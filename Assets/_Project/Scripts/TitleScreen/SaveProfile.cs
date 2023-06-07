@@ -19,25 +19,24 @@ namespace CryptoQuestClient
         [Tooltip("Check file")]
         private string _saveFile;
 
-        [HideInInspector]
-        public bool ExistProfile;
+        public bool ExistProfile = false;
         #endregion
 
         #region Unity_Method
         void Awake()
         {
-            _saveFile = Application.persistentDataPath + _fileNameJson + "json";
+            _saveFile = Application.persistentDataPath + "/" + _fileNameJson + ".json";
             LoadData();
         }
         #endregion
 
         #region Class
-        public void SaveData(bool isBattle)
+        public void SaveData(string playerName)
         {
             SaveProfile saveProfile = new SaveProfile();
-            saveProfile.PlayerName = PlayerName;
+            saveProfile.PlayerName = playerName;
             string jsonString = JsonUtility.ToJson(saveProfile);
-            string filePath = Application.persistentDataPath + _fileNameJson + "json";
+            string filePath = Application.persistentDataPath + "/" + _fileNameJson + ".json";
             File.WriteAllText(filePath, jsonString);
         }
 

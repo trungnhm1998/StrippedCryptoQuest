@@ -9,7 +9,7 @@ namespace CryptoQuestClient
     {
         #region Variables
         [Header("References")]
-        // [SerializeField] private SaveMockup _saveMockup;
+        [SerializeField] private SaveProfile _saveProfile;
 
 
         [Header("Entry Name")]
@@ -19,44 +19,46 @@ namespace CryptoQuestClient
         [SerializeField] private Button _nameEntryBtn;
         [SerializeField] private Text _nameEntryText;
         [SerializeField] private Text _confirmNameEntry;
+        [SerializeField] private bool _enablePanel;
         [SerializeField] private string _confirmMessage;
         #endregion
 
 
         #region Class
-        private void CheckNameEntry()
+        public void CheckNameEntry()
         {
             _nameEntryBtn.interactable = _nameEntryText.text.Length != 0;
         }
 
         public void ConfirmNameEntry()
         {
-            _nameEntryPanel.SetActive(false);
-            _promptPanel.SetActive(true);
-            _confirmNameEntry.text = $"Your name is {_nameEntryText.text}\n You can't change it when game starts,\n is that OK?";
+            _nameEntryPanel.SetActive(!_enablePanel);
+            _promptPanel.SetActive(_enablePanel);
+            _confirmNameEntry.text = _confirmMessage + _nameEntryText.text;
         }
 
         public void ConfirmPrompt()
         {
-            // _saveMockup.PlayerName = _nameEntryText.text;
-            // _saveMockup.SaveData(false);
+            _saveProfile.PlayerName = _nameEntryText.text;
+            _saveProfile.SaveData(_nameEntryText.text);
         }
         public void CancelPrompt()
         {
-            _nameEntryPanel.SetActive(true);
-            _promptPanel.SetActive(false);
+            _nameEntryPanel.SetActive(_enablePanel);
+            _promptPanel.SetActive(!_enablePanel);
         }
 
         public void StartGame()
         {
-            // if (_saveMockup.HasCharacter)
-            // {
-            //     Debug.Log("Already has character");
-            // }
-            // else
-            // {
-            //     _entryPanel.SetActive(true);
-            // }
+            if (_saveProfile.ExistProfile)
+            {
+                _enablePanel = false;
+            }
+            else
+            {
+                _enablePanel = true;
+                _entryPanel.SetActive(_enablePanel);
+            }
         }
         #endregion
     }
