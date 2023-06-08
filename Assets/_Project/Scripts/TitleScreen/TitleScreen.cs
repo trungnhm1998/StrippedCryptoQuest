@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,7 +10,7 @@ namespace CryptoQuestClient
     {
         #region Variables
         [Header("References")]
-        [SerializeField] private SaveProfile _saveProfile = new SaveProfile();
+        [SerializeField] private SaveManagerSO _saveManagerSO;
         [SerializeField] private ProfileScriptableObject _profileSO;
 
         [Header("Entry Name")]
@@ -18,16 +19,15 @@ namespace CryptoQuestClient
         [SerializeField] private Button _btnConfirm;
         [SerializeField] private Text _nameEntry;
         [SerializeField] private Text _confirmNameEntry;
-        [SerializeField] private bool _enablePanel;
         [SerializeField] private string _confirmMessage;
         [SerializeField] private string _fileName;
+        private bool _enablePanel;
         #endregion
 
         #region Unity_Method
         void Awake()
         {
-            _saveProfile._profileSO = _profileSO;
-            _saveProfile._fileName = _fileName;
+            _saveManagerSO = new SaveManagerSO(_profileSO, _fileName);
         }
         #endregion
 
@@ -47,8 +47,8 @@ namespace CryptoQuestClient
 
         public void ConfirmPrompt()
         {
-            _saveProfile.PlayerName = _nameEntry.text;
-            _saveProfile.SaveData();
+            _profileSO.PlayerName = _nameEntry.text;
+            _saveManagerSO.SaveData();
         }
         public void CancelPrompt()
         {
@@ -58,8 +58,8 @@ namespace CryptoQuestClient
 
         public void StartGame()
         {
-            _saveProfile.LoadData();
-            _enablePanel = !_saveProfile.ExistProfile;
+            _saveManagerSO.LoadData();
+            _enablePanel = _profileSO.PlayerName == null;
             _nameEntryPanel.SetActive(_enablePanel);
         }
         #endregion
