@@ -15,7 +15,7 @@ namespace CryptoQuestClient
 
         [Header("Entry Name")]
         [SerializeField] private GameObject _nameEntryPanel;
-        [SerializeField] private GameObject _promptPanel;
+        [SerializeField] private GameObject _nameConfirmPromptPanel;
         [SerializeField] private Button _btnConfirm;
         [SerializeField] private Text _nameEntry;
         [SerializeField] private Text _confirmNameEntry;
@@ -23,15 +23,7 @@ namespace CryptoQuestClient
         [SerializeField] private string _fileName;
         private bool _enablePanel;
         #endregion
-
-        #region Unity_Method
-        void Awake()
-        {
-            _saveManagerSO = new SaveManagerSO(_profileSO, _fileName);
-        }
-        #endregion
-
-
+        
         #region Class
         public void CheckNameEntry()
         {
@@ -41,7 +33,7 @@ namespace CryptoQuestClient
         public void ConfirmNameEntry()
         {
             _nameEntryPanel.SetActive(!_enablePanel);
-            _promptPanel.SetActive(_enablePanel);
+            _nameConfirmPromptPanel.SetActive(_enablePanel);
             _confirmNameEntry.text = _confirmMessage + _nameEntry.text;
         }
 
@@ -53,7 +45,7 @@ namespace CryptoQuestClient
         public void CancelPrompt()
         {
             _nameEntryPanel.SetActive(_enablePanel);
-            _promptPanel.SetActive(!_enablePanel);
+            _nameConfirmPromptPanel.SetActive(!_enablePanel);
         }
 
         public void StartGame()

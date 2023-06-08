@@ -7,12 +7,6 @@ namespace CryptoQuestClient
 {
     public class SaveManagerSO : ScriptableObject
     {
-        public SaveManagerSO(ProfileScriptableObject profile, string fileName)
-        {
-            _profileSO = profile;
-            _fileName = fileName;
-        }
-        
         [Header("References")]
         public ProfileScriptableObject _profileSO;
         public string _fileName;

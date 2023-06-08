@@ -7,7 +7,6 @@ namespace CryptoQuestClient
 {
     public static class ProfileManager
     {
-        
         public static void WriteData(ProfileScriptableObject _profileSO, string _fileName)
         {
             string jsonString = JsonUtility.ToJson(_profileSO);
