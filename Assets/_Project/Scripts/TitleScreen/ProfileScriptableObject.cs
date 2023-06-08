@@ -4,7 +4,8 @@ using UnityEngine;
 
 namespace CryptoQuestClient
 {
-    public class Profile
+    [CreateAssetMenu(fileName = "Profile", menuName = "ScriptableObjects/Profile")]
+    public class ProfileScriptableObject : ScriptableObject
     {
         public string PlayerName;
     }

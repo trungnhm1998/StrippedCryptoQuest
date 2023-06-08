@@ -5,47 +5,36 @@ using UnityEngine;
 
 namespace CryptoQuestClient
 {
-    public class SaveProfile : MonoBehaviour
+    public class SaveProfile
     {
         #region Variables
 
         [Header("References")]
-        [SerializeField] private Profile _profile;
-        [SerializeField] private string _fileNameJson;
+        [HideInInspector] public ProfileScriptableObject _profileSO;
+        [HideInInspector] public string _fileName;
 
-        [HideInInspector]
-        public string PlayerName;
+        [HideInInspector] public string PlayerName;
+        [HideInInspector] public bool ExistProfile = false;
 
         [Tooltip("Check file")]
         private string _saveFile;
-
-        public bool ExistProfile = false;
-        #endregion
-
-        #region Unity_Method
-        void Awake()
-        {
-            _saveFile = Application.persistentDataPath + "/" + _fileNameJson + ".json";
-            LoadData();
-        }
         #endregion
 
         #region Class
-        public void SaveData(string playerName)
+        public void SaveData()
         {
-            SaveProfile saveProfile = new SaveProfile();
-            saveProfile.PlayerName = playerName;
-            string jsonString = JsonUtility.ToJson(saveProfile);
-            string filePath = Application.persistentDataPath + "/" + _fileNameJson + ".json";
-            File.WriteAllText(filePath, jsonString);
+            _profileSO.PlayerName = PlayerName;
+            string jsonString = JsonUtility.ToJson(_profileSO);
+            _saveFile = Application.persistentDataPath + "/" + _fileName;
+            File.WriteAllText(_saveFile, jsonString);
         }
 
         public void LoadData()
         {
+            _saveFile = Application.persistentDataPath + "/" + _fileName;
             if (File.Exists(_saveFile))
             {
                 string fileContents = File.ReadAllText(_saveFile);
-                _profile = JsonUtility.FromJson<Profile>(fileContents);
                 ExistProfile = true;
             }
         }
