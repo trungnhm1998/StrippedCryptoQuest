@@ -1,21 +1,22 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.IO;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace CryptoQuest.SaveSystem
 {
     public class SaveSystemSO : ScriptableObject
     {
-        public string saveFileName;
+        [SerializeField] private SaveManagerSO _saveManagerSO;
+        public string saveFileName = "save.json";
 
-        public void SaveData()
+        public SaveData saveData = new SaveData();
+
+        public bool SaveData()
         {
+            return false;
         }
 
-        public void LoadData()
+        public bool LoadData()
         {
+            return false;
         }
     }
 }
