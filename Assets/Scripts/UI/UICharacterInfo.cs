@@ -22,9 +22,11 @@ namespace CryptoQuest
         [SerializeField] private Image _avatar;
 
         [Header("Data")]
-        [SerializeField] private CharInfoMockDataSO _charInfoMockData;
+        private CharInfoMockDataSO _charInfoMockData;
+        public CharInfoMockDataSO CharInfoMockData { get => _charInfoMockData; set => _charInfoMockData = value; }
 
-        private void Awake() {
+        private void Start()
+        {
             SetName();
             SetLevel();
             SetHP();
@@ -38,18 +40,18 @@ namespace CryptoQuest
 
         private void SetName()
         {
-            _name.text = $"{_charInfoMockData.Name}";
+            _name.text = $"{CharInfoMockData.Name}";
         }
 
         private void SetLevel()
         {
-            _level.text = $"<size=20%>Lv</size>{_charInfoMockData.Level}";
+            _level.text = $"<size=20%>Lv</size>{CharInfoMockData.Level}";
         }
 
         private void SetHP()
         {
-            int curHP = _charInfoMockData.CurrentHP;
-            int maxHP = _charInfoMockData.MaxHP;
+            int curHP = CharInfoMockData.CurrentHP;
+            int maxHP = CharInfoMockData.MaxHP;
 
             _currentHP.text = $"{curHP}";
             _maxHP.text = $"{maxHP}";
@@ -59,8 +61,8 @@ namespace CryptoQuest
 
         private void SetMP()
         {
-            int curMP = _charInfoMockData.CurrentMP;
-            int maxMP = _charInfoMockData.MaxMP;
+            int curMP = CharInfoMockData.CurrentMP;
+            int maxMP = CharInfoMockData.MaxMP;
 
             _currentMP.text = $"{curMP}";
             _maxMP.text = $"{maxMP}";
@@ -70,25 +72,25 @@ namespace CryptoQuest
 
         private void SetEXP()
         {
-            int curEXP = _charInfoMockData.CurrentEXP;
-            int maxEXP = _charInfoMockData.MaxEXP;
+            int curEXP = CharInfoMockData.CurrentEXP;
+            int maxEXP = CharInfoMockData.MaxEXP;
 
             _EXPBar.fillAmount = (float)curEXP / (float)maxEXP;
         }
 
         private void SetClass()
         {
-            _class.text = $"{_charInfoMockData.Class}";
+            _class.text = $"{CharInfoMockData.Class}";
         }
 
         private void SetElemental()
         {
-            _elemental.sprite = _charInfoMockData.Elemental.Icon;
+            _elemental.sprite = CharInfoMockData.Elemental.Icon;
         }
 
         private void SetAvatar()
         {
-            _avatar.sprite = _charInfoMockData.Avatar;
+            _avatar.sprite = CharInfoMockData.Avatar;
         }
     }
 }

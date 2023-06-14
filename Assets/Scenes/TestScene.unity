@@ -1442,15 +1442,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1299542500356229987, guid: 8506323678c317e4ebe1349f25ea7ef6, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1299542500356229987, guid: 8506323678c317e4ebe1349f25ea7ef6, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1299542500356229987, guid: 8506323678c317e4ebe1349f25ea7ef6, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -70
       objectReference: {fileID: 0}
     - target: {fileID: 3723826022379110890, guid: 8506323678c317e4ebe1349f25ea7ef6, type: 3}
       propertyPath: m_Pivot.x
@@ -1470,7 +1470,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3723826022379110890, guid: 8506323678c317e4ebe1349f25ea7ef6, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3723826022379110890, guid: 8506323678c317e4ebe1349f25ea7ef6, type: 3}
       propertyPath: m_AnchorMin.x
@@ -1478,7 +1478,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3723826022379110890, guid: 8506323678c317e4ebe1349f25ea7ef6, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3723826022379110890, guid: 8506323678c317e4ebe1349f25ea7ef6, type: 3}
       propertyPath: m_SizeDelta.x
@@ -1518,7 +1518,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3723826022379110890, guid: 8506323678c317e4ebe1349f25ea7ef6, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 132.5
       objectReference: {fileID: 0}
     - target: {fileID: 3723826022379110890, guid: 8506323678c317e4ebe1349f25ea7ef6, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -1538,23 +1538,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4471811910414807199, guid: 8506323678c317e4ebe1349f25ea7ef6, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4471811910414807199, guid: 8506323678c317e4ebe1349f25ea7ef6, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4471811910414807199, guid: 8506323678c317e4ebe1349f25ea7ef6, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -35
       objectReference: {fileID: 0}
     - target: {fileID: 6491508334308831872, guid: 8506323678c317e4ebe1349f25ea7ef6, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6491508334308831872, guid: 8506323678c317e4ebe1349f25ea7ef6, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7104514512710834291, guid: 8506323678c317e4ebe1349f25ea7ef6, type: 3}
       propertyPath: m_Name
@@ -1562,7 +1562,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7104514512710834291, guid: 8506323678c317e4ebe1349f25ea7ef6, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1821,6 +1821,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1073828177}
+  - component: {fileID: 1073828178}
   m_Layer: 5
   m_Name: Home
   m_TagString: Untagged
@@ -1850,6 +1851,21 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 5}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1073828178
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1073828176}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d24223ca4d2d574ea66f61ce8e1065a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _characterSlots: {fileID: 262224328}
+  _characterInfoPF: {fileID: 7104514512710834291, guid: 8506323678c317e4ebe1349f25ea7ef6, type: 3}
+  _partyManagerMockData: {fileID: 11400000, guid: b97126249c17e024fa024226ffea3c3f, type: 2}
 --- !u!1 &1226201356
 GameObject:
   m_ObjectHideFlags: 0
