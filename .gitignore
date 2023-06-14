@@ -13,9 +13,13 @@
 # MemoryCaptures can get excessive in size.
 # They also could contain extremely sensitive data
 /[Mm]emoryCaptures/
+/UserSettings/
 
 # Recordings can get excessive in size
 /[Rr]ecordings/
+
+# Asset meta data should only be ignored when the corresponding asset is also ignored
+!/[Aa]ssets/**/*.meta
 
 # Uncomment this line if you wish to ignore the asset store tools plugin
 # /[Aa]ssets/AssetStoreTools*
@@ -26,6 +30,9 @@
 # Visual Studio cache directory
 .vs/
 .vscode/
+
+# Idea cache directory
+.idea/
 
 # Gradle cache directory
 .gradle/
@@ -55,12 +62,16 @@ ExportedObj/
 
 # Unity3D generated file on crash reports
 sysinfo.txt
+debug.log
 
 # Builds
 *.apk
 *.aab
 *.unitypackage
 *.app
+
+#Mac invisible folder files
+*.DS_Store
 
 # Crashlytics generated file
 crashlytics-build.properties
@@ -71,3 +82,24 @@ crashlytics-build.properties
 # Temporary auto-generated Android Assets
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
+
+# Any image or video created by the Recorder package
+/Recordings/
+
+# Package related files that can be ignored or are better kept user-specific
+ProjectSettings/Packages/com.unity.probuilder/Settings.json
+ProjectSettings/Packages/com.unity.polybrush/Settings.json
+/ProjectSettings/Packages/com.unity.progrids/Settings.json
+/ProjectSettings/Packages/com.unity.learn.iet-framework/Settings.json
+Assets/Polybrush Data*
+Assets/PolybrushData*
+
+# Asset Bundles folder and .bin file
+/Assets/StreamingAssets
+*.bin
+
+# A marker file which is used to decide whether to run the first-launch experience, for example show the welcome dialog
+InitCodeMarker
+
+# Tutorial Framework has a backup option for the project's content, let's ignore the possible backup folder
+/Tutorial Defaults/
