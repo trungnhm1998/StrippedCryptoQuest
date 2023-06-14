@@ -4,8 +4,8 @@ namespace CryptoQuest.SaveSystem
 {
     public abstract class SaveManagerSO : ScriptableObject
     {
-        [SerializeField] private string fileSaveName = "save.json";
+        public abstract bool Save(SaveData saveData);
 
-        private ISaveManager _saveManager;
+        public abstract bool Load(out SaveData saveData);
     }
 }
