@@ -1,4 +1,4 @@
-﻿using CryptoQuest.SaveSystem;
+﻿using CryptoQuest.Core.SaveSystem;
 using NUnit.Framework;
 
 namespace Tests.EditMode

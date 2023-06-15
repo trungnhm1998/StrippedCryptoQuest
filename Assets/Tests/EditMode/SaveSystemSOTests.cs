@@ -1,4 +1,4 @@
-﻿using CryptoQuest.SaveSystem;
+﻿using CryptoQuest.Core.SaveSystem;
 using NUnit.Framework;
 using UnityEditor;
 using UnityEngine;
@@ -26,13 +26,13 @@ namespace Tests.EditMode
         [Test]
         public void SaveData_ShouldNotBeNull()
         {
-            Assert.IsNotNull(_saveSystemSO.saveData, "saveData should not be null.");
+            Assert.IsNotNull(_saveSystemSO._saveData, "saveData should not be null.");
         }
 
         [Test]
         public void SaveData_PlayerName_ShouldBeEmpty()
         {
-            Assert.IsEmpty(_saveSystemSO.saveData.playerName, "saveData.playerName should be empty.");
+            Assert.IsEmpty(_saveSystemSO._saveData.playerName, "saveData.playerName should be empty.");
         }
 
         [Test]
@@ -45,17 +45,17 @@ namespace Tests.EditMode
         public void LoadSaveGame_WithMockName_ShouldHaveDifferentName()
         {
             const string mockPlayerName = "Test Player Name";
-            _saveSystemSO.saveData = new SaveData { playerName = mockPlayerName };
+            _saveSystemSO._saveData = new SaveData { playerName = mockPlayerName };
 
             Assert.IsTrue(_saveSystemSO.LoadSaveGame(), "LoadSaveGame should return true.");
-            Assert.AreNotEqual(mockPlayerName, _saveSystemSO.saveData.playerName,
+            Assert.AreNotEqual(mockPlayerName, _saveSystemSO._saveData.playerName,
                 $"saveData.playerName should be {mockPlayerName}.");
         }
 
         [TearDown]
         public void Teardown()
         {
-            _saveSystemSO.saveData = new SaveData();
+            _saveSystemSO._saveData = new SaveData();
             _saveSystemSO = null;
         }
     }

@@ -1,4 +1,4 @@
-﻿using CryptoQuest.SaveSystem;
+﻿using CryptoQuest.Core.SaveSystem;
 using NUnit.Framework;
 using UnityEditor;
 
@@ -32,7 +32,7 @@ namespace Tests.EditMode
         public void LoadSaveGame_ShouldReturnTrue_WithDefaultPlayerName()
         {
             Assert.IsTrue(_nullSaveManagerSO.Load(out var saveData), "LoadSaveGame should return true.");
-            Assert.AreEqual(NullSaveManagerSO.DEFAULT_PLAYER_NAME, saveData.playerName,
+            Assert.AreEqual(NullSaveManagerSO.DefaultPlayerName, saveData.playerName,
                 "saveData.playerName should be the default player name.");
         }
     }

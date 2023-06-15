@@ -1,0 +1,23 @@
+﻿using System;
+using CryptoQuest.Core.SceneManagementSystem.ScriptableObjects;
+using UnityEngine;
+
+namespace CryptoQuest.Core.SceneManagementSystem.Events.ScriptableObjects
+{
+    [CreateAssetMenu(menuName = "SceneManagementSystem/Events/Scene Load Event Channel")]
+    public class LoadSceneEventChannelSO : ScriptableObject
+    {
+        public Action<SceneScriptableObject> LoadingRequested;
+
+        public void OnRaiseEvent(SceneScriptableObject sceneScriptableObject)
+        {
+            if (LoadingRequested == null)
+            {
+                Debug.LogWarning("A request for loading scene has been made, but no one listening.");
+                return;
+            }
+
+            LoadingRequested.Invoke(sceneScriptableObject);
+        }
+    }
+}
