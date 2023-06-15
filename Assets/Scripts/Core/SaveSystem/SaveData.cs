@@ -1,8 +1,7 @@
 ﻿using System;
 using Newtonsoft.Json;
-using UnityEngine.Serialization;
 
-namespace CryptoQuest.Core.SaveSystem
+namespace Core.SaveSystem
 {
     [Serializable]
     public class SaveData

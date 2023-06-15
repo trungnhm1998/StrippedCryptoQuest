@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 
-namespace CryptoQuest.EditorTools.Attributes.ReadOnlyAttribute
+namespace EditorTools.Attributes.ReadOnlyAttribute
 {
-    public class ReadOnlyAttribute : PropertyAttribute { }
+    public class ReadOnlyAttribute : PropertyAttribute
+    {
+    }
 }

@@ -1,12 +1,12 @@
-﻿using CryptoQuest.Core.Common;
-using CryptoQuest.Core.SceneManagementSystem.Events.ScriptableObjects;
-using CryptoQuest.Core.SceneManagementSystem.ScriptableObjects;
+﻿using Core.Common;
+using Core.SceneManagementSystem.Events.ScriptableObjects;
+using Core.SceneManagementSystem.ScriptableObjects;
 using UnityEngine;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.ResourceManagement.ResourceProviders;
 using UnityEngine.SceneManagement;
 
-namespace CryptoQuest.Core.SceneManagementSystem
+namespace Core.SceneManagementSystem
 {
     public class StartupLoader : MonoBehaviour
     {

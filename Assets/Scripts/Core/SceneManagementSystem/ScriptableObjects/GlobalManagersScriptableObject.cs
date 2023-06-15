@@ -1,5 +1,5 @@
 
-namespace CryptoQuest.Core.SceneManagementSystem.ScriptableObjects
+namespace Core.SceneManagementSystem.ScriptableObjects
 {
     public class GlobalManagersScriptableObject : SceneScriptableObject { }
 }

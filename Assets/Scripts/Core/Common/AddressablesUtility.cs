@@ -1,6 +1,6 @@
 ﻿using UnityEngine.AddressableAssets;
 
-namespace CryptoQuest.Core.Common
+namespace Core.Common
 {
     /// <summary>
     /// A utility class for various Addressables functionality

@@ -1,8 +1,8 @@
-﻿using CryptoQuest.Core.SceneManagementSystem.Events.ScriptableObjects;
-using CryptoQuest.Core.SceneManagementSystem.ScriptableObjects;
+﻿using Core.SceneManagementSystem.Events.ScriptableObjects;
+using Core.SceneManagementSystem.ScriptableObjects;
 using UnityEngine;
 
-namespace CryptoQuest.Core.SceneManagementSystem
+namespace Core.SceneManagementSystem
 {
     public class SceneLoader : MonoBehaviour
     {

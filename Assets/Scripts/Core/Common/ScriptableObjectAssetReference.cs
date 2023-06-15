@@ -3,7 +3,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
-namespace CryptoQuest.Core.Common
+namespace Core.Common
 {
     [Serializable]
     public class ScriptableObjectAssetReference<TScriptableObject> : AssetReference

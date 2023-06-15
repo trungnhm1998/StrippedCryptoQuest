@@ -1,8 +1,8 @@
-﻿using CryptoQuest.EditorTools.Attributes.ReadOnlyAttribute;
+﻿using EditorTools.Attributes.ReadOnlyAttribute;
 using UnityEditor;
 using UnityEngine;
 
-namespace CryptoQuest.Core.SaveSystem.ScriptableObjects
+namespace Core.SaveSystem.ScriptableObjects
 {
     public class SerializableScriptableObject : ScriptableObject
     {

@@ -1,4 +1,4 @@
-﻿namespace CryptoQuest.Core.SaveSystem
+﻿namespace Core.SaveSystem
 {
     public class NullSaveManagerSO : SaveManagerSO
     {

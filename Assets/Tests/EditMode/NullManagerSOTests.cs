@@ -1,4 +1,4 @@
-﻿using CryptoQuest.Core.SaveSystem;
+﻿using Core.SaveSystem;
 using NUnit.Framework;
 using UnityEditor;
 

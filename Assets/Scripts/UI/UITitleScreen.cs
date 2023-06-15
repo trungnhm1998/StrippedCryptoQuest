@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace CryptoQuest.UI
+namespace UI
 {
     public class UITitleScreen : MonoBehaviour
     {

@@ -1,7 +1,7 @@
 ﻿using UnityEditor;
 using UnityEngine;
 
-namespace CryptoQuest.EditorTools.Attributes.ReadOnlyAttribute.Editor
+namespace EditorTools.Attributes.ReadOnlyAttribute.Editor
 {
     [CustomPropertyDrawer(typeof(ReadOnlyAttribute))]
     public class ReadOnlyDrawer : PropertyDrawer

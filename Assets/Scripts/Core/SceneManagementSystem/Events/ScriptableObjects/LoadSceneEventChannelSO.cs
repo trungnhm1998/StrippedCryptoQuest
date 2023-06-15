@@ -1,8 +1,8 @@
 ﻿using System;
-using CryptoQuest.Core.SceneManagementSystem.ScriptableObjects;
+using Core.SceneManagementSystem.ScriptableObjects;
 using UnityEngine;
 
-namespace CryptoQuest.Core.SceneManagementSystem.Events.ScriptableObjects
+namespace Core.SceneManagementSystem.Events.ScriptableObjects
 {
     [CreateAssetMenu(menuName = "SceneManagementSystem/Events/Scene Load Event Channel")]
     public class LoadSceneEventChannelSO : ScriptableObject

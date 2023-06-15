@@ -1,10 +1,9 @@
 ﻿using System;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using Object = UnityEngine.Object;
 
-namespace CryptoQuest.Core.Common
+namespace Core.Common
 {
     [Serializable]
     public class SceneAssetReference : AssetReference

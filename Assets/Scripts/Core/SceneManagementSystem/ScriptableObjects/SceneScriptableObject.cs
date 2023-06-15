@@ -1,8 +1,8 @@
-﻿using CryptoQuest.Core.Common;
-using CryptoQuest.Core.SaveSystem.ScriptableObjects;
+﻿using Core.Common;
+using Core.SaveSystem.ScriptableObjects;
 using UnityEngine;
 
-namespace CryptoQuest.Core.SceneManagementSystem.ScriptableObjects
+namespace Core.SceneManagementSystem.ScriptableObjects
 {
     [CreateAssetMenu(menuName = "Scene Management/Scene Scriptable Object")]
     public class SceneScriptableObject : SerializableScriptableObject

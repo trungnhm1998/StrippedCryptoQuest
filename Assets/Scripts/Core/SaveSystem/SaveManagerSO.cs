@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace CryptoQuest.Core.SaveSystem
+namespace Core.SaveSystem
 {
     public abstract class SaveManagerSO : ScriptableObject
     {

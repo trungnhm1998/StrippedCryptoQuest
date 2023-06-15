@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 
-namespace CryptoQuest.Core.Common
+namespace Core.Common
 {
     /// <summary>
     /// Creates an AssetReference that is restricted to having a specific Component.
