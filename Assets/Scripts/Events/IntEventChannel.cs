@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace CryptoQuest
+namespace CryptoQuest.Events
 {
     [CreateAssetMenu(menuName = "Events/Int Event Channel")]
     public class IntEventChannel : ScriptableObject

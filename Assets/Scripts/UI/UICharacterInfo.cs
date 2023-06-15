@@ -1,9 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+using CryptoQuest.MockData;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace CryptoQuest
+namespace CryptoQuest.UI
 {
     public class UICharacterInfo : MonoBehaviour
     {
@@ -26,6 +27,11 @@ namespace CryptoQuest
         public CharInfoMockDataSO CharInfoMockData { get => _charInfoMockData; set => _charInfoMockData = value; }
 
         private void Start()
+        {
+            InitCharacterInfo();
+        }
+
+        private void InitCharacterInfo()
         {
             SetName();
             SetLevel();

@@ -1,9 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+using CryptoQuest.MockData;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace CryptoQuest
+namespace CryptoQuest.UI
 {
     public class UICharacterInfoManager : MonoBehaviour
     {

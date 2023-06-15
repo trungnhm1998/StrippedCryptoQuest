@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace CryptoQuest
+namespace CryptoQuest.MockData
 {
     [CreateAssetMenu(menuName = "Gameplay/MockData/Character Info")]
     public class CharInfoMockDataSO : ScriptableObject
