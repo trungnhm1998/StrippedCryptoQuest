@@ -9,6 +9,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using CryptoQuest;
+using CryptoQuest.Character.ScriptableObjects;
 
 public class CharacterSOEditor : ScriptableObjectBrowserEditor<CharacterSO>
 {
