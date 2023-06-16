@@ -1,6 +1,9 @@
 ﻿using Core.SceneManagementSystem.Events.ScriptableObjects;
 using Core.SceneManagementSystem.ScriptableObjects;
 using UnityEngine;
+using UnityEngine.ResourceManagement.AsyncOperations;
+using UnityEngine.ResourceManagement.ResourceProviders;
+using UnityEngine.SceneManagement;
 
 namespace Core.SceneManagementSystem
 {
@@ -9,22 +12,27 @@ namespace Core.SceneManagementSystem
         [Header("Listening on")]
         [SerializeField] private LoadSceneEventChannelSO _loadSceneEventChannelSO;
 
-        private SceneScriptableObject _currentSceneSO;
-        private SceneScriptableObject _mainMenuSceneSO;
+        private SceneScriptableObject _sceneToLoadSO;
 
         private void OnEnable()
         {
-            _loadSceneEventChannelSO.LoadingRequested += LoadingMainMenuRequested;
+            _loadSceneEventChannelSO.LoadingRequested += MainMenu_LoadingRequested;
         }
 
         private void OnDisable()
         {
-            _loadSceneEventChannelSO.LoadingRequested -= LoadingMainMenuRequested;
+            _loadSceneEventChannelSO.LoadingRequested -= MainMenu_LoadingRequested;
         }
 
-        private void LoadingMainMenuRequested(SceneScriptableObject mainMenuSceneSO)
+        private void MainMenu_LoadingRequested(SceneScriptableObject mainMenuSceneSO)
         {
-            _mainMenuSceneSO = mainMenuSceneSO;
+            _sceneToLoadSO = mainMenuSceneSO;
+            var op = _sceneToLoadSO.SceneReference.LoadSceneAsync(LoadSceneMode.Additive, true, 0);
+            op.Completed += OnMainMenuLoaded;
+        }
+
+        private void OnMainMenuLoaded(AsyncOperationHandle<SceneInstance> obj)
+        {
         }
     }
 }

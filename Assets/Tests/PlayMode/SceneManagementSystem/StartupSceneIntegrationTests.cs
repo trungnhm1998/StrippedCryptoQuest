@@ -9,6 +9,8 @@ namespace Tests.PlayMode.SceneManagementSystem
 {
     public class StartupSceneIntegrationTests
     {
+        private const int FRAMES_TO_WAIT = 360;
+
         [UnityTest]
         public IEnumerator ManagerScene_Loaded()
         {
@@ -23,17 +25,28 @@ namespace Tests.PlayMode.SceneManagementSystem
             Assert.NotNull(startupLoader);
 
             var startupLoaderComponent = startupLoader.GetComponent<StartupLoader>();
-            
+
             Assert.NotNull(startupLoaderComponent);
 
-            var framesToWait = 360;
+            var framesToWait = FRAMES_TO_WAIT;
             while (framesToWait >= 0)
             {
                 framesToWait--;
                 yield return null;
             }
-            
+
             Assert.That(SceneManager.GetSceneByName("GlobalManagers").isLoaded);
+
+            framesToWait = FRAMES_TO_WAIT;
+            while (framesToWait >= 0)
+            {
+                framesToWait--;
+                yield return null;
+            }
+
+            Assert.That(SceneManager.GetSceneByName(startupSceneName).isLoaded == false);
+
+            Assert.That(startupLoader == null);
         }
     }
 }
