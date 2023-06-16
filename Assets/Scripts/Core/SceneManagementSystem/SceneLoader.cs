@@ -1,4 +1,5 @@
-﻿using Core.SceneManagementSystem.Events.ScriptableObjects;
+﻿using System;
+using Core.SceneManagementSystem.Events.ScriptableObjects;
 using Core.SceneManagementSystem.ScriptableObjects;
 using UnityEngine;
 using UnityEngine.ResourceManagement.AsyncOperations;
@@ -13,6 +14,7 @@ namespace Core.SceneManagementSystem
         [SerializeField] private LoadSceneEventChannelSO _loadSceneEventChannelSO;
 
         private SceneScriptableObject _sceneToLoadSO;
+        private SceneScriptableObject _currentLoadedSceneSO;
 
         private void OnEnable()
         {
@@ -28,11 +30,15 @@ namespace Core.SceneManagementSystem
         {
             _sceneToLoadSO = mainMenuSceneSO;
             var op = _sceneToLoadSO.SceneReference.LoadSceneAsync(LoadSceneMode.Additive, true, 0);
-            op.Completed += OnMainMenuLoaded;
+            op.Completed += NewScene_Loaded;
         }
 
-        private void OnMainMenuLoaded(AsyncOperationHandle<SceneInstance> obj)
+        private void NewScene_Loaded(AsyncOperationHandle<SceneInstance> obj)
         {
+            _currentLoadedSceneSO = _sceneToLoadSO;
+
+            var scene = obj.Result.Scene;
+            SceneManager.SetActiveScene(scene);
         }
     }
 }
