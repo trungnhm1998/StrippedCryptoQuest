@@ -37,6 +37,14 @@ namespace Tests.PlayMode.SceneManagementSystem
 
             Assert.That(SceneManager.GetSceneByName("GlobalManagers").isLoaded);
 
+            var sceneLoaderGo = GameObject.Find("SceneLoader");
+
+            Assert.NotNull(sceneLoaderGo);
+
+            var sceneLoader = sceneLoaderGo.GetComponent<SceneLoader>();
+
+            Assert.NotNull(sceneLoader);
+
             framesToWait = FRAMES_TO_WAIT;
             while (framesToWait >= 0)
             {
@@ -47,6 +55,14 @@ namespace Tests.PlayMode.SceneManagementSystem
             Assert.That(SceneManager.GetSceneByName(startupSceneName).isLoaded == false);
 
             Assert.That(startupLoader == null);
+            framesToWait = FRAMES_TO_WAIT;
+            while (framesToWait >= 0)
+            {
+                framesToWait--;
+                yield return null;
+            }
+
+            Assert.That(SceneManager.GetSceneByName("Title").isLoaded);
         }
     }
 }
