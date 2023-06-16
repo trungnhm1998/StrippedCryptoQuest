@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Core.SceneManagementSystem.Events.ScriptableObjects
 {
-    [CreateAssetMenu(menuName = "SceneManagementSystem/Events/Scene Load Event Channel")]
+    [CreateAssetMenu(menuName = "Scene Management/Events/Load Scene Event Channel")]
     public class LoadSceneEventChannelSO : ScriptableObject
     {
         public Action<SceneScriptableObject> LoadingRequested;

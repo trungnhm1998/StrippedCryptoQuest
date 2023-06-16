@@ -1,4 +1,4 @@
-﻿using EditorTools.Attributes.ReadOnlyAttribute;
+﻿using EditorTools.Runtime.Attributes.ReadOnlyAttribute;
 using UnityEditor;
 using UnityEngine;
 

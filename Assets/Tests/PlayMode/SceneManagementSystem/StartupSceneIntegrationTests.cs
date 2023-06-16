@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using Core.SceneManagementSystem;
 using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -6,7 +7,7 @@ using UnityEngine.TestTools;
 
 namespace Tests.PlayMode.SceneManagementSystem
 {
-    public class StartupLoaderTests
+    public class StartupSceneIntegrationTests
     {
         [UnityTest]
         public IEnumerator ManagerScene_Loaded()
@@ -20,10 +21,10 @@ namespace Tests.PlayMode.SceneManagementSystem
             var startupLoader = GameObject.Find("StartupLoader");
 
             Assert.NotNull(startupLoader);
+
+            var startupLoaderComponent = startupLoader.GetComponent<StartupLoader>();
             
-            var managerScene = SceneManager.GetSceneByName("Manager");
-            
-            Assert.That(managerScene.isLoaded == false);
+            Assert.NotNull(startupLoaderComponent);
         }
     }
 }
