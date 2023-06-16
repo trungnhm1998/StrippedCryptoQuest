@@ -9,15 +9,22 @@ namespace Core.SceneManagementSystem.Events.ScriptableObjects
     {
         public Action<SceneScriptableObject> LoadingRequested;
 
-        public void OnRaiseEvent(SceneScriptableObject sceneScriptableObject)
+        public bool OnRaiseEvent(SceneScriptableObject sceneScriptableObject)
         {
+            if (sceneScriptableObject == null)
+            {
+                Debug.LogWarning("A request for loading scene has been made, but no scene was provided.");
+                return false;
+            }
+
             if (LoadingRequested == null)
             {
                 Debug.LogWarning("A request for loading scene has been made, but no one listening.");
-                return;
+                return false;
             }
 
             LoadingRequested.Invoke(sceneScriptableObject);
+            return true;
         }
     }
 }

@@ -25,6 +25,15 @@ namespace Tests.PlayMode.SceneManagementSystem
             var startupLoaderComponent = startupLoader.GetComponent<StartupLoader>();
             
             Assert.NotNull(startupLoaderComponent);
+
+            var framesToWait = 360;
+            while (framesToWait >= 0)
+            {
+                framesToWait--;
+                yield return null;
+            }
+            
+            Assert.That(SceneManager.GetSceneByName("GlobalManagers").isLoaded);
         }
     }
 }

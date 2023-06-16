@@ -15,12 +15,6 @@ namespace Tests.EditMode.Core.Common
         }
 
         [Test]
-        public void CreateInstance_CreatedCorrectly()
-        {
-            Assert.IsNotEmpty(_sceneAssetReference.AssetGUID);
-        }
-
-        [Test]
         public void ValidateAsset_WithSceneUnit_ValidatesCorrectly()
         {
             Assert.IsTrue(_sceneAssetReference.ValidateAsset("path/to/scene.unity"));

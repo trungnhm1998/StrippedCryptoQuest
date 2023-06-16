@@ -1,9 +1,8 @@
 ﻿using Core.SaveSystem;
 using NUnit.Framework;
 using UnityEditor;
-using UnityEngine;
 
-namespace Tests.EditMode
+namespace Tests.EditMode.Core.SaveSystem
 {
     [TestFixture]
     public class SaveSystemSOTests

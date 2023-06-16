@@ -1,7 +1,7 @@
 ﻿using Core.SaveSystem;
 using NUnit.Framework;
 
-namespace Tests.EditMode
+namespace Tests.EditMode.Core.SaveSystem
 {
     [TestFixture]
     public class SaveDataTests

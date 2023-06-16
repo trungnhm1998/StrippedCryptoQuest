@@ -2,7 +2,7 @@
 using NUnit.Framework;
 using UnityEditor;
 
-namespace Tests.EditMode
+namespace Tests.EditMode.Core.SaveSystem
 {
     [TestFixture]
     public class NullManagerSOTests
