@@ -1,5 +1,5 @@
 ﻿using System.Collections;
-using Core.SceneManagementSystem;
+using Core.Runtime.SceneManagementSystem;
 using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -41,7 +41,7 @@ namespace Tests.PlayMode.SceneManagementSystem
 
             Assert.NotNull(sceneLoaderGo);
 
-            var sceneLoader = sceneLoaderGo.GetComponent<SceneLoader>();
+            var sceneLoader = sceneLoaderGo.GetComponent<LinearGameSceneLoader>();
 
             Assert.NotNull(sceneLoader);
 

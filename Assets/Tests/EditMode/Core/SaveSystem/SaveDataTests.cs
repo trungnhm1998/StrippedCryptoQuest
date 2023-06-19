@@ -1,4 +1,4 @@
-﻿using Core.SaveSystem;
+﻿using Core.Runtime.SaveSystem;
 using NUnit.Framework;
 
 namespace Tests.EditMode.Core.SaveSystem

@@ -1,5 +1,5 @@
-﻿using Core.SceneManagementSystem.Events.ScriptableObjects;
-using Core.SceneManagementSystem.ScriptableObjects;
+﻿using Core.Runtime.SceneManagementSystem.Events.ScriptableObjects;
+using Core.Runtime.SceneManagementSystem.ScriptableObjects;
 using NUnit.Framework;
 using UnityEngine;
 

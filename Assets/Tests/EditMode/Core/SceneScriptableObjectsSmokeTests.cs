@@ -1,4 +1,4 @@
-﻿using Core.SceneManagementSystem.ScriptableObjects;
+﻿using Core.Runtime.SceneManagementSystem.ScriptableObjects;
 using NUnit.Framework;
 using UnityEngine;
 

@@ -1,4 +1,4 @@
-﻿using Core.Common;
+﻿using Core.Runtime.Common;
 using NUnit.Framework;
 
 namespace Tests.EditMode.Core.Common
