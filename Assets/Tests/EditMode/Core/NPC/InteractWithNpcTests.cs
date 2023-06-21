@@ -9,10 +9,13 @@ using UnityEngine;
 public class InteractWithNpcTests
 {
     private DialogsScriptableObject _dialogSO;
+    private GameObject _npcGameObject;
 
     [SetUp]
     public void Setup()
     {
+        _npcGameObject = new GameObject();
+
         _dialogSO = ScriptableObject.CreateInstance<DialogsScriptableObject>();
         _dialogSO.messages = new List<string>();
     }
@@ -23,12 +26,13 @@ public class InteractWithNpcTests
         var mockMessage = "Hello World";
         _dialogSO.messages.Add(mockMessage);
 
-        var npcGameObject = new GameObject();
-        IDialog dialog = npcGameObject.AddComponent<NPC>();
+        NPC npc = _npcGameObject.AddComponent<NPC>();
+        DialogController dialogController = _npcGameObject.GetComponent<DialogController>();
 
-        dialog.SetDialog(_dialogSO);
+        npc.Init();
+        dialogController.SetDialog(_dialogSO);
 
-        IInteractable interactable = npcGameObject.GetComponent<NPC>();
+        IInteractable interactable = _npcGameObject.GetComponent<NPC>();
 
         var message = interactable.Interact();
 
@@ -38,12 +42,13 @@ public class InteractWithNpcTests
     [Test]
     public void Interact_WithNewEmptyMessageDialogSO_ShouldReturnEmptyString()
     {
-        var npcGameObject = new GameObject();
-        IDialog dialog = npcGameObject.AddComponent<NPC>();
+        NPC npc = _npcGameObject.AddComponent<NPC>();
+        DialogController dialogController = _npcGameObject.GetComponent<DialogController>();
 
-        dialog.SetDialog(_dialogSO);
+        npc.Init();
+        dialogController.SetDialog(_dialogSO);
 
-        IInteractable interactable = npcGameObject.GetComponent<NPC>();
+        IInteractable interactable = _npcGameObject.GetComponent<NPC>();
 
         var message = interactable.Interact();
 
@@ -57,12 +62,13 @@ public class InteractWithNpcTests
         var mockMessage = new List<string>() { "Hello World", "Hello World 2" };
         _dialogSO.messages.AddRange(mockMessage);
 
-        var npcGameObject = new GameObject();
-        IDialog dialog = npcGameObject.AddComponent<NPC>();
+        NPC npc = _npcGameObject.AddComponent<NPC>();
+        DialogController dialogController = npc.GetComponent<DialogController>();
 
-        dialog.SetDialog(_dialogSO);
+        npc.Init();
+        dialogController.SetDialog(_dialogSO);
 
-        IInteractable interactable = npcGameObject.GetComponent<NPC>();
+        IInteractable interactable = _npcGameObject.GetComponent<NPC>();
 
         foreach (var message in _dialogSO.messages)
         {

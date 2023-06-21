@@ -1,31 +1,24 @@
 using System;
 using Core.Runtime.Character;
-using Core.Runtime.Events.ScriptableObjects.Dialogs;
 using UnityEngine;
 
-public class NPC : MonoBehaviour, IInteractable, IDialog
+[RequireComponent(typeof(DialogController))]
+public class NPC : MonoBehaviour, IInteractable
 {
-    [SerializeField] private DialogsScriptableObject _dialogSO;
-    private int _currentIndex = 0;
+    [SerializeField] private DialogController _dialogController;
+
+    private void Awake()
+    {
+        Init();
+    }
+
+    public void Init()
+    {
+        _dialogController = GetComponent<DialogController>();
+    }
 
     public string Interact()
     {
-        if (_dialogSO.messages.Count == 0) return String.Empty;
-
-        var currentMessage = _dialogSO.messages[_currentIndex];
-
-        _currentIndex++;
-
-        if (_currentIndex > _dialogSO.messages.Count)
-        {
-            _currentIndex = 0;
-        }
-
-        return currentMessage;
-    }
-
-    public void SetDialog(DialogsScriptableObject dialogSO)
-    {
-        _dialogSO = dialogSO;
+        return _dialogController.GetDialog();
     }
 }
