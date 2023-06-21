@@ -88,19 +88,20 @@ namespace Core.Runtime.SceneManagementSystem
         {
             _currentLoadedScene = currentOpenSceneInEditor;
 
-            if (_currentLoadedScene.SceneType != SceneScriptableObject.Type.Location) return;
-
-            _gameplayManagerLoadingOperationHandle =
-                _gameplayManagerSceneSO.SceneReference.LoadSceneAsync(LoadSceneMode.Additive, true);
-            _gameplayManagerLoadingOperationHandle.WaitForCompletion();
-            _gameplayManagerSceneInstance = _gameplayManagerLoadingOperationHandle.Result;
+            if (_currentLoadedScene.SceneType == SceneScriptableObject.Type.Location)
+            {
+                _gameplayManagerLoadingOperationHandle =
+                    _gameplayManagerSceneSO.SceneReference.LoadSceneAsync(LoadSceneMode.Additive, true);
+                _gameplayManagerLoadingOperationHandle.WaitForCompletion();
+                _gameplayManagerSceneInstance = _gameplayManagerLoadingOperationHandle.Result;
+            }
 
             _sceneLoaded.RaiseEvent();
         }
 #endif
 
         /// <summary>
-        /// Using <c>.Completed += </c> because WebGL doesn't support threading for async/await
+        /// Using callback because WebGL doesn't support threading for async/await
         /// </summary>
         private void LoadGameplayManagerScene()
         {
