@@ -88,6 +88,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ecb1d947d08ee5349a99ae57eda49f1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _inputMediator: {fileID: 11400000, guid: 49bf4d77accf076438c9e0493eb3cfa4, type: 2}
+  _startGameButton: {fileID: 6671979922524370796}
+  _sceneLoaded: {fileID: 11400000, guid: b8b96e43d21a7bf4c96df4cb83c2b764, type: 2}
 --- !u!1 &6977630085506732414
 GameObject:
   m_ObjectHideFlags: 0
@@ -284,4 +287,16 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 228590396726627733}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 999992858487759977}
+        m_TargetAssemblyTypeName: CryptoQuest.UI.UITitle, indi-games.crypto-quest
+        m_MethodName: StartGameButtonClicked
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
