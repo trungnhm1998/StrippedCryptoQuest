@@ -436,6 +436,15 @@ namespace CryptoQuest.Input
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Pause"",
+                    ""type"": ""Button"",
+                    ""id"": ""3511167b-0bed-4242-a9ae-8101d40d4f12"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -647,6 +656,28 @@ namespace CryptoQuest.Input
                     ""action"": ""Inventory"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5d97c292-a249-4471-be5c-6a658fc8495a"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2cb7bf59-e6f4-4ee9-8581-1670ce37907e"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -694,6 +725,7 @@ namespace CryptoQuest.Input
             m_MapGameplay_Move = m_MapGameplay.FindAction("Move", throwIfNotFound: true);
             m_MapGameplay_Interact = m_MapGameplay.FindAction("Interact", throwIfNotFound: true);
             m_MapGameplay_Inventory = m_MapGameplay.FindAction("Inventory", throwIfNotFound: true);
+            m_MapGameplay_Pause = m_MapGameplay.FindAction("Pause", throwIfNotFound: true);
         }
 
         public void Dispose()
@@ -844,6 +876,7 @@ namespace CryptoQuest.Input
         private readonly InputAction m_MapGameplay_Move;
         private readonly InputAction m_MapGameplay_Interact;
         private readonly InputAction m_MapGameplay_Inventory;
+        private readonly InputAction m_MapGameplay_Pause;
         public struct MapGameplayActions
         {
             private @InputActions m_Wrapper;
@@ -851,6 +884,7 @@ namespace CryptoQuest.Input
             public InputAction @Move => m_Wrapper.m_MapGameplay_Move;
             public InputAction @Interact => m_Wrapper.m_MapGameplay_Interact;
             public InputAction @Inventory => m_Wrapper.m_MapGameplay_Inventory;
+            public InputAction @Pause => m_Wrapper.m_MapGameplay_Pause;
             public InputActionMap Get() { return m_Wrapper.m_MapGameplay; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -869,6 +903,9 @@ namespace CryptoQuest.Input
                 @Inventory.started += instance.OnInventory;
                 @Inventory.performed += instance.OnInventory;
                 @Inventory.canceled += instance.OnInventory;
+                @Pause.started += instance.OnPause;
+                @Pause.performed += instance.OnPause;
+                @Pause.canceled += instance.OnPause;
             }
 
             private void UnregisterCallbacks(IMapGameplayActions instance)
@@ -882,6 +919,9 @@ namespace CryptoQuest.Input
                 @Inventory.started -= instance.OnInventory;
                 @Inventory.performed -= instance.OnInventory;
                 @Inventory.canceled -= instance.OnInventory;
+                @Pause.started -= instance.OnPause;
+                @Pause.performed -= instance.OnPause;
+                @Pause.canceled -= instance.OnPause;
             }
 
             public void RemoveCallbacks(IMapGameplayActions instance)
@@ -931,6 +971,7 @@ namespace CryptoQuest.Input
             void OnMove(InputAction.CallbackContext context);
             void OnInteract(InputAction.CallbackContext context);
             void OnInventory(InputAction.CallbackContext context);
+            void OnPause(InputAction.CallbackContext context);
         }
     }
 }
