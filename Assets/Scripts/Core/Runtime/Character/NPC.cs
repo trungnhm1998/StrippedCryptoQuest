@@ -1,4 +1,3 @@
-using System;
 using Core.Runtime.Character;
 using UnityEngine;
 
@@ -7,18 +6,11 @@ public class NPC : MonoBehaviour, IInteractable
 {
     [SerializeField] private DialogController _dialogController;
 
-    private void Awake()
-    {
-        Init();
-    }
+    private string _dialogData;
+    public string DialogData => _dialogData;
 
-    public void Init()
+    public void Interact()
     {
-        _dialogController = GetComponent<DialogController>();
-    }
-
-    public string Interact()
-    {
-        return _dialogController.GetDialog();
+        _dialogData = _dialogController.GetDialogKey();
     }
 }

@@ -2,6 +2,6 @@
 {
     public interface IInteractable
     {
-        public string Interact();
+        public void Interact();
     }
 }

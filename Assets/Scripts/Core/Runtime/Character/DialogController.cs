@@ -3,7 +3,6 @@ using Core.Runtime.Character;
 using Core.Runtime.Events.ScriptableObjects.Dialogs;
 using UnityEngine;
 
-[RequireComponent(typeof(NPC))]
 public class DialogController : MonoBehaviour, IDialog
 {
     [SerializeField] private DialogsScriptableObject _dialogSO;
@@ -14,19 +13,26 @@ public class DialogController : MonoBehaviour, IDialog
         _dialogSO = dialogSO;
     }
 
-    public string GetDialog()
+
+    public string GetDialogKey()
     {
-        if (_dialogSO.messages.Count == 0) return String.Empty;
+        var isDataEmpty = _dialogSO.Messages.Count == 0;
+        if (isDataEmpty) return String.Empty;
 
-        var currentMessage = _dialogSO.messages[_currentIndex];
+        var message = _dialogSO.Messages[GetNextIndex()];
 
+        return message;
+    }
+
+    public int GetNextIndex()
+    {
         _currentIndex++;
 
-        if (_currentIndex > _dialogSO.messages.Count)
+        if (_currentIndex >= _dialogSO.Messages.Count)
         {
             _currentIndex = 0;
         }
 
-        return currentMessage;
+        return _currentIndex;
     }
 }
