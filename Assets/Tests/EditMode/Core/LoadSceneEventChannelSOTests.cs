@@ -16,7 +16,7 @@ namespace Tests.EditMode.Core
             var loadSceneEventChannelSO = ScriptableObject.CreateInstance<LoadSceneEventChannelSO>();
             loadSceneEventChannelSO.LoadingRequested += sceneSO => { hasCalled = sceneSO == mockScene; };
 
-            loadSceneEventChannelSO.OnRaiseEvent(mockScene);
+            loadSceneEventChannelSO.RequestLoad(mockScene);
 
             Assert.IsTrue(hasCalled);
         }
@@ -24,21 +24,24 @@ namespace Tests.EditMode.Core
         [Test]
         public void OnRaiseEvent_WithNoSubscriber_ShouldLogWarning()
         {
+            var hasCalled = false;
             var mockScene = ScriptableObject.CreateInstance<SceneScriptableObject>();
             var loadSceneEventChannelSO = ScriptableObject.CreateInstance<LoadSceneEventChannelSO>();
 
-            var hasCalled = loadSceneEventChannelSO.OnRaiseEvent(mockScene);
+            loadSceneEventChannelSO.RequestLoad(mockScene);
+            loadSceneEventChannelSO.LoadingRequested += sceneSO => { hasCalled = true; };
 
             Assert.IsFalse(hasCalled);
         }
 
         [Test]
-        public void OnRaiseEvent_WithNull_ShouldReturnFalse()
+        public void OnRaiseEvent_WithNull_ShouldNotCalled()
         {
+            var hasCalled = false;
             var loadSceneEventChannelSO = ScriptableObject.CreateInstance<LoadSceneEventChannelSO>();
-            loadSceneEventChannelSO.LoadingRequested += sceneSO => { };
+            loadSceneEventChannelSO.LoadingRequested += sceneSO => { hasCalled = true; };
 
-            var hasCalled = loadSceneEventChannelSO.OnRaiseEvent(null);
+            loadSceneEventChannelSO.RequestLoad(null);
 
             Assert.IsFalse(hasCalled);
         }
