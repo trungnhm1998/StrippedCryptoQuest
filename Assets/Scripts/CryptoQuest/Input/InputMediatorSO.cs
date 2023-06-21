@@ -4,16 +4,34 @@ using UnityEngine.InputSystem;
 
 namespace CryptoQuest.Input
 {
-    // TODO: Move action maps to separate scriptable objects
-    public class InputMediator : ScriptableObject, InputActions.IMapGameplayActions, InputActions.IMenusActions
+    // TODO: Move action map interfaces to separate scriptable objects
+    public class InputMediatorSO : ScriptableObject, InputActions.IMapGameplayActions, InputActions.IMenusActions
     {
+        #region Events
+
+        #region Gameplay
+
+        public event UnityAction<Vector2> MoveEvent;
+        public event UnityAction PauseEvent;
+
+        #endregion
+
+        #region Menu
+
         public event UnityAction MenuConfirmClicked;
+        public event UnityAction CancelEvent;
+
+        #endregion
+
+        #endregion
 
         private InputActions _inputActions;
 
         private void OnEnable()
         {
             CreateInputInstanceIfNeeded();
+
+            _inputActions.Disable();
         }
 
         private void OnDisable()
@@ -23,8 +41,9 @@ namespace CryptoQuest.Input
 
         #region Main
 
-        private void DisableAllInput()
+        public void DisableAllInput()
         {
+            _inputActions.Disable();
             _inputActions.MapGameplay.Disable();
             _inputActions.Menus.Disable();
         }
@@ -44,29 +63,35 @@ namespace CryptoQuest.Input
             _inputActions.MapGameplay.Disable();
         }
 
+        public void EnableMapGameplayInput()
+        {
+            _inputActions.Menus.Disable();
+            _inputActions.MapGameplay.Enable();
+        }
+
         #endregion
 
         #region MapGameplayActions
 
         public void OnMove(InputAction.CallbackContext context)
         {
+            MoveEvent?.Invoke(context.ReadValue<Vector2>());
         }
 
-        public void OnInteract(InputAction.CallbackContext context)
-        {
-        }
+        public void OnInteract(InputAction.CallbackContext context) { }
 
-        public void OnInventory(InputAction.CallbackContext context)
+        public void OnInventory(InputAction.CallbackContext context) { }
+
+        public void OnPause(InputAction.CallbackContext context)
         {
+            if (context.performed) PauseEvent?.Invoke();
         }
 
         #endregion
 
         #region MenuActions
 
-        public void OnNavigate(InputAction.CallbackContext context)
-        {
-        }
+        public void OnNavigate(InputAction.CallbackContext context) { }
 
         public void OnConfirm(InputAction.CallbackContext context)
         {
@@ -76,11 +101,10 @@ namespace CryptoQuest.Input
 
         public void OnCancel(InputAction.CallbackContext context)
         {
+            if (context.performed) CancelEvent?.Invoke();
         }
 
-        public void OnSubmit(InputAction.CallbackContext context)
-        {
-        }
+        public void OnSubmit(InputAction.CallbackContext context) { }
 
         public void OnClick(InputAction.CallbackContext context) { }
 

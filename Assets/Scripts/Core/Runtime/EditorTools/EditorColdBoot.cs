@@ -42,15 +42,15 @@ namespace Core.Runtime.EditorTools
                 NotifyColdStartupEventChannelLoaded;
         }
 
-        private void NotifyColdStartupEventChannelLoaded(AsyncOperationHandle<LoadSceneEventChannelSO> obj)
+        private void NotifyColdStartupEventChannelLoaded(AsyncOperationHandle<LoadSceneEventChannelSO> editorColdBootEventChannelOpHandle)
         {
             if (_thisSceneSO != null)
             {
-                obj.Result.OnRaiseEvent(_thisSceneSO);
+                editorColdBootEventChannelOpHandle.Result.RequestLoad(_thisSceneSO);
             }
             else
             {
-                _sceneLoadedEventChannelSO.OnRaiseEvent();
+                _sceneLoadedEventChannelSO.RaiseEvent();
             }
         }
 #endif
