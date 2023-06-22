@@ -19,7 +19,6 @@ namespace CryptoQuest
         [SerializeField] private LoadSceneEventChannelSO _loadNextSceneEventChannelSO;
         private void OnTriggerEnter2D(Collider2D other)
         {
-            Debug.Log("TeleportArea OnTriggerEnter2D");
             if (other.gameObject.CompareTag("Player"))
             {
                 PlayerController player = other.gameObject.GetComponent<PlayerController>();
@@ -29,7 +28,7 @@ namespace CryptoQuest
         }
         public void TriggerTeleport(SceneScriptableObject scene)
         {
-            _loadNextSceneEventChannelSO.OnRaiseEvent(scene);
+            _loadNextSceneEventChannelSO.RequestLoad(scene);
         }
 
         public void UpdatePlayerFacingAxis(Vector2 axis)

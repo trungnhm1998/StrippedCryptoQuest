@@ -1,19 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Core.Runtime.Events.ScriptableObjects;
 
 namespace CryptoQuest
 {
     public class DestinationController : MonoBehaviour
     {
-        public GameObject playerPrefab;
-        public PlayerPositionInfoSO positionInfo;
-        private PlayerController player;
+        public PlayerPositionInfoSO positionInfoSO;
+        public Vector2EventChannelSO setPlayerPositionEvent;
+        public Vector2EventChannelSO setPlayerFacingAxisEvent;
 
         private void Start()
         {
-            player = Instantiate(playerPrefab, positionInfo.playerPosition, Quaternion.identity).GetComponent<PlayerController>();
-            player.facingCollider.transform.position = positionInfo.playerFacingAxis;
+            setPlayerPositionEvent.RaiseEvent(transform.position);
+            setPlayerFacingAxisEvent.RaiseEvent(positionInfoSO.playerFacingAxis);
         }
     }
 }
