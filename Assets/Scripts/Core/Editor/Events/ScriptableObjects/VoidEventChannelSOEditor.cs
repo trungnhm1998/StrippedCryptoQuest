@@ -15,7 +15,7 @@
 
             var eventSO = target as VoidEventChannelSO;
             if (GUILayout.Button($"Raise {eventSO.name}"))
-                eventSO.OnRaiseEvent();
+                eventSO.RaiseEvent();
         }
     }
 }

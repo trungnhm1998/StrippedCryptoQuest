@@ -5,10 +5,10 @@ namespace Core.Runtime.SaveSystem
 {
     public class SaveSystemSO : ScriptableObject
     {
-        [FormerlySerializedAs("saveManagerSO")] [SerializeField] private SaveManagerSO _saveManagerSO;
+        [SerializeField] private SaveManagerSO _saveManagerSO;
         public SaveManagerSO SaveManagerSO => _saveManagerSO;
 
-        [FormerlySerializedAs("saveData")] public SaveData _saveData = new SaveData();
+        public SaveData _saveData = new SaveData();
 
         public bool SaveGame()
         {

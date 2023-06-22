@@ -1,5 +1,6 @@
-using System;
 using Core.Runtime.Events.ScriptableObjects;
+using Core.Runtime.SceneManagementSystem.Events.ScriptableObjects;
+using Core.Runtime.SceneManagementSystem.ScriptableObjects;
 using CryptoQuest.Input;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,11 +9,15 @@ namespace CryptoQuest.UI
 {
     public class UITitle : MonoBehaviour
     {
-        [SerializeField] private InputMediator _inputMediator;
+        [SerializeField] private SceneScriptableObject _sceneToLoad;
+        [SerializeField] private InputMediatorSO _inputMediatorSO;
         [SerializeField] private Button _startGameButton;
 
         [Header("Listen on")]
         [SerializeField] private VoidEventChannelSO _sceneLoaded;
+
+        [Header("Raise on")]
+        [SerializeField] private LoadSceneEventChannelSO _loadMapEvent;
 
         private void OnEnable()
         {
@@ -26,13 +31,13 @@ namespace CryptoQuest.UI
 
         private void SceneLoadedEvent_Raised()
         {
-            _inputMediator.EnableMenuInput();
+            _inputMediatorSO.EnableMenuInput();
             _startGameButton.Select();
         }
 
         public void StartGameButtonClicked()
         {
-            Debug.Log("Start Game Button Clicked");
+            _loadMapEvent.RequestLoad(_sceneToLoad);
         }
     }
 }
