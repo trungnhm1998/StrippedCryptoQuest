@@ -8,13 +8,19 @@ namespace Core.Runtime.Events.ScriptableObjects
     {
         public UnityAction EventRaised;
 
-        public void OnRaiseEvent()
+        public void RaiseEvent()
+        {
+            OnRaiseEvent();
+        }
+
+        private void OnRaiseEvent()
         {
             if (EventRaised == null)
             {
                 Debug.LogWarning($"Event was raised on {name} but no one was listening.");
                 return;
             }
+
             EventRaised.Invoke();
         }
     }

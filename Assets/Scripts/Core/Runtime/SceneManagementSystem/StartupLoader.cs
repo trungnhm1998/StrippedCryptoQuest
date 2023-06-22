@@ -29,7 +29,7 @@ namespace Core.Runtime.SceneManagementSystem
         private void OnLoadMainMenuEventChannelSOLoaded(
             AsyncOperationHandle<LoadSceneEventChannelSO> loadMainMenuEventChannel)
         {
-            loadMainMenuEventChannel.Result.OnRaiseEvent(_titleScene);
+            loadMainMenuEventChannel.Result.RequestLoad(_titleScene);
 
             SceneManager.UnloadSceneAsync(0);
         }
