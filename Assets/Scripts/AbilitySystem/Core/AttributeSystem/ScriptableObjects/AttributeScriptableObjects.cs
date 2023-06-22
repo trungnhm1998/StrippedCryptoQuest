@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Indigames.AbilitySystem
 {
-    [CreateAssetMenu(menuName = "Indigames Ability System/Attribute")]
+    [CreateAssetMenu(menuName = "Indigames Ability System/Attributes/Attribute")]
     public class AttributeScriptableObject : ScriptableObject
     {
         public struct AttributeEventArgs

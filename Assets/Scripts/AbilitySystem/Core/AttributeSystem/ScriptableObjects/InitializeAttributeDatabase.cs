@@ -4,7 +4,7 @@ using UnityEngine.Serialization;
 
 namespace Indigames.AbilitySystem
 {
-    [CreateAssetMenu(fileName = "InitStats", menuName = "GIndigames Ability System/Attribute/Initialize Stats Database")]
+    [CreateAssetMenu(fileName = "InitStats", menuName = "Indigames Ability System/Attributes/Initialize Stats Database")]
     public class InitializeAttributeDatabase : ScriptableObject
     {
         public AttributeInitValue[] attributesToInitialize;

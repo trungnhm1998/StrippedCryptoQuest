@@ -192,24 +192,11 @@ namespace Indigames.AbilitySystem
             return GrantedTags.Contains(tagToCheck);
         }
         
-        public virtual bool CheckTagRequirementsMet(AbstractEffect abstractEffect)
+        public virtual bool CheckTagRequirementsMet(AbstractEffect effect)
         {
-            // Check if granted tags contain all required tags from the effect
-            foreach (var requiredTagFromEffect in abstractEffect.EffectSO.ApplicationTagRequirements.RequireTags)
-            {
-                if (!GrantedTags.Contains(requiredTagFromEffect))
-                    return false;
-            }
-
-            // Check if granted tags contain any forbidden tags from the effect
-            // If EffectSO.ApplicationTagRequirements.IgnoreTags is present, then the effect cannot be applied
-            foreach (var mustNotHaveTag in abstractEffect.EffectSO.ApplicationTagRequirements.IgnoreTags)
-            {
-                if (GrantedTags.Contains(mustNotHaveTag))
-                    return false;
-            }
-
-            return true;
+            var tagConditionDetail = effect.EffectSO.ApplicationTagRequirements;
+            return SkillSystemHelper.SystemHasAllTags(this, tagConditionDetail.RequireTags) 
+                && SkillSystemHelper.SystemHasNoneTags(this, tagConditionDetail.IgnoreTags);
         }
 #endregion
 
