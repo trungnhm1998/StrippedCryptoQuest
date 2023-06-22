@@ -6,13 +6,12 @@ using UnityEngine;
 public class DialogController : MonoBehaviour, IDialog
 {
     [SerializeField] private DialogsScriptableObject _dialogSO;
-    private int _currentIndex = -1;
+    private int _currentIndex = 0;
 
     public void SetDialogData(DialogsScriptableObject dialogSO)
     {
         _dialogSO = dialogSO;
     }
-
 
     public string GetDialogKey()
     {
@@ -37,5 +36,10 @@ public class DialogController : MonoBehaviour, IDialog
     private bool IsDataEmpty()
     {
         return _dialogSO.Messages.Count == 0;
+    }
+
+    public int GetCurrentDialogIndex()
+    {
+        return _currentIndex;
     }
 }

@@ -8,9 +8,15 @@ using UnityEngine;
 public class DialogControllerTest
 {
     private DialogsScriptableObject _dialogSO;
+    private DialogController _dialogController;
     private NPC _npcGameObject;
 
     const string NPC_PREFAB_PATH = "Assets/Prefabs/Characters/NPCs/NPC.prefab";
+
+    private List<string> DIALOG_TEST = new List<string>
+    {
+        "Hello World", "Hello World 2", "Hello World 3", "Hello World 4"
+    };
 
     [SetUp]
     public void Setup()
@@ -20,15 +26,17 @@ public class DialogControllerTest
 
         _dialogSO = ScriptableObject.CreateInstance<DialogsScriptableObject>();
         _dialogSO.Messages = new List<string>();
+        _dialogSO.Messages.AddRange(DIALOG_TEST);
+
+        _dialogController = _npcGameObject.GetComponent<DialogController>();
+        _dialogController.SetDialogData(_dialogSO);
     }
 
     [Test]
     public void GetNextIndex_WithEmptyDialogSO_ShouldReturnZero()
     {
-        DialogController dialogController = _npcGameObject.GetComponent<DialogController>();
-        dialogController.SetDialogData(_dialogSO);
-
-        var index = dialogController.GetNextIndex();
+        _dialogSO.Messages.Clear();
+        var index = _dialogController.GetNextIndex();
 
         Assert.AreEqual(0, index);
     }
@@ -36,18 +44,37 @@ public class DialogControllerTest
     [Test]
     public void GetNextIndex_WithDummyDataDialogSO_ShouldReturnCorrectIndex()
     {
-        var mockMessage = new List<string>() { "Hello World", "Hello World 2", "Hello World 3", "Hello World 4" };
-        _dialogSO.Messages.AddRange(mockMessage);
+        int expectedCount = DIALOG_TEST.Count;
+        bool hasCorrectData = true;
 
-        DialogController dialogController = _npcGameObject.GetComponent<DialogController>();
-        dialogController.SetDialogData(_dialogSO);
-
-        int expectedCount = mockMessage.Count;
-
-        for (int expected = 0; expected < expectedCount; expected++)
+        for (int expected = 1; expected < expectedCount; expected++)
         {
-            var nextIndex = dialogController.GetNextIndex();
-            Assert.AreEqual(expected, nextIndex);
+            var nextIndex = _dialogController.GetNextIndex();
+            if (expected != nextIndex)
+            {
+                hasCorrectData = false;
+                break;
+            }
         }
+
+        Assert.IsTrue(hasCorrectData);
+    }
+
+    [Test]
+    public void GetNextIndex_Called_ShouldReturnOne()
+    {
+        var index = _dialogController.GetNextIndex();
+        var expected = 1;
+
+        Assert.AreEqual(expected, index);
+    }
+
+    [Test]
+    public void GetCurrentDialogIndex_ShouldReturnZeroByDefault()
+    {
+        var currentIndex = _dialogController.GetCurrentDialogIndex();
+        var expectedIndex = 0;
+
+        Assert.AreEqual(expectedIndex, currentIndex);
     }
 }
