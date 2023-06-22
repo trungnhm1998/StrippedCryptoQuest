@@ -33,8 +33,8 @@ namespace CryptoQuest.UI.Dialog
 
         private void TurnOnDialog()
         {
-            _innerUI.SetActive(true);
             SetupMessage();
+            _innerUI.SetActive(true);
         }
 
         private void TurnOffDialog()
