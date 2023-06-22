@@ -140,7 +140,6 @@ GameObject:
   m_Component:
   - component: {fileID: 3894741085270454377}
   - component: {fileID: 8826221197734135165}
-  - component: {fileID: 681240915659192749}
   - component: {fileID: 1714939857055939417}
   - component: {fileID: 4763354189618126938}
   m_Layer: 0
@@ -218,21 +217,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &681240915659192749
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5321287068592105386}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 186d68ed77bbf6741a5d093b02b40fa0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  facingCollider: {fileID: 8921595700730477632}
-  setPlayerPositionEvent: {fileID: 11400000, guid: 5de3268c621a33248af37f012d6fe4da, type: 2}
-  setPlayerFacingAxisEvent: {fileID: 11400000, guid: 0ab236263fa06d84d9ef099496505ffa, type: 2}
 --- !u!61 &1714939857055939417
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -292,7 +276,7 @@ Rigidbody2D:
   m_UseAutoMass: 0
   m_Mass: 1
   m_LinearDrag: 0
-  m_AngularDrag: 0.05
+  m_AngularDrag: 0
   m_GravityScale: 0
   m_Material: {fileID: 0}
   m_IncludeLayers:
