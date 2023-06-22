@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Indigames.AbilitySystem
 {
-    [CreateAssetMenu(menuName = "Gameplay Skill System/Effects/Instant Effect")]
+    [CreateAssetMenu(fileName = "InstantEffect", menuName = "Indigames Ability System/Effects/Instant Effect")]
     public class InstantEffectScriptableObject : EffectScriptableObject<InstantEffect>
     {
     }
