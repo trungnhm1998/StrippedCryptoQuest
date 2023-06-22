@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Collections;
 using Core.Runtime.Events.ScriptableObjects;
 using Core.Runtime.SceneManagementSystem.Events.ScriptableObjects;
 using Core.Runtime.SceneManagementSystem.ScriptableObjects;
@@ -6,16 +6,16 @@ using UnityEngine;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.ResourceManagement.ResourceProviders;
 using UnityEngine.SceneManagement;
-using UnityEngine.Serialization;
 
 namespace Core.Runtime.SceneManagementSystem
 {
     public class LinearGameSceneLoader : MonoBehaviour
     {
         [SerializeField] private SceneScriptableObject _gameplayManagerSceneSO;
+        [SerializeField] private float _fadeDuration = .3f;
 
         [Header("Listening on")]
-        [SerializeField] private LoadSceneEventChannelSO _loadLocation;
+        [SerializeField] private LoadSceneEventChannelSO _loadMap;
 
         [SerializeField] private LoadSceneEventChannelSO _loadTitle;
 #if UNITY_EDITOR
@@ -24,6 +24,8 @@ namespace Core.Runtime.SceneManagementSystem
 
         [Header("Raise on")]
         [SerializeField] private VoidEventChannelSO _sceneLoaded;
+
+        [SerializeField] private VoidEventChannelSO _sceneUnloading;
 
         private AsyncOperationHandle<SceneInstance> _sceneLoadingOperationHandle;
         private AsyncOperationHandle<SceneInstance> _gameplayManagerLoadingOperationHandle;
@@ -36,7 +38,7 @@ namespace Core.Runtime.SceneManagementSystem
 
         private void OnEnable()
         {
-            _loadLocation.LoadingRequested += MapLoadingRequested;
+            _loadMap.LoadingRequested += MapLoadingRequested;
             _loadTitle.LoadingRequested += TitleSceneLoadingRequested;
 #if UNITY_EDITOR
             _editorColdBoot.LoadingRequested += EditorColdBootLoadingRequested;
@@ -45,7 +47,7 @@ namespace Core.Runtime.SceneManagementSystem
 
         private void OnDisable()
         {
-            _loadLocation.LoadingRequested -= MapLoadingRequested;
+            _loadMap.LoadingRequested -= MapLoadingRequested;
             _loadTitle.LoadingRequested -= TitleSceneLoadingRequested;
 #if UNITY_EDITOR
             _editorColdBoot.LoadingRequested -= EditorColdBootLoadingRequested;
@@ -86,19 +88,20 @@ namespace Core.Runtime.SceneManagementSystem
         {
             _currentLoadedScene = currentOpenSceneInEditor;
 
-            if (_currentLoadedScene.SceneType != SceneScriptableObject.Type.Location) return;
+            if (_currentLoadedScene.SceneType == SceneScriptableObject.Type.Location)
+            {
+                _gameplayManagerLoadingOperationHandle =
+                    _gameplayManagerSceneSO.SceneReference.LoadSceneAsync(LoadSceneMode.Additive, true);
+                _gameplayManagerLoadingOperationHandle.WaitForCompletion();
+                _gameplayManagerSceneInstance = _gameplayManagerLoadingOperationHandle.Result;
+            }
 
-            _gameplayManagerLoadingOperationHandle =
-                _gameplayManagerSceneSO.SceneReference.LoadSceneAsync(LoadSceneMode.Additive, true);
-            _gameplayManagerLoadingOperationHandle.WaitForCompletion();
-            _gameplayManagerSceneInstance = _gameplayManagerLoadingOperationHandle.Result;
-
-            _sceneLoaded.OnRaiseEvent();
+            _sceneLoaded.RaiseEvent();
         }
 #endif
 
         /// <summary>
-        /// Using <c>.Completed += </c> because WebGL doesn't support threading for async/await
+        /// Using callback because WebGL doesn't support threading for async/await
         /// </summary>
         private void LoadGameplayManagerScene()
         {
@@ -116,6 +119,13 @@ namespace Core.Runtime.SceneManagementSystem
 
         private void UnloadPreviousScene()
         {
+            _sceneUnloading.RaiseEvent();
+            StartCoroutine(CoUnloadPreviousScene());
+        }
+
+        private IEnumerator CoUnloadPreviousScene()
+        {
+            yield return new WaitForSeconds(_fadeDuration);
             if (_currentLoadedScene != null)
             {
                 if (_currentLoadedScene.SceneReference.OperationHandle.IsValid())
@@ -158,6 +168,8 @@ namespace Core.Runtime.SceneManagementSystem
 
             var scene = asyncOpSceneInstance.Result.Scene;
             SceneManager.SetActiveScene(scene);
+
+            _sceneLoaded.RaiseEvent();
         }
     }
 }
