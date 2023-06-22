@@ -6,64 +6,67 @@ using UnityEditor;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-[TestFixture]
-public class InteractWithNpcTests
+namespace Tests.EditMode.Core.NPC
 {
-    private DialogsScriptableObject _dialogSO;
-    private NPC _npcGameObject;
-
-    const string NPC_PREFAB_PATH = "Assets/Prefabs/Characters/NPCs/NPC.prefab";
-
-    [SetUp]
-    public void Setup()
+    [TestFixture]
+    public class InteractWithNpcTests
     {
-        _npcGameObject = AssetDatabase.LoadAssetAtPath(NPC_PREFAB_PATH, typeof(NPC)) as NPC;
-        _npcGameObject = Object.Instantiate(_npcGameObject);
+        private DialogsScriptableObject _dialogSO;
+        private global::NPC _npcGameObject;
 
-        _dialogSO = ScriptableObject.CreateInstance<DialogsScriptableObject>();
-        _dialogSO.Messages = new List<string>();
-    }
+        const string NPC_PREFAB_PATH = "Assets/Prefabs/Characters/NPCs/NPC.prefab";
 
-    [Test]
-    public void Interact_WithNewDialogSO_ShouldReturnCorrectDataFromSO()
-    {
-        var mockMessage = "Hello World";
-        _dialogSO.Messages.Add(mockMessage);
-
-        DialogController dialogController = _npcGameObject.GetComponent<DialogController>();
-        dialogController.SetDialogData(_dialogSO);
-
-        _npcGameObject.Interact();
-
-        Assert.AreEqual(mockMessage, _npcGameObject.DialogData);
-    }
-
-    [Test]
-    public void Interact_WithNewEmptyMessageDialogSO_ShouldReturnEmptyString()
-    {
-        DialogController dialogController = _npcGameObject.GetComponent<DialogController>();
-        dialogController.SetDialogData(_dialogSO);
-
-        _npcGameObject.Interact();
-
-        Assert.AreEqual(String.Empty, _npcGameObject.DialogData);
-    }
-
-    [Test]
-    public void Interact_WithTwoInteract_ShouldReturnCorrectMultiDataFromSO()
-    {
-        var mockMessage = new List<string>() { "Hello World", "Hello World 2" };
-        _dialogSO.Messages.AddRange(mockMessage);
-
-        DialogController dialogController = _npcGameObject.GetComponent<DialogController>();
-        dialogController.SetDialogData(_dialogSO);
-
-        foreach (var message in _dialogSO.Messages)
+        [SetUp]
+        public void Setup()
         {
-            _npcGameObject.Interact();
-            var currentMessage = _npcGameObject.DialogData;
+            _npcGameObject = AssetDatabase.LoadAssetAtPath(NPC_PREFAB_PATH, typeof(global::NPC)) as global::NPC;
+            _npcGameObject = Object.Instantiate(_npcGameObject);
 
-            Assert.AreEqual(message, currentMessage);
+            _dialogSO = ScriptableObject.CreateInstance<DialogsScriptableObject>();
+            _dialogSO.Messages = new List<string>();
+        }
+
+        [Test]
+        public void Interact_WithNewDialogSO_ShouldReturnCorrectDataFromSO()
+        {
+            var mockMessage = "Hello World";
+            _dialogSO.Messages.Add(mockMessage);
+
+            DialogController dialogController = _npcGameObject.GetComponent<DialogController>();
+            dialogController.SetDialogData(_dialogSO);
+
+            _npcGameObject.Interact();
+
+            Assert.AreEqual(mockMessage, _npcGameObject.DialogData);
+        }
+
+        [Test]
+        public void Interact_WithNewEmptyMessageDialogSO_ShouldReturnEmptyString()
+        {
+            DialogController dialogController = _npcGameObject.GetComponent<DialogController>();
+            dialogController.SetDialogData(_dialogSO);
+
+            _npcGameObject.Interact();
+
+            Assert.AreEqual(String.Empty, _npcGameObject.DialogData);
+        }
+
+        [Test]
+        public void Interact_WithTwoInteract_ShouldReturnCorrectMultiDataFromSO()
+        {
+            var mockMessage = new List<string>() { "Hello World", "Hello World 2" };
+            _dialogSO.Messages.AddRange(mockMessage);
+
+            DialogController dialogController = _npcGameObject.GetComponent<DialogController>();
+            dialogController.SetDialogData(_dialogSO);
+
+            foreach (var message in _dialogSO.Messages)
+            {
+                _npcGameObject.Interact();
+                var currentMessage = _npcGameObject.DialogData;
+
+                Assert.AreEqual(message, currentMessage);
+            }
         }
     }
 }
