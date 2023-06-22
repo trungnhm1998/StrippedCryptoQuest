@@ -1,3 +1,5 @@
+using System;
+using CryptoQuest.Input;
 using UnityEngine;
 
 namespace CryptoQuest.Characters
@@ -6,11 +8,27 @@ namespace CryptoQuest.Characters
     public class Npc : MonoBehaviour, IInteractable
     {
         [SerializeField] private DialogController _dialogController;
+        [SerializeField] private InputMediatorSO _interactController;
 
-        [SerializeField] private InteractController _interactController;
 
         private string _dialogData;
         public string DialogData => _dialogData;
+
+        private void Start()
+        {
+            _interactController.EnableMapGameplayInput();
+        }
+
+        private void OnEnable()
+        {
+            _interactController.InteractEvent += Interact;
+        }
+
+        private void OnDisable()
+        {
+            _interactController.InteractEvent -= Interact;
+        }
+
 
         public void Interact()
         {
