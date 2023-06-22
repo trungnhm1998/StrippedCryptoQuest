@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using Core.Runtime.Events.ScriptableObjects.Dialogs;
+using CryptoQuest.Characters;
 using NUnit.Framework;
 using UnityEditor;
 using UnityEngine;
@@ -11,14 +12,14 @@ namespace Tests.PlayMode.Character
     public class InteractWithNpcIntegrationTests
     {
         private DialogsScriptableObject _dialogSO;
-        private NPC _npcGameObject;
+        private Npc _npcGameObject;
 
         const string NPC_PREFAB_PATH = "Assets/Prefabs/Characters/NPCs/NPC.prefab";
 
         [SetUp]
         public void Setup()
         {
-            _npcGameObject = AssetDatabase.LoadAssetAtPath(NPC_PREFAB_PATH, typeof(NPC)) as NPC;
+            _npcGameObject = AssetDatabase.LoadAssetAtPath(NPC_PREFAB_PATH, typeof(Npc)) as Npc;
             _npcGameObject = Object.Instantiate(_npcGameObject);
 
             _dialogSO = ScriptableObject.CreateInstance<DialogsScriptableObject>();

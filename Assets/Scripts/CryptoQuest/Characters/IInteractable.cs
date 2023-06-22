@@ -1,4 +1,4 @@
-﻿namespace Core.Runtime.Character
+﻿namespace CryptoQuest.Characters
 {
     public interface IInteractable
     {

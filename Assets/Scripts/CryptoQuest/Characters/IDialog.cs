@@ -1,6 +1,6 @@
 ﻿using Core.Runtime.Events.ScriptableObjects.Dialogs;
 
-namespace Core.Runtime.Character
+namespace CryptoQuest.Characters
 {
     public interface IDialog
     {
