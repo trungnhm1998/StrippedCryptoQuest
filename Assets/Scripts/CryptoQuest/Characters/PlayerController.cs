@@ -7,7 +7,13 @@ namespace CryptoQuest.Characters
     public class PlayerController : MonoBehaviour, ICharacter
     {
         [SerializeField] private InputMediatorSO _inputMediator;
-        [SerializeField] private PlayerStateSO _playerStateSO;
+        [SerializeField] private CharacterStateSO _characterStateSO;
+
+        public CharacterStateSO CharacterStateSO
+        {
+            get => _characterStateSO;
+            set => _characterStateSO = value;
+        }
 
         private void Start()
         {
@@ -31,12 +37,12 @@ namespace CryptoQuest.Characters
 
         public void SetFacingDirection(Character.EFacingDirection facingDirection)
         {
-            _playerStateSO.facingDirection = facingDirection;
+            _characterStateSO.facingDirection = facingDirection;
         }
 
         public Character.EFacingDirection GetFacingDirection()
         {
-            return _playerStateSO.facingDirection;
+            return _characterStateSO.facingDirection;
         }
     }
 }
