@@ -15,12 +15,6 @@ namespace Indigames.AbilitySystem
         public SkillSystem Target => _target;
         public SkillSystem Owner;
         public SkillParameters SkillParameters;
-        public int Level { get; set; } = 1;
-
-        /// <summary>
-        /// Add level rate to modifier value
-        /// </summary>
-        public float LevelRate { get; set; } = 0;
 
         public bool IsExpired { get; set; } = false;
         public bool IsRemoveAfterApplied
@@ -33,8 +27,6 @@ namespace Indigames.AbilitySystem
             }
         }
 
-        // TODO: Move out of this abstract class
-        public float Value;
 
         protected IEffectApplier _effectApplier;
 
@@ -99,8 +91,6 @@ namespace Indigames.AbilitySystem
         public AbstractEffect Clone()
         {
             var clone = Owner.GetEffect(EffectSO, Origin, SkillParameters);
-            clone.Value = Value;
-
             return clone;
         }
     }
