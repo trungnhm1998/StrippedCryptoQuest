@@ -2,10 +2,8 @@
 using System.Collections.Generic;
 using Core.Runtime.Events.ScriptableObjects.Dialogs;
 using CryptoQuest.Characters;
-using CryptoQuest.Input;
 using NUnit.Framework;
 using UnityEditor;
-using UnityEditor.VersionControl;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.LowLevel;
@@ -19,6 +17,7 @@ namespace Tests.PlayMode.Character
         private DialogController _dialogController;
         private Npc _npcGameObject;
         private GameObject _eventSystem;
+        private GameObject _player;
 
         const string NPC_PREFAB_PATH = "Assets/Prefabs/Characters/NPCs/NPC.prefab";
         const string EVENT_SYSTEM_PATH = "Assets/Prefabs/UI/Shared/EventSystem.prefab";
@@ -43,25 +42,19 @@ namespace Tests.PlayMode.Character
 
             _dialogController = _npcGameObject.GetComponent<DialogController>();
             _dialogController.SetDialogData(_dialogSO);
+
+            _player = new GameObject("Player");
+            _player.tag = "Player";
+            _player.transform.position = Vector3.zero;
+            _player.AddComponent<Rigidbody2D>();
+            _player.AddComponent<BoxCollider2D>();
         }
 
 
         [UnityTest]
         public IEnumerator Interact_WithNpc_ShouldReturnCorrectDataFromSO()
         {
-            int expectedCount = DIALOG_TEST.Count;
-            bool hasCorrectData = true;
-
-            for (int expected = 1; expected < expectedCount; expected++)
-            {
-                var nextIndex = _dialogController.GetNextIndex();
-                if (expected != nextIndex)
-                {
-                    hasCorrectData = false;
-                    break;
-                }
-            }
-
+            bool hasCorrectData = HasCorrectData();
 
             Assert.IsTrue(hasCorrectData);
             yield return null;
@@ -80,11 +73,31 @@ namespace Tests.PlayMode.Character
             }
             finally
             {
+                var hasCorrectData = HasCorrectData();
+
+                Assert.IsTrue(hasCorrectData);
                 InputSystem.RemoveDevice(keyboard);
             }
 
-
             yield return null;
+        }
+
+        private bool HasCorrectData()
+        {
+            int expectedCount = DIALOG_TEST.Count;
+            bool hasCorrectData = true;
+
+            for (int expected = 1; expected < expectedCount; expected++)
+            {
+                var nextIndex = _dialogController.GetNextIndex();
+                if (expected != nextIndex)
+                {
+                    hasCorrectData = false;
+                    break;
+                }
+            }
+
+            return hasCorrectData;
         }
     }
 }
