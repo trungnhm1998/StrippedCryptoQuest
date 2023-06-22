@@ -4,7 +4,7 @@ namespace Core.Runtime.Character
 {
     public interface IDialog
     {
-        public void SetDialog(DialogsScriptableObject dialogSO);
+        public void SetDialogData(DialogsScriptableObject dialogSO);
         public string GetDialogKey();
     }
 }

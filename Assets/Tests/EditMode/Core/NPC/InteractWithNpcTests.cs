@@ -31,7 +31,7 @@ public class InteractWithNpcTests
         _dialogSO.Messages.Add(mockMessage);
 
         DialogController dialogController = _npcGameObject.GetComponent<DialogController>();
-        dialogController.SetDialog(_dialogSO);
+        dialogController.SetDialogData(_dialogSO);
 
         _npcGameObject.Interact();
 
@@ -42,7 +42,7 @@ public class InteractWithNpcTests
     public void Interact_WithNewEmptyMessageDialogSO_ShouldReturnEmptyString()
     {
         DialogController dialogController = _npcGameObject.GetComponent<DialogController>();
-        dialogController.SetDialog(_dialogSO);
+        dialogController.SetDialogData(_dialogSO);
 
         _npcGameObject.Interact();
 
@@ -56,7 +56,7 @@ public class InteractWithNpcTests
         _dialogSO.Messages.AddRange(mockMessage);
 
         DialogController dialogController = _npcGameObject.GetComponent<DialogController>();
-        dialogController.SetDialog(_dialogSO);
+        dialogController.SetDialogData(_dialogSO);
 
         foreach (var message in _dialogSO.Messages)
         {

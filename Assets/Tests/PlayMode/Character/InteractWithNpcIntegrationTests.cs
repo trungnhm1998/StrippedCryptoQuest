@@ -30,7 +30,7 @@ namespace Tests.PlayMode.Character
         public IEnumerator Interact_WithNpc_ShouldReturnCorrectDataFromSO()
         {
             DialogController dialogController = _npcGameObject.GetComponent<DialogController>();
-            dialogController.SetDialog(_dialogSO);
+            dialogController.SetDialogData(_dialogSO);
 
             foreach (var message in _dialogSO.Messages)
             {

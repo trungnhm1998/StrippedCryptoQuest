@@ -6,9 +6,9 @@ using UnityEngine;
 public class DialogController : MonoBehaviour, IDialog
 {
     [SerializeField] private DialogsScriptableObject _dialogSO;
-    private int _currentIndex = 0;
+    private int _currentIndex = -1;
 
-    public void SetDialog(DialogsScriptableObject dialogSO)
+    public void SetDialogData(DialogsScriptableObject dialogSO)
     {
         _dialogSO = dialogSO;
     }
@@ -16,23 +16,26 @@ public class DialogController : MonoBehaviour, IDialog
 
     public string GetDialogKey()
     {
-        var isDataEmpty = _dialogSO.Messages.Count == 0;
-        if (isDataEmpty) return String.Empty;
+        if (IsDataEmpty()) return String.Empty;
 
         var message = _dialogSO.Messages[GetNextIndex()];
-
         return message;
     }
 
     public int GetNextIndex()
     {
-        _currentIndex++;
-
-        if (_currentIndex >= _dialogSO.Messages.Count)
-        {
-            _currentIndex = 0;
-        }
-
+        _currentIndex = CalculateNextIndex();
         return _currentIndex;
+    }
+
+    private int CalculateNextIndex()
+    {
+        if (IsDataEmpty()) return 0;
+        return (_currentIndex + 1) % _dialogSO.Messages.Count;
+    }
+
+    private bool IsDataEmpty()
+    {
+        return _dialogSO.Messages.Count == 0;
     }
 }

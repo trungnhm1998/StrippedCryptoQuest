@@ -26,24 +26,28 @@ public class DialogControllerTest
     public void GetNextIndex_WithEmptyDialogSO_ShouldReturnZero()
     {
         DialogController dialogController = _npcGameObject.GetComponent<DialogController>();
-        dialogController.SetDialog(_dialogSO);
+        dialogController.SetDialogData(_dialogSO);
 
-        var nextIndex = dialogController.GetNextIndex();
+        var index = dialogController.GetNextIndex();
 
-        Assert.AreEqual(0, nextIndex);
+        Assert.AreEqual(0, index);
     }
 
     [Test]
     public void GetNextIndex_WithDummyDataDialogSO_ShouldReturnCorrectIndex()
     {
-        var mockMessage = new List<string>() { "Hello World", "Hello World 2" };
+        var mockMessage = new List<string>() { "Hello World", "Hello World 2", "Hello World 3", "Hello World 4" };
         _dialogSO.Messages.AddRange(mockMessage);
 
         DialogController dialogController = _npcGameObject.GetComponent<DialogController>();
-        dialogController.SetDialog(_dialogSO);
+        dialogController.SetDialogData(_dialogSO);
 
-        var nextIndex = dialogController.GetNextIndex();
+        int expectedCount = mockMessage.Count;
 
-        Assert.AreEqual(1, nextIndex);
+        for (int expected = 0; expected < expectedCount; expected++)
+        {
+            var nextIndex = dialogController.GetNextIndex();
+            Assert.AreEqual(expected, nextIndex);
+        }
     }
 }
