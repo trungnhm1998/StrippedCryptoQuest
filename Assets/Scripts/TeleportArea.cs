@@ -16,7 +16,7 @@ namespace CryptoQuest
         public SceneScriptableObject currentScene;
         public SceneScriptableObject nextScene;
         public PlayerPositionInfoSO playerPositionInfoSO;
-        [SerializeField] private LoadSceneEventChannelSO _loadNextSceneEventChannelSO;
+        public LoadSceneEventChannelSO _loadNextSceneEventChannelSO;
         private void OnTriggerEnter2D(Collider2D other)
         {
             if (other.gameObject.CompareTag("Player"))
@@ -26,12 +26,12 @@ namespace CryptoQuest
                 TriggerTeleport(nextScene);
             }
         }
-        public void TriggerTeleport(SceneScriptableObject scene)
+        private void TriggerTeleport(SceneScriptableObject scene)
         {
             _loadNextSceneEventChannelSO.RequestLoad(scene);
         }
 
-        public void UpdatePlayerFacingAxis(Vector2 axis)
+        private void UpdatePlayerFacingAxis(Vector2 axis)
         {
             playerPositionInfoSO.playerFacingAxis = axis;
         }
