@@ -169,6 +169,8 @@ namespace Core.Runtime.SceneManagementSystem
             var scene = asyncOpSceneInstance.Result.Scene;
             SceneManager.SetActiveScene(scene);
 
+            _isLoading = false;
+
             _sceneLoaded.RaiseEvent();
         }
     }
