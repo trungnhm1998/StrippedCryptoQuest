@@ -58,7 +58,7 @@ namespace Indigames.AbilitySystem
         /// <exception cref="ArgumentOutOfRangeException"></exception>
         public void ApplyDurationalEffect(AbstractEffect abstractEffect)
         {
-            _skillSystem.AppliedDurationalEffects.Add(new EffectSpecificationContainer(abstractEffect));
+            _skillSystem.AppliedEffects.Add(new EffectSpecificationContainer(abstractEffect));
 
             Debug.Log($"EffectApplier::Durational::to {_skillSystem.name} with effect {abstractEffect.EffectSO.name}");
         }

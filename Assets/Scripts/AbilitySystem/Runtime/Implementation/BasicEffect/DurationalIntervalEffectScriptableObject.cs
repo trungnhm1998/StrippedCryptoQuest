@@ -32,7 +32,7 @@ namespace Indigames.AbilitySystem
             _effectApplier = effectApplier;
             var effectContainer = new EffectSpecificationContainer(this, false);
             effectContainer.ClearModifiers();
-            Target.AppliedDurationalEffects.Add(effectContainer);
+            Target.AppliedEffects.Add(effectContainer);
         }
 
         public override void Update(float deltaTime)

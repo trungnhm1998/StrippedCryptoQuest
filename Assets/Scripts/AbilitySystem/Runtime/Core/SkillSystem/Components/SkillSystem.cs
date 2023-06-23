@@ -11,7 +11,7 @@ namespace Indigames.AbilitySystem
         public AttributeSystem AttributeSystem => _attributeSystem;
 
         public List<TagScriptableObject> GrantedTags = new List<TagScriptableObject>();
-        public List<EffectSpecificationContainer> AppliedDurationalEffects = new List<EffectSpecificationContainer>();
+        public List<EffectSpecificationContainer> AppliedEffects = new List<EffectSpecificationContainer>();
 
         protected SkillSpecificationContainer _grantedSkills;
         public SkillSpecificationContainer GrantedSkills => _grantedSkills;
@@ -156,12 +156,12 @@ namespace Indigames.AbilitySystem
         
         public virtual void RemoveEffect(AbstractEffect abstractEffect)
         {
-            for (int i = AppliedDurationalEffects.Count - 1; i >= 0; i--)
+            for (int i = AppliedEffects.Count - 1; i >= 0; i--)
             {
-                var effect = AppliedDurationalEffects[i];
+                var effect = AppliedEffects[i];
                 if (abstractEffect.EffectSO == effect.EffectSpec.EffectSO)
                 {
-                    AppliedDurationalEffects.RemoveAt(i);
+                    AppliedEffects.RemoveAt(i);
                 }
             }
 
@@ -222,7 +222,7 @@ namespace Indigames.AbilitySystem
         {
             // Reset all attribute to their base values
             _attributeSystem.ResetAttributeModifiers();
-            foreach (var effect in AppliedDurationalEffects)
+            foreach (var effect in AppliedEffects)
             {
                 UpdateAttributesModifiersWithEffect(effect);
             }
@@ -247,7 +247,7 @@ namespace Indigames.AbilitySystem
         
         protected virtual void UpdateEffects()
         {
-            foreach (EffectSpecificationContainer effect in AppliedDurationalEffects)
+            foreach (EffectSpecificationContainer effect in AppliedEffects)
             {
                 var effectSpec = effect.EffectSpec;
                 if (!effectSpec.IsExpired)
@@ -257,12 +257,12 @@ namespace Indigames.AbilitySystem
 
         protected virtual void RemoveExpiredEffects()
         {
-            for (var i = AppliedDurationalEffects.Count - 1; i >= 0; i--)
+            for (var i = AppliedEffects.Count - 1; i >= 0; i--)
             {
-                var effect = AppliedDurationalEffects[i];
+                var effect = AppliedEffects[i];
                 if (effect.EffectSpec.IsExpired)
                 {
-                    AppliedDurationalEffects.RemoveAt(i);
+                    AppliedEffects.RemoveAt(i);
                 }
             }
         }

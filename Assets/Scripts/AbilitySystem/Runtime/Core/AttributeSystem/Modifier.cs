@@ -5,7 +5,6 @@ namespace Indigames.AbilitySystem
     [Serializable]
     public class Modifier
     {
-        public EAttributeModifierType currentType;
         public float Additive;
         public float Multiplicative;
         public float Overriding;
