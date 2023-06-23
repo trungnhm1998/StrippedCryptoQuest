@@ -263,6 +263,7 @@ namespace Indigames.AbilitySystem
                 if (effect.EffectSpec.IsExpired)
                 {
                     AppliedEffects.RemoveAt(i);
+                    RemoveTags(effect.EffectSpec.EffectSO.GrantedTags);
                 }
             }
         }

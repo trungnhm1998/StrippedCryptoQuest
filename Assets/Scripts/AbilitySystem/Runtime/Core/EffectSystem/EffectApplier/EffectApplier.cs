@@ -59,7 +59,7 @@ namespace Indigames.AbilitySystem
         public void ApplyDurationalEffect(AbstractEffect abstractEffect)
         {
             _skillSystem.AppliedEffects.Add(new EffectSpecificationContainer(abstractEffect));
-
+            _skillSystem.GrantedTags.AddRange(abstractEffect.EffectSO.GrantedTags);
             Debug.Log($"EffectApplier::Durational::to {_skillSystem.name} with effect {abstractEffect.EffectSO.name}");
         }
     }
