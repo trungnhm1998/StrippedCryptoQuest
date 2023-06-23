@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Core.Runtime.Events.ScriptableObjects;
-using CryptoQuest.MockData;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,7 +14,7 @@ namespace CryptoQuest.UI.Dialog
         [SerializeField] private VoidEventChannelSO _turnOffDialogEvent;
 
         [Space]
-        [SerializeField] private NPCSpeechSO _receivedMessage;
+        // [SerializeField] private NPCSpeechSO _receivedMessage;
         [SerializeField] private GameObject _innerUI;
         [SerializeField] private Text _message;
 
@@ -44,7 +43,7 @@ namespace CryptoQuest.UI.Dialog
 
         private void SetupMessage()
         {
-            _message.text = $"{_receivedMessage.Message}";
+            // _message.text = $"{_receivedMessage.Message}";
         }
     }
 }
