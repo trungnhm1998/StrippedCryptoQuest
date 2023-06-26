@@ -1,5 +1,4 @@
-﻿using System;
-using Core.Runtime.Events.ScriptableObjects.Dialogs;
+﻿using Core.Runtime.Events.ScriptableObjects.Dialogs;
 using UnityEngine;
 
 namespace CryptoQuest.Characters
@@ -16,7 +15,7 @@ namespace CryptoQuest.Characters
 
         public string GetDialogKey()
         {
-            if (IsDataEmpty()) return String.Empty;
+            if (IsDataEmpty()) return string.Empty;
 
             var message = _dialogSO.Messages[GetNextIndex()];
             return message;
