@@ -8,6 +8,19 @@ namespace Indigames.AbilitySystem
         [SerializeField] private InitializeAttributeDatabase _database;
         public InitializeAttributeDatabase DefaultStats => _database;
 
+#if UNITY_EDITOR
+        private void OnValidate()
+        {
+            if (_attributeSystem != null) return;
+            _attributeSystem = GetComponent<AttributeSystem>();
+        }
+#endif
+
+        private void Start()
+        {
+            InitStats();
+        }
+
         public void InitStats()
         {
             InitStats(_database);

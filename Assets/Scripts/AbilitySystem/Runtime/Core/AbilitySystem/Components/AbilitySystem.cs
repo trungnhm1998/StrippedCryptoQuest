@@ -26,14 +26,22 @@ namespace Indigames.AbilitySystem
 #if UNITY_EDITOR
         private void OnValidate()
         {
-            if (_attributeSystem != null) return;
-            _attributeSystem = GetComponent<AttributeSystem>();
-            if (_skillSystem != null) return;
-            _skillSystem = GetComponent<SkillSystem>();
-            if (_effectSystem != null) return;
-            _effectSystem = GetComponent<EffectSystem>();
-            if (_tagSystem != null) return;
-            _tagSystem = GetComponent<TagSystem>();
+            if (_attributeSystem == null)
+            {
+                _attributeSystem = GetComponent<AttributeSystem>();
+            }
+            if (_skillSystem == null)
+            {
+                _skillSystem = GetComponent<SkillSystem>();
+            }
+            if (_effectSystem == null)
+            {
+                _effectSystem = GetComponent<EffectSystem>();
+            }
+            if (_tagSystem == null)
+            {
+                _tagSystem = GetComponent<TagSystem>();
+            }
         }
 #endif
 

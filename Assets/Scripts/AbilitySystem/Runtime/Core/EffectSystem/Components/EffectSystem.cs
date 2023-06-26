@@ -55,7 +55,7 @@ namespace Indigames.AbilitySystem
             if (inEffectSpec == null || !inEffectSpec.CanApply(Owner)) return NullEffect.Instance;
             
             inEffectSpec.SetTarget(Owner);
-            inEffectSpec.Accept(_effectApplier);
+            inEffectSpec.Accept(EffectAppliers);
             return inEffectSpec;
         }
 
