@@ -14,27 +14,27 @@ namespace Indigames.AbilitySystem
         /// <summary>
         /// The system give/apply this effect
         /// </summary>
-        public SkillSystem Owner;
+        public AbilitySystem Owner;
 
         /// <summary>
         /// The system this effect apply to. Can be the same as Owner and it will be self apply effect
         /// </summary>
-        private SkillSystem _target;
-        public SkillSystem Target => _target;
+        private AbilitySystem _target;
+        public AbilitySystem Target => _target;
 
         // The object that create this effect
         public string Origin;
-        public SkillParameters SkillParameters;
+        public AbilityParameters Parameters;
         public bool IsExpired { get; set; } = false;
         public bool RemoveWithSkill = true;
 
         protected IEffectApplier _effectApplier;
 
-        public virtual void InitEffect(EffectScriptableObject effectScriptableObject, SkillSystem skillSystem,
-            SkillParameters parameters)
+        public virtual void InitEffect(EffectScriptableObject effectScriptableObject, AbilitySystem ownerSystem,
+            AbilityParameters parameters)
         {
-            Owner = skillSystem;
-            SkillParameters = parameters;
+            Owner = ownerSystem;
+            Parameters = parameters;
 
             if (effectScriptableObject == null)
             {
@@ -45,10 +45,10 @@ namespace Indigames.AbilitySystem
             EffectSO = effectScriptableObject;
         }
 
-        public bool CanApply(SkillSystem skillSystem)
+        public bool CanApply(AbilitySystem ownerSystem)
         {
             if (Owner == null) return false;
-            if (!skillSystem.CheckTagRequirementsMet(this)) return false;
+            if (!CheckTagRequirementsMet()) return false;
 
             var effectSODetails = EffectSO.EffectDetails;
 
@@ -63,16 +63,16 @@ namespace Indigames.AbilitySystem
 
             foreach (var appReq in EffectSO.CustomApplicationRequirements)
             {
-                if (appReq != null && !appReq.CanApplyEffect(EffectSO, this, skillSystem))
+                if (appReq != null && !appReq.CanApplyEffect(EffectSO, this, ownerSystem))
                     return false;
             }
 
             return true;
         }
 
-        public AbstractEffect SetTarget(SkillSystem skillSystem)
+        public AbstractEffect SetTarget(AbilitySystem targetSystem)
         {
-            _target = skillSystem;
+            _target = targetSystem;
             return this;
         }
 
@@ -84,8 +84,15 @@ namespace Indigames.AbilitySystem
         public abstract void Update(float deltaTime);
         public AbstractEffect Clone()
         {
-            var clone = Owner.GetEffect(EffectSO, Origin, SkillParameters);
+            var clone = Owner.EffectSystem.GetEffect(EffectSO, Origin, Parameters);
             return clone;
+        }
+
+        protected virtual bool CheckTagRequirementsMet()
+        {
+            var tagConditionDetail = EffectSO.ApplicationTagRequirements;
+            return AbilitySystemHelper.SystemHasAllTags(Owner, tagConditionDetail.RequireTags) 
+                && AbilitySystemHelper.SystemHasNoneTags(Owner, tagConditionDetail.IgnoreTags);
         }
     }
 

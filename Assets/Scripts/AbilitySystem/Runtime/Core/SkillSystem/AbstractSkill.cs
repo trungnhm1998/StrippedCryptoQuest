@@ -11,9 +11,9 @@ namespace Indigames.AbilitySystem
         protected SkillScriptableObject _skillSO;
         public SkillScriptableObject SkillSO => _skillSO;
 
-        protected SkillParameters _parameters; 
+        protected AbilityParameters _parameters; 
 
-        public SkillSystem Owner;
+        public AbilitySystem Owner;
         public bool IsRemoveAfterActivation;
         public bool IsPendingRemove;
 
@@ -23,7 +23,7 @@ namespace Indigames.AbilitySystem
         /// <param name="owner">Owner of this skill</param>
         /// <param name="skillSO">Skill's data SO</param>
         /// <param name="parameters">Parameters of the skill</param>
-        public virtual void InitSkill(SkillSystem owner, SkillScriptableObject skillSO, SkillParameters parameters)
+        public virtual void InitSkill(AbilitySystem owner, SkillScriptableObject skillSO, AbilityParameters parameters)
         {
             Owner = owner;
             _skillSO = skillSO;
@@ -38,7 +38,7 @@ namespace Indigames.AbilitySystem
                 return;
             }
 
-            Owner.TryActiveSkill(this);
+            Owner.SkillSystem.TryActiveSkill(this);
         }
 
         /// <summary>
@@ -50,7 +50,7 @@ namespace Indigames.AbilitySystem
 
             _isActive = true;
             Owner.StartCoroutine(InternalActiveSkill());
-            Owner.AddTags(SkillSO.Tags.ActivationTags);
+            Owner.TagSystem.AddTags(SkillSO.Tags.ActivationTags);
         }
 
         /// <summary>
@@ -62,7 +62,7 @@ namespace Indigames.AbilitySystem
 
             _isActive = false;
             Owner.StopCoroutine(InternalActiveSkill());
-            Owner.RemoveTags(SkillSO.Tags.ActivationTags);
+            Owner.TagSystem.RemoveTags(SkillSO.Tags.ActivationTags);
         }
 
         public bool CanActiveSkill()
@@ -76,13 +76,13 @@ namespace Indigames.AbilitySystem
         /// </summary>
         protected virtual bool CheckTags()
         {
-            return SkillSystemHelper.SystemHasAllTags(Owner, SkillSO.Tags.OwnerTags.RequireTags)
-                && SkillSystemHelper.SystemHasAllTags(Owner, SkillSO.Tags.SourceTags.RequireTags)
-                && SkillSystemHelper.SystemHasAllTags(Owner, SkillSO.Tags.TargetTags.RequireTags)
+            return AbilitySystemHelper.SystemHasAllTags(Owner, SkillSO.Tags.OwnerTags.RequireTags)
+                && AbilitySystemHelper.SystemHasAllTags(Owner, SkillSO.Tags.SourceTags.RequireTags)
+                && AbilitySystemHelper.SystemHasAllTags(Owner, SkillSO.Tags.TargetTags.RequireTags)
                 // ---------------------------------------------------------
-                && SkillSystemHelper.SystemHasNoneTags(Owner, SkillSO.Tags.OwnerTags.IgnoreTags)
-                && SkillSystemHelper.SystemHasNoneTags(Owner, SkillSO.Tags.SourceTags.IgnoreTags)
-                && SkillSystemHelper.SystemHasNoneTags(Owner, SkillSO.Tags.TargetTags.IgnoreTags);
+                && AbilitySystemHelper.SystemHasNoneTags(Owner, SkillSO.Tags.OwnerTags.IgnoreTags)
+                && AbilitySystemHelper.SystemHasNoneTags(Owner, SkillSO.Tags.SourceTags.IgnoreTags)
+                && AbilitySystemHelper.SystemHasNoneTags(Owner, SkillSO.Tags.TargetTags.IgnoreTags);
         }
 
         public virtual void OnSkillRemoved(AbstractSkill skillSpec)

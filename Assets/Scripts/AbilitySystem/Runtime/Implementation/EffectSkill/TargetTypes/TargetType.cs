@@ -8,7 +8,7 @@ namespace Indigames.AbilitySystem
         /// <summary>
         /// Add the target you want the skill to affect in targets parameter
         /// </summary>
-        public abstract void GetTargets(SkillSystem owner, ref List<SkillSystem> targets);
+        public abstract void GetTargets(AbilitySystem owner, ref List<AbilitySystem> targets);
     }
 
 }

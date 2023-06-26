@@ -8,7 +8,7 @@ namespace Indigames.AbilitySystem
     {
         public class EffectSkillContext
         {
-            public List<SkillSystem> AffectTargets = new List<SkillSystem>();
+            public List<AbilitySystem> AffectTargets = new List<AbilitySystem>();
         }
 
         private Dictionary<TagScriptableObject, List<AbstractEffect>> _effectTagDict =
@@ -81,7 +81,7 @@ namespace Indigames.AbilitySystem
             var returnSpec = new SkillEffectContainerSpec();
             if (Owner == null) return returnSpec;
 
-            var targets = new List<SkillSystem>();
+            var targets = new List<AbilitySystem>();
             if (container.TargetType)
             {
                 container.TargetType.GetTargets(Owner, ref targets);
@@ -107,7 +107,7 @@ namespace Indigames.AbilitySystem
 
         public virtual AbstractEffect CreateEffectSpec(EffectScriptableObject effectScriptableObject)
         {
-            return Owner.GetEffect(effectScriptableObject, this, _parameters);
+            return Owner.EffectSystem.GetEffect(effectScriptableObject, this, _parameters);
         }
 
         protected virtual List<AbstractEffect> ApplyEffectContainerSpec(SkillEffectContainerSpec skillEffectSpec,
@@ -119,7 +119,7 @@ namespace Indigames.AbilitySystem
             {
                 foreach (var target in skillEffectSpec.Targets)
                 {
-                    appliedEffect.AddRange(SkillSystemHelper.ApplyEffectSpecToTarget(effectSpec, target));
+                    appliedEffect.AddRange(AbilitySystemHelper.ApplyEffectSpecToTarget(effectSpec, target));
                 }
             }
 
@@ -136,7 +136,7 @@ namespace Indigames.AbilitySystem
                 {
                     var effectSpec = effectSpecs[i];
                     if (effectSpec.RemoveWithSkill)
-                        Owner.RemoveEffect(effectSpec);
+                        Owner.EffectSystem.RemoveEffect(effectSpec);
                 }
             }
 
@@ -148,7 +148,7 @@ namespace Indigames.AbilitySystem
             if (!_effectTagDict.ContainsKey(skillTag)) return;
             foreach (var effectSpec in _effectTagDict[skillTag])
             {
-                effectSpec.Target.RemoveEffect(effectSpec);
+                effectSpec.Target.EffectSystem.RemoveEffect(effectSpec);
             }
 
             _effectTagDict.Remove(skillTag);

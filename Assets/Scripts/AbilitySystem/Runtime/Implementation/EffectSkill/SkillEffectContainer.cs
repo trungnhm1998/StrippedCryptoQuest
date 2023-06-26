@@ -12,9 +12,9 @@ namespace Indigames.AbilitySystem
     public class SkillEffectContainerSpec
     {
         public List<AbstractEffect> EffectSpecs = new List<AbstractEffect>();
-        public List<SkillSystem> Targets = new List<SkillSystem>();
+        public List<AbilitySystem> Targets = new List<AbilitySystem>();
 
-        public void AddTargets(List<SkillSystem> targets)
+        public void AddTargets(List<AbilitySystem> targets)
         {
             if (targets.Count == 0) return;
             Targets.AddRange(targets);

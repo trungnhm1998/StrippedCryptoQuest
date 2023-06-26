@@ -8,10 +8,10 @@ namespace Indigames.AbilitySystem
         [SerializeField] private SkillTags tags;
         public SkillTags Tags => tags;
 
-        [SerializeField] private SkillParameters parameters;
-        public SkillParameters Parameters => parameters;
+        [SerializeField] private AbilityParameters parameters;
+        public AbilityParameters Parameters => parameters;
 
-        public AbstractSkill GetSkillSpec(SkillSystem owner, SkillParameters parameters)
+        public AbstractSkill GetSkillSpec(AbilitySystem owner, AbilityParameters parameters)
         {
             var skill = CreateSkill();
             skill.InitSkill(owner, this, parameters);
@@ -28,16 +28,6 @@ namespace Indigames.AbilitySystem
     public abstract class SkillScriptableObject<T> : SkillScriptableObject where T : AbstractSkill, new()
     {
         protected override AbstractSkill CreateSkill() => new T();
-    }
-
-    /// <summary>
-    /// Skill parameters 
-    /// Ex: skill's value or level rate in Mugen Horror project
-    /// Override this depend on project spec
-    /// </summary>
-    [Serializable]
-    public abstract class SkillParameters
-    {
     }
 
     [Serializable]

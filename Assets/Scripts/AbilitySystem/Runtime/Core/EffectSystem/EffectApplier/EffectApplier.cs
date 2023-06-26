@@ -5,13 +5,13 @@ namespace Indigames.AbilitySystem
 {
     public class EffectApplier : IEffectApplier
     {
-        private readonly SkillSystem _skillSystem;
+        private readonly AbilitySystem _ownerSystem;
         private readonly AttributeSystem _attributeSystem;
 
-        public EffectApplier(SkillSystem skillSystem)
+        public EffectApplier(AbilitySystem ownerSystem)
         {
-            _skillSystem = skillSystem;
-            _attributeSystem = skillSystem.AttributeSystem;
+            _ownerSystem = ownerSystem;
+            _attributeSystem = ownerSystem.AttributeSystem;
         }
 
         /// <summary>
@@ -21,7 +21,7 @@ namespace Indigames.AbilitySystem
         /// <param name="abstractEffect"></param>
         public void ApplyInstantEffect(AbstractEffect abstractEffect)
         {
-            Debug.Log($"EffectApplier::ApplyInstantEffect {abstractEffect.EffectSO.name} to system {_skillSystem.name}");
+            Debug.Log($"EffectApplier::ApplyInstantEffect {abstractEffect.EffectSO.name} to system {_ownerSystem.name}");
             var container = new EffectSpecificationContainer(abstractEffect);
             var modifiers = container.Modifiers;
 
@@ -48,7 +48,7 @@ namespace Indigames.AbilitySystem
                 _attributeSystem.SetAttributeBaseValue(attribute, attributeValue.BaseValue);
                 Debug.Log($"EffectApplier::ApplyInstantEffect::to attribute {attribute.name} base value {attributeValue.BaseValue} currentValue {attributeValue.CurrentValue}");
             }
-            _skillSystem.GrantedTags.AddRange(effectSO.GrantedTags);
+            _ownerSystem.TagSystem.GrantedTags.AddRange(effectSO.GrantedTags);
         }
 
         /// <summary>
@@ -58,9 +58,9 @@ namespace Indigames.AbilitySystem
         /// <exception cref="ArgumentOutOfRangeException"></exception>
         public void ApplyDurationalEffect(AbstractEffect abstractEffect)
         {
-            _skillSystem.AppliedEffects.Add(new EffectSpecificationContainer(abstractEffect));
-            _skillSystem.GrantedTags.AddRange(abstractEffect.EffectSO.GrantedTags);
-            Debug.Log($"EffectApplier::Durational::to {_skillSystem.name} with effect {abstractEffect.EffectSO.name}");
+            _ownerSystem.EffectSystem.AppliedEffects.Add(new EffectSpecificationContainer(abstractEffect));
+            _ownerSystem.TagSystem.GrantedTags.AddRange(abstractEffect.EffectSO.GrantedTags);
+            Debug.Log($"EffectApplier::Durational::to {_ownerSystem.name} with effect {abstractEffect.EffectSO.name}");
         }
     }
 }

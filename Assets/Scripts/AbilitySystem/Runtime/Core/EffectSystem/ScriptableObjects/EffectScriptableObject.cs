@@ -31,11 +31,11 @@ namespace Indigames.AbilitySystem
         /// <param name="levelRate"></param>
         /// <param name="level"></param>
         /// <returns></returns>
-        public virtual AbstractEffect GetEffect(SkillSystem skillSystem, object origin, SkillParameters skillParameters)
+        public virtual AbstractEffect GetEffect(AbilitySystem ownerSystem, object origin, AbilityParameters parameters)
         {
             var effect = CreateEffect();
             effect.Origin = origin.ToString();
-            effect.InitEffect(this, skillSystem, skillParameters);
+            effect.InitEffect(this, ownerSystem, parameters);
             return effect;
         }
 

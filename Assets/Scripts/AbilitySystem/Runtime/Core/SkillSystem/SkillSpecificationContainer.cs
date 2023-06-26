@@ -5,9 +5,9 @@ namespace Indigames.AbilitySystem
     public class SkillSpecificationContainer
     {
         public List<AbstractSkill> Skills = new List<AbstractSkill>();
-        public SkillSystem Owner;
+        public AbilitySystem Owner;
         
-        public void RegisterWithOwner(SkillSystem owner)
+        public void RegisterWithOwner(AbilitySystem owner)
         {
             Owner = owner;
         }

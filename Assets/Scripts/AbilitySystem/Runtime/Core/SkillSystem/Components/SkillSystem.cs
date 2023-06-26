@@ -4,50 +4,27 @@ using System.Linq;
 
 namespace Indigames.AbilitySystem
 {
-    [RequireComponent(typeof(AttributeSystem))]
     public class SkillSystem : MonoBehaviour
     {
-        [SerializeField] private AttributeSystem _attributeSystem;
-        public AttributeSystem AttributeSystem => _attributeSystem;
-
-        public List<TagScriptableObject> GrantedTags = new List<TagScriptableObject>();
-        public List<EffectSpecificationContainer> AppliedEffects = new List<EffectSpecificationContainer>();
-
         protected SkillSpecificationContainer _grantedSkills;
         public SkillSpecificationContainer GrantedSkills => _grantedSkills;
 
-        
-        private IEffectApplier _effectApplier;
-        protected IEffectApplier EffectApplier
-        {
-            get
-            {
-                if (_effectApplier == null)
-                {
-                    _effectApplier = new EffectApplier(this);
-                }
+        protected AbilitySystem _owner;
+        public AbilitySystem Owner => _owner;
 
-                return _effectApplier;
-            }
+        public void InitSystem(AbilitySystem owner)
+        {
+            _owner = owner;
         }
 
-#if UNITY_EDITOR
-        private void OnValidate()
-        {
-            if (_attributeSystem != null) return;
-            _attributeSystem = GetComponent<AttributeSystem>();
-        }
-#endif
-
-#region InitSkillAndEffect
         /// <summary>
         /// Add/Give/Grant skill to the system. Only skill that in the system can be active
         /// There's only 1 skill per system (no duplicate skill)
         /// </summary>
         /// <param name="skillDef"></param>
-        /// <param name="skillParams"></param>
+        /// <param name="abilityParams"></param>
         /// <returns>A skill handler (humble object) to execute their skill logic</returns>
-        public AbstractSkill GiveSkill(SkillScriptableObject skillDef, SkillParameters skillParams)
+        public AbstractSkill GiveSkill(SkillScriptableObject skillDef, AbilityParameters abilityParams)
         {
             foreach (var skill in _grantedSkills.Skills)
             {
@@ -55,7 +32,7 @@ namespace Indigames.AbilitySystem
                     return skill;
             }
 
-            var grantedSkill = skillDef.GetSkillSpec(this, skillParams);
+            var grantedSkill = skillDef.GetSkillSpec(Owner, abilityParams);
 
             return GiveSkill(grantedSkill);
         }
@@ -78,26 +55,10 @@ namespace Indigames.AbilitySystem
         private void OnGrantedSkill(AbstractSkill skillSpec)
         {
             if (!skillSpec.SkillSO) return;
-            skillSpec.Owner = this;
+            skillSpec.Owner = Owner;
             skillSpec.OnSkillGranted(skillSpec);
         }
 
-        /// <summary>
-        /// Will create a new AbstractEffect from EffectScriptableObject (data)
-        /// this will update the Owner of the effect to this SkillSystem
-        /// </summary>
-        /// <param name="effectSO"></param>
-        /// <param name="origin"></param>
-        /// <param name="skillParameters"></param>
-        /// <returns></returns>
-        public AbstractEffect GetEffect(EffectScriptableObject effectSO, object origin, SkillParameters skillParameters)
-        {
-            UpdateAttributeSystemModifiers();
-            return effectSO.GetEffect(this, origin, skillParameters);
-        }
-#endregion
-
-#region SkillActivationAndApplyEffect
         public void TryActiveSkill(AbstractSkill inSkillSpec)
         {
             if (inSkillSpec.SkillSO == null) return;
@@ -108,17 +69,6 @@ namespace Indigames.AbilitySystem
             }
         }
 
-        public AbstractEffect ApplyEffectToSelf(AbstractEffect inEffectSpec)
-        {
-            if (inEffectSpec == null || !inEffectSpec.CanApply(this)) return NullEffect.Instance;
-            
-            inEffectSpec.SetTarget(this);
-            inEffectSpec.Accept(EffectApplier);
-            return inEffectSpec;
-        }
-#endregion
-
-#region RemoveSkillAndEffect
         public bool RemoveSkill(AbstractSkill skill)
         {
             List<AbstractSkill> grantedSkillsList = _grantedSkills.Skills;
@@ -154,118 +104,9 @@ namespace Indigames.AbilitySystem
             _grantedSkills.Skills = new List<AbstractSkill>();
         }
         
-        public virtual void RemoveEffect(AbstractEffect abstractEffect)
-        {
-            for (int i = AppliedEffects.Count - 1; i >= 0; i--)
-            {
-                var effect = AppliedEffects[i];
-                if (abstractEffect.EffectSO == effect.EffectSpec.EffectSO)
-                {
-                    AppliedEffects.RemoveAt(i);
-                }
-            }
-
-            if (abstractEffect.Owner == null) return;
-            ForceUpdateAttributeSystemModifiers();
-            
-            if (abstractEffect.Owner == this) return;
-            abstractEffect.Owner.ForceUpdateAttributeSystemModifiers();
-        }
-#endregion
-
-#region Tags
-        public virtual void AddTags(TagScriptableObject[] tags)
-        {
-            GrantedTags.AddRange(tags);
-        }
-
-        public virtual void RemoveTags(TagScriptableObject[] tags)
-        {
-            foreach (var tag in tags)
-            {
-                GrantedTags.Remove(tag);
-            }
-        }
-
-        public virtual bool HasTag(TagScriptableObject tagToCheck)
-        {
-            return GrantedTags.Contains(tagToCheck);
-        }
-        
-        public virtual bool CheckTagRequirementsMet(AbstractEffect effect)
-        {
-            var tagConditionDetail = effect.EffectSO.ApplicationTagRequirements;
-            return SkillSystemHelper.SystemHasAllTags(this, tagConditionDetail.RequireTags) 
-                && SkillSystemHelper.SystemHasNoneTags(this, tagConditionDetail.IgnoreTags);
-        }
-#endregion
-
         private void Update()
         {
-            UpdateAttributeSystemModifiers();
-
-            UpdateEffects();
-            RemoveExpiredEffects();
             RemovePendingSkills();
-        }
-
-        /// <summary>
-        /// Force the system to check all effects and update their status
-        /// </summary>
-        public void ForceUpdateAttributeSystemModifiers()
-        {
-            UpdateAttributeSystemModifiers();
-            _attributeSystem.UpdateAllAttributeCurrentValues();
-        }
-
-        protected virtual void UpdateAttributeSystemModifiers()
-        {
-            // Reset all attribute to their base values
-            _attributeSystem.ResetAttributeModifiers();
-            foreach (var effect in AppliedEffects)
-            {
-                UpdateAttributesModifiersWithEffect(effect);
-            }
-        }
-
-        protected void UpdateAttributesModifiersWithEffect(EffectSpecificationContainer effectContainer)
-        {
-            if (effectContainer.EffectSpec.IsExpired) return;
-
-            foreach (var effectModifierDetail in effectContainer.Modifiers)
-            {
-                if (!_attributeSystem.HasAttribute(effectModifierDetail.Attribute))
-                {
-                    _attributeSystem.AddAttributes(effectModifierDetail.Attribute);
-                    _attributeSystem.MarkCacheDirty();
-                }
-
-                _attributeSystem.AddModifierToAttribute(effectModifierDetail.Modifier, effectModifierDetail.Attribute, out _,
-                    effectContainer.EffectSpec.EffectSO.EffectDetails.StackingType);
-            }
-        }
-        
-        protected virtual void UpdateEffects()
-        {
-            foreach (EffectSpecificationContainer effect in AppliedEffects)
-            {
-                var effectSpec = effect.EffectSpec;
-                if (!effectSpec.IsExpired)
-                    effectSpec.Update(Time.deltaTime);
-            }
-        }
-
-        protected virtual void RemoveExpiredEffects()
-        {
-            for (var i = AppliedEffects.Count - 1; i >= 0; i--)
-            {
-                var effect = AppliedEffects[i];
-                if (effect.EffectSpec.IsExpired)
-                {
-                    AppliedEffects.RemoveAt(i);
-                    RemoveTags(effect.EffectSpec.EffectSO.GrantedTags);
-                }
-            }
         }
 
         protected virtual void RemovePendingSkills()
