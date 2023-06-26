@@ -8,6 +8,7 @@ using UnityEngine.ResourceManagement.ResourceProviders;
 using System;
 using Core.Runtime.Common;
 using Core.Runtime.SceneManagementSystem.Events.ScriptableObjects;
+using CryptoQuest.Characters;
 
 namespace CryptoQuest
 {
@@ -19,6 +20,8 @@ namespace CryptoQuest
         {
             if (other.gameObject.CompareTag("Player"))
             {
+                PlayerController playerController = other.gameObject.GetComponent<PlayerController>();
+                playerController.SaveFacingDirection(playerController.GetFacingDirection());
                 TriggerTeleport(nextScene);
             }
         }

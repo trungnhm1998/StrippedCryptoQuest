@@ -8,6 +8,7 @@ namespace CryptoQuest.Characters
     {
         [SerializeField] private InputMediatorSO _inputMediator;
         [SerializeField] private CharacterStateSO _characterStateSO;
+        private Character.EFacingDirection _facingDirection;
 
         public CharacterStateSO CharacterStateSO
         {
@@ -37,12 +38,16 @@ namespace CryptoQuest.Characters
 
         public void SetFacingDirection(Character.EFacingDirection facingDirection)
         {
-            _characterStateSO.facingDirection = facingDirection;
+            _facingDirection = facingDirection;
         }
 
         public Character.EFacingDirection GetFacingDirection()
         {
-            return _characterStateSO.facingDirection;
+            return _facingDirection;
+        }
+        public void SaveFacingDirection(Character.EFacingDirection facingDirection)
+        {
+            _characterStateSO.facingDirection = facingDirection;
         }
     }
 }
