@@ -1,4 +1,5 @@
-﻿using CryptoQuest.Input;
+using CryptoQuest.Characters;
+using CryptoQuest.Input;
 using UnityEngine;
 
 namespace CryptoQuest.Character
@@ -11,6 +12,7 @@ namespace CryptoQuest.Character
         private CharacterBehaviour _characterBehaviour;
         
         private Character.EFacingDirection _facingDirection;
+        private IInteractable _currentInteractable;
 
         private void Start()
         {
@@ -20,11 +22,13 @@ namespace CryptoQuest.Character
         private void OnEnable()
         {
             _inputMediator.MoveEvent += MoveEvent_Raised;
+            _inputMediator.InteractEvent += InteractEvent_Raised;
         }
 
         private void OnDisable()
         {
             _inputMediator.MoveEvent -= MoveEvent_Raised;
+            _inputMediator.InteractEvent -= InteractEvent_Raised;
         }
 
         private void MoveEvent_Raised(Vector2 axis)
@@ -40,6 +44,23 @@ namespace CryptoQuest.Character
         public void SaveFacingDirection(Character.EFacingDirection facingDirection)
         {
             _characterBehaviour.FacingDirection = facingDirection;
+        }
+
+        private void InteractEvent_Raised()
+        {
+            if (_currentInteractable == null) return;
+            _currentInteractable.Interact();
+        }
+
+        private void OnCollisionEnter2D(Collision2D other)
+        {
+            _currentInteractable = other.gameObject.GetComponent<IInteractable>();
+        }
+
+        private void OnCollisionExit2D(Collision2D other)
+        {
+           if(other.gameObject.GetComponent<IInteractable>() == _currentInteractable)
+               _currentInteractable = null; 
         }
     }
 }

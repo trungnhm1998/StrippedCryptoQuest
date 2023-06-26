@@ -13,6 +13,7 @@ namespace CryptoQuest.Input
 
         public event UnityAction<Vector2> MoveEvent;
         public event UnityAction PauseEvent;
+        public event UnityAction InteractEvent;
 
         #endregion
 
@@ -78,7 +79,10 @@ namespace CryptoQuest.Input
             MoveEvent?.Invoke(context.ReadValue<Vector2>());
         }
 
-        public void OnInteract(InputAction.CallbackContext context) { }
+        public void OnInteract(InputAction.CallbackContext context)
+        {
+            if (context.performed) InteractEvent?.Invoke();
+        }
 
         public void OnInventory(InputAction.CallbackContext context) { }
 
