@@ -1,4 +1,5 @@
 ﻿using Core.Runtime.Events.ScriptableObjects.Dialogs;
+using NotImplementedException = System.NotImplementedException;
 
 namespace CryptoQuest.Characters
 {
@@ -11,5 +12,6 @@ namespace CryptoQuest.Characters
         public void SetDialogData(DialogsScriptableObject dialogSO) { }
 
         public string GetDialogKey() => string.Empty;
+        public void ShowDialog() { }
     }
 }

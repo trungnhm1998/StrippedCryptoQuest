@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace CryptoQuest.Characters
@@ -6,9 +7,6 @@ namespace CryptoQuest.Characters
     {
         private IDialog _dialogController = NullDialog.Instance;
 
-        private string _dialogData;
-        public string DialogData => _dialogData;
-
         private void Awake()
         {
             _dialogController = GetComponent<IDialog>();
@@ -16,8 +14,7 @@ namespace CryptoQuest.Characters
 
         public void Interact()
         {
-            _dialogData = _dialogController.GetDialogKey();
+            _dialogController.ShowDialog();
         }
     }
-
 }

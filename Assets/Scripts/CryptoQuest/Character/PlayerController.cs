@@ -8,9 +8,9 @@ namespace CryptoQuest.Character
     public class PlayerController : MonoBehaviour
     {
         [SerializeField] private InputMediatorSO _inputMediator;
-        
+
         private CharacterBehaviour _characterBehaviour;
-        
+
         private Character.EFacingDirection _facingDirection;
         private IInteractable _currentInteractable;
 
@@ -52,15 +52,16 @@ namespace CryptoQuest.Character
             _currentInteractable.Interact();
         }
 
-        private void OnCollisionEnter2D(Collision2D other)
+        private void OnTriggerEnter2D(Collider2D other)
         {
+            Debug.Log(other.gameObject.name);
             _currentInteractable = other.gameObject.GetComponent<IInteractable>();
         }
 
-        private void OnCollisionExit2D(Collision2D other)
+        private void OnTriggerExit2D(Collider2D other)
         {
-           if(other.gameObject.GetComponent<IInteractable>() == _currentInteractable)
-               _currentInteractable = null; 
+            if (other.gameObject.GetComponent<IInteractable>() == _currentInteractable)
+                _currentInteractable = null;
         }
     }
 }

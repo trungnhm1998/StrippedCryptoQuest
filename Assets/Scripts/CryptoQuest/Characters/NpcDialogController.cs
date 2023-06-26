@@ -1,25 +1,14 @@
 ﻿using Core.Runtime.Events.ScriptableObjects.Dialogs;
+using CryptoQuest.Characters.Events;
 using UnityEngine;
 
 namespace CryptoQuest.Characters
 {
     public class NpcDialogController : MonoBehaviour, IDialog
     {
+        [SerializeField] private DialogEventScriptableObject _dialogEventSO;
         [SerializeField] private DialogsScriptableObject _dialogSO;
         private int _currentIndex = 0;
-
-        public void SetDialogData(DialogsScriptableObject dialogSO)
-        {
-            _dialogSO = dialogSO;
-        }
-
-        public string GetDialogKey()
-        {
-            if (IsDataEmpty()) return string.Empty;
-
-            var message = _dialogSO.Messages[GetNextIndex()];
-            return message;
-        }
 
         public int GetNextIndex()
         {
@@ -32,15 +21,20 @@ namespace CryptoQuest.Characters
             return _currentIndex;
         }
 
-        private int CalculateNextIndex()
+        public int CalculateNextIndex()
         {
             if (IsDataEmpty()) return 0;
-            return (_currentIndex + 1) % _dialogSO.Messages.Count;
+            return (_currentIndex + 1) % _dialogSO.Lines.Count;
         }
 
         private bool IsDataEmpty()
         {
-            return _dialogSO.Messages.Count == 0;
+            return _dialogSO.Lines.Count == 0;
+        }
+
+        public void ShowDialog()
+        {
+            _dialogEventSO.OnShow(_dialogSO.GetLine(_currentIndex));
         }
     }
 }

@@ -4,7 +4,6 @@ namespace CryptoQuest.Characters
 {
     public interface IDialog
     {
-        public void SetDialogData(DialogsScriptableObject dialogSO);
-        public string GetDialogKey();
+        public void ShowDialog();
     }
 }
