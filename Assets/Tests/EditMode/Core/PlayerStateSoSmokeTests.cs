@@ -1,26 +1,24 @@
-using System.Collections;
-using System.Collections.Generic;
+using CryptoQuest.Character;
+using CryptoQuest.Character.ScriptableObjects;
 using NUnit.Framework;
-using UnityEngine;
-using UnityEngine.TestTools;
-using CryptoQuest;
 
-namespace Tests.EditMode
+namespace Tests.EditMode.Core
 {
     [TestFixture]
     public class PlayerStateSoSmokeTests
     {
         [Test]
-        public void PlayerStateSo_CreatedCorrectly()
+        public void PlayerStateSo_Created_WithSouthDirectionByDefault()
         {
             var guids = UnityEditor.AssetDatabase.FindAssets("t:CharacterStateSO");
 
-            foreach (var guid in guids)
-            {
-                var path = UnityEditor.AssetDatabase.GUIDToAssetPath(guid);
-                var playerStateSO = UnityEditor.AssetDatabase.LoadAssetAtPath<CharacterStateSO>(path);
-                Assert.IsNotEmpty(playerStateSO.facingDirection.ToString());
-            }
+            var haveOnlyOneInstance = 1;
+            Assert.AreEqual(haveOnlyOneInstance, guids.Length);
+
+            var path = UnityEditor.AssetDatabase.GUIDToAssetPath(guids[0]);
+            var playerStateSO = UnityEditor.AssetDatabase.LoadAssetAtPath<CharacterStateSO>(path);
+
+            Assert.AreEqual(Character.EFacingDirection.South, playerStateSO.FacingDirection);
         }
     }
 }
