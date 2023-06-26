@@ -1,13 +1,21 @@
-﻿using CryptoQuest.Input;
+using CryptoQuest.Input;
 using UnityEngine;
+
 
 namespace CryptoQuest.Characters
 {
-    public class PlayerController : MonoBehaviour
+    public class PlayerController : MonoBehaviour, ICharacter
     {
         [SerializeField] private InputMediatorSO _inputMediator;
-
+        [SerializeField] private CharacterStateSO _characterStateSO;
+        private Character.EFacingDirection _facingDirection;
         private IInteractable _currentNpc;
+
+        public CharacterStateSO CharacterStateSO
+        {
+            get => _characterStateSO;
+            set => _characterStateSO = value;
+        }
 
         private void Start()
         {
@@ -29,6 +37,21 @@ namespace CryptoQuest.Characters
         private void MoveEvent_Raised(Vector2 axis)
         {
             Debug.Log(axis);
+        }
+
+        public void SetFacingDirection(Character.EFacingDirection facingDirection)
+        {
+            _facingDirection = facingDirection;
+        }
+
+        public Character.EFacingDirection GetFacingDirection()
+        {
+            return _facingDirection;
+        }
+
+        public void SaveFacingDirection(Character.EFacingDirection facingDirection)
+        {
+            _characterStateSO.facingDirection = facingDirection;
         }
 
         private void InteractEvent_Raised()
