@@ -9,7 +9,7 @@ namespace CryptoQuest.Characters
         [SerializeField] private InputMediatorSO _inputMediator;
         [SerializeField] private CharacterStateSO _characterStateSO;
         private Character.EFacingDirection _facingDirection;
-        private IInteractable _currentNpc;
+        private IInteractable _currentInteractable;
 
         public CharacterStateSO CharacterStateSO
         {
@@ -56,18 +56,19 @@ namespace CryptoQuest.Characters
 
         private void InteractEvent_Raised()
         {
-            if (_currentNpc == null) return;
-            _currentNpc.Interact();
+            if (_currentInteractable == null) return;
+            _currentInteractable.Interact();
         }
 
         private void OnCollisionEnter2D(Collision2D other)
         {
-            _currentNpc = other.gameObject.GetComponent<IInteractable>();
+            _currentInteractable = other.gameObject.GetComponent<IInteractable>();
         }
 
         private void OnCollisionExit2D(Collision2D other)
         {
-            _currentNpc = null;
+           if(other.gameObject.GetComponent<IInteractable>() == _currentInteractable)
+               _currentInteractable = null; 
         }
     }
 }
