@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace CryptoQuest.UI
 {
-    public class UIDialog : MonoBehaviour, IDialog, IEvents
+    public class UIDialog : MonoBehaviour, IDialog
     {
         [Header("Events received")]
         [SerializeField] private VoidEventChannelSO _showDialogEvent;
@@ -12,7 +12,8 @@ namespace CryptoQuest.UI
         [Space]
         [SerializeField] private GameObject _content;
 
-        public bool IsShown { get => _content.activeSelf; }
+        public bool IsShown => _content.activeSelf;
+
         public GameObject Content
         {
             get => _content; set => _content = value;
