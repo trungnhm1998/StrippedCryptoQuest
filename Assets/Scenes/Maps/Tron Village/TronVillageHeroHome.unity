@@ -229,7 +229,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -5204234606393122213, guid: 6f3f0a3295f344be6b225c88082c21d1, type: 3}
       propertyPath: m_SortingLayerID
-      value: -1413416027
+      value: 1569843687
       objectReference: {fileID: 0}
     - target: {fileID: -826137461974399479, guid: 6f3f0a3295f344be6b225c88082c21d1, type: 3}
       propertyPath: m_SortingLayer
@@ -237,7 +237,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -826137461974399479, guid: 6f3f0a3295f344be6b225c88082c21d1, type: 3}
       propertyPath: m_SortingLayerID
-      value: -1413416027
+      value: 1569843687
       objectReference: {fileID: 0}
     - target: {fileID: 2111133004100676924, guid: 6f3f0a3295f344be6b225c88082c21d1, type: 3}
       propertyPath: m_RootOrder
@@ -289,7 +289,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2302146952561076085, guid: 6f3f0a3295f344be6b225c88082c21d1, type: 3}
       propertyPath: m_SortingLayerID
-      value: -1510798133
+      value: 1114508233
       objectReference: {fileID: 0}
     - target: {fileID: 2314066495466425727, guid: 6f3f0a3295f344be6b225c88082c21d1, type: 3}
       propertyPath: m_IsActive
@@ -301,7 +301,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3525381255032542517, guid: 6f3f0a3295f344be6b225c88082c21d1, type: 3}
       propertyPath: m_SortingLayerID
-      value: -1510798133
+      value: 1114508233
       objectReference: {fileID: 0}
     - target: {fileID: 3883154888195309703, guid: 6f3f0a3295f344be6b225c88082c21d1, type: 3}
       propertyPath: m_Name
@@ -313,7 +313,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8991327286549117558, guid: 6f3f0a3295f344be6b225c88082c21d1, type: 3}
       propertyPath: m_SortingLayerID
-      value: -1510798133
+      value: 1114508233
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -395,6 +395,7 @@ GameObject:
   m_Component:
   - component: {fileID: 664002955}
   - component: {fileID: 664002954}
+  - component: {fileID: 664002956}
   m_Layer: 0
   m_Name: TeleportArea
   m_TagString: Untagged
@@ -462,3 +463,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &664002956
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 664002953}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 394ac388cc7f44746a25849a7de5ebd3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _playerTag: Player
+  nextScene: {fileID: 11400000, guid: 0451c73b69502124082634e5f0c72c8e, type: 2}
+  _loadNextSceneEventChannelSO: {fileID: 11400000, guid: 932ea26428d5f4c4f8bdfd48ebc80873, type: 2}
