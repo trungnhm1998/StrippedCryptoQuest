@@ -44,7 +44,6 @@ namespace Tests.PlayMode.Character
             _dialogController.SetDialogData(_dialogSO);
 
             _player = new GameObject("Player");
-            _player.tag = "Player";
             _player.transform.position = Vector3.zero;
             _player.AddComponent<Rigidbody2D>();
             _player.AddComponent<BoxCollider2D>();
