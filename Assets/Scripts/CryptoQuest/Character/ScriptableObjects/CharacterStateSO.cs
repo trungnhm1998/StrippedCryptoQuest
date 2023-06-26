@@ -1,3 +1,4 @@
+using CryptoQuest.Character.MonoBehaviours;
 using UnityEngine;
 
 namespace CryptoQuest.Character.ScriptableObjects
@@ -5,6 +6,6 @@ namespace CryptoQuest.Character.ScriptableObjects
     [CreateAssetMenu(menuName = "Crypto Quest/Characters/Character State")]
     public class CharacterStateSO : ScriptableObject
     {
-        public Character.EFacingDirection FacingDirection;
+        public CharacterBehaviour.EFacingDirection FacingDirection;
     }
 }
