@@ -8,7 +8,7 @@ using Core.Runtime.SceneManagementSystem.Events.ScriptableObjects;
 
 public class TeleportEditorCheat : MonoBehaviour
 {
-#if UNITY_EDITOR || DEV_ENV
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
     private List<SceneScriptableObject> _sceneScriptableObjects = new List<SceneScriptableObject>();
     public LoadSceneEventChannelSO sceneLoadedEventChannelSO;
     private bool _showSceneList;
