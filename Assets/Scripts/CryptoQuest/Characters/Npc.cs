@@ -1,20 +1,23 @@
-using System;
 using UnityEngine;
 
 namespace CryptoQuest.Characters
 {
-    [RequireComponent(typeof(DialogController))]
     public class Npc : MonoBehaviour, IInteractable
     {
-        [SerializeField] private DialogController _dialogController;
+        private IDialog _dialogController = NullDialog.Instance;
 
         private string _dialogData;
         public string DialogData => _dialogData;
 
+        private void Awake()
+        {
+            _dialogController = GetComponent<IDialog>();
+        }
+
         public void Interact()
         {
-            Debug.Log("Interacting with NPC");
             _dialogData = _dialogController.GetDialogKey();
         }
     }
+
 }

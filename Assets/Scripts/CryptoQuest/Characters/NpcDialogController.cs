@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace CryptoQuest.Characters
 {
-    public class DialogController : MonoBehaviour, IDialog
+    public class NpcDialogController : MonoBehaviour, IDialog
     {
         [SerializeField] private DialogsScriptableObject _dialogSO;
         private int _currentIndex = 0;
@@ -28,6 +28,11 @@ namespace CryptoQuest.Characters
             return _currentIndex;
         }
 
+        public int GetCurrentDialogIndex()
+        {
+            return _currentIndex;
+        }
+
         private int CalculateNextIndex()
         {
             if (IsDataEmpty()) return 0;
@@ -37,11 +42,6 @@ namespace CryptoQuest.Characters
         private bool IsDataEmpty()
         {
             return _dialogSO.Messages.Count == 0;
-        }
-
-        public int GetCurrentDialogIndex()
-        {
-            return _currentIndex;
         }
     }
 }

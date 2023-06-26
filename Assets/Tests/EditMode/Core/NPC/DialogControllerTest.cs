@@ -11,10 +11,8 @@ namespace Tests.EditMode.Core.NPC
     public class DialogControllerTest
     {
         private DialogsScriptableObject _dialogSO;
-        private DialogController _dialogController;
-        private Npc _npcGameObject;
-
-        const string NPC_PREFAB_PATH = "Assets/Prefabs/Characters/NPCs/NPC.prefab";
+        private NpcDialogController _npcDialogController;
+        private GameObject _npcGameObject;
 
         private List<string> DIALOG_TEST = new List<string>
         {
@@ -24,22 +22,23 @@ namespace Tests.EditMode.Core.NPC
         [SetUp]
         public void Setup()
         {
-            _npcGameObject = AssetDatabase.LoadAssetAtPath(NPC_PREFAB_PATH, typeof(Npc)) as Npc;
-            _npcGameObject = Object.Instantiate(_npcGameObject);
-
+            _npcGameObject = new GameObject(); 
+            _npcGameObject.AddComponent<NpcDialogController>(); 
+            _npcGameObject.AddComponent<NpcDialogController>();
+            
             _dialogSO = ScriptableObject.CreateInstance<DialogsScriptableObject>();
             _dialogSO.Messages = new List<string>();
             _dialogSO.Messages.AddRange(DIALOG_TEST);
 
-            _dialogController = _npcGameObject.GetComponent<DialogController>();
-            _dialogController.SetDialogData(_dialogSO);
+            _npcDialogController = _npcGameObject.GetComponent<NpcDialogController>();
+            _npcDialogController.SetDialogData(_dialogSO);
         }
 
         [Test]
         public void GetNextIndex_WithEmptyDialogSO_ShouldReturnZero()
         {
             _dialogSO.Messages.Clear();
-            var index = _dialogController.GetNextIndex();
+            var index = _npcDialogController.GetNextIndex();
 
             Assert.AreEqual(0, index);
         }
@@ -52,7 +51,7 @@ namespace Tests.EditMode.Core.NPC
 
             for (int expected = 1; expected < expectedCount; expected++)
             {
-                var nextIndex = _dialogController.GetNextIndex();
+                var nextIndex = _npcDialogController.GetNextIndex();
                 if (expected != nextIndex)
                 {
                     hasCorrectData = false;
@@ -66,7 +65,7 @@ namespace Tests.EditMode.Core.NPC
         [Test]
         public void GetNextIndex_Called_ShouldReturnOne()
         {
-            var index = _dialogController.GetNextIndex();
+            var index = _npcDialogController.GetNextIndex();
             var expected = 1;
 
             Assert.AreEqual(expected, index);
@@ -75,7 +74,7 @@ namespace Tests.EditMode.Core.NPC
         [Test]
         public void GetCurrentDialogIndex_ShouldReturnZeroByDefault()
         {
-            var currentIndex = _dialogController.GetCurrentDialogIndex();
+            var currentIndex = _npcDialogController.GetCurrentDialogIndex();
             var expectedIndex = 0;
 
             Assert.AreEqual(expectedIndex, currentIndex);
