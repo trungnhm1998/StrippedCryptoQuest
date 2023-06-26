@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4327092780162310320}
   m_Layer: 5
-  m_Name: InnerUI
+  m_Name: Content
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -47,7 +47,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8759938187778997364}
-  - component: {fileID: 6852741684755084839}
+  - component: {fileID: 4450681144292384039}
   m_Layer: 5
   m_Name: SpeechDialog
   m_TagString: Untagged
@@ -76,7 +76,7 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: -300}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &6852741684755084839
+--- !u!114 &4450681144292384039
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -85,14 +85,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 3899739026275214210}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 135834c65872d4c44bca56d1b71c5bdd, type: 3}
+  m_Script: {fileID: 11500000, guid: 6365db6b401508a4e9c6744fc81504b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _turnOnDialogEvent: {fileID: 11400000, guid: 661327b19734e694ebedf0de5c8bf618, type: 2}
-  _turnOffDialogEvent: {fileID: 11400000, guid: 133fb0d84bfd4284d92509a77b6c10fe, type: 2}
-  _receivedMessage: {fileID: 11400000, guid: d0dbaf2124e75e34081ae295ff223155, type: 2}
-  _innerUI: {fileID: 3426673102168637838}
-  _message: {fileID: 8187036121969586233}
+  _showDialogEvent: {fileID: 11400000, guid: 661327b19734e694ebedf0de5c8bf618, type: 2}
+  _hideDialogEvent: {fileID: 11400000, guid: 133fb0d84bfd4284d92509a77b6c10fe, type: 2}
+  _content: {fileID: 3426673102168637838}
 --- !u!1 &5976134810377708210
 GameObject:
   m_ObjectHideFlags: 0
