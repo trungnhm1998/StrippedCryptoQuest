@@ -13,16 +13,17 @@ namespace CryptoQuest
 {
     public class TeleportArea : MonoBehaviour
     {
+        [SerializeField] private String _playerTag = "Player";
         public SceneScriptableObject nextScene;
         public LoadSceneEventChannelSO _loadNextSceneEventChannelSO;
         private void OnTriggerEnter2D(Collider2D other)
         {
-            if (other.gameObject.CompareTag("Player"))
+            if (other.gameObject.CompareTag(_playerTag))
             {
-                TriggerTeleport(nextScene);
+                OnTriggerTeleport(nextScene);
             }
         }
-        private void TriggerTeleport(SceneScriptableObject scene)
+        private void OnTriggerTeleport(SceneScriptableObject scene)
         {
             _loadNextSceneEventChannelSO.RequestLoad(scene);
         }
