@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Core.Editor.EditorTools.Attributes.ReadOnlyAttribute
 {
-    [CustomPropertyDrawer(typeof(global::EditorTools.Runtime.Attributes.ReadOnlyAttribute.ReadOnlyAttribute))]
+    [CustomPropertyDrawer(typeof(Runtime.EditorTools.Attributes.ReadOnlyAttribute.ReadOnlyAttribute))]
     public class ReadOnlyDrawer : PropertyDrawer
     {
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace EditorTools.Runtime.Attributes.ReadOnlyAttribute
+namespace Core.Runtime.EditorTools.Attributes.ReadOnlyAttribute
 {
     public class ReadOnlyAttribute : PropertyAttribute
     {
