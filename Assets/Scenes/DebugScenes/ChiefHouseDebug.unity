@@ -167,7 +167,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce56960df15e88640a34d9b8b442f32d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  entranceDestination: {fileID: 1585045}
+  transitionSO: {fileID: 11400000, guid: 2a4e24b3a44766f4d88fe843fa5fbd5a, type: 2}
+  mapPath: {fileID: 11400000, guid: 87a1381c5324b324a870bbd05f823822, type: 2}
   entranceFacingDirection: 0
   updatePlayerStateEvent: {fileID: 11400000, guid: d382e3bcf93a017448ed9709645bfe84, type: 2}
 --- !u!1 &336135974
@@ -200,8 +201,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 394ac388cc7f44746a25849a7de5ebd3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  NextScene: {fileID: 11400000, guid: 2384d510e3605d14dbc2369193241739, type: 2}
-  LoadNextSceneEventChannelSO: {fileID: 11400000, guid: 932ea26428d5f4c4f8bdfd48ebc80873, type: 2}
+  nextScene: {fileID: 11400000, guid: 2384d510e3605d14dbc2369193241739, type: 2}
+  loadNextSceneEventChannelSO: {fileID: 11400000, guid: 932ea26428d5f4c4f8bdfd48ebc80873, type: 2}
+  transitionSO: {fileID: 11400000, guid: 2a4e24b3a44766f4d88fe843fa5fbd5a, type: 2}
+  mapPath: {fileID: 11400000, guid: 42cc2e169d95b5d418af8b1523069598, type: 2}
   _playerTag: Player
 --- !u!4 &336135976
 Transform:

@@ -8,7 +8,8 @@ namespace CryptoQuest.Map
     {
         public SceneScriptableObject nextScene;
         public LoadSceneEventChannelSO loadNextSceneEventChannelSO;
-
+        public MapTransitionSO transitionSO;
+        public MapPathSO mapPath;
         [SerializeField] private string _playerTag = "Player";
 
         private void OnTriggerEnter2D(Collider2D other)
@@ -20,7 +21,12 @@ namespace CryptoQuest.Map
 
         private void OnTriggerTeleport(SceneScriptableObject scene)
         {
+            UpdateTransitionName(mapPath);
             loadNextSceneEventChannelSO.RequestLoad(scene);
+        }
+        private void UpdateTransitionName(MapPathSO transitionPath)
+        {
+            transitionSO.currentMapPath = transitionPath;
         }
     }
 }
