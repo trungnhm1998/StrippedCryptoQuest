@@ -1,18 +1,29 @@
-﻿using CryptoQuest.Input;
+﻿using System;
+using CryptoQuest.Input;
 using UnityEngine;
 
 namespace CryptoQuest.Character.MonoBehaviours
 {
     [RequireComponent(typeof(Rigidbody2D))]
+    [RequireComponent(typeof(Animator))]
     public class HeroController : MonoBehaviour
     {
         [SerializeField] private InputMediatorSO _inputMediator;
         [SerializeField] private float _speed = 4f;
+        [SerializeField] private CharacterBehaviour _characterBehaviour;
+        [SerializeField] private Animator _animator;
+        [SerializeField]
+        private IInteractionManager _test;
 
         private Rigidbody2D _rigidbody2D;
         private Vector2 _inputVector;
         private ICharacterController2D _controller;
         private IInteractionManager _interactionManager;
+
+        private void OnValidate()
+        {
+            
+        }
 
         private void Awake()
         {

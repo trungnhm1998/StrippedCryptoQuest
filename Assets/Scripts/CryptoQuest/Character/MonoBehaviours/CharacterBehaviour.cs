@@ -12,7 +12,6 @@ namespace CryptoQuest.Character.MonoBehaviours
             East = 3,
         }
 
-        protected EFacingDirection FacingDirection = EFacingDirection.South;
+        public EFacingDirection FacingDirection { get; set; } = EFacingDirection.South;
     }
 }
-

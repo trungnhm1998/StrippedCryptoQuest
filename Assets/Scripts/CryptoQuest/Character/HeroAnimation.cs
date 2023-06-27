@@ -1,15 +1,14 @@
-using System.Collections;
-using System.Collections.Generic;
-using Core.Runtime.EditorTools.Attributes.ReadOnlyAttribute;
+using CryptoQuest.Character.MonoBehaviours;
 using UnityEngine;
 
-namespace CryptoQuest.Character.MonoBehaviours
+namespace CryptoQuest.Character
 {
     public class HeroAnimation : MonoBehaviour
     {
         [SerializeField] private Animator _heroAnimation;
         private CharacterBehaviour.EFacingDirection _facingDirection;
         private Rigidbody2D _rigidbody2D;
+
         void Awake()
         {
             _rigidbody2D = GetComponent<Rigidbody2D>();
@@ -32,6 +31,7 @@ namespace CryptoQuest.Character.MonoBehaviours
                 _heroAnimation.SetFloat("moveX", 0);
                 _heroAnimation.SetFloat("moveY", 0);
             }
+
             SetFacingDirection();
         }
 
@@ -49,12 +49,12 @@ namespace CryptoQuest.Character.MonoBehaviours
                     _heroAnimation.SetFloat("lastPosX", 0);
                     _heroAnimation.SetFloat("lastPosY", -.1f);
                     break;
-                case ( < 0, 0):
+                case (< 0, 0):
                     _facingDirection = CharacterBehaviour.EFacingDirection.West;
                     _heroAnimation.SetFloat("lastPosX", -.1f);
                     _heroAnimation.SetFloat("lastPosY", 0);
                     break;
-                case ( > 0, 0):
+                case (> 0, 0):
                     _facingDirection = CharacterBehaviour.EFacingDirection.East;
                     _heroAnimation.SetFloat("lastPosX", .1f);
                     _heroAnimation.SetFloat("lastPosY", 0);
