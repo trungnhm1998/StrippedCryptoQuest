@@ -40,10 +40,13 @@ namespace Indigames.AbilitySystem.Sample
             yield return base.InternalActiveAbility();
             _turnLeft = Parameters.continuesTurn;
         }
+        
         private void OnTurnEndEvent()
         {
+            if (!IsActive) return;
             Debug.Log($"TurnBaseSkill::OnTurnEndEvent: {AbilitySO.name} Turn Left: {_turnLeft}");
-            if (--_turnLeft > 0) return;
+            // Compare the before value because caculation start at then next turn
+            if (_turnLeft-- > 0) return;
             EndAbility();
         }
 

@@ -9,24 +9,28 @@ namespace Indigames.AbilitySystem.Sample
     {
     #if UNITY_EDITOR || DEVELOPMENT_BUILD 
         [SerializeField] private AbilitySystemBehaviour _owner;
+        [SerializeField] private BattleUnitBase _battleUnit;
         [SerializeField] private AbilitySystemBehaviour _target;
         [SerializeField] private bool _showDebug = false;
         [SerializeField] private Rect _windowRect = new Rect(20, 20, 120, 50);
-        [SerializeField] private Rect _minimizeRect = new Rect(20, 20, 120, 50);
+        [SerializeField] private float _windowWidth = 400;
         [SerializeField] private int _windowId;
         [Header("Abilities to add")]
-        [SerializeField] private List<AbilityScriptableObject> skills = new();
+        [SerializeField] private List<AbilityScriptableObject> _availableSkills = new();
+        [SerializeField] private List<AbilityScriptableObject> _defaultGrantSkills = new();
         [Header("Effects to add")]
-        [SerializeField] private List<EffectScriptableObject> effects = new();
+        [SerializeField] private List<EffectScriptableObject> _effects = new();
         [Header("Modifier to add")]
-        [SerializeField] private AttributeModifier[] modifiers;
+        [SerializeField] private AttributeModifier[] _modifiers;
 
         private AttributeSystemBehaviour _attributeSystem;
         private bool _showAttributes = true;
         private bool _showSkills = true;
-        private bool _showAppliedEffects = true;
+        private bool _showBattleUnit = true;
+        private bool _showAppliedEffects = false;
         private bool _showApplyEffects = false;
         private bool _showApplyModifiers = false;
+        private Rect _minimizeRect;
         
         private void OnValidate()
         {
@@ -34,11 +38,25 @@ namespace Indigames.AbilitySystem.Sample
             {
                 _owner = GetComponent<AbilitySystemBehaviour>();
             }
+            if (_battleUnit == null)
+            {
+                _battleUnit = GetComponent<BattleUnitBase>();
+            }
         }
 
         private void Start()
         {
+            _minimizeRect = _windowRect;
             _attributeSystem = _owner.AttributeSystem;
+            GrantDefaulSkills();
+        }
+
+        private void GrantDefaulSkills()
+        {
+            foreach (var skill in _defaultGrantSkills)
+            {
+                _owner.GiveAbility(skill);
+            }
         }
 
         private void OnGUI()
@@ -71,29 +89,43 @@ namespace Indigames.AbilitySystem.Sample
 
         private void RenderDebug()
         {
-            GUILayout.BeginHorizontal("box", GUILayout.Width(Screen.width - 100));
+            GUILayout.BeginHorizontal("box", GUILayout.Width(_windowWidth));
             {
                 GUILayout.BeginVertical();
                 RenderAttributesDebug();
                 RenderAppliedEffect();
-                GUILayout.EndVertical();
-
-                GUILayout.Space(5);
-
-                GUILayout.BeginVertical();
-                RenderAddEffect();
-                RenderAddModifiers();
                 GUILayout.EndVertical();
             }
             GUILayout.EndHorizontal();
 
             GUILayout.Space(5);
 
-            GUILayout.BeginHorizontal("box", GUILayout.Width(Screen.width - 100));
+            GUILayout.BeginHorizontal("box", GUILayout.Width(_windowWidth));
+            {
+                GUILayout.BeginVertical();
+                RenderListTargetsDebug();
+                GUILayout.EndVertical();
+            }
+            GUILayout.EndHorizontal();
+
+            GUILayout.Space(5);
+
+            GUILayout.BeginHorizontal("box", GUILayout.Width(_windowWidth));
             {
                 GUILayout.BeginVertical();
                 RenderListSkillsDebug();
                 RenderGrantedSkillsDebug();
+                GUILayout.EndVertical();
+            }
+            GUILayout.EndHorizontal();
+
+            GUILayout.Space(5);
+
+            GUILayout.BeginHorizontal("box", GUILayout.Width(_windowWidth));
+            {
+                GUILayout.BeginVertical();
+                RenderAddEffect();
+                RenderAddModifiers();
                 GUILayout.EndVertical();
             }
             GUILayout.EndHorizontal();
@@ -104,7 +136,7 @@ namespace Indigames.AbilitySystem.Sample
             _showApplyModifiers = GUILayout.Toggle(_showApplyModifiers, "Show add modifiers");
             if (!_showApplyModifiers) return;
 
-            foreach (var modifier in modifiers)
+            foreach (var modifier in _modifiers)
             {
                 if (GUILayout.Button($"Add modifier {modifier.Attribute.name}"))
                 {
@@ -131,7 +163,7 @@ namespace Indigames.AbilitySystem.Sample
             GUILayout.Label("Base Power: ");
             var txtLevelRate = GUILayout.TextField("0");
             GUILayout.EndHorizontal();
-            foreach (var effect in effects)
+            foreach (var effect in _effects)
             {
                 if (GUILayout.Button($"Add effect {effect.name}"))
                 {
@@ -184,11 +216,28 @@ namespace Indigames.AbilitySystem.Sample
             }
         }
         
+        private void RenderListTargetsDebug()
+        {
+            _showBattleUnit = GUILayout.Toggle(_showBattleUnit, "Show Battle Unit");
+            if (!_showBattleUnit || _battleUnit.Targets == null) return;
+            foreach (var target in _battleUnit.Targets)
+            {
+                if (target == null) continue;
+                GUI.enabled = !_battleUnit.TargetContainer.Targets.Contains(target);
+                var buttonLabel = (GUI.enabled ? "Select" : "Selected") + $" target {target.name}";
+                if (GUILayout.Button(buttonLabel))
+                {
+                    _battleUnit.SelectSingleTarget(target);
+                }
+                GUI.enabled = true;
+            }
+        }
+
         private void RenderListSkillsDebug()
         {
             _showSkills = GUILayout.Toggle(_showSkills, "Show Available Abilities");
             if (!_showSkills) return;
-            foreach (var skill in skills)
+            foreach (var skill in _availableSkills)
             {
                 if (GUILayout.Button($"Grant skill {skill.name}"))
                 {
@@ -207,6 +256,7 @@ namespace Indigames.AbilitySystem.Sample
                 if (GUILayout.Button($"Activate skill {skill.AbilitySO.name}"))
                 {
                     _owner.TryActiveAbility(skill);
+                    _battleUnit.OnPerformSkill();
                 }
                 GUI.enabled = true;
             }

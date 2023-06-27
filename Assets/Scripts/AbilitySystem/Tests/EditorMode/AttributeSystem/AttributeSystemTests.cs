@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.TestTools;
 using Indigames.AbilitySystem;
 
-namespace Indigames.AbilitySystem.Tests.Attribute
+namespace Indigames.AbilitySystem.Tests.AttributeSystem
 {
     public class AttributeSystemBehaviourTests
     {
@@ -27,7 +27,7 @@ namespace Indigames.AbilitySystem.Tests.Attribute
         }
 
         [Test]
-        public void AttributeSystem_CheckHasAttribute()
+        public void AttributeSystemBehaviour_CheckHasAttribute()
         {
             Assert.IsFalse(_attributeSystem.HasAttribute(_attributeInSystem),
                 $"{_attributeInSystem.name} is not added into Attribute System");
@@ -36,7 +36,7 @@ namespace Indigames.AbilitySystem.Tests.Attribute
         }
 
         [Test]
-        public void AttributeSystem_CheckAddAttribute()
+        public void AttributeSystemBehaviour_CheckAddAttribute()
         {
             SetupAddAttribute();
 
@@ -53,9 +53,9 @@ namespace Indigames.AbilitySystem.Tests.Attribute
 
 
         [Test]
-        public void AttributeSystem_GetAttributeValue()
+        public void AttributeSystemBehaviour_GetAttributeValue()
         {
-            AttributeSystem_CheckAddAttribute();
+            AttributeSystemBehaviour_CheckAddAttribute();
 
             Assert.IsTrue(_attributeSystem.GetAttributeValue(_attributeInSystem, out var valueInSystem), 
                 $"Shoud be true because {_attributeInSystem.name} is in system");
@@ -72,7 +72,7 @@ namespace Indigames.AbilitySystem.Tests.Attribute
         }
 
         [Test]
-        public void AttributeSystem_SetBaseAttributeValueTo10()
+        public void AttributeSystemBehaviour_SetBaseAttributeValueTo10()
         {
             SetupSetBaseValueAttribute(10);
 
@@ -85,7 +85,7 @@ namespace Indigames.AbilitySystem.Tests.Attribute
         }
         
         [Test]
-        public void AttributeSystem_ResetAllAttributes()
+        public void AttributeSystemBehaviour_ResetAllAttributes()
         {
             SetupSetBaseValueAttribute(100);
 
@@ -97,7 +97,7 @@ namespace Indigames.AbilitySystem.Tests.Attribute
 
         
         [Test]
-        public void AttributeSystem_UpdateAttributeCurrentValue()
+        public void AttributeSystemBehaviour_UpdateAttributeCurrentValue()
         {
             SetupAddAttribute();
             SetupSetBaseValueAttribute(10);
@@ -119,7 +119,7 @@ namespace Indigames.AbilitySystem.Tests.Attribute
         }
 
         [Test]
-        public void AttributeSystem_AddModifierAdd_1()
+        public void AttributeSystemBehaviour_AddModifierAdd_1()
         {
             SetupSetBaseValueAttribute(10);
             _attributeSystem.UpdateAttributeCurrentValue(_attributeInSystem);
@@ -151,7 +151,7 @@ namespace Indigames.AbilitySystem.Tests.Attribute
 
         
         [Test]
-        public void AttributeSystem_AddModifierMultiply_100Percent()
+        public void AttributeSystemBehaviour_AddModifierMultiply_100Percent()
         {
             SetupSetBaseValueAttribute(10);
             _attributeSystem.UpdateAttributeCurrentValue(_attributeInSystem);
@@ -183,9 +183,9 @@ namespace Indigames.AbilitySystem.Tests.Attribute
         }
 
         [Test]
-        public void AttributeSystem_ResetAllModifiers()
+        public void AttributeSystemBehaviour_ResetAllModifiers()
         {
-            AttributeSystem_AddModifierMultiply_100Percent();
+            AttributeSystemBehaviour_AddModifierMultiply_100Percent();
             AttributeValue value = new AttributeValue();
             _attributeSystem.GetAttributeValue(_attributeInSystem, out value);
             Assert.AreEqual(40, value.CurrentValue);

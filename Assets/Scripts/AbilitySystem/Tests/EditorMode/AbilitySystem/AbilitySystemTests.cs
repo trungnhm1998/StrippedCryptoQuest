@@ -5,12 +5,12 @@ using UnityEngine;
 using UnityEngine.TestTools;
 using Indigames.AbilitySystem;
 
-namespace Indigames.AbilitySystem.Tests.Ability
+namespace Indigames.AbilitySystem.Tests.AbilitySystem
 {
     public class AbilitySystemBehaviourTests
     {
         [Test]
-        public void AbilitySystem_OnValidateAssignComponentsCorrectly()
+        public void AbilitySystemBehaviour_OnValidateAssignComponentsCorrectly()
         {
             var abilityOwner = new GameObject();
             var abilitySystem = abilityOwner.AddComponent<AbilitySystemBehaviour>();
