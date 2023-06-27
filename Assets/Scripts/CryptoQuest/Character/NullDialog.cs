@@ -9,7 +9,7 @@ namespace CryptoQuest.Characters
 
         public static IDialog Instance => _instance ??= new NullDialog();
 
-        public void SetDialogData(DialogsScriptableObject dialogSO) { }
+        public void SetDialogData(DialogueScriptableObject dialogueSo) { }
 
         public string GetDialogKey() => string.Empty;
         public void ShowDialog() { }

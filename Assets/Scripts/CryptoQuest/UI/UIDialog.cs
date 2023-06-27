@@ -1,5 +1,8 @@
 using Core.Runtime.Events.ScriptableObjects;
+using CryptoQuest.Characters.Events;
+using TMPro;
 using UnityEngine;
+using UnityEngine.Localization;
 
 namespace CryptoQuest.UI
 {
@@ -7,16 +10,21 @@ namespace CryptoQuest.UI
     {
         [Header("Events received")]
         [SerializeField] private VoidEventChannelSO _showDialogEvent;
+
         [SerializeField] private VoidEventChannelSO _hideDialogEvent;
+        [SerializeField] private DialogEventScriptableObject _dialogEvent;
 
         [Space]
         [SerializeField] private GameObject _content;
+
+        [SerializeField] private TextMeshProUGUI _text;
 
         public bool IsShown => _content.activeSelf;
 
         public GameObject Content
         {
-            get => _content; set => _content = value;
+            get => _content;
+            set => _content = value;
         }
 
         public VoidEventChannelSO ShowDialogEvent
@@ -51,16 +59,23 @@ namespace CryptoQuest.UI
             _content.SetActive(false);
         }
 
+        public void SetText(LocalizedString localizedString)
+        {
+            _text.text = localizedString.GetLocalizedString();
+        }
+
         public void RegisterEvents()
         {
             _showDialogEvent.EventRaised += Show;
             _hideDialogEvent.EventRaised += Hide;
+            _dialogEvent.ShowEvent += SetText;
         }
 
         public void UnregisterEvents()
         {
             _showDialogEvent.EventRaised -= Show;
             _hideDialogEvent.EventRaised -= Hide;
+            _dialogEvent.ShowEvent -= SetText;
         }
     }
 }

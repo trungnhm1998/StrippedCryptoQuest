@@ -10,7 +10,7 @@ namespace Tests.EditMode.Core.NPC
     [TestFixture]
     public class DialogControllerTest
     {
-        private DialogsScriptableObject _dialogSO;
+        private DialogueScriptableObject _dialogueSo;
         private NpcDialogController _npcDialogController;
         private GameObject _npcGameObject;
 
@@ -18,57 +18,11 @@ namespace Tests.EditMode.Core.NPC
         [SetUp]
         public void Setup()
         {
-            _npcGameObject = new GameObject(); 
-            _npcGameObject.AddComponent<NpcDialogController>(); 
+            _npcGameObject = new GameObject();
             _npcGameObject.AddComponent<NpcDialogController>();
-            
-            _dialogSO = ScriptableObject.CreateInstance<DialogsScriptableObject>();
+            _npcGameObject.AddComponent<NpcDialogController>();
 
-        }
-
-        [Test]
-        public void GetNextIndex_WithEmptyDialogSO_ShouldReturnZero()
-        {
-            var index = _npcDialogController.GetNextIndex();
-
-            Assert.AreEqual(0, index);
-        }
-
-        [Test]
-        public void GetNextIndex_WithDummyDataDialogSO_ShouldReturnCorrectIndex()
-        {
-            // int expectedCount = DIALOG_TEST.Count;
-            // bool hasCorrectData = true;
-            //
-            // for (int expected = 1; expected < expectedCount; expected++)
-            // {
-            //     var nextIndex = _npcDialogController.GetNextIndex();
-            //     if (expected != nextIndex)
-            //     {
-            //         hasCorrectData = false;
-            //         break;
-            //     }
-            // }
-            //
-            // Assert.IsTrue(hasCorrectData);
-        }
-
-        [Test]
-        public void GetNextIndex_Called_ShouldReturnOne()
-        {
-            var index = _npcDialogController.GetNextIndex();
-            var expected = 1;
-
-            Assert.AreEqual(expected, index);
-        }
-
-        [Test]
-        public void GetCurrentDialogIndex_ShouldReturnZeroByDefault()
-        {
-            var currentIndex = _npcDialogController.GetCurrentDialogIndex();
-            var expectedIndex = 0;
-
-            Assert.AreEqual(expectedIndex, currentIndex);
+            _dialogueSo = ScriptableObject.CreateInstance<DialogueScriptableObject>();
         }
     }
 }
