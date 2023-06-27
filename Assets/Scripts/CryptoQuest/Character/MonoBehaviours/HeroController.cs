@@ -1,4 +1,5 @@
-﻿using CryptoQuest.Input;
+﻿using CryptoQuest.Characters;
+using CryptoQuest.Input;
 using UnityEngine;
 
 namespace CryptoQuest.Character.MonoBehaviours
@@ -27,11 +28,21 @@ namespace CryptoQuest.Character.MonoBehaviours
         private void OnEnable()
         {
             _inputMediator.MoveEvent += MoveEvent_Raised;
+            _inputMediator.InteractEvent += InteractEvent_Raised;
         }
 
         private void OnDisable()
         {
             _inputMediator.MoveEvent -= MoveEvent_Raised;
+            _inputMediator.InteractEvent -= InteractEvent_Raised;
+        }
+
+        private void InteractEvent_Raised()
+        {
+            IInteractable currentInteractable = GetComponent<InteractionManager>().CurrentInteraction;
+
+            if (currentInteractable == null) return;
+            currentInteractable.Interact();
         }
 
         private void FixedUpdate()
