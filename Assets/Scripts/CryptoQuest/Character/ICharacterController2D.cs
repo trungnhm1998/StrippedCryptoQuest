@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace CryptoQuest.Character.MonoBehaviours
+namespace CryptoQuest.Character
 {
     public interface ICharacterController2D
     {
