@@ -18,7 +18,7 @@ namespace CryptoQuest.EditorTool
             if (!IsTargeting) return;
 
             Gizmos.color = Color.green;
-            Gizmos.DrawIcon(_targetPosition, "Assets/CryptoQuestEditor/EditorTool/Icons/SpawnIcon.png", true);
+            Gizmos.DrawIcon(_targetPosition, "Assets/CryptoQuestEditor/Arts/Icons/SpawnIcon.png", true);
         }
 
         public void BeginTargeting()

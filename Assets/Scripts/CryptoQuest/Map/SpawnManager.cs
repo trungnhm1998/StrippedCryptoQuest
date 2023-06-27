@@ -11,15 +11,36 @@ namespace CryptoQuest.Map
         [SerializeField] private InputMediatorSO _inputMediator;
         [SerializeField] private GameplayBus _gameplayBus;
         [SerializeField] private HeroBehaviour _heroPrefab;
+        [SerializeField] private PathStorageSO _pathStorage;
 
         [Header("Listening on")]
         [SerializeField] private VoidEventChannelSO _sceneLoadedEventChannelSO;
+
+        private MapEntrance[] _mapEntrances;
 
         private Transform _defaultSpawnPoint;
 
         private void Awake()
         {
+            _mapEntrances = FindObjectsOfType<MapEntrance>();
             _defaultSpawnPoint = transform.GetChild(0);
+        }
+
+        private Transform GetSpawnPoint()
+        {
+            var spawnPoint = _defaultSpawnPoint;
+
+            for (int i = 0; i < _mapEntrances.Length; i++)
+            {
+                var entrance = _mapEntrances[i];
+                if (entrance.MapPath == _pathStorage.LastTakenPath)
+                {
+                    spawnPoint = entrance.transform;
+                    break;
+                }
+            }
+
+            return spawnPoint;
         }
 
         private void OnEnable()
@@ -36,7 +57,9 @@ namespace CryptoQuest.Map
         {
             if (_defaultSpawnPoint == null) return;
 
-            var heroInstance = Instantiate(_heroPrefab, _defaultSpawnPoint);
+            var spawnPoint = GetSpawnPoint();
+
+            var heroInstance = Instantiate(_heroPrefab, spawnPoint.position, Quaternion.identity);
             _gameplayBus.Hero = heroInstance;
         }
     }

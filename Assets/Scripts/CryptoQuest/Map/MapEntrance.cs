@@ -1,34 +1,29 @@
-using System.Collections;
-using System.Collections.Generic;
 using CryptoQuest.Character.MonoBehaviours;
 using CryptoQuest.Character.ScriptableObjects;
 using UnityEngine;
+using UnityEngine.Serialization;
+
 namespace CryptoQuest.Map
 {
     public class MapEntrance : MonoBehaviour
     {
-        public MapTransitionSO transitionSO;
-        public MapPathSO mapPath;
+        [SerializeField] private PathStorageSO _transitionSO;
+        [SerializeField] private MapPathSO _mapPath;
+        public MapPathSO MapPath => _mapPath;
 
-        public CharacterBehaviour.EFacingDirection entranceFacingDirection;
-        public CharacterArgsEventChannelSO updatePlayerStateEvent;
+        [SerializeField] private CharacterBehaviour.EFacingDirection _entranceFacingDirection;
+        [SerializeField] private CharacterArgsEventChannelSO _updatePlayerStateEvent;
         private void Start()
         {
-            if (transitionSO.currentMapPath == null)
+            if (_transitionSO.LastTakenPath == null)
             {
-                SetUpDefault();
                 return;
             };
-            if (mapPath != transitionSO.currentMapPath) return;
+            if (_mapPath != _transitionSO.LastTakenPath) return;
             CharacterArgs characterArgs = new CharacterArgs();
             characterArgs.position = transform.position;
-            characterArgs.facingDirection = entranceFacingDirection;
-            updatePlayerStateEvent.RaiseEvent(characterArgs);
-            transitionSO.currentMapPath = null;
-        }
-        private void SetUpDefault()
-        {
-           // set up default map entrance
+            characterArgs.facingDirection = _entranceFacingDirection;
+            _updatePlayerStateEvent.RaiseEvent(characterArgs);
         }
     }
 }
