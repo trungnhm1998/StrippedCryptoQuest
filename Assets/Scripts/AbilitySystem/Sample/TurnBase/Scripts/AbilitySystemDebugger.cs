@@ -154,8 +154,12 @@ namespace Indigames.AbilitySystem.Sample
                 if (abstractEffect.EffectSO.EffectDetails.Modifiers[0].ModifierComputationMethod)
                     computedValue = abstractEffect.EffectSO.EffectDetails.Modifiers[0].ModifierComputationMethod
                         .CalculateMagnitude(abstractEffect);
-                var skillParams = (SkillParameters) abstractEffect.Parameters;
-                string details = $"\nTurns: {skillParams.continuesTurn} | Base Power: {skillParams.basePower}";
+                string details = "";
+                if (abstractEffect.Parameters != null)
+                {
+                    var skillParams = (SkillParameters) abstractEffect.Parameters;
+                    details = $"\nTurns: {skillParams.continuesTurn} | Base Power: {skillParams.basePower}";
+                }
 
                 if (abstractEffect is DurationalEffect durationalEffect)
                 {
@@ -188,7 +192,7 @@ namespace Indigames.AbilitySystem.Sample
             {
                 if (GUILayout.Button($"Grant skill {skill.name}"))
                 {
-                    var effectSpec = _owner.SkillSystem.GiveSkill(skill, new SkillParameters());
+                    var effectSpec = _owner.SkillSystem.GiveSkill(skill);
                 }
             }
         }
@@ -199,10 +203,12 @@ namespace Indigames.AbilitySystem.Sample
             if (!_showSkills) return;
             foreach (var skill in _owner.SkillSystem.GrantedSkills.Skills)
             {
-                if (GUILayout.Button($"Try activate skill {skill.SkillSO.name}"))
+                GUI.enabled = skill.CanActiveSkill();
+                if (GUILayout.Button($"Activate skill {skill.SkillSO.name}"))
                 {
                     _owner.SkillSystem.TryActiveSkill(skill);
                 }
+                GUI.enabled = true;
             }
         }
     #endif
