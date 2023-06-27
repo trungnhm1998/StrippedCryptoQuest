@@ -15,6 +15,8 @@ namespace Indigames.AbilitySystem
         }
 
         /// <summary>
+        /// It's mean instantly modify base of the attribute
+        /// suitable for non-stats attribute like HP (not MaxHP)
         /// Attack can be treat as instant effect
         /// Enemy -> attack (effect) -> Player
         /// </summary>
@@ -41,7 +43,7 @@ namespace Indigames.AbilitySystem
                         attributeValue.BaseValue += calculatedModifier.Additive;
                         break;
                     case EAttributeModifierType.Multiply:
-                        attributeValue.BaseValue *= calculatedModifier.Multiplicative;
+                        attributeValue.BaseValue += attributeValue.BaseValue * calculatedModifier.Multiplicative;
                         break;
                 }
 

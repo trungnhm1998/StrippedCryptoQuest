@@ -6,18 +6,18 @@ namespace Indigames.AbilitySystem
 {
     public class AttributeSystem : MonoBehaviour
     {
-        [SerializeField] private List<AbstractAttributesEventChannel> _attributeEventChannels;
+        [SerializeField] private List<AbstractAttributesEventChannel> _attributeEventChannels = new();
         public List<AbstractAttributesEventChannel> AttributeEventChannels { get => _attributeEventChannels; }
 
         /// <summary>
         /// If gameplay needs more attributes, add them here
         /// </summary>
-        [SerializeField] private List<AttributeScriptableObject> _attributes;
+        [SerializeField] private List<AttributeScriptableObject> _attributes = new();
 
         /// <summary>
         /// Value of the attributes above
         /// </summary>
-        [SerializeField] private List<AttributeValue> _attributeValues;
+        [SerializeField] private List<AttributeValue> _attributeValues = new();
         public List<AttributeValue> AttributeValues => _attributeValues;
 
         // Only cache the index of the attribute, not the attribute itself
@@ -97,7 +97,8 @@ namespace Indigames.AbilitySystem
 
         public bool HasAttribute(AttributeScriptableObject attributeSO)
         {
-            return _attributeIndexCache.TryGetValue(attributeSO, out _);
+            var cache = GetAttributeIndexCache();
+            return cache.TryGetValue(attributeSO, out _);
         }
 
         /// <summary>
@@ -132,16 +133,17 @@ namespace Indigames.AbilitySystem
                 return;
             AttributeValue attributeValue = _attributeValues[index];
             var previousValue = attributeValue.Clone();
+            foreach (var eventChannel in _attributeEventChannels)
+            {
+                eventChannel.PreAttributeChanged(this, _previousValues, ref _attributeValues);
+            }
+
             _attributeValues[index] = AttributeSystemHelper.CalculateCurrentAttributeValue(attributeValue);
 
             if (!(Math.Abs(attributeValue.CurrentValue - previousValue.CurrentValue) > TOLERATED_DIFFERENCE))
                 return;
 
             attribute.RaiseValueChangedEvent(this, previousValue, attributeValue);
-            foreach (var eventChannel in _attributeEventChannels)
-            {
-                eventChannel.PreAttributeChanged(this, _previousValues, ref _attributeValues);
-            }
         }
 
         public void UpdateAllAttributeCurrentValues()
@@ -203,7 +205,6 @@ namespace Indigames.AbilitySystem
         {
             var cache = GetAttributeIndexCache();
             if (!cache.TryGetValue(attribute, out var index)) return;
-
             var attributeValue = _attributeValues[index];
             attributeValue.BaseValue = value;
             _attributeValues[index] = attributeValue;

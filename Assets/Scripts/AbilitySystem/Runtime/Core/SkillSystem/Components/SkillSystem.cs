@@ -6,7 +6,7 @@ namespace Indigames.AbilitySystem
 {
     public class SkillSystem : MonoBehaviour
     {
-        protected SkillSpecificationContainer _grantedSkills;
+        protected SkillSpecificationContainer _grantedSkills = new();
         public SkillSpecificationContainer GrantedSkills => _grantedSkills;
 
         protected AbilitySystem _owner;
