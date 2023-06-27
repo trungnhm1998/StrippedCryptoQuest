@@ -15,6 +15,13 @@ namespace CryptoQuest.Characters
 
         private int _currentIndex = 0;
 
+
+        public void ShowDialog()
+        {
+            _dialogEventSO.OnShow(_dialogueSO.GetLine(CalculateNextIndex()));
+            _showDialogEventSO.RaiseEvent();
+        }
+
         private int CalculateNextIndex()
         {
             if (IsDataEmpty()) return 0;
@@ -24,12 +31,6 @@ namespace CryptoQuest.Characters
         private bool IsDataEmpty()
         {
             return _dialogueSO.Lines.Count == 0;
-        }
-
-        public void ShowDialog()
-        {
-            _dialogEventSO.OnShow(_dialogueSO.GetLine(CalculateNextIndex()));
-            _showDialogEventSO.RaiseEvent();
         }
     }
 }
