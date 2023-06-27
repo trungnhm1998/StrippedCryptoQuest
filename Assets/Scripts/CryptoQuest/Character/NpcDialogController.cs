@@ -15,11 +15,16 @@ namespace CryptoQuest.Characters
 
         private int _currentIndex = 0;
 
-
         public void ShowDialog()
         {
-            _dialogEventSO.OnShow(_dialogueSO.GetLine(CalculateNextIndex()));
+            _dialogEventSO.OnShow(_dialogueSO.GetLine(GetNextIndex()));
             _showDialogEventSO.RaiseEvent();
+        }
+
+        private int GetNextIndex()
+        {
+            _currentIndex = CalculateNextIndex();
+            return _currentIndex;
         }
 
         private int CalculateNextIndex()
