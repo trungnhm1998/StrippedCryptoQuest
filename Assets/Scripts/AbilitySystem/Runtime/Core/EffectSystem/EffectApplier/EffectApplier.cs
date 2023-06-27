@@ -5,10 +5,10 @@ namespace Indigames.AbilitySystem
 {
     public class EffectApplier : IEffectApplier
     {
-        private readonly AbilitySystem _ownerSystem;
-        private readonly AttributeSystem _attributeSystem;
+        private readonly AbilitySystemBehaviour _ownerSystem;
+        private readonly AttributeSystemBehaviour _attributeSystem;
 
-        public EffectApplier(AbilitySystem ownerSystem)
+        public EffectApplier(AbilitySystemBehaviour ownerSystem)
         {
             _ownerSystem = ownerSystem;
             _attributeSystem = ownerSystem.AttributeSystem;

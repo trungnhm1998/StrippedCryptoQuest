@@ -14,23 +14,23 @@ namespace Indigames.AbilitySystem
         /// <summary>
         /// The system give/apply this effect
         /// </summary>
-        public AbilitySystem Owner;
+        public AbilitySystemBehaviour Owner;
 
         /// <summary>
         /// The system this effect apply to. Can be the same as Owner and it will be self apply effect
         /// </summary>
-        private AbilitySystem _target;
-        public AbilitySystem Target => _target;
+        private AbilitySystemBehaviour _target;
+        public AbilitySystemBehaviour Target => _target;
 
         // The object that create this effect
         public string Origin;
         public AbilityParameters Parameters;
         public bool IsExpired { get; set; } = false;
-        public bool RemoveWhenSkillEnd = true;
+        public bool RemoveWhenAbilityEnd = true;
 
         protected IEffectApplier _effectApplier;
 
-        public virtual void InitEffect(EffectScriptableObject effectScriptableObject, AbilitySystem ownerSystem,
+        public virtual void InitEffect(EffectScriptableObject effectScriptableObject, AbilitySystemBehaviour ownerSystem,
             AbilityParameters parameters)
         {
             Owner = ownerSystem;
@@ -45,7 +45,7 @@ namespace Indigames.AbilitySystem
             EffectSO = effectScriptableObject;
         }
 
-        public bool CanApply(AbilitySystem ownerSystem)
+        public bool CanApply(AbilitySystemBehaviour ownerSystem)
         {
             if (Owner == null) return false;
             if (!CheckTagRequirementsMet()) return false;
@@ -70,7 +70,7 @@ namespace Indigames.AbilitySystem
             return true;
         }
 
-        public AbstractEffect SetTarget(AbilitySystem targetSystem)
+        public AbstractEffect SetTarget(AbilitySystemBehaviour targetSystem)
         {
             _target = targetSystem;
             return this;

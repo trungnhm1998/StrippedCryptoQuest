@@ -4,14 +4,14 @@ using System.Linq;
 
 namespace Indigames.AbilitySystem
 {
-    public class EffectSystem : MonoBehaviour
+    public class EffectSystemBehaviour : MonoBehaviour
     {
         public List<EffectSpecificationContainer> AppliedEffects = new List<EffectSpecificationContainer>();
 
-        protected AbilitySystem _owner;
-        public AbilitySystem Owner => _owner;
+        protected AbilitySystemBehaviour _owner;
+        public AbilitySystemBehaviour Owner => _owner;
 
-        private AttributeSystem _attributeSystem;
+        private AttributeSystemBehaviour _attributeSystem;
         private IEffectApplier _effectApplier;
         protected IEffectApplier EffectAppliers
         {
@@ -31,14 +31,14 @@ namespace Indigames.AbilitySystem
             _attributeSystem = Owner.AttributeSystem;
         }        
 
-        public void InitSystem(AbilitySystem owner)
+        public void InitSystem(AbilitySystemBehaviour owner)
         {
             _owner = owner;
         }
 
         /// <summary>
         /// Will create a new AbstractEffect from EffectScriptableObject (data)
-        /// this will update the Owner of the effect to this SkillSystem
+        /// this will update the Owner of the effect to this AbilitySystem
         /// </summary>
         /// <param name="effectSO"></param>
         /// <param name="origin"></param>

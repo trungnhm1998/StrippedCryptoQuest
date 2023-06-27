@@ -4,7 +4,7 @@ namespace Indigames.AbilitySystem
 {
     public class StatsInitializer : MonoBehaviour
     {
-        [SerializeField] private AttributeSystem _attributeSystem;
+        [SerializeField] private AttributeSystemBehaviour _attributeSystem;
         [SerializeField] private InitializeAttributeDatabase _database;
         public InitializeAttributeDatabase DefaultStats => _database;
 
@@ -12,7 +12,7 @@ namespace Indigames.AbilitySystem
         private void OnValidate()
         {
             if (_attributeSystem != null) return;
-            _attributeSystem = GetComponent<AttributeSystem>();
+            _attributeSystem = GetComponent<AttributeSystemBehaviour>();
         }
 #endif
 
