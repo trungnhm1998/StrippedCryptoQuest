@@ -22,9 +22,4 @@ namespace Indigames.AbilitySystem
             public List<SkillEffectContainer> TargetContainer = new List<SkillEffectContainer>();
         }
     }
-
-    public class EffectSkillSO<T> : EffectSkillSO where T : EffectSkill, new()
-    {
-        protected override AbstractSkill CreateSkill() => new T();
-    }
 }

@@ -126,21 +126,28 @@ namespace Indigames.AbilitySystem
             return appliedEffect;
         }
 
-        public override void OnSkillRemoved(AbstractSkill skillSpec)
+        public override void EndSkill()
         {
-            base.OnSkillRemoved(skillSpec);
+            base.EndSkill();
+            
             foreach (var tagEffect in _effectTagDict)
             {
                 var effectSpecs = tagEffect.Value;
                 for (int i = 0; i < effectSpecs.Count; i++)
                 {
                     var effectSpec = effectSpecs[i];
-                    if (effectSpec.RemoveWithSkill)
+                    if (effectSpec.RemoveWhenSkillEnd)
                         Owner.EffectSystem.RemoveEffect(effectSpec);
                 }
             }
 
             _effectTagDict.Clear();
+        }
+
+        public override void OnSkillRemoved(AbstractSkill skillSpec)
+        {
+            base.OnSkillRemoved(skillSpec);
+            EndSkill();
         }
 
         public void RemoveEffectWithTag(TagScriptableObject skillTag)

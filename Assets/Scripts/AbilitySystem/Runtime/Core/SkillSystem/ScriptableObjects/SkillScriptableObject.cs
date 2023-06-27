@@ -8,13 +8,13 @@ namespace Indigames.AbilitySystem
         [SerializeField] private SkillTags tags;
         public SkillTags Tags => tags;
 
-        [SerializeField] private AbilityParameters parameters;
-        public AbilityParameters Parameters => parameters;
+        [SerializeField] private AbilityParameters _parameters;
+        public virtual AbilityParameters Parameters => _parameters;
 
-        public AbstractSkill GetSkillSpec(AbilitySystem owner, AbilityParameters parameters)
+        public AbstractSkill GetSkillSpec(AbilitySystem owner)
         {
             var skill = CreateSkill();
-            skill.InitSkill(owner, this, parameters);
+            skill.InitSkill(owner, this, Parameters);
             return skill;
         }
 

@@ -67,6 +67,7 @@ namespace Indigames.AbilitySystem
                 if (abstractEffect.EffectSO == effect.EffectSpec.EffectSO)
                 {
                     AppliedEffects.RemoveAt(i);
+                    break;
                 }
             }
 

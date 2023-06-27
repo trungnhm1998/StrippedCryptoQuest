@@ -65,9 +65,9 @@ namespace Indigames.AbilitySystem
             Owner.TagSystem.RemoveTags(SkillSO.Tags.ActivationTags);
         }
 
-        public bool CanActiveSkill()
+        public virtual bool CanActiveSkill()
         {
-            return !_isActive && CheckTags();
+            return CheckTags();
         }
 
         /// <summary>
