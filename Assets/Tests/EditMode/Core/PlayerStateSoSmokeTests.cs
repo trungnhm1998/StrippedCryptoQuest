@@ -1,4 +1,5 @@
 using CryptoQuest.Character;
+using CryptoQuest.Character.MonoBehaviours;
 using CryptoQuest.Character.ScriptableObjects;
 using NUnit.Framework;
 
@@ -18,7 +19,7 @@ namespace Tests.EditMode.Core
             var path = UnityEditor.AssetDatabase.GUIDToAssetPath(guids[0]);
             var playerStateSO = UnityEditor.AssetDatabase.LoadAssetAtPath<CharacterStateSO>(path);
 
-            Assert.AreEqual(Character.EFacingDirection.South, playerStateSO.FacingDirection);
+            Assert.AreEqual(CharacterBehaviour.EFacingDirection.South, playerStateSO.FacingDirection);
         }
     }
 }
