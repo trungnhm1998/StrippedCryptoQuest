@@ -2,7 +2,7 @@
 using UnityEditor;
 using UnityEngine;
 
-namespace CryptoQuestEditor.EditorTool
+namespace CryptoQuestEditor.Scripts.EditorTool
 {
     [CustomEditor(typeof(ClickToPlaceUtil))]
     public class ClickToPlaceUtilEditor : Editor
@@ -15,7 +15,6 @@ namespace CryptoQuestEditor.EditorTool
 
             if (GUILayout.Button("Place at Mouse cursor") && !ClickToPlaceUtil.IsTargeting)
             {
-                Debug.Log("Place");
                 ClickToPlaceUtil.BeginTargeting();
                 SceneView.duringSceneGui += DuringSceneGui;
             }
@@ -31,10 +30,8 @@ namespace CryptoQuestEditor.EditorTool
             mousePos.x *= pixelsPerPoint;
 
             var pos = sceneView.camera.ScreenToWorldPoint(mousePos);
-            
+
             ClickToPlaceUtil.UpdateTargeting(pos);
-            
-            Debug.Log($"pos: {pos} - mousePos: {mousePos} - currentGUIEvent.type {currentGUIEvent.type}");
 
             switch (currentGUIEvent.type)
             {
