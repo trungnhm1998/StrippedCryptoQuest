@@ -5,51 +5,51 @@ using UnityEngine;
 
 namespace Indigames.AbilitySystem.Sample
 {
-    [CreateAssetMenu(fileName = "TurnBaseSkill", menuName = "Indigames Ability System/Skills/Turn Base Skill")]
-    public class TurnBaseSkillSO : EffectSkillSO
+    [CreateAssetMenu(fileName = "TurnBaseSkill", menuName = "Indigames Ability System/Abilities/Turn Base Ability")]
+    public class TurnBaseSkillSO : EffectAbilitySO
     {
         [SerializeField] private SkillParameters _parameters;
         public override AbilityParameters Parameters => _parameters;
 
         public VoidEventChannelSO TurnEndEventChannel;
-        protected override AbstractSkill CreateSkill()
+        protected override AbstractAbility CreateAbility()
         {
             var skill = new TurnBaseSkill();
             return skill;
         }
     }
 
-    public class TurnBaseSkill : EffectSkill
+    public class TurnBaseSkill : EffectAbility
     {
         private int _turnLeft;
-        protected new TurnBaseSkillSO SkillSO => (TurnBaseSkillSO) _skillSO;
+        protected new TurnBaseSkillSO AbilitySO => (TurnBaseSkillSO) _abilitySO;
         protected SkillParameters Parameters => (SkillParameters) _parameters; 
 
-        public override void OnSkillGranted(AbstractSkill skillSpec)
+        public override void OnAbilityGranted(AbstractAbility skillSpec)
         {
-            SkillSO.TurnEndEventChannel.EventRaised += OnTurnEndEvent;
+            AbilitySO.TurnEndEventChannel.EventRaised += OnTurnEndEvent;
         }
 
-        public override void OnSkillRemoved(AbstractSkill skillSpec)
+        public override void OnAbilityRemoved(AbstractAbility skillSpec)
         {
-            SkillSO.TurnEndEventChannel.EventRaised -= OnTurnEndEvent;
+            AbilitySO.TurnEndEventChannel.EventRaised -= OnTurnEndEvent;
         }
 
-        protected override IEnumerator InternalActiveSkill()
+        protected override IEnumerator InternalActiveAbility()
         {
-            yield return base.InternalActiveSkill();
+            yield return base.InternalActiveAbility();
             _turnLeft = Parameters.continuesTurn;
         }
         private void OnTurnEndEvent()
         {
-            Debug.Log($"TurnBaseSkill::OnTurnEndEvent: {SkillSO.name} Turn Left: {_turnLeft}");
+            Debug.Log($"TurnBaseSkill::OnTurnEndEvent: {AbilitySO.name} Turn Left: {_turnLeft}");
             if (--_turnLeft > 0) return;
-            EndSkill();
+            EndAbility();
         }
 
-        public override bool CanActiveSkill()
+        public override bool CanActiveAbility()
         {
-            return !IsActive && base.CanActiveSkill();
+            return !IsActive && base.CanActiveAbility();
         }
     }
 }

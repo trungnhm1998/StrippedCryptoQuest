@@ -7,11 +7,11 @@ using Indigames.AbilitySystem;
 
 namespace Indigames.AbilitySystem.Tests.Attribute
 {
-    public class AttributeSystemTests
+    public class AttributeSystemBehaviourTests
     {
         private const float DEFAULT_ATTRIBUTE_VALUE = 0;
         private GameObject _gameObject;
-        private AttributeSystem _attributeSystem;
+        private AttributeSystemBehaviour _attributeSystem;
         private AttributeScriptableObject _attributeInSystem;
         private AttributeScriptableObject _attributeOutSystem;
 
@@ -19,7 +19,7 @@ namespace Indigames.AbilitySystem.Tests.Attribute
         public void Setup()
         {
             _gameObject = new GameObject();
-            _attributeSystem = _gameObject.AddComponent<AttributeSystem>();
+            _attributeSystem = _gameObject.AddComponent<AttributeSystemBehaviour>();
             _attributeInSystem = ScriptableObject.CreateInstance<AttributeScriptableObject>();
             _attributeInSystem.name = "TestAttributeInSystem";
             _attributeOutSystem = ScriptableObject.CreateInstance<AttributeScriptableObject>();

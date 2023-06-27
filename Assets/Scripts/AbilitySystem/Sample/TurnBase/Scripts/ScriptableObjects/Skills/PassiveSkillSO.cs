@@ -4,26 +4,26 @@ using UnityEngine;
 
 namespace Indigames.AbilitySystem.Sample
 {
-    [CreateAssetMenu(fileName = "PassiveSkill", menuName = "Indigames Ability System/Skills/Passive Skill")]
-    public class PassiveSkillSO : EffectSkillSO
+    [CreateAssetMenu(fileName = "PassiveSkill", menuName = "Indigames Ability System/Abilities/Passive Ability")]
+    public class PassiveSkillSO : EffectAbilitySO
     {
-        protected override AbstractSkill CreateSkill()
+        protected override AbstractAbility CreateAbility()
         {
             var skill = new PassiveSkill();
             return skill;
         }
     }
 
-    public class PassiveSkill : EffectSkill
+    public class PassiveSkill : EffectAbility
     {
-        public override void OnSkillGranted(AbstractSkill skillSpec)
+        public override void OnAbilityGranted(AbstractAbility skillSpec)
         {
-            Owner.SkillSystem.TryActiveSkill(skillSpec);
+            Owner.TryActiveAbility(skillSpec);
         }
 
-        public override bool CanActiveSkill()
+        public override bool CanActiveAbility()
         {
-            return !IsActive && base.CanActiveSkill();
+            return !IsActive && base.CanActiveAbility();
         }
     }
 }

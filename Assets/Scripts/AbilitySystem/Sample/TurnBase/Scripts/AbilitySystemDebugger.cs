@@ -8,20 +8,20 @@ namespace Indigames.AbilitySystem.Sample
     public class AbilitySystemDebugger : MonoBehaviour
     {
     #if UNITY_EDITOR || DEVELOPMENT_BUILD 
-        [SerializeField] private AbilitySystem _owner;
-        [SerializeField] private AbilitySystem _target;
+        [SerializeField] private AbilitySystemBehaviour _owner;
+        [SerializeField] private AbilitySystemBehaviour _target;
         [SerializeField] private bool _showDebug = false;
         [SerializeField] private Rect _windowRect = new Rect(20, 20, 120, 50);
         [SerializeField] private Rect _minimizeRect = new Rect(20, 20, 120, 50);
         [SerializeField] private int _windowId;
-        [Header("Skills to add")]
-        [SerializeField] private List<SkillScriptableObject> skills = new();
+        [Header("Abilities to add")]
+        [SerializeField] private List<AbilityScriptableObject> skills = new();
         [Header("Effects to add")]
         [SerializeField] private List<EffectScriptableObject> effects = new();
         [Header("Modifier to add")]
         [SerializeField] private AttributeModifier[] modifiers;
 
-        private AttributeSystem _attributeSystem;
+        private AttributeSystemBehaviour _attributeSystem;
         private bool _showAttributes = true;
         private bool _showSkills = true;
         private bool _showAppliedEffects = true;
@@ -32,7 +32,7 @@ namespace Indigames.AbilitySystem.Sample
         {
             if (_owner == null)
             {
-                _owner = GetComponent<AbilitySystem>();
+                _owner = GetComponent<AbilitySystemBehaviour>();
             }
         }
 
@@ -122,7 +122,7 @@ namespace Indigames.AbilitySystem.Sample
             if (!_showApplyEffects) return;
             if (GUILayout.Button("Remove all skills"))
             {
-                _owner.SkillSystem.RemoveAllSkills();
+                _owner.RemoveAllAbilities();
             }
 
             GUILayout.BeginHorizontal();
@@ -186,27 +186,27 @@ namespace Indigames.AbilitySystem.Sample
         
         private void RenderListSkillsDebug()
         {
-            _showSkills = GUILayout.Toggle(_showSkills, "Show Available Skills");
+            _showSkills = GUILayout.Toggle(_showSkills, "Show Available Abilities");
             if (!_showSkills) return;
             foreach (var skill in skills)
             {
                 if (GUILayout.Button($"Grant skill {skill.name}"))
                 {
-                    var effectSpec = _owner.SkillSystem.GiveSkill(skill);
+                    var effectSpec = _owner.GiveAbility(skill);
                 }
             }
         }
         
         private void RenderGrantedSkillsDebug()
         {
-            _showSkills = GUILayout.Toggle(_showSkills, "Show Granted Skills");
+            _showSkills = GUILayout.Toggle(_showSkills, "Show Granted Abilities");
             if (!_showSkills) return;
-            foreach (var skill in _owner.SkillSystem.GrantedSkills.Skills)
+            foreach (var skill in _owner.GrantedAbilities.Abilities)
             {
-                GUI.enabled = skill.CanActiveSkill();
-                if (GUILayout.Button($"Activate skill {skill.SkillSO.name}"))
+                GUI.enabled = skill.CanActiveAbility();
+                if (GUILayout.Button($"Activate skill {skill.AbilitySO.name}"))
                 {
-                    _owner.SkillSystem.TryActiveSkill(skill);
+                    _owner.TryActiveAbility(skill);
                 }
                 GUI.enabled = true;
             }
