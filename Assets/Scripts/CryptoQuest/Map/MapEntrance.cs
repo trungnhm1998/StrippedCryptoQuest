@@ -1,5 +1,4 @@
 using CryptoQuest.Character.MonoBehaviours;
-using CryptoQuest.Character.ScriptableObjects;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -7,12 +6,13 @@ namespace CryptoQuest.Map
 {
     public class MapEntrance : MonoBehaviour
     {
-        [SerializeField] private PathStorageSO _transitionSO;
+        [Header("Config")]
         [SerializeField] private MapPathSO _mapPath;
         public MapPathSO MapPath => _mapPath;
-
         [SerializeField] private CharacterBehaviour.EFacingDirection _entranceFacingDirection;
+        public CharacterBehaviour.EFacingDirection EntranceFacingDirection => _entranceFacingDirection;
 
-        private void Start() { }
+        [Header("Refs")]
+        [SerializeField] private PathStorageSO _pathStorage;
     }
 }

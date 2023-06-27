@@ -1,3 +1,4 @@
+using Core.Runtime.EditorTools.Attributes.ReadOnlyAttribute;
 using Core.Runtime.SceneManagementSystem.Events.ScriptableObjects;
 using Core.Runtime.SceneManagementSystem.ScriptableObjects;
 using UnityEngine;
@@ -6,11 +7,14 @@ namespace CryptoQuest.Map
 {
     public class MapExit : MonoBehaviour
     {
+        [Header("Configs")]
         [SerializeField] private SceneScriptableObject _nextScene;
+        [SerializeField] private MapPathSO _mapPath;
+        
+        [Header("Refs")]
         [SerializeField] private LoadSceneEventChannelSO _loadNextSceneEventChannelSO;
         [SerializeField] private PathStorageSO _transitionSO;
-        [SerializeField] private MapPathSO _mapPath;
-        [SerializeField] private string _playerTag = "Player";
+        [SerializeField, ReadOnly] private string _playerTag = "Player";
 
         private void OnTriggerEnter2D(Collider2D other)
         {
