@@ -4,10 +4,10 @@ using UnityEngine;
 
 namespace CryptoQuest.Map
 {
-    public class TeleportArea : MonoBehaviour
+    public class MapExit : MonoBehaviour
     {
-        public SceneScriptableObject NextScene;
-        public LoadSceneEventChannelSO LoadNextSceneEventChannelSO;
+        public SceneScriptableObject nextScene;
+        public LoadSceneEventChannelSO loadNextSceneEventChannelSO;
 
         [SerializeField] private string _playerTag = "Player";
 
@@ -15,12 +15,12 @@ namespace CryptoQuest.Map
         {
             if (!other.gameObject.CompareTag(_playerTag)) return;
 
-            OnTriggerTeleport(NextScene);
+            OnTriggerTeleport(nextScene);
         }
 
         private void OnTriggerTeleport(SceneScriptableObject scene)
         {
-            LoadNextSceneEventChannelSO.RequestLoad(scene);
+            loadNextSceneEventChannelSO.RequestLoad(scene);
         }
     }
 }
