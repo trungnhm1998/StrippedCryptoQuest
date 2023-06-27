@@ -26,7 +26,7 @@ namespace Indigames.AbilitySystem
         public string Origin;
         public AbilityParameters Parameters;
         public bool IsExpired { get; set; } = false;
-        public bool RemoveWithSkill = true;
+        public bool RemoveWhenSkillEnd = true;
 
         protected IEffectApplier _effectApplier;
 

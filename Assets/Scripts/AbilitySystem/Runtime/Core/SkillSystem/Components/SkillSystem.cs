@@ -22,9 +22,8 @@ namespace Indigames.AbilitySystem
         /// There's only 1 skill per system (no duplicate skill)
         /// </summary>
         /// <param name="skillDef"></param>
-        /// <param name="abilityParams"></param>
         /// <returns>A skill handler (humble object) to execute their skill logic</returns>
-        public AbstractSkill GiveSkill(SkillScriptableObject skillDef, AbilityParameters abilityParams)
+        public AbstractSkill GiveSkill(SkillScriptableObject skillDef)
         {
             foreach (var skill in _grantedSkills.Skills)
             {
@@ -32,7 +31,7 @@ namespace Indigames.AbilitySystem
                     return skill;
             }
 
-            var grantedSkill = skillDef.GetSkillSpec(Owner, abilityParams);
+            var grantedSkill = skillDef.GetSkillSpec(Owner);
 
             return GiveSkill(grantedSkill);
         }
