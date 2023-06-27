@@ -1,12 +1,10 @@
-﻿using CryptoQuest.Characters;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace CryptoQuest.Character.MonoBehaviours
 {
-    public class InteractionManager : MonoBehaviour
+    public class SingleEntityInteractionManager : MonoBehaviour, IInteractionManager
     {
         private IInteractable _currentInteraction;
-        public IInteractable CurrentInteraction => _currentInteraction;
 
         /// <summary>
         /// There should be a child InteractionZone game object with a trigger collider and ZoneTriggerController component
@@ -23,6 +21,10 @@ namespace CryptoQuest.Character.MonoBehaviours
 
         private void AddPotentialInteraction(GameObject go)
         {
+            if (_currentInteraction != null)
+            {
+                Debug.LogWarning($"_currentInteraction is not null and will be overriden.");
+            }
             _currentInteraction = go.GetComponent<IInteractable>();
         }
 
@@ -30,6 +32,12 @@ namespace CryptoQuest.Character.MonoBehaviours
         {
             if (go.GetComponent<IInteractable>() != _currentInteraction) return;
             _currentInteraction = null;
+        }
+
+        public void Interact()
+        {
+            if (_currentInteraction == null) return;
+            _currentInteraction.Interact();
         }
     }
 }

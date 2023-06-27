@@ -4,14 +4,16 @@ using UnityEngine.Localization;
 
 namespace Core.Runtime.Events.ScriptableObjects.Dialogs
 {
-    [CreateAssetMenu(menuName = "Dialogue System/Dialog")]
+    [CreateAssetMenu(menuName = "Crypto Quest/Story/Dialogue")]
     public class DialogueScriptableObject : ScriptableObject
     {
-        public List<LocalizedString> Lines;
+        [SerializeField] private List<LocalizedString> _lines;
+        
+        public int LinesCount => _lines.Count;
 
         public LocalizedString GetLine(int currentIndex)
         {
-            return Lines[currentIndex];
+            return _lines[currentIndex];
         }
     }
 }

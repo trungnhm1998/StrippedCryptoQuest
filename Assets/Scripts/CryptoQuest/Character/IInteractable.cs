@@ -1,4 +1,4 @@
-﻿namespace CryptoQuest.Characters
+﻿namespace CryptoQuest.Character
 {
     public interface IInteractable
     {

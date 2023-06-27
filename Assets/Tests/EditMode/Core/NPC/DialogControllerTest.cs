@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using Core.Runtime.Events.ScriptableObjects.Dialogs;
-using CryptoQuest.Characters;
+using CryptoQuest.Character;
 using NUnit.Framework;
 using UnityEditor;
 using UnityEngine;
@@ -11,7 +11,7 @@ namespace Tests.EditMode.Core.NPC
     public class DialogControllerTest
     {
         private DialogueScriptableObject _dialogueSo;
-        private NpcDialogController _npcDialogController;
+        private DialogManager _dialogManager;
         private GameObject _npcGameObject;
 
 
@@ -19,8 +19,8 @@ namespace Tests.EditMode.Core.NPC
         public void Setup()
         {
             _npcGameObject = new GameObject();
-            _npcGameObject.AddComponent<NpcDialogController>();
-            _npcGameObject.AddComponent<NpcDialogController>();
+            _npcGameObject.AddComponent<DialogManager>();
+            _npcGameObject.AddComponent<DialogManager>();
 
             _dialogueSo = ScriptableObject.CreateInstance<DialogueScriptableObject>();
         }

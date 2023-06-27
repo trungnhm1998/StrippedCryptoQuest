@@ -1,9 +1,11 @@
-﻿using Core.Runtime.Events.ScriptableObjects.Dialogs;
-
-namespace CryptoQuest.Characters
+﻿namespace CryptoQuest.Character
 {
+    public class DialogArgs { }
+
     public interface IDialog
     {
-        public void ShowDialog();
+        public void Show();
+        public void Hide();
+        public void SetData(DialogArgs args);
     }
 }

@@ -1,5 +1,4 @@
-﻿using CryptoQuest.Characters;
-using CryptoQuest.Input;
+﻿using CryptoQuest.Input;
 using UnityEngine;
 
 namespace CryptoQuest.Character.MonoBehaviours
@@ -13,11 +12,13 @@ namespace CryptoQuest.Character.MonoBehaviours
         private Rigidbody2D _rigidbody2D;
         private Vector2 _inputVector;
         private ICharacterController2D _controller;
+        private IInteractionManager _interactionManager;
 
         private void Awake()
         {
             _rigidbody2D = GetComponent<Rigidbody2D>();
             _controller = new TopDownController(_speed);
+            _interactionManager = GetComponent<IInteractionManager>();
         }
 
         private void Start()
@@ -39,10 +40,7 @@ namespace CryptoQuest.Character.MonoBehaviours
 
         private void InteractEvent_Raised()
         {
-            IInteractable currentInteractable = GetComponent<InteractionManager>().CurrentInteraction;
-
-            if (currentInteractable == null) return;
-            currentInteractable.Interact();
+            _interactionManager.Interact();
         }
 
         private void FixedUpdate()
