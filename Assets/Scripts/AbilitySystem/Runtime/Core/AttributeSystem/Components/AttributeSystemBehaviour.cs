@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Indigames.AbilitySystem
 {
-    public class AttributeSystem : MonoBehaviour
+    public class AttributeSystemBehaviour : MonoBehaviour
     {
         [SerializeField] private List<AbstractAttributesEventChannel> _attributeEventChannels = new();
         public List<AbstractAttributesEventChannel> AttributeEventChannels { get => _attributeEventChannels; }
@@ -238,7 +238,7 @@ namespace Indigames.AbilitySystem
         }
 
         /// <summary>
-        /// Use lateUpdate to make sure skills/effects finishes their calculations before we update the attribute values
+        /// Use lateUpdate to make sure Abilities/effects finishes their calculations before we update the attribute values
         /// </summary>
         private void LateUpdate()
         {

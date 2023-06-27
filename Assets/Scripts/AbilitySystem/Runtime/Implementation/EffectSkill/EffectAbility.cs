@@ -4,44 +4,44 @@ using UnityEngine;
 
 namespace Indigames.AbilitySystem
 {
-    public class EffectSkill : AbstractSkill
+    public class EffectAbility : AbstractAbility
     {
-        public class EffectSkillContext
+        public class EffectAbilityContext
         {
-            public List<AbilitySystem> AffectTargets = new List<AbilitySystem>();
+            public List<AbilitySystemBehaviour> AffectTargets = new List<AbilitySystemBehaviour>();
         }
 
         private Dictionary<TagScriptableObject, List<AbstractEffect>> _effectTagDict =
             new Dictionary<TagScriptableObject, List<AbstractEffect>>();
 
-        protected new EffectSkillSO SkillSO => (EffectSkillSO) _skillSO;
+        protected new EffectAbilitySO AbilitySO => (EffectAbilitySO) _abilitySO;
 
-        protected override IEnumerator InternalActiveSkill()
+        protected override IEnumerator InternalActiveAbility()
         {
-            // Try active skill with tag OnActive
-            foreach (var effectContainer in SkillSO.EffectContainerMap)
+            // Try active ability with tag OnActive
+            foreach (var effectContainer in AbilitySO.EffectContainerMap)
             {
                 if (effectContainer.Tag == null) continue;
                 if (effectContainer.Tag.name == "OnActive")
                 {
-                    ApplyEffectContainerByTag(effectContainer.Tag, new EffectSkillContext());
+                    ApplyEffectContainerByTag(effectContainer.Tag, new EffectAbilityContext());
                 }
             }
 
-            Debug.Log($"EffectSkill::InternalActiveSkill {SkillSO.name} Activated");
+            Debug.Log($"EffectAbility::InternalActiveAbility {AbilitySO.name} Activated");
             yield break;
         }
 
-        public List<AbstractEffect> ApplyEffectContainerByTag(TagScriptableObject tag, EffectSkillContext context)
+        public List<AbstractEffect> ApplyEffectContainerByTag(TagScriptableObject tag, EffectAbilityContext context)
         {
             if (!IsActive)
             {
-                Debug.Log($"EffectSkill::ApplyEffectContainerByTag: {SkillSO.name} is not active");
+                Debug.Log($"EffectAbility::ApplyEffectContainerByTag: {AbilitySO.name} is not active");
                 return new List<AbstractEffect>();
             }
 
             var specs = CreateEffectContainerSpec(tag, context);
-            Debug.Log($"EffectSkill::ApplyEffectWithTags - {tag.name}");
+            Debug.Log($"EffectAbility::ApplyEffectWithTags - {tag.name}");
 
             var returnEffects = new List<AbstractEffect>();
             foreach (var spec in specs)
@@ -56,11 +56,11 @@ namespace Indigames.AbilitySystem
             return returnEffects;
         }
 
-        protected List<SkillEffectContainerSpec> CreateEffectContainerSpec(TagScriptableObject tag,
-            EffectSkillContext context)
+        protected List<AbilityEffectContainerSpec> CreateEffectContainerSpec(TagScriptableObject tag,
+            EffectAbilityContext context)
         {
-            List<SkillEffectContainerSpec> returnSpecs = new List<SkillEffectContainerSpec>();
-            foreach (var effectContainer in SkillSO.EffectContainerMap)
+            List<AbilityEffectContainerSpec> returnSpecs = new List<AbilityEffectContainerSpec>();
+            foreach (var effectContainer in AbilitySO.EffectContainerMap)
             {
                 if (effectContainer.Tag == null) continue;
                 if (effectContainer.Tag == tag)
@@ -75,13 +75,13 @@ namespace Indigames.AbilitySystem
             return returnSpecs;
         }
 
-        protected SkillEffectContainerSpec CreateEffectContainerSpecFromContainer(SkillEffectContainer container,
-            EffectSkillContext context)
+        protected AbilityEffectContainerSpec CreateEffectContainerSpecFromContainer(AbilityEffectContainer container,
+            EffectAbilityContext context)
         {
-            var returnSpec = new SkillEffectContainerSpec();
+            var returnSpec = new AbilityEffectContainerSpec();
             if (Owner == null) return returnSpec;
 
-            var targets = new List<AbilitySystem>();
+            var targets = new List<AbilitySystemBehaviour>();
             if (container.TargetType)
             {
                 container.TargetType.GetTargets(Owner, ref targets);
@@ -110,14 +110,14 @@ namespace Indigames.AbilitySystem
             return Owner.EffectSystem.GetEffect(effectScriptableObject, this, _parameters);
         }
 
-        protected virtual List<AbstractEffect> ApplyEffectContainerSpec(SkillEffectContainerSpec skillEffectSpec,
-            EffectSkillContext context)
+        protected virtual List<AbstractEffect> ApplyEffectContainerSpec(AbilityEffectContainerSpec abilityEffectSpec,
+            EffectAbilityContext context)
         {
             var appliedEffect = new List<AbstractEffect>();
 
-            foreach (var effectSpec in skillEffectSpec.EffectSpecs)
+            foreach (var effectSpec in abilityEffectSpec.EffectSpecs)
             {
-                foreach (var target in skillEffectSpec.Targets)
+                foreach (var target in abilityEffectSpec.Targets)
                 {
                     appliedEffect.AddRange(AbilitySystemHelper.ApplyEffectSpecToTarget(effectSpec, target));
                 }
@@ -126,9 +126,9 @@ namespace Indigames.AbilitySystem
             return appliedEffect;
         }
 
-        public override void EndSkill()
+        public override void EndAbility()
         {
-            base.EndSkill();
+            base.EndAbility();
             
             foreach (var tagEffect in _effectTagDict)
             {
@@ -136,7 +136,7 @@ namespace Indigames.AbilitySystem
                 for (int i = 0; i < effectSpecs.Count; i++)
                 {
                     var effectSpec = effectSpecs[i];
-                    if (effectSpec.RemoveWhenSkillEnd)
+                    if (effectSpec.RemoveWhenAbilityEnd)
                         Owner.EffectSystem.RemoveEffect(effectSpec);
                 }
             }
@@ -144,21 +144,21 @@ namespace Indigames.AbilitySystem
             _effectTagDict.Clear();
         }
 
-        public override void OnSkillRemoved(AbstractSkill skillSpec)
+        public override void OnAbilityRemoved(AbstractAbility abilitySpec)
         {
-            base.OnSkillRemoved(skillSpec);
-            EndSkill();
+            base.OnAbilityRemoved(abilitySpec);
+            EndAbility();
         }
 
-        public void RemoveEffectWithTag(TagScriptableObject skillTag)
+        public void RemoveEffectWithTag(TagScriptableObject abilityTag)
         {
-            if (!_effectTagDict.ContainsKey(skillTag)) return;
-            foreach (var effectSpec in _effectTagDict[skillTag])
+            if (!_effectTagDict.ContainsKey(abilityTag)) return;
+            foreach (var effectSpec in _effectTagDict[abilityTag])
             {
                 effectSpec.Target.EffectSystem.RemoveEffect(effectSpec);
             }
 
-            _effectTagDict.Remove(skillTag);
+            _effectTagDict.Remove(abilityTag);
         }
     }
 }

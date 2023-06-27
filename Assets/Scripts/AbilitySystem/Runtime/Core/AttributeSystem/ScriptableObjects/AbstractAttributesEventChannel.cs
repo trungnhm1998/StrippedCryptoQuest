@@ -12,7 +12,7 @@ namespace Indigames.AbilitySystem
         /// <param name="previousAttributeValue"></param>
         /// <param name="currentAttributeValue"></param>
         public abstract void PreAttributeChanged(
-            AttributeSystem attributeSystem,
+            AttributeSystemBehaviour attributeSystem,
             List<AttributeValue> previousAttributeValue,
             ref List<AttributeValue> currentAttributeValue
         );
