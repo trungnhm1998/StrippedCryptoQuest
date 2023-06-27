@@ -1,4 +1,5 @@
-﻿using CryptoQuest.Character.MonoBehaviours;
+﻿using CryptoQuest.Character;
+using CryptoQuest.Character.MonoBehaviours;
 using NUnit.Framework;
 
 namespace Tests.EditMode.CryptoQuest.Character
