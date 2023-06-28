@@ -5,7 +5,7 @@ using NUnit.Framework;
 namespace Tests.EditMode.CryptoQuest.Character
 {
     [TestFixture]
-    public class CharacterMovementTests
+    public class TopDownControllerTests
     {
         [Test]
         public void CalculateVelocity_ShouldReturnCorrect()
