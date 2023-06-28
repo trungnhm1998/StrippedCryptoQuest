@@ -330,7 +330,7 @@ namespace CryptoQuest.Input
                 {
                     ""name"": """",
                     ""id"": ""fbcaa16b-cdc6-4c80-8fb9-fb5128145eba"",
-                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""path"": ""<Gamepad>/buttonEast"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
@@ -616,7 +616,7 @@ namespace CryptoQuest.Input
                 {
                     ""name"": """",
                     ""id"": ""f0c4d612-d4c9-40b7-a469-cff25aa35642"",
-                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""path"": ""<Gamepad>/buttonEast"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
