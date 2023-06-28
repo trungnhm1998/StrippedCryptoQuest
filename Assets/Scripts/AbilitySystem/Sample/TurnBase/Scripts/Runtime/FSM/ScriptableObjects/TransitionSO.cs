@@ -12,7 +12,7 @@ namespace Indigames.AbilitySystem.FSM
         public virtual void Execute(BaseStateMachine stateMachine)
         {
             var nextState = Decision.Decide(stateMachine) ? TrueState : FalseState;
-            if (nextState is RemainInStateSO || nextState == null) return;
+            if (nextState == null) return;
 
             stateMachine.SetCurrentState(nextState);
         }
