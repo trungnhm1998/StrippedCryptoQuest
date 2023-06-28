@@ -10,13 +10,12 @@ namespace CryptoQuest.Character.MonoBehaviours
     {
         [SerializeField] private InputMediatorSO _inputMediator;
         [SerializeField] private float _speed = 4f;
-        [SerializeField] private Animator _animator;
+        [SerializeField] private CharacterBehaviour _characterBehaviour;
 
         private Rigidbody2D _rigidbody2D;
         private Vector2 _inputVector;
         private ICharacterController2D _controller;
         private IInteractionManager _interactionManager;
-        private CharacterBehaviour _characterBehaviour;
 
         private static readonly int MoveX = Animator.StringToHash("moveX");
 
@@ -25,7 +24,7 @@ namespace CryptoQuest.Character.MonoBehaviours
             _rigidbody2D = GetComponent<Rigidbody2D>();
             _controller = new SingleDirectionTopDownController2D();
             _interactionManager = GetComponent<IInteractionManager>();
-            _characterBehaviour = GetComponent<CharacterBehaviour>();
+            // _characterBehaviour = GetComponent<CharacterBehaviour>();
         }
 
         private void Start()
@@ -53,16 +52,22 @@ namespace CryptoQuest.Character.MonoBehaviours
         private void FixedUpdate()
         {
             _controller.Speed = _speed;
-            _rigidbody2D.velocity = _controller.CalculateVelocity();
+            var velocity = _controller.CalculateVelocity();
+
+            _characterBehaviour.IsWalking = _speed > 0f && velocity != Vector2.zero;
+            _characterBehaviour.SetFacingDirection(velocity);
+
+            _rigidbody2D.velocity = velocity;
         }
 
         private Vector2 _i;
+
         private void MoveEvent_Raised(Vector2 inputVector)
         {
             _i = inputVector;
             _controller.InputVector = inputVector;
         }
-        
+
         // render debug info
         private void OnGUI()
         {

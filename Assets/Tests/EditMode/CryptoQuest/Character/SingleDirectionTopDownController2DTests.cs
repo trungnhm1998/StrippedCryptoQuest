@@ -39,7 +39,9 @@ namespace Tests.EditMode.CryptoQuest.Character
         }
 
         [TestCase(4, 1, 0, -1, 0, -4, 0)]
-        public void CalculateVelocity_SecondInputVectorWithDifferentDirection_ShouldChangeDirection(
+        [TestCase(4, 1, 0, 1, 1, -4, 0)]
+        [TestCase(4, 1, 0, 0, 1, 0, 4)]
+        public void CalculateVelocity_SecondInput_ShouldPrioritizeFirstInput(
             float speed,
             float inputX, float inputY,
             float secondInputX, float secondInputY,
