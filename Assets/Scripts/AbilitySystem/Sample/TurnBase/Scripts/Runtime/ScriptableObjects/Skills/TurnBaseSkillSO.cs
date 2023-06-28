@@ -27,6 +27,7 @@ namespace Indigames.AbilitySystem.Sample
 
         public override void OnAbilityGranted(AbstractAbility skillSpec)
         {
+            _turnLeft = Parameters.continuesTurn;
             AbilitySO.TurnEndEventChannel.EventRaised += OnTurnEndEvent;
         }
 

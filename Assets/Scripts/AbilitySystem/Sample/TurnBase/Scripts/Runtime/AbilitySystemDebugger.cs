@@ -27,7 +27,7 @@ namespace Indigames.AbilitySystem.Sample
         private bool _showAttributes = true;
         private bool _showSkills = true;
         private bool _showBattleUnit = true;
-        private bool _showAppliedEffects = false;
+        private bool _showAppliedEffects = true;
         private bool _showApplyEffects = false;
         private bool _showApplyModifiers = false;
         private Rect _minimizeRect;

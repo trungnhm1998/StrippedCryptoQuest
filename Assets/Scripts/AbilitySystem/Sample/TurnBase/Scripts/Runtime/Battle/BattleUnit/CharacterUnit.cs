@@ -9,9 +9,7 @@ namespace Indigames.AbilitySystem.Sample
         {
             yield return base.Execute();
             // Wait Select monster > wait activate skill > run effect > next unit
-            bool hasNoTarget = TargetContainer.Targets.Count <= 0;
-            Debug.Log($"CharacterUnit::Execute: {hasNoTarget}");
-            while (hasNoTarget)
+            while (HasNoTarget())
             {
                 yield return false;
             }
@@ -22,6 +20,11 @@ namespace Indigames.AbilitySystem.Sample
             }
 
             yield return null;
+        }
+
+        private bool HasNoTarget()
+        {
+            return TargetContainer.Targets.Count <= 0;
         }
     }
 }

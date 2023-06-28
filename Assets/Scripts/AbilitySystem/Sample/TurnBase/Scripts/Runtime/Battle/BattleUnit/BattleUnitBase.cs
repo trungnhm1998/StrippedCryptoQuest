@@ -16,9 +16,11 @@ namespace Indigames.AbilitySystem.Sample
 
         protected BattleManager _battleManager;
         protected bool _isPerformSkillThisTurn;
+        protected bool _isDeath;
 
         public void Init(BattleManager manager, AbilitySystemBehaviour owner)
         {
+            _targetContainer.Targets.Clear();
             _battleManager = manager;
             Owner = owner;
         }
@@ -42,10 +44,13 @@ namespace Indigames.AbilitySystem.Sample
 
         protected virtual void SetDefaultTarget()
         {
-            if (Targets != null && Targets.Count > 0)
-            {
-                SelectSingleTarget(Targets[0]);
-            }
+            if (Targets == null || Targets.Count <= 0) return;
+
+            var currrentTargets = TargetContainer.Targets;
+            if (currrentTargets.Count > 0) return;
+
+            _targetContainer.SetSingleTarget(Targets[0]);
+            Debug.Log($"{Targets[0].gameObject}");
         }
 
         public virtual void SelectSingleTarget(AbilitySystemBehaviour target)
@@ -67,27 +72,31 @@ namespace Indigames.AbilitySystem.Sample
         
         public virtual IEnumerator Resolve()
         {
+            ClearDeathTargets();
+            SetDefaultTarget();
+            yield return null;
+        }
+
+        private void ClearDeathTargets()
+        {
             var currrentTargets = TargetContainer.Targets;
             for (int i = 0; i < currrentTargets.Count; i++)
             {
                 var target = currrentTargets[i];
-                if (target == null || target.gameObject == null)
-                {
-                    TargetContainer.Targets.Remove(target);
-                    i--;
-                }
+                if (target != null && target.gameObject != null) continue;
+
+                TargetContainer.Targets.Remove(target);
+                i--;
             }
-            yield return null;
         }
 
         private void OnHPChanged(AttributeScriptableObject.AttributeEventArgs args)
         {
-            if (Owner == null) return;
+            if (Owner == null || args.System != Owner.AttributeSystem) return;
             Owner.AttributeSystem.GetAttributeValue(_hpAttribute, out var attributValue);
-            if (attributValue.CurrentValue < 0)
-            {
-                _battleManager.RemoveUnit(this);
-            }
+            if (attributValue.CurrentValue > 0 || _isDeath) return;
+            _isDeath = true;
+            _battleManager.RemoveUnit(this);
         }
 
         public virtual void OnDeath()
