@@ -5,7 +5,8 @@ Scriptname: `MapPathSO.cs`
 1. Go to `Assets/ScriptableObjects/Paths`.
 2. Create new folder with scene name.
 3. `Create > CryptoQuest > Map > Map Path`.
-   ![Alt text](image-2.png)
+     ![image](https://github.com/indigames/CryptoQuestClient/assets/102936052/aca7cea2-3d1e-484e-a1f9-d4b6ea648107)
+
 4. Rename path according to naming convention.
 
 # Path Naming
@@ -35,15 +36,27 @@ Map Entrance will handle where the player will be placed when entering this curr
 **Set up Map Exit**
 
 1. Navigate to `Assets/Prefabs/Maps`
-   ![Alt text](image-3.png)
+   
+   ![image](https://github.com/indigames/CryptoQuestClient/assets/102936052/b5638a1c-52cc-470d-b81a-b041c1722a92)
+
 2. Drag the `MapExit` prefab to the current map scene
-   ![Alt text](image-4.png)
+
+   ![image](https://github.com/indigames/CryptoQuestClient/assets/102936052/01acdb53-9e81-4d4d-b4cd-90ffe4cd0de0)
+
+
 3. Select `MapExit` on Hierarchy, in the inspector window, click `Place at Mouse Cursor` and place at desired position.
-   ![Alt text](image-5.png)
-   ![Alt text](image-6.png)
+
+   ![image](https://github.com/indigames/CryptoQuestClient/assets/102936052/b873c1c0-96be-415e-8238-80de9828c4ff)
+
+
+   ![image](https://github.com/indigames/CryptoQuestClient/assets/102936052/0f67da97-67b6-48f9-9ab9-3c3cb333b3d6)
+
 4. Choose the Next Scene to transit to
 5. Choose Map path to match with the next scene MapEntrance's Map path
-   ![Alt text](image-7.png)
+
+   ![image](https://github.com/indigames/CryptoQuestClient/assets/102936052/d70f3c22-42b2-4823-b8a7-77c9c059dd8a)
+
+
 
 **Set up Map Entrance**
 
@@ -52,9 +65,18 @@ Map Entrance will handle where the player will be placed when entering this curr
 3. Select `MapEntrance` on Hierarchy, in the inspector window, click `Place at Mouse Cursor` and place at desire position.
 4. Choose Map path to match with the previous scene MapExit's Map path
 5. Select Entrance Facing Direction
-   ![Alt text](image-8.png)
+
+   ![image](https://github.com/indigames/CryptoQuestClient/assets/102936052/4a635bfb-465e-4714-817a-9aac01f51c0b)
+
+
 
 **Note:
 MapExit position and MapEntrance position must be separated by a distance (so that when entering the map, there will be no colliding with MapExit)**
-![Alt text](image-9.png)
-![Alt text](image-10.png)
+
+   ![image](https://github.com/indigames/CryptoQuestClient/assets/102936052/6f94a2eb-41ef-4815-9c87-56902ceabff8)
+
+   ![image](https://github.com/indigames/CryptoQuestClient/assets/102936052/1bf9b111-2c35-42d7-91b9-0a7663971f35)
+
+
+
+
