@@ -1,18 +1,18 @@
-﻿using CryptoQuest.Character;
+﻿using CryptoQuest.Character.Movement;
 using NUnit.Framework;
 using UnityEngine;
 
-namespace Tests.EditMode.CryptoQuest.Character
+namespace Tests.EditMode.CryptoQuest.Character.Movement
 {
     [TestFixture]
-    public class SingleDirectionTopDownController2DTests
+    public class ConstantVelocityInSingleDirectionStrategyTests
     {
-        private ICharacterController2D _controller;
+        private IPlayerVelocityStrategy _controller;
 
         [SetUp]
         public void Setup()
         {
-            _controller = new SingleDirectionTopDownController2D();
+            _controller = new ConstantVelocityInSingleDirectionStrategy();
         }
 
         [TestCase(4, -1, 0, -4, 0)]
@@ -28,18 +28,20 @@ namespace Tests.EditMode.CryptoQuest.Character
             float inputX, float inputY,
             float expectedX, float expectedY)
         {
-            _controller.Speed = speed;
-            _controller.InputVector = new Vector2(inputX, inputY);
-
-            var velocity = _controller.CalculateVelocity();
+            var velocity = _controller.CalculateVelocity(new Vector2(inputX, inputY), speed);
 
             var expectedVelocity = new Vector2(expectedX, expectedY);
 
             Assert.AreEqual(expectedVelocity, velocity);
         }
 
+
+        [TestCase(4, 1, 0, 1, 0.5f, 4, 0)]
         [TestCase(4, 1, 0, -1, 0, -4, 0)]
-        [TestCase(4, 1, 0, 1, 1, -4, 0)]
+        [TestCase(4, 1, 0, 1, 1, 4, 0)]
+        [TestCase(4, 1, 0, 0.7f, 0.7f, 4, 0)]
+        [TestCase(4, 1, 1, 0.9f, 0.7f, 4, 0)]
+        [TestCase(4, 0, -1, -1, 0.7f, -4, 0)]
         [TestCase(4, 1, 0, 0, 1, 0, 4)]
         public void CalculateVelocity_SecondInput_ShouldPrioritizeFirstInput(
             float speed,
@@ -47,17 +49,12 @@ namespace Tests.EditMode.CryptoQuest.Character
             float secondInputX, float secondInputY,
             float expectedX, float expectedY)
         {
-            _controller.Speed = speed;
-            _controller.InputVector = new Vector2(inputX, inputY);
-            
-            _controller.CalculateVelocity();
-            
-            _controller.InputVector = new Vector2(secondInputX, secondInputY);
-            
-            var velocity = _controller.CalculateVelocity();
-            
+            var velocity = _controller.CalculateVelocity(new Vector2(inputX, inputY), speed);
+
+            velocity = _controller.CalculateVelocity(new Vector2(secondInputX, secondInputY), speed);
+
             var expectedVelocity = new Vector2(expectedX, expectedY);
-            
+
             Assert.AreEqual(expectedVelocity, velocity);
         }
     }

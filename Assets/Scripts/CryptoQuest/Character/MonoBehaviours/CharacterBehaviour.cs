@@ -23,14 +23,9 @@ namespace CryptoQuest.Character.MonoBehaviours
             set => _animator.SetBool(AnimIsWalking, value);
         }
 
-        private static readonly int AnimVelocityX = Animator.StringToHash("VelocityX");
-        private static readonly int AnimVelocityY = Animator.StringToHash("VelocityY");
+        private static readonly int AnimVelocityX = Animator.StringToHash("InputX");
+        private static readonly int AnimVelocityY = Animator.StringToHash("InputY");
         private static readonly int AnimIsWalking = Animator.StringToHash("IsWalking");
-
-        private void Start()
-        {
-            _animator.SetFloat(AnimVelocityY, -1f);
-        }
 
         public void SetFacingDirection(Vector2 velocity)
         {
@@ -42,23 +37,18 @@ namespace CryptoQuest.Character.MonoBehaviours
             switch (velocity)
             {
                 case { x: > 0 }:
-                    SetFacingDirection(EFacingDirection.East);
+                    _facingDirection = EFacingDirection.East;
                     break;
                 case { x: < 0 }:
-                    SetFacingDirection(EFacingDirection.West);
+                    _facingDirection = EFacingDirection.West;
                     break;
                 case { y: > 0 }:
-                    SetFacingDirection(EFacingDirection.North);
+                    _facingDirection = EFacingDirection.North;
                     break;
                 case { y: < 0 }:
-                    SetFacingDirection(EFacingDirection.South);
+                    _facingDirection = EFacingDirection.South;
                     break;
             }
-        }
-
-        private void SetFacingDirection(EFacingDirection facingDirection)
-        {
-            _facingDirection = facingDirection;
         }
     }
 }

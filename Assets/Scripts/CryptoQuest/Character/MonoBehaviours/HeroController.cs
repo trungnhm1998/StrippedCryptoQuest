@@ -1,4 +1,4 @@
-﻿using System;
+﻿using CryptoQuest.Character.Movement;
 using CryptoQuest.Input;
 using UnityEngine;
 
@@ -14,17 +14,14 @@ namespace CryptoQuest.Character.MonoBehaviours
 
         private Rigidbody2D _rigidbody2D;
         private Vector2 _inputVector;
-        private ICharacterController2D _controller;
+        private IPlayerVelocityStrategy _velocityStrategy;
         private IInteractionManager _interactionManager;
-
-        private static readonly int MoveX = Animator.StringToHash("moveX");
 
         private void Awake()
         {
             _rigidbody2D = GetComponent<Rigidbody2D>();
-            _controller = new SingleDirectionTopDownController2D();
+            _velocityStrategy = new ConstantVelocityInSingleDirectionStrategy();
             _interactionManager = GetComponent<IInteractionManager>();
-            // _characterBehaviour = GetComponent<CharacterBehaviour>();
         }
 
         private void Start()
@@ -51,29 +48,17 @@ namespace CryptoQuest.Character.MonoBehaviours
 
         private void FixedUpdate()
         {
-            _controller.Speed = _speed;
-            var velocity = _controller.CalculateVelocity();
+            var velocity = _velocityStrategy.CalculateVelocity(_inputVector, _speed);
 
             _characterBehaviour.IsWalking = _speed > 0f && velocity != Vector2.zero;
-            _characterBehaviour.SetFacingDirection(velocity);
+            _characterBehaviour.SetFacingDirection(_inputVector);
 
             _rigidbody2D.velocity = velocity;
         }
 
-        private Vector2 _i;
-
         private void MoveEvent_Raised(Vector2 inputVector)
         {
-            _i = inputVector;
-            _controller.InputVector = inputVector;
-        }
-
-        // render debug info
-        private void OnGUI()
-        {
-            GUI.Label(new Rect(10, 10, 300, 20), $"InputVector: {_controller.InputVector}");
-            GUI.Label(new Rect(10, 30, 300, 20), $"Velocity: {_controller.CalculateVelocity()}");
-            GUI.Label(new Rect(10, 50, 300, 20), $"i {_i}");
+            _inputVector = inputVector;
         }
     }
 }
