@@ -12,11 +12,13 @@ namespace CryptoQuest.Character.MonoBehaviours
         private Rigidbody2D _rigidbody2D;
         private Vector2 _inputVector;
         private ICharacterController2D _controller;
+        private IInteractionManager _interactionManager;
 
         private void Awake()
         {
             _rigidbody2D = GetComponent<Rigidbody2D>();
             _controller = new TopDownController(_speed);
+            _interactionManager = GetComponent<IInteractionManager>();
         }
 
         private void Start()
@@ -27,11 +29,18 @@ namespace CryptoQuest.Character.MonoBehaviours
         private void OnEnable()
         {
             _inputMediator.MoveEvent += MoveEvent_Raised;
+            _inputMediator.InteractEvent += InteractEvent_Raised;
         }
 
         private void OnDisable()
         {
             _inputMediator.MoveEvent -= MoveEvent_Raised;
+            _inputMediator.InteractEvent -= InteractEvent_Raised;
+        }
+
+        private void InteractEvent_Raised()
+        {
+            _interactionManager.Interact();
         }
 
         private void FixedUpdate()
