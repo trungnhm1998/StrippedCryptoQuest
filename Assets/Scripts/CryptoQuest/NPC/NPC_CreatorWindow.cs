@@ -5,21 +5,22 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 using UnityEngine.UI;
+using UnityEngine.Localization;
+using UnityEngine.Localization.Settings;
 
 public class NPC_CreatorWindow : EditorWindow
 {
-    [Tooltip("NPC Variables")]
+    private NPC_Localize _localize = new NPC_Localize();
     private string _nameNPC;
-    private Sprite _spriteNPC;
+    private string _updateNameNPC;
     private bool _isCollider;
+    private bool _updateCollider;
     private string _exportPath;
-
-    [Tooltip("List NPC")]
+    private Sprite _spriteNPC;
+    private Sprite _updateSpriteNPC;
     private GameObject _baseNPC;
     private GameObject _currentNPC;
     private List<GameObject> _listNPC;
-
-    [Tooltip("Current NPC Variables")]
     private SpriteRenderer _spriteRenderer;
 
 
@@ -31,69 +32,103 @@ public class NPC_CreatorWindow : EditorWindow
 
     private void OnGUI()
     {
-        GUILayout.Label("Create new NPC", EditorStyles.label);
+        if (Application.systemLanguage == SystemLanguage.English)
+        {
+            _localize.InitializeSetup("en");
+        }
+        else
+        {
+            _localize.InitializeSetup("ja");
+        }
+
+        GUIStyle titleFontStyle = new GUIStyle();
+        titleFontStyle.fontSize = 26;
+        titleFontStyle.normal.textColor = Color.gray;
+        titleFontStyle.fontStyle = FontStyle.Bold;
+        titleFontStyle.alignment = TextAnchor.UpperLeft;
+        titleFontStyle.padding.bottom = 10;
+
+        // NPC Tools UI
+        GUILayout.Label(_localize._createTitle, titleFontStyle);
         GUILayout.Space(10);
 
         GUILayout.BeginHorizontal();
-        GUILayout.Label("Name", EditorStyles.label);
+        GUILayout.Label(_localize._name, EditorStyles.label);
         _nameNPC = EditorGUILayout.TextField(_nameNPC, GUILayout.MaxWidth(264));
         GUILayout.EndHorizontal();
         GUILayout.Space(10);
 
         GUILayout.BeginHorizontal();
-        GUILayout.Label("Sprite", EditorStyles.label);
+        GUILayout.Label(_localize._sprite, EditorStyles.label);
         _spriteNPC = (Sprite)EditorGUILayout.ObjectField(_spriteNPC, typeof(Sprite), true, GUILayout.MaxWidth(264));
         GUILayout.EndHorizontal();
         GUILayout.Space(10);
 
         GUILayout.BeginHorizontal();
-        GUILayout.Label("Check Collider", EditorStyles.label);
+        GUILayout.Label(_localize._collider, EditorStyles.label);
         _isCollider = EditorGUILayout.Toggle(_isCollider);
         GUILayout.EndHorizontal();
         GUILayout.Space(10);
 
         GUILayout.BeginHorizontal();
-        GUILayout.Label("Export Path", EditorStyles.label);
+        GUILayout.Label(_localize._exportPath, EditorStyles.label);
         _exportPath = EditorGUILayout.TextField(_exportPath, GUILayout.MaxWidth(264));
         GUILayout.EndHorizontal();
         GUILayout.Space(10);
 
         GUILayout.BeginHorizontal();
-        GUILayout.Label("Base NPC", EditorStyles.label);
+        GUILayout.Label(_localize._baseNPC, EditorStyles.label);
         _baseNPC = (GameObject)EditorGUILayout.ObjectField(_baseNPC, typeof(GameObject), true, GUILayout.MaxWidth(264));
         GUILayout.EndHorizontal();
+        GUILayout.Space(30);
 
-
-        GUILayout.Space(10);
-
-        if (GUILayout.Button("Create"))
+        if (GUILayout.Button(_localize._buttonCreate, GUILayout.Height(60)))
         {
             CreateNPC(_nameNPC, _spriteNPC, _isCollider);
         }
+        GUILayout.Space(30);
 
-        GUILayout.Space(50);
-        GUILayout.Label("Update NPC", EditorStyles.label);
+        //UPDATE
+
+        GUILayout.Label(_localize._updateTitle, titleFontStyle);
         GUILayout.Space(10);
+
         GUILayout.BeginHorizontal();
-        GUILayout.Label("Select NPC to Update", EditorStyles.label);
+        GUILayout.Label(_localize._selectNPC, EditorStyles.label);
         _currentNPC = (GameObject)EditorGUILayout.ObjectField(_currentNPC, typeof(GameObject), true, GUILayout.MaxWidth(264));
         GUILayout.EndHorizontal();
+        GUILayout.Space(10);
+
+        GUILayout.BeginHorizontal();
+        GUILayout.Label(_localize._name, EditorStyles.label);
+        _updateNameNPC = EditorGUILayout.TextField(_updateNameNPC, GUILayout.MaxWidth(264));
+        GUILayout.EndHorizontal();
+        GUILayout.Space(10);
+
+        GUILayout.BeginHorizontal();
+        GUILayout.Label(_localize._sprite, EditorStyles.label);
+        _updateSpriteNPC = (Sprite)EditorGUILayout.ObjectField(_updateSpriteNPC, typeof(Sprite), true, GUILayout.MaxWidth(264));
+        GUILayout.EndHorizontal();
+        GUILayout.Space(10);
+
+        GUILayout.BeginHorizontal();
+        GUILayout.Label(_localize._collider, EditorStyles.label);
+        _updateCollider = EditorGUILayout.Toggle(_updateCollider);
+        GUILayout.EndHorizontal();
+        GUILayout.Space(10);
 
         GUILayout.Space(10);
-        if (GUILayout.Button("Update"))
+        if (GUILayout.Button(_localize._btnUpdate, GUILayout.Height(60)))
         {
             UpdateNPC();
         }
-
-
-        GUILayout.Space(10);
-        if (GUILayout.Button("Update All"))
+        if (GUILayout.Button(_localize._btnUpdateAll, GUILayout.Height(60)))
         {
             GetListNPC();
             UpdateAllNPC();
         }
+        GUILayout.Space(50);
     }
-
     private void GetListNPC()
     {
         _listNPC = new List<GameObject>();
@@ -105,11 +140,11 @@ public class NPC_CreatorWindow : EditorWindow
         }
     }
 
-    private void CheckCollider(GameObject npc)
+    private void CheckCollider(GameObject npc, bool interactable)
     {
         if (npc.GetComponent<BoxCollider2D>() == null)
         {
-            if (_isCollider)
+            if (interactable)
             {
                 npc.AddComponent<BoxCollider2D>();
                 BoxCollider2D collider2D = npc.GetComponent<BoxCollider2D>();
@@ -120,11 +155,13 @@ public class NPC_CreatorWindow : EditorWindow
         }
         else
         {
-            BoxCollider2D collider2D = npc.GetComponent<BoxCollider2D>();
-            Destroy(collider2D);
+            if (!interactable)
+            {
+                BoxCollider2D collider2D = npc.GetComponent<BoxCollider2D>();
+                DestroyImmediate(collider2D, true);
+            }
         }
     }
-
     private void CreateNPC(string nameNPC, Sprite spriteNPC, bool checkCollider)
     {
         GetListNPC();
@@ -139,7 +176,7 @@ public class NPC_CreatorWindow : EditorWindow
         _spriteRenderer = newNPC.GetComponent<SpriteRenderer>();
         _spriteRenderer.sprite = spriteNPC;
 
-        CheckCollider(newNPC);
+        CheckCollider(newNPC, _isCollider);
 
         bool prefabSuccess;
         PrefabUtility.SaveAsPrefabAsset(newNPC, _exportPath + nameNPC + ".prefab", out prefabSuccess);
@@ -158,16 +195,17 @@ public class NPC_CreatorWindow : EditorWindow
     {
         if (_currentNPC != null)
         {
+            string myPath = AssetDatabase.GetAssetPath(_currentNPC);
             _spriteRenderer = _currentNPC.GetComponent<SpriteRenderer>();
-            _spriteRenderer.sprite = _spriteNPC;
-            _currentNPC.name = _nameNPC;
+            _spriteRenderer.sprite = _updateSpriteNPC;
+            AssetDatabase.RenameAsset(myPath, _updateNameNPC);
 
             var components = _baseNPC.GetComponents<MonoBehaviour>();
             foreach (var component in components)
             {
                 if (_currentNPC.GetComponent(component.GetType()) == null) _currentNPC.AddComponent(component.GetType());
             }
-            CheckCollider(_currentNPC);
+            CheckCollider(_currentNPC, _updateCollider);
         }
     }
 
