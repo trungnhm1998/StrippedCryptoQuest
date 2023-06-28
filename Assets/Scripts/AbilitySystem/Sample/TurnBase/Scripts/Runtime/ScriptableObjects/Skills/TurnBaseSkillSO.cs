@@ -46,7 +46,7 @@ namespace Indigames.AbilitySystem.Sample
         {
             if (!IsActive) return;
             Debug.Log($"TurnBaseSkill::OnTurnEndEvent: {AbilitySO.name} Turn Left: {_turnLeft}");
-            // Compare the before value because caculation start at then next turn
+            // Compare the before value because caculation start at the next turn
             if (_turnLeft-- > 0) return;
             EndAbility();
         }

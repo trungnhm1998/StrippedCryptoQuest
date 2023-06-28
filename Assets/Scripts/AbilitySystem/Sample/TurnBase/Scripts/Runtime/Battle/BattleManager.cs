@@ -14,17 +14,15 @@ namespace Indigames.AbilitySystem.Sample
         [SerializeField] private VoidEventChannelSO _turnEndEventChannel;
 
         private List<IBattleUnit> _battleUnits = new();
+        public List<IBattleUnit> BattleUnits => _battleUnits;
+
         private List<IBattleUnit> _pendingRemoveUnit = new();
         private int _turn = 0;
+
 
         private void Awake()
         {
             InitBattleUnits();
-        }
-
-        private void Start()
-        {
-            StartCoroutine(Battle());
         }
 
         private void InitBattleUnits()
@@ -51,7 +49,7 @@ namespace Indigames.AbilitySystem.Sample
             _pendingRemoveUnit.Add(unit);
         }
 
-        private IEnumerator RemovePendingUnits()
+        public IEnumerator RemovePendingUnits()
         {
             while (_pendingRemoveUnit.Count > 0)
             {
@@ -68,37 +66,8 @@ namespace Indigames.AbilitySystem.Sample
             unit.OnDeath();
         }
 
-        private IEnumerator Battle()
-        {
-            Debug.Log($"BattleManager::Battle: Battle Start");
 
-            while (!IsBattleEnd())
-            {
-                _turn++;
-                Debug.Log($"BattleManager::Battle: Turn {_turn}");
-
-                var _unitsCopy = _battleUnits.ToList();
-
-                foreach (var unit in _unitsCopy)
-                {
-                    yield return unit.Execute();
-                }
-
-                yield return RemovePendingUnits();
-
-                _turnEndEventChannel.RaiseEvent();                
-                
-                foreach (var unit in _unitsCopy)
-                {
-                    yield return unit.Resolve();
-                }
-            }
-
-            Debug.Log($"BattleManager::Battle: Battle End");
-            yield break;
-        }
-
-        private bool IsBattleEnd()
+        public bool IsBattleEnd()
         {
             return (_battleTeam1.Count <= 0) || (_battleTeam2.Count <= 0);
         }

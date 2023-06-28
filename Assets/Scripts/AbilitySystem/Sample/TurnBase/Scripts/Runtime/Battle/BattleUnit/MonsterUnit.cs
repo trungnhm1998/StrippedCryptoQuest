@@ -5,19 +5,18 @@ namespace Indigames.AbilitySystem.Sample
 {
     public class MonsterUnit : BattleUnitBase
     {
-        private ISkillActivator _skillActivator;
+        private ISkillSelector _skillSelector;
 
         private void Start()
         {
-            _skillActivator = new RandomSkillActivator();
+            _skillSelector = new RandomSkillSelector();
         }
 
-        public override IEnumerator Execute()
+        public override IEnumerator Prepare()
         {
-            yield return base.Execute();
-            _skillActivator.ActivateSkill(this);
-            // Select character then random perform skill
-            yield return null;
+            _selectedSkill = _skillSelector.GetSkill(this);
+            SetDefaultTarget();
+            yield return base.Prepare();
         }
     }
 }

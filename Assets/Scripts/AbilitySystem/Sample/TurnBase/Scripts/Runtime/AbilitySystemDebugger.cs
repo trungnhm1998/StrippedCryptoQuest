@@ -26,7 +26,7 @@ namespace Indigames.AbilitySystem.Sample
         private AttributeSystemBehaviour _attributeSystem;
         private bool _showAttributes = true;
         private bool _showSkills = true;
-        private bool _showBattleUnit = true;
+        private bool _showTargetUnit = false;
         private bool _showAppliedEffects = true;
         private bool _showApplyEffects = false;
         private bool _showApplyModifiers = false;
@@ -103,18 +103,9 @@ namespace Indigames.AbilitySystem.Sample
             GUILayout.BeginHorizontal("box", GUILayout.Width(_windowWidth));
             {
                 GUILayout.BeginVertical();
-                RenderListTargetsDebug();
-                GUILayout.EndVertical();
-            }
-            GUILayout.EndHorizontal();
-
-            GUILayout.Space(5);
-
-            GUILayout.BeginHorizontal("box", GUILayout.Width(_windowWidth));
-            {
-                GUILayout.BeginVertical();
                 RenderListSkillsDebug();
                 RenderGrantedSkillsDebug();
+                RenderListTargetsDebug();
                 GUILayout.EndVertical();
             }
             GUILayout.EndHorizontal();
@@ -218,8 +209,8 @@ namespace Indigames.AbilitySystem.Sample
         
         private void RenderListTargetsDebug()
         {
-            _showBattleUnit = GUILayout.Toggle(_showBattleUnit, "Show Battle Unit");
-            if (!_showBattleUnit || _battleUnit.Targets == null) return;
+            if (!_showTargetUnit || _battleUnit.Targets == null) return;
+            GUILayout.Label("Select a target");
             foreach (var target in _battleUnit.Targets)
             {
                 if (target == null) continue;
@@ -228,6 +219,7 @@ namespace Indigames.AbilitySystem.Sample
                 if (GUILayout.Button(buttonLabel))
                 {
                     _battleUnit.SelectSingleTarget(target);
+                    _showTargetUnit = false;
                 }
                 GUI.enabled = true;
             }
@@ -248,17 +240,15 @@ namespace Indigames.AbilitySystem.Sample
         
         private void RenderGrantedSkillsDebug()
         {
-            _showSkills = GUILayout.Toggle(_showSkills, "Show Granted Abilities");
-            if (!_showSkills) return;
+            if (_battleUnit.SelectedSkill != null) return;
+            GUILayout.Label("Granted Skills");
             foreach (var skill in _owner.GrantedAbilities.Abilities)
             {
-                GUI.enabled = skill.CanActiveAbility();
-                if (GUILayout.Button($"Activate skill {skill.AbilitySO.name}"))
+                if (GUILayout.Button($"Select skill {skill.AbilitySO.name}"))
                 {
-                    _owner.TryActiveAbility(skill);
-                    _battleUnit.OnPerformSkill();
+                    _battleUnit.SelectSkill(skill);
+                    _showTargetUnit = true;
                 }
-                GUI.enabled = true;
             }
         }
     #endif

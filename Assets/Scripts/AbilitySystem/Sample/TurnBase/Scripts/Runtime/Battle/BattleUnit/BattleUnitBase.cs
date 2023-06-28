@@ -14,8 +14,10 @@ namespace Indigames.AbilitySystem.Sample
         [SerializeField] private TargetContainterSO _targetContainer;
         public TargetContainterSO TargetContainer => _targetContainer;
 
+        protected AbstractAbility _selectedSkill;
+        public AbstractAbility SelectedSkill => _selectedSkill;
+
         protected BattleManager _battleManager;
-        protected bool _isPerformSkillThisTurn;
         protected bool _isDeath;
 
         public void Init(BattleManager manager, AbilitySystemBehaviour owner)
@@ -39,7 +41,6 @@ namespace Indigames.AbilitySystem.Sample
         {
             Targets = targets;
             OwnerTeam = ownerTeam;
-            SetDefaultTarget();
         }
 
         protected virtual void SetDefaultTarget()
@@ -50,7 +51,6 @@ namespace Indigames.AbilitySystem.Sample
             if (currrentTargets.Count > 0) return;
 
             _targetContainer.SetSingleTarget(Targets[0]);
-            Debug.Log($"{Targets[0].gameObject}");
         }
 
         public virtual void SelectSingleTarget(AbilitySystemBehaviour target)
@@ -64,37 +64,45 @@ namespace Indigames.AbilitySystem.Sample
             _targetContainer.SetMultipleTargets(Targets);
         }
 
+        public void SelectSkill(AbstractAbility selectedSkill)
+        {
+            _selectedSkill = selectedSkill;
+        }
+
+
+        public virtual IEnumerator Prepare()
+        {
+            while (_selectedSkill == null)
+            {
+                yield return false;
+            }
+
+            
+            while (HasNoTarget())
+            {
+                yield return false;
+            }
+        }
         public virtual IEnumerator Execute()
         {
-            _isPerformSkillThisTurn = false;
+            Owner.TryActiveAbility(_selectedSkill);
             yield return null;
         }
         
         public virtual IEnumerator Resolve()
         {
-            ClearDeathTargets();
-            SetDefaultTarget();
+            _selectedSkill = null;
+            TargetContainer.Targets.Clear();
             yield return null;
-        }
-
-        private void ClearDeathTargets()
-        {
-            var currrentTargets = TargetContainer.Targets;
-            for (int i = 0; i < currrentTargets.Count; i++)
-            {
-                var target = currrentTargets[i];
-                if (target != null && target.gameObject != null) continue;
-
-                TargetContainer.Targets.Remove(target);
-                i--;
-            }
         }
 
         private void OnHPChanged(AttributeScriptableObject.AttributeEventArgs args)
         {
             if (Owner == null || args.System != Owner.AttributeSystem) return;
+
             Owner.AttributeSystem.GetAttributeValue(_hpAttribute, out var attributValue);
             if (attributValue.CurrentValue > 0 || _isDeath) return;
+
             _isDeath = true;
             _battleManager.RemoveUnit(this);
         }
@@ -105,9 +113,9 @@ namespace Indigames.AbilitySystem.Sample
             Destroy(gameObject);
         }
 
-        public virtual void OnPerformSkill()
+        private bool HasNoTarget()
         {
-            _isPerformSkillThisTurn = true;
+            return TargetContainer.Targets.Count <= 0;
         }
     }
 }

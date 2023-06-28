@@ -421,6 +421,7 @@ GameObject:
   m_Component:
   - component: {fileID: 612028297}
   - component: {fileID: 612028296}
+  - component: {fileID: 612028298}
   m_Layer: 0
   m_Name: BattleManager
   m_TagString: Untagged
@@ -462,6 +463,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &612028298
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 612028295}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 454256b3228bb204ab2a333a6f429418, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _initialState: {fileID: 11400000, guid: dad41c53d6f3df74e9cae25ba024d8a9, type: 2}
 --- !u!1 &1075641788
 GameObject:
   m_ObjectHideFlags: 0
@@ -690,11 +704,11 @@ MonoBehaviour:
   _windowWidth: 300
   _windowId: 2
   _availableSkills:
-  - {fileID: 11400000, guid: dcb98359a91d55a4c9bd883be41d46a0, type: 2}
   - {fileID: 11400000, guid: 8b93d877b39afe044b4b144cbee3d8b9, type: 2}
-  - {fileID: 11400000, guid: 4fbb7b8e9c5e75d48a166477e95189c7, type: 2}
+  - {fileID: 11400000, guid: dcb98359a91d55a4c9bd883be41d46a0, type: 2}
   _defaultGrantSkills:
   - {fileID: 11400000, guid: 2bb4c93bebc5d24488d8d500a4db75a9, type: 2}
+  - {fileID: 11400000, guid: 4fbb7b8e9c5e75d48a166477e95189c7, type: 2}
   _effects: []
   _modifiers: []
 --- !u!114 &1378124707
