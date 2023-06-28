@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Core.Runtime.SaveSystem
 {
@@ -9,6 +8,7 @@ namespace Core.Runtime.SaveSystem
         public SaveManagerSO SaveManagerSO => _saveManagerSO;
 
         public SaveData _saveData = new SaveData();
+        public string PlayerName => _saveData.playerName;
 
         public bool SaveGame()
         {

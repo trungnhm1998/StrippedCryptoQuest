@@ -16,12 +16,14 @@ MonoBehaviour:
     m_Code: en
   m_SharedData: {fileID: 11400000, guid: 4be45ea04057b7b4c8f80bc12990e0f8, type: 2}
   m_Metadata:
-    m_Items: []
+    m_Items:
+    - rid: 3755987333286461460
   m_TableData:
   - m_Id: 30731235328
-    m_Localized: Hello World
+    m_Localized: Hello {global.Save.PlayerName} World
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 3755987333286461460
   - m_Id: 330456199168
     m_Localized: Sentence Oshifu Seishi Note 64 Hundreds of Pounds Pawn Line 18 Noku
       Apodo Kokusai Chiheiyu Memorandum of Understanding Hireki Years Two necks are
@@ -35,4 +37,8 @@ MonoBehaviour:
       m_Items: []
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: 3755987333286461460
+      type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_Entries: 0070b92707000000
