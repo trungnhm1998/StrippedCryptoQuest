@@ -8,7 +8,11 @@ namespace Core.Runtime.SaveSystem
         public SaveManagerSO SaveManagerSO => _saveManagerSO;
 
         public SaveData _saveData = new SaveData();
-        public string PlayerName => _saveData.playerName;
+        public string PlayerName
+        {
+            get => _saveData.playerName;
+            set => _saveData.playerName = value;
+        }
 
         public bool SaveGame()
         {
