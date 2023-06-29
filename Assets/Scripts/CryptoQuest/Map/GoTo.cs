@@ -5,14 +5,17 @@ using UnityEngine;
 
 namespace CryptoQuest.Map
 {
-    public class MapExit : MonoBehaviour
+    public class GoTo : MonoBehaviour
     {
         [Header("Configs")]
         [SerializeField] private SceneScriptableObject _nextScene;
+
         [SerializeField] private MapPathSO _mapPath;
-        
+        public MapPathSO MapPath => _mapPath;
+
         [Header("Refs")]
         [SerializeField] private LoadSceneEventChannelSO _loadNextSceneEventChannelSO;
+
         [SerializeField] private PathStorageSO _transitionSO;
         [SerializeField, ReadOnly] private string _playerTag = "Player";
 
