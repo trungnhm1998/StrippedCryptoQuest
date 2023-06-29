@@ -6,7 +6,6 @@ using CryptoQuest.Input;
 using CryptoQuest.System.Settings;
 using TMPro;
 using UnityEngine;
-using NotImplementedException = System.NotImplementedException;
 
 namespace CryptoQuest.UI
 {
@@ -15,7 +14,7 @@ namespace CryptoQuest.UI
         [SerializeField] private TMP_InputField _playerNamePlaceholder;
         [SerializeField] private TextMeshProUGUI _validationText;
         [SerializeField] private GameObject _panelInputName;
-        public TextAsset _textAsset;
+        [SerializeField] private TextAsset _textAsset;
 
         [Space(10), SerializeField] private SceneScriptableObject _sceneToLoad;
         [SerializeField] private InputMediatorSO _inputMediatorSO;
@@ -27,6 +26,13 @@ namespace CryptoQuest.UI
         [Header("Raise on")]
         [SerializeField] private LoadSceneEventChannelSO _loadMapEvent;
 
+
+        private StringValidator _stringValidator;
+
+        private void Awake()
+        {
+            _stringValidator = new StringValidator(_textAsset);
+        }
 
         private void OnEnable()
         {
@@ -42,7 +48,13 @@ namespace CryptoQuest.UI
 
         private void SceneLoadedEvent_Raised()
         {
+            Reset();
             _inputMediatorSO.EnableMenuInput();
+        }
+
+        private void Reset()
+        {
+            _validationText.text = string.Empty;
         }
 
         private void CheckPlayerName()
@@ -65,26 +77,21 @@ namespace CryptoQuest.UI
 
         public void SetPlayerName()
         {
-            bool isValid = WordsValidate(_playerNamePlaceholder.text);
-            if (!isValid) return;
+            if (!IsValidData()) return;
 
             _saveSystemSo.PlayerName = _playerNamePlaceholder.text;
-            _panelInputName.SetActive(false);
             StartGame();
         }
 
-        private bool WordsValidate(string text)
+        private bool IsValidData()
         {
-            var isValid = TextValidation.ValidateWords(text, _textAsset);
-            if (isValid)
-            {
-                _validationText.gameObject.SetActive(false);
-            }
+            bool isValid = _stringValidator.Validate(_playerNamePlaceholder.text);
+            _validationText.text = _stringValidator.WarningText();
+            _validationText.gameObject.SetActive(!isValid);
+            if (!isValid) return false;
 
-            _validationText.text = "Invalid name";
-            _validationText.gameObject.SetActive(true);
-
-            return isValid;
+            _panelInputName.SetActive(true);
+            return true;
         }
 
         private void StartGame()
