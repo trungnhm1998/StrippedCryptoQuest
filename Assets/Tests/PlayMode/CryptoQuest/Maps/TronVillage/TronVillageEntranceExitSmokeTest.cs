@@ -62,35 +62,35 @@ namespace Tests.PlayMode.CryptoQuest.Maps.TronVillage
             }
 
             Assert.That(SceneManager.GetSceneByName("TronVillage").isLoaded);
-            var mapExitGOs = GameObject.FindObjectsOfType<MapExit>();
-            var mapEntranceGOs = GameObject.FindObjectsOfType<MapEntrance>();
+            var goToGOs = GameObject.FindObjectsOfType<GoTo>();
+            var goFromGOs = GameObject.FindObjectsOfType<GoFrom>();
 
-            Assert.NotNull(mapExitGOs);
-            Assert.NotNull(mapEntranceGOs);
+            Assert.NotNull(goToGOs);
+            Assert.NotNull(goFromGOs);
             int exitCount = 0;
             int entranceCount = 0;
-            List<MapPathSO> mapExitPaths = new List<MapPathSO>();
-            List<MapPathSO> mapEntrancePaths = new List<MapPathSO>();
-            foreach (var mapExitGO in mapExitGOs)
+            List<MapPathSO> goToPaths = new List<MapPathSO>();
+            List<MapPathSO> goFromPaths = new List<MapPathSO>();
+            foreach (var goToGameOject in goToGOs)
             {
-                var mapExit = mapExitGO.GetComponent<MapExit>();
-                Assert.NotNull(mapExit.MapPath);
-                mapExitPaths.Add(mapExit.MapPath);
+                var goTo = goToGameOject.GetComponent<GoTo>();
+                Assert.NotNull(goTo.MapPath);
+                goToPaths.Add(goTo.MapPath);
                 exitCount++;
             }
 
-            foreach (var mapEntranceGO in mapEntranceGOs)
+            foreach (var goFromGameObject in goFromGOs)
             {
-                var mapEntrance = mapEntranceGO.GetComponent<MapEntrance>();
-                Assert.NotNull(mapEntrance.MapPath);
-                mapEntrancePaths.Add(mapEntrance.MapPath);
+                var goFrom = goFromGameObject.GetComponent<GoFrom>();
+                Assert.NotNull(goFrom.MapPath);
+                goFromPaths.Add(goFrom.MapPath);
                 entranceCount++;
             }
 
             Assert.AreEqual(5, exitCount);
             Assert.AreEqual(5, entranceCount);
-            var exitsSet = new HashSet<MapPathSO>(mapExitPaths);
-            var entrancesSet = new HashSet<MapPathSO>(mapEntrancePaths);
+            var exitsSet = new HashSet<MapPathSO>(goToPaths);
+            var entrancesSet = new HashSet<MapPathSO>(goFromPaths);
             bool isEqual = exitsSet.SetEquals(entrancesSet);
             Assert.IsTrue(isEqual);
         }
