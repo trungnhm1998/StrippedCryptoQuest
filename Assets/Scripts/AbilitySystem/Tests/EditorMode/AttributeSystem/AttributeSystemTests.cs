@@ -72,22 +72,27 @@ namespace Indigames.AbilitySystem.Tests.AttributeSystem
         }
 
         [Test]
-        public void AttributeSystemBehaviour_SetBaseAttributeValueTo10()
+        [TestCase(10, 10)]
+        [TestCase(20, 20)]
+        public void AttributeSystemBehaviour_SetBaseAttributeValue(float inputValue, float expectedBaseValue)
         {
-            SetupSetBaseValueAttribute(10);
+            SetupSetBaseValueAttribute(inputValue);
 
             _attributeSystem.GetAttributeValue(_attributeInSystem, out var valueInSystem);
             _attributeSystem.GetAttributeValue(_attributeOutSystem, out var valueOutSystem);
             
-            Assert.AreEqual(10, valueInSystem.BaseValue);
+            Assert.AreEqual(expectedBaseValue, valueInSystem.BaseValue);
             Assert.AreEqual(DEFAULT_ATTRIBUTE_VALUE, valueOutSystem.BaseValue,
                 $"Because {_attributeOutSystem.name} not in the system\n So the system return default value");
         }
         
         [Test]
-        public void AttributeSystemBehaviour_ResetAllAttributes()
+        [TestCase(-1)]
+        [TestCase(100)]
+        [TestCase(20)]
+        public void AttributeSystemBehaviour_ResetAllAttributes(float inputValue)
         {
-            SetupSetBaseValueAttribute(100);
+            SetupSetBaseValueAttribute(inputValue);
 
             _attributeSystem.ResetAllAttributes();
             _attributeSystem.GetAttributeValue(_attributeInSystem, out var valueInSystem);
@@ -97,103 +102,80 @@ namespace Indigames.AbilitySystem.Tests.AttributeSystem
 
         
         [Test]
-        public void AttributeSystemBehaviour_UpdateAttributeCurrentValue()
+        [TestCase(10, 10)]
+        [TestCase(100, 100)]
+        public void AttributeSystemBehaviour_UpdateAttributeCurrentValue(float inputBaseValue, float expectedCurrentValue)
         {
             SetupAddAttribute();
-            SetupSetBaseValueAttribute(10);
-            AttributeValue value = new AttributeValue();
-            _attributeSystem.GetAttributeValue(_attributeInSystem, out value);
-            Assert.AreEqual(10, value.BaseValue);
+            SetupSetBaseValueAttribute(inputBaseValue);
 
-            Assert.AreEqual(0, value.CurrentValue);
             _attributeSystem.UpdateAttributeCurrentValue(_attributeInSystem);
-            _attributeSystem.GetAttributeValue(_attributeInSystem, out value);
-            Assert.AreEqual(10, value.CurrentValue);
-
-            SetupSetBaseValueAttribute(0);
-
-            Assert.AreEqual(10, value.CurrentValue);
-            _attributeSystem.UpdateAllAttributeCurrentValues();
-            _attributeSystem.GetAttributeValue(_attributeInSystem, out value);
-            Assert.AreEqual(0, value.CurrentValue);
+            _attributeSystem.GetAttributeValue(_attributeInSystem, out var value);
+            Assert.AreEqual(expectedCurrentValue, value.CurrentValue);
         }
 
         [Test]
-        public void AttributeSystemBehaviour_AddModifierAdd_1()
+        [TestCase(10, 10)]
+        [TestCase(100, 100)]
+        public void AttributeSystemBehaviour_UpdateAllAttributesCurrentValue(float inputBaseValue, float expectedCurrentValue)
         {
-            SetupSetBaseValueAttribute(10);
+            SetupAddAttribute();
+            SetupSetBaseValueAttribute(inputBaseValue);
+
+            _attributeSystem.UpdateAllAttributeCurrentValues();
+            _attributeSystem.GetAttributeValue(_attributeInSystem, out var value);
+            Assert.AreEqual(expectedCurrentValue, value.CurrentValue);
+        }
+
+        [Test]
+        [TestCase(10, 1, 0, 10, 11, EEffectStackingType.External)]
+        [TestCase(10, 2, 0, 12, 12, EEffectStackingType.Core)]
+        [TestCase(10, -1, 0, 10, 9, EEffectStackingType.External)]
+        [TestCase(10, -1, 0, 9, 9, EEffectStackingType.Core)]
+        [TestCase(10, 0, 1, 10, 20, EEffectStackingType.External)]
+        [TestCase(10, 0, 1, 20, 20, EEffectStackingType.Core)]
+        [TestCase(10, 0, 0.5f, 10, 15, EEffectStackingType.External)]
+        [TestCase(10, 0, 0.5f, 15, 15, EEffectStackingType.Core)]
+        [TestCase(10, 1, 1, 10, 22, EEffectStackingType.External)]
+        [TestCase(10, 1, 1, 22, 22, EEffectStackingType.Core)]
+        public void AttributeSystemBehaviour_AddModifier(float inputBaseValue,
+            float inputModifierAdditiveValue, float inputModifierMultiplyValue,
+            float expectedCoretValue, float expectedCurrentValue,
+            EEffectStackingType stackMode)
+        {
+            SetupSetBaseValueAttribute(inputBaseValue);
             _attributeSystem.UpdateAttributeCurrentValue(_attributeInSystem);
-            AttributeValue value = new AttributeValue();
-            _attributeSystem.GetAttributeValue(_attributeInSystem, out value);
             var modifier = new Modifier()
             {
-                Additive = 1
+                Additive = inputModifierAdditiveValue,
+                Multiplicative = inputModifierMultiplyValue
             };
-            //Modifier External so the CoreValue unchanged
-            Assert.AreEqual(0, value.Modifier.Additive);
-            _attributeSystem.AddModifierToAttribute(modifier, _attributeInSystem, out value);
-            Assert.AreEqual(1, value.Modifier.Additive);
-            Assert.AreEqual(10, value.CurrentValue);
+            _attributeSystem.AddModifierToAttribute(modifier, _attributeInSystem, out _, stackMode);
             _attributeSystem.UpdateAttributeCurrentValue(_attributeInSystem);
-            _attributeSystem.GetAttributeValue(_attributeInSystem, out value);
-            Assert.AreEqual(10, AttributeSystemHelper.CaculateCoreAttributeValue(value));
-            Assert.AreEqual(11, value.CurrentValue);
-
-            //Modifier Core and the CoreValue changed
-            Assert.AreEqual(0, value.CoreModifier.Additive);
-            _attributeSystem.AddModifierToAttribute(modifier, _attributeInSystem, out value, EEffectStackingType.Core);
-            Assert.AreEqual(1, value.CoreModifier.Additive);
-            _attributeSystem.UpdateAllAttributeCurrentValues();
-            _attributeSystem.GetAttributeValue(_attributeInSystem, out value);
-            Assert.AreEqual(11, AttributeSystemHelper.CaculateCoreAttributeValue(value));
-            Assert.AreEqual(12, value.CurrentValue);
+            _attributeSystem.GetAttributeValue(_attributeInSystem, out var value);
+            Assert.AreEqual(expectedCoretValue, AttributeSystemHelper.CaculateCoreAttributeValue(value));
+            Assert.AreEqual(expectedCurrentValue, value.CurrentValue);
         }
 
-        
         [Test]
-        public void AttributeSystemBehaviour_AddModifierMultiply_100Percent()
+        [TestCase(10, 1, 1, EEffectStackingType.External, 10)]
+        [TestCase(10, -1, 1, EEffectStackingType.Core, 10)]
+        public void AttributeSystemBehaviour_ResetAllModifiers(float inputBaseValue, 
+            float inputModifierAdditiveValue, float inputModifierMultiplyValue,
+            EEffectStackingType stackMode, float expectedCurrentValue)
         {
-            SetupSetBaseValueAttribute(10);
-            _attributeSystem.UpdateAttributeCurrentValue(_attributeInSystem);
-            AttributeValue value = new AttributeValue();
-            _attributeSystem.GetAttributeValue(_attributeInSystem, out value);
+            SetupSetBaseValueAttribute(inputBaseValue);
             var modifier = new Modifier()
             {
-                Multiplicative = 1
+                Additive = inputModifierAdditiveValue,
+                Multiplicative = inputModifierMultiplyValue
             };
-
-            //Modifier External so the CoreValue unchanged
-            Assert.AreEqual(0, value.Modifier.Multiplicative);
-            _attributeSystem.AddModifierToAttribute(modifier, _attributeInSystem, out value);
-            Assert.AreEqual(1, value.Modifier.Multiplicative);
-            Assert.AreEqual(10, value.CurrentValue);
-            _attributeSystem.UpdateAttributeCurrentValue(_attributeInSystem);
-            _attributeSystem.GetAttributeValue(_attributeInSystem, out value);
-            Assert.AreEqual(10, AttributeSystemHelper.CaculateCoreAttributeValue(value));
-            Assert.AreEqual(20, value.CurrentValue);
-
-            //Modifier Core and the CoreValue changed
-            Assert.AreEqual(0, value.CoreModifier.Multiplicative);
-            _attributeSystem.AddModifierToAttribute(modifier, _attributeInSystem, out value, EEffectStackingType.Core);
-            Assert.AreEqual(1, value.CoreModifier.Multiplicative);
-            _attributeSystem.UpdateAllAttributeCurrentValues();
-            _attributeSystem.GetAttributeValue(_attributeInSystem, out value);
-            Assert.AreEqual(20, AttributeSystemHelper.CaculateCoreAttributeValue(value));
-            Assert.AreEqual(40, value.CurrentValue);
-        }
-
-        [Test]
-        public void AttributeSystemBehaviour_ResetAllModifiers()
-        {
-            AttributeSystemBehaviour_AddModifierMultiply_100Percent();
-            AttributeValue value = new AttributeValue();
-            _attributeSystem.GetAttributeValue(_attributeInSystem, out value);
-            Assert.AreEqual(40, value.CurrentValue);
+            _attributeSystem.AddModifierToAttribute(modifier, _attributeInSystem, out _, stackMode);
 
             _attributeSystem.ResetAttributeModifiers();
             _attributeSystem.UpdateAllAttributeCurrentValues();
-            _attributeSystem.GetAttributeValue(_attributeInSystem, out value);
-            Assert.AreEqual(10, value.CurrentValue);
+            _attributeSystem.GetAttributeValue(_attributeInSystem, out var value);
+            Assert.AreEqual(expectedCurrentValue, value.CurrentValue);
         }
     }
 }
