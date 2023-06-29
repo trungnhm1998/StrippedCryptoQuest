@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace CryptoQuest.Map
 {
-    public class MapExit : MonoBehaviour
+    public class GoTo : MonoBehaviour
     {
         [Header("Configs")]
         [SerializeField] private SceneScriptableObject _nextScene;

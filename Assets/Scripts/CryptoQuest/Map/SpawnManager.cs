@@ -16,13 +16,13 @@ namespace CryptoQuest.Map
         [Header("Listening on")]
         [SerializeField] private VoidEventChannelSO _sceneLoadedEventChannelSO;
 
-        private MapEntrance[] _mapEntrances;
+        private GoFrom[] _mapEntrances;
 
         private Transform _defaultSpawnPoint;
 
         private void Awake()
         {
-            _mapEntrances = FindObjectsOfType<MapEntrance>();
+            _mapEntrances = FindObjectsOfType<GoFrom>();
             _defaultSpawnPoint = transform.GetChild(0);
         }
 

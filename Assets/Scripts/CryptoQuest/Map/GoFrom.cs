@@ -4,7 +4,7 @@ using UnityEngine.Serialization;
 
 namespace CryptoQuest.Map
 {
-    public class MapEntrance : MonoBehaviour
+    public class GoFrom : MonoBehaviour
     {
         [Header("Config")]
         [SerializeField] private MapPathSO _mapPath;
