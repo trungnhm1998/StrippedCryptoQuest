@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Indigames.AbilitySystem
 {
-    public class TagSystem : MonoBehaviour
+    public class TagSystemBehaviour : MonoBehaviour
     {
         public List<TagScriptableObject> GrantedTags = new List<TagScriptableObject>();
 

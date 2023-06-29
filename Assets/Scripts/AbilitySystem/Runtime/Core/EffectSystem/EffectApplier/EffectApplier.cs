@@ -5,16 +5,18 @@ namespace Indigames.AbilitySystem
 {
     public class EffectApplier : IEffectApplier
     {
-        private readonly AbilitySystem _ownerSystem;
-        private readonly AttributeSystem _attributeSystem;
+        private readonly AbilitySystemBehaviour _ownerSystem;
+        private readonly AttributeSystemBehaviour _attributeSystem;
 
-        public EffectApplier(AbilitySystem ownerSystem)
+        public EffectApplier(AbilitySystemBehaviour ownerSystem)
         {
             _ownerSystem = ownerSystem;
             _attributeSystem = ownerSystem.AttributeSystem;
         }
 
         /// <summary>
+        /// It's mean instantly modify base of the attribute
+        /// suitable for non-stats attribute like HP (not MaxHP)
         /// Attack can be treat as instant effect
         /// Enemy -> attack (effect) -> Player
         /// </summary>
@@ -41,7 +43,7 @@ namespace Indigames.AbilitySystem
                         attributeValue.BaseValue += calculatedModifier.Additive;
                         break;
                     case EAttributeModifierType.Multiply:
-                        attributeValue.BaseValue *= calculatedModifier.Multiplicative;
+                        attributeValue.BaseValue += attributeValue.BaseValue * calculatedModifier.Multiplicative;
                         break;
                 }
 
