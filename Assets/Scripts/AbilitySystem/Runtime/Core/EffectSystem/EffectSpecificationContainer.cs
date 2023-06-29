@@ -18,14 +18,18 @@ namespace Indigames.AbilitySystem
         {
             _effectSpec = effectSpec;
             if (generateModifiers)
+            {
                 _modifiers = GenerateEffectModifier(_effectSpec);
+            }
         }
 
         private AttributeModifier[] GenerateEffectModifier(AbstractEffect abstractEffect)
         {
             var modifierDefAfterCalculation = CalculateModifierMagnitude(abstractEffect);
             if (abstractEffect.EffectSO.ExecutionCalculation)
+            {
                 abstractEffect.EffectSO.ExecutionCalculation.ExecuteImplementation(ref abstractEffect, ref modifierDefAfterCalculation);
+            }
 
             var calculatedModifiers = new AttributeModifier[modifierDefAfterCalculation.Length];
 
@@ -75,7 +79,9 @@ namespace Indigames.AbilitySystem
             {
                 EffectAttributeModifier modifier = modifierDefsDetail[i].Clone();
                 if (modifier.ModifierComputationMethod)
+                {
                     modifier.Value += modifier.ModifierComputationMethod.CalculateMagnitude(abstractEffect);
+                }
                 calculatedModifiers[i] = modifier;
             }
 

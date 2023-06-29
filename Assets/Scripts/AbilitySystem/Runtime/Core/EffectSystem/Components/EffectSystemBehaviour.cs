@@ -26,14 +26,10 @@ namespace Indigames.AbilitySystem
             }
         }
 
-        private void Start()
-        {
-            _attributeSystem = Owner.AttributeSystem;
-        }        
-
         public void InitSystem(AbilitySystemBehaviour owner)
         {
             _owner = owner;
+            _attributeSystem = owner.AttributeSystem;
         }
 
         /// <summary>

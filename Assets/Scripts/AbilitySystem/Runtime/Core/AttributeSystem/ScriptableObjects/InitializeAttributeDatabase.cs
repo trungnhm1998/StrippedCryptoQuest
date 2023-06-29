@@ -6,13 +6,13 @@ namespace Indigames.AbilitySystem
     [CreateAssetMenu(fileName = "InitStats", menuName = "Indigames Ability System/Attributes/Initialize Stats Database")]
     public class InitializeAttributeDatabase : ScriptableObject
     {
-        public AttributeInitValue[] attributesToInitialize;
+        public AttributeInitValue[] AttributesToInitialize;
     }
 
     [Serializable]
     public struct AttributeInitValue
     {
-        public AttributeScriptableObject attribute;
-        public float value;
+        public AttributeScriptableObject Attribute;
+        public float Value;
     }
 }

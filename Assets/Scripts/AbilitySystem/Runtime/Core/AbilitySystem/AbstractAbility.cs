@@ -50,7 +50,7 @@ namespace Indigames.AbilitySystem
 
             _isActive = true;
             Owner.StartCoroutine(InternalActiveAbility());
-            Owner.TagSystem.AddTags(AbilitySO.Tags.ActivationTags);
+            Owner.TagSystem.GrantedTags.AddRange(AbilitySO.Tags.ActivationTags);
         }
 
         /// <summary>
@@ -71,18 +71,19 @@ namespace Indigames.AbilitySystem
         }
 
         /// <summary>
-        /// This ability can only active if the Owner, Source, Target system has all the required tags
+        /// This ability can only active if the Owner system has all the required tags
         /// and none of the Ignore tags
+        /// Source and Target are not implemented yet
         /// </summary>
         protected virtual bool CheckTags()
         {
             return AbilitySystemHelper.SystemHasAllTags(Owner, AbilitySO.Tags.OwnerTags.RequireTags)
-                && AbilitySystemHelper.SystemHasAllTags(Owner, AbilitySO.Tags.SourceTags.RequireTags)
-                && AbilitySystemHelper.SystemHasAllTags(Owner, AbilitySO.Tags.TargetTags.RequireTags)
+                // && AbilitySystemHelper.SystemHasAllTags(Source, AbilitySO.Tags.SourceTags.RequireTags)
+                // && AbilitySystemHelper.SystemHasAllTags(Target, AbilitySO.Tags.TargetTags.RequireTags)
                 // ---------------------------------------------------------
-                && AbilitySystemHelper.SystemHasNoneTags(Owner, AbilitySO.Tags.OwnerTags.IgnoreTags)
-                && AbilitySystemHelper.SystemHasNoneTags(Owner, AbilitySO.Tags.SourceTags.IgnoreTags)
-                && AbilitySystemHelper.SystemHasNoneTags(Owner, AbilitySO.Tags.TargetTags.IgnoreTags);
+                // && AbilitySystemHelper.SystemHasNoneTags(Source, AbilitySO.Tags.SourceTags.IgnoreTags)
+                // && AbilitySystemHelper.SystemHasNoneTags(Target, AbilitySO.Tags.TargetTags.IgnoreTags)
+                && AbilitySystemHelper.SystemHasNoneTags(Owner, AbilitySO.Tags.OwnerTags.IgnoreTags);
         }
 
         public virtual void OnAbilityRemoved(AbstractAbility abilitySpec)

@@ -1,9 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using NUnit.Framework;
 using UnityEngine;
-using UnityEngine.TestTools;
-using Indigames.AbilitySystem;
 
 namespace Indigames.AbilitySystem.Tests.AttributeSystem
 {
@@ -21,13 +17,11 @@ namespace Indigames.AbilitySystem.Tests.AttributeSystem
             _gameObject = new GameObject();
             _attributeSystem = _gameObject.AddComponent<AttributeSystemBehaviour>();
             _attributeInSystem = ScriptableObject.CreateInstance<AttributeScriptableObject>();
-            _attributeInSystem.name = "TestAttributeInSystem";
             _attributeOutSystem = ScriptableObject.CreateInstance<AttributeScriptableObject>();
-            _attributeOutSystem.name = "TestAttributeOutSystem";
         }
 
         [Test]
-        public void AttributeSystemBehaviour_CheckHasAttribute()
+        public void HasAttribute_ShouldFalse()
         {
             Assert.IsFalse(_attributeSystem.HasAttribute(_attributeInSystem),
                 $"{_attributeInSystem.name} is not added into Attribute System");
@@ -36,7 +30,7 @@ namespace Indigames.AbilitySystem.Tests.AttributeSystem
         }
 
         [Test]
-        public void AttributeSystemBehaviour_CheckAddAttribute()
+        public void AddAttribute_ShouldHasAddedAttributeOnly()
         {
             SetupAddAttribute();
 
@@ -53,9 +47,9 @@ namespace Indigames.AbilitySystem.Tests.AttributeSystem
 
 
         [Test]
-        public void AttributeSystemBehaviour_GetAttributeValue()
+        public void GetAttributeValue_ShouldTrueWithAddedAttribute()
         {
-            AttributeSystemBehaviour_CheckAddAttribute();
+            SetupAddAttribute();
 
             Assert.IsTrue(_attributeSystem.GetAttributeValue(_attributeInSystem, out var valueInSystem), 
                 $"Shoud be true because {_attributeInSystem.name} is in system");
@@ -74,7 +68,7 @@ namespace Indigames.AbilitySystem.Tests.AttributeSystem
         [Test]
         [TestCase(10, 10)]
         [TestCase(20, 20)]
-        public void AttributeSystemBehaviour_SetBaseAttributeValue(float inputValue, float expectedBaseValue)
+        public void SetAttributeBaseValue_ShouldEqualInputValue(float inputValue, float expectedBaseValue)
         {
             SetupSetBaseValueAttribute(inputValue);
 
@@ -90,7 +84,7 @@ namespace Indigames.AbilitySystem.Tests.AttributeSystem
         [TestCase(-1)]
         [TestCase(100)]
         [TestCase(20)]
-        public void AttributeSystemBehaviour_ResetAllAttributes(float inputValue)
+        public void ResetAllAttributes_ValueShouldEqualDefault(float inputValue)
         {
             SetupSetBaseValueAttribute(inputValue);
 
@@ -100,11 +94,10 @@ namespace Indigames.AbilitySystem.Tests.AttributeSystem
             Assert.AreEqual(DEFAULT_ATTRIBUTE_VALUE, valueInSystem.BaseValue);
         }
 
-        
         [Test]
         [TestCase(10, 10)]
         [TestCase(100, 100)]
-        public void AttributeSystemBehaviour_UpdateAttributeCurrentValue(float inputBaseValue, float expectedCurrentValue)
+        public void UpdateAttributeCurrentValue_CurrentValueShouldEqualInput(float inputBaseValue, float expectedCurrentValue)
         {
             SetupAddAttribute();
             SetupSetBaseValueAttribute(inputBaseValue);
@@ -117,7 +110,7 @@ namespace Indigames.AbilitySystem.Tests.AttributeSystem
         [Test]
         [TestCase(10, 10)]
         [TestCase(100, 100)]
-        public void AttributeSystemBehaviour_UpdateAllAttributesCurrentValue(float inputBaseValue, float expectedCurrentValue)
+        public void UpdateAllAttributeCurrentValues_CurrentValueShouldEqualInput(float inputBaseValue, float expectedCurrentValue)
         {
             SetupAddAttribute();
             SetupSetBaseValueAttribute(inputBaseValue);
@@ -128,18 +121,20 @@ namespace Indigames.AbilitySystem.Tests.AttributeSystem
         }
 
         [Test]
-        [TestCase(10, 1, 0, 10, 11, EEffectStackingType.External)]
-        [TestCase(10, 2, 0, 12, 12, EEffectStackingType.Core)]
-        [TestCase(10, -1, 0, 10, 9, EEffectStackingType.External)]
-        [TestCase(10, -1, 0, 9, 9, EEffectStackingType.Core)]
-        [TestCase(10, 0, 1, 10, 20, EEffectStackingType.External)]
-        [TestCase(10, 0, 1, 20, 20, EEffectStackingType.Core)]
-        [TestCase(10, 0, 0.5f, 10, 15, EEffectStackingType.External)]
-        [TestCase(10, 0, 0.5f, 15, 15, EEffectStackingType.Core)]
-        [TestCase(10, 1, 1, 10, 22, EEffectStackingType.External)]
-        [TestCase(10, 1, 1, 22, 22, EEffectStackingType.Core)]
-        public void AttributeSystemBehaviour_AddModifier(float inputBaseValue,
-            float inputModifierAdditiveValue, float inputModifierMultiplyValue,
+        [TestCase(10, 1, 0, 0, 10, 11, EEffectStackingType.External)]
+        [TestCase(10, 2, 0, 0, 12, 12, EEffectStackingType.Core)]
+        [TestCase(10, -1, 0, 0, 10, 9, EEffectStackingType.External)]
+        [TestCase(10, -1, 0, 0, 9, 9, EEffectStackingType.Core)]
+        [TestCase(10, 0, 1, 0, 10, 20, EEffectStackingType.External)]
+        [TestCase(10, 0, 1, 0, 20, 20, EEffectStackingType.Core)]
+        [TestCase(10, 0, 0.5f, 0, 10, 15, EEffectStackingType.External)]
+        [TestCase(10, 0, 0.5f, 0, 15, 15, EEffectStackingType.Core)]
+        [TestCase(10, 1, 1, 0, 10, 22, EEffectStackingType.External)]
+        [TestCase(10, 1, 1, 0, 22, 22, EEffectStackingType.Core)]
+        [TestCase(10, 1, 1, 2, 10, 2, EEffectStackingType.External)]
+        [TestCase(10, 1, 1, 2, 2, 2, EEffectStackingType.Core)]
+        public void AddModifier_ShouldReturnExpectedValue(float inputBaseValue,
+            float inputModifierAdditiveValue, float inputModifierMultiplyValue, float inputModifierOverrideValue,
             float expectedCoretValue, float expectedCurrentValue,
             EEffectStackingType stackMode)
         {
@@ -148,7 +143,8 @@ namespace Indigames.AbilitySystem.Tests.AttributeSystem
             var modifier = new Modifier()
             {
                 Additive = inputModifierAdditiveValue,
-                Multiplicative = inputModifierMultiplyValue
+                Multiplicative = inputModifierMultiplyValue,
+                Overriding = inputModifierOverrideValue
             };
             _attributeSystem.AddModifierToAttribute(modifier, _attributeInSystem, out _, stackMode);
             _attributeSystem.UpdateAttributeCurrentValue(_attributeInSystem);
@@ -160,7 +156,7 @@ namespace Indigames.AbilitySystem.Tests.AttributeSystem
         [Test]
         [TestCase(10, 1, 1, EEffectStackingType.External, 10)]
         [TestCase(10, -1, 1, EEffectStackingType.Core, 10)]
-        public void AttributeSystemBehaviour_ResetAllModifiers(float inputBaseValue, 
+        public void ResetAttributeModifiers_ShouldReturnExpectedValue(float inputBaseValue, 
             float inputModifierAdditiveValue, float inputModifierMultiplyValue,
             EEffectStackingType stackMode, float expectedCurrentValue)
         {

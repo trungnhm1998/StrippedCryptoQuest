@@ -11,9 +11,9 @@ namespace Indigames.AbilitySystem
         [Tooltip("Which attribute to affect and how it affected")]
         public EffectDetails EffectDetails;
         [Tooltip("When the effect is applied to a target, these tags will be granted through logic of AbilitySystem")]
-        public TagScriptableObject[] GrantedTags;
+        public TagScriptableObject[] GrantedTags = new TagScriptableObject[0];
         [Tooltip("These tags must be present or must not (ignore tags) for the effect to be applied.")]
-        public TagRequireIgnoreDetails ApplicationTagRequirements;
+        public TagRequireIgnoreDetails ApplicationTagRequirements = new();
         [Tooltip("How the effect being custom caculated. Can leave it null or DefaultSO.")]
         public AbstractEffectExecutionCalculationSO ExecutionCalculation;
 
@@ -21,7 +21,7 @@ namespace Indigames.AbilitySystem
         [Range(0f, 1f)] [Tooltip("There {ChanceToApply}*100% chance that effect will be applied")]
         public float ChanceToApply = 1f;
         [Tooltip("Custom requirement to know if we can apply effect or not")]
-        public List<EffectCustomApplicationRequirement> CustomApplicationRequirements = new List<EffectCustomApplicationRequirement>();
+        public List<EffectCustomApplicationRequirement> CustomApplicationRequirements = new();
 
         /// <summary>
         /// Get a new AbstractEffect instance with the given level and level rate. from this ScriptableObject.

@@ -5,7 +5,7 @@ namespace Indigames.AbilitySystem
 {
     public abstract class AbilityScriptableObject : ScriptableObject
     {
-        [SerializeField] private AbilityTags tags;
+        [SerializeField] private AbilityTags tags = new();
         public AbilityTags Tags => tags;
 
         [SerializeField] private AbilityParameters _parameters;
@@ -31,7 +31,7 @@ namespace Indigames.AbilitySystem
     }
 
     [Serializable]
-    public struct AbilityTags
+    public class AbilityTags
     {
         /// <summary>
         /// Tag to define this ability should be unique
@@ -39,38 +39,42 @@ namespace Indigames.AbilitySystem
         public TagScriptableObject AbilityTag;
 
         /// <summary>
+        /// Not implemented
         /// Active the ability on the same system will cancel any ability that have these tags
         /// </summary>
-        public TagScriptableObject[] CancelAbilityWithTags;
+        public TagScriptableObject[] CancelAbilityWithTags = new TagScriptableObject[0];
 
         /// <summary>
+        /// Not implemented
         /// Prevents execution of any other Abilities with a matching Tag while this Ability is executing.
         /// Ability that have these tags will be blocked from activating on the same system
         /// e.g. silencing ability that enemy could use to prevent use to use any ability
         /// </summary>
-        public TagScriptableObject[] BlockAbilityWithTags;
+        public TagScriptableObject[] BlockAbilityWithTags = new TagScriptableObject[0];
 
         /// <summary>
         /// These tags will be granted to the source system while this ability is active
         /// </summary>
-        public TagScriptableObject[] ActivationTags;
+        public TagScriptableObject[] ActivationTags = new TagScriptableObject[0];
 
         /// <summary>
         /// This ability can only active if owner system has all of the RequiredTags
         /// and none of the Ignore tags
         /// </summary>
-        public TagRequireIgnoreDetails OwnerTags;
+        public TagRequireIgnoreDetails OwnerTags = new();
 
         /// <summary>
+        /// Not implemented
         /// This ability can only active if the Source system has all the required tags
         /// and none of the Ignore tags
         /// </summary>
-        public TagRequireIgnoreDetails SourceTags;
+        public TagRequireIgnoreDetails SourceTags = new();
 
         /// <summary>
+        /// Not implemented
         /// This ability can only active if the Target system has all the required tags
         /// and none of the Ignore tags
         /// </summary>
-        public TagRequireIgnoreDetails TargetTags;
+        public TagRequireIgnoreDetails TargetTags = new();
     }
 }
