@@ -58,7 +58,7 @@ namespace Indigames.AbilitySystem
         /// </summary>
         public virtual void EndAbility()
         {
-            if (!_isActive) return;
+            if (!_isActive || Owner == null) return;
 
             _isActive = false;
             Owner.StopCoroutine(InternalActiveAbility());
