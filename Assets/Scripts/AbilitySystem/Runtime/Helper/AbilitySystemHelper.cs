@@ -4,7 +4,7 @@ namespace Indigames.AbilitySystem
 {
     public static class AbilitySystemHelper
     {
-        public static List<AbstractEffect> ApplyEffectSpecToTarget(AbstractEffect effect, AbilitySystem target)
+        public static List<AbstractEffect> ApplyEffectSpecToTarget(AbstractEffect effect, AbilitySystemBehaviour target)
         {
             var appliedEffects = new List<AbstractEffect>();
             var effectSpec = target.EffectSystem.ApplyEffectToSelf(effect);
@@ -16,13 +16,13 @@ namespace Indigames.AbilitySystem
         }
 
         /// <summary>
-        /// Checks if an Skill System has all the listed tags
+        /// Checks if an Ability System has all the listed tags
         /// </summary>
-        /// <param name="skillSystem">Skill System</param>
+        /// <param name="abilitySystem">Ability System</param>
         /// <param name="tags">List of tags to check</param>
-        /// <returns><para>true, if the Skill System has all tags</para>
+        /// <returns><para>true, if the Ability System has all tags</para>
         /// false, if system is invalid or missing 1 or more tags</returns>
-        public static bool SystemHasAllTags(AbilitySystem abilitySystem, TagScriptableObject[] tags)
+        public static bool SystemHasAllTags(AbilitySystemBehaviour abilitySystem, TagScriptableObject[] tags)
         {
             if (abilitySystem == null) return false;
             var tagSystem = abilitySystem.TagSystem;
@@ -36,14 +36,14 @@ namespace Indigames.AbilitySystem
         }
 
         /// <summary>
-        /// Checks if an Skill System has none of the listed tags
-        /// I could use static method here but I want to pass the skill system to the method
+        /// Checks if an Ability System has none of the listed tags
+        /// I could use static method here but I want to pass the ability system to the method
         /// </summary>
-        /// <param name="skillSystem">Skill System</param>
+        /// <param name="abilitySystem">Ability System</param>
         /// <param name="tags">List of tags to check</param>
-        /// <returns><para>true, if the Skill System has none of the tags</para>
+        /// <returns><para>true, if the Ability System has none of the tags</para>
         /// false, if system is invalid or has 1 or more tags</returns>
-        public static bool SystemHasNoneTags(AbilitySystem abilitySystem, TagScriptableObject[] tags)
+        public static bool SystemHasNoneTags(AbilitySystemBehaviour abilitySystem, TagScriptableObject[] tags)
         {
             if (abilitySystem == null) return false;
             var tagSystem = abilitySystem.TagSystem;

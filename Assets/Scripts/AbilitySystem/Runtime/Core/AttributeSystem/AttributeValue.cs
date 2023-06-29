@@ -9,7 +9,7 @@ namespace Indigames.AbilitySystem
         public float BaseValue;
         public float CurrentValue;
         /// <summary>
-        ///For skill/effect external stats
+        ///For ability/effect external stats
         /// </summary>
         public Modifier Modifier = new Modifier();
         public Modifier CoreModifier = new Modifier();
