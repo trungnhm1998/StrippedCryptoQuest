@@ -8,13 +8,13 @@ namespace Indigames.AbilitySystem
     {
         public struct AttributeEventArgs
         {
-            public AttributeSystem System;
+            public AttributeSystemBehaviour System;
             public AttributeValue NewValue;
             public AttributeValue OldValue;
         }
         public Action<AttributeEventArgs> ValueChangeEvent;
 
-        public void RaiseValueChangedEvent(AttributeSystem system, AttributeValue oldValue, AttributeValue newValue)
+        public void RaiseValueChangedEvent(AttributeSystemBehaviour system, AttributeValue oldValue, AttributeValue newValue)
         {
             ValueChangeEvent?.Invoke(new AttributeEventArgs
             {
