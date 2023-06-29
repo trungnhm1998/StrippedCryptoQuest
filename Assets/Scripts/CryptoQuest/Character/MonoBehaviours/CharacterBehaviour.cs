@@ -1,4 +1,3 @@
-using System;
 using Core.Runtime.EditorTools.Attributes.ReadOnlyAttribute;
 using UnityEngine;
 
@@ -17,8 +16,9 @@ namespace CryptoQuest.Character.MonoBehaviours
         }
 
         [SerializeField, ReadOnly] private EFacingDirection _facingDirection = EFacingDirection.South;
+        public EFacingDirection FacingDirection => _facingDirection;
 
-        public bool IsWalking
+        public virtual bool IsWalking
         {
             set => _animator.SetBool(AnimIsWalking, value);
         }
@@ -27,7 +27,7 @@ namespace CryptoQuest.Character.MonoBehaviours
         private static readonly int AnimVelocityY = Animator.StringToHash("InputY");
         private static readonly int AnimIsWalking = Animator.StringToHash("IsWalking");
 
-        public void SetFacingDirection(Vector2 velocity)
+        public virtual void SetFacingDirection(Vector2 velocity)
         {
             if (velocity == Vector2.zero) return;
 

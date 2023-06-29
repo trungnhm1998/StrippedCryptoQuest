@@ -267,6 +267,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _animator: {fileID: 8011887746097824300}
   _facingDirection: 0
+  _interactionCollider: {fileID: 4297895614093028720}
+  _facingOffsets:
+  - Direction: 0
+    Offset: {x: 0, y: -0.8}
+  - Direction: 1
+    Offset: {x: -0.5, y: 0}
+  - Direction: 2
+    Offset: {x: 0, y: 0.8}
+  - Direction: 3
+    Offset: {x: 0.5, y: 0}
 --- !u!114 &2400260871458529821
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -327,7 +337,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6964796200260798395}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -0.8, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -393,7 +403,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.8}
+  m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
