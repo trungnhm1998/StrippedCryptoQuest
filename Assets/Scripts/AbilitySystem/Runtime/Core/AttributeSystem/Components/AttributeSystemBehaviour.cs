@@ -133,12 +133,13 @@ namespace Indigames.AbilitySystem
                 return;
             AttributeValue attributeValue = _attributeValues[index];
             var previousValue = attributeValue.Clone();
-            foreach (var eventChannel in _attributeEventChannels)
-            {
-                eventChannel.PreAttributeChanged(this, _previousValues, ref _attributeValues);
-            }
 
             _attributeValues[index] = AttributeSystemHelper.CalculateCurrentAttributeValue(attributeValue);
+            
+            foreach (var eventChannel in _attributeEventChannels)
+            {
+                eventChannel.AfterAttributeChanged(this, _previousValues, ref _attributeValues);
+            }
 
             if (!(Math.Abs(attributeValue.CurrentValue - previousValue.CurrentValue) > TOLERATED_DIFFERENCE))
                 return;
@@ -153,16 +154,7 @@ namespace Indigames.AbilitySystem
             {
                 var _attributeValue = _attributeValues[i];
                 _previousValues.Add(_attributeValue.Clone());
-            }
 
-            foreach (var eventChannel in _attributeEventChannels)
-            {
-                eventChannel.PreAttributeChanged(this, _previousValues, ref _attributeValues);
-            }
-
-            for (int i = 0; i < _attributeValues.Count; i++)
-            {
-                var _attributeValue = _attributeValues[i];
                 AttributeScriptableObject attributeScriptableObject = _attributeValue.Attribute;
                 AttributeValue calculateCurrentAttributeValue = AttributeSystemHelper.CalculateCurrentAttributeValue(_attributeValue);
                 _attributeValues[i] = calculateCurrentAttributeValue;
@@ -174,6 +166,11 @@ namespace Indigames.AbilitySystem
                     attributeScriptableObject
                         .RaiseValueChangedEvent(this, _previousValues[i], _attributeValues[i]);
                 }
+            }
+
+            foreach (var eventChannel in _attributeEventChannels)
+            {
+                eventChannel.AfterAttributeChanged(this, _previousValues, ref _attributeValues);
             }
         }
 
