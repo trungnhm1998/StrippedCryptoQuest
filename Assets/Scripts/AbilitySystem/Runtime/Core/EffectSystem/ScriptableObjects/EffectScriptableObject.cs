@@ -10,7 +10,7 @@ namespace Indigames.AbilitySystem
         public string Description;
         [Tooltip("Which attribute to affect and how it affected")]
         public EffectDetails EffectDetails;
-        [Tooltip("When the effect is applied to a target, these tags will be granted through logic of SkillSystem")]
+        [Tooltip("When the effect is applied to a target, these tags will be granted through logic of AbilitySystem")]
         public TagScriptableObject[] GrantedTags;
         [Tooltip("These tags must be present or must not (ignore tags) for the effect to be applied.")]
         public TagRequireIgnoreDetails ApplicationTagRequirements;
@@ -27,11 +27,11 @@ namespace Indigames.AbilitySystem
         /// Get a new AbstractEffect instance with the given level and level rate. from this ScriptableObject.
         /// note level and level rate are specific to Mugen Horror Action game.
         /// </summary>
-        /// <param name="skillSystem"></param>
+        /// <param name="abilitySystem"></param>
         /// <param name="levelRate"></param>
         /// <param name="level"></param>
         /// <returns></returns>
-        public virtual AbstractEffect GetEffect(AbilitySystem ownerSystem, object origin, AbilityParameters parameters)
+        public virtual AbstractEffect GetEffect(AbilitySystemBehaviour ownerSystem, object origin, AbilityParameters parameters)
         {
             var effect = CreateEffect();
             effect.Origin = origin.ToString();
