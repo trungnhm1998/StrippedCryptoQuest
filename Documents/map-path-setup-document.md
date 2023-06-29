@@ -32,7 +32,7 @@ Example:
 # Setup Map Exit and Map Entrance
 
 `GoTo.cs` will handle the transition from the current map to the next map.
-`GoFrom` will handle where the player will be placed when entering this current map.
+`GoFrom.cs` will handle where the player will be placed when entering this current map.
 
 **Set up Go To next map **
 
