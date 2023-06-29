@@ -21,7 +21,7 @@ namespace Indigames.AbilitySystem
             set => _remainingDuration = value;
         }
 
-        public override void InitEffect(EffectScriptableObject effectScriptableObject, AbilitySystem ownerSystem,
+        public override void InitEffect(EffectScriptableObject effectScriptableObject, AbilitySystemBehaviour ownerSystem,
             AbilityParameters parameters)
         {
             base.InitEffect(effectScriptableObject, ownerSystem, parameters);

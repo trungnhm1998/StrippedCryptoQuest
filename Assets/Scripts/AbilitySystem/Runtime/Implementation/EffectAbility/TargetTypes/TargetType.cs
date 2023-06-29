@@ -6,9 +6,9 @@ namespace Indigames.AbilitySystem
     public abstract class TargetType : ScriptableObject
     {
         /// <summary>
-        /// Add the target you want the skill to affect in targets parameter
+        /// Add the target you want the ability to affect in targets parameter
         /// </summary>
-        public abstract void GetTargets(AbilitySystem owner, ref List<AbilitySystem> targets);
+        public abstract void GetTargets(AbilitySystemBehaviour owner, ref List<AbilitySystemBehaviour> targets);
     }
 
 }
