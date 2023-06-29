@@ -15,7 +15,7 @@ namespace CryptoQuest.System.Settings
         {
             _banWords = textAsset.text.Split('\n');
             _banWords = _banWords.Select(x => x.ToLower()).ToArray();
-            
+
             UpdateBadWordDictionary();
             UpdateSpecialCharsDictionary();
         }
@@ -35,7 +35,6 @@ namespace CryptoQuest.System.Settings
                 badWordsString += word + or;
             }
 
-
             var regexPattern = @".*(" + badWordsString + @").*";
             _badWordsRegex = new Regex(regexPattern, RegexOptions.IgnoreCase);
         }
@@ -47,44 +46,44 @@ namespace CryptoQuest.System.Settings
             var containedBadWords = _badWordsRegex.IsMatch(input);
             if (containedBadWords)
             {
-                _invalidType = InvalidType.ContainedBanWord;
+                _invalidType = InvalidType.BAN_WORD;
                 return false;
             }
-
 
             var containedSpecialChars = _specialCharsRegex.IsMatch(input);
             if (containedSpecialChars)
             {
-                _invalidType = InvalidType.ContainedSpecialChars;
+                _invalidType = InvalidType.SPEACIAL_CHARACTER;
                 return false;
             }
 
+            var isCharacterTooLong = input.Length > 10 || input.Length <= 1;
+            if (isCharacterTooLong)
+            {
+                _invalidType = InvalidType.LONG_CHARACTER;
+                return false;
+            }
 
             return true;
         }
 
         public string WarningText()
         {
-            switch (_invalidType)
+            return _invalidType switch
             {
-                case InvalidType.ContainedBanWord:
-                    return "This word is not allowed";
-                case InvalidType.ContainedTooLongCharacter:
-                    return "1 to 10 characters only";
-                case InvalidType.ContainedSpecialChars:
-                    return "Special characters are not allowed";
-                default:
-                    return "";
-            }
+                InvalidType.BAN_WORD => _invalidType.ToString(),
+                InvalidType.LONG_CHARACTER => _invalidType.ToString(),
+                InvalidType.SPEACIAL_CHARACTER => _invalidType.ToString(),
+                _ => ""
+            };
         }
     }
 
-
     public enum InvalidType
     {
-        None = 0,
-        ContainedSpecialChars = 1,
-        ContainedBanWord = 2,
-        ContainedTooLongCharacter = 3,
+        NONE = 0,
+        BAN_WORD = 1,
+        LONG_CHARACTER = 2,
+        SPEACIAL_CHARACTER = 3
     }
 }

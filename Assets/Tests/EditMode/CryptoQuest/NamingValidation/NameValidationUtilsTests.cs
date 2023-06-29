@@ -45,5 +45,15 @@ namespace Tests.EditMode.CryptoQuest.NamingValidation
 
             Assert.IsTrue(result);
         }
+
+        [TestCase("a")]
+        [TestCase("hereIsLongName")]
+        [TestCase("ThisisTheLongestNameInTheWorld")]
+        public void Validate_ShortInput_ShouldReturnFalse(string input)
+        {
+            var result = _stringValidator.Validate(input);
+
+            Assert.IsFalse(result);
+        }
     }
 }

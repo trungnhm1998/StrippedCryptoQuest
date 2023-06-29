@@ -6,13 +6,14 @@ using CryptoQuest.Input;
 using CryptoQuest.System.Settings;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Localization.Components;
 
 namespace CryptoQuest.UI
 {
     public class UITitle : MonoBehaviour
     {
         [SerializeField] private TMP_InputField _playerNamePlaceholder;
-        [SerializeField] private TextMeshProUGUI _validationText;
+        [SerializeField] private LocalizeStringEvent _validationText;
         [SerializeField] private GameObject _panelInputName;
         [SerializeField] private TextAsset _textAsset;
 
@@ -25,7 +26,6 @@ namespace CryptoQuest.UI
 
         [Header("Raise on")]
         [SerializeField] private LoadSceneEventChannelSO _loadMapEvent;
-
 
         private StringValidator _stringValidator;
 
@@ -48,13 +48,7 @@ namespace CryptoQuest.UI
 
         private void SceneLoadedEvent_Raised()
         {
-            Reset();
             _inputMediatorSO.EnableMenuInput();
-        }
-
-        private void Reset()
-        {
-            _validationText.text = string.Empty;
         }
 
         private void CheckPlayerName()
@@ -86,8 +80,6 @@ namespace CryptoQuest.UI
         private bool IsValidData()
         {
             bool isValid = _stringValidator.Validate(_playerNamePlaceholder.text);
-            _validationText.text = _stringValidator.WarningText();
-            _validationText.gameObject.SetActive(!isValid);
             if (!isValid) return false;
 
             _panelInputName.SetActive(true);
@@ -102,6 +94,13 @@ namespace CryptoQuest.UI
         private bool IsPlayerNull()
         {
             return string.IsNullOrEmpty(_saveSystemSo.PlayerName);
+        }
+
+        public void ValidateData()
+        {
+            bool isValid = _stringValidator.Validate(_playerNamePlaceholder.text);
+            _validationText.gameObject.SetActive(!isValid);
+            _validationText.StringReference.TableEntryReference = "TITLE_VALIDATE_" + _stringValidator.WarningText();
         }
     }
 }
