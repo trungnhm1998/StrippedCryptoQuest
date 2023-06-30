@@ -57,10 +57,10 @@ namespace CryptoQuest.System.Settings
                 return false;
             }
 
-            var isCharacterTooLong = input.Length > 10 || input.Length <= 1;
+            var isCharacterTooLong = input.Length > 10 || input.Length < 1;
             if (isCharacterTooLong)
             {
-                _invalidType = InvalidType.LONG_CHARACTER;
+                _invalidType = InvalidType.DEFAULT;
                 return false;
             }
 
@@ -72,18 +72,16 @@ namespace CryptoQuest.System.Settings
             return _invalidType switch
             {
                 InvalidType.BAN_WORD => _invalidType.ToString(),
-                InvalidType.LONG_CHARACTER => _invalidType.ToString(),
                 InvalidType.SPEACIAL_CHARACTER => _invalidType.ToString(),
-                _ => ""
+                _ => InvalidType.DEFAULT.ToString()
             };
         }
     }
 
     public enum InvalidType
     {
-        NONE = 0,
+        DEFAULT = 0,
         BAN_WORD = 1,
-        LONG_CHARACTER = 2,
-        SPEACIAL_CHARACTER = 3
+        SPEACIAL_CHARACTER = 2
     }
 }

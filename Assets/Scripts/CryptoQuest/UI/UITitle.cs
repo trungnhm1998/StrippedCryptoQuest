@@ -28,10 +28,12 @@ namespace CryptoQuest.UI
         [SerializeField] private LoadSceneEventChannelSO _loadMapEvent;
 
         private StringValidator _stringValidator;
+        private TextMeshProUGUI _validText;
 
         private void Awake()
         {
             _stringValidator = new StringValidator(_textAsset);
+            _validText = _validationText.GetComponent<TextMeshProUGUI>();
         }
 
         private void OnEnable()
@@ -79,11 +81,27 @@ namespace CryptoQuest.UI
 
         private bool IsValidData()
         {
+            SetData();
             bool isValid = _stringValidator.Validate(_playerNamePlaceholder.text);
             if (!isValid) return false;
 
             _panelInputName.SetActive(true);
             return true;
+        }
+
+
+        public void SetData()
+        {
+            _stringValidator.Validate(_playerNamePlaceholder.text);
+            var warningText = _stringValidator.WarningText();
+
+            _validText.color = Color.white;
+            if (warningText != InvalidType.DEFAULT.ToString())
+            {
+                _validText.color = Color.red;
+            }
+
+            _validationText.StringReference.TableEntryReference = $@"TITLE_VALIDATE_{warningText}";
         }
 
         private void StartGame()
@@ -94,13 +112,6 @@ namespace CryptoQuest.UI
         private bool IsPlayerNull()
         {
             return string.IsNullOrEmpty(_saveSystemSo.PlayerName);
-        }
-
-        public void ValidateData()
-        {
-            bool isValid = _stringValidator.Validate(_playerNamePlaceholder.text);
-            _validationText.gameObject.SetActive(!isValid);
-            _validationText.StringReference.TableEntryReference = "TITLE_VALIDATE_" + _stringValidator.WarningText();
         }
     }
 }
