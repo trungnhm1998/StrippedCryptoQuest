@@ -61,6 +61,7 @@ namespace CryptoQuest.Map
 
             var heroInstance = Instantiate(_heroPrefab, spawnPoint.position, Quaternion.identity);
             _gameplayBus.Hero = heroInstance;
+            _gameplayBus.RaiseHeroSpawnedEvent();
         }
     }
 }
