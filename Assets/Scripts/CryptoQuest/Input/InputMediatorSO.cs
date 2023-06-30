@@ -21,6 +21,7 @@ namespace CryptoQuest.Input
 
         public event UnityAction MenuConfirmClicked;
         public event UnityAction MenuSubmitClicked;
+        public event UnityAction MoveSelectionEvent;
         public event UnityAction CancelEvent;
 
         #endregion
@@ -96,7 +97,10 @@ namespace CryptoQuest.Input
 
         #region MenuActions
 
-        public void OnNavigate(InputAction.CallbackContext context) { }
+        public void OnNavigate(InputAction.CallbackContext context)
+        {
+            if (context.performed) MoveSelectionEvent?.Invoke();
+        }
 
         public void OnConfirm(InputAction.CallbackContext context)
         {

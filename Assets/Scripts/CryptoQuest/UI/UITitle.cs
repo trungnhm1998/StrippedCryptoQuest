@@ -38,7 +38,7 @@ namespace CryptoQuest.UI
         [SerializeField] private LoadSceneEventChannelSO _loadMapEvent;
 
         private IStringValidator _nameValidator;
-        [SerializeField] private ETitleState _currentState;
+        private ETitleState _currentState;
 
         private void Awake()
         {
@@ -59,6 +59,7 @@ namespace CryptoQuest.UI
             _inputMediatorSO.MenuSubmitClicked -= MenuSubmitEvent_Clicked;
             _inputMediatorSO.CancelEvent -= CancelEvent_Clicked;
         }
+
 
         private void CancelEvent_Clicked()
         {
