@@ -2,7 +2,7 @@
 using NUnit.Framework;
 using UnityEditor;
 
-namespace IndiGamesEditor.Core.Tests.Editor.SaveSystem
+namespace IndiGamesEditor.Core.Tests.SaveSystem
 {
     public class SerializableScriptableObjectSmokeTests
     {

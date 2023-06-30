@@ -7,6 +7,7 @@ using UnityEditor;
 using UnityEngine.UI;
 using UnityEngine.Localization;
 using UnityEngine.Localization.Settings;
+using System;
 
 public class NPC_CreatorWindow : EditorWindow
 {
@@ -148,8 +149,8 @@ public class NPC_CreatorWindow : EditorWindow
             {
                 npc.AddComponent<BoxCollider2D>();
                 BoxCollider2D collider2D = npc.GetComponent<BoxCollider2D>();
-                Vector2 spriteSize = new Vector2(_spriteRenderer.sprite.rect.width * 0.01f, _spriteRenderer.sprite.rect.height * 0.01f);
-                collider2D.size = spriteSize;
+                collider2D.size = new Vector2(_spriteRenderer.sprite.rect.width * 0.01f, (_spriteRenderer.sprite.rect.height * 0.01f) / 2);
+                collider2D.offset = new Vector2(collider2D.offset.x, (collider2D.offset.y) / 2);
                 collider2D.isTrigger = true;
             }
         }
@@ -213,10 +214,14 @@ public class NPC_CreatorWindow : EditorWindow
     {
         foreach (GameObject npc in _listNPC)
         {
+            // CheckCollider(npc, _updateCollider);
             var components = _baseNPC.GetComponents<MonoBehaviour>();
             foreach (var component in components)
             {
-                if (npc.GetComponent(component.GetType()) == null) npc.AddComponent(component.GetType());
+                if (npc.GetComponent(component.GetType()) == null)
+                {
+                    npc.AddComponent(component.GetType());
+                }
             }
         }
     }

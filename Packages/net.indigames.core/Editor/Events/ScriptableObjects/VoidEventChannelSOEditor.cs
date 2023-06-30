@@ -2,7 +2,7 @@
 using UnityEditor;
 using UnityEngine;
 
-namespace IndiGames.Core.Editor
+namespace IndiGamesEditor.Core.Events.ScriptableObjects
 {
     [CustomEditor(typeof(VoidEventChannelSO))]
     public class VoidEventChannelSOEditor : UnityEditor.Editor
