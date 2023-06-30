@@ -42,7 +42,7 @@ namespace Indigames.AbilitySystem.Tests.AttributeSystem
 
         private void SetupAddAttribute()
         {
-            _attributeSystem.AddAttributes(new AttributeScriptableObject[] {_attributeInSystem});
+            _attributeSystem.AddAttributes(_attributeInSystem);
         }
 
 
@@ -135,7 +135,7 @@ namespace Indigames.AbilitySystem.Tests.AttributeSystem
         [TestCase(10, 1, 1, 2, 2, 2, EEffectStackingType.Core)]
         public void AddModifier_ShouldReturnExpectedValue(float inputBaseValue,
             float inputModifierAdditiveValue, float inputModifierMultiplyValue, float inputModifierOverrideValue,
-            float expectedCoretValue, float expectedCurrentValue,
+            float expectedCoreValue, float expectedCurrentValue,
             EEffectStackingType stackMode)
         {
             SetupSetBaseValueAttribute(inputBaseValue);
@@ -149,7 +149,7 @@ namespace Indigames.AbilitySystem.Tests.AttributeSystem
             _attributeSystem.AddModifierToAttribute(modifier, _attributeInSystem, out _, stackMode);
             _attributeSystem.UpdateAttributeCurrentValue(_attributeInSystem);
             _attributeSystem.GetAttributeValue(_attributeInSystem, out var value);
-            Assert.AreEqual(expectedCoretValue, AttributeSystemHelper.CaculateCoreAttributeValue(value));
+            Assert.AreEqual(expectedCoreValue, AttributeSystemHelper.CaculateCoreAttributeValue(value));
             Assert.AreEqual(expectedCurrentValue, value.CurrentValue);
         }
 

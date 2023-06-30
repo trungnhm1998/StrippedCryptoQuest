@@ -45,6 +45,9 @@ namespace Indigames.AbilitySystem
                     case EAttributeModifierType.Multiply:
                         attributeValue.BaseValue += attributeValue.BaseValue * calculatedModifier.Multiplicative;
                         break;
+                    case EAttributeModifierType.Override:
+                        attributeValue.BaseValue = calculatedModifier.Overriding;
+                        break;
                 }
 
                 _attributeSystem.SetAttributeBaseValue(attribute, attributeValue.BaseValue);

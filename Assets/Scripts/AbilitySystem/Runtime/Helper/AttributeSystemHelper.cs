@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace Indigames.AbilitySystem
 {
@@ -22,8 +23,14 @@ namespace Indigames.AbilitySystem
 
         public static float CaculateCoreAttributeValue(AttributeValue attributeValue)
         {
-            return (attributeValue.BaseValue + attributeValue.CoreModifier.Additive) *
-                (attributeValue.CoreModifier.Multiplicative + 1);
+            var coreModifier = attributeValue.CoreModifier;
+
+            if (coreModifier.Overriding != 0)
+            {
+                return coreModifier.Overriding;
+            }
+            return (attributeValue.BaseValue + coreModifier.Additive) *
+                (coreModifier.Multiplicative + 1);
         }
     }
 }

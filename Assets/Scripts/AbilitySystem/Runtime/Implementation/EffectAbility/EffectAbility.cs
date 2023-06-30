@@ -50,7 +50,9 @@ namespace Indigames.AbilitySystem
             }
 
             if (!_effectTagDict.ContainsKey(tag))
+            {
                 _effectTagDict.Add(tag, new List<AbstractEffect>());
+            }
             _effectTagDict[tag].AddRange(returnEffects);
 
             return returnEffects;

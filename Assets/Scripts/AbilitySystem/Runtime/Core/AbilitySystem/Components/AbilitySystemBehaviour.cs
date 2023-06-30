@@ -25,6 +25,12 @@ namespace Indigames.AbilitySystem
 #if UNITY_EDITOR
         private void OnValidate()
         {
+            ValidateComponents();
+        }
+#endif
+
+        private void ValidateComponents()
+        {
             if (_attributeSystem == null)
             {
                 _attributeSystem = GetComponent<AttributeSystemBehaviour>();
@@ -37,11 +43,12 @@ namespace Indigames.AbilitySystem
             {
                 _tagSystem = GetComponent<TagSystemBehaviour>();
             }
+
         }
-#endif
 
         private void Awake()
         {
+            ValidateComponents();
             _effectSystem.InitSystem(this);
         }
 

@@ -48,7 +48,7 @@ namespace Indigames.AbilitySystem
 
         public AbstractEffect ApplyEffectToSelf(AbstractEffect inEffectSpec)
         {
-            if (inEffectSpec == null || !inEffectSpec.CanApply(Owner)) return NullEffect.Instance;
+            if (inEffectSpec == null || !inEffectSpec.CanApply()) return NullEffect.Instance;
             
             inEffectSpec.SetTarget(Owner);
             inEffectSpec.Accept(EffectAppliers);

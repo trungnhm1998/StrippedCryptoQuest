@@ -6,7 +6,7 @@ namespace Indigames.AbilitySystem
     public class AbilityEffectContainer
     {
         public TargetType TargetType;
-        public EffectScriptableObject[] Effects;
+        public EffectScriptableObject[] Effects = new EffectScriptableObject[0];
     }
 
     public class AbilityEffectContainerSpec

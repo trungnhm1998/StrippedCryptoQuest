@@ -45,7 +45,7 @@ namespace Indigames.AbilitySystem
             EffectSO = effectScriptableObject;
         }
 
-        public bool CanApply(AbilitySystemBehaviour ownerSystem)
+        public bool CanApply()
         {
             if (Owner == null) return false;
             if (!CheckTagRequirementsMet()) return false;
@@ -63,7 +63,7 @@ namespace Indigames.AbilitySystem
 
             foreach (var appReq in EffectSO.CustomApplicationRequirements)
             {
-                if (appReq != null && !appReq.CanApplyEffect(EffectSO, this, ownerSystem))
+                if (appReq != null && !appReq.CanApplyEffect(EffectSO, this, Owner))
                     return false;
             }
 

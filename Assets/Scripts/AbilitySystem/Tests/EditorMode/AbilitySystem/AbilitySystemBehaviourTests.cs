@@ -67,7 +67,7 @@ namespace Indigames.AbilitySystem.Tests.AbilitySystem
         }
         
         [Test]
-        public void TryActiveAbility_AbilityShouldOnlyActive_WhenSystemHasRequired()
+        public void TryActiveAbility_AbilityShouldOnlyActive_WhenSystemHasRequiredTag()
         {
             _abilitySO.Tags.OwnerTags.RequireTags = new TagScriptableObject[] {_requiredTag};
             var ability = _abilitySystem.GiveAbility(_abilitySO);
