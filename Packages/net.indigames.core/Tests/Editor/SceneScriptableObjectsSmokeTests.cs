@@ -1,7 +1,7 @@
 ﻿using IndiGames.Core.SceneManagementSystem.ScriptableObjects;
 using NUnit.Framework;
 
-namespace IndiGamesEditor.Core.Tests.Editor
+namespace IndiGamesEditor.Core.Tests
 {
     [TestFixture]
     public class SceneScriptableObjectsSmokeTests
