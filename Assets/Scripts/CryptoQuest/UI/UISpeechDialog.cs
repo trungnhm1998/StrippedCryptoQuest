@@ -1,6 +1,6 @@
-using Core.Runtime.Events.ScriptableObjects.Dialogs;
 using CryptoQuest.Character;
 using CryptoQuest.Input;
+using IndiGames.Core.Events.ScriptableObjects.Dialogs;
 using TMPro;
 using UnityEngine;
 

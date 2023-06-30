@@ -1,5 +1,5 @@
-using Core.Runtime.Events.ScriptableObjects.Dialogs;
 using CryptoQuest.Events.UI;
+using IndiGames.Core.Events.ScriptableObjects.Dialogs;
 using UnityEngine;
 
 namespace CryptoQuest.Character

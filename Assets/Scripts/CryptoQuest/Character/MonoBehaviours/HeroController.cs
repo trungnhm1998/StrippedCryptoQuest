@@ -1,4 +1,5 @@
-﻿using CryptoQuest.Character.Movement;
+﻿using System;
+using CryptoQuest.Character.Movement;
 using CryptoQuest.Input;
 using UnityEngine;
 
@@ -59,6 +60,11 @@ namespace CryptoQuest.Character.MonoBehaviours
         private void MoveEvent_Raised(Vector2 inputVector)
         {
             _inputVector = inputVector;
+        }
+        
+        private void OnGUI()
+        {
+            GUI.Label(new Rect(10, 10, 200, 20), $"Input Vector: {_inputVector}");
         }
     }
 }

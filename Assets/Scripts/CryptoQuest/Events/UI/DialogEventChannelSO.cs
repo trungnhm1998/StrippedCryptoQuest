@@ -1,4 +1,4 @@
-﻿using Core.Runtime.Events.ScriptableObjects.Dialogs;
+﻿using IndiGames.Core.Events.ScriptableObjects.Dialogs;
 using UnityEngine;
 using UnityEngine.Events;
 

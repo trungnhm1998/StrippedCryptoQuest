@@ -1,6 +1,6 @@
-using Core.Runtime.EditorTools.Attributes.ReadOnlyAttribute;
-using Core.Runtime.SceneManagementSystem.Events.ScriptableObjects;
-using Core.Runtime.SceneManagementSystem.ScriptableObjects;
+using IndiGames.Core.EditorTools.Attributes.ReadOnlyAttribute;
+using IndiGames.Core.SceneManagementSystem.Events.ScriptableObjects;
+using IndiGames.Core.SceneManagementSystem.ScriptableObjects;
 using UnityEngine;
 
 namespace CryptoQuest.Map

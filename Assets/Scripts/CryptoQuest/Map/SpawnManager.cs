@@ -1,7 +1,7 @@
-﻿using Core.Runtime.Events.ScriptableObjects;
-using CryptoQuest.Character.MonoBehaviours;
+﻿using CryptoQuest.Character.MonoBehaviours;
 using CryptoQuest.Gameplay;
 using CryptoQuest.Input;
+using IndiGames.Core.Events.ScriptableObjects;
 using UnityEngine;
 
 namespace CryptoQuest.Map
