@@ -20,6 +20,7 @@ namespace CryptoQuest.Input
         #region Menu
 
         public event UnityAction MenuConfirmClicked;
+        public event UnityAction MenuSubmitClicked;
         public event UnityAction CancelEvent;
 
         #endregion
@@ -108,7 +109,10 @@ namespace CryptoQuest.Input
             if (context.performed) CancelEvent?.Invoke();
         }
 
-        public void OnSubmit(InputAction.CallbackContext context) { }
+        public void OnSubmit(InputAction.CallbackContext context)
+        {
+            if (context.performed) MenuSubmitClicked?.Invoke();
+        }
 
         public void OnClick(InputAction.CallbackContext context) { }
 

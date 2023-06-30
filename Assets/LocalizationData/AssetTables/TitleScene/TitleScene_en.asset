@@ -16,7 +16,8 @@ MonoBehaviour:
     m_Code: en
   m_SharedData: {fileID: 11400000, guid: b85c0a79d763f1e4ca7ef82830844f06, type: 2}
   m_Metadata:
-    m_Items: []
+    m_Items:
+    - rid: 3755987378272993338
   m_TableData:
   - m_Id: 20862038016
     m_Localized: ENTER YOUR NAME
@@ -47,6 +48,34 @@ MonoBehaviour:
     m_Localized: Enter your name
     m_Metadata:
       m_Items: []
+  - m_Id: 340306704297984
+    m_Localized: Please enter a name between 1 and 10 characters
+    m_Metadata:
+      m_Items: []
+  - m_Id: 340940224557056
+    m_Localized: The name cannot be null
+    m_Metadata:
+      m_Items: []
+  - m_Id: 344301564948480
+    m_Localized: NO
+    m_Metadata:
+      m_Items: []
+  - m_Id: 345134486614016
+    m_Localized: 'Your name is {global.Save.PlayerName}
+
+      You cannot change
+      it when the game start, is that Ok?'
+    m_Metadata:
+      m_Items:
+      - rid: 3755987378272993338
+  - m_Id: 348178909589504
+    m_Localized: YES
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: 3755987378272993338
+      type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_Entries: 007079e2e5390100

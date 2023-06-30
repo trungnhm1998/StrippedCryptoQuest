@@ -9,7 +9,8 @@ namespace CryptoQuest.System.Settings
         Valid = 0,
         BadWord = 1,
         LongWord = 2,
-        SpecialChars = 3
+        SpecialChars = 3,
+        Null = 4
     }
 
     public class NameValidator : IStringValidator
@@ -22,7 +23,7 @@ namespace CryptoQuest.System.Settings
             var badWords = textAsset.text.Split('\n');
             badWords = badWords.Select(x => x.ToLower()).ToArray();
 
-            UpdateBadWordDictionary(badWords);
+            UpdateBadWordDictionary(ref badWords);
             UpdateSpecialCharsDictionary();
         }
 
@@ -31,7 +32,7 @@ namespace CryptoQuest.System.Settings
             _specialCharsRegex = new Regex($@"[{specialChars}]");
         }
 
-        private void UpdateBadWordDictionary(string[] badWords)
+        private void UpdateBadWordDictionary(ref string[] badWords)
         {
             var badWordsString = "";
             for (var index = 0; index < badWords.Length; index++)
@@ -61,10 +62,15 @@ namespace CryptoQuest.System.Settings
                 return EValidation.SpecialChars;
             }
 
-            var isCharacterTooLong = input.Length > 10 || input.Length < 1;
+            var isCharacterTooLong = input.Length > 10;
             if (isCharacterTooLong)
             {
                 return EValidation.LongWord;
+            }
+
+            if (string.IsNullOrEmpty(input))
+            {
+                return EValidation.Null;
             }
 
             return EValidation.Valid;
