@@ -1,12 +1,9 @@
 using Core.Runtime.Events.ScriptableObjects;
-using Core.Runtime.SaveSystem;
 using Core.Runtime.SceneManagementSystem.Events.ScriptableObjects;
 using Core.Runtime.SceneManagementSystem.ScriptableObjects;
 using CryptoQuest.Input;
-using CryptoQuest.System.Settings;
-using TMPro;
+using CryptoQuest.UI.Menu;
 using UnityEngine;
-using UnityEngine.Localization.Components;
 
 namespace CryptoQuest.UI
 {
@@ -20,16 +17,11 @@ namespace CryptoQuest.UI
 
     public class UITitle : MonoBehaviour
     {
-        [SerializeField] private TMP_InputField _playerNamePlaceholder;
-        [SerializeField] private TextMeshProUGUI _validationText;
-        [SerializeField] private LocalizeStringEvent _validationStringEvent;
-        [SerializeField] private GameObject _nameEntryPanel;
-        [SerializeField] private GameObject _promptPanel;
-        [SerializeField] private TextAsset _textAsset;
+        [SerializeField] private UINameInputPanel _nameInputPanel;
+        [SerializeField] private UIInputConfirmPanel _inputConfirmPanel;
 
         [Space(10), SerializeField] private SceneScriptableObject _sceneToLoad;
         [SerializeField] private InputMediatorSO _inputMediatorSO;
-        [SerializeField] private SaveSystemSO _saveSystemSo;
 
         [Header("Listen on")]
         [SerializeField] private VoidEventChannelSO _sceneLoaded;
@@ -37,27 +29,35 @@ namespace CryptoQuest.UI
         [Header("Raise on")]
         [SerializeField] private LoadSceneEventChannelSO _loadMapEvent;
 
-        private IStringValidator _nameValidator;
         private ETitleState _currentState;
+        private MenuSelectionHandler _menuSelectionHandler;
 
         private void Awake()
         {
-            _nameValidator = new NameValidator(_textAsset);
             _currentState = ETitleState.Waiting;
+            _menuSelectionHandler = GetComponent<MenuSelectionHandler>();
         }
 
         private void OnEnable()
         {
             _sceneLoaded.EventRaised += SceneLoadedEvent_Raised;
-            _inputMediatorSO.MenuSubmitClicked += MenuSubmitEvent_Clicked;
+            _inputMediatorSO.MenuConfirmClicked += MenuSubmitEvent_Clicked;
             _inputMediatorSO.CancelEvent += CancelEvent_Clicked;
+
+            _nameInputPanel.OnConfirmButtonPressed += ValidateInput;
+            _inputConfirmPanel.OnYesButtonPressed += StartGame;
+            _inputConfirmPanel.OnNoButtonPressed += HideConfirmPanel;
         }
 
         private void OnDisable()
         {
             _sceneLoaded.EventRaised -= SceneLoadedEvent_Raised;
-            _inputMediatorSO.MenuSubmitClicked -= MenuSubmitEvent_Clicked;
+            _inputMediatorSO.MenuConfirmClicked -= MenuSubmitEvent_Clicked;
             _inputMediatorSO.CancelEvent -= CancelEvent_Clicked;
+
+            _nameInputPanel.OnConfirmButtonPressed -= ValidateInput;
+            _inputConfirmPanel.OnYesButtonPressed -= StartGame;
+            _inputConfirmPanel.OnNoButtonPressed -= HideConfirmPanel;
         }
 
 
@@ -66,7 +66,7 @@ namespace CryptoQuest.UI
             switch (_currentState)
             {
                 case ETitleState.Validation:
-                    _nameEntryPanel.SetActive(false);
+                    _nameInputPanel.Hide();
                     _currentState = ETitleState.Waiting;
                     UpdateState();
                     break;
@@ -78,50 +78,31 @@ namespace CryptoQuest.UI
 
         private void MenuSubmitEvent_Clicked()
         {
-            if (_currentState == ETitleState.Waiting)
+            switch (_currentState)
             {
-                _currentState = ETitleState.Validation;
-                UpdateState();
-                return;
-            }
-
-            if (_currentState == ETitleState.Validation)
-            {
-                ValidateInput();
-                return;
-            }
-
-            if (_currentState == ETitleState.StartGame)
-            {
-                StartGame();
+                case ETitleState.Waiting:
+                    _currentState = ETitleState.Validation;
+                    UpdateState();
+                    return;
+                case ETitleState.Validation:
+                    ValidateInput();
+                    return;
+                case ETitleState.StartGame:
+                    StartGame();
+                    break;
             }
         }
 
         private void SceneLoadedEvent_Raised() => _inputMediatorSO.EnableMenuInput();
 
-        private void ValidateInput()
+        public void ValidateInput()
         {
-            if (!IsValid()) return;
+            if (!_nameInputPanel.IsValid()) return;
 
             _currentState = ETitleState.Valid;
             UpdateState();
         }
 
-        private bool IsValid()
-        {
-            var validation = _nameValidator.Validate(_playerNamePlaceholder.text);
-            _validationStringEvent.StringReference.TableEntryReference = "TITLE_VALIDATE_" + (int)validation;
-
-            if (validation != EValidation.Valid)
-            {
-                _validationText.color = Color.red;
-                return false;
-            }
-
-            _saveSystemSo.PlayerName = _playerNamePlaceholder.text;
-            _validationText.color = Color.white;
-            return true;
-        }
 
         private void UpdateState()
         {
@@ -143,9 +124,9 @@ namespace CryptoQuest.UI
 
         private void ShowInputPanel()
         {
-            if (IsPlayerNameEmpty())
+            if (_nameInputPanel.IsPlayerNameEmpty())
             {
-                _nameEntryPanel.SetActive(true);
+                _nameInputPanel.Show();
                 return;
             }
 
@@ -154,17 +135,17 @@ namespace CryptoQuest.UI
 
         private void ShowConfirmPanel()
         {
-            _promptPanel.SetActive(true);
-            _nameEntryPanel.SetActive(false);
+            _inputConfirmPanel.Show();
+            _nameInputPanel.Hide();
 
             _currentState = ETitleState.StartGame;
         }
 
         public void HideConfirmPanel()
         {
-            _promptPanel.SetActive(false);
+            _inputConfirmPanel.Hide();
 
-            _saveSystemSo.PlayerName = string.Empty;
+            _nameInputPanel.SetPlayerName(string.Empty);
             _currentState = ETitleState.Validation;
             UpdateState();
         }
@@ -172,13 +153,7 @@ namespace CryptoQuest.UI
 
         public void StartGame()
         {
-            if (_currentState == ETitleState.StartGame) _loadMapEvent.RequestLoad(_sceneToLoad);
-        }
-
-
-        private bool IsPlayerNameEmpty()
-        {
-            return string.IsNullOrEmpty(_saveSystemSo.PlayerName);
+            _loadMapEvent.RequestLoad(_sceneToLoad);
         }
     }
 }
