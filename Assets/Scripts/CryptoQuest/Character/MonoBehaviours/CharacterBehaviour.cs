@@ -1,4 +1,4 @@
-using Core.Runtime.EditorTools.Attributes.ReadOnlyAttribute;
+using IndiGames.Core.EditorTools.Attributes.ReadOnlyAttribute;
 using UnityEngine;
 
 namespace CryptoQuest.Character.MonoBehaviours

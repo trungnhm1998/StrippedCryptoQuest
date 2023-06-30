@@ -1,7 +1,7 @@
-using Core.Runtime.Events.ScriptableObjects;
-using Core.Runtime.SceneManagementSystem.Events.ScriptableObjects;
-using Core.Runtime.SceneManagementSystem.ScriptableObjects;
 using CryptoQuest.Input;
+using IndiGames.Core.Events.ScriptableObjects;
+using IndiGames.Core.SceneManagementSystem.Events.ScriptableObjects;
+using IndiGames.Core.SceneManagementSystem.ScriptableObjects;
 using UnityEngine;
 using UnityEngine.UI;
 

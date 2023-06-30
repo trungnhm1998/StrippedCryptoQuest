@@ -1,3 +1,4 @@
+using System;
 using CryptoQuest.Character.MonoBehaviours;
 using UnityEngine;
 
@@ -5,8 +6,7 @@ namespace CryptoQuest.Character.Movement
 {
     public class ConstantVelocityInSingleDirectionStrategy : IPlayerVelocityStrategy
     {
-        private Vector2 _lastInputVector;
-
+        private Vector2 _lastMovingDirection;
         private readonly CharacterBehaviour _characterBehaviour;
 
         public ConstantVelocityInSingleDirectionStrategy(CharacterBehaviour characterBehaviour)
@@ -18,29 +18,27 @@ namespace CryptoQuest.Character.Movement
         {
             if (speed <= 0f || inputVector == Vector2.zero)
             {
-                _lastInputVector = Vector2.zero;
+                _lastMovingDirection = Vector2.zero;
                 return Vector2.zero;
             }
 
-            var isMovingVertical = Mathf.Abs(inputVector.y) >= Mathf.Abs(inputVector.x); // moving vertical by default
-            var direction = isMovingVertical ? inputVector.y < 0 ? -1 : 1 : inputVector.x < 0 ? -1 : 1;
+            // Yes I know this is not actually normalized, using Max or Min here does the same thing
+            var normalizedX = inputVector.x > 0 ? 1 : inputVector.x < 0 ? -1 : 0;
+            var normalizedY = inputVector.y > 0 ? 1 : inputVector.y < 0 ? -1 : 0;
+            var isMovingHorizontal = Mathf.Abs(inputVector.x) >= Mathf.Abs(inputVector.y); // moving horizontal by default
+            var isMovingBackward = isMovingHorizontal ? inputVector.x < 0 ? -1 : 1 : inputVector.y < 0 ? -1 : 1;
+            var expectedDirection =
+                isMovingHorizontal ? new Vector2(isMovingBackward, 0f) : new Vector2(0f, isMovingBackward);
 
-            var x = inputVector.x > 0 ? 1 : inputVector.x < 0 ? -1 : 0;
-            var y = inputVector.y > 0 ? 1 : inputVector.y < 0 ? -1 : 0;
+            if (normalizedX != 0 && normalizedX == _lastMovingDirection.x && normalizedY == 1 && isMovingHorizontal)
+                return _lastMovingDirection * speed;
 
-            if ((!isMovingVertical && x != 0 && x == _lastInputVector.x) ||
-                (isMovingVertical && y != 0 && y == _lastInputVector.y))
-            {
-                return _lastInputVector * speed;
-            }
+            _characterBehaviour.SetFacingDirection(expectedDirection);
 
-            inputVector = isMovingVertical ? new Vector2(0f, direction) : new Vector2(direction, 0f);
+            _lastMovingDirection = expectedDirection;
 
-            _characterBehaviour.SetFacingDirection(inputVector);
-
-            _lastInputVector = inputVector;
-
-            return inputVector * speed;
+            return expectedDirection * speed;
         }
+
     }
 }

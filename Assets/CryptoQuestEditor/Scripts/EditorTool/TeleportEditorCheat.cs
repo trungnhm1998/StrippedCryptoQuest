@@ -1,6 +1,6 @@
 using System.Collections.Generic;
-using Core.Runtime.SceneManagementSystem.Events.ScriptableObjects;
-using Core.Runtime.SceneManagementSystem.ScriptableObjects;
+using IndiGames.Core.SceneManagementSystem.Events.ScriptableObjects;
+using IndiGames.Core.SceneManagementSystem.ScriptableObjects;
 using UnityEngine;
 
 namespace CryptoQuestEditor

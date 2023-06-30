@@ -1,4 +1,4 @@
-﻿using Core.Runtime.Events.ScriptableObjects;
+﻿using IndiGames.Core.Events.ScriptableObjects;
 using UnityEngine;
 
 namespace CryptoQuest.Input
