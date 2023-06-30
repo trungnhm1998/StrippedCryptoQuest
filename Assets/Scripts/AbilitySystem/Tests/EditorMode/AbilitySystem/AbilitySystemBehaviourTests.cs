@@ -61,9 +61,11 @@ namespace Indigames.AbilitySystem.Tests.AbilitySystem
         [Test]
         public void TryActiveAbility_AbilityShouldActive()
         {
+            _abilitySO.Tags.ActivationTags = new TagScriptableObject[] {_requiredTag};
             var ability = _abilitySystem.GiveAbility(_abilitySO);
             _abilitySystem.TryActiveAbility(ability);
             Assert.IsTrue(ability.IsActive);
+            Assert.IsTrue(_abilitySystem.TagSystem.HasTag(_requiredTag));
         }
         
         [Test]
@@ -106,9 +108,11 @@ namespace Indigames.AbilitySystem.Tests.AbilitySystem
         [Test]
         public void RemoveAllAbilities_GrantedListShouldBeEmpty()
         {
+            _abilitySO.Tags.ActivationTags = new TagScriptableObject[] {_requiredTag};
             var ability = _abilitySystem.GiveAbility(_abilitySO);
             _abilitySystem.RemoveAllAbilities();
             Assert.IsEmpty(_abilitySystem.GrantedAbilities.Abilities);
+            Assert.IsFalse(_abilitySystem.TagSystem.HasTag(_requiredTag));
         }
     }
 }

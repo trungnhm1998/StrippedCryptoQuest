@@ -50,7 +50,7 @@ namespace Indigames.AbilitySystem
 
             _isActive = true;
             Owner.StartCoroutine(InternalActiveAbility());
-            Owner.TagSystem.GrantedTags.AddRange(AbilitySO.Tags.ActivationTags);
+            Owner.TagSystem.AddTags(AbilitySO.Tags.ActivationTags);
         }
 
         /// <summary>

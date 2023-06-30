@@ -29,12 +29,10 @@ namespace Indigames.AbilitySystem
         public void InitStats(InitializeAttributeDatabase stats)
         {
             _database = stats;
-            AttributeScriptableObject[] attributes = new AttributeScriptableObject[stats.AttributesToInitialize.Length];
             for (int i = 0; i < stats.AttributesToInitialize.Length; i++)
             {
-                attributes[i] = stats.AttributesToInitialize[i].Attribute;
+                _attributeSystem.AddAttributes(stats.AttributesToInitialize[i].Attribute);
             }
-            _attributeSystem.AddAttributes(attributes);
             foreach (var initValue in stats.AttributesToInitialize)
             {
                 _attributeSystem.SetAttributeBaseValue(initValue.Attribute, initValue.Value);

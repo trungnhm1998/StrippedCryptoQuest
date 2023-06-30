@@ -7,12 +7,27 @@ namespace Indigames.AbilitySystem
     {
         public List<TagScriptableObject> GrantedTags = new List<TagScriptableObject>();
 
+        public virtual void AddTags(TagScriptableObject[] tags)
+        {
+            GrantedTags.AddRange(tags);
+        }
+
+        public virtual void AddTags(TagScriptableObject tag)
+        {
+            GrantedTags.Add(tag);
+        }
+
         public virtual void RemoveTags(TagScriptableObject[] tags)
         {
             foreach (var tag in tags)
             {
                 GrantedTags.Remove(tag);
             }
+        }
+
+        public virtual bool HasTag(TagScriptableObject tagToCheck)
+        {
+            return GrantedTags.Contains(tagToCheck);
         }
     }
 }

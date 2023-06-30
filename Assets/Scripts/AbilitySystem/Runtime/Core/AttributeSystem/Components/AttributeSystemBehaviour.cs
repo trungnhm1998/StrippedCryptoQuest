@@ -105,7 +105,7 @@ namespace Indigames.AbilitySystem
         /// Add attributes to this attribute system. Duplicates are ignored.
         /// </summary>
         /// <param name="attributes">Attributes to add</param>
-        public void AddAttributes(params AttributeScriptableObject[] attributes)
+        public void AddAttributes(AttributeScriptableObject[] attributes)
         {
             // If this attribute already exists, we don't need to add it. For that, we need to make sure the cache is up to date.
             var cache = GetAttributeIndexCache();
@@ -118,6 +118,18 @@ namespace Indigames.AbilitySystem
                     _attributes.Add(attributeToAdd);
                     _attributeValues.Add(new AttributeValue(attributeToAdd));
                 }
+            }
+        }
+
+        public void AddAttributes(AttributeScriptableObject attribute)
+        {
+            var cache = GetAttributeIndexCache();
+
+            if (!cache.ContainsKey(attribute))
+            {
+                MarkCacheDirty();
+                _attributes.Add(attribute);
+                _attributeValues.Add(new AttributeValue(attribute));
             }
         }
 

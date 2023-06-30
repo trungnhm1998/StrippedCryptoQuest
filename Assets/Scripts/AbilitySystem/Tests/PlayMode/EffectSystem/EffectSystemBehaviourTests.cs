@@ -31,13 +31,6 @@ namespace Indigames.AbilitySystem.Tests.EffectSystem
             _ignoredTag = ScriptableObject.CreateInstance<TagScriptableObject>();
         }
 
-        [TearDown]
-        public void TearDown()
-        {
-            _instantEffectSO = ScriptableObject.CreateInstance<InstantEffectScriptableObject>();
-            _durationEffectSO = ScriptableObject.CreateInstance<DurationalEffectScriptableObject>();
-        }
-
         [Test]
         public void GiveEffect_ReturnEffectSpec_CorrectOwner()
         {
