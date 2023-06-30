@@ -1,4 +1,5 @@
-﻿using CryptoQuest.Character.Movement;
+﻿using CryptoQuest.Camera;
+using CryptoQuest.Character.Movement;
 using CryptoQuest.Input;
 using UnityEngine;
 
@@ -11,11 +12,15 @@ namespace CryptoQuest.Character.MonoBehaviours
         [SerializeField] private InputMediatorSO _inputMediator;
         [SerializeField] private float _speed = 4f;
         [SerializeField] private CharacterBehaviour _characterBehaviour;
+        // [SerializeField] private CameraManagerSO _cameraManagerSO;
 
         private Rigidbody2D _rigidBody2D;
+        // public Rigidbody2D RigidBody2D { get => _rigidBody2D; }
+
         private Vector2 _inputVector;
         private IPlayerVelocityStrategy _velocityStrategy;
         private IInteractionManager _interactionManager;
+
 
         private void Awake()
         {
@@ -54,11 +59,14 @@ namespace CryptoQuest.Character.MonoBehaviours
         private void FixedUpdate()
         {
             _rigidBody2D.velocity = _velocityStrategy.CalculateVelocity(_inputVector, _speed);
+            // _cameraManagerSO.PlayerPosition = _rigidBody2D.position;
         }
 
         private void MoveEvent_Raised(Vector2 inputVector)
         {
             _inputVector = inputVector;
+
+            // Debug.Log($"MoveEvent_Raised::_inputVector=[{_inputVector}]");
         }
     }
 }
