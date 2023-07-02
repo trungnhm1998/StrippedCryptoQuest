@@ -15,9 +15,10 @@ namespace CryptoQuest.Map
 
         [Header("Refs")]
         [SerializeField] private LoadSceneEventChannelSO _loadNextSceneEventChannelSO;
-
+        [SerializeField] private BoxCollider2D _collider;
         [SerializeField] private PathStorageSO _transitionSO;
         [SerializeField, ReadOnly] private string _playerTag = "Player";
+
 
         private void OnTriggerEnter2D(Collider2D other)
         {
@@ -35,6 +36,13 @@ namespace CryptoQuest.Map
         private void UpdateTransitionName(MapPathSO transitionPath)
         {
             _transitionSO.LastTakenPath = transitionPath;
+        }
+
+        private void OnDrawGizmos()
+        {
+            Gizmos.color = new Color(0, 255, 0, .3f);
+            Gizmos.matrix = transform.localToWorldMatrix;
+            Gizmos.DrawCube(new Vector3(_collider.offset.x, _collider.offset.y, -2), _collider.size);
         }
     }
 }
