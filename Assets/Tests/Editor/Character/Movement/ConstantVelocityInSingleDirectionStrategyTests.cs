@@ -3,7 +3,7 @@ using CryptoQuest.Character.Movement;
 using NUnit.Framework;
 using UnityEngine;
 
-namespace Tests.Editor.Character.Movement
+namespace CryptoQuest.Tests.Editor.Character.Movement
 {
     [TestFixture]
     public class ConstantVelocityInSingleDirectionStrategyTests

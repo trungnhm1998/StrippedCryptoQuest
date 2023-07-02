@@ -1,7 +1,7 @@
 ﻿using IndiGames.Core.Common;
 using NUnit.Framework;
 
-namespace IndiGames.Core.EditorTests.Common
+namespace IndiGames.Core.Tests.Editor.Common
 {
     [TestFixture]
     public class SceneAssetReferenceTests

@@ -2,7 +2,7 @@
 using NUnit.Framework;
 using UnityEditor;
 
-namespace IndiGames.Core.EditorTests.SaveSystem
+namespace IndiGames.Core.Tests.Editor.SaveSystem
 {
     [TestFixture]
     public class SaveSystemSOTests

@@ -1,7 +1,7 @@
 ﻿using IndiGames.Core.SaveSystem;
 using NUnit.Framework;
 
-namespace IndiGames.Core.EditorTests.SaveSystem
+namespace IndiGames.Core.Tests.Editor.SaveSystem
 {
     [TestFixture]
     public class SaveDataTests

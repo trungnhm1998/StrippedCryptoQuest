@@ -3,7 +3,7 @@ using NUnit.Framework;
 using UnityEditor;
 using UnityEngine;
 
-namespace IndiGames.Core.EditorTests.Common
+namespace IndiGames.Core.Tests.Editor.Common
 {
     public class ScriptableObjectAssetReferenceTests
     {

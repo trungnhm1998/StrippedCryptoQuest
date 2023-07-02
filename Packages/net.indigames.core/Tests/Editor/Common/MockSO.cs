@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace IndiGames.Core.EditorTests.Common
+namespace IndiGames.Core.Tests.Editor.Common
 {
     public class MockSO : ScriptableObject { }
 }
