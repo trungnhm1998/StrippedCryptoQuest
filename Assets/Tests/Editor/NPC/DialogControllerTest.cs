@@ -1,9 +1,9 @@
 ﻿using CryptoQuest.Character;
-using IndiGames.Core.Events.ScriptableObjects.Dialogs;
+using CryptoQuest.Gameplay.Quest.Dialogue.ScriptableObject;
 using NUnit.Framework;
 using UnityEngine;
 
-namespace Tests.Editor.NPC
+namespace CryptoQuest.Tests.Editor.NPC
 {
     [TestFixture]
     public class DialogControllerTest

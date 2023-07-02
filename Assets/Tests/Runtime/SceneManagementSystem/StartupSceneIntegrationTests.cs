@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.TestTools;
 
-namespace Tests.Runtime.SceneManagementSystem
+namespace CryptoQuest.Tests.Runtime.SceneManagementSystem
 {
     public class StartupSceneIntegrationTests
     {

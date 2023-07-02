@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace Core.Runtime.Events.ScriptableObjects
+namespace IndiGames.Core.Events.ScriptableObjects
 {
     [CreateAssetMenu(menuName = "Core/Events/Float Event Channel")]
     public class FloatEventChannelSO : ScriptableObject
