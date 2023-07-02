@@ -1,5 +1,4 @@
-﻿using System;
-using CryptoQuest.Character.Movement;
+﻿using CryptoQuest.Character.Movement;
 using CryptoQuest.Input;
 using UnityEngine;
 

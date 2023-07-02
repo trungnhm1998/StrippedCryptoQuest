@@ -876,6 +876,56 @@ namespace CryptoQuest.Input
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Dialogues"",
+            ""id"": ""b3c697fc-9043-4c3c-a0f0-ab1e51de9292"",
+            ""actions"": [
+                {
+                    ""name"": ""NextDialogue"",
+                    ""type"": ""Button"",
+                    ""id"": ""ef29c5fa-c65a-4893-925e-d25645b1b6c3"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""3c7dd120-cf97-46b4-a89c-17b2729e522d"",
+                    ""path"": ""<Keyboard>/enter"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""MnK"",
+                    ""action"": ""NextDialogue"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""24e0692a-e3dc-4251-b54e-851057f13d1d"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""MnK"",
+                    ""action"": ""NextDialogue"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d03fa7ad-72a2-430b-9e90-c9012339dd50"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""NextDialogue"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": [
@@ -923,6 +973,9 @@ namespace CryptoQuest.Input
             m_MapGameplay_Interact = m_MapGameplay.FindAction("Interact", throwIfNotFound: true);
             m_MapGameplay_Inventory = m_MapGameplay.FindAction("Inventory", throwIfNotFound: true);
             m_MapGameplay_Pause = m_MapGameplay.FindAction("Pause", throwIfNotFound: true);
+            // Dialogues
+            m_Dialogues = asset.FindActionMap("Dialogues", throwIfNotFound: true);
+            m_Dialogues_NextDialogue = m_Dialogues.FindAction("NextDialogue", throwIfNotFound: true);
         }
 
         public void Dispose()
@@ -1144,6 +1197,52 @@ namespace CryptoQuest.Input
             }
         }
         public MapGameplayActions @MapGameplay => new MapGameplayActions(this);
+
+        // Dialogues
+        private readonly InputActionMap m_Dialogues;
+        private List<IDialoguesActions> m_DialoguesActionsCallbackInterfaces = new List<IDialoguesActions>();
+        private readonly InputAction m_Dialogues_NextDialogue;
+        public struct DialoguesActions
+        {
+            private @InputActions m_Wrapper;
+            public DialoguesActions(@InputActions wrapper) { m_Wrapper = wrapper; }
+            public InputAction @NextDialogue => m_Wrapper.m_Dialogues_NextDialogue;
+            public InputActionMap Get() { return m_Wrapper.m_Dialogues; }
+            public void Enable() { Get().Enable(); }
+            public void Disable() { Get().Disable(); }
+            public bool enabled => Get().enabled;
+            public static implicit operator InputActionMap(DialoguesActions set) { return set.Get(); }
+            public void AddCallbacks(IDialoguesActions instance)
+            {
+                if (instance == null || m_Wrapper.m_DialoguesActionsCallbackInterfaces.Contains(instance)) return;
+                m_Wrapper.m_DialoguesActionsCallbackInterfaces.Add(instance);
+                @NextDialogue.started += instance.OnNextDialogue;
+                @NextDialogue.performed += instance.OnNextDialogue;
+                @NextDialogue.canceled += instance.OnNextDialogue;
+            }
+
+            private void UnregisterCallbacks(IDialoguesActions instance)
+            {
+                @NextDialogue.started -= instance.OnNextDialogue;
+                @NextDialogue.performed -= instance.OnNextDialogue;
+                @NextDialogue.canceled -= instance.OnNextDialogue;
+            }
+
+            public void RemoveCallbacks(IDialoguesActions instance)
+            {
+                if (m_Wrapper.m_DialoguesActionsCallbackInterfaces.Remove(instance))
+                    UnregisterCallbacks(instance);
+            }
+
+            public void SetCallbacks(IDialoguesActions instance)
+            {
+                foreach (var item in m_Wrapper.m_DialoguesActionsCallbackInterfaces)
+                    UnregisterCallbacks(item);
+                m_Wrapper.m_DialoguesActionsCallbackInterfaces.Clear();
+                AddCallbacks(instance);
+            }
+        }
+        public DialoguesActions @Dialogues => new DialoguesActions(this);
         private int m_GamepadSchemeIndex = -1;
         public InputControlScheme GamepadScheme
         {
@@ -1178,6 +1277,10 @@ namespace CryptoQuest.Input
             void OnInteract(InputAction.CallbackContext context);
             void OnInventory(InputAction.CallbackContext context);
             void OnPause(InputAction.CallbackContext context);
+        }
+        public interface IDialoguesActions
+        {
+            void OnNextDialogue(InputAction.CallbackContext context);
         }
     }
 }

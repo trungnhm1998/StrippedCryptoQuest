@@ -4,6 +4,7 @@ using UnityEngine.Events;
 
 namespace CryptoQuest.Events.UI
 {
+    [CreateAssetMenu(menuName = "Create DialogEventChannelSO", fileName = "DialogEventChannelSO", order = 0)]
     public class DialogEventChannelSO : ScriptableObject
     {
         public event UnityAction<DialogueScriptableObject> ShowEvent;

@@ -5,7 +5,7 @@ namespace CryptoQuest.Input
 {
     public class InputMediatorController : MonoBehaviour
     {
-        [SerializeField] private InputMediatorSO _inputMediatorSO;
+        [SerializeField] private  InputMediatorSO _inputMediator;
         [SerializeField] private VoidEventChannelSO _sceneUnloadingEvent;
 
         private void OnEnable()
@@ -20,7 +20,7 @@ namespace CryptoQuest.Input
 
         private void SceneUnloadingEvent_Raised()
         {
-            _inputMediatorSO.DisableAllInput();
+            _inputMediator.DisableAllInput();
         }
     }
 }

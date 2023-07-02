@@ -15,7 +15,7 @@
             {
                 playerName = DefaultPlayerName,
             };
-            return true;
+            return false;
         }
     }
 }

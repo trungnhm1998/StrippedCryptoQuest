@@ -23,12 +23,12 @@ namespace CryptoQuest.UI
 
         private void OnEnable()
         {
-            _inputMediator.MenuConfirmClicked += NextDialog;
+            _inputMediator.NextDialoguePressed += NextDialog;
         }
 
         private void OnDisable()
         {
-            _inputMediator.MenuConfirmClicked -= NextDialog;
+            _inputMediator.NextDialoguePressed -= NextDialog;
         }
 
         private void NextDialog()
