@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
+using NotImplementedException = System.NotImplementedException;
 
 namespace CryptoQuest.Input
 {
@@ -66,18 +67,28 @@ namespace CryptoQuest.Input
             _inputActions = new InputActions();
             _inputActions.Menus.SetCallbacks(this);
             _inputActions.MapGameplay.SetCallbacks(this);
+            _inputActions.Dialogues.SetCallbacks(this);
         }
 
         public void EnableMenuInput()
         {
             _inputActions.Menus.Enable();
             _inputActions.MapGameplay.Disable();
+            _inputActions.Dialogues.Disable();
+        }
+        
+        public void EnableDialogueInput()
+        {
+            _inputActions.Dialogues.Enable();
+            _inputActions.MapGameplay.Disable();
+            _inputActions.Menus.Disable();
         }
 
         public void EnableMapGameplayInput()
         {
             _inputActions.Menus.Disable();
             _inputActions.MapGameplay.Enable();
+            _inputActions.Dialogues.Disable();
         }
 
         #endregion
@@ -143,6 +154,11 @@ namespace CryptoQuest.Input
         public void OnNextDialogue(InputAction.CallbackContext context)
         {
             if (context.performed) NextDialoguePressed?.Invoke();
+        }
+
+        public void OnEscape(InputAction.CallbackContext context)
+        {
+            Debug.LogWarning("Escape pressed, but not implemented");
         }
 
         #endregion

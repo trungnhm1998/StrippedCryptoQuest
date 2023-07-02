@@ -889,6 +889,15 @@ namespace CryptoQuest.Input
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Escape"",
+                    ""type"": ""Button"",
+                    ""id"": ""054997f7-5c78-4b59-8f7a-002479bc96f5"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -922,6 +931,17 @@ namespace CryptoQuest.Input
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
                     ""action"": ""NextDialogue"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b9f930d0-3486-4974-955c-069ff8ba66be"",
+                    ""path"": ""*/{Cancel}"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad;MnK"",
+                    ""action"": ""Escape"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -976,6 +996,7 @@ namespace CryptoQuest.Input
             // Dialogues
             m_Dialogues = asset.FindActionMap("Dialogues", throwIfNotFound: true);
             m_Dialogues_NextDialogue = m_Dialogues.FindAction("NextDialogue", throwIfNotFound: true);
+            m_Dialogues_Escape = m_Dialogues.FindAction("Escape", throwIfNotFound: true);
         }
 
         public void Dispose()
@@ -1202,11 +1223,13 @@ namespace CryptoQuest.Input
         private readonly InputActionMap m_Dialogues;
         private List<IDialoguesActions> m_DialoguesActionsCallbackInterfaces = new List<IDialoguesActions>();
         private readonly InputAction m_Dialogues_NextDialogue;
+        private readonly InputAction m_Dialogues_Escape;
         public struct DialoguesActions
         {
             private @InputActions m_Wrapper;
             public DialoguesActions(@InputActions wrapper) { m_Wrapper = wrapper; }
             public InputAction @NextDialogue => m_Wrapper.m_Dialogues_NextDialogue;
+            public InputAction @Escape => m_Wrapper.m_Dialogues_Escape;
             public InputActionMap Get() { return m_Wrapper.m_Dialogues; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -1219,6 +1242,9 @@ namespace CryptoQuest.Input
                 @NextDialogue.started += instance.OnNextDialogue;
                 @NextDialogue.performed += instance.OnNextDialogue;
                 @NextDialogue.canceled += instance.OnNextDialogue;
+                @Escape.started += instance.OnEscape;
+                @Escape.performed += instance.OnEscape;
+                @Escape.canceled += instance.OnEscape;
             }
 
             private void UnregisterCallbacks(IDialoguesActions instance)
@@ -1226,6 +1252,9 @@ namespace CryptoQuest.Input
                 @NextDialogue.started -= instance.OnNextDialogue;
                 @NextDialogue.performed -= instance.OnNextDialogue;
                 @NextDialogue.canceled -= instance.OnNextDialogue;
+                @Escape.started -= instance.OnEscape;
+                @Escape.performed -= instance.OnEscape;
+                @Escape.canceled -= instance.OnEscape;
             }
 
             public void RemoveCallbacks(IDialoguesActions instance)
@@ -1281,6 +1310,7 @@ namespace CryptoQuest.Input
         public interface IDialoguesActions
         {
             void OnNextDialogue(InputAction.CallbackContext context);
+            void OnEscape(InputAction.CallbackContext context);
         }
     }
 }
