@@ -70,7 +70,7 @@ Camera:
   far clip plane: 100
   field of view: 60
   orthographic: 1
-  orthographic size: 2.58
+  orthographic size: 5
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -227,7 +227,7 @@ MonoBehaviour:
   m_Follow: {fileID: 0}
   m_Lens:
     FieldOfView: 60
-    OrthographicSize: 2.58
+    OrthographicSize: 5
     NearClipPlane: 0.1
     FarClipPlane: 100
     Dutch: 0
@@ -276,7 +276,7 @@ Transform:
   - {fileID: 6640117740706423746}
   - {fileID: 8314685212265358805}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1634449350796813697
 MonoBehaviour:
@@ -292,6 +292,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _gameplayBus: {fileID: 11400000, guid: a26ff341568973e46a1d4449052d5bb0, type: 2}
   _virtualCamera: {fileID: 4951359876998024880}
+  _isStaticCamera: 0
 --- !u!1 &8145505384657341828
 GameObject:
   m_ObjectHideFlags: 0
