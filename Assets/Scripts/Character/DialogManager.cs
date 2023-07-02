@@ -11,7 +11,7 @@ namespace CryptoQuest.Character
         [SerializeField] private InputMediatorSO _inputMediator;
         [SerializeField] private DialogEventChannelSO _dialogEventSO;
 
-        [SerializeField] private IDialog _speechDialog = NullDialog.Instance;
+        private IDialog _speechDialog = NullDialog.Instance;
 
         private void Awake()
         {

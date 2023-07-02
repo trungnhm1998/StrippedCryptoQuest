@@ -5,7 +5,8 @@ using UnityEngine.InputSystem;
 namespace CryptoQuest.Input
 {
     // TODO: Move action map interfaces to separate scriptable objects
-    public class InputMediatorSO : ScriptableObject, InputActions.IMapGameplayActions, InputActions.IMenusActions
+    public class InputMediatorSO : ScriptableObject, InputActions.IMapGameplayActions, InputActions.IMenusActions,
+        InputActions.IDialoguesActions
     {
         #region Events
 
@@ -19,8 +20,17 @@ namespace CryptoQuest.Input
 
         #region Menu
 
-        public event UnityAction MenuConfirmClicked;
+        public event UnityAction MenuConfirmPressed;
+        public event UnityAction MenuSubmitPressed;
+        public event UnityAction MenuMouseMoveEvent;
+        public event UnityAction MoveSelectionEvent;
         public event UnityAction CancelEvent;
+
+        #endregion
+
+        #region Dialogue
+
+        public event UnityAction NextDialoguePressed;
 
         #endregion
 
@@ -95,12 +105,20 @@ namespace CryptoQuest.Input
 
         #region MenuActions
 
-        public void OnNavigate(InputAction.CallbackContext context) { }
+        public void OnMoveSelection(InputAction.CallbackContext context)
+        {
+            if (context.performed) MoveSelectionEvent?.Invoke();
+        }
+
+        public void OnNavigate(InputAction.CallbackContext context)
+        {
+            if (context.performed) MenuMouseMoveEvent?.Invoke();
+        }
 
         public void OnConfirm(InputAction.CallbackContext context)
         {
             if (context.phase == InputActionPhase.Performed)
-                MenuConfirmClicked?.Invoke();
+                MenuConfirmPressed?.Invoke();
         }
 
         public void OnCancel(InputAction.CallbackContext context)
@@ -108,11 +126,24 @@ namespace CryptoQuest.Input
             if (context.performed) CancelEvent?.Invoke();
         }
 
-        public void OnSubmit(InputAction.CallbackContext context) { }
+        public void OnSubmit(InputAction.CallbackContext context)
+        {
+            if (context.performed) MenuSubmitPressed?.Invoke();
+        }
 
+        public bool LeftMouseDown() => Mouse.current.leftButton.isPressed;
         public void OnClick(InputAction.CallbackContext context) { }
 
         public void OnPoint(InputAction.CallbackContext context) { }
+
+        #endregion
+
+        #region Dialogue
+
+        public void OnNextDialogue(InputAction.CallbackContext context)
+        {
+            if (context.performed) NextDialoguePressed?.Invoke();
+        }
 
         #endregion
     }
