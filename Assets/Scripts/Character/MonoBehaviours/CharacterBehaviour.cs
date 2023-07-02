@@ -1,3 +1,4 @@
+using System;
 using IndiGames.Core.EditorTools.Attributes.ReadOnlyAttribute;
 using UnityEngine;
 
@@ -26,6 +27,27 @@ namespace CryptoQuest.Character.MonoBehaviours
         private static readonly int AnimVelocityX = Animator.StringToHash("InputX");
         private static readonly int AnimVelocityY = Animator.StringToHash("InputY");
         private static readonly int AnimIsWalking = Animator.StringToHash("IsWalking");
+
+        public void SetFacingDirection(EFacingDirection facingDirection)
+        {
+            _facingDirection = facingDirection;
+
+            switch (_facingDirection)
+            {
+                case EFacingDirection.South:
+                    _animator.SetFloat(AnimVelocityY, -1);
+                    break;
+                case EFacingDirection.West:
+                    _animator.SetFloat(AnimVelocityX, -1);
+                    break;
+                case EFacingDirection.North:
+                    _animator.SetFloat(AnimVelocityY, 1);
+                    break;
+                case EFacingDirection.East:
+                    _animator.SetFloat(AnimVelocityX, 1);
+                    break;
+            }
+        }
 
         public virtual void SetFacingDirection(Vector2 velocity)
         {

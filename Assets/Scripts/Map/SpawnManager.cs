@@ -60,6 +60,9 @@ namespace CryptoQuest.Map
             var spawnPoint = GetSpawnPoint();
 
             var heroInstance = Instantiate(_heroPrefab, spawnPoint.position, Quaternion.identity);
+            if (spawnPoint.gameObject.TryGetComponent<GoFrom>(out var goFrom))
+                heroInstance.SetFacingDirection(goFrom.EntranceFacingDirection);
+
             _gameplayBus.Hero = heroInstance;
             _gameplayBus.RaiseHeroSpawnedEvent();
         }

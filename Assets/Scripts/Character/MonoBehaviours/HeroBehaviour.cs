@@ -27,7 +27,6 @@ namespace CryptoQuest.Character.MonoBehaviours
             }
         }
 
-
         public override void SetFacingDirection(Vector2 velocity)
         {
             base.SetFacingDirection(velocity);
