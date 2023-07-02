@@ -32,7 +32,7 @@ namespace CryptoQuest.Character
 
         private void ShowDialog(DialogueScriptableObject dialogue)
         {
-            _inputMediator.EnableMenuInput();
+            _inputMediator.EnableDialogueInput();
             _speechDialog.SetData(new SpeechDialogArgs()
             {
                 DialogueSO = dialogue

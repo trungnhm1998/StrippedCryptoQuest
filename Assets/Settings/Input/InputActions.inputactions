@@ -865,6 +865,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Escape",
+                    "type": "Button",
+                    "id": "054997f7-5c78-4b59-8f7a-002479bc96f5",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -898,6 +907,17 @@
                     "processors": "",
                     "groups": "Gamepad",
                     "action": "NextDialogue",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b9f930d0-3486-4974-955c-069ff8ba66be",
+                    "path": "*/{Cancel}",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad;MnK",
+                    "action": "Escape",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
