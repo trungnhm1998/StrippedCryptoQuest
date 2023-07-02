@@ -2,7 +2,7 @@
 using NUnit.Framework;
 using UnityEditor;
 
-namespace IndiGamesEditor.Core.Tests.SaveSystem
+namespace IndiGames.Core.EditorTests.SaveSystem
 {
     [TestFixture]
     public class NullManagerSOTests

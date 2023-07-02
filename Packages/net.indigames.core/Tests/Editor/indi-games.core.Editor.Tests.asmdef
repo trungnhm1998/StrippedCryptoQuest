@@ -1,22 +1,27 @@
 {
-    "name": "indi-games.core.Editor.Tests",
-    "rootNamespace": "IndiGamesEditor.Core",
+    "name": "IndiGames.Core.Editor.Tests",
+    "rootNamespace": "IndiGames.Core.EditorTests",
     "references": [
         "UnityEngine.TestRunner",
         "UnityEditor.TestRunner",
+        "IndiGames.Core",
+        "IndiGamesEditor.Core",
         "Unity.Addressables",
-        "Unity.ResourceManager",
-        "IndiGames.Core"
+        "Unity.Addressables.Editor"
     ],
     "includePlatforms": [
         "Editor"
     ],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
-    "overrideReferences": false,
-    "precompiledReferences": [],
-    "autoReferenced": true,
-    "defineConstraints": [],
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "nunit.framework.dll"
+    ],
+    "autoReferenced": false,
+    "defineConstraints": [
+        "UNITY_INCLUDE_TESTS"
+    ],
     "versionDefines": [],
     "noEngineReferences": false
 }
