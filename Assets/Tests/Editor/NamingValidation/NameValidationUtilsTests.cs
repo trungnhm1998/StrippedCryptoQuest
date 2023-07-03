@@ -26,7 +26,7 @@ namespace CryptoQuest.Tests.Editor.NamingValidation
         [TestCase("nigger")]
         [TestCase("nigga")]
         [TestCase("HELL")]
-        public void Validate_BadWord_ShouldReturnFalse(string input)
+        public void Validate_BadWord_ShouldReturnEValidationBadWord(string input)
         {
             EValidation result = nameValidator.Validate(input);
 
