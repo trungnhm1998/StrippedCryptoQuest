@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Indigames.AbilitySystem.FSM
+namespace IndiGames.GameplayAbilitySystem.FSM
 {
     [CreateAssetMenu(fileName = "TransitionSO", menuName = "Indigames Ability System/FSM/Transition")]
     public class TransitionSO : ScriptableObject

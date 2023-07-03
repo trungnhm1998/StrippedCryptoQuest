@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-namespace Indigames.AbilitySystem.FSM
+namespace IndiGames.GameplayAbilitySystem.FSM
 {
     [CreateAssetMenu(fileName = "StateSO", menuName = "Indigames Ability System/FSM/States/Normal State")]
     public class StateSO : BaseStateSO

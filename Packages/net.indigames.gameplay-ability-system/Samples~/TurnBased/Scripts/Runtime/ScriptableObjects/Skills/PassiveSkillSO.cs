@@ -1,8 +1,9 @@
-using System;
-using System.Collections.Generic;
 using UnityEngine;
+using IndiGames.GameplayAbilitySystem.AbilitySystem;
+using IndiGames.GameplayAbilitySystem.Implementation.EffectAbility;
+using IndiGames.GameplayAbilitySystem.Implementation.EffectAbility.ScriptableObjects;
 
-namespace Indigames.AbilitySystem.Sample
+namespace IndiGames.GameplayAbilitySystem.Sample
 {
     [CreateAssetMenu(fileName = "PassiveSkill", menuName = "Indigames Ability System/Abilities/Passive Ability")]
     public class PassiveSkillSO : EffectAbilitySO

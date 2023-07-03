@@ -30,14 +30,11 @@ namespace CryptoQuest.Map
         {
             var spawnPoint = _defaultSpawnPoint;
 
-            for (int i = 0; i < _mapEntrances.Length; i++)
+            foreach (var entrance in _mapEntrances)
             {
-                var entrance = _mapEntrances[i];
-                if (entrance.MapPath == _pathStorage.LastTakenPath)
-                {
-                    spawnPoint = entrance.transform;
-                    break;
-                }
+                if (entrance.MapPath != _pathStorage.LastTakenPath) continue;
+                spawnPoint = entrance.transform;
+                break;
             }
 
             return spawnPoint;

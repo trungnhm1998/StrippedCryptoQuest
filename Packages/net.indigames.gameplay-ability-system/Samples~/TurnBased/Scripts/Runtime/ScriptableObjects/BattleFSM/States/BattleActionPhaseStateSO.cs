@@ -1,8 +1,8 @@
 using UnityEngine;
 using System.Collections;
-using Indigames.AbilitySystem.FSM;
+using IndiGames.GameplayAbilitySystem.FSM;
 
-namespace Indigames.AbilitySystem.Sample
+namespace IndiGames.GameplayAbilitySystem.Sample
 {
     [CreateAssetMenu(fileName = "BattleActionPhaseStateSO", menuName = "Indigames Ability System/FSM/States/Battle Action Phase State")]
     public class BattleActionPhaseStateSO : BattleStateSO

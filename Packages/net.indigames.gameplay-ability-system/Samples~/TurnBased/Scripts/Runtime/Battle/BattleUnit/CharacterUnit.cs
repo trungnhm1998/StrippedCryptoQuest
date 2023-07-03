@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-namespace Indigames.AbilitySystem.Sample
+namespace IndiGames.GameplayAbilitySystem.Sample
 {
     public class CharacterUnit : BattleUnitBase
     {
