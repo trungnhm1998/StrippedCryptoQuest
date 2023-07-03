@@ -73,5 +73,13 @@ namespace CryptoQuest.Tests.Editor.NamingValidation
 
             Assert.AreEqual(EValidation.LongWord, result);
         }
+
+        [TestCase("")]
+        public void Validate_NullName_ShouldReturnTrue(string input)
+        {
+            EValidation result = nameValidator.Validate(input);
+
+            Assert.AreEqual(EValidation.Null, result);
+        }
     }
 }
