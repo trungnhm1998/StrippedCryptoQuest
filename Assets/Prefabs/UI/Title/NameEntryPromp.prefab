@@ -237,6 +237,7 @@ MonoBehaviour:
   _nameInput: {fileID: 6198431179645180393}
   _validationText: {fileID: 8893628092102747817}
   _validationStringEvent: {fileID: 4208990684001578608}
+  _selectionHandler: {fileID: 3967818804326162791}
   _textAsset: {fileID: 4900000, guid: 36f17ad5a8a2c314eaf42464e7736309, type: 3}
   _saveSystemSO: {fileID: 11400000, guid: 839abfc1e6ec7704ea1a6eab9160e6b6, type: 2}
   _validColor: {r: 1, g: 1, b: 1, a: 1}
@@ -835,7 +836,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 0
+  m_Interactable: 1
   m_TargetGraphic: {fileID: 4320161939570432245}
   m_OnClick:
     m_PersistentCalls:
@@ -1587,8 +1588,8 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 6896061644043995169}
         m_TargetAssemblyTypeName: CryptoQuest.UI.Title.UINamingPanel, indi-games.crypto-quest
-        m_MethodName: HandleEndEdit
-        m_Mode: 0
+        m_MethodName: OnEndEdit
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -1614,19 +1615,7 @@ MonoBehaviour:
       m_Calls: []
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 6896061644043995169}
-        m_TargetAssemblyTypeName: CryptoQuest.UI.Title.UINamingPanel, indi-games.crypto-quest
-        m_MethodName: ValidateInput
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   m_OnTouchScreenKeyboardStatusChanged:
     m_PersistentCalls:
       m_Calls: []

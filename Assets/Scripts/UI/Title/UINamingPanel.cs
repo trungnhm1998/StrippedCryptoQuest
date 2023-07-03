@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using CryptoQuest.Input;
+using CryptoQuest.Menu;
 using CryptoQuest.System.Settings;
 using IndiGames.Core.SaveSystem;
 using TMPro;
@@ -18,6 +19,7 @@ namespace CryptoQuest.UI.Title
         [SerializeField] private TMP_InputField _nameInput;
         [SerializeField] private TextMeshProUGUI _validationText;
         [SerializeField] private LocalizeStringEvent _validationStringEvent;
+        [SerializeField] private MenuSelectionHandler _selectionHandler;
 
         [SerializeField] private TextAsset _textAsset;
         [SerializeField] private SaveSystemSO _saveSystemSO;
@@ -41,22 +43,39 @@ namespace CryptoQuest.UI.Title
         {
             _inputMediator.CancelEvent += BackToStartScreen;
             _inputMediator.MenuTabPressed += NavigateToNextInput;
-            _confirm.interactable = false;
 
+            _selectionHandler.UpdateDefault(_nameInput.gameObject);
             StartCoroutine(CoSelectNameInput());
         }
 
         private void OnDisable()
         {
+            _selectionHandler.Unselect();
             _inputMediator.CancelEvent -= BackToStartScreen;
             _inputMediator.MenuTabPressed -= NavigateToNextInput;
+        }
+        
+        public void OnEndEdit()
+        {
+            _confirm.Select();
+        }
+
+        public void OnConfirmButtonPressed()
+        {
+            if (!IsNameValid(_nameInput.text))
+            {
+                _nameInput.Select();
+                return;
+            }
+
+            _saveSystemSO.PlayerName = _nameInput.text;
+            ConfirmNameButtonPressed?.Invoke();
         }
 
         private void BackToStartScreen()
         {
             CancelEvent?.Invoke();
         }
-
 
         private bool IsNameValid(string input)
         {
@@ -68,51 +87,20 @@ namespace CryptoQuest.UI.Title
             return isValid;
         }
 
-        public void ValidateInput(string input)
-        {
-            var isNameValid = IsNameValid(input);
-            _confirm.interactable = isNameValid;
-
-            if (!isNameValid)
-            {
-                StartCoroutine(CoSelectNameInput());
-            }
-        }
-
-        public void HandleEndEdit(string input)
-        {
-            ValidateInput(input);
-
-            NavigateToNextInput();
-        }
-
         private void NavigateToNextInput()
         {
-            if (!gameObject.activeSelf) return;
-
             var currentSelected = EventSystem.current.currentSelectedGameObject;
 
-            StartCoroutine(currentSelected == _nameInput.gameObject
-                ? CoSelectConfirmButton()
-                : CoSelectNameInput());
-        }
-
-        private IEnumerator CoSelectConfirmButton()
-        {
-            yield return new WaitForSeconds(.03f); // highlight event system bug workaround
-            _confirm.Select();
+            if (currentSelected == _nameInput.gameObject)
+                _confirm.Select();
+            else
+                _nameInput.Select();
         }
 
         private IEnumerator CoSelectNameInput()
         {
             yield return new WaitForSeconds(.03f); // highlight event system bug workaround
             _nameInput.Select();
-        }
-
-        public void OnConfirmButtonPressed()
-        {
-            _saveSystemSO.PlayerName = _nameInput.text;
-            ConfirmNameButtonPressed?.Invoke();
         }
     }
 }

@@ -24,7 +24,7 @@ namespace CryptoQuest.Input
         #region Menu
 
         public event UnityAction MenuConfirmPressed;
-        public event UnityAction MenuSubmitPressed;
+        public event UnityAction MenuSubmitEvent;
         public event UnityAction MenuNavigateEvent;
         public event UnityAction MoveSelectionEvent;
         public event UnityAction MouseMoveEvent;
@@ -143,7 +143,7 @@ namespace CryptoQuest.Input
 
         public void OnSubmit(InputAction.CallbackContext context)
         {
-            if (context.performed) MenuSubmitPressed?.Invoke();
+            if (context.performed) MenuSubmitEvent?.Invoke();
         }
 
         public bool LeftMouseDown() => Mouse.current.leftButton.isPressed;

@@ -14,11 +14,13 @@ namespace CryptoQuest.UI.FadeController
 
         protected override void FadeInLogic()
         {
+            _fadeImg.enabled = true;
             _fadeImg.DOBlendableColor(_fadeInColor, FadeConfig.Duration);
         }
 
         protected override void FadeOutLogic()
         {
+            _fadeImg.enabled = false;
             _fadeImg.DOBlendableColor(_fadeOutColor, FadeConfig.Duration);
         }
     }
