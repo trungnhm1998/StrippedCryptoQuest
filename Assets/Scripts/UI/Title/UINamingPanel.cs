@@ -54,7 +54,7 @@ namespace CryptoQuest.UI.Title
             _inputMediator.CancelEvent -= BackToStartScreen;
             _inputMediator.MenuTabPressed -= NavigateToNextInput;
         }
-        
+
         public void OnEndEdit()
         {
             _confirm.Select();
