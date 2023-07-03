@@ -73,9 +73,9 @@ namespace CryptoQuest.UI.Title
             var isNameValid = IsNameValid(input);
             _confirm.interactable = isNameValid;
 
-            if (isNameValid)
+            if (!isNameValid)
             {
-                _nameInput.Select();
+                StartCoroutine(CoSelectNameInput());
             }
         }
 
