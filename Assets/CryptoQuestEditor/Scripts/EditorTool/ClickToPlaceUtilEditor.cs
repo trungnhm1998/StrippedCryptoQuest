@@ -2,7 +2,7 @@
 using UnityEditor;
 using UnityEngine;
 
-namespace CryptoQuestEditor.Scripts.EditorTool
+namespace CryptoQuestEditor.EditorTool
 {
     [CustomEditor(typeof(ClickToPlaceUtil))]
     public class ClickToPlaceUtilEditor : Editor

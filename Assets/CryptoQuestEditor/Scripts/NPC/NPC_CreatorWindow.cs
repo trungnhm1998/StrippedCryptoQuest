@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-namespace CryptoQuest.NPC
+namespace CryptoQuestEditor.NPC
 {
     public class NPC_CreatorWindow : EditorWindow
     {
