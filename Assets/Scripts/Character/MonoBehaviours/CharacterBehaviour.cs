@@ -31,6 +31,8 @@ namespace CryptoQuest.Character.MonoBehaviours
         public void SetFacingDirection(EFacingDirection facingDirection)
         {
             _facingDirection = facingDirection;
+            _animator.SetFloat(AnimVelocityX, 0);
+            _animator.SetFloat(AnimVelocityY, 0);
 
             switch (_facingDirection)
             {
