@@ -1,6 +1,6 @@
 using UnityEngine.Localization.Settings;
 
-namespace CryptoQuest.NPC
+namespace CryptoQuestEditor.NPC
 {
     public class NPC_Localize
     {
