@@ -41,7 +41,6 @@ namespace CryptoQuest.UI.Title
         {
             _inputMediator.CancelEvent += BackToStartScreen;
             _inputMediator.MenuTabPressed += NavigateToNextInput;
-            _inputMediator.MenuNavigateEvent += NavigateToNextInput;
             _confirm.interactable = false;
 
             StartCoroutine(CoSelectNameInput());
@@ -51,7 +50,6 @@ namespace CryptoQuest.UI.Title
         {
             _inputMediator.CancelEvent -= BackToStartScreen;
             _inputMediator.MenuTabPressed -= NavigateToNextInput;
-            _inputMediator.MenuNavigateEvent -= NavigateToNextInput;
         }
 
         private void BackToStartScreen()
