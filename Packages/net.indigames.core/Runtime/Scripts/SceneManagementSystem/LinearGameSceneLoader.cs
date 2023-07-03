@@ -98,7 +98,6 @@ namespace IndiGames.Core.SceneManagementSystem
                 _gameplayManagerSceneInstance = _gameplayManagerLoadingOperationHandle.Result;
             }
 
-            _fadeConfigSO.OnFadeOut();
             _sceneLoaded.RaiseEvent();
         }
 #endif
