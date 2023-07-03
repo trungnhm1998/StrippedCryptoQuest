@@ -20,7 +20,7 @@
                     "id": "7ef12941-53a4-4cdc-82a3-b73a0685f64a",
                     "expectedControlType": "Vector2",
                     "processors": "",
-                    "interactions": "",
+                    "interactions": "Press",
                     "initialStateCheck": false
                 },
                 {
@@ -64,6 +64,15 @@
                     "type": "PassThrough",
                     "id": "f569fdf5-fc4b-4631-98e8-c0397f35421c",
                     "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "NextSelection",
+                    "type": "Button",
+                    "id": "7914fd6d-01e8-425f-98a0-4104d2d87dc7",
+                    "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -553,6 +562,17 @@
                     "action": "MoveSelection",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "f9005af0-0d8d-46b8-bf6e-92bf1813d5ac",
+                    "path": "<Keyboard>/tab",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "MnK",
+                    "action": "NextSelection",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },

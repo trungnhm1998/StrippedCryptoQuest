@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
-using NotImplementedException = System.NotImplementedException;
 
 namespace CryptoQuest.Input
 {
@@ -23,8 +22,9 @@ namespace CryptoQuest.Input
 
         public event UnityAction MenuConfirmPressed;
         public event UnityAction MenuSubmitPressed;
-        public event UnityAction MenuMouseMoveEvent;
+        public event UnityAction MenuNavigateEvent;
         public event UnityAction MoveSelectionEvent;
+        public event UnityAction MenuTabPressed;
         public event UnityAction CancelEvent;
 
         #endregion
@@ -76,7 +76,7 @@ namespace CryptoQuest.Input
             _inputActions.MapGameplay.Disable();
             _inputActions.Dialogues.Disable();
         }
-        
+
         public void EnableDialogueInput()
         {
             _inputActions.Dialogues.Enable();
@@ -123,7 +123,7 @@ namespace CryptoQuest.Input
 
         public void OnNavigate(InputAction.CallbackContext context)
         {
-            if (context.performed) MenuMouseMoveEvent?.Invoke();
+            if (context.performed) MenuNavigateEvent?.Invoke();
         }
 
         public void OnConfirm(InputAction.CallbackContext context)
@@ -146,6 +146,11 @@ namespace CryptoQuest.Input
         public void OnClick(InputAction.CallbackContext context) { }
 
         public void OnPoint(InputAction.CallbackContext context) { }
+
+        public void OnNextSelection(InputAction.CallbackContext context)
+        {
+            if (context.performed) MenuTabPressed?.Invoke();
+        }
 
         #endregion
 

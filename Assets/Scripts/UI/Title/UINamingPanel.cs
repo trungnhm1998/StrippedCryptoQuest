@@ -5,6 +5,7 @@ using IndiGames.Core.SaveSystem;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.EventSystems;
 using UnityEngine.Localization.Components;
 using UnityEngine.UI;
 
@@ -39,6 +40,8 @@ namespace CryptoQuest.UI.Title
         private void OnEnable()
         {
             _inputMediator.CancelEvent += BackToStartScreen;
+            _inputMediator.MenuTabPressed += NavigateToNextInput;
+            _inputMediator.MenuNavigateEvent += NavigateToNextInput;
             _confirm.interactable = false;
 
             StartCoroutine(CoSelectNameInput());
@@ -47,6 +50,8 @@ namespace CryptoQuest.UI.Title
         private void OnDisable()
         {
             _inputMediator.CancelEvent -= BackToStartScreen;
+            _inputMediator.MenuTabPressed -= NavigateToNextInput;
+            _inputMediator.MenuNavigateEvent -= NavigateToNextInput;
         }
 
         private void BackToStartScreen()
@@ -54,11 +59,6 @@ namespace CryptoQuest.UI.Title
             CancelEvent?.Invoke();
         }
 
-        private IEnumerator CoSelectNameInput()
-        {
-            yield return new WaitForSeconds(.03f); // highlight event system bug workaround
-            _nameInput.Select();
-        }
 
         private bool IsNameValid(string input)
         {
@@ -85,7 +85,30 @@ namespace CryptoQuest.UI.Title
         {
             ValidateInput(input);
 
+            NavigateToNextInput();
+        }
+
+        private void NavigateToNextInput()
+        {
+            if (!gameObject.activeSelf) return;
+
+            var currentSelected = EventSystem.current.currentSelectedGameObject;
+
+            StartCoroutine(currentSelected == _nameInput.gameObject
+                ? CoSelectConfirmButton()
+                : CoSelectNameInput());
+        }
+
+        private IEnumerator CoSelectConfirmButton()
+        {
+            yield return new WaitForSeconds(.03f); // highlight event system bug workaround
             _confirm.Select();
+        }
+
+        private IEnumerator CoSelectNameInput()
+        {
+            yield return new WaitForSeconds(.03f); // highlight event system bug workaround
+            _nameInput.Select();
         }
 
         public void OnConfirmButtonPressed()

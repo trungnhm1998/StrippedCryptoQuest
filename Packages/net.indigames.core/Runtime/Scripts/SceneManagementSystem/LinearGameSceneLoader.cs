@@ -2,6 +2,7 @@
 using IndiGames.Core.Events.ScriptableObjects;
 using IndiGames.Core.SceneManagementSystem.Events.ScriptableObjects;
 using IndiGames.Core.SceneManagementSystem.ScriptableObjects;
+using IndiGames.Core.UI.FadeController;
 using UnityEngine;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.ResourceManagement.ResourceProviders;
@@ -9,10 +10,11 @@ using UnityEngine.SceneManagement;
 
 namespace IndiGames.Core.SceneManagementSystem
 {
+    // TODO: Class current violate SRP move fading logic to separate class
     public class LinearGameSceneLoader : MonoBehaviour
     {
         [SerializeField] private SceneScriptableObject _gameplayManagerSceneSO;
-        [SerializeField] private float _fadeDuration = .3f;
+        [SerializeField] private FadeConfigSO _fadeConfigSO;
 
         [Header("Listening on")]
         [SerializeField] private LoadSceneEventChannelSO _loadMap;
@@ -125,7 +127,8 @@ namespace IndiGames.Core.SceneManagementSystem
 
         private IEnumerator CoUnloadPreviousScene()
         {
-            yield return new WaitForSeconds(_fadeDuration);
+            _fadeConfigSO.OnFadeIn();
+            yield return new WaitForSeconds(_fadeConfigSO.Duration);
             if (_currentLoadedScene != null)
             {
                 if (_currentLoadedScene.SceneReference.OperationHandle.IsValid())
@@ -170,6 +173,8 @@ namespace IndiGames.Core.SceneManagementSystem
             SceneManager.SetActiveScene(scene);
 
             _isLoading = false;
+
+            _fadeConfigSO.OnFadeOut();
 
             _sceneLoaded.RaiseEvent();
         }

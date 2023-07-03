@@ -15,7 +15,7 @@ namespace CryptoQuest.Menu
 
         private void OnEnable()
         {
-            _inputMediator.MenuMouseMoveEvent += HandleMoveCursor;
+            _inputMediator.MenuNavigateEvent += HandleMoveCursor;
             _inputMediator.MoveSelectionEvent += HandleMoveSelection;
 
             StartCoroutine(SelectDefault());
@@ -23,7 +23,7 @@ namespace CryptoQuest.Menu
 
         private void OnDisable()
         {
-            _inputMediator.MenuMouseMoveEvent -= HandleMoveCursor;
+            _inputMediator.MenuNavigateEvent -= HandleMoveCursor;
             _inputMediator.MoveSelectionEvent -= HandleMoveSelection;
         }
 
@@ -118,11 +118,11 @@ namespace CryptoQuest.Menu
         }
 
         // Debug
-        // private void OnGUI()
-        // {
-        //	 	GUILayout.Box($"_currentSelection: {(_currentSelection != null ? _currentSelection.name : "null")}");
-        //	 	GUILayout.Box($"_mouseSelection: {(_mouseSelection != null ? _mouseSelection.name : "null")}");
-        // }
+         // private void OnGUI()
+         // {
+        	//  	GUILayout.Box($"_currentSelection: {(_currentSelection != null ? _currentSelection.name : "null")}");
+        	//  	GUILayout.Box($"_mouseSelection: {(_mouseSelection != null ? _mouseSelection.name : "null")}");
+         // }
         private void Update()
         {
             if ((EventSystem.current != null) && (EventSystem.current.currentSelectedGameObject == null) && (_currentSelection != null))
