@@ -1,7 +1,11 @@
 using UnityEngine;
 using System.Collections;
+using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
+using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
+using IndiGames.GameplayAbilitySystem.AbilitySystem;
 using System.Collections.Generic;
-namespace Indigames.AbilitySystem.Sample
+
+namespace IndiGames.GameplayAbilitySystem.Sample
 {
     public class BattleUnitBase : MonoBehaviour, IBattleUnit
     {

@@ -1,8 +1,11 @@
 using System;
 using UnityEngine;
 using Random = UnityEngine.Random;
+using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
+using IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects.EffectExecutionCalculation;
+using IndiGames.GameplayAbilitySystem.EffectSystem;
 
-namespace Indigames.AbilitySystem.Sample
+namespace IndiGames.GameplayAbilitySystem.Sample
 {
     [CreateAssetMenu(fileName = "DamageCaculation", menuName = "Indigames Ability System/Effects/Execution Calculations/Damage Caculation")]
     public class DamageCalculationSO : AbstractEffectExecutionCalculationSO

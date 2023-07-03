@@ -1,9 +1,14 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using Indigames.AbilitySystem;
+using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
+using IndiGames.GameplayAbilitySystem.AbilitySystem.ScriptableObjects;
+using IndiGames.GameplayAbilitySystem.AttributeSystem.Components;
+using IndiGames.GameplayAbilitySystem.AttributeSystem;
+using IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects;
+using IndiGames.GameplayAbilitySystem.Implementation.BasicEffect;
 
-namespace Indigames.AbilitySystem.Sample
+namespace IndiGames.GameplayAbilitySystem.Sample
 {
     public class AbilitySystemDebugger : MonoBehaviour
     {

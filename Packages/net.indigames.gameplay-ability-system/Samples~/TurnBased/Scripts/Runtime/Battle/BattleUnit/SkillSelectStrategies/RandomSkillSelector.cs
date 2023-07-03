@@ -1,7 +1,7 @@
-using Indigames.AbilitySystem;
+using IndiGames.GameplayAbilitySystem.AbilitySystem;
 using UnityEngine;
 
-namespace Indigames.AbilitySystem.Sample
+namespace IndiGames.GameplayAbilitySystem.Sample
 {
     public class RandomSkillSelector : ISkillSelector
     {

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Indigames.AbilitySystem.FSM
+namespace IndiGames.GameplayAbilitySystem.FSM
 {
     public abstract class FSMActionSO : ScriptableObject
     {

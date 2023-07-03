@@ -1,7 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
 
-namespace Indigames.AbilitySystem.Sample
+namespace IndiGames.GameplayAbilitySystem.Sample
 {
     public interface IBattleUnit
     {

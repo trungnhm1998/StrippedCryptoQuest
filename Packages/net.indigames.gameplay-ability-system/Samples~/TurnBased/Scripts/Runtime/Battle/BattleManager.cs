@@ -2,8 +2,9 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Collections;
 using System.Linq;
+using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
 
-namespace Indigames.AbilitySystem.Sample
+namespace IndiGames.GameplayAbilitySystem.Sample
 {
     public class BattleManager : MonoBehaviour
     {

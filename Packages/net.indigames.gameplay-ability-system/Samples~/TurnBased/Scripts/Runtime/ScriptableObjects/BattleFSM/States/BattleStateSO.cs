@@ -1,7 +1,7 @@
 using UnityEngine;
-using Indigames.AbilitySystem.FSM;
+using IndiGames.GameplayAbilitySystem.FSM;
 
-namespace Indigames.AbilitySystem.Sample
+namespace IndiGames.GameplayAbilitySystem.Sample
 {
     [CreateAssetMenu(fileName = "BattleStateSO", menuName = "Indigames Ability System/FSM/States/Battle State")]
     public class BattleStateSO : StateSO
