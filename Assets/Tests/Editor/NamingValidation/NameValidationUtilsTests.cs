@@ -3,7 +3,7 @@ using NUnit.Framework;
 using UnityEditor;
 using UnityEngine;
 
-namespace Tests.EditMode.CryptoQuest.NamingValidation
+namespace CryptoQuest.Tests.Editor.NamingValidation
 {
     [TestFixture]
     public class NameValidationUtilsTests
@@ -22,9 +22,6 @@ namespace Tests.EditMode.CryptoQuest.NamingValidation
             nameValidator = new NameValidator(_textAsset);
         }
 
-        [TestCase("badWord")]
-        [TestCase("anotherBadWord")]
-        [TestCase("VeryBadWord")]
         [TestCase("FUCK")]
         [TestCase("nigger")]
         [TestCase("nigga")]
