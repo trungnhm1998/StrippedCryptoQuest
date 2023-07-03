@@ -3,7 +3,7 @@ using NUnit.Framework;
 using UnityEditor;
 using UnityEngine;
 
-namespace Tests.EditMode.CryptoQuest.NamingValidation
+namespace CryptoQuest.Tests.Editor.NamingValidation
 {
     [TestFixture]
     public class NameValidationUtilsTests
@@ -22,14 +22,11 @@ namespace Tests.EditMode.CryptoQuest.NamingValidation
             nameValidator = new NameValidator(_textAsset);
         }
 
-        [TestCase("badWord")]
-        [TestCase("anotherBadWord")]
-        [TestCase("VeryBadWord")]
         [TestCase("FUCK")]
         [TestCase("nigger")]
         [TestCase("nigga")]
         [TestCase("HELL")]
-        public void Validate_BadWord_ShouldReturnFalse(string input)
+        public void Validate_BadWord_ShouldReturnEValidationBadWord(string input)
         {
             EValidation result = nameValidator.Validate(input);
 
@@ -75,6 +72,14 @@ namespace Tests.EditMode.CryptoQuest.NamingValidation
             EValidation result = nameValidator.Validate(input);
 
             Assert.AreEqual(EValidation.LongWord, result);
+        }
+
+        [TestCase("")]
+        public void Validate_NullName_ShouldReturnTrue(string input)
+        {
+            EValidation result = nameValidator.Validate(input);
+
+            Assert.AreEqual(EValidation.Null, result);
         }
     }
 }

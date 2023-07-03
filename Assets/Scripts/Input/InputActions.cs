@@ -44,7 +44,7 @@ namespace CryptoQuest.Input
                     ""id"": ""7ef12941-53a4-4cdc-82a3-b73a0685f64a"",
                     ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
-                    ""interactions"": """",
+                    ""interactions"": ""Press"",
                     ""initialStateCheck"": false
                 },
                 {
@@ -88,6 +88,15 @@ namespace CryptoQuest.Input
                     ""type"": ""PassThrough"",
                     ""id"": ""f569fdf5-fc4b-4631-98e8-c0397f35421c"",
                     ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""NextSelection"",
+                    ""type"": ""Button"",
+                    ""id"": ""7914fd6d-01e8-425f-98a0-4104d2d87dc7"",
+                    ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
@@ -577,6 +586,17 @@ namespace CryptoQuest.Input
                     ""action"": ""MoveSelection"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f9005af0-0d8d-46b8-bf6e-92bf1813d5ac"",
+                    ""path"": ""<Keyboard>/tab"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""MnK"",
+                    ""action"": ""NextSelection"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -987,6 +1007,7 @@ namespace CryptoQuest.Input
             m_Menus_Cancel = m_Menus.FindAction("Cancel", throwIfNotFound: true);
             m_Menus_Click = m_Menus.FindAction("Click", throwIfNotFound: true);
             m_Menus_Point = m_Menus.FindAction("Point", throwIfNotFound: true);
+            m_Menus_NextSelection = m_Menus.FindAction("NextSelection", throwIfNotFound: true);
             // MapGameplay
             m_MapGameplay = asset.FindActionMap("MapGameplay", throwIfNotFound: true);
             m_MapGameplay_Move = m_MapGameplay.FindAction("Move", throwIfNotFound: true);
@@ -1065,6 +1086,7 @@ namespace CryptoQuest.Input
         private readonly InputAction m_Menus_Cancel;
         private readonly InputAction m_Menus_Click;
         private readonly InputAction m_Menus_Point;
+        private readonly InputAction m_Menus_NextSelection;
         public struct MenusActions
         {
             private @InputActions m_Wrapper;
@@ -1076,6 +1098,7 @@ namespace CryptoQuest.Input
             public InputAction @Cancel => m_Wrapper.m_Menus_Cancel;
             public InputAction @Click => m_Wrapper.m_Menus_Click;
             public InputAction @Point => m_Wrapper.m_Menus_Point;
+            public InputAction @NextSelection => m_Wrapper.m_Menus_NextSelection;
             public InputActionMap Get() { return m_Wrapper.m_Menus; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -1106,6 +1129,9 @@ namespace CryptoQuest.Input
                 @Point.started += instance.OnPoint;
                 @Point.performed += instance.OnPoint;
                 @Point.canceled += instance.OnPoint;
+                @NextSelection.started += instance.OnNextSelection;
+                @NextSelection.performed += instance.OnNextSelection;
+                @NextSelection.canceled += instance.OnNextSelection;
             }
 
             private void UnregisterCallbacks(IMenusActions instance)
@@ -1131,6 +1157,9 @@ namespace CryptoQuest.Input
                 @Point.started -= instance.OnPoint;
                 @Point.performed -= instance.OnPoint;
                 @Point.canceled -= instance.OnPoint;
+                @NextSelection.started -= instance.OnNextSelection;
+                @NextSelection.performed -= instance.OnNextSelection;
+                @NextSelection.canceled -= instance.OnNextSelection;
             }
 
             public void RemoveCallbacks(IMenusActions instance)
@@ -1299,6 +1328,7 @@ namespace CryptoQuest.Input
             void OnCancel(InputAction.CallbackContext context);
             void OnClick(InputAction.CallbackContext context);
             void OnPoint(InputAction.CallbackContext context);
+            void OnNextSelection(InputAction.CallbackContext context);
         }
         public interface IMapGameplayActions
         {
