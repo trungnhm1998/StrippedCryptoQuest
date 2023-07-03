@@ -1,6 +1,6 @@
-using Indigames.AbilitySystem;
+using IndiGames.GameplayAbilitySystem.AbilitySystem;
 
-namespace Indigames.AbilitySystem.Sample
+namespace IndiGames.GameplayAbilitySystem.Sample
 {
     public interface ISkillSelector
     {

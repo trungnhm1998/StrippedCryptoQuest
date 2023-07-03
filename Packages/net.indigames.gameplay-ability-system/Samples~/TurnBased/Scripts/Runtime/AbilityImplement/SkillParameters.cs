@@ -1,7 +1,7 @@
-using Indigames.AbilitySystem;
+using IndiGames.GameplayAbilitySystem.AbilitySystem;
 using System;
 
-namespace Indigames.AbilitySystem.Sample
+namespace IndiGames.GameplayAbilitySystem.Sample
 {
     [Serializable]
     public class SkillParameters : AbilityParameters

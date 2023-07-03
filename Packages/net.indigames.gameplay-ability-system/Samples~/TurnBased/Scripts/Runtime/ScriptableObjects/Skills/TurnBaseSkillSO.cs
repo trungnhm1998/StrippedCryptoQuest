@@ -1,9 +1,10 @@
-using System;
-using System.Collections.Generic;
 using System.Collections;
 using UnityEngine;
+using IndiGames.GameplayAbilitySystem.AbilitySystem;
+using IndiGames.GameplayAbilitySystem.Implementation.EffectAbility;
+using IndiGames.GameplayAbilitySystem.Implementation.EffectAbility.ScriptableObjects;
 
-namespace Indigames.AbilitySystem.Sample
+namespace IndiGames.GameplayAbilitySystem.Sample
 {
     [CreateAssetMenu(fileName = "TurnBaseSkill", menuName = "Indigames Ability System/Abilities/Turn Base Ability")]
     public class TurnBaseSkillSO : EffectAbilitySO

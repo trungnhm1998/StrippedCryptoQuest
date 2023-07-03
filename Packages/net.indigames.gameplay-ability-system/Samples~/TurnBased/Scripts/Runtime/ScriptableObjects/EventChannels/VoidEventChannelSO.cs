@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace Indigames.AbilitySystem.Sample
+namespace IndiGames.GameplayAbilitySystem.Sample
 {
     [CreateAssetMenu(menuName = "Indigames Ability System/Events/Void Event Channel")]
     public class VoidEventChannelSO : ScriptableObject

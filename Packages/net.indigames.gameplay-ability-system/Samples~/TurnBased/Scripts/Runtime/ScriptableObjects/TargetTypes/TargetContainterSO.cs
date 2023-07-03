@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
-using System;
+using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
 
-namespace Indigames.AbilitySystem
+namespace IndiGames.GameplayAbilitySystem
 {
     [CreateAssetMenu(fileName = "TargetContainter", menuName = "Indigames Ability System/Abilities/Target Containter")]
     public class TargetContainterSO : ScriptableObject

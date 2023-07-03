@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using System;
 
-namespace Indigames.AbilitySystem.FSM
+namespace IndiGames.GameplayAbilitySystem.FSM
 {
     public class BaseStateMachine : MonoBehaviour
     {

@@ -1,7 +1,7 @@
 using UnityEngine;
-using Indigames.AbilitySystem.FSM;
+using IndiGames.GameplayAbilitySystem.FSM;
 
-namespace Indigames.AbilitySystem.Sample
+namespace IndiGames.GameplayAbilitySystem.Sample
 {
     [CreateAssetMenu(fileName = "BattleActionSO", menuName = "Indigames Ability System/FSM/Actions/Battle Action")]
     public class BattleActionSO : FSMActionSO

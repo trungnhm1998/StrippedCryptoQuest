@@ -1,7 +1,7 @@
 using UnityEngine;
-using Indigames.AbilitySystem.FSM;
+using IndiGames.GameplayAbilitySystem.FSM;
 
-namespace Indigames.AbilitySystem.Sample
+namespace IndiGames.GameplayAbilitySystem.Sample
 {
     [CreateAssetMenu(fileName = "BattleEndDecisionSO", menuName = "Indigames Ability System/FSM/Decisions/Battle End Dicision")]
     public class BattleEndDecisionSO : DecisionSO
