@@ -100,6 +100,15 @@ namespace CryptoQuest.Input
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""MouseMove"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""4d548808-973e-4510-ac5a-40f98bfa227e"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -597,6 +606,17 @@ namespace CryptoQuest.Input
                     ""action"": ""NextSelection"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""56c8cb4f-9b2d-46a6-a593-4afc398922b0"",
+                    ""path"": ""<Mouse>/position"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""MnK"",
+                    ""action"": ""MouseMove"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -1008,6 +1028,7 @@ namespace CryptoQuest.Input
             m_Menus_Click = m_Menus.FindAction("Click", throwIfNotFound: true);
             m_Menus_Point = m_Menus.FindAction("Point", throwIfNotFound: true);
             m_Menus_NextSelection = m_Menus.FindAction("NextSelection", throwIfNotFound: true);
+            m_Menus_MouseMove = m_Menus.FindAction("MouseMove", throwIfNotFound: true);
             // MapGameplay
             m_MapGameplay = asset.FindActionMap("MapGameplay", throwIfNotFound: true);
             m_MapGameplay_Move = m_MapGameplay.FindAction("Move", throwIfNotFound: true);
@@ -1087,6 +1108,7 @@ namespace CryptoQuest.Input
         private readonly InputAction m_Menus_Click;
         private readonly InputAction m_Menus_Point;
         private readonly InputAction m_Menus_NextSelection;
+        private readonly InputAction m_Menus_MouseMove;
         public struct MenusActions
         {
             private @InputActions m_Wrapper;
@@ -1099,6 +1121,7 @@ namespace CryptoQuest.Input
             public InputAction @Click => m_Wrapper.m_Menus_Click;
             public InputAction @Point => m_Wrapper.m_Menus_Point;
             public InputAction @NextSelection => m_Wrapper.m_Menus_NextSelection;
+            public InputAction @MouseMove => m_Wrapper.m_Menus_MouseMove;
             public InputActionMap Get() { return m_Wrapper.m_Menus; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -1132,6 +1155,9 @@ namespace CryptoQuest.Input
                 @NextSelection.started += instance.OnNextSelection;
                 @NextSelection.performed += instance.OnNextSelection;
                 @NextSelection.canceled += instance.OnNextSelection;
+                @MouseMove.started += instance.OnMouseMove;
+                @MouseMove.performed += instance.OnMouseMove;
+                @MouseMove.canceled += instance.OnMouseMove;
             }
 
             private void UnregisterCallbacks(IMenusActions instance)
@@ -1160,6 +1186,9 @@ namespace CryptoQuest.Input
                 @NextSelection.started -= instance.OnNextSelection;
                 @NextSelection.performed -= instance.OnNextSelection;
                 @NextSelection.canceled -= instance.OnNextSelection;
+                @MouseMove.started -= instance.OnMouseMove;
+                @MouseMove.performed -= instance.OnMouseMove;
+                @MouseMove.canceled -= instance.OnMouseMove;
             }
 
             public void RemoveCallbacks(IMenusActions instance)
@@ -1329,6 +1358,7 @@ namespace CryptoQuest.Input
             void OnClick(InputAction.CallbackContext context);
             void OnPoint(InputAction.CallbackContext context);
             void OnNextSelection(InputAction.CallbackContext context);
+            void OnMouseMove(InputAction.CallbackContext context);
         }
         public interface IMapGameplayActions
         {

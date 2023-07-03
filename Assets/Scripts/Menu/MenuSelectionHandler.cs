@@ -15,16 +15,16 @@ namespace CryptoQuest.Menu
 
         private void OnEnable()
         {
-            _inputMediator.MenuNavigateEvent += HandleMoveCursor;
-            _inputMediator.MoveSelectionEvent += HandleMoveSelection;
+            _inputMediator.MenuNavigateEvent += HandleMoveSelection;
+            _inputMediator.MouseMoveEvent += HandleMoveCursor;
 
             StartCoroutine(SelectDefault());
         }
 
         private void OnDisable()
         {
-            _inputMediator.MenuNavigateEvent -= HandleMoveCursor;
-            _inputMediator.MoveSelectionEvent -= HandleMoveSelection;
+            _inputMediator.MenuNavigateEvent -= HandleMoveSelection;
+            _inputMediator.MouseMoveEvent -= HandleMoveCursor;
         }
 
         public void UpdateDefault(GameObject newDefault)

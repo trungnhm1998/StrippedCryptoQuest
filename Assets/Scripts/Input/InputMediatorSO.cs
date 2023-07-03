@@ -1,6 +1,9 @@
-﻿using UnityEngine;
+﻿using System.Linq.Expressions;
+using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
+using UnityEngine.UIElements;
+using NotImplementedException = System.NotImplementedException;
 
 namespace CryptoQuest.Input
 {
@@ -24,6 +27,7 @@ namespace CryptoQuest.Input
         public event UnityAction MenuSubmitPressed;
         public event UnityAction MenuNavigateEvent;
         public event UnityAction MoveSelectionEvent;
+        public event UnityAction MouseMoveEvent;
         public event UnityAction MenuTabPressed;
         public event UnityAction CancelEvent;
 
@@ -150,6 +154,11 @@ namespace CryptoQuest.Input
         public void OnNextSelection(InputAction.CallbackContext context)
         {
             if (context.performed) MenuTabPressed?.Invoke();
+        }
+
+        public void OnMouseMove(InputAction.CallbackContext context)
+        {
+            if (context.phase == InputActionPhase.Performed) MouseMoveEvent?.Invoke();
         }
 
         #endregion
