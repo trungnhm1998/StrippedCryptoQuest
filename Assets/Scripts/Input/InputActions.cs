@@ -367,6 +367,17 @@ namespace CryptoQuest.Input
                 },
                 {
                     ""name"": """",
+                    ""id"": ""698c6acf-38d7-4a85-9f9b-5beb63106dbe"",
+                    ""path"": ""<Keyboard>/numpadEnter"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""MnK"",
+                    ""action"": ""Confirm"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""7fed6561-a67f-41b5-a0a6-bea5ec80ea22"",
                     ""path"": ""<Keyboard>/escape"",
                     ""interactions"": """",
