@@ -8,6 +8,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.Localization.Components;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace CryptoQuest.UI.Title
@@ -15,17 +16,19 @@ namespace CryptoQuest.UI.Title
     public class UINamingPanel : MonoBehaviour
     {
         [SerializeField] private InputMediatorSO _inputMediator;
+        [SerializeField] private SaveSystemSO _saveSystemSO;
+
         [SerializeField] private Button _confirm;
+        [SerializeField] private MenuSelectionHandler _selectionHandler;
+
         [SerializeField] private TMP_InputField _nameInput;
         [SerializeField] private TextMeshProUGUI _validationText;
         [SerializeField] private LocalizeStringEvent _validationStringEvent;
-        [SerializeField] private MenuSelectionHandler _selectionHandler;
-
-        [SerializeField] private TextAsset _textAsset;
-        [SerializeField] private SaveSystemSO _saveSystemSO;
-
         [SerializeField] private Color _validColor;
         [SerializeField] private Color _invalidColor;
+
+        [SerializeField] private TextAsset _badWordAsset;
+        [SerializeField] private TextAsset _specialCharacterAsset;
 
         private IStringValidator _nameValidator;
 
@@ -36,7 +39,7 @@ namespace CryptoQuest.UI.Title
 
         private void Awake()
         {
-            _nameValidator = new NameValidator(_textAsset);
+            _nameValidator = new NameValidator(_badWordAsset, _specialCharacterAsset);
         }
 
         private void OnEnable()

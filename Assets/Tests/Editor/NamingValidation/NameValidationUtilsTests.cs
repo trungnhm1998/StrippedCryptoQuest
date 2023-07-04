@@ -9,23 +9,49 @@ namespace CryptoQuest.Tests.Editor.NamingValidation
     public class NameValidationUtilsTests
     {
         private IStringValidator nameValidator;
+
         private TextAsset _textAsset;
-        private static string ASSET_PATH = "Assets/Settings/Gameplay/words.txt";
+        private TextAsset _specialCharAsset;
+
+        private static string BAD_WORD_ASSET_PATH = "Assets/Settings/Gameplay/BadWords.txt";
+        private static string SPECIAL_CHAR_ASSET_PATH = "Assets/Settings/Gameplay/SpecialCharacters.txt";
+
 
         [SetUp]
         public void Setup()
         {
-            _textAsset = AssetDatabase.LoadAssetAtPath<TextAsset>(ASSET_PATH);
+            _textAsset = AssetDatabase.LoadAssetAtPath<TextAsset>(BAD_WORD_ASSET_PATH);
+            _specialCharAsset = AssetDatabase.LoadAssetAtPath<TextAsset>(SPECIAL_CHAR_ASSET_PATH);
 
             Assert.NotNull(_textAsset);
 
-            nameValidator = new NameValidator(_textAsset);
+            nameValidator = new NameValidator(_textAsset, _specialCharAsset);
         }
 
         [TestCase("FUCK")]
         [TestCase("nigger")]
         [TestCase("nigga")]
         [TestCase("HELL")]
+        [TestCase("FUCK")]
+        [TestCase("bitch")]
+        [TestCase("hell")]
+        [TestCase("asshole")]
+        [TestCase("dickhead")]
+        [TestCase("cunt")]
+        [TestCase("idiot")]
+        [TestCase("moron")]
+        [TestCase("shit")]
+        [TestCase("jerk")]
+        [TestCase("bastard")]
+        [TestCase("fuckwit")]
+        [TestCase("douchebag")]
+        [TestCase("wanker")]
+        [TestCase("twat")]
+        [TestCase("prick")]
+        [TestCase("cockwomble")]
+        [TestCase("motherfucker")]
+        [TestCase("dumbass")]
+        [TestCase("scumbag")]
         public void Validate_BadWord_ShouldReturnEValidationBadWord(string input)
         {
             EValidation result = nameValidator.Validate(input);
@@ -33,11 +59,17 @@ namespace CryptoQuest.Tests.Editor.NamingValidation
             Assert.AreEqual(EValidation.BadWord, result);
         }
 
-        [TestCase("Defa;ult Player?")]
-        [TestCase("~`NormalName")]
+
         [TestCase(".dot..")]
         [TestCase("???nani")]
-        [TestCase("%^@#!$@!(*#@^&$%!&@")]
+        [TestCase(".!@#$%")]
+        [TestCase("?!@#$%^")]
+        [TestCase("&*()_+-")]
+        [TestCase("<>={}|/")]
+        [TestCase("`~;:")]
+        [TestCase("£§€")]
+        [TestCase(".,")]
+        [TestCase("'")]
         public void Validate_SpecialCharacter_ShouldReturnFalse(string input)
         {
             EValidation result = nameValidator.Validate(input);
