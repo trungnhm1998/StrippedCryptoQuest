@@ -18,16 +18,17 @@ namespace CryptoQuest.System.Settings
         private Regex _specialCharsRegex;
         private Regex _badWordsRegex;
 
-        public NameValidator(TextAsset textAsset)
+        public NameValidator(TextAsset badWordsAsset, TextAsset specialCharsAsset)
         {
-            var badWords = textAsset.text.Split('\n');
+            var badWords = badWordsAsset.text.Split('\n');
+            var specialChars = specialCharsAsset.text;
             badWords = badWords.Select(x => x.ToLower()).ToArray();
 
             UpdateBadWordDictionary(ref badWords);
-            UpdateSpecialCharsDictionary();
+            UpdateSpecialCharsDictionary(ref specialChars);
         }
 
-        private void UpdateSpecialCharsDictionary(string specialChars = "@#$%^*()<>/|}{~:.;?")
+        private void UpdateSpecialCharsDictionary(ref string specialChars)
         {
             _specialCharsRegex = new Regex($@"[{specialChars}]");
         }
@@ -42,7 +43,7 @@ namespace CryptoQuest.System.Settings
                 badWordsString += word + or;
             }
 
-            var regexPattern = @".*(" + badWordsString + @").*";
+            var regexPattern = @"\b(" + badWordsString + @")\b";
             _badWordsRegex = new Regex(regexPattern, RegexOptions.IgnoreCase);
         }
 
