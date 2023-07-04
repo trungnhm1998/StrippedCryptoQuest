@@ -8,7 +8,6 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.Localization.Components;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace CryptoQuest.UI.Title
@@ -34,6 +33,7 @@ namespace CryptoQuest.UI.Title
 
         public UnityAction ConfirmNameButtonPressed;
         public UnityAction CancelEvent;
+        private bool _isInputValid;
 
         private const string VALIDATION_TABLE_ENTRY = "TITLE_VALIDATE_";
 
@@ -46,6 +46,8 @@ namespace CryptoQuest.UI.Title
         {
             _inputMediator.CancelEvent += BackToStartScreen;
             _inputMediator.MenuTabPressed += NavigateToNextInput;
+            _inputMediator.MenuConfirmedEvent += HandleInputSubmit;
+            _nameInput.onSubmit.AddListener(MenuSubmitEvent);
 
             _selectionHandler.UpdateDefault(_nameInput.gameObject);
             StartCoroutine(CoSelectNameInput());
@@ -56,16 +58,13 @@ namespace CryptoQuest.UI.Title
             _selectionHandler.Unselect();
             _inputMediator.CancelEvent -= BackToStartScreen;
             _inputMediator.MenuTabPressed -= NavigateToNextInput;
-        }
-
-        public void OnEndEdit()
-        {
-            _confirm.Select();
+            _inputMediator.MenuConfirmedEvent -= HandleInputSubmit;
+            _nameInput.onSubmit.RemoveListener(MenuSubmitEvent);
         }
 
         public void OnConfirmButtonPressed()
         {
-            if (!IsNameValid(_nameInput.text))
+            if (!_isInputValid)
             {
                 _nameInput.Select();
                 return;
@@ -73,6 +72,23 @@ namespace CryptoQuest.UI.Title
 
             _saveSystemSO.PlayerName = _nameInput.text;
             ConfirmNameButtonPressed?.Invoke();
+        }
+
+        public void ValidateInput(string input)
+        {
+            _isInputValid = IsNameValid(input);
+        }
+
+        private void HandleInputSubmit()
+        {
+            if (EventSystem.current.currentSelectedGameObject != _nameInput.gameObject) return;
+            MenuSubmitEvent(_nameInput.text);
+        }
+
+        private void MenuSubmitEvent(string input)
+        {
+            if (IsNameValid(input))
+                _confirm.Select();
         }
 
         private void BackToStartScreen()

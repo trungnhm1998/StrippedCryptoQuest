@@ -15,12 +15,12 @@ namespace CryptoQuest.UI.Title
 
         private void OnEnable()
         {
-            _inputMediator.MenuConfirmPressed += OnStartButtonPressed;
+            _inputMediator.MenuConfirmedEvent += OnStartButtonPressed;
         }
 
         private void OnDisable()
         {
-            _inputMediator.MenuConfirmPressed -= OnStartButtonPressed;
+            _inputMediator.MenuConfirmedEvent -= OnStartButtonPressed;
         }
 
         private IEnumerator Start()
