@@ -132,14 +132,10 @@ namespace IndiGames.Core.SceneManagementSystem
             if (_currentLoadedScene != null)
             {
                 if (_currentLoadedScene.SceneReference.OperationHandle.IsValid())
-                {
-                    yield return _currentLoadedScene.SceneReference.UnLoadScene();
-                }
+                    _currentLoadedScene.SceneReference.UnLoadScene();
 #if UNITY_EDITOR
                 else
-                {
                     UnloadSceneWhenStartFromEditor();
-                }
 #endif
             }
 

@@ -20,8 +20,8 @@ namespace CryptoQuest.UI.FadeController
 
         protected override void FadeOutLogic()
         {
-            _fadeImg.enabled = false;
             _fadeImg.DOBlendableColor(_fadeOutColor, FadeConfig.Duration);
+            _fadeImg.enabled = false;
         }
     }
 }
