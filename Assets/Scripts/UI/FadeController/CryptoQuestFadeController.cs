@@ -1,7 +1,9 @@
-﻿using DG.Tweening;
+﻿using System.Collections;
+using DG.Tweening;
 using IndiGames.Core.UI.FadeController;
 using UnityEngine;
 using UnityEngine.UI;
+using NotImplementedException = System.NotImplementedException;
 
 namespace CryptoQuest.UI.FadeController
 {
@@ -21,6 +23,12 @@ namespace CryptoQuest.UI.FadeController
         protected override void FadeOutLogic()
         {
             _fadeImg.DOBlendableColor(_fadeOutColor, FadeConfig.Duration);
+            StartCoroutine(CoFadeOut());
+        }
+
+        private IEnumerator CoFadeOut()
+        {
+            yield return new WaitForSeconds(FadeConfig.Duration);
             _fadeImg.enabled = false;
         }
     }
