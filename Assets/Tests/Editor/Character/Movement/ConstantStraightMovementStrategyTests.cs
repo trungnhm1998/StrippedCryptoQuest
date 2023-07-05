@@ -6,7 +6,7 @@ using UnityEngine;
 namespace CryptoQuest.Tests.Editor.Character.Movement
 {
     [TestFixture]
-    public class ConstantVelocityInSingleDirectionStrategyTests
+    public class ConstantStraightMovementStrategyTests
     {
         private class MockBehaviour : CharacterBehaviour
         {
@@ -24,7 +24,7 @@ namespace CryptoQuest.Tests.Editor.Character.Movement
         public void Setup()
         {
             var mockBehaviour = new GameObject().AddComponent<MockBehaviour>();
-            _controller = new ConstantVelocityInSingleDirectionStrategy(mockBehaviour);
+            _controller = new ConstantStraightMovementStrategy(mockBehaviour);
         }
 
         [TestCase(4, -1, 0, -4, 0)]
@@ -47,36 +47,18 @@ namespace CryptoQuest.Tests.Editor.Character.Movement
             Assert.AreEqual(expectedVelocity, velocity);
         }
 
-        [TestCase(4, 0, 1, 0.7f, 0.7f, 4, 0)]
-        [TestCase(4, 0, -1, -1, 1, -4, 0)]
-        [TestCase(4, 0, -0.8f, 1, -1, 4, 0)]
-        [TestCase(4, 0.3f, -0.8f, -0.5f, -0.7f, 0, -4)]
-        public void CalculateVelocity_SecondInput_ShouldPrioritizeHorizontal(
-            float speed,
-            float inputX, float inputY,
-            float secondInputX, float secondInputY,
-            float expectedX, float expectedY)
-        {
-            var velocity = _controller.CalculateVelocity(new Vector2(inputX, inputY), speed);
-
-            velocity = _controller.CalculateVelocity(new Vector2(secondInputX, secondInputY), speed);
-
-            var expectedVelocity = new Vector2(expectedX, expectedY);
-
-            Assert.AreEqual(expectedVelocity, velocity);
-        }
-
         [TestCase(4, 1, 0, 1, 0.5f, 4, 0)]
         [TestCase(4, 1, 0, -1, 0, -4, 0)]
         [TestCase(4, 1, 0, 1, 1, 4, 0)]
         [TestCase(4, 1, 0, 0.7f, 0.7f, 4, 0)]
-        [TestCase(4, 0, -0.8f, -0.8f, -0.2f, -4, 0)]
+        [TestCase(4, 0, -0.8f, -0.8f, -0.2f, 0, -4)]
         [TestCase(4, 1, 0, 0.7f, 0.7f, 4, 0)]
         [TestCase(4, 1, 1, 0.9f, 0.7f, 4, 0)]
-        [TestCase(4, 0, -1, -1, 0.7f, -4, 0)]
+        [TestCase(4, 0, -1, -1, 0.7f, 0, -4)]
         [TestCase(4, 1, 0, 0, 1, 0, 4)]
-        [TestCase(4, 0, -0.8f, -0.8f, -0.2f, -4, 0)]
-        public void CalculateVelocity_SecondInput_ShouldPrioritizeFirstInput(
+        [TestCase(4, 0, -0.8f, -0.8f, -0.2f, 0, -4)]
+        [TestCase(4, 0, 1f, 0.71f, 0.71f, 0, 4)]
+        public void CalculateVelocity_SecondInput_ShouldPrioritize_LastStraightInput(
             float speed,
             float inputX, float inputY,
             float secondInputX, float secondInputY,
@@ -85,27 +67,6 @@ namespace CryptoQuest.Tests.Editor.Character.Movement
             var velocity = _controller.CalculateVelocity(new Vector2(inputX, inputY), speed);
 
             velocity = _controller.CalculateVelocity(new Vector2(secondInputX, secondInputY), speed);
-
-            var expectedVelocity = new Vector2(expectedX, expectedY);
-
-            Assert.AreEqual(expectedVelocity, velocity);
-        }
-
-        [TestCase(4, 1, 0, 0.00262168166f, -0.00786504522f, 0, -4)]
-        public void CalculateVelocity_ThirdInput_ShouldResetLastInput(
-            float speed,
-            float inputX, float inputY,
-            float thirdInputX, float thirdInputY,
-            float expectedX, float expectedY)
-        {
-            // will cached _lastInputVector to be (1, 0)
-            var velocity = _controller.CalculateVelocity(new Vector2(inputX, inputY), speed);
-
-            velocity = _controller.CalculateVelocity(Vector2.zero, speed);
-
-            Assert.AreEqual(Vector2.zero, velocity);
-
-            velocity = _controller.CalculateVelocity(new Vector2(thirdInputX, thirdInputY), speed);
 
             var expectedVelocity = new Vector2(expectedX, expectedY);
 
@@ -116,18 +77,23 @@ namespace CryptoQuest.Tests.Editor.Character.Movement
             0.9f, 0,
             0.8f, 0.3f,
             0.2f, 1f,
-            0f, 4f)]
+            4f, 0f)]
         [TestCase(4,
             -0.9f, 0,
             -0.7f, -0.3f,
             -0.2f, -0.8f,
-            0f, -4f)]
+            -4f, 0f)]
         [TestCase(4,
-            -0.9f, 0,
+            0, -0.9f,
             -0.7f, -0.3f,
             1, 1f,
-            4f, 0)]
-        public void CalculateVelocity_ThirdInput_ShouldOverrideSecond(
+            0, -4f)]
+        [TestCase(4,
+            0, -0.9f,
+            -0.7f, -0.3f,
+            1, 0f,
+            4, 0f)]
+        public void CalculateVelocity_ThirdInput_ShouldPrioritize_LastStraightInput(
             float speed,
             float inputX, float inputY,
             float secondInputX, float secondInputY,
