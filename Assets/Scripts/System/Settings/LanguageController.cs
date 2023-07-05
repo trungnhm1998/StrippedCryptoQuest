@@ -16,7 +16,7 @@ namespace CryptoQuest.System.Settings
         private AsyncOperationHandle _initializeOperation;
         private List<string> _languagesList = new List<string>();
 
-        private void OnEnable()
+        private void Start()
         {
             _initializeOperation = LocalizationSettings.SelectedLocaleAsync;
 
