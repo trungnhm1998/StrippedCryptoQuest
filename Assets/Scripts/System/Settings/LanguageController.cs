@@ -1,6 +1,6 @@
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.Localization;
 using UnityEngine.Localization.Settings;
 using UnityEngine.ResourceManagement.AsyncOperations;
@@ -9,30 +9,29 @@ namespace CryptoQuest.System.Settings
 {
     public class LanguageController : MonoBehaviour
     {
-        public event UnityAction<Locale> Save = delegate { };
+        [Header("UI")]
+        [SerializeField] TMP_Dropdown _dropdown;
 
         private int _currentSelectedOption = 0;
-        private LanguageType _savedSelectedOption = default;
         private AsyncOperationHandle _initializeOperation;
         private List<string> _languagesList = new List<string>();
 
-        private void OnEnable()
+        private void Start()
         {
             _initializeOperation = LocalizationSettings.SelectedLocaleAsync;
 
-            if (_initializeOperation.IsDone)
-            {
-                InitializeCompleted(_initializeOperation);
-            }
-            else
-            {
-                _initializeOperation.Completed += InitializeCompleted;
-            }
+            _initializeOperation.Completed += InitializeCompleted;
         }
 
         private void OnDisable()
         {
             LocalizationSettings.SelectedLocaleChanged -= SelectedLocaleChanged;
+        }
+
+        private void InitializeLanguage()
+        {
+            _dropdown.ClearOptions();
+            _dropdown.AddOptions(_languagesList);
         }
 
         private void InitializeCompleted(AsyncOperationHandle obj)
@@ -47,26 +46,35 @@ namespace CryptoQuest.System.Settings
                 if (LocalizationSettings.SelectedLocale == locale) _currentSelectedOption = i;
 
                 var displayName = locales[i].Identifier.CultureInfo != null
-                    ? locales[i].Identifier.CultureInfo.DisplayName
-                    : locales[i].Identifier.Code;
+                    ? locales[i].Identifier.CultureInfo.NativeName
+                    : locales[i].ToString();
                 _languagesList.Add(displayName);
             }
 
-            _savedSelectedOption = (LanguageType)_currentSelectedOption;
-            Debug.Log($"Saved Locale is {(LanguageType)_savedSelectedOption}");
+            InitializeLanguage();
             LocalizationSettings.SelectedLocaleChanged += SelectedLocaleChanged;
         }
 
         private void SelectedLocaleChanged(Locale locale)
         {
             var index = LocalizationSettings.AvailableLocales.Locales.IndexOf(locale);
-            Debug.Log($"Selected Locale changed to {locale.name} ({(LanguageType)index})");
+            _dropdown.value = index;
         }
-    }
 
-    public enum LanguageType
-    {
-        English = 0,
-        Japanese = 1,
+        public void OnChangeLanguage(int index)
+        {
+            _currentSelectedOption = index;
+            OnSelectionChanged();
+        }
+
+        private void OnSelectionChanged()
+        {
+            LocalizationSettings.SelectedLocaleChanged -= SelectedLocaleChanged;
+
+            var locale = LocalizationSettings.AvailableLocales.Locales[_currentSelectedOption];
+            LocalizationSettings.SelectedLocale = locale;
+
+            LocalizationSettings.SelectedLocaleChanged += SelectedLocaleChanged;
+        }
     }
 }
