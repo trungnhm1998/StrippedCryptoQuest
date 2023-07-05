@@ -9,6 +9,7 @@ namespace CryptoQuest.System.Settings
 {
     public class LanguageController : MonoBehaviour
     {
+        [Header("UI")]
         [SerializeField] TMP_Dropdown _dropdown;
 
         private int _currentSelectedOption = 0;
