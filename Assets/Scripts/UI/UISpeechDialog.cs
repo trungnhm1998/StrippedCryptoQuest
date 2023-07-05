@@ -3,6 +3,7 @@ using CryptoQuest.Gameplay.Quest.Dialogue.ScriptableObject;
 using CryptoQuest.Input;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Localization.Components;
 
 namespace CryptoQuest.UI
 {
@@ -16,7 +17,7 @@ namespace CryptoQuest.UI
         [SerializeField] private InputMediatorSO _inputMediator;
 
         [SerializeField] private GameObject _content;
-        [SerializeField] private TextMeshProUGUI _dialogLabel;
+        [SerializeField] private LocalizeStringEvent _dialogLabel;
 
         private DialogueScriptableObject _dialogue;
         private int _currentDialogueIndex = 0;
@@ -71,13 +72,13 @@ namespace CryptoQuest.UI
 
         private void UpdateDialogueWithIndex(int dialogueIndex)
         {
-            _dialogLabel.text = _dialogue.GetLine(dialogueIndex).GetLocalizedString();
+            _dialogLabel.StringReference = _dialogue.GetLine(dialogueIndex);
         }
 
         private void Reset()
         {
             _currentDialogueIndex = 0;
-            _dialogLabel.text = string.Empty;
+            _dialogLabel.StringReference = null;
         }
     }
 }
