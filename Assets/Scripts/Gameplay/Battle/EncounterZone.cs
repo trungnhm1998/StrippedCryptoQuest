@@ -1,12 +1,26 @@
+using Unity.Collections;
 using UnityEngine;
 
 namespace CryptoQuest.Gameplay.Battle
 {
-    public class BattleEncounter : MonoBehaviour
+    public class EncounterZone : MonoBehaviour
     {
         [SerializeField] private TriggerBattleEncounterEventSO _triggerBattleEncounterEvent;
         [SerializeField] private BattleDataSO _battleData;
         [SerializeField] private BoxCollider2D _collider;
+        [SerializeField, ReadOnly] private string _playerTag = "Player";
+
+        private void OnTriggerEnter2D(Collider2D other)
+        {
+            if (!other.gameObject.CompareTag(_playerTag)) return;
+
+            OnTriggerBattleEncounter();
+        }
+
+        private void OnTriggerBattleEncounter()
+        {
+            _triggerBattleEncounterEvent.Raise(_battleData);
+        }
 
         private void OnDrawGizmos()
         {
