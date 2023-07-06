@@ -26,6 +26,7 @@ namespace CryptoQuest
         [SerializeField] private Image frameImg;
         [SerializeField] private float _showAnimationDuration = .5f;
         [SerializeField] private float _hideAnimationDuration = .5f;
+        [SerializeField] private float _hideDistance = -1000f;
         private Sequence _sequence;
 
 
@@ -78,7 +79,7 @@ namespace CryptoQuest
                 .Append(backgroundImg.DOFade(0, duration))
                 .Join(frameImg.DOFade(0, duration))
                 .Join(_mapNameLabel.gameObject.GetComponent<TextMeshProUGUI>().DOFade(0, duration))
-                .Join(container.transform.DOMoveX(-1000, duration));
+                .Join(container.transform.DOMoveX(_hideDistance, duration));
         }
     }
 }
