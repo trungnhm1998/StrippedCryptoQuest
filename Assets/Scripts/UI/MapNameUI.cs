@@ -7,6 +7,7 @@ using IndiGames.Core.UI.FadeController;
 using UnityEngine;
 using UnityEngine.Localization;
 using DG.Tweening;
+using IndiGames.Core.SceneManagementSystem.Events.ScriptableObjects;
 using TMPro;
 using UnityEngine.Localization.Components;
 using UnityEngine.Serialization;
@@ -16,56 +17,67 @@ namespace CryptoQuest
 {
     public class MapNameUI : MonoBehaviour
     {
-        [SerializeField] private VoidEventChannelSO _sceneLoaded;
-        [SerializeField] private VoidEventChannelSO _hideMapName;
-        [SerializeField] private LocalizedString _mapNameLocalizedKey;
-        [SerializeField] private LocalizeStringEvent _mapNameLabel;
+        [Header("Listened events")]
+        [SerializeField] private StringEventChannelSO _onShowMapNameUI;
+
+        [SerializeField] private LoadSceneEventChannelSO _loadMapEvent;
+
         [SerializeField] private GameObject _container;
         [SerializeField] private Image _backgroundImage;
         [SerializeField] private Image _frameImage;
-        [SerializeField] private float _showAnimationDuration = .5f;
-        [SerializeField] private float _hideAnimationDuration = .5f;
-        [SerializeField] private float _hideDistance = -1000f;
+        [SerializeField] private TextMeshProUGUI _mapNameText;
+        [SerializeField] private float _showDuration = 10f;
+        [SerializeField] private float _showSpeed = .5f;
+        [SerializeField] private float _hideSpeed = .5f;
+        [SerializeField] private float _hideDistance = -500f;
         private Sequence _sequence;
 
         private void OnEnable()
         {
-            _sceneLoaded.EventRaised += OnSceneLoaded;
-            _hideMapName.EventRaised += OnHideMapName;
+            _container.transform.DOMoveX(_hideDistance, 0);
+            _onShowMapNameUI.EventRaised += OnShowMapName;
+            _loadMapEvent.LoadingRequested += OnLoadNewScene;
         }
 
         private void OnDisable()
         {
-            _sceneLoaded.EventRaised -= OnSceneLoaded;
-            _hideMapName.EventRaised -= OnHideMapName;
+            _onShowMapNameUI.EventRaised -= OnShowMapName;
+            _loadMapEvent.LoadingRequested -= OnLoadNewScene;
         }
 
-        private void Start()
+        private void OnLoadNewScene(SceneScriptableObject scene)
         {
             HideMapName(0);
         }
 
-        private void OnSceneLoaded()
+        private void Start()
         {
-            ShowMapName(_showAnimationDuration);
+            _container.SetActive(false);
         }
 
-        private void OnHideMapName()
+        private void OnShowMapName(string mapName)
         {
-            HideMapName(_hideAnimationDuration);
+            SetUpMapName(mapName);
+            ShowMapName(_showSpeed);
+        }
+
+        private void SetUpMapName(string mapName)
+        {
+            _mapNameText.text = mapName;
         }
 
         private void ShowMapName(float duration)
         {
-            _mapNameLabel.StringReference = _mapNameLocalizedKey;
-            var text = _mapNameLabel.gameObject.GetComponent<TextMeshProUGUI>();
+            _container.SetActive(true);
             _sequence?.Kill();
             _sequence = DOTween.Sequence();
             _sequence
                 .Append(_backgroundImage.DOFade(1, duration))
+                .Join(_mapNameText.DOFade(1, duration))
                 .Join(_frameImage.DOFade(1, duration))
-                .Join(text.DOFade(1, duration))
-                .Join(_container.transform.DOMoveX(0, duration));
+                .Join(_container.transform.DOMoveX(0, duration))
+                .AppendInterval(_showDuration)
+                .OnComplete(() => HideMapName(_hideSpeed));
         }
 
         private void HideMapName(float duration)
@@ -75,7 +87,7 @@ namespace CryptoQuest
             _sequence
                 .Append(_backgroundImage.DOFade(0, duration))
                 .Join(_frameImage.DOFade(0, duration))
-                .Join(_mapNameLabel.gameObject.GetComponent<TextMeshProUGUI>().DOFade(0, duration))
+                .Join(_mapNameText.DOFade(0, duration))
                 .Join(_container.transform.DOMoveX(_hideDistance, duration));
         }
     }
