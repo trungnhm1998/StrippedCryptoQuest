@@ -10,7 +10,8 @@ namespace CryptoQuestEditor.Build
 
         public void OnPreprocessBuild(BuildReport report)
         {
-            VersionApplicator.SetVersion(VersionGenerator.Generate());
+            var version = VersionGenerator.Generate();
+            VersionApplicator.SetVersion(version);
         }
     }
 }

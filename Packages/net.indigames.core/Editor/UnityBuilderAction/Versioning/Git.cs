@@ -2,6 +2,7 @@
 using System.Text.RegularExpressions;
 using Codice.CM.Common;
 using IndiGamesEditor.UnityBuilderAction.System;
+using UnityEngine;
 
 namespace IndiGamesEditor.UnityBuilderAction.Versioning
 {
@@ -21,6 +22,8 @@ namespace IndiGamesEditor.UnityBuilderAction.Versioning
             if (IsShallowClone())
                 Fetch();
 
+            Run(@"update-index --refresh");
+
             string version;
             if (HasAnyVersionTags())
             {
@@ -30,6 +33,7 @@ namespace IndiGamesEditor.UnityBuilderAction.Versioning
             else
             {
                 version = $"0.0.{GetTotalNumberOfCommits()}-{GetVersionString()}";
+                Console.WriteLine(Run(@"status"));
                 Console.WriteLine("Repository does not have tags to base the version on.");
             }
 
@@ -106,7 +110,7 @@ namespace IndiGamesEditor.UnityBuilderAction.Versioning
             string version = GetVersionString();
             // 0.1-2-g12345678-dirty
             version = version.Substring(1);
-            
+
             var regex = new Regex(Regex.Escape("-"));
             // 0.1.2-g12345678-dirty
             version = regex.Replace(version, ".", 1);
