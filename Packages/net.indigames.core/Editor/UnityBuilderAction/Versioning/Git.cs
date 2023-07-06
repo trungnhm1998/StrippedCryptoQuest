@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text.RegularExpressions;
 using Codice.CM.Common;
 using IndiGamesEditor.UnityBuilderAction.System;
 
@@ -103,8 +104,12 @@ namespace IndiGamesEditor.UnityBuilderAction.Versioning
             // (where 2 is the amount of commits, g stands for git
             // , 12345678 is the commit hash and dirty means there are uncommitted changes)
             string version = GetVersionString();
-            // 0.1.2.g12345678.dirty
-            version = version.Replace('-', '.');
+            // 0.1-2-g12345678-dirty
+            version = version.Substring(1);
+            
+            var regex = new Regex(Regex.Escape("-"));
+            // 0.1.2-g12345678-dirty
+            version = regex.Replace(version, ".", 1);
 
             return version;
         }
