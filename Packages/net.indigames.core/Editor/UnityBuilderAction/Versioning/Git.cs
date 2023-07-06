@@ -23,7 +23,14 @@ namespace IndiGamesEditor.UnityBuilderAction.Versioning
                 Fetch();
 
             // https://stackoverflow.com/a/17537385/10479236
-            Run(@"update-index --refresh");
+            try
+            {
+                Run(@"update-index --refresh");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Branch properly not clean, this is safe to skip. \n" + e);
+            }
 
             string version;
             if (HasAnyVersionTags())
@@ -33,7 +40,7 @@ namespace IndiGamesEditor.UnityBuilderAction.Versioning
             }
             else
             {
-                version = $"0.0.{GetTotalNumberOfCommits()}-{GetVersionString()}";
+                version = $"0.0.{GetTotalNumberOfCommits()}_{GetVersionString()}";
                 Console.WriteLine("Repository does not have tags to base the version on.");
             }
 
@@ -114,6 +121,9 @@ namespace IndiGamesEditor.UnityBuilderAction.Versioning
             var regex = new Regex(Regex.Escape("-"));
             // 0.1.2-g12345678-dirty
             version = regex.Replace(version, ".", 1);
+            
+            // 0.1.2_g12345678-dirty
+            version = regex.Replace(version, "_", 1);
 
             return version;
         }
