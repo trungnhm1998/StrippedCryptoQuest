@@ -20,7 +20,7 @@ namespace CryptoQuest.Character.MonoBehaviours
         private void Awake()
         {
             _rigidBody2D = GetComponent<Rigidbody2D>();
-            _velocityStrategy = new ConstantStraightMovementStrategy(_characterBehaviour);
+            _velocityStrategy = new ConstantVelocityLastInputMovementStrategy(_characterBehaviour);
             _interactionManager = GetComponent<IInteractionManager>();
         }
 

@@ -636,9 +636,36 @@ namespace CryptoQuest.Input
             ""id"": ""0295c9ca-c6c5-403b-a931-68eafafc77a1"",
             ""actions"": [
                 {
-                    ""name"": ""Move"",
+                    ""name"": ""MoveUp"",
                     ""type"": ""Value"",
                     ""id"": ""53f812ea-12a2-41fe-88bf-a092eef4fc41"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": ""StickDeadzone"",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""MoveDown"",
+                    ""type"": ""Value"",
+                    ""id"": ""ee17c010-a6c0-4a22-90c2-66ed89821bf0"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": ""StickDeadzone"",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""MoveLeft"",
+                    ""type"": ""Value"",
+                    ""id"": ""0b5833ca-5b05-4eea-a4dd-6188a9ace53b"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": ""StickDeadzone"",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""MoveRight"",
+                    ""type"": ""Value"",
+                    ""id"": ""e5c5124f-d646-465b-9b66-9830b7f7c334"",
                     ""expectedControlType"": ""Vector2"",
                     ""processors"": ""StickDeadzone"",
                     ""interactions"": """",
@@ -674,24 +701,13 @@ namespace CryptoQuest.Input
             ],
             ""bindings"": [
                 {
-                    ""name"": """",
-                    ""id"": ""d0450bc3-8213-4884-87dc-28f3d9d03e51"",
-                    ""path"": ""<Gamepad>/leftStick"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Gamepad"",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
                     ""name"": ""Gamepad D-Pad"",
                     ""id"": ""08c0de83-c54e-454d-b9e7-0bcb5e69c083"",
                     ""path"": ""2DVector"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Move"",
+                    ""action"": ""MoveUp"",
                     ""isComposite"": true,
                     ""isPartOfComposite"": false
                 },
@@ -702,40 +718,7 @@ namespace CryptoQuest.Input
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""Down"",
-                    ""id"": ""f1fab9f4-6320-4aa2-a482-fe297c099669"",
-                    ""path"": ""<Gamepad>/dpad/down"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Gamepad"",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""Left"",
-                    ""id"": ""19e4dc08-f46c-4b5a-bba5-4c2921c4b3b3"",
-                    ""path"": ""<Gamepad>/dpad/left"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""Right"",
-                    ""id"": ""2849c086-cc9a-4412-bb20-c750a69337c7"",
-                    ""path"": ""<Gamepad>/dpad/right"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Gamepad"",
-                    ""action"": ""Move"",
+                    ""action"": ""MoveUp"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
@@ -746,7 +729,7 @@ namespace CryptoQuest.Input
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Move"",
+                    ""action"": ""MoveUp"",
                     ""isComposite"": true,
                     ""isPartOfComposite"": false
                 },
@@ -757,40 +740,7 @@ namespace CryptoQuest.Input
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""MnK"",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""down"",
-                    ""id"": ""f941b3c0-d722-4734-a672-9d77375e62e4"",
-                    ""path"": ""<Keyboard>/s"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""MnK"",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""left"",
-                    ""id"": ""bbc4972b-eeda-4380-ac50-c539991c3659"",
-                    ""path"": ""<Keyboard>/a"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""MnK"",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""right"",
-                    ""id"": ""55098bfd-d895-432e-85bb-5af22ad9adde"",
-                    ""path"": ""<Keyboard>/d"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""MnK"",
-                    ""action"": ""Move"",
+                    ""action"": ""MoveUp"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
@@ -801,40 +751,7 @@ namespace CryptoQuest.Input
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""MnK"",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""down"",
-                    ""id"": ""23f09c0a-7084-4417-9794-2c9e4b0cbcfb"",
-                    ""path"": ""<Keyboard>/downArrow"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""MnK"",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""left"",
-                    ""id"": ""bc374cdf-e61a-49e3-a369-7c3d16ad6390"",
-                    ""path"": ""<Keyboard>/leftArrow"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""MnK"",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""right"",
-                    ""id"": ""68276105-7cdb-44b6-9a80-0e78717e4daa"",
-                    ""path"": ""<Keyboard>/rightArrow"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""MnK"",
-                    ""action"": ""Move"",
+                    ""action"": ""MoveUp"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
@@ -925,6 +842,171 @@ namespace CryptoQuest.Input
                     ""action"": ""Pause"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""Gamepad D-Pad"",
+                    ""id"": ""82160596-eab8-4f6a-8a70-233d69280b60"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MoveDown"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""Down"",
+                    ""id"": ""60d11683-471c-4d31-bb9c-b4dd1b605fed"",
+                    ""path"": ""<Gamepad>/dpad/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""MoveDown"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""Keyboard"",
+                    ""id"": ""57237e0b-9112-4758-8716-6f8e14e357a7"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MoveDown"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""c92a7350-91ad-4fa1-a8f3-2a90b597d685"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""MnK"",
+                    ""action"": ""MoveDown"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""df457869-427e-4394-a052-2e92be3320f0"",
+                    ""path"": ""<Keyboard>/downArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""MnK"",
+                    ""action"": ""MoveDown"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""Gamepad D-Pad"",
+                    ""id"": ""4e8726d4-4a85-4cbf-a683-a5a1b3679d81"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MoveLeft"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""Left"",
+                    ""id"": ""d3a7c042-e46b-43d6-ae72-24b1b6817e10"",
+                    ""path"": ""<Gamepad>/dpad/left"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MoveLeft"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""Keyboard"",
+                    ""id"": ""5b587d01-f3b8-4f15-8045-c404e2a80073"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MoveLeft"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""0a03f20d-7c8d-4bb8-9e52-85b8afc444af"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""MnK"",
+                    ""action"": ""MoveLeft"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""cb904814-a5a7-445b-9df4-0d662b32a727"",
+                    ""path"": ""<Keyboard>/leftArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""MnK"",
+                    ""action"": ""MoveLeft"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""Gamepad D-Pad"",
+                    ""id"": ""151ded11-155d-4843-bc58-087bfce45bcf"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MoveRight"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""Right"",
+                    ""id"": ""cdf79bf2-35db-4aac-b82d-189b9ddcdb64"",
+                    ""path"": ""<Gamepad>/dpad/right"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""MoveRight"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""Keyboard"",
+                    ""id"": ""80d3a413-c4e8-4307-bc1c-16b0f3cc60ee"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MoveRight"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""4fc91e91-596b-421e-8328-ee1ddf5b1d5d"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""MnK"",
+                    ""action"": ""MoveRight"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""9094f354-84e4-409f-b891-2ab8644d95d5"",
+                    ""path"": ""<Keyboard>/rightArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""MnK"",
+                    ""action"": ""MoveRight"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
                 }
             ]
         },
@@ -1042,7 +1124,10 @@ namespace CryptoQuest.Input
             m_Menus_MouseMove = m_Menus.FindAction("MouseMove", throwIfNotFound: true);
             // MapGameplay
             m_MapGameplay = asset.FindActionMap("MapGameplay", throwIfNotFound: true);
-            m_MapGameplay_Move = m_MapGameplay.FindAction("Move", throwIfNotFound: true);
+            m_MapGameplay_MoveUp = m_MapGameplay.FindAction("MoveUp", throwIfNotFound: true);
+            m_MapGameplay_MoveDown = m_MapGameplay.FindAction("MoveDown", throwIfNotFound: true);
+            m_MapGameplay_MoveLeft = m_MapGameplay.FindAction("MoveLeft", throwIfNotFound: true);
+            m_MapGameplay_MoveRight = m_MapGameplay.FindAction("MoveRight", throwIfNotFound: true);
             m_MapGameplay_Interact = m_MapGameplay.FindAction("Interact", throwIfNotFound: true);
             m_MapGameplay_Inventory = m_MapGameplay.FindAction("Inventory", throwIfNotFound: true);
             m_MapGameplay_Pause = m_MapGameplay.FindAction("Pause", throwIfNotFound: true);
@@ -1221,7 +1306,10 @@ namespace CryptoQuest.Input
         // MapGameplay
         private readonly InputActionMap m_MapGameplay;
         private List<IMapGameplayActions> m_MapGameplayActionsCallbackInterfaces = new List<IMapGameplayActions>();
-        private readonly InputAction m_MapGameplay_Move;
+        private readonly InputAction m_MapGameplay_MoveUp;
+        private readonly InputAction m_MapGameplay_MoveDown;
+        private readonly InputAction m_MapGameplay_MoveLeft;
+        private readonly InputAction m_MapGameplay_MoveRight;
         private readonly InputAction m_MapGameplay_Interact;
         private readonly InputAction m_MapGameplay_Inventory;
         private readonly InputAction m_MapGameplay_Pause;
@@ -1229,7 +1317,10 @@ namespace CryptoQuest.Input
         {
             private @InputActions m_Wrapper;
             public MapGameplayActions(@InputActions wrapper) { m_Wrapper = wrapper; }
-            public InputAction @Move => m_Wrapper.m_MapGameplay_Move;
+            public InputAction @MoveUp => m_Wrapper.m_MapGameplay_MoveUp;
+            public InputAction @MoveDown => m_Wrapper.m_MapGameplay_MoveDown;
+            public InputAction @MoveLeft => m_Wrapper.m_MapGameplay_MoveLeft;
+            public InputAction @MoveRight => m_Wrapper.m_MapGameplay_MoveRight;
             public InputAction @Interact => m_Wrapper.m_MapGameplay_Interact;
             public InputAction @Inventory => m_Wrapper.m_MapGameplay_Inventory;
             public InputAction @Pause => m_Wrapper.m_MapGameplay_Pause;
@@ -1242,9 +1333,18 @@ namespace CryptoQuest.Input
             {
                 if (instance == null || m_Wrapper.m_MapGameplayActionsCallbackInterfaces.Contains(instance)) return;
                 m_Wrapper.m_MapGameplayActionsCallbackInterfaces.Add(instance);
-                @Move.started += instance.OnMove;
-                @Move.performed += instance.OnMove;
-                @Move.canceled += instance.OnMove;
+                @MoveUp.started += instance.OnMoveUp;
+                @MoveUp.performed += instance.OnMoveUp;
+                @MoveUp.canceled += instance.OnMoveUp;
+                @MoveDown.started += instance.OnMoveDown;
+                @MoveDown.performed += instance.OnMoveDown;
+                @MoveDown.canceled += instance.OnMoveDown;
+                @MoveLeft.started += instance.OnMoveLeft;
+                @MoveLeft.performed += instance.OnMoveLeft;
+                @MoveLeft.canceled += instance.OnMoveLeft;
+                @MoveRight.started += instance.OnMoveRight;
+                @MoveRight.performed += instance.OnMoveRight;
+                @MoveRight.canceled += instance.OnMoveRight;
                 @Interact.started += instance.OnInteract;
                 @Interact.performed += instance.OnInteract;
                 @Interact.canceled += instance.OnInteract;
@@ -1258,9 +1358,18 @@ namespace CryptoQuest.Input
 
             private void UnregisterCallbacks(IMapGameplayActions instance)
             {
-                @Move.started -= instance.OnMove;
-                @Move.performed -= instance.OnMove;
-                @Move.canceled -= instance.OnMove;
+                @MoveUp.started -= instance.OnMoveUp;
+                @MoveUp.performed -= instance.OnMoveUp;
+                @MoveUp.canceled -= instance.OnMoveUp;
+                @MoveDown.started -= instance.OnMoveDown;
+                @MoveDown.performed -= instance.OnMoveDown;
+                @MoveDown.canceled -= instance.OnMoveDown;
+                @MoveLeft.started -= instance.OnMoveLeft;
+                @MoveLeft.performed -= instance.OnMoveLeft;
+                @MoveLeft.canceled -= instance.OnMoveLeft;
+                @MoveRight.started -= instance.OnMoveRight;
+                @MoveRight.performed -= instance.OnMoveRight;
+                @MoveRight.canceled -= instance.OnMoveRight;
                 @Interact.started -= instance.OnInteract;
                 @Interact.performed -= instance.OnInteract;
                 @Interact.canceled -= instance.OnInteract;
@@ -1373,7 +1482,10 @@ namespace CryptoQuest.Input
         }
         public interface IMapGameplayActions
         {
-            void OnMove(InputAction.CallbackContext context);
+            void OnMoveUp(InputAction.CallbackContext context);
+            void OnMoveDown(InputAction.CallbackContext context);
+            void OnMoveLeft(InputAction.CallbackContext context);
+            void OnMoveRight(InputAction.CallbackContext context);
             void OnInteract(InputAction.CallbackContext context);
             void OnInventory(InputAction.CallbackContext context);
             void OnPause(InputAction.CallbackContext context);
