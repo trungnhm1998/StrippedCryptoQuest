@@ -78,7 +78,8 @@ namespace CryptoQuest.UI
         private void Reset()
         {
             _currentDialogueIndex = 0;
-            _dialogLabel.StringReference = null;
+            // TODO: Can't set null here because of bug in LocalizeStringEvent
+            // _dialogLabel.StringReference = null;
         }
     }
 }
