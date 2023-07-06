@@ -22,6 +22,7 @@ namespace IndiGamesEditor.UnityBuilderAction.Versioning
             if (IsShallowClone())
                 Fetch();
 
+            // https://stackoverflow.com/a/17537385/10479236
             Run(@"update-index --refresh");
 
             string version;
@@ -33,7 +34,6 @@ namespace IndiGamesEditor.UnityBuilderAction.Versioning
             else
             {
                 version = $"0.0.{GetTotalNumberOfCommits()}-{GetVersionString()}";
-                Console.WriteLine(Run(@"status"));
                 Console.WriteLine("Repository does not have tags to base the version on.");
             }
 
