@@ -5,21 +5,26 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace CryptoQuest
+namespace CryptoQuest.Character
 {
-    public class NPCFacingDirection : MonoBehaviour
+    public class NPCFacingDirection : MonoBehaviour, IInteractable
     {
+        public CharacterBehaviour.EFacingDirection _characterFacingDirection;
+        public HeroBehaviour _heroFacingDirection;
         private SpriteRenderer _currentSprite;
-        [SerializeField] private List<Sprite> _listSprites;
-        private string _spriteName;
+        private List<Sprite> _listSprites;
         private string _spriteLocation;
+        private string _spriteName;
         private string _assetPath;
-        public CharacterBehaviour.EFacingDirection _entranceFacingDirection;
 
         void Start()
         {
             InitializeSetup();
             GetFacingDirectionSprites();
+        }
+        public void Interact()
+        {
+            NPCInteract();
         }
         private void InitializeSetup()
         {
@@ -32,8 +37,14 @@ namespace CryptoQuest
         }
         public void NPCInteract()
         {
+            if (_heroFacingDirection == null)
+            {
+                GameObject hero = FindObjectOfType<HeroBehaviour>().gameObject;
+                _heroFacingDirection = hero.GetComponent<HeroBehaviour>();
+            }
+            _characterFacingDirection = _heroFacingDirection.FacingDirection;
             int facingDirection;
-            switch (_entranceFacingDirection)
+            switch (_characterFacingDirection)
             {
                 case CharacterBehaviour.EFacingDirection.South:
                     facingDirection = (int)CharacterBehaviour.EFacingDirection.North;
@@ -74,11 +85,6 @@ namespace CryptoQuest
                     }
                 }
             }
-        }
-
-        void OnTriggerEnter2D(Collider2D other)
-        {
-            NPCInteract();
         }
     }
 }
