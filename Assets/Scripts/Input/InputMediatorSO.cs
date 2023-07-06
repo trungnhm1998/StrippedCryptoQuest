@@ -4,6 +4,7 @@ using UnityEngine.Events;
 using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
 using NotImplementedException = System.NotImplementedException;
+using System.Collections.Generic;
 
 namespace CryptoQuest.Input
 {
@@ -90,6 +91,7 @@ namespace CryptoQuest.Input
 
         public void EnableMapGameplayInput()
         {
+            _inputCached.Clear();
             _inputActions.Menus.Disable();
             _inputActions.MapGameplay.Enable();
             _inputActions.Dialogues.Disable();
@@ -99,9 +101,64 @@ namespace CryptoQuest.Input
 
         #region MapGameplayActions
 
-        public void OnMove(InputAction.CallbackContext context)
+        private List<Vector2> _inputCached = new();
+
+        private void GameplayRemoveMove(Vector2 direction)
         {
-            MoveEvent?.Invoke(context.ReadValue<Vector2>());
+            _inputCached.Remove(direction);  
+            
+            if (_inputCached.Count <= 0)
+            {
+                MoveEvent?.Invoke(Vector3.zero);
+                return;
+            }
+            MoveEvent?.Invoke(_inputCached[_inputCached.Count - 1]);
+        }
+
+        private void GameplayMove(Vector2 direction)
+        {
+            if (!_inputCached.Contains(direction))
+            {
+                _inputCached.Add(direction);
+            }
+            MoveEvent?.Invoke(_inputCached[_inputCached.Count - 1]);
+        }
+
+        public void OnMoveUp(InputAction.CallbackContext context)
+        {
+            if (context.canceled)
+            {
+                GameplayRemoveMove(Vector2.up);
+                return;
+            }
+            GameplayMove(Vector2.up);
+        }
+        public void OnMoveDown(InputAction.CallbackContext context)
+        {
+            if (context.canceled)
+            {
+                GameplayRemoveMove(Vector2.down);
+                return;
+            }
+            GameplayMove(Vector2.down);
+        }
+        public void OnMoveLeft(InputAction.CallbackContext context)
+        {
+            if (context.canceled)
+            {
+                GameplayRemoveMove(Vector2.left);
+                return;
+            }
+            GameplayMove(Vector2.left);
+        }
+        public void OnMoveRight(InputAction.CallbackContext context)
+        {
+            if (context.canceled)
+            {
+                GameplayRemoveMove(Vector2.right);
+                return;
+            }
+            GameplayMove(Vector2.right);
         }
 
         public void OnInteract(InputAction.CallbackContext context)
