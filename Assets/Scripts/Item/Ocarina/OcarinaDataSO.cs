@@ -10,6 +10,5 @@ namespace CryptoQuest
     {
         public List<OcarinaData> ocarinaDataList;
         public List<SceneScriptableObject> ocarinaBlockSceneList;
-        
     }
 }

@@ -15,7 +15,6 @@ namespace CryptoQuest
         public LoadSceneEventChannelSO requestloadMapEvent;
         public VoidEventChannelSO mapLoadedEvent;
         private SceneScriptableObject _currentRequestedMap;
-
         private void OnEnable()
         {
             requestloadMapEvent.LoadingRequested += OnLoadMapRequested;

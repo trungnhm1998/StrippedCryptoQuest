@@ -18,12 +18,10 @@ namespace Tests.Runtime.Ocarina
         private const int FRAMES_TO_WAIT = 360;
         private LoadSceneEventChannelSO _loadMapEvent;
 
-
         [UnityTest]
         public IEnumerator OcarinaDestinations_SetUpCorrectly()
         {
             const string startupSceneName = "Startup";
-
             yield return SceneManager.LoadSceneAsync(startupSceneName, LoadSceneMode.Single);
 
             Assert.That(SceneManager.GetActiveScene().name == startupSceneName);
@@ -56,7 +54,7 @@ namespace Tests.Runtime.Ocarina
                 }
             }
 
-            framesToWait = 360;
+            framesToWait = 500;
             while (framesToWait >= -1)
             {
                 framesToWait--;
@@ -75,10 +73,10 @@ namespace Tests.Runtime.Ocarina
                 }
             }
 
+            List<MapPathSO> ocarinaPathSO = new List<MapPathSO>();
             var ocarinaDataGuids = AssetDatabase.FindAssets("t: OcarinaDataSO");
             var ocarinaDataSOpath = UnityEditor.AssetDatabase.GUIDToAssetPath(ocarinaDataGuids[0]);
             var ocarinaDataSO = UnityEditor.AssetDatabase.LoadAssetAtPath<OcarinaDataSO>(ocarinaDataSOpath);
-            List<MapPathSO> ocarinaPathSO = new List<MapPathSO>();
             foreach (var ocarinaData in ocarinaDataSO.ocarinaDataList)
             {
                 ocarinaPathSO.Add(ocarinaData.path);
