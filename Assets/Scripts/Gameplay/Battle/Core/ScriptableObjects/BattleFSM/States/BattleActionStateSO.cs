@@ -8,34 +8,31 @@ namespace CryptoQuest.Gameplay.Battle
     public class BattleActionStateSO : BattleStateSO
     {
         private BattleLog _battleLog;
+        private Coroutine _unitActionCoroutine; 
 
         public override void OnEnterState(BaseStateMachine stateMachine)
         {
             base.OnEnterState(stateMachine);
             _battleLog = stateMachine.GetComponent<BattleLog>();
-            stateMachine.StartCoroutine(BattleUnitsAction(stateMachine));
-            Debug.Log($"BattleState: Enter Action Phase");
+            _unitActionCoroutine = stateMachine.StartCoroutine(BattleUnitsAction(stateMachine));
         }
         
         private IEnumerator BattleUnitsAction(BaseStateMachine stateMachine)
         {
-            foreach (var unit in _battleManager.BattleUnits)
+            foreach (var unit in BattleManager.BattleUnits)
             {
                 yield return unit.Execute();
 
                 if (!_battleLog) continue;
-                _battleLog.Log(new BattleLogData() {
-                    Message = $"{unit.GetOwner().name} Action"
-                });
+                _battleLog.Log($"{unit.GetOwner().name} Action");
             }
-            stateMachine.SetCurrentState(NextState);
+            stateMachine.SetCurrentState(_nextState);
         }
 
         public override void OnExitState(BaseStateMachine stateMachine)
         {
             base.OnExitState(stateMachine);
-            stateMachine.StopCoroutine(BattleUnitsAction(stateMachine));
-            Debug.Log($"BattleState: Exit Action Phase");
+            stateMachine.StopCoroutine(_unitActionCoroutine);
         }
     }
 }

@@ -11,49 +11,46 @@ namespace CryptoQuest.Gameplay.Battle
         [SerializeField] private BaseStateMachine _stateMachine;
         [SerializeField] private StateSO _battleEndState;
 
-        [SerializeField] private BattleTeam _battleTeam1;
-        public BattleTeam BattleTeam1 => _battleTeam1;
-        [SerializeField] private BattleTeam _battleTeam2;
-        public BattleTeam BattleTeam2 => _battleTeam2;
+        [field: SerializeField]
+        public BattleTeam BattleTeam1 { get; private set; }
+        [field: SerializeField]
+        public BattleTeam BattleTeam2 { get; private set; }
 
         public IBattleUnit CurrentUnit {get; set;}
-        private int _turn = 0;
-        public int Turn => _turn;
-        private BaseBattleSpawner _battleSpawner;
-        public BaseBattleSpawner BattleSpawner => _battleSpawner;
-        private List<IBattleUnit> _battleUnits = new();
-        public List<IBattleUnit> BattleUnits => _battleUnits;
+        public int Turn { get; private set; }
+        public BaseBattleSpawner BattleSpawner { get; private set; }
+        public List<IBattleUnit> BattleUnits { get; private set; } = new();
 
         protected void Awake()
         {
-            _battleSpawner = GetComponent<BaseBattleSpawner>();
+            BattleSpawner = GetComponent<BaseBattleSpawner>();
             InitBattleTeams();
         }
 
         public void InitBattleTeams()
         {
-            _battleUnits.Clear();
-            _battleTeam1.InitBattleUnits(_battleTeam2);
-            _battleUnits.AddRange(_battleTeam1.BattleUnits);
-            _battleTeam2.InitBattleUnits(_battleTeam1);
-            _battleUnits.AddRange(_battleTeam2.BattleUnits);
+            BattleUnits.Clear();
+            BattleTeam1.InitBattleUnits(BattleTeam2);
+            BattleUnits.AddRange(BattleTeam1.BattleUnits);
+            BattleTeam2.InitBattleUnits(BattleTeam1);
+            BattleUnits.AddRange(BattleTeam2.BattleUnits);
         }
 
 
         public IEnumerator RemovePendingUnits()
         {
-            yield return _battleTeam1.RemovePendingUnits();
-            yield return _battleTeam2.RemovePendingUnits();
+            yield return BattleTeam1.RemovePendingUnits();
+            yield return BattleTeam2.RemovePendingUnits();
         }
 
         public bool IsBattleEnd()
         {
-            return (_battleTeam1.IsWiped() || _battleTeam2.IsWiped());
+            return (BattleTeam1.IsWiped() || BattleTeam2.IsWiped());
         }
 
         public void OnNewTurn()
         {
-            _turn++;
+            Turn++;
         }
 
         public void OnEscape()

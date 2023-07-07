@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
+using IndiGames.GameplayAbilitySystem.AttributeSystem;
 using IndiGames.GameplayAbilitySystem.AbilitySystem;
 using System.Collections.Generic;
 
@@ -15,18 +16,17 @@ namespace CryptoQuest.Gameplay.Battle
 
         [SerializeField] protected AttributeScriptableObject _hpAttribute;
 
-        [SerializeField] private TargetContainterSO _targetContainer;
-        public TargetContainterSO TargetContainer => _targetContainer;
+        [field: SerializeField]
+        public TargetContainterSO TargetContainer { get; private set; }
 
-        protected AbstractAbility _selectedSkill;
-        public AbstractAbility SelectedSkill => _selectedSkill;
+        public AbstractAbility SelectedSkill { get; protected set; }
 
         protected BattleManager _battleManager;
         protected bool _isDeath;
 
         public void Init(BattleTeam team, AbilitySystemBehaviour owner)
         {
-            _targetContainer.Targets.Clear();
+            TargetContainer.Targets.Clear();
             OwnerTeam = team;
             Owner = owner;
         }
@@ -58,23 +58,23 @@ namespace CryptoQuest.Gameplay.Battle
             var currrentTargets = TargetContainer.Targets;
             if (currrentTargets.Count > 0) return;
 
-            _targetContainer.SetSingleTarget(OpponentTeam.Members[0]);
+            TargetContainer.SetSingleTarget(OpponentTeam.Members[0]);
         }
 
         public virtual void SelectSingleTarget(AbilitySystemBehaviour target)
         {
             if (OpponentTeam.Members.FindIndex(x => x == target) < 0) return;
-            _targetContainer.SetSingleTarget(target);
+            TargetContainer.SetSingleTarget(target);
         }
 
         public virtual void SelectAllTarget()
         {
-            _targetContainer.SetMultipleTargets(OpponentTeam.Members);
+            TargetContainer.SetMultipleTargets(OpponentTeam.Members);
         }
 
         public void SelectSkill(AbstractAbility selectedSkill)
         {
-            _selectedSkill = selectedSkill;
+            SelectedSkill = selectedSkill;
         }
 
         public BattleTeam GetOpponent() => OpponentTeam;
@@ -83,26 +83,18 @@ namespace CryptoQuest.Gameplay.Battle
 
         public virtual IEnumerator Prepare()
         {
-            while (_selectedSkill == null)
-            {
-                yield return false;
-            }
-
-            
-            while (HasNoTarget())
-            {
-                yield return false;
-            }
+            yield return new WaitWhile(() => SelectedSkill == null);
+            yield return new WaitWhile(HasNoTarget);
         }
         public virtual IEnumerator Execute()
         {
-            Owner.TryActiveAbility(_selectedSkill);
+            Owner.TryActiveAbility(SelectedSkill);
             yield return null;
         }
         
         public virtual IEnumerator Resolve()
         {
-            _selectedSkill = null;
+            SelectedSkill = null;
             TargetContainer.Targets.Clear();
             yield return null;
         }
@@ -111,7 +103,7 @@ namespace CryptoQuest.Gameplay.Battle
         {
             if (Owner == null || args.System != Owner.AttributeSystem) return;
 
-            Owner.AttributeSystem.GetAttributeValue(_hpAttribute, out var attributValue);
+            Owner.AttributeSystem.GetAttributeValue(_hpAttribute, out AttributeValue attributValue);
             if (attributValue.CurrentValue > 0 || _isDeath) return;
 
             _isDeath = true;

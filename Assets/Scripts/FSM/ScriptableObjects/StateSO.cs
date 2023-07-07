@@ -6,20 +6,21 @@ namespace CryptoQuest.FSM
     [CreateAssetMenu(fileName = "StateSO", menuName = "Gameplay/Battle/FSM/States/Normal State")]
     public class StateSO : BaseStateSO
     {
-        public List<FSMActionSO> Actions = new();
-        public List<TransitionSO> Transitions = new();
-        public BaseStateSO NextState;
+        [SerializeField] private List<FSMActionSO> _actions;
+        [SerializeField] private List<TransitionSO> _transitions;
+        [SerializeField] protected BaseStateSO _nextState;
 
         public override void Execute(BaseStateMachine stateMachine)
         {
-            foreach (var action in Actions)
+            foreach (FSMActionSO action in _actions)
             {
                 action.Execute(stateMachine);
             }
 
-            foreach (var transition in Transitions)
+            foreach (TransitionSO transition in _transitions)
             {
                 transition.Execute(stateMachine);
+                break;
             }
         }
     }

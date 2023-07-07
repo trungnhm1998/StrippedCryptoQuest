@@ -8,18 +8,17 @@ namespace CryptoQuest.Gameplay.Battle
 {
     public interface IBattleUnit
     {
-        public GameObject gameObject { get ; } 
-        public void Init(BattleTeam team, AbilitySystemBehaviour owner);
-        public void SetOpponentTeams(BattleTeam opponentTeam);
-        public IEnumerator Prepare();
-        public IEnumerator Execute();
-        public IEnumerator Resolve();
-        public void OnDeath();
-        public AbilitySystemBehaviour GetOwner();
-        public BattleTeam GetOpponent();
-        public void SelectSkill(AbstractAbility selectedSkill);
-        public void SelectSingleTarget(AbilitySystemBehaviour target);
-        public string GetOriginalName();
+        void Init(BattleTeam team, AbilitySystemBehaviour owner);
+        void SetOpponentTeams(BattleTeam opponentTeam);
+        IEnumerator Prepare();
+        IEnumerator Execute();
+        IEnumerator Resolve();
+        void OnDeath();
+        AbilitySystemBehaviour GetOwner();
+        BattleTeam GetOpponent();
+        void SelectSkill(AbstractAbility selectedSkill);
+        void SelectSingleTarget(AbilitySystemBehaviour target);
+        string GetOriginalName();
     }
 }
     

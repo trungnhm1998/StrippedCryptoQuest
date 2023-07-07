@@ -10,22 +10,22 @@ namespace CryptoQuest.Gameplay.Battle
     {
         [SerializeField] private VoidEventChannelSO _turnEndChannelEvent;
         private bool _isResolveComplete;
+        private Coroutine _unitResolveCoroutine; 
 
         public override void OnEnterState(BaseStateMachine stateMachine)
         {
             base.OnEnterState(stateMachine);
             _isResolveComplete = false;
-            Debug.Log($"BattleState: Enter Resolve Phase");
-            stateMachine.StartCoroutine(BattleUnitsResolve());
+            _unitResolveCoroutine = stateMachine.StartCoroutine(BattleUnitsResolve());
         }
 
         private IEnumerator BattleUnitsResolve()
         {
-            yield return _battleManager.RemovePendingUnits();
+            yield return BattleManager.RemovePendingUnits();
 
             _turnEndChannelEvent.RaiseEvent();
 
-            foreach (var unit in _battleManager.BattleUnits)
+            foreach (var unit in BattleManager.BattleUnits)
             {
                 yield return unit.Resolve();
             }
@@ -41,8 +41,7 @@ namespace CryptoQuest.Gameplay.Battle
         public override void OnExitState(BaseStateMachine stateMachine)
         {
             base.OnExitState(stateMachine);
-            stateMachine.StopCoroutine(BattleUnitsResolve());
-            Debug.Log($"BattleState: Exit Resolve Phase");
+            stateMachine.StopCoroutine(_unitResolveCoroutine);
         }
     }
 }

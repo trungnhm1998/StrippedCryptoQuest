@@ -2,23 +2,22 @@ using UnityEngine;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.Components;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace CryptoQuest.Gameplay.Battle
 {
     [RequireComponent(typeof(BattleManager))]
     public abstract class BaseBattleSpawner : MonoBehaviour
     {
-        private string[] _duplicatePostfix = new string[4] {"A", "B", "C", "D"};
+        private readonly string[] _duplicatePostfix = new string[] {"A", "B", "C", "D"};
         [SerializeField] protected BattleManager _battleManager;
         [SerializeField] protected GameObject _monsterPrefab;
 
-#if UNITY_EDITOR
         private void OnValidate()
         {
             if (_battleManager != null) return;
             _battleManager = GetComponent<BattleManager>();
         }
-#endif
 
         public abstract void SpawnBattle();
 
@@ -26,7 +25,7 @@ namespace CryptoQuest.Gameplay.Battle
         {
             foreach (var enemy in data.Enemies)
             {
-                var enemyGO = Instantiate(_monsterPrefab, transform);
+                GameObject enemyGO = Instantiate(_monsterPrefab, transform);
                 var statInit = enemyGO.GetComponent<StatsInitializer>();
                 statInit.InitStats(enemy);
                 enemyGO.name = enemy.Name;
@@ -42,7 +41,7 @@ namespace CryptoQuest.Gameplay.Battle
 
         private void ProcessEnemyName(string enemyName)
         {
-            var sameNameEnemies = _battleManager.BattleTeam2.Members.FindAll(x => x.gameObject.name == enemyName);
+            List<AbilitySystemBehaviour> sameNameEnemies = _battleManager.BattleTeam2.Members.FindAll(x => x.gameObject.name == enemyName);
             for (int i = 0; i < sameNameEnemies.Count; i++)
             {
                 if (i >= _duplicatePostfix.Length)

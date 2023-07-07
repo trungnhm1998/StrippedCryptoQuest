@@ -29,7 +29,7 @@ namespace CryptoQuest.Gameplay.Battle
 
         public override void OnAbilityGranted(AbstractAbility skillSpec)
         {
-            _turnLeft = Parameters.continuesTurn;
+            _turnLeft = Parameters.ContinuesTurn;
             AbilitySO.TurnEndEventChannel.EventRaised += OnTurnEndEvent;
         }
 
@@ -41,15 +41,18 @@ namespace CryptoQuest.Gameplay.Battle
         protected override IEnumerator InternalActiveAbility()
         {
             yield return base.InternalActiveAbility();
-            _turnLeft = Parameters.continuesTurn;
+            _turnLeft = Parameters.ContinuesTurn;
         }
         
         private void OnTurnEndEvent()
         {
             if (!IsActive) return;
-            Debug.Log($"TurnBaseSkill::OnTurnEndEvent: {AbilitySO.name} Turn Left: {_turnLeft}");
             // Compare the before value because caculation start at the next turn
-            if (_turnLeft-- > 0) return;
+            if (_turnLeft > 0)
+            { 
+                _turnLeft--;
+                return; 
+            }
             EndAbility();
         }
 

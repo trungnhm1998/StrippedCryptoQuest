@@ -9,13 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a186c60d93c8a3b4ca97ab78d17cb7d8, type: 3}
-  m_Name: AtackUpPassiveSkill
+  m_Script: {fileID: 11500000, guid: bdc4e39fb04cd1c44b0f539d34748678, type: 3}
+  m_Name: PlayerNormalAttack
   m_EditorClassIdentifier: 
   tags:
-    SkillTag: {fileID: 0}
-    CancelSkillWithTags: []
-    BlockSkillWithTags: []
+    AbilityTag: {fileID: 0}
+    CancelAbilityWithTags: []
+    BlockAbilityWithTags: []
     ActivationTags: []
     OwnerTags:
       RequireTags: []
@@ -29,6 +29,6 @@ MonoBehaviour:
   EffectContainerMap:
   - Tag: {fileID: 11400000, guid: c280954e89b79e24da8821e956e23ea0, type: 2}
     TargetContainer:
-    - TargetType: {fileID: 11400000, guid: ee9c03338b0e7064697cea6c20bed0f0, type: 2}
+    - TargetType: {fileID: 11400000, guid: 6576f78d883c7dc4a8bd0a62881d0078, type: 2}
       Effects:
-      - {fileID: 11400000, guid: 4a8704616d10df14da879840f457b7a4, type: 2}
+      - {fileID: 11400000, guid: 5eb0d60425209bf47bbb9cc3d02190b5, type: 2}

@@ -12,16 +12,10 @@ namespace CryptoQuest.Gameplay.Battle
         /// <summary>
         /// Override this if you want to save all battle logs
         /// </summary>
-        /// <param name="data"></param>
-        public virtual void Log(BattleLogData data)
+        /// <param name="message"></param>
+        public virtual void Log(string message)
         {
-            _gotNewLogEventChannel.RaiseEvent(data.Message);
+            _gotNewLogEventChannel.RaiseEvent(message);
         }
     }
-
-    public struct BattleLogData
-    {
-        public string Message;
-    }
-
 }

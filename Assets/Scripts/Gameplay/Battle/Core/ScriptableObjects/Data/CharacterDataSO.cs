@@ -11,6 +11,6 @@ namespace CryptoQuest.Gameplay.Battle
     {
         public string Name;
         public Sprite Sprite;
-        public List<AbilityScriptableObject> GrantedSkills = new();
+        public List<AbilityScriptableObject> GrantedSkills;
     }
 }

@@ -8,31 +8,28 @@ namespace CryptoQuest.Gameplay.Battle
 {
     public class BattleTeam : MonoBehaviour
     {
-        [SerializeField] private List<AbilitySystemBehaviour> _members;
-        public List<AbilitySystemBehaviour> Members => _members;
+        [field: SerializeField]
+        public List<AbilitySystemBehaviour> Members { get; private set; }
 
-        private List<IBattleUnit> _battleUnits = new();
-        public List<IBattleUnit> BattleUnits => _battleUnits;
+        public List<IBattleUnit> BattleUnits { get; private set; } = new();
+
         private List<IBattleUnit> _pendingRemoveUnit = new();
-        private BaseBattleSpawner _battleSpawner;
-        public BaseBattleSpawner BattleSpawner => _battleSpawner;
 
         protected void Awake()
         {
-            _battleSpawner = GetComponent<BaseBattleSpawner>();
-            _battleUnits.Clear();
+            BattleUnits.Clear();
         }
 
         public void InitBattleUnits(BattleTeam opponentTeam)
         {
-            _battleUnits.Clear();
+            BattleUnits.Clear();
 
-            foreach (var member in _members)
+            foreach (var member in Members)
             {
                 var unit = member.gameObject.GetComponent<IBattleUnit>();
                 unit.Init(this, member);
                 unit.SetOpponentTeams(opponentTeam);
-                _battleUnits.Add(unit);
+                BattleUnits.Add(unit);
             }
         }
 
@@ -45,22 +42,19 @@ namespace CryptoQuest.Gameplay.Battle
         {
             while (_pendingRemoveUnit.Count > 0)
             {
-                var unit = _pendingRemoveUnit[0];
+                IBattleUnit unit = _pendingRemoveUnit[0];
                 _pendingRemoveUnit.Remove(unit);
                 RemoveUnitImmediately(unit);
-                yield return true;
+                yield return null;
             }
         }
         
         public void RemoveUnitImmediately(IBattleUnit unit)
         {
-            _battleUnits.Remove(unit);
+            BattleUnits.Remove(unit);
             unit.OnDeath();
         }
 
-        public bool IsWiped()
-        {
-            return (_battleUnits.Count <= 0);
-        }
+        public bool IsWiped() => BattleUnits.Count <= 0;
     }   
 }
