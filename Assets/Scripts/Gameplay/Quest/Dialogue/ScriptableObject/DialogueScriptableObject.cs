@@ -8,7 +8,7 @@ namespace CryptoQuest.Gameplay.Quest.Dialogue.ScriptableObject
     public class DialogueScriptableObject : UnityEngine.ScriptableObject
     {
         [SerializeField] private List<LocalizedString> _lines;
-        
+
         public int LinesCount => _lines.Count;
 
         public LocalizedString GetLine(int currentIndex)
