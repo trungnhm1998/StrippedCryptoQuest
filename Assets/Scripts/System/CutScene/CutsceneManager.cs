@@ -51,7 +51,7 @@ namespace CryptoQuest.System.CutScene
 
         private void EndCutScene()
         {
-            if (_onPlayCutsceneEvent != null) _onPlayCutsceneEvent.OnEventRaised -= OnPlayCutsceneEventRaised;
+            // if (_onPlayCutsceneEvent != null) _onPlayCutsceneEvent.OnEventRaised -= OnPlayCutsceneEventRaised;
 
             _inputMediator.EnableMapGameplayInput();
         }
