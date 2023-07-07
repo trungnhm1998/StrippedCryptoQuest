@@ -11,10 +11,15 @@ namespace CryptoQuest.System.CutScene.DialogueControlTrack
     public class DialogueBehaviour : PlayableBehaviour
     {
         [SerializeField] private bool _isPauseWhenClipEnds;
+
+        [Header("Dialogue Option")]
         [SerializeField] private DialogueScriptableObject _dialogueLine;
+
         [SerializeField] private VoidEventChannelSO _onLineEndedEvent;
 
+        [Header("Raise event")]
         [HideInInspector] public DialogEventChannelSO PlayDialogueEvent;
+
         [HideInInspector] public VoidEventChannelSO PauseTimelineEvent;
 
         private bool _isDialoguePlayed;
@@ -29,9 +34,9 @@ namespace CryptoQuest.System.CutScene.DialogueControlTrack
 
             if (_dialogueLine != null)
             {
-                if (PlayDialogueEvent != null)
-                    PlayDialogueEvent.Show(_dialogueLine);
                 _isDialoguePlayed = true;
+                if (PlayDialogueEvent == null) return;
+                PlayDialogueEvent.Show(_dialogueLine);
             }
             else
             {

@@ -58,7 +58,7 @@ GameObject:
   - component: {fileID: 1560560517055220606}
   - component: {fileID: 8324194914358490285}
   m_Layer: 0
-  m_Name: CutSceneTrigger
+  m_Name: WakeUpCutScene
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -78,7 +78,7 @@ Transform:
   m_Children:
   - {fileID: 4219110332904545253}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3145964427407285909
 MonoBehaviour:
@@ -92,11 +92,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6444712b9cae4582a27c37b734cebc1f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _dialogue: {fileID: 11400000, guid: 338ee1159513c674d8c0ffcb9de8b6d9, type: 2}
   _isTriggerOnce: 0
-  _playOnAwake: 0
+  _playOnAwake: 1
   _playableDirector: {fileID: 1560560517055220606}
-  _onSpecificCutSceneEvent: {fileID: 0}
+  _onSpecificCutSceneEvent: {fileID: 11400000, guid: bb491fc8d15ab044fbdf7378a7f49370, type: 2}
+  _sceneLoadedEventChannelSO: {fileID: 11400000, guid: b8b96e43d21a7bf4c96df4cb83c2b764, type: 2}
   _onPlayCutsceneEvent: {fileID: 11400000, guid: 9660b2bdb62768145adb3fd899eaec86, type: 2}
 --- !u!114 &7951264596430247089
 MonoBehaviour:
@@ -111,6 +111,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _director: {fileID: 1560560517055220606}
+  _gameplayBus: {fileID: 11400000, guid: a26ff341568973e46a1d4449052d5bb0, type: 2}
+  _objectsToBindTags:
+  - Player
+  _trackNames:
+  - Hero
+  - AnimationPlayer
   _objectsToBind: []
 --- !u!320 &1560560517055220606
 PlayableDirector:
@@ -127,7 +133,9 @@ PlayableDirector:
   m_DirectorUpdateMode: 1
   m_InitialTime: 0
   m_SceneBindings:
-  - key: {fileID: -5167276094392438607, guid: 66f265c7bcc274f48aaab8be7249972c, type: 2}
+  - key: {fileID: 3795366506255669224, guid: 66f265c7bcc274f48aaab8be7249972c, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: -790814943748779836, guid: 66f265c7bcc274f48aaab8be7249972c, type: 2}
     value: {fileID: 0}
   m_ExposedReferences:
     m_References: []
@@ -138,7 +146,7 @@ BoxCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5436071275556961955}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:

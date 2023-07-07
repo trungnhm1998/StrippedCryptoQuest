@@ -1,15 +1,15 @@
-﻿using CryptoQuest.Gameplay.Quest.Dialogue.ScriptableObject;
+﻿using System;
+using System.Collections;
 using CryptoQuest.UI.CutScene;
 using IndiGames.Core.Events.ScriptableObjects;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.Playables;
 
 namespace CryptoQuest.System.CutScene
 {
     public class CutSceneTrigger : MonoBehaviour
     {
-        [SerializeField] private DialogueScriptableObject _dialogue;
-
         [Header("Option")]
         [SerializeField] private bool _isTriggerOnce;
 
@@ -19,22 +19,40 @@ namespace CryptoQuest.System.CutScene
         [Header("Listen to")]
         [SerializeField] private VoidEventChannelSO _onSpecificCutSceneEvent;
 
+        [SerializeField] private VoidEventChannelSO _sceneLoadedEventChannelSO;
+
         [Header("Raise event")]
         [SerializeField] private PlayableDirectorChannelSO _onPlayCutsceneEvent;
 
         private void OnEnable()
         {
-            if (_onSpecificCutSceneEvent != null) _onSpecificCutSceneEvent.EventRaised += OnSpecificCutSceneEventRaised;
-
-            if (!_playOnAwake) return;
-            if (_onPlayCutsceneEvent == null) return;
-
-            _onPlayCutsceneEvent.RaiseEvent(_playableDirector);
+            _sceneLoadedEventChannelSO.EventRaised += PlayCutSceneOnAwake;
+            // _onSpecificCutSceneEvent.EventRaised += OnSpecificCutSceneEventRaised;
         }
 
         private void OnDisable()
         {
-            if (_onSpecificCutSceneEvent != null) _onSpecificCutSceneEvent.EventRaised -= OnSpecificCutSceneEventRaised;
+            _sceneLoadedEventChannelSO.EventRaised -= PlayCutSceneOnAwake;
+            // _onSpecificCutSceneEvent.EventRaised -= OnSpecificCutSceneEventRaised;
+        }
+
+        private void Update()
+        {
+            // click T in new input system
+        }
+
+        private void PlayCutSceneOnAwake()
+        {
+            if (!_playOnAwake) return;
+            if (_onPlayCutsceneEvent == null) return;
+
+            StartCoroutine(PlayCutScene());
+        }
+
+        private IEnumerator PlayCutScene()
+        {
+            yield return new WaitForSeconds(1f);
+            _onPlayCutsceneEvent.RaiseEvent(_playableDirector);
         }
 
         private void OnSpecificCutSceneEventRaised()
@@ -47,9 +65,7 @@ namespace CryptoQuest.System.CutScene
 
         private void OnTriggerEnter2D(Collider2D other)
         {
-            // if (_onSpecificCutSceneEvent != null) _onSpecificCutSceneEvent.RaiseEvent();
-            // TODO: Demo only
-            _onPlayCutsceneEvent.RaiseEvent(_playableDirector);
+            if (_onSpecificCutSceneEvent != null) _onSpecificCutSceneEvent.RaiseEvent();
         }
     }
 }

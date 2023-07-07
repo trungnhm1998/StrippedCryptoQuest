@@ -9,6 +9,7 @@ namespace CryptoQuest.System.CutScene.DialogueControlTrack
     [TrackClipType(typeof(DialogueClip))]
     public class DialogueTrack : PlayableTrack
     {
+        [Header("Raise event")]
         public DialogEventChannelSO PlayDialogueEvent;
         public VoidEventChannelSO PauseTimelineEvent;
 
