@@ -14,14 +14,6 @@ namespace CryptoQuest.Gameplay.Battle
         private List<IBattleUnit> _battleUnits = new();
         public List<IBattleUnit> BattleUnits => _battleUnits;
         private List<IBattleUnit> _pendingRemoveUnit = new();
-        private BaseBattleSpawner _battleSpawner;
-        public BaseBattleSpawner BattleSpawner => _battleSpawner;
-
-        protected void Awake()
-        {
-            _battleSpawner = GetComponent<BaseBattleSpawner>();
-            _battleUnits.Clear();
-        }
 
         public void InitBattleUnits(BattleTeam opponentTeam)
         {
@@ -60,7 +52,7 @@ namespace CryptoQuest.Gameplay.Battle
 
         public bool IsWiped()
         {
-            return (_battleUnits.Count <= 0);
+            return _battleUnits.Count <= 0;
         }
     }   
 }

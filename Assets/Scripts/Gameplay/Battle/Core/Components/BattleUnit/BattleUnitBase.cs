@@ -12,6 +12,7 @@ namespace CryptoQuest.Gameplay.Battle
         public AbilitySystemBehaviour Owner {get; set;}
         public BattleTeam OpponentTeam {get; set;}
         public BattleTeam OwnerTeam {get; set;}
+        public virtual string OriginalName => "BattleUnit";
 
         [SerializeField] protected AttributeScriptableObject _hpAttribute;
 
@@ -20,6 +21,9 @@ namespace CryptoQuest.Gameplay.Battle
 
         protected AbstractAbility _selectedSkill;
         public AbstractAbility SelectedSkill => _selectedSkill;
+
+        protected List<string> _executeLogs = new();
+        public List<string> ExecuteLogs => _executeLogs;
 
         protected BattleManager _battleManager;
         protected bool _isDeath;
@@ -45,11 +49,6 @@ namespace CryptoQuest.Gameplay.Battle
         {
             OpponentTeam = opponentTeam;
         }
-
-        public virtual AbilitySystemBehaviour GetOwner()
-        {
-            return Owner;
-        } 
 
         protected virtual void SetDefaultTarget()
         {
@@ -77,10 +76,6 @@ namespace CryptoQuest.Gameplay.Battle
             _selectedSkill = selectedSkill;
         }
 
-        public BattleTeam GetOpponent() => OpponentTeam;
-
-        public virtual string GetOriginalName() => "";
-
         public virtual IEnumerator Prepare()
         {
             while (_selectedSkill == null)
@@ -88,12 +83,12 @@ namespace CryptoQuest.Gameplay.Battle
                 yield return false;
             }
 
-            
             while (HasNoTarget())
             {
                 yield return false;
             }
         }
+
         public virtual IEnumerator Execute()
         {
             Owner.TryActiveAbility(_selectedSkill);

@@ -15,6 +15,7 @@ namespace CryptoQuest.Gameplay.Battle
         /// <param name="data"></param>
         public virtual void Log(BattleLogData data)
         {
+            Debug.Log($"BattleLog::Log {data.Message}");
             _gotNewLogEventChannel.RaiseEvent(data.Message);
         }
     }

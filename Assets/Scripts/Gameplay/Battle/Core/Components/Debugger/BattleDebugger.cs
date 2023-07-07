@@ -112,7 +112,7 @@ namespace CryptoQuest.Gameplay.Battle
         {
             if (!_showActions || _battleManager.CurrentUnit == null) return;
             GUILayout.BeginVertical();
-            var currentUnitOwner = _battleManager.CurrentUnit.GetOwner();
+            var currentUnitOwner = _battleManager.CurrentUnit.Owner;
             foreach (var skill in currentUnitOwner.GrantedAbilities.Abilities)
             {
                 GUI.enabled = !skill.IsActive;
@@ -131,7 +131,7 @@ namespace CryptoQuest.Gameplay.Battle
         {
             var currentUnit =  _battleManager.CurrentUnit;
             if (currentUnit == null) return;
-            var currentUnitOpponent = currentUnit.GetOpponent();
+            var currentUnitOpponent = currentUnit.OpponentTeam;
 
             if (!_showTargetUnit || currentUnitOpponent == null) return;
             GUILayout.BeginVertical();

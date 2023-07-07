@@ -1,14 +1,13 @@
 using System.Collections;
 using UnityEngine;
 using IndiGames.GameplayAbilitySystem.AbilitySystem;
-using IndiGames.GameplayAbilitySystem.Implementation.EffectAbility;
-using IndiGames.GameplayAbilitySystem.Implementation.EffectAbility.ScriptableObjects;
 using IndiGames.Core.Events.ScriptableObjects;
+using UnityEngine.Localization.Settings;
 
 namespace CryptoQuest.Gameplay.Battle
 {
     [CreateAssetMenu(fileName = "TurnBaseSkill", menuName = "Gameplay/Battle/Abilities/Turn Base Ability")]
-    public class TurnBaseSkillSO : EffectAbilitySO
+    public class TurnBaseSkillSO : CQSkillSO
     {
         [SerializeField] private SkillParameters _parameters;
         public override AbilityParameters Parameters => _parameters;
@@ -21,7 +20,7 @@ namespace CryptoQuest.Gameplay.Battle
         }
     }
 
-    public class TurnBaseSkill : EffectAbility
+    public class TurnBaseSkill : CQSkill
     {
         private int _turnLeft;
         protected new TurnBaseSkillSO AbilitySO => (TurnBaseSkillSO) _abilitySO;
@@ -29,12 +28,14 @@ namespace CryptoQuest.Gameplay.Battle
 
         public override void OnAbilityGranted(AbstractAbility skillSpec)
         {
+            base.OnAbilityGranted(skillSpec);
             _turnLeft = Parameters.continuesTurn;
             AbilitySO.TurnEndEventChannel.EventRaised += OnTurnEndEvent;
         }
 
         public override void OnAbilityRemoved(AbstractAbility skillSpec)
         {
+            base.OnAbilityRemoved(skillSpec);
             AbilitySO.TurnEndEventChannel.EventRaised -= OnTurnEndEvent;
         }
 
@@ -56,6 +57,12 @@ namespace CryptoQuest.Gameplay.Battle
         public override bool CanActiveAbility()
         {
             return !IsActive && base.CanActiveAbility();
+        }
+
+        protected override void SkillActivatePromt()
+        {
+            string normalAttackText = LocalizationSettings.StringDatabase.GetLocalizedString(BATTLE_PROMT_TABLE, AbilitySO.PromtKey);
+            unit.ExecuteLogs.Add(string.Format(normalAttackText, unit.OriginalName, AbilitySO.SkillName));
         }
     }
 }

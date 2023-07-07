@@ -24,9 +24,14 @@ namespace CryptoQuest.Gameplay.Battle
                 yield return unit.Execute();
 
                 if (!_battleLog) continue;
-                _battleLog.Log(new BattleLogData() {
-                    Message = $"{unit.GetOwner().name} Action"
-                });
+                foreach (var log in unit.ExecuteLogs)
+                {
+                    _battleLog.Log(new BattleLogData() {
+                        Message = log
+                    });
+                    yield return null;
+                }
+                unit.ExecuteLogs.Clear();
             }
             stateMachine.SetCurrentState(NextState);
         }

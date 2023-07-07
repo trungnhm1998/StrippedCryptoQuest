@@ -7,6 +7,7 @@ namespace CryptoQuest.Gameplay.Battle
     public class CharacterUnit : BattleUnitBase
     {
         protected string _originalName;
+        public override string OriginalName => _originalName;
 
         protected virtual void Start()
         {
@@ -14,11 +15,6 @@ namespace CryptoQuest.Gameplay.Battle
             var data = statsInitializer.DefaultStats as CharacterDataSO;
             if (data == null) return;
             _originalName = data.Name;
-        }
-
-        public override string GetOriginalName()
-        {
-            return _originalName;
         }
     }
 }

@@ -43,6 +43,7 @@ namespace CryptoQuest.Gameplay.Battle
         private void ProcessEnemyName(string enemyName)
         {
             var sameNameEnemies = _battleManager.BattleTeam2.Members.FindAll(x => x.gameObject.name == enemyName);
+            if (sameNameEnemies.Count <= 1) return;
             for (int i = 0; i < sameNameEnemies.Count; i++)
             {
                 if (i >= _duplicatePostfix.Length)

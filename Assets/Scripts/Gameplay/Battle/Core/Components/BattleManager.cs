@@ -39,7 +39,6 @@ namespace CryptoQuest.Gameplay.Battle
             _battleUnits.AddRange(_battleTeam2.BattleUnits);
         }
 
-
         public IEnumerator RemovePendingUnits()
         {
             yield return _battleTeam1.RemovePendingUnits();
@@ -48,7 +47,7 @@ namespace CryptoQuest.Gameplay.Battle
 
         public bool IsBattleEnd()
         {
-            return (_battleTeam1.IsWiped() || _battleTeam2.IsWiped());
+            return _battleTeam1.IsWiped() || _battleTeam2.IsWiped();
         }
 
         public void OnNewTurn()
