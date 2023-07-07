@@ -6,6 +6,7 @@ using IndiGames.Core.SceneManagementSystem.Events.ScriptableObjects;
 using IndiGames.Core.SceneManagementSystem.ScriptableObjects;
 using UnityEngine;
 using UnityEngine.Localization;
+using UnityEngine.Serialization;
 
 namespace CryptoQuest
 {
@@ -15,13 +16,12 @@ namespace CryptoQuest
         [SerializeField] private PathStorageSO _pathStorage;
         [SerializeField] private LoadSceneEventChannelSO _requestLoadMapEvent;
         [SerializeField] private SceneScriptableObject _worldMapScene;
-        [SerializeField] private List<OcarinaData> _ocarinaDataList;
-        [SerializeField] private List<SceneScriptableObject> _ocarinaBlockSceneList;
+        [SerializeField] private OcarinaDataSO _ocarinaDatas;
         [SerializeField] private OcarinaData _currentSelectedOcarinaData;
 
         public void SelectDestination(OcarinaData selectedDestination)
         {
-            foreach (var ocarinaData in _ocarinaDataList)
+            foreach (var ocarinaData in _ocarinaDatas.ocarinaDataList)
             {
                 if (ocarinaData.mapName == selectedDestination.mapName)
                     _currentSelectedOcarinaData = ocarinaData;
@@ -30,7 +30,7 @@ namespace CryptoQuest
 
         public void Use()
         {
-            foreach (var blockScene in _ocarinaBlockSceneList)
+            foreach (var blockScene in _ocarinaDatas.ocarinaBlockSceneList)
             {
                 if (_mapStorage.currentMapScene == blockScene) return;
             }
@@ -43,13 +43,6 @@ namespace CryptoQuest
             _pathStorage.LastTakenPath = pathSO;
             _requestLoadMapEvent.RequestLoad(sceneSO);
         }
-
-        //rm later
-        // private void OnTriggerEnter(Collider other)
-        // {
-        //     if (other.CompareTag("Player"))
-        //         SelectDestination(new OcarinaData(){mapName=, path = "TRON_VILLAGE"});
-        // }
     }
 
     [Serializable]
