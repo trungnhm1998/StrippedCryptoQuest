@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 8118863153528223941}
   - component: {fileID: 1777753454019466195}
   - component: {fileID: 2442478146309426484}
-  - component: {fileID: 1227720150527427470}
+  - component: {fileID: 8771262284569674151}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -122,7 +122,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _hpAttribute: {fileID: 11400000, guid: 47235b4d63dc53a48a36591dbde337fe, type: 2}
   _targetContainer: {fileID: 11400000, guid: 53ea03a64802a7945a7bdb7df75af372, type: 2}
---- !u!114 &1227720150527427470
+--- !u!114 &8771262284569674151
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -131,22 +131,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 7704234448636028181}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 53b5c0b02a7cbe24d9f0f4bcec4b8363, type: 3}
+  m_Script: {fileID: 11500000, guid: 5accc99ddc0f58b4897aba577685bfaf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _owner: {fileID: 1777753454019466195}
-  _battleUnit: {fileID: 2442478146309426484}
-  _target: {fileID: 0}
   _showDebug: 1
   _windowRect:
     serializedVersion: 2
-    x: 20
+    x: 500
     y: 20
     width: 120
     height: 50
   _windowWidth: 400
-  _windowId: 0
-  _availableSkills: []
-  _defaultGrantSkills: []
-  _effects: []
-  _modifiers: []
+  _windowId: 1

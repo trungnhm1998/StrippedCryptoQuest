@@ -20,7 +20,7 @@ namespace CryptoQuest.Gameplay.Battle
             {
                 _battleManager.BattleSpawner.SpawnBattle();
             }
-            _battleManager.InitBattleUnits();
+            _battleManager.InitBattleTeams();
             stateMachine.SetCurrentState(NextState);
             yield break;
         }

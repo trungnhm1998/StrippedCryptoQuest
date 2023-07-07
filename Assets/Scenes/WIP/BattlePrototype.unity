@@ -123,6 +123,52 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &144666321
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 144666322}
+  - component: {fileID: 144666323}
+  m_Layer: 0
+  m_Name: HeroTeam
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &144666322
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 144666321}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 612028297}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &144666323
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 144666321}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17ceab50d3f5e3d4fa331c1958bf393f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _members:
+  - {fileID: 1378124712}
 --- !u!1 &447902171
 GameObject:
   m_ObjectHideFlags: 0
@@ -273,6 +319,7 @@ GameObject:
   - component: {fileID: 612028298}
   - component: {fileID: 612028299}
   - component: {fileID: 612028300}
+  - component: {fileID: 612028301}
   m_Layer: 0
   m_Name: BattleManager
   m_TagString: Untagged
@@ -294,9 +341,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _stateMachine: {fileID: 612028298}
   _battleEndState: {fileID: 11400000, guid: f3bf7dbd20e1c5c4ca5316d68f121bdf, type: 2}
-  _battleTeam1:
-  - {fileID: 1378124712}
-  _battleTeam2: []
+  _battleTeam1: {fileID: 144666323}
+  _battleTeam2: {fileID: 968974140}
 --- !u!4 &612028297
 Transform:
   m_ObjectHideFlags: 0
@@ -308,7 +354,9 @@ Transform:
   m_LocalPosition: {x: -4.400472, y: -0.74147445, z: 0.008797536}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
-  m_Children: []
+  m_Children:
+  - {fileID: 144666322}
+  - {fileID: 968974139}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -352,7 +400,76 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41ecd6a41150f8149bfb49ce467805b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _onGotNewLogEvent: {fileID: 11400000, guid: d614e1bbd15b41b44bf5171d32575969, type: 2}
+  _gotNewLogEventChannel: {fileID: 11400000, guid: d614e1bbd15b41b44bf5171d32575969, type: 2}
+--- !u!114 &612028301
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 612028295}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16ae4b1ea403ab5449a44b5aae9156b6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _battleManager: {fileID: 612028296}
+  _gotNewLogEventChannel: {fileID: 11400000, guid: d614e1bbd15b41b44bf5171d32575969, type: 2}
+  _turnEndEventChannel: {fileID: 11400000, guid: 4bfb11462c4d9274a96b8573324faf82, type: 2}
+  _showDebug: 1
+  _windowRect:
+    serializedVersion: 2
+    x: 20
+    y: 400
+    width: 120
+    height: 50
+  _windowWidth: 800
+  _windowId: 3
+--- !u!1 &968974138
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 968974139}
+  - component: {fileID: 968974140}
+  m_Layer: 0
+  m_Name: MonsterTeam
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &968974139
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 968974138}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 612028297}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &968974140
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 968974138}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17ceab50d3f5e3d4fa331c1958bf393f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _members: []
 --- !u!1 &1378124697
 GameObject:
   m_ObjectHideFlags: 0
@@ -363,13 +480,13 @@ GameObject:
   m_Component:
   - component: {fileID: 1378124704}
   - component: {fileID: 1378124698}
-  - component: {fileID: 1378124705}
   - component: {fileID: 1378124709}
   - component: {fileID: 1378124708}
   - component: {fileID: 1378124707}
   - component: {fileID: 1378124712}
   - component: {fileID: 1378124711}
   - component: {fileID: 1378124713}
+  - component: {fileID: 1378124714}
   m_Layer: 0
   m_Name: Hero
   m_TagString: Untagged
@@ -406,36 +523,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1378124705
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1378124697}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 53b5c0b02a7cbe24d9f0f4bcec4b8363, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _owner: {fileID: 1378124712}
-  _battleUnit: {fileID: 1378124711}
-  _target: {fileID: 0}
-  _showDebug: 1
-  _windowRect:
-    serializedVersion: 2
-    x: 20
-    y: 500
-    width: 100
-    height: 50
-  _windowWidth: 300
-  _windowId: 2
-  _availableSkills:
-  - {fileID: 11400000, guid: 8b93d877b39afe044b4b144cbee3d8b9, type: 2}
-  - {fileID: 11400000, guid: dcb98359a91d55a4c9bd883be41d46a0, type: 2}
-  _defaultGrantSkills: []
-  _effects: []
-  _modifiers: []
 --- !u!114 &1378124707
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -520,3 +607,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _abilitySystem: {fileID: 1378124712}
   _characterData: {fileID: 11400000, guid: 549fe8060f017d443adb6aff881f5765, type: 2}
+--- !u!114 &1378124714
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1378124697}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5accc99ddc0f58b4897aba577685bfaf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _owner: {fileID: 1378124712}
+  _showDebug: 1
+  _windowRect:
+    serializedVersion: 2
+    x: 20
+    y: 20
+    width: 120
+    height: 50
+  _windowWidth: 400
+  _windowId: 0

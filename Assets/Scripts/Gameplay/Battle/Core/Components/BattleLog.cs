@@ -7,7 +7,7 @@ namespace CryptoQuest.Gameplay.Battle
 {
     public class BattleLog : MonoBehaviour
     {
-        [SerializeField] private StringEventChannelSO _onGotNewLogEvent;
+        [SerializeField] private StringEventChannelSO _gotNewLogEventChannel;
 
         /// <summary>
         /// Override this if you want to save all battle logs
@@ -15,7 +15,7 @@ namespace CryptoQuest.Gameplay.Battle
         /// <param name="data"></param>
         public virtual void Log(BattleLogData data)
         {
-            _onGotNewLogEvent.RaiseEvent(data.Message);
+            _gotNewLogEventChannel.RaiseEvent(data.Message);
         }
     }
 

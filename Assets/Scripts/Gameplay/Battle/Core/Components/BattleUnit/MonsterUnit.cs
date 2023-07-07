@@ -3,12 +3,13 @@ using System.Collections;
 
 namespace CryptoQuest.Gameplay.Battle
 {
-    public class MonsterUnit : BattleUnitBase
+    public class MonsterUnit : CharacterUnit
     {
         private ISkillSelector _skillSelector;
 
-        private void Start()
+        protected override void Start()
         {
+            base.Start();
             _skillSelector = new RandomSkillSelector();
         }
 

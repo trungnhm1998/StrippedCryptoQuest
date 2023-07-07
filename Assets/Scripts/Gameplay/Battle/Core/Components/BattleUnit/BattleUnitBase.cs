@@ -10,8 +10,8 @@ namespace CryptoQuest.Gameplay.Battle
     public class BattleUnitBase : MonoBehaviour, IBattleUnit
     {
         public AbilitySystemBehaviour Owner {get; set;}
-        public List<AbilitySystemBehaviour> OpponentTeam {get; set;}
-        public List<AbilitySystemBehaviour> OwnerTeam {get; set;}
+        public BattleTeam OpponentTeam {get; set;}
+        public BattleTeam OwnerTeam {get; set;}
 
         [SerializeField] protected AttributeScriptableObject _hpAttribute;
 
@@ -24,10 +24,10 @@ namespace CryptoQuest.Gameplay.Battle
         protected BattleManager _battleManager;
         protected bool _isDeath;
 
-        public void Init(BattleManager manager, AbilitySystemBehaviour owner)
+        public void Init(BattleTeam team, AbilitySystemBehaviour owner)
         {
             _targetContainer.Targets.Clear();
-            _battleManager = manager;
+            OwnerTeam = team;
             Owner = owner;
         }
 
@@ -41,10 +41,9 @@ namespace CryptoQuest.Gameplay.Battle
             _hpAttribute.ValueChangeEvent -= OnHPChanged;
         }
 
-        public virtual void SetTeams(ref List<AbilitySystemBehaviour> ownerTeam, ref List<AbilitySystemBehaviour> targets)
+        public virtual void SetOpponentTeams(BattleTeam opponentTeam)
         {
-            OpponentTeam = targets;
-            OwnerTeam = ownerTeam;
+            OpponentTeam = opponentTeam;
         }
 
         public virtual AbilitySystemBehaviour GetOwner()
@@ -54,23 +53,23 @@ namespace CryptoQuest.Gameplay.Battle
 
         protected virtual void SetDefaultTarget()
         {
-            if (OpponentTeam == null || OpponentTeam.Count <= 0) return;
+            if (OpponentTeam == null || OpponentTeam.Members.Count <= 0) return;
 
             var currrentTargets = TargetContainer.Targets;
             if (currrentTargets.Count > 0) return;
 
-            _targetContainer.SetSingleTarget(OpponentTeam[0]);
+            _targetContainer.SetSingleTarget(OpponentTeam.Members[0]);
         }
 
         public virtual void SelectSingleTarget(AbilitySystemBehaviour target)
         {
-            if (OpponentTeam.FindIndex(x => x == target) < 0) return;
+            if (OpponentTeam.Members.FindIndex(x => x == target) < 0) return;
             _targetContainer.SetSingleTarget(target);
         }
 
         public virtual void SelectAllTarget()
         {
-            _targetContainer.SetMultipleTargets(OpponentTeam);
+            _targetContainer.SetMultipleTargets(OpponentTeam.Members);
         }
 
         public void SelectSkill(AbstractAbility selectedSkill)
@@ -78,6 +77,9 @@ namespace CryptoQuest.Gameplay.Battle
             _selectedSkill = selectedSkill;
         }
 
+        public BattleTeam GetOpponent() => OpponentTeam;
+
+        public virtual string GetOriginalName() => "";
 
         public virtual IEnumerator Prepare()
         {
@@ -113,13 +115,12 @@ namespace CryptoQuest.Gameplay.Battle
             if (attributValue.CurrentValue > 0 || _isDeath) return;
 
             _isDeath = true;
-            _battleManager.RemoveUnit(this);
+            OwnerTeam.RemoveUnit(this);
         }
 
         public virtual void OnDeath()
         {
-            OwnerTeam.Remove(Owner);
-            Destroy(gameObject);
+            gameObject.SetActive(false);
         }
 
         private bool HasNoTarget()
