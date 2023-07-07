@@ -15,17 +15,19 @@ using UnityEngine.UI;
 
 namespace CryptoQuest
 {
-    public class MapNameUI : MonoBehaviour
+    public class UIMapName : MonoBehaviour
     {
         [Header("Listened events")]
         [SerializeField] private StringEventChannelSO _onShowMapNameUI;
 
-        [SerializeField] private LoadSceneEventChannelSO _loadMapEvent;
+        [SerializeField] private VoidEventChannelSO _onHideMapNameUI;
 
+        [Header("Set up")]
         [SerializeField] private GameObject _container;
+
         [SerializeField] private Image _backgroundImage;
         [SerializeField] private Image _frameImage;
-        [SerializeField] private TextMeshProUGUI _mapNameText;
+        [SerializeField] private Text _mapNameText;
         [SerializeField] private float _showDuration = 10f;
         [SerializeField] private float _showSpeed = .5f;
         [SerializeField] private float _hideSpeed = .5f;
@@ -36,16 +38,16 @@ namespace CryptoQuest
         {
             _container.transform.DOMoveX(_hideDistance, 0);
             _onShowMapNameUI.EventRaised += OnShowMapName;
-            _loadMapEvent.LoadingRequested += OnLoadNewScene;
+            _onHideMapNameUI.EventRaised += OnLoadNewScene;
         }
 
         private void OnDisable()
         {
             _onShowMapNameUI.EventRaised -= OnShowMapName;
-            _loadMapEvent.LoadingRequested -= OnLoadNewScene;
+            _onHideMapNameUI.EventRaised -= OnLoadNewScene;
         }
 
-        private void OnLoadNewScene(SceneScriptableObject scene)
+        private void OnLoadNewScene()
         {
             HideMapName(0);
         }
