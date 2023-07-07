@@ -11,47 +11,61 @@ namespace CryptoQuest.System.CutScene
 {
     public class CutsceneManager : MonoBehaviour
     {
-        [SerializeField] private DialogueScriptableObject _dialogue;
         [SerializeField] private InputMediatorSO _inputMediator;
 
         [Header("Listening to")]
         [SerializeField] private PlayableDirectorChannelSO _onPlayCutsceneEvent;
 
         [SerializeField] private VoidEventChannelSO _onPauseTimelineEvent;
-        [SerializeField] private VoidEventChannelSO _onLineEndedEvent;
-
-        [Header("Raising event")]
-        [SerializeField] private DialogEventChannelSO _onShowDialogEvent;
+        [SerializeField] private VoidEventChannelSO _onResumeTimelineEvent;
 
         [Header("Option")]
         [SerializeField] private PlayableDirector _director;
 
-        private bool _isDialoguePlayed;
+        private bool _isDialoguePaused;
 
         private void OnEnable()
         {
             _onPlayCutsceneEvent.OnEventRaised += OnPlayCutsceneEventRaised;
+            _onPauseTimelineEvent.EventRaised += PauseTimeline;
+            _onResumeTimelineEvent.EventRaised += ResumeTimeline;
+        }
+
+        private void OnDisable()
+        {
+            _onPauseTimelineEvent.EventRaised -= PauseTimeline;
+            _onResumeTimelineEvent.EventRaised -= ResumeTimeline;
         }
 
         private void OnPlayCutsceneEventRaised(PlayableDirector value)
         {
             _inputMediator.EnableDialogueInput();
 
+            _isDialoguePaused = false;
             _director = value;
             _director.Play();
             _director.stopped += HandleDirectorStopped;
         }
 
-        private void HandleDirectorStopped(PlayableDirector obj)
-        {
-            EndCutScene();
-        }
+        private void HandleDirectorStopped(PlayableDirector obj) => EndCutScene();
 
         private void EndCutScene()
         {
             if (_onPlayCutsceneEvent != null) _onPlayCutsceneEvent.OnEventRaised -= OnPlayCutsceneEventRaised;
 
             _inputMediator.EnableMapGameplayInput();
+        }
+
+        private void PauseTimeline()
+        {
+            _isDialoguePaused = true;
+            _director.playableGraph.GetRootPlayable(0).SetSpeed(0);
+        }
+
+        private void ResumeTimeline()
+        {
+            _isDialoguePaused = false;
+            _director.playableGraph.GetRootPlayable(0).SetSpeed(1);
         }
     }
 }

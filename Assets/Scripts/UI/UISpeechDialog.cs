@@ -1,8 +1,8 @@
 using CryptoQuest.Character;
 using CryptoQuest.Gameplay.Quest.Dialogue.ScriptableObject;
 using CryptoQuest.Input;
-using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.Localization.Components;
 
 namespace CryptoQuest.UI
@@ -21,6 +21,9 @@ namespace CryptoQuest.UI
 
         private DialogueScriptableObject _dialogue;
         private int _currentDialogueIndex = 0;
+
+        [Header("Raise event")]
+        public UnityEvent OnDialogEnded;
 
         private void OnEnable()
         {
@@ -44,7 +47,6 @@ namespace CryptoQuest.UI
             UpdateDialogueWithIndex(_currentDialogueIndex);
         }
 
-
         public void Show()
         {
             if (_dialogue.LinesCount == 0)
@@ -59,10 +61,13 @@ namespace CryptoQuest.UI
 
         public void Hide()
         {
-            Reset();
+            _currentDialogueIndex = 0;
+
             _dialogue = null;
             _content.SetActive(false);
             _inputMediator.EnableMapGameplayInput();
+
+            OnDialogEnded?.Invoke();
         }
 
         public void SetData(DialogArgs args)
@@ -73,13 +78,6 @@ namespace CryptoQuest.UI
         private void UpdateDialogueWithIndex(int dialogueIndex)
         {
             _dialogLabel.StringReference = _dialogue.GetLine(dialogueIndex);
-        }
-
-        private void Reset()
-        {
-            _currentDialogueIndex = 0;
-            // TODO: Can't set null here because of bug in LocalizeStringEvent
-            // _dialogLabel.StringReference = null;
         }
     }
 }

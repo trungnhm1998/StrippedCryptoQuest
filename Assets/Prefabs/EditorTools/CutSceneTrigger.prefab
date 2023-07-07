@@ -54,8 +54,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1198447728046416260}
   - component: {fileID: 3145964427407285909}
-  - component: {fileID: 8324194914358490285}
+  - component: {fileID: 7951264596430247089}
   - component: {fileID: 1560560517055220606}
+  - component: {fileID: 8324194914358490285}
   m_Layer: 0
   m_Name: CutSceneTrigger
   m_TagString: Untagged
@@ -77,7 +78,7 @@ Transform:
   m_Children:
   - {fileID: 4219110332904545253}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3145964427407285909
 MonoBehaviour:
@@ -91,12 +92,45 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6444712b9cae4582a27c37b734cebc1f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _dialogue: {fileID: 11400000, guid: 338ee1159513c674d8c0ffcb9de8b6d9, type: 2}
   _isTriggerOnce: 0
   _playOnAwake: 0
-  _dialogue: {fileID: 11400000, guid: 338ee1159513c674d8c0ffcb9de8b6d9, type: 2}
   _playableDirector: {fileID: 1560560517055220606}
   _onSpecificCutSceneEvent: {fileID: 0}
   _onPlayCutsceneEvent: {fileID: 11400000, guid: 9660b2bdb62768145adb3fd899eaec86, type: 2}
+--- !u!114 &7951264596430247089
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5436071275556961955}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92982463dedd411e83a5854bbb8d339d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _director: {fileID: 1560560517055220606}
+  _objectsToBind: []
+--- !u!320 &1560560517055220606
+PlayableDirector:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5436071275556961955}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_PlayableAsset: {fileID: 11400000, guid: 66f265c7bcc274f48aaab8be7249972c, type: 2}
+  m_InitialState: 0
+  m_WrapMode: 2
+  m_DirectorUpdateMode: 1
+  m_InitialTime: 0
+  m_SceneBindings:
+  - key: {fileID: -5167276094392438607, guid: 66f265c7bcc274f48aaab8be7249972c, type: 2}
+    value: {fileID: 0}
+  m_ExposedReferences:
+    m_References: []
 --- !u!61 &8324194914358490285
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -142,20 +176,3 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!320 &1560560517055220606
-PlayableDirector:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5436071275556961955}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_PlayableAsset: {fileID: 0}
-  m_InitialState: 1
-  m_WrapMode: 2
-  m_DirectorUpdateMode: 1
-  m_InitialTime: 0
-  m_SceneBindings: []
-  m_ExposedReferences:
-    m_References: []
