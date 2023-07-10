@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.Components;
+using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
+using IndiGames.GameplayAbilitySystem.AbilitySystem;
 using IndiGames.Core.Events.ScriptableObjects;
 
 namespace CryptoQuest.Gameplay.Battle
@@ -65,7 +67,7 @@ namespace CryptoQuest.Gameplay.Battle
             if (_battleManager == null) return;
             // DragWindow
             Rect newRect;
-            var inputRect = _showDebug ? _windowRect : _minimizeRect;
+            Rect inputRect = _showDebug ? _windowRect : _minimizeRect;
 
             GUILayout.BeginVertical();
             newRect = GUILayout.Window(_windowId, inputRect, DoMyWindow, $"Battle Simulate", GUILayout.ExpandHeight(true));
@@ -77,7 +79,7 @@ namespace CryptoQuest.Gameplay.Battle
                 _windowRect = newRect;
         }
 
-        void DoMyWindow(int windowID)
+        private void DoMyWindow(int windowID)
         {
             // Insert a huge dragging area at the end.
             // This gets clipped to the window (like all other controls) so you can never
@@ -112,8 +114,8 @@ namespace CryptoQuest.Gameplay.Battle
         {
             if (!_showActions || _battleManager.CurrentUnit == null) return;
             GUILayout.BeginVertical();
-            var currentUnitOwner = _battleManager.CurrentUnit.Owner;
-            foreach (var skill in currentUnitOwner.GrantedAbilities.Abilities)
+            AbilitySystemBehaviour currentUnitOwner = _battleManager.CurrentUnit.Owner;
+            foreach (AbstractAbility skill in currentUnitOwner.GrantedAbilities.Abilities)
             {
                 GUI.enabled = !skill.IsActive;
                 if (GUILayout.Button($"Select skill {skill.AbilitySO.name}"))
@@ -129,14 +131,14 @@ namespace CryptoQuest.Gameplay.Battle
         
         private void RenderSelectTargets()
         {
-            var currentUnit =  _battleManager.CurrentUnit;
+            IBattleUnit currentUnit =  _battleManager.CurrentUnit;
             if (currentUnit == null) return;
-            var currentUnitOpponent = currentUnit.OpponentTeam;
+            BattleTeam currentUnitOpponent = currentUnit.OpponentTeam;
 
             if (!_showTargetUnit || currentUnitOpponent == null) return;
             GUILayout.BeginVertical();
             GUILayout.Label("Select a target");
-            foreach (var target in currentUnitOpponent.Members)
+            foreach (AbilitySystemBehaviour target in currentUnitOpponent.Members)
             {
                 if (target == null) continue;
                 var buttonLabel = $"Target {target.name}";

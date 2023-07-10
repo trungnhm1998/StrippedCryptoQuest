@@ -1,5 +1,4 @@
 using UnityEngine;
-using System.Collections;
 using CryptoQuest.FSM;
 
 namespace CryptoQuest.Gameplay.Battle
@@ -10,26 +9,17 @@ namespace CryptoQuest.Gameplay.Battle
         public override void OnEnterState(BaseStateMachine stateMachine)
         {
             base.OnEnterState(stateMachine);
-            Debug.Log($"BattleState: Enter Prepare Phase");
-            stateMachine.StartCoroutine(BattlePrepare(stateMachine));
+            BattlePrepare(stateMachine);
         }
 
-        private IEnumerator BattlePrepare(BaseStateMachine stateMachine)
+        private void BattlePrepare(BaseStateMachine stateMachine)
         {
-            if (_battleManager.BattleSpawner)
+            if (BattleManager.BattleSpawner)
             {
-                _battleManager.BattleSpawner.SpawnBattle();
+                BattleManager.BattleSpawner.SpawnBattle();
             }
-            _battleManager.InitBattleTeams();
-            stateMachine.SetCurrentState(NextState);
-            yield break;
-        }
-        
-        public override void OnExitState(BaseStateMachine stateMachine)
-        {
-            base.OnExitState(stateMachine);
-            stateMachine.StopCoroutine(BattlePrepare(stateMachine));
-            Debug.Log($"BattleState: Exit Prepare Phase");
+            BattleManager.InitBattleTeams();
+            stateMachine.SetCurrentState(_nextState);
         }
     }
 }

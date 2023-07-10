@@ -13,11 +13,7 @@ namespace CryptoQuest.Gameplay.Battle
         public override void Execute(BaseStateMachine stateMachine)
         {
             if (_manager != null) return;
-
-            var manager = stateMachine.GetComponent<BattleManager>();
-            if (manager == null) return;
-            
-            _manager = manager;
+            _manager = stateMachine.GetComponent<BattleManager>();
         }
     }
 }

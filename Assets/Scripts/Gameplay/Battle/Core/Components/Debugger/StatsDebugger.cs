@@ -42,7 +42,7 @@ namespace CryptoQuest.Gameplay.Battle
             if (_owner == null) return;
             // DragWindow
             Rect newRect;
-            var inputRect = _showDebug ? _windowRect : _minimizeRect;
+            Rect inputRect = _showDebug ? _windowRect : _minimizeRect;
 
             GUILayout.BeginVertical();
             newRect = GUILayout.Window(_windowId, inputRect, DoMyWindow, $"{_owner.name} Stats", GUILayout.ExpandHeight(true));
@@ -54,7 +54,7 @@ namespace CryptoQuest.Gameplay.Battle
                 _windowRect = newRect;
         }
 
-        void DoMyWindow(int windowID)
+        private void DoMyWindow(int windowID)
         {
             // Insert a huge dragging area at the end.
             // This gets clipped to the window (like all other controls) so you can never
@@ -88,13 +88,15 @@ namespace CryptoQuest.Gameplay.Battle
                 string optional = $"({isActive})";
                 float computedValue = 0;
                 if (abstractEffect.EffectSO.EffectDetails.Modifiers[0].ModifierComputationMethod)
+                {
                     computedValue = abstractEffect.EffectSO.EffectDetails.Modifiers[0].ModifierComputationMethod
                         .CalculateMagnitude(abstractEffect);
+                }
                 string details = "";
                 if (abstractEffect.Parameters != null)
                 {
                     var skillParams = (SkillParameters) abstractEffect.Parameters;
-                    details = $"\nTurns: {skillParams.continuesTurn} | Base Power: {skillParams.basePower}";
+                    details = $"\nTurns: {skillParams.ContinuesTurn} | Base Power: {skillParams.BasePower}";
                 }
 
                 if (abstractEffect is DurationalEffect durationalEffect)

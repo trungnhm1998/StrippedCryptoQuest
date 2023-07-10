@@ -11,7 +11,7 @@ namespace CryptoQuest.FSM
 
         public virtual void Execute(BaseStateMachine stateMachine)
         {
-            var nextState = Decision.Decide(stateMachine) ? TrueState : FalseState;
+            BaseStateSO nextState = Decision.Decide(stateMachine) ? TrueState : FalseState;
             if (nextState == null) return;
 
             stateMachine.SetCurrentState(nextState);

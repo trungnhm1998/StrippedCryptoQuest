@@ -7,7 +7,7 @@ namespace CryptoQuest.Gameplay.Battle
     [CreateAssetMenu(fileName = "TargetContainter", menuName = "Gameplay/Battle/Abilities/Target Containter")]
     public class TargetContainterSO : ScriptableObject
     {
-        public List<AbilitySystemBehaviour> Targets {get; set;} = new();
+        public List<AbilitySystemBehaviour> Targets {get; private set;} = new();
 
         public void SetSingleTarget(AbilitySystemBehaviour target)
         {

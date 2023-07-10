@@ -12,9 +12,10 @@ namespace CryptoQuest.Gameplay.Battle
         protected virtual void Start()
         {
             var statsInitializer = GetComponent<StatsInitializer>();
-            var data = statsInitializer.DefaultStats as CharacterDataSO;
-            if (data == null) return;
-            _originalName = data.Name;
+            if (statsInitializer.DefaultStats is CharacterDataSO data)
+            {
+                _originalName = data.Name;
+            }
         }
     }
 }

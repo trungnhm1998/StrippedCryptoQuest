@@ -15,7 +15,7 @@ namespace CryptoQuest.Gameplay.Battle
 
         public override IEnumerator Prepare()
         {
-            _selectedSkill = _skillSelector.GetSkill(this);
+            SelectedSkill = _skillSelector.GetSkill(this);
             SetDefaultTarget();
             yield return base.Prepare();
         }

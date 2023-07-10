@@ -10,11 +10,6 @@ namespace IndiGames.Core.Events.ScriptableObjects
 
         public void RaiseEvent(string value)
         {
-            OnRaiseEvent(value);
-        }
-
-        private void OnRaiseEvent(string value)
-        {
             if (EventRaised == null)
             {
                 Debug.LogWarning($"Event was raised on {name} but no one was listening.");

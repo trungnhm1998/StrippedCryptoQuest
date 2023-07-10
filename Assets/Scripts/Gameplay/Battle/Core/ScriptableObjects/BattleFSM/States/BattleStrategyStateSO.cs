@@ -7,31 +7,30 @@ namespace CryptoQuest.Gameplay.Battle
     [CreateAssetMenu(fileName = "BattleStrategyStateSO", menuName = "Gameplay/Battle/FSM/States/Battle Strategy State")]
     public class BattleStrategyStateSO : BattleStateSO
     {
+        private Coroutine _unitPrepareCoroutine; 
         public override void OnEnterState(BaseStateMachine stateMachine)
         {
             base.OnEnterState(stateMachine);
-            Debug.Log($"BattleState: Enter Strategy Phase");
-            stateMachine.StartCoroutine(BattleUnitsPrepare(stateMachine));
+            _unitPrepareCoroutine = stateMachine.StartCoroutine(BattleUnitsPrepare(stateMachine));
         }
 
         private IEnumerator BattleUnitsPrepare(BaseStateMachine stateMachine)
         {
             // Might sort _battleUnits by speed or team 1 will execute first by default
-            _battleManager.OnNewTurn();
-            foreach (var unit in _battleManager.BattleUnits)
+            BattleManager.OnNewTurn();
+            foreach (var unit in BattleManager.BattleUnits)
             {
-                _battleManager.CurrentUnit = unit;
+                BattleManager.CurrentUnit = unit;
                 yield return unit.Prepare();
             }
-            _battleManager.CurrentUnit = null;
-            stateMachine.SetCurrentState(NextState);
+            BattleManager.CurrentUnit = null;
+            stateMachine.SetCurrentState(_nextState);
         }
         
         public override void OnExitState(BaseStateMachine stateMachine)
         {
             base.OnExitState(stateMachine);
-            stateMachine.StopCoroutine(BattleUnitsPrepare(stateMachine));
-            Debug.Log($"BattleState: Exit Strategy Phase");
+            stateMachine.StopCoroutine(_unitPrepareCoroutine);
         }
     }
 }

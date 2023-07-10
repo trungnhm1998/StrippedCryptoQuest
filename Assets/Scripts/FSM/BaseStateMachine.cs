@@ -9,7 +9,7 @@ namespace CryptoQuest.FSM
         [SerializeField] private BaseStateSO _initialState;
         private Dictionary<Type, Component> _cachedComponents = new();
         
-        public BaseStateSO CurrentState { get; set; }
+        public BaseStateSO CurrentState { get; private set; }
 
         private void Awake()
         {
@@ -48,12 +48,11 @@ namespace CryptoQuest.FSM
                 return component as T;
             }
 
-            component = base.GetComponent<T>();
-            if (component != null)
+            if (TryGetComponent<T>(out var notCachedComponent))
             {
-                _cachedComponents.Add(typeof(T), component);
+                _cachedComponents[typeof(T)] = notCachedComponent;
             }
-            return component as T;
+            return notCachedComponent;
         }
     }
 }
