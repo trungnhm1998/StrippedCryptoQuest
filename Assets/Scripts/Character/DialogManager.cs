@@ -2,6 +2,7 @@
 using CryptoQuest.Gameplay.Quest.Dialogue.ScriptableObject;
 using CryptoQuest.Input;
 using CryptoQuest.UI;
+using CryptoQuest.UI.Dialogs;
 using UnityEngine;
 
 namespace CryptoQuest.Character
@@ -16,6 +17,7 @@ namespace CryptoQuest.Character
         private void Awake()
         {
             _speechDialog = GetComponentInChildren<IDialog>();
+            // UIChatDialog.Create<UIChatDialog>();
         }
 
         private void OnEnable()
