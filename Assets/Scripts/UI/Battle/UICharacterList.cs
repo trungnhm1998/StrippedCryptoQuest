@@ -16,17 +16,14 @@ namespace CryptoQuest.UI.Battle
         private void InitUI()
         {
             int index = 0;
-            foreach (var member in _battleManager.BattleTeam1.Members)
+            int memberCount = _battleManager.BattleTeam1.Members.Count;
+            for (int i = 0; i < _uiCharacterInfos.Length; i++)
             {
-                var characterInfo = _uiCharacterInfos[index];
-                characterInfo.gameObject.SetActive(true);
-                characterInfo.SetOwnerSystem(member);
-                index++;
-            }
-
-            for (int i = index; i < _uiCharacterInfos.Length; i++)
-            {
-                _uiCharacterInfos[i].gameObject.SetActive(false);
+                var characterInfo = _uiCharacterInfos[i];
+                var isInMemberRange = i < memberCount;
+                characterInfo.gameObject.SetActive(isInMemberRange);
+                if (!isInMemberRange) return;
+                characterInfo.SetOwnerSystem(_battleManager.BattleTeam1.Members[i]);
             }
         }
     }

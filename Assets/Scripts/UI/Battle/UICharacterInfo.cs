@@ -31,13 +31,13 @@ namespace CryptoQuest.UI.Battle
         private void OnEnable()
         {
             _hpAttributeSO.ValueChangeEvent += OnHPChanged;
-            _mpAttributeSO.ValueChangeEvent += OnHPChanged;
+            _mpAttributeSO.ValueChangeEvent += OnMPChanged;
         }
 
         private void OnDisable()
         {
             _hpAttributeSO.ValueChangeEvent -= OnHPChanged;
-            _mpAttributeSO.ValueChangeEvent -= OnHPChanged;
+            _mpAttributeSO.ValueChangeEvent -= OnMPChanged;
         }
 
         public void SetOwnerSystem(AbilitySystemBehaviour owner)
@@ -77,10 +77,10 @@ namespace CryptoQuest.UI.Battle
             Text valueText, Slider slider)
         {
             if (!_owner.AttributeSystem.GetAttributeValue(maxSO, out AttributeValue maxValue)) return;
-            if (!_owner.AttributeSystem.GetAttributeValue(attributeSO, out AttributeValue attributValue)) return;
+            if (!_owner.AttributeSystem.GetAttributeValue(attributeSO, out AttributeValue attributeValue)) return;
 
-            valueText.text = attributValue.CurrentValue.ToString();
-            slider.value = attributValue.CurrentValue / maxValue.CurrentValue;  
+            valueText.text = attributeValue.CurrentValue.ToString();
+            slider.value = attributeValue.CurrentValue / maxValue.CurrentValue;  
         }
     }
 }
