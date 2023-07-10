@@ -14,6 +14,8 @@ namespace CryptoQuest.Gameplay.Battle
         [SerializeField] protected BattleManager _battleManager;
         [SerializeField] protected GameObject _monsterPrefab;
 
+        private Dictionary<string, int> _duplicateEnemies = new();
+
         private void OnValidate()
         {
             if (_battleManager != null) return;
@@ -36,23 +38,20 @@ namespace CryptoQuest.Gameplay.Battle
                     abilitySystem.GiveAbility(skill);
                 }
                 _battleManager.BattleTeam2.Members.Add(abilitySystem);
-                ProcessEnemyName(enemy.Name);
+                ProcessEnemiesName(data, enemy);
             }
         }
 
-        private void ProcessEnemyName(string enemyName)
+        private void ProcessEnemiesName(BattleDataSO data, CharacterDataSO enemyData)
         {
-            List<AbilitySystemBehaviour> sameNameEnemies = _battleManager.BattleTeam2.Members.FindAll(x => x.gameObject.name == enemyName);
-            if (sameNameEnemies.Count <= 1) return;
-            for (int i = 0; i < sameNameEnemies.Count; i++)
-            {
-                if (i >= _duplicatePostfix.Length)
-                {
-                    Debug.LogWarning($"Only allow {_duplicatePostfix.Length} enemy with same name");
-                    break;
-                }
-                sameNameEnemies[i].gameObject.name += _duplicatePostfix[i]; 
-            }
+            var sameNameCount = data.Enemies.Count(x => x.Name == enemyData.Name);
+            if (sameNameCount <= 1) return;
+
+            if (!_duplicateEnemies.TryGetValue(enemyData.Name, out var duplicateCount)) return;
+            if (duplicateCount >= _duplicatePostfix.Length) return;
+
+            enemyData.DisplayName = $"{enemyData.Name}{_duplicatePostfix[duplicateCount]}"; 
+            _duplicateEnemies[enemyData.Name]++;
         }
     }
 }

@@ -13,7 +13,6 @@ namespace CryptoQuest.Gameplay.Battle
         public AbilitySystemBehaviour Owner {get; set;}
         public BattleTeam OpponentTeam {get; set;}
         public BattleTeam OwnerTeam {get; set;}
-        public virtual string OriginalName => "BattleUnit";
         public bool IsDead => _isDead;
 
         [SerializeField] protected AttributeScriptableObject _hpAttribute;
@@ -23,12 +22,16 @@ namespace CryptoQuest.Gameplay.Battle
 
         public AbstractAbility SelectedSkill { get; protected set; }
 
-        protected List<string> _executeLogs = new();
-        public List<string> ExecuteLogs => _executeLogs;
+        public List<string> ExecuteLogs { get; protected set; } = new();
 
         protected BattleManager _battleManager;
         protected bool _isDead;
 
+        public virtual CharacterDataSO GetUnitData()
+        {
+            return null;
+        }
+        
         public void Init(BattleTeam team, AbilitySystemBehaviour owner)
         {
             TargetContainer.Targets.Clear();

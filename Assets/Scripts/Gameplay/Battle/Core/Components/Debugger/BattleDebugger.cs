@@ -141,7 +141,8 @@ namespace CryptoQuest.Gameplay.Battle
             foreach (AbilitySystemBehaviour target in currentUnitOpponent.Members)
             {
                 if (target == null) continue;
-                var buttonLabel = $"Target {target.name}";
+                var targetUnit = target.GetComponent<IBattleUnit>();
+                var buttonLabel = $"Target {targetUnit.GetUnitData().DisplayName}";
                 if (GUILayout.Button(buttonLabel))
                 {
                     currentUnit.SelectSingleTarget(target);

@@ -22,6 +22,7 @@ namespace CryptoQuest.Gameplay.Battle
         private bool _showAppliedEffects = true;
         private Rect _minimizeRect;
         private int _windowId;
+        private IBattleUnit _unit;
 
         private void OnValidate()
         {
@@ -33,6 +34,7 @@ namespace CryptoQuest.Gameplay.Battle
 
         private void Start()
         {
+            _unit = GetComponent<IBattleUnit>();
             _minimizeRect = _windowRect;
             _attributeSystem = _owner.AttributeSystem;
             _windowId = gameObject.GetInstanceID();
@@ -46,7 +48,7 @@ namespace CryptoQuest.Gameplay.Battle
             Rect inputRect = _showDebug ? _windowRect : _minimizeRect;
 
             GUILayout.BeginVertical();
-            newRect = GUILayout.Window(_windowId, inputRect, DoMyWindow, $"{_owner.name} Stats", GUILayout.ExpandHeight(true));
+            newRect = GUILayout.Window(_windowId, inputRect, DoMyWindow, $"{_unit.GetUnitData()?.DisplayName} Stats", GUILayout.ExpandHeight(true));
             GUILayout.EndVertical();
 
             if (!_showDebug)
