@@ -65,7 +65,7 @@ namespace CryptoQuest.Gameplay.Battle
         protected override void SkillActivatePromt()
         {
             string normalAttackText = LocalizationSettings.StringDatabase.GetLocalizedString(BATTLE_PROMT_TABLE, AbilitySO.PromtKey);
-            unit.ExecuteLogs.Add(string.Format(normalAttackText, unit.OriginalName, AbilitySO.SkillName));
+            _unit.ExecuteLogs.Add(string.Format(normalAttackText, Owner.gameObject.name, AbilitySO.SkillName));
         }
     }
 }

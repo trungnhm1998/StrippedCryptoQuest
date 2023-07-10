@@ -40,6 +40,15 @@ namespace CryptoQuest.Gameplay.Battle
         {
             yield return BattleTeam1.RemovePendingUnits();
             yield return BattleTeam2.RemovePendingUnits();
+
+            for (int i = 0; i < BattleUnits.Count; i++)
+            {
+                IBattleUnit unit = BattleUnits[i];
+                if (!unit.IsDead) continue;
+                
+                BattleUnits.Remove(unit);
+                i--;
+            }
         }
 
         public bool IsBattleEnd()

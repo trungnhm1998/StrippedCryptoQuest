@@ -16,13 +16,13 @@ namespace CryptoQuest.Gameplay.Battle
         [SerializeField] private bool _showDebug = false;
         [SerializeField] private Rect _windowRect = new Rect(20, 20, 120, 50);
         [SerializeField] private float _windowWidth = 400;
-        [SerializeField] private int _windowId;
 
         private AttributeSystemBehaviour _attributeSystem;
         private bool _showAttributes = true;
         private bool _showAppliedEffects = true;
         private Rect _minimizeRect;
-        
+        private int _windowId;
+
         private void OnValidate()
         {
             if (_owner == null)
@@ -35,6 +35,7 @@ namespace CryptoQuest.Gameplay.Battle
         {
             _minimizeRect = _windowRect;
             _attributeSystem = _owner.AttributeSystem;
+            _windowId = gameObject.GetInstanceID();
         }
 
         private void OnGUI()

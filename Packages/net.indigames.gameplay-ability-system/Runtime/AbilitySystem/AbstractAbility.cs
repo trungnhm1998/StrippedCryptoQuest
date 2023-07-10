@@ -70,7 +70,7 @@ namespace IndiGames.GameplayAbilitySystem.AbilitySystem
 
         public virtual bool CanActiveAbility()
         {
-            return CheckTags();
+            return Owner.gameObject.activeSelf && CheckTags();
         }
 
         /// <summary>

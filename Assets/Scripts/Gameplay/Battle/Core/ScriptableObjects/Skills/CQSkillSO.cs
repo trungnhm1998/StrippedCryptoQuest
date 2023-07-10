@@ -25,26 +25,27 @@ namespace CryptoQuest.Gameplay.Battle
     public class CQSkill : EffectAbility
     {
         protected const string BATTLE_PROMT_TABLE = "BattlePromt";
-        protected IBattleUnit unit;
+        protected IBattleUnit _unit;
         protected new CQSkillSO AbilitySO => (CQSkillSO) _abilitySO;
         
         public override void OnAbilityGranted(AbstractAbility skillSpec)
         {
             base.OnAbilityGranted(skillSpec);
-            unit = Owner.GetComponent<IBattleUnit>();
+            _unit = Owner.GetComponent<IBattleUnit>();
         }
 
         protected override IEnumerator InternalActiveAbility()
         {
-            if (unit == null) yield break;
+            if (_unit == null) yield break;
             SkillActivatePromt();
             yield return base.InternalActiveAbility();
         }
 
         protected virtual void SkillActivatePromt()
         {
+            if (AbilitySO.PromtKey == "") return;
             string normalAttackText = LocalizationSettings.StringDatabase.GetLocalizedString(BATTLE_PROMT_TABLE, AbilitySO.PromtKey);
-            unit.ExecuteLogs.Add(string.Format(normalAttackText, unit.OriginalName));
+            _unit.ExecuteLogs.Add(string.Format(normalAttackText, Owner.gameObject.name));
         }
     }
 }

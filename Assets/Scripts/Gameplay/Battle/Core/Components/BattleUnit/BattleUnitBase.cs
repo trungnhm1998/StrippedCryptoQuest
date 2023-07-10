@@ -14,6 +14,7 @@ namespace CryptoQuest.Gameplay.Battle
         public BattleTeam OpponentTeam {get; set;}
         public BattleTeam OwnerTeam {get; set;}
         public virtual string OriginalName => "BattleUnit";
+        public bool IsDead => _isDead;
 
         [SerializeField] protected AttributeScriptableObject _hpAttribute;
 
@@ -26,7 +27,7 @@ namespace CryptoQuest.Gameplay.Battle
         public List<string> ExecuteLogs => _executeLogs;
 
         protected BattleManager _battleManager;
-        protected bool _isDeath;
+        protected bool _isDead;
 
         public void Init(BattleTeam team, AbilitySystemBehaviour owner)
         {
@@ -100,15 +101,16 @@ namespace CryptoQuest.Gameplay.Battle
             if (Owner == null || args.System != Owner.AttributeSystem) return;
 
             Owner.AttributeSystem.GetAttributeValue(_hpAttribute, out AttributeValue attributValue);
-            if (attributValue.CurrentValue > 0 || _isDeath) return;
+            if (attributValue.CurrentValue > 0 || _isDead) return;
 
-            _isDeath = true;
+            _isDead = true;
             OwnerTeam.RemoveUnit(this);
+            gameObject.SetActive(false);
         }
 
         public virtual void OnDeath()
         {
-            gameObject.SetActive(false);
+            Destroy(gameObject);
         }
 
         private bool HasNoTarget()

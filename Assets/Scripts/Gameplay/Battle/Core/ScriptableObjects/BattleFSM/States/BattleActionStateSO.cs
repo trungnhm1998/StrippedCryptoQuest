@@ -27,7 +27,6 @@ namespace CryptoQuest.Gameplay.Battle
                 foreach (var log in unit.ExecuteLogs)
                 {
                     _battleLog.Log(log);
-                    yield return null;
                 }
                 unit.ExecuteLogs.Clear();
             }

@@ -1,6 +1,7 @@
 using UnityEngine;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.Components;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
+using IndiGames.GameplayAbilitySystem.AbilitySystem.ScriptableObjects;
 using System.Linq;
 using System.Collections.Generic;
 
@@ -30,7 +31,7 @@ namespace CryptoQuest.Gameplay.Battle
                 statInit.InitStats(enemy);
                 enemyGO.name = enemy.Name;
                 var abilitySystem = enemyGO.GetComponent<AbilitySystemBehaviour>();
-                foreach (var skill in enemy.GrantedSkills)
+                foreach (AbilityScriptableObject skill in enemy.GrantedSkills)
                 {
                     abilitySystem.GiveAbility(skill);
                 }
