@@ -21,7 +21,7 @@ namespace CryptoQuest.Events
             {
                 GUILayout.BeginHorizontal();
 
-                GUILayout.Label("String Value");
+                GUILayout.Label("Map path object");
                 _object = EditorGUILayout.ObjectField(_object, typeof(MapPathSO)) as MapPathSO;
                 GUILayout.EndHorizontal();
             }
