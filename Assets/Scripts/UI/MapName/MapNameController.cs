@@ -16,8 +16,7 @@ namespace CryptoQuest
 {
     public class MapNameController : MonoBehaviour
     {
-        [SerializeField] private SceneScriptableObject _sceneScriptableObject;
-        [SerializeField] private TableReference _tableReference;
+        [SerializeField] private LocalizedString _mapNameKey;
 
         [Header("Listened events")]
         [SerializeField] private VoidEventChannelSO _sceneLoaded;
@@ -25,7 +24,7 @@ namespace CryptoQuest
         [SerializeField] private LoadSceneEventChannelSO _loadMapEvent;
 
         [Header("Raised events")]
-        [SerializeField] private StringEventChannelSO _onShowMapNameUI;
+        [SerializeField] private LocalizedStringEventChannelSO _onShowMapNameUI;
 
         [SerializeField] private VoidEventChannelSO _onHideMapNameUI;
 
@@ -43,15 +42,11 @@ namespace CryptoQuest
             _loadMapEvent.LoadingRequested -= OnLoadNewScene;
         }
 
-        private void OnSceneLoaded() {
-            if (string.IsNullOrEmpty(_sceneScriptableObject.LocalizedName))
-            {
-                _onShowMapNameUI.RaiseEvent(_sceneScriptableObject.name);
-                return;
-            }
-            LocalizationSettings.StringDatabase
-                .GetLocalizedStringAsync(_tableReference, _sceneScriptableObject.LocalizedName)
-                .Completed += result => _onShowMapNameUI.RaiseEvent(result.Result);
+        private void OnSceneLoaded()
+        {
+            if (_mapNameKey.IsEmpty) return;
+
+            _onShowMapNameUI.RaiseEvent(_mapNameKey);
         }
 
         private void OnLoadNewScene(SceneScriptableObject scene)

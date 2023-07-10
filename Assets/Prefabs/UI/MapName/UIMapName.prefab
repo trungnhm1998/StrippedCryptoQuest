@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8727179001227584086}
   - component: {fileID: 4975939838282961241}
   - component: {fileID: 2840169238861699431}
+  - component: {fileID: 5120763925228187859}
   m_Layer: 5
   m_Name: MapNameText
   m_TagString: Untagged
@@ -96,6 +97,46 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_HorizontalFit: 2
   m_VerticalFit: 0
+--- !u!114 &5120763925228187859
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1635614067193955039}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56eb0353ae6e5124bb35b17aff880f16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_StringReference:
+    m_TableReference:
+      m_TableCollectionName: 
+    m_TableEntryReference:
+      m_KeyId: 0
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  m_FormatArguments: []
+  m_UpdateString:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4975939838282961241}
+        m_TargetAssemblyTypeName: UnityEngine.UI.Text, UnityEngine.UI
+        m_MethodName: set_text
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 1
+  references:
+    version: 2
+    RefIds: []
 --- !u!1 &2644873878118783360
 GameObject:
   m_ObjectHideFlags: 0
@@ -356,12 +397,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80745b31352ea574da66bad1e3fd1093, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _onShowMapNameUI: {fileID: 11400000, guid: 86edde8ef0eb2244ca19e310403bde0e, type: 2}
+  _onShowMapNameUI: {fileID: 11400000, guid: 66ad4f4677bc01c479f22fa86b7fa3e8, type: 2}
   _onHideMapNameUI: {fileID: 11400000, guid: c7b9279a3d4bd3b4c9f11c5b14e32b88, type: 2}
   _container: {fileID: 4847134323731490868}
   _backgroundImage: {fileID: 6637944718203325161}
   _frameImage: {fileID: 8344948093482082278}
-  _mapNameText: {fileID: 4975939838282961241}
+  _mapNameText: {fileID: 5120763925228187859}
   _showDuration: 10
   _showSpeed: 1
   _hideSpeed: 0.5
