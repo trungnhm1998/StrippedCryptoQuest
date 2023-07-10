@@ -43,11 +43,8 @@ namespace CryptoQuest.Gameplay.Battle
                     previousModifier.Value = damageValue * -1;
                     modifiers[index] = previousModifier;
 
-                    if (_ownerUnit == null || _targetUnit == null) return true;
-                    string _takeDamagePromt = GetCachedString(TakeDamagePromtKey);
-                    _ownerUnit.ExecuteLogs.Add(string.Format(_takeDamagePromt, damageValue, effectSpec.Target.gameObject.name));
-
-                    CheckTargetDeath(effectSpec, damageValue);
+                    LogAfterCalculateDamage(damageValue);
+                    LogIfTargetDeath(effectSpec, damageValue);
                     return true;
                 }
             }
@@ -72,14 +69,27 @@ namespace CryptoQuest.Gameplay.Battle
             return localizedString;
         }
 
-        private void CheckTargetDeath(AbstractEffect effectSpec, float damage)
+        private void LogAfterCalculateDamage(float damage)
+        {
+            if (_ownerUnit == null || _targetUnit == null) return;
+
+            string _takeDamagePromt = GetCachedString(TakeDamagePromtKey);
+            CharacterDataSO targetUnitData = _targetUnit.GetUnitData();
+            if (targetUnitData == null) return;
+
+            _ownerUnit.ExecuteLogs.Add(string.Format(_takeDamagePromt, damage, targetUnitData.DisplayName));
+        }
+
+        private void LogIfTargetDeath(AbstractEffect effectSpec, float damage)
         {
             AbilitySystemBehaviour target = effectSpec.Target;
             target.AttributeSystem.GetAttributeValue(TargetHP, out AttributeValue value);
             if (value.CurrentValue <= damage)
             {
                 string _deathPromt = GetCachedString(DeathPromtKey);
-                _ownerUnit.ExecuteLogs.Add(string.Format(_deathPromt, target.gameObject.name));
+                CharacterDataSO targetUnitData = _targetUnit.GetUnitData();
+                if (targetUnitData == null) return;
+                _ownerUnit.ExecuteLogs.Add(string.Format(_deathPromt, targetUnitData.DisplayName));
             }
         }
     }

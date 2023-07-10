@@ -12,5 +12,18 @@ namespace CryptoQuest.Gameplay.Battle
         public string Name;
         public Sprite BattleIconSprite;
         public List<AbilityScriptableObject> GrantedSkills;
+
+        private string _displayName;
+        public string DisplayName {
+            get
+            {
+                return _displayName == "" ? Name : _displayName;
+            }
+
+            set
+            {
+                _displayName = value;
+            }
+        }
     }
 }

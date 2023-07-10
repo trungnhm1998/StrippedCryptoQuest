@@ -6,16 +6,22 @@ namespace CryptoQuest.Gameplay.Battle
 {
     public class CharacterUnit : BattleUnitBase
     {
-        protected string _originalName;
-        public override string OriginalName => _originalName;
+        protected CharacterDataSO _characterData;
+        
+        public override CharacterDataSO GetUnitData()
+        {
+            _characterData ??= GetCharacterData();
+            return _characterData;
+        }
 
-        protected virtual void Start()
+        private CharacterDataSO GetCharacterData()
         {
             var statsInitializer = GetComponent<StatsInitializer>();
             if (statsInitializer.DefaultStats is CharacterDataSO data)
             {
-                _originalName = data.Name;
+                return data;
             }
+            return null;
         }
     }
 }

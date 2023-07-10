@@ -15,11 +15,7 @@ namespace CryptoQuest.Gameplay.Battle
     {
         public string SkillName = "";
         public string PromtKey = "";
-        protected override AbstractAbility CreateAbility()
-        {
-            var skill = new CQSkill();
-            return skill;
-        }
+        protected override AbstractAbility CreateAbility() => new CQSkill();
     }
 
     public class CQSkill : EffectAbility
@@ -45,7 +41,9 @@ namespace CryptoQuest.Gameplay.Battle
         {
             if (AbilitySO.PromtKey == "") return;
             string normalAttackText = LocalizationSettings.StringDatabase.GetLocalizedString(BATTLE_PROMT_TABLE, AbilitySO.PromtKey);
-            _unit.ExecuteLogs.Add(string.Format(normalAttackText, Owner.gameObject.name));
+            CharacterDataSO unitData = _unit.GetUnitData();
+            if (unitData == null) return;
+            _unit.ExecuteLogs.Add(string.Format(normalAttackText, unitData.DisplayName));
         }
     }
 }

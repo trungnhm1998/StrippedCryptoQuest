@@ -11,9 +11,9 @@ namespace CryptoQuest.Gameplay.Battle
         List<string> ExecuteLogs { get; }
         AbilitySystemBehaviour Owner { get; }
         BattleTeam OpponentTeam { get; }
-        string OriginalName { get; }
         bool IsDead { get; }
         
+        CharacterDataSO GetUnitData();
         void Init(BattleTeam team, AbilitySystemBehaviour owner);
         void SetOpponentTeams(BattleTeam opponentTeam);
         IEnumerator Prepare();
