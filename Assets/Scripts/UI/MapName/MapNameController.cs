@@ -43,15 +43,14 @@ namespace CryptoQuest
             _loadMapEvent.LoadingRequested -= OnLoadNewScene;
         }
 
-        private void OnSceneLoaded()
-        {
-            if (String.IsNullOrEmpty(_sceneScriptableObject.localizedName))
+        private void OnSceneLoaded() {
+            if (string.IsNullOrEmpty(_sceneScriptableObject.LocalizedName))
             {
                 _onShowMapNameUI.RaiseEvent(_sceneScriptableObject.name);
                 return;
             }
             LocalizationSettings.StringDatabase
-                .GetLocalizedStringAsync(_tableReference, _sceneScriptableObject.localizedName)
+                .GetLocalizedStringAsync(_tableReference, _sceneScriptableObject.LocalizedName)
                 .Completed += result => _onShowMapNameUI.RaiseEvent(result.Result);
         }
 

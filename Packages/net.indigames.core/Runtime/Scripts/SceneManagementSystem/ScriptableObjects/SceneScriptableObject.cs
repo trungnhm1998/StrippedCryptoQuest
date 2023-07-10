@@ -21,6 +21,6 @@ namespace IndiGames.Core.SceneManagementSystem.ScriptableObjects
 
         public Type SceneType;
         public SceneAssetReference SceneReference;
-        public string localizedName;
+        public string LocalizedName;
     }
 }
