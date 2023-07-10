@@ -7,8 +7,9 @@ using UnityEngine;
 
 namespace CryptoQuest.Events
 {
+#if UNITY_EDITOR
     [CustomEditor(typeof(MapPathEventChannelSO))]
-    public class MapPathEventChannelSOEditor : UnityEditor.Editor
+    public class MapPathEventChannelSOEditor : Editor
     {
         private MapPathSO _object;
 
@@ -34,4 +35,5 @@ namespace CryptoQuest.Events
             GUILayout.EndVertical();
         }
     }
+#endif
 }
