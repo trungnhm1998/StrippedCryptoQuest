@@ -20,7 +20,7 @@ namespace CryptoQuest.FSM
             foreach (TransitionSO transition in _transitions)
             {
                 transition.Execute(stateMachine);
-                break;
+                if (stateMachine.CurrentState != this) break;
             }
         }
     }
