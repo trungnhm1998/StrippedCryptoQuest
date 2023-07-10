@@ -58,7 +58,7 @@ namespace Tests.Runtime.Ocarina
         private static List<MapPathSO> GetOcarinaPathsInData()
         {
             List<MapPathSO> ocarinaPathSo = new();
-            string[] ocarinaDataGuids = AssetDatabase.FindAssets("t: OcarinaDataSO");
+            string[] ocarinaDataGuids = AssetDatabase.FindAssets("t: OcarinaLocations");
             string ocarinaDataSOpath = UnityEditor.AssetDatabase.GUIDToAssetPath(ocarinaDataGuids[0]);
             OcarinaLocations ocarinaDataSo =
                 UnityEditor.AssetDatabase.LoadAssetAtPath<OcarinaLocations>(ocarinaDataSOpath);
