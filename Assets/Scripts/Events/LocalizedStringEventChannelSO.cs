@@ -18,7 +18,9 @@ namespace CryptoQuest
         public void RaiseEvent(LocalizedString value)
         {
             OnRaiseEvent(value);
+#if UNITY_EDITOR
             _debugValue = value;
+#endif
         }
 
         private void OnRaiseEvent(LocalizedString value)
@@ -30,7 +32,9 @@ namespace CryptoQuest
             }
 
             EventRaised.Invoke(value);
+#if UNITY_EDITOR
             _debugValue = value;
+#endif
         }
     }
 }
