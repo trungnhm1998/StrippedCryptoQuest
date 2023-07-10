@@ -29,6 +29,7 @@ namespace IndiGames.GameplayAbilitySystem.AttributeSystem.Components
 
         public void InitStats(InitializeAttributeDatabase stats)
         {
+            if (stats == null) return;
             _database = stats;
             for (int i = 0; i < stats.AttributesToInitialize.Length; i++)
             {
