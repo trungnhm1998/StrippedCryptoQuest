@@ -9,7 +9,7 @@ namespace CryptoQuest
     [CustomEditor(typeof(StringEventChannelSO))]
     public class StringEventChannelSOEditor : UnityEditor.Editor
     {
-        private string stringValue = "";
+        private string _stringValue = "";
 
         private void OnEnable() { }
 
@@ -23,13 +23,13 @@ namespace CryptoQuest
                 GUILayout.BeginHorizontal();
 
                 GUILayout.Label("String Value");
-                stringValue = EditorGUILayout.TextField(stringValue);
+                _stringValue = EditorGUILayout.TextField(_stringValue);
                 GUILayout.EndHorizontal();
             }
             var eventSO = target as StringEventChannelSO;
             if (GUILayout.Button($"Raise {eventSO.name}"))
             {
-                eventSO.RaiseEvent(stringValue);
+                eventSO.RaiseEvent(_stringValue);
             }
             GUILayout.EndVertical();
         }
