@@ -10,7 +10,7 @@ namespace CryptoQuest.Gameplay.Battle
     public class CharacterDataSO : InitializeAttributeDatabase
     {
         public string Name;
-        public Sprite Sprite;
+        public Sprite BattleIconSprite;
         public List<AbilityScriptableObject> GrantedSkills;
     }
 }
