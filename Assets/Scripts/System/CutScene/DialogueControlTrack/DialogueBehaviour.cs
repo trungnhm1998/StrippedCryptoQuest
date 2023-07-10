@@ -26,44 +26,41 @@ namespace CryptoQuest.System.CutScene.DialogueControlTrack
 
         public override void ProcessFrame(Playable playable, FrameData info, object playerData)
         {
-            if (_isDialoguePlayed) return;
+            if (_isDialoguePlayed || !IsPlaying(playable)) return;
 
-            if (!Application.isPlaying) return;
-
-            if (!playable.GetGraph().IsPlaying()) return;
-
-            if (_dialogueLine != null)
-            {
-                _isDialoguePlayed = true;
-                if (PlayDialogueEvent == null) return;
-                PlayDialogueEvent.Show(_dialogueLine);
-            }
-            else
+            if (_dialogueLine == null)
             {
                 Debug.LogWarning("This clip contains no DialogueLine");
+                return;
             }
+
+            ShowDialog();
+            _isDialoguePlayed = true;
         }
 
         public override void OnBehaviourPause(Playable playable, FrameData info)
         {
-            if (!Application.isPlaying) return;
+            if (!_isDialoguePlayed || !IsPlaying(playable)) return;
 
-            if (!playable.GetGraph().IsPlaying()) return;
-
-            if (!_isDialoguePlayed) return;
-
-            if (!playable.GetGraph().GetRootPlayable(0).IsDone())
+            if (IsClipDone(playable))
             {
-                if (_isPauseWhenClipEnds)
-                {
-                    if (PauseTimelineEvent == null) return;
-                    PauseTimelineEvent.RaiseEvent();
-                }
-                else
-                {
-                    _onLineEndedEvent?.RaiseEvent();
-                }
+                Debug.LogWarning("This clip is done");
+                return;
             }
+
+            if (_isPauseWhenClipEnds)
+                PauseDialog();
+            else
+                EndDialog();
         }
+
+        private void EndDialog() => _onLineEndedEvent.RaiseEvent();
+
+        private void ShowDialog() => PlayDialogueEvent.Show(_dialogueLine);
+
+        private void PauseDialog() => PauseTimelineEvent.RaiseEvent();
+
+        private bool IsClipDone(Playable playable) => playable.GetGraph().GetRootPlayable(0).IsDone();
+        private bool IsPlaying(Playable playable) => Application.isPlaying && playable.GetGraph().IsPlaying();
     }
 }

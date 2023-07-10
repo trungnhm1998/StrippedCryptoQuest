@@ -22,8 +22,6 @@ namespace CryptoQuest.System.CutScene
         [Header("Option")]
         [SerializeField] private PlayableDirector _director;
 
-        private bool _isDialoguePaused;
-
         private void OnEnable()
         {
             _onPlayCutsceneEvent.OnEventRaised += OnPlayCutsceneEventRaised;
@@ -41,31 +39,18 @@ namespace CryptoQuest.System.CutScene
         {
             _inputMediator.EnableDialogueInput();
 
-            _isDialoguePaused = false;
             _director = value;
             _director.Play();
+
             _director.stopped += HandleDirectorStopped;
         }
 
         private void HandleDirectorStopped(PlayableDirector obj) => EndCutScene();
 
-        private void EndCutScene()
-        {
-            // if (_onPlayCutsceneEvent != null) _onPlayCutsceneEvent.OnEventRaised -= OnPlayCutsceneEventRaised;
+        private void EndCutScene() => _inputMediator.EnableMapGameplayInput();
 
-            _inputMediator.EnableMapGameplayInput();
-        }
+        private void PauseTimeline() => _director.playableGraph.GetRootPlayable(0).SetSpeed(0);
 
-        private void PauseTimeline()
-        {
-            _isDialoguePaused = true;
-            _director.playableGraph.GetRootPlayable(0).SetSpeed(0);
-        }
-
-        private void ResumeTimeline()
-        {
-            _isDialoguePaused = false;
-            _director.playableGraph.GetRootPlayable(0).SetSpeed(1);
-        }
+        private void ResumeTimeline() => _director.playableGraph.GetRootPlayable(0).SetSpeed(1);
     }
 }

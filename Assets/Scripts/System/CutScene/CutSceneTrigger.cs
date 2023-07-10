@@ -3,14 +3,13 @@ using CryptoQuest.UI.CutScene;
 using IndiGames.Core.Events.ScriptableObjects;
 using UnityEngine;
 using UnityEngine.Playables;
-using NotImplementedException = System.NotImplementedException;
 
 namespace CryptoQuest.System.CutScene
 {
     public class CutSceneTrigger : MonoBehaviour
     {
         [Header("Option")]
-        [SerializeField, Tooltip("Check here if you want cut scene play immediately")]
+        [SerializeField, Tooltip("Check if you want cut scene play immediately")]
         private bool _playOnAwake;
 
         [SerializeField, Tooltip("Check if you want to destroy after cut scene done.")]
