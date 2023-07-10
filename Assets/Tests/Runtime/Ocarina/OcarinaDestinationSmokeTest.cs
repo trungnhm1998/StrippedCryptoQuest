@@ -17,75 +17,105 @@ namespace Tests.Runtime.Ocarina
     {
         private const int FRAMES_TO_WAIT = 360;
         private LoadSceneEventChannelSO _loadMapEvent;
+        private string STARTUP_SCENE_NAME = "Startup";
 
         [UnityTest]
         public IEnumerator OcarinaDestinations_SetUpCorrectly()
         {
-            const string startupSceneName = "Startup";
-            yield return SceneManager.LoadSceneAsync(startupSceneName, LoadSceneMode.Single);
+            yield return SceneManager.LoadSceneAsync(STARTUP_SCENE_NAME, LoadSceneMode.Single);
 
-            Assert.That(SceneManager.GetActiveScene().name == startupSceneName);
-            var sceneSOGuids = AssetDatabase.FindAssets("t: SceneScriptableObject");
-            var framesToWait = FRAMES_TO_WAIT;
-            while (framesToWait >= -1)
-            {
-                framesToWait--;
-                yield return null;
-            }
+            Assert.That(SceneManager.GetActiveScene().name == STARTUP_SCENE_NAME);
+            SceneScriptableObject worldMapSceneSo = OcarinaDestinationSmokeTest.GetWorldMapScene();
 
-            SceneScriptableObject worldMapSceneSO = new SceneScriptableObject();
-            foreach (var guid in sceneSOGuids)
-            {
-                var path = UnityEditor.AssetDatabase.GUIDToAssetPath(guid);
-                var sceneSO = UnityEditor.AssetDatabase.LoadAssetAtPath<SceneScriptableObject>(path);
-                if (sceneSO.name == "WorldMapScene")
-                    worldMapSceneSO = sceneSO;
-            }
+            yield return DelayAfterLoadRequest();
 
-            var eventSOGuids = AssetDatabase.FindAssets("t: LoadSceneEventChannelSO");
-            foreach (var guid in eventSOGuids)
-            {
-                var path = UnityEditor.AssetDatabase.GUIDToAssetPath(guid);
-                var loadEventSO = UnityEditor.AssetDatabase.LoadAssetAtPath<LoadSceneEventChannelSO>(path);
-                if (loadEventSO.name == "LoadMapEventChannel")
-                {
-                    _loadMapEvent = loadEventSO;
-                    _loadMapEvent.RequestLoad(worldMapSceneSO);
-                }
-            }
+            _loadMapEvent = GetLoadMapEventSO();
+            _loadMapEvent.RequestLoad(worldMapSceneSo);
 
-            framesToWait = 500;
-            while (framesToWait >= -1)
-            {
-                framesToWait--;
-                yield return null;
-            }
+            yield return DelayAfterLoadRequest();
 
             Assert.That(SceneManager.GetSceneByName("WorldMap").isLoaded);
-            List<MapPathSO> destinationPaths = new List<MapPathSO>();
-            var goFromGOs = GameObject.FindObjectsOfType<GoFrom>();
-            foreach (var goFromGO in goFromGOs)
+            List<MapPathSO> destinationPaths = new(GetOcarinaDestinationPaths());
+
+            List<MapPathSO> ocarinaPaths = GetOcarinaPathsInData();
+
+            HashSet<MapPathSO> ocarinaPathSet = new(ocarinaPaths);
+            HashSet<MapPathSO> destinationPathSet = new(destinationPaths);
+            bool areEqual = ocarinaPathSet.SetEquals(destinationPathSet);
+            Assert.IsTrue(areEqual);
+        }
+
+        private IEnumerator DelayAfterLoadRequest()
+        {
+            int framesToWait = FRAMES_TO_WAIT;
+            while (framesToWait >= 0)
+            {
+                framesToWait--;
+                yield return null;
+            }
+        }
+
+        private static List<MapPathSO> GetOcarinaPathsInData()
+        {
+            List<MapPathSO> ocarinaPathSo = new();
+            string[] ocarinaDataGuids = AssetDatabase.FindAssets("t: OcarinaDataSO");
+            string ocarinaDataSOpath = UnityEditor.AssetDatabase.GUIDToAssetPath(ocarinaDataGuids[0]);
+            OcarinaLocations ocarinaDataSo =
+                UnityEditor.AssetDatabase.LoadAssetAtPath<OcarinaLocations>(ocarinaDataSOpath);
+            foreach (OcarinaLocations.Location ocarinaLocation in ocarinaDataSo.Locations)
+            {
+                ocarinaPathSo.Add(ocarinaLocation.Path);
+            }
+
+            return ocarinaPathSo;
+        }
+
+        private static List<MapPathSO> GetOcarinaDestinationPaths()
+        {
+            GoFrom[] goFromGOs = GameObject.FindObjectsOfType<GoFrom>();
+            List<MapPathSO> destinationPaths = new();
+            foreach (GoFrom goFromGO in goFromGOs)
             {
                 if (goFromGO.gameObject.name.Contains("Ocarina"))
                 {
-                    var goFrom = goFromGO.GetComponent<GoFrom>();
+                    GoFrom goFrom = goFromGO.GetComponent<GoFrom>();
                     destinationPaths.Add(goFrom.MapPath);
                 }
             }
 
-            List<MapPathSO> ocarinaPathSO = new List<MapPathSO>();
-            var ocarinaDataGuids = AssetDatabase.FindAssets("t: OcarinaDataSO");
-            var ocarinaDataSOpath = UnityEditor.AssetDatabase.GUIDToAssetPath(ocarinaDataGuids[0]);
-            var ocarinaDataSO = UnityEditor.AssetDatabase.LoadAssetAtPath<OcarinaDataSO>(ocarinaDataSOpath);
-            foreach (var ocarinaData in ocarinaDataSO.ocarinaDataList)
+            return destinationPaths;
+        }
+
+        private LoadSceneEventChannelSO GetLoadMapEventSO()
+        {
+            string[] eventSOGuids = AssetDatabase.FindAssets("t: LoadSceneEventChannelSO");
+            foreach (string guid in eventSOGuids)
             {
-                ocarinaPathSO.Add(ocarinaData.path);
+                string path = UnityEditor.AssetDatabase.GUIDToAssetPath(guid);
+                LoadSceneEventChannelSO loadEventSO =
+                    UnityEditor.AssetDatabase.LoadAssetAtPath<LoadSceneEventChannelSO>(path);
+                if (loadEventSO.name == "LoadMapEventChannel")
+                {
+                    return loadEventSO;
+                }
             }
 
-            var ocarinaPathSet = new HashSet<MapPathSO>(ocarinaPathSO);
-            var destinationPathSet = new HashSet<MapPathSO>(destinationPaths);
-            bool areEqual = ocarinaPathSet.SetEquals(destinationPathSet);
-            Assert.IsTrue(areEqual);
+            return null;
+        }
+
+        private static SceneScriptableObject GetWorldMapScene()
+        {
+            string[] sceneSOGuids = AssetDatabase.FindAssets("t: SceneScriptableObject");
+            SceneScriptableObject worldMapSceneSO = new();
+            foreach (string guid in sceneSOGuids)
+            {
+                string path = UnityEditor.AssetDatabase.GUIDToAssetPath(guid);
+                SceneScriptableObject sceneSO = UnityEditor.AssetDatabase.LoadAssetAtPath<SceneScriptableObject>(path);
+                if (sceneSO.name == "WorldMapScene")
+                    worldMapSceneSO = sceneSO;
+            }
+
+            return worldMapSceneSO;
         }
     }
 }

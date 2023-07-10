@@ -6,6 +6,6 @@ namespace CryptoQuest
 {
     public interface IUsable
     {
-        public void Use();
-    }   
+        void Use();
+    }
 }
