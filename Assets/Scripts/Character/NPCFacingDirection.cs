@@ -7,10 +7,10 @@ using UnityEngine.UI;
 
 namespace CryptoQuest.Character
 {
-    public class NPCFacingDirection : MonoBehaviour, IInteractable
+    public class NPCFacingDirection : MonoBehaviour
     {
-        public CharacterBehaviour.EFacingDirection _characterFacingDirection;
-        public HeroBehaviour _heroFacingDirection;
+        private CharacterBehaviour.EFacingDirection _characterFacingDirection;
+        private HeroBehaviour _heroFacingDirection;
         private SpriteRenderer _currentSprite;
         private List<Sprite> _listSprites;
         private string _spriteLocation;
@@ -21,10 +21,6 @@ namespace CryptoQuest.Character
         {
             InitializeSetup();
             GetFacingDirectionSprites();
-        }
-        public void Interact()
-        {
-            NPCInteract();
         }
         private void InitializeSetup()
         {
@@ -49,24 +45,18 @@ namespace CryptoQuest.Character
                 case CharacterBehaviour.EFacingDirection.South:
                     facingDirection = (int)CharacterBehaviour.EFacingDirection.North;
                     _currentSprite.sprite = _listSprites[facingDirection];
-                    Debug.Log(facingDirection);
                     break;
                 case CharacterBehaviour.EFacingDirection.West:
                     facingDirection = (int)CharacterBehaviour.EFacingDirection.East;
                     _currentSprite.sprite = _listSprites[facingDirection];
-                    Debug.Log(facingDirection);
                     break;
                 case CharacterBehaviour.EFacingDirection.North:
                     facingDirection = (int)CharacterBehaviour.EFacingDirection.South;
                     _currentSprite.sprite = _listSprites[facingDirection];
-                    Debug.Log(facingDirection);
                     break;
                 case CharacterBehaviour.EFacingDirection.East:
                     facingDirection = (int)CharacterBehaviour.EFacingDirection.West;
                     _currentSprite.sprite = _listSprites[facingDirection];
-                    Debug.Log(facingDirection);
-                    break;
-                default:
                     break;
             }
         }
