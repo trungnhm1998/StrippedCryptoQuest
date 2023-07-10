@@ -11,8 +11,6 @@ namespace CryptoQuest
     {
         private string _stringValue = "";
 
-        private void OnEnable() { }
-
         public override void OnInspectorGUI()
         {
             base.OnInspectorGUI();
