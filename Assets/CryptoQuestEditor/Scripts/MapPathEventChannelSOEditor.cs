@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using CryptoQuest.Events;
 using CryptoQuest.Map;
 using UnityEditor;
 using UnityEngine;
 
-namespace CryptoQuest.Events
+namespace CryptoQuestEditor
 {
-#if UNITY_EDITOR
     [CustomEditor(typeof(MapPathEventChannelSO))]
     public class MapPathEventChannelSOEditor : Editor
     {
@@ -35,5 +32,4 @@ namespace CryptoQuest.Events
             GUILayout.EndVertical();
         }
     }
-#endif
 }
