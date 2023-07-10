@@ -15,7 +15,7 @@ namespace Tests.Runtime.Ocarina
 {
     public class OcarinaDestinationSmokeTest
     {
-        private const int FRAMES_TO_WAIT = 360;
+        private readonly WaitForSeconds SECONDS_TO_WAIT = new WaitForSeconds(6);
         private LoadSceneEventChannelSO _loadMapEvent;
         private string STARTUP_SCENE_NAME = "Startup";
 
@@ -27,12 +27,12 @@ namespace Tests.Runtime.Ocarina
             Assert.That(SceneManager.GetActiveScene().name == STARTUP_SCENE_NAME);
             SceneScriptableObject worldMapSceneSo = OcarinaDestinationSmokeTest.GetWorldMapScene();
 
-            yield return DelayAfterLoadRequest();
+            yield return SECONDS_TO_WAIT;
 
             _loadMapEvent = GetLoadMapEventSO();
             _loadMapEvent.RequestLoad(worldMapSceneSo);
 
-            yield return DelayAfterLoadRequest();
+            yield return SECONDS_TO_WAIT;
 
             Assert.That(SceneManager.GetSceneByName("WorldMap").isLoaded);
             List<MapPathSO> destinationPaths = new(GetOcarinaDestinationPaths());
@@ -43,16 +43,6 @@ namespace Tests.Runtime.Ocarina
             HashSet<MapPathSO> destinationPathSet = new(destinationPaths);
             bool areEqual = ocarinaPathSet.SetEquals(destinationPathSet);
             Assert.IsTrue(areEqual);
-        }
-
-        private IEnumerator DelayAfterLoadRequest()
-        {
-            int framesToWait = FRAMES_TO_WAIT;
-            while (framesToWait >= 0)
-            {
-                framesToWait--;
-                yield return null;
-            }
         }
 
         private static List<MapPathSO> GetOcarinaPathsInData()
