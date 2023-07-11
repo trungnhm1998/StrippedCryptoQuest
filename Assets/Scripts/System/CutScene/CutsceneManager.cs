@@ -31,9 +31,9 @@ namespace CryptoQuest.System.CutScene
 
         private void OnDisable()
         {
+            _onPlayCutsceneEvent.OnEventRaised -= OnPlayCutsceneEventRaised;
             _onPauseTimelineEvent.EventRaised -= PauseTimeline;
             _onResumeTimelineEvent.EventRaised -= ResumeTimeline;
-            _director.stopped -= HandleDirectorStopped;
         }
 
         private void OnPlayCutsceneEventRaised(PlayableDirector value)
