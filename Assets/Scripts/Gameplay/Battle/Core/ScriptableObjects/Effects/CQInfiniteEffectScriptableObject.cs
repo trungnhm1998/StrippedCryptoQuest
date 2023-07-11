@@ -36,9 +36,5 @@ namespace CryptoQuest.Gameplay.Battle
             }
 
         }
-
-        public override void Update(float deltaTime)
-        {
-        }
     }
 }
