@@ -15,7 +15,7 @@ namespace CryptoQuestEditor.EditorTool
 
         private void OnGUI()
         {
-            _showSceneList = GUILayout.Toggle(_showSceneList, "Show add effects");
+            _showSceneList = GUILayout.Toggle(_showSceneList, "Show teleport destinations");
             if (!_showSceneList) return;
 
 

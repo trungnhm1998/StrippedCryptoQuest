@@ -20,9 +20,9 @@ namespace CryptoQuest.Tests.Runtime.OcarinaIntergrationTests
         private readonly WaitForSeconds SECONDS_TO_WAIT = new WaitForSeconds(6);
         private LoadSceneEventChannelSO _loadMapEvent;
         private string STARTUP_SCENE_NAME = "Startup";
-        private PathStorageSO pathStorage;
-        private MapPathEventChannelSO destinationSelectedEvent;
-        private VoidEventChannelSO destinationConfirmEvent;
+        private PathStorageSO _pathStorage;
+        private MapPathEventChannelSO _destinationSelectedEvent;
+        private VoidEventChannelSO _destinationConfirmEvent;
 
 
         [UnityTest]
@@ -37,34 +37,44 @@ namespace CryptoQuest.Tests.Runtime.OcarinaIntergrationTests
             OcarinaBehaviour ocarinaBehaviour = GameObject.FindObjectOfType<OcarinaBehaviour>();
             Assert.NotNull(ocarinaBehaviour);
 
-            pathStorage = ocarinaBehaviour.PathStorage;
-            Assert.NotNull(pathStorage);
-
-            destinationSelectedEvent = ocarinaBehaviour.DestinationSelectedEvent;
-            Assert.NotNull(destinationSelectedEvent);
-
-            destinationConfirmEvent = ocarinaBehaviour.DestinationConfirmEvent;
-            Assert.NotNull(destinationConfirmEvent);
-        }
-
-        [UnityTest]
-        public IEnumerator UseOcarina_LoadWorldScene()
-        {
-            yield return SceneManager.LoadSceneAsync(STARTUP_SCENE_NAME, LoadSceneMode.Single);
-
-            Assert.That(SceneManager.GetActiveScene().name == STARTUP_SCENE_NAME);
-
-            yield return SECONDS_TO_WAIT;
-            Assert.That(SceneManager.GetSceneByName("GlobalManagers").isLoaded);
-            OcarinaBehaviour ocarinaBehaviour = GameObject.FindObjectOfType<OcarinaBehaviour>();
-            Assert.NotNull(ocarinaBehaviour);
+            GetNecessaryScriptableObjects();
+            Assert.NotNull(_pathStorage);
+            Assert.NotNull(_destinationSelectedEvent);
+            Assert.NotNull(_destinationConfirmEvent);
 
             MapPathSO newPath = ScriptableObject.CreateInstance<MapPathSO>();
-            ocarinaBehaviour.DestinationSelectedEvent.RaiseEvent(newPath);
-            ocarinaBehaviour.DestinationConfirmEvent.RaiseEvent();
+            _destinationSelectedEvent.RaiseEvent(newPath);
+            _destinationConfirmEvent.RaiseEvent();
             yield return SECONDS_TO_WAIT;
             Assert.That(SceneManager.GetSceneByName("WorldMap").isLoaded);
         }
+
+        private void GetNecessaryScriptableObjects()
+        {
+            string[] pathStorageGuids = AssetDatabase.FindAssets("t: PathStorageSO");
+            string pathStorageSOpath = UnityEditor.AssetDatabase.GUIDToAssetPath(pathStorageGuids[0]);
+            _pathStorage = UnityEditor.AssetDatabase.LoadAssetAtPath<PathStorageSO>(pathStorageSOpath);
+
+            string[] destinationSelectedEventGuids = AssetDatabase.FindAssets("t: MapPathEventChannelSO");
+            string destinationSelectedEventSOpath =
+                UnityEditor.AssetDatabase.GUIDToAssetPath(destinationSelectedEventGuids[0]);
+            _destinationSelectedEvent =
+                UnityEditor.AssetDatabase.LoadAssetAtPath<MapPathEventChannelSO>(destinationSelectedEventSOpath);
+
+            string[] destinationConfirmEventGuids = AssetDatabase.FindAssets("t: VoidEventChannelSO");
+            foreach (string guid in destinationConfirmEventGuids)
+            {
+                string destinationConfirmEventSOpath = UnityEditor.AssetDatabase.GUIDToAssetPath(guid);
+                VoidEventChannelSO eventSo =
+                    UnityEditor.AssetDatabase.LoadAssetAtPath<VoidEventChannelSO>(destinationConfirmEventSOpath);
+                if (eventSo.name == "DestinationConfirmEvent")
+                {
+                    _destinationConfirmEvent = eventSo;
+                    break;
+                }
+            }
+        }
+
 
         [UnityTest]
         public IEnumerator UseOcarina_WithOut_Selected_Destination_Still_Load_WorldMap()
@@ -78,7 +88,10 @@ namespace CryptoQuest.Tests.Runtime.OcarinaIntergrationTests
             OcarinaBehaviour ocarinaBehaviour = GameObject.FindObjectOfType<OcarinaBehaviour>();
             Assert.NotNull(ocarinaBehaviour);
 
-            ocarinaBehaviour.DestinationConfirmEvent.RaiseEvent();
+            if (_destinationConfirmEvent == null || _destinationSelectedEvent == null || _pathStorage == null)
+                GetNecessaryScriptableObjects();
+
+            _destinationConfirmEvent.RaiseEvent();
             yield return SECONDS_TO_WAIT;
             bool isWorldMapLoaded = SceneManager.GetSceneByName("WorldMap").isLoaded;
             Assert.IsTrue(isWorldMapLoaded);
@@ -96,7 +109,9 @@ namespace CryptoQuest.Tests.Runtime.OcarinaIntergrationTests
             OcarinaBehaviour ocarinaBehaviour = GameObject.FindObjectOfType<OcarinaBehaviour>();
             Assert.NotNull(ocarinaBehaviour);
 
-            ocarinaBehaviour.DestinationConfirmEvent.RaiseEvent();
+            if (_destinationConfirmEvent == null || _destinationSelectedEvent == null || _pathStorage == null)
+                GetNecessaryScriptableObjects();
+            _destinationConfirmEvent.RaiseEvent();
             yield return SECONDS_TO_WAIT;
             Assert.That(SceneManager.GetSceneByName("WorldMap").isLoaded);
             Vector2 defaultSpawnPos = GameObject.Find("DefaultSpawnLocation").transform.position;
@@ -116,13 +131,15 @@ namespace CryptoQuest.Tests.Runtime.OcarinaIntergrationTests
             OcarinaBehaviour ocarinaBehaviour = GameObject.FindObjectOfType<OcarinaBehaviour>();
             Assert.NotNull(ocarinaBehaviour);
 
+            if (_destinationConfirmEvent == null || _destinationSelectedEvent == null || _pathStorage == null)
+                GetNecessaryScriptableObjects();
             MapPathSO newPath = ScriptableObject.CreateInstance<MapPathSO>();
             newPath.name = "newPath";
-            ocarinaBehaviour.DestinationSelectedEvent.RaiseEvent(newPath);
-            Assert.That(ocarinaBehaviour.PathStorage.LastTakenPath != newPath);
+            _destinationSelectedEvent.RaiseEvent(newPath);
+            Assert.That(_pathStorage.LastTakenPath != newPath);
 
-            ocarinaBehaviour.DestinationConfirmEvent.RaiseEvent();
-            Assert.That(ocarinaBehaviour.PathStorage.LastTakenPath == newPath);
+            _destinationConfirmEvent.RaiseEvent();
+            Assert.That(_pathStorage.LastTakenPath == newPath);
         }
 
         [UnityTest]
@@ -137,7 +154,8 @@ namespace CryptoQuest.Tests.Runtime.OcarinaIntergrationTests
             OcarinaBehaviour ocarinaBehaviour = GameObject.FindObjectOfType<OcarinaBehaviour>();
             Assert.NotNull(ocarinaBehaviour);
 
-
+            if (_destinationConfirmEvent == null || _destinationSelectedEvent == null || _pathStorage == null)
+                GetNecessaryScriptableObjects();
             string[] guids = AssetDatabase.FindAssets("t:MapPathSO");
             foreach (string guid in guids)
             {
@@ -146,8 +164,8 @@ namespace CryptoQuest.Tests.Runtime.OcarinaIntergrationTests
                     UnityEditor.AssetDatabase.LoadAssetAtPath<MapPathSO>(path);
                 if (mapPathSo.name == "Ocarina_WorldMap.PortCity")
                 {
-                    ocarinaBehaviour.DestinationSelectedEvent.RaiseEvent(mapPathSo);
-                    ocarinaBehaviour.DestinationConfirmEvent.RaiseEvent();
+                    _destinationSelectedEvent.RaiseEvent(mapPathSo);
+                    _destinationConfirmEvent.RaiseEvent();
                     break;
                 }
             }
