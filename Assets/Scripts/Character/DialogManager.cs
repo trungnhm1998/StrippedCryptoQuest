@@ -17,7 +17,6 @@ namespace CryptoQuest.Character
         private void Awake()
         {
             _speechDialog = GetComponentInChildren<IDialog>();
-            // UIChatDialog.Create<UIChatDialog>();
         }
 
         private void OnEnable()
