@@ -19,6 +19,8 @@ namespace CryptoQuest.Gameplay.Battle
 
         [field: SerializeField]
         public TargetContainterSO TargetContainer { get; private set; }
+        [field: SerializeField]
+        public CharacterDataSO UnitData { get; set; }
 
         public AbstractAbility SelectedSkill { get; protected set; }
 
@@ -27,12 +29,7 @@ namespace CryptoQuest.Gameplay.Battle
         protected BattleManager _battleManager;
         protected bool _isDead;
 
-        public virtual CharacterDataSO GetUnitData()
-        {
-            return null;
-        }
-        
-        public void Init(BattleTeam team, AbilitySystemBehaviour owner)
+        public virtual void Init(BattleTeam team, AbilitySystemBehaviour owner)
         {
             TargetContainer.Targets.Clear();
             OwnerTeam = team;

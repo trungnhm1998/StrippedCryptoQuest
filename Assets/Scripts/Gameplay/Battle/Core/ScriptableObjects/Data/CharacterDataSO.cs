@@ -1,8 +1,8 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.ScriptableObjects;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
+using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
 
 namespace CryptoQuest.Gameplay.Battle
 {
@@ -25,5 +25,7 @@ namespace CryptoQuest.Gameplay.Battle
                 _displayName = value;
             }
         }
+
+        public AbilitySystemBehaviour Owner { get; set; }
     }
 }

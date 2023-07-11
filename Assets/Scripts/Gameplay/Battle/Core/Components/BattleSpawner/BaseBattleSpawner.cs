@@ -31,12 +31,11 @@ namespace CryptoQuest.Gameplay.Battle
                 GameObject enemyGO = Instantiate(_monsterPrefab, transform);
                 var statInit = enemyGO.GetComponent<StatsInitializer>();
                 statInit.InitStats(enemy);
-                enemyGO.name = enemy.Name;
+
+                var battleUnit = enemyGO.GetComponent<IBattleUnit>();
+                battleUnit.UnitData = enemy;
+                
                 var abilitySystem = enemyGO.GetComponent<AbilitySystemBehaviour>();
-                foreach (AbilityScriptableObject skill in enemy.GrantedSkills)
-                {
-                    abilitySystem.GiveAbility(skill);
-                }
                 _battleManager.BattleTeam2.Members.Add(abilitySystem);
                 ProcessEnemiesName(data, enemy);
             }

@@ -33,6 +33,7 @@ namespace CryptoQuest.FSM
 
         public void SetCurrentState(BaseStateSO nextState)
         {
+            if (nextState == null) return;
             if (CurrentState != null)
             {
                 CurrentState.OnExitState(this);

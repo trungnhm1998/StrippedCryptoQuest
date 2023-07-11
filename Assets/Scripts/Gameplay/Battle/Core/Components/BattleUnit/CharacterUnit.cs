@@ -1,27 +1,29 @@
 using UnityEngine;
 using System.Collections;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.Components;
+using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
 
 namespace CryptoQuest.Gameplay.Battle
 {
     public class CharacterUnit : BattleUnitBase
     {
-        protected CharacterDataSO _characterData;
-        
-        public override CharacterDataSO GetUnitData()
+        public override void Init(BattleTeam team, AbilitySystemBehaviour owner)
         {
-            _characterData = (_characterData != null) ? _characterData : GetCharacterData();
-            return _characterData;
+            base.Init(team, owner);
+            UnitData.Owner = owner;
         }
 
-        private CharacterDataSO GetCharacterData()
+        private void Start()
         {
-            var statsInitializer = GetComponent<StatsInitializer>();
-            if (statsInitializer.DefaultStats is CharacterDataSO data)
+            GrantDefaulSkills();
+        }
+
+        private void GrantDefaulSkills()
+        {
+            foreach (var skill in UnitData.GrantedSkills)
             {
-                return data;
+                Owner.GiveAbility(skill);
             }
-            return null;
         }
     }
 }

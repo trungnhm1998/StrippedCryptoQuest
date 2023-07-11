@@ -9,7 +9,9 @@ namespace CryptoQuest.Gameplay.Battle
     public class BattleManager : MonoBehaviour
     {
         [SerializeField] private BaseStateMachine _stateMachine;
+        [SerializeField] private StateSO _battleStartState;
         [SerializeField] private StateSO _battleEndState;
+        [SerializeField] private BattleBus _battleBus;
 
         [field: SerializeField]
         public BattleTeam BattleTeam1 { get; private set; }
@@ -21,17 +23,29 @@ namespace CryptoQuest.Gameplay.Battle
         public BaseBattleSpawner BattleSpawner { get; private set; }
         public List<IBattleUnit> BattleUnits { get; private set; } = new();
 
+
         protected void Awake()
         {
             BattleSpawner = GetComponent<BaseBattleSpawner>();
-            InitBattleTeams();
+            _battleBus.BattleManager = this;
+            _stateMachine.SetCurrentState(_battleStartState);
         }
 
         public void InitBattleTeams()
         {
             BattleUnits.Clear();
+            SetupTeam1();
+            SetupTeam2();
+        }
+
+        private void SetupTeam1()
+        {
             BattleTeam1.InitBattleUnits(BattleTeam2);
             BattleUnits.AddRange(BattleTeam1.BattleUnits);
+        }
+
+        private void SetupTeam2()
+        {
             BattleTeam2.InitBattleUnits(BattleTeam1);
             BattleUnits.AddRange(BattleTeam2.BattleUnits);
         }
