@@ -2,6 +2,7 @@
 using CryptoQuest.Gameplay.Quest.Dialogue.ScriptableObject;
 using CryptoQuest.Input;
 using CryptoQuest.UI;
+using CryptoQuest.UI.Dialogs;
 using UnityEngine;
 
 namespace CryptoQuest.Character
@@ -9,7 +10,7 @@ namespace CryptoQuest.Character
     public class DialogManager : MonoBehaviour
     {
         [SerializeField] private InputMediatorSO _inputMediator;
-        [SerializeField] private DialogEventChannelSO _dialogEventSO;
+        [SerializeField] private DialogueEventChannelSO _dialogEventSO;
 
         private IDialog _speechDialog = NullDialog.Instance;
 
