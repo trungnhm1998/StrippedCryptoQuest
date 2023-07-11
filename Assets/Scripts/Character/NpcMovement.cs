@@ -2,169 +2,96 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using CryptoQuest.Character.MonoBehaviours;
+using CryptoQuest.Character.Movement;
+using IndiGames.Core.EditorTools.Attributes.ReadOnlyAttribute;
 using UnityEditor;
 using UnityEngine;
 
 namespace CryptoQuest
 {
-    public class NpcMovement : MonoBehaviour
+    public class NpcMovement : CharacterBehaviour
     {
-        public enum MoveingDirection
-        {
-            MoveDown = 0,
-            MoveLeft = 1,
-            MoveTop = 2,
-            MoveRight = 3,
-            None = 4
-        }
-
         [SerializeField] private AnimatorOverrideController _animatorOverrideController;
-        [SerializeField] private MoveingDirection _firstMovingDirection;
-        [SerializeField] private Transform _startMovingPosition;
-        [SerializeField] private Transform _finishMovingPosition;
-        [SerializeField] private float _timeDuration;
-        private MoveingDirection _npcFacingDirection;
-        private HeroBehaviour _heroBehaviour;
-        private Animator _animator;
-        private float _percentComplete = 0f;
+        [SerializeField] private EFacingDirection _playerFacingDirection = EFacingDirection.South;
+        [SerializeField] private Transform _pointAPosition;
+        [SerializeField] private Transform _pointBPosition;
+        [SerializeField] private Transform _destination;
+        [SerializeField] private GameObject _testPoint;
+        [SerializeField] private float _speed;
+        [SerializeField] private float _delayTime;
         private float _timeElapsed = 0;
-        private bool _isMoveForward;
         private bool _isMoving;
+        private Animator _animatorNpc;
+        private Vector2 _characterVelocity;
+        private Vector2 sprite;
+
 
         void Start()
         {
             _isMoving = true;
-            _isMoveForward = true;
-            _npcFacingDirection = MoveingDirection.None;
-            _animator = gameObject.GetComponent<Animator>();
-            _animator.runtimeAnimatorController = _animatorOverrideController;
-            _startMovingPosition.transform.localPosition = gameObject.transform.localPosition;
-            SetFacingDirection(_firstMovingDirection);
+            SpriteRenderer _spriteRenderer = GetComponent<SpriteRenderer>();
+            sprite = new Vector2(_spriteRenderer.sprite.rect.width * 0.01f / 2, (_spriteRenderer.sprite.rect.height * 0.01f) / 2);
+
+            _testPoint.transform.localPosition = sprite;
+            _animatorNpc = _animator;
+            _animatorNpc.runtimeAnimatorController = _animatorOverrideController;
+            if (_destination == null) _destination = _pointAPosition;
+            GetCharacterVelocity();
         }
 
         void Update()
         {
+            Move();
+        }
+
+        private void Move()
+        {
             if (_isMoving)
+                transform.localPosition = Vector2.MoveTowards(transform.localPosition, _destination.localPosition, _speed * Time.deltaTime);
+
+            if (gameObject.transform.localPosition == _destination.localPosition)
             {
-                _animator.SetBool("IsWalking", true);
-                if (_isMoveForward)
+                _isMoving = false;
+                _timeElapsed += Time.deltaTime;
+                if (_timeElapsed > _delayTime)
                 {
-                    NPCMovingForward();
+                    SwapDestination();
+                    _timeElapsed = 0;
                 }
-                else
-                {
-                    NPCMovingBackward();
-                }
+            }
+            _animatorNpc.SetBool(AnimIsWalking, _isMoving);
+        }
+
+        private void SwapDestination()
+        {
+            if (_destination == _pointAPosition)
+            {
+                _destination = _pointBPosition;
             }
             else
             {
-                _animator.SetBool("IsWalking", false);
+                _destination = _pointAPosition;
             }
-        }
-        private void NPCMovingForward()
-        {
-            _percentComplete += Time.deltaTime;
-            float percentageCompleted = _percentComplete / _timeDuration;
-            gameObject.transform.localPosition = Vector2.Lerp(_startMovingPosition.localPosition,
-                _finishMovingPosition.localPosition, percentageCompleted);
-            if (_percentComplete > _timeDuration)
-            {
-                _isMoveForward = false;
-                _percentComplete = 0;
-                ReverseFacingDirection(_firstMovingDirection);
-            }
-        }
-        private void NPCMovingBackward()
-        {
-            _percentComplete += Time.deltaTime;
-            float percentageCompleted = _percentComplete / _timeDuration;
-            gameObject.transform.localPosition = Vector2.Lerp(_finishMovingPosition.localPosition,
-                _startMovingPosition.localPosition, percentageCompleted);
-            if (_percentComplete > _timeDuration)
-            {
-                _isMoveForward = true;
-                _percentComplete = 0;
-                ReverseFacingDirection(_npcFacingDirection);
-            }
+            _isMoving = true;
+            GetCharacterVelocity();
         }
 
-        private void SetFacingDirection(MoveingDirection direction)
+        private void GetCharacterVelocity()
         {
-            _animator.SetFloat("AnimVelocityX", 0);
-            _animator.SetFloat("AnimVelocityY", 0);
-            _npcFacingDirection = direction;
-            switch (_npcFacingDirection)
-            {
-                case MoveingDirection.MoveDown:
-                    _animator.SetFloat("AnimVelocityY", -1);
-                    break;
-                case MoveingDirection.MoveLeft:
-                    _animator.SetFloat("AnimVelocityX", -1);
-                    break;
-                case MoveingDirection.MoveTop:
-                    _animator.SetFloat("AnimVelocityY", 1);
-                    break;
-                case MoveingDirection.MoveRight:
-                    _animator.SetFloat("AnimVelocityX", 1);
-                    break;
-            }
+            _characterVelocity = _destination.localPosition - gameObject.transform.localPosition;
+            SetFacingDirection(_characterVelocity.normalized);
         }
 
-        private void ReverseFacingDirection(MoveingDirection direction)
+        private void OnTriggerEnter2D(Collider2D other)
         {
-            switch (direction)
-            {
-                case MoveingDirection.MoveDown:
-                    _npcFacingDirection = MoveingDirection.MoveTop;
-                    break;
-                case MoveingDirection.MoveLeft:
-                    _npcFacingDirection = MoveingDirection.MoveRight;
-                    break;
-                case MoveingDirection.MoveTop:
-                    _npcFacingDirection = MoveingDirection.MoveDown;
-                    break;
-                case MoveingDirection.MoveRight:
-                    _npcFacingDirection = MoveingDirection.MoveLeft;
-                    break;
-            }
-            SetFacingDirection(_npcFacingDirection);
+            _isMoving = IsWalking = false;
+            IFacingStrategy strat = new NpcFacingStrategy();
+            SetFacingDirection(strat.Execute(transform.position, other.transform.position));
         }
-        void OnTriggerEnter2D(Collider2D other)
-        {
-            _isMoving = false;
-            if (_heroBehaviour == null && other.CompareTag("Player"))
-            {
-                _heroBehaviour = other.GetComponentInParent(typeof(HeroBehaviour)) as HeroBehaviour;
-            }
-            switch (_heroBehaviour.FacingDirection)
-            {
-                case HeroBehaviour.EFacingDirection.South:
-                    SetFacingDirection(MoveingDirection.MoveTop);
-                    break;
-                case HeroBehaviour.EFacingDirection.West:
-                    SetFacingDirection(MoveingDirection.MoveRight);
-                    break;
-                case HeroBehaviour.EFacingDirection.North:
-                    SetFacingDirection(MoveingDirection.MoveDown);
-                    break;
-                case HeroBehaviour.EFacingDirection.East:
-                    SetFacingDirection(MoveingDirection.MoveLeft);
-                    break;
-            }
-            SetFacingDirection(_npcFacingDirection);
-        }
-
-        void OnTriggerExit2D(Collider2D other)
+        private void OnTriggerExit2D(Collider2D other)
         {
             _isMoving = true;
-            if (_isMoveForward)
-            {
-                SetFacingDirection(_firstMovingDirection);
-            }
-            else
-            {
-                ReverseFacingDirection(_firstMovingDirection);
-            }
+            GetCharacterVelocity();
         }
     }
 }
