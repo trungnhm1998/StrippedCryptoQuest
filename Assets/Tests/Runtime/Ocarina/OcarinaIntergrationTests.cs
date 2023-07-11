@@ -82,7 +82,7 @@ namespace CryptoQuest.Tests.Runtime.OcarinaIntergrationTests
 
 
         [UnityTest]
-        public IEnumerator UseOcarina_WithOut_Selected_Destination_Still_Load_WorldMap()
+        public IEnumerator ConfirmUseOcarina_WorldMapIsLoad_ShouldReturnTrue()
         {
             yield return SceneManager.LoadSceneAsync(STARTUP_SCENE_NAME, LoadSceneMode.Single);
 
@@ -103,7 +103,7 @@ namespace CryptoQuest.Tests.Runtime.OcarinaIntergrationTests
         }
 
         [UnityTest]
-        public IEnumerator UseOcarina_WithOut_Selected_Destination_Place_Player_At_Default_Pos()
+        public IEnumerator ConfirmUseOcarina_PlayerIsPlacedAtDefaultPos_ShouldReturnTrue()
         {
             yield return SceneManager.LoadSceneAsync(STARTUP_SCENE_NAME, LoadSceneMode.Single);
 
@@ -125,7 +125,7 @@ namespace CryptoQuest.Tests.Runtime.OcarinaIntergrationTests
         }
 
         [UnityTest]
-        public IEnumerator SelectDestination_NotUpdatePath_Until_UseOcarina()
+        public IEnumerator SelectDestination_NotUpdatePath_Until_UseOcarina_ShouldReturnTrueTrue()
         {
             yield return SceneManager.LoadSceneAsync(STARTUP_SCENE_NAME, LoadSceneMode.Single);
 
@@ -148,7 +148,7 @@ namespace CryptoQuest.Tests.Runtime.OcarinaIntergrationTests
         }
 
         [UnityTest]
-        public IEnumerator UseOcarina_To_PortCity_PlacePlayer_At_Entrance()
+        public IEnumerator ConfirmUseOcarina_PlacePlayerAtEntrance_ShouldReturnTrue()
         {
             yield return SceneManager.LoadSceneAsync(STARTUP_SCENE_NAME, LoadSceneMode.Single);
             Assert.That(SceneManager.GetActiveScene().name == STARTUP_SCENE_NAME);
@@ -193,7 +193,12 @@ namespace CryptoQuest.Tests.Runtime.OcarinaIntergrationTests
         }
 
         [UnityTest]
-        public IEnumerator UseOcarina_InWorldMap_Still_Move_Hero_To_Destination()
+        [TestCase("Ocarina_WorldMap.CryptoSanctuary", ExpectedResult = (IEnumerator)null)]
+        [TestCase("Ocarina_WorldMap.PortCity", ExpectedResult = (IEnumerator)null)]
+        [TestCase("Ocarina_WorldMap.FairyForest", ExpectedResult = (IEnumerator)null)]
+        [TestCase("Ocarina_WorldMap.TronVillage", ExpectedResult = (IEnumerator)null)]
+        [TestCase("Ocarina_WorldMap.UniVillage", ExpectedResult = (IEnumerator)null)]
+        public IEnumerator ConfirmUseOcarina_InWorldMapStillMoveHeroToDestination_ShouldReturnTrue(string pathCase)
         {
             yield return SceneManager.LoadSceneAsync(STARTUP_SCENE_NAME, LoadSceneMode.Single);
             Assert.That(SceneManager.GetActiveScene().name == STARTUP_SCENE_NAME);
@@ -214,10 +219,10 @@ namespace CryptoQuest.Tests.Runtime.OcarinaIntergrationTests
             string[] guids = AssetDatabase.FindAssets("t:MapPathSO");
             foreach (string guid in guids)
             {
-                string path = UnityEditor.AssetDatabase.GUIDToAssetPath(guid);
+                string path =AssetDatabase.GUIDToAssetPath(guid);
                 MapPathSO mapPathSo =
-                    UnityEditor.AssetDatabase.LoadAssetAtPath<MapPathSO>(path);
-                if (mapPathSo.name == "Ocarina_WorldMap.PortCity")
+                    AssetDatabase.LoadAssetAtPath<MapPathSO>(path);
+                if (mapPathSo.name == pathCase)
                 {
                     _destinationSelectedEvent.RaiseEvent(mapPathSo);
                     _destinationConfirmEvent.RaiseEvent();
@@ -231,7 +236,7 @@ namespace CryptoQuest.Tests.Runtime.OcarinaIntergrationTests
             foreach (GoFrom goFromGO in goFromGOs)
             {
                 GoFrom goFrom = goFromGO.GetComponent<GoFrom>();
-                if (goFrom.MapPath.name == "Ocarina_WorldMap.PortCity")
+                if (goFrom.MapPath.name == pathCase)
                 {
                     portCityEntrancePos = goFromGO.transform.position;
                     break;
