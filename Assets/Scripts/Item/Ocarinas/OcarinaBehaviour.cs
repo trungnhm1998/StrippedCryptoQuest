@@ -13,10 +13,13 @@ namespace CryptoQuest
     public class OcarinaBehaviour : MonoBehaviour
     {
         [SerializeField] private PathStorageSO _pathStorage;
+        public PathStorageSO PathStorage => _pathStorage;
         [SerializeField] private LoadSceneEventChannelSO _requestLoadMapEvent;
         [SerializeField] private SceneScriptableObject _worldMapScene;
         [SerializeField] private MapPathEventChannelSO _destinationSelectedEvent;
+        public MapPathEventChannelSO DestinationSelectedEvent => _destinationSelectedEvent;
         [SerializeField] private VoidEventChannelSO _destinationConfirmEvent;
+        public VoidEventChannelSO DestinationConfirmEvent => _destinationConfirmEvent;
 
         private MapPathSO _selectedPath;
 
