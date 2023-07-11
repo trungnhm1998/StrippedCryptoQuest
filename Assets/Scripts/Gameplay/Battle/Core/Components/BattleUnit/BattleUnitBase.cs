@@ -22,7 +22,7 @@ namespace CryptoQuest.Gameplay.Battle
 
         public AbstractAbility SelectedSkill { get; protected set; }
 
-        public List<string> ExecuteLogs { get; protected set; } = new();
+        public ILogger Logger { get; protected set; }
 
         protected BattleManager _battleManager;
         protected bool _isDead;
@@ -37,6 +37,7 @@ namespace CryptoQuest.Gameplay.Battle
             TargetContainer.Targets.Clear();
             OwnerTeam = team;
             Owner = owner;
+            Logger = GetComponent<ILogger>();
         }
 
         protected virtual void OnEnable()
@@ -89,6 +90,7 @@ namespace CryptoQuest.Gameplay.Battle
         public virtual IEnumerator Execute()
         {
             Owner.TryActiveAbility(SelectedSkill);
+            Logger.ClearLogs();
             yield return null;
         }
         

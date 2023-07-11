@@ -43,7 +43,7 @@ namespace CryptoQuest.Gameplay.Battle
             string normalAttackText = LocalizationSettings.StringDatabase.GetLocalizedString(BATTLE_PROMT_TABLE, AbilitySO.PromtKey);
             CharacterDataSO unitData = _unit.GetUnitData();
             if (unitData == null) return;
-            _unit.ExecuteLogs.Add(string.Format(normalAttackText, unitData.DisplayName));
+            _unit.Logger.Log(string.Format(normalAttackText, unitData.DisplayName));
         }
     }
 }

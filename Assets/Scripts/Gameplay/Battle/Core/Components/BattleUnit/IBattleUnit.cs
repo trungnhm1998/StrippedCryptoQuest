@@ -8,7 +8,7 @@ namespace CryptoQuest.Gameplay.Battle
 {
     public interface IBattleUnit
     {
-        List<string> ExecuteLogs { get; }
+        ILogger Logger { get; }
         AbilitySystemBehaviour Owner { get; }
         BattleTeam OpponentTeam { get; }
         bool IsDead { get; }

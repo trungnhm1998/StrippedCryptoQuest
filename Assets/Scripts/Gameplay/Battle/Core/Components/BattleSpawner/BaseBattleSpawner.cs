@@ -47,7 +47,11 @@ namespace CryptoQuest.Gameplay.Battle
             var sameNameCount = data.Enemies.Count(x => x.Name == enemyData.Name);
             if (sameNameCount <= 1) return;
 
-            if (!_duplicateEnemies.TryGetValue(enemyData.Name, out var duplicateCount)) return;
+            if (!_duplicateEnemies.TryGetValue(enemyData.Name, out var duplicateCount))
+            {
+                duplicateCount = 0;
+                _duplicateEnemies.Add(enemyData.Name, duplicateCount);
+            }
             if (duplicateCount >= _duplicatePostfix.Length) return;
 
             enemyData.DisplayName = $"{enemyData.Name}{_duplicatePostfix[duplicateCount]}"; 

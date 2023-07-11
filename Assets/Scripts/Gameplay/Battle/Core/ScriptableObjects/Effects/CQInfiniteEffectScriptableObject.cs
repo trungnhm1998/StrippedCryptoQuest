@@ -32,7 +32,7 @@ namespace CryptoQuest.Gameplay.Battle
                 string promt = LocalizationSettings.StringDatabase.GetLocalizedString(BATTLE_PROMT_TABLE, promtKey);
                 CharacterDataSO unitData = _unit.GetUnitData();
                 if (unitData == null) return;
-                _unit.ExecuteLogs.Add(string.Format(promt, unitData.DisplayName, modifier.AttributeSO.DisplayName));
+                _unit.Logger.Log(string.Format(promt, unitData.DisplayName, modifier.AttributeSO.DisplayName));
             }
 
         }

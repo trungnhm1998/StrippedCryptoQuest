@@ -400,7 +400,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41ecd6a41150f8149bfb49ce467805b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _gotNewLogEventChannel: {fileID: 11400000, guid: d614e1bbd15b41b44bf5171d32575969, type: 2}
+  _gotNewLogEventChannel: {fileID: 0}
 --- !u!114 &612028301
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -487,6 +487,7 @@ GameObject:
   - component: {fileID: 1378124711}
   - component: {fileID: 1378124713}
   - component: {fileID: 1378124714}
+  - component: {fileID: 1378124715}
   m_Layer: 0
   m_Name: Hero
   m_TagString: Untagged
@@ -628,4 +629,17 @@ MonoBehaviour:
     width: 120
     height: 50
   _windowWidth: 400
-  _windowId: 0
+--- !u!114 &1378124715
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1378124697}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b8a81e5b3ffd7f54dace1ef4eeb63677, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _gotNewLogEventChannel: {fileID: 11400000, guid: d614e1bbd15b41b44bf5171d32575969, type: 2}
+  _unitClearLogsEventChannel: {fileID: 11400000, guid: 1844deabc064a724da24babf799bdaf7, type: 2}

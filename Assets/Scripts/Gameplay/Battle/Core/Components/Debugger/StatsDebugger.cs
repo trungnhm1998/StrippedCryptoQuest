@@ -48,7 +48,8 @@ namespace CryptoQuest.Gameplay.Battle
             Rect inputRect = _showDebug ? _windowRect : _minimizeRect;
 
             GUILayout.BeginVertical();
-            newRect = GUILayout.Window(_windowId, inputRect, DoMyWindow, $"{_unit.GetUnitData()?.DisplayName} Stats", GUILayout.ExpandHeight(true));
+            var unitData = _unit.GetUnitData();
+            newRect = GUILayout.Window(_windowId, inputRect, DoMyWindow, $"{((unitData != null) ? unitData.DisplayName : "Character")} Stats", GUILayout.ExpandHeight(true));
             GUILayout.EndVertical();
 
             if (!_showDebug)

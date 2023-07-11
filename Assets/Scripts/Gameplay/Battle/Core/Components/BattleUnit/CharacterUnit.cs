@@ -10,7 +10,7 @@ namespace CryptoQuest.Gameplay.Battle
         
         public override CharacterDataSO GetUnitData()
         {
-            _characterData ??= GetCharacterData();
+            _characterData = (_characterData != null) ? _characterData : GetCharacterData();
             return _characterData;
         }
 
