@@ -19,7 +19,9 @@ namespace CryptoQuest.Tests.Runtime.OcarinaIntergrationTests
     {
         private readonly WaitForSeconds SECONDS_TO_WAIT = new WaitForSeconds(6);
         private LoadSceneEventChannelSO _loadMapEvent;
-        private string STARTUP_SCENE_NAME = "Startup";
+        private const string STARTUP_SCENE_NAME = "Startup";
+        private const string GLOBAL_MANAGER_SCENE_NAME = "GlobalManagers";
+        private const string WORLD_MAP_SCENE_NAME = "WorldMap";
         private PathStorageSO _pathStorage;
         private MapPathEventChannelSO _destinationSelectedEvent;
         private VoidEventChannelSO _destinationConfirmEvent;
@@ -33,7 +35,7 @@ namespace CryptoQuest.Tests.Runtime.OcarinaIntergrationTests
             Assert.That(SceneManager.GetActiveScene().name == STARTUP_SCENE_NAME);
 
             yield return SECONDS_TO_WAIT;
-            Assert.That(SceneManager.GetSceneByName("GlobalManagers").isLoaded);
+            Assert.That(SceneManager.GetSceneByName(GLOBAL_MANAGER_SCENE_NAME).isLoaded);
             OcarinaBehaviour ocarinaBehaviour = GameObject.FindObjectOfType<OcarinaBehaviour>();
             Assert.NotNull(ocarinaBehaviour);
 
@@ -46,7 +48,7 @@ namespace CryptoQuest.Tests.Runtime.OcarinaIntergrationTests
             _destinationSelectedEvent.RaiseEvent(newPath);
             _destinationConfirmEvent.RaiseEvent();
             yield return SECONDS_TO_WAIT;
-            Assert.That(SceneManager.GetSceneByName("WorldMap").isLoaded);
+            Assert.That(SceneManager.GetSceneByName(WORLD_MAP_SCENE_NAME).isLoaded);
         }
 
         private void GetNecessaryScriptableObjects()
@@ -73,6 +75,9 @@ namespace CryptoQuest.Tests.Runtime.OcarinaIntergrationTests
                     break;
                 }
             }
+
+            if (_loadMapEvent == null)
+                _loadMapEvent = GetLoadMapEventSO();
         }
 
 
@@ -84,7 +89,7 @@ namespace CryptoQuest.Tests.Runtime.OcarinaIntergrationTests
             Assert.That(SceneManager.GetActiveScene().name == STARTUP_SCENE_NAME);
 
             yield return SECONDS_TO_WAIT;
-            Assert.That(SceneManager.GetSceneByName("GlobalManagers").isLoaded);
+            Assert.That(SceneManager.GetSceneByName(GLOBAL_MANAGER_SCENE_NAME).isLoaded);
             OcarinaBehaviour ocarinaBehaviour = GameObject.FindObjectOfType<OcarinaBehaviour>();
             Assert.NotNull(ocarinaBehaviour);
 
@@ -93,7 +98,7 @@ namespace CryptoQuest.Tests.Runtime.OcarinaIntergrationTests
 
             _destinationConfirmEvent.RaiseEvent();
             yield return SECONDS_TO_WAIT;
-            bool isWorldMapLoaded = SceneManager.GetSceneByName("WorldMap").isLoaded;
+            bool isWorldMapLoaded = SceneManager.GetSceneByName(WORLD_MAP_SCENE_NAME).isLoaded;
             Assert.IsTrue(isWorldMapLoaded);
         }
 
@@ -105,7 +110,7 @@ namespace CryptoQuest.Tests.Runtime.OcarinaIntergrationTests
             Assert.That(SceneManager.GetActiveScene().name == STARTUP_SCENE_NAME);
 
             yield return SECONDS_TO_WAIT;
-            Assert.That(SceneManager.GetSceneByName("GlobalManagers").isLoaded);
+            Assert.That(SceneManager.GetSceneByName(GLOBAL_MANAGER_SCENE_NAME).isLoaded);
             OcarinaBehaviour ocarinaBehaviour = GameObject.FindObjectOfType<OcarinaBehaviour>();
             Assert.NotNull(ocarinaBehaviour);
 
@@ -113,7 +118,7 @@ namespace CryptoQuest.Tests.Runtime.OcarinaIntergrationTests
                 GetNecessaryScriptableObjects();
             _destinationConfirmEvent.RaiseEvent();
             yield return SECONDS_TO_WAIT;
-            Assert.That(SceneManager.GetSceneByName("WorldMap").isLoaded);
+            Assert.That(SceneManager.GetSceneByName(WORLD_MAP_SCENE_NAME).isLoaded);
             Vector2 defaultSpawnPos = GameObject.Find("DefaultSpawnLocation").transform.position;
             Vector2 heroGoPos = GameObject.FindObjectOfType<HeroBehaviour>().gameObject.transform.position;
             Assert.That(heroGoPos == defaultSpawnPos);
@@ -127,7 +132,7 @@ namespace CryptoQuest.Tests.Runtime.OcarinaIntergrationTests
             Assert.That(SceneManager.GetActiveScene().name == STARTUP_SCENE_NAME);
 
             yield return SECONDS_TO_WAIT;
-            Assert.That(SceneManager.GetSceneByName("GlobalManagers").isLoaded);
+            Assert.That(SceneManager.GetSceneByName(GLOBAL_MANAGER_SCENE_NAME).isLoaded);
             OcarinaBehaviour ocarinaBehaviour = GameObject.FindObjectOfType<OcarinaBehaviour>();
             Assert.NotNull(ocarinaBehaviour);
 
@@ -146,11 +151,10 @@ namespace CryptoQuest.Tests.Runtime.OcarinaIntergrationTests
         public IEnumerator UseOcarina_To_PortCity_PlacePlayer_At_Entrance()
         {
             yield return SceneManager.LoadSceneAsync(STARTUP_SCENE_NAME, LoadSceneMode.Single);
-
             Assert.That(SceneManager.GetActiveScene().name == STARTUP_SCENE_NAME);
 
             yield return SECONDS_TO_WAIT;
-            Assert.That(SceneManager.GetSceneByName("GlobalManagers").isLoaded);
+            Assert.That(SceneManager.GetSceneByName(GLOBAL_MANAGER_SCENE_NAME).isLoaded);
             OcarinaBehaviour ocarinaBehaviour = GameObject.FindObjectOfType<OcarinaBehaviour>();
             Assert.NotNull(ocarinaBehaviour);
 
@@ -183,9 +187,92 @@ namespace CryptoQuest.Tests.Runtime.OcarinaIntergrationTests
                 }
             }
 
-            GameObject heroGo = GameObject.FindObjectOfType<HeroBehaviour>().gameObject;
-            Assert.NotNull(heroGo);
-            Assert.That((Vector2)heroGo.transform.position == (Vector2)portCityEntrancePos);
+            HeroBehaviour hero = GameObject.FindObjectOfType<HeroBehaviour>();
+            Assert.NotNull(hero);
+            Assert.That((Vector2)hero.transform.position == (Vector2)portCityEntrancePos);
+        }
+
+        [UnityTest]
+        public IEnumerator UseOcarina_InWorldMap_Still_Move_Hero_To_Destination()
+        {
+            yield return SceneManager.LoadSceneAsync(STARTUP_SCENE_NAME, LoadSceneMode.Single);
+            Assert.That(SceneManager.GetActiveScene().name == STARTUP_SCENE_NAME);
+
+            yield return SECONDS_TO_WAIT;
+            Assert.That(SceneManager.GetSceneByName(GLOBAL_MANAGER_SCENE_NAME).isLoaded);
+
+            OcarinaBehaviour ocarinaBehaviour = GameObject.FindObjectOfType<OcarinaBehaviour>();
+            Assert.NotNull(ocarinaBehaviour);
+
+            if (_destinationConfirmEvent == null || _destinationSelectedEvent == null || _pathStorage == null)
+                GetNecessaryScriptableObjects();
+            SceneScriptableObject worldMapSceneSO = GetWorldMapScene();
+            _loadMapEvent.LoadingRequested(worldMapSceneSO);
+            yield return SECONDS_TO_WAIT;
+            Assert.That(SceneManager.GetSceneByName(WORLD_MAP_SCENE_NAME).isLoaded);
+
+            string[] guids = AssetDatabase.FindAssets("t:MapPathSO");
+            foreach (string guid in guids)
+            {
+                string path = UnityEditor.AssetDatabase.GUIDToAssetPath(guid);
+                MapPathSO mapPathSo =
+                    UnityEditor.AssetDatabase.LoadAssetAtPath<MapPathSO>(path);
+                if (mapPathSo.name == "Ocarina_WorldMap.PortCity")
+                {
+                    _destinationSelectedEvent.RaiseEvent(mapPathSo);
+                    _destinationConfirmEvent.RaiseEvent();
+                    break;
+                }
+            }
+
+            yield return true;
+            GoFrom[] goFromGOs = GameObject.FindObjectsOfType<GoFrom>();
+            Vector2 portCityEntrancePos = new Vector2(0, 0);
+            foreach (GoFrom goFromGO in goFromGOs)
+            {
+                GoFrom goFrom = goFromGO.GetComponent<GoFrom>();
+                if (goFrom.MapPath.name == "Ocarina_WorldMap.PortCity")
+                {
+                    portCityEntrancePos = goFromGO.transform.position;
+                    break;
+                }
+            }
+
+            HeroBehaviour hero = GameObject.FindObjectOfType<HeroBehaviour>();
+            Assert.NotNull(hero);
+            Assert.That((Vector2)hero.transform.position == (Vector2)portCityEntrancePos);
+        }
+
+        private static SceneScriptableObject GetWorldMapScene()
+        {
+            string[] sceneSOGuids = AssetDatabase.FindAssets("t: SceneScriptableObject");
+            SceneScriptableObject worldMapSceneSO = new();
+            foreach (string guid in sceneSOGuids)
+            {
+                string path = UnityEditor.AssetDatabase.GUIDToAssetPath(guid);
+                SceneScriptableObject sceneSO = UnityEditor.AssetDatabase.LoadAssetAtPath<SceneScriptableObject>(path);
+                if (sceneSO.name == "WorldMapScene")
+                    worldMapSceneSO = sceneSO;
+            }
+
+            return worldMapSceneSO;
+        }
+
+        private LoadSceneEventChannelSO GetLoadMapEventSO()
+        {
+            string[] eventSOGuids = AssetDatabase.FindAssets("t: LoadSceneEventChannelSO");
+            foreach (string guid in eventSOGuids)
+            {
+                string path = UnityEditor.AssetDatabase.GUIDToAssetPath(guid);
+                LoadSceneEventChannelSO loadEventSO =
+                    UnityEditor.AssetDatabase.LoadAssetAtPath<LoadSceneEventChannelSO>(path);
+                if (loadEventSO.name == "LoadMapEventChannel")
+                {
+                    return loadEventSO;
+                }
+            }
+
+            return null;
         }
     }
 }

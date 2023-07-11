@@ -22,7 +22,6 @@ namespace CryptoQuestEditor.EditorTool
         [SerializeField] private float _guiWidth = 400;
         [SerializeField] private float _guiButtonHeight = 50;
         [SerializeField] private int _fontSize = 20;
-        private List<GoFrom> _cachedDestinations = new();
 
         private void OnGUI()
         {
@@ -32,7 +31,6 @@ namespace CryptoQuestEditor.EditorTool
 
             if (!_showOcarinaList) return;
 
-
             if (OcarinaData.Locations.Count > 0)
             {
                 foreach (OcarinaLocations.Location location in OcarinaData.Locations)
@@ -41,25 +39,8 @@ namespace CryptoQuestEditor.EditorTool
                             GUILayout.Width(_guiWidth),
                             GUILayout.Height(_guiButtonHeight)))
                     {
-                        if (SceneManager.GetSceneByName("WorldMap").isLoaded)
-                        {
-                            if (_cachedDestinations.Count == 0)
-                                _cachedDestinations = new List<GoFrom>(FindObjectsOfType<GoFrom>());
-                            foreach (GoFrom destination in _cachedDestinations)
-                            {
-                                if (location.Path == destination.MapPath)
-                                {
-                                    GameObject hero = GameObject.FindObjectOfType<HeroBehaviour>().gameObject;
-                                    hero.transform.position = destination.transform.position;
-                                    break;
-                                }
-                            }
-                        }
-                        else
-                        {
-                            _destinationSelectedEvent.RaiseEvent(location.Path);
-                            _destinationConfirmEvent.RaiseEvent();
-                        }
+                        _destinationSelectedEvent.RaiseEvent(location.Path);
+                        _destinationConfirmEvent.RaiseEvent();
                     }
                 }
             }
