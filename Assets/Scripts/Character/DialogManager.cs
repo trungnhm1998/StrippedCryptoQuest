@@ -10,7 +10,7 @@ namespace CryptoQuest.Character
     public class DialogManager : MonoBehaviour
     {
         [SerializeField] private InputMediatorSO _inputMediator;
-        [SerializeField] private DialogEventChannelSO _dialogEventSO;
+        [SerializeField] private DialogueEventChannelSO _dialogEventSO;
 
         private IDialog _speechDialog = NullDialog.Instance;
 

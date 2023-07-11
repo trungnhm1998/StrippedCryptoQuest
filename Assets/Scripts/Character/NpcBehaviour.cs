@@ -9,13 +9,11 @@ namespace CryptoQuest.Character
         [SerializeField] private DialogueScriptableObject _dialogue;
 
         [Header("Raise on")]
-        [SerializeField] private DialogEventChannelSO _dialogEventChannel;
-        [SerializeField] private DialogueEventChannelSO _dialogueEventChannel;
+        [SerializeField] private DialogueEventChannelSO _dialogEventChannel;
 
         public void Interact()
         {
-            // _dialogEventChannel.Show(_dialogue);
-            _dialogueEventChannel.Show(_dialogue);
+            _dialogEventChannel.Show(_dialogue);
         }
     }
 }

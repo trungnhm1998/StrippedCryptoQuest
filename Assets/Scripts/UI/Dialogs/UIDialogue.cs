@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using CryptoQuest.Character;
 using CryptoQuest.Gameplay.Quest.Dialogue.ScriptableObject;
 using CryptoQuest.Input;
 using UnityEngine;
@@ -27,6 +24,11 @@ namespace CryptoQuest.UI.Dialogs
             _inputMediator.NextDialoguePressed -= NextDialog;
         }
 
+        protected override void OnBeforeShow()
+        {
+            base.OnBeforeShow();
+            _inputMediator.EnableDialogueInput();
+        }
         private void NextDialog()
         {
             _currentDialogueIndex++;
@@ -53,6 +55,7 @@ namespace CryptoQuest.UI.Dialogs
         public override UIDialogue Close()
         {
             _inputMediator.EnableMapGameplayInput();
+            gameObject.SetActive(false);
             return base.Close();
         }
 

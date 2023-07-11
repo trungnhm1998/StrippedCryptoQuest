@@ -1,13 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
-using IndiGames.Core.Common;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace CryptoQuest.UI.Dialogs
 {
-    public abstract class DialogController<T> : MonoBehaviour where T : ModalWindow<T>
+    public abstract class AbstractDialogController<T> : MonoBehaviour where T : ModalWindow<T>
     {
         [SerializeField] private AssetReference _dialogPrefab;
         [SerializeField] private Transform _dialogsContainer;
@@ -27,18 +24,23 @@ namespace CryptoQuest.UI.Dialogs
 
         protected void LoadAssetDialog()
         {
-
+            if (_gameObjectAsyncOps.IsValid() && _gameObjectAsyncOps.Status == AsyncOperationStatus.Succeeded)
+            {
+                InstantiateDialogPrefab(_gameObjectAsyncOps);
+                return;
+            }
             _dialogPrefab.LoadAssetAsync<GameObject>().Completed += InstantiateDialogPrefab;
         }
 
         private T _dialogInstance;
+        private AsyncOperationHandle<GameObject> _gameObjectAsyncOps;
+
         public T DialogInstance => _dialogInstance;
 
-        protected void InstantiateDialogPrefab(AsyncOperationHandle<GameObject> args)
+        protected void InstantiateDialogPrefab(AsyncOperationHandle<GameObject> gameObjectAsyncOps)
         {
-            var dialog = Instantiate(args.Result);
-
-            dialog.transform.SetParent(_dialogsContainer);
+            _gameObjectAsyncOps = gameObjectAsyncOps;
+            var dialog = Instantiate(gameObjectAsyncOps.Result, _dialogsContainer);
 
             _dialogInstance = dialog.GetComponent<T>();
             SetupDialog(_dialogInstance);

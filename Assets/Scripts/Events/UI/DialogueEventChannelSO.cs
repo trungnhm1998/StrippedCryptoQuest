@@ -1,9 +1,10 @@
-using CryptoQuest.Gameplay.Quest.Dialogue.ScriptableObject;
+﻿using CryptoQuest.Gameplay.Quest.Dialogue.ScriptableObject;
 using UnityEngine;
 using UnityEngine.Events;
 
 namespace CryptoQuest.Events.UI
 {
+    [CreateAssetMenu(menuName = "Create DialogueEventChannelSO", fileName = "DialogueEventChannelSO", order = 0)]
     public class DialogueEventChannelSO : ScriptableObject
     {
         public event UnityAction<DialogueScriptableObject> ShowEvent;
