@@ -1,8 +1,8 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.Collections;
-using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
 using CryptoQuest.FSM;
+using IndiGames.Core.Events.ScriptableObjects;
 
 namespace CryptoQuest.Gameplay.Battle
 {
@@ -17,6 +17,9 @@ namespace CryptoQuest.Gameplay.Battle
         public BattleTeam BattleTeam1 { get; private set; }
         [field: SerializeField]
         public BattleTeam BattleTeam2 { get; private set; }
+
+        [Header("Events")]
+        [SerializeField] private VoidEventChannelSO _newTurnEventChannel;
 
         public IBattleUnit CurrentUnit {get; set;}
         public int Turn { get; private set; }
@@ -71,6 +74,7 @@ namespace CryptoQuest.Gameplay.Battle
 
         public void OnNewTurn()
         {
+            _newTurnEventChannel.RaiseEvent();
             Turn++;
         }
 

@@ -1,8 +1,4 @@
 using UnityEngine;
-using System.Collections.Generic;
-using System.Collections;
-using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
-using CryptoQuest.FSM;
 using CryptoQuest.UI.Battle;
 
 namespace CryptoQuest.Gameplay.Battle

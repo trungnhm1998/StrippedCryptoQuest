@@ -14,6 +14,7 @@ namespace CryptoQuest.Gameplay.Battle
         public BattleTeam OpponentTeam {get; set;}
         public BattleTeam OwnerTeam {get; set;}
         public bool IsDead => _isDead;
+        public virtual AbstractAbility NormalAttack {get; protected set;}
 
         [SerializeField] protected AttributeScriptableObject _hpAttribute;
 
