@@ -1,3 +1,4 @@
+using CryptoQuest.Character.MonoBehaviours;
 using CryptoQuest.Events.UI;
 using CryptoQuest.Gameplay.Quest.Dialogue.ScriptableObject;
 using UnityEngine;
@@ -7,7 +8,7 @@ namespace CryptoQuest.Character
     public class NpcBehaviour : MonoBehaviour, IInteractable
     {
         [SerializeField] private DialogueScriptableObject _dialogue;
-        private NPCFacingDirection _facingDirection;
+        [SerializeField] private NPCFacingDirection _facingDirection;
 
         [Header("Raise on")]
         [SerializeField] private DialogEventChannelSO _dialogEventChannel;
