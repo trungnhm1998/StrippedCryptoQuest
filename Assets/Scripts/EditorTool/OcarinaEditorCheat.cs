@@ -1,14 +1,7 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using CryptoQuest;
-using CryptoQuest.Character.MonoBehaviours;
 using CryptoQuest.Events;
-using CryptoQuest.Map;
 using IndiGames.Core.Events.ScriptableObjects;
 using UnityEngine;
-using UnityEngine.SceneManagement;
-using UnityEngine.Serialization;
 
 namespace CryptoQuestEditor.EditorTool
 {
