@@ -18,14 +18,18 @@ namespace CryptoQuest.Gameplay.Battle
         [field: SerializeField]
         public BattleTeam BattleTeam2 { get; private set; }
 
-        [Header("Events")]
+        [Header("Raise Events")]
         [SerializeField] private VoidEventChannelSO _newTurnEventChannel;
+
+        [Header("Listen Events")]
+        [SerializeField] private VoidEventChannelSO _onDialogCloseEventChannel;
 
         public IBattleUnit CurrentUnit {get; set;}
         public int Turn { get; private set; }
         public BaseBattleSpawner BattleSpawner { get; private set; }
         public List<IBattleUnit> BattleUnits { get; private set; } = new();
 
+        public bool IsEndTurn { get; private set; }
 
         protected void Awake()
         {
@@ -36,6 +40,16 @@ namespace CryptoQuest.Gameplay.Battle
         private void Start()
         {
             _stateMachine.SetCurrentState(_battleStartState);
+        }
+
+        private void OnEnable()
+        {
+            _onDialogCloseEventChannel.EventRaised += OnEndTurn;
+        }
+
+        private void OnDisable()
+        {
+            _onDialogCloseEventChannel.EventRaised -= OnEndTurn;
         }
 
         public void InitBattleTeams()
@@ -78,10 +92,16 @@ namespace CryptoQuest.Gameplay.Battle
 
         public void OnNewTurn()
         {
+            IsEndTurn = false;
             _newTurnEventChannel.RaiseEvent();
             Turn++;
         }
 
+        private void OnEndTurn()
+        {
+            IsEndTurn = true;
+        }
+        
         public void OnEscape()
         {
             _stateMachine.SetCurrentState(_battleEndState);
