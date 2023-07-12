@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using CryptoQuest.Gameplay.Quest;
 using CryptoQuest.Input;
 using UnityEngine;
 using UnityEngine.Events;
@@ -13,8 +15,8 @@ namespace CryptoQuest.UI.Dialogs
         [SerializeField] private InputMediatorSO _inputMediator;
         [SerializeField] private Button _defaultSelectButton;
 
-        public event UnityAction YesButtonPressed;
-        public event UnityAction NoButtonPressed;
+        public UnityAction YesButtonPressed;
+        public UnityAction NoButtonPressed;
 
         protected override void OnBeforeShow()
         {

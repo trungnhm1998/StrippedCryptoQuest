@@ -121,7 +121,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1276287080574751218}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1665308465055408875}
+        m_TargetAssemblyTypeName: CryptoQuest.UI.Dialogs.UIYesNoDialog, indi-games.crypto-quest
+        m_MethodName: OnYesButtonPressed
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   IsSelected: 0
 --- !u!1 &413352783352011349
 GameObject:
@@ -420,7 +432,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2894374354831663791}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1665308465055408875}
+        m_TargetAssemblyTypeName: CryptoQuest.UI.Dialogs.UIYesNoDialog, indi-games.crypto-quest
+        m_MethodName: OnNoButtonPressed
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   IsSelected: 0
 --- !u!1 &2725359430713011011
 GameObject:
@@ -629,6 +653,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8759938187778997364}
+  - component: {fileID: 1665308465055408875}
   m_Layer: 5
   m_Name: YesNoDialog
   m_TagString: Untagged
@@ -657,6 +682,26 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 150}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1665308465055408875
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3899739026275214210}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd2c4eb925d82524d844b561a22ef123, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 3537686293215316460}
+  headerText: {fileID: 0}
+  bodyText: {fileID: 0}
+  closeButton: {fileID: 0}
+  backgroundButton: {fileID: 0}
+  buttonsRoot: {fileID: 0}
+  _inputMediator: {fileID: 11400000, guid: 1fb61cdb72f0a484f8e4db68e2011977, type: 2}
+  _defaultSelectButton: {fileID: 2736592127187316408}
 --- !u!1 &4571134373119542746
 GameObject:
   m_ObjectHideFlags: 0
