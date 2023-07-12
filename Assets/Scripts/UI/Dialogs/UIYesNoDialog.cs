@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using CryptoQuest.Events.UI;
 using CryptoQuest.Input;
@@ -13,6 +14,9 @@ namespace CryptoQuest.UI.Dialogs
         [SerializeField] private Button _defaultSelectButton;
         [SerializeField] private DialogCallbackEventSO _yesButtonPressedEvennt;
         [SerializeField] private DialogCallbackEventSO _noButtonPressedEvent;
+
+        public Action YesPressed;
+        public Action NoPressed;
 
         protected override void OnBeforeShow()
         {
@@ -49,12 +53,12 @@ namespace CryptoQuest.UI.Dialogs
 
         public void OnYesButtonPressed()
         {
-            _yesButtonPressedEvennt.Raise(() => Close());
+            YesPressed.Invoke();
         }
 
         public void OnNoButtonPressed()
         {
-            _noButtonPressedEvent.Raise(() => Close());
+            NoPressed.Invoke();
         }
     }
 }

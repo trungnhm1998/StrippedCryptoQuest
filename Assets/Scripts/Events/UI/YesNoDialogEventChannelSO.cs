@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using CryptoQuest.Gameplay.Quest;
@@ -8,12 +9,12 @@ namespace CryptoQuest.Events.UI
 {
     public class YesNoDialogEventChannelSO : ScriptableObject
     {
-        public event UnityAction ShowEvent;
+        public event UnityAction<Action, Action> ShowEvent;
         public event UnityAction HideEvent;
 
-        public void Show()
+        public void Show(Action yesButtonPressed, Action noButtonPressed)
         {
-            OnShow();
+            OnShow(yesButtonPressed, noButtonPressed);
         }
 
         public void Hide()
@@ -32,7 +33,7 @@ namespace CryptoQuest.Events.UI
             HideEvent.Invoke();
         }
 
-        private void OnShow()
+        private void OnShow(Action yesButtonPressed, Action noButtonPressed)
         {
             if (ShowEvent == null)
             {
@@ -40,7 +41,7 @@ namespace CryptoQuest.Events.UI
                 return;
             }
 
-            ShowEvent.Invoke();
+            ShowEvent.Invoke(yesButtonPressed, noButtonPressed);
         }
     }
 }
