@@ -7,16 +7,16 @@ namespace CryptoQuest.UI.Dialogs
     public class DialogueController : AbstractDialogController<UIDialogue>
     {
         [SerializeField] private DialogueEventChannelSO _dialogueEventSO;
-        private DialogueScriptableObject _args;
+        private DialogueScriptableObject _dialogueArgs;
 
         protected override void RegisterEvents()
         {
             _dialogueEventSO.ShowEvent += ShowDialog;
         }
 
-        private void ShowDialog(DialogueScriptableObject arg0)
+        private void ShowDialog(DialogueScriptableObject dialogueArgs)
         {
-            _args = arg0;
+            _dialogueArgs = dialogueArgs;
             LoadAssetDialog();
         }
 
@@ -28,9 +28,8 @@ namespace CryptoQuest.UI.Dialogs
         protected override void SetupDialog(UIDialogue dialog)
         {
             dialog
-                .SetDialogue(_args)
+                .SetDialogue(_dialogueArgs)
                 .Show();
         }
-
     }
 }

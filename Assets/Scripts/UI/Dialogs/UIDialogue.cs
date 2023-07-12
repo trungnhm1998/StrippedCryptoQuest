@@ -41,9 +41,9 @@ namespace CryptoQuest.UI.Dialogs
             UpdateDialogueWithIndex(_currentDialogueIndex);
         }
 
-        public UIDialogue SetDialogue(DialogueScriptableObject args)
+        public UIDialogue SetDialogue(DialogueScriptableObject dialogueArgs)
         {
-            _dialogue = args;
+            _dialogue = dialogueArgs;
             return this;
         }
 
@@ -61,6 +61,7 @@ namespace CryptoQuest.UI.Dialogs
 
         protected override void CheckIgnorableForClose()
         {
+            return;
         }
     }
 }
