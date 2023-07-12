@@ -20,14 +20,13 @@ namespace CryptoQuestEditor.NPC
             Walking_Top = 6,
             Walking_Right = 7
         }
-        private Npc_Action _npcAction;
         private string _spriteLocation;
         private string _spriteName;
         private string _assetPath;
         private string _exportPath;
+        private Npc_Action _npcAction;
         private GameObject _currentNPC;
         private SpriteRenderer _currentSprite;
-        private NpcMovement _spriteNPC;
         private List<Sprite> _listSprite;
 
         [MenuItem("Window/NPC/Animation")]
@@ -52,27 +51,20 @@ namespace CryptoQuestEditor.NPC
 
             if (GUILayout.Button("Create Animation Clip", GUILayout.Height(60)))
             {
-                CreateSprite();
+                InitializedSetup();
             }
         }
-
-        private void CreateSprite()
-        {
-            InitializedSetup();
-        }
-
 
         private void InitializedSetup()
         {
             if (_currentNPC.GetComponent<NpcMovement>() == null) _currentNPC.AddComponent<NpcMovement>();
             _currentSprite = _currentNPC.GetComponent<SpriteRenderer>();
-            _spriteNPC = _currentNPC.GetComponent<NpcMovement>();
             string spritePath = AssetDatabase.GetAssetPath(_currentSprite.sprite);
             string spriteName = _currentSprite.sprite.name;
-            _assetPath = spritePath.TrimEnd('/').Remove(spritePath.LastIndexOf('/') + 1);
+            _assetPath = Path.GetDirectoryName(spritePath);
             _spriteName = spriteName.TrimEnd('_').Remove(spriteName.LastIndexOf("_") + 1);
             _spriteLocation = spriteName.TrimEnd('_').Remove(spriteName.LastIndexOf("_"));
-            if (!Directory.Exists($"{_exportPath}/{_currentNPC.name}"))
+            if (!Directory.Exists(Path.Combine(_exportPath, _currentNPC.name)))
             {
                 AssetDatabase.CreateFolder(_exportPath, _currentNPC.name);
             }
@@ -81,8 +73,7 @@ namespace CryptoQuestEditor.NPC
 
         private void GetSprites()
         {
-            UnityEngine.Object[] sprites = AssetDatabase.LoadAllAssetsAtPath(_assetPath + _spriteLocation + ".png");
-            var components = _currentNPC.GetComponents<MonoBehaviour>();
+            UnityEngine.Object[] sprites = AssetDatabase.LoadAllAssetsAtPath(Path.Combine(_assetPath, _spriteLocation + ".png"));
             if (_listSprite != null) _listSprite.Clear();
             for (int i = 0; i < sprites.Length; i++)
             {
@@ -90,18 +81,24 @@ namespace CryptoQuestEditor.NPC
                 {
                     if (sprite.name == _spriteName + i)
                     {
-                        AddSpriteToList(i, sprite);
+                        AddSpriteToList(i, sprite as Sprite);
                     }
                 }
             }
         }
 
-        private void AddSpriteToList(int currentSprite, UnityEngine.Object sprite)
+        private void AddSpriteToList(int currentSprite, Sprite sprite)
         {
             switch (currentSprite)
             {
+                case >= 0 and <= 3:
+                    _npcAction = (Npc_Action)currentSprite;
+                    _listSprite.Add(sprite);
+                    CreateClip(_npcAction.ToString(), _listSprite);
+                    _listSprite.Clear();
+                    break;
                 case > 3 and <= 7:
-                    _listSprite.Add(sprite as Sprite);
+                    _listSprite.Add(sprite);
                     if (_listSprite.Count >= 4)
                     {
                         CreateClip(Npc_Action.Walking_Down.ToString(), _listSprite);
@@ -109,7 +106,7 @@ namespace CryptoQuestEditor.NPC
                     }
                     break;
                 case > 7 and <= 11:
-                    _listSprite.Add(sprite as Sprite);
+                    _listSprite.Add(sprite);
                     if (_listSprite.Count >= 4)
                     {
                         CreateClip(Npc_Action.Walking_Left.ToString(), _listSprite);
@@ -117,7 +114,7 @@ namespace CryptoQuestEditor.NPC
                     }
                     break;
                 case > 11 and <= 15:
-                    _listSprite.Add(sprite as Sprite);
+                    _listSprite.Add(sprite);
                     if (_listSprite.Count >= 4)
                     {
                         CreateClip(Npc_Action.Walking_Top.ToString(), _listSprite);
@@ -125,32 +122,23 @@ namespace CryptoQuestEditor.NPC
                     }
                     break;
                 case > 15 and <= 19:
-                    _listSprite.Add(sprite as Sprite);
+                    _listSprite.Add(sprite);
                     if (_listSprite.Count >= 4)
                     {
                         CreateClip(Npc_Action.Walking_Right.ToString(), _listSprite);
                         _listSprite.Clear();
                     }
                     break;
-                default:
-                    _npcAction = (Npc_Action)currentSprite;
-                    _listSprite.Add(sprite as Sprite);
-                    CreateClip(_npcAction.ToString(), _listSprite);
-                    _listSprite.Clear();
-                    break;
             }
         }
 
         private void CreateClip(string clipName, List<Sprite> listSprite)
         {
-            AnimationClip newClip = new AnimationClip();
-
-            AnimationClipSettings newSettings = new AnimationClipSettings();
+            AnimationClip newClip = new();
+            AnimationClipSettings newSettings = new();
             newSettings.loopTime = true;
             AnimationUtility.SetAnimationClipSettings(newClip, newSettings);
-
             EditorCurveBinding binding = EditorCurveBinding.PPtrCurve("", typeof(SpriteRenderer), "m_Sprite");
-
             float interval = 1 / 4f;
             ObjectReferenceKeyframe[] orks = new ObjectReferenceKeyframe[listSprite.Count + 1];
             for (int i = 0; i < orks.Length; i++)
@@ -168,8 +156,7 @@ namespace CryptoQuestEditor.NPC
             }
 
             AnimationUtility.SetObjectReferenceCurve(newClip, binding, orks);
-
-            AssetDatabase.CreateAsset(newClip, _exportPath + $"/{_currentNPC.name}/{clipName}.anim");
+            AssetDatabase.CreateAsset(newClip, Path.Combine(_exportPath, _currentNPC.name, $"{clipName}.anim"));
             AssetDatabase.SaveAssets();
         }
     }

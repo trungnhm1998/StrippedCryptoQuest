@@ -6,20 +6,10 @@ public class NpcFacingStrategy : IFacingStrategy
 {
     public CharacterBehaviour.EFacingDirection Execute(Vector2 myPosition, Vector2 playerPosition)
     {
-        Vector2 test = playerPosition - myPosition;
-
-        Vector2 abs = new Vector2(Mathf.Abs(test.x), Mathf.Abs(test.y));
-
-
-        if (test.x < 0 && abs.x > abs.y)
-            return CharacterBehaviour.EFacingDirection.West;
-        else if (test.x > 0 && abs.x > abs.y)
-            return CharacterBehaviour.EFacingDirection.East;
-        if (test.y < 0 && abs.x < abs.y)
-            return CharacterBehaviour.EFacingDirection.South;
-        else if (test.y > 0 && abs.x < abs.y)
-            return CharacterBehaviour.EFacingDirection.North;
-
-        return CharacterBehaviour.EFacingDirection.North;
+        Vector2 direction = playerPosition - myPosition;
+        if (Mathf.Abs(direction.x) > Mathf.Abs(direction.y))
+            return (direction.x < 0) ? CharacterBehaviour.EFacingDirection.West : CharacterBehaviour.EFacingDirection.East;
+        else
+            return (direction.y < 0) ? CharacterBehaviour.EFacingDirection.South : CharacterBehaviour.EFacingDirection.North;
     }
 }
