@@ -10,8 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 5190564016027140256}
   - component: {fileID: 3903992598498255546}
-  - component: {fileID: 5660900965235566292}
   - component: {fileID: -3641915403047467505}
+  - component: {fileID: -1419670741651647934}
+  - component: {fileID: 6650899009566248713}
   m_Layer: 0
   m_Name: NPC_GrandmaTotori
   m_TagString: Untagged
@@ -86,7 +87,21 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!61 &5660900965235566292
+--- !u!114 &-3641915403047467505
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8098022396294273254}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ccbfbdc39cd3f8940b942c3d69572361, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _dialogue: {fileID: 11400000, guid: 338ee1159513c674d8c0ffcb9de8b6d9, type: 2}
+  _dialogEventChannel: {fileID: 11400000, guid: 5ea06a7649747af4aaa3d444b3ab8a99, type: 2}
+--- !u!61 &-1419670741651647934
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -131,7 +146,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.11, y: 1.14}
   m_EdgeRadius: 0
---- !u!114 &-3641915403047467505
+--- !u!114 &6650899009566248713
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -140,8 +155,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 8098022396294273254}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ccbfbdc39cd3f8940b942c3d69572361, type: 3}
+  m_Script: {fileID: 11500000, guid: 8317eb7042a89a440ba9e968d6b2d015, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _dialogue: {fileID: 11400000, guid: 338ee1159513c674d8c0ffcb9de8b6d9, type: 2}
-  _dialogEventChannel: {fileID: 11400000, guid: 5ea06a7649747af4aaa3d444b3ab8a99, type: 2}
+  _animator: {fileID: 0}
+  _facingDirection: 0
