@@ -8,7 +8,7 @@ namespace CryptoQuest.Character
     public class NpcBehaviour : MonoBehaviour, IInteractable
     {
         [SerializeField] private DialogueScriptableObject _dialogue;
-        [SerializeField] private NPCFacingDirection _facingDirection;
+        private NPCFacingDirection _facingDirection;
 
         [Header("Raise on")]
         [SerializeField] private DialogEventChannelSO _dialogEventChannel;

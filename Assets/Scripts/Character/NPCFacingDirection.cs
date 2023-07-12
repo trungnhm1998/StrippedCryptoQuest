@@ -3,40 +3,13 @@ using UnityEngine;
 
 namespace CryptoQuest.Character
 {
-    public class NPCFacingDirection : MonoBehaviour
+    public class NPCFacingDirection : CharacterBehaviour
     {
-        [SerializeField] private CharacterBehaviour.EFacingDirection _characterFacingDirection;
-        [SerializeField] private HeroBehaviour _heroFacingDirection;
-        [SerializeField] private SpriteRenderer _currentSprite;
-        [SerializeField] private Sprite _FacingDownDirection;
-        [SerializeField] private Sprite _FacingLeftDirection;
-        [SerializeField] private Sprite _FacingTopDirection;
-        [SerializeField] private Sprite _FacingRightDirection;
-
-        void Start()
-        {
-            _currentSprite = GetComponent<SpriteRenderer>();
-        }
+        private HeroBehaviour _heroFacingDirection;
         public void NPCInteract()
         {
-            _characterFacingDirection = _heroFacingDirection.FacingDirection;
-            switch (_characterFacingDirection)
-            {
-                case CharacterBehaviour.EFacingDirection.South:
-                    _currentSprite.sprite = _FacingTopDirection;
-                    break;
-                case CharacterBehaviour.EFacingDirection.West:
-                    _currentSprite.sprite = _FacingRightDirection;
-                    break;
-                case CharacterBehaviour.EFacingDirection.North:
-                    _currentSprite.sprite = _FacingDownDirection;
-                    break;
-                case CharacterBehaviour.EFacingDirection.East:
-                    _currentSprite.sprite = _FacingLeftDirection;
-                    break;
-            }
+            SetFacingDirection(_heroFacingDirection.gameObject.transform.position - transform.position);
         }
-
         void OnTriggerEnter2D(Collider2D other)
         {
             if (other.CompareTag("InteractionZone") && _heroFacingDirection == null)
