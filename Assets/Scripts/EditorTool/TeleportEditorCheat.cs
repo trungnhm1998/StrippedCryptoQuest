@@ -10,7 +10,9 @@ namespace CryptoQuestEditor.EditorTool
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
         public LoadSceneEventChannelSO SceneLoadedEventChannelSO;
 
-        private readonly List<SceneScriptableObject> _sceneScriptableObjects = new List<SceneScriptableObject>();
+        [SerializeField]
+        private List<SceneScriptableObject> _sceneScriptableObjects = new List<SceneScriptableObject>();
+
         private bool _showSceneList;
 
         private void OnGUI()
@@ -35,11 +37,12 @@ namespace CryptoQuestEditor.EditorTool
         {
             SceneLoadedEventChannelSO.RequestLoad(sceneScriptableObject);
         }
-
-        private void Start()
+#endif
+#if UNITY_EDITOR
+        private void OnValidate()
         {
             var guids = UnityEditor.AssetDatabase.FindAssets("t:SceneScriptableObject");
-
+            _sceneScriptableObjects = new();
             foreach (var guid in guids)
             {
                 var path = UnityEditor.AssetDatabase.GUIDToAssetPath(guid);
