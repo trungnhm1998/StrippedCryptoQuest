@@ -1,10 +1,7 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using CryptoQuest.Gameplay.Quest;
+using CryptoQuest.Events.UI;
 using CryptoQuest.Input;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.UI;
 
 namespace CryptoQuest.UI.Dialogs
@@ -14,9 +11,8 @@ namespace CryptoQuest.UI.Dialogs
         [Header("Child Components")]
         [SerializeField] private InputMediatorSO _inputMediator;
         [SerializeField] private Button _defaultSelectButton;
-
-        public UnityAction YesButtonPressed;
-        public UnityAction NoButtonPressed;
+        [SerializeField] private DialogCallbackEventSO _yesButtonPressedEvennt;
+        [SerializeField] private DialogCallbackEventSO _noButtonPressedEvent;
 
         protected override void OnBeforeShow()
         {
@@ -53,12 +49,12 @@ namespace CryptoQuest.UI.Dialogs
 
         public void OnYesButtonPressed()
         {
-            YesButtonPressed?.Invoke();
+            _yesButtonPressedEvennt.Raise(() => Close());
         }
 
         public void OnNoButtonPressed()
         {
-            NoButtonPressed?.Invoke();
+            _noButtonPressedEvent.Raise(() => Close());
         }
     }
 }
