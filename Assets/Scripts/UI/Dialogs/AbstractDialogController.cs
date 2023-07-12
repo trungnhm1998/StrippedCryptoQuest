@@ -24,23 +24,28 @@ namespace CryptoQuest.UI.Dialogs
 
         protected void LoadAssetDialog()
         {
-            if (_gameObjectAsyncOps.IsValid() && _gameObjectAsyncOps.Status == AsyncOperationStatus.Succeeded)
+            bool hasDialogAssetLoaded = _gameObjectAsyncOps.IsValid() && _gameObjectAsyncOps.Status == AsyncOperationStatus.Succeeded;
+            if (hasDialogAssetLoaded)
             {
-                InstantiateDialogPrefab(_gameObjectAsyncOps);
+                DialogPrefabAssetLoaded(_gameObjectAsyncOps);
                 return;
             }
-            _dialogPrefab.LoadAssetAsync<GameObject>().Completed += InstantiateDialogPrefab;
+            _dialogPrefab.LoadAssetAsync<GameObject>().Completed += DialogPrefabAssetLoaded;
         }
 
-        private T _dialogInstance;
         private AsyncOperationHandle<GameObject> _gameObjectAsyncOps;
-
+        private T _dialogInstance;
         public T DialogInstance => _dialogInstance;
 
-        protected void InstantiateDialogPrefab(AsyncOperationHandle<GameObject> gameObjectAsyncOps)
+        private void DialogPrefabAssetLoaded(AsyncOperationHandle<GameObject> gameObjectAsyncOps)
         {
             _gameObjectAsyncOps = gameObjectAsyncOps;
-            var dialog = Instantiate(gameObjectAsyncOps.Result, _dialogsContainer);
+            InstantiateDialogPrefab(gameObjectAsyncOps.Result);
+        }
+
+        private void InstantiateDialogPrefab(GameObject dialogPrefab)
+        {
+            var dialog = Instantiate(dialogPrefab, _dialogsContainer);
 
             _dialogInstance = dialog.GetComponent<T>();
             SetupDialog(_dialogInstance);
@@ -51,7 +56,6 @@ namespace CryptoQuest.UI.Dialogs
         /// </summary>
         /// <param name="dialog"></param>
         protected abstract void SetupDialog(T dialog);
-
     }
 }
 
