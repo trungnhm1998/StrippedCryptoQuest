@@ -28,7 +28,6 @@ namespace Tests.Runtime.Ocarina
             SceneScriptableObject worldMapSceneSo = OcarinaDestinationSmokeTest.GetWorldMapScene();
 
             yield return SECONDS_TO_WAIT;
-
             _loadMapEvent = GetLoadMapEventSO();
             _loadMapEvent.RequestLoad(worldMapSceneSo);
 
