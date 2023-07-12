@@ -55,7 +55,7 @@ namespace CryptoQuest
         private void MoveHeroToPathEntrance(MapPathSO path)
         {
             if (_cachedDestinations.Count == 0)
-                _cachedDestinations = new List<GoFrom>(FindObjectsOfType<GoFrom>());
+                _cachedDestinations.AddRange(FindObjectsOfType<GoFrom>());
             foreach (GoFrom destination in _cachedDestinations)
             {
                 if (path == destination.MapPath)
