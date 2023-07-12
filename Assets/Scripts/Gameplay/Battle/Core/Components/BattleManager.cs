@@ -31,6 +31,10 @@ namespace CryptoQuest.Gameplay.Battle
         {
             BattleSpawner = GetComponent<BaseBattleSpawner>();
             _battleBus.BattleManager = this;
+        }
+
+        private void Start()
+        {
             _stateMachine.SetCurrentState(_battleStartState);
         }
 
