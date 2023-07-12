@@ -11,23 +11,24 @@ namespace CryptoQuest
 {
     public class NpcMovement : CharacterBehaviour
     {
-        [SerializeField] private AnimatorOverrideController _animatorOverrideController;
         [SerializeField] private Transform _pointAPosition;
         [SerializeField] private Transform _pointBPosition;
         [SerializeField] private Transform _destination;
         [SerializeField] private float _speed;
-        [SerializeField] private float _delayTime;
-        private float _timeElapsed = 0;
-        private bool _isMoving;
-        private Vector2 _characterVelocity;
+        [SerializeField] private float _waitBeforeMovingAgainTime;
+        [SerializeField] private float _minDistanceToChangeDestination;
+        private IFacingStrategy facingStrategy = new NpcFacingStrategy();
+        private float _currentSpeed;
+        private float _timeLeftUntilWaitingFinished;
 
-        void Start()
+        void Awake()
         {
-            _isMoving = IsWalking = true;
-            if (_destination == null){} _destination = _pointAPosition;
+            if (_destination == null) _destination = _pointAPosition;
+            IsWalking = true;
             transform.position = _destination.position;
-            _animator.runtimeAnimatorController = _animatorOverrideController;
-            GetCharacterVelocity();
+            _currentSpeed = _speed;
+            _timeLeftUntilWaitingFinished = _waitBeforeMovingAgainTime;
+            SetFacingDirection(_destination.localPosition - gameObject.transform.localPosition);
         }
 
         void Update()
@@ -37,17 +38,17 @@ namespace CryptoQuest
 
         private void Move()
         {
-            if (_isMoving)
-                transform.localPosition = Vector2.MoveTowards(transform.localPosition, _destination.localPosition, _speed * Time.deltaTime);
-
-            if (gameObject.transform.localPosition == _destination.localPosition)
+            transform.localPosition = Vector2.MoveTowards(transform.localPosition, _destination.localPosition, _currentSpeed * Time.deltaTime);
+            if ((_destination.localPosition - transform.localPosition).magnitude < _minDistanceToChangeDestination)
             {
                 IsWalking = false;
-                _timeElapsed += Time.deltaTime;
-                if (_timeElapsed > _delayTime)
+                _currentSpeed = 0f;
+                _timeLeftUntilWaitingFinished -= Time.deltaTime;
+                if (_timeLeftUntilWaitingFinished <= 0)
                 {
+                    IsWalking = true;
+                    _timeLeftUntilWaitingFinished = _waitBeforeMovingAgainTime;
                     SwapDestination();
-                    _timeElapsed = 0;
                 }
             }
         }
@@ -62,29 +63,23 @@ namespace CryptoQuest
             {
                 _destination = _pointAPosition;
             }
-            IsWalking = true;
-            GetCharacterVelocity();
+            _currentSpeed = _speed;
+            SetFacingDirection(_destination.localPosition - gameObject.transform.localPosition);
         }
-
-        private void GetCharacterVelocity()
-        {
-            _characterVelocity = _destination.localPosition - gameObject.transform.localPosition;
-            SetFacingDirection(_characterVelocity.normalized);
-        }
-
         private void OnTriggerEnter2D(Collider2D other)
         {
             if (other.CompareTag("Player"))
             {
-                _isMoving = IsWalking = false;
-                IFacingStrategy strat = new NpcFacingStrategy();
-                SetFacingDirection(strat.Execute(transform.position, other.transform.position));
+                IsWalking = false;
+                _currentSpeed = 0f;
+                SetFacingDirection(facingStrategy.Execute(transform.position, other.transform.position));
             }
         }
         private void OnTriggerExit2D(Collider2D other)
         {
-            _isMoving = IsWalking = true;
-            GetCharacterVelocity();
+            IsWalking = true;
+            _currentSpeed = _speed;
+            SetFacingDirection(_destination.localPosition - gameObject.transform.localPosition);
         }
     }
 }

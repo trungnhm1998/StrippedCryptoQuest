@@ -6,7 +6,7 @@ namespace CryptoQuest.Character.MonoBehaviours
 {
     public abstract class CharacterBehaviour : MonoBehaviour
     {
-        [SerializeField] private protected Animator _animator;
+        [SerializeField] private Animator _animator;
 
         public enum EFacingDirection
         {
@@ -16,7 +16,7 @@ namespace CryptoQuest.Character.MonoBehaviours
             East = 3,
         }
 
-        [SerializeField, ReadOnly] private protected EFacingDirection _facingDirection = EFacingDirection.South;
+        [SerializeField, ReadOnly] private EFacingDirection _facingDirection = EFacingDirection.South;
         public EFacingDirection FacingDirection => _facingDirection;
 
         public virtual bool IsWalking
@@ -24,9 +24,9 @@ namespace CryptoQuest.Character.MonoBehaviours
             set => _animator.SetBool(AnimIsWalking, value);
         }
 
-        private protected readonly int AnimVelocityX = Animator.StringToHash("InputX");
-        private protected readonly int AnimVelocityY = Animator.StringToHash("InputY");
-        private protected readonly int AnimIsWalking = Animator.StringToHash("IsWalking");
+        private static readonly int AnimVelocityX = Animator.StringToHash("InputX");
+        private static readonly int AnimVelocityY = Animator.StringToHash("InputY");
+        private static readonly int AnimIsWalking = Animator.StringToHash("IsWalking");
 
         public void SetFacingDirection(EFacingDirection facingDirection)
         {
