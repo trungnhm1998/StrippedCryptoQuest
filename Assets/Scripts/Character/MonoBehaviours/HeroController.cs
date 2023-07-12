@@ -63,7 +63,7 @@ namespace CryptoQuest.Character.MonoBehaviours
         
         private void OnGUI()
         {
-            GUI.Label(new Rect(10, 10, 200, 20), $"Input Vector: {_inputVector}");
+            GUI.Label(new Rect(20, 20, 250, 50), $"Input Vector: {_inputVector}");
         }
     }
 }
