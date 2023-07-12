@@ -30,7 +30,7 @@ namespace CryptoQuest.Gameplay.Battle
             {
                 string promtKey = modifier.Value < 0 ? ATTRIBUTE_DECREASED_KEY : ATTRIBUTE_INCREASED_KEY;
                 string promt = LocalizationSettings.StringDatabase.GetLocalizedString(BATTLE_PROMT_TABLE, promtKey);
-                CharacterDataSO unitData = _unit.GetUnitData();
+                CharacterDataSO unitData = _unit.UnitData;
                 if (unitData == null) return;
                 _unit.Logger.Log(string.Format(promt, unitData.DisplayName, modifier.AttributeSO.DisplayName));
             }

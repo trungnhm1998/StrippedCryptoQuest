@@ -74,7 +74,7 @@ namespace CryptoQuest.Gameplay.Battle
             if (_ownerUnit == null || _targetUnit == null) return;
 
             string _takeDamagePromt = GetCachedString(TakeDamagePromtKey);
-            CharacterDataSO targetUnitData = _targetUnit.GetUnitData();
+            CharacterDataSO targetUnitData = _targetUnit.UnitData;
             if (targetUnitData == null) return;
 
             _ownerUnit.Logger.Log(string.Format(_takeDamagePromt, damage, targetUnitData.DisplayName));
@@ -87,7 +87,7 @@ namespace CryptoQuest.Gameplay.Battle
             if (value.CurrentValue <= damage)
             {
                 string _deathPromt = GetCachedString(DeathPromtKey);
-                CharacterDataSO targetUnitData = _targetUnit.GetUnitData();
+                CharacterDataSO targetUnitData = _targetUnit.UnitData;
                 if (targetUnitData == null) return;
                 _ownerUnit.Logger.Log(string.Format(_deathPromt, targetUnitData.DisplayName));
             }

@@ -1,20 +1,13 @@
-﻿using System.Collections;
-using CryptoQuest.Input;
-using UnityEngine;
-using UnityEngine.Events;
+﻿using UnityEngine;
 using UnityEngine.UI;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
 using IndiGames.GameplayAbilitySystem.AttributeSystem;
-using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
-using IndiGames.GameplayAbilitySystem.AttributeSystem.Components;
-using CryptoQuest.Gameplay.Battle;
 
 namespace CryptoQuest.UI.Battle
 {
-    public class UICharacterInfo : MonoBehaviour
+    public class UIHeroInfo : CharacterInfoBase
     {
         [SerializeField] private AttributeScriptableObject _maxHpAttributeSO;
-        [SerializeField] private AttributeScriptableObject _hpAttributeSO;
         [SerializeField] private AttributeScriptableObject _maxMpAttributeSO;
         [SerializeField] private AttributeScriptableObject _mpAttributeSO;
 
@@ -24,51 +17,38 @@ namespace CryptoQuest.UI.Battle
         [SerializeField] private Slider _hpSlider;
         [SerializeField] private Text _mpValueText;
         [SerializeField] private Slider _mpSlider;
-        [SerializeField] private Image _characterIcon;
+        [SerializeField] protected Image _characterIcon;
 
-        private AbilitySystemBehaviour _owner;
-
-        private void OnEnable()
+        protected override void OnEnable()
         {
-            _hpAttributeSO.ValueChangeEvent += OnHPChanged;
+            base.OnEnable();
             _mpAttributeSO.ValueChangeEvent += OnMPChanged;
         }
 
-        private void OnDisable()
+        protected override void OnDisable()
         {
-            _hpAttributeSO.ValueChangeEvent -= OnHPChanged;
+            base.OnDisable();
             _mpAttributeSO.ValueChangeEvent -= OnMPChanged;
         }
 
-        public void SetOwnerSystem(AbilitySystemBehaviour owner)
+        protected override void Setup()
         {
-            _owner = owner;
-            InitUI();
-        }
-
-        private void InitUI()
-        {
-            if (_owner == null) return;
-            var statsInitializer = _owner.GetComponent<StatsInitializer>();
-            if (statsInitializer.DefaultStats is CharacterDataSO data)
-            {
-                _nameText.text = data.Name;
-                _characterIcon.sprite = data.BattleIconSprite;
-            }
+            _characterIcon.sprite = _characterData.BattleIconSprite;
+            _nameText.text = _characterData.Name;
             UpdateValueUI(_maxHpAttributeSO, _hpAttributeSO, _hpValueText, _hpSlider);
             UpdateValueUI(_maxMpAttributeSO, _mpAttributeSO, _mpValueText, _mpSlider);
         }
 
-        private void OnHPChanged(AttributeScriptableObject.AttributeEventArgs args)
+        protected override void OnHPChanged(AttributeScriptableObject.AttributeEventArgs args)
         {
-            if (_owner == null || args.System != _owner.AttributeSystem) return;
+            if (args.System != _attributeSystem) return;
 
             UpdateValueUI(_maxHpAttributeSO, _hpAttributeSO, _hpValueText, _hpSlider);
         }
 
         private void OnMPChanged(AttributeScriptableObject.AttributeEventArgs args)
         {
-            if (_owner == null || args.System != _owner.AttributeSystem) return;
+            if (args.System != _attributeSystem) return;
 
             UpdateValueUI(_maxMpAttributeSO, _mpAttributeSO, _mpValueText, _mpSlider);
         }
@@ -76,10 +56,14 @@ namespace CryptoQuest.UI.Battle
         private void UpdateValueUI(AttributeScriptableObject maxSO, AttributeScriptableObject attributeSO,
             Text valueText, Slider slider)
         {
-            if (!_owner.AttributeSystem.GetAttributeValue(maxSO, out AttributeValue maxValue)) return;
-            if (!_owner.AttributeSystem.GetAttributeValue(attributeSO, out AttributeValue attributeValue)) return;
+            if (_attributeSystem == null) return;
+
+            _attributeSystem.GetAttributeValue(maxSO, out AttributeValue maxValue);
+            _attributeSystem.GetAttributeValue(attributeSO, out AttributeValue attributeValue);
 
             valueText.text = attributeValue.CurrentValue.ToString();
+
+            if (maxValue.CurrentValue == 0) return;
             slider.value = attributeValue.CurrentValue / maxValue.CurrentValue;  
         }
     }

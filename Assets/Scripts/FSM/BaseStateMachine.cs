@@ -18,6 +18,7 @@ namespace CryptoQuest.FSM
 
         protected virtual void Init()
         {
+            if (_initialState == null) return;
             SetCurrentState(_initialState);
         }
 

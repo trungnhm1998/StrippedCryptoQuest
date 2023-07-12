@@ -13,7 +13,7 @@ namespace CryptoQuest.Gameplay.Battle
         BattleTeam OpponentTeam { get; }
         bool IsDead { get; }
         
-        CharacterDataSO GetUnitData();
+        CharacterDataSO UnitData { get; set; }
         void Init(BattleTeam team, AbilitySystemBehaviour owner);
         void SetOpponentTeams(BattleTeam opponentTeam);
         IEnumerator Prepare();
