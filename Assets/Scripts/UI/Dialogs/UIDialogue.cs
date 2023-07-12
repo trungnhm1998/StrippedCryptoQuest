@@ -26,9 +26,10 @@ namespace CryptoQuest.UI.Dialogs
 
         protected override void OnBeforeShow()
         {
-            base.OnBeforeShow();
             _inputMediator.EnableDialogueInput();
+            UpdateDialogueWithIndex(_currentDialogueIndex);
         }
+
         private void NextDialog()
         {
             _currentDialogueIndex++;
