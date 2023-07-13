@@ -64,7 +64,7 @@ namespace CryptoQuest.UI.Battle
                 UITargetButton targetButton = _targetButtons[i];
                 var isInTargetRange = i < targetCount;
                 targetButton.gameObject.SetActive(isInTargetRange);
-                if (!isInTargetRange) return;
+                if (!isInTargetRange) continue;
                 SetupTargetButton(targetButton, targetUnits[i]);
             }
         }
