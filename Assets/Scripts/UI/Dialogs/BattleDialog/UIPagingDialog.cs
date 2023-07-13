@@ -88,7 +88,6 @@ namespace CryptoQuest.UI.Dialogs.BattleDialog
 
         public override UIPagingDialog Close()
         {
-            _inputMediator.EnableMapGameplayInput();
             gameObject.SetActive(false);
             _onPagingDialogClose.RaiseEvent();
             return base.Close();

@@ -1,12 +1,14 @@
 using UnityEngine;
 using CryptoQuest.UI.Battle;
 using IndiGames.Core.Events.ScriptableObjects;
+using CryptoQuest.Input;
 
 namespace CryptoQuest.Gameplay.Battle
 {
     public class BattleController : MonoBehaviour
     {
         [SerializeField] private BattleBus _battleBus;
+        [SerializeField] private InputMediatorSO _inputMediator;
 
         [Header("UI")]
         [SerializeField] private CharacterList _heroesUI;
@@ -27,6 +29,7 @@ namespace CryptoQuest.Gameplay.Battle
         {
             _newTurnEventChannel.EventRaised -= OnNewTurn;
             _battleStartChannelEvent.EventRaised -= OnBattleStart;
+            _inputMediator.EnableMapGameplayInput();
         }
 
         private void OnNewTurn()
@@ -38,6 +41,7 @@ namespace CryptoQuest.Gameplay.Battle
         {
             _heroesUI.InitUI(_battleBus.BattleManager.BattleTeam1.BattleUnits);
             _monstersUI.InitUI(_battleBus.BattleManager.BattleTeam2.BattleUnits);
+            _inputMediator.EnableMenuInput();
         }
     }   
 }
