@@ -8,9 +8,7 @@ namespace CryptoQuest.Gameplay.Battle
     {
         public override bool Decide(BaseStateMachine stateMachine)
         {
-            var battleManager = stateMachine.GetComponent<BattleManager>();
-            if (battleManager == null) return false;
-            
+            if (!stateMachine.TryGetComponent<BattleManager>(out var battleManager)) return false;            
             return battleManager.IsEndTurn;
         }
     }

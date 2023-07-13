@@ -93,9 +93,6 @@ namespace CryptoQuest.UI.Dialogs.BattleDialog
             return base.Close();
         }
 
-        protected override void CheckIgnorableForClose()
-        {
-            return;
-        }
+        protected override void CheckIgnorableForClose() {}
     }
 }
