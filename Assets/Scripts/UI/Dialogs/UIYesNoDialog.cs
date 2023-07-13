@@ -18,15 +18,9 @@ namespace CryptoQuest.UI.Dialogs
         public Action YesPressed;
         public Action NoPressed;
 
-        protected override void OnBeforeShow()
-        {
-            return;
-        }
+        protected override void OnBeforeShow() { }
 
-        protected override void CheckIgnorableForClose()
-        {
-            return;
-        }
+        protected override void CheckIgnorableForClose() { }
 
         public override UIYesNoDialog Close()
         {
@@ -36,7 +30,7 @@ namespace CryptoQuest.UI.Dialogs
 
         private void OnEnable()
         {
-            StartCoroutine(CoSelectYesButton());
+            StartCoroutine(CoSelectDefaultButton());
             _inputMediator.CancelEvent += OnNoButtonPressed;
         }
 
@@ -45,7 +39,7 @@ namespace CryptoQuest.UI.Dialogs
             _inputMediator.CancelEvent -= OnNoButtonPressed;
         }
 
-        private IEnumerator CoSelectYesButton()
+        private IEnumerator CoSelectDefaultButton()
         {
             yield return new WaitForSeconds(.03f);
             _defaultSelectButton.Select();
