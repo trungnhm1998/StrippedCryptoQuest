@@ -15,26 +15,29 @@ namespace CryptoQuest.Gameplay.Battle
 
         [Header("Listen Events")]
         [SerializeField] private VoidEventChannelSO _newTurnEventChannel;
+        [SerializeField] private VoidEventChannelSO _battleStartChannelEvent;
         
-        private void Start()
-        {
-            _heroesUI.InitUI(_battleBus.BattleManager.BattleTeam1.BattleUnits);
-            _monstersUI.InitUI(_battleBus.BattleManager.BattleTeam2.BattleUnits);
-        }
-
         private void OnEnable()
         {
             _newTurnEventChannel.EventRaised += OnNewTurn;
+            _battleStartChannelEvent.EventRaised += OnBattleStart;
         }
 
         private void OnDisable()
         {
             _newTurnEventChannel.EventRaised -= OnNewTurn;
+            _battleStartChannelEvent.EventRaised -= OnBattleStart;
         }
 
         private void OnNewTurn()
         {
             _batteMenu.SetActive(true);
+        }
+
+        private void OnBattleStart()
+        {
+            _heroesUI.InitUI(_battleBus.BattleManager.BattleTeam1.BattleUnits);
+            _monstersUI.InitUI(_battleBus.BattleManager.BattleTeam2.BattleUnits);
         }
     }   
 }

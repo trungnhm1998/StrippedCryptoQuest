@@ -55,7 +55,8 @@ namespace CryptoQuest.UI.Dialogs.BattleDialog
             var page = _dialogue.Pages[dialogueIndex];
             if (page.Lines.Count <= 0)
             {
-                Close();
+                _isShowingLines = false;
+                NextDialog();
                 return;
             }
             

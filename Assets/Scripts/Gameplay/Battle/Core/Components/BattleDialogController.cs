@@ -45,15 +45,18 @@ namespace CryptoQuest.Gameplay.Battle
 
         private void OnClearLog()
         {
+            if (_currentPage != null && _currentPage.Lines.Count <= 0) return;
             _currentPage = new DialogPage();
             _currentDialog.Pages.Add(_currentPage);
         }
 
         private void OnEndActionPhase()
         {
+            _currentDialog.Pages.Remove(_currentPage);
             _showPagingDialogEventChannel.RaiseEvent(_currentDialog);
             _currentDialog = new();
-            OnClearLog();
+            _currentPage = new DialogPage();
+            _currentDialog.Pages.Add(_currentPage);
         }
     }
 }

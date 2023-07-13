@@ -28,7 +28,6 @@ namespace CryptoQuest.UI.Battle
         {
             _battleManager = _battleBus.BattleManager;
             SetupChain(_normalAttackChain);
-            OnHeroTurn(_battleManager.CurrentUnit);
         }
 
         private void OnEnable()
