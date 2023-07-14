@@ -19,8 +19,6 @@ namespace CryptoQuest
         [SerializeField] private SaveSystemSO _saveSystemSO;
         [SerializeField] private StringEventChannelSO _onTriggerStartDialogue;
         [SerializeField] private InputMediatorSO _inputMediator;
-        [SerializeField] private TableReference _tableReference;
-        public List<string> keys = new List<string>();
 
         private void Awake()
         {
@@ -43,14 +41,6 @@ namespace CryptoQuest
         private void Start()
         {
             _yarnVariableStorage.SetValue("$playerName", _saveSystemSO.PlayerName);
-
-            var stringCollection = LocalizationEditorSettings.GetStringTableCollection("Map");
-            foreach (var entry in stringCollection.SharedData.Entries)
-            {
-                keys.Add(entry.Key);
-                var value = LocalizationSettings.StringDatabase.GetLocalizedStringAsync(_tableReference, entry.Key);
-                _yarnVariableStorage.SetValue("$" + entry.Key, value.Result);
-            }
         }
 
         private void OnDialogueEnd(string str)
@@ -62,14 +52,6 @@ namespace CryptoQuest
 
         private void StartDiaglog(string nodeName)
         {
-            var stringCollection = LocalizationEditorSettings.GetStringTableCollection("Map");
-            foreach (var entry in stringCollection.SharedData.Entries)
-            {
-                keys.Add(entry.Key);
-                var value = LocalizationSettings.StringDatabase.GetLocalizedStringAsync(_tableReference, entry.Key);
-                _yarnVariableStorage.SetValue("$" + entry.Key, value.Result);
-            }
-
             _dialogueRunner.StartDialogue(nodeName);
             _inputMediator.EnableMenuInput();
         }

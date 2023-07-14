@@ -1,9 +1,8 @@
-﻿title: a
+﻿title: BreakingBadQuest
 tags:
 position: 100,100
 ---
 <<declare $playerName = "tuco">>
-<<declare $playerName1 = "tuco">>
 linew #line:DIALOUGE_TABLE
 line {$playerName} #line:GREETING
 <<jump Walter>>
@@ -35,4 +34,5 @@ title: Gus
 position: 700,300
 ---
 line #line:GUS_1
+<<EndDialogue Gus>>
 ===
