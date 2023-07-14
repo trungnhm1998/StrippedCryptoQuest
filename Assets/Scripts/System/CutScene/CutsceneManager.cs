@@ -1,10 +1,10 @@
 ﻿using CryptoQuest.Input;
-using CryptoQuest.UI.CutScene;
+using CryptoQuest.System.Cutscene.Events;
 using IndiGames.Core.Events.ScriptableObjects;
 using UnityEngine;
 using UnityEngine.Playables;
 
-namespace CryptoQuest.System.CutScene
+namespace CryptoQuest.System.Cutscene
 {
     public class CutsceneManager : MonoBehaviour
     {

@@ -1,8 +1,8 @@
-﻿using IndiGames.Core.Events.ScriptableObjects;
+﻿using CryptoQuest.System.Cutscene.Events;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
-namespace CryptoQuest.System.CutScene
+namespace CryptoQuest.System.Cutscene
 {
     public class CutsceneSpawner : MonoBehaviour
     {

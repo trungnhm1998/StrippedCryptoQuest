@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.Playables;
 
-namespace CryptoQuest.System.CutScene
+namespace CryptoQuest.System.Cutscene
 {
     public class TimelineBinder : MonoBehaviour
     {

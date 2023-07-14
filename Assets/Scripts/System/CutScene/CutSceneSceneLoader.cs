@@ -2,9 +2,9 @@
 using IndiGames.Core.SceneManagementSystem.ScriptableObjects;
 using UnityEngine;
 
-namespace CryptoQuest.System.CutScene
+namespace CryptoQuest.System.Cutscene
 {
-    public class CutSceneSceneLoader : MonoBehaviour
+    public class CutsceneSceneLoader : MonoBehaviour
     {
         [SerializeField] private SceneScriptableObject _sceneToLoad;
 
