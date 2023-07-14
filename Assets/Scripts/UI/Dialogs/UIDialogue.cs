@@ -45,15 +45,15 @@ namespace CryptoQuest.UI.Dialogs
             UpdateDialogueWithIndex(_currentDialogueIndex);
         }
 
+        private void UpdateDialogueWithIndex(int dialogueIndex)
+        {
+            _dialogueLabel.StringReference = _dialogue.GetLine(dialogueIndex);
+        }
+
         public UIDialogue SetDialogue(DialogueScriptableObject dialogueArgs)
         {
             _dialogue = dialogueArgs;
             return this;
-        }
-
-        private void UpdateDialogueWithIndex(int dialogueIndex)
-        {
-            _dialogueLabel.StringReference = _dialogue.GetLine(dialogueIndex);
         }
 
         public override UIDialogue Close()
