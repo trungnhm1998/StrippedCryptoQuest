@@ -1,5 +1,6 @@
 using CryptoQuest.Gameplay.Quest.Dialogue.ScriptableObject;
 using CryptoQuest.Input;
+using IndiGames.Core.Events.ScriptableObjects;
 using UnityEngine;
 using UnityEngine.Localization.Components;
 
@@ -9,6 +10,8 @@ namespace CryptoQuest.UI.Dialogs
     {
         [Header("Child Components")]
         [SerializeField] private InputMediatorSO _inputMediator;
+
+        [SerializeField] private VoidEventChannelSO _onDialogueEndedEvent;
         [SerializeField] private LocalizeStringEvent _dialogueLabel;
 
         private DialogueScriptableObject _dialogue;
@@ -56,6 +59,7 @@ namespace CryptoQuest.UI.Dialogs
         public override UIDialogue Close()
         {
             _inputMediator.EnableMapGameplayInput();
+            _onDialogueEndedEvent.RaiseEvent();
             gameObject.SetActive(false);
             return base.Close();
         }

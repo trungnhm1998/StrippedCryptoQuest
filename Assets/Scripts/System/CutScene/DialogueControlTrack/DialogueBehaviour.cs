@@ -10,15 +10,16 @@ namespace CryptoQuest.System.CutScene.DialogueControlTrack
     [Serializable]
     public class DialogueBehaviour : PlayableBehaviour
     {
-        [SerializeField] private bool _isPauseWhenClipEnds;
+        [SerializeField] private bool _isPauseWhenClipEnds = true;
 
         [Header("Dialogue Option")]
         [SerializeField] private DialogueScriptableObject _dialogueLine;
 
         [SerializeField] private VoidEventChannelSO _onLineEndedEvent;
+        [SerializeField] private VoidEventChannelSO _onShowEmotionEvent;
 
         [Header("Raise event")]
-        [HideInInspector] public DialogEventChannelSO PlayDialogueEvent;
+        [HideInInspector] public DialogueEventChannelSO PlayDialogueEvent;
 
         [HideInInspector] public VoidEventChannelSO PauseTimelineEvent;
 
@@ -34,7 +35,10 @@ namespace CryptoQuest.System.CutScene.DialogueControlTrack
                 return;
             }
 
+            if (_isPauseWhenClipEnds) PauseDialog();
+
             ShowDialog();
+            ShowEmotion();
             _isDialoguePlayed = true;
         }
 
@@ -48,15 +52,28 @@ namespace CryptoQuest.System.CutScene.DialogueControlTrack
                 return;
             }
 
-            if (_isPauseWhenClipEnds)
-                PauseDialog();
-            else
-                EndDialog();
+            if (!_isPauseWhenClipEnds) EndDialog();
+
+            _isDialoguePlayed = false;
         }
 
-        private void EndDialog() => _onLineEndedEvent.RaiseEvent();
+        private void ShowEmotion()
+        {
+            if (_onShowEmotionEvent == null) return;
+            _onShowEmotionEvent.RaiseEvent();
+        }
 
-        private void ShowDialog() => PlayDialogueEvent.Show(_dialogueLine);
+        private void EndDialog()
+        {
+            if (_onLineEndedEvent == null) return;
+            _onLineEndedEvent.RaiseEvent();
+        }
+
+        private void ShowDialog()
+        {
+            if (_dialogueLine == null) return;
+            PlayDialogueEvent.Show(_dialogueLine);
+        }
 
         private void PauseDialog() => PauseTimelineEvent.RaiseEvent();
 

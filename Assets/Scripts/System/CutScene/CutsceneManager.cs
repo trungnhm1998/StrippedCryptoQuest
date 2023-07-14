@@ -6,6 +6,7 @@ using CryptoQuest.UI.CutScene;
 using IndiGames.Core.Events.ScriptableObjects;
 using UnityEngine;
 using UnityEngine.Playables;
+using UnityEngine.Serialization;
 
 namespace CryptoQuest.System.CutScene
 {
@@ -35,6 +36,8 @@ namespace CryptoQuest.System.CutScene
             _onPauseTimelineEvent.EventRaised -= PauseTimeline;
             _onResumeTimelineEvent.EventRaised -= ResumeTimeline;
         }
+
+        private void HandleCutsceneToPlay(GameObject arg0, Vector2 arg1) { }
 
         private void OnPlayCutsceneEventRaised(PlayableDirector value)
         {

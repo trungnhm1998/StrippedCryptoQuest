@@ -1,3 +1,4 @@
+using System;
 using CryptoQuest.Events.UI;
 using IndiGames.Core.Events.ScriptableObjects;
 using UnityEngine;
@@ -10,8 +11,9 @@ namespace CryptoQuest.System.CutScene.DialogueControlTrack
     public class DialogueTrack : PlayableTrack
     {
         [Header("Raise event")]
-        public DialogEventChannelSO PlayDialogueEvent;
-        public VoidEventChannelSO PauseTimelineEvent;
+        [SerializeField] private DialogueEventChannelSO _playDialogueEvent;
+
+        [SerializeField] private VoidEventChannelSO _pauseTimelineEvent;
 
         public override Playable CreateTrackMixer(PlayableGraph graph, GameObject go, int inputCount)
         {
@@ -19,8 +21,14 @@ namespace CryptoQuest.System.CutScene.DialogueControlTrack
             {
                 DialogueClip clipControl = clip.asset as DialogueClip;
 
-                clipControl.PauseTimelineEvent = PauseTimelineEvent;
-                clipControl.PlayDialogueEvent = PlayDialogueEvent;
+                if (clipControl == null)
+                {
+                    Debug.LogWarning("This clip contains no DialogueLine");
+                    continue;
+                }
+
+                clipControl.pauseTimelineEvent = _pauseTimelineEvent;
+                clipControl.playDialogueEvent = _playDialogueEvent;
             }
 
             return base.CreateTrackMixer(graph, go, inputCount);

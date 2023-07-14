@@ -8,22 +8,20 @@ namespace CryptoQuest.System.CutScene.DialogueControlTrack
 {
     public class DialogueClip : PlayableAsset, ITimelineClipAsset
     {
-        [SerializeField] private DialogueBehaviour _template = default;
+        [SerializeField] private DialogueBehaviour _dialogueBehaviour = default;
 
-        [HideInInspector] public DialogEventChannelSO PlayDialogueEvent;
-        [HideInInspector] public VoidEventChannelSO PauseTimelineEvent;
+        [HideInInspector] public DialogueEventChannelSO playDialogueEvent;
+        [HideInInspector] public VoidEventChannelSO pauseTimelineEvent;
 
-        public ClipCaps clipCaps
-        {
-            get { return ClipCaps.None; }
-        }
+        public ClipCaps clipCaps => ClipCaps.None;
 
         public override Playable CreatePlayable(PlayableGraph graph, GameObject owner)
         {
-            ScriptPlayable<DialogueBehaviour> playable = ScriptPlayable<DialogueBehaviour>.Create(graph, _template);
+            ScriptPlayable<DialogueBehaviour> playable =
+                ScriptPlayable<DialogueBehaviour>.Create(graph, _dialogueBehaviour);
 
-            _template.PlayDialogueEvent = PlayDialogueEvent;
-            _template.PauseTimelineEvent = PauseTimelineEvent;
+            _dialogueBehaviour.PlayDialogueEvent = playDialogueEvent;
+            _dialogueBehaviour.PauseTimelineEvent = pauseTimelineEvent;
 
             return playable;
         }

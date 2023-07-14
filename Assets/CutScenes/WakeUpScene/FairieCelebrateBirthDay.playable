@@ -28,14 +28,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01b28e5cbdb34853b6b7cd5f42e2ea8e, type: 3}
   m_Name: DialogueClip
   m_EditorClassIdentifier: 
-  _template:
+  _dialogueBehaviour:
     _isPauseWhenClipEnds: 1
-    _dialogueLine: {fileID: 11400000, guid: 28dbf6d0ca22ce84bb7eb88c6b60bebe, type: 2}
+    _dialogueLine: {fileID: 11400000, guid: 74144818dde966c438a60d94e37c1952, type: 2}
     _onLineEndedEvent: {fileID: 0}
-    PlayDialogueEvent: {fileID: 11400000, guid: 96b72cc288a244841a57d6587e60e1e9, type: 2}
+    _onShowEmotionEvent: {fileID: 0}
+    PlayDialogueEvent: {fileID: 11400000, guid: 5ea06a7649747af4aaa3d444b3ab8a99, type: 2}
     PauseTimelineEvent: {fileID: 11400000, guid: 7591ae1482fd3544fa2606e780c916ff, type: 2}
-  PlayDialogueEvent: {fileID: 11400000, guid: 96b72cc288a244841a57d6587e60e1e9, type: 2}
-  PauseTimelineEvent: {fileID: 11400000, guid: 7591ae1482fd3544fa2606e780c916ff, type: 2}
+  playDialogueEvent: {fileID: 11400000, guid: 5ea06a7649747af4aaa3d444b3ab8a99, type: 2}
+  pauseTimelineEvent: {fileID: 11400000, guid: 7591ae1482fd3544fa2606e780c916ff, type: 2}
 --- !u!114 &-5599006183222631857
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -542,8 +543,8 @@ MonoBehaviour:
     m_DisplayName: DialogueClip
   m_Markers:
     m_Objects: []
-  PlayDialogueEvent: {fileID: 11400000, guid: 96b72cc288a244841a57d6587e60e1e9, type: 2}
-  PauseTimelineEvent: {fileID: 11400000, guid: 7591ae1482fd3544fa2606e780c916ff, type: 2}
+  _playDialogueEvent: {fileID: 11400000, guid: 5ea06a7649747af4aaa3d444b3ab8a99, type: 2}
+  _pauseTimelineEvent: {fileID: 11400000, guid: 7591ae1482fd3544fa2606e780c916ff, type: 2}
 --- !u!114 &-5586616833766151023
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -556,14 +557,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01b28e5cbdb34853b6b7cd5f42e2ea8e, type: 3}
   m_Name: DialogueClip
   m_EditorClassIdentifier: 
-  _template:
+  _dialogueBehaviour:
     _isPauseWhenClipEnds: 1
-    _dialogueLine: {fileID: 11400000, guid: b51d9fe68f282304b843c6af642c46ee, type: 2}
+    _dialogueLine: {fileID: 0}
     _onLineEndedEvent: {fileID: 0}
-    PlayDialogueEvent: {fileID: 11400000, guid: 96b72cc288a244841a57d6587e60e1e9, type: 2}
+    _onShowEmotionEvent: {fileID: 0}
+    PlayDialogueEvent: {fileID: 11400000, guid: 5ea06a7649747af4aaa3d444b3ab8a99, type: 2}
     PauseTimelineEvent: {fileID: 11400000, guid: 7591ae1482fd3544fa2606e780c916ff, type: 2}
-  PlayDialogueEvent: {fileID: 11400000, guid: 96b72cc288a244841a57d6587e60e1e9, type: 2}
-  PauseTimelineEvent: {fileID: 11400000, guid: 7591ae1482fd3544fa2606e780c916ff, type: 2}
+  playDialogueEvent: {fileID: 11400000, guid: 5ea06a7649747af4aaa3d444b3ab8a99, type: 2}
+  pauseTimelineEvent: {fileID: 11400000, guid: 7591ae1482fd3544fa2606e780c916ff, type: 2}
 --- !u!114 &-5072557775478423296
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -576,14 +578,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01b28e5cbdb34853b6b7cd5f42e2ea8e, type: 3}
   m_Name: DialogueClip(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)
   m_EditorClassIdentifier: 
-  _template:
+  _dialogueBehaviour:
     _isPauseWhenClipEnds: 1
-    _dialogueLine: {fileID: 11400000, guid: 2732fe7a378036a4ab6572fd3bc43680, type: 2}
+    _dialogueLine: {fileID: 11400000, guid: b84b8dd1f82dacb4690e4e5bcb063297, type: 2}
     _onLineEndedEvent: {fileID: 0}
-    PlayDialogueEvent: {fileID: 11400000, guid: 96b72cc288a244841a57d6587e60e1e9, type: 2}
+    _onShowEmotionEvent: {fileID: 0}
+    PlayDialogueEvent: {fileID: 11400000, guid: 5ea06a7649747af4aaa3d444b3ab8a99, type: 2}
     PauseTimelineEvent: {fileID: 11400000, guid: 7591ae1482fd3544fa2606e780c916ff, type: 2}
-  PlayDialogueEvent: {fileID: 11400000, guid: 96b72cc288a244841a57d6587e60e1e9, type: 2}
-  PauseTimelineEvent: {fileID: 11400000, guid: 7591ae1482fd3544fa2606e780c916ff, type: 2}
+  playDialogueEvent: {fileID: 11400000, guid: 5ea06a7649747af4aaa3d444b3ab8a99, type: 2}
+  pauseTimelineEvent: {fileID: 11400000, guid: 7591ae1482fd3544fa2606e780c916ff, type: 2}
 --- !u!114 &-4894489475371328658
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -667,14 +670,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01b28e5cbdb34853b6b7cd5f42e2ea8e, type: 3}
   m_Name: DialogueClip(Clone)(Clone)
   m_EditorClassIdentifier: 
-  _template:
+  _dialogueBehaviour:
     _isPauseWhenClipEnds: 1
-    _dialogueLine: {fileID: 11400000, guid: 6b6e44b3f1ffed14f8696771eaedf183, type: 2}
+    _dialogueLine: {fileID: 11400000, guid: 28dbf6d0ca22ce84bb7eb88c6b60bebe, type: 2}
     _onLineEndedEvent: {fileID: 0}
-    PlayDialogueEvent: {fileID: 11400000, guid: 96b72cc288a244841a57d6587e60e1e9, type: 2}
+    _onShowEmotionEvent: {fileID: 0}
+    PlayDialogueEvent: {fileID: 11400000, guid: 5ea06a7649747af4aaa3d444b3ab8a99, type: 2}
     PauseTimelineEvent: {fileID: 11400000, guid: 7591ae1482fd3544fa2606e780c916ff, type: 2}
-  PlayDialogueEvent: {fileID: 11400000, guid: 96b72cc288a244841a57d6587e60e1e9, type: 2}
-  PauseTimelineEvent: {fileID: 11400000, guid: 7591ae1482fd3544fa2606e780c916ff, type: 2}
+  playDialogueEvent: {fileID: 11400000, guid: 5ea06a7649747af4aaa3d444b3ab8a99, type: 2}
+  pauseTimelineEvent: {fileID: 11400000, guid: 7591ae1482fd3544fa2606e780c916ff, type: 2}
 --- !u!114 &-677748738266949045
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -748,14 +752,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01b28e5cbdb34853b6b7cd5f42e2ea8e, type: 3}
   m_Name: DialogueClip(Clone)(Clone)(Clone)(Clone)
   m_EditorClassIdentifier: 
-  _template:
+  _dialogueBehaviour:
     _isPauseWhenClipEnds: 1
     _dialogueLine: {fileID: 11400000, guid: 6b6e44b3f1ffed14f8696771eaedf183, type: 2}
     _onLineEndedEvent: {fileID: 0}
-    PlayDialogueEvent: {fileID: 11400000, guid: 96b72cc288a244841a57d6587e60e1e9, type: 2}
+    _onShowEmotionEvent: {fileID: 0}
+    PlayDialogueEvent: {fileID: 11400000, guid: 5ea06a7649747af4aaa3d444b3ab8a99, type: 2}
     PauseTimelineEvent: {fileID: 11400000, guid: 7591ae1482fd3544fa2606e780c916ff, type: 2}
-  PlayDialogueEvent: {fileID: 11400000, guid: 96b72cc288a244841a57d6587e60e1e9, type: 2}
-  PauseTimelineEvent: {fileID: 11400000, guid: 7591ae1482fd3544fa2606e780c916ff, type: 2}
+  playDialogueEvent: {fileID: 11400000, guid: 5ea06a7649747af4aaa3d444b3ab8a99, type: 2}
+  pauseTimelineEvent: {fileID: 11400000, guid: 7591ae1482fd3544fa2606e780c916ff, type: 2}
 --- !u!114 &5974530428361037180
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -768,14 +773,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01b28e5cbdb34853b6b7cd5f42e2ea8e, type: 3}
   m_Name: DialogueClip
   m_EditorClassIdentifier: 
-  _template:
+  _dialogueBehaviour:
     _isPauseWhenClipEnds: 1
-    _dialogueLine: {fileID: 11400000, guid: 74144818dde966c438a60d94e37c1952, type: 2}
+    _dialogueLine: {fileID: 11400000, guid: b51d9fe68f282304b843c6af642c46ee, type: 2}
     _onLineEndedEvent: {fileID: 0}
-    PlayDialogueEvent: {fileID: 11400000, guid: 96b72cc288a244841a57d6587e60e1e9, type: 2}
+    _onShowEmotionEvent: {fileID: 0}
+    PlayDialogueEvent: {fileID: 11400000, guid: 5ea06a7649747af4aaa3d444b3ab8a99, type: 2}
     PauseTimelineEvent: {fileID: 11400000, guid: 7591ae1482fd3544fa2606e780c916ff, type: 2}
-  PlayDialogueEvent: {fileID: 11400000, guid: 96b72cc288a244841a57d6587e60e1e9, type: 2}
-  PauseTimelineEvent: {fileID: 11400000, guid: 7591ae1482fd3544fa2606e780c916ff, type: 2}
+  playDialogueEvent: {fileID: 11400000, guid: 5ea06a7649747af4aaa3d444b3ab8a99, type: 2}
+  pauseTimelineEvent: {fileID: 11400000, guid: 7591ae1482fd3544fa2606e780c916ff, type: 2}
 --- !u!114 &7159146536771701718
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -991,11 +997,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01b28e5cbdb34853b6b7cd5f42e2ea8e, type: 3}
   m_Name: DialogueClip(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)
   m_EditorClassIdentifier: 
-  _template:
+  _dialogueBehaviour:
     _isPauseWhenClipEnds: 1
-    _dialogueLine: {fileID: 11400000, guid: 542895de82f1e2e41924dc07ca421187, type: 2}
+    _dialogueLine: {fileID: 11400000, guid: 2732fe7a378036a4ab6572fd3bc43680, type: 2}
     _onLineEndedEvent: {fileID: 11400000, guid: 90db6f9b1b8ee064b8d4151cf1fcb722, type: 2}
-    PlayDialogueEvent: {fileID: 11400000, guid: 96b72cc288a244841a57d6587e60e1e9, type: 2}
+    _onShowEmotionEvent: {fileID: 0}
+    PlayDialogueEvent: {fileID: 11400000, guid: 5ea06a7649747af4aaa3d444b3ab8a99, type: 2}
     PauseTimelineEvent: {fileID: 11400000, guid: 7591ae1482fd3544fa2606e780c916ff, type: 2}
-  PlayDialogueEvent: {fileID: 11400000, guid: 96b72cc288a244841a57d6587e60e1e9, type: 2}
-  PauseTimelineEvent: {fileID: 11400000, guid: 7591ae1482fd3544fa2606e780c916ff, type: 2}
+  playDialogueEvent: {fileID: 11400000, guid: 5ea06a7649747af4aaa3d444b3ab8a99, type: 2}
+  pauseTimelineEvent: {fileID: 11400000, guid: 7591ae1482fd3544fa2606e780c916ff, type: 2}

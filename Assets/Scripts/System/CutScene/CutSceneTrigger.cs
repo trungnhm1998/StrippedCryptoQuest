@@ -23,15 +23,21 @@ namespace CryptoQuest.System.CutScene
         [Header("Raise event")]
         [SerializeField] private PlayableDirectorChannelSO _onPlayCutsceneEvent;
 
+        private void Awake()
+        {
+            if (!_playOnAwake) return;
+            StartCoroutine(PlayCutscene());
+        }
+
         private void OnEnable()
         {
-            _sceneLoadedEventChannelSO.EventRaised += PlayCutSceneOnAwake;
+            _sceneLoadedEventChannelSO.EventRaised += HandleCutscenePlaying;
             _playableDirector.stopped += HandleDirectorStopped;
         }
 
         private void OnDisable()
         {
-            _sceneLoadedEventChannelSO.EventRaised -= PlayCutSceneOnAwake;
+            _sceneLoadedEventChannelSO.EventRaised -= HandleCutscenePlaying;
             _playableDirector.stopped -= HandleDirectorStopped;
         }
 
@@ -41,15 +47,13 @@ namespace CryptoQuest.System.CutScene
             Destroy(this);
         }
 
-        private void PlayCutSceneOnAwake()
+        private void HandleCutscenePlaying()
         {
-            if (!_playOnAwake) return;
             if (_onPlayCutsceneEvent == null) return;
-
-            StartCoroutine(PlayCutScene());
+            StartCoroutine(PlayCutscene());
         }
 
-        private IEnumerator PlayCutScene()
+        private IEnumerator PlayCutscene()
         {
             yield return new WaitForSeconds(1f); // wait for scene to load
             _onPlayCutsceneEvent.RaiseEvent(_playableDirector);
