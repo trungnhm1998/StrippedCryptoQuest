@@ -12,8 +12,6 @@ namespace CryptoQuest.UI.Dialogs
         [Header("Child Components")]
         [SerializeField] private InputMediatorSO _inputMediator;
         [SerializeField] private Button _defaultSelectButton;
-        [SerializeField] private DialogCallbackEventSO _yesButtonPressedEvennt;
-        [SerializeField] private DialogCallbackEventSO _noButtonPressedEvent;
 
         public Action YesPressed;
         public Action NoPressed;
@@ -21,12 +19,6 @@ namespace CryptoQuest.UI.Dialogs
         protected override void OnBeforeShow() { }
 
         protected override void CheckIgnorableForClose() { }
-
-        public override UIYesNoDialog Close()
-        {
-            gameObject.SetActive(false);
-            return base.Close();
-        }
 
         private void OnEnable()
         {
@@ -41,7 +33,7 @@ namespace CryptoQuest.UI.Dialogs
 
         private IEnumerator CoSelectDefaultButton()
         {
-            yield return new WaitForSeconds(.03f);
+            yield return null;
             _defaultSelectButton.Select();
         }
 
