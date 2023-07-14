@@ -8,6 +8,6 @@ namespace CryptoQuest.Gameplay.Quest
     [CreateAssetMenu(menuName = "Crypto Quest/Battle/Reward")]
     public class RewardDialogData : ScriptableObject
     {
-        [SerializeField] public List<LocalizedString> ItemNames { get; private set; }
+        [field: SerializeField] public List<LocalizedString> ItemNames { get; private set; }
     }
 }
