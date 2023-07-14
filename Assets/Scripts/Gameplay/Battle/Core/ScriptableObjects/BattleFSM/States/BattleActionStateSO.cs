@@ -1,19 +1,20 @@
 using UnityEngine;
 using System.Collections;
 using CryptoQuest.FSM;
+using IndiGames.Core.Events.ScriptableObjects;
 
 namespace CryptoQuest.Gameplay.Battle
 {
     [CreateAssetMenu(fileName = "BattleActionStateSO", menuName = "Gameplay/Battle/FSM/States/Battle Action State")]
     public class BattleActionStateSO : BattleStateSO
-    {
-        private BattleLog _battleLog;
+    {        
+        [SerializeField] private VoidEventChannelSO _endActionPhaseEventChannel;
+
         private Coroutine _unitActionCoroutine; 
 
         public override void OnEnterState(BaseStateMachine stateMachine)
         {
             base.OnEnterState(stateMachine);
-            _battleLog = stateMachine.GetComponent<BattleLog>();
             _unitActionCoroutine = stateMachine.StartCoroutine(BattleUnitsAction(stateMachine));
         }
         
@@ -22,11 +23,8 @@ namespace CryptoQuest.Gameplay.Battle
             foreach (var unit in BattleManager.BattleUnits)
             {
                 yield return unit.Execute();
-
-                if (!_battleLog) continue;
-                _battleLog.Log($"{unit.GetOwner().name} Action");
             }
-            stateMachine.SetCurrentState(_nextState);
+            _endActionPhaseEventChannel.RaiseEvent();
         }
 
         public override void OnExitState(BaseStateMachine stateMachine)
