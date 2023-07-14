@@ -10,8 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 8690311471687499579}
   - component: {fileID: 7792015344407669820}
-  - component: {fileID: 4419527403140489288}
   - component: {fileID: -8865580038324613876}
+  - component: {fileID: 8104908892789915956}
+  - component: {fileID: 3197280765502270616}
+  - component: {fileID: -660305282902845378}
   m_Layer: 0
   m_Name: NPC_Solider_Red
   m_TagString: Untagged
@@ -86,7 +88,21 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!61 &4419527403140489288
+--- !u!114 &-8865580038324613876
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5772803860225570356}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ccbfbdc39cd3f8940b942c3d69572361, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _dialogue: {fileID: 11400000, guid: 338ee1159513c674d8c0ffcb9de8b6d9, type: 2}
+  _dialogEventChannel: {fileID: 11400000, guid: 5ea06a7649747af4aaa3d444b3ab8a99, type: 2}
+--- !u!61 &8104908892789915956
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -118,10 +134,10 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.255, y: 0.585}
+  m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
+    pivot: {x: 0.5, y: 0.5}
     oldSize: {x: 0.51, y: 1.17}
     newSize: {x: 0.51, y: 1.17}
     adaptiveTilingThreshold: 0.5
@@ -131,7 +147,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.51, y: 1.17}
   m_EdgeRadius: 0
---- !u!114 &-8865580038324613876
+--- !u!114 &3197280765502270616
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -140,8 +156,29 @@ MonoBehaviour:
   m_GameObject: {fileID: 5772803860225570356}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ccbfbdc39cd3f8940b942c3d69572361, type: 3}
+  m_Script: {fileID: 11500000, guid: 8317eb7042a89a440ba9e968d6b2d015, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _dialogue: {fileID: 11400000, guid: 338ee1159513c674d8c0ffcb9de8b6d9, type: 2}
-  _dialogEventChannel: {fileID: 11400000, guid: 5ea06a7649747af4aaa3d444b3ab8a99, type: 2}
+  _animator: {fileID: -660305282902845378}
+  _facingDirection: 0
+--- !u!95 &-660305282902845378
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5772803860225570356}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 22100000, guid: 27e219dd9c08f134dbd1a5a91feed05e, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

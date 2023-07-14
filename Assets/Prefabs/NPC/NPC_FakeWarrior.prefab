@@ -10,8 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 5339908919218007516}
   - component: {fileID: 874408571194905096}
-  - component: {fileID: 6525846812775087189}
   - component: {fileID: -840806153157758279}
+  - component: {fileID: -7072095473563974240}
+  - component: {fileID: -4542353857501631431}
+  - component: {fileID: 6256207908978599410}
   m_Layer: 0
   m_Name: NPC_FakeWarrior
   m_TagString: Untagged
@@ -86,7 +88,21 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!61 &6525846812775087189
+--- !u!114 &-840806153157758279
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7868431345466418400}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ccbfbdc39cd3f8940b942c3d69572361, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _dialogue: {fileID: 11400000, guid: 338ee1159513c674d8c0ffcb9de8b6d9, type: 2}
+  _dialogEventChannel: {fileID: 11400000, guid: 5ea06a7649747af4aaa3d444b3ab8a99, type: 2}
+--- !u!61 &-7072095473563974240
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -118,10 +134,10 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.33, y: 0.54}
+  m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
+    pivot: {x: 0.5, y: 0.5}
     oldSize: {x: 0.66, y: 1.08}
     newSize: {x: 0.66, y: 1.08}
     adaptiveTilingThreshold: 0.5
@@ -131,7 +147,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.66, y: 1.08}
   m_EdgeRadius: 0
---- !u!114 &-840806153157758279
+--- !u!114 &-4542353857501631431
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -140,8 +156,29 @@ MonoBehaviour:
   m_GameObject: {fileID: 7868431345466418400}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ccbfbdc39cd3f8940b942c3d69572361, type: 3}
+  m_Script: {fileID: 11500000, guid: 8317eb7042a89a440ba9e968d6b2d015, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _dialogue: {fileID: 11400000, guid: 338ee1159513c674d8c0ffcb9de8b6d9, type: 2}
-  _dialogEventChannel: {fileID: 11400000, guid: 5ea06a7649747af4aaa3d444b3ab8a99, type: 2}
+  _animator: {fileID: 6256207908978599410}
+  _facingDirection: 0
+--- !u!95 &6256207908978599410
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7868431345466418400}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 22100000, guid: 3d0a52cf1f929ab4da3842f4339945b6, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
