@@ -60,21 +60,17 @@ namespace CryptoQuest.UI.Dialogs
             return this;
         }
 
-        private void DisplayNonItemsReward()
-        {
-        }
-
         private void DisplayItemsReward()
         {
-            if (_rewardDialogData.Items.Count <= 0)
+            if (_rewardDialogData.ItemNames.Count <= 0)
             {
                 SetRewardedItemLabel(_noItemString);
                 return;
             }
 
-            foreach (var item in _rewardDialogData.Items)
+            foreach (var itemName in _rewardDialogData.ItemNames)
             {
-                SetRewardedItemLabel(item);
+                SetRewardedItemLabel(itemName);
             }
         }
 
@@ -87,12 +83,12 @@ namespace CryptoQuest.UI.Dialogs
             return rewardedItemLabel;
         }
 
-        private void SetRewardedItemLabel(LocalizedString item)
+        private void SetRewardedItemLabel(LocalizedString itemName)
         {
             var rewardedItemLabel = 
                 GetRewaredItemLabel();
 
-            rewardedItemLabel.StringReference = item;
+            rewardedItemLabel.StringReference = itemName;
         }
     }
 }
