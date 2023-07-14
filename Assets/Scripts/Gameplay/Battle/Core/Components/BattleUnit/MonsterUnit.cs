@@ -7,9 +7,8 @@ namespace CryptoQuest.Gameplay.Battle
     {
         private ISkillSelector _skillSelector;
 
-        protected override void Start()
+        protected void Awake()
         {
-            base.Start();
             _skillSelector = new RandomSkillSelector();
         }
 

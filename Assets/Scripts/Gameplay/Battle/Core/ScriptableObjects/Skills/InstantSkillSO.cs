@@ -10,7 +10,7 @@ namespace CryptoQuest.Gameplay.Battle
     /// Skill will end right after activate like normal attack
     /// </summary>
     [CreateAssetMenu(fileName = "InstantSkill", menuName = "Gameplay/Battle/Abilities/Instant Skill")]
-    public class InstantSkillSO : EffectAbilitySO
+    public class InstantSkillSO : CQSkillSO
     {
         protected override AbstractAbility CreateAbility()
         {
@@ -19,7 +19,7 @@ namespace CryptoQuest.Gameplay.Battle
         }
     }
 
-    public class InstantSkill : EffectAbility
+    public class InstantSkill : CQSkill
     {
         protected override IEnumerator InternalActiveAbility()
         {

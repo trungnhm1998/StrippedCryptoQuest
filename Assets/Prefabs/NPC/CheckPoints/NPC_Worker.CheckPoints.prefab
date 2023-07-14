@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 194149909781350320}
   - component: {fileID: 727415341986260738}
   - component: {fileID: 3107507553882089597}
+  - component: {fileID: 1816293080032377560}
+  - component: {fileID: 7092445162930648489}
   m_Layer: 0
   m_Name: NPC_Worker.CheckPoints
   m_TagString: Untagged
@@ -48,7 +50,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _dialogue: {fileID: 11400000, guid: 338ee1159513c674d8c0ffcb9de8b6d9, type: 2}
-  _dialogEventChannel: {fileID: 11400000, guid: 96b72cc288a244841a57d6587e60e1e9, type: 2}
+  _dialogEventChannel: {fileID: 11400000, guid: 5ea06a7649747af4aaa3d444b3ab8a99, type: 2}
 --- !u!212 &727415341986260738
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -136,7 +138,7 @@ BoxCollider2D:
   m_Offset: {x: 0.3, y: 0.27}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
+    pivot: {x: 0.5, y: 0.5}
     oldSize: {x: 0.6, y: 1.08}
     newSize: {x: 0.6, y: 1.08}
     adaptiveTilingThreshold: 0.5
@@ -146,6 +148,41 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.59999996, y: 0.53999996}
   m_EdgeRadius: 0
+--- !u!114 &1816293080032377560
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5164116748062405639}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8317eb7042a89a440ba9e968d6b2d015, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _animator: {fileID: 0}
+  _facingDirection: 0
+--- !u!95 &7092445162930648489
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5164116748062405639}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &6671534395868635440
 GameObject:
   m_ObjectHideFlags: 0
