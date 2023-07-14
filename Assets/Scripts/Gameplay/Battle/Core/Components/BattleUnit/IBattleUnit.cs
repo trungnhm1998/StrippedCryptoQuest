@@ -12,6 +12,7 @@ namespace CryptoQuest.Gameplay.Battle
         AbilitySystemBehaviour Owner { get; }
         BattleTeam OpponentTeam { get; }
         bool IsDead { get; }
+        AbstractAbility NormalAttack { get; }
         
         CharacterDataSO UnitData { get; set; }
         void Init(BattleTeam team, AbilitySystemBehaviour owner);

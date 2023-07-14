@@ -1,8 +1,8 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.Collections;
-using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
 using CryptoQuest.FSM;
+using IndiGames.Core.Events.ScriptableObjects;
 
 namespace CryptoQuest.Gameplay.Battle
 {
@@ -18,17 +18,41 @@ namespace CryptoQuest.Gameplay.Battle
         [field: SerializeField]
         public BattleTeam BattleTeam2 { get; private set; }
 
+        [Header("Raise Events")]
+        [SerializeField] private VoidEventChannelSO _newTurnEventChannel;
+
+        [Header("Listen Events")]
+        [SerializeField] private VoidEventChannelSO _onDialogCloseEventChannel;
+        [SerializeField] private VoidEventChannelSO _sceneLoadedEventChannel;
+
         public IBattleUnit CurrentUnit {get; set;}
         public int Turn { get; private set; }
         public BaseBattleSpawner BattleSpawner { get; private set; }
         public List<IBattleUnit> BattleUnits { get; private set; } = new();
 
+        public bool IsEndTurn { get; private set; }
 
         protected void Awake()
         {
             BattleSpawner = GetComponent<BaseBattleSpawner>();
             _battleBus.BattleManager = this;
+        }
+
+        private void StartBattle()
+        {
             _stateMachine.SetCurrentState(_battleStartState);
+        }
+
+        private void OnEnable()
+        {
+            _onDialogCloseEventChannel.EventRaised += OnEndTurn;
+            _sceneLoadedEventChannel.EventRaised += StartBattle;
+        }
+
+        private void OnDisable()
+        {
+            _onDialogCloseEventChannel.EventRaised -= OnEndTurn;
+            _sceneLoadedEventChannel.EventRaised -= StartBattle;
         }
 
         public void InitBattleTeams()
@@ -71,9 +95,16 @@ namespace CryptoQuest.Gameplay.Battle
 
         public void OnNewTurn()
         {
+            IsEndTurn = false;
+            _newTurnEventChannel.RaiseEvent();
             Turn++;
         }
 
+        private void OnEndTurn()
+        {
+            IsEndTurn = true;
+        }
+        
         public void OnEscape()
         {
             _stateMachine.SetCurrentState(_battleEndState);

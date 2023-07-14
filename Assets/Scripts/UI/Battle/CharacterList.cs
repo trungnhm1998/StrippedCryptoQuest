@@ -15,7 +15,7 @@ namespace CryptoQuest.UI.Battle
                 var characterInfo = _characterInfos[i];
                 var isInMemberRange = i < memberCount;
                 characterInfo.gameObject.SetActive(isInMemberRange);
-                if (!isInMemberRange) return;
+                if (!isInMemberRange) continue;
                 characterInfo.SetData(units[i].UnitData);
             }
         }
