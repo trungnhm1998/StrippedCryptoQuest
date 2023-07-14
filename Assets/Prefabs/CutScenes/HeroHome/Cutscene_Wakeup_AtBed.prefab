@@ -59,9 +59,9 @@ GameObject:
   - component: {fileID: 8324194914358490285}
   - component: {fileID: 1118849242690439696}
   m_Layer: 0
-  m_Name: WakeUpCutSceneAtBed
+  m_Name: Cutscene_Wakeup_AtBed
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 3936346786652291628, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -113,11 +113,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _director: {fileID: 1560560517055220606}
-  _gameplayBus: {fileID: 11400000, guid: a26ff341568973e46a1d4449052d5bb0, type: 2}
   _objectsToBindTags:
   - Player
+  - Signal
   _trackNames:
   - AnimationPlayer
+  - Signal Track
   _objectsToBind: []
 --- !u!320 &1560560517055220606
 PlayableDirector:
@@ -138,6 +139,10 @@ PlayableDirector:
     value: {fileID: 0}
   - key: {fileID: -8063429329474622825, guid: 66f265c7bcc274f48aaab8be7249972c, type: 2}
     value: {fileID: 5175587782299126954}
+  - key: {fileID: 5335862003436010375, guid: 66f265c7bcc274f48aaab8be7249972c, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: 824445314490270842, guid: 66f265c7bcc274f48aaab8be7249972c, type: 2}
+    value: {fileID: 0}
   m_ExposedReferences:
     m_References: []
 --- !u!61 &8324194914358490285

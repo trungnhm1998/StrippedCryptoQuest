@@ -18,7 +18,7 @@ namespace CryptoQuest.System.CutScene
         [SerializeField] private PlayableDirector _playableDirector;
 
         [Header("Listen to")]
-        [SerializeField] private VoidEventChannelSO _sceneLoadedEventChannelSO;
+        [SerializeField] private CutsceneEventChannelSO _sceneLoadedEventChannelSO;
 
         [Header("Raise event")]
         [SerializeField] private PlayableDirectorChannelSO _onPlayCutsceneEvent;

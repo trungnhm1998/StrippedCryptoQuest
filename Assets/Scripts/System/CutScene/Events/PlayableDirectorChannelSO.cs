@@ -9,6 +9,11 @@ namespace CryptoQuest.UI.CutScene
     {
         public UnityAction<PlayableDirector> OnEventRaised;
 
+#if UNITY_EDITOR
+        [SerializeField] private PlayableDirector _value;
+        public PlayableDirector Value => _value;
+#endif
+
         public void RaiseEvent(PlayableDirector value)
         {
             if (OnEventRaised == null)
@@ -24,6 +29,10 @@ namespace CryptoQuest.UI.CutScene
             }
 
             OnEventRaised.Invoke(value);
+            
+#if UNITY_EDITOR
+            _value = value;
+#endif
         }
     }
 }

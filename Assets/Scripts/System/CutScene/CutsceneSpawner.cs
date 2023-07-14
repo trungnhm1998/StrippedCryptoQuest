@@ -9,14 +9,10 @@ namespace CryptoQuest.System.CutScene
         [SerializeField] private AssetReference _cutscenePrefab;
 
         [Header("Listening to")]
-        [SerializeField] private VoidEventChannelSO _cutsceneRaisedEventChannelSO;
+        [SerializeField] private CutsceneEventChannelSO _cutsceneRaisedEventChannelSO;
 
-        private Transform _defaultSpawnPoint;
-
-        private void Awake()
-        {
-            _defaultSpawnPoint = transform.GetChild(0);
-        }
+        [Header("Container")]
+        [SerializeField] private Transform _spawnPointContainer;
 
         private void OnEnable()
         {
@@ -30,9 +26,9 @@ namespace CryptoQuest.System.CutScene
 
         private void SpawnCutscene()
         {
-            if (_defaultSpawnPoint == null) return;
+            if (_spawnPointContainer == null) return;
 
-            _cutscenePrefab.InstantiateAsync(_defaultSpawnPoint.position, Quaternion.identity);
+            _cutscenePrefab.InstantiateAsync(_spawnPointContainer.position, Quaternion.identity);
         }
     }
 }
