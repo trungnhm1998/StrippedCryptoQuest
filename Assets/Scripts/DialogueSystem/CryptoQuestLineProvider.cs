@@ -112,11 +112,11 @@ namespace CryptoQuest
             return localizedLine;
         }
 
-        public override void Start()
+        private void OnEnable()
         {
             if (stringsTables != null)
             {
-                OnStringTableChanged();
+                stringsTables[0].TableChanged += OnStringTableChanged;
             }
 
             if (assetTable != null)
@@ -125,7 +125,20 @@ namespace CryptoQuest
             }
         }
 
-        private void OnStringTableChanged()
+        private void OnDisable()
+        {
+            if (stringsTables != null)
+            {
+                stringsTables[0].TableChanged -= OnStringTableChanged;
+            }
+
+            if (assetTable != null)
+            {
+                assetTable.TableChanged -= OnAssetTableChanged;
+            }
+        }
+
+        private void OnStringTableChanged(StringTable value)
         {
             currentStringsTables.Clear();
             foreach (LocalizedStringTable stringsTable in stringsTables)
