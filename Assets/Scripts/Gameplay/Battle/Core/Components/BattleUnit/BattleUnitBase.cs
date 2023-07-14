@@ -13,22 +13,29 @@ namespace CryptoQuest.Gameplay.Battle
         public AbilitySystemBehaviour Owner {get; set;}
         public BattleTeam OpponentTeam {get; set;}
         public BattleTeam OwnerTeam {get; set;}
+        public bool IsDead => _isDead;
+        public virtual AbstractAbility NormalAttack {get; protected set;}
 
         [SerializeField] protected AttributeScriptableObject _hpAttribute;
 
         [field: SerializeField]
         public TargetContainterSO TargetContainer { get; private set; }
+        [field: SerializeField]
+        public CharacterDataSO UnitData { get; set; }
 
         public AbstractAbility SelectedSkill { get; protected set; }
 
-        protected BattleManager _battleManager;
-        protected bool _isDeath;
+        public ILogger Logger { get; protected set; }
 
-        public void Init(BattleTeam team, AbilitySystemBehaviour owner)
+        protected BattleManager _battleManager;
+        protected bool _isDead;
+
+        public virtual void Init(BattleTeam team, AbilitySystemBehaviour owner)
         {
             TargetContainer.Targets.Clear();
             OwnerTeam = team;
             Owner = owner;
+            Logger = GetComponent<ILogger>();
         }
 
         protected virtual void OnEnable()
@@ -45,11 +52,6 @@ namespace CryptoQuest.Gameplay.Battle
         {
             OpponentTeam = opponentTeam;
         }
-
-        public virtual AbilitySystemBehaviour GetOwner()
-        {
-            return Owner;
-        } 
 
         protected virtual void SetDefaultTarget()
         {
@@ -77,18 +79,16 @@ namespace CryptoQuest.Gameplay.Battle
             SelectedSkill = selectedSkill;
         }
 
-        public BattleTeam GetOpponent() => OpponentTeam;
-
-        public virtual string GetOriginalName() => "";
-
         public virtual IEnumerator Prepare()
         {
             yield return new WaitWhile(() => SelectedSkill == null);
             yield return new WaitWhile(HasNoTarget);
         }
+
         public virtual IEnumerator Execute()
         {
             Owner.TryActiveAbility(SelectedSkill);
+            Logger.ClearLogs();
             yield return null;
         }
         
@@ -104,15 +104,16 @@ namespace CryptoQuest.Gameplay.Battle
             if (Owner == null || args.System != Owner.AttributeSystem) return;
 
             Owner.AttributeSystem.GetAttributeValue(_hpAttribute, out AttributeValue attributValue);
-            if (attributValue.CurrentValue > 0 || _isDeath) return;
+            if (attributValue.CurrentValue > 0 || _isDead) return;
 
-            _isDeath = true;
+            _isDead = true;
             OwnerTeam.RemoveUnit(this);
+            gameObject.SetActive(false);
         }
 
         public virtual void OnDeath()
         {
-            gameObject.SetActive(false);
+            Destroy(gameObject);
         }
 
         private bool HasNoTarget()

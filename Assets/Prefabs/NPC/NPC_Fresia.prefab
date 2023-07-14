@@ -10,8 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 2788067372125607882}
   - component: {fileID: 1123808003810634223}
-  - component: {fileID: 2036378630867752947}
   - component: {fileID: 8930211856240862246}
+  - component: {fileID: -1189669067205153196}
+  - component: {fileID: -7489040591023369836}
+  - component: {fileID: 788766770343755295}
   m_Layer: 0
   m_Name: NPC_Fresia
   m_TagString: Untagged
@@ -86,7 +88,21 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!61 &2036378630867752947
+--- !u!114 &8930211856240862246
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3515193214871791706}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ccbfbdc39cd3f8940b942c3d69572361, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _dialogue: {fileID: 11400000, guid: 338ee1159513c674d8c0ffcb9de8b6d9, type: 2}
+  _dialogEventChannel: {fileID: 11400000, guid: 5ea06a7649747af4aaa3d444b3ab8a99, type: 2}
+--- !u!61 &-1189669067205153196
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -131,7 +147,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.66, y: 0.96}
   m_EdgeRadius: 0
---- !u!114 &8930211856240862246
+--- !u!114 &-7489040591023369836
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -140,8 +156,29 @@ MonoBehaviour:
   m_GameObject: {fileID: 3515193214871791706}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ccbfbdc39cd3f8940b942c3d69572361, type: 3}
+  m_Script: {fileID: 11500000, guid: 8317eb7042a89a440ba9e968d6b2d015, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _dialogue: {fileID: 11400000, guid: 338ee1159513c674d8c0ffcb9de8b6d9, type: 2}
-  _dialogEventChannel: {fileID: 11400000, guid: 5ea06a7649747af4aaa3d444b3ab8a99, type: 2}
+  _animator: {fileID: 788766770343755295}
+  _facingDirection: 0
+--- !u!95 &788766770343755295
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3515193214871791706}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 22100000, guid: a13e0457bd8d2d64481114a754b1582a, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

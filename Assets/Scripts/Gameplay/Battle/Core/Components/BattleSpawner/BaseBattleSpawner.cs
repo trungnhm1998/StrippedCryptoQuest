@@ -1,6 +1,7 @@
 using UnityEngine;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.Components;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
+using IndiGames.GameplayAbilitySystem.AbilitySystem.ScriptableObjects;
 using System.Linq;
 using System.Collections.Generic;
 
@@ -12,6 +13,8 @@ namespace CryptoQuest.Gameplay.Battle
         private readonly string[] _duplicatePostfix = new string[] {"A", "B", "C", "D"};
         [SerializeField] protected BattleManager _battleManager;
         [SerializeField] protected GameObject _monsterPrefab;
+
+        private Dictionary<string, int> _duplicateEnemies = new();
 
         private void OnValidate()
         {
@@ -28,29 +31,30 @@ namespace CryptoQuest.Gameplay.Battle
                 GameObject enemyGO = Instantiate(_monsterPrefab, transform);
                 var statInit = enemyGO.GetComponent<StatsInitializer>();
                 statInit.InitStats(enemy);
-                enemyGO.name = enemy.Name;
+
+                var battleUnit = enemyGO.GetComponent<IBattleUnit>();
+                battleUnit.UnitData = enemy;
+                
                 var abilitySystem = enemyGO.GetComponent<AbilitySystemBehaviour>();
-                foreach (var skill in enemy.GrantedSkills)
-                {
-                    abilitySystem.GiveAbility(skill);
-                }
                 _battleManager.BattleTeam2.Members.Add(abilitySystem);
-                ProcessEnemyName(enemy.Name);
+                ProcessEnemiesName(data, enemy);
             }
         }
 
-        private void ProcessEnemyName(string enemyName)
+        private void ProcessEnemiesName(BattleDataSO data, CharacterDataSO enemyData)
         {
-            List<AbilitySystemBehaviour> sameNameEnemies = _battleManager.BattleTeam2.Members.FindAll(x => x.gameObject.name == enemyName);
-            for (int i = 0; i < sameNameEnemies.Count; i++)
+            var sameNameCount = data.Enemies.Count(x => x.Name == enemyData.Name);
+            if (sameNameCount <= 1) return;
+
+            if (!_duplicateEnemies.TryGetValue(enemyData.Name, out var duplicateCount))
             {
-                if (i >= _duplicatePostfix.Length)
-                {
-                    Debug.LogWarning($"Only allow {_duplicatePostfix.Length} enemy with same name");
-                    break;
-                }
-                sameNameEnemies[i].gameObject.name += _duplicatePostfix[i]; 
+                duplicateCount = 0;
+                _duplicateEnemies.Add(enemyData.Name, duplicateCount);
             }
+            if (duplicateCount >= _duplicatePostfix.Length) return;
+
+            enemyData.DisplayName = $"{enemyData.Name}{_duplicatePostfix[duplicateCount]}"; 
+            _duplicateEnemies[enemyData.Name]++;
         }
     }
 }
