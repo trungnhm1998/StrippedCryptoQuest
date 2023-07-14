@@ -15,11 +15,6 @@ namespace CryptoQuest.Gameplay.Battle
 
         private List<IBattleUnit> _pendingRemoveUnit = new();
 
-        protected void Awake()
-        {
-            BattleUnits.Clear();
-        }
-
         public void InitBattleUnits(BattleTeam opponentTeam)
         {
             BattleUnits.Clear();
@@ -35,6 +30,8 @@ namespace CryptoQuest.Gameplay.Battle
 
         public void RemoveUnit(IBattleUnit unit)
         {
+            BattleUnits.Remove(unit);
+            Members.Remove(unit.Owner);
             _pendingRemoveUnit.Add(unit);
         }
 
@@ -44,15 +41,9 @@ namespace CryptoQuest.Gameplay.Battle
             {
                 IBattleUnit unit = _pendingRemoveUnit[0];
                 _pendingRemoveUnit.Remove(unit);
-                RemoveUnitImmediately(unit);
+                unit.OnDeath();
                 yield return null;
             }
-        }
-        
-        public void RemoveUnitImmediately(IBattleUnit unit)
-        {
-            BattleUnits.Remove(unit);
-            unit.OnDeath();
         }
 
         public bool IsWiped() => BattleUnits.Count <= 0;
