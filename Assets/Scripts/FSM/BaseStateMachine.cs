@@ -1,6 +1,11 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System;
+#if UNITY_EDITOR
+    using System.Linq;
+    using System.IO;
+    using UnityEditor;
+#endif
 
 namespace CryptoQuest.FSM
 {
@@ -10,6 +15,22 @@ namespace CryptoQuest.FSM
         private Dictionary<Type, Component> _cachedComponents = new();
         
         public BaseStateSO CurrentState { get; private set; }
+
+#if UNITY_EDITOR
+        public static NullStateSO LoadNullStateSO()
+        {
+            return AssetDatabase.FindAssets($"t:{typeof(NullStateSO).Name} ")
+                .Select(x => AssetDatabase.GUIDToAssetPath(x))
+                .SelectMany(x => AssetDatabase.LoadAllAssetsAtPath(x))
+                .OfType<NullStateSO>().FirstOrDefault();
+        }
+
+        private void OnValidate()
+        {
+            if (_initialState != null) return;
+            _initialState = LoadNullStateSO();
+        }
+#endif
 
         private void Awake()
         {

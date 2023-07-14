@@ -7,14 +7,12 @@ namespace CryptoQuest.FSM
     {
         public DecisionSO Decision;
         public BaseStateSO TrueState;
-        public BaseStateSO FalseState;
 
         public virtual void Execute(BaseStateMachine stateMachine)
         {
-            BaseStateSO nextState = Decision.Decide(stateMachine) ? TrueState : FalseState;
-            if (nextState == null) return;
+            if (!Decision.Decide(stateMachine)) return;
 
-            stateMachine.SetCurrentState(nextState);
+            stateMachine.SetCurrentState(TrueState);
         }
     }
 }

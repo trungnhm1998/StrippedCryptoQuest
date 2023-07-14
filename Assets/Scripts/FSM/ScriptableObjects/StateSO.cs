@@ -23,5 +23,9 @@ namespace CryptoQuest.FSM
                 if (stateMachine.CurrentState != this) break;
             }
         }
+
+        public override void OnEnterState(BaseStateMachine stateMachine) {}
+        
+        public override void OnExitState(BaseStateMachine stateMachine) {}
     }
 }
