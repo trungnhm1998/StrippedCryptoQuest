@@ -12,10 +12,6 @@ namespace CryptoQuest.Gameplay.Battle
         {
             base.Init(team, owner);
             UnitData.Owner = owner;
-        }
-
-        private void Start()
-        {
             GrantDefaulSkills();
         }
 

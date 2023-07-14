@@ -11,6 +11,7 @@ namespace CryptoQuest.UI.Battle
 {
     public class SelectTargetHandler : BattleActionHandler
     {
+        [SerializeField] private GameObject _battleMenu;
         [SerializeField] private GameObject _selectTargetUI;
         [SerializeField] private UITargetButton[] _targetButtons;
 
@@ -39,6 +40,7 @@ namespace CryptoQuest.UI.Battle
         {
             _currentUnit.SelectSingleTarget(unit.Owner);
             _selectTargetUI.SetActive(false);
+            _battleMenu.SetActive(false);
             base.Handle(unit);
         }
 

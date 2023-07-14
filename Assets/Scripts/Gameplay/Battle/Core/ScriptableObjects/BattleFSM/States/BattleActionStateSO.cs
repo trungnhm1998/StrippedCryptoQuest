@@ -1,12 +1,15 @@
 using UnityEngine;
 using System.Collections;
 using CryptoQuest.FSM;
+using IndiGames.Core.Events.ScriptableObjects;
 
 namespace CryptoQuest.Gameplay.Battle
 {
     [CreateAssetMenu(fileName = "BattleActionStateSO", menuName = "Gameplay/Battle/FSM/States/Battle Action State")]
     public class BattleActionStateSO : BattleStateSO
-    {
+    {        
+        [SerializeField] private VoidEventChannelSO _endActionPhaseEventChannel;
+
         private Coroutine _unitActionCoroutine; 
 
         public override void OnEnterState(BaseStateMachine stateMachine)
@@ -21,7 +24,7 @@ namespace CryptoQuest.Gameplay.Battle
             {
                 yield return unit.Execute();
             }
-            stateMachine.SetCurrentState(_nextState);
+            _endActionPhaseEventChannel.RaiseEvent();
         }
 
         public override void OnExitState(BaseStateMachine stateMachine)
