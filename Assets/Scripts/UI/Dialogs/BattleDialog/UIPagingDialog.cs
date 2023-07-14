@@ -55,7 +55,8 @@ namespace CryptoQuest.UI.Dialogs.BattleDialog
             var page = _dialogue.Pages[dialogueIndex];
             if (page.Lines.Count <= 0)
             {
-                Close();
+                _isShowingLines = false;
+                NextDialog();
                 return;
             }
             
@@ -87,7 +88,6 @@ namespace CryptoQuest.UI.Dialogs.BattleDialog
 
         public override UIPagingDialog Close()
         {
-            _inputMediator.EnableMapGameplayInput();
             gameObject.SetActive(false);
             _onPagingDialogClose.RaiseEvent();
             return base.Close();
