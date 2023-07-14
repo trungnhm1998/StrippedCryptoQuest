@@ -1,0 +1,38 @@
+﻿title: a
+tags:
+position: 100,100
+---
+<<declare $playerName = "tuco">>
+<<declare $playerName1 = "tuco">>
+linew #line:DIALOUGE_TABLE
+line {$playerName} #line:GREETING
+<<jump Walter>>
+===
+title: Walter
+position: 400,100
+---
+line #line:WALTER_WHITE_2
+->   Opt #line:OPTION_HEISENBERG
+    <<jump Heisenberg>>
+->  Opt #line:OPTION_TUCO
+    <<jump Tuco>>
+-> Opt #line:OPTION_GUS
+    <<jump Gus>>
+===
+title: Heisenberg
+position: 100,300
+---
+line #line:HEISENBERG_1
+<<EndDialogue Heisenberg>>
+===
+title: Tuco
+position: 400,300
+---
+line #line:TUCO_1
+<<EndDialogue Tuco>>
+===
+title: Gus
+position: 700,300
+---
+line #line:GUS_1
+===
