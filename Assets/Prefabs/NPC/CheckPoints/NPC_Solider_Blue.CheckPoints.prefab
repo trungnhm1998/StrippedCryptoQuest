@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 8600159341403563117}
   - component: {fileID: 6034841552215537949}
   - component: {fileID: 5199643819895926546}
+  - component: {fileID: 9076824754474294097}
+  - component: {fileID: 2837957458979331230}
   m_Layer: 0
   m_Name: NPC_Solider_Blue.CheckPoints
   m_TagString: Untagged
@@ -136,7 +138,7 @@ BoxCollider2D:
   m_Offset: {x: 0.255, y: 0.2925}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
+    pivot: {x: 0.5, y: 0.5}
     oldSize: {x: 0.51, y: 1.17}
     newSize: {x: 0.51, y: 1.17}
     adaptiveTilingThreshold: 0.5
@@ -146,6 +148,41 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.51, y: 0.585}
   m_EdgeRadius: 0
+--- !u!114 &9076824754474294097
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2491330905960302023}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8317eb7042a89a440ba9e968d6b2d015, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _animator: {fileID: 0}
+  _facingDirection: 0
+--- !u!95 &2837957458979331230
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2491330905960302023}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &2572068326650655540
 GameObject:
   m_ObjectHideFlags: 0

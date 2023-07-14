@@ -6,7 +6,7 @@ using IndiGames.GameplayAbilitySystem.Implementation.EffectAbility.ScriptableObj
 namespace CryptoQuest.Gameplay.Battle
 {
     [CreateAssetMenu(fileName = "PassiveSkill", menuName = "Gameplay/Battle/Abilities/Passive Ability")]
-    public class PassiveSkillSO : EffectAbilitySO
+    public class PassiveSkillSO : CQSkillSO
     {
         protected override AbstractAbility CreateAbility()
         {
@@ -15,10 +15,11 @@ namespace CryptoQuest.Gameplay.Battle
         }
     }
 
-    public class PassiveSkill : EffectAbility
+    public class PassiveSkill : CQSkill
     {
         public override void OnAbilityGranted(AbstractAbility skillSpec)
         {
+            base.OnAbilityGranted(skillSpec);
             Owner.TryActiveAbility(skillSpec);
         }
 

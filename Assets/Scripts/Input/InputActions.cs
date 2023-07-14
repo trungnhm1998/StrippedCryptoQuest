@@ -434,7 +434,7 @@ namespace CryptoQuest.Input
                 {
                     ""name"": """",
                     ""id"": ""d3bf169a-aadc-434e-8cd2-34e6622afe6d"",
-                    ""path"": ""*/{Submit}"",
+                    ""path"": ""<Keyboard>/space"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""MnK;Gamepad"",
