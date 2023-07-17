@@ -3,7 +3,7 @@ using CryptoQuest.Input;
 using UnityEngine;
 using UnityEngine.Localization.Components;
 
-namespace CryptoQuest.UI.Dialogs
+namespace CryptoQuest.UI.Dialogs.Dialogue
 {
     public class UIDialogue : ModalWindow<UIDialogue>
     {
