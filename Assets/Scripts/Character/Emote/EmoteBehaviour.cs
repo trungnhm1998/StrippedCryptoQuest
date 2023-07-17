@@ -9,20 +9,17 @@ namespace CryptoQuest.Character
         [SerializeField] private List<EmoteSO> _listEmote;
         [SerializeField] private SpriteRenderer _currentEmote;
         [SerializeField] private Animator _animator;
-        private bool _isReaction = false;
         
         public void SetReactionIcon(TypeOfEmote type)
         {
-            _isReaction = true;
             foreach (EmoteSO emote in _listEmote)
             {
                 if (emote.TypeOfEmote == type)
                 {
                     _currentEmote.sprite = emote.ReactionIcon;
-                    _animator.SetBool("ReactionEmote", _isReaction);
+                    _animator.SetTrigger("ReactionEmote");
                 }
             }
-            _isReaction = false;
         }
     }
 }
