@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 using UnityEngine;
 
@@ -17,12 +18,12 @@ namespace CryptoQuest.System.Settings
     {
         private Regex _specialCharsRegex;
         private Regex _badWordsRegex;
+        private static readonly char[] DELIMS = { '\r', '\n' };
 
         public NameValidator(TextAsset badWordsAsset, TextAsset specialCharsAsset)
         {
-            var badWords = badWordsAsset.text.Split('\n');
+            var badWords = badWordsAsset.text.Split(DELIMS);
             var specialChars = specialCharsAsset.text;
-            badWords = badWords.Select(x => x.ToLower()).ToArray();
 
             UpdateBadWordDictionary(ref badWords);
             UpdateSpecialCharsDictionary(ref specialChars);
@@ -43,8 +44,7 @@ namespace CryptoQuest.System.Settings
                 badWordsString += word + or;
             }
 
-            var regexPattern = @"\b(" + badWordsString + @")\b";
-            _badWordsRegex = new Regex(regexPattern, RegexOptions.IgnoreCase);
+            _badWordsRegex = new Regex($@"\b(" + badWordsString + @")\b", RegexOptions.IgnoreCase);
         }
 
         public EValidation Validate(string input)
