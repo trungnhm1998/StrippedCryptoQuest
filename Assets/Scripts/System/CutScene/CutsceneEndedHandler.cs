@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace CryptoQuest.System.Cutscene
 {
-    public class CutsceneHandler : MonoBehaviour
+    public class CutsceneEndedHandler : MonoBehaviour
     {
         [SerializeField] private GameplayBus _gameplayBus;
         [SerializeField] private Transform _heroEndPosition;
