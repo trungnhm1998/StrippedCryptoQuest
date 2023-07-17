@@ -9,17 +9,16 @@ namespace CryptoQuest
     {
         [SerializeField] private DialogueScriptableObject _dialogue;
         [SerializeField] private DialogueEventChannelSO _dialogEventChannel;
-        [SerializeField] private SpriteRenderer _currentSprite;
-        [SerializeField] private Sprite _closedChest;
+        [SerializeField] private Animator _animator;
         private bool _isOpen = false;
 
         public void Interact()
         {
             if (!_isOpen)
             {
+                _animator.SetBool("OpenChest", true);
                 _dialogEventChannel.Show(_dialogue);
-                _currentSprite.sprite = _closedChest;
-                _isOpen = !_isOpen;
+                _isOpen = true;
             }
         }
     }
