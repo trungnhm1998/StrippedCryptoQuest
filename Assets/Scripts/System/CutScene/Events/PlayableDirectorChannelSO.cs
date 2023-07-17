@@ -4,7 +4,7 @@ using UnityEngine.Playables;
 
 namespace CryptoQuest.System.Cutscene.Events
 {
-    [CreateAssetMenu(menuName = "Crypto Quest/CutScene/Playable Director Channel")]
+    [CreateAssetMenu(menuName = "Crypto Quest/Cutscene/Playable Director Channel")]
     public class PlayableDirectorChannelSO : ScriptableObject
     {
         public UnityAction<PlayableDirector> OnEventRaised;
@@ -29,7 +29,7 @@ namespace CryptoQuest.System.Cutscene.Events
             }
 
             OnEventRaised.Invoke(value);
-            
+
 #if UNITY_EDITOR
             _value = value;
 #endif

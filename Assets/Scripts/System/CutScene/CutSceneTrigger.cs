@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using CryptoQuest.Gameplay;
 using CryptoQuest.System.Cutscene.Events;
 using UnityEngine;
 using UnityEngine.Playables;
@@ -11,13 +12,12 @@ namespace CryptoQuest.System.Cutscene
         [SerializeField, Tooltip("Check if you want to destroy after cut scene done.")]
         private bool _playOneTimeOnly;
 
-        [Header("Listening to")]
         [SerializeField] private PlayableDirector _playableDirector;
 
         [Header("Raise event")]
         [SerializeField] private PlayableDirectorChannelSO _onPlayCutsceneEvent;
 
-        private void Awake()
+        public void Awake()
         {
             StartCoroutine(PlayCutscene());
         }
@@ -27,6 +27,7 @@ namespace CryptoQuest.System.Cutscene
             _playableDirector.stopped += HandleDirectorStopped;
         }
 
+
         private void OnDisable()
         {
             _playableDirector.stopped -= HandleDirectorStopped;
@@ -34,6 +35,7 @@ namespace CryptoQuest.System.Cutscene
 
         private void HandleDirectorStopped(PlayableDirector obj)
         {
+            // _gameplayBus.Hero.transform.position = _cutscenePlayer.transform.position;
             if (!_playOneTimeOnly) return;
             Destroy(this);
         }
