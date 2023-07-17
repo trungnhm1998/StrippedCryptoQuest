@@ -37,40 +37,30 @@ namespace CryptoQuest
 
         public override LocalizedLine GetLocalizedLine(Yarn.Line line)
         {
-            var text = line.ID;
+            string text = null;
+            LineMetadata metadata = null;
             if (currentStringsTables != null)
             {
                 foreach (var currentStringsTable in currentStringsTables)
                 {
-                    if (currentStringsTable[line.ID] == null)
-                    {
-                        text =
-                            $"Error: Missing localisation for line {line.ID} in string table {currentStringsTable.LocaleIdentifier}";
-                    }
-                    else
+                    if (currentStringsTable[line.ID] != null)
                     {
                         text = currentStringsTable[line.ID].LocalizedValue;
+                        metadata = currentStringsTable[line.ID].GetMetadata<LineMetadata>();
                         break;
                     }
                 }
             }
 
-            // Construct the localized line
+            if (text == null)
+                text = $"Error: Missing localisation for line {line.ID} in string tables";
+
             LocalizedLine localizedLine = new LocalizedLine()
             {
                 TextID = line.ID,
                 RawText = text,
                 Substitutions = line.Substitutions,
             };
-            LineMetadata metadata = null;
-            foreach (var currentStringsTable in currentStringsTables)
-            {
-                if (currentStringsTable[line.ID] != null)
-                {
-                    metadata = currentStringsTable[line.ID].GetMetadata<LineMetadata>();
-                    break;
-                }
-            }
 
             if (metadata != null)
             {
