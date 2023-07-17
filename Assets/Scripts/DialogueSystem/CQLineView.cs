@@ -13,48 +13,48 @@ namespace CryptoQuest
         [SerializeField] private InputMediatorSO _inputMediator;
 
         [SerializeField]
-        internal CanvasGroup canvasGroup;
+        private CanvasGroup canvasGroup;
 
         [SerializeField]
-        internal bool useFadeEffect = true;
-
-        [SerializeField]
-        [Min(0)]
-        internal float fadeInTime = 0.25f;
+        private bool useFadeEffect = true;
 
         [SerializeField]
         [Min(0)]
-        internal float fadeOutTime = 0.05f;
+        private float fadeInTime = 0.25f;
 
         [SerializeField]
-        internal TextMeshProUGUI lineText = null;
+        [Min(0)]
+        private float fadeOutTime = 0.05f;
+
+        [SerializeField]
+        private TextMeshProUGUI lineText = null;
 
         [SerializeField]
         [UnityEngine.Serialization.FormerlySerializedAs("showCharacterName")]
-        internal bool showCharacterNameInLineView = true;
+        private bool showCharacterNameInLineView = true;
 
         [SerializeField]
-        internal TextMeshProUGUI characterNameText = null;
+        private TextMeshProUGUI characterNameText = null;
 
         [SerializeField]
         GameObject _characterNameContainer = null;
 
         [SerializeField]
-        internal bool useTypewriterEffect = false;
+        private bool useTypewriterEffect = false;
 
         [SerializeField]
-        internal UnityEngine.Events.UnityEvent onCharacterTyped;
-
-        [SerializeField]
-        [Min(0)]
-        internal float typewriterEffectSpeed = 0f;
+        private UnityEngine.Events.UnityEvent onCharacterTyped;
 
         [SerializeField]
         [Min(0)]
-        internal float holdTime = 1f;
+        private float typewriterEffectSpeed = 0f;
 
         [SerializeField]
-        internal bool autoAdvance = false;
+        [Min(0)]
+        private float holdTime = 1f;
+
+        [SerializeField]
+        private bool autoAdvance = false;
 
         LocalizedLine currentLine = null;
 
@@ -100,7 +100,7 @@ namespace CryptoQuest
 
             if (useFadeEffect)
             {
-                yield return StartCoroutine(Effects.FadeAlpha(canvasGroup, 1, 0, fadeOutTime, currentStopToken));
+                yield return Effects.FadeAlpha(canvasGroup, 1, 0, fadeOutTime, currentStopToken);
                 currentStopToken.Complete();
             }
 
@@ -140,11 +140,7 @@ namespace CryptoQuest
             }
             else
             {
-                _characterNameContainer.SetActive(true);
-                characterNameText.text = dialogueLine.CharacterName;
-                if (string.IsNullOrEmpty(dialogueLine.CharacterName))
-                    _characterNameContainer.SetActive(false);
-                lineText.text = dialogueLine.TextWithoutCharacterName.Text;
+                SetCharacterName(dialogueLine);
                 length = dialogueLine.TextWithoutCharacterName.Text.Length;
             }
 
@@ -166,73 +162,9 @@ namespace CryptoQuest
 
         private IEnumerator RunLineInternal(LocalizedLine dialogueLine, Action onDialogueLineFinished)
         {
-            IEnumerator PresentLine()
-            {
-                lineText.gameObject.SetActive(true);
-                canvasGroup.gameObject.SetActive(true);
-
-                if (characterNameText != null)
-                {
-                    _characterNameContainer.SetActive(true);
-                    characterNameText.text = dialogueLine.CharacterName;
-                    if (string.IsNullOrEmpty(dialogueLine.CharacterName))
-                        _characterNameContainer.SetActive(false);
-                    lineText.text = dialogueLine.TextWithoutCharacterName.Text;
-                }
-                else
-                {
-                    _characterNameContainer.SetActive(false);
-                    if (showCharacterNameInLineView)
-                    {
-                        lineText.text = dialogueLine.Text.Text;
-                    }
-                    else
-                    {
-                        lineText.text = dialogueLine.TextWithoutCharacterName.Text;
-                    }
-                }
-
-                if (useTypewriterEffect)
-                {
-                    lineText.maxVisibleCharacters = 0;
-                }
-                else
-                {
-                    lineText.maxVisibleCharacters = int.MaxValue;
-                }
-
-                if (useFadeEffect)
-                {
-                    yield return StartCoroutine(Effects.FadeAlpha(canvasGroup, 0, 1, fadeInTime, currentStopToken));
-                    if (currentStopToken.WasInterrupted)
-                    {
-                        yield break;
-                    }
-                }
-
-                if (useTypewriterEffect)
-                {
-                    canvasGroup.alpha = 1f;
-                    canvasGroup.interactable = true;
-                    canvasGroup.blocksRaycasts = true;
-                    yield return StartCoroutine(
-                        Effects.Typewriter(
-                            lineText,
-                            typewriterEffectSpeed,
-                            () => onCharacterTyped.Invoke(),
-                            currentStopToken
-                        )
-                    );
-                    if (currentStopToken.WasInterrupted)
-                    {
-                        yield break;
-                    }
-                }
-            }
-
             currentLine = dialogueLine;
 
-            yield return StartCoroutine(PresentLine());
+            yield return PresentLine(dialogueLine);
 
             currentStopToken.Complete();
 
@@ -246,7 +178,7 @@ namespace CryptoQuest
                 yield return new WaitForSeconds(holdTime);
             }
 
-            if (autoAdvance == false)
+            if (!autoAdvance)
             {
                 yield break;
             }
@@ -285,6 +217,73 @@ namespace CryptoQuest
                 currentLine = null;
                 StartCoroutine(DismissLineInternal(null));
             }
+        }
+
+
+        private IEnumerator PresentLine(LocalizedLine dialogueLine)
+        {
+            lineText.gameObject.SetActive(true);
+            canvasGroup.gameObject.SetActive(true);
+
+            if (characterNameText != null)
+            {
+                SetCharacterName(dialogueLine);
+            }
+            else
+            {
+                _characterNameContainer.SetActive(false);
+                if (showCharacterNameInLineView)
+                {
+                    lineText.text = dialogueLine.Text.Text;
+                }
+                else
+                {
+                    lineText.text = dialogueLine.TextWithoutCharacterName.Text;
+                }
+            }
+
+            if (useTypewriterEffect)
+            {
+                lineText.maxVisibleCharacters = 0;
+            }
+            else
+            {
+                lineText.maxVisibleCharacters = int.MaxValue;
+            }
+
+            if (useFadeEffect)
+            {
+                yield return StartCoroutine(Effects.FadeAlpha(canvasGroup, 0, 1, fadeInTime, currentStopToken));
+                if (currentStopToken.WasInterrupted)
+                {
+                    yield break;
+                }
+            }
+
+            if (useTypewriterEffect)
+            {
+                canvasGroup.alpha = 1f;
+                canvasGroup.interactable = true;
+                canvasGroup.blocksRaycasts = true;
+                yield return Effects.Typewriter(
+                    lineText,
+                    typewriterEffectSpeed,
+                    () => onCharacterTyped.Invoke(),
+                    currentStopToken);
+                if (currentStopToken.WasInterrupted)
+                {
+                    yield break;
+                }
+            }
+        }
+
+        private void SetCharacterName(LocalizedLine dialogueLine)
+        {
+            _characterNameContainer.SetActive(true);
+            characterNameText.text = dialogueLine.CharacterName;
+            if (string.IsNullOrEmpty(dialogueLine.CharacterName))
+                _characterNameContainer.SetActive(false);
+            lineText.text = dialogueLine.TextWithoutCharacterName.Text;
         }
     }
 }

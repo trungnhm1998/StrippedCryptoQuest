@@ -12,14 +12,14 @@ namespace CryptoQuest
     {
         [SerializeField] CanvasGroup canvasGroup;
         [SerializeField] OptionView optionViewPrefab;
-        [SerializeField] GameObject optionViewContainer; 
+        [SerializeField] GameObject optionViewContainer;
         [SerializeField] TextMeshProUGUI lastLineText;
         [SerializeField] float fadeTime = 0.1f;
         [SerializeField] bool showUnavailableOptions = false;
         List<OptionView> optionViews = new List<OptionView>();
         Action<int> OnOptionSelected;
         LocalizedLine lastSeenLine;
-        
+
         public void Start()
         {
             canvasGroup.alpha = 0;
@@ -51,29 +51,14 @@ namespace CryptoQuest
                 optionView.gameObject.SetActive(false);
             }
 
-            int optionViewsCreated = 0;
+            RenderOptionView(dialogueOptions);
+            RenderLastLineText();
+            OnOptionSelected = onOptionSelected;
+            StartCoroutine(Effects.FadeAlpha(canvasGroup, 0, 1, fadeTime));
+        }
 
-            for (int i = 0; i < dialogueOptions.Length; i++)
-            {
-                var optionView = optionViews[i];
-                var option = dialogueOptions[i];
-
-                if (option.IsAvailable == false && showUnavailableOptions == false)
-                {
-                    continue;
-                }
-
-                optionView.gameObject.SetActive(true);
-                optionView.Option = option;
-                
-                if (optionViewsCreated == 0)
-                {
-                    optionView.Select();
-                }
-
-                optionViewsCreated += 1;
-            }
-
+        private void RenderLastLineText()
+        {
             if (lastLineText != null)
             {
                 if (lastSeenLine != null)
@@ -86,32 +71,52 @@ namespace CryptoQuest
                     lastLineText.gameObject.SetActive(false);
                 }
             }
+        }
 
-            OnOptionSelected = onOptionSelected;
+        private void RenderOptionView(DialogueOption[] dialogueOptions)
+        {
+            int optionViewsCreated = 0;
 
-            StartCoroutine(Effects.FadeAlpha(canvasGroup, 0, 1, fadeTime));
-
-            OptionView CreateNewOptionView()
+            for (int i = 0; i < dialogueOptions.Length; i++)
             {
-                var optionView = Instantiate(optionViewPrefab);
-                optionView.transform.SetParent(optionViewContainer.transform, false);
-                optionView.transform.SetAsLastSibling();
+                var optionView = optionViews[i];
+                var option = dialogueOptions[i];
 
-                optionView.OnOptionSelected = OptionViewWasSelected;
-                optionViews.Add(optionView);
-
-                return optionView;
-            }
-
-            void OptionViewWasSelected(DialogueOption option)
-            {
-                StartCoroutine(OptionViewWasSelectedInternal(option));
-
-                IEnumerator OptionViewWasSelectedInternal(DialogueOption selectedOption)
+                if (!option.IsAvailable && !showUnavailableOptions)
                 {
-                    yield return StartCoroutine(Effects.FadeAlpha(canvasGroup, 1, 0, fadeTime));
-                    OnOptionSelected(selectedOption.DialogueOptionID);
+                    continue;
                 }
+
+                optionView.gameObject.SetActive(true);
+                optionView.Option = option;
+
+                if (optionViewsCreated == 0)
+                {
+                    optionView.Select();
+                }
+
+                optionViewsCreated += 1;
+            }
+        }
+
+        private OptionView CreateNewOptionView()
+        {
+            var optionView = Instantiate(optionViewPrefab);
+            optionView.transform.SetParent(optionViewContainer.transform, false);
+            optionView.transform.SetAsLastSibling();
+            optionView.OnOptionSelected = OptionViewWasSelected;
+            optionViews.Add(optionView);
+            return optionView;
+        }
+
+        private void OptionViewWasSelected(DialogueOption option)
+        {
+            StartCoroutine(OptionViewWasSelectedInternal(option));
+
+            IEnumerator OptionViewWasSelectedInternal(DialogueOption selectedOption)
+            {
+                yield return StartCoroutine(Effects.FadeAlpha(canvasGroup, 1, 0, fadeTime));
+                OnOptionSelected(selectedOption.DialogueOptionID);
             }
         }
 
@@ -124,7 +129,6 @@ namespace CryptoQuest
                 OnOptionSelected = null;
                 canvasGroup.interactable = false;
                 canvasGroup.blocksRaycasts = false;
-
                 StartCoroutine(Effects.FadeAlpha(canvasGroup, canvasGroup.alpha, 0, fadeTime));
             }
         }

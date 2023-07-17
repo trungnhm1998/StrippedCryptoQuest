@@ -47,7 +47,6 @@ namespace CryptoQuest
         {
             _onTriggerEndDialogue.RaiseEvent(str);
             _inputMediator.EnableMapGameplayInput();
-            Debug.Log("Completed event " + str);
         }
 
         private void StartDiaglog(string nodeName)

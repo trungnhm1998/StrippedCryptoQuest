@@ -18,46 +18,21 @@ namespace CryptoQuest
 {
     public class CryptoQuestLineProvider : LineProviderBehaviour
     {
-        [SerializeField] internal List<LocalizedStringTable> stringsTables = new List<LocalizedStringTable>();
-        [SerializeField] internal LocalizedAssetTable assetTable;
+        public List<LocalizedStringTable> stringsTables = new List<LocalizedStringTable>();
+        public LocalizedAssetTable assetTable;
 
-        private List<StringTable> currentStringsTables = new List<StringTable>();
+        private List<StringTable> currentStringsTables = new();
         private AssetTable currentAssetTable;
 
-        private List<AsyncOperationHandle<Object>> pendingLoadOperations = new List<AsyncOperationHandle<Object>>();
-        private Dictionary<string, Object> loadedAssets = new Dictionary<string, Object>();
+        private List<AsyncOperationHandle<Object>> pendingLoadOperations = new();
+        private Dictionary<string, Object> loadedAssets = new();
 
         public override string LocaleCode => LocalizationSettings.SelectedLocale.Identifier.Code;
 
         public override bool LinesAvailable
         {
-            get
-            {
-                if (this.stringsTables.Count == 0)
-                {
-                    return false;
-                }
-
-                if (this.currentStringsTables == null)
-                {
-                    return false;
-                }
-
-                if (this.assetTable.IsEmpty == false)
-                {
-                    if (this.currentAssetTable == null)
-                    {
-                        return false;
-                    }
-
-                    if (pendingLoadOperations.Count > 0)
-                    {
-                        return false;
-                    }
-                }
-
-                return true;
-            }
+            get => stringsTables.Count != 0 && currentStringsTables != null && (assetTable.IsEmpty ||
+                (currentAssetTable != null && pendingLoadOperations.Count <= 0));
         }
 
         public override LocalizedLine GetLocalizedLine(Yarn.Line line)
