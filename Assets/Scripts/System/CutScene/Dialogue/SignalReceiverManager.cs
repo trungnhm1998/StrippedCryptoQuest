@@ -16,9 +16,7 @@ namespace CryptoQuest.System.Cutscene.Dialogue
 
         public void OnNotify(Playable origin, INotification notification, object context)
         {
-            DialogueMarker marker = notification as DialogueMarker;
-
-            if (marker == null) return;
+            if (!(notification is DialogueMarker marker)) return;
 
             if (!IsPlaying(origin)) return;
 

@@ -29,13 +29,12 @@ namespace CryptoQuest.System.CutScene.Annotation.Editor
 
         public override MarkerDrawOptions GetMarkerOptions(IMarker marker)
         {
-            DialogueMarker annotation = marker as DialogueMarker;
-            if (annotation == null)
+            if (marker is DialogueMarker annotation)
             {
-                return base.GetMarkerOptions(marker);
+                return new MarkerDrawOptions { tooltip = annotation.name };
             }
 
-            return new MarkerDrawOptions { tooltip = annotation.name };
+            return base.GetMarkerOptions(marker); 
         }
 
 

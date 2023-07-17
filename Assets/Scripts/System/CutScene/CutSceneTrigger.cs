@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using CryptoQuest.Gameplay;
 using CryptoQuest.System.Cutscene.Events;
 using UnityEngine;
 using UnityEngine.Playables;
@@ -27,7 +26,6 @@ namespace CryptoQuest.System.Cutscene
             _playableDirector.stopped += HandleDirectorStopped;
         }
 
-
         private void OnDisable()
         {
             _playableDirector.stopped -= HandleDirectorStopped;
@@ -35,7 +33,6 @@ namespace CryptoQuest.System.Cutscene
 
         private void HandleDirectorStopped(PlayableDirector obj)
         {
-            // _gameplayBus.Hero.transform.position = _cutscenePlayer.transform.position;
             if (!_playOneTimeOnly) return;
             Destroy(this);
         }
