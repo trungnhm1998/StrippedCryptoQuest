@@ -582,7 +582,6 @@ GameObject:
   - component: {fileID: 4841733842235969568}
   - component: {fileID: 5451978760775825838}
   - component: {fileID: 7382093211511045360}
-  - component: {fileID: 5853463016912212813}
   - component: {fileID: 1288108269678769075}
   - component: {fileID: 1585627793496936225}
   - component: {fileID: 220694408743316457}
@@ -610,7 +609,7 @@ Transform:
   - {fileID: 8775892980224932160}
   - {fileID: 3093100537462727543}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &5451978760775825838
 MonoBehaviour:
@@ -638,21 +637,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90cb4cd7d5ad4e03ac53d0741a7f5a46, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &5853463016912212813
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7975463420305670343}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6444712b9cae4582a27c37b734cebc1f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _playOneTimeOnly: 1
-  _playableDirector: {fileID: 1288108269678769075}
-  _onPlayCutsceneEvent: {fileID: 11400000, guid: 9660b2bdb62768145adb3fd899eaec86, type: 2}
 --- !u!320 &1288108269678769075
 PlayableDirector:
   m_ObjectHideFlags: 0
