@@ -4,7 +4,7 @@ using CryptoQuest.Events.UI;
 using CryptoQuest.Gameplay.Quest;
 using UnityEngine;
 
-namespace CryptoQuest.UI.Dialogs
+namespace CryptoQuest.UI.Dialogs.LevelStatusDialog
 {
     public class LevelStatusController : AbstractDialogController<UILevelStatusDialog>
     {

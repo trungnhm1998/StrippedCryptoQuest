@@ -1,21 +1,11 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using CryptoQuest.Events.UI;
-using CryptoQuest.Gameplay.Quest;
-using TMPro;
 using UnityEngine;
 using UnityEngine.Localization;
 using UnityEngine.Localization.Components;
-using UnityEngine.Localization.Settings;
-using UnityEngine.Localization.SmartFormat.PersistentVariables;
 
-namespace CryptoQuest.UI.Dialogs.BattleDialog
+namespace CryptoQuest.UI.Dialogs.LevelStatusDialog
 {
-    public class Test : MonoBehaviour
+    public class LevelUpCharName : MonoBehaviour
     {
-        private const string SUBJECT_ARGUMENT = "subject";
-        public TMP_Text text;
         [field: SerializeField] public string DefaultCharacterName { get; private set; }
         private LocalizedString _charName;
         [SerializeField] private LocalizeStringEvent stringEvent;

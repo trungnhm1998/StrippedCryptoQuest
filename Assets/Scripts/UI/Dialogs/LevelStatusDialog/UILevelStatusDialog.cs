@@ -9,14 +9,14 @@ using UnityEngine.Localization;
 using UnityEngine.Localization.Components;
 using UnityEngine.UI;
 
-namespace CryptoQuest.UI.Dialogs
+namespace CryptoQuest.UI.Dialogs.LevelStatusDialog
 {
     public class UILevelStatusDialog : ModalWindow<UILevelStatusDialog>
     {
         [Header("Child Components")]
         [SerializeField] private InputMediatorSO _inputMediator;
         [SerializeField] private Button _defaultSelectButton;
-        [SerializeField] private Test _levelStatusTextPrefab;
+        [SerializeField] private LevelUpCharName _levelStatusTextPrefab;
         [SerializeField] private Transform _levelStatusesContainerTransform;
         [SerializeField] private LocalizedString _noLevelUpTargetString;
 
@@ -25,7 +25,7 @@ namespace CryptoQuest.UI.Dialogs
 
         protected override void OnBeforeShow()
         {
-            DisplayItemsReward();
+            DisplayListLeveledUpCharacter();
         }
 
         protected override void CheckIgnorableForClose() { }
@@ -53,40 +53,18 @@ namespace CryptoQuest.UI.Dialogs
             return this;
         }
 
-        private void DisplayItemsReward()
+        private void DisplayListLeveledUpCharacter()
         {
-            // if (_levelStatusDialogData.TargetTextList.Count <= 0)
-            // {
-            //     SetNameOfLevelUpCharacterLabel(_noLevelUpTargetString);
-            //     return;
-            // }
-
             foreach (var target in _levelStatusDialogData.TargetTextList)
             {
-                SetNameOfLevelUpCharacterLabel(target);
+                SetNameForLeveledUpCharacter(target);
             }
         }
 
-        private LocalizeStringEvent GetNameOfLevelUpCharacterLabel()
+        private void SetNameForLeveledUpCharacter(LocalizedString name)
         {
-            var textGO = Instantiate(_levelStatusTextPrefab, _levelStatusesContainerTransform);
-
-            var levelUpTargetLabel = textGO.GetComponent<LocalizeStringEvent>();
-
-            return levelUpTargetLabel;
-        }
-
-        private void SetNameOfLevelUpCharacterLabel(LocalizedString name)
-        {
-            // var levelUpTargetLabel = 
-            //     GetNameOfLevelUpCharacterLabel();
-
-            // levelUpTargetLabel.StringReference = levelUpTargetString;
-
-            var component = Instantiate<Test>(_levelStatusTextPrefab, _levelStatusesContainerTransform);
+            var component = Instantiate<LevelUpCharName>(_levelStatusTextPrefab, _levelStatusesContainerTransform);
             component.SetName(name);
-
-
         }
     }
 
