@@ -1,16 +1,14 @@
-using UnityEngine;
 using System.Collections;
 using IndiGames.GameplayAbilitySystem.AbilitySystem;
-using IndiGames.GameplayAbilitySystem.Implementation.EffectAbility;
-using IndiGames.GameplayAbilitySystem.Implementation.EffectAbility.ScriptableObjects;
+using UnityEngine;
 
-namespace CryptoQuest.Gameplay.Battle
+namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Skills
 {
     /// <summary>
     /// Skill will end right after activate like normal attack
     /// </summary>
     [CreateAssetMenu(fileName = "InstantSkill", menuName = "Gameplay/Battle/Abilities/Instant Skill")]
-    public class InstantSkillSO : EffectAbilitySO
+    public class InstantSkillSO : CQSkillSO
     {
         protected override AbstractAbility CreateAbility()
         {
@@ -19,7 +17,7 @@ namespace CryptoQuest.Gameplay.Battle
         }
     }
 
-    public class InstantSkill : EffectAbility
+    public class InstantSkill : CQSkill
     {
         protected override IEnumerator InternalActiveAbility()
         {

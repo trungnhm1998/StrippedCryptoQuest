@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using CryptoQuest.Character.MonoBehaviours;
 using CryptoQuest.Events;
@@ -7,11 +6,9 @@ using IndiGames.Core.Events.ScriptableObjects;
 using IndiGames.Core.SceneManagementSystem.Events.ScriptableObjects;
 using IndiGames.Core.SceneManagementSystem.ScriptableObjects;
 using UnityEngine;
-using UnityEngine.Localization;
 using UnityEngine.SceneManagement;
-using UnityEngine.Serialization;
 
-namespace CryptoQuest
+namespace CryptoQuest.Item.Ocarinas
 {
     public class OcarinaBehaviour : MonoBehaviour
     {

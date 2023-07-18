@@ -1,11 +1,12 @@
-using System.Collections.Generic;
-using UnityEngine;
-using IndiGames.GameplayAbilitySystem.AttributeSystem.Components;
-using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
-using IndiGames.GameplayAbilitySystem.AbilitySystem;
+using CryptoQuest.Events;
+using CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit;
 using IndiGames.Core.Events.ScriptableObjects;
+using IndiGames.GameplayAbilitySystem.AbilitySystem;
+using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
+using IndiGames.GameplayAbilitySystem.AttributeSystem.Components;
+using UnityEngine;
 
-namespace CryptoQuest.Gameplay.Battle
+namespace CryptoQuest.Gameplay.Battle.Core.Components.Debugger
 {
     public class BattleDebugger : MonoBehaviour
     {
@@ -114,7 +115,7 @@ namespace CryptoQuest.Gameplay.Battle
         {
             if (!_showActions || _battleManager.CurrentUnit == null) return;
             GUILayout.BeginVertical();
-            AbilitySystemBehaviour currentUnitOwner = _battleManager.CurrentUnit.GetOwner();
+            AbilitySystemBehaviour currentUnitOwner = _battleManager.CurrentUnit.Owner;
             foreach (AbstractAbility skill in currentUnitOwner.GrantedAbilities.Abilities)
             {
                 GUI.enabled = !skill.IsActive;
@@ -133,7 +134,7 @@ namespace CryptoQuest.Gameplay.Battle
         {
             IBattleUnit currentUnit =  _battleManager.CurrentUnit;
             if (currentUnit == null) return;
-            BattleTeam currentUnitOpponent = currentUnit.GetOpponent();
+            BattleTeam currentUnitOpponent = currentUnit.OpponentTeam;
 
             if (!_showTargetUnit || currentUnitOpponent == null) return;
             GUILayout.BeginVertical();
@@ -141,7 +142,8 @@ namespace CryptoQuest.Gameplay.Battle
             foreach (AbilitySystemBehaviour target in currentUnitOpponent.Members)
             {
                 if (target == null) continue;
-                var buttonLabel = $"Target {target.name}";
+                var targetUnit = target.GetComponent<IBattleUnit>();
+                var buttonLabel = $"Target {targetUnit.UnitData.DisplayName}";
                 if (GUILayout.Button(buttonLabel))
                 {
                     currentUnit.SelectSingleTarget(target);

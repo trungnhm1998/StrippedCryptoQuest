@@ -1,13 +1,10 @@
-using System.Collections.Generic;
-using UnityEngine;
+using CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
-using IndiGames.GameplayAbilitySystem.AbilitySystem.ScriptableObjects;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.Components;
-using IndiGames.GameplayAbilitySystem.AttributeSystem;
-using IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects;
 using IndiGames.GameplayAbilitySystem.Implementation.BasicEffect;
+using UnityEngine;
 
-namespace CryptoQuest.Gameplay.Battle
+namespace CryptoQuest.Gameplay.Battle.Core.Components.Debugger
 {
     public class StatsDebugger : MonoBehaviour
     {
@@ -16,13 +13,14 @@ namespace CryptoQuest.Gameplay.Battle
         [SerializeField] private bool _showDebug = false;
         [SerializeField] private Rect _windowRect = new Rect(20, 20, 120, 50);
         [SerializeField] private float _windowWidth = 400;
-        [SerializeField] private int _windowId;
 
         private AttributeSystemBehaviour _attributeSystem;
         private bool _showAttributes = true;
         private bool _showAppliedEffects = true;
         private Rect _minimizeRect;
-        
+        private int _windowId;
+        private IBattleUnit _unit;
+
         private void OnValidate()
         {
             if (_owner == null)
@@ -33,8 +31,10 @@ namespace CryptoQuest.Gameplay.Battle
 
         private void Start()
         {
+            _unit = GetComponent<IBattleUnit>();
             _minimizeRect = _windowRect;
             _attributeSystem = _owner.AttributeSystem;
+            _windowId = gameObject.GetInstanceID();
         }
 
         private void OnGUI()
@@ -45,7 +45,8 @@ namespace CryptoQuest.Gameplay.Battle
             Rect inputRect = _showDebug ? _windowRect : _minimizeRect;
 
             GUILayout.BeginVertical();
-            newRect = GUILayout.Window(_windowId, inputRect, DoMyWindow, $"{_owner.name} Stats", GUILayout.ExpandHeight(true));
+            var unitData = _unit.UnitData;
+            newRect = GUILayout.Window(_windowId, inputRect, DoMyWindow, $"{((unitData != null) ? unitData.DisplayName : "Character")} Stats", GUILayout.ExpandHeight(true));
             GUILayout.EndVertical();
 
             if (!_showDebug)

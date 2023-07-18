@@ -1,7 +1,8 @@
-using UnityEngine;
 using System.Collections.Generic;
+using CryptoQuest.FSM.ScriptableObjects.Base;
+using UnityEngine;
 
-namespace CryptoQuest.FSM
+namespace CryptoQuest.FSM.ScriptableObjects
 {
     [CreateAssetMenu(fileName = "StateSO", menuName = "Gameplay/Battle/FSM/States/Normal State")]
     public class StateSO : BaseStateSO
@@ -23,5 +24,9 @@ namespace CryptoQuest.FSM
                 if (stateMachine.CurrentState != this) break;
             }
         }
+
+        public override void OnEnterState(BaseStateMachine stateMachine) {}
+        
+        public override void OnExitState(BaseStateMachine stateMachine) {}
     }
 }

@@ -504,8 +504,35 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8932584803192340463, guid: fe35e9aba49be5f4083a50f893bd0120, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 521251920779182563}
   m_SourcePrefab: {fileID: 100100000, guid: fe35e9aba49be5f4083a50f893bd0120, type: 3}
+--- !u!1 &521251920779182562 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8932584803192340463, guid: fe35e9aba49be5f4083a50f893bd0120, type: 3}
+  m_PrefabInstance: {fileID: 521251920779182561}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &521251920779182563
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 521251920779182562}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2e0dba4b942846488989ebca2e787fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _gameplayManagerSceneSO: {fileID: 11400000, guid: 8c20d86ff48bc7c42a3cc1bb3b9bc01c, type: 2}
+  _fadeConfigSO: {fileID: 11400000, guid: 7dbde9362953f5a48b9dcf0c2aa32754, type: 2}
+  _loadSceneEvent: {fileID: 11400000, guid: f335d4829ce891e40b75888362db8700, type: 2}
+  _unloadSceneEvent: {fileID: 11400000, guid: 316630d92b908bd4fa253597042e3b8d, type: 2}
+  _editorColdBoot: {fileID: 11400000, guid: 1968806e33134b64d8c7dbf01d084585, type: 2}
+  _sceneLoaded: {fileID: 11400000, guid: d463f98507ffd95459feb67b21dd1ecc, type: 2}
+  _sceneUnloading: {fileID: 11400000, guid: ccb2cdde6c846e64d9e87d1806ec5056, type: 2}
 --- !u!1001 &6794949523962522864
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -1,20 +1,19 @@
+using CryptoQuest.FSM.ScriptableObjects.Base;
 using UnityEngine;
 
-namespace CryptoQuest.FSM
+namespace CryptoQuest.FSM.ScriptableObjects
 {
     [CreateAssetMenu(fileName = "TransitionSO", menuName = "Gameplay/Battle/FSM/Transition")]
     public class TransitionSO : ScriptableObject
     {
         public DecisionSO Decision;
         public BaseStateSO TrueState;
-        public BaseStateSO FalseState;
 
         public virtual void Execute(BaseStateMachine stateMachine)
         {
-            BaseStateSO nextState = Decision.Decide(stateMachine) ? TrueState : FalseState;
-            if (nextState == null) return;
+            if (!Decision.Decide(stateMachine)) return;
 
-            stateMachine.SetCurrentState(nextState);
+            stateMachine.SetCurrentState(TrueState);
         }
     }
 }

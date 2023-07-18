@@ -1,10 +1,10 @@
-using UnityEngine;
-using System.Collections.Generic;
 using System.Collections;
+using System.Collections.Generic;
+using CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
-using CryptoQuest.FSM;
+using UnityEngine;
 
-namespace CryptoQuest.Gameplay.Battle
+namespace CryptoQuest.Gameplay.Battle.Core.Components
 {
     public class BattleTeam : MonoBehaviour
     {
@@ -14,11 +14,6 @@ namespace CryptoQuest.Gameplay.Battle
         public List<IBattleUnit> BattleUnits { get; private set; } = new();
 
         private List<IBattleUnit> _pendingRemoveUnit = new();
-
-        protected void Awake()
-        {
-            BattleUnits.Clear();
-        }
 
         public void InitBattleUnits(BattleTeam opponentTeam)
         {
@@ -35,6 +30,8 @@ namespace CryptoQuest.Gameplay.Battle
 
         public void RemoveUnit(IBattleUnit unit)
         {
+            BattleUnits.Remove(unit);
+            Members.Remove(unit.Owner);
             _pendingRemoveUnit.Add(unit);
         }
 
@@ -44,15 +41,9 @@ namespace CryptoQuest.Gameplay.Battle
             {
                 IBattleUnit unit = _pendingRemoveUnit[0];
                 _pendingRemoveUnit.Remove(unit);
-                RemoveUnitImmediately(unit);
+                unit.OnDeath();
                 yield return null;
             }
-        }
-        
-        public void RemoveUnitImmediately(IBattleUnit unit)
-        {
-            BattleUnits.Remove(unit);
-            unit.OnDeath();
         }
 
         public bool IsWiped() => BattleUnits.Count <= 0;

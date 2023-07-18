@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace CryptoQuest.FSM
+namespace CryptoQuest.FSM.ScriptableObjects.Base
 {
     public abstract class DecisionSO : ScriptableObject
     {

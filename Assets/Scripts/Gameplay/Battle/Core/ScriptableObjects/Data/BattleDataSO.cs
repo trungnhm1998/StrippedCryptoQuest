@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace CryptoQuest.Gameplay.Battle
+namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data
 {
     [CreateAssetMenu(menuName = "Gameplay/Battle/Battle Data")]
     public class BattleDataSO : ScriptableObject

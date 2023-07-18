@@ -1,15 +1,14 @@
-using UnityEngine;
 using System.Collections;
+using CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit.SkillSelectStrategies;
 
-namespace CryptoQuest.Gameplay.Battle
+namespace CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit
 {
     public class MonsterUnit : CharacterUnit
     {
         private ISkillSelector _skillSelector;
 
-        protected override void Start()
+        protected void Awake()
         {
-            base.Start();
             _skillSelector = new RandomSkillSelector();
         }
 

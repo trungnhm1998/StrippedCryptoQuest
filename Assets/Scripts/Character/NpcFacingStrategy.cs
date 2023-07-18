@@ -1,15 +1,17 @@
-
-using UnityEngine;
 using CryptoQuest.Character.MonoBehaviours;
+using UnityEngine;
 
-public class NpcFacingStrategy : IFacingStrategy
+namespace CryptoQuest.Character
 {
-    public CharacterBehaviour.EFacingDirection Execute(Vector2 myPosition, Vector2 playerPosition)
+    public class NpcFacingStrategy : IFacingStrategy
     {
-        Vector2 direction = playerPosition - myPosition;
-        if (Mathf.Abs(direction.x) > Mathf.Abs(direction.y))
-            return (direction.x < 0) ? CharacterBehaviour.EFacingDirection.West : CharacterBehaviour.EFacingDirection.East;
-        else
-            return (direction.y < 0) ? CharacterBehaviour.EFacingDirection.South : CharacterBehaviour.EFacingDirection.North;
+        public CharacterBehaviour.EFacingDirection Execute(Vector2 myPosition, Vector2 playerPosition)
+        {
+            Vector2 direction = playerPosition - myPosition;
+            if (Mathf.Abs(direction.x) > Mathf.Abs(direction.y))
+                return (direction.x < 0) ? CharacterBehaviour.EFacingDirection.West : CharacterBehaviour.EFacingDirection.East;
+            else
+                return (direction.y < 0) ? CharacterBehaviour.EFacingDirection.South : CharacterBehaviour.EFacingDirection.North;
+        }
     }
 }
