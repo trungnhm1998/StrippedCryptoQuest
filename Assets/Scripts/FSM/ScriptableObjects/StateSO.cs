@@ -1,7 +1,8 @@
-using UnityEngine;
 using System.Collections.Generic;
+using CryptoQuest.FSM.ScriptableObjects.Base;
+using UnityEngine;
 
-namespace CryptoQuest.FSM
+namespace CryptoQuest.FSM.ScriptableObjects
 {
     [CreateAssetMenu(fileName = "StateSO", menuName = "Gameplay/Battle/FSM/States/Normal State")]
     public class StateSO : BaseStateSO

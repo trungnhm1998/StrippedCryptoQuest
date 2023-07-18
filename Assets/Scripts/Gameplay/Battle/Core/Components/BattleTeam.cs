@@ -1,10 +1,10 @@
-using UnityEngine;
-using System.Collections.Generic;
 using System.Collections;
+using System.Collections.Generic;
+using CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
-using CryptoQuest.FSM;
+using UnityEngine;
 
-namespace CryptoQuest.Gameplay.Battle
+namespace CryptoQuest.Gameplay.Battle.Core.Components
 {
     public class BattleTeam : MonoBehaviour
     {

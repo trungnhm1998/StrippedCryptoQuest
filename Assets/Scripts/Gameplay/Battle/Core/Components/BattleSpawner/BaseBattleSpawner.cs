@@ -1,11 +1,12 @@
-using UnityEngine;
-using IndiGames.GameplayAbilitySystem.AttributeSystem.Components;
-using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
-using IndiGames.GameplayAbilitySystem.AbilitySystem.ScriptableObjects;
-using System.Linq;
 using System.Collections.Generic;
+using System.Linq;
+using CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit;
+using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data;
+using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
+using IndiGames.GameplayAbilitySystem.AttributeSystem.Components;
+using UnityEngine;
 
-namespace CryptoQuest.Gameplay.Battle
+namespace CryptoQuest.Gameplay.Battle.Core.Components.BattleSpawner
 {
     [RequireComponent(typeof(BattleManager))]
     public abstract class BaseBattleSpawner : MonoBehaviour

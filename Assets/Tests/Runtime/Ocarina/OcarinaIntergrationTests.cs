@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using CryptoQuest.Character.MonoBehaviours;
 using CryptoQuest.Events;
+using CryptoQuest.Item.Ocarinas;
 using CryptoQuest.Map;
 using IndiGames.Core.Events.ScriptableObjects;
 using IndiGames.Core.SceneManagementSystem.Events.ScriptableObjects;

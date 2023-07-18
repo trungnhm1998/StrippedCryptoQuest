@@ -1,9 +1,9 @@
 using System.Collections.Generic;
-using UnityEngine;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
 using IndiGames.GameplayAbilitySystem.Implementation.EffectAbility.TargetTypes;
+using UnityEngine;
 
-namespace CryptoQuest.Gameplay.Battle
+namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.TargetTypes
 {
     [CreateAssetMenu(fileName = "SelfTargetSO", menuName = "Gameplay/Battle/Abilities/Target Type/Other Target")]
     public class OtherTargetSO : TargetType

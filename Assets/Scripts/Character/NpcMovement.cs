@@ -1,13 +1,7 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using CryptoQuest.Character.MonoBehaviours;
-using CryptoQuest.Character.Movement;
-using IndiGames.Core.EditorTools.Attributes.ReadOnlyAttribute;
-using UnityEditor;
 using UnityEngine;
 
-namespace CryptoQuest
+namespace CryptoQuest.Character
 {
     public class NpcMovement : CharacterBehaviour
     {

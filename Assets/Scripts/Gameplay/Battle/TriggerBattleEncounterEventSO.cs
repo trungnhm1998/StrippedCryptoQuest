@@ -1,3 +1,4 @@
+using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data;
 using IndiGames.Core.Events.ScriptableObjects;
 using UnityEngine;
 using UnityEngine.Events;

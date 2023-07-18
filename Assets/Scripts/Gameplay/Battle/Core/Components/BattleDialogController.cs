@@ -1,9 +1,9 @@
-using UnityEngine;
-using System.Collections.Generic;
-using CryptoQuest.UI.Battle;
+using CryptoQuest.Events;
+using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Events;
 using IndiGames.Core.Events.ScriptableObjects;
+using UnityEngine;
 
-namespace CryptoQuest.Gameplay.Battle
+namespace CryptoQuest.Gameplay.Battle.Core.Components
 {
     public class BattleDialogController : MonoBehaviour
     {

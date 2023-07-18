@@ -1,20 +1,20 @@
-using CryptoQuest;
 using CryptoQuest.Events;
+using CryptoQuest.Item.Ocarinas.Data;
 using IndiGames.Core.Events.ScriptableObjects;
 using UnityEngine;
 
-namespace CryptoQuestEditor.EditorTool
+namespace CryptoQuest.EditorTool
 {
     public class OcarinaEditorCheat : MonoBehaviour
     {
-#if UNITY_EDITOR || DEVELOPMENT_BUILD
-        public OcarinaLocations OcarinaData;
-        private bool _showOcarinaList;
+        [SerializeField] private OcarinaLocations _ocarinaData;
         [SerializeField] private MapPathEventChannelSO _destinationSelectedEvent;
         [SerializeField] private VoidEventChannelSO _destinationConfirmEvent;
         [SerializeField] private float _guiWidth = 400;
         [SerializeField] private float _guiButtonHeight = 50;
         [SerializeField] private int _fontSize = 20;
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
+        private bool _showOcarinaList;
 
         private void OnGUI()
         {
@@ -24,18 +24,16 @@ namespace CryptoQuestEditor.EditorTool
 
             if (!_showOcarinaList) return;
 
-            if (OcarinaData.Locations.Count > 0)
+            if (_ocarinaData.Locations.Count <= 0) return;
+
+            foreach (var location in _ocarinaData.Locations)
             {
-                foreach (OcarinaLocations.Location location in OcarinaData.Locations)
-                {
-                    if (GUILayout.Button($"Use Ocarina go to {location.MapName.GetLocalizedString()}",
-                            GUILayout.Width(_guiWidth),
-                            GUILayout.Height(_guiButtonHeight)))
-                    {
-                        _destinationSelectedEvent.RaiseEvent(location.Path);
-                        _destinationConfirmEvent.RaiseEvent();
-                    }
-                }
+                if (!GUILayout.Button($"Use Ocarina go to {location.MapName.GetLocalizedString()}",
+                        GUILayout.Width(_guiWidth),
+                        GUILayout.Height(_guiButtonHeight))) continue;
+                
+                _destinationSelectedEvent.RaiseEvent(location.Path);
+                _destinationConfirmEvent.RaiseEvent();
             }
         }
 #endif

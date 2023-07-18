@@ -1,8 +1,7 @@
+using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data;
 using UnityEngine;
-using IndiGames.GameplayAbilitySystem.AttributeSystem.Components;
-using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
 
-namespace CryptoQuest.Gameplay.Battle
+namespace CryptoQuest.Gameplay.Battle.Core.Components.BattleSpawner
 {
     public class SimpleBattleSpawner : BaseBattleSpawner
     {

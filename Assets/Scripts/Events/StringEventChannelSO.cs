@@ -1,10 +1,7 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace CryptoQuest
+namespace CryptoQuest.Events
 {
     [CreateAssetMenu(menuName = "Core/Events/String Event Channel")]
     public class StringEventChannelSO : ScriptableObject

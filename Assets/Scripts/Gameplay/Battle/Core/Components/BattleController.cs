@@ -1,9 +1,10 @@
-using UnityEngine;
+using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects;
+using CryptoQuest.Input;
 using CryptoQuest.UI.Battle;
 using IndiGames.Core.Events.ScriptableObjects;
-using CryptoQuest.Input;
+using UnityEngine;
 
-namespace CryptoQuest.Gameplay.Battle
+namespace CryptoQuest.Gameplay.Battle.Core.Components
 {
     public class BattleController : MonoBehaviour
     {

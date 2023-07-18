@@ -1,8 +1,10 @@
-
-using UnityEngine;
 using CryptoQuest.Character.MonoBehaviours;
+using UnityEngine;
 
-public interface IFacingStrategy
+namespace CryptoQuest.Character
 {
-    public CharacterBehaviour.EFacingDirection Execute(Vector2 myPosition, Vector2 playerPosition);
+    public interface IFacingStrategy
+    {
+        public CharacterBehaviour.EFacingDirection Execute(Vector2 myPosition, Vector2 playerPosition);
+    }
 }

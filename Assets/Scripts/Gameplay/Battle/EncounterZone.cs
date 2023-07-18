@@ -1,3 +1,4 @@
+using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data;
 using Unity.Collections;
 using UnityEngine;
 
