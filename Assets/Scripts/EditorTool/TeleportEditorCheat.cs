@@ -3,7 +3,7 @@ using IndiGames.Core.SceneManagementSystem.Events.ScriptableObjects;
 using IndiGames.Core.SceneManagementSystem.ScriptableObjects;
 using UnityEngine;
 
-namespace CryptoQuestEditor.EditorTool
+namespace CryptoQuest.EditorTool
 {
     public class TeleportEditorCheat : MonoBehaviour
     {

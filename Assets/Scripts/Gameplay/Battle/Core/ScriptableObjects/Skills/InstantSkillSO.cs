@@ -1,10 +1,8 @@
-using UnityEngine;
 using System.Collections;
 using IndiGames.GameplayAbilitySystem.AbilitySystem;
-using IndiGames.GameplayAbilitySystem.Implementation.EffectAbility;
-using IndiGames.GameplayAbilitySystem.Implementation.EffectAbility.ScriptableObjects;
+using UnityEngine;
 
-namespace CryptoQuest.Gameplay.Battle
+namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Skills
 {
     /// <summary>
     /// Skill will end right after activate like normal attack

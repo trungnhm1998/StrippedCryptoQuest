@@ -1,8 +1,8 @@
+using System.Collections.Generic;
 using IndiGames.GameplayAbilitySystem.AbilitySystem;
 using UnityEngine;
-using System.Collections.Generic;
 
-namespace CryptoQuest.Gameplay.Battle
+namespace CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit.SkillSelectStrategies
 {
     public class RandomSkillSelector : ISkillSelector
     {

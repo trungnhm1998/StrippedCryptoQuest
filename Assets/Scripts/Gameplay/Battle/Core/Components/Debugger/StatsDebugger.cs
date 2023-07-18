@@ -1,13 +1,10 @@
-using System.Collections.Generic;
-using UnityEngine;
+using CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
-using IndiGames.GameplayAbilitySystem.AbilitySystem.ScriptableObjects;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.Components;
-using IndiGames.GameplayAbilitySystem.AttributeSystem;
-using IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects;
 using IndiGames.GameplayAbilitySystem.Implementation.BasicEffect;
+using UnityEngine;
 
-namespace CryptoQuest.Gameplay.Battle
+namespace CryptoQuest.Gameplay.Battle.Core.Components.Debugger
 {
     public class StatsDebugger : MonoBehaviour
     {

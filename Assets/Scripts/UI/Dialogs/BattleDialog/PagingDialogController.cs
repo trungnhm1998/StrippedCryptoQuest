@@ -1,5 +1,6 @@
 using UnityEngine;
 using CryptoQuest.Gameplay.Battle;
+using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Events;
 
 namespace CryptoQuest.UI.Dialogs.BattleDialog
 {

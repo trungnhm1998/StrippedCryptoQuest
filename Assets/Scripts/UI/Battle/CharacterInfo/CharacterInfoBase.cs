@@ -1,15 +1,9 @@
-﻿using System.Collections;
-using CryptoQuest.Input;
-using UnityEngine;
-using UnityEngine.Events;
-using UnityEngine.UI;
-using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
-using IndiGames.GameplayAbilitySystem.AttributeSystem;
-using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
+﻿using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.Components;
-using CryptoQuest.Gameplay.Battle;
+using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
+using UnityEngine;
 
-namespace CryptoQuest.UI.Battle
+namespace CryptoQuest.UI.Battle.CharacterInfo
 {
     public abstract class CharacterInfoBase : MonoBehaviour
     {

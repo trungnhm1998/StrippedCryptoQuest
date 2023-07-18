@@ -1,13 +1,15 @@
-using UnityEngine;
-using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
-using IndiGames.GameplayAbilitySystem.AttributeSystem;
-using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
-using IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects.EffectExecutionCalculation;
-using IndiGames.GameplayAbilitySystem.EffectSystem;
-using UnityEngine.Localization.Settings;
 using System.Collections.Generic;
+using CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit;
+using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data;
+using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
+using IndiGames.GameplayAbilitySystem.AttributeSystem;
+using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
+using IndiGames.GameplayAbilitySystem.EffectSystem;
+using IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects.EffectExecutionCalculation;
+using UnityEngine;
+using UnityEngine.Localization.Settings;
 
-namespace CryptoQuest.Gameplay.Battle
+namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Effects.EffectExecutionCalculation
 {
     [CreateAssetMenu(fileName = "DamageCaculation", menuName = "Gameplay/Battle/Effects/Execution Calculations/Damage Caculation")]
     public class DamageCalculationSO : AbstractEffectExecutionCalculationSO

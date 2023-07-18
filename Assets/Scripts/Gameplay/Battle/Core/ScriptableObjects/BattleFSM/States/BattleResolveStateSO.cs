@@ -1,9 +1,9 @@
-using UnityEngine;
 using System.Collections;
-using IndiGames.Core.Events.ScriptableObjects;
 using CryptoQuest.FSM;
+using IndiGames.Core.Events.ScriptableObjects;
+using UnityEngine;
 
-namespace CryptoQuest.Gameplay.Battle
+namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.BattleFSM.States
 {
     [CreateAssetMenu(fileName = "BattleResolveStateSO", menuName = "Gameplay/Battle/FSM/States/Battle Resolve State")]
     public class BattleResolveStateSO : BattleStateSO

@@ -1,6 +1,7 @@
+using CryptoQuest.FSM.ScriptableObjects.Base;
 using UnityEngine;
 
-namespace CryptoQuest.FSM
+namespace CryptoQuest.FSM.ScriptableObjects
 {
     [CreateAssetMenu(fileName = "TransitionSO", menuName = "Gameplay/Battle/FSM/Transition")]
     public class TransitionSO : ScriptableObject

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using CryptoQuest.Events;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Localization;
