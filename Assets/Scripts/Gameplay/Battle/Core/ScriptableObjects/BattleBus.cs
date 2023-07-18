@@ -1,8 +1,7 @@
-using CryptoQuest.Character.MonoBehaviours;
+using CryptoQuest.Gameplay.Battle.Core.Components;
 using UnityEngine;
-using UnityEngine.Events;
 
-namespace CryptoQuest.Gameplay.Battle
+namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects
 {
     public class BattleBus : ScriptableObject
     {

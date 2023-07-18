@@ -1,7 +1,8 @@
-﻿using UnityEngine;
+﻿using CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit;
+using UnityEngine;
 using UnityEngine.Events;
 
-namespace CryptoQuest.Gameplay.Battle
+namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Events
 {
     [CreateAssetMenu(fileName = "BattleUnitEventChannelSO", menuName = "Gameplay/Battle/Events/Battle Unit Event")]
     public class BattleUnitEventChannelSO : ScriptableObject

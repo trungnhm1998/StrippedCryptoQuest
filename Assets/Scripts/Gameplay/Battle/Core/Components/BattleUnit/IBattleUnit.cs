@@ -1,10 +1,10 @@
 using System.Collections;
-using System.Collections.Generic;
-using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
+using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data;
 using IndiGames.GameplayAbilitySystem.AbilitySystem;
-using UnityEngine;
+using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
+using ILogger = CryptoQuest.Gameplay.Battle.Core.Components.Logger.ILogger;
 
-namespace CryptoQuest.Gameplay.Battle
+namespace CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit
 {
     public interface IBattleUnit
     {

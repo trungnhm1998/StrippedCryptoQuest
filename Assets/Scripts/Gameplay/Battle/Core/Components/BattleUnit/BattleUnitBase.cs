@@ -1,12 +1,14 @@
-using UnityEngine;
 using System.Collections;
-using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
-using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
-using IndiGames.GameplayAbilitySystem.AttributeSystem;
+using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data;
+using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.TargetTypes;
 using IndiGames.GameplayAbilitySystem.AbilitySystem;
-using System.Collections.Generic;
+using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
+using IndiGames.GameplayAbilitySystem.AttributeSystem;
+using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
+using UnityEngine;
+using ILogger = CryptoQuest.Gameplay.Battle.Core.Components.Logger.ILogger;
 
-namespace CryptoQuest.Gameplay.Battle
+namespace CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit
 {
     public class BattleUnitBase : MonoBehaviour, IBattleUnit
     {

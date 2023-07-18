@@ -2,6 +2,8 @@
 using UnityEngine.UI;
 using CryptoQuest.Gameplay.Battle;
 using System.Collections.Generic;
+using CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit;
+
 namespace CryptoQuest.UI.Battle
 {
     public class MonsterList : CharacterList

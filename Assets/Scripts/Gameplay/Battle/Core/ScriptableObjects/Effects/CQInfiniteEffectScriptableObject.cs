@@ -1,11 +1,13 @@
+using CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit;
+using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data;
 using IndiGames.GameplayAbilitySystem.EffectSystem;
 using IndiGames.GameplayAbilitySystem.EffectSystem.EffectApplier;
 using IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects;
 using IndiGames.GameplayAbilitySystem.Implementation.BasicEffect;
-using UnityEngine.Localization.Settings;
 using UnityEngine;
+using UnityEngine.Localization.Settings;
 
-namespace CryptoQuest.Gameplay.Battle
+namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Effects
 {
     [CreateAssetMenu(fileName = "CQInfiniteEffect", menuName = "Indigames Ability System/Effects/CQ Infinite Effect")]
     public class CQInfiniteEffectScriptableObject : EffectScriptableObject<CQInfiniteEffect> {}
