@@ -1,4 +1,6 @@
-﻿using IndiGames.Core.EditorTools.Attributes.ReadOnlyAttribute;
+﻿using System;
+using CryptoQuest.Gameplay;
+using IndiGames.Core.EditorTools.Attributes.ReadOnlyAttribute;
 using UnityEngine;
 using UnityEngine.Playables;
 
@@ -6,6 +8,7 @@ namespace CryptoQuest.System.Cutscene
 {
     public class TimelineBinder : MonoBehaviour
     {
+        [SerializeField] private GameplayBus _gameplayBus;
         [SerializeField] private PlayableDirector _director;
 
         [SerializeField] private string[] _objectsToBindTags;
@@ -13,9 +16,14 @@ namespace CryptoQuest.System.Cutscene
 
         [SerializeField, ReadOnly] private GameObject[] _objectsToBind;
 
-        private void Awake()
+        private void OnEnable()
         {
-            BindObjects();
+            _gameplayBus.HeroSpawned += BindObjects;
+        }
+
+        private void OnDisable()
+        {
+            _gameplayBus.HeroSpawned -= BindObjects;
         }
 
         private void BindObjects()
