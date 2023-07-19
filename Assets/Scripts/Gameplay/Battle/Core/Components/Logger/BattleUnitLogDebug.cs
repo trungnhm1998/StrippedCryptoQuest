@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace CryptoQuest.Gameplay.Battle
+namespace CryptoQuest.Gameplay.Battle.Core.Components.Logger
 {
     public class BattleUnitLogDebug : BattleUnitLog
     {

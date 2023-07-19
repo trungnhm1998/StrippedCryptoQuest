@@ -1,8 +1,9 @@
-using UnityEngine;
-using CryptoQuest.Gameplay.Battle;
 using CryptoQuest.FSM;
+using CryptoQuest.FSM.ScriptableObjects.Base;
+using CryptoQuest.Gameplay.Battle.Core.Components;
+using UnityEngine;
 
-namespace CryptoQuest.Gameplay.Battle
+namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.BattleFSM.Actions
 {
     [CreateAssetMenu(fileName = "BattleActionSO", menuName = "Gameplay/Battle/FSM/Actions/Battle Action")]
     public class BattleActionSO : FSMActionSO

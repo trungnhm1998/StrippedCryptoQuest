@@ -1,13 +1,8 @@
-﻿using UnityEngine;
-using UnityEngine.UI;
-using CryptoQuest.Gameplay.Battle;
-using System.Collections.Generic;
-using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
-using IndiGames.GameplayAbilitySystem.AbilitySystem;
-using IndiGames.Core.Events.ScriptableObjects;
-using CryptoQuest.GameHandler;
+﻿using CryptoQuest.Gameplay.Battle.Core.Components;
+using CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit;
+using UnityEngine;
 
-namespace CryptoQuest.UI.Battle
+namespace CryptoQuest.UI.Battle.BattleActionHandler
 {
     public class SelectTargetHandler : BattleActionHandler
     {

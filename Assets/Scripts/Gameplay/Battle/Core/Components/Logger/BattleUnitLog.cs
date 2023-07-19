@@ -1,8 +1,9 @@
 using System.Collections.Generic;
+using CryptoQuest.Events;
 using IndiGames.Core.Events.ScriptableObjects;
 using UnityEngine;
 
-namespace CryptoQuest.Gameplay.Battle
+namespace CryptoQuest.Gameplay.Battle.Core.Components.Logger
 {
     public class BattleUnitLog : MonoBehaviour, ILogger
     {

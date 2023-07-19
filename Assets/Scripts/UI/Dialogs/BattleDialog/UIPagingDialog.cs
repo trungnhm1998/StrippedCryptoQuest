@@ -2,6 +2,7 @@ using CryptoQuest.Input;
 using UnityEngine;
 using UnityEngine.UI;
 using CryptoQuest.Gameplay.Battle;
+using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Events;
 using DG.Tweening;
 using IndiGames.Core.Events.ScriptableObjects;
 

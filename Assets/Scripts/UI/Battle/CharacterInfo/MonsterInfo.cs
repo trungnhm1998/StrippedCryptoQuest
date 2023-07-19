@@ -1,8 +1,8 @@
-﻿using UnityEngine;
+﻿using IndiGames.GameplayAbilitySystem.AttributeSystem;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
-using IndiGames.GameplayAbilitySystem.AttributeSystem;
+using UnityEngine;
 
-namespace CryptoQuest.UI.Battle
+namespace CryptoQuest.UI.Battle.CharacterInfo
 {
     public class MonsterInfo : CharacterInfoBase
     {

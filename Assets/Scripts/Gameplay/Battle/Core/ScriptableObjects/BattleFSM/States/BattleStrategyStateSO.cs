@@ -1,8 +1,8 @@
-using UnityEngine;
 using System.Collections;
 using CryptoQuest.FSM;
+using UnityEngine;
 
-namespace CryptoQuest.Gameplay.Battle
+namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.BattleFSM.States
 {
     [CreateAssetMenu(fileName = "BattleStrategyStateSO", menuName = "Gameplay/Battle/FSM/States/Battle Strategy State")]
     public class BattleStrategyStateSO : BattleStateSO

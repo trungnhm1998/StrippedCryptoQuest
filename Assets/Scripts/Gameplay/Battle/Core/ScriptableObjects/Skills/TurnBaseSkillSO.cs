@@ -1,10 +1,11 @@
 using System.Collections;
-using UnityEngine;
-using IndiGames.GameplayAbilitySystem.AbilitySystem;
+using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data;
 using IndiGames.Core.Events.ScriptableObjects;
+using IndiGames.GameplayAbilitySystem.AbilitySystem;
+using UnityEngine;
 using UnityEngine.Localization.Settings;
 
-namespace CryptoQuest.Gameplay.Battle
+namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Skills
 {
     [CreateAssetMenu(fileName = "TurnBaseSkill", menuName = "Gameplay/Battle/Abilities/Turn Base Ability")]
     public class TurnBaseSkillSO : CQSkillSO
