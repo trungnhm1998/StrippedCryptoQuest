@@ -24,11 +24,12 @@ namespace CryptoQuest.Tests.Editor.NamingValidation
             _specialCharAsset = AssetDatabase.LoadAssetAtPath<TextAsset>(SPECIAL_CHAR_ASSET_PATH);
 
             Assert.NotNull(_textAsset);
+            Assert.NotNull(_specialCharAsset);
 
             nameValidator = new NameValidator(_textAsset, _specialCharAsset);
         }
 
-        [TestCase("FUCK")]
+        [TestCase("nigga")]
         [TestCase("nigger")]
         [TestCase("nigga")]
         [TestCase("HELL")]
@@ -112,6 +113,18 @@ namespace CryptoQuest.Tests.Editor.NamingValidation
             EValidation result = nameValidator.Validate(input);
 
             Assert.AreEqual(EValidation.Null, result);
+        }
+        
+        [TestCase("1")]
+        [TestCase("123")]
+        [TestCase("123456789")]
+        [TestCase("Saymyname9")]
+        [TestCase("N0ic3")]
+        public void Validate_NumberName_ShouldReturnTrue(string input)
+        {
+            EValidation result = nameValidator.Validate(input);
+
+            Assert.AreEqual(EValidation.Valid, result);
         }
     }
 }
