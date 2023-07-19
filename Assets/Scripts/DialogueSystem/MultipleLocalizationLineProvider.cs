@@ -7,6 +7,7 @@ using UnityEngine.Localization;
 using UnityEngine.Localization.Settings;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.ResourceManagement;
+using UnityEngine.Serialization;
 using Yarn.Unity;
 using Object = UnityEngine.Object;
 
@@ -14,34 +15,37 @@ using Object = UnityEngine.Object;
 using UnityEditor;
 #endif
 
-namespace CryptoQuest
+namespace CryptoQuest.DialogueSystem
 {
-    public class CryptoQuestLineProvider : LineProviderBehaviour
+    public class MultipleLocalizationLineProvider : LineProviderBehaviour
     {
-        public List<LocalizedStringTable> stringsTables = new List<LocalizedStringTable>();
-        public LocalizedAssetTable assetTable;
+        [FormerlySerializedAs("stringsTables")]
+        public List<LocalizedStringTable> StringsTables = new();
 
-        private List<StringTable> currentStringsTables = new();
-        private AssetTable currentAssetTable;
+        [FormerlySerializedAs("assetTable")]
+        public LocalizedAssetTable AssetTable;
 
-        private List<AsyncOperationHandle<Object>> pendingLoadOperations = new();
-        private Dictionary<string, Object> loadedAssets = new();
+        private List<StringTable> _currentStringsTables = new();
+        private AssetTable _currentAssetTable;
+
+        private List<AsyncOperationHandle<Object>> _pendingLoadOperations = new();
+        private Dictionary<string, Object> _loadedAssets = new();
 
         public override string LocaleCode => LocalizationSettings.SelectedLocale.Identifier.Code;
 
         public override bool LinesAvailable
         {
-            get => stringsTables.Count != 0 && currentStringsTables != null && (assetTable.IsEmpty ||
-                (currentAssetTable != null && pendingLoadOperations.Count <= 0));
+            get => StringsTables.Count != 0 && _currentStringsTables != null && (AssetTable.IsEmpty ||
+                (_currentAssetTable != null && _pendingLoadOperations.Count <= 0));
         }
 
         public override LocalizedLine GetLocalizedLine(Yarn.Line line)
         {
             string text = null;
             LineMetadata metadata = null;
-            if (currentStringsTables != null)
+            if (_currentStringsTables != null)
             {
-                foreach (var currentStringsTable in currentStringsTables)
+                foreach (var currentStringsTable in _currentStringsTables)
                 {
                     if (currentStringsTable[line.ID] != null)
                     {
@@ -69,7 +73,7 @@ namespace CryptoQuest
 
             var lineIDWithoutPrefix = line.ID.Replace("line:", "");
 
-            if (loadedAssets.TryGetValue(lineIDWithoutPrefix, out var asset))
+            if (_loadedAssets.TryGetValue(lineIDWithoutPrefix, out var asset))
             {
                 localizedLine.Asset = asset;
             }
@@ -79,56 +83,56 @@ namespace CryptoQuest
 
         private void OnEnable()
         {
-            if (stringsTables != null)
+            if (StringsTables != null)
             {
-                stringsTables[0].TableChanged += OnStringTableChanged;
+                StringsTables[0].TableChanged += OnStringTableChanged;
             }
 
-            if (assetTable != null)
+            if (AssetTable != null)
             {
-                assetTable.TableChanged += OnAssetTableChanged;
+                AssetTable.TableChanged += OnAssetTableChanged;
             }
         }
 
         private void OnDisable()
         {
-            if (stringsTables != null)
+            if (StringsTables != null)
             {
-                stringsTables[0].TableChanged -= OnStringTableChanged;
+                StringsTables[0].TableChanged -= OnStringTableChanged;
             }
 
-            if (assetTable != null)
+            if (AssetTable != null)
             {
-                assetTable.TableChanged -= OnAssetTableChanged;
+                AssetTable.TableChanged -= OnAssetTableChanged;
             }
         }
 
         private void OnStringTableChanged(StringTable value)
         {
-            currentStringsTables.Clear();
-            foreach (LocalizedStringTable stringsTable in stringsTables)
+            _currentStringsTables.Clear();
+            foreach (LocalizedStringTable stringsTable in StringsTables)
             {
-                currentStringsTables.Add(stringsTable.GetTable());
+                _currentStringsTables.Add(stringsTable.GetTable());
             }
         }
 
         private void OnAssetTableChanged(AssetTable value)
         {
-            currentAssetTable = value;
+            _currentAssetTable = value;
         }
 
         public override void PrepareForLines(IEnumerable<string> lineIDs)
         {
-            if (assetTable.IsEmpty != true)
+            if (AssetTable.IsEmpty != true)
             {
-                if (currentAssetTable == null)
+                if (_currentAssetTable == null)
                 {
-                    RunAfterComplete(assetTable.GetTableAsync(),
+                    RunAfterComplete(AssetTable.GetTableAsync(),
                         (loadedAssetTable) => { PreloadLinesFromTable(loadedAssetTable, lineIDs); });
                 }
                 else
                 {
-                    PreloadLinesFromTable(currentAssetTable, lineIDs);
+                    PreloadLinesFromTable(_currentAssetTable, lineIDs);
                 }
             }
 
@@ -140,7 +144,7 @@ namespace CryptoQuest
                     lineIDsWithoutPrefix.Add(l.Replace("line:", ""));
                 }
 
-                var assetKeysToUnload = new HashSet<string>(loadedAssets.Keys);
+                var assetKeysToUnload = new HashSet<string>(_loadedAssets.Keys);
                 assetKeysToUnload.ExceptWith(lineIDsWithoutPrefix);
                 foreach (var assetKeyToUnload in assetKeysToUnload)
                 {
@@ -150,7 +154,7 @@ namespace CryptoQuest
                     {
                         table.ReleaseAsset(entryToRelease);
 
-                        loadedAssets.Remove(assetKeyToUnload);
+                        _loadedAssets.Remove(assetKeyToUnload);
                     }
                 }
 
@@ -167,17 +171,17 @@ namespace CryptoQuest
                     if (loadOperation.IsDone == false)
                     {
                         Debug.Log($"Asset for {id} was already loaded");
-                        loadedAssets[id] = loadOperation.Result;
+                        _loadedAssets[id] = loadOperation.Result;
                     }
                     else
                     {
-                        pendingLoadOperations.Add(loadOperation);
+                        _pendingLoadOperations.Add(loadOperation);
                         loadOperation.Completed += (operation) =>
                         {
-                            pendingLoadOperations.Remove(loadOperation);
+                            _pendingLoadOperations.Remove(loadOperation);
                             if (operation.Status == AsyncOperationStatus.Succeeded)
                             {
-                                loadedAssets[id] = operation.Result;
+                                _loadedAssets[id] = operation.Result;
                             }
                             else
                             {
@@ -218,7 +222,7 @@ namespace CryptoQuest
         public string[] tags;
     }
 #if UNITY_EDITOR
-    [CustomEditor(typeof(CryptoQuestLineProvider))]
+    [CustomEditor(typeof(MultipleLocalizationLineProvider))]
     public class CryptoQuestLocalisedLineProviderEditor : Editor
     {
         private SerializedProperty stringsTableProperties;
@@ -233,9 +237,11 @@ namespace CryptoQuest
 
         public void OnEnable()
         {
-            var stringsTablesProperty = serializedObject.FindProperty(nameof(CryptoQuestLineProvider.stringsTables));
+            var stringsTablesProperty =
+                serializedObject.FindProperty(nameof(MultipleLocalizationLineProvider.StringsTables));
             stringsTableProperties = stringsTablesProperty;
-            this.assetTableProperty = serializedObject.FindProperty(nameof(CryptoQuestLineProvider.assetTable));
+            this.assetTableProperty =
+                serializedObject.FindProperty(nameof(MultipleLocalizationLineProvider.AssetTable));
         }
     }
 #endif

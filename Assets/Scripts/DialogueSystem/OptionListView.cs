@@ -4,48 +4,49 @@ using System.Collections.Generic;
 using CryptoQuest.Input;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Yarn.Unity;
 
-namespace CryptoQuest
+namespace CryptoQuest.DialogueSystem
 {
     public class CQOptionListView : DialogueViewBase
     {
-        [SerializeField] CanvasGroup canvasGroup;
-        [SerializeField] OptionView optionViewPrefab;
-        [SerializeField] GameObject optionViewContainer;
-        [SerializeField] TextMeshProUGUI lastLineText;
-        [SerializeField] float fadeTime = 0.1f;
-        [SerializeField] bool showUnavailableOptions = false;
-        List<OptionView> optionViews = new List<OptionView>();
-        Action<int> OnOptionSelected;
-        LocalizedLine lastSeenLine;
+        [SerializeField] private CanvasGroup _canvasGroup;
+        [SerializeField] private OptionView _optionViewPrefab;
+        [SerializeField] private GameObject _optionViewContainer;
+        [SerializeField] private TextMeshProUGUI _lastLineText;
+        [SerializeField] private float _fadeTime = 0.1f;
+        [SerializeField] private bool _showUnavailableOptions = false;
+        private List<OptionView> _optionViews = new();
+        private Action<int> _OnOptionSelected;
+        private LocalizedLine _lastSeenLine;
 
         public void Start()
         {
-            canvasGroup.alpha = 0;
-            canvasGroup.interactable = false;
-            canvasGroup.blocksRaycasts = false;
+            _canvasGroup.alpha = 0;
+            _canvasGroup.interactable = false;
+            _canvasGroup.blocksRaycasts = false;
         }
 
         public void Reset()
         {
-            canvasGroup = GetComponentInParent<CanvasGroup>();
+            _canvasGroup = GetComponentInParent<CanvasGroup>();
         }
 
         public override void RunLine(LocalizedLine dialogueLine, Action onDialogueLineFinished)
         {
-            lastSeenLine = dialogueLine;
+            _lastSeenLine = dialogueLine;
             onDialogueLineFinished();
         }
 
         public override void RunOptions(DialogueOption[] dialogueOptions, Action<int> onOptionSelected)
         {
-            foreach (var optionView in optionViews)
+            foreach (var optionView in _optionViews)
             {
                 optionView.gameObject.SetActive(false);
             }
 
-            while (dialogueOptions.Length > optionViews.Count)
+            while (dialogueOptions.Length > _optionViews.Count)
             {
                 var optionView = CreateNewOptionView();
                 optionView.gameObject.SetActive(false);
@@ -53,22 +54,22 @@ namespace CryptoQuest
 
             RenderOptionView(dialogueOptions);
             RenderLastLineText();
-            OnOptionSelected = onOptionSelected;
-            StartCoroutine(Effects.FadeAlpha(canvasGroup, 0, 1, fadeTime));
+            _OnOptionSelected = onOptionSelected;
+            StartCoroutine(Effects.FadeAlpha(_canvasGroup, 0, 1, _fadeTime));
         }
 
         private void RenderLastLineText()
         {
-            if (lastLineText != null)
+            if (_lastLineText != null)
             {
-                if (lastSeenLine != null)
+                if (_lastSeenLine != null)
                 {
-                    lastLineText.gameObject.SetActive(true);
-                    lastLineText.text = lastSeenLine.Text.Text;
+                    _lastLineText.gameObject.SetActive(true);
+                    _lastLineText.text = _lastSeenLine.Text.Text;
                 }
                 else
                 {
-                    lastLineText.gameObject.SetActive(false);
+                    _lastLineText.gameObject.SetActive(false);
                 }
             }
         }
@@ -79,10 +80,10 @@ namespace CryptoQuest
 
             for (int i = 0; i < dialogueOptions.Length; i++)
             {
-                var optionView = optionViews[i];
+                var optionView = _optionViews[i];
                 var option = dialogueOptions[i];
 
-                if (!option.IsAvailable && !showUnavailableOptions)
+                if (!option.IsAvailable && !_showUnavailableOptions)
                 {
                     continue;
                 }
@@ -101,11 +102,11 @@ namespace CryptoQuest
 
         private OptionView CreateNewOptionView()
         {
-            var optionView = Instantiate(optionViewPrefab);
-            optionView.transform.SetParent(optionViewContainer.transform, false);
+            var optionView = Instantiate(_optionViewPrefab);
+            optionView.transform.SetParent(_optionViewContainer.transform, false);
             optionView.transform.SetAsLastSibling();
             optionView.OnOptionSelected = OptionViewWasSelected;
-            optionViews.Add(optionView);
+            _optionViews.Add(optionView);
             return optionView;
         }
 
@@ -115,21 +116,21 @@ namespace CryptoQuest
 
             IEnumerator OptionViewWasSelectedInternal(DialogueOption selectedOption)
             {
-                yield return StartCoroutine(Effects.FadeAlpha(canvasGroup, 1, 0, fadeTime));
-                OnOptionSelected(selectedOption.DialogueOptionID);
+                yield return StartCoroutine(Effects.FadeAlpha(_canvasGroup, 1, 0, _fadeTime));
+                _OnOptionSelected(selectedOption.DialogueOptionID);
             }
         }
 
         public override void DialogueComplete()
         {
-            if (canvasGroup.alpha > 0)
+            if (_canvasGroup.alpha > 0)
             {
                 StopAllCoroutines();
-                lastSeenLine = null;
-                OnOptionSelected = null;
-                canvasGroup.interactable = false;
-                canvasGroup.blocksRaycasts = false;
-                StartCoroutine(Effects.FadeAlpha(canvasGroup, canvasGroup.alpha, 0, fadeTime));
+                _lastSeenLine = null;
+                _OnOptionSelected = null;
+                _canvasGroup.interactable = false;
+                _canvasGroup.blocksRaycasts = false;
+                StartCoroutine(Effects.FadeAlpha(_canvasGroup, _canvasGroup.alpha, 0, _fadeTime));
             }
         }
     }

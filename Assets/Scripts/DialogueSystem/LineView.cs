@@ -4,61 +4,62 @@ using System.Collections.Generic;
 using CryptoQuest.Input;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Yarn.Unity;
 
-namespace CryptoQuest
+namespace CryptoQuest.DialogueSystem
 {
-    public class CQLineView : DialogueViewBase
+    public class LineView : DialogueViewBase
     {
         [SerializeField] private InputMediatorSO _inputMediator;
 
         [SerializeField]
-        private CanvasGroup canvasGroup;
+        private CanvasGroup _canvasGroup;
 
         [SerializeField]
-        private bool useFadeEffect = true;
-
-        [SerializeField]
-        [Min(0)]
-        private float fadeInTime = 0.25f;
+        private bool _useFadeEffect = true;
 
         [SerializeField]
         [Min(0)]
-        private float fadeOutTime = 0.05f;
-
-        [SerializeField]
-        private TextMeshProUGUI lineText = null;
-
-        [SerializeField]
-        [UnityEngine.Serialization.FormerlySerializedAs("showCharacterName")]
-        private bool showCharacterNameInLineView = true;
-
-        [SerializeField]
-        private TextMeshProUGUI characterNameText = null;
-
-        [SerializeField]
-        GameObject _characterNameContainer = null;
-
-        [SerializeField]
-        private bool useTypewriterEffect = false;
-
-        [SerializeField]
-        private UnityEngine.Events.UnityEvent onCharacterTyped;
+        private float _fadeInTime = 0.25f;
 
         [SerializeField]
         [Min(0)]
-        private float typewriterEffectSpeed = 0f;
+        private float _fadeOutTime = 0.05f;
+
+        [SerializeField]
+        private TextMeshProUGUI _lineText = null;
+
+        [SerializeField]
+        private bool _showCharacterNameInLineView = true;
+
+        [SerializeField]
+        private TextMeshProUGUI _characterNameText = null;
+
+        [SerializeField]
+        private GameObject _characterNameContainer = null;
+
+        [SerializeField]
+        private bool _useTypewriterEffect = false;
+
+        [SerializeField]
+        private UnityEngine.Events.UnityEvent _onCharacterTyped;
 
         [SerializeField]
         [Min(0)]
-        private float holdTime = 1f;
+        private float _typewriterEffectSpeed = 0f;
+
+        [FormerlySerializedAs("holdTime")]
+        [SerializeField]
+        [Min(0)]
+        private float _holdTime = 1f;
 
         [SerializeField]
-        private bool autoAdvance = false;
+        private bool _autoAdvance = false;
 
-        LocalizedLine currentLine = null;
+        private LocalizedLine currentLine = null;
 
-        Effects.CoroutineInterruptToken currentStopToken = new Effects.CoroutineInterruptToken();
+        private Effects.CoroutineInterruptToken currentStopToken = new();
 
         private void OnEnable()
         {
@@ -77,13 +78,13 @@ namespace CryptoQuest
 
         private void Awake()
         {
-            canvasGroup.alpha = 0;
-            canvasGroup.blocksRaycasts = false;
+            _canvasGroup.alpha = 0;
+            _canvasGroup.blocksRaycasts = false;
         }
 
         private void Reset()
         {
-            canvasGroup = GetComponentInParent<CanvasGroup>();
+            _canvasGroup = GetComponentInParent<CanvasGroup>();
         }
 
         public override void DismissLine(Action onDismissalComplete)
@@ -95,18 +96,18 @@ namespace CryptoQuest
 
         private IEnumerator DismissLineInternal(Action onDismissalComplete)
         {
-            var interactable = canvasGroup.interactable;
-            canvasGroup.interactable = false;
+            var interactable = _canvasGroup.interactable;
+            _canvasGroup.interactable = false;
 
-            if (useFadeEffect)
+            if (_useFadeEffect)
             {
-                yield return Effects.FadeAlpha(canvasGroup, 1, 0, fadeOutTime, currentStopToken);
+                yield return Effects.FadeAlpha(_canvasGroup, 1, 0, _fadeOutTime, currentStopToken);
                 currentStopToken.Complete();
             }
 
-            canvasGroup.alpha = 0;
-            canvasGroup.blocksRaycasts = false;
-            canvasGroup.interactable = interactable;
+            _canvasGroup.alpha = 0;
+            _canvasGroup.blocksRaycasts = false;
+            _canvasGroup.interactable = interactable;
 
             if (onDismissalComplete != null)
             {
@@ -119,22 +120,22 @@ namespace CryptoQuest
             currentLine = dialogueLine;
             StopAllCoroutines();
 
-            lineText.gameObject.SetActive(true);
-            canvasGroup.gameObject.SetActive(true);
+            _lineText.gameObject.SetActive(true);
+            _canvasGroup.gameObject.SetActive(true);
 
             int length;
 
-            if (characterNameText == null)
+            if (_characterNameText == null)
             {
-                if (showCharacterNameInLineView)
+                if (_showCharacterNameInLineView)
                 {
-                    lineText.text = dialogueLine.Text.Text;
+                    _lineText.text = dialogueLine.Text.Text;
                     length = dialogueLine.Text.Text.Length;
                 }
                 else
                 {
                     _characterNameContainer.SetActive(false);
-                    lineText.text = dialogueLine.TextWithoutCharacterName.Text;
+                    _lineText.text = dialogueLine.TextWithoutCharacterName.Text;
                     length = dialogueLine.TextWithoutCharacterName.Text.Length;
                 }
             }
@@ -144,11 +145,11 @@ namespace CryptoQuest
                 length = dialogueLine.TextWithoutCharacterName.Text.Length;
             }
 
-            lineText.maxVisibleCharacters = length;
+            _lineText.maxVisibleCharacters = length;
 
-            canvasGroup.alpha = 1;
-            canvasGroup.interactable = true;
-            canvasGroup.blocksRaycasts = true;
+            _canvasGroup.alpha = 1;
+            _canvasGroup.interactable = true;
+            _canvasGroup.blocksRaycasts = true;
 
             onInterruptLineFinished();
         }
@@ -168,17 +169,17 @@ namespace CryptoQuest
 
             currentStopToken.Complete();
 
-            lineText.maxVisibleCharacters = int.MaxValue;
+            _lineText.maxVisibleCharacters = int.MaxValue;
 
-            canvasGroup.alpha = 1f;
-            canvasGroup.blocksRaycasts = true;
+            _canvasGroup.alpha = 1f;
+            _canvasGroup.blocksRaycasts = true;
 
-            if (holdTime > 0)
+            if (_holdTime > 0)
             {
-                yield return new WaitForSeconds(holdTime);
+                yield return new WaitForSeconds(_holdTime);
             }
 
-            if (!autoAdvance)
+            if (!_autoAdvance)
             {
                 yield break;
             }
@@ -222,53 +223,53 @@ namespace CryptoQuest
 
         private IEnumerator PresentLine(LocalizedLine dialogueLine)
         {
-            lineText.gameObject.SetActive(true);
-            canvasGroup.gameObject.SetActive(true);
+            _lineText.gameObject.SetActive(true);
+            _canvasGroup.gameObject.SetActive(true);
 
-            if (characterNameText != null)
+            if (_characterNameText != null)
             {
                 SetCharacterName(dialogueLine);
             }
             else
             {
                 _characterNameContainer.SetActive(false);
-                if (showCharacterNameInLineView)
+                if (_showCharacterNameInLineView)
                 {
-                    lineText.text = dialogueLine.Text.Text;
+                    _lineText.text = dialogueLine.Text.Text;
                 }
                 else
                 {
-                    lineText.text = dialogueLine.TextWithoutCharacterName.Text;
+                    _lineText.text = dialogueLine.TextWithoutCharacterName.Text;
                 }
             }
 
-            if (useTypewriterEffect)
+            if (_useTypewriterEffect)
             {
-                lineText.maxVisibleCharacters = 0;
+                _lineText.maxVisibleCharacters = 0;
             }
             else
             {
-                lineText.maxVisibleCharacters = int.MaxValue;
+                _lineText.maxVisibleCharacters = int.MaxValue;
             }
 
-            if (useFadeEffect)
+            if (_useFadeEffect)
             {
-                yield return StartCoroutine(Effects.FadeAlpha(canvasGroup, 0, 1, fadeInTime, currentStopToken));
+                yield return StartCoroutine(Effects.FadeAlpha(_canvasGroup, 0, 1, _fadeInTime, currentStopToken));
                 if (currentStopToken.WasInterrupted)
                 {
                     yield break;
                 }
             }
 
-            if (useTypewriterEffect)
+            if (_useTypewriterEffect)
             {
-                canvasGroup.alpha = 1f;
-                canvasGroup.interactable = true;
-                canvasGroup.blocksRaycasts = true;
+                _canvasGroup.alpha = 1f;
+                _canvasGroup.interactable = true;
+                _canvasGroup.blocksRaycasts = true;
                 yield return Effects.Typewriter(
-                    lineText,
-                    typewriterEffectSpeed,
-                    () => onCharacterTyped.Invoke(),
+                    _lineText,
+                    _typewriterEffectSpeed,
+                    () => _onCharacterTyped.Invoke(),
                     currentStopToken);
                 if (currentStopToken.WasInterrupted)
                 {
@@ -280,10 +281,10 @@ namespace CryptoQuest
         private void SetCharacterName(LocalizedLine dialogueLine)
         {
             _characterNameContainer.SetActive(true);
-            characterNameText.text = dialogueLine.CharacterName;
+            _characterNameText.text = dialogueLine.CharacterName;
             if (string.IsNullOrEmpty(dialogueLine.CharacterName))
                 _characterNameContainer.SetActive(false);
-            lineText.text = dialogueLine.TextWithoutCharacterName.Text;
+            _lineText.text = dialogueLine.TextWithoutCharacterName.Text;
         }
     }
 }
