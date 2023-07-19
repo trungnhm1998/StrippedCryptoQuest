@@ -1,18 +1,19 @@
 using CryptoQuest.Gameplay.Quest.Dialogue.ScriptableObject;
 using CryptoQuest.Input;
-using IndiGames.Core.Events.ScriptableObjects;
 using UnityEngine;
 using UnityEngine.Localization.Components;
+using UnityEngine.UI;
 
-namespace CryptoQuest.UI.Dialogs
+namespace CryptoQuest.UI.Dialogs.Dialogue
 {
     public class UIDialogue : ModalWindow<UIDialogue>
     {
         [Header("Child Components")]
         [SerializeField] private InputMediatorSO _inputMediator;
 
-        [SerializeField] private VoidEventChannelSO _onDialogueEndedEvent;
         [SerializeField] private LocalizeStringEvent _dialogueLabel;
+        [SerializeField] private GameObject _npcNameTag;
+        [SerializeField] private Text _npcName;
 
         private DialogueScriptableObject _dialogue;
         private int _currentDialogueIndex = 0;
@@ -30,6 +31,7 @@ namespace CryptoQuest.UI.Dialogs
         protected override void OnBeforeShow()
         {
             _inputMediator.EnableDialogueInput();
+            DisplayNPCName();
             UpdateDialogueWithIndex(_currentDialogueIndex);
         }
 
@@ -59,14 +61,18 @@ namespace CryptoQuest.UI.Dialogs
         public override UIDialogue Close()
         {
             _inputMediator.EnableMapGameplayInput();
-            _onDialogueEndedEvent.RaiseEvent();
             gameObject.SetActive(false);
             return base.Close();
         }
 
-        protected override void CheckIgnorableForClose()
+        protected override void CheckIgnorableForClose() { }
+
+        private void DisplayNPCName()
         {
-            return;
+            if (_dialogue.NPCName == null)
+                _npcNameTag.SetActive(false);
+            else
+                _npcName.text = _dialogue.NPCName;
         }
     }
 }
