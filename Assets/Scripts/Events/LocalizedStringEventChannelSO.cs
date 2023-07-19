@@ -1,10 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Localization;
 
-namespace CryptoQuest
+namespace CryptoQuest.Events
 {
     [CreateAssetMenu(menuName = "Crypto Quest/Events/Localized String Event Channel")]
     public class LocalizedStringEventChannelSO : ScriptableObject

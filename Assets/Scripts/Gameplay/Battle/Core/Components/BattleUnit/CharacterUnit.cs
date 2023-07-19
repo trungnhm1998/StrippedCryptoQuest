@@ -1,10 +1,6 @@
-using UnityEngine;
-using System.Collections;
-using IndiGames.GameplayAbilitySystem.AttributeSystem.Components;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
-using IndiGames.GameplayAbilitySystem.AbilitySystem;
 
-namespace CryptoQuest.Gameplay.Battle
+namespace CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit
 {
     public class CharacterUnit : BattleUnitBase
     {

@@ -1,8 +1,8 @@
-using UnityEngine;
 using System.Collections;
-using IndiGames.Core.Events.ScriptableObjects;
+using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Events;
+using UnityEngine;
 
-namespace CryptoQuest.Gameplay.Battle
+namespace CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit
 {
     public class HeroUnit : CharacterUnit
     {

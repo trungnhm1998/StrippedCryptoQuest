@@ -1,9 +1,9 @@
-﻿using UnityEngine;
-using UnityEngine.UI;
+﻿using IndiGames.GameplayAbilitySystem.AttributeSystem;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
-using IndiGames.GameplayAbilitySystem.AttributeSystem;
+using UnityEngine;
+using UnityEngine.UI;
 
-namespace CryptoQuest.UI.Battle
+namespace CryptoQuest.UI.Battle.CharacterInfo
 {
     public class UIHeroInfo : CharacterInfoBase
     {

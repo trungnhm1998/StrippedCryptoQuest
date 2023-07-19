@@ -1,19 +1,12 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
+using CryptoQuest.Events;
+using DG.Tweening;
 using IndiGames.Core.Events.ScriptableObjects;
-using IndiGames.Core.SceneManagementSystem.ScriptableObjects;
-using IndiGames.Core.UI.FadeController;
 using UnityEngine;
 using UnityEngine.Localization;
-using DG.Tweening;
-using IndiGames.Core.SceneManagementSystem.Events.ScriptableObjects;
-using TMPro;
 using UnityEngine.Localization.Components;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
-namespace CryptoQuest
+namespace CryptoQuest.UI.MapName
 {
     public class UIMapName : MonoBehaviour
     {

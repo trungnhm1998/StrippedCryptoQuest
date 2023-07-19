@@ -1,9 +1,9 @@
-﻿using UnityEngine;
-using UnityEngine.Events;
+﻿using System;
 using System.Collections.Generic;
-using System;
+using UnityEngine;
+using UnityEngine.Events;
 
-namespace CryptoQuest.Gameplay.Battle
+namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Events
 {
     [CreateAssetMenu(fileName = "PagingDialogEventChannelSO", menuName = "Gameplay/Battle/Events/Paging Dialog Event")]
     public class PagingDialogEventChannelSO : ScriptableObject

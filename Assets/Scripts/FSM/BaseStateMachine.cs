@@ -1,6 +1,8 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System;
+using CryptoQuest.FSM.ScriptableObjects;
+using CryptoQuest.FSM.ScriptableObjects.Base;
 #if UNITY_EDITOR
     using System.Linq;
     using System.IO;

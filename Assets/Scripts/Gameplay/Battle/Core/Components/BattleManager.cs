@@ -1,10 +1,14 @@
-using UnityEngine;
-using System.Collections.Generic;
 using System.Collections;
+using System.Collections.Generic;
 using CryptoQuest.FSM;
+using CryptoQuest.FSM.ScriptableObjects;
+using CryptoQuest.Gameplay.Battle.Core.Components.BattleSpawner;
+using CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit;
+using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects;
 using IndiGames.Core.Events.ScriptableObjects;
+using UnityEngine;
 
-namespace CryptoQuest.Gameplay.Battle
+namespace CryptoQuest.Gameplay.Battle.Core.Components
 {
     public class BattleManager : MonoBehaviour
     {

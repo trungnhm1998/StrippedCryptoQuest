@@ -1,13 +1,7 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using CryptoQuest.Character.MonoBehaviours;
-using CryptoQuest.Character.Movement;
-using IndiGames.Core.EditorTools.Attributes.ReadOnlyAttribute;
-using UnityEditor;
 using UnityEngine;
 
-namespace CryptoQuest
+namespace CryptoQuest.Character
 {
     public class NpcMovement : CharacterBehaviour
     {
@@ -66,7 +60,7 @@ namespace CryptoQuest
             _currentSpeed = _speed;
             SetFacingDirection(_destination.localPosition - gameObject.transform.localPosition);
         }
-        private void OnTriggerEnter2D(Collider2D other)
+        private void OnTriggerStay2D(Collider2D other)
         {
             if (other.CompareTag("Player"))
             {

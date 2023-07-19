@@ -1,9 +1,7 @@
-using UnityEngine;
 using IndiGames.GameplayAbilitySystem.AbilitySystem;
-using IndiGames.GameplayAbilitySystem.Implementation.EffectAbility;
-using IndiGames.GameplayAbilitySystem.Implementation.EffectAbility.ScriptableObjects;
+using UnityEngine;
 
-namespace CryptoQuest.Gameplay.Battle
+namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Skills
 {
     [CreateAssetMenu(fileName = "PassiveSkill", menuName = "Gameplay/Battle/Abilities/Passive Ability")]
     public class PassiveSkillSO : CQSkillSO

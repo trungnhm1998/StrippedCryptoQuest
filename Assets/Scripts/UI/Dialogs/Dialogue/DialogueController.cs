@@ -2,7 +2,7 @@ using CryptoQuest.Events.UI;
 using CryptoQuest.Gameplay.Quest.Dialogue.ScriptableObject;
 using UnityEngine;
 
-namespace CryptoQuest.UI.Dialogs
+namespace CryptoQuest.UI.Dialogs.Dialogue
 {
     public class DialogueController : AbstractDialogController<UIDialogue>
     {
