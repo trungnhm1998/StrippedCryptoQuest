@@ -1,0 +1,126 @@
+using System.Collections;
+using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data;
+using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.TargetTypes;
+using IndiGames.GameplayAbilitySystem.AbilitySystem;
+using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
+using IndiGames.GameplayAbilitySystem.AttributeSystem;
+using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
+using UnityEngine;
+using ILogger = CryptoQuest.Gameplay.Battle.Core.Components.Logger.ILogger;
+
+namespace CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit
+{
+    public class BattleUnitBase : MonoBehaviour, IBattleUnit
+    {
+        public AbilitySystemBehaviour Owner {get; set;}
+        public BattleTeam OpponentTeam {get; set;}
+        public BattleTeam OwnerTeam {get; set;}
+        public bool IsDead => _isDead;
+        public virtual AbstractAbility NormalAttack {get; protected set;}
+
+        [SerializeField] protected AttributeScriptableObject _hpAttribute;
+
+        [field: SerializeField]
+        public TargetContainterSO TargetContainer { get; private set; }
+        [field: SerializeField]
+        public CharacterDataSO UnitData { get; set; }
+
+        public AbstractAbility SelectedSkill { get; protected set; }
+
+        public ILogger Logger { get; protected set; }
+
+        protected BattleManager _battleManager;
+        protected bool _isDead;
+
+        public virtual void Init(BattleTeam team, AbilitySystemBehaviour owner)
+        {
+            TargetContainer.Targets.Clear();
+            OwnerTeam = team;
+            Owner = owner;
+            Logger = GetComponent<ILogger>();
+        }
+
+        protected virtual void OnEnable()
+        {
+            _hpAttribute.ValueChangeEvent += OnHPChanged;
+        }
+
+        protected virtual void OnDisable()
+        {
+            _hpAttribute.ValueChangeEvent -= OnHPChanged;
+        }
+
+        public virtual void SetOpponentTeams(BattleTeam opponentTeam)
+        {
+            OpponentTeam = opponentTeam;
+        }
+
+        protected virtual void SetDefaultTarget()
+        {
+            if (OpponentTeam == null || OpponentTeam.Members.Count <= 0) return;
+
+            var currrentTargets = TargetContainer.Targets;
+            if (currrentTargets.Count > 0) return;
+
+            TargetContainer.SetSingleTarget(OpponentTeam.Members[0]);
+        }
+
+        public virtual void SelectSingleTarget(AbilitySystemBehaviour target)
+        {
+            if (OpponentTeam.Members.FindIndex(x => x == target) < 0) return;
+            TargetContainer.SetSingleTarget(target);
+        }
+
+        public virtual void SelectAllTarget()
+        {
+            TargetContainer.SetMultipleTargets(OpponentTeam.Members);
+        }
+
+        public void SelectSkill(AbstractAbility selectedSkill)
+        {
+            SelectedSkill = selectedSkill;
+        }
+
+        public virtual IEnumerator Prepare()
+        {
+            yield return new WaitWhile(() => SelectedSkill == null);
+            yield return new WaitWhile(HasNoTarget);
+        }
+
+        public virtual IEnumerator Execute()
+        {
+            Owner.TryActiveAbility(SelectedSkill);
+            Logger.ClearLogs();
+            yield return null;
+        }
+        
+        public virtual IEnumerator Resolve()
+        {
+            SelectedSkill = null;
+            TargetContainer.Targets.Clear();
+            yield return null;
+        }
+
+        private void OnHPChanged(AttributeScriptableObject.AttributeEventArgs args)
+        {
+            if (Owner == null || args.System != Owner.AttributeSystem) return;
+
+            Owner.AttributeSystem.GetAttributeValue(_hpAttribute, out AttributeValue attributValue);
+            if (attributValue.CurrentValue > 0 || _isDead) return;
+
+            _isDead = true;
+            OwnerTeam.RemoveUnit(this);
+            gameObject.SetActive(false);
+        }
+
+        public virtual void OnDeath()
+        {
+            Destroy(gameObject);
+        }
+
+        private bool HasNoTarget()
+        {
+            return TargetContainer.Targets.Count <= 0;
+        }
+    }
+}
