@@ -10,6 +10,7 @@ namespace CryptoQuest.UI.Dialogs.Dialogue
     {
         [Header("Child Components")]
         [SerializeField] private InputMediatorSO _inputMediator;
+
         [SerializeField] private LocalizeStringEvent _dialogueLabel;
         [SerializeField] private GameObject _npcNameTag;
         [SerializeField] private Text _npcName;
