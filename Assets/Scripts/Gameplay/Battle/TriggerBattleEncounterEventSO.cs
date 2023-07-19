@@ -11,6 +11,12 @@ namespace CryptoQuest.Gameplay.Battle
 
         public void Raise(BattleDataSO battleData)
         {
+            if (EncounterBattle == null)
+            {
+                Debug.LogWarning($"Event was raised on {name} but no one was listening.");
+                return;
+            }
+
             EncounterBattle.Invoke(battleData);
         }
     }
