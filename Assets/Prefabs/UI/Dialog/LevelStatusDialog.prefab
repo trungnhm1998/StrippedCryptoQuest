@@ -381,6 +381,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8759938187778997364}
   - component: {fileID: 208887386734249158}
+  - component: {fileID: 5862169707397844982}
   m_Layer: 5
   m_Name: LevelStatusDialog
   m_TagString: Untagged
@@ -425,6 +426,40 @@ MonoBehaviour:
   _defaultSelection: {fileID: 0}
   _currentSelection: {fileID: 0}
   _mouseSelection: {fileID: 0}
+--- !u!114 &5862169707397844982
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3899739026275214210}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39cf2a74c6421e34a825eb4b52a475c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 3537686293215316460}
+  headerText: {fileID: 0}
+  bodyText: {fileID: 0}
+  closeButton: {fileID: 0}
+  backgroundButton: {fileID: 0}
+  buttonsRoot: {fileID: 0}
+  _inputMediator: {fileID: 11400000, guid: 1fb61cdb72f0a484f8e4db68e2011977, type: 2}
+  _defaultSelectButton: {fileID: 4899500312240695118}
+  _levelStatusTextPrefab: {fileID: 3487835041671616854, guid: 6f497d390471eac45ac4b5e6635c1a19, type: 3}
+  _levelStatusesContainerTransform: {fileID: 4381432382050142843}
+  _noLevelUpTargetString:
+    m_TableReference:
+      m_TableCollectionName: GUID:11dbab3c4ff052d48b61c8c89ad19c61
+    m_TableEntryReference:
+      m_KeyId: 0
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!1 &4582801244802021442
 GameObject:
   m_ObjectHideFlags: 0

@@ -11,7 +11,8 @@ GameObject:
   - component: {fileID: 384322352476933200}
   - component: {fileID: 5944360022351671184}
   - component: {fileID: 5023043077222777069}
-  - component: {fileID: 1532489350515792497}
+  - component: {fileID: 5276172003169345280}
+  - component: {fileID: 3487835041671616854}
   m_Layer: 5
   m_Name: LevelStatusText
   m_TagString: Untagged
@@ -136,7 +137,7 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!114 &1532489350515792497
+--- !u!114 &5276172003169345280
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -150,13 +151,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_StringReference:
     m_TableReference:
-      m_TableCollectionName: GUID:f4555d339f9b76141bffa3a6a012a01a
+      m_TableCollectionName: GUID:11dbab3c4ff052d48b61c8c89ad19c61
     m_TableEntryReference:
-      m_KeyId: 40514146304
+      m_KeyId: 1074201076486144
       m_Key: 
     m_FallbackState: 0
     m_WaitForCompletion: 0
-    m_LocalVariables: []
+    m_LocalVariables:
+    - name: variable
+      variable:
+        rid: 5368587953791827970
   m_FormatArguments: []
   m_UpdateString:
     m_PersistentCalls:
@@ -172,7 +176,26 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
-        m_CallState: 1
+        m_CallState: 2
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: 5368587953791827970
+      type: {class: ObjectVariable, ns: UnityEngine.Localization.SmartFormat.PersistentVariables, asm: Unity.Localization}
+      data:
+        m_Value: {fileID: 3487835041671616854}
+--- !u!114 &3487835041671616854
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2820993507433147887}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e291ba0a015cf348996916586307f5d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  text: {fileID: 5023043077222777069}
+  <DefaultCharacterName>k__BackingField: def
+  stringEvent: {fileID: 5276172003169345280}
