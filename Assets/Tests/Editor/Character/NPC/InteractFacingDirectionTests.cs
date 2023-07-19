@@ -1,3 +1,4 @@
+using CryptoQuest.Character;
 using CryptoQuest.Character.MonoBehaviours;
 using CryptoQuest.Character.Movement;
 using NUnit.Framework;

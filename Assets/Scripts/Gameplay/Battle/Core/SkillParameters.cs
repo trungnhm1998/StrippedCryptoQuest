@@ -1,7 +1,7 @@
-using IndiGames.GameplayAbilitySystem.AbilitySystem;
 using System;
+using IndiGames.GameplayAbilitySystem.AbilitySystem;
 
-namespace CryptoQuest.Gameplay.Battle
+namespace CryptoQuest.Gameplay.Battle.Core
 {
     [Serializable]
     public class SkillParameters : AbilityParameters

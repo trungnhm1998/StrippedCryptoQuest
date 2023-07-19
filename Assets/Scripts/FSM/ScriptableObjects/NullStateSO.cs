@@ -1,7 +1,7 @@
+using CryptoQuest.FSM.ScriptableObjects.Base;
 using UnityEngine;
-using System.Collections.Generic;
 
-namespace CryptoQuest.FSM
+namespace CryptoQuest.FSM.ScriptableObjects
 {
     [CreateAssetMenu(fileName = "NullStateSO", menuName = "Gameplay/Battle/FSM/States/Null State")]
     public class NullStateSO : BaseStateSO

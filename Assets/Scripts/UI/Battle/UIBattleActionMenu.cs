@@ -6,13 +6,17 @@ using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
 using IndiGames.GameplayAbilitySystem.AbilitySystem;
 using IndiGames.Core.Events.ScriptableObjects;
 using CryptoQuest.GameHandler;
+using CryptoQuest.Gameplay.Battle.Core.Components;
+using CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit;
+using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects;
+using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Events;
 
 namespace CryptoQuest.UI.Battle
 {
     public class UIBattleActionMenu : MonoBehaviour
     {
         [SerializeField] private BattleBus _battleBus;
-        [SerializeField] private BattleActionHandler[] _normalAttackChain;
+        [SerializeField] private BattleActionHandler.BattleActionHandler[] _normalAttackChain;
 
         [Header("Events")]
         [SerializeField] private BattleUnitEventChannelSO _heroTurnEventChannel;
@@ -47,7 +51,7 @@ namespace CryptoQuest.UI.Battle
             _currentUnitName.text = unit.UnitData.DisplayName;
         }
 
-        private void SetupChain(BattleActionHandler[] chain)
+        private void SetupChain(BattleActionHandler.BattleActionHandler[] chain)
         {
             for (int i = 1; i < chain.Length; i++) 
             {

@@ -1,18 +1,11 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
+using CryptoQuest.Events;
 using IndiGames.Core.Events.ScriptableObjects;
 using IndiGames.Core.SceneManagementSystem.Events.ScriptableObjects;
 using IndiGames.Core.SceneManagementSystem.ScriptableObjects;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.Localization;
-using UnityEngine.Localization.Settings;
-using UnityEngine.Localization.Tables;
-using UnityEngine.Serialization;
-using UnityEngine.SocialPlatforms;
 
-namespace CryptoQuest
+namespace CryptoQuest.UI.MapName
 {
     public class MapNameController : MonoBehaviour
     {

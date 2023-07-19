@@ -1,7 +1,7 @@
-using UnityEngine;
 using System.Collections;
+using CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit.SkillSelectStrategies;
 
-namespace CryptoQuest.Gameplay.Battle
+namespace CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit
 {
     public class MonsterUnit : CharacterUnit
     {
