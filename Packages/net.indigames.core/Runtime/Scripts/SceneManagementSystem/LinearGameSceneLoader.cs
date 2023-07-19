@@ -88,13 +88,19 @@ namespace IndiGames.Core.SceneManagementSystem
 #if UNITY_EDITOR
         private void EditorColdBootLoadingRequested(SceneScriptableObject currentOpenSceneInEditor)
         {
+           StartCoroutine(CoLoadScene(currentOpenSceneInEditor)); 
+        }
+        
+        private IEnumerator CoLoadScene(SceneScriptableObject currentOpenSceneInEditor)
+        {
             _currentLoadedScene = currentOpenSceneInEditor;
 
             if (_currentLoadedScene.SceneType == SceneScriptableObject.Type.Location)
             {
                 _gameplayManagerLoadingOperationHandle =
                     _gameplayManagerSceneSO.SceneReference.LoadSceneAsync(LoadSceneMode.Additive, true);
-                _gameplayManagerLoadingOperationHandle.WaitForCompletion();
+                yield return _gameplayManagerLoadingOperationHandle; 
+                if (!_gameplayManagerLoadingOperationHandle.Result.Scene.IsValid()) yield break;
                 _gameplayManagerSceneInstance = _gameplayManagerLoadingOperationHandle.Result;
             }
 
