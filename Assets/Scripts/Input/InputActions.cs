@@ -400,11 +400,11 @@ namespace CryptoQuest.Input
                 },
                 {
                     ""name"": """",
-                    ""id"": ""9e67d935-b650-461c-909b-efec4b6d430d"",
-                    ""path"": ""*/{Cancel}"",
+                    ""id"": ""688063d4-e984-4e34-b7a8-d2efb9a177f7"",
+                    ""path"": ""<SwitchProControllerHID>/buttonSouth"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": ""Gamepad;MnK"",
+                    ""groups"": ""Gamepad"",
                     ""action"": ""Cancel"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -428,17 +428,6 @@ namespace CryptoQuest.Input
                     ""processors"": """",
                     ""groups"": ""MnK"",
                     ""action"": ""Point"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""1e046e57-9644-41aa-b3a6-0fc1fafd87fa"",
-                    ""path"": ""*/{Submit}"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""MnK;Gamepad"",
-                    ""action"": ""Submit"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -631,12 +620,56 @@ namespace CryptoQuest.Input
                 },
                 {
                     ""name"": """",
+                    ""id"": ""8d8210f0-1755-41f8-9ccd-23f9a1b3c1fb"",
+                    ""path"": ""<Keyboard>/enter"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""MnK"",
+                    ""action"": ""Submit"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""26d544f8-73f6-4dc0-b2a9-270b56973299"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""MnK"",
+                    ""action"": ""Submit"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""234b8f00-033c-4724-8ef1-407f8aa5d312"",
                     ""path"": ""<Keyboard>/numpadEnter"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""MnK"",
                     ""action"": ""Submit"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1e046e57-9644-41aa-b3a6-0fc1fafd87fa"",
+                    ""path"": ""*/{Submit}"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""MnK;Gamepad"",
+                    ""action"": ""Submit"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9e67d935-b650-461c-909b-efec4b6d430d"",
+                    ""path"": ""*/{Cancel}"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad;MnK"",
+                    ""action"": ""Cancel"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -692,7 +725,7 @@ namespace CryptoQuest.Input
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Inventory"",
+                    ""name"": ""MainMenu"",
                     ""type"": ""Button"",
                     ""id"": ""772cec36-898a-474f-882a-b76e6d11c41d"",
                     ""expectedControlType"": ""Button"",
@@ -817,7 +850,7 @@ namespace CryptoQuest.Input
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
-                    ""action"": ""Inventory"",
+                    ""action"": ""MainMenu"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -828,7 +861,7 @@ namespace CryptoQuest.Input
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""MnK"",
-                    ""action"": ""Inventory"",
+                    ""action"": ""MainMenu"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -1140,7 +1173,7 @@ namespace CryptoQuest.Input
             m_MapGameplay_MoveLeft = m_MapGameplay.FindAction("MoveLeft", throwIfNotFound: true);
             m_MapGameplay_MoveRight = m_MapGameplay.FindAction("MoveRight", throwIfNotFound: true);
             m_MapGameplay_Interact = m_MapGameplay.FindAction("Interact", throwIfNotFound: true);
-            m_MapGameplay_Inventory = m_MapGameplay.FindAction("Inventory", throwIfNotFound: true);
+            m_MapGameplay_MainMenu = m_MapGameplay.FindAction("MainMenu", throwIfNotFound: true);
             m_MapGameplay_Pause = m_MapGameplay.FindAction("Pause", throwIfNotFound: true);
             // Dialogues
             m_Dialogues = asset.FindActionMap("Dialogues", throwIfNotFound: true);
@@ -1322,7 +1355,7 @@ namespace CryptoQuest.Input
         private readonly InputAction m_MapGameplay_MoveLeft;
         private readonly InputAction m_MapGameplay_MoveRight;
         private readonly InputAction m_MapGameplay_Interact;
-        private readonly InputAction m_MapGameplay_Inventory;
+        private readonly InputAction m_MapGameplay_MainMenu;
         private readonly InputAction m_MapGameplay_Pause;
         public struct MapGameplayActions
         {
@@ -1333,7 +1366,7 @@ namespace CryptoQuest.Input
             public InputAction @MoveLeft => m_Wrapper.m_MapGameplay_MoveLeft;
             public InputAction @MoveRight => m_Wrapper.m_MapGameplay_MoveRight;
             public InputAction @Interact => m_Wrapper.m_MapGameplay_Interact;
-            public InputAction @Inventory => m_Wrapper.m_MapGameplay_Inventory;
+            public InputAction @MainMenu => m_Wrapper.m_MapGameplay_MainMenu;
             public InputAction @Pause => m_Wrapper.m_MapGameplay_Pause;
             public InputActionMap Get() { return m_Wrapper.m_MapGameplay; }
             public void Enable() { Get().Enable(); }
@@ -1359,9 +1392,9 @@ namespace CryptoQuest.Input
                 @Interact.started += instance.OnInteract;
                 @Interact.performed += instance.OnInteract;
                 @Interact.canceled += instance.OnInteract;
-                @Inventory.started += instance.OnInventory;
-                @Inventory.performed += instance.OnInventory;
-                @Inventory.canceled += instance.OnInventory;
+                @MainMenu.started += instance.OnMainMenu;
+                @MainMenu.performed += instance.OnMainMenu;
+                @MainMenu.canceled += instance.OnMainMenu;
                 @Pause.started += instance.OnPause;
                 @Pause.performed += instance.OnPause;
                 @Pause.canceled += instance.OnPause;
@@ -1384,9 +1417,9 @@ namespace CryptoQuest.Input
                 @Interact.started -= instance.OnInteract;
                 @Interact.performed -= instance.OnInteract;
                 @Interact.canceled -= instance.OnInteract;
-                @Inventory.started -= instance.OnInventory;
-                @Inventory.performed -= instance.OnInventory;
-                @Inventory.canceled -= instance.OnInventory;
+                @MainMenu.started -= instance.OnMainMenu;
+                @MainMenu.performed -= instance.OnMainMenu;
+                @MainMenu.canceled -= instance.OnMainMenu;
                 @Pause.started -= instance.OnPause;
                 @Pause.performed -= instance.OnPause;
                 @Pause.canceled -= instance.OnPause;
@@ -1498,7 +1531,7 @@ namespace CryptoQuest.Input
             void OnMoveLeft(InputAction.CallbackContext context);
             void OnMoveRight(InputAction.CallbackContext context);
             void OnInteract(InputAction.CallbackContext context);
-            void OnInventory(InputAction.CallbackContext context);
+            void OnMainMenu(InputAction.CallbackContext context);
             void OnPause(InputAction.CallbackContext context);
         }
         public interface IDialoguesActions

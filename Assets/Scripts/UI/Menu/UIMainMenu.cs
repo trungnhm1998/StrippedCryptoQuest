@@ -17,17 +17,25 @@ namespace CryptoQuest.UI.Menu
 
         private void OnEnable()
         {
-            _inputMediator.MenuTabPressed += NavigateToNextMenu;
+            _inputMediator.OpenMainMenuEvent += Open;
+            _inputMediator.CancelEvent += Close;
         }
 
         private void OnDisable()
         {
-            _inputMediator.MenuTabPressed -= NavigateToNextMenu;
+            _inputMediator.OpenMainMenuEvent -= Open;
+            _inputMediator.CancelEvent -= Close;
         }
 
-        private void NavigateToNextMenu()
+        private void Open()
         {
-            Debug.Log("Next");
+            _contents.SetActive(true);
+            _inputMediator.EnableMenuInput();
+        }
+
+        private void Close()
+        {
+            _contents.SetActive(false);
         }
     }
 }
