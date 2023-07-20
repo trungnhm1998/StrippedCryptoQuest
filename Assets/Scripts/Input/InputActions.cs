@@ -44,7 +44,7 @@ namespace CryptoQuest.Input
                     ""id"": ""7ef12941-53a4-4cdc-82a3-b73a0685f64a"",
                     ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
-                    ""interactions"": ""Press"",
+                    ""interactions"": """",
                     ""initialStateCheck"": false
                 },
                 {

@@ -1,9 +1,11 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.UI;
 using CryptoQuest.Gameplay.Battle.Core.Components;
 using CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit;
 using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects;
 using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Events;
+using CryptoQuest.UI.Battle.CommandsMenu;
 using TMPro;
 
 namespace CryptoQuest.UI.Battle
@@ -18,6 +20,7 @@ namespace CryptoQuest.UI.Battle
 
         [Header("UI")]
         [SerializeField] private TextMeshProUGUI _currentUnitName;
+
         [SerializeField] private Button _firstButton;
 
         private BattleManager _battleManager;
@@ -48,7 +51,7 @@ namespace CryptoQuest.UI.Battle
 
         private void SetupChain(BattleActionHandler.BattleActionHandler[] chain)
         {
-            for (int i = 1; i < chain.Length; i++) 
+            for (int i = 1; i < chain.Length; i++)
             {
                 chain[i - 1].SetNext(chain[i]);
             }
@@ -56,31 +59,36 @@ namespace CryptoQuest.UI.Battle
 
         private void SelectFirstButton()
         {
-            _firstButton.Select(); 
+            _firstButton.Select();
         }
 
         public void OnNormalAttack()
         {
             _normalAttackChain[0].Handle(_currentUnit);
+            Debug.Log($"Normal Attack");
         }
 
         public void OnUseSkill()
         {
             // TODO: Implement use Skill flow here
+            Debug.Log($"Use Skill");
         }
-        
+
         public void OnUseItem()
         {
             // TODO: Implement use item flow here
+            Debug.Log($"Use Item");
         }
-        
+
         public void OnGuard()
         {
             // TODO: Implement guard flow here
+            Debug.Log($"Guard");
         }
-        
+
         public void OnEscape()
         {
+            Debug.Log($"Escape");
             _battleManager.OnEscape();
         }
     }
