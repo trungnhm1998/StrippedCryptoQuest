@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using CryptoQuest.Input;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace CryptoQuest.UI.Menu
 {
@@ -13,6 +14,7 @@ namespace CryptoQuest.UI.Menu
 
         [Header("Game Components")]
         [SerializeField] private GameObject _contents;
+        [SerializeField] private Button _defaultSelectMenu;
 
         private void OnEnable()
         {
@@ -28,8 +30,9 @@ namespace CryptoQuest.UI.Menu
 
         private void Open()
         {
-            _contents.SetActive(true);
             _inputMediator.EnableMenuInput();
+            _contents.SetActive(true);
+            _defaultSelectMenu.Select();
         }
 
         private void Close()
