@@ -44,7 +44,7 @@ namespace CryptoQuest.Input
                     ""id"": ""7ef12941-53a4-4cdc-82a3-b73a0685f64a"",
                     ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
-                    ""interactions"": ""Press"",
+                    ""interactions"": """",
                     ""initialStateCheck"": false
                 },
                 {
@@ -825,6 +825,17 @@ namespace CryptoQuest.Input
                     ""name"": """",
                     ""id"": ""84c0a4fd-9611-4cbc-9833-e1f01f487518"",
                     ""path"": ""<Keyboard>/enter"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""MnK"",
+                    ""action"": ""Interact"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0bbb4f87-6e4e-4efe-90e7-ab4a3b39668e"",
+                    ""path"": ""<Keyboard>/numpadEnter"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""MnK"",
