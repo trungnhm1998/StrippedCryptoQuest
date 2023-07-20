@@ -34,6 +34,7 @@ namespace CryptoQuest.UI.Menu
 
         private void Close()
         {
+            _inputMediator.EnableMapGameplayInput();
             _contents.SetActive(false);
         }
     }
