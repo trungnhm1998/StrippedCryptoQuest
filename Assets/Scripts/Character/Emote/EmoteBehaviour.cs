@@ -6,20 +6,16 @@ namespace CryptoQuest.Character
 {
     public class EmoteBehaviour : MonoBehaviour
     {
-        [SerializeField] private List<EmoteSO> _listEmote;
+        [SerializeField] private EmoteSO _emote;
         [SerializeField] private SpriteRenderer _currentEmote;
         [SerializeField] private Animator _animator;
-        
-        public void SetReactionIcon(TypeOfEmote type)
+        [SerializeField] private string _parameterAnimator;
+
+        public void SetReactionIcon()
         {
-            foreach (EmoteSO emote in _listEmote)
-            {
-                if (emote.TypeOfEmote == type)
-                {
-                    _currentEmote.sprite = emote.ReactionIcon;
-                    _animator.SetTrigger("ReactionEmote");
-                }
-            }
+            _currentEmote.sprite = _emote.ReactionIcon;
+            _animator.ResetTrigger(_parameterAnimator);
+            _animator.SetTrigger(_parameterAnimator);
         }
     }
 }
