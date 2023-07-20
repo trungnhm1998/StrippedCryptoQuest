@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace CryptoQuest
 {
-    public class LoadingScreen : MonoBehaviour
+    public class GameStateTransitionBehaviour : MonoBehaviour
     {
         [SerializeField] private Animator _animator;
         [SerializeField] private ScreenColorTransitionSO _screenColor;
