@@ -11,7 +11,7 @@ namespace CryptoQuest.Character
         [SerializeField] private Animator _animator;
         [SerializeField] private string _parameterAnimator;
 
-        public void SetReactionIcon()
+        public void ShowEmote()
         {
             _currentEmote.sprite = _emote.ReactionIcon;
             _animator.ResetTrigger(_parameterAnimator);
