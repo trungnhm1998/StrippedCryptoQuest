@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace CryptoQuest.UI.Battle.CommandsMenu
 {
-    public class CommandsScroll : MonoBehaviour
+    public class NavigationAutoScroll : MonoBehaviour
     {
         [Header("Events")]
         [SerializeField] private InputMediatorSO _inputMediator;
