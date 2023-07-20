@@ -23,6 +23,9 @@ namespace CryptoQuest.UI.Battle
 
         [SerializeField] private Button _firstButton;
 
+        [SerializeField] private Button[] _allButtons;
+        [SerializeField] private TextMeshProUGUI[] _allButtonTexts;
+
         private BattleManager _battleManager;
         private IBattleUnit _currentUnit;
 
@@ -45,6 +48,7 @@ namespace CryptoQuest.UI.Battle
         private void OnHeroTurn(IBattleUnit unit)
         {
             SelectFirstButton();
+            SetActiveCommandsMenu(true);
             _currentUnit = unit;
             _currentUnitName.text = unit.UnitData.DisplayName;
         }
@@ -65,31 +69,44 @@ namespace CryptoQuest.UI.Battle
         public void OnNormalAttack()
         {
             _normalAttackChain[0].Handle(_currentUnit);
-            Debug.Log($"Normal Attack");
+            SetActiveCommandsMenu(false);
         }
 
         public void OnUseSkill()
         {
             // TODO: Implement use Skill flow here
-            Debug.Log($"Use Skill");
+            SetActiveCommandsMenu(false);
         }
 
         public void OnUseItem()
         {
             // TODO: Implement use item flow here
-            Debug.Log($"Use Item");
+            SetActiveCommandsMenu(false);
         }
 
         public void OnGuard()
         {
             // TODO: Implement guard flow here
-            Debug.Log($"Guard");
+            SetActiveCommandsMenu(false);
         }
 
         public void OnEscape()
         {
-            Debug.Log($"Escape");
+            SetActiveCommandsMenu(false);
             _battleManager.OnEscape();
+        }
+
+        private void SetActiveCommandsMenu(bool isActive)
+        {
+            foreach (var button in _allButtons)
+            {
+                button.interactable = isActive;
+            }
+
+            foreach (var buttonText in _allButtonTexts)
+            {
+                buttonText.color = isActive ? Color.white : Color.gray;
+            }
         }
     }
 }
