@@ -2,16 +2,17 @@ using System.Collections.Generic;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
 using IndiGames.GameplayAbilitySystem.Implementation.EffectAbility.TargetTypes;
 using UnityEngine;
+using CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit;
 
 namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.TargetTypes
 {
-    [CreateAssetMenu(fileName = "SelfTargetSO", menuName = "Gameplay/Battle/Abilities/Target Type/Other Target")]
-    public class OtherTargetSO : TargetType
+    [CreateAssetMenu(fileName = "BattleUnitTargetSO", menuName = "Gameplay/Battle/Abilities/Target Type/Battle Unit Target")]
+    public class BattleUnitTargetSO : TargetType
     {
-        [SerializeField] private TargetContainterSO _targetContainer;
         public override void GetTargets(AbilitySystemBehaviour owner, ref List<AbilitySystemBehaviour> targets)
         {
-            targets.AddRange(_targetContainer.Targets);
+            if (!owner.TryGetComponent<BattleUnitBase>(out var unit)) return;
+            targets.AddRange(unit.TargetContainer);
         }
     }
 
