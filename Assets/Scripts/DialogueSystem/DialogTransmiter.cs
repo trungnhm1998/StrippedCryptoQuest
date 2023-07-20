@@ -1,13 +1,7 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using CryptoQuest.Events;
 using CryptoQuest.Input;
 using IndiGames.Core.SaveSystem;
-using UnityEditor.Localization;
 using UnityEngine;
-using UnityEngine.Localization.Settings;
-using UnityEngine.Localization.Tables;
 using Yarn.Unity;
 
 namespace CryptoQuest.DialogueSystem
