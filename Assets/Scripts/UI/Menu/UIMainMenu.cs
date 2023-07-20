@@ -13,7 +13,6 @@ namespace CryptoQuest.UI.Menu
 
         [Header("Game Components")]
         [SerializeField] private GameObject _contents;
-        [SerializeField] private List<GameObject> _menuPointers;
 
         private void OnEnable()
         {
