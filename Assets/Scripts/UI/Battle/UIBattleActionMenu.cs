@@ -1,15 +1,10 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using CryptoQuest.Gameplay.Battle;
-using System.Collections.Generic;
-using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
-using IndiGames.GameplayAbilitySystem.AbilitySystem;
-using IndiGames.Core.Events.ScriptableObjects;
-using CryptoQuest.GameHandler;
 using CryptoQuest.Gameplay.Battle.Core.Components;
 using CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit;
 using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects;
 using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Events;
+using TMPro;
 
 namespace CryptoQuest.UI.Battle
 {
@@ -22,7 +17,7 @@ namespace CryptoQuest.UI.Battle
         [SerializeField] private BattleUnitEventChannelSO _heroTurnEventChannel;
 
         [Header("UI")]
-        [SerializeField] private Text _currentUnitName;
+        [SerializeField] private TextMeshProUGUI _currentUnitName;
         [SerializeField] private Button _firstButton;
 
         private BattleManager _battleManager;
