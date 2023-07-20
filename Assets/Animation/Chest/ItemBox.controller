@@ -60,7 +60,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: OpenChest
+    m_ConditionEvent: IsOpening
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -7432737704513386830}
@@ -85,7 +85,7 @@ AnimatorController:
   m_Name: ItemBox
   serializedVersion: 5
   m_AnimatorParameters:
-  - m_Name: OpenChest
+  - m_Name: IsOpening
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
