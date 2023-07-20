@@ -1,6 +1,6 @@
 using System.Collections;
+using System.Collections.Generic;
 using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data;
-using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.TargetTypes;
 using IndiGames.GameplayAbilitySystem.AbilitySystem;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
 using IndiGames.GameplayAbilitySystem.AttributeSystem;
@@ -21,20 +21,19 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit
         [SerializeField] protected AttributeScriptableObject _hpAttribute;
 
         [field: SerializeField]
-        public TargetContainterSO TargetContainer { get; private set; }
-        [field: SerializeField]
         public CharacterDataSO UnitData { get; set; }
 
         public AbstractAbility SelectedSkill { get; protected set; }
 
         public ILogger Logger { get; protected set; }
 
+        public List<AbilitySystemBehaviour> TargetContainer { get; protected set; } = new();
+
         protected BattleManager _battleManager;
         protected bool _isDead;
 
         public virtual void Init(BattleTeam team, AbilitySystemBehaviour owner)
         {
-            TargetContainer.Targets.Clear();
             OwnerTeam = team;
             Owner = owner;
             Logger = GetComponent<ILogger>();
@@ -59,21 +58,43 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit
         {
             if (OpponentTeam == null || OpponentTeam.Members.Count <= 0) return;
 
-            var currrentTargets = TargetContainer.Targets;
-            if (currrentTargets.Count > 0) return;
+            if (TargetContainer.Count > 0) return;
 
-            TargetContainer.SetSingleTarget(OpponentTeam.Members[0]);
+            TargetContainer.Add(OpponentTeam.Members[0]);
         }
 
         public virtual void SelectSingleTarget(AbilitySystemBehaviour target)
         {
-            if (OpponentTeam.Members.FindIndex(x => x == target) < 0) return;
-            TargetContainer.SetSingleTarget(target);
+            TargetContainer.Clear();
+            TargetContainer.Add(target);
         }
 
-        public virtual void SelectAllTarget()
+        /// <summary>
+        /// Use this to select group of units
+        /// </summary>
+        /// <param name="targets"></param>
+        public virtual void SelectTargets(params AbilitySystemBehaviour[] targets)
         {
-            TargetContainer.SetMultipleTargets(OpponentTeam.Members);
+            TargetContainer.Clear();
+            TargetContainer.AddRange(targets);
+        }
+
+        public virtual void SelectTargets(List<AbilitySystemBehaviour> targets)
+        {
+            TargetContainer.Clear();
+            TargetContainer.AddRange(targets);
+        }
+
+        public virtual void SelectAllOpponent()
+        {
+            TargetContainer.Clear();
+            TargetContainer.AddRange(OpponentTeam.Members);
+        }
+
+        public virtual void SelectAllAlly()
+        {
+            TargetContainer.Clear();
+            TargetContainer.AddRange(OwnerTeam.Members);
         }
 
         public void SelectSkill(AbstractAbility selectedSkill)
@@ -97,7 +118,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit
         public virtual IEnumerator Resolve()
         {
             SelectedSkill = null;
-            TargetContainer.Targets.Clear();
+            TargetContainer.Clear();
             yield return null;
         }
 
@@ -120,7 +141,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit
 
         private bool HasNoTarget()
         {
-            return TargetContainer.Targets.Count <= 0;
+            return TargetContainer.Count <= 0;
         }
     }
 }
