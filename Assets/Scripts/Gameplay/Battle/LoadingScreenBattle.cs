@@ -4,44 +4,21 @@ using UnityEngine;
 
 namespace CryptoQuest
 {
-    public class LoadingScreenBattle : MonoBehaviour
+    public class LoadingScreen : MonoBehaviour
     {
-        public enum ScreenTransition
-        {
-            Battle = 0,
-            Ocarina = 1
-        }
         [SerializeField] private Animator _animator;
-        [SerializeField] private ScreenTransition _loadScreen;
-        [SerializeField] private List<SpriteRenderer> _listSprite;
-        private bool _isLoadScreen;
+        [SerializeField] private ScreenColorTransitionSO _screenColor;
+        [SerializeField] private List<SpriteRenderer> _spriteList;
+        [SerializeField] private string _parameterLoadingScreen;
 
-        public virtual bool IsTransitionScreen
+        public void LoadBattleScreen()
         {
-            set => _animator.SetBool(AnimIsScreenTransition, value);
-        }
-        private static readonly int AnimIsScreenTransition = Animator.StringToHash("Transition");
-
-        public void LoadTransitionScreen()
-        {
-            IsTransitionScreen = true;
-            switch (_loadScreen)
+            foreach (SpriteRenderer sprite in _spriteList)
             {
-                case ScreenTransition.Battle:
-                    foreach (SpriteRenderer sprite in _listSprite)
-                    {
-                        sprite.color = new Color(0, 0, 0, 1);
-                    }
-                    break;
-                case ScreenTransition.Ocarina:
-                    foreach (SpriteRenderer sprite in _listSprite)
-                    {
-                        sprite.color = new Color(0, 0, 1, 1);
-                    }
-                    break;
-                default:
-                    break;
+                sprite.color = _screenColor.ColorLoadingScreen;
             }
+            _animator.ResetTrigger(_parameterLoadingScreen);
+            _animator.SetTrigger(_parameterLoadingScreen);
         }
     }
 }
