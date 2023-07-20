@@ -97,7 +97,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components.Debugger
                 if (abstractEffect.Parameters != null)
                 {
                     var skillParams = (SkillParameters) abstractEffect.Parameters;
-                    details = $"\nTurns: {skillParams.ContinuesTurn} | Base Power: {skillParams.BasePower}";
+                    details = $"\nTurns: {skillParams.ContinuesTurn} | Base Power: {skillParams.AbilityValues.BasePower}";
                 }
 
                 if (abstractEffect is DurationalEffect durationalEffect)
