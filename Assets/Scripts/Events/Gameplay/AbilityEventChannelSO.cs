@@ -2,7 +2,7 @@ using IndiGames.GameplayAbilitySystem.AbilitySystem.ScriptableObjects;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace CryptoQuest.Events
+namespace CryptoQuest.Events.Gameplay
 {
     public class AbilityEventChannelSO : ScriptableObject
     {
@@ -15,13 +15,7 @@ namespace CryptoQuest.Events
 
         private void OnRaiseEvent(AbilityScriptableObject ability)
         {
-            if (EventRaised == null)
-            {
-                Debug.LogWarning($"Event was raised on {name} but no one was listening.");
-                return;
-            }
-
-            EventRaised.Invoke(ability);
+            this.CallEventSafely(EventRaised, ability);
         }
     }
 }

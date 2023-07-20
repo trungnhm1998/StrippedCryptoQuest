@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Localization;
 
 namespace CryptoQuest
 {
@@ -9,7 +10,7 @@ namespace CryptoQuest
     public class GenericData : ScriptableObject
     {
         public int Id;
-        public string NameKey = "";
-        public string DescriptionKey = "";
+        public LocalizedString NameKey;
+        public LocalizedString DescriptionKey;
     }
 }

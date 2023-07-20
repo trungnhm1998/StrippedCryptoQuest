@@ -1,23 +1,24 @@
 using System.Collections;
-using CryptoQuest.Events;
+using CryptoQuest.Events.Gameplay;
+using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Skills.CryptoQuestAbility;
 using IndiGames.GameplayAbilitySystem.AbilitySystem;
 using UnityEngine;
 
-namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Skills
+namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Skills.CryptoQuestAbility
 {
-    public class SpecialAbilitySO : InstantAbilitySO
+    public class SpecialAbilitySO : AbilitySO
     {
         public AbilityEventChannelSO AbilityEvent;
-        protected override AbstractAbility CreateAbility() => new SpecialAbility(SkillParams, AbilityEvent);
+        protected override AbstractAbility CreateAbility() => new SpecialAbility(SkillInfo, AbilityEvent);
     }
 
-    public class SpecialAbility : InstantAbility
+    public class SpecialAbility : Ability
     {
         private AbilityEventChannelSO _abilityEvent;
         protected new SpecialAbilitySO AbilitySO => (SpecialAbilitySO)_abilitySO;
 
-        public SpecialAbility(SkillParameters skillParameters, AbilityEventChannelSO abilityEvent) : base(
-            skillParameters)
+        public SpecialAbility(SkillInfo skillInfo, AbilityEventChannelSO abilityEvent) : base(
+            skillInfo)
         {
             _abilityEvent = abilityEvent;
         }
@@ -25,6 +26,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Skills
         protected override IEnumerator InternalActiveAbility()
         {
             yield return base.InternalActiveAbility();
+            _abilityEvent.EventRaised(_abilitySO);
             EndAbility();
         }
 
