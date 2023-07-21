@@ -8,22 +8,33 @@ namespace CryptoQuest.UI.Menu
 {
     public class UICharacterInfoManager : MonoBehaviour
     {
-        [SerializeField] private GameObject _characterSlots;
+        [SerializeField] private Transform _characterSlots;
         [SerializeField] private GameObject _characterInfoPF;
         [SerializeField] private PartyManagerMockDataSO _partyManagerMockData;
 
         private void Awake()
         {
+            PrepareSlots();
             LoadPartyMembers();
+        }
+
+        private void PrepareSlots()
+        {
+            if (_characterSlots.childCount <= 0) return;
+
+            foreach (Transform child in _characterSlots)
+            {
+                Destroy(child.gameObject);
+            }
         }
 
         private void LoadPartyMembers()
         {
-            foreach (var item in _partyManagerMockData.Members)
+            foreach (var member in _partyManagerMockData.Members)
             {
-                var member = Instantiate(_characterInfoPF);
-                member.GetComponentInChildren<UICharacterInfo>().CharInfoMockData = item;
-                member.transform.parent = _characterSlots.transform;
+                var memberGO = Instantiate(_characterInfoPF);
+                memberGO.GetComponentInChildren<UICharacterInfo>().CharInfoMockData = member;
+                memberGO.transform.parent = _characterSlots;
             }
         }
     }

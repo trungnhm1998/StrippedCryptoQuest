@@ -62,7 +62,7 @@ namespace CryptoQuest.UI.Menu
             _currentHP.text = $"{curHP}";
             _maxHP.text = $"{maxHP}";
 
-            _MPBar.fillAmount = (float)curHP / (float)maxHP;
+            _HPBar.fillAmount = (float)curHP / (float)maxHP;
         }
 
         private void SetMP()
