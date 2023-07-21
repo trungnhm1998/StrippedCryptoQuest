@@ -8,6 +8,7 @@ namespace CryptoQuest.Gameplay
 {
     public class GameplayBus : ScriptableObject
     {
+        [SerializeField] private GameStateSO _gameState;
         public HeroBehaviour Hero;
         public BattleTeam PlayerTeam;
         public AbilitySystemBehaviour MainSystem;
@@ -16,6 +17,7 @@ namespace CryptoQuest.Gameplay
 
         public void RaiseHeroSpawnedEvent()
         {
+            _gameState.UpdateGameState(EGameState.Field);
             HeroSpawned?.Invoke();
         }
     }
