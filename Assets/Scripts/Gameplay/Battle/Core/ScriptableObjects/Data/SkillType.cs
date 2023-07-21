@@ -4,8 +4,7 @@ using UnityEngine;
 
 namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data
 {
-    public class SkillType : GenericData 
-    {
-    }
+    [CreateAssetMenu(fileName = "SkillCategory",
+        menuName = "Gameplay/Battle/Core/ScriptableObjects/Data/SkillCategory")]
+    public class SkillType : GenericData { }
 }
-

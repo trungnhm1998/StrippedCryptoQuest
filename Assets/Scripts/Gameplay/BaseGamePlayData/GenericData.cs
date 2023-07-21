@@ -3,14 +3,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Localization;
+using UnityEngine.Serialization;
 
 namespace CryptoQuest
 {
-    [Serializable]
+    [CreateAssetMenu(fileName = "GenericData", menuName = "Gameplay/BaseGameplayData/GenericData")]
     public class GenericData : ScriptableObject
     {
         public int Id;
-        public LocalizedString NameKey;
-        public LocalizedString DescriptionKey;
+        public LocalizedString Name;
+        public LocalizedString Description;
     }
 }

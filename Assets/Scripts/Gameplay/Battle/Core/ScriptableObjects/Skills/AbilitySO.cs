@@ -14,9 +14,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Skills.CryptoQuestA
     [CreateAssetMenu(fileName = "CQ Ability", menuName = "Gameplay/Battle/Abilities/CQ Ability")]
     public class AbilitySO : EffectAbilitySO
     {
-        
         public SkillInfo SkillInfo;
-
         protected override AbstractAbility CreateAbility() => new Ability(SkillInfo);
     }
 

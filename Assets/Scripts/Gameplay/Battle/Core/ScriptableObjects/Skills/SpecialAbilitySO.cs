@@ -1,33 +1,40 @@
 using System.Collections;
 using CryptoQuest.Events.Gameplay;
-using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Skills.CryptoQuestAbility;
 using IndiGames.GameplayAbilitySystem.AbilitySystem;
-using UnityEngine;
+using IndiGames.GameplayAbilitySystem.AbilitySystem.ScriptableObjects;
+using UnityEngine.Events;
+using UnityEngine.Localization;
 
 namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Skills.CryptoQuestAbility
 {
-    public class SpecialAbilitySO : AbilitySO
+    public class SpecialAbilitySO : AbilityScriptableObject
     {
-        public AbilityEventChannelSO AbilityEvent;
-        protected override AbstractAbility CreateAbility() => new SpecialAbility(SkillInfo, AbilityEvent);
+        public int Id;
+        public LocalizedString Name;
+        public LocalizedString Description;
+        public UnityAction<AbilityScriptableObject> OnAbilityActivated;
+        protected override AbstractAbility CreateAbility() => new SpecialAbility();
+
+        public virtual void Activated()
+        {
+            OnAbilityActivated?.Invoke(this);
+        }
     }
 
-    public class SpecialAbility : Ability
+    public class SpecialAbility : AbstractAbility
     {
-        private AbilityEventChannelSO _abilityEvent;
         protected new SpecialAbilitySO AbilitySO => (SpecialAbilitySO)_abilitySO;
-
-        public SpecialAbility(SkillInfo skillInfo, AbilityEventChannelSO abilityEvent) : base(
-            skillInfo)
-        {
-            _abilityEvent = abilityEvent;
-        }
 
         protected override IEnumerator InternalActiveAbility()
         {
-            yield return base.InternalActiveAbility();
-            _abilityEvent.EventRaised(_abilitySO);
+            AbilityActivated();
             EndAbility();
+            yield break;
+        }
+
+        public void AbilityActivated()
+        {
+            AbilitySO.Activated();
         }
 
         public override bool CanActiveAbility()
