@@ -7,7 +7,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.BattleFSM.States
     [CreateAssetMenu(fileName = "BattlePrepareStateSO", menuName = "Gameplay/Battle/FSM/States/Battle Prepare State")]
     public class BattlePrepareStateSO : BattleStateSO
     {
-        [SerializeField] private VoidEventChannelSO _battleStartChannelEvent;
+        [SerializeField] private GameStateSO _gameState;
 
         public override void OnEnterState(BaseStateMachine stateMachine)
         {
@@ -22,7 +22,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.BattleFSM.States
                 BattleManager.BattleSpawner.SpawnBattle();
             }
             BattleManager.InitBattleTeams();
-            _battleStartChannelEvent.RaiseEvent();
+            _gameState.UpdateGameState(EGameState.Battle);
             stateMachine.SetCurrentState(_nextState);
         }
     }
