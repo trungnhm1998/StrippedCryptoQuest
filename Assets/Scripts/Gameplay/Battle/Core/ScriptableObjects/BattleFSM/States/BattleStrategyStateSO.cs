@@ -8,7 +8,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.BattleFSM.States
     [CreateAssetMenu(fileName = "BattleStrategyStateSO", menuName = "Gameplay/Battle/FSM/States/Battle Strategy State")]
     public class BattleStrategyStateSO : BattleStateSO
     {
-        [SerializeField] private VoidEventChannelSO _endStategyPhaseEventChannel;
+        [SerializeField] private VoidEventChannelSO _endStrategyPhaseEventChannel;
         private Coroutine _unitPrepareCoroutine; 
         public override void OnEnterState(BaseStateMachine stateMachine)
         {
@@ -27,7 +27,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.BattleFSM.States
             }
             BattleManager.CurrentUnit = null;
             stateMachine.SetCurrentState(_nextState);
-            _endStategyPhaseEventChannel.RaiseEvent();
+            _endStrategyPhaseEventChannel.RaiseEvent();
         }
         
         public override void OnExitState(BaseStateMachine stateMachine)

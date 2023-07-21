@@ -1,6 +1,8 @@
 ﻿using CryptoQuest.Character.MonoBehaviours;
 using UnityEngine;
 using UnityEngine.Events;
+using CryptoQuest.Gameplay.Battle.Core.Components;
+using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
 
 namespace CryptoQuest.Gameplay
 {
@@ -8,6 +10,8 @@ namespace CryptoQuest.Gameplay
     {
         [SerializeField] private GameStateSO _gameState;
         public HeroBehaviour Hero;
+        public BattleTeam PlayerTeam;
+        public AbilitySystemBehaviour MainSystem;
 
         public UnityAction HeroSpawned;
 
