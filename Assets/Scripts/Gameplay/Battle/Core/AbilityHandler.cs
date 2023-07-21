@@ -3,12 +3,13 @@ using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.ScriptableObjects;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace CryptoQuest
 {
     public class AbilityHandler : MonoBehaviour
     {
-        [SerializeField] private AbilityEventChannelSO _onRequestActivateAbility;
+        [SerializeField] private AbilityEventChannelSO _abilityActivatedEventChannel;
         [SerializeField] private AbilitySystemBehaviour _abilitySystemBehaviour;
 #if UNITY_EDITOR
         private void OnValidate()
@@ -27,12 +28,12 @@ namespace CryptoQuest
 
         private void OnEnable()
         {
-            _onRequestActivateAbility.EventRaised += ActivateSkill;
+            _abilityActivatedEventChannel.EventRaised += ActivateSkill;
         }
 
         private void OnDisable()
         {
-            _onRequestActivateAbility.EventRaised -= ActivateSkill;
+            _abilityActivatedEventChannel.EventRaised -= ActivateSkill;
         }
 
         public void ActivateSkill(AbilityScriptableObject abilityScriptableObject)

@@ -8,8 +8,9 @@ namespace CryptoQuest.Events.Gameplay
     public class AbilityEventChannelSO : ScriptableObject
     {
         public UnityAction<AbilityScriptableObject> EventRaised;
+#if UNITY_EDITOR
         public AbilityScriptableObject AbilitySO;
-
+#endif
         public void RaiseEvent(AbilityScriptableObject ability)
         {
             OnRaiseEvent(ability);
