@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.UI;
 using CryptoQuest.Gameplay.Battle.Core.Components;
 using CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit;
@@ -24,13 +25,20 @@ namespace CryptoQuest.UI.Battle
         [SerializeField] private Button[] _allButtons;
         [SerializeField] private TextMeshProUGUI[] _allButtonTexts;
 
+        [Header("Config Button Text Colors")]
+        [SerializeField] private Color _activeColor;
+
+        [SerializeField] private Color _inactiveColor;
+
         private BattleManager _battleManager;
         private IBattleUnit _currentUnit;
+        private Dictionary<Button, TextMeshProUGUI> _buttonTextMap = new Dictionary<Button, TextMeshProUGUI>();
 
         private void Start()
         {
             _battleManager = _battleBus.BattleManager;
             SetupChain(_normalAttackChain);
+            CacheButtonTexts();
         }
 
         private void OnEnable()
@@ -56,6 +64,16 @@ namespace CryptoQuest.UI.Battle
             for (int i = 1; i < chain.Length; i++)
             {
                 chain[i - 1].SetNext(chain[i]);
+            }
+        }
+
+        private void CacheButtonTexts()
+        {
+            _buttonTextMap.Clear();
+            
+            for (int i = 0; i < _allButtons.Length; i++)
+            {
+                _buttonTextMap.Add(_allButtons[i], _allButtonTexts[i]);
             }
         }
 
@@ -96,14 +114,13 @@ namespace CryptoQuest.UI.Battle
 
         private void SetActiveCommandsMenu(bool isActive)
         {
-            foreach (var button in _allButtons)
+            foreach (var pair in _buttonTextMap)
             {
-                button.interactable = isActive;
-            }
+                var button = pair.Key;
+                var buttonText = pair.Value;
 
-            foreach (var buttonText in _allButtonTexts)
-            {
-                buttonText.color = isActive ? Color.white : Color.gray;
+                button.interactable = isActive;
+                buttonText.color = isActive ? _activeColor : _inactiveColor;
             }
         }
     }

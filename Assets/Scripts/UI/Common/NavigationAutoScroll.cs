@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 namespace CryptoQuest.UI.Battle.CommandsMenu
 {
+    [RequireComponent(typeof(ScrollViewCalculator))]
     public class NavigationAutoScroll : MonoBehaviour
     {
         [Header("Events")]
@@ -14,15 +15,20 @@ namespace CryptoQuest.UI.Battle.CommandsMenu
         [SerializeField] private RectTransform _firstButton;
 
         [SerializeField] private RectTransform _lastButton;
+        [SerializeField] private GameObject _arrowUpHint;
+        [SerializeField] private GameObject _arrowDownHint;
 
+        [Header("Panel")]
         [SerializeField] private ScrollRect _scrollRect;
 
-        [SerializeField] private GameObject _arrowUp;
-        [SerializeField] private GameObject _arrowDown;
+        private IScrollView _scrollViewCalculation;
+
 
         private void OnEnable()
         {
+            Debug.Log("NavigationAutoScroll enabled");
             _inputMediator.MenuNavigateEvent += CheckButtonPosition;
+            _scrollViewCalculation = GetComponent<IScrollView>();
         }
 
         private void OnDisable()
@@ -36,37 +42,18 @@ namespace CryptoQuest.UI.Battle.CommandsMenu
 
             if (currentButton == _firstButton.gameObject)
             {
-                ScrollToTarget(_firstButton);
-                _arrowDown.SetActive(true);
-                _arrowUp.SetActive(false);
+                _scrollRect.verticalNormalizedPosition =
+                    _scrollViewCalculation.CalculateNormalizedScrollPosition(_scrollRect, _firstButton);
+                _arrowDownHint.SetActive(true);
+                _arrowUpHint.SetActive(false);
             }
             else if (currentButton == _lastButton.gameObject)
             {
-                ScrollToTarget(_lastButton);
-                _arrowUp.SetActive(true);
-                _arrowDown.SetActive(false);
+                _scrollRect.verticalNormalizedPosition =
+                    _scrollViewCalculation.CalculateNormalizedScrollPosition(_scrollRect, _lastButton);
+                _arrowUpHint.SetActive(true);
+                _arrowDownHint.SetActive(false);
             }
-        }
-
-        private float ScrollToTarget(RectTransform targetRect, float align = 0)
-        {
-            float contentHeight = _scrollRect.content.rect.height;
-            float viewportHeight = _scrollRect.viewport.rect.height;
-
-            if (contentHeight < viewportHeight) return 0;
-
-            float targetPosition = contentHeight + GetPositionY(targetRect) + targetRect.rect.height * align;
-            float gap = viewportHeight * align;
-            float normalizedPosition = (targetPosition - gap) / (contentHeight - viewportHeight);
-
-            normalizedPosition = Mathf.Clamp01(normalizedPosition);
-            _scrollRect.verticalNormalizedPosition = normalizedPosition;
-            return normalizedPosition;
-        }
-
-        private float GetPositionY(RectTransform target)
-        {
-            return target.localPosition.y + target.rect.y;
         }
     }
 }
