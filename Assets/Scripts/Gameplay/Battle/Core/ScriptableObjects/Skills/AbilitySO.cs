@@ -1,13 +1,8 @@
 using System.Collections;
-using CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit;
-using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data;
 using IndiGames.GameplayAbilitySystem.AbilitySystem;
 using IndiGames.GameplayAbilitySystem.Implementation.EffectAbility;
 using IndiGames.GameplayAbilitySystem.Implementation.EffectAbility.ScriptableObjects;
 using UnityEngine;
-using UnityEngine.Localization;
-using UnityEngine.Localization.Settings;
-using UnityEngine.Serialization;
 
 namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Skills.CryptoQuestAbility
 {
