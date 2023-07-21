@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.UI;
 using CryptoQuest.Gameplay.Battle.Core.Components;
 using CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit;
@@ -18,10 +19,20 @@ namespace CryptoQuest.UI.Battle
 
         [Header("UI")]
         [SerializeField] private TextMeshProUGUI _currentUnitName;
+
         [SerializeField] private Button _firstButton;
+
+        [SerializeField] private Button[] _allButtons;
+        [SerializeField] private TextMeshProUGUI[] _allButtonTexts;
+
+        [Header("Config Button Text Colors")]
+        [SerializeField] private Color _activeColor;
+
+        [SerializeField] private Color _inactiveColor;
 
         private BattleManager _battleManager;
         private IBattleUnit _currentUnit;
+        private readonly Dictionary<Button, TextMeshProUGUI> _buttonTextMap = new();
 
         private void Start()
         {
@@ -42,46 +53,76 @@ namespace CryptoQuest.UI.Battle
         private void OnHeroTurn(IBattleUnit unit)
         {
             SelectFirstButton();
+            CacheButtonTexts();
+
             _currentUnit = unit;
             _currentUnitName.text = unit.UnitData.DisplayName;
         }
 
         private void SetupChain(BattleActionHandler.BattleActionHandler[] chain)
         {
-            for (int i = 1; i < chain.Length; i++) 
+            for (int i = 1; i < chain.Length; i++)
             {
                 chain[i - 1].SetNext(chain[i]);
             }
         }
 
+        private void CacheButtonTexts()
+        {
+            SetActiveCommandsMenu(true);
+            _buttonTextMap.Clear();
+
+            for (int i = 0; i < _allButtons.Length; i++)
+            {
+                _buttonTextMap.Add(_allButtons[i], _allButtonTexts[i]);
+            }
+        }
+
         private void SelectFirstButton()
         {
-            _firstButton.Select(); 
+            _firstButton.Select();
         }
 
         public void OnNormalAttack()
         {
             _normalAttackChain[0].Handle(_currentUnit);
+            SetActiveCommandsMenu(false);
         }
 
         public void OnUseSkill()
         {
             // TODO: Implement use Skill flow here
+            SetActiveCommandsMenu(false);
         }
-        
+
         public void OnUseItem()
         {
             // TODO: Implement use item flow here
+            SetActiveCommandsMenu(false);
         }
-        
+
         public void OnGuard()
         {
             // TODO: Implement guard flow here
+            SetActiveCommandsMenu(false);
         }
-        
+
         public void OnEscape()
         {
+            SetActiveCommandsMenu(false);
             _battleManager.OnEscape();
+        }
+
+        private void SetActiveCommandsMenu(bool isActive)
+        {
+            foreach (var pair in _buttonTextMap)
+            {
+                var button = pair.Key;
+                var buttonText = pair.Value;
+
+                button.interactable = isActive;
+                buttonText.color = isActive ? _activeColor : _inactiveColor;
+            }
         }
     }
 }
