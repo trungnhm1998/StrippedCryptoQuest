@@ -6,7 +6,6 @@ using UnityEngine.Localization.Tables;
 using UnityEngine.Localization;
 using UnityEngine.Localization.Settings;
 using UnityEngine.ResourceManagement.AsyncOperations;
-using UnityEngine.ResourceManagement;
 using UnityEngine.Serialization;
 using Yarn.Unity;
 using Object = UnityEngine.Object;
@@ -47,12 +46,12 @@ namespace CryptoQuest.DialogueSystem
             {
                 foreach (var currentStringsTable in _currentStringsTables)
                 {
-                    if (currentStringsTable[line.ID] != null)
-                    {
-                        text = currentStringsTable[line.ID].LocalizedValue;
-                        metadata = currentStringsTable[line.ID].GetMetadata<LineMetadata>();
-                        break;
-                    }
+                    if (currentStringsTable == null || currentStringsTable[line.ID] == null)
+                        continue;
+
+                    text = currentStringsTable[line.ID].LocalizedValue;
+                    metadata = currentStringsTable[line.ID].GetMetadata<LineMetadata>();
+                    break;
                 }
             }
 

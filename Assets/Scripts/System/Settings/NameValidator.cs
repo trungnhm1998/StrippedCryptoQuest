@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using UnityEngine;
@@ -22,7 +23,7 @@ namespace CryptoQuest.System.Settings
 
         public NameValidator(TextAsset badWordsAsset, TextAsset specialCharsAsset)
         {
-            var badWords = badWordsAsset.text.Split(DELIMS);
+            var badWords = badWordsAsset.text.Split(DELIMS, StringSplitOptions.RemoveEmptyEntries);
             var specialChars = specialCharsAsset.text;
 
             UpdateBadWordDictionary(ref badWords);
