@@ -1,5 +1,6 @@
 ﻿using IndiGames.GameplayAbilitySystem.AttributeSystem;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,11 +14,15 @@ namespace CryptoQuest.UI.Battle.CharacterInfo
 
         [Header("UI")]
         [SerializeField] private Text _nameText;
+
         [SerializeField] private Text _hpValueText;
         [SerializeField] private Slider _hpSlider;
         [SerializeField] private Text _mpValueText;
         [SerializeField] private Slider _mpSlider;
+        [SerializeField] private Image _selectFrame;
+        [SerializeField] private Image _popupItemFrame;
         [SerializeField] protected Image _characterIcon;
+        [SerializeField] private TextMeshProUGUI _itemPopupText;
 
         protected override void OnEnable()
         {
@@ -64,7 +69,7 @@ namespace CryptoQuest.UI.Battle.CharacterInfo
             valueText.text = attributeValue.CurrentValue.ToString();
 
             if (maxValue.CurrentValue == 0) return;
-            slider.value = attributeValue.CurrentValue / maxValue.CurrentValue;  
+            slider.value = attributeValue.CurrentValue / maxValue.CurrentValue;
         }
     }
 }

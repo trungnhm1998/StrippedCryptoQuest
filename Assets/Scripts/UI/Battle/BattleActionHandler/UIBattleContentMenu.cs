@@ -4,36 +4,38 @@ using UnityEngine;
 
 namespace CryptoQuest.UI.Battle.BattleActionHandler
 {
-    public class SelectTargetHandler : BattleActionHandler
+    public class UIBattleContentMenu : BattleActionHandler
     {
-        [SerializeField] private GameObject _selectTargetUI;
-        [SerializeField] private UITargetButton[] _targetButtons;
+        [SerializeField] private BattlePanelController _battlePanelController;
+
+        // [SerializeField] private GameObject _selectTargetUI;
+        // [SerializeField] private UITargetButton[] _targetButtons;
 
         private IBattleUnit _currentUnit;
 
         private void OnValidate()
         {
-            _targetButtons = gameObject.GetComponentsInChildren<UITargetButton>(true);
+            // _targetButtons = gameObject.GetComponentsInChildren<UITargetButton>(true);
         }
 
         private void Start()
         {
-            foreach (var button in _targetButtons)
-            {
-                button.gameObject.SetActive(false);
-            }
+            // foreach (var button in _targetButtons)
+            // {
+            //     button.gameObject.SetActive(false);
+            // }
         }
 
         private void SelectFirstButton()
         {
-            if (_targetButtons.Length <= 0) return;
-            _targetButtons[0].Button.Select();
+            // if (_targetButtons.Length <= 0) return;
+            // _targetButtons[0].Button.Select();
         }
 
         public void OnSelectTarget(IBattleUnit unit)
         {
             _currentUnit.SelectSingleTarget(unit.Owner);
-            _selectTargetUI.SetActive(false);
+            // _selectTargetUI.SetActive(false);
             base.Handle(unit);
         }
 
@@ -41,7 +43,7 @@ namespace CryptoQuest.UI.Battle.BattleActionHandler
         {
             _currentUnit = currentUnit;
             if (_currentUnit == null) return currentUnit;
-            _selectTargetUI.SetActive(true);
+            // _selectTargetUI.SetActive(true);
             SetupTargetButton(_currentUnit.OpponentTeam);
 
             SelectFirstButton();
@@ -52,14 +54,14 @@ namespace CryptoQuest.UI.Battle.BattleActionHandler
         {
             var targetUnits = team.BattleUnits;
             int targetCount = targetUnits.Count;
-            for (int i = 0; i < _targetButtons.Length; i++)
-            {
-                UITargetButton targetButton = _targetButtons[i];
-                var isInTargetRange = i < targetCount;
-                targetButton.gameObject.SetActive(isInTargetRange);
-                if (!isInTargetRange) continue;
-                SetupTargetButton(targetButton, targetUnits[i]);
-            }
+            // for (int i = 0; i < _targetButtons.Length; i++)
+            // {
+            //     UITargetButton targetButton = _targetButtons[i];
+            //     var isInTargetRange = i < targetCount;
+            //     targetButton.gameObject.SetActive(isInTargetRange);
+            //     if (!isInTargetRange) continue;
+            //     SetupTargetButton(targetButton, targetUnits[i]);
+            // }
         }
 
         private void SetupTargetButton(UITargetButton targetButton, IBattleUnit unit)

@@ -8,9 +8,6 @@ namespace CryptoQuest.UI.Battle.CommandsMenu
     [RequireComponent(typeof(AutoScrollViewCalculatorCalculator))]
     public class NavigationAutoScroll : MonoBehaviour
     {
-        [Header("Events")]
-        [SerializeField] private InputMediatorSO _inputMediator;
-
         [Header("UI")]
         [SerializeField] private RectTransform _firstButton;
 
@@ -26,16 +23,10 @@ namespace CryptoQuest.UI.Battle.CommandsMenu
 
         private void OnEnable()
         {
-            _inputMediator.MenuNavigateEvent += CheckButtonPosition;
             _autoScrollViewCalculatorCalculation = GetComponent<IAutoScrollViewCalculator>();
         }
 
-        private void OnDisable()
-        {
-            _inputMediator.MenuNavigateEvent -= CheckButtonPosition;
-        }
-
-        private void CheckButtonPosition()
+        public void CheckButtonPosition()
         {
             var currentButton = EventSystem.current.currentSelectedGameObject;
 
