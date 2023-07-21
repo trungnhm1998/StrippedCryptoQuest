@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 namespace CryptoQuest.UI.Menu
 {
-    public class UICharacterInfoManager : MonoBehaviour
+    public class UIHomeMenu : MonoBehaviour
     {
         [SerializeField] private Transform _characterSlots;
         [SerializeField] private GameObject _characterInfoPF;
