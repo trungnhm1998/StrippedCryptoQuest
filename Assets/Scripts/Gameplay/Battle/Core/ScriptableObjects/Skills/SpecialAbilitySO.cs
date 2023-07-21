@@ -1,5 +1,4 @@
 using System.Collections;
-using CryptoQuest.Events.Gameplay;
 using IndiGames.GameplayAbilitySystem.AbilitySystem;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.ScriptableObjects;
 using UnityEngine.Events;
@@ -27,14 +26,14 @@ namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Skills.CryptoQuestA
 
         protected override IEnumerator InternalActiveAbility()
         {
-            AbilityActivated();
+            yield return AbilityActivated();
             EndAbility();
-            yield break;
         }
 
-        public void AbilityActivated()
+        public IEnumerator AbilityActivated()
         {
             AbilitySO.Activated();
+            yield break;
         }
 
         public override bool CanActiveAbility()
