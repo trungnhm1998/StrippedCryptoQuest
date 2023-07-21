@@ -376,11 +376,11 @@
                 },
                 {
                     "name": "",
-                    "id": "9e67d935-b650-461c-909b-efec4b6d430d",
-                    "path": "*/{Cancel}",
+                    "id": "688063d4-e984-4e34-b7a8-d2efb9a177f7",
+                    "path": "<SwitchProControllerHID>/buttonSouth",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Gamepad;MnK",
+                    "groups": "Gamepad",
                     "action": "Cancel",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -404,17 +404,6 @@
                     "processors": "",
                     "groups": "MnK",
                     "action": "Point",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "1e046e57-9644-41aa-b3a6-0fc1fafd87fa",
-                    "path": "*/{Submit}",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "MnK;Gamepad",
-                    "action": "Submit",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -607,12 +596,45 @@
                 },
                 {
                     "name": "",
+                    "id": "8d8210f0-1755-41f8-9ccd-23f9a1b3c1fb",
+                    "path": "<Keyboard>/enter",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "MnK",
+                    "action": "Submit",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "234b8f00-033c-4724-8ef1-407f8aa5d312",
                     "path": "<Keyboard>/numpadEnter",
                     "interactions": "",
                     "processors": "",
                     "groups": "MnK",
                     "action": "Submit",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "1e046e57-9644-41aa-b3a6-0fc1fafd87fa",
+                    "path": "*/{Submit}",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "MnK;Gamepad",
+                    "action": "Submit",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "9e67d935-b650-461c-909b-efec4b6d430d",
+                    "path": "*/{Cancel}",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad;MnK",
+                    "action": "Cancel",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
@@ -668,7 +690,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Inventory",
+                    "name": "MainMenu",
                     "type": "Button",
                     "id": "772cec36-898a-474f-882a-b76e6d11c41d",
                     "expectedControlType": "Button",
@@ -804,7 +826,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
-                    "action": "Inventory",
+                    "action": "MainMenu",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -815,7 +837,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "MnK",
-                    "action": "Inventory",
+                    "action": "MainMenu",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

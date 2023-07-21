@@ -39,6 +39,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components
         private void OnNewTurn()
         {
             _batteMenu.SetActive(true);
+            _inputMediator.EnableMenuInput();
         }
 
         private void OnBattleStart()
