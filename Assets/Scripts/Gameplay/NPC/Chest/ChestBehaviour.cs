@@ -1,7 +1,6 @@
-using CryptoQuest.Events.UI;
-using CryptoQuest.Gameplay.Quest.Dialogue.ScriptableObject;
 using CryptoQuest.Character;
 using UnityEngine;
+using CryptoQuest.Events.Chest;
 
 namespace CryptoQuest.Gameplay.NPC.Chest
 {
