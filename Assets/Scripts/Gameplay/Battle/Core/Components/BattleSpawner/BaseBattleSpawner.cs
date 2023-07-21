@@ -1,9 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
-using CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit;
 using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data;
-using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
-using IndiGames.GameplayAbilitySystem.AttributeSystem.Components;
 using UnityEngine;
 
 namespace CryptoQuest.Gameplay.Battle.Core.Components.BattleSpawner
@@ -13,7 +10,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components.BattleSpawner
     {
         private readonly string[] _duplicatePostfix = new string[] {"A", "B", "C", "D"};
         [SerializeField] protected BattleManager _battleManager;
-        [SerializeField] protected GameObject _monsterPrefab;
+        [SerializeField] protected BattleDataSO _battleData;
 
         private Dictionary<string, int> _duplicateEnemies = new();
 
@@ -23,26 +20,14 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components.BattleSpawner
             _battleManager = GetComponent<BattleManager>();
         }
 
-        public abstract void SpawnBattle();
-
-        public virtual void GenerateBattle(BattleDataSO data)
+        public virtual void SpawnBattle()
         {
-            foreach (var enemy in data.Enemies)
-            {
-                GameObject enemyGO = Instantiate(_monsterPrefab, transform);
-                var statInit = enemyGO.GetComponent<StatsInitializer>();
-                statInit.InitStats(enemy);
-
-                var battleUnit = enemyGO.GetComponent<IBattleUnit>();
-                battleUnit.UnitData = enemy;
-                
-                var abilitySystem = enemyGO.GetComponent<AbilitySystemBehaviour>();
-                _battleManager.BattleTeam2.Members.Add(abilitySystem);
-                ProcessEnemiesName(data, enemy);
-            }
+            GenerateBattle(_battleData);
         }
 
-        private void ProcessEnemiesName(BattleDataSO data, CharacterDataSO enemyData)
+        public abstract void GenerateBattle(BattleDataSO data);
+
+        protected void ProcessEnemiesName(BattleDataSO data, CharacterDataSO enemyData)
         {
             var sameNameCount = data.Enemies.Count(x => x.Name == enemyData.Name);
             if (sameNameCount <= 1) return;
