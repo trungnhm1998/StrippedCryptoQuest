@@ -1,10 +1,10 @@
-﻿using System.Linq.Expressions;
+﻿using System.Collections.Generic;
+using System.Linq.Expressions;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
 using NotImplementedException = System.NotImplementedException;
-using System.Collections.Generic;
 
 namespace CryptoQuest.Input
 {
@@ -19,6 +19,7 @@ namespace CryptoQuest.Input
         public event UnityAction<Vector2> MoveEvent;
         public event UnityAction PauseEvent;
         public event UnityAction InteractEvent;
+        public event UnityAction OpenMainMenuEvent;
 
         #endregion
 
@@ -166,7 +167,10 @@ namespace CryptoQuest.Input
             if (context.performed) InteractEvent?.Invoke();
         }
 
-        public void OnInventory(InputAction.CallbackContext context) { }
+        public void OnMainMenu(InputAction.CallbackContext context)
+        {
+            if (context.performed) OpenMainMenuEvent?.Invoke();
+        }
 
         public void OnPause(InputAction.CallbackContext context)
         {
