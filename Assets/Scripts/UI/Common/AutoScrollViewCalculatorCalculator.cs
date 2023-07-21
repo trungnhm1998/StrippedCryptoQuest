@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 namespace CryptoQuest.UI.Battle.CommandsMenu
 {
-    public class ScrollViewCalculator : MonoBehaviour, IScrollView
+    public class AutoScrollViewCalculatorCalculator : MonoBehaviour, IAutoScrollViewCalculator
     {
         public float CalculateNormalizedScrollPosition(ScrollRect scrollRect, RectTransform targetRect, float align = 0)
         {
