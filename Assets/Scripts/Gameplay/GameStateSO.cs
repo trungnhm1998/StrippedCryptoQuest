@@ -1,5 +1,4 @@
-using System;
-using UnityEditor;
+using IndiGames.Core.Events.ScriptableObjects;
 using UnityEngine;
 
 namespace CryptoQuest.Gameplay
@@ -15,17 +14,24 @@ namespace CryptoQuest.Gameplay
     [CreateAssetMenu(fileName = "GameState", menuName = "Gameplay/Game State")]
     public class GameStateSO : ScriptableObject
     {
-        [Header("Game states")]
-        [SerializeField] private EGameState _previousGameState;
-
         [field: SerializeField] 
         public EGameState CurrentGameState { get; private set; }
+
+        [field: SerializeField] 
+        public EGameState PreviousGameState  { get; private set; }
+
+        [Header("Events")]
+        [SerializeField] private VoidEventChannelSO _enterBattleChannelEvent;
+        [SerializeField] private VoidEventChannelSO _enterFieldChannelEvent;
 
         public void UpdateGameState(EGameState newGameState)
         {
             if (newGameState == CurrentGameState) return;
 
-            _previousGameState = CurrentGameState;
+            if (newGameState == EGameState.Battle) _enterBattleChannelEvent.RaiseEvent();
+            if (newGameState == EGameState.Field) _enterFieldChannelEvent.RaiseEvent();
+
+            PreviousGameState = CurrentGameState;
             CurrentGameState = newGameState;
         }
     }
