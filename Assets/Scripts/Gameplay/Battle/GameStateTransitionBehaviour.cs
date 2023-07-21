@@ -2,14 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace CryptoQuest
+namespace CryptoQuest.Gameplay.Battle
 {
     public class GameStateTransitionBehaviour : MonoBehaviour
     {
         [SerializeField] private Animator _animator;
         [SerializeField] private ScreenColorTransitionSO _screenColor;
         [SerializeField] private List<SpriteRenderer> _spriteList;
-        [SerializeField] private string _parameterLoadingScreen;
+        private static readonly int AnimIsLoadingScreen = Animator.StringToHash("IsLoadingScreen");
 
         public void LoadBattleScreen()
         {
@@ -17,8 +17,8 @@ namespace CryptoQuest
             {
                 sprite.color = _screenColor.ColorLoadingScreen;
             }
-            _animator.ResetTrigger(_parameterLoadingScreen);
-            _animator.SetTrigger(_parameterLoadingScreen);
+            _animator.ResetTrigger(AnimIsLoadingScreen);
+            _animator.SetTrigger(AnimIsLoadingScreen);
         }
     }
 }
