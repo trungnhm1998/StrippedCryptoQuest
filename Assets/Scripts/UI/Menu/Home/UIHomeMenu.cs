@@ -1,16 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using CryptoQuest.UI.Menu.MockData;
+using IndiGames.Core.Events.ScriptableObjects;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace CryptoQuest.UI.Menu
+namespace CryptoQuest.UI.Menu.Home
 {
     public class UIHomeMenu : MonoBehaviour
     {
         [SerializeField] private Transform _characterSlots;
         [SerializeField] private GameObject _characterInfoPF;
         [SerializeField] private PartyManagerMockDataSO _partyManagerMockData;
+        [SerializeField] private VoidEventChannelSO _partyLoaded;
 
         private void Awake()
         {
@@ -36,6 +38,8 @@ namespace CryptoQuest.UI.Menu
                 memberGO.GetComponentInChildren<UICharacterInfo>().CharInfoMockData = member;
                 memberGO.transform.parent = _characterSlots;
             }
+
+            _partyLoaded.RaiseEvent();
         }
     }
 }

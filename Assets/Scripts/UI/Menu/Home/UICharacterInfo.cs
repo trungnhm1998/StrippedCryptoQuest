@@ -4,7 +4,7 @@ using CryptoQuest.UI.Menu.MockData;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace CryptoQuest.UI.Menu
+namespace CryptoQuest.UI.Menu.Home
 {
     public class UICharacterInfo : MonoBehaviour
     {

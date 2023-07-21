@@ -109,6 +109,15 @@ namespace CryptoQuest.Input
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""HomeMenuSort"",
+                    ""type"": ""Button"",
+                    ""id"": ""d6fcc8ac-31cd-44ba-afed-b8ddea4a7324"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -661,6 +670,28 @@ namespace CryptoQuest.Input
                     ""action"": ""Cancel"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1854258e-9724-4e83-9749-31a13849a8c1"",
+                    ""path"": ""<Keyboard>/x"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""MnK"",
+                    ""action"": ""HomeMenuSort"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f24b9177-f415-442f-a669-ba230ef16d71"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""HomeMenuSort"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -1166,6 +1197,7 @@ namespace CryptoQuest.Input
             m_Menus_Point = m_Menus.FindAction("Point", throwIfNotFound: true);
             m_Menus_NextSelection = m_Menus.FindAction("NextSelection", throwIfNotFound: true);
             m_Menus_MouseMove = m_Menus.FindAction("MouseMove", throwIfNotFound: true);
+            m_Menus_HomeMenuSort = m_Menus.FindAction("HomeMenuSort", throwIfNotFound: true);
             // MapGameplay
             m_MapGameplay = asset.FindActionMap("MapGameplay", throwIfNotFound: true);
             m_MapGameplay_MoveUp = m_MapGameplay.FindAction("MoveUp", throwIfNotFound: true);
@@ -1249,6 +1281,7 @@ namespace CryptoQuest.Input
         private readonly InputAction m_Menus_Point;
         private readonly InputAction m_Menus_NextSelection;
         private readonly InputAction m_Menus_MouseMove;
+        private readonly InputAction m_Menus_HomeMenuSort;
         public struct MenusActions
         {
             private @InputActions m_Wrapper;
@@ -1262,6 +1295,7 @@ namespace CryptoQuest.Input
             public InputAction @Point => m_Wrapper.m_Menus_Point;
             public InputAction @NextSelection => m_Wrapper.m_Menus_NextSelection;
             public InputAction @MouseMove => m_Wrapper.m_Menus_MouseMove;
+            public InputAction @HomeMenuSort => m_Wrapper.m_Menus_HomeMenuSort;
             public InputActionMap Get() { return m_Wrapper.m_Menus; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -1298,6 +1332,9 @@ namespace CryptoQuest.Input
                 @MouseMove.started += instance.OnMouseMove;
                 @MouseMove.performed += instance.OnMouseMove;
                 @MouseMove.canceled += instance.OnMouseMove;
+                @HomeMenuSort.started += instance.OnHomeMenuSort;
+                @HomeMenuSort.performed += instance.OnHomeMenuSort;
+                @HomeMenuSort.canceled += instance.OnHomeMenuSort;
             }
 
             private void UnregisterCallbacks(IMenusActions instance)
@@ -1329,6 +1366,9 @@ namespace CryptoQuest.Input
                 @MouseMove.started -= instance.OnMouseMove;
                 @MouseMove.performed -= instance.OnMouseMove;
                 @MouseMove.canceled -= instance.OnMouseMove;
+                @HomeMenuSort.started -= instance.OnHomeMenuSort;
+                @HomeMenuSort.performed -= instance.OnHomeMenuSort;
+                @HomeMenuSort.canceled -= instance.OnHomeMenuSort;
             }
 
             public void RemoveCallbacks(IMenusActions instance)
@@ -1523,6 +1563,7 @@ namespace CryptoQuest.Input
             void OnPoint(InputAction.CallbackContext context);
             void OnNextSelection(InputAction.CallbackContext context);
             void OnMouseMove(InputAction.CallbackContext context);
+            void OnHomeMenuSort(InputAction.CallbackContext context);
         }
         public interface IMapGameplayActions
         {

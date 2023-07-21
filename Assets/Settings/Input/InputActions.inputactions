@@ -85,6 +85,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "HomeMenuSort",
+                    "type": "Button",
+                    "id": "d6fcc8ac-31cd-44ba-afed-b8ddea4a7324",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -635,6 +644,28 @@
                     "processors": "",
                     "groups": "Gamepad;MnK",
                     "action": "Cancel",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "1854258e-9724-4e83-9749-31a13849a8c1",
+                    "path": "<Keyboard>/x",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "MnK",
+                    "action": "HomeMenuSort",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f24b9177-f415-442f-a669-ba230ef16d71",
+                    "path": "<Gamepad>/buttonWest",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "HomeMenuSort",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
