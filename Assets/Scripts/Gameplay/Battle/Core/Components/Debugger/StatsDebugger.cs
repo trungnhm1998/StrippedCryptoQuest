@@ -8,7 +8,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components.Debugger
 {
     public class StatsDebugger : MonoBehaviour
     {
-    #if UNITY_EDITOR || DEVELOPMENT_BUILD 
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
         [SerializeField] private AbilitySystemBehaviour _owner;
         [SerializeField] private bool _showDebug = false;
         [SerializeField] private Rect _windowRect = new Rect(20, 20, 120, 50);
@@ -46,7 +46,8 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components.Debugger
 
             GUILayout.BeginVertical();
             var unitData = _unit.UnitData;
-            newRect = GUILayout.Window(_windowId, inputRect, DoMyWindow, $"{((unitData != null) ? unitData.DisplayName : "Character")} Stats", GUILayout.ExpandHeight(true));
+            newRect = GUILayout.Window(_windowId, inputRect, DoMyWindow,
+                $"{((unitData != null) ? unitData.DisplayName : "Character")} Stats", GUILayout.ExpandHeight(true));
             GUILayout.EndVertical();
 
             if (!_showDebug)
@@ -93,10 +94,11 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components.Debugger
                     computedValue = abstractEffect.EffectSO.EffectDetails.Modifiers[0].ModifierComputationMethod
                         .CalculateMagnitude(abstractEffect);
                 }
+
                 string details = "";
                 if (abstractEffect.Parameters != null)
                 {
-                    var skillParams = (SkillParameters) abstractEffect.Parameters;
+                    var skillParams = (SkillParameters)abstractEffect.Parameters;
                     details = $"\nTurns: {skillParams.ContinuesTurn} | Base Power: {skillParams.BasePower}";
                 }
 
@@ -118,10 +120,10 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components.Debugger
             foreach (var attribute in _attributeSystem.AttributeValues)
             {
                 GUILayout.Label($"{attribute.Attribute.name}: {attribute.CurrentValue}\n"
-                    + $"(equipments [+{attribute.CoreModifier.Additive}] [*{attribute.CoreModifier.Multiplicative}]) " 
-                        + $"(skills/effects [+{attribute.Modifier.Additive}] [*{attribute.Modifier.Multiplicative}])");
+                                + $"(equipments [+{attribute.CoreModifier.Additive}] [*{attribute.CoreModifier.Multiplicative}]) "
+                                + $"(skills/effects [+{attribute.Modifier.Additive}] [*{attribute.Modifier.Multiplicative}])");
             }
         }
-    #endif
+#endif
     }
 }
