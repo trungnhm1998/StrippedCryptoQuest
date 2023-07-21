@@ -1,5 +1,5 @@
 using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data;
-using Unity.Collections;
+using IndiGames.Core.EditorTools.Attributes.ReadOnlyAttribute;
 using UnityEngine;
 
 namespace CryptoQuest.Gameplay.Battle

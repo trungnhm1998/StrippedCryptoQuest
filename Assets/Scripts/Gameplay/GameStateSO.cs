@@ -1,5 +1,6 @@
 using IndiGames.Core.Events.ScriptableObjects;
 using UnityEngine;
+using IndiGames.Core.EditorTools.Attributes.ReadOnlyAttribute;
 
 namespace CryptoQuest.Gameplay
 {
@@ -14,10 +15,10 @@ namespace CryptoQuest.Gameplay
     [CreateAssetMenu(fileName = "GameState", menuName = "Gameplay/Game State")]
     public class GameStateSO : ScriptableObject
     {
-        [field: SerializeField] 
+        [field: SerializeField, ReadOnly] 
         public EGameState CurrentGameState { get; private set; }
 
-        [field: SerializeField] 
+        [field: SerializeField, ReadOnly] 
         public EGameState PreviousGameState  { get; private set; }
 
         [Header("Events")]
