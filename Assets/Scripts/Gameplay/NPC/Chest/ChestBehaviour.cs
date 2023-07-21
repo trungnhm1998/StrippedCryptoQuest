@@ -3,15 +3,12 @@ using CryptoQuest.Gameplay.Quest.Dialogue.ScriptableObject;
 using CryptoQuest.Character;
 using UnityEngine;
 
-namespace CryptoQuest
+namespace CryptoQuest.Gameplay.NPC.Chest
 {
     public class ChestBehaviour : MonoBehaviour, IInteractable
     {
-        [Header("Event")]
-        [SerializeField] private OpenChestEventChannelSO _openChestChannel;
-        [Header("Raise on")]
-        [SerializeField] private ChestDataSO _chestData;
-
+        [SerializeField] private ChestEventChannelSO _chestEventChannel;
+        [SerializeField] private ChestData _chestData;
         [SerializeField] private Animator _animator;
         private bool _isOpened = false;
         private static readonly int IsOpening = Animator.StringToHash("IsOpening");
@@ -22,7 +19,7 @@ namespace CryptoQuest
             {
                 _isOpened = true;
                 _animator.SetBool(IsOpening, _isOpened);
-                _openChestChannel.Open(_chestData);
+                _chestEventChannel.Open(_chestData);
             }
         }
     }
