@@ -8,6 +8,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.BattleFSM.States
     [CreateAssetMenu(fileName = "BattleEndStateSO", menuName = "Gameplay/Battle/FSM/States/Battle End State")]
     public class BattleEndStateSO : BattleStateSO
     {
+        [SerializeField] private GameStateSO _gameState;
         [SerializeField] private SceneScriptableObject _battleSceneSO;
         [SerializeField] private UnloadSceneEventChannelSO _unloadSceneEvent;
         public override void OnEnterState(BaseStateMachine stateMachine)
@@ -19,6 +20,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.BattleFSM.States
         private void BattleEnd(BaseStateMachine stateMachine)
         {
             _unloadSceneEvent.RequestUnload(_battleSceneSO);
+            _gameState.UpdateGameState(EGameState.Field);
         }
     }
 }
