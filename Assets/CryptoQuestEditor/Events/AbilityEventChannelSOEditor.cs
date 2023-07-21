@@ -1,14 +1,9 @@
-using CryptoQuest.DialogueSystem;
-using CryptoQuest.Events;
 using CryptoQuest.Events.Gameplay;
 using UnityEngine;
 
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
-using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data;
-using IndiGames.GameplayAbilitySystem.AbilitySystem.ScriptableObjects;
-
 
 namespace CryptoQuest
 {
