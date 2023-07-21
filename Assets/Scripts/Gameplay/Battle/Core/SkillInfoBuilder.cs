@@ -3,7 +3,7 @@ using CryptoQuest.Gameplay.Battle.Core;
 using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data;
 using UnityEngine.Localization;
 
-namespace CryptoQuest
+namespace CryptoQuest.Gameplay.Battle.Core
 {
     public class SkillInfoBuilder
     {
