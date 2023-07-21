@@ -21,6 +21,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components
 
             foreach (var member in Members)
             {
+                if (!member.gameObject.activeSelf) continue;
                 var unit = member.gameObject.GetComponent<IBattleUnit>();
                 unit.Init(this, member);
                 unit.SetOpponentTeams(opponentTeam);
