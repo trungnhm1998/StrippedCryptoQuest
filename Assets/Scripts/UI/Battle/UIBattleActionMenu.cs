@@ -32,13 +32,12 @@ namespace CryptoQuest.UI.Battle
 
         private BattleManager _battleManager;
         private IBattleUnit _currentUnit;
-        private Dictionary<Button, TextMeshProUGUI> _buttonTextMap = new Dictionary<Button, TextMeshProUGUI>();
+        private readonly Dictionary<Button, TextMeshProUGUI> _buttonTextMap = new();
 
         private void Start()
         {
             _battleManager = _battleBus.BattleManager;
             SetupChain(_normalAttackChain);
-            CacheButtonTexts();
         }
 
         private void OnEnable()
@@ -54,7 +53,8 @@ namespace CryptoQuest.UI.Battle
         private void OnHeroTurn(IBattleUnit unit)
         {
             SelectFirstButton();
-            SetActiveCommandsMenu(true);
+            CacheButtonTexts();
+
             _currentUnit = unit;
             _currentUnitName.text = unit.UnitData.DisplayName;
         }
@@ -69,8 +69,9 @@ namespace CryptoQuest.UI.Battle
 
         private void CacheButtonTexts()
         {
+            SetActiveCommandsMenu(true);
             _buttonTextMap.Clear();
-            
+
             for (int i = 0; i < _allButtons.Length; i++)
             {
                 _buttonTextMap.Add(_allButtons[i], _allButtonTexts[i]);

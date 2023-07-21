@@ -26,7 +26,6 @@ namespace CryptoQuest.UI.Battle.CommandsMenu
 
         private void OnEnable()
         {
-            Debug.Log("NavigationAutoScroll enabled");
             _inputMediator.MenuNavigateEvent += CheckButtonPosition;
             _scrollViewCalculation = GetComponent<IScrollView>();
         }
