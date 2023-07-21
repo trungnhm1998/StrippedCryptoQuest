@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using CryptoQuest.MockData;
+using CryptoQuest.UI.Menu.MockData;
 using UnityEngine;
 using UnityEngine.UI;
 
