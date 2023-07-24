@@ -39,6 +39,10 @@ namespace CryptoQuest.UI.Battle
 
         private BattleManager _battleManager;
 
+        private void Start()
+        {
+            _commandPanel.Init(_mobInfo);
+        }
 
         private void OnEnable()
         {
@@ -51,8 +55,6 @@ namespace CryptoQuest.UI.Battle
             _inputMediator.CancelEvent += OnClickCancel;
 
             _battleManager = _battleBus.BattleManager;
-
-            _commandPanel.Init(_mobInfo);
         }
 
         private void OnDisable()

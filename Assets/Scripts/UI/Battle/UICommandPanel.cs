@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using CryptoQuest.UI.Battle.CommandsMenu;
 using UnityEngine;
+using UnityEngine.Pool;
 using UnityEngine.UI;
 
 namespace CryptoQuest.UI.Battle
@@ -11,45 +12,37 @@ namespace CryptoQuest.UI.Battle
         [SerializeField] private GameObject _itemPrefab;
 
         private List<GameObject> _buttonPool = new List<GameObject>();
-        private Queue<UICommandContent> _commandQueue = new Queue<UICommandContent>();
+        private IObjectPool<UICommandContent> _uiCommandContentPool;
 
         private void Awake()
         {
-            for (int i = 0; i < 7; i++)
-            {
-                var button = InstantiateButton();
-                ReturnButtonToPool(button);
-            }
+            _uiCommandContentPool = new ObjectPool<UICommandContent>(OnCreate, OnGet, OnRelease, OnDestroyPool);
         }
 
-        private GameObject InstantiateButton()
+        private void OnDestroyPool(UICommandContent obj)
         {
-            var button = Instantiate(_itemPrefab, _content.transform);
-            button.SetActive(false);
+            Destroy(obj.gameObject);
+        }
+
+        private void OnRelease(UICommandContent obj)
+        {
+            obj.gameObject.SetActive(false);
+            _buttonPool.Remove(obj.gameObject);
+        }
+
+        private void OnGet(UICommandContent obj)
+        {
+            obj.transform.SetAsLastSibling();
+            obj.gameObject.SetActive(true);
+        }
+
+        private UICommandContent OnCreate()
+        {
+            var go = Instantiate(_itemPrefab, _content.transform);
+            _buttonPool.Add(go);
+            var button = go.GetComponent<UICommandContent>();
+            button.ObjectPool = _uiCommandContentPool;
             return button;
-        }
-
-        private void ReturnButtonToPool(GameObject button)
-        {
-            button.SetActive(false);
-            _buttonPool.Add(button);
-            var content = button.GetComponent<UICommandContent>();
-
-            if (content == null) return;
-            _commandQueue.Enqueue(content);
-        }
-
-        private UICommandContent GetButtonFromPool()
-        {
-            if (_commandQueue.Count == 0)
-            {
-                var newItem = InstantiateButton();
-                ReturnButtonToPool(newItem);
-            }
-
-            var uiCommandContent = _commandQueue.Dequeue();
-            uiCommandContent.gameObject.SetActive(true);
-            return uiCommandContent;
         }
 
         public override void Init(List<ButtonInfo> informations)
@@ -57,7 +50,7 @@ namespace CryptoQuest.UI.Battle
             _content.SetActive(true);
             foreach (var info in informations)
             {
-                var item = GetButtonFromPool();
+                var item = _uiCommandContentPool.Get();
                 item.Init(info);
             }
 
@@ -69,13 +62,13 @@ namespace CryptoQuest.UI.Battle
 
         public override void Clear()
         {
-            foreach (var button in _buttonPool)
+            foreach (Transform transform in _content.transform)
             {
-                Destroy(button);
+                var button = transform.GetComponent<UICommandContent>();
+                if (button && button.gameObject.activeInHierarchy)
+                    button.ReleaseToPool();
             }
 
-            _buttonPool.Clear();
-            _commandQueue.Clear();
             _content.SetActive(false);
         }
     }
