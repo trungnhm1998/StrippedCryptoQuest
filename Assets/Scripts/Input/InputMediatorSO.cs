@@ -43,8 +43,9 @@ namespace CryptoQuest.Input
 
         #region HomeMenu
 
-        public event UnityAction NextTargetEvent;
-        public event UnityAction PreviousTargetEvent;
+        public event UnityAction NextEvent;
+        public event UnityAction PreviousEvent;
+        public event UnityAction ConfirmSelectEvent;
 
         #endregion
 
@@ -262,12 +263,17 @@ namespace CryptoQuest.Input
 
         public void OnNext(InputAction.CallbackContext context)
         {
-            if (context.performed) NextTargetEvent?.Invoke();
+            if (context.performed) NextEvent?.Invoke();
         }
 
         public void OnPrevious(InputAction.CallbackContext context)
         {
-            if (context.performed) PreviousTargetEvent?.Invoke();
+            if (context.performed) PreviousEvent?.Invoke();
+        }
+
+        public void OnConfirmSelect(InputAction.CallbackContext context)
+        {
+            if (context.performed) ConfirmSelectEvent?.Invoke();
         }
 
         #endregion

@@ -1002,6 +1002,15 @@ namespace CryptoQuest.Input
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ConfirmSelect"",
+                    ""type"": ""Button"",
+                    ""id"": ""cc1ef8f3-edf9-4652-ac91-7612115f7323"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -1136,6 +1145,39 @@ namespace CryptoQuest.Input
                     ""action"": ""Previous"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""863c9890-3406-4dd8-b538-f0ba67b3ad43"",
+                    ""path"": ""<Keyboard>/enter"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""MnK"",
+                    ""action"": ""ConfirmSelect"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""10cf7b9b-772a-4ba0-8eea-b0f701b90e35"",
+                    ""path"": ""<Keyboard>/numpadEnter"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""MnK"",
+                    ""action"": ""ConfirmSelect"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""bf4c3072-c4c4-487b-a33a-d08a4fe9aa06"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""ConfirmSelect"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -1198,6 +1240,7 @@ namespace CryptoQuest.Input
             m_HomeMenu = asset.FindActionMap("HomeMenu", throwIfNotFound: true);
             m_HomeMenu_Next = m_HomeMenu.FindAction("Next", throwIfNotFound: true);
             m_HomeMenu_Previous = m_HomeMenu.FindAction("Previous", throwIfNotFound: true);
+            m_HomeMenu_ConfirmSelect = m_HomeMenu.FindAction("ConfirmSelect", throwIfNotFound: true);
         }
 
         public void Dispose()
@@ -1519,12 +1562,14 @@ namespace CryptoQuest.Input
         private List<IHomeMenuActions> m_HomeMenuActionsCallbackInterfaces = new List<IHomeMenuActions>();
         private readonly InputAction m_HomeMenu_Next;
         private readonly InputAction m_HomeMenu_Previous;
+        private readonly InputAction m_HomeMenu_ConfirmSelect;
         public struct HomeMenuActions
         {
             private @InputActions m_Wrapper;
             public HomeMenuActions(@InputActions wrapper) { m_Wrapper = wrapper; }
             public InputAction @Next => m_Wrapper.m_HomeMenu_Next;
             public InputAction @Previous => m_Wrapper.m_HomeMenu_Previous;
+            public InputAction @ConfirmSelect => m_Wrapper.m_HomeMenu_ConfirmSelect;
             public InputActionMap Get() { return m_Wrapper.m_HomeMenu; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -1540,6 +1585,9 @@ namespace CryptoQuest.Input
                 @Previous.started += instance.OnPrevious;
                 @Previous.performed += instance.OnPrevious;
                 @Previous.canceled += instance.OnPrevious;
+                @ConfirmSelect.started += instance.OnConfirmSelect;
+                @ConfirmSelect.performed += instance.OnConfirmSelect;
+                @ConfirmSelect.canceled += instance.OnConfirmSelect;
             }
 
             private void UnregisterCallbacks(IHomeMenuActions instance)
@@ -1550,6 +1598,9 @@ namespace CryptoQuest.Input
                 @Previous.started -= instance.OnPrevious;
                 @Previous.performed -= instance.OnPrevious;
                 @Previous.canceled -= instance.OnPrevious;
+                @ConfirmSelect.started -= instance.OnConfirmSelect;
+                @ConfirmSelect.performed -= instance.OnConfirmSelect;
+                @ConfirmSelect.canceled -= instance.OnConfirmSelect;
             }
 
             public void RemoveCallbacks(IHomeMenuActions instance)
@@ -1616,6 +1667,7 @@ namespace CryptoQuest.Input
         {
             void OnNext(InputAction.CallbackContext context);
             void OnPrevious(InputAction.CallbackContext context);
+            void OnConfirmSelect(InputAction.CallbackContext context);
         }
     }
 }

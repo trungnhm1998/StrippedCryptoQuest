@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace CryptoQuest.UI.Menu.Home
 {
-    public class UIHomeMenuSortCharacter : MonoBehaviour
+    public class UIHomeMenuSelectCharacter : MonoBehaviour
     {
         [Header("Configs")]
         [SerializeField] private InputMediatorSO _inputMediator;
@@ -16,7 +16,9 @@ namespace CryptoQuest.UI.Menu.Home
 
         [Header("Game Components")]
         [SerializeField] private Transform _characterSlots;
-        [SerializeField] private UICharacterCard _cardHolder;
+        private UICharacterCard _selectingCardHolder;
+        private UICharacterCard _selectedCardHolder;
+        private int[] _arr = { 0, 0, 0, 0 };
 
         private int _currentSortTargetIndex = 0;
         private int CurrentSortTargetIndex
@@ -39,15 +41,17 @@ namespace CryptoQuest.UI.Menu.Home
         private void OnEnable()
         {
             _inputMediator.HomeMenuSortEvent += OnEnableSortFunc;
-            _inputMediator.NextTargetEvent += OnNextTarget;
-            _inputMediator.PreviousTargetEvent += OnPreviousTarget;
+            _inputMediator.NextEvent += OnNextTarget;
+            _inputMediator.PreviousEvent += OnPreviousTarget;
+            _inputMediator.ConfirmSelectEvent += OnConfirmSelectTarget;
         }
 
         private void OnDisable()
         {
             _inputMediator.HomeMenuSortEvent -= OnEnableSortFunc;
-            _inputMediator.NextTargetEvent -= OnNextTarget;
-            _inputMediator.PreviousTargetEvent += OnPreviousTarget;
+            _inputMediator.NextEvent -= OnNextTarget;
+            _inputMediator.PreviousEvent -= OnPreviousTarget;
+            _inputMediator.ConfirmSelectEvent -= OnConfirmSelectTarget;
         }
 
         private UICharacterCard GetCharacterCard(int index)
@@ -59,7 +63,7 @@ namespace CryptoQuest.UI.Menu.Home
         private void OnEnableSortFunc()
         {
             _inputMediator.EnableHomeMenuInput();
-            _cardHolder = GetCharacterCard(0);
+            _selectingCardHolder = GetCharacterCard(0);
             SelectTargetToSort();
         }
 
@@ -79,11 +83,30 @@ namespace CryptoQuest.UI.Menu.Home
         {
             var currentCard = GetCharacterCard(CurrentSortTargetIndex);
 
-            if (_cardHolder != currentCard)
-                _cardHolder.Deselect();
+            if (_selectingCardHolder != currentCard)
+                _selectingCardHolder.Deselect();
 
-            _cardHolder = currentCard;
-            _cardHolder.Select();
+            _selectingCardHolder = currentCard;
+            _selectingCardHolder.Select();
+        }
+
+        private void OnConfirmSelectTarget()
+        {
+            // _selectedCardHolder = _selectingCardHolder;
+            _arr[CurrentSortTargetIndex] = 1;
+
+            Debug.Log($"[{string.Join(",", _arr)}]");
+            _inputMediator.NextEvent -= OnNextTarget;
+            _inputMediator.PreviousEvent -= OnPreviousTarget;
+
+            _selectingCardHolder.OnSelected();
+
+            _inputMediator.NextEvent += OnSwapRight;
+        }
+
+        private void OnSwapRight()
+        {
+
         }
     }
 }
