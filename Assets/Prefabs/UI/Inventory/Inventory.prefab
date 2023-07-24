@@ -456,6 +456,7 @@ GameObject:
   - component: {fileID: 7420969191363257853}
   - component: {fileID: 3141743425969938592}
   - component: {fileID: 8066051763325091460}
+  - component: {fileID: 1110373941974820383}
   m_Layer: 5
   m_Name: Expendables
   m_TagString: Untagged
@@ -565,8 +566,34 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 3141743425969938592}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1110373941974820383}
+        m_TargetAssemblyTypeName: CryptoQuest.UI.Inventory.UIInventoryTabButton,
+          indi-games.crypto-quest
+        m_MethodName: OnClicked
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   IsSelected: 0
+--- !u!114 &1110373941974820383
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2056020140488295876}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c38f2be563219e4b9fcec267ad7afba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _tabTypeId: 0
 --- !u!1 &2308836290064884215
 GameObject:
   m_ObjectHideFlags: 0
@@ -959,6 +986,7 @@ GameObject:
   - component: {fileID: 9197948330059327540}
   - component: {fileID: 4088996883719731046}
   - component: {fileID: 7610391741606752129}
+  - component: {fileID: 4586658172523973805}
   m_Layer: 5
   m_Name: Valuables
   m_TagString: Untagged
@@ -1068,8 +1096,34 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 4088996883719731046}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 4586658172523973805}
+        m_TargetAssemblyTypeName: CryptoQuest.UI.Inventory.UIInventoryTabButton,
+          indi-games.crypto-quest
+        m_MethodName: OnClicked
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   IsSelected: 0
+--- !u!114 &4586658172523973805
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4766262094470552491}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c38f2be563219e4b9fcec267ad7afba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _tabTypeId: 1
 --- !u!1 &5842137814597412011
 GameObject:
   m_ObjectHideFlags: 0
@@ -1121,12 +1175,11 @@ MonoBehaviour:
   _autoScrollRect: {fileID: 8495677151630898313}
   _selectionHandler: {fileID: 3243643118316364725}
   _tabInventoryButton:
-  - {fileID: 8066051763325091460}
-  - {fileID: 7610391741606752129}
-  - {fileID: 291965089011255142}
+  - {fileID: 1110373941974820383}
+  - {fileID: 4586658172523973805}
+  - {fileID: 5690194879344105287}
   _itemMenu:
-  - MenuName: Expendables
-    Items:
+  - Items:
     - {fileID: 11400000, guid: 439504de78a653648b6f5f41301420bf, type: 2}
     - {fileID: 11400000, guid: 201c4597fb5bd3b41b397357695bf0b2, type: 2}
     - {fileID: 11400000, guid: 03c8ea842626f1b458869533439afc6c, type: 2}
@@ -1146,8 +1199,7 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 439504de78a653648b6f5f41301420bf, type: 2}
     - {fileID: 11400000, guid: 201c4597fb5bd3b41b397357695bf0b2, type: 2}
     InitializedData: 0
-  - MenuName: Valuebles
-    Items:
+  - Items:
     - {fileID: 11400000, guid: 03c8ea842626f1b458869533439afc6c, type: 2}
     - {fileID: 11400000, guid: 6ebeb0846973ee244a93c1efd00327ec, type: 2}
     - {fileID: 11400000, guid: 439504de78a653648b6f5f41301420bf, type: 2}
@@ -1183,8 +1235,7 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 439504de78a653648b6f5f41301420bf, type: 2}
     - {fileID: 11400000, guid: 201c4597fb5bd3b41b397357695bf0b2, type: 2}
     InitializedData: 0
-  - MenuName: NFT
-    Items:
+  - Items:
     - {fileID: 11400000, guid: 439504de78a653648b6f5f41301420bf, type: 2}
     - {fileID: 11400000, guid: 6ebeb0846973ee244a93c1efd00327ec, type: 2}
     - {fileID: 11400000, guid: 201c4597fb5bd3b41b397357695bf0b2, type: 2}
@@ -1203,8 +1254,8 @@ MonoBehaviour:
   - {fileID: 6440769535548549677}
   - {fileID: 2411745074133571599}
   _parentTransform: {fileID: 509404612358635226}
-  _MoveUp: {fileID: 2308836290064884215}
-  _MoveDown: {fileID: 6398922649024843336}
+  _upArrowHint: {fileID: 2308836290064884215}
+  _downArrowHint: {fileID: 6398922649024843336}
 --- !u!114 &5243556196498190241
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1218,15 +1269,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _listButton: []
-  _items:
-  - menuName: Expendables
-    _listButton: []
-  - menuName: Valuebles
-    _listButton: []
-  - menuName: NFT
-    _listButton: []
   _description: {fileID: 5492274689975852820}
-  _currentButton: {fileID: 0}
+  Item:
+  - ListButton: []
+  - ListButton: []
+  - ListButton: []
 --- !u!1 &5897715805975414583
 GameObject:
   m_ObjectHideFlags: 0
@@ -1320,6 +1367,7 @@ GameObject:
   - component: {fileID: 3056598828605273665}
   - component: {fileID: 8329439392688853745}
   - component: {fileID: 6651128711650125539}
+  - component: {fileID: 4685775156674711876}
   m_Layer: 5
   m_Name: Description
   m_TagString: Untagged
@@ -1430,6 +1478,46 @@ MonoBehaviour:
     version: 2
     RefIds: []
 --- !u!114 &6651128711650125539
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5907443925195265422}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56eb0353ae6e5124bb35b17aff880f16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_StringReference:
+    m_TableReference:
+      m_TableCollectionName: GUID:eb6ce0c7cd5c2444c9d3345957efb3cb
+    m_TableEntryReference:
+      m_KeyId: 2568901718016
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  m_FormatArguments: []
+  m_UpdateString:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3056598828605273665}
+        m_TargetAssemblyTypeName: UnityEngine.UI.Text, UnityEngine.UI
+        m_MethodName: set_text
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  references:
+    version: 2
+    RefIds: []
+--- !u!114 &4685775156674711876
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2304,6 +2392,7 @@ GameObject:
   - component: {fileID: 6170251703160121440}
   - component: {fileID: 4865189440426642283}
   - component: {fileID: 291965089011255142}
+  - component: {fileID: 5690194879344105287}
   m_Layer: 5
   m_Name: NFT
   m_TagString: Untagged
@@ -2413,5 +2502,31 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 4865189440426642283}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 5690194879344105287}
+        m_TargetAssemblyTypeName: CryptoQuest.UI.Inventory.UIInventoryTabButton,
+          indi-games.crypto-quest
+        m_MethodName: OnClicked
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   IsSelected: 0
+--- !u!114 &5690194879344105287
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9019341855491367950}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c38f2be563219e4b9fcec267ad7afba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _tabTypeId: 2

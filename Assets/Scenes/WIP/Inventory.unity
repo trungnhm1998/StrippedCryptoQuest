@@ -683,12 +683,48 @@ PrefabInstance:
       propertyPath: m_Navigation.m_Mode
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 291965089011255142, guid: 2b5bce4de3b58ac468c2139df6cbb57c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 291965089011255142, guid: 2b5bce4de3b58ac468c2139df6cbb57c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 291965089011255142, guid: 2b5bce4de3b58ac468c2139df6cbb57c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 9047595340394520518}
+    - target: {fileID: 291965089011255142, guid: 2b5bce4de3b58ac468c2139df6cbb57c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 291965089011255142, guid: 2b5bce4de3b58ac468c2139df6cbb57c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnClicked
+      objectReference: {fileID: 0}
+    - target: {fileID: 291965089011255142, guid: 2b5bce4de3b58ac468c2139df6cbb57c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: CryptoQuest.UI.Inventory.UIInventoryTabButton, indi-games.crypto-quest
+      objectReference: {fileID: 0}
+    - target: {fileID: 291965089011255142, guid: 2b5bce4de3b58ac468c2139df6cbb57c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 711326648366881564, guid: 2b5bce4de3b58ac468c2139df6cbb57c, type: 3}
       propertyPath: _MoveUp
       value: 
       objectReference: {fileID: 1608148379}
     - target: {fileID: 711326648366881564, guid: 2b5bce4de3b58ac468c2139df6cbb57c, type: 3}
       propertyPath: _MoveDown
+      value: 
+      objectReference: {fileID: 317897744}
+    - target: {fileID: 711326648366881564, guid: 2b5bce4de3b58ac468c2139df6cbb57c, type: 3}
+      propertyPath: _upArrowHint
+      value: 
+      objectReference: {fileID: 1608148379}
+    - target: {fileID: 711326648366881564, guid: 2b5bce4de3b58ac468c2139df6cbb57c, type: 3}
+      propertyPath: _downArrowHint
       value: 
       objectReference: {fileID: 317897744}
     - target: {fileID: 711326648366881564, guid: 2b5bce4de3b58ac468c2139df6cbb57c, type: 3}
@@ -704,6 +740,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 983005305}
     - target: {fileID: 711326648366881564, guid: 2b5bce4de3b58ac468c2139df6cbb57c, type: 3}
+      propertyPath: _tabInventoryButton.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 711326648366881564, guid: 2b5bce4de3b58ac468c2139df6cbb57c, type: 3}
       propertyPath: _itemMenu.Array.data[0].MenuName
       value: Expendables
       objectReference: {fileID: 0}
@@ -715,6 +755,18 @@ PrefabInstance:
       propertyPath: _itemMenu.Array.data[2].MenuName
       value: NFT
       objectReference: {fileID: 0}
+    - target: {fileID: 711326648366881564, guid: 2b5bce4de3b58ac468c2139df6cbb57c, type: 3}
+      propertyPath: _tabInventoryButton.Array.data[0]
+      value: 
+      objectReference: {fileID: 9047595340394520520}
+    - target: {fileID: 711326648366881564, guid: 2b5bce4de3b58ac468c2139df6cbb57c, type: 3}
+      propertyPath: _tabInventoryButton.Array.data[1]
+      value: 
+      objectReference: {fileID: 9047595340394520519}
+    - target: {fileID: 711326648366881564, guid: 2b5bce4de3b58ac468c2139df6cbb57c, type: 3}
+      propertyPath: _tabInventoryButton.Array.data[2]
+      value: 
+      objectReference: {fileID: 9047595340394520518}
     - target: {fileID: 711326648366881564, guid: 2b5bce4de3b58ac468c2139df6cbb57c, type: 3}
       propertyPath: _itemMenu.Array.data[0].Items.Array.size
       value: 18
@@ -1124,6 +1176,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5243556196498190241, guid: 2b5bce4de3b58ac468c2139df6cbb57c, type: 3}
+      propertyPath: Item.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5243556196498190241, guid: 2b5bce4de3b58ac468c2139df6cbb57c, type: 3}
       propertyPath: _items.Array.size
       value: 3
       objectReference: {fileID: 0}
@@ -1146,6 +1202,34 @@ PrefabInstance:
     - target: {fileID: 7610391741606752129, guid: 2b5bce4de3b58ac468c2139df6cbb57c, type: 3}
       propertyPath: m_Navigation.m_Mode
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7610391741606752129, guid: 2b5bce4de3b58ac468c2139df6cbb57c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7610391741606752129, guid: 2b5bce4de3b58ac468c2139df6cbb57c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7610391741606752129, guid: 2b5bce4de3b58ac468c2139df6cbb57c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 9047595340394520519}
+    - target: {fileID: 7610391741606752129, guid: 2b5bce4de3b58ac468c2139df6cbb57c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7610391741606752129, guid: 2b5bce4de3b58ac468c2139df6cbb57c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnClicked
+      objectReference: {fileID: 0}
+    - target: {fileID: 7610391741606752129, guid: 2b5bce4de3b58ac468c2139df6cbb57c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: CryptoQuest.UI.Inventory.UIInventoryTabButton, indi-games.crypto-quest
+      objectReference: {fileID: 0}
+    - target: {fileID: 7610391741606752129, guid: 2b5bce4de3b58ac468c2139df6cbb57c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 7902270717740799856, guid: 2b5bce4de3b58ac468c2139df6cbb57c, type: 3}
       propertyPath: m_AnchorMax.y
@@ -1174,6 +1258,34 @@ PrefabInstance:
     - target: {fileID: 8066051763325091460, guid: 2b5bce4de3b58ac468c2139df6cbb57c, type: 3}
       propertyPath: m_Navigation.m_Mode
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8066051763325091460, guid: 2b5bce4de3b58ac468c2139df6cbb57c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8066051763325091460, guid: 2b5bce4de3b58ac468c2139df6cbb57c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8066051763325091460, guid: 2b5bce4de3b58ac468c2139df6cbb57c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 9047595340394520520}
+    - target: {fileID: 8066051763325091460, guid: 2b5bce4de3b58ac468c2139df6cbb57c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8066051763325091460, guid: 2b5bce4de3b58ac468c2139df6cbb57c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnClicked
+      objectReference: {fileID: 0}
+    - target: {fileID: 8066051763325091460, guid: 2b5bce4de3b58ac468c2139df6cbb57c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: CryptoQuest.UI.Inventory.UIInventoryTabButton, indi-games.crypto-quest
+      objectReference: {fileID: 0}
+    - target: {fileID: 8066051763325091460, guid: 2b5bce4de3b58ac468c2139df6cbb57c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 8262796188015647636, guid: 2b5bce4de3b58ac468c2139df6cbb57c, type: 3}
       propertyPath: m_AnchorMax.y
@@ -1229,7 +1341,70 @@ PrefabInstance:
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2056020140488295876, guid: 2b5bce4de3b58ac468c2139df6cbb57c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 9047595340394520520}
+    - targetCorrespondingSourceObject: {fileID: 4766262094470552491, guid: 2b5bce4de3b58ac468c2139df6cbb57c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 9047595340394520519}
+    - targetCorrespondingSourceObject: {fileID: 9019341855491367950, guid: 2b5bce4de3b58ac468c2139df6cbb57c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 9047595340394520518}
     - targetCorrespondingSourceObject: {fileID: 5907443925195265422, guid: 2b5bce4de3b58ac468c2139df6cbb57c, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1809413173}
   m_SourcePrefab: {fileID: 100100000, guid: 2b5bce4de3b58ac468c2139df6cbb57c, type: 3}
+--- !u!1 &9047595340394520515 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9019341855491367950, guid: 2b5bce4de3b58ac468c2139df6cbb57c, type: 3}
+  m_PrefabInstance: {fileID: 9047595340394520514}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &9047595340394520516 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4766262094470552491, guid: 2b5bce4de3b58ac468c2139df6cbb57c, type: 3}
+  m_PrefabInstance: {fileID: 9047595340394520514}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &9047595340394520517 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2056020140488295876, guid: 2b5bce4de3b58ac468c2139df6cbb57c, type: 3}
+  m_PrefabInstance: {fileID: 9047595340394520514}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &9047595340394520518
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9047595340394520515}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c38f2be563219e4b9fcec267ad7afba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _tabTypeId: 2
+--- !u!114 &9047595340394520519
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9047595340394520516}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c38f2be563219e4b9fcec267ad7afba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _tabTypeId: 1
+--- !u!114 &9047595340394520520
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9047595340394520517}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c38f2be563219e4b9fcec267ad7afba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _tabTypeId: 0

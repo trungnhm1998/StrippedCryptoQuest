@@ -7,7 +7,6 @@ namespace CryptoQuest.Item.Inventory
     {
         public Sprite Icon;
         public string Name;
-        public int Amount;
         public string Description;
     }
 }

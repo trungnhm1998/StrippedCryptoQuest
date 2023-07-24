@@ -9,7 +9,7 @@ namespace CryptoQuest.UI.Inventory
     {
         public Image Icon;
         public Text Name;
-        public Text Amount;
+        public Text Quantity;
         private ItemInformation _itemInfo;
         private int _cellIndex;
 
@@ -19,7 +19,7 @@ namespace CryptoQuest.UI.Inventory
             _itemInfo = itemInfo;
             Icon.sprite = itemInfo.Icon;
             Name.text = itemInfo.NameItem;
-            Amount.text = itemInfo.Amount.ToString();
+            Quantity.text = itemInfo.Quantity.ToString();
         }
     }
 }
