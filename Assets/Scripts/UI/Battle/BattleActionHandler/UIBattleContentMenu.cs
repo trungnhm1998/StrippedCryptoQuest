@@ -32,28 +32,28 @@ namespace CryptoQuest.UI.Battle.BattleActionHandler
             // _targetButtons[0].Button.Select();
         }
 
-        public void OnSelectTarget(IBattleUnit unit)
-        {
-            _currentUnit.SelectSingleTarget(unit.Owner);
-            // _selectTargetUI.SetActive(false);
-            base.Handle(unit);
-        }
+        // public void OnSelectTarget(IBattleUnit unit)
+        // {
+        //     _currentUnit.SelectSingleTarget(unit.Owner);
+        //     _selectTargetUI.SetActive(false);
+        //     base.Handle(unit);
+        // }
 
-        public override object Handle(IBattleUnit currentUnit)
-        {
-            _currentUnit = currentUnit;
-            if (_currentUnit == null) return currentUnit;
-            // _selectTargetUI.SetActive(true);
-            SetupTargetButton(_currentUnit.OpponentTeam);
+        // public override object Handle(IBattleUnit currentUnit)
+        // {
+        //     _currentUnit = currentUnit;
+        //     if (_currentUnit == null) return currentUnit;
+        //     _selectTargetUI.SetActive(true);
+        //     SetupTargetButton(_currentUnit.OpponentTeam);
+        //
+        //     SelectFirstButton();
+        //     return null;
+        // }
 
-            SelectFirstButton();
-            return null;
-        }
-
-        private void SetupTargetButton(BattleTeam team)
-        {
-            var targetUnits = team.BattleUnits;
-            int targetCount = targetUnits.Count;
+        // private void SetupTargetButton(BattleTeam team)
+        // {
+            // var targetUnits = team.BattleUnits;
+            // int targetCount = targetUnits.Count;
             // for (int i = 0; i < _targetButtons.Length; i++)
             // {
             //     UITargetButton targetButton = _targetButtons[i];
@@ -62,12 +62,12 @@ namespace CryptoQuest.UI.Battle.BattleActionHandler
             //     if (!isInTargetRange) continue;
             //     SetupTargetButton(targetButton, targetUnits[i]);
             // }
-        }
+        // }
 
-        private void SetupTargetButton(UITargetButton targetButton, IBattleUnit unit)
-        {
-            targetButton.Button.onClick.AddListener(() => OnSelectTarget(unit));
-            targetButton.Text.text = unit.UnitData.DisplayName;
-        }
+        // private void SetupTargetButton(UITargetButton targetButton, IBattleUnit unit)
+        // {
+        //     targetButton.Button.onClick.AddListener(() => OnSelectTarget(unit));
+        //     targetButton.Text.text = unit.UnitData.DisplayName;
+        // }
     }
 }

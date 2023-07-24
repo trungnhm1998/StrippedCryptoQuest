@@ -1,12 +1,9 @@
 ﻿using CryptoQuest.Gameplay.Battle.Core.Components;
 using CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit;
-using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects;
 using CryptoQuest.Input;
-using CryptoQuest.UI.Battle.BattleActionHandler;
 using CryptoQuest.UI.Battle.CommandsMenu;
 using UnityEngine;
 using UnityEngine.Events;
-using NotImplementedException = System.NotImplementedException;
 
 namespace CryptoQuest.UI.Battle
 {
@@ -24,9 +21,11 @@ namespace CryptoQuest.UI.Battle
         [SerializeField] private NavigationAutoScroll _navigationAutoScroll;
         [SerializeField] private UIBattleCommandMenu _uiBattleCommandMenu;
 
-        [SerializeField] private BattleActionHandler.BattleActionHandler[] _normalAttackChain;
+        // [SerializeField] private BattleActionHandler.BattleActionHandler[] _normalAttackChain;
 
+        [Header("UI Panels")]
         [SerializeField] private UIAttackPanel _attackPanel;
+
         [SerializeField] private UISkillsPanel _skillPanel;
         [SerializeField] private UIItemsPanel _itemPanel;
         [SerializeField] private UIMobStatusPanel _mobPanel;
@@ -51,7 +50,7 @@ namespace CryptoQuest.UI.Battle
             _inputMediator.MenuNavigateEvent += OnChangeLine;
             _inputMediator.CancelEvent += OnClickCancel;
 
-            SetupChain(_normalAttackChain);
+            // SetupChain(_normalAttackChain);
             OpenMobPanel();
         }
 
@@ -80,13 +79,13 @@ namespace CryptoQuest.UI.Battle
             _uiBattleCommandMenu.Initialize();
         }
 
-        private void SetupChain(BattleActionHandler.BattleActionHandler[] chain)
-        {
-            for (int i = 1; i < chain.Length; i++)
-            {
-                chain[i - 1].SetNext(chain[i]);
-            }
-        }
+        // private void SetupChain(BattleActionHandler.BattleActionHandler[] chain)
+        // {
+        //     for (int i = 1; i < chain.Length; i++)
+        //     {
+        //         chain[i - 1].SetNext(chain[i]);
+        //     }
+        // }
 
         private void OnButtonEscapeClickedHandler()
         {
@@ -114,39 +113,40 @@ namespace CryptoQuest.UI.Battle
         private void OnButtonAttackClickedHandler(IBattleUnit currentUnit)
         {
             // _normalAttackChain[0].Handle(currentUnit);
+            Debug.Log("Attack");
             OpenAttackPanel();
         }
 
         private void OpenAttackPanel()
         {
-            _attackPanel.content.SetActive(true);
-            _skillPanel.content.SetActive(false);
-            _itemPanel.content.SetActive(false);
-            _mobPanel.content.SetActive(false);
+            _attackPanel.SetActive(true);
+            _skillPanel.SetActive(false);
+            _itemPanel.SetActive(false);
+            _mobPanel.SetActive(false);
         }
 
         private void OpenSkillPanel()
         {
-            _attackPanel.content.SetActive(false);
-            _skillPanel.content.SetActive(true);
-            _itemPanel.content.SetActive(false);
-            _mobPanel.content.SetActive(false);
+            _attackPanel.SetActive(false);
+            _skillPanel.SetActive(true);
+            _itemPanel.SetActive(false);
+            _mobPanel.SetActive(false);
         }
 
         private void OpenItemPanel()
         {
-            _attackPanel.content.SetActive(false);
-            _skillPanel.content.SetActive(false);
-            _itemPanel.content.SetActive(true);
-            _mobPanel.content.SetActive(false);
+            _attackPanel.SetActive(false);
+            _skillPanel.SetActive(false);
+            _itemPanel.SetActive(true);
+            _mobPanel.SetActive(false);
         }
 
         private void OpenMobPanel()
         {
-            _attackPanel.content.SetActive(false);
-            _skillPanel.content.SetActive(false);
-            _itemPanel.content.SetActive(false);
-            _mobPanel.content.SetActive(true);
+            _attackPanel.SetActive(false);
+            _skillPanel.SetActive(false);
+            _itemPanel.SetActive(false);
+            _mobPanel.SetActive(true);
         }
     }
 }
