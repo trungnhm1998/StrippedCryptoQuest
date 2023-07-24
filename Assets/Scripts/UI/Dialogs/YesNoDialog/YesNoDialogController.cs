@@ -1,7 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using CryptoQuest.Events.UI;
+using CryptoQuest.Events.UI.Dialogs;
 using CryptoQuest.Gameplay.Quest;
 using UnityEngine;
 using UnityEngine.Events;

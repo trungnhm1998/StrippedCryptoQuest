@@ -26,14 +26,13 @@ namespace CryptoQuest.UI.Menu.Home
 
         private void OnEnable()
         {
-            _inputMediator.HomeMenuSortEvent += EnableSortFunc;
             _partyLoaded.EventRaised += OnPartyLoaded;
         }
 
         private void OnDisable()
         {
-            _inputMediator.HomeMenuSortEvent -= EnableSortFunc;
             _partyLoaded.EventRaised -= OnPartyLoaded;
+            // _inputMediator.HomeMenuSortEvent -= EnableSortFunc;
         }
 
         private void OnPartyLoaded()
@@ -43,17 +42,21 @@ namespace CryptoQuest.UI.Menu.Home
 
         private void GetCurrentCardParty()
         {
+
             for (int i = 0; i < _characterSlots.childCount; i++)
             {
                 var cardUI = _characterSlots.GetChild(i).GetComponent<UICharacterCard>();
-                Debug.Log($"cardUI=[{cardUI}]");
+
                 _charCards.Add(cardUI);
             }
+
+            Debug.Log($"_charCards count=[{_characterSlots.GetChild(4)}]");
+            _inputMediator.HomeMenuSortEvent += EnableSortFunc;
         }
 
         private void EnableSortFunc()
         {
-            Debug.Log("Sort");
+            Debug.Log($"Sort::_charCards[0]=[{_charCards[0]}]");
             _charCards[0].OnBeingSelected();
         }
     }
