@@ -42,10 +42,11 @@ GameObject:
   - component: {fileID: 6216182945005972211}
   - component: {fileID: 3032815039308167478}
   - component: {fileID: 10848707234251251}
-  - component: {fileID: 4703898190467113470}
   - component: {fileID: 3750759406810816978}
   - component: {fileID: 688716285615649962}
   - component: {fileID: 3195730646285006180}
+  - component: {fileID: 602926861516001105}
+  - component: {fileID: 2795469437991644426}
   m_Layer: 0
   m_Name: NPC
   m_TagString: Untagged
@@ -135,26 +136,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &4703898190467113470
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2764607700392222741}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5d6beaf020c827748b3ee50a3883e097, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _animator: {fileID: 3750759406810816978}
-  _facingDirection: 0
-  _pointAPosition: {fileID: 8422142338311110857}
-  _pointBPosition: {fileID: 224910234583023362}
-  _destination: {fileID: 0}
-  _speed: 1.5
-  _waitBeforeMovingAgainTime: 0.5
-  _minDistanceToChangeDestination: 0.1
 --- !u!95 &3750759406810816978
 Animator:
   serializedVersion: 5
@@ -266,6 +247,40 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.86, y: 1.43}
   m_EdgeRadius: 0
+--- !u!114 &602926861516001105
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2764607700392222741}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa2813ec4d6ba0f4d8296a3ce5168ac8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _animator: {fileID: 3750759406810816978}
+  _facingDirection: 0
+  _pointAPosition: {fileID: 8422142338311110857}
+  _pointBPosition: {fileID: 224910234583023362}
+  _destination: {fileID: 8422142338311110857}
+  _speed: 3
+  _waitBeforeMovingAgainTime: 0.5
+  _minDistanceToChangeDestination: 0.1
+--- !u!114 &2795469437991644426
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2764607700392222741}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8317eb7042a89a440ba9e968d6b2d015, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _animator: {fileID: 3750759406810816978}
+  _facingDirection: 0
 --- !u!1 &3693912357754153461
 GameObject:
   m_ObjectHideFlags: 0

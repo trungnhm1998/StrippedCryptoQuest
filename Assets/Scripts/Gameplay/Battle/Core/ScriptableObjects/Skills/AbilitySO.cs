@@ -10,6 +10,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Skills.CryptoQuestA
     public class AbilitySO : EffectAbilitySO
     {
         public SkillInfo SkillInfo;
+        public override AbilityParameters Parameters => SkillInfo.SkillParameters;
         protected override AbstractAbility CreateAbility() => new Ability(SkillInfo);
     }
 
