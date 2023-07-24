@@ -1,4 +1,3 @@
-using CryptoQuest.Gameplay.Battle.Core;
 using IndiGames.GameplayAbilitySystem.AttributeSystem;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
 using IndiGames.GameplayAbilitySystem.EffectSystem;
