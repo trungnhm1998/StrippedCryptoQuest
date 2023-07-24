@@ -4,13 +4,13 @@ namespace CryptoQuest.Tests.Editor.Battle
 {
     public class SkillParameterBuilder
     {
-        private float _basePower;
-        private float _powerUpperLimit;
-        private float _powerLowerLimit;
-        private float _skillPowerThreshold;
-        private float _powerValueAdded;
-        private float _powerValueReduced;
-        private int _continuesTurn;
+        private float _basePower = 0;
+        private float _powerUpperLimit = 20;
+        private float _powerLowerLimit = 10;
+        private float _skillPowerThreshold = 10;
+        private float _powerValueAdded = 0.5f;
+        private float _powerValueReduced = 0.5f;
+        private int _continuesTurn = 1;
 
         public SkillParameters Build()
         {

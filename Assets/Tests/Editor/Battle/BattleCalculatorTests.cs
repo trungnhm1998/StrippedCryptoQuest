@@ -10,7 +10,6 @@ namespace CryptoQuest.Tests.Editor.Battle
         [Test]
         public void BattleCalculator_CalculateValidParams_ReturnCorrectValue()
         {
-            BattleCalculator calculator = new();
             SkillParameterBuilder builder = new();
 
             SkillParameters skillParameters = builder
@@ -28,15 +27,10 @@ namespace CryptoQuest.Tests.Editor.Battle
         [Test]
         public void BattleCalculator_CalculateValidParams_ReturnPowerLowerLimit()
         {
-            BattleCalculator calculator = new();
             SkillParameterBuilder builder = new();
 
             SkillParameters skillParameters = builder
                 .WithBasePower(0)
-                .WithPowerUpperLimit(20)
-                .WithPowerLowerLimit(10)
-                .WithSkillPowerThreshold(10)
-                .WithPowerValueAdded(0.5f)
                 .Build();
 
             float randomValue = 0f;
@@ -48,16 +42,10 @@ namespace CryptoQuest.Tests.Editor.Battle
         [Test]
         public void BattleCalculator_CalculateValidParams_ReturnPowerUpperLimit()
         {
-            BattleCalculator calculator = new();
-
             SkillParameterBuilder builder = new();
 
             SkillParameters skillParameters = builder
                 .WithBasePower(100)
-                .WithPowerUpperLimit(20)
-                .WithPowerLowerLimit(10)
-                .WithSkillPowerThreshold(10)
-                .WithPowerValueAdded(0.5f)
                 .Build();
 
             float randomValue = 0.01f;
@@ -69,15 +57,10 @@ namespace CryptoQuest.Tests.Editor.Battle
         [Test]
         public void BattleCalculator_CalculateWithNegativeAttackPower_ReturnPowerLowerLimit()
         {
-            BattleCalculator calculator = new();
             SkillParameterBuilder builder = new();
 
             SkillParameters skillParameters = builder
                 .WithBasePower(0)
-                .WithPowerUpperLimit(20)
-                .WithPowerLowerLimit(10)
-                .WithSkillPowerThreshold(10)
-                .WithPowerValueAdded(0.5f)
                 .Build();
 
             float randomValue = 0.01f;
@@ -89,15 +72,10 @@ namespace CryptoQuest.Tests.Editor.Battle
         [Test]
         public void BattleCalculator_CalculateWithNegativeBasePower_ReturnPowerLowerLimit()
         {
-            BattleCalculator calculator = new();
             SkillParameterBuilder builder = new();
 
             SkillParameters skillParameters = builder
                 .WithBasePower(-100)
-                .WithPowerUpperLimit(20)
-                .WithPowerLowerLimit(10)
-                .WithSkillPowerThreshold(10)
-                .WithPowerValueAdded(0.5f)
                 .Build();
 
             float randomValue = 0.01f;
@@ -114,10 +92,6 @@ namespace CryptoQuest.Tests.Editor.Battle
 
             SkillParameters skillParameters = builder
                 .WithBasePower(-100)
-                .WithPowerUpperLimit(20)
-                .WithPowerLowerLimit(10)
-                .WithSkillPowerThreshold(10)
-                .WithPowerValueAdded(0.5f)
                 .Build();
 
             float randomValue = 0.01f;

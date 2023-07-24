@@ -13,6 +13,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Calculation
     {
         [SerializeField] private AttributeScriptableObject _baseMagicAttackSO;
         [SerializeField] private AttributeScriptableObject _targetedAttributeSO;
+        [SerializeField] private float randomRange = 0.05f;
 
         public override bool ExecuteImplementation(ref AbstractEffect effectSpec,
             ref EffectAttributeModifier[] attributeModifiers)
@@ -20,7 +21,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Calculation
             SkillParameters skillParameters = effectSpec.Parameters as SkillParameters;
             effectSpec.Owner.AttributeSystem.GetAttributeValue(_baseMagicAttackSO, out AttributeValue baseMagicAttack);
             float healAmount = BattleCalculator.CalculateBaseDamage(skillParameters, baseMagicAttack.CurrentValue,
-                Random.Range(-0.05f, 0.05f));
+                Random.Range(-randomRange, randomRange));
             for (var index = 0; index < attributeModifiers.Length; index++)
             {
                 if (attributeModifiers[index].AttributeSO != _targetedAttributeSO) continue;
