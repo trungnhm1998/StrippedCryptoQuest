@@ -1,18 +1,16 @@
-using CryptoQuest.Gameplay.Battle.Core;
 using UnityEngine;
 
-namespace CryptoQuest
+namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Calculation
 {
     public class BattleCalculator
     {
-        public float CalculateBaseDamage(SkillParameters skillParameters, float attackPower, float randomValue)
+        public static float CalculateBaseDamage(SkillParameters skillParameters, float attackPower, float modifierScale)
         {
             float damage =
                 (skillParameters.BasePower + (attackPower - skillParameters.SkillPowerThreshold) *
                     skillParameters.PowerValueAdded);
-            damage = damage < skillParameters.PowerLowerLimit ? skillParameters.PowerLowerLimit : damage;
-            damage = damage > skillParameters.PowerUpperLimit ? skillParameters.PowerUpperLimit : damage;
-            float baseDamage = damage + damage * randomValue;
+            damage = Mathf.Clamp(damage, skillParameters.PowerLowerLimit, skillParameters.PowerUpperLimit);
+            float baseDamage = damage + damage * modifierScale;
             return baseDamage;
         }
     }
