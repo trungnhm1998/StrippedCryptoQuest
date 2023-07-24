@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &3657907278438369924
+--- !u!1 &1234817171958443671
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,28 +8,28 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 6771579861835312343}
-  - component: {fileID: 179747616246681028}
+  - component: {fileID: 53520145032147269}
+  - component: {fileID: 9061401963530217168}
   m_Layer: 0
-  m_Name: SkillPanel
+  m_Name: CommandPanelMenu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!224 &6771579861835312343
+--- !u!224 &53520145032147269
 RectTransform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3657907278438369924}
+  m_GameObject: {fileID: 1234817171958443671}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 2217544491144585097}
+  - {fileID: 4314054726794449880}
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -38,22 +38,21 @@ RectTransform:
   m_AnchoredPosition: {x: 385, y: -162.5}
   m_SizeDelta: {x: 650, y: 255}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &179747616246681028
+--- !u!114 &9061401963530217168
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3657907278438369924}
+  m_GameObject: {fileID: 1234817171958443671}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fa8713414dfb4b579995b5ca77956b7f, type: 3}
+  m_Script: {fileID: 11500000, guid: 65c51f537b9f4cf388ef3c9cfe6d16d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  content: {fileID: 5533360458615141527}
-  _itemPrefab: {fileID: 1667010868398511718, guid: 2ef6a7337d9142a47b67a336b87590e9, type: 3}
-  attackBus: {fileID: 11400000, guid: c03df8a0cc2620b4ab38a57189712412, type: 2}
---- !u!1 &5533360458615141527
+  _content: {fileID: 7366883199237468023}
+  _itemPrefab: {fileID: 2359656759552357064, guid: 2ef6a7337d9142a47b67a336b87590e9, type: 3}
+--- !u!1 &7366883199237468023
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -61,8 +60,8 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 2217544491144585097}
-  - component: {fileID: 446569896145211788}
+  - component: {fileID: 4314054726794449880}
+  - component: {fileID: 4399918762342060403}
   m_Layer: 0
   m_Name: Content
   m_TagString: Untagged
@@ -70,19 +69,19 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 0
---- !u!224 &2217544491144585097
+--- !u!224 &4314054726794449880
 RectTransform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5533360458615141527}
+  m_GameObject: {fileID: 7366883199237468023}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 6771579861835312343}
+  m_Father: {fileID: 53520145032147269}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -90,13 +89,13 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &446569896145211788
+--- !u!114 &4399918762342060403
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5533360458615141527}
+  m_GameObject: {fileID: 7366883199237468023}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 59f8146938fff824cb5fd77236b75775, type: 3}

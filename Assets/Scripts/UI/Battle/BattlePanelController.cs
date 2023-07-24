@@ -7,6 +7,8 @@ using CryptoQuest.Input;
 using CryptoQuest.UI.Battle.CommandsMenu;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Serialization;
+using UnityEngine.UI;
 
 namespace CryptoQuest.UI.Battle
 {
@@ -27,11 +29,14 @@ namespace CryptoQuest.UI.Battle
         [SerializeField] private UIBattleCommandMenu _uiBattleCommandMenu;
 
         [Header("UI Panels")]
-        [SerializeField] private UIAttackPanel _attackPanel;
+        [SerializeField] private UICommandPanel _commandPanel;
 
-        [SerializeField] private UISkillsPanel _skillPanel;
-        [SerializeField] private UIItemsPanel _itemPanel;
-        [SerializeField] private UIMobStatusPanel _mobPanel;
+        [Header("Demo Panels")]
+        [SerializeField] private List<ButtonInfo> _attackPanelInfo;
+
+        [SerializeField] private List<ButtonInfo> _skillPanelInfo;
+        [SerializeField] private List<ButtonInfo> _itemPanelInfo;
+        [SerializeField] private List<ButtonInfo> _mobInfo;
 
         private BattleManager _battleManager;
 
@@ -49,7 +54,7 @@ namespace CryptoQuest.UI.Battle
 
             _battleManager = _battleBus.BattleManager;
 
-            OpenMobPanel();
+            _commandPanel.Init(_mobInfo);
         }
 
         private void OnDisable()
@@ -73,7 +78,6 @@ namespace CryptoQuest.UI.Battle
 
         private void OnClickCancel()
         {
-            OpenMobPanel();
             _uiBattleCommandMenu.Initialize();
         }
 
@@ -86,52 +90,17 @@ namespace CryptoQuest.UI.Battle
 
         private void OnButtonItemClickedHandler(IBattleUnit currentUnit)
         {
-            _itemPanel.Init(currentUnit);
-            OpenItemPanel();
+            _commandPanel.Init(_itemPanelInfo);
         }
 
         private void OnButtonSkillClickedHandler(IBattleUnit currentUnit)
         {
-            _skillPanel.Init(currentUnit);
-            OpenSkillPanel();
+            _commandPanel.Init(_skillPanelInfo);
         }
 
         private void OnButtonAttackClickedHandler(IBattleUnit currentUnit)
         {
-            _attackPanel.Init(currentUnit);
-            OpenAttackPanel();
-        }
-
-        private void OpenAttackPanel()
-        {
-            _attackPanel.SetPanelActive(true);
-            _skillPanel.SetPanelActive(false);
-            _itemPanel.SetPanelActive(false);
-            _mobPanel.SetPanelActive(false);
-        }
-
-        private void OpenSkillPanel()
-        {
-            _attackPanel.SetPanelActive(false);
-            _skillPanel.SetPanelActive(true);
-            _itemPanel.SetPanelActive(false);
-            _mobPanel.SetPanelActive(false);
-        }
-
-        private void OpenItemPanel()
-        {
-            _attackPanel.SetPanelActive(false);
-            _skillPanel.SetPanelActive(false);
-            _itemPanel.SetPanelActive(true);
-            _mobPanel.SetPanelActive(false);
-        }
-
-        private void OpenMobPanel()
-        {
-            _attackPanel.SetPanelActive(false);
-            _skillPanel.SetPanelActive(false);
-            _itemPanel.SetPanelActive(false);
-            _mobPanel.SetPanelActive(true);
+            _commandPanel.Init(_attackPanelInfo);
         }
     }
 }

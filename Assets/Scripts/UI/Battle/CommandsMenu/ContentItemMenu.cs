@@ -5,6 +5,7 @@ namespace CryptoQuest.UI.Battle
 {
     public abstract class ContentItemMenu : MonoBehaviour
     {
-        public abstract void Init(IBattleUnit unit);
+        public abstract void Init(ButtonInfo info);
+
     }
 }
