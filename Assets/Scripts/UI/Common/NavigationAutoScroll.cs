@@ -1,4 +1,5 @@
-﻿using CryptoQuest.Input;
+﻿using System;
+using CryptoQuest.Input;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -7,6 +8,9 @@ namespace CryptoQuest.UI.Battle.CommandsMenu
 {
     public class NavigationAutoScroll : MonoBehaviour
     {
+        [Header("Events")]
+        [SerializeField] private InputMediatorSO _inputMediator;
+
         [Header("UI")]
         [SerializeField] private RectTransform _firstButton;
 
@@ -18,7 +22,19 @@ namespace CryptoQuest.UI.Battle.CommandsMenu
         [SerializeField] private ScrollRect _scrollRect;
 
 
-        public void CheckButtonPosition()
+        private void OnEnable()
+        {
+            _inputMediator.MenuNavigateEvent += CheckButtonPosition;
+            _inputMediator.CancelEvent += CheckButtonPosition;
+        }
+
+        private void OnDisable()
+        {
+            _inputMediator.MenuNavigateEvent -= CheckButtonPosition;
+            _inputMediator.CancelEvent -= CheckButtonPosition;
+        }
+
+        private void CheckButtonPosition()
         {
             var currentButton = EventSystem.current.currentSelectedGameObject;
 

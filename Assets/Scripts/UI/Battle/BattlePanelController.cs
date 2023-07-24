@@ -25,7 +25,6 @@ namespace CryptoQuest.UI.Battle
 
         [SerializeField] private BattleBus _battleBus;
 
-        [SerializeField] private NavigationAutoScroll _navigationAutoScroll;
         [SerializeField] private UIBattleCommandMenu _uiBattleCommandMenu;
 
         [Header("UI Panels")]
@@ -49,7 +48,6 @@ namespace CryptoQuest.UI.Battle
             OnButtonGuardClicked += OnButtonGuardClickedHandler;
             OnButtonEscapeClicked += OnButtonEscapeClickedHandler;
 
-            _inputMediator.MenuNavigateEvent += OnChangeLine;
             _inputMediator.CancelEvent += OnClickCancel;
 
             _battleManager = _battleBus.BattleManager;
@@ -65,23 +63,14 @@ namespace CryptoQuest.UI.Battle
             OnButtonGuardClicked -= OnButtonGuardClickedHandler;
             OnButtonEscapeClicked -= OnButtonEscapeClickedHandler;
 
-            _inputMediator.MenuNavigateEvent -= OnChangeLine;
             _inputMediator.CancelEvent -= OnClickCancel;
         }
-
-
-        private void OnChangeLine()
-        {
-            _navigationAutoScroll.CheckButtonPosition();
-        }
-
 
         private void OnClickCancel()
         {
             _commandPanel.Clear();
             _commandPanel.Init(_mobInfo);
             _uiBattleCommandMenu.Initialize();
-            OnChangeLine();
         }
 
         private void OnButtonEscapeClickedHandler()
