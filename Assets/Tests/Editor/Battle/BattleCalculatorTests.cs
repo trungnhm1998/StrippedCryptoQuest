@@ -9,14 +9,16 @@ namespace CryptoQuest.Tests.Editor.Battle
         public void BattleCalculator_CalculateValidParams_ReturnCorrectValue()
         {
             BattleCalculator calculator = new();
-            SkillParameters skillParameters = new()
-            {
-                BasePower = 10,
-                SkillPowerThreshold = 10,
-                PowerValueAdded = 0.5f,
-                PowerLowerLimit = 10,
-                PowerUpperLimit = 20
-            };
+            SkillParameterBuilder builder = new();
+
+            SkillParameters skillParameters = builder
+                .WithBasePower(10)
+                .WithPowerUpperLimit(20)
+                .WithPowerLowerLimit(10)
+                .WithSkillPowerThreshold(10)
+                .WithPowerValueAdded(0.5f)
+                .Build();
+
             float calculatedValue = calculator.CalculateBaseDamage(skillParameters, 10, 0.01f);
             Assert.AreEqual(10.1f, calculatedValue);
         }
@@ -25,14 +27,16 @@ namespace CryptoQuest.Tests.Editor.Battle
         public void BattleCalculator_CalculateValidParams_ReturnPowerLowerLimit()
         {
             BattleCalculator calculator = new();
-            SkillParameters skillParameters = new()
-            {
-                BasePower = 0,
-                SkillPowerThreshold = 10,
-                PowerValueAdded = 0.5f,
-                PowerLowerLimit = 10,
-                PowerUpperLimit = 20
-            };
+            SkillParameterBuilder builder = new();
+
+            SkillParameters skillParameters = builder
+                .WithBasePower(0)
+                .WithPowerUpperLimit(20)
+                .WithPowerLowerLimit(10)
+                .WithSkillPowerThreshold(10)
+                .WithPowerValueAdded(0.5f)
+                .Build();
+
             float randomValue = 0f;
             float calculatedValue = calculator.CalculateBaseDamage(skillParameters, 0, randomValue);
             float expectedValue = skillParameters.PowerLowerLimit + skillParameters.PowerLowerLimit * randomValue;
@@ -43,14 +47,17 @@ namespace CryptoQuest.Tests.Editor.Battle
         public void BattleCalculator_CalculateValidParams_ReturnPowerUpperLimit()
         {
             BattleCalculator calculator = new();
-            SkillParameters skillParameters = new()
-            {
-                BasePower = 100,
-                SkillPowerThreshold = 10,
-                PowerValueAdded = 0.5f,
-                PowerLowerLimit = 10,
-                PowerUpperLimit = 20
-            };
+
+            SkillParameterBuilder builder = new();
+
+            SkillParameters skillParameters = builder
+                .WithBasePower(100)
+                .WithPowerUpperLimit(20)
+                .WithPowerLowerLimit(10)
+                .WithSkillPowerThreshold(10)
+                .WithPowerValueAdded(0.5f)
+                .Build();
+
             float randomValue = 0.01f;
             float calculatedValue = calculator.CalculateBaseDamage(skillParameters, 100, randomValue);
             float expectedValue = skillParameters.PowerUpperLimit + skillParameters.PowerUpperLimit * randomValue;
@@ -61,14 +68,16 @@ namespace CryptoQuest.Tests.Editor.Battle
         public void BattleCalculator_CalculateWithNegativeAttackPower_ReturnPowerLowerLimit()
         {
             BattleCalculator calculator = new();
-            SkillParameters skillParameters = new()
-            {
-                BasePower = 0,
-                SkillPowerThreshold = 10,
-                PowerValueAdded = 0.5f,
-                PowerLowerLimit = 10,
-                PowerUpperLimit = 20
-            };
+            SkillParameterBuilder builder = new();
+
+            SkillParameters skillParameters = builder
+                .WithBasePower(0)
+                .WithPowerUpperLimit(20)
+                .WithPowerLowerLimit(10)
+                .WithSkillPowerThreshold(10)
+                .WithPowerValueAdded(0.5f)
+                .Build();
+
             float randomValue = 0.01f;
             float calculatedValue = calculator.CalculateBaseDamage(skillParameters, -100, randomValue);
             float expectedValue = skillParameters.PowerLowerLimit + skillParameters.PowerLowerLimit * randomValue;
