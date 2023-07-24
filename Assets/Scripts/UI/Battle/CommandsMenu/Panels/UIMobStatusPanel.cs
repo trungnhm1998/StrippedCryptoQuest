@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -27,7 +26,7 @@ namespace CryptoQuest.UI.Battle
             }
         }
 
-        public void SetActive(bool isActive)
+        public override void SetPanelActive(bool isActive)
         {
             content.SetActive(isActive);
             if (!isActive) return;

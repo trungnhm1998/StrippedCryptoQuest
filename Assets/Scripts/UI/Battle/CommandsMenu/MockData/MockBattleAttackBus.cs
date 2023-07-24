@@ -10,15 +10,15 @@ namespace CryptoQuest.UI.Battle
         {
             new Mob()
             {
-                name = "chingchong",
+                name = "Slime",
             },
             new Mob()
             {
-                name = "somethingElse2",
+                name = "Goblin",
             },
             new Mob()
             {
-                name = "nigga",
+                name = "Orc",
             }
         };
     }

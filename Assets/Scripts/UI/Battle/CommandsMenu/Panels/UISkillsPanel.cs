@@ -27,7 +27,7 @@ namespace CryptoQuest.UI.Battle
             }
         }
 
-        public void SetActive(bool isActive)
+        public override void SetPanelActive(bool isActive)
         {
             content.SetActive(isActive);
             if (!isActive) return;

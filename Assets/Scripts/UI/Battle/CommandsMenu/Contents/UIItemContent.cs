@@ -12,11 +12,6 @@ namespace CryptoQuest.UI.Battle
             public ItemName itemname;
         }
 
-        public override BarDataStructure Foo()
-        {
-            return new Item();
-        }
-
         public override void Init(BarDataStructure input)
         {
             var item = input as Item;

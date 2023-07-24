@@ -12,11 +12,6 @@ namespace CryptoQuest.UI.Battle
             public Mob mob;
         }
 
-        public override BarDataStructure Foo()
-        {
-            return new Attack();
-        }
-
         public override void Init(BarDataStructure input)
         {
             var attack = input as Attack;

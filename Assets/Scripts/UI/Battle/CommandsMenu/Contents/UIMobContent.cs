@@ -1,5 +1,4 @@
-﻿using NPOI.SS.Formula.Functions;
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
 
 namespace CryptoQuest.UI.Battle
@@ -11,11 +10,6 @@ namespace CryptoQuest.UI.Battle
         public class Attack : BarDataStructure
         {
             public Mob mob;
-        }
-
-        public override BarDataStructure Foo()
-        {
-            return new Attack();
         }
 
         public override void Init(BarDataStructure input)

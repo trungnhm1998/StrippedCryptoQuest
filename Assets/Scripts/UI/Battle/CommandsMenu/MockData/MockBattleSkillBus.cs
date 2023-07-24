@@ -10,15 +10,15 @@ namespace CryptoQuest.UI.Battle
         {
             new SkillName()
             {
-                name = "bantumlum",
+                name = "Fire",
             },
             new SkillName()
             {
-                name = "oibanoi",
+                name = "Water",
             },
             new SkillName()
             {
-                name = "nigga",
+                name = "Lightning",
             }
         };
     }
