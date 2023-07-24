@@ -12,34 +12,18 @@ namespace CryptoQuest.UI.Menu.Home
         [SerializeField] private Transform _characterSlots;
         [SerializeField] private GameObject _characterInfoPF;
         [SerializeField] private PartyManagerMockDataSO _partyManagerMockData;
-        [SerializeField] private VoidEventChannelSO _partyLoaded;
 
         private void Awake()
         {
-            PrepareSlots();
             LoadPartyMembers();
-        }
-
-        private void PrepareSlots()
-        {
-            if (_characterSlots.childCount <= 0) return;
-
-            foreach (Transform child in _characterSlots)
-            {
-                Destroy(child.gameObject);
-            }
         }
 
         private void LoadPartyMembers()
         {
-            foreach (var member in _partyManagerMockData.Members)
+            for (int i = 0; i < _partyManagerMockData.Members.Count; i++)
             {
-                var memberGO = Instantiate(_characterInfoPF);
-                memberGO.GetComponentInChildren<UICharacterInfo>().CharInfoMockData = member;
-                memberGO.transform.parent = _characterSlots;
+                _characterSlots.GetChild(i).GetComponentInChildren<UICharacterInfo>().CharInfoMockData = _partyManagerMockData.Members[i];
             }
-
-            _partyLoaded.RaiseEvent();
         }
     }
 }

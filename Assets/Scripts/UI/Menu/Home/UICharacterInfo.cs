@@ -9,6 +9,7 @@ namespace CryptoQuest.UI.Menu.Home
     public class UICharacterInfo : MonoBehaviour
     {
         [Header("UI Components")]
+        [SerializeField] private GameObject _content;
         [SerializeField] private Text _name;
         [SerializeField] private Text _level;
         [SerializeField] private Text _currentHP;
@@ -28,7 +29,18 @@ namespace CryptoQuest.UI.Menu.Home
 
         private void Start()
         {
-            InitCharacterInfo();
+            CheckExistence();
+        }
+
+        private void CheckExistence()
+        {
+            if (CharInfoMockData == null)
+                _content.SetActive(false);
+            else
+            {
+                _content.SetActive(true);
+                InitCharacterInfo();
+            }
         }
 
         private void InitCharacterInfo()

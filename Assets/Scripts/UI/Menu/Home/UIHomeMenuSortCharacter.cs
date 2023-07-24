@@ -15,7 +15,6 @@ namespace CryptoQuest.UI.Menu.Home
         [SerializeField] private PartyManagerMockDataSO _partyManagerMockData;
 
         [Header("Game Components")]
-        [SerializeField] private VoidEventChannelSO _partyLoaded;
         [SerializeField] private Transform _characterSlots;
         [SerializeField] private List<UICharacterCard> _charCards;
 
@@ -26,13 +25,11 @@ namespace CryptoQuest.UI.Menu.Home
 
         private void OnEnable()
         {
-            _partyLoaded.EventRaised += OnPartyLoaded;
         }
 
         private void OnDisable()
         {
-            _partyLoaded.EventRaised -= OnPartyLoaded;
-            // _inputMediator.HomeMenuSortEvent -= EnableSortFunc;
+            _inputMediator.HomeMenuSortEvent -= EnableSortFunc;
         }
 
         private void OnPartyLoaded()
