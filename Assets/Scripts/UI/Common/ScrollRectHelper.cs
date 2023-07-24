@@ -3,9 +3,10 @@ using UnityEngine.UI;
 
 namespace CryptoQuest.UI.Battle.CommandsMenu
 {
-    public class AutoScrollViewCalculator : MonoBehaviour, IAutoScrollViewCalculator
+    public static class ScrollRectHelper
     {
-        public float CalculateNormalizedScrollPosition(ScrollRect scrollRect, RectTransform targetRect, float align = 0)
+        public static float CalculateNormalizedPosition(ScrollRect scrollRect, RectTransform targetRect,
+            float align = 0)
         {
             float contentHeight = scrollRect.content.rect.height;
             float viewportHeight = scrollRect.viewport.rect.height;
@@ -20,7 +21,7 @@ namespace CryptoQuest.UI.Battle.CommandsMenu
             return normalizedPosition;
         }
 
-        private float GetPositionY(RectTransform rectTransform)
+        private static float GetPositionY(RectTransform rectTransform)
         {
             return rectTransform.localPosition.y + rectTransform.rect.y;
         }

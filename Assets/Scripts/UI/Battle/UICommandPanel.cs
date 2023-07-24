@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
-using CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit;
-using UnityEditor.Localization.Plugins.XLIFF.V20;
+using CryptoQuest.UI.Battle.CommandsMenu;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,35 +10,73 @@ namespace CryptoQuest.UI.Battle
         [SerializeField] private GameObject _content;
         [SerializeField] private GameObject _itemPrefab;
 
-        private List<GameObject> _childButton = new List<GameObject>();
+        private List<GameObject> _buttonPool = new List<GameObject>();
+        private Queue<UICommandContent> _commandQueue = new Queue<UICommandContent>();
 
-
-        public override void Init(List<ButtonInfo> infomations)
+        private void Awake()
         {
-            Clear();
-            _content.SetActive(true);
-            foreach (var info in infomations)
+            for (int i = 0; i < 7; i++)
             {
-                var item = Instantiate(_itemPrefab, _content.transform);
-                _childButton.Add(item);
-                item.GetComponent<UICommandContent>().Init(info);
+                var button = InstantiateButton();
+                ReturnButtonToPool(button);
+            }
+        }
+
+        private GameObject InstantiateButton()
+        {
+            var button = Instantiate(_itemPrefab, _content.transform);
+            button.SetActive(false);
+            return button;
+        }
+
+        private void ReturnButtonToPool(GameObject button)
+        {
+            button.SetActive(false);
+            _buttonPool.Add(button);
+            var content = button.GetComponent<UICommandContent>();
+
+            if (content == null) return;
+            _commandQueue.Enqueue(content);
+        }
+
+        private UICommandContent GetButtonFromPool()
+        {
+            if (_commandQueue.Count == 0)
+            {
+                var newItem = InstantiateButton();
+                ReturnButtonToPool(newItem);
             }
 
-            if (_childButton == null || _childButton.Count == 0) return;
+            var uiCommandContent = _commandQueue.Dequeue();
+            uiCommandContent.gameObject.SetActive(true);
+            return uiCommandContent;
+        }
 
-            var firstButton = _childButton[0];
+        public override void Init(List<ButtonInfo> informations)
+        {
+            _content.SetActive(true);
+            foreach (var info in informations)
+            {
+                var item = GetButtonFromPool();
+                item.Init(info);
+            }
+
+            if (_buttonPool == null || _buttonPool.Count == 0) return;
+
+            var firstButton = _buttonPool[0];
             firstButton.GetComponent<Button>().Select();
         }
 
         public override void Clear()
         {
-            foreach (var button in _childButton)
+            foreach (var button in _buttonPool)
             {
                 Destroy(button);
             }
 
-            _childButton.Clear();
-            return;
+            _buttonPool.Clear();
+            _commandQueue.Clear();
+            _content.SetActive(false);
         }
     }
 }

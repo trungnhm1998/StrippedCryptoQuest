@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 namespace CryptoQuest.UI.Battle.CommandsMenu
 {
-    [RequireComponent(typeof(AutoScrollViewCalculator))]
     public class NavigationAutoScroll : MonoBehaviour
     {
         [Header("UI")]
@@ -18,13 +17,6 @@ namespace CryptoQuest.UI.Battle.CommandsMenu
         [Header("Panel")]
         [SerializeField] private ScrollRect _scrollRect;
 
-        private IAutoScrollViewCalculator _autoScrollViewCalculatorCalculation;
-
-
-        private void OnEnable()
-        {
-            _autoScrollViewCalculatorCalculation = GetComponent<IAutoScrollViewCalculator>();
-        }
 
         public void CheckButtonPosition()
         {
@@ -33,14 +25,14 @@ namespace CryptoQuest.UI.Battle.CommandsMenu
             if (currentButton == _firstButton.gameObject)
             {
                 _scrollRect.verticalNormalizedPosition =
-                    _autoScrollViewCalculatorCalculation.CalculateNormalizedScrollPosition(_scrollRect, _firstButton);
+                    ScrollRectHelper.CalculateNormalizedPosition(_scrollRect, _firstButton);
                 _arrowDownHint.SetActive(true);
                 _arrowUpHint.SetActive(false);
             }
             else if (currentButton == _lastButton.gameObject)
             {
                 _scrollRect.verticalNormalizedPosition =
-                    _autoScrollViewCalculatorCalculation.CalculateNormalizedScrollPosition(_scrollRect, _lastButton);
+                    ScrollRectHelper.CalculateNormalizedPosition(_scrollRect, _lastButton);
                 _arrowUpHint.SetActive(true);
                 _arrowDownHint.SetActive(false);
             }

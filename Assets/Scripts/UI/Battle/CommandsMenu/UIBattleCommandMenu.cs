@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
 using CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit;
 using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Events;
 using TMPro;
+using UnityEngine;
+using UnityEngine.UI;
 
-namespace CryptoQuest.UI.Battle
+namespace CryptoQuest.UI.Battle.CommandsMenu
 {
     public class UIBattleCommandMenu : MonoBehaviour
     {

@@ -78,28 +78,38 @@ namespace CryptoQuest.UI.Battle
 
         private void OnClickCancel()
         {
+            _commandPanel.Clear();
+            _commandPanel.Init(_mobInfo);
             _uiBattleCommandMenu.Initialize();
+            OnChangeLine();
         }
 
         private void OnButtonEscapeClickedHandler()
         {
+            _commandPanel.Clear();
             _battleManager.OnEscape();
         }
 
-        private void OnButtonGuardClickedHandler() { }
+        private void OnButtonGuardClickedHandler()
+        {
+            _commandPanel.Clear();
+        }
 
         private void OnButtonItemClickedHandler(IBattleUnit currentUnit)
         {
+            _commandPanel.Clear();
             _commandPanel.Init(_itemPanelInfo);
         }
 
         private void OnButtonSkillClickedHandler(IBattleUnit currentUnit)
         {
+            _commandPanel.Clear();
             _commandPanel.Init(_skillPanelInfo);
         }
 
         private void OnButtonAttackClickedHandler(IBattleUnit currentUnit)
         {
+            _commandPanel.Clear();
             _commandPanel.Init(_attackPanelInfo);
         }
     }

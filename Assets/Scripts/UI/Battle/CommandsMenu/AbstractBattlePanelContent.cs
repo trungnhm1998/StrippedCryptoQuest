@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
-using CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit;
 using UnityEngine;
 
-namespace CryptoQuest.UI.Battle
+namespace CryptoQuest.UI.Battle.CommandsMenu
 {
     public abstract class AbstractBattlePanelContent : MonoBehaviour
     {
