@@ -12,7 +12,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Skills.CryptoQuestA
     public class AbilitySO : EffectAbilitySO
     {
         public SkillInfo SkillInfo;
-        public AttributeScriptableObject MPAttributeSO;
+        public AttributeScriptableObject costSpecSO;
         public override AbilityParameters Parameters => SkillInfo.SkillParameters;
         protected override AbstractAbility CreateAbility() => new Ability(SkillInfo);
     }
@@ -31,9 +31,9 @@ namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Skills.CryptoQuestA
         {
             if (!CanActiveAbility()) return;
 
-            Owner.AttributeSystem.GetAttributeValue(AbilitySO.MPAttributeSO, out var mpAttributeValue);
-            if (!IsMpEnoughToCast(mpAttributeValue)) return;
-            SetRemainingMp(mpAttributeValue.CurrentValue - _skillInfo.MPConsumption);
+            Owner.AttributeSystem.GetAttributeValue(AbilitySO.costSpecSO, out var ownerCostSpec);
+            if (!IsValidCost(ownerCostSpec)) return;
+            SetRemainingCostSpec(ownerCostSpec.CurrentValue - _skillInfo.Cost);
 
             _isActive = true;
             Owner.StartCoroutine(InternalActiveAbility());
@@ -51,17 +51,17 @@ namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Skills.CryptoQuestA
             yield return base.InternalActiveAbility();
         }
 
-        private bool IsMpEnoughToCast(AttributeValue mpAttributeValue)
+        private bool IsValidCost(AttributeValue costSpec)
         {
-            bool isEnough = mpAttributeValue.CurrentValue >= _skillInfo.MPConsumption;
+            bool isEnough = costSpec.CurrentValue >= _skillInfo.Cost;
             if (!isEnough)
-                Debug.Log("Not enough MP to cast");
-            return mpAttributeValue.CurrentValue >= _skillInfo.MPConsumption;
+                Debug.Log("Not enough to cast");
+            return isEnough;
         }
 
-        private void SetRemainingMp(float value)
+        private void SetRemainingCostSpec(float value)
         {
-            Owner.AttributeSystem.SetAttributeBaseValue(AbilitySO.MPAttributeSO, value);
+            Owner.AttributeSystem.SetAttributeBaseValue(AbilitySO.costSpecSO, value);
         }
     }
 }

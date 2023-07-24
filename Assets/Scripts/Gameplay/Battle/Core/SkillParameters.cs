@@ -3,6 +3,7 @@ using CryptoQuest.Gameplay.BaseGameplayData;
 using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data;
 using IndiGames.GameplayAbilitySystem.AbilitySystem;
 using UnityEngine.Localization;
+using UnityEngine.Serialization;
 
 namespace CryptoQuest.Gameplay.Battle.Core
 {
@@ -27,7 +28,7 @@ namespace CryptoQuest.Gameplay.Battle.Core
         public Element Element;
         public SkillType SkillType;
         public SkillCategory Category;
-        public float MPConsumption;
+        public float Cost;
         public SkillEffectType EffectType;
         public bool isFixed;
         public SkillParameters SkillParameters;
