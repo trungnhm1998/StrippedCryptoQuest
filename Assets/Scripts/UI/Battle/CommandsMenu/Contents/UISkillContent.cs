@@ -1,4 +1,5 @@
 ﻿using System;
+using CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit;
 using TMPro;
 using UnityEngine;
 
@@ -8,15 +9,9 @@ namespace CryptoQuest.UI.Battle
     {
         [SerializeField] private TextMeshProUGUI _label;
 
-        public class Skill : BarDataStructure
+        public override void Init(IBattleUnit unit)
         {
-            public SkillName skillname;
-        }
-
-        public override void Init(BarDataStructure input)
-        {
-            var skill = input as Skill;
-            _label.text = skill.skillname.name;
+            _label.text = unit.UnitData.DisplayName;
         }
     }
 }

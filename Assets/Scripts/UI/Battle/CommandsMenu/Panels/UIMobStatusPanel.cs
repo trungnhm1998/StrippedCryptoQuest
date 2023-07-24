@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,21 +9,17 @@ namespace CryptoQuest.UI.Battle
     {
         public GameObject content;
         [SerializeField] private UIMobContent _itemPrefab;
-        [SerializeField] private MockBattleMobBus attackBus;
 
         private List<UIMobContent> childButton = new();
 
-        public override void Init()
+
+        public override void Init(IBattleUnit unit)
         {
-            foreach (var skillName in attackBus.Mobs)
+            foreach (IBattleUnit currentUnit in unit.OpponentTeam.BattleUnits)
             {
                 var item = Instantiate(_itemPrefab, content.transform);
-
                 childButton.Add(item);
-                item.Init(new UIMobContent.Attack()
-                {
-                    mob = skillName,
-                });
+                item.Init(currentUnit);
             }
         }
 
@@ -30,6 +27,7 @@ namespace CryptoQuest.UI.Battle
         {
             content.SetActive(isActive);
             if (!isActive) return;
+            if (childButton == null || childButton.Count == 0) return;
 
             var firstButton = childButton[0];
             firstButton.GetComponent<Button>().Select();

@@ -1,4 +1,5 @@
-﻿using TMPro;
+﻿using CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit;
+using TMPro;
 using UnityEngine;
 
 namespace CryptoQuest.UI.Battle
@@ -7,15 +8,9 @@ namespace CryptoQuest.UI.Battle
     {
         [SerializeField] private TextMeshProUGUI _label;
 
-        public class Attack : BarDataStructure
+        public override void Init(IBattleUnit unit)
         {
-            public Mob mob;
-        }
-
-        public override void Init(BarDataStructure input)
-        {
-            var attack = input as Attack;
-            _label.text = attack.mob.name;
+            _label.text = unit.UnitData.DisplayName;
         }
     }
 }

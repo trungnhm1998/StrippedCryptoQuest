@@ -79,14 +79,14 @@ namespace CryptoQuest.UI.Battle
         public void OnUseSkill()
         {
             // TODO: Implement use Skill flow here
-            _battlePanelController.OnButtonSkillClicked.Invoke();
+            _battlePanelController.OnButtonSkillClicked.Invoke(_currentUnit);
             SetActiveCommandsMenu(false);
         }
 
         public void OnUseItem()
         {
             // TODO: Implement use item flow here
-            _battlePanelController.OnButtonItemClicked.Invoke();
+            _battlePanelController.OnButtonItemClicked.Invoke(_currentUnit);
             SetActiveCommandsMenu(false);
         }
 

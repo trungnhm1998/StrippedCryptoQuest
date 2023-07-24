@@ -1,4 +1,6 @@
-﻿using CryptoQuest.Gameplay.Battle.Core.Components;
+﻿using System;
+using System.Collections.Generic;
+using CryptoQuest.Gameplay.Battle.Core.Components;
 using CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit;
 using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects;
 using CryptoQuest.Input;
@@ -11,8 +13,8 @@ namespace CryptoQuest.UI.Battle
     public class BattlePanelController : MonoBehaviour
     {
         public UnityAction<IBattleUnit> OnButtonAttackClicked = delegate { };
-        public UnityAction OnButtonSkillClicked = delegate { };
-        public UnityAction OnButtonItemClicked = delegate { };
+        public UnityAction<IBattleUnit> OnButtonSkillClicked = delegate { };
+        public UnityAction<IBattleUnit> OnButtonItemClicked = delegate { };
         public UnityAction OnButtonGuardClicked = delegate { };
         public UnityAction OnButtonEscapeClicked = delegate { };
 
@@ -33,15 +35,9 @@ namespace CryptoQuest.UI.Battle
 
         private BattleManager _battleManager;
 
+
         private void OnEnable()
         {
-            AbstractBattlePanelContent[] panels = { _attackPanel, _skillPanel, _itemPanel, _mobPanel };
-
-            foreach (var panel in panels)
-            {
-                panel.Init();
-            }
-
             OnButtonAttackClicked += OnButtonAttackClickedHandler;
             OnButtonSkillClicked += OnButtonSkillClickedHandler;
             OnButtonItemClicked += OnButtonItemClickedHandler;
@@ -88,18 +84,21 @@ namespace CryptoQuest.UI.Battle
 
         private void OnButtonGuardClickedHandler() { }
 
-        private void OnButtonItemClickedHandler()
+        private void OnButtonItemClickedHandler(IBattleUnit currentUnit)
         {
+            _itemPanel.Init(currentUnit);
             OpenItemPanel();
         }
 
-        private void OnButtonSkillClickedHandler()
+        private void OnButtonSkillClickedHandler(IBattleUnit currentUnit)
         {
+            _skillPanel.Init(currentUnit);
             OpenSkillPanel();
         }
 
         private void OnButtonAttackClickedHandler(IBattleUnit currentUnit)
         {
+            _attackPanel.Init(currentUnit);
             OpenAttackPanel();
         }
 

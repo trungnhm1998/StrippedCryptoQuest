@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace CryptoQuest.UI.Battle.CommandsMenu
 {
-    [RequireComponent(typeof(AutoScrollViewCalculatorCalculator))]
+    [RequireComponent(typeof(AutoScrollViewCalculator))]
     public class NavigationAutoScroll : MonoBehaviour
     {
         [Header("UI")]

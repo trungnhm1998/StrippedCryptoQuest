@@ -8,7 +8,7 @@ namespace CryptoQuest.Tests.Editor.UI.Battle
     [TestFixture]
     public class NavigationAutoScrollTests
     {
-        private AutoScrollViewCalculatorCalculator _autoScrollViewCalculatorCalculator;
+        private AutoScrollViewCalculator _autoScrollViewCalculator;
         private ScrollRect _scrollRect;
         private RectTransform _contentRect;
         private RectTransform _viewportRect;
@@ -22,7 +22,7 @@ namespace CryptoQuest.Tests.Editor.UI.Battle
             _viewportRect = new GameObject().AddComponent<RectTransform>();
             _targetRect = new GameObject().AddComponent<RectTransform>();
 
-            _autoScrollViewCalculatorCalculator = new GameObject().AddComponent<AutoScrollViewCalculatorCalculator>();
+            _autoScrollViewCalculator = new GameObject().AddComponent<AutoScrollViewCalculator>();
         }
 
         [TestCase(100, 50, 100, 100, 0, TestName = "CalculateNormalizedScrollPosition_ContentLessThanViewport_ReturnsZero")]
@@ -44,7 +44,7 @@ namespace CryptoQuest.Tests.Editor.UI.Battle
 
             _targetRect.sizeDelta = new Vector2(Mathf.Min(contentX, viewportX), Mathf.Min(contentY, viewportY));
 
-            float result = _autoScrollViewCalculatorCalculator.CalculateNormalizedScrollPosition(_scrollRect, _targetRect);
+            float result = _autoScrollViewCalculator.CalculateNormalizedScrollPosition(_scrollRect, _targetRect);
 
             Assert.AreEqual(expectedNormalizedPosition, result, 0.001f);
         }
