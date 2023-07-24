@@ -16,7 +16,20 @@ namespace CryptoQuest.UI.Menu.Home
 
         [Header("Game Components")]
         [SerializeField] private Transform _characterSlots;
-        [SerializeField] private List<UICharacterCard> _charCards;
+        [SerializeField] private UICharacterCard _cardHolder;
+
+        private int _currentSortTargetIndex = 0;
+        private int CurrentSortTargetIndex
+        {
+            get => _currentSortTargetIndex;
+            set
+            {
+                _currentSortTargetIndex = value % _partyManagerMockData.Members.Count;
+
+                if (_currentSortTargetIndex < 0)
+                    _currentSortTargetIndex = _partyManagerMockData.Members.Count - 1;
+            }
+        }
 
         private void Awake()
         {
@@ -25,30 +38,52 @@ namespace CryptoQuest.UI.Menu.Home
 
         private void OnEnable()
         {
-            _inputMediator.HomeMenuSortEvent += EnableSortFunc;
-
-            GetCurrentCardParty();
+            _inputMediator.HomeMenuSortEvent += OnEnableSortFunc;
+            _inputMediator.NextTargetEvent += OnNextTarget;
+            _inputMediator.PreviousTargetEvent += OnPreviousTarget;
         }
 
         private void OnDisable()
         {
-            _inputMediator.HomeMenuSortEvent -= EnableSortFunc;
+            _inputMediator.HomeMenuSortEvent -= OnEnableSortFunc;
+            _inputMediator.NextTargetEvent -= OnNextTarget;
+            _inputMediator.PreviousTargetEvent += OnPreviousTarget;
         }
 
-        private void GetCurrentCardParty()
+        private UICharacterCard GetCharacterCard(int index)
         {
-
-            for (int i = 0; i < _characterSlots.childCount; i++)
-            {
-                var cardUI = _characterSlots.GetChild(i).GetComponent<UICharacterCard>();
-
-                _charCards.Add(cardUI);
-            }
+            var cardUI = _characterSlots.GetChild(index).GetComponent<UICharacterCard>();
+            return cardUI;
         }
 
-        private void EnableSortFunc()
+        private void OnEnableSortFunc()
         {
-            _charCards[0].OnBeingSelected();
+            _inputMediator.EnableHomeMenuInput();
+            _cardHolder = GetCharacterCard(0);
+            SelectTargetToSort();
+        }
+
+        private void OnNextTarget()
+        {
+            CurrentSortTargetIndex++;
+            SelectTargetToSort();
+        }
+
+        private void OnPreviousTarget()
+        {
+            CurrentSortTargetIndex--;
+            SelectTargetToSort();
+        }
+
+        private void SelectTargetToSort()
+        {
+            var currentCard = GetCharacterCard(CurrentSortTargetIndex);
+
+            if (_cardHolder != currentCard)
+                _cardHolder.Deselect();
+
+            _cardHolder = currentCard;
+            _cardHolder.Select();
         }
     }
 }

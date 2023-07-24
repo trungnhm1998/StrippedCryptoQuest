@@ -10,17 +10,14 @@ namespace CryptoQuest.UI.Menu.Home
     {
         [SerializeField] private GameObject _selectedEffect;
 
-        private void OnEnable()
-        {
-        }
-
-        private void OnDisable()
-        {
-        }
-
-        public void OnBeingSelected()
+        public void Select()
         {
             _selectedEffect.SetActive(true);
+        }
+
+        public void Deselect()
+        {
+            _selectedEffect.SetActive(false);
         }
     }
 }

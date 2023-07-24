@@ -30,15 +30,6 @@ namespace CryptoQuest.Input
             ""id"": ""c8db8c1e-e16e-4540-8635-5975751b1bb4"",
             ""actions"": [
                 {
-                    ""name"": ""MoveSelection"",
-                    ""type"": ""Value"",
-                    ""id"": ""1b014bd5-68da-4576-a416-c05754a8db94"",
-                    ""expectedControlType"": ""Vector2"",
-                    ""processors"": ""StickDeadzone"",
-                    ""interactions"": """",
-                    ""initialStateCheck"": true
-                },
-                {
                     ""name"": ""Navigate"",
                     ""type"": ""PassThrough"",
                     ""id"": ""7ef12941-53a4-4cdc-82a3-b73a0685f64a"",
@@ -111,9 +102,9 @@ namespace CryptoQuest.Input
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""HomeMenuSort"",
+                    ""name"": ""HomeMenuEnableSort"",
                     ""type"": ""Button"",
-                    ""id"": ""d6fcc8ac-31cd-44ba-afed-b8ddea4a7324"",
+                    ""id"": ""ca4cc3bc-157e-4155-abc8-70bd2752e84c"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -224,7 +215,7 @@ namespace CryptoQuest.Input
                     ""name"": ""Keyboard"",
                     ""id"": ""e8903b0e-af0a-422a-8e9e-a21633fd9efe"",
                     ""path"": ""2DVector"",
-                    ""interactions"": """",
+                    ""interactions"": ""Tap"",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Navigate"",
@@ -441,171 +432,6 @@ namespace CryptoQuest.Input
                     ""isPartOfComposite"": false
                 },
                 {
-                    ""name"": ""Gamepad Left Stick"",
-                    ""id"": ""941d4d85-dd58-45e1-8ee6-6a9072b06427"",
-                    ""path"": ""2DVector(mode=1)"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""MoveSelection"",
-                    ""isComposite"": true,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""up"",
-                    ""id"": ""4ba156bb-5453-4b12-8fb0-b78de27bb71a"",
-                    ""path"": ""<Gamepad>/leftStick/up"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""MoveSelection"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""down"",
-                    ""id"": ""0e24e422-e690-4fd5-9255-97b1ffae3e8c"",
-                    ""path"": ""<Gamepad>/leftStick/down"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""MoveSelection"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""left"",
-                    ""id"": ""884d0fa7-4396-4119-8dfe-a81f9e632749"",
-                    ""path"": ""<Gamepad>/leftStick/left"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""MoveSelection"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""right"",
-                    ""id"": ""2d83c98b-b539-4aef-8c01-cd9d5eecc563"",
-                    ""path"": ""<Gamepad>/leftStick/right"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""MoveSelection"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""Keyboard WASD"",
-                    ""id"": ""696e4806-d246-4a7e-be56-3f19531fa187"",
-                    ""path"": ""2DVector(mode=1)"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""MoveSelection"",
-                    ""isComposite"": true,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""up"",
-                    ""id"": ""996baf74-bc9b-41b2-97df-bd4425d9f03f"",
-                    ""path"": ""<Keyboard>/w"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""MoveSelection"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""down"",
-                    ""id"": ""1d80377a-93e2-4bf9-8717-117acac1174a"",
-                    ""path"": ""<Keyboard>/s"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""MoveSelection"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""left"",
-                    ""id"": ""aec95441-d570-47b0-8ea3-f08e6f1d382c"",
-                    ""path"": ""<Keyboard>/a"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""MoveSelection"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""right"",
-                    ""id"": ""63655bac-1822-4ac6-842d-517fba6e424b"",
-                    ""path"": ""<Keyboard>/d"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""MoveSelection"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""Keyboard Arrows"",
-                    ""id"": ""5417e256-d05e-446f-97d3-5afd15b3f051"",
-                    ""path"": ""2DVector(mode=1)"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""MoveSelection"",
-                    ""isComposite"": true,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""up"",
-                    ""id"": ""fe43ff23-5fa3-471f-a8b1-09abd844f04f"",
-                    ""path"": ""<Keyboard>/upArrow"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""MoveSelection"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""down"",
-                    ""id"": ""f8be5fb2-4ad7-458c-9594-92c81be73595"",
-                    ""path"": ""<Keyboard>/downArrow"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""MoveSelection"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""left"",
-                    ""id"": ""80679bc6-833f-4e83-9a82-7b9b9dd25b6c"",
-                    ""path"": ""<Keyboard>/leftArrow"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""MoveSelection"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""right"",
-                    ""id"": ""08c560d6-2caf-4dfa-9fc6-bd7da2176d8a"",
-                    ""path"": ""<Keyboard>/rightArrow"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""MoveSelection"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
                     ""name"": """",
                     ""id"": ""f9005af0-0d8d-46b8-bf6e-92bf1813d5ac"",
                     ""path"": ""<Keyboard>/tab"",
@@ -673,23 +499,23 @@ namespace CryptoQuest.Input
                 },
                 {
                     ""name"": """",
-                    ""id"": ""1854258e-9724-4e83-9749-31a13849a8c1"",
+                    ""id"": ""47c3ca79-b42c-4dba-9c53-5e212b57e8f3"",
                     ""path"": ""<Keyboard>/x"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""MnK"",
-                    ""action"": ""HomeMenuSort"",
+                    ""action"": ""HomeMenuEnableSort"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
-                    ""id"": ""f24b9177-f415-442f-a669-ba230ef16d71"",
+                    ""id"": ""1ceaae05-4cdd-46e3-8ff6-8ac79a9b93fd"",
                     ""path"": ""<Gamepad>/buttonWest"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
-                    ""action"": ""HomeMenuSort"",
+                    ""action"": ""HomeMenuEnableSort"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1154,6 +980,164 @@ namespace CryptoQuest.Input
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""HomeMenu"",
+            ""id"": ""03009577-21fa-43a0-8674-4a86a4d5cb1c"",
+            ""actions"": [
+                {
+                    ""name"": ""Next"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""29532e9b-70b9-455d-8c25-f8e80cad96e4"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Previous"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""f9506bf1-63d8-4b68-9170-f5e1b494a02a"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": ""Gamepad"",
+                    ""id"": ""5fdfcaa0-e60c-4487-96c9-8ed4227e80a9"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Next"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""477894b7-1db0-4418-b3dc-0fdf96fddda6"",
+                    ""path"": ""<Gamepad>/leftStick/right"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Next"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""ea29fcbe-a6fa-4522-98cd-3e67347acb9a"",
+                    ""path"": ""<Gamepad>/rightStick/right"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Next"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b5c37d00-7df6-4e04-8db3-d6877afe0408"",
+                    ""path"": ""<Gamepad>/dpad"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Next"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""52f7a043-da0b-49ab-be12-179ca984d9d9"",
+                    ""path"": ""<Keyboard>/rightArrow"",
+                    ""interactions"": ""Tap"",
+                    ""processors"": """",
+                    ""groups"": ""MnK"",
+                    ""action"": ""Next"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""Gamepad"",
+                    ""id"": ""ced82bb2-564d-4b64-a08e-b518e9fb168d"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Previous"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""54010308-ff84-45eb-91c9-abeb53f9dd00"",
+                    ""path"": ""<Gamepad>/leftStick/left"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Previous"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""a95d3f87-ede1-4629-9700-3d63a6575e82"",
+                    ""path"": ""<Gamepad>/rightStick/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Previous"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""Keyboard"",
+                    ""id"": ""ee20362a-0269-4794-a934-3decde0a9eae"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": ""Tap"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Previous"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""beef860d-82c1-47da-8a0b-e5193ae4259a"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""MnK"",
+                    ""action"": ""Previous"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""ba48c4f9-b980-4ca3-a9c2-f5b5eaa0ec97"",
+                    ""path"": ""<Keyboard>/leftArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""MnK"",
+                    ""action"": ""Previous"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""974b9ad7-da03-49b9-ab03-f1fdbd5b4524"",
+                    ""path"": ""<Gamepad>/dpad"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Previous"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": [
@@ -1188,7 +1172,6 @@ namespace CryptoQuest.Input
 }");
             // Menus
             m_Menus = asset.FindActionMap("Menus", throwIfNotFound: true);
-            m_Menus_MoveSelection = m_Menus.FindAction("MoveSelection", throwIfNotFound: true);
             m_Menus_Navigate = m_Menus.FindAction("Navigate", throwIfNotFound: true);
             m_Menus_Submit = m_Menus.FindAction("Submit", throwIfNotFound: true);
             m_Menus_Confirm = m_Menus.FindAction("Confirm", throwIfNotFound: true);
@@ -1197,7 +1180,7 @@ namespace CryptoQuest.Input
             m_Menus_Point = m_Menus.FindAction("Point", throwIfNotFound: true);
             m_Menus_NextSelection = m_Menus.FindAction("NextSelection", throwIfNotFound: true);
             m_Menus_MouseMove = m_Menus.FindAction("MouseMove", throwIfNotFound: true);
-            m_Menus_HomeMenuSort = m_Menus.FindAction("HomeMenuSort", throwIfNotFound: true);
+            m_Menus_HomeMenuEnableSort = m_Menus.FindAction("HomeMenuEnableSort", throwIfNotFound: true);
             // MapGameplay
             m_MapGameplay = asset.FindActionMap("MapGameplay", throwIfNotFound: true);
             m_MapGameplay_MoveUp = m_MapGameplay.FindAction("MoveUp", throwIfNotFound: true);
@@ -1211,6 +1194,10 @@ namespace CryptoQuest.Input
             m_Dialogues = asset.FindActionMap("Dialogues", throwIfNotFound: true);
             m_Dialogues_NextDialogue = m_Dialogues.FindAction("NextDialogue", throwIfNotFound: true);
             m_Dialogues_Escape = m_Dialogues.FindAction("Escape", throwIfNotFound: true);
+            // HomeMenu
+            m_HomeMenu = asset.FindActionMap("HomeMenu", throwIfNotFound: true);
+            m_HomeMenu_Next = m_HomeMenu.FindAction("Next", throwIfNotFound: true);
+            m_HomeMenu_Previous = m_HomeMenu.FindAction("Previous", throwIfNotFound: true);
         }
 
         public void Dispose()
@@ -1272,7 +1259,6 @@ namespace CryptoQuest.Input
         // Menus
         private readonly InputActionMap m_Menus;
         private List<IMenusActions> m_MenusActionsCallbackInterfaces = new List<IMenusActions>();
-        private readonly InputAction m_Menus_MoveSelection;
         private readonly InputAction m_Menus_Navigate;
         private readonly InputAction m_Menus_Submit;
         private readonly InputAction m_Menus_Confirm;
@@ -1281,12 +1267,11 @@ namespace CryptoQuest.Input
         private readonly InputAction m_Menus_Point;
         private readonly InputAction m_Menus_NextSelection;
         private readonly InputAction m_Menus_MouseMove;
-        private readonly InputAction m_Menus_HomeMenuSort;
+        private readonly InputAction m_Menus_HomeMenuEnableSort;
         public struct MenusActions
         {
             private @InputActions m_Wrapper;
             public MenusActions(@InputActions wrapper) { m_Wrapper = wrapper; }
-            public InputAction @MoveSelection => m_Wrapper.m_Menus_MoveSelection;
             public InputAction @Navigate => m_Wrapper.m_Menus_Navigate;
             public InputAction @Submit => m_Wrapper.m_Menus_Submit;
             public InputAction @Confirm => m_Wrapper.m_Menus_Confirm;
@@ -1295,7 +1280,7 @@ namespace CryptoQuest.Input
             public InputAction @Point => m_Wrapper.m_Menus_Point;
             public InputAction @NextSelection => m_Wrapper.m_Menus_NextSelection;
             public InputAction @MouseMove => m_Wrapper.m_Menus_MouseMove;
-            public InputAction @HomeMenuSort => m_Wrapper.m_Menus_HomeMenuSort;
+            public InputAction @HomeMenuEnableSort => m_Wrapper.m_Menus_HomeMenuEnableSort;
             public InputActionMap Get() { return m_Wrapper.m_Menus; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -1305,9 +1290,6 @@ namespace CryptoQuest.Input
             {
                 if (instance == null || m_Wrapper.m_MenusActionsCallbackInterfaces.Contains(instance)) return;
                 m_Wrapper.m_MenusActionsCallbackInterfaces.Add(instance);
-                @MoveSelection.started += instance.OnMoveSelection;
-                @MoveSelection.performed += instance.OnMoveSelection;
-                @MoveSelection.canceled += instance.OnMoveSelection;
                 @Navigate.started += instance.OnNavigate;
                 @Navigate.performed += instance.OnNavigate;
                 @Navigate.canceled += instance.OnNavigate;
@@ -1332,16 +1314,13 @@ namespace CryptoQuest.Input
                 @MouseMove.started += instance.OnMouseMove;
                 @MouseMove.performed += instance.OnMouseMove;
                 @MouseMove.canceled += instance.OnMouseMove;
-                @HomeMenuSort.started += instance.OnHomeMenuSort;
-                @HomeMenuSort.performed += instance.OnHomeMenuSort;
-                @HomeMenuSort.canceled += instance.OnHomeMenuSort;
+                @HomeMenuEnableSort.started += instance.OnHomeMenuEnableSort;
+                @HomeMenuEnableSort.performed += instance.OnHomeMenuEnableSort;
+                @HomeMenuEnableSort.canceled += instance.OnHomeMenuEnableSort;
             }
 
             private void UnregisterCallbacks(IMenusActions instance)
             {
-                @MoveSelection.started -= instance.OnMoveSelection;
-                @MoveSelection.performed -= instance.OnMoveSelection;
-                @MoveSelection.canceled -= instance.OnMoveSelection;
                 @Navigate.started -= instance.OnNavigate;
                 @Navigate.performed -= instance.OnNavigate;
                 @Navigate.canceled -= instance.OnNavigate;
@@ -1366,9 +1345,9 @@ namespace CryptoQuest.Input
                 @MouseMove.started -= instance.OnMouseMove;
                 @MouseMove.performed -= instance.OnMouseMove;
                 @MouseMove.canceled -= instance.OnMouseMove;
-                @HomeMenuSort.started -= instance.OnHomeMenuSort;
-                @HomeMenuSort.performed -= instance.OnHomeMenuSort;
-                @HomeMenuSort.canceled -= instance.OnHomeMenuSort;
+                @HomeMenuEnableSort.started -= instance.OnHomeMenuEnableSort;
+                @HomeMenuEnableSort.performed -= instance.OnHomeMenuEnableSort;
+                @HomeMenuEnableSort.canceled -= instance.OnHomeMenuEnableSort;
             }
 
             public void RemoveCallbacks(IMenusActions instance)
@@ -1534,6 +1513,60 @@ namespace CryptoQuest.Input
             }
         }
         public DialoguesActions @Dialogues => new DialoguesActions(this);
+
+        // HomeMenu
+        private readonly InputActionMap m_HomeMenu;
+        private List<IHomeMenuActions> m_HomeMenuActionsCallbackInterfaces = new List<IHomeMenuActions>();
+        private readonly InputAction m_HomeMenu_Next;
+        private readonly InputAction m_HomeMenu_Previous;
+        public struct HomeMenuActions
+        {
+            private @InputActions m_Wrapper;
+            public HomeMenuActions(@InputActions wrapper) { m_Wrapper = wrapper; }
+            public InputAction @Next => m_Wrapper.m_HomeMenu_Next;
+            public InputAction @Previous => m_Wrapper.m_HomeMenu_Previous;
+            public InputActionMap Get() { return m_Wrapper.m_HomeMenu; }
+            public void Enable() { Get().Enable(); }
+            public void Disable() { Get().Disable(); }
+            public bool enabled => Get().enabled;
+            public static implicit operator InputActionMap(HomeMenuActions set) { return set.Get(); }
+            public void AddCallbacks(IHomeMenuActions instance)
+            {
+                if (instance == null || m_Wrapper.m_HomeMenuActionsCallbackInterfaces.Contains(instance)) return;
+                m_Wrapper.m_HomeMenuActionsCallbackInterfaces.Add(instance);
+                @Next.started += instance.OnNext;
+                @Next.performed += instance.OnNext;
+                @Next.canceled += instance.OnNext;
+                @Previous.started += instance.OnPrevious;
+                @Previous.performed += instance.OnPrevious;
+                @Previous.canceled += instance.OnPrevious;
+            }
+
+            private void UnregisterCallbacks(IHomeMenuActions instance)
+            {
+                @Next.started -= instance.OnNext;
+                @Next.performed -= instance.OnNext;
+                @Next.canceled -= instance.OnNext;
+                @Previous.started -= instance.OnPrevious;
+                @Previous.performed -= instance.OnPrevious;
+                @Previous.canceled -= instance.OnPrevious;
+            }
+
+            public void RemoveCallbacks(IHomeMenuActions instance)
+            {
+                if (m_Wrapper.m_HomeMenuActionsCallbackInterfaces.Remove(instance))
+                    UnregisterCallbacks(instance);
+            }
+
+            public void SetCallbacks(IHomeMenuActions instance)
+            {
+                foreach (var item in m_Wrapper.m_HomeMenuActionsCallbackInterfaces)
+                    UnregisterCallbacks(item);
+                m_Wrapper.m_HomeMenuActionsCallbackInterfaces.Clear();
+                AddCallbacks(instance);
+            }
+        }
+        public HomeMenuActions @HomeMenu => new HomeMenuActions(this);
         private int m_GamepadSchemeIndex = -1;
         public InputControlScheme GamepadScheme
         {
@@ -1554,7 +1587,6 @@ namespace CryptoQuest.Input
         }
         public interface IMenusActions
         {
-            void OnMoveSelection(InputAction.CallbackContext context);
             void OnNavigate(InputAction.CallbackContext context);
             void OnSubmit(InputAction.CallbackContext context);
             void OnConfirm(InputAction.CallbackContext context);
@@ -1563,7 +1595,7 @@ namespace CryptoQuest.Input
             void OnPoint(InputAction.CallbackContext context);
             void OnNextSelection(InputAction.CallbackContext context);
             void OnMouseMove(InputAction.CallbackContext context);
-            void OnHomeMenuSort(InputAction.CallbackContext context);
+            void OnHomeMenuEnableSort(InputAction.CallbackContext context);
         }
         public interface IMapGameplayActions
         {
@@ -1579,6 +1611,11 @@ namespace CryptoQuest.Input
         {
             void OnNextDialogue(InputAction.CallbackContext context);
             void OnEscape(InputAction.CallbackContext context);
+        }
+        public interface IHomeMenuActions
+        {
+            void OnNext(InputAction.CallbackContext context);
+            void OnPrevious(InputAction.CallbackContext context);
         }
     }
 }
