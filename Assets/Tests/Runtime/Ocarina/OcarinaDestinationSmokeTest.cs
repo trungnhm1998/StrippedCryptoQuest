@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using CryptoQuest;
 using CryptoQuest.Item.Ocarinas.Data;
 using CryptoQuest.Map;
 using IndiGames.Core.SceneManagementSystem.Events.ScriptableObjects;
@@ -11,8 +10,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.TestTools;
 
-
-namespace Tests.Runtime.Ocarina
+namespace CryptoQuest.Tests.Runtime.Ocarina
 {
     public class OcarinaDestinationSmokeTest
     {

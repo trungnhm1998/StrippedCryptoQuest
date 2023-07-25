@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using CryptoQuest.Character.MonoBehaviours;
 using CryptoQuest.Events;
 using CryptoQuest.Item.Ocarinas;
@@ -8,13 +7,12 @@ using IndiGames.Core.Events.ScriptableObjects;
 using IndiGames.Core.SceneManagementSystem.Events.ScriptableObjects;
 using IndiGames.Core.SceneManagementSystem.ScriptableObjects;
 using NUnit.Framework;
-using Tests.Runtime.Ocarina;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.TestTools;
 
-namespace CryptoQuest.Tests.Runtime.OcarinaIntergrationTests
+namespace CryptoQuest.Tests.Runtime.Ocarina
 {
     public class OcarinaIntergrationTests
     {
