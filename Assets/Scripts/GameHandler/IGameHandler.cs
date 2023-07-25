@@ -6,7 +6,7 @@ namespace CryptoQuest.GameHandler
 {
     public interface IGameHandler
     {
-        object Handle(object request);
+        void Handle(object request);
         IGameHandler SetNext(IGameHandler nextHandler);
     }
 }

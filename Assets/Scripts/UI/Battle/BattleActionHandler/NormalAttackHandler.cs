@@ -6,17 +6,13 @@ namespace CryptoQuest.UI.Battle.BattleActionHandler
 {
     public class NormalAttackHandler : BattleActionHandler
     {
-        public override object Handle(IBattleUnit currentUnit)
+        public override void Handle(IBattleUnit currentUnit)
         {
-            if (currentUnit == null) return currentUnit;
+            if (currentUnit == null) return;
             AbilitySystemBehaviour currentUnitOwner = currentUnit.Owner;
-            if (currentUnit.NormalAttack == null)
-            {
-                Debug.LogWarning($"This character dont have normal attack skill");
-                return currentUnit;
-            }
+
             currentUnit.SelectSkill(currentUnit.NormalAttack);
-            return base.Handle(currentUnit);
+            base.Handle(currentUnit);
         }
     }
 }
