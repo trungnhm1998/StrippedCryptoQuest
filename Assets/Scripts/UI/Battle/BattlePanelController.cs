@@ -5,6 +5,7 @@ using CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit;
 using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects;
 using CryptoQuest.Input;
 using CryptoQuest.UI.Battle.CommandsMenu;
+using IndiGames.Core.Events.ScriptableObjects;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Serialization;
@@ -20,28 +21,32 @@ namespace CryptoQuest.UI.Battle
         public UnityAction OnButtonGuardClicked = delegate { };
         public UnityAction OnButtonEscapeClicked = delegate { };
 
+
+        [SerializeField] private BattleActionHandler.BattleActionHandler[] _normalAttackChain;
+
         [Header("Events")]
         [SerializeField] private InputMediatorSO _inputMediator;
 
         [SerializeField] private BattleBus _battleBus;
-
-        [SerializeField] private UIBattleCommandMenu _uiBattleCommandMenu;
+        [SerializeField] private VoidEventChannelSO _onNewTurnEvent;
 
         [Header("UI Panels")]
+        [SerializeField] private UIBattleCommandMenu _uiBattleCommandMenu;
+
         [SerializeField] private UICommandPanel _commandPanel;
-
-        [Header("Demo Panels")]
-        [SerializeField] private List<ButtonInfo> _attackPanelInfo;
-
-        [SerializeField] private List<ButtonInfo> _skillPanelInfo;
-        [SerializeField] private List<ButtonInfo> _itemPanelInfo;
-        [SerializeField] private List<ButtonInfo> _mobInfo;
 
         private BattleManager _battleManager;
 
-        private void Start()
+        public void OpenCommandDetailPanel(List<ButtonInfo> infos)
         {
-            _commandPanel.Init(_mobInfo);
+            _commandPanel.gameObject.SetActive(true);
+            _commandPanel.Init(infos);
+        }
+
+        public void CloseCommandDetailPanel()
+        {
+            _commandPanel.Clear();
+            _commandPanel.gameObject.SetActive(false);
         }
 
         private void OnEnable()
@@ -51,10 +56,12 @@ namespace CryptoQuest.UI.Battle
             OnButtonItemClicked += OnButtonItemClickedHandler;
             OnButtonGuardClicked += OnButtonGuardClickedHandler;
             OnButtonEscapeClicked += OnButtonEscapeClickedHandler;
+            _onNewTurnEvent.EventRaised += OnNewTurn;
 
             _inputMediator.CancelEvent += OnClickCancel;
 
             _battleManager = _battleBus.BattleManager;
+            SetupChain(_normalAttackChain);
         }
 
         private void OnDisable()
@@ -64,14 +71,37 @@ namespace CryptoQuest.UI.Battle
             OnButtonItemClicked -= OnButtonItemClickedHandler;
             OnButtonGuardClicked -= OnButtonGuardClickedHandler;
             OnButtonEscapeClicked -= OnButtonEscapeClickedHandler;
+            _onNewTurnEvent.EventRaised -= OnNewTurn;
 
             _inputMediator.CancelEvent -= OnClickCancel;
+        }
+
+        private void SetupChain(BattleActionHandler.BattleActionHandler[] chain)
+        {
+            for (int i = 1; i < chain.Length; i++)
+            {
+                chain[i - 1].SetNext(chain[i]);
+            }
+        }
+
+        private void OnNewTurn()
+        {
+            _commandPanel.Clear();
+            List<ButtonInfo> infos = new();
+            foreach (var enemy in _battleManager.BattleTeam2.BattleUnits)
+            {
+                infos.Add(new ButtonInfo()
+                {
+                    Name = enemy.UnitData.DisplayName,
+                });
+            }
+
+            // OpenCommandDetailPanel(infos);
         }
 
         private void OnClickCancel()
         {
             _commandPanel.Clear();
-            _commandPanel.Init(_mobInfo);
             _uiBattleCommandMenu.Initialize();
         }
 
@@ -89,19 +119,17 @@ namespace CryptoQuest.UI.Battle
         private void OnButtonItemClickedHandler(IBattleUnit currentUnit)
         {
             _commandPanel.Clear();
-            _commandPanel.Init(_itemPanelInfo);
         }
 
         private void OnButtonSkillClickedHandler(IBattleUnit currentUnit)
         {
             _commandPanel.Clear();
-            _commandPanel.Init(_skillPanelInfo);
         }
 
         private void OnButtonAttackClickedHandler(IBattleUnit currentUnit)
         {
             _commandPanel.Clear();
-            _commandPanel.Init(_attackPanelInfo);
+            _normalAttackChain[0].Handle(currentUnit);
         }
     }
 }

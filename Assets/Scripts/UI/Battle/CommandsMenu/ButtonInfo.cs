@@ -8,6 +8,6 @@ namespace CryptoQuest.UI.Battle.CommandsMenu
     {
         public string Name;
         public string Value;
-        public UnityEvent Callback;
+        public UnityAction Callback;
     }
 }

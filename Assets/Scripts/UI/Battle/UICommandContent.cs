@@ -23,7 +23,7 @@ namespace CryptoQuest.UI.Battle
         {
             _label.text = info.Name;
             _value.text = info.Value;
-            Button.onClick.AddListener(info.Callback.Invoke);
+            Button.onClick.AddListener(info.Callback);
         }
 
         public void ReleaseToPool()
@@ -33,7 +33,7 @@ namespace CryptoQuest.UI.Battle
 
         private void OnDisable()
         {
-           ReleaseToPool(); 
+            ReleaseToPool();
         }
     }
 }
