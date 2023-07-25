@@ -4,6 +4,7 @@ using IndiGames.Core.Events.ScriptableObjects;
 using IndiGames.GameplayAbilitySystem.AbilitySystem;
 using UnityEngine;
 using UnityEngine.Localization.Settings;
+using UnityEngine.Localization.SmartFormat.PersistentVariables;
 
 namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Skills
 {
@@ -65,10 +66,16 @@ namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Skills
 
         protected override void SkillActivatePromt()
         {
-            string normalAttackText = LocalizationSettings.StringDatabase.GetLocalizedString(BATTLE_PROMT_TABLE, AbilitySO.PromtKey);
+            var actionData = AbilitySO.ActionDataSO;
             CharacterDataSO unitData = _unit.UnitData;
-            if (unitData == null) return;
-            _unit.Logger.Log(string.Format(normalAttackText, unitData.DisplayName, AbilitySO.SkillName));
+            if (unitData == null || actionData == null) return; 
+
+            actionData.Log.Clear();
+            var nameValue = new StringVariable() {Value = unitData.DisplayName};
+            var skillNameValue = new StringVariable() {Value = AbilitySO.SkillName.GetLocalizedString()};
+            actionData.Log.Add(UNIT_NAME_VARIABLE, nameValue);
+            actionData.Log.Add(SKILL_NAME_VARIABLE, skillNameValue);
+            AbilitySO.ActionEventSO.RaiseEvent(actionData);
         }
     }
 }

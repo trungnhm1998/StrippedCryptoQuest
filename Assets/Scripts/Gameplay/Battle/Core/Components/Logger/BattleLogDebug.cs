@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace CryptoQuest.Gameplay.Battle.Core.Components.Logger
 {
-    public class BattleUnitLogDebug : BattleUnitLog
+    public class BattleLogDebug : BattleLog
     {
         public override void Log(string message)
         {

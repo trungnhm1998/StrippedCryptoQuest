@@ -6,7 +6,7 @@ using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
 using IndiGames.GameplayAbilitySystem.AttributeSystem;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
 using UnityEngine;
-using ILogger = CryptoQuest.Gameplay.Battle.Core.Components.Logger.ILogger;
+using IndiGames.Core.Events.ScriptableObjects;
 
 namespace CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit
 {
@@ -23,30 +23,41 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit
         [field: SerializeField]
         public CharacterDataSO UnitData { get; set; }
 
-        public AbstractAbility SelectedSkill { get; protected set; }
+        [Header("Raise Events")]
+        [SerializeField] protected VoidEventChannelSO _doneActionEventChannel;
 
-        public ILogger Logger { get; protected set; }
+        [Header("Listen Events")]
+        [SerializeField] protected VoidEventChannelSO _doneShowUnitAction;
+
+        public AbstractAbility SelectedSkill { get; protected set; }
 
         public List<AbilitySystemBehaviour> TargetContainer { get; protected set; } = new();
 
         protected BattleManager _battleManager;
         protected bool _isDead;
+        protected bool _isDoneShowAction;
 
         public virtual void Init(BattleTeam team, AbilitySystemBehaviour owner)
         {
             OwnerTeam = team;
             Owner = owner;
-            Logger = GetComponent<ILogger>();
         }
 
         protected virtual void OnEnable()
         {
             _hpAttribute.ValueChangeEvent += OnHPChanged;
+            _doneShowUnitAction.EventRaised += OnDoneShowAction;
         }
 
         protected virtual void OnDisable()
         {
             _hpAttribute.ValueChangeEvent -= OnHPChanged;
+            _doneShowUnitAction.EventRaised -= OnDoneShowAction;
+        }
+
+        private void OnDoneShowAction()
+        {
+            _isDoneShowAction = true;
         }
 
         public virtual void SetOpponentTeams(BattleTeam opponentTeam)
@@ -111,7 +122,8 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit
         public virtual IEnumerator Execute()
         {
             Owner.TryActiveAbility(SelectedSkill);
-            Logger.ClearLogs();
+            _doneActionEventChannel.RaiseEvent();
+            yield return new WaitWhile(() => _isDoneShowAction == true);
             yield return null;
         }
         
@@ -119,6 +131,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit
         {
             SelectedSkill = null;
             TargetContainer.Clear();
+            _isDoneShowAction = false;
             yield return null;
         }
 

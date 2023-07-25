@@ -8,23 +8,24 @@ using IndiGames.GameplayAbilitySystem.EffectSystem;
 using IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects.EffectExecutionCalculation;
 using UnityEngine;
 using UnityEngine.Localization.Settings;
+using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Events;
+using UnityEngine.Localization.SmartFormat.PersistentVariables;
 
 namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Effects.EffectExecutionCalculation
 {
     [CreateAssetMenu(fileName = "DamageCaculation", menuName = "Gameplay/Battle/Effects/Execution Calculations/Damage Caculation")]
     public class DamageCalculationSO : AbstractEffectExecutionCalculationSO
     {
-        public string TakeDamagePromtKey;
-        public string MissPromtKey;
-        public string NoDamagePromtKey;
-        public string DeathPromtKey;
+        public BattleActionDataEventChannelSO ActionEventSO;
+        public BattleActionDataSO TakeDamageActionData;
+        public BattleActionDataSO MissActionData;
+        public BattleActionDataSO NoDamageActionData;
+        public BattleActionDataSO DeathActionData;
         public AttributeScriptableObject OwnerAttack;
         public AttributeScriptableObject TargetHP;
 
         private IBattleUnit _ownerUnit;
         private IBattleUnit _targetUnit;
-        private const string BATTLE_PROMT_TABLE = "BattlePromt";
-        private Dictionary<string, string> _cachedStrings = new();
 
         public override bool ExecuteImplementation(ref AbstractEffect effectSpec,
             ref EffectAttributeModifier[] modifiers)
@@ -54,32 +55,18 @@ namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Effects.EffectExecu
             return false;
         }
 
-        /// <summary>
-        /// TODO: Check when localize changed to clear cache
-        /// </summary>
-        /// <param name="promtKey"></param>
-        /// <returns></returns>
-        private string GetCachedString(string promtKey)
-        {
-            if (promtKey == "") return null;
-            if (_cachedStrings.TryGetValue(promtKey, out string value))
-            {
-                return value;
-            }
-            string localizedString = LocalizationSettings.StringDatabase.GetLocalizedString(BATTLE_PROMT_TABLE, promtKey);
-            _cachedStrings.Add(promtKey, localizedString);
-            return localizedString;
-        }
-
         private void LogAfterCalculateDamage(float damage)
         {
             if (_ownerUnit == null || _targetUnit == null) return;
-
-            string _takeDamagePromt = GetCachedString(TakeDamagePromtKey);
             CharacterDataSO targetUnitData = _targetUnit.UnitData;
             if (targetUnitData == null) return;
 
-            _ownerUnit.Logger.Log(string.Format(_takeDamagePromt, damage, targetUnitData.DisplayName));
+            TakeDamageActionData.Log.Clear();
+            var nameValue = new StringVariable() {Value = targetUnitData.DisplayName};
+            var damageValue = new FloatVariable() {Value = damage};
+            TakeDamageActionData.Log.Add("unitName", nameValue);
+            TakeDamageActionData.Log.Add("damage", damageValue);
+            ActionEventSO.RaiseEvent(TakeDamageActionData);
         }
 
         private void LogIfTargetDeath(AbstractEffect effectSpec, float damage)
@@ -88,10 +75,13 @@ namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Effects.EffectExecu
             target.AttributeSystem.GetAttributeValue(TargetHP, out AttributeValue value);
             if (value.CurrentValue <= damage)
             {
-                string _deathPromt = GetCachedString(DeathPromtKey);
                 CharacterDataSO targetUnitData = _targetUnit.UnitData;
                 if (targetUnitData == null) return;
-                _ownerUnit.Logger.Log(string.Format(_deathPromt, targetUnitData.DisplayName));
+
+                DeathActionData.Log.Clear();
+                var nameValue = new StringVariable() {Value = targetUnitData.DisplayName};
+                DeathActionData.Log.Add("unitName", nameValue);
+                ActionEventSO.RaiseEvent(DeathActionData);
             }
         }
     }

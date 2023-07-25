@@ -59,6 +59,18 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components
             _sceneLoadedEventChannel.EventRaised -= StartBattle;
         }
 
+#if UNITY_EDITOR
+        private void OnDestroy()
+        {
+            // To make sure when battle manager is detroyed, the battle end and
+            // the global state is reset, to prevent error when cold boot
+            if (_stateMachine.CurrentState != _battleEndState)
+            {
+                OnEscape();
+            }
+        }
+#endif 
+
         public void InitBattleTeams()
         {
             BattleUnits.Clear();

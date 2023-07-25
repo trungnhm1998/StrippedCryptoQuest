@@ -6,17 +6,37 @@ using IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects;
 using IndiGames.GameplayAbilitySystem.Implementation.BasicEffect;
 using UnityEngine;
 using UnityEngine.Localization.Settings;
+using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Events;
+using UnityEngine.Localization.SmartFormat.PersistentVariables;
+using UnityEngine.Localization;
 
 namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Effects
 {
     [CreateAssetMenu(fileName = "CQInfiniteEffect", menuName = "Indigames Ability System/Effects/CQ Infinite Effect")]
-    public class CQInfiniteEffectScriptableObject : EffectScriptableObject<CQInfiniteEffect> {}
+    public class CQInfiniteEffectScriptableObject : EffectScriptableObject
+    {
+        public BattleActionDataEventChannelSO ActionEventSO;
+        public BattleActionDataSO IncreaseActionDataSO;
+        public BattleActionDataSO DecreaseActionDataSO;
+
+        protected override AbstractEffect CreateEffect()
+        {
+            return new CQInfiniteEffect(this);
+        }
+    }
 
     public class CQInfiniteEffect : InfiniteEffect
     {
-        protected const string BATTLE_PROMT_TABLE = "BattlePromt";
-        protected const string ATTRIBUTE_INCREASED_KEY = "ATTRIBUTE_INCREASED";
-        protected const string ATTRIBUTE_DECREASED_KEY = "ATTRIBUTE_DECREASED";
+        private CQInfiniteEffectScriptableObject _effectSO;
+
+        public CQInfiniteEffect(CQInfiniteEffectScriptableObject effectSO)
+        {
+            _effectSO = effectSO;
+        }
+
+        protected const string UNIT_NAME_VARIABLE = "unitName";
+        protected const string ATTRIBUTE_NAME_VARIABLE = "attributeName";
+
         protected IBattleUnit _unit;
 
         public override void Accept(IEffectApplier effectApplier)
@@ -30,13 +50,17 @@ namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Effects
             _unit = Owner.GetComponent<IBattleUnit>();
             foreach (EffectAttributeModifier modifier in EffectSO.EffectDetails.Modifiers)
             {
-                string promtKey = modifier.Value < 0 ? ATTRIBUTE_DECREASED_KEY : ATTRIBUTE_INCREASED_KEY;
-                string promt = LocalizationSettings.StringDatabase.GetLocalizedString(BATTLE_PROMT_TABLE, promtKey);
+                var actionData = modifier.Value < 0 ? _effectSO.DecreaseActionDataSO : _effectSO.IncreaseActionDataSO;
                 CharacterDataSO unitData = _unit.UnitData;
-                if (unitData == null) return;
-                _unit.Logger.Log(string.Format(promt, unitData.DisplayName, modifier.AttributeSO.DisplayName));
-            }
+                if (unitData == null || actionData == null) return;
 
+                actionData.Log.Clear();
+                var nameValue = new StringVariable() {Value = unitData.DisplayName};
+                var attributeValue = new StringVariable() {Value = modifier.AttributeSO.DisplayName};
+                actionData.Log.Add(UNIT_NAME_VARIABLE, nameValue);
+                actionData.Log.Add(ATTRIBUTE_NAME_VARIABLE, nameValue);
+                _effectSO.ActionEventSO.RaiseEvent(actionData);
+            }
         }
     }
 }

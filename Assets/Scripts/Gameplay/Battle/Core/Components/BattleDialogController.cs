@@ -9,7 +9,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components
     {
         [Header("Listen Events")]
         [SerializeField] private StringEventChannelSO _gotNewLogEventChannel;
-        [SerializeField] private VoidEventChannelSO _unitClearLogsEventChannel;
+        [SerializeField] private VoidEventChannelSO _unitDoneActionEventChannel;
         [SerializeField] private VoidEventChannelSO _endActionPhaseEventChannel;
 
         [Header("Raise Events")]
@@ -21,20 +21,20 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components
 
         private void Awake()
         {
-            OnClearLog();
+            OnUnitDoneAction();
         }
 
         private void OnEnable()
         {
             _gotNewLogEventChannel.EventRaised += OnGotNewLog;
-            _unitClearLogsEventChannel.EventRaised += OnClearLog;
+            _unitDoneActionEventChannel.EventRaised += OnUnitDoneAction;
             _endActionPhaseEventChannel.EventRaised += OnEndActionPhase;
         }
 
         private void OnDisable()
         {
             _gotNewLogEventChannel.EventRaised -= OnGotNewLog;
-            _unitClearLogsEventChannel.EventRaised -= OnClearLog;
+            _unitDoneActionEventChannel.EventRaised -= OnUnitDoneAction;
             _endActionPhaseEventChannel.EventRaised -= OnEndActionPhase;
         }
 
@@ -43,7 +43,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components
             _currentPage.Lines.Add(message);
         }
 
-        private void OnClearLog()
+        private void OnUnitDoneAction()
         {
             if (_currentPage != null && _currentPage.Lines.Count <= 0) return;
             _currentPage = new DialogPage();
