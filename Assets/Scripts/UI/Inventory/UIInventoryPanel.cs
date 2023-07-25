@@ -16,12 +16,12 @@ namespace CryptoQuest.UI.Inventory
         [SerializeField] private List<Button> _listButton;
         [SerializeField] private Text _description;
         private Button _currentButton;
-        public List<Items> Item;
+        public List<Items> ListItem;
         public List<ItemInformation> ItemInfo = new();
 
         public void AddItem(Button button, int dataNumber)
         {
-            Item[dataNumber].ListButton.Add(button);
+            ListItem[dataNumber].ListButton.Add(button);
             _listButton.Add(button);
         }
 

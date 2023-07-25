@@ -30,10 +30,9 @@ namespace CryptoQuest.UI.Inventory
         [SerializeField] private RectTransform _parentTransform;
         [SerializeField] private GameObject _upArrowHint;
         [SerializeField] private GameObject _downArrowHint;
-        private RectTransform _currentRectTransform;
-        private UIInventoryTabButton _currentMenu;
-        private Button _currentItem;
-        private int _dataNumber = 0;
+        [SerializeField] private RectTransform _currentRectTransform;
+        [SerializeField] private Button _currentItem;
+        private int _indexMenuNumber = 0;
         private List<ItemInformation> _itemList = new List<ItemInformation>();
 
         private void Awake()
@@ -77,57 +76,33 @@ namespace CryptoQuest.UI.Inventory
 
         private void SelectionNextMenu()
         {
-            for (int i = 0; i < _tabInventoryButton.Count; i++)
-            {
-                if (_currentMenu != _tabInventoryButton[i])
-                    continue;
-                int nextIndex = (i + 1) % _tabInventoryButton.Count;
-                _currentMenu = _tabInventoryButton[nextIndex];
-                SelectTab(nextIndex);
-                break;
-            }
+            _indexMenuNumber++;
+            _indexMenuNumber = _indexMenuNumber >= _tabInventoryButton.Count ? 0 : _indexMenuNumber;
+            SelectTab(_indexMenuNumber);
         }
 
         private void SelectionPreviousMenu()
         {
-            for (int i = 0; i < _tabInventoryButton.Count; i++)
-            {
-                int nextIndex;
-                if (_currentMenu != _tabInventoryButton[i])
-                    continue;
-                if (i == 0)
-                {
-                    nextIndex = _tabInventoryButton.Count - 1;
-                }
-                else
-                {
-                    nextIndex = (i - 1) % _tabInventoryButton.Count;
-                    _currentMenu = _tabInventoryButton[nextIndex];
-                }
-                SelectTab(nextIndex);
-                break;
-            }
+            _indexMenuNumber--;
+            _indexMenuNumber = _indexMenuNumber < 0 ? _tabInventoryButton.Count - 1 : _indexMenuNumber;
+            SelectTab(_indexMenuNumber);
         }
 
         private void InitData()
         {
-            _currentMenu = _tabInventoryButton[_dataNumber];
             _itemList.Clear();
-            foreach (ItemSO item in _itemMenu[_dataNumber].Items)
+            foreach (ItemSO item in _itemMenu[_indexMenuNumber].Items)
             {
                 _itemList.Add(new ItemInformation(item));
-                // _inventoryPanel.ItemInfo.Add(new ItemInformation(item));
             }
             _inventoryPanel.ItemInfo.AddRange(_itemList);
-            _itemMenu[_dataNumber].InitializedData = true;
+            _itemMenu[_indexMenuNumber].InitializedData = true;
             _recyclableScrollRect.Initialize(this);
-            CheckScrollRect();
         }
 
-        public void CheckScrollRect()
+        private void CheckScrollRect()
         {
-            if (_currentRectTransform == null)
-                _currentRectTransform = _inventory[_dataNumber].transform as RectTransform;
+            _currentRectTransform = _inventory[_indexMenuNumber].transform as RectTransform;
             RectTransform items = _recyclableScrollRect.PrototypeCell;
             bool shouldMoveUp = _currentRectTransform.anchoredPosition.y > items.rect.height;
             _upArrowHint.SetActive(shouldMoveUp);
@@ -139,13 +114,10 @@ namespace CryptoQuest.UI.Inventory
 
         private void SelectItem()
         {
-            for (int i = 0; i < _tabInventoryButton.Count; i++)
+            if (_itemMenu[_indexMenuNumber].Items.Count != 0)
             {
-                if (_currentMenu == _tabInventoryButton[i] && _itemMenu[i].Items.Count != 0)
-                {
-                    _currentItem = _inventoryPanel.Item[i].ListButton[0];
-                    _currentItem.Select();
-                }
+                _currentItem = _inventoryPanel.ListItem[_indexMenuNumber].ListButton[0];
+                _currentItem.Select();
             }
         }
 
@@ -159,19 +131,17 @@ namespace CryptoQuest.UI.Inventory
                 if (isMatched)
                     ShowTab(i);
             }
+            CheckScrollRect();
         }
 
-        private void ShowTab(int dataNumber)
+        private void ShowTab(int index)
         {
-            _dataNumber = dataNumber;
-            _currentMenu = _tabInventoryButton[dataNumber];
-            _currentMenu.Select();
-            _recyclableScrollRect.content = _inventory[dataNumber].transform as RectTransform;
+            _recyclableScrollRect.content = _inventory[index].transform as RectTransform;
             _autoScrollRect.ContentRectTransform =
-                _inventory[dataNumber].transform as RectTransform;
-            if (!_itemMenu[dataNumber].InitializedData)
+                _inventory[index].transform as RectTransform;
+            if (!_itemMenu[index].InitializedData)
                 InitData();
-            if (_inventoryPanel.Item[dataNumber].ListButton.Count != 0)
+            if (_inventoryPanel.ListItem[index].ListButton.Count != 0)
                 SelectItem();
         }
 
@@ -184,19 +154,14 @@ namespace CryptoQuest.UI.Inventory
         {
             var item = cell as UIItemStatus;
             item.ConfigureCell(_itemList[index], index);
-            for (int i = 0; i < _itemMenu.Count; i++)
-            {
-                if (_currentMenu == _tabInventoryButton[i])
-                {
-                    _inventoryPanel.AddItem(item.GetComponent<Button>(), i);
-                }
-            }
+            _inventoryPanel.AddItem(item.GetComponent<Button>(), _indexMenuNumber);
         }
 
         public void SetButtonListener()
         {
             _inventoryPanel.UpdateButton();
             SelectItem();
+            CheckScrollRect();
         }
     }
 }
