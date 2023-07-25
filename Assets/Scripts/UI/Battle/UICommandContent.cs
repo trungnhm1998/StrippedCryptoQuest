@@ -1,5 +1,4 @@
-﻿using CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit;
-using CryptoQuest.UI.Battle.CommandsMenu;
+﻿using CryptoQuest.UI.Battle.CommandsMenu;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Pool;
@@ -11,7 +10,7 @@ namespace CryptoQuest.UI.Battle
     {
         [SerializeField] private TextMeshProUGUI _label;
         [SerializeField] private TextMeshProUGUI _value;
-        [SerializeField] private Button _button;
+        public Button Button;
 
         private IObjectPool<UICommandContent> _objectPool;
 
@@ -24,12 +23,17 @@ namespace CryptoQuest.UI.Battle
         {
             _label.text = info.Name;
             _value.text = info.Value;
-            _button.onClick.AddListener(info.Callback.Invoke);
+            Button.onClick.AddListener(info.Callback.Invoke);
         }
 
         public void ReleaseToPool()
         {
             _objectPool?.Release(this);
+        }
+
+        private void OnDisable()
+        {
+           ReleaseToPool(); 
         }
     }
 }

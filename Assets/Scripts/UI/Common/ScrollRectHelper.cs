@@ -5,7 +5,7 @@ namespace CryptoQuest.UI.Battle.CommandsMenu
 {
     public static class ScrollRectHelper
     {
-        public static float CalculateNormalizedPosition(ScrollRect scrollRect, RectTransform targetRect,
+        public static float CalculateNormalizedPosition(this ScrollRect scrollRect, RectTransform targetRect,
             float align = 0)
         {
             float contentHeight = scrollRect.content.rect.height;
@@ -21,7 +21,7 @@ namespace CryptoQuest.UI.Battle.CommandsMenu
             return normalizedPosition;
         }
 
-        private static float GetPositionY(RectTransform rectTransform)
+        private static float GetPositionY(this RectTransform rectTransform)
         {
             return rectTransform.localPosition.y + rectTransform.rect.y;
         }

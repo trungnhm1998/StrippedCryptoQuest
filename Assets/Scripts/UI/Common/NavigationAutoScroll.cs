@@ -14,7 +14,20 @@ namespace CryptoQuest.UI.Battle.CommandsMenu
         [Header("UI")]
         [SerializeField] private RectTransform _firstButton;
 
+        public RectTransform FirstButton
+        {
+            get => _firstButton;
+            set => _firstButton = value;
+        }
+
         [SerializeField] private RectTransform _lastButton;
+
+        public RectTransform LastButton
+        {
+            get => _lastButton;
+            set => _lastButton = value;
+        }
+
         [SerializeField] private GameObject _arrowUpHint;
         [SerializeField] private GameObject _arrowDownHint;
 
@@ -41,14 +54,14 @@ namespace CryptoQuest.UI.Battle.CommandsMenu
             if (currentButton == _firstButton.gameObject)
             {
                 _scrollRect.verticalNormalizedPosition =
-                    ScrollRectHelper.CalculateNormalizedPosition(_scrollRect, _firstButton);
+                    _scrollRect.CalculateNormalizedPosition(_firstButton);
                 _arrowDownHint.SetActive(true);
                 _arrowUpHint.SetActive(false);
             }
             else if (currentButton == _lastButton.gameObject)
             {
                 _scrollRect.verticalNormalizedPosition =
-                    ScrollRectHelper.CalculateNormalizedPosition(_scrollRect, _lastButton);
+                    _scrollRect.CalculateNormalizedPosition(_lastButton);
                 _arrowUpHint.SetActive(true);
                 _arrowDownHint.SetActive(false);
             }

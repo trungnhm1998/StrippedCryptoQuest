@@ -9,40 +9,14 @@ namespace CryptoQuest.UI.Battle
     public class UICommandPanel : AbstractBattlePanelContent
     {
         [SerializeField] private GameObject _content;
-        [SerializeField] private GameObject _itemPrefab;
+        [SerializeField] private UICommandContent _itemPrefab;
+        [SerializeField] private NavigationAutoScroll _navigationAutoScroll;
 
-        private List<GameObject> _buttonPool = new List<GameObject>();
         private IObjectPool<UICommandContent> _uiCommandContentPool;
 
         private void Awake()
         {
             _uiCommandContentPool = new ObjectPool<UICommandContent>(OnCreate, OnGet, OnRelease, OnDestroyPool);
-        }
-
-        private void OnDestroyPool(UICommandContent obj)
-        {
-            Destroy(obj.gameObject);
-        }
-
-        private void OnRelease(UICommandContent obj)
-        {
-            obj.gameObject.SetActive(false);
-            _buttonPool.Remove(obj.gameObject);
-        }
-
-        private void OnGet(UICommandContent obj)
-        {
-            obj.transform.SetAsLastSibling();
-            obj.gameObject.SetActive(true);
-        }
-
-        private UICommandContent OnCreate()
-        {
-            var go = Instantiate(_itemPrefab, _content.transform);
-            _buttonPool.Add(go);
-            var button = go.GetComponent<UICommandContent>();
-            button.ObjectPool = _uiCommandContentPool;
-            return button;
         }
 
         public override void Init(List<ButtonInfo> informations)
@@ -52,24 +26,42 @@ namespace CryptoQuest.UI.Battle
             {
                 var item = _uiCommandContentPool.Get();
                 item.Init(info);
+                _navigationAutoScroll.LastButton = item.GetComponent<RectTransform>();
             }
 
-            if (_buttonPool == null || _buttonPool.Count == 0) return;
 
-            var firstButton = _buttonPool[0];
-            firstButton.GetComponent<Button>().Select();
+            var firstButton = _content.GetComponentInChildren<Button>();
+            if (!firstButton) return;
+            _navigationAutoScroll.FirstButton = firstButton.GetComponent<RectTransform>();
+            firstButton.Select();
         }
 
         public override void Clear()
         {
-            foreach (Transform transform in _content.transform)
-            {
-                var button = transform.GetComponent<UICommandContent>();
-                if (button && button.gameObject.activeInHierarchy)
-                    button.ReleaseToPool();
-            }
-
             _content.SetActive(false);
+        }
+
+        private UICommandContent OnCreate()
+        {
+            var button = Instantiate(_itemPrefab, _content.transform);
+            button.ObjectPool = _uiCommandContentPool;
+            return button;
+        }
+
+        private void OnGet(UICommandContent obj)
+        {
+            obj.transform.SetAsLastSibling();
+            obj.gameObject.SetActive(true);
+        }
+
+        private void OnRelease(UICommandContent obj)
+        {
+            obj.gameObject.SetActive(false);
+        }
+
+        private void OnDestroyPool(UICommandContent obj)
+        {
+            Destroy(obj.gameObject);
         }
     }
 }
