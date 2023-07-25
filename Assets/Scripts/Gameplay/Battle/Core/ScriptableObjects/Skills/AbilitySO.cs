@@ -12,7 +12,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Skills.CryptoQuestA
     public class AbilitySO : EffectAbilitySO
     {
         public SkillInfo SkillInfo;
-        public AttributeScriptableObject costSpecSO;
+        public AttributeScriptableObject CostSpecSO;
         public override AbilityParameters Parameters => SkillInfo.SkillParameters;
         protected override AbstractAbility CreateAbility() => new Ability(SkillInfo);
     }
@@ -31,7 +31,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Skills.CryptoQuestA
         {
             if (!CanActiveAbility()) return;
 
-            Owner.AttributeSystem.GetAttributeValue(AbilitySO.costSpecSO, out var ownerCostSpec);
+            Owner.AttributeSystem.GetAttributeValue(AbilitySO.CostSpecSO, out var ownerCostSpec);
             if (!IsValidCost(ownerCostSpec)) return;
             SetRemainingCostSpec(ownerCostSpec.CurrentValue - _skillInfo.Cost);
 
@@ -61,7 +61,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Skills.CryptoQuestA
 
         private void SetRemainingCostSpec(float value)
         {
-            Owner.AttributeSystem.SetAttributeBaseValue(AbilitySO.costSpecSO, value);
+            Owner.AttributeSystem.SetAttributeBaseValue(AbilitySO.CostSpecSO, value);
         }
     }
 }
