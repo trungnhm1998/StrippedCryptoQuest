@@ -15,6 +15,7 @@ namespace CryptoQuest.UI.Menu.Home
         [SerializeField] private PartyManagerMockDataSO _partyManagerMockData;
 
         [Header("Game Components")]
+        [SerializeField] private VoidEventChannelSO _enableMainMenuInputs;
         [SerializeField] private Transform _characterSlots;
         [SerializeField] private GameObject _topLine;
 
@@ -33,6 +34,8 @@ namespace CryptoQuest.UI.Menu.Home
             }
         }
 
+        private int _indexHolder;
+
         private void Awake()
         {
             _inputMediator.EnableMenuInput();
@@ -40,13 +43,13 @@ namespace CryptoQuest.UI.Menu.Home
 
         private void OnEnable()
         {
-            _inputMediator.HomeMenuSortEvent += OnEnableSortFunc;
+            RegisterSortModeEvent();
             RegisterSelectInputEvents();
         }
 
         private void OnDisable()
         {
-            _inputMediator.HomeMenuSortEvent -= OnEnableSortFunc;
+            UnregisterSortModeEvent();
             UnregisterSelectInputEvent();
         }
 
@@ -56,7 +59,7 @@ namespace CryptoQuest.UI.Menu.Home
             return cardUI;
         }
 
-        private void OnEnableSortFunc()
+        private void OnEnableSortMode()
         {
             _inputMediator.EnableHomeMenuInput();
             _selectedCardHolder = GetCharacterCard(0);
@@ -93,6 +96,8 @@ namespace CryptoQuest.UI.Menu.Home
 
             _topLine.SetActive(false);
             _selectedCardHolder.OnSelected();
+
+            _indexHolder = CurrentIndex;
         }
 
         private void OnSwapRight()
@@ -107,7 +112,6 @@ namespace CryptoQuest.UI.Menu.Home
 
         private void OnSwapLeft()
         {
-
             var currentTarget = _characterSlots.GetChild(CurrentIndex);
 
             CurrentIndex--;
@@ -120,8 +124,50 @@ namespace CryptoQuest.UI.Menu.Home
         {
             _selectedCardHolder.Confirm();
             _topLine.SetActive(true);
+            MatchDataWithUI();
             UnregisterSortInputEvents();
             RegisterSelectInputEvents();
+        }
+
+        private void MatchDataWithUI()
+        {
+            for (int i = 0; i < _partyManagerMockData.Members.Count; i++)
+            {
+                var memberInfo = _characterSlots.GetChild(i).GetComponent<UICharacterInfo>().CharInfoMockData;
+                _partyManagerMockData.Members[i] = memberInfo;
+            }
+        }
+
+        private void OnCancelSort()
+        {
+            _selectedCardHolder.Cancel();
+            UnregisterSortInputEvents();
+            RegisterSelectInputEvents();
+            ApplyDataBeforeSort();
+        }
+
+        private void ApplyDataBeforeSort()
+        {
+            var currentTarget = _characterSlots.GetChild(CurrentIndex);
+            currentTarget.SetSiblingIndex(_indexHolder);
+
+            CurrentIndex = _indexHolder;
+        }
+        
+        private void OnCancelSelect()
+        {
+            _selectedCardHolder.Deselect();
+            _enableMainMenuInputs.RaiseEvent();
+        }
+
+        private void RegisterSortModeEvent()
+        {
+            _inputMediator.HomeMenuSortEvent += OnEnableSortMode;
+        }
+        
+        private void UnregisterSortModeEvent()
+        {
+            _inputMediator.HomeMenuSortEvent -= OnEnableSortMode;
         }
 
         private void RegisterSelectInputEvents()
@@ -129,6 +175,7 @@ namespace CryptoQuest.UI.Menu.Home
             _inputMediator.NextEvent += OnNextTarget;
             _inputMediator.PreviousEvent += OnPreviousTarget;
             _inputMediator.ConfirmEvent += OnConfirmSelect;
+            _inputMediator.HomeMenuCancelEvent += OnCancelSelect;
         }
         
         private void UnregisterSelectInputEvent()
@@ -136,6 +183,7 @@ namespace CryptoQuest.UI.Menu.Home
             _inputMediator.NextEvent -= OnNextTarget;
             _inputMediator.PreviousEvent -= OnPreviousTarget;
             _inputMediator.ConfirmEvent -= OnConfirmSelect;
+            _inputMediator.HomeMenuCancelEvent -= OnCancelSelect;
         }
 
         private void RegisterSortInputEvents()
@@ -143,6 +191,7 @@ namespace CryptoQuest.UI.Menu.Home
             _inputMediator.NextEvent += OnSwapRight;
             _inputMediator.PreviousEvent += OnSwapLeft;
             _inputMediator.ConfirmEvent += OnConfirmSortOrder;
+            _inputMediator.HomeMenuCancelEvent += OnCancelSort;
         }
 
         private void UnregisterSortInputEvents()
@@ -150,6 +199,7 @@ namespace CryptoQuest.UI.Menu.Home
             _inputMediator.NextEvent -= OnSwapRight;
             _inputMediator.PreviousEvent -= OnSwapLeft;
             _inputMediator.ConfirmEvent -= OnConfirmSortOrder;
+            _inputMediator.HomeMenuCancelEvent -= OnCancelSort;
         }
     }
 }

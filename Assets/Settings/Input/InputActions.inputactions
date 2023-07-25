@@ -987,6 +987,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "HomeMenuCancel",
+                    "type": "Button",
+                    "id": "654e2681-dfba-46dc-8a3d-2a8855ac9013",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -1152,6 +1161,28 @@
                     "processors": "",
                     "groups": "Gamepad",
                     "action": "ConfirmSelect",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ddda68cb-4997-4622-8e05-2f28ff2e3ca7",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "HomeMenuCancel",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "67207902-d0b8-4d63-973c-de884da8378f",
+                    "path": "<Gamepad>/buttonEast",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "HomeMenuCancel",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

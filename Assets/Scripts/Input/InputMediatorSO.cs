@@ -46,6 +46,7 @@ namespace CryptoQuest.Input
         public event UnityAction NextEvent;
         public event UnityAction PreviousEvent;
         public event UnityAction ConfirmEvent;
+        public event UnityAction HomeMenuCancelEvent;
 
         #endregion
 
@@ -274,6 +275,11 @@ namespace CryptoQuest.Input
         public void OnConfirmSelect(InputAction.CallbackContext context)
         {
             if (context.performed) ConfirmEvent?.Invoke();
+        }
+        
+        public void OnHomeMenuCancel(InputAction.CallbackContext context)
+        {
+            if (context.performed) HomeMenuCancelEvent?.Invoke();
         }
 
         #endregion

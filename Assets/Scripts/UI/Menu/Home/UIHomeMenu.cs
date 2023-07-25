@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using CryptoQuest.UI.Menu.MockData;
+using IndiGames.Core.Events.ScriptableObjects;
 using UnityEngine;
 
 namespace CryptoQuest.UI.Menu.Home
@@ -8,7 +9,6 @@ namespace CryptoQuest.UI.Menu.Home
     public class UIHomeMenu : MonoBehaviour
     {
         [SerializeField] private Transform _characterSlots;
-        [SerializeField] private GameObject _characterInfoPF;
         [SerializeField] private PartyManagerMockDataSO _partyManagerMockData;
 
         private void Awake()

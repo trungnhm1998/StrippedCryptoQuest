@@ -34,6 +34,11 @@ namespace CryptoQuest.UI.Menu.Home
             PerformSelectedEffect();
         }
 
+        public void Cancel()
+        {
+            BackToNormalState();
+        }
+
         public void Confirm()
         {
             BackToNormalState();
@@ -50,7 +55,6 @@ namespace CryptoQuest.UI.Menu.Home
         {
             _selectedEffect.SetActive(false);
             _contents.SetActive(true);
-            Deselect();
         }
     }
 }
