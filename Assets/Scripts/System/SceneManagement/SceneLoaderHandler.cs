@@ -1,16 +1,18 @@
 using IndiGames.Core.SceneManagementSystem;
 using IndiGames.Core.SceneManagementSystem.ScriptableObjects;
+using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace CryptoQuest.System.SceneManagement
 {
     public class SceneLoaderHandler : LinearGameSceneLoader
     {
-        public SceneLoaderBus SceneLoadBus;
+        [SerializeField] private SceneLoaderBus _sceneLoadBus;
         public SceneScriptableObject CurrentLoadedScene => _currentLoadedScene;
 
         private void Awake()
         {
-            SceneLoadBus.SceneLoader = this;
+            _sceneLoadBus.SceneLoader = this;
         }
     }
 }

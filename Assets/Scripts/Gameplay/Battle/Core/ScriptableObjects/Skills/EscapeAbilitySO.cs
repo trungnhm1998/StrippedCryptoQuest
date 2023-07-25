@@ -26,18 +26,12 @@ namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Skills
         protected new EscapeAbilitySO AbilitySO => (EscapeAbilitySO)_abilitySO;
 
         private SceneLoaderBus _sceneLoaderBus;
-        private Dictionary<SceneScriptableObject, MapPathSO> _mapToEscapePathDictionary = new();
+        private EscapeRouteMappingSO _escapeRouteMappingSO;
 
         public EscapeAbility(EscapeRouteMappingSO escapeRouteMappingSo, SceneLoaderBus sceneLoaderBus)
         {
             _sceneLoaderBus = sceneLoaderBus;
-            foreach (var escapeRouteMapping in escapeRouteMappingSo.EscapeRouteMappings)
-            {
-                foreach (var escapableMap in escapeRouteMapping.EscapableMaps)
-                {
-                    _mapToEscapePathDictionary[escapableMap] = escapeRouteMapping.EscapeRoute;
-                }
-            }
+            _escapeRouteMappingSO = escapeRouteMappingSo;
         }
 
         public override IEnumerator AbilityActivated()
@@ -49,7 +43,9 @@ namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Skills
         private void HandleEscape()
         {
             SceneScriptableObject currentActiveMapScene = _sceneLoaderBus.SceneLoader.CurrentLoadedScene;
-            if (_mapToEscapePathDictionary.TryGetValue(currentActiveMapScene, out var escapeRoute))
+            Dictionary<SceneScriptableObject, MapPathSO> mapToEscapeRouteDict =
+                _escapeRouteMappingSO.MapToEscapePathDictionary;
+            if (mapToEscapeRouteDict.TryGetValue(currentActiveMapScene, out var escapeRoute))
             {
                 OnEscaping(escapeRoute);
                 return;
