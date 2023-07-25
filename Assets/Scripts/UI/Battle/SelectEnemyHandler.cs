@@ -12,7 +12,7 @@ namespace CryptoQuest.UI.Battle.BattleActionHandler
 
         private IBattleUnit _currentUnit;
 
-        public void SelectTarget(IBattleUnit unit)
+        private void SelectTarget(IBattleUnit unit)
         {
             _currentUnit.SelectSingleTarget(unit.Owner);
             _panelController.CloseCommandDetailPanel();
@@ -27,13 +27,12 @@ namespace CryptoQuest.UI.Battle.BattleActionHandler
 
         private void SetupTargetButton(IBattleUnit battleUnit)
         {
-            var buttonInfos = new List<ButtonInfo>();
+            var buttonInfos = new List<AbstractButtonInfo>();
             var targetUnits = battleUnit.OpponentTeam.BattleUnits;
 
             foreach (var unit in targetUnits)
             {
-                var buttonInfo = new ButtonInfo(unit);
-                buttonInfo.Clicked = delegate { SelectTarget(unit); };
+                var buttonInfo = new SkillAbstractButtonInfo(unit, SelectTarget);
                 buttonInfos.Add(buttonInfo);
             }
 

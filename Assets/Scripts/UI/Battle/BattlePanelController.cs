@@ -36,9 +36,9 @@ namespace CryptoQuest.UI.Battle
         [SerializeField] private UICommandPanel _commandPanel;
 
         private BattleManager _battleManager;
-        private List<ButtonInfo> infos = new();
+        private List<AbstractButtonInfo> infos = new();
 
-        public void OpenCommandDetailPanel(List<ButtonInfo> infos)
+        public void OpenCommandDetailPanel(List<AbstractButtonInfo> infos)
         {
             _commandPanel.gameObject.SetActive(true);
             _commandPanel.Init(infos);

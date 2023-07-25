@@ -10,10 +10,10 @@ namespace CryptoQuest.UI.Battle
         [SerializeField] private BattlePanelController _panelController;
 
         [Header("Demo Panels")]
-        [SerializeField] private List<ButtonInfo> _attackPanelInfo;
+        [SerializeField] private List<AbstractButtonInfo> _attackPanelInfo;
 
-        [SerializeField] private List<ButtonInfo> _skillPanelInfo;
-        [SerializeField] private List<ButtonInfo> _itemPanelInfo;
+        [SerializeField] private List<AbstractButtonInfo> _skillPanelInfo;
+        [SerializeField] private List<AbstractButtonInfo> _itemPanelInfo;
 
         private void OnEnable()
         {

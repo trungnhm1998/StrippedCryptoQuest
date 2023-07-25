@@ -19,7 +19,7 @@ namespace CryptoQuest.UI.Battle
             _uiCommandContentPool = new ObjectPool<UICommandContent>(OnCreate, OnGet, OnRelease, OnDestroyPool);
         }
 
-        public override void Init(List<ButtonInfo> informations)
+        public override void Init(List<AbstractButtonInfo> informations)
         {
             _content.SetActive(true);
             foreach (var info in informations)
