@@ -9,7 +9,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.TestTools;
 
-namespace Tests.Runtime.Maps.TronVillage
+namespace CryptoQuest.Tests.Runtime.Maps.TronVillage
 {
     public class TronVillageEntranceExitSmokeTest
     {
