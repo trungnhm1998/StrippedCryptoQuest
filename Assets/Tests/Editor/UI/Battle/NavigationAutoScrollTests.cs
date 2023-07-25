@@ -8,7 +8,6 @@ namespace CryptoQuest.Tests.Editor.UI.Battle
     [TestFixture]
     public class NavigationAutoScrollTests
     {
-        private AutoScrollViewCalculatorCalculator _autoScrollViewCalculatorCalculator;
         private ScrollRect _scrollRect;
         private RectTransform _contentRect;
         private RectTransform _viewportRect;
@@ -21,12 +20,12 @@ namespace CryptoQuest.Tests.Editor.UI.Battle
             _contentRect = new GameObject().AddComponent<RectTransform>();
             _viewportRect = new GameObject().AddComponent<RectTransform>();
             _targetRect = new GameObject().AddComponent<RectTransform>();
-
-            _autoScrollViewCalculatorCalculator = new GameObject().AddComponent<AutoScrollViewCalculatorCalculator>();
         }
 
-        [TestCase(100, 50, 100, 100, 0, TestName = "CalculateNormalizedScrollPosition_ContentLessThanViewport_ReturnsZero")]
-        [TestCase(100, 200, 100, 100, 1, TestName = "CalculateNormalizedScrollPosition_ContentGreaterThanViewport_ReturnsNormalizedPosition")]
+        [TestCase(100, 50, 100, 100, 0,
+            TestName = "CalculateNormalizedScrollPosition_ContentLessThanViewport_ReturnsZero")]
+        [TestCase(100, 200, 100, 100, 1,
+            TestName = "CalculateNormalizedScrollPosition_ContentGreaterThanViewport_ReturnsNormalizedPosition")]
         [TestCase(0, 0, 100, 100, 0, TestName = "CalculateNormalizedScrollPosition_ZeroContentAndViewport_ReturnsZero")]
         [TestCase(100, 0, 100, 100, 0, TestName = "CalculateNormalizedScrollPosition_ZeroViewport_ReturnsZero")]
         public void CalculateNormalizedScrollPosition_ValidContentAndViewPort_ReturnsCorrectNormalizedPosition(
@@ -44,7 +43,7 @@ namespace CryptoQuest.Tests.Editor.UI.Battle
 
             _targetRect.sizeDelta = new Vector2(Mathf.Min(contentX, viewportX), Mathf.Min(contentY, viewportY));
 
-            float result = _autoScrollViewCalculatorCalculator.CalculateNormalizedScrollPosition(_scrollRect, _targetRect);
+            float result = ScrollRectHelper.CalculateNormalizedPosition(_scrollRect, _targetRect);
 
             Assert.AreEqual(expectedNormalizedPosition, result, 0.001f);
         }

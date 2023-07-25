@@ -1,11 +1,8 @@
-﻿using UnityEngine;
-using UnityEngine.UI;
-using CryptoQuest.Gameplay.Battle;
 using System.Collections.Generic;
-using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
-using IndiGames.GameplayAbilitySystem.AbilitySystem;
-using IndiGames.Core.Events.ScriptableObjects;
-using CryptoQuest.GameHandler;
+using IndiGames.GameplayAbilitySystem.AbilitySystem.ScriptableObjects;
+using TMPro;
+using UnityEngine;
+using UnityEngine.UI;
 
 namespace CryptoQuest.UI.Battle
 {
@@ -15,6 +12,6 @@ namespace CryptoQuest.UI.Battle
         public Button Button { get; private set; }
 
         [field: SerializeField]
-        public Text Text { get; private set; }
+        public TextMeshProUGUI Text { get; private set; }
     }
 }
