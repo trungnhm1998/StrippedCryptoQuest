@@ -12,34 +12,28 @@ namespace CryptoQuest.UI.Battle.BattleActionHandler
 
         private IBattleUnit _currentUnit;
 
-        public void OnSelectTarget(IBattleUnit unit)
+        public void SelectTarget(IBattleUnit unit)
         {
             _currentUnit.SelectSingleTarget(unit.Owner);
             _panelController.CloseCommandDetailPanel();
             base.Handle(unit);
         }
 
-        public override object Handle(IBattleUnit currentUnit)
+        public override void Handle(IBattleUnit currentUnit)
         {
             _currentUnit = currentUnit;
-            if (_currentUnit == null) return currentUnit;
-            SetupTargetButton(_currentUnit.OpponentTeam);
-            return null;
+            SetupTargetButton(_currentUnit);
         }
 
-        private void SetupTargetButton(BattleTeam team)
+        private void SetupTargetButton(IBattleUnit battleUnit)
         {
             var buttonInfos = new List<ButtonInfo>();
-            var targetUnits = team.BattleUnits;
+            var targetUnits = battleUnit.OpponentTeam.BattleUnits;
 
             foreach (var unit in targetUnits)
             {
-                var buttonInfo = new ButtonInfo()
-                {
-                    Name = unit.UnitData.DisplayName,
-                    Value = "",
-                    Callback = () => OnSelectTarget(unit)
-                };
+                var buttonInfo = new ButtonInfo(unit);
+                buttonInfo.Clicked = delegate { SelectTarget(unit); };
                 buttonInfos.Add(buttonInfo);
             }
 

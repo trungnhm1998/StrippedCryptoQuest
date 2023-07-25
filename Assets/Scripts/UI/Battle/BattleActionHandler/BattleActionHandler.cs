@@ -8,12 +8,12 @@ namespace CryptoQuest.UI.Battle.BattleActionHandler
     {
         protected BattleActionHandler _nextHandler;
 
-        public virtual object Handle(IBattleUnit unit)
+        public virtual void Handle(IBattleUnit unit)
         {
-            if (_nextHandler == null) return null;
-            return _nextHandler.Handle(unit);
+            if (_nextHandler == null) return;
+            _nextHandler.Handle(unit);
         }
-        
+
         public virtual IGameHandler SetNext(BattleActionHandler handler)
         {
             _nextHandler = handler;
@@ -22,6 +22,5 @@ namespace CryptoQuest.UI.Battle.BattleActionHandler
 
         public IGameHandler SetNext(IGameHandler handler) => handler;
         public virtual object Handle(object request) => request;
-
     }
 }

@@ -36,6 +36,7 @@ namespace CryptoQuest.UI.Battle
         [SerializeField] private UICommandPanel _commandPanel;
 
         private BattleManager _battleManager;
+        private List<ButtonInfo> infos = new();
 
         public void OpenCommandDetailPanel(List<ButtonInfo> infos)
         {
@@ -56,7 +57,7 @@ namespace CryptoQuest.UI.Battle
             OnButtonItemClicked += OnButtonItemClickedHandler;
             OnButtonGuardClicked += OnButtonGuardClickedHandler;
             OnButtonEscapeClicked += OnButtonEscapeClickedHandler;
-            _onNewTurnEvent.EventRaised += OnNewTurn;
+            _onNewTurnEvent.EventRaised += SetupNewTurn;
 
             _inputMediator.CancelEvent += OnClickCancel;
 
@@ -71,7 +72,7 @@ namespace CryptoQuest.UI.Battle
             OnButtonItemClicked -= OnButtonItemClickedHandler;
             OnButtonGuardClicked -= OnButtonGuardClickedHandler;
             OnButtonEscapeClicked -= OnButtonEscapeClickedHandler;
-            _onNewTurnEvent.EventRaised -= OnNewTurn;
+            _onNewTurnEvent.EventRaised -= SetupNewTurn;
 
             _inputMediator.CancelEvent -= OnClickCancel;
         }
@@ -84,19 +85,14 @@ namespace CryptoQuest.UI.Battle
             }
         }
 
-        private void OnNewTurn()
+        private void SetupNewTurn()
         {
             _commandPanel.Clear();
-            List<ButtonInfo> infos = new();
+            infos.Clear();
             foreach (var enemy in _battleManager.BattleTeam2.BattleUnits)
             {
-                infos.Add(new ButtonInfo()
-                {
-                    Name = enemy.UnitData.DisplayName,
-                });
+                infos.Add(new ButtonInfo(enemy));
             }
-
-            // OpenCommandDetailPanel(infos);
         }
 
         private void OnClickCancel()

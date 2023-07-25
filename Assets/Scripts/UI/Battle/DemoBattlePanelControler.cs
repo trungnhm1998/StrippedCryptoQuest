@@ -17,30 +17,30 @@ namespace CryptoQuest.UI.Battle
 
         private void OnEnable()
         {
-            _panelController.OnButtonAttackClicked += OnButtonAttackClickedHandler;
-            _panelController.OnButtonSkillClicked += OnButtonSkillClickedHandler;
-            _panelController.OnButtonItemClicked += OnButtonItemClickedHandler;
+            _panelController.OnButtonAttackClicked += ButtonAttackClicked;
+            _panelController.OnButtonSkillClicked += ButtonSkillClicked;
+            _panelController.OnButtonItemClicked += ButtonItemClicked;
         }
 
         private void OnDisable()
         {
-            _panelController.OnButtonAttackClicked -= OnButtonAttackClickedHandler;
-            _panelController.OnButtonSkillClicked -= OnButtonSkillClickedHandler;
-            _panelController.OnButtonItemClicked -= OnButtonItemClickedHandler;
+            _panelController.OnButtonAttackClicked -= ButtonAttackClicked;
+            _panelController.OnButtonSkillClicked -= ButtonSkillClicked;
+            _panelController.OnButtonItemClicked -= ButtonItemClicked;
         }
 
 
-        private void OnButtonItemClickedHandler(IBattleUnit currentUnit)
+        private void ButtonItemClicked(IBattleUnit currentUnit)
         {
             _panelController.OpenCommandDetailPanel(_itemPanelInfo);
         }
 
-        private void OnButtonSkillClickedHandler(IBattleUnit currentUnit)
+        private void ButtonSkillClicked(IBattleUnit currentUnit)
         {
             _panelController.OpenCommandDetailPanel(_skillPanelInfo);
         }
 
-        private void OnButtonAttackClickedHandler(IBattleUnit currentUnit)
+        private void ButtonAttackClicked(IBattleUnit currentUnit)
         {
             _panelController.OpenCommandDetailPanel(_attackPanelInfo);
         }
