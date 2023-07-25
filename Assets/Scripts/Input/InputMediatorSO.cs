@@ -45,7 +45,7 @@ namespace CryptoQuest.Input
 
         public event UnityAction NextEvent;
         public event UnityAction PreviousEvent;
-        public event UnityAction ConfirmSelectEvent;
+        public event UnityAction ConfirmEvent;
 
         #endregion
 
@@ -273,7 +273,7 @@ namespace CryptoQuest.Input
 
         public void OnConfirmSelect(InputAction.CallbackContext context)
         {
-            if (context.performed) ConfirmSelectEvent?.Invoke();
+            if (context.performed) ConfirmEvent?.Invoke();
         }
 
         #endregion

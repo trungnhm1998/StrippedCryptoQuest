@@ -12,6 +12,7 @@ namespace CryptoQuest.UI.Menu.Home
         [SerializeField] private GameObject _selectingEffect;
         [SerializeField] private GameObject _selectedEffect;
         [SerializeField] private Image _selectedAvatar;
+        [SerializeField] private GameObject _contents;
 
         private void OnEnable()
         {
@@ -33,10 +34,23 @@ namespace CryptoQuest.UI.Menu.Home
             PerformSelectedEffect();
         }
 
+        public void Confirm()
+        {
+            BackToNormalState();
+        }
+
         private void PerformSelectedEffect()
         {
+            _contents.SetActive(false);
             _selectedEffect.SetActive(true);
             _selectedAvatar.sprite = _avatar.sprite;
+        }
+
+        private void BackToNormalState()
+        {
+            _selectedEffect.SetActive(false);
+            _contents.SetActive(true);
+            Deselect();
         }
     }
 }
