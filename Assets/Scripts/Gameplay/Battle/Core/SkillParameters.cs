@@ -3,7 +3,6 @@ using CryptoQuest.Gameplay.BaseGameplayData;
 using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data;
 using IndiGames.GameplayAbilitySystem.AbilitySystem;
 using UnityEngine.Localization;
-using UnityEngine.Serialization;
 
 namespace CryptoQuest.Gameplay.Battle.Core
 {
