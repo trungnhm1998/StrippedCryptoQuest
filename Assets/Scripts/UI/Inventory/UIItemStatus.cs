@@ -1,25 +1,39 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using PolyAndCode.UI;
+using UnityEngine.Localization.Components;
+using UnityEngine.Events;
 using CryptoQuest.Item.Inventory;
+using UnityEngine.EventSystems;
+using CryptoQuest.Gameplay.Inventory;
 
 namespace CryptoQuest.UI.Inventory
 {
-    public class UIItemStatus : MonoBehaviour, ICell
+    public class UIItemInventory : MonoBehaviour, ICell
     {
         public Image Icon;
-        public Text Name;
+        public LocalizeStringEvent Name;
         public Text Quantity;
-        private ItemInformation _itemInfo;
-        private int _cellIndex;
+        private ItemInfomation _itemInfo;
 
-        public void ConfigureCell(ItemInformation itemInfo, int cellIndex)
+        public event UnityAction<ItemSO> Clicked;
+
+        public void Init(ItemInfomation itemInfo)
         {
-            _cellIndex = cellIndex;
             _itemInfo = itemInfo;
-            Icon.sprite = itemInfo.Icon;
-            Name.text = itemInfo.NameItem;
+            Icon.sprite = itemInfo.ItemSO.Icon;
+            Name.StringReference = itemInfo.ItemSO.Name;
             Quantity.text = itemInfo.Quantity.ToString();
+        }
+
+        public void OnClicked()
+        {
+            Clicked?.Invoke(_itemInfo.ItemSO);
+        }
+
+        public void Select()
+        {
+            EventSystem.current.SetSelectedGameObject(gameObject);
         }
     }
 }

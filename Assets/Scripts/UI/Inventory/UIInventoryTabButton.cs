@@ -1,3 +1,4 @@
+using CryptoQuest.Item.Inventory;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
@@ -6,13 +7,13 @@ namespace CryptoQuest.UI.Inventory
 {
     public class UIInventoryTabButton : MonoBehaviour
     {
-        public event UnityAction<int> Clicked;
+        public event UnityAction<EItemType> Clicked;
 
-        [SerializeField] private int _tabTypeId;
+        [SerializeField] private EItemType _typeMenuItem;
 
         public void OnClicked()
         {
-            Clicked?.Invoke(_tabTypeId);
+            Clicked?.Invoke(_typeMenuItem);
         }
 
         public void Select()
