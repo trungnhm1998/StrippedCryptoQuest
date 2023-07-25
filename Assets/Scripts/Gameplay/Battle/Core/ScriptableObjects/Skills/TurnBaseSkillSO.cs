@@ -71,10 +71,8 @@ namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Skills
             if (unitData == null || actionData == null) return; 
 
             actionData.Log.Clear();
-            var nameValue = new StringVariable() {Value = unitData.DisplayName};
-            var skillNameValue = new StringVariable() {Value = AbilitySO.SkillName.GetLocalizedString()};
-            actionData.Log.Add(UNIT_NAME_VARIABLE, nameValue);
-            actionData.Log.Add(SKILL_NAME_VARIABLE, skillNameValue);
+            actionData.AddStringVar(UNIT_NAME_VARIABLE, unitData.DisplayName);
+            actionData.AddStringVar(SKILL_NAME_VARIABLE, AbilitySO.SkillName.GetLocalizedString());
             AbilitySO.ActionEventSO.RaiseEvent(actionData);
         }
     }

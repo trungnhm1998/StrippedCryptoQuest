@@ -123,8 +123,13 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit
         {
             Owner.TryActiveAbility(SelectedSkill);
             _doneActionEventChannel.RaiseEvent();
-            yield return new WaitWhile(() => _isDoneShowAction == true);
+            yield return WaitUntilDoneShowAction();
             yield return null;
+        }
+
+        private IEnumerator WaitUntilDoneShowAction()
+        {
+            yield return new WaitWhile(() => _isDoneShowAction == true);
         }
         
         public virtual IEnumerator Resolve()

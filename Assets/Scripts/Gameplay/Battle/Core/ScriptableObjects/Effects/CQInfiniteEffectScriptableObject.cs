@@ -55,10 +55,8 @@ namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Effects
                 if (unitData == null || actionData == null) return;
 
                 actionData.Log.Clear();
-                var nameValue = new StringVariable() {Value = unitData.DisplayName};
-                var attributeValue = new StringVariable() {Value = modifier.AttributeSO.DisplayName};
-                actionData.Log.Add(UNIT_NAME_VARIABLE, nameValue);
-                actionData.Log.Add(ATTRIBUTE_NAME_VARIABLE, nameValue);
+                actionData.AddStringVar(UNIT_NAME_VARIABLE, unitData.DisplayName);
+                actionData.AddStringVar(ATTRIBUTE_NAME_VARIABLE, modifier.AttributeSO.DisplayName);
                 _effectSO.ActionEventSO.RaiseEvent(actionData);
             }
         }
