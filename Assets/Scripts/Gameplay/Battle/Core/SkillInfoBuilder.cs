@@ -13,7 +13,7 @@ namespace CryptoQuest.Gameplay.Battle.Core
         private Element _element;
         private SkillType _skillType;
         private SkillCategory _category;
-        private float _mpConsumption;
+        private float _cost;
         private SkillEffectType _effectType;
         private bool _isFixed;
         private SkillParameters _skillParameters;
@@ -28,7 +28,7 @@ namespace CryptoQuest.Gameplay.Battle.Core
                 Element = _element,
                 SkillType = _skillType,
                 Category = _category,
-                MPConsumption = _mpConsumption,
+                Cost = _cost,
                 EffectType = _effectType,
                 isFixed = _isFixed,
                 SkillParameters = _skillParameters
@@ -71,9 +71,9 @@ namespace CryptoQuest.Gameplay.Battle.Core
             return this;
         }
 
-        public SkillInfoBuilder WithMPConsumption(float mpConsumption)
+        public SkillInfoBuilder WithMPConsumption(float cost)
         {
-            _mpConsumption = mpConsumption;
+            _cost = cost;
             return this;
         }
 
