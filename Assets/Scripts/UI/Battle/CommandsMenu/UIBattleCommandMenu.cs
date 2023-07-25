@@ -1,18 +1,15 @@
 ﻿using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
-using CryptoQuest.Gameplay.Battle.Core.Components;
 using CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit;
-using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects;
 using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Events;
 using TMPro;
+using UnityEngine;
+using UnityEngine.UI;
 
-namespace CryptoQuest.UI.Battle
+namespace CryptoQuest.UI.Battle.CommandsMenu
 {
-    public class UIBattleActionMenu : MonoBehaviour
+    public class UIBattleCommandMenu : MonoBehaviour
     {
-        [SerializeField] private BattleBus _battleBus;
-        [SerializeField] private BattleActionHandler.BattleActionHandler[] _normalAttackChain;
+        [SerializeField] private BattlePanelController _battlePanelController;
 
         [Header("Events")]
         [SerializeField] private BattleUnitEventChannelSO _heroTurnEventChannel;
@@ -30,15 +27,9 @@ namespace CryptoQuest.UI.Battle
 
         [SerializeField] private Color _inactiveColor;
 
-        private BattleManager _battleManager;
         private IBattleUnit _currentUnit;
         private readonly Dictionary<Button, TextMeshProUGUI> _buttonTextMap = new();
 
-        private void Start()
-        {
-            _battleManager = _battleBus.BattleManager;
-            SetupChain(_normalAttackChain);
-        }
 
         private void OnEnable()
         {
@@ -50,21 +41,17 @@ namespace CryptoQuest.UI.Battle
             _heroTurnEventChannel.EventRaised -= OnHeroTurn;
         }
 
-        private void OnHeroTurn(IBattleUnit unit)
+        public void Initialize()
         {
             SelectFirstButton();
             CacheButtonTexts();
-
-            _currentUnit = unit;
-            _currentUnitName.text = unit.UnitData.DisplayName;
         }
 
-        private void SetupChain(BattleActionHandler.BattleActionHandler[] chain)
+        private void OnHeroTurn(IBattleUnit unit)
         {
-            for (int i = 1; i < chain.Length; i++)
-            {
-                chain[i - 1].SetNext(chain[i]);
-            }
+            Initialize();
+            _currentUnit = unit;
+            _currentUnitName.text = unit.UnitData.DisplayName;
         }
 
         private void CacheButtonTexts()
@@ -85,32 +72,35 @@ namespace CryptoQuest.UI.Battle
 
         public void OnNormalAttack()
         {
-            _normalAttackChain[0].Handle(_currentUnit);
+            _battlePanelController.OnButtonAttackClicked.Invoke(_currentUnit);
             SetActiveCommandsMenu(false);
         }
 
         public void OnUseSkill()
         {
             // TODO: Implement use Skill flow here
+            _battlePanelController.OnButtonSkillClicked.Invoke(_currentUnit);
             SetActiveCommandsMenu(false);
         }
 
         public void OnUseItem()
         {
             // TODO: Implement use item flow here
+            _battlePanelController.OnButtonItemClicked.Invoke(_currentUnit);
             SetActiveCommandsMenu(false);
         }
 
         public void OnGuard()
         {
             // TODO: Implement guard flow here
+            _battlePanelController.OnButtonGuardClicked.Invoke();
             SetActiveCommandsMenu(false);
         }
 
         public void OnEscape()
         {
+            _battlePanelController.OnButtonEscapeClicked.Invoke();
             SetActiveCommandsMenu(false);
-            _battleManager.OnEscape();
         }
 
         private void SetActiveCommandsMenu(bool isActive)
