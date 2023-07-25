@@ -1,28 +1,44 @@
 using System.Collections;
+using System.Collections.Generic;
 using CryptoQuest.Map;
-using IndiGames.Core.SceneManagementSystem.Events.ScriptableObjects;
+using CryptoQuest.System.SceneManagement;
 using IndiGames.Core.SceneManagementSystem.ScriptableObjects;
 using IndiGames.GameplayAbilitySystem.AbilitySystem;
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using UnityEngine.Events;
 
 namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Skills
 {
-    [CreateAssetMenu (fileName = "Escape Ability", menuName = "Gameplay/Battle/Abilities/Escape Ability")]
+    [CreateAssetMenu(fileName = "Escape Ability", menuName = "Gameplay/Battle/Abilities/Escape Ability")]
     public class EscapeAbilitySO : SpecialAbilitySO
     {
-        public PathStorageSO PathStorage;
-        public ActiveSceneSO ActiveSceneSO;
-        public SceneScriptableObject EscapeDestinationSceneSO;
-        public EscapeRouteMappingSO EscapeRouteMappingSO;
-        public LoadSceneEventChannelSO LoadSceneEventChannelSO;
+        [SerializeField] private EscapeRouteMappingSO _escapeRouteMappingSO;
+        [SerializeField] private SceneLoaderBus _sceneLoaderBus;
+        public UnityAction<MapPathSO> EscapeSucceeded;
+        public UnityAction EscapeFailed;
 
-        protected override AbstractAbility CreateAbility() => new EscapeAbility();
+        protected override AbstractAbility CreateAbility()
+            => new EscapeAbility(_escapeRouteMappingSO, _sceneLoaderBus);
     }
 
     public class EscapeAbility : SpecialAbility
     {
         protected new EscapeAbilitySO AbilitySO => (EscapeAbilitySO)_abilitySO;
+
+        private SceneLoaderBus _sceneLoaderBus;
+        private Dictionary<SceneScriptableObject, MapPathSO> _mapToEscapePathDictionary = new();
+
+        public EscapeAbility(EscapeRouteMappingSO escapeRouteMappingSo, SceneLoaderBus sceneLoaderBus)
+        {
+            _sceneLoaderBus = sceneLoaderBus;
+            foreach (var escapeRouteMapping in escapeRouteMappingSo.EscapeRouteMappings)
+            {
+                foreach (var escapableMap in escapeRouteMapping.EscapableMaps)
+                {
+                    _mapToEscapePathDictionary[escapableMap] = escapeRouteMapping.EscapeRoute;
+                }
+            }
+        }
 
         public override IEnumerator AbilityActivated()
         {
@@ -30,28 +46,21 @@ namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Skills
             yield return base.AbilityActivated();
         }
 
-
         private void HandleEscape()
         {
-            SceneScriptableObject currentActiveMapScene = AbilitySO.ActiveSceneSO.CurrentActiveMapScene;
-            foreach (var escapeRoute in AbilitySO.EscapeRouteMappingSO.EscapeRouteMappings)
+            SceneScriptableObject currentActiveMapScene = _sceneLoaderBus.SceneLoader.CurrentLoadedScene;
+            if (_mapToEscapePathDictionary.TryGetValue(currentActiveMapScene, out var escapeRoute))
             {
-                if (escapeRoute.EscapableMaps.Contains(currentActiveMapScene))
-                {
-                    TriggerEscape(escapeRoute.EscapeRoute);
-                    return;
-                }
+                OnEscaping(escapeRoute);
+                return;
             }
 
-            Debug.Log("Map is unescapable");
+            AbilitySO.EscapeFailed?.Invoke();
         }
 
-        private void TriggerEscape(MapPathSO escapeRoute)
+        private void OnEscaping(MapPathSO escapeRoute)
         {
-            if (SceneManager.GetSceneByName("WorldMap").isLoaded)
-                return;
-            AbilitySO.PathStorage.LastTakenPath = escapeRoute;
-            AbilitySO.LoadSceneEventChannelSO.RequestLoad(AbilitySO.EscapeDestinationSceneSO);
+            AbilitySO.EscapeSucceeded?.Invoke(escapeRoute);
         }
     }
 }
