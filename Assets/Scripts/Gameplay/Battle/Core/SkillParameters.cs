@@ -27,7 +27,7 @@ namespace CryptoQuest.Gameplay.Battle.Core
         public Element Element;
         public SkillType SkillType;
         public SkillCategory Category;
-        public float MPConsumption;
+        public float Cost;
         public SkillEffectType EffectType;
         public bool isFixed;
         public SkillParameters SkillParameters;
