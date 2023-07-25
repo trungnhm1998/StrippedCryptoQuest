@@ -16,7 +16,6 @@ namespace CryptoQuest.UI.Battle.BattleActionHandler
         {
             _currentUnit.SelectSingleTarget(unit.Owner);
             _panelController.CloseCommandDetailPanel();
-            base.Handle(unit);
         }
 
         public override void Handle(IBattleUnit currentUnit)
