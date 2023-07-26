@@ -29,7 +29,7 @@ namespace CryptoQuest.UI.Menu.Home
             _selectingEffect.SetActive(false);
         }
 
-        public void OnSelected()
+        public void Selected()
         {
             PerformSelectedEffect();
         }
