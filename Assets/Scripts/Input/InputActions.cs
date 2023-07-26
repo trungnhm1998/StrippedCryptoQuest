@@ -1217,7 +1217,7 @@ namespace CryptoQuest.Input
             ""id"": ""995ba685-ac12-4fbc-bfac-80830c51f95d"",
             ""actions"": [
                 {
-                    ""name"": ""ChangeEquipment"",
+                    ""name"": ""EnableChangeEquipmentMode"",
                     ""type"": ""Button"",
                     ""id"": ""5e94e9e7-edbb-4c82-b1eb-b4d61346b915"",
                     ""expectedControlType"": ""Button"",
@@ -1242,6 +1242,15 @@ namespace CryptoQuest.Input
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ConfirmSelectEquipmentSlot"",
+                    ""type"": ""Button"",
+                    ""id"": ""bb25bd51-1554-435d-ada3-7f269940e174"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -1252,7 +1261,7 @@ namespace CryptoQuest.Input
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""MnK"",
-                    ""action"": ""ChangeEquipment"",
+                    ""action"": ""EnableChangeEquipmentMode"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -1263,7 +1272,7 @@ namespace CryptoQuest.Input
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
-                    ""action"": ""ChangeEquipment"",
+                    ""action"": ""EnableChangeEquipmentMode"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -1332,6 +1341,39 @@ namespace CryptoQuest.Input
                     ""action"": ""GoAbove"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9e66988a-b7b1-40c7-94ef-714dadfe26f8"",
+                    ""path"": ""<Keyboard>/enter"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""MnK"",
+                    ""action"": ""ConfirmSelectEquipmentSlot"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7a303cbb-7885-4755-abfa-f619da8f9b24"",
+                    ""path"": ""<Keyboard>/numpadEnter"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""MnK"",
+                    ""action"": ""ConfirmSelectEquipmentSlot"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2589c1fa-3e2c-48b4-af69-dcb81069c2dc"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""ConfirmSelectEquipmentSlot"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -1398,9 +1440,10 @@ namespace CryptoQuest.Input
             m_HomeMenu_HomeMenuCancel = m_HomeMenu.FindAction("HomeMenuCancel", throwIfNotFound: true);
             // StatusMenu
             m_StatusMenu = asset.FindActionMap("StatusMenu", throwIfNotFound: true);
-            m_StatusMenu_ChangeEquipment = m_StatusMenu.FindAction("ChangeEquipment", throwIfNotFound: true);
+            m_StatusMenu_EnableChangeEquipmentMode = m_StatusMenu.FindAction("EnableChangeEquipmentMode", throwIfNotFound: true);
             m_StatusMenu_GoBelow = m_StatusMenu.FindAction("GoBelow", throwIfNotFound: true);
             m_StatusMenu_GoAbove = m_StatusMenu.FindAction("GoAbove", throwIfNotFound: true);
+            m_StatusMenu_ConfirmSelectEquipmentSlot = m_StatusMenu.FindAction("ConfirmSelectEquipmentSlot", throwIfNotFound: true);
         }
 
         public void Dispose()
@@ -1790,16 +1833,18 @@ namespace CryptoQuest.Input
         // StatusMenu
         private readonly InputActionMap m_StatusMenu;
         private List<IStatusMenuActions> m_StatusMenuActionsCallbackInterfaces = new List<IStatusMenuActions>();
-        private readonly InputAction m_StatusMenu_ChangeEquipment;
+        private readonly InputAction m_StatusMenu_EnableChangeEquipmentMode;
         private readonly InputAction m_StatusMenu_GoBelow;
         private readonly InputAction m_StatusMenu_GoAbove;
+        private readonly InputAction m_StatusMenu_ConfirmSelectEquipmentSlot;
         public struct StatusMenuActions
         {
             private @InputActions m_Wrapper;
             public StatusMenuActions(@InputActions wrapper) { m_Wrapper = wrapper; }
-            public InputAction @ChangeEquipment => m_Wrapper.m_StatusMenu_ChangeEquipment;
+            public InputAction @EnableChangeEquipmentMode => m_Wrapper.m_StatusMenu_EnableChangeEquipmentMode;
             public InputAction @GoBelow => m_Wrapper.m_StatusMenu_GoBelow;
             public InputAction @GoAbove => m_Wrapper.m_StatusMenu_GoAbove;
+            public InputAction @ConfirmSelectEquipmentSlot => m_Wrapper.m_StatusMenu_ConfirmSelectEquipmentSlot;
             public InputActionMap Get() { return m_Wrapper.m_StatusMenu; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -1809,28 +1854,34 @@ namespace CryptoQuest.Input
             {
                 if (instance == null || m_Wrapper.m_StatusMenuActionsCallbackInterfaces.Contains(instance)) return;
                 m_Wrapper.m_StatusMenuActionsCallbackInterfaces.Add(instance);
-                @ChangeEquipment.started += instance.OnChangeEquipment;
-                @ChangeEquipment.performed += instance.OnChangeEquipment;
-                @ChangeEquipment.canceled += instance.OnChangeEquipment;
+                @EnableChangeEquipmentMode.started += instance.OnEnableChangeEquipmentMode;
+                @EnableChangeEquipmentMode.performed += instance.OnEnableChangeEquipmentMode;
+                @EnableChangeEquipmentMode.canceled += instance.OnEnableChangeEquipmentMode;
                 @GoBelow.started += instance.OnGoBelow;
                 @GoBelow.performed += instance.OnGoBelow;
                 @GoBelow.canceled += instance.OnGoBelow;
                 @GoAbove.started += instance.OnGoAbove;
                 @GoAbove.performed += instance.OnGoAbove;
                 @GoAbove.canceled += instance.OnGoAbove;
+                @ConfirmSelectEquipmentSlot.started += instance.OnConfirmSelectEquipmentSlot;
+                @ConfirmSelectEquipmentSlot.performed += instance.OnConfirmSelectEquipmentSlot;
+                @ConfirmSelectEquipmentSlot.canceled += instance.OnConfirmSelectEquipmentSlot;
             }
 
             private void UnregisterCallbacks(IStatusMenuActions instance)
             {
-                @ChangeEquipment.started -= instance.OnChangeEquipment;
-                @ChangeEquipment.performed -= instance.OnChangeEquipment;
-                @ChangeEquipment.canceled -= instance.OnChangeEquipment;
+                @EnableChangeEquipmentMode.started -= instance.OnEnableChangeEquipmentMode;
+                @EnableChangeEquipmentMode.performed -= instance.OnEnableChangeEquipmentMode;
+                @EnableChangeEquipmentMode.canceled -= instance.OnEnableChangeEquipmentMode;
                 @GoBelow.started -= instance.OnGoBelow;
                 @GoBelow.performed -= instance.OnGoBelow;
                 @GoBelow.canceled -= instance.OnGoBelow;
                 @GoAbove.started -= instance.OnGoAbove;
                 @GoAbove.performed -= instance.OnGoAbove;
                 @GoAbove.canceled -= instance.OnGoAbove;
+                @ConfirmSelectEquipmentSlot.started -= instance.OnConfirmSelectEquipmentSlot;
+                @ConfirmSelectEquipmentSlot.performed -= instance.OnConfirmSelectEquipmentSlot;
+                @ConfirmSelectEquipmentSlot.canceled -= instance.OnConfirmSelectEquipmentSlot;
             }
 
             public void RemoveCallbacks(IStatusMenuActions instance)
@@ -1902,9 +1953,10 @@ namespace CryptoQuest.Input
         }
         public interface IStatusMenuActions
         {
-            void OnChangeEquipment(InputAction.CallbackContext context);
+            void OnEnableChangeEquipmentMode(InputAction.CallbackContext context);
             void OnGoBelow(InputAction.CallbackContext context);
             void OnGoAbove(InputAction.CallbackContext context);
+            void OnConfirmSelectEquipmentSlot(InputAction.CallbackContext context);
         }
     }
 }

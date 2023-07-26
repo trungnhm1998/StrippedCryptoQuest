@@ -12,9 +12,11 @@ namespace CryptoQuest.UI.Menu.Status
         [Header("Configs")]
         [SerializeField] private InputMediatorSO _inputMediator;
         [SerializeField] private VoidEventChannelSO _enableChangeEquipmentModeEvent;
+        [SerializeField] private VoidEventChannelSO _confirmSelectEquipmentSlotEvent;
 
         [Header("Game Components")]
         [SerializeField] private List<UIStatusMenuEquipmentSlot> _equipmentSlots;
+        [SerializeField] private GameObject _navigations;
 
         private int _currentIndex;
         private int CurrentIndex
@@ -81,16 +83,24 @@ namespace CryptoQuest.UI.Menu.Status
             SelectEquipmentSlot();
         }
 
+        private void OnConfirmSelect()
+        {
+            _confirmSelectEquipmentSlotEvent.RaiseEvent();
+            _navigations.SetActive(false);
+        }
+
         private void RegisterChangeEquipmentInputEvents()
         {
             _inputMediator.GoBelowEvent += GoToBelowSlot;
             _inputMediator.GoAboveEvent += GoToAboveSlot;
+            _inputMediator.ConfirmSelectEquipmentSlotEvent += OnConfirmSelect;
         }
         
         private void UnregisterChangeEquipmentInputEvents()
         {
             _inputMediator.GoBelowEvent -= GoToBelowSlot;
             _inputMediator.GoAboveEvent -= GoToAboveSlot;
+            _inputMediator.ConfirmSelectEquipmentSlotEvent -= OnConfirmSelect;
         }
     }
 }

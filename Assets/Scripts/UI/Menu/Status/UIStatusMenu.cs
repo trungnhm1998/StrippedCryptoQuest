@@ -11,21 +11,21 @@ namespace CryptoQuest.UI.Menu.Status
     public class UIStatusMenu : MonoBehaviour
     {
         [SerializeField] private InputMediatorSO _inputMediator;
-        [SerializeField] private PartyManagerMockDataSO _partyManagerMockData;
         [SerializeField] private VoidEventChannelSO _enableChangeEquipmentModeEvent;
+        
 
         private void OnEnable()
         {
             _inputMediator.EnableStatusMenuInput();
-            _inputMediator.ChangeEquipmentEvent += OnEnableChangeEquipmentMode;
+            _inputMediator.EnableChangeEquipmentModeEvent += OnEnableEnableChangeEquipmentModeMode;
         }
 
         private void OnDisable()
         {
-            _inputMediator.ChangeEquipmentEvent -= OnEnableChangeEquipmentMode;
+            _inputMediator.EnableChangeEquipmentModeEvent -= OnEnableEnableChangeEquipmentModeMode;
         }
 
-        private void OnEnableChangeEquipmentMode()
+        private void OnEnableEnableChangeEquipmentModeMode()
         {
             _enableChangeEquipmentModeEvent.RaiseEvent();
         }

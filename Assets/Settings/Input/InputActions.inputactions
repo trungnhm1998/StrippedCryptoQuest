@@ -1193,7 +1193,7 @@
             "id": "995ba685-ac12-4fbc-bfac-80830c51f95d",
             "actions": [
                 {
-                    "name": "ChangeEquipment",
+                    "name": "EnableChangeEquipmentMode",
                     "type": "Button",
                     "id": "5e94e9e7-edbb-4c82-b1eb-b4d61346b915",
                     "expectedControlType": "Button",
@@ -1218,6 +1218,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "ConfirmSelectEquipmentSlot",
+                    "type": "Button",
+                    "id": "bb25bd51-1554-435d-ada3-7f269940e174",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -1228,7 +1237,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "MnK",
-                    "action": "ChangeEquipment",
+                    "action": "EnableChangeEquipmentMode",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -1239,7 +1248,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
-                    "action": "ChangeEquipment",
+                    "action": "EnableChangeEquipmentMode",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -1306,6 +1315,39 @@
                     "processors": "",
                     "groups": "",
                     "action": "GoAbove",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "9e66988a-b7b1-40c7-94ef-714dadfe26f8",
+                    "path": "<Keyboard>/enter",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "MnK",
+                    "action": "ConfirmSelectEquipmentSlot",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7a303cbb-7885-4755-abfa-f619da8f9b24",
+                    "path": "<Keyboard>/numpadEnter",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "MnK",
+                    "action": "ConfirmSelectEquipmentSlot",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "2589c1fa-3e2c-48b4-af69-dcb81069c2dc",
+                    "path": "<Gamepad>/buttonSouth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "ConfirmSelectEquipmentSlot",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
