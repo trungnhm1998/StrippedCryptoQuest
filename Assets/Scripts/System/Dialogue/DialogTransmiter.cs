@@ -4,7 +4,7 @@ using IndiGames.Core.SaveSystem;
 using UnityEngine;
 using Yarn.Unity;
 
-namespace CryptoQuest.DialogueSystem
+namespace CryptoQuest.System.Dialogue
 {
     public class DialogTransmiter : MonoBehaviour
     {

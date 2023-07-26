@@ -1,13 +1,11 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using CryptoQuest.Input;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Serialization;
 using Yarn.Unity;
 
-namespace CryptoQuest.DialogueSystem
+namespace CryptoQuest.System.Dialogue
 {
     public class CQOptionListView : DialogueViewBase
     {
