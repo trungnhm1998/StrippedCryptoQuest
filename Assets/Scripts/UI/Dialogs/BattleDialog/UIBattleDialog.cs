@@ -1,14 +1,17 @@
 using CryptoQuest.Input;
 using UnityEngine;
 using UnityEngine.UI;
-using DG.Tweening;
+using System.Collections;
 using IndiGames.Core.Events.ScriptableObjects;
 
 namespace CryptoQuest.UI.Dialogs.BattleDialog
 {
     public class UIBattleDialog : ModalWindow<UIBattleDialog>
     {
+        [Header("Config")]
         [SerializeField] private InputMediatorSO _inputMediator;
+        [Tooltip("Set this below 0 when you don't want auto hide")]
+        [SerializeField] private float _autoHideDelay;
 
         [Header("UI")]
         [SerializeField] private Text _dialogText;
@@ -22,8 +25,7 @@ namespace CryptoQuest.UI.Dialogs.BattleDialog
         [SerializeField] private VoidEventChannelSO _closeBattleDialogEventChannel;
 
         private string _message;
-
-        private Sequence _showLineSeq;
+        private Coroutine _autoNextCoroutine; 
 
         private void OnEnable()
         {
@@ -45,11 +47,21 @@ namespace CryptoQuest.UI.Dialogs.BattleDialog
             if (!_nextMark.activeSelf) return;
             _dialogText.text = "";
             _doneShowDialogEvent.RaiseEvent();
+            if (_autoNextCoroutine == null) return;
+            StopCoroutine(_autoNextCoroutine);
         }
 
         private void ShowNextMark()
         {
             _nextMark.SetActive(true);
+            if (_autoHideDelay < 0) return;
+            _autoNextCoroutine = StartCoroutine(DelayAutoNext(_autoHideDelay));
+        }
+
+        private IEnumerator DelayAutoNext(float delay)
+        {
+            yield return new WaitForSeconds(delay);
+            NextDialog();
         }
 
         private void CloseDialog()
