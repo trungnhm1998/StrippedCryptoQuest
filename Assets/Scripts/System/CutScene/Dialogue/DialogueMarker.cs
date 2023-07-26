@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.Timeline;
 
-namespace CryptoQuest.System.Cutscene.Dialogue
+namespace CryptoQuest.System.CutScene.Dialogue
 {
     [CustomStyle("AnnotationMarker")]
     public class DialogueMarker : Marker, INotification

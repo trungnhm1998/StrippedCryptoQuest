@@ -1,12 +1,8 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using CryptoQuest.Events.UI;
-using CryptoQuest.Gameplay.Quest;
 using UnityEngine;
-using UnityEngine.Events;
 
-namespace CryptoQuest.UI.Dialogs
+namespace CryptoQuest.UI.Dialogs.YesNoDialog
 {
     public class YesNoDialogController : AbstractDialogController<UIYesNoDialog>
     {

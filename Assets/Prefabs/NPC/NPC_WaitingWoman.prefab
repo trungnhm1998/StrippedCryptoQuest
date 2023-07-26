@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 4646627970647339316}
   - component: {fileID: 2527108063910198980}
   - component: {fileID: -1536596884729955802}
+  - component: {fileID: 4027080605027885410}
   m_Layer: 0
   m_Name: NPC_WaitingWoman
   m_TagString: Untagged
@@ -100,8 +101,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ccbfbdc39cd3f8940b942c3d69572361, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _dialogue: {fileID: 11400000, guid: 338ee1159513c674d8c0ffcb9de8b6d9, type: 2}
-  _dialogEventChannel: {fileID: 11400000, guid: 5ea06a7649747af4aaa3d444b3ab8a99, type: 2}
+  _interacted:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!61 &4646627970647339316
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -161,6 +163,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _animator: {fileID: -1536596884729955802}
   _facingDirection: 0
+  _bus: {fileID: 11400000, guid: a26ff341568973e46a1d4449052d5bb0, type: 2}
 --- !u!95 &-1536596884729955802
 Animator:
   serializedVersion: 5
@@ -182,3 +185,28 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &4027080605027885410
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4231528622095367689}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9e07f409ddb4fd0a9e1ab4046463478, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _dialogueLine:
+    m_TableReference:
+      m_TableCollectionName: GUID:4be45ea04057b7b4c8f80bc12990e0f8
+    m_TableEntryReference:
+      m_KeyId: 395938514145280
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  _playLocalizedLineEventEvent: {fileID: 11400000, guid: a5c02db9f0a54854080e16f16a2ba339, type: 2}
+  references:
+    version: 2
+    RefIds: []

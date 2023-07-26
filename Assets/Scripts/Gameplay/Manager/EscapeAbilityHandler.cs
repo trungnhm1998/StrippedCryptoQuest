@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Skills;
 using CryptoQuest.Map;
 using CryptoQuest.UI.SpiralFX;
@@ -8,7 +5,7 @@ using IndiGames.Core.SceneManagementSystem.Events.ScriptableObjects;
 using IndiGames.Core.SceneManagementSystem.ScriptableObjects;
 using UnityEngine;
 
-namespace CryptoQuest
+namespace CryptoQuest.Gameplay.Manager
 {
     public class EscapeAbilityHandler : MonoBehaviour
     {

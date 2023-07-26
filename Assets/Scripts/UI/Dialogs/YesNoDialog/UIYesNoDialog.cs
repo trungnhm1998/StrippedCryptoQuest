@@ -1,11 +1,10 @@
 using System;
 using System.Collections;
-using CryptoQuest.Events.UI;
 using CryptoQuest.Input;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace CryptoQuest.UI.Dialogs
+namespace CryptoQuest.UI.Dialogs.YesNoDialog
 {
     public class UIYesNoDialog : ModalWindow<UIYesNoDialog>
     {
