@@ -3,10 +3,9 @@
 //Website : Polyandcode.com 
 
 using UnityEngine.UI;
-using UnityEngine;
-#if UNITY_EDITOR
 using UnityEditor.AnimatedValues;
 using UnityEditor;
+using UnityEngine;
 
 namespace PolyAndCode.UI
 {
@@ -81,18 +80,17 @@ namespace PolyAndCode.UI
                 a.target = value;
         }
 
-
         public override void OnInspectorGUI()
         {
-            SetAnimBools(false);
+            SetAnimBools(false); 
             serializedObject.Update();
-
+          
             EditorGUILayout.PropertyField(_direction);
             EditorGUILayout.PropertyField(_type, new GUIContent("Grid"));
             if (_type.boolValue)
             {
                 string title = _direction.enumValueIndex == (int)RecyclableScrollRect.DirectionType.Vertical ? "Coloumns" : "Rows";
-                _script.Segments = EditorGUILayout.IntField(title, _script.Segments);
+               _script.Segments =  EditorGUILayout.IntField(title, _script.Segments);
             }
 
             EditorGUILayout.PropertyField(_selfInitialize);
@@ -129,4 +127,3 @@ namespace PolyAndCode.UI
         }
     }
 }
-#endif

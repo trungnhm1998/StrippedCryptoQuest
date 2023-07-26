@@ -136,11 +136,11 @@ namespace PolyAndCode.UI
             int minPoolSize = Math.Min(MinPoolSize, DataSource.GetItemCount());
 
             //create cells untill the Pool area is covered and pool size is the minimum required
-            while (poolSize < DataSource.GetItemCount())
+            while ((poolSize < minPoolSize || currentPoolCoverage < requriedCoverage) && poolSize < DataSource.GetItemCount())
             {
                 //Instantiate and add to Pool
                 RectTransform item = (UnityEngine.Object.Instantiate(PrototypeCell.gameObject)).GetComponent<RectTransform>();
-                item.name = "Item_" + poolSize;
+                item.name = "Cell";
                 item.sizeDelta = new Vector2(_cellWidth, _cellHeight);
                 _cellPool.Add(item);
                 item.SetParent(Content, false);

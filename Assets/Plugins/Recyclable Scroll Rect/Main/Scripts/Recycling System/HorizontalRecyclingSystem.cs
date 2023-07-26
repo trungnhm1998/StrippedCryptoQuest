@@ -159,6 +159,7 @@ namespace PolyAndCode.UI
                 //Setting data for Cell
                 _cachedCells.Add(item.GetComponent<ICell>());
                 DataSource.SetCell(_cachedCells[_cachedCells.Count - 1], poolSize);
+
                 //Update the Pool size
                 poolSize++;
             }
