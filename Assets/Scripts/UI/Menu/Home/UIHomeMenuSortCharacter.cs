@@ -5,6 +5,7 @@ using CryptoQuest.Input;
 using CryptoQuest.UI.Menu.MockData;
 using IndiGames.Core.Events.ScriptableObjects;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace CryptoQuest.UI.Menu.Home
 {
@@ -16,7 +17,8 @@ namespace CryptoQuest.UI.Menu.Home
 
         [Header("Game Components")]
         [SerializeField] private VoidEventChannelSO _enableMainMenuInputs;
-        [SerializeField] private Transform _characterSlots;
+        [SerializeField] private List<UICharacterInfo> _characterInfoSlots;
+        [SerializeField] private List<UICharacterCard> _characterCardSlots;
         [SerializeField] private GameObject _topLine;
 
         private UICharacterCard _selectedCardHolder;
@@ -53,7 +55,7 @@ namespace CryptoQuest.UI.Menu.Home
 
         private UICharacterCard GetCharacterCard(int index)
         {
-            var cardUI = _characterSlots.GetChild(index).GetComponent<UICharacterCard>();
+            var cardUI = _characterCardSlots[index];
             return cardUI;
         }
 
@@ -100,22 +102,22 @@ namespace CryptoQuest.UI.Menu.Home
 
         private void SwapRight()
         {
-            var currentTarget = _characterSlots.GetChild(CurrentIndex);
+            var currentTarget = _characterCardSlots[CurrentIndex];
 
             CurrentIndex++;
-            currentTarget.SetSiblingIndex(CurrentIndex);
+            currentTarget.transform.SetSiblingIndex(CurrentIndex);
 
-            _selectedCardHolder = currentTarget.GetComponent<UICharacterCard>();
+            _selectedCardHolder = currentTarget;
         }
 
         private void SwapLeft()
         {
-            var currentTarget = _characterSlots.GetChild(CurrentIndex);
+            var currentTarget = _characterCardSlots[CurrentIndex];
 
             CurrentIndex--;
-            currentTarget.SetSiblingIndex(CurrentIndex);
+            currentTarget.transform.SetSiblingIndex(CurrentIndex);
 
-            _selectedCardHolder = currentTarget.GetComponent<UICharacterCard>();
+            _selectedCardHolder = currentTarget;
         }
 
         private void ConfirmSortOrder()
@@ -131,7 +133,7 @@ namespace CryptoQuest.UI.Menu.Home
         {
             for (int i = 0; i < _partyManagerMockData.Members.Count; i++)
             {
-                var memberInfo = _characterSlots.GetChild(i).GetComponent<UICharacterInfo>().CharInfoMockData;
+                var memberInfo = _characterInfoSlots[i].CharInfoMockData;
                 _partyManagerMockData.Members[i] = memberInfo;
             }
         }
@@ -146,12 +148,12 @@ namespace CryptoQuest.UI.Menu.Home
 
         private void ApplyDataBeforeSort()
         {
-            var currentTarget = _characterSlots.GetChild(CurrentIndex);
-            currentTarget.SetSiblingIndex(_indexHolder);
+            var currentTarget = _characterInfoSlots[CurrentIndex];
+            currentTarget.transform.SetSiblingIndex(_indexHolder);
 
             CurrentIndex = _indexHolder;
         }
-        
+
         private void CancelSelect()
         {
             _selectedCardHolder.Deselect();
@@ -162,7 +164,7 @@ namespace CryptoQuest.UI.Menu.Home
         {
             _inputMediator.HomeMenuSortEvent += EnableSortMode;
         }
-        
+
         private void UnregisterSortModeEvent()
         {
             _inputMediator.HomeMenuSortEvent -= EnableSortMode;
@@ -175,7 +177,7 @@ namespace CryptoQuest.UI.Menu.Home
             _inputMediator.ConfirmEvent += ConfirmSelect;
             _inputMediator.HomeMenuCancelEvent += CancelSelect;
         }
-        
+
         private void UnregisterSelectInputEvent()
         {
             _inputMediator.NextEvent -= ChangeNextTarget;

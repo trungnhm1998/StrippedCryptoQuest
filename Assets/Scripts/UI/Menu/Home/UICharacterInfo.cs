@@ -110,5 +110,10 @@ namespace CryptoQuest.UI.Menu.Home
         {
             _avatar.sprite = CharInfoMockData.Avatar;
         }
+
+        public void SetData(CharInfoMockDataSO dataReceived)
+        {
+            CharInfoMockData = dataReceived;
+        }
     }
 }
