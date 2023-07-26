@@ -2,7 +2,7 @@
 using UnityEngine.Events;
 using UnityEngine.Playables;
 
-namespace CryptoQuest.System.CutScene.Events
+namespace CryptoQuest.System.CutsceneSystem.Events
 {
     [CreateAssetMenu(menuName = "Crypto Quest/Cutscene/Playable Director Channel")]
     public class PlayableDirectorChannelSO : ScriptableObject

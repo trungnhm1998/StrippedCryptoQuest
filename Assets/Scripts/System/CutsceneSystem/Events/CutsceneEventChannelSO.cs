@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.Events;
 
-namespace CryptoQuest.System.CutScene.Events
+namespace CryptoQuest.System.CutsceneSystem.Events
 {
     [CreateAssetMenu(menuName = "Core/Events/Void Event Channel")]
     public class CutsceneEventChannelSO : ScriptableObject

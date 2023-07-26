@@ -1,7 +1,7 @@
 ﻿using CryptoQuest.Gameplay;
 using UnityEngine;
 
-namespace CryptoQuest.System.CutScene
+namespace CryptoQuest.System.CutsceneSystem
 {
     public class CutsceneEndedHandler : MonoBehaviour
     {

@@ -3,7 +3,7 @@ using IndiGames.Core.EditorTools.Attributes.ReadOnlyAttribute;
 using UnityEngine;
 using UnityEngine.Playables;
 
-namespace CryptoQuest.System.CutScene
+namespace CryptoQuest.System.CutsceneSystem
 {
     public class PlayerRuntimeTimelineBinder : MonoBehaviour
     {

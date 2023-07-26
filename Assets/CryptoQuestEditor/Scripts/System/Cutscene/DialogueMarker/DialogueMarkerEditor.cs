@@ -1,4 +1,4 @@
-﻿using CryptoQuest.System.CutScene.Dialogue;
+﻿using CryptoQuest.System.CutsceneSystem.Dialogue;
 using UnityEditor;
 using UnityEditor.Timeline;
 using UnityEngine;
