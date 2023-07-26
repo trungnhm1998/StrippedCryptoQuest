@@ -1,4 +1,5 @@
-﻿using CryptoQuest.System.Dialogue.Events;
+﻿using CryptoQuest.Gameplay.Cutscenes.Events;
+using CryptoQuest.System.Dialogue.Events;
 using IndiGames.Core.Events.ScriptableObjects;
 using UnityEngine;
 using UnityEngine.Events;
@@ -16,6 +17,7 @@ namespace CryptoQuest.System.Dialogue
 
         [Header("Raise on")]
         [SerializeField] private VoidEventChannelSO _dialogueCompletedEventChannelSO;
+        [SerializeField] private PauseCutsceneEvent _pauseCutsceneEvent;
 
         [SerializeField] private UnityEvent _onDialogueCompleted;
 
@@ -33,15 +35,22 @@ namespace CryptoQuest.System.Dialogue
 
         private void ShowDialogue(string yarnNodeName)
         {
+            if (Dialogue.IsActive)
+            {
+                Debug.LogWarning(
+                    "YarnSpinnerDialogueManager::ShowDialogue: Try run show dialogue while the previous still running.");
+                _pauseCutsceneEvent.RaiseEvent(true);
+                return;
+            }
+
             Debug.Log($"YarnSpinnerDialogueManager::ShowDialogue: yarnNodeName[{yarnNodeName}]");
-            if(Dialogue.IsActive) Dialogue.Stop();
             _dialogueRunner.StartDialogue(yarnNodeName);
         }
 
         public void DialogueCompleted()
         {
-            if(Dialogue.IsActive) Dialogue.Stop();
-             // support cross scene
+            if (Dialogue.IsActive) Dialogue.Stop();
+            // support cross scene
             if (_dialogueCompletedEventChannelSO != null) _dialogueCompletedEventChannelSO.RaiseEvent();
             _onDialogueCompleted.Invoke();
         }
