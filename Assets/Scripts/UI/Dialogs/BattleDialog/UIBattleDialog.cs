@@ -47,21 +47,14 @@ namespace CryptoQuest.UI.Dialogs.BattleDialog
             if (!_nextMark.activeSelf) return;
             _dialogText.text = "";
             _doneShowDialogEvent.RaiseEvent();
-            if (_autoNextCoroutine == null) return;
-            StopCoroutine(_autoNextCoroutine);
+            CancelInvoke(nameof(NextDialog));
         }
 
         private void ShowNextMark()
         {
             _nextMark.SetActive(true);
             if (_autoHideDelay < 0) return;
-            _autoNextCoroutine = StartCoroutine(DelayAutoNext(_autoHideDelay));
-        }
-
-        private IEnumerator DelayAutoNext(float delay)
-        {
-            yield return new WaitForSeconds(delay);
-            NextDialog();
+            Invoke(nameof(NextDialog), _autoHideDelay);
         }
 
         private void CloseDialog()
