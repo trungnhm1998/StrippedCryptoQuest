@@ -4,19 +4,24 @@ using System;
 
 namespace CryptoQuest.GameHandler
 {
-    public abstract class BaseGameHandler : MonoBehaviour, IGameHandler
+    public abstract class BaseGameHandler<T> : MonoBehaviour, IGameHandler<T>
     {
-        private IGameHandler _nextHandler;
+        private IGameHandler<T> _nextHandler = new EmptyGameHandler<T>();
 
-        public IGameHandler SetNext(IGameHandler handler)
+        public IGameHandler<T> SetNext(IGameHandler<T> handler)
         {
             _nextHandler = handler;
             return handler;
         }
 
-        public virtual void Handle(object request)
+        public virtual void Handle(T request)
         {
             _nextHandler.Handle(request);
+        }
+
+        public virtual void Handle()
+        {
+            _nextHandler.Handle();
         }
     }
 }
