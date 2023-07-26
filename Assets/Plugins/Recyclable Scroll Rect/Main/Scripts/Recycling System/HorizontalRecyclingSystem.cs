@@ -173,8 +173,6 @@ namespace PolyAndCode.UI
             {
                 PrototypeCell.gameObject.SetActive(false);
             }
-
-            DataSource.SetButtonListener();
         }
         #endregion
 
