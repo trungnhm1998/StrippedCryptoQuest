@@ -16,6 +16,7 @@ namespace CryptoQuest.UI.Inventory
         private Dictionary<EItemType, UIInventoryPanel> _cachedInventories;
         private Dictionary<EItemType, UIInventoryTabButton> _cachedTabButtons;
         private UIInventoryPanel _currentActivePanel;
+        
         private void Awake()
         {
             InitInventories();
