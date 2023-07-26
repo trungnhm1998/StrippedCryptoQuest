@@ -1,10 +1,9 @@
-﻿using System;
-using CryptoQuest.Gameplay;
+﻿using CryptoQuest.Gameplay;
 using IndiGames.Core.EditorTools.Attributes.ReadOnlyAttribute;
 using UnityEngine;
 using UnityEngine.Playables;
 
-namespace CryptoQuest.System.Cutscene
+namespace CryptoQuest.System.CutScene
 {
     public class TimelineBinder : MonoBehaviour
     {

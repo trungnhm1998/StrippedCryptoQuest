@@ -1,12 +1,11 @@
 ﻿using System.Collections.Generic;
-using CryptoQuest.Gameplay.Battle.Core.Components;
 using CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit;
 using CryptoQuest.UI.Battle.CommandsMenu;
 using UnityEngine;
 
-namespace CryptoQuest.UI.Battle.BattleActionHandler
+namespace CryptoQuest.UI.Battle
 {
-    public class SelectEnemyHandler : BattleActionHandler
+    public class SelectEnemyHandler : BattleActionHandler.BattleActionHandler
     {
         [SerializeField] private BattlePanelController _panelController;
 
