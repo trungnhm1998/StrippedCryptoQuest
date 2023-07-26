@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8439276243842850810}
   - component: {fileID: 2617902153846749713}
   m_Layer: 5
-  m_Name: Text (Legacy)
+  m_Name: Order
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -167,9 +167,9 @@ GameObject:
   - component: {fileID: 1252632200816518795}
   - component: {fileID: 8127218833089615124}
   - component: {fileID: 7922745920403385066}
-  - component: {fileID: 541044268354872738}
+  - component: {fileID: 3859996014566700973}
   m_Layer: 5
-  m_Name: EquipmentSlot
+  m_Name: InventoryItem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -236,7 +236,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &541044268354872738
+--- !u!114 &3859996014566700973
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -245,11 +245,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 7623322557906955225}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6eae02af46391814a8da23334797d6ad, type: 3}
+  m_Script: {fileID: 11500000, guid: 4c015e4549f85694d8b0e8210693e95b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _name: {fileID: 6423858681161605315}
-  _text: {fileID: 2617902153846749713}
+  _itemOrder: {fileID: 2617902153846749713}
   _selectEffect: {fileID: 7155894134286787715}
 --- !u!1 &8705481323967797160
 GameObject:
@@ -264,7 +264,7 @@ GameObject:
   - component: {fileID: 7147422257074699177}
   - component: {fileID: 6423858681161605315}
   m_Layer: 5
-  m_Name: EquipmentTxt
+  m_Name: ItemTxt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -331,7 +331,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: Equipment
+  m_Text: Item
 --- !u!114 &6423858681161605315
 MonoBehaviour:
   m_ObjectHideFlags: 0
