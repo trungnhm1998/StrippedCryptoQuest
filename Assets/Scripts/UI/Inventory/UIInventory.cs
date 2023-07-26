@@ -3,6 +3,7 @@ using CryptoQuest.Input;
 using CryptoQuest.Item.Inventory;
 using CryptoQuest.Menu;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace CryptoQuest.UI.Inventory
 {
@@ -40,7 +41,7 @@ namespace CryptoQuest.UI.Inventory
 
             _inputMediator.NextSelectionMenu += SelectNextMenu;
             _inputMediator.PreviousSelectionMenu += SelectPreviousMenu;
-            _inputMediator.MenuNavigateEvent += SelectItemHandle;
+            _inputMediator.MenuSubmitEvent += HandleItemPressed;
             for (int i = 0; i < _tabInventoryButton.Count; i++)
             {
                 _tabInventoryButton[i].Clicked += SelectTab;
@@ -54,15 +55,11 @@ namespace CryptoQuest.UI.Inventory
         {
             _inputMediator.NextSelectionMenu -= SelectNextMenu;
             _inputMediator.PreviousSelectionMenu -= SelectPreviousMenu;
-            _inputMediator.MenuNavigateEvent -= SelectItemHandle;
+            _inputMediator.MenuSubmitEvent -= HandleItemPressed;
             for (int i = 0; i < _tabInventoryButton.Count; i++)
             {
                 _tabInventoryButton[i].Clicked -= SelectTab;
             }
-        }
-
-        private void SelectItemHandle()
-        {
         }
 
         private List<EItemType> _cycleType = new List<EItemType>()
@@ -85,6 +82,11 @@ namespace CryptoQuest.UI.Inventory
             _currentSelectedTabIndex--;
             _currentSelectedTabIndex = _currentSelectedTabIndex < 0 ? _tabInventoryButton.Count - 1 : _currentSelectedTabIndex;
             SelectTab(_cycleType[_currentSelectedTabIndex]);
+        }
+
+        private void HandleItemPressed()
+        {
+            Debug.Log($"{EventSystem.current.currentSelectedGameObject} Pressed!");
         }
 
         private void SelectTab(EItemType type)

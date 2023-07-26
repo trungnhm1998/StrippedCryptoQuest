@@ -2,16 +2,21 @@ using System;
 using System.Collections.Generic;
 using CryptoQuest.Gameplay.Inventory;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
+using CryptoQuest.Input;
 using CryptoQuest.Item.Inventory;
 using CryptoQuest.Menu;
 using PolyAndCode.UI;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.Localization.Components;
+using UnityEngine.UI;
 
 namespace CryptoQuest.UI.Inventory
 {
     // TODO: rename class
     public class UIInventoryPanel : MonoBehaviour, IRecyclableScrollRectDataSource
     {
+        [SerializeField] private InputMediatorSO _inputMediator;
         [SerializeField] private GameObject _content;
         [SerializeField] private InventorySO _inventory;
         [SerializeField] private RecyclableScrollRect _recyclableScrollRect;
@@ -19,17 +24,30 @@ namespace CryptoQuest.UI.Inventory
         [SerializeField] private EItemType _type;
         [SerializeField] private GameObject _upHint;
         [SerializeField] private GameObject _downHint;
+        [SerializeField] private RectTransform _currentRectTransform;
+        [SerializeField] private RectTransform _parentRectTransform;
+        [SerializeField] private RectTransform _itemRectTransform;
+        [SerializeField] private LocalizeStringEvent _localizeDescription;
+        [SerializeField] private Image _tabImage;
         public EItemType Type => _type;
-        private Dictionary<EItemType, List<UIItemInventory>> _itemsByType = new();
-        public List<ItemInfomation> ItemInfo = new();
         private List<ItemInfomation> _itemList = new List<ItemInfomation>();
-        public List<ItemInfomation> ItemList => _itemList;
-
-        private bool _initializedData = false;
+        private List<MultiInputButton> _buttonList = new();
+        private UIItemInventory _itemInformation;
 
         private void Awake()
         {
             InitData();
+        }
+
+        private void OnEnable()
+        {
+            _inputMediator.EnableMenuInput();
+            _inputMediator.MenuNavigateEvent += SelectItemHandle;
+        }
+
+        private void OnDisable()
+        {
+            _inputMediator.MenuNavigateEvent -= SelectItemHandle;
         }
 
         private void InitData()
@@ -45,30 +63,43 @@ namespace CryptoQuest.UI.Inventory
             }
         }
 
+        private void SelectItemHandle()
+        {
+            _autoScrollRect.UpdateScrollRectTransform();
+            CheckScrollRect();
+            if (EventSystem.current.currentSelectedGameObject.GetComponent<UIItemInventory>())
+            {
+                _itemInformation = EventSystem.current.currentSelectedGameObject.GetComponent<UIItemInventory>();
+                _localizeDescription.StringReference = _itemInformation.Description;
+            }
+        }
 
         public void Deselect()
         {
-            Debug.Log($"Deselect {_type}");
             _content.SetActive(false);
+            _tabImage.enabled = false;
         }
 
         public void Select()
         {
-            Debug.Log($"Select {_type}");
             _content.SetActive(true);
+            _tabImage.enabled = true;
             CheckScrollRect();
+            if (_buttonList.Count > 0)
+            {
+                _buttonList[0].Select();
+                SelectItemHandle();
+            }
         }
 
         private void CheckScrollRect()
         {
-            // _currentRectTransform = _cachedInventories[_currentActivePanel.Type].transform as RectTransform;
-            // RectTransform items = _recyclableScrollRect.PrototypeCell;
-            // bool shouldMoveUp = _currentRectTransform.anchoredPosition.y > items.rect.height;
-            // _upArrowHint.SetActive(shouldMoveUp);
-            // bool shouldMoveDown =
-            //     _currentRectTransform.rect.height - _currentRectTransform.anchoredPosition.y
-            //     > _parentTransform.rect.height + items.rect.height / 2;
-            // _downArrowHint.SetActive(shouldMoveDown);
+            bool shouldMoveUp = _currentRectTransform.anchoredPosition.y > _itemRectTransform.rect.height;
+            _upHint.SetActive(shouldMoveUp);
+            bool shouldMoveDown =
+                _currentRectTransform.rect.height - _currentRectTransform.anchoredPosition.y
+                > _parentRectTransform.rect.height + _itemRectTransform.rect.height / 2;
+            _downHint.SetActive(shouldMoveDown);
         }
 
         #region PLUGINS
@@ -81,16 +112,8 @@ namespace CryptoQuest.UI.Inventory
         {
             var item = cell as UIItemInventory;
             item.Init(_itemList[index]);
-        }
-        public void SetButtonListener()
-        {
-            Debug.Log("SetButtonListener");
+            _buttonList.Add(item.GetComponent<MultiInputButton>());
         }
         #endregion
-
-        private void HandleItemPressed()
-        {
-
-        }
     }
 }

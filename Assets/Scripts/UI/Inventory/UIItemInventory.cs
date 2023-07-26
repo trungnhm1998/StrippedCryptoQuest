@@ -6,6 +6,7 @@ using UnityEngine.Events;
 using CryptoQuest.Item.Inventory;
 using UnityEngine.EventSystems;
 using CryptoQuest.Gameplay.Inventory;
+using UnityEngine.Localization;
 
 namespace CryptoQuest.UI.Inventory
 {
@@ -14,6 +15,7 @@ namespace CryptoQuest.UI.Inventory
         public Image Icon;
         public LocalizeStringEvent Name;
         public Text Quantity;
+        public LocalizedString Description;
         private ItemInfomation _itemInfo;
 
         public event UnityAction<ItemSO> Clicked;
@@ -24,6 +26,7 @@ namespace CryptoQuest.UI.Inventory
             Icon.sprite = itemInfo.ItemSO.Icon;
             Name.StringReference = itemInfo.ItemSO.Name;
             Quantity.text = itemInfo.Quantity.ToString();
+            Description = itemInfo.ItemSO.Description;
         }
 
         public void OnClicked()
