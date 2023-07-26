@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using CryptoQuest.Gameplay.Battle;
 using System.Collections.Generic;
 using CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit;
 using CryptoQuest.UI.Battle.CharacterInfo;
@@ -9,6 +8,11 @@ namespace CryptoQuest.UI.Battle
     public class CharacterList : MonoBehaviour
     {
         [SerializeField] private CharacterInfoBase[] _characterInfos;
+
+        private void OnValidate()
+        {
+            _characterInfos = gameObject.GetComponentsInChildren<CharacterInfoBase>(true);
+        }
 
         public virtual void InitUI(List<IBattleUnit> units)
         {

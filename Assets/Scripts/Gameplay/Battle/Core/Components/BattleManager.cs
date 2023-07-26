@@ -18,9 +18,9 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components
         [SerializeField] private BattleBus _battleBus;
 
         [field: SerializeField]
-        public BattleTeam BattleTeam1 { get; private set; }
+        public BattleTeam BattleTeam1 { get; protected set; }
         [field: SerializeField]
-        public BattleTeam BattleTeam2 { get; private set; }
+        public BattleTeam BattleTeam2 { get; protected set; }
 
         [Header("Raise Events")]
         [SerializeField] private VoidEventChannelSO _newTurnEventChannel;
@@ -42,7 +42,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components
             _battleBus.BattleManager = this;
         }
 
-        private void StartBattle()
+        protected virtual void StartBattle()
         {
             _stateMachine.SetCurrentState(_battleStartState);
         }
@@ -58,6 +58,18 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components
             _onDialogCloseEventChannel.EventRaised -= OnEndTurn;
             _sceneLoadedEventChannel.EventRaised -= StartBattle;
         }
+
+#if UNITY_EDITOR
+        private void OnDestroy()
+        {
+            // To make sure when battle manager is detroyed, the battle end and
+            // the global state is reset, to prevent error when cold boot
+            if (_stateMachine.CurrentState != _battleEndState)
+            {
+                OnEscape();
+            }
+        }
+#endif 
 
         public void InitBattleTeams()
         {

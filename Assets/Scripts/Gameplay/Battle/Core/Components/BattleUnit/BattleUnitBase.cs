@@ -1,12 +1,12 @@
 using System.Collections;
+using System.Collections.Generic;
 using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data;
-using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.TargetTypes;
 using IndiGames.GameplayAbilitySystem.AbilitySystem;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
 using IndiGames.GameplayAbilitySystem.AttributeSystem;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
 using UnityEngine;
-using ILogger = CryptoQuest.Gameplay.Battle.Core.Components.Logger.ILogger;
+using IndiGames.Core.Events.ScriptableObjects;
 
 namespace CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit
 {
@@ -21,33 +21,43 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit
         [SerializeField] protected AttributeScriptableObject _hpAttribute;
 
         [field: SerializeField]
-        public TargetContainterSO TargetContainer { get; private set; }
-        [field: SerializeField]
         public CharacterDataSO UnitData { get; set; }
+
+        [Header("Raise Events")]
+        [SerializeField] protected VoidEventChannelSO _doneActionEventChannel;
+
+        [Header("Listen Events")]
+        [SerializeField] protected VoidEventChannelSO _doneShowUnitAction;
 
         public AbstractAbility SelectedSkill { get; protected set; }
 
-        public ILogger Logger { get; protected set; }
+        public List<AbilitySystemBehaviour> TargetContainer { get; protected set; } = new();
 
         protected BattleManager _battleManager;
         protected bool _isDead;
+        protected bool _isDoneShowAction;
 
         public virtual void Init(BattleTeam team, AbilitySystemBehaviour owner)
         {
-            TargetContainer.Targets.Clear();
             OwnerTeam = team;
             Owner = owner;
-            Logger = GetComponent<ILogger>();
         }
 
         protected virtual void OnEnable()
         {
             _hpAttribute.ValueChangeEvent += OnHPChanged;
+            _doneShowUnitAction.EventRaised += OnDoneShowAction;
         }
 
         protected virtual void OnDisable()
         {
             _hpAttribute.ValueChangeEvent -= OnHPChanged;
+            _doneShowUnitAction.EventRaised -= OnDoneShowAction;
+        }
+
+        private void OnDoneShowAction()
+        {
+            _isDoneShowAction = true;
         }
 
         public virtual void SetOpponentTeams(BattleTeam opponentTeam)
@@ -59,21 +69,43 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit
         {
             if (OpponentTeam == null || OpponentTeam.Members.Count <= 0) return;
 
-            var currrentTargets = TargetContainer.Targets;
-            if (currrentTargets.Count > 0) return;
+            if (TargetContainer.Count > 0) return;
 
-            TargetContainer.SetSingleTarget(OpponentTeam.Members[0]);
+            TargetContainer.Add(OpponentTeam.Members[0]);
         }
 
         public virtual void SelectSingleTarget(AbilitySystemBehaviour target)
         {
-            if (OpponentTeam.Members.FindIndex(x => x == target) < 0) return;
-            TargetContainer.SetSingleTarget(target);
+            TargetContainer.Clear();
+            TargetContainer.Add(target);
         }
 
-        public virtual void SelectAllTarget()
+        /// <summary>
+        /// Use this to select group of units
+        /// </summary>
+        /// <param name="targets"></param>
+        public virtual void SelectTargets(params AbilitySystemBehaviour[] targets)
         {
-            TargetContainer.SetMultipleTargets(OpponentTeam.Members);
+            TargetContainer.Clear();
+            TargetContainer.AddRange(targets);
+        }
+
+        public virtual void SelectTargets(List<AbilitySystemBehaviour> targets)
+        {
+            TargetContainer.Clear();
+            TargetContainer.AddRange(targets);
+        }
+
+        public virtual void SelectAllOpponent()
+        {
+            TargetContainer.Clear();
+            TargetContainer.AddRange(OpponentTeam.Members);
+        }
+
+        public virtual void SelectAllAlly()
+        {
+            TargetContainer.Clear();
+            TargetContainer.AddRange(OwnerTeam.Members);
         }
 
         public void SelectSkill(AbstractAbility selectedSkill)
@@ -90,14 +122,21 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit
         public virtual IEnumerator Execute()
         {
             Owner.TryActiveAbility(SelectedSkill);
-            Logger.ClearLogs();
+            _doneActionEventChannel.RaiseEvent();
+            yield return WaitUntilDoneShowAction();
             yield return null;
+        }
+
+        private IEnumerator WaitUntilDoneShowAction()
+        {
+            yield return new WaitWhile(() => _isDoneShowAction == true);
         }
         
         public virtual IEnumerator Resolve()
         {
             SelectedSkill = null;
-            TargetContainer.Targets.Clear();
+            TargetContainer.Clear();
+            _isDoneShowAction = false;
             yield return null;
         }
 
@@ -120,7 +159,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit
 
         private bool HasNoTarget()
         {
-            return TargetContainer.Targets.Count <= 0;
+            return TargetContainer.Count <= 0;
         }
     }
 }

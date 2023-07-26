@@ -501,10 +501,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: SceneLoader
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3155167198865865265, guid: fe35e9aba49be5f4083a50f893bd0120, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8932584803192340463, guid: fe35e9aba49be5f4083a50f893bd0120, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 521251920779182564}
     - targetCorrespondingSourceObject: {fileID: 8932584803192340463, guid: fe35e9aba49be5f4083a50f893bd0120, type: 3}
       insertIndex: -1
       addedObject: {fileID: 521251920779182563}
@@ -533,6 +537,26 @@ MonoBehaviour:
   _editorColdBoot: {fileID: 11400000, guid: 1968806e33134b64d8c7dbf01d084585, type: 2}
   _sceneLoaded: {fileID: 11400000, guid: d463f98507ffd95459feb67b21dd1ecc, type: 2}
   _sceneUnloading: {fileID: 11400000, guid: ccb2cdde6c846e64d9e87d1806ec5056, type: 2}
+--- !u!114 &521251920779182564
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 521251920779182562}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4955aec57294a9d4eb992773b2b378e1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _gameplayManagerSceneSO: {fileID: 11400000, guid: 8c20d86ff48bc7c42a3cc1bb3b9bc01c, type: 2}
+  _fadeConfigSO: {fileID: 11400000, guid: 7dbde9362953f5a48b9dcf0c2aa32754, type: 2}
+  _loadMap: {fileID: 11400000, guid: 932ea26428d5f4c4f8bdfd48ebc80873, type: 2}
+  _loadTitle: {fileID: 11400000, guid: 38739450c999a184c93b461c6442b507, type: 2}
+  _editorColdBoot: {fileID: 11400000, guid: 49613f02b24166c4ba51b3ebf4fb42e3, type: 2}
+  _sceneLoaded: {fileID: 11400000, guid: b8b96e43d21a7bf4c96df4cb83c2b764, type: 2}
+  _sceneUnloading: {fileID: 11400000, guid: ccb2cdde6c846e64d9e87d1806ec5056, type: 2}
+  _sceneLoadBus: {fileID: 11400000, guid: 8a84cff925b530f41b4c946ad8c7cf70, type: 2}
 --- !u!1001 &6794949523962522864
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -585,6 +609,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3431512265037710448, guid: 71875c9c70d96cb4b9d46bfea304bac3, type: 3}
+      propertyPath: m_SubmitAction
+      value: 
+      objectReference: {fileID: -589600534500391792, guid: 650dc670339d4e146b716556f119c587, type: 3}
     - target: {fileID: 7129437425251968576, guid: 71875c9c70d96cb4b9d46bfea304bac3, type: 3}
       propertyPath: m_Name
       value: EventSystem

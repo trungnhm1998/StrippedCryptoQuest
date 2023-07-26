@@ -16,40 +16,51 @@ MonoBehaviour:
     m_Code: en
   m_SharedData: {fileID: 11400000, guid: 832b1adaee163f04aaba984e01aa985a, type: 2}
   m_Metadata:
-    m_Items: []
+    m_Items:
+    - rid: 8776625620612546562
   m_TableData:
   - m_Id: 1258597703680
-    m_Localized: '{0} attacks!'
+    m_Localized: '{unitName} attacks!'
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 8776625620612546562
   - m_Id: 1345062445572096
-    m_Localized: '{0} damage to the {1}!!'
+    m_Localized: '{damage} damage to the {unitName}!!'
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 8776625620612546562
   - m_Id: 1674647494656
     m_Localized: '{0} used {1}!'
     m_Metadata:
       m_Items: []
   - m_Id: 1846932725760
-    m_Localized: '{0} is defeated!'
+    m_Localized: '{unitName} is defeated!'
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 8776625620612546562
   - m_Id: 1996069593088
     m_Localized: Miss!
     m_Metadata:
       m_Items: []
   - m_Id: 2079649488896
-    m_Localized: '{0} takes no damage!'
+    m_Localized: '{unitName} takes no damage!'
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 8776625620612546562
   - m_Id: 1000986638606336
-    m_Localized: '{0}''s {1} is increased.'
+    m_Localized: '{unitName}''s {attributeName} is increased.'
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 8776625620612546562
   - m_Id: 1001068364619776
-    m_Localized: '{0}''s {1} is decreased.'
+    m_Localized: '{unitName}''s {attributeName} is decreased.'
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 8776625620612546562
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: 8776625620612546562
+      type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_Entries: 00e0440a2501000000e044c153c7040000e0c405ae01000000e0c434e401000000e0045d648e030000e04464778e0300

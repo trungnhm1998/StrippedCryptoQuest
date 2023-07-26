@@ -28,7 +28,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3951551157325074413}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -10}
+  m_LocalPosition: {x: 5, y: -5, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -182,6 +182,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8314685212265358805}
   - component: {fileID: 4951359876998024880}
+  - component: {fileID: 4459745094720210412}
   m_Layer: 0
   m_Name: Virtual Camera
   m_TagString: Untagged
@@ -197,7 +198,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7889516305689687643}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -10}
+  m_LocalPosition: {x: 17.7, y: -15.7, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -244,6 +245,23 @@ MonoBehaviour:
         m_Calls: []
   m_LegacyBlendHint: 0
   m_ComponentOwner: {fileID: 7660815781249818601}
+--- !u!114 &4459745094720210412
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7889516305689687643}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2fba25a5cd15594e8f050a11e386c80, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ConfineMode: 0
+  m_BoundingVolume: {fileID: 0}
+  m_BoundingShape2D: {fileID: 0}
+  m_ConfineScreenEdges: 1
+  m_Damping: 0
 --- !u!1 &8004070437169698952
 GameObject:
   m_ObjectHideFlags: 0
@@ -254,7 +272,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3899684602420430283}
   - component: {fileID: 1634449350796813697}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: CameraManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -276,7 +294,7 @@ Transform:
   - {fileID: 6640117740706423746}
   - {fileID: 8314685212265358805}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1634449350796813697
 MonoBehaviour:
