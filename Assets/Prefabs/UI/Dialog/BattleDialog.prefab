@@ -125,9 +125,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8759938187778997364}
-  - component: {fileID: 6736838347333281158}
+  - component: {fileID: 2575735209882136255}
   m_Layer: 5
-  m_Name: BattleDialogue
+  m_Name: BattleDialog
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -154,7 +154,7 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 150}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &6736838347333281158
+--- !u!114 &2575735209882136255
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -163,7 +163,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3899739026275214210}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 609aec43b1f10834e98ef2ee225b85b0, type: 3}
+  m_Script: {fileID: 11500000, guid: 4bfdf8314fd34d24595606d6675e67da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 3537686293215316460}
@@ -173,11 +173,11 @@ MonoBehaviour:
   backgroundButton: {fileID: 0}
   buttonsRoot: {fileID: 0}
   _inputMediator: {fileID: 11400000, guid: 1fb61cdb72f0a484f8e4db68e2011977, type: 2}
-  _dialogueText: {fileID: 81883292853957341}
+  _dialogText: {fileID: 81883292853957341}
   _continueMark: {fileID: 4626600794888442260}
-  _delayBetweenLine: 0.25
-  _doneShowUnitAction: {fileID: 11400000, guid: 7f17076c6f0eca9478a3985d281b54d9, type: 2}
-  _onPagingDialogClose: {fileID: 11400000, guid: 41271f076f16d4c41a650cf7ab42ef62, type: 2}
+  _doneShowActionEventChannel: {fileID: 11400000, guid: 7f17076c6f0eca9478a3985d281b54d9, type: 2}
+  _showNextMarkEventChannel: {fileID: 11400000, guid: 9ed5ff741b20bee4f9e8a2ade059511f, type: 2}
+  _endActionPhaseEventChannel: {fileID: 11400000, guid: 4116eb7df02c5cb418f0bccf9c6a8922, type: 2}
 --- !u!1 &4582801244802021442
 GameObject:
   m_ObjectHideFlags: 0
@@ -380,7 +380,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: f49691bd10631384d840c96542a56a46, type: 3}
+    m_Font: {fileID: 12800000, guid: dd09ab6ed89294671a80ceee568a7f12, type: 3}
     m_FontSize: 36
     m_FontStyle: 0
     m_BestFit: 0

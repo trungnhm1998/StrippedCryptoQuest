@@ -29,7 +29,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components
         [SerializeField] private VoidEventChannelSO _onDialogCloseEventChannel;
         [SerializeField] private VoidEventChannelSO _sceneLoadedEventChannel;
 
-        public IBattleUnit CurrentUnit {get; set;}
+        public IBattleUnit CurrentUnit { get; set; } = NullBattleUnit.Instance;
         public int Turn { get; private set; }
         public BaseBattleSpawner BattleSpawner { get; private set; }
         public List<IBattleUnit> BattleUnits { get; private set; } = new();

@@ -57,6 +57,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit
 
         private void OnDoneShowAction()
         {
+            if (_battleManager.CurrentUnit.Owner != Owner) return;
             _isDoneShowAction = true;
         }
 
