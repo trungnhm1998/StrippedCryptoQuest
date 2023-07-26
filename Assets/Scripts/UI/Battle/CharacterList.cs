@@ -28,7 +28,7 @@ namespace CryptoQuest.UI.Battle
             }
         }
 
-        public virtual void ShowSelected(string name)
+        public virtual void SetSelectedData(string name)
         {
             foreach (var characterInfo in _characterInfos)
             {

@@ -11,10 +11,11 @@ namespace CryptoQuest.UI.Battle
         [SerializeField] private CharacterList _characterList;
 
         private IBattleUnit _currentUnit;
+        private readonly List<AbstractButtonInfo> _buttonInfo = new();
 
         private void SelectTarget(IBattleUnit unit)
         {
-            _characterList.ShowSelected(unit.UnitData.DisplayName);
+            _characterList.SetSelectedData(unit.UnitData.DisplayName);
             _characterList.SelectFirstHero();
         }
 
@@ -26,16 +27,16 @@ namespace CryptoQuest.UI.Battle
 
         private void SetupTargetButton(IBattleUnit battleUnit)
         {
-            var buttonInfos = new List<AbstractButtonInfo>();
+            _buttonInfo.Clear();
             var targetUnits = battleUnit.OpponentTeam.BattleUnits;
 
             foreach (var unit in targetUnits)
             {
                 var buttonInfo = new SkillAbstractButtonInfo(unit, SelectTarget);
-                buttonInfos.Add(buttonInfo);
+                _buttonInfo.Add(buttonInfo);
             }
 
-            _panelController.OpenCommandDetailPanel(buttonInfos);
+            _panelController.OpenCommandDetailPanel(_buttonInfo);
         }
     }
 }

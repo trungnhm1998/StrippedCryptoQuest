@@ -1,10 +1,11 @@
-﻿using IndiGames.GameplayAbilitySystem.AttributeSystem;
+﻿using System.Collections;
+using IndiGames.GameplayAbilitySystem.AttributeSystem;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using NotImplementedException = System.NotImplementedException;
 
 namespace CryptoQuest.UI.Battle.CharacterInfo
 {
@@ -25,6 +26,7 @@ namespace CryptoQuest.UI.Battle.CharacterInfo
         [SerializeField] private Image _popupItemFrame;
         [SerializeField] protected Image _characterIcon;
         [SerializeField] private TextMeshProUGUI _itemPopupText;
+        [SerializeField] private Button _button;
 
         protected override void OnEnable()
         {
@@ -74,21 +76,25 @@ namespace CryptoQuest.UI.Battle.CharacterInfo
             slider.value = attributeValue.CurrentValue / maxValue.CurrentValue;
         }
 
+        private bool IsCurrentlySelected => EventSystem.current.currentSelectedGameObject == gameObject &&
+                                            _button.interactable;
+
         protected override void OnSelected(string name)
         {
-            var currentObject = EventSystem.current.currentSelectedGameObject;
+            _button.interactable = true;
 
-            _selectFrame.gameObject.SetActive(currentObject == gameObject);
-            _popupItemFrame.gameObject.SetActive(currentObject == gameObject);
+            _selectFrame.gameObject.SetActive(IsCurrentlySelected);
+            _popupItemFrame.gameObject.SetActive(IsCurrentlySelected);
+
             _itemPopupText.text = name;
         }
 
         public void OnSelect(BaseEventData eventData)
         {
-            var currentObject = EventSystem.current.currentSelectedGameObject;
+            if (!_button.interactable) return;
 
-            _selectFrame.gameObject.SetActive(currentObject == gameObject);
-            _popupItemFrame.gameObject.SetActive(currentObject == gameObject);
+            _selectFrame.gameObject.SetActive(true);
+            _popupItemFrame.gameObject.SetActive(true);
         }
 
 
@@ -98,9 +104,14 @@ namespace CryptoQuest.UI.Battle.CharacterInfo
             _popupItemFrame.gameObject.SetActive(false);
         }
 
-        public void OnCallback()
+        public void OnClicked()
         {
             Debug.Log("UIHeroInfo::OnCallback");
+        }
+
+        public void SetButtonActive(bool isActive)
+        {
+            _button.interactable = isActive;
         }
     }
 }

@@ -21,8 +21,8 @@ namespace CryptoQuest.UI.Battle
 
 
         [SerializeField] private BattleActionHandler.BattleActionHandler[] _normalAttackChain;
-[SerializeField] private BattleActionHandler.BattleActionHandler[] _skillAttackChain;
-        
+        [SerializeField] private BattleActionHandler.BattleActionHandler[] _skillAttackChain;
+
         [Header("Events")]
         [SerializeField] private InputMediatorSO _inputMediator;
 
