@@ -14,10 +14,9 @@ namespace CryptoQuest.GameHandler
             return handler;
         }
 
-        public virtual object Handle(object request)
+        public virtual void Handle(object request)
         {
-            if (_nextHandler == null) return null;
-            return _nextHandler.Handle(request);
+            _nextHandler.Handle(request);
         }
     }
 }

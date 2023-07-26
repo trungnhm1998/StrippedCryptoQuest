@@ -16,7 +16,6 @@ namespace CryptoQuest.UI.Battle.CommandsMenu
 
         public RectTransform FirstButton
         {
-            get => _firstButton;
             set => _firstButton = value;
         }
 
@@ -24,7 +23,6 @@ namespace CryptoQuest.UI.Battle.CommandsMenu
 
         public RectTransform LastButton
         {
-            get => _lastButton;
             set => _lastButton = value;
         }
 
@@ -49,6 +47,8 @@ namespace CryptoQuest.UI.Battle.CommandsMenu
 
         private void CheckButtonPosition()
         {
+            if (_firstButton == null || _lastButton == null) return;
+
             var currentButton = EventSystem.current.currentSelectedGameObject;
 
             if (currentButton == _firstButton.gameObject)
