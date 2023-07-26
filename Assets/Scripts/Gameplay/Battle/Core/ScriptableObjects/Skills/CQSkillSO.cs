@@ -5,7 +5,9 @@ using IndiGames.GameplayAbilitySystem.AbilitySystem;
 using IndiGames.GameplayAbilitySystem.Implementation.EffectAbility;
 using IndiGames.GameplayAbilitySystem.Implementation.EffectAbility.ScriptableObjects;
 using UnityEngine;
-using UnityEngine.Localization.Settings;
+using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Events;
+using UnityEngine.Localization.SmartFormat.PersistentVariables;
+using UnityEngine.Localization;
 
 namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Skills
 {
@@ -15,14 +17,16 @@ namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Skills
     [CreateAssetMenu(fileName = "CQSkillSO", menuName = "Gameplay/Battle/Abilities/Crypto Quest Skill")]
     public class CQSkillSO : EffectAbilitySO
     {
-        public string SkillName = "";
-        public string PromtKey = "";
+        public BattleActionDataSO ActionDataSO;
+        public BattleActionDataEventChannelSO ActionEventSO;
+        public LocalizedString SkillName;
         protected override AbstractAbility CreateAbility() => new CQSkill();
     }
 
     public class CQSkill : EffectAbility
     {
-        protected const string BATTLE_PROMT_TABLE = "BattlePromt";
+        protected const string UNIT_NAME_VARIABLE = "unitName";
+        protected const string SKILL_NAME_VARIABLE = "skillName";
         protected IBattleUnit _unit;
         protected new CQSkillSO AbilitySO => (CQSkillSO) _abilitySO;
         
@@ -41,11 +45,13 @@ namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Skills
 
         protected virtual void SkillActivatePromt()
         {
-            if (AbilitySO.PromtKey == "") return;
-            string normalAttackText = LocalizationSettings.StringDatabase.GetLocalizedString(BATTLE_PROMT_TABLE, AbilitySO.PromtKey);
+            var actionData = AbilitySO.ActionDataSO;
             CharacterDataSO unitData = _unit.UnitData;
-            if (unitData == null) return;
-            _unit.Logger.Log(string.Format(normalAttackText, unitData.DisplayName));
+            if (unitData == null || actionData == null) return; 
+
+            actionData.Log.Clear();
+            actionData.AddStringVar(UNIT_NAME_VARIABLE, unitData.DisplayName);
+            AbilitySO.ActionEventSO.RaiseEvent(actionData);
         }
     }
 }
