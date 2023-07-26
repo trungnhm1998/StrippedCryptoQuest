@@ -17,37 +17,41 @@ namespace CryptoQuest.Menu
 
         private new void Awake()
         {
-            _menuSelectionHandler = transform.root.gameObject.GetComponentInChildren<MenuSelectionHandler>();
+            GetMenuSelectionHandler();
+        }
+
+        private MenuSelectionHandler GetMenuSelectionHandler()
+        {
+            if (_menuSelectionHandler == null)
+                _menuSelectionHandler = transform.root.gameObject.GetComponentInChildren<MenuSelectionHandler>();
+            return _menuSelectionHandler;
         }
 
         public override void OnPointerEnter(PointerEventData eventData)
         {
-            _menuSelectionHandler.HandleMouseEnter(gameObject);
+            GetMenuSelectionHandler().HandleMouseEnter(gameObject);
         }
 
         public override void OnPointerExit(PointerEventData eventData)
         {
-            _menuSelectionHandler.HandleMouseExit(gameObject);
+            GetMenuSelectionHandler().HandleMouseExit(gameObject);
         }
 
         public override void OnSelect(BaseEventData eventData)
         {
             IsSelected = true;
-            _menuSelectionHandler.UpdateSelection(gameObject);
+            GetMenuSelectionHandler().UpdateSelection(gameObject);
             base.OnSelect(eventData);
         }
 
         public void UpdateSelected()
         {
-            if (_menuSelectionHandler == null)
-                _menuSelectionHandler = transform.root.gameObject.GetComponentInChildren<MenuSelectionHandler>();
-
-            _menuSelectionHandler.UpdateSelection(gameObject);
+            GetMenuSelectionHandler().UpdateSelection(gameObject);
         }
 
         public override void OnSubmit(BaseEventData eventData)
         {
-            if (_menuSelectionHandler.AllowsSubmit())
+            if (GetMenuSelectionHandler().AllowsSubmit())
                 base.OnSubmit(eventData);
         }
     }
