@@ -1187,6 +1187,129 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "StatusMenu",
+            "id": "995ba685-ac12-4fbc-bfac-80830c51f95d",
+            "actions": [
+                {
+                    "name": "ChangeEquipment",
+                    "type": "Button",
+                    "id": "5e94e9e7-edbb-4c82-b1eb-b4d61346b915",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "GoBelow",
+                    "type": "Button",
+                    "id": "de7a5a19-06f8-42f8-9e90-ed8acfb9d972",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "GoAbove",
+                    "type": "Button",
+                    "id": "4b7f4266-f34e-4af9-8afe-827a9e1ecd60",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "2f4cbd02-9bb9-4dc2-9990-9685783f5dd4",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "MnK",
+                    "action": "ChangeEquipment",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "be202df5-231e-4a75-8bbd-33f3a59a21d1",
+                    "path": "<Gamepad>/buttonNorth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "ChangeEquipment",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f04e1dfe-7789-4b9b-a62a-35a1642b409c",
+                    "path": "<Keyboard>/downArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "MnK",
+                    "action": "GoBelow",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6f623e3c-0bac-4568-b604-7065cd2fae3a",
+                    "path": "<Gamepad>/buttonSouth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "GoBelow",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ac6e1ba2-1523-4f1d-929a-0488e99dbf14",
+                    "path": "<Gamepad>/leftStick/down",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "GoBelow",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "10481cb9-3df8-4905-9c01-7f697d583fee",
+                    "path": "<Keyboard>/upArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "MnK",
+                    "action": "GoAbove",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "996465c2-8ea9-4da8-87d6-84dfc3a1101a",
+                    "path": "<Gamepad>/buttonNorth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "GoAbove",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "aa500602-3a7e-4580-b5d7-ae7f7c095bc4",
+                    "path": "<Gamepad>/leftStick/up",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "GoAbove",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": [

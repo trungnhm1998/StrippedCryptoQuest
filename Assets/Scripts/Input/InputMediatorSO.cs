@@ -10,7 +10,7 @@ namespace CryptoQuest.Input
 {
     // TODO: Move action map interfaces to separate scriptable objects
     public class InputMediatorSO : ScriptableObject, InputActions.IMapGameplayActions, InputActions.IMenusActions,
-        InputActions.IDialoguesActions, InputActions.IHomeMenuActions
+        InputActions.IDialoguesActions, InputActions.IHomeMenuActions, InputActions.IStatusMenuActions
     {
         #region Events
 
@@ -50,6 +50,14 @@ namespace CryptoQuest.Input
 
         #endregion
 
+        #region StatusMenu
+
+        public event UnityAction ChangeEquipmentEvent;
+        public event UnityAction GoBelowEvent;
+        public event UnityAction GoAboveEvent;
+
+        #endregion
+
         #endregion
 
         private InputActions _inputActions;
@@ -84,6 +92,7 @@ namespace CryptoQuest.Input
             _inputActions.MapGameplay.SetCallbacks(this);
             _inputActions.Dialogues.SetCallbacks(this);
             _inputActions.HomeMenu.SetCallbacks(this);
+            _inputActions.StatusMenu.SetCallbacks(this);
         }
 
         public void EnableMenuInput()
@@ -117,6 +126,15 @@ namespace CryptoQuest.Input
             _inputActions.Dialogues.Disable();
             _inputActions.MapGameplay.Disable();
             _inputActions.Menus.Disable();
+        }
+
+        public void EnableStatusMenuInput()
+        {
+            _inputActions.StatusMenu.Enable();
+            _inputActions.Dialogues.Disable();
+            _inputActions.MapGameplay.Disable();
+            _inputActions.Menus.Disable();
+            _inputActions.HomeMenu.Disable();
         }
 
         #endregion
@@ -280,6 +298,25 @@ namespace CryptoQuest.Input
         public void OnHomeMenuCancel(InputAction.CallbackContext context)
         {
             if (context.performed) HomeMenuCancelEvent?.Invoke();
+        }
+
+        #endregion
+
+        #region StatusMenu
+
+        public void OnChangeEquipment(InputAction.CallbackContext context)
+        {
+            if (context.performed) ChangeEquipmentEvent?.Invoke();
+        }
+
+        public void OnGoBelow(InputAction.CallbackContext context)
+        {
+            if (context.performed) GoBelowEvent?.Invoke();
+        }
+
+        public void OnGoAbove(InputAction.CallbackContext context)
+        {
+            if (context.performed) GoAboveEvent?.Invoke();
         }
 
         #endregion
