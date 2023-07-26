@@ -1,4 +1,5 @@
-﻿using CryptoQuest.Character.Movement;
+﻿using System;
+using CryptoQuest.Character.Movement;
 using CryptoQuest.Input;
 using UnityEngine;
 
@@ -20,13 +21,8 @@ namespace CryptoQuest.Character.MonoBehaviours
         private void Awake()
         {
             _rigidBody2D = GetComponent<Rigidbody2D>();
-            _velocityStrategy = new ConstantVelocityLastInputMovementStrategy(_characterBehaviour);
+            _velocityStrategy = new ConstantVelocityLastInputMovementStrategy();
             _interactionManager = GetComponent<IInteractionManager>();
-        }
-
-        private void Start()
-        {
-            _inputMediator.EnableMapGameplayInput();
         }
 
         private void OnEnable()
@@ -49,6 +45,8 @@ namespace CryptoQuest.Character.MonoBehaviours
         private void Update()
         {
             _characterBehaviour.IsWalking = _speed > 0f && _rigidBody2D.velocity != Vector2.zero;
+            if (_inputVector != Vector2.zero)
+                _characterBehaviour.SetFacingDirection(_inputVector);
         }
 
         private void FixedUpdate()
@@ -59,11 +57,6 @@ namespace CryptoQuest.Character.MonoBehaviours
         private void MoveEvent_Raised(Vector2 inputVector)
         {
             _inputVector = inputVector;
-        }
-        
-        private void OnGUI()
-        {
-            GUI.Label(new Rect(20, 20, 250, 50), $"Input Vector: {_inputVector}");
         }
     }
 }

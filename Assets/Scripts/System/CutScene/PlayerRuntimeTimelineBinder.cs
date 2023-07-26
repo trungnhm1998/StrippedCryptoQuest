@@ -5,7 +5,7 @@ using UnityEngine.Playables;
 
 namespace CryptoQuest.System.CutScene
 {
-    public class TimelineBinder : MonoBehaviour
+    public class PlayerRuntimeTimelineBinder : MonoBehaviour
     {
         [SerializeField] private GameplayBus _gameplayBus;
         [SerializeField] private PlayableDirector _director;

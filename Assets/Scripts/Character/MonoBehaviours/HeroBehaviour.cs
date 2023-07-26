@@ -27,11 +27,16 @@ namespace CryptoQuest.Character.MonoBehaviours
             }
         }
 
+        private void OnEnable()
+        {
+            SetFacingDirection(_facingDirection);
+        }
+
         public override void SetFacingDirection(Vector2 velocity)
         {
             base.SetFacingDirection(velocity);
 
-            _interactionCollider.transform.localPosition = _facingOffsetDictionary[FacingDirection].Offset;
+            _interactionCollider.transform.localPosition = _facingOffsetDictionary[_facingDirection].Offset;
         }
     }
 }
