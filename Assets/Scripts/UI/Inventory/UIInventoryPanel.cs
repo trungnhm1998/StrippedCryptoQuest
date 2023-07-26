@@ -54,7 +54,7 @@ namespace CryptoQuest.UI.Inventory
         {
             _recyclableScrollRect.Initialize(this);
             _itemList.Clear();
-            foreach (var item in _inventory._items)
+            foreach (var item in _inventory.Items)
             {
                 var itemSO = item.ItemSO;
                 var type = itemSO.Type;
