@@ -29,10 +29,10 @@ namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.BattleFSM.States
             base.OnEnterState(stateMachine);
             _doneShowDialogEventChannel.EventRaised += OnDoneShowDialog;
             _stateMachine = stateMachine;
-            _unitPrepareCoroutine = stateMachine.StartCoroutine(BattlePrepare(stateMachine));
+            _unitPrepareCoroutine = stateMachine.StartCoroutine(PrepareBattle(stateMachine));
         }
 
-        private IEnumerator BattlePrepare(BaseStateMachine stateMachine)
+        private IEnumerator PrepareBattle(BaseStateMachine stateMachine)
         {
             if (BattleManager.BattleSpawner)
             {

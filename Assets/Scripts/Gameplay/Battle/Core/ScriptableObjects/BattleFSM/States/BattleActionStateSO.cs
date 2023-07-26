@@ -16,10 +16,10 @@ namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.BattleFSM.States
         public override void OnEnterState(BaseStateMachine stateMachine)
         {
             base.OnEnterState(stateMachine);
-            _unitActionCoroutine = stateMachine.StartCoroutine(BattleUnitsAction(stateMachine));
+            _unitActionCoroutine = stateMachine.StartCoroutine(PerformBattleUnitsAction(stateMachine));
         }
         
-        private IEnumerator BattleUnitsAction(BaseStateMachine stateMachine)
+        private IEnumerator PerformBattleUnitsAction(BaseStateMachine stateMachine)
         {
             foreach (var unit in BattleManager.BattleUnits)
             {
