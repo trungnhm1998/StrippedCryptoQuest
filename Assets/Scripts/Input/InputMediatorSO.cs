@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq.Expressions;
 using UnityEngine;
 using UnityEngine.Events;
@@ -32,6 +32,9 @@ namespace CryptoQuest.Input
         public event UnityAction MenuTabPressed;
         public event UnityAction CancelEvent;
         public event UnityAction HomeMenuSortEvent;
+
+        public event UnityAction NextSelectionMenu;
+        public event UnityAction PreviousSelectionMenu;
 
         #endregion
 
@@ -255,6 +258,16 @@ namespace CryptoQuest.Input
         public void OnMouseMove(InputAction.CallbackContext context)
         {
             if (context.phase == InputActionPhase.Performed) MouseMoveEvent?.Invoke();
+        }
+
+        public void OnNextSelectionMenu(InputAction.CallbackContext context)
+        {
+            if (context.performed) NextSelectionMenu?.Invoke();
+        }
+
+        public void OnPreviousSelectionMenu(InputAction.CallbackContext context)
+        {
+            if (context.performed) PreviousSelectionMenu?.Invoke();
         }
 
         public void OnHomeMenuEnableSort(InputAction.CallbackContext context)
