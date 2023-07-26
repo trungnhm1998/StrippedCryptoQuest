@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 4910881999108043440}
   - component: {fileID: 3325778089372773004}
   - component: {fileID: -6964451628965985269}
+  - component: {fileID: -3041565167937363625}
   m_Layer: 0
   m_Name: NPC_Man_UniVillage_NorthWest
   m_TagString: Untagged
@@ -48,8 +49,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ccbfbdc39cd3f8940b942c3d69572361, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _dialogue: {fileID: 0}
-  _dialogEventChannel: {fileID: 11400000, guid: 5ea06a7649747af4aaa3d444b3ab8a99, type: 2}
+  _interacted:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!212 &8409917278330094625
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -182,3 +184,28 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &-3041565167937363625
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7248431143634707800}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9e07f409ddb4fd0a9e1ab4046463478, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _dialogueLine:
+    m_TableReference:
+      m_TableCollectionName: GUID:4be45ea04057b7b4c8f80bc12990e0f8
+    m_TableEntryReference:
+      m_KeyId: 395938514145280
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  _playLocalizedLineEventEvent: {fileID: 11400000, guid: a5c02db9f0a54854080e16f16a2ba339, type: 2}
+  references:
+    version: 2
+    RefIds: []

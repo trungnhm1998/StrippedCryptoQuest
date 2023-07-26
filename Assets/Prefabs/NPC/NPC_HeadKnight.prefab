@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 4053417496013064294}
   - component: {fileID: 6549665741741059986}
   - component: {fileID: -4818239909801117991}
-  - component: {fileID: 1261643941442704523}
+  - component: {fileID: 380345254416919844}
   m_Layer: 0
   m_Name: NPC_HeadKnight
   m_TagString: Untagged
@@ -35,7 +35,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &2674697679671200827
 SpriteRenderer:
@@ -101,8 +101,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ccbfbdc39cd3f8940b942c3d69572361, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _dialogue: {fileID: 11400000, guid: 338ee1159513c674d8c0ffcb9de8b6d9, type: 2}
-  _dialogEventChannel: {fileID: 11400000, guid: 5ea06a7649747af4aaa3d444b3ab8a99, type: 2}
+  _interacted:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!61 &4053417496013064294
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -183,7 +184,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &1261643941442704523
+--- !u!114 &380345254416919844
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -192,14 +193,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 1065791554058737759}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5d6beaf020c827748b3ee50a3883e097, type: 3}
+  m_Script: {fileID: 11500000, guid: a9e07f409ddb4fd0a9e1ab4046463478, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _animator: {fileID: 0}
-  _facingDirection: 0
-  _pointAPosition: {fileID: 0}
-  _pointBPosition: {fileID: 0}
-  _destination: {fileID: 0}
-  _speed: 0
-  _waitBeforeMovingAgainTime: 0
-  _minDistanceToChangeDestination: 0
+  _dialogueLine:
+    m_TableReference:
+      m_TableCollectionName: GUID:4be45ea04057b7b4c8f80bc12990e0f8
+    m_TableEntryReference:
+      m_KeyId: 395938514145280
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  _playLocalizedLineEventEvent: {fileID: 11400000, guid: a5c02db9f0a54854080e16f16a2ba339, type: 2}
+  references:
+    version: 2
+    RefIds: []
