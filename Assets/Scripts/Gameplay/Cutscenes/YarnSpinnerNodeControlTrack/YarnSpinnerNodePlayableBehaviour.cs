@@ -11,21 +11,27 @@ namespace CryptoQuest.Gameplay.Cutscenes.YarnSpinnerNodeControlTrack
     {
         public PlayDialogueEvent PlayDialogue;
         public PauseCutsceneEvent PauseTimelineEvent;
+
+        /// <summary>
+        /// We need to wait for the player to actually finish reading all the dialogues before we can continue the timeline.
+        /// </summary>
+        public bool PauseTimelineOnClipEnds = true;
+
         [HideInInspector] public string YarnNodeName = "Start";
 
-        private bool _dialoguePlayed = false;
+        private bool _played = false;
 
         public override void ProcessFrame(Playable playable, FrameData info, object playerData)
         {
-            if (_dialoguePlayed)
+            if (_played)
                 return;
 
-            _dialoguePlayed = true;
             if (Application.isPlaying)
             {
                 if (!playable.GetGraph().IsPlaying()) return;
                 if (string.IsNullOrEmpty(YarnNodeName)) return;
                 PlayDialogue.RaiseEvent(YarnNodeName);
+                _played = true;
             }
 #if UNITY_EDITOR
             else
@@ -39,10 +45,13 @@ namespace CryptoQuest.Gameplay.Cutscenes.YarnSpinnerNodeControlTrack
         {
             Debug.Log("OnBehaviourPause");
             if (!Application.isPlaying) return;
-            if (!playable.GetGraph().IsPlaying()
-                || playable.GetGraph().GetRootPlayable(0).IsDone()) return;
+            if (!playable.GetGraph().IsPlaying()) return;
+            if (playable.GetGraph().GetRootPlayable(0).IsDone()) return;
+            if (!_played) return;
+
             // pause the timeline until the player finishes reading through all the dialogue (When the dialogue closes)
-            PauseTimelineEvent.RaiseEvent(true);
+            if (PauseTimelineOnClipEnds)
+                PauseTimelineEvent.RaiseEvent(true);
         }
     }
 }

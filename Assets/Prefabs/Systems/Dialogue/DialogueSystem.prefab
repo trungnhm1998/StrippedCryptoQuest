@@ -32,7 +32,7 @@ Transform:
   m_Children:
   - {fileID: 3928917288699705300}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &4302499264253339029
 MonoBehaviour:
@@ -48,6 +48,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _dialogueRunner: {fileID: 3100438476098457047}
   _playDialogueEventEvent: {fileID: 11400000, guid: 2271886bc7140d040a69b2e1825b986b, type: 2}
+  _dialogueCompletedEventChannelSO: {fileID: 0}
+  _onDialogueCompleted:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: CryptoQuest.Gameplay.Cutscenes.CutsceneManager,
+          indi-games.crypto-quest
+        m_MethodName: ResumeCutscene
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &4897542309144459205
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -146,6 +163,30 @@ PrefabInstance:
     - target: {fileID: 3292657647476544605, guid: c595816d2a2f63e438471e092154f2a5, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3579681405068720530, guid: c595816d2a2f63e438471e092154f2a5, type: 3}
+      propertyPath: onDialogueComplete.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3579681405068720530, guid: c595816d2a2f63e438471e092154f2a5, type: 3}
+      propertyPath: onDialogueComplete.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3579681405068720530, guid: c595816d2a2f63e438471e092154f2a5, type: 3}
+      propertyPath: onDialogueComplete.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 4302499264253339029}
+    - target: {fileID: 3579681405068720530, guid: c595816d2a2f63e438471e092154f2a5, type: 3}
+      propertyPath: onDialogueComplete.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3579681405068720530, guid: c595816d2a2f63e438471e092154f2a5, type: 3}
+      propertyPath: onDialogueComplete.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: DialogueCompleted
+      objectReference: {fileID: 0}
+    - target: {fileID: 3579681405068720530, guid: c595816d2a2f63e438471e092154f2a5, type: 3}
+      propertyPath: onDialogueComplete.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 7778558434935992803, guid: c595816d2a2f63e438471e092154f2a5, type: 3}
       propertyPath: m_SizeDelta.x

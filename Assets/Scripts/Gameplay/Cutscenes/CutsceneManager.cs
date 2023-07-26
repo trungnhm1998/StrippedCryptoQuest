@@ -8,6 +8,7 @@ namespace CryptoQuest.Gameplay.Cutscenes
     {
         [Header("Listening to")]
         [SerializeField] private PlayCutsceneEvent _playCutsceneEvent;
+
         [SerializeField] private PauseCutsceneEvent _pauseCutsceneEvent;
 
         /// <summary>
@@ -37,7 +38,19 @@ namespace CryptoQuest.Gameplay.Cutscenes
 
         private void PauseCutscene(bool isPaused)
         {
+            if (_currentPlayableDirector == null)
+            {
+                Debug.LogWarning("A request to pause a cutscene was received, but no cutscene is currently playing, " +
+                                 "probably a cutscene was played from editor, and not from the CutsceneTrigger.");
+                return;
+            }
+
             _currentPlayableDirector.playableGraph.GetRootPlayable(0).SetSpeed(isPaused ? 0 : 1);
+        }
+
+        public void ResumeCutscene()
+        {
+            PauseCutscene(false);
         }
     }
 }
