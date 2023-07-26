@@ -70,7 +70,6 @@ namespace CryptoQuest.UI.Dialogs.BattleDialog
 
         private void OnGotActionData(BattleActionDataSO data)
         {
-            Debug.Log($"Action log: {data.Log.GetLocalizedString()}");
             ShowDialog(data.Log);
         }
 

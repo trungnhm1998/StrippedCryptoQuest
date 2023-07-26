@@ -11,11 +11,8 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit
         private static NullBattleUnit _instance;
         public static IBattleUnit Instance => _instance ??= new NullBattleUnit();
 
-        private AbilitySystemBehaviour _owner = new AbilitySystemBehaviour();
-        public AbilitySystemBehaviour Owner => _owner;
-
-        private BattleTeam _opponentTeam = new BattleTeam();
-        public BattleTeam OpponentTeam => _opponentTeam;
+        public AbilitySystemBehaviour Owner { get; }
+        public BattleTeam OpponentTeam { get; }
         
         public bool IsDead { get; }
         public AbstractAbility NormalAttack { get; }
