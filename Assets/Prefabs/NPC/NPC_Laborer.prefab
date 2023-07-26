@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 5170298642275452205}
   - component: {fileID: -1785430639984135304}
   - component: {fileID: 6355607358802326447}
-  - component: {fileID: -8264064122944949660}
   - component: {fileID: 8732135574826504247}
+  - component: {fileID: -9047693834083704419}
   - component: {fileID: -5800979416793036935}
   m_Layer: 0
   m_Name: NPC_Laborer
@@ -149,20 +149,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.6, y: 1.08}
   m_EdgeRadius: 0
---- !u!114 &-8264064122944949660
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 971953413339142772}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8317eb7042a89a440ba9e968d6b2d015, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _animator: {fileID: 8732135574826504247}
-  _facingDirection: 0
 --- !u!95 &8732135574826504247
 Animator:
   serializedVersion: 5
@@ -184,6 +170,21 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &-9047693834083704419
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 971953413339142772}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8317eb7042a89a440ba9e968d6b2d015, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _animator: {fileID: 0}
+  _facingDirection: 0
+  _bus: {fileID: 11400000, guid: a26ff341568973e46a1d4449052d5bb0, type: 2}
 --- !u!114 &-5800979416793036935
 MonoBehaviour:
   m_ObjectHideFlags: 0

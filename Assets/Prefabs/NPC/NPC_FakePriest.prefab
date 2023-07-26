@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 4712637387391115778}
   - component: {fileID: -3817618732484759859}
   - component: {fileID: -8497003855920568253}
-  - component: {fileID: -361178301478267331}
   - component: {fileID: -8803139384800894725}
+  - component: {fileID: -9072467094985599065}
   - component: {fileID: -250757490711617171}
   m_Layer: 0
   m_Name: NPC_FakePriest
@@ -149,20 +149,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.57, y: 1.14}
   m_EdgeRadius: 0
---- !u!114 &-361178301478267331
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3875943202401453570}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8317eb7042a89a440ba9e968d6b2d015, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _animator: {fileID: -8803139384800894725}
-  _facingDirection: 0
 --- !u!95 &-8803139384800894725
 Animator:
   serializedVersion: 5
@@ -184,6 +170,21 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &-9072467094985599065
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3875943202401453570}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8317eb7042a89a440ba9e968d6b2d015, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _animator: {fileID: 0}
+  _facingDirection: 0
+  _bus: {fileID: 11400000, guid: a26ff341568973e46a1d4449052d5bb0, type: 2}
 --- !u!114 &-250757490711617171
 MonoBehaviour:
   m_ObjectHideFlags: 0

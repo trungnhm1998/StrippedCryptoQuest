@@ -26,7 +26,7 @@ namespace CryptoQuest.Character
         {
             _interacted.Invoke();
             _dialogueController.ShowDialogue();
-            _npcFacingDirection.FaceOther();
+            _npcFacingDirection.FacePlayer();
         }
     }
 }
