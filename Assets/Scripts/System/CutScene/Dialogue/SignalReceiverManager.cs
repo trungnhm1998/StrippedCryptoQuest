@@ -4,7 +4,7 @@ using IndiGames.Core.Events.ScriptableObjects;
 using UnityEngine;
 using UnityEngine.Playables;
 
-namespace CryptoQuest.System.Cutscene.Dialogue
+namespace CryptoQuest.System.CutScene.Dialogue
 {
     public class SignalReceiverManager : MonoBehaviour, INotificationReceiver
     {

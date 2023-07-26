@@ -1,4 +1,4 @@
-﻿using CryptoQuest.Gameplay.Quest.Dialogue.ScriptableObject;
+﻿using CryptoQuest.Gameplay.Quest.Dialogue;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -6,31 +6,11 @@ namespace CryptoQuest.Events.UI
 {
     public class DialogueEventChannelSO : ScriptableObject
     {
-        public event UnityAction<DialogueScriptableObject> ShowEvent;
-        public event UnityAction HideEvent;
+        public event UnityAction<IDialogueDef> ShowEvent;
 
-        public void Show(DialogueScriptableObject dialogue)
-        {
-            OnShow(dialogue);
-        }
+        public void Show(IDialogueDef dialogue) => OnShow(dialogue);
 
-        public void Hide()
-        {
-            OnHide();
-        }
-
-        private void OnHide()
-        {
-            if (HideEvent == null)
-            {
-                Debug.LogWarning("A request for hiding dialog has been made, but no one listening.");
-                return;
-            }
-
-            HideEvent.Invoke();
-        }
-
-        private void OnShow(DialogueScriptableObject dialogue)
+        private void OnShow(IDialogueDef dialogue)
         {
             if (dialogue == null)
             {

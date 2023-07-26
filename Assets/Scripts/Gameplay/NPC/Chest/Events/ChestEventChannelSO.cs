@@ -1,10 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
-using CryptoQuest.Gameplay.NPC.Chest;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace CryptoQuest.Events.Chest
+namespace CryptoQuest.Gameplay.NPC.Chest.Events
 {
     public class ChestEventChannelSO : ScriptableObject
     {

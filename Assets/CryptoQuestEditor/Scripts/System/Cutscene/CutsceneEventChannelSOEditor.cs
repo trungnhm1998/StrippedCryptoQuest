@@ -1,4 +1,4 @@
-﻿using CryptoQuest.System.Cutscene.Events;
+﻿using CryptoQuest.System.CutScene.Events;
 using IndiGames.Core.Events.ScriptableObjects;
 using UnityEditor;
 using UnityEngine;

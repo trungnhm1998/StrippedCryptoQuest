@@ -1,29 +1,25 @@
-using CryptoQuest.Events.UI;
-using CryptoQuest.Gameplay.Quest.Dialogue.ScriptableObject;
-using UnityEngine;
+using CryptoQuest.Gameplay.Quest.Dialogue;
 
 namespace CryptoQuest.UI.Dialogs.Dialogue
 {
     public class DialogueController : AbstractDialogController<UIDialogue>
     {
-        [SerializeField] private DialogueEventChannelSO _dialogueEventSO;
-        private DialogueScriptableObject _dialogueArgs;
+        private IDialogueDef _dialogueArgs;
 
-        protected override void RegisterEvents()
+        protected override void RegisterEvents() { }
+        protected override void UnregisterEvents() { }
+
+        public void Show(IDialogueDef dialogueArgs)
         {
-            _dialogueEventSO.ShowEvent += ShowDialog;
+            ShowDialog(dialogueArgs);
         }
 
-        private void ShowDialog(DialogueScriptableObject dialogueArgs)
+        private void ShowDialog(IDialogueDef dialogueArgs)
         {
             _dialogueArgs = dialogueArgs;
             LoadAssetDialog();
         }
 
-        protected override void UnregisterEvents()
-        {
-            _dialogueEventSO.ShowEvent -= ShowDialog;
-        }
 
         protected override void SetupDialog(UIDialogue dialog)
         {
