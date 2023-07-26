@@ -1,10 +1,10 @@
 ﻿using System;
-using CryptoQuest.Gameplay.Cutscenes.Events;
+using CryptoQuest.System.CutsceneSystem.Events;
 using CryptoQuest.System.Dialogue.Events;
 using UnityEngine;
 using UnityEngine.Playables;
 
-namespace CryptoQuest.Gameplay.Cutscenes.YarnSpinnerNodeControlTrack
+namespace CryptoQuest.System.CutsceneSystem.YarnSpinnerNodeControlTrack
 {
     [Serializable]
     public class YarnSpinnerNodePlayableBehaviour : PlayableBehaviour

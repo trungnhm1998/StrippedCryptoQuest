@@ -2,7 +2,7 @@
 using UnityEngine.Events;
 using UnityEngine.Playables;
 
-namespace CryptoQuest.Gameplay.Cutscenes.Events
+namespace CryptoQuest.System.CutsceneSystem.Events
 {
     [CreateAssetMenu(menuName = "Crypto Quest/Cutscenes/Events/PlayCutscene")]
     public class PlayCutsceneEvent : ScriptableObject

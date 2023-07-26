@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine.Timeline;
 
-namespace CryptoQuest.Gameplay.Cutscenes.YarnSpinnerNodeControlTrack
+namespace CryptoQuest.System.CutsceneSystem.YarnSpinnerNodeControlTrack
 {
     [Serializable]
     [TrackClipType(typeof(YarnSpinnerNodePlayableAsset))]

@@ -1,6 +1,6 @@
 ﻿using UnityEngine.Playables;
 
-namespace CryptoQuest.Gameplay.Cutscenes.YarnSpinnerNodeControlTrack
+namespace CryptoQuest.System.CutsceneSystem.YarnSpinnerNodeControlTrack
 {
     public class YarnSpinnerNodeMixer : PlayableBehaviour
     {

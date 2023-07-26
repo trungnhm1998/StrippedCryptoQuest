@@ -1,9 +1,9 @@
-﻿using CryptoQuest.Gameplay.Cutscenes.Events;
+﻿using CryptoQuest.System.CutsceneSystem.Events;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Playables;
 
-namespace CryptoQuest.Gameplay.Cutscenes
+namespace CryptoQuest.System.CutsceneSystem
 {
     public class CutsceneManager : MonoBehaviour
     {

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
+using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
 using CryptoQuest.Input;
-using CryptoQuest.Item.Inventory;
 using CryptoQuest.Menu;
 using UnityEngine;
 using UnityEngine.EventSystems;

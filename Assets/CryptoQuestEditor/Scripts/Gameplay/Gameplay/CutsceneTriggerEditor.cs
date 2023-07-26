@@ -1,4 +1,4 @@
-﻿using CryptoQuest.Gameplay.Cutscenes;
+﻿using CryptoQuest.System.CutsceneSystem;
 using UnityEditor;
 using UnityEditor.UIElements;
 using UnityEngine;

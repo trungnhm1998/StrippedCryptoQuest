@@ -1,5 +1,5 @@
-﻿using CryptoQuest.Gameplay.Cutscenes.Events;
-using CryptoQuest.Input;
+﻿using CryptoQuest.Input;
+using CryptoQuest.System.CutsceneSystem.Events;
 using CryptoQuest.System.Dialogue.Events;
 using IndiGames.Core.Events.ScriptableObjects;
 using UnityEngine;
