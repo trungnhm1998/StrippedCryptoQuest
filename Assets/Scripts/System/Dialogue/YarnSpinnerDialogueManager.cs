@@ -19,6 +19,8 @@ namespace CryptoQuest.System.Dialogue
 
         [SerializeField] private UnityEvent _onDialogueCompleted;
 
+        private Yarn.Dialogue Dialogue => _dialogueRunner.Dialogue;
+
         private void OnEnable()
         {
             _playDialogueEventEvent.PlayDialogueRequested += ShowDialogue;
@@ -32,11 +34,13 @@ namespace CryptoQuest.System.Dialogue
         private void ShowDialogue(string yarnNodeName)
         {
             Debug.Log($"YarnSpinnerDialogueManager::ShowDialogue: yarnNodeName[{yarnNodeName}]");
+            if(Dialogue.IsActive) Dialogue.Stop();
             _dialogueRunner.StartDialogue(yarnNodeName);
         }
 
         public void DialogueCompleted()
         {
+            if(Dialogue.IsActive) Dialogue.Stop();
              // support cross scene
             if (_dialogueCompletedEventChannelSO != null) _dialogueCompletedEventChannelSO.RaiseEvent();
             _onDialogueCompleted.Invoke();

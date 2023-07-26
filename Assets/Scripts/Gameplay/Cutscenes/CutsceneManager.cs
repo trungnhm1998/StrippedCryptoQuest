@@ -40,7 +40,7 @@ namespace CryptoQuest.Gameplay.Cutscenes
         {
             if (_currentPlayableDirector == null)
             {
-                Debug.LogWarning("A request to pause a cutscene was received, but no cutscene is currently playing, " +
+                Debug.LogWarning("A request to pause a cutscene was received, but no playable director was previously saved, " +
                                  "probably a cutscene was played from editor, and not from the CutsceneTrigger.");
                 return;
             }

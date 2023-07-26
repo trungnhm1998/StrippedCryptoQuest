@@ -21,6 +21,9 @@ namespace CryptoQuest.Gameplay.Cutscenes.YarnSpinnerNodeControlTrack
 
         private bool _played = false;
 
+        /// <summary>
+        /// Show dialogue using YarnSpinner.
+        /// </summary>
         public override void ProcessFrame(Playable playable, FrameData info, object playerData)
         {
             if (_played)
@@ -41,13 +44,19 @@ namespace CryptoQuest.Gameplay.Cutscenes.YarnSpinnerNodeControlTrack
 #endif
         }
 
+        /// <summary>
+        /// Try to pause the timeline when the player reading the dialogue
+        /// </summary>
         public override void OnBehaviourPause(Playable playable, FrameData info)
         {
             Debug.Log("OnBehaviourPause");
-            if (!Application.isPlaying) return;
-            if (!playable.GetGraph().IsPlaying()) return;
-            if (playable.GetGraph().GetRootPlayable(0).IsDone()) return;
-            if (!_played) return;
+            if (!Application.isPlaying
+                || !playable.GetGraph().IsPlaying()
+                || playable.GetGraph().GetRootPlayable(0).IsDone()
+                || !_played)
+            {
+                return;
+            }
 
             // pause the timeline until the player finishes reading through all the dialogue (When the dialogue closes)
             if (PauseTimelineOnClipEnds)
