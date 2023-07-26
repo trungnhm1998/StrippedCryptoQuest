@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.Timeline;
 
-namespace CryptoQuest.System.CutsceneSystem.YarnSpinnerNodeControlTrack
+namespace CryptoQuest.System.CutsceneSystem.CustomTimelineTracks.YarnSpinnerNodeControlTrack
 {
     [Serializable]
     public class YarnSpinnerNodePlayableAsset : PlayableAsset, ITimelineClipAsset

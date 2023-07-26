@@ -4,7 +4,7 @@ using CryptoQuest.System.Dialogue.Events;
 using UnityEngine;
 using UnityEngine.Playables;
 
-namespace CryptoQuest.System.CutsceneSystem.YarnSpinnerNodeControlTrack
+namespace CryptoQuest.System.CutsceneSystem.CustomTimelineTracks.YarnSpinnerNodeControlTrack
 {
     [Serializable]
     public class YarnSpinnerNodePlayableBehaviour : PlayableBehaviour
