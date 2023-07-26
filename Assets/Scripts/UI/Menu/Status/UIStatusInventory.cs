@@ -26,16 +26,6 @@ namespace CryptoQuest.UI.Menu.Status
 
         private List<UIStatusMenuInventoryItem.Data> _mockDataList = new();
 
-        private void Awake()
-        {
-            // TODO: REMOVE WHEN WE HAVE REAL DATA
-            for (int i = 0; i < _itemCount; i++)
-            {
-                _mockDataList.Add(_mockData.Clone());
-            }
-            _scrollRect.Initialize(this);
-        }
-
         private void OnEnable()
         {
             _inputMediator.EnableStatusMenuInput();
@@ -51,6 +41,14 @@ namespace CryptoQuest.UI.Menu.Status
         private void ViewInventory()
         {
             _contents.SetActive(true);
+
+            // TODO: REMOVE WHEN WE HAVE REAL DATA
+            for (int i = 0; i < _itemCount; i++)
+            {
+                _mockDataList.Add(_mockData.Clone());
+            }
+
+            _scrollRect.Initialize(this);
         }
 
         #region PLUGINS 
