@@ -6,7 +6,7 @@ using IndiGames.GameplayAbilitySystem.Implementation.EffectAbility;
 using IndiGames.GameplayAbilitySystem.Implementation.EffectAbility.ScriptableObjects;
 using UnityEngine;
 
-namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Skills.CryptoQuestAbility
+namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Skills
 {
     [CreateAssetMenu(fileName = "CQ Ability", menuName = "Gameplay/Battle/Abilities/CQ Ability")]
     public class AbilitySO : EffectAbilitySO

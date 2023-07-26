@@ -1,10 +1,9 @@
-﻿using System;
-using CryptoQuest.Input;
+﻿using CryptoQuest.Input;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-namespace CryptoQuest.UI.Battle.CommandsMenu
+namespace CryptoQuest.UI.Common
 {
     public class NavigationAutoScroll : MonoBehaviour
     {

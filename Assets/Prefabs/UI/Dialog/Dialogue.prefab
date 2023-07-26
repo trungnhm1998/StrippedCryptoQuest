@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1146631108519234735}
   - component: {fileID: 7376851818600900105}
   - component: {fileID: 5943207863751523332}
-  - component: {fileID: 7546136205252735399}
+  - component: {fileID: 2138824273682724905}
   m_Layer: 5
   m_Name: Message
   m_TagString: Untagged
@@ -136,7 +136,7 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!114 &7546136205252735399
+--- !u!114 &2138824273682724905
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -172,7 +172,7 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
-        m_CallState: 1
+        m_CallState: 2
   references:
     version: 2
     RefIds: []
@@ -187,6 +187,7 @@ GameObject:
   - component: {fileID: 8660715951025677822}
   - component: {fileID: 1710249241755488675}
   - component: {fileID: 3795621083132759101}
+  - component: {fileID: 1210191043683088815}
   m_Layer: 5
   m_Name: Name
   m_TagString: Untagged
@@ -256,6 +257,46 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 0.7
   m_Text: Adam Warlock
+--- !u!114 &1210191043683088815
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1035560303283465622}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56eb0353ae6e5124bb35b17aff880f16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_StringReference:
+    m_TableReference:
+      m_TableCollectionName: 
+    m_TableEntryReference:
+      m_KeyId: 0
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  m_FormatArguments: []
+  m_UpdateString:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3795621083132759101}
+        m_TargetAssemblyTypeName: UnityEngine.UI.Text, UnityEngine.UI
+        m_MethodName: set_text
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  references:
+    version: 2
+    RefIds: []
 --- !u!1 &2409534841471916624
 GameObject:
   m_ObjectHideFlags: 0
@@ -429,9 +470,9 @@ MonoBehaviour:
   backgroundButton: {fileID: 0}
   buttonsRoot: {fileID: 0}
   _inputMediator: {fileID: 11400000, guid: 1fb61cdb72f0a484f8e4db68e2011977, type: 2}
-  _dialogueLabel: {fileID: 7546136205252735399}
+  _dialogueText: {fileID: 2138824273682724905}
+  _npcNameText: {fileID: 1210191043683088815}
   _npcNameTag: {fileID: 2409534841471916624}
-  _npcName: {fileID: 3795621083132759101}
 --- !u!114 &4332641596101518859
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1,10 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using CryptoQuest.Events.UI.Dialogs;
 using CryptoQuest.Gameplay.Quest;
 using UnityEngine;
 
-namespace CryptoQuest.UI.Dialogs
+namespace CryptoQuest.UI.Dialogs.RewardDialog
 {
     public class RewardDialogController : AbstractDialogController<UIRewardDialog>
     {
