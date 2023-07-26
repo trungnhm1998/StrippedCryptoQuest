@@ -1,5 +1,6 @@
 ﻿using CryptoQuest.Events.UI;
 using CryptoQuest.Gameplay.Quest.Dialogue;
+using CryptoQuest.Input;
 using CryptoQuest.System.Dialogue.Builder;
 using CryptoQuest.System.Dialogue.Events;
 using CryptoQuest.UI.Dialogs.Dialogue;
@@ -11,6 +12,7 @@ namespace CryptoQuest.System.Dialogue
 {
     public class DialogueManager : MonoBehaviour
     {
+        [SerializeField] private InputMediatorSO _inputMediator;
         [SerializeField] private DialogueController _gameDialogueController;
 
         [Header("Listen to")]
@@ -40,11 +42,12 @@ namespace CryptoQuest.System.Dialogue
         private void ShowDialogue(LocalizedString localizedLine)
         {
             Dialogue dialogue = A.Dialogue.WithLines(localizedLine);
-            _gameDialogueController.Show(dialogue);
+            ShowDialogue(dialogue);
         }
 
         private void ShowDialogue(IDialogueDef dialogue)
         {
+            _inputMediator.EnableDialogueInput();
             _gameDialogueController.Show(dialogue);
         }
     }

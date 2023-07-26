@@ -55,12 +55,16 @@ namespace CryptoQuest.Gameplay.Cutscenes.YarnSpinnerNodeControlTrack
                 || playable.GetGraph().GetRootPlayable(0).IsDone()
                 || !_played)
             {
+                Debug.Log("OnBehaviourPause::Skip");
                 return;
             }
 
             // pause the timeline until the player finishes reading through all the dialogue (When the dialogue closes)
             if (PauseTimelineOnClipEnds)
+            {
+                Debug.Log("OnBehaviourPause::Pause cutscene");
                 PauseTimelineEvent.RaiseEvent(true);
+            }
         }
     }
 }

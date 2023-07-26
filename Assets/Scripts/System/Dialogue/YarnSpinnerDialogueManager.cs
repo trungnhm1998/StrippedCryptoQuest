@@ -1,4 +1,5 @@
 ﻿using CryptoQuest.Gameplay.Cutscenes.Events;
+using CryptoQuest.Input;
 using CryptoQuest.System.Dialogue.Events;
 using IndiGames.Core.Events.ScriptableObjects;
 using UnityEngine;
@@ -9,6 +10,7 @@ namespace CryptoQuest.System.Dialogue
 {
     public class YarnSpinnerDialogueManager : MonoBehaviour
     {
+        [SerializeField] private InputMediatorSO _inputMediator;
         [Header("UI")]
         [SerializeField] private DialogueRunner _dialogueRunner;
 
@@ -44,6 +46,7 @@ namespace CryptoQuest.System.Dialogue
             }
 
             Debug.Log($"YarnSpinnerDialogueManager::ShowDialogue: yarnNodeName[{yarnNodeName}]");
+            _inputMediator.EnableDialogueInput();
             _dialogueRunner.StartDialogue(yarnNodeName);
         }
 

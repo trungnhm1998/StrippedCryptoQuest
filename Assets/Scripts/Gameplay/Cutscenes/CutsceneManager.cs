@@ -1,6 +1,6 @@
 ﻿using CryptoQuest.Gameplay.Cutscenes.Events;
-using IndiGames.Core.EditorTools.Attributes.ReadOnlyAttribute;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.Playables;
 
 namespace CryptoQuest.Gameplay.Cutscenes
@@ -11,6 +11,9 @@ namespace CryptoQuest.Gameplay.Cutscenes
         [SerializeField] private PlayCutsceneEvent _playCutsceneEvent;
 
         [SerializeField] private PauseCutsceneEvent _pauseCutsceneEvent;
+        
+        [Header("Raise on")]
+        [SerializeField] private UnityEvent _onCutsceneCompleted;
 
         /// <summary>
         /// There are multiple directors/cutscenes on a scene, we will try to inject to correct playing director
@@ -32,9 +35,24 @@ namespace CryptoQuest.Gameplay.Cutscenes
 
         private void PlayCutscene(PlayableDirector playableDirector)
         {
+            if (playableDirector == _currentPlayableDirector)
+            {
+                Debug.LogWarning("CutsceneManager::PlayCutscene: Trying to play the same cutscene again.");
+                return;
+            }
+
+            if (_currentPlayableDirector != null) _currentPlayableDirector.Stop();
+
             // what happens to the previous cutscene?
             _currentPlayableDirector = playableDirector;
             _currentPlayableDirector.Play();
+            _currentPlayableDirector.stopped += HandleDirectorStopped;
+        }
+
+        private void HandleDirectorStopped(PlayableDirector director)
+        {
+            _currentPlayableDirector.stopped -= HandleDirectorStopped;
+            _onCutsceneCompleted.Invoke();
         }
 
         private void PauseCutscene(bool isPaused)
