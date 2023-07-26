@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 6034734167827446154}
   - component: {fileID: -9167647409708852877}
   - component: {fileID: -3197624967880666227}
-  - component: {fileID: -2241015815570682270}
   - component: {fileID: 8325756436434363019}
+  - component: {fileID: 5903225823771986531}
   - component: {fileID: -820694552758871232}
   m_Layer: 0
   m_Name: NPC_ChildGirl
@@ -149,20 +149,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.69, y: 0.69}
   m_EdgeRadius: 0
---- !u!114 &-2241015815570682270
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1621826414909250652}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8317eb7042a89a440ba9e968d6b2d015, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _animator: {fileID: 8325756436434363019}
-  _facingDirection: 0
 --- !u!95 &8325756436434363019
 Animator:
   serializedVersion: 5
@@ -184,6 +170,21 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &5903225823771986531
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1621826414909250652}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8317eb7042a89a440ba9e968d6b2d015, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _animator: {fileID: 0}
+  _facingDirection: 0
+  _bus: {fileID: 11400000, guid: a26ff341568973e46a1d4449052d5bb0, type: 2}
 --- !u!114 &-820694552758871232
 MonoBehaviour:
   m_ObjectHideFlags: 0

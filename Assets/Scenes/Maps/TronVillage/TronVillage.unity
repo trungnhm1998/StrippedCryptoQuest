@@ -1997,7 +1997,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 607842835
   m_SortingLayer: 2
-  m_SortingOrder: 1
+  m_SortingOrder: 0
   m_Sprite: {fileID: 1802326442, guid: 597ab98a57f28bf488ba5088faf5d798, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -2247,7 +2247,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6216182945776283710}
-  - component: {fileID: 3032815040078472187}
   - component: {fileID: 10848705385225022}
   - component: {fileID: 3750759405500758815}
   - component: {fileID: 688716286923877991}
@@ -2255,6 +2254,7 @@ GameObject:
   - component: {fileID: 602926861748131228}
   - component: {fileID: 2795469439834388423}
   - component: {fileID: 1916410585}
+  - component: {fileID: 6216182945776283711}
   m_Layer: 0
   m_Name: NPC
   m_TagString: Untagged
@@ -2276,33 +2276,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _animator: {fileID: 3750759405500758815}
   _facingDirection: 0
---- !u!114 &3032815040078472187
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2764607699617987288}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ccbfbdc39cd3f8940b942c3d69572361, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _interacted:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2795469439834388423}
-        m_TargetAssemblyTypeName: CryptoQuest.Character.NPCFacingDirection, indi-games.crypto-quest
-        m_MethodName: FaceOther
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+  _bus: {fileID: 11400000, guid: a26ff341568973e46a1d4449052d5bb0, type: 2}
 --- !u!61 &3195730645512859561
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2417,6 +2391,21 @@ Transform:
   m_Father: {fileID: 1650538931}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6216182945776283711
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2764607699617987288}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ccbfbdc39cd3f8940b942c3d69572361, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _interacted:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!4 &8422142339622230532
 Transform:
   m_ObjectHideFlags: 0

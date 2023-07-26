@@ -1,21 +1,16 @@
 using CryptoQuest.Character.MonoBehaviours;
+using CryptoQuest.Gameplay;
 using UnityEngine;
 
 namespace CryptoQuest.Character
 {
     public class NPCFacingDirection : CharacterBehaviour
     {
-        private Transform _other;
-        public void FaceOther()
+        [SerializeField] private GameplayBus _bus;
+
+        public void FacePlayer()
         {
-            SetFacingDirection(_other.position - transform.position);
-        }
-        void OnTriggerEnter2D(Collider2D other)
-        {
-            if (other.CompareTag("InteractionZone") && _other == null)
-            {
-                _other = other.transform;
-            }
+            SetFacingDirection(new NpcFacingStrategy().Execute(transform.position, _bus.Hero.transform.position));
         }
     }
 }
