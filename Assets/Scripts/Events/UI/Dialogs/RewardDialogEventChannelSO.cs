@@ -3,7 +3,7 @@ using CryptoQuest.Gameplay.Quest.Dialogue.ScriptableObject;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace CryptoQuest.Events.UI
+namespace CryptoQuest.Events.UI.Dialogs
 {
     public class RewardDialogEventChannelSO : ScriptableObject
     {

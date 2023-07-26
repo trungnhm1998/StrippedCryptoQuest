@@ -5,7 +5,7 @@ using CryptoQuest.Gameplay.Quest;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace CryptoQuest.Events.UI
+namespace CryptoQuest.Events.UI.Dialogs
 {
     public class YesNoDialogEventChannelSO : ScriptableObject
     {

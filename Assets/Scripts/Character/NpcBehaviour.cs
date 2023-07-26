@@ -1,5 +1,5 @@
 using CryptoQuest.Character.MonoBehaviours;
-using CryptoQuest.Events.UI;
+using CryptoQuest.Events.UI.Dialogs;
 using CryptoQuest.Gameplay.Quest.Dialogue.ScriptableObject;
 using UnityEngine;
 
