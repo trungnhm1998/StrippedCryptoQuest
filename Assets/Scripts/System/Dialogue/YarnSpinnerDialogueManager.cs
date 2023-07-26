@@ -49,7 +49,6 @@ namespace CryptoQuest.System.Dialogue
 
         public void DialogueCompleted()
         {
-            if (Dialogue.IsActive) Dialogue.Stop();
             // support cross scene
             if (_dialogueCompletedEventChannelSO != null) _dialogueCompletedEventChannelSO.RaiseEvent();
             _onDialogueCompleted.Invoke();
