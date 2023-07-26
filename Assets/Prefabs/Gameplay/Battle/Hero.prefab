@@ -16,7 +16,6 @@ GameObject:
   - component: {fileID: 8039474876287072617}
   - component: {fileID: 3876355296964779715}
   - component: {fileID: 6729949259968414189}
-  - component: {fileID: 8220240640901020704}
   m_Layer: 0
   m_Name: Hero
   m_TagString: Untagged
@@ -144,18 +143,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _hpAttribute: {fileID: 11400000, guid: 879def46810903f46ac8b6711980571f, type: 2}
   <UnitData>k__BackingField: {fileID: 11400000, guid: 549fe8060f017d443adb6aff881f5765, type: 2}
+  _doneActionEventChannel: {fileID: 11400000, guid: 9ed5ff741b20bee4f9e8a2ade059511f, type: 2}
+  _doneShowUnitAction: {fileID: 11400000, guid: 7f17076c6f0eca9478a3985d281b54d9, type: 2}
   _heroTurnEventChannel: {fileID: 11400000, guid: 4522380f7b12a9f48a3a14b2ddb652b7, type: 2}
---- !u!114 &8220240640901020704
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2011783402802653897}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b8a81e5b3ffd7f54dace1ef4eeb63677, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _gotNewLogEventChannel: {fileID: 11400000, guid: d614e1bbd15b41b44bf5171d32575969, type: 2}
-  _unitClearLogsEventChannel: {fileID: 11400000, guid: 1844deabc064a724da24babf799bdaf7, type: 2}

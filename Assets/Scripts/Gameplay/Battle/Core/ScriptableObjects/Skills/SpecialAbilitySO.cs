@@ -4,7 +4,7 @@ using IndiGames.GameplayAbilitySystem.AbilitySystem.ScriptableObjects;
 using UnityEngine.Events;
 using UnityEngine.Localization;
 
-namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Skills.CryptoQuestAbility
+namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Skills
 {
     public class SpecialAbilitySO : AbilityScriptableObject
     {
@@ -30,7 +30,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Skills.CryptoQuestA
             EndAbility();
         }
 
-        public IEnumerator AbilityActivated()
+        public virtual IEnumerator AbilityActivated()
         {
             AbilitySO.Activated();
             yield break;

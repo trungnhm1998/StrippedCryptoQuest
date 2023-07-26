@@ -2,7 +2,6 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.Pool;
-using UnityEngine.UI;
 
 namespace CryptoQuest.UI.Battle
 {
@@ -10,7 +9,7 @@ namespace CryptoQuest.UI.Battle
     {
         [SerializeField] private TextMeshProUGUI _label;
         [SerializeField] private TextMeshProUGUI _value;
-        public Button Button;
+        private AbstractButtonInfo _abstractButtonInfo;
 
         private IObjectPool<UICommandContent> _objectPool;
 
@@ -19,21 +18,26 @@ namespace CryptoQuest.UI.Battle
             set => _objectPool = value;
         }
 
-        public override void Init(ButtonInfo info)
+        public override void Init(AbstractButtonInfo info)
         {
             _label.text = info.Name;
             _value.text = info.Value;
-            Button.onClick.AddListener(info.Callback.Invoke);
+            _abstractButtonInfo = info;
+        }
+        
+        public void HandleClick()
+        {
+            _abstractButtonInfo.HandleClick();
         }
 
-        public void ReleaseToPool()
+        private void ReleaseToPool()
         {
             _objectPool?.Release(this);
         }
 
         private void OnDisable()
         {
-           ReleaseToPool(); 
+            ReleaseToPool();
         }
     }
 }
