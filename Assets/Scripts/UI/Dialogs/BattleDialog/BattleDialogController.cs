@@ -3,6 +3,7 @@ using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Events;
 using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data;
 using IndiGames.Core.Events.ScriptableObjects;
 using UnityEngine;
+using UnityEngine.Localization;
 
 namespace CryptoQuest.UI.Dialogs.BattleDialog
 {
@@ -11,11 +12,13 @@ namespace CryptoQuest.UI.Dialogs.BattleDialog
         [Header("Listen Events")]
         [SerializeField] private BattleActionDataEventChannelSO _gotActionDataEventChannel;
         [SerializeField] private VoidEventChannelSO _doneActionEventChannel;
+        [SerializeField] private VoidEventChannelSO _endActionPhaseEventChannel;
 
         [Header("Raise Events")]
-        [SerializeField] private StringEventChannelSO _showBattleDialogEventChannel;
+        [SerializeField] private LocalizedStringEventChannelSO _showBattleDialogEventChannel;
+        [SerializeField] private VoidEventChannelSO _showNextMarkEventChannel;
 
-        private string _message;
+        private LocalizedString _localizedMessage;
         [SerializeField] private UIBattleDialog _dialog;
 
         protected override void RegisterEvents()
@@ -23,6 +26,7 @@ namespace CryptoQuest.UI.Dialogs.BattleDialog
             _showBattleDialogEventChannel.EventRaised += ShowDialog;
             _doneActionEventChannel.EventRaised += OnUnitDoneAction;
             _gotActionDataEventChannel.EventRaised += OnGotActionData;
+            _endActionPhaseEventChannel.EventRaised += CloseDialog;
         }
 
         protected override void UnregisterEvents()
@@ -30,6 +34,7 @@ namespace CryptoQuest.UI.Dialogs.BattleDialog
             _showBattleDialogEventChannel.EventRaised -= ShowDialog;
             _doneActionEventChannel.EventRaised -= OnUnitDoneAction;
             _gotActionDataEventChannel.EventRaised -= OnGotActionData;
+            _endActionPhaseEventChannel.EventRaised += CloseDialog;
         }
 
         private void Start()
@@ -40,39 +45,38 @@ namespace CryptoQuest.UI.Dialogs.BattleDialog
 
         protected override void SetupDialog(UIBattleDialog dialog)
         {
-            if (_dialog == null)
-            {
-                _dialog = dialog;
-            }
-            _dialog.SetDialogue(_message)
+            dialog.SetDialogue(_localizedMessage.GetLocalizedString())
                 .Show();
+            if (_dialog != null) return;
+            _dialog = dialog;
         }
 
-        private void ShowDialog(string dialogue)
+        private void ShowDialog(LocalizedString message)
         {
-            _message = dialogue;
+            _dialog.gameObject.SetActive(true);
+            _localizedMessage = message;
             if (_dialog != null)
             {
-                _dialog.SetDialogue(_message)
-                    .Show();
+                SetupDialog(_dialog);
                 return;
             }
             LoadAssetDialog();
         }
 
+        private void CloseDialog()
+        {
+            _dialog.Close();
+        }
+
         private void OnGotActionData(BattleActionDataSO data)
         {
-            _dialog.gameObject.SetActive(true);
-            _dialog.SetDialogue(data.Log.GetLocalizedString())
-                .Show();
+            Debug.Log($"Action log: {data.Log.GetLocalizedString()}");
+            ShowDialog(data.Log);
         }
 
         private void OnUnitDoneAction()
         {
-        }
-
-        private void OnEndActionPhase()
-        {
+            _showNextMarkEventChannel.RaiseEvent();
         }
     }
 }

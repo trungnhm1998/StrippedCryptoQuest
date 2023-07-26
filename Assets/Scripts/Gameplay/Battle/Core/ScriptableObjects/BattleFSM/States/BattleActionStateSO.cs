@@ -1,5 +1,6 @@
 using System.Collections;
 using CryptoQuest.FSM;
+using CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit;
 using IndiGames.Core.Events.ScriptableObjects;
 using UnityEngine;
 
@@ -22,9 +23,12 @@ namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.BattleFSM.States
         {
             foreach (var unit in BattleManager.BattleUnits)
             {
+                BattleManager.CurrentUnit = unit;
                 yield return unit.Execute();
             }
+            BattleManager.CurrentUnit = NullBattleUnit.Instance;
             _endActionPhaseEventChannel.RaiseEvent();
+            stateMachine.SetCurrentState(_nextState);
         }
 
         public override void OnExitState(BaseStateMachine stateMachine)

@@ -1,8 +1,6 @@
 using CryptoQuest.Input;
 using UnityEngine;
 using UnityEngine.UI;
-using CryptoQuest.Gameplay.Battle;
-using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Events;
 using DG.Tweening;
 using IndiGames.Core.Events.ScriptableObjects;
 
@@ -14,14 +12,14 @@ namespace CryptoQuest.UI.Dialogs.BattleDialog
 
         [Header("UI")]
         [SerializeField] private Text _dialogText;
-        [SerializeField] private GameObject _continueMark;
+        [SerializeField] private GameObject _nextMark;
 
         [Header("Raise Events")]
-        [SerializeField] private VoidEventChannelSO _doneShowActionEventChannel;
+        [SerializeField] private VoidEventChannelSO _doneShowDialogEvent;
 
         [Header("Listen Events")]
         [SerializeField] private VoidEventChannelSO _showNextMarkEventChannel;
-        [SerializeField] private VoidEventChannelSO _endActionPhaseEventChannel;
+        [SerializeField] private VoidEventChannelSO _closeBattleDialogEventChannel;
 
         private string _message;
 
@@ -29,27 +27,29 @@ namespace CryptoQuest.UI.Dialogs.BattleDialog
 
         private void OnEnable()
         {
+            _dialogText.text = "";
             _inputMediator.NextDialoguePressed += NextDialog;
             _showNextMarkEventChannel.EventRaised += ShowNextMark;
-            _endActionPhaseEventChannel.EventRaised += CloseDialog;
+            _closeBattleDialogEventChannel.EventRaised += CloseDialog;
         }
 
         private void OnDisable()
         {
             _inputMediator.NextDialoguePressed -= NextDialog;
             _showNextMarkEventChannel.EventRaised -= ShowNextMark;
-            _endActionPhaseEventChannel.EventRaised -= CloseDialog;
+            _closeBattleDialogEventChannel.EventRaised -= CloseDialog;
         }
 
         private void NextDialog()
         {
+            if (!_nextMark.activeSelf) return;
             _dialogText.text = "";
-            _doneShowActionEventChannel.RaiseEvent();
+            _doneShowDialogEvent.RaiseEvent();
         }
 
         private void ShowNextMark()
         {
-            _continueMark.SetActive(true);
+            _nextMark.SetActive(true);
         }
 
         private void CloseDialog()
@@ -60,7 +60,7 @@ namespace CryptoQuest.UI.Dialogs.BattleDialog
         protected override void OnBeforeShow()
         {
             base.OnBeforeShow();
-            _continueMark.SetActive(false);
+            _nextMark.SetActive(false);
             _inputMediator.EnableDialogueInput();
             _dialogText.text += $"{_message}\n";
         }
@@ -73,7 +73,6 @@ namespace CryptoQuest.UI.Dialogs.BattleDialog
 
         public override UIBattleDialog Close()
         {
-            Debug.Log($"who?");
             gameObject.SetActive(false);
             Visible = false;
             return this;

@@ -132,7 +132,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &8759938187778997364
 RectTransform:
   m_ObjectHideFlags: 0
@@ -174,10 +174,10 @@ MonoBehaviour:
   buttonsRoot: {fileID: 0}
   _inputMediator: {fileID: 11400000, guid: 1fb61cdb72f0a484f8e4db68e2011977, type: 2}
   _dialogText: {fileID: 81883292853957341}
-  _continueMark: {fileID: 4626600794888442260}
-  _doneShowActionEventChannel: {fileID: 11400000, guid: 7f17076c6f0eca9478a3985d281b54d9, type: 2}
-  _showNextMarkEventChannel: {fileID: 11400000, guid: 9ed5ff741b20bee4f9e8a2ade059511f, type: 2}
-  _endActionPhaseEventChannel: {fileID: 11400000, guid: 4116eb7df02c5cb418f0bccf9c6a8922, type: 2}
+  _nextMark: {fileID: 4626600794888442260}
+  _doneShowDialogEvent: {fileID: 11400000, guid: 7c5ea92a1adcd1a41bd62b22f8d98934, type: 2}
+  _showNextMarkEventChannel: {fileID: 11400000, guid: 9f65c4f7fd7684a4394a451b20a98549, type: 2}
+  _closeBattleDialogEventChannel: {fileID: 11400000, guid: f5e46e97818ec434993f6b47142b29ed, type: 2}
 --- !u!1 &4582801244802021442
 GameObject:
   m_ObjectHideFlags: 0
@@ -228,7 +228,7 @@ GameObject:
   - component: {fileID: 2566427080710727024}
   - component: {fileID: 4120608488301105020}
   m_Layer: 0
-  m_Name: ContinueMark
+  m_Name: NextMark
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

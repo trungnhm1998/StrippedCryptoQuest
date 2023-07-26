@@ -26,8 +26,8 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components
         [SerializeField] private VoidEventChannelSO _newTurnEventChannel;
 
         [Header("Listen Events")]
-        [SerializeField] private VoidEventChannelSO _onDialogCloseEventChannel;
         [SerializeField] private VoidEventChannelSO _sceneLoadedEventChannel;
+        [SerializeField] private VoidEventChannelSO _endActionPhaseEventChannel;
 
         public IBattleUnit CurrentUnit { get; set; } = NullBattleUnit.Instance;
         public int Turn { get; private set; }
@@ -49,13 +49,13 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components
 
         private void OnEnable()
         {
-            _onDialogCloseEventChannel.EventRaised += OnEndTurn;
+            _endActionPhaseEventChannel.EventRaised += OnEndTurn;
             _sceneLoadedEventChannel.EventRaised += StartBattle;
         }
 
         private void OnDisable()
         {
-            _onDialogCloseEventChannel.EventRaised -= OnEndTurn;
+            _endActionPhaseEventChannel.EventRaised -= OnEndTurn;
             _sceneLoadedEventChannel.EventRaised -= StartBattle;
         }
 
