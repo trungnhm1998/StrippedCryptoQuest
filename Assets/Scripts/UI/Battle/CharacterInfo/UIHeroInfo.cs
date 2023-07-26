@@ -2,11 +2,13 @@
 using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using NotImplementedException = System.NotImplementedException;
 
 namespace CryptoQuest.UI.Battle.CharacterInfo
 {
-    public class UIHeroInfo : CharacterInfoBase
+    public class UIHeroInfo : CharacterInfoBase, IDeselectHandler, ISelectHandler
     {
         [SerializeField] private AttributeScriptableObject _maxHpAttributeSO;
         [SerializeField] private AttributeScriptableObject _maxMpAttributeSO;
@@ -70,6 +72,35 @@ namespace CryptoQuest.UI.Battle.CharacterInfo
 
             if (maxValue.CurrentValue == 0) return;
             slider.value = attributeValue.CurrentValue / maxValue.CurrentValue;
+        }
+
+        protected override void OnSelected(string name)
+        {
+            var currentObject = EventSystem.current.currentSelectedGameObject;
+
+            _selectFrame.gameObject.SetActive(currentObject == gameObject);
+            _popupItemFrame.gameObject.SetActive(currentObject == gameObject);
+            _itemPopupText.text = name;
+        }
+
+        public void OnSelect(BaseEventData eventData)
+        {
+            var currentObject = EventSystem.current.currentSelectedGameObject;
+
+            _selectFrame.gameObject.SetActive(currentObject == gameObject);
+            _popupItemFrame.gameObject.SetActive(currentObject == gameObject);
+        }
+
+
+        public void OnDeselect(BaseEventData eventData)
+        {
+            _selectFrame.gameObject.SetActive(false);
+            _popupItemFrame.gameObject.SetActive(false);
+        }
+
+        public void OnCallback()
+        {
+            Debug.Log("UIHeroInfo::OnCallback");
         }
     }
 }
