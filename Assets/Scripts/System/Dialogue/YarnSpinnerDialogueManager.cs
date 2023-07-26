@@ -25,6 +25,7 @@ namespace CryptoQuest.System.Dialogue
         private void ShowDialogue(string yarnNodeName)
         {
             Debug.Log($"DialogueManager: ShowDialogue: {yarnNodeName}");
+            _dialogueRunner.StartDialogue(yarnNodeName);
         }
     }
 }
