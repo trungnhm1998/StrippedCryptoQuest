@@ -10,7 +10,7 @@ namespace CryptoQuest.Input
 {
     // TODO: Move action map interfaces to separate scriptable objects
     public class InputMediatorSO : ScriptableObject, InputActions.IMapGameplayActions, InputActions.IMenusActions,
-        InputActions.IDialoguesActions
+        InputActions.IDialoguesActions, InputActions.IHomeMenuActions
     {
         #region Events
 
@@ -28,16 +28,25 @@ namespace CryptoQuest.Input
         public event UnityAction MenuConfirmedEvent;
         public event UnityAction MenuSubmitEvent;
         public event UnityAction MenuNavigateEvent;
-        public event UnityAction MoveSelectionEvent;
         public event UnityAction MouseMoveEvent;
         public event UnityAction MenuTabPressed;
         public event UnityAction CancelEvent;
+        public event UnityAction HomeMenuSortEvent;
 
         #endregion
 
         #region Dialogue
 
         public event UnityAction NextDialoguePressed;
+
+        #endregion
+
+        #region HomeMenu
+
+        public event UnityAction NextEvent;
+        public event UnityAction PreviousEvent;
+        public event UnityAction ConfirmEvent;
+        public event UnityAction HomeMenuCancelEvent;
 
         #endregion
 
@@ -74,6 +83,7 @@ namespace CryptoQuest.Input
             _inputActions.Menus.SetCallbacks(this);
             _inputActions.MapGameplay.SetCallbacks(this);
             _inputActions.Dialogues.SetCallbacks(this);
+            _inputActions.HomeMenu.SetCallbacks(this);
         }
 
         public void EnableMenuInput()
@@ -81,6 +91,7 @@ namespace CryptoQuest.Input
             _inputActions.Menus.Enable();
             _inputActions.MapGameplay.Disable();
             _inputActions.Dialogues.Disable();
+            _inputActions.HomeMenu.Disable();
         }
 
         public void EnableDialogueInput()
@@ -88,6 +99,7 @@ namespace CryptoQuest.Input
             _inputActions.Dialogues.Enable();
             _inputActions.MapGameplay.Disable();
             _inputActions.Menus.Disable();
+            _inputActions.HomeMenu.Disable();
         }
 
         public void EnableMapGameplayInput()
@@ -96,6 +108,15 @@ namespace CryptoQuest.Input
             _inputActions.Menus.Disable();
             _inputActions.MapGameplay.Enable();
             _inputActions.Dialogues.Disable();
+            _inputActions.HomeMenu.Disable();
+        }
+
+        public void EnableHomeMenuInput()
+        {
+            _inputActions.HomeMenu.Enable();
+            _inputActions.Dialogues.Disable();
+            _inputActions.MapGameplay.Disable();
+            _inputActions.Menus.Disable();
         }
 
         #endregion
@@ -106,8 +127,8 @@ namespace CryptoQuest.Input
 
         private void GameplayRemoveMove(Vector2 direction)
         {
-            _inputCached.Remove(direction);  
-            
+            _inputCached.Remove(direction);
+
             if (_inputCached.Count <= 0)
             {
                 MoveEvent?.Invoke(Vector3.zero);
@@ -181,11 +202,6 @@ namespace CryptoQuest.Input
 
         #region MenuActions
 
-        public void OnMoveSelection(InputAction.CallbackContext context)
-        {
-            if (context.performed) MoveSelectionEvent?.Invoke();
-        }
-
         public void OnNavigate(InputAction.CallbackContext context)
         {
             if (context.performed) MenuNavigateEvent?.Invoke();
@@ -222,6 +238,11 @@ namespace CryptoQuest.Input
             if (context.phase == InputActionPhase.Performed) MouseMoveEvent?.Invoke();
         }
 
+        public void OnHomeMenuEnableSort(InputAction.CallbackContext context)
+        {
+            if (context.performed) HomeMenuSortEvent?.Invoke();
+        }
+
         #endregion
 
         #region Dialogue
@@ -234,6 +255,31 @@ namespace CryptoQuest.Input
         public void OnEscape(InputAction.CallbackContext context)
         {
             Debug.LogWarning("Escape pressed, but not implemented");
+        }
+
+
+        #endregion
+
+        #region HomeMenu
+
+        public void OnNext(InputAction.CallbackContext context)
+        {
+            if (context.performed) NextEvent?.Invoke();
+        }
+
+        public void OnPrevious(InputAction.CallbackContext context)
+        {
+            if (context.performed) PreviousEvent?.Invoke();
+        }
+
+        public void OnConfirmSelect(InputAction.CallbackContext context)
+        {
+            if (context.performed) ConfirmEvent?.Invoke();
+        }
+        
+        public void OnHomeMenuCancel(InputAction.CallbackContext context)
+        {
+            if (context.performed) HomeMenuCancelEvent?.Invoke();
         }
 
         #endregion
