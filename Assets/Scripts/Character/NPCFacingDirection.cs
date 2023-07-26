@@ -5,16 +5,16 @@ namespace CryptoQuest.Character
 {
     public class NPCFacingDirection : CharacterBehaviour
     {
-        private HeroBehaviour _heroFacingDirection;
-        public void NPCInteract()
+        private Transform _other;
+        public void FaceOther()
         {
-            SetFacingDirection(_heroFacingDirection.gameObject.transform.position - transform.position);
+            SetFacingDirection(_other.position - transform.position);
         }
         void OnTriggerEnter2D(Collider2D other)
         {
-            if (other.CompareTag("InteractionZone") && _heroFacingDirection == null)
+            if (other.CompareTag("InteractionZone") && _other == null)
             {
-                _heroFacingDirection = other.GetComponentInParent<HeroBehaviour>();
+                _other = other.transform;
             }
         }
     }

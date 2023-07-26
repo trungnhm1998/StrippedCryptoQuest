@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3895722320467637079}
   - component: {fileID: 2144551768439279913}
   - component: {fileID: -6548792483828499691}
+  - component: {fileID: -4108403830288177000}
   m_Layer: 0
   m_Name: NPC_Fairie_Orange
   m_TagString: Untagged
@@ -97,5 +98,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ccbfbdc39cd3f8940b942c3d69572361, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _dialogue: {fileID: 11400000, guid: 338ee1159513c674d8c0ffcb9de8b6d9, type: 2}
-  _dialogEventChannel: {fileID: 11400000, guid: 5ea06a7649747af4aaa3d444b3ab8a99, type: 2}
+  _interacted:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &-4108403830288177000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3879404727733781920}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9e07f409ddb4fd0a9e1ab4046463478, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _dialogueLine:
+    m_TableReference:
+      m_TableCollectionName: GUID:4be45ea04057b7b4c8f80bc12990e0f8
+    m_TableEntryReference:
+      m_KeyId: 395938514145280
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  _playLocalizedLineEventEvent: {fileID: 11400000, guid: a5c02db9f0a54854080e16f16a2ba339, type: 2}
+  references:
+    version: 2
+    RefIds: []
