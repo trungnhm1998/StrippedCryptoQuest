@@ -1,4 +1,5 @@
 ﻿using CryptoQuest.Gameplay.Cutscenes.Events;
+using IndiGames.Core.EditorTools.Attributes.ReadOnlyAttribute;
 using UnityEngine;
 using UnityEngine.Playables;
 
@@ -26,7 +27,7 @@ namespace CryptoQuest.Gameplay.Cutscenes
         private void OnDisable()
         {
             _playCutsceneEvent.PlayCutsceneRequested -= PlayCutscene;
-            _pauseCutsceneEvent.PauseCutsceneRequested += PauseCutscene;
+            _pauseCutsceneEvent.PauseCutsceneRequested -= PauseCutscene;
         }
 
         private void PlayCutscene(PlayableDirector playableDirector)
@@ -40,8 +41,9 @@ namespace CryptoQuest.Gameplay.Cutscenes
         {
             if (_currentPlayableDirector == null)
             {
-                Debug.LogWarning("A request to pause a cutscene was received, but no playable director was previously saved, " +
-                                 "probably a cutscene was played from editor, and not from the CutsceneTrigger.");
+                Debug.LogWarning(
+                    "A request to pause a cutscene was received, but no playable director was previously saved, " +
+                    "probably a cutscene was played from editor, and not from the CutsceneTrigger.");
                 return;
             }
 
