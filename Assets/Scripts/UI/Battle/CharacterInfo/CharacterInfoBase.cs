@@ -29,8 +29,15 @@ namespace CryptoQuest.UI.Battle.CharacterInfo
             Setup();
         }
 
+        public virtual void ShowSelected(string name)
+        {
+            OnSelected(name);
+        }
+
         protected abstract void Setup();
 
         protected abstract void OnHPChanged(AttributeScriptableObject.AttributeEventArgs args);
+
+        protected abstract void OnSelected(string name);
     }
 }
