@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using CryptoQuest.Gameplay.Quest;
 using CryptoQuest.Input;
-using CryptoQuest.UI.Dialogs.BattleDialog;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Localization;

@@ -2,6 +2,7 @@ using System.Collections;
 using CryptoQuest.FSM;
 using IndiGames.Core.Events.ScriptableObjects;
 using UnityEngine;
+using CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit;
 
 namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.BattleFSM.States
 {
@@ -25,7 +26,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.BattleFSM.States
                 BattleManager.CurrentUnit = unit;
                 yield return unit.Prepare();
             }
-            BattleManager.CurrentUnit = null;
+            BattleManager.CurrentUnit = NullBattleUnit.Instance;
             stateMachine.SetCurrentState(_nextState);
             _endStrategyPhaseEventChannel.RaiseEvent();
         }
