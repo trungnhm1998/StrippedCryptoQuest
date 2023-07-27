@@ -4,6 +4,7 @@ using CryptoQuest.Input;
 using IndiGames.Core.Events.ScriptableObjects;
 using PolyAndCode.UI;
 using UnityEngine;
+using UnityEngine.Serialization;
 using NotImplementedException = System.NotImplementedException;
 
 namespace CryptoQuest.UI.Menu.Status
@@ -13,7 +14,10 @@ namespace CryptoQuest.UI.Menu.Status
         [Header("Configs")]
         [SerializeField] private RecyclableScrollRect _scrollRect;
         [SerializeField] private InputMediatorSO _inputMediator;
+        
+        [Header("Events")]
         [SerializeField] private VoidEventChannelSO _confirmSelectEquipmentSlotEvent;
+        [SerializeField] private VoidEventChannelSO _turnOffInventoryEvent;
 
         // TODO: REMOVE WHEN WE HAVE REAL DATA
         #region MOCK
@@ -31,14 +35,14 @@ namespace CryptoQuest.UI.Menu.Status
         {
             _inputMediator.EnableStatusMenuInput();
             _confirmSelectEquipmentSlotEvent.EventRaised += ViewInventory;
-            _inputMediator.StatusMenuCancelEvent += TurnOffInventory;
+            _inputMediator.StatusMenuCancelEvent += OnTurnOffInventory;
         }
 
         private void OnDisable()
         {
             _inputMediator.EnableStatusMenuInput();
             _confirmSelectEquipmentSlotEvent.EventRaised -= ViewInventory;
-            _inputMediator.StatusMenuCancelEvent -= TurnOffInventory;
+            _inputMediator.StatusMenuCancelEvent -= OnTurnOffInventory;
         }
 
         private void ViewInventory()
@@ -54,8 +58,9 @@ namespace CryptoQuest.UI.Menu.Status
             _scrollRect.Initialize(this);
         }
 
-        private void TurnOffInventory()
+        private void OnTurnOffInventory()
         {
+            _turnOffInventoryEvent.RaiseEvent();
             _contents.SetActive(false);
         }
 
