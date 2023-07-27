@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace CryptoQuest.UI.Menu.Home
 {
-    public class UIHomeMenu : MonoBehaviour
+    public class UIHomeMenu : UIMenuPanel
     {
         [SerializeField] private List<UICharacterInfo> _characterSlots;
         [SerializeField] private PartyManagerMockDataSO _partyManagerMockData;

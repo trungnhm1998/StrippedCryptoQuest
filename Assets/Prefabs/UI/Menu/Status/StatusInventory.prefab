@@ -127,6 +127,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _scrollRect: {fileID: 8155279374806228660}
+  _autoScrollRect: {fileID: 6731987565504366104}
   _inputMediator: {fileID: 11400000, guid: 1fb61cdb72f0a484f8e4db68e2011977, type: 2}
   _confirmSelectEquipmentSlotEvent: {fileID: 11400000, guid: dae200ac866200044966c3d187f1b544, type: 2}
   _turnOffInventoryEvent: {fileID: 11400000, guid: 3110effe41d6f4f4182aa26a98a5489c, type: 2}
@@ -134,14 +135,17 @@ MonoBehaviour:
   _mockData:
     Name:
       m_TableReference:
-        m_TableCollectionName: GUID:f4555d339f9b76141bffa3a6a012a01a
+        m_TableCollectionName: GUID:508b08c83ae0ad14e96ae9a3a5974870
       m_TableEntryReference:
-        m_KeyId: 1428073795584
+        m_KeyId: 1664661901312
         m_Key: 
       m_FallbackState: 0
       m_WaitForCompletion: 0
       m_LocalVariables: []
   _contents: {fileID: 1719733815256641558}
+  _currentRectTransform: {fileID: 4474885853621604057}
+  _parentRectTransform: {fileID: 6999474618689601451}
+  _itemRectTransform: {fileID: 1252632200816518795, guid: ecfa62a89a4fe574ca5451e62de6e33b, type: 3}
   references:
     version: 2
     RefIds: []
@@ -180,7 +184,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 391.5503}
+  m_SizeDelta: {x: 17, y: 390}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &5146238977475049260
 MonoBehaviour:
@@ -599,7 +603,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 8362816908534630193}
   m_Direction: 0
   m_Value: 0
-  m_Size: 1
+  m_Size: 0.9758865
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -616,6 +620,7 @@ GameObject:
   - component: {fileID: 5771418389216681351}
   - component: {fileID: 1004747627027648404}
   - component: {fileID: 8155279374806228660}
+  - component: {fileID: 6731987565504366104}
   m_Layer: 5
   m_Name: Items
   m_TagString: Untagged
@@ -643,8 +648,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -48.982}
-  m_SizeDelta: {x: 705, y: 391.04}
+  m_AnchoredPosition: {x: 0, y: -50}
+  m_SizeDelta: {x: 705, y: 390}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5771418389216681351
 CanvasRenderer:
@@ -701,7 +706,7 @@ MonoBehaviour:
   m_Vertical: 1
   m_MovementType: 2
   m_Elasticity: 0.1
-  m_Inertia: 0
+  m_Inertia: 1
   m_DecelerationRate: 0.135
   m_ScrollSensitivity: 1
   m_Viewport: {fileID: 6999474618689601451}
@@ -731,6 +736,23 @@ MonoBehaviour:
   SelfInitialize: 0
   Direction: 0
   _segments: 0
+--- !u!114 &6731987565504366104
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3956028058936693867}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46c403e4c65e1e44888140f1ee8d8cd2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _viewportValueAbove: 1.3
+  _viewportValueBelow: 4.3
+  _templateScrollRect: {fileID: 8155279374806228660}
+  _templateViewportTransform: {fileID: 6999474618689601451}
+  ContentRectTransform: {fileID: 4474885853621604057}
 --- !u!1 &4051713387265643742
 GameObject:
   m_ObjectHideFlags: 0
@@ -1047,7 +1069,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 2245667060266386426}
   m_Direction: 2
   m_Value: 1
-  m_Size: 0.9552796
+  m_Size: 0.9564102
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -1086,7 +1108,7 @@ RectTransform:
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 0.9758865, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -1766,7 +1788,7 @@ RectTransform:
   m_Father: {fileID: 5585898681345102077}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.04472041}
+  m_AnchorMin: {x: 0, y: 0.04358977}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using CryptoQuest.Input;
+using CryptoQuest.Menu;
 using IndiGames.Core.Events.ScriptableObjects;
 using UnityEngine;
 using UnityEngine.UI;
@@ -10,6 +11,8 @@ namespace CryptoQuest.UI.Menu
 {
     public class UIMainMenu : MonoBehaviour
     {
+        [SerializeField] private MenuSelectionHandler _selectionHandler;
+
         [Header("Configs")]
         [SerializeField] private InputMediatorSO _inputMediator;
 
@@ -18,7 +21,14 @@ namespace CryptoQuest.UI.Menu
 
         [Header("Game Components")]
         [SerializeField] private GameObject _contents;
+
         [SerializeField] private Button _defaultSelectMenu;
+
+        // TODO: DEBUG, REMOVE!
+        private void Start()
+        {
+            _inputMediator.EnableMapGameplayInput();
+        }
 
         private void OnEnable()
         {
@@ -38,7 +48,7 @@ namespace CryptoQuest.UI.Menu
         {
             EnableInputs();
             _contents.SetActive(true);
-            _defaultSelectMenu.Select();
+            _selectionHandler.UpdateSelection(_defaultSelectMenu.gameObject);
         }
 
         private void Close()

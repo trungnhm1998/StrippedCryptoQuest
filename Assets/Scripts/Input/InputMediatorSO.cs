@@ -58,8 +58,9 @@ namespace CryptoQuest.Input
         public event UnityAction EnableChangeEquipmentModeEvent;
         public event UnityAction GoBelowEvent;
         public event UnityAction GoAboveEvent;
-        public event UnityAction ConfirmSelectEquipmentSlotEvent;
+        public event UnityAction StatusMenuConfirmSelectEvent;
         public event UnityAction StatusMenuCancelEvent;
+        public event UnityAction StatusMenuNavigateEvent;
 
         #endregion
 
@@ -334,14 +335,19 @@ namespace CryptoQuest.Input
             if (context.performed) GoAboveEvent?.Invoke();
         }
         
-        public void OnConfirmSelectEquipmentSlot(InputAction.CallbackContext context)
+        public void OnStatusMenuConfirmSelect(InputAction.CallbackContext context)
         {
-            if (context.performed) ConfirmSelectEquipmentSlotEvent?.Invoke();
+            if (context.performed) StatusMenuConfirmSelectEvent?.Invoke();
         }
 
         public void OnStatusMenuCancel(InputAction.CallbackContext context)
         {
             if (context.performed) StatusMenuCancelEvent?.Invoke();
+        }
+
+        void InputActions.IStatusMenuActions.OnNavigate(InputAction.CallbackContext context)
+        {
+            if (context.performed) StatusMenuNavigateEvent?.Invoke();
         }
 
         #endregion

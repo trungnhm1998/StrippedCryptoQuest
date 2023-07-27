@@ -88,7 +88,7 @@ namespace CryptoQuest.UI.Menu.Status
             SelectEquipmentSlot();
         }
 
-        private void OnConfirmSelect()
+        private void OnStatusMenuConfirmSelect()
         {
             _confirmSelectEquipmentSlotEvent.RaiseEvent();
             _navigations.SetActive(false);
@@ -99,14 +99,14 @@ namespace CryptoQuest.UI.Menu.Status
         {
             _inputMediator.GoBelowEvent += GoToBelowSlot;
             _inputMediator.GoAboveEvent += GoToAboveSlot;
-            _inputMediator.ConfirmSelectEquipmentSlotEvent += OnConfirmSelect;
+            _inputMediator.StatusMenuConfirmSelectEvent += OnStatusMenuConfirmSelect;
         }
         
         private void UnregisterChangeEquipmentInputEvents()
         {
             _inputMediator.GoBelowEvent -= GoToBelowSlot;
             _inputMediator.GoAboveEvent -= GoToAboveSlot;
-            _inputMediator.ConfirmSelectEquipmentSlotEvent -= OnConfirmSelect;
+            _inputMediator.StatusMenuConfirmSelectEvent -= OnStatusMenuConfirmSelect;
         }
     }
 }

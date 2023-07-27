@@ -9,9 +9,9 @@ namespace CryptoQuest.Menu
     public class MenuSelectionHandler : MonoBehaviour
     {
         [SerializeField] private InputMediatorSO _inputMediator;
-        [SerializeField][ReadOnly] private GameObject _defaultSelection;
-        [SerializeField][ReadOnly] private GameObject _currentSelection;
-        [SerializeField][ReadOnly] private GameObject _mouseSelection;
+        [SerializeField] [ReadOnly] private GameObject _defaultSelection;
+        [SerializeField] [ReadOnly] private GameObject _currentSelection;
+        [SerializeField] [ReadOnly] private GameObject _mouseSelection;
 
         private void OnEnable()
         {
@@ -37,7 +37,7 @@ namespace CryptoQuest.Menu
         /// </summary>
         private IEnumerator SelectDefault()
         {
-            yield return new WaitForSeconds(.03f); // Necessary wait otherwise the highlight won't show up
+            yield return null; // Necessary wait otherwise the highlight won't show up
 
             if (_defaultSelection != null)
                 UpdateSelection(_defaultSelection);
@@ -110,7 +110,8 @@ namespace CryptoQuest.Menu
         /// <param name="UIElement"></param>
         public void UpdateSelection(GameObject UIElement)
         {
-            if ((UIElement.GetComponent<MultiInputSelectableElement>() != null) || (UIElement.GetComponent<MultiInputButton>() != null))
+            if ((UIElement.GetComponent<MultiInputSelectableElement>() != null) ||
+                (UIElement.GetComponent<MultiInputButton>() != null))
             {
                 _mouseSelection = UIElement;
                 _currentSelection = UIElement;
@@ -118,16 +119,16 @@ namespace CryptoQuest.Menu
         }
 
         // Debug
-         // private void OnGUI()
-         // {
-        	//  	GUILayout.Box($"_currentSelection: {(_currentSelection != null ? _currentSelection.name : "null")}");
-        	//  	GUILayout.Box($"_mouseSelection: {(_mouseSelection != null ? _mouseSelection.name : "null")}");
-         // }
+        // private void OnGUI()
+        // {
+        //  	GUILayout.Box($"_currentSelection: {(_currentSelection != null ? _currentSelection.name : "null")}");
+        //  	GUILayout.Box($"_mouseSelection: {(_mouseSelection != null ? _mouseSelection.name : "null")}");
+        // }
         private void Update()
         {
-            if ((EventSystem.current != null) && (EventSystem.current.currentSelectedGameObject == null) && (_currentSelection != null))
+            if ((EventSystem.current != null) && (EventSystem.current.currentSelectedGameObject == null) &&
+                (_currentSelection != null))
             {
-
                 EventSystem.current.SetSelectedGameObject(_currentSelection);
             }
         }

@@ -35,11 +35,6 @@ namespace CryptoQuest.UI.Menu.Home
 
         private int _indexHolder;
 
-        private void Awake()
-        {
-            _inputMediator.EnableMenuInput();
-        }
-
         private void OnEnable()
         {
             RegisterSortModeEvent();
