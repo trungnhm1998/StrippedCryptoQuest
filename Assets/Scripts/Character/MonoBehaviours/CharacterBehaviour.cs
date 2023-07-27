@@ -1,4 +1,3 @@
-using System;
 using IndiGames.Core.EditorTools.Attributes.ReadOnlyAttribute;
 using UnityEngine;
 
@@ -8,6 +7,16 @@ namespace CryptoQuest.Character.MonoBehaviours
     {
         [SerializeField] private Animator _animator;
 
+        private Animator _animatorComponent
+        {
+            get
+            {
+                if (_animator == null)
+                    _animator = GetComponent<Animator>();
+                return _animator;
+            }
+        }
+
         public enum EFacingDirection
         {
             South = 0,
@@ -16,12 +25,11 @@ namespace CryptoQuest.Character.MonoBehaviours
             East = 3,
         }
 
-        [SerializeField, ReadOnly] private EFacingDirection _facingDirection = EFacingDirection.South;
-        public EFacingDirection FacingDirection => _facingDirection;
+        [SerializeField, ReadOnly] protected EFacingDirection _facingDirection = EFacingDirection.South;
 
         public virtual bool IsWalking
         {
-            set => _animator.SetBool(AnimIsWalking, value);
+            set => _animatorComponent.SetBool(AnimIsWalking, value);
         }
 
         private static readonly int AnimVelocityX = Animator.StringToHash("InputX");
@@ -31,22 +39,22 @@ namespace CryptoQuest.Character.MonoBehaviours
         public void SetFacingDirection(EFacingDirection facingDirection)
         {
             _facingDirection = facingDirection;
-            _animator.SetFloat(AnimVelocityX, 0);
-            _animator.SetFloat(AnimVelocityY, 0);
+            _animatorComponent.SetFloat(AnimVelocityX, 0);
+            _animatorComponent.SetFloat(AnimVelocityY, 0);
 
             switch (_facingDirection)
             {
                 case EFacingDirection.South:
-                    _animator.SetFloat(AnimVelocityY, -1);
+                    _animatorComponent.SetFloat(AnimVelocityY, -1);
                     break;
                 case EFacingDirection.West:
-                    _animator.SetFloat(AnimVelocityX, -1);
+                    _animatorComponent.SetFloat(AnimVelocityX, -1);
                     break;
                 case EFacingDirection.North:
-                    _animator.SetFloat(AnimVelocityY, 1);
+                    _animatorComponent.SetFloat(AnimVelocityY, 1);
                     break;
                 case EFacingDirection.East:
-                    _animator.SetFloat(AnimVelocityX, 1);
+                    _animatorComponent.SetFloat(AnimVelocityX, 1);
                     break;
             }
         }
@@ -54,9 +62,10 @@ namespace CryptoQuest.Character.MonoBehaviours
         public virtual void SetFacingDirection(Vector2 velocity)
         {
             if (velocity == Vector2.zero) return;
+            velocity = velocity.normalized;
 
-            _animator.SetFloat(AnimVelocityX, velocity.x);
-            _animator.SetFloat(AnimVelocityY, velocity.y);
+            _animatorComponent.SetFloat(AnimVelocityX, velocity.x);
+            _animatorComponent.SetFloat(AnimVelocityY, velocity.y);
 
             switch (velocity)
             {

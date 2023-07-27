@@ -20,7 +20,8 @@ namespace CryptoQuestEditor
                 GUILayout.BeginHorizontal();
 
                 GUILayout.Label("Map path object");
-                _object = EditorGUILayout.ObjectField(_object, typeof(MapPathSO)) as MapPathSO;
+                // TODO: make it dropdown
+                _object = EditorGUILayout.ObjectField(_object, typeof(MapPathSO)) as MapPathSO; // TODO: use allowSceneObjects
                 GUILayout.EndHorizontal();
             }
             MapPathEventChannelSO eventSO = target as MapPathEventChannelSO;
