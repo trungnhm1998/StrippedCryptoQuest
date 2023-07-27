@@ -5,14 +5,13 @@ using IndiGames.Core.Events.ScriptableObjects;
 using UnityEngine;
 using CryptoQuest.GameHandler;
 
-namespace CryptoQuest.Gameplay.Battle.Core.Components.ActionVFXHandler
+namespace CryptoQuest.Gameplay.Battle.Core.Components.ActionVFX
 {
-    public class ActionVFXHandler : MonoBehaviour
+    public class ActionVFXController : MonoBehaviour
     {
         [Header("Listen Events")]
         [SerializeField] private BattleActionDataEventChannelSO _gotActionDataEventChannel;
         [SerializeField] private VoidEventChannelSO _doneActionEventChannel;
-        [SerializeField] private VoidEventChannelSO _endActionPhaseEventChannel;
 
         [Header("Raise Events")]
         [SerializeField] private LocalizedStringEventChannelSO _showBattleDialogEventChannel;

@@ -1,14 +1,14 @@
 using CryptoQuest.GameHandler;
 using System;
 
-namespace CryptoQuest.Gameplay.Battle.Core.Components.ActionVFXHandler
+namespace CryptoQuest.Gameplay.Battle.Core.Components.ActionVFX
 {
     public class DoneActionHandler : GameHandler<object>
     {
         public Action DoneAction;
-        private ActionVFXHandler _actionVFXHandler;
+        private ActionVFXController _actionVFXHandler;
 
-        public DoneActionHandler(ActionVFXHandler handler)
+        public DoneActionHandler(ActionVFXController handler)
         {
             _actionVFXHandler = handler;
         }

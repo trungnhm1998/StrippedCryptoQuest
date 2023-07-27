@@ -6,7 +6,7 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 using System;
 using UnityEngine.Localization;
 
-namespace CryptoQuest.Gameplay.Battle.Core.Components.ActionVFXHandler
+namespace CryptoQuest.Gameplay.Battle.Core.Components.ActionVFX
 {
     public class LogAfterVFXHandler : GameHandler<object>
     {
@@ -25,13 +25,16 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components.ActionVFXHandler
                 OnEffectComplete();
                 return;
             }
-            _actionData.VFXPrefab.InstantiateAsync(Vector3.zero, Quaternion.identity).Completed += VFXPrefabAssetLoaded;
+            var target = _actionData.Target;
+            var vfxPos = (target == null) ? Vector3.zero : target.transform.position;
+            _actionData.VFXPrefab.InstantiateAsync(vfxPos, Quaternion.identity).Completed += VFXPrefabAssetLoaded;
         }
 
-        private void VFXPrefabAssetLoaded(AsyncOperationHandle<GameObject> gameObjectAsyncOps)
+        private void VFXPrefabAssetLoaded(AsyncOperationHandle<GameObject> handle)
         {
-            var vfxObject = gameObjectAsyncOps.Result;
+            var vfxObject = handle.Result;
             if (!vfxObject.TryGetComponent<BattleVFXBehaviour>(out var vfxBehaviour)) return;
+            vfxBehaviour.Init(_actionData);
             vfxBehaviour.CompleteVFX += OnEffectComplete;
         }
 
