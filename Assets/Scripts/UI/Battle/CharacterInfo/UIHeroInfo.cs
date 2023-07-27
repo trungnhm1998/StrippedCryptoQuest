@@ -1,12 +1,15 @@
-﻿using IndiGames.GameplayAbilitySystem.AttributeSystem;
+﻿using System.Collections;
+using IndiGames.GameplayAbilitySystem.AttributeSystem;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace CryptoQuest.UI.Battle.CharacterInfo
 {
-    public class UIHeroInfo : CharacterInfoBase
+    public class UIHeroInfo : CharacterInfoBase, IDeselectHandler, ISelectHandler
     {
         [SerializeField] private AttributeScriptableObject _maxHpAttributeSO;
         [SerializeField] private AttributeScriptableObject _maxMpAttributeSO;
@@ -23,6 +26,7 @@ namespace CryptoQuest.UI.Battle.CharacterInfo
         [SerializeField] private Image _popupItemFrame;
         [SerializeField] protected Image _characterIcon;
         [SerializeField] private TextMeshProUGUI _itemPopupText;
+        [SerializeField] private Button _button;
 
         protected override void OnEnable()
         {
@@ -70,6 +74,44 @@ namespace CryptoQuest.UI.Battle.CharacterInfo
 
             if (maxValue.CurrentValue == 0) return;
             slider.value = attributeValue.CurrentValue / maxValue.CurrentValue;
+        }
+
+        private bool IsCurrentlySelected => EventSystem.current.currentSelectedGameObject == gameObject &&
+                                            _button.interactable;
+
+        protected override void OnSelected(string name)
+        {
+            _button.interactable = true;
+
+            _selectFrame.gameObject.SetActive(IsCurrentlySelected);
+            _popupItemFrame.gameObject.SetActive(IsCurrentlySelected);
+
+            _itemPopupText.text = name;
+        }
+
+        public void OnSelect(BaseEventData eventData)
+        {
+            if (!_button.interactable) return;
+
+            _selectFrame.gameObject.SetActive(true);
+            _popupItemFrame.gameObject.SetActive(true);
+        }
+
+
+        public void OnDeselect(BaseEventData eventData)
+        {
+            _selectFrame.gameObject.SetActive(false);
+            _popupItemFrame.gameObject.SetActive(false);
+        }
+
+        public void OnClicked()
+        {
+            Debug.Log("UIHeroInfo::OnCallback");
+        }
+
+        public void SetButtonActive(bool isActive)
+        {
+            _button.interactable = isActive;
         }
     }
 }
