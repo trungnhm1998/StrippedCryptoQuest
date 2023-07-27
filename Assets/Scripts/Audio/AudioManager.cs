@@ -1,5 +1,4 @@
-﻿using System;
-using CryptoQuest.Audio.AudioData;
+﻿using CryptoQuest.Audio.AudioData;
 using CryptoQuest.Audio.SoundEmitters;
 using IndiGames.Core.Events.ScriptableObjects;
 using UnityEngine;
@@ -135,20 +134,20 @@ namespace CryptoQuest.Audio
             return true;
         }
 
-        private AudioCueKey PlayBackgroundMusic(AudioCueSO audiocue, AudioConfigurationSO audioconfiguration)
+        private AudioCueKey PlayBackgroundMusic(AudioCueSO audioCue, AudioConfigurationSO audioConfiguration)
         {
             float fadeDuration = 2f;
             float startTime = 0f;
 
             if (IsAudioPlaying())
             {
-                AudioClip musicToPlay = audiocue.GetClips()[0];
+                AudioClip musicToPlay = audioCue.GetClips()[0];
                 if (_musicSoundEmitter.GetClip() == musicToPlay) return AudioCueKey.Invalid;
                 startTime = _musicSoundEmitter.FadeMusicOut(fadeDuration);
             }
 
             _musicSoundEmitter = _pool.Request();
-            _musicSoundEmitter.FadeMusicIn(audiocue.GetClips()[0], audioconfiguration, fadeDuration, startTime);
+            _musicSoundEmitter.FadeMusicIn(audioCue.GetClips()[0], audioConfiguration, fadeDuration, startTime);
             _musicSoundEmitter.OnSoundFinishedPlaying += OnSoundFinishedPlaying;
 
             return AudioCueKey.Invalid;
@@ -162,11 +161,20 @@ namespace CryptoQuest.Audio
             return true;
         }
 
-        private void ChangeMasterVolume(float value) { }
+        private void ChangeMasterVolume(float value)
+        {
+            Debug.Log($"Change master volume: {value}");
+        }
 
-        private void ChangeBackgroundMusicVolume(float value) { }
+        private void ChangeBackgroundMusicVolume(float value)
+        {
+            Debug.Log($"Change bg music volume: {value}");
+        }
 
-        private void ChangeSfxVolume(float value) { }
+        private void ChangeSfxVolume(float value)
+        {
+            Debug.Log($"Change sfx  volume: {value}");
+        }
 
         private void OnSoundFinishedPlaying(SoundEmitter soundEmitter)
         {

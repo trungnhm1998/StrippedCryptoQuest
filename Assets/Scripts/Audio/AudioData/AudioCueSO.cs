@@ -11,14 +11,14 @@ namespace CryptoQuest.Audio.AudioData
         public AudioClip[] GetClips()
         {
             int numberOfClips = _audioClipGroups.Length;
-            AudioClip[] resultingClips = new AudioClip[numberOfClips];
+            AudioClip[] clipsResult = new AudioClip[numberOfClips];
 
             for (int i = 0; i < numberOfClips; i++)
             {
-                resultingClips[i] = _audioClipGroups[i].GetNextClip();
+                clipsResult[i] = _audioClipGroups[i].GetNextClip();
             }
 
-            return resultingClips;
+            return clipsResult;
         }
     }
 }

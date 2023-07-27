@@ -9,7 +9,7 @@ namespace CryptoQuest.Audio.AudioData
         public int Value;
         public AudioCueSO AudioCue;
 
-        public AudioCueKey(int value, AudioCueSO audioCue)
+        public AudioCueKey(int value, AudioCueSO audioCue = null)
         {
             Value = value;
             AudioCue = audioCue;
