@@ -1324,6 +1324,15 @@ namespace CryptoQuest.Input
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""StatusMenuCancel"",
+                    ""type"": ""Button"",
+                    ""id"": ""09cd25d4-4178-40db-9760-2364f22a4f27"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -1363,7 +1372,7 @@ namespace CryptoQuest.Input
                 {
                     ""name"": """",
                     ""id"": ""6f623e3c-0bac-4568-b604-7065cd2fae3a"",
-                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""path"": ""<Gamepad>/dpad/down"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
@@ -1396,7 +1405,7 @@ namespace CryptoQuest.Input
                 {
                     ""name"": """",
                     ""id"": ""996465c2-8ea9-4da8-87d6-84dfc3a1101a"",
-                    ""path"": ""<Gamepad>/buttonNorth"",
+                    ""path"": ""<Gamepad>/dpad/right"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
@@ -1445,6 +1454,28 @@ namespace CryptoQuest.Input
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
                     ""action"": ""ConfirmSelectEquipmentSlot"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""45cc7b47-a732-446b-8faa-df9a855a695e"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""MnK"",
+                    ""action"": ""StatusMenuCancel"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""375d1dd1-a2f5-43f4-b7ea-860b90aaffbc"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""StatusMenuCancel"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1519,6 +1550,7 @@ namespace CryptoQuest.Input
             m_StatusMenu_GoBelow = m_StatusMenu.FindAction("GoBelow", throwIfNotFound: true);
             m_StatusMenu_GoAbove = m_StatusMenu.FindAction("GoAbove", throwIfNotFound: true);
             m_StatusMenu_ConfirmSelectEquipmentSlot = m_StatusMenu.FindAction("ConfirmSelectEquipmentSlot", throwIfNotFound: true);
+            m_StatusMenu_StatusMenuCancel = m_StatusMenu.FindAction("StatusMenuCancel", throwIfNotFound: true);
         }
 
         public void Dispose()
@@ -1928,6 +1960,7 @@ namespace CryptoQuest.Input
         private readonly InputAction m_StatusMenu_GoBelow;
         private readonly InputAction m_StatusMenu_GoAbove;
         private readonly InputAction m_StatusMenu_ConfirmSelectEquipmentSlot;
+        private readonly InputAction m_StatusMenu_StatusMenuCancel;
         public struct StatusMenuActions
         {
             private @InputActions m_Wrapper;
@@ -1936,6 +1969,7 @@ namespace CryptoQuest.Input
             public InputAction @GoBelow => m_Wrapper.m_StatusMenu_GoBelow;
             public InputAction @GoAbove => m_Wrapper.m_StatusMenu_GoAbove;
             public InputAction @ConfirmSelectEquipmentSlot => m_Wrapper.m_StatusMenu_ConfirmSelectEquipmentSlot;
+            public InputAction @StatusMenuCancel => m_Wrapper.m_StatusMenu_StatusMenuCancel;
             public InputActionMap Get() { return m_Wrapper.m_StatusMenu; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -1957,6 +1991,9 @@ namespace CryptoQuest.Input
                 @ConfirmSelectEquipmentSlot.started += instance.OnConfirmSelectEquipmentSlot;
                 @ConfirmSelectEquipmentSlot.performed += instance.OnConfirmSelectEquipmentSlot;
                 @ConfirmSelectEquipmentSlot.canceled += instance.OnConfirmSelectEquipmentSlot;
+                @StatusMenuCancel.started += instance.OnStatusMenuCancel;
+                @StatusMenuCancel.performed += instance.OnStatusMenuCancel;
+                @StatusMenuCancel.canceled += instance.OnStatusMenuCancel;
             }
 
             private void UnregisterCallbacks(IStatusMenuActions instance)
@@ -1973,6 +2010,9 @@ namespace CryptoQuest.Input
                 @ConfirmSelectEquipmentSlot.started -= instance.OnConfirmSelectEquipmentSlot;
                 @ConfirmSelectEquipmentSlot.performed -= instance.OnConfirmSelectEquipmentSlot;
                 @ConfirmSelectEquipmentSlot.canceled -= instance.OnConfirmSelectEquipmentSlot;
+                @StatusMenuCancel.started -= instance.OnStatusMenuCancel;
+                @StatusMenuCancel.performed -= instance.OnStatusMenuCancel;
+                @StatusMenuCancel.canceled -= instance.OnStatusMenuCancel;
             }
 
             public void RemoveCallbacks(IStatusMenuActions instance)
@@ -2050,6 +2090,7 @@ namespace CryptoQuest.Input
             void OnGoBelow(InputAction.CallbackContext context);
             void OnGoAbove(InputAction.CallbackContext context);
             void OnConfirmSelectEquipmentSlot(InputAction.CallbackContext context);
+            void OnStatusMenuCancel(InputAction.CallbackContext context);
         }
     }
 }

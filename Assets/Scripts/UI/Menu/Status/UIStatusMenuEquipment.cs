@@ -87,6 +87,7 @@ namespace CryptoQuest.UI.Menu.Status
         {
             _confirmSelectEquipmentSlotEvent.RaiseEvent();
             _navigations.SetActive(false);
+            UnregisterChangeEquipmentInputEvents();
         }
 
         private void RegisterChangeEquipmentInputEvents()

@@ -59,6 +59,7 @@ namespace CryptoQuest.Input
         public event UnityAction GoBelowEvent;
         public event UnityAction GoAboveEvent;
         public event UnityAction ConfirmSelectEquipmentSlotEvent;
+        public event UnityAction StatusMenuCancelEvent;
 
         #endregion
 
@@ -336,6 +337,11 @@ namespace CryptoQuest.Input
         public void OnConfirmSelectEquipmentSlot(InputAction.CallbackContext context)
         {
             if (context.performed) ConfirmSelectEquipmentSlotEvent?.Invoke();
+        }
+
+        public void OnStatusMenuCancel(InputAction.CallbackContext context)
+        {
+            if (context.performed) StatusMenuCancelEvent?.Invoke();
         }
 
         #endregion
