@@ -8,7 +8,7 @@ namespace CryptoQuest.UI.Menu.Home
 {
     public class UIHomeMenu : MonoBehaviour
     {
-        [SerializeField] private Transform _characterSlots;
+        [SerializeField] private List<UICharacterInfo> _characterSlots;
         [SerializeField] private PartyManagerMockDataSO _partyManagerMockData;
 
         private void Awake()
@@ -20,13 +20,8 @@ namespace CryptoQuest.UI.Menu.Home
         {
             for (int i = 0; i < _partyManagerMockData.Members.Count; i++)
             {
-                ApplyData(i);
+                _characterSlots[i].SetData(_partyManagerMockData.Members[i]);
             }
-        }
-
-        private void ApplyData(int index)
-        {
-            _characterSlots.GetChild(index).GetComponentInChildren<UICharacterInfo>().CharInfoMockData = _partyManagerMockData.Members[index];
         }
     }
 }

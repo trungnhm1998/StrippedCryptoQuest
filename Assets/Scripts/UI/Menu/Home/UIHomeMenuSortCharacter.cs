@@ -8,6 +8,7 @@ using UnityEngine;
 
 namespace CryptoQuest.UI.Menu.Home
 {
+    // TODO: refactor getChild() and getComponent() code style
     public class UIHomeMenuSortCharacter : MonoBehaviour
     {
         [Header("Configs")]
@@ -27,10 +28,8 @@ namespace CryptoQuest.UI.Menu.Home
             get => _currentIndex;
             set
             {
-                _currentIndex = value % _partyManagerMockData.Members.Count;
-
-                if (_currentIndex < 0)
-                    _currentIndex = _partyManagerMockData.Members.Count - 1;
+                int count = _partyManagerMockData.Members.Count;
+                _currentIndex = (value + count) % count;
             }
         }
 
@@ -59,20 +58,20 @@ namespace CryptoQuest.UI.Menu.Home
             return cardUI;
         }
 
-        private void OnEnableSortMode()
+        private void EnableSortMode()
         {
             _inputMediator.EnableHomeMenuInput();
             _selectedCardHolder = GetCharacterCard(0);
             SelectTargetToSort();
         }
 
-        private void OnNextTarget()
+        private void ChangeNextTarget()
         {
             CurrentIndex++;
             SelectTargetToSort();
         }
 
-        private void OnPreviousTarget()
+        private void ChangePreviousTarget()
         {
             CurrentIndex--;
             SelectTargetToSort();
@@ -89,18 +88,18 @@ namespace CryptoQuest.UI.Menu.Home
             _selectedCardHolder.Select();
         }
 
-        private void OnConfirmSelect()
+        private void ConfirmSelect()
         {
             UnregisterSelectInputEvent();
             RegisterSortInputEvents();
 
             _topLine.SetActive(false);
-            _selectedCardHolder.OnSelected();
+            _selectedCardHolder.Selected();
 
             _indexHolder = CurrentIndex;
         }
 
-        private void OnSwapRight()
+        private void SwapRight()
         {
             var currentTarget = _characterSlots.GetChild(CurrentIndex);
 
@@ -110,7 +109,7 @@ namespace CryptoQuest.UI.Menu.Home
             _selectedCardHolder = currentTarget.GetComponent<UICharacterCard>();
         }
 
-        private void OnSwapLeft()
+        private void SwapLeft()
         {
             var currentTarget = _characterSlots.GetChild(CurrentIndex);
 
@@ -120,7 +119,7 @@ namespace CryptoQuest.UI.Menu.Home
             _selectedCardHolder = currentTarget.GetComponent<UICharacterCard>();
         }
 
-        private void OnConfirmSortOrder()
+        private void ConfirmSortOrder()
         {
             _selectedCardHolder.Confirm();
             _topLine.SetActive(true);
@@ -138,7 +137,7 @@ namespace CryptoQuest.UI.Menu.Home
             }
         }
 
-        private void OnCancelSort()
+        private void CancelSort()
         {
             _selectedCardHolder.Cancel();
             UnregisterSortInputEvents();
@@ -153,8 +152,8 @@ namespace CryptoQuest.UI.Menu.Home
 
             CurrentIndex = _indexHolder;
         }
-        
-        private void OnCancelSelect()
+
+        private void CancelSelect()
         {
             _selectedCardHolder.Deselect();
             _enableMainMenuInputs.RaiseEvent();
@@ -162,44 +161,44 @@ namespace CryptoQuest.UI.Menu.Home
 
         private void RegisterSortModeEvent()
         {
-            _inputMediator.HomeMenuSortEvent += OnEnableSortMode;
+            _inputMediator.HomeMenuSortEvent += EnableSortMode;
         }
-        
+
         private void UnregisterSortModeEvent()
         {
-            _inputMediator.HomeMenuSortEvent -= OnEnableSortMode;
+            _inputMediator.HomeMenuSortEvent -= EnableSortMode;
         }
 
         private void RegisterSelectInputEvents()
         {
-            _inputMediator.NextEvent += OnNextTarget;
-            _inputMediator.PreviousEvent += OnPreviousTarget;
-            _inputMediator.ConfirmEvent += OnConfirmSelect;
-            _inputMediator.HomeMenuCancelEvent += OnCancelSelect;
+            _inputMediator.NextEvent += ChangeNextTarget;
+            _inputMediator.PreviousEvent += ChangePreviousTarget;
+            _inputMediator.ConfirmEvent += ConfirmSelect;
+            _inputMediator.HomeMenuCancelEvent += CancelSelect;
         }
-        
+
         private void UnregisterSelectInputEvent()
         {
-            _inputMediator.NextEvent -= OnNextTarget;
-            _inputMediator.PreviousEvent -= OnPreviousTarget;
-            _inputMediator.ConfirmEvent -= OnConfirmSelect;
-            _inputMediator.HomeMenuCancelEvent -= OnCancelSelect;
+            _inputMediator.NextEvent -= ChangeNextTarget;
+            _inputMediator.PreviousEvent -= ChangePreviousTarget;
+            _inputMediator.ConfirmEvent -= ConfirmSelect;
+            _inputMediator.HomeMenuCancelEvent -= CancelSelect;
         }
 
         private void RegisterSortInputEvents()
         {
-            _inputMediator.NextEvent += OnSwapRight;
-            _inputMediator.PreviousEvent += OnSwapLeft;
-            _inputMediator.ConfirmEvent += OnConfirmSortOrder;
-            _inputMediator.HomeMenuCancelEvent += OnCancelSort;
+            _inputMediator.NextEvent += SwapRight;
+            _inputMediator.PreviousEvent += SwapLeft;
+            _inputMediator.ConfirmEvent += ConfirmSortOrder;
+            _inputMediator.HomeMenuCancelEvent += CancelSort;
         }
 
         private void UnregisterSortInputEvents()
         {
-            _inputMediator.NextEvent -= OnSwapRight;
-            _inputMediator.PreviousEvent -= OnSwapLeft;
-            _inputMediator.ConfirmEvent -= OnConfirmSortOrder;
-            _inputMediator.HomeMenuCancelEvent -= OnCancelSort;
+            _inputMediator.NextEvent -= SwapRight;
+            _inputMediator.PreviousEvent -= SwapLeft;
+            _inputMediator.ConfirmEvent -= ConfirmSortOrder;
+            _inputMediator.HomeMenuCancelEvent -= CancelSort;
         }
     }
 }

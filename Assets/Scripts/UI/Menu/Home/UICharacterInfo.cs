@@ -58,47 +58,47 @@ namespace CryptoQuest.UI.Menu.Home
 
         private void SetName()
         {
-            _name.text = $"{CharInfoMockData.Name}";
+            _name.text = CharInfoMockData.Name;
         }
 
         private void SetLevel()
         {
-            _level.text = $"<size=20%>Lv</size>{CharInfoMockData.Level}";
+            _level.text = string.Format(_level.text, CharInfoMockData.Level);
         }
 
         private void SetHP()
         {
-            int curHP = CharInfoMockData.CurrentHP;
-            int maxHP = CharInfoMockData.MaxHP;
+            float curHP = CharInfoMockData.CurrentHP;
+            float maxHP = CharInfoMockData.MaxHP;
 
-            _currentHP.text = $"{curHP}";
-            _maxHP.text = $"{maxHP}";
+            _currentHP.text = ((int)curHP).ToString();
+            _maxHP.text = ((int)maxHP).ToString();
 
-            _HPBar.fillAmount = (float)curHP / (float)maxHP;
+            _HPBar.fillAmount = curHP / maxHP;
         }
 
         private void SetMP()
         {
-            int curMP = CharInfoMockData.CurrentMP;
-            int maxMP = CharInfoMockData.MaxMP;
+            float curMP = CharInfoMockData.CurrentMP;
+            float maxMP = CharInfoMockData.MaxMP;
 
-            _currentMP.text = $"{curMP}";
-            _maxMP.text = $"{maxMP}";
+            _currentMP.text = ((int)curMP).ToString();
+            _maxMP.text = ((int)maxMP).ToString();
 
-            _MPBar.fillAmount = (float)curMP / (float)maxMP;
+            _MPBar.fillAmount = curMP / maxMP;
         }
 
         private void SetEXP()
         {
-            int curEXP = CharInfoMockData.CurrentEXP;
-            int maxEXP = CharInfoMockData.MaxEXP;
+            float curEXP = CharInfoMockData.CurrentEXP;
+            float maxEXP = CharInfoMockData.MaxEXP;
 
-            _EXPBar.fillAmount = (float)curEXP / (float)maxEXP;
+            _EXPBar.fillAmount = curEXP / maxEXP;
         }
 
         private void SetClass()
         {
-            _class.text = $"{CharInfoMockData.Class}";
+            _class.text = CharInfoMockData.Class;
         }
 
         private void SetElemental()
@@ -109,6 +109,11 @@ namespace CryptoQuest.UI.Menu.Home
         private void SetAvatar()
         {
             _avatar.sprite = CharInfoMockData.Avatar;
+        }
+
+        public void SetData(CharInfoMockDataSO dataReceived)
+        {
+            CharInfoMockData = dataReceived;
         }
     }
 }
