@@ -1,8 +1,7 @@
 using System.Collections.Generic;
 using CryptoQuest.Audio.AudioData;
-using CryptoQuest.Audio.SoundEmitters;
 
-namespace CryptoQuest.Audio
+namespace CryptoQuest.Audio.SoundEmitters
 {
     public class SoundEmitterStore
     {

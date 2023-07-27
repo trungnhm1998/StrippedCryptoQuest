@@ -1,9 +1,7 @@
-using System;
-using CryptoQuest.Audio.SoundEmitters;
 using UnityEngine;
 using UnityEngine.Pool;
 
-namespace CryptoQuest.Audio
+namespace CryptoQuest.Audio.SoundEmitters
 {
     public class SoundEmitterPool : MonoBehaviour
     {

@@ -15,7 +15,7 @@ namespace CryptoQuest.Audio.AudioData
 
             for (int i = 0; i < numberOfClips; i++)
             {
-                clipsResult[i] = _audioClipGroups[i].GetNextClip();
+                clipsResult[i] = _audioClipGroups[i].SwitchToNextClip();
             }
 
             return clipsResult;
