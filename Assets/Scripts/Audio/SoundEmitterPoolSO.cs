@@ -13,6 +13,9 @@ namespace CryptoQuest.Audio
         private IObjectPool<SoundEmitter> _pool;
         private Transform _poolRoot;
 
+        private const bool COLLECTION_CHECK = true;
+        private const int DEFAULT_POOL_SIZE = 10;
+
         private Transform PoolRoot
         {
             get
@@ -35,16 +38,17 @@ namespace CryptoQuest.Audio
             PoolRoot.SetParent(_parent);
         }
 
-        public void CreatePool(int poolSize, Transform parent)
+        public void Create(int poolSize, Transform parent)
         {
-            _pool = new ObjectPool<SoundEmitter>(OnCreateSound, OnGetSound, OnReleaseSound, OnDestroySound);
+            _pool = new ObjectPool<SoundEmitter>(OnCreateSound, OnGetSound, OnReleaseSound, OnDestroySound,
+                COLLECTION_CHECK, DEFAULT_POOL_SIZE, poolSize);
 
-            for (int i = 0; i < poolSize; i++)
-            {
-                var soundEmitter = _pool.Get();
-                SetParent(parent);
-                soundEmitter.gameObject.SetActive(false);
-            }
+            SetParent(parent);
+        }
+
+        public SoundEmitter Request()
+        {
+            return _pool.Get();
         }
 
         private void OnDestroySound(SoundEmitter obj)

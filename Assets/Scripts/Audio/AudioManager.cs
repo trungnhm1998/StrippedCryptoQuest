@@ -12,7 +12,8 @@ namespace CryptoQuest.Audio
 
         private void Awake()
         {
-            _soundEmitterPool.CreatePool(_soundEmitterPoolSize, this.transform);
+            _soundEmitterPool.Create(_soundEmitterPoolSize, this.transform);
+            // var soundEmitter = _soundEmitterPool.Request();
         }
     }
 }
