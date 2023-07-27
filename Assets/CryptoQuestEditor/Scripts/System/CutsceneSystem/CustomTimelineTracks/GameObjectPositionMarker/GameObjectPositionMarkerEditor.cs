@@ -3,27 +3,19 @@ using UnityEditor.Timeline;
 using UnityEngine;
 using UnityEngine.Timeline;
 
-namespace CryptoQuestEditor.CryptoQuestEditor.System.CutsceneSystem.CustomTimelineTracks.GameObjectPositionMarker
+namespace CryptoQuestEditor.System.CutsceneSystem.CustomTimelineTracks.GameObjectPositionMarker
 {
     [CustomTimelineEditor(
         typeof(CryptoQuest.System.CutsceneSystem.CustomTimelineTracks.GameObjectPosition.GameObjectPositionMarker))]
     public class GameObjectPositionMarkerEditor : MarkerEditor
     {
-        const float LINE_OVERLAY_WIDTH = 6.0f;
-
-        const string OVERLAY_PATH = "timeline_annotation_overlay";
-        const string OVERLAY_SELECTED_PATH = "timeline_annotation_overlay_selected";
-        const string OVERLAY_COLLAPSED_PATH = "timeline_annotation_overlay_collapsed";
+        const string OVERLAY_PATH = "Assets/CryptoQuestEditor/Scripts/System/CutsceneSystem/CustomTimelineTracks/GameObjectPositionMarker/Stylesheets/Icons/timeline_annotation_overlay.png";
 
         private static readonly Texture2D OverlayTexture;
-        private static readonly Texture2D OverlaySelectedTexture;
-        private static readonly Texture2D OverlayCollapsedTexture;
 
         static GameObjectPositionMarkerEditor()
         {
-            OverlayTexture = Resources.Load<Texture2D>(OVERLAY_PATH);
-            OverlaySelectedTexture = Resources.Load<Texture2D>(OVERLAY_SELECTED_PATH);
-            OverlayCollapsedTexture = Resources.Load<Texture2D>(OVERLAY_COLLAPSED_PATH);
+            OverlayTexture = EditorGUIUtility.Load(OVERLAY_PATH) as Texture2D;
         }
 
         // Draws a vertical line on top of the Timeline window's contents.
@@ -35,7 +27,7 @@ namespace CryptoQuestEditor.CryptoQuestEditor.System.CutsceneSystem.CustomTimeli
                     GameObjectPositionMarker;
             if (annotation == null) return;
 
-            DrawColorOverlay(region, annotation.Color, uiState);
+            GUI.DrawTexture(region.markerRegion, OverlayTexture);
         }
 
         // Sets the marker's tooltip based on its title.
@@ -51,27 +43,16 @@ namespace CryptoQuestEditor.CryptoQuestEditor.System.CutsceneSystem.CustomTimeli
                 : new MarkerDrawOptions { tooltip = annotation.parent.name + " Position" };
         }
 
-        private static void DrawColorOverlay(MarkerOverlayRegion region, Color color, MarkerUIStates state)
+        public override void OnCreate(IMarker marker, IMarker clonedFrom)
         {
-            // Save the Editor's overlay color before changing it
-            Color oldColor = GUI.color;
-            GUI.color = color;
+            base.OnCreate(marker, clonedFrom);
 
-            if (state.HasFlag(MarkerUIStates.Selected))
-            {
-                GUI.DrawTexture(region.markerRegion, OverlaySelectedTexture);
-            }
-            else if (state.HasFlag(MarkerUIStates.Collapsed))
-            {
-                GUI.DrawTexture(region.markerRegion, OverlayCollapsedTexture);
-            }
-            else if (state.HasFlag(MarkerUIStates.None))
-            {
-                GUI.DrawTexture(region.markerRegion, OverlayTexture);
-            }
-
-            // Restore the previous Editor's overlay color
-            GUI.color = oldColor;
+            // set the marker position to center of scene view
+            var annotation =
+                marker as CryptoQuest.System.CutsceneSystem.CustomTimelineTracks.GameObjectPosition.
+                    GameObjectPositionMarker;
+            if (annotation && SceneView.lastActiveSceneView)
+                annotation.Position = SceneView.lastActiveSceneView.pivot;
         }
     }
 }
