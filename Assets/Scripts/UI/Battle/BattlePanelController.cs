@@ -23,6 +23,7 @@ namespace CryptoQuest.UI.Battle
 
 
         [SerializeField] private BattleActionHandler.BattleActionHandler[] _normalAttackChain;
+        [SerializeField] private BattleActionHandler.BattleActionHandler _retreatHandler;
 
         [Header("Events")]
         [SerializeField] private InputMediatorSO _inputMediator;
@@ -105,6 +106,7 @@ namespace CryptoQuest.UI.Battle
         {
             _commandPanel.Clear();
             _battleManager.OnEscape();
+            _retreatHandler.Handle(_battleManager.CurrentUnit);
         }
 
         private void OnButtonGuardClickedHandler()
