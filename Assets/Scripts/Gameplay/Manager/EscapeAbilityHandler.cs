@@ -1,5 +1,6 @@
 using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Skills;
 using CryptoQuest.Map;
+using CryptoQuest.UI.SpiralFX;
 using IndiGames.Core.SceneManagementSystem.Events.ScriptableObjects;
 using IndiGames.Core.SceneManagementSystem.ScriptableObjects;
 using UnityEngine;
@@ -12,6 +13,7 @@ namespace CryptoQuest.Gameplay.Manager
         [SerializeField] private SceneScriptableObject _destinationScene;
         [SerializeField] private PathStorageSO _pathStorageSo;
         [SerializeField] private LoadSceneEventChannelSO _loadMapEventChannel;
+        [SerializeField] private SpiralConfigSO _spiralConfig;
 
 
         private void OnEnable()
@@ -26,6 +28,7 @@ namespace CryptoQuest.Gameplay.Manager
 
         private void OnEscapeSucceded(MapPathSO escapePath)
         {
+            _spiralConfig.Color = Color.green;
             _pathStorageSo.LastTakenPath = escapePath;
             _loadMapEventChannel.RequestLoad(_destinationScene);
         }

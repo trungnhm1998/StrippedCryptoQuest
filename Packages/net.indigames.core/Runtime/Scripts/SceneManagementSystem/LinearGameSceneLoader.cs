@@ -13,7 +13,7 @@ namespace IndiGames.Core.SceneManagementSystem
     // TODO: Class current violate SRP move fading logic to separate class
     public class LinearGameSceneLoader : MonoBehaviour
     {
-        [SerializeField] private SceneScriptableObject _gameplayManagerSceneSO;
+        [SerializeField] protected SceneScriptableObject _gameplayManagerSceneSO;
         [SerializeField] private FadeConfigSO _fadeConfigSO;
 
         [Header("Listening on")]
@@ -25,20 +25,20 @@ namespace IndiGames.Core.SceneManagementSystem
 #endif
 
         [Header("Raise on")]
-        [SerializeField] private VoidEventChannelSO _sceneLoaded;
+        [SerializeField] protected VoidEventChannelSO _sceneLoaded;
 
-        [SerializeField] private VoidEventChannelSO _sceneUnloading;
+        [SerializeField] protected VoidEventChannelSO _sceneUnloading;
 
-        private AsyncOperationHandle<SceneInstance> _sceneLoadingOperationHandle;
-        private AsyncOperationHandle<SceneInstance> _gameplayManagerLoadingOperationHandle;
+        protected AsyncOperationHandle<SceneInstance> _sceneLoadingOperationHandle;
+        protected AsyncOperationHandle<SceneInstance> _gameplayManagerLoadingOperationHandle;
 
-        private SceneScriptableObject _sceneToLoad;
+        protected SceneScriptableObject _sceneToLoad;
         protected SceneScriptableObject _currentLoadedScene;
 
-        private SceneInstance _gameplayManagerSceneInstance;
-        private bool _isLoading;
+        protected SceneInstance _gameplayManagerSceneInstance;
+        protected bool _isLoading;
 
-        private void OnEnable()
+        protected virtual void OnEnable()
         {
             _loadMap.LoadingRequested += MapLoadingRequested;
             _loadTitle.LoadingRequested += TitleSceneLoadingRequested;
@@ -47,7 +47,7 @@ namespace IndiGames.Core.SceneManagementSystem
 #endif
         }
 
-        private void OnDisable()
+        protected virtual void OnDisable()
         {
             _loadMap.LoadingRequested -= MapLoadingRequested;
             _loadTitle.LoadingRequested -= TitleSceneLoadingRequested;
@@ -118,7 +118,7 @@ namespace IndiGames.Core.SceneManagementSystem
             _gameplayManagerLoadingOperationHandle.Completed += GameplayManagerSceneLoaded;
         }
 
-        private void GameplayManagerSceneLoaded(AsyncOperationHandle<SceneInstance> asyncOpSceneInstance)
+        protected void GameplayManagerSceneLoaded(AsyncOperationHandle<SceneInstance> asyncOpSceneInstance)
         {
             _gameplayManagerSceneInstance = asyncOpSceneInstance.Result;
 
@@ -153,7 +153,7 @@ namespace IndiGames.Core.SceneManagementSystem
         /// <c>_currentLoadedSceneSO.SceneReference.OperationHandle</c> would be null because the scene
         /// already loaded when open directly through EditorColdBoot
         /// </summary>
-        private void UnloadSceneWhenStartFromEditor()
+        protected void UnloadSceneWhenStartFromEditor()
         {
             SceneManager.UnloadSceneAsync(_currentLoadedScene.SceneReference.editorAsset.name);
         }
