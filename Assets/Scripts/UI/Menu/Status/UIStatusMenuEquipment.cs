@@ -13,7 +13,6 @@ namespace CryptoQuest.UI.Menu.Status
         [SerializeField] private InputMediatorSO _inputMediator;
 
         [Header("Events")]
-        [SerializeField] private VoidEventChannelSO _enableChangeEquipmentModeEvent;
         [SerializeField] private VoidEventChannelSO _confirmSelectEquipmentSlotEvent;
         [SerializeField] private VoidEventChannelSO _turnOffInventoryEvent;
 
@@ -36,18 +35,19 @@ namespace CryptoQuest.UI.Menu.Status
 
         private void OnEnable()
         {
-            _enableChangeEquipmentModeEvent.EventRaised += ChangeEquipmentModeEnabled;
+            _inputMediator.EnableChangeEquipmentModeEvent += ChangeEquipmentModeEnabled;
             _turnOffInventoryEvent.EventRaised += RegisterChangeEquipmentInputEvents;
         }
 
         private void OnDisable()
         {
-            _enableChangeEquipmentModeEvent.EventRaised -= ChangeEquipmentModeEnabled;
+            _inputMediator.EnableChangeEquipmentModeEvent -= ChangeEquipmentModeEnabled;
             _turnOffInventoryEvent.EventRaised -= RegisterChangeEquipmentInputEvents;
         }
 
         private void ChangeEquipmentModeEnabled()
         {
+            _inputMediator.EnableStatusEquipmentMenuInput();
             Init();
         }
 
