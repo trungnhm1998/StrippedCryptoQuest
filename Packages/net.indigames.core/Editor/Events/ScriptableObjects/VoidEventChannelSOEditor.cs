@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace IndiGamesEditor.Core.Events.ScriptableObjects
 {
-    [CustomEditor(typeof(VoidEventChannelSO))]
+    [CustomEditor(typeof(VoidEventChannelSO), true)]
     public class VoidEventChannelSOEditor : UnityEditor.Editor
     {
         public override void OnInspectorGUI()

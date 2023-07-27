@@ -8,8 +8,6 @@ using CryptoQuest.UI.Battle.CommandsMenu;
 using IndiGames.Core.Events.ScriptableObjects;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.Serialization;
-using UnityEngine.UI;
 
 namespace CryptoQuest.UI.Battle
 {
@@ -23,6 +21,7 @@ namespace CryptoQuest.UI.Battle
 
 
         [SerializeField] private BattleActionHandler.BattleActionHandler[] _normalAttackChain;
+        [SerializeField] private BattleActionHandler.BattleActionHandler[] _skillAttackChain;
 
         [Header("Events")]
         [SerializeField] private InputMediatorSO _inputMediator;
@@ -63,6 +62,7 @@ namespace CryptoQuest.UI.Battle
 
             _battleManager = _battleBus.BattleManager;
             SetupChain(_normalAttackChain);
+            SetupChain(_skillAttackChain);
         }
 
         private void OnDisable()
@@ -112,14 +112,12 @@ namespace CryptoQuest.UI.Battle
             _commandPanel.Clear();
         }
 
-        private void OnButtonItemClickedHandler(IBattleUnit currentUnit)
-        {
-            _commandPanel.Clear();
-        }
+        private void OnButtonItemClickedHandler(IBattleUnit currentUnit) { }
 
         private void OnButtonSkillClickedHandler(IBattleUnit currentUnit)
         {
             _commandPanel.Clear();
+            _skillAttackChain[0].Handle(currentUnit);
         }
 
         private void OnButtonAttackClickedHandler(IBattleUnit currentUnit)

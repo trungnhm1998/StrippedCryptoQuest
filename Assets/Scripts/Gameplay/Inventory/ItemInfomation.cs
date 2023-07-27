@@ -1,5 +1,5 @@
 using System;
-using CryptoQuest.Item.Inventory;
+using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
 
 namespace CryptoQuest.Gameplay.Inventory
 {

@@ -9,12 +9,12 @@ namespace CryptoQuest.UI.Menu.MockData
     {
         public string Name;
         public int Level;
-        public int CurrentHP;
-        public int MaxHP;
-        public int CurrentMP;
-        public int MaxMP;
-        public int CurrentEXP;
-        public int MaxEXP;
+        public float CurrentHP;
+        public float MaxHP;
+        public float CurrentMP;
+        public float MaxMP;
+        public float CurrentEXP;
+        public float MaxEXP;
         public string Class;
         public ElementalMockDataSO Elemental;
         public Sprite Avatar;
