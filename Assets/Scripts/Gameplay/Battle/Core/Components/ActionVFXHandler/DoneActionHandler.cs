@@ -5,7 +5,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components.ActionVFXHandler
 {
     public class DoneActionHandler : GameHandler<object>
     {
-        public Action OnDoneAction;
+        public Action DoneAction;
         private ActionVFXHandler _actionVFXHandler;
 
         public DoneActionHandler(ActionVFXHandler handler)
@@ -15,7 +15,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components.ActionVFXHandler
 
         public override void Handle()
         {
-            OnDoneAction?.Invoke();
+            DoneAction?.Invoke();
             _actionVFXHandler.ResetHandler();
         }
     }

@@ -10,7 +10,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components.ActionVFXHandler
 {
     public class LogAfterVFXHandler : GameHandler<object>
     {
-        public Action<LocalizedString> OnShowBattleDialog;
+        public Action<LocalizedString> ShowBattleDialog;
         private BattleActionDataSO _actionData;
 
         public LogAfterVFXHandler(BattleActionDataSO actionData)
@@ -43,7 +43,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components.ActionVFXHandler
 
         protected void ShowLog()
         {
-            OnShowBattleDialog?.Invoke(_actionData.Log);
+            ShowBattleDialog?.Invoke(_actionData.Log);
         }
 
         public override void Handle()

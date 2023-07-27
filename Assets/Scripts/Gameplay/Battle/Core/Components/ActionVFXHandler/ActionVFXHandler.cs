@@ -26,30 +26,30 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components.ActionVFXHandler
         {
             _rootHandler = _currentHandler;
             _doneActionHandler = new DoneActionHandler(this);
-            _doneActionHandler.OnDoneAction += _showNextMarkEventChannel.RaiseEvent;
+            _doneActionHandler.DoneAction += _showNextMarkEventChannel.RaiseEvent;
         }
 
         protected void OnEnable()
         {
-            _doneActionEventChannel.EventRaised += OnUnitDoneAction;
-            _gotActionDataEventChannel.EventRaised += OnGotActionData;
+            _doneActionEventChannel.EventRaised += SetupDoneHandler;
+            _gotActionDataEventChannel.EventRaised += SetupHandler;
         }
 
         protected void OnDisable()
         {
-            _doneActionEventChannel.EventRaised -= OnUnitDoneAction;
-            _gotActionDataEventChannel.EventRaised -= OnGotActionData;
+            _doneActionEventChannel.EventRaised -= SetupDoneHandler;
+            _gotActionDataEventChannel.EventRaised -= SetupHandler;
         }
 
-        private void OnGotActionData(BattleActionDataSO data)
+        private void SetupHandler(BattleActionDataSO data)
         {
             var handler = new LogAfterVFXHandler(data);
-            handler.OnShowBattleDialog += _showBattleDialogEventChannel.RaiseEvent;
+            handler.ShowBattleDialog += _showBattleDialogEventChannel.RaiseEvent;
             _currentHandler.SetNext(handler);
             _currentHandler = handler;
         }
 
-        private void OnUnitDoneAction()
+        private void SetupDoneHandler()
         {
             _currentHandler.SetNext(_doneActionHandler);
             _rootHandler.Handle();
