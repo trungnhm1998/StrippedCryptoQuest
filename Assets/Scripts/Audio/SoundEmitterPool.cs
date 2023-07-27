@@ -5,8 +5,7 @@ using UnityEngine.Pool;
 
 namespace CryptoQuest.Audio
 {
-    [CreateAssetMenu(menuName = "Crypto Quest/Audio/SoundEmmiter Pool", fileName = "SoundEmitterPoolSO")]
-    public class SoundEmitterPoolSO : ScriptableObject
+    public class SoundEmitterPool : MonoBehaviour
     {
         [SerializeField] private SoundEmitter _prefab = default;
 
@@ -32,23 +31,26 @@ namespace CryptoQuest.Audio
 
         private Transform _parent;
 
-        private void SetParent(Transform t)
+        public void SetParent(Transform t)
         {
             _parent = t;
             PoolRoot.SetParent(_parent);
         }
 
-        public void Create(int poolSize, Transform parent)
+        public void Create(int poolSize)
         {
             _pool = new ObjectPool<SoundEmitter>(OnCreateSound, OnGetSound, OnReleaseSound, OnDestroySound,
                 COLLECTION_CHECK, DEFAULT_POOL_SIZE, poolSize);
-
-            SetParent(parent);
         }
 
         public SoundEmitter Request()
         {
             return _pool.Get();
+        }
+
+        public void Release(SoundEmitter soundEmitter)
+        {
+            soundEmitter.ReleasePool();
         }
 
         private void OnDestroySound(SoundEmitter obj)
@@ -70,7 +72,7 @@ namespace CryptoQuest.Audio
         private SoundEmitter OnCreateSound()
         {
             var soundEmitter = Instantiate(_prefab, PoolRoot.transform);
-            soundEmitter.ObjectPool = _pool;
+            soundEmitter.Init(_pool);
             return soundEmitter;
         }
     }

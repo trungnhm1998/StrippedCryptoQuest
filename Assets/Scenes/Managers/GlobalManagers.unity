@@ -407,6 +407,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1332682846}
   - component: {fileID: 1332682845}
+  - component: {fileID: 1332682847}
   m_Layer: 0
   m_Name: AudioManager
   m_TagString: Untagged
@@ -426,7 +427,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62d56a1f7b4a46a2a12154fcc2fe13a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _soundEmitterPool: {fileID: 11400000, guid: 0d6ab213fec25024fa1592cc289d22ce, type: 2}
+  _pool: {fileID: 1332682847}
+  _soundEmitterPoolSize: 10
+  _sfxEventChannel: {fileID: 11400000, guid: d94d8af02e524214383b1f54ee255f34, type: 2}
+  _backgroundMusicEventChannel: {fileID: 11400000, guid: 3b145a5bdef529242b1938ff468cd3f1, type: 2}
+  _sfxVolumeEventChannel: {fileID: 11400000, guid: 894c611ae192c274eaf61ee2736ff6ff, type: 2}
+  _backgroundMusicVolumeEventChannel: {fileID: 11400000, guid: b0f9456fe2e0c8249a7db76f6caf75c2, type: 2}
+  _masterVolumeEventChannel: {fileID: 11400000, guid: 96f74952f2e58fd44b5f786197973175, type: 2}
+  _masterVolume: 1
+  _backgroundMusicVolume: 1
+  _sfxVolume: 1
 --- !u!4 &1332682846
 Transform:
   m_ObjectHideFlags: 0
@@ -442,6 +452,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1332682847
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1332682844}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 20f8eaffb36c47f888404f50e02944a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _prefab: {fileID: 6340597422452755816, guid: 250fe6f6bb9f95948a3527fdcc9b93d9, type: 3}
 --- !u!1 &2017068256
 GameObject:
   m_ObjectHideFlags: 0

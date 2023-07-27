@@ -1,4 +1,3 @@
-using System.Collections;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Events;
@@ -13,23 +12,25 @@ namespace CryptoQuest.Audio.SoundEmitters
 
         [SerializeField] private AudioSource _audioSource;
 
-        private IObjectPool<SoundEmitter> _objectPool = default;
-        public IObjectPool<SoundEmitter> ObjectPool { get; set; }
+        private IObjectPool<SoundEmitter> ObjectPool { get; set; }
 
-        public void PlayAudioClip(AudioClip clip, bool hasLoop)
+        public void Init(IObjectPool<SoundEmitter> pool) => ObjectPool = pool;
+
+        public void PlayAudioClip(AudioClip clip, AudioConfigurationSO setting, bool hasLoop)
         {
             _audioSource.clip = clip;
+            setting.ApplyTo(_audioSource);
             _audioSource.loop = hasLoop;
             _audioSource.time = 0f;
             _audioSource.Play();
 
             if (hasLoop) return;
-            StartCoroutine(FinishedPlaying(clip.length));
+            Invoke(nameof(OnFinishedPlay), clip.length);
         }
 
-        public void FadeMusicIn(AudioClip clip, float duration, float startTime = 0f)
+        public void FadeMusicIn(AudioClip clip, AudioConfigurationSO setting, float duration, float startTime = 0f)
         {
-            PlayAudioClip(clip, true);
+            PlayAudioClip(clip, setting, true);
             _audioSource.volume = 0f;
 
             if (startTime <= _audioSource.clip.length)
@@ -37,18 +38,15 @@ namespace CryptoQuest.Audio.SoundEmitters
                 _audioSource.time = startTime;
             }
 
-            //TODO: SETTING VOLUME 
-            float END_VALUE_FOR_SOUND = 1;
-            _audioSource.DOFade(END_VALUE_FOR_SOUND, duration);
+            _audioSource.DOFade(setting.Volume, duration);
         }
 
         public float FadeMusicOut(float duration)
         {
-            _audioSource.DOFade(0f, duration).onComplete += NotifySoundDone;
+            _audioSource.DOFade(0f, duration).onComplete += OnFinishedPlay;
 
             return _audioSource.time;
         }
-
 
         public void Finish()
         {
@@ -56,52 +54,23 @@ namespace CryptoQuest.Audio.SoundEmitters
 
             _audioSource.loop = false;
             float timeRemaining = _audioSource.clip.length - _audioSource.time;
-            StartCoroutine(FinishedPlaying(timeRemaining));
+            Invoke(nameof(OnFinishedPlay), timeRemaining);
         }
 
-        public void Resume()
-        {
-            _audioSource.Play();
-        }
-
-        public void Pause()
-        {
-            _audioSource.Pause();
-        }
-
-        public void Stop()
-        {
-            _audioSource.Stop();
-        }
-
-        public AudioClip GetClip()
-        {
-            return _audioSource.clip;
-        }
-
-        public bool IsPlaying()
-        {
-            return _audioSource.isPlaying;
-        }
-
-        public bool IsLoop()
-        {
-            return _audioSource.loop;
-        }
+        public void Resume() => _audioSource.Play();
+        public void Pause() => _audioSource.Pause();
+        public void Stop() => _audioSource.Stop();
+        public AudioClip GetClip() => _audioSource.clip;
+        public bool IsPlaying() => _audioSource.isPlaying;
+        public bool IsLoop() => _audioSource.loop;
 
         public void ReleasePool()
         {
-            _objectPool?.Release(this);
+            ObjectPool?.Release(this);
         }
 
-        private IEnumerator FinishedPlaying(float clipLength)
-        {
-            yield return new WaitForSeconds(clipLength);
 
-            NotifySoundDone();
-        }
-
-        private void NotifySoundDone()
+        private void OnFinishedPlay()
         {
             OnSoundFinishedPlaying?.Invoke(this);
         }

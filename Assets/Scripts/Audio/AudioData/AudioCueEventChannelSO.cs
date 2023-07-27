@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 
-namespace CryptoQuest.Audio
+namespace CryptoQuest.Audio.AudioData
 {
+    [CreateAssetMenu(menuName = "Crypto Quest/Audio/Audio Cue Event", fileName = "AudioCueEventChannelSO")]
     public class AudioCueEventChannelSO : ScriptableObject
     {
         public AudioCuePlayAction OnAudioCuePlayRequested;
@@ -9,64 +10,42 @@ namespace CryptoQuest.Audio
         public AudioCueFinishAction OnAudioCueFinishRequested;
 
         public AudioCueKey RaisePlayEvent(AudioCueSO audioCue, AudioConfigurationSO audioConfiguration)
-
         {
-            AudioCueKey audioCueKey = AudioCueKey.Invalid;
-
-            if (OnAudioCuePlayRequested != null)
+            if (OnAudioCuePlayRequested == null)
             {
-                audioCueKey = OnAudioCuePlayRequested.Invoke(audioCue, audioConfiguration);
-            }
-            else
-            {
-                Debug.LogWarning("An AudioCue play event was requested  for " + audioCue.name +
-                                 ", but nobody picked it up. " +
-                                 "Check why there is no AudioManager already loaded, " +
-                                 "and make sure it's listening on this AudioCue Event channel.");
+                Debug.LogWarning($"Event was raised on {name} but no one was listening.");
+                return AudioCueKey.Invalid;
             }
 
-            return audioCueKey;
+            Debug.Log($"Event was raised on {name} and someone was listening.");
+            return OnAudioCuePlayRequested.Invoke(audioCue, audioConfiguration);
         }
 
         public bool RaiseStopEvent(AudioCueKey audioCueKey)
         {
-            bool requestSucceed = false;
+            if (OnAudioCueStopRequested == null)
+            {
+                Debug.LogWarning($"Event was raised on {name} but no one was listening.");
 
-            if (OnAudioCueStopRequested != null)
-            {
-                requestSucceed = OnAudioCueStopRequested.Invoke(audioCueKey);
-            }
-            else
-            {
-                Debug.LogWarning("An AudioCue stop event was requested, but nobody picked it up. " +
-                                 "Check why there is no AudioManager already loaded, " +
-                                 "and make sure it's listening on this AudioCue Event channel.");
+                return false;
             }
 
-            return requestSucceed;
+            return OnAudioCueStopRequested.Invoke(audioCueKey);
         }
 
         public bool RaiseFinishEvent(AudioCueKey audioCueKey)
         {
-            bool requestSucceed = false;
-
             if (OnAudioCueStopRequested != null)
             {
-                requestSucceed = OnAudioCueFinishRequested.Invoke(audioCueKey);
-            }
-            else
-            {
-                Debug.LogWarning("An AudioCue finish event was requested, but nobody picked it up. " +
-                                 "Check why there is no AudioManager already loaded, " +
-                                 "and make sure it's listening on this AudioCue Event channel.");
+                Debug.LogWarning($"Event was raised on {name} but no one was listening.");
+                return false;
             }
 
-            return requestSucceed;
+            return OnAudioCueFinishRequested.Invoke(audioCueKey);
         }
     }
 
     public delegate AudioCueKey AudioCuePlayAction(AudioCueSO audioCue, AudioConfigurationSO audioConfiguration);
-
 
     public delegate bool AudioCueStopAction(AudioCueKey emitterKey);
 
