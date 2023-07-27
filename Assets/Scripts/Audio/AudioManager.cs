@@ -87,8 +87,8 @@ namespace CryptoQuest.Audio
                 soundEmitters[i] = _pool.Request();
                 if (soundEmitters[i] == null) continue;
 
-                soundEmitters[i].PlayAudioClip(currentClips[i], settings, audioCue.looping);
-                if (!audioCue.looping) soundEmitters[i].OnSoundFinishedPlaying += OnSoundFinishedPlaying;
+                soundEmitters[i].PlayAudioClip(currentClips[i], settings, audioCue.Looping);
+                if (!audioCue.Looping) soundEmitters[i].OnSoundFinishedPlaying += OnSoundFinishedPlaying;
             }
 
             return _soundEmitterStore.Add(audioCue, soundEmitters);

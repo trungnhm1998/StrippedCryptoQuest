@@ -12,9 +12,8 @@ namespace CryptoQuest.Audio.SoundEmitters
 
         [SerializeField] private AudioSource _audioSource;
 
-        private IObjectPool<SoundEmitter> ObjectPool { get; set; }
-
-        public void Init(IObjectPool<SoundEmitter> pool) => ObjectPool = pool;
+        private IObjectPool<SoundEmitter> _objectPool;
+        public void Init(IObjectPool<SoundEmitter> pool) => _objectPool = pool;
 
         public void PlayAudioClip(AudioClip clip, AudioConfigurationSO setting, bool hasLoop)
         {
@@ -66,7 +65,7 @@ namespace CryptoQuest.Audio.SoundEmitters
 
         public void ReleasePool()
         {
-            ObjectPool?.Release(this);
+            _objectPool?.Release(this);
         }
 
 

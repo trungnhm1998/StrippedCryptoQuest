@@ -1,17 +1,18 @@
 ﻿using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace CryptoQuest.Audio
 {
     [CreateAssetMenu(menuName = "Crypto Quest/Audio/Audio Config", fileName = "AudioConfigurationSO")]
     public class AudioConfigurationSO : ScriptableObject
     {
-        [SerializeField] private PriorityLevel _priorityLevel = PriorityLevel.Standard;
+        [SerializeField] private EPriorityLevel _priorityLevel = EPriorityLevel.Standard;
 
         [HideInInspector]
         public int Priority
         {
             get { return (int)_priorityLevel; }
-            set { _priorityLevel = (PriorityLevel)value; }
+            set { _priorityLevel = (EPriorityLevel)value; }
         }
 
         [Header("Sound properties")]
@@ -20,7 +21,7 @@ namespace CryptoQuest.Audio
         [Range(0f, 1f)] public float Volume = 1f;
 
 
-        private enum PriorityLevel
+        private enum EPriorityLevel
         {
             Highest = 0,
             High = 64,

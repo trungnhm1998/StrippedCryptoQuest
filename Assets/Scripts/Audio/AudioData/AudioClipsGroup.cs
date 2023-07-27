@@ -6,21 +6,33 @@ namespace CryptoQuest.Audio.AudioData
     [Serializable]
     public class AudioClipsGroup
     {
-        private readonly AudioClip[] _audioClips;
-        private readonly IListIndex _clipIndex;
+        [SerializeField] private ESequenceMode _mode = ESequenceMode.Sequential;
+        [SerializeField] private AudioClip[] _audioClips;
+        private IListIndex _clipIndex;
 
-        public AudioClipsGroup(AudioClip[] audioClips, ESequenceMode mode = ESequenceMode.Sequential)
+        private IListIndex ClipIndex
         {
-            _audioClips = audioClips;
-            _clipIndex = ListIndexFactory.Create(mode);
+            get
+            {
+                _clipIndex ??= ListIndexFactory.Create(_mode);
+                return _clipIndex;
+            }
         }
 
-        public AudioClip CurrentClip => _audioClips[_clipIndex.Value];
+        public AudioClipsGroup() { }
+
+        public AudioClipsGroup(AudioClip[] audioClips, ESequenceMode mode)
+        {
+            _audioClips = audioClips;
+            _mode = mode;
+        }
+
+        public AudioClip CurrentClip => _audioClips[ClipIndex.Value];
 
         public AudioClip SwitchToNextClip()
         {
-            _clipIndex.GoForward(_audioClips.Length);
-            return _audioClips[_clipIndex.Value];
+            ClipIndex.GoForward(_audioClips.Length);
+            return _audioClips[ClipIndex.Value];
         }
     }
 }

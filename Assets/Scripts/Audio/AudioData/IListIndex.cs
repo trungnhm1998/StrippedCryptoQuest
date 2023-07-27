@@ -1,3 +1,6 @@
+using System;
+using UnityEngine;
+
 namespace CryptoQuest.Audio.AudioData
 {
     public interface IListIndex

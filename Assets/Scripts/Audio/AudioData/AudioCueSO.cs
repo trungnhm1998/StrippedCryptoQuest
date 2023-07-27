@@ -5,7 +5,7 @@ namespace CryptoQuest.Audio.AudioData
     [CreateAssetMenu(menuName = "Crypto Quest/Audio/Audio Cue", fileName = "AudioCueSO")]
     public class AudioCueSO : ScriptableObject
     {
-        public bool looping = false;
+        public bool Looping = false;
         [SerializeField] private AudioClipsGroup[] _audioClipGroups = default;
 
         public AudioClip[] GetClips()
