@@ -17,7 +17,7 @@ namespace CryptoQuest.UI.Menu.Status
         [SerializeField] private RecyclableScrollRect _scrollRect;
         [SerializeField] private AutoScrollRect _autoScrollRect;
         [SerializeField] private InputMediatorSO _inputMediator;
-        
+
         [Header("Events")]
         [SerializeField] private VoidEventChannelSO _confirmSelectEquipmentSlotEvent;
         [SerializeField] private VoidEventChannelSO _turnOffInventoryEvent;
@@ -31,9 +31,6 @@ namespace CryptoQuest.UI.Menu.Status
 
         [Header("Game Components")]
         [SerializeField] private GameObject _contents;
-        [SerializeField] private RectTransform _currentRectTransform;
-        [SerializeField] private RectTransform _parentRectTransform;
-        [SerializeField] private RectTransform _itemRectTransform;
 
         private List<UIStatusMenuInventoryItem.Data> _mockDataList = new();
         private UIStatusMenuInventoryItem _itemInformation;
@@ -61,6 +58,12 @@ namespace CryptoQuest.UI.Menu.Status
             _confirmSelectEquipmentSlotEvent.EventRaised -= ViewInventory;
         }
 
+        private void FixedUpdate()
+        {
+            _autoScrollRect.UpdateScrollRectTransform();
+
+        }
+
         private void ViewInventory()
         {
             _contents.SetActive(true);
@@ -80,45 +83,23 @@ namespace CryptoQuest.UI.Menu.Status
             _turnOffInventoryEvent.RaiseEvent();
             _contents.SetActive(false);
         }
-        
+
         private void OnStatusMenuConfirmSelect()
         {
             _contents.SetActive(false);
             UnregisterInventoryInputEvents();
         }
-        
-        private void SelectItemHandle()
-        {
-            Debug.Log("navigate");
-            _autoScrollRect.UpdateScrollRectTransform();
-            CheckScrollRect();
-            if (EventSystem.current.currentSelectedGameObject.GetComponent<UIStatusMenuInventoryItem>())
-            {
-                _itemInformation = EventSystem.current.currentSelectedGameObject.GetComponent<UIStatusMenuInventoryItem>();
-            }
-            Debug.Log("end navigate");
-        }
-        
-        private void CheckScrollRect()
-        {
-            bool shouldMoveUp = _currentRectTransform.anchoredPosition.y > _itemRectTransform.rect.height;
-            // _upHint.SetActive(shouldMoveUp);
-            bool shouldMoveDown =
-                _currentRectTransform.rect.height - _currentRectTransform.anchoredPosition.y
-                > _parentRectTransform.rect.height + _itemRectTransform.rect.height / 2;
-            // _downHint.SetActive(shouldMoveDown);
-        }
-        
+
         private void RegisterInventoryInputEvents()
         {
-            _inputMediator.StatusMenuNavigateEvent += SelectItemHandle;
-            _inputMediator.StatusMenuConfirmSelectEvent += OnStatusMenuConfirmSelect;
+            // _inputMediator.StatusMenuNavigateEvent += SelectItemHandle;
+            // _inputMediator.StatusMenuConfirmSelectEvent += OnStatusMenuConfirmSelect;
         }
-        
+
         private void UnregisterInventoryInputEvents()
         {
-            _inputMediator.StatusMenuNavigateEvent -= SelectItemHandle;
-            _inputMediator.StatusMenuConfirmSelectEvent -= OnStatusMenuConfirmSelect;
+            // _inputMediator.StatusMenuNavigateEvent -= SelectItemHandle;
+            // _inputMediator.StatusMenuConfirmSelectEvent -= OnStatusMenuConfirmSelect;
         }
 
         #region PLUGINS 

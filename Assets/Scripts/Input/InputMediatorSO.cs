@@ -354,7 +354,7 @@ namespace CryptoQuest.Input
 
         void InputActions.IStatusMenuActions.OnNavigate(InputAction.CallbackContext context)
         {
-            if (context.performed) StatusMenuNavigateEvent?.Invoke();
+            // if (context.performed) MenuNavigateEvent?.Invoke();
         }
 
         public void OnECharacterChange(InputAction.CallbackContext context)

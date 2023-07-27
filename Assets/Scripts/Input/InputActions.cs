@@ -1587,6 +1587,15 @@ namespace CryptoQuest.Input
                     ""initialStateCheck"": false
                 },
                 {
+                    ""name"": ""Navigate"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""47fe76c4-be91-437f-9853-fd06feaa9bad"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""StatusMenuConfirmSelect"",
                     ""type"": ""Button"",
                     ""id"": ""6b357178-6e4d-454b-9ef7-e1490c13adbd"",
@@ -1775,6 +1784,215 @@ namespace CryptoQuest.Input
                     ""action"": ""StatusMenuConfirmSelect"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""Gamepad"",
+                    ""id"": ""a778f629-b087-4c25-a665-0bbf83017c63"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Navigate"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""0d961b81-bf37-4057-a11e-912ea00711e4"",
+                    ""path"": ""<Gamepad>/leftStick/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Navigate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""53f9de90-9148-4a2a-8d81-1b4540befc9f"",
+                    ""path"": ""<Gamepad>/rightStick/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Navigate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""876daddc-a502-42da-ab21-7672e48853ec"",
+                    ""path"": ""<Gamepad>/leftStick/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Navigate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""47b3dd9c-13b3-45f0-a958-73a673684e70"",
+                    ""path"": ""<Gamepad>/rightStick/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Navigate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""81ce4c35-8a00-4a58-b04a-88507bdb6ec1"",
+                    ""path"": ""<Gamepad>/leftStick/left"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Navigate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""38cb063b-fb08-4c29-a935-61d598d2d9b6"",
+                    ""path"": ""<Gamepad>/rightStick/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Navigate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""0140769a-7b9c-4c0a-bf20-44d4b72c1d8f"",
+                    ""path"": ""<Gamepad>/leftStick/right"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Navigate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""5c2387a5-be31-400e-a1aa-48e7e2cb5c07"",
+                    ""path"": ""<Gamepad>/rightStick/right"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Navigate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""Keyboard"",
+                    ""id"": ""34af73ff-852b-4294-b971-2066189d412d"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": ""Tap"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Navigate"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""3782810d-ed18-485b-b1e5-d7abacfac36f"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""MnK"",
+                    ""action"": ""Navigate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""a3fd036d-e766-4ada-a23c-5ad5354750ab"",
+                    ""path"": ""<Keyboard>/upArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""MnK"",
+                    ""action"": ""Navigate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""cf270c67-59ab-4f73-ae3e-982d947c7c55"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""MnK"",
+                    ""action"": ""Navigate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""6efa14f6-a7b9-4079-9025-00dd214c9d85"",
+                    ""path"": ""<Keyboard>/downArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""MnK"",
+                    ""action"": ""Navigate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""1048c235-bbd9-46b0-9e04-40dd41188b16"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""MnK"",
+                    ""action"": ""Navigate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""b45016fb-f6e8-4162-8ecf-55e48dd92edb"",
+                    ""path"": ""<Keyboard>/leftArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""MnK"",
+                    ""action"": ""Navigate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""df210caa-5a25-4fdf-a689-cfb5c1f8cb99"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""MnK"",
+                    ""action"": ""Navigate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""6815a298-a5ab-48fc-8d5e-340eaae455e7"",
+                    ""path"": ""<Keyboard>/rightArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""MnK"",
+                    ""action"": ""Navigate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0a002f6d-55dd-48b1-bf67-74e4a44688e4"",
+                    ""path"": ""<Gamepad>/dpad"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Navigate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -1937,6 +2155,7 @@ namespace CryptoQuest.Input
             // StatusMenu/EquipmentsMenu
             m_StatusMenuEquipmentsMenu = asset.FindActionMap("StatusMenu/EquipmentsMenu", throwIfNotFound: true);
             m_StatusMenuEquipmentsMenu_ECharacterChange = m_StatusMenuEquipmentsMenu.FindAction("ECharacterChange", throwIfNotFound: true);
+            m_StatusMenuEquipmentsMenu_Navigate = m_StatusMenuEquipmentsMenu.FindAction("Navigate", throwIfNotFound: true);
             m_StatusMenuEquipmentsMenu_StatusMenuConfirmSelect = m_StatusMenuEquipmentsMenu.FindAction("StatusMenuConfirmSelect", throwIfNotFound: true);
             m_StatusMenuEquipmentsMenu_EBack = m_StatusMenuEquipmentsMenu.FindAction("EBack", throwIfNotFound: true);
             m_StatusMenuEquipmentsMenu_EConfirm = m_StatusMenuEquipmentsMenu.FindAction("EConfirm", throwIfNotFound: true);
@@ -2416,6 +2635,7 @@ namespace CryptoQuest.Input
         private readonly InputActionMap m_StatusMenuEquipmentsMenu;
         private List<IStatusMenuEquipmentsMenuActions> m_StatusMenuEquipmentsMenuActionsCallbackInterfaces = new List<IStatusMenuEquipmentsMenuActions>();
         private readonly InputAction m_StatusMenuEquipmentsMenu_ECharacterChange;
+        private readonly InputAction m_StatusMenuEquipmentsMenu_Navigate;
         private readonly InputAction m_StatusMenuEquipmentsMenu_StatusMenuConfirmSelect;
         private readonly InputAction m_StatusMenuEquipmentsMenu_EBack;
         private readonly InputAction m_StatusMenuEquipmentsMenu_EConfirm;
@@ -2426,6 +2646,7 @@ namespace CryptoQuest.Input
             private @InputActions m_Wrapper;
             public StatusMenuEquipmentsMenuActions(@InputActions wrapper) { m_Wrapper = wrapper; }
             public InputAction @ECharacterChange => m_Wrapper.m_StatusMenuEquipmentsMenu_ECharacterChange;
+            public InputAction @Navigate => m_Wrapper.m_StatusMenuEquipmentsMenu_Navigate;
             public InputAction @StatusMenuConfirmSelect => m_Wrapper.m_StatusMenuEquipmentsMenu_StatusMenuConfirmSelect;
             public InputAction @EBack => m_Wrapper.m_StatusMenuEquipmentsMenu_EBack;
             public InputAction @EConfirm => m_Wrapper.m_StatusMenuEquipmentsMenu_EConfirm;
@@ -2443,6 +2664,9 @@ namespace CryptoQuest.Input
                 @ECharacterChange.started += instance.OnECharacterChange;
                 @ECharacterChange.performed += instance.OnECharacterChange;
                 @ECharacterChange.canceled += instance.OnECharacterChange;
+                @Navigate.started += instance.OnNavigate;
+                @Navigate.performed += instance.OnNavigate;
+                @Navigate.canceled += instance.OnNavigate;
                 @StatusMenuConfirmSelect.started += instance.OnStatusMenuConfirmSelect;
                 @StatusMenuConfirmSelect.performed += instance.OnStatusMenuConfirmSelect;
                 @StatusMenuConfirmSelect.canceled += instance.OnStatusMenuConfirmSelect;
@@ -2465,6 +2689,9 @@ namespace CryptoQuest.Input
                 @ECharacterChange.started -= instance.OnECharacterChange;
                 @ECharacterChange.performed -= instance.OnECharacterChange;
                 @ECharacterChange.canceled -= instance.OnECharacterChange;
+                @Navigate.started -= instance.OnNavigate;
+                @Navigate.performed -= instance.OnNavigate;
+                @Navigate.canceled -= instance.OnNavigate;
                 @StatusMenuConfirmSelect.started -= instance.OnStatusMenuConfirmSelect;
                 @StatusMenuConfirmSelect.performed -= instance.OnStatusMenuConfirmSelect;
                 @StatusMenuConfirmSelect.canceled -= instance.OnStatusMenuConfirmSelect;
@@ -2630,6 +2857,7 @@ namespace CryptoQuest.Input
         public interface IStatusMenuEquipmentsMenuActions
         {
             void OnECharacterChange(InputAction.CallbackContext context);
+            void OnNavigate(InputAction.CallbackContext context);
             void OnStatusMenuConfirmSelect(InputAction.CallbackContext context);
             void OnEBack(InputAction.CallbackContext context);
             void OnEConfirm(InputAction.CallbackContext context);
