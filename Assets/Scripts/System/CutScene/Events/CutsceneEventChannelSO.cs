@@ -1,27 +1,11 @@
-﻿using UnityEngine;
+﻿using IndiGames.Core.Events.ScriptableObjects;
+using UnityEngine;
 using UnityEngine.Events;
 
 namespace CryptoQuest.System.CutScene.Events
 {
-    [CreateAssetMenu(menuName = "Core/Events/Void Event Channel")]
-    public class CutsceneEventChannelSO : ScriptableObject
+    [CreateAssetMenu(menuName = "Crypto Quest/Cutscene/Cutscene Event Channel")]
+    public class CutsceneEventChannelSO : VoidEventChannelSO
     {
-        public UnityAction EventRaised;
-
-        public void RaiseEvent()
-        {
-            OnRaiseEvent();
-        }
-
-        private void OnRaiseEvent()
-        {
-            if (EventRaised == null)
-            {
-                Debug.LogWarning($"Event was raised on {name} but no one was listening.");
-                return;
-            }
-
-            EventRaised.Invoke();
-        }
     }
 }

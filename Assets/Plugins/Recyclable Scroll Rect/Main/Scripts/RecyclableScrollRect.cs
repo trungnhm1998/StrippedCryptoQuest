@@ -49,15 +49,17 @@ namespace PolyAndCode.UI
         private RecyclingSystem _recyclingSystem;
         private Vector2 _prevAnchoredPos;
 
-        // protected override void Start()
-        // {
-        //     vertical = true;
-        //     horizontal = false;
+        protected override void Start()
+        {
+            //defafult(built-in) in scroll rect can have both directions enabled, Recyclable scroll rect can be scrolled in only one direction.
+            //setting default as vertical, Initialize() will set this again. 
+            vertical = true;
+            horizontal = false;
 
-        //     if (!Application.isPlaying) return;
+            if (!Application.isPlaying) return;
 
-        //     if (SelfInitialize) Initialize();
-        // }
+            if (SelfInitialize) Initialize();
+        }
 
         /// <summary>
         /// Initialization when selfInitalize is true. Assumes that data source is set in controller's Awake.

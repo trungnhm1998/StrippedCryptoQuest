@@ -1,4 +1,4 @@
-﻿using CryptoQuest.Events.UI;
+﻿using CryptoQuest.Events.UI.Dialogs;
 using CryptoQuest.Gameplay.Quest.Dialogue;
 using CryptoQuest.System.Dialogue.Builder;
 using CryptoQuest.System.Dialogue.Events;
