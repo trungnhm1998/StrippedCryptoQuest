@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace CryptoQuest.UI.Battle.BattleActionHandler
 {
-    public class BattleActionHandler : BaseGameHandler<IBattleUnit>
+    public class BattleActionHandler : MonoGameHandler<IBattleUnit>
     {
     }
 }
