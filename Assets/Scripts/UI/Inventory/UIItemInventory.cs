@@ -3,9 +3,9 @@ using UnityEngine.UI;
 using PolyAndCode.UI;
 using UnityEngine.Localization.Components;
 using UnityEngine.Events;
-using CryptoQuest.Item.Inventory;
 using UnityEngine.EventSystems;
 using CryptoQuest.Gameplay.Inventory;
+using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
 using UnityEngine.Localization;
 
 namespace CryptoQuest.UI.Inventory

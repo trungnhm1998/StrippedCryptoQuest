@@ -25,8 +25,7 @@ namespace CryptoQuest.Character.MonoBehaviours
             East = 3,
         }
 
-        [SerializeField, ReadOnly] private EFacingDirection _facingDirection = EFacingDirection.South;
-        public EFacingDirection FacingDirection => _facingDirection;
+        [SerializeField, ReadOnly] protected EFacingDirection _facingDirection = EFacingDirection.South;
 
         public virtual bool IsWalking
         {

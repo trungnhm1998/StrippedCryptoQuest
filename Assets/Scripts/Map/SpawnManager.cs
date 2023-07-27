@@ -12,12 +12,12 @@ namespace CryptoQuest.Map
         [SerializeField] private GameplayBus _gameplayBus;
         [SerializeField] private HeroBehaviour _heroPrefab;
         [SerializeField] private PathStorageSO _pathStorage;
+        [SerializeField] private CharacterBehaviour.EFacingDirection _defaultFacingDirection;
 
         [Header("Listening on")]
         [SerializeField] private VoidEventChannelSO _sceneLoadedEventChannelSO;
 
         private GoFrom[] _mapEntrances;
-
         private Transform _defaultSpawnPoint;
 
         private void Awake()
@@ -42,12 +42,18 @@ namespace CryptoQuest.Map
 
         private void OnEnable()
         {
-            _sceneLoadedEventChannelSO.EventRaised += SpawnPlayer;
+            _sceneLoadedEventChannelSO.EventRaised += HandleSceneLoaded;
         }
 
         private void OnDisable()
         {
-            _sceneLoadedEventChannelSO.EventRaised -= SpawnPlayer;
+            _sceneLoadedEventChannelSO.EventRaised -= HandleSceneLoaded;
+        }
+
+        private void HandleSceneLoaded()
+        {
+            SpawnPlayer();
+            _inputMediator.EnableMapGameplayInput();
         }
 
         private void SpawnPlayer()
@@ -57,8 +63,9 @@ namespace CryptoQuest.Map
             var spawnPoint = GetSpawnPoint();
 
             var heroInstance = Instantiate(_heroPrefab, spawnPoint.position, Quaternion.identity);
-            if (spawnPoint.gameObject.TryGetComponent<GoFrom>(out var goFrom))
-                heroInstance.SetFacingDirection(goFrom.EntranceFacingDirection);
+            heroInstance.SetFacingDirection(spawnPoint.gameObject.TryGetComponent<GoFrom>(out var goFrom)
+                ? goFrom.EntranceFacingDirection
+                : _defaultFacingDirection);
 
             _gameplayBus.Hero = heroInstance;
             _gameplayBus.RaiseHeroSpawnedEvent();
