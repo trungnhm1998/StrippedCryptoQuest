@@ -33,6 +33,9 @@ namespace CryptoQuest.Input
         public event UnityAction MenuTabPressed;
         public event UnityAction CancelEvent;
 
+        public event UnityAction NextSelectionMenu;
+        public event UnityAction PreviousSelectionMenu;
+
         #endregion
 
         #region Dialogue
@@ -220,6 +223,16 @@ namespace CryptoQuest.Input
         public void OnMouseMove(InputAction.CallbackContext context)
         {
             if (context.phase == InputActionPhase.Performed) MouseMoveEvent?.Invoke();
+        }
+
+        public void OnNextSelectionMenu(InputAction.CallbackContext context)
+        {
+            if (context.performed) NextSelectionMenu?.Invoke();
+        }
+
+        public void OnPreviousSelectionMenu(InputAction.CallbackContext context)
+        {
+            if (context.performed) PreviousSelectionMenu?.Invoke();
         }
 
         #endregion

@@ -34,7 +34,7 @@ namespace CryptoQuest.UI.Dialogs.BattleDialog
             _showBattleDialogEventChannel.EventRaised -= ShowDialog;
             _doneActionEventChannel.EventRaised -= OnUnitDoneAction;
             _gotActionDataEventChannel.EventRaised -= OnGotActionData;
-            _endActionPhaseEventChannel.EventRaised += CloseDialog;
+            _endActionPhaseEventChannel.EventRaised -= CloseDialog;
         }
 
         private void Start()
