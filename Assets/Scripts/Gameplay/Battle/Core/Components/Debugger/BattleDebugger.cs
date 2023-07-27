@@ -113,9 +113,10 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components.Debugger
 
         private void RenderBattleActions()
         {
-            if (!_showActions || _battleManager.CurrentUnit == null) return;
+            if (!_showActions) return;
             GUILayout.BeginVertical();
             AbilitySystemBehaviour currentUnitOwner = _battleManager.CurrentUnit.Owner;
+            if (currentUnitOwner == null) return;
             foreach (AbstractAbility skill in currentUnitOwner.GrantedAbilities.Abilities)
             {
                 GUI.enabled = !skill.IsActive;
@@ -132,8 +133,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components.Debugger
         
         private void RenderSelectTargets()
         {
-            IBattleUnit currentUnit =  _battleManager.CurrentUnit;
-            if (currentUnit == null) return;
+            IBattleUnit currentUnit = _battleManager.CurrentUnit;
             BattleTeam currentUnitOpponent = currentUnit.OpponentTeam;
 
             if (!_showTargetUnit || currentUnitOpponent == null) return;
