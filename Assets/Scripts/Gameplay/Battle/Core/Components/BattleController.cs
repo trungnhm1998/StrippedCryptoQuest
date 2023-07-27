@@ -18,20 +18,20 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components
 
         [Header("Listen Events")]
         [SerializeField] private VoidEventChannelSO _newTurnEventChannel;
-        [SerializeField] private VoidEventChannelSO _battleStartChannelEvent;
+        [SerializeField] private VoidEventChannelSO _battleStartEventChannel;
         [SerializeField] private VoidEventChannelSO _endStrategyPhaseEventChannel;
         
         private void OnEnable()
         {
             _newTurnEventChannel.EventRaised += OnNewTurn;
-            _battleStartChannelEvent.EventRaised += OnBattleStart;
+            _battleStartEventChannel.EventRaised += SetupBattleUIs;
             _endStrategyPhaseEventChannel.EventRaised += OnStategyPhaseEnd;
         }
 
         private void OnDisable()
         {
             _newTurnEventChannel.EventRaised -= OnNewTurn;
-            _battleStartChannelEvent.EventRaised -= OnBattleStart;
+            _battleStartEventChannel.EventRaised -= SetupBattleUIs;
             _endStrategyPhaseEventChannel.EventRaised -= OnStategyPhaseEnd;
             _inputMediator.EnableMapGameplayInput();
         }
@@ -39,14 +39,16 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components
         private void OnNewTurn()
         {
             _batteMenu.SetActive(true);
+            _heroesUI.gameObject.SetActive(true);
             _inputMediator.EnableMenuInput();
         }
 
-        private void OnBattleStart()
+        private void SetupBattleUIs()
         {
             _heroesUI.InitUI(_battleBus.BattleManager.BattleTeam1.BattleUnits);
             _monstersUI.InitUI(_battleBus.BattleManager.BattleTeam2.BattleUnits);
-            _inputMediator.EnableMenuInput();
+            _heroesUI.gameObject.SetActive(false);
+            _batteMenu.SetActive(false);
         }
 
         private void OnStategyPhaseEnd()

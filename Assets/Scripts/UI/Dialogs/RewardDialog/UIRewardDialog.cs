@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using CryptoQuest.Gameplay.Quest;
 using CryptoQuest.Input;
 using UnityEngine;
@@ -8,7 +7,7 @@ using UnityEngine.Localization;
 using UnityEngine.Localization.Components;
 using UnityEngine.UI;
 
-namespace CryptoQuest.UI.Dialogs
+namespace CryptoQuest.UI.Dialogs.RewardDialog
 {
     public class UIRewardDialog : ModalWindow<UIRewardDialog>
     {

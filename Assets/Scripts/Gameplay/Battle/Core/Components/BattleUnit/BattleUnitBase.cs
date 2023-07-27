@@ -27,14 +27,14 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit
         [SerializeField] protected VoidEventChannelSO _doneActionEventChannel;
 
         [Header("Listen Events")]
-        [SerializeField] protected VoidEventChannelSO _doneShowUnitAction;
+        [SerializeField] protected VoidEventChannelSO _doneShowDialogEvent;
 
         public AbstractAbility SelectedSkill { get; protected set; }
 
         public List<AbilitySystemBehaviour> TargetContainer { get; protected set; } = new();
 
-        protected BattleManager _battleManager;
         protected bool _isDead;
+        protected bool _isPerformingAction;
         protected bool _isDoneShowAction;
 
         public virtual void Init(BattleTeam team, AbilitySystemBehaviour owner)
@@ -46,17 +46,18 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit
         protected virtual void OnEnable()
         {
             _hpAttribute.ValueChangeEvent += OnHPChanged;
-            _doneShowUnitAction.EventRaised += OnDoneShowAction;
+            _doneShowDialogEvent.EventRaised += DoneShowAction;
         }
 
         protected virtual void OnDisable()
         {
             _hpAttribute.ValueChangeEvent -= OnHPChanged;
-            _doneShowUnitAction.EventRaised -= OnDoneShowAction;
+            _doneShowDialogEvent.EventRaised -= DoneShowAction;
         }
 
-        private void OnDoneShowAction()
+        private void DoneShowAction()
         {
+            if (!_isPerformingAction) return;
             _isDoneShowAction = true;
         }
 
@@ -121,15 +122,22 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit
 
         public virtual IEnumerator Execute()
         {
+            _isPerformingAction = true;
             Owner.TryActiveAbility(SelectedSkill);
             _doneActionEventChannel.RaiseEvent();
             yield return WaitUntilDoneShowAction();
-            yield return null;
+            _isPerformingAction = false;
         }
 
         private IEnumerator WaitUntilDoneShowAction()
         {
-            yield return new WaitWhile(() => _isDoneShowAction == true);
+            yield return new WaitWhile(() => !_isDoneShowAction && CanAction());
+        }
+
+        private bool CanAction()
+        {
+            // TODO: Check system unable to action tag here
+            return !_isDead;
         }
         
         public virtual IEnumerator Resolve()

@@ -1,8 +1,7 @@
-using CryptoQuest.Gameplay.Quest.Dialogue.ScriptableObject;
+using CryptoQuest.Gameplay.Quest.Dialogue;
 using CryptoQuest.Input;
 using UnityEngine;
 using UnityEngine.Localization.Components;
-using UnityEngine.UI;
 
 namespace CryptoQuest.UI.Dialogs.Dialogue
 {
@@ -10,13 +9,14 @@ namespace CryptoQuest.UI.Dialogs.Dialogue
     {
         [Header("Child Components")]
         [SerializeField] private InputMediatorSO _inputMediator;
-
-        [SerializeField] private LocalizeStringEvent _dialogueLabel;
+        [SerializeField] private LocalizeStringEvent _dialogueText;
+        [SerializeField] private LocalizeStringEvent _npcNameText;
         [SerializeField] private GameObject _npcNameTag;
-        [SerializeField] private Text _npcName;
 
-        private DialogueScriptableObject _dialogue;
+        private IDialogueDef _dialogue;
         private int _currentDialogueIndex = 0;
+
+        public override bool Visible { get; set; }
 
         private void OnEnable()
         {
@@ -49,10 +49,10 @@ namespace CryptoQuest.UI.Dialogs.Dialogue
 
         private void UpdateDialogueWithIndex(int dialogueIndex)
         {
-            _dialogueLabel.StringReference = _dialogue.GetLine(dialogueIndex);
+            _dialogueText.StringReference = _dialogue.GetLine(dialogueIndex);
         }
 
-        public UIDialogue SetDialogue(DialogueScriptableObject dialogueArgs)
+        public UIDialogue SetDialogue(IDialogueDef dialogueArgs)
         {
             _dialogue = dialogueArgs;
             return this;
@@ -69,10 +69,10 @@ namespace CryptoQuest.UI.Dialogs.Dialogue
 
         private void DisplayNPCName()
         {
-            if (_dialogue.NPCName == null)
+            if (_dialogue.SpeakerName.IsEmpty)
                 _npcNameTag.SetActive(false);
             else
-                _npcName.text = _dialogue.NPCName;
+                _npcNameText.StringReference = _dialogue.SpeakerName;
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq.Expressions;
 using UnityEngine;
 using UnityEngine.Events;
@@ -10,7 +10,7 @@ namespace CryptoQuest.Input
 {
     // TODO: Move action map interfaces to separate scriptable objects
     public class InputMediatorSO : ScriptableObject, InputActions.IMapGameplayActions, InputActions.IMenusActions,
-        InputActions.IDialoguesActions, InputActions.IHomeMenuActions
+        InputActions.IDialoguesActions, InputActions.IHomeMenuActions, InputActions.IStatusMenuActions
     {
         #region Events
 
@@ -33,6 +33,9 @@ namespace CryptoQuest.Input
         public event UnityAction CancelEvent;
         public event UnityAction HomeMenuSortEvent;
 
+        public event UnityAction NextSelectionMenu;
+        public event UnityAction PreviousSelectionMenu;
+
         #endregion
 
         #region Dialogue
@@ -47,6 +50,15 @@ namespace CryptoQuest.Input
         public event UnityAction PreviousEvent;
         public event UnityAction ConfirmEvent;
         public event UnityAction HomeMenuCancelEvent;
+
+        #endregion
+
+        #region StatusMenu
+
+        public event UnityAction EnableChangeEquipmentModeEvent;
+        public event UnityAction GoBelowEvent;
+        public event UnityAction GoAboveEvent;
+        public event UnityAction ConfirmSelectEquipmentSlotEvent;
 
         #endregion
 
@@ -84,6 +96,7 @@ namespace CryptoQuest.Input
             _inputActions.MapGameplay.SetCallbacks(this);
             _inputActions.Dialogues.SetCallbacks(this);
             _inputActions.HomeMenu.SetCallbacks(this);
+            _inputActions.StatusMenu.SetCallbacks(this);
         }
 
         public void EnableMenuInput()
@@ -117,6 +130,15 @@ namespace CryptoQuest.Input
             _inputActions.Dialogues.Disable();
             _inputActions.MapGameplay.Disable();
             _inputActions.Menus.Disable();
+        }
+
+        public void EnableStatusMenuInput()
+        {
+            _inputActions.StatusMenu.Enable();
+            _inputActions.Dialogues.Disable();
+            _inputActions.MapGameplay.Disable();
+            _inputActions.Menus.Disable();
+            _inputActions.HomeMenu.Disable();
         }
 
         #endregion
@@ -238,6 +260,16 @@ namespace CryptoQuest.Input
             if (context.phase == InputActionPhase.Performed) MouseMoveEvent?.Invoke();
         }
 
+        public void OnNextSelectionMenu(InputAction.CallbackContext context)
+        {
+            if (context.performed) NextSelectionMenu?.Invoke();
+        }
+
+        public void OnPreviousSelectionMenu(InputAction.CallbackContext context)
+        {
+            if (context.performed) PreviousSelectionMenu?.Invoke();
+        }
+
         public void OnHomeMenuEnableSort(InputAction.CallbackContext context)
         {
             if (context.performed) HomeMenuSortEvent?.Invoke();
@@ -280,6 +312,30 @@ namespace CryptoQuest.Input
         public void OnHomeMenuCancel(InputAction.CallbackContext context)
         {
             if (context.performed) HomeMenuCancelEvent?.Invoke();
+        }
+
+        #endregion
+
+        #region StatusMenu
+
+        public void OnEnableChangeEquipmentMode(InputAction.CallbackContext context)
+        {
+            if (context.performed) EnableChangeEquipmentModeEvent?.Invoke();
+        }
+
+        public void OnGoBelow(InputAction.CallbackContext context)
+        {
+            if (context.performed) GoBelowEvent?.Invoke();
+        }
+
+        public void OnGoAbove(InputAction.CallbackContext context)
+        {
+            if (context.performed) GoAboveEvent?.Invoke();
+        }
+        
+        public void OnConfirmSelectEquipmentSlot(InputAction.CallbackContext context)
+        {
+            if (context.performed) ConfirmSelectEquipmentSlotEvent?.Invoke();
         }
 
         #endregion

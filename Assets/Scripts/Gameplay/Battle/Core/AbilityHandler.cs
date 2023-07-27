@@ -1,11 +1,9 @@
 using CryptoQuest.Events.Gameplay;
-using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.ScriptableObjects;
 using UnityEngine;
-using UnityEngine.Serialization;
 
-namespace CryptoQuest
+namespace CryptoQuest.Gameplay.Battle.Core
 {
     public class AbilityHandler : MonoBehaviour
     {
