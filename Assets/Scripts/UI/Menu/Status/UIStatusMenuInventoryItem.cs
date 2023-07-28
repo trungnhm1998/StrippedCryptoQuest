@@ -32,9 +32,7 @@ namespace CryptoQuest.UI.Menu.Status
         [SerializeField] private GameObject _selectEffect;
         [SerializeField] private AssetReferenceT<GameObject> _assetReference;
         [SerializeField] private Transform _unequipContainer;
-
-        private const string UNEQUIP_KEY = "ITEM_UNEQUIP";
-        private const string ITEM_KEY = "ITEM_RUSTY_SWORD";
+        
         private GameObject _unequipSlot;
 
         public void Select()
@@ -54,10 +52,7 @@ namespace CryptoQuest.UI.Menu.Status
                 if (_unequipSlot == null)
                     _assetReference.LoadAssetAsync<GameObject>().Completed += UIPrefabLoaded;
                 else
-                {
-                    _name.SetEntry(UNEQUIP_KEY);
                     _unequipSlot.SetActive(true);
-                }
             }
             else
             {
@@ -65,7 +60,6 @@ namespace CryptoQuest.UI.Menu.Status
                 {
                     _unequipSlot.SetActive(false);
                 }
-                _name.SetEntry(ITEM_KEY);
                 _name.StringReference = data.Name;
                 _itemOrder.text = index.ToString();
             }
