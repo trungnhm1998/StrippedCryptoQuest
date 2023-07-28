@@ -27,18 +27,23 @@ namespace CryptoQuestEditor.System.CutsceneSystem.CustomTimelineTracks.YarnSpinn
 
             if (GUILayout.Button(Target.YarnNodeName, EditorStyles.popup))
             {
-                var provider = CreateInstance<YarnNodeEntriesProvider>();
-                provider.YarnProject = Target.YarnProj;
+                var provider = CreateInstance<YarnNodeEntriesProvider>(); // TODO: cache this with yarn project
+                provider.YarnProject = Target.Project;
                 provider.EntrySelected = nodeName =>
                 {
                     Debug.Log($"Selected {nodeName}");
                     Target.YarnNodeName = nodeName;
                     serializedObject.ApplyModifiedProperties();
+                    // save the asset
+                    EditorUtility.SetDirty(target);
+                    AssetDatabase.SaveAssets();
                 };
                 SearchWindow.Open(
                     new SearchWindowContext(GUIUtility.GUIToScreenPoint(Event.current.mousePosition)),
                     provider);
             }
+
+            GUILayout.Button("Save"); // this is a hack to get the YarnNodeName to update
 
             EditorGUILayout.EndHorizontal();
             serializedObject.ApplyModifiedProperties();
