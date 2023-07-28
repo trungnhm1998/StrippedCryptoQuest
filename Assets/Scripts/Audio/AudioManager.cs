@@ -1,108 +1,107 @@
-﻿using CryptoQuest.Audio.AudioData;
-using CryptoQuest.Audio.SoundEmitters;
+﻿using System.Collections.Generic;
+using CryptoQuest.Audio.AudioData;
+using CryptoQuest.Audio.AudioEmitters;
+using CryptoQuest.Audio.Settings;
 using IndiGames.Core.Events.ScriptableObjects;
 using UnityEngine;
 
 namespace CryptoQuest.Audio
 {
-    [RequireComponent((typeof(SoundEmitterPool)))]
+    [RequireComponent((typeof(AudioEmitterPool)))]
     public class AudioManager : MonoBehaviour
     {
         [Header("SoundEmitters Pool")]
-        [SerializeField] private SoundEmitterPool _pool = default;
+        [SerializeField]
+        private AudioEmitterPool _pool = default;
 
         [SerializeField] private int _soundEmitterPoolSize = 10;
 
         [Header("Listening on")]
-        [SerializeField] private AudioCueEventChannelSO _sfxEventChannel;
+        [SerializeField]
+        private AudioCueEventChannelSO _sfxEventChannel;
 
         [SerializeField] private AudioCueEventChannelSO _backgroundMusicEventChannel;
-        [SerializeField] private FloatEventChannelSO _sfxVolumeEventChannel;
-        [SerializeField] private FloatEventChannelSO _backgroundMusicVolumeEventChannel;
-        [SerializeField] private FloatEventChannelSO _masterVolumeEventChannel;
 
         [Header("Audio control")]
-        [Range(0f, 1f)]
-        [SerializeField] private float _masterVolume = 1f;
+        [SerializeField]
+        private AudioSettingsSO _settings;
 
-        [Range(0f, 1f)]
-        [SerializeField] private float _backgroundMusicVolume = 1f;
-
-        [Range(0f, 1f)]
-        [SerializeField] private float _sfxVolume = 1f;
-
-        private SoundEmitterStore _soundEmitterStore;
-        private SoundEmitter _musicSoundEmitter;
-
-
-        private void OnValidate()
-        {
-            _pool = GetComponent<SoundEmitterPool>();
-        }
+        private readonly AudioEmitterCache _audioEmitterCache = new();
+        private AudioEmitter _playingMusicAudioEmitter;
 
         private void Awake()
         {
-            _soundEmitterStore = new SoundEmitterStore();
-
             _pool.Create(_soundEmitterPoolSize);
             _pool.SetParent(this.transform);
         }
 
         private void OnEnable()
         {
-            _sfxEventChannel.OnAudioCuePlayRequested += PlayAudioCue;
-            _sfxEventChannel.OnAudioCueStopRequested += StopAudioCue;
-            _sfxEventChannel.OnAudioCueFinishRequested += FinishAudioCue;
+            _sfxEventChannel.AudioPlayRequested += PlayAudioCue;
+            _sfxEventChannel.AudioStopRequested += StopAudioCue;
 
-            _backgroundMusicEventChannel.OnAudioCuePlayRequested += PlayBackgroundMusic;
-            _backgroundMusicEventChannel.OnAudioCueStopRequested += StopBackgroundMusic;
+            _backgroundMusicEventChannel.AudioPlayRequested += PlayBackgroundMusic;
+            _backgroundMusicEventChannel.AudioStopRequested += StopBackgroundMusic;
 
-            _masterVolumeEventChannel.EventRaised += ChangeMasterVolume;
-            _backgroundMusicVolumeEventChannel.EventRaised += ChangeBackgroundMusicVolume;
-            _sfxVolumeEventChannel.EventRaised += ChangeSfxVolume;
+            _settings.VolumeChanged += ChangeMasterVolume;
         }
 
         private void OnDisable()
         {
-            _sfxEventChannel.OnAudioCuePlayRequested -= PlayAudioCue;
-            _sfxEventChannel.OnAudioCueStopRequested -= StopAudioCue;
-            _sfxEventChannel.OnAudioCueFinishRequested -= FinishAudioCue;
+            _sfxEventChannel.AudioPlayRequested -= PlayAudioCue;
+            _sfxEventChannel.AudioStopRequested -= StopAudioCue;
 
-            _backgroundMusicEventChannel.OnAudioCuePlayRequested -= PlayBackgroundMusic;
-            _backgroundMusicEventChannel.OnAudioCueStopRequested -= StopBackgroundMusic;
+            _backgroundMusicEventChannel.AudioPlayRequested -= PlayBackgroundMusic;
+            _backgroundMusicEventChannel.AudioStopRequested -= StopBackgroundMusic;
 
-            _masterVolumeEventChannel.EventRaised -= ChangeMasterVolume;
-            _backgroundMusicVolumeEventChannel.EventRaised -= ChangeBackgroundMusicVolume;
-            _sfxVolumeEventChannel.EventRaised -= ChangeSfxVolume;
+            _settings.VolumeChanged -= ChangeMasterVolume;
+
+            ReleaseAllSoundEmitters();
         }
 
-        private AudioCueKey PlayAudioCue(AudioCueSO audioCue, AudioConfigurationSO settings)
+        private void ReleaseAllSoundEmitters()
+        {
+            foreach (var cueToEmitters in _audioEmitterCache.Cache)
+            {
+                foreach (var soundEmitter in cueToEmitters.Value)
+                {
+                    soundEmitter.AudioFinishedPlaying -= AudioFinishedPlaying;
+                    soundEmitter.Stop();
+                    _pool.Release(soundEmitter);
+                }
+            }
+        }
+
+        private void PlayAudioCue(AudioCueSO audioCue)
         {
             AudioClip[] currentClips = audioCue.GetClips();
-            SoundEmitter[] soundEmitters = new SoundEmitter[currentClips.Length];
+            List<AudioEmitter> audioEmitters = new();
 
-            var clipIndex = currentClips.Length;
-            for (int i = 0; i < clipIndex; i++)
+            var numberOfClips = currentClips.Length;
+            for (int i = 0; i < numberOfClips; i++)
             {
-                soundEmitters[i] = _pool.Request();
-                if (soundEmitters[i] == null) continue;
+                var audioEmitter = _pool.Request();
+                if (audioEmitter == null)
+                {
+                    Debug.LogWarning($"Cannot play audio cue {audioCue} - no sound emitters available");
+                    continue;
+                }
 
-                soundEmitters[i].PlayAudioClip(currentClips[i], settings, audioCue.Looping);
-                if (!audioCue.Looping) soundEmitters[i].OnSoundFinishedPlaying += OnSoundFinishedPlaying;
+                audioEmitter.PlayAudioClip(currentClips[i], audioCue.Looping);
+                if (!audioCue.Looping) audioEmitter.AudioFinishedPlaying += AudioFinishedPlaying;
+                audioEmitters.Add(audioEmitter);
             }
 
-            return _soundEmitterStore.Add(audioCue, soundEmitters);
+            _audioEmitterCache.Add(audioCue, audioEmitters);
         }
 
 
-        private bool StopAudioCue(AudioCueKey key)
+        private void StopAudioCue(AudioCueSO key)
         {
-            bool isFound = _soundEmitterStore.Get(key, out SoundEmitter[] soundEmitters);
-
-            if (!isFound)
+            if (!_audioEmitterCache.TryGetValue(key, out var soundEmitters))
             {
                 Debug.LogWarning($"AudioCueKey {key} not found in the SoundEmitterStore");
-                return false;
+                return;
             }
 
             foreach (var soundEmitter in soundEmitters)
@@ -110,31 +109,10 @@ namespace CryptoQuest.Audio
                 StopAndCleanEmitter(soundEmitter);
             }
 
-            _soundEmitterStore.Remove(key);
-
-            return true;
+            _audioEmitterCache.Remove(key);
         }
 
-        private bool FinishAudioCue(AudioCueKey key)
-        {
-            bool isFound = _soundEmitterStore.Get(key, out SoundEmitter[] soundEmitters);
-
-            if (!isFound)
-            {
-                Debug.LogWarning($"AudioCueKey {key} not found in the SoundEmitterStore");
-                return false;
-            }
-
-            foreach (var soundEmitter in soundEmitters)
-            {
-                soundEmitter.Finish();
-                soundEmitter.OnSoundFinishedPlaying += OnSoundFinishedPlaying;
-            }
-
-            return true;
-        }
-
-        private AudioCueKey PlayBackgroundMusic(AudioCueSO audioCue, AudioConfigurationSO audioConfiguration)
+        private void PlayBackgroundMusic(AudioCueSO audioCue)
         {
             float fadeDuration = 2f;
             float startTime = 0f;
@@ -142,23 +120,20 @@ namespace CryptoQuest.Audio
             if (IsAudioPlaying())
             {
                 AudioClip musicToPlay = audioCue.GetClips()[0];
-                if (_musicSoundEmitter.GetClip() == musicToPlay) return AudioCueKey.Invalid;
-                startTime = _musicSoundEmitter.FadeMusicOut(fadeDuration);
+                if (_playingMusicAudioEmitter.GetClip() == musicToPlay) return;
+                startTime = _playingMusicAudioEmitter.FadeMusicOut(fadeDuration);
             }
 
-            _musicSoundEmitter = _pool.Request();
-            _musicSoundEmitter.FadeMusicIn(audioCue.GetClips()[0], audioConfiguration, fadeDuration, startTime);
-            _musicSoundEmitter.OnSoundFinishedPlaying += OnSoundFinishedPlaying;
-
-            return AudioCueKey.Invalid;
+            _playingMusicAudioEmitter = _pool.Request();
+            _playingMusicAudioEmitter.FadeMusicIn(audioCue.GetClips()[0], fadeDuration, startTime);
+            _playingMusicAudioEmitter.AudioFinishedPlaying += AudioFinishedPlaying;
         }
 
-        private bool StopBackgroundMusic(AudioCueKey key)
+        private void StopBackgroundMusic(AudioCueSO arg0)
         {
-            if (!IsAudioPlaying()) return false;
+            if (!IsAudioPlaying()) return;
 
-            _musicSoundEmitter.Stop();
-            return true;
+            _playingMusicAudioEmitter.Stop();
         }
 
         private void ChangeMasterVolume(float value)
@@ -166,30 +141,18 @@ namespace CryptoQuest.Audio
             Debug.Log($"Change master volume: {value}");
         }
 
-        private void ChangeBackgroundMusicVolume(float value)
+        private void AudioFinishedPlaying(AudioEmitter audioEmitter)
         {
-            Debug.Log($"Change bg music volume: {value}");
+            StopAndCleanEmitter(audioEmitter);
         }
 
-        private void ChangeSfxVolume(float value)
+        private void StopAndCleanEmitter(AudioEmitter audioEmitter)
         {
-            Debug.Log($"Change sfx  volume: {value}");
+            audioEmitter.AudioFinishedPlaying -= AudioFinishedPlaying;
+            audioEmitter.Stop();
+            _pool.Release(audioEmitter);
         }
 
-        private void OnSoundFinishedPlaying(SoundEmitter soundEmitter)
-        {
-            StopAndCleanEmitter(soundEmitter);
-        }
-
-        private void StopAndCleanEmitter(SoundEmitter soundEmitter)
-        {
-            if (soundEmitter.IsLoop()) return;
-
-            soundEmitter.OnSoundFinishedPlaying -= OnSoundFinishedPlaying;
-            soundEmitter.Stop();
-            _pool.Release(soundEmitter);
-        }
-
-        private bool IsAudioPlaying() => _musicSoundEmitter != null && _musicSoundEmitter.IsPlaying();
+        private bool IsAudioPlaying() => _playingMusicAudioEmitter != null && _playingMusicAudioEmitter.IsPlaying();
     }
 }

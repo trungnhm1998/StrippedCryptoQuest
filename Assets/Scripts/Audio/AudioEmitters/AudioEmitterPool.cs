@@ -1,13 +1,13 @@
 using UnityEngine;
 using UnityEngine.Pool;
 
-namespace CryptoQuest.Audio.SoundEmitters
+namespace CryptoQuest.Audio.AudioEmitters
 {
-    public class SoundEmitterPool : MonoBehaviour
+    public class AudioEmitterPool : MonoBehaviour
     {
-        [SerializeField] private SoundEmitter _prefab = default;
+        [SerializeField] private AudioEmitter _prefab = default;
 
-        private IObjectPool<SoundEmitter> _pool;
+        private IObjectPool<AudioEmitter> _pool;
         private Transform _poolRoot;
 
         private const bool COLLECTION_CHECK = true;
@@ -37,37 +37,37 @@ namespace CryptoQuest.Audio.SoundEmitters
 
         public void Create(int poolSize)
         {
-            _pool = new ObjectPool<SoundEmitter>(OnCreateSound, OnGetSound, OnReleaseSound, OnDestroySound,
+            _pool = new ObjectPool<AudioEmitter>(OnCreateSound, OnGetSound, OnReleaseSound, OnDestroySound,
                 COLLECTION_CHECK, DEFAULT_POOL_SIZE, poolSize);
         }
 
-        public SoundEmitter Request()
+        public AudioEmitter Request()
         {
             return _pool.Get();
         }
 
-        public void Release(SoundEmitter soundEmitter)
+        public void Release(AudioEmitter audioEmitter)
         {
-            soundEmitter.ReleasePool();
+            audioEmitter.ReleasePool();
         }
 
-        private void OnDestroySound(SoundEmitter obj)
+        private void OnDestroySound(AudioEmitter obj)
         {
             Destroy(obj.gameObject);
         }
 
-        private void OnReleaseSound(SoundEmitter obj)
+        private void OnReleaseSound(AudioEmitter obj)
         {
             obj.gameObject.SetActive(false);
         }
 
-        private void OnGetSound(SoundEmitter obj)
+        private void OnGetSound(AudioEmitter obj)
         {
             obj.transform.SetAsFirstSibling();
             obj.gameObject.SetActive(true);
         }
 
-        private SoundEmitter OnCreateSound()
+        private AudioEmitter OnCreateSound()
         {
             var soundEmitter = Instantiate(_prefab, PoolRoot.transform);
             soundEmitter.Init(_pool);
