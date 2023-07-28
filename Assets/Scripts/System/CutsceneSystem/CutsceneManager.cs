@@ -2,18 +2,21 @@
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Playables;
+#if UNITY_EDITOR
+using UnityEditor.Timeline;
+#endif
 
 namespace CryptoQuest.System.CutsceneSystem
 {
     public class CutsceneManager : MonoBehaviour
     {
         [Header("Listening to")]
-        [SerializeField] private PlayCutsceneEvent _playCutsceneEvent;
+        [SerializeField]
+        private PlayCutsceneEvent _playCutsceneEvent;
 
         [SerializeField] private PauseCutsceneEvent _pauseCutsceneEvent;
-        
-        [Header("Raise on")]
-        [SerializeField] private UnityEvent _onCutsceneCompleted;
+
+        [Header("Raise on")] [SerializeField] private UnityEvent _onCutsceneCompleted;
 
         /// <summary>
         /// There are multiple directors/cutscenes on a scene, we will try to inject to correct playing director
@@ -63,10 +66,14 @@ namespace CryptoQuest.System.CutsceneSystem
                 Debug.LogWarning(
                     "A request to pause a cutscene was received, but no playable director was previously saved, " +
                     "probably a cutscene was played from editor, and not from the CutsceneTrigger.");
-                return;
+
+#if UNITY_EDITOR
+                _currentPlayableDirector = TimelineEditor.inspectedDirector;
+#endif
             }
 
-            _currentPlayableDirector.playableGraph.GetRootPlayable(0).SetSpeed(isPaused ? 0 : 1);
+            if (_currentPlayableDirector)
+                _currentPlayableDirector.playableGraph.GetRootPlayable(0).SetSpeed(isPaused ? 0 : 1);
         }
 
         public void ResumeCutscene()
