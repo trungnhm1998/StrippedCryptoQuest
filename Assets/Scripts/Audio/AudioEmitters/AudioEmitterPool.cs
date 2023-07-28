@@ -5,13 +5,13 @@ namespace CryptoQuest.Audio.AudioEmitters
 {
     public class AudioEmitterPool : MonoBehaviour
     {
+        private const bool COLLECTION_CHECK = true;
+        private const int DEFAULT_POOL_SIZE = 10;
+
         [SerializeField] private AudioEmitter _prefab = default;
 
         private IObjectPool<AudioEmitter> _pool;
         private Transform _poolRoot;
-
-        private const bool COLLECTION_CHECK = true;
-        private const int DEFAULT_POOL_SIZE = 10;
 
         private Transform PoolRoot
         {

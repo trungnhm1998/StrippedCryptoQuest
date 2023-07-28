@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit;
 using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
@@ -7,9 +6,7 @@ using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
 using IndiGames.GameplayAbilitySystem.EffectSystem;
 using IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects.EffectExecutionCalculation;
 using UnityEngine;
-using UnityEngine.Localization.Settings;
 using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Events;
-using UnityEngine.Localization.SmartFormat.PersistentVariables;
 
 namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Effects.EffectExecutionCalculation
 {
@@ -59,7 +56,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Effects.EffectExecu
         {
             if (_ownerUnit == null || _targetUnit == null) return;
 
-            TakeDamageActionData.Log.Clear();
+            TakeDamageActionData.Init(_targetUnit.UnitInfo.Owner);
             TakeDamageActionData.AddStringVar("unitName", _targetUnit.UnitInfo.DisplayName);
             TakeDamageActionData.AddFloatVar("damage", damage);
             ActionEventSO.RaiseEvent(TakeDamageActionData);
