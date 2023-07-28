@@ -1,15 +1,14 @@
-using UnityEngine;
-using CryptoQuest.Gameplay.Battle;
 using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Events;
+using UnityEngine;
 
-namespace CryptoQuest.UI.Dialogs.BattleDialog
+namespace CryptoQuest.UI.Dialogs.PagingDialog
 {
     public class PagingDialogController : AbstractDialogController<UIPagingDialog>
     {
         [Header("Listen Events")]
         [SerializeField] private PagingDialogEventChannelSO _showPagingDialogEventChannel;
 
-        private PagingDialog _dialogue;
+        private Gameplay.Battle.Core.ScriptableObjects.Events.PagingDialog _dialogue;
 
         protected override void RegisterEvents()
         {
@@ -21,7 +20,7 @@ namespace CryptoQuest.UI.Dialogs.BattleDialog
             _showPagingDialogEventChannel.EventRaised -= ShowDialog;
         }
 
-        private void ShowDialog(PagingDialog dialogue)
+        private void ShowDialog(Gameplay.Battle.Core.ScriptableObjects.Events.PagingDialog dialogue)
         {
             _dialogue = dialogue;
             LoadAssetDialog();

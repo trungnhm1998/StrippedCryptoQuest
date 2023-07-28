@@ -6,7 +6,7 @@ using UnityEngine.Timeline;
 namespace CryptoQuestEditor.System.CutsceneSystem.CustomTimelineTracks.GameObjectPositionMarker
 {
     [CustomTimelineEditor(
-        typeof(CryptoQuest.System.CutsceneSystem.CustomTimelineTracks.GameObjectPosition.GameObjectPositionMarker))]
+        typeof(CryptoQuest.System.CutsceneSystem.CustomTimelineTracks.GameObjectPositionMarker.GameObjectPositionMarker))]
     public class GameObjectPositionMarkerEditor : MarkerEditor
     {
         const string OVERLAY_PATH = "Assets/CryptoQuestEditor/Scripts/System/CutsceneSystem/CustomTimelineTracks/GameObjectPositionMarker/Stylesheets/Icons/timeline_annotation_overlay.png";
@@ -23,8 +23,7 @@ namespace CryptoQuestEditor.System.CutsceneSystem.CustomTimelineTracks.GameObjec
         {
             // The `marker argument needs to be cast as the appropriate type, usually the one specified in the `CustomTimelineEditor` attribute
             var annotation =
-                marker as CryptoQuest.System.CutsceneSystem.CustomTimelineTracks.GameObjectPosition.
-                    GameObjectPositionMarker;
+                marker as CryptoQuest.System.CutsceneSystem.CustomTimelineTracks.GameObjectPositionMarker.GameObjectPositionMarker;
             if (annotation == null) return;
 
             GUI.DrawTexture(region.markerRegion, OverlayTexture);
@@ -36,8 +35,7 @@ namespace CryptoQuestEditor.System.CutsceneSystem.CustomTimelineTracks.GameObjec
             // The `marker argument needs to be cast as the appropriate type, usually the one specified in the `CustomTimelineEditor` attribute
             var
                 annotation =
-                    marker as CryptoQuest.System.CutsceneSystem.CustomTimelineTracks.GameObjectPosition.
-                        GameObjectPositionMarker;
+                    marker as CryptoQuest.System.CutsceneSystem.CustomTimelineTracks.GameObjectPositionMarker.GameObjectPositionMarker;
             return annotation == null
                 ? base.GetMarkerOptions(marker)
                 : new MarkerDrawOptions { tooltip = annotation.parent.name + " Position" };
@@ -49,8 +47,7 @@ namespace CryptoQuestEditor.System.CutsceneSystem.CustomTimelineTracks.GameObjec
 
             // set the marker position to center of scene view
             var annotation =
-                marker as CryptoQuest.System.CutsceneSystem.CustomTimelineTracks.GameObjectPosition.
-                    GameObjectPositionMarker;
+                marker as CryptoQuest.System.CutsceneSystem.CustomTimelineTracks.GameObjectPositionMarker.GameObjectPositionMarker;
             if (annotation && SceneView.lastActiveSceneView)
                 annotation.Position = SceneView.lastActiveSceneView.pivot;
         }

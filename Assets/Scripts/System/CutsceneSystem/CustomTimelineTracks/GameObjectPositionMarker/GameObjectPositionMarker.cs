@@ -3,7 +3,7 @@ using UnityEngine.Localization;
 using UnityEngine.Playables;
 using UnityEngine.Timeline;
 
-namespace CryptoQuest.System.CutsceneSystem.CustomTimelineTracks.GameObjectPosition
+namespace CryptoQuest.System.CutsceneSystem.CustomTimelineTracks.GameObjectPositionMarker
 {
     [CustomStyle("GameObjectPositionMarkerStyle")]
     [DisplayName("GameObjectPosition1")]

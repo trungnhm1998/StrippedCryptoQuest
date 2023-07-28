@@ -1,12 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
-using CryptoQuest.UI.SpiralFX;
 using DG.Tweening;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
-namespace CryptoQuest
+namespace CryptoQuest.UI.SpiralFX
 {
     public class SpiralEffectController : MonoBehaviour
     {

@@ -4,14 +4,13 @@ using UnityEngine;
 namespace CryptoQuestEditor.System.CutsceneSystem.CustomTimelineTracks.GameObjectPositionMarker
 {
     [CustomEditor(
-        typeof(CryptoQuest.System.CutsceneSystem.CustomTimelineTracks.GameObjectPosition.GameObjectPositionMarker))]
+        typeof(CryptoQuest.System.CutsceneSystem.CustomTimelineTracks.GameObjectPositionMarker.GameObjectPositionMarker))]
     public class GameObjectPositionEditor : Editor
     {
         private bool _authoring;
 
-        private CryptoQuest.System.CutsceneSystem.CustomTimelineTracks.GameObjectPosition.GameObjectPositionMarker
-            Marker => target as CryptoQuest.System.CutsceneSystem.CustomTimelineTracks.GameObjectPosition.
-            GameObjectPositionMarker;
+        private CryptoQuest.System.CutsceneSystem.CustomTimelineTracks.GameObjectPositionMarker.GameObjectPositionMarker
+            Marker => target as CryptoQuest.System.CutsceneSystem.CustomTimelineTracks.GameObjectPositionMarker.GameObjectPositionMarker;
 
         private void OnEnable()
         {

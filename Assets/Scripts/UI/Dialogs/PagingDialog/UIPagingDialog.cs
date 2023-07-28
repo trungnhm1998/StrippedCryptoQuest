@@ -1,11 +1,10 @@
 using CryptoQuest.Input;
-using UnityEngine;
-using UnityEngine.UI;
-using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Events;
 using DG.Tweening;
 using IndiGames.Core.Events.ScriptableObjects;
+using UnityEngine;
+using UnityEngine.UI;
 
-namespace CryptoQuest.UI.Dialogs.BattleDialog
+namespace CryptoQuest.UI.Dialogs.PagingDialog
 {
     public class UIPagingDialog : ModalWindow<UIPagingDialog>
     {
@@ -19,7 +18,7 @@ namespace CryptoQuest.UI.Dialogs.BattleDialog
         [Header("Raise Events")]
         [SerializeField] private VoidEventChannelSO _onPagingDialogClose;
 
-        private PagingDialog _dialogue;
+        private Gameplay.Battle.Core.ScriptableObjects.Events.PagingDialog _dialogue;
         private int _currentPageIndex = 0;
         private bool _isShowingLines = false;
 
@@ -80,7 +79,7 @@ namespace CryptoQuest.UI.Dialogs.BattleDialog
             PlayDialoguePageWithIndex(0);
         }
 
-        public UIPagingDialog SetDialogue(PagingDialog dialogueArgs)
+        public UIPagingDialog SetDialogue(Gameplay.Battle.Core.ScriptableObjects.Events.PagingDialog dialogueArgs)
         {
             _dialogue = dialogueArgs;
             return this;

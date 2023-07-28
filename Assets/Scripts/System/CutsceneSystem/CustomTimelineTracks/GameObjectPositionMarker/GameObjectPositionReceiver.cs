@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.Playables;
 
-namespace CryptoQuest.System.CutsceneSystem.CustomTimelineTracks.GameObjectPosition
+namespace CryptoQuest.System.CutsceneSystem.CustomTimelineTracks.GameObjectPositionMarker
 {
     public class GameObjectPositionReceiver : MonoBehaviour, INotificationReceiver
     {
