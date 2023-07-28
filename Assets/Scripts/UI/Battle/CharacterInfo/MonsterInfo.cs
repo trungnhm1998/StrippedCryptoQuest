@@ -25,5 +25,7 @@ namespace CryptoQuest.UI.Battle.CharacterInfo
                 gameObject.SetActive(false);
             }
         }
+
+        protected override void OnSelected(string name) { }
     }
 }

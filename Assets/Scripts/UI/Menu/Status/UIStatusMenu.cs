@@ -3,33 +3,23 @@ using System.Collections;
 using System.Collections.Generic;
 using CryptoQuest.Input;
 using CryptoQuest.UI.Menu.MockData;
-using UnityEngine;
 using IndiGames.Core.Events.ScriptableObjects;
+using UnityEngine;
 
 namespace CryptoQuest.UI.Menu.Status
 {
-    public class UIStatusMenu : MonoBehaviour
+    public class UIStatusMenu : UIMenuPanel
     {
-        [SerializeField] private InputMediatorSO _inputMediator;
-        [SerializeField] private VoidEventChannelSO _enableChangeEquipmentModeEvent;
-        
-
-        private void OnEnable()
+        protected override void EnablePanelInput()
         {
             _inputMediator.EnableStatusMenuInput();
-            _inputMediator.EnableChangeEquipmentModeEvent += OnEnableEnableChangeEquipmentModeMode;
+            _inputMediator.StatusMenuCancelEvent += BackToNavBar;
         }
 
-        private void OnDisable()
+        private void BackToNavBar()
         {
-            _inputMediator.EnableChangeEquipmentModeEvent -= OnEnableEnableChangeEquipmentModeMode;
+            _inputMediator.StatusMenuCancelEvent -= BackToNavBar;
+            PanelUnfocus?.Invoke(_typeSO);
         }
-
-        private void OnEnableEnableChangeEquipmentModeMode()
-        {
-            _enableChangeEquipmentModeEvent.RaiseEvent();
-        }
-
-        private void LoadCurrentCharacter() { }
     }
 }

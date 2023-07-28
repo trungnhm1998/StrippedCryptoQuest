@@ -1,9 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using CryptoQuest.Input;
+using CryptoQuest.Menu;
+using CryptoQuest.UI.Inventory;
 using IndiGames.Core.Events.ScriptableObjects;
 using PolyAndCode.UI;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using NotImplementedException = System.NotImplementedException;
 
 namespace CryptoQuest.UI.Menu.Status
 {
@@ -11,8 +15,12 @@ namespace CryptoQuest.UI.Menu.Status
     {
         [Header("Configs")]
         [SerializeField] private RecyclableScrollRect _scrollRect;
+        [SerializeField] private AutoScrollRect _autoScrollRect;
         [SerializeField] private InputMediatorSO _inputMediator;
+
+        [Header("Events")]
         [SerializeField] private VoidEventChannelSO _confirmSelectEquipmentSlotEvent;
+        [SerializeField] private VoidEventChannelSO _turnOffInventoryEvent;
 
         // TODO: REMOVE WHEN WE HAVE REAL DATA
         #region MOCK
@@ -25,6 +33,18 @@ namespace CryptoQuest.UI.Menu.Status
         [SerializeField] private GameObject _contents;
 
         private List<UIStatusMenuInventoryItem.Data> _mockDataList = new();
+        private UIStatusMenuInventoryItem _itemInformation;
+
+        private int _currentIndex;
+        private int CurrentIndex
+        {
+            get => _currentIndex;
+            set
+            {
+                int count = _itemCount;
+                _currentIndex = (value + count) % count;
+            }
+        }
 
         private void OnEnable()
         {
@@ -32,15 +52,22 @@ namespace CryptoQuest.UI.Menu.Status
             _confirmSelectEquipmentSlotEvent.EventRaised += ViewInventory;
         }
 
+
         private void OnDisable()
         {
-            _inputMediator.EnableStatusMenuInput();
             _confirmSelectEquipmentSlotEvent.EventRaised -= ViewInventory;
+        }
+
+        private void FixedUpdate()
+        {
+            _autoScrollRect.UpdateScrollRectTransform();
+
         }
 
         private void ViewInventory()
         {
             _contents.SetActive(true);
+            RegisterInventoryInputEvents();
 
             // TODO: REMOVE WHEN WE HAVE REAL DATA
             for (int i = 0; i < _itemCount; i++)
@@ -49,6 +76,30 @@ namespace CryptoQuest.UI.Menu.Status
             }
 
             _scrollRect.Initialize(this);
+        }
+
+        private void OnTurnOffInventory()
+        {
+            _turnOffInventoryEvent.RaiseEvent();
+            _contents.SetActive(false);
+        }
+
+        private void OnStatusMenuConfirmSelect()
+        {
+            _contents.SetActive(false);
+            UnregisterInventoryInputEvents();
+        }
+
+        private void RegisterInventoryInputEvents()
+        {
+            // _inputMediator.StatusMenuNavigateEvent += SelectItemHandle;
+            // _inputMediator.StatusMenuConfirmSelectEvent += OnStatusMenuConfirmSelect;
+        }
+
+        private void UnregisterInventoryInputEvents()
+        {
+            // _inputMediator.StatusMenuNavigateEvent -= SelectItemHandle;
+            // _inputMediator.StatusMenuConfirmSelectEvent -= OnStatusMenuConfirmSelect;
         }
 
         #region PLUGINS 
@@ -68,8 +119,8 @@ namespace CryptoQuest.UI.Menu.Status
         /// <param name="index">query from real data using this index</param>
         public void SetCell(ICell cell, int index)
         {
-            UIStatusMenuInventoryItem equipmentRow = cell as UIStatusMenuInventoryItem;
-            equipmentRow.Init(_mockDataList[index], index);
+            UIStatusMenuInventoryItem itemRow = cell as UIStatusMenuInventoryItem;
+            itemRow.Init(_mockDataList[index], index);
         }
         #endregion
     }

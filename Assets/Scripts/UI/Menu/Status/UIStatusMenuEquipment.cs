@@ -11,8 +11,10 @@ namespace CryptoQuest.UI.Menu.Status
     {
         [Header("Configs")]
         [SerializeField] private InputMediatorSO _inputMediator;
-        [SerializeField] private VoidEventChannelSO _enableChangeEquipmentModeEvent;
+
+        [Header("Events")]
         [SerializeField] private VoidEventChannelSO _confirmSelectEquipmentSlotEvent;
+        [SerializeField] private VoidEventChannelSO _turnOffInventoryEvent;
 
         [Header("Game Components")]
         [SerializeField] private List<UIStatusMenuEquipmentSlot> _equipmentSlots;
@@ -33,16 +35,19 @@ namespace CryptoQuest.UI.Menu.Status
 
         private void OnEnable()
         {
-            _enableChangeEquipmentModeEvent.EventRaised += ChangeEquipmentModeEnabled;
+            _inputMediator.EnableChangeEquipmentModeEvent += ChangeEquipmentModeEnabled;
+            _turnOffInventoryEvent.EventRaised += RegisterChangeEquipmentInputEvents;
         }
 
         private void OnDisable()
         {
-            _enableChangeEquipmentModeEvent.EventRaised -= ChangeEquipmentModeEnabled;
+            _inputMediator.EnableChangeEquipmentModeEvent -= ChangeEquipmentModeEnabled;
+            _turnOffInventoryEvent.EventRaised -= RegisterChangeEquipmentInputEvents;
         }
 
         private void ChangeEquipmentModeEnabled()
         {
+            _inputMediator.EnableStatusEquipmentMenuInput();
             Init();
         }
 
@@ -83,24 +88,25 @@ namespace CryptoQuest.UI.Menu.Status
             SelectEquipmentSlot();
         }
 
-        private void OnConfirmSelect()
+        private void OnStatusMenuConfirmSelect()
         {
             _confirmSelectEquipmentSlotEvent.RaiseEvent();
             _navigations.SetActive(false);
+            UnregisterChangeEquipmentInputEvents();
         }
 
         private void RegisterChangeEquipmentInputEvents()
         {
             _inputMediator.GoBelowEvent += GoToBelowSlot;
             _inputMediator.GoAboveEvent += GoToAboveSlot;
-            _inputMediator.ConfirmSelectEquipmentSlotEvent += OnConfirmSelect;
+            _inputMediator.StatusMenuConfirmSelectEvent += OnStatusMenuConfirmSelect;
         }
         
         private void UnregisterChangeEquipmentInputEvents()
         {
             _inputMediator.GoBelowEvent -= GoToBelowSlot;
             _inputMediator.GoAboveEvent -= GoToAboveSlot;
-            _inputMediator.ConfirmSelectEquipmentSlotEvent -= OnConfirmSelect;
+            _inputMediator.StatusMenuConfirmSelectEvent -= OnStatusMenuConfirmSelect;
         }
     }
 }
