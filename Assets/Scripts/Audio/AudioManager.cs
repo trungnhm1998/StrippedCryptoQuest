@@ -72,7 +72,12 @@ namespace CryptoQuest.Audio
             }
         }
 
-
+        /// <summary>
+        /// All SFX are one shot, so we can release the emitter back to the pool
+        /// Let the pool destroy it if it's not needed anymore
+        /// ┐(´～｀)┌
+        /// </summary>
+        /// <param name="key"></param>
         private void StopSFX(AudioCueSO key) { }
 
         private void PlayBackgroundMusic(AudioCueSO audioCue)
@@ -101,7 +106,7 @@ namespace CryptoQuest.Audio
 
         private void ChangeMasterVolume(float value)
         {
-            Debug.Log($"Change master volume: {value}");
+            _playingMusicAudioEmitter.SetVolume(value);
         }
 
         private void AudioFinishedPlaying(AudioEmitterValue audioEmitterValue)

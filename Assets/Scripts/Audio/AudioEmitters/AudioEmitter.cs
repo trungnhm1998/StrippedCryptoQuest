@@ -74,6 +74,7 @@ namespace CryptoQuest.Audio.AudioEmitters
         public AudioClip GetClip() => _audioSource.clip;
         public bool IsPlaying() => _audioSource.isPlaying;
         public bool IsLoop() => _audioSource.loop;
+        public void SetVolume(float value) => _audioSource.volume = value;
         public void ReleasePool() => _objectPool?.Release(this);
         private void OnFinishedPlay() => AudioFinishedPlaying?.Invoke(_emitterValue);
     }
