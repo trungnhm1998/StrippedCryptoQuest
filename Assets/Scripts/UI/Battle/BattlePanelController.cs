@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using CryptoQuest.Events.Gameplay;
 using CryptoQuest.Gameplay.Battle.Core.Components;
@@ -33,6 +34,7 @@ namespace CryptoQuest.UI.Battle
 
         [SerializeField] private BattleBus _battleBus;
         [SerializeField] private VoidEventChannelSO _onNewTurnEvent;
+        [SerializeField] private VoidEventChannelSO _onEscapeFailedEvent;
 
         [Header("UI Panels")]
         [SerializeField] private UIBattleCommandMenu _uiBattleCommandMenu;
@@ -64,7 +66,7 @@ namespace CryptoQuest.UI.Battle
             _onNewTurnEvent.EventRaised += SetupNewTurn;
 
             _inputMediator.CancelEvent += OnClickCancel;
-
+            _onEscapeFailedEvent.EventRaised += OnEscapeFailed;
             _battleManager = _battleBus.BattleManager;
             SetupChain(_normalAttackChain);
         }
@@ -79,6 +81,7 @@ namespace CryptoQuest.UI.Battle
             _onNewTurnEvent.EventRaised -= SetupNewTurn;
 
             _inputMediator.CancelEvent -= OnClickCancel;
+            _onEscapeFailedEvent.EventRaised -= OnEscapeFailed;
         }
 
         private void SetupChain(BattleActionHandler.BattleActionHandler[] chain)
@@ -99,6 +102,18 @@ namespace CryptoQuest.UI.Battle
             }
         }
 
+        private void OnEscapeFailed()
+        {
+            StartCoroutine(ReinitializeUI());
+        }
+
+        private IEnumerator ReinitializeUI()
+        {
+            yield return new WaitForSeconds(1);
+            _commandPanel.Clear();
+            _uiBattleCommandMenu.Initialize();
+        }
+
         private void OnClickCancel()
         {
             _commandPanel.Clear();
@@ -109,8 +124,7 @@ namespace CryptoQuest.UI.Battle
         {
             _commandPanel.Clear();
             _retreatHandler.CurrentBattleInfo = _battleManager.CurrentBattleInfo;
-            _retreatHandler.Handle(currentUnit); 
-            // _battleManager.OnEscape();
+            _retreatHandler.Handle(currentUnit);
         }
 
         private void OnButtonGuardClickedHandler()

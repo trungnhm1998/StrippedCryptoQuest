@@ -7,6 +7,7 @@ using CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit;
 using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects;
 using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Skills;
 using IndiGames.Core.Events.ScriptableObjects;
+using IndiGames.GameplayAbilitySystem.AbilitySystem.ScriptableObjects;
 using UnityEngine;
 
 namespace CryptoQuest.Gameplay.Battle.Core.Components
@@ -31,7 +32,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components
         [SerializeField] private VoidEventChannelSO _sceneLoadedEventChannel;
 
         [SerializeField] private VoidEventChannelSO _endActionPhaseEventChannel;
-        [SerializeField] private RetreatAbilitySO _retreatAbility;
+        [SerializeField] private SpecialAbilitySO _retreatAbility;
         public IBattleUnit CurrentUnit { get; set; } = NullBattleUnit.Instance;
         public int Turn { get; private set; }
         public BaseBattleSpawner BattleSpawner { get; private set; }
@@ -56,14 +57,14 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components
         {
             _endActionPhaseEventChannel.EventRaised += OnEndTurn;
             _sceneLoadedEventChannel.EventRaised += StartBattle;
-            _retreatAbility.OnRetreatSucceed += OnEscape;
+            _retreatAbility.OnAbilityActivated += OnRetreatActivated;
         }
 
         private void OnDisable()
         {
             _endActionPhaseEventChannel.EventRaised -= OnEndTurn;
             _sceneLoadedEventChannel.EventRaised -= StartBattle;
-            _retreatAbility.OnRetreatSucceed -= OnEscape;
+            _retreatAbility.OnAbilityActivated -= OnRetreatActivated;
         }
 
 #if UNITY_EDITOR
@@ -126,6 +127,11 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components
         private void OnEndTurn()
         {
             IsEndTurn = true;
+        }
+
+        private void OnRetreatActivated(AbilityScriptableObject abilityScriptableObject)
+        {
+            OnEscape();
         }
 
         public void OnEscape()
