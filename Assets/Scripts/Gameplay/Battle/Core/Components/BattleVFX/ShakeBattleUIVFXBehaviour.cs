@@ -1,4 +1,5 @@
 using IndiGames.Core.Events.ScriptableObjects;
+using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data;
 using UnityEngine;
 
 namespace CryptoQuest.Gameplay.Battle.Core.Components.BattleVFX
@@ -11,8 +12,9 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components.BattleVFX
         [Header("Raise Events")]
         [SerializeField] private VoidEventChannelSO _shakeBattleUIEventChannel;
 
-        private void Start()
+        public override void Init(BattleActionDataSO data)
         {
+            base.Init(data);
             _shakeBattleUIEventChannel.RaiseEvent();
         }
 
