@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ea35b069c6be7ca4faa4566dad71ffb8, type: 3}
-  m_Name: TakeDamageActionData
+  m_Name: EnemyTakeDamageActionData
   m_EditorClassIdentifier: 
   <Log>k__BackingField:
     m_TableReference:
@@ -23,23 +23,23 @@ MonoBehaviour:
     m_LocalVariables:
     - name: unitName
       variable:
-        rid: 8776625637241651223
+        rid: 8776625682445762573
     - name: damage
       variable:
-        rid: 8776625637241651224
-  <EffectPrefab>k__BackingField:
-    m_AssetGUID: 
+        rid: 8776625682445762574
+  <VFXPrefab>k__BackingField:
+    m_AssetGUID: d906a1ff3019a2d4bac7d42546578461
     m_SubObjectName: 
     m_SubObjectType: 
     m_EditorAssetChanged: 0
   references:
     version: 2
     RefIds:
-    - rid: 8776625637241651223
+    - rid: 8776625682445762573
       type: {class: StringVariable, ns: UnityEngine.Localization.SmartFormat.PersistentVariables, asm: Unity.Localization}
       data:
-        m_Value: Hero
-    - rid: 8776625637241651224
+        m_Value: SlimeA
+    - rid: 8776625682445762574
       type: {class: FloatVariable, ns: UnityEngine.Localization.SmartFormat.PersistentVariables, asm: Unity.Localization}
       data:
-        m_Value: 1
+        m_Value: 50
