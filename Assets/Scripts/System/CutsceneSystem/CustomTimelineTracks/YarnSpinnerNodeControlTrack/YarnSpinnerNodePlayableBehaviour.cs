@@ -28,13 +28,13 @@ namespace CryptoQuest.System.CutsceneSystem.CustomTimelineTracks.YarnSpinnerNode
         {
             if (_played)
                 return;
+            _played = true;
 
             if (Application.isPlaying)
             {
                 if (!playable.GetGraph().IsPlaying()) return;
                 if (string.IsNullOrEmpty(YarnNodeName)) return;
                 PlayDialogueEvent.RaiseEvent(YarnNodeName);
-                _played = true;
             }
 #if UNITY_EDITOR
             else

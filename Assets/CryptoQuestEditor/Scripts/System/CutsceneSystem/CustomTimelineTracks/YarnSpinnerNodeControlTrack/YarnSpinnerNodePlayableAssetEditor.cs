@@ -3,6 +3,7 @@ using System.Linq;
 using CryptoQuest.System.CutsceneSystem.CustomTimelineTracks.YarnSpinnerNodeControlTrack;
 using UnityEditor;
 using UnityEditor.Experimental.GraphView;
+using UnityEditor.Timeline;
 using UnityEngine;
 using UnityEngine.Events;
 using Yarn.Unity;
@@ -28,7 +29,7 @@ namespace CryptoQuestEditor.System.CutsceneSystem.CustomTimelineTracks.YarnSpinn
             if (GUILayout.Button(Target.YarnNodeName, EditorStyles.popup))
             {
                 var provider = CreateInstance<YarnNodeEntriesProvider>(); // TODO: cache this with yarn project
-                provider.YarnProject = Target.Project;
+                provider.YarnProject = TimelineEditor.inspectedDirector.GetGenericBinding(TimelineEditor.selectedClip.GetParentTrack()) as YarnProject;
                 provider.EntrySelected = nodeName =>
                 {
                     Debug.Log($"Selected {nodeName}");
@@ -43,7 +44,7 @@ namespace CryptoQuestEditor.System.CutsceneSystem.CustomTimelineTracks.YarnSpinn
                     provider);
             }
 
-            GUILayout.Button("Save"); // this is a hack to get the YarnNodeName to update
+            GUILayout.Button("Refresh"); // this is a hack to get the YarnNodeName to update
 
             EditorGUILayout.EndHorizontal();
             serializedObject.ApplyModifiedProperties();
