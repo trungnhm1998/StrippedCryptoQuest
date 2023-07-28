@@ -51,7 +51,7 @@ namespace CryptoQuest.UI.Battle.CommandsMenu
         {
             Initialize();
             _currentUnit = unit;
-            _currentUnitName.text = unit.UnitData.DisplayName;
+            _currentUnitName.text = unit.UnitInfo.DisplayName;
         }
 
         private void CacheButtonTexts()

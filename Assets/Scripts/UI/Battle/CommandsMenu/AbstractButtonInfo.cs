@@ -21,7 +21,7 @@ namespace CryptoQuest.UI.Battle.CommandsMenu
     [Serializable]
     public class ButtonInfo : AbstractButtonInfo
     {
-        public ButtonInfo(IBattleUnit unit) : base(unit.UnitData.DisplayName) { }
+        public ButtonInfo(IBattleUnit unit) : base(unit.UnitInfo.DisplayName) { }
 
         public override void HandleClick() { }
     }
@@ -33,7 +33,7 @@ namespace CryptoQuest.UI.Battle.CommandsMenu
         private IBattleUnit _unit;
 
         public SkillAbstractButtonInfo(IBattleUnit unit, Action<IBattleUnit> setTargetCallback)
-            : base(unit.UnitData.DisplayName)
+            : base(unit.UnitInfo.DisplayName)
         {
             _unit = unit;
             _setTargetCallback = setTargetCallback;

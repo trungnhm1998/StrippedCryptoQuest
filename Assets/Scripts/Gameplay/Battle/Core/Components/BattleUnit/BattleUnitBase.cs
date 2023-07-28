@@ -17,6 +17,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit
         public BattleTeam OwnerTeam {get; set;}
         public bool IsDead => _isDead;
         public virtual AbstractAbility NormalAttack {get; protected set;}
+        public CharacterInformation UnitInfo { get; private set; }
 
         [SerializeField] protected AttributeScriptableObject _hpAttribute;
 
@@ -41,6 +42,13 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit
         {
             OwnerTeam = team;
             Owner = owner;
+            CreateCharacterInfo();
+        }
+
+        public void CreateCharacterInfo()
+        {
+            if (UnitInfo != null) return;
+            UnitInfo = UnitData.CreateCharacterInfo();
         }
 
         protected virtual void OnEnable()

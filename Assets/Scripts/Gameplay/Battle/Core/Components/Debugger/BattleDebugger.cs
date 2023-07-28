@@ -143,7 +143,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components.Debugger
             {
                 if (target == null) continue;
                 var targetUnit = target.GetComponent<IBattleUnit>();
-                var buttonLabel = $"Target {targetUnit.UnitData.DisplayName}";
+                var buttonLabel = $"Target {targetUnit.UnitInfo.DisplayName}";
                 if (GUILayout.Button(buttonLabel))
                 {
                     currentUnit.SelectSingleTarget(target);

@@ -22,9 +22,11 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components.BattleSpawner
                 var statInit = member.GetComponent<StatsInitializer>();
                 statInit.InitStats(enemy);
 
-                var battleUnit = member.GetComponent<IBattleUnit>();
+                var battleUnit = member.GetComponent<BattleUnitBase>();
                 battleUnit.UnitData = enemy;
-                ProcessEnemiesName(data, enemy);
+                battleUnit.CreateCharacterInfo();
+                
+                ProcessEnemiesName(data, battleUnit.UnitInfo);
             }
         }
     }

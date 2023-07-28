@@ -2,7 +2,6 @@ using System.Collections;
 using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data;
 using IndiGames.GameplayAbilitySystem.AbilitySystem;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
-using ILogger = CryptoQuest.Gameplay.Battle.Core.Components.Logger.ILogger;
 
 namespace CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit
 {
@@ -14,6 +13,8 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit
         AbstractAbility NormalAttack { get; }
         
         CharacterDataSO UnitData { get; set; }
+        CharacterInformation UnitInfo { get; }
+
         void Init(BattleTeam team, AbilitySystemBehaviour owner);
         void SetOpponentTeams(BattleTeam opponentTeam);
         IEnumerator Prepare();
