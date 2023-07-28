@@ -67,7 +67,7 @@ namespace CryptoQuest.Audio
                     continue;
                 }
 
-                audioEmitter.PlayAudioClip(currentClips[i], audioCue.Looping);
+                audioEmitter.PlayAudioClip(currentClips[i], _settings, audioCue.Looping);
                 if (!audioCue.Looping) audioEmitter.AudioFinishedPlaying += AudioFinishedPlaying;
             }
         }
@@ -89,7 +89,7 @@ namespace CryptoQuest.Audio
 
             if (_playingMusicAudioEmitter == null)
                 _playingMusicAudioEmitter = _pool.Request();
-            _playingMusicAudioEmitter.FadeMusicIn(audioCue.GetClips()[0], fadeDuration, startTime);
+            _playingMusicAudioEmitter.FadeMusicIn(audioCue.GetClips()[0], _settings, fadeDuration, startTime);
         }
 
         private void StopBackgroundMusic(AudioCueSO arg0)
@@ -101,8 +101,9 @@ namespace CryptoQuest.Audio
 
         private void ChangeMasterVolume(float value)
         {
-            Debug.Log($"Change master volume: {value}");
+            _playingMusicAudioEmitter.SetVolume(value);
         }
+
 
         private void AudioFinishedPlaying(AudioEmitterValue audioEmitterValue)
         {
@@ -115,6 +116,7 @@ namespace CryptoQuest.Audio
             audioEmitterValue.Stop();
             audioEmitterValue.ReleaseToPool();
         }
+
 
         private bool IsAudioPlaying() => _playingMusicAudioEmitter != null && _playingMusicAudioEmitter.IsPlaying();
     }

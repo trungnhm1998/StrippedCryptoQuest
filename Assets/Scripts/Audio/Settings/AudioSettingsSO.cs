@@ -6,9 +6,7 @@ namespace CryptoQuest.Audio.Settings
 {
     public class AudioSettingsSO : ScriptableObject
     {
-        [SerializeField, HideInInspector]
-        private float _volume = 1f;
-
+        [SerializeField, HideInInspector] private float _volume = 1f;
         public event UnityAction<float> VolumeChanged;
 
         public float Volume
@@ -19,6 +17,11 @@ namespace CryptoQuest.Audio.Settings
                 _volume = value;
                 this.CallEventSafely(VolumeChanged, _volume);
             }
+        }
+
+        public void ApplySettings(AudioSource audioSource)
+        {
+            audioSource.volume = _volume;
         }
     }
 }
