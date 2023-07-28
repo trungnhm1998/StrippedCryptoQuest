@@ -1,12 +1,10 @@
-using UnityEngine;
-using System.Collections.Generic;
-using System;
-
 namespace CryptoQuest.GameHandler
 {
-    public interface IGameHandler
+    public interface IGameHandler<T>
     {
-        void Handle(object request);
-        IGameHandler SetNext(IGameHandler nextHandler);
+        IGameHandler<T> NextHandler { get; }
+        void Handle(T request);
+        void Handle();
+        IGameHandler<T> SetNext(IGameHandler<T> nextHandler);
     }
 }
