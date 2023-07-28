@@ -28,15 +28,13 @@ namespace CryptoQuest.UI.Battle
         [SerializeField] private BattleActionHandler.BattleActionHandler _retreatHandler;
         [SerializeField] private BattleActionHandler.BattleActionHandler[] _skillAttackChain;
 
-        [Header("Events")]
-        [SerializeField] private InputMediatorSO _inputMediator;
+        [Header("Events")] [SerializeField] private InputMediatorSO _inputMediator;
 
         [SerializeField] private BattleBus _battleBus;
         [SerializeField] private VoidEventChannelSO _onNewTurnEvent;
         [SerializeField] private VoidEventChannelSO _onEscapeFailedEvent;
 
-        [Header("UI Panels")]
-        [SerializeField] private UIBattleCommandMenu _uiBattleCommandMenu;
+        [Header("UI Panels")] [SerializeField] private UIBattleCommandMenu _uiBattleCommandMenu;
 
         [SerializeField] private UICommandPanel _commandPanel;
 
@@ -102,22 +100,17 @@ namespace CryptoQuest.UI.Battle
             }
         }
 
-        private void OnEscapeFailed()
-        {
-            StartCoroutine(ReinitializeUI());
-        }
+        private void OnEscapeFailed() => Invoke(nameof(ReinitializeUI), 1f);
 
-        private IEnumerator ReinitializeUI()
+        private void ReinitializeUI()
         {
-            yield return new WaitForSeconds(1);
             _commandPanel.Clear();
             _uiBattleCommandMenu.Initialize();
         }
 
         private void OnClickCancel()
         {
-            _commandPanel.Clear();
-            _uiBattleCommandMenu.Initialize();
+            ReinitializeUI();
         }
 
         private void OnButtonEscapeClickedHandler(IBattleUnit currentUnit)

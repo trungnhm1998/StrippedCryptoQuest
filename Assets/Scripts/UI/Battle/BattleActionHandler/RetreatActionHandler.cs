@@ -20,17 +20,17 @@ namespace CryptoQuest.UI.Battle.BattleActionHandler
         public override void Handle(IBattleUnit currentUnit)
         {
             if (currentUnit == null) return;
-            float probabilityOfEscape =
-                BattleCalculator.CalculateProbabilityOfEscape(GetTargetMaxAttributeValue(currentUnit),
-                    GetOwnerAttributeValue(currentUnit));
-            float randomValue = Random.value;
-            Debug.Log("Probability of escape: " + probabilityOfEscape + " Random value: " + randomValue);
-            if (randomValue > probabilityOfEscape || !CurrentBattleInfo.IsBattleEscapable)
+            if (!IsAbleToRetreat(currentUnit))
             {
                 _onEscapeFailedEvent.RaiseEvent();
                 return;
             }
 
+            Retreat(currentUnit);
+        }
+
+        private void Retreat(IBattleUnit currentUnit)
+        {
             AbilitySystemBehaviour currentUnitOwner = currentUnit.Owner;
             AbstractAbility retreatAbility = currentUnitOwner.GiveAbility(RetreatAbilitySO);
             currentUnit.SelectSkill(retreatAbility);
@@ -43,10 +43,7 @@ namespace CryptoQuest.UI.Battle.BattleActionHandler
             foreach (var target in currentUnit.OpponentTeam.Members)
             {
                 target.AttributeSystem.GetAttributeValue(TargetedAttributeSO, out var targetAttributeValue);
-                if (targetAttributeValue.CurrentValue > targetMaxAttributeValue)
-                {
-                    targetMaxAttributeValue = targetAttributeValue.CurrentValue;
-                }
+                targetMaxAttributeValue = Mathf.Max(targetMaxAttributeValue, targetAttributeValue.CurrentValue);
             }
 
             return targetMaxAttributeValue;
@@ -56,6 +53,16 @@ namespace CryptoQuest.UI.Battle.BattleActionHandler
         {
             currentUnit.Owner.AttributeSystem.GetAttributeValue(TargetedAttributeSO, out var ownerAttributeValue);
             return ownerAttributeValue.CurrentValue;
+        }
+
+        private bool IsAbleToRetreat(IBattleUnit currentUnit)
+        {
+            float probabilityOfEscape =
+                BattleCalculator.CalculateProbabilityOfEscape(GetTargetMaxAttributeValue(currentUnit),
+                    GetOwnerAttributeValue(currentUnit));
+            float randomValue = Random.value;
+            Debug.Log("Probability of escape: " + probabilityOfEscape + " Random value: " + randomValue);
+            return randomValue > probabilityOfEscape || !CurrentBattleInfo.IsBattleEscapable;
         }
     }
 }

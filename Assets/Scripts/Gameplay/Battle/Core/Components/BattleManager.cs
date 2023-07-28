@@ -19,17 +19,15 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components
         [SerializeField] private StateSO _battleEndState;
         [SerializeField] private BattleBus _battleBus;
 
-        [field: SerializeField]
-        public BattleTeam BattleTeam1 { get; protected set; }
+        [field: SerializeField] public BattleTeam BattleTeam1 { get; protected set; }
 
-        [field: SerializeField]
-        public BattleTeam BattleTeam2 { get; protected set; }
+        [field: SerializeField] public BattleTeam BattleTeam2 { get; protected set; }
 
-        [Header("Raise Events")]
-        [SerializeField] private VoidEventChannelSO _newTurnEventChannel;
+        [Header("Raise Events")] [SerializeField]
+        private VoidEventChannelSO _newTurnEventChannel;
 
-        [Header("Listen Events")]
-        [SerializeField] private VoidEventChannelSO _sceneLoadedEventChannel;
+        [Header("Listen Events")] [SerializeField]
+        private VoidEventChannelSO _sceneLoadedEventChannel;
 
         [SerializeField] private VoidEventChannelSO _endActionPhaseEventChannel;
         [SerializeField] private SpecialAbilitySO _retreatAbility;
@@ -38,14 +36,14 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components
         public BaseBattleSpawner BattleSpawner { get; private set; }
         public List<IBattleUnit> BattleUnits { get; private set; } = new();
         public bool IsEndTurn { get; private set; }
-        private BattleInfo _currentBattleInfo;
-        public BattleInfo CurrentBattleInfo => _currentBattleInfo;
+        public BattleInfo CurrentBattleInfo { get; private set; }
 
         protected void Awake()
         {
             BattleSpawner = GetComponent<BaseBattleSpawner>();
             _battleBus.BattleManager = this;
-            _currentBattleInfo.IsBattleEscapable = BattleSpawner.IsBattleEscapale();
+            BattleInfo currentBattleInfo = CurrentBattleInfo;
+            currentBattleInfo.IsBattleEscapable = BattleSpawner.IsBattleEscapale();
         }
 
         protected virtual void StartBattle()
