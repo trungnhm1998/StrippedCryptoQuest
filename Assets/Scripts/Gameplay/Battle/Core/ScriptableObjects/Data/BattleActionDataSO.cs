@@ -11,7 +11,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data
         [field: SerializeField]
         public LocalizedString Log { get; private set; }
         [field: SerializeField]
-        public AssetReference EffectPrefab { get; private set; }
+        public AssetReference VFXPrefab { get; private set; }
 
         public void AddStringVar(string variableName, string value)
         {
