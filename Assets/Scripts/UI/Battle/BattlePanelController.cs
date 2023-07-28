@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using CryptoQuest.Events.Gameplay;
 using CryptoQuest.Gameplay.Battle.Core.Components;
 using CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit;
 using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects;
+using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Skills;
 using CryptoQuest.Input;
 using CryptoQuest.UI.Battle.CommandsMenu;
 using IndiGames.Core.Events.ScriptableObjects;
+using IndiGames.GameplayAbilitySystem.AbilitySystem.ScriptableObjects;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Serialization;
@@ -19,7 +22,7 @@ namespace CryptoQuest.UI.Battle
         public UnityAction<IBattleUnit> OnButtonSkillClicked = delegate { };
         public UnityAction<IBattleUnit> OnButtonItemClicked = delegate { };
         public UnityAction OnButtonGuardClicked = delegate { };
-        public UnityAction OnButtonEscapeClicked = delegate { };
+        public UnityAction<IBattleUnit> OnButtonEscapeClicked = delegate { };
 
 
         [SerializeField] private BattleActionHandler.BattleActionHandler[] _normalAttackChain;
@@ -102,11 +105,12 @@ namespace CryptoQuest.UI.Battle
             _uiBattleCommandMenu.Initialize();
         }
 
-        private void OnButtonEscapeClickedHandler()
+        private void OnButtonEscapeClickedHandler(IBattleUnit currentUnit)
         {
             _commandPanel.Clear();
-            _battleManager.OnEscape();
-            _retreatHandler.Handle(_battleManager.CurrentUnit);
+            _retreatHandler.CurrentBattleInfo = _battleManager.CurrentBattleInfo;
+            _retreatHandler.Handle(currentUnit); 
+            // _battleManager.OnEscape();
         }
 
         private void OnButtonGuardClickedHandler()

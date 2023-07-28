@@ -5,6 +5,7 @@ using CryptoQuest.FSM.ScriptableObjects;
 using CryptoQuest.Gameplay.Battle.Core.Components.BattleSpawner;
 using CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit;
 using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects;
+using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Skills;
 using IndiGames.Core.Events.ScriptableObjects;
 using UnityEngine;
 
@@ -19,6 +20,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components
 
         [field: SerializeField]
         public BattleTeam BattleTeam1 { get; protected set; }
+
         [field: SerializeField]
         public BattleTeam BattleTeam2 { get; protected set; }
 
@@ -27,19 +29,22 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components
 
         [Header("Listen Events")]
         [SerializeField] private VoidEventChannelSO _sceneLoadedEventChannel;
-        [SerializeField] private VoidEventChannelSO _endActionPhaseEventChannel;
 
+        [SerializeField] private VoidEventChannelSO _endActionPhaseEventChannel;
+        [SerializeField] private RetreatAbilitySO _retreatAbility;
         public IBattleUnit CurrentUnit { get; set; } = NullBattleUnit.Instance;
         public int Turn { get; private set; }
         public BaseBattleSpawner BattleSpawner { get; private set; }
         public List<IBattleUnit> BattleUnits { get; private set; } = new();
-
         public bool IsEndTurn { get; private set; }
+        private BattleInfo _currentBattleInfo;
+        public BattleInfo CurrentBattleInfo => _currentBattleInfo;
 
         protected void Awake()
         {
             BattleSpawner = GetComponent<BaseBattleSpawner>();
             _battleBus.BattleManager = this;
+            _currentBattleInfo.IsBattleEscapable = BattleSpawner.IsBattleEscapale();
         }
 
         protected virtual void StartBattle()
@@ -51,12 +56,14 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components
         {
             _endActionPhaseEventChannel.EventRaised += OnEndTurn;
             _sceneLoadedEventChannel.EventRaised += StartBattle;
+            _retreatAbility.OnRetreatSucceed += OnEscape;
         }
 
         private void OnDisable()
         {
             _endActionPhaseEventChannel.EventRaised -= OnEndTurn;
             _sceneLoadedEventChannel.EventRaised -= StartBattle;
+            _retreatAbility.OnRetreatSucceed -= OnEscape;
         }
 
 #if UNITY_EDITOR
@@ -69,7 +76,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components
                 OnEscape();
             }
         }
-#endif 
+#endif
 
         public void InitBattleTeams()
         {
@@ -99,7 +106,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components
             {
                 IBattleUnit unit = BattleUnits[i];
                 if (!unit.IsDead) continue;
-                
+
                 BattleUnits.Remove(unit);
             }
         }
@@ -120,10 +127,15 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components
         {
             IsEndTurn = true;
         }
-        
+
         public void OnEscape()
         {
             _stateMachine.SetCurrentState(_battleEndState);
         }
-    }   
+    }
+
+    public struct BattleInfo
+    {
+        public bool IsBattleEscapable;
+    }
 }
