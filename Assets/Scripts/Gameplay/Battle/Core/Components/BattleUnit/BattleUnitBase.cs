@@ -42,7 +42,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit
         {
             OwnerTeam = team;
             Owner = owner;
-            Reset();
+            ResetUnit();
         }
 
         protected virtual void OnEnable()
@@ -144,11 +144,11 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit
 
         public virtual IEnumerator Resolve()
         {
-            Reset();
+            ResetUnit();
             yield return null;
         }
 
-        public void Reset()
+        public void ResetUnit()
         {
             SelectedSkill = null;
             TargetContainer.Clear();
