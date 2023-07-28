@@ -18,10 +18,5 @@ namespace CryptoQuest.Audio.Settings
                 this.CallEventSafely(VolumeChanged, _volume);
             }
         }
-
-        public void ApplySettings(AudioSource audioSource)
-        {
-            audioSource.volume = _volume;
-        }
     }
 }

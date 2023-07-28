@@ -25,12 +25,11 @@ namespace CryptoQuest.Audio.AudioEmitters
         private IObjectPool<AudioEmitter> _objectPool;
         public void Init(IObjectPool<AudioEmitter> pool) => _objectPool = pool;
 
-        public void PlayAudioClip(AudioClip clip, AudioSettingsSO settings, bool hasLoop)
+        public void PlayAudioClip(AudioClip clip, bool hasLoop)
         {
             _emitterValue = new AudioEmitterValue(this);
 
             _audioSource.clip = clip;
-            settings.ApplySettings(_audioSource);
             _audioSource.volume = _setting.Volume;
             _audioSource.loop = hasLoop;
             _audioSource.time = 0f;
@@ -40,9 +39,9 @@ namespace CryptoQuest.Audio.AudioEmitters
             Invoke(nameof(OnFinishedPlay), clip.length);
         }
 
-        public void FadeMusicIn(AudioClip clip, AudioSettingsSO settings, float duration, float startTime = 0f)
+        public void FadeMusicIn(AudioClip clip, float duration, float startTime = 0f)
         {
-            PlayAudioClip(clip, settings, true);
+            PlayAudioClip(clip, true);
             _audioSource.volume = 0f;
 
             if (startTime <= _audioSource.clip.length)
