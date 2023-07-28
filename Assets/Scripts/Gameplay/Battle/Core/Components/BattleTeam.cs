@@ -12,6 +12,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components
         public List<AbilitySystemBehaviour> Members { get; private set; }
 
         public List<IBattleUnit> BattleUnits { get; private set; } = new();
+        public ITeamGroups TeamGroups { get; set; } = new NullTeamGroups();
 
         private List<IBattleUnit> _pendingRemoveUnit = new();
 
@@ -27,10 +28,13 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components
                 unit.SetOpponentTeams(opponentTeam);
                 BattleUnits.Add(unit);
             }
+
+            TeamGroups.InitGroups();
         }
 
         public void RemoveUnit(IBattleUnit unit)
         {
+            TeamGroups.RemoveUnitData(unit.UnitData);
             BattleUnits.Remove(unit);
             Members.Remove(unit.Owner);
             _pendingRemoveUnit.Add(unit);

@@ -1,6 +1,7 @@
 ﻿using CryptoQuest.UI.Battle.CommandsMenu;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.Pool;
 
 namespace CryptoQuest.UI.Battle
@@ -9,7 +10,8 @@ namespace CryptoQuest.UI.Battle
     {
         [SerializeField] private TextMeshProUGUI _label;
         [SerializeField] private TextMeshProUGUI _value;
-        private AbstractButtonInfo _abstractButtonInfo;
+        [SerializeField] private Button _button;
+        private AbstractButtonInfo _buttonInfo;
 
         private IObjectPool<UICommandContent> _objectPool;
 
@@ -22,12 +24,13 @@ namespace CryptoQuest.UI.Battle
         {
             _label.text = info.Name;
             _value.text = info.Value;
-            _abstractButtonInfo = info;
+            _button.interactable = info.IsInteractable; 
+            _buttonInfo = info;
         }
         
         public void HandleClick()
         {
-            _abstractButtonInfo.HandleClick();
+            _buttonInfo.HandleClick();
         }
 
         private void ReleaseToPool()

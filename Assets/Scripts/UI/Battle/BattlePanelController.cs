@@ -35,7 +35,7 @@ namespace CryptoQuest.UI.Battle
         [SerializeField] private UICommandPanel _commandPanel;
 
         private BattleManager _battleManager;
-        private List<AbstractButtonInfo> infos = new();
+        private List<AbstractButtonInfo> _infos = new();
 
         public void OpenCommandDetailPanel(List<AbstractButtonInfo> infos)
         {
@@ -49,6 +49,12 @@ namespace CryptoQuest.UI.Battle
             _commandPanel.gameObject.SetActive(false);
         }
 
+        private void Awake()
+        {
+            SetupChain(_normalAttackChain);
+            SetupChain(_skillAttackChain);
+        }
+
         private void OnEnable()
         {
             OnButtonAttackClicked += OnButtonAttackClickedHandler;
@@ -56,13 +62,11 @@ namespace CryptoQuest.UI.Battle
             OnButtonItemClicked += OnButtonItemClickedHandler;
             OnButtonGuardClicked += OnButtonGuardClickedHandler;
             OnButtonEscapeClicked += OnButtonEscapeClickedHandler;
-            _onNewTurnEvent.EventRaised += SetupNewTurn;
 
             _inputMediator.CancelEvent += OnClickCancel;
 
             _battleManager = _battleBus.BattleManager;
-            SetupChain(_normalAttackChain);
-            SetupChain(_skillAttackChain);
+            ShowEnemyGroups();
         }
 
         private void OnDisable()
@@ -72,7 +76,6 @@ namespace CryptoQuest.UI.Battle
             OnButtonItemClicked -= OnButtonItemClickedHandler;
             OnButtonGuardClicked -= OnButtonGuardClickedHandler;
             OnButtonEscapeClicked -= OnButtonEscapeClickedHandler;
-            _onNewTurnEvent.EventRaised -= SetupNewTurn;
 
             _inputMediator.CancelEvent -= OnClickCancel;
         }
@@ -85,14 +88,18 @@ namespace CryptoQuest.UI.Battle
             }
         }
 
-        private void SetupNewTurn()
+        private void ShowEnemyGroups()
         {
             _commandPanel.Clear();
-            infos.Clear();
-            foreach (var enemy in _battleManager.BattleTeam2.BattleUnits)
+            _infos.Clear();
+            var opponentTeam = _battleManager.BattleTeam2;
+            
+            foreach (var group in opponentTeam.TeamGroups.GroupsDict)
             {
-                infos.Add(new ButtonInfo(enemy));
+                _infos.Add(new EnemyGroupButtonInfo(group.Key, group.Value));
             }
+
+            OpenCommandDetailPanel(_infos);
         }
 
         private void OnClickCancel()
