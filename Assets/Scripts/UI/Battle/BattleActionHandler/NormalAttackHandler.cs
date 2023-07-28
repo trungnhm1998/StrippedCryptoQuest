@@ -12,7 +12,7 @@ namespace CryptoQuest.UI.Battle.BattleActionHandler
             AbilitySystemBehaviour currentUnitOwner = currentUnit.Owner;
 
             currentUnit.SelectSkill(currentUnit.NormalAttack);
-            base.Handle(currentUnit);
+            NextHandler?.Handle(currentUnit);
         }
     }
 }

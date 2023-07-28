@@ -391,6 +391,7 @@ Transform:
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1286560774}
+  - {fileID: 1506847218}
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -655,6 +656,76 @@ Transform:
   m_Father: {fileID: 562110972}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1506847217
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1506847218}
+  - component: {fileID: 1506847220}
+  - component: {fileID: 1506847219}
+  m_Layer: 0
+  m_Name: ActionVFXHandler
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1506847218
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1506847217}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -3.888291, y: 3.5985382, z: 91.5987}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 562110972}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1506847219
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1506847217}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: daf28dc9818122e4bb4b957160b07b37, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _gotActionDataEventChannel: {fileID: 11400000, guid: f9d0c3b98f2e51a448f0e3086d7eed36, type: 2}
+  _doneActionEventChannel: {fileID: 11400000, guid: 9ed5ff741b20bee4f9e8a2ade059511f, type: 2}
+  _endActionPhaseEventChannel: {fileID: 11400000, guid: 4116eb7df02c5cb418f0bccf9c6a8922, type: 2}
+  _showBattleDialogEventChannel: {fileID: 11400000, guid: f43e82d9faba50046a2c65b8af62a2f9, type: 2}
+  _showNextMarkEventChannel: {fileID: 11400000, guid: 9f65c4f7fd7684a4394a451b20a98549, type: 2}
+--- !u!114 &1506847220
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1506847217}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49f9d52cd9572c3468cf44d24b08d783, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _battleBus: {fileID: 11400000, guid: 2290057e7f48d1046b5e0a6c3f6dc910, type: 2}
+  _inputMediator: {fileID: 11400000, guid: 1fb61cdb72f0a484f8e4db68e2011977, type: 2}
+  _heroesUI: {fileID: 797312277}
+  _monstersUI: {fileID: 1111840047}
+  _batteMenu: {fileID: 1097146775}
+  _newTurnEventChannel: {fileID: 11400000, guid: 0f2dc4548e630314e9ce0c18237f54c8, type: 2}
+  _battleStartEventChannel: {fileID: 11400000, guid: 10feb0e3bd5394b4f93989855f674bfa, type: 2}
+  _endStrategyPhaseEventChannel: {fileID: 11400000, guid: d206703a44eea214ea5140c1018b92be, type: 2}
 --- !u!223 &721239361783109978
 Canvas:
   m_ObjectHideFlags: 0
