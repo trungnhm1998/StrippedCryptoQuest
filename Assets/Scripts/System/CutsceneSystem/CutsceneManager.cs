@@ -52,6 +52,7 @@ namespace CryptoQuest.System.CutsceneSystem
         private void HandleDirectorStopped(PlayableDirector director)
         {
             _currentPlayableDirector.stopped -= HandleDirectorStopped;
+            _currentPlayableDirector = null;
             _onCutsceneCompleted.Invoke();
         }
 
