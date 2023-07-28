@@ -72,8 +72,7 @@ namespace CryptoQuest.UI.Menu.Status
 
         private UIStatusMenuEquipmentSlot GetEquipmentSlot(int index)
         {
-            var equipmentSlotUI = _equipmentSlots[index];
-            return equipmentSlotUI;
+            return _equipmentSlots[index];
         }
 
         private void GoToBelowSlot()
