@@ -1291,6 +1291,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "CharacterChange",
+                    "type": "Button",
+                    "id": "f423674b-febe-45aa-88e9-6809df622ffc",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -1550,18 +1559,9 @@
             ]
         },
         {
-            "name": "StatusMenu/EquipmentsMenu",
+            "name": "Status/Equipments",
             "id": "85c15859-2a2d-4147-aafb-0bc946e72435",
             "actions": [
-                {
-                    "name": "CharacterChange",
-                    "type": "Button",
-                    "id": "d2c8a6d5-1c63-4ec8-b365-4097ac3302d5",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
                 {
                     "name": "StatusMenuConfirmSelect",
                     "type": "Button",
@@ -1609,28 +1609,6 @@
                 }
             ],
             "bindings": [
-                {
-                    "name": "",
-                    "id": "9bfa1f71-4b1f-4e0d-8baf-2f3a1cffd0f0",
-                    "path": "<Gamepad>/buttonNorth",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Gamepad",
-                    "action": "CharacterChange",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "2bd402f9-0f1f-4285-82ec-4ec46feeeaad",
-                    "path": "<Keyboard>/e",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "MnK",
-                    "action": "CharacterChange",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
                 {
                     "name": "",
                     "id": "5424aaf3-3824-4286-a0b0-1bc895504105",
@@ -1777,7 +1755,7 @@
             ]
         },
         {
-            "name": "StatusMenu/EquipmentsMenu/Inventory",
+            "name": "Status/Equipments/Inventory",
             "id": "f90adf2d-e53d-4435-a5a8-65a88568895d",
             "actions": [
                 {
@@ -1790,9 +1768,18 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "StatusInventoryConfirm",
+                    "name": "StatusInventoryGoBelow",
                     "type": "Button",
-                    "id": "649ff2e5-4c58-4257-9135-b27fe2922f1c",
+                    "id": "3a6d9a59-c688-4e6b-8609-f7bc6e260ba0",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "StatusInventoryGoAbove",
+                    "type": "Button",
+                    "id": "d0d346e6-5d85-4f92-92ec-8ccc94c37025",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -1846,56 +1833,67 @@
                 },
                 {
                     "name": "",
-                    "id": "986177ad-8c04-4a87-a719-60f04d795efe",
-                    "path": "<Keyboard>/space",
+                    "id": "b556b546-7377-4bc8-8043-969c16e52a29",
+                    "path": "<Keyboard>/downArrow",
                     "interactions": "",
                     "processors": "",
                     "groups": "MnK",
-                    "action": "StatusInventoryConfirm",
+                    "action": "StatusInventoryGoBelow",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "8968086e-295d-42ee-a8e1-ac9bd57aa3c1",
-                    "path": "<Keyboard>/enter",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "MnK",
-                    "action": "StatusInventoryConfirm",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "b264a4c4-49ea-4105-9d96-91dc18b9812e",
-                    "path": "<Mouse>/leftButton",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "MnK",
-                    "action": "StatusInventoryConfirm",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "f3b43288-1d98-4ed7-af4b-377373843266",
-                    "path": "<Gamepad>/buttonSouth",
+                    "id": "f434ed55-e443-43b9-80e2-72ea63d51164",
+                    "path": "<Gamepad>/dpad/down",
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
-                    "action": "StatusInventoryConfirm",
+                    "action": "StatusInventoryGoBelow",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "226fb37e-c4b4-4145-bc8a-a9b0a548ecab",
-                    "path": "<Keyboard>/numpadEnter",
+                    "id": "a927ee56-aec1-4eb9-aa38-aee3b4e9d9f8",
+                    "path": "<Gamepad>/leftStick/down",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "StatusInventoryGoBelow",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6bbefbf4-9201-4cdf-8ae6-f67a397867c9",
+                    "path": "<Keyboard>/upArrow",
                     "interactions": "",
                     "processors": "",
                     "groups": "MnK",
-                    "action": "StatusInventoryConfirm",
+                    "action": "StatusInventoryGoAbove",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "99f7b279-b4a9-474b-84e8-afc44e1e5d20",
+                    "path": "<Gamepad>/dpad/right",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "StatusInventoryGoAbove",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ec670971-2625-4feb-a121-ab91ae024150",
+                    "path": "<Gamepad>/leftStick/up",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "StatusInventoryGoAbove",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

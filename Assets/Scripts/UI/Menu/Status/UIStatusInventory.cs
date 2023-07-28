@@ -7,6 +7,8 @@ using IndiGames.Core.Events.ScriptableObjects;
 using PolyAndCode.UI;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.Serialization;
+using UnityEngine.UI;
 using NotImplementedException = System.NotImplementedException;
 
 namespace CryptoQuest.UI.Menu.Status
@@ -15,7 +17,6 @@ namespace CryptoQuest.UI.Menu.Status
     {
         [Header("Configs")]
         [SerializeField] private RecyclableScrollRect _scrollRect;
-        [SerializeField] private AutoScrollRect _autoScrollRect;
         [SerializeField] private InputMediatorSO _inputMediator;
 
         [Header("Events")]
@@ -26,18 +27,20 @@ namespace CryptoQuest.UI.Menu.Status
         #region MOCK
         [Header("Mock")]
         [SerializeField] private int _itemCount;
-        [SerializeField] private UIStatusMenuInventoryItem.Data _mockData;
+        [SerializeField] private UIStatusInventoryItem.Data _mockData;
         #endregion
 
         [Header("Game Components")]
         [SerializeField] private GameObject _contents;
+        [SerializeField] private RectTransform _myScrollRect;
+        [SerializeField] private RectTransform _singleItemRect;
 
-        private List<UIStatusMenuInventoryItem.Data> _mockDataList = new();
-        private UIStatusMenuInventoryItem _itemInformation;
+        private List<UIStatusInventoryItem.Data> _mockDataList = new();
+        private UIStatusInventoryItem _itemInformation;
+        private float _verticalOffset;
 
         private void OnEnable()
         {
-            _inputMediator.EnableStatusMenuInput();
             _confirmSelectEquipmentSlotEvent.EventRaised += ViewInventory;
         }
 
@@ -47,16 +50,13 @@ namespace CryptoQuest.UI.Menu.Status
             _confirmSelectEquipmentSlotEvent.EventRaised -= ViewInventory;
         }
 
-        private void FixedUpdate()
-        {
-            _autoScrollRect.UpdateScrollRectTransform();
-
-        }
-
         private void ViewInventory()
         {
             _contents.SetActive(true);
+            _inputMediator.EnableStatusEquipmentsInventoryInput();
             RegisterInventoryInputEvents();
+
+            _verticalOffset = _singleItemRect.rect.height;
 
             // TODO: REMOVE WHEN WE HAVE REAL DATA
             for (int i = 0; i < _itemCount; i++)
@@ -71,24 +71,37 @@ namespace CryptoQuest.UI.Menu.Status
         {
             _turnOffInventoryEvent.RaiseEvent();
             _contents.SetActive(false);
+            _inputMediator.EnableStatusEquipmentsInput();
+            UnregisterInventoryInputEvents();
         }
 
-        private void OnStatusMenuConfirmSelect()
+        private void StatusInventoryGoDown()
         {
-            _contents.SetActive(false);
-            UnregisterInventoryInputEvents();
+            Scroll(-_verticalOffset);
+        }
+
+        private void StatusInventoryGoUp()
+        {
+            Scroll(_verticalOffset);
+        }
+
+        private void Scroll(float value)
+        {
+            _myScrollRect.anchoredPosition -= new Vector2(0, value);
         }
 
         private void RegisterInventoryInputEvents()
         {
-            // _inputMediator.St += SelectItemHandle;
-            // _inputMediator.StatusMenuConfirmSelectEvent += OnStatusMenuConfirmSelect;
+            _inputMediator.StatusEquipmentInventoryCancelEvent += OnTurnOffInventory;
+            _inputMediator.StatusInventoryGoBelowEvent += StatusInventoryGoDown;
+            _inputMediator.StatusInventoryGoAboveEvent += StatusInventoryGoUp;
         }
 
         private void UnregisterInventoryInputEvents()
         {
-            // _inputMediator.StatusMenuNavigateEvent -= SelectItemHandle;
-            // _inputMediator.StatusMenuConfirmSelectEvent -= OnStatusMenuConfirmSelect;
+            _inputMediator.StatusEquipmentInventoryCancelEvent -= OnTurnOffInventory;
+            _inputMediator.StatusInventoryGoBelowEvent -= StatusInventoryGoDown;
+            _inputMediator.StatusInventoryGoAboveEvent -= StatusInventoryGoUp;
         }
 
         #region PLUGINS 
@@ -108,7 +121,7 @@ namespace CryptoQuest.UI.Menu.Status
         /// <param name="index">query from real data using this index</param>
         public void SetCell(ICell cell, int index)
         {
-            UIStatusMenuInventoryItem itemRow = cell as UIStatusMenuInventoryItem;
+            UIStatusInventoryItem itemRow = cell as UIStatusInventoryItem;
             itemRow.Init(_mockDataList[index], index);
         }
         #endregion

@@ -11,7 +11,7 @@ using UnityEngine.UI;
 
 namespace CryptoQuest.UI.Menu.Status
 {
-    public class UIStatusMenuInventoryItem : MonoBehaviour, ICell
+    public class UIStatusInventoryItem : MonoBehaviour, ICell
     {
         [Serializable]
         public class Data
@@ -37,7 +37,7 @@ namespace CryptoQuest.UI.Menu.Status
 
         public void Select()
         {
-            EventSystem.current.SetSelectedGameObject(gameObject);
+            _selectEffect.SetActive(true);
         }
 
         public void Deselect()

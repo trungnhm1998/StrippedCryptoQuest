@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using CryptoQuest.Input;
 using IndiGames.Core.Events.ScriptableObjects;
 using UnityEngine;
-using NotImplementedException = System.NotImplementedException;
 
 namespace CryptoQuest.UI.Menu.Status
 {
@@ -47,7 +46,7 @@ namespace CryptoQuest.UI.Menu.Status
 
         private void ChangeEquipmentModeEnabled()
         {
-            _inputMediator.EnableStatusEquipmentMenuInput();
+            _inputMediator.EnableStatusEquipmentsInput();
             Init();
         }
 
@@ -75,13 +74,13 @@ namespace CryptoQuest.UI.Menu.Status
             return _equipmentSlots[index];
         }
 
-        private void GoToBelowSlot()
+        private void StatusEquipmentGoToBelowSlot()
         {
             CurrentIndex++;
             SelectEquipmentSlot();
         }
         
-        private void GoToAboveSlot()
+        private void StatusEquipmentGoToAboveSlot()
         {
             CurrentIndex--;
             SelectEquipmentSlot();
@@ -104,16 +103,16 @@ namespace CryptoQuest.UI.Menu.Status
 
         private void RegisterChangeEquipmentInputEvents()
         {
-            _inputMediator.GoBelowEvent += GoToBelowSlot;
-            _inputMediator.GoAboveEvent += GoToAboveSlot;
+            _inputMediator.StatusEquipmentGoBelowEvent += StatusEquipmentGoToBelowSlot;
+            _inputMediator.StatusEquipmentGoAboveEvent += StatusEquipmentGoToAboveSlot;
             _inputMediator.StatusMenuConfirmSelectEvent += OnStatusMenuConfirmSelect;
             _inputMediator.StatusEquipmentCancelEvent += CancelEquipment;
         }
 
         private void UnregisterChangeEquipmentInputEvents()
         {
-            _inputMediator.GoBelowEvent -= GoToBelowSlot;
-            _inputMediator.GoAboveEvent -= GoToAboveSlot;
+            _inputMediator.StatusEquipmentGoBelowEvent -= StatusEquipmentGoToBelowSlot;
+            _inputMediator.StatusEquipmentGoAboveEvent -= StatusEquipmentGoToAboveSlot;
             _inputMediator.StatusMenuConfirmSelectEvent -= OnStatusMenuConfirmSelect;
             _inputMediator.StatusEquipmentCancelEvent -= CancelEquipment;
         }

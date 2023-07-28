@@ -15,7 +15,8 @@ namespace CryptoQuest.Input
         InputActions.IDialoguesActions,
         InputActions.IHomeMenuActions,
         InputActions.IStatusMenuActions,
-        InputActions.IStatusMenuEquipmentsMenuActions
+        InputActions.IStatusEquipmentsActions,
+        InputActions.IStatusEquipmentsInventoryActions
     {
         #region Events
 
@@ -61,11 +62,14 @@ namespace CryptoQuest.Input
         #region StatusMenu
 
         public event UnityAction EnableChangeEquipmentModeEvent;
-        public event UnityAction GoBelowEvent;
-        public event UnityAction GoAboveEvent;
+        public event UnityAction StatusEquipmentGoBelowEvent;
+        public event UnityAction StatusEquipmentGoAboveEvent;
         public event UnityAction StatusMenuConfirmSelectEvent;
         public event UnityAction StatusMenuCancelEvent;
         public event UnityAction StatusEquipmentCancelEvent;
+        public event UnityAction StatusEquipmentInventoryCancelEvent;
+        public event UnityAction StatusInventoryGoBelowEvent;
+        public event UnityAction StatusInventoryGoAboveEvent;
 
         #endregion
 
@@ -95,8 +99,8 @@ namespace CryptoQuest.Input
             _inputActions.Dialogues.Disable();
             _inputActions.HomeMenu.Disable();
             _inputActions.StatusMenu.Disable();
-            _inputActions.StatusMenuEquipmentsMenu.Disable();
-            _inputActions.StatusMenuEquipmentsMenuInventory.Disable();
+            _inputActions.StatusEquipments.Disable();
+            _inputActions.StatusEquipmentsInventory.Disable();
         }
 
         private void CreateInputInstanceIfNeeded()
@@ -109,7 +113,8 @@ namespace CryptoQuest.Input
             _inputActions.Dialogues.SetCallbacks(this);
             _inputActions.HomeMenu.SetCallbacks(this);
             _inputActions.StatusMenu.SetCallbacks(this);
-            _inputActions.StatusMenuEquipmentsMenu.SetCallbacks(this);
+            _inputActions.StatusEquipments.SetCallbacks(this);
+            _inputActions.StatusEquipmentsInventory.SetCallbacks(this);
         }
 
         public void EnableMenuInput()
@@ -143,12 +148,17 @@ namespace CryptoQuest.Input
             _inputActions.StatusMenu.Enable();
         }
 
-        public void EnableStatusEquipmentMenuInput()
+        public void EnableStatusEquipmentsInput()
         {
             DisableAllInput();
-            _inputActions.StatusMenuEquipmentsMenu.Enable();
+            _inputActions.StatusEquipments.Enable();
         }
-
+        
+        public void EnableStatusEquipmentsInventoryInput()
+        {
+            DisableAllInput();
+            _inputActions.StatusEquipmentsInventory.Enable();
+        }
 
         #endregion
 
@@ -326,25 +336,9 @@ namespace CryptoQuest.Input
         #endregion
 
         #region StatusMenu
-
         public void OnEnableChangeEquipmentMode(InputAction.CallbackContext context)
         {
             if (context.performed) EnableChangeEquipmentModeEvent?.Invoke();
-        }
-
-        public void OnGoBelow(InputAction.CallbackContext context)
-        {
-            if (context.performed) GoBelowEvent?.Invoke();
-        }
-
-        public void OnGoAbove(InputAction.CallbackContext context)
-        {
-            if (context.performed) GoAboveEvent?.Invoke();
-        }
-
-        public void OnMagicStone(InputAction.CallbackContext context)
-        {
-            throw new NotImplementedException();
         }
 
         public void OnStatusEquipmentCancel(InputAction.CallbackContext context)
@@ -356,15 +350,49 @@ namespace CryptoQuest.Input
         {
             throw new NotImplementedException();
         }
+        #endregion
 
+        #region StatusMenu.Equipments
         public void OnStatusMenuConfirmSelect(InputAction.CallbackContext context)
         {
             if (context.performed) StatusMenuConfirmSelectEvent?.Invoke();
+        }
+        
+        public void OnGoBelow(InputAction.CallbackContext context)
+        {
+            if (context.performed) StatusEquipmentGoBelowEvent?.Invoke();
+        }
+
+        public void OnGoAbove(InputAction.CallbackContext context)
+        {
+            if (context.performed) StatusEquipmentGoAboveEvent?.Invoke();
+        }
+
+        public void OnMagicStone(InputAction.CallbackContext context)
+        {
+            throw new NotImplementedException();
         }
 
         public void OnStatusMenuCancel(InputAction.CallbackContext context)
         {
             if (context.performed) StatusMenuCancelEvent?.Invoke();
+        }
+        #endregion
+
+        #region StatusMenu.Equipments.Inventory
+        public void OnStatusInventoryCancel(InputAction.CallbackContext context)
+        {
+            if (context.performed) StatusEquipmentInventoryCancelEvent?.Invoke();
+        }
+
+        public void OnStatusInventoryGoBelow(InputAction.CallbackContext context)
+        {
+            if (context.performed) StatusInventoryGoBelowEvent?.Invoke();
+        }
+
+        public void OnStatusInventoryGoAbove(InputAction.CallbackContext context)
+        {
+            if (context.performed) StatusInventoryGoAboveEvent?.Invoke();
         }
 
         #endregion
