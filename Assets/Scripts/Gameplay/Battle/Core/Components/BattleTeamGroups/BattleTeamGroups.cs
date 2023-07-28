@@ -26,14 +26,13 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components
                 CharacterDataSO[] characters = group.Characters;
                 if (characters.Length <= 0) continue;
                 CharacterDataSO characterData = characters[0];
-                IBattleUnit unit = Team.BattleUnits.Find(u => u.UnitData == characterData);
                 GroupsDict.Add(characterData, characters.Length);
             }
         }
 
         public void RemoveUnitData(CharacterDataSO data)
         {
-            if (!GroupsDict.TryGetValue(data, out var numberOfUnit)) return;
+            if (!GroupsDict.ContainsKey(data)) return;
             GroupsDict[data]--;
             if (GroupsDict[data] > 0) return;
             GroupsDict.Remove(data);
