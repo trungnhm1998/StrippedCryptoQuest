@@ -9,15 +9,15 @@ namespace CryptoQuest.System.CutsceneSystem.CustomTimelineTracks.YarnSpinnerNode
     [Serializable]
     public class YarnSpinnerNodePlayableBehaviour : PlayableBehaviour
     {
-        public PlayDialogueEvent PlayDialogue;
-        public PauseCutsceneEvent PauseTimelineEvent;
+        [HideInInspector] public PlayDialogueEvent PlayDialogueEvent;
+        [HideInInspector] public PauseCutsceneEvent PauseTimelineEvent;
+        [HideInInspector] public string YarnNodeName = "Start";
 
         /// <summary>
         /// We need to wait for the player to actually finish reading all the dialogues before we can continue the timeline.
         /// </summary>
         public bool PauseTimelineOnClipEnds = true;
 
-        [HideInInspector] public string YarnNodeName = "Start";
 
         private bool _played = false;
 
@@ -28,13 +28,13 @@ namespace CryptoQuest.System.CutsceneSystem.CustomTimelineTracks.YarnSpinnerNode
         {
             if (_played)
                 return;
+            _played = true;
 
             if (Application.isPlaying)
             {
                 if (!playable.GetGraph().IsPlaying()) return;
                 if (string.IsNullOrEmpty(YarnNodeName)) return;
-                PlayDialogue.RaiseEvent(YarnNodeName);
-                _played = true;
+                PlayDialogueEvent.RaiseEvent(YarnNodeName);
             }
 #if UNITY_EDITOR
             else

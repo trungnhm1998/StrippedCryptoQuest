@@ -8,7 +8,7 @@ namespace CryptoQuest.Audio
     public class PlayMusicOnSceneLoaded : MonoBehaviour
     {
         [Header("Listen to")] [SerializeField] private VoidEventChannelSO _sceneLoaded;
-        [FormerlySerializedAs("_playMusicEvent")] [Header("Raise on")] [SerializeField] private AudioCueEventChannelSO _musicEventChannel;
+        [Header("Raise on")] [SerializeField] private AudioCueEventChannelSO _musicEventChannel;
 
         [Header("Configs")] [SerializeField] private AudioCueSO _musicTrack;
 
