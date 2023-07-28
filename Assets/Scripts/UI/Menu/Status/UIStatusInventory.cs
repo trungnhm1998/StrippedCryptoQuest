@@ -35,17 +35,6 @@ namespace CryptoQuest.UI.Menu.Status
         private List<UIStatusMenuInventoryItem.Data> _mockDataList = new();
         private UIStatusMenuInventoryItem _itemInformation;
 
-        private int _currentIndex;
-        private int CurrentIndex
-        {
-            get => _currentIndex;
-            set
-            {
-                int count = _itemCount;
-                _currentIndex = (value + count) % count;
-            }
-        }
-
         private void OnEnable()
         {
             _inputMediator.EnableStatusMenuInput();
@@ -92,7 +81,7 @@ namespace CryptoQuest.UI.Menu.Status
 
         private void RegisterInventoryInputEvents()
         {
-            // _inputMediator.StatusMenuNavigateEvent += SelectItemHandle;
+            // _inputMediator.St += SelectItemHandle;
             // _inputMediator.StatusMenuConfirmSelectEvent += OnStatusMenuConfirmSelect;
         }
 

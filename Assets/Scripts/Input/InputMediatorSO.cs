@@ -65,7 +65,7 @@ namespace CryptoQuest.Input
         public event UnityAction GoAboveEvent;
         public event UnityAction StatusMenuConfirmSelectEvent;
         public event UnityAction StatusMenuCancelEvent;
-        public event UnityAction StatusMenuNavigateEvent;
+        public event UnityAction StatusEquipmentCancelEvent;
 
         #endregion
 
@@ -342,6 +342,21 @@ namespace CryptoQuest.Input
             if (context.performed) GoAboveEvent?.Invoke();
         }
 
+        public void OnMagicStone(InputAction.CallbackContext context)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void OnStatusEquipmentCancel(InputAction.CallbackContext context)
+        {
+            if (context.performed) StatusEquipmentCancelEvent?.Invoke();
+        }
+
+        public void OnCharacterChange(InputAction.CallbackContext context)
+        {
+            throw new NotImplementedException();
+        }
+
         public void OnStatusMenuConfirmSelect(InputAction.CallbackContext context)
         {
             if (context.performed) StatusMenuConfirmSelectEvent?.Invoke();
@@ -350,26 +365,6 @@ namespace CryptoQuest.Input
         public void OnStatusMenuCancel(InputAction.CallbackContext context)
         {
             if (context.performed) StatusMenuCancelEvent?.Invoke();
-        }
-
-        void InputActions.IStatusMenuActions.OnNavigate(InputAction.CallbackContext context)
-        {
-            // if (context.performed) MenuNavigateEvent?.Invoke();
-        }
-
-        public void OnECharacterChange(InputAction.CallbackContext context)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void OnEBack(InputAction.CallbackContext context)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void OnEConfirm(InputAction.CallbackContext context)
-        {
-            if (context.performed) EnableChangeEquipmentModeEvent?.Invoke();
         }
 
         #endregion

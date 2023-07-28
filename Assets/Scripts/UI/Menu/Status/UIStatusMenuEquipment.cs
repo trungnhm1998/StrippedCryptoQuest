@@ -94,18 +94,28 @@ namespace CryptoQuest.UI.Menu.Status
             UnregisterChangeEquipmentInputEvents();
         }
 
+        private void CancelEquipment()
+        {
+            Debug.Log($"cancel");
+            _selectedSlotHolder.Deselect();
+            UnregisterChangeEquipmentInputEvents();
+            _inputMediator.EnableStatusMenuInput();
+        }
+
         private void RegisterChangeEquipmentInputEvents()
         {
             _inputMediator.GoBelowEvent += GoToBelowSlot;
             _inputMediator.GoAboveEvent += GoToAboveSlot;
             _inputMediator.StatusMenuConfirmSelectEvent += OnStatusMenuConfirmSelect;
+            _inputMediator.StatusEquipmentCancelEvent += CancelEquipment;
         }
-        
+
         private void UnregisterChangeEquipmentInputEvents()
         {
             _inputMediator.GoBelowEvent -= GoToBelowSlot;
             _inputMediator.GoAboveEvent -= GoToAboveSlot;
             _inputMediator.StatusMenuConfirmSelectEvent -= OnStatusMenuConfirmSelect;
+            _inputMediator.StatusEquipmentCancelEvent -= CancelEquipment;
         }
     }
 }
