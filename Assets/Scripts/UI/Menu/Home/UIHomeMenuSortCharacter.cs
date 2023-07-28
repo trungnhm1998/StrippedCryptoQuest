@@ -16,7 +16,6 @@ namespace CryptoQuest.UI.Menu.Home
         [SerializeField] private PartyManagerMockDataSO _partyManagerMockData;
 
         [Header("Game Components")]
-        [SerializeField] private VoidEventChannelSO _enableMainMenuInputs;
         [SerializeField] private Transform _characterSlots;
         [SerializeField] private GameObject _topLine;
 
@@ -35,9 +34,19 @@ namespace CryptoQuest.UI.Menu.Home
 
         private int _indexHolder;
 
+        [SerializeField] private List<UICharacterInfo> _slots;
+
         private void Awake()
         {
-            _inputMediator.EnableMenuInput();
+            LoadPartyMembers();
+        }
+
+        private void LoadPartyMembers()
+        {
+            for (int i = 0; i < _partyManagerMockData.Members.Count; i++)
+            {
+                _slots[i].SetData(_partyManagerMockData.Members[i]);
+            }
         }
 
         private void OnEnable()
@@ -156,7 +165,6 @@ namespace CryptoQuest.UI.Menu.Home
         private void CancelSelect()
         {
             _selectedCardHolder.Deselect();
-            _enableMainMenuInputs.RaiseEvent();
         }
 
         private void RegisterSortModeEvent()

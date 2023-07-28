@@ -1,3 +1,4 @@
+using CryptoQuest.Input;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -59,6 +60,7 @@ namespace CryptoQuest.Menu
                 scrollRect.normalizedPosition = new Vector2(0, newNormalizedY);
             }
         }
+
         public void UpdateScrollRectTransform()
         {
             UpdateScrollToSelected(_templateScrollRect, ContentRectTransform, _templateViewportTransform);

@@ -9,8 +9,13 @@ using NotImplementedException = System.NotImplementedException;
 namespace CryptoQuest.Input
 {
     // TODO: Move action map interfaces to separate scriptable objects
-    public class InputMediatorSO : ScriptableObject, InputActions.IMapGameplayActions, InputActions.IMenusActions,
-        InputActions.IDialoguesActions, InputActions.IHomeMenuActions, InputActions.IStatusMenuActions
+    public class InputMediatorSO : ScriptableObject,
+        InputActions.IMapGameplayActions,
+        InputActions.IMenusActions,
+        InputActions.IDialoguesActions,
+        InputActions.IHomeMenuActions,
+        InputActions.IStatusMenuActions,
+        InputActions.IStatusMenuEquipmentsMenuActions
     {
         #region Events
 
@@ -58,7 +63,9 @@ namespace CryptoQuest.Input
         public event UnityAction EnableChangeEquipmentModeEvent;
         public event UnityAction GoBelowEvent;
         public event UnityAction GoAboveEvent;
-        public event UnityAction ConfirmSelectEquipmentSlotEvent;
+        public event UnityAction StatusMenuConfirmSelectEvent;
+        public event UnityAction StatusMenuCancelEvent;
+        public event UnityAction StatusMenuNavigateEvent;
 
         #endregion
 
@@ -85,6 +92,11 @@ namespace CryptoQuest.Input
             _inputActions.Disable();
             _inputActions.MapGameplay.Disable();
             _inputActions.Menus.Disable();
+            _inputActions.Dialogues.Disable();
+            _inputActions.HomeMenu.Disable();
+            _inputActions.StatusMenu.Disable();
+            _inputActions.StatusMenuEquipmentsMenu.Disable();
+            _inputActions.StatusMenuEquipmentsMenuInventory.Disable();
         }
 
         private void CreateInputInstanceIfNeeded()
@@ -97,49 +109,46 @@ namespace CryptoQuest.Input
             _inputActions.Dialogues.SetCallbacks(this);
             _inputActions.HomeMenu.SetCallbacks(this);
             _inputActions.StatusMenu.SetCallbacks(this);
+            _inputActions.StatusMenuEquipmentsMenu.SetCallbacks(this);
         }
 
         public void EnableMenuInput()
         {
+            DisableAllInput();
             _inputActions.Menus.Enable();
-            _inputActions.MapGameplay.Disable();
-            _inputActions.Dialogues.Disable();
-            _inputActions.HomeMenu.Disable();
         }
 
         public void EnableDialogueInput()
         {
+            DisableAllInput();
             _inputActions.Dialogues.Enable();
-            _inputActions.MapGameplay.Disable();
-            _inputActions.Menus.Disable();
-            _inputActions.HomeMenu.Disable();
         }
 
         public void EnableMapGameplayInput()
         {
             _inputCached.Clear();
-            _inputActions.Menus.Disable();
+            DisableAllInput();
             _inputActions.MapGameplay.Enable();
-            _inputActions.Dialogues.Disable();
-            _inputActions.HomeMenu.Disable();
         }
 
         public void EnableHomeMenuInput()
         {
+            DisableAllInput();
             _inputActions.HomeMenu.Enable();
-            _inputActions.Dialogues.Disable();
-            _inputActions.MapGameplay.Disable();
-            _inputActions.Menus.Disable();
         }
 
         public void EnableStatusMenuInput()
         {
+            DisableAllInput();
             _inputActions.StatusMenu.Enable();
-            _inputActions.Dialogues.Disable();
-            _inputActions.MapGameplay.Disable();
-            _inputActions.Menus.Disable();
-            _inputActions.HomeMenu.Disable();
         }
+
+        public void EnableStatusEquipmentMenuInput()
+        {
+            DisableAllInput();
+            _inputActions.StatusMenuEquipmentsMenu.Enable();
+        }
+
 
         #endregion
 
@@ -308,7 +317,7 @@ namespace CryptoQuest.Input
         {
             if (context.performed) ConfirmEvent?.Invoke();
         }
-        
+
         public void OnHomeMenuCancel(InputAction.CallbackContext context)
         {
             if (context.performed) HomeMenuCancelEvent?.Invoke();
@@ -332,10 +341,35 @@ namespace CryptoQuest.Input
         {
             if (context.performed) GoAboveEvent?.Invoke();
         }
-        
-        public void OnConfirmSelectEquipmentSlot(InputAction.CallbackContext context)
+
+        public void OnStatusMenuConfirmSelect(InputAction.CallbackContext context)
         {
-            if (context.performed) ConfirmSelectEquipmentSlotEvent?.Invoke();
+            if (context.performed) StatusMenuConfirmSelectEvent?.Invoke();
+        }
+
+        public void OnStatusMenuCancel(InputAction.CallbackContext context)
+        {
+            if (context.performed) StatusMenuCancelEvent?.Invoke();
+        }
+
+        void InputActions.IStatusMenuActions.OnNavigate(InputAction.CallbackContext context)
+        {
+            // if (context.performed) MenuNavigateEvent?.Invoke();
+        }
+
+        public void OnECharacterChange(InputAction.CallbackContext context)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void OnEBack(InputAction.CallbackContext context)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void OnEConfirm(InputAction.CallbackContext context)
+        {
+            if (context.performed) EnableChangeEquipmentModeEvent?.Invoke();
         }
 
         #endregion
