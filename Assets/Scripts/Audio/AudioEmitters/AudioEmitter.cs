@@ -1,24 +1,26 @@
+using CryptoQuest.Audio.Settings;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Pool;
 
-namespace CryptoQuest.Audio.SoundEmitters
+namespace CryptoQuest.Audio.AudioEmitters
 {
     [RequireComponent((typeof(AudioSource)))]
-    public class SoundEmitter : MonoBehaviour
+    public class AudioEmitter : MonoBehaviour
     {
-        public event UnityAction<SoundEmitter> OnSoundFinishedPlaying;
+        public event UnityAction<AudioEmitter> AudioFinishedPlaying;
 
         [SerializeField] private AudioSource _audioSource;
+        [SerializeField] private AudioSettingsSO _setting;
 
-        private IObjectPool<SoundEmitter> _objectPool;
-        public void Init(IObjectPool<SoundEmitter> pool) => _objectPool = pool;
+        private IObjectPool<AudioEmitter> _objectPool;
+        public void Init(IObjectPool<AudioEmitter> pool) => _objectPool = pool;
 
-        public void PlayAudioClip(AudioClip clip, AudioConfigurationSO setting, bool hasLoop)
+        public void PlayAudioClip(AudioClip clip, bool hasLoop)
         {
             _audioSource.clip = clip;
-            setting.ApplyTo(_audioSource);
+            _audioSource.volume = _setting.Volume;
             _audioSource.loop = hasLoop;
             _audioSource.time = 0f;
             _audioSource.Play();
@@ -27,9 +29,9 @@ namespace CryptoQuest.Audio.SoundEmitters
             Invoke(nameof(OnFinishedPlay), clip.length);
         }
 
-        public void FadeMusicIn(AudioClip clip, AudioConfigurationSO setting, float duration, float startTime = 0f)
+        public void FadeMusicIn(AudioClip clip, float duration, float startTime = 0f)
         {
-            PlayAudioClip(clip, setting, true);
+            PlayAudioClip(clip, true);
             _audioSource.volume = 0f;
 
             if (startTime <= _audioSource.clip.length)
@@ -37,7 +39,7 @@ namespace CryptoQuest.Audio.SoundEmitters
                 _audioSource.time = startTime;
             }
 
-            _audioSource.DOFade(setting.Volume, duration);
+            _audioSource.DOFade(_setting.Volume, duration);
         }
 
         public float FadeMusicOut(float duration)
@@ -71,7 +73,7 @@ namespace CryptoQuest.Audio.SoundEmitters
 
         private void OnFinishedPlay()
         {
-            OnSoundFinishedPlaying?.Invoke(this);
+            AudioFinishedPlaying?.Invoke(this);
         }
     }
 }
