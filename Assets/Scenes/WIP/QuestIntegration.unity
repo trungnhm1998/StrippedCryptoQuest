@@ -141,7 +141,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 249936104857289378, guid: 76801428e522b6c4888e6e24368398d5, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -2.88
       objectReference: {fileID: 0}
     - target: {fileID: 249936104857289378, guid: 76801428e522b6c4888e6e24368398d5, type: 3}
       propertyPath: m_LocalPosition.z
@@ -187,6 +187,11 @@ PrefabInstance:
 --- !u!1 &878400482 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3117586077093109585, guid: 76801428e522b6c4888e6e24368398d5, type: 3}
+  m_PrefabInstance: {fileID: 878400481}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &878400483 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 249936104857289378, guid: 76801428e522b6c4888e6e24368398d5, type: 3}
   m_PrefabInstance: {fileID: 878400481}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &957738511
@@ -632,12 +637,12 @@ PlayableDirector:
   m_DirectorUpdateMode: 1
   m_InitialTime: 0
   m_SceneBindings:
-  - key: {fileID: 4269247606705987025, guid: f6c83d858a12e2f4a92c9e74864e6416, type: 2}
-    value: {fileID: 7545569452688597077, guid: dfa88a2ee6b337244b890d2cc4d6b1df, type: 3}
   - key: {fileID: 4561700440481707393, guid: f6c83d858a12e2f4a92c9e74864e6416, type: 2}
     value: {fileID: 878400482}
   - key: {fileID: 4375708823924864574, guid: f6c83d858a12e2f4a92c9e74864e6416, type: 2}
     value: {fileID: 878400482}
+  - key: {fileID: -5480080127940892292, guid: f6c83d858a12e2f4a92c9e74864e6416, type: 2}
+    value: {fileID: 878400483}
   m_ExposedReferences:
     m_References:
     - a5d3d3df4360774409f5424792e820b4: {fileID: 0}
@@ -661,8 +666,10 @@ MonoBehaviour:
   _director: {fileID: 5734061564045962132}
   _objectsToBindTags:
   - Player
+  - Player
   _trackNames:
   - Hero
+  - HeroPosition
   _objectsToBind: []
 --- !u!4 &8951220770542302224
 Transform:
