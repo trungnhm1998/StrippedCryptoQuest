@@ -9,9 +9,12 @@ namespace CryptoQuest.System.CutsceneSystem.CustomTimelineTracks.YarnSpinnerNode
     [Serializable]
     public class YarnSpinnerNodePlayableBehaviour : PlayableBehaviour
     {
-        [HideInInspector] public PlayDialogueEvent PlayDialogueEvent;
-        [HideInInspector] public PauseCutsceneEvent PauseTimelineEvent;
-        [HideInInspector] public string YarnNodeName = "Start";
+        [HideInInspector]
+        public PlayDialogueEvent PlayDialogueEvent;
+        [HideInInspector]
+        public PauseCutsceneEvent PauseTimelineEvent;
+        [HideInInspector]
+        public string YarnNodeName = "Start";
 
         /// <summary>
         /// We need to wait for the player to actually finish reading all the dialogues before we can continue the timeline.
@@ -49,22 +52,19 @@ namespace CryptoQuest.System.CutsceneSystem.CustomTimelineTracks.YarnSpinnerNode
         /// </summary>
         public override void OnBehaviourPause(Playable playable, FrameData info)
         {
-            Debug.Log("OnBehaviourPause");
             if (!Application.isPlaying
                 || !playable.GetGraph().IsPlaying()
                 || playable.GetGraph().GetRootPlayable(0).IsDone()
                 || !_played)
             {
-                Debug.Log("OnBehaviourPause::Skip");
                 return;
             }
 
+            if (!PauseTimelineOnClipEnds) return;
+
             // pause the timeline until the player finishes reading through all the dialogue (When the dialogue closes)
-            if (PauseTimelineOnClipEnds)
-            {
-                Debug.Log("OnBehaviourPause::Pause cutscene");
-                PauseTimelineEvent.RaiseEvent(true);
-            }
+            Debug.Log("OnBehaviourPause::Pause cutscene");
+            PauseTimelineEvent.RaiseEvent(true);
         }
     }
 }
