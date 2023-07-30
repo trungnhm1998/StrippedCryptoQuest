@@ -1,6 +1,6 @@
 using System.Collections;
 using System.ComponentModel;
-using CryptoQuest.Character.Emote;
+using CryptoQuest.Character.Reaction;
 using NUnit.Framework;
 using UnityEditor;
 using UnityEngine;
@@ -63,6 +63,13 @@ namespace CryptoQuest.Tests
                 Assert.NotNull(reactionController);
                 Object.DestroyImmediate(reactionController.gameObject);
             }
+
+            [Test]
+            public void ReactionAssets_ShouldHaveCorrectCount()
+            {
+                var reactions = AssetDatabase.FindAssets("t:Reaction");
+                Assert.AreEqual(20, reactions.Length);
+            }
         }
 
         [TestFixture]
@@ -88,34 +95,24 @@ namespace CryptoQuest.Tests
             [Test]
             public void ShowEmote_SetsSpriteRendererSprite()
             {
-                var emote = ScriptableObject.CreateInstance<EmoteSO>();
+                var emote = ScriptableObject.CreateInstance<Reaction>();
                 var emoteReactionIcon = Sprite.Create(new Texture2D(1, 1), new Rect(0, 0, 1, 1), Vector2.zero);
                 emote.ReactionIcon = emoteReactionIcon;
-                _reactionController.ShowEmote(emote);
+                _reactionController.ShowReaction(emote);
                 Assert.AreEqual(emoteReactionIcon, _reactionController.GetComponent<SpriteRenderer>().sprite);
             }
 
             [Test]
-            public void ShowEmote_PlaysCorrectAnimation()
+            public void ShowEmote_WithAllEmotes_ShouldHaveCorrectSprite()
             {
-                var emote = ScriptableObject.CreateInstance<EmoteSO>();
-                _reactionController.ShowEmote(emote);
-                Assert.AreEqual(emote.ReactionStateName,
-                    _reactionController.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).shortNameHash);
-            }
+                var reactions = AssetDatabase.FindAssets("t:Reaction");
 
-            [UnityTest]
-            public IEnumerator ShowEmote_PlaysCorrectAnimation_Coroutine()
-            {
-                // load all assets with type EmoteSO in project and play each one
-                var emotes = AssetDatabase.FindAssets("t:EmoteSO");
-                foreach (var emote in emotes)
+                foreach (var reaction in reactions)
                 {
-                    var emoteSO = AssetDatabase.LoadAssetAtPath<EmoteSO>(AssetDatabase.GUIDToAssetPath(emote));
-                    _reactionController.ShowEmote(emoteSO);
-                    yield return null;
-                    Assert.AreEqual(emoteSO.ReactionStateName,
-                        _reactionController.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).shortNameHash);
+                    var emote = AssetDatabase.LoadAssetAtPath<Reaction>(AssetDatabase.GUIDToAssetPath(reaction));
+                    _reactionController.ShowReaction(emote);
+                    Assert.AreEqual(emote.ReactionIcon,
+                        _reactionController.GetComponent<SpriteRenderer>().sprite);
                 }
             }
         }

@@ -1,4 +1,4 @@
-﻿using CryptoQuest.Character.Emote;
+﻿using CryptoQuest.Character.Reaction;
 using UnityEditor;
 using UnityEditor.UIElements;
 using UnityEngine;
@@ -6,7 +6,7 @@ using UnityEngine.UIElements;
 
 namespace CryptoQuestEditor.Character.Emote
 {
-    [CustomEditor(typeof(EmoteSO))]
+    [CustomEditor(typeof(Reaction))]
     public class EmoteSOEditor : Editor
     {
         [SerializeField] private VisualTreeAsset _visualTreeAsset;
@@ -20,7 +20,7 @@ namespace CryptoQuestEditor.Character.Emote
             _visualTreeAsset.CloneTree(root);
 
             var previewImage = root.Q<Image>("preview-image");
-            previewImage.image = ((EmoteSO)target).ReactionIcon.texture;
+            previewImage.image = ((Reaction)target).ReactionIcon.texture;
 
             return root;
         }
