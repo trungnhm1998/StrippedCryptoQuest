@@ -14,15 +14,15 @@ namespace CryptoQuest.UI.Menu.Status
     public class UIStatusInventoryItem : MonoBehaviour, ICell
     {
         [Serializable]
-        public class Data
+        public class MockData
         {
             public LocalizedString Name;
 
-            public Data Clone()
+            public MockData Clone()
             {
-                return new Data()
+                return new MockData()
                 {
-                    Name = Name
+                    Name = Name,
                 };
             }
         }
@@ -45,7 +45,7 @@ namespace CryptoQuest.UI.Menu.Status
             _selectEffect.SetActive(false);
         }
 
-        public void Init(Data data, int index)
+        public void Init(MockData mockData, int index)
         {
             if (index == 0)
             {
@@ -60,9 +60,10 @@ namespace CryptoQuest.UI.Menu.Status
                 {
                     _unequipSlot.SetActive(false);
                 }
-                _name.StringReference = data.Name;
-                _itemOrder.text = index.ToString();
+                _name.StringReference = mockData.Name;
             }
+
+            _itemOrder.text = index.ToString();
         }
 
         private void UIPrefabLoaded(AsyncOperationHandle<GameObject> obj)

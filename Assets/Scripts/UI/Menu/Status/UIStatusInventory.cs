@@ -27,7 +27,7 @@ namespace CryptoQuest.UI.Menu.Status
         #region MOCK
         [Header("Mock")]
         [SerializeField] private int _itemCount;
-        [SerializeField] private UIStatusInventoryItem.Data _mockData;
+        [FormerlySerializedAs("_mockData")] [SerializeField] private UIStatusInventoryItem.MockData mockMockData;
         #endregion
 
         [Header("Game Components")]
@@ -35,9 +35,11 @@ namespace CryptoQuest.UI.Menu.Status
         [SerializeField] private RectTransform _myScrollRect;
         [SerializeField] private RectTransform _singleItemRect;
 
-        private List<UIStatusInventoryItem.Data> _mockDataList = new();
-        private UIStatusInventoryItem _itemInformation;
+        private List<UIStatusInventoryItem.MockData> _mockDataList = new();
+
         private float _verticalOffset;
+        private bool _initialized = false;
+
 
         private void OnEnable()
         {
@@ -61,10 +63,15 @@ namespace CryptoQuest.UI.Menu.Status
             // TODO: REMOVE WHEN WE HAVE REAL DATA
             for (int i = 0; i < _itemCount; i++)
             {
-                _mockDataList.Add(_mockData.Clone());
+                _mockDataList.Add(mockMockData.Clone());
             }
 
-            _scrollRect.Initialize(this);
+            // only init after get data
+            if (!_initialized)
+            {
+                _initialized = true;
+                _scrollRect.Initialize(this);
+            }
         }
 
         private void OnTurnOffInventory()
@@ -89,6 +96,7 @@ namespace CryptoQuest.UI.Menu.Status
         {
             _myScrollRect.anchoredPosition -= new Vector2(0, value);
         }
+
 
         private void RegisterInventoryInputEvents()
         {

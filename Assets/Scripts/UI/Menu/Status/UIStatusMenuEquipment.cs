@@ -95,7 +95,6 @@ namespace CryptoQuest.UI.Menu.Status
 
         private void CancelEquipment()
         {
-            Debug.Log($"cancel");
             _selectedSlotHolder.Deselect();
             UnregisterChangeEquipmentInputEvents();
             _inputMediator.EnableStatusMenuInput();
