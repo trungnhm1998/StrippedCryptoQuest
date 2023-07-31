@@ -29,7 +29,7 @@ namespace CryptoQuest.Timeline.Position
                 if (!(playable.GetInputWeight(i) > 0)) continue;
 
                 var input = (ScriptPlayable<PositionPlayableBehaviour>)playable.GetInput(i);
-                _boundTransform.localPosition = input.GetBehaviour().Position;
+                _boundTransform.position = input.GetBehaviour().Position;
                 break;
             }
         }
@@ -49,7 +49,7 @@ namespace CryptoQuest.Timeline.Position
             _boundTransform = transform;
             if (_boundTransform != null)
             {
-                _initialPosition = _boundTransform.localPosition;
+                _initialPosition = _boundTransform.position;
             }
         }
 
@@ -60,7 +60,7 @@ namespace CryptoQuest.Timeline.Position
             // Reset the position to the initial position when the timeline is paused only for editor mode.
             if (!Application.isPlaying)
             {
-                _boundTransform.localPosition = _initialPosition;
+                _boundTransform.position = _initialPosition;
             }
         }
     }

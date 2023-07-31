@@ -99,8 +99,8 @@ namespace CryptoQuest.UI.Battle.CommandsMenu
 
         public void OnEscape()
         {
-            _battlePanelController.OnButtonEscapeClicked.Invoke();
             SetActiveCommandsMenu(false);
+            _battlePanelController.OnButtonEscapeClicked.Invoke(_currentUnit);
         }
 
         private void SetActiveCommandsMenu(bool isActive)
