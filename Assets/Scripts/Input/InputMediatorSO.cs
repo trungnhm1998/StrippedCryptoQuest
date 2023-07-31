@@ -1,10 +1,8 @@
+using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
-using UnityEngine.UIElements;
-using NotImplementedException = System.NotImplementedException;
 
 namespace CryptoQuest.Input
 {
@@ -76,6 +74,7 @@ namespace CryptoQuest.Input
         #endregion
 
         private InputActions _inputActions;
+        public InputActions InputActions => _inputActions;
 
         private void OnEnable()
         {

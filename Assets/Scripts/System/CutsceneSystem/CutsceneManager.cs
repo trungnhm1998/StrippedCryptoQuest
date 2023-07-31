@@ -1,5 +1,6 @@
 ﻿using CryptoQuest.System.CutsceneSystem.CustomTimelineTracks.YarnSpinnerNodeControlTrack;
 using CryptoQuest.System.CutsceneSystem.Events;
+using CryptoQuest.System.Dialogue;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Playables;
@@ -28,13 +29,13 @@ namespace CryptoQuest.System.CutsceneSystem
         private void OnEnable()
         {
             _playCutsceneEvent.PlayCutsceneRequested += PlayCutscene;
-            YarnSpinnerNodePlayableBehaviour.PauseTimelineRequested += PauseCutscene;
+            YarnSpinnerDialogueManager.PauseTimelineRequested += PauseCutscene;
         }
 
         private void OnDisable()
         {
             _playCutsceneEvent.PlayCutsceneRequested -= PlayCutscene;
-            YarnSpinnerNodePlayableBehaviour.PauseTimelineRequested -= PauseCutscene;
+            YarnSpinnerDialogueManager.PauseTimelineRequested -= PauseCutscene;
         }
 
         private void PlayCutscene(PlayableDirector playableDirector)

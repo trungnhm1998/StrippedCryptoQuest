@@ -1,4 +1,4 @@
-﻿using CryptoQuest.Character.Reaction;
+﻿using CryptoQuest.Character;
 using UnityEditor;
 using UnityEditor.UIElements;
 using UnityEngine;
@@ -6,14 +6,14 @@ using UnityEngine.UIElements;
 
 namespace CryptoQuestEditor.Character.Reaction
 {
-    [CustomEditor(typeof(ReactionController))]
+    [CustomEditor(typeof(ReactionBehaviour))]
     public class ReactionControllerEditor : Editor
     {
         [SerializeField] private VisualTreeAsset _visualTreeAsset;
 
-        private ReactionController Target => (ReactionController)target;
+        private ReactionBehaviour Target => (ReactionBehaviour)target;
 
-        private CryptoQuest.Character.Reaction.Reaction _reactionDef;
+        private CryptoQuest.Character.Reaction _reactionDef;
         private Button _showReactionButton;
 
         public override VisualElement CreateInspectorGUI()
@@ -25,8 +25,8 @@ namespace CryptoQuestEditor.Character.Reaction
             _visualTreeAsset.CloneTree(root);
 
             var objectField = root.Q<ObjectField>("reaction-object-field");
-            objectField.objectType = typeof(CryptoQuest.Character.Reaction.Reaction);
-            objectField.RegisterValueChangedCallback(evt => { _reactionDef = (CryptoQuest.Character.Reaction.Reaction)evt.newValue; });
+            objectField.objectType = typeof(CryptoQuest.Character.Reaction);
+            objectField.RegisterValueChangedCallback(evt => { _reactionDef = (CryptoQuest.Character.Reaction)evt.newValue; });
 
             _showReactionButton = root.Q<Button>("show-reaction-button");
             _showReactionButton.SetEnabled(Application.isPlaying);

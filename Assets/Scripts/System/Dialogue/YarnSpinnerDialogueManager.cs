@@ -1,16 +1,45 @@
-﻿using CryptoQuest.Input;
-using CryptoQuest.System.CutsceneSystem.CustomTimelineTracks.YarnSpinnerNodeControlTrack;
+﻿using System;
+using System.Collections.Generic;
+using CryptoQuest.Input;
 using CryptoQuest.System.CutsceneSystem.Events;
 using CryptoQuest.System.Dialogue.Events;
 using IndiGames.Core.Events.ScriptableObjects;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.EventSystems;
 using Yarn.Unity;
 
 namespace CryptoQuest.System.Dialogue
 {
     public class YarnSpinnerDialogueManager : MonoBehaviour
     {
+        public static Action<string> PlayDialogueRequested;
+        public static Action<bool> PauseTimelineRequested;
+
+        private static List<YarnSpinnerDialogueManager> _systems = new List<YarnSpinnerDialogueManager>();
+
+        /// <summary>
+        /// Little hack to support cross scene, and make sure there always one active instance.
+        /// </summary>
+        public static YarnSpinnerDialogueManager Instance
+        {
+            get => _systems.Count > 0 ? _systems[0] : null;
+            set
+            {
+                var index = _systems.IndexOf(value);
+
+                if (index > 0)
+                {
+                    _systems.RemoveAt(index);
+                    _systems.Insert(0, value);
+                }
+                else if (index < 0)
+                {
+                    Debug.LogError($"Failed setting YarnSpinnerDialogueManager.Instance to unknown system " + value);
+                }
+            }
+        }
+
         [SerializeField] private InputMediatorSO _inputMediator;
 
         [Header("UI")]
@@ -24,18 +53,22 @@ namespace CryptoQuest.System.Dialogue
 
         [SerializeField] private PauseCutsceneEvent _pauseCutsceneEvent;
 
+        [SerializeField] private UnityEvent<string> _onReactionShowed;
+
         [SerializeField] private UnityEvent _onDialogueCompleted;
 
         private Yarn.Dialogue Dialogue => _dialogueRunner.Dialogue;
 
         private void OnEnable()
         {
-            YarnSpinnerNodePlayableBehaviour.PlayDialogueRequested += ShowDialogue;
+            _systems.Add(this);
+            PlayDialogueRequested += ShowDialogue;
         }
 
         private void OnDisable()
         {
-            YarnSpinnerNodePlayableBehaviour.PlayDialogueRequested -= ShowDialogue;
+            PlayDialogueRequested -= ShowDialogue;
+            _systems.Remove(this);
         }
 
         private void ShowDialogue(string yarnNodeName)
@@ -58,6 +91,24 @@ namespace CryptoQuest.System.Dialogue
             // support cross scene
             if (_dialogueCompletedEventChannelSO != null) _dialogueCompletedEventChannelSO.RaiseEvent();
             _onDialogueCompleted.Invoke();
+        }
+
+        /// <summary>
+        /// Because of this method I have to use singleton or else the system use Find with name in a large scene
+        /// </summary>
+        /// <param name="reactionName"></param>
+        [YarnCommand("react")]
+        public static void React(string reactionName)
+        {
+            Debug.Log($"Reacting with {reactionName}");
+
+            if (Instance == null)
+            {
+                Debug.LogWarning("YarnSpinnerDialogueManager::React: _instance is null");
+                return;
+            }
+
+            Instance._onReactionShowed?.Invoke(reactionName);
         }
     }
 }

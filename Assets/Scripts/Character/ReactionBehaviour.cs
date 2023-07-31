@@ -2,9 +2,9 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace CryptoQuest.Character.Reaction
+namespace CryptoQuest.Character
 {
-    public class ReactionController : MonoBehaviour
+    public class ReactionBehaviour : MonoBehaviour
     {
         public event UnityAction ShowingReaction;
         public event UnityAction ReactionHidden;
