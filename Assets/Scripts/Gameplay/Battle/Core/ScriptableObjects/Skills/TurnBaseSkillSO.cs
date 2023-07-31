@@ -67,11 +67,10 @@ namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Skills
         protected override void SkillActivatePromt()
         {
             var actionData = AbilitySO.ActionDataSO;
-            CharacterDataSO unitData = _unit.UnitData;
-            if (unitData == null || actionData == null) return; 
+            if (actionData == null) return; 
 
             actionData.Log.Clear();
-            actionData.AddStringVar(UNIT_NAME_VARIABLE, unitData.DisplayName);
+            actionData.AddStringVar(UNIT_NAME_VARIABLE, _unit.UnitInfo.DisplayName);
             actionData.AddStringVar(SKILL_NAME_VARIABLE, AbilitySO.SkillName.GetLocalizedString());
             AbilitySO.ActionEventSO.RaiseEvent(actionData);
         }

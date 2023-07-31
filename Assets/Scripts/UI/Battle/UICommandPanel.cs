@@ -15,13 +15,13 @@ namespace CryptoQuest.UI.Battle
 
         private IObjectPool<UICommandContent> _uiCommandContentPool;
 
-        private void Awake()
-        {
-            _uiCommandContentPool = new ObjectPool<UICommandContent>(OnCreate, OnGet, OnRelease, OnDestroyPool);
-        }
-
         public override void Init(List<AbstractButtonInfo> informations)
         {
+            if (_uiCommandContentPool == null)
+            {
+                _uiCommandContentPool = new ObjectPool<UICommandContent>(OnCreate, OnGet, OnRelease, OnDestroyPool);
+            }
+
             _content.SetActive(true);
             foreach (var info in informations)
             {
@@ -30,9 +30,13 @@ namespace CryptoQuest.UI.Battle
                 _navigationAutoScroll.LastButton = item.GetComponent<RectTransform>();
             }
 
+            SelectFirstButton();
+        }
 
+        private void SelectFirstButton()
+        {
             var firstButton = _content.GetComponentInChildren<Button>();
-            if (!firstButton) return;
+            if (!firstButton || !firstButton.interactable) return;
             _navigationAutoScroll.FirstButton = firstButton.GetComponent<RectTransform>();
             firstButton.Select();
         }

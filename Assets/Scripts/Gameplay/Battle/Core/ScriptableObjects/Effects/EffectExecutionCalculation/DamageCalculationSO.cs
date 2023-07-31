@@ -55,11 +55,9 @@ namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Effects.EffectExecu
         private void LogAfterCalculateDamage(float damage)
         {
             if (_ownerUnit == null || _targetUnit == null) return;
-            CharacterDataSO targetUnitData = _targetUnit.UnitData;
-            if (targetUnitData == null) return;
 
-            TakeDamageActionData.Init(targetUnitData.Owner);
-            TakeDamageActionData.AddStringVar("unitName", targetUnitData.DisplayName);
+            TakeDamageActionData.Init(_targetUnit.UnitInfo.Owner);
+            TakeDamageActionData.AddStringVar("unitName", _targetUnit.UnitInfo.DisplayName);
             TakeDamageActionData.AddFloatVar("damage", damage);
             ActionEventSO.RaiseEvent(TakeDamageActionData);
         }
@@ -70,11 +68,8 @@ namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Effects.EffectExecu
             target.AttributeSystem.GetAttributeValue(TargetHP, out AttributeValue value);
             if (value.CurrentValue <= damage)
             {
-                CharacterDataSO targetUnitData = _targetUnit.UnitData;
-                if (targetUnitData == null) return;
-
                 DeathActionData.Log.Clear();
-                DeathActionData.AddStringVar("unitName", targetUnitData.DisplayName);
+                DeathActionData.AddStringVar("unitName", _targetUnit.UnitInfo.DisplayName);
                 ActionEventSO.RaiseEvent(DeathActionData);
             }
         }
