@@ -46,7 +46,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components.Debugger
 
             GUILayout.BeginVertical();
             newRect = GUILayout.Window(_windowId, inputRect, DoMyWindow,
-                $"{(_unit.UnitInfo.DisplayName)} Stats", GUILayout.ExpandHeight(true));
+                $"{(_unit.UnitInfo?.DisplayName)} Stats", GUILayout.ExpandHeight(true));
             GUILayout.EndVertical();
 
             if (!_showDebug)

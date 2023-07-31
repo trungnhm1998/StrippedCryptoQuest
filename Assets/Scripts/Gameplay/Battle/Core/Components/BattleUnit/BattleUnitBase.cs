@@ -132,13 +132,11 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit
 
         public virtual IEnumerator Execute()
         {
-            Debug.Log($"Action {gameObject}");
             _isPerformingAction = true;
             Owner.TryActiveAbility(SelectedSkill);
             _doneActionEventChannel.RaiseEvent();
             yield return WaitUntilDoneShowAction();
             _isPerformingAction = false;
-            Debug.Log($"Done Action {gameObject}");
         }
 
         private IEnumerator WaitUntilDoneShowAction()

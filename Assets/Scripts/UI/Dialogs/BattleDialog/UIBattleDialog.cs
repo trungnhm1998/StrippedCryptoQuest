@@ -44,9 +44,7 @@ namespace CryptoQuest.UI.Dialogs.BattleDialog
 
         private void NextDialog()
         {
-            Debug.Log($"{_nextMark.activeSelf}");
             if (!_nextMark.activeSelf) return;
-            Debug.Log($"Raise done");
             _dialogText.text = "";
             _doneShowDialogEvent.RaiseEvent();
             CancelInvoke(nameof(NextDialog));
@@ -54,7 +52,6 @@ namespace CryptoQuest.UI.Dialogs.BattleDialog
 
         private void ShowNextMark()
         {
-            Debug.Log($"who?");
             _nextMark.SetActive(true);
             if (_autoHideDelay < 0) return;
             Invoke(nameof(NextDialog), _autoHideDelay);
@@ -67,7 +64,7 @@ namespace CryptoQuest.UI.Dialogs.BattleDialog
 
         protected override void OnBeforeShow()
         {
-            Debug.Log($"who??");
+            Debug.Log($"done show line?");
             base.OnBeforeShow();
             _nextMark.SetActive(false);
             _inputMediator.EnableDialogueInput();
