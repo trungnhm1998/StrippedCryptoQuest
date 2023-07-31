@@ -1,6 +1,4 @@
 using CryptoQuest.Events;
-using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Events;
-using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data;
 using IndiGames.Core.Events.ScriptableObjects;
 using UnityEngine;
 using System.Collections;
@@ -12,6 +10,9 @@ namespace CryptoQuest.UI.Dialogs.BattleDialog
     {
         [Header("Listen Events")] [SerializeField]
         private VoidEventChannelSO _endActionPhaseEventChannel;
+
+        [Header("Raise Events")] [SerializeField]
+        private VoidEventChannelSO _showBattleLogSuccessEventChannel;
 
         [SerializeField] private LocalizedStringEventChannelSO _showBattleDialogEventChannel;
 
@@ -54,6 +55,7 @@ namespace CryptoQuest.UI.Dialogs.BattleDialog
             {
                 _dialog.SetDialogue(handler.Result)
                     .Show();
+                _showBattleLogSuccessEventChannel.RaiseEvent();
             }
         }
 

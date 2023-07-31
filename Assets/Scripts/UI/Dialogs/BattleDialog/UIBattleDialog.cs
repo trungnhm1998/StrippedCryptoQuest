@@ -64,6 +64,7 @@ namespace CryptoQuest.UI.Dialogs.BattleDialog
 
         protected override void OnBeforeShow()
         {
+            Debug.Log($"done show line?");
             base.OnBeforeShow();
             _nextMark.SetActive(false);
             _inputMediator.EnableDialogueInput();
