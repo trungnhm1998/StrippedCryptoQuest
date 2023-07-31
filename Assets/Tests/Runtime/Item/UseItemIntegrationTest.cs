@@ -3,11 +3,15 @@ using CryptoQuest.Gameplay.Battle.Core.Components;
 using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Skills;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
-using IndiGames.GameplayAbilitySystem.AbilitySystem.ScriptableObjects;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
 using IndiGames.GameplayAbilitySystem.EffectSystem;
 using NUnit.Framework;
+
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
+
+using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.TestTools;
@@ -16,120 +20,126 @@ namespace CryptoQuest.Tests.Runtime.Item
 {
     public class UseItemIntegrationTest
     {
-        private const int SECOND_TO_WAIT = 3;
+#if UNITY_EDITOR
+        private readonly WaitForSeconds WAIT_ONE_SECOND = new(1);
+        private const string ITEMS_TEST_SCENE = "Assets/Tests/Runtime/Items.unity";
+        private ItemSO _healItem;
+        private GameObject _inventoryController;
+        private InventoryController _inventoryControllerComponent;
+        private BattleTeam _battleTeam;
+        private AbilitySystemBehaviour _player;
+        private AttributeScriptableObject _playerHealthAttribute;
 
-        private ItemSO healItem;
-        private GameObject iventoryController;
-        private InventoryController inventoryControllerComponent;
-        private BattleTeam battleTeam;
-        private AbilitySystemBehaviour player;
-        private AttributeScriptableObject playerHealthAttribute;
-
-        public void SetUp()
+        [UnitySetUp]
+        public IEnumerator OneTimeSetup()
         {
-            healItem = GetItemSO("HealItem");
-            Assert.NotNull(healItem);
+            yield return LoadTestScene();
+            FindReferences();
+        }
 
-            iventoryController = GameObject.Find("InventoryController");
-            Assert.NotNull(iventoryController);
+        private IEnumerator LoadTestScene()
+        {
+            yield return EditorSceneManager.LoadSceneAsyncInPlayMode(ITEMS_TEST_SCENE,
+                new LoadSceneParameters(LoadSceneMode.Single));
+        }
 
-            inventoryControllerComponent = iventoryController.GetComponent<InventoryController>();
-            Assert.NotNull(inventoryControllerComponent);
+        private void FindReferences()
+        {
+            _healItem = GetItemSO("HealItem");
+            Assert.NotNull(_healItem);
 
-            battleTeam = GameObject.Find("PlayerPartyManager").GetComponent<BattleTeam>();
-            Assert.NotNull(battleTeam);
+            _inventoryController = GameObject.Find("InventoryController");
+            Assert.NotNull(_inventoryController);
 
-            player = battleTeam.Members[0];
-            Assert.NotNull(player);
+            _inventoryControllerComponent = _inventoryController.GetComponent<InventoryController>();
+            Assert.NotNull(_inventoryControllerComponent);
 
-            playerHealthAttribute = GetAttributeScriptableObject("Player.HP");
-            Assert.NotNull(playerHealthAttribute);
+            _battleTeam = GameObject.Find("PlayerPartyManager").GetComponent<BattleTeam>();
+            Assert.NotNull(_battleTeam);
+
+            _player = _battleTeam.Members[0];
+            Assert.NotNull(_player);
+
+            _playerHealthAttribute = GetAttributeScriptableObject("Player.HP");
+            Assert.NotNull(_playerHealthAttribute);
         }
 
         [UnityTest]
         public IEnumerator UseHealItem_ChangePlayerHealth_ReturnHealthIncrease()
         {
-            const string startupSceneName = "Startup";
-            yield return SceneManager.LoadSceneAsync(startupSceneName, LoadSceneMode.Single);
+            _player.AttributeSystem.GetAttributeValue(_playerHealthAttribute, out var playerHealthBeforeUse);
+            _inventoryControllerComponent.CurrentOwnerAbilitySystemBehaviour = _player;
+            _healItem.Use(_player);
+            yield return WAIT_ONE_SECOND;
 
-            yield return new WaitForSeconds(SECOND_TO_WAIT);
-
-            Assert.That(SceneManager.GetSceneByName("GlobalManagers").isLoaded);
-            SetUp();
-
-            player.AttributeSystem.GetAttributeValue(playerHealthAttribute, out var playerHealthBeforeUse);
-            inventoryControllerComponent.CurrentOwnerAbilitySystemBehaviour = player;
-            healItem.Use(player);
-            yield return new WaitForSeconds(1);
-
-            player.AttributeSystem.GetAttributeValue(playerHealthAttribute, out var playerHealthAfterUse);
+            _player.AttributeSystem.GetAttributeValue(_playerHealthAttribute, out var playerHealthAfterUse);
             Assert.That(playerHealthBeforeUse.CurrentValue < playerHealthAfterUse.CurrentValue);
         }
 
         [UnityTest]
         public IEnumerator UseHealItem_Heal100HP_ReturnPlayerHPIncreased100()
         {
-            const string startupSceneName = "Startup";
-            yield return SceneManager.LoadSceneAsync(startupSceneName, LoadSceneMode.Single);
+            SetupHealItem();
+            yield return WAIT_ONE_SECOND;
+            _player.AttributeSystem.GetAttributeValue(_playerHealthAttribute, out var playerHealthBeforeUse);
+            _inventoryControllerComponent.CurrentOwnerAbilitySystemBehaviour = _player;
+            _healItem.Use(_player);
+            float expectedValue = playerHealthBeforeUse.CurrentValue + 100;
+            yield return WAIT_ONE_SECOND;
 
-            yield return new WaitForSeconds(SECOND_TO_WAIT);
+            _player.AttributeSystem.GetAttributeValue(_playerHealthAttribute, out var playerHealthAfterUse);
+            Assert.That(playerHealthAfterUse.CurrentValue == expectedValue);
+        }
 
-            Assert.That(SceneManager.GetSceneByName("GlobalManagers").isLoaded);
-            SetUp();
-            ExpendableItemSO expendableItem = healItem as ExpendableItemSO;
+        private void SetupHealItem()
+        {
+            var expendableItem = _healItem as ExpendableItemSO;
             Assert.NotNull(expendableItem);
 
-            AbilitySO healAbility = expendableItem.Ability as AbilitySO;
+            var healAbility = expendableItem.Ability as AbilitySO;
 
             EffectAttributeModifier newModifier = new()
             {
-                AttributeSO = playerHealthAttribute,
+                AttributeSO = _playerHealthAttribute,
                 ModifierType = EAttributeModifierType.Add,
                 ModifierComputationMethod = null,
                 Value = 100
             };
             healAbility.EffectContainerMap[0].TargetContainer[0].Effects[0]
                 .EffectDetails.Modifiers[0] = newModifier;
-            yield return new WaitForSeconds(1);
-            player.AttributeSystem.GetAttributeValue(playerHealthAttribute, out var playerHealthBeforeUse);
-            inventoryControllerComponent.CurrentOwnerAbilitySystemBehaviour = player;
-            healItem.Use(player);
-            float expectedValue = playerHealthBeforeUse.CurrentValue + 100;
-            yield return new WaitForSeconds(1);
-
-            player.AttributeSystem.GetAttributeValue(playerHealthAttribute, out var playerHealthAfterUse);
-            Assert.That(playerHealthAfterUse.CurrentValue == expectedValue);
         }
-
 
         public ItemSO GetItemSO(string itemName)
         {
-            ItemSO itemSO = null;
             var guids = AssetDatabase.FindAssets("t:ItemSO");
             foreach (var guid in guids)
             {
                 var path = AssetDatabase.GUIDToAssetPath(guid);
                 var healItemSo = AssetDatabase.LoadAssetAtPath<ItemSO>(path);
                 if (healItemSo.name == itemName)
-                    itemSO = healItemSo;
+                {
+                    return healItemSo;
+                }
             }
 
-            return itemSO;
+            return null;
         }
 
         public AttributeScriptableObject GetAttributeScriptableObject(string attributeName)
         {
-            AttributeScriptableObject attribureSO = null;
             var guids = AssetDatabase.FindAssets("t:AttributeScriptableObject");
             foreach (var guid in guids)
             {
                 var path = AssetDatabase.GUIDToAssetPath(guid);
                 var attrSo = AssetDatabase.LoadAssetAtPath<AttributeScriptableObject>(path);
                 if (attrSo.name == attributeName)
-                    attribureSO = attrSo;
+                {
+                    return attrSo;
+                }
             }
 
-            return attribureSO;
+            return null;
         }
     }
+#endif
 }
