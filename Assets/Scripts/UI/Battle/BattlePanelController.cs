@@ -1,11 +1,15 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using CryptoQuest.Events.Gameplay;
 using CryptoQuest.Gameplay.Battle.Core.Components;
 using CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit;
 using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects;
+using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Skills;
 using CryptoQuest.Input;
 using CryptoQuest.UI.Battle.CommandsMenu;
 using IndiGames.Core.Events.ScriptableObjects;
+using IndiGames.GameplayAbilitySystem.AbilitySystem.ScriptableObjects;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -17,20 +21,19 @@ namespace CryptoQuest.UI.Battle
         public UnityAction<IBattleUnit> OnButtonSkillClicked = delegate { };
         public UnityAction<IBattleUnit> OnButtonItemClicked = delegate { };
         public UnityAction OnButtonGuardClicked = delegate { };
-        public UnityAction OnButtonEscapeClicked = delegate { };
+        public UnityAction<IBattleUnit> OnButtonEscapeClicked = delegate { };
 
 
         [SerializeField] private BattleActionHandler.BattleActionHandler[] _normalAttackChain;
+        [SerializeField] private BattleActionHandler.BattleActionHandler _retreatHandler;
         [SerializeField] private BattleActionHandler.BattleActionHandler[] _skillAttackChain;
 
-        [Header("Events")]
-        [SerializeField] private InputMediatorSO _inputMediator;
+        [Header("Events")] [SerializeField] private InputMediatorSO _inputMediator;
 
         [SerializeField] private BattleBus _battleBus;
         [SerializeField] private VoidEventChannelSO _onNewTurnEvent;
 
-        [Header("UI Panels")]
-        [SerializeField] private UIBattleCommandMenu _uiBattleCommandMenu;
+        [Header("UI Panels")] [SerializeField] private UIBattleCommandMenu _uiBattleCommandMenu;
 
         [SerializeField] private UICommandPanel _commandPanel;
 
@@ -59,7 +62,6 @@ namespace CryptoQuest.UI.Battle
             _onNewTurnEvent.EventRaised += SetupNewTurn;
 
             _inputMediator.CancelEvent += OnClickCancel;
-
             _battleManager = _battleBus.BattleManager;
             SetupChain(_normalAttackChain);
             SetupChain(_skillAttackChain);
@@ -95,16 +97,22 @@ namespace CryptoQuest.UI.Battle
             }
         }
 
-        private void OnClickCancel()
+        private void ReinitializeUI()
         {
             _commandPanel.Clear();
             _uiBattleCommandMenu.Initialize();
         }
 
-        private void OnButtonEscapeClickedHandler()
+        private void OnClickCancel()
+        {
+            ReinitializeUI();
+        }
+
+        private void OnButtonEscapeClickedHandler(IBattleUnit currentUnit)
         {
             _commandPanel.Clear();
-            _battleManager.OnEscape();
+            _retreatHandler.CurrentBattleInfo = _battleManager.CurrentBattleInfo;
+            _retreatHandler.Handle(currentUnit);
         }
 
         private void OnButtonGuardClickedHandler()

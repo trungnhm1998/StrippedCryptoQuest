@@ -5,7 +5,9 @@ using CryptoQuest.FSM.ScriptableObjects;
 using CryptoQuest.Gameplay.Battle.Core.Components.BattleSpawner;
 using CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit;
 using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects;
+using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Skills;
 using IndiGames.Core.Events.ScriptableObjects;
+using IndiGames.GameplayAbilitySystem.AbilitySystem.ScriptableObjects;
 using UnityEngine;
 
 namespace CryptoQuest.Gameplay.Battle.Core.Components
@@ -17,29 +19,32 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components
         [SerializeField] private StateSO _battleEndState;
         [SerializeField] private BattleBus _battleBus;
 
-        [field: SerializeField]
-        public BattleTeam BattleTeam1 { get; protected set; }
-        [field: SerializeField]
-        public BattleTeam BattleTeam2 { get; protected set; }
+        [field: SerializeField] public BattleTeam BattleTeam1 { get; protected set; }
 
-        [Header("Raise Events")]
-        [SerializeField] private VoidEventChannelSO _newTurnEventChannel;
+        [field: SerializeField] public BattleTeam BattleTeam2 { get; protected set; }
 
-        [Header("Listen Events")]
-        [SerializeField] private VoidEventChannelSO _sceneLoadedEventChannel;
+        [Header("Raise Events")] [SerializeField]
+        private VoidEventChannelSO _newTurnEventChannel;
+
+        [Header("Listen Events")] [SerializeField]
+        private VoidEventChannelSO _sceneLoadedEventChannel;
+
         [SerializeField] private VoidEventChannelSO _endActionPhaseEventChannel;
-
+        [SerializeField] private SpecialAbilitySO _retreatAbility;
         public IBattleUnit CurrentUnit { get; set; } = NullBattleUnit.Instance;
         public int Turn { get; private set; }
         public BaseBattleSpawner BattleSpawner { get; private set; }
         public List<IBattleUnit> BattleUnits { get; private set; } = new();
-
         public bool IsEndTurn { get; private set; }
+        public BattleInfo CurrentBattleInfo { get; private set; }
 
         protected void Awake()
         {
             BattleSpawner = GetComponent<BaseBattleSpawner>();
             _battleBus.BattleManager = this;
+            BattleInfo currentBattleInfo;
+            currentBattleInfo.IsBattleEscapable = BattleSpawner.IsBattleEscapale();
+            CurrentBattleInfo = currentBattleInfo;
         }
 
         protected virtual void StartBattle()
@@ -51,12 +56,14 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components
         {
             _endActionPhaseEventChannel.EventRaised += OnEndTurn;
             _sceneLoadedEventChannel.EventRaised += StartBattle;
+            _retreatAbility.OnAbilityActivated += OnRetreatActivated;
         }
 
         private void OnDisable()
         {
             _endActionPhaseEventChannel.EventRaised -= OnEndTurn;
             _sceneLoadedEventChannel.EventRaised -= StartBattle;
+            _retreatAbility.OnAbilityActivated -= OnRetreatActivated;
         }
 
 #if UNITY_EDITOR
@@ -66,10 +73,10 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components
             // the global state is reset, to prevent error when cold boot
             if (_stateMachine.CurrentState != _battleEndState)
             {
-                OnEscape();
+                OnRetreat();
             }
         }
-#endif 
+#endif
 
         public void InitBattleTeams()
         {
@@ -99,7 +106,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components
             {
                 IBattleUnit unit = BattleUnits[i];
                 if (!unit.IsDead) continue;
-                
+
                 BattleUnits.Remove(unit);
             }
         }
@@ -120,10 +127,20 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components
         {
             IsEndTurn = true;
         }
-        
-        public void OnEscape()
+
+        private void OnRetreatActivated(AbilityScriptableObject abilityScriptableObject)
+        {
+            OnRetreat();
+        }
+
+        public void OnRetreat()
         {
             _stateMachine.SetCurrentState(_battleEndState);
         }
-    }   
+    }
+
+    public struct BattleInfo
+    {
+        public bool IsBattleEscapable;
+    }
 }
