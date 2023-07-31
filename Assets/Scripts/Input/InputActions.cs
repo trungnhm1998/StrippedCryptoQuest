@@ -1645,18 +1645,18 @@ namespace CryptoQuest.Input
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""MagicStone"",
+                    ""name"": ""StatusEquipmentCancel"",
                     ""type"": ""Button"",
-                    ""id"": ""b9c7000c-ad2e-42b2-ade3-a4e3933b999f"",
+                    ""id"": ""44e05bb2-4fc3-434f-84bc-7ce62f61555a"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""StatusEquipmentCancel"",
+                    ""name"": ""EnableMagicStoneMenu"",
                     ""type"": ""Button"",
-                    ""id"": ""44e05bb2-4fc3-434f-84bc-7ce62f61555a"",
+                    ""id"": ""0c25fd26-3b47-4536-b85c-d9771f523881"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -1765,17 +1765,6 @@ namespace CryptoQuest.Input
                 },
                 {
                     ""name"": """",
-                    ""id"": ""1212e4b9-7fa1-4839-a619-196f7c2daff9"",
-                    ""path"": """",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""MagicStone"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""8a926546-d3b5-4543-8d50-573ed42b8050"",
                     ""path"": ""<Keyboard>/escape"",
                     ""interactions"": """",
@@ -1804,6 +1793,28 @@ namespace CryptoQuest.Input
                     ""processors"": """",
                     ""groups"": ""Gamepad;MnK"",
                     ""action"": ""StatusEquipmentCancel"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7a15c111-94fe-44f0-ae80-6ca99597062d"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""MnK"",
+                    ""action"": ""EnableMagicStoneMenu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""10666229-7a9b-4dc1-bd34-3a4b91615618"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""EnableMagicStoneMenu"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -2068,8 +2079,8 @@ namespace CryptoQuest.Input
             m_StatusEquipments_StatusMenuConfirmSelect = m_StatusEquipments.FindAction("StatusMenuConfirmSelect", throwIfNotFound: true);
             m_StatusEquipments_GoBelow = m_StatusEquipments.FindAction("GoBelow", throwIfNotFound: true);
             m_StatusEquipments_GoAbove = m_StatusEquipments.FindAction("GoAbove", throwIfNotFound: true);
-            m_StatusEquipments_MagicStone = m_StatusEquipments.FindAction("MagicStone", throwIfNotFound: true);
             m_StatusEquipments_StatusEquipmentCancel = m_StatusEquipments.FindAction("StatusEquipmentCancel", throwIfNotFound: true);
+            m_StatusEquipments_EnableMagicStoneMenu = m_StatusEquipments.FindAction("EnableMagicStoneMenu", throwIfNotFound: true);
             // Status/Equipments/Inventory
             m_StatusEquipmentsInventory = asset.FindActionMap("Status/Equipments/Inventory", throwIfNotFound: true);
             m_StatusEquipmentsInventory_StatusInventoryCancel = m_StatusEquipmentsInventory.FindAction("StatusInventoryCancel", throwIfNotFound: true);
@@ -2564,8 +2575,8 @@ namespace CryptoQuest.Input
         private readonly InputAction m_StatusEquipments_StatusMenuConfirmSelect;
         private readonly InputAction m_StatusEquipments_GoBelow;
         private readonly InputAction m_StatusEquipments_GoAbove;
-        private readonly InputAction m_StatusEquipments_MagicStone;
         private readonly InputAction m_StatusEquipments_StatusEquipmentCancel;
+        private readonly InputAction m_StatusEquipments_EnableMagicStoneMenu;
         public struct StatusEquipmentsActions
         {
             private @InputActions m_Wrapper;
@@ -2573,8 +2584,8 @@ namespace CryptoQuest.Input
             public InputAction @StatusMenuConfirmSelect => m_Wrapper.m_StatusEquipments_StatusMenuConfirmSelect;
             public InputAction @GoBelow => m_Wrapper.m_StatusEquipments_GoBelow;
             public InputAction @GoAbove => m_Wrapper.m_StatusEquipments_GoAbove;
-            public InputAction @MagicStone => m_Wrapper.m_StatusEquipments_MagicStone;
             public InputAction @StatusEquipmentCancel => m_Wrapper.m_StatusEquipments_StatusEquipmentCancel;
+            public InputAction @EnableMagicStoneMenu => m_Wrapper.m_StatusEquipments_EnableMagicStoneMenu;
             public InputActionMap Get() { return m_Wrapper.m_StatusEquipments; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -2593,12 +2604,12 @@ namespace CryptoQuest.Input
                 @GoAbove.started += instance.OnGoAbove;
                 @GoAbove.performed += instance.OnGoAbove;
                 @GoAbove.canceled += instance.OnGoAbove;
-                @MagicStone.started += instance.OnMagicStone;
-                @MagicStone.performed += instance.OnMagicStone;
-                @MagicStone.canceled += instance.OnMagicStone;
                 @StatusEquipmentCancel.started += instance.OnStatusEquipmentCancel;
                 @StatusEquipmentCancel.performed += instance.OnStatusEquipmentCancel;
                 @StatusEquipmentCancel.canceled += instance.OnStatusEquipmentCancel;
+                @EnableMagicStoneMenu.started += instance.OnEnableMagicStoneMenu;
+                @EnableMagicStoneMenu.performed += instance.OnEnableMagicStoneMenu;
+                @EnableMagicStoneMenu.canceled += instance.OnEnableMagicStoneMenu;
             }
 
             private void UnregisterCallbacks(IStatusEquipmentsActions instance)
@@ -2612,12 +2623,12 @@ namespace CryptoQuest.Input
                 @GoAbove.started -= instance.OnGoAbove;
                 @GoAbove.performed -= instance.OnGoAbove;
                 @GoAbove.canceled -= instance.OnGoAbove;
-                @MagicStone.started -= instance.OnMagicStone;
-                @MagicStone.performed -= instance.OnMagicStone;
-                @MagicStone.canceled -= instance.OnMagicStone;
                 @StatusEquipmentCancel.started -= instance.OnStatusEquipmentCancel;
                 @StatusEquipmentCancel.performed -= instance.OnStatusEquipmentCancel;
                 @StatusEquipmentCancel.canceled -= instance.OnStatusEquipmentCancel;
+                @EnableMagicStoneMenu.started -= instance.OnEnableMagicStoneMenu;
+                @EnableMagicStoneMenu.performed -= instance.OnEnableMagicStoneMenu;
+                @EnableMagicStoneMenu.canceled -= instance.OnEnableMagicStoneMenu;
             }
 
             public void RemoveCallbacks(IStatusEquipmentsActions instance)
@@ -2810,8 +2821,8 @@ namespace CryptoQuest.Input
             void OnStatusMenuConfirmSelect(InputAction.CallbackContext context);
             void OnGoBelow(InputAction.CallbackContext context);
             void OnGoAbove(InputAction.CallbackContext context);
-            void OnMagicStone(InputAction.CallbackContext context);
             void OnStatusEquipmentCancel(InputAction.CallbackContext context);
+            void OnEnableMagicStoneMenu(InputAction.CallbackContext context);
         }
         public interface IStatusEquipmentsInventoryActions
         {

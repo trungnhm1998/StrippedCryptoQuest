@@ -362,11 +362,6 @@ namespace CryptoQuest.Input
             throw new NotImplementedException();
         }
 
-        public void OnEnableMagicStoneMenu(InputAction.CallbackContext context)
-        {
-            if (context.performed) EnableMagicStoneMenuEvent?.Invoke();
-        }
-
         #endregion
 
         #region StatusMenu.Equipments
@@ -393,6 +388,10 @@ namespace CryptoQuest.Input
         public void OnStatusMenuCancel(InputAction.CallbackContext context)
         {
             if (context.performed) StatusMenuCancelEvent?.Invoke();
+        }
+        public void OnEnableMagicStoneMenu(InputAction.CallbackContext context)
+        {
+            if (context.performed) EnableMagicStoneMenuEvent?.Invoke();
         }
         #endregion
 

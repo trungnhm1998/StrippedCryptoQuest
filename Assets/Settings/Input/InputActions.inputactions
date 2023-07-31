@@ -1621,18 +1621,18 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "MagicStone",
+                    "name": "StatusEquipmentCancel",
                     "type": "Button",
-                    "id": "b9c7000c-ad2e-42b2-ade3-a4e3933b999f",
+                    "id": "44e05bb2-4fc3-434f-84bc-7ce62f61555a",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
                 },
                 {
-                    "name": "StatusEquipmentCancel",
+                    "name": "EnableMagicStoneMenu",
                     "type": "Button",
-                    "id": "44e05bb2-4fc3-434f-84bc-7ce62f61555a",
+                    "id": "0c25fd26-3b47-4536-b85c-d9771f523881",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -1741,17 +1741,6 @@
                 },
                 {
                     "name": "",
-                    "id": "1212e4b9-7fa1-4839-a619-196f7c2daff9",
-                    "path": "",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "MagicStone",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "8a926546-d3b5-4543-8d50-573ed42b8050",
                     "path": "<Keyboard>/escape",
                     "interactions": "",
@@ -1780,6 +1769,28 @@
                     "processors": "",
                     "groups": "Gamepad;MnK",
                     "action": "StatusEquipmentCancel",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7a15c111-94fe-44f0-ae80-6ca99597062d",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "MnK",
+                    "action": "EnableMagicStoneMenu",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "10666229-7a9b-4dc1-bd34-3a4b91615618",
+                    "path": "<Gamepad>/buttonWest",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "EnableMagicStoneMenu",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

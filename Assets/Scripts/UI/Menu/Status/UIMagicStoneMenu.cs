@@ -22,7 +22,7 @@ namespace CryptoQuest.UI.Menu.Status
         private void HidePanel()
         {
             _contents.SetActive(false);
-            _inputMediator.EnableStatusMenuInput();
+            _inputMediator.EnableStatusEquipmentsInput();
 
             _inputMediator.TurnOffMagicStoneMenuEvent -= HidePanel;
         }
