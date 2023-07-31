@@ -167,7 +167,7 @@ namespace CryptoQuest.UI.Menu
         private void BackToMenuNavigationState(MenuTypeSO menuTypeSO)
         {
             EnableAllNavButtons();
-            _currentActivePanel = null;
+            // _currentActivePanel = null;
         }
 
         private void HideCurrentPanel()
