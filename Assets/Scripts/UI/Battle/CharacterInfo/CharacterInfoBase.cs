@@ -9,7 +9,7 @@ namespace CryptoQuest.UI.Battle.CharacterInfo
     {
         [SerializeField] protected AttributeScriptableObject _hpAttributeSO;
 
-        protected CharacterDataSO _characterData;
+        protected CharacterInformation _characterInfo;
         protected AttributeSystemBehaviour _attributeSystem;
 
         protected virtual void OnEnable()
@@ -22,10 +22,10 @@ namespace CryptoQuest.UI.Battle.CharacterInfo
             _hpAttributeSO.ValueChangeEvent -= OnHPChanged;
         }
 
-        public virtual void SetData(CharacterDataSO data)
+        public virtual void SetData(CharacterInformation characterInfo)
         {
-            _characterData = data;
-            _attributeSystem = data.Owner.AttributeSystem;
+            _characterInfo = characterInfo;
+            _attributeSystem = characterInfo.Owner.AttributeSystem;
             Setup();
         }
 

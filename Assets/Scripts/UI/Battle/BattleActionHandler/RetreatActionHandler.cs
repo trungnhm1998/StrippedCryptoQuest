@@ -13,15 +13,17 @@ namespace CryptoQuest.UI.Battle.BattleActionHandler
 {
     public class RetreatActionHandler : BattleActionHandler
     {
-        public AbilityScriptableObject RetreatAbilitySO;
-        public AttributeScriptableObject TargetedAttributeSO;
-        public VoidEventChannelSO _onRetreatFailedEvent;
+        [SerializeField] private AbilityScriptableObject _retreatAbilitySO;
+        [SerializeField] private AttributeScriptableObject _targetedAttributeSO;
+        [SerializeField] private BattlePanelController _battlePanelController;
 
         public override void Handle(IBattleUnit currentUnit)
         {
             if (currentUnit == null) return;
             if (!IsAbleToRetreat(currentUnit))
             {
+                //TODO: Move retreat logic to ability and add action in retreat ability if can retreat or not
+                _battlePanelController.ReinitializeUI();
                 return;
             }
 
@@ -31,7 +33,7 @@ namespace CryptoQuest.UI.Battle.BattleActionHandler
         private void Retreat(IBattleUnit currentUnit)
         {
             AbilitySystemBehaviour currentUnitOwner = currentUnit.Owner;
-            AbstractAbility retreatAbility = currentUnitOwner.GiveAbility(RetreatAbilitySO);
+            AbstractAbility retreatAbility = currentUnitOwner.GiveAbility(_retreatAbilitySO);
             currentUnit.SelectSkill(retreatAbility);
             currentUnit.SelectSingleTarget(currentUnitOwner);
         }
@@ -41,7 +43,7 @@ namespace CryptoQuest.UI.Battle.BattleActionHandler
             float targetMaxAttributeValue = 0;
             foreach (var target in currentUnit.OpponentTeam.Members)
             {
-                target.AttributeSystem.GetAttributeValue(TargetedAttributeSO, out var targetAttributeValue);
+                target.AttributeSystem.GetAttributeValue(_targetedAttributeSO, out var targetAttributeValue);
                 targetMaxAttributeValue = Mathf.Max(targetMaxAttributeValue, targetAttributeValue.CurrentValue);
             }
 
@@ -50,7 +52,7 @@ namespace CryptoQuest.UI.Battle.BattleActionHandler
 
         private float GetOwnerAttributeValue(IBattleUnit currentUnit)
         {
-            currentUnit.Owner.AttributeSystem.GetAttributeValue(TargetedAttributeSO, out var ownerAttributeValue);
+            currentUnit.Owner.AttributeSystem.GetAttributeValue(_targetedAttributeSO, out var ownerAttributeValue);
             return ownerAttributeValue.CurrentValue;
         }
 
