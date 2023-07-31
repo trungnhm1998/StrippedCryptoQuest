@@ -6,12 +6,12 @@ using UnityEngine.UIElements;
 
 namespace CryptoQuestEditor
 {
-    [CustomEditor(typeof(AudioSettingsSO))]
+    [CustomEditor(typeof(AudioSettingSO))]
     public class AudioSettingsSOEditor : Editor
     {
         [SerializeField] private VisualTreeAsset _visualTreeAsset = default;
 
-        private AudioSettingsSO Target => target as AudioSettingsSO;
+        private AudioSettingSO Target => target as AudioSettingSO;
 
         public override VisualElement CreateInspectorGUI()
         {
