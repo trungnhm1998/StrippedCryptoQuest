@@ -20,7 +20,7 @@ namespace CryptoQuest.Audio.AudioEmitters
         /// a cueSO could be the same but value should be different
         /// e.g. gun shot SFX
         /// </summary>
-        [SerializeField, ReadOnly] private AudioEmitterValue _emitterValue;
+        [ReadOnly] private AudioEmitterValue _emitterValue;
 
         private IObjectPool<AudioEmitter> _objectPool;
         public void Init(IObjectPool<AudioEmitter> pool) => _objectPool = pool;

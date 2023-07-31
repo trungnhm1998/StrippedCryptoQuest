@@ -8,10 +8,10 @@ namespace CryptoQuest.Audio
     [RequireComponent((typeof(AudioEmitterPool)))]
     public class AudioManager : MonoBehaviour
     {
-        [Header("SoundEmitters Pool")] [SerializeField]
+        [Header("AudioEmitters Pool")] [SerializeField]
         private AudioEmitterPool _pool = default;
 
-        [SerializeField] private int _soundEmitterPoolSize = 10;
+        [SerializeField] private int _audioEmitterPoolSize = 10;
 
         [Header("Listening on")] [SerializeField]
         private AudioCueEventChannelSO _sfxEventChannel;
@@ -25,7 +25,7 @@ namespace CryptoQuest.Audio
 
         private void Awake()
         {
-            _pool.Create(_soundEmitterPoolSize);
+            _pool.Create(_audioEmitterPoolSize);
             _pool.SetParent(this.transform);
         }
 
