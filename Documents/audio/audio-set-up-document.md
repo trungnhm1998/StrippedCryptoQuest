@@ -8,7 +8,7 @@ To manage audio clips for each audio in the game, we use a script called `AudioC
 
 3. Click on **Create** in the top menu.
 
-4. Go to `Crypto Quest` > `Audio` > `Audio Cue`.
+4. Go to `Crypto Quest` > `Audio` > `BGM Cue` or `SFX Cue`.
 
 5. Rename the audio according to the naming convention. [[Tutorials]](#audio-naming)
 

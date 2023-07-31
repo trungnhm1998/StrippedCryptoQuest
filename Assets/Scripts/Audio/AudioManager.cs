@@ -19,7 +19,7 @@ namespace CryptoQuest.Audio
         [SerializeField] private AudioCueEventChannelSO _backgroundMusicEventChannel;
 
         [Header("Audio control")] [SerializeField]
-        private AudioSettingsSO _settings;
+        private AudioSettingSO audioSettings;
 
         private AudioEmitter _playingMusicAudioEmitter;
 
@@ -37,7 +37,7 @@ namespace CryptoQuest.Audio
             _backgroundMusicEventChannel.AudioPlayRequested += PlayBackgroundMusic;
             _backgroundMusicEventChannel.AudioStopRequested += StopBackgroundMusic;
 
-            _settings.VolumeChanged += ChangeMasterVolume;
+            audioSettings.VolumeChanged += ChangeMasterVolume;
         }
 
         private void OnDisable()
@@ -48,7 +48,7 @@ namespace CryptoQuest.Audio
             _backgroundMusicEventChannel.AudioPlayRequested -= PlayBackgroundMusic;
             _backgroundMusicEventChannel.AudioStopRequested -= StopBackgroundMusic;
 
-            _settings.VolumeChanged -= ChangeMasterVolume;
+            audioSettings.VolumeChanged -= ChangeMasterVolume;
         }
 
         private void PlaySFX(AudioCueSO audioCue)
@@ -67,7 +67,7 @@ namespace CryptoQuest.Audio
                     continue;
                 }
 
-                audioEmitter.PlayAudioClip(currentClips[i], audioCue.Looping);
+                audioEmitter.PlayAudioClip(currentClips[i], audioSettings, audioCue.Looping);
                 if (!audioCue.Looping) audioEmitter.AudioFinishedPlaying += AudioFinishedPlaying;
             }
         }
@@ -94,7 +94,7 @@ namespace CryptoQuest.Audio
 
             if (_playingMusicAudioEmitter == null)
                 _playingMusicAudioEmitter = _pool.Request();
-            _playingMusicAudioEmitter.FadeMusicIn(audioCue.GetClips()[0], fadeDuration, startTime);
+            _playingMusicAudioEmitter.FadeMusicIn(audioCue.GetClips()[0], audioSettings, fadeDuration, startTime);
         }
 
         private void StopBackgroundMusic(AudioCueSO arg0)
