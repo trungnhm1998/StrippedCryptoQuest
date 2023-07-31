@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using CryptoQuest.UI.Menu.ScriptableObjects;
+using IndiGames.Core.Events.ScriptableObjects;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
 
@@ -16,12 +18,31 @@ namespace CryptoQuest.UI.Menu
             public UIMenuPanel Panel;
         }
 
+        [FormerlySerializedAs("EnableSortModeEvent")]
+        [Header("Events")]
+        [SerializeField] private VoidEventChannelSO SortModeEnabledEvent;
+        [SerializeField] private VoidEventChannelSO SortModeDisabledEvent;
+
+        [Header("Game Components")]
         [SerializeField] private RectTransform _navBar;
         [SerializeField] private List<UIHeaderButton> _navBarButtons = new();
         [SerializeField] private List<MenuMap> _panels = new();
+
         private Dictionary<EMenuType, UIMenuPanel> _cachedPanel = new();
         private UIMenuPanel _currentActivePanel;
         private MenuTypeSO _currentActiveMenuTypeSO;
+
+        private void OnEnable()
+        {
+            SortModeEnabledEvent.EventRaised += DisableButtonsInteraction;
+            SortModeDisabledEvent.EventRaised += EnableButtonsInteraction;
+        }
+
+        private void OnDisable()
+        {
+            SortModeEnabledEvent.EventRaised -= DisableButtonsInteraction;
+            SortModeDisabledEvent.EventRaised -= EnableButtonsInteraction;
+        }
 
         private void Awake()
         {
@@ -34,6 +55,23 @@ namespace CryptoQuest.UI.Menu
             _currentActivePanel = _cachedPanel[EMenuType.Main];
         }
 
+        private void DisableButtonsInteraction()
+        {
+            foreach (var button in _navBarButtons)
+            {
+                button.interactable = false;
+            }
+        }
+
+        private void EnableButtonsInteraction()
+        {
+            Debug.Log($"Sort mode turn off");
+            foreach (var button in _navBarButtons)
+            {
+                button.interactable = true;
+            }
+        }
+
         public void MainMenuBeingClosed()
         {
             foreach (var button in _navBarButtons)
@@ -44,15 +82,17 @@ namespace CryptoQuest.UI.Menu
 
         public void ShowMainMenuPanel()
         {
+            UpdateNavBarLayout();
+
             if (_currentActivePanel != null && _currentActivePanel.TypeSO.Type != EMenuType.Main)
             {
                 HideCurrentPanel();
             }
 
             _currentActivePanel = _cachedPanel[EMenuType.Main];
-            ShowCurrentPanel();
-            UpdateNavBarLayout();
+            _currentActiveMenuTypeSO = _currentActivePanel.TypeSO;
             RegisterNavBarButtonEvents();
+            ShowCurrentPanel();
         }
 
         private void RegisterNavBarButtonEvents()
@@ -72,9 +112,9 @@ namespace CryptoQuest.UI.Menu
             }
 
             if (typeToShow == EMenuType.Main) return;
-
+            
             _currentActiveMenuTypeSO = typeSO;
-
+            
             HideCurrentPanel();
             _currentActivePanel = _cachedPanel[typeToShow];
             ShowCurrentPanel();
@@ -96,6 +136,7 @@ namespace CryptoQuest.UI.Menu
                 button.Disable();
                 if (button.TypeSO == typeSO)
                 {
+                    Debug.Log("test");
                     button.Pointer.enabled = false;
                     button.Enable();
                 }
