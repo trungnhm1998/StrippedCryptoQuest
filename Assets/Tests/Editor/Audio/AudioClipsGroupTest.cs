@@ -15,7 +15,7 @@ namespace CryptoQuest.Tests.Editor.Audio
         private AudioClipsGroup _group;
 
         [TestCase(ESequenceMode.Sequential)]
-        [TestCase(ESequenceMode.ImmediateRepeat)]
+        [TestCase(ESequenceMode.Repeat)]
         [TestCase(ESequenceMode.Random)]
         public void AudioClipsGroup_GetNextClip_ExpectNotIndexOutOfRange(ESequenceMode mode)
         {
