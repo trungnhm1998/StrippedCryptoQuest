@@ -16,10 +16,9 @@ namespace CryptoQuest.UI.Skill
     {
         [SerializeField] private SkillsMockupSO _listSkillMockup;
         [SerializeField] private RecyclableScrollRect _recyclableScrollRect;
-        [SerializeField] private ECharacterSkill _character;
-        private List<MultiInputButton> _buttonList = new();
-        public ECharacterSkill Character => _character;
-        private List<SkillInformation> _listSkills = new List<SkillInformation>();
+        [field: SerializeField] public ECharacterClasses CharacterClass { get; private set; }
+        private List<MultiInputButton> _listSkillButton = new();
+        private List<SkillInformation> _listSkills = new();
 
         private void Awake()
         {
@@ -34,8 +33,8 @@ namespace CryptoQuest.UI.Skill
             foreach (var skill in _listSkillMockup.Skills)
             {
                 var skillSO = skill.SkillSO;
-                var type = skillSO.CharacterSkills;
-                if (type != _character) continue;
+                var type = skillSO.CharacterClass;
+                if (type != CharacterClass) continue;
                 _listSkills.Add(new SkillInformation(skillSO));
             }
         }
@@ -50,7 +49,7 @@ namespace CryptoQuest.UI.Skill
         {
             var skill = cell as UISkillAbility;
             skill.Init(_listSkills[index]);
-            _buttonList.Add(skill.GetComponent<MultiInputButton>());
+            _listSkillButton.Add(skill.GetComponent<MultiInputButton>());
         }
         #endregion
     }

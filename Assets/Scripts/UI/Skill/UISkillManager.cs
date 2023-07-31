@@ -14,8 +14,8 @@ namespace CryptoQuest.UI.Skill
         [SerializeField] private MenuSelectionHandler _selectionHandler;
         [SerializeField] private List<UISkillTabButton> _tabSkillButton;
         [SerializeField] private List<UISkillCharacterPanel> _listSkills;
-        private Dictionary<ECharacterSkill, UISkillCharacterPanel> _cachedSkills = new();
-        private Dictionary<ECharacterSkill, UISkillTabButton> _cachedTabButtons = new();
+        private Dictionary<ECharacterClasses, UISkillCharacterPanel> _cachedSkills = new();
+        private Dictionary<ECharacterClasses, UISkillTabButton> _cachedTabButtons = new();
         private UISkillCharacterPanel _currentActivePanel;
 
         private void Awake()
@@ -26,14 +26,11 @@ namespace CryptoQuest.UI.Skill
         private void InitListSkills()
         {
             _currentActivePanel = _listSkills[0];
-            _cachedSkills = new();
-            _cachedTabButtons = new();
-
             for (var i = 0; i < _listSkills.Count; i++)
             {
                 var skill = _listSkills[i];
-                _cachedSkills.Add(skill.Character, skill);
-                _cachedTabButtons.Add(skill.Character, _tabSkillButton[i]);
+                _cachedSkills.Add(skill.CharacterClass, skill);
+                _cachedTabButtons.Add(skill.CharacterClass, _tabSkillButton[i]);
             }
         }
 

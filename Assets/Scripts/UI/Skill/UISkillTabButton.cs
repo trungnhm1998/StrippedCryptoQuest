@@ -6,9 +6,9 @@ namespace CryptoQuest.UI.Skill
 {
     public class UISkillTabButton : MonoBehaviour
     {
-        public event UnityAction<ECharacterSkill> Clicked;
+        public event UnityAction<ECharacterClasses> Clicked;
 
-        [SerializeField] private ECharacterSkill _typeMenuCharacter;
+        [SerializeField] private ECharacterClasses _typeMenuCharacter;
 
         private void OnClicked()
         {
