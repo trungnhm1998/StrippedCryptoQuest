@@ -10,11 +10,14 @@ using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Skills;
 using IndiGames.Core.Events.ScriptableObjects;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.ScriptableObjects;
 using UnityEngine;
+using IndiGames.Core.SceneManagementSystem.Events.ScriptableObjects;
+using IndiGames.Core.SceneManagementSystem.ScriptableObjects;
 
 namespace CryptoQuest.Gameplay.Battle.Core.Components
 {
     public class BattleManager : MonoBehaviour
     {
+        [SerializeField] private SceneScriptableObject _battleSceneSO;
         [SerializeField] private BaseStateMachine _stateMachine;
         [SerializeField] private StateSO _battleStartState;
         [SerializeField] private StateSO _battleEndState;
@@ -27,6 +30,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components
 
         [Header("Raise Events")] [SerializeField]
         private VoidEventChannelSO _newTurnEventChannel;
+        [SerializeField] private UnloadSceneEventChannelSO _unloadSceneEvent;
 
         [Header("Listen Events")] [SerializeField]
         private VoidEventChannelSO _sceneLoadedEventChannel;
@@ -138,6 +142,11 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components
         public void OnRetreat()
         {
             _stateMachine.SetCurrentState(_battleEndState);
+        }
+
+        public void OnBattleEnd()
+        {
+            _unloadSceneEvent.UnloadRequested(_battleSceneSO);
         }
 
         public List<IBattleUnit> GetActionOrderList()

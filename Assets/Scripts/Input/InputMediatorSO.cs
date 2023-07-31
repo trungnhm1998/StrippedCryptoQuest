@@ -14,7 +14,8 @@ namespace CryptoQuest.Input
         InputActions.IHomeMenuActions,
         InputActions.IStatusMenuActions,
         InputActions.IStatusEquipmentsActions,
-        InputActions.IStatusEquipmentsInventoryActions
+        InputActions.IStatusEquipmentsInventoryActions,
+        InputActions.IStatusMagicStoneActions
     {
         #region Events
 
@@ -68,6 +69,8 @@ namespace CryptoQuest.Input
         public event UnityAction StatusEquipmentInventoryCancelEvent;
         public event UnityAction StatusInventoryGoBelowEvent;
         public event UnityAction StatusInventoryGoAboveEvent;
+        public event UnityAction EnableMagicStoneMenuEvent;
+        public event UnityAction TurnOffMagicStoneMenuEvent;
 
         #endregion
 
@@ -100,6 +103,7 @@ namespace CryptoQuest.Input
             _inputActions.StatusMenu.Disable();
             _inputActions.StatusEquipments.Disable();
             _inputActions.StatusEquipmentsInventory.Disable();
+            _inputActions.StatusMagicStone.Disable();
         }
 
         private void CreateInputInstanceIfNeeded()
@@ -114,6 +118,7 @@ namespace CryptoQuest.Input
             _inputActions.StatusMenu.SetCallbacks(this);
             _inputActions.StatusEquipments.SetCallbacks(this);
             _inputActions.StatusEquipmentsInventory.SetCallbacks(this);
+            _inputActions.StatusMagicStone.SetCallbacks(this);
         }
 
         public void EnableMenuInput()
@@ -157,6 +162,12 @@ namespace CryptoQuest.Input
         {
             DisableAllInput();
             _inputActions.StatusEquipmentsInventory.Enable();
+        }
+        
+        public void EnableStatusMagicStoneInput()
+        {
+            DisableAllInput();
+            _inputActions.StatusMagicStone.Enable();
         }
 
         #endregion
@@ -349,6 +360,7 @@ namespace CryptoQuest.Input
         {
             throw new NotImplementedException();
         }
+
         #endregion
 
         #region StatusMenu.Equipments
@@ -376,6 +388,10 @@ namespace CryptoQuest.Input
         {
             if (context.performed) StatusMenuCancelEvent?.Invoke();
         }
+        public void OnEnableMagicStoneMenu(InputAction.CallbackContext context)
+        {
+            if (context.performed) EnableMagicStoneMenuEvent?.Invoke();
+        }
         #endregion
 
         #region StatusMenu.Equipments.Inventory
@@ -393,7 +409,13 @@ namespace CryptoQuest.Input
         {
             if (context.performed) StatusInventoryGoAboveEvent?.Invoke();
         }
+        #endregion
 
+        #region StatusMenu.MagicStone
+        public void OnTurnOffMagicStoneMenu(InputAction.CallbackContext context)
+        {
+            if (context.performed) TurnOffMagicStoneMenuEvent?.Invoke();
+        }
         #endregion
     }
 }
