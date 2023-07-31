@@ -2,16 +2,16 @@
 using CryptoQuest.Gameplay.Quest.Dialogue.ScriptableObject;
 using UnityEngine;
 
-namespace CryptoQuest.Character.DialogueBehaviours
+namespace CryptoQuest.Character.DialogueProviders
 {
-    public class ScriptableObjectDialogueController : MonoBehaviour, IDialogueController
+    public class ScriptableObjectDialogueProvider : DialogueProviderBehaviour
     {
         [SerializeField] private DialogueScriptableObject _dialogueScriptableObject;
 
         [Header("Raise on")]
         [SerializeField] private DialogueEventChannelSO _dialogueEventChannelSO;
 
-        public void ShowDialogue()
+        public override void ShowDialogue()
         {
             _dialogueEventChannelSO.Show(_dialogueScriptableObject);
         }
