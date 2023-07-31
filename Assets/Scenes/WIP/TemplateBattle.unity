@@ -764,10 +764,6 @@ PrefabInstance:
       propertyPath: _battleOrderDecider
       value: 
       objectReference: {fileID: 9173481833396736059}
-    - target: {fileID: 5033487356452785046, guid: 3deeb84024fa8b84e8df688f312dd64d, type: 3}
-      propertyPath: _endActionPhaseEventChannel
-      value: 
-      objectReference: {fileID: 11400000, guid: 4116eb7df02c5cb418f0bccf9c6a8922, type: 2}
     - target: {fileID: 8709895734227502206, guid: 3deeb84024fa8b84e8df688f312dd64d, type: 3}
       propertyPath: m_RootOrder
       value: -1
@@ -815,16 +811,8 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 3422187207846808246, guid: 3deeb84024fa8b84e8df688f312dd64d, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 9173481833396736059}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3deeb84024fa8b84e8df688f312dd64d, type: 3}
---- !u!1 &1881708701663024094 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3422187207846808246, guid: 3deeb84024fa8b84e8df688f312dd64d, type: 3}
-  m_PrefabInstance: {fileID: 1881708701663024093}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2797803324402331429
 GameObject:
   m_ObjectHideFlags: 0
@@ -1101,17 +1089,14 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8709895734227502206, guid: 3deeb84024fa8b84e8df688f312dd64d, type: 3}
   m_PrefabInstance: {fileID: 1881708701663024093}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &9173481833396736059
+--- !u!114 &9173481833396736059 stripped
 MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 5186279793484626792, guid: 3deeb84024fa8b84e8df688f312dd64d, type: 3}
+  m_PrefabInstance: {fileID: 1881708701663024093}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1881708701663024094}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8244be533e731dc4c8f71b8bed4623f6, type: 3}
+  m_Script: {fileID: 11500000, guid: a20039c48f56dd343bcdc386b93d5650, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerDecideAttribute: {fileID: 11400000, guid: 916738d0e4f0a1048ae72f96de242bb1, type: 2}
-  _enemyDecideAttribute: {fileID: 11400000, guid: 22f0fcb7661743047a2eab8ef3fb6bbb, type: 2}

@@ -142,7 +142,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components
 
         public List<IBattleUnit> GetActionOrderList()
         {
-            return _battleOrderDecider.SortUnitByAttributeValue(BattleUnits, false);
+            return _battleOrderDecider.SortUnitByAttributeValue(BattleUnits);
         }
     }   
 

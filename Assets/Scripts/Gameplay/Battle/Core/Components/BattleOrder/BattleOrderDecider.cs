@@ -10,7 +10,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components.BattleOrder
     [RequireComponent(typeof(BattleManager))]
     public class BattleOrderDecider : MonoBehaviour
     {
-        [SerializeField] protected AttributeScriptableObject _playerDecideAttribute;
+        [SerializeField] protected AttributeScriptableObject _decideAttribute;
 
         public List<IBattleUnit> SortUnitByAttributeValue(List<IBattleUnit> units, bool isDescending = true)
         {
@@ -25,7 +25,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components.BattleOrder
         protected virtual float GetDecideAttributeValue(IBattleUnit unit)
         {
             var attributeSystem = unit.Owner.AttributeSystem;
-            attributeSystem.GetAttributeValue(_playerDecideAttribute, out var attributeValue);
+            attributeSystem.GetAttributeValue(_decideAttribute, out var attributeValue);
             return attributeValue.CurrentValue;
         }
     }
