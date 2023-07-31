@@ -1,5 +1,6 @@
 using CryptoQuest.Audio.Settings;
 using DG.Tweening;
+using IndiGames.Core.EditorTools.Attributes.ReadOnlyAttribute;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Pool;
@@ -9,16 +10,25 @@ namespace CryptoQuest.Audio.AudioEmitters
     [RequireComponent((typeof(AudioSource)))]
     public class AudioEmitter : MonoBehaviour
     {
-        public event UnityAction<AudioEmitter> AudioFinishedPlaying;
+        public event UnityAction<AudioEmitterValue> AudioFinishedPlaying;
 
         [SerializeField] private AudioSource _audioSource;
         [SerializeField] private AudioSettingsSO _setting;
+
+        /// <summary>
+        /// This will be the runtime value of the AudioCueSO
+        /// a cueSO could be the same but value should be different
+        /// e.g. gun shot SFX
+        /// </summary>
+        [SerializeField, ReadOnly] private AudioEmitterValue _emitterValue;
 
         private IObjectPool<AudioEmitter> _objectPool;
         public void Init(IObjectPool<AudioEmitter> pool) => _objectPool = pool;
 
         public void PlayAudioClip(AudioClip clip, bool hasLoop)
         {
+            _emitterValue = new AudioEmitterValue(this);
+
             _audioSource.clip = clip;
             _audioSource.volume = _setting.Volume;
             _audioSource.loop = hasLoop;
@@ -64,16 +74,8 @@ namespace CryptoQuest.Audio.AudioEmitters
         public AudioClip GetClip() => _audioSource.clip;
         public bool IsPlaying() => _audioSource.isPlaying;
         public bool IsLoop() => _audioSource.loop;
-
-        public void ReleasePool()
-        {
-            _objectPool?.Release(this);
-        }
-
-
-        private void OnFinishedPlay()
-        {
-            AudioFinishedPlaying?.Invoke(this);
-        }
+        public void SetVolume(float value) => _audioSource.volume = value;
+        public void ReleasePool() => _objectPool?.Release(this);
+        private void OnFinishedPlay() => AudioFinishedPlaying?.Invoke(_emitterValue);
     }
 }
