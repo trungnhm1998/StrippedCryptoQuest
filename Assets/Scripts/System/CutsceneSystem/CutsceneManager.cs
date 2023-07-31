@@ -1,6 +1,7 @@
 ﻿using CryptoQuest.System.CutsceneSystem.CustomTimelineTracks.YarnSpinnerNodeControlTrack;
 using CryptoQuest.System.CutsceneSystem.Events;
 using CryptoQuest.System.Dialogue;
+using CryptoQuest.System.Dialogue.Managers;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Playables;
@@ -72,7 +73,8 @@ namespace CryptoQuest.System.CutsceneSystem
             {
                 Debug.LogWarning(
                     "A request to pause a cutscene was received, but no playable director was previously saved, " +
-                    "probably a cutscene was played from editor, and not from the CutsceneTrigger.");
+                    "probably a cutscene was played from editor, and not from the CutsceneTrigger." +
+                    "\nAlso could cause by normal dialogue through YarnSpinnerDialogueManager.");
 
 #if UNITY_EDITOR
                 _currentPlayableDirector = TimelineEditor.inspectedDirector;

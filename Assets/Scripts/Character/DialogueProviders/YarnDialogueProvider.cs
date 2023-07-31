@@ -1,4 +1,5 @@
 ﻿using CryptoQuest.System.Dialogue;
+using CryptoQuest.System.Dialogue.Managers;
 using UnityEngine;
 
 namespace CryptoQuest.Character.DialogueProviders

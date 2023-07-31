@@ -5,10 +5,9 @@ using CryptoQuest.System.Dialogue.Builder;
 using CryptoQuest.System.Dialogue.Events;
 using CryptoQuest.UI.Dialogs.Dialogue;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.Localization;
 
-namespace CryptoQuest.System.Dialogue
+namespace CryptoQuest.System.Dialogue.Managers
 {
     public class DialogueManager : MonoBehaviour
     {

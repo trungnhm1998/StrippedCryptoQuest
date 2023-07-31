@@ -1,5 +1,6 @@
 ﻿using System;
 using CryptoQuest.System.Dialogue;
+using CryptoQuest.System.Dialogue.Managers;
 using UnityEngine;
 using UnityEngine.Playables;
 

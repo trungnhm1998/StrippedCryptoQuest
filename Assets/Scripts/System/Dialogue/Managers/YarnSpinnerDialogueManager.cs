@@ -1,15 +1,16 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using CryptoQuest.Gameplay;
 using CryptoQuest.Input;
 using CryptoQuest.System.CutsceneSystem.Events;
 using CryptoQuest.System.Dialogue.Events;
 using IndiGames.Core.Events.ScriptableObjects;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.EventSystems;
 using Yarn.Unity;
 
-namespace CryptoQuest.System.Dialogue
+namespace CryptoQuest.System.Dialogue.Managers
 {
     public class YarnSpinnerDialogueManager : MonoBehaviour
     {
@@ -40,6 +41,10 @@ namespace CryptoQuest.System.Dialogue
             }
         }
 
+        /// <summary>
+        /// TODO: Move to a class that manages <see cref="YarnSpinnerDialogueManager"/> and <see cref="DialogueManager"/>
+        /// </summary>
+        [SerializeField] private GameStateSO _gameState;
         [SerializeField] private InputMediatorSO _inputMediator;
 
         [Header("UI")]
@@ -82,12 +87,18 @@ namespace CryptoQuest.System.Dialogue
             }
 
             Debug.Log($"YarnSpinnerDialogueManager::ShowDialogue: yarnNodeName[{yarnNodeName}]");
+            _gameState.UpdateGameState(EGameState.Dialogue);
             _inputMediator.EnableDialogueInput();
             _dialogueRunner.StartDialogue(yarnNodeName);
         }
 
         public void DialogueCompleted()
         {
+            _gameState.RevertGameState();
+
+            if (_gameState.CurrentGameState is EGameState.Field or EGameState.Battle)
+                _inputMediator.EnableMapGameplayInput();
+
             // support cross scene
             if (_dialogueCompletedEventChannelSO != null) _dialogueCompletedEventChannelSO.RaiseEvent();
             _onDialogueCompleted.Invoke();
@@ -100,15 +111,19 @@ namespace CryptoQuest.System.Dialogue
         [YarnCommand("react")]
         public static void React(string reactionName)
         {
-            Debug.Log($"Reacting with {reactionName}");
-
             if (Instance == null)
             {
                 Debug.LogWarning("YarnSpinnerDialogueManager::React: _instance is null");
                 return;
             }
 
-            Instance._onReactionShowed?.Invoke(reactionName);
+            Instance.ShowReaction(reactionName);
+        }
+
+        private void ShowReaction(string reactionName)
+        {
+            Debug.Log($"YarnSpinnerDialogueManager::ShowReaction: reactionName[{reactionName}]");
+            _onReactionShowed?.Invoke(reactionName);
         }
     }
 }
