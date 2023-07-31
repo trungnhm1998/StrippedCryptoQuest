@@ -42,8 +42,9 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components
         {
             BattleSpawner = GetComponent<BaseBattleSpawner>();
             _battleBus.BattleManager = this;
-            BattleInfo currentBattleInfo = CurrentBattleInfo;
+            BattleInfo currentBattleInfo;
             currentBattleInfo.IsBattleEscapable = BattleSpawner.IsBattleEscapale();
+            CurrentBattleInfo = currentBattleInfo;
         }
 
         protected virtual void StartBattle()
@@ -72,7 +73,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components
             // the global state is reset, to prevent error when cold boot
             if (_stateMachine.CurrentState != _battleEndState)
             {
-                OnEscape();
+                OnRetreat();
             }
         }
 #endif
@@ -129,10 +130,10 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components
 
         private void OnRetreatActivated(AbilityScriptableObject abilityScriptableObject)
         {
-            OnEscape();
+            OnRetreat();
         }
 
-        public void OnEscape()
+        public void OnRetreat()
         {
             _stateMachine.SetCurrentState(_battleEndState);
         }

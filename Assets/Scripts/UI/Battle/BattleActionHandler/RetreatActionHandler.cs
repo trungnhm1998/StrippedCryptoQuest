@@ -15,14 +15,13 @@ namespace CryptoQuest.UI.Battle.BattleActionHandler
     {
         public AbilityScriptableObject RetreatAbilitySO;
         public AttributeScriptableObject TargetedAttributeSO;
-        public VoidEventChannelSO _onEscapeFailedEvent;
+        public VoidEventChannelSO _onRetreatFailedEvent;
 
         public override void Handle(IBattleUnit currentUnit)
         {
             if (currentUnit == null) return;
             if (!IsAbleToRetreat(currentUnit))
             {
-                _onEscapeFailedEvent.RaiseEvent();
                 return;
             }
 
@@ -57,12 +56,14 @@ namespace CryptoQuest.UI.Battle.BattleActionHandler
 
         private bool IsAbleToRetreat(IBattleUnit currentUnit)
         {
-            float probabilityOfEscape =
-                BattleCalculator.CalculateProbabilityOfEscape(GetTargetMaxAttributeValue(currentUnit),
+            float probabilityOfRetreat =
+                BattleCalculator.CalculateProbabilityOfRetreat(GetTargetMaxAttributeValue(currentUnit),
                     GetOwnerAttributeValue(currentUnit));
             float randomValue = Random.value;
-            Debug.Log("Probability of escape: " + probabilityOfEscape + " Random value: " + randomValue);
-            return randomValue > probabilityOfEscape || !CurrentBattleInfo.IsBattleEscapable;
+            Debug.Log("Probability of Retreat: " + probabilityOfRetreat + " Random value: " + randomValue);
+            Debug.Log("Is Battle Escapable: " + CurrentBattleInfo.IsBattleEscapable + " Is Able To Retreat: " +
+                      (randomValue < probabilityOfRetreat && CurrentBattleInfo.IsBattleEscapable));
+            return randomValue < probabilityOfRetreat && CurrentBattleInfo.IsBattleEscapable;
         }
     }
 }

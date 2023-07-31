@@ -32,7 +32,6 @@ namespace CryptoQuest.UI.Battle
 
         [SerializeField] private BattleBus _battleBus;
         [SerializeField] private VoidEventChannelSO _onNewTurnEvent;
-        [SerializeField] private VoidEventChannelSO _onEscapeFailedEvent;
 
         [Header("UI Panels")] [SerializeField] private UIBattleCommandMenu _uiBattleCommandMenu;
 
@@ -63,7 +62,6 @@ namespace CryptoQuest.UI.Battle
             _onNewTurnEvent.EventRaised += SetupNewTurn;
 
             _inputMediator.CancelEvent += OnClickCancel;
-            _onEscapeFailedEvent.EventRaised += OnEscapeFailed;
             _battleManager = _battleBus.BattleManager;
             SetupChain(_normalAttackChain);
             SetupChain(_skillAttackChain);
@@ -79,7 +77,6 @@ namespace CryptoQuest.UI.Battle
             _onNewTurnEvent.EventRaised -= SetupNewTurn;
 
             _inputMediator.CancelEvent -= OnClickCancel;
-            _onEscapeFailedEvent.EventRaised -= OnEscapeFailed;
         }
 
         private void SetupChain(BattleActionHandler.BattleActionHandler[] chain)
@@ -99,8 +96,6 @@ namespace CryptoQuest.UI.Battle
                 infos.Add(new ButtonInfo(enemy));
             }
         }
-
-        private void OnEscapeFailed() => Invoke(nameof(ReinitializeUI), 1f);
 
         private void ReinitializeUI()
         {

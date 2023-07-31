@@ -14,7 +14,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Calculation
             return baseDamage;
         }
 
-        public static float CalculateProbabilityOfEscape(float targetMaxAttributeValue, float ownerAttributeValue)
+        public static float CalculateProbabilityOfRetreat(float targetMaxAttributeValue, float ownerAttributeValue)
         {
             return (50 - 50 * (targetMaxAttributeValue - ownerAttributeValue) / 100) / 100;
         }
