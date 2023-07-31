@@ -1,6 +1,4 @@
 ﻿using System;
-using CryptoQuest.System.CutsceneSystem.Events;
-using CryptoQuest.System.Dialogue.Events;
 using UnityEngine;
 using UnityEngine.Playables;
 
@@ -9,10 +7,9 @@ namespace CryptoQuest.System.CutsceneSystem.CustomTimelineTracks.YarnSpinnerNode
     [Serializable]
     public class YarnSpinnerNodePlayableBehaviour : PlayableBehaviour
     {
-        [HideInInspector]
-        public PlayDialogueEvent PlayDialogueEvent;
-        [HideInInspector]
-        public PauseCutsceneEvent PauseTimelineEvent;
+        public static event Action<string> PlayDialogueRequested;
+        public static event Action<bool> PauseTimelineRequested;
+
         [HideInInspector]
         public string YarnNodeName = "Start";
 
@@ -37,7 +34,7 @@ namespace CryptoQuest.System.CutsceneSystem.CustomTimelineTracks.YarnSpinnerNode
             {
                 if (!playable.GetGraph().IsPlaying()) return;
                 if (string.IsNullOrEmpty(YarnNodeName)) return;
-                PlayDialogueEvent.RaiseEvent(YarnNodeName);
+                PlayDialogueRequested?.Invoke(YarnNodeName);
             }
 #if UNITY_EDITOR
             else
@@ -64,7 +61,7 @@ namespace CryptoQuest.System.CutsceneSystem.CustomTimelineTracks.YarnSpinnerNode
 
             // pause the timeline until the player finishes reading through all the dialogue (When the dialogue closes)
             Debug.Log("OnBehaviourPause::Pause cutscene");
-            PauseTimelineEvent.RaiseEvent(true);
+            PauseTimelineRequested?.Invoke(true);
         }
     }
 }
