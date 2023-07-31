@@ -1,7 +1,8 @@
-﻿using UnityEngine;
+﻿using CryptoQuest.UI.Common;
 using IndiGames.Core.Events.ScriptableObjects;
+using UnityEngine;
 
-namespace CryptoQuest.UI.Battle
+namespace CryptoQuest.UI.Battle.VFX
 {
     public class ShakeBattleUI : MonoBehaviour
     {

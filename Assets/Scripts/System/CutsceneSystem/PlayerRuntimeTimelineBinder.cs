@@ -1,4 +1,5 @@
-﻿using CryptoQuest.Gameplay;
+﻿using System;
+using CryptoQuest.Gameplay;
 using IndiGames.Core.EditorTools.Attributes.ReadOnlyAttribute;
 using UnityEngine;
 using UnityEngine.Playables;
@@ -23,6 +24,11 @@ namespace CryptoQuest.System.CutsceneSystem
         private void OnDisable()
         {
             _gameplayBus.HeroSpawned -= BindObjects;
+        }
+
+        private void Start()
+        {
+            BindObjects();
         }
 
         private void BindObjects()

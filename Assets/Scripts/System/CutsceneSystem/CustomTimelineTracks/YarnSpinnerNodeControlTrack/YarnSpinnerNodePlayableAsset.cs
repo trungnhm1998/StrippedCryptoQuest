@@ -2,17 +2,17 @@
 using CryptoQuest.System.CutsceneSystem.Events;
 using CryptoQuest.System.Dialogue.Events;
 using UnityEngine;
+using UnityEngine.Localization;
 using UnityEngine.Playables;
 using UnityEngine.Timeline;
-using Yarn.Unity;
 
 namespace CryptoQuest.System.CutsceneSystem.CustomTimelineTracks.YarnSpinnerNodeControlTrack
 {
     [Serializable]
+    [DisplayName("Yarn Node Clip")]
     public class YarnSpinnerNodePlayableAsset : PlayableAsset, ITimelineClipAsset
     {
-        [HideInInspector] public YarnProject Project;
-        [HideInInspector] public string YarnNodeName = "Start";
+        public string YarnNodeName = "Start";
 
         [HideInInspector] public PlayDialogueEvent PlayDialogueEvent;
         [HideInInspector] public PauseCutsceneEvent PauseTimelineEvent;

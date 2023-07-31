@@ -17,6 +17,20 @@ namespace CryptoQuest.System.CutsceneSystem.CustomTimelineTracks.YarnSpinnerNode
         public PlayDialogueEvent PlayDialogueEvent;
         public PauseCutsceneEvent PauseTimelineEvent;
 
+#if UNITY_EDITOR
+        private void OnValidate()
+        {
+            foreach (var clip in GetClips())
+            {
+                var asset = clip.asset as YarnSpinnerNodePlayableAsset;
+                if (asset == null) continue;
+
+                asset.PlayDialogueEvent = PlayDialogueEvent;
+                asset.PauseTimelineEvent = PauseTimelineEvent;
+            }
+        }
+#endif
+
         public override void GatherProperties(PlayableDirector director, IPropertyCollector driver)
         {
             var yarnProject = director.GetGenericBinding(this) as YarnProject;
@@ -31,7 +45,6 @@ namespace CryptoQuest.System.CutsceneSystem.CustomTimelineTracks.YarnSpinnerNode
                 var asset = clip.asset as YarnSpinnerNodePlayableAsset;
                 if (asset == null) continue;
 
-                asset.Project = yarnProject;
                 asset.PlayDialogueEvent = PlayDialogueEvent;
                 asset.PauseTimelineEvent = PauseTimelineEvent;
             }

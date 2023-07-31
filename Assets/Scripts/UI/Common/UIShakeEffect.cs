@@ -1,9 +1,8 @@
-﻿using UnityEngine;
+﻿using DG.Tweening;
+using UnityEngine;
 using UnityEngine.Events;
-using System;
-using DG.Tweening;
 
-namespace CryptoQuest.UI.Battle
+namespace CryptoQuest.UI.Common
 {
     public class UIShakeEffect : MonoBehaviour
     {
