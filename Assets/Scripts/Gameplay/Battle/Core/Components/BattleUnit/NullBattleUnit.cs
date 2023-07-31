@@ -17,6 +17,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit
         public AbstractAbility NormalAttack { get; }
         
         public CharacterDataSO UnitData { get; set; }
+        public CharacterInformation UnitInfo { get; private set; }
 
         public void Init(BattleTeam team, AbilitySystemBehaviour owner) {}
         public void SetOpponentTeams(BattleTeam opponentTeam) {}

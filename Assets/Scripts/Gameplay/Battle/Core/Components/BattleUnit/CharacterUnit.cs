@@ -7,7 +7,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit
         public override void Init(BattleTeam team, AbilitySystemBehaviour owner)
         {
             base.Init(team, owner);
-            UnitData.Owner = owner;
+            UnitInfo.Owner = owner;
             GrantDefaulSkills();
         }
 

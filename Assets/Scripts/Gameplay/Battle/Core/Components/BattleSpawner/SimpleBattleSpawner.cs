@@ -18,12 +18,13 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components.BattleSpawner
                 var statInit = enemyGO.GetComponent<StatsInitializer>();
                 statInit.InitStats(enemy);
 
-                var battleUnit = enemyGO.GetComponent<IBattleUnit>();
+                var battleUnit = enemyGO.GetComponent<BattleUnitBase>();
                 battleUnit.UnitData = enemy;
+                battleUnit.CreateCharacterInfo();
                 
                 var abilitySystem = enemyGO.GetComponent<AbilitySystemBehaviour>();
                 _battleManager.BattleTeam2.Members.Add(abilitySystem);
-                ProcessEnemiesName(data, enemy);
+                ProcessEnemiesName(data, battleUnit.UnitInfo);
             }
         }
     }

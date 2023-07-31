@@ -51,11 +51,10 @@ namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Effects
             foreach (EffectAttributeModifier modifier in EffectSO.EffectDetails.Modifiers)
             {
                 var actionData = modifier.Value < 0 ? _effectSO.DecreaseActionDataSO : _effectSO.IncreaseActionDataSO;
-                CharacterDataSO unitData = _unit.UnitData;
-                if (unitData == null || actionData == null) return;
+                if (actionData == null) return;
 
                 actionData.Log.Clear();
-                actionData.AddStringVar(UNIT_NAME_VARIABLE, unitData.DisplayName);
+                actionData.AddStringVar(UNIT_NAME_VARIABLE, _unit.UnitInfo.DisplayName);
                 actionData.AddStringVar(ATTRIBUTE_NAME_VARIABLE, modifier.AttributeSO.DisplayName);
                 _effectSO.ActionEventSO.RaiseEvent(actionData);
             }
