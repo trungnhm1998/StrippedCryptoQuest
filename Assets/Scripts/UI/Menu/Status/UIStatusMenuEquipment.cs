@@ -102,7 +102,7 @@ namespace CryptoQuest.UI.Menu.Status
             _inputMediator.EnableStatusMenuInput();
         }
 
-        public void OnEnableMagicStone()
+        private void OnEnableMagicStone()
         {
             EnableMagicStoneEvent?.Invoke();
         }
@@ -113,6 +113,7 @@ namespace CryptoQuest.UI.Menu.Status
             _inputMediator.StatusEquipmentGoAboveEvent += StatusEquipmentGoToAboveSlot;
             _inputMediator.StatusMenuConfirmSelectEvent += OnStatusMenuConfirmSelect;
             _inputMediator.StatusEquipmentCancelEvent += CancelEquipment;
+            _inputMediator.EnableMagicStoneMenuEvent += OnEnableMagicStone;
         }
 
         private void UnregisterChangeEquipmentInputEvents()
@@ -121,6 +122,7 @@ namespace CryptoQuest.UI.Menu.Status
             _inputMediator.StatusEquipmentGoAboveEvent -= StatusEquipmentGoToAboveSlot;
             _inputMediator.StatusMenuConfirmSelectEvent -= OnStatusMenuConfirmSelect;
             _inputMediator.StatusEquipmentCancelEvent -= CancelEquipment;
+            _inputMediator.EnableMagicStoneMenuEvent -= OnEnableMagicStone;
         }
     }
 }

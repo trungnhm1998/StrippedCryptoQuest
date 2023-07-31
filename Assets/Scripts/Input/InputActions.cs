@@ -1324,6 +1324,15 @@ namespace CryptoQuest.Input
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""EnableMagicStoneMenu"",
+                    ""type"": ""Button"",
+                    ""id"": ""7d85899a-4ac9-40b5-bfbc-c52003215a49"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -1577,6 +1586,28 @@ namespace CryptoQuest.Input
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
                     ""action"": ""Navigate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6ddc7949-3116-4733-9880-fe206cde8ca4"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""MnK"",
+                    ""action"": ""EnableMagicStoneMenu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""03d873c4-319b-48d4-a3f3-ad49665c54f5"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""EnableMagicStoneMenu"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1922,6 +1953,45 @@ namespace CryptoQuest.Input
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Status/MagicStone"",
+            ""id"": ""207ac2fd-1de8-4870-9921-343151564a19"",
+            ""actions"": [
+                {
+                    ""name"": ""TurnOffMagicStoneMenu"",
+                    ""type"": ""Button"",
+                    ""id"": ""1e81da56-5eb6-4151-a96d-6464e02ebdca"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""680bb09f-4338-47ba-8366-218ae8607623"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""MnK"",
+                    ""action"": ""TurnOffMagicStoneMenu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6443e877-1f7e-4f8d-8269-f90510cc8679"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""TurnOffMagicStoneMenu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": [
@@ -1992,6 +2062,7 @@ namespace CryptoQuest.Input
             m_StatusMenu_StatusMenuCancel = m_StatusMenu.FindAction("StatusMenuCancel", throwIfNotFound: true);
             m_StatusMenu_Navigate = m_StatusMenu.FindAction("Navigate", throwIfNotFound: true);
             m_StatusMenu_CharacterChange = m_StatusMenu.FindAction("CharacterChange", throwIfNotFound: true);
+            m_StatusMenu_EnableMagicStoneMenu = m_StatusMenu.FindAction("EnableMagicStoneMenu", throwIfNotFound: true);
             // Status/Equipments
             m_StatusEquipments = asset.FindActionMap("Status/Equipments", throwIfNotFound: true);
             m_StatusEquipments_StatusMenuConfirmSelect = m_StatusEquipments.FindAction("StatusMenuConfirmSelect", throwIfNotFound: true);
@@ -2004,6 +2075,9 @@ namespace CryptoQuest.Input
             m_StatusEquipmentsInventory_StatusInventoryCancel = m_StatusEquipmentsInventory.FindAction("StatusInventoryCancel", throwIfNotFound: true);
             m_StatusEquipmentsInventory_StatusInventoryGoBelow = m_StatusEquipmentsInventory.FindAction("StatusInventoryGoBelow", throwIfNotFound: true);
             m_StatusEquipmentsInventory_StatusInventoryGoAbove = m_StatusEquipmentsInventory.FindAction("StatusInventoryGoAbove", throwIfNotFound: true);
+            // Status/MagicStone
+            m_StatusMagicStone = asset.FindActionMap("Status/MagicStone", throwIfNotFound: true);
+            m_StatusMagicStone_TurnOffMagicStoneMenu = m_StatusMagicStone.FindAction("TurnOffMagicStoneMenu", throwIfNotFound: true);
         }
 
         public void Dispose()
@@ -2413,6 +2487,7 @@ namespace CryptoQuest.Input
         private readonly InputAction m_StatusMenu_StatusMenuCancel;
         private readonly InputAction m_StatusMenu_Navigate;
         private readonly InputAction m_StatusMenu_CharacterChange;
+        private readonly InputAction m_StatusMenu_EnableMagicStoneMenu;
         public struct StatusMenuActions
         {
             private @InputActions m_Wrapper;
@@ -2421,6 +2496,7 @@ namespace CryptoQuest.Input
             public InputAction @StatusMenuCancel => m_Wrapper.m_StatusMenu_StatusMenuCancel;
             public InputAction @Navigate => m_Wrapper.m_StatusMenu_Navigate;
             public InputAction @CharacterChange => m_Wrapper.m_StatusMenu_CharacterChange;
+            public InputAction @EnableMagicStoneMenu => m_Wrapper.m_StatusMenu_EnableMagicStoneMenu;
             public InputActionMap Get() { return m_Wrapper.m_StatusMenu; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -2442,6 +2518,9 @@ namespace CryptoQuest.Input
                 @CharacterChange.started += instance.OnCharacterChange;
                 @CharacterChange.performed += instance.OnCharacterChange;
                 @CharacterChange.canceled += instance.OnCharacterChange;
+                @EnableMagicStoneMenu.started += instance.OnEnableMagicStoneMenu;
+                @EnableMagicStoneMenu.performed += instance.OnEnableMagicStoneMenu;
+                @EnableMagicStoneMenu.canceled += instance.OnEnableMagicStoneMenu;
             }
 
             private void UnregisterCallbacks(IStatusMenuActions instance)
@@ -2458,6 +2537,9 @@ namespace CryptoQuest.Input
                 @CharacterChange.started -= instance.OnCharacterChange;
                 @CharacterChange.performed -= instance.OnCharacterChange;
                 @CharacterChange.canceled -= instance.OnCharacterChange;
+                @EnableMagicStoneMenu.started -= instance.OnEnableMagicStoneMenu;
+                @EnableMagicStoneMenu.performed -= instance.OnEnableMagicStoneMenu;
+                @EnableMagicStoneMenu.canceled -= instance.OnEnableMagicStoneMenu;
             }
 
             public void RemoveCallbacks(IStatusMenuActions instance)
@@ -2615,6 +2697,52 @@ namespace CryptoQuest.Input
             }
         }
         public StatusEquipmentsInventoryActions @StatusEquipmentsInventory => new StatusEquipmentsInventoryActions(this);
+
+        // Status/MagicStone
+        private readonly InputActionMap m_StatusMagicStone;
+        private List<IStatusMagicStoneActions> m_StatusMagicStoneActionsCallbackInterfaces = new List<IStatusMagicStoneActions>();
+        private readonly InputAction m_StatusMagicStone_TurnOffMagicStoneMenu;
+        public struct StatusMagicStoneActions
+        {
+            private @InputActions m_Wrapper;
+            public StatusMagicStoneActions(@InputActions wrapper) { m_Wrapper = wrapper; }
+            public InputAction @TurnOffMagicStoneMenu => m_Wrapper.m_StatusMagicStone_TurnOffMagicStoneMenu;
+            public InputActionMap Get() { return m_Wrapper.m_StatusMagicStone; }
+            public void Enable() { Get().Enable(); }
+            public void Disable() { Get().Disable(); }
+            public bool enabled => Get().enabled;
+            public static implicit operator InputActionMap(StatusMagicStoneActions set) { return set.Get(); }
+            public void AddCallbacks(IStatusMagicStoneActions instance)
+            {
+                if (instance == null || m_Wrapper.m_StatusMagicStoneActionsCallbackInterfaces.Contains(instance)) return;
+                m_Wrapper.m_StatusMagicStoneActionsCallbackInterfaces.Add(instance);
+                @TurnOffMagicStoneMenu.started += instance.OnTurnOffMagicStoneMenu;
+                @TurnOffMagicStoneMenu.performed += instance.OnTurnOffMagicStoneMenu;
+                @TurnOffMagicStoneMenu.canceled += instance.OnTurnOffMagicStoneMenu;
+            }
+
+            private void UnregisterCallbacks(IStatusMagicStoneActions instance)
+            {
+                @TurnOffMagicStoneMenu.started -= instance.OnTurnOffMagicStoneMenu;
+                @TurnOffMagicStoneMenu.performed -= instance.OnTurnOffMagicStoneMenu;
+                @TurnOffMagicStoneMenu.canceled -= instance.OnTurnOffMagicStoneMenu;
+            }
+
+            public void RemoveCallbacks(IStatusMagicStoneActions instance)
+            {
+                if (m_Wrapper.m_StatusMagicStoneActionsCallbackInterfaces.Remove(instance))
+                    UnregisterCallbacks(instance);
+            }
+
+            public void SetCallbacks(IStatusMagicStoneActions instance)
+            {
+                foreach (var item in m_Wrapper.m_StatusMagicStoneActionsCallbackInterfaces)
+                    UnregisterCallbacks(item);
+                m_Wrapper.m_StatusMagicStoneActionsCallbackInterfaces.Clear();
+                AddCallbacks(instance);
+            }
+        }
+        public StatusMagicStoneActions @StatusMagicStone => new StatusMagicStoneActions(this);
         private int m_GamepadSchemeIndex = -1;
         public InputControlScheme GamepadScheme
         {
@@ -2675,6 +2803,7 @@ namespace CryptoQuest.Input
             void OnStatusMenuCancel(InputAction.CallbackContext context);
             void OnNavigate(InputAction.CallbackContext context);
             void OnCharacterChange(InputAction.CallbackContext context);
+            void OnEnableMagicStoneMenu(InputAction.CallbackContext context);
         }
         public interface IStatusEquipmentsActions
         {
@@ -2689,6 +2818,10 @@ namespace CryptoQuest.Input
             void OnStatusInventoryCancel(InputAction.CallbackContext context);
             void OnStatusInventoryGoBelow(InputAction.CallbackContext context);
             void OnStatusInventoryGoAbove(InputAction.CallbackContext context);
+        }
+        public interface IStatusMagicStoneActions
+        {
+            void OnTurnOffMagicStoneMenu(InputAction.CallbackContext context);
         }
     }
 }
