@@ -4,9 +4,14 @@ using UnityEngine.Events;
 
 namespace CryptoQuest.Audio.Settings
 {
-    public class AudioSettingsSO : ScriptableObject
+    public class AudioSettingSO : ScriptableObject
     {
+        /// <summary>
+        /// Serialized field for show in inspector custom volume
+        /// Hide in inspector because we have custom editor UI for this
+        /// </summary>
         [SerializeField, HideInInspector] private float _volume = 1f;
+
         public event UnityAction<float> VolumeChanged;
 
         public float Volume

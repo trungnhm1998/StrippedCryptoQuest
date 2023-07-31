@@ -6,11 +6,11 @@ namespace CryptoQuest.System.Settings
     public class AudioSettingController : MonoBehaviour
     {
         [Header("Listen on")]
-        [SerializeField] private AudioSettingsSO _settings;
+        [SerializeField] private AudioSettingSO audioSettings;
 
         public void ChangeAudioVolume(float value)
         {
-            _settings.Volume = value;
+            audioSettings.Volume = value;
         }
     }
 }
