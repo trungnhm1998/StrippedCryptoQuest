@@ -17,7 +17,7 @@ namespace CryptoQuest.UI.Inventory
         public Text Quantity;
         public LocalizedString Description;
         private ItemInfomation _itemInfo;
-
+        public ItemInfomation ItemInfo => _itemInfo;
         public event UnityAction<ItemSO> Clicked;
 
         public void Init(ItemInfomation itemInfo)

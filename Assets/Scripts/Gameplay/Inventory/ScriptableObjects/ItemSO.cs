@@ -1,3 +1,4 @@
+using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
 using UnityEngine;
 using UnityEngine.Localization;
 
@@ -9,6 +10,7 @@ namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects
         Valuables = 1,
         NFT = 2
     }
+
     [CreateAssetMenu(menuName = "Crypto Quest/Inventory/Item")]
     public class ItemSO : ScriptableObject
     {
@@ -16,5 +18,6 @@ namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects
         public Sprite Icon;
         public LocalizedString Name;
         public LocalizedString Description;
+        public virtual void Use(AbilitySystemBehaviour owner = null) { }
     }
 }
