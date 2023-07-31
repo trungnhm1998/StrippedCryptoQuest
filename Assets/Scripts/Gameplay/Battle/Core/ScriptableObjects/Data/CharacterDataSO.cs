@@ -1,9 +1,9 @@
 using System.Collections.Generic;
-using CryptoQuest.UI.Battle;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.ScriptableObjects;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
 using UnityEngine;
+using System;
 
 namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data
 {
@@ -15,19 +15,29 @@ namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data
         public AbilityScriptableObject NormalAttack;
         public List<AbilityScriptableObject> GrantedSkills;
 
-        private string _displayName = "";
-        public string DisplayName {
-            get
-            {
-                return _displayName == "" ? Name : _displayName;
-            }
-
-            set
-            {
-                _displayName = value;
-            }
+        /// <summary>
+        /// Need to create character info when there're
+        /// many characters using the same data set, like enemies
+        /// </summary>
+        /// <returns></returns>
+        public CharacterInformation CreateCharacterInfo()
+        {
+            return new CharacterInformation(this, Name);
         }
+    }
 
+    public class CharacterInformation
+    {
         public AbilitySystemBehaviour Owner { get; set; }
+        public CharacterDataSO Data { get; private set; }
+        public string OriginalName { get; private set; }
+        public string DisplayName { get; set; }
+
+        public CharacterInformation(CharacterDataSO data, string originalName)
+        {
+            Data = data;
+            OriginalName = originalName; 
+            DisplayName = originalName;
+        }
     }
 }

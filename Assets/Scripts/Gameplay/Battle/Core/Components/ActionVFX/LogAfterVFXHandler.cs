@@ -1,5 +1,6 @@
 using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data;
 using CryptoQuest.Gameplay.Battle.Core.Components.BattleVFX;
+using IndiGames.Core.Events.ScriptableObjects;
 using UnityEngine;
 using CryptoQuest.GameHandler;
 using UnityEngine.ResourceManagement.AsyncOperations;
@@ -10,6 +11,8 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components.ActionVFX
 {
     public class LogAfterVFXHandler : GameHandler<object>
     {
+        
+        public VoidEventChannelSO ShowBattleLogSuccessEventChannel;
         public Action<LocalizedString> ShowBattleDialog;
         private BattleActionDataSO _actionData;
 
@@ -41,7 +44,6 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components.ActionVFX
         protected void OnEffectComplete()
         {
             ShowLog();
-            NextHandler?.Handle();
         }
 
         protected void ShowLog()
@@ -51,7 +53,14 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components.ActionVFX
 
         public override void Handle()
         {
+            ShowBattleLogSuccessEventChannel.EventRaised += OnShowBattleLogSuccess;
             LoadEffect();
+        }
+
+        private void OnShowBattleLogSuccess()
+        {
+            NextHandler?.Handle();
+            ShowBattleLogSuccessEventChannel.EventRaised -= OnShowBattleLogSuccess;
         }
     }
 }

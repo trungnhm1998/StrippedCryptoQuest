@@ -15,7 +15,7 @@ namespace CryptoQuest.UI.Battle
 
         private void SelectTarget(IBattleUnit unit)
         {
-            _characterList.SetSelectedData(unit.UnitData.DisplayName);
+            _characterList.SetSelectedData(unit.UnitInfo.DisplayName);
             _characterList.SelectFirstHero();
         }
 
