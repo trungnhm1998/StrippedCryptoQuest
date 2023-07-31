@@ -51,7 +51,7 @@ namespace CryptoQuest.UI.Battle.CommandsMenu
         {
             Initialize();
             _currentUnit = unit;
-            _currentUnitName.text = unit.UnitData.DisplayName;
+            _currentUnitName.text = unit.UnitInfo.DisplayName;
         }
 
         private void CacheButtonTexts()
@@ -99,8 +99,8 @@ namespace CryptoQuest.UI.Battle.CommandsMenu
 
         public void OnEscape()
         {
-            _battlePanelController.OnButtonEscapeClicked.Invoke();
             SetActiveCommandsMenu(false);
+            _battlePanelController.OnButtonEscapeClicked.Invoke(_currentUnit);
         }
 
         private void SetActiveCommandsMenu(bool isActive)

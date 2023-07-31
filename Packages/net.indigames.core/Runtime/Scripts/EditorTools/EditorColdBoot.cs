@@ -25,8 +25,9 @@ namespace IndiGames.Core.EditorTools
 
         private void Awake()
         {
-            _isStartFromEditor =
-                !SceneManager.GetSceneByName(_globalManagersSO.SceneReference.editorAsset.name).isLoaded;
+             _isStartFromEditor =
+                 !SceneManager.GetSceneByName(_globalManagersSO.SceneReference.editorAsset.name).isLoaded 
+                    && !_globalManagersSO.SceneReference.OperationHandle.IsValid(); 
         }
 
         private void Start()

@@ -2,7 +2,6 @@ using UnityEngine;
 
 namespace CryptoQuest.Audio.AudioData
 {
-    [CreateAssetMenu(menuName = "Crypto Quest/Audio/Audio Cue", fileName = "AudioCueSO")]
     public class AudioCueSO : ScriptableObject
     {
         public bool Looping = false;

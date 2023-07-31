@@ -8,7 +8,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components.BattleSpawner
     [RequireComponent(typeof(BattleManager))]
     public abstract class BaseBattleSpawner : MonoBehaviour
     {
-        private readonly string[] _duplicatePostfix = new string[] {"A", "B", "C", "D"};
+        private readonly string[] _duplicatePostfix = new string[] { "A", "B", "C", "D" };
         [SerializeField] protected BattleManager _battleManager;
         [SerializeField] protected BattleDataSO _battleData;
 
@@ -27,21 +27,23 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components.BattleSpawner
 
         public abstract void GenerateBattle(BattleDataSO data);
 
-        protected void ProcessEnemiesName(BattleDataSO data, CharacterDataSO enemyData)
+        protected void ProcessEnemiesName(BattleDataSO data, CharacterInformation enemyInfo)
         {
-            var sameNameCount = data.Enemies.Count(x => x.Name == enemyData.Name);
+            var sameNameCount = data.Enemies.Count(x => x.Name == enemyInfo.OriginalName);
             if (sameNameCount <= 1) return;
 
-            if (!_duplicateEnemies.TryGetValue(enemyData.Name, out var duplicateCount))
+            if (!_duplicateEnemies.TryGetValue(enemyInfo.OriginalName, out var duplicateCount))
             {
                 duplicateCount = 0;
-                _duplicateEnemies.Add(enemyData.Name, duplicateCount);
+                _duplicateEnemies.Add(enemyInfo.OriginalName, duplicateCount);
             }
+
             if (duplicateCount >= _duplicatePostfix.Length) return;
 
-            enemyData.DisplayName = $"{enemyData.Name}{_duplicatePostfix[duplicateCount]}"; 
-            _duplicateEnemies[enemyData.Name]++;
+            enemyInfo.DisplayName = $"{enemyInfo.OriginalName}{_duplicatePostfix[duplicateCount]}"; 
+            _duplicateEnemies[enemyInfo.OriginalName]++;
         }
+
+        public bool IsBattleEscapale() => _battleData.IsEscapable;
     }
 }
-    

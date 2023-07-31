@@ -42,8 +42,8 @@ namespace CryptoQuest.UI.Battle.CharacterInfo
 
         protected override void Setup()
         {
-            _characterIcon.sprite = _characterData.BattleIconSprite;
-            _nameText.text = _characterData.Name;
+            _characterIcon.sprite = _characterInfo.Data.BattleIconSprite;
+            _nameText.text = _characterInfo.DisplayName;
             UpdateValueUI(_maxHpAttributeSO, _hpAttributeSO, _hpValueText, _hpSlider);
             UpdateValueUI(_maxMpAttributeSO, _mpAttributeSO, _mpValueText, _mpSlider);
         }

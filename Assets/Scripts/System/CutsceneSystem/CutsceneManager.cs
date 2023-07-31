@@ -1,4 +1,5 @@
-﻿using CryptoQuest.System.CutsceneSystem.Events;
+﻿using CryptoQuest.System.CutsceneSystem.CustomTimelineTracks.YarnSpinnerNodeControlTrack;
+using CryptoQuest.System.CutsceneSystem.Events;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Playables;
@@ -27,17 +28,22 @@ namespace CryptoQuest.System.CutsceneSystem
         private void OnEnable()
         {
             _playCutsceneEvent.PlayCutsceneRequested += PlayCutscene;
-            _pauseCutsceneEvent.PauseCutsceneRequested += PauseCutscene;
+            YarnSpinnerNodePlayableBehaviour.PauseTimelineRequested += PauseCutscene;
         }
 
         private void OnDisable()
         {
             _playCutsceneEvent.PlayCutsceneRequested -= PlayCutscene;
-            _pauseCutsceneEvent.PauseCutsceneRequested -= PauseCutscene;
+            YarnSpinnerNodePlayableBehaviour.PauseTimelineRequested -= PauseCutscene;
         }
 
         private void PlayCutscene(PlayableDirector playableDirector)
         {
+            if (_currentPlayableDirector != null && _currentPlayableDirector.playableGraph.GetRootPlayable(0).IsDone())
+            {
+                _currentPlayableDirector = null;
+            }
+
             if (playableDirector == _currentPlayableDirector)
             {
                 Debug.LogWarning("CutsceneManager::PlayCutscene: Trying to play the same cutscene again.");

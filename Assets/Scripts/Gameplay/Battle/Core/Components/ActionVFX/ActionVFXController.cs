@@ -12,6 +12,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components.ActionVFX
         [Header("Listen Events")]
         [SerializeField] private BattleActionDataEventChannelSO _gotActionDataEventChannel;
         [SerializeField] private VoidEventChannelSO _doneActionEventChannel;
+        [SerializeField] private VoidEventChannelSO _showBattleLogSuccessEventChannel;
 
         [Header("Raise Events")]
         [SerializeField] private LocalizedStringEventChannelSO _showBattleDialogEventChannel;
@@ -44,6 +45,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components.ActionVFX
         {
             var handler = new LogAfterVFXHandler(data);
             handler.ShowBattleDialog += _showBattleDialogEventChannel.RaiseEvent;
+            handler.ShowBattleLogSuccessEventChannel = _showBattleLogSuccessEventChannel;
             _currentHandler.SetNext(handler);
             _currentHandler = handler;
         }
