@@ -5,6 +5,8 @@ using CryptoQuest.Input;
 using CryptoQuest.UI.Menu.MockData;
 using IndiGames.Core.Events.ScriptableObjects;
 using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.Serialization;
 
 namespace CryptoQuest.UI.Menu.Home
 {
@@ -14,10 +16,15 @@ namespace CryptoQuest.UI.Menu.Home
         [Header("Configs")]
         [SerializeField] private InputMediatorSO _inputMediator;
         [SerializeField] private PartyManagerMockDataSO _partyManagerMockData;
+        
+        [Header("Events")]
+        [SerializeField] private VoidEventChannelSO SortModeEnabledEvent;
+        [SerializeField] private VoidEventChannelSO SortModeDisabledEvent;
 
         [Header("Game Components")]
         [SerializeField] private Transform _characterSlots;
         [SerializeField] private GameObject _topLine;
+        [SerializeField] private List<UICharacterInfo> _slots;
 
         private UICharacterCard _selectedCardHolder;
 
@@ -33,8 +40,6 @@ namespace CryptoQuest.UI.Menu.Home
         }
 
         private int _indexHolder;
-
-        [SerializeField] private List<UICharacterInfo> _slots;
 
         private void Awake()
         {
@@ -67,8 +72,9 @@ namespace CryptoQuest.UI.Menu.Home
             return cardUI;
         }
 
-        private void EnableSortMode()
+        private void OnEnableSortMode()
         {
+            SortModeEnabledEvent.RaiseEvent();
             _inputMediator.EnableHomeMenuInput();
             _selectedCardHolder = GetCharacterCard(0);
             SelectTargetToSort();
@@ -164,17 +170,20 @@ namespace CryptoQuest.UI.Menu.Home
 
         private void CancelSelect()
         {
+            SortModeDisabledEvent.RaiseEvent();
             _selectedCardHolder.Deselect();
+            UnregisterSortModeEvent();
+            UnregisterSelectInputEvent();
         }
 
         private void RegisterSortModeEvent()
         {
-            _inputMediator.HomeMenuSortEvent += EnableSortMode;
+            _inputMediator.HomeMenuSortEvent += OnEnableSortMode;
         }
 
         private void UnregisterSortModeEvent()
         {
-            _inputMediator.HomeMenuSortEvent -= EnableSortMode;
+            _inputMediator.HomeMenuSortEvent -= OnEnableSortMode;
         }
 
         private void RegisterSelectInputEvents()
