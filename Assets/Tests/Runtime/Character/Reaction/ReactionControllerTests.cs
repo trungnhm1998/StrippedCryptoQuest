@@ -95,21 +95,19 @@ namespace CryptoQuest.Tests.Runtime.Character.Reaction
         [UnityTest]
         public IEnumerator ShowReaction_WithNegativeHideAfter_ShouldHideAfter2SecondsByDefault()
         {
+            var showTime = Time.time;
             _controller.ShowReaction(_reactions[0], -1f);
 
-            var time = 0f;
-            while (true)
+            void ReactionHiddenRaised()
             {
-                time += Time.deltaTime;
-                if (_controllerSpriteRenderer.sprite == null)
-                {
-                    break;
-                }
-
-                yield return null;
+                var timeTaken = Time.time - showTime;
+                Assert.IsTrue(timeTaken >= 2.5f && timeTaken <= 2.6f,
+                    $"Reaction should hide after 2.5s but was {timeTaken}");
             }
 
-            Assert.IsTrue(time >= 2.5f && time <= 2.6f, $"Reaction should hide after 2 seconds(Default) but was {time}");
+            _controller.ReactionHidden += ReactionHiddenRaised;
+            yield return new WaitForSeconds(3f); // max wait time until ReactionHidden event is raised
+            _controller.ReactionHidden -= ReactionHiddenRaised;
         }
 
         [UnityTest]
