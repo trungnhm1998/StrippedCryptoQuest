@@ -6,5 +6,6 @@ namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data
     public class BattleDataSO : ScriptableObject
     {
         public CharacterDataSO[] Enemies;
+        public bool IsEscapable;
     }
 }

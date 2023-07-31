@@ -10,8 +10,9 @@ namespace CryptoQuest.UI.Dialogs.BattleDialog
 {
     public class BattleDialogController : AbstractDialogController<UIBattleDialog>
     {
-        [Header("Listen Events")]
-        [SerializeField] private VoidEventChannelSO _endActionPhaseEventChannel;
+        [Header("Listen Events")] [SerializeField]
+        private VoidEventChannelSO _endActionPhaseEventChannel;
+
         [SerializeField] private LocalizedStringEventChannelSO _showBattleDialogEventChannel;
 
         private LocalizedString _localizedMessage;
@@ -37,10 +38,23 @@ namespace CryptoQuest.UI.Dialogs.BattleDialog
 
         protected override void SetupDialog(UIBattleDialog dialog)
         {
-            dialog.SetDialogue(_localizedMessage.GetLocalizedString())
-                .Show();
-            if (_dialog != null) return;
-            _dialog = dialog;
+            if (_dialog == null)
+            {
+                _dialog = dialog;
+            }
+
+            StartCoroutine(CoSetupDialog());
+        }
+
+        private IEnumerator CoSetupDialog()
+        {
+            var handler = _localizedMessage.GetLocalizedStringAsync();
+            yield return handler;
+            if (handler.IsDone)
+            {
+                _dialog.SetDialogue(handler.Result)
+                    .Show();
+            }
         }
 
         private void ShowDialog(LocalizedString message)
@@ -52,6 +66,7 @@ namespace CryptoQuest.UI.Dialogs.BattleDialog
                 SetupDialog(_dialog);
                 return;
             }
+
             LoadAssetDialog();
         }
 
