@@ -1,4 +1,5 @@
 ﻿using CryptoQuest.Input;
+using CryptoQuest.System.CutsceneSystem.CustomTimelineTracks.YarnSpinnerNodeControlTrack;
 using CryptoQuest.System.CutsceneSystem.Events;
 using CryptoQuest.System.Dialogue.Events;
 using IndiGames.Core.Events.ScriptableObjects;
@@ -11,6 +12,7 @@ namespace CryptoQuest.System.Dialogue
     public class YarnSpinnerDialogueManager : MonoBehaviour
     {
         [SerializeField] private InputMediatorSO _inputMediator;
+
         [Header("UI")]
         [SerializeField] private DialogueRunner _dialogueRunner;
 
@@ -19,6 +21,7 @@ namespace CryptoQuest.System.Dialogue
 
         [Header("Raise on")]
         [SerializeField] private VoidEventChannelSO _dialogueCompletedEventChannelSO;
+
         [SerializeField] private PauseCutsceneEvent _pauseCutsceneEvent;
 
         [SerializeField] private UnityEvent _onDialogueCompleted;
@@ -27,12 +30,12 @@ namespace CryptoQuest.System.Dialogue
 
         private void OnEnable()
         {
-            _playDialogueEventEvent.PlayDialogueRequested += ShowDialogue;
+            YarnSpinnerNodePlayableBehaviour.PlayDialogueRequested += ShowDialogue;
         }
 
         private void OnDisable()
         {
-            _playDialogueEventEvent.PlayDialogueRequested -= ShowDialogue;
+            YarnSpinnerNodePlayableBehaviour.PlayDialogueRequested -= ShowDialogue;
         }
 
         private void ShowDialogue(string yarnNodeName)
