@@ -136,7 +136,6 @@ namespace CryptoQuest.UI.Menu
                 button.Disable();
                 if (button.TypeSO == typeSO)
                 {
-                    Debug.Log("test");
                     button.Pointer.enabled = false;
                     button.Enable();
                 }
