@@ -1,5 +1,4 @@
-﻿using System;
-using CryptoQuest.Audio.AudioData;
+﻿using CryptoQuest.Audio.AudioData;
 using UnityEngine;
 
 namespace CryptoQuest.Audio
@@ -23,12 +22,12 @@ namespace CryptoQuest.Audio
             OnStopAudio();
         }
 
-        private void OnPlaySFX()
+        public void OnPlaySFX()
         {
             _sfxEventChannel.PlayAudio(_sfxTrack);
         }
 
-        private void OnStopAudio()
+        public void OnStopAudio()
         {
             _sfxEventChannel.StopAudio(_sfxTrack);
         }
