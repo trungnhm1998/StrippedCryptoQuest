@@ -11,18 +11,18 @@ using UnityEngine.UI;
 
 namespace CryptoQuest.UI.Menu.Status
 {
-    public class UIStatusMenuInventoryItem : MonoBehaviour, ICell
+    public class UIStatusInventoryItem : MonoBehaviour, ICell
     {
         [Serializable]
-        public class Data
+        public class MockData
         {
             public LocalizedString Name;
 
-            public Data Clone()
+            public MockData Clone()
             {
-                return new Data()
+                return new MockData()
                 {
-                    Name = Name
+                    Name = Name,
                 };
             }
         }
@@ -32,14 +32,12 @@ namespace CryptoQuest.UI.Menu.Status
         [SerializeField] private GameObject _selectEffect;
         [SerializeField] private AssetReferenceT<GameObject> _assetReference;
         [SerializeField] private Transform _unequipContainer;
-
-        private const string UNEQUIP_KEY = "ITEM_UNEQUIP";
-        private const string ITEM_KEY = "ITEM_RUSTY_SWORD";
+        
         private GameObject _unequipSlot;
 
         public void Select()
         {
-            EventSystem.current.SetSelectedGameObject(gameObject);
+            _selectEffect.SetActive(true);
         }
 
         public void Deselect()
@@ -47,17 +45,14 @@ namespace CryptoQuest.UI.Menu.Status
             _selectEffect.SetActive(false);
         }
 
-        public void Init(Data data, int index)
+        public void Init(MockData mockData, int index)
         {
             if (index == 0)
             {
                 if (_unequipSlot == null)
                     _assetReference.LoadAssetAsync<GameObject>().Completed += UIPrefabLoaded;
                 else
-                {
-                    _name.SetEntry(UNEQUIP_KEY);
                     _unequipSlot.SetActive(true);
-                }
             }
             else
             {
@@ -65,10 +60,10 @@ namespace CryptoQuest.UI.Menu.Status
                 {
                     _unequipSlot.SetActive(false);
                 }
-                _name.SetEntry(ITEM_KEY);
-                _name.StringReference = data.Name;
-                _itemOrder.text = index.ToString();
+                _name.StringReference = mockData.Name;
             }
+
+            _itemOrder.text = index.ToString();
         }
 
         private void UIPrefabLoaded(AsyncOperationHandle<GameObject> obj)
