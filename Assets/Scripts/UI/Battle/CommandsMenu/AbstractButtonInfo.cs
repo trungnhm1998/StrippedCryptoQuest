@@ -1,27 +1,34 @@
 ﻿using System;
 using CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit;
+using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data;
 
 namespace CryptoQuest.UI.Battle.CommandsMenu
 {
     [Serializable]
     public abstract class AbstractButtonInfo
     {
-        public string Name { get; private set; }
-        public string Value { get; private set; }
+        public string Name { get; protected set; }
+        public string Value { get; protected set; }
+        public bool IsInteractable { get; protected set; }
 
-        protected AbstractButtonInfo(string name, string value = "")
+        protected AbstractButtonInfo(string name, string value = "", bool isInteractable = true)
         {
             Name = name;
             Value = value;
+            IsInteractable = isInteractable; 
         }
 
         public abstract void HandleClick();
     }
 
     [Serializable]
-    public class ButtonInfo : AbstractButtonInfo
+    public class EnemyGroupButtonInfo : AbstractButtonInfo
     {
-        public ButtonInfo(IBattleUnit unit) : base(unit.UnitData.DisplayName) { }
+        public EnemyGroupButtonInfo(CharacterDataSO unit, int numberOfEnemy) : base(unit.Name, "", false)
+        {
+            if (numberOfEnemy <= 1) return;
+            Value = $"x{numberOfEnemy.ToString()}";
+        }
 
         public override void HandleClick() { }
     }
@@ -33,7 +40,7 @@ namespace CryptoQuest.UI.Battle.CommandsMenu
         private IBattleUnit _unit;
 
         public SkillAbstractButtonInfo(IBattleUnit unit, Action<IBattleUnit> setTargetCallback)
-            : base(unit.UnitData.DisplayName)
+            : base(unit.UnitInfo.DisplayName)
         {
             _unit = unit;
             _setTargetCallback = setTargetCallback;
