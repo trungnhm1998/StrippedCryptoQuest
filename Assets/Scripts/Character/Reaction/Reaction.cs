@@ -6,6 +6,5 @@ namespace CryptoQuest.Character.Reaction
     public class Reaction : ScriptableObject
     {
         public Sprite ReactionIcon;
-        [HideInInspector] public int ReactionStateName = Animator.StringToHash("Reaction");
     }
 }
