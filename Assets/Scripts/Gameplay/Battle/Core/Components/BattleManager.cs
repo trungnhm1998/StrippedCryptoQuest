@@ -4,6 +4,7 @@ using CryptoQuest.FSM;
 using CryptoQuest.FSM.ScriptableObjects;
 using CryptoQuest.Gameplay.Battle.Core.Components.BattleSpawner;
 using CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit;
+using CryptoQuest.Gameplay.Battle.Core.Components.BattleOrder;
 using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects;
 using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Skills;
 using IndiGames.Core.Events.ScriptableObjects;
@@ -18,6 +19,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components
         [SerializeField] private StateSO _battleStartState;
         [SerializeField] private StateSO _battleEndState;
         [SerializeField] private BattleBus _battleBus;
+        [SerializeField] private BattleOrderDecider _battleOrderDecider;
 
         [field: SerializeField] public BattleTeam BattleTeam1 { get; protected set; }
 
@@ -137,7 +139,12 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components
         {
             _stateMachine.SetCurrentState(_battleEndState);
         }
-    }
+
+        public List<IBattleUnit> GetActionOrderList()
+        {
+            return _battleOrderDecider.SortUnitByAttributeValue(BattleUnits);
+        }
+    }   
 
     public struct BattleInfo
     {

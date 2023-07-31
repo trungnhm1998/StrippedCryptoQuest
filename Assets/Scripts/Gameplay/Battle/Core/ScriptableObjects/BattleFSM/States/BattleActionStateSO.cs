@@ -21,7 +21,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.BattleFSM.States
 
         private IEnumerator PerformBattleUnitsAction(BaseStateMachine stateMachine)
         {
-            foreach (var unit in BattleManager.BattleUnits)
+            foreach (var unit in BattleManager.GetActionOrderList())
             {
                 BattleManager.CurrentUnit = unit;
                 yield return unit.Execute();
