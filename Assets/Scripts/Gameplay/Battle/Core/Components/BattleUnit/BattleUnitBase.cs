@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data;
@@ -12,11 +13,11 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit
 {
     public class BattleUnitBase : MonoBehaviour, IBattleUnit
     {
-        public AbilitySystemBehaviour Owner {get; set;}
-        public BattleTeam OpponentTeam {get; set;}
-        public BattleTeam OwnerTeam {get; set;}
+        public AbilitySystemBehaviour Owner { get; set; }
+        public BattleTeam OpponentTeam { get; set; }
+        public BattleTeam OwnerTeam { get; set; }
         public bool IsDead => _isDead;
-        public virtual AbstractAbility NormalAttack {get; protected set;}
+        public virtual AbstractAbility NormalAttack { get; protected set; }
         public CharacterInformation UnitInfo { get; private set; }
 
         [SerializeField] protected AttributeScriptableObject _hpAttribute;
@@ -43,6 +44,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit
             OwnerTeam = team;
             Owner = owner;
             CreateCharacterInfo();
+            ResetUnit();
         }
 
         public void CreateCharacterInfo()
@@ -130,11 +132,13 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit
 
         public virtual IEnumerator Execute()
         {
+            Debug.Log($"Action {gameObject}");
             _isPerformingAction = true;
             Owner.TryActiveAbility(SelectedSkill);
             _doneActionEventChannel.RaiseEvent();
             yield return WaitUntilDoneShowAction();
             _isPerformingAction = false;
+            Debug.Log($"Done Action {gameObject}");
         }
 
         private IEnumerator WaitUntilDoneShowAction()
@@ -147,13 +151,18 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit
             // TODO: Check system unable to action tag here
             return !_isDead;
         }
-        
+
         public virtual IEnumerator Resolve()
+        {
+            ResetUnit();
+            yield return null;
+        }
+
+        public void ResetUnit()
         {
             SelectedSkill = null;
             TargetContainer.Clear();
             _isDoneShowAction = false;
-            yield return null;
         }
 
         private void OnHPChanged(AttributeScriptableObject.AttributeEventArgs args)

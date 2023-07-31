@@ -8,6 +8,8 @@ namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data
     [CreateAssetMenu(menuName = "Gameplay/Battle/Battle Data")]
     public class BattleDataSO : ScriptableObject
     {
+        public bool IsEscapable; 
+
         [field: SerializeField]
         public CharacterGroup[] EnemyGroups { get; private set;}
 
@@ -52,7 +54,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data
             if (Characters.Length <= 0) return;
             var firstValidChara = Characters.First<CharacterDataSO>(x => x != null);
 
-            for (int i = 1; i < Characters.Length; i++)
+            for (int i = 0; i < Characters.Length; i++)
             {
                 var chara = Characters[i];
                 if (chara == firstValidChara) continue;

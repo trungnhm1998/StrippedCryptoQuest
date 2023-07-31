@@ -593,6 +593,17 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 528163024506008966, guid: 956bfec26de3ab44394d3e0e402ff9c0, type: 3}
   m_PrefabInstance: {fileID: 6073816311404192179}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1097146777 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 525384554280490780, guid: 956bfec26de3ab44394d3e0e402ff9c0, type: 3}
+  m_PrefabInstance: {fileID: 6073816311404192179}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1097146775}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b43afacefcf4c13af90cb3a5d819ffb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1111840047 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1875065028247885266, guid: 3deeb84024fa8b84e8df688f312dd64d, type: 3}
@@ -665,7 +676,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1506847218}
-  - component: {fileID: 1506847220}
   - component: {fileID: 1506847219}
   m_Layer: 0
   m_Name: ActionVFXController
@@ -705,26 +715,6 @@ MonoBehaviour:
   _doneActionEventChannel: {fileID: 11400000, guid: 9ed5ff741b20bee4f9e8a2ade059511f, type: 2}
   _showBattleDialogEventChannel: {fileID: 11400000, guid: f43e82d9faba50046a2c65b8af62a2f9, type: 2}
   _showNextMarkEventChannel: {fileID: 11400000, guid: 9f65c4f7fd7684a4394a451b20a98549, type: 2}
---- !u!114 &1506847220
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1506847217}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 49f9d52cd9572c3468cf44d24b08d783, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _battleBus: {fileID: 11400000, guid: 2290057e7f48d1046b5e0a6c3f6dc910, type: 2}
-  _inputMediator: {fileID: 11400000, guid: 1fb61cdb72f0a484f8e4db68e2011977, type: 2}
-  _heroesUI: {fileID: 797312277}
-  _monstersUI: {fileID: 1111840047}
-  _batteMenu: {fileID: 1097146775}
-  _newTurnEventChannel: {fileID: 11400000, guid: 0f2dc4548e630314e9ce0c18237f54c8, type: 2}
-  _battleStartEventChannel: {fileID: 11400000, guid: 10feb0e3bd5394b4f93989855f674bfa, type: 2}
-  _endStrategyPhaseEventChannel: {fileID: 11400000, guid: d206703a44eea214ea5140c1018b92be, type: 2}
 --- !u!223 &721239361783109978
 Canvas:
   m_ObjectHideFlags: 0
@@ -763,7 +753,7 @@ PrefabInstance:
     - target: {fileID: 3989987833036956159, guid: 3deeb84024fa8b84e8df688f312dd64d, type: 3}
       propertyPath: _battleData
       value: 
-      objectReference: {fileID: 11400000, guid: ab6bf8d3f0bb425449bd537a4dc3a5d9, type: 2}
+      objectReference: {fileID: 11400000, guid: 776504b7b50e9464898f2b0de365f0bb, type: 2}
     - target: {fileID: 8709895734227502206, guid: 3deeb84024fa8b84e8df688f312dd64d, type: 3}
       propertyPath: m_RootOrder
       value: -1
@@ -964,9 +954,33 @@ PrefabInstance:
       value: -0.0006057949
       objectReference: {fileID: 0}
     - target: {fileID: 5509629255415990337, guid: 956bfec26de3ab44394d3e0e402ff9c0, type: 3}
+      propertyPath: m_Pivot.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5509629255415990337, guid: 956bfec26de3ab44394d3e0e402ff9c0, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5509629255415990337, guid: 956bfec26de3ab44394d3e0e402ff9c0, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5509629255415990337, guid: 956bfec26de3ab44394d3e0e402ff9c0, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 5509629255415990337, guid: 956bfec26de3ab44394d3e0e402ff9c0, type: 3}
       propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5509629255415990337, guid: 956bfec26de3ab44394d3e0e402ff9c0, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0.000061035156
+      objectReference: {fileID: 0}
+    - target: {fileID: 5509629255415990337, guid: 956bfec26de3ab44394d3e0e402ff9c0, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0.000015258789
+      objectReference: {fileID: 0}
     - target: {fileID: 7106638629251935448, guid: 956bfec26de3ab44394d3e0e402ff9c0, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -1015,6 +1029,18 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7425177563303467373, guid: 956bfec26de3ab44394d3e0e402ff9c0, type: 3}
+      propertyPath: _retreatAbilitySO
+      value: 
+      objectReference: {fileID: 11400000, guid: a0f75fbf27be14140aa72678a173d481, type: 2}
+    - target: {fileID: 7425177563303467373, guid: 956bfec26de3ab44394d3e0e402ff9c0, type: 3}
+      propertyPath: _targetedAttributeSO
+      value: 
+      objectReference: {fileID: 11400000, guid: 6e9af3d88e4f52849b938dd384bd5e37, type: 2}
+    - target: {fileID: 7425177563303467373, guid: 956bfec26de3ab44394d3e0e402ff9c0, type: 3}
+      propertyPath: BattlePanelController
+      value: 
+      objectReference: {fileID: 1097146777}
     - target: {fileID: 7700479619137461728, guid: 956bfec26de3ab44394d3e0e402ff9c0, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0

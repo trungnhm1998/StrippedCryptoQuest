@@ -8,7 +8,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components.BattleSpawner
     [RequireComponent(typeof(BattleManager))]
     public abstract class BaseBattleSpawner : MonoBehaviour
     {
-        private readonly string[] _duplicatePostfix = new string[] {"A", "B", "C", "D"};
+        private readonly string[] _duplicatePostfix = new string[] { "A", "B", "C", "D" };
         [SerializeField] protected BattleManager _battleManager;
         [SerializeField] protected BattleDataSO _battleData;
 
@@ -37,11 +37,13 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components.BattleSpawner
                 duplicateCount = 0;
                 _duplicateEnemies.Add(enemyInfo.OriginalName, duplicateCount);
             }
+
             if (duplicateCount >= _duplicatePostfix.Length) return;
 
             enemyInfo.DisplayName = $"{enemyInfo.OriginalName}{_duplicatePostfix[duplicateCount]}"; 
             _duplicateEnemies[enemyInfo.OriginalName]++;
         }
+
+        public bool IsBattleEscapale() => _battleData.IsEscapable;
     }
 }
-    
