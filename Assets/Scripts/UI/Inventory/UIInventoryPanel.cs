@@ -29,7 +29,7 @@ namespace CryptoQuest.UI.Inventory
         [SerializeField] private LocalizeStringEvent _localizeDescription;
         [SerializeField] private Image _tabImage;
         public EItemType Type => _type;
-        private List<ItemInfomation> _itemList = new List<ItemInfomation>();
+        private List<ItemBase> _itemList = new List<ItemBase>();
         private List<MultiInputButton> _buttonList = new();
         private UIItemInventory _itemInformation;
 
@@ -58,7 +58,7 @@ namespace CryptoQuest.UI.Inventory
                 var itemSO = item.ItemSO;
                 var type = itemSO.Type;
                 if (type != _type) continue;
-                _itemList.Add(new ItemInfomation(itemSO, item.Quantity));
+                _itemList.Add(new ExpendableItemBase(itemSO, item.Quantity));
             }
         }
 
