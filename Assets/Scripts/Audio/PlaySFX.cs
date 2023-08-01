@@ -7,7 +7,7 @@ namespace CryptoQuest.Audio
     {
         [Header("Raise on")] [SerializeField] private AudioCueEventChannelSO _sfxEventChannel;
 
-        [Header("Configs")] [SerializeField] private AudioCueSO _sfxTrack;
+        [Header("Configs")] [SerializeField] private SFXCueSO _sfxTrack;
         [SerializeField] private bool _playOnStart = default;
 
         private void OnEnable()
