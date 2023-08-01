@@ -95,6 +95,8 @@ namespace CryptoQuest.Audio
             if (_playingMusicAudioEmitter == null)
                 _playingMusicAudioEmitter = _pool.Request();
             _playingMusicAudioEmitter.FadeMusicIn(audioCue.GetClips()[0], audioSettings, fadeDuration, startTime);
+
+            Debug.Log($"[AudioManager] Playing background music [{audioCue.name}]");
         }
 
         private void StopBackgroundMusic(AudioCueSO arg0)
@@ -102,6 +104,7 @@ namespace CryptoQuest.Audio
             if (!IsAudioPlaying()) return;
 
             _playingMusicAudioEmitter.Stop();
+            Debug.Log($"[AudioManager] Stopped playing background music");
         }
 
         private void ChangeMasterVolume(float value)
