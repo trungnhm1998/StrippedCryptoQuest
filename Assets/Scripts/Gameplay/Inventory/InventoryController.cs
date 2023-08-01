@@ -22,10 +22,12 @@ namespace CryptoQuest
             _onEquipItemEventChannel.EventRaised -= EquipItem;
         }
 
-        private void EquipItem(ItemInfomation item)
+        private void EquipItem(ItemBase itemBaseItem)
         {
-            item.Owner = CurrentOwnerAbilitySystemBehaviour;
-            item.Use();
+            ExpendableItemBase expendableItemBase = itemBaseItem as ExpendableItemBase;
+            if (expendableItemBase == null) return;
+            expendableItemBase.Owner = CurrentOwnerAbilitySystemBehaviour;
+            itemBaseItem.Use();
         }
     }
 }

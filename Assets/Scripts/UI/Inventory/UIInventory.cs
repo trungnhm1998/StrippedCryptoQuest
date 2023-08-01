@@ -94,10 +94,10 @@ namespace CryptoQuest.UI.Inventory
         private void HandleItemPressed()
         {
             Debug.Log(
-                $"{EventSystem.current.currentSelectedGameObject.GetComponent<UIItemInventory>().ItemInfo.ItemSO} Pressed!");
-            ItemInfomation selectedItem =
-                EventSystem.current.currentSelectedGameObject.GetComponent<UIItemInventory>().ItemInfo;
-            _OnEquipItemEvent.RaiseEvent(selectedItem);
+                $"{EventSystem.current.currentSelectedGameObject.GetComponent<UIItemInventory>().ItemBase.ItemSO} Pressed!");
+            ItemBase selectedItemBaseItem =
+                EventSystem.current.currentSelectedGameObject.GetComponent<UIItemInventory>().ItemBase;
+            _OnEquipItemEvent.RaiseEvent(selectedItemBaseItem);
         }
 
         private void SelectTab(EItemType type)

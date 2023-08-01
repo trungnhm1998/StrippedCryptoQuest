@@ -25,7 +25,7 @@ namespace CryptoQuest.Tests.Runtime.Item
         private readonly WaitForSeconds WAIT_ONE_SECOND = new(1);
         private const string ITEMS_TEST_SCENE = "Assets/Tests/Runtime/Items.unity";
         private ItemSO _healItem;
-        private ExpendableItemInfo _healItemInfo;
+        private ExpendableItemBase _healItemBase;
         private GameObject _inventoryController;
         private InventoryController _inventoryControllerComponent;
         private BattleTeam _battleTeam;
@@ -66,15 +66,15 @@ namespace CryptoQuest.Tests.Runtime.Item
             _playerHealthAttribute = GetAttributeScriptableObject("Player.HP");
             Assert.NotNull(_playerHealthAttribute);
 
-            _healItemInfo = new ExpendableItemInfo(_player, _healItem, 1);
-            Assert.NotNull(_healItemInfo);
+            _healItemBase = new ExpendableItemBase(_player, _healItem, 1);
+            Assert.NotNull(_healItemBase);
         }
 
         [UnityTest]
         public IEnumerator UseHealItem_ChangePlayerHealth_ReturnHealthIncrease()
         {
             _player.AttributeSystem.GetAttributeValue(_playerHealthAttribute, out var playerHealthBeforeUse);
-            _healItemInfo.Use();
+            _healItemBase.Use();
             yield return WAIT_ONE_SECOND;
 
             _player.AttributeSystem.GetAttributeValue(_playerHealthAttribute, out var playerHealthAfterUse);
@@ -88,7 +88,7 @@ namespace CryptoQuest.Tests.Runtime.Item
             yield return WAIT_ONE_SECOND;
             _player.AttributeSystem.GetAttributeValue(_playerHealthAttribute, out var playerHealthBeforeUse);
 
-            _healItemInfo.Use();
+            _healItemBase.Use();
             float expectedValue = playerHealthBeforeUse.CurrentValue + 100;
             yield return WAIT_ONE_SECOND;
 

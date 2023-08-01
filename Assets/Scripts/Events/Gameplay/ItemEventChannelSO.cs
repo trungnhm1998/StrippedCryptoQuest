@@ -7,16 +7,16 @@ namespace CryptoQuest.Events.Gameplay
     [CreateAssetMenu(fileName = "ItemEventChannelSO", menuName = "Core/Events/Item Event Channel")]
     public class ItemEventChannelSO : ScriptableObject
     {
-        public UnityAction<ItemInfomation> EventRaised;
+        public UnityAction<ItemBase> EventRaised;
 
-        public void RaiseEvent(ItemInfomation item)
+        public void RaiseEvent(ItemBase itemBaseItem)
         {
-            OnRaiseEvent(item);
+            OnRaiseEvent(itemBaseItem);
         }
 
-        private void OnRaiseEvent(ItemInfomation item)
+        private void OnRaiseEvent(ItemBase itemBaseItem)
         {
-            this.CallEventSafely(EventRaised, item);
+            this.CallEventSafely(EventRaised, itemBaseItem);
         }
     }
 }

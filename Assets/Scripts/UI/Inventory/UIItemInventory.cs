@@ -16,22 +16,22 @@ namespace CryptoQuest.UI.Inventory
         public LocalizeStringEvent Name;
         public Text Quantity;
         public LocalizedString Description;
-        private ItemInfomation _itemInfo;
-        public ItemInfomation ItemInfo => _itemInfo;
+        private ItemBase _itemBase;
+        public ItemBase ItemBase => _itemBase;
         public event UnityAction<ItemSO> Clicked;
 
-        public void Init(ItemInfomation itemInfo)
+        public void Init(ItemBase itemBase)
         {
-            _itemInfo = itemInfo;
-            Icon.sprite = itemInfo.ItemSO.Icon;
-            Name.StringReference = itemInfo.ItemSO.Name;
-            Quantity.text = itemInfo.Quantity.ToString();
-            Description = itemInfo.ItemSO.Description;
+            _itemBase = itemBase;
+            Icon.sprite = itemBase.ItemSO.Icon;
+            Name.StringReference = itemBase.ItemSO.Name;
+            Quantity.text = itemBase.Quantity.ToString();
+            Description = itemBase.ItemSO.Description;
         }
 
         public void OnClicked()
         {
-            Clicked?.Invoke(_itemInfo.ItemSO);
+            Clicked?.Invoke(_itemBase.ItemSO);
         }
 
         public void Select()
