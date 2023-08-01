@@ -4,6 +4,7 @@ using IndiGames.Core.SceneManagementSystem.Events.ScriptableObjects;
 using IndiGames.Core.SceneManagementSystem.ScriptableObjects;
 using IndiGames.Core.UI.FadeController;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.ResourceManagement.ResourceProviders;
 using UnityEngine.SceneManagement;
@@ -88,9 +89,9 @@ namespace IndiGames.Core.SceneManagementSystem
 #if UNITY_EDITOR
         private void EditorColdBootLoadingRequested(SceneScriptableObject currentOpenSceneInEditor)
         {
-           StartCoroutine(CoLoadScene(currentOpenSceneInEditor)); 
+            StartCoroutine(CoLoadScene(currentOpenSceneInEditor));
         }
-        
+
         private IEnumerator CoLoadScene(SceneScriptableObject currentOpenSceneInEditor)
         {
             _currentLoadedScene = currentOpenSceneInEditor;
@@ -99,7 +100,7 @@ namespace IndiGames.Core.SceneManagementSystem
             {
                 _gameplayManagerLoadingOperationHandle =
                     _gameplayManagerSceneSO.SceneReference.LoadSceneAsync(LoadSceneMode.Additive, true);
-                yield return _gameplayManagerLoadingOperationHandle; 
+                yield return _gameplayManagerLoadingOperationHandle;
                 if (!_gameplayManagerLoadingOperationHandle.Result.Scene.IsValid()) yield break;
                 _gameplayManagerSceneInstance = _gameplayManagerLoadingOperationHandle.Result;
             }
@@ -145,6 +146,7 @@ namespace IndiGames.Core.SceneManagementSystem
 #endif
             }
 
+            Resources.UnloadUnusedAssets();
             LoadNewScene();
         }
 
