@@ -64,7 +64,7 @@ namespace IndiGames.Core.SceneManagementSystem
             _sceneToLoad = sceneToLoad;
             _isLoading = true;
 
-            if (!_gameplayManagerSceneInstance.Scene.isLoaded)
+            if (!_gameplayManagerSceneInstance.Scene.isLoaded && !_gameplayManagerSceneSO.SceneReference.OperationHandle.IsValid())
             {
                 LoadGameplayManagerScene();
                 return;

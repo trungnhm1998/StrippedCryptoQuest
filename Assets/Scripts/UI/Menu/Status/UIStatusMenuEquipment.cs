@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using CryptoQuest.Input;
 using IndiGames.Core.Events.ScriptableObjects;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace CryptoQuest.UI.Menu.Status
 {
@@ -14,6 +15,7 @@ namespace CryptoQuest.UI.Menu.Status
         [Header("Events")]
         [SerializeField] private VoidEventChannelSO _confirmSelectEquipmentSlotEvent;
         [SerializeField] private VoidEventChannelSO _turnOffInventoryEvent;
+        public UnityEvent EnableMagicStoneEvent;
 
         [Header("Game Components")]
         [SerializeField] private List<UIStatusMenuEquipmentSlot> _equipmentSlots;
@@ -100,12 +102,18 @@ namespace CryptoQuest.UI.Menu.Status
             _inputMediator.EnableStatusMenuInput();
         }
 
+        private void OnEnableMagicStone()
+        {
+            EnableMagicStoneEvent?.Invoke();
+        }
+
         private void RegisterChangeEquipmentInputEvents()
         {
             _inputMediator.StatusEquipmentGoBelowEvent += StatusEquipmentGoToBelowSlot;
             _inputMediator.StatusEquipmentGoAboveEvent += StatusEquipmentGoToAboveSlot;
             _inputMediator.StatusMenuConfirmSelectEvent += OnStatusMenuConfirmSelect;
             _inputMediator.StatusEquipmentCancelEvent += CancelEquipment;
+            _inputMediator.EnableMagicStoneMenuEvent += OnEnableMagicStone;
         }
 
         private void UnregisterChangeEquipmentInputEvents()
@@ -114,6 +122,7 @@ namespace CryptoQuest.UI.Menu.Status
             _inputMediator.StatusEquipmentGoAboveEvent -= StatusEquipmentGoToAboveSlot;
             _inputMediator.StatusMenuConfirmSelectEvent -= OnStatusMenuConfirmSelect;
             _inputMediator.StatusEquipmentCancelEvent -= CancelEquipment;
+            _inputMediator.EnableMagicStoneMenuEvent -= OnEnableMagicStone;
         }
     }
 }

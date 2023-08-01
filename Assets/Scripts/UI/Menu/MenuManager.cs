@@ -136,7 +136,6 @@ namespace CryptoQuest.UI.Menu
                 button.Disable();
                 if (button.TypeSO == typeSO)
                 {
-                    Debug.Log("test");
                     button.Pointer.enabled = false;
                     button.Enable();
                 }
@@ -167,7 +166,7 @@ namespace CryptoQuest.UI.Menu
         private void BackToMenuNavigationState(MenuTypeSO menuTypeSO)
         {
             EnableAllNavButtons();
-            _currentActivePanel = null;
+            // _currentActivePanel = null;
         }
 
         private void HideCurrentPanel()
