@@ -9,7 +9,6 @@ namespace CryptoQuest.EditorTool
 {
     public class LoadBattleEditorCheat : MonoBehaviour
     {
-#if UNITY_EDITOR || DEVELOPMENT_BUILD
         [SerializeField] private SceneScriptableObject[] _battleScenes;
         [SerializeField] private LoadSceneEventChannelSO _loadBattleSceneEvent;
 
@@ -18,13 +17,13 @@ namespace CryptoQuest.EditorTool
         [SerializeField] private int _fontSize = 20;
         [SerializeField] private bool _showDebug = false;
         [SerializeField] private Rect _windowRect = new Rect(20, 20, 120, 50);
-        [SerializeField] private float _windowWidth = 400;
         [SerializeField] private int _windowId;
 
         private Rect _minimizeRect;
 
         private bool _showBattle = true;
 
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
         private void Start()
         {
             _minimizeRect = _windowRect;

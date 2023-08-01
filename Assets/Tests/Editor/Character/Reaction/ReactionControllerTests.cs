@@ -1,4 +1,4 @@
-using CryptoQuest.Character.Reaction;
+using CryptoQuest.Character;
 using NUnit.Framework;
 using UnityEditor;
 using UnityEngine;
@@ -14,13 +14,13 @@ namespace CryptoQuest.Tests.Editor.Character.Reaction
         private const string REACTION_ANIMATOR_ASSET_PATH =
             "Assets/Animation/Reaction/Reaction.controller";
 
-        private static ReactionController _reactionControllerPrefab;
+        private static ReactionBehaviour _reactionBehaviourPrefab;
 
         [OneTimeSetUp]
         public void OneTimeSetup()
         {
-            _reactionControllerPrefab =
-                AssetDatabase.LoadAssetAtPath<ReactionController>(REACTION_CONTROLLER_PREFAB_ASSET_PATH);
+            _reactionBehaviourPrefab =
+                AssetDatabase.LoadAssetAtPath<ReactionBehaviour>(REACTION_CONTROLLER_PREFAB_ASSET_PATH);
         }
 
         [TestFixture]
@@ -29,20 +29,20 @@ namespace CryptoQuest.Tests.Editor.Character.Reaction
             [Test]
             public void ReactionControllerPrefab_Exists()
             {
-                Assert.NotNull(_reactionControllerPrefab);
+                Assert.NotNull(_reactionBehaviourPrefab);
             }
 
             [Test]
             public void ReactionControllerPrefab_HasAnimator()
             {
-                var animator = _reactionControllerPrefab.GetComponent<Animator>();
+                var animator = _reactionBehaviourPrefab.GetComponent<Animator>();
                 Assert.NotNull(animator);
             }
 
             [Test]
             public void ReactionControllerPrefab_AnimatorController_HasCorrectController()
             {
-                var animator = _reactionControllerPrefab.GetComponent<Animator>();
+                var animator = _reactionBehaviourPrefab.GetComponent<Animator>();
                 var controller = AssetDatabase.LoadAssetAtPath<RuntimeAnimatorController>(REACTION_ANIMATOR_ASSET_PATH);
                 Assert.AreEqual(controller, animator.runtimeAnimatorController);
             }
@@ -50,21 +50,21 @@ namespace CryptoQuest.Tests.Editor.Character.Reaction
             [Test]
             public void ReactionControllerPrefab_HasSpriteRenderer()
             {
-                var spriteRenderer = _reactionControllerPrefab.GetComponent<SpriteRenderer>();
+                var spriteRenderer = _reactionBehaviourPrefab.GetComponent<SpriteRenderer>();
                 Assert.NotNull(spriteRenderer);
             }
 
             [Test]
             public void ReactionControllerPrefab_SpriteRenderer_ShouldNotHaveSprite()
             {
-                var sprite = _reactionControllerPrefab.GetComponent<SpriteRenderer>().sprite;
+                var sprite = _reactionBehaviourPrefab.GetComponent<SpriteRenderer>().sprite;
                 Assert.IsNull(sprite);
             }
 
             [Test]
             public void ReactionControllerPrefab_CanInstantiate()
             {
-                var reactionController = Object.Instantiate(_reactionControllerPrefab);
+                var reactionController = Object.Instantiate(_reactionBehaviourPrefab);
                 Assert.NotNull(reactionController);
                 Object.DestroyImmediate(reactionController);
             }
@@ -78,35 +78,35 @@ namespace CryptoQuest.Tests.Editor.Character.Reaction
                 {
                     // load
                     var reactionSO =
-                        AssetDatabase.LoadAssetAtPath<CryptoQuest.Character.Reaction.Reaction>(
+                        AssetDatabase.LoadAssetAtPath<CryptoQuest.Character.Reaction>(
                             AssetDatabase.GUIDToAssetPath(reactionGuid));
                     Assert.NotNull(reactionSO.ReactionIcon);
                 }
             }
         }
 
-        private ReactionController _reactionControllerInstance;
+        private ReactionBehaviour _reactionBehaviourInstance;
 
         [SetUp]
         public void Setup()
         {
-            _reactionControllerInstance = Object.Instantiate(_reactionControllerPrefab);
+            _reactionBehaviourInstance = Object.Instantiate(_reactionBehaviourPrefab);
         }
 
         [TearDown]
         public void TearDown()
         {
-            Object.DestroyImmediate(_reactionControllerInstance);
+            Object.DestroyImmediate(_reactionBehaviourInstance);
         }
 
         [Test]
         public void ShowReaction_SetsSpriteRendererSprite()
         {
-            var reaction = ScriptableObject.CreateInstance<CryptoQuest.Character.Reaction.Reaction>();
+            var reaction = ScriptableObject.CreateInstance<CryptoQuest.Character.Reaction>();
             var reactionIcon = Sprite.Create(new Texture2D(1, 1), new Rect(0, 0, 1, 1), Vector2.zero);
             reaction.ReactionIcon = reactionIcon;
-            _reactionControllerInstance.ShowReaction(reaction);
-            Assert.AreEqual(reactionIcon, _reactionControllerInstance.GetComponent<SpriteRenderer>().sprite);
+            _reactionBehaviourInstance.ShowReaction(reaction);
+            Assert.AreEqual(reactionIcon, _reactionBehaviourInstance.GetComponent<SpriteRenderer>().sprite);
         }
 
         [Test]
@@ -116,11 +116,11 @@ namespace CryptoQuest.Tests.Editor.Character.Reaction
 
             foreach (var guid in reactions)
             {
-                var reaction = AssetDatabase.LoadAssetAtPath<CryptoQuest.Character.Reaction.Reaction>(
+                var reaction = AssetDatabase.LoadAssetAtPath<CryptoQuest.Character.Reaction>(
                     AssetDatabase.GUIDToAssetPath(guid));
-                _reactionControllerInstance.ShowReaction(reaction);
+                _reactionBehaviourInstance.ShowReaction(reaction);
                 Assert.AreEqual(reaction.ReactionIcon,
-                    _reactionControllerInstance.GetComponent<SpriteRenderer>().sprite);
+                    _reactionBehaviourInstance.GetComponent<SpriteRenderer>().sprite);
             }
         }
 
@@ -134,13 +134,13 @@ namespace CryptoQuest.Tests.Editor.Character.Reaction
                 called = true;
             }
 
-            _reactionControllerInstance.ShowingReaction += ShowingReactionCalled;
+            _reactionBehaviourInstance.ShowingReaction += ShowingReactionCalled;
 
-            _reactionControllerInstance.ShowReaction(ScriptableObject
-                .CreateInstance<CryptoQuest.Character.Reaction.Reaction>());
+            _reactionBehaviourInstance.ShowReaction(ScriptableObject
+                .CreateInstance<CryptoQuest.Character.Reaction>());
 
             Assert.True(called);
-            _reactionControllerInstance.ShowingReaction -= ShowingReactionCalled;
+            _reactionBehaviourInstance.ShowingReaction -= ShowingReactionCalled;
         }
     }
 }

@@ -1,9 +1,18 @@
 ﻿title: QuestIntegration
 tags:
 ---
-Some dialogue with path
--> First Path
-    Some dialogue with first path
--> Second Path
-    Some dialogue with second path
+Some dialogue with path #line:0f5cc7f 
+-> First Path #line:0fba3fa 
+    Some dialogue with first path #line:0f0d580 
+-> Second Path #line:0d49a5e 
+    Some dialogue with second path #line:02000a1 
+===
+
+title: ReactionIntegration
+tags:
+---
+Some dialogue before reaction #line:0c20b50 
+<<react Agree>>
+<<wait 2.5>>
+Some dialogue after reaction #line:0aa38de 
 ===
