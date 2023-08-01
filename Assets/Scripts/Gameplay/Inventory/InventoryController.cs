@@ -24,9 +24,9 @@ namespace CryptoQuest
 
         private void EquipItem(ItemBase itemBaseItem)
         {
-            ExpendableItemBase expendableItemBase = itemBaseItem as ExpendableItemBase;
-            if (expendableItemBase == null) return;
-            expendableItemBase.Owner = CurrentOwnerAbilitySystemBehaviour;
+            ExpendableItemInfo expendableItemInfo = itemBaseItem as ExpendableItemInfo;
+            if (expendableItemInfo == null) return;
+            expendableItemInfo.Owner = CurrentOwnerAbilitySystemBehaviour;
             itemBaseItem.Use();
         }
     }
