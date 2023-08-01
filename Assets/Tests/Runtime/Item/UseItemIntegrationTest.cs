@@ -8,10 +8,11 @@ using IndiGames.GameplayAbilitySystem.EffectSystem;
 using NUnit.Framework;
 
 #if UNITY_EDITOR
+using CryptoQuest.Gameplay.Inventory;
 using UnityEditor;
+using UnityEditor.SceneManagement;
 #endif
 
-using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.TestTools;
@@ -24,11 +25,13 @@ namespace CryptoQuest.Tests.Runtime.Item
         private readonly WaitForSeconds WAIT_ONE_SECOND = new(1);
         private const string ITEMS_TEST_SCENE = "Assets/Tests/Runtime/Items.unity";
         private ItemSO _healItem;
+        private ExpendableItemInfo _healItemInfo;
         private GameObject _inventoryController;
         private InventoryController _inventoryControllerComponent;
         private BattleTeam _battleTeam;
         private AbilitySystemBehaviour _player;
         private AttributeScriptableObject _playerHealthAttribute;
+        private string[] attributeGuids;
 
         [UnitySetUp]
         public IEnumerator OneTimeSetup()
@@ -62,14 +65,16 @@ namespace CryptoQuest.Tests.Runtime.Item
 
             _playerHealthAttribute = GetAttributeScriptableObject("Player.HP");
             Assert.NotNull(_playerHealthAttribute);
+
+            _healItemInfo = new ExpendableItemInfo(_player, _healItem, 1);
+            Assert.NotNull(_healItemInfo);
         }
 
         [UnityTest]
         public IEnumerator UseHealItem_ChangePlayerHealth_ReturnHealthIncrease()
         {
             _player.AttributeSystem.GetAttributeValue(_playerHealthAttribute, out var playerHealthBeforeUse);
-            _inventoryControllerComponent.CurrentOwnerAbilitySystemBehaviour = _player;
-            _healItem.Use(_player);
+            _healItemInfo.Use();
             yield return WAIT_ONE_SECOND;
 
             _player.AttributeSystem.GetAttributeValue(_playerHealthAttribute, out var playerHealthAfterUse);
@@ -82,8 +87,8 @@ namespace CryptoQuest.Tests.Runtime.Item
             SetupHealItem();
             yield return WAIT_ONE_SECOND;
             _player.AttributeSystem.GetAttributeValue(_playerHealthAttribute, out var playerHealthBeforeUse);
-            _inventoryControllerComponent.CurrentOwnerAbilitySystemBehaviour = _player;
-            _healItem.Use(_player);
+
+            _healItemInfo.Use();
             float expectedValue = playerHealthBeforeUse.CurrentValue + 100;
             yield return WAIT_ONE_SECOND;
 
@@ -127,8 +132,9 @@ namespace CryptoQuest.Tests.Runtime.Item
 
         public AttributeScriptableObject GetAttributeScriptableObject(string attributeName)
         {
-            var guids = AssetDatabase.FindAssets("t:AttributeScriptableObject");
-            foreach (var guid in guids)
+            if (attributeGuids == null)
+                attributeGuids = AssetDatabase.FindAssets("t:AttributeScriptableObject");
+            foreach (var guid in attributeGuids)
             {
                 var path = AssetDatabase.GUIDToAssetPath(guid);
                 var attrSo = AssetDatabase.LoadAssetAtPath<AttributeScriptableObject>(path);

@@ -18,6 +18,6 @@ namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects
         public Sprite Icon;
         public LocalizedString Name;
         public LocalizedString Description;
-        public virtual void Use(AbilitySystemBehaviour owner = null) { }
+     
     }
 }

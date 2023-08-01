@@ -11,11 +11,5 @@ namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects
     public class ExpendableItemSO : ItemSO
     {
         public AbilityScriptableObject Ability;
-
-        public override void Use(AbilitySystemBehaviour owner = null)
-        {
-            var ability = owner.GiveAbility(Ability);
-            owner.TryActiveAbility(ability);
-        }
     }
 }

@@ -10,7 +10,7 @@ namespace CryptoQuest
     {
         [SerializeField] private InventorySO _inventorySO;
         [SerializeField] private ItemEventChannelSO _onEquipItemEventChannel;
-        public AbilitySystemBehaviour CurrentOwnerAbilitySystemBehaviour;
+        [SerializeField] private AbilitySystemBehaviour CurrentOwnerAbilitySystemBehaviour;
 
         private void OnEnable()
         {
@@ -24,7 +24,8 @@ namespace CryptoQuest
 
         private void EquipItem(ItemInfomation item)
         {
-            item.ItemSO.Use(CurrentOwnerAbilitySystemBehaviour);
+            item.Owner = CurrentOwnerAbilitySystemBehaviour;
+            item.Use();
         }
     }
 }
