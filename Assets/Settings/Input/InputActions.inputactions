@@ -1300,6 +1300,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "EnableMagicStoneMenu",
+                    "type": "Button",
+                    "id": "7d85899a-4ac9-40b5-bfbc-c52003215a49",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -1555,6 +1564,28 @@
                     "action": "Navigate",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6ddc7949-3116-4733-9880-fe206cde8ca4",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "MnK",
+                    "action": "EnableMagicStoneMenu",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "03d873c4-319b-48d4-a3f3-ad49665c54f5",
+                    "path": "<Gamepad>/buttonWest",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "EnableMagicStoneMenu",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },
@@ -1590,18 +1621,18 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "MagicStone",
+                    "name": "StatusEquipmentCancel",
                     "type": "Button",
-                    "id": "b9c7000c-ad2e-42b2-ade3-a4e3933b999f",
+                    "id": "44e05bb2-4fc3-434f-84bc-7ce62f61555a",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
                 },
                 {
-                    "name": "StatusEquipmentCancel",
+                    "name": "EnableMagicStoneMenu",
                     "type": "Button",
-                    "id": "44e05bb2-4fc3-434f-84bc-7ce62f61555a",
+                    "id": "0c25fd26-3b47-4536-b85c-d9771f523881",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -1710,17 +1741,6 @@
                 },
                 {
                     "name": "",
-                    "id": "1212e4b9-7fa1-4839-a619-196f7c2daff9",
-                    "path": "",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "MagicStone",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "8a926546-d3b5-4543-8d50-573ed42b8050",
                     "path": "<Keyboard>/escape",
                     "interactions": "",
@@ -1749,6 +1769,28 @@
                     "processors": "",
                     "groups": "Gamepad;MnK",
                     "action": "StatusEquipmentCancel",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7a15c111-94fe-44f0-ae80-6ca99597062d",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "MnK",
+                    "action": "EnableMagicStoneMenu",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "10666229-7a9b-4dc1-bd34-3a4b91615618",
+                    "path": "<Gamepad>/buttonWest",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "EnableMagicStoneMenu",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
@@ -1894,6 +1936,45 @@
                     "processors": "",
                     "groups": "",
                     "action": "StatusInventoryGoAbove",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "Status/MagicStone",
+            "id": "207ac2fd-1de8-4870-9921-343151564a19",
+            "actions": [
+                {
+                    "name": "TurnOffMagicStoneMenu",
+                    "type": "Button",
+                    "id": "1e81da56-5eb6-4151-a96d-6464e02ebdca",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "680bb09f-4338-47ba-8366-218ae8607623",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "MnK",
+                    "action": "TurnOffMagicStoneMenu",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6443e877-1f7e-4f8d-8269-f90510cc8679",
+                    "path": "<Gamepad>/buttonEast",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "TurnOffMagicStoneMenu",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

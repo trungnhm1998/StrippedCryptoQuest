@@ -35,6 +35,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data
 
         private void OnValidate()
         {
+            if (EnemyGroups == null) return;
             _allEnemies.Clear();
             foreach (var group in EnemyGroups)
             {

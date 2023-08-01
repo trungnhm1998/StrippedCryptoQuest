@@ -1,6 +1,4 @@
 using CryptoQuest.FSM;
-using IndiGames.Core.SceneManagementSystem.Events.ScriptableObjects;
-using IndiGames.Core.SceneManagementSystem.ScriptableObjects;
 using UnityEngine;
 
 namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.BattleFSM.States
@@ -9,8 +7,6 @@ namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.BattleFSM.States
     public class BattleEndStateSO : BattleStateSO
     {
         [SerializeField] private GameStateSO _gameState;
-        [SerializeField] private SceneScriptableObject _battleSceneSO;
-        [SerializeField] private UnloadSceneEventChannelSO _unloadSceneEvent;
         public override void OnEnterState(BaseStateMachine stateMachine)
         {
             base.OnEnterState(stateMachine);
@@ -19,7 +15,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.BattleFSM.States
 
         private void BattleEnd(BaseStateMachine stateMachine)
         {
-            _unloadSceneEvent.RequestUnload(_battleSceneSO);
+            BattleManager.OnBattleEnd();
             _gameState.UpdateGameState(EGameState.Field);
         }
     }

@@ -5,7 +5,7 @@ using UnityEngine.UIElements;
 
 namespace CryptoQuestEditor.Character.Reaction
 {
-    [CustomEditor(typeof(CryptoQuest.Character.Reaction.Reaction))]
+    [CustomEditor(typeof(CryptoQuest.Character.Reaction))]
     public class ReactionSoEditor : Editor
     {
         [SerializeField] private VisualTreeAsset _visualTreeAsset;
@@ -19,7 +19,7 @@ namespace CryptoQuestEditor.Character.Reaction
             _visualTreeAsset.CloneTree(root);
 
             var previewImage = root.Q<Image>("preview-image");
-            previewImage.image = ((CryptoQuest.Character.Reaction.Reaction)target).ReactionIcon.texture;
+            previewImage.image = ((CryptoQuest.Character.Reaction)target).ReactionIcon.texture;
 
             return root;
         }
