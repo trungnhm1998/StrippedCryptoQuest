@@ -5,7 +5,7 @@ using UnityEngine.Localization;
 
 namespace CryptoQuest
 {
-    public enum ECharacterClasses
+    public enum ECharacterClass
     {
         MainCharacter = 0,
         Hero = 1,
@@ -16,7 +16,7 @@ namespace CryptoQuest
     [CreateAssetMenu(menuName = "Crypto Quest/Ability/Skill")]
     public class SkillSO : ScriptableObject
     {
-        public ECharacterClasses CharacterClass;
+        public ECharacterClass CharacterClass;
         public Sprite Icon;
         public LocalizedString Name;
         public LocalizedString Description;

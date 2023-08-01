@@ -35,6 +35,7 @@ RectTransform:
   - {fileID: 49143937058904316}
   - {fileID: 1070823420240903587}
   - {fileID: 268245164091703389}
+  - {fileID: 6953534667702213804}
   - {fileID: 5903795929718258449}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -135,6 +136,34 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3709182367213729318}
     m_Modifications:
+    - target: {fileID: 606546665574542925, guid: 681a7b2c80f95724ca9fdd6a80311b5b, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 606546665574542925, guid: 681a7b2c80f95724ca9fdd6a80311b5b, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 606546665574542925, guid: 681a7b2c80f95724ca9fdd6a80311b5b, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 2504724073586289387}
+    - target: {fileID: 606546665574542925, guid: 681a7b2c80f95724ca9fdd6a80311b5b, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 606546665574542925, guid: 681a7b2c80f95724ca9fdd6a80311b5b, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: OnPlaySFX
+      objectReference: {fileID: 0}
+    - target: {fileID: 606546665574542925, guid: 681a7b2c80f95724ca9fdd6a80311b5b, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: CryptoQuest.Audio.PlaySFX, indi-games.crypto-quest
+      objectReference: {fileID: 0}
+    - target: {fileID: 606546665574542925, guid: 681a7b2c80f95724ca9fdd6a80311b5b, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 674211124338240622, guid: 681a7b2c80f95724ca9fdd6a80311b5b, type: 3}
       propertyPath: m_Name
       value: NamingPanel
@@ -248,6 +277,87 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b97fb36c97748e49ce037863e093512, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1001 &1430510350680869943
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 3709182367213729318}
+    m_Modifications:
+    - target: {fileID: 3537754337707075292, guid: b981a075a91c9894fa19898c03fd7134, type: 3}
+      propertyPath: _sfxTrack
+      value: 
+      objectReference: {fileID: 11400000, guid: 520413ed8ce94444eaaff9f3ff2882ca, type: 2}
+    - target: {fileID: 5017259005298996286, guid: b981a075a91c9894fa19898c03fd7134, type: 3}
+      propertyPath: m_Name
+      value: PlaySFX
+      objectReference: {fileID: 0}
+    - target: {fileID: 8333307916284809371, guid: b981a075a91c9894fa19898c03fd7134, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8333307916284809371, guid: b981a075a91c9894fa19898c03fd7134, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8333307916284809371, guid: b981a075a91c9894fa19898c03fd7134, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8333307916284809371, guid: b981a075a91c9894fa19898c03fd7134, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8333307916284809371, guid: b981a075a91c9894fa19898c03fd7134, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8333307916284809371, guid: b981a075a91c9894fa19898c03fd7134, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8333307916284809371, guid: b981a075a91c9894fa19898c03fd7134, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8333307916284809371, guid: b981a075a91c9894fa19898c03fd7134, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8333307916284809371, guid: b981a075a91c9894fa19898c03fd7134, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8333307916284809371, guid: b981a075a91c9894fa19898c03fd7134, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8333307916284809371, guid: b981a075a91c9894fa19898c03fd7134, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b981a075a91c9894fa19898c03fd7134, type: 3}
+--- !u!114 &2504724073586289387 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3537754337707075292, guid: b981a075a91c9894fa19898c03fd7134, type: 3}
+  m_PrefabInstance: {fileID: 1430510350680869943}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ede966c60be49e08960e0b22f8d1a02, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &6953534667702213804 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8333307916284809371, guid: b981a075a91c9894fa19898c03fd7134, type: 3}
+  m_PrefabInstance: {fileID: 1430510350680869943}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1904584812081267365
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -340,6 +450,34 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2640007633060447992, guid: 2b53e6e36ad79e549b39657f762900b3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2640007633060447992, guid: 2b53e6e36ad79e549b39657f762900b3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2640007633060447992, guid: 2b53e6e36ad79e549b39657f762900b3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 2504724073586289387}
+    - target: {fileID: 2640007633060447992, guid: 2b53e6e36ad79e549b39657f762900b3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2640007633060447992, guid: 2b53e6e36ad79e549b39657f762900b3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: OnPlaySFX
+      objectReference: {fileID: 0}
+    - target: {fileID: 2640007633060447992, guid: 2b53e6e36ad79e549b39657f762900b3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: CryptoQuest.Audio.PlaySFX, indi-games.crypto-quest
+      objectReference: {fileID: 0}
+    - target: {fileID: 2640007633060447992, guid: 2b53e6e36ad79e549b39657f762900b3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 3229269088787168958, guid: 2b53e6e36ad79e549b39657f762900b3, type: 3}
       propertyPath: m_Name
       value: NameConfirmPopup
@@ -347,6 +485,34 @@ PrefabInstance:
     - target: {fileID: 3229269088787168958, guid: 2b53e6e36ad79e549b39657f762900b3, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5343061708297114979, guid: 2b53e6e36ad79e549b39657f762900b3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5343061708297114979, guid: 2b53e6e36ad79e549b39657f762900b3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5343061708297114979, guid: 2b53e6e36ad79e549b39657f762900b3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 2504724073586289387}
+    - target: {fileID: 5343061708297114979, guid: 2b53e6e36ad79e549b39657f762900b3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5343061708297114979, guid: 2b53e6e36ad79e549b39657f762900b3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: OnPlaySFX
+      objectReference: {fileID: 0}
+    - target: {fileID: 5343061708297114979, guid: 2b53e6e36ad79e549b39657f762900b3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: CryptoQuest.Audio.PlaySFX, indi-games.crypto-quest
+      objectReference: {fileID: 0}
+    - target: {fileID: 5343061708297114979, guid: 2b53e6e36ad79e549b39657f762900b3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 6357984586215935116, guid: 2b53e6e36ad79e549b39657f762900b3, type: 3}
       propertyPath: managedReferences[8364171947265229805]
@@ -480,6 +646,14 @@ PrefabInstance:
     - target: {fileID: 1999982070752934324, guid: 8ec89981a16f8d547ae15c0fc443aa53, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4287546627095012464, guid: 8ec89981a16f8d547ae15c0fc443aa53, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 2504724073586289387}
+    - target: {fileID: 4287546627095012464, guid: 8ec89981a16f8d547ae15c0fc443aa53, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: OnPlaySFX
       objectReference: {fileID: 0}
     - target: {fileID: 6907903845180517927, guid: 8ec89981a16f8d547ae15c0fc443aa53, type: 3}
       propertyPath: m_Name
