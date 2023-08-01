@@ -11,11 +11,9 @@ namespace CryptoQuest.UI.Skill
     public class UISkillManager : MonoBehaviour
     {
         [SerializeField] private MenuSelectionHandler _selectionHandler;
-        [SerializeField] private List<UISkillTabButton> _tabSkillButton;
         [SerializeField] private List<UISkillCharacterPanel> _listSkills;
         [SerializeField] private List<Image> _listHighlightBackground;
         private Dictionary<ECharacterClass, UISkillCharacterPanel> _cachedSkills = new();
-        private Dictionary<ECharacterClass, UISkillTabButton> _cachedTabButtons = new();
         private UISkillCharacterPanel _currentActivePanel;
         private bool _isSelectedMenu;
 
@@ -32,7 +30,6 @@ namespace CryptoQuest.UI.Skill
             {
                 var skill = _listSkills[i];
                 _cachedSkills.Add(skill.Character, skill);
-                _cachedTabButtons.Add(skill.Character, _tabSkillButton[i]);
             }
         }
         private int _currentSelectedTabIndex = 0;

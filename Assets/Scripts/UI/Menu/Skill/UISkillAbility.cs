@@ -11,10 +11,10 @@ namespace CryptoQuest.UI.Skill
 {
     public class UISkillAbility : MonoBehaviour, ICell
     {
-        public Image Icon;
-        public LocalizeStringEvent Name;
-        public Text ManaPoint;
-        public LocalizedString Description;
+        [SerializeField] private Image _iconImage;
+        [SerializeField] private LocalizeStringEvent _name;
+        [SerializeField] private Text _manaPointText;
+        [field: SerializeField] public LocalizedString Description { get; private set; }
         private SkillInformation _skillInfo;
 
         public event UnityAction<SkillSO> Clicked;
@@ -22,9 +22,9 @@ namespace CryptoQuest.UI.Skill
         public void Init(SkillInformation skillInfo)
         {
             _skillInfo = skillInfo;
-            Icon.sprite = skillInfo.SkillSO.Icon;
-            Name.StringReference = skillInfo.SkillSO.Name;
-            ManaPoint.text = skillInfo.SkillSO.Mana.ToString();
+            _iconImage.sprite = skillInfo.SkillSO.Icon;
+            _name.StringReference = skillInfo.SkillSO.Name;
+            _manaPointText.text = skillInfo.SkillSO.Mana.ToString();
             Description = skillInfo.SkillSO.Description;
         }
 
