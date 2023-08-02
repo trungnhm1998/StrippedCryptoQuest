@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using CryptoQuest.Audio.AudioData;
 using CryptoQuest.Audio.AudioEmitters;
 using CryptoQuest.Audio.Settings;
 using UnityEngine;
-using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace CryptoQuest.Audio
 {

@@ -1,7 +1,6 @@
 ﻿using CryptoQuest.Audio.AudioData;
 using IndiGames.Core.Events.ScriptableObjects;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace CryptoQuest.Audio
 {
