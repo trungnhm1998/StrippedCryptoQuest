@@ -1,15 +1,9 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using CryptoQuest.Gameplay.Battle;
 using CryptoQuest.Gameplay.Battle.Core.Components;
 using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects;
-using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data;
 using IndiGames.Core.SceneManagementSystem.Events.ScriptableObjects;
-using IndiGames.Core.SceneManagementSystem.ScriptableObjects;
 using UnityEngine;
 
-namespace CryptoQuest
+namespace CryptoQuest.Gameplay.Battle
 {
     public class BattleLoader : MonoBehaviour
     {
