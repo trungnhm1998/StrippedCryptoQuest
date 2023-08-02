@@ -6,6 +6,6 @@ namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects
     [CreateAssetMenu(menuName = "Crypto Quest/Inventory/Inventory")]
     public class InventorySO : ScriptableObject
     {
-        public List<ItemBase> Items;
+        public List<ExpendableItemInfo> Items;
     }
 }
