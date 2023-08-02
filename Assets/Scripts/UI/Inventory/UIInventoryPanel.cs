@@ -58,7 +58,7 @@ namespace CryptoQuest.UI.Inventory
                 var itemSO = item.ItemSO;
                 var type = itemSO.Type;
                 if (type != _type) continue;
-                _itemList.Add(new ExpendableItemBase(itemSO, item.Quantity));
+                _itemList.Add(new ExpendableItemInfo(itemSO, item.Quantity));
             }
         }
 

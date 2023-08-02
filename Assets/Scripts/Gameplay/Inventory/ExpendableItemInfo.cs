@@ -5,18 +5,17 @@ using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
 namespace CryptoQuest.Gameplay.Inventory
 {
     [Serializable]
-    public class ExpendableItemBase : ItemBase
+    public class ExpendableItemInfo : ItemBase
     {
         public new ExpendableItemSO ItemSO => (ExpendableItemSO)base.ItemSO;
         public AbilitySystemBehaviour Owner;
-        public ExpendableItemBase(ItemSO itemSO, int quantity = 0) : base(itemSO, quantity) { }
+        public ExpendableItemInfo(ItemSO itemSO, int quantity = 0) : base(itemSO, quantity) { }
 
-        public ExpendableItemBase(AbilitySystemBehaviour owner, ItemSO itemSO, int quantity = 0) : base(itemSO,
+        public ExpendableItemInfo(AbilitySystemBehaviour owner, ItemSO itemSO, int quantity = 0) : base(itemSO,
             quantity)
         {
             Owner = owner;
         }
-
 
         public override void Use()
         {

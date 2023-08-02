@@ -41,7 +41,7 @@ namespace CryptoQuest.Audio.AudioEmitters
         public void FadeMusicIn(AudioClip clip, AudioSettingSO audioSettings, float duration, float startTime = 0f)
         {
             PlayAudioClip(clip, audioSettings, true);
-            _audioSource.volume = 0f;
+            _audioSource.DOFade(0, .05f);
 
             if (startTime <= _audioSource.clip.length)
             {
