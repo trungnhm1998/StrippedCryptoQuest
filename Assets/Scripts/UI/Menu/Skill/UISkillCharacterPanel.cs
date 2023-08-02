@@ -15,6 +15,7 @@ namespace CryptoQuest.UI.Skill
 {
     public class UISkillCharacterPanel : MonoBehaviour, IRecyclableScrollRectDataSource
     {
+        [SerializeField] private InputMediatorSO _inputMediator;
         [SerializeField] private GameObject _content;
         [SerializeField] private SkillsMockupSO _listSkillMockup;
         [SerializeField] private RecyclableScrollRect _recyclableScrollRect;
@@ -26,7 +27,6 @@ namespace CryptoQuest.UI.Skill
         [SerializeField] private RectTransform _skillRectTransform;
         [SerializeField] private LocalizeStringEvent _localizeDescription;
         [SerializeField] private Image _tabImage;
-        [NonSerialized] public UISkillAbility CurrentSkillSelected;
         [field: SerializeField] public ECharacterClass Character { get; private set; }
         private List<MultiInputButton> _listSkillButton = new();
         private List<SkillInformation> _listSkills = new();
@@ -36,6 +36,16 @@ namespace CryptoQuest.UI.Skill
         {
             InitData();
             _recyclableScrollRect.DataSource = this;
+        }
+        private void OnEnable()
+        {
+            _inputMediator.EnableMenuInput();
+            _inputMediator.MenuNavigateEvent += SelectSkillHandle;
+        }
+
+        private void OnDisable()
+        {
+            _inputMediator.MenuNavigateEvent -= SelectSkillHandle;
         }
 
         private void InitData()
