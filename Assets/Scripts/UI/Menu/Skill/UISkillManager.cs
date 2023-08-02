@@ -67,7 +67,8 @@ namespace CryptoQuest.UI.Skill
             _isSelectedMenu = true;
 
         }
-        private readonly List<ECharacterClass> CYCLE_TYPES = new()
+
+        private readonly ECharacterClass[] CYCLE_TYPES = new ECharacterClass[]
         {
             ECharacterClass.MainCharacter,
             ECharacterClass.Archer,
