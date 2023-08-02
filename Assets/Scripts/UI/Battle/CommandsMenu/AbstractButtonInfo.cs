@@ -1,6 +1,10 @@
 ﻿using System;
+using CryptoQuest.Events.Gameplay;
 using CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit;
 using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data;
+using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Skills;
+using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
+using IndiGames.GameplayAbilitySystem.AbilitySystem.ScriptableObjects;
 
 namespace CryptoQuest.UI.Battle.CommandsMenu
 {
@@ -15,7 +19,7 @@ namespace CryptoQuest.UI.Battle.CommandsMenu
         {
             Name = name;
             Value = value;
-            IsInteractable = isInteractable; 
+            IsInteractable = isInteractable;
         }
 
         public abstract void HandleClick();
@@ -49,6 +53,47 @@ namespace CryptoQuest.UI.Battle.CommandsMenu
         public override void HandleClick()
         {
             _setTargetCallback.Invoke(_unit);
+        }
+    }
+
+    [Serializable]
+    public class AbilityAbstractButtonInfo : AbstractButtonInfo
+    {
+        private AbilitySO _ability;
+        private Action<AbilitySO> _setSkillCallback;
+
+        public AbilityAbstractButtonInfo(Action<AbilitySO> setSkillCallback,
+            AbilitySO ability)
+            : base(ability.SkillInfo.SkillName.GetLocalizedString())
+
+        {
+            _setSkillCallback = setSkillCallback;
+            _ability = ability;
+        }
+
+        public override void HandleClick()
+        {
+            _setSkillCallback.Invoke(_ability);
+        }
+    }
+
+    [Serializable]
+    public class ExpendableItemAbstractButtonInfo : AbstractButtonInfo
+    {
+        private ExpendableItemSO _item;
+        private Action<ExpendableItemSO> _setItemCallback;
+
+        public ExpendableItemAbstractButtonInfo(Action<ExpendableItemSO> setItemCallback,
+            ExpendableItemSO item)
+            : base(item.Name.GetLocalizedString())
+        {
+            _setItemCallback = setItemCallback;
+            _item = item;
+        }
+
+        public override void HandleClick()
+        {
+            _setItemCallback.Invoke(_item);
         }
     }
 }

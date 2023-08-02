@@ -12,6 +12,7 @@ using IndiGames.Core.Events.ScriptableObjects;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.ScriptableObjects;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Serialization;
 
 namespace CryptoQuest.UI.Battle
 {
@@ -27,7 +28,7 @@ namespace CryptoQuest.UI.Battle
         [SerializeField] private BattleActionHandler.BattleActionHandler[] _normalAttackChain;
         [SerializeField] private BattleActionHandler.BattleActionHandler _retreatHandler;
         [SerializeField] private BattleActionHandler.BattleActionHandler[] _skillAttackChain;
-
+        [SerializeField] private BattleActionHandler.BattleActionHandler[] _itemChain;
         [Header("Events")] [SerializeField] private InputMediatorSO _inputMediator;
 
         [SerializeField] private BattleBus _battleBus;
@@ -56,6 +57,7 @@ namespace CryptoQuest.UI.Battle
         {
             SetupChain(_normalAttackChain);
             SetupChain(_skillAttackChain);
+            SetupChain(_itemChain);
         }
 
         private void OnEnable()
@@ -95,7 +97,7 @@ namespace CryptoQuest.UI.Battle
             _commandPanel.Clear();
             _infos.Clear();
             var opponentTeam = _battleManager.BattleTeam2;
-            
+
             foreach (var group in opponentTeam.TeamGroups.GroupsDict)
             {
                 _infos.Add(new EnemyGroupButtonInfo(group.Key, group.Value));
@@ -127,7 +129,11 @@ namespace CryptoQuest.UI.Battle
             _commandPanel.Clear();
         }
 
-        private void OnButtonItemClickedHandler(IBattleUnit currentUnit) { }
+        private void OnButtonItemClickedHandler(IBattleUnit currentUnit)
+        {
+            _commandPanel.Clear();
+            _itemChain[0].Handle(currentUnit);
+        }
 
         private void OnButtonSkillClickedHandler(IBattleUnit currentUnit)
         {
