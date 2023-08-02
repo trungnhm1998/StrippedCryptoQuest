@@ -1,5 +1,6 @@
 ﻿using CryptoQuest.Audio.AudioData;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace CryptoQuest.Audio
 {
@@ -7,7 +8,7 @@ namespace CryptoQuest.Audio
     {
         [Header("Raise on")] [SerializeField] private AudioCueEventChannelSO _sfxEventChannel;
 
-        [Header("Configs")] [SerializeField] private SFXCueSO _sfxTrack;
+        [FormerlySerializedAs("_sfxTrack")] [Header("Configs")] public SFXCueSO SfxTrack;
         [SerializeField] private bool _playOnStart = default;
 
         private void OnEnable()
@@ -24,12 +25,12 @@ namespace CryptoQuest.Audio
 
         public void OnPlaySFX()
         {
-            _sfxEventChannel.PlayAudio(_sfxTrack);
+            _sfxEventChannel.PlayAudio(SfxTrack);
         }
 
         public void OnStopAudio()
         {
-            _sfxEventChannel.StopAudio(_sfxTrack);
+            _sfxEventChannel.StopAudio(SfxTrack);
         }
     }
 }
