@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using CryptoQuest.Events.Gameplay;
+using CryptoQuest.Gameplay.Inventory;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
 using CryptoQuest.Input;
 using CryptoQuest.Menu;
@@ -13,10 +15,11 @@ namespace CryptoQuest.UI.Inventory
         [SerializeField] private MenuSelectionHandler _selectionHandler;
         [SerializeField] private List<UIInventoryTabButton> _tabInventoryButton;
         [SerializeField] private List<UIInventoryPanel> _inventories;
+        [SerializeField] private ItemEventChannelSO _OnEquipItemEvent;
         private Dictionary<EItemType, UIInventoryPanel> _cachedInventories;
         private Dictionary<EItemType, UIInventoryTabButton> _cachedTabButtons;
         private UIInventoryPanel _currentActivePanel;
-        
+
         private void Awake()
         {
             InitInventories();
@@ -69,25 +72,32 @@ namespace CryptoQuest.UI.Inventory
             EItemType.Valuables,
             EItemType.NFT
         };
+
         private int _currentSelectedTabIndex = 0;
 
         private void SelectNextMenu()
         {
             _currentSelectedTabIndex++;
-            _currentSelectedTabIndex = _currentSelectedTabIndex >= _tabInventoryButton.Count ? 0 : _currentSelectedTabIndex;
+            _currentSelectedTabIndex =
+                _currentSelectedTabIndex >= _tabInventoryButton.Count ? 0 : _currentSelectedTabIndex;
             SelectTab(_cycleType[_currentSelectedTabIndex]);
         }
 
         private void SelectPreviousMenu()
         {
             _currentSelectedTabIndex--;
-            _currentSelectedTabIndex = _currentSelectedTabIndex < 0 ? _tabInventoryButton.Count - 1 : _currentSelectedTabIndex;
+            _currentSelectedTabIndex =
+                _currentSelectedTabIndex < 0 ? _tabInventoryButton.Count - 1 : _currentSelectedTabIndex;
             SelectTab(_cycleType[_currentSelectedTabIndex]);
         }
 
         private void HandleItemPressed()
         {
-            Debug.Log($"{EventSystem.current.currentSelectedGameObject} Pressed!");
+            Debug.Log(
+                $"{EventSystem.current.currentSelectedGameObject.GetComponent<UIItemInventory>().ItemBase.ItemSO} Pressed!");
+            ItemBase selectedItemBaseItem =
+                EventSystem.current.currentSelectedGameObject.GetComponent<UIItemInventory>().ItemBase;
+            _OnEquipItemEvent.RaiseEvent(selectedItemBaseItem);
         }
 
         private void SelectTab(EItemType type)
