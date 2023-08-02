@@ -41,7 +41,6 @@ namespace CryptoQuest.Gameplay.Battle
             if ((Vector2)other.transform.position == _playerPosition) return;
 
             _playerPosition = other.transform.position;
-
             _countdown -= Time.deltaTime / _customRatio;
             if (_countdown < 0f)
             {
@@ -53,13 +52,13 @@ namespace CryptoQuest.Gameplay.Battle
         private void OnCountdownEnd()
         {
             _inputMediatorSO.EnableMenuInput();
-            SetUpBattletToInit();
+            SetUpBattleToInit();
             BattleInfo currentBattleInfo =
                 new(_battleSceneSO, _currentBattleSetup.BattleData, _isBattleEscapable);
             OnTriggerBattleEncounter(currentBattleInfo);
         }
 
-        private void SetUpBattletToInit()
+        private void SetUpBattleToInit()
         {
             float randomValue = Random.value;
             for (int i = 0; i < _battleEncounterSetups.Count; i++)
