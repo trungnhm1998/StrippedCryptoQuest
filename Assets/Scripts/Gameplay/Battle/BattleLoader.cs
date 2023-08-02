@@ -1,6 +1,7 @@
 using CryptoQuest.Gameplay.Battle.Core.Components;
 using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects;
 using IndiGames.Core.SceneManagementSystem.Events.ScriptableObjects;
+using IndiGames.Core.SceneManagementSystem.ScriptableObjects;
 using UnityEngine;
 
 namespace CryptoQuest.Gameplay.Battle
@@ -10,6 +11,7 @@ namespace CryptoQuest.Gameplay.Battle
         [SerializeField] private TriggerBattleEncounterEventSO _triggerBattleEncounterEventSo;
         [SerializeField] private LoadSceneEventChannelSO _loadSceneEventChannelSo;
         [SerializeField] private BattleBus _battleBus;
+        [SerializeField] private SceneScriptableObject _battleSceneSO;
 
         private void OnEnable()
         {
@@ -24,7 +26,7 @@ namespace CryptoQuest.Gameplay.Battle
         private void OnEncounterBattle(BattleInfo battleInfo)
         {
             _battleBus.CurrentBattleInfo = battleInfo;
-            _loadSceneEventChannelSo.RequestLoad(battleInfo.BattleSceneSO);
+            _loadSceneEventChannelSo.RequestLoad(_battleSceneSO);
         }
     }
 }

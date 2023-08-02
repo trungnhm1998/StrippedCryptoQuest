@@ -64,10 +64,5 @@ namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data
         }
     }
 
-    [Serializable]
-    public class BattleEncounterSetup
-    {
-        public float Probability;
-        public BattleDataSO BattleData;
-    }
+  
 }

@@ -157,13 +157,11 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components
 
     public struct BattleInfo
     {
-        public SceneScriptableObject BattleSceneSO;
         public BattleDataSO BattleDataSO;
         public bool IsBattleEscapable;
 
-        public BattleInfo(SceneScriptableObject battleSceneSo, BattleDataSO battleDataSo, bool isBattleEscapable)
+        public BattleInfo(BattleDataSO battleDataSo, bool isBattleEscapable)
         {
-            BattleSceneSO = battleSceneSo;
             BattleDataSO = battleDataSo;
             IsBattleEscapable = isBattleEscapable;
         }
