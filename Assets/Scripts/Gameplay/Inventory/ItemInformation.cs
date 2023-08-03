@@ -6,10 +6,8 @@ namespace CryptoQuest.Gameplay.Inventory
     [Serializable]
     public class ItemInformation
     {
-        public ItemGeneric Data;
-
-        protected Data.Item.Item _item;
-        public Data.Item.Item Item => _item;
+        protected ItemGenericSO _item;
+        public ItemGenericSO Item => _item;
 
         protected string _id;
 
@@ -19,7 +17,7 @@ namespace CryptoQuest.Gameplay.Inventory
             set => _id = value;
         }
 
-        public ItemInformation(Data.Item.Item item, int quantity)
+        public ItemInformation(ItemGenericSO item)
         {
             _item = item;
             _id = Guid.NewGuid().ToString();

@@ -3,7 +3,7 @@ using UnityEngine.Localization;
 
 namespace CryptoQuest.Data
 {
-    public class ItemGeneric : ScriptableObject
+    public class ItemGenericSO : ScriptableObject
     {
         public int ID;
 
