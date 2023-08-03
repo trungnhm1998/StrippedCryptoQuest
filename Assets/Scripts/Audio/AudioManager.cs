@@ -7,7 +7,7 @@ using UnityEngine;
 namespace CryptoQuest.Audio
 {
     [RequireComponent((typeof(AudioEmitterPool)))]
-    public class udioManager : MonoBehaviour
+    public class AudioManager : MonoBehaviour
     {
         [Header("AudioEmitters Pool")] [SerializeField]
         private AudioEmitterPool _pool = default;
