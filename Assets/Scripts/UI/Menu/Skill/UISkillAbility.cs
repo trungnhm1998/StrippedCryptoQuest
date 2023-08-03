@@ -15,6 +15,7 @@ namespace CryptoQuest.UI.Skill
         [SerializeField] private LocalizeStringEvent _name;
         [SerializeField] private Text _manaPointText;
         [field: SerializeField] public LocalizedString Description { get; private set; }
+        [field: SerializeField] public ECharacterSkill TypeOfSkill { get; private set; }
         private SkillInformation _skillInfo;
 
         public event UnityAction<SkillSO> Clicked;
@@ -26,6 +27,7 @@ namespace CryptoQuest.UI.Skill
             _name.StringReference = skillInfo.SkillSO.Name;
             _manaPointText.text = skillInfo.SkillSO.Mana.ToString();
             Description = skillInfo.SkillSO.Description;
+            TypeOfSkill = skillInfo.SkillSO.TypeOfSkill;
         }
 
         public void OnClicked()
