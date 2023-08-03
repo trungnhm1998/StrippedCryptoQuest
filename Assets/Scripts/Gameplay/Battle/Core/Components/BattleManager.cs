@@ -19,7 +19,6 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components
 {
     public class BattleManager : MonoBehaviour
     {
-        [SerializeField] private SceneScriptableObject _battleSceneSO;
         [SerializeField] private BaseStateMachine _stateMachine;
         [SerializeField] private StateSO _battleStartState;
         [SerializeField] private StateSO _battleEndState;
@@ -34,13 +33,12 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components
         [Header("Raise Events")] [SerializeField]
         private VoidEventChannelSO _newTurnEventChannel;
 
-        [SerializeField] private UnloadSceneEventChannelSO _unloadSceneEvent;
-
         [Header("Listen Events")] [SerializeField]
         private VoidEventChannelSO _sceneLoadedEventChannel;
 
         [SerializeField] private VoidEventChannelSO _endActionPhaseEventChannel;
         [SerializeField] private SpecialAbilitySO _retreatAbility;
+        [SerializeField] private VoidEventChannelSO _onBattleEndEventChannel;
         public IBattleUnit CurrentUnit { get; set; } = NullBattleUnit.Instance;
         public int Turn { get; private set; }
         public BaseBattleSpawner BattleSpawner { get; private set; }
@@ -156,7 +154,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components
 
         public void OnBattleEnd()
         {
-            _unloadSceneEvent.UnloadRequested(_battleSceneSO);
+            _onBattleEndEventChannel.RaiseEvent();
         }
 
         public List<IBattleUnit> GetActionOrderList()
