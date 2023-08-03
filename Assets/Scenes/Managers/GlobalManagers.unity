@@ -631,6 +631,12 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 8932584803192340463, guid: fe35e9aba49be5f4083a50f893bd0120, type: 3}
       insertIndex: -1
       addedObject: {fileID: 521251920779182563}
+    - targetCorrespondingSourceObject: {fileID: 8932584803192340463, guid: fe35e9aba49be5f4083a50f893bd0120, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 521251920779182566}
+    - targetCorrespondingSourceObject: {fileID: 8932584803192340463, guid: fe35e9aba49be5f4083a50f893bd0120, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 521251920779182565}
   m_SourcePrefab: {fileID: 100100000, guid: fe35e9aba49be5f4083a50f893bd0120, type: 3}
 --- !u!1 &521251920779182562 stripped
 GameObject:
@@ -676,10 +682,36 @@ MonoBehaviour:
   _sceneLoaded: {fileID: 11400000, guid: b8b96e43d21a7bf4c96df4cb83c2b764, type: 2}
   _sceneUnloading: {fileID: 11400000, guid: ccb2cdde6c846e64d9e87d1806ec5056, type: 2}
   _sceneLoadBus: {fileID: 11400000, guid: 8a84cff925b530f41b4c946ad8c7cf70, type: 2}
-  _loadMapWithSpiralEventChannel: {fileID: 11400000, guid: 79a5144f83f6c524c93041227015e7d7, type: 2}
-  _loadAdditiveWithSpiralEventChannel: {fileID: 11400000, guid: cec35b2d410029c468eda1dc8b2139db, type: 2}
   _AdditiveSceneLoadedWithSpiralFX: {fileID: 11400000, guid: 42b7d0ba3be2b9843a5bb3af7993358a, type: 2}
   _spiralConfigSO: {fileID: 11400000, guid: 2708a2e85420add4493974ea482cd235, type: 2}
+--- !u!114 &521251920779182565
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 521251920779182562}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1aabccebf077ca649b450e113d34b9b1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _sceneLoaderHandler: {fileID: 521251920779182564}
+  _loadAdditiveWithSpiralEventChannel: {fileID: 11400000, guid: 79a5144f83f6c524c93041227015e7d7, type: 2}
+--- !u!114 &521251920779182566
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 521251920779182562}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1aabccebf077ca649b450e113d34b9b1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _sceneLoaderHandler: {fileID: 521251920779182564}
+  _loadAdditiveWithSpiralEventChannel: {fileID: 11400000, guid: cec35b2d410029c468eda1dc8b2139db, type: 2}
 --- !u!1001 &6794949523962522864
 PrefabInstance:
   m_ObjectHideFlags: 0

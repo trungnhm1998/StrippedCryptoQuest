@@ -15,8 +15,6 @@ namespace CryptoQuest.System.SceneManagement
     public class SceneLoaderHandler : LinearGameSceneLoader
     {
         [SerializeField] private SceneLoaderBus _sceneLoadBus;
-        [SerializeField] private LoadSceneEventChannelSO _loadMapWithSpiralEventChannel;
-        [SerializeField] private LoadSceneEventChannelSO _loadAdditiveWithSpiralEventChannel;
         [SerializeField] private VoidEventChannelSO _AdditiveSceneLoadedWithSpiralFX;
         [SerializeField] private SpiralConfigSO _spiralConfigSO;
         public SceneScriptableObject CurrentLoadedScene => _currentLoadedScene;
@@ -29,18 +27,14 @@ namespace CryptoQuest.System.SceneManagement
         protected override void OnEnable()
         {
             base.OnEnable();
-            _loadMapWithSpiralEventChannel.LoadingRequested += MapLoadingRequestedWithSpiralFX;
-            _loadAdditiveWithSpiralEventChannel.LoadingRequested += AdditiveSceneLoadingWithSpiralRequested;
         }
 
         protected override void OnDisable()
         {
             base.OnDisable();
-            _loadMapWithSpiralEventChannel.LoadingRequested -= MapLoadingRequestedWithSpiralFX;
-            _loadAdditiveWithSpiralEventChannel.LoadingRequested -= AdditiveSceneLoadingWithSpiralRequested;
         }
 
-        private void MapLoadingRequestedWithSpiralFX(SceneScriptableObject locationToLoad)
+        public void MapLoadingRequestedWithSpiralFX(SceneScriptableObject locationToLoad)
         {
             if (_isLoading) return;
 
@@ -59,7 +53,7 @@ namespace CryptoQuest.System.SceneManagement
             }
         }
 
-        private void AdditiveSceneLoadingWithSpiralRequested(SceneScriptableObject sceneToLoad)
+        public void AdditiveSceneLoadingWithSpiralRequested(SceneScriptableObject sceneToLoad)
         {
             if (_isLoading) return;
 
