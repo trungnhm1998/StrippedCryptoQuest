@@ -49,7 +49,8 @@ namespace CryptoQuest.Gameplay.Battle
         {
             _inputMediatorSO.EnableMenuInput();
             BattleDataSO currentBattData = _battleField.GetBattleToInit();
-            BattleInfo currentBattleInfo = new(currentBattData, _battleField.IsBattleEscapable);
+            BattleInfo currentBattleInfo =
+                new(currentBattData, _battleField.IsBattleEscapable, _battleField.BattleBackground);
             OnTriggerBattleEncounter(currentBattleInfo);
         }
 

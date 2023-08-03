@@ -13,15 +13,17 @@ namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.BattleFSM.States
         [SerializeField] private GameStateSO _gameState;
         [SerializeField] private float _waitShowTime = 3f;
         [SerializeField] private LocalizedString _monsterAppear;
+
         [Header("Raise Events")]
         [SerializeField] private VoidEventChannelSO _showNextMarkEventChannel;
+
         [SerializeField] private LocalizedStringEventChannelSO _showBattleDialogEventChannel;
         [SerializeField] private VoidEventChannelSO _closeBattleDialogEventChannel;
 
         [Header("Listen Events")]
         [SerializeField] private VoidEventChannelSO _doneShowDialogEventChannel;
 
-        private Coroutine _unitPrepareCoroutine; 
+        private Coroutine _unitPrepareCoroutine;
         private BaseStateMachine _stateMachine;
 
         public override void OnEnterState(BaseStateMachine stateMachine)
@@ -36,8 +38,9 @@ namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.BattleFSM.States
         {
             if (BattleManager.BattleSpawner)
             {
-                BattleManager.BattleSpawner.SpawnBattle();
+                BattleManager.InitBattle();
             }
+
             BattleManager.InitBattleTeams();
             _gameState.UpdateGameState(EGameState.Battle);
 
