@@ -10,6 +10,7 @@ namespace CryptoQuest.UI.Skill
 {
     public class UISkillManager : MonoBehaviour
     {
+        [SerializeField] private InputMediatorSO _inputMediator;
         [SerializeField] private MenuSelectionHandler _selectionHandler;
         [SerializeField] private List<UISkillTabButton> _tabSkillButton;
         [SerializeField] private List<UISkillCharacterPanel> _listSkills;
@@ -28,7 +29,6 @@ namespace CryptoQuest.UI.Skill
         private void InitListSkills()
         {
             _currentActivePanel = _listSkills[0];
-
             for (var i = 0; i < _listSkills.Count; i++)
             {
                 var skill = _listSkills[i];
@@ -36,10 +36,14 @@ namespace CryptoQuest.UI.Skill
                 _cachedTabButtons.Add(skill.Character, _tabSkillButton[i]);
             }
         }
-
-
         private void OnEnable()
         {
+            _inputMediator.EnableMenuInput();
+            _inputMediator.MenuNavigateEvent += SelectCharacterMenu;
+            _inputMediator.MenuSubmitEvent += ShowCharacterSkills;
+            _inputMediator.NextSelectionMenu += SelectNextMenu;
+            _inputMediator.PreviousSelectionMenu += SelectPreviousMenu;
+            _inputMediator.CancelEvent += BackToSelectCharacterCard;
             for (int i = 0; i < _tabSkillButton.Count; i++)
             {
                 _tabSkillButton[i].Clicked += SelectTab;
@@ -51,11 +55,30 @@ namespace CryptoQuest.UI.Skill
 
         private void OnDisable()
         {
+            _inputMediator.MenuSubmitEvent -= ShowCharacterSkills;
+            _inputMediator.MenuNavigateEvent -= SelectCharacterMenu;
+            _inputMediator.NextSelectionMenu -= SelectNextMenu;
+            _inputMediator.PreviousSelectionMenu -= SelectPreviousMenu;
+            _inputMediator.CancelEvent -= BackToSelectCharacterCard;
             for (int i = 0; i < _tabSkillButton.Count; i++)
             {
                 _tabSkillButton[i].Clicked -= SelectTab;
             }
         }
+        private void SelectNextMenu()
+        {
+            _listHighlightBackground[_currentSelectedTabIndex].enabled = false;
+            _currentSelectedTabIndex = (_currentSelectedTabIndex + 1) % _tabSkillButton.Count;
+            SelectTab(CYCLE_TYPES[_currentSelectedTabIndex]);
+        }
+
+        private void SelectPreviousMenu()
+        {
+            _listHighlightBackground[_currentSelectedTabIndex].enabled = false;
+            _currentSelectedTabIndex = (_currentSelectedTabIndex - 1 + _tabSkillButton.Count) % _tabSkillButton.Count;
+            SelectTab(CYCLE_TYPES[_currentSelectedTabIndex]);
+        }
+
 
         private void ShowCharacterSkills()
         {
@@ -65,7 +88,6 @@ namespace CryptoQuest.UI.Skill
             }
             SelectTab(CYCLE_TYPES[_currentSelectedTabIndex]);
             _isSelectedMenu = true;
-
         }
 
         private readonly ECharacterClass[] CYCLE_TYPES = new ECharacterClass[]
@@ -94,7 +116,6 @@ namespace CryptoQuest.UI.Skill
                     break;
                 }
             }
-
         }
 
         public void OnClickCharacterCard()
