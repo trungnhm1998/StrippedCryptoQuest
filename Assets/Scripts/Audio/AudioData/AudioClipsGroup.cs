@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 
 namespace CryptoQuest.Audio.AudioData
 {
@@ -7,7 +8,7 @@ namespace CryptoQuest.Audio.AudioData
     public class AudioClipsGroup
     {
         [SerializeField] private ESequenceMode _mode = ESequenceMode.Sequential;
-        [SerializeField] private AudioClip[] _audioClips;
+        [SerializeField] private AssetReferenceT<AudioClip>[] _audioClips;
         private IListIndex _clipIndex;
 
         private IListIndex ClipIndex
@@ -21,15 +22,15 @@ namespace CryptoQuest.Audio.AudioData
 
         public AudioClipsGroup() { }
 
-        public AudioClipsGroup(AudioClip[] audioClips, ESequenceMode mode)
+        public AudioClipsGroup(AssetReferenceT<AudioClip>[] audioClips, ESequenceMode mode)
         {
             _audioClips = audioClips;
             _mode = mode;
         }
 
-        public AudioClip CurrentClip => _audioClips[ClipIndex.Value];
+        public AssetReferenceT<AudioClip> CurrentClip => _audioClips[ClipIndex.Value];
 
-        public AudioClip SwitchToNextClip()
+        public  AssetReferenceT<AudioClip> SwitchToNextClip()
         {
             ClipIndex.GoForward(_audioClips.Length);
             return _audioClips[ClipIndex.Value];

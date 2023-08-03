@@ -1,4 +1,5 @@
-﻿using CryptoQuest.Audio.AudioData;
+﻿using System;
+using CryptoQuest.Audio.AudioData;
 using CryptoQuest.Audio.AudioEmitters;
 using CryptoQuest.Audio.Settings;
 using UnityEngine;
@@ -22,6 +23,8 @@ namespace CryptoQuest.Audio
         private AudioSettingSO audioSettings;
 
         private AudioEmitter _playingMusicAudioEmitter;
+        private AudioCueSO _currentSfxCue;
+        private AudioCueSO _currentBgmCue;
 
         private void Awake()
         {
@@ -31,8 +34,8 @@ namespace CryptoQuest.Audio
 
         private void OnEnable()
         {
-            _sfxEventChannel.AudioPlayRequested += PlaySFX;
-            _sfxEventChannel.AudioStopRequested += StopSFX;
+            _sfxEventChannel.AudioPlayRequested += PlaySfx;
+            _sfxEventChannel.AudioStopRequested += StopSfx;
 
             _backgroundMusicEventChannel.AudioPlayRequested += PlayBackgroundMusic;
             _backgroundMusicEventChannel.AudioStopRequested += StopBackgroundMusic;
@@ -42,8 +45,8 @@ namespace CryptoQuest.Audio
 
         private void OnDisable()
         {
-            _sfxEventChannel.AudioPlayRequested -= PlaySFX;
-            _sfxEventChannel.AudioStopRequested -= StopSFX;
+            _sfxEventChannel.AudioPlayRequested -= PlaySfx;
+            _sfxEventChannel.AudioStopRequested -= StopSfx;
 
             _backgroundMusicEventChannel.AudioPlayRequested -= PlayBackgroundMusic;
             _backgroundMusicEventChannel.AudioStopRequested -= StopBackgroundMusic;
@@ -51,26 +54,31 @@ namespace CryptoQuest.Audio
             audioSettings.VolumeChanged -= ChangeMasterVolume;
         }
 
-        private void PlaySFX(AudioCueSO audioCue)
+        public void PlaySfx(AudioCueSO audioCue)
         {
-            AudioClip[] currentClips = audioCue.GetClips();
+            AudioClip currentClip = null;
 
-            var numberOfClips = currentClips.Length;
-            for (int i = 0; i < numberOfClips; i++)
+            TryToLoadData(audioCue, (audioClip) =>
             {
+                currentClip = audioClip;
+
                 var audioEmitter = _pool.Request();
                 if (audioEmitter == null)
                 {
                     Debug.LogWarning(
-                        $"Cannot play audio cue [{audioCue}] with clip [{currentClips[i].name}] " +
+                        $"Cannot play audio cue [{audioCue}] " +
                         $"- no sound emitters available");
-                    continue;
+                    return;
                 }
 
-                audioEmitter.PlayAudioClip(currentClips[i], audioSettings, audioCue.Looping);
+                audioEmitter.PlayAudioClip(currentClip, audioSettings, audioCue.Looping);
                 if (!audioCue.Looping) audioEmitter.AudioFinishedPlaying += AudioFinishedPlaying;
-            }
+
+                _currentSfxCue = audioCue;
+                Debug.Log($"[AudioManager::PlaySFX] Playing SFX: {audioCue.name}");
+            });
         }
+
 
         /// <summary>
         /// All SFX are one shot, so we can release the emitter back to the pool
@@ -78,26 +86,61 @@ namespace CryptoQuest.Audio
         /// ┐(´～｀)┌
         /// </summary>
         /// <param name="key"></param>
-        private void StopSFX(AudioCueSO key) { }
+        private void StopSfx(AudioCueSO key) { }
 
-        private void PlayBackgroundMusic(AudioCueSO audioCue)
+        public void PlayBackgroundMusic(AudioCueSO audioCue)
         {
-            float fadeDuration = 2f;
+            AudioClip currentClip = null;
+
             float startTime = 0f;
 
-            if (IsAudioPlaying())
+            if (_currentBgmCue != null)
             {
-                AudioClip musicToPlay = audioCue.GetClips()[0];
-                if (_playingMusicAudioEmitter.GetClip() == musicToPlay) return;
-                startTime = _playingMusicAudioEmitter.FadeMusicOut(fadeDuration);
+                _currentBgmCue.GetPlayableAsset().ReleaseAsset();
             }
 
-            if (_playingMusicAudioEmitter == null)
-                _playingMusicAudioEmitter = _pool.Request();
-            _playingMusicAudioEmitter.FadeMusicIn(audioCue.GetClips()[0], audioSettings, fadeDuration, startTime);
+            TryToLoadData(audioCue, (audioClip) =>
+            {
+                currentClip = audioClip;
 
-            Debug.Log($"[AudioManager] Playing background music [{audioCue.name}]");
+                if (IsAudioPlaying())
+                {
+                    AudioClip musicToPlay = currentClip;
+                    if (_playingMusicAudioEmitter.GetClip() == musicToPlay) return;
+                    startTime = _playingMusicAudioEmitter.FadeMusicOut();
+                }
+
+                if (_playingMusicAudioEmitter == null)
+                    _playingMusicAudioEmitter = _pool.Request();
+                _playingMusicAudioEmitter.FadeMusicIn(currentClip, audioSettings, startTime);
+
+                _currentBgmCue = audioCue;
+
+                Debug.Log($"[AudioManager::PlayBackgroundMusic] Playing background music: {audioCue.name}");
+            });
         }
+
+        private void TryToLoadData(AudioCueSO audioCue, Action<AudioClip> callback)
+        {
+            var currentCue = audioCue.GetPlayableAsset();
+
+
+            if (currentCue.IsValid())
+            {
+                if (currentCue.Asset != null)
+                {
+                    callback?.Invoke((AudioClip)currentCue.Asset);
+                    return;
+                }
+                else
+                {
+                    currentCue.ReleaseAsset();
+                }
+            }
+
+            currentCue.LoadAssetAsync().Completed += handle => { callback?.Invoke(handle.Result); };
+        }
+
 
         private void StopBackgroundMusic(AudioCueSO arg0)
         {
@@ -122,6 +165,11 @@ namespace CryptoQuest.Audio
             audioEmitterValue.UnregisterEvent(AudioFinishedPlaying);
             audioEmitterValue.Stop();
             audioEmitterValue.ReleaseToPool();
+
+            if (_currentSfxCue != null)
+            {
+                _currentSfxCue.GetPlayableAsset().ReleaseAsset();
+            }
         }
 
         private bool IsAudioPlaying() => _playingMusicAudioEmitter != null && _playingMusicAudioEmitter.IsPlaying();
