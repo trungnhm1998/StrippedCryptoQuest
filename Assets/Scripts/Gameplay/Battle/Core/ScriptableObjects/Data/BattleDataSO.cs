@@ -2,26 +2,26 @@ using UnityEngine;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using IndiGames.Core.SceneManagementSystem.ScriptableObjects;
 
 namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data
 {
     [CreateAssetMenu(menuName = "Gameplay/Battle/Battle Data")]
     public class BattleDataSO : ScriptableObject
     {
-        public bool IsEscapable; 
-
         [field: SerializeField]
-        public CharacterGroup[] EnemyGroups { get; private set;}
+        public CharacterGroup[] EnemyGroups { get; private set; }
 
         [NonSerialized]
         private List<CharacterDataSO> _allEnemies = new();
-        public List<CharacterDataSO> Enemies 
-        { 
-            get 
+
+        public List<CharacterDataSO> Enemies
+        {
+            get
             {
                 InitAllEnemies();
                 return _allEnemies;
-            } 
+            }
         }
 
         private void InitAllEnemies()
@@ -48,7 +48,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data
     public class CharacterGroup
     {
         [field: SerializeField]
-        public CharacterDataSO[] Characters { get; private set;}
+        public CharacterDataSO[] Characters { get; private set; }
 
         public void ValidateSameCharacterInGroup()
         {
@@ -59,8 +59,10 @@ namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data
             {
                 var chara = Characters[i];
                 if (chara == firstValidChara) continue;
-                Characters[i] = firstValidChara; 
+                Characters[i] = firstValidChara;
             }
         }
-    }    
+    }
+
+  
 }

@@ -56,12 +56,8 @@ namespace CryptoQuest.Audio
 
         public void PlaySfx(AudioCueSO audioCue)
         {
-            AudioClip currentClip = null;
-
-            TryToLoadData(audioCue, (audioClip) =>
+            TryToLoadData(audioCue, currentClip =>
             {
-                currentClip = audioClip;
-
                 var audioEmitter = _pool.Request();
                 if (audioEmitter == null)
                 {
@@ -90,8 +86,6 @@ namespace CryptoQuest.Audio
 
         public void PlayBackgroundMusic(AudioCueSO audioCue)
         {
-            AudioClip currentClip = null;
-
             float startTime = 0f;
 
             if (_currentBgmCue != null)
@@ -99,10 +93,8 @@ namespace CryptoQuest.Audio
                 _currentBgmCue.GetPlayableAsset().ReleaseAsset();
             }
 
-            TryToLoadData(audioCue, (audioClip) =>
+            TryToLoadData(audioCue, currentClip =>
             {
-                currentClip = audioClip;
-
                 if (IsAudioPlaying())
                 {
                     AudioClip musicToPlay = currentClip;
@@ -124,7 +116,6 @@ namespace CryptoQuest.Audio
         {
             var currentCue = audioCue.GetPlayableAsset();
 
-
             if (currentCue.IsValid())
             {
                 if (currentCue.Asset != null)
@@ -132,10 +123,8 @@ namespace CryptoQuest.Audio
                     callback?.Invoke((AudioClip)currentCue.Asset);
                     return;
                 }
-                else
-                {
-                    currentCue.ReleaseAsset();
-                }
+
+                currentCue.ReleaseAsset();
             }
 
             currentCue.LoadAssetAsync().Completed += handle => { callback?.Invoke(handle.Result); };
