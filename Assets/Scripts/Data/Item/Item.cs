@@ -2,7 +2,7 @@
 
 namespace CryptoQuest.Data.Item
 {
-    public class ItemData : ItemGenericData
+    public class Item : ItemGeneric
     {
         public Sprite PreviewSprite;
 
@@ -10,14 +10,5 @@ namespace CryptoQuest.Data.Item
         public ItemTypeSO ItemTypeSo => _itemTypeSo;
 
         public virtual void Activate() { }
-
-#if UNITY_EDITOR
-
-        public void SetItemTypeSO(ItemTypeSO itemTypeSO)
-        {
-            this._itemTypeSo = itemTypeSO;
-        }
-
-#endif
     }
 }

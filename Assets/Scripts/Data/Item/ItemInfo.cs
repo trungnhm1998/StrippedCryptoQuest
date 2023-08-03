@@ -5,8 +5,8 @@ namespace CryptoQuest.Data.Item
     [Serializable]
     public class ItemInfo
     {
-        protected ItemData _item;
-        public ItemData Item => _item;
+        protected Item _item;
+        public Item Item => _item;
 
         protected string _id;
 
@@ -18,7 +18,7 @@ namespace CryptoQuest.Data.Item
 
         public int Quantity = 0;
 
-        public ItemInfo(ItemData item, int quantity)
+        public ItemInfo(Item item, int quantity)
         {
             _item = item;
             _id = Guid.NewGuid().ToString();
@@ -36,13 +36,5 @@ namespace CryptoQuest.Data.Item
         {
             return _item != null && Quantity > 0;
         }
-    }
-
-    [Serializable]
-    public class RandomItemInfo : ItemInfo
-    {
-        public int Weight;
-
-        public RandomItemInfo(ItemData item, int quantity) : base(item, quantity) { }
     }
 }

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using CryptoQuest.Data.Item;
 using UnityEngine;
 
 namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects
@@ -7,5 +8,8 @@ namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects
     public class InventorySO : ScriptableObject
     {
         public List<ExpendableItemInfo> Items;
+
+        public List<UsableSO> UsableItem;
+        public List<EquipmentSO> EquipmentItem;
     }
 }
