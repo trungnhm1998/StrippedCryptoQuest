@@ -1,4 +1,3 @@
-using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
 using UnityEngine;
 using UnityEngine.Localization;
 
@@ -18,6 +17,5 @@ namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects
         public Sprite Icon;
         public LocalizedString Name;
         public LocalizedString Description;
-     
     }
 }

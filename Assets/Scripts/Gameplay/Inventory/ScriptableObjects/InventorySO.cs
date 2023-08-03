@@ -7,5 +7,8 @@ namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects
     public class InventorySO : ScriptableObject
     {
         public List<ExpendableItemInfo> Items;
+
+        public List<UsableInformation> UsableItem;
+        public List<EquipmentInformation> EquipmentItem;
     }
 }
