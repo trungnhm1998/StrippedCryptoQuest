@@ -58,6 +58,11 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components
             _stateMachine.SetCurrentState(_battleStartState);
         }
 
+        public void InitBattle()
+        {
+            BattleSpawner.SpawnBattle(CurrentBattleInfo.BattleDataSO);
+        }
+
         private void OnEnable()
         {
             _endActionPhaseEventChannel.EventRaised += OnEndTurn;
