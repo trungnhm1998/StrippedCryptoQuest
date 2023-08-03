@@ -1,5 +1,6 @@
 using CryptoQuest.Gameplay.Battle.Core.Components;
 using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Calculation;
+using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data;
 using CryptoQuest.Input;
 using IndiGames.Core.EditorTools.Attributes.ReadOnlyAttribute;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
@@ -47,8 +48,8 @@ namespace CryptoQuest.Gameplay.Battle
         private void OnCountdownEnd()
         {
             _inputMediatorSO.EnableMenuInput();
-            BattleEncounterSetup currentBattleSetup = _battleField.GetBattleToInit();
-            BattleInfo currentBattleInfo = new(currentBattleSetup.BattleData, _battleField.IsBattleEscapable);
+            BattleDataSO currentBattData = _battleField.GetBattleToInit();
+            BattleInfo currentBattleInfo = new(currentBattData, _battleField.IsBattleEscapable);
             OnTriggerBattleEncounter(currentBattleInfo);
         }
 

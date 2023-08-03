@@ -14,7 +14,7 @@ namespace CryptoQuest.Gameplay.Battle
         public float EncounterRate = 5f;
         public bool IsBattleEscapable = true;
 
-        public BattleEncounterSetup GetBattleToInit()
+        public BattleDataSO GetBattleToInit()
         {
             float randomValue = Random.value;
             BattleEncounterSetup selectedBattle = BattleEncounterSetups[BattleEncounterSetups.Count - 1];
@@ -28,7 +28,7 @@ namespace CryptoQuest.Gameplay.Battle
                 }
             }
 
-            return selectedBattle;
+            return selectedBattle.BattleData;
         }
     }
 
