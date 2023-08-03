@@ -1,6 +1,7 @@
 ﻿using CryptoQuest.Audio.AudioData;
 using NUnit.Framework;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 
 namespace CryptoQuest.Tests.Editor.Audio
 {
@@ -11,7 +12,7 @@ namespace CryptoQuest.Tests.Editor.Audio
         private const int MANY_OF_CLIPS = 5;
         private const int NUMBER_OF_PASS = 2;
 
-        private AudioClip[] _clips;
+        private AssetReferenceT<AudioClip>[] _clips;
         private AudioClipsGroup _group;
 
         [TestCase(ESequenceMode.Sequential)]
@@ -53,12 +54,12 @@ namespace CryptoQuest.Tests.Editor.Audio
             }
         }
 
-        private AudioClip[] CreateEmptyAudioClips(int quantity)
+        private AssetReferenceT<AudioClip>[] CreateEmptyAudioClips(int quantity)
         {
-            var newClips = new AudioClip[quantity];
+            var newClips = new AssetReferenceT<AudioClip>[quantity];
             for (int i = 0; i < quantity; i++)
             {
-                newClips[i] = AudioClip.Create("AudioClip" + i, 1, 1, 1000, false);
+                newClips[i] = new AssetReferenceT<AudioClip>("AudioClip" + i);
             }
 
             return newClips;
@@ -69,7 +70,7 @@ namespace CryptoQuest.Tests.Editor.Audio
         {
             for (int i = 0; i < _clips.Length; i++)
             {
-                Object.DestroyImmediate(_clips[i]);
+                _clips[i].ReleaseAsset();
             }
         }
     }
