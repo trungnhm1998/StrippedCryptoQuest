@@ -1,10 +1,8 @@
-using System.Collections;
 using System.Collections.Generic;
 using CryptoQuest.Input;
 using CryptoQuest.Menu;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.UI;
 
 namespace CryptoQuest.UI.Skill
 {
@@ -14,11 +12,12 @@ namespace CryptoQuest.UI.Skill
         [SerializeField] private MenuSelectionHandler _selectionHandler;
         [SerializeField] private List<UISkillTabButton> _tabSkillButton;
         [SerializeField] private List<UISkillCharacterPanel> _listSkills;
-        [SerializeField] private List<Image> _listHighlightBackground;
+        [SerializeField] private List<MultiInputButton> _listCharacterCardButton;
         private Dictionary<ECharacterClass, UISkillCharacterPanel> _cachedSkills = new();
         private Dictionary<ECharacterClass, UISkillTabButton> _cachedTabButtons = new();
         private UISkillCharacterPanel _currentActivePanel;
         private bool _isSelectedMenu = false;
+        private bool _isSelectedCharacter = false;
         private int _currentSelectedTabIndex = 0;
 
         private void Awake()
@@ -36,6 +35,7 @@ namespace CryptoQuest.UI.Skill
                 _cachedTabButtons.Add(skill.Character, _tabSkillButton[i]);
             }
         }
+
         private void OnEnable()
         {
             _inputMediator.EnableMenuInput();
@@ -65,29 +65,67 @@ namespace CryptoQuest.UI.Skill
                 _tabSkillButton[i].Clicked -= SelectTab;
             }
         }
+
         private void SelectNextMenu()
         {
-            _listHighlightBackground[_currentSelectedTabIndex].enabled = false;
             _currentSelectedTabIndex = (_currentSelectedTabIndex + 1) % _tabSkillButton.Count;
             SelectTab(CYCLE_TYPES[_currentSelectedTabIndex]);
         }
 
         private void SelectPreviousMenu()
         {
-            _listHighlightBackground[_currentSelectedTabIndex].enabled = false;
             _currentSelectedTabIndex = (_currentSelectedTabIndex - 1 + _tabSkillButton.Count) % _tabSkillButton.Count;
             SelectTab(CYCLE_TYPES[_currentSelectedTabIndex]);
         }
 
-
         private void ShowCharacterSkills()
         {
-            foreach (var tab in _tabSkillButton)
+            if (!_isSelectedMenu)
             {
-                tab.GetComponent<MultiInputButton>().enabled = false;
+                foreach (var tab in _tabSkillButton)
+                {
+                    tab.GetComponent<MultiInputButton>().enabled = false;
+                }
+                SelectTab(CYCLE_TYPES[_currentSelectedTabIndex]);
+                _isSelectedMenu = true;
             }
-            SelectTab(CYCLE_TYPES[_currentSelectedTabIndex]);
-            _isSelectedMenu = true;
+            else
+            {
+                HandleSkillPressed();
+            }
+        }
+
+        private void HandleSkillPressed()
+        {
+            if (_isSelectedCharacter)
+            {
+                _isSelectedCharacter = false;
+                foreach (var card in _listCharacterCardButton)
+                {
+                    card.enabled = false;
+                }
+                SelectTab(CYCLE_TYPES[_currentSelectedTabIndex]);
+                //TODO: Implement apply skill to character
+                Debug.Log($"Apply skill to Character ");
+            }
+            else
+            {
+                if (_listSkills[_currentSelectedTabIndex].TypeOfSkill == ECharacterSkill.TargetCast)
+                {
+                    _isSelectedCharacter = true;
+                    _listSkills[_currentSelectedTabIndex].ActiveSkillSelection(false);
+                    foreach (var card in _listCharacterCardButton)
+                    {
+                        card.enabled = true;
+                    }
+                    EventSystem.current.SetSelectedGameObject(_listCharacterCardButton[0].gameObject);
+                }
+                else
+                {
+                    //TODO: Implement logic to use skill
+                    Debug.Log($"Used Skill!");
+                }
+            }
         }
 
         private readonly ECharacterClass[] CYCLE_TYPES = new ECharacterClass[]
@@ -132,9 +170,7 @@ namespace CryptoQuest.UI.Skill
             }
             EventSystem.current.SetSelectedGameObject(_tabSkillButton[_currentSelectedTabIndex].gameObject);
             _isSelectedMenu = false;
-            _listHighlightBackground[_currentSelectedTabIndex].enabled = false;
             _listSkills[_currentSelectedTabIndex].ActiveSkillSelection(false);
-
         }
     }
 }

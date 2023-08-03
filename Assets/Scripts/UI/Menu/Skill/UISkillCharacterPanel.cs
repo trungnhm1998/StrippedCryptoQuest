@@ -1,5 +1,3 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using CryptoQuest.Gameplay.Skill;
 using CryptoQuest.Gameplay.Skill.ScriptableObjects;
@@ -26,8 +24,9 @@ namespace CryptoQuest.UI.Skill
         [SerializeField] private RectTransform _parentRectTransform;
         [SerializeField] private RectTransform _skillRectTransform;
         [SerializeField] private LocalizeStringEvent _localizeDescription;
-        [SerializeField] private Image _tabImage;
+        [SerializeField] private Image _characterCardBackground;
         [field: SerializeField] public ECharacterClass Character { get; private set; }
+        [field: SerializeField] public ECharacterSkill TypeOfSkill { get; private set; }
         private List<MultiInputButton> _listSkillButton = new();
         private List<SkillInformation> _listSkills = new();
 
@@ -104,7 +103,7 @@ namespace CryptoQuest.UI.Skill
         {
             foreach (var button in _listSkillButton)
             {
-                _tabImage.enabled = isActivated;
+                _characterCardBackground.enabled = isActivated;
                 button.GetComponent<MultiInputButton>().enabled = isActivated;
             }
         }
