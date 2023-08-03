@@ -13,6 +13,7 @@ namespace CryptoQuest.Gameplay.Battle
         public List<BattleEncounterSetup> BattleEncounterSetups;
         public float EncounterRate = 5f;
         public bool IsBattleEscapable = true;
+        public Sprite BattleBackground;
 
         public BattleDataSO GetBattleToInit()
         {

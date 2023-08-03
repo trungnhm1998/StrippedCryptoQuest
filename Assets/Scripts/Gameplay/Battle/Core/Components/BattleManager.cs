@@ -13,6 +13,7 @@ using IndiGames.GameplayAbilitySystem.AbilitySystem.ScriptableObjects;
 using UnityEngine;
 using IndiGames.Core.SceneManagementSystem.Events.ScriptableObjects;
 using IndiGames.Core.SceneManagementSystem.ScriptableObjects;
+using UnityEngine.UI;
 
 namespace CryptoQuest.Gameplay.Battle.Core.Components
 {
@@ -24,6 +25,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components
         [SerializeField] private StateSO _battleEndState;
         [SerializeField] private BattleBus _battleBus;
         [SerializeField] private BattleOrderDecider _battleOrderDecider;
+        [SerializeField] private Image BattleBackgroundImage;
 
         [field: SerializeField] public BattleTeam BattleTeam1 { get; protected set; }
 
@@ -51,6 +53,9 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components
             BattleSpawner = GetComponent<BaseBattleSpawner>();
             _battleBus.BattleManager = this;
             CurrentBattleInfo = _battleBus.CurrentBattleInfo;
+            BattleBackgroundImage.sprite = CurrentBattleInfo.BattleBackground != null
+                ? CurrentBattleInfo.BattleBackground
+                : BattleBackgroundImage.sprite;
         }
 
         protected virtual void StartBattle()
@@ -164,11 +169,13 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components
     {
         public BattleDataSO BattleDataSO;
         public bool IsBattleEscapable;
+        public Sprite BattleBackground;
 
-        public BattleInfo(BattleDataSO battleDataSo, bool isBattleEscapable)
+        public BattleInfo(BattleDataSO battleDataSo, bool isBattleEscapable, Sprite battleBackground = null)
         {
             BattleDataSO = battleDataSo;
             IsBattleEscapable = isBattleEscapable;
+            BattleBackground = battleBackground;
         }
     }
 }

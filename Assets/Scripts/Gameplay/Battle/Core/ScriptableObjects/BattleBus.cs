@@ -7,5 +7,6 @@ namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects
     {
         public BattleManager BattleManager { get; set; }
         public BattleInfo CurrentBattleInfo { get; set; }
+        public Sprite CurrentBattleBackground { get; set; }
     }
 }
