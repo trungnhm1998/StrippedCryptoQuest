@@ -28,7 +28,7 @@ namespace IndiGames.Core.SceneManagementSystem
         [SerializeField] private VoidEventChannelSO _sceneLoaded;
 
         [SerializeField] private VoidEventChannelSO _sceneUnloading;
-
+		protected FadeConfigSO _currentConfigUsed;
         private AsyncOperationHandle<SceneInstance> _sceneLoadingOperationHandle;
         private AsyncOperationHandle<SceneInstance> _gameplayManagerLoadingOperationHandle;
 
@@ -37,16 +37,17 @@ namespace IndiGames.Core.SceneManagementSystem
         private SceneInstance _gameplayManagerSceneInstance;
         private bool _isLoading;
 
-        private void OnEnable()
+        protected virtual void OnEnable()
         {
             _loadSceneEvent.LoadingRequested += SceneLoadingRequested;
             _unloadSceneEvent.UnloadRequested += UnloadSceneRequested;
+			_currentConfigUsed = _fadeConfigSO;
 #if UNITY_EDITOR
             _editorColdBoot.LoadingRequested += EditorColdBootLoadingRequested;
 #endif
         }
 
-        private void OnDisable()
+        protected virtual void OnDisable()
         {
             _loadSceneEvent.LoadingRequested -= SceneLoadingRequested;
             _unloadSceneEvent.UnloadRequested -= UnloadSceneRequested;
@@ -59,7 +60,7 @@ namespace IndiGames.Core.SceneManagementSystem
         {
             if (_isLoading) return;
             
-            _fadeConfigSO.OnFadeIn();
+            _currentConfigUsed.OnFadeIn();
 
             _sceneToLoad = sceneToLoad;
             _isLoading = true;
@@ -118,8 +119,8 @@ namespace IndiGames.Core.SceneManagementSystem
 
         private IEnumerator CoUnloadPreviousScene(SceneScriptableObject sceneToUnload)
         {
-            _fadeConfigSO.OnFadeIn();
-            yield return new WaitForSeconds(_fadeConfigSO.Duration);
+            _currentConfigUsed.OnFadeIn();
+            yield return new WaitForSeconds(_currentConfigUsed.Duration);
             if (sceneToUnload != null)
             {
                 if (sceneToUnload.SceneReference.OperationHandle.IsValid())
@@ -133,7 +134,7 @@ namespace IndiGames.Core.SceneManagementSystem
                 }
 #endif
             }
-            _fadeConfigSO.OnFadeOut();
+            _currentConfigUsed.OnFadeOut();
         }
 
         private void LoadNewScene()
@@ -150,9 +151,10 @@ namespace IndiGames.Core.SceneManagementSystem
 
             _isLoading = false;
 
-            _fadeConfigSO.OnFadeOut();
+            _currentConfigUsed.OnFadeOut();
 
             _sceneLoaded.RaiseEvent();
+			_currentConfigUsed = _fadeConfigSO;
         }
     }
 }

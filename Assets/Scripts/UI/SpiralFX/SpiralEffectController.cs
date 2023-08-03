@@ -28,14 +28,14 @@ namespace CryptoQuest.UI.SpiralFX
 
         private void OnEnable()
         {
-            _spiralConfig.SpiralIn += SpiralIn_Raised;
-            _spiralConfig.SpiralOut += SpiralOut_Raised;
+            _spiralConfig.FadeIn += SpiralIn_Raised;
+            _spiralConfig.FadeOut += SpiralOut_Raised;
         }
 
         private void OnDisable()
         {
-            _spiralConfig.SpiralIn -= SpiralIn_Raised;
-            _spiralConfig.SpiralOut -= SpiralOut_Raised;
+            _spiralConfig.FadeIn -= SpiralIn_Raised;
+            _spiralConfig.FadeOut -= SpiralOut_Raised;
         }
 
         private void SpiralIn_Raised()
