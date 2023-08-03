@@ -27,10 +27,9 @@ namespace CryptoQuest.UI.Battle
             if (backgroundSpriteAsset == null)
                 yield break;
             AsyncOperationHandle<Sprite> handle = backgroundSpriteAsset.LoadAssetAsync<Sprite>();
-            if (handle.IsValid())
+            if (handle.IsValid() && backgroundSpriteAsset.Asset != null)
             {
-                if (backgroundSpriteAsset.Asset != null)
-                    _backgroundSprite = backgroundSpriteAsset.Asset as Sprite;
+                _backgroundSprite = backgroundSpriteAsset.Asset as Sprite;
             }
 
             yield return handle;

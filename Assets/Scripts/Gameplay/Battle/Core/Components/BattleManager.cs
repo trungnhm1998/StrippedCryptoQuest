@@ -25,7 +25,6 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components
         [SerializeField] private StateSO _battleEndState;
         [SerializeField] private BattleBus _battleBus;
         [SerializeField] private BattleOrderDecider _battleOrderDecider;
-        [SerializeField] private Image BattleBackgroundImage;
 
         [field: SerializeField] public BattleTeam BattleTeam1 { get; protected set; }
 
