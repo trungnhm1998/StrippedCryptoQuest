@@ -1,4 +1,4 @@
 ﻿namespace CryptoQuest.Gameplay.Inventory
 {
-    public class EquipmentInformation : ItemInfomation { }
+    public class EquipmentInformation : ItemInformation { }
 }

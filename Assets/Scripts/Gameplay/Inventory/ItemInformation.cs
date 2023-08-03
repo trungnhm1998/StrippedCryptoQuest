@@ -1,12 +1,15 @@
 ﻿using System;
+using CryptoQuest.Data;
 
-namespace CryptoQuest.Data.Item
+namespace CryptoQuest.Gameplay.Inventory
 {
     [Serializable]
-    public class ItemInfo
+    public class ItemInformation
     {
-        protected Item _item;
-        public Item Item => _item;
+        public ItemGeneric Data;
+
+        protected Data.Item.Item _item;
+        public Data.Item.Item Item => _item;
 
         protected string _id;
 
@@ -16,25 +19,21 @@ namespace CryptoQuest.Data.Item
             set => _id = value;
         }
 
-        public int Quantity = 0;
-
-        public ItemInfo(Item item, int quantity)
+        public ItemInformation(Data.Item.Item item, int quantity)
         {
             _item = item;
             _id = Guid.NewGuid().ToString();
-            Quantity = quantity;
         }
 
-        public ItemInfo()
+        public ItemInformation()
         {
             _item = null;
             _id = Guid.NewGuid().ToString();
-            Quantity = 1;
         }
 
         public bool IsValid()
         {
-            return _item != null && Quantity > 0;
+            return _item != null;
         }
     }
 }

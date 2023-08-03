@@ -1,6 +1,6 @@
 ﻿namespace CryptoQuest.Gameplay.Inventory
 {
-    public class UsableInformation : ItemInfomation
+    public class UsableInformation : ItemInformation
     {
         public int Quantity;
     }

@@ -1,10 +1,9 @@
 using CryptoQuest.Events.Gameplay;
-using CryptoQuest.Gameplay.Inventory;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
 using UnityEngine;
 
-namespace CryptoQuest
+namespace CryptoQuest.Gameplay.Inventory
 {
     public class InventoryController : MonoBehaviour
     {

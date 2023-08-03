@@ -1,4 +1,3 @@
-using CryptoQuest.Data.Item;
 using UnityEngine;
 using UnityEngine.Localization;
 
