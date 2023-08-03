@@ -7,19 +7,15 @@ namespace CryptoQuest.Data
     {
         public int ID;
 
-        [SerializeField] private LocalizedString _displayName;
-        public LocalizedString DisplayName => _displayName;
+        [field: SerializeField] public LocalizedString DisplayName { get; private set; }
         public LocalizedString Description;
+        [field: SerializeField] public Sprite Icon { get; private set; }
 
-        [SerializeField] private Sprite _icon;
-        public Sprite Icon => _icon;
-
-        [SerializeField] private bool _isNftItem;
-        public bool IsNftItem => _isNftItem;
+        [field: SerializeField] public bool IsNftItem { get; private set; }
 
         public void SetIcon(Sprite icon)
         {
-            this._icon = icon;
+            this.Icon = icon;
         }
     }
 }
