@@ -1,3 +1,4 @@
+using CryptoQuest.Gameplay.Battle.Core.Components;
 using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data;
 using IndiGames.Core.Events.ScriptableObjects;
 using UnityEngine;
@@ -7,9 +8,9 @@ namespace CryptoQuest.Gameplay.Battle
 {
     public class TriggerBattleEncounterEventSO : ScriptableObject
     {
-        public UnityAction<BattleDataSO> EncounterBattle;
+        public UnityAction<BattleInfo> EncounterBattle;
 
-        public void Raise(BattleDataSO battleData)
+        public void Raise(BattleInfo battleInfo)
         {
             if (EncounterBattle == null)
             {
@@ -17,7 +18,7 @@ namespace CryptoQuest.Gameplay.Battle
                 return;
             }
 
-            EncounterBattle.Invoke(battleData);
+            EncounterBattle.Invoke(battleInfo);
         }
     }
 }

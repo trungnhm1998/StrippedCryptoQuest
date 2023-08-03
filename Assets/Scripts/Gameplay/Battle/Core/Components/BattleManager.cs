@@ -6,6 +6,7 @@ using CryptoQuest.Gameplay.Battle.Core.Components.BattleSpawner;
 using CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit;
 using CryptoQuest.Gameplay.Battle.Core.Components.BattleOrder;
 using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects;
+using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data;
 using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Skills;
 using IndiGames.Core.Events.ScriptableObjects;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.ScriptableObjects;
@@ -30,6 +31,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components
 
         [Header("Raise Events")] [SerializeField]
         private VoidEventChannelSO _newTurnEventChannel;
+
         [SerializeField] private UnloadSceneEventChannelSO _unloadSceneEvent;
 
         [Header("Listen Events")] [SerializeField]
@@ -48,9 +50,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components
         {
             BattleSpawner = GetComponent<BaseBattleSpawner>();
             _battleBus.BattleManager = this;
-            BattleInfo currentBattleInfo;
-            currentBattleInfo.IsBattleEscapable = BattleSpawner.IsBattleEscapale();
-            CurrentBattleInfo = currentBattleInfo;
+            CurrentBattleInfo = _battleBus.CurrentBattleInfo;
         }
 
         protected virtual void StartBattle()
@@ -153,10 +153,17 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components
         {
             return _battleOrderDecider.SortUnitByAttributeValue(BattleUnits);
         }
-    }   
+    }
 
     public struct BattleInfo
     {
+        public BattleDataSO BattleDataSO;
         public bool IsBattleEscapable;
+
+        public BattleInfo(BattleDataSO battleDataSo, bool isBattleEscapable)
+        {
+            BattleDataSO = battleDataSo;
+            IsBattleEscapable = isBattleEscapable;
+        }
     }
 }

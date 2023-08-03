@@ -40,10 +40,8 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components.BattleSpawner
 
             if (duplicateCount >= _duplicatePostfix.Length) return;
 
-            enemyInfo.DisplayName = $"{enemyInfo.OriginalName}{_duplicatePostfix[duplicateCount]}"; 
+            enemyInfo.DisplayName = $"{enemyInfo.OriginalName}{_duplicatePostfix[duplicateCount]}";
             _duplicateEnemies[enemyInfo.OriginalName]++;
         }
-
-        public bool IsBattleEscapale() => _battleData.IsEscapable;
     }
 }

@@ -18,5 +18,13 @@ namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Calculation
         {
             return (50 - 50 * (targetMaxAttributeValue - ownerAttributeValue) / 100) / 100;
         }
+
+        public static float CalculateEncounterRateBuff(float buff, float passiveBuff)
+        {
+            bool isZeroBuff = (buff == 0 && passiveBuff == 0);
+            float buffDividen = isZeroBuff ? 1 : ((1 - buff) * (1 - passiveBuff));
+            float buffRate = (buffDividen != 0) ? (1 / buffDividen) : 1;
+            return buffRate;
+        }
     }
 }
