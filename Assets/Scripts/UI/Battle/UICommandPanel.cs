@@ -27,7 +27,6 @@ namespace CryptoQuest.UI.Battle
             {
                 var item = _uiCommandContentPool.Get();
                 item.Init(info);
-                _navigationAutoScroll.LastButton = item.GetComponent<RectTransform>();
             }
 
             SelectFirstButton();
@@ -37,7 +36,6 @@ namespace CryptoQuest.UI.Battle
         {
             var firstButton = _content.GetComponentInChildren<Button>();
             if (!firstButton || !firstButton.interactable) return;
-            _navigationAutoScroll.FirstButton = firstButton.GetComponent<RectTransform>();
             firstButton.Select();
         }
 
