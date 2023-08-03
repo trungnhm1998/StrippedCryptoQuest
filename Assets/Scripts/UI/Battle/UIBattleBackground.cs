@@ -15,6 +15,7 @@ namespace CryptoQuest.UI.Battle
         [SerializeField] private BattleBus _battleBus;
         [SerializeField] private Image _backgroundImage;
         private Sprite _backgroundSprite;
+        private AssetReferenceT<Sprite> backgroundSpriteAsset;
 
         private void Awake()
         {
@@ -23,7 +24,7 @@ namespace CryptoQuest.UI.Battle
 
         public IEnumerator GetBackground()
         {
-            AssetReferenceT<Sprite> backgroundSpriteAsset = _battleBus.CurrentBattleInfo.BattleBackground;
+            backgroundSpriteAsset = _battleBus.CurrentBattleInfo.BattleBackground;
             if (backgroundSpriteAsset == null)
                 yield break;
             AsyncOperationHandle<Sprite> handle = backgroundSpriteAsset.LoadAssetAsync<Sprite>();
@@ -38,6 +39,12 @@ namespace CryptoQuest.UI.Battle
                 _backgroundSprite = handle.Result;
                 _backgroundImage.sprite = _backgroundSprite != null ? _backgroundSprite : _backgroundImage.sprite;
             }
+        }
+
+        private void OnDisable()
+        {
+            if (_backgroundSprite != null)
+                backgroundSpriteAsset.ReleaseAsset();
         }
     }
 }
