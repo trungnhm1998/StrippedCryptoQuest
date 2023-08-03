@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1071142457790314701}
   - component: {fileID: 3380334984890605471}
   - component: {fileID: 8807924384110792005}
+  - component: {fileID: 3571199402832566947}
   m_Layer: 0
   m_Name: Background
   m_TagString: Untagged
@@ -67,7 +68,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 77a3df24428bcf845a1acc3a5dc87f38, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 08d8dc0d8ce981641a58adbc525edd00, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -77,6 +78,20 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &3571199402832566947
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6681347347479903651}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e461570ee58b354ba7ff17275d9a3c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _battleBus: {fileID: 11400000, guid: 2290057e7f48d1046b5e0a6c3f6dc910, type: 2}
+  _backgroundImage: {fileID: 8807924384110792005}
 --- !u!1 &7959368017133274458
 GameObject:
   m_ObjectHideFlags: 0
@@ -373,6 +388,10 @@ PrefabInstance:
       propertyPath: _skillAttackChain.Array.data[1]
       value: 
       objectReference: {fileID: 3660873216457126405}
+    - target: {fileID: 8413079734381066558, guid: 956bfec26de3ab44394d3e0e402ff9c0, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -4.300003
+      objectReference: {fileID: 0}
     - target: {fileID: 9170090403351853472, guid: 956bfec26de3ab44394d3e0e402ff9c0, type: 3}
       propertyPath: m_Name
       value: BattleUI

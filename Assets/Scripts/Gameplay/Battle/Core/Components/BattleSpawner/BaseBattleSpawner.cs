@@ -11,7 +11,6 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components.BattleSpawner
         private readonly string[] _duplicatePostfix = new string[] { "A", "B", "C", "D" };
         [SerializeField] protected BattleManager _battleManager;
         [SerializeField] protected BattleDataSO _battleData;
-
         private Dictionary<string, int> _duplicateEnemies = new();
 
         private void OnValidate()
@@ -20,9 +19,10 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components.BattleSpawner
             _battleManager = GetComponent<BattleManager>();
         }
 
-        public virtual void SpawnBattle()
+        public virtual void SpawnBattle(BattleDataSO battleDataSo)
         {
-            GenerateBattle(_battleData);
+            var currentBattleData = (battleDataSo != null) ? battleDataSo : _battleData;
+            GenerateBattle(currentBattleData);
         }
 
         public abstract void GenerateBattle(BattleDataSO data);
@@ -40,10 +40,8 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components.BattleSpawner
 
             if (duplicateCount >= _duplicatePostfix.Length) return;
 
-            enemyInfo.DisplayName = $"{enemyInfo.OriginalName}{_duplicatePostfix[duplicateCount]}"; 
+            enemyInfo.DisplayName = $"{enemyInfo.OriginalName}{_duplicatePostfix[duplicateCount]}";
             _duplicateEnemies[enemyInfo.OriginalName]++;
         }
-
-        public bool IsBattleEscapale() => _battleData.IsEscapable;
     }
 }

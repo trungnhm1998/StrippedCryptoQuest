@@ -6,18 +6,20 @@ using CryptoQuest.Gameplay.Battle.Core.Components.BattleSpawner;
 using CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit;
 using CryptoQuest.Gameplay.Battle.Core.Components.BattleOrder;
 using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects;
+using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data;
 using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Skills;
 using IndiGames.Core.Events.ScriptableObjects;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.ScriptableObjects;
 using UnityEngine;
 using IndiGames.Core.SceneManagementSystem.Events.ScriptableObjects;
 using IndiGames.Core.SceneManagementSystem.ScriptableObjects;
+using UnityEngine.AddressableAssets;
+using UnityEngine.UI;
 
 namespace CryptoQuest.Gameplay.Battle.Core.Components
 {
     public class BattleManager : MonoBehaviour
     {
-        [SerializeField] private SceneScriptableObject _battleSceneSO;
         [SerializeField] private BaseStateMachine _stateMachine;
         [SerializeField] private StateSO _battleStartState;
         [SerializeField] private StateSO _battleEndState;
@@ -30,13 +32,13 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components
 
         [Header("Raise Events")] [SerializeField]
         private VoidEventChannelSO _newTurnEventChannel;
-        [SerializeField] private UnloadSceneEventChannelSO _unloadSceneEvent;
 
         [Header("Listen Events")] [SerializeField]
         private VoidEventChannelSO _sceneLoadedEventChannel;
 
         [SerializeField] private VoidEventChannelSO _endActionPhaseEventChannel;
         [SerializeField] private SpecialAbilitySO _retreatAbility;
+        [SerializeField] private VoidEventChannelSO _onBattleEndEventChannel;
         public IBattleUnit CurrentUnit { get; set; } = NullBattleUnit.Instance;
         public int Turn { get; private set; }
         public BaseBattleSpawner BattleSpawner { get; private set; }
@@ -48,14 +50,17 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components
         {
             BattleSpawner = GetComponent<BaseBattleSpawner>();
             _battleBus.BattleManager = this;
-            BattleInfo currentBattleInfo;
-            currentBattleInfo.IsBattleEscapable = BattleSpawner.IsBattleEscapale();
-            CurrentBattleInfo = currentBattleInfo;
+            CurrentBattleInfo = _battleBus.CurrentBattleInfo;
         }
 
         protected virtual void StartBattle()
         {
             _stateMachine.SetCurrentState(_battleStartState);
+        }
+
+        public void InitBattle()
+        {
+            BattleSpawner.SpawnBattle(CurrentBattleInfo.BattleDataSO);
         }
 
         private void OnEnable()
@@ -146,17 +151,27 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components
 
         public void OnBattleEnd()
         {
-            _unloadSceneEvent.UnloadRequested(_battleSceneSO);
+            _onBattleEndEventChannel.RaiseEvent();
         }
 
         public List<IBattleUnit> GetActionOrderList()
         {
             return _battleOrderDecider.SortUnitByAttributeValue(BattleUnits);
         }
-    }   
+    }
 
     public struct BattleInfo
     {
+        public BattleDataSO BattleDataSO;
         public bool IsBattleEscapable;
+        public AssetReferenceT<Sprite> BattleBackground;
+
+        public BattleInfo(BattleDataSO battleDataSo, bool isBattleEscapable,
+            AssetReferenceT<Sprite> battleBackground = null)
+        {
+            BattleDataSO = battleDataSo;
+            IsBattleEscapable = isBattleEscapable;
+            BattleBackground = battleBackground;
+        }
     }
 }

@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 
 namespace CryptoQuest.Audio.AudioData
 {
@@ -7,10 +8,10 @@ namespace CryptoQuest.Audio.AudioData
         public bool Looping = false;
         [SerializeField] private AudioClipsGroup[] _audioClipGroups = default;
 
-        public AudioClip[] GetClips()
+        public AssetReferenceT<AudioClip>[] GetClips()
         {
             int numberOfClips = _audioClipGroups.Length;
-            AudioClip[] clipsResult = new AudioClip[numberOfClips];
+            AssetReferenceT<AudioClip>[] clipsResult = new AssetReferenceT<AudioClip>[numberOfClips];
 
             for (int i = 0; i < numberOfClips; i++)
             {
@@ -19,5 +20,8 @@ namespace CryptoQuest.Audio.AudioData
 
             return clipsResult;
         }
+
+        public AssetReferenceT<AudioClip> GetPlayableAsset()
+            => _audioClipGroups[0].SwitchToNextClip();
     }
 }

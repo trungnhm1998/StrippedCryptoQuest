@@ -1,7 +1,6 @@
 ﻿using CryptoQuest.Audio.AudioData;
 using IndiGames.Core.Events.ScriptableObjects;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace CryptoQuest.Audio
 {
@@ -10,21 +9,26 @@ namespace CryptoQuest.Audio
         [Header("Listen to")] [SerializeField] private VoidEventChannelSO _sceneLoaded;
         [Header("Raise on")] [SerializeField] private AudioCueEventChannelSO _musicEventChannel;
 
-        [Header("Configs")] [SerializeField] private AudioCueSO _musicTrack;
+        [Header("Configs")] public AudioCueSO MusicTrack;
 
         private void OnEnable()
         {
-            _sceneLoaded.EventRaised += OnPlayMusic;
+            _sceneLoaded.EventRaised += PlayBackgroundMusic;
         }
 
         private void OnDisable()
         {
-            _sceneLoaded.EventRaised -= OnPlayMusic;
+            _sceneLoaded.EventRaised -= PlayBackgroundMusic;
         }
 
-        private void OnPlayMusic()
+        public void PlayBackgroundMusic()
         {
-            _musicEventChannel.PlayAudio(_musicTrack);
+            _musicEventChannel.PlayAudio(MusicTrack);
+        }
+
+        public void StopBackgroundMusic()
+        {
+            _musicEventChannel.StopAudio(MusicTrack);
         }
     }
 }

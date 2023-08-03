@@ -10,6 +10,7 @@ namespace CryptoQuest.Audio.AudioEmitters
     [RequireComponent((typeof(AudioSource)))]
     public class AudioEmitter : MonoBehaviour
     {
+        private const float FADE_VOLUME_DURATION = 2f;
         public event UnityAction<AudioEmitterValue> AudioFinishedPlaying;
 
         [SerializeField] private AudioSource _audioSource;
@@ -23,6 +24,7 @@ namespace CryptoQuest.Audio.AudioEmitters
 
         private IObjectPool<AudioEmitter> _objectPool;
         public void Init(IObjectPool<AudioEmitter> pool) => _objectPool = pool;
+
 
         public void PlayAudioClip(AudioClip clip, AudioSettingSO audioSettings, bool hasLoop)
         {
@@ -38,7 +40,7 @@ namespace CryptoQuest.Audio.AudioEmitters
             Invoke(nameof(OnFinishedPlay), clip.length);
         }
 
-        public void FadeMusicIn(AudioClip clip, AudioSettingSO audioSettings, float duration, float startTime = 0f)
+        public void FadeMusicIn(AudioClip clip, AudioSettingSO audioSettings, float startTime = 0f)
         {
             PlayAudioClip(clip, audioSettings, true);
             _audioSource.DOFade(0, .05f);
@@ -48,12 +50,12 @@ namespace CryptoQuest.Audio.AudioEmitters
                 _audioSource.time = startTime;
             }
 
-            _audioSource.DOFade(audioSettings.Volume, duration);
+            _audioSource.DOFade(audioSettings.Volume, FADE_VOLUME_DURATION);
         }
 
-        public float FadeMusicOut(float duration)
+        public float FadeMusicOut()
         {
-            _audioSource.DOFade(0f, duration).onComplete += OnFinishedPlay;
+            _audioSource.DOFade(0f, FADE_VOLUME_DURATION).onComplete += OnFinishedPlay;
 
             return _audioSource.time;
         }
