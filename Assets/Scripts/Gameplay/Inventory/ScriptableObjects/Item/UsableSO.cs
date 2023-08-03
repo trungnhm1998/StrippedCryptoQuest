@@ -11,7 +11,7 @@ namespace CryptoQuest.Data.Item
     [CreateAssetMenu(fileName = "Usable Item", menuName = "Crypto Quest/Inventory/Usable Item")]
     public class UsableSO : ItemGenericSO
     {
-        [SerializeField] private UsableTypeSo _usableTypeSo;
+        [SerializeField] private UsableTypeSO _usableTypeSo;
         [SerializeField] private EItemType _itemType;
     }
 }

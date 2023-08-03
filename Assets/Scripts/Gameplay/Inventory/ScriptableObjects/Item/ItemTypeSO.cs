@@ -5,11 +5,11 @@ namespace CryptoQuest.Data.Item
     public enum EInventoryActionType
     {
         Use = 0, // For materials, consumables, stackable items, ...etc
-        Equip = 1, // For Weapon,  Gem ,NFT, ...etc
+        Equip = 1, // For Weapon, Gem ,NFT, ...etc
     }
 
     [CreateAssetMenu(fileName = "ItemType", menuName = "Crypto Quest/Inventory/ItemType")]
-    public class ItemTypeSO
+    public class ItemTypeSO : ScriptableObject
     {
         public Sprite Icon;
         [SerializeField] private EInventoryActionType _actionType;
