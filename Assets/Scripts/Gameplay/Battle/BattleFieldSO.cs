@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data;
 using IndiGames.Core.SceneManagementSystem.ScriptableObjects;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 using Random = UnityEngine.Random;
 
 namespace CryptoQuest.Gameplay.Battle
@@ -13,7 +14,7 @@ namespace CryptoQuest.Gameplay.Battle
         public List<BattleEncounterSetup> BattleEncounterSetups;
         public float EncounterRate = 5f;
         public bool IsBattleEscapable = true;
-        public Sprite BattleBackground;
+        public AssetReferenceT<Sprite> BattleBackground;
 
         public BattleDataSO GetBattleToInit()
         {
