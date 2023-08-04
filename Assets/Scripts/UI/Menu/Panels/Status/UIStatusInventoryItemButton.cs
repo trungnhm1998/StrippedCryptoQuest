@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using CryptoQuest.Menu;
 using CryptoQuest.UI.Menu.Stats;
 using IndiGames.Core.Events.ScriptableObjects;
+using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
 using PolyAndCode.UI;
 using UnityEngine;
 using UnityEngine.Events;
@@ -9,11 +11,13 @@ using UnityEngine.EventSystems;
 using UnityEngine.Localization;
 using UnityEngine.Localization.Components;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 namespace CryptoQuest.UI.Menu.Panels.Status
 {
     public class UIStatusInventoryItemButton : MultiInputButton, ICell
     {
+        public static event UnityAction<UIStats.Equipment> InspectingEquipment;
         [Serializable]
         public class MockData
         {
@@ -28,15 +32,16 @@ namespace CryptoQuest.UI.Menu.Panels.Status
             }
         }
 
+        [Header("Mock")]
+        [SerializeField] private List<AttributeScriptableObject> _allAttributeToRandomFrom;
+
         [Header("Game Components")]
         [SerializeField] private LocalizeStringEvent _name;
         [SerializeField] private Text _itemOrder;
         [SerializeField] private GameObject _selectEffect;
-        [SerializeField] private FloatEventChannelSO CompareValueEvent;
 
         private GameObject _unEquipSlot;
-        
-        
+
 
         public void Init(MockData mockData, int index)
         {
@@ -53,16 +58,25 @@ namespace CryptoQuest.UI.Menu.Panels.Status
         public void OnPressed()
         {
             Debug.Log($"Inventory item pressed");
-            // _uiAttribute.CompareValue(120);
         }
 
         public override void OnSelect(BaseEventData eventData)
         {
             base.OnSelect(eventData);
             _selectEffect.SetActive(true);
-
-            CompareValueEvent.RaiseEvent(120);
+            InspectingEquipment?.Invoke(CreateFakeData());
             Debug.Log($"Inventory");
+        }
+
+        private UIStats.Equipment CreateFakeData()
+        {
+            var mockEquipment = new UIStats.Equipment();
+            var numberOfModifiedAttributes = Random.Range(1, 3);
+            for (int i = 0; i < numberOfModifiedAttributes; i++)
+            {
+                mockEquipment.ModifiedAttributes.Add(_allAttributeToRandomFrom[i], Random.Range(50, 200));
+            }
+            return mockEquipment;
         }
 
         public override void OnDeselect(BaseEventData eventData)
