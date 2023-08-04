@@ -18,7 +18,7 @@ namespace CryptoQuest.UI.Menu.Panels.Status
         [SerializeField] private int _itemCount;
 
         [FormerlySerializedAs("_mockData")] [SerializeField]
-        private UIStatusInventoryItem.MockData mockMockData;
+        private UIStatusInventoryItemButton.MockData mockMockData;
 
         #endregion
 
@@ -28,7 +28,7 @@ namespace CryptoQuest.UI.Menu.Panels.Status
         [SerializeField] private RectTransform _myScrollRect;
         [SerializeField] private RectTransform _singleItemRect;
 
-        private List<UIStatusInventoryItem.MockData> _mockDataList = new();
+        private List<UIStatusInventoryItemButton.MockData> _mockDataList = new();
 
         private float _verticalOffset;
         private bool _initialized = false;
@@ -99,8 +99,8 @@ namespace CryptoQuest.UI.Menu.Panels.Status
         /// <param name="index">query from real data using this index</param>
         public void SetCell(ICell cell, int index)
         {
-            UIStatusInventoryItem itemRow = cell as UIStatusInventoryItem;
-            itemRow.Init(_mockDataList[index], index);
+            UIStatusInventoryItemButton itemButtonRow = cell as UIStatusInventoryItemButton;
+            itemButtonRow.Init(_mockDataList[index], index);
         }
 
         #endregion
