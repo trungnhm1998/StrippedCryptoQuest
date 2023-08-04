@@ -19,6 +19,7 @@ namespace IndiGames.Core.SceneManagementSystem
 
         [Header("Listening on")]
         [SerializeField] private LoadSceneEventChannelSO _loadMap;
+        
         [SerializeField] private LoadSceneEventChannelSO _loadTitle;
 #if UNITY_EDITOR
         [SerializeField] private LoadSceneEventChannelSO _editorColdBoot;
@@ -28,6 +29,7 @@ namespace IndiGames.Core.SceneManagementSystem
         [SerializeField] protected VoidEventChannelSO _sceneLoaded;
 
         [SerializeField] protected VoidEventChannelSO _sceneUnloading;
+        
         protected AsyncOperationHandle<SceneInstance> _sceneLoadingOperationHandle;
         protected AsyncOperationHandle<SceneInstance> _gameplayManagerLoadingOperationHandle;
 

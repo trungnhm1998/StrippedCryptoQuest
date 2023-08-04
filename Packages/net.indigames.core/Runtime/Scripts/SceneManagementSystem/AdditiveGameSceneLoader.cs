@@ -28,6 +28,7 @@ namespace IndiGames.Core.SceneManagementSystem
         [SerializeField] private VoidEventChannelSO _sceneLoaded;
 
         [SerializeField] private VoidEventChannelSO _sceneUnloading;
+        
         private AsyncOperationHandle<SceneInstance> _sceneLoadingOperationHandle;
         private AsyncOperationHandle<SceneInstance> _gameplayManagerLoadingOperationHandle;
 
@@ -36,7 +37,7 @@ namespace IndiGames.Core.SceneManagementSystem
         private SceneInstance _gameplayManagerSceneInstance;
         private bool _isLoading;
 
-        protected virtual void OnEnable()
+        private void OnEnable()
         {
             _loadSceneEvent.LoadingRequested += SceneLoadingRequested;
             _unloadSceneEvent.UnloadRequested += UnloadSceneRequested;
@@ -45,7 +46,7 @@ namespace IndiGames.Core.SceneManagementSystem
 #endif
         }
 
-        protected virtual void OnDisable()
+        private void OnDisable()
         {
             _loadSceneEvent.LoadingRequested -= SceneLoadingRequested;
             _unloadSceneEvent.UnloadRequested -= UnloadSceneRequested;
