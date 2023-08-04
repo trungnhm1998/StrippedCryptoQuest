@@ -13,10 +13,13 @@ namespace CryptoQuest.Menu
         [SerializeField] [ReadOnly] private GameObject _currentSelection;
         [SerializeField] [ReadOnly] private GameObject _mouseSelection;
 
+        private bool _hasCursorMoved;
+        public bool HasCursorMoved => _hasCursorMoved;
+
         private void OnEnable()
         {
             _inputMediator.MenuNavigateEvent += HandleMoveSelection;
-            _inputMediator.MouseMoveEvent += HandleMoveCursor;
+            _inputMediator.MenuMouseMoveEvent += HandleMoveCursor;
 
             StartCoroutine(SelectDefault());
         }
@@ -24,7 +27,7 @@ namespace CryptoQuest.Menu
         private void OnDisable()
         {
             _inputMediator.MenuNavigateEvent -= HandleMoveSelection;
-            _inputMediator.MouseMoveEvent -= HandleMoveCursor;
+            _inputMediator.MenuMouseMoveEvent -= HandleMoveCursor;
         }
 
         public void UpdateDefault(GameObject newDefault)
@@ -55,8 +58,9 @@ namespace CryptoQuest.Menu
         /// when the event was fired. The _currentSelection is updated later on, after the EventSystem moves to the
         /// desired UI element, the UI element will call into UpdateSelection()
         /// </summary>
-        private void HandleMoveSelection()
+        private void HandleMoveSelection(Vector2 input)
         {
+            _hasCursorMoved = false;
             Cursor.visible = false;
 
             // Handle case where no UI element is selected because mouse left selectable bounds
@@ -64,8 +68,9 @@ namespace CryptoQuest.Menu
                 EventSystem.current.SetSelectedGameObject(_currentSelection);
         }
 
-        private void HandleMoveCursor()
+        public virtual void HandleMoveCursor()
         {
+            _hasCursorMoved = true;
             if (_mouseSelection != null)
             {
                 EventSystem.current.SetSelectedGameObject(_mouseSelection);
@@ -74,13 +79,13 @@ namespace CryptoQuest.Menu
             Cursor.visible = true;
         }
 
-        public void HandleMouseEnter(GameObject UIElement)
+        public virtual void HandleMouseEnter(GameObject UIElement)
         {
             _mouseSelection = UIElement;
             EventSystem.current.SetSelectedGameObject(UIElement);
         }
 
-        public void HandleMouseExit(GameObject UIElement)
+        public virtual void HandleMouseExit(GameObject UIElement)
         {
             if (EventSystem.current.currentSelectedGameObject != UIElement)
             {
@@ -113,7 +118,7 @@ namespace CryptoQuest.Menu
             if ((UIElement.GetComponent<MultiInputSelectableElement>() != null) ||
                 (UIElement.GetComponent<MultiInputButton>() != null))
             {
-                _mouseSelection = UIElement;
+                // _mouseSelection = UIElement;
                 _currentSelection = UIElement;
             }
         }

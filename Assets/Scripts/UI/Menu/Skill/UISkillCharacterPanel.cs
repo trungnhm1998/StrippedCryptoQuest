@@ -73,7 +73,7 @@ namespace CryptoQuest.UI.Skill
                 _currentRectTransform.rect.height - _currentRectTransform.anchoredPosition.y
                 > _parentRectTransform.rect.height + _skillRectTransform.rect.height / 2;
 
-        private void SelectSkillHandle()
+        private void SelectSkillHandle(Vector2 arg0)
         {
             _autoScrollRect.UpdateScrollRectTransform();
             ShowScrollHints();
@@ -101,7 +101,7 @@ namespace CryptoQuest.UI.Skill
             if (_listSkillButton.Count > 0)
             {
                 _listSkillButton[0].Select();
-                SelectSkillHandle();
+                SelectSkillHandle(Vector2.zero);
             }
         }
 

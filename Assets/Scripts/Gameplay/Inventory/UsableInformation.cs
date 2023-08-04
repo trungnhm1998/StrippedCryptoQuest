@@ -1,7 +1,11 @@
-﻿namespace CryptoQuest.Gameplay.Inventory
+﻿using System;
+using UnityEngine;
+
+namespace CryptoQuest.Gameplay.Inventory
 {
+    [Serializable]
     public class UsableInformation : ItemInformation
     {
-        public int Quantity;
+        [field: SerializeField] public int Quantity { get; private set; }
     }
 }

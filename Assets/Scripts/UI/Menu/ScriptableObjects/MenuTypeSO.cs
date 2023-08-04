@@ -5,12 +5,13 @@ namespace CryptoQuest.UI.Menu.ScriptableObjects
 {
     public enum EMenuType
     {
-        Main = 0,
+        Home = 0,
         Status = 1,
         Skills = 2,
         Items = 3,
         Beast = 4,
-        Options = 5
+        Option = 5,
+        Navigation = 6,
     }
     
     [CreateAssetMenu(menuName = "Crypto Quest/UI/Menu Type", fileName = "UIMenuPanelType")]

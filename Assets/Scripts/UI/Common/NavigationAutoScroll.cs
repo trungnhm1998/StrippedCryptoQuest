@@ -35,13 +35,18 @@ namespace CryptoQuest.UI.Common
         private void OnEnable()
         {
             _inputMediator.MenuNavigateEvent += CheckButtonPosition;
-            _inputMediator.CancelEvent += CheckButtonPosition;
+            _inputMediator.MenuCancelEvent += CheckButtonPosition;
         }
 
         private void OnDisable()
         {
             _inputMediator.MenuNavigateEvent -= CheckButtonPosition;
-            _inputMediator.CancelEvent -= CheckButtonPosition;
+            _inputMediator.MenuCancelEvent -= CheckButtonPosition;
+        }
+
+        private void CheckButtonPosition(Vector2 arg0)
+        {
+            CheckButtonPosition();
         }
 
         private void CheckButtonPosition()

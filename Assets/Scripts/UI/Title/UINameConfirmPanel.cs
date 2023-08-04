@@ -17,7 +17,7 @@ namespace CryptoQuest.UI.Title
         private void OnEnable()
         {
             StartCoroutine(CoSelectYesButton());
-            _inputMediator.CancelEvent += OnNoButtonPressed;
+            _inputMediator.MenuCancelEvent += OnNoButtonPressed;
         }
 
         private IEnumerator CoSelectYesButton()
@@ -28,7 +28,7 @@ namespace CryptoQuest.UI.Title
 
         private void OnDisable()
         {
-            _inputMediator.CancelEvent -= OnNoButtonPressed;
+            _inputMediator.MenuCancelEvent -= OnNoButtonPressed;
         }
 
         public void OnYesButtonPressed()
