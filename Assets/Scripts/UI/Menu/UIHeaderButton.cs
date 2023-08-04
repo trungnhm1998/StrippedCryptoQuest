@@ -18,38 +18,37 @@ namespace CryptoQuest.UI.Menu
         [SerializeField] private TMP_Text _header;
         [SerializeField] private Color _normal;
         [SerializeField] private Color _disabled;
-        private bool _enabled = true;
 
         public void OnPressed()
         {
-            if (!_enabled) return;
             Pressed?.Invoke(_typeSO);
         }
 
         public override void OnSelect(BaseEventData eventData)
         {
-            if (!_enabled) return;
+            if (!interactable)
+            {
+                return;
+            }
+
             _pointer.enabled = true;
             base.OnSelect(eventData);
         }
+
         public override void OnDeselect(BaseEventData eventData)
         {
-            if (!_enabled) return;
-
             _pointer.enabled = false;
             base.OnDeselect(eventData);
         }
 
-        public void Disable()
+        public void Focus()
         {
-            _enabled = false;
-            _header.color = _disabled;
+            _header.color = _normal;
         }
 
-        public void Enable()
+        public void UnFocus()
         {
-            _enabled = true;
-            _header.color = _normal;
+            _header.color = _disabled;
         }
     }
 }

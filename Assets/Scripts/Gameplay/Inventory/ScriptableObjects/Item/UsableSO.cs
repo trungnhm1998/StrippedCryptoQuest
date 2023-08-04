@@ -1,0 +1,19 @@
+﻿using UnityEngine;
+
+namespace CryptoQuest.Data.Item
+{
+    public enum EItemType
+    {
+        Key = 0,
+        Consumable = 1,
+    }
+
+    [CreateAssetMenu(fileName = "Usable Item", menuName = "Crypto Quest/Inventory/Usable Item")]
+    public class UsableSO : ItemGenericSO
+    {
+        [Header("Usable Item")]
+        [SerializeField] private UsableTypeSO _usableTypeSo;
+
+        [SerializeField] private EItemType _itemType;
+    }
+}

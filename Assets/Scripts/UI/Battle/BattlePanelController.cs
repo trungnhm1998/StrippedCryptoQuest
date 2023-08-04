@@ -68,7 +68,7 @@ namespace CryptoQuest.UI.Battle
             OnButtonGuardClicked += OnButtonGuardClickedHandler;
             OnButtonEscapeClicked += OnButtonEscapeClickedHandler;
 
-            _inputMediator.CancelEvent += OnClickCancel;
+            _inputMediator.MenuCancelEvent += OnClickMenuCancel;
             _battleManager = _battleBus.BattleManager;
             ShowEnemyGroups();
         }
@@ -81,7 +81,7 @@ namespace CryptoQuest.UI.Battle
             OnButtonGuardClicked -= OnButtonGuardClickedHandler;
             OnButtonEscapeClicked -= OnButtonEscapeClickedHandler;
 
-            _inputMediator.CancelEvent -= OnClickCancel;
+            _inputMediator.MenuCancelEvent -= OnClickMenuCancel;
         }
 
         private void SetupChain(BattleActionHandler.BattleActionHandler[] chain)
@@ -112,7 +112,7 @@ namespace CryptoQuest.UI.Battle
             _uiBattleCommandMenu.Initialize();
         }
 
-        private void OnClickCancel()
+        private void OnClickMenuCancel()
         {
             ReinitializeUI();
         }

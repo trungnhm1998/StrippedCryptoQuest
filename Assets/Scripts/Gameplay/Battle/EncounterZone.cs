@@ -2,6 +2,7 @@ using CryptoQuest.Gameplay.Battle.Core.Components;
 using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Calculation;
 using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data;
 using CryptoQuest.Input;
+using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Events;
 using IndiGames.Core.EditorTools.Attributes.ReadOnlyAttribute;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;

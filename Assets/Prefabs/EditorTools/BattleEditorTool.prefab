@@ -1,0 +1,71 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3227777770989510523
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5720049554569970454}
+  - component: {fileID: 5963690770288739539}
+  m_Layer: 0
+  m_Name: BattleEditorTool
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5720049554569970454
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3227777770989510523}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5963690770288739539
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3227777770989510523}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06d881bde51793740872df56f909774d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _gameplayBus: {fileID: 11400000, guid: a26ff341568973e46a1d4449052d5bb0, type: 2}
+  _battleDataSOs:
+  - {fileID: 11400000, guid: 776504b7b50e9464898f2b0de365f0bb, type: 2}
+  - {fileID: 11400000, guid: ab6bf8d3f0bb425449bd537a4dc3a5d9, type: 2}
+  - {fileID: 11400000, guid: 4fff71652e2d91643925d1441d79974b, type: 2}
+  _battleScenes:
+  - {fileID: 11400000, guid: 833dbd4ce20eda642b4396d6dceb5038, type: 2}
+  - {fileID: 11400000, guid: 6a177d40f56f35947a214ec092cb0d85, type: 2}
+  - {fileID: 11400000, guid: d7773916a6f16ef44b84c315a089e44f, type: 2}
+  _defaultBackground:
+    m_AssetGUID: 77a3df24428bcf845a1acc3a5dc87f38
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0
+  _triggerBattleEncounterEvent: {fileID: 11400000, guid: 958b0408c96e9e241b57861e46638a79, type: 2}
+  _enterBattleChannelEvent: {fileID: 11400000, guid: 10feb0e3bd5394b4f93989855f674bfa, type: 2}
+  _enterFieldChannelEvent: {fileID: 11400000, guid: 6b39df15c0e11b94190b1e13cca7a626, type: 2}
+  _guiWidth: 400
+  _showDebug: 0
+  _windowRect:
+    serializedVersion: 2
+    x: 20
+    y: 20
+    width: 120
+    height: 50
