@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using CryptoQuest.Gameplay.Skill;
 using CryptoQuest.Gameplay.Skill.ScriptableObjects;
@@ -24,11 +25,12 @@ namespace CryptoQuest.UI.Skill
         [SerializeField] private RectTransform _parentRectTransform;
         [SerializeField] private RectTransform _skillRectTransform;
         [SerializeField] private LocalizeStringEvent _localizeDescription;
-        [SerializeField] private Image _characterCardBackground;
         [field: SerializeField] public ECharacterClass Character { get; private set; }
-        [field: SerializeField] public ECharacterSkill TypeOfSkill { get; private set; }
         private List<MultiInputButton> _listSkillButton = new();
         private List<SkillInformation> _listSkills = new();
+        [NonSerialized] public ECharacterSkill TypeOfSkill;
+        [NonSerialized] public UISkillAbility CurrentSkillAbility;
+        public Image CharacterCardBackground;
 
 
         private void Awake()
@@ -71,13 +73,15 @@ namespace CryptoQuest.UI.Skill
                 _currentRectTransform.rect.height - _currentRectTransform.anchoredPosition.y
                 > _parentRectTransform.rect.height + _skillRectTransform.rect.height / 2;
 
-        private void SelectSkillHandle()
+        private void SelectSkillHandle(Vector2 arg0)
         {
             _autoScrollRect.UpdateScrollRectTransform();
             ShowScrollHints();
             if (EventSystem.current.currentSelectedGameObject.TryGetComponent<UISkillAbility>(out var currentSelectedSkill))
             {
-                _localizeDescription.StringReference = currentSelectedSkill.Description;
+                CurrentSkillAbility = currentSelectedSkill;
+                TypeOfSkill = CurrentSkillAbility.TypeOfSkill;
+                _localizeDescription.StringReference = CurrentSkillAbility.Description;
             }
         }
 
@@ -85,6 +89,7 @@ namespace CryptoQuest.UI.Skill
         {
             _content.SetActive(false);
             ActiveSkillSelection(false);
+            CharacterCardBackground.enabled = false;
         }
 
         public void Select()
@@ -92,10 +97,11 @@ namespace CryptoQuest.UI.Skill
             _content.SetActive(true);
             ShowScrollHints();
             ActiveSkillSelection(true);
+            CharacterCardBackground.enabled = true;
             if (_listSkillButton.Count > 0)
             {
                 _listSkillButton[0].Select();
-                SelectSkillHandle();
+                SelectSkillHandle(Vector2.zero);
             }
         }
 
@@ -103,7 +109,6 @@ namespace CryptoQuest.UI.Skill
         {
             foreach (var button in _listSkillButton)
             {
-                _characterCardBackground.enabled = isActivated;
                 button.GetComponent<MultiInputButton>().enabled = isActivated;
             }
         }

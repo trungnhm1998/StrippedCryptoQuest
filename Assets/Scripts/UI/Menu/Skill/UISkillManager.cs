@@ -18,7 +18,8 @@ namespace CryptoQuest.UI.Skill
         private UISkillCharacterPanel _currentActivePanel;
         private bool _isSelectedMenu = false;
         private bool _isSelectedCharacter = false;
-        private int _currentSelectedTabIndex = 0;
+        [SerializeField] private int _currentSelectedTabIndex = 0;
+        [SerializeField] private int _currentCharacterCardIndex = 0;
 
         private void Awake()
         {
@@ -43,7 +44,7 @@ namespace CryptoQuest.UI.Skill
             _inputMediator.MenuSubmitEvent += ShowCharacterSkills;
             _inputMediator.NextSelectionMenu += SelectNextMenu;
             _inputMediator.PreviousSelectionMenu += SelectPreviousMenu;
-            _inputMediator.CancelEvent += BackToSelectCharacterCard;
+            _inputMediator.MenuCancelEvent += BackToSelectCharacterCard;
             for (int i = 0; i < _tabSkillButton.Count; i++)
             {
                 _tabSkillButton[i].Clicked += SelectTab;
@@ -59,7 +60,7 @@ namespace CryptoQuest.UI.Skill
             _inputMediator.MenuNavigateEvent -= SelectCharacterMenu;
             _inputMediator.NextSelectionMenu -= SelectNextMenu;
             _inputMediator.PreviousSelectionMenu -= SelectPreviousMenu;
-            _inputMediator.CancelEvent -= BackToSelectCharacterCard;
+            _inputMediator.MenuCancelEvent -= BackToSelectCharacterCard;
             for (int i = 0; i < _tabSkillButton.Count; i++)
             {
                 _tabSkillButton[i].Clicked -= SelectTab;
@@ -106,7 +107,7 @@ namespace CryptoQuest.UI.Skill
                 }
                 SelectTab(CYCLE_TYPES[_currentSelectedTabIndex]);
                 //TODO: Implement apply skill to character
-                Debug.Log($"Apply skill to Character ");
+                Debug.Log($"Apply skill to Character {CYCLE_TYPES[_currentCharacterCardIndex]}");
             }
             else
             {
@@ -123,7 +124,7 @@ namespace CryptoQuest.UI.Skill
                 else
                 {
                     //TODO: Implement logic to use skill
-                    Debug.Log($"Used Skill!");
+                    Debug.Log($"Use self cast-skill!");
                 }
             }
         }
@@ -144,33 +145,52 @@ namespace CryptoQuest.UI.Skill
             _currentActivePanel.Select();
         }
 
-        private void SelectCharacterMenu()
+        private void SelectCharacterMenu(Vector2 arg0)
         {
+            GameObject currentGameObject = EventSystem.current.currentSelectedGameObject;
             for (int i = 0; i < _tabSkillButton.Count; i++)
             {
-                if (_tabSkillButton[i].gameObject == EventSystem.current.currentSelectedGameObject)
+                if (_isSelectedMenu)
                 {
-                    _currentSelectedTabIndex = i;
-                    break;
+                    if (currentGameObject == _listCharacterCardButton[i].gameObject)
+                        _currentCharacterCardIndex = i;
+                }
+                else
+                {
+                    _listSkills[_currentSelectedTabIndex].CharacterCardBackground.enabled = false;
+                    if (currentGameObject == _tabSkillButton[i].gameObject)
+                        _currentSelectedTabIndex = i;
                 }
             }
         }
 
         public void OnClickCharacterCard()
         {
-            SelectCharacterMenu();
+            SelectCharacterMenu(Vector2.zero);
             ShowCharacterSkills();
         }
 
         public void BackToSelectCharacterCard()
         {
-            foreach (var tab in _tabSkillButton)
+            if (!_isSelectedCharacter)
             {
-                tab.GetComponent<MultiInputButton>().enabled = true;
+                foreach (var tab in _tabSkillButton)
+                {
+                    tab.GetComponent<MultiInputButton>().enabled = true;
+                }
+                EventSystem.current.SetSelectedGameObject(_tabSkillButton[_currentSelectedTabIndex].gameObject);
+                _isSelectedMenu = false;
+                _listSkills[_currentSelectedTabIndex].ActiveSkillSelection(false);
             }
-            EventSystem.current.SetSelectedGameObject(_tabSkillButton[_currentSelectedTabIndex].gameObject);
-            _isSelectedMenu = false;
-            _listSkills[_currentSelectedTabIndex].ActiveSkillSelection(false);
+            else
+            {
+                foreach (var card in _listCharacterCardButton)
+                {
+                    card.enabled = false;
+                }
+                _isSelectedCharacter = false;
+                SelectTab(CYCLE_TYPES[_currentSelectedTabIndex]);
+            }
         }
     }
 }

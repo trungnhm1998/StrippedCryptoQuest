@@ -1,5 +1,5 @@
-using System;
 using System.Collections.Generic;
+using System.Numerics;
 using CryptoQuest.Gameplay.Inventory;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
 using CryptoQuest.Input;
@@ -9,6 +9,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Localization.Components;
 using UnityEngine.UI;
+using Vector2 = UnityEngine.Vector2;
 
 namespace CryptoQuest.UI.Inventory
 {
@@ -62,7 +63,7 @@ namespace CryptoQuest.UI.Inventory
             }
         }
 
-        private void SelectItemHandle()
+        private void SelectItemHandle(Vector2 arg0)
         {
             _autoScrollRect.UpdateScrollRectTransform();
             CheckScrollRect();
@@ -87,7 +88,7 @@ namespace CryptoQuest.UI.Inventory
             if (_buttonList.Count > 0)
             {
                 _buttonList[0].Select();
-                SelectItemHandle();
+                SelectItemHandle(Vector2.zero);
             }
         }
 

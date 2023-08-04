@@ -1,178 +1,136 @@
-﻿using System;
-using System.Collections.Generic;
+using CryptoQuest.Input;
+using CryptoQuest.UI.Menu.MenuStates;
+using CryptoQuest.UI.Menu.Panels;
 using CryptoQuest.UI.Menu.ScriptableObjects;
-using IndiGames.Core.Events.ScriptableObjects;
 using UnityEngine;
-using UnityEngine.Events;
-using UnityEngine.Serialization;
-using UnityEngine.UI;
 
 namespace CryptoQuest.UI.Menu
 {
     public class MenuManager : MonoBehaviour
     {
-        [Serializable]
-        public struct MenuMap
+        [Header("Configs")]
+        [SerializeField] private InputMediatorSO _inputMediator;
+
+        [Header("Game Components")] [SerializeField]
+        private GameObject _contents;
+
+        [SerializeField] private UINavigationBar _navigationBar;
+        public UINavigationBar NavigationBar => _navigationBar;
+        [SerializeField] private MenuTypeSO _defaultMenu;
+        [SerializeField] private GameObject _panelsContainer;
+
+        private MainMenuStateMachine _mainMenuFsm;
+
+        private void Awake()
         {
-            public MenuTypeSO TypeSO;
-            public UIMenuPanel Panel;
+            SetupMenuStateMachines();
         }
 
-        [FormerlySerializedAs("EnableSortModeEvent")]
-        [Header("Events")]
-        [SerializeField] private VoidEventChannelSO SortModeEnabledEvent;
-        [SerializeField] private VoidEventChannelSO SortModeDisabledEvent;
+        /// <summary>
+        /// Find all the UIMenuPanel in <see cref="_panelsContainer"/> and setup the state machines.
+        /// Through Polymorphism <see cref="UIMenuPanel.GetPanelState"/>, each
+        /// UIMenuPanel needs to implement and return correct state machine.
+        ///
+        /// State machine will be init when the main menu first open at <see cref="ShowMainMenu"/>.
+        /// <seealso cref="CryptoQuest.UI.Menu.Panels.Status.UIStatusMenu.GetPanelState"/>
+        /// </summary>
+        private void SetupMenuStateMachines()
+        {
+            _mainMenuFsm = new MainMenuStateMachine(this);
+            var panels = _panelsContainer.GetComponentsInChildren<UIMenuPanel>();
+            foreach (var panel in panels)
+            {
+                _mainMenuFsm.AddState(panel.TypeSO.name, panel.GetPanelState(this));
+            }
 
-        [Header("Game Components")]
-        [SerializeField] private RectTransform _navBar;
-        [SerializeField] private List<UIHeaderButton> _navBarButtons = new();
-        [SerializeField] private List<MenuMap> _panels = new();
+            _mainMenuFsm.SetStartState(_defaultMenu.name);
+        }
 
-        private Dictionary<EMenuType, UIMenuPanel> _cachedPanel = new();
-        private UIMenuPanel _currentActivePanel;
-        private MenuTypeSO _currentActiveMenuTypeSO;
-
+        /// <summary>
+        /// For each new interaction with the menu, we will register the new events here and delegates the logic to the
+        /// state machine
+        /// </summary>
         private void OnEnable()
         {
-            SortModeEnabledEvent.EventRaised += DisableButtonsInteraction;
-            SortModeDisabledEvent.EventRaised += EnableButtonsInteraction;
+            _navigationBar.MenuChanged += ChangeMenu;
+
+            _inputMediator.ShowMainMenu += ShowMainMenu; // Start Button
+            _inputMediator.StartPressed += CloseMainMenu; // also start button but only in main menu
+            _inputMediator.MenuCancelEvent += MenuCancelEventRaised; // East Button
+            _inputMediator.TabChangeEvent += ChangeTab; // shoulder LB/RB
+            _inputMediator.MenuSubmitEvent += Submit; // South Button
+            _inputMediator.MenuInteractEvent += Interact;
         }
 
         private void OnDisable()
         {
-            SortModeEnabledEvent.EventRaised -= DisableButtonsInteraction;
-            SortModeDisabledEvent.EventRaised -= EnableButtonsInteraction;
+            _navigationBar.MenuChanged -= ChangeMenu;
+
+            _inputMediator.ShowMainMenu -= ShowMainMenu;
+            _inputMediator.StartPressed -= CloseMainMenu; // also start button but only in main menu
+            _inputMediator.MenuCancelEvent -= MenuCancelEventRaised;
+            _inputMediator.TabChangeEvent -= ChangeTab;
+            _inputMediator.MenuSubmitEvent -= Submit;
+            _inputMediator.MenuInteractEvent -= Interact;
         }
 
-        private void Awake()
+        #region State Machine Delegates
+
+        /// <summary>
+        /// When presses the "E" button on keyboard, each panels (sub state machine) will have its own logic to handle
+        /// delegate the logic to the main menu state machine. first then it will delegate to the sub state machine.
+        /// </summary>
+        private void Interact()
         {
-            _cachedPanel = new();
-            foreach (var menuMap in _panels)
-            {
-                _cachedPanel.Add(menuMap.TypeSO.Type, menuMap.Panel);
-            }
-
-            _currentActivePanel = _cachedPanel[EMenuType.Main];
-        }
-
-        private void DisableButtonsInteraction()
-        {
-            foreach (var button in _navBarButtons)
-            {
-                button.interactable = false;
-            }
-        }
-
-        private void EnableButtonsInteraction()
-        {
-            Debug.Log($"Sort mode turn off");
-            foreach (var button in _navBarButtons)
-            {
-                button.interactable = true;
-            }
-        }
-
-        public void MainMenuBeingClosed()
-        {
-            foreach (var button in _navBarButtons)
-            {
-                button.Pressed -= MenuHeaderButtonPressed;
-            }
-        }
-
-        public void ShowMainMenuPanel()
-        {
-            UpdateNavBarLayout();
-
-            if (_currentActivePanel != null && _currentActivePanel.TypeSO.Type != EMenuType.Main)
-            {
-                HideCurrentPanel();
-            }
-
-            _currentActivePanel = _cachedPanel[EMenuType.Main];
-            _currentActiveMenuTypeSO = _currentActivePanel.TypeSO;
-            RegisterNavBarButtonEvents();
-            ShowCurrentPanel();
-        }
-
-        private void RegisterNavBarButtonEvents()
-        {
-            foreach (var button in _navBarButtons)
-            {
-                button.Pressed += MenuHeaderButtonPressed;
-            }
-        }
-
-        public void MenuHeaderButtonPressed(MenuTypeSO typeSO)
-        {
-            var typeToShow = typeSO.Type;
-            if (_currentActivePanel != null && _currentActivePanel.TypeSO.Type == typeToShow)
-            {
-                return;
-            }
-
-            if (typeToShow == EMenuType.Main) return;
-            
-            _currentActiveMenuTypeSO = typeSO;
-            
-            HideCurrentPanel();
-            _currentActivePanel = _cachedPanel[typeToShow];
-            ShowCurrentPanel();
-
-            EnableCurrectActiveHeaderButton(typeSO);
+            _mainMenuFsm.Interact();
         }
 
         /// <summary>
-        /// disable other buttons then the current active one
-        /// hide arrow from the active button
+        /// Delegate the logic for sub states and sub state machines.
+        /// Some state will called the CloseMainMenu() method to close the menu. Usually at State suffix with Navigation.
         /// </summary>
-        /// <param name="typeSO">typeSO from the pressed button</param>
-        private void EnableCurrectActiveHeaderButton(MenuTypeSO typeSO)
+        private void MenuCancelEventRaised()
         {
-            foreach (var button in _navBarButtons)
-            {
-                // disable button component so it could be remove from unity event system
-                button.interactable = false;
-                button.Disable();
-                if (button.TypeSO == typeSO)
-                {
-                    button.Pointer.enabled = false;
-                    button.Enable();
-                }
-            }
+            _mainMenuFsm.HandleCancel();
         }
 
-        private void EnableAllNavButtons()
+        private void ChangeTab(float direction)
         {
-            foreach (var button in _navBarButtons)
-            {
-                button.interactable = true;
-                button.Enable();
-                button.Pointer.enabled = button.TypeSO == _currentActiveMenuTypeSO;
-            }
-        }
-        public void UpdateNavBarLayout()
-        {
-            LayoutRebuilder.ForceRebuildLayoutImmediate(_navBar);
+            _mainMenuFsm.ChangeTab(direction);
         }
 
-        private void ShowCurrentPanel()
+        private void Submit()
         {
-            if (_currentActivePanel == null) return;
-            _currentActivePanel.Show();
-            _currentActivePanel.PanelUnfocus = BackToMenuNavigationState;
+            _mainMenuFsm.OnLogic();
         }
 
-        private void BackToMenuNavigationState(MenuTypeSO menuTypeSO)
+        #endregion
+
+        /// <summary>
+        /// Will open the main menu UI when <see cref="InputMediatorSO.ShowMainMenu"/> were raised.
+        /// </summary>
+        private void ShowMainMenu()
         {
-            EnableAllNavButtons();
-            // _currentActivePanel = null;
+            _contents.SetActive(true);
+            _navigationBar.SetActive(true);
+            _mainMenuFsm.Init();
+            _inputMediator.EnableMenuInput();
         }
 
-        private void HideCurrentPanel()
+        /// <summary>
+        /// Destructive method to close the main menu UI.
+        /// </summary>
+        public void CloseMainMenu()
         {
-            if (_currentActivePanel == null) return;
-            _currentActivePanel.Hide();
+            _navigationBar.SetActive(false);
+            _contents.SetActive(false);
+            _inputMediator.EnableMapGameplayInput();
+        }
+
+        private void ChangeMenu(MenuTypeSO typeSO)
+        {
+            Debug.Log($"ChangeMenu {typeSO.name}");
+            _mainMenuFsm.RequestStateChange(typeSO.name);
         }
     }
 }

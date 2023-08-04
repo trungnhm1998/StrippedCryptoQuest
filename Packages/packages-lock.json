@@ -1,5 +1,28 @@
 {
   "dependencies": {
+    "com.esotericsoftware.spine.spine-csharp": {
+      "version": "https://github.com/EsotericSoftware/spine-runtimes.git?path=spine-csharp/src#4.1",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "3ae685fff52b6d129bfd19c80fbf9f9aa0264208"
+    },
+    "com.esotericsoftware.spine.spine-unity": {
+      "version": "https://github.com/EsotericSoftware/spine-runtimes.git?path=spine-unity/Assets/Spine#4.1",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {
+        "com.esotericsoftware.spine.spine-csharp": "4.1.0"
+      },
+      "hash": "3ae685fff52b6d129bfd19c80fbf9f9aa0264208"
+    },
+    "com.inspiaaa.unityhfsm": {
+      "version": "https://github.com/Inspiaaa/UnityHFSM.git#upm",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "2168c17857dfee65ab1417dee6e41b5c3b15846b"
+    },
     "com.jetbrains.riderflow": {
       "version": "2023.1.0-25",
       "depth": 0,
@@ -395,6 +418,12 @@
     },
     "net.indigames.quest-system": {
       "version": "file:net.indigames.quest-system",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
+    "net.indigames.tools": {
+      "version": "file:net.indigames.tools",
       "depth": 0,
       "source": "embedded",
       "dependencies": {}
