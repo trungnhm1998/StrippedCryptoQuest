@@ -17,7 +17,7 @@ namespace CryptoQuest.UI.Inventory
         [SerializeField] private List<UIInventoryTabButton> _tabInventoryButton;
         [SerializeField] private List<UIInventoryPanel> _inventories;
         [SerializeField] private ItemEventChannelSO _OnEquipItemEvent;
-        [SerializeField] private List<UsableTypeSO> _cycleType;
+        [SerializeField] private List<UsableTypeSO> _cycleTypes;
         private Dictionary<UsableTypeSO, UIInventoryPanel> _cachedInventories;
         private Dictionary<UsableTypeSO, UIInventoryTabButton> _cachedTabButtons;
         private UIInventoryPanel _currentActivePanel;
@@ -54,7 +54,7 @@ namespace CryptoQuest.UI.Inventory
             }
 
             _selectionHandler.UpdateDefault(_tabInventoryButton[0].gameObject);
-            SelectTab(_cycleType[0]);
+            SelectTab(_cycleTypes[0]);
         }
 
         private void OnDisable()
@@ -75,7 +75,7 @@ namespace CryptoQuest.UI.Inventory
             _currentSelectedTabIndex++;
             _currentSelectedTabIndex =
                 _currentSelectedTabIndex >= _tabInventoryButton.Count ? 0 : _currentSelectedTabIndex;
-            SelectTab(_cycleType[_currentSelectedTabIndex]);
+            SelectTab(_cycleTypes[_currentSelectedTabIndex]);
         }
 
         private void SelectPreviousMenu()
@@ -83,7 +83,7 @@ namespace CryptoQuest.UI.Inventory
             _currentSelectedTabIndex--;
             _currentSelectedTabIndex =
                 _currentSelectedTabIndex < 0 ? _tabInventoryButton.Count - 1 : _currentSelectedTabIndex;
-            SelectTab(_cycleType[_currentSelectedTabIndex]);
+            SelectTab(_cycleTypes[_currentSelectedTabIndex]);
         }
 
         private void HandleItemPressed()

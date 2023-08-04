@@ -3,7 +3,7 @@ using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.ScriptableObjects;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
 using UnityEngine;
-using System;
+using UnityEngine.AddressableAssets;
 
 namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data
 {
@@ -11,7 +11,6 @@ namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data
     public class CharacterDataSO : InitializeAttributeDatabase
     {
         public string Name;
-        public Sprite BattleIconSprite;
         public AbilityScriptableObject NormalAttack;
         public List<AbilityScriptableObject> GrantedSkills;
 
