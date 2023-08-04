@@ -52,7 +52,7 @@ namespace CryptoQuest.Gameplay.Battle
             _battleBus.CurrentBattleInfo = battleInfo;
             _spiralConfigSo.Color = Color.black;
             _spiralConfigSo.DoneSpiralIn += SpiralInDone;
-            _spiralConfigSo.DoneFadeOut+= StartBattle;
+            _spiralConfigSo.DoneFadeOut += StartBattle;
             _spiralConfigSo.OnSpiralIn();
         }
 
