@@ -47,20 +47,20 @@ namespace CryptoQuest.UI.SpiralFX
 
         private void FadeOutRaised()
         {
-            OnFadeOut();
+            FadeOut();
         }
 
         private void SpiralIn_Raised()
         {
-            OnSpiralIn();
+            SpiralIn();
         }
 
         private void SpiralOut_Raised()
         {
-            OnSpiralOut();
+            SpiralOut();
         }
 
-        private void OnFadeOut()
+        private void FadeOut()
         {
             for (int i = 0; i < _spiralMasks.Count; i++)
             {
@@ -80,7 +80,7 @@ namespace CryptoQuest.UI.SpiralFX
             _spiralConfig.OnFinishFadeOut();
         }
 
-        private void OnSpiralIn()
+        private void SpiralIn()
         {
             ResetSpiralSize();
             _baseHorizontal.gameObject.SetActive(true);
@@ -96,10 +96,10 @@ namespace CryptoQuest.UI.SpiralFX
                     new Vector2(_screenWidth, _baseHorizontal.rectTransform.sizeDelta.y), _spiralDuration / 2))
                 .Join(_baseVertical.rectTransform.DOSizeDelta(
                     new Vector2(_baseVertical.rectTransform.sizeDelta.x, _screenHeight), _spiralDuration / 2))
-                .OnComplete(() => { OnSpiralSpin(); });
+                .OnComplete(() => { SpiralSpin(); });
         }
 
-        private void OnSpiralSpin()
+        private void SpiralSpin()
         {
             for (int i = 0; i < _spiralMasks.Count; i++)
             {
@@ -117,7 +117,7 @@ namespace CryptoQuest.UI.SpiralFX
             _spiralConfig.OnFinishSpiralIn();
         }
 
-        private void OnSpiralReveseSpin()
+        private void SpiralReveseSpin()
         {
             for (int i = 0; i < _spiralMasks.Count; i++)
             {
@@ -126,14 +126,14 @@ namespace CryptoQuest.UI.SpiralFX
             }
         }
 
-        private void OnSpiralOut()
+        private void SpiralOut()
         {
             StartCoroutine(StartReverseSpiral());
         }
 
         private IEnumerator StartReverseSpiral()
         {
-            OnSpiralReveseSpin();
+            SpiralReveseSpin();
             yield return new WaitForSeconds(_spiralDuration / 2);
             _sequence = DOTween.Sequence();
             _sequence
