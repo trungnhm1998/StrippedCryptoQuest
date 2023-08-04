@@ -68,7 +68,7 @@ namespace CryptoQuest.Menu
                 EventSystem.current.SetSelectedGameObject(_currentSelection);
         }
 
-        private void HandleMoveCursor()
+        public virtual void HandleMoveCursor()
         {
             _hasCursorMoved = true;
             if (_mouseSelection != null)
@@ -79,13 +79,13 @@ namespace CryptoQuest.Menu
             Cursor.visible = true;
         }
 
-        public void HandleMouseEnter(GameObject UIElement)
+        public virtual void HandleMouseEnter(GameObject UIElement)
         {
             _mouseSelection = UIElement;
             EventSystem.current.SetSelectedGameObject(UIElement);
         }
 
-        public void HandleMouseExit(GameObject UIElement)
+        public virtual void HandleMouseExit(GameObject UIElement)
         {
             if (EventSystem.current.currentSelectedGameObject != UIElement)
             {

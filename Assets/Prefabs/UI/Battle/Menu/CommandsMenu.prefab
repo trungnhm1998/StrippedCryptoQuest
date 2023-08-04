@@ -1111,7 +1111,7 @@ GameObject:
   - component: {fileID: 2782095523705182995}
   - component: {fileID: 5950388133210088121}
   - component: {fileID: 490102877632347429}
-  - component: {fileID: 479146184979190957}
+  - component: {fileID: 6744096226400759985}
   m_Layer: 0
   m_Name: CommandsMenu
   m_TagString: Untagged
@@ -1136,7 +1136,7 @@ RectTransform:
   - {fileID: 8065589770465883867}
   - {fileID: 6014532123820528663}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
@@ -1211,7 +1211,7 @@ MonoBehaviour:
   - {fileID: 2985944849982435294}
   _activeColor: {r: 1, g: 1, b: 1, a: 1}
   _inactiveColor: {r: 0.5019608, g: 0.5019608, b: 0.5019608, a: 1}
---- !u!114 &479146184979190957
+--- !u!114 &6744096226400759985
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1220,13 +1220,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 4016686727580335480}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: af38c0740d43a4f419a21ea970c9cf53, type: 3}
+  m_Script: {fileID: 11500000, guid: 12cb5e110fa29d44581fe2a2393f3a16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _inputMediator: {fileID: 11400000, guid: 1fb61cdb72f0a484f8e4db68e2011977, type: 2}
   _defaultSelection: {fileID: 0}
-  _currentSelection: {fileID: 574740110981811285}
-  _mouseSelection: {fileID: 574740110981811285}
+  _currentSelection: {fileID: 0}
+  _mouseSelection: {fileID: 0}
 --- !u!1 &4124627094007968546
 GameObject:
   m_ObjectHideFlags: 0
@@ -2297,7 +2297,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fcb05f5860a0565418a3035077571184, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RetreatAbilitySO: {fileID: 11400000, guid: a0f75fbf27be14140aa72678a173d481, type: 2}
-  IsBattleRetreatable: 0
-  TargetedAttributeSO: {fileID: 11400000, guid: 6e9af3d88e4f52849b938dd384bd5e37, type: 2}
-  _onEscapeFailedEvent: {fileID: 11400000, guid: 21ac4f77cf89fde4ca1f4069bbe611fe, type: 2}
+  _retreatAbilitySO: {fileID: 0}
+  _targetedAttributeSO: {fileID: 0}
+  _battlePanelController: {fileID: 0}
