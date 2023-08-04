@@ -44,16 +44,16 @@ namespace CryptoQuest.UI.Menu.Panels.Status
             UIStatusInventoryItemButton.InspectingEquipment -= PreviewStats;
         }
 
-        private void Start()
+        private void InitMockData()
         {
-            // var mockEquipment = new Equipment();
-            // for (var index = 0; index < _modifiedAttributes.Count; index++)
-            // {
-            //     var attribute = _modifiedAttributes[index];
-            //     mockEquipment.ModifiedAttributes.Add(attribute, _modifiedAttributesValue[index]);
-            // }
-            //
-            // PreviewStats(mockEquipment);
+            var mockEquipment = new Equipment();
+            for (var index = 0; index < _modifiedAttributes.Count; index++)
+            {
+                var attribute = _modifiedAttributes[index];
+                mockEquipment.ModifiedAttributes.Add(attribute, _modifiedAttributesValue[index]);
+            }
+
+            PreviewStats(mockEquipment);
         }
 
         public void PreviewStats(Equipment equipment)
