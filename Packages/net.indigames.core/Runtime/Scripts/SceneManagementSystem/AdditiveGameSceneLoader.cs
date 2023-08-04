@@ -28,7 +28,6 @@ namespace IndiGames.Core.SceneManagementSystem
         [SerializeField] private VoidEventChannelSO _sceneLoaded;
 
         [SerializeField] private VoidEventChannelSO _sceneUnloading;
-        
         private AsyncOperationHandle<SceneInstance> _sceneLoadingOperationHandle;
         private AsyncOperationHandle<SceneInstance> _gameplayManagerLoadingOperationHandle;
 
