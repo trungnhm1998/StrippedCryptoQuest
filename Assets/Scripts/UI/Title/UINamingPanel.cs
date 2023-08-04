@@ -44,7 +44,7 @@ namespace CryptoQuest.UI.Title
 
         private void OnEnable()
         {
-            _inputMediator.CancelEvent += BackToStartScreen;
+            _inputMediator.MenuCancelEvent += BackToStartScreen;
             _inputMediator.MenuTabPressed += NavigateToNextInput;
             _inputMediator.MenuConfirmedEvent += HandleInputSubmit;
             _nameInput.onSubmit.AddListener(MenuSubmitEvent);
@@ -56,7 +56,7 @@ namespace CryptoQuest.UI.Title
         private void OnDisable()
         {
             _selectionHandler.Unselect();
-            _inputMediator.CancelEvent -= BackToStartScreen;
+            _inputMediator.MenuCancelEvent -= BackToStartScreen;
             _inputMediator.MenuTabPressed -= NavigateToNextInput;
             _inputMediator.MenuConfirmedEvent -= HandleInputSubmit;
             _nameInput.onSubmit.RemoveListener(MenuSubmitEvent);

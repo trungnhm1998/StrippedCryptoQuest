@@ -22,12 +22,12 @@ namespace CryptoQuest.UI.Dialogs.YesNoDialog
         private void OnEnable()
         {
             StartCoroutine(CoSelectDefaultButton());
-            _inputMediator.CancelEvent += OnNoButtonPressed;
+            _inputMediator.MenuCancelEvent += OnNoButtonPressed;
         }
 
         private void OnDisable()
         {
-            _inputMediator.CancelEvent -= OnNoButtonPressed;
+            _inputMediator.MenuCancelEvent -= OnNoButtonPressed;
         }
 
         private IEnumerator CoSelectDefaultButton()

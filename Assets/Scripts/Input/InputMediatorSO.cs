@@ -10,32 +10,32 @@ namespace CryptoQuest.Input
     public class InputMediatorSO : ScriptableObject,
         InputActions.IMapGameplayActions,
         InputActions.IMenusActions,
-        InputActions.IDialoguesActions,
-        InputActions.IHomeMenuActions,
-        InputActions.IStatusMenuActions,
-        InputActions.IStatusEquipmentsActions,
-        InputActions.IStatusEquipmentsInventoryActions,
-        InputActions.IStatusMagicStoneActions
+        InputActions.IDialoguesActions
     {
         #region Events
 
         #region Gameplay
 
         public event UnityAction<Vector2> MoveEvent;
-        public event UnityAction PauseEvent;
         public event UnityAction InteractEvent;
-        public event UnityAction OpenMainMenuEvent;
+        /// <summary>
+        /// During field gameplay, this event is raised when the player presses the "Start"/"Tab"/"Escape" button.
+        /// </summary>
+        public event UnityAction ShowMainMenu;
 
         #endregion
 
         #region Menu
 
+        public event UnityAction StartPressed;
+        public event UnityAction<float> TabChangeEvent;
+        public event UnityAction<Vector2> MenuNavigateEvent;
         public event UnityAction MenuConfirmedEvent;
         public event UnityAction MenuSubmitEvent;
-        public event UnityAction MenuNavigateEvent;
-        public event UnityAction MouseMoveEvent;
+        public event UnityAction MenuMouseMoveEvent;
+        public event UnityAction MenuInteractEvent;
         public event UnityAction MenuTabPressed;
-        public event UnityAction CancelEvent;
+        public event UnityAction MenuCancelEvent;
         public event UnityAction HomeMenuSortEvent;
 
         public event UnityAction NextSelectionMenu;
@@ -46,31 +46,6 @@ namespace CryptoQuest.Input
         #region Dialogue
 
         public event UnityAction NextDialoguePressed;
-
-        #endregion
-
-        #region HomeMenu
-
-        public event UnityAction NextEvent;
-        public event UnityAction PreviousEvent;
-        public event UnityAction ConfirmEvent;
-        public event UnityAction HomeMenuCancelEvent;
-
-        #endregion
-
-        #region StatusMenu
-
-        public event UnityAction EnableChangeEquipmentModeEvent;
-        public event UnityAction StatusEquipmentGoBelowEvent;
-        public event UnityAction StatusEquipmentGoAboveEvent;
-        public event UnityAction StatusMenuConfirmSelectEvent;
-        public event UnityAction StatusMenuCancelEvent;
-        public event UnityAction StatusEquipmentCancelEvent;
-        public event UnityAction StatusEquipmentInventoryCancelEvent;
-        public event UnityAction StatusInventoryGoBelowEvent;
-        public event UnityAction StatusInventoryGoAboveEvent;
-        public event UnityAction EnableMagicStoneMenuEvent;
-        public event UnityAction TurnOffMagicStoneMenuEvent;
 
         #endregion
 
@@ -99,11 +74,6 @@ namespace CryptoQuest.Input
             _inputActions.MapGameplay.Disable();
             _inputActions.Menus.Disable();
             _inputActions.Dialogues.Disable();
-            _inputActions.HomeMenu.Disable();
-            _inputActions.StatusMenu.Disable();
-            _inputActions.StatusEquipments.Disable();
-            _inputActions.StatusEquipmentsInventory.Disable();
-            _inputActions.StatusMagicStone.Disable();
         }
 
         private void CreateInputInstanceIfNeeded()
@@ -114,11 +84,6 @@ namespace CryptoQuest.Input
             _inputActions.Menus.SetCallbacks(this);
             _inputActions.MapGameplay.SetCallbacks(this);
             _inputActions.Dialogues.SetCallbacks(this);
-            _inputActions.HomeMenu.SetCallbacks(this);
-            _inputActions.StatusMenu.SetCallbacks(this);
-            _inputActions.StatusEquipments.SetCallbacks(this);
-            _inputActions.StatusEquipmentsInventory.SetCallbacks(this);
-            _inputActions.StatusMagicStone.SetCallbacks(this);
         }
 
         public void EnableMenuInput()
@@ -140,36 +105,6 @@ namespace CryptoQuest.Input
             _inputActions.MapGameplay.Enable();
         }
 
-        public void EnableHomeMenuInput()
-        {
-            DisableAllInput();
-            _inputActions.HomeMenu.Enable();
-        }
-
-        public void EnableStatusMenuInput()
-        {
-            DisableAllInput();
-            _inputActions.StatusMenu.Enable();
-        }
-
-        public void EnableStatusEquipmentsInput()
-        {
-            DisableAllInput();
-            _inputActions.StatusEquipments.Enable();
-        }
-        
-        public void EnableStatusEquipmentsInventoryInput()
-        {
-            DisableAllInput();
-            _inputActions.StatusEquipmentsInventory.Enable();
-        }
-        
-        public void EnableStatusMagicStoneInput()
-        {
-            DisableAllInput();
-            _inputActions.StatusMagicStone.Enable();
-        }
-
         #endregion
 
         #region MapGameplayActions
@@ -185,6 +120,7 @@ namespace CryptoQuest.Input
                 MoveEvent?.Invoke(Vector3.zero);
                 return;
             }
+
             MoveEvent?.Invoke(_inputCached[_inputCached.Count - 1]);
         }
 
@@ -194,6 +130,7 @@ namespace CryptoQuest.Input
             {
                 _inputCached.Add(direction);
             }
+
             MoveEvent?.Invoke(_inputCached[_inputCached.Count - 1]);
         }
 
@@ -204,8 +141,10 @@ namespace CryptoQuest.Input
                 GameplayRemoveMove(Vector2.up);
                 return;
             }
+
             GameplayMove(Vector2.up);
         }
+
         public void OnMoveDown(InputAction.CallbackContext context)
         {
             if (context.canceled)
@@ -213,8 +152,10 @@ namespace CryptoQuest.Input
                 GameplayRemoveMove(Vector2.down);
                 return;
             }
+
             GameplayMove(Vector2.down);
         }
+
         public void OnMoveLeft(InputAction.CallbackContext context)
         {
             if (context.canceled)
@@ -222,8 +163,10 @@ namespace CryptoQuest.Input
                 GameplayRemoveMove(Vector2.left);
                 return;
             }
+
             GameplayMove(Vector2.left);
         }
+
         public void OnMoveRight(InputAction.CallbackContext context)
         {
             if (context.canceled)
@@ -231,6 +174,7 @@ namespace CryptoQuest.Input
                 GameplayRemoveMove(Vector2.right);
                 return;
             }
+
             GameplayMove(Vector2.right);
         }
 
@@ -241,12 +185,7 @@ namespace CryptoQuest.Input
 
         public void OnMainMenu(InputAction.CallbackContext context)
         {
-            if (context.performed) OpenMainMenuEvent?.Invoke();
-        }
-
-        public void OnPause(InputAction.CallbackContext context)
-        {
-            if (context.performed) PauseEvent?.Invoke();
+            if (context.performed) ShowMainMenu?.Invoke();
         }
 
         #endregion
@@ -255,18 +194,7 @@ namespace CryptoQuest.Input
 
         public void OnNavigate(InputAction.CallbackContext context)
         {
-            if (context.performed) MenuNavigateEvent?.Invoke();
-        }
-
-        public void OnConfirm(InputAction.CallbackContext context)
-        {
-            if (context.phase == InputActionPhase.Performed)
-                MenuConfirmedEvent?.Invoke();
-        }
-
-        public void OnCancel(InputAction.CallbackContext context)
-        {
-            if (context.performed) CancelEvent?.Invoke();
+            if (context.performed) MenuNavigateEvent?.Invoke(context.ReadValue<Vector2>());
         }
 
         public void OnSubmit(InputAction.CallbackContext context)
@@ -274,34 +202,35 @@ namespace CryptoQuest.Input
             if (context.performed) MenuSubmitEvent?.Invoke();
         }
 
-        public bool LeftMouseDown() => Mouse.current.leftButton.isPressed;
+        public void OnConfirm(InputAction.CallbackContext context) { }
+
+        public void OnCancel(InputAction.CallbackContext context)
+        {
+            if (context.performed) MenuCancelEvent?.Invoke();
+        }
+
         public void OnClick(InputAction.CallbackContext context) { }
 
         public void OnPoint(InputAction.CallbackContext context) { }
 
-        public void OnNextSelection(InputAction.CallbackContext context)
-        {
-            if (context.performed) MenuTabPressed?.Invoke();
-        }
-
         public void OnMouseMove(InputAction.CallbackContext context)
         {
-            if (context.phase == InputActionPhase.Performed) MouseMoveEvent?.Invoke();
+            if (context.performed) MenuMouseMoveEvent?.Invoke();
         }
 
-        public void OnNextSelectionMenu(InputAction.CallbackContext context)
+        public void OnChangeTab(InputAction.CallbackContext context)
         {
-            if (context.performed) NextSelectionMenu?.Invoke();
+            if (context.performed) TabChangeEvent?.Invoke(context.ReadValue<float>());
         }
 
-        public void OnPreviousSelectionMenu(InputAction.CallbackContext context)
+        public void OnMenuInteract(InputAction.CallbackContext context)
         {
-            if (context.performed) PreviousSelectionMenu?.Invoke();
+            if (context.performed) MenuInteractEvent?.Invoke();
         }
 
-        public void OnHomeMenuEnableSort(InputAction.CallbackContext context)
+        public void OnMenuStart(InputAction.CallbackContext context)
         {
-            if (context.performed) HomeMenuSortEvent?.Invoke();
+            if (context.performed) StartPressed?.Invoke();
         }
 
         #endregion
@@ -318,104 +247,9 @@ namespace CryptoQuest.Input
             Debug.LogWarning("Escape pressed, but not implemented");
         }
 
-
         #endregion
 
-        #region HomeMenu
-
-        public void OnNext(InputAction.CallbackContext context)
-        {
-            if (context.performed) NextEvent?.Invoke();
-        }
-
-        public void OnPrevious(InputAction.CallbackContext context)
-        {
-            if (context.performed) PreviousEvent?.Invoke();
-        }
-
-        public void OnConfirmSelect(InputAction.CallbackContext context)
-        {
-            if (context.performed) ConfirmEvent?.Invoke();
-        }
-
-        public void OnHomeMenuCancel(InputAction.CallbackContext context)
-        {
-            if (context.performed) HomeMenuCancelEvent?.Invoke();
-        }
-
-        #endregion
-
-        #region StatusMenu
-        public void OnEnableChangeEquipmentMode(InputAction.CallbackContext context)
-        {
-            if (context.performed) EnableChangeEquipmentModeEvent?.Invoke();
-        }
-
-        public void OnStatusEquipmentCancel(InputAction.CallbackContext context)
-        {
-            if (context.performed) StatusEquipmentCancelEvent?.Invoke();
-        }
-
-        public void OnCharacterChange(InputAction.CallbackContext context)
-        {
-            throw new NotImplementedException();
-        }
-
-        #endregion
-
-        #region StatusMenu.Equipments
-        public void OnStatusMenuConfirmSelect(InputAction.CallbackContext context)
-        {
-            if (context.performed) StatusMenuConfirmSelectEvent?.Invoke();
-        }
-        
-        public void OnGoBelow(InputAction.CallbackContext context)
-        {
-            if (context.performed) StatusEquipmentGoBelowEvent?.Invoke();
-        }
-
-        public void OnGoAbove(InputAction.CallbackContext context)
-        {
-            if (context.performed) StatusEquipmentGoAboveEvent?.Invoke();
-        }
-
-        public void OnMagicStone(InputAction.CallbackContext context)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void OnStatusMenuCancel(InputAction.CallbackContext context)
-        {
-            if (context.performed) StatusMenuCancelEvent?.Invoke();
-        }
-        public void OnEnableMagicStoneMenu(InputAction.CallbackContext context)
-        {
-            if (context.performed) EnableMagicStoneMenuEvent?.Invoke();
-        }
-        #endregion
-
-        #region StatusMenu.Equipments.Inventory
-        public void OnStatusInventoryCancel(InputAction.CallbackContext context)
-        {
-            if (context.performed) StatusEquipmentInventoryCancelEvent?.Invoke();
-        }
-
-        public void OnStatusInventoryGoBelow(InputAction.CallbackContext context)
-        {
-            if (context.performed) StatusInventoryGoBelowEvent?.Invoke();
-        }
-
-        public void OnStatusInventoryGoAbove(InputAction.CallbackContext context)
-        {
-            if (context.performed) StatusInventoryGoAboveEvent?.Invoke();
-        }
-        #endregion
-
-        #region StatusMenu.MagicStone
-        public void OnTurnOffMagicStoneMenu(InputAction.CallbackContext context)
-        {
-            if (context.performed) TurnOffMagicStoneMenuEvent?.Invoke();
-        }
-        #endregion
+        public bool LeftMouseDown()
+            => Mouse.current.leftButton.isPressed;
     }
 }
