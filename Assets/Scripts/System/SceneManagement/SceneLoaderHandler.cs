@@ -17,29 +17,11 @@ namespace CryptoQuest.System.SceneManagement
     public class SceneLoaderHandler : LinearGameSceneLoader
     {
         [SerializeField] private SceneLoaderBus _sceneLoadBus;
-        [SerializeField] private ConfigSOEventChannelSO _onSetConfigEventChannel;
         public SceneScriptableObject CurrentLoadedScene => _currentLoadedScene;
 
         private void Awake()
         {
             _sceneLoadBus.SceneLoader = this;
-        }
-
-        protected override void OnEnable()
-        {
-            base.OnEnable();
-            _onSetConfigEventChannel.EventRaised += SetFadeConfig;
-        }
-
-        protected override void OnDisable()
-        {
-            base.OnDisable();
-            _onSetConfigEventChannel.EventRaised -= SetFadeConfig;
-        }
-
-        private void SetFadeConfig(FadeConfigSO configSo)
-        {
-            _currentConfigUsed = configSo;
         }
     }
 }

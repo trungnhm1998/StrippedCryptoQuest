@@ -28,7 +28,6 @@ namespace IndiGames.Core.SceneManagementSystem
         [SerializeField] protected VoidEventChannelSO _sceneLoaded;
 
         [SerializeField] protected VoidEventChannelSO _sceneUnloading;
-        protected FadeConfigSO _currentConfigUsed;
         protected AsyncOperationHandle<SceneInstance> _sceneLoadingOperationHandle;
         protected AsyncOperationHandle<SceneInstance> _gameplayManagerLoadingOperationHandle;
 
@@ -42,7 +41,6 @@ namespace IndiGames.Core.SceneManagementSystem
         {
             _loadMap.LoadingRequested += MapLoadingRequested;
             _loadTitle.LoadingRequested += TitleSceneLoadingRequested;
-            _currentConfigUsed = _fadeConfigSO;
 #if UNITY_EDITOR
             _editorColdBoot.LoadingRequested += EditorColdBootLoadingRequested;
 #endif
@@ -134,8 +132,8 @@ namespace IndiGames.Core.SceneManagementSystem
 
         private IEnumerator CoUnloadPreviousScene()
         {
-            _currentConfigUsed.OnFadeIn();
-            yield return new WaitForSeconds(_currentConfigUsed.Duration);
+            _fadeConfigSO.OnFadeIn();
+            yield return new WaitForSeconds(_fadeConfigSO.Duration);
             if (_currentLoadedScene != null)
             {
                 if (_currentLoadedScene.SceneReference.OperationHandle.IsValid())
@@ -178,10 +176,9 @@ namespace IndiGames.Core.SceneManagementSystem
 
             _isLoading = false;
 
-            _currentConfigUsed.OnFadeOut();
+            _fadeConfigSO.OnFadeOut();
 
             _sceneLoaded.RaiseEvent();
-_currentConfigUsed = _fadeConfigSO;
         }
     }
 }
