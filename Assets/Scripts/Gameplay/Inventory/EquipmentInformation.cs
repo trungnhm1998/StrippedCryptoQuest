@@ -8,5 +8,8 @@ namespace CryptoQuest.Gameplay.Inventory
     public class EquipmentInformation : ItemInformation
     {
         [SerializeField] private RaritySO _raritySo;
+        protected override void Activate() { }
+
+        public void Equip() => Activate();
     }
 }

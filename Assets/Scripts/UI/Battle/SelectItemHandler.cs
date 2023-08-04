@@ -1,6 +1,6 @@
 using System.Collections.Generic;
+using CryptoQuest.Data.Item;
 using CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit;
-using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Skills;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
 using CryptoQuest.UI.Battle.CommandsMenu;
 using UnityEngine;
@@ -11,7 +11,7 @@ namespace CryptoQuest.UI.Battle
     {
         [SerializeField] private BattlePanelController _panelController;
         [SerializeField] private InventorySO _inventorySO;
-        private List<ExpendableItemSO> _items = new();
+        private List<UsableSO> _items = new();
 
         private readonly List<AbstractButtonInfo> _buttonInfo = new();
         private IBattleUnit _currentUnit;
@@ -25,13 +25,9 @@ namespace CryptoQuest.UI.Battle
         private void SetupTargetButton(IBattleUnit battleUnit)
         {
             _buttonInfo.Clear();
-            foreach (var item in _inventorySO.Items)
+            foreach (var item in _inventorySO.UsableItem)
             {
-                if (item.ItemSO.Type == EItemType.Expendables)
-                {
-                    ExpendableItemSO expendableItemSO = item.ItemSO as ExpendableItemSO;
-                    _items.Add(expendableItemSO);
-                }
+                _items.Add(item.ItemSO);
             }
 
             foreach (var item in _items)
@@ -43,7 +39,7 @@ namespace CryptoQuest.UI.Battle
             _panelController.OpenCommandDetailPanel(_buttonInfo);
         }
 
-        private void SetExpendableItemAbility(ExpendableItemSO itemSo)
+        private void SetExpendableItemAbility(UsableSO itemSo)
         {
             var ability = _currentUnit.Owner.GiveAbility(itemSo.Ability);
             _currentUnit.SelectSkill(ability);

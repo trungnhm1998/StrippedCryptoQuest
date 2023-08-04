@@ -11,6 +11,7 @@ namespace CryptoQuest.Gameplay.Inventory
         [SerializeField] private ItemEventChannelSO _onEquipItemEventChannel;
         [SerializeField] private AbilitySystemBehaviour CurrentOwnerAbilitySystemBehaviour;
 
+
         private void OnEnable()
         {
             _onEquipItemEventChannel.EventRaised += EquipItem;
@@ -21,12 +22,11 @@ namespace CryptoQuest.Gameplay.Inventory
             _onEquipItemEventChannel.EventRaised -= EquipItem;
         }
 
-        private void EquipItem(ItemBase itemBaseItem)
+        private void EquipItem(UsableInformation item)
         {
-            ExpendableItemInfo expendableItemInfo = itemBaseItem as ExpendableItemInfo;
-            if (expendableItemInfo == null) return;
-            expendableItemInfo.Owner = CurrentOwnerAbilitySystemBehaviour;
-            itemBaseItem.Use();
+            if (item == null) return;
+            item.Owner = CurrentOwnerAbilitySystemBehaviour;
+            item.UseItem();
         }
     }
 }
