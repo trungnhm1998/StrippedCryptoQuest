@@ -9,7 +9,7 @@ namespace CryptoQuest.Data
         public int ID;
 
         [field: SerializeField] public LocalizedString DisplayName { get; private set; }
-        public LocalizedString Description;
+        [field: SerializeField] public LocalizedString Description { get; private set; }
         [field: SerializeField] public Sprite Icon { get; private set; }
 
         [field: SerializeField] public bool IsNftItem { get; private set; }

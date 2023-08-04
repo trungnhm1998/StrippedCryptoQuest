@@ -26,7 +26,7 @@ namespace CryptoQuest.UI.Inventory
             Icon.sprite = item.Item.Icon;
             Name.StringReference = item.Item.DisplayName;
             Quantity.text = item.Quantity.ToString();
-            // Description = item.ItemSO.Description;
+            Description = item.Item.Description;
         }
 
         public void OnClicked()

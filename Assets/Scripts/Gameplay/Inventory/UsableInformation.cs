@@ -10,7 +10,7 @@ namespace CryptoQuest.Gameplay.Inventory
     public class UsableInformation : ItemInformation
     {
         [field: SerializeField] public int Quantity { get; private set; }
-        [HideInInspector] public AbilitySystemBehaviour Owner;
+        public AbilitySystemBehaviour Owner { get; set; }
 
         [field: SerializeField] public UsableSO ItemSO { get; private set; }
 
@@ -27,9 +27,7 @@ namespace CryptoQuest.Gameplay.Inventory
 
         protected override void Activate()
         {
-            Debug.Log($"Activate {ItemSO.name}");
             if (Owner == null) return;
-            Debug.Log($"Owner {Owner.name}");
             AbstractAbility ability = Owner.GiveAbility(ItemSO.Ability);
             Owner.TryActiveAbility(ability);
         }
