@@ -14,8 +14,6 @@ namespace CryptoQuest.Gameplay
         Cutscene = 4,
     }
 
-
-    [CreateAssetMenu(fileName = "GameState", menuName = "Gameplay/Game State")]
     public class GameStateSO : ScriptableObject
     {
         [field: SerializeField, ReadOnly]

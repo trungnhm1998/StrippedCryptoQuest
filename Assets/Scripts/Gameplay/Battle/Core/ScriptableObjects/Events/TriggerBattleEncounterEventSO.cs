@@ -4,7 +4,7 @@ using IndiGames.Core.Events.ScriptableObjects;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace CryptoQuest.Gameplay.Battle
+namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Events
 {
     public class TriggerBattleEncounterEventSO : ScriptableObject
     {
