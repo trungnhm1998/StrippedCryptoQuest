@@ -28,12 +28,12 @@ namespace CryptoQuest.UI.Title
 
         private void Awake()
         {
+            _inputMediator.DisableAllInput();
             _hasSaveData = _saveSystem.LoadSaveGame();
         }
 
         private void Start()
         {
-            _inputMediator.DisableAllInput();
             ShowStartGamePanel();
         }
 
