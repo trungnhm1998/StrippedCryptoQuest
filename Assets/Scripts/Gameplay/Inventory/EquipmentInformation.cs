@@ -1,4 +1,12 @@
-﻿namespace CryptoQuest.Gameplay.Inventory
+﻿using System;
+using CryptoQuest.Data.Item;
+using UnityEngine;
+
+namespace CryptoQuest.Gameplay.Inventory
 {
-    public class EquipmentInformation : ItemInformation { }
+    [Serializable]
+    public class EquipmentInformation : ItemInformation
+    {
+        [SerializeField] private RaritySO _raritySo;
+    }
 }
