@@ -44,7 +44,7 @@ namespace CryptoQuest.UI.Skill
             _inputMediator.MenuSubmitEvent += ShowCharacterSkills;
             _inputMediator.NextSelectionMenu += SelectNextMenu;
             _inputMediator.PreviousSelectionMenu += SelectPreviousMenu;
-            _inputMediator.CancelEvent += BackToSelectCharacterCard;
+            _inputMediator.MenuCancelEvent += BackToSelectCharacterCard;
             for (int i = 0; i < _tabSkillButton.Count; i++)
             {
                 _tabSkillButton[i].Clicked += SelectTab;
@@ -60,7 +60,7 @@ namespace CryptoQuest.UI.Skill
             _inputMediator.MenuNavigateEvent -= SelectCharacterMenu;
             _inputMediator.NextSelectionMenu -= SelectNextMenu;
             _inputMediator.PreviousSelectionMenu -= SelectPreviousMenu;
-            _inputMediator.CancelEvent -= BackToSelectCharacterCard;
+            _inputMediator.MenuCancelEvent -= BackToSelectCharacterCard;
             for (int i = 0; i < _tabSkillButton.Count; i++)
             {
                 _tabSkillButton[i].Clicked -= SelectTab;
@@ -145,7 +145,7 @@ namespace CryptoQuest.UI.Skill
             _currentActivePanel.Select();
         }
 
-        private void SelectCharacterMenu()
+        private void SelectCharacterMenu(Vector2 arg0)
         {
             GameObject currentGameObject = EventSystem.current.currentSelectedGameObject;
             for (int i = 0; i < _tabSkillButton.Count; i++)
@@ -166,7 +166,7 @@ namespace CryptoQuest.UI.Skill
 
         public void OnClickCharacterCard()
         {
-            SelectCharacterMenu();
+            SelectCharacterMenu(Vector2.zero);
             ShowCharacterSkills();
         }
 
