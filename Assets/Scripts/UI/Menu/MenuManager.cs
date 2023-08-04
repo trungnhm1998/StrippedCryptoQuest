@@ -3,7 +3,6 @@ using CryptoQuest.UI.Menu.MenuStates;
 using CryptoQuest.UI.Menu.Panels;
 using CryptoQuest.UI.Menu.ScriptableObjects;
 using UnityEngine;
-using NotImplementedException = System.NotImplementedException;
 
 namespace CryptoQuest.UI.Menu
 {

@@ -12,6 +12,7 @@ namespace CryptoQuest.UI.Title
 
         [Header("UI")]
         [SerializeField] private UIStartGame _startGamePanel;
+
         [SerializeField] private UINamingPanel _namingPanel;
         [SerializeField] private UINameConfirmPanel _confirmationPanel;
 
@@ -20,6 +21,7 @@ namespace CryptoQuest.UI.Title
 
         [Header("Raise on")]
         [SerializeField] private VoidEventChannelSO _startNewGameChannel;
+
         [SerializeField] private VoidEventChannelSO _continueGameChannel;
 
         private bool _hasSaveData;
@@ -33,21 +35,6 @@ namespace CryptoQuest.UI.Title
         private void Start()
         {
             ShowStartGamePanel();
-        }
-
-        private void OnEnable()
-        {
-            _sceneLoadedChannel.EventRaised += HandleSceneLoaded;
-        }
-
-        private void OnDisable()
-        {
-            _sceneLoadedChannel.EventRaised -= HandleSceneLoaded;
-        }
-
-        private void HandleSceneLoaded()
-        {
-            _inputMediator.EnableMenuInput();
         }
 
         private void ShowStartGamePanel()

@@ -116,11 +116,6 @@ namespace CryptoQuest.UI.Title
                 _nameInput.Select();
         }
 
-        public void OnEndEditInput()
-        {
-            _inputMediator.EnableMenuInput();
-        }
-
         private IEnumerator CoSelectNameInput()
         {
             _inputMediator.DisableAllInput();
