@@ -108,7 +108,7 @@ namespace CryptoQuest.Input
 
         #region MapGameplayActions
 
-        private List<Vector2> _inputCached = new();
+        private readonly List<Vector2> _inputCached = new();
 
         private void GameplayRemoveMove(Vector2 direction)
         {
@@ -120,7 +120,8 @@ namespace CryptoQuest.Input
                 return;
             }
 
-            MoveEvent?.Invoke(_inputCached[_inputCached.Count - 1]);
+            // Index from end operator ^, this equal _inputCached.Count - 1
+            MoveEvent?.Invoke(_inputCached[^1]);
         }
 
         private void GameplayMove(Vector2 direction)
@@ -130,7 +131,7 @@ namespace CryptoQuest.Input
                 _inputCached.Add(direction);
             }
 
-            MoveEvent?.Invoke(_inputCached[_inputCached.Count - 1]);
+            MoveEvent?.Invoke(_inputCached[^1]);
         }
 
         public void OnMoveUp(InputAction.CallbackContext context)

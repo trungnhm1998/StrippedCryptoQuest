@@ -8,8 +8,8 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components
 {
     public class BattleController : MonoBehaviour
     {
+        [SerializeField] private BattleInputSO _battleInput;
         [SerializeField] private BattleBus _battleBus;
-        [SerializeField] private InputMediatorSO _inputMediator;
 
         [Header("UI")]
         [SerializeField] private CharacterList _heroesUI;
@@ -33,14 +33,13 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components
             _newTurnEventChannel.EventRaised -= OnNewTurn;
             _battleStartEventChannel.EventRaised -= SetupBattleUIs;
             _endStrategyPhaseEventChannel.EventRaised -= OnStategyPhaseEnd;
-            _inputMediator.EnableMapGameplayInput();
+            _battleInput.DisableBattleInput();
         }
 
         private void OnNewTurn()
         {
             _batteMenu.SetActive(true);
             _heroesUI.gameObject.SetActive(true);
-            _inputMediator.EnableMenuInput();
         }
 
         private void SetupBattleUIs()

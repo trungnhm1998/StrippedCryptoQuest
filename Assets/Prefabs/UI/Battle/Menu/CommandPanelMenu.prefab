@@ -55,7 +55,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _content: {fileID: 3356965728858396503}
   _itemPrefab: {fileID: 4760999619473875055, guid: 2ef6a7337d9142a47b67a336b87590e9, type: 3}
-  _navigationAutoScroll: {fileID: 4541969105574477605}
+  _navigationAutoScroll: {fileID: 0}
 --- !u!114 &8573187432408204303
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -247,7 +247,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 233954180823975175}
-  - component: {fileID: 4541969105574477605}
+  - component: {fileID: 7628064691521845768}
   - component: {fileID: 1211341661103231604}
   - component: {fileID: 6419113294319050896}
   - component: {fileID: 7825661060766914960}
@@ -279,7 +279,7 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: -15}
   m_SizeDelta: {x: 620, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &4541969105574477605
+--- !u!114 &7628064691521845768
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -288,15 +288,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 4108703559888648447}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f88d46a7336342159dec8d51108b43d3, type: 3}
+  m_Script: {fileID: 11500000, guid: c53626e68d504a8499971e1f7eaf5e37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _inputMediator: {fileID: 11400000, guid: 1fb61cdb72f0a484f8e4db68e2011977, type: 2}
   _firstButton: {fileID: 0}
   _lastButton: {fileID: 0}
   _arrowUpHint: {fileID: 4298003183915882938}
   _arrowDownHint: {fileID: 8537389916527040848}
   _scrollRect: {fileID: 7825661060766914960}
+  _battleInput: {fileID: 11400000, guid: d0c44063c591fb8489bc8e1087c0999e, type: 2}
 --- !u!222 &1211341661103231604
 CanvasRenderer:
   m_ObjectHideFlags: 0

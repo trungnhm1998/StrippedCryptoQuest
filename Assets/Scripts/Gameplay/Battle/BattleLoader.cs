@@ -4,6 +4,7 @@ using CryptoQuest.Events;
 using CryptoQuest.Gameplay.Battle.Core.Components;
 using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects;
 using CryptoQuest.UI.SpiralFX;
+using CryptoQuest.Input;
 using IndiGames.Core.Events.ScriptableObjects;
 using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Events;
 using IndiGames.Core.SceneManagementSystem.Events.ScriptableObjects;
@@ -14,6 +15,7 @@ namespace CryptoQuest.Gameplay.Battle
 {
     public class BattleLoader : MonoBehaviour
     {
+        [SerializeField] private BattleInputSO _battleInput;
         [SerializeField] private SpiralConfigSO _spiralConfigSo;
         [SerializeField] private BattleBus _battleBus;
         [SerializeField] private SceneScriptableObject _battleSceneSO;
@@ -49,6 +51,7 @@ namespace CryptoQuest.Gameplay.Battle
 
         private void OnEncounterBattle(BattleInfo battleInfo)
         {
+            _battleInput.EnableBattleInput();
             _battleBus.CurrentBattleInfo = battleInfo;
             _spiralConfigSo.Color = Color.black;
             _spiralConfigSo.DoneSpiralIn += SpiralInDone;
