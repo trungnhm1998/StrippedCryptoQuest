@@ -1,7 +1,7 @@
 using System.Collections.Generic;
-using CryptoQuest.Data.Item;
 using CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
+using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item;
 using CryptoQuest.UI.Battle.CommandsMenu;
 using UnityEngine;
 
@@ -27,7 +27,7 @@ namespace CryptoQuest.UI.Battle
             _buttonInfo.Clear();
             foreach (var item in _inventorySO.UsableItems)
             {
-                _items.Add(item.ItemSO);
+                _items.Add(item.Item);
             }
 
             foreach (var item in _items)

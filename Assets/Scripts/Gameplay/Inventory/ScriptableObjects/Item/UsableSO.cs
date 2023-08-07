@@ -1,22 +1,14 @@
-﻿using IndiGames.GameplayAbilitySystem.AbilitySystem.ScriptableObjects;
+﻿using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Type;
+using IndiGames.GameplayAbilitySystem.AbilitySystem.ScriptableObjects;
 using UnityEngine;
-using UnityEngine.Serialization;
 
-namespace CryptoQuest.Data.Item
+namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item
 {
-    public enum EItemType
-    {
-        Key = 0,
-        Consumable = 1,
-    }
-
     [CreateAssetMenu(fileName = "Usable Item", menuName = "Crypto Quest/Inventory/Usable Item")]
     public class UsableSO : ItemGenericSO
     {
-        [Header("Usable Item")] public UsableTypeSO UsableTypeSO;
-
-        [SerializeField] private EItemType _itemType;
-
-        public AbilityScriptableObject Ability;
+        [field: Header("Usable Item")]
+        [field: SerializeField] public UsableTypeSO UsableTypeSO { get; private set; }
+        [field: SerializeField] public AbilityScriptableObject Ability { get; private set; }
     }
 }

@@ -1,10 +1,10 @@
 ﻿using System;
-using CryptoQuest.Data.Item;
 using CryptoQuest.Events.Gameplay;
 using CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit;
 using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data;
 using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Skills;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
+using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.ScriptableObjects;
 
 namespace CryptoQuest.UI.Battle.CommandsMenu

@@ -2,13 +2,13 @@ using System.Collections;
 using CryptoQuest.Gameplay.Battle.Core.Components;
 using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Skills;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
+using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
 using IndiGames.GameplayAbilitySystem.EffectSystem;
 using NUnit.Framework;
 
 #if UNITY_EDITOR
-using CryptoQuest.Data.Item;
 using CryptoQuest.Gameplay.Inventory;
 using UnityEditor;
 using UnityEditor.SceneManagement;
@@ -26,7 +26,7 @@ namespace CryptoQuest.Tests.Runtime.Item
         private readonly WaitForSeconds WAIT_ONE_SECOND = new(1);
         private const string ITEMS_TEST_SCENE = "Assets/Tests/Runtime/Items.unity";
         private UsableSO _healItem;
-        private UsableInformation _healItemInfo;
+        private UsableInfo _healItemInfo;
         private GameObject _inventoryController;
         private InventoryController _inventoryControllerComponent;
         private BattleTeam _battleTeam;
@@ -67,7 +67,7 @@ namespace CryptoQuest.Tests.Runtime.Item
             _playerHealthAttribute = GetAttributeScriptableObject("Player.HP");
             Assert.NotNull(_playerHealthAttribute);
 
-            _healItemInfo = new UsableInformation(_healItem, _player);
+            _healItemInfo = new UsableInfo(_healItem, _player);
             Assert.NotNull(_healItemInfo);
         }
 

@@ -1,7 +1,7 @@
 using System.Collections.Generic;
-using CryptoQuest.Data.Item;
 using CryptoQuest.Gameplay.Inventory;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
+using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Type;
 using CryptoQuest.Input;
 using CryptoQuest.Menu;
 using PolyAndCode.UI;
@@ -30,7 +30,7 @@ namespace CryptoQuest.UI.Inventory
         [SerializeField] private LocalizeStringEvent _localizeDescription;
         [SerializeField] private Image _tabImage;
         public UsableTypeSO Type => _type;
-        private List<UsableInformation> _itemList = new();
+        private List<UsableInfo> _itemList = new();
         private List<MultiInputButton> _buttonList = new();
         private UIItemInventory _itemInformation;
 
@@ -56,11 +56,11 @@ namespace CryptoQuest.UI.Inventory
             _itemList.Clear();
             foreach (var item in _inventory.UsableItems)
             {
-                var itemSO = item.ItemSO;
+                var itemSO = item.Item;
                 var type = itemSO.UsableTypeSO;
                 if (type != _type) continue;
 
-                _itemList.Add(new UsableInformation(itemSO, item.Quantity));
+                _itemList.Add(new UsableInfo(itemSO, item.Quantity));
             }
         }
 

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace CryptoQuest.Data.Item
+namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Type
 {
     public enum EInventoryActionType
     {

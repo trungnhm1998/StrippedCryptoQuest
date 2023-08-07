@@ -1,32 +1,31 @@
 ﻿using System;
-using CryptoQuest.Data;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
 
 namespace CryptoQuest.Gameplay.Inventory
 {
     [Serializable]
-    public abstract class ItemInformation
+    public abstract class ItemInfo
     {
-        public ItemGenericSO Item { get; protected set; }
+        public ItemGenericSO BaseItem { get; protected set; }
         public string Id { get; set; }
 
-        public ItemInformation(ItemGenericSO item)
+        public ItemInfo(ItemGenericSO baseItem)
         {
-            Item = item;
+            BaseItem = baseItem;
             Id = Guid.NewGuid().ToString();
         }
 
-        public ItemInformation()
+        public ItemInfo()
         {
-            Item = null;
+            BaseItem = null;
             Id = Guid.NewGuid().ToString();
         }
 
         public bool IsValid()
         {
-            return Item != null;
+            return BaseItem != null;
         }
-        
+
         protected abstract void Activate();
     }
 }

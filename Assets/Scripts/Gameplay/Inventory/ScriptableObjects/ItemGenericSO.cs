@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.Localization;
 
-namespace CryptoQuest.Data
+namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects
 {
     public class ItemGenericSO : ScriptableObject
     {
@@ -10,13 +10,11 @@ namespace CryptoQuest.Data
 
         [field: SerializeField] public LocalizedString DisplayName { get; private set; }
         [field: SerializeField] public LocalizedString Description { get; private set; }
-        [field: SerializeField] public Sprite Icon { get; private set; }
+        [field: SerializeField] public Sprite Image { get; private set; }
 
-        [field: SerializeField] public bool IsNftItem { get; private set; }
-
-        public void SetIcon(Sprite icon)
+        public void SetImage(Sprite icon)
         {
-            this.Icon = icon;
+            this.Image = icon;
         }
     }
 }
