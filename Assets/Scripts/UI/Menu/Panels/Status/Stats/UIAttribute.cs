@@ -7,7 +7,11 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Stats
 {
     public class UIAttribute : MonoBehaviour
     {
+        private const string FORMAT = "{0}";
+        private const string ELEMENTAL_FORMAT = "+{0}%";
+
         public float DefaultValue = 100;
+        public bool isElemental;
 
         [SerializeField] private TMP_Text _valueLabel;
         [SerializeField] private Image _lowerIcon;
@@ -21,6 +25,7 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Stats
         private void Start()
         {
             _convertedValue = (int)DefaultValue;
+            ResetAttributeUI();
         }
 
         public void CompareValue(float receivedValue)
@@ -46,14 +51,15 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Stats
             _higherIcon.gameObject.SetActive(false);
             _lowerIcon.gameObject.SetActive(false);
             _valueLabel.color = Color.white;
-            _valueLabel.text = ((int)DefaultValue).ToString();
+            _valueLabel.text = string.Format(isElemental ? ELEMENTAL_FORMAT : FORMAT, (int)DefaultValue);
         }
 
         private void UpdateAttributeUI(Image image, int value)
         {
             image.gameObject.SetActive(true);
             _valueLabel.color = image.color;
-            _valueLabel.text = value.ToString();
+            _valueLabel.text = string.Format(isElemental ? ELEMENTAL_FORMAT : FORMAT, value);
+            Debug.Log($"value = {value}");
         }
     }
 }

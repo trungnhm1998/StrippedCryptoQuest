@@ -18,8 +18,7 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Stats
         [SerializeField] private List<float> _modifiedAttributesValue;
 
         [Space]
-        [FormerlySerializedAs("_attributes")] [SerializeField]
-        private List<UIAttribute> _uiAttributes = new List<UIAttribute>();
+        [SerializeField] private List<UIAttribute> _uiAttributes = new List<UIAttribute>();
 
         private Dictionary<AttributeScriptableObject, UIAttribute> _temp = new();
 

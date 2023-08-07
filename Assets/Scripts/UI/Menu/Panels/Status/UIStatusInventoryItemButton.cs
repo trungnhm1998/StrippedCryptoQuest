@@ -64,13 +64,12 @@ namespace CryptoQuest.UI.Menu.Panels.Status
             base.OnSelect(eventData);
             _selectEffect.SetActive(true);
             InspectingEquipment?.Invoke(CreateFakeData());
-            Debug.Log($"Inventory");
         }
 
         private UIStats.Equipment CreateFakeData()
         {
             var mockEquipment = new UIStats.Equipment();
-            var numberOfModifiedAttributes = Random.Range(1, 3);
+            var numberOfModifiedAttributes = Random.Range(1, 22);
             for (int i = 0; i < numberOfModifiedAttributes; i++)
             {
                 mockEquipment.ModifiedAttributes.Add(_allAttributeToRandomFrom[i], Random.Range(50, 200));
