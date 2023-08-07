@@ -134,8 +134,8 @@ GameObject:
   - component: {fileID: 4873985980455992722}
   - component: {fileID: 6996474279961022294}
   - component: {fileID: 6829376850599486780}
-  - component: {fileID: 9170994166482393344}
   - component: {fileID: 4723887359237689444}
+  - component: {fileID: 6910941236376225136}
   m_Layer: 5
   m_Name: Skill
   m_TagString: Untagged
@@ -261,7 +261,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 9170994166482393344}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: CryptoQuest.UI.Skill.UISkillAbility, indi-games.crypto-quest
         m_MethodName: OnClicked
         m_Mode: 1
@@ -274,7 +274,19 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   IsSelected: 1
---- !u!114 &9170994166482393344
+--- !u!225 &4723887359237689444
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6544690099334993259}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
+--- !u!114 &6910941236376225136
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -283,7 +295,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6544690099334993259}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 15fb4f33e074c31459f67213b75e0692, type: 3}
+  m_Script: {fileID: 11500000, guid: 4432cdd4fff66e74d99a14d2cd2ccd6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _iconImage: {fileID: 1962279535448429215}
@@ -298,21 +310,10 @@ MonoBehaviour:
     m_FallbackState: 0
     m_WaitForCompletion: 0
     m_LocalVariables: []
+  <TypeOfSkill>k__BackingField: 0
   references:
     version: 2
     RefIds: []
---- !u!225 &4723887359237689444
-CanvasGroup:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6544690099334993259}
-  m_Enabled: 1
-  m_Alpha: 1
-  m_Interactable: 1
-  m_BlocksRaycasts: 1
-  m_IgnoreParentGroups: 0
 --- !u!1 &7038924252698966816
 GameObject:
   m_ObjectHideFlags: 0

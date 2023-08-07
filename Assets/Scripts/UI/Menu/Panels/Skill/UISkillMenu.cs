@@ -10,6 +10,7 @@ namespace CryptoQuest.UI.Menu.Panels.Skill
     /// </summary>
     public class UISkillMenu : UIMenuPanel
     {
+        
         /// <summary>
         /// Return the specific state machine for this panel.
         /// </summary>

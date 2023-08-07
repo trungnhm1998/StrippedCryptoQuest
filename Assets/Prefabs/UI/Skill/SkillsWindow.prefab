@@ -149,7 +149,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1499554981781148162}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: CryptoQuest.UI.Skill.UISkillManager, indi-games.crypto-quest
         m_MethodName: BackToSelectCharacterCard
         m_Mode: 1
@@ -1064,10 +1064,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2817781547538031663}
-  - component: {fileID: 6106503339059200158}
-  - component: {fileID: 2040060361607022504}
   - component: {fileID: 826387192394571191}
+  - component: {fileID: 6106503339059200158}
   - component: {fileID: 1318060353346447621}
+  - component: {fileID: 5030225709994012179}
   m_Layer: 5
   m_Name: Skill Panel_2
   m_TagString: Untagged
@@ -1096,6 +1096,14 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 745, y: 462}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &826387192394571191
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 922119503794015970}
+  m_CullTransparentMesh: 1
 --- !u!114 &6106503339059200158
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1131,38 +1139,6 @@ MonoBehaviour:
   SelfInitialize: 1
   Direction: 0
   _segments: 2
---- !u!114 &2040060361607022504
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 922119503794015970}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7aa07ba21d1267f4fb01ca2ec4395f46, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _content: {fileID: 4062070923689040608}
-  _listSkillMockup: {fileID: 11400000, guid: 0cb538f48e43f764f96f304077916ccb, type: 2}
-  _recyclableScrollRect: {fileID: 6106503339059200158}
-  _autoScrollRect: {fileID: 1318060353346447621}
-  _upHint: {fileID: 5497906662852116714}
-  _downHint: {fileID: 3283852835898400763}
-  _currentRectTransform: {fileID: 4573489179623644125}
-  _parentRectTransform: {fileID: 6163104819566862174}
-  _skillRectTransform: {fileID: 2171444157869238816, guid: 2c92b1a7bf643054dbeb28382d01a8a7, type: 3}
-  _localizeDescription: {fileID: 6158781394214823339}
-  _tabImage: {fileID: 0}
-  <Character>k__BackingField: 2
---- !u!222 &826387192394571191
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 922119503794015970}
-  m_CullTransparentMesh: 1
 --- !u!114 &1318060353346447621
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1180,6 +1156,31 @@ MonoBehaviour:
   _templateScrollRect: {fileID: 6106503339059200158}
   _templateViewportTransform: {fileID: 6163104819566862174}
   ContentRectTransform: {fileID: 4573489179623644125}
+--- !u!114 &5030225709994012179
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 922119503794015970}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10a25b4606ac938498cbf862084b087b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _inputMediator: {fileID: 11400000, guid: 1fb61cdb72f0a484f8e4db68e2011977, type: 2}
+  _content: {fileID: 4062070923689040608}
+  _listSkillMockup: {fileID: 11400000, guid: 0cb538f48e43f764f96f304077916ccb, type: 2}
+  _recyclableScrollRect: {fileID: 6106503339059200158}
+  _autoScrollRect: {fileID: 1318060353346447621}
+  _upHint: {fileID: 5497906662852116714}
+  _downHint: {fileID: 3283852835898400763}
+  _currentRectTransform: {fileID: 4573489179623644125}
+  _parentRectTransform: {fileID: 6163104819566862174}
+  _skillRectTransform: {fileID: 2171444157869238816, guid: 2c92b1a7bf643054dbeb28382d01a8a7, type: 3}
+  _localizeDescription: {fileID: 6158781394214823339}
+  <Character>k__BackingField: 2
+  CharacterCardBackground: {fileID: 3368674979354206950}
 --- !u!1 &932965611617051250
 GameObject:
   m_ObjectHideFlags: 0
@@ -1662,7 +1663,7 @@ GameObject:
   - component: {fileID: 3409586472303326908}
   - component: {fileID: 6188234843673554416}
   - component: {fileID: 9112934437650030054}
-  - component: {fileID: 1499554981781148162}
+  - component: {fileID: 6150047489197737332}
   m_Layer: 5
   m_Name: SkillsWindow
   m_TagString: Untagged
@@ -1706,7 +1707,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1507640992170536414}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
@@ -1743,7 +1744,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _typeSO: {fileID: 11400000, guid: 285a7208c3fbc0344a1c4bde099d8941, type: 2}
   _content: {fileID: 1969089751643103455}
---- !u!114 &1499554981781148162
+--- !u!114 &6150047489197737332
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1752,16 +1753,28 @@ MonoBehaviour:
   m_GameObject: {fileID: 1507640992170536414}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0a71ebb1973e2604fba8359975c83b4f, type: 3}
+  m_Script: {fileID: 11500000, guid: 35ff405a65fb75241a98f6b443982f14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _inputMediator: {fileID: 11400000, guid: 1fb61cdb72f0a484f8e4db68e2011977, type: 2}
   _selectionHandler: {fileID: 6754717885306597125}
+  _tabSkillButton:
+  - {fileID: 671484197569370508}
+  - {fileID: 33945754810797387}
+  - {fileID: 8381101195230344541}
+  - {fileID: 1457369054221812151}
   _listSkills:
-  - {fileID: 6954690569571067206}
-  - {fileID: 2040060361607022504}
-  - {fileID: 3655270822974313252}
-  - {fileID: 5683122413944449257}
-  _listHighlightBackground: []
+  - {fileID: 6401828240133880215}
+  - {fileID: 5030225709994012179}
+  - {fileID: 3345597270603781222}
+  - {fileID: 6465868650928555541}
+  _listCharacterCardButton:
+  - {fileID: 4489235643594723039}
+  - {fileID: 6961606209865813496}
+  - {fileID: 6302756755272831642}
+  - {fileID: 1765861930679396644}
+  _currentSelectedTabIndex: 0
+  _currentCharacterCardIndex: 0
 --- !u!1 &1540703846324388751
 GameObject:
   m_ObjectHideFlags: 0
@@ -1922,10 +1935,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5692105767806469635}
-  - component: {fileID: 862718621802698581}
-  - component: {fileID: 5683122413944449257}
   - component: {fileID: 6844121779767321070}
+  - component: {fileID: 862718621802698581}
   - component: {fileID: 4727131032215836695}
+  - component: {fileID: 6465868650928555541}
   m_Layer: 5
   m_Name: Skill Panel_4
   m_TagString: Untagged
@@ -1954,6 +1967,14 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 745, y: 462}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &6844121779767321070
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1737857472406169834}
+  m_CullTransparentMesh: 1
 --- !u!114 &862718621802698581
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1989,38 +2010,6 @@ MonoBehaviour:
   SelfInitialize: 1
   Direction: 0
   _segments: 2
---- !u!114 &5683122413944449257
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1737857472406169834}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7aa07ba21d1267f4fb01ca2ec4395f46, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _content: {fileID: 4635505573121041565}
-  _listSkillMockup: {fileID: 11400000, guid: 0cb538f48e43f764f96f304077916ccb, type: 2}
-  _recyclableScrollRect: {fileID: 862718621802698581}
-  _autoScrollRect: {fileID: 4727131032215836695}
-  _upHint: {fileID: 8211098635453362794}
-  _downHint: {fileID: 587568207656431633}
-  _currentRectTransform: {fileID: 6942884006294949712}
-  _parentRectTransform: {fileID: 8417283153542028300}
-  _skillRectTransform: {fileID: 2171444157869238816, guid: 2c92b1a7bf643054dbeb28382d01a8a7, type: 3}
-  _localizeDescription: {fileID: 6158781394214823339}
-  _tabImage: {fileID: 0}
-  <Character>k__BackingField: 1
---- !u!222 &6844121779767321070
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1737857472406169834}
-  m_CullTransparentMesh: 1
 --- !u!114 &4727131032215836695
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2038,6 +2027,31 @@ MonoBehaviour:
   _templateScrollRect: {fileID: 862718621802698581}
   _templateViewportTransform: {fileID: 8417283153542028300}
   ContentRectTransform: {fileID: 6942884006294949712}
+--- !u!114 &6465868650928555541
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1737857472406169834}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10a25b4606ac938498cbf862084b087b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _inputMediator: {fileID: 11400000, guid: 1fb61cdb72f0a484f8e4db68e2011977, type: 2}
+  _content: {fileID: 4635505573121041565}
+  _listSkillMockup: {fileID: 11400000, guid: 0cb538f48e43f764f96f304077916ccb, type: 2}
+  _recyclableScrollRect: {fileID: 862718621802698581}
+  _autoScrollRect: {fileID: 4727131032215836695}
+  _upHint: {fileID: 8211098635453362794}
+  _downHint: {fileID: 587568207656431633}
+  _currentRectTransform: {fileID: 6942884006294949712}
+  _parentRectTransform: {fileID: 8417283153542028300}
+  _skillRectTransform: {fileID: 2171444157869238816, guid: 2c92b1a7bf643054dbeb28382d01a8a7, type: 3}
+  _localizeDescription: {fileID: 6158781394214823339}
+  <Character>k__BackingField: 1
+  CharacterCardBackground: {fileID: 4805846432865472447}
 --- !u!1 &1760243393520200106
 GameObject:
   m_ObjectHideFlags: 0
@@ -2915,10 +2929,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 867577849174331818}
-  - component: {fileID: 543055166419242023}
-  - component: {fileID: 6954690569571067206}
   - component: {fileID: 9098206421777164195}
+  - component: {fileID: 543055166419242023}
   - component: {fileID: 5721818891678490613}
+  - component: {fileID: 6401828240133880215}
   m_Layer: 5
   m_Name: Skill Panel_1
   m_TagString: Untagged
@@ -2947,6 +2961,14 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 745, y: 462}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &9098206421777164195
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2501641704838732054}
+  m_CullTransparentMesh: 1
 --- !u!114 &543055166419242023
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2982,38 +3004,6 @@ MonoBehaviour:
   SelfInitialize: 1
   Direction: 0
   _segments: 2
---- !u!114 &6954690569571067206
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2501641704838732054}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7aa07ba21d1267f4fb01ca2ec4395f46, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _content: {fileID: 7419123793860321494}
-  _listSkillMockup: {fileID: 11400000, guid: 0cb538f48e43f764f96f304077916ccb, type: 2}
-  _recyclableScrollRect: {fileID: 543055166419242023}
-  _autoScrollRect: {fileID: 5721818891678490613}
-  _upHint: {fileID: 4708016045412011269}
-  _downHint: {fileID: 2623073456412598457}
-  _currentRectTransform: {fileID: 4822734933547113303}
-  _parentRectTransform: {fileID: 8191982699683908761}
-  _skillRectTransform: {fileID: 2171444157869238816, guid: 2c92b1a7bf643054dbeb28382d01a8a7, type: 3}
-  _localizeDescription: {fileID: 6158781394214823339}
-  _tabImage: {fileID: 0}
-  <Character>k__BackingField: 0
---- !u!222 &9098206421777164195
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2501641704838732054}
-  m_CullTransparentMesh: 1
 --- !u!114 &5721818891678490613
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3031,6 +3021,31 @@ MonoBehaviour:
   _templateScrollRect: {fileID: 543055166419242023}
   _templateViewportTransform: {fileID: 8191982699683908761}
   ContentRectTransform: {fileID: 4822734933547113303}
+--- !u!114 &6401828240133880215
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2501641704838732054}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10a25b4606ac938498cbf862084b087b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _inputMediator: {fileID: 11400000, guid: 1fb61cdb72f0a484f8e4db68e2011977, type: 2}
+  _content: {fileID: 7419123793860321494}
+  _listSkillMockup: {fileID: 11400000, guid: 0cb538f48e43f764f96f304077916ccb, type: 2}
+  _recyclableScrollRect: {fileID: 543055166419242023}
+  _autoScrollRect: {fileID: 5721818891678490613}
+  _upHint: {fileID: 4708016045412011269}
+  _downHint: {fileID: 2623073456412598457}
+  _currentRectTransform: {fileID: 4822734933547113303}
+  _parentRectTransform: {fileID: 8191982699683908761}
+  _skillRectTransform: {fileID: 2171444157869238816, guid: 2c92b1a7bf643054dbeb28382d01a8a7, type: 3}
+  _localizeDescription: {fileID: 6158781394214823339}
+  <Character>k__BackingField: 0
+  CharacterCardBackground: {fileID: 3981639954588415378}
 --- !u!1 &2573700332682046452
 GameObject:
   m_ObjectHideFlags: 0
@@ -7589,7 +7604,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1499554981781148162}
+      - m_Target: {fileID: 6150047489197737332}
         m_TargetAssemblyTypeName: CryptoQuest.UI.Skill.UISkillManager, indi-games.crypto-quest
         m_MethodName: OnClickCharacterCard
         m_Mode: 1
@@ -8283,7 +8298,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1499554981781148162}
+      - m_Target: {fileID: 6150047489197737332}
         m_TargetAssemblyTypeName: CryptoQuest.UI.Skill.UISkillManager, indi-games.crypto-quest
         m_MethodName: OnClickCharacterCard
         m_Mode: 1
@@ -8543,10 +8558,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9088746382115385144}
-  - component: {fileID: 2672415064881155814}
-  - component: {fileID: 3655270822974313252}
   - component: {fileID: 6502130518816373332}
+  - component: {fileID: 2672415064881155814}
   - component: {fileID: 141120694029130106}
+  - component: {fileID: 3345597270603781222}
   m_Layer: 5
   m_Name: Skill Panel_3
   m_TagString: Untagged
@@ -8575,6 +8590,14 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 745, y: 462}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &6502130518816373332
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6542765757883939044}
+  m_CullTransparentMesh: 1
 --- !u!114 &2672415064881155814
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8610,38 +8633,6 @@ MonoBehaviour:
   SelfInitialize: 1
   Direction: 0
   _segments: 2
---- !u!114 &3655270822974313252
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6542765757883939044}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7aa07ba21d1267f4fb01ca2ec4395f46, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _content: {fileID: 1924485818388940427}
-  _listSkillMockup: {fileID: 11400000, guid: 0cb538f48e43f764f96f304077916ccb, type: 2}
-  _recyclableScrollRect: {fileID: 2672415064881155814}
-  _autoScrollRect: {fileID: 141120694029130106}
-  _upHint: {fileID: 5894938069428557252}
-  _downHint: {fileID: 3944880107443031895}
-  _currentRectTransform: {fileID: 4996105139712091348}
-  _parentRectTransform: {fileID: 1414668761038038469}
-  _skillRectTransform: {fileID: 2171444157869238816, guid: 2c92b1a7bf643054dbeb28382d01a8a7, type: 3}
-  _localizeDescription: {fileID: 6158781394214823339}
-  _tabImage: {fileID: 0}
-  <Character>k__BackingField: 3
---- !u!222 &6502130518816373332
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6542765757883939044}
-  m_CullTransparentMesh: 1
 --- !u!114 &141120694029130106
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8659,6 +8650,31 @@ MonoBehaviour:
   _templateScrollRect: {fileID: 2672415064881155814}
   _templateViewportTransform: {fileID: 1414668761038038469}
   ContentRectTransform: {fileID: 4996105139712091348}
+--- !u!114 &3345597270603781222
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6542765757883939044}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10a25b4606ac938498cbf862084b087b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _inputMediator: {fileID: 11400000, guid: 1fb61cdb72f0a484f8e4db68e2011977, type: 2}
+  _content: {fileID: 1924485818388940427}
+  _listSkillMockup: {fileID: 11400000, guid: 0cb538f48e43f764f96f304077916ccb, type: 2}
+  _recyclableScrollRect: {fileID: 2672415064881155814}
+  _autoScrollRect: {fileID: 141120694029130106}
+  _upHint: {fileID: 5894938069428557252}
+  _downHint: {fileID: 3944880107443031895}
+  _currentRectTransform: {fileID: 4996105139712091348}
+  _parentRectTransform: {fileID: 1414668761038038469}
+  _skillRectTransform: {fileID: 2171444157869238816, guid: 2c92b1a7bf643054dbeb28382d01a8a7, type: 3}
+  _localizeDescription: {fileID: 6158781394214823339}
+  <Character>k__BackingField: 3
+  CharacterCardBackground: {fileID: 396439497310789735}
 --- !u!1 &6546369868862674827
 GameObject:
   m_ObjectHideFlags: 0
@@ -9781,7 +9797,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1499554981781148162}
+      - m_Target: {fileID: 6150047489197737332}
         m_TargetAssemblyTypeName: CryptoQuest.UI.Skill.UISkillManager, indi-games.crypto-quest
         m_MethodName: OnClickCharacterCard
         m_Mode: 1
@@ -11686,7 +11702,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1499554981781148162}
+      - m_Target: {fileID: 6150047489197737332}
         m_TargetAssemblyTypeName: CryptoQuest.UI.Skill.UISkillManager, indi-games.crypto-quest
         m_MethodName: OnClickCharacterCard
         m_Mode: 1
