@@ -7,9 +7,6 @@ namespace CryptoQuest.UI.Common
 {
     public class NavigationAutoScroll : MonoBehaviour
     {
-        [Header("Events")]
-        [SerializeField] private InputMediatorSO _inputMediator;
-
         [Header("UI")]
         [SerializeField] private RectTransform _firstButton;
 
@@ -31,20 +28,7 @@ namespace CryptoQuest.UI.Common
         [Header("Panel")]
         [SerializeField] private ScrollRect _scrollRect;
 
-
-        private void OnEnable()
-        {
-            _inputMediator.MenuNavigateEvent += CheckButtonPosition;
-            _inputMediator.MenuCancelEvent += CheckButtonPosition;
-        }
-
-        private void OnDisable()
-        {
-            _inputMediator.MenuNavigateEvent -= CheckButtonPosition;
-            _inputMediator.MenuCancelEvent -= CheckButtonPosition;
-        }
-
-        private void CheckButtonPosition(Vector2 arg0)
+        protected virtual void Update()
         {
             CheckButtonPosition();
         }
