@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using System.Numerics;
+using CryptoQuest.Data.Item;
 using CryptoQuest.Gameplay.Inventory;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
 using CryptoQuest.Input;
@@ -21,7 +21,7 @@ namespace CryptoQuest.UI.Inventory
         [SerializeField] private InventorySO _inventory;
         [SerializeField] private RecyclableScrollRect _recyclableScrollRect;
         [SerializeField] private AutoScrollRect _autoScrollRect;
-        [SerializeField] private EItemType _type;
+        [SerializeField] private UsableTypeSO _type;
         [SerializeField] private GameObject _upHint;
         [SerializeField] private GameObject _downHint;
         [SerializeField] private RectTransform _currentRectTransform;
@@ -29,8 +29,8 @@ namespace CryptoQuest.UI.Inventory
         [SerializeField] private RectTransform _itemRectTransform;
         [SerializeField] private LocalizeStringEvent _localizeDescription;
         [SerializeField] private Image _tabImage;
-        public EItemType Type => _type;
-        private List<ItemBase> _itemList = new List<ItemBase>();
+        public UsableTypeSO Type => _type;
+        private List<UsableInformation> _itemList = new();
         private List<MultiInputButton> _buttonList = new();
         private UIItemInventory _itemInformation;
 
@@ -52,14 +52,15 @@ namespace CryptoQuest.UI.Inventory
 
         private void InitData()
         {
-            _recyclableScrollRect.Initialize(this);
+            _recyclableScrollRect.DataSource = this;
             _itemList.Clear();
-            foreach (var item in _inventory.Items)
+            foreach (var item in _inventory.UsableItems)
             {
                 var itemSO = item.ItemSO;
-                var type = itemSO.Type;
+                var type = itemSO.UsableTypeSO;
                 if (type != _type) continue;
-                _itemList.Add(new ExpendableItemInfo(itemSO, item.Quantity));
+
+                _itemList.Add(new UsableInformation(itemSO, item.Quantity));
             }
         }
 
@@ -103,6 +104,7 @@ namespace CryptoQuest.UI.Inventory
         }
 
         #region PLUGINS
+
         public int GetItemCount()
         {
             return _itemList.Count;
@@ -114,6 +116,7 @@ namespace CryptoQuest.UI.Inventory
             item.Init(_itemList[index]);
             _buttonList.Add(item.GetComponent<MultiInputButton>());
         }
+
         #endregion
     }
 }

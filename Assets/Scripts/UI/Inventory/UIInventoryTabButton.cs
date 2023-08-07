@@ -1,3 +1,4 @@
+using CryptoQuest.Data.Item;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
 using UnityEngine;
 using UnityEngine.Events;
@@ -7,9 +8,9 @@ namespace CryptoQuest.UI.Inventory
 {
     public class UIInventoryTabButton : MonoBehaviour
     {
-        public event UnityAction<EItemType> Clicked;
+        public event UnityAction<UsableTypeSO> Clicked;
 
-        [SerializeField] private EItemType _typeMenuItem;
+        [SerializeField] private UsableTypeSO _typeMenuItem;
 
         public void OnClicked()
         {
