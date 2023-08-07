@@ -29,7 +29,6 @@ namespace CryptoQuest.UI.Menu.MenuStates.StatusStates
         public override void HandleCancel()
         {
             base.HandleCancel();
-            MainMenuContext.CloseMainMenu();
         }
 
         public override void ChangeTab(float direction)
