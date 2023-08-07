@@ -60,7 +60,7 @@ namespace CryptoQuest.Menu
         /// </summary>
         private void HandleMoveSelection(Vector2 input)
         {
-            _hasCursorMoved = false;
+            _hasCursorMoved = true;
             Cursor.visible = false;
 
             // Handle case where no UI element is selected because mouse left selectable bounds

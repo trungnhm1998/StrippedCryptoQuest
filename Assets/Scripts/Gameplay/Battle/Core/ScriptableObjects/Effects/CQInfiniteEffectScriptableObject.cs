@@ -1,3 +1,4 @@
+using CQAttribute = CryptoQuest.Character.Attributes.AttributeScriptableObject;
 using CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit;
 using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data;
 using IndiGames.GameplayAbilitySystem.EffectSystem;
@@ -55,7 +56,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Effects
 
                 actionData.Log.Clear();
                 actionData.AddStringVar(UNIT_NAME_VARIABLE, _unit.UnitInfo.DisplayName);
-                actionData.AddStringVar(ATTRIBUTE_NAME_VARIABLE, modifier.AttributeSO.DisplayName);
+                actionData.AddStringVar(ATTRIBUTE_NAME_VARIABLE, ((CQAttribute)modifier.AttributeSO).DisplayName);
                 _effectSO.ActionEventSO.RaiseEvent(actionData);
             }
         }
