@@ -9,7 +9,7 @@ namespace CryptoQuest.UI.Dialogs.BattleDialog
     public class UIBattleDialog : ModalWindow<UIBattleDialog>
     {
         [Header("Config")]
-        [SerializeField] private InputMediatorSO _inputMediator;
+        [SerializeField] private BattleInputSO _battleInput;
         [Tooltip("Set this below 0 when you don't want auto hide")]
         [SerializeField] private float _autoHideDelay;
 
@@ -25,19 +25,18 @@ namespace CryptoQuest.UI.Dialogs.BattleDialog
         [SerializeField] private VoidEventChannelSO _closeBattleDialogEventChannel;
 
         private string _message;
-        private Coroutine _autoNextCoroutine; 
 
         private void OnEnable()
         {
             _dialogText.text = "";
-            _inputMediator.NextDialoguePressed += NextDialog;
+            _battleInput.ConfirmedEvent += NextDialog;
             _showNextMarkEventChannel.EventRaised += ShowNextMark;
             _closeBattleDialogEventChannel.EventRaised += CloseDialog;
         }
 
         private void OnDisable()
         {
-            _inputMediator.NextDialoguePressed -= NextDialog;
+            _battleInput.ConfirmedEvent -= NextDialog;
             _showNextMarkEventChannel.EventRaised -= ShowNextMark;
             _closeBattleDialogEventChannel.EventRaised -= CloseDialog;
         }
@@ -66,7 +65,6 @@ namespace CryptoQuest.UI.Dialogs.BattleDialog
         {
             base.OnBeforeShow();
             _nextMark.SetActive(false);
-            _inputMediator.EnableDialogueInput();
             _dialogText.text += $"{_message}\n";
         }
 

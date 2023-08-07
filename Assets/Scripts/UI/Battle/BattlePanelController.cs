@@ -29,9 +29,10 @@ namespace CryptoQuest.UI.Battle
         [SerializeField] private BattleActionHandler.BattleActionHandler _retreatHandler;
         [SerializeField] private BattleActionHandler.BattleActionHandler[] _skillAttackChain;
         [SerializeField] private BattleActionHandler.BattleActionHandler[] _itemChain;
-        [Header("Events")] [SerializeField] private InputMediatorSO _inputMediator;
 
+        [SerializeField] private BattleInputSO _battleInput;
         [SerializeField] private BattleBus _battleBus;
+        [Header("Events")]
         [SerializeField] private VoidEventChannelSO _onNewTurnEvent;
 
         [Header("UI Panels")] [SerializeField] private UIBattleCommandMenu _uiBattleCommandMenu;
@@ -39,7 +40,7 @@ namespace CryptoQuest.UI.Battle
         [SerializeField] private UICommandPanel _commandPanel;
 
         private BattleManager _battleManager;
-        private List<AbstractButtonInfo> _infos = new();
+        private readonly List<AbstractButtonInfo> _infos = new();
 
         public void OpenCommandDetailPanel(List<AbstractButtonInfo> infos)
         {
@@ -68,7 +69,7 @@ namespace CryptoQuest.UI.Battle
             OnButtonGuardClicked += OnButtonGuardClickedHandler;
             OnButtonEscapeClicked += OnButtonEscapeClickedHandler;
 
-            _inputMediator.MenuCancelEvent += OnClickMenuCancel;
+            _battleInput.CancelEvent += OnClickMenuCancel;
             _battleManager = _battleBus.BattleManager;
             ShowEnemyGroups();
         }
@@ -81,12 +82,12 @@ namespace CryptoQuest.UI.Battle
             OnButtonGuardClicked -= OnButtonGuardClickedHandler;
             OnButtonEscapeClicked -= OnButtonEscapeClickedHandler;
 
-            _inputMediator.MenuCancelEvent -= OnClickMenuCancel;
+            _battleInput.CancelEvent -= OnClickMenuCancel;
         }
 
         private void SetupChain(BattleActionHandler.BattleActionHandler[] chain)
         {
-            for (int i = 1; i < chain.Length; i++)
+            for (var i = 1; i < chain.Length; i++)
             {
                 chain[i - 1].SetNext(chain[i]);
             }
