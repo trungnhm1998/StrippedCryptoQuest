@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using IndiGames.GameplayAbilitySystem.AbilitySystem.ScriptableObjects;
+using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace CryptoQuest.Data.Item
 {
@@ -11,9 +13,10 @@ namespace CryptoQuest.Data.Item
     [CreateAssetMenu(fileName = "Usable Item", menuName = "Crypto Quest/Inventory/Usable Item")]
     public class UsableSO : ItemGenericSO
     {
-        [Header("Usable Item")]
-        [SerializeField] private UsableTypeSO _usableTypeSo;
+        [Header("Usable Item")] public UsableTypeSO UsableTypeSO;
 
         [SerializeField] private EItemType _itemType;
+
+        public AbilityScriptableObject Ability;
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using CryptoQuest.Data.Item;
 using CryptoQuest.Events.Gameplay;
 using CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit;
 using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data;
@@ -80,12 +81,12 @@ namespace CryptoQuest.UI.Battle.CommandsMenu
     [Serializable]
     public class ExpendableItemAbstractButtonInfo : AbstractButtonInfo
     {
-        private ExpendableItemSO _item;
-        private Action<ExpendableItemSO> _setItemCallback;
+        private UsableSO _item;
+        private Action<UsableSO> _setItemCallback;
 
-        public ExpendableItemAbstractButtonInfo(Action<ExpendableItemSO> setItemCallback,
-            ExpendableItemSO item)
-            : base(item.Name.GetLocalizedString())
+        public ExpendableItemAbstractButtonInfo(Action<UsableSO> setItemCallback,
+            UsableSO item)
+            : base(item.DisplayName.GetLocalizedString())
         {
             _setItemCallback = setItemCallback;
             _item = item;
