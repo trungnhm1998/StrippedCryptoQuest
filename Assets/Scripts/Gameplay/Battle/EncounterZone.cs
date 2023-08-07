@@ -48,7 +48,7 @@ namespace CryptoQuest.Gameplay.Battle
 
         private void OnCountdownEnd()
         {
-            _inputMediatorSO.EnableMenuInput();
+            _inputMediatorSO.DisableAllInput();
             BattleDataSO currentBattData = _battleField.GetBattleToInit();
             BattleInfo currentBattleInfo =
                 new(currentBattData, _battleField.IsBattleEscapable, _battleField.BattleBackground);

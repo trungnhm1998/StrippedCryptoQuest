@@ -14,6 +14,7 @@ using UnityEngine;
 using IndiGames.Core.SceneManagementSystem.Events.ScriptableObjects;
 using IndiGames.Core.SceneManagementSystem.ScriptableObjects;
 using UnityEngine.AddressableAssets;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace CryptoQuest.Gameplay.Battle.Core.Components
@@ -34,7 +35,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components
         private VoidEventChannelSO _newTurnEventChannel;
 
         [Header("Listen Events")] [SerializeField]
-        private VoidEventChannelSO _sceneLoadedEventChannel;
+        private VoidEventChannelSO _startBattleEventChannel;
 
         [SerializeField] private VoidEventChannelSO _endActionPhaseEventChannel;
         [SerializeField] private SpecialAbilitySO _retreatAbility;
@@ -66,14 +67,14 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components
         private void OnEnable()
         {
             _endActionPhaseEventChannel.EventRaised += OnEndTurn;
-            _sceneLoadedEventChannel.EventRaised += StartBattle;
+            _startBattleEventChannel.EventRaised += StartBattle;
             _retreatAbility.OnAbilityActivated += OnRetreatActivated;
         }
 
         private void OnDisable()
         {
             _endActionPhaseEventChannel.EventRaised -= OnEndTurn;
-            _sceneLoadedEventChannel.EventRaised -= StartBattle;
+            _startBattleEventChannel.EventRaised -= StartBattle;
             _retreatAbility.OnAbilityActivated -= OnRetreatActivated;
         }
 

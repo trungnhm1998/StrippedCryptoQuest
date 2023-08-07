@@ -2,6 +2,7 @@
 using IndiGames.GameplayAbilitySystem.AttributeSystem;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
 using TMPro;
+using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
@@ -42,7 +43,11 @@ namespace CryptoQuest.UI.Battle.CharacterInfo
 
         protected override void Setup()
         {
-            _characterIcon.sprite = _characterInfo.Data.BattleIconSprite;
+            //TODO: Refactor this later
+            if (_characterInfo.Data is HeroDataSO heroData)
+            {
+                _characterIcon.sprite = heroData.BattleIconSprite;
+            }
             _nameText.text = _characterInfo.DisplayName;
             UpdateValueUI(_maxHpAttributeSO, _hpAttributeSO, _hpValueText, _hpSlider);
             UpdateValueUI(_maxMpAttributeSO, _mpAttributeSO, _mpValueText, _mpSlider);
