@@ -36,7 +36,7 @@ namespace CryptoQuest.Input
         public event UnityAction MenuTabPressed;
         public event UnityAction MenuCancelEvent;
         public event UnityAction HomeMenuSortEvent;
-        public event UnityAction<InputAction.CallbackContext> ClosingMenuEvent;
+
         public event UnityAction NextSelectionMenu;
         public event UnityAction PreviousSelectionMenu;
 
@@ -230,11 +230,6 @@ namespace CryptoQuest.Input
         public void OnMenuStart(InputAction.CallbackContext context)
         {
             if (context.performed) StartPressed?.Invoke();
-        }
-
-        public void OnClosingMenu(InputAction.CallbackContext context)
-        {
-            ClosingMenuEvent?.Invoke(context);
         }
 
         #endregion

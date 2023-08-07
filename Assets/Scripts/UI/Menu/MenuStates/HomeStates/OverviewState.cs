@@ -27,6 +27,7 @@ namespace CryptoQuest.UI.Menu.MenuStates.HomeStates
         public override void HandleCancel()
         {
             base.HandleCancel();
+            MainMenuContext.CloseMainMenu();
         }
     }
 }

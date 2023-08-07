@@ -3,7 +3,6 @@ using CryptoQuest.UI.Menu.MenuStates;
 using CryptoQuest.UI.Menu.Panels;
 using CryptoQuest.UI.Menu.ScriptableObjects;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 namespace CryptoQuest.UI.Menu
 {
@@ -55,7 +54,6 @@ namespace CryptoQuest.UI.Menu
         {
             _navigationBar.MenuChanged += ChangeMenu;
 
-            _inputMediator.ClosingMenuEvent += ClosingMenuEvent;
             _inputMediator.ShowMainMenu += ShowMainMenu; // Start Button
             _inputMediator.StartPressed += CloseMainMenu; // also start button but only in main menu
             _inputMediator.MenuCancelEvent += MenuCancelEventRaised; // East Button
@@ -68,7 +66,6 @@ namespace CryptoQuest.UI.Menu
         {
             _navigationBar.MenuChanged -= ChangeMenu;
 
-            _inputMediator.ClosingMenuEvent += ClosingMenuEvent;
             _inputMediator.ShowMainMenu -= ShowMainMenu;
             _inputMediator.StartPressed -= CloseMainMenu; // also start button but only in main menu
             _inputMediator.MenuCancelEvent -= MenuCancelEventRaised;
@@ -111,7 +108,6 @@ namespace CryptoQuest.UI.Menu
 
         /// <summary>
         /// Will open the main menu UI when <see cref="InputMediatorSO.ShowMainMenu"/> were raised.
-        /// Order matters
         /// </summary>
         private void ShowMainMenu()
         {
@@ -121,16 +117,10 @@ namespace CryptoQuest.UI.Menu
             _inputMediator.EnableMenuInput();
         }
 
-        private void ClosingMenuEvent(InputAction.CallbackContext context)
-        {
-            if (context.performed) CloseMainMenu();
-        }
-
         /// <summary>
         /// Destructive method to close the main menu UI.
-        /// Order matters
         /// </summary>
-        private void CloseMainMenu()
+        public void CloseMainMenu()
         {
             _navigationBar.SetActive(false);
             _contents.SetActive(false);
