@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using CryptoQuest.Menu;
-using CryptoQuest.UI.Menu.Stats;
-using IndiGames.Core.Events.ScriptableObjects;
+using CryptoQuest.UI.Menu.Panels.Status.Stats;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
 using PolyAndCode.UI;
 using UnityEngine;

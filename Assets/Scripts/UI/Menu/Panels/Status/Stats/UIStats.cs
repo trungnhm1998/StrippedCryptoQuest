@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using CryptoQuest.UI.Menu.Stats;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-namespace CryptoQuest.UI.Menu.Panels.Status
+namespace CryptoQuest.UI.Menu.Panels.Status.Stats
 {
     public class UIStats : MonoBehaviour
     {
@@ -16,9 +15,7 @@ namespace CryptoQuest.UI.Menu.Panels.Status
 
         [Header("Mock")]
         [SerializeField] private List<AttributeScriptableObject> _modifiedAttributes;
-
         [SerializeField] private List<float> _modifiedAttributesValue;
-
 
         [Space]
         [FormerlySerializedAs("_attributes")] [SerializeField]

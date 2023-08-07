@@ -7,9 +7,6 @@ namespace IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects
     [CreateAssetMenu(menuName = "Indigames Ability System/Attributes/Attribute")]
     public class AttributeScriptableObject : ScriptableObject
     {
-        [field: SerializeField]
-        public string DisplayName { get; private set; }
-
         public struct AttributeEventArgs
         {
             public AttributeSystemBehaviour System;

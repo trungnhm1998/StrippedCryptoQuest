@@ -1,13 +1,9 @@
-﻿using System;
-using IndiGames.Core.Events.ScriptableObjects;
-using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
+﻿using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Events;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
-namespace CryptoQuest.UI.Menu.Stats
+namespace CryptoQuest.UI.Menu.Panels.Status.Stats
 {
     public class UIAttribute : MonoBehaviour
     {
