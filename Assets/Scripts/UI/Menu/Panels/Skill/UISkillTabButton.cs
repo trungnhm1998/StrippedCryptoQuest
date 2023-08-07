@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
-namespace CryptoQuest.UI.Skill
+namespace CryptoQuest.UI.Menu.Panels.Skill
 {
     public class UISkillTabButton : MonoBehaviour
     {

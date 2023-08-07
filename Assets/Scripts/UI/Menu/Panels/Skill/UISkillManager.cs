@@ -4,7 +4,7 @@ using CryptoQuest.Menu;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace CryptoQuest.UI.Skill
+namespace CryptoQuest.UI.Menu.Panels.Skill
 {
     public class UISkillManager : MonoBehaviour
     {
@@ -39,12 +39,12 @@ namespace CryptoQuest.UI.Skill
 
         private void OnEnable()
         {
-            _inputMediator.EnableMenuInput();
-            _inputMediator.MenuNavigateEvent += SelectCharacterMenu;
-            _inputMediator.MenuSubmitEvent += ShowCharacterSkills;
-            _inputMediator.NextSelectionMenu += SelectNextMenu;
-            _inputMediator.PreviousSelectionMenu += SelectPreviousMenu;
-            _inputMediator.MenuCancelEvent += BackToSelectCharacterCard;
+            // _inputMediator.EnableMenuInput();
+            // _inputMediator.MenuNavigateEvent += SelectCharacterMenu;
+            // _inputMediator.MenuSubmitEvent += ShowCharacterSkills;
+            // _inputMediator.NextSelectionMenu += SelectNextMenu;
+            // _inputMediator.PreviousSelectionMenu += SelectPreviousMenu;
+            // _inputMediator.MenuCancelEvent += BackToSelectCharacterCard;
             for (int i = 0; i < _tabSkillButton.Count; i++)
             {
                 _tabSkillButton[i].Clicked += SelectTab;
@@ -56,11 +56,11 @@ namespace CryptoQuest.UI.Skill
 
         private void OnDisable()
         {
-            _inputMediator.MenuSubmitEvent -= ShowCharacterSkills;
-            _inputMediator.MenuNavigateEvent -= SelectCharacterMenu;
-            _inputMediator.NextSelectionMenu -= SelectNextMenu;
-            _inputMediator.PreviousSelectionMenu -= SelectPreviousMenu;
-            _inputMediator.MenuCancelEvent -= BackToSelectCharacterCard;
+            // _inputMediator.MenuSubmitEvent -= ShowCharacterSkills;
+            // _inputMediator.MenuNavigateEvent -= SelectCharacterMenu;
+            // _inputMediator.NextSelectionMenu -= SelectNextMenu;
+            // _inputMediator.PreviousSelectionMenu -= SelectPreviousMenu;
+            // _inputMediator.MenuCancelEvent -= BackToSelectCharacterCard;
             for (int i = 0; i < _tabSkillButton.Count; i++)
             {
                 _tabSkillButton[i].Clicked -= SelectTab;

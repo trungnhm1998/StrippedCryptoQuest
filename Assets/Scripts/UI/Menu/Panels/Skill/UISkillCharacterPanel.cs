@@ -10,7 +10,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.Localization.Components;
 using UnityEngine.UI;
 
-namespace CryptoQuest.UI.Skill
+namespace CryptoQuest.UI.Menu.Panels.Skill
 {
     public class UISkillCharacterPanel : MonoBehaviour, IRecyclableScrollRectDataSource
     {

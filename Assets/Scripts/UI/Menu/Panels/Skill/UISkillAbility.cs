@@ -1,13 +1,13 @@
+using CryptoQuest.Gameplay.Skill;
+using PolyAndCode.UI;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.Localization;
 using UnityEngine.Localization.Components;
 using UnityEngine.UI;
-using PolyAndCode.UI;
-using CryptoQuest.Gameplay.Skill;
 
-namespace CryptoQuest.UI.Skill
+namespace CryptoQuest.UI.Menu.Panels.Skill
 {
     public class UISkillAbility : MonoBehaviour, ICell
     {
