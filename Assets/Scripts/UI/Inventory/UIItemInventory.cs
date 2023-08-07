@@ -16,14 +16,14 @@ namespace CryptoQuest.UI.Inventory
         public LocalizeStringEvent Name;
         public Text Quantity;
         public LocalizedString Description;
-        private UsableInformation _itemBase;
-        public UsableInformation ItemBase => _itemBase;
-        public event UnityAction<UsableInformation> Clicked;
+        private UsableInfo _itemBase;
+        public UsableInfo ItemBase => _itemBase;
+        public event UnityAction<UsableInfo> Clicked;
 
-        public void Init(UsableInformation item)
+        public void Init(UsableInfo item)
         {
             _itemBase = item;
-            Icon.sprite = item.Item.Icon;
+            Icon.sprite = item.Item.Image;
             Name.StringReference = item.Item.DisplayName;
             Quantity.text = item.Quantity.ToString();
             Description = item.Item.Description;

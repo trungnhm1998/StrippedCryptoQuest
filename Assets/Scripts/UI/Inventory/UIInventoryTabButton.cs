@@ -1,5 +1,5 @@
-using CryptoQuest.Data.Item;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
+using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Type;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;

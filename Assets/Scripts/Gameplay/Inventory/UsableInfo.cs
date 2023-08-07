@@ -1,5 +1,5 @@
 ﻿using System;
-using CryptoQuest.Data.Item;
+using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item;
 using IndiGames.GameplayAbilitySystem.AbilitySystem;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
 using UnityEngine;
@@ -7,19 +7,19 @@ using UnityEngine;
 namespace CryptoQuest.Gameplay.Inventory
 {
     [Serializable]
-    public class UsableInformation : ItemInformation
+    public class UsableInfo : ItemInfo
     {
         [field: SerializeField] public int Quantity { get; private set; }
         public AbilitySystemBehaviour Owner { get; set; }
 
-        [field: SerializeField] public UsableSO ItemSO { get; private set; }
+        [field: SerializeField] public UsableSO Item { get; private set; }
 
-        public UsableInformation(UsableSO itemSo, int quantity = 0) : base(itemSo)
+        public UsableInfo(UsableSO baseItemSo, int quantity = 0) : base(baseItemSo)
         {
             Quantity = quantity;
         }
 
-        public UsableInformation(UsableSO itemSo, AbilitySystemBehaviour owner, int quantity = 0) : base(itemSo)
+        public UsableInfo(UsableSO baseItemSo, AbilitySystemBehaviour owner, int quantity = 0) : base(baseItemSo)
         {
             Quantity = quantity;
             Owner = owner;
@@ -28,7 +28,7 @@ namespace CryptoQuest.Gameplay.Inventory
         protected override void Activate()
         {
             if (Owner == null) return;
-            AbstractAbility ability = Owner.GiveAbility(ItemSO.Ability);
+            AbstractAbility ability = Owner.GiveAbility(Item.Ability);
             Owner.TryActiveAbility(ability);
         }
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using CryptoQuest.Gameplay.Inventory;
 using CryptoQuest.Menu;
 using CryptoQuest.UI.Menu.Panels.Status.Stats;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
@@ -17,6 +18,7 @@ namespace CryptoQuest.UI.Menu.Panels.Status
     public class UIStatusInventoryItemButton : MultiInputButton, ICell
     {
         public static event UnityAction<UIStats.Equipment> InspectingEquipment;
+
         [Serializable]
         public class MockData
         {
@@ -36,20 +38,21 @@ namespace CryptoQuest.UI.Menu.Panels.Status
 
         [Header("Game Components")]
         [SerializeField] private LocalizeStringEvent _name;
+
         [SerializeField] private Text _itemOrder;
         [SerializeField] private GameObject _selectEffect;
 
         private GameObject _unEquipSlot;
 
 
-        public void Init(MockData mockData, int index)
+        public void Init(EquipmentInfo data, int index)
         {
             if (_unEquipSlot != null)
             {
                 _unEquipSlot.SetActive(false);
             }
 
-            _name.StringReference = mockData.Name;
+            _name.StringReference = data.Item.DisplayName;
 
             _itemOrder.text = index.ToString();
         }
@@ -74,6 +77,7 @@ namespace CryptoQuest.UI.Menu.Panels.Status
             {
                 mockEquipment.ModifiedAttributes.Add(_allAttributeToRandomFrom[i], Random.Range(50, 200));
             }
+
             return mockEquipment;
         }
 

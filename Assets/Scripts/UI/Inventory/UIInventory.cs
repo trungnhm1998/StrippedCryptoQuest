@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using CryptoQuest.Data.Item;
 using CryptoQuest.Events.Gameplay;
 using CryptoQuest.Gameplay.Inventory;
+using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Type;
 using CryptoQuest.Input;
 using CryptoQuest.Menu;
 using UnityEngine;
@@ -89,8 +89,8 @@ namespace CryptoQuest.UI.Inventory
         private void HandleItemPressed()
         {
             Debug.Log(
-                $"{EventSystem.current.currentSelectedGameObject.GetComponent<UIItemInventory>().ItemBase.ItemSO.DisplayName} Pressed!");
-            UsableInformation selectedItemBaseItem =
+                $"{EventSystem.current.currentSelectedGameObject.GetComponent<UIItemInventory>().ItemBase.Item.DisplayName} Pressed!");
+            UsableInfo selectedItemBaseItem =
                 EventSystem.current.currentSelectedGameObject.GetComponent<UIItemInventory>().ItemBase;
             _OnEquipItemEvent.RaiseEvent(selectedItemBaseItem);
         }

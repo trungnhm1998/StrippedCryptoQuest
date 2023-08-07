@@ -22,7 +22,7 @@ namespace CryptoQuest.Gameplay.Inventory
             _onEquipItemEventChannel.EventRaised -= EquipItem;
         }
 
-        private void EquipItem(UsableInformation item)
+        private void EquipItem(UsableInfo item)
         {
             if (item == null) return;
             item.Owner = CurrentOwnerAbilitySystemBehaviour;

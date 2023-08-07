@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
 using PolyAndCode.UI;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -10,17 +11,7 @@ namespace CryptoQuest.UI.Menu.Panels.Status
         [Header("Configs")]
         [SerializeField] private RecyclableScrollRect _scrollRect;
 
-        // TODO: REMOVE WHEN WE HAVE REAL DATA
-
-        #region MOCK
-
-        [Header("Mock")]
-        [SerializeField] private int _itemCount;
-
-        [FormerlySerializedAs("_mockData")] [SerializeField]
-        private UIStatusInventoryItemButton.MockData mockMockData;
-
-        #endregion
+        [SerializeField] private InventorySO _inventorySO;
 
         [Header("Game Components")]
         [SerializeField] private GameObject _contents;
@@ -28,7 +19,6 @@ namespace CryptoQuest.UI.Menu.Panels.Status
         [SerializeField] private RectTransform _myScrollRect;
         [SerializeField] private RectTransform _singleItemRect;
 
-        private List<UIStatusInventoryItemButton.MockData> _mockDataList = new();
 
         private float _verticalOffset;
         private bool _initialized = false;
@@ -40,12 +30,6 @@ namespace CryptoQuest.UI.Menu.Panels.Status
             RegisterInventoryInputEvents();
 
             _verticalOffset = _singleItemRect.rect.height;
-
-            // TODO: REMOVE WHEN WE HAVE REAL DATA
-            for (int i = 0; i < _itemCount; i++)
-            {
-                _mockDataList.Add(mockMockData.Clone());
-            }
 
             // only init after get data
             if (!_initialized)
@@ -89,7 +73,7 @@ namespace CryptoQuest.UI.Menu.Panels.Status
         /// <returns>Real data count</returns>
         public int GetItemCount()
         {
-            return _mockDataList.Count;
+            return _inventorySO.Equipments.Count;
         }
 
         /// <summary>
@@ -100,7 +84,7 @@ namespace CryptoQuest.UI.Menu.Panels.Status
         public void SetCell(ICell cell, int index)
         {
             UIStatusInventoryItemButton itemButtonRow = cell as UIStatusInventoryItemButton;
-            itemButtonRow.Init(_mockDataList[index], index);
+            itemButtonRow.Init(_inventorySO.Equipments[index], index);
         }
 
         #endregion
