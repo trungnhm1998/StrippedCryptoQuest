@@ -7,8 +7,15 @@ namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item
     [CreateAssetMenu(fileName = "Usable Item", menuName = "Crypto Quest/Inventory/Usable Item")]
     public class UsableSO : ItemGenericSO
     {
-        [field: Header("Usable Item")]
-        [field: SerializeField] public UsableTypeSO UsableTypeSO { get; private set; }
+        [Header("Usable Item")]
+        [SerializeField] private UsableTypeSO usableTypeSO;
+
+        public UsableTypeSO UsableTypeSO
+        {
+            get => usableTypeSO;
+            set => usableTypeSO = value;
+        }
+
         [field: SerializeField] public AbilityScriptableObject Ability { get; private set; }
     }
 }

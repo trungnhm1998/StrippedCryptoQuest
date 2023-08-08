@@ -7,6 +7,6 @@ namespace CryptoQuest.Gameplay.Inventory
     public class WeaponInfo : EquipmentInfo
     {
         public WeaponInfo() { }
-        public WeaponInfo(WeaponSO itemSo) : base(itemSo) { }
+        public WeaponInfo(WeaponSO itemSO) : base(itemSO) { }
     }
 }

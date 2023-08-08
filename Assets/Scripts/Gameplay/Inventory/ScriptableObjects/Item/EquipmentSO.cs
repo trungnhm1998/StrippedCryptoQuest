@@ -12,7 +12,17 @@ namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item
         [SerializeField] private RaritySO _rarity;
 
         [field: SerializeField] public bool IsNftItem { get; private set; }
-        public EquipmentTypeSO EquipmentType => _equipmentType;
-        public RaritySO Rarity => _rarity;
+        
+        protected EquipmentTypeSO EquipmentType
+        {
+            get => _equipmentType;
+            set => _equipmentType = value;
+        }
+
+        public RaritySO Rarity
+        {
+            get => _rarity;
+            set => _rarity = value;
+        }
     }
 }

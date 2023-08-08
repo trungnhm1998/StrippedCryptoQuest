@@ -6,6 +6,10 @@ namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item
     [CreateAssetMenu(fileName = "Weapon Item", menuName = "Crypto Quest/Inventory/Weapon Item")]
     public class WeaponSO : EquipmentSO
     {
-        public new WeaponTypeSO WeaponType => (WeaponTypeSO)EquipmentType;
+        public new WeaponTypeSO WeaponType
+        {
+            get => (WeaponTypeSO)EquipmentType;
+            set => EquipmentType = value;
+        }
     }
 }

@@ -14,12 +14,12 @@ namespace CryptoQuest.Gameplay.Inventory
 
         [field: SerializeField] public UsableSO Item { get; private set; }
 
-        public UsableInfo(UsableSO baseItemSo, int quantity = 0) : base(baseItemSo)
+        public UsableInfo(UsableSO baseItemSO, int quantity = 0) : base(baseItemSO)
         {
             Quantity = quantity;
         }
 
-        public UsableInfo(UsableSO baseItemSo, AbilitySystemBehaviour owner, int quantity = 0) : base(baseItemSo)
+        public UsableInfo(UsableSO baseItemSO, AbilitySystemBehaviour owner, int quantity = 0) : base(baseItemSO)
         {
             Quantity = quantity;
             Owner = owner;
