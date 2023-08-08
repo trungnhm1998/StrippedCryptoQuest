@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
 using CryptoQuest.Menu;
-using IndiGames.Core.Events.ScriptableObjects;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 namespace CryptoQuest.UI.Menu.Panels.Skill
 {
@@ -21,6 +21,8 @@ namespace CryptoQuest.UI.Menu.Panels.Skill
         private bool _isSelectedCharacter = false;
         [SerializeField] private int _currentSelectedTabIndex = 0;
         [SerializeField] private int _currentCharacterCardIndex = 0;
+
+        private GameObject _selectedCharacter;
 
         private void Awake()
         {
@@ -44,9 +46,6 @@ namespace CryptoQuest.UI.Menu.Panels.Skill
             {
                 _tabSkillButton[i].Clicked += SelectTab;
             }
-
-            // _selectionHandler.UpdateDefault(_tabSkillButton[0].gameObject);
-            //  SelectTab(ECharacterClass.MainCharacter);
         }
 
         private void OnDisable()
@@ -55,18 +54,6 @@ namespace CryptoQuest.UI.Menu.Panels.Skill
             {
                 _tabSkillButton[i].Clicked -= SelectTab;
             }
-        }
-
-        private void SelectNextMenu()
-        {
-            _currentSelectedTabIndex = (_currentSelectedTabIndex + 1) % _tabSkillButton.Count;
-            SelectTab(CYCLE_TYPES[_currentSelectedTabIndex]);
-        }
-
-        private void SelectPreviousMenu()
-        {
-            _currentSelectedTabIndex = (_currentSelectedTabIndex - 1 + _tabSkillButton.Count) % _tabSkillButton.Count;
-            SelectTab(CYCLE_TYPES[_currentSelectedTabIndex]);
         }
 
         private void ShowCharacterSkills()
@@ -135,18 +122,17 @@ namespace CryptoQuest.UI.Menu.Panels.Skill
 
         private void SelectCharacterMenu(Vector2 arg0)
         {
-            GameObject currentGameObject = EventSystem.current.currentSelectedGameObject;
             for (int i = 0; i < _tabSkillButton.Count; i++)
             {
                 if (_isSelectedMenu)
                 {
-                    if (currentGameObject == _listCharacterCardButton[i].gameObject)
+                    if (_selectedCharacter == _listCharacterCardButton[i].gameObject)
                         _currentCharacterCardIndex = i;
                 }
                 else
                 {
                     _listSkills[_currentSelectedTabIndex].CharacterCardBackground.enabled = false;
-                    if (currentGameObject == _tabSkillButton[i].gameObject)
+                    if (_selectedCharacter == _tabSkillButton[i].gameObject)
                         _currentSelectedTabIndex = i;
                 }
             }
@@ -154,6 +140,7 @@ namespace CryptoQuest.UI.Menu.Panels.Skill
 
         public void OnClickCharacterCard()
         {
+            _selectedCharacter = EventSystem.current.currentSelectedGameObject;
             CharacterSelected?.Invoke();
             DisableAllCharacterButtons();
             SelectCharacterMenu(Vector2.zero);
@@ -216,6 +203,7 @@ namespace CryptoQuest.UI.Menu.Panels.Skill
         public void OnTurnBack()
         {
             BackToSelectCharacterCard();
+            SelectCharacterMenu(Vector2.zero);
         }
         #endregion
     }
