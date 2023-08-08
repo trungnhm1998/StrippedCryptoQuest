@@ -1,4 +1,4 @@
-﻿using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Type;
+using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Type;
 using UnityEngine;
 
 namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item
@@ -6,23 +6,30 @@ namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item
     [CreateAssetMenu(fileName = "Equipment Item", menuName = "Crypto Quest/Inventory/Equipment Item")]
     public class EquipmentSO : ItemGenericSO
     {
-        [Header("Equipment Item")]
-        [SerializeField] private EquipmentTypeSO _equipmentType;
+        [field: Header("Equipment Item")]
+        [field: SerializeField] public EquipmentTypeSO EquipmentType { get; protected set; }
 
-        [SerializeField] private RaritySO _rarity;
+        [field: SerializeField] public RaritySO Rarity { get; private set; }
 
-        [field: SerializeField] public bool IsNftItem { get; private set; }
-        
-        protected EquipmentTypeSO EquipmentType
+#if UNITY_EDITOR
+
+        /// <summary>
+        /// This method will be use in <see cref="CryptoQuestEditor.Gameplay.Inventory.UsableSOEditor"/> 
+        /// </summary>
+        /// <param name="equipmentType"></param>
+        public void Editor_SetEquipmentType(EquipmentTypeSO equipmentType)
         {
-            get => _equipmentType;
-            set => _equipmentType = value;
+            EquipmentType = equipmentType;
         }
 
-        public RaritySO Rarity
+        /// <summary>
+        /// This method will be use in <see cref="CryptoQuestEditor.Gameplay.Inventory.UsableSOEditor"/> 
+        /// </summary>
+        /// <param name="rarity"></param>
+        public void Editor_SetRarity(RaritySO rarity)
         {
-            get => _rarity;
-            set => _rarity = value;
+            Rarity = rarity;
         }
+#endif
     }
 }

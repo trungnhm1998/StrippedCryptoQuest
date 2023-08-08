@@ -9,6 +9,8 @@ namespace CryptoQuestEditor.Gameplay.Inventory
 {
     public class WeaponTypeSOEditor : ScriptableObjectBrowserEditor<WeaponTypeSO>
     {
+        private const int ROW_OFFSET = 2;
+
         public WeaponTypeSOEditor()
         {
             this.createDataFolder = false;
@@ -19,18 +21,10 @@ namespace CryptoQuestEditor.Gameplay.Inventory
         public override void ImportBatchData(string directory, Action<ScriptableObject> callback)
         {
             string[] allLines = File.ReadAllLines(directory);
-            bool isSkippedFirstLine = false;
 
-            foreach (var line in allLines)
+            for (var index = ROW_OFFSET; index < allLines.Length; index++)
             {
-                if (!isSkippedFirstLine)
-                {
-                    isSkippedFirstLine = true;
-                    continue;
-                }
-
-                // get data form tsv file
-                string[] splitedData = line.Split('\t');
+                string[] splitedData = allLines[index].Split('\t');
                 var id = splitedData[0];
                 var weaponType = splitedData[1];
                 var name = splitedData[3].Replace(" ", "_");
@@ -54,7 +48,7 @@ namespace CryptoQuestEditor.Gameplay.Inventory
                 instance.name = name;
 
                 // Save data
-                if (instance == null || !AssetDatabase.Contains(instance))
+                if (!AssetDatabase.Contains(instance))
                 {
                     AssetDatabase.CreateAsset(instance, path);
                     AssetDatabase.SaveAssets();

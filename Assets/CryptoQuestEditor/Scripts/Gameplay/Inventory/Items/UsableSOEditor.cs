@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Type;
@@ -10,6 +10,9 @@ namespace CryptoQuestEditor.Gameplay.Inventory
 {
     public class UsableSOEditor : ScriptableObjectBrowserEditor<UsableSO>
     {
+        private const string DEFAULT_NAME = "Usable";
+        private const int ROW_OFFSET = 2;
+
         public UsableSOEditor()
         {
             this.createDataFolder = false;
@@ -17,26 +20,23 @@ namespace CryptoQuestEditor.Gameplay.Inventory
             this.defaultStoragePath = "Assets/ScriptableObjects/Data/Inventory/Items/Usables";
         }
 
+        /// <summary>
+        /// <see cref="UsableSO.Editor_SetUsableType"/>
+        /// </summary>
+        /// <param name="directory"></param>
+        /// <param name="callback"></param>
         public override void ImportBatchData(string directory, Action<ScriptableObject> callback)
         {
             string[] allLines = File.ReadAllLines(directory);
-            bool isSkippedFirstLine = false;
 
-            foreach (var line in allLines)
+            for (int index = ROW_OFFSET; index < allLines.Length; index++)
             {
-                if (!isSkippedFirstLine)
-                {
-                    isSkippedFirstLine = true;
-                    continue;
-                }
-                
-
                 // get data form tsv file
-                string[] splitedData = line.Split('\t');
-                var id = splitedData[0];
-                var name = splitedData[2].Replace(" ", "_");
-                var type = splitedData[5];
-                var path = this.defaultStoragePath + "/" + name + ".asset";
+                string[] splitedData = allLines[index].Split('\t');
+                string id = splitedData[0];
+                string name = DEFAULT_NAME + id;
+                string type = splitedData[5];
+                string path = this.defaultStoragePath + "/" + name + ".asset";
 
                 UsableSO instance = null;
 
@@ -58,14 +58,14 @@ namespace CryptoQuestEditor.Gameplay.Inventory
                 instance.ID = id;
                 instance.name = name;
 
-                instance.UsableTypeSO = consumableAsset;
+                instance.Editor_SetUsableType(consumableAsset);
                 if (type == "1")
                 {
-                    instance.UsableTypeSO = keyAsset;
+                    instance.Editor_SetUsableType(keyAsset);
                 }
 
                 // Save data
-                if (instance == null || !AssetDatabase.Contains(instance))
+                if (!AssetDatabase.Contains(instance))
                 {
                     AssetDatabase.CreateAsset(instance, path);
                     AssetDatabase.SaveAssets();
