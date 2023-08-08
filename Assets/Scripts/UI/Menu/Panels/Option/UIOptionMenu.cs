@@ -1,4 +1,5 @@
-﻿using FSM;
+﻿using CryptoQuest.UI.Menu.MenuStates.OptionStates;
+using FSM;
 
 namespace CryptoQuest.UI.Menu.Panels.Option
 {
@@ -6,7 +7,7 @@ namespace CryptoQuest.UI.Menu.Panels.Option
     {
         public override StateBase<string> GetPanelState(MenuManager menuManager)
         {
-            return new StateMachine();
+            return new OptionMenuStateMachine(this);
         }
     }
 }
