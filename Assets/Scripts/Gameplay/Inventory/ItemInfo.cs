@@ -1,5 +1,6 @@
 ﻿using System;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
+using UnityEngine;
 
 namespace CryptoQuest.Gameplay.Inventory
 {
@@ -8,6 +9,8 @@ namespace CryptoQuest.Gameplay.Inventory
     {
         public ItemGenericSO BaseItem { get; protected set; }
         public string Id { get; set; }
+
+        [field: SerializeField] public bool IsNftItem { get; private set; }
 
         public ItemInfo(ItemGenericSO baseItem)
         {

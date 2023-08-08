@@ -11,7 +11,7 @@ namespace CryptoQuest.Gameplay.Inventory
 
         public bool IsEquipped { get; private set; }
         public EquipmentInfo() { }
-        public EquipmentInfo(EquipmentSO itemSo) : base(itemSo) { }
+        public EquipmentInfo(EquipmentSO itemSO) : base(itemSO) { }
         protected override void Activate() { }
 
         public void Equip() => Activate();

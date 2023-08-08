@@ -6,7 +6,7 @@ namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects
     public class ItemGenericSO : ScriptableObject
     {
         [Header("Item Generic Data")]
-        public int ID;
+        public string ID;
 
         [field: SerializeField] public LocalizedString DisplayName { get; private set; }
         [field: SerializeField] public LocalizedString Description { get; private set; }
