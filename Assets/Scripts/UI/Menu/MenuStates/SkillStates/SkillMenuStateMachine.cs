@@ -6,7 +6,9 @@ namespace CryptoQuest.UI.Menu.MenuStates.SkillStates
 {
     public class SkillMenuStateMachine : MenuStateMachine
     {
-        public static readonly string NavStatus = "NavStatus";
+        public static readonly string NavSkill = "NavSkill";
+        public static readonly string Skill = "Skill";
+        public static readonly string CharacterSelection = "CharacterSelection";
 
         private new readonly UISkillMenu _panel;
         
@@ -17,12 +19,12 @@ namespace CryptoQuest.UI.Menu.MenuStates.SkillStates
         public SkillMenuStateMachine(UISkillMenu panel) : base(panel)
         {
             // Could create a factory here if new keyword becomes a problem.
-            AddState(NavStatus, new UnFocusSkillState(panel));
-            // AddState(Status, new FocusStatusState(panel));
-            // AddState(Equipment, new EquipmentState(panel));
+            AddState(NavSkill, new UnFocusSkillState(panel));
+            AddState(Skill, new FocusSkillState(panel));
+            AddState(CharacterSelection, new CharacterSelectionState(panel));
             // AddState(EquipmentSelection, new ChangeEquipmentState(panel));
             //
-            // SetStartState(Equipment);
+            SetStartState(CharacterSelection);
         }
     }
 }

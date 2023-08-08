@@ -23,7 +23,7 @@ namespace CryptoQuest.UI.Menu.MenuStates.SkillStates
         public override void Interact()
         {
             base.Interact();
-            // MenuStateMachine.RequestStateChange(SkillMenuStateMachine);
+            MenuStateMachine.RequestStateChange(SkillMenuStateMachine.CharacterSelection);
         }
 
         public override void HandleCancel()
