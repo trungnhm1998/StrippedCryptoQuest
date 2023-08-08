@@ -18,20 +18,20 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components
 
         [Header("Listen Events")]
         [SerializeField] private VoidEventChannelSO _newTurnEventChannel;
-        [SerializeField] private VoidEventChannelSO _battleStartEventChannel;
+        [SerializeField] private VoidEventChannelSO _doneSetupBattleEventChannel;
         [SerializeField] private VoidEventChannelSO _endStrategyPhaseEventChannel;
         
         private void OnEnable()
         {
             _newTurnEventChannel.EventRaised += OnNewTurn;
-            _battleStartEventChannel.EventRaised += SetupBattleUIs;
+            _doneSetupBattleEventChannel.EventRaised += SetupBattleUIs;
             _endStrategyPhaseEventChannel.EventRaised += OnStategyPhaseEnd;
         }
 
         private void OnDisable()
         {
             _newTurnEventChannel.EventRaised -= OnNewTurn;
-            _battleStartEventChannel.EventRaised -= SetupBattleUIs;
+            _doneSetupBattleEventChannel.EventRaised -= SetupBattleUIs;
             _endStrategyPhaseEventChannel.EventRaised -= OnStategyPhaseEnd;
             _battleInput.DisableBattleInput();
         }

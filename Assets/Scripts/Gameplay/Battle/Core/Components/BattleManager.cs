@@ -35,7 +35,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components
         private VoidEventChannelSO _newTurnEventChannel;
 
         [Header("Listen Events")] [SerializeField]
-        private VoidEventChannelSO _startBattleEventChannel;
+        private VoidEventChannelSO _enterBattleEventChannel;
 
         [SerializeField] private VoidEventChannelSO _endActionPhaseEventChannel;
         [SerializeField] private SpecialAbilitySO _retreatAbility;
@@ -67,14 +67,14 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components
         private void OnEnable()
         {
             _endActionPhaseEventChannel.EventRaised += OnEndTurn;
-            _startBattleEventChannel.EventRaised += StartBattle;
+            _enterBattleEventChannel.EventRaised += StartBattle;
             _retreatAbility.OnAbilityActivated += OnRetreatActivated;
         }
 
         private void OnDisable()
         {
             _endActionPhaseEventChannel.EventRaised -= OnEndTurn;
-            _startBattleEventChannel.EventRaised -= StartBattle;
+            _enterBattleEventChannel.EventRaised -= StartBattle;
             _retreatAbility.OnAbilityActivated -= OnRetreatActivated;
         }
 

@@ -23,8 +23,8 @@ namespace CryptoQuest.Gameplay
         public EGameState PreviousGameState { get; private set; }
 
         [Header("Events")]
-        [SerializeField] private VoidEventChannelSO _enterBattleChannelEvent;
-        [SerializeField] private VoidEventChannelSO _enterFieldChannelEvent;
+        [SerializeField] private VoidEventChannelSO _enterBattleEventChannel;
+        [SerializeField] private VoidEventChannelSO _enterFieldEventChannel;
 
         private void OnEnable()
         {
@@ -36,8 +36,8 @@ namespace CryptoQuest.Gameplay
         {
             if (newGameState == CurrentGameState) return;
 
-            if (newGameState == EGameState.Battle) _enterBattleChannelEvent.RaiseEvent();
-            if (newGameState == EGameState.Field) _enterFieldChannelEvent.RaiseEvent();
+            if (newGameState == EGameState.Battle) _enterBattleEventChannel.RaiseEvent();
+            if (newGameState == EGameState.Field) _enterFieldEventChannel.RaiseEvent();
 
             PreviousGameState = CurrentGameState;
             CurrentGameState = newGameState;
@@ -52,8 +52,8 @@ namespace CryptoQuest.Gameplay
         {
             if (PreviousGameState == CurrentGameState) return;
 
-            if (PreviousGameState == EGameState.Battle) _enterBattleChannelEvent.RaiseEvent();
-            if (PreviousGameState == EGameState.Field) _enterFieldChannelEvent.RaiseEvent();
+            if (PreviousGameState == EGameState.Battle) _enterBattleEventChannel.RaiseEvent();
+            if (PreviousGameState == EGameState.Field) _enterFieldEventChannel.RaiseEvent();
 
             (PreviousGameState, CurrentGameState) = (CurrentGameState, PreviousGameState);
         }
