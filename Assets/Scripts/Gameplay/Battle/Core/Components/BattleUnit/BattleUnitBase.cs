@@ -13,17 +13,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit
 {
     public class BattleUnitBase : MonoBehaviour, IBattleUnit
     {
-        public AbilitySystemBehaviour Owner { get; set; }
-        public BattleTeam OpponentTeam { get; set; }
-        public BattleTeam OwnerTeam { get; set; }
-        public bool IsDead => _isDead;
-        public virtual AbstractAbility NormalAttack { get; protected set; }
-        public CharacterInformation UnitInfo { get; private set; }
-
         [SerializeField] protected AttributeScriptableObject _hpAttribute;
-
-        [field: SerializeField]
-        public CharacterDataSO UnitData { get; set; }
 
         [Header("Raise Events")]
         [SerializeField] protected VoidEventChannelSO _doneActionEventChannel;
@@ -31,9 +21,15 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit
         [Header("Listen Events")]
         [SerializeField] protected VoidEventChannelSO _doneShowDialogEvent;
 
-        public AbstractAbility SelectedSkill { get; protected set; }
+        [field: SerializeField] public CharacterDataSO UnitData { get; set; }
+        [field: SerializeField] public BattleUnitTagConfigSO TagConfig { get; private set; }
 
-        public List<AbilitySystemBehaviour> TargetContainer { get; protected set; } = new();
+        public AbilitySystemBehaviour Owner { get; set; }
+        public BattleTeam OpponentTeam { get; set; }
+        public BattleTeam OwnerTeam { get; set; }
+        public bool IsDead => _isDead;
+        public CharacterInformation UnitInfo { get; private set; }
+        public BaseBattleUnitLogic UnitLogic { get; private set; }
 
         protected bool _isDead;
         protected bool _isPerformingAction;
@@ -44,13 +40,20 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit
             OwnerTeam = team;
             Owner = owner;
             CreateCharacterInfo();
+            InitBattleLogic();
             ResetUnit();
         }
 
         public void CreateCharacterInfo()
         {
-            if (UnitInfo != null) return;
-            UnitInfo = UnitData.CreateCharacterInfo();
+            UnitInfo ??= UnitData.CreateCharacterInfo();
+            UnitInfo.Owner = Owner;
+        }
+
+        protected virtual void InitBattleLogic()
+        {
+            UnitLogic = new BaseBattleUnitLogic(this, TagConfig);
+            UnitLogic.Init();
         }
 
         protected virtual void OnEnable()
@@ -80,60 +83,51 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit
         {
             if (OpponentTeam == null || OpponentTeam.Members.Count <= 0) return;
 
-            if (TargetContainer.Count > 0) return;
-
-            TargetContainer.Add(OpponentTeam.Members[0]);
+            UnitLogic.SelectSingleTarget(OpponentTeam.Members[0]);
         }
 
         public virtual void SelectSingleTarget(AbilitySystemBehaviour target)
         {
-            TargetContainer.Clear();
-            TargetContainer.Add(target);
+            UnitLogic.SelectSingleTarget(target);
         }
 
-        /// <summary>
-        /// Use this to select group of units
-        /// </summary>
-        /// <param name="targets"></param>
         public virtual void SelectTargets(params AbilitySystemBehaviour[] targets)
         {
-            TargetContainer.Clear();
-            TargetContainer.AddRange(targets);
+            UnitLogic.SelectTargets(targets);
         }
 
         public virtual void SelectTargets(List<AbilitySystemBehaviour> targets)
         {
-            TargetContainer.Clear();
-            TargetContainer.AddRange(targets);
+            UnitLogic.SelectTargets(targets);
         }
 
         public virtual void SelectAllOpponent()
         {
-            TargetContainer.Clear();
-            TargetContainer.AddRange(OpponentTeam.Members);
+            UnitLogic.SelectTargets(OpponentTeam.Members);
         }
 
         public virtual void SelectAllAlly()
         {
-            TargetContainer.Clear();
-            TargetContainer.AddRange(OwnerTeam.Members);
+            UnitLogic.SelectTargets(OwnerTeam.Members);
         }
 
-        public void SelectSkill(AbstractAbility selectedSkill)
+        public void SelectAbility(AbstractAbility ability)
         {
-            SelectedSkill = selectedSkill;
+            UnitLogic.SelectedAbility = ability;
         }
 
         public virtual IEnumerator Prepare()
         {
-            yield return new WaitWhile(() => SelectedSkill == null);
-            yield return new WaitWhile(HasNoTarget);
+            yield return new WaitUntil(UnitLogic.IsSelectedAbility);
+            yield return new WaitUntil(UnitLogic.IsSelectedTarget);
         }
 
         public virtual IEnumerator Execute()
         {
             _isPerformingAction = true;
-            Owner.TryActiveAbility(SelectedSkill);
+            UnitLogic.PerformUnitAction();
+
+            //TODO: Too complicated to understand, can it be done using something like BattleManager.NextUnitAction?
             _doneActionEventChannel.RaiseEvent();
             yield return WaitUntilDoneShowAction();
             _isPerformingAction = false;
@@ -158,8 +152,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit
 
         public void ResetUnit()
         {
-            SelectedSkill = null;
-            TargetContainer.Clear();
+            UnitLogic.Reset();
             _isDoneShowAction = false;
         }
 
@@ -167,7 +160,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit
         {
             if (Owner == null || args.System != Owner.AttributeSystem) return;
 
-            Owner.AttributeSystem.GetAttributeValue(_hpAttribute, out AttributeValue attributValue);
+            Owner.AttributeSystem.GetAttributeValue(_hpAttribute, out var attributValue);
             if (attributValue.CurrentValue > 0 || _isDead) return;
 
             _isDead = true;
@@ -178,11 +171,6 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit
         public virtual void OnDeath()
         {
             Destroy(gameObject);
-        }
-
-        private bool HasNoTarget()
-        {
-            return TargetContainer.Count <= 0;
         }
     }
 }

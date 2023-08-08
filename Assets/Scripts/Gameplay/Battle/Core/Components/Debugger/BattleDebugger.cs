@@ -122,7 +122,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components.Debugger
                 GUI.enabled = !skill.IsActive;
                 if (GUILayout.Button($"Select skill {skill.AbilitySO.name}"))
                 {
-                    _battleManager.CurrentUnit.SelectSkill(skill);
+                    _battleManager.CurrentUnit.SelectAbility(skill);
                     _showTargetUnit = true;
                     _showActions = false;
                 }

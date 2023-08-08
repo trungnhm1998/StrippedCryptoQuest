@@ -9,9 +9,7 @@ namespace CryptoQuest.UI.Battle.BattleActionHandler
         public override void Handle(IBattleUnit currentUnit)
         {
             if (currentUnit == null) return;
-            AbilitySystemBehaviour currentUnitOwner = currentUnit.Owner;
-
-            currentUnit.SelectSkill(currentUnit.NormalAttack);
+            currentUnit.SelectAbility(currentUnit.UnitLogic.NormalAttack);
             NextHandler?.Handle(currentUnit);
         }
     }

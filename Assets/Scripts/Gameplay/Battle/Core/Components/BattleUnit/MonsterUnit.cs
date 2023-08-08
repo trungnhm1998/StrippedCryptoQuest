@@ -1,20 +1,20 @@
 using System.Collections;
-using CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit.SkillSelectStrategies;
+using CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit.AbilitySelectStrategies;
 
 namespace CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit
 {
     public class MonsterUnit : CharacterUnit
     {
-        private ISkillSelector _skillSelector;
+        private IAbilitySelector _abilitySelector;
 
         protected void Awake()
         {
-            _skillSelector = new RandomSkillSelector();
+            _abilitySelector = new RandomAbilitySelector();
         }
 
         public override IEnumerator Prepare()
         {
-            SelectedSkill = _skillSelector.GetSkill(this);
+            SelectAbility(_abilitySelector.GetAbility(this));
             SetDefaultTarget();
             yield return base.Prepare();
         }

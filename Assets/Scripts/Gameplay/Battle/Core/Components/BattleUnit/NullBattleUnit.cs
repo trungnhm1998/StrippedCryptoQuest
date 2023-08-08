@@ -14,10 +14,10 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit
         public BattleTeam OpponentTeam { get; }
         
         public bool IsDead { get; }
-        public AbstractAbility NormalAttack { get; }
         
         public CharacterDataSO UnitData { get; set; }
         public CharacterInformation UnitInfo { get; private set; }
+        public BaseBattleUnitLogic UnitLogic { get; private set; }
 
         public void Init(BattleTeam team, AbilitySystemBehaviour owner) {}
         public void SetOpponentTeams(BattleTeam opponentTeam) {}
@@ -38,7 +38,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit
         }
 
         public void OnDeath() {}
-        public void SelectSkill(AbstractAbility selectedSkill) {}
+        public void SelectAbility(AbstractAbility selectedSkill) {}
         public void SelectSingleTarget(AbilitySystemBehaviour target) {}
     }
 }

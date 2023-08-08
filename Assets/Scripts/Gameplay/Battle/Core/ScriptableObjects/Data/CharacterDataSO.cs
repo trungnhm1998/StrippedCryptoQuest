@@ -12,7 +12,9 @@ namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data
     {
         public string Name;
         public AbilityScriptableObject NormalAttack;
-        public List<AbilityScriptableObject> GrantedSkills;
+        public AbilityScriptableObject GuardAbilitySO;
+        public AbilityScriptableObject RetreatAbilitySO;
+        public List<AbilityScriptableObject> GrantedAbilities;
 
         /// <summary>
         /// Need to create character info when there're

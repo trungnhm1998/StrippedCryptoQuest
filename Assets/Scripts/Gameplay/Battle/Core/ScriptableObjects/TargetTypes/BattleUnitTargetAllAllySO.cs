@@ -13,7 +13,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.TargetTypes
         {
             if (!owner.TryGetComponent<BattleUnitBase>(out var unit)) return;
             unit.SelectAllAlly();
-            targets.AddRange(unit.TargetContainer);
+            targets.AddRange(unit.UnitLogic.TargetContainer);
         }
     }
 
