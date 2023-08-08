@@ -1,5 +1,6 @@
 ﻿using CryptoQuest.UI.Menu.Panels.Skill;
 using UnityEngine;
+using NotImplementedException = System.NotImplementedException;
 
 namespace CryptoQuest.UI.Menu.MenuStates.SkillStates
 {
@@ -17,7 +18,7 @@ namespace CryptoQuest.UI.Menu.MenuStates.SkillStates
             base.OnEnter();
             NavigationBar.SetActive(false);
             NavigationBar.HighlightHeader(SkillPanel.TypeSO);
-            // _characterSelectionOverview.EquipmentSlotSelected += ChangeEquipment;
+            _characterSelectionOverview.CharacterSelected += ViewSkills;
             _characterSelectionOverview.InitCharacterSelection();
         }
 
@@ -26,15 +27,20 @@ namespace CryptoQuest.UI.Menu.MenuStates.SkillStates
             base.HandleCancel();
             NavigationBar.SetActive(true);
             NavigationBar.HighlightHeader(SkillPanel.TypeSO, true);
-            // _equipmentOverviewPanel.DeInit();
+            _characterSelectionOverview.DeInitCharacterSelection();
             MenuStateMachine.RequestStateChange(SkillMenuStateMachine.NavSkill);
         }
 
         public override void OnExit()
         {
             base.OnExit();
-            // _equipmentOverviewPanel.DeInit();
-            // _equipmentOverviewPanel.EquipmentSlotSelected -= ChangeEquipment;
+            _characterSelectionOverview.DeInitCharacterSelection();
+            _characterSelectionOverview.CharacterSelected -= ViewSkills;
+        }
+
+        private void ViewSkills()
+        {
+            MenuStateMachine.RequestStateChange(SkillMenuStateMachine.SkillSelection);
         }
     }
 }

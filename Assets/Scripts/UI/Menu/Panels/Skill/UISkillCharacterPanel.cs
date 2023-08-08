@@ -29,7 +29,7 @@ namespace CryptoQuest.UI.Menu.Panels.Skill
         private List<MultiInputButton> _listSkillButton = new();
         private List<SkillInformation> _listSkills = new();
         [NonSerialized] public ECharacterSkill TypeOfSkill;
-        [NonSerialized] public UISkillAbility CurrentSkillAbility;
+        [NonSerialized] public UISkillAbilityButton CurrentSkillAbilityButton;
         public Image CharacterCardBackground;
 
 
@@ -77,11 +77,11 @@ namespace CryptoQuest.UI.Menu.Panels.Skill
         {
             _autoScrollRect.UpdateScrollRectTransform();
             ShowScrollHints();
-            if (EventSystem.current.currentSelectedGameObject.TryGetComponent<UISkillAbility>(out var currentSelectedSkill))
+            if (EventSystem.current.currentSelectedGameObject.TryGetComponent<UISkillAbilityButton>(out var currentSelectedSkill))
             {
-                CurrentSkillAbility = currentSelectedSkill;
-                TypeOfSkill = CurrentSkillAbility.TypeOfSkill;
-                _localizeDescription.StringReference = CurrentSkillAbility.Description;
+                CurrentSkillAbilityButton = currentSelectedSkill;
+                TypeOfSkill = CurrentSkillAbilityButton.TypeOfSkill;
+                _localizeDescription.StringReference = CurrentSkillAbilityButton.Description;
             }
         }
 
@@ -121,7 +121,7 @@ namespace CryptoQuest.UI.Menu.Panels.Skill
 
         public void SetCell(ICell cell, int index)
         {
-            var skill = cell as UISkillAbility;
+            var skill = cell as UISkillAbilityButton;
             skill.Init(_listSkills[index]);
             _listSkillButton.Add(skill.GetComponent<MultiInputButton>());
         }

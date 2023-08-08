@@ -1,8 +1,7 @@
 using System;
 using System.Collections.Generic;
-using CryptoQuest.Input;
 using CryptoQuest.Menu;
-using CryptoQuest.UI.Menu.Panels.Status;
+using IndiGames.Core.Events.ScriptableObjects;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -12,8 +11,6 @@ namespace CryptoQuest.UI.Menu.Panels.Skill
     {
         public event Action CharacterSelected;
 
-        [SerializeField] private InputMediatorSO _inputMediator;
-        [SerializeField] private MenuSelectionHandler _selectionHandler;
         [SerializeField] private List<UISkillTabButton> _tabSkillButton;
         [SerializeField] private List<UISkillCharacterPanel> _listSkills;
         [SerializeField] private List<MultiInputButton> _listCharacterCardButton;
@@ -43,12 +40,6 @@ namespace CryptoQuest.UI.Menu.Panels.Skill
 
         private void OnEnable()
         {
-            // _inputMediator.EnableMenuInput();
-            // _inputMediator.MenuNavigateEvent += SelectCharacterMenu;
-            // _inputMediator.MenuSubmitEvent += ShowCharacterSkills;
-            // _inputMediator.NextSelectionMenu += SelectNextMenu;
-            // _inputMediator.PreviousSelectionMenu += SelectPreviousMenu;
-            // _inputMediator.MenuCancelEvent += BackToSelectCharacterCard;
             for (int i = 0; i < _tabSkillButton.Count; i++)
             {
                 _tabSkillButton[i].Clicked += SelectTab;
@@ -60,11 +51,6 @@ namespace CryptoQuest.UI.Menu.Panels.Skill
 
         private void OnDisable()
         {
-            // _inputMediator.MenuSubmitEvent -= ShowCharacterSkills;
-            // _inputMediator.MenuNavigateEvent -= SelectCharacterMenu;
-            // _inputMediator.NextSelectionMenu -= SelectNextMenu;
-            // _inputMediator.PreviousSelectionMenu -= SelectPreviousMenu;
-            // _inputMediator.MenuCancelEvent -= BackToSelectCharacterCard;
             for (int i = 0; i < _tabSkillButton.Count; i++)
             {
                 _tabSkillButton[i].Clicked -= SelectTab;
@@ -111,7 +97,6 @@ namespace CryptoQuest.UI.Menu.Panels.Skill
                 }
                 SelectTab(CYCLE_TYPES[_currentSelectedTabIndex]);
                 //TODO: Implement apply skill to character
-                Debug.Log($"Apply skill to Character {CYCLE_TYPES[_currentCharacterCardIndex]}");
             }
             else
             {
@@ -128,7 +113,6 @@ namespace CryptoQuest.UI.Menu.Panels.Skill
                 else
                 {
                     //TODO: Implement logic to use skill
-                    Debug.Log($"Use self cast-skill!");
                 }
             }
         }
@@ -170,6 +154,8 @@ namespace CryptoQuest.UI.Menu.Panels.Skill
 
         public void OnClickCharacterCard()
         {
+            CharacterSelected?.Invoke();
+            DisableAllCharacterButtons();
             SelectCharacterMenu(Vector2.zero);
             ShowCharacterSkills();
         }
@@ -197,23 +183,40 @@ namespace CryptoQuest.UI.Menu.Panels.Skill
             }
         }
 
+        #region Character Selection
         private void EnableAllCharacterButtons()
         {
-            foreach (var slotButton in _tabSkillButton)
+            foreach (var button in _tabSkillButton)
             {
-                slotButton.enabled = true;
+                button.enabled = true;
             }
         }
-
-        private void DisableSkillButtons()
+        
+        private void DisableAllCharacterButtons()
         {
-            
+            foreach (var button in _tabSkillButton)
+            {
+                button.enabled = false;
+            }
         }
 
         public void InitCharacterSelection()
         {
             EnableAllCharacterButtons();
-            EventSystem.current.SetSelectedGameObject(_tabSkillButton[0].gameObject);
+            _tabSkillButton[0].Select();
         }
+
+        public void DeInitCharacterSelection()
+        {
+            DisableAllCharacterButtons();
+        }
+        #endregion
+
+        #region Skill Selection
+        public void OnTurnBack()
+        {
+            BackToSelectCharacterCard();
+        }
+        #endregion
     }
 }

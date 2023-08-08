@@ -14,6 +14,9 @@ namespace CryptoQuest.UI.Menu.Panels.Skill
         [SerializeField] private UISkillManager _characterSelectionOverview;
         public UISkillManager CharacterSelectionOverview => _characterSelectionOverview;
 
+        [SerializeField] private UISkillManager _skillSelectionOverview;
+        public UISkillManager SkillSelectionOverview => _skillSelectionOverview;
+
         /// <summary>
         /// Return the specific state machine for this panel.
         /// </summary>

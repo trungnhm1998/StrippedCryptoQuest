@@ -9,6 +9,7 @@ namespace CryptoQuest.UI.Menu.MenuStates.SkillStates
         public static readonly string NavSkill = "NavSkill";
         public static readonly string Skill = "Skill";
         public static readonly string CharacterSelection = "CharacterSelection";
+        public static readonly string SkillSelection = "SkillSelection";
 
         private new readonly UISkillMenu _panel;
         
@@ -22,7 +23,7 @@ namespace CryptoQuest.UI.Menu.MenuStates.SkillStates
             AddState(NavSkill, new UnFocusSkillState(panel));
             AddState(Skill, new FocusSkillState(panel));
             AddState(CharacterSelection, new CharacterSelectionState(panel));
-            // AddState(EquipmentSelection, new ChangeEquipmentState(panel));
+            AddState(SkillSelection, new SkillSelectionState(panel));
             //
             SetStartState(CharacterSelection);
         }
