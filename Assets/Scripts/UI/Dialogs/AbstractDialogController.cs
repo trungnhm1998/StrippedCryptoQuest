@@ -7,7 +7,7 @@ namespace CryptoQuest.UI.Dialogs
     public abstract class AbstractDialogController<T> : MonoBehaviour where T : ModalWindow<T>
     {
         [SerializeField] private AssetReference _dialogPrefab;
-        [SerializeField] private Transform _dialogsContainer;
+        [SerializeField] private RectTransform _dialogsContainer;
 
         private void OnEnable()
         {
