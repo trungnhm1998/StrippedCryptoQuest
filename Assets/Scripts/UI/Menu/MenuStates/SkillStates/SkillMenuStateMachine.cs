@@ -11,10 +11,8 @@ namespace CryptoQuest.UI.Menu.MenuStates.SkillStates
         public static readonly string CharacterSelection = "CharacterSelection";
         public static readonly string SkillSelection = "SkillSelection";
 
-        private new readonly UISkillMenu _panel;
-        
         /// <summary>
-        /// Setup the state machine for status menu.
+        /// Setup the state machine for skill menu.
         /// </summary>
         /// <param name="panel"></param>
         public SkillMenuStateMachine(UISkillMenu panel) : base(panel)

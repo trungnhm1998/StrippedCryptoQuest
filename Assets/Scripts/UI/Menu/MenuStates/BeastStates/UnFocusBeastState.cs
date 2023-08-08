@@ -1,24 +1,23 @@
-﻿using CryptoQuest.UI.Menu.Panels.Option;
-using UnityEngine;
+using CryptoQuest.UI.Menu.Panels.Beast;
 
-namespace CryptoQuest.UI.Menu.MenuStates.OptionStates
+namespace CryptoQuest.UI.Menu.MenuStates.BeastStates
 {
-    public class UnFocusOptionState : OptionStateBase
+    public class UnFocusBeastState : BeastStateBase
     {
-        public UnFocusOptionState(UIOptionMenu optionPanel) : base(optionPanel) { }
+        public UnFocusBeastState(UIBeastMenu panel) : base(panel) { }
 
         public override void OnEnter()
         {
             base.OnEnter();
             NavigationBar.SetActive(true);
-            NavigationBar.HighlightHeader(OptionPanel.TypeSO, true);
+            NavigationBar.HighlightHeader(BeastPanel.TypeSO, true);
         }
 
         public override void OnExit()
         {
             base.OnExit();
             NavigationBar.SetActive(false);
-            NavigationBar.HighlightHeader(OptionPanel.TypeSO);
+            NavigationBar.HighlightHeader(BeastPanel.TypeSO);
         }
         
         public override void Interact()

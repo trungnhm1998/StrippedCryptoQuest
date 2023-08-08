@@ -7,9 +7,7 @@ namespace CryptoQuest.UI.Menu.MenuStates.OptionStates
     {
         public static readonly string NavOption = "NavOption";
         public static readonly string Option = "Option";
-        
-        private new readonly UIOptionMenu _panel;
-        
+
         /// <summary>
         /// Setup the state machine for option menu.
         /// </summary>
