@@ -5,11 +5,11 @@ namespace CryptoQuest.UI.Menu.MenuStates.SkillStates
 {
     public class CharacterSelectionState : SkillStateBase
     {
-        private UISkillMenu _characterSelectionOverview;
+        private UISkillManager _characterSelectionOverview;
 
         public CharacterSelectionState(UISkillMenu skillPanel) : base(skillPanel)
         {
-            _characterSelectionOverview = skillPanel;
+            _characterSelectionOverview = skillPanel.CharacterSelectionOverview;
         }
 
         public override void OnEnter()
@@ -18,7 +18,7 @@ namespace CryptoQuest.UI.Menu.MenuStates.SkillStates
             NavigationBar.SetActive(false);
             NavigationBar.HighlightHeader(SkillPanel.TypeSO);
             // _characterSelectionOverview.EquipmentSlotSelected += ChangeEquipment;
-            // _equipmentOverviewPanel.Init();
+            _characterSelectionOverview.InitCharacterSelection();
         }
 
         public override void HandleCancel()

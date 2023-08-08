@@ -1,6 +1,8 @@
+using System;
 using System.Collections.Generic;
 using CryptoQuest.Input;
 using CryptoQuest.Menu;
+using CryptoQuest.UI.Menu.Panels.Status;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -8,6 +10,8 @@ namespace CryptoQuest.UI.Menu.Panels.Skill
 {
     public class UISkillManager : MonoBehaviour
     {
+        public event Action CharacterSelected;
+
         [SerializeField] private InputMediatorSO _inputMediator;
         [SerializeField] private MenuSelectionHandler _selectionHandler;
         [SerializeField] private List<UISkillTabButton> _tabSkillButton;
@@ -50,8 +54,8 @@ namespace CryptoQuest.UI.Menu.Panels.Skill
                 _tabSkillButton[i].Clicked += SelectTab;
             }
 
-            _selectionHandler.UpdateDefault(_tabSkillButton[0].gameObject);
-            SelectTab(ECharacterClass.MainCharacter);
+            // _selectionHandler.UpdateDefault(_tabSkillButton[0].gameObject);
+            //  SelectTab(ECharacterClass.MainCharacter);
         }
 
         private void OnDisable()
@@ -191,6 +195,25 @@ namespace CryptoQuest.UI.Menu.Panels.Skill
                 _isSelectedCharacter = false;
                 SelectTab(CYCLE_TYPES[_currentSelectedTabIndex]);
             }
+        }
+
+        private void EnableAllCharacterButtons()
+        {
+            foreach (var slotButton in _tabSkillButton)
+            {
+                slotButton.enabled = true;
+            }
+        }
+
+        private void DisableSkillButtons()
+        {
+            
+        }
+
+        public void InitCharacterSelection()
+        {
+            EnableAllCharacterButtons();
+            EventSystem.current.SetSelectedGameObject(_tabSkillButton[0].gameObject);
         }
     }
 }
