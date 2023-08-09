@@ -12,17 +12,15 @@ namespace CryptoQuest.UI.Inventory
 {
     public class UIItemInventory : MonoBehaviour, ICell
     {
-        public Image Icon;
-        public LocalizeStringEvent Name;
-        public Text Quantity;
-        public LocalizedString Description;
-        private UsableInfo _itemBase;
-        public UsableInfo ItemBase => _itemBase;
-        public event UnityAction<UsableInfo> Clicked;
+        [SerializeField] private Image Icon;
+        [SerializeField] private LocalizeStringEvent Name;
+        [SerializeField] private Text Quantity;        
+        [field: SerializeField] public LocalizedString Description{get; private set;}
+        [field: SerializeField] public UsableInfo ItemBase { get; private set; }
 
         public void Init(UsableInfo item)
         {
-            _itemBase = item;
+            ItemBase = item;
             Icon.sprite = item.Item.Image;
             Name.StringReference = item.Item.DisplayName;
             Quantity.text = item.Quantity.ToString();
@@ -31,7 +29,7 @@ namespace CryptoQuest.UI.Inventory
 
         public void OnClicked()
         {
-            Clicked?.Invoke(_itemBase);
+            ItemBase.UseItem();
         }
 
         public void Select()

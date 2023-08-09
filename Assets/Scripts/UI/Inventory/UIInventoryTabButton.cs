@@ -19,7 +19,8 @@ namespace CryptoQuest.UI.Inventory
 
         public void Select()
         {
-            EventSystem.current.SetSelectedGameObject(gameObject);
+            if (EventSystem.current.currentSelectedGameObject != null)
+                EventSystem.current.SetSelectedGameObject(gameObject);
         }
     }
 }

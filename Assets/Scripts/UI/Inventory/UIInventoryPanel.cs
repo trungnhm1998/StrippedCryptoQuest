@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using CryptoQuest.Gameplay.Inventory;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
@@ -17,19 +18,18 @@ namespace CryptoQuest.UI.Inventory
     public class UIInventoryPanel : MonoBehaviour, IRecyclableScrollRectDataSource
     {
         [SerializeField] private InputMediatorSO _inputMediator;
-        [SerializeField] private GameObject _content;
         [SerializeField] private InventorySO _inventory;
         [SerializeField] private RecyclableScrollRect _recyclableScrollRect;
-        [SerializeField] private AutoScrollRect _autoScrollRect;
-        [SerializeField] private UsableTypeSO _type;
+        [SerializeField] private GameObject _content;
         [SerializeField] private GameObject _upHint;
         [SerializeField] private GameObject _downHint;
         [SerializeField] private RectTransform _currentRectTransform;
         [SerializeField] private RectTransform _parentRectTransform;
         [SerializeField] private RectTransform _itemRectTransform;
         [SerializeField] private LocalizeStringEvent _localizeDescription;
-        [SerializeField] private Image _tabImage;
-        public UsableTypeSO Type => _type;
+        [SerializeField] private AutoScrollRect _autoScrollRect;
+        [field: SerializeField] public UsableTypeSO Type { get; private set; }
+        public Image MenuItem;
         private List<UsableInfo> _itemList = new();
         private List<MultiInputButton> _buttonList = new();
         private UIItemInventory _itemInformation;
@@ -54,54 +54,62 @@ namespace CryptoQuest.UI.Inventory
         {
             _recyclableScrollRect.DataSource = this;
             _itemList.Clear();
-            foreach (var item in _inventory.UsableItems)
+            foreach (var usable in _inventory.UsableItems)
             {
-                var itemSO = item.Item;
-                var type = itemSO.UsableTypeSO;
-                if (type != _type) continue;
-
-                _itemList.Add(new UsableInfo(itemSO, item.Quantity));
+                if (usable.Item.UsableTypeSO == Type)
+                {
+                    _itemList.Add(usable);
+                }
             }
         }
 
         private void SelectItemHandle(Vector2 arg0)
         {
             _autoScrollRect.UpdateScrollRectTransform();
-            CheckScrollRect();
+            ShowScrollHints();
             if (EventSystem.current.currentSelectedGameObject.GetComponent<UIItemInventory>())
             {
                 _itemInformation = EventSystem.current.currentSelectedGameObject.GetComponent<UIItemInventory>();
                 _localizeDescription.StringReference = _itemInformation.Description;
             }
         }
+        public void ActiveItemSelection(bool isActivated)
+        {
+            foreach (var button in _buttonList)
+            {
+                button.GetComponent<MultiInputButton>().enabled = isActivated;
+            }
+        }
 
         public void Deselect()
         {
             _content.SetActive(false);
-            _tabImage.enabled = false;
+            MenuItem.enabled = false;
         }
 
         public void Select()
         {
             _content.SetActive(true);
-            _tabImage.enabled = true;
-            CheckScrollRect();
+            MenuItem.enabled = true;
+            ActiveItemSelection(true);
+            ShowScrollHints();
             if (_buttonList.Count > 0)
             {
                 _buttonList[0].Select();
                 SelectItemHandle(Vector2.zero);
             }
         }
-
-        private void CheckScrollRect()
+        private void ShowScrollHints()
         {
-            bool shouldMoveUp = _currentRectTransform.anchoredPosition.y > _itemRectTransform.rect.height;
-            _upHint.SetActive(shouldMoveUp);
-            bool shouldMoveDown =
+            _upHint.SetActive(ShouldMoveUp);
+            _downHint.SetActive(ShouldMoveDown);
+        }
+
+        private bool ShouldMoveUp => _currentRectTransform.anchoredPosition.y > _itemRectTransform.rect.height;
+
+        private bool ShouldMoveDown =>
                 _currentRectTransform.rect.height - _currentRectTransform.anchoredPosition.y
                 > _parentRectTransform.rect.height + _itemRectTransform.rect.height / 2;
-            _downHint.SetActive(shouldMoveDown);
-        }
 
         #region PLUGINS
 
