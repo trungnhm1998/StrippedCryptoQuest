@@ -16,8 +16,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data.Targets
 
         public override void HandleTargets()
         {
-            if (!_unit.Owner.TryGetComponent<BattleUnitBase>(out var unitBase)) return;
-            unitBase.SelectAllAlly();
+            _unit.UnitLogic.SelectAllAlly();
         }
     }
 }

@@ -23,7 +23,7 @@ namespace CryptoQuest.UI.Battle
         private void SetupTargetButton(IBattleUnit battleUnit)
         {
             _buttonInfo.Clear();
-            foreach (var skill in _currentUnit.UnitData.GrantedSkills)
+            foreach (var skill in _currentUnit.UnitData.GrantedAbilities)
             {
                 var cryptoQuestAbility = skill as AbilitySO;
                 if (cryptoQuestAbility == null) continue;
@@ -37,7 +37,7 @@ namespace CryptoQuest.UI.Battle
         private void SetAbility(AbilitySO abilitySO)
         {
             var ability = _currentUnit.Owner.GiveAbility(abilitySO);
-            _currentUnit.SelectSkill(ability);
+            _currentUnit.SelectAbility(ability);
             _panelController.CloseCommandDetailPanel();
             NextHandler?.Handle(_currentUnit);
         }

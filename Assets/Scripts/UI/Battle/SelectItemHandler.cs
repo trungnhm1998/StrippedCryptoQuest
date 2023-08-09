@@ -42,7 +42,7 @@ namespace CryptoQuest.UI.Battle
         private void SetExpendableItemAbility(UsableSO itemSo)
         {
             var ability = _currentUnit.Owner.GiveAbility(itemSo.Ability);
-            _currentUnit.SelectSkill(ability);
+            _currentUnit.SelectAbility(ability);
             _panelController.CloseCommandDetailPanel();
             NextHandler?.Handle(_currentUnit);
         }

@@ -10,11 +10,11 @@ namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.BattleFSM.States
     [CreateAssetMenu(fileName = "BattlePrepareStateSO", menuName = "Gameplay/Battle/FSM/States/Battle Prepare State")]
     public class BattlePrepareStateSO : BattleStateSO
     {
-        [SerializeField] private GameStateSO _gameState;
         [SerializeField] private float _waitShowTime = 3f;
         [SerializeField] private LocalizedString _monsterAppear;
 
         [Header("Raise Events")]
+        [SerializeField] private VoidEventChannelSO _doneSetupBattleEventChannel;
         [SerializeField] private VoidEventChannelSO _showNextMarkEventChannel;
 
         [SerializeField] private LocalizedStringEventChannelSO _showBattleDialogEventChannel;
@@ -42,7 +42,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.BattleFSM.States
             }
 
             BattleManager.InitBattleTeams();
-            _gameState.UpdateGameState(EGameState.Battle);
+            _doneSetupBattleEventChannel.RaiseEvent();
 
             _showBattleDialogEventChannel.RaiseEvent(_monsterAppear);
 

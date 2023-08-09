@@ -15,6 +15,7 @@ namespace CryptoQuest.Gameplay.Battle
 {
     public class BattleLoader : MonoBehaviour
     {
+        [SerializeField] private GameStateSO _gameState;
         [SerializeField] private BattleInputSO _battleInput;
         [SerializeField] private SpiralConfigSO _spiralConfigSo;
         [SerializeField] private BattleBus _battleBus;
@@ -31,7 +32,6 @@ namespace CryptoQuest.Gameplay.Battle
 
         [SerializeField] private LoadSceneEventChannelSO _loadSceneEventChannelSo;
 
-        [SerializeField] private VoidEventChannelSO _startBattleEventChannel;
 
         private void OnEnable()
         {
@@ -71,7 +71,7 @@ namespace CryptoQuest.Gameplay.Battle
 
         private void StartBattle()
         {
-            _startBattleEventChannel.RaiseEvent();
+            _gameState.UpdateGameState(EGameState.Battle);
             _spiralConfigSo.DoneSpiralIn -= SpiralInDone;
             _spiralConfigSo.DoneFadeOut -= StartBattle;
         }

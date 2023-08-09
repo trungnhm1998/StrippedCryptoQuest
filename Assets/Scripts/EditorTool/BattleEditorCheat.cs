@@ -17,7 +17,6 @@ namespace CryptoQuest.EditorTool
     {
         [SerializeField] private GameplayBus _gameplayBus;
         [SerializeField] private BattleDataSO[] _battleDataSOs;
-        [SerializeField] private SceneScriptableObject[] _battleScenes;
         [SerializeField] private AssetReferenceT<Sprite> _defaultBackground;
 
         [Header("Raise Event")]
@@ -118,7 +117,7 @@ namespace CryptoQuest.EditorTool
                 _showDebug = false;
                 
                 var battleInfo = new BattleInfo(data, true, _defaultBackground);
-            _triggerBattleEncounterEvent.Raise(battleInfo);
+                _triggerBattleEncounterEvent.Raise(battleInfo);
             }
         }
 
