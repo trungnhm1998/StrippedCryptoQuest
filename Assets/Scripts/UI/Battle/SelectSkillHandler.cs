@@ -1,8 +1,8 @@
 using System.Collections.Generic;
-using CryptoQuest.Events.Gameplay;
 using CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit;
 using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Skills;
 using CryptoQuest.UI.Battle.CommandsMenu;
+using IndiGames.GameplayAbilitySystem.AbilitySystem;
 using UnityEngine;
 
 namespace CryptoQuest.UI.Battle
@@ -23,20 +23,19 @@ namespace CryptoQuest.UI.Battle
         private void SetupTargetButton(IBattleUnit battleUnit)
         {
             _buttonInfo.Clear();
-            foreach (var skill in _currentUnit.UnitData.GrantedAbilities)
+            foreach (var abstractAbility in _currentUnit.Owner.GrantedAbilities.Abilities)
             {
-                var cryptoQuestAbility = skill as AbilitySO;
-                if (cryptoQuestAbility == null) continue;
-                var buttonInfo = new AbilityAbstractButtonInfo(SetAbility, cryptoQuestAbility);
+                if (!(abstractAbility.AbilitySO is AbilitySO)) continue;
+
+                var buttonInfo = new AbilityAbstractButtonInfo(SetAbility, abstractAbility);
                 _buttonInfo.Add(buttonInfo);
             }
 
             _panelController.OpenCommandDetailPanel(_buttonInfo);
         }
 
-        private void SetAbility(AbilitySO abilitySO)
+        private void SetAbility(AbstractAbility ability)
         {
-            var ability = _currentUnit.Owner.GiveAbility(abilitySO);
             _currentUnit.SelectAbility(ability);
             _panelController.CloseCommandDetailPanel();
             NextHandler?.Handle(_currentUnit);

@@ -1,11 +1,10 @@
 ﻿using System;
-using CryptoQuest.Events.Gameplay;
 using CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit;
 using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data;
 using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Skills;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item;
-using IndiGames.GameplayAbilitySystem.AbilitySystem.ScriptableObjects;
+using IndiGames.GameplayAbilitySystem.AbilitySystem;
 
 namespace CryptoQuest.UI.Battle.CommandsMenu
 {
@@ -70,13 +69,12 @@ namespace CryptoQuest.UI.Battle.CommandsMenu
     [Serializable]
     public class AbilityAbstractButtonInfo : AbstractButtonInfo
     {
-        private AbilitySO _ability;
-        private Action<AbilitySO> _setSkillCallback;
+        private AbstractAbility _ability;
+        private Action<AbstractAbility> _setSkillCallback;
 
-        public AbilityAbstractButtonInfo(Action<AbilitySO> setSkillCallback,
-            AbilitySO ability)
-            : base(ability.SkillInfo.SkillName.GetLocalizedString())
-
+        public AbilityAbstractButtonInfo(Action<AbstractAbility> setSkillCallback,
+            AbstractAbility ability)
+            : base(GetSkillName(ability))
         {
             _setSkillCallback = setSkillCallback;
             _ability = ability;
@@ -86,6 +84,10 @@ namespace CryptoQuest.UI.Battle.CommandsMenu
         {
             _setSkillCallback.Invoke(_ability);
         }
+
+        public static string GetSkillName(AbstractAbility ability)
+            => (ability.AbilitySO is AbilitySO so) ? 
+                so.SkillInfo.SkillName.GetLocalizedString() : "";
     }
 
     [Serializable]
