@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
 using CryptoQuest.Input;
+using CryptoQuest.Menu;
 using PolyAndCode.UI;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -22,7 +23,7 @@ namespace CryptoQuest.UI.Menu.Panels.Status
         [Header("Game Components")]
         [SerializeField] private GameObject _contents;
 
-        [SerializeField] private GameObject _unEquipButton;
+        [SerializeField] private MultiInputButton _unEquipButton;
         [SerializeField] private RectTransform _singleItemRect;
 
         private float _verticalOffset;
@@ -56,7 +57,7 @@ namespace CryptoQuest.UI.Menu.Panels.Status
 
         private void NavigateMenu(InputAction.CallbackContext context)
         {
-            if (EventSystem.current.currentSelectedGameObject.name == _unEquipButton.name)
+            if (EventSystem.current.currentSelectedGameObject.name == _unEquipButton.gameObject.name)
             {
                 _scrollRect.content.anchoredPosition = Vector2.zero;
             }
@@ -90,6 +91,7 @@ namespace CryptoQuest.UI.Menu.Panels.Status
         public void Show(UIEquipmentSlotButton.EEquipmentType statusPanelEquippingType)
         {
             _contents.SetActive(true);
+            _unEquipButton.Select();
 
             // only init after get data
             if (!_initialized)

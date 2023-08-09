@@ -41,6 +41,7 @@ namespace CryptoQuest.UI.Menu.Panels.Status
         {
             EnableAllButtons();
             _defaultSelection.Select();
+            _navigations.SetActive(true);
         }
 
         /// <summary>
@@ -68,6 +69,7 @@ namespace CryptoQuest.UI.Menu.Panels.Status
         public void DeInit()
         {
             DisableAllButtons();
+            _navigations.SetActive(false);
         }
     }
 }
