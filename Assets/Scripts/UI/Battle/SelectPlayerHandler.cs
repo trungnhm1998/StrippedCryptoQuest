@@ -1,7 +1,10 @@
 ﻿using System.Collections.Generic;
 using CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit;
+using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data;
+using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Skills;
 using CryptoQuest.UI.Battle.CommandsMenu;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace CryptoQuest.UI.Battle
 {
@@ -9,15 +12,8 @@ namespace CryptoQuest.UI.Battle
     {
         [SerializeField] private BattlePanelController _panelController;
         [SerializeField] private CharacterList _characterList;
-
         private IBattleUnit _currentUnit;
         private readonly List<AbstractButtonInfo> _buttonInfo = new();
-
-        private void SelectTarget(IBattleUnit unit)
-        {
-            _characterList.SetSelectedData(unit.UnitInfo.DisplayName);
-            _characterList.SelectFirstHero();
-        }
 
         public override void Handle(IBattleUnit currentUnit)
         {
@@ -29,14 +25,12 @@ namespace CryptoQuest.UI.Battle
         {
             _buttonInfo.Clear();
             var targetUnits = battleUnit.OpponentTeam.BattleUnits;
+            battleUnit.Owner.TryGetComponent<BattleUnitBase>(out var unitBase);
+            var skill = unitBase.SelectedSkill.AbilitySO as AbilitySO;
+            var targetTypeSo = skill.SkillInfo.TargetType;
 
-            foreach (var unit in targetUnits)
-            {
-                var buttonInfo = new SkillAbstractButtonInfo(unit, SelectTarget);
-                _buttonInfo.Add(buttonInfo);
-            }
-
-            _panelController.OpenCommandDetailPanel(_buttonInfo);
+            var targetType = targetTypeSo.GetTargetType(battleUnit, _panelController, _characterList);
+            targetType.HandleTargets();
         }
     }
 }

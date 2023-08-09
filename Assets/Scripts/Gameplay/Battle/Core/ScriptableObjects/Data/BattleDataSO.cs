@@ -36,12 +36,21 @@ namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data
         private void OnValidate()
         {
             if (EnemyGroups == null) return;
-            _allEnemies.Clear();
+
             foreach (var group in EnemyGroups)
             {
                 group.ValidateSameCharacterInGroup();
             }
+
+            while (TotalEnemyCount() > 4)
+            {
+                RemoveLastGroup();
+            }
         }
+
+        private int TotalEnemyCount() => EnemyGroups.Sum(group => group.Characters.Length);
+
+        private void RemoveLastGroup() => EnemyGroups = EnemyGroups.Take(EnemyGroups.Length - 1).ToArray();
     }
 
     [Serializable]
@@ -63,6 +72,4 @@ namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data
             }
         }
     }
-
-  
 }

@@ -77,7 +77,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit
             TargetContainer.AddRange(targets);
         }
 
-        public virtual void SelectTargets(List<AbilitySystemBehaviour> targets)
+        public virtual void SelectTargets(IEnumerable<AbilitySystemBehaviour> targets)
         {
             TargetContainer.Clear();
             TargetContainer.AddRange(targets);

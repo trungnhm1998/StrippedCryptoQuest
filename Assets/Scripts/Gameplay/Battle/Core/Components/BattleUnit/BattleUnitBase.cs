@@ -103,12 +103,12 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit
 
         public virtual void SelectAllOpponent()
         {
-            UnitLogic.SelectTargets(OpponentTeam.Members);
+            UnitLogic.SelectTargets(OpponentTeam.GetAvailableMembers());
         }
 
         public virtual void SelectAllAlly()
         {
-            UnitLogic.SelectTargets(OwnerTeam.Members);
+            UnitLogic.SelectTargets(OwnerTeam.GetAvailableMembers());
         }
 
         public void SelectAbility(AbstractAbility ability)
