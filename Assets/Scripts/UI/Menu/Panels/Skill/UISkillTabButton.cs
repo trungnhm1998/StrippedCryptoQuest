@@ -1,10 +1,11 @@
+using CryptoQuest.Menu;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
-namespace CryptoQuest.UI.Skill
+namespace CryptoQuest.UI.Menu.Panels.Skill
 {
-    public class UISkillTabButton : MonoBehaviour
+    public class UISkillTabButton : MultiInputButton
     {
         public event UnityAction<ECharacterClass> Clicked;
 
@@ -13,12 +14,6 @@ namespace CryptoQuest.UI.Skill
         private void OnClicked()
         {
             Clicked?.Invoke(_typeMenuCharacter);
-        }
-
-        public void Select()
-        {
-            if (EventSystem.current.currentSelectedGameObject != null)
-                EventSystem.current.SetSelectedGameObject(gameObject);
         }
     }
 }
