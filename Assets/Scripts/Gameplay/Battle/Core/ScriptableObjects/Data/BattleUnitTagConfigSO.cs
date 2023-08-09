@@ -34,7 +34,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data
         {
             foreach (var tag in tags)
             {
-                return CheckUnitDisableWithTag(tag);    
+                if (CheckUnitDisableWithTag(tag)) return true;    
             }
 
             return false;
