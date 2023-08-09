@@ -9,6 +9,12 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit
         [Header("Events")]
         [SerializeField] private BattleUnitEventChannelSO _heroTurnEventChannel;
 
+        protected override void InitBattleLogic()
+        {
+            UnitLogic = new HeroUnitLogic(this, TagConfig);
+            UnitLogic.Init();
+        }
+
         public override IEnumerator Prepare()
         {
             _heroTurnEventChannel.RaiseEvent(this);

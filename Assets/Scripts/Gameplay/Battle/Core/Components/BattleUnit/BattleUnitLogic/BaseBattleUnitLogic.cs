@@ -2,6 +2,8 @@ using System.Collections.Generic;
 using IndiGames.GameplayAbilitySystem.AbilitySystem;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
 using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data;
+using System.Linq;
+using IndiGames.GameplayAbilitySystem.AbilitySystem.ScriptableObjects;
 
 namespace CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit
 {
@@ -34,7 +36,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit
         private void GrantDefaultAbilities()
         {
             NormalAttack = _owner.GiveAbility(_unitData.NormalAttack);
-            
+
             if (_unitData.RetreatAbilitySO)
             {
                 RetreatAbility = _owner.GiveAbility(_unitData.RetreatAbilitySO);
@@ -60,6 +62,15 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit
         public virtual bool IsSelectedAbility() => SelectedAbility != null;
 
         public virtual bool IsSelectedTarget() => TargetContainer.Count > 0;
+
+        public virtual bool IsUnableAction()
+        {
+            foreach (var tag in _tagConfig.DisableActionTags)
+            {
+                if (_owner.TagSystem.GrantedTags.Contains(tag)) return true;
+            }
+            return false;
+        }
 
         public virtual void SelectSingleTarget(AbilitySystemBehaviour target)
         {
@@ -100,5 +111,16 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit
             _owner.TryActiveAbility(SelectedAbility);
             //TODO: Activate after action abilities (for hero character)
         }
+
+        public virtual void ActivateAbilityWithTag(TagScriptableObject tag)
+        {
+            var abilities = _owner.GrantedAbilities.Abilities;
+            foreach (var ability in abilities)
+            {
+                if (ability.AbilitySO.Tags.AbilityTag != tag) continue;
+                _owner.TryActiveAbility(ability);
+            }
+        }
+
     }
 }

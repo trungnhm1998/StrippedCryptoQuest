@@ -1,0 +1,75 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: caa5a512d2ead36488ee2826b2189e70, type: 3}
+  m_Name: HealAbilitySOAfter
+  m_EditorClassIdentifier: 
+  tags:
+    AbilityTag: {fileID: 11400000, guid: 5160103f52a8d28498ae6af5ba63939c, type: 2}
+    CancelAbilityWithTags: []
+    BlockAbilityWithTags: []
+    ActivationTags: []
+    OwnerTags:
+      RequireTags: []
+      IgnoreTags: []
+    SourceTags:
+      RequireTags: []
+      IgnoreTags: []
+    TargetTags:
+      RequireTags: []
+      IgnoreTags: []
+  EffectContainerMap:
+  - Tag: {fileID: 11400000, guid: c280954e89b79e24da8821e956e23ea0, type: 2}
+    TargetContainer:
+    - TargetType: {fileID: 11400000, guid: ee9c03338b0e7064697cea6c20bed0f0, type: 2}
+      Effects:
+      - {fileID: 11400000, guid: cc3fa3e2977e201489d964c4537d3760, type: 2}
+  SkillInfo:
+    Id: 1076
+    SkillName:
+      m_TableReference:
+        m_TableCollectionName: GUID:a04f9e0f3e0ba4b4fb5275c51c13428a
+      m_TableEntryReference:
+        m_KeyId: 9623937024
+        m_Key: 
+      m_FallbackState: 0
+      m_WaitForCompletion: 0
+      m_LocalVariables: []
+    SkillDescription:
+      m_TableReference:
+        m_TableCollectionName: GUID:a04f9e0f3e0ba4b4fb5275c51c13428a
+      m_TableEntryReference:
+        m_KeyId: 206668144640
+        m_Key: 
+      m_FallbackState: 0
+      m_WaitForCompletion: 0
+      m_LocalVariables: []
+    Element: {fileID: 11400000, guid: 7f686c386b5045a4b932e7ebb3a85482, type: 2}
+    SkillType: {fileID: 11400000, guid: 13d355b83ae2a11478d2d6ed93b882e9, type: 2}
+    Category: {fileID: 11400000, guid: 5ed162c5f42bc9e42b78f1d44343d381, type: 2}
+    Cost: 5
+    EffectType: {fileID: 11400000, guid: 2782020ba7a0f1046a24f4905734a4be, type: 2}
+    TargetType: {fileID: 11400000, guid: f98b754d18db78a43affcb04b399b8e1, type: 2}
+    isFixed: 1
+    SkillParameters:
+      BasePower: 50
+      PowerUpperLimit: 60
+      PowerLowerLimit: 25
+      SkillPowerThreshold: 200
+      PowerValueAdded: 0.2
+      PowerValueReduced: 0.2
+      ContinuesTurn: 0
+  CostSpecSO: {fileID: 11400000, guid: 7db2bad5621111e4f94621d58062ef9b, type: 2}
+  ActionDataSO: {fileID: 11400000, guid: 0ef34c53fe6ee7c4aa33968e00d29d18, type: 2}
+  ActionEventSO: {fileID: 11400000, guid: f9d0c3b98f2e51a448f0e3086d7eed36, type: 2}
+  references:
+    version: 2
+    RefIds: []

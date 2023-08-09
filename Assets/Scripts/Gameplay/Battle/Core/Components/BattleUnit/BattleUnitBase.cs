@@ -29,7 +29,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit
         public BattleTeam OwnerTeam { get; set; }
         public bool IsDead => _isDead;
         public CharacterInformation UnitInfo { get; private set; }
-        public BaseBattleUnitLogic UnitLogic { get; private set; }
+        public BaseBattleUnitLogic UnitLogic { get; protected set; }
 
         protected bool _isDead;
         protected bool _isPerformingAction;
@@ -98,6 +98,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit
 
         public virtual IEnumerator Prepare()
         {
+            if (UnitLogic.IsUnableAction()) yield break;
             yield return new WaitUntil(UnitLogic.IsSelectedAbility);
             yield return new WaitUntil(UnitLogic.IsSelectedTarget);
         }
@@ -121,7 +122,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit
         private bool CanAction()
         {
             // TODO: Check system unable to action tag here
-            return !_isDead;
+            return !_isDead && !UnitLogic.IsUnableAction();
         }
 
         public virtual IEnumerator Resolve()
