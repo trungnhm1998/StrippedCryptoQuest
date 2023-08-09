@@ -8,7 +8,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Calculation
 {
     [CreateAssetMenu(fileName = "HealCalculation",
         menuName = "Gameplay/Battle/Effects/Execution Calculations/Heal Calculation")]
-    public class HealCalculationSO : AbstractEffectExecutionCalculationSO
+    public class MagicBaseCalculationSO : AbstractEffectExecutionCalculationSO
     {
         [SerializeField] private AttributeScriptableObject _baseMagicAttackSO;
         [SerializeField] private AttributeScriptableObject _targetedAttributeSO;
