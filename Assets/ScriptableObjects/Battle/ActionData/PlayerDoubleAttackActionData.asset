@@ -10,29 +10,36 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ea35b069c6be7ca4faa4566dad71ffb8, type: 3}
-  m_Name: PlayerHealActionData
+  m_Name: PlayerDoubleAttackActionData
   m_EditorClassIdentifier: 
   <Log>k__BackingField:
     m_TableReference:
       m_TableCollectionName: GUID:832b1adaee163f04aaba984e01aa985a
     m_TableEntryReference:
-      m_KeyId: 1674647494656
+      m_KeyId: 11983494366470144
       m_Key: 
     m_FallbackState: 0
     m_WaitForCompletion: 0
     m_LocalVariables:
-    - name: unitName
+    - name: 0
       variable:
-        rid: 8776625620612546565
+        rid: 2091066814020190289
+    - name: 1
+      variable:
+        rid: 2091066814020190290
   <VFXPrefab>k__BackingField:
-    m_AssetGUID: 88bf091a301314660aa021928fce80bb
+    m_AssetGUID: afb01aefb9b714a5983e8d0bc49ff7dd
     m_SubObjectName: 
     m_SubObjectType: 
     m_EditorAssetChanged: 0
   references:
     version: 2
     RefIds:
-    - rid: 8776625620612546565
+    - rid: 2091066814020190289
       type: {class: StringVariable, ns: UnityEngine.Localization.SmartFormat.PersistentVariables, asm: Unity.Localization}
       data:
-        m_Value: 
+        m_Value: Hero
+    - rid: 2091066814020190290
+      type: {class: StringVariable, ns: UnityEngine.Localization.SmartFormat.PersistentVariables, asm: Unity.Localization}
+      data:
+        m_Value: enemy

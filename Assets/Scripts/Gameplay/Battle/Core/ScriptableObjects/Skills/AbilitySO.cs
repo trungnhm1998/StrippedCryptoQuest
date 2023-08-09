@@ -74,8 +74,9 @@ namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Skills
             var actionData = AbilitySO.ActionDataSO;
             if (actionData == null) return;
 
-            actionData.Log.Clear();
+            actionData.Init(_unit.UnitLogic.TargetContainer[0]);
             actionData.AddStringVar(UNIT_NAME_VARIABLE, _unit.UnitInfo.DisplayName);
+            actionData.AddStringVar(SKILL_NAME_VARIABLE, AbilitySO.SkillInfo.SkillName.GetLocalizedString());
             AbilitySO.ActionEventSO.RaiseEvent(actionData);
         }
 

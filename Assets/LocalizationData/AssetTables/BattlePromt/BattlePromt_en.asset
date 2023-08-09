@@ -30,9 +30,10 @@ MonoBehaviour:
       m_Items:
       - rid: 8776625620612546562
   - m_Id: 1674647494656
-    m_Localized: '{0} used {1}!'
+    m_Localized: '{unitName} used {skillName}!'
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 8776625620612546562
   - m_Id: 1846932725760
     m_Localized: '{unitName} is defeated!'
     m_Metadata:
@@ -61,10 +62,15 @@ MonoBehaviour:
     m_Localized: The monster appears!
     m_Metadata:
       m_Items: []
+  - m_Id: 11983494366470144
+    m_Localized: '{unitName} used {skillName}!'
+    m_Metadata:
+      m_Items:
+      - rid: 8776625620612546562
   references:
     version: 2
     RefIds:
     - rid: 8776625620612546562
       type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:
-        m_Entries: 00e0440a2501000000e044c153c7040000e0c405ae01000000e0c434e401000000e0045d648e030000e04464778e0300
+        m_Entries: 00e0440a2501000000e044c153c7040000e0c405ae01000000e0c434e401000000e0045d648e030000e04464778e030000a0e1b4ec922a0000e0c4e885010000

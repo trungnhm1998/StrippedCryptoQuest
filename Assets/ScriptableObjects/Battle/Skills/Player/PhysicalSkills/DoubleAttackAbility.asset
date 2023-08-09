@@ -1,0 +1,75 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: caa5a512d2ead36488ee2826b2189e70, type: 3}
+  m_Name: DoubleAttackAbility
+  m_EditorClassIdentifier: 
+  tags:
+    AbilityTag: {fileID: 0}
+    CancelAbilityWithTags: []
+    BlockAbilityWithTags: []
+    ActivationTags: []
+    OwnerTags:
+      RequireTags: []
+      IgnoreTags: []
+    SourceTags:
+      RequireTags: []
+      IgnoreTags: []
+    TargetTags:
+      RequireTags: []
+      IgnoreTags: []
+  EffectContainerMap:
+  - Tag: {fileID: 11400000, guid: c280954e89b79e24da8821e956e23ea0, type: 2}
+    TargetContainer:
+    - TargetType: {fileID: 11400000, guid: 5d511fdf969c0bc4397f2f83fd967853, type: 2}
+      Effects:
+      - {fileID: 11400000, guid: 7cc3c05cc992604419c102ad899bf17e, type: 2}
+  SkillInfo:
+    Id: 2003
+    SkillName:
+      m_TableReference:
+        m_TableCollectionName: GUID:d963362bf05693d48a4eeec62809d8ba
+      m_TableEntryReference:
+        m_KeyId: 12987768832
+        m_Key: 
+      m_FallbackState: 0
+      m_WaitForCompletion: 0
+      m_LocalVariables: []
+    SkillDescription:
+      m_TableReference:
+        m_TableCollectionName: GUID:d963362bf05693d48a4eeec62809d8ba
+      m_TableEntryReference:
+        m_KeyId: 351421964288
+        m_Key: 
+      m_FallbackState: 0
+      m_WaitForCompletion: 0
+      m_LocalVariables: []
+    Element: {fileID: 11400000, guid: 7f686c386b5045a4b932e7ebb3a85482, type: 2}
+    SkillType: {fileID: 11400000, guid: c3e15b3f1ce3b7d49bde1814738df55f, type: 2}
+    Category: {fileID: 11400000, guid: 8fa30c2d59062cb4aba4fa22ec35d644, type: 2}
+    Cost: 0
+    EffectType: {fileID: 11400000, guid: 4d2b868649bbd574b9a0d0480d5e7623, type: 2}
+    TargetType: {fileID: 11400000, guid: dd00925fec32bb64bb1968781bd8c1d2, type: 2}
+    isFixed: 0
+    SkillParameters:
+      BasePower: 150
+      PowerUpperLimit: 300
+      PowerLowerLimit: 75
+      SkillPowerThreshold: 400
+      PowerValueAdded: 0.8
+      PowerValueReduced: 0.8
+      ContinuesTurn: 0
+  CostSpecSO: {fileID: 11400000, guid: 7db2bad5621111e4f94621d58062ef9b, type: 2}
+  ActionDataSO: {fileID: 11400000, guid: e9cf2393cda0ca442ac0b1f557430819, type: 2}
+  ActionEventSO: {fileID: 11400000, guid: f9d0c3b98f2e51a448f0e3086d7eed36, type: 2}
+  references:
+    version: 2
+    RefIds: []
