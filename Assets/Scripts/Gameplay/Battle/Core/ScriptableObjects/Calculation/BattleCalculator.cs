@@ -26,5 +26,37 @@ namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Calculation
             float buffRate = (buffDividen != 0) ? (1 / buffDividen) : 1;
             return buffRate;
         }
+
+        public static float CalculatePercentPhysicalDamage(float baseDamage, float attack, float defence,
+            float elementAttack, float elementResist)
+        {
+            float atkCorrection = BaseBattleVariable.CORRECTION_ATTACK_VALUE != 0
+                ? BaseBattleVariable.CORRECTION_ATTACK_VALUE
+                : 1;
+            float defCorrection = BaseBattleVariable.CORRECTION_ATTACK_VALUE != 0
+                ? BaseBattleVariable.CORRECTION_DEFENSE_VALUE
+                : 1;
+            float elementCorrection = elementResist != 0 ? elementAttack / elementResist : elementAttack;
+            float damage = ((attack / atkCorrection) - (defence / defCorrection)) * baseDamage *
+                           elementCorrection;
+            damage = damage < 0 ? 0 : damage;
+            return damage;
+        }
+
+        public static float CalculateFixedPhysicalDamage(float baseDamage, float elementAttack, float elementResist)
+        {
+            float elementCorrection = elementResist != 0 ? elementAttack / elementResist : elementAttack;
+            float damage = baseDamage * elementCorrection;
+            damage = damage < 0 ? 0 : damage;
+            return damage;
+        }
+    }
+
+    public static class BaseBattleVariable
+    {
+        public const float CORRECTION_ATTACK_VALUE = 2;
+        public const float CORRECTION_DEFENSE_VALUE = 4;
+        public const float CORRECTION_MAGIC_ATTACK_VALUE = 0.2f;
+        public const float CORRECTION_ATTRIBUTE_VALUE = 1;
     }
 }

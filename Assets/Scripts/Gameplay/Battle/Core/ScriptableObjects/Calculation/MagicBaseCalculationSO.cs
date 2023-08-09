@@ -20,14 +20,14 @@ namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Calculation
         {
             SkillParameters skillParameters = effectSpec.Parameters as SkillParameters;
             effectSpec.Owner.AttributeSystem.GetAttributeValue(_baseMagicAttackSO, out AttributeValue baseMagicAttack);
-            float healAmount = BattleCalculator.CalculateBaseDamage(skillParameters, baseMagicAttack.CurrentValue,
+            float baseMagicValue = BattleCalculator.CalculateBaseDamage(skillParameters, baseMagicAttack.CurrentValue,
                 Random.Range(_lowerRandomRange, _upperRandomRange));
             for (var index = 0; index < attributeModifiers.Length; index++)
             {
                 if (attributeModifiers[index].AttributeSO != _targetedAttributeSO) continue;
 
                 EffectAttributeModifier previousModifier = attributeModifiers[index];
-                attributeModifiers[index].Value = healAmount;
+                attributeModifiers[index].Value = baseMagicValue;
 
                 return true;
             }

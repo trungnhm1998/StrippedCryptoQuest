@@ -16,6 +16,7 @@ namespace CryptoQuest.Gameplay.Battle.Core
         public float SkillPowerThreshold;
         public float PowerValueAdded;
         public float PowerValueReduced;
+        public bool IsFixed;
         public int ContinuesTurn = 1;
     }
 
@@ -31,7 +32,6 @@ namespace CryptoQuest.Gameplay.Battle.Core
         public float Cost;
         public SkillEffectType EffectType;
         public BattleTargetTypeSO TargetType;
-        public bool isFixed;
         public SkillParameters SkillParameters;
     }
 }

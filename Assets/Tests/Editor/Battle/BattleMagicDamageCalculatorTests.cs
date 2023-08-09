@@ -5,7 +5,7 @@ using NUnit.Framework;
 
 namespace CryptoQuest.Tests.Editor.Battle
 {
-    public class BattleCalculatorTests
+    public class BattleMagicDamageCalculatorTests
     {
         [Test]
         public void BattleCalculator_CalculateValidParams_ReturnCorrectValue()

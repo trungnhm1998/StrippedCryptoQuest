@@ -30,7 +30,6 @@ namespace CryptoQuest.Gameplay.Battle.Core
                 Category = _category,
                 Cost = _cost,
                 EffectType = _effectType,
-                isFixed = _isFixed,
                 SkillParameters = _skillParameters
             };
         }
