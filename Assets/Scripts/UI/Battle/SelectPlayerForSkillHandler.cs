@@ -23,8 +23,7 @@ namespace CryptoQuest.UI.Battle
         private void SetupTargetButton(IBattleUnit battleUnit)
         {
             _buttonInfo.Clear();
-            battleUnit.Owner.TryGetComponent<BattleUnitBase>(out var unitBase);
-            var ability = unitBase.SelectedSkill.AbilitySO as AbilitySO;
+            var ability = _currentUnit.UnitLogic.SelectedAbility.AbilitySO as AbilitySO;
             if (ability == null) return;
 
             var targetTypeSo = ability.SkillInfo.TargetType;

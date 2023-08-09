@@ -5,7 +5,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit.AbilitySelectSt
 {
     public class RandomAbilitySelector : IAbilitySelector
     {
-        public AbstractAbility GetAbility(BattleUnitBase battleUnit)
+        public AbstractAbility GetAbility(IBattleUnit battleUnit)
         {
             var grantedAbilities = battleUnit.Owner.GrantedAbilities.Abilities;
             if (grantedAbilities.Count <= 0) return null;

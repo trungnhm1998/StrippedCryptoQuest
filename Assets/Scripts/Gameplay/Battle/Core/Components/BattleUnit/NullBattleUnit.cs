@@ -12,6 +12,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit
 
         public AbilitySystemBehaviour Owner { get; }
         public BattleTeam OpponentTeam { get; }
+        public BattleTeam OwnerTeam { get; }
         
         public bool IsDead { get; }
         

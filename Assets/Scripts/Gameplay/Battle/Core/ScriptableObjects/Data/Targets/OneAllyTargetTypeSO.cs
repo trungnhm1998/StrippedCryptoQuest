@@ -20,10 +20,9 @@ namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data.Targets
 
         public override void HandleTargets()
         {
-            if (!_unit.Owner.TryGetComponent<BattleUnitBase>(out var unitBase)) return;
             List<AbstractButtonInfo> _buttonInfo = new();
 
-            foreach (var allyUnit in unitBase.OwnerTeam.BattleUnits)
+            foreach (var allyUnit in _unit.OwnerTeam.BattleUnits)
             {
                 var buttonInfo = new SkillAbstractButtonInfo(allyUnit, SelectTarget);
                 _buttonInfo.Add(buttonInfo);

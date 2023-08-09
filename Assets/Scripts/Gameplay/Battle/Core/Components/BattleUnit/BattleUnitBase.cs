@@ -90,27 +90,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit
         {
             UnitLogic.SelectSingleTarget(target);
         }
-
-        public virtual void SelectTargets(params AbilitySystemBehaviour[] targets)
-        {
-            UnitLogic.SelectTargets(targets);
-        }
-
-        public virtual void SelectTargets(List<AbilitySystemBehaviour> targets)
-        {
-            UnitLogic.SelectTargets(targets);
-        }
-
-        public virtual void SelectAllOpponent()
-        {
-            UnitLogic.SelectTargets(OpponentTeam.GetAvailableMembers());
-        }
-
-        public virtual void SelectAllAlly()
-        {
-            UnitLogic.SelectTargets(OwnerTeam.GetAvailableMembers());
-        }
-
+        
         public void SelectAbility(AbstractAbility ability)
         {
             UnitLogic.SelectedAbility = ability;

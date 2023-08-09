@@ -83,11 +83,21 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit
             TargetContainer.AddRange(targets);
         }
 
+        public virtual void SelectAllOpponent()
+        {
+            SelectTargets(_battleUnit.OpponentTeam.GetAvailableMembers());
+        }
+
+        public virtual void SelectAllAlly()
+        {
+            SelectTargets(_battleUnit.OwnerTeam.GetAvailableMembers());
+        }
+
         public virtual void PerformUnitAction()
         {
             //TODO: Apply abnormal status and check disable
             //TODO: Activate before action abilities (for hero character)
-            _battleUnit.Owner.TryActiveAbility(SelectedAbility);
+            _owner.TryActiveAbility(SelectedAbility);
             //TODO: Activate after action abilities (for hero character)
         }
     }

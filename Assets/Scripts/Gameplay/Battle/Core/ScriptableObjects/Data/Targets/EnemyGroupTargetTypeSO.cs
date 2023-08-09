@@ -16,14 +16,12 @@ namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data.Targets
 
     public class EnemyGroupTargetType : BattleTargetType
     {
-        private BattleUnitBase unitBase;
 
         public EnemyGroupTargetType(IBattleUnit unit, BattlePanelController battlePanelController,
             CharacterList characterList) : base(unit, battlePanelController, characterList) { }
 
         public override void HandleTargets()
         {
-            if (!_unit.Owner.TryGetComponent<BattleUnitBase>(out unitBase)) return;
             List<AbstractButtonInfo> abstractButtonInfos = new();
             var groupUnits = _unit.OpponentTeam.TeamGroups.UnitsDict;
             for (int i = 0; i < groupUnits.Count; i++)
@@ -46,7 +44,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data.Targets
                 targetsSystemBehaviours.Add(selectedUnit.Owner);
             }
 
-            unitBase.SelectTargets(targetsSystemBehaviours);
+            _unit.UnitLogic.SelectTargets(targetsSystemBehaviours);
         }
     }
 }

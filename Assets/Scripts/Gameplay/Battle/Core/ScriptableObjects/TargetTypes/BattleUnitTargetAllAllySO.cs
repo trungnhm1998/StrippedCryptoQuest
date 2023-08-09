@@ -11,8 +11,8 @@ namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.TargetTypes
     {
         public override void GetTargets(AbilitySystemBehaviour owner, ref List<AbilitySystemBehaviour> targets)
         {
-            if (!owner.TryGetComponent<BattleUnitBase>(out var unit)) return;
-            unit.SelectAllAlly();
+            if (!owner.TryGetComponent<IBattleUnit>(out var unit)) return;
+            unit.UnitLogic.SelectAllAlly();
             targets.AddRange(unit.UnitLogic.TargetContainer);
         }
     }
