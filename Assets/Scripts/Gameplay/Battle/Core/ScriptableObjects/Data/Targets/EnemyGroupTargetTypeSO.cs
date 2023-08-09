@@ -3,8 +3,6 @@ using CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit;
 using CryptoQuest.UI.Battle;
 using CryptoQuest.UI.Battle.CommandsMenu;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
-using UnityEditor.Localization.Plugins.XLIFF.V20;
-using UnityEngine;
 
 namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data.Targets
 {

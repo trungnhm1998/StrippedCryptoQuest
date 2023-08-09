@@ -1,15 +1,16 @@
+using CryptoQuest.Gameplay.Skill;
+using CryptoQuest.Menu;
+using PolyAndCode.UI;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.Localization;
 using UnityEngine.Localization.Components;
 using UnityEngine.UI;
-using PolyAndCode.UI;
-using CryptoQuest.Gameplay.Skill;
 
-namespace CryptoQuest.UI.Skill
+namespace CryptoQuest.UI.Menu.Panels.Skill
 {
-    public class UISkillAbility : MonoBehaviour, ICell
+    public class UISkillAbilityButton : MultiInputButton, ICell
     {
         [SerializeField] private Image _iconImage;
         [SerializeField] private LocalizeStringEvent _name;
@@ -35,9 +36,9 @@ namespace CryptoQuest.UI.Skill
             Clicked?.Invoke(_skillInfo.SkillSO);
         }
 
-        public void Select()
-        {
-            EventSystem.current.SetSelectedGameObject(gameObject);
-        }
+        // public void Select()
+        // {
+        //     EventSystem.current.SetSelectedGameObject(gameObject);
+        // }
     }
 }

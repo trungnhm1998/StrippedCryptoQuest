@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using CryptoQuest.Gameplay.Skill;
 using CryptoQuest.Gameplay.Skill.ScriptableObjects;
+using CryptoQuest.Input;
 using CryptoQuest.Menu;
 using PolyAndCode.UI;
 using UnityEngine;
@@ -13,6 +14,7 @@ namespace CryptoQuest.UI.Menu.Panels.Skill
 {
     public class UISkillCharacterPanel : MonoBehaviour, IRecyclableScrollRectDataSource
     {
+        [SerializeField] private InputMediatorSO _inputMediator;
         [SerializeField] private GameObject _content;
         [SerializeField] private SkillsMockupSO _listSkillMockup;
         [SerializeField] private RecyclableScrollRect _recyclableScrollRect;
@@ -23,17 +25,28 @@ namespace CryptoQuest.UI.Menu.Panels.Skill
         [SerializeField] private RectTransform _parentRectTransform;
         [SerializeField] private RectTransform _skillRectTransform;
         [SerializeField] private LocalizeStringEvent _localizeDescription;
-        [SerializeField] private Image _tabImage;
-        [NonSerialized] public UISkillAbility CurrentSkillSelected;
         [field: SerializeField] public ECharacterClass Character { get; private set; }
         private List<MultiInputButton> _listSkillButton = new();
         private List<SkillInformation> _listSkills = new();
+        [NonSerialized] public ECharacterSkill TypeOfSkill;
+        [NonSerialized] public UISkillAbilityButton CurrentSkillAbilityButton;
+        public Image CharacterCardBackground;
 
 
         private void Awake()
         {
             InitData();
             _recyclableScrollRect.DataSource = this;
+        }
+        private void OnEnable()
+        {
+            _inputMediator.EnableMenuInput();
+            _inputMediator.MenuNavigateEvent += SelectSkillHandle;
+        }
+
+        private void OnDisable()
+        {
+            _inputMediator.MenuNavigateEvent -= SelectSkillHandle;
         }
 
         private void InitData()
@@ -60,13 +73,15 @@ namespace CryptoQuest.UI.Menu.Panels.Skill
                 _currentRectTransform.rect.height - _currentRectTransform.anchoredPosition.y
                 > _parentRectTransform.rect.height + _skillRectTransform.rect.height / 2;
 
-        private void SelectSkillHandle()
+        private void SelectSkillHandle(Vector2 arg0)
         {
             _autoScrollRect.UpdateScrollRectTransform();
             ShowScrollHints();
-            if (EventSystem.current.currentSelectedGameObject.TryGetComponent<UISkillAbility>(out var currentSelectedSkill))
+            if (EventSystem.current.currentSelectedGameObject.TryGetComponent<UISkillAbilityButton>(out var currentSelectedSkill))
             {
-                _localizeDescription.StringReference = currentSelectedSkill.Description;
+                CurrentSkillAbilityButton = currentSelectedSkill;
+                TypeOfSkill = CurrentSkillAbilityButton.TypeOfSkill;
+                _localizeDescription.StringReference = CurrentSkillAbilityButton.Description;
             }
         }
 
@@ -74,6 +89,7 @@ namespace CryptoQuest.UI.Menu.Panels.Skill
         {
             _content.SetActive(false);
             ActiveSkillSelection(false);
+            CharacterCardBackground.enabled = false;
         }
 
         public void Select()
@@ -81,10 +97,11 @@ namespace CryptoQuest.UI.Menu.Panels.Skill
             _content.SetActive(true);
             ShowScrollHints();
             ActiveSkillSelection(true);
+            CharacterCardBackground.enabled = true;
             if (_listSkillButton.Count > 0)
             {
                 _listSkillButton[0].Select();
-                SelectSkillHandle();
+                SelectSkillHandle(Vector2.zero);
             }
         }
 
@@ -92,7 +109,6 @@ namespace CryptoQuest.UI.Menu.Panels.Skill
         {
             foreach (var button in _listSkillButton)
             {
-                _tabImage.enabled = isActivated;
                 button.GetComponent<MultiInputButton>().enabled = isActivated;
             }
         }
@@ -105,7 +121,7 @@ namespace CryptoQuest.UI.Menu.Panels.Skill
 
         public void SetCell(ICell cell, int index)
         {
-            var skill = cell as UISkillAbility;
+            var skill = cell as UISkillAbilityButton;
             skill.Init(_listSkills[index]);
             _listSkillButton.Add(skill.GetComponent<MultiInputButton>());
         }
