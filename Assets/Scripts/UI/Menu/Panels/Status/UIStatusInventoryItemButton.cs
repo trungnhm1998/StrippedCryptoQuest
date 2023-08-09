@@ -18,6 +18,7 @@ namespace CryptoQuest.UI.Menu.Panels.Status
     public class UIStatusInventoryItemButton : MultiInputButton, ICell
     {
         public static event UnityAction<UIStats.Equipment> InspectingEquipment;
+        public static event UnityAction<Button> InspectingRow;
 
         [Serializable]
         public class MockData
@@ -38,12 +39,9 @@ namespace CryptoQuest.UI.Menu.Panels.Status
 
         [Header("Game Components")]
         [SerializeField] private LocalizeStringEvent _name;
-
-        [SerializeField] private Text _itemOrder;
         [SerializeField] private GameObject _selectEffect;
 
         private GameObject _unEquipSlot;
-
 
         public void Init(EquipmentInfo data, int index)
         {
@@ -52,9 +50,8 @@ namespace CryptoQuest.UI.Menu.Panels.Status
                 _unEquipSlot.SetActive(false);
             }
 
-            _name.StringReference = data.Item.DisplayName;
-
-            _itemOrder.text = index.ToString();
+            if (data.Item != null && data.Item.DisplayName != null)
+                _name.StringReference = data.Item.DisplayName;
         }
 
         public void OnPressed()
@@ -67,6 +64,7 @@ namespace CryptoQuest.UI.Menu.Panels.Status
             base.OnSelect(eventData);
             _selectEffect.SetActive(true);
             InspectingEquipment?.Invoke(CreateFakeData());
+            InspectingRow?.Invoke(this);
         }
 
         private UIStats.Equipment CreateFakeData()

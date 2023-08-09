@@ -59,7 +59,6 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Stats
             image.gameObject.SetActive(true);
             _valueLabel.color = image.color;
             _valueLabel.text = string.Format(isElemental ? ELEMENTAL_FORMAT : FORMAT, value);
-            Debug.Log($"value = {value}");
         }
     }
 }

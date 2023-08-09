@@ -127,9 +127,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _scrollRect: {fileID: 5425869780003040930}
+  _inputMediator: {fileID: 11400000, guid: 1fb61cdb72f0a484f8e4db68e2011977, type: 2}
   _inventorySO: {fileID: 11400000, guid: 7730f28a7d8180e4bb6cacc9b7dc2d7e, type: 2}
   _contents: {fileID: 1719733815256641558}
-  _myScrollRect: {fileID: 5315831812367777710}
+  _unEquipButton: {fileID: 7118954137411508264}
   _singleItemRect: {fileID: 1252632200816518795, guid: ecfa62a89a4fe574ca5451e62de6e33b, type: 3}
 --- !u!1 &1719733815256641558
 GameObject:
@@ -1264,7 +1265,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7118954137411508264}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Script: {fileID: 11500000, guid: 77b26c7a54d143a7b78bcba222262814, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
@@ -1299,6 +1300,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+  IsSelected: 0
 --- !u!1 &7690543292943358642
 GameObject:
   m_ObjectHideFlags: 0

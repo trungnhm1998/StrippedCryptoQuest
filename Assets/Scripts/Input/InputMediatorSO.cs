@@ -29,6 +29,7 @@ namespace CryptoQuest.Input
         public event UnityAction StartPressed;
         public event UnityAction<float> TabChangeEvent;
         public event UnityAction<Vector2> MenuNavigateEvent;
+        public event UnityAction<InputAction.CallbackContext> MenuNavigationContextEvent;
         public event UnityAction MenuConfirmedEvent;
         public event UnityAction MenuSubmitEvent;
         public event UnityAction MenuMouseMoveEvent;
@@ -51,7 +52,14 @@ namespace CryptoQuest.Input
         #endregion
 
         private InputActions _inputActions;
-        public InputActions InputActions => _inputActions;
+        public InputActions InputActions
+        {
+            get
+            {
+                CreateInputInstanceIfNeeded();
+                return _inputActions;
+            }
+        }
 
         private void OnEnable()
         {
@@ -194,6 +202,7 @@ namespace CryptoQuest.Input
 
         public void OnNavigate(InputAction.CallbackContext context)
         {
+            MenuNavigationContextEvent?.Invoke(context);
             if (context.performed) MenuNavigateEvent?.Invoke(context.ReadValue<Vector2>());
         }
 

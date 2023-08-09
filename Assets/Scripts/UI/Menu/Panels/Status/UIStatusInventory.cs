@@ -1,8 +1,13 @@
+using System;
 using System.Collections.Generic;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
+using CryptoQuest.Input;
 using PolyAndCode.UI;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 using UnityEngine.Serialization;
+using UnityEngine.UI;
 
 namespace CryptoQuest.UI.Menu.Panels.Status
 {
@@ -11,25 +16,80 @@ namespace CryptoQuest.UI.Menu.Panels.Status
         [Header("Configs")]
         [SerializeField] private RecyclableScrollRect _scrollRect;
 
+        [SerializeField] private InputMediatorSO _inputMediator;
         [SerializeField] private InventorySO _inventorySO;
 
         [Header("Game Components")]
         [SerializeField] private GameObject _contents;
 
-        [SerializeField] private RectTransform _myScrollRect;
+        [SerializeField] private GameObject _unEquipButton;
         [SerializeField] private RectTransform _singleItemRect;
-
 
         private float _verticalOffset;
         private bool _initialized = false;
 
+        private RectTransform _inventoryViewport;
+        private float _lowerBound;
+        private float _upperBound;
+
+        private void Awake()
+        {
+            _verticalOffset = _singleItemRect.rect.height;
+            _inventoryViewport = _scrollRect.viewport;
+            var position = _inventoryViewport.position;
+            var rect = _inventoryViewport.rect;
+            _lowerBound = position.y - rect.height / 2;
+            _upperBound = position.y + rect.height / 2 + _verticalOffset;
+        }
+
+        private void OnEnable()
+        {
+            UIStatusInventoryItemButton.InspectingRow += AutoScroll;
+            _inputMediator.MenuNavigationContextEvent += NavigateMenu;
+        }
+
+        private void OnDisable()
+        {
+            UIStatusInventoryItemButton.InspectingRow -= AutoScroll;
+            _inputMediator.MenuNavigationContextEvent -= NavigateMenu;
+        }
+
+        private void NavigateMenu(InputAction.CallbackContext context)
+        {
+            if (EventSystem.current.currentSelectedGameObject.name == _unEquipButton.name)
+            {
+                _scrollRect.content.anchoredPosition = Vector2.zero;
+            }
+        }
+
+        private void AutoScroll(Button button)
+        {
+            var selectedRowPositionY = button.transform.position.y;
+
+            if (selectedRowPositionY <= _lowerBound)
+            {
+                _scrollRect.content.anchoredPosition += Vector2.up * _verticalOffset;
+            }
+            else if (selectedRowPositionY >= _upperBound)
+            {
+                _scrollRect.content.anchoredPosition += Vector2.down * _verticalOffset;
+            }
+
+            AlignItemRow(selectedRowPositionY, _lowerBound);
+        }
+
+        private void AlignItemRow(float selectedRowPositionY, float lowerBound)
+        {
+            if (selectedRowPositionY <= lowerBound + _verticalOffset)
+            {
+                var diff = (lowerBound + _verticalOffset) - selectedRowPositionY;
+                _scrollRect.content.anchoredPosition += Vector2.up * diff;
+            }
+        }
+
         public void Show(UIEquipmentSlotButton.EEquipmentType statusPanelEquippingType)
         {
-            Debug.Log($"Show equipments with type [{statusPanelEquippingType}]");
             _contents.SetActive(true);
-            RegisterInventoryInputEvents();
-
-            _verticalOffset = _singleItemRect.rect.height;
 
             // only init after get data
             if (!_initialized)
@@ -42,28 +102,7 @@ namespace CryptoQuest.UI.Menu.Panels.Status
         public void Hide()
         {
             _contents.SetActive(false);
-            UnregisterInventoryInputEvents();
         }
-
-        private void StatusInventoryGoDown()
-        {
-            Scroll(-_verticalOffset);
-        }
-
-        private void StatusInventoryGoUp()
-        {
-            Scroll(_verticalOffset);
-        }
-
-        private void Scroll(float value)
-        {
-            _myScrollRect.anchoredPosition -= new Vector2(0, value);
-        }
-
-
-        private void RegisterInventoryInputEvents() { }
-
-        private void UnregisterInventoryInputEvents() { }
 
         #region PLUGINS
 
