@@ -110,13 +110,13 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit
         public virtual void SelectAllOpponent()
         {
             TargetContainer.Clear();
-            TargetContainer.AddRange(OpponentTeam.Members);
+            TargetContainer.AddRange(OpponentTeam.GetAvailableMembers());
         }
 
         public virtual void SelectAllAlly()
         {
             TargetContainer.Clear();
-            TargetContainer.AddRange(OwnerTeam.Members);
+            TargetContainer.AddRange(OwnerTeam.GetAvailableMembers());
         }
 
         public void SelectSkill(AbstractAbility selectedSkill)

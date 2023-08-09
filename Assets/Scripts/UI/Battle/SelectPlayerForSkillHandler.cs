@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using CryptoQuest.Events.Gameplay;
 using CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit;
+using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Skills;
 using CryptoQuest.UI.Battle.CommandsMenu;
 using UnityEngine;
 
@@ -9,14 +10,9 @@ namespace CryptoQuest.UI.Battle
     public class SelectPlayerForSkillHandler : BattleActionHandler.BattleActionHandler
     {
         [SerializeField] private BattlePanelController _panelController;
-
+        [SerializeField] private CharacterList _characterList;
         private IBattleUnit _currentUnit;
         private readonly List<AbstractButtonInfo> _buttonInfo = new();
-
-        private void SelectTarget(IBattleUnit unit)
-        {
-            unit.SelectSingleTarget(_currentUnit.Owner);
-        }
 
         public override void Handle(IBattleUnit currentUnit)
         {
@@ -27,11 +23,13 @@ namespace CryptoQuest.UI.Battle
         private void SetupTargetButton(IBattleUnit battleUnit)
         {
             _buttonInfo.Clear();
-            //TODO: get all allies then loop
-            var buttonInfo = new SkillAbstractButtonInfo(battleUnit, SelectTarget);
-            _buttonInfo.Add(buttonInfo);
+            battleUnit.Owner.TryGetComponent<BattleUnitBase>(out var unitBase);
+            var ability = unitBase.SelectedSkill.AbilitySO as AbilitySO;
+            if (ability == null) return;
 
-            _panelController.OpenCommandDetailPanel(_buttonInfo);
+            var targetTypeSo = ability.SkillInfo.TargetType;
+            var targetType = targetTypeSo.GetTargetType(battleUnit, _panelController, _characterList);
+            targetType.HandleTargets();
         }
     }
 }

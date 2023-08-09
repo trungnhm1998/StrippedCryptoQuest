@@ -34,7 +34,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components
 
         public void RemoveUnit(IBattleUnit unit)
         {
-            TeamGroups.RemoveUnitData(unit.UnitData);
+            TeamGroups.RemoveUnitData(unit);
             BattleUnits.Remove(unit);
             Members.Remove(unit.Owner);
             _pendingRemoveUnit.Add(unit);
@@ -51,6 +51,14 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components
             }
         }
 
+        public IEnumerable<AbilitySystemBehaviour> GetAvailableMembers()
+        {
+            foreach (var battleUnit in BattleUnits)
+            {
+                yield return battleUnit.Owner;
+            }
+        }
+
         public bool IsWiped() => BattleUnits.Count <= 0;
-    }   
+    }
 }

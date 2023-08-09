@@ -23,19 +23,29 @@ namespace CryptoQuest.UI.Battle.CommandsMenu
             IsInteractable = isInteractable;
         }
 
-        public abstract void HandleClick();
+        public abstract void OnHandleClick();
     }
 
     [Serializable]
     public class EnemyGroupButtonInfo : AbstractButtonInfo
     {
-        public EnemyGroupButtonInfo(CharacterDataSO unit, int numberOfEnemy) : base(unit.Name, "", false)
+        private Action<int> _setCallback;
+        private int _index;
+
+        public EnemyGroupButtonInfo(CharacterDataSO unit, int numberOfEnemy, bool isInteractable = false, int index = 0,
+            Action<int> callback = null)
+            : base(unit.Name, "", isInteractable)
         {
-            if (numberOfEnemy <= 1) return;
+            if (numberOfEnemy < 1) return;
             Value = $"x{numberOfEnemy.ToString()}";
+            _setCallback = callback;
+            _index = index;
         }
 
-        public override void HandleClick() { }
+        public override void OnHandleClick()
+        {
+            _setCallback?.Invoke(_index);
+        }
     }
 
     [Serializable]
@@ -51,7 +61,7 @@ namespace CryptoQuest.UI.Battle.CommandsMenu
             _setTargetCallback = setTargetCallback;
         }
 
-        public override void HandleClick()
+        public override void OnHandleClick()
         {
             _setTargetCallback.Invoke(_unit);
         }
@@ -72,7 +82,7 @@ namespace CryptoQuest.UI.Battle.CommandsMenu
             _ability = ability;
         }
 
-        public override void HandleClick()
+        public override void OnHandleClick()
         {
             _setSkillCallback.Invoke(_ability);
         }
@@ -92,9 +102,10 @@ namespace CryptoQuest.UI.Battle.CommandsMenu
             _item = item;
         }
 
-        public override void HandleClick()
+        public override void OnHandleClick()
         {
             _setItemCallback.Invoke(_item);
         }
     }
+    // [Serializable]
 }

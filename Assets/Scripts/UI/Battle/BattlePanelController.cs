@@ -32,6 +32,7 @@ namespace CryptoQuest.UI.Battle
 
         [SerializeField] private BattleInputSO _battleInput;
         [SerializeField] private BattleBus _battleBus;
+
         [Header("Events")]
         [SerializeField] private VoidEventChannelSO _onNewTurnEvent;
 
@@ -98,10 +99,10 @@ namespace CryptoQuest.UI.Battle
             _commandPanel.Clear();
             _infos.Clear();
             var opponentTeam = _battleManager.BattleTeam2;
-
-            foreach (var group in opponentTeam.TeamGroups.GroupsDict)
+            Dictionary<int, List<IBattleUnit>> groupUnits = new(opponentTeam.TeamGroups.UnitsDict);
+            for (int i = 0; i < groupUnits.Count; i++)
             {
-                _infos.Add(new EnemyGroupButtonInfo(group.Key, group.Value));
+                _infos.Add(new EnemyGroupButtonInfo(groupUnits[i][0].UnitData, groupUnits[i].Count));
             }
 
             OpenCommandDetailPanel(_infos);

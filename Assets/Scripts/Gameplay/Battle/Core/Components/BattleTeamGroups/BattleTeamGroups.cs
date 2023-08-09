@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit;
 using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
@@ -9,7 +10,8 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components
 {
     public class BattleTeamGroups : ITeamGroups
     {
-        public Dictionary<CharacterDataSO, int> GroupsDict { get; private set; } = new();
+        public Dictionary<int, int> GroupsDict { get; private set; } = new();
+        public Dictionary<int, List<IBattleUnit>> UnitsDict { get; private set; } = new();
         public BattleTeam Team { get; private set; }
         private CharacterGroup[] _groupsData;
 
@@ -21,21 +23,38 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components
 
         public void InitGroups()
         {
-            foreach (var group in _groupsData)
+            HashSet<IBattleUnit> unitPool = new(Team.BattleUnits);
+            for (int i = 0; i < _groupsData.Length; i++)
             {
-                CharacterDataSO[] characters = group.Characters;
+                CharacterDataSO[] characters = _groupsData[i].Characters;
                 if (characters.Length <= 0) continue;
-                CharacterDataSO characterData = characters[0];
-                GroupsDict.Add(characterData, characters.Length);
+                ExtractGroupUnits(i, characters, ref unitPool);
             }
         }
 
-        public void RemoveUnitData(CharacterDataSO data)
+        private void ExtractGroupUnits(int groupIndex, CharacterDataSO[] characters,
+            ref HashSet<IBattleUnit> currentUnsortedUnits)
         {
-            if (!GroupsDict.ContainsKey(data)) return;
-            GroupsDict[data]--;
-            if (GroupsDict[data] > 0) return;
-            GroupsDict.Remove(data);
+            List<IBattleUnit> unitInGroup = new(
+                currentUnsortedUnits.Where(x => x.UnitData == characters[0]).Take(characters.Length));
+            currentUnsortedUnits.RemoveWhere(x => unitInGroup.Contains(x));
+            UnitsDict.Add(groupIndex, unitInGroup);
         }
-    }   
+
+        public void RemoveUnitData(IBattleUnit data)
+        {
+            if (UnitsDict.Count <= 0) return;
+            for (int i = 0; i < UnitsDict.Count; i++)
+            {
+                if (UnitsDict[i].Contains(data))
+                {
+                    UnitsDict[i].Remove(data);
+                    break;
+                }
+
+                if (UnitsDict[i].Count <= 0)
+                    UnitsDict.Remove(i);
+            }
+        }
+    }
 }

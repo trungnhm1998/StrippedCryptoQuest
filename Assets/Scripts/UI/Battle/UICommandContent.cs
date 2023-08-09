@@ -30,7 +30,7 @@ namespace CryptoQuest.UI.Battle
         
         public void HandleClick()
         {
-            _buttonInfo.HandleClick();
+            _buttonInfo.OnHandleClick();
         }
 
         private void ReleaseToPool()

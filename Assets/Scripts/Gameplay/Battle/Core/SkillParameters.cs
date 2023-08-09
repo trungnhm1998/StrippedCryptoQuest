@@ -1,6 +1,7 @@
 using System;
 using CryptoQuest.Gameplay.BaseGameplayData;
 using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data;
+using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data.Targets;
 using IndiGames.GameplayAbilitySystem.AbilitySystem;
 using UnityEngine.Localization;
 
@@ -29,6 +30,7 @@ namespace CryptoQuest.Gameplay.Battle.Core
         public SkillCategory Category;
         public float Cost;
         public SkillEffectType EffectType;
+        public BattleTargetTypeSO TargetType;
         public bool isFixed;
         public SkillParameters SkillParameters;
     }
