@@ -2,7 +2,7 @@
 
 namespace CryptoQuest.UI.Menu.MenuStates.OptionStates
 {
-    public class OptionStateBase : MenuStateBase
+    public abstract class OptionStateBase : MenuStateBase
     {
         protected UIOptionMenu OptionPanel { get; }
 
