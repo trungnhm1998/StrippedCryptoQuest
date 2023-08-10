@@ -99,10 +99,11 @@ namespace CryptoQuest.UI.Battle
             _commandPanel.Clear();
             _infos.Clear();
             var opponentTeam = _battleManager.BattleTeam2;
-            Dictionary<int, List<IBattleUnit>> groupUnits = new(opponentTeam.TeamGroups.UnitsDict);
-            for (int i = 0; i < groupUnits.Count; i++)
+
+            foreach (var unitPair in opponentTeam.TeamGroups.UnitsDict)
             {
-                _infos.Add(new EnemyGroupButtonInfo(groupUnits[i][0].UnitData, groupUnits[i].Count));
+                var units = unitPair.Value;
+                _infos.Add(new EnemyGroupButtonInfo(units[0].UnitData, units.Count));
             }
 
             OpenCommandDetailPanel(_infos);

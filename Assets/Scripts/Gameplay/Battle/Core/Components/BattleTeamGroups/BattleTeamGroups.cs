@@ -41,19 +41,25 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components
             UnitsDict.Add(groupIndex, unitInGroup);
         }
 
-        public void RemoveUnitData(IBattleUnit data)
+        public void RemoveUnitData(IBattleUnit unit)
         {
             if (UnitsDict.Count <= 0) return;
-            for (int i = 0; i < UnitsDict.Count; i++)
+            foreach (var unitPair in UnitsDict)
             {
-                if (UnitsDict[i].Contains(data))
-                {
-                    UnitsDict[i].Remove(data);
-                    break;
-                }
+                var units = unitPair.Value;
+                if (!units.Contains(unit)) continue;
+                units.Remove(unit);
+            }
+            
+            RemoveEmptyGroup();
+        }
 
-                if (UnitsDict[i].Count <= 0)
-                    UnitsDict.Remove(i);
+        private void RemoveEmptyGroup()
+        {
+            var emptyGroups = UnitsDict.Where(u => u.Value.Count <= 0).ToList();
+            foreach (var unitPair in emptyGroups)
+            {
+                UnitsDict.Remove(unitPair.Key);
             }
         }
     }

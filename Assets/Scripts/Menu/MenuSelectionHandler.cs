@@ -131,8 +131,12 @@ namespace CryptoQuest.Menu
         // }
         private void Update()
         {
-            if ((EventSystem.current != null) && (EventSystem.current.currentSelectedGameObject == null) &&
-                (_currentSelection != null))
+            if (EventSystem.current == null) return;
+
+            var currentSelectedGO = EventSystem.current.currentSelectedGameObject;
+            if (currentSelectedGO != null && currentSelectedGO.activeInHierarchy) return; 
+
+            if (_currentSelection != null)
             {
                 EventSystem.current.SetSelectedGameObject(_currentSelection);
             }
