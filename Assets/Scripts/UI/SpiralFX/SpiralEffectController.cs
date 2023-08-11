@@ -144,7 +144,6 @@ namespace CryptoQuest.UI.SpiralFX
                 .OnComplete(() =>
                 {
                     _spiralConfig.OnFinishSpiralOut();
-                    ResetSpiralSize();
                 });
         }
 

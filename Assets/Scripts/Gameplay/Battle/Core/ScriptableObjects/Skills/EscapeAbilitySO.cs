@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using CryptoQuest.Map;
 using CryptoQuest.System.SceneManagement;
+using CryptoQuest.UI.Menu;
+using IndiGames.Core.Events.ScriptableObjects;
 using IndiGames.Core.SceneManagementSystem.ScriptableObjects;
 using IndiGames.GameplayAbilitySystem.AbilitySystem;
 using UnityEngine;
@@ -14,6 +16,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Skills
     {
         [SerializeField] private EscapeRouteMappingSO _escapeRouteMappingSO;
         [SerializeField] private SceneLoaderBus _sceneLoaderBus;
+        public VoidEventChannelSO OnCloseMainMenuEvent;
         public UnityAction<MapPathSO> EscapeSucceeded;
         public UnityAction EscapeFailed;
 
@@ -36,19 +39,21 @@ namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Skills
 
         public override IEnumerator AbilityActivated()
         {
-            HandleEscape();
+            yield return HandleEscape();
             yield return base.AbilityActivated();
         }
 
-        private void HandleEscape()
+        private IEnumerator HandleEscape()
         {
             SceneScriptableObject currentActiveMapScene = _sceneLoaderBus.SceneLoader.CurrentLoadedScene;
             Dictionary<SceneScriptableObject, MapPathSO> mapToEscapeRouteDict =
                 _escapeRouteMappingSO.MapToEscapePathDictionary;
             if (mapToEscapeRouteDict.TryGetValue(currentActiveMapScene, out var escapeRoute))
             {
+                AbilitySO.OnCloseMainMenuEvent.RaiseEvent();
+                yield return null;
                 OnEscaping(escapeRoute);
-                return;
+                yield break;
             }
 
             AbilitySO.EscapeFailed?.Invoke();

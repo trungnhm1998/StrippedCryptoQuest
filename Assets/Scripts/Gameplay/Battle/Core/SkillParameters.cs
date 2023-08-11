@@ -3,6 +3,7 @@ using CryptoQuest.Gameplay.BaseGameplayData;
 using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data;
 using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data.Targets;
 using IndiGames.GameplayAbilitySystem.AbilitySystem;
+using UnityEngine;
 using UnityEngine.Localization;
 
 namespace CryptoQuest.Gameplay.Battle.Core
@@ -26,6 +27,7 @@ namespace CryptoQuest.Gameplay.Battle.Core
         public int Id;
         public LocalizedString SkillName;
         public LocalizedString SkillDescription;
+        public Sprite SkillIcon;
         public Element Element;
         public SkillType SkillType;
         public SkillCategory Category;

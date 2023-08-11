@@ -26,27 +26,49 @@ MonoBehaviour:
     TargetTags:
       RequireTags: []
       IgnoreTags: []
-  Id: 0
-  Name:
-    m_TableReference:
-      m_TableCollectionName: 
-    m_TableEntryReference:
-      m_KeyId: 0
-      m_Key: 
-    m_FallbackState: 0
-    m_WaitForCompletion: 0
-    m_LocalVariables: []
-  Description:
-    m_TableReference:
-      m_TableCollectionName: 
-    m_TableEntryReference:
-      m_KeyId: 0
-      m_Key: 
-    m_FallbackState: 0
-    m_WaitForCompletion: 0
-    m_LocalVariables: []
+  EffectContainerMap: []
+  SkillInfo:
+    Id: 0
+    SkillName:
+      m_TableReference:
+        m_TableCollectionName: GUID:a04f9e0f3e0ba4b4fb5275c51c13428a
+      m_TableEntryReference:
+        m_KeyId: 6493223432331264
+        m_Key: 
+      m_FallbackState: 0
+      m_WaitForCompletion: 0
+      m_LocalVariables: []
+    SkillDescription:
+      m_TableReference:
+        m_TableCollectionName: GUID:a04f9e0f3e0ba4b4fb5275c51c13428a
+      m_TableEntryReference:
+        m_KeyId: 6493407818129408
+        m_Key: 
+      m_FallbackState: 0
+      m_WaitForCompletion: 0
+      m_LocalVariables: []
+    SkillIcon: {fileID: 21300000, guid: 35251f78a4d801b46b4b3e14e201e8e9, type: 3}
+    Element: {fileID: 11400000, guid: 7f686c386b5045a4b932e7ebb3a85482, type: 2}
+    SkillType: {fileID: 11400000, guid: 13d355b83ae2a11478d2d6ed93b882e9, type: 2}
+    Category: {fileID: 11400000, guid: 5ed162c5f42bc9e42b78f1d44343d381, type: 2}
+    Cost: 0
+    EffectType: {fileID: 11400000, guid: b5a3f2b1f03b96a41a69c0b1ba256c53, type: 2}
+    TargetType: {fileID: 11400000, guid: 974de9f2b651f384bab93a077a47854e, type: 2}
+    SkillParameters:
+      BasePower: 0
+      PowerUpperLimit: 0
+      PowerLowerLimit: 0
+      SkillPowerThreshold: 0
+      PowerValueAdded: 0
+      PowerValueReduced: 0
+      IsFixed: 0
+      ContinuesTurn: 1
+  CostSpecSO: {fileID: 11400000, guid: 9f02c864ac2fbcb4e843e4ede08b3c1d, type: 2}
+  ActionDataSO: {fileID: 0}
+  ActionEventSO: {fileID: 0}
   _escapeRouteMappingSO: {fileID: 11400000, guid: 0cf6ea1256cbc8048949264db0cc1cb2, type: 2}
   _sceneLoaderBus: {fileID: 11400000, guid: 8a84cff925b530f41b4c946ad8c7cf70, type: 2}
+  OnCloseMainMenuEvent: {fileID: 11400000, guid: e8ba85b9d7dc0314dbc4a9a18b84579d, type: 2}
   references:
     version: 2
     RefIds: []

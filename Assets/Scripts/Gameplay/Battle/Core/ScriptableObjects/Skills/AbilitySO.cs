@@ -57,7 +57,8 @@ namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Skills
 
         protected override IEnumerator InternalActiveAbility()
         {
-            OnSkillActivatePromt();
+            if (_unit.UnitLogic != null)
+                OnSkillActivatePromt();
             yield return base.InternalActiveAbility();
         }
 
@@ -72,7 +73,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Skills
         protected virtual void OnSkillActivatePromt()
         {
             var actionData = AbilitySO.ActionDataSO;
-            if (actionData == null) return;
+            if (actionData == null || _unit == null) return;
 
             actionData.Init(_unit.UnitLogic.TargetContainer[0]);
             actionData.AddStringVar(UNIT_NAME_VARIABLE, _unit.UnitInfo.DisplayName);

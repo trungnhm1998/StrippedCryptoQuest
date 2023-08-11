@@ -1,3 +1,5 @@
+using CryptoQuest.Events.Gameplay;
+using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Skills;
 using CryptoQuest.Gameplay.Skill;
 using CryptoQuest.Menu;
 using PolyAndCode.UI;
@@ -17,23 +19,23 @@ namespace CryptoQuest.UI.Menu.Panels.Skill
         [SerializeField] private Text _manaPointText;
         [field: SerializeField] public LocalizedString Description { get; private set; }
         [field: SerializeField] public ECharacterSkill TypeOfSkill { get; private set; }
+        private AbilityEventChannelSO _abilityEventChannelSo;
         private SkillInformation _skillInfo;
 
-        public event UnityAction<SkillSO> Clicked;
-
-        public void Init(SkillInformation skillInfo)
+        public void Init(SkillInformation skillInfo, AbilityEventChannelSO abilityEventChannelSo)
         {
             _skillInfo = skillInfo;
-            _iconImage.sprite = skillInfo.SkillSO.Icon;
-            _name.StringReference = skillInfo.SkillSO.Name;
-            _manaPointText.text = skillInfo.SkillSO.Mana.ToString();
-            Description = skillInfo.SkillSO.Description;
-            TypeOfSkill = skillInfo.SkillSO.TypeOfSkill;
+            _iconImage.sprite = skillInfo.abilitySo.SkillInfo.SkillIcon;
+            _name.StringReference = skillInfo.abilitySo.SkillInfo.SkillName;
+            _manaPointText.text = skillInfo.abilitySo.SkillInfo.Cost.ToString();
+            Description = skillInfo.abilitySo.SkillInfo.SkillDescription;
+            TypeOfSkill = ECharacterSkill.TargetCast;
+            _abilityEventChannelSo = abilityEventChannelSo;
         }
 
         public void OnClicked()
         {
-            Clicked?.Invoke(_skillInfo.SkillSO);
+            _abilityEventChannelSo.RaiseEvent(_skillInfo.abilitySo);
         }
 
         // public void Select()

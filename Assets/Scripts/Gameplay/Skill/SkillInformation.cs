@@ -1,18 +1,22 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Skills;
+using IndiGames.GameplayAbilitySystem.AbilitySystem;
+using IndiGames.GameplayAbilitySystem.AbilitySystem.ScriptableObjects;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace CryptoQuest.Gameplay.Skill
 {
     [Serializable]
     public class SkillInformation
     {
-        public SkillSO SkillSO;
+        public AbilitySO abilitySo;
 
-        public SkillInformation(SkillSO skillSO)
+        public SkillInformation(AbilitySO abilitySO)
         {
-            SkillSO = skillSO;
+            abilitySo = abilitySO;
         }
     }
 }

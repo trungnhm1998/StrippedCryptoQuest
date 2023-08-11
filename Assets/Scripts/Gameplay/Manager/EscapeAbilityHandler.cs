@@ -2,6 +2,7 @@ using CryptoQuest.Events;
 using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Skills;
 using CryptoQuest.Map;
 using CryptoQuest.UI.SpiralFX;
+using IndiGames.Core.Events.ScriptableObjects;
 using IndiGames.Core.SceneManagementSystem.Events.ScriptableObjects;
 using IndiGames.Core.SceneManagementSystem.ScriptableObjects;
 using IndiGames.Core.UI.FadeController;
@@ -14,8 +15,8 @@ namespace CryptoQuest.Gameplay.Manager
         [SerializeField] private EscapeAbilitySO _escapeAbilitySo;
         [SerializeField] private SceneScriptableObject _destinationScene;
         [SerializeField] private PathStorageSO _pathStorageSo;
-        [SerializeField] private FadeConfigSO _spiralConfigSo;
         [SerializeField] private LoadSceneEventChannelSO _loadMapEventChannel;
+        [SerializeField] private VoidEventChannelSO _onSceneLoadedEventChannel;
         [SerializeField] private SpiralConfigSO _spiralConfig;
 
 
@@ -33,7 +34,22 @@ namespace CryptoQuest.Gameplay.Manager
         {
             _spiralConfig.Color = Color.green;
             _pathStorageSo.LastTakenPath = escapePath;
+            _spiralConfig.DoneSpiralIn += TriggerEscape;
+            _spiralConfig.DoneSpiralOut += FinishTrasition;
+            _onSceneLoadedEventChannel.EventRaised += _spiralConfig.OnSpiralOut;
+            _spiralConfig.OnSpiralIn();
+        }
+
+        private void TriggerEscape()
+        {
             _loadMapEventChannel.RequestLoad(_destinationScene);
+        }
+
+        private void FinishTrasition()
+        {
+            _spiralConfig.DoneSpiralIn -= TriggerEscape;
+            _spiralConfig.DoneSpiralOut -= FinishTrasition;
+            _onSceneLoadedEventChannel.EventRaised -= _spiralConfig.OnSpiralOut;
         }
     }
 }

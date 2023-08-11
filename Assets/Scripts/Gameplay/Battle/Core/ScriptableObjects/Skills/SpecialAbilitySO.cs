@@ -6,11 +6,8 @@ using UnityEngine.Localization;
 
 namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Skills
 {
-    public class SpecialAbilitySO : AbilityScriptableObject
+    public class SpecialAbilitySO : AbilitySO
     {
-        public int Id;
-        public LocalizedString Name;
-        public LocalizedString Description;
         public UnityAction<AbilityScriptableObject> OnAbilityActivated;
         protected override AbstractAbility CreateAbility() => new SpecialAbility();
 

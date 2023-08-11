@@ -1,13 +1,17 @@
+using System;
 using CryptoQuest.Input;
 using CryptoQuest.UI.Menu.MenuStates;
 using CryptoQuest.UI.Menu.Panels;
 using CryptoQuest.UI.Menu.ScriptableObjects;
+using IndiGames.Core.Events.ScriptableObjects;
 using UnityEngine;
 
 namespace CryptoQuest.UI.Menu
 {
     public class MenuManager : MonoBehaviour
     {
+        [SerializeField] private VoidEventChannelSO _onCloseMainMenuEventChannel;
+
         [Header("Configs")]
         [SerializeField] private InputMediatorSO _inputMediator;
 
@@ -52,6 +56,7 @@ namespace CryptoQuest.UI.Menu
         /// </summary>
         private void OnEnable()
         {
+            _onCloseMainMenuEventChannel.EventRaised += CloseMainMenu;
             _navigationBar.MenuChanged += ChangeMenu;
 
             _inputMediator.ShowMainMenu += ShowMainMenu; // Start Button
@@ -64,6 +69,7 @@ namespace CryptoQuest.UI.Menu
 
         private void OnDisable()
         {
+            _onCloseMainMenuEventChannel.EventRaised -= CloseMainMenu;
             _navigationBar.MenuChanged -= ChangeMenu;
 
             _inputMediator.ShowMainMenu -= ShowMainMenu;

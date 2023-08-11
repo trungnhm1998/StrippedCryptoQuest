@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using CryptoQuest.Events.Gameplay;
 using CryptoQuest.Gameplay.Skill;
 using CryptoQuest.Gameplay.Skill.ScriptableObjects;
 using CryptoQuest.Input;
@@ -14,6 +15,7 @@ namespace CryptoQuest.UI.Menu.Panels.Skill
 {
     public class UISkillCharacterPanel : MonoBehaviour, IRecyclableScrollRectDataSource
     {
+        public AbilityDataProviderSO AbilityDataProvider;
         [SerializeField] private InputMediatorSO _inputMediator;
         [SerializeField] private GameObject _content;
         [SerializeField] private SkillsMockupSO _listSkillMockup;
@@ -25,6 +27,7 @@ namespace CryptoQuest.UI.Menu.Panels.Skill
         [SerializeField] private RectTransform _parentRectTransform;
         [SerializeField] private RectTransform _skillRectTransform;
         [SerializeField] private LocalizeStringEvent _localizeDescription;
+        [SerializeField] private AbilityEventChannelSO _abilityEventChannelSo;
         [field: SerializeField] public ECharacterClass Character { get; private set; }
         private List<MultiInputButton> _listSkillButton = new();
         private List<SkillInformation> _listSkills = new();
@@ -38,6 +41,7 @@ namespace CryptoQuest.UI.Menu.Panels.Skill
             InitData();
             _recyclableScrollRect.DataSource = this;
         }
+
         private void OnEnable()
         {
             _inputMediator.EnableMenuInput();
@@ -52,13 +56,7 @@ namespace CryptoQuest.UI.Menu.Panels.Skill
         private void InitData()
         {
             if (_listSkills != null) _listSkills.Clear();
-            foreach (var skill in _listSkillMockup.Skills)
-            {
-                var skillSO = skill.SkillSO;
-                var type = skillSO.CharacterClass;
-                if (type != Character) continue;
-                _listSkills.Add(new SkillInformation(skillSO));
-            }
+            _listSkills = AbilityDataProvider.GetAllAbility();
         }
 
         private void ShowScrollHints()
@@ -70,14 +68,15 @@ namespace CryptoQuest.UI.Menu.Panels.Skill
         private bool ShouldMoveUp => _currentRectTransform.anchoredPosition.y > _skillRectTransform.rect.height;
 
         private bool ShouldMoveDown =>
-                _currentRectTransform.rect.height - _currentRectTransform.anchoredPosition.y
-                > _parentRectTransform.rect.height + _skillRectTransform.rect.height / 2;
+            _currentRectTransform.rect.height - _currentRectTransform.anchoredPosition.y
+            > _parentRectTransform.rect.height + _skillRectTransform.rect.height / 2;
 
         private void SelectSkillHandle(Vector2 arg0)
         {
             _autoScrollRect.UpdateScrollRectTransform();
             ShowScrollHints();
-            if (EventSystem.current.currentSelectedGameObject.TryGetComponent<UISkillAbilityButton>(out var currentSelectedSkill))
+            if (EventSystem.current.currentSelectedGameObject.TryGetComponent<UISkillAbilityButton>(
+                    out var currentSelectedSkill))
             {
                 CurrentSkillAbilityButton = currentSelectedSkill;
                 TypeOfSkill = CurrentSkillAbilityButton.TypeOfSkill;
@@ -114,6 +113,7 @@ namespace CryptoQuest.UI.Menu.Panels.Skill
         }
 
         #region PLUGINS
+
         public int GetItemCount()
         {
             return _listSkills.Count;
@@ -122,9 +122,10 @@ namespace CryptoQuest.UI.Menu.Panels.Skill
         public void SetCell(ICell cell, int index)
         {
             var skill = cell as UISkillAbilityButton;
-            skill.Init(_listSkills[index]);
+            skill.Init(_listSkills[index], _abilityEventChannelSo);
             _listSkillButton.Add(skill.GetComponent<MultiInputButton>());
         }
+
         #endregion
     }
 }
