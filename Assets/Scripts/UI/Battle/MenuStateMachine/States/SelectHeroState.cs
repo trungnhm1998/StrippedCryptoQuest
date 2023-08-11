@@ -1,11 +1,30 @@
-﻿using FSM;
-using UnityEngine;
-using System;
+﻿using UnityEngine.EventSystems;
 
 namespace CryptoQuest.UI.Battle.MenuStateMachine.States
 {
     public class SelectHeroState : BattleMenuStateBase
     {
-        public SelectHeroState(BattleMenuStateMachine stateMachine) : base(stateMachine) { }
+        private readonly CharacterList _charactersUI;
+
+        public SelectHeroState(BattleMenuStateMachine stateMachine, CharacterList charactersUI) : base(stateMachine)
+        {
+            _charactersUI = charactersUI;
+        }
+
+        public override void OnEnter()
+        {
+            base.OnEnter();
+            //TODO: Refactor ability name later (item name for item and show display ability name)
+            _charactersUI.SetSelectedData(_currentUnit.UnitLogic.SelectedAbility.AbilitySO.name);
+            _charactersUI.SelectFirstHero();
+
+            _battlePanelController.SetActiveCommandDetailButtons(false);
+        }
+
+        public override void OnExit()
+        {
+            _battlePanelController.SetActiveCommandDetailButtons(true);
+            base.OnExit();
+        }
     }
 }

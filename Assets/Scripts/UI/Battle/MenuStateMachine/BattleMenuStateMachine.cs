@@ -7,7 +7,10 @@ namespace CryptoQuest.UI.Battle.MenuStateMachine
     public class BattleMenuStateMachine : PushdownStateMachine
     {
         public static readonly string SelectCommandState = "SelectCommand";
-        public static readonly string SelectCommandContentState = "SelectCommandContent";
+        public static readonly string SelectSingleEnemyState = "SelectSingleEnemy";
+        public static readonly string SelectEnemyGroupState = "SelectEnemyGroup";
+        public static readonly string SelectSkillState = "SelectSkill";
+        public static readonly string SelectItemState = "SelectItem";
         public static readonly string SelectHeroState = "SelectHero";
 
         public BattlePanelController BattlePanelController { get; }
@@ -19,8 +22,11 @@ namespace CryptoQuest.UI.Battle.MenuStateMachine
             BattlePanelController = controller;
             
             AddState(SelectCommandState, new SelectCommandState(this));
-            AddState(SelectCommandContentState, new SelectCommandContentState(this));
-            AddState(SelectHeroState, new SelectHeroState(this));
+            AddState(SelectSkillState, new SelectSkillState(this));
+            AddState(SelectItemState, new SelectItemState(this, controller.Inventory));
+            AddState(SelectSingleEnemyState, new SelectSingleEnemyState(this));
+            AddState(SelectEnemyGroupState, new SelectEnemyGroupState(this));
+            AddState(SelectHeroState, new SelectHeroState(this, controller.CharactersUI));
 
             SetStartState(SelectCommandState);
             Init();

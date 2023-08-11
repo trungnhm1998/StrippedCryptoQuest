@@ -3,15 +3,18 @@ using IndiGames.GameplayAbilitySystem.AttributeSystem;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
 using TMPro;
 using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data;
+using CryptoQuest.Gameplay.Battle.Core.Components;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects;
 
 namespace CryptoQuest.UI.Battle.CharacterInfo
 {
     public class UIHeroInfo : CharacterInfoBase, IDeselectHandler, ISelectHandler
     {
+        [SerializeField] private BattleBus _battleBus;
         [SerializeField] private AttributeScriptableObject _maxHpAttributeSO;
         [SerializeField] private AttributeScriptableObject _maxMpAttributeSO;
         [SerializeField] private AttributeScriptableObject _mpAttributeSO;
@@ -28,6 +31,13 @@ namespace CryptoQuest.UI.Battle.CharacterInfo
         [SerializeField] protected Image _characterIcon;
         [SerializeField] private TextMeshProUGUI _itemPopupText;
         [SerializeField] private Button _button;
+
+        private BattleManager _battleManager;
+
+        private void Awake()
+        {
+            _battleManager = _battleBus.BattleManager;
+        }
 
         protected override void OnEnable()
         {
@@ -98,20 +108,26 @@ namespace CryptoQuest.UI.Battle.CharacterInfo
         {
             if (!_button.interactable) return;
 
-            _selectFrame.gameObject.SetActive(true);
-            _popupItemFrame.gameObject.SetActive(true);
+            SetSelect(true);
         }
 
 
         public void OnDeselect(BaseEventData eventData)
         {
-            _selectFrame.gameObject.SetActive(false);
-            _popupItemFrame.gameObject.SetActive(false);
+            SetSelect(false);
+        }
+
+        private void SetSelect(bool value)
+        {
+            _selectFrame.gameObject.SetActive(value);
+            _popupItemFrame.gameObject.SetActive(value);
         }
 
         public void OnClicked()
         {
-            Debug.Log("UIHeroInfo::OnCallback");
+            var currentUnit = _battleManager.CurrentUnit;
+            currentUnit.UnitLogic.SelectSingleTarget(_characterInfo.Owner);
+            SetSelect(false);
         }
 
         public void SetButtonActive(bool isActive)

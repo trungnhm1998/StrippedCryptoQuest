@@ -1,18 +1,13 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using CryptoQuest.Events.Gameplay;
+﻿using System.Collections.Generic;
 using CryptoQuest.Gameplay.Battle.Core.Components;
 using CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit;
 using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects;
-using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Skills;
 using CryptoQuest.Input;
 using CryptoQuest.UI.Battle.CommandsMenu;
 using IndiGames.Core.Events.ScriptableObjects;
-using IndiGames.GameplayAbilitySystem.AbilitySystem.ScriptableObjects;
 using UnityEngine;
+using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
 using UnityEngine.Events;
-using UnityEngine.Serialization;
 using CryptoQuest.UI.Battle.MenuStateMachine;
 
 namespace CryptoQuest.UI.Battle
@@ -25,6 +20,9 @@ namespace CryptoQuest.UI.Battle
         public UnityAction OnButtonGuardClicked = delegate { };
         public UnityAction<IBattleUnit> OnButtonEscapeClicked = delegate { };
 
+
+        [field: SerializeField] public InventorySO Inventory { get; private set; }
+        [field: SerializeField] public CharacterList CharactersUI { get; private set; }
 
         [SerializeField] private BattleActionHandler.BattleActionHandler[] _normalAttackChain;
         [SerializeField] private BattleActionHandler.BattleActionHandler _retreatHandler;
@@ -41,14 +39,13 @@ namespace CryptoQuest.UI.Battle
 
         [SerializeField] private UICommandPanel _commandPanel;
 
-        private BattleManager _battleManager;
-        private readonly List<AbstractButtonInfo> _infos = new();
+        public BattleManager BattleManager { get; private set; }
 
-        private BattleMenuStateMachine _battleMenuFsm;
+        public BattleMenuStateMachine BattleMenuFSM { get; private set; }
 
         public void OpenCommandDetailPanel(List<AbstractButtonInfo> infos)
         {
-            _battleMenuFsm?.RequestStateChange(BattleMenuStateMachine.SelectCommandContentState);
+            _commandPanel.Clear();
             _commandPanel.gameObject.SetActive(true);
             _commandPanel.Init(infos);
         }
@@ -58,13 +55,17 @@ namespace CryptoQuest.UI.Battle
             _commandPanel.Clear();
             _commandPanel.gameObject.SetActive(false);
         }
+        
+        public void SetActiveCommandDetailButtons(bool isActive)
+        {
+            _commandPanel.SetActiveButtons(isActive);
+        }
 
         private void Awake()
         {
             SetupChain(_normalAttackChain);
             SetupChain(_skillAttackChain);
             SetupChain(_itemChain);
-            SetupStateMachine();
         }
 
         private void OnEnable()
@@ -76,8 +77,9 @@ namespace CryptoQuest.UI.Battle
             OnButtonEscapeClicked += OnButtonEscapeClickedHandler;
 
             _battleInput.CancelEvent += OnClickMenuCancel;
-            _battleManager = _battleBus.BattleManager;
-            ShowEnemyGroups();
+
+            BattleManager = _battleBus.BattleManager;
+            SetupStateMachine();
         }
 
         private void OnDisable()
@@ -101,22 +103,9 @@ namespace CryptoQuest.UI.Battle
 
         private void SetupStateMachine()
         {
-            _battleMenuFsm = new BattleMenuStateMachine(this);
-        }
+            BattleMenuFSM?.ResetToNewState(BattleMenuStateMachine.SelectCommandState);
 
-        private void ShowEnemyGroups()
-        {
-            _commandPanel.Clear();
-            _infos.Clear();
-            var opponentTeam = _battleManager.BattleTeam2;
-
-            foreach (var unitPair in opponentTeam.TeamGroups.UnitsDict)
-            {
-                var units = unitPair.Value;
-                _infos.Add(new EnemyGroupButtonInfo(units[0].UnitData, units.Count));
-            }
-
-            OpenCommandDetailPanel(_infos);
+            BattleMenuFSM ??= new BattleMenuStateMachine(this);
         }
 
         public void ReinitializeUI()
@@ -125,16 +114,20 @@ namespace CryptoQuest.UI.Battle
             _uiBattleCommandMenu.Initialize();
         }
 
+        public void SetActiveCommandMenu(bool value)
+        {
+            _uiBattleCommandMenu.SetActiveCommandsMenu(value);
+        }
+
         private void OnClickMenuCancel()
         {
-            _battleMenuFsm?.HandleCancel();
-            ReinitializeUI();
+            BattleMenuFSM?.HandleCancel();
         }
 
         private void OnButtonEscapeClickedHandler(IBattleUnit currentUnit)
         {
             _commandPanel.Clear();
-            _retreatHandler.CurrentBattleInfo = _battleManager.CurrentBattleInfo;
+            _retreatHandler.CurrentBattleInfo = BattleManager.CurrentBattleInfo;
             _retreatHandler.Handle(currentUnit);
         }
 
@@ -157,8 +150,9 @@ namespace CryptoQuest.UI.Battle
 
         private void OnButtonAttackClickedHandler(IBattleUnit currentUnit)
         {
-            _commandPanel.Clear();
-            _normalAttackChain[0].Handle(currentUnit);
+            currentUnit.SelectAbility(currentUnit.UnitLogic.NormalAttack);
+
+            BattleMenuFSM.RequestStateChange(BattleMenuStateMachine.SelectSingleEnemyState);
         }
     }
 }

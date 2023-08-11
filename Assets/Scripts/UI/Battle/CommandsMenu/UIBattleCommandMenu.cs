@@ -10,6 +10,7 @@ namespace CryptoQuest.UI.Battle.CommandsMenu
     public class UIBattleCommandMenu : MonoBehaviour
     {
         [SerializeField] private BattlePanelController _battlePanelController;
+        [SerializeField] private ChildButtonsActivator _childButonsActivator;
 
         [Header("Events")]
         [SerializeField] private BattleUnitEventChannelSO _heroTurnEventChannel;
@@ -19,17 +20,7 @@ namespace CryptoQuest.UI.Battle.CommandsMenu
 
         [SerializeField] private Button _firstButton;
 
-        [SerializeField] private Button[] _allButtons;
-        [SerializeField] private TextMeshProUGUI[] _allButtonTexts;
-
-        [Header("Config Button Text Colors")]
-        [SerializeField] private Color _activeColor;
-
-        [SerializeField] private Color _inactiveColor;
-
         private IBattleUnit _currentUnit;
-        private readonly Dictionary<Button, TextMeshProUGUI> _buttonTextMap = new();
-
 
         private void OnEnable()
         {
@@ -44,25 +35,13 @@ namespace CryptoQuest.UI.Battle.CommandsMenu
         public void Initialize()
         {
             SelectFirstButton();
-            CacheButtonTexts();
+            SetActiveCommandsMenu(true);
         }
 
         private void OnHeroTurn(IBattleUnit unit)
         {
-            Initialize();
             _currentUnit = unit;
             _currentUnitName.text = unit.UnitInfo.DisplayName;
-        }
-
-        private void CacheButtonTexts()
-        {
-            SetActiveCommandsMenu(true);
-            _buttonTextMap.Clear();
-
-            for (int i = 0; i < _allButtons.Length; i++)
-            {
-                _buttonTextMap.Add(_allButtons[i], _allButtonTexts[i]);
-            }
         }
 
         private void SelectFirstButton()
@@ -73,46 +52,31 @@ namespace CryptoQuest.UI.Battle.CommandsMenu
         public void OnNormalAttack()
         {
             _battlePanelController.OnButtonAttackClicked.Invoke(_currentUnit);
-            SetActiveCommandsMenu(false);
         }
 
         public void OnUseSkill()
         {
-            // TODO: Implement use Skill flow here
             _battlePanelController.OnButtonSkillClicked.Invoke(_currentUnit);
-            SetActiveCommandsMenu(false);
         }
 
         public void OnUseItem()
         {
-            // TODO: Implement use item flow here
             _battlePanelController.OnButtonItemClicked.Invoke(_currentUnit);
-            SetActiveCommandsMenu(false);
         }
 
         public void OnGuard()
         {
-            // TODO: Implement guard flow here
             _battlePanelController.OnButtonGuardClicked.Invoke();
-            SetActiveCommandsMenu(false);
         }
 
         public void OnEscape()
         {
-            SetActiveCommandsMenu(false);
             _battlePanelController.OnButtonEscapeClicked.Invoke(_currentUnit);
         }
 
-        private void SetActiveCommandsMenu(bool isActive)
+        public void SetActiveCommandsMenu(bool isActive)
         {
-            foreach (var pair in _buttonTextMap)
-            {
-                var button = pair.Key;
-                var buttonText = pair.Value;
-
-                button.interactable = isActive;
-                buttonText.color = isActive ? _activeColor : _inactiveColor;
-            }
+            _childButonsActivator.SetActiveButtons(isActive);
         }
     }
 }

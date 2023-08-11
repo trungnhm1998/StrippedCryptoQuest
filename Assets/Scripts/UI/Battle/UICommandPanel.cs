@@ -9,6 +9,7 @@ namespace CryptoQuest.UI.Battle
 {
     public class UICommandPanel : AbstractBattlePanelContent
     {
+        [SerializeField] private ChildButtonsActivator _childButonsActivator;
         [SerializeField] private GameObject _content;
         [SerializeField] private UICommandContent _itemPrefab;
         [SerializeField] private NavigationAutoScroll _navigationAutoScroll;
@@ -30,6 +31,12 @@ namespace CryptoQuest.UI.Battle
             }
 
             SelectFirstButton();
+            _childButonsActivator.CacheButtonTexts();
+        }
+
+        public void SetActiveButtons(bool isActive)
+        {
+            _childButonsActivator.SetActiveButtons(isActive);
         }
 
         private void SelectFirstButton()
