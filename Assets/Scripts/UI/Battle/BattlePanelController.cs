@@ -13,6 +13,7 @@ using IndiGames.GameplayAbilitySystem.AbilitySystem.ScriptableObjects;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Serialization;
+using CryptoQuest.UI.Battle.MenuStateMachine;
 
 namespace CryptoQuest.UI.Battle
 {
@@ -43,8 +44,11 @@ namespace CryptoQuest.UI.Battle
         private BattleManager _battleManager;
         private readonly List<AbstractButtonInfo> _infos = new();
 
+        private BattleMenuStateMachine _battleMenuFsm;
+
         public void OpenCommandDetailPanel(List<AbstractButtonInfo> infos)
         {
+            _battleMenuFsm?.RequestStateChange(BattleMenuStateMachine.SelectCommandContentState);
             _commandPanel.gameObject.SetActive(true);
             _commandPanel.Init(infos);
         }
@@ -60,6 +64,7 @@ namespace CryptoQuest.UI.Battle
             SetupChain(_normalAttackChain);
             SetupChain(_skillAttackChain);
             SetupChain(_itemChain);
+            SetupStateMachine();
         }
 
         private void OnEnable()
@@ -94,6 +99,11 @@ namespace CryptoQuest.UI.Battle
             }
         }
 
+        private void SetupStateMachine()
+        {
+            _battleMenuFsm = new BattleMenuStateMachine(this);
+        }
+
         private void ShowEnemyGroups()
         {
             _commandPanel.Clear();
@@ -117,6 +127,7 @@ namespace CryptoQuest.UI.Battle
 
         private void OnClickMenuCancel()
         {
+            _battleMenuFsm?.HandleCancel();
             ReinitializeUI();
         }
 

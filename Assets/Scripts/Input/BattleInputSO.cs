@@ -36,12 +36,14 @@ namespace CryptoQuest.Input
         {
             DisableAllInput();
             EnableMapGameplayInput();
+            InputActions.BattleMenu.RemoveCallbacks(this);
         }
 
         public void EnableBattleInput()
         {
             DisableAllInput();
             InputActions.BattleMenu.Enable();
+            InputActions.BattleMenu.SetCallbacks(this);
         }
 
         #endregion
