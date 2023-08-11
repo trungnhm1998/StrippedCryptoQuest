@@ -55,7 +55,7 @@ namespace CryptoQuestEditor.Gameplay.Inventory
                         "Assets/ScriptableObjects/Data/Inventory/UsableTypes/Consumable.asset", typeof(UsableTypeSO));
 
                 // import Data
-                instance.ID = id;
+                instance.Editor_SetID(id);
                 instance.name = name;
 
                 instance.Editor_SetUsableType(consumableAsset);

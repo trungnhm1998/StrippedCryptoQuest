@@ -1,5 +1,7 @@
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Type;
+using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Variant;
 using UnityEngine;
+using UnityEngine.Localization;
 
 namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item
 {
@@ -8,11 +10,12 @@ namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item
     {
         [field: Header("Equipment Item")]
         [field: SerializeField] public EquipmentTypeSO EquipmentType { get; protected set; }
-
+        [field: SerializeField] public VariantBaseSO VariantBase { get; private set; }
         [field: SerializeField] public RaritySO Rarity { get; private set; }
+        [field: SerializeField] public LocalizedString LocalizedEquipmentType { get; private set; }
+
 
 #if UNITY_EDITOR
-
         /// <summary>
         /// This method will be use in <see cref="CryptoQuestEditor.Gameplay.Inventory.UsableSOEditor"/> 
         /// </summary>
@@ -29,6 +32,24 @@ namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item
         public void Editor_SetRarity(RaritySO rarity)
         {
             Rarity = rarity;
+        }
+
+        /// <summary>
+        /// This method will be use in <see cref="CryptoQuestEditor.Gameplay.Inventory.UsableSOEditor"/>
+        /// </summary>
+        /// <param name="variantBase"></param>
+        public void Editor_SetVariantBase(VariantBaseSO variantBase)
+        {
+            VariantBase = variantBase;
+        }
+
+        /// <summary>
+        /// This method will be use in <see cref="CryptoQuestEditor.Gameplay.Inventory.UsableSOEditor"/>
+        /// </summary>
+        /// <param name="localizedEquipmentType"></param>
+        public void Editor_SetLocalizedEquipmentType(LocalizedString localizedEquipmentType)
+        {
+            LocalizedEquipmentType = localizedEquipmentType;
         }
 #endif
     }

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using CryptoQuest.Gameplay.Inventory;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
+using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Type;
 using CryptoQuest.Input;
 using CryptoQuest.Menu;

@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using CryptoQuest.Events.Gameplay;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Type;
 using CryptoQuest.Input;

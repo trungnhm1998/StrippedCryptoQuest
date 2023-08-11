@@ -114,7 +114,7 @@ namespace CryptoQuest.UI.Menu.Panels.Status
         /// <returns>Real data count</returns>
         public int GetItemCount()
         {
-            return _inventorySO.Equipments.Count;
+            return _inventorySO.CountEquipmentInSlot();
         }
 
         /// <summary>
@@ -125,7 +125,7 @@ namespace CryptoQuest.UI.Menu.Panels.Status
         public void SetCell(ICell cell, int index)
         {
             UIStatusInventoryItemButton itemButtonRow = cell as UIStatusInventoryItemButton;
-            itemButtonRow.Init(_inventorySO.Equipments[index], index);
+            // itemButtonRow.Init(_inventorySO.Equipments[index], index);
         }
 
         #endregion

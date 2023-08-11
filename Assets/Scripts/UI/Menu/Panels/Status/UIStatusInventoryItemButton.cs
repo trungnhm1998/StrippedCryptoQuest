@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using CryptoQuest.Gameplay.Inventory;
+using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item;
 using CryptoQuest.Menu;
 using CryptoQuest.UI.Menu.Panels.Status.Stats;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
