@@ -1,4 +1,4 @@
-﻿using IndiGames.Core.EditorTools.Attributes.ReadOnlyAttribute;
+﻿using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -12,7 +12,8 @@ namespace CryptoQuest.Menu
     [AddComponentMenu("IndiGamesCore/UI/MultiInputButton")]
     public class MultiInputButton : Button
     {
-        [ReadOnly] public bool IsSelected;
+        public event Action Selected;
+        public event Action Deselected;
 
         private MenuSelectionHandler _menuSelectionHandler;
 
@@ -46,9 +47,18 @@ namespace CryptoQuest.Menu
         public override void OnSelect(BaseEventData eventData)
         {
             if (!enabled) return;
-            IsSelected = true;
+            Selected?.Invoke();
             Handler.UpdateSelection(gameObject);
             base.OnSelect(eventData);
+        }
+
+        public override void OnDeselect(BaseEventData eventData)
+        {
+            base.OnDeselect(eventData);
+            if (!IsActive() || !IsInteractable())
+                return;
+
+            Deselected?.Invoke();
         }
 
         public override void OnSubmit(BaseEventData eventData)

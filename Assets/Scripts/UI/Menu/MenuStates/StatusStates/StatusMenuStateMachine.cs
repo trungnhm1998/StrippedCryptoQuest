@@ -21,7 +21,7 @@ namespace CryptoQuest.UI.Menu.MenuStates.StatusStates
         public StatusMenuStateMachine(UIStatusMenu panel) : base(panel)
         {
             // Could create a factory here if new keyword becomes a problem.
-            AddState(NavStatus, new UnFocusStatusState(panel));
+            AddState(NavStatus, new GenericUnfocusState(Equipment));
             AddState(Status, new FocusStatusState(panel));
             AddState(Equipment, new EquipmentState(panel));
             AddState(EquipmentSelection, new ChangeEquipmentState(panel));

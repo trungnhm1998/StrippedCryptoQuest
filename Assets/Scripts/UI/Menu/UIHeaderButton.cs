@@ -11,6 +11,7 @@ namespace CryptoQuest.UI.Menu
     public class UIHeaderButton : MultiInputButton
     {
         public event UnityAction<MenuTypeSO> Pressed;
+        public event UnityAction<UIHeaderButton> Selected;
         [SerializeField] private MenuTypeSO _typeSO;
         public MenuTypeSO TypeSO => _typeSO;
         [SerializeField] private Image _pointer;
@@ -26,6 +27,7 @@ namespace CryptoQuest.UI.Menu
 
         public override void OnSelect(BaseEventData eventData)
         {
+            Selected?.Invoke(this);
             if (!interactable)
             {
                 return;

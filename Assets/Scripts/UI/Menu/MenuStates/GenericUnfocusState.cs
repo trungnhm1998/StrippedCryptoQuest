@@ -1,29 +1,32 @@
-﻿using CryptoQuest.UI.Menu.Panels.Status;
+﻿using CryptoQuest.UI.Menu.MenuStates.SkillStates;
 
-namespace CryptoQuest.UI.Menu.MenuStates.StatusStates
+namespace CryptoQuest.UI.Menu.MenuStates
 {
-    public class UnFocusStatusState : StatusStateBase
+    public class GenericUnfocusState : MenuStateBase
     {
-        public UnFocusStatusState(UIStatusMenu statusPanel) : base(statusPanel) { }
-
+        private string _someState;
+        public GenericUnfocusState(string someState)
+        {
+            _someState = someState;
+        }
         public override void OnEnter()
         {
             base.OnEnter();
             NavigationBar.SetActive(true);
-            NavigationBar.HighlightHeader(StatusPanel.TypeSO, true);
+            NavigationBar.HighlightLastFocusHeader();
         }
 
         public override void OnExit()
         {
             base.OnExit();
             NavigationBar.SetActive(false);
-            NavigationBar.HighlightHeader(StatusPanel.TypeSO);
+            NavigationBar.HighlightLastFocusHeader(true);
         }
-        
+
         public override void Interact()
         {
             base.Interact();
-            MenuStateMachine.RequestStateChange(StatusMenuStateMachine.Equipment);
+            MenuStateMachine.RequestStateChange(_someState);
         }
 
         public override void HandleCancel()

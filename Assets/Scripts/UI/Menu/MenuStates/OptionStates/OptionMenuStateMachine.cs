@@ -15,7 +15,7 @@ namespace CryptoQuest.UI.Menu.MenuStates.OptionStates
         public OptionMenuStateMachine(UIOptionMenu panel) : base(panel)
         {
             // Could create a factory here if new keyword becomes a problem.
-            AddState(NavOption, new UnFocusOptionState(panel));
+            AddState(NavOption, new GenericUnfocusState(Option));
             AddState(Option, new FocusOptionState(panel));
 
             SetStartState(Option);

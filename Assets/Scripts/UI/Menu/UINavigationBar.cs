@@ -32,6 +32,7 @@ namespace CryptoQuest.UI.Menu
             foreach (var button in _navBarButtons)
             {
                 button.Pressed += OnHeaderPressed;
+                button.Selected += NavBarButtonSelect;
             }
         }
 
@@ -40,7 +41,15 @@ namespace CryptoQuest.UI.Menu
             foreach (var button in _navBarButtons)
             {
                 button.Pressed -= OnHeaderPressed;
+                button.Selected -= NavBarButtonSelect;
             }
+        }
+
+        public UIHeaderButton _lastSelectButton;
+
+        private void NavBarButtonSelect(UIHeaderButton arg0)
+        {
+            _lastSelectButton = arg0;
         }
 
         private void OnHeaderPressed(MenuTypeSO menuTypeSO)
@@ -61,6 +70,13 @@ namespace CryptoQuest.UI.Menu
             if (selecting)
                 headerButton.Select();
         }
+        
+        public void HighlightLastFocusHeader(bool selecting = false)
+        {
+            HighlightHeader(_lastSelectButton.TypeSO);
+            if (selecting)
+                _lastSelectButton.Select();
+        }
 
         public void SetActive(bool isActive)
         {
@@ -77,8 +93,6 @@ namespace CryptoQuest.UI.Menu
                     button.UnFocus();
                 }
             }
-
-            if (isActive) _defaultSelect.Select();
         }
 
         private int CurrentSelectedIndex

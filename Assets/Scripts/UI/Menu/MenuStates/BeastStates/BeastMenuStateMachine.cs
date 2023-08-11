@@ -17,7 +17,7 @@ namespace CryptoQuest.UI.Menu.MenuStates.BeastStates
         public BeastMenuStateMachine(UIBeastMenu panel) : base(panel)
         {
             // Could create a factory here if new keyword becomes a problem.
-            AddState(NavBeast, new UnFocusBeastState(panel));
+            AddState(NavBeast, new GenericUnfocusState(Beast));
             AddState(Beast, new FocusBeastState(panel));
 
             SetStartState(Beast);

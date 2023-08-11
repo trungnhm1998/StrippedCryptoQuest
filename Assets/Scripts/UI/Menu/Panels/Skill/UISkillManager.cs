@@ -11,11 +11,11 @@ namespace CryptoQuest.UI.Menu.Panels.Skill
     {
         public event Action CharacterSelected;
 
-        [SerializeField] private List<UISkillTabButton> _tabSkillButton;
+        [SerializeField] private List<UISkillCharacterButton> _tabSkillButton;
         [SerializeField] private List<UISkillCharacterPanel> _listSkills;
         [SerializeField] private List<MultiInputButton> _listCharacterCardButton;
         private Dictionary<ECharacterClass, UISkillCharacterPanel> _cachedSkills = new();
-        private Dictionary<ECharacterClass, UISkillTabButton> _cachedTabButtons = new();
+        private Dictionary<ECharacterClass, UISkillCharacterButton> _cachedTabButtons = new();
         private UISkillCharacterPanel _currentActivePanel;
         private bool _isSelectedMenu = false;
         private bool _isSelectedCharacter = false;

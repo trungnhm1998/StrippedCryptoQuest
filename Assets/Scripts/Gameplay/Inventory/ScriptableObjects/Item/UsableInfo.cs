@@ -2,6 +2,7 @@
 using IndiGames.GameplayAbilitySystem.AbilitySystem;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
 using UnityEngine;
+using UnityEngine.Localization;
 
 namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item
 {
@@ -12,6 +13,10 @@ namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item
         public AbilitySystemBehaviour Owner { get; set; }
 
         [field: SerializeField] public UsableSO Item { get; private set; }
+        
+        public Sprite Icon => Item.Image;
+        public LocalizedString DisplayName => Item.DisplayName;
+        public LocalizedString Description => Item.Description;
 
         public UsableInfo(UsableSO baseItemSO, int quantity = 0) : base(baseItemSO)
         {
