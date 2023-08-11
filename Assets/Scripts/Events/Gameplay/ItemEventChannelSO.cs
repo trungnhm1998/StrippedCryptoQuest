@@ -12,11 +12,6 @@ namespace CryptoQuest.Events.Gameplay
 
         public void RaiseEvent(UsableInfo itemBaseItem)
         {
-            OnRaiseEvent(itemBaseItem);
-        }
-
-        private void OnRaiseEvent(UsableInfo itemBaseItem)
-        {
             this.CallEventSafely(EventRaised, itemBaseItem);
         }
     }

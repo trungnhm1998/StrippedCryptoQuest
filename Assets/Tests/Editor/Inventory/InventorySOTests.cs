@@ -1,4 +1,4 @@
-﻿using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
+using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Container;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Type;
@@ -114,8 +114,10 @@ namespace CryptoQuest.Tests.Editor
             string equipmentPath,
             SlotType slot)
         {
-            var expected = NewEquipmentFromDataWithPath(slot, equipmentPath);
+            var expected = EquipItemFromDataWithPath(slot, equipmentPath);
             var actual = _inventorySO.GetInventorySlot(slot).Equipment;
+
+            _inventorySO.Add(expected);
 
             Assert.AreEqual(expected, actual);
         }
@@ -127,12 +129,13 @@ namespace CryptoQuest.Tests.Editor
             SlotType slot)
 
         {
-            var expected = NewEquipmentFromDataWithPath(slot, equipmentPath);
+            var expected = EquipItemFromDataWithPath(slot, equipmentPath);
             var actual = _inventorySO.GetInventorySlot(slot).Equipment;
+
+            _inventorySO.Add(expected);
 
             Assert.AreEqual(expected, actual);
         }
-
 
         [TestCase("Assets/ScriptableObjects/Data/Inventory/Items/Equipments/Weapons/Sword.asset", SlotType.Weapon)]
         [TestCase("Assets/ScriptableObjects/Data/Inventory/Items/Equipments/Shield.asset", SlotType.Shield)]
@@ -140,11 +143,13 @@ namespace CryptoQuest.Tests.Editor
             string equipmentPath,
             SlotType slot)
         {
-            NewEquipmentFromDataWithPath(slot, ITEMS_EQUIPMENTS_TWO_HAND);
+            EquipItemFromDataWithPath(slot, ITEMS_EQUIPMENTS_TWO_HAND);
 
-            var expected = NewEquipmentFromDataWithPath(slot, equipmentPath);
+            var expected = EquipItemFromDataWithPath(slot, equipmentPath);
 
             var currentType = expected.Item.EquipmentType.AllowedSlots[0];
+
+            _inventorySO.Add(expected);
 
             if (currentType == SlotType.Weapon)
             {
@@ -158,6 +163,40 @@ namespace CryptoQuest.Tests.Editor
             }
         }
 
+        [TestCase("Assets/ScriptableObjects/Data/Inventory/Items/Usables/Usable5002.asset")]
+        [TestCase("Assets/ScriptableObjects/Data/Inventory/Items/Usables/Usable5003.asset")]
+        [TestCase("Assets/ScriptableObjects/Data/Inventory/Items/Usables/Usable5004.asset")]
+        [TestCase("Assets/ScriptableObjects/Data/Inventory/Items/Usables/Usable5005.asset")]
+        public void Add_UsableItem_ShouldHaveOneItem(string usablePath)
+        {
+            UsableInfo item = NewUsable(usablePath, out UsableSO actual);
+
+            _inventorySO.Add(item);
+            var expected = _inventorySO.UsableItems[0].Item;
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestCase("Assets/ScriptableObjects/Data/Inventory/Items/Usables/Usable5005.asset")]
+        public void Add_UsableItem_ShouldReturnExactlyQuantity(string usablePath)
+        {
+            UsableInfo item = NewUsable(usablePath, out UsableSO actual);
+
+            var actualQuantity = Random.Range(1, 100);
+
+            _inventorySO.Add(item, actualQuantity);
+            var expected = _inventorySO.UsableItems[0].Quantity;
+
+
+            Assert.AreEqual(expected, actualQuantity, $"Expected: {expected} | Actual: {actualQuantity}");
+        }
+
+        [Test]
+        public void Add_ItemWithOutData_ShouldReturnFalse()
+        {
+            var result = _inventorySO.Add(new UsableInfo());
+            Assert.False(result);
+        }
 
         [TestCase("Assets/ScriptableObjects/Data/Inventory/Items/Equipments/Weapons/Sword.asset", SlotType.Weapon)]
         public void Add_WithEquipment_ShouldAddToInventory(string equipmentPath,
@@ -173,7 +212,6 @@ namespace CryptoQuest.Tests.Editor
             Assert.IsNotEmpty(equipments);
         }
 
-
         [Test]
         public void Add_WithEquipmentButNoData_ShouldReturnFalse()
         {
@@ -188,6 +226,38 @@ namespace CryptoQuest.Tests.Editor
             Assert.False(result);
         }
 
+        [TestCase("Assets/ScriptableObjects/Data/Inventory/Items/Equipments/Weapons/Sword.asset", SlotType.Weapon)]
+        public void Remove_WithEquipment_ShouldRemoveFromInventory(string equipmentPath,
+            EquippingSlotContainer.EType slot)
+        {
+            var equipment = EquipItemFromDataWithPath(slot, equipmentPath);
+
+            var expectedType = equipment.Item.EquipmentType.EquipmentCategory;
+
+            _inventorySO.Add(equipment);
+
+            var expected = _inventorySO.Remove(equipment);
+
+            Assert.True(expected);
+
+            _inventorySO.GetEquipmentByType(expectedType, out var equipments);
+            Assert.IsEmpty(equipments);
+        }
+
+        [Test]
+        public void Remove_NullEquipment_ShouldReturnFalse()
+        {
+            var result = _inventorySO.Remove(null);
+            Assert.False(result);
+        }
+
+        [Test]
+        public void Remove_WithEquipmentWithOutData_ShouldReturnFalse()
+        {
+            var result = _inventorySO.Remove(new EquipmentInfo());
+            Assert.False(result);
+        }
+
         private EquipmentInfo NewEquipment(string equipmentPath, out EquipmentSO equipmentSO)
         {
             equipmentSO = AssetDatabase.LoadAssetAtPath<EquipmentSO>(equipmentPath);
@@ -197,7 +267,13 @@ namespace CryptoQuest.Tests.Editor
             return equipment;
         }
 
-        private EquipmentInfo NewEquipmentFromDataWithPath(SlotType slot, string equipmentPath)
+        private UsableInfo NewUsable(string usablePath, out UsableSO item)
+        {
+            item = AssetDatabase.LoadAssetAtPath<UsableSO>(usablePath);
+            return new UsableInfo(item);
+        }
+
+        private EquipmentInfo EquipItemFromDataWithPath(SlotType slot, string equipmentPath)
         {
             var equipmentSO = AssetDatabase.LoadAssetAtPath<EquipmentSO>(equipmentPath);
 
@@ -206,6 +282,7 @@ namespace CryptoQuest.Tests.Editor
             _inventorySO.Equip(slot, equipment);
             return equipment;
         }
+
 
         private static InventorySO[] GetAllInventorySO()
         {

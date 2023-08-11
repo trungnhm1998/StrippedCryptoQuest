@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using IndiGames.GameplayAbilitySystem.AbilitySystem;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
 using UnityEngine;
@@ -20,6 +20,7 @@ namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item
 
         public UsableInfo(UsableSO baseItemSO, int quantity = 0) : base(baseItemSO)
         {
+            Item = baseItemSO;
             Quantity = quantity;
         }
 
@@ -34,6 +35,8 @@ namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item
             Item = baseItemSO as UsableSO;
             Quantity = quantity;
         }
+
+        public UsableInfo() { }
 
         public void SetQuantity(int quantity)
         {
