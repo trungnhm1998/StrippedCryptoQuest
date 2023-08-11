@@ -1,6 +1,7 @@
 using CryptoQuest.Events;
 using DG.Tweening;
 using IndiGames.Core.Events.ScriptableObjects;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Localization;
 using UnityEngine.Localization.Components;
@@ -26,12 +27,12 @@ namespace CryptoQuest.UI.MapName
         [SerializeField] private float _hideSpeed = .5f;
         [SerializeField] private float _hideDistance = -500f;
         private Sequence _sequence;
-        private Text text;
+        private TextMeshProUGUI _text;
 
         private void OnEnable()
         {
             _container.transform.DOMoveX(_hideDistance, 0);
-            text = _mapNameText.GetComponent<Text>();
+            _text = _mapNameText.GetComponent<TextMeshProUGUI>();
             _onShowMapNameUI.EventRaised += OnShowMapName;
             _onHideMapNameUI.EventRaised += OnLoadNewScene;
         }
@@ -66,10 +67,11 @@ namespace CryptoQuest.UI.MapName
         private void ShowMapName(float duration)
         {
             _container.SetActive(true);
+            LayoutRebuilder.ForceRebuildLayoutImmediate(_backgroundImage.rectTransform);
             _sequence = DOTween.Sequence();
             _sequence
                 .Append(_backgroundImage.DOFade(1, duration))
-                .Join(text.DOFade(1, duration))
+                .Join(_text.DOFade(1, duration))
                 .Join(_frameImage.DOFade(1, duration))
                 .Join(_container.transform.DOMoveX(0, duration))
                 .AppendInterval(_showDuration)
@@ -83,7 +85,7 @@ namespace CryptoQuest.UI.MapName
             _sequence
                 .Append(_backgroundImage.DOFade(0, duration))
                 .Join(_frameImage.DOFade(0, duration))
-                .Join(text.DOFade(0, duration))
+                .Join(_text.DOFade(0, duration))
                 .Join(_container.transform.DOMoveX(_hideDistance, duration));
         }
     }
