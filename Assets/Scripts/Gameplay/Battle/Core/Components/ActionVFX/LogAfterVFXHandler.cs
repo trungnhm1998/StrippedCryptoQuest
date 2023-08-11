@@ -11,7 +11,6 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components.ActionVFX
 {
     public class LogAfterVFXHandler : GameHandler<object>
     {
-        
         public VoidEventChannelSO ShowBattleLogSuccessEventChannel;
         public Action<LocalizedString> ShowBattleDialog;
         private BattleActionDataSO _actionData;
@@ -28,8 +27,11 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components.ActionVFX
                 OnEffectComplete();
                 return;
             }
+
             var target = _actionData.Target;
-            var vfxPos = (target == null) ? Vector3.zero : target.transform.position;
+            var vfxPos = (target == null)
+                ? Vector3.zero
+                : new Vector3(target.transform.position.x, 0, target.transform.position.z);
             _actionData.VFXPrefab.InstantiateAsync(vfxPos, Quaternion.identity).Completed += VFXPrefabAssetLoaded;
         }
 

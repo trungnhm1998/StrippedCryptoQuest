@@ -40,6 +40,8 @@ namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Calculation
             float damage = ((attack / atkCorrection) - (defence / defCorrection)) * baseDamage *
                            elementCorrection;
             damage = damage < 0 ? 0 : damage;
+            Debug.Log("baseDamage " + baseDamage + "attack " + attack + "defence " + defence + "elementAttack " +
+                      elementAttack + "elementResist " + elementResist + "damage " + damage);
             return damage;
         }
 
@@ -48,6 +50,8 @@ namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Calculation
             float elementCorrection = elementResist != 0 ? elementAttack / elementResist : elementAttack;
             float damage = baseDamage * elementCorrection;
             damage = damage < 0 ? 0 : damage;
+            Debug.Log("baseDamage " + baseDamage + "elementAttack " + elementAttack + "elementResist " + elementResist +
+                      "damage " + damage);
             return damage;
         }
     }

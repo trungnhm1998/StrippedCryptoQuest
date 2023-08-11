@@ -25,6 +25,7 @@ namespace CryptoQuest.UI.Battle
         private void SetupTargetButton(IBattleUnit battleUnit)
         {
             _buttonInfo.Clear();
+            _items.Clear();
             foreach (var item in _inventorySO.UsableItems)
             {
                 _items.Add(item.Item);

@@ -28,8 +28,8 @@ namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Skills
         protected const string UNIT_NAME_VARIABLE = "unitName";
         protected const string SKILL_NAME_VARIABLE = "skillName";
         protected IBattleUnit _unit;
-        protected new CQSkillSO AbilitySO => (CQSkillSO) _abilitySO;
-        
+        protected new CQSkillSO AbilitySO => (CQSkillSO)_abilitySO;
+
         public override void OnAbilityGranted(AbstractAbility skillSpec)
         {
             base.OnAbilityGranted(skillSpec);
@@ -46,9 +46,9 @@ namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Skills
         protected virtual void SkillActivatePromt()
         {
             var actionData = AbilitySO.ActionDataSO;
-            if (actionData == null) return; 
+            if (actionData == null) return;
 
-            actionData.Log.Clear();
+            actionData.Init(_unit.UnitLogic.TargetContainer[0]);
             actionData.AddStringVar(UNIT_NAME_VARIABLE, _unit.UnitInfo.DisplayName);
             AbilitySO.ActionEventSO.RaiseEvent(actionData);
         }
