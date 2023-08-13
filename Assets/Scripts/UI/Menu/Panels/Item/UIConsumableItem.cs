@@ -53,6 +53,7 @@ namespace CryptoQuest.UI.Menu.Panels.Item
 
         public void Inspect()
         {
+            _button.Select();
             OnInspectingItem();
         }
     }
