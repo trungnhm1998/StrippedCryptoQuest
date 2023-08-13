@@ -9,15 +9,16 @@ namespace CryptoQuest.UI.Menu.Panels.Item
 {
     public class UIConsumableItem : MonoBehaviour, ICell
     {
-        public delegate void InspectingItem(UsableInfo item);
+        public delegate void InspectingItem(UIConsumableItem item);
 
-        public static event InspectingItem Inspecting;
+        public event InspectingItem Inspecting;
         [SerializeField] private Image _icon;
         [SerializeField] private LocalizeStringEvent _name;
         [SerializeField] private Text _quantity;
         [SerializeField] private MultiInputButton _button;
         [SerializeField] private GameObject _selectedBackground;
-        private UsableInfo _consumableItem;
+        private UsableInfo _itemDef;
+        public UsableInfo ItemDef => _itemDef;
 
         private void OnEnable()
         {
@@ -31,6 +32,11 @@ namespace CryptoQuest.UI.Menu.Panels.Item
             _button.Deselected -= DeselectButton;
         }
 
+        public void Deselect()
+        {
+            DeselectButton();
+        }
+
         private void DeselectButton()
         {
             _selectedBackground.SetActive(false);
@@ -39,13 +45,13 @@ namespace CryptoQuest.UI.Menu.Panels.Item
         private void OnInspectingItem()
         {
             _selectedBackground.SetActive(true);
-            Inspecting?.Invoke(_consumableItem);
+            Inspecting?.Invoke(this);
         }
 
 
         public void Init(UsableInfo item)
         {
-            _consumableItem = item;
+            _itemDef = item;
             _icon.sprite = item.Icon;
             _name.StringReference = item.DisplayName;
             _quantity.text = item.Quantity.ToString();

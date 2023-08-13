@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Type;
 using PolyAndCode.UI;
 using UnityEngine;
@@ -7,15 +9,18 @@ namespace CryptoQuest.UI.Menu.Panels.Item
 {
     public class UIConsumables : MonoBehaviour, IRecyclableScrollRectDataSource
     {
+        public event Action<UsableInfo> Inspecting;
+
         [SerializeField] private RecyclableScrollRect _recyclableScrollRect;
         [SerializeField] private GameObject _content;
         [field: SerializeField] public UsableTypeSO Type { get; private set; }
         private IConsumablesProvider _consumablesProvider;
+        private readonly List<UIConsumableItem> _uiConsumables = new();
+        private UIConsumableItem _currentInspectingItem;
 
         private void Awake()
         {
             _consumablesProvider = GetComponent<IConsumablesProvider>(); // TODO: Find a better way to inject
-            _uiConsumables = new UIConsumableItem[GetItemCount()];
             _recyclableScrollRect.Initialize(this);
         }
 
@@ -26,25 +31,51 @@ namespace CryptoQuest.UI.Menu.Panels.Item
             return _consumablesProvider.Items.Count;
         }
 
-        private UIConsumableItem[] _uiConsumables;
 
         public void SetCell(ICell cell, int index)
         {
-            try
+            var item = cell as UIConsumableItem;
+            if (item == null)
             {
-                var item = cell as UIConsumableItem;
-                item.Init(_consumablesProvider.Items[index]);
-                _uiConsumables[index] = item;
-                if (_showing && index == 0)
-                {
-                    item.Inspect();
-                }
+                Debug.Log("Cell is not UIConsumableItem");
+                return;
             }
-            catch (Exception e)
+
+            item.Init(_consumablesProvider.Items[index]);
+            _uiConsumables.Add(item);
+            item.Inspecting += OnInspecting;
+            if (_currentInspectingItem != null)
             {
-                Debug.LogWarning($"Failed to set cell at index {index} with error: {e.Message}");
-                throw;
+                _currentInspectingItem.Inspect();
+                return;
             }
+
+            if (_showing && index == 0)
+            {
+                _currentInspectingItem = item;
+                item.Inspect();
+            }
+        }
+
+        private bool _isPreviousHidden = true;
+
+        private void OnDisable()
+        {
+            _isPreviousHidden = true;
+        }
+
+        private void OnDestroy()
+        {
+            foreach (var item in _uiConsumables)
+            {
+                item.Inspecting -= OnInspecting;
+            }
+        }
+
+        private void OnInspecting(UIConsumableItem consumableUI)
+        {
+            _currentInspectingItem = consumableUI;
+            Inspecting?.Invoke(consumableUI.ItemDef);
         }
 
         #endregion
@@ -55,10 +86,50 @@ namespace CryptoQuest.UI.Menu.Panels.Item
         }
 
         private bool _showing;
+
         public void Show()
+        {
+            EnsureContentIsVisible();
+
+            if (_isPreviousHidden)
+            {
+                _isPreviousHidden = false;
+                DeselectCurrentInspectingItem();
+            }
+
+            SetDefaultInspectingItem();
+
+            InspectCurrentItem();
+        }
+
+        #region Over engineered
+
+        private void EnsureContentIsVisible()
         {
             _content.SetActive(true);
             _showing = true;
         }
+
+        private void DeselectCurrentInspectingItem()
+        {
+            if (!_currentInspectingItem) return;
+            _currentInspectingItem.Deselect();
+            _currentInspectingItem = null;
+        }
+
+        private void SetDefaultInspectingItem()
+        {
+            if (_currentInspectingItem == null && _uiConsumables.Count > 0)
+            {
+                _currentInspectingItem = _uiConsumables[0];
+            }
+        }
+
+        private void InspectCurrentItem()
+        {
+            if (_currentInspectingItem) _currentInspectingItem.Inspect();
+        }
+
+        #endregion
     }
 }

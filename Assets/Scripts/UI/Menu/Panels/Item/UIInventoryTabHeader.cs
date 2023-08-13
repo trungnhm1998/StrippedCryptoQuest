@@ -10,6 +10,9 @@ namespace CryptoQuest.UI.Menu.Panels.Item
         [SerializeField] private UIInventoryTabButton _defaultSelectedTabButton;
         [SerializeField] private UIInventoryTabButton[] _tabButtons;
 
+        /// <summary>
+        /// Open consumable tab by default
+        /// </summary>
         private void OnEnable()
         {
             OpenTab(_defaultSelectedTabButton.ConsumableType);

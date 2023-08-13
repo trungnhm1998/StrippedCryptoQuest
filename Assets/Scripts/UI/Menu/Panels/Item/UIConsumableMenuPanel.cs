@@ -64,16 +64,22 @@ namespace CryptoQuest.UI.Menu.Panels.Item
             return new ItemMenuStateMachine(this);
         }
 
-        private void OnEnable()
+        private void Start()
         {
             _inventoryTabHeader.OpeningTab += ShowItemsWithType;
-            UIConsumableItem.Inspecting += InspectingItem;
+            foreach (var itemList in _itemLists)
+            {
+                itemList.Inspecting += InspectingItem;
+            }
         }
 
-        private void OnDisable()
+        private void OnDestroy()
         {
             _inventoryTabHeader.OpeningTab -= ShowItemsWithType;
-            UIConsumableItem.Inspecting -= InspectingItem;
+            foreach (var itemList in _itemLists)
+            {
+                itemList.Inspecting -= InspectingItem;
+            }
         }
 
         private void InspectingItem(UsableInfo item)
