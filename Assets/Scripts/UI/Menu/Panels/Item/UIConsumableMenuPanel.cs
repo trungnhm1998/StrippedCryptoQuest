@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Type;
@@ -71,6 +72,27 @@ namespace CryptoQuest.UI.Menu.Panels.Item
             {
                 itemList.Inspecting += InspectingItem;
             }
+        }
+
+        private bool _previouslyHidden = true;
+
+        private void OnEnable()
+        {
+            _previouslyHidden = true;
+        }
+
+        protected override void OnShow()
+        {
+            if (_previouslyHidden)
+            {
+                _previouslyHidden = false;
+                ShowItemsWithType(0);
+            }
+        }
+
+        protected override void OnHide()
+        {
+            _previouslyHidden = true;
         }
 
         private void OnDestroy()

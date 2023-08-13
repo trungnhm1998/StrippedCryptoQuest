@@ -9,17 +9,25 @@ namespace CryptoQuest.UI.Menu.Panels
         [SerializeField] private MenuTypeSO _typeSO;
         public MenuTypeSO TypeSO => _typeSO;
 
-        [SerializeField] private GameObject _content;
+        [SerializeField] protected GameObject _content;
 
         public void Show()
         {
             _content.SetActive(true);
+            OnShow();
         }
+
+        // TODO: Rename method, I followed Unity's naming convention
+        protected virtual void OnShow() {}
 
         public void Hide()
         {
             _content.SetActive(false);
+            OnHide();
         }
+        
+        // TODO: Rename method, I followed Unity's naming convention
+        protected virtual void OnHide() {}
 
         /// <summary>
         /// Act as a factory method to create the state machine for each panel.

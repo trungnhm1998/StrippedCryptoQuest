@@ -7,7 +7,6 @@ namespace CryptoQuest.UI.Menu.Panels.Item
     public class UIInventoryTabHeader : MonoBehaviour
     {
         public event Action<UsableTypeSO> OpeningTab;
-        [SerializeField] private UIInventoryTabButton _defaultSelectedTabButton;
         [SerializeField] private UIInventoryTabButton[] _tabButtons;
 
         /// <summary>
@@ -15,8 +14,6 @@ namespace CryptoQuest.UI.Menu.Panels.Item
         /// </summary>
         private void OnEnable()
         {
-            OpenTab(_defaultSelectedTabButton.ConsumableType);
-
             foreach (var tabButton in _tabButtons)
             {
                 tabButton.Clicked += OpenTab;
