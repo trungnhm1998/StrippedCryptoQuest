@@ -18,14 +18,37 @@ namespace CryptoQuest.UI.Menu.Panels.Item
         [SerializeField] private UIConsumables[] _itemLists;
         [SerializeField] private LocalizeStringEvent _localizeDescription;
 
-        private Dictionary<UsableTypeSO, UIConsumables> _itemListCache = new();
+        private readonly Dictionary<UsableTypeSO, int> _itemListCache = new();
         private UIConsumables _currentConsumables;
+
+        private int CurrentTabIndex
+        {
+            get => _currentTabIndex;
+            set
+            {
+                if (value < 0)
+                {
+                    _currentTabIndex = _itemLists.Length - 1;
+                }
+                else if (value >= _itemLists.Length)
+                {
+                    _currentTabIndex = 0;
+                }
+                else
+                {
+                    _currentTabIndex = value;
+                }
+            }
+        }
+
+        private int _currentTabIndex;
 
         private void Awake()
         {
-            foreach (var itemList in _itemLists)
+            for (var index = 0; index < _itemLists.Length; index++)
             {
-                _itemListCache.Add(itemList.Type, itemList);
+                var itemList = _itemLists[index];
+                _itemListCache.Add(itemList.Type, index);
             }
         }
 
@@ -61,9 +84,23 @@ namespace CryptoQuest.UI.Menu.Panels.Item
 
         private void ShowItemsWithType(UsableTypeSO itemType)
         {
+            var index = _itemListCache[itemType];
+            ShowItemsWithType(index);
+        }
+
+        private void ShowItemsWithType(int tabIndex)
+        {
             if (_currentConsumables) _currentConsumables.Hide();
-            _currentConsumables = _itemListCache[itemType];
+            CurrentTabIndex = tabIndex;
+            _inventoryTabHeader.HighlightTab(_itemLists[tabIndex].Type);
+            _currentConsumables = _itemLists[tabIndex];
             _currentConsumables.Show();
+        }
+
+        public void ChangeTab(float direction)
+        {
+            CurrentTabIndex += (int)direction;
+            ShowItemsWithType(CurrentTabIndex);
         }
     }
 }

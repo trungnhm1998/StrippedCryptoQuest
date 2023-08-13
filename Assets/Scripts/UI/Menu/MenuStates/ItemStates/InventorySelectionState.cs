@@ -4,10 +4,7 @@ namespace CryptoQuest.UI.Menu.MenuStates.ItemStates
 {
     public class InventorySelectionState : ItemStateBase
     {
-
-        public InventorySelectionState(UIConsumableMenuPanel consumablePanel) : base(consumablePanel)
-        {
-        }
+        public InventorySelectionState(UIConsumableMenuPanel consumablePanel) : base(consumablePanel) { }
 
         public override void OnEnter()
         {
@@ -32,6 +29,11 @@ namespace CryptoQuest.UI.Menu.MenuStates.ItemStates
             base.OnExit();
             // _overview.InventorySelected -= ViewItems;
             // _overview.DeInit();
+        }
+
+        public override void ChangeTab(float direction)
+        {
+            ConsumablePanel.ChangeTab(direction);
         }
 
         private void ViewItems()

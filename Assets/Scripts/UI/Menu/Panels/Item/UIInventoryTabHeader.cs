@@ -32,14 +32,19 @@ namespace CryptoQuest.UI.Menu.Panels.Item
 
         private void OpenTab(UsableTypeSO consumableType)
         {
+            HighlightTab(consumableType);
+            OpeningTab?.Invoke(consumableType);
+        }
+        
+        public void HighlightTab(UsableTypeSO type)
+        {
             foreach (var tabButton in _tabButtons)
             {
-                if (tabButton.ConsumableType != consumableType)
+                if (tabButton.ConsumableType != type)
                     tabButton.UnHighlight();
                 else
-                    tabButton.Highlight(); // a little bit redundant
+                    tabButton.Highlight();
             }
-            OpeningTab?.Invoke(consumableType);
         }
     }
 }
