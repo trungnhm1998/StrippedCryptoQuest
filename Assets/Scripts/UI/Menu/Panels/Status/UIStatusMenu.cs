@@ -15,7 +15,7 @@ namespace CryptoQuest.UI.Menu.Panels.Status
         public UIStatusMenuEquipment EquipmentOverviewPanel => _equipmentOverviewPanel;
         [field: SerializeField] public UIStatusInventory InventoryPanel { get; private set; }
 
-        public UIEquipmentSlotButton.EEquipmentType EquippingType { get; set; }
+        public EquipmentFilters EquippingType { get; set; }
 
 
         /// <summary>

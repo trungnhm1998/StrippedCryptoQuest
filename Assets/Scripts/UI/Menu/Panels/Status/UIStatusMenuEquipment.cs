@@ -8,7 +8,7 @@ namespace CryptoQuest.UI.Menu.Panels.Status
 {
     public class UIStatusMenuEquipment : MonoBehaviour
     {
-        public event Action<UIEquipmentSlotButton.EEquipmentType> EquipmentSlotSelected;
+        public event Action<EquipmentFilters> EquipmentSlotSelected;
 
         [Header("Game Components")]
         [SerializeField] private List<UIEquipmentSlotButton> _equipmentSlots;
@@ -31,9 +31,9 @@ namespace CryptoQuest.UI.Menu.Panels.Status
             }
         }
 
-        private void EquipmentSlotPressed(UIEquipmentSlotButton.EEquipmentType equipmentType)
+        private void EquipmentSlotPressed(EquipmentFilters filters)
         {
-            EquipmentSlotSelected?.Invoke(equipmentType);
+            EquipmentSlotSelected?.Invoke(filters);
             DisableAllButtons();
         }
 

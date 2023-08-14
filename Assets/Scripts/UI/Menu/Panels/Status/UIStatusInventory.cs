@@ -1,10 +1,14 @@
 using System;
 using System.Collections.Generic;
+using CryptoQuest.Gameplay.Inventory;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
+using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item;
+using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Type;
 using CryptoQuest.Input;
 using CryptoQuest.Menu;
 using PolyAndCode.UI;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.Serialization;
@@ -16,7 +20,6 @@ namespace CryptoQuest.UI.Menu.Panels.Status
     {
         [Header("Configs")]
         [SerializeField] private RecyclableScrollRect _scrollRect;
-
         [SerializeField] private InputMediatorSO _inputMediator;
         [SerializeField] private InventorySO _inventorySO;
 
@@ -33,6 +36,7 @@ namespace CryptoQuest.UI.Menu.Panels.Status
         private float _lowerBound;
         private float _upperBound;
 
+        private List<EquipmentInfo> _equipments;
         private void Awake()
         {
             _verticalOffset = _singleItemRect.rect.height;
@@ -41,6 +45,10 @@ namespace CryptoQuest.UI.Menu.Panels.Status
             var rect = _inventoryViewport.rect;
             _lowerBound = position.y - rect.height / 2;
             _upperBound = position.y + rect.height / 2 + _verticalOffset;
+            if (!_inventorySO.GetEquipmentByType(EEquipmentCategory.Weapon, out _equipments))
+            {
+                Debug.LogWarning("Failed to get equipments");
+            }
         }
 
         private void OnEnable()
@@ -75,8 +83,6 @@ namespace CryptoQuest.UI.Menu.Panels.Status
             {
                 _scrollRect.content.anchoredPosition += Vector2.down * _verticalOffset;
             }
-
-            AlignItemRow(selectedRowPositionY, _lowerBound);
         }
 
         private void AlignItemRow(float selectedRowPositionY, float lowerBound)
@@ -88,7 +94,7 @@ namespace CryptoQuest.UI.Menu.Panels.Status
             }
         }
 
-        public void Show(UIEquipmentSlotButton.EEquipmentType statusPanelEquippingType)
+        public void Show(EquipmentFilters filters)
         {
             _contents.SetActive(true);
             _unEquipButton.Select();
@@ -96,14 +102,15 @@ namespace CryptoQuest.UI.Menu.Panels.Status
             // only init after get data
             if (!_initialized)
             {
-                _initialized = true;
                 _scrollRect.Initialize(this);
+                _initialized = true;
             }
         }
 
         public void Hide()
         {
             _contents.SetActive(false);
+            UITooltip.HideTooltipEvent?.Invoke();
         }
 
         #region PLUGINS
@@ -114,7 +121,7 @@ namespace CryptoQuest.UI.Menu.Panels.Status
         /// <returns>Real data count</returns>
         public int GetItemCount()
         {
-            return _inventorySO.CountEquipmentInSlot();
+            return _equipments.Count;
         }
 
         /// <summary>
@@ -125,7 +132,7 @@ namespace CryptoQuest.UI.Menu.Panels.Status
         public void SetCell(ICell cell, int index)
         {
             UIStatusInventoryItemButton itemButtonRow = cell as UIStatusInventoryItemButton;
-            // itemButtonRow.Init(_inventorySO.Equipments[index], index);
+            itemButtonRow.Init(_equipments[index], index);
         }
 
         #endregion

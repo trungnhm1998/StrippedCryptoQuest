@@ -37,7 +37,7 @@ namespace CryptoQuest.UI.Menu.MenuStates.StatusStates
             _equipmentOverviewPanel.EquipmentSlotSelected -= ChangeEquipment;
         }
 
-        private void ChangeEquipment(UIEquipmentSlotButton.EEquipmentType type)
+        private void ChangeEquipment(EquipmentFilters type)
         {
             StatusPanel.EquippingType = type;
             MenuStateMachine.RequestStateChange(StatusMenuStateMachine.EquipmentSelection);
