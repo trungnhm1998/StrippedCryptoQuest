@@ -1,4 +1,5 @@
 ﻿using CryptoQuest.UI.Menu.Panels.Option;
+using FSM;
 using UnityEngine;
 
 namespace CryptoQuest.UI.Menu.MenuStates.OptionStates
@@ -7,6 +8,7 @@ namespace CryptoQuest.UI.Menu.MenuStates.OptionStates
     {
         public static readonly string NavOption = "NavOption";
         public static readonly string Option = "Option";
+        public static readonly string Language = "Language";
 
         /// <summary>
         /// Setup the state machine for option menu.
@@ -15,10 +17,11 @@ namespace CryptoQuest.UI.Menu.MenuStates.OptionStates
         public OptionMenuStateMachine(UIOptionMenu panel) : base(panel)
         {
             // Could create a factory here if new keyword becomes a problem.
-            AddState(NavOption, new GenericUnfocusState(Option));
+            AddState(NavOption, new GenericUnfocusState(Language));
             AddState(Option, new FocusOptionState(panel));
+            AddState(Language, new LanguageState(panel));
 
-            SetStartState(Option);
+            SetStartState(Language);
         }
     }
 }

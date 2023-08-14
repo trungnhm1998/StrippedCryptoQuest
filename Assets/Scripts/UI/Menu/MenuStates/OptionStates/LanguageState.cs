@@ -1,17 +1,24 @@
-﻿using CryptoQuest.UI.Menu.Panels.Option;
+﻿using CryptoQuest.System.Settings;
+using CryptoQuest.UI.Menu.Panels.Option;
 using UnityEngine;
 
 namespace CryptoQuest.UI.Menu.MenuStates.OptionStates
 {
-    public class FocusOptionState : OptionStateBase
+    public class LanguageState : OptionStateBase
     {
-        public FocusOptionState(UIOptionMenu panel) : base(panel) { }
+        private LanguageController _uiLanguageOverviewPanel;
+
+        public LanguageState(UIOptionMenu optionPanel) : base(optionPanel)
+        {
+            _uiLanguageOverviewPanel = optionPanel.LanguageController;
+        }
 
         public override void OnEnter()
         {
             base.OnEnter();
             NavigationBar.SetActive(false);
             NavigationBar.HighlightHeader(OptionPanel.TypeSO);
+            _uiLanguageOverviewPanel.Initialize();
         }
 
         public override void HandleCancel()
@@ -19,13 +26,14 @@ namespace CryptoQuest.UI.Menu.MenuStates.OptionStates
             base.HandleCancel();
             NavigationBar.SetActive(true);
             NavigationBar.HighlightHeader(OptionPanel.TypeSO, true);
+            _uiLanguageOverviewPanel.DeInitialize();
             MenuStateMachine.RequestStateChange(OptionMenuStateMachine.NavOption);
         }
 
-        public override void Interact()
+        public override void OnExit()
         {
-            base.Interact();
-            MenuStateMachine.RequestStateChange(OptionMenuStateMachine.Language);
+            base.OnExit();
+            _uiLanguageOverviewPanel.DeInitialize();
         }
     }
 }
