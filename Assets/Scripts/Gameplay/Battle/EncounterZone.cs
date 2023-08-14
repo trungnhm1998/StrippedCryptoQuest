@@ -20,7 +20,6 @@ namespace CryptoQuest.Gameplay.Battle
         [SerializeField, ReadOnly] private string _playerTag = "Player";
 
         [SerializeField] private float _customRatio = 1.7f;
-        [SerializeField] private InputMediatorSO _inputMediatorSO;
         [SerializeField] private BoxCollider2D _collider;
         private Vector2 _playerPosition;
         private float _countdown;
@@ -48,7 +47,6 @@ namespace CryptoQuest.Gameplay.Battle
 
         private void OnCountdownEnd()
         {
-            _inputMediatorSO.DisableAllInput();
             BattleDataSO currentBattData = _battleField.GetBattleToInit();
             BattleInfo currentBattleInfo =
                 new(currentBattData, _battleField.IsBattleEscapable, _battleField.BattleBackground);
