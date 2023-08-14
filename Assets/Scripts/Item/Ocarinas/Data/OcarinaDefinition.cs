@@ -8,7 +8,7 @@ using UnityEngine.Localization;
 namespace CryptoQuest.Item.Ocarinas.Data
 {
     [CreateAssetMenu(menuName = "Crypto Quest/Item/Ocarina Data SO")]
-    public class OcarinaLocations : ScriptableObject
+    public class OcarinaDefinition : ScriptableObject
     {
         [Serializable]
         public class Location

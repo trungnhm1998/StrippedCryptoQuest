@@ -1,4 +1,5 @@
 using System;
+using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.ActionTypes;
 using IndiGames.GameplayAbilitySystem.AbilitySystem;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
 using UnityEngine;
@@ -17,7 +18,7 @@ namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item
         public Sprite Icon => Item.Image;
         public LocalizedString DisplayName => Item.DisplayName;
         public LocalizedString Description => Item.Description;
-
+        
         public UsableInfo(UsableSO baseItemSO, int quantity = 0) : base(baseItemSO)
         {
             Item = baseItemSO;
@@ -51,5 +52,10 @@ namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item
         }
 
         public void UseItem() => Activate();
+
+        public void Use()
+        {
+            Item.Action.Execute();
+        }
     }
 }

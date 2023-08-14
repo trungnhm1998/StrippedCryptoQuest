@@ -7,7 +7,7 @@ namespace CryptoQuest.EditorTool
 {
     public class OcarinaEditorCheat : MonoBehaviour
     {
-        [SerializeField] private OcarinaLocations _ocarinaData;
+        [SerializeField] private OcarinaDefinition _ocarinaData;
         [SerializeField] private MapPathEventChannelSO _destinationSelectedEvent;
         [SerializeField] private VoidEventChannelSO _destinationConfirmEvent;
         [SerializeField] private float _guiWidth = 400;

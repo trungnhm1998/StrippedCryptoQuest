@@ -1,4 +1,5 @@
-﻿using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item;
+﻿using System;
+using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item;
 using CryptoQuest.Menu;
 using PolyAndCode.UI;
 using UnityEngine;
@@ -9,6 +10,7 @@ namespace CryptoQuest.UI.Menu.Panels.Item
 {
     public class UIConsumableItem : MonoBehaviour, ICell
     {
+        public static event Action<UsableInfo> Using;
         public delegate void InspectingItem(UIConsumableItem item);
 
         public event InspectingItem Inspecting;
@@ -22,14 +24,21 @@ namespace CryptoQuest.UI.Menu.Panels.Item
 
         private void OnEnable()
         {
+            _button.onClick.AddListener(Use);
             _button.Selected += OnInspectingItem;
             _button.Deselected += DeselectButton;
         }
 
         private void OnDisable()
         {
+            _button.onClick.RemoveListener(Use);
             _button.Selected -= OnInspectingItem;
             _button.Deselected -= DeselectButton;
+        }
+
+        private void Use()
+        {
+            Using?.Invoke(_itemDef);
         }
 
         public void Deselect()

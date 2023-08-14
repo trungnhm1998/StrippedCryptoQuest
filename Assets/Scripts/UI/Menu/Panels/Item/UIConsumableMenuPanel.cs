@@ -1,8 +1,8 @@
-using System;
 using System.Collections.Generic;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Type;
 using CryptoQuest.UI.Menu.MenuStates.ItemStates;
+using CryptoQuest.UI.Menu.Panels.Item.Ocarina;
 using FSM;
 using UnityEngine;
 using UnityEngine.Localization.Components;
@@ -18,6 +18,7 @@ namespace CryptoQuest.UI.Menu.Panels.Item
         [SerializeField] private UIInventoryTabHeader _inventoryTabHeader;
         [SerializeField] private UIConsumables[] _itemLists;
         [SerializeField] private LocalizeStringEvent _localizeDescription;
+        [field: SerializeField] public UIOcarinaPresenter OcarinaPanel { get; set; } // TODO: Violate OCP
 
         private readonly Dictionary<UsableTypeSO, int> _itemListCache = new();
         private UIConsumables _currentConsumables;
@@ -42,6 +43,7 @@ namespace CryptoQuest.UI.Menu.Panels.Item
             }
         }
 
+
         private int _currentTabIndex;
 
         private void Awake()
@@ -53,6 +55,9 @@ namespace CryptoQuest.UI.Menu.Panels.Item
             }
         }
 
+
+        public ItemMenuStateMachine StateMachine { get; set; }
+
         /// <summary>
         /// Return the specific state machine for this panel.
         /// </summary>
@@ -62,7 +67,7 @@ namespace CryptoQuest.UI.Menu.Panels.Item
         /// from <see cref="StateMachine"/> which also derived from <see cref="StateBase"/></returns>
         public override StateBase<string> GetPanelState(MenuManager menuManager)
         {
-            return new ItemMenuStateMachine(this);
+            return StateMachine ??= new ItemMenuStateMachine(this);
         }
 
         private void Start()
@@ -72,6 +77,8 @@ namespace CryptoQuest.UI.Menu.Panels.Item
             {
                 itemList.Inspecting += InspectingItem;
             }
+
+            UIConsumableItem.Using += UseItem;
         }
 
         private bool _previouslyHidden = true;
@@ -102,6 +109,13 @@ namespace CryptoQuest.UI.Menu.Panels.Item
             {
                 itemList.Inspecting -= InspectingItem;
             }
+
+            UIConsumableItem.Using -= UseItem;
+        }
+
+        private void UseItem(UsableInfo consumable)
+        {
+            consumable.Use();
         }
 
         private void InspectingItem(UsableInfo item)
