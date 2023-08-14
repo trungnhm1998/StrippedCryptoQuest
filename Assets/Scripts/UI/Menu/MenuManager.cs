@@ -2,6 +2,7 @@ using System;
 using CryptoQuest.Input;
 using CryptoQuest.UI.Menu.MenuStates;
 using CryptoQuest.UI.Menu.Panels;
+using CryptoQuest.UI.Menu.Panels.Status;
 using CryptoQuest.UI.Menu.ScriptableObjects;
 using IndiGames.Core.Events.ScriptableObjects;
 using UnityEngine;
@@ -24,6 +25,7 @@ namespace CryptoQuest.UI.Menu
         [SerializeField] private GameObject _panelsContainer;
 
         private MainMenuStateMachine _mainMenuFsm;
+        public MainMenuStateMachine MainMenuFsm => _mainMenuFsm;
 
         private void Awake()
         {
@@ -36,7 +38,7 @@ namespace CryptoQuest.UI.Menu
         /// UIMenuPanel needs to implement and return correct state machine.
         ///
         /// State machine will be init when the main menu first open at <see cref="ShowMainMenu"/>.
-        /// <seealso cref="CryptoQuest.UI.Menu.Panels.Status.UIStatusMenu.GetPanelState"/>
+        /// <seealso cref="UIStatusMenu.GetPanelState"/>
         /// </summary>
         private void SetupMenuStateMachines()
         {
