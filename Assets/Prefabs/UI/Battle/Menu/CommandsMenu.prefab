@@ -310,7 +310,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 1
-  IsSelected: 1
 --- !u!1 &2882043419698145498
 GameObject:
   m_ObjectHideFlags: 0
@@ -445,7 +444,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 1
-  IsSelected: 1
 --- !u!1 &3055574339688182136
 GameObject:
   m_ObjectHideFlags: 0
@@ -592,7 +590,6 @@ GameObject:
   - component: {fileID: 1131790544031150172}
   - component: {fileID: 1290749923804222790}
   - component: {fileID: 8692447915437195413}
-  - component: {fileID: 8938372110071361450}
   - component: {fileID: 7570413273424099088}
   m_Layer: 0
   m_Name: Attack Button
@@ -660,18 +657,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 0.4
---- !u!114 &8938372110071361450
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3116533770531176751}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 74d666a152116fd42bd93830e1978e71, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &7570413273424099088
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -728,7 +713,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 1
-  IsSelected: 0
 --- !u!1 &3370744539360074230
 GameObject:
   m_ObjectHideFlags: 0
@@ -863,7 +847,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 1
-  IsSelected: 1
 --- !u!1 &3498974251917641777
 GameObject:
   m_ObjectHideFlags: 0
@@ -1112,6 +1095,7 @@ GameObject:
   - component: {fileID: 5950388133210088121}
   - component: {fileID: 490102877632347429}
   - component: {fileID: 6744096226400759985}
+  - component: {fileID: 6832411501745761114}
   m_Layer: 0
   m_Name: CommandsMenu
   m_TagString: Untagged
@@ -1194,23 +1178,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _battlePanelController: {fileID: 0}
+  _childButonsActivator: {fileID: 6832411501745761114}
   _heroTurnEventChannel: {fileID: 11400000, guid: 4522380f7b12a9f48a3a14b2ddb652b7, type: 2}
   _currentUnitName: {fileID: 307844353719758422}
   _firstButton: {fileID: 7570413273424099088}
-  _allButtons:
-  - {fileID: 7570413273424099088}
-  - {fileID: 5121785347240370423}
-  - {fileID: 3379886514693606238}
-  - {fileID: 6514335382208022475}
-  - {fileID: 4441944864693008869}
-  _allButtonTexts:
-  - {fileID: 9067596742981051458}
-  - {fileID: 8077292186654307700}
-  - {fileID: 9016168516451480914}
-  - {fileID: 837925529189884522}
-  - {fileID: 2985944849982435294}
-  _activeColor: {r: 1, g: 1, b: 1, a: 1}
-  _inactiveColor: {r: 0.5019608, g: 0.5019608, b: 0.5019608, a: 1}
 --- !u!114 &6744096226400759985
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1227,6 +1198,20 @@ MonoBehaviour:
   _defaultSelection: {fileID: 0}
   _currentSelection: {fileID: 0}
   _mouseSelection: {fileID: 0}
+--- !u!114 &6832411501745761114
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4016686727580335480}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3df9b2bcd7b6c784b80d485a1c4dc974, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _activeColor: {r: 1, g: 1, b: 1, a: 0}
+  _inactiveColor: {r: 0.3773585, g: 0.3773585, b: 0.3773585, a: 0}
 --- !u!1 &4124627094007968546
 GameObject:
   m_ObjectHideFlags: 0
@@ -1280,7 +1265,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f88d46a7336342159dec8d51108b43d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _battleInput: {fileID: 11400000, guid: d0c44063c591fb8489bc8e1087c0999e, type: 2}
   _firstButton: {fileID: 1131790544031150172}
   _lastButton: {fileID: 242520718522791744}
   _arrowUpHint: {fileID: 3842447773176749576}
@@ -2284,7 +2268,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 1
-  IsSelected: 0
 --- !u!114 &6894763029054040028
 MonoBehaviour:
   m_ObjectHideFlags: 0

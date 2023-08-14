@@ -76,6 +76,7 @@ namespace CryptoQuest.UI.Dialogs.BattleDialog
 
         public override UIBattleDialog Close()
         {
+            _dialogText.text = "";
             gameObject.SetActive(false);
             Visible = false;
             return this;

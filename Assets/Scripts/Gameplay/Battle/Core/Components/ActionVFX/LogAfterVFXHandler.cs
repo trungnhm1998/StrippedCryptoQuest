@@ -62,6 +62,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components.ActionVFX
         private void OnShowBattleLogSuccess()
         {
             NextHandler?.Handle();
+            ShowBattleDialog = null;
             ShowBattleLogSuccessEventChannel.EventRaised -= OnShowBattleLogSuccess;
         }
     }

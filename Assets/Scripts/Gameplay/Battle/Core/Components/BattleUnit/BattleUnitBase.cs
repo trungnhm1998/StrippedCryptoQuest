@@ -135,6 +135,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit
         {
             UnitLogic.Reset();
             _isDoneShowAction = false;
+            _isPerformingAction = false;
         }
 
         private void OnHPChanged(AttributeScriptableObject.AttributeEventArgs args)

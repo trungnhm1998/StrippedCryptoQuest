@@ -32,7 +32,6 @@ namespace CryptoQuest.Gameplay.Battle
 
         [SerializeField] private LoadSceneEventChannelSO _loadSceneEventChannelSo;
 
-
         private void OnEnable()
         {
             _triggerBattleEncounterEventSo.EncounterBattle += OnEncounterBattle;

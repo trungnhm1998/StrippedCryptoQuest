@@ -23,6 +23,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components.BattleVFX
         private void OnDestroy()
         {
             CompleteVFX?.Invoke();
+            CompleteVFX = null;
         }
     }
 }
