@@ -27,7 +27,6 @@ namespace CryptoQuest.UI.Menu.MenuStates.StatusStates
         {
             base.OnExit();
             _inventoryPanel.Hide();
-            StatusPanel.EquippingType = UIEquipmentSlotButton.EEquipmentType.None;
         }
     }
 }

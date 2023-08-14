@@ -9,25 +9,11 @@ namespace CryptoQuest.UI.Menu.Panels.Status
     {
         [SerializeField] private GameObject _selectEffect;
 
-        public enum EEquipmentType
-        {
-            None = -1,
-            Weapon = 0,
-            Shield = 1,
-            Head = 2,
-            Body = 3,
-            Leg = 4,
-            Foot = 5,
-            Accessory1 = 6,
-            Accessory2 = 7,
-        }
-
-        public event UnityAction<EEquipmentType> Pressed;
-        [SerializeField] private EEquipmentType _equipmentType;
+        public event UnityAction<EquipmentFilters> Pressed;
 
         public void OnPressed()
         {
-            Pressed?.Invoke(_equipmentType);
+            Pressed?.Invoke(GetComponent<EquipmentFilters>());
         }
 
         public override void OnSelect(BaseEventData eventData)

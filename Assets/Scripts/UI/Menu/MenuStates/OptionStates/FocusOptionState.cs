@@ -1,4 +1,5 @@
 ﻿using CryptoQuest.UI.Menu.Panels.Option;
+using UnityEngine;
 
 namespace CryptoQuest.UI.Menu.MenuStates.OptionStates
 {
@@ -24,7 +25,7 @@ namespace CryptoQuest.UI.Menu.MenuStates.OptionStates
         public override void Interact()
         {
             base.Interact();
-            MenuStateMachine.RequestStateChange(OptionMenuStateMachine.Option);
+            MenuStateMachine.RequestStateChange(OptionMenuStateMachine.Language);
         }
     }
 }

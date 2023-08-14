@@ -327,6 +327,12 @@ namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects
             return index;
         }
 
+        /// <summary>
+        /// Get the up to date equipments in inventory using their category <see cref="EEquipmentCategory"/> and <see cref="EquipmentTypeSO"/>
+        /// </summary>
+        /// <param name="equipmentCategory">type of equipments</param>
+        /// <param name="equipments">list of <see cref="EquipmentInfo"/> that will be populated</param>
+        /// <returns>list of <see cref="EquipmentInfo"/> in inventory</returns>
         public bool GetEquipmentByType(EEquipmentCategory equipmentCategory, out List<EquipmentInfo> equipments)
         {
             equipments = new();

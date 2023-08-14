@@ -78,6 +78,8 @@ namespace CryptoQuest.UI.Battle.CommandsMenu
         {
             _setSkillCallback = setSkillCallback;
             _ability = ability;
+            if (!(_ability.AbilitySO is AbilitySO cqAbility)) return;
+            Value = $"{cqAbility.SkillInfo.Cost.ToString()}";
         }
 
         public override void OnHandleClick()
@@ -97,11 +99,12 @@ namespace CryptoQuest.UI.Battle.CommandsMenu
         private Action<UsableSO> _setItemCallback;
 
         public ExpendableItemAbstractButtonInfo(Action<UsableSO> setItemCallback,
-            UsableSO item)
-            : base(item.DisplayName.GetLocalizedString())
+            UsableInfo itemInfo)
+            : base(itemInfo.Item.DisplayName.GetLocalizedString())
         {
             _setItemCallback = setItemCallback;
-            _item = item;
+            _item = itemInfo.Item;
+            Value = $"x{itemInfo.Quantity.ToString()}";
         }
 
         public override void OnHandleClick()

@@ -16,6 +16,7 @@ namespace CryptoQuest.UI.Battle.CharacterInfo
         private const float INIT_Z_OFFSET = 100f;
         [SerializeField] private float _waitTimeBeforeFadeOut = 1f;
         [SerializeField] private float _fadeOutDuration = 1f;
+        [SerializeField] private float _blinkingInterval = 0.2f;
         public SkeletonAnimation SpineAnimation { get; set; }
         private Sequence _sequence;
         private string sequenceId = "FadeSkeleton";
@@ -86,13 +87,14 @@ namespace CryptoQuest.UI.Battle.CharacterInfo
         {
             _sequence = DOTween.Sequence();
             _sequence
-                .Append(FadeSkeleton(0, 0.2f))
-                .Append(FadeSkeleton(1, 0.2f))
-                .Append(FadeSkeleton(0, 0.2f))
-                .Append(FadeSkeleton(1, 0.2f))
+                .Append(FadeSkeleton(0, _blinkingInterval))
+                .Append(FadeSkeleton(1, _blinkingInterval))
+                .Append(FadeSkeleton(0, _blinkingInterval))
+                .Append(FadeSkeleton(1, _blinkingInterval))
                 .OnComplete(() => action?.Invoke());
         }
 
         protected override void OnSelected(string name) { }
+        public override void SetSelectActive(bool value) { }
     }
 }

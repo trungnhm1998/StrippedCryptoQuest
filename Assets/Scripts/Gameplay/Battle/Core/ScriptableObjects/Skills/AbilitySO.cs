@@ -38,6 +38,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Skills
         public override void ActivateAbility()
         {
             if (!CanActiveAbility()) return;
+            _unit ??= Owner.GetComponent<IBattleUnit>();
 
             Owner.AttributeSystem.GetAttributeValue(AbilitySO.CostSpecSO, out var ownerCostSpec);
             if (!IsValidCost(ownerCostSpec)) return;
@@ -48,17 +49,9 @@ namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Skills
             Owner.TagSystem.AddTags(AbilitySO.Tags.ActivationTags);
         }
 
-
-        public override void OnAbilityGranted(AbstractAbility skillSpec)
-        {
-            base.OnAbilityGranted(skillSpec);
-            _unit = Owner.GetComponent<IBattleUnit>();
-        }
-
         protected override IEnumerator InternalActiveAbility()
         {
-            if (_unit.UnitLogic != null)
-                OnSkillActivatePromt();
+            OnSkillActivatePromt();
             yield return base.InternalActiveAbility();
         }
 
@@ -73,7 +66,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Skills
         protected virtual void OnSkillActivatePromt()
         {
             var actionData = AbilitySO.ActionDataSO;
-            if (actionData == null || _unit == null) return;
+            if (actionData == null || _unit == null || _unit.UnitLogic == null) return;
 
             actionData.Init(_unit.UnitLogic.TargetContainer[0]);
             actionData.AddStringVar(UNIT_NAME_VARIABLE, _unit.UnitInfo.DisplayName);

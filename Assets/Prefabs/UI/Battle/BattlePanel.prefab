@@ -33,7 +33,7 @@ RectTransform:
   - {fileID: 6247151847086040197}
   - {fileID: 2935996222134803672}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -54,9 +54,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Inventory>k__BackingField: {fileID: 11400000, guid: 4b4903dbe1c434d418a3afff1b12a3ba, type: 2}
   <CharactersUI>k__BackingField: {fileID: 0}
+  <TagConfigSO>k__BackingField: {fileID: 11400000, guid: 1b25746ea962c1b4f84662c4f3e15d8e, type: 2}
   _normalAttackChain:
-  - {fileID: 6748428953625385978}
-  - {fileID: 7521519819756259973}
+  - {fileID: 0}
+  - {fileID: 0}
   _retreatHandler: {fileID: 2838816652936459941}
   _skillAttackChain: []
   _itemChain: []
@@ -276,6 +277,7 @@ PrefabInstance:
       objectReference: {fileID: 11400000, guid: 21ac4f77cf89fde4ca1f4069bbe611fe, type: 2}
     m_RemovedComponents:
     - {fileID: 6894763029054040028, guid: e7b8f3b6389f785448653d8fc0d33938, type: 3}
+    - {fileID: 8938372110071361450, guid: e7b8f3b6389f785448653d8fc0d33938, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
@@ -341,17 +343,6 @@ MonoBehaviour:
   _retreatAbilitySO: {fileID: 11400000, guid: a0f75fbf27be14140aa72678a173d481, type: 2}
   _targetedAttributeSO: {fileID: 11400000, guid: 6e9af3d88e4f52849b938dd384bd5e37, type: 2}
   _battlePanelController: {fileID: 5126377737464281300}
---- !u!114 &6748428953625385978 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8938372110071361450, guid: e7b8f3b6389f785448653d8fc0d33938, type: 3}
-  m_PrefabInstance: {fileID: 2426391760990286928}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 74d666a152116fd42bd93830e1978e71, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &8964772245371946081
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -480,7 +471,8 @@ PrefabInstance:
       propertyPath: _panelController
       value: 
       objectReference: {fileID: 5126377737464281300}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1443556173286264548, guid: 94df4701f86f583478d8aaa2f4668fe7, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
@@ -521,16 +513,5 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 65c51f537b9f4cf388ef3c9cfe6d16d7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &7521519819756259973 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1443556173286264548, guid: 94df4701f86f583478d8aaa2f4668fe7, type: 3}
-  m_PrefabInstance: {fileID: 8964772245371946081}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1132982188175499293}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: abcd615dd8ef4f1e86b8dc364f612bba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

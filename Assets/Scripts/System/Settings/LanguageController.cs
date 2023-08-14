@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -19,13 +20,22 @@ namespace CryptoQuest.System.Settings
         private void Start()
         {
             _initializeOperation = LocalizationSettings.SelectedLocaleAsync;
-
             _initializeOperation.Completed += InitializeCompleted;
         }
 
         private void OnDisable()
         {
             LocalizationSettings.SelectedLocaleChanged -= SelectedLocaleChanged;
+        }
+
+        public void Initialize()
+        {
+            _dropdown.Select();
+        }
+
+        public void DeInitialize()
+        {
+            _dropdown.Hide();
         }
 
         private void InitializeLanguage()

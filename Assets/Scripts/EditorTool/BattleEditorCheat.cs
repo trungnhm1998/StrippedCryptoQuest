@@ -10,12 +10,14 @@ using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Events;
 using UnityEngine.AddressableAssets;
 using CryptoQuest.Gameplay.Battle.Core.Components;
 using UnityEngine;
+using CryptoQuest.Gameplay.Battle;
 
 namespace CryptoQuest.EditorTool
 {
     public class BattleEditorCheat : MonoBehaviour
     {
         [SerializeField] private GameplayBus _gameplayBus;
+        [SerializeField] private BattleLoader _battleLoader;
         [SerializeField] private BattleDataSO[] _battleDataSOs;
         [SerializeField] private AssetReferenceT<Sprite> _defaultBackground;
 
@@ -98,11 +100,18 @@ namespace CryptoQuest.EditorTool
             GUILayout.BeginHorizontal("box", GUILayout.Width(_guiWidth));
             {
                 GUILayout.BeginVertical();
+                RenderDisableLoadBattle();
                 RenderBattleToLoad();
                 RenderPlayerParty();
                 GUILayout.EndVertical();
             }
             GUILayout.EndVertical();
+        }
+
+        private void RenderDisableLoadBattle()
+        {
+            _battleLoader.enabled =
+                GUILayout.Toggle(_battleLoader.enabled, "Disable Battle Loader", GUILayout.Width(_guiWidth));
         }
 
         private void RenderBattleToLoad()

@@ -134,5 +134,10 @@ namespace CryptoQuest.UI.Battle.CharacterInfo
         {
             _button.interactable = isActive;
         }
+
+        public override void SetSelectActive(bool value)
+        {
+            SetButtonActive(value);
+        }
     }
 }

@@ -1,4 +1,4 @@
-﻿using UnityEngine.EventSystems;
+﻿using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Skills;
 
 namespace CryptoQuest.UI.Battle.MenuStateMachine.States
 {
@@ -14,15 +14,24 @@ namespace CryptoQuest.UI.Battle.MenuStateMachine.States
         public override void OnEnter()
         {
             base.OnEnter();
-            //TODO: Refactor ability name later (item name for item and show display ability name)
-            _charactersUI.SetSelectedData(_currentUnit.UnitLogic.SelectedAbility.AbilitySO.name);
-            _charactersUI.SelectFirstHero();
+            
+            var selectedAbility = _currentUnit.UnitLogic.SelectedAbility;
+            var ability = selectedAbility.AbilitySO as AbilitySO;
+            var abilityName = ability.name;
+            if (ability != null)
+            {
+                abilityName = ability.SkillInfo.SkillName.GetLocalizedString();
+            }
+            _charactersUI.SetSelectActive(true);
+            _charactersUI.SetSelectedData(abilityName);
+            _charactersUI.SelectFirstCharacter();
 
             _battlePanelController.SetActiveCommandDetailButtons(false);
         }
 
         public override void OnExit()
         {
+            _charactersUI.SetSelectActive(false);
             _battlePanelController.SetActiveCommandDetailButtons(true);
             base.OnExit();
         }
