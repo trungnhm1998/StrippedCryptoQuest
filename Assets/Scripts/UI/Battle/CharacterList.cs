@@ -36,7 +36,15 @@ namespace CryptoQuest.UI.Battle
             }
         }
 
-        public void SelectFirstHero()
+        public virtual void SetSelectActive(bool value)
+        {
+            foreach (var characterInfo in _characterInfos)
+            {
+                characterInfo.SetSelectActive(value);
+            }
+        }
+
+        public void SelectFirstCharacter()
         {
             _characterInfos[0].GetComponent<Button>().Select();
         }

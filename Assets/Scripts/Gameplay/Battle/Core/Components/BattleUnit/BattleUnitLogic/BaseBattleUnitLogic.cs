@@ -107,9 +107,9 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit
         public virtual void PerformUnitAction()
         {
             //TODO: Apply abnormal status and check disable
-            //TODO: Activate before action abilities (for hero character)
-            _owner.TryActiveAbility(SelectedAbility);
-            //TODO: Activate after action abilities (for hero character)
+            // Change to this because system can use ability from item
+            // and _owner.TryActiveAbility can only activate skill inside system
+            SelectedAbility.ActivateAbility();
         }
 
         public virtual void ActivateAbilityWithTag(TagScriptableObject tag)

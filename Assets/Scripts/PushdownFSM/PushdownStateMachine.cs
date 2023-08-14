@@ -34,10 +34,7 @@ namespace CryptoQuest.PushdownFSM
         /// <param name="forceInstantly"></param>
         public void ResetToNewState(string stateName, bool forceInstantly = false)
         {
-            while (StateStack.Count > 0)
-            {
-                StateStack.Pop();
-            }            
+            StateStack.Clear();
             base.RequestStateChange(stateName, forceInstantly);
         }
     }

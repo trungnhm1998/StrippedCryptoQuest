@@ -34,6 +34,8 @@ namespace CryptoQuest.UI.Battle.CharacterInfo
             OnSelected(name);
         }
 
+        public abstract void SetSelectActive(bool value);
+
         protected abstract void Setup();
 
         protected abstract void OnHPChanged(AttributeScriptableObject.AttributeEventArgs args);

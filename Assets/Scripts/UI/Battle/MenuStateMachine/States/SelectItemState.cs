@@ -33,9 +33,11 @@ namespace CryptoQuest.UI.Battle.MenuStateMachine.States
 
         private void SetExpendableItemAbility(UsableSO itemSo)
         {
+            // System shouln't have item's ability because 
+            // if item is used system dont have that ability any more
             var ability = itemSo.Ability.GetAbilitySpec(_currentUnit.Owner);
             _currentUnit.SelectAbility(ability);
-            _battlePanelController.CloseCommandDetailPanel();
+            HandleTarget();
         }
     }
 }

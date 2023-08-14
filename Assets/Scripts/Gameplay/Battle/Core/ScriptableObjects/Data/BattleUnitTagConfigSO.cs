@@ -20,6 +20,10 @@ namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data
         [Tooltip("Unit will activate abilities with this tag after action")]
         [field: SerializeField]
         public TagScriptableObject AfterActionTag { get; private set; }
+        
+        [Tooltip("Ability with these will be hiden in skill panel")]
+        [field: SerializeField]
+        public TagScriptableObject[] NotActivableSkillTags { get; private set; }
 
         public bool CheckUnitDisableWithTag(TagScriptableObject tagToCheck)
         {
@@ -37,6 +41,20 @@ namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data
                 if (CheckUnitDisableWithTag(tag)) return true;    
             }
 
+            return false;
+        }
+
+        /// <summary>
+        /// Some skill are auto activate
+        /// </summary>
+        /// <param name="tagToCheck"></param>
+        /// <returns></returns>
+        public bool CheckNotActivableSkillTag(TagScriptableObject tagToCheck)
+        {
+            for (var i = 0; i < NotActivableSkillTags.Length; i++)
+            {
+                if (NotActivableSkillTags[i] == tagToCheck) return true;
+            }
             return false;
         }
     }

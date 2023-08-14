@@ -12,7 +12,9 @@ namespace CryptoQuest.UI.Battle.MenuStateMachine.States
         {
             foreach (var abstractAbility in _currentUnit.Owner.GrantedAbilities.Abilities)
             {
-                if (abstractAbility.AbilitySO is not AbilitySO) continue;
+                var abilitySO = abstractAbility.AbilitySO;
+                var isAtivableSkill = _battlePanelController.TagConfigSO.CheckNotActivableSkillTag(abilitySO.Tags.AbilityTag);
+                if (abilitySO is not AbilitySO || isAtivableSkill) continue;
 
                 var buttonInfo = new AbilityAbstractButtonInfo(SetAbility, abstractAbility);
                 _buttonInfos.Add(buttonInfo);
@@ -22,7 +24,7 @@ namespace CryptoQuest.UI.Battle.MenuStateMachine.States
         private void SetAbility(AbstractAbility ability)
         {
             _currentUnit.SelectAbility(ability);
-            _battlePanelController.CloseCommandDetailPanel();
+            HandleTarget();
         }
     }
 }

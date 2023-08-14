@@ -9,6 +9,7 @@ using UnityEngine;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
 using UnityEngine.Events;
 using CryptoQuest.UI.Battle.MenuStateMachine;
+using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data;
 
 namespace CryptoQuest.UI.Battle
 {
@@ -23,11 +24,9 @@ namespace CryptoQuest.UI.Battle
 
         [field: SerializeField] public InventorySO Inventory { get; private set; }
         [field: SerializeField] public CharacterList CharactersUI { get; private set; }
+        [field: SerializeField] public BattleUnitTagConfigSO TagConfigSO { get; private set; }
 
-        [SerializeField] private BattleActionHandler.BattleActionHandler[] _normalAttackChain;
         [SerializeField] private BattleActionHandler.BattleActionHandler _retreatHandler;
-        [SerializeField] private BattleActionHandler.BattleActionHandler[] _skillAttackChain;
-        [SerializeField] private BattleActionHandler.BattleActionHandler[] _itemChain;
 
         [SerializeField] private BattleInputSO _battleInput;
         [SerializeField] private BattleBus _battleBus;
@@ -59,13 +58,6 @@ namespace CryptoQuest.UI.Battle
         public void SetActiveCommandDetailButtons(bool isActive)
         {
             _commandPanel.SetActiveButtons(isActive);
-        }
-
-        private void Awake()
-        {
-            SetupChain(_normalAttackChain);
-            SetupChain(_skillAttackChain);
-            SetupChain(_itemChain);
         }
 
         private void OnEnable()
@@ -138,14 +130,12 @@ namespace CryptoQuest.UI.Battle
 
         private void OnButtonItemClickedHandler(IBattleUnit currentUnit)
         {
-            _commandPanel.Clear();
-            _itemChain[0].Handle(currentUnit);
+            BattleMenuFSM.RequestStateChange(BattleMenuStateMachine.SelectItemState);
         }
 
         private void OnButtonSkillClickedHandler(IBattleUnit currentUnit)
         {
-            _commandPanel.Clear();
-            _skillAttackChain[0].Handle(currentUnit);
+            BattleMenuFSM.RequestStateChange(BattleMenuStateMachine.SelectSkillState);
         }
 
         private void OnButtonAttackClickedHandler(IBattleUnit currentUnit)

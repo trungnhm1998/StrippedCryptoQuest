@@ -2,47 +2,26 @@ using System.Collections.Generic;
 using CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit;
 using CryptoQuest.UI.Battle;
 using CryptoQuest.UI.Battle.CommandsMenu;
+using CryptoQuest.UI.Battle.MenuStateMachine;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
 
 namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data.Targets
 {
     public class EnemyGroupTargetTypeSO : BattleTargetTypeSO
     {
-        public override BattleTargetType GetTargetType(IBattleUnit unit, BattlePanelController battlePanelController,
-            CharacterList characterList) => new EnemyGroupTargetType(unit, battlePanelController, characterList);
+        public override BattleTargetType GetTargetType(IBattleUnit unit, BattlePanelController battlePanelController)
+            => new EnemyGroupTargetType(unit, battlePanelController);
     }
 
     public class EnemyGroupTargetType : BattleTargetType
     {
 
-        public EnemyGroupTargetType(IBattleUnit unit, BattlePanelController battlePanelController,
-            CharacterList characterList) : base(unit, battlePanelController, characterList) { }
+        public EnemyGroupTargetType(IBattleUnit unit, BattlePanelController battlePanelController)
+            : base(unit, battlePanelController) { }
 
         public override void HandleTargets()
         {
-            List<AbstractButtonInfo> abstractButtonInfos = new();
-            var groupUnits = _unit.OpponentTeam.TeamGroups.UnitsDict;
-            for (int i = 0; i < groupUnits.Count; i++)
-            {
-                CharacterDataSO characterDataSo = groupUnits[i][0].UnitData;
-                var buttonInfo =
-                    new EnemyGroupButtonInfo(characterDataSo, groupUnits[i].Count, true, i, HandleGroupSelection);
-                abstractButtonInfos.Add(buttonInfo);
-            }
-
-            _battlePanelController.OpenCommandDetailPanel(abstractButtonInfos);
-        }
-
-        public void HandleGroupSelection(int index)
-        {
-            var selectedGroupUnits = _unit.OpponentTeam.TeamGroups.UnitsDict[index];
-            List<AbilitySystemBehaviour> targetsSystemBehaviours = new();
-            foreach (var selectedUnit in selectedGroupUnits)
-            {
-                targetsSystemBehaviours.Add(selectedUnit.Owner);
-            }
-
-            _unit.UnitLogic.SelectTargets(targetsSystemBehaviours);
+            _battlePanelController.BattleMenuFSM.RequestStateChange(BattleMenuStateMachine.SelectEnemyGroupState);
         }
     }
 }
