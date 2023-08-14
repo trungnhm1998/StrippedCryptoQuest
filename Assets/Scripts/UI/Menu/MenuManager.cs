@@ -61,6 +61,7 @@ namespace CryptoQuest.UI.Menu
             _onCloseMainMenuEventChannel.EventRaised += CloseMainMenu;
             _navigationBar.MenuChanged += ChangeMenu;
 
+            _inputMediator.MenuNavigateEvent += _mainMenuFsm.HandleNavigate;
             _inputMediator.ShowMainMenu += ShowMainMenu; // Start Button
             _inputMediator.StartPressed += CloseMainMenu; // also start button but only in main menu
             _inputMediator.MenuCancelEvent += MenuCancelEventRaised; // East Button
@@ -74,6 +75,7 @@ namespace CryptoQuest.UI.Menu
             _onCloseMainMenuEventChannel.EventRaised -= CloseMainMenu;
             _navigationBar.MenuChanged -= ChangeMenu;
 
+            _inputMediator.MenuNavigateEvent -= _mainMenuFsm.HandleNavigate;
             _inputMediator.ShowMainMenu -= ShowMainMenu;
             _inputMediator.StartPressed -= CloseMainMenu; // also start button but only in main menu
             _inputMediator.MenuCancelEvent -= MenuCancelEventRaised;

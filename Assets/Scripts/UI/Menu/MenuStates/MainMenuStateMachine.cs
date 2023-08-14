@@ -1,4 +1,6 @@
 using FSM;
+using UnityEngine;
+using NotImplementedException = System.NotImplementedException;
 
 namespace CryptoQuest.UI.Menu.MenuStates
 {
@@ -40,6 +42,11 @@ namespace CryptoQuest.UI.Menu.MenuStates
         public void ChangeTab(float direction)
         {
             ActiveState.ChangeTab(direction);
+        }
+
+        public void HandleNavigate(Vector2 direction)
+        {
+            ActiveState.HandleNavigate(direction);
         }
 
         #endregion

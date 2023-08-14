@@ -1,6 +1,7 @@
 using CryptoQuest.UI.Menu.Panels;
 using FSM;
 using UnityEngine;
+using NotImplementedException = System.NotImplementedException;
 
 namespace CryptoQuest.UI.Menu.MenuStates
 {
@@ -60,6 +61,12 @@ namespace CryptoQuest.UI.Menu.MenuStates
         {
             Debug.Log($"{GetType().Name}::ChangeTab::{_panel.name}");
             ActiveState.ChangeTab(direction);
+        }
+
+        public virtual void HandleNavigate(Vector2 direction)
+        {
+            Debug.Log($"{GetType().Name}::HandleNavigate{direction.ToString()}::{_panel.name}");
+            ActiveState.HandleNavigate(direction);
         }
     }
 }

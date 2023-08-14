@@ -54,5 +54,10 @@ namespace CryptoQuest.UI.Menu.MenuStates
         {
             Debug.Log($"{GetType().Name}/ChangeTab/{direction}");
         }
+
+        public virtual void HandleNavigate(Vector2 direction)
+        {
+            Debug.Log($"{GetType().Name}/HandleNavigate/{direction}");
+        }
     }
 }

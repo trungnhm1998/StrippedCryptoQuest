@@ -1,14 +1,16 @@
-﻿using CryptoQuest.UI.Menu.MenuStates.SkillStates;
+﻿using UnityEngine;
 
 namespace CryptoQuest.UI.Menu.MenuStates
 {
     public class GenericUnfocusState : MenuStateBase
     {
         private string _someState;
+
         public GenericUnfocusState(string someState)
         {
             _someState = someState;
         }
+
         public override void OnEnter()
         {
             base.OnEnter();
@@ -39,6 +41,13 @@ namespace CryptoQuest.UI.Menu.MenuStates
         {
             base.ChangeTab(direction);
             NavigationBar.ChangeTab(direction);
+        }
+
+
+        public override void HandleNavigate(Vector2 direction)
+        {
+            base.HandleNavigate(direction);
+            NavigationBar.ChangeTab(direction.x);
         }
     }
 }

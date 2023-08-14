@@ -1,4 +1,5 @@
 ﻿using CryptoQuest.UI.Menu.Panels.Home;
+using UnityEngine;
 
 namespace CryptoQuest.UI.Menu.MenuStates.HomeStates
 {
@@ -22,6 +23,11 @@ namespace CryptoQuest.UI.Menu.MenuStates.HomeStates
         {
             base.ChangeTab(direction);
             NavigationBar.ChangeTab(direction);
+        }
+
+        public override void HandleNavigate(Vector2 direction)
+        {
+            ChangeTab(direction.x);
         }
 
         public override void HandleCancel()
