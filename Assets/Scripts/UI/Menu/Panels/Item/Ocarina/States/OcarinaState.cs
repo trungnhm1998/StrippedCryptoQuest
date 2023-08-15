@@ -1,4 +1,5 @@
 ﻿using CryptoQuest.UI.Menu.MenuStates;
+using CryptoQuest.UI.Menu.MenuStates.ItemStates;
 using UnityEngine;
 
 namespace CryptoQuest.UI.Menu.Panels.Item.Ocarina.States

@@ -25,11 +25,6 @@ namespace CryptoQuest.UI.Menu.MenuStates.HomeStates
             NavigationBar.ChangeTab(direction);
         }
 
-        public override void HandleNavigate(Vector2 direction)
-        {
-            ChangeTab(direction.x);
-        }
-
         public override void HandleCancel()
         {
             base.HandleCancel();

@@ -2,6 +2,7 @@
 using CryptoQuest.Events;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.ActionTypes;
 using CryptoQuest.Item.Ocarinas.Data;
+using CryptoQuest.UI.Menu.MenuStates.ItemStates;
 using CryptoQuest.UI.Menu.Panels.Item.Ocarina.States;
 using IndiGames.Core.Events.ScriptableObjects;
 using UnityEngine;
@@ -83,6 +84,7 @@ namespace CryptoQuest.UI.Menu.Panels.Item.Ocarina
         {
             _consumableMenuPanel.Interactable = true;
             _content.SetActive(false);
+            _consumableMenuPanel.StateMachine.RequestStateChange(ItemMenuStateMachine.InventorySelection);
         }
 
         public void Execute()
