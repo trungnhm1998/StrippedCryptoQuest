@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -30,6 +31,27 @@ namespace CryptoQuest.Character.MonoBehaviours
         private void OnEnable()
         {
             SetFacingDirection(_facingDirection);
+        }
+
+        public IEnumerator ActivateOcarina()
+        {
+            SetFacingDirection(EFacingDirection.South);
+            _animatorComponent.Play("Hero_Ocarina");
+            float length = FindAnimation(_animatorComponent, "Hero_Ocarina").length;
+            yield return new WaitForSeconds(length);
+        }
+
+        public AnimationClip FindAnimation(Animator animator, string name)
+        {
+            foreach (AnimationClip clip in animator.runtimeAnimatorController.animationClips)
+            {
+                if (clip.name == name)
+                {
+                    return clip;
+                }
+            }
+
+            return null;
         }
 
         public override void SetFacingDirection(Vector2 velocity)

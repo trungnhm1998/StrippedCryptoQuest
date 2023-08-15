@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Collections.Generic;
 using IndiGames.Core.EditorTools.Attributes.ReadOnlyAttribute;
 using UnityEngine;
 
@@ -7,7 +9,7 @@ namespace CryptoQuest.Character.MonoBehaviours
     {
         [SerializeField] private Animator _animator;
 
-        private Animator _animatorComponent
+        protected Animator _animatorComponent
         {
             get
             {
