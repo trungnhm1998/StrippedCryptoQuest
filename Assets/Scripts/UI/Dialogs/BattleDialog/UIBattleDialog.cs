@@ -12,6 +12,7 @@ namespace CryptoQuest.UI.Dialogs.BattleDialog
         [SerializeField] private BattleInputSO _battleInput;
         [Tooltip("Set this below 0 when you don't want auto hide")]
         [SerializeField] private float _autoHideDelay;
+        [SerializeField] private bool _canEnterToSkip;
 
         [Header("UI")]
         [SerializeField] private Text _dialogText;
@@ -29,14 +30,14 @@ namespace CryptoQuest.UI.Dialogs.BattleDialog
         private void OnEnable()
         {
             _dialogText.text = "";
-            _battleInput.ConfirmedEvent += NextDialog;
+            if (_canEnterToSkip) _battleInput.ConfirmedEvent += NextDialog;
             _showNextMarkEventChannel.EventRaised += ShowNextMark;
             _closeBattleDialogEventChannel.EventRaised += CloseDialog;
         }
 
         private void OnDisable()
         {
-            _battleInput.ConfirmedEvent -= NextDialog;
+            if (_canEnterToSkip) _battleInput.ConfirmedEvent -= NextDialog;
             _showNextMarkEventChannel.EventRaised -= ShowNextMark;
             _closeBattleDialogEventChannel.EventRaised -= CloseDialog;
         }
