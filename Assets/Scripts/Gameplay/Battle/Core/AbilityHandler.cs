@@ -36,8 +36,8 @@ namespace CryptoQuest.Gameplay.Battle.Core
 
         public void ActivateSkill(AbilityScriptableObject abilityScriptableObject)
         {
-            var ability = _abilitySystemBehaviour.GiveAbility(abilityScriptableObject);
-            _abilitySystemBehaviour.TryActiveAbility(ability);
+            var ability = abilityScriptableObject.GetAbilitySpec(_abilitySystemBehaviour);
+            ability.ActivateAbility();
         }
     }
 }
