@@ -13,7 +13,6 @@ namespace CryptoQuest.Menu
     public class MultiInputButton : Button
     {
         public event Action Selected;
-        public event Action Deselected;
 
         private MenuSelectionHandler _menuSelectionHandler;
 
@@ -30,35 +29,12 @@ namespace CryptoQuest.Menu
             }
         }
 
-        public override void OnPointerEnter(PointerEventData eventData)
-        {
-            if (!Handler.HasCursorMoved) return;
-            if (!enabled) return;
-            Handler.HandleMouseEnter(gameObject);
-        }
-
-        public override void OnPointerExit(PointerEventData eventData)
-        {
-            if (!Handler.HasCursorMoved) return;
-            if (!enabled) return;
-            Handler.HandleMouseExit(gameObject);
-        }
-
         public override void OnSelect(BaseEventData eventData)
         {
             if (!enabled) return;
             Selected?.Invoke();
             Handler.UpdateSelection(gameObject);
             base.OnSelect(eventData);
-        }
-
-        public override void OnDeselect(BaseEventData eventData)
-        {
-            base.OnDeselect(eventData);
-            if (!IsActive() || !IsInteractable())
-                return;
-
-            Deselected?.Invoke();
         }
 
         public override void OnSubmit(BaseEventData eventData)

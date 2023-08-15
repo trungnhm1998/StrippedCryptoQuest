@@ -11,10 +11,6 @@ namespace CryptoQuest.Menu
         [SerializeField] private InputMediatorSO _inputMediator;
         [SerializeField] [ReadOnly] private GameObject _defaultSelection;
         [SerializeField] [ReadOnly] private GameObject _currentSelection;
-        [SerializeField] [ReadOnly] private GameObject _mouseSelection;
-
-        private bool _hasCursorMoved;
-        public bool HasCursorMoved => _hasCursorMoved;
 
         private void OnEnable()
         {
@@ -60,7 +56,6 @@ namespace CryptoQuest.Menu
         /// </summary>
         private void HandleMoveSelection(Vector2 input)
         {
-            _hasCursorMoved = true;
             Cursor.visible = false;
 
             // Handle case where no UI element is selected because mouse left selectable bounds
@@ -70,31 +65,7 @@ namespace CryptoQuest.Menu
 
         public virtual void HandleMoveCursor()
         {
-            _hasCursorMoved = true;
-            if (_mouseSelection != null)
-            {
-                EventSystem.current.SetSelectedGameObject(_mouseSelection);
-            }
-
             Cursor.visible = true;
-        }
-
-        public virtual void HandleMouseEnter(GameObject UIElement)
-        {
-            _mouseSelection = UIElement;
-            EventSystem.current.SetSelectedGameObject(UIElement);
-        }
-
-        public virtual void HandleMouseExit(GameObject UIElement)
-        {
-            if (EventSystem.current.currentSelectedGameObject != UIElement)
-            {
-                return;
-            }
-
-            // keep selecting the last thing the mouse has selected 
-            _mouseSelection = null;
-            EventSystem.current.SetSelectedGameObject(_currentSelection);
         }
 
         /// <summary>
@@ -104,9 +75,7 @@ namespace CryptoQuest.Menu
         public bool AllowsSubmit()
         {
             // if LMB is not down, there is no edge case to handle, allow the event to continue
-            return !_inputMediator.LeftMouseDown()
-                   // if we know mouse & keyboard are on different elements, do not allow interaction to continue
-                   || _mouseSelection != null && _mouseSelection == _currentSelection;
+            return !_inputMediator.LeftMouseDown();
         }
 
         /// <summary>
@@ -134,7 +103,7 @@ namespace CryptoQuest.Menu
             if (EventSystem.current == null) return;
 
             var currentSelectedGO = EventSystem.current.currentSelectedGameObject;
-            if (currentSelectedGO != null && currentSelectedGO.activeInHierarchy) return; 
+            if (currentSelectedGO != null && currentSelectedGO.activeInHierarchy) return;
 
             if (_currentSelection != null)
             {
