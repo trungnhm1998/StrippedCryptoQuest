@@ -5,6 +5,7 @@ using CryptoQuest.Item.Ocarinas.Data;
 using CryptoQuest.UI.Menu.Panels.Item.Ocarina.States;
 using IndiGames.Core.Events.ScriptableObjects;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace CryptoQuest.UI.Menu.Panels.Item.Ocarina
 {
@@ -27,7 +28,7 @@ namespace CryptoQuest.UI.Menu.Panels.Item.Ocarina
 
         private void Awake()
         {
-            Debug.Log("OcarinaPresenter Awake");
+            _consumableMenuPanel.StateMachine.AddState(OcarinaState.Ocarina, new OcarinaState(this));
             _binder.Bind(this);
         }
 
@@ -38,17 +39,22 @@ namespace CryptoQuest.UI.Menu.Panels.Item.Ocarina
 
         public void Show()
         {
-            // TODO: THIS IS A VERY BAD CODE
-            _consumableMenuPanel.StateMachine.RequestStateChange(OcarinaState.Ocarina);
+            _consumableMenuPanel.Interactable = false;
             _content.SetActive(true);
             DestroyAllChildren();
 
-            foreach (var town in _towns.Locations)
+            for (var index = 0; index < _towns.Locations.Count; index++)
             {
+                var town = _towns.Locations[index];
                 var townButton = Instantiate(_townButtonPrefab, _townButtonContainer);
                 townButton.SetTownName(town);
 
                 townButton.Clicked += UseOcarina;
+
+                if (index == 0)
+                {
+                    EventSystem.current.SetSelectedGameObject(townButton.gameObject);
+                }
             }
         }
 
@@ -57,6 +63,7 @@ namespace CryptoQuest.UI.Menu.Panels.Item.Ocarina
             _forceCloseMenuEvent.RaiseEvent();
             _destinationSelectedEvent.RaiseEvent(location.Path);
             _destinationConfirmEvent.RaiseEvent();
+            Hide();
         }
 
         /// <summary>
@@ -74,7 +81,13 @@ namespace CryptoQuest.UI.Menu.Panels.Item.Ocarina
 
         public void Hide()
         {
+            _consumableMenuPanel.Interactable = true;
             _content.SetActive(false);
+        }
+
+        public void Execute()
+        {
+            _consumableMenuPanel.StateMachine.RequestStateChange(OcarinaState.Ocarina);
         }
     }
 }

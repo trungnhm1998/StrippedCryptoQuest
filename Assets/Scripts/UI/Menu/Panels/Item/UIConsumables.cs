@@ -14,9 +14,25 @@ namespace CryptoQuest.UI.Menu.Panels.Item
         [SerializeField] private RecyclableScrollRect _recyclableScrollRect;
         [SerializeField] private GameObject _content;
         [field: SerializeField] public UsableTypeSO Type { get; private set; }
+
         private IConsumablesProvider _consumablesProvider;
         private readonly List<UIConsumableItem> _uiConsumables = new();
         private UIConsumableItem _currentInspectingItem;
+
+        private bool _interactable;
+
+        public bool Interactable
+        {
+            get => _interactable;
+            set
+            {
+                _interactable = value;
+                foreach (var consumableButton in _uiConsumables)
+                {
+                    consumableButton.Interactable = value;
+                }
+            }
+        }
 
         private void Awake()
         {
@@ -41,8 +57,8 @@ namespace CryptoQuest.UI.Menu.Panels.Item
                 return;
             }
 
-            item.Init(_consumablesProvider.Items[index]);
             _uiConsumables.Add(item);
+            item.Init(_consumablesProvider.Items[index]);
             item.Inspecting += OnInspecting;
             if (_currentInspectingItem != null)
             {
@@ -113,7 +129,6 @@ namespace CryptoQuest.UI.Menu.Panels.Item
         private void DeselectCurrentInspectingItem()
         {
             if (!_currentInspectingItem) return;
-            _currentInspectingItem.Deselect();
             _currentInspectingItem = null;
         }
 

@@ -5,6 +5,7 @@ using CryptoQuest.UI.Menu.MenuStates.ItemStates;
 using CryptoQuest.UI.Menu.Panels.Item.Ocarina;
 using FSM;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.Localization.Components;
 
 namespace CryptoQuest.UI.Menu.Panels.Item
@@ -18,7 +19,6 @@ namespace CryptoQuest.UI.Menu.Panels.Item
         [SerializeField] private UIInventoryTabHeader _inventoryTabHeader;
         [SerializeField] private UIConsumables[] _itemLists;
         [SerializeField] private LocalizeStringEvent _localizeDescription;
-        [field: SerializeField] public UIOcarinaPresenter OcarinaPanel { get; set; } // TODO: Violate OCP
 
         private readonly Dictionary<UsableTypeSO, int> _itemListCache = new();
         private UIConsumables _currentConsumables;
@@ -82,6 +82,23 @@ namespace CryptoQuest.UI.Menu.Panels.Item
         }
 
         private bool _previouslyHidden = true;
+        private bool _interactable = false;
+
+        public bool Interactable
+        {
+            get => _interactable;
+            set
+            {
+                _interactable = value;
+                if (_currentConsumables) _currentConsumables.Interactable = _interactable;
+                
+                // TODO: BADE CODE
+                if (_interactable && _usingItem)
+                {
+                    EventSystem.current.SetSelectedGameObject(_usingItem.gameObject);
+                }
+            }
+        }
 
         private void OnEnable()
         {
@@ -113,8 +130,11 @@ namespace CryptoQuest.UI.Menu.Panels.Item
             UIConsumableItem.Using -= UseItem;
         }
 
-        private void UseItem(UsableInfo consumable)
+        private UIConsumableItem _usingItem;
+
+        private void UseItem(UIConsumableItem consumable)
         {
+            _usingItem = consumable;
             consumable.Use();
         }
 

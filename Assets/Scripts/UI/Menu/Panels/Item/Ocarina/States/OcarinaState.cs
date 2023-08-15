@@ -17,12 +17,14 @@ namespace CryptoQuest.UI.Menu.Panels.Item.Ocarina.States
         public override void OnEnter()
         {
             base.OnEnter();
+            _uiOcarinaPresenter.Show();
             Debug.Log($"OcarinaState OnEnter");
         }
 
         public override void HandleCancel()
         {
             base.HandleCancel();
+            _uiOcarinaPresenter.Hide();
         }
     }
 }

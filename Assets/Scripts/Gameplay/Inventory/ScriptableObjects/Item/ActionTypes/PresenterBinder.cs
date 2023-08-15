@@ -27,5 +27,10 @@ namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.ActionTypes
         {
             _presenter.Hide();
         }
+
+        public void Execute()
+        {
+            _presenter.Execute();
+        }
     }
 }

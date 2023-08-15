@@ -1,5 +1,4 @@
 ﻿using CryptoQuest.UI.Menu.Panels.Item;
-using CryptoQuest.UI.Menu.Panels.Item.Ocarina.States;
 
 namespace CryptoQuest.UI.Menu.MenuStates.ItemStates
 {
@@ -22,9 +21,6 @@ namespace CryptoQuest.UI.Menu.MenuStates.ItemStates
             AddState(Item, new FocusItemState(panel));
             AddState(InventorySelection, new InventorySelectionState(panel));
             AddState(ItemSelection, new ItemSelectionState(panel));
-
-            // TODO: Move this to OcarinaPresenter because it violate OCP
-            AddState(OcarinaState.Ocarina, new OcarinaState(panel.OcarinaPanel));
 
             SetStartState(InventorySelection);
         }

@@ -11,8 +11,6 @@ namespace CryptoQuest.UI.Menu.MenuStates.ItemStates
             base.OnEnter();
             NavigationBar.SetActive(false);
             NavigationBar.HighlightHeader(ConsumablePanel.TypeSO);
-            // _overview.InventorySelected += ViewItems;
-            // _overview.Init();
         }
 
         public override void HandleCancel()
@@ -20,15 +18,7 @@ namespace CryptoQuest.UI.Menu.MenuStates.ItemStates
             base.HandleCancel();
             NavigationBar.SetActive(true);
             NavigationBar.HighlightHeader(ConsumablePanel.TypeSO, true);
-            // _overview.DeInit();
             MenuStateMachine.RequestStateChange(ItemMenuStateMachine.NavItem);
-        }
-
-        public override void OnExit()
-        {
-            base.OnExit();
-            // _overview.InventorySelected -= ViewItems;
-            // _overview.DeInit();
         }
 
         public override void ChangeTab(float direction)

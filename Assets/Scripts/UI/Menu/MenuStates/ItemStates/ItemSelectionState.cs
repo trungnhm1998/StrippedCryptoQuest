@@ -1,5 +1,4 @@
 ﻿using CryptoQuest.UI.Menu.Panels.Item;
-using UnityEngine;
 
 namespace CryptoQuest.UI.Menu.MenuStates.ItemStates
 {

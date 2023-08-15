@@ -10,7 +10,8 @@ namespace CryptoQuest.UI.Menu.Panels.Item
 {
     public class UIConsumableItem : MonoBehaviour, ICell
     {
-        public static event Action<UsableInfo> Using;
+        public static event Action<UIConsumableItem> Using;
+
         public delegate void InspectingItem(UIConsumableItem item);
 
         public event InspectingItem Inspecting;
@@ -22,33 +23,30 @@ namespace CryptoQuest.UI.Menu.Panels.Item
         private UsableInfo _itemDef;
         public UsableInfo ItemDef => _itemDef;
 
+        public bool Interactable
+        {
+            get => _button.interactable;
+            set => _button.interactable = value;
+        }
+
         private void OnEnable()
         {
-            _button.onClick.AddListener(Use);
             _button.Selected += OnInspectingItem;
-            _button.Deselected += DeselectButton;
         }
 
         private void OnDisable()
         {
-            _button.onClick.RemoveListener(Use);
             _button.Selected -= OnInspectingItem;
-            _button.Deselected -= DeselectButton;
         }
 
-        private void Use()
+        public void OnUse()
         {
-            Using?.Invoke(_itemDef);
+            Using?.Invoke(this);
         }
 
-        public void Deselect()
+        public void Use()
         {
-            DeselectButton();
-        }
-
-        private void DeselectButton()
-        {
-            _selectedBackground.SetActive(false);
+            _itemDef.Use();
         }
 
         private void OnInspectingItem()
