@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit;
 using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Events;
+using CryptoQuest.UI.Battle.MenuStateMachine;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -40,6 +41,7 @@ namespace CryptoQuest.UI.Battle.CommandsMenu
 
         private void OnHeroTurn(IBattleUnit unit)
         {
+            _battlePanelController.BattleMenuFSM.ResetToNewState(BattleMenuStateMachine.SelectCommandState);
             _currentUnit = unit;
             _currentUnitName.text = unit.UnitInfo.DisplayName;
         }
