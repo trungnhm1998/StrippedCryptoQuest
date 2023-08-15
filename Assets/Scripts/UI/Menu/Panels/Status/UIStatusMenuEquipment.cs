@@ -12,8 +12,9 @@ namespace CryptoQuest.UI.Menu.Panels.Status
 
         [Header("Game Components")]
         [SerializeField] private List<UIEquipmentSlotButton> _equipmentSlots;
+
+        [SerializeField] private GameObject _content;
         [SerializeField] private UIEquipmentSlotButton _defaultSelection;
-        [SerializeField] private GameObject _navigations;
 
         private void OnEnable()
         {
@@ -41,7 +42,6 @@ namespace CryptoQuest.UI.Menu.Panels.Status
         {
             EnableAllButtons();
             _defaultSelection.Select();
-            _navigations.SetActive(true);
         }
 
         /// <summary>
@@ -69,7 +69,6 @@ namespace CryptoQuest.UI.Menu.Panels.Status
         public void DeInit()
         {
             DisableAllButtons();
-            _navigations.SetActive(false);
         }
     }
 }

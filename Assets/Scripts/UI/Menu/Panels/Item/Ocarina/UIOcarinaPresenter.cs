@@ -33,11 +33,6 @@ namespace CryptoQuest.UI.Menu.Panels.Item.Ocarina
             _binder.Bind(this);
         }
 
-        private void OnEnable()
-        {
-            Hide();
-        }
-
         public void Show()
         {
             _consumableMenuPanel.Interactable = false;
