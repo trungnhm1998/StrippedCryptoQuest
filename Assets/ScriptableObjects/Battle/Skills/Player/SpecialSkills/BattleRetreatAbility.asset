@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: BattleRetreatAbility
   m_EditorClassIdentifier: 
   tags:
-    AbilityTag: {fileID: 0}
+    AbilityTag: {fileID: 11400000, guid: 631841cbaf4b5f440924e723ce08dc3c, type: 2}
     CancelAbilityWithTags: []
     BlockAbilityWithTags: []
     ActivationTags: []
@@ -26,25 +26,46 @@ MonoBehaviour:
     TargetTags:
       RequireTags: []
       IgnoreTags: []
-  Id: 0
-  Name:
-    m_TableReference:
-      m_TableCollectionName: 
-    m_TableEntryReference:
-      m_KeyId: 0
-      m_Key: 
-    m_FallbackState: 0
-    m_WaitForCompletion: 0
-    m_LocalVariables: []
-  Description:
-    m_TableReference:
-      m_TableCollectionName: 
-    m_TableEntryReference:
-      m_KeyId: 0
-      m_Key: 
-    m_FallbackState: 0
-    m_WaitForCompletion: 0
-    m_LocalVariables: []
+  EffectContainerMap: []
+  SkillInfo:
+    Id: 0
+    SkillName:
+      m_TableReference:
+        m_TableCollectionName: 
+      m_TableEntryReference:
+        m_KeyId: 0
+        m_Key: 
+      m_FallbackState: 0
+      m_WaitForCompletion: 0
+      m_LocalVariables: []
+    SkillDescription:
+      m_TableReference:
+        m_TableCollectionName: 
+      m_TableEntryReference:
+        m_KeyId: 0
+        m_Key: 
+      m_FallbackState: 0
+      m_WaitForCompletion: 0
+      m_LocalVariables: []
+    SkillIcon: {fileID: 0}
+    Element: {fileID: 0}
+    SkillType: {fileID: 0}
+    Category: {fileID: 0}
+    Cost: 0
+    EffectType: {fileID: 0}
+    TargetType: {fileID: 0}
+    SkillParameters:
+      BasePower: 0
+      PowerUpperLimit: 0
+      PowerLowerLimit: 0
+      SkillPowerThreshold: 0
+      PowerValueAdded: 0
+      PowerValueReduced: 0
+      IsFixed: 0
+      ContinuesTurn: 1
+  CostSpecSO: {fileID: 0}
+  ActionDataSO: {fileID: 0}
+  ActionEventSO: {fileID: 0}
   references:
     version: 2
     RefIds: []
