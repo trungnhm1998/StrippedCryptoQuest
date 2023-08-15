@@ -16,7 +16,8 @@ MonoBehaviour:
     m_Code: en
   m_SharedData: {fileID: 11400000, guid: eb6ce0c7cd5c2444c9d3345957efb3cb, type: 2}
   m_Metadata:
-    m_Items: []
+    m_Items:
+    - rid: 7850883903912935431
   m_TableData:
   - m_Id: 139560841216
     m_Localized: HOME
@@ -31,7 +32,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 292246089728
-    m_Localized: ITEMS
+    m_Localized: ITEM
     m_Metadata:
       m_Items: []
   - m_Id: 321329393664
@@ -54,16 +55,12 @@ MonoBehaviour:
     m_Localized: Select Menu
     m_Metadata:
       m_Items: []
-  - m_Id: 707935170560
-    m_Localized: Class
-    m_Metadata:
-      m_Items: []
   - m_Id: 1279409090560
     m_Localized: Equipment
     m_Metadata:
       m_Items: []
   - m_Id: 1674130845696
-    m_Localized: Foot
+    m_Localized: Feet
     m_Metadata:
       m_Items: []
   - m_Id: 1607911174144
@@ -79,11 +76,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1546389123072
-    m_Localized: Shield
+    m_Localized: Left Hand
     m_Metadata:
       m_Items: []
   - m_Id: 1511576399872
-    m_Localized: Weapon
+    m_Localized: Right Hand
     m_Metadata:
       m_Items: []
   - m_Id: 1472531623936
@@ -95,7 +92,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2309039419392
-    m_Localized: Accessory
+    m_Localized: Accessory 1
     m_Metadata:
       m_Items: []
   - m_Id: 2568901718016
@@ -107,11 +104,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2948091965440
-    m_Localized: Expendables
+    m_Localized: Consumables
     m_Metadata:
       m_Items: []
   - m_Id: 3039209025536
-    m_Localized: Valuables
+    m_Localized: Key Items
     m_Metadata:
       m_Items: []
   - m_Id: 3080900407296
@@ -142,6 +139,51 @@ MonoBehaviour:
     m_Localized: Select teleport destination
     m_Metadata:
       m_Items: []
+  - m_Id: 14905611510181888
+    m_Localized: '{character.name}''s {attribute.hp/sp} restored.'
+    m_Metadata:
+      m_Items:
+      - rid: 7850883903912935431
+  - m_Id: 14905611560513536
+    m_Localized: The party left the dungeon.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14905611560513537
+    m_Localized: It does not seem to work.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14905611560513538
+    m_Localized: Encounter Rate has decreased.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14905611560513539
+    m_Localized: DIMENSIONAL BOX
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14905611560513540
+    m_Localized: Magic Stone
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14905611560513541
+    m_Localized: Elements
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14905611560513542
+    m_Localized: Materials
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14905611560513543
+    m_Localized: NFT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14905611560513544
+    m_Localized: Accessory 2
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: 7850883903912935431
+      type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_Entries: 0070391f93f43400
