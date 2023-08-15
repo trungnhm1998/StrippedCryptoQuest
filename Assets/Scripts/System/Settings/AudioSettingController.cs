@@ -21,8 +21,8 @@ namespace CryptoQuest.System.Settings
 
         public void ChangeAudioVolume(float value)
         {
-            _audioSettings.Volume = value;
-            _volumeText.text = $"{value * 100,0:F0}%";
+            _audioSettings.Volume = (int)value / 100;
+            _volumeText.text = $"{value,0:F0}%";
         }
     }
 }

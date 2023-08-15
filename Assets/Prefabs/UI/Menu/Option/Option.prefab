@@ -2151,7 +2151,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8594389285095321282}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
+  m_Script: {fileID: 11500000, guid: c48125e08495b544292db95b1055b873, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
@@ -2187,9 +2187,9 @@ MonoBehaviour:
   m_HandleRect: {fileID: 3676535489370367399}
   m_Direction: 0
   m_MinValue: 0
-  m_MaxValue: 1
+  m_MaxValue: 100
   m_WholeNumbers: 0
-  m_Value: 1
+  m_Value: 40
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
@@ -2205,6 +2205,13 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  _steps:
+  - Threshold: 0.5
+    StepValue: 1
+  - Threshold: 1.4
+    StepValue: 5
+  - Threshold: 1.8
+    StepValue: 10
 --- !u!114 &7149571463580895130
 MonoBehaviour:
   m_ObjectHideFlags: 0
