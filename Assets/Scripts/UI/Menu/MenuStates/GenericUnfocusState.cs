@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Numerics;
+using CryptoQuest.UI.Menu.MenuStates.SkillStates;
 
 namespace CryptoQuest.UI.Menu.MenuStates
 {
@@ -43,8 +44,7 @@ namespace CryptoQuest.UI.Menu.MenuStates
             NavigationBar.ChangeTab(direction);
         }
 
-
-        public override void HandleNavigate(Vector2 direction)
+        public override void HandleNavigate(UnityEngine.Vector2 direction)
         {
             base.HandleNavigate(direction);
             NavigationBar.ChangeTab(direction.x);

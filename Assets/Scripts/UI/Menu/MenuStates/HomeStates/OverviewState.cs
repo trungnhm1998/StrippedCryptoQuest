@@ -30,5 +30,11 @@ namespace CryptoQuest.UI.Menu.MenuStates.HomeStates
             base.HandleCancel();
             MainMenuContext.CloseMainMenu();
         }
+
+        public override void HandleNavigate(Vector2 direction)
+        {
+            base.HandleNavigate(direction);
+            NavigationBar.ChangeTab(direction.x);
+        }
     }
 }
