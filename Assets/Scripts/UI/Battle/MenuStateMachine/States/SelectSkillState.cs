@@ -10,12 +10,8 @@ namespace CryptoQuest.UI.Battle.MenuStateMachine.States
 
         protected override void SetupButtonsInfo()
         {
-            foreach (var abstractAbility in _currentUnit.Owner.GrantedAbilities.Abilities)
+            foreach (var abstractAbility in _currentUnit.UnitLogic.GetActivableAbilities())
             {
-                var abilitySO = abstractAbility.AbilitySO;
-                var isAtivableSkill = _battlePanelController.TagConfigSO.CheckNotActivableSkillTag(abilitySO.Tags.AbilityTag);
-                if (abilitySO is not AbilitySO || isAtivableSkill) continue;
-
                 var buttonInfo = new AbilityAbstractButtonInfo(SetAbility, abstractAbility);
                 _buttonInfos.Add(buttonInfo);
             }

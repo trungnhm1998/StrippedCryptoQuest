@@ -2,8 +2,8 @@ using System.Collections.Generic;
 using IndiGames.GameplayAbilitySystem.AbilitySystem;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
 using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data;
-using System.Linq;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.ScriptableObjects;
+using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Skills;
 
 namespace CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit
 {
@@ -109,7 +109,19 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit
             //TODO: Apply abnormal status and check disable
             // Change to this because system can use ability from item
             // and _owner.TryActiveAbility can only activate skill inside system
+            if (!IsTargetsValid()) return;
             SelectedAbility.ActivateAbility();
+        }
+
+        private bool IsTargetsValid()
+        {
+            foreach(var target in TargetContainer)
+            {
+                //TODO: target container contain battle unit might be better
+                target.TryGetComponent<IBattleUnit>(out var unit);
+                if (unit != null && unit.IsDead) return false;
+            }
+            return true;
         }
 
         public virtual void ActivateAbilityWithTag(TagScriptableObject tag)
@@ -122,5 +134,15 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit
             }
         }
 
+        public IEnumerable<AbstractAbility> GetActivableAbilities()
+        {
+            foreach (var ability in _owner.GrantedAbilities.Abilities)
+            {
+                var abilitySO = ability.AbilitySO;
+                var isAtivableSkill = _tagConfig.CheckNotActivableSkillTag(abilitySO.Tags.AbilityTag);
+                if (abilitySO is not AbilitySO || isAtivableSkill) continue;
+                yield return ability;
+            }
+        }
     }
 }

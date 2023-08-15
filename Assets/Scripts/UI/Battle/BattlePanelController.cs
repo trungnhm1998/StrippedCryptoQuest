@@ -10,6 +10,7 @@ using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
 using UnityEngine.Events;
 using CryptoQuest.UI.Battle.MenuStateMachine;
 using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data;
+using System.Linq;
 
 namespace CryptoQuest.UI.Battle
 {
@@ -123,18 +124,18 @@ namespace CryptoQuest.UI.Battle
             _retreatHandler.Handle(currentUnit);
         }
 
-        private void OnButtonGuardClickedHandler()
-        {
-            _commandPanel.Clear();
-        }
+        private void OnButtonGuardClickedHandler() { }
 
         private void OnButtonItemClickedHandler(IBattleUnit currentUnit)
         {
+            if (Inventory.UsableItems.Count <= 0) return;
             BattleMenuFSM.RequestStateChange(BattleMenuStateMachine.SelectItemState);
         }
 
         private void OnButtonSkillClickedHandler(IBattleUnit currentUnit)
         {
+            var activableAbilities = currentUnit.UnitLogic.GetActivableAbilities();
+            if (activableAbilities.Count() <= 0) return;
             BattleMenuFSM.RequestStateChange(BattleMenuStateMachine.SelectSkillState);
         }
 
