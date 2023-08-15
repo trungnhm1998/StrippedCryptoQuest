@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using CryptoQuest.Character.MonoBehaviours;
 using CryptoQuest.Events;
+using CryptoQuest.Input;
 using CryptoQuest.Map;
 using CryptoQuest.System.Dialogue.Events;
 using CryptoQuest.UI.SpiralFX;
@@ -24,6 +25,7 @@ namespace CryptoQuest.Item.Ocarinas
         [SerializeField] private VoidEventChannelSO _destinationConfirmEvent;
         [SerializeField] private SpiralConfigSO _spiralConfig;
         [SerializeField] private VoidEventChannelSO _onSceneLoadedEventChannel;
+        [SerializeField] private InputMediatorSO _inputMediatorSO;
 
         [Header("Ocarina UI")]
         [SerializeField] private GameObject _ocarinaUI;
@@ -57,6 +59,7 @@ namespace CryptoQuest.Item.Ocarinas
         public IEnumerator CoActivateOcarinaAnim()
         {
             HeroBehaviour heroBehaviour = FindObjectOfType<HeroBehaviour>();
+            _inputMediatorSO.DisableAllInput();
             _ocarinaUI.SetActive(true);
             yield return heroBehaviour.ActivateOcarina();
             _ocarinaUI.SetActive(false);
@@ -74,6 +77,7 @@ namespace CryptoQuest.Item.Ocarinas
 
         private void FinishTrasition()
         {
+            _inputMediatorSO.EnableMapGameplayInput();
             _spiralConfig.DoneSpiralIn -= TriggerOcarina;
             _spiralConfig.DoneSpiralOut -= FinishTrasition;
             _onSceneLoadedEventChannel.EventRaised -= _spiralConfig.OnSpiralOut;
