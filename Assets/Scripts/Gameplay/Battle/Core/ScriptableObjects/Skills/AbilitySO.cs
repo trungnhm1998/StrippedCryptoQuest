@@ -27,7 +27,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Skills
         private SkillInfo _skillInfo;
         protected const string UNIT_NAME_VARIABLE = "unitName";
         protected const string SKILL_NAME_VARIABLE = "skillName";
-        protected new AbilitySO AbilitySO => (AbilitySO)_abilitySO;
+        public new AbilitySO AbilitySO => (AbilitySO)_abilitySO;
         protected IBattleUnit _unit;
 
         public Ability(SkillInfo skillInfo)

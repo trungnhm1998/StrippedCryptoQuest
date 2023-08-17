@@ -4,6 +4,7 @@ using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
 using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.ScriptableObjects;
 using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Skills;
+using CryptoQuest.Gameplay.Battle.Helper;
 
 namespace CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit
 {
@@ -124,23 +125,13 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit
             return true;
         }
 
-        public virtual void ActivateAbilityWithTag(TagScriptableObject tag)
+        public IEnumerable<Ability> GetActivableAbilities()
         {
-            var abilities = _owner.GrantedAbilities.Abilities;
-            foreach (var ability in abilities)
-            {
-                if (ability.AbilitySO.Tags.AbilityTag != tag) continue;
-                _owner.TryActiveAbility(ability);
-            }
-        }
-
-        public IEnumerable<AbstractAbility> GetActivableAbilities()
-        {
-            foreach (var ability in _owner.GrantedAbilities.Abilities)
+            foreach (var ability in _owner.GetAbilitiesInBattle())
             {
                 var abilitySO = ability.AbilitySO;
-                var isAtivableSkill = _tagConfig.CheckNotActivableSkillTag(abilitySO.Tags.AbilityTag);
-                if (abilitySO is not AbilitySO || isAtivableSkill) continue;
+                var isSkillNotActivable = _tagConfig.CheckNotActivableSkillTag(abilitySO.Tags.AbilityTag);
+                if (isSkillNotActivable) continue;
                 yield return ability;
             }
         }

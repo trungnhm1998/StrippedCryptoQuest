@@ -69,17 +69,16 @@ namespace CryptoQuest.UI.Battle.CommandsMenu
     [Serializable]
     public class AbilityAbstractButtonInfo : AbstractButtonInfo
     {
-        private AbstractAbility _ability;
-        private Action<AbstractAbility> _setSkillCallback;
+        private Ability _ability;
+        private Action<Ability> _setSkillCallback;
 
-        public AbilityAbstractButtonInfo(Action<AbstractAbility> setSkillCallback,
-            AbstractAbility ability)
+        public AbilityAbstractButtonInfo(Action<Ability> setSkillCallback,
+            Ability ability)
             : base(GetSkillName(ability))
         {
             _setSkillCallback = setSkillCallback;
             _ability = ability;
-            if (!(_ability.AbilitySO is AbilitySO cqAbility)) return;
-            Value = $"{cqAbility.SkillInfo.Cost.ToString()}";
+            Value = $"{_ability.AbilitySO.SkillInfo.Cost.ToString()}";
         }
 
         public override void OnHandleClick()
@@ -87,9 +86,7 @@ namespace CryptoQuest.UI.Battle.CommandsMenu
             _setSkillCallback.Invoke(_ability);
         }
 
-        public static string GetSkillName(AbstractAbility ability)
-            => (ability.AbilitySO is AbilitySO so) ? 
-                so.SkillInfo.SkillName.GetLocalizedString() : "";
+        public static string GetSkillName(Ability ability) => ability.AbilitySO.SkillInfo.SkillName.GetLocalizedString();
     }
 
     [Serializable]

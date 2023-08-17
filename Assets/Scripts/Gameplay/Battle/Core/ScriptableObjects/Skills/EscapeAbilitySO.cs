@@ -21,7 +21,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Skills
         public UnityAction EscapeFailed;
 
         protected override AbstractAbility CreateAbility()
-            => new EscapeAbility(_escapeRouteMappingSO, _sceneLoaderBus);
+            => new EscapeAbility(SkillInfo, _escapeRouteMappingSO, _sceneLoaderBus);
     }
 
     public class EscapeAbility : SpecialAbility
@@ -31,7 +31,8 @@ namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Skills
         private SceneLoaderBus _sceneLoaderBus;
         private EscapeRouteMappingSO _escapeRouteMappingSO;
 
-        public EscapeAbility(EscapeRouteMappingSO escapeRouteMappingSo, SceneLoaderBus sceneLoaderBus)
+        public EscapeAbility(SkillInfo info, EscapeRouteMappingSO escapeRouteMappingSo, SceneLoaderBus sceneLoaderBus)
+            : base(info)
         {
             _sceneLoaderBus = sceneLoaderBus;
             _escapeRouteMappingSO = escapeRouteMappingSo;
