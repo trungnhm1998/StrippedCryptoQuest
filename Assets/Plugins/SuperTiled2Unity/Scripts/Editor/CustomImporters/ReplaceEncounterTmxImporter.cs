@@ -3,7 +3,6 @@ using System.Linq;
 using Plugins.SuperTiled2Unity.Scripts.Editor.Settings;
 using SuperTiled2Unity;
 using SuperTiled2Unity.Editor;
-using UnityEditor;
 using UnityEngine;
 
 namespace Plugins.SuperTiled2Unity.Scripts.Editor.CustomImporters
@@ -38,7 +37,7 @@ namespace Plugins.SuperTiled2Unity.Scripts.Editor.CustomImporters
                 var prefab = typePrefabReplacement.m_Prefab;
                 if (prefab != null)
                 {
-                    var instance = (GameObject)PrefabUtility.InstantiatePrefab(prefab);
+                    var instance = GameObject.Instantiate(prefab);
                     instance.transform.SetParent(so.transform.parent);
                     instance.transform.position = so.transform.position + prefab.transform.localPosition;
                     instance.transform.rotation = so.transform.rotation;
