@@ -12,12 +12,13 @@ namespace CryptoQuest.Gameplay.Manager
     public class PlayerPartyManager : MonoBehaviour
     {
         [SerializeField] private GameplayBus _gameplayBus;
+        [SerializeField] private PartySO _party;
         [SerializeField] private BattleTeam _playerTeam;
         [SerializeField] private AbilitySystemBehaviour _mainSystem;
 
         private void Awake()
         {
-            _gameplayBus.PlayerTeam = _playerTeam;
+            _party.PlayerTeam = _playerTeam;
             _gameplayBus.MainSystem = _mainSystem;
         }
     }
