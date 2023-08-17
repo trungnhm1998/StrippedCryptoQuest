@@ -4,7 +4,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components
 {
     public class CQBattleManager : BattleManager
     {
-        [SerializeField] private GameplayBus _gameplayBus;
+        [SerializeField] private PartySO _party;
 
         private void OnValidate()
         {
@@ -16,7 +16,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components
 
         protected override void StartBattle()
         {
-            BattleTeam1 = _gameplayBus.PlayerTeam;
+            BattleTeam1 = _party.PlayerTeam;
             base.StartBattle();
         }
     }   

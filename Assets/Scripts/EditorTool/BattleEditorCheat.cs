@@ -17,6 +17,7 @@ namespace CryptoQuest.EditorTool
     public class BattleEditorCheat : MonoBehaviour
     {
         [SerializeField] private GameplayBus _gameplayBus;
+        [SerializeField] private PartySO _party;
         [SerializeField] private BattleLoader _battleLoader;
         [SerializeField] private BattleDataSO[] _battleDataSOs;
         [SerializeField] private AssetReferenceT<Sprite> _defaultBackground;
@@ -136,7 +137,7 @@ namespace CryptoQuest.EditorTool
                 GUILayout.Toggle(_showParty, "Show Party", GUILayout.Width(_guiWidth));
             if (!_showParty) return;
 
-            var playerTeam = _gameplayBus.PlayerTeam;
+            var playerTeam = _party.PlayerTeam;
             for (int i = 0; i < playerTeam.Members.Count; i++)
             {
                 var member = playerTeam.Members[i];
