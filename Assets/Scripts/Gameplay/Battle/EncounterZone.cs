@@ -1,3 +1,4 @@
+using System;
 using CryptoQuest.Gameplay.Battle.Core.Components;
 using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Calculation;
 using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data;
@@ -23,12 +24,18 @@ namespace CryptoQuest.Gameplay.Battle
         [SerializeField] private BoxCollider2D _collider;
         private Vector2 _playerPosition;
         private float _countdown;
+        public string BattleId;
 
 
         private void OnTriggerEnter2D(Collider2D other)
         {
             if (!other.gameObject.CompareTag(_playerTag)) return;
             InitCountDown();
+        }
+
+        private void OnValidate()
+        {
+            _collider = GetComponent<BoxCollider2D>();
         }
 
         private void OnTriggerStay2D(Collider2D other)
@@ -77,6 +84,11 @@ namespace CryptoQuest.Gameplay.Battle
             Gizmos.color = new Color(150, 0, 0, .3f);
             Gizmos.matrix = transform.localToWorldMatrix;
             Gizmos.DrawCube(new Vector3(_collider.offset.x, _collider.offset.y, -2), _collider.size);
+        }
+
+        public void SetBattleId(string battleId)
+        {
+            BattleId = battleId;
         }
     }
 }
