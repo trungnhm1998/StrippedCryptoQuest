@@ -1,13 +1,9 @@
 using CryptoQuest.Gameplay.Battle.Core.Components;
 using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Calculation;
 using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data;
-using CryptoQuest.Input;
 using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Events;
 using IndiGames.Core.EditorTools.Attributes.ReadOnlyAttribute;
-using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
-using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 namespace CryptoQuest.Gameplay.Battle
 {
@@ -19,8 +15,8 @@ namespace CryptoQuest.Gameplay.Battle
         [Header("Area Configuration")]
         [SerializeField, ReadOnly] private string _playerTag = "Player";
 
+        [SerializeField] private string _encounterId;
         [SerializeField] private float _customRatio = 1.7f;
-        [SerializeField] private BoxCollider2D _collider;
         private Vector2 _playerPosition;
         private float _countdown;
 
@@ -72,11 +68,13 @@ namespace CryptoQuest.Gameplay.Battle
             _triggerBattleEncounterEvent.Raise(battleInfo);
         }
 
-        private void OnDrawGizmos()
+        /// <summary>
+        /// This will be called when SuperTiled2Unity has finished importing the component.
+        /// </summary>
+        /// <param name="encounterId"></param>
+        public void EncounterId(string encounterId)
         {
-            Gizmos.color = new Color(150, 0, 0, .3f);
-            Gizmos.matrix = transform.localToWorldMatrix;
-            Gizmos.DrawCube(new Vector3(_collider.offset.x, _collider.offset.y, -2), _collider.size);
+            _encounterId = encounterId;
         }
     }
 }
