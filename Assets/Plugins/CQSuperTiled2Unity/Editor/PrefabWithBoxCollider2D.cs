@@ -79,31 +79,29 @@ namespace CryptoQuestEditor.SuperTiled2Unity
             foreach (var so in supers)
             {
                 if (!so.TryGetComponent<SuperCustomProperties>(out var props)) continue;
+                PostProcessObject(so, objectsById);
                 foreach (var p in props.m_Properties)
                 {
                     objectsById[so.m_Id].BroadcastProperty(p, objectsById);
                 }
-                PostProcessObject(so.gameObject);
             }
         }
 
-        private void PostProcessObject(GameObject go)
+        private void PostProcessObject(SuperObject so, Dictionary<int, GameObject> objectsById)
         {
-            var properties = go.GetComponent<SuperCustomProperties>();
+            var properties = so.GetComponent<SuperCustomProperties>();
+            var go = objectsById[so.m_Id];
             var collider = go.GetComponent<Collider2D>();
 
             if (collider != null)
             {
-                CustomProperty isTrigger;
-                if (properties.TryGetCustomProperty(StringConstants.Unity_IsTrigger, out isTrigger))
-                {
+                if (properties.TryGetCustomProperty(StringConstants.Unity_IsTrigger, out CustomProperty isTrigger))
                     collider.isTrigger = _context.GetIsTriggerOverridable(isTrigger.GetValueAsBool());
-                }
             }
-
-            // Make sure all children have the same physics layer
-            // This is needed for Tile objects in particular that have their colliders in child objects
-            go.AssignChildLayers();
+            else
+            {
+                Debug.LogWarning($"Object '{go.name}' has no collider.");
+            }
         }
 
         private static void DestroyOldReplacedObjects(List<GameObject> goToDestroy)
