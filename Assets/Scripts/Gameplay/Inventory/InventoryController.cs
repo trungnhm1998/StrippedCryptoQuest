@@ -1,8 +1,6 @@
-using System;
 using CryptoQuest.Events.Gameplay;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item;
-using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Container;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
 using UnityEngine;
 
@@ -19,14 +17,8 @@ namespace CryptoQuest.Gameplay.Inventory
         [SerializeField] private ItemEventChannelSO _onAddItem;
         [SerializeField] private ItemEventChannelSO _onRemoveItem;
 
-        [SerializeField] private EquipmentEventChannelSO _onEquipItem;
-        [SerializeField] private EquipmentEventChannelSO _onUnequipItem;
-
         private void OnEnable()
         {
-            _onEquipItem.EventRaised += Equip;
-            _onUnequipItem.EventRaised += Unequip;
-
             _onUseItem.EventRaised += UseItem;
             _onAddItem.EventRaised += AddItem;
 
@@ -35,24 +27,12 @@ namespace CryptoQuest.Gameplay.Inventory
 
         private void OnDisable()
         {
-            _onEquipItem.EventRaised -= Equip;
-            _onUnequipItem.EventRaised -= Unequip;
-
             _onUseItem.EventRaised -= UseItem;
             _onAddItem.EventRaised -= AddItem;
 
             _onRemoveItem.EventRaised -= RemoveItem;
         }
 
-        private void Equip(EquippingSlotContainer.EType slot, EquipmentInfo equipment)
-        {
-            _inventorySO.Equip(slot, equipment);
-        }
-
-        private void Unequip(EquippingSlotContainer.EType slot, EquipmentInfo equipment)
-        {
-            _inventorySO.Unequip(slot);
-        }
 
         private void AddItem(UsableInfo item)
         {

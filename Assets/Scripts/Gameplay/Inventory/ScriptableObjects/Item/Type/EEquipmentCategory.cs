@@ -9,6 +9,5 @@
         Leg = 4,
         Foot = 5,
         Accessory = 6,
-        Count
     }
 }

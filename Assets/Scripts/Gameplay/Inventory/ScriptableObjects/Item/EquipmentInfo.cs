@@ -22,13 +22,11 @@ namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item
 
         public void Equip(InventorySO inventory)
         {
-            Item.EquipmentType.Equip(this, inventory);
             Activate();
         }
 
         public void Unequip(InventorySO inventory)
         {
-            Item.EquipmentType.Unequip(inventory);
             Activate();
         }
     }

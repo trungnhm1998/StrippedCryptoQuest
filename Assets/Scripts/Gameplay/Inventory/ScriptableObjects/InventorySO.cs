@@ -1,10 +1,10 @@
-using System;
 using System.Collections.Generic;
+using CryptoQuest.Config;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Container;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Type;
+using UnityEditor;
 using UnityEngine;
-using UnityEngine.Events;
 using ESlotType =
     CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Container.EquippingSlotContainer.EType;
 
@@ -13,68 +13,43 @@ namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects
     [CreateAssetMenu(menuName = "Crypto Quest/Inventory/Inventory")]
     public class InventorySO : ScriptableObject
     {
-        // TODO: Make this constant to be able to change in ConfigSO
-        public const int EQUIPMENT_SLOTS_COUNT = (int)ESlotType.Count;
-        public const int INVENTORY_SLOTS_COUNT = (int)EEquipmentCategory.Count;
+        [Header("Config"), SerializeField]
+        private InventoryConfigSO _inventoryConfig;
 
-        [NonReorderable, SerializeField] private List<EquippingSlotContainer> _equippingSlots =
-            new(EQUIPMENT_SLOTS_COUNT);
-
-        private Dictionary<ESlotType, EquippingSlotContainer>
-            _equippingSlotsCache = new();
-
-        [field: Header("Inventory")]
-        [field: SerializeField] public List<UsableInfo> UsableItems { get; private set; } = new();
+        [field: Header("Inventory"), SerializeField]
+        public List<UsableInfo> UsableItems { get; private set; } = new();
 
         /// <summary>
-        /// This is sub inventory for equipment
+        /// This is inventory for equipment
         /// and make management by compartments and for easy-to-work UI
         /// </summary>
-        [SerializeField] private List<InventoryContainer> _subInventories =
-            new(INVENTORY_SLOTS_COUNT);
+        [SerializeField] private List<InventoryContainer> _inventories = new();
 
-        private Dictionary<EEquipmentCategory, int> _subInventoriesCache = new();
+        private Dictionary<EEquipmentCategory, int> _inventoriesCache = new();
 
         #region Inventory Editor
 
 #if UNITY_EDITOR
         private void OnValidate()
         {
-            ValidateEquipping();
             ValidateInventory();
-        }
-
-        private void ValidateEquipping()
-        {
-            ValidateListLength(ref _equippingSlots, EQUIPMENT_SLOTS_COUNT);
-            ValidateEquippingSlots();
-        }
-
-        private void ValidateEquippingSlots()
-        {
-            for (int index = 0; index < EQUIPMENT_SLOTS_COUNT; index++)
-            {
-                _equippingSlots[index] ??= new EquippingSlotContainer();
-                _equippingSlots[index].Equipment ??= new EquipmentInfo();
-                _equippingSlots[index].Type = (ESlotType)index;
-                _equippingSlots[index].EquipmentCategory =
-                    (EEquipmentCategory)Mathf.Clamp(index, 0, INVENTORY_SLOTS_COUNT - 1);
-            }
         }
 
         private void ValidateInventory()
         {
-            ValidateListLength(ref _subInventories, INVENTORY_SLOTS_COUNT);
+            _inventories = new(_inventoryConfig.SlotTypeIndex);
+
+            ValidateListLength(ref _inventories, _inventoryConfig.SlotTypeIndex);
             ValidateInventoryContainers();
         }
 
         private void ValidateInventoryContainers()
         {
-            for (int index = 0; index < INVENTORY_SLOTS_COUNT; index++)
+            for (int index = 0; index < _inventoryConfig.SlotTypeIndex; index++)
             {
-                _subInventories[index] ??= new InventoryContainer();
-                _subInventories[index].CurrentItems ??= new List<EquipmentInfo>();
-                _subInventories[index].EquipmentCategory = (EEquipmentCategory)index;
+                _inventories[index] ??= new();
+                _inventories[index].CurrentItems ??= new();
+                _inventories[index].EquipmentCategory = (EEquipmentCategory)index;
             }
         }
 
@@ -88,17 +63,6 @@ namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects
         }
 
         /// <summary>
-        /// This method will get the cache of equipping slots to check if the slot is available
-        /// in unit test
-        /// <see cref="InventorySOTest.InventorySO_ShouldHaveCorrectSlots"/>
-        /// </summary>
-        /// <returns></returns>
-        public int Editor_GetEquipmentSlotsCount()
-        {
-            return _equippingSlotsCache.Count;
-        }
-
-        /// <summary>
         /// This method will get the cache of inventory slots to check if the slot is available
         /// in unit test
         /// <see cref="InventorySOTest.InventorySO_ShouldHaveCorrectInventorySlots"/>
@@ -106,17 +70,7 @@ namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects
         /// <returns></returns>
         public int Editor_GetInventorySlotsCacheCount()
         {
-            return _subInventoriesCache.Count;
-        }
-
-        /// <summary>
-        /// This method is used for Editor only in unit test
-        /// <see cref="InventorySOTest.Setup"/>
-        /// </summary>
-        /// <returns></returns>
-        public Dictionary<ESlotType, EquippingSlotContainer> Editor_GetEquippingCache()
-        {
-            return _equippingSlotsCache;
+            return _inventoriesCache.Count;
         }
 
         /// <summary>
@@ -126,17 +80,23 @@ namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects
         /// <returns></returns>
         public List<InventoryContainer> Editor_GetSubInventoryContainers()
         {
-            return _subInventories;
+            return _inventories;
         }
 
         /// <summary>
-        ///  This method is used for Editor only in unit test
-        ///  <see cref="InventorySOTest.InventorySO_ShouldHaveCorrectSlots"/>
+        /// This function only use for Unit test to get the inventory config
+        /// <see cref="InventorySO.OnEnable"/>
         /// </summary>
-        /// <returns></returns>
-        public List<EquippingSlotContainer> Editor_GetEquippingSlotContainers()
+        private void Editor_ValidateInventoryConfig()
         {
-            return _equippingSlots;
+            if (_inventoryConfig != null) return;
+
+            var guids = AssetDatabase.FindAssets("t:InventoryConfigSO");
+
+            var path = AssetDatabase.GUIDToAssetPath(guids[0]);
+            var inventoryConfigSO = AssetDatabase.LoadAssetAtPath<InventoryConfigSO>(path);
+
+            _inventoryConfig = inventoryConfigSO;
         }
 #endif
 
@@ -145,26 +105,21 @@ namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects
         private void OnEnable()
         {
 #if UNITY_EDITOR
-            ValidateEquipping();
+            Editor_ValidateInventoryConfig();
             ValidateInventory();
 #endif
+
             Initialize();
         }
 
         private void Initialize()
         {
-            _equippingSlotsCache.Clear();
-            _subInventoriesCache.Clear();
+            _inventoriesCache.Clear();
 
-            foreach (var slot in _equippingSlots)
+            for (var index = 0; index < _inventories.Count; index++)
             {
-                _equippingSlotsCache[slot.Type] = slot;
-            }
-
-            for (var index = 0; index < _subInventories.Count; index++)
-            {
-                var inventory = _subInventories[index];
-                _subInventoriesCache[inventory.EquipmentCategory] = index;
+                var inventory = _inventories[index];
+                _inventoriesCache[inventory.EquipmentCategory] = index;
             }
         }
 
@@ -218,7 +173,6 @@ namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects
             return true;
         }
 
-
         public bool Add(EEquipmentCategory equipmentCategory, EquipmentInfo equipment)
         {
             if (equipment == null)
@@ -243,7 +197,7 @@ namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects
             int index = GetInventoryIndex(equipment);
             if (index < 0) return false;
 
-            _subInventories[index].CurrentItems.Remove(equipment);
+            _inventories[index].CurrentItems.Remove(equipment);
             return true;
         }
 
@@ -262,47 +216,6 @@ namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects
             return true;
         }
 
-        public bool Equip(ESlotType allowedSlot, EquipmentInfo equipmentInfo)
-        {
-            if (!Unequip(allowedSlot))
-            {
-                Debug.LogWarning($"Cannot unequip {allowedSlot}");
-                return false;
-            }
-
-            if (!Remove(equipmentInfo))
-            {
-                Debug.LogWarning($"Inventory doesn't have {equipmentInfo.Item.name}");
-                return false;
-            }
-
-            if (!UpdateEquippingSlot(allowedSlot, equipmentInfo))
-            {
-                Debug.LogWarning($"Cannot update inventory {allowedSlot}");
-                return false;
-            }
-
-            return true;
-        }
-
-        public bool Unequip(ESlotType slotType)
-        {
-            if (!UpdateEquippingSlot(slotType))
-            {
-                Debug.LogWarning($"Cannot update inventory {slotType}");
-                return false;
-            }
-
-            return true;
-        }
-
-        public int CountEquipmentInSlot(EEquipmentCategory slotEquipmentCategory = EEquipmentCategory.Weapon)
-        {
-            var currentItemsInSlot = _subInventories[(int)slotEquipmentCategory].CurrentItems;
-
-            return currentItemsInSlot.Count;
-        }
-
         private int GetInventoryIndex(EquipmentInfo equipment)
         {
             if (equipment == null)
@@ -318,7 +231,7 @@ namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects
             }
 
             var currentCategory = equipment.Item.EquipmentType.EquipmentCategory;
-            if (!_subInventoriesCache.TryGetValue(currentCategory, out var index))
+            if (!_inventoriesCache.TryGetValue(currentCategory, out var index))
             {
                 Debug.LogWarning($"Inventory doesn't have {currentCategory}");
                 return -1;
@@ -337,39 +250,23 @@ namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects
         {
             equipments = new();
 
-            if (!_subInventoriesCache.TryGetValue(equipmentCategory, out var index)) return false;
+            if (!_inventoriesCache.TryGetValue(equipmentCategory, out var index)) return false;
 
-            equipments = _subInventories[index].CurrentItems;
+            equipments = _inventories[index].CurrentItems;
 
             return true;
         }
 
-        public EquippingSlotContainer GetInventorySlot(ESlotType slotType)
-        {
-            return _equippingSlotsCache[slotType];
-        }
-
-        private bool UpdateEquippingSlot(ESlotType slotType, EquipmentInfo equipmentInfo = null)
-        {
-            if (!_equippingSlotsCache.TryGetValue(slotType, out var slot))
-            {
-                Debug.LogError($"Slot {slotType} is not available");
-                return false;
-            }
-
-            slot.UpdateEquipment(equipmentInfo);
-            return true;
-        }
 
         private bool UpdateInventorySlot(EEquipmentCategory category, EquipmentInfo equipment = null)
         {
-            if (!_subInventoriesCache.TryGetValue(category, out var cachedIndex))
+            if (!_inventoriesCache.TryGetValue(category, out var cachedIndex))
             {
                 Debug.LogWarning($"Inventory doesn't have {category} slot");
                 return false;
             }
 
-            var inventory = _subInventories[cachedIndex];
+            var inventory = _inventories[cachedIndex];
             inventory.CurrentItems.Add(equipment);
             return true;
         }

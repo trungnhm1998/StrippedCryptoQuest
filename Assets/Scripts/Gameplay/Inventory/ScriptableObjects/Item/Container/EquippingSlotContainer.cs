@@ -17,7 +17,6 @@ namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Container
             Foot = 5,
             Accessory1 = 6,
             Accessory2 = 7,
-            Count 
         }
 
         [field: SerializeField] public EEquipmentCategory EquipmentCategory { get; set; }

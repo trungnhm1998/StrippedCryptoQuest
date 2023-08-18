@@ -12,12 +12,10 @@ namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Type
 
         public virtual void Equip(EquipmentInfo equipment, InventorySO inventory)
         {
-            inventory.Equip(AllowedSlots[0], equipment);
         }
 
         public virtual void Unequip(InventorySO inventory)
         {
-            inventory.Unequip(AllowedSlots[0]);
         }
     }
 }

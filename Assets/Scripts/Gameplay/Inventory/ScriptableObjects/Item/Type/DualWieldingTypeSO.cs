@@ -12,16 +12,18 @@ namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Type
 
         public override void Unequip(InventorySO inventory)
         {
-            var isDualWielding = inventory.GetInventorySlot(SlotType.Weapon).Equipment ==
-                                 inventory.GetInventorySlot(SlotType.Shield).Equipment;
-            if (!isDualWielding)
-            {
-                Debug.LogError("Trying to unequip dual wielding type, but it's not dual wielding");
-                return;
-            }
-
-            inventory.Unequip(AllowedSlots[0]);
-            inventory.Unequip(AllowedSlots[1]);
+            //TODO: @Long18 will refactor this after have character equipment controller
+            
+            // var isDualWielding = inventory.GetInventorySlot(SlotType.Weapon).Equipment ==
+            //                      inventory.GetInventorySlot(SlotType.Shield).Equipment;
+            // if (!isDualWielding)
+            // {
+            //     Debug.LogError("Trying to unequip dual wielding type, but it's not dual wielding");
+            //     return;
+            // }
+            //
+            // inventory.Unequip(AllowedSlots[0]);
+            // inventory.Unequip(AllowedSlots[1]);
         }
     }
 }
