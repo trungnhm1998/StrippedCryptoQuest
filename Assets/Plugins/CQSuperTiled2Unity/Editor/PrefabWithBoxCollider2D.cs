@@ -87,7 +87,7 @@ namespace CryptoQuestEditor.SuperTiled2Unity
             }
         }
 
-        private void PostProcessObject(SuperObject so, Dictionary<int, GameObject> objectsById)
+        private void PostProcessObject(SuperObject so, Dictionary<int, GameObject> objectsById, bool useCustomProp = false)
         {
             var properties = so.GetComponent<SuperCustomProperties>();
             var go = objectsById[so.m_Id];
@@ -95,8 +95,11 @@ namespace CryptoQuestEditor.SuperTiled2Unity
 
             if (collider != null)
             {
-                if (properties.TryGetCustomProperty(StringConstants.Unity_IsTrigger, out CustomProperty isTrigger))
+                if (properties.TryGetCustomProperty(StringConstants.Unity_IsTrigger, out CustomProperty isTrigger) &&
+                    useCustomProp)
                     collider.isTrigger = _context.GetIsTriggerOverridable(isTrigger.GetValueAsBool());
+                else
+                    collider.isTrigger = true;
             }
             else
             {
