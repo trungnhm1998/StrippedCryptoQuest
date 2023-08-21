@@ -1,7 +1,8 @@
 ﻿using CryptoQuest.UI.Battle.CommandsMenu;
-using System.Collections.Generic;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item;
+using CryptoQuest.Gameplay.Inventory.Helper;
+using UnityEngine;
 
 namespace CryptoQuest.UI.Battle.MenuStateMachine.States
 {
@@ -16,7 +17,7 @@ namespace CryptoQuest.UI.Battle.MenuStateMachine.States
 
         protected override void SetupButtonsInfo()
         {
-            foreach (var itemInfo in _inventorySO.UsableItems)
+            foreach (var itemInfo in _inventorySO.GetItemsInBattle())
             {
                 var buttonInfo = new ExpendableItemAbstractButtonInfo(SetExpendableItemAbility, itemInfo);
                 _buttonInfos.Add(buttonInfo);

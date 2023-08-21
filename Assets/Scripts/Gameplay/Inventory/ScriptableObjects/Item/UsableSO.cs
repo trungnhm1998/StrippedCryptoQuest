@@ -1,6 +1,6 @@
+using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Skills;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.ActionTypes;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Type;
-using IndiGames.GameplayAbilitySystem.AbilitySystem.ScriptableObjects;
 using UnityEngine;
 
 namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item
@@ -12,12 +12,22 @@ namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item
         [field: SerializeField] public UsableTypeSO UsableTypeSO { get; private set; }
         [field: SerializeField] public ActionDefinitionBase ActionDefinition { get; private set; }
 
-        [field: SerializeField] public AbilityScriptableObject Ability { get; private set; }
+        [field: SerializeField] public AbilitySO Ability { get; private set; }
         
         public ActionSpecificationBase Action => ActionDefinition.Create();
 
 
 #if UNITY_EDITOR
+        /// <summary>
+        /// Make sure ability of this item has item's name
+        /// to show in battle when select item
+        /// </summary>
+        private void OnValidate()
+        {
+            if (Ability == null) return;
+            Ability.SkillInfo.SkillName = DisplayName;
+            Ability.SkillInfo.SkillDescription = Description;
+        }
 
         /// <summary>
         /// This method will be use in <see cref="CryptoQuestEditor.Gameplay.Inventory.UsableSOEditor.ImportBatchData"/> 
