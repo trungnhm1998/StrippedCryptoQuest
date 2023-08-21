@@ -35,7 +35,8 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Monster
                 string[] splitedData = allLines[index].Split('\t');
                 string name = splitedData[4];
                 string path = this.defaultStoragePath + "/" + name + ".asset";
-                if (!DataValidator.IsStringsNotNull(splitedData, new List<int>() { 22, 23, 24, 25, 26, 27 }))
+                if (!DataValidator.IsStringsNotNull(splitedData, new List<int>()
+                        { 3, 5, 22, 23, 24, 25, 26, 27 }))
                     continue;
                 MonsterUnitDataModel dataModel = new MonsterUnitDataModel()
                 {

@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data;
+using UnityEngine;
 
 namespace CryptoQuest.Data
 {
@@ -17,13 +19,42 @@ namespace CryptoQuest.Data
             return true;
         }
 
-        public static bool IsStringsNotNull(string[] datas, List<int> columnsException)
+        public static bool IsStringsNotNull(string[] datas, List<int> columnsException = null)
         {
             for (int i = 0; i < datas.Length; i++)
             {
-                if (columnsException.Contains(i))
+                if (columnsException != null && columnsException.Contains(i))
                     continue;
                 if (string.IsNullOrEmpty(datas[i])) return false;
+            }
+
+            return true;
+        }
+
+        public static bool IsValidNumberOfMonsterSetup(List<string> battleIds)
+        {
+            int count = 0;
+            foreach (var battleId in battleIds)
+            {
+                if (!string.IsNullOrEmpty(battleId))
+                {
+                    count += battleId.Split(',').Length;
+                }
+            }
+
+            Debug.Log(count);
+
+            return count <= 4;
+        }
+
+        public static bool MonsterPartyValidator(MonsterPartyDataModel data)
+        {
+            var properties = data.GetType().GetProperties();
+            foreach (var property in properties)
+            {
+                var value = property.GetValue(data);
+                if (value == null || !IsMatchCustomBusinessRule(value))
+                    return false;
             }
 
             return true;
@@ -67,5 +98,11 @@ namespace CryptoQuest.Data
         public float Exp { get; set; }
         public float Gold { get; set; }
         public string DropItemID { get; set; }
+    }
+
+    public class MonsterPartyDataModel
+    {
+        public int MonserPartyId { get; set; }
+        public string MonsterGroupingProperty { get; set; }
     }
 }

@@ -9,6 +9,8 @@ namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data
     [CreateAssetMenu(menuName = "Gameplay/Battle/Battle Data")]
     public class BattleDataSO : ScriptableObject
     {
+        public int BattleId;
+
         [field: SerializeField]
         public CharacterGroup[] EnemyGroups { get; private set; }
 
@@ -23,7 +25,12 @@ namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data
                 return _allEnemies;
             }
         }
-
+#if UNITY_EDITOR
+        public void Editor_SetEnemyGroups(CharacterGroup[] group)
+        {
+            EnemyGroups = group;
+        }
+#endif
         private void InitAllEnemies()
         {
             if (_allEnemies.Count > 0) return;
@@ -58,7 +65,12 @@ namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data
     {
         [field: SerializeField]
         public CharacterDataSO[] Characters { get; private set; }
-
+#if UNITY_EDITOR
+        public void Editor_SetCharacters(CharacterDataSO[] characters)
+        {
+            Characters = characters;
+        }
+#endif
         public void ValidateSameCharacterInGroup()
         {
             if (Characters.Length <= 0) return;
