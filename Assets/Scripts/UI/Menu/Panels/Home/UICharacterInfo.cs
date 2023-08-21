@@ -81,8 +81,8 @@ namespace CryptoQuest.UI.Menu.Panels.Home
 
         private void SetHP()
         {
-            CharAttributes.GetAttributeValue(_hpAttribute, out var curHp);
-            CharAttributes.GetAttributeValue(_maxHpAttribute, out var maxHp);
+            CharAttributes.TryGetAttributeValue(_hpAttribute, out var curHp);
+            CharAttributes.TryGetAttributeValue(_maxHpAttribute, out var maxHp);
 
             _currentHp.text = ((int)curHp.CurrentValue).ToString();
             _maxHp.text = ((int)maxHp.CurrentValue).ToString();
@@ -92,8 +92,8 @@ namespace CryptoQuest.UI.Menu.Panels.Home
 
         private void SetMP()
         {
-            CharAttributes.GetAttributeValue(_mpAttribute, out var curMp);
-            CharAttributes.GetAttributeValue(_maxMpAttribute, out var maxMp);
+            CharAttributes.TryGetAttributeValue(_mpAttribute, out var curMp);
+            CharAttributes.TryGetAttributeValue(_maxMpAttribute, out var maxMp);
         
             _currentMp.text = ((int)curMp.CurrentValue).ToString();
             _maxMp.text = ((int)maxMp.CurrentValue).ToString();
@@ -103,8 +103,8 @@ namespace CryptoQuest.UI.Menu.Panels.Home
         
         private void SetEXP()
         {
-            CharAttributes.GetAttributeValue(_expAttribute, out var curExp);
-            CharAttributes.GetAttributeValue(_maxExpAttribute, out var maxExp);
+            CharAttributes.TryGetAttributeValue(_expAttribute, out var curExp);
+            CharAttributes.TryGetAttributeValue(_maxExpAttribute, out var maxExp);
 
             if (maxExp.CurrentValue <= 0)
             {
