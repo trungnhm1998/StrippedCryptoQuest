@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.ScriptableObjects;
 using IndiGames.GameplayAbilitySystem.EffectSystem;
+using IndiGames.GameplayAbilitySystem.TagSystem.ScriptableObjects;
 
 namespace IndiGames.GameplayAbilitySystem.Helper
 {

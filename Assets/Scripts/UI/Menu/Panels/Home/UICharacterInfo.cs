@@ -1,29 +1,45 @@
-using CryptoQuest.UI.Menu.MockData;
+using CryptoQuest.Character.Attributes;
+using CryptoQuest.Gameplay;
+using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data;
+using IndiGames.GameplayAbilitySystem.AttributeSystem;
+using IndiGames.GameplayAbilitySystem.AttributeSystem.Components;
+using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace CryptoQuest.UI.Menu.Panels.Home
 {
     public class UICharacterInfo : MonoBehaviour
     {
+        [Header("Character Infomation")]
+        [SerializeField] private AttributeScriptableObject _hpAttribute;
+        [SerializeField] private AttributeScriptableObject _maxHpAttribute;
+        [SerializeField] private AttributeScriptableObject _mpAttribute;
+        [SerializeField] private AttributeScriptableObject _maxMpAttribute;
+        [SerializeField] private AttributeScriptableObject _expAttribute;
+        [SerializeField] private AttributeScriptableObject _maxExpAttribute;
+
         [Header("UI Components")]
         [SerializeField] private GameObject _content;
-        [SerializeField] private Text _name;
-        [SerializeField] private Text _level;
-        [SerializeField] private Text _currentHP;
-        [SerializeField] private Text _maxHP;
-        [SerializeField] private Image _HPBar;
-        [SerializeField] private Text _currentMP;
-        [SerializeField] private Text _maxMP;
-        [SerializeField] private Image _MPBar;
-        [SerializeField] private Image _EXPBar;
-        [SerializeField] private Text _class;
-        [SerializeField] private Image _elemental;
+        [SerializeField] private TMP_Text _name;
+        [SerializeField] private TMP_Text _level;
+        [SerializeField] private TMP_Text _currentHp;
+        [SerializeField] private TMP_Text _maxHp;
+        [SerializeField] private Image _HpBar;
+        [SerializeField] private TMP_Text _currentMp;
+        [SerializeField] private TMP_Text _maxMp;
+        [SerializeField] private Image _MpBar;
+        [SerializeField] private Image _ExpBar;
+        [SerializeField] private TMP_Text _class;
+        [SerializeField] private Image _element;
         [SerializeField] private Image _avatar;
 
-        [Header("Data")]
-        private CharInfoMockDataSO _charInfoMockData;
-        public CharInfoMockDataSO CharInfoMockData { get => _charInfoMockData; set => _charInfoMockData = value; }
+        private HeroDataSO _charInfo;
+        public HeroDataSO CharInfo { get => _charInfo; set => _charInfo = value; }
+
+        private AttributeSystemBehaviour charAttributes;
+        public AttributeSystemBehaviour CharAttributes { get => charAttributes; set => charAttributes = value; }
 
         private void Start()
         {
@@ -32,7 +48,7 @@ namespace CryptoQuest.UI.Menu.Panels.Home
 
         private void CheckExistence()
         {
-            if (CharInfoMockData == null)
+            if (CharInfo == null)
                 _content.SetActive(false);
             else
             {
@@ -46,7 +62,6 @@ namespace CryptoQuest.UI.Menu.Panels.Home
             SetName();
             SetLevel();
             SetHP();
-            SetHP();
             SetMP();
             SetEXP();
             SetClass();
@@ -56,62 +71,71 @@ namespace CryptoQuest.UI.Menu.Panels.Home
 
         private void SetName()
         {
-            _name.text = CharInfoMockData.Name;
+            _name.text = CharInfo.Name;
         }
 
         private void SetLevel()
         {
-            _level.text = string.Format(_level.text, CharInfoMockData.Level);
+            _level.text = string.Format(_level.text, CharInfo.Level);
         }
 
         private void SetHP()
         {
-            float curHP = CharInfoMockData.CurrentHP;
-            float maxHP = CharInfoMockData.MaxHP;
+            CharAttributes.TryGetAttributeValue(_hpAttribute, out var curHp);
+            CharAttributes.TryGetAttributeValue(_maxHpAttribute, out var maxHp);
 
-            _currentHP.text = ((int)curHP).ToString();
-            _maxHP.text = ((int)maxHP).ToString();
+            _currentHp.text = ((int)curHp.CurrentValue).ToString();
+            _maxHp.text = ((int)maxHp.CurrentValue).ToString();
 
-            _HPBar.fillAmount = curHP / maxHP;
+            _HpBar.fillAmount = curHp.CurrentValue / maxHp.CurrentValue;
         }
 
         private void SetMP()
         {
-            float curMP = CharInfoMockData.CurrentMP;
-            float maxMP = CharInfoMockData.MaxMP;
-
-            _currentMP.text = ((int)curMP).ToString();
-            _maxMP.text = ((int)maxMP).ToString();
-
-            _MPBar.fillAmount = curMP / maxMP;
+            CharAttributes.TryGetAttributeValue(_mpAttribute, out var curMp);
+            CharAttributes.TryGetAttributeValue(_maxMpAttribute, out var maxMp);
+        
+            _currentMp.text = ((int)curMp.CurrentValue).ToString();
+            _maxMp.text = ((int)maxMp.CurrentValue).ToString();
+        
+            _MpBar.fillAmount = curMp.CurrentValue / maxMp.CurrentValue;
         }
-
+        
         private void SetEXP()
         {
-            float curEXP = CharInfoMockData.CurrentEXP;
-            float maxEXP = CharInfoMockData.MaxEXP;
+            CharAttributes.TryGetAttributeValue(_expAttribute, out var curExp);
+            CharAttributes.TryGetAttributeValue(_maxExpAttribute, out var maxExp);
 
-            _EXPBar.fillAmount = curEXP / maxEXP;
+            if (maxExp.CurrentValue <= 0)
+            {
+                maxExp = new AttributeValue()
+                {
+                    BaseValue = 100,
+                    CurrentValue = 100
+                };
+            }
+            _ExpBar.fillAmount = curExp.CurrentValue / maxExp.CurrentValue;
         }
 
         private void SetClass()
         {
-            _class.text = CharInfoMockData.Class;
+            _class.text = CharInfo.name;
         }
 
         private void SetElemental()
         {
-            _elemental.sprite = CharInfoMockData.Elemental.Icon;
+            _element.sprite = CharInfo.ElementIcon;
         }
 
         private void SetAvatar()
         {
-            _avatar.sprite = CharInfoMockData.Avatar;
+            _avatar.sprite = CharInfo.Avatar;
         }
 
-        public void SetData(CharInfoMockDataSO dataReceived)
+        public void SetData(HeroDataSO infoReceived, AttributeSystemBehaviour attributesReceived)
         {
-            CharInfoMockData = dataReceived;
+            CharInfo = infoReceived;
+            CharAttributes = attributesReceived;
         }
     }
 }

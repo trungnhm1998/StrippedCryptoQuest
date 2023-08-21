@@ -6,12 +6,12 @@ using UnityEngine;
 
 namespace IndiGames.GameplayAbilitySystem.EffectSystem.EffectApplier
 {
-    public class EffectApplier : IEffectApplier
+    public class DefaultEffectApplier : IEffectApplier
     {
         private readonly AbilitySystemBehaviour _ownerSystem;
         private readonly AttributeSystemBehaviour _attributeSystem;
 
-        public EffectApplier(AbilitySystemBehaviour ownerSystem)
+        public DefaultEffectApplier(AbilitySystemBehaviour ownerSystem)
         {
             _ownerSystem = ownerSystem;
             _attributeSystem = ownerSystem.AttributeSystem;
@@ -37,7 +37,7 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem.EffectApplier
             {
                 var modifierSpec = effectAttributeModifiers[index];
                 var attribute = modifierSpec.AttributeSO;
-                _attributeSystem.GetAttributeValue(attribute, out var attributeValue);
+                _attributeSystem.TryGetAttributeValue(attribute, out var attributeValue);
 
                 Modifier calculatedModifier = modifiers[index].Modifier;
                 switch (modifierSpec.ModifierType)

@@ -1,4 +1,5 @@
 using System;
+using IndiGames.GameplayAbilitySystem.AttributeSystem;
 
 namespace IndiGames.GameplayAbilitySystem.EffectSystem
 {
@@ -6,12 +7,6 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem
     public struct EffectDetails
     {
         public EffectAttributeModifier[] Modifiers;
-        public EEffectStackingType StackingType;
-    }
-
-    public enum EEffectStackingType
-    {
-        External,
-        Core,
+        public EModifierType StackingType;
     }
 }

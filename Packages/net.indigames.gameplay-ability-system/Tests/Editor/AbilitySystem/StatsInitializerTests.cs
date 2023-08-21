@@ -35,8 +35,8 @@ namespace IndiGames.GameplayAbilitySystem.Tests.Editor.AbilitySystem
                 }
             };
             _statInitializer.InitStats(_statDatabase);
-            Assert.IsTrue(_attributeSystem.HasAttribute(attribute));
-            _attributeSystem.GetAttributeValue(attribute, out var value);
+            Assert.IsTrue(_attributeSystem.HasAttribute(attribute, out _));
+            _attributeSystem.TryGetAttributeValue(attribute, out var value);
             Assert.AreEqual(inputValue, value.CurrentValue);
         }
     }

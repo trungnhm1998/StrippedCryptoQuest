@@ -4,13 +4,15 @@ using IndiGames.GameplayAbilitySystem.AbilitySystem.ScriptableObjects;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.Components;
 using IndiGames.GameplayAbilitySystem.EffectSystem.Components;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace IndiGames.GameplayAbilitySystem.AbilitySystem.Components
 {
     [RequireComponent(typeof(AttributeSystemBehaviour))]
     [RequireComponent(typeof(EffectSystemBehaviour))]
+    [RequireComponent(typeof(AbilityEffectBehaviour))]
     [RequireComponent(typeof(TagSystemBehaviour))]
-    public class AbilitySystemBehaviour : MonoBehaviour
+    public partial class AbilitySystemBehaviour : MonoBehaviour
     {
         [SerializeField] private AttributeSystemBehaviour _attributeSystem;
         public AttributeSystemBehaviour AttributeSystem => _attributeSystem;
@@ -18,10 +20,13 @@ namespace IndiGames.GameplayAbilitySystem.AbilitySystem.Components
         [SerializeField] private EffectSystemBehaviour _effectSystem;
         public EffectSystemBehaviour EffectSystem => _effectSystem;
 
+        [SerializeField] private AbilityEffectBehaviour _abilityEffectSystem;
+        public AbilityEffectBehaviour AbilityEffectSystem => _abilityEffectSystem;
+
         [SerializeField] private TagSystemBehaviour _tagSystem;
         public TagSystemBehaviour TagSystem => _tagSystem;
 
-        protected AbilitySpecificationContainer _grantedAbilities = new();
+        private AbilitySpecificationContainer _grantedAbilities = new();
         public AbilitySpecificationContainer GrantedAbilities => _grantedAbilities;
 
 
@@ -34,33 +39,31 @@ namespace IndiGames.GameplayAbilitySystem.AbilitySystem.Components
 
         private void ValidateComponents()
         {
-            if (_attributeSystem == null)
-            {
-                _attributeSystem = GetComponent<AttributeSystemBehaviour>();
-            }
-            if (_effectSystem == null)
-            {
-                _effectSystem = GetComponent<EffectSystemBehaviour>();
-            }
-            if (_tagSystem == null)
-            {
-                _tagSystem = GetComponent<TagSystemBehaviour>();
-            }
-
+            _attributeSystem = GetComponent<AttributeSystemBehaviour>();
+            _effectSystem = GetComponent<EffectSystemBehaviour>();
+            _tagSystem = GetComponent<TagSystemBehaviour>();
+            _abilityEffectSystem = GetComponent<AbilityEffectBehaviour>();
         }
 
         private void Awake()
         {
             ValidateComponents();
+            // assert all components are not null
+            Assert.IsNotNull(_attributeSystem, $"Attribute System is required!");
+            Assert.IsNotNull(_effectSystem, $"Effect System is required!");
+            Assert.IsNotNull(_abilityEffectSystem, $"Ability Effect System is required!");
+            Assert.IsNotNull(_tagSystem, $"Tag System is required!");
             _effectSystem.InitSystem(this);
         }
 
         /// <summary>
         /// Add/Give/Grant ability to the system. Only ability that in the system can be active
         /// There's only 1 ability per system (no duplicate ability)
+        ///
+        /// <see cref="AbstractAbility.InternalActiveAbility"/> required this system to be enabled/active in order to start a coroutine
         /// </summary>
         /// <param name="abilityDef"></param>
-        /// <returns>A ability handler (humble object) to execute their ability logic</returns>
+        /// <returns>A <see cref="AbstractAbility"/> to handle (humble object) their ability logic</returns>
         public AbstractAbility GiveAbility(AbilityScriptableObject abilityDef)
         {
             foreach (var ability in _grantedAbilities.Abilities)
@@ -83,6 +86,7 @@ namespace IndiGames.GameplayAbilitySystem.AbilitySystem.Components
                 if (abilitySpec.AbilitySO == inAbilitySpec.AbilitySO)
                     return abilitySpec;
             }
+
             _grantedAbilities.Abilities.Add(inAbilitySpec);
             OnGrantedAbility(inAbilitySpec);
 
@@ -122,14 +126,14 @@ namespace IndiGames.GameplayAbilitySystem.AbilitySystem.Components
 
             return false;
         }
-        
+
         private void OnRemoveAbility(AbstractAbility abilitySpec)
         {
             if (!abilitySpec.AbilitySO) return;
 
             abilitySpec.OnAbilityRemoved(abilitySpec);
         }
-        
+
         public void RemoveAllAbilities()
         {
             for (int i = _grantedAbilities.Abilities.Count - 1; i >= 0; i--)
@@ -138,9 +142,10 @@ namespace IndiGames.GameplayAbilitySystem.AbilitySystem.Components
                 _grantedAbilities.Abilities.RemoveAt(i);
                 OnRemoveAbility(abilitySpec);
             }
+
             _grantedAbilities.Abilities = new List<AbstractAbility>();
         }
-        
+
         private void Update()
         {
             RemovePendingAbilities();

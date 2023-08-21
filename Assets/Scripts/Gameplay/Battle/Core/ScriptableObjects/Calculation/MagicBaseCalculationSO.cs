@@ -19,7 +19,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Calculation
             ref EffectAttributeModifier[] attributeModifiers)
         {
             SkillParameters skillParameters = effectSpec.Parameters as SkillParameters;
-            effectSpec.Owner.AttributeSystem.GetAttributeValue(_baseMagicAttackSO, out AttributeValue baseMagicAttack);
+            effectSpec.Owner.AttributeSystem.TryGetAttributeValue(_baseMagicAttackSO, out AttributeValue baseMagicAttack);
             float baseMagicValue = BattleCalculator.CalculateBaseDamage(skillParameters, baseMagicAttack.CurrentValue,
                 Random.Range(_lowerRandomRange, _upperRandomRange));
             for (var index = 0; index < attributeModifiers.Length; index++)

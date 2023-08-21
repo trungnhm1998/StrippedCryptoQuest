@@ -142,7 +142,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit
         {
             if (Owner == null || args.System != Owner.AttributeSystem) return;
 
-            Owner.AttributeSystem.GetAttributeValue(_hpAttribute, out var attributValue);
+            Owner.AttributeSystem.TryGetAttributeValue(_hpAttribute, out var attributValue);
             if (attributValue.CurrentValue > 0 || _isDead) return;
 
             _isDead = true;

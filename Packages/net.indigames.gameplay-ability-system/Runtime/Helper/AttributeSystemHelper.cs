@@ -6,7 +6,7 @@ namespace IndiGames.GameplayAbilitySystem.Helper
     {
         public static AttributeValue CalculateCurrentAttributeValue(AttributeValue attributeValue)
         {
-            float overridingValue = attributeValue.Modifier.Overriding + attributeValue.CoreModifier.Overriding;
+            float overridingValue = attributeValue.ExternalModifier.Overriding + attributeValue.CoreModifier.Overriding;
             if (overridingValue != 0)
             {
                 attributeValue.CurrentValue = overridingValue;
@@ -15,8 +15,8 @@ namespace IndiGames.GameplayAbilitySystem.Helper
 
             var coreValue = CaculateCoreAttributeValue(attributeValue);
 
-            attributeValue.CurrentValue = (coreValue + attributeValue.Modifier.Additive) *
-                                          (attributeValue.Modifier.Multiplicative + 1);
+            attributeValue.CurrentValue = (coreValue + attributeValue.ExternalModifier.Additive) *
+                                          (attributeValue.ExternalModifier.Multiplicative + 1);
             return attributeValue;
         }
 

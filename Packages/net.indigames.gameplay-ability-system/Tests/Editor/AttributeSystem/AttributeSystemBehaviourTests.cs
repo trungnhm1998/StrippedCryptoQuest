@@ -28,9 +28,9 @@ namespace IndiGames.GameplayAbilitySystem.Tests.Editor.AttributeSystem
         [Test]
         public void HasAttribute_ShouldFalse()
         {
-            Assert.IsFalse(_attributeSystem.HasAttribute(_attributeInSystem),
+            Assert.IsFalse(_attributeSystem.HasAttribute(_attributeInSystem, out _),
                 $"{_attributeInSystem.name} is not added into Attribute System");
-            Assert.IsFalse(_attributeSystem.HasAttribute(_attributeOutSystem),
+            Assert.IsFalse(_attributeSystem.HasAttribute(_attributeOutSystem, out _),
                 $"{_attributeOutSystem.name} is also not added into Attribute System");
         }
 
@@ -39,9 +39,9 @@ namespace IndiGames.GameplayAbilitySystem.Tests.Editor.AttributeSystem
         {
             SetupAddAttribute();
 
-            Assert.IsTrue(_attributeSystem.HasAttribute(_attributeInSystem),
+            Assert.IsTrue(_attributeSystem.HasAttribute(_attributeInSystem, out _),
                 $"{_attributeInSystem} just added into Attribute System");
-            Assert.IsFalse(_attributeSystem.HasAttribute(_attributeOutSystem),
+            Assert.IsFalse(_attributeSystem.HasAttribute(_attributeOutSystem, out _),
                 $"{_attributeOutSystem.name} still not added into Attribute System");
         }
 
@@ -56,9 +56,9 @@ namespace IndiGames.GameplayAbilitySystem.Tests.Editor.AttributeSystem
         {
             SetupAddAttribute();
 
-            Assert.IsTrue(_attributeSystem.GetAttributeValue(_attributeInSystem, out var valueInSystem), 
+            Assert.IsTrue(_attributeSystem.TryGetAttributeValue(_attributeInSystem, out var valueInSystem), 
                 $"Shoud be true because {_attributeInSystem.name} is in system");
-            Assert.IsFalse(_attributeSystem.GetAttributeValue(_attributeOutSystem, out var valueOutSystem), 
+            Assert.IsFalse(_attributeSystem.TryGetAttributeValue(_attributeOutSystem, out var valueOutSystem), 
                 $"Shoud be false because {_attributeOutSystem.name} is in system");
         }
 
@@ -77,8 +77,8 @@ namespace IndiGames.GameplayAbilitySystem.Tests.Editor.AttributeSystem
         {
             SetupSetBaseValueAttribute(inputValue);
 
-            _attributeSystem.GetAttributeValue(_attributeInSystem, out var valueInSystem);
-            _attributeSystem.GetAttributeValue(_attributeOutSystem, out var valueOutSystem);
+            _attributeSystem.TryGetAttributeValue(_attributeInSystem, out var valueInSystem);
+            _attributeSystem.TryGetAttributeValue(_attributeOutSystem, out var valueOutSystem);
             
             Assert.AreEqual(expectedBaseValue, valueInSystem.BaseValue);
             Assert.AreEqual(DEFAULT_ATTRIBUTE_VALUE, valueOutSystem.BaseValue,
@@ -94,7 +94,7 @@ namespace IndiGames.GameplayAbilitySystem.Tests.Editor.AttributeSystem
             SetupSetBaseValueAttribute(inputValue);
 
             _attributeSystem.ResetAllAttributes();
-            _attributeSystem.GetAttributeValue(_attributeInSystem, out var valueInSystem);
+            _attributeSystem.TryGetAttributeValue(_attributeInSystem, out var valueInSystem);
             
             Assert.AreEqual(DEFAULT_ATTRIBUTE_VALUE, valueInSystem.BaseValue);
         }
@@ -108,7 +108,7 @@ namespace IndiGames.GameplayAbilitySystem.Tests.Editor.AttributeSystem
             SetupSetBaseValueAttribute(inputBaseValue);
 
             _attributeSystem.UpdateAttributeCurrentValue(_attributeInSystem);
-            _attributeSystem.GetAttributeValue(_attributeInSystem, out var value);
+            _attributeSystem.TryGetAttributeValue(_attributeInSystem, out var value);
             Assert.AreEqual(expectedCurrentValue, value.CurrentValue);
         }
 
@@ -120,28 +120,28 @@ namespace IndiGames.GameplayAbilitySystem.Tests.Editor.AttributeSystem
             SetupAddAttribute();
             SetupSetBaseValueAttribute(inputBaseValue);
 
-            _attributeSystem.UpdateAllAttributeCurrentValues();
-            _attributeSystem.GetAttributeValue(_attributeInSystem, out var value);
+            _attributeSystem.UpdateAttributeValues();
+            _attributeSystem.TryGetAttributeValue(_attributeInSystem, out var value);
             Assert.AreEqual(expectedCurrentValue, value.CurrentValue);
         }
 
         [Test]
-        [TestCase(10, 1, 0, 0, 10, 11, EEffectStackingType.External)]
-        [TestCase(10, 2, 0, 0, 12, 12, EEffectStackingType.Core)]
-        [TestCase(10, -1, 0, 0, 10, 9, EEffectStackingType.External)]
-        [TestCase(10, -1, 0, 0, 9, 9, EEffectStackingType.Core)]
-        [TestCase(10, 0, 1, 0, 10, 20, EEffectStackingType.External)]
-        [TestCase(10, 0, 1, 0, 20, 20, EEffectStackingType.Core)]
-        [TestCase(10, 0, 0.5f, 0, 10, 15, EEffectStackingType.External)]
-        [TestCase(10, 0, 0.5f, 0, 15, 15, EEffectStackingType.Core)]
-        [TestCase(10, 1, 1, 0, 10, 22, EEffectStackingType.External)]
-        [TestCase(10, 1, 1, 0, 22, 22, EEffectStackingType.Core)]
-        [TestCase(10, 1, 1, 2, 10, 2, EEffectStackingType.External)]
-        [TestCase(10, 1, 1, 2, 2, 2, EEffectStackingType.Core)]
+        [TestCase(10, 1, 0, 0, 10, 11, EModifierType.External)]
+        [TestCase(10, 2, 0, 0, 12, 12, EModifierType.Core)]
+        [TestCase(10, -1, 0, 0, 10, 9, EModifierType.External)]
+        [TestCase(10, -1, 0, 0, 9, 9, EModifierType.Core)]
+        [TestCase(10, 0, 1, 0, 10, 20, EModifierType.External)]
+        [TestCase(10, 0, 1, 0, 20, 20, EModifierType.Core)]
+        [TestCase(10, 0, 0.5f, 0, 10, 15, EModifierType.External)]
+        [TestCase(10, 0, 0.5f, 0, 15, 15, EModifierType.Core)]
+        [TestCase(10, 1, 1, 0, 10, 22, EModifierType.External)]
+        [TestCase(10, 1, 1, 0, 22, 22, EModifierType.Core)]
+        [TestCase(10, 1, 1, 2, 10, 2, EModifierType.External)]
+        [TestCase(10, 1, 1, 2, 2, 2, EModifierType.Core)]
         public void AddModifier_ShouldReturnExpectedValue(float inputBaseValue,
             float inputModifierAdditiveValue, float inputModifierMultiplyValue, float inputModifierOverrideValue,
             float expectedCoreValue, float expectedCurrentValue,
-            EEffectStackingType stackMode)
+            EModifierType stackMode)
         {
             SetupSetBaseValueAttribute(inputBaseValue);
             _attributeSystem.UpdateAttributeCurrentValue(_attributeInSystem);
@@ -151,19 +151,19 @@ namespace IndiGames.GameplayAbilitySystem.Tests.Editor.AttributeSystem
                 Multiplicative = inputModifierMultiplyValue,
                 Overriding = inputModifierOverrideValue
             };
-            _attributeSystem.AddModifierToAttribute(modifier, _attributeInSystem, out _, stackMode);
+            _attributeSystem.TryAddModifierToAttribute(modifier, _attributeInSystem, stackMode);
             _attributeSystem.UpdateAttributeCurrentValue(_attributeInSystem);
-            _attributeSystem.GetAttributeValue(_attributeInSystem, out var value);
+            _attributeSystem.TryGetAttributeValue(_attributeInSystem, out var value);
             Assert.AreEqual(expectedCoreValue, AttributeSystemHelper.CaculateCoreAttributeValue(value));
             Assert.AreEqual(expectedCurrentValue, value.CurrentValue);
         }
 
         [Test]
-        [TestCase(10, 1, 1, EEffectStackingType.External, 10)]
-        [TestCase(10, -1, 1, EEffectStackingType.Core, 10)]
+        [TestCase(10, 1, 1, EModifierType.External, 10)]
+        [TestCase(10, -1, 1, EModifierType.Core, 10)]
         public void ResetAttributeModifiers_ShouldReturnExpectedValue(float inputBaseValue, 
             float inputModifierAdditiveValue, float inputModifierMultiplyValue,
-            EEffectStackingType stackMode, float expectedCurrentValue)
+            EModifierType modifierType, float expectedCurrentValue)
         {
             SetupSetBaseValueAttribute(inputBaseValue);
             var modifier = new Modifier()
@@ -171,11 +171,11 @@ namespace IndiGames.GameplayAbilitySystem.Tests.Editor.AttributeSystem
                 Additive = inputModifierAdditiveValue,
                 Multiplicative = inputModifierMultiplyValue
             };
-            _attributeSystem.AddModifierToAttribute(modifier, _attributeInSystem, out _, stackMode);
+            _attributeSystem.TryAddModifierToAttribute(modifier, _attributeInSystem, modifierType);
 
             _attributeSystem.ResetAttributeModifiers();
-            _attributeSystem.UpdateAllAttributeCurrentValues();
-            _attributeSystem.GetAttributeValue(_attributeInSystem, out var value);
+            _attributeSystem.UpdateAttributeValues();
+            _attributeSystem.TryGetAttributeValue(_attributeInSystem, out var value);
             Assert.AreEqual(expectedCurrentValue, value.CurrentValue);
         }
     }

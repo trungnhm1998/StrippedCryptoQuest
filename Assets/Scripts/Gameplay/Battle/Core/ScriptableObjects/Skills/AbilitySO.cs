@@ -40,7 +40,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Skills
             if (!CanActiveAbility()) return;
             _unit ??= Owner.GetComponent<IBattleUnit>();
 
-            Owner.AttributeSystem.GetAttributeValue(AbilitySO.CostSpecSO, out var ownerCostSpec);
+            Owner.AttributeSystem.TryGetAttributeValue(AbilitySO.CostSpecSO, out var ownerCostSpec);
             if (!IsValidCost(ownerCostSpec)) return;
             SetRemainingCostSpec(ownerCostSpec.CurrentValue - _skillInfo.Cost);
 

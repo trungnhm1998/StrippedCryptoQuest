@@ -33,4 +33,10 @@ namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item
             Activate();
         }
     }
+
+    [Serializable]
+    public class StatsValue
+    {
+        
+    }
 }

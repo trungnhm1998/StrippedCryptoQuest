@@ -8,6 +8,7 @@ using IndiGames.GameplayAbilitySystem.EffectSystem;
 using IndiGames.GameplayAbilitySystem.EffectSystem.Components;
 using IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects;
 using IndiGames.GameplayAbilitySystem.Implementation.BasicEffect;
+using IndiGames.GameplayAbilitySystem.TagSystem.ScriptableObjects;
 using IndiGames.GameplayAbilitySystem.Tests.Runtime;
 using NUnit.Framework;
 using UnityEngine;
@@ -56,7 +57,7 @@ namespace IndiGames.GameplayAbilitySystem.Tests.EffectSystem
         public void ApplyEffectToSelf_InstantEffect_ValueShouldCorrect(EAttributeModifierType modifierType, float baseValue, float effectValue, float expectedValue)
         {
             SetupAndApplyEffect(_instantEffectSO, modifierType, effectValue, 10);
-            _attributeSystem.GetAttributeValue(_attribute, out var value);
+            _attributeSystem.TryGetAttributeValue(_attribute, out var value);
             Assert.AreEqual(expectedValue, value.BaseValue);
         }
 
@@ -148,13 +149,13 @@ namespace IndiGames.GameplayAbilitySystem.Tests.EffectSystem
             SetupAndApplyEffect(_durationEffectSO, modifierType, effectValue, baseValue);
             _effectSystem.ForceUpdateAttributeSystemModifiers();
 
-            _attributeSystem.GetAttributeValue(_attribute, out value);
+            _attributeSystem.TryGetAttributeValue(_attribute, out value);
             Assert.AreEqual(expectedValue, value.CurrentValue);
             yield return new WaitForSeconds(duration);
             _effectSystem.ForceUpdateAttributeSystemModifiers();
 
 
-            _attributeSystem.GetAttributeValue(_attribute, out value);
+            _attributeSystem.TryGetAttributeValue(_attribute, out value);
             Assert.AreEqual(baseValue, value.CurrentValue);
         }
 
@@ -175,7 +176,7 @@ namespace IndiGames.GameplayAbilitySystem.Tests.EffectSystem
 
             _effectSystem.RemoveEffect(effect);
 
-            _attributeSystem.GetAttributeValue(_attribute, out value);
+            _attributeSystem.TryGetAttributeValue(_attribute, out value);
             Assert.AreEqual(baseValue, value.CurrentValue);
         }
         

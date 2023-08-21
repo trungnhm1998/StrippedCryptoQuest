@@ -7,6 +7,7 @@ using IndiGames.GameplayAbilitySystem.EffectSystem;
 using IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects;
 using IndiGames.GameplayAbilitySystem.Helper;
 using IndiGames.GameplayAbilitySystem.Implementation.EffectAbility.ScriptableObjects;
+using IndiGames.GameplayAbilitySystem.TagSystem.ScriptableObjects;
 using UnityEngine;
 
 namespace IndiGames.GameplayAbilitySystem.Implementation.EffectAbility

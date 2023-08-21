@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.ScriptableObjects;
+using IndiGames.GameplayAbilitySystem.TagSystem.ScriptableObjects;
 using UnityEngine;
 
 namespace IndiGames.GameplayAbilitySystem.AbilitySystem.Components

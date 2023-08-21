@@ -2,33 +2,30 @@ using System.Collections.Generic;
 using IndiGames.GameplayAbilitySystem.AbilitySystem;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.Components;
+using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
 using IndiGames.GameplayAbilitySystem.EffectSystem.EffectApplier;
 using IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects;
 using UnityEngine;
 
 namespace IndiGames.GameplayAbilitySystem.EffectSystem.Components
 {
-    public class EffectSystemBehaviour : MonoBehaviour
+    /// <summary>
+    /// Wrapper around the <see cref="AttributeSystemBehaviour"/> to handle the effects
+    /// for every applied effect find all of it modifiers and add it to the attribute in the <see cref="AttributeSystemBehaviour"/>
+    /// </summary>
+    public partial class EffectSystemBehaviour : MonoBehaviour
     {
-        public List<EffectSpecificationContainer> AppliedEffects = new List<EffectSpecificationContainer>();
+        public List<EffectSpecificationContainer> AppliedEffects { get; } = new();
 
-        protected AbilitySystemBehaviour _owner;
+        private AbilitySystemBehaviour _owner;
         public AbilitySystemBehaviour Owner => _owner;
 
         private AttributeSystemBehaviour _attributeSystem;
         private IEffectApplier _effectApplier;
-        protected IEffectApplier EffectAppliers
-        {
-            get
-            {
-                if (_effectApplier == null)
-                {
-                    _effectApplier = new EffectApplier.EffectApplier(Owner);
-                }
 
-                return _effectApplier;
-            }
-        }
+        // TODO: Could use a factory here
+        protected IEffectApplier EffectAppliers => _effectApplier ??= new DefaultEffectApplier(Owner);
+
 
         public void InitSystem(AbilitySystemBehaviour owner)
         {
@@ -45,43 +42,46 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem.Components
         /// <param name="parameters"></param>
         /// <returns></returns>
         public AbstractEffect GetEffect(EffectScriptableObject effectSO, object origin, AbilityParameters parameters)
-        {
-            UpdateAttributeSystemModifiers();
-            return effectSO.GetEffect(Owner, origin, parameters);
-        }
+            => effectSO.GetEffect(Owner, origin, parameters);
 
+        // TODO: Move to AbilityEffectBehaviour
         public AbstractEffect ApplyEffectToSelf(AbstractEffect inEffectSpec)
         {
             if (inEffectSpec == null || !inEffectSpec.CanApply()) return NullEffect.Instance;
-            
+
             inEffectSpec.SetTarget(Owner);
             inEffectSpec.Accept(EffectAppliers);
             return inEffectSpec;
         }
 
+        /// <summary>
+        /// Remove the effect from the system
+        /// We should also remove the effect's modifiers from the attribute
+        /// </summary>
+        /// <param name="abstractEffect"></param>
         public virtual void RemoveEffect(AbstractEffect abstractEffect)
         {
             for (int i = AppliedEffects.Count - 1; i >= 0; i--)
             {
                 var effect = AppliedEffects[i];
-                if (abstractEffect.EffectSO == effect.EffectSpec.EffectSO)
-                {
-                    AppliedEffects.RemoveAt(i);
-                    break;
-                }
+                if (abstractEffect.EffectSO != effect.EffectSpec.EffectSO) continue;
+
+                AppliedEffects.RemoveAt(i);
+                break;
             }
 
-            if (abstractEffect.Owner == null) return;
+            // after remove the effect from system we need to update the attribute modifiers
             ForceUpdateAttributeSystemModifiers();
-            
-            if (abstractEffect.Owner == this) return;
-            abstractEffect.Owner.EffectSystem.ForceUpdateAttributeSystemModifiers();
         }
 
         private void Update()
         {
-            UpdateAttributeSystemModifiers();
+            UpdateAttributeModifiersUsingAppliedEffects();
+        }
 
+        public void UpdateAttributeModifiersUsingAppliedEffects()
+        {
+            UpdateAttributeSystemModifiers();
             UpdateEffects();
             RemoveExpiredEffects();
         }
@@ -92,43 +92,55 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem.Components
         public void ForceUpdateAttributeSystemModifiers()
         {
             UpdateAttributeSystemModifiers();
-            _attributeSystem.UpdateAllAttributeCurrentValues();
+            _attributeSystem.UpdateAttributeValues();
         }
 
+        /// <summary>
+        /// Update the attribute system modifiers using the applied effects, but first reset all attribute to their base values
+        /// </summary>
         protected virtual void UpdateAttributeSystemModifiers()
         {
             // Reset all attribute to their base values
             _attributeSystem.ResetAttributeModifiers();
             foreach (var effect in AppliedEffects)
             {
-                UpdateAttributesModifiersWithEffect(effect);
+                AddModifiersToAttributeWithEffect(effect);
             }
         }
 
-        protected void UpdateAttributesModifiersWithEffect(EffectSpecificationContainer effectContainer)
+        protected void AddModifiersToAttributeWithEffect(EffectSpecificationContainer effect)
         {
-            if (effectContainer.EffectSpec.IsExpired) return;
+            if (effect.Expired) return;
 
-            foreach (var effectModifierDetail in effectContainer.Modifiers)
+            foreach (var effectModifierDetail in effect.Modifiers)
             {
-                if (!_attributeSystem.HasAttribute(effectModifierDetail.Attribute))
-                {
-                    _attributeSystem.AddAttributes(effectModifierDetail.Attribute);
-                    _attributeSystem.MarkCacheDirty();
-                }
-
-                _attributeSystem.AddModifierToAttribute(effectModifierDetail.Modifier, effectModifierDetail.Attribute, out _,
-                    effectContainer.EffectSpec.EffectSO.EffectDetails.StackingType);
+                AddAttributeToSystemIfNotExists(effectModifierDetail.Attribute);
+                _attributeSystem.TryAddModifierToAttribute(
+                    effectModifierDetail.Modifier,
+                    effectModifierDetail.Attribute,
+                    effect.ModifierType);
             }
         }
-        
+
+        /// <summary>
+        /// The case is we have an effect with modifier want to affect an attribute that is not in the system yet
+        ///
+        /// e.g. Modifier to increase gold drop rate, but the attribute system does not have gold drop rate attribute.
+        /// We can either add the attribute to the system or this method would add it for us. only at runtime
+        /// </summary>
+        private void AddAttributeToSystemIfNotExists(AttributeScriptableObject attribute)
+        {
+            if (_attributeSystem.HasAttribute(attribute, out _)) return;
+            _attributeSystem.AddAttributes(attribute);
+        }
+
         protected virtual void UpdateEffects()
         {
-            foreach (EffectSpecificationContainer effect in AppliedEffects)
+            for (var index = 0; index < AppliedEffects.Count; index++)
             {
-                var effectSpec = effect.EffectSpec;
-                if (!effectSpec.IsExpired)
-                    effectSpec.Update(Time.deltaTime);
+                var effectContainer = AppliedEffects[index];
+                if (!effectContainer.Expired)
+                    effectContainer.Update(Time.deltaTime);
             }
         }
 
@@ -137,11 +149,10 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem.Components
             for (var i = AppliedEffects.Count - 1; i >= 0; i--)
             {
                 var effect = AppliedEffects[i];
-                if (effect.EffectSpec.IsExpired)
-                {
-                    AppliedEffects.RemoveAt(i);
-                    Owner.TagSystem.RemoveTags(effect.EffectSpec.EffectSO.GrantedTags);
-                }
+                if (!effect.Expired) continue;
+
+                AppliedEffects.RemoveAt(i);
+                Owner.TagSystem.RemoveTags(effect.GrantedTags);
             }
         }
     }

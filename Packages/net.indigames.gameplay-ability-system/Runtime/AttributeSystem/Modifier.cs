@@ -1,5 +1,4 @@
 using System;
-using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
 
 namespace IndiGames.GameplayAbilitySystem.AttributeSystem
 {
@@ -25,12 +24,5 @@ namespace IndiGames.GameplayAbilitySystem.AttributeSystem
                 Overriding = b.Overriding
             };
         }
-    }
-
-    [Serializable]
-    public struct AttributeModifier
-    {
-        public AttributeScriptableObject Attribute;
-        public Modifier Modifier;
     }
 }

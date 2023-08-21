@@ -1,5 +1,6 @@
 using IndiGames.GameplayAbilitySystem.AbilitySystem;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
+using IndiGames.GameplayAbilitySystem.AttributeSystem;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
 using IndiGames.GameplayAbilitySystem.EffectSystem;
 using IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects;
@@ -24,7 +25,7 @@ namespace IndiGames.GameplayAbilitySystem.Tests.Runtime
                     Value = value
                 }
             };
-            effectSO.EffectDetails.StackingType = EEffectStackingType.External;
+            effectSO.EffectDetails.StackingType = EModifierType.External;
         }
 
         public static AbstractEffect SetupAndApplyEffect(AbilitySystemBehaviour system, AttributeScriptableObject attribute,
