@@ -66,6 +66,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit
 
         public virtual bool IsUnableAction()
         {
+            if (_battleUnit.IsDead) return true;
             foreach (var tag in _tagConfig.DisableActionTags)
             {
                 if (_owner.TagSystem.GrantedTags.Contains(tag)) return true;
@@ -110,7 +111,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit
             //TODO: Apply abnormal status and check disable
             // Change to this because system can use ability from item
             // and _owner.TryActiveAbility can only activate skill inside system
-            if (!IsTargetsValid()) return;
+            if (_battleUnit.IsDead || !IsTargetsValid()) return;
             SelectedAbility.ActivateAbility();
         }
 

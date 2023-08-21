@@ -36,7 +36,6 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components
         {
             TeamGroups.RemoveUnitData(unit);
             BattleUnits.Remove(unit);
-            Members.Remove(unit.Owner);
             _pendingRemoveUnit.Add(unit);
         }
 

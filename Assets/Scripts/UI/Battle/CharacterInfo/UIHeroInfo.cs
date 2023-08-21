@@ -9,6 +9,7 @@ using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects;
+using IndiGames.GameplayAbilitySystem.AttributeSystem.Components;
 
 namespace CryptoQuest.UI.Battle.CharacterInfo
 {
@@ -39,16 +40,16 @@ namespace CryptoQuest.UI.Battle.CharacterInfo
             _battleManager = _battleBus.BattleManager;
         }
 
-        protected override void OnEnable()
+        public override void SetData(CharacterInformation characterInfo)
         {
-            base.OnEnable();
-            _mpAttributeSO.ValueChangeEvent += OnMPChanged;
+            base.SetData(characterInfo);
+            _attributeSystem.AttributeChanged += OnMPChanged;
         }
 
         protected override void OnDisable()
         {
             base.OnDisable();
-            _mpAttributeSO.ValueChangeEvent -= OnMPChanged;
+            _attributeSystem.AttributeChanged -= OnMPChanged;
         }
 
         protected override void Setup()
@@ -63,16 +64,18 @@ namespace CryptoQuest.UI.Battle.CharacterInfo
             UpdateValueUI(_maxMpAttributeSO, _mpAttributeSO, _mpValueText, _mpSlider);
         }
 
-        protected override void OnHPChanged(AttributeScriptableObject.AttributeEventArgs args)
+        protected override void OnHPChanged(AttributeSystemBehaviour system, AttributeValue oldValue,
+            AttributeValue newValue)
         {
-            if (args.System != _attributeSystem) return;
+            if (oldValue.Attribute != _hpAttributeSO) return;
 
             UpdateValueUI(_maxHpAttributeSO, _hpAttributeSO, _hpValueText, _hpSlider);
         }
 
-        private void OnMPChanged(AttributeScriptableObject.AttributeEventArgs args)
+        private void OnMPChanged(AttributeSystemBehaviour system, AttributeValue oldValue,
+            AttributeValue newValue)
         {
-            if (args.System != _attributeSystem) return;
+            if (oldValue.Attribute != _mpAttributeSO) return;
 
             UpdateValueUI(_maxMpAttributeSO, _mpAttributeSO, _mpValueText, _mpSlider);
         }

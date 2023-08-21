@@ -7,6 +7,7 @@ using System.Collections;
 using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Events;
 using DG.Tweening;
 using Spine.Unity;
+using IndiGames.GameplayAbilitySystem.AttributeSystem.Components;
 
 namespace CryptoQuest.UI.Battle.CharacterInfo
 {
@@ -52,12 +53,13 @@ namespace CryptoQuest.UI.Battle.CharacterInfo
             SpineAnimation = GetComponentInChildren<SkeletonAnimation>();
         }
 
-        protected override void OnHPChanged(AttributeScriptableObject.AttributeEventArgs args)
+        protected override void OnHPChanged(AttributeSystemBehaviour system, AttributeValue oldValue,
+            AttributeValue newValue)
         {
-            if (args.System != _characterInfo.Owner.AttributeSystem) return;
+            if (oldValue.Attribute != _hpAttributeSO) return;
 
             _characterInfo.Owner.AttributeSystem.TryGetAttributeValue(_hpAttributeSO, out AttributeValue hpValue);
-            if (args.OldValue.CurrentValue < hpValue.CurrentValue) return;
+            if (oldValue.CurrentValue < hpValue.CurrentValue) return;
             BlinkingSkeleton(() => { StartCoroutine(CoMonsterDeath(hpValue.CurrentValue)); });
         }
 
