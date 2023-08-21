@@ -30,8 +30,8 @@ namespace CryptoQuest.Gameplay.PlayerParty
 
             if (!members.IsIndexValid(sourceIndex) || !members.IsIndexValid(destinationIndex))
             {
-                Debug.LogError("Invalid source or destination index");
                 SortCompleted?.Invoke(false);
+                Debug.LogError("Invalid source or destination index");
                 return;
             }
 
