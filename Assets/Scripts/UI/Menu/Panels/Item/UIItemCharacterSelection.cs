@@ -7,10 +7,12 @@ namespace CryptoQuest.UI.Menu.Panels.Item
 {
     public class UIItemCharacterSelection : MonoBehaviour
     {
-        [SerializeField] private List<MultiInputButton> _characterButtons;
+        public event Action<int> Clicked;
+        [SerializeField] public List<MultiInputButton> _characterButtons;
 
         public void Init()
         {
+            Debug.Log($"UIItemCharacterSelection Init");
             EnableAllButtons();
             _characterButtons[0].Select();
         }
@@ -40,6 +42,12 @@ namespace CryptoQuest.UI.Menu.Panels.Item
             {
                 button.enabled = false;
             }
+        }
+        
+        public void OnClicked(int index)
+        {
+            Debug.Log($"UIItemCharacterSelection OnClicked {index}");
+            Clicked?.Invoke(index);
         }
     }
 }

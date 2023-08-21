@@ -4,6 +4,6 @@
     {
         public void Show();
         public void Hide();
-        public void Execute();
+        public void UseHerb();
     }
 }

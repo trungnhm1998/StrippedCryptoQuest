@@ -28,9 +28,9 @@ namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.ActionTypes
             _presenter.Hide();
         }
 
-        public void Execute()
+        public void UseHerb()
         {
-            _presenter.Execute();
+            _presenter.UseHerb();
         }
     }
 }

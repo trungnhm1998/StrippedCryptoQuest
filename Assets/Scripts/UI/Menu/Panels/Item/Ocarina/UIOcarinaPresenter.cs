@@ -82,7 +82,7 @@ namespace CryptoQuest.UI.Menu.Panels.Item.Ocarina
             _consumableMenuPanel.StateMachine.RequestStateChange(ItemMenuStateMachine.InventorySelection);
         }
 
-        public void Execute()
+        public void UseHerb()
         {
             _consumableMenuPanel.StateMachine.RequestStateChange(OcarinaState.Ocarina);
         }
