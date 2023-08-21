@@ -1,7 +1,9 @@
 using System.Collections.Generic;
 using CryptoQuest.Gameplay;
+using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data;
 using CryptoQuest.Input;
 using IndiGames.Core.Events.ScriptableObjects;
+using IndiGames.GameplayAbilitySystem.AttributeSystem.Components;
 using UnityEngine;
 
 namespace CryptoQuest.UI.Menu.Panels.Home
@@ -30,12 +32,13 @@ namespace CryptoQuest.UI.Menu.Panels.Home
             get => _currentIndex;
             set
             {
-                // int count = _party.Members.Count;
-                // _currentIndex = (value + count) % count;
+                int count = _party.PlayerTeam.BattleUnits.Count;
+                _currentIndex = (value + count) % count;
             }
         }
 
         private int _indexHolder;
+        private HeroDataSO _memberStats;
 
         private void Awake()
         {
@@ -44,10 +47,16 @@ namespace CryptoQuest.UI.Menu.Panels.Home
 
         private void LoadPartyMembers()
         {
-            // for (int i = 0; i < _party.Members.Count; i++)
-            // {
-            //     _slots[i].SetData(_party.Members[i]);
-            // }
+            for (int i = 0; i < _party.PlayerTeam.Members.Count; i++)
+            {
+                var member = _party.PlayerTeam.Members[i];
+                if (member.gameObject.activeSelf)
+                {
+                    member.TryGetComponent<StatsInitializer>(out var initializer);
+                    _memberStats = initializer.DefaultStats as HeroDataSO;
+                    _slots[i].SetData(_memberStats, _party.PlayerTeam.Members[i].AttributeSystem);
+                }
+            }
         }
 
         private void OnEnable()
@@ -133,18 +142,8 @@ namespace CryptoQuest.UI.Menu.Panels.Home
         {
             _selectedCardHolder.Confirm();
             _topLine.SetActive(true);
-            MatchDataWithUI();
             UnregisterSortInputEvents();
             RegisterSelectInputEvents();
-        }
-
-        private void MatchDataWithUI()
-        {
-            // for (int i = 0; i < _party.Members.Count; i++)
-            // {
-            //     var memberInfo = _characterSlots.GetChild(i).GetComponent<UICharacterInfo>().CharInfoMockData;
-            //     _party.Members[i] = memberInfo;
-            // }
         }
 
         private void CancelSort()
