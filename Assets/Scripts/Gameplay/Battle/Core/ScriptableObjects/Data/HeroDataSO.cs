@@ -1,6 +1,6 @@
+using CryptoQuest.Config;
 using UnityEngine;
-using System;
-using UnityEngine.AddressableAssets;
+using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
 
 namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data
 {
@@ -9,5 +9,19 @@ namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data
     {
         [field: SerializeField]
         public Sprite BattleIconSprite { get; private set; }
+
+        [field: SerializeField, Header("Equipment slots")]
+        public InventoryConfigSO InventoryConfig { get; private set; }
+
+        [field: SerializeField, NonReorderable]
+        public CharacterEquipments Equipments { get; private set; } = new();
+
+#if UNITY_EDITOR
+        private void OnValidate()
+        {
+            if (InventoryConfig == null) return;
+            Equipments.Initialize(InventoryConfig.CategorySlotIndex, InventoryConfig.SlotTypeIndex);
+        }
+#endif
     }
 }
