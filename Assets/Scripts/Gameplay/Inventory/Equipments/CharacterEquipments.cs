@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Container;
@@ -14,6 +14,7 @@ namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects
     {
         [NonReorderable, SerializeField] private List<EquippingSlotContainer> _equippingSlots = new();
         private Dictionary<ESlotType, EquippingSlotContainer> _equippingSlotsCache = new();
+        public InventorySO Inventory { get; set; }
 
         public CharacterEquipments() { }
 
@@ -58,25 +59,9 @@ namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects
 
         #endregion
 
-        public EquippingSlotContainer GetSlot(ESlotType slotType)
-        {
-            return _equippingSlotsCache[slotType];
-        }
-
-        public bool UpdateEquippingSlot(ESlotType slotType, EquipmentInfo equipmentInfo = null)
-        {
-            if (!_equippingSlotsCache.TryGetValue(slotType, out var slot))
-            {
-                Debug.LogWarning($"Slot {slotType} is not available");
-                return false;
-            }
-
-            slot.UpdateEquipment(equipmentInfo);
-            return true;
-        }
+        #region Editor
 
 #if UNITY_EDITOR
-
 
         /// <summary>
         /// This method will get the cache of equipping slots to check if the slot is available
@@ -109,5 +94,70 @@ namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects
             return _equippingSlots;
         }
 #endif
+
+        #endregion
+
+        public List<EquippingSlotContainer> GetEquippingSlots()
+        {
+            return _equippingSlots;
+        }
+
+        public bool Equip(ESlotType allowedSlot, EquipmentInfo equipmentInfo)
+        {
+            if (equipmentInfo == null)
+            {
+                Debug.LogWarning($"CharacterEquipments::Equipment is null");
+                return false;
+            }
+
+            if (!Inventory.Remove(equipmentInfo))
+            {
+                Debug.LogWarning($"CharacterEquipments::Don't have {equipmentInfo} in inventory");
+                return false;
+            }
+
+            if (!UpdateEquippingSlot(allowedSlot, equipmentInfo))
+            {
+                Debug.LogWarning($"CharacterEquipments::Cannot update inventory {allowedSlot}");
+                return false;
+            }
+
+            return true;
+        }
+
+        public bool Unequip(ESlotType slotType, EquipmentInfo equipmentInfo)
+        {
+            if (equipmentInfo == null)
+            {
+                Debug.LogWarning($"CharacterEquipments::Equipment is null");
+                return false;
+            }
+
+            if (!Inventory.Add(equipmentInfo))
+            {
+                Debug.LogWarning($"CharacterEquipments::Cannot add {equipmentInfo} to inventory");
+                return false;
+            }
+
+            if (!UpdateEquippingSlot(slotType))
+            {
+                Debug.LogWarning($"CharacterEquipments::Cannot update inventory {slotType}");
+                return false;
+            }
+
+            return true;
+        }
+
+        public bool UpdateEquippingSlot(ESlotType slotType, EquipmentInfo equipmentInfo = null)
+        {
+            if (!_equippingSlotsCache.TryGetValue(slotType, out var slot))
+            {
+                Debug.LogWarning($"CharacterEquipments::Slot {slotType} is not available");
+                return false;
+            }
+
+            slot.UpdateEquipment(equipmentInfo);
+            return true;
+        }
     }
 }

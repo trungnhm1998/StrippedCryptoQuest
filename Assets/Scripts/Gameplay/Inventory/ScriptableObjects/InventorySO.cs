@@ -37,8 +37,6 @@ namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects
 
         private void ValidateInventory()
         {
-            _inventories = new(_inventoryConfig.SlotTypeIndex);
-
             ValidateListLength(ref _inventories, _inventoryConfig.SlotTypeIndex);
             ValidateInventoryContainers();
         }
@@ -196,8 +194,16 @@ namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects
         {
             int index = GetInventoryIndex(equipment);
             if (index < 0) return false;
+            
+            for (int i = 0; i < _inventories[index].CurrentItems.Count; i++)
+            {
+                if (_inventories[index].CurrentItems[i].Item.ID == equipment.Item.ID)
+                {
+                    _inventories[index].CurrentItems.RemoveAt(i);
+                    return true;
+                }
+            }
 
-            _inventories[index].CurrentItems.Remove(equipment);
             return true;
         }
 
