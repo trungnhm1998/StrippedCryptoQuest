@@ -8,6 +8,7 @@ using IndiGames.GameplayAbilitySystem.AttributeSystem;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
 using UnityEngine;
 using IndiGames.Core.Events.ScriptableObjects;
+using IndiGames.GameplayAbilitySystem.AttributeSystem.Components;
 
 namespace CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit
 {
@@ -47,7 +48,9 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit
         public void CreateCharacterInfo()
         {
             UnitInfo ??= UnitData.CreateCharacterInfo();
+            if (Owner == null) return;
             UnitInfo.Owner = Owner;
+            Owner.AttributeSystem.AttributeChanged += OnHPChanged;
         }
 
         protected virtual void InitBattleLogic()
@@ -58,13 +61,15 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit
 
         protected virtual void OnEnable()
         {
-            _hpAttribute.ValueChangeEvent += OnHPChanged;
             _doneShowDialogEvent.EventRaised += DoneShowAction;
         }
 
         protected virtual void OnDisable()
         {
-            _hpAttribute.ValueChangeEvent -= OnHPChanged;
+            if (Owner != null)
+            {
+                Owner.AttributeSystem.AttributeChanged -= OnHPChanged;
+            }
             _doneShowDialogEvent.EventRaised -= DoneShowAction;
         }
 
@@ -136,23 +141,25 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit
             UnitLogic.Reset();
             _isDoneShowAction = false;
             _isPerformingAction = false;
+            CheckUnitDead();
         }
 
-        private void OnHPChanged(AttributeScriptableObject.AttributeEventArgs args)
+        private void OnHPChanged(AttributeSystemBehaviour system, AttributeValue oldValue,
+            AttributeValue newValue)
         {
-            if (Owner == null || args.System != Owner.AttributeSystem) return;
+            if (oldValue.Attribute != _hpAttribute) return;
+            CheckUnitDead();
+        }
 
+        private void CheckUnitDead()
+        {
             Owner.AttributeSystem.TryGetAttributeValue(_hpAttribute, out var attributValue);
             if (attributValue.CurrentValue > 0 || _isDead) return;
 
             _isDead = true;
             OwnerTeam.RemoveUnit(this);
-            gameObject.SetActive(false);
         }
 
-        public virtual void OnDeath()
-        {
-            Destroy(gameObject);
-        }
+        public virtual void OnDeath() { }
     }
 }

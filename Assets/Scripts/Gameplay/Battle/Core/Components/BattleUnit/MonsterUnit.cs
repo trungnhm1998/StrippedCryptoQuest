@@ -18,5 +18,12 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit
             SetDefaultTarget();
             yield return base.Prepare();
         }
+        
+        public override void OnDeath()
+        {
+            base.OnDeath();
+            OwnerTeam.Members.Remove(Owner);
+            Destroy(gameObject);
+        }
     }
 }

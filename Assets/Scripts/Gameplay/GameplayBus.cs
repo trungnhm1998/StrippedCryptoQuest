@@ -10,7 +10,6 @@ namespace CryptoQuest.Gameplay
     {
         [SerializeField] private GameStateSO _gameState;
         public HeroBehaviour Hero;
-        public AbilitySystemBehaviour MainSystem;
 
         public UnityAction HeroSpawned;
 

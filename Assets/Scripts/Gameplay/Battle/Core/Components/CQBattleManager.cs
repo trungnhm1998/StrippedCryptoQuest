@@ -1,3 +1,4 @@
+using CryptoQuest.Gameplay.PlayerParty;
 using UnityEngine;
 
 namespace CryptoQuest.Gameplay.Battle.Core.Components

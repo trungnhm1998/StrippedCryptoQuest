@@ -11,6 +11,8 @@ namespace CryptoQuest.Gameplay.Battle
     [CreateAssetMenu(menuName = "Gameplay/Battle/Battle Field")]
     public class BattleFieldSO : ScriptableObject
     {
+        public string BattleFieldId;
+        public string ChapterId;
         public List<BattleEncounterSetup> BattleEncounterSetups;
         public float EncounterRate = 5f;
         public bool IsBattleEscapable = true;

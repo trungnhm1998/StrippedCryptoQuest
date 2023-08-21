@@ -1,4 +1,5 @@
 ﻿using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data;
+using IndiGames.GameplayAbilitySystem.AttributeSystem;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.Components;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
 using UnityEngine;
@@ -12,20 +13,16 @@ namespace CryptoQuest.UI.Battle.CharacterInfo
         protected CharacterInformation _characterInfo;
         protected AttributeSystemBehaviour _attributeSystem;
 
-        protected virtual void OnEnable()
-        {
-            _hpAttributeSO.ValueChangeEvent += OnHPChanged;
-        }
-
         protected virtual void OnDisable()
         {
-            _hpAttributeSO.ValueChangeEvent -= OnHPChanged;
+            _attributeSystem.AttributeChanged -= OnHPChanged;
         }
 
         public virtual void SetData(CharacterInformation characterInfo)
         {
             _characterInfo = characterInfo;
             _attributeSystem = characterInfo.Owner.AttributeSystem;
+            _attributeSystem.AttributeChanged += OnHPChanged;
             Setup();
         }
 
@@ -38,7 +35,8 @@ namespace CryptoQuest.UI.Battle.CharacterInfo
 
         protected abstract void Setup();
 
-        protected abstract void OnHPChanged(AttributeScriptableObject.AttributeEventArgs args);
+        protected abstract void OnHPChanged(AttributeSystemBehaviour system, AttributeValue oldValue,
+            AttributeValue newValue);
 
         protected abstract void OnSelected(string name);
     }

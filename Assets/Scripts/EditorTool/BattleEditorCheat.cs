@@ -1,22 +1,17 @@
-using CryptoQuest.Events;
-using CryptoQuest.Item.Ocarinas.Data;
-using IndiGames.Core.SceneManagementSystem.Events.ScriptableObjects;
-using IndiGames.Core.SceneManagementSystem.ScriptableObjects;
-using IndiGames.Core.EditorTools.Attributes.ReadOnlyAttribute;
 using IndiGames.Core.Events.ScriptableObjects;
-using CryptoQuest.Gameplay;
 using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data;
 using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Events;
 using UnityEngine.AddressableAssets;
 using CryptoQuest.Gameplay.Battle.Core.Components;
 using UnityEngine;
 using CryptoQuest.Gameplay.Battle;
+using CryptoQuest.Gameplay.PlayerParty;
+using CryptoQuest.Gameplay.PlayerParty.Helper;
 
 namespace CryptoQuest.EditorTool
 {
     public class BattleEditorCheat : MonoBehaviour
     {
-        [SerializeField] private GameplayBus _gameplayBus;
         [SerializeField] private PartySO _party;
         [SerializeField] private BattleLoader _battleLoader;
         [SerializeField] private BattleDataSO[] _battleDataSOs;
@@ -142,11 +137,14 @@ namespace CryptoQuest.EditorTool
             {
                 var member = playerTeam.Members[i];
                 var memberGO = playerTeam.Members[i].gameObject;
-                if (member == _gameplayBus.MainSystem) continue;
+                if (member == _party.MainSystem) continue;
                 var activeStatusLabel = memberGO.activeSelf ? "Disable" : "Active"; 
                 if (GUILayout.Button($"{activeStatusLabel} member {i}"))
                 {
                     memberGO.SetActive(!memberGO.activeSelf);
+                    var destination = memberGO.activeSelf ? 1 : playerTeam.Members.Count - 1;
+                    playerTeam.Members.SortElement(i, destination);
+                    break;
                 }
             }
         }
