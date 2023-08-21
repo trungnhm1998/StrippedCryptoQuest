@@ -1,29 +1,51 @@
-using CryptoQuest.Gameplay.Battle.Core.Components;
-using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Calculation;
-using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data;
-using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Events;
+using CryptoQuest.Events;
 using IndiGames.Core.EditorTools.Attributes.ReadOnlyAttribute;
+using IndiGames.Core.Events.ScriptableObjects;
 using UnityEngine;
 
 namespace CryptoQuest.Gameplay.Battle
 {
     public class EncounterZone : MonoBehaviour
     {
-        [SerializeField] private BattleFieldSO _battleField;
-        [SerializeField] private TriggerBattleEncounterEventSO _triggerBattleEncounterEvent;
+        [SerializeField] private StringEventChannelSO _battleEncounterConfigureEvent;
+        [SerializeField] private StringEventChannelSO _encounterRequestEvent;
+
+        [Header("Listen to Events")]
+        [SerializeField] private FloatEventChannelSO _encounterRateConfigResponseEvent;
 
         [Header("Area Configuration")]
         [SerializeField, ReadOnly] private string _playerTag = "Player";
 
-        [SerializeField] private string _encounterId;
+        [SerializeField, ReadOnly] private string _encounterId;
         [SerializeField] private float _customRatio = 1.7f;
+        private BattleFieldSO _battleField;
         private Vector2 _playerPosition;
+        private float _encounterRate = 0;
         private float _countdown;
 
+        private void OnEnable()
+        {
+            _encounterRateConfigResponseEvent.EventRaised += ConfigEncounterRate;
+        }
+
+        private void OnDisable()
+        {
+            _encounterRateConfigResponseEvent.EventRaised -= ConfigEncounterRate;
+        }
+
+        private void Awake()
+        {
+        }
+
+        private void ConfigEncounterRate(float encounterRate)
+        {
+            _encounterRate = encounterRate;
+        }
 
         private void OnTriggerEnter2D(Collider2D other)
         {
             if (!other.gameObject.CompareTag(_playerTag)) return;
+            _battleEncounterConfigureEvent.RaiseEvent(_encounterId);
             InitCountDown();
         }
 
@@ -43,29 +65,19 @@ namespace CryptoQuest.Gameplay.Battle
 
         private void OnCountdownEnd()
         {
-            BattleDataSO currentBattData = _battleField.GetBattleToInit();
-            BattleInfo currentBattleInfo =
-                new(currentBattData, _battleField.IsBattleEscapable, _battleField.BattleBackground);
-            OnTriggerBattleEncounter(currentBattleInfo);
+            OnTriggerBattleEncounter();
         }
 
 
         private void InitCountDown()
         {
-            float encounterRateBuff = GetBuffsRatio();
-            _countdown = Random.Range(3, _battleField.EncounterRate) * encounterRateBuff;
+            _countdown = _encounterRate;
         }
 
-        private float GetBuffsRatio()
-        {
-            float encounterRateBuff
-                = BattleCalculator.CalculateEncounterRateBuff(0, 0);
-            return encounterRateBuff;
-        }
 
-        private void OnTriggerBattleEncounter(BattleInfo battleInfo)
+        private void OnTriggerBattleEncounter()
         {
-            _triggerBattleEncounterEvent.Raise(battleInfo);
+            _encounterRequestEvent.RaiseEvent(_encounterId);
         }
 
         /// <summary>
