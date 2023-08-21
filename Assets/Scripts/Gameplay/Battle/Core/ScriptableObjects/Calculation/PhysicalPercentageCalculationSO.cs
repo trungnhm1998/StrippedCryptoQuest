@@ -31,8 +31,8 @@ namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Calculation
             SkillParameters skillParameters = effectSpec.Parameters as SkillParameters;
             if (skillParameters == null) return false;
 
-            effectSpec.Owner.AttributeSystem.GetAttributeValue(_ownerAttack, out AttributeValue attackValue);
-            effectSpec.Target.AttributeSystem.GetAttributeValue(_targetDefense, out AttributeValue defenseValue);
+            effectSpec.Owner.AttributeSystem.TryGetAttributeValue(_ownerAttack, out AttributeValue attackValue);
+            effectSpec.Target.AttributeSystem.TryGetAttributeValue(_targetDefense, out AttributeValue defenseValue);
             float baseDamageValue = BattleCalculator.CalculateBaseDamage(skillParameters, attackValue.CurrentValue,
                 Random.Range(_lowerRandomRange, _upperRandomRange));
             float damageValue = 0;
@@ -68,7 +68,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Calculation
         private void LogIfTargetDeath(AbstractEffect effectSpec, float damage)
         {
             AbilitySystemBehaviour target = effectSpec.Target;
-            target.AttributeSystem.GetAttributeValue(_targetedAttribute, out AttributeValue value);
+            target.AttributeSystem.TryGetAttributeValue(_targetedAttribute, out AttributeValue value);
             if (value.CurrentValue <= damage)
             {
                 _deathActionData.Log.Clear();

@@ -3,6 +3,9 @@ using CoreAttributeSO = IndiGames.GameplayAbilitySystem.AttributeSystem.Scriptab
 
 namespace CryptoQuest.Character.Attributes
 {
+    /// <summary>
+    /// Base Attribute
+    /// </summary>
     [CreateAssetMenu(menuName = "Crypto Quest/Character/Attribute")]
     public class AttributeScriptableObject : CoreAttributeSO
     {

@@ -120,7 +120,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components.Debugger
             {
                 GUILayout.Label($"{attribute.Attribute.name}: {attribute.CurrentValue}\n"
                                 + $"(equipments [+{attribute.CoreModifier.Additive}] [*{attribute.CoreModifier.Multiplicative}]) "
-                                + $"(skills/effects [+{attribute.Modifier.Additive}] [*{attribute.Modifier.Multiplicative}])");
+                                + $"(skills/effects [+{attribute.ExternalModifier.Additive}] [*{attribute.ExternalModifier.Multiplicative}])");
             }
         }
 #endif

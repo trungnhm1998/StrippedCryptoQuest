@@ -1,3 +1,4 @@
+using CryptoQuest.Gameplay.Inventory.Equipment;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Type;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Variant;
 using UnityEngine;
@@ -10,10 +11,16 @@ namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item
     {
         [field: Header("Equipment Item")]
         [field: SerializeField] public EquipmentTypeSO EquipmentType { get; protected set; }
+
         [field: SerializeField] public VariantBaseSO VariantBase { get; private set; }
         [field: SerializeField] public RaritySO Rarity { get; private set; }
         [field: SerializeField] public LocalizedString LocalizedEquipmentType { get; private set; }
+        [field: SerializeField] public int RequiredCharacterLevel { get; private set; }
+        [SerializeField, Header("Attributes")] private Stats _stats;
+        public Stats Stats => _stats;
 
+
+        #region EDITOR
 
 #if UNITY_EDITOR
         /// <summary>
@@ -52,5 +59,7 @@ namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item
             LocalizedEquipmentType = localizedEquipmentType;
         }
 #endif
+
+        #endregion
     }
 }

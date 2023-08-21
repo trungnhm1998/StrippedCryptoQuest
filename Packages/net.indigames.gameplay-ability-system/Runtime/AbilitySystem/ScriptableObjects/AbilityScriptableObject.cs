@@ -1,5 +1,6 @@
 using System;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
+using IndiGames.GameplayAbilitySystem.TagSystem.ScriptableObjects;
 using UnityEngine;
 
 namespace IndiGames.GameplayAbilitySystem.AbilitySystem.ScriptableObjects
@@ -43,7 +44,7 @@ namespace IndiGames.GameplayAbilitySystem.AbilitySystem.ScriptableObjects
         /// Not implemented
         /// Active the ability on the same system will cancel any ability that have these tags
         /// </summary>
-        public TagScriptableObject[] CancelAbilityWithTags = new TagScriptableObject[0];
+        public TagScriptableObject[] CancelAbilityWithTags = Array.Empty<TagScriptableObject>();
 
         /// <summary>
         /// Not implemented
@@ -51,12 +52,12 @@ namespace IndiGames.GameplayAbilitySystem.AbilitySystem.ScriptableObjects
         /// Ability that have these tags will be blocked from activating on the same system
         /// e.g. silencing ability that enemy could use to prevent use to use any ability
         /// </summary>
-        public TagScriptableObject[] BlockAbilityWithTags = new TagScriptableObject[0];
+        public TagScriptableObject[] BlockAbilityWithTags = Array.Empty<TagScriptableObject>();
 
         /// <summary>
         /// These tags will be granted to the source system while this ability is active
         /// </summary>
-        public TagScriptableObject[] ActivationTags = new TagScriptableObject[0];
+        public TagScriptableObject[] ActivationTags = Array.Empty<TagScriptableObject>();
 
         /// <summary>
         /// This ability can only active if owner system has all of the RequiredTags

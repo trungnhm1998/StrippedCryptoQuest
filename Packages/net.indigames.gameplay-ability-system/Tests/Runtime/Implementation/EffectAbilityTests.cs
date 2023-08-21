@@ -10,6 +10,7 @@ using IndiGames.GameplayAbilitySystem.Implementation.BasicEffect;
 using IndiGames.GameplayAbilitySystem.Implementation.EffectAbility;
 using IndiGames.GameplayAbilitySystem.Implementation.EffectAbility.ScriptableObjects;
 using IndiGames.GameplayAbilitySystem.Implementation.EffectAbility.TargetTypes;
+using IndiGames.GameplayAbilitySystem.TagSystem.ScriptableObjects;
 using IndiGames.GameplayAbilitySystem.Tests.Runtime;
 using NUnit.Framework;
 using UnityEngine;
@@ -130,7 +131,7 @@ namespace IndiGames.GameplayAbilitySystem.Tests.Implementation
         private void AssertCurrentAttribute(float expectedValue)
         {
             _effectSystem.ForceUpdateAttributeSystemModifiers();
-            _attributeSystem.GetAttributeValue(_attribute, out var value);
+            _attributeSystem.TryGetAttributeValue(_attribute, out var value);
             Assert.AreEqual(expectedValue, value.CurrentValue);
         }
 

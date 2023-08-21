@@ -27,7 +27,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Effects.EffectExecu
         public override bool ExecuteImplementation(ref AbstractEffect effectSpec,
             ref EffectAttributeModifier[] modifiers)
         {
-            effectSpec.Owner.AttributeSystem.GetAttributeValue(OwnerAttack, out var attackDamage);
+            effectSpec.Owner.AttributeSystem.TryGetAttributeValue(OwnerAttack, out var attackDamage);
             _ownerUnit = effectSpec.Owner.GetComponent<IBattleUnit>();
             _targetUnit = effectSpec.Target.GetComponent<IBattleUnit>();
 
@@ -65,7 +65,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Effects.EffectExecu
         private void LogIfTargetDeath(AbstractEffect effectSpec, float damage)
         {
             AbilitySystemBehaviour target = effectSpec.Target;
-            target.AttributeSystem.GetAttributeValue(TargetHP, out AttributeValue value);
+            target.AttributeSystem.TryGetAttributeValue(TargetHP, out AttributeValue value);
             if (value.CurrentValue <= damage)
             {
                 DeathActionData.Log.Clear();

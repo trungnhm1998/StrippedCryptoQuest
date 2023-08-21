@@ -1,8 +1,18 @@
 using System;
+using IndiGames.GameplayAbilitySystem.AbilitySystem.ScriptableObjects;
 using IndiGames.GameplayAbilitySystem.AttributeSystem;
+using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
+using IndiGames.GameplayAbilitySystem.TagSystem.ScriptableObjects;
 
 namespace IndiGames.GameplayAbilitySystem.EffectSystem
 {
+    [Serializable]
+    public struct AttributeModifier
+    {
+        public AttributeScriptableObject Attribute;
+        public Modifier Modifier;
+    }
+
     /// <summary>
     /// This class is for working with effects without have to modify any existing code.
     /// </summary>
@@ -14,6 +24,10 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem
 
         private AttributeModifier[] _modifiers = Array.Empty<AttributeModifier>();
         public AttributeModifier[] Modifiers => _modifiers;
+
+        public EModifierType ModifierType => _effectSpec.EffectSO.EffectDetails.StackingType;
+        public bool Expired => _effectSpec.IsExpired;
+        public TagScriptableObject[] GrantedTags => _effectSpec.EffectSO.GrantedTags;
 
         public EffectSpecificationContainer(AbstractEffect effectSpec, bool generateModifiers = true)
         {
@@ -29,7 +43,8 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem
             var modifierDefAfterCalculation = CalculateModifierMagnitude(abstractEffect);
             if (abstractEffect.EffectSO.ExecutionCalculation)
             {
-                abstractEffect.EffectSO.ExecutionCalculation.ExecuteImplementation(ref abstractEffect, ref modifierDefAfterCalculation);
+                abstractEffect.EffectSO.ExecutionCalculation.ExecuteImplementation(ref abstractEffect,
+                    ref modifierDefAfterCalculation);
             }
 
             var calculatedModifiers = new AttributeModifier[modifierDefAfterCalculation.Length];
@@ -51,7 +66,7 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem
                         copiedModifier.Multiplicative = modifierValue;
                         break;
                     case EAttributeModifierType.Override:
-                        copiedModifier.Overriding  = modifierValue;
+                        copiedModifier.Overriding = modifierValue;
                         break;
                 }
 
@@ -83,6 +98,7 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem
                 {
                     modifier.Value += modifier.ModifierComputationMethod.CalculateMagnitude(abstractEffect);
                 }
+
                 calculatedModifiers[i] = modifier;
             }
 
@@ -93,6 +109,11 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem
         public void ClearModifiers()
         {
             _modifiers = Array.Empty<AttributeModifier>();
+        }
+
+        public void Update(float deltaTime)
+        {
+            _effectSpec.Update(deltaTime);
         }
     }
 }

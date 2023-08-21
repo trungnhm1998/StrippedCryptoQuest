@@ -43,7 +43,7 @@ namespace CryptoQuest.UI.Battle.BattleActionHandler
             float targetMaxAttributeValue = 0;
             foreach (var target in currentUnit.OpponentTeam.Members)
             {
-                target.AttributeSystem.GetAttributeValue(_targetedAttributeSO, out var targetAttributeValue);
+                target.AttributeSystem.TryGetAttributeValue(_targetedAttributeSO, out var targetAttributeValue);
                 targetMaxAttributeValue = Mathf.Max(targetMaxAttributeValue, targetAttributeValue.CurrentValue);
             }
 
@@ -52,7 +52,7 @@ namespace CryptoQuest.UI.Battle.BattleActionHandler
 
         private float GetOwnerAttributeValue(IBattleUnit currentUnit)
         {
-            currentUnit.Owner.AttributeSystem.GetAttributeValue(_targetedAttributeSO, out var ownerAttributeValue);
+            currentUnit.Owner.AttributeSystem.TryGetAttributeValue(_targetedAttributeSO, out var ownerAttributeValue);
             return ownerAttributeValue.CurrentValue;
         }
 

@@ -74,11 +74,11 @@ namespace CryptoQuest.Tests.Runtime.Item
         [UnityTest]
         public IEnumerator UseHealItem_ChangePlayerHealth_ReturnHealthIncrease()
         {
-            _player.AttributeSystem.GetAttributeValue(_playerHealthAttribute, out var playerHealthBeforeUse);
+            _player.AttributeSystem.TryGetAttributeValue(_playerHealthAttribute, out var playerHealthBeforeUse);
             _healItemInfo.UseItem();
             yield return WAIT_ONE_SECOND;
 
-            _player.AttributeSystem.GetAttributeValue(_playerHealthAttribute, out var playerHealthAfterUse);
+            _player.AttributeSystem.TryGetAttributeValue(_playerHealthAttribute, out var playerHealthAfterUse);
             Assert.That(playerHealthBeforeUse.CurrentValue < playerHealthAfterUse.CurrentValue);
         }
 
@@ -87,13 +87,13 @@ namespace CryptoQuest.Tests.Runtime.Item
         {
             SetupHealItem();
             yield return WAIT_ONE_SECOND;
-            _player.AttributeSystem.GetAttributeValue(_playerHealthAttribute, out var playerHealthBeforeUse);
+            _player.AttributeSystem.TryGetAttributeValue(_playerHealthAttribute, out var playerHealthBeforeUse);
 
             _healItemInfo.UseItem();
             float expectedValue = playerHealthBeforeUse.CurrentValue + 100;
             yield return WAIT_ONE_SECOND;
 
-            _player.AttributeSystem.GetAttributeValue(_playerHealthAttribute, out var playerHealthAfterUse);
+            _player.AttributeSystem.TryGetAttributeValue(_playerHealthAttribute, out var playerHealthAfterUse);
             Assert.That(playerHealthAfterUse.CurrentValue == expectedValue);
         }
 

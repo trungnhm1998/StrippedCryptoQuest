@@ -1,4 +1,5 @@
 using System;
+using IndiGames.GameplayAbilitySystem.TagSystem.ScriptableObjects;
 using UnityEngine;
 
 namespace IndiGames.GameplayAbilitySystem.AbilitySystem.ScriptableObjects

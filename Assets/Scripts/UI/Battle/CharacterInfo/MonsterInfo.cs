@@ -56,7 +56,7 @@ namespace CryptoQuest.UI.Battle.CharacterInfo
         {
             if (args.System != _characterInfo.Owner.AttributeSystem) return;
 
-            _characterInfo.Owner.AttributeSystem.GetAttributeValue(_hpAttributeSO, out AttributeValue hpValue);
+            _characterInfo.Owner.AttributeSystem.TryGetAttributeValue(_hpAttributeSO, out AttributeValue hpValue);
             if (args.OldValue.CurrentValue < hpValue.CurrentValue) return;
             BlinkingSkeleton(() => { StartCoroutine(CoMonsterDeath(hpValue.CurrentValue)); });
         }

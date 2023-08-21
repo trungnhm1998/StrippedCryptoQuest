@@ -1,37 +1,57 @@
 using System;
 using System.Collections.Generic;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
-using IndiGames.GameplayAbilitySystem.EffectSystem;
 using IndiGames.GameplayAbilitySystem.Helper;
 using UnityEngine;
 
 namespace IndiGames.GameplayAbilitySystem.AttributeSystem.Components
 {
-    public class AttributeSystemBehaviour : MonoBehaviour
+    /// <summary>
+    /// Manage all the attributes in the system
+    /// Each <see cref="AttributeScriptableObject"/> with have their corresponding <see cref="AttributeValue"/>
+    /// <see cref="AttributeValue"/> will be created at runtime
+    /// </summary>
+    public partial class AttributeSystemBehaviour : MonoBehaviour
     {
+        public delegate void AttributeChangedDelegate(AttributeSystemBehaviour system, AttributeValue oldValue,
+            AttributeValue newValue);
+
+        public event AttributeChangedDelegate AttributeChanged;
         [SerializeField] private List<AbstractAttributesEventChannel> _attributeEventChannels = new();
-        public List<AbstractAttributesEventChannel> AttributeEventChannels { get => _attributeEventChannels; }
+
+        public List<AbstractAttributesEventChannel> AttributeEventChannels => _attributeEventChannels;
 
         /// <summary>
         /// If gameplay needs more attributes, add them here
         /// </summary>
         [SerializeField] private List<AttributeScriptableObject> _attributes = new();
 
+        public List<AttributeScriptableObject> Attributes => _attributes;
+
         /// <summary>
         /// Value of the attributes above
         /// </summary>
         [SerializeField] private List<AttributeValue> _attributeValues = new();
+
         public List<AttributeValue> AttributeValues => _attributeValues;
 
-        // Only cache the index of the attribute, not the attribute itself
-        private Dictionary<AttributeScriptableObject, int> _attributeIndexCache = new();
-        private bool _isCacheDirty = true;
+        /// <summary>
+        /// Only cache the index of the attribute, not the attribute itself.
+        /// So I could modified the attribute value without having to update the cache
+        /// </summary>
+        private readonly Dictionary<AttributeScriptableObject, int> _attributeIndexCache = new();
+
+        private bool _isCacheStale = true;
 
         private void Awake()
         {
+            Init();
+        }
+
+        public virtual void Init()
+        {
             InitializeAttributeValues();
-            MarkCacheDirty();
-            GetAttributeIndexCache();
+            GetAttributeIndexCache(true);
         }
 
         private void InitializeAttributeValues()
@@ -43,23 +63,31 @@ namespace IndiGames.GameplayAbilitySystem.AttributeSystem.Components
             }
         }
 
-        public void MarkCacheDirty()
+        private void MarkCacheDirty()
         {
-            _isCacheDirty = true;
+            _isCacheStale = true;
         }
 
-        private Dictionary<AttributeScriptableObject, int> GetAttributeIndexCache()
+        /// <summary>
+        /// Get Attribute indices from the cache if the cache were dirty little ***
+        /// we will UnStale the cache and update it
+        /// </summary>
+        /// <param name="forceRefresh"></param>
+        /// <returns></returns>
+        private Dictionary<AttributeScriptableObject, int> GetAttributeIndexCache(bool forceRefresh = false)
         {
-            if (_isCacheDirty)
-            {
-                _attributeIndexCache.Clear();
-                for (int i = 0; i < _attributeValues.Count; i++)
-                {
-                    _attributeIndexCache.Add(_attributeValues[i].Attribute, i);
-                }
+            if (forceRefresh)
+                _isCacheStale = true;
 
-                _isCacheDirty = false;
+            if (!_isCacheStale) return _attributeIndexCache;
+
+            _attributeIndexCache.Clear();
+            for (int i = 0; i < _attributeValues.Count; i++)
+            {
+                _attributeIndexCache.Add(_attributeValues[i].Attribute, i);
             }
+
+            _isCacheStale = false;
 
             return _attributeIndexCache;
         }
@@ -69,79 +97,73 @@ namespace IndiGames.GameplayAbilitySystem.AttributeSystem.Components
         /// </summary>
         /// <param name="attributeToModify"></param>
         /// <param name="modifier"></param>
-        /// <param name="outValue"></param>
-        /// <param name="stackingType"></param>
+        /// <param name="modifierType"></param>
         /// <returns>True if the attribute what to modify is in the system</returns>
-        public bool AddModifierToAttribute(Modifier modifier, AttributeScriptableObject attributeToModify,
-            out AttributeValue outValue, EEffectStackingType stackingType = EEffectStackingType.External)
+        public bool TryAddModifierToAttribute(Modifier modifier, AttributeScriptableObject attributeToModify,
+            EModifierType modifierType = EModifierType.External)
         {
             var cache = GetAttributeIndexCache();
 
-            if (cache.TryGetValue(attributeToModify, out var index))
+            if (!cache.TryGetValue(attributeToModify, out var index)) return false;
+
+            var attributeValue = _attributeValues[index];
+            switch (modifierType)
             {
-                outValue = _attributeValues[index];
-                switch (stackingType)
-                {
-                    case EEffectStackingType.External:
-                        outValue.Modifier += modifier;
-                        break;
-                    case EEffectStackingType.Core:
-                        outValue.CoreModifier += modifier;
-                        break;
-                }
-                _attributeValues[index] = outValue;
-                
+                case EModifierType.External:
+                    attributeValue.ExternalModifier += modifier;
+                    break;
+                case EModifierType.Core:
+                    attributeValue.CoreModifier += modifier;
+                    break;
+            }
+
+            _attributeValues[index] = attributeValue;
+
+            return true;
+        }
+
+        /// <summary>
+        /// Check if the system has the attribute and return a copy of the attribute value
+        /// </summary>
+        /// <param name="attributeSO">Which Attribute</param>
+        /// <param name="value">The value of teh Attribute in system</param>
+        /// <returns></returns>
+        public bool HasAttribute(AttributeScriptableObject attributeSO, out AttributeValue value)
+        {
+            var cache = GetAttributeIndexCache();
+            if (cache.TryGetValue(attributeSO, out var index))
+            {
+                value = _attributeValues[index];
                 return true;
             }
 
-            outValue = new AttributeValue();
+            value = new AttributeValue();
             return false;
-        }
-
-        public bool HasAttribute(AttributeScriptableObject attributeSO)
-        {
-            var cache = GetAttributeIndexCache();
-            return cache.TryGetValue(attributeSO, out _);
         }
 
         /// <summary>
         /// Add attributes to this attribute system. Duplicates are ignored.
+        /// We also don't want to add a duplicate attribute into the system
         /// </summary>
-        /// <param name="attributes">Attributes to add</param>
-        public void AddAttributes(AttributeScriptableObject[] attributes)
-        {
-            // If this attribute already exists, we don't need to add it. For that, we need to make sure the cache is up to date.
-            var cache = GetAttributeIndexCache();
-
-            foreach (var attributeToAdd in attributes)
-            {
-                if (!cache.ContainsKey(attributeToAdd))
-                {
-                    MarkCacheDirty();
-                    _attributes.Add(attributeToAdd);
-                    _attributeValues.Add(new AttributeValue(attributeToAdd));
-                }
-            }
-        }
-
+        /// <param name="attribute">The data defined attribute</param>
         public void AddAttributes(AttributeScriptableObject attribute)
         {
+            // Update the cache to make sure we don't add duplicate attribute
             var cache = GetAttributeIndexCache();
+            if (cache.ContainsKey(attribute)) return;
 
-            if (!cache.ContainsKey(attribute))
-            {
-                MarkCacheDirty();
-                _attributes.Add(attribute);
-                _attributeValues.Add(new AttributeValue(attribute));
-            }
+            MarkCacheDirty();
+            _attributes.Add(attribute);
+            _attributeValues.Add(new AttributeValue(attribute));
         }
 
-        private List<AttributeValue> _previousValues = new List<AttributeValue>();
+        private readonly List<AttributeValue> _previousAttributeValues = new();
         private const float TOLERATED_DIFFERENCE = 0.01f;
 
         /// <summary>
         /// Force update single attribute
         /// </summary>
+        [Obsolete]
         public void UpdateAttributeCurrentValue(AttributeScriptableObject attribute)
         {
             if (!GetAttributeIndexCache().TryGetValue(attribute, out var index))
@@ -150,61 +172,57 @@ namespace IndiGames.GameplayAbilitySystem.AttributeSystem.Components
             var previousValue = attributeValue.Clone();
 
             _attributeValues[index] = AttributeSystemHelper.CalculateCurrentAttributeValue(attributeValue);
-            
+
             foreach (var eventChannel in _attributeEventChannels)
             {
-                eventChannel.AfterAttributeChanged(this, _previousValues, ref _attributeValues);
+                eventChannel.PreAttributeChange(this, _previousAttributeValues, ref _attributeValues);
             }
 
             if (!(Math.Abs(attributeValue.CurrentValue - previousValue.CurrentValue) > TOLERATED_DIFFERENCE))
                 return;
 
-            attribute.RaiseValueChangedEvent(this, previousValue, attributeValue);
+            attribute.OnValueChanged(this, previousValue, attributeValue);
         }
 
-        public void UpdateAllAttributeCurrentValues()
+        /// <summary>
+        /// For every <see cref="AttributeScriptableObject"/> in the system, create a new <see cref="AttributeValue"/>
+        /// to represent a updated value at run time.
+        /// </summary>
+        public void UpdateAttributeValues()
         {
-            _previousValues.Clear();
+            _previousAttributeValues.Clear();
             for (int i = 0; i < _attributeValues.Count; i++)
             {
-                var _attributeValue = _attributeValues[i];
-                _previousValues.Add(_attributeValue.Clone());
+                var attributeValue = _attributeValues[i];
+                _previousAttributeValues.Add(attributeValue.Clone());
+                _attributeValues[i] = attributeValue
+                    .Attribute.CalculateCurrentAttributeValue(attributeValue, _attributeValues);
 
-                AttributeScriptableObject attributeScriptableObject = _attributeValue.Attribute;
-                AttributeValue calculateCurrentAttributeValue = AttributeSystemHelper.CalculateCurrentAttributeValue(_attributeValue);
-                _attributeValues[i] = calculateCurrentAttributeValue;
+                if (!(Math.Abs(attributeValue.CurrentValue - _previousAttributeValues[i].CurrentValue) >
+                      TOLERATED_DIFFERENCE))
+                    continue;
 
-                if (Math.Abs(_attributeValues[i].CurrentValue - _previousValues[i].CurrentValue) > TOLERATED_DIFFERENCE)
-                {
-                    Debug.Log(
-                        $"Attribute {_attributeValues[i].Attribute.name} changed from {_previousValues[i].CurrentValue} to {_attributeValues[i].CurrentValue}");
-                    attributeScriptableObject
-                        .RaiseValueChangedEvent(this, _previousValues[i], _attributeValues[i]);
-                }
+                AttributeChanged?.Invoke(this, _previousAttributeValues[i], attributeValue);
             }
 
-            foreach (var eventChannel in _attributeEventChannels)
+            for (var index = 0; index < _attributeEventChannels.Count; index++)
             {
-                eventChannel.AfterAttributeChanged(this, _previousValues, ref _attributeValues);
+                var eventChannel = _attributeEventChannels[index];
+                eventChannel.PreAttributeChange(this, _previousAttributeValues, ref _attributeValues);
             }
         }
 
-        private AttributeScriptableObject _cachedAttribute;
-        private int _cachedIndex = -1;
-
-        public bool GetAttributeValue(AttributeScriptableObject attribute, out AttributeValue value)
+        /// <summary>
+        /// Get a copy of Attribute Value from the system
+        /// </summary>
+        /// <param name="attribute"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public bool TryGetAttributeValue(AttributeScriptableObject attribute, out AttributeValue value)
         {
-            if (_cachedAttribute == attribute && _cachedIndex != -1)
-            {
-                value = _attributeValues[_cachedIndex];
-                return true;
-            }
-
             var cache = GetAttributeIndexCache();
             if (cache.TryGetValue(attribute, out var index))
             {
-                _cachedIndex = index;
-                _cachedAttribute = attribute;
                 value = _attributeValues[index].Clone();
                 return true;
             }
@@ -213,12 +231,32 @@ namespace IndiGames.GameplayAbilitySystem.AttributeSystem.Components
             return false;
         }
 
+        /// <summary>
+        /// Forcefully update base value of an <see cref="AttributeValue"/> in the system
+        /// Regards of forcefully still a viable options, developer should should effect system to modify the value
+        /// </summary>
+        /// <param name="attribute"></param>
+        /// <param name="value"></param>
         public void SetAttributeBaseValue(AttributeScriptableObject attribute, float value)
         {
             var cache = GetAttributeIndexCache();
             if (!cache.TryGetValue(attribute, out var index)) return;
+
             var attributeValue = _attributeValues[index];
             attributeValue.BaseValue = value;
+            _attributeValues[index] = attributeValue;
+        }
+
+        /// <summary>
+        /// Forcefully update the attribute value in the system
+        /// </summary>
+        /// <param name="attribute"></param>
+        /// <param name="attributeValue"></param>
+        public void SetAttributeValue(AttributeScriptableObject attribute, AttributeValue attributeValue)
+        {
+            var cache = GetAttributeIndexCache();
+            if (!cache.TryGetValue(attribute, out var index)) return;
+
             _attributeValues[index] = attributeValue;
         }
 
@@ -239,22 +277,18 @@ namespace IndiGames.GameplayAbilitySystem.AttributeSystem.Components
             for (int i = 0; i < _attributeValues.Count; i++)
             {
                 var attributeValue = _attributeValues[i];
-                attributeValue.Modifier = attributeValue.CoreModifier = new Modifier();
+                attributeValue.ExternalModifier = attributeValue.CoreModifier = new Modifier();
                 _attributeValues[i] = attributeValue;
             }
         }
 
-        public List<AttributeScriptableObject> GetAttributes()
-        {
-            return _attributes;
-        }
-
         /// <summary>
         /// Use lateUpdate to make sure Abilities/effects finishes their calculations before we update the attribute values
+        /// Support realtime update by default
         /// </summary>
-        private void LateUpdate()
+        protected virtual void LateUpdate()
         {
-            UpdateAllAttributeCurrentValues();
+            UpdateAttributeValues();
         }
     }
 }

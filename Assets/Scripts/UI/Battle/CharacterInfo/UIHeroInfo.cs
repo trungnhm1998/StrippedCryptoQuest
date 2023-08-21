@@ -82,8 +82,8 @@ namespace CryptoQuest.UI.Battle.CharacterInfo
         {
             if (_attributeSystem == null) return;
 
-            _attributeSystem.GetAttributeValue(maxSO, out AttributeValue maxValue);
-            _attributeSystem.GetAttributeValue(attributeSO, out AttributeValue attributeValue);
+            _attributeSystem.TryGetAttributeValue(maxSO, out AttributeValue maxValue);
+            _attributeSystem.TryGetAttributeValue(attributeSO, out AttributeValue attributeValue);
 
             valueText.text = attributeValue.CurrentValue.ToString();
 

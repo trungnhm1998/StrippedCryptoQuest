@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace IndiGames.GameplayAbilitySystem.AbilitySystem.ScriptableObjects
+namespace IndiGames.GameplayAbilitySystem.TagSystem.ScriptableObjects
 {
     [CreateAssetMenu(menuName = "Indigames Ability System/Tag")]
     public class TagScriptableObject : ScriptableObject
@@ -13,7 +13,7 @@ namespace IndiGames.GameplayAbilitySystem.AbilitySystem.ScriptableObjects
         /// By default will search only 3 levels deep.
         /// </summary>
         /// <param name="other">Parent/Ancestor tag to compare with</param>
-        /// <param name="depthSearchLimit"></param>
+        /// <param name="depthSearchLimit">depth limit to search, increase this if needed for more complex system</param>
         /// <returns>True if this tag is a child/descendant of the other tag</returns>
         public bool IsChildOf(TagScriptableObject other, int depthSearchLimit = 3)
         {

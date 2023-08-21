@@ -40,7 +40,7 @@ namespace IndiGames.GameplayAbilitySystem.AttributeSystem.Components
                 _attributeSystem.SetAttributeBaseValue(initValue.Attribute, initValue.Value);
             }
 
-            _attributeSystem.UpdateAllAttributeCurrentValues();
+            _attributeSystem.UpdateAttributeValues();
         }
     }
 }

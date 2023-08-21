@@ -25,7 +25,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components.BattleOrder
         protected virtual float GetDecideAttributeValue(IBattleUnit unit)
         {
             var attributeSystem = unit.Owner.AttributeSystem;
-            attributeSystem.GetAttributeValue(_decideAttribute, out var attributeValue);
+            attributeSystem.TryGetAttributeValue(_decideAttribute, out var attributeValue);
             return attributeValue.CurrentValue;
         }
     }
