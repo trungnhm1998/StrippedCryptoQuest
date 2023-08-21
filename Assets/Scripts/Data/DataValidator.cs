@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using CryptoQuest.Gameplay.Battle;
+using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Calculation;
 using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data;
 using UnityEngine;
 
@@ -31,6 +33,34 @@ namespace CryptoQuest.Data
             return true;
         }
 
+        public static bool IsValidPair(string firstData, string secondData)
+        {
+            return ((!string.IsNullOrEmpty(firstData)) && (!string.IsNullOrEmpty(secondData)));
+        }
+
+        public static bool IsValidTotalProbability(List<BattleEncounterSetupDataModel> monsterGroups)
+        {
+            float totalProbability = 0;
+            foreach (var monsterGroup in monsterGroups)
+            {
+                totalProbability += monsterGroup.Probability / BaseBattleVariable.CORRECTION_PROBABILITY_VALUE;
+            }
+
+            return totalProbability == 1;
+        }
+
+        public static bool IsCorrectBattleFieldSetup(BattleFieldSO data)
+        {
+            float totalProbability = 0;
+            foreach (var encounterSetup in data.BattleEncounterSetups)
+            {
+                if (encounterSetup.BattleData == null)
+                    return false;
+                totalProbability += encounterSetup.Probability / BaseBattleVariable.CORRECTION_PROBABILITY_VALUE;
+            }
+            return totalProbability == 1;
+        }
+
         public static bool IsValidNumberOfMonsterSetup(List<string> battleIds)
         {
             int count = 0;
@@ -41,8 +71,6 @@ namespace CryptoQuest.Data
                     count += battleId.Split(',').Length;
                 }
             }
-
-            Debug.Log(count);
 
             return count <= 4;
         }
@@ -104,5 +132,24 @@ namespace CryptoQuest.Data
     {
         public int MonserPartyId { get; set; }
         public string MonsterGroupingProperty { get; set; }
+    }
+    public class BattleFieldDataModel
+    {
+        public string BattleFieldId { get; set; }
+        public string ChapterId { get; set; }
+        public int BackgroundId { get; set; }
+        public List<BattleEncounterSetupDataModel> BattleEncounterSetups { get; set; } = new();
+    }
+
+    public class BattleEncounterSetupDataModel
+    {
+        public int BattleDataId { get; set; }
+        public float Probability { get; set; }
+
+        public BattleEncounterSetupDataModel(int battleDataId, float encounterRate)
+        {
+            BattleDataId = battleDataId;
+            Probability = encounterRate;
+        }
     }
 }

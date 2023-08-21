@@ -62,5 +62,6 @@ namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Calculation
         public const float CORRECTION_DEFENSE_VALUE = 4;
         public const float CORRECTION_MAGIC_ATTACK_VALUE = 0.2f;
         public const float CORRECTION_ATTRIBUTE_VALUE = 1;
+        public const float CORRECTION_PROBABILITY_VALUE = 100;
     }
 }
