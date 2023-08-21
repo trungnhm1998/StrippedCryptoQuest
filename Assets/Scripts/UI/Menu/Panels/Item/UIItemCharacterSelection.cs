@@ -12,7 +12,6 @@ namespace CryptoQuest.UI.Menu.Panels.Item
 
         public void Init()
         {
-            Debug.Log($"UIItemCharacterSelection Init");
             EnableAllButtons();
             _characterButtons[0].Select();
         }
@@ -46,7 +45,6 @@ namespace CryptoQuest.UI.Menu.Panels.Item
         
         public void OnClicked(int index)
         {
-            Debug.Log($"UIItemCharacterSelection OnClicked {index}");
             Clicked?.Invoke(index);
         }
     }

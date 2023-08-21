@@ -1,8 +1,10 @@
 ﻿using CryptoQuest.Gameplay;
+using CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.ActionTypes;
 using CryptoQuest.UI.Menu.MenuStates.ItemStates;
 using CryptoQuest.UI.Menu.Panels.Item.States;
+using IndiGames.GameplayAbilitySystem.AbilitySystem;
 using UnityEngine;
 
 namespace CryptoQuest.UI.Menu.Panels.Item
@@ -34,13 +36,9 @@ namespace CryptoQuest.UI.Menu.Panels.Item
 
         private void UseHerb(int index)
         {
-            Debug.Log($"Current player {_partySo.PlayerTeam.Members[index].name}");
-
             var owner = _partySo.PlayerTeam.Members[index];
-            
-            // TODO: Pending.. @trungnhm1998 will refactor this
-            // AbstractAbility ability = owner.GiveAbility(_item.Ability);
-            // ability.ActivateAbility();
+            AbstractAbility ability = owner.GiveAbility(_item.Ability);
+            ability.ActivateAbility();
         }
 
         public void Hide()

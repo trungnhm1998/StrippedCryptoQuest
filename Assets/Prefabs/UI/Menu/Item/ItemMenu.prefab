@@ -5095,6 +5095,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7828518343036507919}
+  - component: {fileID: 2148971968416517586}
   m_Layer: 5
   m_Name: Inventories
   m_TagString: Untagged
@@ -5125,6 +5126,23 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 114.82001}
   m_SizeDelta: {x: 0, y: -349.64}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &2148971968416517586
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5436647258567655987}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27eb0a81427bcb4478baca1789c5ad49, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _binder: {fileID: 11400000, guid: fefb513b9b97d4d46b9c1d84ab6b8c01, type: 2}
+  _uiConsumableMenuPanel: {fileID: 8807848270579151364}
+  _partySo: {fileID: 11400000, guid: b97126249c17e024fa024226ffea3c3f, type: 2}
+  _item: {fileID: 0}
+  _uiItemCharacterSelection: {fileID: 765940455396856533}
 --- !u!1 &5449715430077972064
 GameObject:
   m_ObjectHideFlags: 0
@@ -9634,18 +9652,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7828518343036507919}
     m_Modifications:
-    - target: {fileID: 2076704773167002764, guid: f678823e9847c614fbc86d9c145966d1, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 7583303049394256495, guid: f678823e9847c614fbc86d9c145966d1, type: 3}
       propertyPath: m_Name
       value: Expendables
       objectReference: {fileID: 0}
-    - target: {fileID: 7643426442895243828, guid: f678823e9847c614fbc86d9c145966d1, type: 3}
-      propertyPath: <Type>k__BackingField
-      value: 
-      objectReference: {fileID: 11400000, guid: 38be8846d419c5248a5eda2b4376a348, type: 2}
     - target: {fileID: 9131596554454661132, guid: f678823e9847c614fbc86d9c145966d1, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -9733,37 +9743,14 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 7583303049394256495, guid: f678823e9847c614fbc86d9c145966d1, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1150806962336884500}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f678823e9847c614fbc86d9c145966d1, type: 3}
---- !u!1 &7586275633629013936 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7583303049394256495, guid: f678823e9847c614fbc86d9c145966d1, type: 3}
-  m_PrefabInstance: {fileID: 34498881180884447}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1150806962336884500
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7586275633629013936}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 27eb0a81427bcb4478baca1789c5ad49, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _binder: {fileID: 11400000, guid: fefb513b9b97d4d46b9c1d84ab6b8c01, type: 2}
-  _uiConsumableMenuPanel: {fileID: 8807848270579151364}
-  _uiItemCharacterSelection: {fileID: 765940455396856533}
 --- !u!114 &7667509580581464043 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7643426442895243828, guid: f678823e9847c614fbc86d9c145966d1, type: 3}
   m_PrefabInstance: {fileID: 34498881180884447}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7586275633629013936}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c745aeaf787e04d39909d72c86f1aeb9, type: 3}
@@ -10182,7 +10169,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8788915804113079551, guid: f678823e9847c614fbc86d9c145966d1, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -10776,7 +10764,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8788915804113079551, guid: f678823e9847c614fbc86d9c145966d1, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
