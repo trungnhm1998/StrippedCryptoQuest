@@ -35,7 +35,7 @@ Transform:
   - {fileID: 8979043575076635252}
   - {fileID: 839065385627468697}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3953106281829004072
 MonoBehaviour:
@@ -50,6 +50,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _gameplayBus: {fileID: 11400000, guid: a26ff341568973e46a1d4449052d5bb0, type: 2}
+  _party: {fileID: 11400000, guid: b97126249c17e024fa024226ffea3c3f, type: 2}
   _playerTeam: {fileID: 3692677028450796624}
   _mainSystem: {fileID: 1856444087882818294}
 --- !u!114 &3692677028450796624
@@ -77,6 +78,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 6751529336063773711}
     m_Modifications:
+    - target: {fileID: -8954601881777790865, guid: 67d87534ac7faba4c80d75a213a92b6b, type: 3}
+      propertyPath: _heroData
+      value: 
+      objectReference: {fileID: 11400000, guid: 7a9dd1a665a96a14e9fcee21306b419a, type: 2}
+    - target: {fileID: -8954601881777790865, guid: 67d87534ac7faba4c80d75a213a92b6b, type: 3}
+      propertyPath: <HeroData>k__BackingField
+      value: 
+      objectReference: {fileID: 11400000, guid: 7a9dd1a665a96a14e9fcee21306b419a, type: 2}
     - target: {fileID: 1753367143978595433, guid: 67d87534ac7faba4c80d75a213a92b6b, type: 3}
       propertyPath: _database
       value: 
@@ -166,6 +175,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 6751529336063773711}
     m_Modifications:
+    - target: {fileID: -8954601881777790865, guid: 67d87534ac7faba4c80d75a213a92b6b, type: 3}
+      propertyPath: _heroData
+      value: 
+      objectReference: {fileID: 11400000, guid: 5e95c1db880277647baa7f37c01d037f, type: 2}
+    - target: {fileID: -8954601881777790865, guid: 67d87534ac7faba4c80d75a213a92b6b, type: 3}
+      propertyPath: <HeroData>k__BackingField
+      value: 
+      objectReference: {fileID: 11400000, guid: 5e95c1db880277647baa7f37c01d037f, type: 2}
     - target: {fileID: 1753367143978595433, guid: 67d87534ac7faba4c80d75a213a92b6b, type: 3}
       propertyPath: _database
       value: 
@@ -255,6 +272,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 6751529336063773711}
     m_Modifications:
+    - target: {fileID: -8954601881777790865, guid: 67d87534ac7faba4c80d75a213a92b6b, type: 3}
+      propertyPath: _heroData
+      value: 
+      objectReference: {fileID: 11400000, guid: c1b9bddd03ee09a458d56f84dede5a55, type: 2}
+    - target: {fileID: -8954601881777790865, guid: 67d87534ac7faba4c80d75a213a92b6b, type: 3}
+      propertyPath: <HeroData>k__BackingField
+      value: 
+      objectReference: {fileID: 11400000, guid: c1b9bddd03ee09a458d56f84dede5a55, type: 2}
     - target: {fileID: 1753367143978595433, guid: 67d87534ac7faba4c80d75a213a92b6b, type: 3}
       propertyPath: _database
       value: 
