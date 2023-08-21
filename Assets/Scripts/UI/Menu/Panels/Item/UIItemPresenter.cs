@@ -5,11 +5,12 @@ using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.ActionTypes;
 using CryptoQuest.UI.Menu.MenuStates.ItemStates;
 using CryptoQuest.UI.Menu.Panels.Item.States;
 using IndiGames.GameplayAbilitySystem.AbilitySystem;
+using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
 using UnityEngine;
 
 namespace CryptoQuest.UI.Menu.Panels.Item
 {
-    public class UIHerbPresenter : MonoBehaviour, IActionPresenter
+    public class UIItemPresenter : MonoBehaviour, IActionPresenter
     {
         [SerializeField] private PresenterBinder _binder;
         [SerializeField] private UIConsumableMenuPanel _uiConsumableMenuPanel;
@@ -22,7 +23,7 @@ namespace CryptoQuest.UI.Menu.Panels.Item
 
         private void Awake()
         {
-            _uiConsumableMenuPanel.StateMachine.AddState(HerbState.Herb, new HerbState(this));
+            _uiConsumableMenuPanel.StateMachine.AddState(ItemState.UseItemForSingleAlly, new ItemState(this));
             _binder.Bind(this);
         }
 
@@ -31,13 +32,13 @@ namespace CryptoQuest.UI.Menu.Panels.Item
             _uiConsumableMenuPanel.Interactable = false;
             _uiItemCharacterSelection.Init();
 
-            _uiItemCharacterSelection.Clicked += UseHerb;
+            _uiItemCharacterSelection.Clicked += UseItem;
         }
 
-        private void UseHerb(int index)
+        private void UseItem(int index)
         {
-            var owner = _partySo.PlayerTeam.Members[index];
-            AbstractAbility ability = owner.GiveAbility(_item.Ability);
+            AbilitySystemBehaviour owner = _partySo.PlayerTeam.Members[index];
+            AbstractAbility ability = _item.Ability.GetAbilitySpec(owner);
             ability.ActivateAbility();
         }
 
@@ -50,7 +51,7 @@ namespace CryptoQuest.UI.Menu.Panels.Item
 
         public void Execute()
         {
-            _uiConsumableMenuPanel.StateMachine.RequestStateChange(HerbState.Herb);
+            _uiConsumableMenuPanel.StateMachine.RequestStateChange(ItemState.UseItemForSingleAlly);
         }
     }
 }

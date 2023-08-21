@@ -2,12 +2,12 @@
 
 namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.ActionTypes
 {
-    public class HerbAction : ActionDefinitionBase
+    public class ItemAction : ActionDefinitionBase
     {
-        protected override ActionSpecificationBase CreateInternal() => new HerbActionSpec();
+        protected override ActionSpecificationBase CreateInternal() => new ItemActionSpec();
     }
 
-    public class HerbActionSpec : ActionSpecificationBase
+    public class ItemActionSpec : ActionSpecificationBase
     {
         protected override void OnExecute()
         {
