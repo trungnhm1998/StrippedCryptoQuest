@@ -48,7 +48,7 @@ namespace CryptoQuest.UI.Menu.Panels.Item
             _uiConsumableMenuPanel.StateMachine.RequestStateChange(ItemMenuStateMachine.InventorySelection);
         }
 
-        public void UseHerb()
+        public void Execute()
         {
             _uiConsumableMenuPanel.StateMachine.RequestStateChange(HerbState.Herb);
         }

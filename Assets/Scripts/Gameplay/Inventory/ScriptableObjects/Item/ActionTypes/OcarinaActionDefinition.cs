@@ -13,7 +13,7 @@ namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.ActionTypes
     {
         protected override void OnExecute()
         {
-            Presenter.UseHerb();
+            Presenter.Execute();
         }
     }
 }
