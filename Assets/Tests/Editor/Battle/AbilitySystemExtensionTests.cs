@@ -72,7 +72,7 @@ namespace CryptoQuest.Tests.Editor.Battle
         }
 
         [Test]
-        public void GetAbilitiesInField_ShouldContainFieldAndBattleAbility()
+        public void GetAbilitiesInFieldAndBattle_ShouldContainFieldAndBattleAbility()
         {
             var abilities = _abilitySystem.GetAbilitiesInBattleAndField();
             Assert.IsTrue(abilities.Contains(_fieldAndBattleAbility));
