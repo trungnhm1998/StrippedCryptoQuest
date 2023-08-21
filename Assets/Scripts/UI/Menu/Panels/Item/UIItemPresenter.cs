@@ -1,7 +1,7 @@
-﻿using CryptoQuest.Gameplay;
-using CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit;
-using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item;
+﻿using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.ActionTypes;
+using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Type;
+using CryptoQuest.Gameplay.PlayerParty;
 using CryptoQuest.UI.Menu.MenuStates.ItemStates;
 using CryptoQuest.UI.Menu.Panels.Item.States;
 using IndiGames.GameplayAbilitySystem.AbilitySystem;
@@ -13,18 +13,22 @@ namespace CryptoQuest.UI.Menu.Panels.Item
     public class UIItemPresenter : MonoBehaviour, IActionPresenter
     {
         [SerializeField] private PresenterBinder _binder;
-        [SerializeField] private UIConsumableMenuPanel _uiConsumableMenuPanel;
         [SerializeField] private PartySO _partySo;
 
-        [SerializeField] private UsableSO _item;
+        [Header("UI")]
+        [SerializeField] private UIConsumableMenuPanel _uiConsumableMenuPanel;
 
         [SerializeField] private UIItemCharacterSelection _uiItemCharacterSelection;
 
+        private UsableSO _item;
 
         private void Awake()
         {
             _uiConsumableMenuPanel.StateMachine.AddState(ItemState.UseItemForSingleAlly, new ItemState(this));
+            _uiConsumableMenuPanel.StateMachine.AddState(ItemState.UseItemForAllAllies, new ItemState(this));
             _binder.Bind(this);
+
+            UIConsumableItem.Using += GetItem;
         }
 
         public void Show()
@@ -32,20 +36,30 @@ namespace CryptoQuest.UI.Menu.Panels.Item
             _uiConsumableMenuPanel.Interactable = false;
             _uiItemCharacterSelection.Init();
 
-            _uiItemCharacterSelection.Clicked += UseItem;
+            _uiItemCharacterSelection.Clicked += ActiveAbility;
         }
 
-        private void UseItem(int index)
+        private void GetItem(UIConsumableItem currentItem)
+        {
+            _item = currentItem.ItemDef.Item;
+        }
+
+        private void ActiveAbility(int index)
         {
             AbilitySystemBehaviour owner = _partySo.PlayerTeam.Members[index];
             AbstractAbility ability = _item.Ability.GetAbilitySpec(owner);
             ability.ActivateAbility();
+
+            Hide();
         }
 
         public void Hide()
         {
             _uiConsumableMenuPanel.Interactable = true;
             _uiItemCharacterSelection.DeInit();
+
+            _uiItemCharacterSelection.Clicked -= ActiveAbility;
+
             _uiConsumableMenuPanel.StateMachine.RequestStateChange(ItemMenuStateMachine.InventorySelection);
         }
 
