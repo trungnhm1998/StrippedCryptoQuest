@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 1777753454019466195}
   - component: {fileID: 2442478146309426484}
   - component: {fileID: 8771262284569674151}
+  - component: {fileID: 4227199146749451100}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -79,7 +80,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e75053713f221bc488f4a0119399a755, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AppliedEffects: []
 --- !u!114 &8118863153528223941
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -107,6 +107,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _attributeSystem: {fileID: 4166923911424837267}
   _effectSystem: {fileID: 5867922176582265061}
+  _abilityEffectSystem: {fileID: 4227199146749451100}
   _tagSystem: {fileID: 8118863153528223941}
 --- !u!114 &2442478146309426484
 MonoBehaviour:
@@ -120,7 +121,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4da6483dfa85000439ec5f53c1115bfb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _hpAttribute: {fileID: 11400000, guid: 47235b4d63dc53a48a36591dbde337fe, type: 2}
+  _hpAttribute: {fileID: 11400000, guid: 77c53593fd92c904aa7689c5a7449df3, type: 2}
   _doneActionEventChannel: {fileID: 11400000, guid: 9ed5ff741b20bee4f9e8a2ade059511f, type: 2}
   _doneShowDialogEvent: {fileID: 11400000, guid: 7c5ea92a1adcd1a41bd62b22f8d98934, type: 2}
   <UnitData>k__BackingField: {fileID: 0}
@@ -146,3 +147,15 @@ MonoBehaviour:
     width: 120
     height: 50
   _windowWidth: 400
+--- !u!114 &4227199146749451100
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7704234448636028181}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b41fedf455499914680e8b368e11fa9e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

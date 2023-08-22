@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 3876355296964779715}
   - component: {fileID: 6729949259968414189}
   - component: {fileID: -8954601881777790865}
+  - component: {fileID: 33423683942313027}
   m_Layer: 0
   m_Name: Hero
   m_TagString: Untagged
@@ -80,7 +81,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e75053713f221bc488f4a0119399a755, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AppliedEffects: []
 --- !u!114 &7589914057393015314
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -108,6 +108,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _attributeSystem: {fileID: 5812339283841037738}
   _effectSystem: {fileID: 5328154967645560885}
+  _abilityEffectSystem: {fileID: 33423683942313027}
   _tagSystem: {fileID: 7589914057393015314}
 --- !u!114 &3876355296964779715
 MonoBehaviour:
@@ -142,7 +143,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3b4e80bae6bdee42ab2056030e6da51, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _hpAttribute: {fileID: 11400000, guid: 879def46810903f46ac8b6711980571f, type: 2}
+  _hpAttribute: {fileID: 11400000, guid: 77c53593fd92c904aa7689c5a7449df3, type: 2}
   _doneActionEventChannel: {fileID: 11400000, guid: 9ed5ff741b20bee4f9e8a2ade059511f, type: 2}
   _doneShowDialogEvent: {fileID: 11400000, guid: 7c5ea92a1adcd1a41bd62b22f8d98934, type: 2}
   <UnitData>k__BackingField: {fileID: 11400000, guid: 549fe8060f017d443adb6aff881f5765, type: 2}
@@ -165,3 +166,15 @@ MonoBehaviour:
   <Equipments>k__BackingField: []
   _onEquipItem: {fileID: 11400000, guid: 34a357e4d3400604da27606cef19329e, type: 2}
   _onUnequipItem: {fileID: 11400000, guid: a4434ce3e61b46d4fae0536649544f14, type: 2}
+--- !u!114 &33423683942313027
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2011783402802653897}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b41fedf455499914680e8b368e11fa9e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
