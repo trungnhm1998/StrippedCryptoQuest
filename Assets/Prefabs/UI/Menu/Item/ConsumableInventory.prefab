@@ -478,7 +478,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _recyclableScrollRect: {fileID: 272777385134673198}
   _content: {fileID: 2076704773167002764}
-  <Type>k__BackingField: {fileID: 11400000, guid: 38be8846d419c5248a5eda2b4376a348, type: 2}
+  <Type>k__BackingField: {fileID: 0}
 --- !u!114 &3504895232198016896
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -495,8 +495,6 @@ MonoBehaviour:
   _partySo: {fileID: 11400000, guid: b97126249c17e024fa024226ffea3c3f, type: 2}
   _uiConsumableMenuPanel: {fileID: 0}
   _uiItemCharacterSelection: {fileID: 0}
-  _singleTargetType: {fileID: 11400000, guid: a2ea7f9b209491642a05a2d5d5f9cbfc, type: 2}
-  _allTargetType: {fileID: 11400000, guid: ce8a490d840449b46a2fa026a3dd0f4c, type: 2}
 --- !u!114 &6440227071524369810
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -509,7 +507,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd4eeb4d29fe04c44b020c790b6f1931, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _items: []
+  _items:
+  - <IsNftItem>k__BackingField: 0
+    <Quantity>k__BackingField: 0
+    <Item>k__BackingField: {fileID: 0}
 --- !u!1 &8743635559222423050
 GameObject:
   m_ObjectHideFlags: 0
