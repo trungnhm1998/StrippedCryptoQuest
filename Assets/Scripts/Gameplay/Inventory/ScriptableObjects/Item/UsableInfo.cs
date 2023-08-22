@@ -10,15 +10,15 @@ namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item
     [Serializable]
     public class UsableInfo : ItemInfo
     {
-        [field: SerializeField] public int Quantity { get; private set; }
+        [field: SerializeField] public int Quantity { get; private set; } = 1;
         public AbilitySystemBehaviour Owner { get; set; }
 
         [field: SerializeField] public UsableSO Item { get; private set; }
-        
+
         public Sprite Icon => Item.Image;
         public LocalizedString DisplayName => Item.DisplayName;
         public LocalizedString Description => Item.Description;
-        
+
         public UsableInfo(UsableSO baseItemSO, int quantity = 0) : base(baseItemSO)
         {
             Item = baseItemSO;
