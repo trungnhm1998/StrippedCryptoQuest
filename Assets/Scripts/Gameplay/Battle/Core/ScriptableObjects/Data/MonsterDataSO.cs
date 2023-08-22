@@ -15,5 +15,11 @@ namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data
 
         [field: SerializeField]
         public AssetReference MonsterPrefab { get; private set; }
+#if UNITY_EDITOR
+        public void Editor_SetMonsterPrefab(AssetReference prefab)
+        {
+            MonsterPrefab = prefab;
+        }
+#endif
     }
 }

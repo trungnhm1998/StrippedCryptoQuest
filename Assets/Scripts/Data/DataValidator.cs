@@ -56,7 +56,7 @@ namespace CryptoQuest.Data
             {
                 if (encounterSetup.BattleData == null)
                     return false;
-                totalProbability += encounterSetup.Probability / BaseBattleVariable.CORRECTION_PROBABILITY_VALUE;
+                totalProbability += encounterSetup.Probability;
             }
             return totalProbability == 1;
         }
@@ -111,6 +111,7 @@ namespace CryptoQuest.Data
         public int MonsterId { get; set; }
         public string MonsterName { get; set; }
         public int ElementId { get; set; }
+        public float MaxHP { get; set; }
         public float HP { get; set; }
         public float MP { get; set; }
         public float Strength { get; set; }
@@ -126,6 +127,7 @@ namespace CryptoQuest.Data
         public float Exp { get; set; }
         public float Gold { get; set; }
         public string DropItemID { get; set; }
+        public string MonsterPrefabName { get; set; }
     }
 
     public class MonsterPartyDataModel

@@ -5,10 +5,12 @@ using System.Linq;
 using CryptoQuest.Data;
 using CryptoQuest.Gameplay.BaseGameplayData;
 using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data;
+using IndiGames.GameplayAbilitySystem.AbilitySystem.ScriptableObjects;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
 using ScriptableObjectBrowser;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 using AttributeScriptableObject = CryptoQuest.Character.Attributes.AttributeScriptableObject;
 
 namespace CryptoQuestEditor.Gameplay.Gameplay.Monster
@@ -18,6 +20,11 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Monster
         private const string DEFAULT_NAME = "Monster";
         private const int ROW_OFFSET = 2;
         private const string ATTRIBUTE_PREFIX = "Default.";
+
+        private const string NORMAL_ATTACK_ABILITY_PATH =
+            "Assets/ScriptableObjects/Battle/Skills/Enemy/NormalAttack/EmemyNormalAttack.asset";
+
+        private const string PREFAB_PATH = "Assets/Prefabs/Battle/Enemies/";
 
         public MonsterDataSOEditor()
         {
@@ -34,7 +41,8 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Monster
                 // get data form tsv file
                 string[] splitedData = allLines[index].Split('\t');
                 string name = splitedData[4];
-                string path = this.defaultStoragePath + "/" + name + ".asset";
+                string replacedName = name.Replace(" ", "");
+                string path = this.defaultStoragePath + "/" + replacedName + ".asset";
                 if (!DataValidator.IsStringsNotNull(splitedData, new List<int>()
                         { 3, 5, 22, 23, 24, 25, 26, 27 }))
                     continue;
@@ -43,6 +51,7 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Monster
                     MonsterId = int.Parse(splitedData[0]),
                     MonsterName = splitedData[4],
                     ElementId = int.Parse(splitedData[7]),
+                    MaxHP = float.Parse(splitedData[8]),
                     HP = float.Parse(splitedData[8]),
                     MP = float.Parse(splitedData[9]),
                     Strength = float.Parse(splitedData[10]),
@@ -58,7 +67,8 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Monster
                     Exp = float.Parse(splitedData[20]),
                     Gold = float.Parse(splitedData[21]),
                     // DropItemID = splitedData[22]
-                    DropItemID = "Drop item id"
+                    DropItemID = "Drop item id",
+                    MonsterPrefabName = splitedData[25]
                 };
                 if (!DataValidator.MonsterDataValidator(dataModel))
                 {
@@ -79,15 +89,18 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Monster
                 instance.Exp = dataModel.Exp;
                 instance.Gold = dataModel.Gold;
                 instance.DropItemID = dataModel.DropItemID;
+                instance.NormalAttack = GetNormalAttackAbility();
+                instance.Editor_SetMonsterPrefab(GetMonsterPrefab(dataModel.MonsterPrefabName));
                 List<string> attributeNames = new()
                 {
-                    "HP", "MP", "Strength",
+                    "MaxHP", "HP", "MP", "Strength",
                     "Vitality", "Agility", "Intelligence", "Luck", "Attack",
                     "SkillPower", "Defense", "EvasionRate", "CriticalRate"
                 };
                 AttributeInitValue[] attributeInitValues = InitAttributeValueSetup(dataModel, attributeNames);
                 instance.AttributesToInitialize = attributeInitValues;
-                instance.name = name;
+                instance.Name = name;
+                instance.name = replacedName;
 
                 if (!AssetDatabase.Contains(instance))
                 {
@@ -101,6 +114,23 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Monster
                 }
             }
         }
+
+        private AbilityScriptableObject GetNormalAttackAbility()
+        {
+            var ability =
+                (AbilityScriptableObject)AssetDatabase.LoadAssetAtPath(NORMAL_ATTACK_ABILITY_PATH,
+                    typeof(AbilityScriptableObject));
+            return ability;
+        }
+
+        private AssetReference GetMonsterPrefab(string prefabName)
+        {
+            var path = PREFAB_PATH + prefabName + ".prefab";
+            var guid = AssetDatabase.AssetPathToGUID(path);
+            AssetReference monsterPrefab = new(guid);
+            return monsterPrefab;
+        }
+
 
         private AttributeInitValue[] InitAttributeValueSetup(MonsterUnitDataModel dataModel,
             List<string> attributeNames)

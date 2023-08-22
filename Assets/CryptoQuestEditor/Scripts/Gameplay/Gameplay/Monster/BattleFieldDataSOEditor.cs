@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using CryptoQuest.Data;
 using CryptoQuest.Gameplay.Battle;
+using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Calculation;
 using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data;
 using ScriptableObjectBrowser;
 using UnityEditor;
@@ -81,7 +82,8 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Monster
                     => data.BattleId == battleEncounterSetupDataModel.BattleDataId);
                 if (battleDatas.Count() == 0) continue;
                 BattleEncounterSetup encounterSetup = new();
-                encounterSetup.Probability = battleEncounterSetupDataModel.Probability;
+                encounterSetup.Probability = battleEncounterSetupDataModel.Probability /
+                                             BaseBattleVariable.CORRECTION_PROBABILITY_VALUE;
                 encounterSetup.BattleData = battleDatas.First();
                 battleEncounterSetups.Add(encounterSetup);
             }
