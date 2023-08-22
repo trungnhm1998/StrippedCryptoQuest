@@ -136,6 +136,7 @@ namespace CryptoQuest.UI.Menu.Panels.Home
         {
             CharInfo = infoReceived;
             CharAttributes = attributesReceived;
+            CheckExistence();
         }
     }
 }

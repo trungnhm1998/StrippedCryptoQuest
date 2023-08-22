@@ -48,7 +48,11 @@ namespace CryptoQuest.UI.Menu.MenuStates
         {
             ActiveState.HandleNavigate(direction);
         }
-
+        public void Confirm()
+        {
+            ActiveState.Confirm();
+        }
         #endregion
+
     }
 }

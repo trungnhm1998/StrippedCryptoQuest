@@ -68,6 +68,7 @@ namespace CryptoQuest.UI.Menu
             _inputMediator.TabChangeEvent += ChangeTab; // shoulder LB/RB
             _inputMediator.MenuSubmitEvent += Submit; // South Button
             _inputMediator.MenuInteractEvent += Interact;
+            _inputMediator.MenuConfirmedEvent += _mainMenuFsm.Confirm;
         }
 
         private void OnDisable()
@@ -82,6 +83,8 @@ namespace CryptoQuest.UI.Menu
             _inputMediator.TabChangeEvent -= ChangeTab;
             _inputMediator.MenuSubmitEvent -= Submit;
             _inputMediator.MenuInteractEvent -= Interact;
+            _inputMediator.MenuConfirmedEvent -= _mainMenuFsm.Confirm;
+
         }
 
         #region State Machine Delegates

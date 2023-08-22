@@ -1,34 +1,46 @@
+using System.Collections.Generic;
+using CryptoQuest.Menu;
+using IndiGames.Core.Events.ScriptableObjects;
 using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace CryptoQuest.UI.Menu.Panels.Home
 {
-    public class UICharacterCard : MonoBehaviour
+    public class UICharacterCardButton : MultiInputButton
     {
+        public static UnityAction<UICharacterCardButton> SelectedEvent;
+
         [SerializeField] private Image _avatar;
-        [SerializeField] private GameObject _selectingEffect;
         [SerializeField] private GameObject _selectedEffect;
         [SerializeField] private Image _selectedAvatar;
         [SerializeField] private GameObject _contents;
 
-        private void OnEnable()
+        [Header("Events")]
+        [SerializeField] private VoidEventChannelSO SortModeEnabledEvent;
+
+        protected override void OnEnable()
         {
-            _selectedEffect.SetActive(false);
+            base.OnEnable();
+            SortModeEnabledEvent.EventRaised += CheckButtonActive;
         }
 
-        public void Select()
+        protected override void OnDisable()
         {
-            _selectingEffect.SetActive(true);
+            base.OnDisable();
+            SortModeEnabledEvent.EventRaised -= CheckButtonActive;
         }
 
-        public void Deselect()
+        private void CheckButtonActive()
         {
-            _selectingEffect.SetActive(false);
+            this.enabled = _contents.activeSelf;
         }
 
-        public void Selected()
+        public void CardButtonOnPressed()
         {
             PerformSelectedEffect();
+            SelectedEvent?.Invoke(this);
         }
 
         public void Cancel()

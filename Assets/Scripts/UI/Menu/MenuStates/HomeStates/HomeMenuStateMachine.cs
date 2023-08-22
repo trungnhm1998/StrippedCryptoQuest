@@ -5,8 +5,8 @@ namespace CryptoQuest.UI.Menu.MenuStates.HomeStates
     public class HomeMenuStateMachine : MenuStateMachine
     {
         public static readonly string Overview = "Overview";
-        public static readonly string SelectSort = "SelectSort";
-        public static readonly string Sorting = "Sorting";
+        public static readonly string PreSort = "PreSort";
+        public static readonly string Sort = "Sort";
 
         private readonly UIHomeMenu _panel;
 
@@ -16,8 +16,8 @@ namespace CryptoQuest.UI.Menu.MenuStates.HomeStates
 
             // make sure the state derived from MenuStateBase
             AddState(Overview, new OverviewState(homeMenuPanel));
-            // AddState(SelectSort, new State(onLogic: Logic));
-            // AddState(Sorting, new State(onLogic: Logic));
+            AddState(PreSort, new PreSortState(homeMenuPanel));
+            AddState(Sort, new SortState(homeMenuPanel));
 
             SetStartState(Overview);
         }

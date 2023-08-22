@@ -3,14 +3,9 @@ using UnityEngine;
 
 namespace CryptoQuest.UI.Menu.MenuStates.HomeStates
 {
-    public class OverviewState : MenuStateBase
+    public class OverviewState : HomeStateBase
     {
-        protected UIHomeMenu HomePanel { get; }
-
-        public OverviewState(UIHomeMenu homePanel)
-        {
-            HomePanel = homePanel;
-        }
+        public OverviewState(UIHomeMenu homePanel) : base(homePanel) { }
 
         public override void OnEnter()
         {
@@ -35,6 +30,11 @@ namespace CryptoQuest.UI.Menu.MenuStates.HomeStates
         {
             base.HandleNavigate(direction);
             NavigationBar.ChangeTab(direction.x);
+        }
+
+        public override void Interact()
+        {
+            MenuStateMachine.RequestStateChange(HomeMenuStateMachine.PreSort);
         }
     }
 }

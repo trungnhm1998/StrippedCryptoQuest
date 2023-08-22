@@ -57,6 +57,12 @@ namespace CryptoQuest.UI.Menu.MenuStates
             ActiveState.Interact();
         }
 
+        public virtual void Confirm()
+        {
+            Debug.Log($"{GetType().Name}::Confirm::{_panel.name}");
+            ActiveState.Confirm();
+        }
+
         public virtual void ChangeTab(float direction)
         {
             Debug.Log($"{GetType().Name}::ChangeTab::{_panel.name}");

@@ -211,7 +211,10 @@ namespace CryptoQuest.Input
             if (context.performed) MenuSubmitEvent?.Invoke();
         }
 
-        public void OnConfirm(InputAction.CallbackContext context) { }
+        public void OnConfirm(InputAction.CallbackContext context)
+        {
+            if (context.performed) MenuConfirmedEvent?.Invoke();
+        }
 
         public void OnCancel(InputAction.CallbackContext context)
         {
