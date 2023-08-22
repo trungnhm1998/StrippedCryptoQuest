@@ -65,6 +65,7 @@ namespace CryptoQuest.UI.Menu.Panels.Home
             {
                 if (member.gameObject.activeSelf)
                 {
+                    Debug.Log($"member = [{member.name}]");
                     member.TryGetComponent<StatsInitializer>(out var initializer);
                     _memberStats = initializer.DefaultStats as HeroDataSO;
                     _activeMembersData.Add(_memberStats);
@@ -90,7 +91,6 @@ namespace CryptoQuest.UI.Menu.Panels.Home
 
         public void ConfirmSelect(UICharacterCardButton card)
         {
-
             SelectedEvent?.Invoke();
 
             _topLine.SetActive(false);
@@ -105,6 +105,7 @@ namespace CryptoQuest.UI.Menu.Panels.Home
         {
             var currentTarget = _characterSlots.GetChild(CurrentIndex);
 
+            _party.Sort(CurrentIndex, CurrentIndex + 1);
             CurrentIndex++;
             currentTarget.SetSiblingIndex(CurrentIndex);
 
@@ -115,6 +116,7 @@ namespace CryptoQuest.UI.Menu.Panels.Home
         {
             var currentTarget = _characterSlots.GetChild(CurrentIndex);
 
+            _party.Sort(CurrentIndex, CurrentIndex - 1);
             CurrentIndex--;
             currentTarget.SetSiblingIndex(CurrentIndex);
 
