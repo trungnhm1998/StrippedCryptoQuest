@@ -13,6 +13,7 @@ namespace CryptoQuest.Menu
     public class MultiInputButton : Button
     {
         public event Action Selected;
+        public event Action DeSelected;
 
         private MenuSelectionHandler _menuSelectionHandler;
 
@@ -41,6 +42,13 @@ namespace CryptoQuest.Menu
         {
             if (Handler.AllowsSubmit())
                 base.OnSubmit(eventData);
+        }
+
+        public override void OnDeselect(BaseEventData eventData)
+        {
+            if (!enabled) return;
+            DeSelected?.Invoke();
+            base.OnDeselect(eventData);
         }
     }
 }

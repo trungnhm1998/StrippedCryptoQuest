@@ -32,11 +32,14 @@ namespace CryptoQuest.UI.Menu.Panels.Item
         private void OnEnable()
         {
             _button.Selected += OnInspectingItem;
+            _button.DeSelected += OnDeselectItem;
         }
+
 
         private void OnDisable()
         {
             _button.Selected -= OnInspectingItem;
+            _button.DeSelected -= OnDeselectItem;
         }
 
         public void OnUse()
@@ -55,6 +58,10 @@ namespace CryptoQuest.UI.Menu.Panels.Item
             Inspecting?.Invoke(this);
         }
 
+        private void OnDeselectItem()
+        {
+            _selectedBackground.SetActive(false);
+        }
 
         public void Init(UsableInfo item)
         {
