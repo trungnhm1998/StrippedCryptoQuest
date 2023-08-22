@@ -14,6 +14,7 @@ namespace CryptoQuest.UI.Menu.Panels.Status
         public void OnPressed()
         {
             Pressed?.Invoke(GetComponent<EquipmentFilters>());
+            _selectEffect.SetActive(false);
         }
 
         public override void OnSelect(BaseEventData eventData)
