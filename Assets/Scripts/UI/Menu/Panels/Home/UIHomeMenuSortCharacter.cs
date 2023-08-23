@@ -48,13 +48,13 @@ namespace CryptoQuest.UI.Menu.Panels.Home
 
         private void OnEnable()
         {
-            _homeMenu.OpenedEvent += LoadPartyMembers;
+            _homeMenu.MenuOpenedEvent += LoadPartyMembers;
             UICharacterCardButton.SelectedEvent += ConfirmSelect;
         }
 
         private void OnDisable()
         {
-            _homeMenu.OpenedEvent -= LoadPartyMembers;
+            _homeMenu.MenuOpenedEvent -= LoadPartyMembers;
             UICharacterCardButton.SelectedEvent -= ConfirmSelect;
         }
 
@@ -65,7 +65,6 @@ namespace CryptoQuest.UI.Menu.Panels.Home
             {
                 if (member.gameObject.activeSelf)
                 {
-                    Debug.Log($"member = [{member.name}]");
                     member.TryGetComponent<StatsInitializer>(out var initializer);
                     _memberStats = initializer.DefaultStats as HeroDataSO;
                     _activeMembersData.Add(_memberStats);

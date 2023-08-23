@@ -6,10 +6,12 @@ namespace CryptoQuest.UI.Menu.MenuStates.StatusStates
     public class EquipmentState : StatusStateBase
     {
         private UIStatusMenuEquipment _equipmentOverviewPanel;
+        private UIStatusCharacter _characterPanel;
 
         public EquipmentState(UIStatusMenu statusPanel) : base(statusPanel)
         {
             _equipmentOverviewPanel = statusPanel.EquipmentOverviewPanel;
+            _characterPanel = statusPanel.CharacterPanel;
         }
 
         public override void OnEnter()
@@ -41,6 +43,12 @@ namespace CryptoQuest.UI.Menu.MenuStates.StatusStates
         {
             StatusPanel.EquippingType = type;
             MenuStateMachine.RequestStateChange(StatusMenuStateMachine.EquipmentSelection);
+        }
+
+        public override void HandleNavigate(Vector2 direction)
+        {
+            base.HandleNavigate(direction);
+            _characterPanel.ChangeCharacter(direction);
         }
     }
 }

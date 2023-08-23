@@ -1,6 +1,7 @@
 using CryptoQuest.UI.Menu.MenuStates.StatusStates;
 using FSM;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace CryptoQuest.UI.Menu.Panels.Status
 {
@@ -14,9 +15,9 @@ namespace CryptoQuest.UI.Menu.Panels.Status
         [SerializeField] private UIStatusMenuEquipment _equipmentOverviewPanel;
         public UIStatusMenuEquipment EquipmentOverviewPanel => _equipmentOverviewPanel;
         [field: SerializeField] public UIStatusInventory InventoryPanel { get; private set; }
+        [field: SerializeField] public UIStatusCharacter CharacterPanel { get; private set; }
 
         public EquipmentFilters EquippingType { get; set; }
-
 
         /// <summary>
         /// Return the specific state machine for this panel.

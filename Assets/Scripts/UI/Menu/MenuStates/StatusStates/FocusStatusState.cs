@@ -1,3 +1,4 @@
+using UnityEngine;
 using CryptoQuest.UI.Menu.Panels.Status;
 
 namespace CryptoQuest.UI.Menu.MenuStates.StatusStates

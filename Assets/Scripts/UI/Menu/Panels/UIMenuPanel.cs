@@ -1,11 +1,14 @@
 using CryptoQuest.UI.Menu.ScriptableObjects;
 using FSM;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace CryptoQuest.UI.Menu.Panels
 {
     public abstract class UIMenuPanel : MonoBehaviour
     {
+        public UnityAction MenuOpenedEvent;
+
         [SerializeField] private MenuTypeSO _typeSO;
         public MenuTypeSO TypeSO => _typeSO;
 
@@ -18,7 +21,10 @@ namespace CryptoQuest.UI.Menu.Panels
         }
 
         // TODO: Rename method, I followed Unity's naming convention
-        protected virtual void OnShow() {}
+        protected virtual void OnShow()
+        {
+            MenuOpenedEvent?.Invoke();
+        }
 
         public void Hide()
         {
