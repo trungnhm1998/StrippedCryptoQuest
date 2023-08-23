@@ -2,20 +2,26 @@ using UnityEngine;
 using UnityEditor;
 using System.IO;
 using System.Xml;
+using System.Collections.Generic;
+using SuperTiled2Unity;
+using SuperTiled2Unity.Editor;
+using UnityEditor.SceneManagement;
 
 public class ResizeTilesetEditor
 {
-    [MenuItem("Assets/Resize Tileset by 3")]
-    private static void ResizePNGImages()
+    private const float RESIZE_FACTOR = 3f;
+
+    [MenuItem("Assets/Tileset Resize/Resize Tileset by 3")]
+    private static void ResizeTilesetSize()
     {
-        var folderPath = GetCurrentFolderPath();
-        if (folderPath == null) return;
+        ResizePNG(RESIZE_FACTOR);
+        ModifyTSX(RESIZE_FACTOR);
+        // ModifyTMX(RESIZE_FACTOR);
+    }
 
-        var resizeFactor = 3f;
-
-        var pngFilePaths = Directory.GetFiles(folderPath, "*.png", SearchOption.AllDirectories);
-
-        foreach (var pngFilePath in pngFilePaths)
+    private static void ResizePNG(float resizeFactor)
+    {
+        foreach (var pngFilePath in TraverseFolder("*.png"))
         {
             // Load the original PNG texture
             var pngBytes = File.ReadAllBytes(pngFilePath);
@@ -40,25 +46,28 @@ public class ResizeTilesetEditor
             var resizedBytes = resizedTexture.EncodeToPNG();
             File.WriteAllBytes(pngFilePath, resizedBytes);
 
-            Debug.Log("PNG image resized and saved at: " + pngFilePath);
+            Debug.Log($"{pngFilePath} resized and saved.");
         }
 
         AssetDatabase.Refresh();
-        Debug.Log("PNG images resized.");
-
-        ModifyTSX(resizeFactor);
+        Debug.Log("All PNG images resized.");
     }
 
     private static void ModifyTSX(float resizeFactor)
     {
-        var folderPath = GetCurrentFolderPath();
-        if (folderPath == null) return;
-        var tsxFilePaths = Directory.GetFiles(folderPath, "*.tsx", SearchOption.AllDirectories);
-
-        foreach (var tsxFilePath in tsxFilePaths)
+        foreach (var tsxFilePath in TraverseFolder("*.tsx"))
         {
             var doc = new XmlDocument();
             doc.Load(tsxFilePath);
+            var importer = AssetImporter.GetAtPath(tsxFilePath);
+
+            if (importer is TiledAssetImporter tiledImporter)
+            {
+                var so = new SerializedObject(tiledImporter);
+                // you can Shift+Right Click on property names in the Inspector to see their paths
+                so.FindProperty("m_PixelsPerUnit").floatValue /= resizeFactor;
+                so.ApplyModifiedProperties();
+            }
 
             var root = doc.DocumentElement;
 
@@ -75,19 +84,89 @@ public class ResizeTilesetEditor
 
             doc.Save(tsxFilePath);
 
-            Debug.Log("Tileset modified (tilewidth and tileheight reduced by a factor of 3) and saved.");
+            Debug.Log($"{tsxFilePath} modified and saved.");
         }
 
         AssetDatabase.Refresh();
-        Debug.Log("TSX resized.");
+        Debug.Log("All TSX resized.");
     }
 
-    private static void ModifyAttribute(XmlElement element, string attr, float resizeFactor)
+    [MenuItem("Assets/Tileset Resize/Fix Polygon Collider")]
+    public static void FixPolygonCollider()
     {
-        Debug.Log($"{attr}: {element.GetAttribute(attr)}");
-        var value = int.Parse(element.GetAttribute(attr));
-        var newValue = Mathf.FloorToInt(value / resizeFactor);
-        element.SetAttribute(attr, newValue.ToString());
+        ModifyPolygonColliderPositions(new Vector3(0f, 0.96f / 1.5f, 0f));
+    }
+
+    [MenuItem("Assets/Tileset Resize/Reset Polygon Collider")]
+    public static void ResetPolygonCollider()
+    {
+        ModifyPolygonColliderPositions(Vector3.zero);
+    }
+
+    private static void ModifyPolygonColliderPositions(Vector3 newLocalPosition)
+    {
+        var activeScene = UnityEngine.SceneManagement.SceneManager.GetActiveScene();
+        foreach (var gameObject in activeScene.GetRootGameObjects())
+        {
+            var colliders = gameObject.GetComponentsInChildren<PolygonCollider2D>(true);
+
+            foreach (var collider in colliders)
+            {
+                if (!collider.gameObject.TryGetComponent<SuperColliderComponent>(out var _)) continue;
+                collider.transform.localPosition = newLocalPosition; 
+            }
+        }
+        // Mark the scene as dirty
+        EditorSceneManager.MarkSceneDirty(activeScene);
+
+        // Save the scene
+        EditorSceneManager.SaveScene(activeScene);
+    }
+    
+    private static void ModifyTMX(float resizeFactor)
+    {
+        foreach (var tmxFilePath in TraverseFolder("*.tmx"))
+        {
+            var doc = new XmlDocument();
+            doc.Load(tmxFilePath);
+
+            var root = doc.DocumentElement;
+            var importer = AssetImporter.GetAtPath(tmxFilePath);
+
+            if (importer is TiledAssetImporter tiledImporter)
+            {
+                var so = new SerializedObject(tiledImporter);
+                // you can Shift+Right Click on property names in the Inspector to see their paths
+                so.FindProperty("m_PixelsPerUnit").floatValue /= resizeFactor;
+                so.ApplyModifiedProperties();
+            }
+
+
+            foreach (XmlElement tileset in root.SelectNodes("//map"))
+            {
+                ModifyAttribute(tileset, "tilewidth", resizeFactor);
+                ModifyAttribute(tileset, "tileheight", resizeFactor);
+            }
+
+            doc.Save(tmxFilePath);
+
+            Debug.Log($"{tmxFilePath} modified and saved.");
+        }
+
+        AssetDatabase.Refresh();
+        Debug.Log("All TMX resized.");
+    }
+
+    private static IEnumerable<string> TraverseFolder(string fileExtension, SearchOption searchOption = SearchOption.AllDirectories)
+    {
+        var folderPath = GetCurrentFolderPath();
+        if (folderPath == null) yield break;
+        var filePaths = Directory.GetFiles(folderPath, fileExtension, searchOption);
+
+        foreach (var filePath in filePaths)
+        {
+            yield return filePath;
+        }
     }
 
     private static string GetCurrentFolderPath()
@@ -99,5 +178,21 @@ public class ResizeTilesetEditor
             return null;
         }
         return folderPath;
+    }
+
+    private static void ModifyAttribute(XmlElement element, string attr, float resizeFactor)
+    {
+        Debug.Log($"{attr}: {element.GetAttribute(attr)}");
+        var value = int.Parse(element.GetAttribute(attr));
+        var newValue = Mathf.FloorToInt(value / resizeFactor);
+        element.SetAttribute(attr, newValue.ToString());
+    }
+
+    private static void ModifyAttributeFloat(XmlElement element, string attr, float resizeFactor)
+    {
+        Debug.Log($"{attr}: {element.GetAttribute(attr)}");
+        var value = float.Parse(element.GetAttribute(attr));
+        var newValue = value / resizeFactor;
+        element.SetAttribute(attr, newValue.ToString());
     }
 }
