@@ -12,7 +12,7 @@ namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects
     [Serializable]
     public class CharacterEquipments
     {
-        [NonReorderable, SerializeField] private List<EquippingSlotContainer> _equippingSlots = new();
+        [NonReorderable, SerializeField] private List<EquippingSlotContainer> _equippingSlots;
         private Dictionary<ESlotType, EquippingSlotContainer> _equippingSlotsCache = new();
         public InventorySO Inventory { get; set; }
 

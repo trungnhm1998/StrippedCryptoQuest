@@ -17,13 +17,13 @@ namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects
         private InventoryConfigSO _inventoryConfig;
 
         [field: Header("Inventory"), SerializeField]
-        public List<UsableInfo> UsableItems { get; private set; } = new();
+        public List<UsableInfo> UsableItems { get; private set; }
 
         /// <summary>
         /// This is inventory for equipment
         /// and make management by compartments and for easy-to-work UI
         /// </summary>
-        [SerializeField] private List<InventoryContainer> _inventories = new();
+        [SerializeField] private List<InventoryContainer> _inventories;
 
         private Dictionary<EEquipmentCategory, int> _inventoriesCache = new();
 
@@ -194,7 +194,7 @@ namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects
         {
             int index = GetInventoryIndex(equipment);
             if (index < 0) return false;
-            
+
             for (int i = 0; i < _inventories[index].CurrentItems.Count; i++)
             {
                 if (_inventories[index].CurrentItems[i].Item.ID == equipment.Item.ID)

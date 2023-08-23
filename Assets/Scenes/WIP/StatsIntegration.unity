@@ -137,7 +137,7 @@ GameObject:
   - component: {fileID: 544481028}
   - component: {fileID: 544481024}
   - component: {fileID: 544481023}
-  - component: {fileID: 544481027}
+  - component: {fileID: 544481029}
   m_Layer: 0
   m_Name: Character
   m_TagString: Untagged
@@ -223,24 +223,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 692557e6fee799243868270d0b093d7e, type: 2}
   - {fileID: 11400000, guid: 0d7a5bc26b58515459d9e824964fd7f8, type: 2}
   _attributeValues: []
---- !u!114 &544481027
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 544481021}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dd7d5e5a65f31f243864fa776a95efe3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _effectSystemBehaviour: {fileID: 544481025}
-  _equipment:
-    Data: {fileID: 11400000, guid: 3a3b8838491a3b448a6ca3fcbbfaed3a, type: 2}
-    Level: 0
-  _baseEquipmentEffect: {fileID: 11400000, guid: d97f40487d4fc1843a9377ec47986e93, type: 2}
-  _computationMethod: {fileID: 11400000, guid: 4fe6e3f4b130f604d96a1b1a4218c868, type: 2}
 --- !u!114 &544481028
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -253,6 +235,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b41fedf455499914680e8b368e11fa9e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &544481029
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 544481021}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf5a15ba72cfcff468c35d50f3efa439, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _effectSystemBehaviour: {fileID: 544481025}
+  _baseEquipmentEffect: {fileID: 11400000, guid: d97f40487d4fc1843a9377ec47986e93, type: 2}
+  _computationMethod: {fileID: 11400000, guid: 4fe6e3f4b130f604d96a1b1a4218c868, type: 2}
+  <HeroData>k__BackingField: {fileID: 11400000, guid: 549fe8060f017d443adb6aff881f5765, type: 2}
+  <Inventory>k__BackingField: {fileID: 11400000, guid: 7730f28a7d8180e4bb6cacc9b7dc2d7e, type: 2}
+  <Equipments>k__BackingField: []
+  _onEquipItem: {fileID: 11400000, guid: 34a357e4d3400604da27606cef19329e, type: 2}
+  _onUnequipItem: {fileID: 11400000, guid: a4434ce3e61b46d4fae0536649544f14, type: 2}
 --- !u!1 &798960852
 GameObject:
   m_ObjectHideFlags: 0
