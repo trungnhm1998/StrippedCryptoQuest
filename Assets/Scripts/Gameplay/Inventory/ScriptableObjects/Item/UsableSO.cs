@@ -12,7 +12,7 @@ namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item
         [field: SerializeField] public UsableTypeSO UsableTypeSO { get; private set; }
         [field: SerializeField] public ActionDefinitionBase ActionDefinition { get; private set; }
 
-        [field: SerializeField] public AbilitySO Ability { get; private set; }
+        [field: SerializeField] public ItemAbilityDef Ability { get; private set; }
         
         public ActionSpecificationBase Action => ActionDefinition.Create();
 
@@ -25,8 +25,6 @@ namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item
         private void OnValidate()
         {
             if (Ability == null) return;
-            Ability.SkillInfo.SkillName = DisplayName;
-            Ability.SkillInfo.SkillDescription = Description;
         }
 
         /// <summary>

@@ -55,7 +55,12 @@ namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item
 
         public void Use()
         {
-            Item.Action.Execute();
+            var action = Item.Action;
+            action.ActionContext = new ActionSpecificationBase.Context()
+            {
+                Item = this
+            };
+            action.Execute();
         }
     }
 }

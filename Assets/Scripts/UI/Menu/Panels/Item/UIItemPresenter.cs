@@ -1,10 +1,8 @@
 ﻿using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.ActionTypes;
-using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Type;
 using CryptoQuest.Gameplay.PlayerParty;
 using CryptoQuest.UI.Menu.MenuStates.ItemStates;
 using CryptoQuest.UI.Menu.Panels.Item.States;
-using IndiGames.GameplayAbilitySystem.AbilitySystem;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
 using UnityEngine;
 
@@ -24,8 +22,7 @@ namespace CryptoQuest.UI.Menu.Panels.Item
 
         private void Awake()
         {
-            _uiConsumableMenuPanel.StateMachine.AddState(ItemState.UseItemForSingleAlly, new ItemState(this));
-            _uiConsumableMenuPanel.StateMachine.AddState(ItemState.UseItemForAllAllies, new ItemState(this));
+            _uiConsumableMenuPanel.StateMachine.AddState(UISingleItemState.Item, new UISingleItemState(this));
             _binder.Bind(this);
 
             UIConsumableItem.Using += GetItem;
@@ -47,8 +44,8 @@ namespace CryptoQuest.UI.Menu.Panels.Item
         private void ActiveAbility(int index)
         {
             AbilitySystemBehaviour owner = _partySo.PlayerTeam.Members[index];
-            AbstractAbility ability = _item.Ability.GetAbilitySpec(owner);
-            ability.ActivateAbility();
+            var ability = _item.Ability.GetAbilitySpec(owner);
+            ability.TryActiveAbility();
 
             Hide();
         }
@@ -65,7 +62,7 @@ namespace CryptoQuest.UI.Menu.Panels.Item
 
         public void Execute()
         {
-            _uiConsumableMenuPanel.StateMachine.RequestStateChange(ItemState.UseItemForSingleAlly);
+            _uiConsumableMenuPanel.StateMachine.RequestStateChange(UISingleItemState.Item);
         }
     }
 }

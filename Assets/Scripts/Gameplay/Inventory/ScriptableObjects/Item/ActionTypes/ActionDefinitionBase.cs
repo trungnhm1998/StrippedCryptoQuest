@@ -18,8 +18,13 @@ namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.ActionTypes
 
     public abstract class ActionSpecificationBase
     {
+        public struct Context
+        {
+            public UsableInfo Item { get; set; }
+        }
         private IActionPresenter _presenter;
         protected IActionPresenter Presenter => _presenter;
+        public Context ActionContext;
 
         public void Bind(IActionPresenter presenter)
         {
@@ -33,4 +38,5 @@ namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.ActionTypes
 
         protected virtual void OnExecute() { }
     }
+
 }

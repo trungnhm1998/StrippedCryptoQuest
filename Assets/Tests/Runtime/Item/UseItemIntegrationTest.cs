@@ -101,9 +101,9 @@ namespace CryptoQuest.Tests.Runtime.Item
         {
             var expendableItem = _healItem as UsableSO;
             Assert.NotNull(expendableItem);
-
+            
             var healAbility = expendableItem.Ability as AbilitySO;
-
+            
             EffectAttributeModifier newModifier = new()
             {
                 AttributeSO = _playerHealthAttribute,

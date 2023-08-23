@@ -7,7 +7,6 @@ namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.ActionTypes
     /// I followed the MVVP pattern here, but with a little twist. this class decorated the real UI.
     /// Now we can "interact" with the UI through this class.
     /// </summary>
-    [CreateAssetMenu(menuName = "Create UIActionProviderSO", fileName = "UIActionProviderSO", order = 0)]
     public class PresenterBinder : ScriptableObject, IActionPresenter
     {
         private IActionPresenter _presenter;

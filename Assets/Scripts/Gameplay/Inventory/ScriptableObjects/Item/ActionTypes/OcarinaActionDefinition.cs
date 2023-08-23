@@ -3,7 +3,6 @@ using UnityEngine;
 
 namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.ActionTypes
 {
-    [CreateAssetMenu(menuName = "Crypto Quest/Inventory/Action/OcarinaAction")]
     public class OcarinaActionDefinition : ActionDefinitionBase
     {
         protected override ActionSpecificationBase CreateInternal() => new OcarinaActionSpec();

@@ -1,8 +1,8 @@
+using System;
 using System.Collections.Generic;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Type;
 using CryptoQuest.UI.Menu.MenuStates.ItemStates;
-using CryptoQuest.UI.Menu.Panels.Item.Ocarina;
 using FSM;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -16,6 +16,8 @@ namespace CryptoQuest.UI.Menu.Panels.Item
     /// </summary>
     public class UIConsumableMenuPanel : UIMenuPanel
     {
+        public event Action<UsableInfo> Inspecting;
+        
         [SerializeField] private UIInventoryTabHeader _inventoryTabHeader;
         [SerializeField] private UIConsumables[] _itemLists;
         [SerializeField] private LocalizeStringEvent _localizeDescription;
@@ -141,6 +143,7 @@ namespace CryptoQuest.UI.Menu.Panels.Item
         private void InspectingItem(UsableInfo item)
         {
             _localizeDescription.StringReference = item.Description;
+            Inspecting?.Invoke(item);
         }
 
 
