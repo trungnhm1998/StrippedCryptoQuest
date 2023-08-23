@@ -24,11 +24,9 @@ namespace CryptoQuest.UI.Menu.Panels.Status
 
         private void ButtonOnSelectedEvent(int index)
         {
-            var b = index >= BOUNDARY;
-            var position = b ? _upPoint.position : _downPoint.position;
             UITooltip
                 .ShowTooltipEvent?
-                .Invoke(position, b);
+                .Invoke(_upPoint.position, _downPoint.position);
         }
     }
 }

@@ -67,12 +67,12 @@ namespace CryptoQuest.UI.Menu.Panels.Status
 
         public override void OnSelect(BaseEventData eventData)
         {
+            InspectingRow?.Invoke(this);
             SelectedEvent?.Invoke(_index);
 
             base.OnSelect(eventData);
             _selectEffect.SetActive(true);
             InspectingEquipment?.Invoke(CreateFakeData());
-            InspectingRow?.Invoke(this);
         }
 
         private UIStats.Equipment CreateFakeData()

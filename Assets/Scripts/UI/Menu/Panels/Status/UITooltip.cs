@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using IndiGames.Core.Events.ScriptableObjects;
 using TMPro;
 using UnityEngine;
@@ -10,7 +12,7 @@ namespace CryptoQuest.UI.Menu.Panels.Status
 {
     public class UITooltip : MonoBehaviour
     {
-        public delegate void TooltipEvent(Vector2 position, bool isDownWard = true);
+        public delegate void TooltipEvent(Vector2 upwardPosition, Vector2 downwardPosition);
         public static TooltipEvent ShowTooltipEvent;
         public static UnityAction HideTooltipEvent;
         [SerializeField] private RectTransform _upContainer;
@@ -23,28 +25,39 @@ namespace CryptoQuest.UI.Menu.Panels.Status
         [SerializeField] private Image _illustration;
         [SerializeField] private Image _rarity;
         [SerializeField] private TMP_Text _level;
+        [SerializeField] private float _waitBeforePopupTooltip;
+        private bool _isShowDownWard;
 
         private void OnEnable()
         {
-            ShowTooltipEvent += ShowTooltipAtLocation;
+            ShowTooltipEvent += SetTooltipLocation;
             HideTooltipEvent += Hide;
-
         }
 
         private void OnDisable()
         {
-            ShowTooltipEvent -= ShowTooltipAtLocation;
+            ShowTooltipEvent -= SetTooltipLocation;
             HideTooltipEvent -= Hide;
         }
 
-        private void ShowTooltipAtLocation(Vector2 location, bool isShowDownWard)
+        private void SetTooltipLocation(Vector2 upwardTooltipPoint, Vector2 downwardTooltipPoint)
         {
-            _downContainer.position = _upContainer.position = location;
-            _content.SetActive(true);
-            _reverseFrame.SetActive(isShowDownWard);
-            _frame.SetActive(!isShowDownWard);
-            _content.transform.parent = isShowDownWard ? _downContainer : _upContainer;
+            _content.SetActive(false);
+            if (_upContainer.localPosition.y <= 0) _isShowDownWard = true;
+            else _isShowDownWard = false;
+            _upContainer.transform.position = downwardTooltipPoint;
+            _downContainer.transform.position = upwardTooltipPoint;
+            _content.transform.parent = _isShowDownWard ? _downContainer : _upContainer;
             _content.transform.localPosition = new Vector3(0, 0, 0);
+            StartCoroutine(ShowTooltip());
+        }
+
+        private IEnumerator ShowTooltip()
+        {
+            yield return new WaitForSeconds(_waitBeforePopupTooltip);
+            _reverseFrame.SetActive(_isShowDownWard);
+            _frame.SetActive(!_isShowDownWard);
+            _content.SetActive(true);
         }
 
         private void Hide()
