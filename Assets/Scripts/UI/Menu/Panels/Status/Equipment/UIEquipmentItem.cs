@@ -5,6 +5,7 @@ using CryptoQuest.Menu;
 using CryptoQuest.UI.Menu.Panels.Status.Stats;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
 using PolyAndCode.UI;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
@@ -40,21 +41,25 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
         [SerializeField] private List<AttributeScriptableObject> _allAttributeToRandomFrom;
 
         [Header("Game Components")]
+        [SerializeField] private TMP_Text _itemName;
         [SerializeField] private LocalizeStringEvent _name;
         [SerializeField] private GameObject _selectEffect;
 
         private GameObject _unEquipSlot;
         private int _index;
 
-        public void Init(EquipmentInfo data, int index)
+        public void Init(EquipmentInfo data, int index = 0)
         {
             _index = index;
 
             if (_unEquipSlot != null)
                 _unEquipSlot.SetActive(false);
 
+            _itemName.text = data.Item.name;
             if (data.Item != null && data.Item.DisplayName != null)
+            {
                 _name.StringReference = data.Item.DisplayName;
+            }
         }
 
         public void OnPressed()

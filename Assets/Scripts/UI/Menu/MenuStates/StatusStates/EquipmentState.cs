@@ -6,12 +6,12 @@ namespace CryptoQuest.UI.Menu.MenuStates.StatusStates
 {
     public class EquipmentState : StatusStateBase
     {
-        private UIEquipmentOverview _equipmentOverviewOverviewPanel;
+        private UIEquipmentOverview _equipmentOverviewPanel;
         private UIStatusCharacter _characterPanel;
 
         public EquipmentState(UIStatusMenu statusPanel) : base(statusPanel)
         {
-            _equipmentOverviewOverviewPanel = statusPanel.EquipmentOverviewPanel;
+            _equipmentOverviewPanel = statusPanel.EquipmentOverviewPanel;
             _characterPanel = statusPanel.CharacterPanel;
         }
 
@@ -20,8 +20,8 @@ namespace CryptoQuest.UI.Menu.MenuStates.StatusStates
             base.OnEnter();
             NavigationBar.SetActive(false);
             NavigationBar.HighlightHeader(StatusPanel.TypeSO);
-            _equipmentOverviewOverviewPanel.EquipmentSlotSelected += ChangeEquipment;
-            _equipmentOverviewOverviewPanel.Init();
+            _equipmentOverviewPanel.EquipmentSlotSelected += ChangeEquipment;
+            _equipmentOverviewPanel.Init();
         }
 
         public override void HandleCancel()
@@ -29,15 +29,15 @@ namespace CryptoQuest.UI.Menu.MenuStates.StatusStates
             base.HandleCancel();
             NavigationBar.SetActive(true);
             NavigationBar.HighlightHeader(StatusPanel.TypeSO, true);
-            _equipmentOverviewOverviewPanel.DeInit();
+            _equipmentOverviewPanel.DeInit();
             MenuStateMachine.RequestStateChange(StatusMenuStateMachine.NavStatus);
         }
 
         public override void OnExit()
         {
             base.OnExit();
-            _equipmentOverviewOverviewPanel.DeInit();
-            _equipmentOverviewOverviewPanel.EquipmentSlotSelected -= ChangeEquipment;
+            _equipmentOverviewPanel.DeInit();
+            _equipmentOverviewPanel.EquipmentSlotSelected -= ChangeEquipment;
         }
 
         private void ChangeEquipment(EquipmentFilters type)

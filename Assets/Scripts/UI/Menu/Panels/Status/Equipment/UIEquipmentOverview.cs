@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
 using UnityEngine;
 
 namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
@@ -10,8 +11,8 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
 
         [Header("Game Components")]
         [SerializeField] private List<UIEquipmentSlotButton> _equipmentSlots;
-
-        [SerializeField] private GameObject _content;
+        [SerializeField] private List<GameObject> _itemContainers;
+        [SerializeField] private GameObject _item;
         [SerializeField] private UIEquipmentSlotButton _defaultSelection;
 
         private void OnEnable()
@@ -36,6 +37,36 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
             DisableAllButtons();
         }
 
+        public void SetEquipment(CharacterEquipments currentEquipping)
+        {
+            RefreshUI();
+
+            var equipment = currentEquipping.GetEquippingSlots();
+            var i = 0;
+
+            foreach (var slot in equipment)
+            {
+                if (slot.Equipment.Item != null)
+                {
+                    Debug.Log($"@@@@@@@@@@@@@@@@@@@@@");
+                    var item = Instantiate(_item, _itemContainers[i].transform);
+                    item.GetComponent<UIEquipmentItem>().Init(slot.Equipment);
+                }
+                i++;
+            }
+        }
+
+        private void RefreshUI()
+        {
+            foreach (var row in _itemContainers)
+            {
+                foreach (Transform child in row.transform) {
+                    Destroy(child.gameObject);
+                }
+            }
+        }
+
+        #region State context
         public void Init()
         {
             EnableAllButtons();
@@ -68,5 +99,6 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
         {
             DisableAllButtons();
         }
+        #endregion
     }
 }

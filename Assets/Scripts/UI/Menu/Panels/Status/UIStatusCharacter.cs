@@ -2,6 +2,7 @@
 using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data;
 using CryptoQuest.Gameplay.PlayerParty;
 using CryptoQuest.UI.Menu.Panels.Home;
+using CryptoQuest.UI.Menu.Panels.Status.Equipment;
 using CryptoQuest.UI.Menu.Panels.Status.Stats;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.Components;
 using UnityEngine;
@@ -15,6 +16,7 @@ namespace CryptoQuest.UI.Menu.Panels.Status
         [SerializeField] private UIStatusMenu _statusMenu;
         [SerializeField] private Image _avatar;
         [SerializeField] private UIStats _stats;
+        [SerializeField] private UIEquipmentOverview _equipmentOverview;
 
         private List<HeroDataSO> _activeMembersData = new();
         private List<AttributeSystemBehaviour> _activeMembersAttribute = new();
@@ -54,6 +56,7 @@ namespace CryptoQuest.UI.Menu.Panels.Status
                     _activeMembersData.Add(memberStats);
                     _activeMembersAttribute.Add(member.AttributeSystem);
                     _stats.SetAttributes(member.AttributeSystem);
+                    _equipmentOverview.SetEquipment(_activeMembersData[CurrentIndex].Equipments);
                 }
             }
         }
@@ -67,6 +70,7 @@ namespace CryptoQuest.UI.Menu.Panels.Status
 
             _avatar.sprite = _activeMembersData[CurrentIndex].Avatar;
             _stats.SetAttributes(_activeMembersAttribute[CurrentIndex]);
+            _equipmentOverview.SetEquipment(_activeMembersData[CurrentIndex].Equipments);
         }
     }
 }
