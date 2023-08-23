@@ -48,7 +48,7 @@ namespace CryptoQuest.EditorTool
         private int _windowId;
         private bool _enableOneHitCheat = false;
         private float baseDamageValue = 9;
-        private Dictionary<AbilitySystemBehaviour, AbstractAbility> _memberAbilityDict = new();
+        private Dictionary<AbilitySystemBehaviour, GameplayAbilitySpec> _memberAbilityDict = new();
 
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
         private void Start()
