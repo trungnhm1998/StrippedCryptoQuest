@@ -7,6 +7,7 @@ using FSM;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Localization.Components;
+using UnityEngine.UI;
 
 namespace CryptoQuest.UI.Menu.Panels.Item
 {
@@ -24,6 +25,7 @@ namespace CryptoQuest.UI.Menu.Panels.Item
 
         private readonly Dictionary<UsableTypeSO, int> _itemListCache = new();
         private UIConsumables _currentConsumables;
+        private Text _description;
 
         private int CurrentTabIndex
         {
@@ -50,6 +52,7 @@ namespace CryptoQuest.UI.Menu.Panels.Item
 
         private void Awake()
         {
+            _description = _localizeDescription.GetComponent<Text>();
             for (var index = 0; index < _itemLists.Length; index++)
             {
                 var itemList = _itemLists[index];
@@ -93,7 +96,7 @@ namespace CryptoQuest.UI.Menu.Panels.Item
             {
                 _interactable = value;
                 if (_currentConsumables) _currentConsumables.Interactable = _interactable;
-                
+
                 // TODO: BADE CODE
                 if (_interactable && _usingItem)
                 {
@@ -164,6 +167,7 @@ namespace CryptoQuest.UI.Menu.Panels.Item
 
         public void ChangeTab(float direction)
         {
+            _description.text = null;
             CurrentTabIndex += (int)direction;
             ShowItemsWithType(CurrentTabIndex);
         }
