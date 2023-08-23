@@ -1,7 +1,7 @@
 using CryptoQuest.UI.Menu.MenuStates.StatusStates;
+using CryptoQuest.UI.Menu.Panels.Status.Equipment;
 using FSM;
 using UnityEngine;
-using UnityEngine.Events;
 
 namespace CryptoQuest.UI.Menu.Panels.Status
 {
@@ -12,9 +12,9 @@ namespace CryptoQuest.UI.Menu.Panels.Status
     public class UIStatusMenu : UIMenuPanel
     {
         [Header("State Context")]
-        [SerializeField] private UIStatusMenuEquipment _equipmentOverviewPanel;
-        public UIStatusMenuEquipment EquipmentOverviewPanel => _equipmentOverviewPanel;
-        [field: SerializeField] public UIStatusInventory InventoryPanel { get; private set; }
+        [SerializeField] private UIEquipmentOverview equipmentOverviewPanel;
+        public UIEquipmentOverview EquipmentOverviewPanel => equipmentOverviewPanel;
+        [field: SerializeField] public UIEquipmentList EquipmentListPanel { get; private set; }
         [field: SerializeField] public UIStatusCharacter CharacterPanel { get; private set; }
 
         public EquipmentFilters EquippingType { get; set; }

@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using CryptoQuest.Gameplay.Inventory;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item;
 using CryptoQuest.Menu;
 using CryptoQuest.UI.Menu.Panels.Status.Stats;
-using IndiGames.Core.Events.ScriptableObjects;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
 using PolyAndCode.UI;
 using UnityEngine;
@@ -16,9 +14,9 @@ using UnityEngine.Serialization;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
-namespace CryptoQuest.UI.Menu.Panels.Status
+namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
 {
-    public class UIStatusInventoryItemButton : MultiInputButton, ICell
+    public class UIEquipmentItem : MultiInputButton, ICell
     {
         public static event UnityAction<UIStats.Equipment> InspectingEquipment;
         public static event UnityAction<Button> InspectingRow;
@@ -41,7 +39,6 @@ namespace CryptoQuest.UI.Menu.Panels.Status
         [Header("Mock")]
         [SerializeField] private List<AttributeScriptableObject> _allAttributeToRandomFrom;
 
-        [FormerlySerializedAs("_tooltipPosition")]
         [Header("Game Components")]
         [SerializeField] private LocalizeStringEvent _name;
         [SerializeField] private GameObject _selectEffect;

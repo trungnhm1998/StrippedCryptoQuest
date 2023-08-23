@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace CryptoQuest.UI.Menu.Panels.Status
+namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
 {
     public class UIUnequipRow : MultiInputButton
     {

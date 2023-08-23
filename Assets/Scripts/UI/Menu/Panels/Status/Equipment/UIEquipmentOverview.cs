@@ -1,12 +1,10 @@
 using System;
 using System.Collections.Generic;
-using CryptoQuest.UI.Menu.MenuStates.StatusStates;
 using UnityEngine;
-using UnityEngine.UI;
 
-namespace CryptoQuest.UI.Menu.Panels.Status
+namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
 {
-    public class UIStatusMenuEquipment : MonoBehaviour
+    public class UIEquipmentOverview : MonoBehaviour
     {
         public event Action<EquipmentFilters> EquipmentSlotSelected;
 

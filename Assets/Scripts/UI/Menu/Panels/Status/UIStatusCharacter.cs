@@ -2,6 +2,7 @@
 using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data;
 using CryptoQuest.Gameplay.PlayerParty;
 using CryptoQuest.UI.Menu.Panels.Home;
+using CryptoQuest.UI.Menu.Panels.Status.Stats;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.Components;
 using UnityEngine;
 using UnityEngine.UI;
@@ -13,8 +14,10 @@ namespace CryptoQuest.UI.Menu.Panels.Status
         [SerializeField] private PartySO _party;
         [SerializeField] private UIStatusMenu _statusMenu;
         [SerializeField] private Image _avatar;
+        [SerializeField] private UIStats _stats;
 
         private List<HeroDataSO> _activeMembersData = new();
+        private List<AttributeSystemBehaviour> _activeMembersAttribute = new();
 
         private int _currentIndex = 0;
         private int CurrentIndex
@@ -37,6 +40,7 @@ namespace CryptoQuest.UI.Menu.Panels.Status
             _statusMenu.MenuOpenedEvent -= LoadPartyMembers;
         }
 
+        // Code smell here, need to refactor later, violate DRY with UIHomeMenuSortCharacter
         private void LoadPartyMembers()
         {
             _activeMembersData.Clear();
@@ -48,6 +52,8 @@ namespace CryptoQuest.UI.Menu.Panels.Status
                     member.TryGetComponent<StatsInitializer>(out var initializer);
                     var memberStats = initializer.DefaultStats as HeroDataSO;
                     _activeMembersData.Add(memberStats);
+                    _activeMembersAttribute.Add(member.AttributeSystem);
+                    _stats.SetAttributes(member.AttributeSystem);
                 }
             }
         }
@@ -60,6 +66,7 @@ namespace CryptoQuest.UI.Menu.Panels.Status
                 CurrentIndex--;
 
             _avatar.sprite = _activeMembersData[CurrentIndex].Avatar;
+            _stats.SetAttributes(_activeMembersAttribute[CurrentIndex]);
         }
     }
 }

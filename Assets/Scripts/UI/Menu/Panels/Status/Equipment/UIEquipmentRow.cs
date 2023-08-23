@@ -1,16 +1,12 @@
-﻿using System;
-using UnityEngine;
-using UnityEngine.Serialization;
+﻿using UnityEngine;
 
-namespace CryptoQuest.UI.Menu.Panels.Status
+namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
 {
     public class UIEquipmentRow : MonoBehaviour
     {
-        private const int BOUNDARY = 2;
         [SerializeField] private RectTransform _downPoint;
         [SerializeField] private RectTransform _upPoint;
-        [SerializeField] private RectTransform _selfViewport;
-        [SerializeField] private UIStatusInventoryItemButton _button;
+        [SerializeField] private UIEquipmentItem _button;
 
         private void OnEnable()
         {

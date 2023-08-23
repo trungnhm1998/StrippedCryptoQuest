@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
-namespace CryptoQuest.UI.Menu.Panels.Status
+namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
 {
     public class UIEquipmentSlotButton : MultiInputButton
     {
@@ -16,13 +16,13 @@ namespace CryptoQuest.UI.Menu.Panels.Status
             Pressed?.Invoke(GetComponent<EquipmentFilters>());
             _selectEffect.SetActive(false);
         }
-
+        
         public override void OnSelect(BaseEventData eventData)
         {
             base.OnSelect(eventData);
             _selectEffect.SetActive(true);
         }
-
+        
         public override void OnDeselect(BaseEventData eventData)
         {
             base.OnDeselect(eventData);

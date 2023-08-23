@@ -1,9 +1,8 @@
-using System;
 using System.Collections.Generic;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Type;
 using UnityEngine;
 
-namespace CryptoQuest.UI.Menu.Panels.Status
+namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
 {
     public class EquipmentFilters : MonoBehaviour
     {

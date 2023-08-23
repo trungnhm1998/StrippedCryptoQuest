@@ -25,7 +25,6 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Stats
         private void Start()
         {
             _convertedValue = (int)DefaultValue;
-            ResetAttributeUI();
         }
 
         public void CompareValue(float receivedValue)
@@ -59,6 +58,12 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Stats
             image.gameObject.SetActive(true);
             _valueLabel.color = image.color;
             _valueLabel.text = string.Format(isElemental ? ELEMENTAL_FORMAT : FORMAT, value);
+        }
+
+        public void Init(float receivedValue)
+        {
+            ResetAttributeUI();
+            _valueLabel.text = string.Format(isElemental ? ELEMENTAL_FORMAT : FORMAT, (int)receivedValue);
         }
     }
 }

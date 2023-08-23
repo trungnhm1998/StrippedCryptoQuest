@@ -1,4 +1,5 @@
 ﻿using CryptoQuest.UI.Menu.Panels.Status;
+using CryptoQuest.UI.Menu.Panels.Status.Equipment;
 using UnityEditor;
 using UnityEditor.UI;
 

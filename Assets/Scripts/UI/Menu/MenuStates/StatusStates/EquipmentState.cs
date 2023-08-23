@@ -1,16 +1,17 @@
 using CryptoQuest.UI.Menu.Panels.Status;
+using CryptoQuest.UI.Menu.Panels.Status.Equipment;
 using UnityEngine;
 
 namespace CryptoQuest.UI.Menu.MenuStates.StatusStates
 {
     public class EquipmentState : StatusStateBase
     {
-        private UIStatusMenuEquipment _equipmentOverviewPanel;
+        private UIEquipmentOverview _equipmentOverviewOverviewPanel;
         private UIStatusCharacter _characterPanel;
 
         public EquipmentState(UIStatusMenu statusPanel) : base(statusPanel)
         {
-            _equipmentOverviewPanel = statusPanel.EquipmentOverviewPanel;
+            _equipmentOverviewOverviewPanel = statusPanel.EquipmentOverviewPanel;
             _characterPanel = statusPanel.CharacterPanel;
         }
 
@@ -19,8 +20,8 @@ namespace CryptoQuest.UI.Menu.MenuStates.StatusStates
             base.OnEnter();
             NavigationBar.SetActive(false);
             NavigationBar.HighlightHeader(StatusPanel.TypeSO);
-            _equipmentOverviewPanel.EquipmentSlotSelected += ChangeEquipment;
-            _equipmentOverviewPanel.Init();
+            _equipmentOverviewOverviewPanel.EquipmentSlotSelected += ChangeEquipment;
+            _equipmentOverviewOverviewPanel.Init();
         }
 
         public override void HandleCancel()
@@ -28,15 +29,15 @@ namespace CryptoQuest.UI.Menu.MenuStates.StatusStates
             base.HandleCancel();
             NavigationBar.SetActive(true);
             NavigationBar.HighlightHeader(StatusPanel.TypeSO, true);
-            _equipmentOverviewPanel.DeInit();
+            _equipmentOverviewOverviewPanel.DeInit();
             MenuStateMachine.RequestStateChange(StatusMenuStateMachine.NavStatus);
         }
 
         public override void OnExit()
         {
             base.OnExit();
-            _equipmentOverviewPanel.DeInit();
-            _equipmentOverviewPanel.EquipmentSlotSelected -= ChangeEquipment;
+            _equipmentOverviewOverviewPanel.DeInit();
+            _equipmentOverviewOverviewPanel.EquipmentSlotSelected -= ChangeEquipment;
         }
 
         private void ChangeEquipment(EquipmentFilters type)

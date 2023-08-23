@@ -1,6 +1,4 @@
-using System;
 using System.Collections.Generic;
-using CryptoQuest.Gameplay.Inventory;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Type;
@@ -8,15 +6,13 @@ using CryptoQuest.Input;
 using CryptoQuest.Menu;
 using PolyAndCode.UI;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
-namespace CryptoQuest.UI.Menu.Panels.Status
+namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
 {
-    public class UIStatusInventory : MonoBehaviour, IRecyclableScrollRectDataSource
+    public class UIEquipmentList : MonoBehaviour, IRecyclableScrollRectDataSource
     {
         [Header("Configs")]
         [SerializeField] private RecyclableScrollRect _scrollRect;
@@ -53,13 +49,13 @@ namespace CryptoQuest.UI.Menu.Panels.Status
 
         private void OnEnable()
         {
-            UIStatusInventoryItemButton.InspectingRow += AutoScroll;
+            UIEquipmentItem.InspectingRow += AutoScroll;
             _inputMediator.MenuNavigationContextEvent += NavigateMenu;
         }
 
         private void OnDisable()
         {
-            UIStatusInventoryItemButton.InspectingRow -= AutoScroll;
+            UIEquipmentItem.InspectingRow -= AutoScroll;
             _inputMediator.MenuNavigationContextEvent -= NavigateMenu;
         }
 
@@ -131,8 +127,8 @@ namespace CryptoQuest.UI.Menu.Panels.Status
         /// <param name="index">query from real data using this index</param>
         public void SetCell(ICell cell, int index)
         {
-            UIStatusInventoryItemButton itemButtonRow = cell as UIStatusInventoryItemButton;
-            itemButtonRow.Init(_equipments[index], index);
+            UIEquipmentItem itemRow = cell as UIEquipmentItem;
+            itemRow.Init(_equipments[index], index);
         }
 
         #endregion
