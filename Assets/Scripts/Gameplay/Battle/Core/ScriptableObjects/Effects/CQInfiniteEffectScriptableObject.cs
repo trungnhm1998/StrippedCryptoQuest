@@ -20,17 +20,17 @@ namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Effects
         public BattleActionDataSO IncreaseActionDataSO;
         public BattleActionDataSO DecreaseActionDataSO;
 
-        protected override AbstractEffect CreateEffect()
+        protected override GameplayEffectSpec CreateEffect()
         {
-            return new CQInfiniteEffect(this);
+            return new CqInfiniteEffectSpec(this);
         }
     }
 
-    public class CQInfiniteEffect : InfiniteEffect
+    public class CqInfiniteEffectSpec : InfiniteEffectSpec
     {
         private CQInfiniteEffectScriptableObject _effectSO;
 
-        public CQInfiniteEffect(CQInfiniteEffectScriptableObject effectSO)
+        public CqInfiniteEffectSpec(CQInfiniteEffectScriptableObject effectSO)
         {
             _effectSO = effectSO;
         }
@@ -48,15 +48,15 @@ namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Effects
 
         private void LogEffect()
         {
-            _unit = Owner.GetComponent<IBattleUnit>();
-            foreach (EffectAttributeModifier modifier in EffectSO.EffectDetails.Modifiers)
+            _unit = Source.GetComponent<IBattleUnit>();
+            foreach (EffectAttributeModifier modifier in Def.EffectDetails.Modifiers)
             {
                 var actionData = modifier.Value < 0 ? _effectSO.DecreaseActionDataSO : _effectSO.IncreaseActionDataSO;
                 if (actionData == null) return;
 
                 actionData.Log.Clear();
                 actionData.AddStringVar(UNIT_NAME_VARIABLE, _unit.UnitInfo.DisplayName);
-                actionData.AddStringVar(ATTRIBUTE_NAME_VARIABLE, ((CQAttribute)modifier.AttributeSO).DisplayName);
+                actionData.AddStringVar(ATTRIBUTE_NAME_VARIABLE, ((CQAttribute)modifier.Attribute).DisplayName);
                 _effectSO.ActionEventSO.RaiseEvent(actionData);
             }
         }

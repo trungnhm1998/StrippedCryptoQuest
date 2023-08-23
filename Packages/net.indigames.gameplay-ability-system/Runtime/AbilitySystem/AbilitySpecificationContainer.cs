@@ -5,7 +5,7 @@ namespace IndiGames.GameplayAbilitySystem.AbilitySystem
 {
     public class AbilitySpecificationContainer
     {
-        public List<AbstractAbility> Abilities = new List<AbstractAbility>();
+        public List<GameplayAbilitySpec> Abilities = new List<GameplayAbilitySpec>();
         public AbilitySystemBehaviour Owner;
         
         public void RegisterWithOwner(AbilitySystemBehaviour owner)

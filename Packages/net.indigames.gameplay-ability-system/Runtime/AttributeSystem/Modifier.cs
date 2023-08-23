@@ -3,7 +3,7 @@ using System;
 namespace IndiGames.GameplayAbilitySystem.AttributeSystem
 {
     [Serializable]
-    public class Modifier
+    public struct Modifier
     {
         public float Additive;
         public float Multiplicative;
@@ -24,5 +24,6 @@ namespace IndiGames.GameplayAbilitySystem.AttributeSystem
                 Overriding = b.Overriding
             };
         }
+        
     }
 }

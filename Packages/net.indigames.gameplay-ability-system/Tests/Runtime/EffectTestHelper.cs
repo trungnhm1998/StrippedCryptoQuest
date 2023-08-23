@@ -19,25 +19,25 @@ namespace IndiGames.GameplayAbilitySystem.Tests.Runtime
             effectSO.EffectDetails.Modifiers = new EffectAttributeModifier[] {
                 new EffectAttributeModifier()
                 {
-                    AttributeSO = attribute,
+                    Attribute = attribute,
                     ModifierType = modifierType,
-                    ModifierComputationMethod = null,
+                    ModifierMagnitude = null,
                     Value = value
                 }
             };
             effectSO.EffectDetails.StackingType = EModifierType.External;
         }
 
-        public static AbstractEffect SetupAndApplyEffect(AbilitySystemBehaviour system, AttributeScriptableObject attribute,
+        public static GameplayEffectSpec SetupAndApplyEffect(AbilitySystemBehaviour system, AttributeScriptableObject attribute,
             EffectScriptableObject effectSO,
             EAttributeModifierType modifierType = EAttributeModifierType.Add,
             float value = 1, float baseValue = 10)
         {
-            system.AttributeSystem.AddAttributes(attribute);
+            system.AttributeSystem.AddAttribute(attribute);
             system.AttributeSystem.SetAttributeBaseValue(attribute, baseValue);
             SetupEffectSO(attribute, effectSO, modifierType, value);
             
-            var effect = system.EffectSystem.GetEffect(effectSO, system, new MockParameters());
+            var effect = system.EffectSystem.GetEffect(effectSO);
             var appliedEffect = system.EffectSystem.ApplyEffectToSelf(effect);
             return appliedEffect;
         }
@@ -47,7 +47,7 @@ namespace IndiGames.GameplayAbilitySystem.Tests.Runtime
     
     public class FalseCustomRequirement : EffectCustomApplicationRequirement 
     {
-        public override bool CanApplyEffect(EffectScriptableObject effect, AbstractEffect effectSpec, AbilitySystemBehaviour ownerSystem)
+        public override bool CanApplyEffect(EffectScriptableObject effect, GameplayEffectSpec effectSpecSpec, AbilitySystemBehaviour ownerSystem)
         {
             return false;
         }
@@ -55,7 +55,7 @@ namespace IndiGames.GameplayAbilitySystem.Tests.Runtime
     
     public class TrueCustomRequirement : EffectCustomApplicationRequirement 
     {
-        public override bool CanApplyEffect(EffectScriptableObject effect, AbstractEffect effectSpec, AbilitySystemBehaviour ownerSystem)
+        public override bool CanApplyEffect(EffectScriptableObject effect, GameplayEffectSpec effectSpecSpec, AbilitySystemBehaviour ownerSystem)
         {
             return true;
         }

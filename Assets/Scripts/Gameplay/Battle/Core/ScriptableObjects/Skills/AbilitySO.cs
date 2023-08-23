@@ -18,11 +18,10 @@ namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Skills
         public AttributeScriptableObject CostSpecSO;
         public BattleActionDataSO ActionDataSO;
         public BattleActionDataEventChannelSO ActionEventSO;
-        public override AbilityParameters Parameters => SkillInfo.SkillParameters;
-        protected override AbstractAbility CreateAbility() => new Ability(SkillInfo);
+        protected override GameplayAbilitySpec CreateAbility() => new Ability(SkillInfo);
     }
 
-    public class Ability : EffectAbility
+    public class Ability : EffectGameplayAbilitySpec
     {
         private SkillInfo _skillInfo;
         protected const string UNIT_NAME_VARIABLE = "unitName";

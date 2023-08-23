@@ -1,8 +1,10 @@
 using System.Collections.Generic;
-using System.Linq;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.ScriptableObjects;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.Components;
+using IndiGames.GameplayAbilitySystem.EffectSystem;
 using IndiGames.GameplayAbilitySystem.EffectSystem.Components;
+using IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects;
+using Unity.Collections;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -14,6 +16,8 @@ namespace IndiGames.GameplayAbilitySystem.AbilitySystem.Components
     [RequireComponent(typeof(TagSystemBehaviour))]
     public partial class AbilitySystemBehaviour : MonoBehaviour
     {
+        public delegate void AbilityGranted(GameplayAbilitySpec grantedAbility);
+        public event AbilityGranted AbilityGrantedEvent;
         [SerializeField] private AttributeSystemBehaviour _attributeSystem;
         public AttributeSystemBehaviour AttributeSystem => _attributeSystem;
 
@@ -26,9 +30,8 @@ namespace IndiGames.GameplayAbilitySystem.AbilitySystem.Components
         [SerializeField] private TagSystemBehaviour _tagSystem;
         public TagSystemBehaviour TagSystem => _tagSystem;
 
-        private AbilitySpecificationContainer _grantedAbilities = new();
-        public AbilitySpecificationContainer GrantedAbilities => _grantedAbilities;
-
+        private List<GameplayAbilitySpec> _grantedAbilities = new();
+        public IReadOnlyList<GameplayAbilitySpec> GrantedAbilities => _grantedAbilities;
 
 #if UNITY_EDITOR
         private void OnValidate()
@@ -48,7 +51,6 @@ namespace IndiGames.GameplayAbilitySystem.AbilitySystem.Components
         private void Awake()
         {
             ValidateComponents();
-            // assert all components are not null
             Assert.IsNotNull(_attributeSystem, $"Attribute System is required!");
             Assert.IsNotNull(_effectSystem, $"Effect System is required!");
             Assert.IsNotNull(_abilityEffectSystem, $"Ability Effect System is required!");
@@ -59,66 +61,58 @@ namespace IndiGames.GameplayAbilitySystem.AbilitySystem.Components
         /// <summary>
         /// Add/Give/Grant ability to the system. Only ability that in the system can be active
         /// There's only 1 ability per system (no duplicate ability)
-        ///
-        /// <see cref="AbstractAbility.InternalActiveAbility"/> required this system to be enabled/active in order to start a coroutine
         /// </summary>
         /// <param name="abilityDef"></param>
-        /// <returns>A <see cref="AbstractAbility"/> to handle (humble object) their ability logic</returns>
-        public AbstractAbility GiveAbility(AbilityScriptableObject abilityDef)
+        /// <returns>A <see cref="GameplayAbilitySpec"/> to handle (humble object) their ability logic</returns>
+        public GameplayAbilitySpec GiveAbility(AbilityScriptableObject abilityDef)
         {
-            foreach (var ability in _grantedAbilities.Abilities)
+            if (abilityDef == null)
             {
+                Debug.LogWarning($"AbilitySystemBehaviour::GiveAbility::AbilityDef is null");
+                return new GameplayAbilitySpec();
+            }
+
+            for (var index = 0; index < _grantedAbilities.Count; index++)
+            {
+                var ability = _grantedAbilities[index];
                 if (ability.AbilitySO == abilityDef)
                     return ability;
             }
 
             var grantedAbility = abilityDef.GetAbilitySpec(this);
 
-            return GiveAbility(grantedAbility);
+            _grantedAbilities.Add(grantedAbility);
+            OnGrantedAbility(grantedAbility);
+
+            return grantedAbility;
         }
 
-        public AbstractAbility GiveAbility(AbstractAbility inAbilitySpec)
+        private void OnGrantedAbility(GameplayAbilitySpec gameplayAbilitySpecSpec)
         {
-            if (!inAbilitySpec.AbilitySO) return null;
+            if (!gameplayAbilitySpecSpec.AbilitySO) return;
+            gameplayAbilitySpecSpec.OnAbilityGranted(gameplayAbilitySpecSpec);
+            AbilityGrantedEvent?.Invoke(gameplayAbilitySpecSpec);
+        }
 
-            foreach (AbstractAbility abilitySpec in _grantedAbilities.Abilities)
+        public void TryActiveAbility(GameplayAbilitySpec inGameplayAbilitySpecSpec)
+        {
+            if (inGameplayAbilitySpecSpec.AbilitySO == null) return;
+            foreach (var abilitySpec in _grantedAbilities)
             {
-                if (abilitySpec.AbilitySO == inAbilitySpec.AbilitySO)
-                    return abilitySpec;
-            }
-
-            _grantedAbilities.Abilities.Add(inAbilitySpec);
-            OnGrantedAbility(inAbilitySpec);
-
-            return inAbilitySpec;
-        }
-
-        private void OnGrantedAbility(AbstractAbility abilitySpec)
-        {
-            if (!abilitySpec.AbilitySO) return;
-            abilitySpec.Owner = this;
-            abilitySpec.OnAbilityGranted(abilitySpec);
-        }
-
-        public void TryActiveAbility(AbstractAbility inAbilitySpec)
-        {
-            if (inAbilitySpec.AbilitySO == null) return;
-            foreach (var abilitySpec in _grantedAbilities.Abilities)
-            {
-                if (abilitySpec != inAbilitySpec) continue;
-                inAbilitySpec.ActivateAbility();
+                if (abilitySpec != inGameplayAbilitySpecSpec) continue;
+                inGameplayAbilitySpecSpec.ActivateAbility();
             }
         }
 
-        public bool RemoveAbility(AbstractAbility ability)
+        public bool RemoveAbility(GameplayAbilitySpec gameplayAbilitySpec)
         {
-            List<AbstractAbility> grantedAbilitiesList = _grantedAbilities.Abilities;
+            List<GameplayAbilitySpec> grantedAbilitiesList = _grantedAbilities;
             for (int i = grantedAbilitiesList.Count - 1; i >= 0; i--)
             {
-                var abilitySpec = grantedAbilitiesList[i];
-                if (abilitySpec == ability)
+                var grantedSpec = grantedAbilitiesList[i];
+                if (grantedSpec == gameplayAbilitySpec)
                 {
-                    OnRemoveAbility(abilitySpec);
+                    OnRemoveAbility(gameplayAbilitySpec);
                     grantedAbilitiesList.RemoveAt(i);
                     return true;
                 }
@@ -127,37 +121,42 @@ namespace IndiGames.GameplayAbilitySystem.AbilitySystem.Components
             return false;
         }
 
-        private void OnRemoveAbility(AbstractAbility abilitySpec)
+        private void OnRemoveAbility(GameplayAbilitySpec gameplayAbilitySpecSpec)
         {
-            if (!abilitySpec.AbilitySO) return;
+            if (!gameplayAbilitySpecSpec.AbilitySO) return;
 
-            abilitySpec.OnAbilityRemoved(abilitySpec);
+            gameplayAbilitySpecSpec.OnAbilityRemoved(gameplayAbilitySpecSpec);
         }
 
         public void RemoveAllAbilities()
         {
-            for (int i = _grantedAbilities.Abilities.Count - 1; i >= 0; i--)
+            for (int i = _grantedAbilities.Count - 1; i >= 0; i--)
             {
-                var abilitySpec = _grantedAbilities.Abilities[i];
-                _grantedAbilities.Abilities.RemoveAt(i);
+                var abilitySpec = _grantedAbilities[i];
+                _grantedAbilities.RemoveAt(i);
                 OnRemoveAbility(abilitySpec);
             }
 
-            _grantedAbilities.Abilities = new List<AbstractAbility>();
+            _grantedAbilities = new List<GameplayAbilitySpec>();
         }
 
-        private void Update()
+        /// <summary>
+        /// Create an effect spec from the effect definition, with this system as the source
+        /// </summary>
+        /// <param name="effectDef">The <see cref="EffectScriptableObject"/> that are used to create the spec</param>
+        /// <returns>New effect spec based on the def</returns>
+        public GameplayEffectSpec MakeOutgoingSpec(EffectScriptableObject effectDef)
         {
-            RemovePendingAbilities();
+            if (effectDef == null)
+                return new GameplayEffectSpec();
+
+            GameplayEffectSpec effectSpecSpec = effectDef.CreateEffectSpec(this);
+            return effectSpecSpec;
         }
 
-        protected virtual void RemovePendingAbilities()
+        public GameplayEffectSpec ApplyEffectSpecToSelf(GameplayEffectSpec effectSpec)
         {
-            foreach (var ability in _grantedAbilities.Abilities.ToList())
-            {
-                if (ability.IsPendingRemove || ability.IsRemoveAfterActivation)
-                    RemoveAbility(ability);
-            }
+            return _effectSystem.ApplyEffectToSelf(effectSpec);
         }
     }
 }

@@ -17,9 +17,9 @@ namespace CryptoQuest.UI.Battle.MenuStateMachine.States
             }
         }
 
-        private void SetAbility(AbstractAbility ability)
+        private void SetAbility(GameplayAbilitySpec gameplayAbilitySpec)
         {
-            _currentUnit.SelectAbility(ability);
+            _currentUnit.SelectAbility(gameplayAbilitySpec);
             HandleTarget();
         }
     }

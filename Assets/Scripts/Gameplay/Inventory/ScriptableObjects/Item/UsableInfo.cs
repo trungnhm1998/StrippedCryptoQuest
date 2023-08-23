@@ -47,8 +47,8 @@ namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item
         protected override void Activate()
         {
             if (Owner == null) return;
-            AbstractAbility ability = Owner.GiveAbility(Item.Ability);
-            Owner.TryActiveAbility(ability);
+            GameplayAbilitySpec gameplayAbilitySpec = Owner.GiveAbility(Item.Ability);
+            Owner.TryActiveAbility(gameplayAbilitySpec);
         }
 
         public void UseItem() => Activate();

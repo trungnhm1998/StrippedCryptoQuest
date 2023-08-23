@@ -1,7 +1,6 @@
-using System;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
-using IndiGames.GameplayAbilitySystem.AttributeSystem;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.Components;
+using IndiGames.GameplayAbilitySystem.Implementation.BasicEffect;
 using UnityEngine;
 
 namespace IndiGames.GameplayAbilitySystem.EffectSystem.EffectApplier
@@ -22,53 +21,60 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem.EffectApplier
         /// suitable for non-stats attribute like HP (not MaxHP)
         /// Attack can be treat as instant effect
         /// Enemy -> attack (effect) -> Player
+        ///
+        /// Based on GAS I would want Instant effect as a infinite effect but for now I will modify the base value
         /// </summary>
-        /// <param name="abstractEffect"></param>
-        public void ApplyInstantEffect(AbstractEffect abstractEffect)
+        public void Visit(InstantEffectSpec instantEffectSpec)
         {
-            Debug.Log($"EffectApplier::ApplyInstantEffect {abstractEffect.EffectSO.name} to system {_ownerSystem.name}");
-            var container = new EffectSpecificationContainer(abstractEffect);
-            var modifiers = container.Modifiers;
+            Debug.Log(
+                $"DefaultEffectApplier::ApplyInstantEffect {instantEffectSpec.Def.name} to system {_ownerSystem.name}");
+            var container = new ActiveEffectSpecification(instantEffectSpec);
+            var computedModifiers = container.ComputedModifiers;
 
-            var effectSO = abstractEffect.EffectSO;
-            var effectAttributeModifiers = effectSO.EffectDetails.Modifiers;
-
-            for (int index = 0; index < effectAttributeModifiers.Length; index++)
+            for (int index = 0; index < computedModifiers.Count; index++)
             {
-                var modifierSpec = effectAttributeModifiers[index];
-                var attribute = modifierSpec.AttributeSO;
-                _attributeSystem.TryGetAttributeValue(attribute, out var attributeValue);
+                var computedModifier = computedModifiers[index];
+                var modifier = computedModifier.Modifier;
+                var attribute = computedModifier.Attribute;
 
-                Modifier calculatedModifier = modifiers[index].Modifier;
-                switch (modifierSpec.ModifierType)
+                // get a copy of the attribute value
+                if (!_attributeSystem.TryGetAttributeValue(attribute, out var attributeValue)) continue;
+
+                switch (computedModifier.ModifierType)
                 {
                     case EAttributeModifierType.Add:
-                        attributeValue.BaseValue += calculatedModifier.Additive;
+                        attributeValue.BaseValue += modifier.Additive;
                         break;
                     case EAttributeModifierType.Multiply:
-                        attributeValue.BaseValue += attributeValue.BaseValue * calculatedModifier.Multiplicative;
+                        attributeValue.BaseValue += attributeValue.BaseValue * modifier.Multiplicative;
                         break;
                     case EAttributeModifierType.Override:
-                        attributeValue.BaseValue = calculatedModifier.Overriding;
+                        attributeValue.BaseValue = modifier.Overriding;
                         break;
                 }
 
                 _attributeSystem.SetAttributeBaseValue(attribute, attributeValue.BaseValue);
-                Debug.Log($"EffectApplier::ApplyInstantEffect::to attribute {attribute.name} base value {attributeValue.BaseValue} currentValue {attributeValue.CurrentValue}");
+                Debug.Log($"DefaultEffectApplier::ApplyInstantEffect" +
+                          $"::to attribute {attribute} " +
+                          $"base value[{attributeValue.BaseValue}] " +
+                          $"currentValue[{attributeValue.CurrentValue}]");
             }
-            _ownerSystem.TagSystem.GrantedTags.AddRange(effectSO.GrantedTags);
         }
+
+        public void Visit(DurationalEffectSpec durationalEffectSpec) => InternalVisitDurational(durationalEffectSpec);
+
+        public void Visit(InfiniteEffectSpec infiniteEffectSpec) => InternalVisitDurational(infiniteEffectSpec);
 
         /// <summary>
         /// Slow enemy down for 15sec
+        /// We would want to add this active effect into the applied effect, when the effect is expired
+        /// Remove it and recalculate the attribute modifiers will be easier
         /// </summary>
-        /// <param name="abstractEffect"></param>
-        /// <exception cref="ArgumentOutOfRangeException"></exception>
-        public void ApplyDurationalEffect(AbstractEffect abstractEffect)
+        private void InternalVisitDurational(GameplayEffectSpec effectSpec)
         {
-            _ownerSystem.EffectSystem.AppliedEffects.Add(new EffectSpecificationContainer(abstractEffect));
-            _ownerSystem.TagSystem.GrantedTags.AddRange(abstractEffect.EffectSO.GrantedTags);
-            Debug.Log($"EffectApplier::Durational::to {_ownerSystem.name} with effect {abstractEffect.EffectSO.name}");
+            _ownerSystem.EffectSystem.AppliedEffects.Add(new ActiveEffectSpecification(effectSpec));
+            Debug.Log(
+                $"EffectApplier::Durational::to {_ownerSystem.name} with effect {effectSpec.Def.name}");
         }
     }
 }

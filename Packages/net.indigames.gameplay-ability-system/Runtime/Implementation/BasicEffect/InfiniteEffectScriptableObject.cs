@@ -6,13 +6,13 @@ using UnityEngine;
 namespace IndiGames.GameplayAbilitySystem.Implementation.BasicEffect
 {
     [CreateAssetMenu(fileName = "InfiniteEffect", menuName = "Indigames Ability System/Effects/Infinite Effect")]
-    public class InfiniteEffectScriptableObject : EffectScriptableObject<InfiniteEffect> {}
+    public class InfiniteEffectScriptableObject : EffectScriptableObject<InfiniteEffectSpec> {}
 
-    public class InfiniteEffect : AbstractEffect
+    public class InfiniteEffectSpec : GameplayEffectSpec
     {
         public override void Accept(IEffectApplier effectApplier)
         {
-            effectApplier.ApplyDurationalEffect(this);
+            effectApplier.Visit(this);
         }
 
         public override void Update(float deltaTime)

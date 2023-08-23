@@ -13,14 +13,14 @@ namespace IndiGames.GameplayAbilitySystem.Helper
                 return attributeValue;
             }
 
-            var coreValue = CaculateCoreAttributeValue(attributeValue);
+            var coreValue = CalculateCoreAttributeValue(attributeValue);
 
             attributeValue.CurrentValue = (coreValue + attributeValue.ExternalModifier.Additive) *
                                           (attributeValue.ExternalModifier.Multiplicative + 1);
             return attributeValue;
         }
 
-        public static float CaculateCoreAttributeValue(AttributeValue attributeValue)
+        public static float CalculateCoreAttributeValue(AttributeValue attributeValue)
         {
             var coreModifier = attributeValue.CoreModifier;
 

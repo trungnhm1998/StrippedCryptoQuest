@@ -87,7 +87,6 @@ namespace CryptoQuest.Tests.Editor.Battle
         [Test]
         public void BattleCalculator_CalculateWithNegativeBasePowerAndAttackPower_ReturnPowerLowerLimit()
         {
-            BattleCalculator calculator = new();
             SkillParameterBuilder builder = new();
 
             SkillParameters skillParameters = builder

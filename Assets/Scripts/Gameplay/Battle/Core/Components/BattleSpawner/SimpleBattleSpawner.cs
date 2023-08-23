@@ -15,7 +15,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components.BattleSpawner
             foreach (var enemy in data.Enemies)
             {
                 GameObject enemyGO = Instantiate(_monsterPrefab, transform);
-                var statInit = enemyGO.GetComponent<StatsInitializer>();
+                var statInit = enemyGO.GetComponent<ScriptableObjectStatsInitializer>();
                 statInit.InitStats(enemy);
 
                 var battleUnit = enemyGO.GetComponent<BattleUnitBase>();

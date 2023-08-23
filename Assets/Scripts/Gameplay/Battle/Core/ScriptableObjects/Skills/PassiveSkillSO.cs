@@ -6,7 +6,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Skills
     [CreateAssetMenu(fileName = "PassiveSkill", menuName = "Gameplay/Battle/Abilities/Passive Ability")]
     public class PassiveSkillSO : CQSkillSO
     {
-        protected override AbstractAbility CreateAbility()
+        protected override GameplayAbilitySpec CreateAbility()
         {
             var skill = new PassiveSkill();
             return skill;
@@ -15,10 +15,10 @@ namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Skills
 
     public class PassiveSkill : CQSkill
     {
-        public override void OnAbilityGranted(AbstractAbility skillSpec)
+        public override void OnAbilityGranted(GameplayAbilitySpec skill)
         {
-            base.OnAbilityGranted(skillSpec);
-            Owner.TryActiveAbility(skillSpec);
+            base.OnAbilityGranted(skill);
+            Owner.TryActiveAbility(skill);
         }
 
         public override bool CanActiveAbility()

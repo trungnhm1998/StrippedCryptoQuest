@@ -28,7 +28,7 @@ namespace CryptoQuest.Gameplay.Battle.Core
         public LocalizedString SkillName;
         public LocalizedString SkillDescription;
         public Sprite SkillIcon;
-        public Element Element;
+        public Elemental Element;
         public SkillType SkillType;
         public SkillCategory Category;
         public float Cost;

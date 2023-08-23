@@ -117,7 +117,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components.Debugger
             GUILayout.BeginVertical();
             AbilitySystemBehaviour currentUnitOwner = _battleManager.CurrentUnit.Owner;
             if (currentUnitOwner == null) return;
-            foreach (AbstractAbility skill in currentUnitOwner.GrantedAbilities.Abilities)
+            foreach (GameplayAbilitySpec skill in currentUnitOwner.GrantedAbilities)
             {
                 GUI.enabled = !skill.IsActive;
                 if (GUILayout.Button($"Select skill {skill.AbilitySO.name}"))

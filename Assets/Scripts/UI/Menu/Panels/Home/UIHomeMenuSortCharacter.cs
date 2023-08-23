@@ -65,7 +65,7 @@ namespace CryptoQuest.UI.Menu.Panels.Home
             {
                 if (member.gameObject.activeSelf)
                 {
-                    member.TryGetComponent<StatsInitializer>(out var initializer);
+                    member.TryGetComponent<ScriptableObjectStatsInitializer>(out var initializer);
                     _memberStats = initializer.DefaultStats as HeroDataSO;
                     _activeMembersData.Add(_memberStats);
                     _activeMembersAttribute.Add(member.AttributeSystem);

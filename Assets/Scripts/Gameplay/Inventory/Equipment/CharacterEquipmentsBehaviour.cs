@@ -29,7 +29,6 @@ namespace CryptoQuest
         private EffectSystemBehaviour _effectSystemBehaviour;
 
         [field: SerializeField] private InfiniteEffectScriptableObject _baseEquipmentEffect;
-        [field: SerializeField] private ConstantFloatComputationSO _computationMethod;
 
         [field: Header("Listening events"), SerializeField]
         private EquipmentEventChannelSO _onEquipItem;
@@ -91,22 +90,21 @@ namespace CryptoQuest
                 var attribute = attributes[i];
                 modifiers[i] = new EffectAttributeModifier
                 {
-                    AttributeSO = attribute.AttributeDef,
+                    Attribute = attribute.AttributeDef,
                     ModifierType = EAttributeModifierType.Add,
-                    ModifierComputationMethod = _computationMethod,
                     Value = attribute.MinValue
                 };
             }
 
             _equipmentEffect.EffectDetails.Modifiers = modifiers;
 
-            var effect = _effectSystemBehaviour.GetEffect(_equipmentEffect, this, new SkillParameters());
+            var effect = _effectSystemBehaviour.GetEffect(_equipmentEffect);
             _effectSystemBehaviour.ApplyEffectToSelf(effect);
         }
 
         private void ClearEffect()
         {
-            var currentEffect = _effectSystemBehaviour.GetEffect(_equipmentEffect, this, new SkillParameters());
+            var currentEffect = _effectSystemBehaviour.GetEffect(_equipmentEffect);
             _effectSystemBehaviour.RemoveEffect(currentEffect);
         }
     }

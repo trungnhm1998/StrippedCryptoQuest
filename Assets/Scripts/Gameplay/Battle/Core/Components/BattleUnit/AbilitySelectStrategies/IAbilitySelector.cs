@@ -4,6 +4,6 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit.AbilitySelectSt
 {
     public interface IAbilitySelector
     {
-        AbstractAbility GetAbility(IBattleUnit battleUnit);
+        GameplayAbilitySpec GetAbility(IBattleUnit battleUnit);
     }
 }

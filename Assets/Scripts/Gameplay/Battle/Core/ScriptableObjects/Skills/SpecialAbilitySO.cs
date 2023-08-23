@@ -9,7 +9,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Skills
     public class SpecialAbilitySO : AbilitySO
     {
         public UnityAction<AbilityScriptableObject> OnAbilityActivated;
-        protected override AbstractAbility CreateAbility() => new SpecialAbility(SkillInfo);
+        protected override GameplayAbilitySpec CreateAbility() => new SpecialAbility(SkillInfo);
 
         public virtual void Activated()
         {

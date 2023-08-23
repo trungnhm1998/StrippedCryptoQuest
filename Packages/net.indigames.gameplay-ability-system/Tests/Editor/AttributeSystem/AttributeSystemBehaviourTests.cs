@@ -47,7 +47,7 @@ namespace IndiGames.GameplayAbilitySystem.Tests.Editor.AttributeSystem
 
         private void SetupAddAttribute()
         {
-            _attributeSystem.AddAttributes(_attributeInSystem);
+            _attributeSystem.AddAttribute(_attributeInSystem);
         }
 
 
@@ -154,7 +154,7 @@ namespace IndiGames.GameplayAbilitySystem.Tests.Editor.AttributeSystem
             _attributeSystem.TryAddModifierToAttribute(modifier, _attributeInSystem, stackMode);
             _attributeSystem.UpdateAttributeCurrentValue(_attributeInSystem);
             _attributeSystem.TryGetAttributeValue(_attributeInSystem, out var value);
-            Assert.AreEqual(expectedCoreValue, AttributeSystemHelper.CaculateCoreAttributeValue(value));
+            Assert.AreEqual(expectedCoreValue, AttributeSystemHelper.CalculateCoreAttributeValue(value));
             Assert.AreEqual(expectedCurrentValue, value.CurrentValue);
         }
 

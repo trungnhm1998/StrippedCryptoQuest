@@ -10,7 +10,7 @@ namespace CryptoQuest.Gameplay.Battle.Core
         private int _id;
         private LocalizedString _skillName;
         private LocalizedString _skillDescription;
-        private Element _element;
+        private Elemental _element;
         private SkillType _skillType;
         private SkillCategory _category;
         private float _cost;
@@ -54,7 +54,7 @@ namespace CryptoQuest.Gameplay.Battle.Core
             return this;
         }
 
-        public SkillInfoBuilder WithElement(Element element)
+        public SkillInfoBuilder WithElement(Elemental element)
         {
             _element = element;
             return this;

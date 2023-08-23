@@ -2,23 +2,30 @@ using UnityEngine;
 
 namespace IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects.ModifierComputationStrategies
 {
+    /// <summary>
+    /// - Scalable Float
+    ///     Use Level the scale the value
+    /// - Attribute Based
+    ///     Take CurrentValue or BaseValue of a backing Attribute on the Source (Who created the GameplayEffectSpec)
+    ///     or the Target (Who received the GameplayEffectSpec) and further modify it by a coefficient.
+    /// - Custom Calculation Class
+    ///     <see cref="DefaultFloatComputation"/>
+    /// - Set By Caller
+    ///     Imagine player holding a button 
+    /// </summary>
     public abstract class ModifierComputationSO : ScriptableObject
     {
         /// <summary>
-        /// Function called when the magnitude is calculated, usually after the target has been assigned
-        /// In my case it will be in IEffectApplier
+        /// Called when the spec is first initialised
         /// </summary>
-        /// <param name="effect">Effect Specification</param>
-        /// <returns></returns>
-        public abstract float CalculateMagnitude(AbstractEffect effect);
+        /// <param name="effectSpec">Gameplay Effect Spec</param>
+        public abstract void Initialize(GameplayEffectSpec effectSpec);
 
         /// <summary>
-        /// Show preview value if you apply this effect
+        /// Function called when the magnitude is calculated, usually after the target has been assigned
         /// </summary>
-        /// <param name="effect">Effect Specification</param>
+        /// <param name="effectSpec">Gameplay Effect Spec</param>
         /// <returns></returns>
-        public virtual float CalculatePreview(AbstractEffect effect){
-            return 0;
-        }
+        public abstract float? CalculateMagnitude(GameplayEffectSpec effectSpec);
     }
 }

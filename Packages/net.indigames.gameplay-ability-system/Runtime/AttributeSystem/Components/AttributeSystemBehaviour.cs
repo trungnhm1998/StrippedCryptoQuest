@@ -17,6 +17,7 @@ namespace IndiGames.GameplayAbilitySystem.AttributeSystem.Components
             AttributeValue newValue);
 
         public event AttributeChangedDelegate AttributeChanged;
+        [SerializeField] private bool _initOnAwake = true;
         [SerializeField] private List<AbstractAttributesEventChannel> _attributeEventChannels = new();
 
         public List<AbstractAttributesEventChannel> AttributeEventChannels => _attributeEventChannels;
@@ -45,7 +46,7 @@ namespace IndiGames.GameplayAbilitySystem.AttributeSystem.Components
 
         private void Awake()
         {
-            Init();
+            if (_initOnAwake) Init();
         }
 
         public virtual void Init()
@@ -57,9 +58,12 @@ namespace IndiGames.GameplayAbilitySystem.AttributeSystem.Components
         private void InitializeAttributeValues()
         {
             _attributeValues = new List<AttributeValue>();
-            foreach (var attribute in _attributes)
+            var attributes = new List<AttributeScriptableObject>(_attributes);
+            _attributes = new();
+            for (var index = 0; index < attributes.Count; index++)
             {
-                _attributeValues.Add(new AttributeValue(attribute));
+                var attribute = attributes[index];
+                AddAttribute(attribute);
             }
         }
 
@@ -146,15 +150,21 @@ namespace IndiGames.GameplayAbilitySystem.AttributeSystem.Components
         /// We also don't want to add a duplicate attribute into the system
         /// </summary>
         /// <param name="attribute">The data defined attribute</param>
-        public void AddAttributes(AttributeScriptableObject attribute)
+        public void AddAttribute(AttributeScriptableObject attribute)
         {
             // Update the cache to make sure we don't add duplicate attribute
             var cache = GetAttributeIndexCache();
-            if (cache.ContainsKey(attribute)) return;
+            if (cache.ContainsKey(attribute))
+            {
+                Debug.LogWarning(
+                    $"AttributeSystemBehaviour::AddAttributes::Try to add duplicate attribute {attribute.name} to the system {name}");
+                return;
+            }
 
             MarkCacheDirty();
             _attributes.Add(attribute);
-            _attributeValues.Add(new AttributeValue(attribute));
+            var calculateInitialValue = attribute.CalculateInitialValue(new AttributeValue(attribute), _attributeValues);
+            _attributeValues.Add(calculateInitialValue);
         }
 
         private readonly List<AttributeValue> _previousAttributeValues = new();
@@ -228,6 +238,8 @@ namespace IndiGames.GameplayAbilitySystem.AttributeSystem.Components
             }
 
             value = new AttributeValue();
+            Debug.LogWarning($"AttributeSystemBehaviour" +
+                             $"::TryGetAttributeValue::Attribute {attribute.name} not found in the system");
             return false;
         }
 
@@ -271,6 +283,7 @@ namespace IndiGames.GameplayAbilitySystem.AttributeSystem.Components
 
         /// <summary>
         /// loop through _attributeValues and reset all of it modifiers
+        /// This will also cause the <see cref="AttributeValue.CurrentValue"/> to be equals to <see cref="AttributeValue.BaseValue"/>
         /// </summary>
         public void ResetAttributeModifiers()
         {

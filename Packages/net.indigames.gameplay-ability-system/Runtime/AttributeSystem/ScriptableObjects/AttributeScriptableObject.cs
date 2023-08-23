@@ -57,6 +57,13 @@ namespace IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects
             }
         }
 
+        /// <summary>
+        /// Called by <see cref="AttributeSystemBehaviour.InitializeAttributeValues"/> to calculate the initial value of the attribute.
+        /// There would be a hidden bug here when the current attribute value depends on other attributes.
+        /// </summary>
+        /// <param name="attributeValue"></param>
+        /// <param name="otherAttributeValues"></param>
+        /// <returns></returns>
         public virtual AttributeValue CalculateInitialValue(AttributeValue attributeValue,
             List<AttributeValue> otherAttributeValues)
         {

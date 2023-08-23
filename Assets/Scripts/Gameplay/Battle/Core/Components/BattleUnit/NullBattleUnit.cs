@@ -39,7 +39,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit
         }
 
         public void OnDeath() {}
-        public void SelectAbility(AbstractAbility selectedSkill) {}
+        public void SelectAbility(GameplayAbilitySpec selectedSkill) {}
         public void SelectSingleTarget(AbilitySystemBehaviour target) {}
     }
 }

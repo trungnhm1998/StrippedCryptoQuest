@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using IndiGames.GameplayAbilitySystem.AbilitySystem;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.ScriptableObjects;
 using IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects.CustomApplicationRequirement;
@@ -17,11 +16,12 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects
         [Tooltip("Which attribute to affect and how it affected")]
         public EffectDetails EffectDetails;
         [Tooltip("When the effect is applied to a target, these tags will be granted through logic of AbilitySystem")]
-        public TagScriptableObject[] GrantedTags = new TagScriptableObject[0];
+        public TagScriptableObject[] GrantedTags = Array.Empty<TagScriptableObject>();
         [Tooltip("These tags must be present or must not (ignore tags) for the effect to be applied.")]
         public TagRequireIgnoreDetails ApplicationTagRequirements = new();
         [Tooltip("How the effect being custom caculated. Can leave it null or DefaultSO.")]
-        public AbstractEffectExecutionCalculationSO ExecutionCalculation;
+        public EffectExecutionCalculationBase ExecutionCalculation;
+        public EffectExecutionCalculationBase[] ExecutionCalculations;
 
         [Header("Application rules")]
         [Range(0f, 1f)] [Tooltip("There {ChanceToApply}*100% chance that effect will be applied")]
@@ -30,30 +30,26 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects
         public List<EffectCustomApplicationRequirement> CustomApplicationRequirements = new();
 
         /// <summary>
-        /// Get a new AbstractEffect instance with the given level and level rate. from this ScriptableObject.
-        /// note level and level rate are specific to Mugen Horror Action game.
+        /// 
         /// </summary>
-        /// <param name="abilitySystem"></param>
-        /// <param name="levelRate"></param>
-        /// <param name="level"></param>
+        /// <param name="ownerSystem"></param>
         /// <returns></returns>
-        public virtual AbstractEffect GetEffect(AbilitySystemBehaviour ownerSystem, object origin, AbilityParameters parameters)
+        public virtual GameplayEffectSpec CreateEffectSpec(AbilitySystemBehaviour ownerSystem)
         {
             var effect = CreateEffect();
-            effect.Origin = origin.ToString();
-            effect.InitEffect(this, ownerSystem, parameters);
+            effect.InitEffect(this, ownerSystem);
             return effect;
         }
 
-        protected abstract AbstractEffect CreateEffect();
+        protected abstract GameplayEffectSpec CreateEffect();
 
         public Action OnEffectApplied;
         public Action OnEffectActivated;
         public Action OnEffectDeactivated;
     }
 
-    public abstract class EffectScriptableObject<T> : EffectScriptableObject where T : AbstractEffect, new()
+    public abstract class EffectScriptableObject<T> : EffectScriptableObject where T : GameplayEffectSpec, new()
     {
-        protected override AbstractEffect CreateEffect() => new T();
+        protected override GameplayEffectSpec CreateEffect() => new T();
     }
 }

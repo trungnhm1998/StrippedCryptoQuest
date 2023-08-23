@@ -22,7 +22,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit
         IEnumerator Execute();
         IEnumerator Resolve();
         void OnDeath();
-        void SelectAbility(AbstractAbility selectedSkill);
+        void SelectAbility(GameplayAbilitySpec selectedSkill);
         void SelectSingleTarget(AbilitySystemBehaviour target);
     }
 }

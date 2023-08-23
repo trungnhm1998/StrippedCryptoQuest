@@ -7,7 +7,7 @@ using UnityEngine;
 namespace IndiGames.GameplayAbilitySystem.Implementation.EffectAbility.ScriptableObjects
 {
     [CreateAssetMenu(fileName = "EffectAbility", menuName = "Indigames Ability System/Abilities/Effect Ability")]
-    public class EffectAbilitySO : AbilityScriptableObject<EffectAbility>
+    public class EffectAbilitySO : AbilityScriptableObject<EffectGameplayAbilitySpec>
     {
         /// <summary>
         /// Effect applied using tag in desired timing (eg. PostAttack,...)

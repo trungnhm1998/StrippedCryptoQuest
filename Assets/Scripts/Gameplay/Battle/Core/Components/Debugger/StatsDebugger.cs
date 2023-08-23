@@ -88,27 +88,23 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components.Debugger
                 var isActive = abstractEffect.IsExpired ? "Inactive" : "Active";
                 string optional = $"({isActive})";
                 float computedValue = 0;
-                if (abstractEffect.EffectSO.EffectDetails.Modifiers[0].ModifierComputationMethod)
+                if (abstractEffect.Def.EffectDetails.Modifiers[0].ModifierMagnitude)
                 {
-                    computedValue = abstractEffect.EffectSO.EffectDetails.Modifiers[0].ModifierComputationMethod
-                        .CalculateMagnitude(abstractEffect);
+                    // TODO: REFACTOR GAS
+                    // computedValue = abstractEffect.EffectSO.EffectDetails.Modifiers[0].ModifierMagnitude
+                        // .CalculateMagnitude(abstractEffect);
                 }
 
                 string details = "";
-                if (abstractEffect.Parameters != null)
-                {
-                    var skillParams = (SkillParameters)abstractEffect.Parameters;
-                    details = $"\nTurns: {skillParams.ContinuesTurn} | Base Power: {skillParams.BasePower}";
-                }
 
-                if (abstractEffect is DurationalEffect durationalEffect)
+                if (abstractEffect is DurationalEffectSpec durationalEffect)
                 {
                     var remainingDuration = durationalEffect.RemainingDuration;
                     optional = $"({remainingDuration:0.00})";
                 }
 
                 GUILayout.Label(
-                    $"Effect: {abstractEffect.Origin}.{abstractEffect.EffectSO.name} {optional} {details}");
+                    $"Effect: {abstractEffect.Def.name} {optional} {details}");
             }
         }
 

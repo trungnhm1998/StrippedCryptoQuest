@@ -1,5 +1,6 @@
 using System;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
+using UnityEngine;
 
 namespace IndiGames.GameplayAbilitySystem.AttributeSystem
 {
@@ -14,31 +15,32 @@ namespace IndiGames.GameplayAbilitySystem.AttributeSystem
     /// Should have use struct but it messing with my Unit Test
     /// </summary>
     [Serializable]
-    public class AttributeValue
+    public struct AttributeValue
     {
-        public AttributeScriptableObject Attribute;
-        public float BaseValue;
-        public float CurrentValue;
+        [field: SerializeField] public AttributeScriptableObject Attribute { get; set; }
+        [field: SerializeField] public float BaseValue { get; set; }
+        [field: SerializeField] public float CurrentValue { get; set; }
 
         /// <summary>
         /// Sum of all external effects
         /// For ability/effect external stats
         /// This is for external modifier such as temporary buff, in combat buff
         /// </summary>
-        public Modifier ExternalModifier = new();
+        public Modifier ExternalModifier;
 
         /// <summary>
         /// Based on For Honor GDC talk which will cause wrong calculation
         /// This is for Gameplay Difficulty multiplier, Gear, Permanent Buffs and passive
         /// <seealso herf="https://www.youtube.com/watch?v=JgSvuSaXs3E"/>
         /// </summary>
-        public Modifier CoreModifier = new();
-
-        public AttributeValue() { }
+        public Modifier CoreModifier;
 
         public AttributeValue(AttributeScriptableObject attribute)
         {
             Attribute = attribute;
+            BaseValue = CurrentValue = 0f;
+            ExternalModifier = new Modifier();
+            CoreModifier = new Modifier();
         }
 
         public AttributeValue Clone()

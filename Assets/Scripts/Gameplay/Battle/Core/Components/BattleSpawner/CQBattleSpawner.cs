@@ -21,7 +21,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components.BattleSpawner
                 if (!isInEnemyRange) continue;
 
                 var enemy = data.Enemies[i];
-                var statInit = member.GetComponent<StatsInitializer>();
+                var statInit = member.GetComponent<ScriptableObjectStatsInitializer>();
                 statInit.InitStats(enemy);
 
                 var battleUnit = member.GetComponent<BattleUnitBase>();

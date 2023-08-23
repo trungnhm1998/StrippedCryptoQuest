@@ -12,10 +12,9 @@ namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Skills
     public class TurnBaseSkillSO : CQSkillSO
     {
         [SerializeField] private SkillParameters _parameters;
-        public override AbilityParameters Parameters => _parameters;
 
         public VoidEventChannelSO TurnEndEventChannel;
-        protected override AbstractAbility CreateAbility()
+        protected override GameplayAbilitySpec CreateAbility()
         {
             var skill = new TurnBaseSkill();
             return skill;
@@ -26,25 +25,24 @@ namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Skills
     {
         private int _turnLeft;
         protected new TurnBaseSkillSO AbilitySO => (TurnBaseSkillSO) _abilitySO;
-        protected SkillParameters Parameters => (SkillParameters) _parameters; 
 
-        public override void OnAbilityGranted(AbstractAbility skillSpec)
+        public override void OnAbilityGranted(Ability skill)
         {
-            base.OnAbilityGranted(skillSpec);
-            _turnLeft = Parameters.ContinuesTurn;
+            base.OnAbilityGranted(skill);
+            // _turnLeft = Parameters.ContinuesTurn;
             AbilitySO.TurnEndEventChannel.EventRaised += OnTurnEndEvent;
         }
 
-        public override void OnAbilityRemoved(AbstractAbility skillSpec)
+        public override void OnAbilityRemoved(GameplayAbilitySpec skill)
         {
-            base.OnAbilityRemoved(skillSpec);
+            base.OnAbilityRemoved(skill);
             AbilitySO.TurnEndEventChannel.EventRaised -= OnTurnEndEvent;
         }
 
         protected override IEnumerator InternalActiveAbility()
         {
             yield return base.InternalActiveAbility();
-            _turnLeft = Parameters.ContinuesTurn;
+            // _turnLeft = Parameters.ContinuesTurn;
         }
         
         private void OnTurnEndEvent()

@@ -8,17 +8,6 @@ namespace IndiGames.GameplayAbilitySystem.Helper
 {
     public static class AbilitySystemHelper
     {
-        public static List<AbstractEffect> ApplyEffectSpecToTarget(AbstractEffect effect, AbilitySystemBehaviour target)
-        {
-            var appliedEffects = new List<AbstractEffect>();
-            var effectSpec = target.EffectSystem.ApplyEffectToSelf(effect);
-            if (effectSpec.Owner == null || effectSpec.Target == null)
-                return appliedEffects;
-            appliedEffects.Add(effectSpec);
-
-            return appliedEffects;
-        }
-
         /// <summary>
         /// Checks if an Ability System has all the listed tags
         /// </summary>

@@ -1,20 +1,19 @@
 using System.Collections.Generic;
-using IndiGames.GameplayAbilitySystem.AbilitySystem;
-using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
 using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data;
-using IndiGames.GameplayAbilitySystem.AbilitySystem.ScriptableObjects;
 using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Skills;
 using CryptoQuest.Gameplay.Battle.Helper;
+using IndiGames.GameplayAbilitySystem.AbilitySystem;
+using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
 
 namespace CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit
 {
     public class BaseBattleUnitLogic
     {
-        public AbstractAbility SelectedAbility { get; set; }
+        public GameplayAbilitySpec SelectedAbility { get; set; }
         public List<AbilitySystemBehaviour> TargetContainer { get; protected set; } = new();
-        public AbstractAbility NormalAttack { get; protected set; }
-        public AbstractAbility RetreatAbility { get; protected set; }
-        public AbstractAbility GuardAbility { get; protected set; }
+        public GameplayAbilitySpec NormalAttack { get; protected set; }
+        public GameplayAbilitySpec RetreatAbility { get; protected set; }
+        public GameplayAbilitySpec GuardAbility { get; protected set; }
 
         protected IBattleUnit _battleUnit;
         protected AbilitySystemBehaviour _owner;
@@ -33,7 +32,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit
         {
             GrantDefaultAbilities();
         }
-        
+
         private void GrantDefaultAbilities()
         {
             NormalAttack = _owner.GiveAbility(_unitData.NormalAttack);
@@ -71,6 +70,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit
             {
                 if (_owner.TagSystem.GrantedTags.Contains(tag)) return true;
             }
+
             return false;
         }
 
@@ -117,12 +117,13 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit
 
         private bool IsTargetsValid()
         {
-            foreach(var target in TargetContainer)
+            foreach (var target in TargetContainer)
             {
                 //TODO: target container contain battle unit might be better
                 target.TryGetComponent<IBattleUnit>(out var unit);
                 if (unit != null && unit.IsDead) return false;
             }
+
             return true;
         }
 

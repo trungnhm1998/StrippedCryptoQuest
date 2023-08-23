@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Calculation
 {
-    public class BattleCalculator
+    public static class BattleCalculator
     {
         public static float CalculateBaseDamage(SkillParameters skillParameters, float attackPower, float modifierScale)
         {
@@ -54,6 +54,12 @@ namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Calculation
                       "damage " + damage);
             return damage;
         }
+
+        public static float CorrectAttack(this float attackPowerValue) =>
+            attackPowerValue / BaseBattleVariable.CORRECTION_ATTACK_VALUE;
+
+        public static float CorrectDefense(this float defenceValue) =>
+            defenceValue / BaseBattleVariable.CORRECTION_DEFENSE_VALUE;
     }
 
     public static class BaseBattleVariable

@@ -11,7 +11,7 @@ namespace CryptoQuest.Character.Attributes
     ///
     /// Equip attribute
     /// </summary>
-    [CreateAssetMenu(menuName = "Crypto Quest/Character/Attribute")]
+    [CreateAssetMenu(menuName = "Crypto Quest/Character/Derived Attribute")]
     public class DerivedAttributeScriptableObject : AttributeScriptableObject
     {
         [SerializeField] private AttributeScriptableObject _affectedBy;

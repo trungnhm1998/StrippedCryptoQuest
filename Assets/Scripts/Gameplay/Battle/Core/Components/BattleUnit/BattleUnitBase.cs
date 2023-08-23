@@ -96,9 +96,9 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit
             UnitLogic.SelectSingleTarget(target);
         }
         
-        public void SelectAbility(AbstractAbility ability)
+        public void SelectAbility(GameplayAbilitySpec gameplayAbilitySpec)
         {
-            UnitLogic.SelectedAbility = ability;
+            UnitLogic.SelectedAbility = gameplayAbilitySpec;
         }
 
         public virtual IEnumerator Prepare()

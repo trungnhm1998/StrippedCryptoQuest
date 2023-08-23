@@ -10,7 +10,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Skills
     [CreateAssetMenu(fileName = "InstantSkill", menuName = "Gameplay/Battle/Abilities/Instant Skill")]
     public class InstantSkillSO : CQSkillSO
     {
-        protected override AbstractAbility CreateAbility()
+        protected override GameplayAbilitySpec CreateAbility()
         {
             var skill = new InstantSkill();
             return skill;

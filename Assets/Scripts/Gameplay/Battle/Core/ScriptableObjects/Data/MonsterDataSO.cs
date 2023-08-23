@@ -8,7 +8,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data
     public class MonsterDataSO : CharacterDataSO
     {
         public int MonsterId;
-        public Element Element;
+        public Elemental Element;
         public float Exp;
         public float Gold;
         public string DropItemID;

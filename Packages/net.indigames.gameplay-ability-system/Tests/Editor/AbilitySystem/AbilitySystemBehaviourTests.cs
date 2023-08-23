@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Linq;
 using IndiGames.GameplayAbilitySystem.AbilitySystem;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.ScriptableObjects;
@@ -16,11 +17,11 @@ namespace IndiGames.GameplayAbilitySystem.Tests.Editor.AbilitySystem
         private TagScriptableObject _requiredTag;
         private TagScriptableObject _ignoredTag;
 
-        private class MockAbilitySO : AbilityScriptableObject<MockAbility>
+        private class MockAbilitySO : AbilityScriptableObject<MockGameplayAbilitySpec>
         {
         }
 
-        private class MockAbility : AbstractAbility
+        private class MockGameplayAbilitySpec : GameplayAbilitySpec
         {
             protected override IEnumerator InternalActiveAbility()
             {
@@ -50,7 +51,7 @@ namespace IndiGames.GameplayAbilitySystem.Tests.Editor.AbilitySystem
         public void GiveAbility_ShouldContainAbilitySpec()
         {
             var ability = _abilitySystem.GiveAbility(_abilitySO);
-            Assert.IsTrue(_abilitySystem.GrantedAbilities.Abilities.Contains(ability));
+            Assert.IsTrue(_abilitySystem.GrantedAbilities.Contains(ability));
             Assert.AreEqual(_abilitySystem, ability.Owner);
         }
 
@@ -59,7 +60,7 @@ namespace IndiGames.GameplayAbilitySystem.Tests.Editor.AbilitySystem
         {
             _abilitySystem.GiveAbility(_abilitySO);
             _abilitySystem.GiveAbility(_abilitySO);
-            Assert.AreEqual(1, _abilitySystem.GrantedAbilities.Abilities.Count);
+            Assert.AreEqual(1, _abilitySystem.GrantedAbilities.Count);
         }
         
         [Test]
@@ -106,7 +107,7 @@ namespace IndiGames.GameplayAbilitySystem.Tests.Editor.AbilitySystem
             _abilitySystem.TryActiveAbility(ability);
             _abilitySystem.RemoveAbility(ability);
             Assert.IsFalse(ability.IsActive);
-            Assert.IsFalse(_abilitySystem.GrantedAbilities.Abilities.Contains(ability));
+            Assert.IsFalse(_abilitySystem.GrantedAbilities.Contains(ability));
         }
         
         [Test]
@@ -115,7 +116,7 @@ namespace IndiGames.GameplayAbilitySystem.Tests.Editor.AbilitySystem
             _abilitySO.Tags.ActivationTags = new TagScriptableObject[] {_requiredTag};
             var ability = _abilitySystem.GiveAbility(_abilitySO);
             _abilitySystem.RemoveAllAbilities();
-            Assert.IsEmpty(_abilitySystem.GrantedAbilities.Abilities);
+            Assert.IsEmpty(_abilitySystem.GrantedAbilities);
             Assert.IsFalse(_abilitySystem.TagSystem.HasTag(_requiredTag));
         }
     }

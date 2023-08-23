@@ -45,9 +45,9 @@ namespace IndiGames.GameplayAbilitySystem.Tests.EffectSystem
         [Test]
         public void GiveEffect_ReturnEffectSpec_CorrectOwner()
         {
-            var effect = _effectSystem.GetEffect(_instantEffectSO, this, new MockParameters());
+            var effect = _effectSystem.GetEffect(_instantEffectSO);
             Assert.IsNotNull(effect);
-            Assert.AreEqual(effect.Owner, _abilitySystem);
+            Assert.AreEqual(effect.Source, _abilitySystem);
         }
 
         [Test]
@@ -66,12 +66,12 @@ namespace IndiGames.GameplayAbilitySystem.Tests.EffectSystem
         {
             _instantEffectSO.ApplicationTagRequirements.RequireTags = new TagScriptableObject[] {_requiredTag};
             var effect = SetupAndApplyEffect(_instantEffectSO);
-            Assert.AreEqual(effect, NullEffect.Instance);
+            Assert.AreEqual(effect, NullEffectSpec.Instance);
 
             _abilitySystem.TagSystem.GrantedTags.Add(_requiredTag);
-            effect = _effectSystem.GetEffect(_instantEffectSO, this, new MockParameters());
+            effect = _effectSystem.GetEffect(_instantEffectSO);
             var appliedEffect = _effectSystem.ApplyEffectToSelf(effect);
-            Assert.AreNotEqual(effect, NullEffect.Instance);
+            Assert.AreNotEqual(effect, NullEffectSpec.Instance);
         }
 
         [Test]
@@ -80,12 +80,12 @@ namespace IndiGames.GameplayAbilitySystem.Tests.EffectSystem
             _instantEffectSO.ApplicationTagRequirements.IgnoreTags = new TagScriptableObject[] {_ignoredTag};
             _abilitySystem.TagSystem.GrantedTags.Add(_ignoredTag);
             var effect = SetupAndApplyEffect(_instantEffectSO);
-            Assert.AreEqual(effect, NullEffect.Instance);
+            Assert.AreEqual(effect, NullEffectSpec.Instance);
 
             _abilitySystem.TagSystem.GrantedTags.Remove(_ignoredTag);
-            effect = _effectSystem.GetEffect(_instantEffectSO, this, new MockParameters());
+            effect = _effectSystem.GetEffect(_instantEffectSO);
             var appliedEffect = _effectSystem.ApplyEffectToSelf(effect);
-            Assert.AreNotEqual(effect, NullEffect.Instance);
+            Assert.AreNotEqual(effect, NullEffectSpec.Instance);
         }
 
         
@@ -96,15 +96,15 @@ namespace IndiGames.GameplayAbilitySystem.Tests.EffectSystem
             _instantEffectSO.EffectDetails.Modifiers = new EffectAttributeModifier[] {
                 new EffectAttributeModifier()
                 {
-                    AttributeSO = null,
+                    Attribute = null,
                     ModifierType = EAttributeModifierType.Add,
-                    ModifierComputationMethod = null,
+                    ModifierMagnitude = null,
                     Value = 1
                 }
             };
-            var effect = _effectSystem.GetEffect(_instantEffectSO, this, new MockParameters());
+            var effect = _effectSystem.GetEffect(_instantEffectSO);
             var appliedEffect = _effectSystem.ApplyEffectToSelf(effect);
-            Assert.AreEqual(appliedEffect, NullEffect.Instance);
+            Assert.AreEqual(appliedEffect, NullEffectSpec.Instance);
         }
 
         [Test]
@@ -117,7 +117,7 @@ namespace IndiGames.GameplayAbilitySystem.Tests.EffectSystem
             Random.InitState(randomInitState);
             _instantEffectSO.ChanceToApply = chanceToApply;
             var effect = SetupAndApplyEffect(_instantEffectSO);
-            return effect != NullEffect.Instance;
+            return effect != NullEffectSpec.Instance;
         }
 
         [Test]
@@ -125,15 +125,15 @@ namespace IndiGames.GameplayAbilitySystem.Tests.EffectSystem
         {
             _instantEffectSO.CustomApplicationRequirements.Add(new FalseCustomRequirement());
             var effect = SetupAndApplyEffect(_instantEffectSO);
-            Assert.IsTrue(effect == NullEffect.Instance);
+            Assert.IsTrue(effect == NullEffectSpec.Instance);
 
             _instantEffectSO.CustomApplicationRequirements.Add(new TrueCustomRequirement());
             effect = SetupAndApplyEffect(_instantEffectSO);
-            Assert.IsTrue(effect == NullEffect.Instance);
+            Assert.IsTrue(effect == NullEffectSpec.Instance);
 
             _instantEffectSO.CustomApplicationRequirements.RemoveAll(x => x is FalseCustomRequirement);
             effect = SetupAndApplyEffect(_instantEffectSO);
-            Assert.IsFalse(effect == NullEffect.Instance);
+            Assert.IsFalse(effect == NullEffectSpec.Instance);
         }
 
         [UnityTest]
@@ -180,7 +180,7 @@ namespace IndiGames.GameplayAbilitySystem.Tests.EffectSystem
             Assert.AreEqual(baseValue, value.CurrentValue);
         }
         
-        private AbstractEffect SetupAndApplyEffect(EffectScriptableObject effectSO,
+        private GameplayEffectSpec SetupAndApplyEffect(EffectScriptableObject effectSO,
             EAttributeModifierType modifierType = EAttributeModifierType.Add,
             float value = 1, float baseValue = 10)
         {

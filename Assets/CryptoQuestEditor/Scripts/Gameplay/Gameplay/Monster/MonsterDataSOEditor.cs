@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using CryptoQuest.Data;
+using CryptoQuest.Gameplay;
 using CryptoQuest.Gameplay.BaseGameplayData;
 using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.ScriptableObjects;
@@ -84,7 +85,7 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Monster
                 }
 
                 instance.MonsterId = dataModel.MonsterId;
-                instance.Element = GetAssetsFromType<Element>().Where(element
+                instance.Element = GetAssetsFromType<Elemental>().Where(element
                     => element.Id == dataModel.ElementId).First();
                 instance.Exp = dataModel.Exp;
                 instance.Gold = dataModel.Gold;

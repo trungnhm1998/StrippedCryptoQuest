@@ -5,9 +5,9 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit.AbilitySelectSt
 {
     public class RandomAbilitySelector : IAbilitySelector
     {
-        public AbstractAbility GetAbility(IBattleUnit battleUnit)
+        public GameplayAbilitySpec GetAbility(IBattleUnit battleUnit)
         {
-            var grantedAbilities = battleUnit.Owner.GrantedAbilities.Abilities;
+            var grantedAbilities = battleUnit.Owner.GrantedAbilities;
             if (grantedAbilities.Count <= 0) return null;
             var ramdomAbility = grantedAbilities[Random.Range(0, grantedAbilities.Count - 1)];
             return ramdomAbility;

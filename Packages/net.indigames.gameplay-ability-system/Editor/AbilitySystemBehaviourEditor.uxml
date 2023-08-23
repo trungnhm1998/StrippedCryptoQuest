@@ -1,0 +1,7 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="True">
+    <ui:Label tabindex="-1" text="EDITOR" display-tooltip-when-elided="true" style="margin-top: 10px; padding-top: 0;" />
+    <ui:VisualElement style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); flex-direction: row;">
+        <ui:Label tabindex="-1" text="Granted Abilities: " display-tooltip-when-elided="true" />
+        <ui:Label tabindex="-1" text="0" display-tooltip-when-elided="true" name="granted-abilities" binding-path="_grantedAbilities.Length" />
+    </ui:VisualElement>
+</ui:UXML>

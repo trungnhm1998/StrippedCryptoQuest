@@ -9,7 +9,7 @@ namespace IndiGames.GameplayAbilitySystem.Tests.Editor.AbilitySystem
     {
         private GameObject _go;
         private AttributeSystemBehaviour _attributeSystem;
-        private StatsInitializer _statInitializer;
+        private ScriptableObjectStatsInitializer _scriptableObjectStatInitializer;
         private InitializeAttributeDatabase _statDatabase;
 
         [SetUp]
@@ -18,7 +18,7 @@ namespace IndiGames.GameplayAbilitySystem.Tests.Editor.AbilitySystem
             _go = new GameObject();
             _attributeSystem = _go.AddComponent<AttributeSystemBehaviour>();
             _statDatabase = ScriptableObject.CreateInstance<InitializeAttributeDatabase>();
-            _statInitializer = _go.AddComponent<StatsInitializer>();
+            _scriptableObjectStatInitializer = _go.AddComponent<ScriptableObjectStatsInitializer>();
         }
 
         [Test]
@@ -34,7 +34,7 @@ namespace IndiGames.GameplayAbilitySystem.Tests.Editor.AbilitySystem
                     Value = inputValue
                 }
             };
-            _statInitializer.InitStats(_statDatabase);
+            _scriptableObjectStatInitializer.InitStats(_statDatabase);
             Assert.IsTrue(_attributeSystem.HasAttribute(attribute, out _));
             _attributeSystem.TryGetAttributeValue(attribute, out var value);
             Assert.AreEqual(inputValue, value.CurrentValue);

@@ -33,8 +33,8 @@ namespace CryptoQuest.UI.Battle.BattleActionHandler
         private void Retreat(IBattleUnit currentUnit)
         {
             AbilitySystemBehaviour currentUnitOwner = currentUnit.Owner;
-            AbstractAbility retreatAbility = currentUnitOwner.GiveAbility(_retreatAbilitySO);
-            currentUnit.SelectAbility(retreatAbility);
+            GameplayAbilitySpec retreatGameplayAbilitySpec = currentUnitOwner.GiveAbility(_retreatAbilitySO);
+            currentUnit.SelectAbility(retreatGameplayAbilitySpec);
             currentUnit.SelectSingleTarget(currentUnitOwner);
         }
 

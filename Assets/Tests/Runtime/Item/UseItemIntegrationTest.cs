@@ -106,9 +106,9 @@ namespace CryptoQuest.Tests.Runtime.Item
             
             EffectAttributeModifier newModifier = new()
             {
-                AttributeSO = _playerHealthAttribute,
+                Attribute = _playerHealthAttribute,
                 ModifierType = EAttributeModifierType.Add,
-                ModifierComputationMethod = null,
+                ModifierMagnitude = null,
                 Value = 100
             };
             healAbility.EffectContainerMap[0].TargetContainer[0].Effects[0]

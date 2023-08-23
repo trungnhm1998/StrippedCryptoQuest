@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using IndiGames.GameplayAbilitySystem.AbilitySystem;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.Components;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
@@ -15,7 +14,7 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem.Components
     /// </summary>
     public partial class EffectSystemBehaviour : MonoBehaviour
     {
-        public List<EffectSpecificationContainer> AppliedEffects { get; } = new();
+        public List<ActiveEffectSpecification> AppliedEffects { get; } = new();
 
         private AbilitySystemBehaviour _owner;
         public AbilitySystemBehaviour Owner => _owner;
@@ -23,8 +22,7 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem.Components
         private AttributeSystemBehaviour _attributeSystem;
         private IEffectApplier _effectApplier;
 
-        // TODO: Could use a factory here
-        protected IEffectApplier EffectAppliers => _effectApplier ??= new DefaultEffectApplier(Owner);
+        private IEffectApplier EffectAppliers => _effectApplier ??= new DefaultEffectApplier(Owner);
 
 
         public void InitSystem(AbilitySystemBehaviour owner)
@@ -38,33 +36,30 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem.Components
         /// this will update the Owner of the effect to this AbilitySystem
         /// </summary>
         /// <param name="effectSO"></param>
-        /// <param name="origin"></param>
-        /// <param name="parameters"></param>
         /// <returns></returns>
-        public AbstractEffect GetEffect(EffectScriptableObject effectSO, object origin, AbilityParameters parameters)
-            => effectSO.GetEffect(Owner, origin, parameters);
+        public GameplayEffectSpec GetEffect(EffectScriptableObject effectSO)
+            => effectSO.CreateEffectSpec(Owner);
 
         // TODO: Move to AbilityEffectBehaviour
-        public AbstractEffect ApplyEffectToSelf(AbstractEffect inEffectSpec)
+        public GameplayEffectSpec ApplyEffectToSelf(GameplayEffectSpec inEffectSpecSpec)
         {
-            if (inEffectSpec == null || !inEffectSpec.CanApply()) return NullEffect.Instance;
+            if (inEffectSpecSpec == null || !inEffectSpecSpec.CanApply()) return new GameplayEffectSpec();
 
-            inEffectSpec.SetTarget(Owner);
-            inEffectSpec.Accept(EffectAppliers);
-            return inEffectSpec;
+            inEffectSpecSpec.Target = Owner;
+            inEffectSpecSpec.Accept(EffectAppliers);
+            return inEffectSpecSpec;
         }
 
         /// <summary>
         /// Remove the effect from the system
         /// We should also remove the effect's modifiers from the attribute
         /// </summary>
-        /// <param name="abstractEffect"></param>
-        public virtual void RemoveEffect(AbstractEffect abstractEffect)
+        public virtual void RemoveEffect(GameplayEffectSpec effectSpec)
         {
             for (int i = AppliedEffects.Count - 1; i >= 0; i--)
             {
                 var effect = AppliedEffects[i];
-                if (abstractEffect.EffectSO != effect.EffectSpec.EffectSO) continue;
+                if (effectSpec.Def != effect.EffectSpec.Def) continue;
 
                 AppliedEffects.RemoveAt(i);
                 break;
@@ -96,29 +91,33 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem.Components
         }
 
         /// <summary>
-        /// Update the attribute system modifiers using the applied effects, but first reset all attribute to their base values
+        /// 1. Reset all attributes to their base value
+        /// 2. Add all modifiers from all active effects
         /// </summary>
         protected virtual void UpdateAttributeSystemModifiers()
         {
-            // Reset all attribute to their base values
             _attributeSystem.ResetAttributeModifiers();
-            foreach (var effect in AppliedEffects)
+            for (var index = 0; index < AppliedEffects.Count; index++)
             {
+                var effect = AppliedEffects[index];
+                if (effect.Expired) continue;
                 AddModifiersToAttributeWithEffect(effect);
             }
         }
 
-        protected void AddModifiersToAttributeWithEffect(EffectSpecificationContainer effect)
+        private void AddModifiersToAttributeWithEffect(ActiveEffectSpecification activeEffect)
         {
-            if (effect.Expired) return;
+            if (activeEffect.Expired) return;
 
-            foreach (var effectModifierDetail in effect.Modifiers)
+            for (var index = 0; index < activeEffect.ComputedModifiers.Count; index++)
             {
-                AddAttributeToSystemIfNotExists(effectModifierDetail.Attribute);
+                var computedModifier = activeEffect.ComputedModifiers[index];
+
+                AddAttributeToSystemIfNotExists(computedModifier.Attribute);
                 _attributeSystem.TryAddModifierToAttribute(
-                    effectModifierDetail.Modifier,
-                    effectModifierDetail.Attribute,
-                    effect.ModifierType);
+                    computedModifier.Modifier,
+                    computedModifier.Attribute,
+                    activeEffect.ModifierType);
             }
         }
 
@@ -130,8 +129,7 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem.Components
         /// </summary>
         private void AddAttributeToSystemIfNotExists(AttributeScriptableObject attribute)
         {
-            if (_attributeSystem.HasAttribute(attribute, out _)) return;
-            _attributeSystem.AddAttributes(attribute);
+            _attributeSystem.AddAttribute(attribute);
         }
 
         protected virtual void UpdateEffects()

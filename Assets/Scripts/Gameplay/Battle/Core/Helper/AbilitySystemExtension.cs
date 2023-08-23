@@ -14,7 +14,7 @@ namespace CryptoQuest.Gameplay.Battle.Helper
     {
         public static void ActivateAbilityWithTag(this AbilitySystemBehaviour owner, TagScriptableObject tag)
         {
-            var abilities = owner.GrantedAbilities.Abilities;
+            var abilities = owner.GrantedAbilities;
             foreach (var ability in abilities)
             {
                 if (ability.AbilitySO.Tags.AbilityTag != tag) continue;
@@ -45,7 +45,7 @@ namespace CryptoQuest.Gameplay.Battle.Helper
         /// <returns></returns>
         public static IEnumerable<Ability> GetAbilitiesWithUsageScenario(this AbilitySystemBehaviour owner, EAbilityUsageScenario usageScenario)
         {
-            foreach (var grantedAbility in owner.GrantedAbilities.Abilities)
+            foreach (var grantedAbility in owner.GrantedAbilities)
             {
                 if (!(grantedAbility is Ability ability)) continue;
                 var abilitySO = ability.AbilitySO;

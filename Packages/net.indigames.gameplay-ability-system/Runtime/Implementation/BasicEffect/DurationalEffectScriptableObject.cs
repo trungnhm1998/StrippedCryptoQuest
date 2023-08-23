@@ -8,7 +8,7 @@ using UnityEngine;
 namespace IndiGames.GameplayAbilitySystem.Implementation.BasicEffect
 {
     [CreateAssetMenu(fileName = "DurationalEffect", menuName = "Indigames Ability System/Effects/Durational Effect")]
-    public class DurationalEffectScriptableObject : EffectScriptableObject<DurationalEffect>
+    public class DurationalEffectScriptableObject : EffectScriptableObject<DurationalEffectSpec>
     {
         public float Duration;
     }
@@ -16,9 +16,9 @@ namespace IndiGames.GameplayAbilitySystem.Implementation.BasicEffect
     /// <summary>
     /// Effect need update over time such as slow or stun enemy for 3 seconds
     /// </summary>
-    public class DurationalEffect : AbstractEffect
+    public class DurationalEffectSpec : GameplayEffectSpec
     {
-        protected float _remainingDuration;
+        private float _remainingDuration;
 
         public float RemainingDuration
         {
@@ -26,17 +26,16 @@ namespace IndiGames.GameplayAbilitySystem.Implementation.BasicEffect
             set => _remainingDuration = value;
         }
 
-        public override void InitEffect(EffectScriptableObject effectScriptableObject, AbilitySystemBehaviour ownerSystem,
-            AbilityParameters parameters)
+        public override void InitEffect(EffectScriptableObject effectDef, AbilitySystemBehaviour source)
         {
-            base.InitEffect(effectScriptableObject, ownerSystem, parameters);
-            _remainingDuration = ((DurationalEffectScriptableObject) effectScriptableObject).Duration;
+            base.InitEffect(effectDef, source);
+            _remainingDuration = ((DurationalEffectScriptableObject) effectDef).Duration;
         }
 
         public override void Accept(IEffectApplier effectApplier)
         {
             base.Accept(effectApplier);
-            _effectApplier.ApplyDurationalEffect(this);
+            _effectApplier.Visit(this);
         }
 
         public override void Update(float deltaTime)

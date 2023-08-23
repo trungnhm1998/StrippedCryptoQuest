@@ -15,7 +15,7 @@ namespace IndiGames.GameplayAbilitySystem.Implementation.EffectAbility
 
     public class AbilityEffectContainerSpec
     {
-        public List<AbstractEffect> EffectSpecs = new List<AbstractEffect>();
+        public List<GameplayEffectSpec> EffectSpecs = new List<GameplayEffectSpec>();
         public List<AbilitySystemBehaviour> Targets = new List<AbilitySystemBehaviour>();
 
         public void AddTargets(List<AbilitySystemBehaviour> targets)

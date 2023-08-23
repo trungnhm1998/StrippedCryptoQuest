@@ -20,7 +20,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Skills
         public UnityAction<MapPathSO> EscapeSucceeded;
         public UnityAction EscapeFailed;
 
-        protected override AbstractAbility CreateAbility()
+        protected override GameplayAbilitySpec CreateAbility()
             => new EscapeAbility(SkillInfo, _escapeRouteMappingSO, _sceneLoaderBus);
     }
 

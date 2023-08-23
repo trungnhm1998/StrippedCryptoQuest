@@ -8,7 +8,7 @@ namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item
     [CreateAssetMenu(menuName = "Crypto Quest/Ability/Item Ability", fileName = "Item Ability")]
     public class ItemAbilityDef : AbilitySO
     {
-        protected override AbstractAbility CreateAbility() => new ItemAbility(SkillInfo);
+        protected override GameplayAbilitySpec CreateAbility() => new ItemAbility(SkillInfo);
     }
 
     public class ItemAbility : Ability

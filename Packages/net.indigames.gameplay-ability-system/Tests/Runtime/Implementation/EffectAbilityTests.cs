@@ -98,7 +98,7 @@ namespace IndiGames.GameplayAbilitySystem.Tests.Implementation
         [TestCase(10, 11)]
         public void RemoveEffectWithTag_ValueShouldBeCorrect(float baseValue, float expectedValue)
         {
-            var ability = ActivateAbility(baseValue, true) as EffectAbility;
+            var ability = ActivateAbility(baseValue, true) as EffectGameplayAbilitySpec;
 
             ability.RemoveEffectWithTag(_otherTag);
             AssertCurrentAttribute(expectedValue);
@@ -108,22 +108,22 @@ namespace IndiGames.GameplayAbilitySystem.Tests.Implementation
         [TestCase(10)]
         public void RemoveAllAbilities_ShouldAlsoRemoveEffect(float baseValue)
         {
-            var ability = ActivateAbility(baseValue, true) as EffectAbility;
+            var ability = ActivateAbility(baseValue, true) as EffectGameplayAbilitySpec;
 
             _abilitySystem.RemoveAllAbilities();
             AssertCurrentAttribute(baseValue);
         }
 
-        private AbstractAbility ActivateAbility(float baseValue, bool isActiveOtherTag)
+        private GameplayAbilitySpec ActivateAbility(float baseValue, bool isActiveOtherTag)
         {
-            _attributeSystem.AddAttributes(_attribute);
+            _attributeSystem.AddAttribute(_attribute);
             _attributeSystem.SetAttributeBaseValue(_attribute, baseValue);
 
-            var ability = _abilitySystem.GiveAbility(_effectAbilitySO) as EffectAbility;
+            var ability = _abilitySystem.GiveAbility(_effectAbilitySO) as EffectGameplayAbilitySpec;
             _abilitySystem.TryActiveAbility(ability);
             if (isActiveOtherTag)
             {
-                ability.ApplyEffectContainerByTag(_otherTag, new EffectAbility.EffectAbilityContext());
+                ability.ApplyEffectContainerByTag(_otherTag, new EffectGameplayAbilitySpec.EffectAbilityContext());
             }
             return ability;
         }

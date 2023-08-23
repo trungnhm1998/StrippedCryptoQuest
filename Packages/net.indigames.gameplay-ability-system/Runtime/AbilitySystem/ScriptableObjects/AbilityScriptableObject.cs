@@ -10,26 +10,23 @@ namespace IndiGames.GameplayAbilitySystem.AbilitySystem.ScriptableObjects
         [SerializeField] private AbilityTags tags = new();
         public AbilityTags Tags => tags;
 
-        [SerializeField] private AbilityParameters _parameters;
-        public virtual AbilityParameters Parameters => _parameters;
-
-        public AbstractAbility GetAbilitySpec(AbilitySystemBehaviour owner)
+        public GameplayAbilitySpec GetAbilitySpec(AbilitySystemBehaviour owner)
         {
             var ability = CreateAbility();
-            ability.InitAbility(owner, this, Parameters);
+            ability.InitAbility(owner, this);
             return ability;
         }
 
-        protected abstract AbstractAbility CreateAbility();
+        protected abstract GameplayAbilitySpec CreateAbility();
     }
 
     /// <summary>
     /// Override this to create new ability SO with a new abstract ability
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public abstract class AbilityScriptableObject<T> : AbilityScriptableObject where T : AbstractAbility, new()
+    public abstract class AbilityScriptableObject<T> : AbilityScriptableObject where T : GameplayAbilitySpec, new()
     {
-        protected override AbstractAbility CreateAbility() => new T();
+        protected override GameplayAbilitySpec CreateAbility() => new T();
     }
 
     [Serializable]

@@ -1,13 +1,13 @@
-using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
+﻿using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
 using UnityEngine;
 
 namespace IndiGames.GameplayAbilitySystem.AttributeSystem.Components
 {
-    public class StatsInitializer : MonoBehaviour
+    public class StatsInitializer : MonoBehaviour, IStatInitializer
     {
         [SerializeField] private AttributeSystemBehaviour _attributeSystem;
-        [SerializeField] private InitializeAttributeDatabase _database;
-        public InitializeAttributeDatabase DefaultStats => _database;
+        [SerializeField] private AttributeInitValue[] _database;
+        [SerializeField] private bool _initOnStart = false;
 
 #if UNITY_EDITOR
         private void OnValidate()
@@ -19,24 +19,15 @@ namespace IndiGames.GameplayAbilitySystem.AttributeSystem.Components
 
         private void Start()
         {
-            InitStats();
+            if (_initOnStart) InitStats();
         }
 
         public void InitStats()
         {
-            InitStats(_database);
-        }
-
-        public void InitStats(InitializeAttributeDatabase stats)
-        {
-            if (stats == null) return;
-            _database = stats;
-            for (int i = 0; i < stats.AttributesToInitialize.Length; i++)
+            for (int i = 0; i < _database.Length; i++)
             {
-                _attributeSystem.AddAttributes(stats.AttributesToInitialize[i].Attribute);
-            }
-            foreach (var initValue in stats.AttributesToInitialize)
-            {
+                var initValue = _database[i];
+                _attributeSystem.AddAttribute(initValue.Attribute);
                 _attributeSystem.SetAttributeBaseValue(initValue.Attribute, initValue.Value);
             }
 

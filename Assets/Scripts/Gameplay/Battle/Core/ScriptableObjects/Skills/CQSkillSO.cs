@@ -20,19 +20,19 @@ namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Skills
         public BattleActionDataSO ActionDataSO;
         public BattleActionDataEventChannelSO ActionEventSO;
         public LocalizedString SkillName;
-        protected override AbstractAbility CreateAbility() => new CQSkill();
+        protected override GameplayAbilitySpec CreateAbility() => new CQSkill();
     }
 
-    public class CQSkill : EffectAbility
+    public class CQSkill : EffectGameplayAbilitySpec
     {
         protected const string UNIT_NAME_VARIABLE = "unitName";
         protected const string SKILL_NAME_VARIABLE = "skillName";
         protected IBattleUnit _unit;
         protected new CQSkillSO AbilitySO => (CQSkillSO)_abilitySO;
 
-        public override void OnAbilityGranted(AbstractAbility skillSpec)
+        public virtual void OnAbilityGranted(Skills.Ability skill)
         {
-            base.OnAbilityGranted(skillSpec);
+            base.OnAbilityGranted(skill);
             _unit = Owner.GetComponent<IBattleUnit>();
         }
 

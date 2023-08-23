@@ -6,11 +6,11 @@ using UnityEngine;
 namespace IndiGames.GameplayAbilitySystem.Implementation.BasicEffect
 {
     [CreateAssetMenu(fileName = "InstantEffect", menuName = "Indigames Ability System/Effects/Instant Effect")]
-    public class InstantEffectScriptableObject : EffectScriptableObject<InstantEffect>
+    public class InstantEffectScriptableObject : EffectScriptableObject<InstantEffectSpec>
     {
     }
 
-    public class InstantEffect : AbstractEffect
+    public class InstantEffectSpec : GameplayEffectSpec
     {
         public override void Update(float deltaTime)
         {
@@ -21,7 +21,7 @@ namespace IndiGames.GameplayAbilitySystem.Implementation.BasicEffect
         {
             base.Accept(effectApplier);
 
-            _effectApplier.ApplyInstantEffect(this);
+            _effectApplier.Visit(this);
             IsExpired = true;
         }
     }
