@@ -28,7 +28,7 @@ namespace CryptoQuestEditor.NPC
         private Npc_Action _npcAction;
         private GameObject _currentNPC;
         private SpriteRenderer _currentSprite;
-        private List<Sprite> _listSprite;
+        private List<Sprite> _listSprite = new();
 
         [MenuItem("Window/NPC/Animation")]
         public static void ShowWindow()
