@@ -5,21 +5,18 @@ namespace CryptoQuest.Gameplay
 {
     public class BattlePrototype : MonoBehaviour
     {
-        [SerializeField] private Character _character;
-        [SerializeField] private Character _enemy;
-
         [SerializeField] private AbilityScriptableObject _abilityToUseOnEnemy;
 
         private SimpleGameplayAbilitySpec _gameplayAbilitySpec;
 
-        public void GiveAbilityToCharacter()
+        public void GiveAbilityToTarget(Character character)
         {
-            _gameplayAbilitySpec = _character.GameplayAbilitySystem.GiveAbility(_abilityToUseOnEnemy) as SimpleGameplayAbilitySpec;
+            _gameplayAbilitySpec = character.GameplayAbilitySystem.GiveAbility(_abilityToUseOnEnemy) as SimpleGameplayAbilitySpec;
         }
 
-        public void UseAbilityOnEnemy()
+        public void UseAbilityOnTarget(Character character)
         {
-            _gameplayAbilitySpec.Active(_enemy);
+            _gameplayAbilitySpec.Active(character);
         }
     }
 }

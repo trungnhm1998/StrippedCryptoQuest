@@ -19,8 +19,10 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects
         public TagScriptableObject[] GrantedTags = Array.Empty<TagScriptableObject>();
         [Tooltip("These tags must be present or must not (ignore tags) for the effect to be applied.")]
         public TagRequireIgnoreDetails ApplicationTagRequirements = new();
-        [Tooltip("How the effect being custom caculated. Can leave it null or DefaultSO.")]
-        public EffectExecutionCalculationBase ExecutionCalculation;
+        /// <summary>
+        /// e.g. Need to calculate based on caster's attribute
+        /// </summary>
+        [Tooltip("How the effect being calculated with custom logic. Can leave it null or DefaultSO.")]
         public EffectExecutionCalculationBase[] ExecutionCalculations;
 
         [Header("Application rules")]

@@ -184,7 +184,8 @@ namespace IndiGames.GameplayAbilitySystem.Tests.EffectSystem
             EAttributeModifierType modifierType = EAttributeModifierType.Add,
             float value = 1, float baseValue = 10)
         {
-            return EffectTestHelper.SetupAndApplyEffect(_abilitySystem, _attribute, effectSO, modifierType, value, baseValue);
+            // return EffectTestHelper.SetupAndApplyEffect(_abilitySystem, _attribute, effectSO, modifierType, value, baseValue);
+            return effectSO.CreateEffectSpec(_abilitySystem);
         }
     }
 }

@@ -24,11 +24,11 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem.EffectApplier
         ///
         /// Based on GAS I would want Instant effect as a infinite effect but for now I will modify the base value
         /// </summary>
-        public void Visit(InstantEffectSpec instantEffectSpec)
+        public ActiveEffectSpecification Visit(IInstantEffectSpec instantEffectSpecSpec)
         {
             Debug.Log(
-                $"DefaultEffectApplier::ApplyInstantEffect {instantEffectSpec.Def.name} to system {_ownerSystem.name}");
-            var container = new ActiveEffectSpecification(instantEffectSpec);
+                $"DefaultEffectApplier::ApplyInstantEffect {instantEffectSpecSpec.Def.name} to system {_ownerSystem.name}");
+            var container = new ActiveEffectSpecification(instantEffectSpecSpec);
             var computedModifiers = container.ComputedModifiers;
 
             for (int index = 0; index < computedModifiers.Count; index++)
@@ -55,26 +55,30 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem.EffectApplier
 
                 _attributeSystem.SetAttributeBaseValue(attribute, attributeValue.BaseValue);
                 Debug.Log($"DefaultEffectApplier::ApplyInstantEffect" +
-                          $"::to attribute {attribute} " +
+                          $"::to attribute {attribute.name} " +
                           $"base value[{attributeValue.BaseValue}] " +
                           $"currentValue[{attributeValue.CurrentValue}]");
             }
+
+            return container;
         }
 
-        public void Visit(DurationalEffectSpec durationalEffectSpec) => InternalVisitDurational(durationalEffectSpec);
+        public ActiveEffectSpecification Visit(IDurationalEffectSpec durationalEffectSpec) => InternalVisitDurational(durationalEffectSpec);
 
-        public void Visit(InfiniteEffectSpec infiniteEffectSpec) => InternalVisitDurational(infiniteEffectSpec);
+        public ActiveEffectSpecification Visit(IInfiniteEffectSpec infiniteEffectSpec) => InternalVisitDurational(infiniteEffectSpec);
 
         /// <summary>
         /// Slow enemy down for 15sec
         /// We would want to add this active effect into the applied effect, when the effect is expired
         /// Remove it and recalculate the attribute modifiers will be easier
         /// </summary>
-        private void InternalVisitDurational(GameplayEffectSpec effectSpec)
+        private ActiveEffectSpecification InternalVisitDurational(IGameplayEffectSpec effectSpec)
         {
-            _ownerSystem.EffectSystem.AppliedEffects.Add(new ActiveEffectSpecification(effectSpec));
+            var activeEffectSpecification = new ActiveEffectSpecification(effectSpec);
+            _ownerSystem.EffectSystem.AppliedEffects.Add(activeEffectSpecification);
             Debug.Log(
                 $"EffectApplier::Durational::to {_ownerSystem.name} with effect {effectSpec.Def.name}");
+            return activeEffectSpecification;
         }
     }
 }

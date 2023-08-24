@@ -6,17 +6,17 @@ using UnityEngine;
 namespace IndiGames.GameplayAbilitySystem.Implementation.BasicEffect
 {
     [CreateAssetMenu(fileName = "InfiniteEffect", menuName = "Indigames Ability System/Effects/Infinite Effect")]
-    public class InfiniteEffectScriptableObject : EffectScriptableObject<InfiniteEffectSpec> {}
+    public class InfiniteEffectScriptableObject : EffectScriptableObject<InfiniteEffectSpec> { }
 
-    public class InfiniteEffectSpec : GameplayEffectSpec
+    public interface IInfiniteEffectSpec : IGameplayEffectSpec { }
+
+    public class InfiniteEffectSpec : GameplayEffectSpec, IInfiniteEffectSpec
     {
-        public override void Accept(IEffectApplier effectApplier)
+        public override ActiveEffectSpecification Accept(IEffectApplier effectApplier)
         {
-            effectApplier.Visit(this);
+            return effectApplier.Visit(this);
         }
 
-        public override void Update(float deltaTime)
-        {
-        }
+        public override void Update(float deltaTime) { }
     }
 }

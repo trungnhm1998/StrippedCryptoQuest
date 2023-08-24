@@ -9,19 +9,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 60fb86d7ead02f64181e85be590003ec, type: 3}
-  m_Name: GE_DamageBase
+  m_Script: {fileID: 11500000, guid: 174e2e5d5e2167b4dac873bdd3b5bf4c, type: 3}
+  m_Name: GE_CostMPBase
   m_EditorClassIdentifier: 
   Description: 
   EffectDetails:
-    Modifiers: []
+    Modifiers:
+    - Attribute: {fileID: 11400000, guid: a7e3a44d36bf87d44afeb00b236e832e, type: 2}
+      ModifierType: 0
+      ModifierMagnitude: {fileID: 0}
+      Value: 0
     StackingType: 0
   GrantedTags: []
   ApplicationTagRequirements:
     RequireTags: []
     IgnoreTags: []
-  ExecutionCalculation: {fileID: 11400000, guid: 3f78234ed50d68c4880ffa78125e9f4a, type: 2}
-  ExecutionCalculations:
-  - {fileID: 11400000, guid: 3f78234ed50d68c4880ffa78125e9f4a, type: 2}
+  ExecutionCalculations: []
   ChanceToApply: 1
   CustomApplicationRequirements: []

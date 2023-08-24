@@ -43,8 +43,8 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem
             }
         }
 
-        private GameplayEffectSpec _effectSpec;
-        public GameplayEffectSpec EffectSpec => _effectSpec;
+        private IGameplayEffectSpec _effectSpec;
+        public IGameplayEffectSpec EffectSpec => _effectSpec;
 
         /// <summary>
         /// After calculated magnitude and custom execution calculation
@@ -56,7 +56,12 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem
         public bool Expired => _effectSpec.IsExpired;
         public TagScriptableObject[] GrantedTags => _effectSpec.Def.GrantedTags;
 
-        public ActiveEffectSpecification(GameplayEffectSpec effectSpec)
+        /// <summary>
+        /// To prevent null reference exception
+        /// </summary>
+        public ActiveEffectSpecification() { }
+
+        public ActiveEffectSpecification(IGameplayEffectSpec effectSpec)
         {
             _effectSpec = effectSpec;
             ComputedModifiers = GenerateEffectModifier(_effectSpec);
@@ -67,7 +72,7 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem
         /// </summary>
         /// <param name="effectSpec"></param>
         /// <returns></returns>
-        private List<ComputedModifier> GenerateEffectModifier(GameplayEffectSpec effectSpec)
+        private List<ComputedModifier> GenerateEffectModifier(IGameplayEffectSpec effectSpec)
         {
             var calculatedMagnitudeModifiers = CalculateModifierMagnitude(effectSpec);
             ExecuteCustomCalculations(effectSpec, ref calculatedMagnitudeModifiers);
@@ -83,7 +88,7 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem
             return computedModifiers;
         }
 
-        private void ExecuteCustomCalculations(GameplayEffectSpec effectSpec,
+        private void ExecuteCustomCalculations(IGameplayEffectSpec effectSpec,
             ref List<EffectAttributeModifier> calculatedMagnitudeModifiers)
         {
             var customCalculations = effectSpec.Def.ExecutionCalculations;
@@ -108,12 +113,12 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem
         /// </summary>
         /// <param name="gameplayEffectSpec"></param>
         /// <returns></returns>
-        private List<EffectAttributeModifier> CalculateModifierMagnitude(GameplayEffectSpec gameplayEffectSpec)
+        private List<EffectAttributeModifier> CalculateModifierMagnitude(IGameplayEffectSpec gameplayEffectSpec)
         {
             var effectDefModifiers = gameplayEffectSpec.Def.EffectDetails.Modifiers;
             var calculatedModifiers = new List<EffectAttributeModifier>();
 
-            for (int i = 0; i < calculatedModifiers.Count; i++)
+            for (int i = 0; i < effectDefModifiers.Length; i++)
             {
                 var modifier = effectDefModifiers[i].Clone(); // make sure to create a copy
                 if (modifier.ModifierMagnitude)

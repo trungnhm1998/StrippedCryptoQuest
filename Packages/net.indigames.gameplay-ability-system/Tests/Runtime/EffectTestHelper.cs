@@ -27,20 +27,6 @@ namespace IndiGames.GameplayAbilitySystem.Tests.Runtime
             };
             effectSO.EffectDetails.StackingType = EModifierType.External;
         }
-
-        public static GameplayEffectSpec SetupAndApplyEffect(AbilitySystemBehaviour system, AttributeScriptableObject attribute,
-            EffectScriptableObject effectSO,
-            EAttributeModifierType modifierType = EAttributeModifierType.Add,
-            float value = 1, float baseValue = 10)
-        {
-            system.AttributeSystem.AddAttribute(attribute);
-            system.AttributeSystem.SetAttributeBaseValue(attribute, baseValue);
-            SetupEffectSO(attribute, effectSO, modifierType, value);
-            
-            var effect = system.EffectSystem.GetEffect(effectSO);
-            var appliedEffect = system.EffectSystem.ApplyEffectToSelf(effect);
-            return appliedEffect;
-        }
     }
 
     public class MockParameters : AbilityParameters {}

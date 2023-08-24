@@ -1,6 +1,9 @@
+using System;
 using System.Collections;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.ScriptableObjects;
+using IndiGames.GameplayAbilitySystem.EffectSystem;
+using IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects;
 using IndiGames.GameplayAbilitySystem.Helper;
 using UnityEngine;
 
@@ -108,6 +111,30 @@ namespace IndiGames.GameplayAbilitySystem.AbilitySystem
         protected virtual IEnumerator InternalActiveAbility()
         {
             yield break;
+        }
+
+        protected ActiveEffectSpecification ApplyGameplayEffectToOwner(EffectScriptableObject effectDef)
+        {
+            if (effectDef)
+            {
+                var effectSpec = Owner.MakeOutgoingSpec(effectDef);
+                if (effectSpec != null)
+                {
+                    return ApplyGameplayEffectSpecToOwner(effectSpec);
+                }
+            }
+
+            return new ActiveEffectSpecification();
+        }
+
+        private ActiveEffectSpecification ApplyGameplayEffectSpecToOwner(GameplayEffectSpec effectSpec)
+        {
+            if (effectSpec != null)
+            {
+                return Owner.ApplyEffectSpecToSelf(effectSpec);
+            }
+
+            return new ActiveEffectSpecification();
         }
     }
 }

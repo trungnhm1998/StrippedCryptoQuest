@@ -1,16 +1,14 @@
 using IndiGames.GameplayAbilitySystem.EffectSystem;
 using IndiGames.GameplayAbilitySystem.EffectSystem.EffectApplier;
-using IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects;
+using IndiGames.GameplayAbilitySystem.Implementation.BasicEffect;
 using UnityEngine;
 
-namespace IndiGames.GameplayAbilitySystem.Implementation.BasicEffect
+namespace CryptoQuest.Gameplay
 {
-    [CreateAssetMenu(fileName = "InstantEffect", menuName = "Indigames Ability System/Effects/Instant Effect")]
-    public class InstantEffectScriptableObject : EffectScriptableObject<InstantEffectSpec> { }
+    [CreateAssetMenu(menuName = "Create InstantGameplayEffect", fileName = "InstantGameplayEffect", order = 0)]
+    public class InstantGameplayEffect : CryptoQuestGameplayEffect<InstantGameplayEffectSpec> { }
 
-    public interface IInstantEffectSpec : IGameplayEffectSpec { }
-
-    public class InstantEffectSpec : GameplayEffectSpec, IInstantEffectSpec
+    public class InstantGameplayEffectSpec : CryptoQuestGameplayEffectSpec, IInstantEffectSpec
     {
         public override void Update(float deltaTime)
         {

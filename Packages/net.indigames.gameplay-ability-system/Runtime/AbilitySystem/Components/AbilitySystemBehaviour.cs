@@ -90,6 +90,7 @@ namespace IndiGames.GameplayAbilitySystem.AbilitySystem.Components
         private void OnGrantedAbility(GameplayAbilitySpec gameplayAbilitySpecSpec)
         {
             if (!gameplayAbilitySpecSpec.AbilitySO) return;
+            Debug.Log($"AbilitySystemBehaviour::OnGrantedAbility {gameplayAbilitySpecSpec.AbilitySO.name} to {gameObject.name}");
             gameplayAbilitySpecSpec.OnAbilityGranted(gameplayAbilitySpecSpec);
             AbilityGrantedEvent?.Invoke(gameplayAbilitySpecSpec);
         }
@@ -141,6 +142,7 @@ namespace IndiGames.GameplayAbilitySystem.AbilitySystem.Components
         }
 
         /// <summary>
+        /// TODO: Move this into <see cref="GameplayAbilitySpec"/>
         /// Create an effect spec from the effect definition, with this system as the source
         /// </summary>
         /// <param name="effectDef">The <see cref="EffectScriptableObject"/> that are used to create the spec</param>
@@ -154,9 +156,14 @@ namespace IndiGames.GameplayAbilitySystem.AbilitySystem.Components
             return effectSpecSpec;
         }
 
-        public GameplayEffectSpec ApplyEffectSpecToSelf(GameplayEffectSpec effectSpec)
+        public ActiveEffectSpecification ApplyEffectSpecToSelf(GameplayEffectSpec effectSpec)
         {
             return _effectSystem.ApplyEffectToSelf(effectSpec);
+        }
+
+        public bool CanApplyAttributeModifiers(EffectScriptableObject effectDef)
+        {
+            return _effectSystem.CanApplyAttributeModifiers(effectDef);
         }
     }
 }

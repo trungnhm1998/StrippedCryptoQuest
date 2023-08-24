@@ -13,10 +13,12 @@ namespace IndiGames.GameplayAbilitySystem.Implementation.BasicEffect
         public float Duration;
     }
 
+    public interface IDurationalEffectSpec : IGameplayEffectSpec { }
+
     /// <summary>
     /// Effect need update over time such as slow or stun enemy for 3 seconds
     /// </summary>
-    public class DurationalEffectSpec : GameplayEffectSpec
+    public class DurationalEffectSpec : GameplayEffectSpec, IDurationalEffectSpec
     {
         private float _remainingDuration;
 
@@ -29,13 +31,13 @@ namespace IndiGames.GameplayAbilitySystem.Implementation.BasicEffect
         public override void InitEffect(EffectScriptableObject effectDef, AbilitySystemBehaviour source)
         {
             base.InitEffect(effectDef, source);
-            _remainingDuration = ((DurationalEffectScriptableObject) effectDef).Duration;
+            _remainingDuration = ((DurationalEffectScriptableObject)effectDef).Duration;
         }
 
-        public override void Accept(IEffectApplier effectApplier)
+        public override ActiveEffectSpecification Accept(IEffectApplier effectApplier)
         {
             base.Accept(effectApplier);
-            _effectApplier.Visit(this);
+            return _effectApplier.Visit(this);
         }
 
         public override void Update(float deltaTime)

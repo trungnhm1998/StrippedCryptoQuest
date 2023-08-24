@@ -26,6 +26,11 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects.Modifie
         /// </summary>
         /// <param name="effectSpec">Gameplay Effect Spec</param>
         /// <returns></returns>
-        public abstract float? CalculateMagnitude(GameplayEffectSpec effectSpec);
+        public abstract float? CalculateMagnitude(IGameplayEffectSpec effectSpec);
+
+        public bool AttemptCalculateMagnitude(IGameplayEffectSpec gameplayEffectSpec, out float evaluatedMagnitude)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

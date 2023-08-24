@@ -8,8 +8,17 @@ using Random = UnityEngine.Random;
 
 namespace IndiGames.GameplayAbilitySystem.EffectSystem
 {
+    public interface IGameplayEffectSpec
+    {
+        public EffectScriptableObject Def { get; }
+        public bool IsExpired { get; }
+        public AbilitySystemBehaviour Target { get; }
+        public AbilitySystemBehaviour Source { get; }
+        public void Update(float deltaTime);
+    }
+
     [Serializable]
-    public class GameplayEffectSpec
+    public partial class GameplayEffectSpec : IGameplayEffectSpec
     {
         /// <summary>
         /// Which Data/SO the effect is based on
@@ -29,7 +38,12 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem
         public bool IsExpired { get; set; }
         public bool RemoveWhenAbilityEnd = true;
 
+        public ModifierSpec[] Modifiers = Array.Empty<ModifierSpec>();
+
         protected IEffectApplier _effectApplier;
+
+        public virtual void InitEffect(EffectScriptableObject effectDef)
+            => InitEffect(effectDef, null);
 
         public virtual void InitEffect(EffectScriptableObject effectDef, AbilitySystemBehaviour source)
         {
@@ -42,6 +56,7 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem
             }
 
             Def = effectDef;
+            Modifiers = new ModifierSpec[Def.EffectDetails.Modifiers.Length];
         }
 
         public bool CanApply()
@@ -51,7 +66,7 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem
 
             if (Def == null)
             {
-                Debug.LogWarning("AbstractEffect::canApply::Tried to apply effect with no Def.");
+                Debug.LogWarning("GameplayEffectSpec::canApply::Tried to apply effect with no Def.");
                 return false;
             }
 
@@ -63,7 +78,7 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem
                 if (!modifier.Attribute)
                 {
                     Debug.LogWarning(
-                        $"AbstractEffect::canApply::Effect {Def.name} has a modifier with no Attribute at idx[{index}].");
+                        $"GameplayEffectSpec::canApply::Effect {Def.name} has a modifier with no Attribute at idx[{index}].");
                     return false;
                 }
             }
@@ -89,9 +104,10 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem
             return true;
         }
 
-        public virtual void Accept(IEffectApplier effectApplier)
+        public virtual ActiveEffectSpecification Accept(IEffectApplier effectApplier)
         {
             _effectApplier = effectApplier;
+            return new ActiveEffectSpecification();
         }
 
         public virtual void Update(float deltaTime) { }
@@ -102,6 +118,43 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem
             return AbilitySystemHelper.SystemHasAllTags(Source, tagConditionDetail.RequireTags)
                    && AbilitySystemHelper.SystemHasNoneTags(Source, tagConditionDetail.IgnoreTags);
         }
+
+        public void CalculateModifierMagnitudes()
+        {
+            var effectSODetails = Def.EffectDetails;
+            for (var index = 0; index < effectSODetails.Modifiers.Length; index++)
+            {
+                var modifierDef = effectSODetails.Modifiers[index];
+                var modifierSpec = Modifiers[index];
+
+                var modifierMagnitude = modifierDef.ModifierMagnitude;
+                if (modifierMagnitude == null)
+                {
+                    Debug.LogWarning(
+                        $"GameplayEffectSpec::calculateModifierMagnitudes::Effect {Def.name} has a modifier with no ModifierMagnitude at idx[{index}].");
+                    continue;
+                }
+
+                if (modifierMagnitude.AttemptCalculateMagnitude(this, out modifierSpec.EvaluatedMagnitude) == false)
+                {
+                    modifierSpec.EvaluatedMagnitude = 0;
+                    Debug.Log($"Modifier on spec {Def.name} failed to calculate magnitude. Falling back to 0.");
+                }
+
+                Modifiers[index] = modifierSpec;
+            }
+        }
+    }
+
+    [Serializable]
+    public struct ModifierSpec
+    {
+        public float EvaluatedMagnitude;
+
+        private GameplayEffectSpec _effectSpec;
+        private ActiveEffectSpecification _activeEffectSpecification;
+
+        public float GetEvaluatedMagnitude() => EvaluatedMagnitude;
     }
 
     [Obsolete]

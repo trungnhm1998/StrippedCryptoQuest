@@ -40,10 +40,11 @@ namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Effects
 
         protected IBattleUnit _unit;
 
-        public override void Accept(IEffectApplier effectApplier)
+        public override ActiveEffectSpecification Accept(IEffectApplier effectApplier)
         {
-            base.Accept(effectApplier);
+            var activeSpec = base.Accept(effectApplier);
             LogEffect();
+            return activeSpec;
         }
 
         private void LogEffect()

@@ -7,8 +7,8 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem.EffectApplier
     /// </summary>
     public interface IEffectApplier
     {
-        public void Visit(InstantEffectSpec instantEffectSpec);
-        public void Visit(DurationalEffectSpec durationalEffectSpec);
-        public void Visit(InfiniteEffectSpec infiniteEffectSpec);
+        public ActiveEffectSpecification Visit(IInstantEffectSpec instantEffectSpec);
+        public ActiveEffectSpecification Visit(IDurationalEffectSpec durationalEffectSpec);
+        public ActiveEffectSpecification Visit(IInfiniteEffectSpec infiniteEffectSpec);
     }
 }

@@ -41,13 +41,17 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem.Components
             => effectSO.CreateEffectSpec(Owner);
 
         // TODO: Move to AbilityEffectBehaviour
-        public GameplayEffectSpec ApplyEffectToSelf(GameplayEffectSpec inEffectSpecSpec)
+        /// <summary>
+        /// AbilitySystemComponent.cpp::ApplyGameplayEffectSpecToSelf::line 730
+        /// </summary>
+        /// <param name="inEffectSpecSpec"></param>
+        /// <returns></returns>
+        public ActiveEffectSpecification ApplyEffectToSelf(GameplayEffectSpec inEffectSpecSpec)
         {
-            if (inEffectSpecSpec == null || !inEffectSpecSpec.CanApply()) return new GameplayEffectSpec();
+            if (inEffectSpecSpec == null || !inEffectSpecSpec.CanApply()) return new ActiveEffectSpecification();
 
             inEffectSpecSpec.Target = Owner;
-            inEffectSpecSpec.Accept(EffectAppliers);
-            return inEffectSpecSpec;
+            return inEffectSpecSpec.Accept(EffectAppliers);
         }
 
         /// <summary>
@@ -152,6 +156,33 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem.Components
                 AppliedEffects.RemoveAt(i);
                 Owner.TagSystem.RemoveTags(effect.GrantedTags);
             }
+        }
+
+        /// <summary>
+        /// Tests if all modifiers in this GameplayEffect will leave the attribute > 0.f
+        /// </summary>
+        /// <param name="effectDef"></param>
+        /// <returns></returns>
+        public bool CanApplyAttributeModifiers(EffectScriptableObject effectDef)
+        {
+            var spec = new GameplayEffectSpec();
+            spec.InitEffect(effectDef);
+            spec.CalculateModifierMagnitudes();
+
+            for (int i = 0; i < spec.Modifiers.Length; i++)
+            {
+                var modDef = effectDef.EffectDetails.Modifiers[i];
+                var modSpec = spec.Modifiers[i];
+
+                // Only worry about additive.  Anything else passes.
+                if (modDef.ModifierType != EAttributeModifierType.Add) continue;
+                if (modDef.Attribute == null) continue;
+
+                if (!_attributeSystem.TryGetAttributeValue(modDef.Attribute, out var attributeValue)) continue;
+                if (attributeValue.CurrentValue + modSpec.GetEvaluatedMagnitude() < 0) return false;
+            }
+
+            return true;
         }
     }
 }
