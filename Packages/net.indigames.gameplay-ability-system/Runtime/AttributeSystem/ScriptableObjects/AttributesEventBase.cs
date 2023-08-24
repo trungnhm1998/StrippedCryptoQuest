@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects
 {
-    public abstract class AbstractAttributesEventChannel : ScriptableObject
+    public abstract class AttributesEventBase : ScriptableObject
     {
         public abstract void PreAttributeChange(
             AttributeSystemBehaviour attributeSystem,

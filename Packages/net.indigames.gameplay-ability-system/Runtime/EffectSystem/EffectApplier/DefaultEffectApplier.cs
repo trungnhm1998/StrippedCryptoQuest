@@ -59,6 +59,8 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem.EffectApplier
                           $"base value[{attributeValue.BaseValue}] " +
                           $"currentValue[{attributeValue.CurrentValue}]");
             }
+            
+            _attributeSystem.UpdateAttributeValues(); // TODO: I don't really sure about this line
 
             return container;
         }

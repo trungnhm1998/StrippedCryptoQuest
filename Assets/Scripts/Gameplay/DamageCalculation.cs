@@ -7,7 +7,6 @@ using UnityEngine;
 
 namespace CryptoQuest.Gameplay
 {
-    [CreateAssetMenu(menuName = "Create DamageCalculation", fileName = "DamageCalculation", order = 0)]
     public class DamageCalculation : EffectExecutionCalculationBase
     {
         [Header("Config")]

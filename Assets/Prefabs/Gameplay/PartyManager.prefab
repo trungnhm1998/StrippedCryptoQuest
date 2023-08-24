@@ -48,12 +48,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6efe3763439e20e4585e0243005e5df9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _party:
-    Characters:
-    - {fileID: 11400000, guid: 549fe8060f017d443adb6aff881f5765, type: 2}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
+  _party: {fileID: 11400000, guid: b97126249c17e024fa024226ffea3c3f, type: 2}
   _partySlots:
   - {fileID: 1061442196154788955}
   - {fileID: 7845165137051627599}
@@ -70,6 +65,10 @@ PrefabInstance:
     - target: {fileID: 239542988720385688, guid: 446d422afc0e64d4795f638a6c81772d, type: 3}
       propertyPath: m_Name
       value: PartySlot_3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3403815865495540255, guid: 446d422afc0e64d4795f638a6c81772d, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3951836576556903689, guid: 446d422afc0e64d4795f638a6c81772d, type: 3}
       propertyPath: m_RootOrder
@@ -148,6 +147,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PartySlot_1
       objectReference: {fileID: 0}
+    - target: {fileID: 3403815865495540255, guid: 446d422afc0e64d4795f638a6c81772d, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3951836576556903689, guid: 446d422afc0e64d4795f638a6c81772d, type: 3}
       propertyPath: m_RootOrder
       value: -1
@@ -224,6 +227,10 @@ PrefabInstance:
     - target: {fileID: 239542988720385688, guid: 446d422afc0e64d4795f638a6c81772d, type: 3}
       propertyPath: m_Name
       value: PartySlot_2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3403815865495540255, guid: 446d422afc0e64d4795f638a6c81772d, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3951836576556903689, guid: 446d422afc0e64d4795f638a6c81772d, type: 3}
       propertyPath: m_RootOrder
@@ -302,6 +309,146 @@ PrefabInstance:
       propertyPath: m_Name
       value: PartySlot
       objectReference: {fileID: 0}
+    - target: {fileID: 2711014302249089436, guid: 446d422afc0e64d4795f638a6c81772d, type: 3}
+      propertyPath: _initOnStart
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2711014302249089436, guid: 446d422afc0e64d4795f638a6c81772d, type: 3}
+      propertyPath: _spec.<Class>k__BackingField
+      value: 
+      objectReference: {fileID: 11400000, guid: 1599339424e30e8478d070f5ff29aa85, type: 2}
+    - target: {fileID: 2711014302249089436, guid: 446d422afc0e64d4795f638a6c81772d, type: 3}
+      propertyPath: _spec.<Level>k__BackingField
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2711014302249089436, guid: 446d422afc0e64d4795f638a6c81772d, type: 3}
+      propertyPath: _spec.<Element>k__BackingField
+      value: 
+      objectReference: {fileID: 11400000, guid: 8ac80f798e1550a44a6c845172d2dd87, type: 2}
+    - target: {fileID: 2711014302249089436, guid: 446d422afc0e64d4795f638a6c81772d, type: 3}
+      propertyPath: _spec.<HeroDef>k__BackingField
+      value: 
+      objectReference: {fileID: 11400000, guid: b75f6c5d82c2d3d4990d8b84b54aed7e, type: 2}
+    - target: {fileID: 2711014302249089436, guid: 446d422afc0e64d4795f638a6c81772d, type: 3}
+      propertyPath: _spec.<StatsDef>k__BackingField.MaxLevel
+      value: 99
+      objectReference: {fileID: 0}
+    - target: {fileID: 2711014302249089436, guid: 446d422afc0e64d4795f638a6c81772d, type: 3}
+      propertyPath: _spec.<StatsDef>k__BackingField.Attributes.Array.size
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 2711014302249089436, guid: 446d422afc0e64d4795f638a6c81772d, type: 3}
+      propertyPath: _spec.<StatsDef>k__BackingField.Attributes.Array.data[0].MaxValue
+      value: 616
+      objectReference: {fileID: 0}
+    - target: {fileID: 2711014302249089436, guid: 446d422afc0e64d4795f638a6c81772d, type: 3}
+      propertyPath: _spec.<StatsDef>k__BackingField.Attributes.Array.data[0].MinValue
+      value: 154
+      objectReference: {fileID: 0}
+    - target: {fileID: 2711014302249089436, guid: 446d422afc0e64d4795f638a6c81772d, type: 3}
+      propertyPath: _spec.<StatsDef>k__BackingField.Attributes.Array.data[1].MaxValue
+      value: 385
+      objectReference: {fileID: 0}
+    - target: {fileID: 2711014302249089436, guid: 446d422afc0e64d4795f638a6c81772d, type: 3}
+      propertyPath: _spec.<StatsDef>k__BackingField.Attributes.Array.data[1].MinValue
+      value: 127
+      objectReference: {fileID: 0}
+    - target: {fileID: 2711014302249089436, guid: 446d422afc0e64d4795f638a6c81772d, type: 3}
+      propertyPath: _spec.<StatsDef>k__BackingField.Attributes.Array.data[2].MaxValue
+      value: 400
+      objectReference: {fileID: 0}
+    - target: {fileID: 2711014302249089436, guid: 446d422afc0e64d4795f638a6c81772d, type: 3}
+      propertyPath: _spec.<StatsDef>k__BackingField.Attributes.Array.data[2].MinValue
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 2711014302249089436, guid: 446d422afc0e64d4795f638a6c81772d, type: 3}
+      propertyPath: _spec.<StatsDef>k__BackingField.Attributes.Array.data[3].MaxValue
+      value: 300
+      objectReference: {fileID: 0}
+    - target: {fileID: 2711014302249089436, guid: 446d422afc0e64d4795f638a6c81772d, type: 3}
+      propertyPath: _spec.<StatsDef>k__BackingField.Attributes.Array.data[3].MinValue
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 2711014302249089436, guid: 446d422afc0e64d4795f638a6c81772d, type: 3}
+      propertyPath: _spec.<StatsDef>k__BackingField.Attributes.Array.data[4].MaxValue
+      value: 120
+      objectReference: {fileID: 0}
+    - target: {fileID: 2711014302249089436, guid: 446d422afc0e64d4795f638a6c81772d, type: 3}
+      propertyPath: _spec.<StatsDef>k__BackingField.Attributes.Array.data[4].MinValue
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 2711014302249089436, guid: 446d422afc0e64d4795f638a6c81772d, type: 3}
+      propertyPath: _spec.<StatsDef>k__BackingField.Attributes.Array.data[5].MaxValue
+      value: 320
+      objectReference: {fileID: 0}
+    - target: {fileID: 2711014302249089436, guid: 446d422afc0e64d4795f638a6c81772d, type: 3}
+      propertyPath: _spec.<StatsDef>k__BackingField.Attributes.Array.data[5].MinValue
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 2711014302249089436, guid: 446d422afc0e64d4795f638a6c81772d, type: 3}
+      propertyPath: _spec.<StatsDef>k__BackingField.Attributes.Array.data[6].MaxValue
+      value: 52
+      objectReference: {fileID: 0}
+    - target: {fileID: 2711014302249089436, guid: 446d422afc0e64d4795f638a6c81772d, type: 3}
+      propertyPath: _spec.<StatsDef>k__BackingField.Attributes.Array.data[6].MinValue
+      value: 26
+      objectReference: {fileID: 0}
+    - target: {fileID: 2711014302249089436, guid: 446d422afc0e64d4795f638a6c81772d, type: 3}
+      propertyPath: _spec.<StatsDef>k__BackingField.Attributes.Array.data[0].Attribute
+      value: 
+      objectReference: {fileID: 11400000, guid: 692557e6fee799243868270d0b093d7e, type: 2}
+    - target: {fileID: 2711014302249089436, guid: 446d422afc0e64d4795f638a6c81772d, type: 3}
+      propertyPath: _spec.<StatsDef>k__BackingField.Attributes.Array.data[1].Attribute
+      value: 
+      objectReference: {fileID: 11400000, guid: 0c164956786943a46b545cc58cc139f9, type: 2}
+    - target: {fileID: 2711014302249089436, guid: 446d422afc0e64d4795f638a6c81772d, type: 3}
+      propertyPath: _spec.<StatsDef>k__BackingField.Attributes.Array.data[2].Attribute
+      value: 
+      objectReference: {fileID: 11400000, guid: 0d7a5bc26b58515459d9e824964fd7f8, type: 2}
+    - target: {fileID: 2711014302249089436, guid: 446d422afc0e64d4795f638a6c81772d, type: 3}
+      propertyPath: _spec.<StatsDef>k__BackingField.Attributes.Array.data[3].Attribute
+      value: 
+      objectReference: {fileID: 11400000, guid: 6762f359f1a736c45b2df614e80aef45, type: 2}
+    - target: {fileID: 2711014302249089436, guid: 446d422afc0e64d4795f638a6c81772d, type: 3}
+      propertyPath: _spec.<StatsDef>k__BackingField.Attributes.Array.data[4].Attribute
+      value: 
+      objectReference: {fileID: 11400000, guid: 2b6352f953a4cb54d806baed1b804397, type: 2}
+    - target: {fileID: 2711014302249089436, guid: 446d422afc0e64d4795f638a6c81772d, type: 3}
+      propertyPath: _spec.<StatsDef>k__BackingField.Attributes.Array.data[5].Attribute
+      value: 
+      objectReference: {fileID: 11400000, guid: 33fa33f7e21108b4280d1749ac4886e0, type: 2}
+    - target: {fileID: 2711014302249089436, guid: 446d422afc0e64d4795f638a6c81772d, type: 3}
+      propertyPath: _spec.<StatsDef>k__BackingField.Attributes.Array.data[6].Attribute
+      value: 
+      objectReference: {fileID: 11400000, guid: 9ea7ef66c3bae0d47832b0244c8e6ff6, type: 2}
+    - target: {fileID: 2711014302249089436, guid: 446d422afc0e64d4795f638a6c81772d, type: 3}
+      propertyPath: _spec.<StatsDef>k__BackingField.Attributes.Array.data[0].AttributeDef
+      value: 
+      objectReference: {fileID: 11400000, guid: 692557e6fee799243868270d0b093d7e, type: 2}
+    - target: {fileID: 2711014302249089436, guid: 446d422afc0e64d4795f638a6c81772d, type: 3}
+      propertyPath: _spec.<StatsDef>k__BackingField.Attributes.Array.data[1].AttributeDef
+      value: 
+      objectReference: {fileID: 11400000, guid: 0c164956786943a46b545cc58cc139f9, type: 2}
+    - target: {fileID: 2711014302249089436, guid: 446d422afc0e64d4795f638a6c81772d, type: 3}
+      propertyPath: _spec.<StatsDef>k__BackingField.Attributes.Array.data[2].AttributeDef
+      value: 
+      objectReference: {fileID: 11400000, guid: 0d7a5bc26b58515459d9e824964fd7f8, type: 2}
+    - target: {fileID: 2711014302249089436, guid: 446d422afc0e64d4795f638a6c81772d, type: 3}
+      propertyPath: _spec.<StatsDef>k__BackingField.Attributes.Array.data[3].AttributeDef
+      value: 
+      objectReference: {fileID: 11400000, guid: 6762f359f1a736c45b2df614e80aef45, type: 2}
+    - target: {fileID: 2711014302249089436, guid: 446d422afc0e64d4795f638a6c81772d, type: 3}
+      propertyPath: _spec.<StatsDef>k__BackingField.Attributes.Array.data[4].AttributeDef
+      value: 
+      objectReference: {fileID: 11400000, guid: 2b6352f953a4cb54d806baed1b804397, type: 2}
+    - target: {fileID: 2711014302249089436, guid: 446d422afc0e64d4795f638a6c81772d, type: 3}
+      propertyPath: _spec.<StatsDef>k__BackingField.Attributes.Array.data[5].AttributeDef
+      value: 
+      objectReference: {fileID: 11400000, guid: 33fa33f7e21108b4280d1749ac4886e0, type: 2}
+    - target: {fileID: 2711014302249089436, guid: 446d422afc0e64d4795f638a6c81772d, type: 3}
+      propertyPath: _spec.<StatsDef>k__BackingField.Attributes.Array.data[6].AttributeDef
+      value: 
+      objectReference: {fileID: 11400000, guid: 9ea7ef66c3bae0d47832b0244c8e6ff6, type: 2}
     - target: {fileID: 3951836576556903689, guid: 446d422afc0e64d4795f638a6c81772d, type: 3}
       propertyPath: m_RootOrder
       value: -1

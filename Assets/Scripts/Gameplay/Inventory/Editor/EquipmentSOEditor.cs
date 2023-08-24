@@ -4,7 +4,6 @@ using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item;
 using UnityEditor;
 using UnityEditor.UIElements;
 using UnityEngine.UIElements;
-using Attribute = CryptoQuest.Gameplay.Inventory.Equipment.Attribute;
 
 namespace CryptoQuestEditor.Inventory
 {
@@ -34,7 +33,7 @@ namespace CryptoQuestEditor.Inventory
             AttributeEditorUxml.CloneTree(root);
 
             var multiColumn = root.Q<MultiColumnListView>();
-            multiColumn.itemsSource = Target.Stats.Attributes;
+            multiColumn.itemsSource = Target.StatsDef.Attributes;
 
             var cols = multiColumn.columns;
             cols["attribute"].makeCell = () => new ObjectField() { objectType = typeof(AttributeScriptableObject) };
@@ -46,10 +45,10 @@ namespace CryptoQuestEditor.Inventory
                 var objectField = ((ObjectField)element);
                 // objectField.bindingPath = $"Stats.Attributes.Array.data[{i}].AttributeDef";
                 // objectField.Bind(serializedObject);
-                objectField.value = Target.Stats.Attributes[i].AttributeDef;
+                objectField.value = Target.StatsDef.Attributes[i].Attribute;
                 objectField.RegisterValueChangedCallback(evt =>
                 {
-                    Target.Stats.Attributes[i].AttributeDef = (AttributeScriptableObject)evt.newValue;
+                    Target.StatsDef.Attributes[i].Attribute = (AttributeScriptableObject)evt.newValue;
                 });
             };
 
@@ -60,20 +59,20 @@ namespace CryptoQuestEditor.Inventory
                 floatField.bindingPath = $"Stats.Attributes.Array.data[{i}].MinValue";
                 floatField.Bind(serializedObject);
                 // set value
-                floatField.value = Target.Stats.Attributes[i].MinValue;
+                floatField.value = Target.StatsDef.Attributes[i].MinValue;
                 floatField.RegisterValueChangedCallback((evt =>
                 {
-                    Target.Stats.Attributes[i].MinValue = evt.newValue;
+                    Target.StatsDef.Attributes[i].MinValue = evt.newValue;
                 }));
             };
 
             cols["max-value"].bindCell = (element, i) =>
             {
                 var floatField = ((FloatField)element);
-                floatField.value = Target.Stats.Attributes[i].MaxValue;
+                floatField.value = Target.StatsDef.Attributes[i].MaxValue;
                 floatField.RegisterValueChangedCallback((evt =>
                 {
-                    Target.Stats.Attributes[i].MaxValue = evt.newValue;
+                    Target.StatsDef.Attributes[i].MaxValue = evt.newValue;
                 }));
             };
 

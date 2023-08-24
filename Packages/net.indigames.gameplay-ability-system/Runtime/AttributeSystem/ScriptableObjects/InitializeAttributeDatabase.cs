@@ -3,16 +3,17 @@ using UnityEngine;
 
 namespace IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects
 {
-    [CreateAssetMenu(fileName = "InitStats", menuName = "Indigames Ability System/Attributes/Initialize Stats Database")]
+    [CreateAssetMenu(fileName = "InitStats",
+        menuName = "Indigames Ability System/Attributes/Initialize Stats Database")]
     public class InitializeAttributeDatabase : ScriptableObject
     {
-        public AttributeInitValue[] AttributesToInitialize;
+        public AttributeWithValue[] AttributesToInitialize;
     }
 
     [Serializable]
-    public struct AttributeInitValue
+    public struct AttributeWithValue
     {
-        public AttributeScriptableObject Attribute;
-        public float Value;
+        [field: SerializeField] public AttributeScriptableObject Attribute { get; set; }
+        [field: SerializeField] public float Value { get; set; }
     }
 }

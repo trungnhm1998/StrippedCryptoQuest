@@ -1,11 +1,9 @@
 using IndiGames.GameplayAbilitySystem.EffectSystem;
 using IndiGames.GameplayAbilitySystem.EffectSystem.EffectApplier;
 using IndiGames.GameplayAbilitySystem.Implementation.BasicEffect;
-using UnityEngine;
 
 namespace CryptoQuest.Gameplay
 {
-    [CreateAssetMenu(menuName = "Create InstantGameplayEffect", fileName = "InstantGameplayEffect", order = 0)]
     public class InstantGameplayEffect : CryptoQuestGameplayEffect<InstantGameplayEffectSpec> { }
 
     public class InstantGameplayEffectSpec : CryptoQuestGameplayEffectSpec, IInstantEffectSpec

@@ -98,7 +98,7 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Monster
                     "Vitality", "Agility", "Intelligence", "Luck", "Attack",
                     "SkillPower", "Defense", "EvasionRate", "CriticalRate"
                 };
-                AttributeInitValue[] attributeInitValues = InitAttributeValueSetup(dataModel, attributeNames);
+                AttributeWithValue[] attributeInitValues = InitAttributeValueSetup(dataModel, attributeNames);
                 instance.AttributesToInitialize = attributeInitValues;
                 instance.Name = name;
                 instance.name = replacedName;
@@ -133,19 +133,19 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Monster
         }
 
 
-        private AttributeInitValue[] InitAttributeValueSetup(MonsterUnitDataModel dataModel,
+        private AttributeWithValue[] InitAttributeValueSetup(MonsterUnitDataModel dataModel,
             List<string> attributeNames)
         {
-            List<AttributeInitValue> values = new();
+            List<AttributeWithValue> values = new();
             foreach (var attributeName in attributeNames)
             {
                 AttributeScriptableObject attributeSo = GetAssetsFromType<AttributeScriptableObject>().Where(attribute
                     => attribute.name == ATTRIBUTE_PREFIX + attributeName).First();
                 float value = (float)dataModel.GetType().GetProperty(attributeName).GetValue(dataModel, null);
-                AttributeInitValue attributeInitValue = new AttributeInitValue();
-                attributeInitValue.Attribute = attributeSo;
-                attributeInitValue.Value = value;
-                values.Add(attributeInitValue);
+                AttributeWithValue attributeWithValue = new AttributeWithValue();
+                attributeWithValue.Attribute = attributeSo;
+                attributeWithValue.Value = value;
+                values.Add(attributeWithValue);
             }
 
             return values.ToArray();

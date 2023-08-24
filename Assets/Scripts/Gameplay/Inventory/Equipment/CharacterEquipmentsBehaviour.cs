@@ -82,7 +82,7 @@ namespace CryptoQuest
 
         private void ApplyEffect(EquipmentInfo equipment)
         {
-            var attributes = equipment.Item.Stats.Attributes;
+            var attributes = equipment.Item.StatsDef.Attributes;
             _equipmentEffect = Instantiate(_baseEquipmentEffect, transform);
             var modifiers = new EffectAttributeModifier[attributes.Length];
             for (int i = 0; i < attributes.Length; i++)
@@ -90,7 +90,7 @@ namespace CryptoQuest
                 var attribute = attributes[i];
                 modifiers[i] = new EffectAttributeModifier
                 {
-                    Attribute = attribute.AttributeDef,
+                    Attribute = attribute.Attribute,
                     ModifierType = EAttributeModifierType.Add,
                     Value = attribute.MinValue
                 };

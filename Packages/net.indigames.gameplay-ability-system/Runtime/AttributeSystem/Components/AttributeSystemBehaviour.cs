@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
 using UnityEngine;
@@ -19,7 +20,11 @@ namespace IndiGames.GameplayAbilitySystem.AttributeSystem.Components
         public event PreAttributeChangeDelegate PreAttributeChange;
         public event PostAttributeChangeDelegate PostAttributeChange;
         [SerializeField] private bool _initOnAwake = true;
-        [SerializeField] private List<AbstractAttributesEventChannel> _attributeEventChannels = new();
+        [SerializeField] private bool _updateOnLateUpdate = false;
+        /// <summary>
+        /// Use this to clamp or doing any logic pre and post attribute change
+        /// </summary>
+        [SerializeField] private List<AttributesEventBase> _attributeEvents = new();
 
         /// <summary>
         /// If gameplay needs more attributes, add them here
@@ -77,7 +82,7 @@ namespace IndiGames.GameplayAbilitySystem.AttributeSystem.Components
         /// </summary>
         /// <param name="forceRefresh"></param>
         /// <returns></returns>
-        private Dictionary<AttributeScriptableObject, int> GetAttributeIndexCache(bool forceRefresh = false)
+        public Dictionary<AttributeScriptableObject, int> GetAttributeIndexCache(bool forceRefresh = false)
         {
             if (forceRefresh)
                 _isCacheStale = true;
@@ -181,8 +186,8 @@ namespace IndiGames.GameplayAbilitySystem.AttributeSystem.Components
                 var evaluatedAttribute = oldAttributeValue
                     .Attribute.CalculateCurrentAttributeValue(oldAttributeValue, _attributeValues);
 
-                if (oldAttributeValue.CurrentValue.NearlyEqual(_attributeValues[i].CurrentValue)) continue;
-                foreach (var preAttributeChangeChannel in _attributeEventChannels)
+                // if (oldAttributeValue.CurrentValue.NearlyEqual(_attributeValues[i].CurrentValue)) continue;
+                foreach (var preAttributeChangeChannel in _attributeEvents)
                 {
                     preAttributeChangeChannel.PreAttributeChange(this, ref evaluatedAttribute);
                 }
@@ -191,7 +196,7 @@ namespace IndiGames.GameplayAbilitySystem.AttributeSystem.Components
                 _attributeValues[i] = evaluatedAttribute;
                 PostAttributeChange?.Invoke(oldAttributeValue.Attribute, oldAttributeValue, evaluatedAttribute);
 
-                foreach (var preAttributeChangeChannel in _attributeEventChannels)
+                foreach (var preAttributeChangeChannel in _attributeEvents)
                 {
                     preAttributeChangeChannel.PostAttributeChange(this, ref oldAttributeValue, ref evaluatedAttribute);
                 }
@@ -275,9 +280,10 @@ namespace IndiGames.GameplayAbilitySystem.AttributeSystem.Components
         /// Use lateUpdate to make sure Abilities/effects finishes their calculations before we update the attribute values
         /// Support realtime update by default
         /// </summary>
+        [Obsolete]
         protected virtual void LateUpdate()
         {
-            UpdateAttributeValues();
+            if (_updateOnLateUpdate) UpdateAttributeValues();
         }
     }
 }

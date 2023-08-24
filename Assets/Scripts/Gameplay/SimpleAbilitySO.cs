@@ -77,6 +77,7 @@ namespace CryptoQuest.Gameplay
             if (Owner.CanApplyAttributeModifiers(_costEffect)) return true;
 
             // TODO: Add a tag to indicate that the cost failed
+            Debug.Log($"Not enough {_costEffect.EffectDetails.Modifiers[0].Attribute.name} to cast this ability");
             NotEnoughResourcesToCast?.Invoke();
             return false;
         }

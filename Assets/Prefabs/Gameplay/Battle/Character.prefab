@@ -51,7 +51,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _initOnAwake: 0
-  _attributeEventChannels: []
+  _updateOnLateUpdate: 0
+  _attributeEvents:
+  - {fileID: 11400000, guid: 9922f82ae7bef404e84741b678c662dc, type: 2}
+  - {fileID: 11400000, guid: f6dcb1d91ba882e4e87a5e35b8675007, type: 2}
   _attributes:
   - {fileID: 11400000, guid: 2b6352f953a4cb54d806baed1b804397, type: 2}
   - {fileID: 11400000, guid: cff0791781b73cf4ca80877936aedaad, type: 2}
@@ -172,5 +175,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _initOnStart: 0
   <GameplayAbilitySystem>k__BackingField: {fileID: 8039474876287072617}
-  _characterMetaData:
-    Element: {fileID: 0}
+  _spec:
+    <HeroDef>k__BackingField: {fileID: 0}
+    <Class>k__BackingField: {fileID: 0}
+    <Element>k__BackingField: {fileID: 0}
+    <Level>k__BackingField: 0
+    <StatsDef>k__BackingField:
+      MaxLevel: 0
+      Attributes: []

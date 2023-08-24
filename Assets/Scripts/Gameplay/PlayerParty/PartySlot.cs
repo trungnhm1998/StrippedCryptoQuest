@@ -35,5 +35,10 @@ namespace CryptoQuest.Gameplay.PlayerParty
         {
             _character = character;
         }
+
+        public void Init(CharacterSpec character)
+        {
+            _character.Init(character);
+        }
     }
 }
