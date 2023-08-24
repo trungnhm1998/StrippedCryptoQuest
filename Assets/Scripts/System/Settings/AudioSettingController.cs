@@ -15,14 +15,22 @@ namespace CryptoQuest.System.Settings
 
         private void OnEnable()
         {
-            ChangeAudioVolume(_audioSettings.Volume);
-            _volumeSlider.value = _audioSettings.Volume;
+            float volumePercentage = _audioSettings.Volume * 100;
+            UpdateVolumeDisplay(volumePercentage);
         }
 
         public void ChangeAudioVolume(float value)
         {
-            _audioSettings.Volume = (int)value / 100;
-            _volumeText.text = $"{value,0:F0}%";
+            float volumeValue = value / 100;
+            _audioSettings.Volume = volumeValue;
+
+            UpdateVolumeDisplay(value);
+        }
+
+        private void UpdateVolumeDisplay(float value)
+        {
+            _volumeText.text = $"{value:F0}%";
+            _volumeSlider.value = value;
         }
     }
 }
