@@ -518,17 +518,6 @@ namespace CryptoQuest.Input
                     ""isPartOfComposite"": true
                 },
                 {
-                    ""name"": """",
-                    ""id"": ""beff9b18-c983-4b57-b5c0-47d58b6955ac"",
-                    ""path"": ""<Keyboard>/tab"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""MnK"",
-                    ""action"": ""ChangeTab"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
                     ""name"": ""Q/E"",
                     ""id"": ""ffcfb6fb-cf67-4cae-8fcc-a491a8bbf77d"",
                     ""path"": ""1DAxis"",
@@ -773,17 +762,6 @@ namespace CryptoQuest.Input
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
-                    ""action"": ""MainMenu"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""e44657e2-2990-4262-aeeb-e9a664083442"",
-                    ""path"": ""<Keyboard>/tab"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""MnK"",
                     ""action"": ""MainMenu"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
