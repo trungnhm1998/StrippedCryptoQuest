@@ -3,7 +3,6 @@ using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.ScriptableObjects;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
 
 namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data
 {
@@ -11,6 +10,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data
     public class CharacterDataSO : InitializeAttributeDatabase
     {
         public string Name;
+
         public AbilityScriptableObject NormalAttack;
         public AbilityScriptableObject GuardAbilitySO;
         public AbilityScriptableObject RetreatAbilitySO;
@@ -37,7 +37,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data
         public CharacterInformation(CharacterDataSO data, string originalName)
         {
             Data = data;
-            OriginalName = originalName; 
+            OriginalName = originalName;
             DisplayName = originalName;
         }
     }

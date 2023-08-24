@@ -15,7 +15,7 @@ namespace CryptoQuest.UI.Menu.MenuStates.StatusStates
         public override void OnEnter()
         {
             base.OnEnter();
-            _equipmentListPanel.Show(StatusPanel.EquippingType);
+            // TODO: FIX THIS
         }
 
         public override void HandleCancel()

@@ -53,7 +53,7 @@ namespace CryptoQuest.UI.Battle.CharacterInfo
             SpineAnimation = GetComponentInChildren<SkeletonAnimation>();
         }
 
-        protected override void OnHPChanged(AttributeSystemBehaviour system, AttributeValue oldValue,
+        protected override void OnHPChanged(AttributeScriptableObject attribute, AttributeValue oldValue,
             AttributeValue newValue)
         {
             if (oldValue.Attribute != _hpAttributeSO) return;

@@ -1,8 +1,6 @@
 ﻿using CryptoQuest.Character.MonoBehaviours;
 using UnityEngine;
 using UnityEngine.Events;
-using CryptoQuest.Gameplay.Battle.Core.Components;
-using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
 
 namespace CryptoQuest.Gameplay
 {

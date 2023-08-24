@@ -107,7 +107,7 @@ namespace IndiGames.GameplayAbilitySystem.Tests.Editor.AttributeSystem
             SetupAddAttribute();
             SetupSetBaseValueAttribute(inputBaseValue);
 
-            _attributeSystem.UpdateAttributeCurrentValue(_attributeInSystem);
+            _attributeSystem.UpdateAttributeValues();
             _attributeSystem.TryGetAttributeValue(_attributeInSystem, out var value);
             Assert.AreEqual(expectedCurrentValue, value.CurrentValue);
         }
@@ -144,7 +144,7 @@ namespace IndiGames.GameplayAbilitySystem.Tests.Editor.AttributeSystem
             EModifierType stackMode)
         {
             SetupSetBaseValueAttribute(inputBaseValue);
-            _attributeSystem.UpdateAttributeCurrentValue(_attributeInSystem);
+            _attributeSystem.UpdateAttributeValues();
             var modifier = new Modifier()
             {
                 Additive = inputModifierAdditiveValue,
@@ -152,7 +152,7 @@ namespace IndiGames.GameplayAbilitySystem.Tests.Editor.AttributeSystem
                 Overriding = inputModifierOverrideValue
             };
             _attributeSystem.TryAddModifierToAttribute(modifier, _attributeInSystem, stackMode);
-            _attributeSystem.UpdateAttributeCurrentValue(_attributeInSystem);
+            _attributeSystem.UpdateAttributeValues();
             _attributeSystem.TryGetAttributeValue(_attributeInSystem, out var value);
             Assert.AreEqual(expectedCoreValue, AttributeSystemHelper.CalculateCoreAttributeValue(value));
             Assert.AreEqual(expectedCurrentValue, value.CurrentValue);

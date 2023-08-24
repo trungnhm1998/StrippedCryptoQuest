@@ -43,13 +43,13 @@ namespace CryptoQuest.UI.Battle.CharacterInfo
         public override void SetData(CharacterInformation characterInfo)
         {
             base.SetData(characterInfo);
-            _attributeSystem.AttributeChanged += OnMPChanged;
+            _attributeSystem.PostAttributeChange += OnMPChanged;
         }
 
         protected override void OnDisable()
         {
             base.OnDisable();
-            _attributeSystem.AttributeChanged -= OnMPChanged;
+            _attributeSystem.PostAttributeChange -= OnMPChanged;
         }
 
         protected override void Setup()
@@ -64,7 +64,7 @@ namespace CryptoQuest.UI.Battle.CharacterInfo
             UpdateValueUI(_maxMpAttributeSO, _mpAttributeSO, _mpValueText, _mpSlider);
         }
 
-        protected override void OnHPChanged(AttributeSystemBehaviour system, AttributeValue oldValue,
+        protected override void OnHPChanged(AttributeScriptableObject attribute, AttributeValue oldValue,
             AttributeValue newValue)
         {
             if (oldValue.Attribute != _hpAttributeSO) return;
@@ -72,7 +72,7 @@ namespace CryptoQuest.UI.Battle.CharacterInfo
             UpdateValueUI(_maxHpAttributeSO, _hpAttributeSO, _hpValueText, _hpSlider);
         }
 
-        private void OnMPChanged(AttributeSystemBehaviour system, AttributeValue oldValue,
+        private void OnMPChanged(AttributeScriptableObject attribute, AttributeValue oldValue,
             AttributeValue newValue)
         {
             if (oldValue.Attribute != _mpAttributeSO) return;

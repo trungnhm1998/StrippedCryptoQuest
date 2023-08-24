@@ -1,62 +1,12 @@
-using System;
 using System.Collections.Generic;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.Components;
 using UnityEngine;
 
 namespace IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects
 {
-    /// <summary>
-    /// Typesafe event handler
-    /// </summary>
-    public class AttributeChangedEventArgs : EventArgs
-    {
-        /// <summary>
-        /// The owner
-        /// </summary>
-        public AttributeSystemBehaviour AttributeSystem { get; set; }
-
-        public float Value { get; set; }
-    }
-
     [CreateAssetMenu(menuName = "Indigames Ability System/Attributes/Attribute")]
     public class AttributeScriptableObject : ScriptableObject
     {
-        public struct AttributeEventArgs
-        {
-            public AttributeSystemBehaviour System;
-            public AttributeValue NewValue;
-            public AttributeValue OldValue;
-        }
-
-        public event EventHandler AttributeChanged;
-        public event Action<AttributeEventArgs> ValueChangeEvent;
-
-        public void OnValueChanged(AttributeSystemBehaviour system, AttributeValue oldValue, AttributeValue newValue)
-        {
-            ValueChangeEvent?.Invoke(new AttributeEventArgs
-            {
-                System = system,
-                OldValue = oldValue,
-                NewValue = newValue
-            });
-        }
-
-        /// <summary>
-        /// This is called before the attribute value is changed.
-        /// This is a good place to add your own logic to modify the value.
-        /// for example, you could clamp the value to a certain range or based on max attribute.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        public void OnAttributeChanged(object sender, AttributeChangedEventArgs e)
-        {
-            EventHandler handler = AttributeChanged;
-            if (handler != null)
-            {
-                handler(sender, e);
-            }
-        }
-
         /// <summary>
         /// Called by <see cref="AttributeSystemBehaviour.InitializeAttributeValues"/> to calculate the initial value of the attribute.
         /// There would be a hidden bug here when the current attribute value depends on other attributes.

@@ -1,4 +1,5 @@
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Type;
+using CryptoQuest.Gameplay.PlayerParty;
 using CryptoQuest.UI.Menu.MenuStates.StatusStates;
 using CryptoQuest.UI.Menu.Panels.Status.Equipment;
 using FSM;
@@ -19,6 +20,20 @@ namespace CryptoQuest.UI.Menu.Panels.Status
         [field: SerializeField] public UIStatusCharacter CharacterPanel { get; private set; }
 
         public EEquipmentCategory EquippingType { get; set; }
+
+        private IPartyManager _partyManager;
+        public IPartyManager PartyManager => _partyManager;
+
+        private void Awake()
+        {
+            _partyManager = GetComponent<IPartyManager>();
+            SetParty(CharacterPanel);
+        }
+
+        private void SetParty(IStatsRenderer statsRenderer)
+        {
+            statsRenderer.SetParty(_partyManager);
+        }
 
         /// <summary>
         /// Return the specific state machine for this panel.

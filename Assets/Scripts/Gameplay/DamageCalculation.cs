@@ -23,7 +23,7 @@ namespace CryptoQuest.Gameplay
             ref CustomExecutionParameters executionParams,
             ref List<EffectAttributeModifier> outModifiers)
         {
-            var character = executionParams.SourceAbilitySystemComponent.GetComponent<Character>();
+            var character = executionParams.SourceAbilitySystemComponent.GetComponent<CharacterBehaviour>();
             var characterElemental = character.Element;
 
             executionParams.TryGetAttributeValue(new CustomExecutionAttributeCaptureDef()

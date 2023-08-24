@@ -1,6 +1,7 @@
 using CryptoQuest.Character.MonoBehaviours;
 using CryptoQuest.Gameplay;
 using UnityEngine;
+using CharacterBehaviour = CryptoQuest.Character.MonoBehaviours.CharacterBehaviour;
 
 namespace CryptoQuest.Character
 {
