@@ -21,7 +21,6 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
 
         [Header("Game Components")]
         [SerializeField] private GameObject _contents;
-
         [SerializeField] private MultiInputButton _unEquipButton;
         [SerializeField] private RectTransform _singleItemRect;
 
@@ -33,6 +32,8 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
         private float _upperBound;
 
         private List<EquipmentInfo> _equipments;
+        private EEquipmentCategory _cachedType;
+
         private void Awake()
         {
             _verticalOffset = _singleItemRect.rect.height;
@@ -41,10 +42,6 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
             var rect = _inventoryViewport.rect;
             _lowerBound = position.y - rect.height / 2;
             _upperBound = position.y + rect.height / 2 + _verticalOffset;
-            if (!_inventorySO.GetEquipmentByType(EEquipmentCategory.Weapon, out _equipments))
-            {
-                Debug.LogWarning("Failed to get equipments");
-            }
         }
 
         private void OnEnable()
@@ -90,16 +87,39 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
             }
         }
 
-        public void Show(EquipmentFilters filters)
+        public void Show(EEquipmentCategory type)
         {
             _contents.SetActive(true);
             _unEquipButton.Select();
+            LoadItems(type);
+        }
 
-            // only init after get data
+        private void RefreshItems()
+        {
+            for (int i = 1; i < _scrollRect.content.childCount; i++)
+            {
+                Destroy(_scrollRect.content.GetChild(i).gameObject);
+            }
+        }
+
+        private void LoadItems(EEquipmentCategory type)
+        {
+            if (type != _cachedType)
+            {
+                RefreshItems();
+                _initialized = false;
+            }
+            _cachedType = type;
+
             if (!_initialized)
             {
                 _scrollRect.Initialize(this);
                 _initialized = true;
+            }
+            
+            if (!_inventorySO.GetEquipmentByType(type, out _equipments))
+            {
+                Debug.LogWarning("Failed to get equipments");
             }
         }
 
@@ -129,6 +149,7 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
         {
             UIEquipmentItem itemRow = cell as UIEquipmentItem;
             itemRow.Init(_equipments[index], index);
+            itemRow.interactable = true;
         }
 
         #endregion

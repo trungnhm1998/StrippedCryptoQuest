@@ -1,3 +1,4 @@
+using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Type;
 using CryptoQuest.UI.Menu.MenuStates.StatusStates;
 using CryptoQuest.UI.Menu.Panels.Status.Equipment;
 using FSM;
@@ -17,7 +18,7 @@ namespace CryptoQuest.UI.Menu.Panels.Status
         [field: SerializeField] public UIEquipmentList EquipmentListPanel { get; private set; }
         [field: SerializeField] public UIStatusCharacter CharacterPanel { get; private set; }
 
-        public EquipmentFilters EquippingType { get; set; }
+        public EEquipmentCategory EquippingType { get; set; }
 
         /// <summary>
         /// Return the specific state machine for this panel.

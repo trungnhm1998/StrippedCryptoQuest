@@ -1,3 +1,4 @@
+using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Type;
 using CryptoQuest.UI.Menu.Panels.Status;
 using CryptoQuest.UI.Menu.Panels.Status.Equipment;
 using UnityEngine;
@@ -40,7 +41,7 @@ namespace CryptoQuest.UI.Menu.MenuStates.StatusStates
             _equipmentOverviewPanel.EquipmentSlotSelected -= ChangeEquipment;
         }
 
-        private void ChangeEquipment(EquipmentFilters type)
+        private void ChangeEquipment(EEquipmentCategory type)
         {
             StatusPanel.EquippingType = type;
             MenuStateMachine.RequestStateChange(StatusMenuStateMachine.EquipmentSelection);

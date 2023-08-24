@@ -1,13 +1,14 @@
 using System;
 using System.Collections.Generic;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
+using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Type;
 using UnityEngine;
 
 namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
 {
     public class UIEquipmentOverview : MonoBehaviour
     {
-        public event Action<EquipmentFilters> EquipmentSlotSelected;
+        public event Action<EEquipmentCategory> EquipmentSlotSelected;
 
         [Header("Game Components")]
         [SerializeField] private List<UIEquipmentSlotButton> _equipmentSlots;
@@ -31,9 +32,9 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
             }
         }
 
-        private void EquipmentSlotPressed(EquipmentFilters filters)
+        private void EquipmentSlotPressed(EEquipmentCategory category)
         {
-            EquipmentSlotSelected?.Invoke(filters);
+            EquipmentSlotSelected?.Invoke(category);
             DisableAllButtons();
         }
 
@@ -48,7 +49,6 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
             {
                 if (slot.Equipment.Item != null)
                 {
-                    Debug.Log($"@@@@@@@@@@@@@@@@@@@@@");
                     var item = Instantiate(_item, _itemContainers[i].transform);
                     item.GetComponent<UIEquipmentItem>().Init(slot.Equipment);
                 }
