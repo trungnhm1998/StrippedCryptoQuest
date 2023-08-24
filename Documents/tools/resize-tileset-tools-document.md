@@ -36,3 +36,25 @@ Problems left:
 Tilemap PPU not match, but I don't see any issue cause by this
 
 ![Tilemap PPU not match](img/problem.png)
+
+# Warning
+#### Some tilemap after reducing by tool will get an error like this
+![Error.](img/tilemapErrorAfterReduce.png)
+
+### Reason and how to fix it
+- There are some files that have a rate of 300% but there is an excess paragraph below
+![Reason.](img/cropTilemap.png)
+
+- So we need to crop the excess by cropping that part so that the height and the width are divisible by 3.
+Example: (Height: 4000px to 3936px)
+![Crop tilemap.](img/resizeTilemap.png)
+![Crop tilemap.](img/tilemapAfterResize.png)
+
+
+- After resizing the tilemap, we need to open the file TSX of the tilemap and edit with text editor to change the height and width same as the tilemap after resizing.
+
+![Edit file tsx.](img/settingFileTSX.png)
+
+- After that, we need back to Unity for Unity to re-import the change of the tilemap (If we don't do that Unity can be error texture and we need to reset Unity) and reduce the tilemap by tools again
+
+![Re-import tilemap.](img/re-importInUnity.png)
