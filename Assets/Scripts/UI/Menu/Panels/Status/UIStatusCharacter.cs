@@ -77,7 +77,6 @@ namespace CryptoQuest.UI.Menu.Panels.Status
             if (memberInParty.IsValid()) ;
             _inspectingCharacter = memberInParty;
             _inspectingAttributeSystem = _inspectingCharacter.CharacterComponent.AttributeSystem;
-            _inspectingAttributeSystem.UpdateAttributeValues();
             UpdateElementsStats(_inspectingAttributeSystem);
             _inspectingCharacter.SetupUI(this);
             InspectingCharacter?.Invoke(CurrentIndex);
