@@ -31,8 +31,10 @@ namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.ActionTypes
 
             foreach (var owner in members)
             {
-                var ability = item.Item.Ability.GetAbilitySpec(owner);
-                ability.TryActiveAbility();
+                CryptoQuestGameplayEffectSpec ability =
+                    (CryptoQuestGameplayEffectSpec)owner.MakeOutgoingSpec(item.Item.Ability.Effect);
+                
+                owner.ApplyEffectSpecToSelf(ability);
             }
         }
     }

@@ -12,7 +12,7 @@ namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item
         [field: SerializeField] public UsableTypeSO UsableTypeSO { get; private set; }
         [field: SerializeField] public ActionDefinitionBase ActionDefinition { get; private set; }
 
-        [field: SerializeField] public ItemAbilityDef Ability { get; private set; }
+        [field: SerializeField] public SimpleAbilitySO Ability { get; private set; }
         
         public ActionSpecificationBase Action => ActionDefinition.Create();
 

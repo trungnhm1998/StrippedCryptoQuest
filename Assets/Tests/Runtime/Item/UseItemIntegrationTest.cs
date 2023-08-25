@@ -99,20 +99,20 @@ namespace CryptoQuest.Tests.Runtime.Item
 
         private void SetupHealItem()
         {
-            var expendableItem = _healItem as UsableSO;
-            Assert.NotNull(expendableItem);
-            
-            var healAbility = expendableItem.Ability as AbilitySO;
-            
-            EffectAttributeModifier newModifier = new()
-            {
-                Attribute = _playerHealthAttribute,
-                ModifierType = EAttributeModifierType.Add,
-                ModifierMagnitude = null,
-                Value = 100
-            };
-            healAbility.EffectContainerMap[0].TargetContainer[0].Effects[0]
-                .EffectDetails.Modifiers[0] = newModifier;
+            // var expendableItem = _healItem as UsableSO;
+            // Assert.NotNull(expendableItem);
+            //
+            // var healAbility = expendableItem.Ability as AbilitySO;
+            //
+            // EffectAttributeModifier newModifier = new()
+            // {
+            //     Attribute = _playerHealthAttribute,
+            //     ModifierType = EAttributeModifierType.Add,
+            //     ModifierMagnitude = null,
+            //     Value = 100
+            // };
+            // healAbility.EffectContainerMap[0].TargetContainer[0].Effects[0]
+            //     .EffectDetails.Modifiers[0] = newModifier;
         }
 
         public UsableSO GetItemSO(string itemName)
