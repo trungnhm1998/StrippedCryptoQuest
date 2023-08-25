@@ -133,7 +133,8 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem.Components
         /// </summary>
         private void AddAttributeToSystemIfNotExists(AttributeScriptableObject attribute)
         {
-            _attributeSystem.AddAttribute(attribute);
+            if (!_attributeSystem.HasAttribute(attribute, out _))
+                _attributeSystem.AddAttribute(attribute);
         }
 
         protected virtual void UpdateEffects()

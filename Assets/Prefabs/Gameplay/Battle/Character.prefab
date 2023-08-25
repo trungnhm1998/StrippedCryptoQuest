@@ -16,6 +16,8 @@ GameObject:
   - component: {fileID: 3876355296964779715}
   - component: {fileID: 33423683942313027}
   - component: {fileID: 1245516887952458058}
+  - component: {fileID: 2460843599423441590}
+  - component: {fileID: 2810014679992245933}
   m_Layer: 0
   m_Name: Character
   m_TagString: Untagged
@@ -36,7 +38,7 @@ Transform:
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &5812339283841037738
 MonoBehaviour:
@@ -174,8 +176,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d2bada46c1e16243923b3f71725658b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _initOnStart: 0
-  <GameplayAbilitySystem>k__BackingField: {fileID: 8039474876287072617}
   _spec:
     <BaseInfo>k__BackingField: {fileID: 0}
     <Element>k__BackingField: {fileID: 0}
@@ -183,3 +183,37 @@ MonoBehaviour:
     <StatsDef>k__BackingField:
       MaxLevel: 0
       Attributes: []
+    <Equipments>k__BackingField:
+      <Slots>k__BackingField: []
+  _initOnStart: 0
+  <GameplayAbilitySystem>k__BackingField: {fileID: 8039474876287072617}
+  <EffectSystem>k__BackingField: {fileID: 5328154967645560885}
+  <AttributeSystem>k__BackingField: {fileID: 5812339283841037738}
+--- !u!114 &2460843599423441590
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2011783402802653897}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dde71a10fa67d194aa05d55d268ce914, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _characterBehaviour: {fileID: 1245516887952458058}
+--- !u!114 &2810014679992245933
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2011783402802653897}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf5a15ba72cfcff468c35d50f3efa439, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _equipments:
+    <Slots>k__BackingField: []
+  _equipmentEffectBase: {fileID: 11400000, guid: d97f40487d4fc1843a9377ec47986e93, type: 2}

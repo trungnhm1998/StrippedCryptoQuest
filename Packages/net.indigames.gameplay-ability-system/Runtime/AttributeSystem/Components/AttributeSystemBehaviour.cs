@@ -122,7 +122,9 @@ namespace IndiGames.GameplayAbilitySystem.AttributeSystem.Components
                     break;
             }
 
-            _attributeValues[index] = attributeValue;
+            var attributeWithNewModifer =
+                attributeValue.Attribute.CalculateCurrentAttributeValue(attributeValue, _attributeValues);
+            SetAttributeValue(attributeToModify, attributeWithNewModifer);
 
             return true;
         }
@@ -246,7 +248,10 @@ namespace IndiGames.GameplayAbilitySystem.AttributeSystem.Components
             var cache = GetAttributeIndexCache();
             if (!cache.TryGetValue(attribute, out var index)) return;
 
+            var oldValue = _attributeValues[index];
+            PreAttributeChange?.Invoke(oldValue.Attribute, attributeValue);
             _attributeValues[index] = attributeValue;
+            PostAttributeChange?.Invoke(attributeValue.Attribute, oldValue, attributeValue);
         }
 
         public void ResetAllAttributes()

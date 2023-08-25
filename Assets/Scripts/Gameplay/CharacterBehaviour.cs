@@ -3,7 +3,10 @@ using CryptoQuest.Gameplay.PlayerParty;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.Components;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
+using IndiGames.GameplayAbilitySystem.EffectSystem;
+using IndiGames.GameplayAbilitySystem.EffectSystem.Components;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace CryptoQuest.Gameplay
 {
@@ -11,23 +14,38 @@ namespace CryptoQuest.Gameplay
     {
         void Init(CharacterSpec character);
         void SetSlot(PartySlot partySlot);
-        AbilitySystemBehaviour GAS { get; }
+        AbilitySystemBehaviour GameplayAbilitySystem { get; }
+        EffectSystemBehaviour EffectSystem { get; }
         AttributeSystemBehaviour AttributeSystem { get; }
+        CharacterSpec Spec { get; }
+        ActiveEffectSpecification ApplyEffect(GameplayEffectSpec effectSpec);
+        void UpdateAttributeValues();
     }
 
     public class CharacterBehaviour : MonoBehaviour, ICharacter
     {
+        [SerializeField] private CharacterSpec _spec;
+
         [SerializeField] private bool _initOnStart = true; // Maybe remove this later
         [field: SerializeField] public AbilitySystemBehaviour GameplayAbilitySystem { get; set; }
-        [SerializeField] private CharacterSpec _spec;
-        public AbilitySystemBehaviour GAS => GameplayAbilitySystem;
-        public AttributeSystemBehaviour AttributeSystem => GameplayAbilitySystem.AttributeSystem;
+        [field: SerializeField] public EffectSystemBehaviour EffectSystem { get; set; }
+        [field: SerializeField] public AttributeSystemBehaviour AttributeSystem { get; private set; }
 
         public Elemental Element => _spec.Element;
+
+        public CharacterSpec Spec => _spec;
+
+        private IEquipmentController _equipmentController;
+        private IStatInitializer _statsInitializer;
 
         private void OnValidate()
         {
             if (GameplayAbilitySystem == null) GameplayAbilitySystem = GetComponent<AbilitySystemBehaviour>();
+        }
+
+        private void Awake()
+        {
+            GetDependencies();
         }
 
         private void Start()
@@ -37,9 +55,17 @@ namespace CryptoQuest.Gameplay
 
         public void Init(CharacterSpec character)
         {
+            GetDependencies();
             _spec = character;
             _spec.Bind(this);
             Init();
+        }
+
+        private void GetDependencies()
+        {
+            if (_equipmentController == null) _equipmentController = GetComponent<IEquipmentController>();
+            if (_statsInitializer == null) _statsInitializer = GetComponent<IStatInitializer>();
+            Assert.IsNotNull(_equipmentController); // even for a monster?
         }
 
         public void SetSlot(PartySlot partySlot)
@@ -47,7 +73,15 @@ namespace CryptoQuest.Gameplay
             transform.SetParent(partySlot.transform);
         }
 
-        #region Attributes
+        public ActiveEffectSpecification ApplyEffect(GameplayEffectSpec effectSpec)
+        {
+            return GameplayAbilitySystem.ApplyEffectSpecToSelf(effectSpec);
+        }
+
+        public void UpdateAttributeValues()
+        {
+            EffectSystem.UpdateAttributeModifiersUsingAppliedEffects();
+        }
 
         /// <summary>
         /// Then we will need to add stats such as ATK, DEF, etc. these need to init after the base stats so when  <see cref="AttributeScriptableObject.CalculateInitialValue"/> get called, it will have the base stats value
@@ -55,63 +89,8 @@ namespace CryptoQuest.Gameplay
         private void Init()
         {
             if (_spec.IsValid() == false) return;
-            InitBaseStats();
-            InitAllAttributes();
-            InitElementStats();
-
-            AttributeSystem.UpdateAttributeValues(); // Update the current value
+            _statsInitializer.InitStats();
+            _equipmentController.InitEquipments(this);
         }
-
-        /// <summary>
-        /// We will need a base stats such as STR, INT, DEX, etc. these need to init first
-        ///
-        /// Use the <see cref="CharacterSpec.StatsDef"/> which contains the base stats to init
-        /// </summary>
-        private void InitBaseStats()
-        {
-            var attributeDefs = _spec.StatsDef.Attributes;
-            var charLvl = _spec.Level;
-            for (int i = 0; i < attributeDefs.Length; i++)
-            {
-                var attributeDef = attributeDefs[i];
-                AttributeSystem.AddAttribute(attributeDef.Attribute);
-                var baseValueAtLevel = _spec.GetValueAtLevel(charLvl, attributeDef);
-                AttributeSystem.SetAttributeBaseValue(attributeDef.Attribute, baseValueAtLevel);
-            }
-
-            AttributeSystem.UpdateAttributeValues();
-        }
-
-        private void InitElementStats()
-        {
-            AttributeSystem.AddAttribute(Element.AttackAttribute);
-            AttributeSystem.AddAttribute(Element.ResistanceAttribute);
-            for (int i = 0; i < Element.Multipliers.Length; i++)
-            {
-                var elementMultiplier = Element.Multipliers[i];
-                AttributeSystem.AddAttribute(elementMultiplier.Attribute);
-                AttributeSystem.SetAttributeBaseValue(elementMultiplier.Attribute,
-                    elementMultiplier.Value);
-            }
-
-            AttributeSystem.UpdateAttributeValues();
-        }
-
-        /// <summary>
-        /// Calculate init value for all attributes, HP, MP will be same as MaxHP, MaxMP
-        ///
-        /// ATK = STR, DEF = VIT, etc.
-        /// </summary>
-        private void InitAllAttributes()
-        {
-            for (int i = 0; i < AttributeSystem.AttributeValues.Count; i++)
-            {
-                var attributeValue = AttributeSystem.AttributeValues[i];
-                AttributeSystem.AttributeValues[i] = attributeValue.Attribute.CalculateInitialValue(attributeValue,
-                    AttributeSystem.AttributeValues);
-            }
-        }
-
-        #endregion
     }
 }
