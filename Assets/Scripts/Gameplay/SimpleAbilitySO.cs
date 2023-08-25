@@ -54,6 +54,7 @@ namespace CryptoQuest.Gameplay
         {
             base.InitAbility(owner, abilitySO);
 
+            if (AbilityDef.Cost == null) return;
             _costEffect = Object.Instantiate(AbilityDef.Cost);
             _costEffect.EffectDetails.Modifiers[0].Value = -AbilityDef.Info.Cost; // I think this is a bad code
         }

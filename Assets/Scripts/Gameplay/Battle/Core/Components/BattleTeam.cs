@@ -1,13 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit;
-using CryptoQuest.Gameplay.PlayerParty;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
 using UnityEngine;
 
 namespace CryptoQuest.Gameplay.Battle.Core.Components
 {
-    public class BattleTeam : MonoBehaviour, IParty
+    public class BattleTeam : MonoBehaviour
     {
         [field: SerializeField]
         public List<AbilitySystemBehaviour> Members { get; private set; }

@@ -1,4 +1,5 @@
 ﻿using CryptoQuest.Gameplay.Character;
+using CryptoQuest.Gameplay.PlayerParty;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.Components;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
@@ -9,6 +10,9 @@ namespace CryptoQuest.Gameplay
     public interface ICharacter
     {
         void Init(CharacterSpec character);
+        void SetSlot(PartySlot partySlot);
+        AbilitySystemBehaviour GAS { get; }
+        AttributeSystemBehaviour AttributeSystem { get; }
     }
 
     public class CharacterBehaviour : MonoBehaviour, ICharacter
@@ -17,6 +21,8 @@ namespace CryptoQuest.Gameplay
         [field: SerializeField] public AbilitySystemBehaviour GameplayAbilitySystem { get; set; }
         [SerializeField] private CharacterSpec _spec;
         private AttributeSystemBehaviour _attributeSystem;
+        public AbilitySystemBehaviour GAS => GameplayAbilitySystem;
+        public AttributeSystemBehaviour AttributeSystem => _attributeSystem;
 
         public Elemental Element => _spec.Element;
 
@@ -38,30 +44,34 @@ namespace CryptoQuest.Gameplay
         public void Init(CharacterSpec character)
         {
             _spec = character;
+            _spec.Bind(this);
             Init();
         }
+
+        public void SetSlot(PartySlot partySlot)
+        {
+            transform.SetParent(partySlot.transform);
+        }
+
+        #region Attributes
 
         /// <summary>
         /// Then we will need to add stats such as ATK, DEF, etc. these need to init after the base stats so when  <see cref="AttributeScriptableObject.CalculateInitialValue"/> get called, it will have the base stats value
         /// </summary>
         private void Init()
         {
+            if (_spec.IsValid() == false) return;
             InitBaseStats();
+            InitAllAttributes();
             InitElementStats();
-            _attributeSystem.UpdateAttributeValues(); // Update the current value
-
-            for (int i = 0; i < _attributeSystem.AttributeValues.Count; i++)
-            {
-                var attributeValue = _attributeSystem.AttributeValues[i];
-                _attributeSystem.AttributeValues[i] = attributeValue.Attribute.CalculateInitialValue(attributeValue,
-                    _attributeSystem.AttributeValues);
-            }
 
             _attributeSystem.UpdateAttributeValues(); // Update the current value
         }
 
         /// <summary>
         /// We will need a base stats such as STR, INT, DEX, etc. these need to init first
+        ///
+        /// Use the <see cref="CharacterSpec.StatsDef"/> which contains the base stats to init
         /// </summary>
         private void InitBaseStats()
         {
@@ -74,6 +84,8 @@ namespace CryptoQuest.Gameplay
                 var baseValueAtLevel = _spec.GetValueAtLevel(charLvl, attributeDef);
                 _attributeSystem.SetAttributeBaseValue(attributeDef.Attribute, baseValueAtLevel);
             }
+
+            _attributeSystem.UpdateAttributeValues();
         }
 
         private void InitElementStats()
@@ -87,6 +99,25 @@ namespace CryptoQuest.Gameplay
                 _attributeSystem.SetAttributeBaseValue(elementMultiplier.Attribute,
                     elementMultiplier.Value);
             }
+
+            _attributeSystem.UpdateAttributeValues();
         }
+
+        /// <summary>
+        /// Calculate init value for all attributes, HP, MP will be same as MaxHP, MaxMP
+        ///
+        /// ATK = STR, DEF = VIT, etc.
+        /// </summary>
+        private void InitAllAttributes()
+        {
+            for (int i = 0; i < _attributeSystem.AttributeValues.Count; i++)
+            {
+                var attributeValue = _attributeSystem.AttributeValues[i];
+                _attributeSystem.AttributeValues[i] = attributeValue.Attribute.CalculateInitialValue(attributeValue,
+                    _attributeSystem.AttributeValues);
+            }
+        }
+
+        #endregion
     }
 }

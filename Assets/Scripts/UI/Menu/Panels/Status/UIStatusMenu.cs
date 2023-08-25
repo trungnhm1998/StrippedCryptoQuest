@@ -1,3 +1,4 @@
+using System;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Type;
 using CryptoQuest.Gameplay.PlayerParty;
 using CryptoQuest.UI.Menu.MenuStates.StatusStates;
@@ -21,18 +22,15 @@ namespace CryptoQuest.UI.Menu.Panels.Status
 
         public EEquipmentCategory EquippingType { get; set; }
 
-        private IPartyManager _partyManager;
-        public IPartyManager PartyManager => _partyManager;
+        private IParty _party;
+        private int _inspectingMemberIndex = 0;
 
         private void Awake()
         {
-            _partyManager = GetComponent<IPartyManager>();
-            SetParty(CharacterPanel);
-        }
-
-        private void SetParty(IStatsRenderer statsRenderer)
-        {
-            statsRenderer.SetParty(_partyManager);
+            _party = GetComponent<IParty>();
+            if (_party == null) throw new NullReferenceException("Party is null");
+            EquipmentListPanel.Init(_party);
+            CharacterPanel.Init(_party);
         }
 
         /// <summary>

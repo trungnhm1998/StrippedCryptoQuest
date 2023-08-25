@@ -19,21 +19,20 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Stats
         {
             if (_attributeSystem != null)
             {
-                _attributeSystem.PostAttributeChange -= UpdateElementStats;
+                _attributeSystem.PreAttributeChange -= UpdateElementStats;
             }
 
             _attributeSystem = attributeSystem;
-            _attributeSystem.PostAttributeChange += UpdateElementStats;
+            _attributeSystem.PreAttributeChange += UpdateElementStats;
 
             _attributeSystem.TryGetAttributeValue(Elemental.AttackAttribute, out var atkValue);
             _attributeSystem.TryGetAttributeValue(Elemental.ResistanceAttribute, out var resValue);
 
-            UpdateElementStats(Elemental.AttackAttribute, atkValue, atkValue);
-            UpdateElementStats(Elemental.ResistanceAttribute, resValue, resValue);
+            UpdateElementStats(Elemental.AttackAttribute, atkValue);
+            UpdateElementStats(Elemental.ResistanceAttribute, resValue);
         }
 
-        private void UpdateElementStats(AttributeScriptableObject attribute, AttributeValue oldValue,
-            AttributeValue newValue)
+        private void UpdateElementStats(AttributeScriptableObject attribute, AttributeValue newValue)
         {
             var text = $"{(int)(newValue.CurrentValue * 100)}%";
 

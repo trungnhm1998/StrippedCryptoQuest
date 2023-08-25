@@ -1,11 +1,17 @@
 ﻿using System;
+using CryptoQuest.UI.Menu.Panels.Home;
 using UnityEngine;
 using UnityEngine.Analytics;
 using UnityEngine.Localization;
 
 namespace CryptoQuest.Gameplay.Character
 {
-    public class HeroSO : ScriptableObject
+    /// <summary>
+    /// Where this character come from?
+    /// name
+    /// age, height, weight
+    /// </summary>
+    public class CharacterBackgroundInfo : ScriptableObject
     {
         [Serializable]
         public struct Information
@@ -20,5 +26,10 @@ namespace CryptoQuest.Gameplay.Character
         }
 
         [field: SerializeField] public Information DetailInformation { get; set; }
+
+        public virtual void SetupUI(ICharacterInfo uiCharacterInfo)
+        {
+            uiCharacterInfo.SetLocalizedName(DetailInformation.LocalizedName);
+        }
     }
 }

@@ -1,33 +1,32 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data;
 using CryptoQuest.Gameplay.PlayerParty;
 using CryptoQuest.UI.Menu.Panels.Status.Equipment;
 using CryptoQuest.UI.Menu.Panels.Status.Stats;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.Components;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using NotImplementedException = System.NotImplementedException;
 
 namespace CryptoQuest.UI.Menu.Panels.Status
 {
-    public interface IStatsRenderer
-    {
-        public void SetParty(IPartyManager party);
-    }
-
-    public class UIStatusCharacter : MonoBehaviour, IStatsRenderer
+    public class UIStatusCharacter : MonoBehaviour
     {
         [SerializeField] private PartySO _party;
         [SerializeField] private UIStatusMenu _statusMenu;
         [SerializeField] private Image _avatar;
         [SerializeField] private UIStats _stats;
-        [SerializeField] private SpriteRenderer _characterElement;
+        [SerializeField] private Image _characterElement;
         [SerializeField] private UIEquipmentOverview _equipmentOverview;
+        [SerializeField] private TMP_Text _level;
+        private string _lvlTxtFormat = string.Empty;
         [SerializeField] private List<UIElementAttribute> _elementAttributes;
+
+        private IParty _playerParty;
 
         private List<HeroDataSO> _activeMembersData = new();
         private List<AttributeSystemBehaviour> _activeMembersAttribute = new();
-        private IPartyManager _playerParty;
 
         private int _currentIndex = 0;
 
@@ -41,6 +40,11 @@ namespace CryptoQuest.UI.Menu.Panels.Status
             }
         }
 
+        public void Init(IParty party)
+        {
+            _playerParty = party;
+        }
+
         private void OnEnable()
         {
             Debug.Log("UIStatusCharacter OnEnable");
@@ -49,16 +53,16 @@ namespace CryptoQuest.UI.Menu.Panels.Status
 
         private void ShowFirstCharacter()
         {
-            // _playerParty.Slots[0].
-        }
+            var firstMember = _playerParty.Members[0];
+            _characterElement.sprite = firstMember.Element.Icon;
+            if (_lvlTxtFormat == string.Empty)
+            {
+                _lvlTxtFormat = _level.text;
+            }
 
-        private void OnDisable()
-        {
-        }
-
-        public void SetParty(IPartyManager party)
-        {
-            _playerParty = party;
+            _level.text = string.Format(_lvlTxtFormat, firstMember.Level);
+            UpdateElementsStats(firstMember.CharacterComponent.AttributeSystem);
+            _avatar.sprite = firstMember.Avatar;
         }
 
         private void UpdateElementsStats(AttributeSystemBehaviour attributeSystem)

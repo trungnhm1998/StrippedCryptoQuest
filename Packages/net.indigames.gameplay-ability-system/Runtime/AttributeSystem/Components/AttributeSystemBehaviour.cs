@@ -56,7 +56,8 @@ namespace IndiGames.GameplayAbilitySystem.AttributeSystem.Components
         public virtual void Init()
         {
             InitializeAttributeValues();
-            GetAttributeIndexCache(true);
+            MarkCacheDirty();
+            GetAttributeIndexCache();
         }
 
         private void InitializeAttributeValues()
@@ -80,13 +81,9 @@ namespace IndiGames.GameplayAbilitySystem.AttributeSystem.Components
         /// Get Attribute indices from the cache if the cache were dirty little ***
         /// we will UnStale the cache and update it
         /// </summary>
-        /// <param name="forceRefresh"></param>
         /// <returns></returns>
-        public Dictionary<AttributeScriptableObject, int> GetAttributeIndexCache(bool forceRefresh = false)
+        public Dictionary<AttributeScriptableObject, int> GetAttributeIndexCache()
         {
-            if (forceRefresh)
-                _isCacheStale = true;
-
             if (!_isCacheStale) return _attributeIndexCache;
 
             _attributeIndexCache.Clear();
@@ -186,7 +183,6 @@ namespace IndiGames.GameplayAbilitySystem.AttributeSystem.Components
                 var evaluatedAttribute = oldAttributeValue
                     .Attribute.CalculateCurrentAttributeValue(oldAttributeValue, _attributeValues);
 
-                // if (oldAttributeValue.CurrentValue.NearlyEqual(_attributeValues[i].CurrentValue)) continue;
                 foreach (var preAttributeChangeChannel in _attributeEvents)
                 {
                     preAttributeChangeChannel.PreAttributeChange(this, ref evaluatedAttribute);
@@ -236,7 +232,7 @@ namespace IndiGames.GameplayAbilitySystem.AttributeSystem.Components
             if (!cache.TryGetValue(attribute, out var index)) return;
 
             var attributeValue = _attributeValues[index];
-            attributeValue.BaseValue = value;
+            attributeValue.BaseValue = attributeValue.CurrentValue = value;
             _attributeValues[index] = attributeValue;
         }
 

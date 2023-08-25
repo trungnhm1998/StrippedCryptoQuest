@@ -378,8 +378,9 @@ MonoBehaviour:
   _statusMenu: {fileID: 103757676075730767}
   _avatar: {fileID: 2552055832081808667}
   _stats: {fileID: 2117365174540996421}
-  _characterElement: {fileID: 0}
+  _characterElement: {fileID: 834191257052809916}
   _equipmentOverview: {fileID: 8112941345715384607}
+  _level: {fileID: 684655992664255695}
   _elementAttributes:
   - {fileID: 554067370641713497}
   - {fileID: 4110144470629765905}
@@ -667,7 +668,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: <size=20>Lv</size>1
+  m_text: <size=20>Lv</size>{0}
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 200a285e3b963164fbf2d97f83baff06, type: 2}
   m_sharedMaterial: {fileID: -8536644400793805630, guid: 200a285e3b963164fbf2d97f83baff06, type: 2}
@@ -1341,6 +1342,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4720291401309311448}
   - component: {fileID: 103757676075730767}
+  - component: {fileID: 1472445084218354939}
   m_Layer: 5
   m_Name: Status
   m_TagString: Untagged
@@ -1386,6 +1388,19 @@ MonoBehaviour:
   equipmentOverviewPanel: {fileID: 8112941345715384607}
   <EquipmentListPanel>k__BackingField: {fileID: 4799702490829077646}
   <CharacterPanel>k__BackingField: {fileID: 5639036211821090842}
+--- !u!114 &1472445084218354939
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2859147272451975405}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b8cf9375efc29e4b8e1e21ba8dcd5c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _party: {fileID: 11400000, guid: b97126249c17e024fa024226ffea3c3f, type: 2}
 --- !u!1 &2969069284477059894
 GameObject:
   m_ObjectHideFlags: 0
@@ -4059,6 +4074,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: 5003d25975f94aa4aaa5c253deaceb21, type: 2}
     - target: {fileID: 451460318331205751, guid: e87e90c4e3245954ca94ce137d14b3f8, type: 3}
+      propertyPath: <Elemental>k__BackingField
+      value: 
+      objectReference: {fileID: 11400000, guid: 9f70471d65085574f86ff7a862f77ed5, type: 2}
+    - target: {fileID: 451460318331205751, guid: e87e90c4e3245954ca94ce137d14b3f8, type: 3}
       propertyPath: <_elemental>k__BackingField
       value: 
       objectReference: {fileID: 11400000, guid: 9f70471d65085574f86ff7a862f77ed5, type: 2}
@@ -4257,6 +4276,10 @@ PrefabInstance:
       propertyPath: _attributeType
       value: 
       objectReference: {fileID: 11400000, guid: 582371299154be7429597b5c2eca4a5f, type: 2}
+    - target: {fileID: 451460318331205751, guid: e87e90c4e3245954ca94ce137d14b3f8, type: 3}
+      propertyPath: <Elemental>k__BackingField
+      value: 
+      objectReference: {fileID: 11400000, guid: 45b43c65777683f40ac77dac46dbe86c, type: 2}
     - target: {fileID: 451460318331205751, guid: e87e90c4e3245954ca94ce137d14b3f8, type: 3}
       propertyPath: <_elemental>k__BackingField
       value: 
@@ -4703,6 +4726,10 @@ PrefabInstance:
       propertyPath: _attributeType
       value: 
       objectReference: {fileID: 11400000, guid: c3000535073f1cd4fb5e3148dd37d694, type: 2}
+    - target: {fileID: 451460318331205751, guid: e87e90c4e3245954ca94ce137d14b3f8, type: 3}
+      propertyPath: <Elemental>k__BackingField
+      value: 
+      objectReference: {fileID: 11400000, guid: 8ac80f798e1550a44a6c845172d2dd87, type: 2}
     - target: {fileID: 451460318331205751, guid: e87e90c4e3245954ca94ce137d14b3f8, type: 3}
       propertyPath: <_elemental>k__BackingField
       value: 
@@ -5153,6 +5180,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: 080ae87baf6af0346ab7743f45186e28, type: 2}
     - target: {fileID: 451460318331205751, guid: e87e90c4e3245954ca94ce137d14b3f8, type: 3}
+      propertyPath: <Elemental>k__BackingField
+      value: 
+      objectReference: {fileID: 11400000, guid: 40c2e4df0059aa743962056c631735bd, type: 2}
+    - target: {fileID: 451460318331205751, guid: e87e90c4e3245954ca94ce137d14b3f8, type: 3}
       propertyPath: <_elemental>k__BackingField
       value: 
       objectReference: {fileID: 11400000, guid: 40c2e4df0059aa743962056c631735bd, type: 2}
@@ -5351,6 +5382,10 @@ PrefabInstance:
       propertyPath: _attributeType
       value: 
       objectReference: {fileID: 11400000, guid: 6197e447341e1614abd078d739dce24d, type: 2}
+    - target: {fileID: 451460318331205751, guid: e87e90c4e3245954ca94ce137d14b3f8, type: 3}
+      propertyPath: <Elemental>k__BackingField
+      value: 
+      objectReference: {fileID: 11400000, guid: 54051e281550585428e51aa6c31204d1, type: 2}
     - target: {fileID: 451460318331205751, guid: e87e90c4e3245954ca94ce137d14b3f8, type: 3}
       propertyPath: <_elemental>k__BackingField
       value: 
@@ -6134,7 +6169,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5771543849347784825, guid: 2fcad25841b776346971b77482dd99ef, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 536.15497
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5771543849347784825, guid: 2fcad25841b776346971b77482dd99ef, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -6174,7 +6209,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5869336735925421420, guid: 2fcad25841b776346971b77482dd99ef, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 347.095
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5869336735925421420, guid: 2fcad25841b776346971b77482dd99ef, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -6222,7 +6257,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6395645779184340597, guid: 2fcad25841b776346971b77482dd99ef, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 139.61499
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6395645779184340597, guid: 2fcad25841b776346971b77482dd99ef, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -6246,7 +6281,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6461913210404023136, guid: 2fcad25841b776346971b77482dd99ef, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 83.445
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6461913210404023136, guid: 2fcad25841b776346971b77482dd99ef, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -6334,7 +6369,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7679637157766436965, guid: 2fcad25841b776346971b77482dd99ef, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 136.73999
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7679637157766436965, guid: 2fcad25841b776346971b77482dd99ef, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -6354,7 +6389,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7798816478317199744, guid: 2fcad25841b776346971b77482dd99ef, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 104.74
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7798816478317199744, guid: 2fcad25841b776346971b77482dd99ef, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -6849,6 +6884,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: 3c0271e07dc5ce2458749dcf70c6db70, type: 2}
     - target: {fileID: 451460318331205751, guid: e87e90c4e3245954ca94ce137d14b3f8, type: 3}
+      propertyPath: <Elemental>k__BackingField
+      value: 
+      objectReference: {fileID: 11400000, guid: ba6de62bb4e6b1340881a31dcd37f1ee, type: 2}
+    - target: {fileID: 451460318331205751, guid: e87e90c4e3245954ca94ce137d14b3f8, type: 3}
       propertyPath: <_elemental>k__BackingField
       value: 
       objectReference: {fileID: 11400000, guid: ba6de62bb4e6b1340881a31dcd37f1ee, type: 2}
@@ -7334,6 +7373,10 @@ PrefabInstance:
       propertyPath: _attributeType
       value: 
       objectReference: {fileID: 11400000, guid: 5e3894b2c7b666b4699d0885c9c08efb, type: 2}
+    - target: {fileID: 451460318331205751, guid: e87e90c4e3245954ca94ce137d14b3f8, type: 3}
+      propertyPath: <Elemental>k__BackingField
+      value: 
+      objectReference: {fileID: 11400000, guid: 151d92503a8867445acb8e585451dc58, type: 2}
     - target: {fileID: 451460318331205751, guid: e87e90c4e3245954ca94ce137d14b3f8, type: 3}
       propertyPath: <_elemental>k__BackingField
       value: 

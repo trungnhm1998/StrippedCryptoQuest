@@ -4,20 +4,7 @@ using UnityEngine;
 
 namespace CryptoQuest.Gameplay.PlayerParty
 {
-    public static class PartyConstants
-    {
-        public const int PARTY_SIZE = 4;
-    }
-
-    public interface IPartyManager { }
-
-    [Serializable]
-    public class Party
-    {
-        public CharacterSpec[] Characters = new CharacterSpec[PartyConstants.PARTY_SIZE];
-    }
-
-    public class PartyManager : MonoBehaviour, IPartyManager
+    public class PartyManager : MonoBehaviour
     {
         [SerializeField, Header("Party Config")]
         private PartySO _party;
@@ -34,17 +21,21 @@ namespace CryptoQuest.Gameplay.PlayerParty
             _partySlots = GetComponentsInChildren<PartySlot>();
         }
 
-        private void Start()
+        private void Awake()
         {
             InitParty();
         }
 
+        /// <summary>
+        /// Init party members stats at run time
+        /// and bind the mono behaviour to the <see cref="CharacterSpec._characterComponent"/>
+        /// </summary>
         private void InitParty()
         {
             for (int i = 0; i < _party.Members.Length; i++)
             {
                 var character = _party.Members[i];
-                if (character == null) continue;
+                if (!character.IsValid()) continue;
                 _partySlots[i].Init(character);
             }
         }
