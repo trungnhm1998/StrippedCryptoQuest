@@ -132,6 +132,8 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem
                 {
                     Debug.LogWarning(
                         $"GameplayEffectSpec::calculateModifierMagnitudes::Effect {Def.name} has a modifier with no ModifierMagnitude at idx[{index}].");
+                    modifierSpec.EvaluatedMagnitude = modifierDef.Value; // TODO: THIS IS A CHEAT
+                    Modifiers[index] = modifierSpec;
                     continue;
                 }
 
@@ -140,6 +142,7 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem
                     modifierSpec.EvaluatedMagnitude = 0;
                     Debug.Log($"Modifier on spec {Def.name} failed to calculate magnitude. Falling back to 0.");
                 }
+
 
                 Modifiers[index] = modifierSpec;
             }

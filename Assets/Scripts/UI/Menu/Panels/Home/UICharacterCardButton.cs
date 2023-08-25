@@ -34,7 +34,7 @@ namespace CryptoQuest.UI.Menu.Panels.Home
 
         private void CheckButtonActive()
         {
-            this.enabled = _contents.activeSelf;
+            // this.enabled = _contents.activeSelf;
         }
 
         public void CardButtonOnPressed()

@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Type;
+using CryptoQuest.Gameplay.PlayerParty;
 using CryptoQuest.Input;
 using CryptoQuest.Menu;
 using PolyAndCode.UI;
@@ -154,5 +155,9 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
         }
 
         #endregion
+
+        public void Init(IParty party)
+        {
+        }
     }
 }

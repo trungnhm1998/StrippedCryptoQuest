@@ -1,5 +1,4 @@
-﻿using UnityEngine.Localization;
-using System;
+﻿using System;
 
 namespace CryptoQuest.Gameplay.PlayerParty
 {

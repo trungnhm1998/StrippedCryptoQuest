@@ -50,7 +50,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit
             UnitInfo ??= UnitData.CreateCharacterInfo();
             if (Owner == null) return;
             UnitInfo.Owner = Owner;
-            Owner.AttributeSystem.AttributeChanged += OnHPChanged;
+            Owner.AttributeSystem.PostAttributeChange += OnHPChanged;
         }
 
         protected virtual void InitBattleLogic()
@@ -68,7 +68,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit
         {
             if (Owner != null)
             {
-                Owner.AttributeSystem.AttributeChanged -= OnHPChanged;
+                Owner.AttributeSystem.PostAttributeChange -= OnHPChanged;
             }
             _doneShowDialogEvent.EventRaised -= DoneShowAction;
         }
@@ -144,9 +144,10 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit
             CheckUnitDead();
         }
 
-        private void OnHPChanged(AttributeSystemBehaviour system, AttributeValue oldValue,
+        private void OnHPChanged(AttributeScriptableObject attribute, AttributeValue oldValue,
             AttributeValue newValue)
         {
+            if (attribute != _hpAttribute) return;
             if (oldValue.Attribute != _hpAttribute) return;
             CheckUnitDead();
         }

@@ -1,14 +1,11 @@
 using CryptoQuest.UI.Menu.ScriptableObjects;
 using FSM;
 using UnityEngine;
-using UnityEngine.Events;
 
 namespace CryptoQuest.UI.Menu.Panels
 {
     public abstract class UIMenuPanel : MonoBehaviour
     {
-        public UnityAction MenuOpenedEvent;
-
         [SerializeField] private MenuTypeSO _typeSO;
         public MenuTypeSO TypeSO => _typeSO;
 
@@ -21,19 +18,16 @@ namespace CryptoQuest.UI.Menu.Panels
         }
 
         // TODO: Rename method, I followed Unity's naming convention
-        protected virtual void OnShow()
-        {
-            MenuOpenedEvent?.Invoke();
-        }
+        protected virtual void OnShow() { }
 
         public void Hide()
         {
             _content.SetActive(false);
             OnHide();
         }
-        
+
         // TODO: Rename method, I followed Unity's naming convention
-        protected virtual void OnHide() {}
+        protected virtual void OnHide() { }
 
         /// <summary>
         /// Act as a factory method to create the state machine for each panel.

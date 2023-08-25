@@ -44,7 +44,7 @@ namespace CryptoQuest.Gameplay
     {
         public event Action NotEnoughResourcesToCast;
         public CryptoQuestGameplayEffect Effect { get; set; }
-        private Character _target;
+        private CharacterBehaviour _target;
         private AbilitySystemBehaviour _targetSystem;
         private SimpleAbilitySO AbilityDef => (SimpleAbilitySO)AbilitySO;
 
@@ -54,6 +54,7 @@ namespace CryptoQuest.Gameplay
         {
             base.InitAbility(owner, abilitySO);
 
+            if (AbilityDef.Cost == null) return;
             _costEffect = Object.Instantiate(AbilityDef.Cost);
             _costEffect.EffectDetails.Modifiers[0].Value = -AbilityDef.Info.Cost; // I think this is a bad code
         }
@@ -77,6 +78,7 @@ namespace CryptoQuest.Gameplay
             if (Owner.CanApplyAttributeModifiers(_costEffect)) return true;
 
             // TODO: Add a tag to indicate that the cost failed
+            Debug.Log($"Not enough {_costEffect.EffectDetails.Modifiers[0].Attribute.name} to cast this ability");
             NotEnoughResourcesToCast?.Invoke();
             return false;
         }
@@ -89,7 +91,7 @@ namespace CryptoQuest.Gameplay
         }
 
 
-        public void Active(Character target)
+        public void Active(CharacterBehaviour target)
         {
             _target = target;
             _targetSystem = target.GameplayAbilitySystem;

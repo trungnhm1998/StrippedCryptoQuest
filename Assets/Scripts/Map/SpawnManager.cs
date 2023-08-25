@@ -3,6 +3,7 @@ using CryptoQuest.Gameplay;
 using CryptoQuest.Input;
 using IndiGames.Core.Events.ScriptableObjects;
 using UnityEngine;
+using CharacterBehaviour = CryptoQuest.Character.MonoBehaviours.CharacterBehaviour;
 
 namespace CryptoQuest.Map
 {

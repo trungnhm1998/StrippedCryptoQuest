@@ -15,7 +15,6 @@ namespace CryptoQuest.UI.Menu.Panels.Home
         public event Action ConfirmedEvent;
 
         [Header("Configs")]
-        [SerializeField] private PartySO _party;
         [SerializeField] private UIHomeMenu _homeMenu;
 
         [Header("Events")]
@@ -24,11 +23,12 @@ namespace CryptoQuest.UI.Menu.Panels.Home
         [Header("Game Components")]
         [SerializeField] private Transform _characterSlots;
         [SerializeField] private GameObject _topLine;
-        [SerializeField] private List<UICharacterInfo> _slots;
+        [SerializeField] private UIPartySlot[] _partySlots;
+        [SerializeField] private List<ICharacterInfo> _slots;
         [SerializeField] private List<UICharacterCardButton> _cardButtons;
         [SerializeField] private GameObject _sortKeysUi;
 
-        private UICharacterCardButton _selectedCardButtonHolder;
+        // private UICharacterCardButton _selectedCardButtonHolder;
         private List<HeroDataSO> _activeMembersData = new();
         private List<AttributeSystemBehaviour> _activeMembersAttribute = new();
 
@@ -45,33 +45,46 @@ namespace CryptoQuest.UI.Menu.Panels.Home
 
         private int _indexHolder;
         private HeroDataSO _memberStats;
+        private IParty _party;
+
+        private void OnValidate()
+        {
+            if (_partySlots.Length != PartyConstants.PARTY_SIZE)
+            {
+                Array.Resize(ref _partySlots, PartyConstants.PARTY_SIZE);
+            }
+            
+            _partySlots = GetComponentsInChildren<UIPartySlot>();
+        }
+
+        public void Init(IParty party)
+        {
+            _party = party;
+            OnEnableSortMode();
+            EnableButtons();
+            _sortKeysUi.SetActive(true);
+        }
 
         private void OnEnable()
         {
-            _homeMenu.MenuOpenedEvent += LoadPartyMembers;
             UICharacterCardButton.SelectedEvent += ConfirmSelect;
+            LoadPartyMembers();
         }
 
         private void OnDisable()
         {
-            _homeMenu.MenuOpenedEvent -= LoadPartyMembers;
             UICharacterCardButton.SelectedEvent -= ConfirmSelect;
         }
 
         private void LoadPartyMembers()
         {
-            var i = 0;
-            foreach (var member in _party.PlayerTeam.Members)
+            for (var index = 0; index < _party.Members.Length; index++)
             {
-                if (member.gameObject.activeSelf)
-                {
-                    member.TryGetComponent<ScriptableObjectStatsInitializer>(out var initializer);
-                    _memberStats = initializer.DefaultStats as HeroDataSO;
-                    _activeMembersData.Add(_memberStats);
-                    _activeMembersAttribute.Add(member.AttributeSystem);
-                    _slots[i].SetData(_memberStats, _activeMembersAttribute[i]);
-                    i++;
-                }
+                var member = _party.Members[index];
+                var slot = _partySlots[index];
+                slot.Active(member.IsValid());
+                if (!member.IsValid()) continue;
+                slot.Init(member);
             }
         }
 
@@ -84,8 +97,8 @@ namespace CryptoQuest.UI.Menu.Panels.Home
         private void OnEnableSortMode()
         {
             SortModeEnabledEvent.RaiseEvent();
-            _selectedCardButtonHolder = GetCharacterCard(CurrentIndex);
-            _selectedCardButtonHolder.Select();
+            // _selectedCardButtonHolder = GetCharacterCard(CurrentIndex);
+            // _selectedCardButtonHolder.Select();
         }
 
         public void ConfirmSelect(UICharacterCardButton card)
@@ -97,34 +110,32 @@ namespace CryptoQuest.UI.Menu.Panels.Home
 
             CurrentIndex = card.transform.GetSiblingIndex();
             _indexHolder = CurrentIndex;
-            _selectedCardButtonHolder = card;
+            // _selectedCardButtonHolder = card;
         }
 
         public void SwapRight()
         {
             var currentTarget = _characterSlots.GetChild(CurrentIndex);
 
-            _party.Sort(CurrentIndex, CurrentIndex + 1);
             CurrentIndex++;
             currentTarget.SetSiblingIndex(CurrentIndex);
 
-            _selectedCardButtonHolder = currentTarget.GetComponent<UICharacterCardButton>();
+            // _selectedCardButtonHolder = currentTarget.GetComponent<UICharacterCardButton>();
         }
 
         public void SwapLeft()
         {
             var currentTarget = _characterSlots.GetChild(CurrentIndex);
 
-            _party.Sort(CurrentIndex, CurrentIndex - 1);
             CurrentIndex--;
             currentTarget.SetSiblingIndex(CurrentIndex);
 
-            _selectedCardButtonHolder = currentTarget.GetComponent<UICharacterCardButton>();
+            // _selectedCardButtonHolder = currentTarget.GetComponent<UICharacterCardButton>();
         }
 
         public void ConfirmSortOrder()
         {
-            _selectedCardButtonHolder.Confirm();
+            // _selectedCardButtonHolder.Confirm();
             _topLine.SetActive(true);
 
             Invoke(nameof(OnConfirmSortOrder), 0.5f);
@@ -137,7 +148,7 @@ namespace CryptoQuest.UI.Menu.Panels.Home
 
         public void CancelSort()
         {
-            _selectedCardButtonHolder.Cancel();
+            // _selectedCardButtonHolder.Cancel();
             ApplyDataBeforeSort();
         }
 
@@ -151,10 +162,10 @@ namespace CryptoQuest.UI.Menu.Panels.Home
 
         private void EnableButtons()
         {
-            foreach (var button in _cardButtons)
-            {
-                button.enabled = true;
-            }
+            // foreach (var button in _cardButtons)
+            // {
+            //     button.enabled = true;
+            // }
         }
 
         private void DisableButtons()
@@ -163,13 +174,6 @@ namespace CryptoQuest.UI.Menu.Panels.Home
             {
                 button.enabled = false;
             }
-        }
-
-        public void Init()
-        {
-            OnEnableSortMode();
-            EnableButtons();
-            _sortKeysUi.SetActive(true);
         }
 
         public void DeInit()

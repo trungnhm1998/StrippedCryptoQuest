@@ -26,9 +26,9 @@ namespace IndiGames.GameplayAbilitySystem.Tests.Editor.AbilitySystem
         public void InitStats_AttributeValues_ShouldBeEqualWithDatabase(float inputValue)
         {
             var attribute = ScriptableObject.CreateInstance<AttributeScriptableObject>();
-            _statDatabase.AttributesToInitialize = new AttributeInitValue[]
+            _statDatabase.AttributesToInitialize = new AttributeWithValue[]
             {
-                new AttributeInitValue() 
+                new AttributeWithValue() 
                 {
                     Attribute = attribute,
                     Value = inputValue

@@ -141,13 +141,13 @@ namespace CryptoQuest.EditorTool
                         var ability = _buffAttackAbility.GetAbilitySpec(member);
                         _memberAbilityDict[member] = ability;
                         ability.ActivateAbility();
-                        member.AttributeSystem.UpdateAttributeCurrentValue(_attackSo);
+                        // TODO: REFACTOR ATTRIBUTE SYSTEM
                     }
                     else
                     {
                         var ability = _memberAbilityDict[member];
                         ability.OnAbilityRemoved(ability);
-                        member.AttributeSystem.UpdateAttributeCurrentValue(_attackSo);
+                        // TODO: REFACTOR ATTRIBUTE SYSTEM
                     }
                 }
 

@@ -15,14 +15,14 @@ namespace CryptoQuest.UI.Battle.CharacterInfo
 
         protected virtual void OnDisable()
         {
-            _attributeSystem.AttributeChanged -= OnHPChanged;
+            _attributeSystem.PostAttributeChange -= OnHPChanged;
         }
 
         public virtual void SetData(CharacterInformation characterInfo)
         {
             _characterInfo = characterInfo;
             _attributeSystem = characterInfo.Owner.AttributeSystem;
-            _attributeSystem.AttributeChanged += OnHPChanged;
+            _attributeSystem.PostAttributeChange += OnHPChanged;
             Setup();
         }
 
@@ -35,7 +35,7 @@ namespace CryptoQuest.UI.Battle.CharacterInfo
 
         protected abstract void Setup();
 
-        protected abstract void OnHPChanged(AttributeSystemBehaviour system, AttributeValue oldValue,
+        protected abstract void OnHPChanged(AttributeScriptableObject attribute, AttributeValue oldValue,
             AttributeValue newValue);
 
         protected abstract void OnSelected(string name);

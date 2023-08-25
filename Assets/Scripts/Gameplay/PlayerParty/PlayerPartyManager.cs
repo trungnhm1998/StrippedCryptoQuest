@@ -1,8 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using CryptoQuest.Gameplay.Battle.Core.Components;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
+using UnityEngine;
 
 namespace CryptoQuest.Gameplay.PlayerParty
 {

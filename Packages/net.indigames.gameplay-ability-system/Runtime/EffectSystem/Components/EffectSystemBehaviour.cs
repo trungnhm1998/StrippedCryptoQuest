@@ -179,7 +179,8 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem.Components
                 if (modDef.Attribute == null) continue;
 
                 if (!_attributeSystem.TryGetAttributeValue(modDef.Attribute, out var attributeValue)) continue;
-                if (attributeValue.CurrentValue + modSpec.GetEvaluatedMagnitude() < 0) return false;
+                var hasEnoughResource = attributeValue.CurrentValue + modSpec.GetEvaluatedMagnitude() < 0;
+                if (hasEnoughResource) return false;
             }
 
             return true;

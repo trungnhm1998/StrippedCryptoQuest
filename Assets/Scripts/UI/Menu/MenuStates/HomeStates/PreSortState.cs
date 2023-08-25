@@ -18,7 +18,6 @@ namespace CryptoQuest.UI.Menu.MenuStates.HomeStates
             base.OnEnter();
             NavigationBar.SetActive(false);
             NavigationBar.HighlightHeader(HomePanel.TypeSO);
-            _sortMode.Init();
             _sortMode.SelectedEvent += StartSorting;
         }
 

@@ -7,7 +7,6 @@ using UnityEngine;
 
 namespace CryptoQuest.Gameplay
 {
-    [CreateAssetMenu(menuName = "Create DamageCalculation", fileName = "DamageCalculation", order = 0)]
     public class DamageCalculation : EffectExecutionCalculationBase
     {
         [Header("Config")]
@@ -23,7 +22,7 @@ namespace CryptoQuest.Gameplay
             ref CustomExecutionParameters executionParams,
             ref List<EffectAttributeModifier> outModifiers)
         {
-            var character = executionParams.SourceAbilitySystemComponent.GetComponent<Character>();
+            var character = executionParams.SourceAbilitySystemComponent.GetComponent<CharacterBehaviour>();
             var characterElemental = character.Element;
 
             executionParams.TryGetAttributeValue(new CustomExecutionAttributeCaptureDef()

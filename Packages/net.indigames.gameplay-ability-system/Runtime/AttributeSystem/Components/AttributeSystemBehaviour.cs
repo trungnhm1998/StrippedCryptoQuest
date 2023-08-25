@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
-using IndiGames.GameplayAbilitySystem.Helper;
 using UnityEngine;
 
 namespace IndiGames.GameplayAbilitySystem.AttributeSystem.Components
@@ -13,14 +12,19 @@ namespace IndiGames.GameplayAbilitySystem.AttributeSystem.Components
     /// </summary>
     public partial class AttributeSystemBehaviour : MonoBehaviour
     {
-        public delegate void AttributeChangedDelegate(AttributeSystemBehaviour system, AttributeValue oldValue,
+        public delegate void PreAttributeChangeDelegate(AttributeScriptableObject attribute, AttributeValue newValue);
+
+        public delegate void PostAttributeChangeDelegate(AttributeScriptableObject attribute, AttributeValue oldValue,
             AttributeValue newValue);
 
-        public event AttributeChangedDelegate AttributeChanged;
+        public event PreAttributeChangeDelegate PreAttributeChange;
+        public event PostAttributeChangeDelegate PostAttributeChange;
         [SerializeField] private bool _initOnAwake = true;
-        [SerializeField] private List<AbstractAttributesEventChannel> _attributeEventChannels = new();
-
-        public List<AbstractAttributesEventChannel> AttributeEventChannels => _attributeEventChannels;
+        [SerializeField] private bool _updateOnLateUpdate = false;
+        /// <summary>
+        /// Use this to clamp or doing any logic pre and post attribute change
+        /// </summary>
+        [SerializeField] private List<AttributesEventBase> _attributeEvents = new();
 
         /// <summary>
         /// If gameplay needs more attributes, add them here
@@ -52,7 +56,8 @@ namespace IndiGames.GameplayAbilitySystem.AttributeSystem.Components
         public virtual void Init()
         {
             InitializeAttributeValues();
-            GetAttributeIndexCache(true);
+            MarkCacheDirty();
+            GetAttributeIndexCache();
         }
 
         private void InitializeAttributeValues()
@@ -76,13 +81,9 @@ namespace IndiGames.GameplayAbilitySystem.AttributeSystem.Components
         /// Get Attribute indices from the cache if the cache were dirty little ***
         /// we will UnStale the cache and update it
         /// </summary>
-        /// <param name="forceRefresh"></param>
         /// <returns></returns>
-        private Dictionary<AttributeScriptableObject, int> GetAttributeIndexCache(bool forceRefresh = false)
+        public Dictionary<AttributeScriptableObject, int> GetAttributeIndexCache()
         {
-            if (forceRefresh)
-                _isCacheStale = true;
-
             if (!_isCacheStale) return _attributeIndexCache;
 
             _attributeIndexCache.Clear();
@@ -163,62 +164,38 @@ namespace IndiGames.GameplayAbilitySystem.AttributeSystem.Components
 
             MarkCacheDirty();
             _attributes.Add(attribute);
-            var calculateInitialValue = attribute.CalculateInitialValue(new AttributeValue(attribute), _attributeValues);
+            var calculateInitialValue =
+                attribute.CalculateInitialValue(new AttributeValue(attribute), _attributeValues);
             _attributeValues.Add(calculateInitialValue);
-        }
-
-        private readonly List<AttributeValue> _previousAttributeValues = new();
-        private const float TOLERATED_DIFFERENCE = 0.01f;
-
-        /// <summary>
-        /// Force update single attribute
-        /// </summary>
-        [Obsolete]
-        public void UpdateAttributeCurrentValue(AttributeScriptableObject attribute)
-        {
-            if (!GetAttributeIndexCache().TryGetValue(attribute, out var index))
-                return;
-            AttributeValue attributeValue = _attributeValues[index];
-            var previousValue = attributeValue.Clone();
-
-            _attributeValues[index] = AttributeSystemHelper.CalculateCurrentAttributeValue(attributeValue);
-
-            foreach (var eventChannel in _attributeEventChannels)
-            {
-                eventChannel.PreAttributeChange(this, _previousAttributeValues, ref _attributeValues);
-            }
-
-            if (!(Math.Abs(attributeValue.CurrentValue - previousValue.CurrentValue) > TOLERATED_DIFFERENCE))
-                return;
-
-            attribute.OnValueChanged(this, previousValue, attributeValue);
         }
 
         /// <summary>
         /// For every <see cref="AttributeScriptableObject"/> in the system, create a new <see cref="AttributeValue"/>
         /// to represent a updated value at run time.
+        ///
+        /// TODO: Refactor to not use in update loop
         /// </summary>
         public void UpdateAttributeValues()
         {
-            _previousAttributeValues.Clear();
             for (int i = 0; i < _attributeValues.Count; i++)
             {
-                var attributeValue = _attributeValues[i];
-                _previousAttributeValues.Add(attributeValue.Clone());
-                _attributeValues[i] = attributeValue
-                    .Attribute.CalculateCurrentAttributeValue(attributeValue, _attributeValues);
+                AttributeValue oldAttributeValue = _attributeValues[i];
+                var evaluatedAttribute = oldAttributeValue
+                    .Attribute.CalculateCurrentAttributeValue(oldAttributeValue, _attributeValues);
 
-                if (!(Math.Abs(attributeValue.CurrentValue - _previousAttributeValues[i].CurrentValue) >
-                      TOLERATED_DIFFERENCE))
-                    continue;
+                foreach (var preAttributeChangeChannel in _attributeEvents)
+                {
+                    preAttributeChangeChannel.PreAttributeChange(this, ref evaluatedAttribute);
+                }
 
-                AttributeChanged?.Invoke(this, _previousAttributeValues[i], attributeValue);
-            }
+                PreAttributeChange?.Invoke(oldAttributeValue.Attribute, evaluatedAttribute);
+                _attributeValues[i] = evaluatedAttribute;
+                PostAttributeChange?.Invoke(oldAttributeValue.Attribute, oldAttributeValue, evaluatedAttribute);
 
-            for (var index = 0; index < _attributeEventChannels.Count; index++)
-            {
-                var eventChannel = _attributeEventChannels[index];
-                eventChannel.PreAttributeChange(this, _previousAttributeValues, ref _attributeValues);
+                foreach (var preAttributeChangeChannel in _attributeEvents)
+                {
+                    preAttributeChangeChannel.PostAttributeChange(this, ref oldAttributeValue, ref evaluatedAttribute);
+                }
             }
         }
 
@@ -255,7 +232,7 @@ namespace IndiGames.GameplayAbilitySystem.AttributeSystem.Components
             if (!cache.TryGetValue(attribute, out var index)) return;
 
             var attributeValue = _attributeValues[index];
-            attributeValue.BaseValue = value;
+            attributeValue.BaseValue = attributeValue.CurrentValue = value;
             _attributeValues[index] = attributeValue;
         }
 
@@ -299,9 +276,10 @@ namespace IndiGames.GameplayAbilitySystem.AttributeSystem.Components
         /// Use lateUpdate to make sure Abilities/effects finishes their calculations before we update the attribute values
         /// Support realtime update by default
         /// </summary>
+        [Obsolete]
         protected virtual void LateUpdate()
         {
-            UpdateAttributeValues();
+            if (_updateOnLateUpdate) UpdateAttributeValues();
         }
     }
 }
