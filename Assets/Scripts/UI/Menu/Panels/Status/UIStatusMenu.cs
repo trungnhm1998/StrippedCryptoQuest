@@ -1,10 +1,12 @@
 using System;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Type;
 using CryptoQuest.Gameplay.PlayerParty;
+using CryptoQuest.UI.Character;
 using CryptoQuest.UI.Menu.MenuStates.StatusStates;
 using CryptoQuest.UI.Menu.Panels.Status.Equipment;
 using FSM;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace CryptoQuest.UI.Menu.Panels.Status
 {
@@ -14,23 +16,42 @@ namespace CryptoQuest.UI.Menu.Panels.Status
     /// </summary>
     public class UIStatusMenu : UIMenuPanel
     {
+        [FormerlySerializedAs("equipmentOverviewPanel")]
         [Header("State Context")]
-        [SerializeField] private UIEquipmentOverview equipmentOverviewPanel;
-        public UIEquipmentOverview EquipmentOverviewPanel => equipmentOverviewPanel;
+        [SerializeField] private UIEquipmentOverview _equipmentOverviewPanel;
+        public UIEquipmentOverview EquipmentOverviewPanel => _equipmentOverviewPanel;
         [field: SerializeField] public UIEquipmentList EquipmentListPanel { get; private set; }
         [field: SerializeField] public UIStatusCharacter CharacterPanel { get; private set; }
+
+        [SerializeField] private AttributeChangeEvent _attributeChangeEvent;
 
         public EEquipmentCategory EquippingType { get; set; }
 
         private IParty _party;
-        private int _inspectingMemberIndex = 0;
 
         private void Awake()
         {
             _party = GetComponent<IParty>();
             if (_party == null) throw new NullReferenceException("Party is null");
             EquipmentListPanel.Init(_party);
-            CharacterPanel.Init(_party);
+            CharacterPanel.SetParty(_party);
+
+            CharacterPanel.InspectingCharacter += InspectCharacter;
+        }
+
+        private void OnDestroy()
+        {
+            CharacterPanel.InspectingCharacter -= InspectCharacter;
+        }
+
+        private void InspectCharacter(int slotIdx)
+        {
+            var charInSlot = _party.Members[slotIdx];
+            if (charInSlot.IsValid() == false) return;
+
+            var charAttributeSystem = charInSlot.CharacterComponent.AttributeSystem;
+            _attributeChangeEvent.AttributeSystemReference = charAttributeSystem;
+            charAttributeSystem.UpdateAttributeValues(); // event will be raise even though the value is the same
         }
 
         /// <summary>

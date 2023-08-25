@@ -20,20 +20,14 @@ namespace CryptoQuest.Gameplay
         [SerializeField] private bool _initOnStart = true; // Maybe remove this later
         [field: SerializeField] public AbilitySystemBehaviour GameplayAbilitySystem { get; set; }
         [SerializeField] private CharacterSpec _spec;
-        private AttributeSystemBehaviour _attributeSystem;
         public AbilitySystemBehaviour GAS => GameplayAbilitySystem;
-        public AttributeSystemBehaviour AttributeSystem => _attributeSystem;
+        public AttributeSystemBehaviour AttributeSystem => GameplayAbilitySystem.AttributeSystem;
 
         public Elemental Element => _spec.Element;
 
         private void OnValidate()
         {
             if (GameplayAbilitySystem == null) GameplayAbilitySystem = GetComponent<AbilitySystemBehaviour>();
-        }
-
-        private void Awake()
-        {
-            _attributeSystem = GameplayAbilitySystem.AttributeSystem;
         }
 
         private void Start()
@@ -65,7 +59,7 @@ namespace CryptoQuest.Gameplay
             InitAllAttributes();
             InitElementStats();
 
-            _attributeSystem.UpdateAttributeValues(); // Update the current value
+            AttributeSystem.UpdateAttributeValues(); // Update the current value
         }
 
         /// <summary>
@@ -80,27 +74,27 @@ namespace CryptoQuest.Gameplay
             for (int i = 0; i < attributeDefs.Length; i++)
             {
                 var attributeDef = attributeDefs[i];
-                _attributeSystem.AddAttribute(attributeDef.Attribute);
+                AttributeSystem.AddAttribute(attributeDef.Attribute);
                 var baseValueAtLevel = _spec.GetValueAtLevel(charLvl, attributeDef);
-                _attributeSystem.SetAttributeBaseValue(attributeDef.Attribute, baseValueAtLevel);
+                AttributeSystem.SetAttributeBaseValue(attributeDef.Attribute, baseValueAtLevel);
             }
 
-            _attributeSystem.UpdateAttributeValues();
+            AttributeSystem.UpdateAttributeValues();
         }
 
         private void InitElementStats()
         {
-            _attributeSystem.AddAttribute(Element.AttackAttribute);
-            _attributeSystem.AddAttribute(Element.ResistanceAttribute);
+            AttributeSystem.AddAttribute(Element.AttackAttribute);
+            AttributeSystem.AddAttribute(Element.ResistanceAttribute);
             for (int i = 0; i < Element.Multipliers.Length; i++)
             {
                 var elementMultiplier = Element.Multipliers[i];
-                _attributeSystem.AddAttribute(elementMultiplier.Attribute);
-                _attributeSystem.SetAttributeBaseValue(elementMultiplier.Attribute,
+                AttributeSystem.AddAttribute(elementMultiplier.Attribute);
+                AttributeSystem.SetAttributeBaseValue(elementMultiplier.Attribute,
                     elementMultiplier.Value);
             }
 
-            _attributeSystem.UpdateAttributeValues();
+            AttributeSystem.UpdateAttributeValues();
         }
 
         /// <summary>
@@ -110,11 +104,11 @@ namespace CryptoQuest.Gameplay
         /// </summary>
         private void InitAllAttributes()
         {
-            for (int i = 0; i < _attributeSystem.AttributeValues.Count; i++)
+            for (int i = 0; i < AttributeSystem.AttributeValues.Count; i++)
             {
-                var attributeValue = _attributeSystem.AttributeValues[i];
-                _attributeSystem.AttributeValues[i] = attributeValue.Attribute.CalculateInitialValue(attributeValue,
-                    _attributeSystem.AttributeValues);
+                var attributeValue = AttributeSystem.AttributeValues[i];
+                AttributeSystem.AttributeValues[i] = attributeValue.Attribute.CalculateInitialValue(attributeValue,
+                    AttributeSystem.AttributeValues);
             }
         }
 

@@ -13,7 +13,7 @@ namespace CryptoQuest.UI.Menu.Panels.Home
     {
         public void SetLocalizedName(LocalizedString localizedName);
         public void SetName(string charName);
-        public void SetClass(LocalizedString localizedClass);
+        public void SetClass(LocalizedString localizedClassName);
         public void SetAvatar(Sprite avatar);
         public void SetElement(Sprite elementIcon);
         public void SetLevel(int lvl);
@@ -104,9 +104,9 @@ namespace CryptoQuest.UI.Menu.Panels.Home
             _expBar.SetMaxValue(maxExp);
         }
 
-        public void SetClass(LocalizedString localizedClass)
+        public void SetClass(LocalizedString localizedClassName)
         {
-            _class.StringReference = localizedClass;
+            _class.StringReference = localizedClassName;
         }
 
         public void SetElement(Sprite element)

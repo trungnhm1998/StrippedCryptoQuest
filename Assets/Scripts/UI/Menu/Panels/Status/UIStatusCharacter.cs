@@ -1,46 +1,51 @@
 ﻿using System;
 using System.Collections.Generic;
-using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data;
+using CryptoQuest.Gameplay.Character;
 using CryptoQuest.Gameplay.PlayerParty;
-using CryptoQuest.UI.Menu.Panels.Status.Equipment;
+using CryptoQuest.UI.Menu.Panels.Home;
 using CryptoQuest.UI.Menu.Panels.Status.Stats;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.Components;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Localization;
+using UnityEngine.Localization.Components;
 using UnityEngine.UI;
 
 namespace CryptoQuest.UI.Menu.Panels.Status
 {
-    public class UIStatusCharacter : MonoBehaviour
+    public class UIStatusCharacter : MonoBehaviour, ICharacterInfo
     {
-        [SerializeField] private PartySO _party;
-        [SerializeField] private UIStatusMenu _statusMenu;
+        public event Action<int> InspectingCharacter;
+        [Header("Character Info UI References")]
         [SerializeField] private Image _avatar;
-        [SerializeField] private UIStats _stats;
         [SerializeField] private Image _characterElement;
-        [SerializeField] private UIEquipmentOverview _equipmentOverview;
         [SerializeField] private TMP_Text _level;
-        private string _lvlTxtFormat = string.Empty;
+        [SerializeField] private LocalizeStringEvent _localizedName;
+        [SerializeField] private LocalizeStringEvent _localizedClassName;
+        [SerializeField] private TMP_Text _name;
         [SerializeField] private List<UIElementAttribute> _elementAttributes;
 
+        private string _lvlTxtFormat = string.Empty; // could made this into static
         private IParty _playerParty;
-
-        private List<HeroDataSO> _activeMembersData = new();
-        private List<AttributeSystemBehaviour> _activeMembersAttribute = new();
-
-        private int _currentIndex = 0;
+        private CharacterSpec _inspectingCharacter;
+        private AttributeSystemBehaviour _inspectingAttributeSystem;
+        private int _currentIndex;
 
         private int CurrentIndex
         {
             get => _currentIndex;
             set
             {
-                int count = _activeMembersData.Count;
-                _currentIndex = (value + count) % count;
+                _currentIndex = value switch
+                {
+                    < 0 => PartyConstants.PARTY_SIZE - 1,
+                    >= PartyConstants.PARTY_SIZE => 0,
+                    _ => value
+                };
             }
         }
 
-        public void Init(IParty party)
+        public void SetParty(IParty party)
         {
             _playerParty = party;
         }
@@ -48,21 +53,7 @@ namespace CryptoQuest.UI.Menu.Panels.Status
         private void OnEnable()
         {
             Debug.Log("UIStatusCharacter OnEnable");
-            ShowFirstCharacter();
-        }
-
-        private void ShowFirstCharacter()
-        {
-            var firstMember = _playerParty.Members[0];
-            _characterElement.sprite = firstMember.Element.Icon;
-            if (_lvlTxtFormat == string.Empty)
-            {
-                _lvlTxtFormat = _level.text;
-            }
-
-            _level.text = string.Format(_lvlTxtFormat, firstMember.Level);
-            UpdateElementsStats(firstMember.CharacterComponent.AttributeSystem);
-            _avatar.sprite = firstMember.Avatar;
+            InspectCharacter(0);
         }
 
         private void UpdateElementsStats(AttributeSystemBehaviour attributeSystem)
@@ -74,35 +65,58 @@ namespace CryptoQuest.UI.Menu.Panels.Status
             }
         }
 
-        // Code smell here, need to refactor later, violate DRY with UIHomeMenuSortCharacter
-        private void LoadPartyMembers()
-        {
-            _activeMembersData.Clear();
-
-            foreach (var member in _party.PlayerTeam.Members)
-            {
-                if (member.gameObject.activeSelf)
-                {
-                    member.TryGetComponent<ScriptableObjectStatsInitializer>(out var initializer);
-                    var memberStats = initializer.DefaultStats as HeroDataSO;
-                    _activeMembersData.Add(memberStats);
-                    _activeMembersAttribute.Add(member.AttributeSystem);
-                    _stats.SetAttributes(member.AttributeSystem);
-                    _equipmentOverview.SetEquipment(_activeMembersData[CurrentIndex].Equipments);
-                }
-            }
-        }
-
         public void ChangeCharacter(Vector2 direction)
         {
-            if (direction.x > 0)
-                CurrentIndex++;
-            else if (direction.x < 0)
-                CurrentIndex--;
-
-            _avatar.sprite = _activeMembersData[CurrentIndex].Avatar;
-            _stats.SetAttributes(_activeMembersAttribute[CurrentIndex]);
-            _equipmentOverview.SetEquipment(_activeMembersData[CurrentIndex].Equipments);
+            CurrentIndex += (int)direction.x;
+            InspectCharacter(CurrentIndex);
         }
+
+        private void InspectCharacter(int slotIndex)
+        {
+            var memberInParty = _playerParty.Members[slotIndex];
+            if (memberInParty.IsValid()) ;
+            _inspectingCharacter = memberInParty;
+            _inspectingAttributeSystem = _inspectingCharacter.CharacterComponent.AttributeSystem;
+            _inspectingAttributeSystem.UpdateAttributeValues();
+            UpdateElementsStats(_inspectingAttributeSystem);
+            _inspectingCharacter.SetupUI(this);
+            InspectingCharacter?.Invoke(CurrentIndex);
+        }
+
+        #region Setup UI
+
+        public void SetLocalizedName(LocalizedString localizedName)
+        {
+            _localizedName.StringReference = localizedName;
+        }
+
+        public void SetName(string charName)
+        {
+            _name.text = charName;
+        }
+
+        public void SetClass(LocalizedString localizedClassName)
+        {
+            _localizedClassName.StringReference = localizedClassName;
+        }
+
+        public void SetAvatar(Sprite avatar)
+        {
+            _avatar.sprite = avatar;
+        }
+
+        public void SetElement(Sprite elementIcon)
+        {
+            _characterElement.sprite = elementIcon;
+        }
+
+        public void SetLevel(int lvl)
+        {
+            if (string.IsNullOrEmpty(_lvlTxtFormat))
+                _lvlTxtFormat = _level.text;
+            _level.text = string.Format(_lvlTxtFormat, lvl);
+        }
+
+        #endregion
     }
 }

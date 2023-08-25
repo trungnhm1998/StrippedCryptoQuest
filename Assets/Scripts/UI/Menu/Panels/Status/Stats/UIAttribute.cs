@@ -1,45 +1,41 @@
-﻿using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
+﻿using IndiGames.GameplayAbilitySystem.AttributeSystem;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace CryptoQuest.UI.Menu.Panels.Status.Stats
 {
-    public class UIAttribute : MonoBehaviour
+    public interface IAttributeUI
     {
-        private const string FORMAT = "{0}";
-        private const string ELEMENTAL_FORMAT = "+{0}%";
+        public void SetValue(float value);
+    }
 
-        public float DefaultValue = 100;
-        public bool isElemental;
+    public interface IAttributeComparable
+    {
+        public void CompareValue(float newValue);
+    }
 
+    public class UIAttribute : MonoBehaviour, IAttributeUI, IAttributeComparable
+    {
         [SerializeField] private TMP_Text _valueLabel;
         [SerializeField] private Image _lowerIcon;
         [SerializeField] private Image _higherIcon;
-        
-        [SerializeField] private AttributeScriptableObject _attributeType;
-        public AttributeScriptableObject Attribute => _attributeType;
-        
-        private int _convertedValue;
 
-        private void Start()
-        {
-            _convertedValue = (int)DefaultValue;
-        }
+        private int _convertedValue;
 
         public void CompareValue(float receivedValue)
         {
             switch (receivedValue)
             {
-                case var _ when (int)receivedValue > _convertedValue:
+                case var _ when receivedValue > _convertedValue:
                     ResetAttributeUI();
-                    UpdateAttributeUI(_higherIcon, (int)receivedValue);
+                    UpdateAttributeUI(_higherIcon, receivedValue);
                     break;
-                case var _ when (int)receivedValue < _convertedValue:
+                case var _ when receivedValue < _convertedValue:
                     ResetAttributeUI();
-                    UpdateAttributeUI(_lowerIcon, (int)receivedValue);
+                    UpdateAttributeUI(_lowerIcon, receivedValue);
                     break;
-                case var _ when (int)receivedValue == _convertedValue:
+                case var _ when receivedValue.NearlyEqual(_convertedValue):
                     ResetAttributeUI();
                     break;
             }
@@ -50,20 +46,18 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Stats
             _higherIcon.gameObject.SetActive(false);
             _lowerIcon.gameObject.SetActive(false);
             _valueLabel.color = Color.white;
-            _valueLabel.text = string.Format(isElemental ? ELEMENTAL_FORMAT : FORMAT, (int)DefaultValue);
         }
 
-        private void UpdateAttributeUI(Image image, int value)
+        private void UpdateAttributeUI(Image image, float value)
         {
             image.gameObject.SetActive(true);
             _valueLabel.color = image.color;
-            _valueLabel.text = string.Format(isElemental ? ELEMENTAL_FORMAT : FORMAT, value);
+            _valueLabel.text = $"{(int)value}";
         }
 
-        public void Init(float receivedValue)
+        public void SetValue(float value)
         {
-            ResetAttributeUI();
-            _valueLabel.text = string.Format(isElemental ? ELEMENTAL_FORMAT : FORMAT, (int)receivedValue);
+            _valueLabel.text = $"{(int)value}";
         }
     }
 }

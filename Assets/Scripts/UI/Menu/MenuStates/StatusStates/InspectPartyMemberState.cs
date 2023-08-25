@@ -5,12 +5,12 @@ using UnityEngine;
 
 namespace CryptoQuest.UI.Menu.MenuStates.StatusStates
 {
-    public class EquipmentState : StatusStateBase
+    public class InspectPartyMemberState : StatusStateBase
     {
         private UIEquipmentOverview _equipmentOverviewPanel;
         private UIStatusCharacter _characterPanel;
 
-        public EquipmentState(UIStatusMenu statusPanel) : base(statusPanel)
+        public InspectPartyMemberState(UIStatusMenu statusPanel) : base(statusPanel)
         {
             _equipmentOverviewPanel = statusPanel.EquipmentOverviewPanel;
             _characterPanel = statusPanel.CharacterPanel;
