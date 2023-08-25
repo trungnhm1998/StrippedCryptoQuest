@@ -53,7 +53,7 @@ namespace CryptoQuest.UI.Menu.Panels.Status
         private void OnEnable()
         {
             Debug.Log("UIStatusCharacter OnEnable");
-            InspectCharacter(0);
+            InspectCharacter(_playerParty.Members[0]);
         }
 
         private void UpdateElementsStats(AttributeSystemBehaviour attributeSystem)
@@ -68,14 +68,20 @@ namespace CryptoQuest.UI.Menu.Panels.Status
         public void ChangeCharacter(Vector2 direction)
         {
             CurrentIndex += (int)direction.x;
-            InspectCharacter(CurrentIndex);
+            var memberInParty = _playerParty.Members[CurrentIndex];
+            while (memberInParty.IsValid() == false)
+            {
+                CurrentIndex += (int)direction.x;
+                memberInParty = _playerParty.Members[CurrentIndex];
+            }
+
+            InspectCharacter(memberInParty);
         }
 
-        private void InspectCharacter(int slotIndex)
+        private void InspectCharacter(CharacterSpec character)
         {
-            var memberInParty = _playerParty.Members[slotIndex];
-            if (memberInParty.IsValid()) ;
-            _inspectingCharacter = memberInParty;
+            if (character.IsValid()) ;
+            _inspectingCharacter = character;
             _inspectingAttributeSystem = _inspectingCharacter.CharacterComponent.AttributeSystem;
             UpdateElementsStats(_inspectingAttributeSystem);
             _inspectingCharacter.SetupUI(this);
