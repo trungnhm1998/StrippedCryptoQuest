@@ -1,3 +1,4 @@
+using IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects.EffectExecutionCalculation;
 using UnityEngine;
 
 namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Calculation
@@ -28,7 +29,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Calculation
         }
 
         public static float CalculatePercentPhysicalDamage(float baseDamage, float attack, float defence,
-            float elementAttack, float elementResist)
+            float elementalRate)
         {
             float atkCorrection = BaseBattleVariable.CORRECTION_ATTACK_VALUE != 0
                 ? BaseBattleVariable.CORRECTION_ATTACK_VALUE
@@ -36,23 +37,42 @@ namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Calculation
             float defCorrection = BaseBattleVariable.CORRECTION_ATTACK_VALUE != 0
                 ? BaseBattleVariable.CORRECTION_DEFENSE_VALUE
                 : 1;
-            float elementCorrection = elementResist != 0 ? elementAttack / elementResist : elementAttack;
-            float damage = ((attack / atkCorrection) - (defence / defCorrection)) * baseDamage *
-                           elementCorrection;
+            float damage = ((attack / atkCorrection) - (defence / defCorrection)) * (baseDamage/100) *
+                           elementalRate;
             damage = damage < 0 ? 0 : damage;
-            Debug.Log("baseDamage " + baseDamage + "attack " + attack + "defence " + defence + "elementAttack " +
-                      elementAttack + "elementResist " + elementResist + "damage " + damage);
+            Debug.Log("baseDamage " + baseDamage + "attack " + attack + "defence " + defence + "elemental rate " +
+                      elementalRate);
             return damage;
         }
 
-        public static float CalculateFixedPhysicalDamage(float baseDamage, float elementAttack, float elementResist)
+        public static float CalculateFixedPhysicalDamage(float baseDamage, float elementalRate)
         {
-            float elementCorrection = elementResist != 0 ? elementAttack / elementResist : elementAttack;
-            float damage = baseDamage * elementCorrection;
+            float damage = baseDamage * elementalRate;
             damage = damage < 0 ? 0 : damage;
-            Debug.Log("baseDamage " + baseDamage + "elementAttack " + elementAttack + "elementResist " + elementResist +
-                      "damage " + damage);
+            Debug.Log("baseDamage " + baseDamage + "elemental rate" + elementalRate);
             return damage;
+        }
+
+        public static float CalculateElementalRateFromParams(CustomExecutionParameters executionParams)
+        {
+            var character = executionParams.SourceAbilitySystemComponent.GetComponent<Character>();
+            var characterElemental = character.Element;
+            executionParams.TryGetAttributeValue(new CustomExecutionAttributeCaptureDef()
+            {
+                Attribute = characterElemental.AttackAttribute,
+                CaptureFrom = EGameplayEffectCaptureSource.Source
+            }, out var elementalAtk, 1f);
+            executionParams.TryGetAttributeValue(new CustomExecutionAttributeCaptureDef()
+            {
+                Attribute = characterElemental.ResistanceAttribute,
+                CaptureFrom = EGameplayEffectCaptureSource.Target
+            }, out var elementalDef, 1f);
+
+            Debug.Log("elemental attack" + elementalAtk.CurrentValue
+                                         + " elemental def" + elementalDef.CurrentValue);
+            var elementalRate = elementalAtk.CurrentValue / elementalDef.CurrentValue;
+            elementalRate = elementalRate == 0 ? 1 : elementalRate;
+            return elementalRate;
         }
 
         public static float CorrectAttack(this float attackPowerValue) =>

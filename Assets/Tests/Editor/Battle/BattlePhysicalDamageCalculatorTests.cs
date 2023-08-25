@@ -17,9 +17,9 @@ namespace CryptoQuest.Tests.Editor.Battle
             float attack, float defence, float elementAttack, float elementResist, float expectedDamage)
 
         {
+            float elementalRate = elementAttack / elementResist;
             float calculatedValue =
-                BattleCalculator.CalculatePercentPhysicalDamage(baseDamage, attack, defence, elementAttack,
-                    elementResist);
+                BattleCalculator.CalculatePercentPhysicalDamage(baseDamage, attack, defence, elementalRate);
 
             Assert.AreEqual(expectedDamage, calculatedValue);
         }
@@ -33,8 +33,9 @@ namespace CryptoQuest.Tests.Editor.Battle
             float elementAttack, float elementResist, float expectedDamage)
 
         {
+            float elementalRate = elementAttack / elementResist;
             float calculatedValue =
-                BattleCalculator.CalculateFixedPhysicalDamage(baseDamage, elementAttack, elementResist);
+                BattleCalculator.CalculateFixedPhysicalDamage(baseDamage, elementalRate);
 
             Assert.AreEqual(expectedDamage, calculatedValue);
         }

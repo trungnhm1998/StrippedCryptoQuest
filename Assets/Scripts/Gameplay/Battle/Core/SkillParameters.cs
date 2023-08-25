@@ -3,6 +3,7 @@ using CryptoQuest.Gameplay.BaseGameplayData;
 using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data;
 using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data.Targets;
 using IndiGames.GameplayAbilitySystem.AbilitySystem;
+using IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects.EffectExecutionCalculation;
 using UnityEngine;
 using UnityEngine.Localization;
 
@@ -19,6 +20,8 @@ namespace CryptoQuest.Gameplay.Battle.Core
         public float PowerValueReduced;
         public bool IsFixed;
         public int ContinuesTurn = 1;
+        public EEffectType EffectType;
+        public CustomExecutionAttributeCaptureDef targetAttribute;
     }
 
     [Serializable]

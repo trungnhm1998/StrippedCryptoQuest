@@ -12,11 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25c00b7691398a14ab856ce3c808de52, type: 3}
   m_Name: PhysicalDamageCalculation
   m_EditorClassIdentifier: 
-  _ownerAttack: {fileID: 11400000, guid: cff0791781b73cf4ca80877936aedaad, type: 2}
-  _targetDefense: {fileID: 11400000, guid: be99df9b1a6f2804abf9dd03f042eb2e, type: 2}
-  _targetedAttribute: {fileID: 11400000, guid: 77c53593fd92c904aa7689c5a7449df3, type: 2}
+  _baseAttack:
+    Attribute: {fileID: 11400000, guid: cff0791781b73cf4ca80877936aedaad, type: 2}
+    CaptureFrom: 0
+  _baseDefense:
+    Attribute: {fileID: 11400000, guid: be99df9b1a6f2804abf9dd03f042eb2e, type: 2}
+    CaptureFrom: 0
+  _targetedAttributeSO: {fileID: 11400000, guid: 77c53593fd92c904aa7689c5a7449df3, type: 2}
   _lowerRandomRange: -0.05
   _upperRandomRange: 0.05
-  _takeDamageActionData: {fileID: 11400000, guid: d785954cb4226a64686880fafda60cdb, type: 2}
-  _deathActionData: {fileID: 11400000, guid: 21eb82fcd2f3d394d8b94dd110dd3228, type: 2}
-  _actionEventSO: {fileID: 11400000, guid: f9d0c3b98f2e51a448f0e3086d7eed36, type: 2}

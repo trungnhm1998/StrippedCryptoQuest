@@ -29,6 +29,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Effects.EffectExecu
             ref List<EffectAttributeModifier> outModifiers)
         {
             // TODO: REFACTOR GAS
+            // use DamageCalculation.cs instead
             // effectSpec.Owner.AttributeSystem.TryGetAttributeValue(OwnerAttack, out var attackDamage);
             // _ownerUnit = effectSpec.Owner.GetComponent<IBattleUnit>();
             // _targetUnit = effectSpec.Target.GetComponent<IBattleUnit>();
