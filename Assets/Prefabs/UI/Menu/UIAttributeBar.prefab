@@ -348,7 +348,6 @@ GameObject:
   - component: {fileID: 6552697258637428692}
   - component: {fileID: 6605604862047731108}
   - component: {fileID: 7844025528723342471}
-  - component: {fileID: 8096547877138113340}
   m_Layer: 5
   m_Name: UIAttributeBar
   m_TagString: Untagged
@@ -410,56 +409,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43efb78b437b4ce28daea0c3d37f59ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _attributeChangeEvent: {fileID: 0}
   _currentValue: {fileID: 497141337055452248}
   _maxValue: {fileID: 4308111943861862957}
   _bar: {fileID: 2512482475229314398}
---- !u!114 &8096547877138113340
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3875553433068561035}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cca9b02febeb439e9a387ccfcf3d2b27, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _attributeSystemReference: {fileID: 0}
-  _onAttributesChanged:
-  - Attribute: {fileID: 11400000, guid: 77c53593fd92c904aa7689c5a7449df3, type: 2}
-    Event:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 7844025528723342471}
-          m_TargetAssemblyTypeName: CryptoQuest.UI.Character.UIAttributeBar, indi-games.crypto-quest
-          m_MethodName: SetValue
-          m_Mode: 0
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-  - Attribute: {fileID: 11400000, guid: 692557e6fee799243868270d0b093d7e, type: 2}
-    Event:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 7844025528723342471}
-          m_TargetAssemblyTypeName: CryptoQuest.UI.Character.UIAttributeBar, indi-games.crypto-quest
-          m_MethodName: SetMaxValue
-          m_Mode: 0
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
 --- !u!1 &6804107085852581272
 GameObject:
   m_ObjectHideFlags: 0
