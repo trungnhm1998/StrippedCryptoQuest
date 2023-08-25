@@ -1,3 +1,4 @@
+using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data;
 using IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects.EffectExecutionCalculation;
 using UnityEngine;
 
@@ -37,7 +38,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Calculation
             float defCorrection = BaseBattleVariable.CORRECTION_ATTACK_VALUE != 0
                 ? BaseBattleVariable.CORRECTION_DEFENSE_VALUE
                 : 1;
-            float damage = ((attack / atkCorrection) - (defence / defCorrection)) * (baseDamage/100) *
+            float damage = ((attack / atkCorrection) - (defence / defCorrection)) * (baseDamage / 100) *
                            elementalRate;
             damage = damage < 0 ? 0 : damage;
             Debug.Log("baseDamage " + baseDamage + "attack " + attack + "defence " + defence + "elemental rate " +
@@ -73,6 +74,23 @@ namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Calculation
             var elementalRate = elementalAtk.CurrentValue / elementalDef.CurrentValue;
             elementalRate = elementalRate == 0 ? 1 : elementalRate;
             return elementalRate;
+        }
+
+        public static float GetEffectTypeValueCorrection(EEffectType effectType)
+        {
+            var mod = 1f;
+            switch (effectType)
+            {
+                case EEffectType.Damage:
+                case EEffectType.DeBuff:
+                    mod = -1f;
+                    break;
+                default:
+                    mod = 1f;
+                    break;
+            }
+
+            return mod;
         }
 
         public static float CorrectAttack(this float attackPowerValue) =>

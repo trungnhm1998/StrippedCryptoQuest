@@ -1,17 +1,19 @@
-﻿using IndiGames.GameplayAbilitySystem.AbilitySystem.ScriptableObjects;
+﻿using CryptoQuest.Gameplay.Skill;
+using IndiGames.GameplayAbilitySystem.AbilitySystem.ScriptableObjects;
 using UnityEngine;
 
 namespace CryptoQuest.Gameplay
 {
     public class BattlePrototype : MonoBehaviour
     {
-        [SerializeField] private AbilityScriptableObject _abilityToUseOnEnemy;
+        [SerializeField] private AbilityData _abilityToUseOnEnemy;
 
         private SimpleGameplayAbilitySpec _gameplayAbilitySpec;
 
         public void GiveAbilityToTarget(Character character)
         {
-            _gameplayAbilitySpec = character.GameplayAbilitySystem.GiveAbility(_abilityToUseOnEnemy) as SimpleGameplayAbilitySpec;
+            SimpleAbilitySO abilitySo = _abilityToUseOnEnemy.CreateAbilityInstance();
+            _gameplayAbilitySpec = character.GameplayAbilitySystem.GiveAbility(abilitySo) as SimpleGameplayAbilitySpec;
         }
 
         public void UseAbilityOnTarget(Character character)

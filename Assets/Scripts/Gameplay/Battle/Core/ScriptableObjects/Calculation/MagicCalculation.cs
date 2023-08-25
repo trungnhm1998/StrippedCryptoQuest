@@ -11,7 +11,6 @@ namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Calculation
     public class MagicCalculation : EffectExecutionCalculationBase
     {
         [SerializeField] private CustomExecutionAttributeCaptureDef _baseMagicAttack;
-        [SerializeField] private AttributeScriptableObject _targetedAttributeSO;
         [SerializeField] private float _lowerRandomRange = -0.05f;
         [SerializeField] private float _upperRandomRange = 0.05f;
 
@@ -21,7 +20,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Calculation
             CryptoQuestGameplayEffectSpec effectSpec = (CryptoQuestGameplayEffectSpec)executionParams.EffectSpec;
             SkillParameters skillParameters = effectSpec.SkillParam;
             executionParams.TryGetAttributeValue(_baseMagicAttack, out var baseMagicAttack);
-
+            var targetedAttributeDef = skillParameters.targetAttribute;
             float baseMagicValue = BattleCalculator.CalculateBaseDamage(skillParameters, baseMagicAttack.CurrentValue,
                 Random.Range(_lowerRandomRange, _upperRandomRange));
 
@@ -29,7 +28,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Calculation
             {
                 var modifier = new EffectAttributeModifier()
                 {
-                    Attribute = _targetedAttributeSO,
+                    Attribute = targetedAttributeDef.Attribute,
                     ModifierType = EAttributeModifierType.Add,
                     Value = baseMagicValue
                 };

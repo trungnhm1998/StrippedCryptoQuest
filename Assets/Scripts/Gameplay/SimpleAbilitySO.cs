@@ -21,15 +21,22 @@ namespace CryptoQuest.Gameplay
         /// </summary>
         public EffectScriptableObject Cost;
 
-        [field: SerializeField] public SkillInfo Info { get; private set; }
+        private SkillInfo _info;
+        public SkillInfo Info => _info;
 
         protected override GameplayAbilitySpec CreateAbility()
         {
+            var effectInstance = Instantiate(Effect);
             var ability = new SimpleGameplayAbilitySpec
             {
-                Effect = Effect
+                Effect = effectInstance
             };
             return ability;
+        }
+
+        public void InitAbilityInfo(SkillInfo info)
+        {
+            _info = info;
         }
     }
 

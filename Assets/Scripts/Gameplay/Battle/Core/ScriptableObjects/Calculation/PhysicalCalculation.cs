@@ -38,17 +38,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Calculation
                 damageValue =
                     BattleCalculator.CalculatePercentPhysicalDamage(baseDamageValue, baseAttack.CurrentValue,
                         baseDefense.CurrentValue, elementalRate);
-            var mod = 1f;
-            switch (effectType)
-            {
-                case EEffectType.Damage:
-                case EEffectType.DeBuff:
-                    mod = -1f;
-                    break;
-                default:
-                    mod = 1f;
-                    break;
-            }
+            var mod = BattleCalculator.GetEffectTypeValueCorrection(effectType);
 
             if (baseDamageValue > 0f)
             {

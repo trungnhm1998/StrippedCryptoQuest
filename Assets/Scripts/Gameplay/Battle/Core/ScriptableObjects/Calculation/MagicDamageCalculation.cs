@@ -41,17 +41,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Calculation
                               (percentage / BaseBattleVariable.CORRECTION_PROBABILITY_VALUE);
             }
 
-            var mod = 1f;
-            switch (effectType)
-            {
-                case EEffectType.Damage:
-                case EEffectType.DeBuff:
-                    mod = -1f;
-                    break;
-                default:
-                    mod = 1f;
-                    break;
-            }
+            var mod = BattleCalculator.GetEffectTypeValueCorrection(effectType);
 
             if (damageValue > 0f)
             {
