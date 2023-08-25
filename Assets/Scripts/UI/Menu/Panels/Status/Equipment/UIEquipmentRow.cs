@@ -7,10 +7,12 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
         [SerializeField] private RectTransform _downPoint;
         [SerializeField] private RectTransform _upPoint;
         [SerializeField] private UIEquipmentItem _button;
+        private RectTransform _equipmentViewport;
 
         private void OnEnable()
         {
             if (_button) _button.SelectedEvent += ButtonOnSelectedEvent;
+            _equipmentViewport = gameObject.GetComponent<RectTransform>();
         }
 
         private void OnDisable()
@@ -22,7 +24,7 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
         {
             UITooltip
                 .ShowTooltipEvent?
-                .Invoke(_upPoint.position, _downPoint.position);
+                .Invoke(_upPoint.position, _downPoint.position, _equipmentViewport.rect.height);
         }
     }
 }

@@ -125,6 +125,7 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
 
         public void Hide()
         {
+            _unEquipButton.Select();
             _contents.SetActive(false);
             UITooltip.HideTooltipEvent?.Invoke();
         }

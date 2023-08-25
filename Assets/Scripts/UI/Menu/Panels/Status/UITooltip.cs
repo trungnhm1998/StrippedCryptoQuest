@@ -12,7 +12,7 @@ namespace CryptoQuest.UI.Menu.Panels.Status
 {
     public class UITooltip : MonoBehaviour
     {
-        public delegate void TooltipEvent(Vector2 upwardPosition, Vector2 downwardPosition);
+        public delegate void TooltipEvent(Vector2 upwardPosition, Vector2 downwardPosition, float rectHeight);
         public static TooltipEvent ShowTooltipEvent;
         public static UnityAction HideTooltipEvent;
         [SerializeField] private RectTransform _upContainer;
@@ -27,6 +27,7 @@ namespace CryptoQuest.UI.Menu.Panels.Status
         [SerializeField] private TMP_Text _level;
         [SerializeField] private float _waitBeforePopupTooltip;
         private bool _isShowDownWard;
+        private bool _isShowTooltip = false;
 
         private void OnEnable()
         {
@@ -40,13 +41,14 @@ namespace CryptoQuest.UI.Menu.Panels.Status
             HideTooltipEvent -= Hide;
         }
 
-        private void SetTooltipLocation(Vector2 upwardTooltipPoint, Vector2 downwardTooltipPoint)
+
+        private void SetTooltipLocation(Vector2 upwardTooltipPoint, Vector2 downwardTooltipPoint, float rectHeight)
         {
+            _isShowTooltip = true;
             _content.SetActive(false);
-            if (_upContainer.localPosition.y <= 0) _isShowDownWard = true;
-            else _isShowDownWard = false;
             _upContainer.transform.position = downwardTooltipPoint;
             _downContainer.transform.position = upwardTooltipPoint;
+            _isShowDownWard = (_upContainer.localPosition.y <= -rectHeight);
             _content.transform.parent = _isShowDownWard ? _downContainer : _upContainer;
             _content.transform.localPosition = new Vector3(0, 0, 0);
             StartCoroutine(ShowTooltip());
@@ -55,13 +57,17 @@ namespace CryptoQuest.UI.Menu.Panels.Status
         private IEnumerator ShowTooltip()
         {
             yield return new WaitForSeconds(_waitBeforePopupTooltip);
-            _reverseFrame.SetActive(_isShowDownWard);
-            _frame.SetActive(!_isShowDownWard);
-            _content.SetActive(true);
+            if (_isShowTooltip)
+            {
+                _reverseFrame.SetActive(_isShowDownWard);
+                _frame.SetActive(!_isShowDownWard);
+                _content.SetActive(true);
+            }
         }
 
         private void Hide()
         {
+            _isShowTooltip = false;
             _content.SetActive(false);
         }
     }
