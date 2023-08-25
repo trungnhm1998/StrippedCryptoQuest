@@ -1,5 +1,6 @@
 using System;
 using CryptoQuest.Gameplay.Character;
+using CryptoQuest.UI.Character;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Localization;
@@ -39,13 +40,9 @@ namespace CryptoQuest.UI.Menu.Panels.Home
         [SerializeField] private Image _avatar;
 
         // stats
-        [SerializeField] private TMP_Text _currentHp;
-        [SerializeField] private TMP_Text _maxHp;
-        [SerializeField] private Image _HpBar;
-        [SerializeField] private TMP_Text _currentMp;
-        [SerializeField] private TMP_Text _maxMp;
-        [SerializeField] private Image _MpBar;
-        [SerializeField] private Image _ExpBar;
+        [SerializeField] private UIAttributeBar _hpBar;
+        [SerializeField] private UIAttributeBar _mpBar;
+        [SerializeField] private UIAttributeBar _expBar;
 
         [SerializeField] private AttributeChangeEvent _attributeChangeEvent;
 
@@ -79,27 +76,33 @@ namespace CryptoQuest.UI.Menu.Panels.Home
 
         public void SetCurrentHp(float currentHp)
         {
-            _currentHp.text = $"{(int)currentHp}";
+            _hpBar.SetValue(currentHp);
         }
 
         public void SetMaxHp(float maxHp)
         {
-            _maxHp.text = $"{(int)maxHp}";
+            _hpBar.SetMaxValue(maxHp);
         }
 
         public void SetCurrentMp(float currentMp)
         {
-            _currentMp.text = $"{(int)currentMp}";
+            _mpBar.SetValue(currentMp);
         }
 
         public void SetMaxMp(float maxMp)
         {
-            _maxMp.text = $"{(int)maxMp}";
+            _mpBar.SetMaxValue(maxMp);
         }
 
-        public void SetExp(float exp) { }
+        public void SetExp(float exp)
+        {
+            _expBar.SetValue(exp);
+        }
 
-        public void SetMaxExp(int maxExp) { }
+        public void SetMaxExp(int maxExp)
+        {
+            _expBar.SetMaxValue(maxExp);
+        }
 
         public void SetClass(LocalizedString localizedClass)
         {

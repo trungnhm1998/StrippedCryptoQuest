@@ -6,7 +6,7 @@ using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace CryptoQuest.UI.Menu.Panels.Home
+namespace CryptoQuest.UI.Character
 {
     public class AttributeChangeEvent : MonoBehaviour
     {
