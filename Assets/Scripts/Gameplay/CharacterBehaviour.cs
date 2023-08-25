@@ -66,25 +66,14 @@ namespace CryptoQuest.Gameplay
         private void InitBaseStats()
         {
             var attributeDefs = _spec.StatsDef.Attributes;
-            var charCappedLvl = _spec.StatsDef.MaxLevel;
             var charLvl = _spec.Level;
             for (int i = 0; i < attributeDefs.Length; i++)
             {
                 var attributeDef = attributeDefs[i];
                 _attributeSystem.AddAttribute(attributeDef.Attribute);
-                var baseValueAtLevel = GetValueAtLevel(charLvl, attributeDef.MinValue, attributeDef.MaxValue,
-                    charCappedLvl);
+                var baseValueAtLevel = _spec.GetValueAtLevel(charLvl, attributeDef);
                 _attributeSystem.SetAttributeBaseValue(attributeDef.Attribute, baseValueAtLevel);
             }
-        }
-
-        private float GetValueAtLevel(int currentLvl, float minValue, float maxValue, int maxLvl)
-        {
-            float value = minValue;
-
-            // TODO: Logic for calculating value at level
-
-            return value;
         }
 
         private void InitElementStats()
