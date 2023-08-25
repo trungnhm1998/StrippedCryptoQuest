@@ -6,7 +6,7 @@ namespace IndiGames.GameplayAbilitySystem.AttributeSystem.Components
     public class InlineStatsInitializer : MonoBehaviour, IStatInitializer
     {
         [SerializeField] private AttributeSystemBehaviour _attributeSystem;
-        [SerializeField] private AttributeInitValue[] _database;
+        [SerializeField] private AttributeWithValue[] _database;
         [SerializeField] private bool _initOnStart = false;
 
 #if UNITY_EDITOR
