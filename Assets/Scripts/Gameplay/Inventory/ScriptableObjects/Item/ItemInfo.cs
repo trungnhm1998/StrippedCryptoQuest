@@ -4,28 +4,26 @@ using UnityEngine;
 namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item
 {
     [Serializable]
-    public abstract class ItemInfo
+    public abstract class ItemInfo<TDef> where TDef : GenericItem
     {
-        public ItemGenericSO BaseItem { get; protected set; }
         public string Id { get; set; }
 
+        [field: SerializeField] public TDef Data { get; private set; } // TODO: Primitive item ID instead
         [field: SerializeField] public bool IsNftItem { get; private set; }
 
-        protected ItemInfo(ItemGenericSO baseItem)
+        protected ItemInfo(TDef baseGenericItem) : this()
         {
-            BaseItem = baseItem;
-            Id = Guid.NewGuid().ToString();
+            Data = baseGenericItem;
         }
 
         protected ItemInfo()
         {
-            BaseItem = null;
             Id = Guid.NewGuid().ToString();
         }
 
         public bool IsValid()
         {
-            return BaseItem != null;
+            return Data != null;
         }
 
         protected abstract void Activate();

@@ -16,10 +16,11 @@ namespace CryptoQuest.UI.Menu.Panels.Status
     /// </summary>
     public class UIStatusMenu : UIMenuPanel
     {
+        [FormerlySerializedAs("_equipmentOverviewPanel")]
         [FormerlySerializedAs("equipmentOverviewPanel")]
         [Header("State Context")]
-        [SerializeField] private UIEquipmentOverview _equipmentOverviewPanel;
-        public UIEquipmentOverview EquipmentOverviewPanel => _equipmentOverviewPanel;
+        [SerializeField] private UICharacterEquipmentsPanel _characterEquipmentsPanel;
+        public UICharacterEquipmentsPanel CharacterEquipmentsPanel => _characterEquipmentsPanel;
         [field: SerializeField] public UIEquipmentList EquipmentListPanel { get; private set; }
         [field: SerializeField] public UIStatusCharacter CharacterPanel { get; private set; }
 
@@ -52,6 +53,7 @@ namespace CryptoQuest.UI.Menu.Panels.Status
             var charAttributeSystem = charInSlot.CharacterComponent.AttributeSystem;
             _attributeChangeEvent.AttributeSystemReference = charAttributeSystem;
             charAttributeSystem.UpdateAttributeValues(); // event will be raise even though the value is the same
+            _characterEquipmentsPanel.SetEquipment(charInSlot.Equipments);
         }
 
         /// <summary>

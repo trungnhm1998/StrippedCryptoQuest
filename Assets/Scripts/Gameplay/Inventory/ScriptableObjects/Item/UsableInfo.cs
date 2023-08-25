@@ -8,20 +8,17 @@ using UnityEngine.Localization;
 namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item
 {
     [Serializable]
-    public class UsableInfo : ItemInfo
+    public class UsableInfo : ItemInfo<UsableSO>
     {
         [field: SerializeField] public int Quantity { get; private set; } = 1;
         public AbilitySystemBehaviour Owner { get; set; }
 
-        [field: SerializeField] public UsableSO Item { get; private set; }
-
-        public Sprite Icon => Item.Image;
-        public LocalizedString DisplayName => Item.DisplayName;
-        public LocalizedString Description => Item.Description;
+        public Sprite Icon => Data.Image;
+        public LocalizedString DisplayName => Data.DisplayName;
+        public LocalizedString Description => Data.Description;
 
         public UsableInfo(UsableSO baseItemSO, int quantity = 0) : base(baseItemSO)
         {
-            Item = baseItemSO;
             Quantity = quantity;
         }
 
@@ -31,9 +28,8 @@ namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item
             Owner = owner;
         }
 
-        public UsableInfo(ItemGenericSO baseItemSO, int quantity)
+        public UsableInfo(GenericItem baseGenericItemSO, int quantity)
         {
-            Item = baseItemSO as UsableSO;
             Quantity = quantity;
         }
 
@@ -47,7 +43,7 @@ namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item
         protected override void Activate()
         {
             if (Owner == null) return;
-            GameplayAbilitySpec gameplayAbilitySpec = Owner.GiveAbility(Item.Ability);
+            GameplayAbilitySpec gameplayAbilitySpec = Owner.GiveAbility(Data.Ability);
             Owner.TryActiveAbility(gameplayAbilitySpec);
         }
 
@@ -55,7 +51,7 @@ namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item
 
         public void Use()
         {
-            var action = Item.Action;
+            var action = Data.Action;
             action.ActionContext = new ActionSpecificationBase.Context()
             {
                 Item = this

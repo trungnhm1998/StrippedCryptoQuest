@@ -1,4 +1,6 @@
 ﻿using System;
+using CryptoQuest.Gameplay.Inventory;
+using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
 using CryptoQuest.UI.Menu.Panels.Home;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
 using UnityEngine;
@@ -15,6 +17,7 @@ namespace CryptoQuest.Gameplay.Character
         [field: SerializeField] public Elemental Element { get; set; }
         [field: SerializeField] public int Level { get; set; }
         [field: SerializeField] public StatsDef StatsDef { get; set; }
+        [field: SerializeField] public CharacterEquipments Equipments { get; private set; }
         public Sprite Avatar => BaseInfo.Avatar;
 
         private ICharacter _characterComponent;
@@ -38,6 +41,7 @@ namespace CryptoQuest.Gameplay.Character
 
         public float GetValueAtLevel(int currentLvl, CappedAttributeDef attributeDef)
         {
+            currentLvl = Mathf.Clamp(currentLvl, 1, StatsDef.MaxLevel);
             var value = attributeDef.MinValue;
 
             value = Mathf.Floor((attributeDef.MaxValue - attributeDef.MinValue) / StatsDef.MaxLevel * currentLvl) +

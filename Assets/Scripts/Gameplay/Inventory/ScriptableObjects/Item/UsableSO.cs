@@ -6,7 +6,7 @@ using UnityEngine;
 namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item
 {
     [CreateAssetMenu(fileName = "Usable Item", menuName = "Crypto Quest/Inventory/Usable Item")]
-    public class UsableSO : ItemGenericSO
+    public class UsableSO : GenericItem
     {
         [field: Header("Usable Item")]
         [field: SerializeField] public UsableTypeSO UsableTypeSO { get; private set; }

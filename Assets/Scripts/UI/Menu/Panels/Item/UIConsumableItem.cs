@@ -20,8 +20,8 @@ namespace CryptoQuest.UI.Menu.Panels.Item
         [SerializeField] private Text _quantity;
         [SerializeField] private MultiInputButton _button;
         [SerializeField] private GameObject _selectedBackground;
-        private UsableInfo _itemDef;
-        public UsableInfo ItemDef => _itemDef;
+        private UsableInfo _consumable;
+        public UsableInfo Consumable => _consumable;
 
         public bool Interactable
         {
@@ -49,7 +49,7 @@ namespace CryptoQuest.UI.Menu.Panels.Item
 
         public void Use()
         {
-            _itemDef.Use();
+            _consumable.Use();
         }
 
         private void OnInspectingItem()
@@ -65,7 +65,7 @@ namespace CryptoQuest.UI.Menu.Panels.Item
 
         public void Init(UsableInfo item)
         {
-            _itemDef = item;
+            _consumable = item;
             _icon.sprite = item.Icon;
             _name.StringReference = item.DisplayName;
             _quantity.text = item.Quantity.ToString();

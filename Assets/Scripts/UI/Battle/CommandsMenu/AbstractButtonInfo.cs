@@ -97,10 +97,10 @@ namespace CryptoQuest.UI.Battle.CommandsMenu
 
         public ExpendableItemAbstractButtonInfo(Action<UsableSO> setItemCallback,
             UsableInfo itemInfo)
-            : base(itemInfo.Item.DisplayName.GetLocalizedString())
+            : base(itemInfo.Data.DisplayName.GetLocalizedString())
         {
             _setItemCallback = setItemCallback;
-            _item = itemInfo.Item;
+            _item = itemInfo.Data;
             Value = $"x{itemInfo.Quantity.ToString()}";
         }
 

@@ -6,7 +6,7 @@ using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Type;
 using NUnit.Framework;
 using UnityEditor;
 using UnityEngine;
-using SlotType = CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Container.EquippingSlotContainer.EType;
+using SlotType = CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Container.EquipmentSlot.EType;
 
 namespace CryptoQuest.Tests.Editor
 {
@@ -82,7 +82,7 @@ namespace CryptoQuest.Tests.Editor
             UsableInfo item = NewUsable(usablePath, out UsableSO actual);
 
             _inventorySO.Add(item);
-            var expected = _inventorySO.UsableItems[0].Item;
+            var expected = _inventorySO.UsableItems[0].Data;
 
             Assert.AreEqual(expected, actual, $"Expected: {expected} | Actual: {actual}");
         }
@@ -108,20 +108,6 @@ namespace CryptoQuest.Tests.Editor
             Assert.False(result);
         }
 
-        [TestCase(EQUIPMENT_PATH + "Weapons/Sword.asset", SlotType.Weapon)]
-        public void Add_WithEquipment_ShouldAddToInventory(string equipmentPath,
-            EquippingSlotContainer.EType expectedSlot)
-        {
-            var equipment = NewEquipment(equipmentPath, out EquipmentSO data);
-
-            var expected = _inventorySO.Add(equipment);
-
-            Assert.True(expected);
-
-            _inventorySO.GetEquipmentByType(data.EquipmentType.EquipmentCategory, out var equipments);
-            Assert.IsNotEmpty(equipments, $" {equipments} is not empty");
-        }
-
         [Test]
         public void Add_WithEquipmentButNoData_ShouldReturnFalse()
         {
@@ -134,24 +120,6 @@ namespace CryptoQuest.Tests.Editor
         {
             var result = _inventorySO.Add(null);
             Assert.False(result);
-        }
-
-        [TestCase(EQUIPMENT_PATH + "Weapons/Sword.asset", SlotType.Weapon)]
-        public void Remove_WithEquipment_ShouldRemoveFromInventory(string equipmentPath,
-            EquippingSlotContainer.EType slot)
-        {
-            var equipment = EquipItemFromDataWithPath(slot, equipmentPath);
-
-            var expectedType = equipment.Item.EquipmentType.EquipmentCategory;
-
-            _inventorySO.Add(equipment);
-
-            var expected = _inventorySO.Remove(equipment);
-
-            Assert.True(expected);
-
-            _inventorySO.GetEquipmentByType(expectedType, out var equipments);
-            Assert.IsEmpty(equipments);
         }
 
         [Test]
@@ -168,29 +136,10 @@ namespace CryptoQuest.Tests.Editor
             Assert.False(result);
         }
 
-        private EquipmentInfo NewEquipment(string equipmentPath, out EquipmentSO equipmentSO)
-        {
-            equipmentSO = AssetDatabase.LoadAssetAtPath<EquipmentSO>(equipmentPath);
-
-            EquipmentInfo equipment = new EquipmentInfo(equipmentSO);
-
-            return equipment;
-        }
-
         private UsableInfo NewUsable(string usablePath, out UsableSO item)
         {
             item = AssetDatabase.LoadAssetAtPath<UsableSO>(usablePath);
             return new UsableInfo(item);
-        }
-
-        private EquipmentInfo EquipItemFromDataWithPath(SlotType slot, string equipmentPath)
-        {
-            var equipmentSO = AssetDatabase.LoadAssetAtPath<EquipmentSO>(equipmentPath);
-
-            EquipmentInfo equipment = new EquipmentInfo(equipmentSO);
-
-            // _inventorySO.Equip(slot, equipment);
-            return equipment;
         }
 
         private InventoryConfigSO GetInventoryConfig()

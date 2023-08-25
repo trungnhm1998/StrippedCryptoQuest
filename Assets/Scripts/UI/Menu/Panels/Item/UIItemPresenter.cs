@@ -40,7 +40,7 @@ namespace CryptoQuest.UI.Menu.Panels.Item
 
         private void GetItem(UIConsumableItem currentItem)
         {
-            _item = currentItem.ItemDef.Item;
+            _item = currentItem.Consumable.Data;
         }
 
         private void ActiveAbility(int index)

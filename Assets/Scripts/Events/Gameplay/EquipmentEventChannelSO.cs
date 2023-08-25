@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.Events;
 using ESlotType =
-    CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Container.EquippingSlotContainer.EType;
+    CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Container.EquipmentSlot.EType;
 
 namespace CryptoQuest.Events.Gameplay
 {

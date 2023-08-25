@@ -91,7 +91,7 @@ namespace CryptoQuest.UI.Menu.Panels.Item
         private void OnInspecting(UIConsumableItem consumableUI)
         {
             _currentInspectingItem = consumableUI;
-            Inspecting?.Invoke(consumableUI.ItemDef);
+            Inspecting?.Invoke(consumableUI.Consumable);
         }
 
         #endregion

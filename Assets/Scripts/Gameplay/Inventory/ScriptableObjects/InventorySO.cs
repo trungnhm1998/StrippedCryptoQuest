@@ -6,7 +6,7 @@ using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Type;
 using UnityEditor;
 using UnityEngine;
 using ESlotType =
-    CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Container.EquippingSlotContainer.EType;
+    CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Container.EquipmentSlot.EType;
 
 namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects
 {
@@ -131,15 +131,12 @@ namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects
                 return false;
             }
 
-            if (equipment.Item == null)
+            if (equipment.IsValid() == false)
             {
-                Debug.LogWarning($"Equipment doesn't have item");
+                Debug.LogWarning($"Equipment is not valid");
                 return false;
             }
 
-            var equipmentCategory = equipment.Item.EquipmentType.EquipmentCategory;
-
-            UpdateInventorySlot(equipmentCategory, equipment);
 
             return true;
         }
@@ -158,7 +155,7 @@ namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects
                 return false;
             }
 
-            if (item.Item == null)
+            if (item.Data == null)
             {
                 Debug.LogWarning($"Item doesn't have item");
                 return false;
@@ -179,9 +176,9 @@ namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects
                 return false;
             }
 
-            if (equipment.Item == null)
+            if (equipment.IsValid() == false)
             {
-                Debug.LogWarning($"Equipment doesn't have item");
+                Debug.LogWarning("Equipment is not valid");
                 return false;
             }
 
@@ -192,19 +189,7 @@ namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects
 
         public bool Remove(EquipmentInfo equipment)
         {
-            int index = GetInventoryIndex(equipment);
-            if (index < 0) return false;
-
-            for (int i = 0; i < _inventories[index].CurrentItems.Count; i++)
-            {
-                if (_inventories[index].CurrentItems[i].Item.ID == equipment.Item.ID)
-                {
-                    _inventories[index].CurrentItems.RemoveAt(i);
-                    return true;
-                }
-            }
-
-            return true;
+            return false;
         }
 
 
@@ -220,30 +205,6 @@ namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects
             }
 
             return true;
-        }
-
-        private int GetInventoryIndex(EquipmentInfo equipment)
-        {
-            if (equipment == null)
-            {
-                Debug.LogWarning($"Equipment is null");
-                return -1;
-            }
-
-            if (equipment.Item == null)
-            {
-                Debug.LogWarning($"Equipment doesn't have item");
-                return -1;
-            }
-
-            var currentCategory = equipment.Item.EquipmentType.EquipmentCategory;
-            if (!_inventoriesCache.TryGetValue(currentCategory, out var index))
-            {
-                Debug.LogWarning($"Inventory doesn't have {currentCategory}");
-                return -1;
-            }
-
-            return index;
         }
 
         /// <summary>

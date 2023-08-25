@@ -46,7 +46,7 @@ namespace CryptoQuest.Tests.Runtime.Inventory
         private EquipmentEventChannelSO _onUnequipItem;
 
         private EquipmentInfo _currentEquipmentInfo;
-        private EquippingSlotContainer.EType _currentSlot;
+        private EquipmentSlot.EType _currentSlot;
 
         [UnitySetUp]
         public IEnumerator SetupOnTime()
@@ -113,76 +113,6 @@ namespace CryptoQuest.Tests.Runtime.Inventory
             _onRemoveItem.RaiseEvent(itemExpected);
 
             Assert.AreEqual(0, _inventorySO.UsableItems.Count, "Inventory should be empty");
-
-            yield return null;
-        }
-
-        [UnityTest]
-        public IEnumerator Equip_ShouldHaveExactEquipmentInSlot()
-        {
-            var data = AssetDatabase.LoadAssetAtPath<EquipmentSO>(EQUIPMENT_DATA_PATH);
-
-            _currentEquipmentInfo = new EquipmentInfo(data);
-
-            _onEquipItem.RaiseEvent(EquippingSlotContainer.EType.Weapon, _currentEquipmentInfo);
-
-            yield return new WaitForSeconds(2f);
-
-            // Assert.AreEqual(_currentEquipmentInfo,
-            //     _inventorySO.GetInventorySlot(EquippingSlotContainer.EType.Weapon).Equipment,
-            //     "Inventory should have 1 item");
-            yield return null;
-        }
-
-        [UnityTest]
-        public IEnumerator Equip_ShieldAndWeapon_ShouldHaveExactlyTwoSlot()
-        {
-            var weapon = AssetDatabase.LoadAssetAtPath<EquipmentSO>(EQUIPMENT_DATA_PATH);
-
-            _currentEquipmentInfo = new EquipmentInfo(weapon);
-
-            _onEquipItem.RaiseEvent(EquippingSlotContainer.EType.Weapon, _currentEquipmentInfo);
-
-            yield return new WaitForSeconds(.5f);
-
-            // Assert.AreEqual(_currentEquipmentInfo,
-            //     _inventorySO.GetInventorySlot(EquippingSlotContainer.EType.Weapon).Equipment,
-            //     "Inventory should have 1 item");
-            
-            var shield = AssetDatabase.LoadAssetAtPath<EquipmentSO>(SHIELD_EQUIPMENT_DATA_PATH);
-
-            _currentEquipmentInfo = new EquipmentInfo(shield);
-
-            _onEquipItem.RaiseEvent(EquippingSlotContainer.EType.Shield, _currentEquipmentInfo);
-
-            yield return new WaitForSeconds(.5f);
-            //
-            // Assert.AreEqual(_currentEquipmentInfo,
-            //     _inventorySO.GetInventorySlot(EquippingSlotContainer.EType.Shield).Equipment,
-            //     "Inventory should have 1 item");
-
-            yield return null;
-        }
-
-        [UnityTest]
-        public IEnumerator Unequip_ShouldEmptyExactSlot()
-        {
-            var data = AssetDatabase.LoadAssetAtPath<EquipmentSO>(EQUIPMENT_DATA_PATH);
-
-            _currentEquipmentInfo = new EquipmentInfo(data);
-
-            _onEquipItem.RaiseEvent(EquippingSlotContainer.EType.Weapon, _currentEquipmentInfo);
-
-            // Assert.AreEqual(_currentEquipmentInfo,
-            //     _inventorySO.GetInventorySlot(EquippingSlotContainer.EType.Weapon).Equipment,
-            //     "Inventory should have 1 item");
-
-            yield return new WaitForSeconds(2f);
-
-            _onUnequipItem.RaiseEvent(EquippingSlotContainer.EType.Weapon, _currentEquipmentInfo);
-
-            // Assert.IsNull(_inventorySO.GetInventorySlot(EquippingSlotContainer.EType.Weapon).Equipment,
-            //     "Inventory should be empty");
 
             yield return null;
         }

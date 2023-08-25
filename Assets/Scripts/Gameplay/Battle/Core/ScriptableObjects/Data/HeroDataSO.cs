@@ -1,4 +1,5 @@
 using CryptoQuest.Config;
+using CryptoQuest.Gameplay.Inventory;
 using UnityEngine;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
 
@@ -17,13 +18,5 @@ namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data
 
         [field: SerializeField, NonReorderable]
         public CharacterEquipments Equipments { get; private set; } = new();
-
-#if UNITY_EDITOR
-        private void OnValidate()
-        {
-            if (InventoryConfig == null) return;
-            Equipments.Initialize(InventoryConfig.CategorySlotIndex, InventoryConfig.SlotTypeIndex);
-        }
-#endif
     }
 }

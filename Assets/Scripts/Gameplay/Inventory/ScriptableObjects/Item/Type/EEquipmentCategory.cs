@@ -2,12 +2,12 @@
 {
     public enum EEquipmentCategory
     {
-        LeftHand = 0,
-        RightHand = 1,
-        Head = 2,
-        Body = 3,
-        Leg = 4,
-        Foot = 5,
+        Weapon = 0,
+        Shield = 1,
+        Helmet = 2,
+        Armor = 3,
+        Trouser = 4,
+        Shoe = 5,
         Accessory = 6,
     }
 }

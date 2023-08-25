@@ -47,13 +47,13 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
 
         private void OnEnable()
         {
-            UIEquipmentItem.InspectingRow += AutoScroll;
+            UIEquipmentButton.InspectingRow += AutoScroll;
             _inputMediator.MenuNavigationContextEvent += NavigateMenu;
         }
 
         private void OnDisable()
         {
-            UIEquipmentItem.InspectingRow -= AutoScroll;
+            UIEquipmentButton.InspectingRow -= AutoScroll;
             _inputMediator.MenuNavigationContextEvent -= NavigateMenu;
         }
 
@@ -110,6 +110,7 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
                 RefreshItems();
                 _initialized = false;
             }
+
             _cachedType = type;
 
             if (!_initialized)
@@ -117,7 +118,7 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
                 _scrollRect.Initialize(this);
                 _initialized = true;
             }
-            
+
             if (!_inventorySO.GetEquipmentByType(type, out _equipments))
             {
                 Debug.LogWarning("Failed to get equipments");
@@ -149,15 +150,13 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
         /// <param name="index">query from real data using this index</param>
         public void SetCell(ICell cell, int index)
         {
-            UIEquipmentItem itemRow = cell as UIEquipmentItem;
-            itemRow.Init(_equipments[index], index);
-            itemRow.interactable = true;
+            // UIEquipmentItem itemRow = cell as UIEquipmentItem;
+            // itemRow.Init(_equipments[index], index);
+            // itemRow.interactable = true;
         }
 
         #endregion
 
-        public void Init(IParty party)
-        {
-        }
+        public void Init(IParty party) { }
     }
 }

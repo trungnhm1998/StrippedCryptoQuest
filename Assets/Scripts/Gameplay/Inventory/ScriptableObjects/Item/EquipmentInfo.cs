@@ -4,21 +4,11 @@ using UnityEngine;
 namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item
 {
     [Serializable]
-    public class EquipmentInfo : ItemInfo
+    public class EquipmentInfo : ItemInfo<EquipmentSO>
     {
-        [field: SerializeField] public EquipmentSO Item { get; private set; }
         [field: SerializeField] public int Level { get; private set; }
+        [field: SerializeField] public StatsDef Stats { get; private set; }
 
-        public bool IsEquipped { get; private set; }
-
-        public EquipmentInfo() { }
-
-        public EquipmentInfo(EquipmentSO itemSO) : base(itemSO)
-        {
-            Item = itemSO;
-        }
-
-        public EquipmentInfo(ItemGenericSO itemSO) : base(itemSO as EquipmentSO) { }
         protected override void Activate() { }
 
         public void Equip(InventorySO inventory)
@@ -32,11 +22,5 @@ namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item
             inventory.Remove(this);
             Activate();
         }
-    }
-
-    [Serializable]
-    public class StatsValue
-    {
-        
     }
 }

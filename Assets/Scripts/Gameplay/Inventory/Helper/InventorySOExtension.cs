@@ -33,7 +33,7 @@ namespace CryptoQuest.Gameplay.Inventory.Helper
         {
             foreach (var itemInfo in inventory.UsableItems)
             {
-                var abilitySO = itemInfo.Item.Ability;
+                var abilitySO = itemInfo.Data.Ability;
                 if (!abilitySO.Info.CheckUsageScenario(usageScenario)) continue;
                 yield return itemInfo;
             }
