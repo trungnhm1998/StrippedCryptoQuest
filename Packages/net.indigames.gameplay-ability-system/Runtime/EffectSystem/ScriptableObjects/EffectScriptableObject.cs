@@ -23,7 +23,7 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects
         /// e.g. Need to calculate based on caster's attribute
         /// </summary>
         [Tooltip("How the effect being calculated with custom logic. Can leave it null or DefaultSO.")]
-        public EffectExecutionCalculationBase[] ExecutionCalculations;
+        public EffectExecutionCalculationBase[] ExecutionCalculations = Array.Empty<EffectExecutionCalculationBase>();
 
         [Header("Application rules")]
         [Range(0f, 1f)] [Tooltip("There {ChanceToApply}*100% chance that effect will be applied")]
