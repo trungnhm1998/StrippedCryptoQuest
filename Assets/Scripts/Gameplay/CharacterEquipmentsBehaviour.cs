@@ -1,18 +1,20 @@
 using System.Collections.Generic;
 using CryptoQuest.Gameplay.Inventory;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item;
+using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Container;
 using IndiGames.GameplayAbilitySystem.EffectSystem;
 using IndiGames.GameplayAbilitySystem.Implementation.BasicEffect;
 using UnityEngine;
 
 namespace CryptoQuest.Gameplay
 {
-    public interface IEquipmentController
+    public interface IEquipmentEffector
     {
         void InitEquipments(ICharacter character);
+        void ApplyEffect(EquipmentInfo equipment);
     }
 
-    public class CharacterEquipmentsBehaviour : MonoBehaviour, IEquipmentController
+    public class CharacterEquipmentsBehaviour : MonoBehaviour, IEquipmentEffector
     {
         private struct EquipmentEffectContainer
         {
@@ -29,7 +31,9 @@ namespace CryptoQuest.Gameplay
         public void InitEquipments(ICharacter character)
         {
             _character = character;
+            ClearEquipmentsHandlers();
             _equipments = _character.Spec.Equipments;
+            RegisterEquipmentHandlers();
 
             foreach (var slot in _equipments.Slots)
             {
@@ -42,7 +46,28 @@ namespace CryptoQuest.Gameplay
             _character.UpdateAttributeValues();
         }
 
-        private void ApplyEffect(EquipmentInfo equipment)
+        /// <summary>
+        /// I need to stay consistence with my naming...
+        /// </summary>
+        private void ClearEquipmentsHandlers()
+        {
+            _equipments.EquipmentAdded -= HandleEquipmentAdded;
+            // _equipments.EquipmentRemoved -= HandleEquipmentRemoved;
+        }
+
+        private void RegisterEquipmentHandlers()
+        {
+            _equipments.EquipmentAdded += HandleEquipmentAdded;
+            // _equipments.EquipmentRemoved += HandleEquipmentRemoved;
+        }
+
+        private void HandleEquipmentAdded(EquipmentSlot.EType slotType, EquipmentSlot slot)
+        {
+            ApplyEffect(slot.Equipment);
+            _character.UpdateAttributeValues();
+        }
+
+        public void ApplyEffect(EquipmentInfo equipment)
         {
             if (equipment.IsValid() == false) return;
 

@@ -45,15 +45,16 @@ namespace CryptoQuest.UI.Menu.Panels.Item
 
         private void ActiveAbility(int index)
         {
-            AbilitySystemBehaviour owner = _partySo.PlayerTeam.Members[index];
-
-            CryptoQuestGameplayEffectSpec ability =
-                (CryptoQuestGameplayEffectSpec)owner.MakeOutgoingSpec(_item.Ability.Effect);
-
-            ability.SetParameters(_item.Ability.Info.SkillParameters);
-            owner.ApplyEffectSpecToSelf(ability);
-            
-            Hide();
+            // TODO: REFACTORING PARTY SYSTEM
+            // AbilitySystemBehaviour owner = _partySo.PlayerTeam.Members[index];
+            //
+            // CryptoQuestGameplayEffectSpec ability =
+            //     (CryptoQuestGameplayEffectSpec)owner.MakeOutgoingSpec(_item.Ability.Effect);
+            //
+            // ability.SetParameters(_item.Ability.Info.SkillParameters);
+            // owner.ApplyEffectSpecToSelf(ability);
+            //
+            // Hide();
         }
 
         public void Hide()

@@ -11,74 +11,80 @@ namespace CryptoQuest.Gameplay.Inventory
     [Serializable]
     public struct CharacterEquipments
     {
-        [field: SerializeField] public List<EquipmentSlot> Slots { get; set; }
-        private Dictionary<ESlotType, EquipmentSlot> _equippingSlotsCache;
+        public event Action<ESlotType, EquipmentSlot> EquipmentAdded;
+        public event Action<ESlotType, EquipmentSlot> EquipmentRemoved;
+
+        [field: SerializeField] public List<EquipmentSlot> Slots { get; private set; }
+        private Dictionary<ESlotType, EquipmentSlot>
+            _equippingSlotsCache; // even though there should only 8 Slots I want faster lookup
 
         public List<EquipmentSlot> GetEquippingSlots()
         {
             return Slots;
         }
 
-        public bool Equip(ESlotType allowedSlot, EquipmentInfo equipmentInfo)
+        public bool Equip(ESlotType slot, EquipmentInfo equipmentInfo)
         {
-            if (equipmentInfo == null)
+            if (!IsSlotValid(slot, equipmentInfo))
             {
-                Debug.LogWarning($"CharacterEquipments::Equipment is null");
                 return false;
             }
 
-            /*
-            if (!Inventory.Remove(equipmentInfo))
-            {
-                Debug.LogWarning($"CharacterEquipments::Don't have {equipmentInfo} in inventory");
-                return false;
-            }
-            */
-
-            if (!UpdateEquippingSlot(allowedSlot, equipmentInfo))
-            {
-                Debug.LogWarning($"CharacterEquipments::Cannot update inventory {allowedSlot}");
-                return false;
-            }
-
+            OnEquipmentAdd(slot, equipmentInfo);
             return true;
         }
 
-        public bool Unequip(ESlotType slotType, EquipmentInfo equipmentInfo)
+        private void OnEquipmentAdd(ESlotType slot, EquipmentInfo equipmentInfo)
         {
-            if (equipmentInfo == null)
+            var equipmentSlot = new EquipmentSlot()
             {
-                Debug.LogWarning($"CharacterEquipments::Equipment is null");
-                return false;
-            }
+                Equipment = equipmentInfo,
+                Type = slot
+            };
+            Slots.Add(equipmentSlot);
+            _equippingSlotsCache.Add(slot, equipmentSlot);
+            EquipmentAdded?.Invoke(slot, equipmentSlot);
+        }
 
-            /*
-            if (!Inventory.Add(equipmentInfo))
-            {
-                Debug.LogWarning($"CharacterEquipments::Cannot add {equipmentInfo} to inventory");
-                return false;
-            }
-            */
-
-            if (!UpdateEquippingSlot(slotType))
-            {
-                Debug.LogWarning($"CharacterEquipments::Cannot update inventory {slotType}");
-                return false;
-            }
-
+        public bool UnEquip(ESlotType slotType, EquipmentInfo equipmentInfo)
+        {
             return true;
         }
 
-        public bool UpdateEquippingSlot(ESlotType slotType, EquipmentInfo equipmentInfo = null)
+        /// <summary>
+        /// Is this slot available for equipping?
+        /// </summary>
+        /// <param name="slotType">what slot</param>
+        /// <param name="equipmentInfo">what equipment</param>
+        /// <returns>return false if already has equipment in slot should <see cref="UnEquip"/> first</returns>
+        public bool IsSlotValid(ESlotType slotType, EquipmentInfo equipmentInfo)
         {
-            if (!_equippingSlotsCache.TryGetValue(slotType, out var slot))
+            if (equipmentInfo == null || equipmentInfo.IsValid() == false)
+            {
+                Debug.LogWarning($"CharacterEquipments::IsSlotValid::equipmentInfo is null or invalid");
+                return false;
+            }
+
+            LazyInitCache();
+
+            if (_equippingSlotsCache.ContainsKey(slotType))
             {
                 Debug.LogWarning($"CharacterEquipments::Slot {slotType} is not available");
                 return false;
             }
 
-            slot.UpdateEquipment(equipmentInfo);
             return true;
+        }
+
+        private void LazyInitCache()
+        {
+            if (_equippingSlotsCache != null) return;
+
+            _equippingSlotsCache = new Dictionary<ESlotType, EquipmentSlot>();
+            foreach (var slot in Slots)
+            {
+                _equippingSlotsCache.Add(slot.Type, slot);
+            }
         }
     }
 }

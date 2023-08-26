@@ -1,7 +1,5 @@
 using System;
-using CryptoQuest.Gameplay.Battle.Core.Components;
 using CryptoQuest.Gameplay.Character;
-using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -15,21 +13,16 @@ namespace CryptoQuest.Gameplay.PlayerParty
     public interface IParty
     {
         CharacterSpec[] Members { get; }
+        bool Sort(int sourceIndex, int destinationIndex);
     }
 
     [CreateAssetMenu(menuName = "Gameplay/Party SO")]
-    public class PartySO : ScriptableObject, IPartySort, IParty
+    public class PartySO : ScriptableObject, IParty
     {
-        [FormerlySerializedAs("Members")] [SerializeField] private CharacterSpec[] _members = new CharacterSpec[PartyConstants.PARTY_SIZE];
+        [FormerlySerializedAs("Members")] [SerializeField]
+        private CharacterSpec[] _members = new CharacterSpec[PartyConstants.PARTY_SIZE];
 
         public CharacterSpec[] Members => _members;
-
-        [Header("Obsolete")]
-        public AbilitySystemBehaviour MainSystem;
-
-        public BattleTeam PlayerTeam;
-        public IPartySort PartySorter { get; private set; }
-        public Action<bool> SortCompleted { get; set; }
 
         private void OnValidate()
         {
@@ -39,11 +32,51 @@ namespace CryptoQuest.Gameplay.PlayerParty
             }
         }
 
-        public void Sort(int sourceIndex, int destinationIndex)
+        /// <summary>
+        /// Cannot sort into empty slot
+        /// Both slot must be valid
+        /// </summary>
+        /// <param name="sourceIndex"></param>
+        /// <param name="destinationIndex"></param>
+        public bool Sort(int sourceIndex, int destinationIndex)
         {
-            PartySorter ??= new SimplePartySort(this);
-            PartySorter.SortCompleted = SortCompleted;
-            PartySorter.Sort(sourceIndex, destinationIndex);
+            if (sourceIndex is < 0 or >= PartyConstants.PARTY_SIZE)
+            {
+                Debug.LogError("PartySO::Sort::Invalid source index");
+                return false;
+            }
+
+            if (destinationIndex is < 0 or >= PartyConstants.PARTY_SIZE)
+            {
+                Debug.LogError("PartySO::Sort::Invalid destination index");
+                return false;
+            }
+
+            if (sourceIndex == destinationIndex)
+            {
+                Debug.LogWarning("PartyS::Sort::Source is the same as destination index");
+                return false;
+            }
+
+            var destMember = Members[destinationIndex];
+            if (destMember == null || destMember.IsValid() == false)
+            {
+                Debug.LogError("PartySO::Sort::Cannot sort into empty slot");
+                return false;
+            }
+
+            var memberToSort = Members[sourceIndex];
+            if (memberToSort == null || memberToSort.IsValid() == false)
+            {
+                Debug.LogError("PartySO::Sort::Invalid source or destination index");
+                return false;
+            }
+
+            // Either this destructuring or 3 lines of code
+            (Members[sourceIndex], Members[destinationIndex]) = (Members[destinationIndex], Members[sourceIndex]);
+
+            Debug.Log($"Sorted {sourceIndex} to {destinationIndex}");
+            return true;
         }
     }
 }

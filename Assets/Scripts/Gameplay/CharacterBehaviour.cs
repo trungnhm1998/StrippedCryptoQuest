@@ -35,7 +35,7 @@ namespace CryptoQuest.Gameplay
 
         public CharacterSpec Spec => _spec;
 
-        private IEquipmentController _equipmentController;
+        private IEquipmentEffector _equipmentEffector;
         private IStatInitializer _statsInitializer;
 
         private void OnValidate()
@@ -63,9 +63,9 @@ namespace CryptoQuest.Gameplay
 
         private void GetDependencies()
         {
-            if (_equipmentController == null) _equipmentController = GetComponent<IEquipmentController>();
+            if (_equipmentEffector == null) _equipmentEffector = GetComponent<IEquipmentEffector>();
             if (_statsInitializer == null) _statsInitializer = GetComponent<IStatInitializer>();
-            Assert.IsNotNull(_equipmentController); // even for a monster?
+            Assert.IsNotNull(_equipmentEffector); // even for a monster?
         }
 
         public void SetSlot(PartySlot partySlot)
@@ -90,7 +90,7 @@ namespace CryptoQuest.Gameplay
         {
             if (_spec.IsValid() == false) return;
             _statsInitializer.InitStats();
-            _equipmentController.InitEquipments(this);
+            _equipmentEffector.InitEquipments(this);
         }
     }
 }

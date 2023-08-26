@@ -11,5 +11,10 @@ namespace CryptoQuest.UI.Menu
     {
         [SerializeField] private PartySO _party;
         public CharacterSpec[] Members => _party.Members;
+
+        public bool Sort(int sourceIndex, int destinationIndex)
+        {
+            return _party.Sort(sourceIndex, destinationIndex);
+        }
     }
 }

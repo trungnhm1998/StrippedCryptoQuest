@@ -17,8 +17,9 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components
 
         protected override void StartBattle()
         {
-            BattleTeam1 = _party.PlayerTeam;
-            base.StartBattle();
+            // TODO: REFACTORING PARTY
+            // BattleTeam1 = _party.PlayerTeam;
+            // base.StartBattle();
         }
     }   
 }

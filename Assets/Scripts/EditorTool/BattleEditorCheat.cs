@@ -129,30 +129,30 @@ namespace CryptoQuest.EditorTool
 
         private void RenderOneHitCheat()
         {
-            var playerTeam = _party.PlayerTeam;
-            var label = _enableOneHitCheat ? "Disable" : "Enable";
-            if (GUILayout.Button($"{label} One hit cheat"))
-            {
-                foreach (var member in playerTeam.Members)
-                {
-                    if (!member.gameObject.activeSelf) continue;
-                    if (!_enableOneHitCheat)
-                    {
-                        var ability = _buffAttackAbility.GetAbilitySpec(member);
-                        _memberAbilityDict[member] = ability;
-                        ability.ActivateAbility();
-                        // TODO: REFACTOR ATTRIBUTE SYSTEM
-                    }
-                    else
-                    {
-                        var ability = _memberAbilityDict[member];
-                        ability.OnAbilityRemoved(ability);
-                        // TODO: REFACTOR ATTRIBUTE SYSTEM
-                    }
-                }
-
-                _enableOneHitCheat = !_enableOneHitCheat;
-            }
+            // var playerTeam = _party.PlayerTeam;
+            // var label = _enableOneHitCheat ? "Disable" : "Enable";
+            // if (GUILayout.Button($"{label} One hit cheat"))
+            // {
+            //     foreach (var member in playerTeam.Members)
+            //     {
+            //         if (!member.gameObject.activeSelf) continue;
+            //         if (!_enableOneHitCheat)
+            //         {
+            //             var ability = _buffAttackAbility.GetAbilitySpec(member);
+            //             _memberAbilityDict[member] = ability;
+            //             ability.ActivateAbility();
+            //             // TODO: REFACTOR ATTRIBUTE SYSTEM
+            //         }
+            //         else
+            //         {
+            //             var ability = _memberAbilityDict[member];
+            //             ability.OnAbilityRemoved(ability);
+            //             // TODO: REFACTOR ATTRIBUTE SYSTEM
+            //         }
+            //     }
+            //
+            //     _enableOneHitCheat = !_enableOneHitCheat;
+            // }
         }
 
 
@@ -174,25 +174,26 @@ namespace CryptoQuest.EditorTool
 
         private void RenderPlayerParty()
         {
-            _showParty =
-                GUILayout.Toggle(_showParty, "Show Party", GUILayout.Width(_guiWidth));
-            if (!_showParty) return;
-
-            var playerTeam = _party.PlayerTeam;
-            for (int i = 0; i < playerTeam.Members.Count; i++)
-            {
-                var member = playerTeam.Members[i];
-                var memberGO = playerTeam.Members[i].gameObject;
-                if (member == _party.MainSystem) continue;
-                var activeStatusLabel = memberGO.activeSelf ? "Disable" : "Active";
-                if (GUILayout.Button($"{activeStatusLabel} member {i}"))
-                {
-                    memberGO.SetActive(!memberGO.activeSelf);
-                    var destination = memberGO.activeSelf ? 1 : playerTeam.Members.Count - 1;
-                    playerTeam.Members.SortElement(i, destination);
-                    break;
-                }
-            }
+            // TODO: REFACTORING PARTY SYSTEM
+            // _showParty =
+            //     GUILayout.Toggle(_showParty, "Show Party", GUILayout.Width(_guiWidth));
+            // if (!_showParty) return;
+            //
+            // var playerTeam = _party.PlayerTeam;
+            // for (int i = 0; i < playerTeam.Members.Count; i++)
+            // {
+            //     var member = playerTeam.Members[i];
+            //     var memberGO = playerTeam.Members[i].gameObject;
+            //     if (member == _party.MainSystem) continue;
+            //     var activeStatusLabel = memberGO.activeSelf ? "Disable" : "Active";
+            //     if (GUILayout.Button($"{activeStatusLabel} member {i}"))
+            //     {
+            //         memberGO.SetActive(!memberGO.activeSelf);
+            //         var destination = memberGO.activeSelf ? 1 : playerTeam.Members.Count - 1;
+            //         playerTeam.Members.SortElement(i, destination);
+            //         break;
+            //     }
+            // }
         }
 
 #endif

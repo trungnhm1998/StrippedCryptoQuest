@@ -21,11 +21,6 @@ namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Container
         [field: SerializeField] public EType Type { get; set; }
         [field: SerializeField] public EquipmentInfo Equipment { get; set; }
 
-        public void UpdateEquipment(EquipmentInfo equipment)
-        {
-            Equipment = equipment;
-        }
-
         public bool IsValid()
         {
             return Equipment.IsValid();
