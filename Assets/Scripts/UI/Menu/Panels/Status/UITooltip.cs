@@ -1,23 +1,31 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using IndiGames.Core.Events.ScriptableObjects;
+﻿using CryptoQuest.UI.Menu.Panels.Status.Equipment;
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Events;
-using UnityEngine.Serialization;
+using UnityEngine.Localization;
 using UnityEngine.UI;
 
 namespace CryptoQuest.UI.Menu.Panels.Status
 {
-    public class UITooltip : MonoBehaviour
+    public interface ITooltip
     {
-        public delegate void TooltipEvent(Vector2 upwardPosition, Vector2 downwardPosition, float rectHeight);
-        public static TooltipEvent ShowTooltipEvent;
-        public static UnityAction HideTooltipEvent;
+        void Show();
+        void Hide();
+        ITooltip WithHeader(LocalizedString dataDisplayName);
+        ITooltip WithDescription(LocalizedString dataDescription);
+        ITooltip WithDisplaySprite(Sprite equipmentTypeIcon);
+        ITooltip WithPosition(Vector3 tooltipPositionPosition);
+        ITooltip WithContentAwareness(RectTransform tooltipPosition);
+        ITooltip SetSafeArea(RectTransform tooltipSafeArea);
+    }
+
+    public class UITooltip : MonoBehaviour, ITooltip
+    {
+        [SerializeField] private TooltipProvider _tooltipProvider;
+        [SerializeField] private GameObject _content;
+
         [SerializeField] private RectTransform _upContainer;
         [SerializeField] private RectTransform _downContainer;
-        [SerializeField] private GameObject _content;
         [SerializeField] private GameObject _frame;
         [SerializeField] private GameObject _reverseFrame;
         [SerializeField] private TMP_Text _description;
@@ -27,48 +35,117 @@ namespace CryptoQuest.UI.Menu.Panels.Status
         [SerializeField] private TMP_Text _level;
         [SerializeField] private float _waitBeforePopupTooltip;
         private bool _isShowDownWard;
-        private bool _isShowTooltip = false;
+        private bool _isShowTooltip;
+        private Tween _tween;
 
-        private void OnEnable()
+        private void Awake()
         {
-            ShowTooltipEvent += SetTooltipLocation;
-            HideTooltipEvent += Hide;
+            _tooltipProvider.Tooltip = this;
         }
 
-        private void OnDisable()
+        public void Hide()
         {
-            ShowTooltipEvent -= SetTooltipLocation;
-            HideTooltipEvent -= Hide;
-        }
-
-
-        private void SetTooltipLocation(Vector2 upwardTooltipPoint, Vector2 downwardTooltipPoint, float rectHeight)
-        {
-            _isShowTooltip = true;
+            _tween?.Kill();
             _content.SetActive(false);
-            _upContainer.transform.position = downwardTooltipPoint;
-            _downContainer.transform.position = upwardTooltipPoint;
-            _isShowDownWard = (_upContainer.localPosition.y <= -rectHeight);
-            _content.transform.parent = _isShowDownWard ? _downContainer : _upContainer;
-            _content.transform.localPosition = new Vector3(0, 0, 0);
-            StartCoroutine(ShowTooltip());
         }
 
-        private IEnumerator ShowTooltip()
+        public ITooltip WithHeader(LocalizedString dataDisplayName)
         {
-            yield return new WaitForSeconds(_waitBeforePopupTooltip);
-            if (_isShowTooltip)
+            return this;
+        }
+
+        public ITooltip WithDescription(LocalizedString dataDescription)
+        {
+            _description.text = dataDescription.GetLocalizedString();
+            return this;
+        }
+
+        public ITooltip WithDisplaySprite(Sprite equipmentImage)
+        {
+            if (equipmentImage == null) return this;
+            _illustration.sprite = equipmentImage;
+            return this;
+        }
+
+        public ITooltip WithPosition(Vector3 position)
+        {
+            _content.transform.position = position;
+            return this;
+        }
+
+        private RectTransform _safeArea;
+        private bool HasSafeArea => _safeArea != null;
+
+        /// <summary>
+        /// The tooltip will try to stay inside the safe area
+        /// </summary>
+        /// <param name="tooltipSafeArea"></param>
+        /// <returns></returns>
+        public ITooltip SetSafeArea(RectTransform tooltipSafeArea)
+        {
+            _safeArea = tooltipSafeArea;
+            return this;
+        }
+
+        /// <summary>
+        /// I don't know what to name this variable.
+        /// It is the rect transform of the content that the tooltips will show over.
+        /// Could use this as position only
+        ///
+        /// or use it size to 
+        /// </summary>
+        private RectTransform _tooltipContent;
+
+        /// <summary>
+        /// Try to place the tooltip either above or below the rect transform
+        /// </summary>
+        /// <param name="tooltipPosition"></param>
+        /// <returns></returns>
+        public ITooltip WithContentAwareness(RectTransform tooltipPosition)
+        {
+            _tooltipContent = tooltipPosition;
+            return this;
+        }
+
+        public void Show()
+        {
+            _tween?.Kill();
+            Hide();
+            _tween = DOVirtual.DelayedCall(_waitBeforePopupTooltip, SetupAndShow);
+        }
+
+        private void SetupAndShow()
+        {
+            var rectTransform = _content.GetComponent<RectTransform>();
+            var contentSize = rectTransform.rect.size;
+            var targetPosition = _tooltipContent.position;
+
+            _content.transform.position = targetPosition; // center by default
+
+            if (HasSafeArea == false)
             {
-                _reverseFrame.SetActive(_isShowDownWard);
-                _frame.SetActive(!_isShowDownWard);
                 _content.SetActive(true);
+                return;
             }
-        }
 
-        private void Hide()
-        {
-            _isShowTooltip = false;
-            _content.SetActive(false);
+            var tooltipPosition = _content.transform.position;
+            if (tooltipPosition.y + contentSize.y > _safeArea.position.y + _safeArea.rect.yMax)
+            {
+                rectTransform.pivot = new Vector2(rectTransform.pivot.x, 1);
+                _frame.SetActive(true);
+                _reverseFrame.SetActive(false);
+                targetPosition = new Vector2(targetPosition.x, targetPosition.y + _tooltipContent.rect.yMin);
+            }
+            else if (tooltipPosition.y - contentSize.y < _safeArea.position.y + _safeArea.rect.yMin)
+            {
+                rectTransform.pivot = new Vector2(rectTransform.pivot.x, 0);
+                _frame.SetActive(false);
+                _reverseFrame.SetActive(true);
+                targetPosition = new Vector2(targetPosition.x, targetPosition.y + _tooltipContent.rect.yMax);
+            }
+
+            _content.transform.position = targetPosition;
+            _content.SetActive(true);
         }
     }
 }

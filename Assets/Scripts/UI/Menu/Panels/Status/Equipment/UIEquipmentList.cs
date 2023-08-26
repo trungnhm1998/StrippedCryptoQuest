@@ -129,7 +129,7 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
         {
             _unEquipButton.Select();
             _contents.SetActive(false);
-            UITooltip.HideTooltipEvent?.Invoke();
+            // TODO: REFACTOR TOOL TIP HIDE
         }
 
         #region PLUGINS

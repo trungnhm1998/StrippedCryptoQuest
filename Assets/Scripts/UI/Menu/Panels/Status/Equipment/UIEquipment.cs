@@ -9,28 +9,32 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
     {
         [SerializeField] private Image _icon;
         [SerializeField] private LocalizeStringEvent _name;
-        [SerializeField] private RectTransform _downPoint;
-        [SerializeField] private RectTransform _upPoint;
-        private RectTransform _equipmentViewport;
-
-        private void OnEnable()
-        {
-            _equipmentViewport = gameObject.GetComponent<RectTransform>();
-        }
-
-
-        private void ButtonOnSelectedEvent(int index)
-        {
-            UITooltip
-                .ShowTooltipEvent?
-                .Invoke(_upPoint.position, _downPoint.position, _equipmentViewport.rect.height);
-        }
+        [SerializeField] private RectTransform _tooltipPosition;
+        private EquipmentInfo _equipment = new();
+        public ITooltip Tooltip { get; set; }
 
         public void Init(EquipmentInfo equipment)
         {
+            _equipment = equipment;
             var def = equipment.Data;
             _name.StringReference = def.DisplayName;
             _icon.sprite = def.EquipmentType.Icon;
+        }
+
+        public void OnInspecting(bool isInspecting)
+        {
+            if (isInspecting == false)
+            {
+                Tooltip.Hide();
+                return;
+            }
+
+            if (_equipment.IsValid() == false) return;
+            Tooltip
+                .WithDescription(_equipment.Data.DisplayName)
+                .WithDisplaySprite(_equipment.Data.Image)
+                .WithContentAwareness(_tooltipPosition)
+                .Show();
         }
     }
 }

@@ -8,7 +8,7 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
     {
         public override void OnSelect(BaseEventData eventData)
         {
-            UITooltip.HideTooltipEvent?.Invoke();
+            // TODO: REFACTOR TOOL TIP HIDE
             base.OnSelect(eventData);
         }
 

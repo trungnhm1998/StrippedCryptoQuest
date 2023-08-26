@@ -302,6 +302,7 @@ GameObject:
   - component: {fileID: 7922745920403385066}
   - component: {fileID: 9089729528290754423}
   - component: {fileID: 8575258915249462629}
+  - component: {fileID: 6551579837362101921}
   m_Layer: 5
   m_Name: EquipmentSlot
   m_TagString: Untagged
@@ -414,10 +415,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 9089729528290754423}
-        m_TargetAssemblyTypeName: CryptoQuest.UI.Menu.Panels.Status.UIEquipmentSlotButton,
+      - m_Target: {fileID: 8575258915249462629}
+        m_TargetAssemblyTypeName: CryptoQuest.UI.Menu.Panels.Status.Equipment.UICharacterEquipmentSlot,
           indi-games.crypto-quest
-        m_MethodName: OnPressed
+        m_MethodName: OnChangingEquipment
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -428,7 +429,6 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 1
   _selectEffect: {fileID: 7155894134286787715}
-  _equipmentCategory: 0
 --- !u!114 &8575258915249462629
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -443,6 +443,35 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <SlotType>k__BackingField: 0
   _equipment: {fileID: 4402026268980786650}
+--- !u!114 &6551579837362101921
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7623322557906955225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69829015e3a24dc449c4c18a0fbd4599, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _onTooltipShow:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4402026268980786650}
+        m_TargetAssemblyTypeName: CryptoQuest.UI.Menu.Panels.Status.Equipment.UIEquipment,
+          indi-games.crypto-quest
+        m_MethodName: OnInspecting
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  _button: {fileID: 9089729528290754423}
 --- !u!1001 &204727280812999270
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -451,6 +480,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 6941356930478696514}
     m_Modifications:
+    - target: {fileID: 1000141524373389450, guid: ecfa62a89a4fe574ca5451e62de6e33b, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1000141524373389450, guid: ecfa62a89a4fe574ca5451e62de6e33b, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1000141524373389450, guid: ecfa62a89a4fe574ca5451e62de6e33b, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1252632200816518795, guid: ecfa62a89a4fe574ca5451e62de6e33b, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -535,9 +576,49 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2096338522824500273, guid: ecfa62a89a4fe574ca5451e62de6e33b, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2096338522824500273, guid: ecfa62a89a4fe574ca5451e62de6e33b, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2096338522824500273, guid: ecfa62a89a4fe574ca5451e62de6e33b, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3399872544789769646, guid: ecfa62a89a4fe574ca5451e62de6e33b, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3399872544789769646, guid: ecfa62a89a4fe574ca5451e62de6e33b, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3399872544789769646, guid: ecfa62a89a4fe574ca5451e62de6e33b, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7623322557906955225, guid: ecfa62a89a4fe574ca5451e62de6e33b, type: 3}
       propertyPath: m_Name
       value: EquipmentItem
+      objectReference: {fileID: 0}
+    - target: {fileID: 7820338398127017734, guid: ecfa62a89a4fe574ca5451e62de6e33b, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 34.3112
+      objectReference: {fileID: 0}
+    - target: {fileID: 7820338398127017734, guid: ecfa62a89a4fe574ca5451e62de6e33b, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 31.2283
+      objectReference: {fileID: 0}
+    - target: {fileID: 7820338398127017734, guid: ecfa62a89a4fe574ca5451e62de6e33b, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -282.54437
+      objectReference: {fileID: 0}
+    - target: {fileID: 7820338398127017734, guid: ecfa62a89a4fe574ca5451e62de6e33b, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -4.7952995
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
