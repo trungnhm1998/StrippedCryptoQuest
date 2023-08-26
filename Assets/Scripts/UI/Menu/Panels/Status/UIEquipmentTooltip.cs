@@ -19,13 +19,11 @@ namespace CryptoQuest.UI.Menu.Panels.Status
         ITooltip SetSafeArea(RectTransform tooltipSafeArea);
     }
 
-    public class UITooltip : MonoBehaviour, ITooltip
+    public class UIEquipmentTooltip : MonoBehaviour, ITooltip
     {
         [SerializeField] private TooltipProvider _tooltipProvider;
         [SerializeField] private GameObject _content;
 
-        [SerializeField] private RectTransform _upContainer;
-        [SerializeField] private RectTransform _downContainer;
         [SerializeField] private GameObject _frame;
         [SerializeField] private GameObject _reverseFrame;
         [SerializeField] private TMP_Text _description;
@@ -94,7 +92,7 @@ namespace CryptoQuest.UI.Menu.Panels.Status
         ///
         /// or use it size to 
         /// </summary>
-        private RectTransform _tooltipContent;
+        private RectTransform _tooltipTarget;
 
         /// <summary>
         /// Try to place the tooltip either above or below the rect transform
@@ -103,13 +101,12 @@ namespace CryptoQuest.UI.Menu.Panels.Status
         /// <returns></returns>
         public ITooltip WithContentAwareness(RectTransform tooltipPosition)
         {
-            _tooltipContent = tooltipPosition;
+            _tooltipTarget = tooltipPosition;
             return this;
         }
 
         public void Show()
         {
-            _tween?.Kill();
             Hide();
             _tween = DOVirtual.DelayedCall(_waitBeforePopupTooltip, SetupAndShow);
         }
@@ -118,7 +115,7 @@ namespace CryptoQuest.UI.Menu.Panels.Status
         {
             var rectTransform = _content.GetComponent<RectTransform>();
             var contentSize = rectTransform.rect.size;
-            var targetPosition = _tooltipContent.position;
+            var targetPosition = _tooltipTarget.position;
 
             _content.transform.position = targetPosition; // center by default
 
@@ -134,14 +131,14 @@ namespace CryptoQuest.UI.Menu.Panels.Status
                 rectTransform.pivot = new Vector2(rectTransform.pivot.x, 1);
                 _frame.SetActive(true);
                 _reverseFrame.SetActive(false);
-                targetPosition = new Vector2(targetPosition.x, targetPosition.y + _tooltipContent.rect.yMin);
+                targetPosition = new Vector2(targetPosition.x, targetPosition.y + _tooltipTarget.rect.yMin);
             }
             else if (tooltipPosition.y - contentSize.y < _safeArea.position.y + _safeArea.rect.yMin)
             {
                 rectTransform.pivot = new Vector2(rectTransform.pivot.x, 0);
                 _frame.SetActive(false);
                 _reverseFrame.SetActive(true);
-                targetPosition = new Vector2(targetPosition.x, targetPosition.y + _tooltipContent.rect.yMax);
+                targetPosition = new Vector2(targetPosition.x, targetPosition.y + _tooltipTarget.rect.yMax);
             }
 
             _content.transform.position = targetPosition;
