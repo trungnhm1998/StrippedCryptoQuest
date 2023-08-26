@@ -44,12 +44,15 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
 
         private void Awake()
         {
-            _tooltipProvider.Tooltip.SetSafeArea(_tooltipSafeArea);
             foreach (var equipmentSlot in _equipmentSlots)
             {
                 equipmentSlot.ChangingEquipment += ChangingEquipment;
-                equipmentSlot.Tooltip = _tooltipProvider.Tooltip;
             }
+        }
+
+        private void OnEnable()
+        {
+            Show();
         }
 
         private void OnDestroy()
@@ -87,15 +90,17 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
 
         #region State context
 
-        public void Init()
+        public void Show()
         {
-            Show();
+            _tooltipProvider.Tooltip.SetSafeArea(_tooltipSafeArea);
+            _equipmentSlotParent.SetActive(true);
             _defaultSelection.Select();
         }
 
-        public void Show(bool isShown = true)
+        public void Hide()
         {
-            _equipmentSlotParent.SetActive(isShown);
+            _tooltipProvider.Tooltip.Hide();
+            _equipmentSlotParent.SetActive(false);
         }
 
         #endregion

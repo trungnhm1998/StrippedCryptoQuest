@@ -19,6 +19,8 @@ namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects
         [field: Header("Inventory"), SerializeField]
         public List<UsableInfo> UsableItems { get; private set; }
 
+        [field: SerializeField] public List<EquipmentInfo> Equipments { get; private set; } = new();
+
         /// <summary>
         /// This is inventory for equipment
         /// and make management by compartments and for easy-to-work UI

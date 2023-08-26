@@ -7,11 +7,17 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
 {
     public class UIEquipment : MonoBehaviour
     {
+        [SerializeField] private TooltipProvider _tooltipProvider;
         [SerializeField] private Image _icon;
         [SerializeField] private LocalizeStringEvent _name;
         [SerializeField] private RectTransform _tooltipPosition;
         private EquipmentInfo _equipment = new();
-        public ITooltip Tooltip { get; set; }
+        private ITooltip _tooltip;
+
+        private void Awake()
+        {
+            _tooltip = _tooltipProvider.Tooltip;
+        }
 
         public void Init(EquipmentInfo equipment)
         {
@@ -21,16 +27,23 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
             _icon.sprite = def.EquipmentType.Icon;
         }
 
+        /// <summary>
+        /// Open tooltip when inspecting
+        /// Also called when deselecting a button but hide tooltip instead
+        /// </summary>
+        /// <param name="isInspecting"></param>
         public void OnInspecting(bool isInspecting)
         {
+            if (_tooltip == null) return;
+
             if (isInspecting == false)
             {
-                Tooltip.Hide();
+                _tooltip.Hide();
                 return;
             }
 
             if (_equipment.IsValid() == false) return;
-            Tooltip
+            _tooltip
                 .WithDescription(_equipment.Data.DisplayName)
                 .WithDisplaySprite(_equipment.Data.Image)
                 .WithContentAwareness(_tooltipPosition)

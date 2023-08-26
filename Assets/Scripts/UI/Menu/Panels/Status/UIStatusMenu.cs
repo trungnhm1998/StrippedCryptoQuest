@@ -17,7 +17,7 @@ namespace CryptoQuest.UI.Menu.Panels.Status
         [field: SerializeField, Header("State Context")]
         public UICharacterEquipmentsPanel CharacterEquipmentsPanel { get; private set; }
 
-        [field: SerializeField] public UIEquipmentList EquipmentListPanel { get; private set; }
+        [field: SerializeField] public UIEquipmentsInventory EquipmentsInventoryPanel { get; private set; }
         [field: SerializeField] public UIStatusCharacter CharacterPanel { get; private set; }
 
         [SerializeField] private AttributeChangeEvent _attributeChangeEvent;
@@ -28,7 +28,6 @@ namespace CryptoQuest.UI.Menu.Panels.Status
         {
             _party = GetComponent<IParty>();
             if (_party == null) throw new NullReferenceException("Party is null");
-            EquipmentListPanel.Init(_party);
             CharacterPanel.SetParty(_party);
 
             CharacterPanel.InspectingCharacter += InspectCharacter;

@@ -9,14 +9,8 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
     {
         public event Action<EquipmentSlot.EType> ChangingEquipment;
         [field: SerializeField] public EquipmentSlot.EType SlotType { get; private set; }
-        public ITooltip Tooltip { get; set; }
 
         [SerializeField] private UIEquipment _equipment;
-
-        private void Awake()
-        {
-            _equipment.Tooltip = Tooltip;
-        }
 
         public void Init(EquipmentInfo equipmentSlotEquipment)
         {

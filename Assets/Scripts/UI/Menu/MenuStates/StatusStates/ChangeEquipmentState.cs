@@ -9,7 +9,8 @@ namespace CryptoQuest.UI.Menu.MenuStates.StatusStates
         public override void OnEnter()
         {
             base.OnEnter();
-            StatusPanel.CharacterEquipmentsPanel.Show(false);
+            StatusPanel.CharacterEquipmentsPanel.Hide();
+            StatusPanel.EquipmentsInventoryPanel.Show();
         }
 
         public override void HandleCancel()
@@ -22,6 +23,7 @@ namespace CryptoQuest.UI.Menu.MenuStates.StatusStates
         {
             base.OnExit();
             StatusPanel.CharacterEquipmentsPanel.Show();
+            StatusPanel.EquipmentsInventoryPanel.Hide();
         }
     }
 }

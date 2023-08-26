@@ -1,4 +1,5 @@
-﻿using CryptoQuest.UI.Menu.Panels.Status.Equipment;
+﻿using System;
+using CryptoQuest.UI.Menu.Panels.Status.Equipment;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
@@ -41,6 +42,10 @@ namespace CryptoQuest.UI.Menu.Panels.Status
             _tooltipProvider.Tooltip = this;
         }
 
+        /// <summary>
+        /// Use this to hide or it could hide automatically if you setup
+        /// <see cref="UITooltipTrigger"/> correctly
+        /// </summary>
         public void Hide()
         {
             _tween?.Kill();
