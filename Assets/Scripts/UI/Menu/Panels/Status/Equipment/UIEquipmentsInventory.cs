@@ -44,6 +44,7 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
 
         private void Awake()
         {
+            Debug.Log($"equipment inventory panel {gameObject.GetInstanceID()}");
             _verticalOffset = _singleItemRect.rect.height;
             _inventoryViewport = _scrollRect.viewport;
             var position = _inventoryViewport.position;

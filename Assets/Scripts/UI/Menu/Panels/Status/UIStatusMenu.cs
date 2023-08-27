@@ -23,7 +23,8 @@ namespace CryptoQuest.UI.Menu.Panels.Status
         [field: SerializeField, Header("State Context")]
         public UICharacterEquipmentsPanel CharacterEquipmentsPanel { get; private set; }
 
-        [field: SerializeField] public UIEquipmentsInventory EquipmentsInventoryPanel { get; private set; }
+        [SerializeField] private UIEquipmentsInventory _equipmentsInventoryPanel;
+        public UIEquipmentsInventory EquipmentsInventoryPanel => _equipmentsInventoryPanel;
         [field: SerializeField] public UIStatusCharacter CharacterPanel { get; private set; }
         [SerializeField] private AttributeChangeEvent _attributeChangeEvent;
         private CharacterSpec _inspectingCharacter;
@@ -32,6 +33,7 @@ namespace CryptoQuest.UI.Menu.Panels.Status
 
         private void Awake()
         {
+            Debug.Log($"status panel {gameObject.GetInstanceID()}");
             _party = _provider.PartyController.Party;
             CharacterPanel.InspectingCharacter += InspectCharacter;
             // This is event could not be fired because the scene contains this component is not loaded yet

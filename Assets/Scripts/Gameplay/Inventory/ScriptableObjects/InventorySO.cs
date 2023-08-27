@@ -15,6 +15,7 @@ namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects
     public interface IInventory
     {
         void Add(EquipmentInfo equipment);
+        void Remove(EquipmentInfo equipment);
     }
 
     [CreateAssetMenu(menuName = "Crypto Quest/Inventory/Inventory")]
@@ -146,9 +147,15 @@ namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects
         /// </summary>
         /// <param name="equipment"></param>
         /// <returns></returns>
-        public bool Remove(EquipmentInfo equipment)
+        public void Remove(EquipmentInfo equipment)
         {
-            return false;
+            if (equipment == null || equipment.IsValid() == false)
+            {
+                Debug.LogWarning($"Equipment is null or invalid");
+                return;
+            }
+            
+            Equipments.Remove(equipment);
         }
 
         public bool Add(UsableInfo item, int quantity = 1)

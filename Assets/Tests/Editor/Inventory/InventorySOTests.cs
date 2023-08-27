@@ -125,20 +125,6 @@ namespace CryptoQuest.Tests.Editor
             Assert.Zero(result);
         }
 
-        [Test]
-        public void Remove_NullEquipment_ShouldReturnFalse()
-        {
-            var result = _inventorySO.Remove(null);
-            Assert.False(result);
-        }
-
-        [Test]
-        public void Remove_WithEquipmentWithOutData_ShouldReturnFalse()
-        {
-            var result = _inventorySO.Remove(new EquipmentInfo());
-            Assert.False(result);
-        }
-
         private UsableInfo NewUsable(string usablePath, out UsableSO item)
         {
             item = AssetDatabase.LoadAssetAtPath<UsableSO>(usablePath);

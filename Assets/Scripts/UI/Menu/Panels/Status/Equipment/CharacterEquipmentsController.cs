@@ -84,7 +84,16 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
             character.Equipments.Equip(equipment);
         }
 
-        private void RemoveEquipmentFromInventory(EquipmentInfo equipment, List<EquipmentSlot.EType> eTypes) { }
+        private void RemoveEquipmentFromInventory(EquipmentInfo equipment, List<EquipmentSlot.EType> eTypes)
+        {
+            if (equipment.IsValid() == false)
+            {
+                Debug.LogWarning($"CharacterEquipmentsController::RemoveEquipmentFromInventory: No equipment is selected");
+                return;
+            }
+            
+            _provider.InventoryController.Remove(equipment);
+        }
 
         private void UnequipEquipmentAtSlot(CharacterSpec characterSpec, EquipmentSlot.EType slotType)
         {
