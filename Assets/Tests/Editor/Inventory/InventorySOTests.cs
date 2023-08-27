@@ -112,15 +112,17 @@ namespace CryptoQuest.Tests.Editor
         [Test]
         public void Add_WithEquipmentButNoData_ShouldReturnFalse()
         {
-            var result = _inventorySO.Add(new EquipmentInfo());
-            Assert.False(result);
+            _inventorySO.Add(new EquipmentInfo());
+            var result = _inventorySO.Equipments.Count;
+            Assert.Zero(result);
         }
 
         [Test]
         public void Add_NullEquipment_ShouldReturnFalse()
         {
-            var result = _inventorySO.Add(null);
-            Assert.False(result);
+            _inventorySO.Add(null);
+            var result = _inventorySO.Equipments.Count;
+            Assert.Zero(result);
         }
 
         [Test]

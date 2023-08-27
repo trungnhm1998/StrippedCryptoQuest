@@ -1,5 +1,5 @@
-using CryptoQuest.Gameplay;
 using CryptoQuest.Gameplay.Character;
+using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Container;
 using CryptoQuest.Gameplay.PlayerParty;
 using CryptoQuest.System;
 using CryptoQuest.UI.Character;
@@ -34,12 +34,24 @@ namespace CryptoQuest.UI.Menu.Panels.Status
             CharacterPanel.InspectingCharacter += InspectCharacter;
             // This is event could not be fired because the scene contains this component is not loaded yet
             _provider.PartyProvided += BindParty;
+            CharacterEquipmentsPanel.UnequipEquipmentAtSlot += UnequipEquipmentAtSlot;
         }
 
         private void OnDestroy()
         {
             CharacterPanel.InspectingCharacter -= InspectCharacter;
             _provider.PartyProvided -= BindParty;
+            CharacterEquipmentsPanel.UnequipEquipmentAtSlot -= UnequipEquipmentAtSlot;
+        }
+
+        private void UnequipEquipmentAtSlot(EquipmentSlot.EType slot)
+        {
+            if (!_inspectingCharacter.IsValid())
+            {
+                Debug.Log($"UIStatusMenu::UnequipEquipmentAtSlot: No character is inspecting");
+                return;
+            }
+            _provider.UnequipEquipmentAtSlot(_inspectingCharacter, slot);
         }
 
         private void BindParty(IPartyController partyController)

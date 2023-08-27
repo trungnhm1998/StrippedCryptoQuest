@@ -1,4 +1,5 @@
-﻿using CryptoQuest.Gameplay.Character;
+﻿using System;
+using CryptoQuest.Gameplay.Character;
 using CryptoQuest.Gameplay.Inventory.Items;
 using CryptoQuest.Gameplay.PlayerParty;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
@@ -20,6 +21,7 @@ namespace CryptoQuest.Gameplay
         AttributeSystemBehaviour AttributeSystem { get; }
         CharacterSpec Spec { get; }
         ActiveEffectSpecification ApplyEffect(GameplayEffectSpec effectSpec);
+        void RemoveEffect(IGameplayEffectSpec activeEffectEffectSpec);
         void Equip(EquipmentInfo equipment);
         void Unequip(EquipmentInfo equipment);
 
@@ -42,6 +44,7 @@ namespace CryptoQuest.Gameplay
         [field: SerializeField] public AttributeSystemBehaviour AttributeSystem { get; private set; }
         public Elemental Element => _spec.Element;
         public CharacterSpec Spec => _spec;
+
         private IEquipmentEffectApplier _equipmentEffectApplier;
         private IStatInitializer _statsInitializer;
 
@@ -84,6 +87,12 @@ namespace CryptoQuest.Gameplay
         {
             return GameplayAbilitySystem.ApplyEffectSpecToSelf(effectSpec);
         }
+
+        public void RemoveEffect(IGameplayEffectSpec activeEffectEffectSpec)
+        {
+            GameplayAbilitySystem.EffectSystem.RemoveEffect(activeEffectEffectSpec as GameplayEffectSpec);
+        }
+
 
         public void Equip(EquipmentInfo equipment) => _spec.Equipments.Equip(equipment);
 

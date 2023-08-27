@@ -13,7 +13,7 @@ namespace CryptoQuest.Gameplay.Inventory.Items
     {
         [field: SerializeField] public int Level { get; private set; }
         [field: SerializeField] public StatsDef Stats { get; private set; }
-        [field: SerializeField] public EquipmentSlot.EType[] RequiredSlots { get; private set; }
+        public EquipmentSlot.EType[] RequiredSlots => Data.RequiredSlots;
 
         [field: SerializeField, ReadOnly] public InfiniteEffectScriptableObject EffectDef { get; set; }
 

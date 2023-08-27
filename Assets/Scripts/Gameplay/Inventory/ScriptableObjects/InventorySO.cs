@@ -12,7 +12,10 @@ using ESlotType =
 
 namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects
 {
-    public interface IInventory { }
+    public interface IInventory
+    {
+        void Add(EquipmentInfo equipment);
+    }
 
     [CreateAssetMenu(menuName = "Crypto Quest/Inventory/Inventory")]
     public class InventorySO : ScriptableObject, IInventory
@@ -20,7 +23,7 @@ namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects
         [SerializeField] private ServiceProvider _provider;
         [SerializeField] private InventoryConfigSO _inventoryConfig;
 
-        [field: SerializeField]public List<UsableInfo> UsableItems { get; private set; }
+        [field: SerializeField] public List<UsableInfo> UsableItems { get; private set; }
         [field: SerializeField] public List<EquipmentInfo> Equipments { get; private set; } = new();
         /// <summary>
         /// This is inventory for equipment
@@ -103,13 +106,9 @@ namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects
 
         #endregion
 
-        private void Awake()
-        {
-            if (_provider != null) _provider.Provide(this);
-        }
-
         private void OnEnable()
         {
+            _provider.Provide(this);
 #if UNITY_EDITOR
             Editor_ValidateInventoryConfig();
             ValidateInventory();
@@ -131,23 +130,15 @@ namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects
 
         #region Equipment
 
-        public bool Add(EquipmentInfo equipment)
+        public void Add(EquipmentInfo equipment)
         {
-            if (equipment == null)
+            if (equipment == null || equipment.IsValid() == false)
             {
-                Debug.LogWarning($"Equipment is null");
-                return false;
-            }
-
-            if (equipment.IsValid() == false)
-            {
-                Debug.LogWarning($"Equipment is not valid");
-                return false;
+                Debug.LogWarning($"Equipment is null or invalid");
+                return;
             }
 
             Equipments.Add(equipment);
-
-            return true;
         }
 
         /// <summary>

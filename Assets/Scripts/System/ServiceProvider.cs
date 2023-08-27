@@ -1,4 +1,5 @@
 ﻿using System;
+using CryptoQuest.Gameplay.Character;
 using CryptoQuest.Gameplay.Inventory;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Container;
@@ -21,7 +22,8 @@ namespace CryptoQuest.System
     /// </summary>
     public class ServiceProvider : ScriptableObject
     {
-        public delegate void UnequipCharacterEquipmentAtSlotHandler(int charIndexInParty, EquipmentSlot.EType slotType);
+        public delegate void UnequipCharacterEquipmentAtSlotHandler(CharacterSpec charIndexInParty,
+            EquipmentSlot.EType slotType);
 
         public event UnequipCharacterEquipmentAtSlotHandler UnequipCharacterEquipmentAtSlot;
         public event Action<IPartyController> PartyProvided;
@@ -55,7 +57,7 @@ namespace CryptoQuest.System
             Inventory = service;
         }
 
-        public void UnequipEquipmentAtSlot(int charIndexInParty, EquipmentSlot.EType slotType)
+        public void UnequipEquipmentAtSlot(CharacterSpec charIndexInParty, EquipmentSlot.EType slotType)
         {
             UnequipCharacterEquipmentAtSlot?.Invoke(charIndexInParty, slotType);
         }

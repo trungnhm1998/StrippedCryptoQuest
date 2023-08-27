@@ -38,9 +38,22 @@ namespace CryptoQuest.Gameplay
         /// <summary>
         /// I need to stay consistence with my naming...
         /// </summary>
-        private void ClearEquipmentsHandlers() => _equipments.EquipmentAdded -= HandleEquipmentAdded;
-        private void RegisterEquipmentHandlers() => _equipments.EquipmentAdded += HandleEquipmentAdded;
-        private void HandleEquipmentAdded(EquipmentInfo equipment) => ApplyEquipmentEffectToCharacter(equipment);
+        private void ClearEquipmentsHandlers()
+        {
+            _equipments.EquipmentAdded -= ApplyEquipmentEffectToCharacter;
+            _equipments.EquipmentRemoved -= RemoveEquipmentEffectFromCharacter;
+        }
+
+        private void RegisterEquipmentHandlers()
+        {
+            _equipments.EquipmentAdded += ApplyEquipmentEffectToCharacter;
+            _equipments.EquipmentRemoved += RemoveEquipmentEffectFromCharacter;
+        }
+
+        private void RemoveEquipmentEffectFromCharacter(EquipmentInfo equipment)
+        {
+            _character.RemoveEffect(equipment.ActiveEffect.EffectSpec); // TODO: REFACTOR
+        }
 
         private void ApplyEquipmentEffectToCharacter(EquipmentInfo equipment)
         {

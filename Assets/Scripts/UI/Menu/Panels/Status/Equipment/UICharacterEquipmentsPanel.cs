@@ -4,7 +4,7 @@ using CryptoQuest.Gameplay.Inventory;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Container;
 using CryptoQuest.Menu;
 using CryptoQuest.UI.Menu.MenuStates.StatusStates;
-using DG.Tweening;
+using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -74,11 +74,7 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
         private EquipmentSlot.EType _modifyingSlotType;
         public EquipmentSlot.EType ModifyingSlotType => _modifyingSlotType;
 
-        private void UnequipCurrentSlot()
-        {
-            Debug.Log($"Unequip equipment at slot {_modifyingSlotType}");
-            UnequipEquipmentAtSlot?.Invoke(_modifyingSlotType);
-        }
+        private void UnequipCurrentSlot() => UnequipEquipmentAtSlot?.Invoke(_modifyingSlotType);
 
         private void ShowEquipmentsInventoryWithType(EquipmentSlot.EType slotType)
         {
@@ -109,7 +105,7 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
         private void ReselectCurrentButton()
         {
             var button = HideToolTipAndDeselectCurrentSelectedButton();
-            button.Select();
+            if (button) button.Select();
         }
 
         private MultiInputButton HideToolTipAndDeselectCurrentSelectedButton()

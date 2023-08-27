@@ -102,8 +102,12 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
             }
         }
 
+        private CharacterSpec _inspectingCharacter;
+
         public void Show(CharacterSpec inspectingChar, EquipmentSlot.EType modifyingSlotType)
         {
+            _inspectingCharacter = inspectingChar;
+            _inspectingCharacter.Equipments.EquipmentRemoved += RemoveCurrentlyEquipping;
             _scrollRect.content.anchoredPosition = Vector2.zero;
             _tooltipProvider.Tooltip.SetSafeArea(_tooltipSafeArea);
             _contents.SetActive(true);
@@ -127,11 +131,26 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
 
         public void Hide()
         {
+            _inspectingCharacter.Equipments.EquipmentRemoved -= RemoveCurrentlyEquipping;
             _tooltipProvider.Tooltip.Hide();
             _contents.SetActive(false);
         }
 
         private List<UIEquipmentItem> _equipmentItems = new();
+
+        /// <summary>
+        /// An equipment just removed from the character equipment inventory, this could be the current equipping
+        /// Add UI to the inventory scroll view and hide the currently equipping UI if the same
+        /// </summary>
+        /// <param name="equipment"></param>
+        /// <exception cref="NotImplementedException"></exception>
+        private void RemoveCurrentlyEquipping(EquipmentInfo equipment)
+        {
+            if (equipment != _currentlyEquippingItem.Equipment) return;
+            _currentlyEquippingItem.Reset();
+            _currentlyEquippingItem.gameObject.SetActive(false);
+            InstantiateNewEquipmentUI(equipment);
+        }
 
         private void InstantiateEquipments()
         {
@@ -140,10 +159,15 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
             for (int i = 0; i < _inventorySO.Equipments.Count; i++)
             {
                 var equipment = _inventorySO.Equipments[i];
-                var equipmentItem = Instantiate(_equipmentItemPrefab, _scrollRect.content);
-                equipmentItem.Init(equipment);
-                equipmentItem.Inspecting += PreviewEquipmentStats;
+                InstantiateNewEquipmentUI(equipment);
             }
+        }
+
+        private void InstantiateNewEquipmentUI(EquipmentInfo equipment)
+        {
+            var equipmentItem = Instantiate(_equipmentItemPrefab, _scrollRect.content);
+            equipmentItem.Init(equipment);
+            equipmentItem.Inspecting += PreviewEquipmentStats;
         }
 
         private void OnDestroy()

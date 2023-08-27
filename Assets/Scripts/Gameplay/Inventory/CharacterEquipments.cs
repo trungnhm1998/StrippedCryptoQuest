@@ -8,25 +8,29 @@ using ESlotType =
 
 namespace CryptoQuest.Gameplay.Inventory
 {
+    /// <summary>
+    /// Using struct here cause the events to be null
+    /// </summary>
     [Serializable]
-    public struct CharacterEquipments
+    public class CharacterEquipments
     {
         public event Action<EquipmentInfo> EquipmentAdded;
         public event Action<EquipmentInfo> EquipmentRemoved;
 
         [field: SerializeField] public List<EquipmentSlot> Slots { get; private set; }
-        private Dictionary<ESlotType, EquipmentSlot> _slotsCache; // this should only have maximum 8 items
+        private Dictionary<ESlotType, int> _slotsCache; // this should only have maximum 8 items
 
-        private Dictionary<ESlotType, EquipmentSlot> SlotCache
+        private Dictionary<ESlotType, int> SlotCache
         {
             get
             {
                 if (_slotsCache == null)
                 {
                     _slotsCache = new();
-                    foreach (var slot in Slots)
+                    for (var index = 0; index < Slots.Count; index++)
                     {
-                        _slotsCache.Add(slot.Type, slot);
+                        var slot = Slots[index];
+                        _slotsCache.Add(slot.Type, index);
                     }
                 }
 
@@ -80,16 +84,18 @@ namespace CryptoQuest.Gameplay.Inventory
 
         public EquipmentInfo GetEquipmentInSlot(ESlotType slotType)
         {
-            if (!SlotCache.TryGetValue(slotType, out var slot))
+            if (!SlotCache.TryGetValue(slotType, out var idx))
             {
-                slot = new EquipmentSlot()
+                var slot = new EquipmentSlot()
                 {
                     Type = slotType,
                     Equipment = new EquipmentInfo()
                 };
+                Slots.Add(slot);
+                return slot.Equipment;
             }
 
-            return slot.Equipment;
+            return Slots[idx].Equipment;
         }
 
         private void OnEquipmentAdded(EquipmentInfo equipment)
@@ -103,21 +109,23 @@ namespace CryptoQuest.Gameplay.Inventory
             EquipmentAdded?.Invoke(equipment);
         }
 
-        private void SetEquipmentInSlot(EquipmentInfo equipment, ESlotType slot)
+        private void SetEquipmentInSlot(EquipmentInfo equipment, ESlotType slotType)
         {
-            if (!SlotCache.TryGetValue(slot, out var equipmentSlot))
+            if (!SlotCache.TryGetValue(slotType, out var idx))
             {
-                equipmentSlot = new EquipmentSlot()
+                var equipmentSlot = new EquipmentSlot()
                 {
                     Equipment = equipment,
-                    Type = slot
+                    Type = slotType
                 };
                 Slots.Add(equipmentSlot);
-                SlotCache.Add(slot, equipmentSlot);
+                SlotCache.Add(slotType, Slots.Count - 1);
             }
             else
             {
-                equipmentSlot.Equipment = equipment;
+                var slot = Slots[idx];
+                slot.Equipment = equipment;
+                Slots[idx] = slot;
             }
         }
     }

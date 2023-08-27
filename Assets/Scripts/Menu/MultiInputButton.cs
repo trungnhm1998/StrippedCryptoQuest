@@ -38,12 +38,6 @@ namespace CryptoQuest.Menu
             base.OnSelect(eventData);
         }
 
-        public override void OnSubmit(BaseEventData eventData)
-        {
-            if (Handler.AllowsSubmit())
-                base.OnSubmit(eventData);
-        }
-
         public override void OnDeselect(BaseEventData eventData)
         {
             if (!enabled) return;

@@ -69,16 +69,6 @@ namespace CryptoQuest.Menu
         }
 
         /// <summary>
-        /// Method interactable UI elements should call on Submit interaction to determine whether to continue or not.
-        /// </summary>
-        /// <returns></returns>
-        public bool AllowsSubmit()
-        {
-            // if LMB is not down, there is no edge case to handle, allow the event to continue
-            return !_inputMediator.LeftMouseDown();
-        }
-
-        /// <summary>
         /// Fired by gamepad or keyboard navigation inputs
         /// </summary>
         /// <param name="UIElement"></param>

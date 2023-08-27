@@ -1,3 +1,4 @@
+using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Container;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Type;
 using UnityEngine;
 using UnityEngine.Localization;
@@ -13,5 +14,6 @@ namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item
         [field: SerializeField] public RaritySO Rarity { get; private set; }
         [field: SerializeField] public LocalizedString LocalizedEquipmentType { get; private set; }
         [field: SerializeField] public int RequiredCharacterLevel { get; private set; }
+        [field: SerializeField] public EquipmentSlot.EType[] RequiredSlots { get; private set; }
     }
 }

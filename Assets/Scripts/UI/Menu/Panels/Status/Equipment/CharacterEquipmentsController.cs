@@ -1,10 +1,9 @@
-﻿using CryptoQuest.Gameplay;
+﻿using CryptoQuest.Gameplay.Character;
 using CryptoQuest.Gameplay.Inventory.Items;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Container;
 using CryptoQuest.Gameplay.PlayerParty;
 using CryptoQuest.System;
 using UnityEngine;
-using NotImplementedException = System.NotImplementedException;
 
 namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
 {
@@ -16,18 +15,25 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
     {
         [SerializeField] private ServiceProvider _provider;
         private IParty _party;
+        private bool _bindThroughEvent;
 
         private void Awake()
         {
             _provider.UnequipCharacterEquipmentAtSlot += UnequipEquipmentAtSlot;
-            _provider.PartyProvided += RegisterMemberEquipmentEvents;
+            if (_provider.PartyController != null)
+                RegisterMemberEquipmentEvents(_provider.PartyController);
+            else
+            {
+                _bindThroughEvent = true;
+                _provider.PartyProvided += RegisterMemberEquipmentEvents;
+            }
         }
 
         private void OnDestroy()
         {
+            if (_bindThroughEvent)
+                _provider.PartyProvided -= RegisterMemberEquipmentEvents;
             _provider.UnequipCharacterEquipmentAtSlot -= UnequipEquipmentAtSlot;
-            _provider.PartyProvided -= RegisterMemberEquipmentEvents;
-
             RemoveMemberEquipmentEvents();
         }
 
@@ -58,18 +64,30 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
             }
         }
 
-        private void AddEquipmentIntoInventory(EquipmentInfo equipment) { }
+        private void AddEquipmentIntoInventory(EquipmentInfo equipment)
+        {
+            _provider.InventoryController.Add(equipment);
+        }
 
         private void RemoveEquipmentFromInventory(EquipmentInfo equipment) { }
 
-        private void UnequipEquipmentAtSlot(int charIndexInParty, EquipmentSlot.EType slotType)
+        private void UnequipEquipmentAtSlot(CharacterSpec characterSpec, EquipmentSlot.EType slotType)
         {
-            if (!_provider.PartyController.TryGetMemberAtIndex(charIndexInParty, out ICharacter character)) return;
+            if (characterSpec.IsValid() == false)
+            {
+                Debug.LogWarning($"CharacterEquipmentsController::UnequipEquipmentAtSlot: No character is inspecting");
+                return;
+            }
 
-            var equipments = character.Spec.Equipments;
+            var equipments = characterSpec.Equipments;
             var equipmentAtSlot = equipments.GetEquipmentInSlot(slotType);
-            if (equipmentAtSlot.IsValid() == false) return;
+            if (equipmentAtSlot.IsValid() == false)
+            {
+                Debug.Log($"CharacterEquipmentsController::UnequipEquipmentAtSlot: No equipment at slot {slotType}");
+                return;
+            }
 
+            characterSpec.Equipments.Unequip(equipmentAtSlot);
             Debug.Log($"Unequip equipment {equipmentAtSlot} at slot {slotType}");
         }
     }
