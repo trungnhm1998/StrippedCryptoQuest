@@ -15,7 +15,7 @@ namespace CryptoQuest.Gameplay.Inventory.Items
         [field: SerializeField] public StatsDef Stats { get; private set; }
         public EquipmentSlot.EType[] RequiredSlots => Data.RequiredSlots;
 
-        [field: SerializeField, ReadOnly] public InfiniteEffectScriptableObject EffectDef { get; set; }
+        public InfiniteEffectScriptableObject EffectDef { get; set; }
 
         /// <summary>
         /// The effect that being active when this equipment is equipped
