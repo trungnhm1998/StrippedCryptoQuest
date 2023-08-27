@@ -1,4 +1,5 @@
-﻿using CryptoQuest.Gameplay.Character;
+﻿using System.Collections.Generic;
+using CryptoQuest.Gameplay.Character;
 using CryptoQuest.Gameplay.Inventory.Items;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Container;
 using CryptoQuest.Gameplay.PlayerParty;
@@ -20,6 +21,7 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
         private void Awake()
         {
             _provider.UnequipCharacterEquipmentAtSlot += UnequipEquipmentAtSlot;
+            _provider.EquipCharacterEquipmentAtSlot += EquipItem;
             if (_provider.PartyController != null)
                 RegisterMemberEquipmentEvents(_provider.PartyController);
             else
@@ -34,6 +36,7 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
             if (_bindThroughEvent)
                 _provider.PartyProvided -= RegisterMemberEquipmentEvents;
             _provider.UnequipCharacterEquipmentAtSlot -= UnequipEquipmentAtSlot;
+            _provider.EquipCharacterEquipmentAtSlot -= EquipItem;
             RemoveMemberEquipmentEvents();
         }
 
@@ -64,12 +67,24 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
             }
         }
 
-        private void AddEquipmentIntoInventory(EquipmentInfo equipment)
+        private void EquipItem(CharacterSpec character, EquipmentInfo equipment)
         {
-            _provider.InventoryController.Add(equipment);
+            if (character.IsValid() == false)
+            {
+                Debug.LogWarning($"CharacterEquipmentsController::EquipItem: No character is inspecting");
+                return;
+            }
+            
+            if (equipment.IsValid() == false)
+            {
+                Debug.LogWarning($"CharacterEquipmentsController::EquipItem: No equipment is selected");
+                return;
+            }
+            
+            character.Equipments.Equip(equipment);
         }
 
-        private void RemoveEquipmentFromInventory(EquipmentInfo equipment) { }
+        private void RemoveEquipmentFromInventory(EquipmentInfo equipment, List<EquipmentSlot.EType> eTypes) { }
 
         private void UnequipEquipmentAtSlot(CharacterSpec characterSpec, EquipmentSlot.EType slotType)
         {
@@ -89,6 +104,11 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
 
             characterSpec.Equipments.Unequip(equipmentAtSlot);
             Debug.Log($"Unequip equipment {equipmentAtSlot} at slot {slotType}");
+        }
+
+        private void AddEquipmentIntoInventory(EquipmentInfo equipment, List<EquipmentSlot.EType> eTypes)
+        {
+            _provider.InventoryController.Add(equipment);
         }
     }
 }

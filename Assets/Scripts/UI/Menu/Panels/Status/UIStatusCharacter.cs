@@ -16,7 +16,7 @@ namespace CryptoQuest.UI.Menu.Panels.Status
 {
     public class UIStatusCharacter : MonoBehaviour, ICharacterInfo
     {
-        public event Action<int> InspectingCharacter;
+        public event Action<CharacterSpec> InspectingCharacter;
         [SerializeField] private ServiceProvider _provider;
         [Header("Character Info UI References")]
         [SerializeField] private Image _avatar;
@@ -90,7 +90,7 @@ namespace CryptoQuest.UI.Menu.Panels.Status
             _inspectingAttributeSystem = _inspectingCharacter.CharacterComponent.AttributeSystem;
             RenderElementsStats(_inspectingAttributeSystem);
             _inspectingCharacter.SetupUI(this);
-            InspectingCharacter?.Invoke(CurrentIndex);
+            InspectingCharacter?.Invoke(_inspectingCharacter);
         }
 
         private void RenderElementsStats(AttributeSystemBehaviour attributeSystem)

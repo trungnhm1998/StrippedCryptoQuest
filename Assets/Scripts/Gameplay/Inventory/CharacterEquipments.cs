@@ -14,30 +14,10 @@ namespace CryptoQuest.Gameplay.Inventory
     [Serializable]
     public class CharacterEquipments
     {
-        public event Action<EquipmentInfo> EquipmentAdded;
-        public event Action<EquipmentInfo> EquipmentRemoved;
+        public event Action<EquipmentInfo, List<ESlotType>> EquipmentAdded;
+        public event Action<EquipmentInfo, List<ESlotType>> EquipmentRemoved;
 
-        [field: SerializeField] public List<EquipmentSlot> Slots { get; private set; }
-        private Dictionary<ESlotType, int> _slotsCache; // this should only have maximum 8 items
-
-        private Dictionary<ESlotType, int> SlotCache
-        {
-            get
-            {
-                if (_slotsCache == null)
-                {
-                    _slotsCache = new();
-                    for (var index = 0; index < Slots.Count; index++)
-                    {
-                        var slot = Slots[index];
-                        _slotsCache.Add(slot.Type, index);
-                    }
-                }
-
-                return _slotsCache;
-            }
-        }
-
+        [field: SerializeField] public List<EquipmentSlot> Slots { get; private set; } = new();
 
         /// <summary>
         /// Find all required slots for this equipment
@@ -54,7 +34,7 @@ namespace CryptoQuest.Gameplay.Inventory
             foreach (var slot in requiredSlots)
                 Unequip(GetEquipmentInSlot(slot));
 
-            OnEquipmentAdded(equipmentInfo);
+            OnEquipmentAdded(equipmentInfo, new List<ESlotType>(requiredSlots));
         }
 
         /// <summary>
@@ -66,39 +46,46 @@ namespace CryptoQuest.Gameplay.Inventory
         {
             if (equipment.IsValid() == false) return;
 
+            var equippedSlots = new List<ESlotType>(); // Support 1 item equip to multiple slots, two handed weapon
             var requiredSlots = equipment.RequiredSlots;
             foreach (var slot in requiredSlots)
             {
                 var equipmentInSlot = GetEquipmentInSlot(slot);
                 if (equipmentInSlot.IsValid() && equipmentInSlot == equipment)
+                {
                     SetEquipmentInSlot(new EquipmentInfo(), slot);
+                    equippedSlots.Add(slot);
+                }
             }
 
-            OnEquipmentRemoved(equipment);
+            OnEquipmentRemoved(equipment, equippedSlots);
         }
 
-        private void OnEquipmentRemoved(EquipmentInfo equipment)
+        private void OnEquipmentRemoved(EquipmentInfo equipment, List<ESlotType> equippedSlots)
         {
-            EquipmentRemoved?.Invoke(equipment);
+            EquipmentRemoved?.Invoke(equipment, equippedSlots);
         }
 
         public EquipmentInfo GetEquipmentInSlot(ESlotType slotType)
         {
-            if (!SlotCache.TryGetValue(slotType, out var idx))
+            // Using dictionary to cache cause me 30min debugging a weird bug so...
+            foreach (var equipmentSlot in Slots)
             {
-                var slot = new EquipmentSlot()
-                {
-                    Type = slotType,
-                    Equipment = new EquipmentInfo()
-                };
-                Slots.Add(slot);
-                return slot.Equipment;
+                if (equipmentSlot.Type == slotType)
+                    return equipmentSlot.Equipment;
             }
 
-            return Slots[idx].Equipment;
+            Debug.Log($"No slot {slotType} found, create new slot");
+            var slot = new EquipmentSlot()
+            {
+                Type = slotType,
+                Equipment = new EquipmentInfo()
+            };
+            Slots.Add(slot);
+            return slot.Equipment;
         }
 
-        private void OnEquipmentAdded(EquipmentInfo equipment)
+        private void OnEquipmentAdded(EquipmentInfo equipment, List<ESlotType> equippedSlots)
         {
             ESlotType[] requiredSlots = equipment.RequiredSlots;
             foreach (var slot in requiredSlots)
@@ -106,27 +93,28 @@ namespace CryptoQuest.Gameplay.Inventory
                 SetEquipmentInSlot(equipment, slot);
             }
 
-            EquipmentAdded?.Invoke(equipment);
+            EquipmentAdded?.Invoke(equipment, equippedSlots);
         }
 
         private void SetEquipmentInSlot(EquipmentInfo equipment, ESlotType slotType)
         {
-            if (!SlotCache.TryGetValue(slotType, out var idx))
+            for (var index = 0; index < Slots.Count; index++)
             {
-                var equipmentSlot = new EquipmentSlot()
+                var slot = Slots[index];
+                if (slot.Type == slotType)
                 {
-                    Equipment = equipment,
-                    Type = slotType
-                };
-                Slots.Add(equipmentSlot);
-                SlotCache.Add(slotType, Slots.Count - 1);
+                    slot.Equipment = equipment;
+                    Slots[index] = slot;
+                    return;
+                }
             }
-            else
+
+            var equipmentSlot = new EquipmentSlot()
             {
-                var slot = Slots[idx];
-                slot.Equipment = equipment;
-                Slots[idx] = slot;
-            }
+                Equipment = equipment,
+                Type = slotType
+            };
+            Slots.Add(equipmentSlot);
         }
     }
 }

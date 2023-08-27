@@ -1,6 +1,5 @@
 ﻿using System;
 using CryptoQuest.Gameplay.Inventory.Items;
-using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item;
 using CryptoQuest.Menu;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -11,9 +10,11 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
     public class UIEquipmentItem : MonoBehaviour
     {
         public event Action<EquipmentInfo> Inspecting;
+        public event Action<EquipmentInfo> EquipItem;
         [FormerlySerializedAs("_equipment")]
         [SerializeField] private UIEquipment _equipmentUI;
         [SerializeField] private MultiInputButton _button;
+        public EquipmentInfo Equipment => _equipmentUI.Equipment;
 
         private void OnEnable()
         {
@@ -34,6 +35,11 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
         public void Init(EquipmentInfo equipment)
         {
             _equipmentUI.Init(equipment);
+        }
+
+        public void OnEquip()
+        {
+            EquipItem?.Invoke(_equipmentUI.Equipment);
         }
     }
 }

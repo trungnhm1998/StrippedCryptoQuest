@@ -1,4 +1,5 @@
 using CryptoQuest.Gameplay.Character;
+using CryptoQuest.Gameplay.Inventory.Items;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Container;
 using CryptoQuest.Gameplay.PlayerParty;
 using CryptoQuest.System;
@@ -7,6 +8,7 @@ using CryptoQuest.UI.Menu.MenuStates.StatusStates;
 using CryptoQuest.UI.Menu.Panels.Status.Equipment;
 using FSM;
 using UnityEngine;
+using NotImplementedException = System.NotImplementedException;
 
 namespace CryptoQuest.UI.Menu.Panels.Status
 {
@@ -51,7 +53,13 @@ namespace CryptoQuest.UI.Menu.Panels.Status
                 Debug.Log($"UIStatusMenu::UnequipEquipmentAtSlot: No character is inspecting");
                 return;
             }
+
             _provider.UnequipEquipmentAtSlot(_inspectingCharacter, slot);
+        }
+
+        public void EquipItem(EquipmentInfo equipment)
+        {
+            _provider.EquipEquipment(_inspectingCharacter, equipment);
         }
 
         private void BindParty(IPartyController partyController)
@@ -59,13 +67,12 @@ namespace CryptoQuest.UI.Menu.Panels.Status
             _party = partyController.Party;
         }
 
-        private void InspectCharacter(int slotIdx)
+        private void InspectCharacter(CharacterSpec characterSpec)
         {
-            var charInSlot = _party.Members[slotIdx];
-            if (charInSlot.IsValid() == false) return;
-            _inspectingCharacter = charInSlot;
+            if (characterSpec.IsValid() == false) return;
+            _inspectingCharacter = characterSpec;
 
-            var charAttributeSystem = charInSlot.CharacterComponent.AttributeSystem;
+            var charAttributeSystem = characterSpec.CharacterComponent.AttributeSystem;
             _attributeChangeEvent.AttributeSystemReference = charAttributeSystem;
             CharacterEquipmentsPanel.SetEquipmentsUI(_inspectingCharacter.Equipments);
         }

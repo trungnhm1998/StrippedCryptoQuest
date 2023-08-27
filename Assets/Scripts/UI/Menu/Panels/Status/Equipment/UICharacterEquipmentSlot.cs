@@ -1,6 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using CryptoQuest.Gameplay.Inventory;
 using CryptoQuest.Gameplay.Inventory.Items;
-using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Container;
 using UnityEngine;
 
@@ -28,6 +29,24 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
         public void OnChangingEquipment()
         {
             ShowEquipmentsInventoryWithType?.Invoke(SlotType);
+        }
+
+        public void RegisterCharacterEquipmentsEvents(CharacterEquipments charSpecEquipments)
+        {
+            charSpecEquipments.EquipmentAdded += UpdateEquipmentUI;
+            charSpecEquipments.EquipmentRemoved += UpdateEquipmentUI;
+        }
+
+        private void UpdateEquipmentUI(EquipmentInfo equipment, List<EquipmentSlot.EType> eTypes)
+        {
+            if (eTypes.Contains(SlotType))
+                Init(equipment);
+        }
+
+        public void RemoveCharacterEquipmentsEvents(CharacterEquipments charSpecEquipments)
+        {
+            charSpecEquipments.EquipmentAdded -= UpdateEquipmentUI;
+            charSpecEquipments.EquipmentRemoved -= UpdateEquipmentUI;
         }
     }
 }

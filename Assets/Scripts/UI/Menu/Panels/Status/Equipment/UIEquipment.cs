@@ -1,9 +1,7 @@
 ﻿using CryptoQuest.Gameplay.Inventory.Items;
-using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item;
 using UnityEngine;
 using UnityEngine.Localization.Components;
 using UnityEngine.UI;
-using NotImplementedException = System.NotImplementedException;
 
 namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
 {

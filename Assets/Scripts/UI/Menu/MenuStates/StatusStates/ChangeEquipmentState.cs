@@ -1,5 +1,4 @@
 ﻿using CryptoQuest.UI.Menu.Panels.Status;
-using CryptoQuest.UI.Menu.Panels.Status.Equipment;
 
 namespace CryptoQuest.UI.Menu.MenuStates.StatusStates
 {

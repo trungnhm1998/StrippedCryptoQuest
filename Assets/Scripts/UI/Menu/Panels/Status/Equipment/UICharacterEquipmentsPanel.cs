@@ -1,10 +1,10 @@
 using System;
 using System.Collections.Generic;
+using CryptoQuest.Gameplay.Character;
 using CryptoQuest.Gameplay.Inventory;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Container;
 using CryptoQuest.Menu;
 using CryptoQuest.UI.Menu.MenuStates.StatusStates;
-using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -15,6 +15,7 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
         public event Action<EquipmentSlot.EType> UnequipEquipmentAtSlot;
         // refs
         [SerializeField] private UIStatusMenu _mainPanel;
+        [SerializeField] private UIStatusCharacter _characterPanel;
         [SerializeField] private UIEquipmentsInventory _equipmentsInventoryPanel;
         [SerializeField] private UICharacterEquipmentSlot[] _equipmentSlots;
 
@@ -52,6 +53,11 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
         }
 #endif
 
+        private void Awake()
+        {
+            _characterPanel.InspectingCharacter += UpdateCharacterEquipments;
+        }
+
         private void OnEnable()
         {
             Show();
@@ -68,6 +74,22 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
             foreach (var equipmentSlot in _equipmentSlots)
             {
                 equipmentSlot.ShowEquipmentsInventoryWithType -= ShowEquipmentsInventoryWithType;
+            }
+        }
+
+        private void OnDestroy()
+        {
+            _characterPanel.InspectingCharacter -= UpdateCharacterEquipments;
+        }
+
+        private void UpdateCharacterEquipments(CharacterSpec charSpec)
+        {
+            if (charSpec.IsValid() == false) return;
+            foreach (var equipmentSlot in _equipmentSlots)
+            {
+                equipmentSlot.RemoveCharacterEquipmentsEvents(charSpec.Equipments);
+                equipmentSlot.Init(charSpec.Equipments.GetEquipmentInSlot(equipmentSlot.SlotType));
+                equipmentSlot.RegisterCharacterEquipmentsEvents(charSpec.Equipments);
             }
         }
 

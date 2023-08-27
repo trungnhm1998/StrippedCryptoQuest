@@ -1,5 +1,7 @@
+using System.Collections.Generic;
 using CryptoQuest.Gameplay.Inventory;
 using CryptoQuest.Gameplay.Inventory.Items;
+using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Container;
 using IndiGames.GameplayAbilitySystem.EffectSystem;
 using IndiGames.GameplayAbilitySystem.Implementation.BasicEffect;
 using UnityEngine;
@@ -31,7 +33,7 @@ namespace CryptoQuest.Gameplay
             foreach (var slot in _equipments.Slots)
             {
                 if (slot.IsValid() == false) continue;
-                ApplyEquipmentEffectToCharacter(slot.Equipment);
+                ApplyEquipmentEffectToCharacter(slot.Equipment, new());
             }
         }
 
@@ -50,12 +52,12 @@ namespace CryptoQuest.Gameplay
             _equipments.EquipmentRemoved += RemoveEquipmentEffectFromCharacter;
         }
 
-        private void RemoveEquipmentEffectFromCharacter(EquipmentInfo equipment)
+        private void RemoveEquipmentEffectFromCharacter(EquipmentInfo equipment, List<EquipmentSlot.EType> eTypes)
         {
             _character.RemoveEffect(equipment.ActiveEffect.EffectSpec); // TODO: REFACTOR
         }
 
-        private void ApplyEquipmentEffectToCharacter(EquipmentInfo equipment)
+        private void ApplyEquipmentEffectToCharacter(EquipmentInfo equipment, List<EquipmentSlot.EType> eTypes)
         {
             if (_character.Spec.IsValid() == false || equipment.IsValid() == false)
                 return;

@@ -1,6 +1,7 @@
 ﻿using System;
 using CryptoQuest.Gameplay.Character;
 using CryptoQuest.Gameplay.Inventory;
+using CryptoQuest.Gameplay.Inventory.Items;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Container;
 using CryptoQuest.Gameplay.PlayerParty;
@@ -22,10 +23,11 @@ namespace CryptoQuest.System
     /// </summary>
     public class ServiceProvider : ScriptableObject
     {
-        public delegate void UnequipCharacterEquipmentAtSlotHandler(CharacterSpec charIndexInParty,
+        public delegate void EquipmentWithSlotHandler(CharacterSpec charIndexInParty,
             EquipmentSlot.EType slotType);
 
-        public event UnequipCharacterEquipmentAtSlotHandler UnequipCharacterEquipmentAtSlot;
+        public event EquipmentWithSlotHandler UnequipCharacterEquipmentAtSlot;
+        public event Action<CharacterSpec, EquipmentInfo> EquipCharacterEquipmentAtSlot;
         public event Action<IPartyController> PartyProvided;
         public IInventoryController InventoryController { get; private set; }
 
@@ -57,9 +59,14 @@ namespace CryptoQuest.System
             Inventory = service;
         }
 
-        public void UnequipEquipmentAtSlot(CharacterSpec charIndexInParty, EquipmentSlot.EType slotType)
+        public void UnequipEquipmentAtSlot(CharacterSpec inspectingChar, EquipmentSlot.EType slotType)
         {
-            UnequipCharacterEquipmentAtSlot?.Invoke(charIndexInParty, slotType);
+            UnequipCharacterEquipmentAtSlot?.Invoke(inspectingChar, slotType);
+        }
+
+        public void EquipEquipment(CharacterSpec inspectingCharacter, EquipmentInfo equipment)
+        {
+            EquipCharacterEquipmentAtSlot?.Invoke(inspectingCharacter, equipment);
         }
     }
 }
