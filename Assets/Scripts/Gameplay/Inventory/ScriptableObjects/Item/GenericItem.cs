@@ -1,4 +1,3 @@
-using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Type;
 using UnityEngine;
 using UnityEngine.Localization;
 

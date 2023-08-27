@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item;
+using CryptoQuest.Gameplay.Inventory.Items;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Container;
 using UnityEngine;
 using ESlotType =
@@ -11,79 +11,113 @@ namespace CryptoQuest.Gameplay.Inventory
     [Serializable]
     public struct CharacterEquipments
     {
-        public event Action<ESlotType, EquipmentSlot> EquipmentAdded;
-        public event Action<ESlotType, EquipmentSlot> EquipmentRemoved;
+        public event Action<EquipmentInfo> EquipmentAdded;
+        public event Action<EquipmentInfo> EquipmentRemoved;
 
         [field: SerializeField] public List<EquipmentSlot> Slots { get; private set; }
-        private Dictionary<ESlotType, EquipmentSlot>
-            _equippingSlotsCache; // even though there should only 8 Slots I want faster lookup
+        private Dictionary<ESlotType, EquipmentSlot> _slotsCache; // this should only have maximum 8 items
 
-        public List<EquipmentSlot> GetEquippingSlots()
+        private Dictionary<ESlotType, EquipmentSlot> SlotCache
         {
-            return Slots;
-        }
-
-        public bool Equip(ESlotType slot, EquipmentInfo equipmentInfo)
-        {
-            if (!IsSlotValid(slot, equipmentInfo))
+            get
             {
-                return false;
+                if (_slotsCache == null)
+                {
+                    _slotsCache = new();
+                    foreach (var slot in Slots)
+                    {
+                        _slotsCache.Add(slot.Type, slot);
+                    }
+                }
+
+                return _slotsCache;
             }
-
-            OnEquipmentAdd(slot, equipmentInfo);
-            return true;
         }
 
-        private void OnEquipmentAdd(ESlotType slot, EquipmentInfo equipmentInfo)
-        {
-            var equipmentSlot = new EquipmentSlot()
-            {
-                Equipment = equipmentInfo,
-                Type = slot
-            };
-            Slots.Add(equipmentSlot);
-            _equippingSlotsCache.Add(slot, equipmentSlot);
-            EquipmentAdded?.Invoke(slot, equipmentSlot);
-        }
 
-        public bool UnEquip(ESlotType slotType, EquipmentInfo equipmentInfo)
+        /// <summary>
+        /// Find all required slots for this equipment
+        /// remove all equipment that in the required slots and put in back to inventory
+        /// equip the equipment
+        /// the required slots will now occupied by the same equipment (check GUID)
+        /// apply the effect
+        /// </summary>
+        public void Equip(EquipmentInfo equipmentInfo)
         {
-            return true;
+            if (equipmentInfo.IsValid() == false) return;
+
+            var requiredSlots = equipmentInfo.RequiredSlots;
+            foreach (var slot in requiredSlots)
+                Unequip(GetEquipmentInSlot(slot));
+
+            OnEquipmentAdded(equipmentInfo);
         }
 
         /// <summary>
-        /// Is this slot available for equipping?
+        /// Unequip the equipment in all required slots, and raise an event,
+        /// InventoryController, or some manager should listen to this event and add the equipment back to inventory
         /// </summary>
-        /// <param name="slotType">what slot</param>
-        /// <param name="equipmentInfo">what equipment</param>
-        /// <returns>return false if already has equipment in slot should <see cref="UnEquip"/> first</returns>
-        public bool IsSlotValid(ESlotType slotType, EquipmentInfo equipmentInfo)
+        /// <param name="equipment">This equipment should already in <see cref="Slots"/> or <see cref="_slotsCache"/></param>
+        public void Unequip(EquipmentInfo equipment)
         {
-            if (equipmentInfo == null || equipmentInfo.IsValid() == false)
+            if (equipment.IsValid() == false) return;
+
+            var requiredSlots = equipment.RequiredSlots;
+            foreach (var slot in requiredSlots)
             {
-                Debug.LogWarning($"CharacterEquipments::IsSlotValid::equipmentInfo is null or invalid");
-                return false;
+                var equipmentInSlot = GetEquipmentInSlot(slot);
+                if (equipmentInSlot.IsValid() && equipmentInSlot == equipment)
+                    SetEquipmentInSlot(new EquipmentInfo(), slot);
             }
 
-            LazyInitCache();
-
-            if (_equippingSlotsCache.ContainsKey(slotType))
-            {
-                Debug.LogWarning($"CharacterEquipments::Slot {slotType} is not available");
-                return false;
-            }
-
-            return true;
+            OnEquipmentRemoved(equipment);
         }
 
-        private void LazyInitCache()
+        private void OnEquipmentRemoved(EquipmentInfo equipment)
         {
-            if (_equippingSlotsCache != null) return;
+            EquipmentRemoved?.Invoke(equipment);
+        }
 
-            _equippingSlotsCache = new Dictionary<ESlotType, EquipmentSlot>();
-            foreach (var slot in Slots)
+        public EquipmentInfo GetEquipmentInSlot(ESlotType slotType)
+        {
+            if (!SlotCache.TryGetValue(slotType, out var slot))
             {
-                _equippingSlotsCache.Add(slot.Type, slot);
+                slot = new EquipmentSlot()
+                {
+                    Type = slotType,
+                    Equipment = new EquipmentInfo()
+                };
+            }
+
+            return slot.Equipment;
+        }
+
+        private void OnEquipmentAdded(EquipmentInfo equipment)
+        {
+            ESlotType[] requiredSlots = equipment.RequiredSlots;
+            foreach (var slot in requiredSlots)
+            {
+                SetEquipmentInSlot(equipment, slot);
+            }
+
+            EquipmentAdded?.Invoke(equipment);
+        }
+
+        private void SetEquipmentInSlot(EquipmentInfo equipment, ESlotType slot)
+        {
+            if (!SlotCache.TryGetValue(slot, out var equipmentSlot))
+            {
+                equipmentSlot = new EquipmentSlot()
+                {
+                    Equipment = equipment,
+                    Type = slot
+                };
+                Slots.Add(equipmentSlot);
+                SlotCache.Add(slot, equipmentSlot);
+            }
+            else
+            {
+                equipmentSlot.Equipment = equipment;
             }
         }
     }

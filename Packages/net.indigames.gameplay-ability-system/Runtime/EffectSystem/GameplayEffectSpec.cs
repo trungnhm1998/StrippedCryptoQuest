@@ -11,7 +11,7 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem
     public interface IGameplayEffectSpec
     {
         public EffectScriptableObject Def { get; }
-        public bool IsExpired { get; }
+        public bool IsExpired { get; set; }
         public AbilitySystemBehaviour Target { get; }
         public AbilitySystemBehaviour Source { get; }
         public void Update(float deltaTime);

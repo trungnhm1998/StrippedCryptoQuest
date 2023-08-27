@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using CryptoQuest.Events.Gameplay;
 using CryptoQuest.Gameplay.Skill;
 using CryptoQuest.Gameplay.Skill.ScriptableObjects;
 using CryptoQuest.Input;
@@ -27,7 +26,6 @@ namespace CryptoQuest.UI.Menu.Panels.Skill
         [SerializeField] private RectTransform _parentRectTransform;
         [SerializeField] private RectTransform _skillRectTransform;
         [SerializeField] private LocalizeStringEvent _localizeDescription;
-        [SerializeField] private AbilityEventChannelSO _abilityEventChannelSo;
         [field: SerializeField] public ECharacterClass Character { get; private set; }
         private List<MultiInputButton> _listSkillButton = new();
         private List<SkillInformation> _listSkills = new();
@@ -122,7 +120,7 @@ namespace CryptoQuest.UI.Menu.Panels.Skill
         public void SetCell(ICell cell, int index)
         {
             var skill = cell as UISkillAbilityButton;
-            skill.Init(_listSkills[index], _abilityEventChannelSo);
+            skill.Init(_listSkills[index]);
             _listSkillButton.Add(skill.GetComponent<MultiInputButton>());
         }
 

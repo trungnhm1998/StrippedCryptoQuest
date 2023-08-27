@@ -1,54 +1,26 @@
-using CryptoQuest.Events.Gameplay;
+using CryptoQuest.Gameplay.Inventory.Items;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
-using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item;
-using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
+using CryptoQuest.System;
 using UnityEngine;
 
 namespace CryptoQuest.Gameplay.Inventory
 {
-    public class InventoryController : MonoBehaviour
+    public interface IInventoryController
     {
-        [SerializeField] private InventorySO _inventorySO;
-        [SerializeField] private AbilitySystemBehaviour CurrentOwnerAbilitySystemBehaviour;
+        public void AddItem(EquipmentInfo item);
+    }
 
-        [Header("Events listening")]
-        [SerializeField] private ItemEventChannelSO _onUseItem;
+    public class InventoryController : MonoBehaviour, IInventoryController
+    {
+        [SerializeField] private ServiceProvider _provider;
 
-        [SerializeField] private ItemEventChannelSO _onAddItem;
-        [SerializeField] private ItemEventChannelSO _onRemoveItem;
+        private IInventory _inventory;
 
-        private void OnEnable()
+        private void Awake()
         {
-            _onUseItem.EventRaised += UseItem;
-            _onAddItem.EventRaised += AddItem;
-
-            _onRemoveItem.EventRaised += RemoveItem;
+            _provider.Provide(this);
         }
 
-        private void OnDisable()
-        {
-            _onUseItem.EventRaised -= UseItem;
-            _onAddItem.EventRaised -= AddItem;
-
-            _onRemoveItem.EventRaised -= RemoveItem;
-        }
-
-
-        private void AddItem(UsableInfo item)
-        {
-            _inventorySO.Add(item);
-        }
-
-        private void RemoveItem(UsableInfo item)
-        {
-            _inventorySO.Remove(item);
-        }
-
-        private void UseItem(UsableInfo item)
-        {
-            if (item == null) return;
-            item.Owner = CurrentOwnerAbilitySystemBehaviour;
-            item.UseItem();
-        }
+        public void AddItem(EquipmentInfo item) { }
     }
 }

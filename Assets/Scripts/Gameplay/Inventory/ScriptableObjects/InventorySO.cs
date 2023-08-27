@@ -1,8 +1,10 @@
+using System;
 using System.Collections.Generic;
 using CryptoQuest.Config;
-using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item;
+using CryptoQuest.Gameplay.Inventory.Items;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Container;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Type;
+using CryptoQuest.System;
 using UnityEditor;
 using UnityEngine;
 using ESlotType =
@@ -10,17 +12,16 @@ using ESlotType =
 
 namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects
 {
+    public interface IInventory { }
+
     [CreateAssetMenu(menuName = "Crypto Quest/Inventory/Inventory")]
-    public class InventorySO : ScriptableObject
+    public class InventorySO : ScriptableObject, IInventory
     {
-        [Header("Config"), SerializeField]
-        private InventoryConfigSO _inventoryConfig;
+        [SerializeField] private ServiceProvider _provider;
+        [SerializeField] private InventoryConfigSO _inventoryConfig;
 
-        [field: Header("Inventory"), SerializeField]
-        public List<UsableInfo> UsableItems { get; private set; }
-
+        [field: SerializeField]public List<UsableInfo> UsableItems { get; private set; }
         [field: SerializeField] public List<EquipmentInfo> Equipments { get; private set; } = new();
-
         /// <summary>
         /// This is inventory for equipment
         /// and make management by compartments and for easy-to-work UI
@@ -102,6 +103,11 @@ namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects
 
         #endregion
 
+        private void Awake()
+        {
+            if (_provider != null) _provider.Provide(this);
+        }
+
         private void OnEnable()
         {
 #if UNITY_EDITOR
@@ -139,8 +145,19 @@ namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects
                 return false;
             }
 
+            Equipments.Add(equipment);
 
             return true;
+        }
+
+        /// <summary>
+        /// How can we know which equipment to remove?
+        /// </summary>
+        /// <param name="equipment"></param>
+        /// <returns></returns>
+        public bool Remove(EquipmentInfo equipment)
+        {
+            return false;
         }
 
         public bool Add(UsableInfo item, int quantity = 1)
@@ -169,31 +186,6 @@ namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects
 
             return true;
         }
-
-        public bool Add(EEquipmentCategory equipmentCategory, EquipmentInfo equipment)
-        {
-            if (equipment == null)
-            {
-                Debug.LogWarning($"Equipment is null");
-                return false;
-            }
-
-            if (equipment.IsValid() == false)
-            {
-                Debug.LogWarning("Equipment is not valid");
-                return false;
-            }
-
-            UpdateInventorySlot(equipmentCategory, equipment);
-
-            return true;
-        }
-
-        public bool Remove(EquipmentInfo equipment)
-        {
-            return false;
-        }
-
 
         public bool Remove(UsableInfo item, int quantity = 1)
         {

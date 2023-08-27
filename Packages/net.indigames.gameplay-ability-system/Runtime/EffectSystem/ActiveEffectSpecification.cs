@@ -53,7 +53,8 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem
         [field: SerializeField] public List<ComputedModifier> ComputedModifiers { get; set; }
 
         public EModifierType ModifierType => _effectSpec.Def.EffectDetails.StackingType;
-        public bool Expired => _effectSpec.IsExpired;
+        public bool IsActive { get; set; }
+        public bool Expired => _effectSpec != null && _effectSpec.IsExpired && IsActive;
         public TagScriptableObject[] GrantedTags => _effectSpec.Def.GrantedTags;
 
         /// <summary>

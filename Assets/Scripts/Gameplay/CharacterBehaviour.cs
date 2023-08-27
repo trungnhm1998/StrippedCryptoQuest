@@ -1,4 +1,5 @@
 ﻿using CryptoQuest.Gameplay.Character;
+using CryptoQuest.Gameplay.Inventory.Items;
 using CryptoQuest.Gameplay.PlayerParty;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.Components;
@@ -19,23 +20,29 @@ namespace CryptoQuest.Gameplay
         AttributeSystemBehaviour AttributeSystem { get; }
         CharacterSpec Spec { get; }
         ActiveEffectSpecification ApplyEffect(GameplayEffectSpec effectSpec);
-        void UpdateAttributeValues();
+        void Equip(EquipmentInfo equipment);
+        void Unequip(EquipmentInfo equipment);
+
+        /// <summary>
+        /// Create a <see cref="GameplayEffectSpec"/> using this character <see cref="GameplayAbilitySystem"/>
+        /// </summary>
+        /// <param name="equipment"></param>
+        /// <returns>A gameplay spec that can be use to apply into the system</returns>
+        GameplayEffectSpec CreateEffectSpecFromEquipment(EquipmentInfo equipment);
     }
 
+    /// <summary>
+    /// Should be a component on scene so that we can use the update
+    /// </summary>
     public class CharacterBehaviour : MonoBehaviour, ICharacter
     {
-        [SerializeField] private CharacterSpec _spec;
-
-        [SerializeField] private bool _initOnStart = true; // Maybe remove this later
-        [field: SerializeField] public AbilitySystemBehaviour GameplayAbilitySystem { get; set; }
-        [field: SerializeField] public EffectSystemBehaviour EffectSystem { get; set; }
+        [SerializeField] private CharacterSpec _spec = new();
+        [field: SerializeField] public AbilitySystemBehaviour GameplayAbilitySystem { get; private set; }
+        [field: SerializeField] public EffectSystemBehaviour EffectSystem { get; private set; }
         [field: SerializeField] public AttributeSystemBehaviour AttributeSystem { get; private set; }
-
         public Elemental Element => _spec.Element;
-
         public CharacterSpec Spec => _spec;
-
-        private IEquipmentEffector _equipmentEffector;
+        private IEquipmentEffectApplier _equipmentEffectApplier;
         private IStatInitializer _statsInitializer;
 
         private void OnValidate()
@@ -48,24 +55,24 @@ namespace CryptoQuest.Gameplay
             GetDependencies();
         }
 
-        private void Start()
-        {
-            if (_initOnStart) Init();
-        }
-
+        /// <summary>
+        /// Then we will need to add stats such as ATK, DEF, etc. these need to init after the base stats so when  <see cref="AttributeScriptableObject.CalculateInitialValue"/> get called, it will have the base stats value
+        /// </summary>
         public void Init(CharacterSpec character)
         {
+            if (character.IsValid() == false) return;
             GetDependencies();
             _spec = character;
             _spec.Bind(this);
-            Init();
+            _statsInitializer.InitStats();
+            _equipmentEffectApplier.InitEquipments(this);
         }
 
         private void GetDependencies()
         {
-            if (_equipmentEffector == null) _equipmentEffector = GetComponent<IEquipmentEffector>();
+            if (_equipmentEffectApplier == null) _equipmentEffectApplier = GetComponent<IEquipmentEffectApplier>();
             if (_statsInitializer == null) _statsInitializer = GetComponent<IStatInitializer>();
-            Assert.IsNotNull(_equipmentEffector); // even for a monster?
+            Assert.IsNotNull(_equipmentEffectApplier); // even for a monster?
         }
 
         public void SetSlot(PartySlot partySlot)
@@ -78,19 +85,14 @@ namespace CryptoQuest.Gameplay
             return GameplayAbilitySystem.ApplyEffectSpecToSelf(effectSpec);
         }
 
-        public void UpdateAttributeValues()
-        {
-            EffectSystem.UpdateAttributeModifiersUsingAppliedEffects();
-        }
+        public void Equip(EquipmentInfo equipment) => _spec.Equipments.Equip(equipment);
 
-        /// <summary>
-        /// Then we will need to add stats such as ATK, DEF, etc. these need to init after the base stats so when  <see cref="AttributeScriptableObject.CalculateInitialValue"/> get called, it will have the base stats value
-        /// </summary>
-        private void Init()
+        public void Unequip(EquipmentInfo equipment) => _spec.Equipments.Unequip(equipment);
+
+        public GameplayEffectSpec CreateEffectSpecFromEquipment(EquipmentInfo equipment)
         {
-            if (_spec.IsValid() == false) return;
-            _statsInitializer.InitStats();
-            _equipmentEffector.InitEquipments(this);
+            if (equipment.IsValid() == false) return new GameplayEffectSpec();
+            return GameplayAbilitySystem.MakeOutgoingSpec(equipment.EffectDef);
         }
     }
 }

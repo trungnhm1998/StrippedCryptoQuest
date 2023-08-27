@@ -1,7 +1,9 @@
-﻿using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item;
+﻿using CryptoQuest.Gameplay.Inventory.Items;
+using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item;
 using UnityEngine;
 using UnityEngine.Localization.Components;
 using UnityEngine.UI;
+using NotImplementedException = System.NotImplementedException;
 
 namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
 {
@@ -13,6 +15,7 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
         [SerializeField] private RectTransform _tooltipPosition;
         private EquipmentInfo _equipment = new();
         private ITooltip _tooltip;
+        public EquipmentInfo Equipment => _equipment;
 
         private void Awake()
         {
@@ -48,6 +51,11 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
                 .WithDisplaySprite(_equipment.Data.Image)
                 .WithContentAwareness(_tooltipPosition)
                 .Show();
+        }
+
+        public void Reset()
+        {
+            _equipment = new EquipmentInfo();
         }
     }
 }

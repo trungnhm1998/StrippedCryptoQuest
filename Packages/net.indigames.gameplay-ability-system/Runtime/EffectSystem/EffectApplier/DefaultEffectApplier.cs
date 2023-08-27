@@ -59,15 +59,19 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem.EffectApplier
                           $"base value[{attributeValue.BaseValue}] " +
                           $"currentValue[{attributeValue.CurrentValue}]");
             }
-            
-            _attributeSystem.UpdateAttributeValues(); // TODO: I don't really sure about this line
+
+            // after modify the attribute this effect is now expired
+            // The system only care if effect is expired or not
+            container.IsActive = false;
 
             return container;
         }
 
-        public ActiveEffectSpecification Visit(IDurationalEffectSpec durationalEffectSpec) => InternalVisitDurational(durationalEffectSpec);
+        public ActiveEffectSpecification Visit(IDurationalEffectSpec durationalEffectSpec) =>
+            InternalVisitDurational(durationalEffectSpec);
 
-        public ActiveEffectSpecification Visit(IInfiniteEffectSpec infiniteEffectSpec) => InternalVisitDurational(infiniteEffectSpec);
+        public ActiveEffectSpecification Visit(IInfiniteEffectSpec infiniteEffectSpec) =>
+            InternalVisitDurational(infiniteEffectSpec);
 
         /// <summary>
         /// Slow enemy down for 15sec
@@ -76,11 +80,9 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem.EffectApplier
         /// </summary>
         private ActiveEffectSpecification InternalVisitDurational(IGameplayEffectSpec effectSpec)
         {
-            var activeEffectSpecification = new ActiveEffectSpecification(effectSpec);
-            _ownerSystem.EffectSystem.AppliedEffects.Add(activeEffectSpecification);
-            Debug.Log(
-                $"EffectApplier::Durational::to {_ownerSystem.name} with effect {effectSpec.Def.name}");
-            return activeEffectSpecification;
+            Debug.Log("EffectApplier::InternalVisitDurational::" +
+                      $"Apply effect {effectSpec.Def.name} to {_ownerSystem.name}");
+            return new ActiveEffectSpecification(effectSpec);
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using CryptoQuest.Gameplay.Inventory.Items;
+using UnityEngine;
 
 namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.ActionTypes
 {

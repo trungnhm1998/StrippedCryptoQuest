@@ -1,4 +1,5 @@
 ﻿using CryptoQuest.UI.Menu.Panels.Status;
+using CryptoQuest.UI.Menu.Panels.Status.Equipment;
 
 namespace CryptoQuest.UI.Menu.MenuStates.StatusStates
 {
@@ -10,7 +11,9 @@ namespace CryptoQuest.UI.Menu.MenuStates.StatusStates
         {
             base.OnEnter();
             StatusPanel.CharacterEquipmentsPanel.Hide();
-            StatusPanel.EquipmentsInventoryPanel.Show();
+            StatusPanel.EquipmentsInventoryPanel.Show(
+                StatusPanel.InspectingCharacter,
+                StatusPanel.CharacterEquipmentsPanel.ModifyingSlotType);
         }
 
         public override void HandleCancel()

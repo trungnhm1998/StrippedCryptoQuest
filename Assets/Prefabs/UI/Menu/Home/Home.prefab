@@ -394,6 +394,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ee02939e2e4fc2439f8267432db9c32, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _serviceProvider: {fileID: 11400000, guid: 8c870727215fbcf48976e7263a1a2485, type: 2}
   _homeMenu: {fileID: 5701526707367658822}
   SortModeEnabledEvent: {fileID: 11400000, guid: 5e1c8713e139d184a9d27e6006ef7d9b, type: 2}
   _characterSlots: {fileID: 7965848160767364178}
@@ -419,7 +420,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4869861119553980847}
   - component: {fileID: 5701526707367658822}
-  - component: {fileID: 9196464526917215904}
   m_Layer: 5
   m_Name: Home
   m_TagString: Untagged
@@ -463,19 +463,6 @@ MonoBehaviour:
   _typeSO: {fileID: 11400000, guid: ed8f7b60915d0e14fb499125dba4e5d8, type: 2}
   _content: {fileID: 2895130046960800212}
   _sortMode: {fileID: 6184574510126152131}
---- !u!114 &9196464526917215904
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8225615250302762978}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2b8cf9375efc29e4b8e1e21ba8dcd5c9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _party: {fileID: 11400000, guid: b97126249c17e024fa024226ffea3c3f, type: 2}
 --- !u!1 &8933424895079716587
 GameObject:
   m_ObjectHideFlags: 0
@@ -636,14 +623,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1047201365981666183}
     m_Modifications:
-    - target: {fileID: 5355637706248454720, guid: 3c82a0ed70b02f54ba487afcff878954, type: 3}
-      propertyPath: m_text
-      value: Q/E
-      objectReference: {fileID: 0}
-    - target: {fileID: 6507475693016442779, guid: 3c82a0ed70b02f54ba487afcff878954, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 114431645548707615, guid: 7bdf12494356e6144b56df590e2d6385, type: 3}
       propertyPath: m_Name
       value: ChangeCharacter
@@ -788,6 +767,14 @@ PrefabInstance:
       propertyPath: m_SizeDelta.x
       value: 16.54
       objectReference: {fileID: 0}
+    - target: {fileID: 5355637706248454720, guid: 3c82a0ed70b02f54ba487afcff878954, type: 3}
+      propertyPath: m_text
+      value: Q/E
+      objectReference: {fileID: 0}
+    - target: {fileID: 6507475693016442779, guid: 3c82a0ed70b02f54ba487afcff878954, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -856,7 +843,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6320747358420644603, guid: 3c82a0ed70b02f54ba487afcff878954, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 113.31
       objectReference: {fileID: 0}
     - target: {fileID: 6507475693016442779, guid: 3c82a0ed70b02f54ba487afcff878954, type: 3}
       propertyPath: m_SizeDelta.x
@@ -1022,7 +1009,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6320747358420644603, guid: 3c82a0ed70b02f54ba487afcff878954, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 83.445
       objectReference: {fileID: 0}
     - target: {fileID: 6507475693016442779, guid: 3c82a0ed70b02f54ba487afcff878954, type: 3}
       propertyPath: m_SizeDelta.x
@@ -1778,7 +1765,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6320747358420644603, guid: 3c82a0ed70b02f54ba487afcff878954, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 82.05
       objectReference: {fileID: 0}
     - target: {fileID: 6507475693016442779, guid: 3c82a0ed70b02f54ba487afcff878954, type: 3}
       propertyPath: m_SizeDelta.x

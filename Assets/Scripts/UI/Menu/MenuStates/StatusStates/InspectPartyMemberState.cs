@@ -26,7 +26,7 @@ namespace CryptoQuest.UI.Menu.MenuStates.StatusStates
         public override void HandleNavigate(Vector2 direction)
         {
             base.HandleNavigate(direction);
-            StatusPanel.CharacterPanel.ChangeCharacter(direction);
+            StatusPanel.CharacterPanel.ChangeCharacter(direction.x);
         }
     }
 }

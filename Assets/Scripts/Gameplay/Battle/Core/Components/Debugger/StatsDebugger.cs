@@ -1,7 +1,6 @@
 using CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.Components;
-using IndiGames.GameplayAbilitySystem.Implementation.BasicEffect;
 using UnityEngine;
 
 namespace CryptoQuest.Gameplay.Battle.Core.Components.Debugger
@@ -72,40 +71,9 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components.Debugger
             {
                 GUILayout.BeginVertical();
                 RenderAttributesDebug();
-                RenderAppliedEffect();
                 GUILayout.EndVertical();
             }
             GUILayout.EndHorizontal();
-        }
-
-        private void RenderAppliedEffect()
-        {
-            _showAppliedEffects = GUILayout.Toggle(_showAppliedEffects, "Show applied effects/modfiers");
-            if (!_showAppliedEffects) return;
-            foreach (var appliedEffect in _owner.EffectSystem.AppliedEffects)
-            {
-                var abstractEffect = appliedEffect.EffectSpec;
-                var isActive = abstractEffect.IsExpired ? "Inactive" : "Active";
-                string optional = $"({isActive})";
-                float computedValue = 0;
-                if (abstractEffect.Def.EffectDetails.Modifiers[0].ModifierMagnitude)
-                {
-                    // TODO: REFACTOR GAS
-                    // computedValue = abstractEffect.EffectSO.EffectDetails.Modifiers[0].ModifierMagnitude
-                        // .CalculateMagnitude(abstractEffect);
-                }
-
-                string details = "";
-
-                if (abstractEffect is DurationalEffectSpec durationalEffect)
-                {
-                    var remainingDuration = durationalEffect.RemainingDuration;
-                    optional = $"({remainingDuration:0.00})";
-                }
-
-                GUILayout.Label(
-                    $"Effect: {abstractEffect.Def.name} {optional} {details}");
-            }
         }
 
         private void RenderAttributesDebug()

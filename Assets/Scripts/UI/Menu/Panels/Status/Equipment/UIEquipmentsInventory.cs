@@ -1,8 +1,12 @@
+using System;
 using System.Collections.Generic;
+using CryptoQuest.Gameplay.Character;
+using CryptoQuest.Gameplay.Inventory.Items;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
-using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item;
+using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Container;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Type;
 using CryptoQuest.Menu;
+using CryptoQuest.System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
@@ -15,17 +19,21 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
     /// </summary>
     public class UIEquipmentsInventory : MonoBehaviour
     {
+        public event Action UnequipPressed;
         [Header("Configs")]
         [SerializeField] private ScrollRect _scrollRect;
         [SerializeField] private InventorySO _inventorySO; // TODO: refactor to use interface instead
         [SerializeField] private UIEquipmentItem _equipmentItemPrefab;
 
         [Header("Game Components")]
+        [SerializeField] private UIEquipment _currentlyEquippingItem;
         [SerializeField] private TooltipProvider _tooltipProvider;
         [SerializeField] private RectTransform _tooltipSafeArea;
         [SerializeField] private GameObject _contents;
         [SerializeField] private MultiInputButton _unEquipButton;
         [SerializeField] private RectTransform _singleItemRect;
+
+        [SerializeField] private ServiceProvider _serviceProvider;
 
         private float _verticalOffset;
         private bool _initialized;
@@ -51,12 +59,12 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
 
         private void OnEnable()
         {
-            UIEquipmentButton.InspectingRow += AutoScroll;
+            _unEquipButton.onClick.AddListener(OnUnequip);
         }
 
         private void OnDisable()
         {
-            UIEquipmentButton.InspectingRow -= AutoScroll;
+            _unEquipButton.onClick.RemoveListener(OnUnequip);
         }
 
         /// <summary>
@@ -94,12 +102,27 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
             }
         }
 
-        public void Show()
+        public void Show(CharacterSpec inspectingChar, EquipmentSlot.EType modifyingSlotType)
         {
+            _scrollRect.content.anchoredPosition = Vector2.zero;
             _tooltipProvider.Tooltip.SetSafeArea(_tooltipSafeArea);
             _contents.SetActive(true);
             _unEquipButton.Select();
-            // LoadItems(type);
+            RenderCurrentlyEquipItem(inspectingChar, modifyingSlotType);
+        }
+
+        private void RenderCurrentlyEquipItem(CharacterSpec inspectingCharacter,
+            EquipmentSlot.EType modifyingSlotType)
+        {
+            var equipment = inspectingCharacter.Equipments.GetEquipmentInSlot(modifyingSlotType);
+            _currentlyEquippingItem.gameObject.SetActive(equipment.IsValid());
+            if (!equipment.IsValid())
+            {
+                _currentlyEquippingItem.Reset();
+                return;
+            }
+
+            _currentlyEquippingItem.Init(equipment);
         }
 
         public void Hide()
@@ -107,6 +130,8 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
             _tooltipProvider.Tooltip.Hide();
             _contents.SetActive(false);
         }
+
+        private List<UIEquipmentItem> _equipmentItems = new();
 
         private void InstantiateEquipments()
         {
@@ -117,46 +142,24 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
                 var equipment = _inventorySO.Equipments[i];
                 var equipmentItem = Instantiate(_equipmentItemPrefab, _scrollRect.content);
                 equipmentItem.Init(equipment);
+                equipmentItem.Inspecting += PreviewEquipmentStats;
             }
         }
 
-        // private void RefreshItems()
-        // {
-        //     for (int i = 1; i < _scrollRect.content.childCount; i++)
-        //     {
-        //         Destroy(_scrollRect.content.GetChild(i).gameObject);
-        //     }
-        // }
+        private void OnDestroy()
+        {
+            foreach (var equipmentItem in _equipmentItems)
+            {
+                equipmentItem.Inspecting -= PreviewEquipmentStats;
+                Destroy(equipmentItem.gameObject);
+            }
+        }
 
-        // private void LoadItems(EEquipmentCategory type)
-        // {
-        //     if (type != _cachedType)
-        //     {
-        //         RefreshItems();
-        //         _initialized = false;
-        //     }
-        //
-        //     _cachedType = type;
-        //
-        //     if (!_initialized)
-        //     {
-        //         _scrollRect.Initialize(this);
-        //         _initialized = true;
-        //     }
-        //
-        //     if (!_inventorySO.GetEquipmentByType(type, out _equipments))
-        //     {
-        //         Debug.LogWarning("Failed to get equipments");
-        //     }
-        // }
-        //
-        // public void Hide()
-        // {
-        //     _unEquipButton.Select();
-        //     _contents.SetActive(false);
-        //     // TODO: REFACTOR TOOL TIP HIDE
-        // }
-        //
-        // public void Init(IParty party) { }
+        private void PreviewEquipmentStats(EquipmentInfo equipmentToPreview) { }
+
+        public void OnUnequip()
+        {
+            UnequipPressed?.Invoke();
+        }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using CryptoQuest.Gameplay.Inventory.Items;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item;
 using CryptoQuest.Menu;
 using PolyAndCode.UI;

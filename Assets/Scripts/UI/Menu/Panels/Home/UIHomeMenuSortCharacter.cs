@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data;
 using CryptoQuest.Gameplay.PlayerParty;
+using CryptoQuest.System;
 using IndiGames.Core.Events.ScriptableObjects;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.Components;
 using UnityEngine;
@@ -13,6 +14,7 @@ namespace CryptoQuest.UI.Menu.Panels.Home
     {
         public event Action SelectedEvent;
         public event Action ConfirmedEvent;
+        [SerializeField] private ServiceProvider _serviceProvider;
 
         [Header("Configs")]
         [SerializeField] private UIHomeMenu _homeMenu;
@@ -33,6 +35,7 @@ namespace CryptoQuest.UI.Menu.Panels.Home
         private List<AttributeSystemBehaviour> _activeMembersAttribute = new();
 
         private int _currentIndex = 0;
+
         private int CurrentIndex
         {
             get => _currentIndex;
@@ -53,27 +56,38 @@ namespace CryptoQuest.UI.Menu.Panels.Home
             {
                 Array.Resize(ref _partySlots, PartyConstants.PARTY_SIZE);
             }
-            
+
             _partySlots = GetComponentsInChildren<UIPartySlot>();
         }
 
-        public void Init(IParty party)
+        private void Awake()
         {
-            _party = party;
-            OnEnableSortMode();
-            EnableButtons();
-            _sortKeysUi.SetActive(true);
+            _party = _serviceProvider.PartyController.Party;
+            _serviceProvider.PartyProvided += InitParty;
         }
 
         private void OnEnable()
         {
             UICharacterCardButton.SelectedEvent += ConfirmSelect;
+            OnEnableSortMode();
+            _sortKeysUi.SetActive(true);
             LoadPartyMembers();
         }
 
         private void OnDisable()
         {
             UICharacterCardButton.SelectedEvent -= ConfirmSelect;
+        }
+
+        private void OnDestroy()
+        {
+            _serviceProvider.PartyProvided -= InitParty;
+        }
+
+        private void InitParty(IPartyController partyController)
+        {
+            _party = _serviceProvider.PartyController.Party;
+            LoadPartyMembers();
         }
 
         private void LoadPartyMembers()
@@ -158,14 +172,6 @@ namespace CryptoQuest.UI.Menu.Panels.Home
             currentTarget.SetSiblingIndex(_indexHolder);
 
             CurrentIndex = _indexHolder;
-        }
-
-        private void EnableButtons()
-        {
-            // foreach (var button in _cardButtons)
-            // {
-            //     button.enabled = true;
-            // }
         }
 
         private void DisableButtons()

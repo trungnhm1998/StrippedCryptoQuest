@@ -1,13 +1,22 @@
 ﻿using System;
 using CryptoQuest.Gameplay.Character;
+using CryptoQuest.System;
 using UnityEngine;
 
 namespace CryptoQuest.Gameplay.PlayerParty
 {
-    public class PartyManager : MonoBehaviour
+    public interface IPartyController
     {
-        [SerializeField, Header("Party Config")]
+        bool TryGetMemberAtIndex(int charIndexInParty, out ICharacter character);
+        IParty Party { get; }
+    }
+
+    public class PartyManager : MonoBehaviour, IPartyController
+    {
+        [field: SerializeField, Header("Party Config")]
         private PartySO _party;
+        public IParty Party => _party;
+        [SerializeField] private ServiceProvider _provider;
 
         [SerializeField, Space] private PartySlot[] _partySlots = new PartySlot[PartyConstants.PARTY_SIZE];
 
@@ -23,6 +32,7 @@ namespace CryptoQuest.Gameplay.PlayerParty
 
         private void Awake()
         {
+            _provider.Provide(this);
             InitParty();
         }
 
@@ -38,6 +48,19 @@ namespace CryptoQuest.Gameplay.PlayerParty
                 if (!character.IsValid()) continue;
                 _partySlots[i].Init(character);
             }
+        }
+
+        public bool TryGetMemberAtIndex(int charIndexInParty, out ICharacter character)
+        {
+            character = _partySlots[0].Character; // first slot suppose to never be null
+
+            if (charIndexInParty < 0 || charIndexInParty >= _partySlots.Length) return false;
+            var partySlot = _partySlots[charIndexInParty];
+            if (partySlot.IsValid() == false) return false;
+
+            character = partySlot.Character;
+
+            return true;
         }
     }
 }

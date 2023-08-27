@@ -1,5 +1,7 @@
-using System;
+using CryptoQuest.Gameplay;
+using CryptoQuest.Gameplay.Character;
 using CryptoQuest.Gameplay.PlayerParty;
+using CryptoQuest.System;
 using CryptoQuest.UI.Character;
 using CryptoQuest.UI.Menu.MenuStates.StatusStates;
 using CryptoQuest.UI.Menu.Panels.Status.Equipment;
@@ -14,40 +16,48 @@ namespace CryptoQuest.UI.Menu.Panels.Status
     /// </summary>
     public class UIStatusMenu : UIMenuPanel
     {
+        [SerializeField] private ServiceProvider _provider;
+
         [field: SerializeField, Header("State Context")]
         public UICharacterEquipmentsPanel CharacterEquipmentsPanel { get; private set; }
 
         [field: SerializeField] public UIEquipmentsInventory EquipmentsInventoryPanel { get; private set; }
         [field: SerializeField] public UIStatusCharacter CharacterPanel { get; private set; }
-
         [SerializeField] private AttributeChangeEvent _attributeChangeEvent;
-
+        private CharacterSpec _inspectingCharacter;
+        public CharacterSpec InspectingCharacter => _inspectingCharacter; // Should have using ICharacter
         private IParty _party;
 
         private void Awake()
         {
-            _party = GetComponent<IParty>();
-            if (_party == null) throw new NullReferenceException("Party is null");
-            CharacterPanel.SetParty(_party);
-
+            _party = _provider.PartyController.Party;
             CharacterPanel.InspectingCharacter += InspectCharacter;
+            // This is event could not be fired because the scene contains this component is not loaded yet
+            _provider.PartyProvided += BindParty;
         }
 
         private void OnDestroy()
         {
             CharacterPanel.InspectingCharacter -= InspectCharacter;
+            _provider.PartyProvided -= BindParty;
+        }
+
+        private void BindParty(IPartyController partyController)
+        {
+            _party = partyController.Party;
         }
 
         private void InspectCharacter(int slotIdx)
         {
             var charInSlot = _party.Members[slotIdx];
             if (charInSlot.IsValid() == false) return;
+            _inspectingCharacter = charInSlot;
 
             var charAttributeSystem = charInSlot.CharacterComponent.AttributeSystem;
             _attributeChangeEvent.AttributeSystemReference = charAttributeSystem;
-            charAttributeSystem.UpdateAttributeValues(); // event will be raise even though the value is the same
-            CharacterEquipmentsPanel.SetEquipment(charInSlot.Equipments);
+            CharacterEquipmentsPanel.SetEquipmentsUI(_inspectingCharacter.Equipments);
         }
+
 
         private StatusMenuStateMachine _state;
         public StatusMenuStateMachine State => _state;

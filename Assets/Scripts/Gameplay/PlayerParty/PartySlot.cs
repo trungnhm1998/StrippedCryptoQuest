@@ -11,28 +11,24 @@ namespace CryptoQuest.Gameplay.PlayerParty
     public class PartySlot : MonoBehaviour
     {
         private ICharacter _character;
+        public ICharacter Character => _character;
 
         private void Awake()
         {
             var child = transform.GetChild(0);
             Assert.IsNotNull(child, "Child is null");
             _character = child.GetComponent<ICharacter>();
-            Assert.IsNotNull(_character, "Character is null");
-        }
-
-        /// <summary>
-        /// Use this when change character's slot/order
-        /// </summary>
-        /// <param name="character"></param>
-        public void SetCharacter(ICharacter character)
-        {
-            _character = character;
-            _character.SetSlot(this);
+            Assert.IsNotNull(_character, "Character component not found");
         }
 
         public void Init(CharacterSpec character)
         {
             _character.Init(character);
+        }
+        
+        public bool IsValid()
+        {
+            return _character != null && _character.Spec.IsValid();
         }
     }
 }
