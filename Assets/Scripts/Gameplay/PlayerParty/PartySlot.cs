@@ -10,16 +10,8 @@ namespace CryptoQuest.Gameplay.PlayerParty
     /// </summary>
     public class PartySlot : MonoBehaviour
     {
-        private ICharacter _character;
-        public ICharacter Character => _character;
-
-        private void Awake()
-        {
-            var child = transform.GetChild(0);
-            Assert.IsNotNull(child, "Child is null");
-            _character = child.GetComponent<ICharacter>();
-            Assert.IsNotNull(_character, "Character component not found");
-        }
+        [SerializeField] private CharacterBehaviour _character;
+        public CharacterBehaviour Character => _character;
 
         public void Init(CharacterSpec character)
         {

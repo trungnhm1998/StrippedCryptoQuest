@@ -12,31 +12,10 @@ using UnityEngine.Assertions;
 
 namespace CryptoQuest.Gameplay
 {
-    public interface ICharacter
-    {
-        void Init(CharacterSpec character);
-        void SetSlot(PartySlot partySlot);
-        AbilitySystemBehaviour GameplayAbilitySystem { get; }
-        EffectSystemBehaviour EffectSystem { get; }
-        AttributeSystemBehaviour AttributeSystem { get; }
-        CharacterSpec Spec { get; }
-        ActiveEffectSpecification ApplyEffect(GameplayEffectSpec effectSpec);
-        void RemoveEffect(IGameplayEffectSpec activeEffectEffectSpec);
-        void Equip(EquipmentInfo equipment);
-        void Unequip(EquipmentInfo equipment);
-
-        /// <summary>
-        /// Create a <see cref="GameplayEffectSpec"/> using this character <see cref="GameplayAbilitySystem"/>
-        /// </summary>
-        /// <param name="equipment"></param>
-        /// <returns>A gameplay spec that can be use to apply into the system</returns>
-        GameplayEffectSpec CreateEffectSpecFromEquipment(EquipmentInfo equipment);
-    }
-
     /// <summary>
     /// Should be a component on scene so that we can use the update
     /// </summary>
-    public class CharacterBehaviour : MonoBehaviour, ICharacter
+    public class CharacterBehaviour : MonoBehaviour
     {
         [SerializeField] private CharacterSpec _spec = new();
         [field: SerializeField] public AbilitySystemBehaviour GameplayAbilitySystem { get; private set; }
@@ -98,6 +77,11 @@ namespace CryptoQuest.Gameplay
 
         public void Unequip(EquipmentInfo equipment) => _spec.Equipments.Unequip(equipment);
 
+        /// <summary>
+        /// Create a <see cref="GameplayEffectSpec"/> using this character <see cref="GameplayAbilitySystem"/>
+        /// </summary>
+        /// <param name="equipment"></param>
+        /// <returns>A gameplay spec that can be use to apply into the system</returns>
         public GameplayEffectSpec CreateEffectSpecFromEquipment(EquipmentInfo equipment)
         {
             if (equipment.IsValid() == false) return new GameplayEffectSpec();
