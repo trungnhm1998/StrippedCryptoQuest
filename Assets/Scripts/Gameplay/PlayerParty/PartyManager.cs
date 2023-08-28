@@ -30,7 +30,12 @@ namespace CryptoQuest.Gameplay.PlayerParty
             _partySlots = GetComponentsInChildren<PartySlot>();
         }
 
-        private void Awake()
+        // TODO: Remove below if refactor InitParty back to Awake 
+        /// <summary>
+        /// Note: If you using party at awake or start and active in the same scene with this
+        /// You should get this through binding event <see cref="ServiceProvider.PartyProvided"/>
+        /// </summary>
+        private void Start()
         {
             _provider.Provide(this);
             InitParty();

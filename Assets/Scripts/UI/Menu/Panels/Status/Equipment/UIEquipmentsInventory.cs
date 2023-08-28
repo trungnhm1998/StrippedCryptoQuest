@@ -60,6 +60,11 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
             _unEquipButton.onClick.RemoveListener(OnUnequip);
         }
 
+        private void OnDestroy()
+        {
+            RemoveEquippingEvent();
+        }
+
         /// <summary>
         /// Reset to position to top of the list
         /// </summary>
@@ -134,11 +139,16 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
 
         public void Hide()
         {
-            _inspectingCharacter.Equipments.EquipmentAdded -= UpdateInventoryAndEquippingUI;
-            _inspectingCharacter.Equipments.EquipmentRemoved -= RemoveCurrentlyEquipping;
+            RemoveEquippingEvent();
             _tooltipProvider.Tooltip.Hide();
             _contents.SetActive(false);
             Reset();
+        }
+
+        private void RemoveEquippingEvent()
+        {
+            _inspectingCharacter.Equipments.EquipmentAdded -= UpdateInventoryAndEquippingUI;
+            _inspectingCharacter.Equipments.EquipmentRemoved -= RemoveCurrentlyEquipping;
         }
 
         private void Reset()

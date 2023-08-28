@@ -33,7 +33,6 @@ namespace CryptoQuest.UI.Menu.Panels.Status
 
         private void Awake()
         {
-            Debug.Log($"status panel {gameObject.GetInstanceID()}");
             _party = _provider.PartyController.Party;
             CharacterPanel.InspectingCharacter += InspectCharacter;
             // This is event could not be fired because the scene contains this component is not loaded yet
@@ -46,7 +45,6 @@ namespace CryptoQuest.UI.Menu.Panels.Status
             CharacterPanel.InspectingCharacter -= InspectCharacter;
             _provider.PartyProvided -= BindParty;
             CharacterEquipmentsPanel.UnequipEquipmentAtSlot -= UnequipEquipmentAtSlot;
-            _state.ActiveState.OnExit();
         }
 
         private void UnequipEquipmentAtSlot(EquipmentSlot.EType slot)
