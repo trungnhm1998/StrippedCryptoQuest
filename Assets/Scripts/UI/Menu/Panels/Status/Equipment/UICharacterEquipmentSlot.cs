@@ -16,6 +16,7 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
 
         public void Init(EquipmentInfo equipmentSlotEquipment)
         {
+            if (!equipmentSlotEquipment.IsValid()) return;
             _equipment.Init(equipmentSlotEquipment);
             _equipment.gameObject.SetActive(true);
         }
