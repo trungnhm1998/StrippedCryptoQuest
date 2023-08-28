@@ -14,7 +14,7 @@ namespace CryptoQuest.Gameplay
         /// Find all <see cref="EquipmentInfo"/> in <see cref="CharacterEquipments"/> then create and apply effect to character
         /// </summary>
         /// <param name="character"></param>
-        void InitEquipments(CharacterBehaviour character);
+        void InitEquipments(CharacterBehaviourBase character);
     }
 
     public class EquipmentEffectApplier : MonoBehaviour, IEquipmentEffectApplier
@@ -22,9 +22,9 @@ namespace CryptoQuest.Gameplay
         [SerializeField] private CharacterEquipments _equipments;
         [SerializeField] private InfiniteEffectScriptableObject _equipmentEffectBase;
 
-        private CharacterBehaviour _character;
+        private CharacterBehaviourBase _character;
 
-        public void InitEquipments(CharacterBehaviour character)
+        public void InitEquipments(CharacterBehaviourBase character)
         {
             _character = character;
             ClearEquipmentsHandlers();

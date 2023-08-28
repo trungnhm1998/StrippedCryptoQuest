@@ -7,7 +7,7 @@ namespace CryptoQuest.Gameplay.PlayerParty
 {
     public interface IPartyController
     {
-        bool TryGetMemberAtIndex(int charIndexInParty, out CharacterBehaviour character);
+        bool TryGetMemberAtIndex(int charIndexInParty, out CharacterBehaviourBase character);
         IParty Party { get; }
     }
 
@@ -50,7 +50,7 @@ namespace CryptoQuest.Gameplay.PlayerParty
             }
         }
 
-        public bool TryGetMemberAtIndex(int charIndexInParty, out CharacterBehaviour character)
+        public bool TryGetMemberAtIndex(int charIndexInParty, out CharacterBehaviourBase character)
         {
             character = _partySlots[0].Character; // first slot suppose to never be null
 

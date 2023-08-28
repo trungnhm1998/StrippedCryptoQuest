@@ -56,7 +56,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Calculation
 
         public static float CalculateElementalRateFromParams(CustomExecutionParameters executionParams)
         {
-            var character = executionParams.SourceAbilitySystemComponent.GetComponent<CharacterBehaviour>();
+            var character = executionParams.SourceAbilitySystemComponent.GetComponent<CharacterBehaviourBase>();
             var characterElemental = character.Element;
             executionParams.TryGetAttributeValue(new CustomExecutionAttributeCaptureDef()
             {

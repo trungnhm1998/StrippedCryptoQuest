@@ -44,7 +44,7 @@ namespace CryptoQuest.Gameplay
     {
         public event Action NotEnoughResourcesToCast;
         public CryptoQuestGameplayEffect Effect { get; set; }
-        private CharacterBehaviour _target;
+        private CharacterBehaviourBase _target;
         private AbilitySystemBehaviour _targetSystem;
         private SimpleAbilitySO AbilityDef => (SimpleAbilitySO)AbilitySO;
 
@@ -91,7 +91,7 @@ namespace CryptoQuest.Gameplay
         }
 
 
-        public void Active(CharacterBehaviour target)
+        public void Active(CharacterBehaviourBase target)
         {
             _target = target;
             _targetSystem = target.GameplayAbilitySystem;

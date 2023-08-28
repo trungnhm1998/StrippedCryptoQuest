@@ -15,7 +15,7 @@ namespace CryptoQuest.Gameplay
     /// <summary>
     /// Should be a component on scene so that we can use the update
     /// </summary>
-    public class CharacterBehaviour : MonoBehaviour
+    public class CharacterBehaviourBase : MonoBehaviour
     {
         [SerializeField] private CharacterSpec _spec = new();
         [field: SerializeField] public AbilitySystemBehaviour GameplayAbilitySystem { get; private set; }

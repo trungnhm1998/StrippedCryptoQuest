@@ -10,8 +10,8 @@ namespace CryptoQuest.Gameplay.PlayerParty
     /// </summary>
     public class PartySlot : MonoBehaviour
     {
-        [SerializeField] private CharacterBehaviour _character;
-        public CharacterBehaviour Character => _character;
+        [SerializeField] private CharacterBehaviourBase _character;
+        public CharacterBehaviourBase Character => _character;
 
         public void Init(CharacterSpec character)
         {

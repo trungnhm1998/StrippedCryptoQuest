@@ -6,7 +6,7 @@ namespace CryptoQuest.Gameplay
 {
     public class CharacterStatsInitializer : MonoBehaviour, IStatInitializer
     {
-        [SerializeField] private CharacterBehaviour _characterBehaviour;
+        [SerializeField] private CharacterBehaviourBase _characterBehaviour;
 
         public void InitStats()
         {

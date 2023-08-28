@@ -8,12 +8,12 @@ namespace CryptoQuest.Gameplay
 
         private SimpleGameplayAbilitySpec _gameplayAbilitySpec;
 
-        public void GiveAbilityToTarget(CharacterBehaviour character)
+        public void GiveAbilityToTarget(CharacterBehaviourBase character)
         {
             _gameplayAbilitySpec = character.GameplayAbilitySystem.GiveAbility(_ability) as SimpleGameplayAbilitySpec;
         }
 
-        public void UseAbilityOnTarget(CharacterBehaviour character)
+        public void UseAbilityOnTarget(CharacterBehaviourBase character)
         {
             _gameplayAbilitySpec.Active(character);
         }

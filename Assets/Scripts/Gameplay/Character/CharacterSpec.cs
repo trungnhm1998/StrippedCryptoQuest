@@ -20,8 +20,8 @@ namespace CryptoQuest.Gameplay.Character
         [field: SerializeField] public CharacterEquipments Equipments { get; private set; }
         public Sprite Avatar => BaseInfo.Avatar;
 
-        private CharacterBehaviour _characterComponent;
-        public CharacterBehaviour CharacterComponent => _characterComponent;
+        private CharacterBehaviourBase _characterComponent;
+        public CharacterBehaviourBase CharacterComponent => _characterComponent;
 
         public float GetValueAtCurrentLevel(AttributeScriptableObject attributeDef)
         {
@@ -57,7 +57,7 @@ namespace CryptoQuest.Gameplay.Character
                    && StatsDef.Attributes.Length > 0;
         }
 
-        public void Bind(CharacterBehaviour characterBehaviour)
+        public void Bind(CharacterBehaviourBase characterBehaviour)
         {
             _characterComponent = characterBehaviour;
         }
