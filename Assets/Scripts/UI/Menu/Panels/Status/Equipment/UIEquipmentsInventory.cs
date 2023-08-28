@@ -44,7 +44,6 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
 
         private void Awake()
         {
-            Debug.Log($"equipment inventory panel {gameObject.GetInstanceID()}");
             _verticalOffset = _singleItemRect.rect.height;
             _inventoryViewport = _scrollRect.viewport;
             var position = _inventoryViewport.position;
@@ -103,7 +102,6 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
 
         public void Show(CharacterSpec inspectingChar, EquipmentSlot.EType modifyingSlotType)
         {
-            Debug.Log($"{gameObject.GetInstanceID()}");
             Reset();
             InstantiateEquipments();
             _slotType = modifyingSlotType;
@@ -126,7 +124,6 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
 
         private void UpdateCurrentlyEquipping(EquipmentInfo equipment)
         {
-            Debug.Log($"{gameObject.GetInstanceID()}");
             _currentlyEquippingItem.gameObject.SetActive(equipment.IsValid());
             if (!equipment.IsValid())
             {
@@ -163,7 +160,6 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
             equipmentItem.Inspecting -= PreviewEquipmentStats;
             Destroy(equipmentItem.gameObject);
         }
-
 
         private void UpdateInventoryAndEquippingUI(EquipmentInfo equipment, List<EquipmentSlot.EType> eTypes)
         {

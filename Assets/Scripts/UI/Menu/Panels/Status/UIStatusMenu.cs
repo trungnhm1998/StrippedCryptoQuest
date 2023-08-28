@@ -46,6 +46,7 @@ namespace CryptoQuest.UI.Menu.Panels.Status
             CharacterPanel.InspectingCharacter -= InspectCharacter;
             _provider.PartyProvided -= BindParty;
             CharacterEquipmentsPanel.UnequipEquipmentAtSlot -= UnequipEquipmentAtSlot;
+            _state.ActiveState.OnExit();
         }
 
         private void UnequipEquipmentAtSlot(EquipmentSlot.EType slot)
