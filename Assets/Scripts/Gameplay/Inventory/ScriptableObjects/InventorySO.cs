@@ -1,10 +1,8 @@
-using System;
 using System.Collections.Generic;
 using CryptoQuest.Config;
 using CryptoQuest.Gameplay.Inventory.Items;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Container;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Type;
-using CryptoQuest.System;
 using UnityEditor;
 using UnityEngine;
 using ESlotType =
@@ -12,20 +10,13 @@ using ESlotType =
 
 namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects
 {
-    public interface IInventory
-    {
-        void Add(EquipmentInfo equipment);
-        void Remove(EquipmentInfo equipment);
-    }
-
     [CreateAssetMenu(menuName = "Crypto Quest/Inventory/Inventory")]
-    public class InventorySO : ScriptableObject, IInventory
+    public class InventorySO : ScriptableObject
     {
-        [SerializeField] private ServiceProvider _provider;
         [SerializeField] private InventoryConfigSO _inventoryConfig;
-
         [field: SerializeField] public List<UsableInfo> UsableItems { get; private set; }
         [field: SerializeField] public List<EquipmentInfo> Equipments { get; private set; } = new();
+
         /// <summary>
         /// This is inventory for equipment
         /// and make management by compartments and for easy-to-work UI
@@ -109,7 +100,6 @@ namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects
 
         private void OnEnable()
         {
-            _provider.Provide(this);
 #if UNITY_EDITOR
             Editor_ValidateInventoryConfig();
             ValidateInventory();
@@ -154,7 +144,7 @@ namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects
                 Debug.LogWarning($"Equipment is null or invalid");
                 return;
             }
-            
+
             Equipments.Remove(equipment);
         }
 

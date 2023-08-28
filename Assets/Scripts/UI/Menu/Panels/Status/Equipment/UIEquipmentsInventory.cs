@@ -20,26 +20,24 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
     {
         public event Action UnequipPressed;
         [SerializeField] private UIStatusMenu _main;
+
         [Header("Configs")]
         [SerializeField] private ScrollRect _scrollRect;
-        [SerializeField] private InventorySO _inventorySO; // TODO: refactor to use interface instead
-        [SerializeField] private UIEquipmentItem _equipmentItemPrefab;
 
+        [SerializeField] private UIEquipmentItem _equipmentItemPrefab;
         [SerializeField] private UIEquipment _currentlyEquippingItem;
         [SerializeField] private TooltipProvider _tooltipProvider;
         [SerializeField] private RectTransform _tooltipSafeArea;
         [SerializeField] private GameObject _contents;
         [SerializeField] private MultiInputButton _unEquipButton;
         [SerializeField] private RectTransform _singleItemRect;
-
         [SerializeField] private ServiceProvider _serviceProvider;
 
+        private InventorySO _inventorySO => _serviceProvider.Inventory;
         private float _verticalOffset;
-
         private RectTransform _inventoryViewport;
         private float _lowerBound;
         private float _upperBound;
-
         private List<UIEquipmentItem> _equipmentItems = new();
 
         private void Awake()

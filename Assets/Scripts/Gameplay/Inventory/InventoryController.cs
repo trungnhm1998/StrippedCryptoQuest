@@ -1,7 +1,7 @@
 using CryptoQuest.Gameplay.Inventory.Items;
+using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
 using CryptoQuest.System;
 using UnityEngine;
-using NotImplementedException = System.NotImplementedException;
 
 namespace CryptoQuest.Gameplay.Inventory
 {
@@ -9,11 +9,14 @@ namespace CryptoQuest.Gameplay.Inventory
     {
         void Add(EquipmentInfo equipment);
         void Remove(EquipmentInfo equipment);
+        InventorySO Inventory { get; }
     }
 
     public class InventoryController : MonoBehaviour, IInventoryController
     {
+        [SerializeField] private InventorySO _inventory;
         [SerializeField] private ServiceProvider _provider;
+        public InventorySO Inventory => _inventory;
 
         private void Awake()
         {
@@ -22,12 +25,12 @@ namespace CryptoQuest.Gameplay.Inventory
 
         public void Add(EquipmentInfo equipment)
         {
-            _provider.Inventory.Add(equipment);
+            _inventory.Add(equipment);
         }
 
         public void Remove(EquipmentInfo equipment)
         {
-            _provider.Inventory.Remove(equipment);
+            _inventory.Remove(equipment);
         }
     }
 }

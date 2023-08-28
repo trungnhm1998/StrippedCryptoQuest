@@ -33,7 +33,7 @@ namespace CryptoQuest.System
 
         public IPartyController PartyController { get; private set; }
 
-        public IInventory Inventory { get; private set; }
+        public InventorySO Inventory => InventoryController.Inventory;
 
         private void ProvideBase(object service)
         {
@@ -51,12 +51,6 @@ namespace CryptoQuest.System
             ProvideBase(service);
             PartyController = service;
             PartyProvided?.Invoke(service);
-        }
-
-        public void Provide(IInventory service)
-        {
-            ProvideBase(service);
-            Inventory = service;
         }
 
         public void UnequipEquipmentAtSlot(CharacterSpec inspectingChar, EquipmentSlot.EType slotType)
