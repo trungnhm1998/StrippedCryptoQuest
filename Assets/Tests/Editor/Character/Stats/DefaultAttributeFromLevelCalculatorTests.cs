@@ -1,13 +1,14 @@
 ﻿using CryptoQuest.Character.Attributes;
 using CryptoQuest.Gameplay;
 using CryptoQuest.Gameplay.Character;
+using CryptoQuest.Gameplay.Inventory.Items;
 using NUnit.Framework;
 using UnityEngine;
 
 namespace CryptoQuest.Tests.Editor.Character.Stats
 {
     [TestFixture]
-    public class CharacterSpecTests
+    public class DefaultAttributeFromLevelCalculatorTests
     {
         /// <summary>
         /// With the current formula, the value at level 10 should be 186.816 but it floor to 186 instead
@@ -16,14 +17,16 @@ namespace CryptoQuest.Tests.Editor.Character.Stats
         [Test]
         public void GetValueAtLevel_WithLevel10MinHP155MaxHP470_ShouldReturn185()
         {
+            var defaultLevelCalculator = new CryptoQuest.Gameplay.Inventory.Items.DefaultAttributeFromLevelCalculator();
+            var cappedAttributeDef = new CappedAttributeDef()
+            {
+                Attribute = ScriptableObject.CreateInstance<AttributeScriptableObject>(),
+                MinValue = 155,
+                MaxValue = 470,
+            };
             var attributeDefs = new CappedAttributeDef[]
             {
-                new()
-                {
-                    Attribute = ScriptableObject.CreateInstance<AttributeScriptableObject>(),
-                    MinValue = 155,
-                    MaxValue = 470,
-                }
+                cappedAttributeDef
             };
             var stats = new StatsDef()
             {
@@ -36,7 +39,7 @@ namespace CryptoQuest.Tests.Editor.Character.Stats
                 Level = 10
             };
 
-            var value = spec.GetValueAtLevel(10, 0);
+            var value = defaultLevelCalculator.GetValueAtLevel(10, cappedAttributeDef, stats);
 
             Assert.AreEqual(186, value);
         }

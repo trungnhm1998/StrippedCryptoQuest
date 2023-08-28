@@ -22,6 +22,7 @@ namespace CryptoQuest.Gameplay
         [SerializeField] private CharacterEquipments _equipments;
         [SerializeField] private InfiniteEffectScriptableObject _equipmentEffectBase;
 
+        private ILevelCalculator _equipmentAttributeCalculator = new DefaultAttributeFromLevelCalculator();
         private CharacterBehaviourBase _character;
 
         public void InitEquipments(CharacterBehaviourBase character)
@@ -77,12 +78,14 @@ namespace CryptoQuest.Gameplay
             for (int i = 0; i < attributes.Length; i++)
             {
                 var attribute = attributes[i];
+                var equipmentValue =
+                    _equipmentAttributeCalculator.GetValueAtLevel(equipment.Level, attribute, equipment.Stats);
+
                 modifiers[i] = new EffectAttributeModifier
                 {
                     Attribute = attribute.Attribute,
                     ModifierType = EAttributeModifierType.Add,
-                    // TODO: https://github.com/indigames/CryptoQuestClient/issues/1045 Implement GetValueAtLevel like CharacterStatsInitializer
-                    Value = attribute.MinValue
+                    Value = equipmentValue
                 };
             }
 

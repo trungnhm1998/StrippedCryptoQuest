@@ -1,7 +1,6 @@
 ﻿using System;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Container;
-using IndiGames.Core.EditorTools.Attributes.ReadOnlyAttribute;
 using IndiGames.GameplayAbilitySystem.EffectSystem;
 using IndiGames.GameplayAbilitySystem.Implementation.BasicEffect;
 using UnityEngine;
@@ -22,6 +21,7 @@ namespace CryptoQuest.Gameplay.Inventory.Items
         /// this contains all <see cref="ActiveEffectSpecification.ComputedModifiers"/> that this equipment give to the character
         /// </summary>
         private ActiveEffectSpecification _activeEffect = new();
+
         public ActiveEffectSpecification ActiveEffect => _activeEffect;
 
         public void SetActiveEffectSpec(ActiveEffectSpecification applyEquipmentEffect)

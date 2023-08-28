@@ -1,5 +1,4 @@
-﻿using System;
-using CryptoQuest.Gameplay.Character;
+﻿using CryptoQuest.Gameplay.Character;
 using CryptoQuest.Gameplay.Inventory.Items;
 using CryptoQuest.Gameplay.PlayerParty;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
