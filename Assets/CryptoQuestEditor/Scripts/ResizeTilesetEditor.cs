@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using SuperTiled2Unity;
 using SuperTiled2Unity.Editor;
 using UnityEditor.SceneManagement;
+using System;
 
 public class ResizeTilesetEditor
 {
@@ -16,7 +17,8 @@ public class ResizeTilesetEditor
     {
         ResizePNG(RESIZE_FACTOR);
         ModifyTSX(RESIZE_FACTOR);
-        // ModifyTMX(RESIZE_FACTOR);
+        ModifyTSXPolygon(RESIZE_FACTOR);
+        ModifyTMX(RESIZE_FACTOR);
     }
 
     private static void ResizePNG(float resizeFactor)
@@ -51,6 +53,53 @@ public class ResizeTilesetEditor
 
         AssetDatabase.Refresh();
         Debug.Log("All PNG images resized.");
+    }
+
+    private static void ModifyTSXPolygon(float resizeFactor)
+    {
+        foreach (var tsxFilePath in TraverseFolder("*.tsx"))
+        {
+            var doc = new XmlDocument();
+            doc.Load(tsxFilePath);
+            var root = doc.DocumentElement;
+            var counter = 0;
+
+            foreach (XmlElement element in root.SelectNodes("//object"))
+            {
+                var polygonNode = element.SelectSingleNode("polygon");
+
+                ModifyAttributeFloat(element, "x", resizeFactor);
+                ModifyAttributeFloat(element, "y", resizeFactor);
+                ModifyAttributeFloat(element, "width", resizeFactor);
+                ModifyAttributeFloat(element, "height", resizeFactor);
+                if (polygonNode == null) continue;
+                var polyElement = polygonNode as XmlElement;
+                counter++;
+                var attr = "points";
+                Debug.Log($"{counter} points: {polyElement.GetAttribute(attr)}");
+                var value = polyElement.GetAttribute(attr);
+                var vectors = value.Split(" ");
+                var result = "";
+                foreach (var item in vectors)
+                {
+                    var points = item.Split(",");
+                    Debug.Log($"parse x {float.Parse(points[0])}");
+                    Debug.Log($"parse y {float.Parse(points[1])}");
+                    var x = float.Parse(points[0])/resizeFactor;
+                    var y = float.Parse(points[1])/resizeFactor;
+                    Debug.Log($"result {x.ToString()},{y.ToString()}");
+                    result += $"{x.ToString()},{y.ToString()} ";
+                }
+                polyElement.SetAttribute(attr, result[0..^1]);
+            }
+
+            doc.Save(tsxFilePath);
+
+            Debug.Log($"{tsxFilePath} modified and saved.");
+        }
+
+        AssetDatabase.Refresh();
+        Debug.Log("All TSX polygon resized.");
     }
 
     private static void ModifyTSX(float resizeFactor)
@@ -91,38 +140,6 @@ public class ResizeTilesetEditor
         Debug.Log("All TSX resized.");
     }
 
-    [MenuItem("Assets/Tileset Resize/Fix Polygon Collider")]
-    public static void FixPolygonCollider()
-    {
-        ModifyPolygonColliderPositions(new Vector3(0f, 0.96f / 1.5f, 0f));
-    }
-
-    [MenuItem("Assets/Tileset Resize/Reset Polygon Collider")]
-    public static void ResetPolygonCollider()
-    {
-        ModifyPolygonColliderPositions(Vector3.zero);
-    }
-
-    private static void ModifyPolygonColliderPositions(Vector3 newLocalPosition)
-    {
-        var activeScene = UnityEngine.SceneManagement.SceneManager.GetActiveScene();
-        foreach (var gameObject in activeScene.GetRootGameObjects())
-        {
-            var colliders = gameObject.GetComponentsInChildren<PolygonCollider2D>(true);
-
-            foreach (var collider in colliders)
-            {
-                if (!collider.gameObject.TryGetComponent<SuperColliderComponent>(out var _)) continue;
-                collider.transform.localPosition = newLocalPosition; 
-            }
-        }
-        // Mark the scene as dirty
-        EditorSceneManager.MarkSceneDirty(activeScene);
-
-        // Save the scene
-        EditorSceneManager.SaveScene(activeScene);
-    }
-    
     private static void ModifyTMX(float resizeFactor)
     {
         foreach (var tmxFilePath in TraverseFolder("*.tmx"))
@@ -146,6 +163,14 @@ public class ResizeTilesetEditor
             {
                 ModifyAttribute(tileset, "tilewidth", resizeFactor);
                 ModifyAttribute(tileset, "tileheight", resizeFactor);
+            }
+
+            foreach (XmlElement element in root.SelectNodes("//object"))
+            {
+                ModifyAttributeFloat(element, "x", resizeFactor);
+                ModifyAttributeFloat(element, "y", resizeFactor);
+                ModifyAttributeFloat(element, "width", resizeFactor);
+                ModifyAttributeFloat(element, "height", resizeFactor);
             }
 
             doc.Save(tmxFilePath);
@@ -182,7 +207,6 @@ public class ResizeTilesetEditor
 
     private static void ModifyAttribute(XmlElement element, string attr, float resizeFactor)
     {
-        Debug.Log($"{attr}: {element.GetAttribute(attr)}");
         var value = int.Parse(element.GetAttribute(attr));
         var newValue = Mathf.FloorToInt(value / resizeFactor);
         element.SetAttribute(attr, newValue.ToString());
@@ -190,8 +214,9 @@ public class ResizeTilesetEditor
 
     private static void ModifyAttributeFloat(XmlElement element, string attr, float resizeFactor)
     {
-        Debug.Log($"{attr}: {element.GetAttribute(attr)}");
-        var value = float.Parse(element.GetAttribute(attr));
+        var attrValue = element.GetAttribute(attr);
+        if (attrValue == "") return;
+        var value = float.Parse(attrValue);
         var newValue = value / resizeFactor;
         element.SetAttribute(attr, newValue.ToString());
     }
