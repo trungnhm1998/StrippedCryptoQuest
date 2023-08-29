@@ -15,13 +15,6 @@ For example the size is 704x992 now so you only need atlas with 1024x1024 size t
 
 ![Change atlas size](img/atlasSize.png)
 
-
-Problems left:
-
-Tilemap PPU not match, but I don't see any issue cause by this
-
-![Tilemap PPU not match](img/problem.png)
-
 # Warning
 #### Some tilemap after reducing by tool will get an error like this
 ![Error.](img/tilemapErrorAfterReduce.png)
