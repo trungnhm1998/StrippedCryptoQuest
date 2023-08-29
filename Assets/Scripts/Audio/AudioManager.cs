@@ -141,6 +141,8 @@ namespace CryptoQuest.Audio
 
         private void ChangeMasterVolume(float value)
         {
+            if (!IsAudioPlaying()) return;
+
             _playingMusicAudioEmitter.SetVolume(value);
         }
 
