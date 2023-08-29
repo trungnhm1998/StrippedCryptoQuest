@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data;
 using CryptoQuest.Gameplay.Skill;
 using IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects;
-using UnityEditor.Localization.Plugins.XLIFF.V20;
 using UnityEngine;
 
 namespace CryptoQuest.Gameplay
