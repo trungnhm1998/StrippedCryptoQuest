@@ -30,7 +30,9 @@ namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Calculation
             {
                 float baseMagicDamageFixedValue = BattleCalculator.CalculateBaseDamage(skillParameters,
                     baseAttack.CurrentValue, Random.Range(_lowerRandomRange, _upperRandomRange));
-                damageValue = baseMagicDamageFixedValue * elementalRate;
+                damageValue = effectType == EEffectType.RemoveAbnormalStatus
+                    ? baseMagicDamageFixedValue
+                    : baseMagicDamageFixedValue * elementalRate;
             }
             else
             {
@@ -43,6 +45,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Calculation
 
             var mod = BattleCalculator.GetEffectTypeValueCorrection(effectType);
 
+            Debug.Log("ability value = " + damageValue * mod);
             if (damageValue > 0f)
             {
                 var modifier = new EffectAttributeModifier()

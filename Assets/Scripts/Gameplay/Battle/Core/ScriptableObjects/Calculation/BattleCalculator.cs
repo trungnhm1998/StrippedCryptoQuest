@@ -58,6 +58,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Calculation
         {
             var character = executionParams.SourceAbilitySystemComponent.GetComponent<CharacterBehaviourBase>();
             var characterElemental = character.Element;
+            if (characterElemental == null) return 1;
             executionParams.TryGetAttributeValue(new CustomExecutionAttributeCaptureDef()
             {
                 Attribute = characterElemental.AttackAttribute,

@@ -38,6 +38,14 @@ namespace CryptoQuest.Gameplay
         {
             _info = info;
         }
+
+        public void InitAbilityEffect(EffectScriptableObject configuredEffect)
+        {
+            if (configuredEffect is CryptoQuestGameplayEffect effectInstance)
+            {
+                Effect = effectInstance;
+            }
+        }
     }
 
     public class SimpleGameplayAbilitySpec : GameplayAbilitySpec

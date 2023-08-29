@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using CryptoQuest.Character.MonoBehaviours;
+using CryptoQuest.Gameplay.Skill;
+using UnityEngine;
 
 namespace CryptoQuest.Gameplay
 {
@@ -16,6 +18,16 @@ namespace CryptoQuest.Gameplay
         public void UseAbilityOnTarget(CharacterBehaviourBase character)
         {
             _gameplayAbilitySpec.Active(character);
+        }
+
+        [SerializeField] private AbilityData _abilityData;
+
+        public void GiveAbilityByData(CharacterBehaviourBase characterBehaviour)
+        {
+            var abilityController = characterBehaviour.GetComponent<IAbilityController>();
+            var ability = abilityController.InitAbility(_abilityData);
+            _gameplayAbilitySpec =
+                (SimpleGameplayAbilitySpec)characterBehaviour.GameplayAbilitySystem.GiveAbility(ability);
         }
     }
 }
