@@ -83,9 +83,8 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
 
         private void UpdateCharacterEquipments(CharacterSpec charSpec)
         {
+            _currentInspectingCharacter = charSpec;
             if (charSpec.IsValid() == false) return;
-
-            UpdateInspectingCharacter(charSpec);
 
             foreach (var equipmentSlot in _equipmentSlots)
             {
@@ -93,20 +92,6 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
                 equipmentSlot.Init(_currentInspectingCharacter.Equipments.GetEquipmentInSlot(equipmentSlot.SlotType));
                 equipmentSlot.RegisterCharacterEquipmentsEvents(_currentInspectingCharacter.Equipments);
             }
-        }
-
-        private void UpdateInspectingCharacter(CharacterSpec charSpec)
-        {
-            if (_currentInspectingCharacter != null)
-            {
-                _currentInspectingCharacter.Equipments.EquipmentAdded -=
-                    (_, _) => SetEquipmentsUI(_currentInspectingCharacter.Equipments);
-            }
-
-            _currentInspectingCharacter = charSpec;
-
-            _currentInspectingCharacter.Equipments.EquipmentAdded +=
-                (_, _) => SetEquipmentsUI(_currentInspectingCharacter.Equipments);
         }
 
         private EquipmentSlot.EType _modifyingSlotType;
@@ -169,6 +154,8 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
 
         public void Show()
         {
+            SetEquipmentsUI(_currentInspectingCharacter.Equipments);
+
             _tooltipProvider.Tooltip.SetSafeArea(_tooltipSafeArea);
             _equipmentSlotParent.SetActive(true);
             _defaultSelection.Select();
