@@ -1,6 +1,5 @@
 ﻿using System;
-using CryptoQuest.Character.Attributes;
-using UnityEngine.Serialization;
+using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
 
 namespace CryptoQuest.Gameplay
 {
@@ -14,7 +13,6 @@ namespace CryptoQuest.Gameplay
     [Serializable]
     public struct CappedAttributeDef
     {
-        [FormerlySerializedAs("AttributeDef")]
         public AttributeScriptableObject Attribute;
         public float MinValue;
         public float MaxValue;
