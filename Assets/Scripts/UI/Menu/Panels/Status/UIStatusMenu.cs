@@ -1,3 +1,4 @@
+using System;
 using CryptoQuest.Gameplay.Character;
 using CryptoQuest.Gameplay.Inventory.Items;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Container;
@@ -8,7 +9,6 @@ using CryptoQuest.UI.Menu.MenuStates.StatusStates;
 using CryptoQuest.UI.Menu.Panels.Status.Equipment;
 using FSM;
 using UnityEngine;
-using NotImplementedException = System.NotImplementedException;
 
 namespace CryptoQuest.UI.Menu.Panels.Status
 {
@@ -18,6 +18,9 @@ namespace CryptoQuest.UI.Menu.Panels.Status
     /// </summary>
     public class UIStatusMenu : UIMenuPanel
     {
+        public event Action Show;
+        public event Action Hide;
+
         [SerializeField] private ServiceProvider _provider;
 
         [field: SerializeField, Header("State Context")]
@@ -45,6 +48,18 @@ namespace CryptoQuest.UI.Menu.Panels.Status
             CharacterPanel.InspectingCharacter -= InspectCharacter;
             _provider.PartyProvided -= BindParty;
             CharacterEquipmentsPanel.UnequipEquipmentAtSlot -= UnequipEquipmentAtSlot;
+        }
+
+        protected override void OnShow()
+        {
+            base.OnShow();
+            Show?.Invoke();
+        }
+
+        protected override void OnHide()
+        {
+            base.OnHide();
+            Hide?.Invoke();
         }
 
         private void UnequipEquipmentAtSlot(EquipmentSlot.EType slot)

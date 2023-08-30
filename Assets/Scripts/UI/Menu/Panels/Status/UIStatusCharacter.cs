@@ -18,6 +18,7 @@ namespace CryptoQuest.UI.Menu.Panels.Status
     {
         public event Action<CharacterSpec> InspectingCharacter;
         [SerializeField] private ServiceProvider _provider;
+        [SerializeField] private UIStatusMenu _statusMenu;
         [Header("Character Info UI References")]
         [SerializeField] private Image _avatar;
         [SerializeField] private Image _characterElement;
@@ -46,17 +47,21 @@ namespace CryptoQuest.UI.Menu.Panels.Status
             }
         }
 
-        private IParty _playerParty;
-
-        private void Awake()
-        {
-            _playerParty = _provider.PartyController.Party;
-        }
+        private IParty PlayerParty => _provider.PartyController.Party;
 
         private void OnEnable()
         {
-            Debug.Log("UIStatusCharacter OnEnable");
-            InspectCharacter(_playerParty.Members[0]);
+            _statusMenu.Show += InspectFirstCharacter;
+        }
+
+        private void OnDisable()
+        {
+            _statusMenu.Show -= InspectFirstCharacter;
+        }
+
+        private void InspectFirstCharacter()
+        {
+            InspectCharacter(PlayerParty.Members[0]);
         }
 
         public void ChangeCharacter(float direction)
@@ -73,11 +78,11 @@ namespace CryptoQuest.UI.Menu.Panels.Status
         /// <param name="direction">-1 for left and 1 for right</param>
         private CharacterSpec GetTheNextValidMemberInParty(int direction)
         {
-            var memberInParty = _playerParty.Members[CurrentIndex];
+            var memberInParty = PlayerParty.Members[CurrentIndex];
             while (memberInParty.IsValid() == false)
             {
                 CurrentIndex += direction;
-                memberInParty = _playerParty.Members[CurrentIndex];
+                memberInParty = PlayerParty.Members[CurrentIndex];
             }
 
             return memberInParty;
