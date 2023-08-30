@@ -20,6 +20,15 @@ namespace CryptoQuest.Gameplay.Inventory
         [field: SerializeField] public List<EquipmentSlot> Slots { get; private set; } = new();
 
         /// <summary>
+        /// Clear when init character to prevent not unsubscribe correctly
+        /// </summary>
+        public void ClearEventRegistration()
+        {
+            EquipmentAdded = null;
+            EquipmentRemoved = null;
+        }
+
+        /// <summary>
         /// Find all required slots for this equipment
         /// remove all equipment that in the required slots and put in back to inventory
         /// equip the equipment

@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using CryptoQuest.Gameplay.Character;
 using CryptoQuest.Gameplay.Inventory.Items;
-using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Container;
 using CryptoQuest.Menu;
 using CryptoQuest.System;
@@ -19,6 +18,7 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
     public class UIEquipmentsInventory : MonoBehaviour
     {
         public event Action UnequipPressed;
+        public event Action<EquipmentInfo, CharacterSpec> InspectingEquipment;
         [SerializeField] private UIStatusMenu _main;
 
         [Header("Configs")]
@@ -32,8 +32,8 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
         [SerializeField] private MultiInputButton _unEquipButton;
         [SerializeField] private RectTransform _singleItemRect;
         [SerializeField] private ServiceProvider _serviceProvider;
+        [SerializeField] private UIEquipmentPreviewer _equipmentPreviewer;
 
-        private InventorySO _inventorySO => _serviceProvider.Inventory;
         private float _verticalOffset;
         private RectTransform _inventoryViewport;
         private float _lowerBound;
@@ -53,16 +53,13 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
         private void OnEnable()
         {
             _unEquipButton.onClick.AddListener(OnUnequip);
+            _unEquipButton.Selected += PreviewUnselectEquipment;
         }
 
         private void OnDisable()
         {
             _unEquipButton.onClick.RemoveListener(OnUnequip);
-        }
-
-        private void OnDestroy()
-        {
-            RemoveEquippingEvent();
+            _unEquipButton.Selected -= PreviewUnselectEquipment;
         }
 
         /// <summary>
@@ -116,6 +113,7 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
             _contents.SetActive(true);
             _unEquipButton.Select();
             RenderCurrentlyEquipItem(inspectingChar, modifyingSlotType);
+            PreviewUnselectEquipment();
         }
 
         private void RenderCurrentlyEquipItem(CharacterSpec inspectingCharacter,
@@ -139,16 +137,12 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
 
         public void Hide()
         {
-            RemoveEquippingEvent();
+            _inspectingCharacter.Equipments.EquipmentAdded -= UpdateInventoryAndEquippingUI;
+            _inspectingCharacter.Equipments.EquipmentRemoved -= RemoveCurrentlyEquipping;
             _tooltipProvider.Tooltip.Hide();
             _contents.SetActive(false);
             Reset();
-        }
-
-        private void RemoveEquippingEvent()
-        {
-            _inspectingCharacter.Equipments.EquipmentAdded -= UpdateInventoryAndEquippingUI;
-            _inspectingCharacter.Equipments.EquipmentRemoved -= RemoveCurrentlyEquipping;
+            _equipmentPreviewer.ResetAttributesUI();
         }
 
         private void Reset()
@@ -165,7 +159,7 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
         private void DestroyEquipmentRow(UIEquipmentItem equipmentItem)
         {
             equipmentItem.EquipItem -= EquipEquipment;
-            equipmentItem.Inspecting -= PreviewEquipmentStats;
+            equipmentItem.Inspecting -= OnPreviewEquipmentStats;
             Destroy(equipmentItem.gameObject);
         }
 
@@ -186,6 +180,7 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
             _tooltipProvider.Tooltip.Hide();
             RemoveEquipmentFromInventory(equipment);
             UpdateCurrentlyEquipping(equipment);
+            PreviewUnselectEquipment();
         }
 
         private void RemoveEquipmentFromInventory(EquipmentInfo equipment)
@@ -229,9 +224,9 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
         {
             _equipmentItems.Clear();
             _equipmentItems = new();
-            for (int i = 0; i < _inventorySO.Equipments.Count; i++)
+            for (int i = 0; i < _serviceProvider.Inventory.Equipments.Count; i++)
             {
-                var equipment = _inventorySO.Equipments[i];
+                var equipment = _serviceProvider.Inventory.Equipments[i];
                 InstantiateNewEquipmentUI(equipment);
             }
 
@@ -242,7 +237,7 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
         {
             var equipmentItem = Instantiate(_equipmentItemPrefab, _scrollRect.content);
             equipmentItem.Init(equipment);
-            equipmentItem.Inspecting += PreviewEquipmentStats;
+            equipmentItem.Inspecting += OnPreviewEquipmentStats;
             equipmentItem.EquipItem += EquipEquipment;
             _equipmentItems.Add(equipmentItem);
         }
@@ -252,10 +247,22 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
             _main.EquipItem(equipment);
         }
 
-        private void PreviewEquipmentStats(EquipmentInfo equipmentToPreview) { }
+        private GameObject _cloneChar;
+
+        private void PreviewUnselectEquipment()
+        {
+            OnPreviewEquipmentStats(_currentlyEquippingItem.Equipment);
+        }
+
+        private void OnPreviewEquipmentStats(EquipmentInfo equipment)
+        {
+            _tooltipProvider.Tooltip.SetSafeArea(_tooltipSafeArea);
+            InspectingEquipment?.Invoke(equipment, _inspectingCharacter);
+        }
 
         public void OnUnequip()
         {
+            _equipmentPreviewer.ResetAttributesUI();
             UnequipPressed?.Invoke();
         }
     }

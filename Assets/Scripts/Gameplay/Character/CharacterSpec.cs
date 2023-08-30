@@ -31,6 +31,7 @@ namespace CryptoQuest.Gameplay.Character
         public void Bind(CharacterBehaviourBase characterBehaviour)
         {
             _characterComponent = characterBehaviour;
+            Equipments.ClearEventRegistration();
         }
 
         public void SetupUI(ICharacterInfo uiCharacterInfo)

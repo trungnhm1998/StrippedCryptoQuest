@@ -71,26 +71,33 @@ namespace CryptoQuest.Gameplay
 
         private void CreateAndSetEffectDefToEquipment(EquipmentInfo equipment)
         {
+            var equipmentEffectDef = CreateEffectDefFormEquipment(equipment);
+            equipment.EffectDef = equipmentEffectDef;
+        }
+
+        private InfiniteEffectScriptableObject CreateEffectDefFormEquipment(EquipmentInfo equipment)
+        {
             var attributes = equipment.Stats.Attributes;
-            var equipmentEffectDef = Instantiate(_equipmentEffectBase);
+            var equipmentEffectDef = Instantiate(_equipmentEffectBase); // Using preconfigured effect base
 
             var modifiers = new EffectAttributeModifier[attributes.Length];
             for (int i = 0; i < attributes.Length; i++)
             {
                 var attribute = attributes[i];
-                var equipmentValue =
-                    _equipmentAttributeCalculator.GetValueAtLevel(equipment.Level, attribute, equipment.Stats);
+                // TODO: Use magnitude calculation here
+                var attributeValue =
+                    _equipmentAttributeCalculator.GetValueAtLevel(equipment.Level, attribute, equipment.Stats.MaxLevel);
 
                 modifiers[i] = new EffectAttributeModifier
                 {
                     Attribute = attribute.Attribute,
                     ModifierType = EAttributeModifierType.Add,
-                    Value = equipmentValue
+                    Value = attributeValue
                 };
             }
 
             equipmentEffectDef.EffectDetails.Modifiers = modifiers;
-            equipment.EffectDef = equipmentEffectDef;
+            return equipmentEffectDef;
         }
     }
 }

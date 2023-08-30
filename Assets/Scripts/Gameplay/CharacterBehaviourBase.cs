@@ -43,6 +43,8 @@ namespace CryptoQuest.Gameplay
         {
             if (character.IsValid() == false) return;
             GetDependencies();
+            // should I clone this? because it's currently the same object in PartySO
+            // if this get modified the spec in party SO will too
             _spec = character;
             _spec.Bind(this);
             _statsInitializer.InitStats();

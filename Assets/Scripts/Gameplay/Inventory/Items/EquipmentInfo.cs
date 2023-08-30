@@ -22,6 +22,9 @@ namespace CryptoQuest.Gameplay.Inventory.Items
         /// </summary>
         private ActiveEffectSpecification _activeEffect = new();
 
+        public EquipmentInfo() { }
+        public EquipmentInfo(EquipmentSO data) : base(data) { }
+
         public ActiveEffectSpecification ActiveEffect => _activeEffect;
 
         public void SetActiveEffectSpec(ActiveEffectSpecification applyEquipmentEffect)
@@ -50,7 +53,6 @@ namespace CryptoQuest.Gameplay.Inventory.Items
         {
             if (other == null) return false;
             if (ReferenceEquals(this, other)) return true;
-            if (Data != other.Data) return false;
             return Id == other.Id;
         }
 
@@ -59,6 +61,17 @@ namespace CryptoQuest.Gameplay.Inventory.Items
         public override bool Equals(object obj) => Equals(obj as EquipmentInfo);
 
         public override int GetHashCode() => (Id, Data).GetHashCode();
+
+        public EquipmentInfo Clone()
+        {
+            return new EquipmentInfo(Data)
+            {
+                Id = Id,
+                Level = Level,
+                Stats = Stats,
+                EffectDef = EffectDef,
+            };
+        }
 
         #endregion
     }

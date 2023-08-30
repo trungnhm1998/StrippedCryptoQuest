@@ -22,6 +22,7 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
 
         public void Init(EquipmentInfo equipment)
         {
+            if (equipment.IsValid() == false) return;
             _equipment = equipment;
             var def = equipment.Data;
             _name.StringReference = def.DisplayName;
@@ -45,6 +46,7 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
 
             if (_equipment.IsValid() == false) return;
             _tooltip
+                .WithLevel(_equipment.Level)
                 .WithDescription(_equipment.Data.DisplayName)
                 .WithDisplaySprite(_equipment.Data.Image)
                 .WithContentAwareness(_tooltipPosition)

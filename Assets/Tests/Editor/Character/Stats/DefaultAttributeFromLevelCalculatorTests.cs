@@ -1,6 +1,5 @@
 ﻿using CryptoQuest.Character.Attributes;
 using CryptoQuest.Gameplay;
-using CryptoQuest.Gameplay.Character;
 using CryptoQuest.Gameplay.Inventory.Items;
 using NUnit.Framework;
 using UnityEngine;
@@ -17,7 +16,7 @@ namespace CryptoQuest.Tests.Editor.Character.Stats
         [Test]
         public void GetValueAtLevel_WithLevel10MinHP155MaxHP470_ShouldReturn185()
         {
-            var defaultLevelCalculator = new CryptoQuest.Gameplay.Inventory.Items.DefaultAttributeFromLevelCalculator();
+            var defaultLevelCalculator = new DefaultAttributeFromLevelCalculator();
             var cappedAttributeDef = new CappedAttributeDef()
             {
                 Attribute = ScriptableObject.CreateInstance<AttributeScriptableObject>(),
@@ -33,15 +32,27 @@ namespace CryptoQuest.Tests.Editor.Character.Stats
                 Attributes = attributeDefs,
                 MaxLevel = 99
             };
-            var spec = new CharacterSpec()
-            {
-                StatsDef = stats,
-                Level = 10
-            };
 
-            var value = defaultLevelCalculator.GetValueAtLevel(10, cappedAttributeDef, stats);
+            var value = defaultLevelCalculator.GetValueAtLevel(10, cappedAttributeDef, stats.MaxLevel);
 
             Assert.AreEqual(186, value);
+        }
+
+        [TestCase(0, 10, 45f, 75f,  48f)]
+        [TestCase(3, 10, 45f, 75f,  54f)]
+        public void GetValueAtLevel(int lvl, int maxLvl, float minVal, float maxVal, float expected)
+        {
+            var defaultLevelCalculator = new DefaultAttributeFromLevelCalculator();
+            var cappedAttributeDef = new CappedAttributeDef()
+            {
+                Attribute = ScriptableObject.CreateInstance<AttributeScriptableObject>(),
+                MinValue = minVal,
+                MaxValue = maxVal,
+            };
+
+            var value = defaultLevelCalculator.GetValueAtLevel(lvl, cappedAttributeDef, maxLvl);
+
+            Assert.AreEqual(expected, value);
         }
     }
 }

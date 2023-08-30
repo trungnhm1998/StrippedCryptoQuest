@@ -45,12 +45,13 @@ namespace CryptoQuest.Gameplay
         {
             var attributeDefs = _characterBehaviour.Spec.StatsDef.Attributes;
             var charLvl = _characterBehaviour.Spec.Level;
+            var characterAllowedMaxLvl = _characterBehaviour.Spec.StatsDef.MaxLevel;
             for (int i = 0; i < attributeDefs.Length; i++)
             {
                 var attributeDef = attributeDefs[i];
                 _characterBehaviour.AttributeSystem.AddAttribute(attributeDef.Attribute);
                 var baseValueAtLevel =
-                    _levelCalculator.GetValueAtLevel(charLvl, attributeDef, _characterBehaviour.Spec.StatsDef);
+                    _levelCalculator.GetValueAtLevel(charLvl, attributeDef, characterAllowedMaxLvl);
                 _characterBehaviour.AttributeSystem.SetAttributeBaseValue(attributeDef.Attribute, baseValueAtLevel);
             }
 

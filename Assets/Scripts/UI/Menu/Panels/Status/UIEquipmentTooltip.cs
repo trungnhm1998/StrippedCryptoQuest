@@ -1,5 +1,4 @@
-﻿using System;
-using CryptoQuest.UI.Menu.Panels.Status.Equipment;
+﻿using CryptoQuest.UI.Menu.Panels.Status.Equipment;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
@@ -18,6 +17,7 @@ namespace CryptoQuest.UI.Menu.Panels.Status
         ITooltip WithPosition(Vector3 tooltipPositionPosition);
         ITooltip WithContentAwareness(RectTransform tooltipPosition);
         ITooltip SetSafeArea(RectTransform tooltipSafeArea);
+        ITooltip WithLevel(int equipmentLevel);
     }
 
     public class UIEquipmentTooltip : MonoBehaviour, ITooltip
@@ -36,10 +36,13 @@ namespace CryptoQuest.UI.Menu.Panels.Status
         private bool _isShowDownWard;
         private bool _isShowTooltip;
         private Tween _tween;
+        private RectTransform _contentRect;
+
 
         private void Awake()
         {
             _tooltipProvider.Tooltip = this;
+            _contentRect = _content.GetComponent<RectTransform>();
         }
 
         /// <summary>
@@ -90,6 +93,14 @@ namespace CryptoQuest.UI.Menu.Panels.Status
             return this;
         }
 
+        private int _equipmentLevel;
+
+        public ITooltip WithLevel(int equipmentLevel)
+        {
+            _equipmentLevel = equipmentLevel;
+            return this;
+        }
+
         /// <summary>
         /// I don't know what to name this variable.
         /// It is the rect transform of the content that the tooltips will show over.
@@ -118,36 +129,41 @@ namespace CryptoQuest.UI.Menu.Panels.Status
 
         private void SetupAndShow()
         {
-            var rectTransform = _content.GetComponent<RectTransform>();
-            var contentSize = rectTransform.rect.size;
+            _level.text = $"Lv. {_equipmentLevel}";
+            SetupPositionBaseOnSafeAreaAndTarget();
+            _content.SetActive(true);
+        }
+
+        private void SetupPositionBaseOnSafeAreaAndTarget()
+        {
+            var contentSize = _contentRect.rect.size;
             var targetPosition = _tooltipTarget.position;
 
             _content.transform.position = targetPosition; // center by default
 
-            if (HasSafeArea == false)
-            {
-                _content.SetActive(true);
-                return;
-            }
+            if (HasSafeArea == false) return;
 
             var tooltipPosition = _content.transform.position;
             if (tooltipPosition.y + contentSize.y > _safeArea.position.y + _safeArea.rect.yMax)
             {
-                rectTransform.pivot = new Vector2(rectTransform.pivot.x, 1);
-                _frame.SetActive(true);
-                _reverseFrame.SetActive(false);
+                _contentRect.pivot = new Vector2(_contentRect.pivot.x, 1);
+                ToggleFrame(true);
                 targetPosition = new Vector2(targetPosition.x, targetPosition.y + _tooltipTarget.rect.yMin);
             }
             else if (tooltipPosition.y - contentSize.y < _safeArea.position.y + _safeArea.rect.yMin)
             {
-                rectTransform.pivot = new Vector2(rectTransform.pivot.x, 0);
-                _frame.SetActive(false);
-                _reverseFrame.SetActive(true);
+                _contentRect.pivot = new Vector2(_contentRect.pivot.x, 0);
+                ToggleFrame(false);
                 targetPosition = new Vector2(targetPosition.x, targetPosition.y + _tooltipTarget.rect.yMax);
             }
 
             _content.transform.position = targetPosition;
-            _content.SetActive(true);
+        }
+
+        private void ToggleFrame(bool isUp)
+        {
+            _frame.SetActive(isUp);
+            _reverseFrame.SetActive(!isUp);
         }
     }
 }
