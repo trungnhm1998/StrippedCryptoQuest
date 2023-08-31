@@ -1,7 +1,5 @@
 using System;
-using CryptoQuest.Gameplay.BaseGameplayData;
 using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data;
-using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data.Targets;
 using IndiGames.GameplayAbilitySystem.AbilitySystem;
 using IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects.EffectExecutionCalculation;
 using UnityEngine;
@@ -37,7 +35,7 @@ namespace CryptoQuest.Gameplay.Battle.Core
         public float Cost;
         public SkillEffectType EffectType;
         public AbilityUsageScenarioSO UsageScenarioSO;
-        public BattleTargetTypeSO TargetType;
+        // public BattleTargetTypeSO TargetType;
         public SkillParameters SkillParameters;
 
         public bool CheckUsageScenario(EAbilityUsageScenario usageScenario)

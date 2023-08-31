@@ -16,7 +16,7 @@ using AttributeScriptableObject = CryptoQuest.Character.Attributes.AttributeScri
 
 namespace CryptoQuestEditor.Gameplay.Gameplay.Monster
 {
-    public class MonsterDataSOEditor : ScriptableObjectBrowserEditor<MonsterDataSO>
+    public class MonsterDataSOEditor : ScriptableObjectBrowserEditor<MonsterData>
     {
         private const string DEFAULT_NAME = "Monster";
         private const int ROW_OFFSET = 2;
@@ -77,20 +77,13 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Monster
                     continue;
                 }
 
-                MonsterDataSO instance = null;
-                instance = (MonsterDataSO)AssetDatabase.LoadAssetAtPath(path, typeof(MonsterDataSO));
+                MonsterData instance = null;
+                instance = (MonsterData)AssetDatabase.LoadAssetAtPath(path, typeof(MonsterData));
                 if (instance == null || !AssetDatabase.Contains(instance))
                 {
-                    instance = ScriptableObject.CreateInstance<MonsterDataSO>();
+                    instance = ScriptableObject.CreateInstance<MonsterData>();
                 }
 
-                instance.MonsterId = dataModel.MonsterId;
-                instance.Element = GetAssetsFromType<Elemental>().Where(element
-                    => element.Id == dataModel.ElementId).First();
-                instance.Exp = dataModel.Exp;
-                instance.Gold = dataModel.Gold;
-                instance.DropItemID = dataModel.DropItemID;
-                instance.NormalAttack = GetNormalAttackAbility();
                 instance.Editor_SetMonsterPrefab(GetMonsterPrefab(dataModel.MonsterPrefabName));
                 List<string> attributeNames = new()
                 {
@@ -99,8 +92,7 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Monster
                     "SkillPower", "Defense", "EvasionRate", "CriticalRate"
                 };
                 AttributeWithValue[] attributeInitValues = InitAttributeValueSetup(dataModel, attributeNames);
-                instance.AttributesToInitialize = attributeInitValues;
-                instance.Name = name;
+                // instance.AttributesToInitialize = attributeInitValues;
                 instance.name = replacedName;
 
                 if (!AssetDatabase.Contains(instance))

@@ -19,7 +19,6 @@ namespace CryptoQuest.Gameplay.Battle
         [SerializeField] private SceneScriptableObject _battleSceneSO;
 
         [Header("Events to listen to")]
-        [SerializeField] private TriggerBattleEncounterEventSO _triggerBattleEncounterEventSo;
         [SerializeField] private VoidEventChannelSO _onBattleEndEventChannel;
         [SerializeField] private VoidEventChannelSO _onSceneLoadedEventChannel;
 
@@ -29,29 +28,27 @@ namespace CryptoQuest.Gameplay.Battle
 
         private void OnEnable()
         {
-            _triggerBattleEncounterEventSo.EncounterBattle += OnEncounterBattle;
             _onBattleEndEventChannel.EventRaised += OnBattleEnd;
             _onSceneLoadedEventChannel.EventRaised += OnSceneLoaded;
         }
 
         private void OnDisable()
         {
-            _triggerBattleEncounterEventSo.EncounterBattle -= OnEncounterBattle;
             _onBattleEndEventChannel.EventRaised -= OnBattleEnd;
             _onSceneLoadedEventChannel.EventRaised -= OnSceneLoaded;
             _spiralConfigSo.DoneSpiralIn -= SpiralInDone;
             _spiralConfigSo.DoneFadeOut -= StartBattle;
         }
 
-        private void OnEncounterBattle(BattleInfo battleInfo)
-        {
-            _battleInput.EnableBattleInput();
-            _battleBus.CurrentBattleInfo = battleInfo;
-            _spiralConfigSo.Color = Color.black;
-            _spiralConfigSo.DoneSpiralIn += SpiralInDone;
-            _spiralConfigSo.DoneFadeOut += StartBattle;
-            _spiralConfigSo.OnSpiralIn();
-        }
+        // private void OnEncounterBattle(BattleInfo battleInfo)
+        // {
+        //     _battleInput.EnableBattleInput();
+        //     _battleBus.CurrentBattleInfo = battleInfo;
+        //     _spiralConfigSo.Color = Color.black;
+        //     _spiralConfigSo.DoneSpiralIn += SpiralInDone;
+        //     _spiralConfigSo.DoneFadeOut += StartBattle;
+        //     _spiralConfigSo.OnSpiralIn();
+        // }
 
         private void SpiralInDone()
         {

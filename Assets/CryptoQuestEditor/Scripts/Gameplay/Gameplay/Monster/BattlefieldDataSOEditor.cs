@@ -78,7 +78,7 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Monster
             List<EncounterData.Config> battleEncounterSetups = new();
             foreach (var battleEncounterSetupDataModel in dataModel.BattleEncounterSetups)
             {
-                var battleDatas = GetAssetsFromType<CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data.EncounterGroups>().Where(data
+                var battleDatas = GetAssetsFromType<EncounterGroups>().Where(data
                     => data.Id == battleEncounterSetupDataModel.BattleDataId);
                 if (battleDatas.Count() == 0) continue;
                 EncounterData.Config encounterSetup = new();

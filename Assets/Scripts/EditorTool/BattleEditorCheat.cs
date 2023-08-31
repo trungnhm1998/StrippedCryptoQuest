@@ -1,20 +1,14 @@
 using System.Collections.Generic;
 using CryptoQuest.Character.Attributes;
-using IndiGames.Core.Events.ScriptableObjects;
-using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data;
-using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Events;
-using UnityEngine.AddressableAssets;
-using CryptoQuest.Gameplay.Battle.Core.Components;
-using UnityEngine;
 using CryptoQuest.Gameplay.Battle;
-using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Skills;
+using CryptoQuest.Gameplay.Encounter;
 using CryptoQuest.Gameplay.PlayerParty;
-using CryptoQuest.Gameplay.PlayerParty.Helper;
+using IndiGames.Core.Events.ScriptableObjects;
 using IndiGames.GameplayAbilitySystem.AbilitySystem;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.ScriptableObjects;
-using IndiGames.GameplayAbilitySystem.AttributeSystem;
-using IndiGames.GameplayAbilitySystem.AttributeSystem.Components;
+using UnityEngine;
+using UnityEngine.AddressableAssets;
 
 namespace CryptoQuest.EditorTool
 {
@@ -26,9 +20,6 @@ namespace CryptoQuest.EditorTool
         [SerializeField] private AssetReferenceT<Sprite> _defaultBackground;
         [SerializeField] private AttributeScriptableObject _attackSo;
         [SerializeField] private AbilityScriptableObject _buffAttackAbility;
-
-        [Header("Raise Event")]
-        [SerializeField] private TriggerBattleEncounterEventSO _triggerBattleEncounterEvent;
 
         [Header("Listen Event")]
         [SerializeField] private VoidEventChannelSO _enterBattleChannelEvent;

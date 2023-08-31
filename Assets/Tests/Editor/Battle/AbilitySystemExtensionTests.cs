@@ -1,13 +1,10 @@
-using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data;
-using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Skills;
-using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
-using CryptoQuest.Gameplay.Battle.Helper;
-using NUnit.Framework;
-using UnityEditor;
-using UnityEngine;
 using System.Linq;
-using CryptoQuest.Gameplay.Battle.Core;
 using CryptoQuest.Gameplay;
+using CryptoQuest.Gameplay.Battle.Core;
+using CryptoQuest.Gameplay.Battle.Helper;
+using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
+using NUnit.Framework;
+using UnityEngine;
 
 namespace CryptoQuest.Tests.Editor.Battle
 {

@@ -1,18 +1,16 @@
-using CryptoQuest.Events;
-using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Skills;
 using CryptoQuest.Map;
 using CryptoQuest.UI.SpiralFX;
 using IndiGames.Core.Events.ScriptableObjects;
 using IndiGames.Core.SceneManagementSystem.Events.ScriptableObjects;
 using IndiGames.Core.SceneManagementSystem.ScriptableObjects;
-using IndiGames.Core.UI.FadeController;
 using UnityEngine;
 
 namespace CryptoQuest.Gameplay.Manager
 {
     public class EscapeAbilityHandler : MonoBehaviour
     {
-        [SerializeField] private EscapeAbilitySO _escapeAbilitySo;
+        // TODO: Refactor ability
+        // [SerializeField] private EscapeAbilitySO _escapeAbilitySo;
         [SerializeField] private SceneScriptableObject _destinationScene;
         [SerializeField] private PathStorageSO _pathStorageSo;
         [SerializeField] private LoadSceneEventChannelSO _loadMapEventChannel;
@@ -22,12 +20,12 @@ namespace CryptoQuest.Gameplay.Manager
 
         private void OnEnable()
         {
-            _escapeAbilitySo.EscapeSucceeded += OnEscapeSucceded;
+            // _escapeAbilitySo.EscapeSucceeded += OnEscapeSucceded;
         }
 
         private void OnDisable()
         {
-            _escapeAbilitySo.EscapeSucceeded -= OnEscapeSucceded;
+            // _escapeAbilitySo.EscapeSucceeded -= OnEscapeSucceded;
         }
 
         private void OnEscapeSucceded(MapPathSO escapePath)

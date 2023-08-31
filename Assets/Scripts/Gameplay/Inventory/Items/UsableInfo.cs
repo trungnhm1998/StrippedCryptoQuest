@@ -29,11 +29,6 @@ namespace CryptoQuest.Gameplay.Inventory.Items
             Owner = owner;
         }
 
-        public UsableInfo(GenericItem baseGenericItemSO, int quantity)
-        {
-            Quantity = quantity;
-        }
-
         public UsableInfo() { }
 
         public void SetQuantity(int quantity)

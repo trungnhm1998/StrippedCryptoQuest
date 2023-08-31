@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using CryptoQuest.Gameplay.BaseGameplayData;
 using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data;
+using CryptoQuest.Gameplay.Character;
 using CryptoQuest.Gameplay.Encounter;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
 using ScriptableObjectBrowser;
@@ -75,21 +76,22 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Monster
         private EncounterGroups.CharacterGroup ConfigMonsterDataSOProperties(string groupProperties)
         {
             string[] splitArray = groupProperties.Split(",", StringSplitOptions.None);
-            List<CharacterDataSO> monsterDataGroup = new();
+            List<CharacterData> monsterDataGroup = new();
             foreach (var id in splitArray)
             {
                 if (string.IsNullOrEmpty(id)) continue;
-                var assets = GetAssetsFromType<MonsterDataSO>().Where(monster
+                var assets = GetAssetsFromType<MonsterData>().Where(monster
                     => monster.MonsterId == int.Parse(id));
-                MonsterDataSO monsterDataSo = assets.Count() > 0 ? assets.First() : null;
-                if (monsterDataSo != null)
+                MonsterData monsterData = assets.Count() > 0 ? assets.First() : null;
+                if (monsterData != null)
                 {
-                    monsterDataGroup.Add(monsterDataSo);
+                    monsterDataGroup.Add(monsterData);
                 }
             }
 
             EncounterGroups.CharacterGroup characterGroup = new();
-            characterGroup.Editor_SetCharacters(monsterDataGroup.ToArray());
+            // TODO: REFACTOR ENCOUNTER
+            // characterGroup.Editor_SetCharacters(monsterDataGroup.ToArray());
             return characterGroup;
         }
 
