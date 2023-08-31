@@ -106,7 +106,6 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
         {
             _category = category;
             Reset();
-            InstantiateEquipments();
             _slotType = modifyingSlotType;
             _inspectingCharacter = inspectingChar;
             _inspectingCharacter.Equipments.EquipmentAdded += UpdateInventoryAndEquippingUI;
@@ -115,6 +114,7 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
             _tooltipProvider.Tooltip.SetSafeArea(_tooltipSafeArea);
             _contents.SetActive(true);
             _unEquipButton.Select();
+            InstantiateEquipments();
             RenderCurrentlyEquipItem(inspectingChar, modifyingSlotType);
             PreviewUnselectEquipment();
         }
@@ -244,6 +244,19 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
             equipmentItem.Inspecting += OnPreviewEquipmentStats;
             equipmentItem.EquipItem += EquipEquipment;
             _equipmentItems.Add(equipmentItem);
+
+            ValidateEquipmentByClass(equipment, equipmentItem);
+        }
+
+        private void ValidateEquipmentByClass(EquipmentInfo equipment, UIEquipmentItem equipmentItem)
+        {
+            CharacterClass[] equipmentAllowedClasses = equipment.Data.EquipmentType.AllowedClasses;
+            CharacterClass characterClass = _inspectingCharacter.Class;
+
+            if (equipmentAllowedClasses == null || equipmentAllowedClasses.Length <= 0) return;
+
+            if (Array.Exists(equipmentAllowedClasses, value => value == characterClass)) return;
+            equipmentItem.DeactivateButton();
         }
 
         private void EquipEquipment(EquipmentInfo equipment)

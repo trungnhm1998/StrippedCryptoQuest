@@ -1,4 +1,5 @@
-﻿using CryptoQuest.Gameplay.Inventory.Items;
+﻿using CryptoQuest.Gameplay.Character;
+using CryptoQuest.Gameplay.Inventory.Items;
 using UnityEngine;
 using SlotType = CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Container.EquipmentSlot.EType;
 
@@ -10,6 +11,7 @@ namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Type
         [field: SerializeField] public int Id { get; private set; }
         [field: SerializeField] public EEquipmentCategory EquipmentCategory { get; private set; }
         [field: SerializeField] public SlotType[] AllowedSlots { get; private set; }
+        [field: SerializeField] public CharacterClass[] AllowedClasses { get; private set; }
 
         public virtual void Equip(EquipmentInfo equipment, InventorySO inventory) { }
 
