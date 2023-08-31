@@ -41,7 +41,7 @@ namespace CryptoQuest.Gameplay.Inventory.Items
             Quantity = quantity;
         }
 
-        protected override void Activate()
+        private void Activate()
         {
             if (Owner == null) return;
             GameplayAbilitySpec gameplayAbilitySpec = Owner.GiveAbility(Data.Ability);

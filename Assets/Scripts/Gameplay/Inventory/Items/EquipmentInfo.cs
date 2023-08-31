@@ -39,7 +39,7 @@ namespace CryptoQuest.Gameplay.Inventory.Items
         /// Something like while equip this item, you have 10% chance to do something
         /// When health is below 50%, your stats boost by 10%
         /// </summary>
-        protected override void Activate() { }
+        protected void Activate() { }
 
         #region Utils
 

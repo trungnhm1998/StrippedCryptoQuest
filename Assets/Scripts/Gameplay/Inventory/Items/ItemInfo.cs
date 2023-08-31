@@ -33,7 +33,5 @@ namespace CryptoQuest.Gameplay.Inventory.Items
         {
             return Data != null;
         }
-
-        protected abstract void Activate();
     }
 }
