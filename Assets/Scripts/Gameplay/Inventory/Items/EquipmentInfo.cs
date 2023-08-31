@@ -1,4 +1,5 @@
 ﻿using System;
+using CryptoQuest.Gameplay.Character;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Container;
 using IndiGames.GameplayAbilitySystem.EffectSystem;
@@ -74,5 +75,49 @@ namespace CryptoQuest.Gameplay.Inventory.Items
         }
 
         #endregion
+
+        public bool ValidateCharacter(CharacterSpec inspectingCharacter)
+        {
+            if (inspectingCharacter == null)
+            {
+                Debug.LogWarning("Character is null");
+                return false;
+            }
+
+            if (Data.EquipmentType == null)
+            {
+                Debug.LogWarning("Equipment type is null");
+                return false;
+            }
+
+            if (Data.EquipmentType.AllowedClasses == null)
+            {
+                Debug.LogWarning("Allowed classes is null");
+                return false;
+            }
+
+            if (Data.RequiredCharacterLevel > inspectingCharacter.Level)
+            {
+                Debug.LogWarning("Character level is not enough");
+                return false;
+            }
+
+            var equipmentAllowedClasses = Data.EquipmentType.AllowedClasses;
+            var characterClass = inspectingCharacter.Class;
+
+            if (equipmentAllowedClasses == null || equipmentAllowedClasses.Length <= 0)
+            {
+                Debug.LogWarning("Equipment allowed classes is null or empty");
+                return false;
+            }
+
+            if (!Array.Exists(equipmentAllowedClasses, allowedClass => allowedClass == characterClass))
+            {
+                Debug.LogWarning("Character class is not allowed");
+                return false;
+            }
+
+            return true;
+        }
     }
 }

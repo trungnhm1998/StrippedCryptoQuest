@@ -241,6 +241,9 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
         {
             var equipmentItem = Instantiate(_equipmentItemPrefab, _scrollRect.content);
             equipmentItem.Init(equipment);
+
+            ValidateEquipment(equipment, equipmentItem);
+
             equipmentItem.Inspecting += OnPreviewEquipmentStats;
             equipmentItem.EquipItem += EquipEquipment;
             _equipmentItems.Add(equipmentItem);
@@ -256,6 +259,14 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
             if (equipmentAllowedClasses == null || equipmentAllowedClasses.Length <= 0) return;
 
             if (Array.Exists(equipmentAllowedClasses, value => value == characterClass)) return;
+            equipmentItem.DeactivateButton();
+        }
+
+
+        private void ValidateEquipment(EquipmentInfo equipment, UIEquipmentItem equipmentItem)
+        {
+            if (equipment.ValidateCharacter(_inspectingCharacter)) return;
+
             equipmentItem.DeactivateButton();
         }
 
