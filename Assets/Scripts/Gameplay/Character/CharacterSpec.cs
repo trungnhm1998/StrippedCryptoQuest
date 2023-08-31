@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using CryptoQuest.Gameplay.Inventory;
+using CryptoQuest.Gameplay.Skill;
 using CryptoQuest.UI.Menu.Panels.Home;
+using IndiGames.GameplayAbilitySystem.AbilitySystem;
 using UnityEngine;
 
 namespace CryptoQuest.Gameplay.Character
@@ -11,34 +14,62 @@ namespace CryptoQuest.Gameplay.Character
     [Serializable]
     public class CharacterSpec
     {
-        [field: SerializeField] public CharacterBase BaseInfo { get; set; }
+        [field: SerializeField] public CharacterBackgroundInfo BackgroundInfo { get; private set; }
+        [field: SerializeField] public CharacterClass Class { get; private set; }
         [field: SerializeField] public Elemental Element { get; set; }
         [field: SerializeField] public int Level { get; set; }
         [field: SerializeField] public StatsDef StatsDef { get; set; }
         [field: SerializeField] public CharacterEquipments Equipments { get; private set; }
-        public Sprite Avatar => BaseInfo.Avatar;
+
+        // TODO: #1136 Remove serialize and load runtime using Class, Element info
+        [field: SerializeField] private CharacterSkillSet _skillSet;
+        public CharacterSkillSet SkillSet => _skillSet;
+
+        // TODO: #1136 Remove serialize and load runtime using Class, BaseInfo info
+        [field: SerializeField] private Sprite _avatar;
+        public Sprite Avatar => _avatar;
 
         private CharacterBehaviourBase _characterComponent;
         public CharacterBehaviourBase CharacterComponent => _characterComponent;
 
         public bool IsValid()
         {
-            return BaseInfo != null
+            return BackgroundInfo != null
                    && Element != null
+                   && Class != null
                    && StatsDef.Attributes.Length > 0;
+        }
+
+        public List<AbilityData> GetAvailableSkills()
+        {
+            if (_skillSet == null) return new();
+            return _skillSet.GetSkillsByCurrentLevel(Level);
+        }
+        
+        public GameplayAbilitySpec CreateSkillSpec(AbilityData data)
+        {
+            var skillSO = _characterComponent.AbilityController.InitAbility(data);
+            return _characterComponent.GameplayAbilitySystem.GiveAbility(skillSO);
+        }
+
+        public void Init(CharacterBehaviourBase characterBehaviour)
+        {
+            Bind(characterBehaviour);
+            Equipments.ClearEventRegistration();
         }
 
         public void Bind(CharacterBehaviourBase characterBehaviour)
         {
             _characterComponent = characterBehaviour;
-            Equipments.ClearEventRegistration();
         }
 
         public void SetupUI(ICharacterInfo uiCharacterInfo)
         {
             uiCharacterInfo.SetElement(Element.Icon);
             uiCharacterInfo.SetLevel(Level);
-            BaseInfo.SetupUI(uiCharacterInfo);
+            uiCharacterInfo.SetClass(Class.Name);
+            uiCharacterInfo.SetAvatar(_avatar);
+            BackgroundInfo.SetupUI(uiCharacterInfo);
         }
     }
 }
