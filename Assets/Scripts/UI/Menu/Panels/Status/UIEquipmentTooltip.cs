@@ -1,4 +1,5 @@
-﻿using CryptoQuest.UI.Menu.Panels.Status.Equipment;
+﻿using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item;
+using CryptoQuest.UI.Menu.Panels.Status.Equipment;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
@@ -18,6 +19,7 @@ namespace CryptoQuest.UI.Menu.Panels.Status
         ITooltip WithContentAwareness(RectTransform tooltipPosition);
         ITooltip SetSafeArea(RectTransform tooltipSafeArea);
         ITooltip WithLevel(int equipmentLevel);
+        ITooltip WithRarity(RaritySO rarity);
     }
 
     public class UIEquipmentTooltip : MonoBehaviour, ITooltip
@@ -98,6 +100,12 @@ namespace CryptoQuest.UI.Menu.Panels.Status
         public ITooltip WithLevel(int equipmentLevel)
         {
             _equipmentLevel = equipmentLevel;
+            return this;
+        }
+
+        public ITooltip WithRarity(RaritySO rarity)
+        {
+            _rarity.sprite = rarity.Icon;
             return this;
         }
 
