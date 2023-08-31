@@ -7,6 +7,8 @@ namespace CryptoQuest.Character.MonoBehaviours
 {
     public class HeroBehaviour : CharacterBehaviour
     {
+        public event Action Step;
+
         [Serializable]
         public struct FacingOffset
         {
@@ -59,6 +61,11 @@ namespace CryptoQuest.Character.MonoBehaviours
             base.SetFacingDirection(velocity);
 
             _interactionCollider.transform.localPosition = _facingOffsetDictionary[_facingDirection].Offset;
+        }
+
+        public void OnStep()
+        {
+            Step?.Invoke();
         }
     }
 }

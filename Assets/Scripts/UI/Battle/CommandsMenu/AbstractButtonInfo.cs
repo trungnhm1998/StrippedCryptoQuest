@@ -1,4 +1,5 @@
 ﻿using System;
+using CryptoQuest.Gameplay;
 using CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit;
 using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data;
 using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Skills;
@@ -70,16 +71,17 @@ namespace CryptoQuest.UI.Battle.CommandsMenu
     [Serializable]
     public class AbilityAbstractButtonInfo : AbstractButtonInfo
     {
-        private Ability _ability;
-        private Action<Ability> _setSkillCallback;
+        private SimpleGameplayAbilitySpec _ability;
+        private Action<SimpleGameplayAbilitySpec> _setSkillCallback;
 
-        public AbilityAbstractButtonInfo(Action<Ability> setSkillCallback,
-            Ability ability)
+        public AbilityAbstractButtonInfo(Action<SimpleGameplayAbilitySpec> setSkillCallback,
+            SimpleGameplayAbilitySpec ability)
             : base(GetSkillName(ability))
         {
             _setSkillCallback = setSkillCallback;
             _ability = ability;
-            Value = $"{_ability.AbilitySO.SkillInfo.Cost.ToString()}";
+            // TODO: REFACTOR BATTLE
+            // Value = $"{_ability.AbilityDef.Info.Cost.ToString()}";
         }
 
         public override void OnHandleClick()
@@ -87,7 +89,12 @@ namespace CryptoQuest.UI.Battle.CommandsMenu
             _setSkillCallback.Invoke(_ability);
         }
 
-        public static string GetSkillName(Ability ability) => ability.AbilitySO.SkillInfo.SkillName.GetLocalizedString();
+        public static string GetSkillName(SimpleGameplayAbilitySpec ability)
+        {
+            // return ability.AbilityDef.Info.SkillName.GetLocalizedString();
+            // TODO: refactor battle
+            return "MOCK";
+        }
     }
 
     [Serializable]

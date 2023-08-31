@@ -1,21 +1,18 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using CryptoQuest.FSM;
 using CryptoQuest.FSM.ScriptableObjects;
+using CryptoQuest.Gameplay.Battle.Core.Commands;
+using CryptoQuest.Gameplay.Battle.Core.Components.BattleOrder;
 using CryptoQuest.Gameplay.Battle.Core.Components.BattleSpawner;
 using CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit;
-using CryptoQuest.Gameplay.Battle.Core.Components.BattleOrder;
 using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects;
 using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data;
 using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Skills;
 using IndiGames.Core.Events.ScriptableObjects;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.ScriptableObjects;
 using UnityEngine;
-using IndiGames.Core.SceneManagementSystem.Events.ScriptableObjects;
-using IndiGames.Core.SceneManagementSystem.ScriptableObjects;
-using UnityEngine.AddressableAssets;
-using UnityEngine.Serialization;
-using UnityEngine.UI;
 
 namespace CryptoQuest.Gameplay.Battle.Core.Components
 {
@@ -26,6 +23,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components
         [SerializeField] private StateSO _battleEndState;
         [SerializeField] private BattleBus _battleBus;
         [SerializeField] private BattleOrderDecider _battleOrderDecider;
+        [field: SerializeField] public BattleCommandHandler BattleCommandHandler { get; protected set; }
 
         [field: SerializeField] public BattleTeam BattleTeam1 { get; protected set; }
 
@@ -61,7 +59,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components
 
         public void InitBattle()
         {
-            BattleSpawner.SpawnBattle(CurrentBattleInfo.BattleDataSO);
+            BattleSpawner.SpawnBattle(CurrentBattleInfo.EncounterGroups);
         }
 
         private void OnEnable()
@@ -161,16 +159,16 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components
         }
     }
 
+    [Serializable]
     public struct BattleInfo
     {
-        public BattleDataSO BattleDataSO;
+        public EncounterGroups EncounterGroups;
         public bool IsBattleEscapable;
-        public AssetReferenceT<Sprite> BattleBackground;
+        public Sprite BattleBackground;
 
-        public BattleInfo(BattleDataSO battleDataSo, bool isBattleEscapable,
-            AssetReferenceT<Sprite> battleBackground = null)
+        public BattleInfo(EncounterGroups encounterGroups, bool isBattleEscapable, Sprite battleBackground)
         {
-            BattleDataSO = battleDataSo;
+            EncounterGroups = encounterGroups;
             IsBattleEscapable = isBattleEscapable;
             BattleBackground = battleBackground;
         }

@@ -2,9 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using CryptoQuest.Data;
 using CryptoQuest.Gameplay.BaseGameplayData;
 using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data;
+using CryptoQuest.Gameplay.Encounter;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
 using ScriptableObjectBrowser;
 using UnityEditor;
@@ -12,7 +12,7 @@ using UnityEngine;
 
 namespace CryptoQuestEditor.Gameplay.Gameplay.Monster
 {
-    public class BattleDataSOEditor : ScriptableObjectBrowserEditor<BattleDataSO>
+    public class BattleDataSOEditor : ScriptableObjectBrowserEditor<EncounterGroups>
     {
         private const string DEFAULT_NAME = "MonsterParty_";
         private const int ROW_OFFSET = 2;
@@ -44,11 +44,11 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Monster
                     continue;
                 }
 
-                BattleDataSO instance = null;
-                instance = (BattleDataSO)AssetDatabase.LoadAssetAtPath(path, typeof(BattleDataSO));
+                EncounterGroups instance = null;
+                instance = (EncounterGroups)AssetDatabase.LoadAssetAtPath(path, typeof(EncounterGroups));
                 if (instance == null || !AssetDatabase.Contains(instance))
                 {
-                    instance = ScriptableObject.CreateInstance<BattleDataSO>();
+                    instance = ScriptableObject.CreateInstance<EncounterGroups>();
                 }
 
                 List<string> groups = new()
@@ -57,7 +57,7 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Monster
                 };
                 if (!DataValidator.IsValidNumberOfMonsterSetup(groups)) continue;
                 instance.Editor_SetEnemyGroups(ConfigMonsterGroup(groups));
-                instance.BattleId = dataModel.MonserPartyId;
+                instance.Editor_SetId(dataModel.MonserPartyId);
                 instance.name = name;
                 if (!AssetDatabase.Contains(instance))
                 {
@@ -72,7 +72,7 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Monster
             }
         }
 
-        private CharacterGroup ConfigMonsterDataSOProperties(string groupProperties)
+        private EncounterGroups.CharacterGroup ConfigMonsterDataSOProperties(string groupProperties)
         {
             string[] splitArray = groupProperties.Split(",", StringSplitOptions.None);
             List<CharacterDataSO> monsterDataGroup = new();
@@ -88,14 +88,14 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Monster
                 }
             }
 
-            CharacterGroup characterGroup = new();
+            EncounterGroups.CharacterGroup characterGroup = new();
             characterGroup.Editor_SetCharacters(monsterDataGroup.ToArray());
             return characterGroup;
         }
 
-        private CharacterGroup[] ConfigMonsterGroup(List<string> groupStrings)
+        private EncounterGroups.CharacterGroup[] ConfigMonsterGroup(List<string> groupStrings)
         {
-            List<CharacterGroup> characterGroups = new();
+            List<EncounterGroups.CharacterGroup> characterGroups = new();
             foreach (var groupString in groupStrings)
             {
                 if (!string.IsNullOrEmpty(groupString))

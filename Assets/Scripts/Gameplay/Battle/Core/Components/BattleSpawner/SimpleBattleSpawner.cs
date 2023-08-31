@@ -10,22 +10,23 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components.BattleSpawner
     {
         [SerializeField] protected GameObject _monsterPrefab;
 
-        public override void GenerateBattle(BattleDataSO data)
+        public override void GenerateBattle(ScriptableObjects.Data.EncounterGroups groups)
         {
-            foreach (var enemy in data.Enemies)
-            {
-                GameObject enemyGO = Instantiate(_monsterPrefab, transform);
-                var statInit = enemyGO.GetComponent<ScriptableObjectStatsInitializer>();
-                statInit.InitStats(enemy);
-
-                var battleUnit = enemyGO.GetComponent<BattleUnitBase>();
-                battleUnit.UnitData = enemy;
-                battleUnit.CreateCharacterInfo();
-                
-                var abilitySystem = enemyGO.GetComponent<AbilitySystemBehaviour>();
-                _battleManager.BattleTeam2.Members.Add(abilitySystem);
-                ProcessEnemiesName(data, battleUnit.UnitInfo);
-            }
+            // TODO: REFACTOR BATTLE SYSTEM
+            // foreach (var enemy in data.Enemies)
+            // {
+            //     GameObject enemyGO = Instantiate(_monsterPrefab, transform);
+            //     var statInit = enemyGO.GetComponent<ScriptableObjectStatsInitializer>();
+            //     statInit.InitStats(enemy);
+            //
+            //     var battleUnit = enemyGO.GetComponent<BattleUnitBase>();
+            //     battleUnit.UnitData = enemy;
+            //     battleUnit.CreateCharacterInfo();
+            //     
+            //     var abilitySystem = enemyGO.GetComponent<AbilitySystemBehaviour>();
+            //     _battleManager.BattleTeam2.Members.Add(abilitySystem);
+            //     ProcessEnemiesName(data, battleUnit.UnitInfo);
+            // }
         }
     }
 }

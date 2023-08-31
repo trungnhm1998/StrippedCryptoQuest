@@ -10,8 +10,10 @@ namespace CryptoQuest.Character.MonoBehaviours
     public class HeroController : MonoBehaviour, ICharacterController
     {
         [SerializeField] private InputMediatorSO _inputMediator;
+        [Tooltip("how far the character has to move to trigger a step")]
+        [SerializeField] private float _distancePerStep = .95f;
         [SerializeField] private float _speed = 4f;
-        [SerializeField] private CharacterBehaviour _characterBehaviour;
+        [SerializeField] private HeroBehaviour _characterBehaviour;
 
         private Rigidbody2D _rigidBody2D;
         private Vector2 _inputVector;
@@ -49,9 +51,28 @@ namespace CryptoQuest.Character.MonoBehaviours
                 _characterBehaviour.SetFacingDirection(_inputVector);
         }
 
+        private Vector2 _lastPosition;
+        private float _distance;
+
         private void FixedUpdate()
         {
             _rigidBody2D.velocity = _velocityStrategy.CalculateVelocity(_inputVector, _speed);
+            OnCharacterStep();
+        }
+
+        /// <summary>
+        /// find the magnitude of the vector (the distance) between the last position and the new position
+        /// </summary>
+        private void OnCharacterStep()
+        {
+            var position = transform.position;
+            _distance +=
+                Math.Abs(Vector2.Distance(_lastPosition, position)); // don't care about if moving backward or not
+            _lastPosition = position;
+
+            if (!(_distance >= _distancePerStep)) return;
+            _distance = 0;
+            _characterBehaviour.OnStep();
         }
 
         private void MoveEvent_Raised(Vector2 inputVector)

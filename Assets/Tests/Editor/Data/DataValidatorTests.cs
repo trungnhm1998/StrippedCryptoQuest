@@ -1,5 +1,5 @@
 using System.Collections;
-using CryptoQuest.Data;
+using CryptoQuest.Gameplay.Encounter;
 using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.TestTools;

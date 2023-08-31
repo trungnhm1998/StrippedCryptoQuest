@@ -1,4 +1,5 @@
-﻿using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data;
+﻿using System;
+using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data;
 using IndiGames.GameplayAbilitySystem.AttributeSystem;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.Components;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
@@ -6,6 +7,7 @@ using UnityEngine;
 
 namespace CryptoQuest.UI.Battle.CharacterInfo
 {
+    [Obsolete]
     public abstract class CharacterInfoBase : MonoBehaviour
     {
         [SerializeField] protected AttributeScriptableObject _hpAttributeSO;

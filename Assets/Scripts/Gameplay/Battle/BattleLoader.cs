@@ -1,12 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
-using CryptoQuest.Events;
 using CryptoQuest.Gameplay.Battle.Core.Components;
 using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects;
-using CryptoQuest.UI.SpiralFX;
-using CryptoQuest.Input;
-using IndiGames.Core.Events.ScriptableObjects;
 using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Events;
+using CryptoQuest.Input;
+using CryptoQuest.UI.SpiralFX;
+using IndiGames.Core.Events.ScriptableObjects;
 using IndiGames.Core.SceneManagementSystem.Events.ScriptableObjects;
 using IndiGames.Core.SceneManagementSystem.ScriptableObjects;
 using UnityEngine;
@@ -23,13 +20,11 @@ namespace CryptoQuest.Gameplay.Battle
 
         [Header("Events to listen to")]
         [SerializeField] private TriggerBattleEncounterEventSO _triggerBattleEncounterEventSo;
-
         [SerializeField] private VoidEventChannelSO _onBattleEndEventChannel;
         [SerializeField] private VoidEventChannelSO _onSceneLoadedEventChannel;
 
         [Header("Events to raise")]
         [SerializeField] private UnloadSceneEventChannelSO _unloadSceneEvent;
-
         [SerializeField] private LoadSceneEventChannelSO _loadSceneEventChannelSo;
 
         private void OnEnable()

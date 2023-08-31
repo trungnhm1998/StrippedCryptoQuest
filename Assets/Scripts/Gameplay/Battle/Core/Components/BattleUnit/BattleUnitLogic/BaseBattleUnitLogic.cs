@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using CryptoQuest.Gameplay.Battle.Core.Commands;
+using CryptoQuest.Gameplay.Battle.Core.Commands.BattleCommands;
 using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data;
 using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Skills;
 using CryptoQuest.Gameplay.Battle.Helper;
@@ -108,11 +110,19 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit
 
         public virtual void PerformUnitAction()
         {
+            // TODO: REFACTOR BATTLE
             //TODO: Apply abnormal status and check disable
             // Change to this because system can use ability from item
             // and _owner.TryActiveAbility can only activate skill inside system
-            if (_battleUnit.IsDead || !IsTargetsValid()) return;
-            SelectedAbility.ActivateAbility();
+            // if (_battleUnit.IsDead || !IsTargetsValid()) return;
+            //
+            // if (!(SelectedAbility is SimpleGameplayAbilitySpec ability)) return;
+            // var useAbilityCommand = new UseAbilityCommand(
+            //     _battleUnit,
+            //     ability
+            // );
+            // BattleCommandHandler.OnReceivedCommand?.Invoke(useAbilityCommand);
+            // SelectedAbility.ActivateAbility();
         }
 
         private bool IsTargetsValid()
@@ -127,7 +137,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit
             return true;
         }
 
-        public IEnumerable<Ability> GetActivableAbilities()
+        public IEnumerable<SimpleGameplayAbilitySpec> GetActivableAbilities()
         {
             foreach (var ability in _owner.GetAbilitiesInBattle())
             {

@@ -9,15 +9,18 @@ using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
 using UnityEngine;
 using IndiGames.Core.Events.ScriptableObjects;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.Components;
+using CryptoQuest.Gameplay.Battle.Core.Commands.BattleCommands;
+using CryptoQuest.Gameplay.Battle.Core.Commands;
 
 namespace CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit
 {
+    [Obsolete]
     public class BattleUnitBase : MonoBehaviour, IBattleUnit
     {
         [SerializeField] protected AttributeScriptableObject _hpAttribute;
 
         [Header("Raise Events")]
-        [SerializeField] protected VoidEventChannelSO _doneActionEventChannel;
+        [SerializeField] protected VoidEventChannelSO _showNextMarkEventChannel;
 
         [Header("Listen Events")]
         [SerializeField] protected VoidEventChannelSO _doneShowDialogEvent;
@@ -33,8 +36,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit
         public BaseBattleUnitLogic UnitLogic { get; protected set; }
 
         protected bool _isDead;
-        protected bool _isPerformingAction;
-        protected bool _isDoneShowAction;
+        private FinishTurnCommand _finishTurnCommand;
 
         public virtual void Init(BattleTeam team, AbilitySystemBehaviour owner)
         {
@@ -59,24 +61,12 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit
             UnitLogic.Init();
         }
 
-        protected virtual void OnEnable()
-        {
-            _doneShowDialogEvent.EventRaised += DoneShowAction;
-        }
-
         protected virtual void OnDisable()
         {
             if (Owner != null)
             {
                 Owner.AttributeSystem.PostAttributeChange -= OnHPChanged;
             }
-            _doneShowDialogEvent.EventRaised -= DoneShowAction;
-        }
-
-        private void DoneShowAction()
-        {
-            if (!_isPerformingAction) return;
-            _isDoneShowAction = true;
         }
 
         public virtual void SetOpponentTeams(BattleTeam opponentTeam)
@@ -110,18 +100,17 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit
 
         public virtual IEnumerator Execute()
         {
-            _isPerformingAction = true;
             UnitLogic.PerformUnitAction();
-
-            //TODO: Too complicated to understand, can it be done using something like BattleManager.NextUnitAction?
-            _doneActionEventChannel.RaiseEvent();
-            yield return WaitUntilDoneShowAction();
-            _isPerformingAction = false;
+            FinishTurn();
+            yield break;
         }
 
-        private IEnumerator WaitUntilDoneShowAction()
+        private void FinishTurn()
         {
-            yield return new WaitWhile(() => !_isDoneShowAction && CanAction());
+            _finishTurnCommand ??= new FinishTurnCommand();
+            _finishTurnCommand.ShowNextMarkEvent = _showNextMarkEventChannel.RaiseEvent;
+            _finishTurnCommand.DoneShowDialogEvent = _doneShowDialogEvent;
+            BattleCommandHandler.OnReceivedCommand?.Invoke(_finishTurnCommand);
         }
 
         private bool CanAction()
@@ -139,8 +128,6 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit
         public void ResetUnit()
         {
             UnitLogic.Reset();
-            _isDoneShowAction = false;
-            _isPerformingAction = false;
             CheckUnitDead();
         }
 

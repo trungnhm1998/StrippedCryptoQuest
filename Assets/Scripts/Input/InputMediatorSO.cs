@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
@@ -17,6 +18,7 @@ namespace CryptoQuest.Input
 
         public event UnityAction<Vector2> MoveEvent;
         public event UnityAction InteractEvent;
+
         /// <summary>
         /// During field gameplay, this event is raised when the player presses the "Start"/"Tab"/"Escape" button.
         /// </summary>
@@ -52,6 +54,7 @@ namespace CryptoQuest.Input
         #endregion
 
         private InputActions _inputActions;
+
         public InputActions InputActions
         {
             get
@@ -62,22 +65,16 @@ namespace CryptoQuest.Input
         }
 
         private void OnEnable()
-        {
-            CreateInputInstanceIfNeeded();
-
-            _inputActions.Disable();
-        }
+            => CreateInputInstanceIfNeeded();
 
         private void OnDisable()
-        {
-            DisableAllInput();
-        }
+            => DisableAllInput();
 
         #region Main
 
         public void DisableAllInput()
         {
-            _inputActions.Disable();
+            _inputCached.Clear();
             _inputActions.MapGameplay.Disable();
             _inputActions.Menus.Disable();
             _inputActions.Dialogues.Disable();
@@ -107,9 +104,15 @@ namespace CryptoQuest.Input
 
         public void EnableMapGameplayInput()
         {
-            _inputCached.Clear();
             DisableAllInput();
             _inputActions.MapGameplay.Enable();
+        }
+
+        public void EnableInputMap(string actionMapName)
+        {
+            DisableAllInput();
+            var actionMap = _inputActions.asset.FindActionMap(actionMapName);
+            actionMap.Enable();
         }
 
         #endregion

@@ -1420,6 +1420,167 @@ namespace CryptoQuest.Input
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Terminal"",
+            ""id"": ""7aa82233-0f98-4282-8187-fe0fbbdf4b06"",
+            ""actions"": [
+                {
+                    ""name"": ""OpenTerminal"",
+                    ""type"": ""Button"",
+                    ""id"": ""be6fc03a-1e8a-44c8-a675-9e6b7f8aac45"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""FullSizeModifier"",
+                    ""type"": ""Button"",
+                    ""id"": ""b9d3ef3b-f284-421f-80bf-8da9a87df91d"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""CommandNavigate"",
+                    ""type"": ""Button"",
+                    ""id"": ""88a84f46-e910-4f0e-8d05-7816b401be78"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Close"",
+                    ""type"": ""Button"",
+                    ""id"": ""288f3dea-9baa-4605-8664-947375798ad2"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Execute"",
+                    ""type"": ""Button"",
+                    ""id"": ""8ea261f3-2ca1-4518-8816-fb11319711a2"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Complete"",
+                    ""type"": ""Button"",
+                    ""id"": ""50e5da96-c412-404c-818e-8f42fb3c1420"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""64b7acfd-2a1f-4287-89fc-fdd8d7dbdcec"",
+                    ""path"": ""<Keyboard>/backquote"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""MnK"",
+                    ""action"": ""OpenTerminal"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a37f5ec3-2832-437e-aba7-613b1b823c6a"",
+                    ""path"": ""<Keyboard>/shift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""MnK"",
+                    ""action"": ""FullSizeModifier"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""UpDown"",
+                    ""id"": ""aef71554-de77-4f18-b17f-2a4d3366ef0b"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CommandNavigate"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""470d357e-53c9-48eb-b0c5-7a4a60cff7e5"",
+                    ""path"": ""<Keyboard>/upArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""MnK"",
+                    ""action"": ""CommandNavigate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""a9591b6c-37ba-4951-96a1-a008488adb91"",
+                    ""path"": ""<Keyboard>/downArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""MnK"",
+                    ""action"": ""CommandNavigate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""32324820-295e-4bb0-bb45-fc1f9c89492d"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""MnK"",
+                    ""action"": ""Close"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""748fd503-4e4a-4f58-ad70-059857214ca3"",
+                    ""path"": ""*/{Submit}"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""MnK"",
+                    ""action"": ""Execute"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""85e4f0c7-5d07-42ff-8732-3afb25852ea7"",
+                    ""path"": ""<Keyboard>/enter"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""MnK"",
+                    ""action"": ""Execute"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""593a81a8-2f44-40b8-94cb-e82b6be036ce"",
+                    ""path"": ""<Keyboard>/tab"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""MnK"",
+                    ""action"": ""Complete"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": [
@@ -1482,6 +1643,14 @@ namespace CryptoQuest.Input
             m_BattleMenu_Confirm = m_BattleMenu.FindAction("Confirm", throwIfNotFound: true);
             m_BattleMenu_Cancel = m_BattleMenu.FindAction("Cancel", throwIfNotFound: true);
             m_BattleMenu_Submit = m_BattleMenu.FindAction("Submit", throwIfNotFound: true);
+            // Terminal
+            m_Terminal = asset.FindActionMap("Terminal", throwIfNotFound: true);
+            m_Terminal_OpenTerminal = m_Terminal.FindAction("OpenTerminal", throwIfNotFound: true);
+            m_Terminal_FullSizeModifier = m_Terminal.FindAction("FullSizeModifier", throwIfNotFound: true);
+            m_Terminal_CommandNavigate = m_Terminal.FindAction("CommandNavigate", throwIfNotFound: true);
+            m_Terminal_Close = m_Terminal.FindAction("Close", throwIfNotFound: true);
+            m_Terminal_Execute = m_Terminal.FindAction("Execute", throwIfNotFound: true);
+            m_Terminal_Complete = m_Terminal.FindAction("Complete", throwIfNotFound: true);
         }
 
         public void Dispose()
@@ -1867,6 +2036,92 @@ namespace CryptoQuest.Input
             }
         }
         public BattleMenuActions @BattleMenu => new BattleMenuActions(this);
+
+        // Terminal
+        private readonly InputActionMap m_Terminal;
+        private List<ITerminalActions> m_TerminalActionsCallbackInterfaces = new List<ITerminalActions>();
+        private readonly InputAction m_Terminal_OpenTerminal;
+        private readonly InputAction m_Terminal_FullSizeModifier;
+        private readonly InputAction m_Terminal_CommandNavigate;
+        private readonly InputAction m_Terminal_Close;
+        private readonly InputAction m_Terminal_Execute;
+        private readonly InputAction m_Terminal_Complete;
+        public struct TerminalActions
+        {
+            private @InputActions m_Wrapper;
+            public TerminalActions(@InputActions wrapper) { m_Wrapper = wrapper; }
+            public InputAction @OpenTerminal => m_Wrapper.m_Terminal_OpenTerminal;
+            public InputAction @FullSizeModifier => m_Wrapper.m_Terminal_FullSizeModifier;
+            public InputAction @CommandNavigate => m_Wrapper.m_Terminal_CommandNavigate;
+            public InputAction @Close => m_Wrapper.m_Terminal_Close;
+            public InputAction @Execute => m_Wrapper.m_Terminal_Execute;
+            public InputAction @Complete => m_Wrapper.m_Terminal_Complete;
+            public InputActionMap Get() { return m_Wrapper.m_Terminal; }
+            public void Enable() { Get().Enable(); }
+            public void Disable() { Get().Disable(); }
+            public bool enabled => Get().enabled;
+            public static implicit operator InputActionMap(TerminalActions set) { return set.Get(); }
+            public void AddCallbacks(ITerminalActions instance)
+            {
+                if (instance == null || m_Wrapper.m_TerminalActionsCallbackInterfaces.Contains(instance)) return;
+                m_Wrapper.m_TerminalActionsCallbackInterfaces.Add(instance);
+                @OpenTerminal.started += instance.OnOpenTerminal;
+                @OpenTerminal.performed += instance.OnOpenTerminal;
+                @OpenTerminal.canceled += instance.OnOpenTerminal;
+                @FullSizeModifier.started += instance.OnFullSizeModifier;
+                @FullSizeModifier.performed += instance.OnFullSizeModifier;
+                @FullSizeModifier.canceled += instance.OnFullSizeModifier;
+                @CommandNavigate.started += instance.OnCommandNavigate;
+                @CommandNavigate.performed += instance.OnCommandNavigate;
+                @CommandNavigate.canceled += instance.OnCommandNavigate;
+                @Close.started += instance.OnClose;
+                @Close.performed += instance.OnClose;
+                @Close.canceled += instance.OnClose;
+                @Execute.started += instance.OnExecute;
+                @Execute.performed += instance.OnExecute;
+                @Execute.canceled += instance.OnExecute;
+                @Complete.started += instance.OnComplete;
+                @Complete.performed += instance.OnComplete;
+                @Complete.canceled += instance.OnComplete;
+            }
+
+            private void UnregisterCallbacks(ITerminalActions instance)
+            {
+                @OpenTerminal.started -= instance.OnOpenTerminal;
+                @OpenTerminal.performed -= instance.OnOpenTerminal;
+                @OpenTerminal.canceled -= instance.OnOpenTerminal;
+                @FullSizeModifier.started -= instance.OnFullSizeModifier;
+                @FullSizeModifier.performed -= instance.OnFullSizeModifier;
+                @FullSizeModifier.canceled -= instance.OnFullSizeModifier;
+                @CommandNavigate.started -= instance.OnCommandNavigate;
+                @CommandNavigate.performed -= instance.OnCommandNavigate;
+                @CommandNavigate.canceled -= instance.OnCommandNavigate;
+                @Close.started -= instance.OnClose;
+                @Close.performed -= instance.OnClose;
+                @Close.canceled -= instance.OnClose;
+                @Execute.started -= instance.OnExecute;
+                @Execute.performed -= instance.OnExecute;
+                @Execute.canceled -= instance.OnExecute;
+                @Complete.started -= instance.OnComplete;
+                @Complete.performed -= instance.OnComplete;
+                @Complete.canceled -= instance.OnComplete;
+            }
+
+            public void RemoveCallbacks(ITerminalActions instance)
+            {
+                if (m_Wrapper.m_TerminalActionsCallbackInterfaces.Remove(instance))
+                    UnregisterCallbacks(instance);
+            }
+
+            public void SetCallbacks(ITerminalActions instance)
+            {
+                foreach (var item in m_Wrapper.m_TerminalActionsCallbackInterfaces)
+                    UnregisterCallbacks(item);
+                m_Wrapper.m_TerminalActionsCallbackInterfaces.Clear();
+                AddCallbacks(instance);
+            }
+        }
+        public TerminalActions @Terminal => new TerminalActions(this);
         private int m_GamepadSchemeIndex = -1;
         public InputControlScheme GamepadScheme
         {
@@ -1918,6 +2173,15 @@ namespace CryptoQuest.Input
             void OnConfirm(InputAction.CallbackContext context);
             void OnCancel(InputAction.CallbackContext context);
             void OnSubmit(InputAction.CallbackContext context);
+        }
+        public interface ITerminalActions
+        {
+            void OnOpenTerminal(InputAction.CallbackContext context);
+            void OnFullSizeModifier(InputAction.CallbackContext context);
+            void OnCommandNavigate(InputAction.CallbackContext context);
+            void OnClose(InputAction.CallbackContext context);
+            void OnExecute(InputAction.CallbackContext context);
+            void OnComplete(InputAction.CallbackContext context);
         }
     }
 }

@@ -119,6 +119,7 @@ GameObject:
   - component: {fileID: 8600546809302911749}
   - component: {fileID: 6804520055658304166}
   - component: {fileID: 5186279793484626792}
+  - component: {fileID: -5025781119350565563}
   m_Layer: 0
   m_Name: BattleManager
   m_TagString: Untagged
@@ -159,6 +160,7 @@ MonoBehaviour:
   _battleEndState: {fileID: 11400000, guid: f3bf7dbd20e1c5c4ca5316d68f121bdf, type: 2}
   _battleBus: {fileID: 11400000, guid: 2290057e7f48d1046b5e0a6c3f6dc910, type: 2}
   _battleOrderDecider: {fileID: 5186279793484626792}
+  <BattleCommandHandler>k__BackingField: {fileID: -5025781119350565563}
   <BattleTeam1>k__BackingField: {fileID: 0}
   <BattleTeam2>k__BackingField: {fileID: 1435534249807775602}
   _newTurnEventChannel: {fileID: 11400000, guid: 0f2dc4548e630314e9ce0c18237f54c8, type: 2}
@@ -231,6 +233,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _decideAttribute: {fileID: 11400000, guid: 2b6352f953a4cb54d806baed1b804397, type: 2}
+--- !u!114 &-5025781119350565563
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3422187207846808246}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f4f6ef74ad1fd74fb3fbacea64da3cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _showBattleDialogEventChannel: {fileID: 11400000, guid: f43e82d9faba50046a2c65b8af62a2f9, type: 2}
 --- !u!1001 &3095958597074120260
 PrefabInstance:
   m_ObjectHideFlags: 0

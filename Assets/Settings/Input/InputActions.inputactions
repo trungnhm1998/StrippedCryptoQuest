@@ -1396,6 +1396,167 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "Terminal",
+            "id": "7aa82233-0f98-4282-8187-fe0fbbdf4b06",
+            "actions": [
+                {
+                    "name": "OpenTerminal",
+                    "type": "Button",
+                    "id": "be6fc03a-1e8a-44c8-a675-9e6b7f8aac45",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "FullSizeModifier",
+                    "type": "Button",
+                    "id": "b9d3ef3b-f284-421f-80bf-8da9a87df91d",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "CommandNavigate",
+                    "type": "Button",
+                    "id": "88a84f46-e910-4f0e-8d05-7816b401be78",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Close",
+                    "type": "Button",
+                    "id": "288f3dea-9baa-4605-8664-947375798ad2",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Execute",
+                    "type": "Button",
+                    "id": "8ea261f3-2ca1-4518-8816-fb11319711a2",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Complete",
+                    "type": "Button",
+                    "id": "50e5da96-c412-404c-818e-8f42fb3c1420",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "64b7acfd-2a1f-4287-89fc-fdd8d7dbdcec",
+                    "path": "<Keyboard>/backquote",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "MnK",
+                    "action": "OpenTerminal",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a37f5ec3-2832-437e-aba7-613b1b823c6a",
+                    "path": "<Keyboard>/shift",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "MnK",
+                    "action": "FullSizeModifier",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "UpDown",
+                    "id": "aef71554-de77-4f18-b17f-2a4d3366ef0b",
+                    "path": "1DAxis",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "CommandNavigate",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "negative",
+                    "id": "470d357e-53c9-48eb-b0c5-7a4a60cff7e5",
+                    "path": "<Keyboard>/upArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "MnK",
+                    "action": "CommandNavigate",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "positive",
+                    "id": "a9591b6c-37ba-4951-96a1-a008488adb91",
+                    "path": "<Keyboard>/downArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "MnK",
+                    "action": "CommandNavigate",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "32324820-295e-4bb0-bb45-fc1f9c89492d",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "MnK",
+                    "action": "Close",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "748fd503-4e4a-4f58-ad70-059857214ca3",
+                    "path": "*/{Submit}",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "MnK",
+                    "action": "Execute",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "85e4f0c7-5d07-42ff-8732-3afb25852ea7",
+                    "path": "<Keyboard>/enter",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "MnK",
+                    "action": "Execute",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "593a81a8-2f44-40b8-94cb-e82b6be036ce",
+                    "path": "<Keyboard>/tab",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "MnK",
+                    "action": "Complete",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": [

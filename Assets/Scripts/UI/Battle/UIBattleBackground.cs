@@ -1,11 +1,5 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
-using UnityEngine.ResourceManagement.AsyncOperations;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace CryptoQuest.UI.Battle
@@ -15,33 +9,10 @@ namespace CryptoQuest.UI.Battle
         [SerializeField] private BattleBus _battleBus;
         [SerializeField] private Image _backgroundImage;
         private Sprite _backgroundSprite;
-        private AssetReferenceT<Sprite> backgroundSpriteAsset;
 
         private void Awake()
         {
-            StartCoroutine(GetBackground());
-        }
-
-        public IEnumerator GetBackground()
-        {
-            backgroundSpriteAsset = _battleBus.CurrentBattleInfo.BattleBackground;
-            if (backgroundSpriteAsset == null)
-                yield break;
-            AsyncOperationHandle<Sprite> handle = backgroundSpriteAsset.LoadAssetAsync<Sprite>();
-
-            yield return handle;
-
-            if (handle.IsDone && handle.Status == AsyncOperationStatus.Succeeded)
-            {
-                _backgroundSprite = handle.Result;
-                _backgroundImage.sprite = _backgroundSprite != null ? _backgroundSprite : _backgroundImage.sprite;
-            }
-        }
-
-        private void OnDisable()
-        {
-            if (_backgroundSprite != null)
-                backgroundSpriteAsset.ReleaseAsset();
+            _backgroundImage.sprite = _battleBus.CurrentBattleInfo.BattleBackground;
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.UI;
 using CryptoQuest.Gameplay.Battle;
 using System.Collections.Generic;
@@ -6,6 +7,7 @@ using CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit;
 
 namespace CryptoQuest.UI.Battle
 {
+    [Obsolete]
     public class MonsterList : CharacterList
     {
         [SerializeField] private LayoutGroup _layout;

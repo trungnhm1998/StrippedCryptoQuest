@@ -13,9 +13,9 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components
         public Dictionary<int, int> GroupsDict { get; private set; } = new();
         public Dictionary<int, List<IBattleUnit>> UnitsDict { get; private set; } = new();
         public BattleTeam Team { get; private set; }
-        private CharacterGroup[] _groupsData;
+        private ScriptableObjects.Data.EncounterGroups.CharacterGroup[] _groupsData;
 
-        public BattleTeamGroups(BattleTeam team, CharacterGroup[] groupsData)
+        public BattleTeamGroups(BattleTeam team, ScriptableObjects.Data.EncounterGroups.CharacterGroup[] groupsData)
         {
             Team = team;
             _groupsData = groupsData;

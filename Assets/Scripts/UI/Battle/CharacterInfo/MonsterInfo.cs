@@ -11,6 +11,7 @@ using IndiGames.GameplayAbilitySystem.AttributeSystem.Components;
 
 namespace CryptoQuest.UI.Battle.CharacterInfo
 {
+    [Obsolete]
     public class MonsterInfo : CharacterInfoBase
     {
         // To hide spine object until it loaded and reset position

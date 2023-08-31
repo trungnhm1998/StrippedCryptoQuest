@@ -22,7 +22,7 @@ namespace CryptoQuest.EditorTool
     {
         [SerializeField] private PartySO _party;
         [SerializeField] private BattleLoader _battleLoader;
-        [SerializeField] private BattleDataSO[] _battleDataSOs;
+        [SerializeField] private EncounterGroups[] _battleDataSOs;
         [SerializeField] private AssetReferenceT<Sprite> _defaultBackground;
         [SerializeField] private AttributeScriptableObject _attackSo;
         [SerializeField] private AbilityScriptableObject _buffAttackAbility;
@@ -158,18 +158,19 @@ namespace CryptoQuest.EditorTool
 
         private void RenderBattleToLoad()
         {
-            _showBattle =
-                GUILayout.Toggle(_showBattle, "Show Battles", GUILayout.Width(_guiWidth));
-            if (!_showBattle) return;
-
-            foreach (var data in _battleDataSOs)
-            {
-                if (!GUILayout.Button($"Load battle: {data.name}")) continue;
-                _showDebug = false;
-
-                var battleInfo = new BattleInfo(data, true, _defaultBackground);
-                _triggerBattleEncounterEvent.Raise(battleInfo);
-            }
+            // TODO: REFACTORING BATTLE SYSTEM
+            // _showBattle =
+            //     GUILayout.Toggle(_showBattle, "Show Battles", GUILayout.Width(_guiWidth));
+            // if (!_showBattle) return;
+            //
+            // foreach (var data in _battleDataSOs)
+            // {
+            //     if (!GUILayout.Button($"Load battle: {data.name}")) continue;
+            //     _showDebug = false;
+            //
+            //     var battleInfo = new BattleInfo(data, true, _defaultBackground);
+            //     _triggerBattleEncounterEvent.Raise(battleInfo);
+            // }
         }
 
         private void RenderPlayerParty()

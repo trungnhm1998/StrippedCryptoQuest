@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit.AbilitySelectStrategies;
 using CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit.TargetPlayerStrategies;
@@ -6,6 +7,7 @@ using UnityEngine;
 
 namespace CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit
 {
+    [Obsolete]
     public class MonsterUnit : CharacterUnit
     {
         [field: SerializeField]

@@ -7,6 +7,7 @@ using UnityEditor;
 using UnityEngine;
 using System.Linq;
 using CryptoQuest.Gameplay.Battle.Core;
+using CryptoQuest.Gameplay;
 
 namespace CryptoQuest.Tests.Editor.Battle
 {
@@ -19,12 +20,12 @@ namespace CryptoQuest.Tests.Editor.Battle
 
         private GameObject _abilityOwner;
         private AbilitySystemBehaviour _abilitySystem;
-        private AbilitySO _fieldAbilitySO;
-        private AbilitySO _battleAbilitySO;
-        private AbilitySO _fieldAndBattleAbilitySO;
-        private Ability _fieldAbility;
-        private Ability _battleAbility;
-        private Ability _fieldAndBattleAbility;
+        private SimpleAbilitySO _fieldAbilitySO;
+        private SimpleAbilitySO _battleAbilitySO;
+        private SimpleAbilitySO _fieldAndBattleAbilitySO;
+        private SimpleGameplayAbilitySpec _fieldAbility;
+        private SimpleGameplayAbilitySpec _battleAbility;
+        private SimpleGameplayAbilitySpec _fieldAndBattleAbility;
 
         [SetUp]
         public void Setup()
@@ -33,24 +34,25 @@ namespace CryptoQuest.Tests.Editor.Battle
             _abilitySystem = _abilityOwner.AddComponent<AbilitySystemBehaviour>();
             var skillInfoBuilder = new SkillInfoBuilder();
 
-            _fieldAbilitySO = ScriptableObject.CreateInstance<AbilitySO>();
-            _fieldAbilitySO.SkillInfo = skillInfoBuilder
-                .WithUsageScenario(AssetDatabase.LoadAssetAtPath<AbilityUsageScenarioSO>(FIELD_SCENARIO))
-                .Build();
+            _fieldAbilitySO = ScriptableObject.CreateInstance<SimpleAbilitySO>();
+            // TODO: REFACTOR BATTLE
+            // _fieldAbilitySO.Editor_SetInfo(skillInfoBuilder
+            //     .WithUsageScenario(AssetDatabase.LoadAssetAtPath<AbilityUsageScenarioSO>(FIELD_SCENARIO))
+            //     .Build());
 
-            _battleAbilitySO = ScriptableObject.CreateInstance<AbilitySO>();
-            _battleAbilitySO.SkillInfo = skillInfoBuilder
-                .WithUsageScenario(AssetDatabase.LoadAssetAtPath<AbilityUsageScenarioSO>(BATTLE_SCENARIO))
-                .Build();
+            _battleAbilitySO = ScriptableObject.CreateInstance<SimpleAbilitySO>();
+            // _battleAbilitySO.Editor_SetInfo(skillInfoBuilder
+            //     .WithUsageScenario(AssetDatabase.LoadAssetAtPath<AbilityUsageScenarioSO>(BATTLE_SCENARIO))
+            //     .Build());
 
-            _fieldAndBattleAbilitySO = ScriptableObject.CreateInstance<AbilitySO>();
-            _fieldAndBattleAbilitySO.SkillInfo = skillInfoBuilder
-                .WithUsageScenario(AssetDatabase.LoadAssetAtPath<AbilityUsageScenarioSO>(FIELD_AND_BATTLE_SCENARIO))
-                .Build();
+            _fieldAndBattleAbilitySO = ScriptableObject.CreateInstance<SimpleAbilitySO>();
+            // _fieldAndBattleAbilitySO.Editor_SetInfo(skillInfoBuilder
+            //     .WithUsageScenario(AssetDatabase.LoadAssetAtPath<AbilityUsageScenarioSO>(FIELD_AND_BATTLE_SCENARIO))
+            //     .Build());
 
-            _fieldAbility = _abilitySystem.GiveAbility(_fieldAbilitySO) as Ability;
-            _battleAbility = _abilitySystem.GiveAbility(_battleAbilitySO) as Ability;
-            _fieldAndBattleAbility = _abilitySystem.GiveAbility(_fieldAndBattleAbilitySO) as Ability;
+            _fieldAbility = _abilitySystem.GiveAbility(_fieldAbilitySO) as SimpleGameplayAbilitySpec;
+            _battleAbility = _abilitySystem.GiveAbility(_battleAbilitySO) as SimpleGameplayAbilitySpec;
+            _fieldAndBattleAbility = _abilitySystem.GiveAbility(_fieldAndBattleAbilitySO) as SimpleGameplayAbilitySpec;
         }
 
         [Test]

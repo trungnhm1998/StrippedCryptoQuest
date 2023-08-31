@@ -22,17 +22,17 @@ namespace CryptoQuest.Gameplay.Battle.Helper
             }
         }
 
-        public static IEnumerable<Ability> GetAbilitiesInBattle(this AbilitySystemBehaviour owner)
+        public static IEnumerable<SimpleGameplayAbilitySpec> GetAbilitiesInBattle(this AbilitySystemBehaviour owner)
         {
             return GetAbilitiesWithUsageScenario(owner, EAbilityUsageScenario.Battle);
         }
 
-        public static IEnumerable<Ability> GetAbilitiesInField(this AbilitySystemBehaviour owner)
+        public static IEnumerable<SimpleGameplayAbilitySpec> GetAbilitiesInField(this AbilitySystemBehaviour owner)
         {
             return GetAbilitiesWithUsageScenario(owner, EAbilityUsageScenario.Field);
         }
 
-        public static IEnumerable<Ability> GetAbilitiesInBattleAndField(this AbilitySystemBehaviour owner)
+        public static IEnumerable<SimpleGameplayAbilitySpec> GetAbilitiesInBattleAndField(this AbilitySystemBehaviour owner)
         {
             return GetAbilitiesWithUsageScenario(owner, EAbilityUsageScenario.Battle | EAbilityUsageScenario.Field);
         }
@@ -43,15 +43,19 @@ namespace CryptoQuest.Gameplay.Battle.Helper
         /// <param name="owner"></param>
         /// <param name="usageScenario"></param>
         /// <returns></returns>
-        public static IEnumerable<Ability> GetAbilitiesWithUsageScenario(this AbilitySystemBehaviour owner, EAbilityUsageScenario usageScenario)
+        public static IEnumerable<SimpleGameplayAbilitySpec> GetAbilitiesWithUsageScenario(
+            this AbilitySystemBehaviour owner,
+            EAbilityUsageScenario usageScenario)
         {
-            foreach (var grantedAbility in owner.GrantedAbilities)
-            {
-                if (!(grantedAbility is Ability ability)) continue;
-                var abilitySO = ability.AbilitySO;
-                if (!abilitySO.SkillInfo.CheckUsageScenario(usageScenario)) continue;
-                yield return ability;
-            }
+            // TODO: REFACTOR BATTLE
+            // foreach (var grantedAbility in owner.GrantedAbilities)
+            // {
+            //     if (!(grantedAbility is SimpleGameplayAbilitySpec ability)) continue;
+            //     var abilitySO = ability.AbilityDef;
+            //     if (!abilitySO.Info.CheckUsageScenario(usageScenario)) continue;
+            //     yield return ability;
+            // }
+            yield break;
         }
     }
 }

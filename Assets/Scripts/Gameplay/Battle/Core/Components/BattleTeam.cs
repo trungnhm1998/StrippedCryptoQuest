@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit;
@@ -6,6 +7,7 @@ using UnityEngine;
 
 namespace CryptoQuest.Gameplay.Battle.Core.Components
 {
+    [Obsolete]
     public class BattleTeam : MonoBehaviour
     {
         [field: SerializeField]

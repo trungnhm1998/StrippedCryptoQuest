@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 2442478146309426484}
   - component: {fileID: 8771262284569674151}
   - component: {fileID: 4227199146749451100}
+  - component: {fileID: 6516022271187710830}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -65,6 +66,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c7189a093b87794f83c2f21f89896f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _initOnAwake: 1
   _attributeEventChannels: []
   _attributes: []
   _attributeValues: []
@@ -122,7 +124,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _hpAttribute: {fileID: 11400000, guid: 77c53593fd92c904aa7689c5a7449df3, type: 2}
-  _doneActionEventChannel: {fileID: 11400000, guid: 9ed5ff741b20bee4f9e8a2ade059511f, type: 2}
+  _showNextMarkEventChannel: {fileID: 11400000, guid: 9f65c4f7fd7684a4394a451b20a98549, type: 2}
   _doneShowDialogEvent: {fileID: 11400000, guid: 7c5ea92a1adcd1a41bd62b22f8d98934, type: 2}
   <UnitData>k__BackingField: {fileID: 0}
   <TagConfig>k__BackingField: {fileID: 11400000, guid: 1b25746ea962c1b4f84662c4f3e15d8e, type: 2}
@@ -160,3 +162,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b41fedf455499914680e8b368e11fa9e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &6516022271187710830
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7704234448636028181}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d2bada46c1e16243923b3f71725658b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GameplayAbilitySystem: {fileID: 1777753454019466195}
+  Element: {fileID: 11400000, guid: ba6de62bb4e6b1340881a31dcd37f1ee, type: 2}
