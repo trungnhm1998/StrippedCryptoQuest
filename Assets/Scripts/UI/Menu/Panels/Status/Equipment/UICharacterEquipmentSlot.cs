@@ -3,14 +3,16 @@ using System.Collections.Generic;
 using CryptoQuest.Gameplay.Inventory;
 using CryptoQuest.Gameplay.Inventory.Items;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Container;
+using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Type;
 using UnityEngine;
 
 namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
 {
     public class UICharacterEquipmentSlot : MonoBehaviour
     {
-        public event Action<EquipmentSlot.EType> ShowEquipmentsInventoryWithType;
+        public event Action<EquipmentSlot.EType, EEquipmentCategory> ShowEquipmentsInventoryWithType;
         [field: SerializeField] public EquipmentSlot.EType SlotType { get; private set; }
+        [field: SerializeField] public EEquipmentCategory EquipmentCategory { get; private set; }
 
         [SerializeField] private UIEquipment _equipment;
 
@@ -29,7 +31,7 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
 
         public void OnChangingEquipment()
         {
-            ShowEquipmentsInventoryWithType?.Invoke(SlotType);
+            ShowEquipmentsInventoryWithType?.Invoke(SlotType, EquipmentCategory);
         }
 
         public void RegisterCharacterEquipmentsEvents(CharacterEquipments charSpecEquipments)

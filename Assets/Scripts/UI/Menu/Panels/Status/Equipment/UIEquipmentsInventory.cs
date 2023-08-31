@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using CryptoQuest.Gameplay.Character;
 using CryptoQuest.Gameplay.Inventory.Items;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Container;
+using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Type;
 using CryptoQuest.Menu;
 using CryptoQuest.System;
 using UnityEngine;
@@ -99,9 +100,11 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
 
         private CharacterSpec _inspectingCharacter;
         private EquipmentSlot.EType _slotType;
+        private EEquipmentCategory _category;
 
-        public void Show(CharacterSpec inspectingChar, EquipmentSlot.EType modifyingSlotType)
+        public void Show(CharacterSpec inspectingChar, EquipmentSlot.EType modifyingSlotType, EEquipmentCategory category)
         {
+            _category = category;
             Reset();
             InstantiateEquipments();
             _slotType = modifyingSlotType;
@@ -227,7 +230,8 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
             for (int i = 0; i < _serviceProvider.Inventory.Equipments.Count; i++)
             {
                 var equipment = _serviceProvider.Inventory.Equipments[i];
-                InstantiateNewEquipmentUI(equipment);
+                if (_category == equipment.Data.EquipmentCategory)
+                    InstantiateNewEquipmentUI(equipment);
             }
 
             Debug.Log($"InstantiateEquipments {_equipmentItems.Count}");
