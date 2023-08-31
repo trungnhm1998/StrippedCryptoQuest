@@ -1,15 +1,15 @@
-﻿using CryptoQuest.UI.Menu.MenuStates;
+﻿using CryptoQuest.UI.Menu.Panels.Item;
 using UnityEngine;
 
-namespace CryptoQuest.UI.Menu.Panels.Item.States
+namespace CryptoQuest.UI.Menu.MenuStates.ItemStates
 {
-    public class UISingleItemState : MenuStateBase
+    public class SingleItemState : MenuStateBase
     {
         public static readonly string Item = "Item";
 
         private UIItemPresenter _uiGroupPresenter;
 
-        public UISingleItemState(UIItemPresenter uiGroupPresenter)
+        public SingleItemState(UIItemPresenter uiGroupPresenter)
         {
             _uiGroupPresenter = uiGroupPresenter;
             
