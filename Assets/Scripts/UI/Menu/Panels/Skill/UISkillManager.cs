@@ -34,8 +34,6 @@ namespace CryptoQuest.UI.Menu.Panels.Skill
         {
             InitListSkills();
             _playerParty = _provider.PartyController.Party;
-
-            Debug.Log($"playerParty = [{_playerParty}]");
         }
 
         private void InitListSkills()
