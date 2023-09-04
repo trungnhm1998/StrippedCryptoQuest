@@ -15,5 +15,6 @@ namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item
         [field: SerializeField] public LocalizedString LocalizedEquipmentType { get; private set; }
         [field: SerializeField] public int RequiredCharacterLevel { get; private set; }
         [field: SerializeField] public EquipmentSlot.EType[] RequiredSlots { get; private set; }
+        public EEquipmentCategory EquipmentCategory => EquipmentType.EquipmentCategory;
     }
 }

@@ -1,6 +1,8 @@
 ﻿using CryptoQuest.Gameplay.Inventory.Items;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Localization.Components;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
@@ -9,8 +11,13 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
     {
         [SerializeField] private TooltipProvider _tooltipProvider;
         [SerializeField] private Image _icon;
-        [SerializeField] private LocalizeStringEvent _name;
+        [SerializeField] private LocalizeStringEvent _nameLocalize;
+        [SerializeField] private TMP_Text _nameText;
         [SerializeField] private RectTransform _tooltipPosition;
+
+        [SerializeField] private Color _disabledColor;
+        [SerializeField] private Color _enabledColor;
+
         private EquipmentInfo _equipment = new();
         private ITooltip _tooltip;
         public EquipmentInfo Equipment => _equipment;
@@ -25,8 +32,14 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
             if (equipment.IsValid() == false) return;
             _equipment = equipment;
             var def = equipment.Data;
-            _name.StringReference = def.DisplayName;
+            _nameLocalize.StringReference = def.DisplayName;
+            _nameText.color = _enabledColor;
             _icon.sprite = def.EquipmentType.Icon;
+        }
+
+        public void DisableButton()
+        {
+            _nameText.color = _disabledColor;
         }
 
         /// <summary>
@@ -50,6 +63,7 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
                 .WithDescription(_equipment.Data.DisplayName)
                 .WithDisplaySprite(_equipment.Data.Image)
                 .WithContentAwareness(_tooltipPosition)
+                .WithRarity(_equipment.Data.Rarity)
                 .Show();
         }
 

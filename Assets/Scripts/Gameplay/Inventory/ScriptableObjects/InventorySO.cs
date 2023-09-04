@@ -118,6 +118,7 @@ namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects
                 _inventoriesCache[inventory.EquipmentCategory] = index;
             }
         }
+        
 
         #region Equipment
 

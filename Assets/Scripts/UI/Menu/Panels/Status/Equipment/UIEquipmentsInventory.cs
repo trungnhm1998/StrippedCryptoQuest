@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using CryptoQuest.Gameplay.Character;
 using CryptoQuest.Gameplay.Inventory.Items;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Container;
+using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Type;
 using CryptoQuest.Menu;
 using CryptoQuest.System;
 using UnityEngine;
@@ -99,11 +100,12 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
 
         private CharacterSpec _inspectingCharacter;
         private EquipmentSlot.EType _slotType;
+        private EEquipmentCategory _category;
 
-        public void Show(CharacterSpec inspectingChar, EquipmentSlot.EType modifyingSlotType)
+        public void Show(CharacterSpec inspectingChar, EquipmentSlot.EType modifyingSlotType, EEquipmentCategory category)
         {
+            _category = category;
             Reset();
-            InstantiateEquipments();
             _slotType = modifyingSlotType;
             _inspectingCharacter = inspectingChar;
             _inspectingCharacter.Equipments.EquipmentAdded += UpdateInventoryAndEquippingUI;
@@ -112,6 +114,7 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
             _tooltipProvider.Tooltip.SetSafeArea(_tooltipSafeArea);
             _contents.SetActive(true);
             _unEquipButton.Select();
+            InstantiateEquipments();
             RenderCurrentlyEquipItem(inspectingChar, modifyingSlotType);
             PreviewUnselectEquipment();
         }
@@ -227,7 +230,8 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
             for (int i = 0; i < _serviceProvider.Inventory.Equipments.Count; i++)
             {
                 var equipment = _serviceProvider.Inventory.Equipments[i];
-                InstantiateNewEquipmentUI(equipment);
+                if (_category == equipment.Data.EquipmentCategory)
+                    InstantiateNewEquipmentUI(equipment);
             }
 
             Debug.Log($"InstantiateEquipments {_equipmentItems.Count}");
@@ -237,9 +241,33 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
         {
             var equipmentItem = Instantiate(_equipmentItemPrefab, _scrollRect.content);
             equipmentItem.Init(equipment);
+
+            ValidateEquipment(equipment, equipmentItem);
+
             equipmentItem.Inspecting += OnPreviewEquipmentStats;
             equipmentItem.EquipItem += EquipEquipment;
             _equipmentItems.Add(equipmentItem);
+
+            ValidateEquipmentByClass(equipment, equipmentItem);
+        }
+
+        private void ValidateEquipmentByClass(EquipmentInfo equipment, UIEquipmentItem equipmentItem)
+        {
+            CharacterClass[] equipmentAllowedClasses = equipment.Data.EquipmentType.AllowedClasses;
+            CharacterClass characterClass = _inspectingCharacter.Class;
+
+            if (equipmentAllowedClasses == null || equipmentAllowedClasses.Length <= 0) return;
+
+            if (Array.Exists(equipmentAllowedClasses, value => value == characterClass)) return;
+            equipmentItem.DeactivateButton();
+        }
+
+
+        private void ValidateEquipment(EquipmentInfo equipment, UIEquipmentItem equipmentItem)
+        {
+            if (equipment.ValidateCharacter(_inspectingCharacter)) return;
+
+            equipmentItem.DeactivateButton();
         }
 
         private void EquipEquipment(EquipmentInfo equipment)

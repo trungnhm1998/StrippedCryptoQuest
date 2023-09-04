@@ -20,6 +20,7 @@ namespace CryptoQuest.Gameplay
         [field: SerializeField] public AbilitySystemBehaviour GameplayAbilitySystem { get; private set; }
         [field: SerializeField] public EffectSystemBehaviour EffectSystem { get; private set; }
         [field: SerializeField] public AttributeSystemBehaviour AttributeSystem { get; private set; }
+        public IAbilityController AbilityController { get; private set; }
         public Elemental Element => _spec.Element;
         public CharacterSpec Spec => _spec;
 
@@ -34,6 +35,7 @@ namespace CryptoQuest.Gameplay
         private void Awake()
         {
             GetDependencies();
+            AbilityController = GetComponent<IAbilityController>();
         }
 
         /// <summary>
@@ -46,7 +48,8 @@ namespace CryptoQuest.Gameplay
             // should I clone this? because it's currently the same object in PartySO
             // if this get modified the spec in party SO will too
             _spec = character;
-            _spec.Bind(this);
+            _spec.Init(this);
+
             _statsInitializer.InitStats();
             _equipmentEffectApplier.InitEquipments(this);
         }

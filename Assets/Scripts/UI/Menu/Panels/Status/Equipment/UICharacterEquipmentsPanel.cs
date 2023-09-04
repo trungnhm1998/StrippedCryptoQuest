@@ -4,6 +4,7 @@ using CryptoQuest.Gameplay.Character;
 using CryptoQuest.Gameplay.Inventory;
 using CryptoQuest.Gameplay.Inventory.Items;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Container;
+using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Type;
 using CryptoQuest.Gameplay.PlayerParty;
 using CryptoQuest.Menu;
 using CryptoQuest.System;
@@ -96,12 +97,14 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
 
         private EquipmentSlot.EType _modifyingSlotType;
         public EquipmentSlot.EType ModifyingSlotType => _modifyingSlotType;
+        public EEquipmentCategory EquipmentCategory { get; private set; }
 
         private void UnequipCurrentSlot() => UnequipEquipmentAtSlot?.Invoke(_modifyingSlotType);
 
-        private void ShowEquipmentsInventoryWithType(EquipmentSlot.EType slotType)
+        private void ShowEquipmentsInventoryWithType(EquipmentSlot.EType slotType, EEquipmentCategory category)
         {
             HideToolTipAndDeselectCurrentSelectedButton();
+            EquipmentCategory = category;
             _modifyingSlotType = slotType;
             _mainPanel.State.RequestStateChange(StatusMenuStateMachine.EquipmentSelection);
         }

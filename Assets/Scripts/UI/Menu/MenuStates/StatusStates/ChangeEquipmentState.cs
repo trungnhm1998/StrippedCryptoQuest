@@ -12,7 +12,8 @@ namespace CryptoQuest.UI.Menu.MenuStates.StatusStates
             StatusPanel.CharacterEquipmentsPanel.Hide();
             StatusPanel.EquipmentsInventoryPanel.Show(
                 StatusPanel.InspectingCharacter,
-                StatusPanel.CharacterEquipmentsPanel.ModifyingSlotType);
+                StatusPanel.CharacterEquipmentsPanel.ModifyingSlotType,
+                StatusPanel.CharacterEquipmentsPanel.EquipmentCategory);
         }
 
         public override void HandleCancel()
