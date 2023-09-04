@@ -52,9 +52,9 @@ namespace CryptoQuest.UI.Menu.Panels.Home
 
         private void OnValidate()
         {
-            if (_partySlots.Length != PartyConstants.PARTY_SIZE)
+            if (_partySlots.Length != PartyConstants.MAX_PARTY_SIZE)
             {
-                Array.Resize(ref _partySlots, PartyConstants.PARTY_SIZE);
+                Array.Resize(ref _partySlots, PartyConstants.MAX_PARTY_SIZE);
             }
 
             _partySlots = GetComponentsInChildren<UIPartySlot>();

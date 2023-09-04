@@ -2,9 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using CryptoQuest.Gameplay;
-using CryptoQuest.Gameplay.BaseGameplayData;
-using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data;
+using CryptoQuest.Gameplay.Character;
 using CryptoQuest.Gameplay.Encounter;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.ScriptableObjects;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
@@ -16,7 +14,7 @@ using AttributeScriptableObject = CryptoQuest.Character.Attributes.AttributeScri
 
 namespace CryptoQuestEditor.Gameplay.Gameplay.Monster
 {
-    public class MonsterDataSOEditor : ScriptableObjectBrowserEditor<MonsterData>
+    public class MonsterDataSOEditor : ScriptableObjectBrowserEditor<EnemyData>
     {
         private const string DEFAULT_NAME = "Monster";
         private const int ROW_OFFSET = 2;
@@ -77,11 +75,11 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Monster
                     continue;
                 }
 
-                MonsterData instance = null;
-                instance = (MonsterData)AssetDatabase.LoadAssetAtPath(path, typeof(MonsterData));
+                EnemyData instance = null;
+                instance = (EnemyData)AssetDatabase.LoadAssetAtPath(path, typeof(EnemyData));
                 if (instance == null || !AssetDatabase.Contains(instance))
                 {
-                    instance = ScriptableObject.CreateInstance<MonsterData>();
+                    instance = ScriptableObject.CreateInstance<EnemyData>();
                 }
 
                 instance.Editor_SetMonsterPrefab(GetMonsterPrefab(dataModel.MonsterPrefabName));

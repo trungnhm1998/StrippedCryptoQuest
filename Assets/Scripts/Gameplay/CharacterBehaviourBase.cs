@@ -20,7 +20,6 @@ namespace CryptoQuest.Gameplay
         [field: SerializeField] public AbilitySystemBehaviour GameplayAbilitySystem { get; private set; }
         [field: SerializeField] public EffectSystemBehaviour EffectSystem { get; private set; }
         [field: SerializeField] public AttributeSystemBehaviour AttributeSystem { get; private set; }
-        public IAbilityController AbilityController { get; private set; }
         public Elemental Element => _spec.Element;
         public CharacterSpec Spec => _spec;
 
@@ -35,7 +34,6 @@ namespace CryptoQuest.Gameplay
         private void Awake()
         {
             GetDependencies();
-            AbilityController = GetComponent<IAbilityController>();
         }
 
         /// <summary>

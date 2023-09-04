@@ -16,7 +16,7 @@ namespace CryptoQuest.EditorTool
     {
         [SerializeField] private PartySO _party;
         [SerializeField] private BattleLoader _battleLoader;
-        [SerializeField] private EncounterGroups[] _battleDataSOs;
+        [SerializeField] private EnemyParty[] _battleDataSOs;
         [SerializeField] private AssetReferenceT<Sprite> _defaultBackground;
         [SerializeField] private AttributeScriptableObject _attackSo;
         [SerializeField] private AbilityScriptableObject _buffAttackAbility;

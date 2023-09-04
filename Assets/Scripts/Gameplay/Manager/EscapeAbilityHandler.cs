@@ -34,8 +34,8 @@ namespace CryptoQuest.Gameplay.Manager
             _pathStorageSo.LastTakenPath = escapePath;
             _spiralConfig.DoneSpiralIn += TriggerEscape;
             _spiralConfig.DoneSpiralOut += FinishTrasition;
-            _onSceneLoadedEventChannel.EventRaised += _spiralConfig.OnSpiralOut;
-            _spiralConfig.OnSpiralIn();
+            _onSceneLoadedEventChannel.EventRaised += _spiralConfig.HideSpiral;
+            _spiralConfig.ShowSpiral();
         }
 
         private void TriggerEscape()
@@ -47,7 +47,7 @@ namespace CryptoQuest.Gameplay.Manager
         {
             _spiralConfig.DoneSpiralIn -= TriggerEscape;
             _spiralConfig.DoneSpiralOut -= FinishTrasition;
-            _onSceneLoadedEventChannel.EventRaised -= _spiralConfig.OnSpiralOut;
+            _onSceneLoadedEventChannel.EventRaised -= _spiralConfig.HideSpiral;
         }
     }
 }

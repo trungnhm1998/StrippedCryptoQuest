@@ -40,8 +40,8 @@ namespace CryptoQuest.UI.Menu.Panels.Status
             {
                 _currentIndex = value switch
                 {
-                    < 0 => PartyConstants.PARTY_SIZE - 1,
-                    >= PartyConstants.PARTY_SIZE => 0,
+                    < 0 => PartyConstants.MAX_PARTY_SIZE - 1,
+                    >= PartyConstants.MAX_PARTY_SIZE => 0,
                     _ => value
                 };
             }

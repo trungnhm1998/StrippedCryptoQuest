@@ -285,54 +285,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!1 &368013363
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 368013364}
-  - component: {fileID: 368013365}
-  m_Layer: 0
-  m_Name: MockAbilityDataProvider
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &368013364
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 368013363}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 12
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &368013365
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 368013363}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d788faffa0af4170bf3ede4f6c0917b0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _providerBus: {fileID: 11400000, guid: c1e91bee16845274bb6603c96de60c9e, type: 2}
-  _mockData:
-  - abilitySo: {fileID: 11400000, guid: dc0cfd3c4c7978146abba50d378389b6, type: 2}
-  - abilitySo: {fileID: 11400000, guid: d88c500af3744734fbca01d9329a3c32, type: 2}
 --- !u!1001 &484528166
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -585,7 +537,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1395703086495497813, guid: cd9751f1c8e143f478634ba0f9f1391f, type: 3}
       propertyPath: m_RootOrder
-      value: 14
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 1395703086495497813, guid: cd9751f1c8e143f478634ba0f9f1391f, type: 3}
       propertyPath: m_AnchorMax.x
@@ -1296,10 +1248,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3142632597784323480, guid: 6662a4047feb5b6429527803f77c2598, type: 3}
-      propertyPath: _battleSceneSO
-      value: 
-      objectReference: {fileID: 11400000, guid: bd2aa71e454c39740b24deb9f20e8d1a, type: 2}
     - target: {fileID: 4490157311320337569, guid: 6662a4047feb5b6429527803f77c2598, type: 3}
       propertyPath: m_Name
       value: BattleLoader
@@ -1334,7 +1282,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 591262318596164672, guid: 59ae4d9d823dd8145afd896d991ad154, type: 3}
       propertyPath: m_RootOrder
-      value: 15
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 591262318596164672, guid: 59ae4d9d823dd8145afd896d991ad154, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1642,7 +1590,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1635630058704197934, guid: 9cbbd99f63f6b794ba491040d42d1f0a, type: 3}
       propertyPath: m_RootOrder
-      value: 13
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 1635630058704197934, guid: 9cbbd99f63f6b794ba491040d42d1f0a, type: 3}
       propertyPath: m_LocalRotation.w
