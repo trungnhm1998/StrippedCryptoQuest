@@ -964,12 +964,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10a25b4606ac938498cbf862084b087b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _scrollRect: {fileID: 6106503339059200158}
+  _singleItemRect: {fileID: 2171444157869238816, guid: 2c92b1a7bf643054dbeb28382d01a8a7, type: 3}
   AbilityDataProvider: {fileID: 11400000, guid: c1e91bee16845274bb6603c96de60c9e, type: 2}
   _inputMediator: {fileID: 11400000, guid: 1fb61cdb72f0a484f8e4db68e2011977, type: 2}
   _content: {fileID: 4062070923689040608}
-  _listSkillMockup: {fileID: 11400000, guid: 0cb538f48e43f764f96f304077916ccb, type: 2}
   _recyclableScrollRect: {fileID: 6106503339059200158}
-  _autoScrollRect: {fileID: 1318060353346447621}
   _upHint: {fileID: 5497906662852116714}
   _downHint: {fileID: 3283852835898400763}
   _currentRectTransform: {fileID: 4573489179623644125}
@@ -1572,6 +1572,7 @@ MonoBehaviour:
   - {fileID: 1765861930679396644}
   _currentSelectedTabIndex: 0
   _currentCharacterCardIndex: 0
+  _provider: {fileID: 11400000, guid: 8c870727215fbcf48976e7263a1a2485, type: 2}
 --- !u!1 &1540703846324388751
 GameObject:
   m_ObjectHideFlags: 0
@@ -1798,12 +1799,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10a25b4606ac938498cbf862084b087b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _scrollRect: {fileID: 862718621802698581}
+  _singleItemRect: {fileID: 2171444157869238816, guid: 2c92b1a7bf643054dbeb28382d01a8a7, type: 3}
   AbilityDataProvider: {fileID: 11400000, guid: c1e91bee16845274bb6603c96de60c9e, type: 2}
   _inputMediator: {fileID: 11400000, guid: 1fb61cdb72f0a484f8e4db68e2011977, type: 2}
   _content: {fileID: 4635505573121041565}
-  _listSkillMockup: {fileID: 11400000, guid: 0cb538f48e43f764f96f304077916ccb, type: 2}
   _recyclableScrollRect: {fileID: 862718621802698581}
-  _autoScrollRect: {fileID: 4727131032215836695}
   _upHint: {fileID: 8211098635453362794}
   _downHint: {fileID: 587568207656431633}
   _currentRectTransform: {fileID: 6942884006294949712}
@@ -2895,7 +2896,6 @@ GameObject:
   - component: {fileID: 867577849174331818}
   - component: {fileID: 9098206421777164195}
   - component: {fileID: 543055166419242023}
-  - component: {fileID: 5721818891678490613}
   - component: {fileID: 6401828240133880215}
   m_Layer: 5
   m_Name: Skill Panel_1
@@ -2968,23 +2968,6 @@ MonoBehaviour:
   SelfInitialize: 1
   Direction: 0
   _segments: 2
---- !u!114 &5721818891678490613
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2501641704838732054}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 46c403e4c65e1e44888140f1ee8d8cd2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _viewportValueAbove: 1.3
-  _viewportValueBelow: 4.3
-  _templateScrollRect: {fileID: 543055166419242023}
-  _templateViewportTransform: {fileID: 8191982699683908761}
-  ContentRectTransform: {fileID: 4822734933547113303}
 --- !u!114 &6401828240133880215
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2997,12 +2980,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10a25b4606ac938498cbf862084b087b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _scrollRect: {fileID: 543055166419242023}
+  _singleItemRect: {fileID: 2171444157869238816, guid: 2c92b1a7bf643054dbeb28382d01a8a7, type: 3}
   AbilityDataProvider: {fileID: 11400000, guid: c1e91bee16845274bb6603c96de60c9e, type: 2}
   _inputMediator: {fileID: 11400000, guid: 1fb61cdb72f0a484f8e4db68e2011977, type: 2}
   _content: {fileID: 7419123793860321494}
-  _listSkillMockup: {fileID: 11400000, guid: 0cb538f48e43f764f96f304077916ccb, type: 2}
   _recyclableScrollRect: {fileID: 543055166419242023}
-  _autoScrollRect: {fileID: 5721818891678490613}
   _upHint: {fileID: 4708016045412011269}
   _downHint: {fileID: 2623073456412598457}
   _currentRectTransform: {fileID: 4822734933547113303}
@@ -8663,12 +8646,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10a25b4606ac938498cbf862084b087b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _scrollRect: {fileID: 2672415064881155814}
+  _singleItemRect: {fileID: 2171444157869238816, guid: 2c92b1a7bf643054dbeb28382d01a8a7, type: 3}
   AbilityDataProvider: {fileID: 11400000, guid: c1e91bee16845274bb6603c96de60c9e, type: 2}
   _inputMediator: {fileID: 11400000, guid: 1fb61cdb72f0a484f8e4db68e2011977, type: 2}
   _content: {fileID: 1924485818388940427}
-  _listSkillMockup: {fileID: 11400000, guid: 0cb538f48e43f764f96f304077916ccb, type: 2}
   _recyclableScrollRect: {fileID: 2672415064881155814}
-  _autoScrollRect: {fileID: 141120694029130106}
   _upHint: {fileID: 5894938069428557252}
   _downHint: {fileID: 3944880107443031895}
   _currentRectTransform: {fileID: 4996105139712091348}

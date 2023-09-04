@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using CryptoQuest.Gameplay.PlayerParty;
 using CryptoQuest.Menu;
+using CryptoQuest.System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -24,9 +26,16 @@ namespace CryptoQuest.UI.Menu.Panels.Skill
 
         private GameObject _selectedCharacter;
 
+        [Header("Configs")]
+        [SerializeField] private ServiceProvider _provider;
+        private IParty _playerParty;
+
         private void Awake()
         {
             InitListSkills();
+            _playerParty = _provider.PartyController.Party;
+
+            Debug.Log($"playerParty = [{_playerParty}]");
         }
 
         private void InitListSkills()

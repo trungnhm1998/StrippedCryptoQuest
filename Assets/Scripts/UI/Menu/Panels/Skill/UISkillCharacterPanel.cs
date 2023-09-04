@@ -14,12 +14,15 @@ namespace CryptoQuest.UI.Menu.Panels.Skill
 {
     public class UISkillCharacterPanel : MonoBehaviour, IRecyclableScrollRectDataSource
     {
+        [Header("Configs")]
+        [SerializeField] private ScrollRect _scrollRect;
+        [SerializeField] private RectTransform _singleItemRect;
+
+        [Space]
         public AbilityDataProviderSO AbilityDataProvider;
         [SerializeField] private InputMediatorSO _inputMediator;
         [SerializeField] private GameObject _content;
-        [SerializeField] private SkillsMockupSO _listSkillMockup;
         [SerializeField] private RecyclableScrollRect _recyclableScrollRect;
-        [SerializeField] private AutoScrollRect _autoScrollRect;
         [SerializeField] private GameObject _upHint;
         [SerializeField] private GameObject _downHint;
         [SerializeField] private RectTransform _currentRectTransform;
@@ -33,9 +36,15 @@ namespace CryptoQuest.UI.Menu.Panels.Skill
         [NonSerialized] public UISkillAbilityButton CurrentSkillAbilityButton;
         public Image CharacterCardBackground;
 
+        private RectTransform _inventoryViewport;
+        private float _verticalOffset;
+        private float _lowerBound;
+        private float _upperBound;
+
 
         private void Awake()
         {
+            InitScrollviewInfo();
             InitData();
             _recyclableScrollRect.DataSource = this;
         }
@@ -49,6 +58,30 @@ namespace CryptoQuest.UI.Menu.Panels.Skill
         private void OnDisable()
         {
             _inputMediator.MenuNavigateEvent -= SelectSkillHandle;
+        }
+
+        private void InitScrollviewInfo()
+        {
+            _verticalOffset = _singleItemRect.rect.height;
+            _inventoryViewport = _scrollRect.viewport;
+            var position = _inventoryViewport.position;
+            var rect = _inventoryViewport.rect;
+            _lowerBound = position.y - rect.height / 2;
+            _upperBound = position.y + rect.height / 2 + _verticalOffset;
+        }
+
+        private void AutoScroll(Button button)
+        {
+            var selectedRowPositionY = button.transform.position.y;
+
+            if (selectedRowPositionY <= _lowerBound)
+            {
+                _scrollRect.content.anchoredPosition += Vector2.up * _verticalOffset;
+            }
+            else if (selectedRowPositionY >= _upperBound)
+            {
+                _scrollRect.content.anchoredPosition += Vector2.down * _verticalOffset;
+            }
         }
 
         private void InitData()
@@ -71,7 +104,8 @@ namespace CryptoQuest.UI.Menu.Panels.Skill
 
         private void SelectSkillHandle(Vector2 arg0)
         {
-            _autoScrollRect.UpdateScrollRectTransform();
+
+            AutoScroll(EventSystem.current.currentSelectedGameObject.GetComponent<Button>());
             ShowScrollHints();
             if (EventSystem.current.currentSelectedGameObject.TryGetComponent<UISkillAbilityButton>(
                     out var currentSelectedSkill))
