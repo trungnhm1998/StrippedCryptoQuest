@@ -1,6 +1,6 @@
-using CryptoQuest.Gameplay.Battle.Core.Components;
+using System;
 using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects;
-using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Events;
+using CryptoQuest.Gameplay.Encounter;
 using CryptoQuest.Input;
 using CryptoQuest.UI.SpiralFX;
 using IndiGames.Core.Events.ScriptableObjects;
@@ -12,6 +12,10 @@ namespace CryptoQuest.Gameplay.Battle
 {
     public class BattleLoader : MonoBehaviour
     {
+        public static event Action<int> LoadBattleWithId;
+        public static void RequestLoadBattle(int id) => LoadBattleWithId?.Invoke(id);
+        public static event Action<EnemyParty> LoadBattle;
+        public static void RequestLoadBattle(EnemyParty party) => LoadBattle?.Invoke(party);
         [SerializeField] private GameStateSO _gameState;
         [SerializeField] private BattleInputSO _battleInput;
         [SerializeField] private SpiralConfigSO _spiralConfigSo;
@@ -19,7 +23,6 @@ namespace CryptoQuest.Gameplay.Battle
         [SerializeField] private SceneScriptableObject _battleSceneSO;
 
         [Header("Events to listen to")]
-        [SerializeField] private TriggerBattleEncounterEventSO _triggerBattleEncounterEventSo;
         [SerializeField] private VoidEventChannelSO _onBattleEndEventChannel;
         [SerializeField] private VoidEventChannelSO _onSceneLoadedEventChannel;
 
@@ -27,30 +30,54 @@ namespace CryptoQuest.Gameplay.Battle
         [SerializeField] private UnloadSceneEventChannelSO _unloadSceneEvent;
         [SerializeField] private LoadSceneEventChannelSO _loadSceneEventChannelSo;
 
+        [Header("Config"), SerializeField]
+        private EnemyParty[] _enemyParties = Array.Empty<EnemyParty>();
+
         private void OnEnable()
         {
-            _triggerBattleEncounterEventSo.EncounterBattle += OnEncounterBattle;
             _onBattleEndEventChannel.EventRaised += OnBattleEnd;
             _onSceneLoadedEventChannel.EventRaised += OnSceneLoaded;
+            LoadBattle += LoadingBattle;
+            LoadBattleWithId += LoadingBattle;
         }
 
         private void OnDisable()
         {
-            _triggerBattleEncounterEventSo.EncounterBattle -= OnEncounterBattle;
             _onBattleEndEventChannel.EventRaised -= OnBattleEnd;
             _onSceneLoadedEventChannel.EventRaised -= OnSceneLoaded;
+            LoadBattle -= LoadingBattle;
+            LoadBattleWithId -= LoadingBattle;
+
             _spiralConfigSo.DoneSpiralIn -= SpiralInDone;
             _spiralConfigSo.DoneFadeOut -= StartBattle;
         }
 
-        private void OnEncounterBattle(BattleInfo battleInfo)
+        private void LoadingBattle(int id)
         {
+            var party = Array.Find(_enemyParties, enemyParty => enemyParty.Id == id);
+            if (party == null)
+            {
+                Debug.LogError($"No enemy party with id \"{id}\" found");
+                return;
+            }
+
+            LoadingBattle(party);
+        }
+
+        private void LoadingBattle(EnemyParty party)
+        {
+            _gameState.UpdateGameState(EGameState.Battle);
             _battleInput.EnableBattleInput();
-            _battleBus.CurrentBattleInfo = battleInfo;
+            _battleBus.CurrentEnemyParty = party;
+            ShowSpiralAndLoadBattleScene();
+        }
+
+        private void ShowSpiralAndLoadBattleScene()
+        {
             _spiralConfigSo.Color = Color.black;
             _spiralConfigSo.DoneSpiralIn += SpiralInDone;
             _spiralConfigSo.DoneFadeOut += StartBattle;
-            _spiralConfigSo.OnSpiralIn();
+            _spiralConfigSo.ShowSpiral();
         }
 
         private void SpiralInDone()
@@ -65,7 +92,6 @@ namespace CryptoQuest.Gameplay.Battle
 
         private void StartBattle()
         {
-            _gameState.UpdateGameState(EGameState.Battle);
             _spiralConfigSo.DoneSpiralIn -= SpiralInDone;
             _spiralConfigSo.DoneFadeOut -= StartBattle;
         }

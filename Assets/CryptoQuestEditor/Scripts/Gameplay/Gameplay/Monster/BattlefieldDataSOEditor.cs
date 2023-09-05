@@ -73,18 +73,18 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Monster
             }
         }
 
-        private List<EncounterData.Config> SetUpInstanceBattleEncounter(BattleFieldDataModel dataModel)
+        private List<EncounterData.GroupConfig> SetUpInstanceBattleEncounter(BattleFieldDataModel dataModel)
         {
-            List<EncounterData.Config> battleEncounterSetups = new();
+            List<EncounterData.GroupConfig> battleEncounterSetups = new();
             foreach (var battleEncounterSetupDataModel in dataModel.BattleEncounterSetups)
             {
-                var battleDatas = GetAssetsFromType<CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data.EncounterGroups>().Where(data
+                var battleDatas = GetAssetsFromType<EnemyParty>().Where(data
                     => data.Id == battleEncounterSetupDataModel.BattleDataId);
                 if (battleDatas.Count() == 0) continue;
-                EncounterData.Config encounterSetup = new();
+                EncounterData.GroupConfig encounterSetup = new();
                 encounterSetup.Probability = battleEncounterSetupDataModel.Probability /
                                              BaseBattleVariable.CORRECTION_PROBABILITY_VALUE;
-                encounterSetup.EncounterGroups = battleDatas.First();
+                encounterSetup.Party = battleDatas.First();
                 battleEncounterSetups.Add(encounterSetup);
             }
 

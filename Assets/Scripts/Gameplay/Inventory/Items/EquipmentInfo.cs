@@ -76,34 +76,18 @@ namespace CryptoQuest.Gameplay.Inventory.Items
 
         #endregion
 
-        public bool ValidateCharacter(CharacterSpec inspectingCharacter)
+        public bool IsValidWith(CharacterSpec inspectingCharacter)
         {
-            if (inspectingCharacter == null)
-            {
-                Debug.LogWarning("Character is null");
-                return false;
-            }
+            if (!IsValid()) return false;
 
-            if (Data.EquipmentType == null)
-            {
-                Debug.LogWarning("Equipment type is null");
-                return false;
-            }
-
-            if (Data.EquipmentType.AllowedClasses == null)
-            {
-                Debug.LogWarning("Allowed classes is null");
-                return false;
-            }
+            CharacterClass[] equipmentAllowedClasses = Data.EquipmentType.AllowedClasses;
+            CharacterClass characterClass = inspectingCharacter.Class;
 
             if (Data.RequiredCharacterLevel > inspectingCharacter.Level)
             {
                 Debug.LogWarning("Character level is not enough");
                 return false;
             }
-
-            var equipmentAllowedClasses = Data.EquipmentType.AllowedClasses;
-            var characterClass = inspectingCharacter.Class;
 
             if (equipmentAllowedClasses == null || equipmentAllowedClasses.Length <= 0)
             {
@@ -116,6 +100,17 @@ namespace CryptoQuest.Gameplay.Inventory.Items
                 Debug.LogWarning("Character class is not allowed");
                 return false;
             }
+
+            return true;
+        }
+
+        public override bool IsValid()
+        {
+            if (!base.IsValid()) return false;
+
+            if (Data.EquipmentType == null) return false;
+
+            if (Data.EquipmentType.AllowedClasses == null) return false;
 
             return true;
         }

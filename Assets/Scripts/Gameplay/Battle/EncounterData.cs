@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data;
+using CryptoQuest.Gameplay.Encounter;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using Random = UnityEngine.Random;
@@ -11,16 +11,16 @@ namespace CryptoQuest.Gameplay.Battle
     public class EncounterData : ScriptableObject
     {
         [Serializable]
-        public struct Config
+        public struct GroupConfig
         {
             public float Probability;
-            public EncounterGroups EncounterGroups;
+            public EnemyParty Party;
         }
 
         [field: SerializeField] public string ID { get; private set; }
 
-        [SerializeField] private List<Config> _configs;
-        public List<Config> Configs => _configs;
+        [SerializeField] private List<GroupConfig> _configs;
+        public List<GroupConfig> Configs => _configs;
         [SerializeField] private float _encounterRate = 5f;
         public float EncounterRate => _encounterRate;
         [SerializeField] private bool _isEscapable = true;
@@ -33,7 +33,7 @@ namespace CryptoQuest.Gameplay.Battle
             ID = id;
         }
 
-        public void Editor_SetConfig(List<Config> config)
+        public void Editor_SetConfig(List<GroupConfig> config)
         {
             _configs = config;
         }
@@ -42,11 +42,11 @@ namespace CryptoQuest.Gameplay.Battle
         /// <summary>
         /// Based on probability, get a battle data
         /// </summary>
-        /// <returns>a Battlefield based on <see cref="Config.Probability"/></returns>
-        public EncounterGroups GetRandomBattlefield()
+        /// <returns>a Battlefield based on <see cref="GroupConfig.Probability"/></returns>
+        public EnemyParty GetRandomBattlefield()
         {
             float randomValue = Random.value;
-            Config selectedBattle = _configs[^1];
+            GroupConfig selectedBattle = _configs[^1];
             for (int i = 0; i < _configs.Count; i++)
             {
                 randomValue -= _configs[i].Probability;
@@ -57,7 +57,7 @@ namespace CryptoQuest.Gameplay.Battle
                 }
             }
 
-            return selectedBattle.EncounterGroups;
+            return selectedBattle.Party;
         }
     }
 }

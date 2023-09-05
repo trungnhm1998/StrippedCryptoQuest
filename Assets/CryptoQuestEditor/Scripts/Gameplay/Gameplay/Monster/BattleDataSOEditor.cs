@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using CryptoQuest.Gameplay.BaseGameplayData;
 using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data;
+using CryptoQuest.Gameplay.Character;
 using CryptoQuest.Gameplay.Encounter;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
 using ScriptableObjectBrowser;
@@ -12,7 +13,7 @@ using UnityEngine;
 
 namespace CryptoQuestEditor.Gameplay.Gameplay.Monster
 {
-    public class BattleDataSOEditor : ScriptableObjectBrowserEditor<EncounterGroups>
+    public class BattleDataSOEditor : ScriptableObjectBrowserEditor<EnemyParty>
     {
         private const string DEFAULT_NAME = "MonsterParty_";
         private const int ROW_OFFSET = 2;
@@ -44,11 +45,11 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Monster
                     continue;
                 }
 
-                EncounterGroups instance = null;
-                instance = (EncounterGroups)AssetDatabase.LoadAssetAtPath(path, typeof(EncounterGroups));
+                EnemyParty instance = null;
+                instance = (EnemyParty)AssetDatabase.LoadAssetAtPath(path, typeof(EnemyParty));
                 if (instance == null || !AssetDatabase.Contains(instance))
                 {
-                    instance = ScriptableObject.CreateInstance<EncounterGroups>();
+                    instance = ScriptableObject.CreateInstance<EnemyParty>();
                 }
 
                 List<string> groups = new()
@@ -56,7 +57,7 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Monster
                     splitedData[2], splitedData[3], splitedData[4], splitedData[5]
                 };
                 if (!DataValidator.IsValidNumberOfMonsterSetup(groups)) continue;
-                instance.Editor_SetEnemyGroups(ConfigMonsterGroup(groups));
+                // instance.Editor_SetEnemyGroups(ConfigMonsterGroup(groups)); // TODO: REFACTOR ENCOUNTER
                 instance.Editor_SetId(dataModel.MonserPartyId);
                 instance.name = name;
                 if (!AssetDatabase.Contains(instance))
@@ -72,30 +73,32 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Monster
             }
         }
 
-        private EncounterGroups.CharacterGroup ConfigMonsterDataSOProperties(string groupProperties)
+        /*
+        private EncounterGroup.CharacterGroup ConfigMonsterDataSOProperties(string groupProperties)
         {
             string[] splitArray = groupProperties.Split(",", StringSplitOptions.None);
-            List<CharacterDataSO> monsterDataGroup = new();
+            List<CharacterData> monsterDataGroup = new();
             foreach (var id in splitArray)
             {
                 if (string.IsNullOrEmpty(id)) continue;
-                var assets = GetAssetsFromType<MonsterDataSO>().Where(monster
+                var assets = GetAssetsFromType<MonsterData>().Where(monster
                     => monster.MonsterId == int.Parse(id));
-                MonsterDataSO monsterDataSo = assets.Count() > 0 ? assets.First() : null;
-                if (monsterDataSo != null)
+                MonsterData monsterData = assets.Count() > 0 ? assets.First() : null;
+                if (monsterData != null)
                 {
-                    monsterDataGroup.Add(monsterDataSo);
+                    monsterDataGroup.Add(monsterData);
                 }
             }
 
-            EncounterGroups.CharacterGroup characterGroup = new();
-            characterGroup.Editor_SetCharacters(monsterDataGroup.ToArray());
+            EncounterGroup.CharacterGroup characterGroup = new();
+            // TODO: REFACTOR ENCOUNTER
+            // characterGroup.Editor_SetCharacters(monsterDataGroup.ToArray());
             return characterGroup;
         }
 
-        private EncounterGroups.CharacterGroup[] ConfigMonsterGroup(List<string> groupStrings)
+        private EncounterGroup.CharacterGroup[] ConfigMonsterGroup(List<string> groupStrings)
         {
-            List<EncounterGroups.CharacterGroup> characterGroups = new();
+            List<EncounterGroup.CharacterGroup> characterGroups = new();
             foreach (var groupString in groupStrings)
             {
                 if (!string.IsNullOrEmpty(groupString))
@@ -107,5 +110,6 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Monster
 
             return characterGroups.ToArray();
         }
+        */
     }
 }

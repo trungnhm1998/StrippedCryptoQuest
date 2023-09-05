@@ -23,11 +23,6 @@ namespace CryptoQuest.Gameplay.Encounter
         {
             LoadingEncounterArea?.Invoke(_encounterId);
         }
-        
-        public void LoadEncounterArea()
-        {
-            LoadingEncounterArea?.Invoke(_encounterId);
-        }
 
         private void OnTriggerEnter2D(Collider2D other)
         {

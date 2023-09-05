@@ -10,13 +10,6 @@ namespace CryptoQuest.UI.Menu.Panels.Skill
     /// </summary>
     public class UISkillMenu : UIMenuPanel
     {
-        [Header("State Context")]
-        [SerializeField] private UISkillManager _characterSelectionOverview;
-        public UISkillManager CharacterSelectionOverview => _characterSelectionOverview;
-
-        [SerializeField] private UISkillManager _skillSelectionOverview;
-        public UISkillManager SkillSelectionOverview => _skillSelectionOverview;
-
         /// <summary>
         /// Return the specific state machine for this panel.
         /// </summary>

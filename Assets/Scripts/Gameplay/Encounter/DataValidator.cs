@@ -52,7 +52,7 @@ namespace CryptoQuest.Gameplay.Encounter
             float totalProbability = 0;
             foreach (var encounterSetup in data.Configs)
             {
-                if (encounterSetup.EncounterGroups == null)
+                if (encounterSetup.Party == null)
                     return false;
                 totalProbability += encounterSetup.Probability;
             }

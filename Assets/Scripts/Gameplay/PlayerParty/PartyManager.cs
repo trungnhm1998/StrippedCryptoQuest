@@ -18,13 +18,13 @@ namespace CryptoQuest.Gameplay.PlayerParty
         public IParty Party => _party;
         [SerializeField] private ServiceProvider _provider;
 
-        [SerializeField, Space] private PartySlot[] _partySlots = new PartySlot[PartyConstants.PARTY_SIZE];
+        [SerializeField, Space] private PartySlot[] _partySlots = new PartySlot[PartyConstants.MAX_PARTY_SIZE];
 
         private void OnValidate()
         {
-            if (_partySlots.Length != PartyConstants.PARTY_SIZE)
+            if (_partySlots.Length != PartyConstants.MAX_PARTY_SIZE)
             {
-                Array.Resize(ref _partySlots, PartyConstants.PARTY_SIZE);
+                Array.Resize(ref _partySlots, PartyConstants.MAX_PARTY_SIZE);
             }
 
             _partySlots = GetComponentsInChildren<PartySlot>();

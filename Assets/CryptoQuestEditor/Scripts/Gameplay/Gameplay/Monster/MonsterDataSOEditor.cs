@@ -2,9 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using CryptoQuest.Gameplay;
-using CryptoQuest.Gameplay.BaseGameplayData;
-using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data;
+using CryptoQuest.Gameplay.Character;
 using CryptoQuest.Gameplay.Encounter;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.ScriptableObjects;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
@@ -16,7 +14,7 @@ using AttributeScriptableObject = CryptoQuest.Character.Attributes.AttributeScri
 
 namespace CryptoQuestEditor.Gameplay.Gameplay.Monster
 {
-    public class MonsterDataSOEditor : ScriptableObjectBrowserEditor<MonsterDataSO>
+    public class MonsterDataSOEditor : ScriptableObjectBrowserEditor<EnemyData>
     {
         private const string DEFAULT_NAME = "Monster";
         private const int ROW_OFFSET = 2;
@@ -77,20 +75,13 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Monster
                     continue;
                 }
 
-                MonsterDataSO instance = null;
-                instance = (MonsterDataSO)AssetDatabase.LoadAssetAtPath(path, typeof(MonsterDataSO));
+                EnemyData instance = null;
+                instance = (EnemyData)AssetDatabase.LoadAssetAtPath(path, typeof(EnemyData));
                 if (instance == null || !AssetDatabase.Contains(instance))
                 {
-                    instance = ScriptableObject.CreateInstance<MonsterDataSO>();
+                    instance = ScriptableObject.CreateInstance<EnemyData>();
                 }
 
-                instance.MonsterId = dataModel.MonsterId;
-                instance.Element = GetAssetsFromType<Elemental>().Where(element
-                    => element.Id == dataModel.ElementId).First();
-                instance.Exp = dataModel.Exp;
-                instance.Gold = dataModel.Gold;
-                instance.DropItemID = dataModel.DropItemID;
-                instance.NormalAttack = GetNormalAttackAbility();
                 instance.Editor_SetMonsterPrefab(GetMonsterPrefab(dataModel.MonsterPrefabName));
                 List<string> attributeNames = new()
                 {
@@ -99,8 +90,7 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Monster
                     "SkillPower", "Defense", "EvasionRate", "CriticalRate"
                 };
                 AttributeWithValue[] attributeInitValues = InitAttributeValueSetup(dataModel, attributeNames);
-                instance.AttributesToInitialize = attributeInitValues;
-                instance.Name = name;
+                // instance.AttributesToInitialize = attributeInitValues;
                 instance.name = replacedName;
 
                 if (!AssetDatabase.Contains(instance))

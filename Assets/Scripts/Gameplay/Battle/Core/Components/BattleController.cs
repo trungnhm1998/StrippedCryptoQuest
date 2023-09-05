@@ -12,8 +12,6 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components
         [SerializeField] private BattleBus _battleBus;
 
         [Header("UI")]
-        [SerializeField] private CharacterList _heroesUI;
-        [SerializeField] private CharacterList _monstersUI;
         [SerializeField] private GameObject _batteMenu;
 
         [Header("Listen Events")]
@@ -39,14 +37,10 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components
         private void OnNewTurn()
         {
             _batteMenu.SetActive(true);
-            _heroesUI.gameObject.SetActive(true);
         }
 
         private void SetupBattleUIs()
         {
-            _heroesUI.InitUI(_battleBus.BattleManager.BattleTeam1.BattleUnits);
-            _monstersUI.InitUI(_battleBus.BattleManager.BattleTeam2.BattleUnits);
-            _heroesUI.gameObject.SetActive(false);
             _batteMenu.SetActive(false);
         }
 

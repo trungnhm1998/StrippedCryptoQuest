@@ -71,8 +71,8 @@ namespace CryptoQuest.Item.Ocarinas
             _spiralConfig.Color = Color.blue;
             _spiralConfig.DoneSpiralIn += TriggerOcarina;
             _spiralConfig.DoneSpiralOut += FinishTrasition;
-            _onSceneLoadedEventChannel.EventRaised += _spiralConfig.OnSpiralOut;
-            _spiralConfig.OnSpiralIn();
+            _onSceneLoadedEventChannel.EventRaised += _spiralConfig.HideSpiral;
+            _spiralConfig.ShowSpiral();
         }
 
         private void FinishTrasition()
@@ -80,7 +80,7 @@ namespace CryptoQuest.Item.Ocarinas
             _inputMediatorSO.EnableMapGameplayInput();
             _spiralConfig.DoneSpiralIn -= TriggerOcarina;
             _spiralConfig.DoneSpiralOut -= FinishTrasition;
-            _onSceneLoadedEventChannel.EventRaised -= _spiralConfig.OnSpiralOut;
+            _onSceneLoadedEventChannel.EventRaised -= _spiralConfig.HideSpiral;
         }
 
         private void TriggerOcarina()
@@ -104,7 +104,7 @@ namespace CryptoQuest.Item.Ocarinas
                 {
                     HeroBehaviour hero = FindObjectOfType<HeroBehaviour>();
                     hero.transform.position = destination.transform.position;
-                    _spiralConfig.OnSpiralOut();
+                    _spiralConfig.HideSpiral();
                     break;
                 }
             }
