@@ -5,7 +5,7 @@ namespace CryptoQuest.Gameplay.Character.LevelSystem
     public interface ILevelCalculator
     {
         int[] RequiredExps { get; }
-        int CalculateCurrentLevel(int currentExp);
+        int CalculateCurrentLevel(float currentExp);
 
     }
 
@@ -46,7 +46,7 @@ namespace CryptoQuest.Gameplay.Character.LevelSystem
             return accumulatedExps;
         }
 
-        public int CalculateCurrentLevel(int currentExp)
+        public int CalculateCurrentLevel(float currentExp)
         {
             for (int i = 0; i < RequiredExps.Length; i++)
             {

@@ -58,14 +58,14 @@ namespace CryptoQuest.Tests.Editor.Gameplay.Character.LevelSystem
         }
 
         [Test]
-        [TestCase(0, 1)]
-        [TestCase(39, 1)]
-        [TestCase(40, 2)]
-        [TestCase(60, 2)]
-        [TestCase(129, 3)]
-        [TestCase(151412, 99)]
-        [TestCase(151413, 99)]
-        public void LevelCalculator_CalculateCurrentLevel_ShouldReturnCorrectLevel(int currentExp, int expectedLevel)
+        [TestCase(0, 1f)]
+        [TestCase(39, 1f)]
+        [TestCase(40, 2f)]
+        [TestCase(60, 2f)]
+        [TestCase(129, 3f)]
+        [TestCase(151412, 99f)]
+        [TestCase(151413, 99f)]
+        public void LevelCalculator_CalculateCurrentLevel_ShouldReturnCorrectLevel(int currentExp, float expectedLevel)
         {
             Assert.AreEqual(expectedLevel, _calculator.CalculateCurrentLevel(currentExp));
         }

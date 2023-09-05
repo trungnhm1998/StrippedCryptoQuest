@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using CryptoQuest.Gameplay.Character.LevelSystem;
 using CryptoQuest.Gameplay.Inventory;
 using CryptoQuest.Gameplay.Skill;
 using CryptoQuest.UI.Menu.Panels.Home;
@@ -14,12 +15,25 @@ namespace CryptoQuest.Gameplay.Character
     [Serializable]
     public class CharacterSpec
     {
+
         [field: SerializeField] public CharacterBackgroundInfo BackgroundInfo { get; private set; }
         [field: SerializeField] public CharacterClass Class { get; private set; }
         [field: SerializeField] public Elemental Element { get; set; }
-        [field: SerializeField] public int Level { get; set; }
         [field: SerializeField] public StatsDef StatsDef { get; set; }
         [field: SerializeField] public CharacterEquipments Equipments { get; private set; }
+        [field: SerializeField] public float Experience { get; set; }
+
+        // I use static here so we only have to create level calculator once
+        // Also call .Level first to make sure that calculator being created
+        public static ILevelCalculator LevelCalculator { get; private set; }
+        public int Level 
+        {
+            get 
+            {
+                LevelCalculator ??= new LevelCalculator(StatsDef.MaxLevel);
+                return LevelCalculator.CalculateCurrentLevel(Experience);
+            }
+        }
 
         // TODO: #1136 Remove serialize and load runtime using Class, Element info
         [field: SerializeField] private CharacterSkillSet _skillSet;
