@@ -7,7 +7,6 @@ namespace CryptoQuest.UI.Menu.MenuStates.SkillStates
     public class SkillMenuStateMachine : MenuStateMachine
     {
         public static readonly string NavSkill = "NavSkill";
-        public static readonly string Skill = "Skill";
         public static readonly string CharacterSelection = "CharacterSelection";
         public static readonly string SkillSelection = "SkillSelection";
 
@@ -19,7 +18,6 @@ namespace CryptoQuest.UI.Menu.MenuStates.SkillStates
         {
             // Could create a factory here if new keyword becomes a problem.
             AddState(NavSkill, new GenericUnfocusState(CharacterSelection));
-            AddState(Skill, new FocusSkillState(panel));
             AddState(CharacterSelection, new CharacterSelectionState(panel));
             AddState(SkillSelection, new SkillSelectionState(panel));
 

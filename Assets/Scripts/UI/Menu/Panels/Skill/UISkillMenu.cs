@@ -1,4 +1,6 @@
-﻿using CryptoQuest.UI.Menu.MenuStates.SkillStates;
+﻿using CryptoQuest.Gameplay.PlayerParty;
+using CryptoQuest.System;
+using CryptoQuest.UI.Menu.MenuStates.SkillStates;
 using FSM;
 using UnityEngine;
 
@@ -20,6 +22,19 @@ namespace CryptoQuest.UI.Menu.Panels.Skill
         public override StateBase<string> GetPanelState(MenuManager menuManager)
         {
             return new SkillMenuStateMachine(this);
+        }
+
+        [SerializeField] private ServiceProvider _provider;
+
+        [Header("State Context")]
+        [SerializeField] private UICharacterSelection _charactersPanel;
+        public UICharacterSelection CharactersPanel => _charactersPanel;
+
+        private IParty _party;
+
+        private void Awake()
+        {
+            _party = _provider.PartyController.Party;
         }
     }
 }
