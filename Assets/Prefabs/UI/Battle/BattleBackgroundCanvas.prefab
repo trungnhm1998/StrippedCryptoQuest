@@ -30,7 +30,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children: []
-  m_Father: {fileID: 4364455626756987287}
+  m_Father: {fileID: 1282977772445369391}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -108,8 +108,9 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4364455626756987287}
+  - {fileID: 1869632218991864376}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -190,7 +191,6 @@ GameObject:
   - component: {fileID: 4364455626756987287}
   - component: {fileID: 6805039038959562688}
   - component: {fileID: 9093349197100203655}
-  - component: {fileID: 8968228001464900876}
   m_Layer: 0
   m_Name: Background
   m_TagString: Untagged
@@ -209,8 +209,7 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
-  m_Children:
-  - {fileID: 1869632218991864376}
+  m_Children: []
   m_Father: {fileID: 1282977772445369391}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -247,7 +246,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 08d8dc0d8ce981641a58adbc525edd00, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 77a3df24428bcf845a1acc3a5dc87f38, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -257,17 +256,3 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &8968228001464900876
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7461952283012068989}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5e461570ee58b354ba7ff17275d9a3c0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _battleBus: {fileID: 11400000, guid: 2290057e7f48d1046b5e0a6c3f6dc910, type: 2}
-  _backgroundImage: {fileID: 9093349197100203655}

@@ -57,13 +57,13 @@ namespace CryptoQuest.Gameplay.PlayerParty
 
         public bool TryGetMemberAtIndex(int charIndexInParty, out CharacterBehaviourBase character)
         {
-            character = _partySlots[0].Character; // first slot suppose to never be null
+            character = _partySlots[0].CharacterComponent; // first slot suppose to never be null
 
             if (charIndexInParty < 0 || charIndexInParty >= _partySlots.Length) return false;
             var partySlot = _partySlots[charIndexInParty];
             if (partySlot.IsValid() == false) return false;
 
-            character = partySlot.Character;
+            character = partySlot.CharacterComponent;
 
             return true;
         }

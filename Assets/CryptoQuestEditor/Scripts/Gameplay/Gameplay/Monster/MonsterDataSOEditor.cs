@@ -114,12 +114,11 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Monster
             return ability;
         }
 
-        private AssetReference GetMonsterPrefab(string prefabName)
+        private GameObject GetMonsterPrefab(string prefabName)
         {
             var path = PREFAB_PATH + prefabName + ".prefab";
             var guid = AssetDatabase.AssetPathToGUID(path);
-            AssetReference monsterPrefab = new(guid);
-            return monsterPrefab;
+            return AssetDatabase.LoadAssetAtPath<GameObject>(AssetDatabase.GUIDToAssetPath(guid));
         }
 
 

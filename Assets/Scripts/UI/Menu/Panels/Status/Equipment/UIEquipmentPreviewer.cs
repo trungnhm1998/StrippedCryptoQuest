@@ -77,16 +77,20 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
         /// <param name="inspectingChar"></param>
         private void CheckEquipInspect(EquipmentInfo inspectingEquipment, CharacterSpec inspectingChar)
         {
-            var clonedEquipments = _clonedCharacter.Spec.Equipments.Slots;
-            foreach (var equipment in clonedEquipments)
+            var clonedCharacterSpec = _clonedCharacter.Spec;
+            var clonedEquipmentsBehaviour = clonedCharacterSpec.Equipments;
+            var clonedEquipments = clonedCharacterSpec.Equipments.Slots;
+            for (var index = 0; index < clonedEquipments.Count; index++)
             {
+                var equipment = clonedEquipments[index];
                 if (inspectingEquipment.Equals(equipment.Equipment))
                 {
-                    _clonedCharacter.Unequip(equipment.Equipment);
+                    clonedEquipmentsBehaviour.Unequip(equipment.Equipment);
                     return;
                 }
             }
-            _clonedCharacter.Equip(inspectingEquipment.Clone());
+
+            clonedEquipmentsBehaviour.Equip(inspectingEquipment.Clone());
         }
 
         /// <summary>

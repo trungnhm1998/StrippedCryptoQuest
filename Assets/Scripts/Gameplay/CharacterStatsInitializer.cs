@@ -1,39 +1,30 @@
 ﻿using CryptoQuest.Gameplay.Character;
 using CryptoQuest.Gameplay.Inventory.Items;
-using IndiGames.GameplayAbilitySystem.AttributeSystem.Components;
 using UnityEngine;
 
 namespace CryptoQuest.Gameplay
 {
-    public class CharacterStatsInitializer : MonoBehaviour, IStatInitializer
+    public class CharacterStatsInitializer : MonoBehaviour, ICharacterComponent
     {
-        [SerializeField] private CharacterBehaviourBase _characterBehaviour;
+        private CharacterBehaviourBase _characterBehaviour;
+        private readonly ILevelCalculator _levelCalculator = new DefaultAttributeFromLevelCalculator();
 
-        private ILevelCalculator _levelCalculator = new DefaultAttributeFromLevelCalculator();
+        public void Init(CharacterBehaviourBase characterBehaviourBase)
+        {
+            _characterBehaviour = characterBehaviourBase;
+            InitStats();
+        }
 
-        public void InitStats()
+        /// <summary>
+        /// Order matters
+        /// </summary>
+        private void InitStats()
         {
             InitBaseStats();
             InitAllAttributes();
             InitElementStats();
 
             _characterBehaviour.AttributeSystem.UpdateAttributeValues(); // Update the current value
-        }
-
-        /// <summary>
-        /// Calculate init value for all attributes, HP, MP will be same as MaxHP, MaxMP
-        ///
-        /// ATK = STR, DEF = VIT, etc.
-        /// </summary>
-        private void InitAllAttributes()
-        {
-            for (int i = 0; i < _characterBehaviour.AttributeSystem.AttributeValues.Count; i++)
-            {
-                var attributeValue = _characterBehaviour.AttributeSystem.AttributeValues[i];
-                _characterBehaviour.AttributeSystem.AttributeValues[i] =
-                    attributeValue.Attribute.CalculateInitialValue(attributeValue,
-                        _characterBehaviour.AttributeSystem.AttributeValues);
-            }
         }
 
         /// <summary>
@@ -56,6 +47,22 @@ namespace CryptoQuest.Gameplay
             }
 
             _characterBehaviour.AttributeSystem.UpdateAttributeValues();
+        }
+
+        /// <summary>
+        /// Calculate init value for all attributes, HP, MP will be same as MaxHP, MaxMP
+        ///
+        /// ATK = STR, DEF = VIT, etc.
+        /// </summary>
+        private void InitAllAttributes()
+        {
+            for (int i = 0; i < _characterBehaviour.AttributeSystem.AttributeValues.Count; i++)
+            {
+                var attributeValue = _characterBehaviour.AttributeSystem.AttributeValues[i];
+                _characterBehaviour.AttributeSystem.AttributeValues[i] =
+                    attributeValue.Attribute.CalculateInitialValue(attributeValue,
+                        _characterBehaviour.AttributeSystem.AttributeValues);
+            }
         }
 
         private void InitElementStats()

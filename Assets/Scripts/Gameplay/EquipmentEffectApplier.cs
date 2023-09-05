@@ -8,24 +8,24 @@ using UnityEngine;
 
 namespace CryptoQuest.Gameplay
 {
-    public interface IEquipmentEffectApplier
-    {
-        /// <summary>
-        /// Find all <see cref="EquipmentInfo"/> in <see cref="CharacterEquipments"/> then create and apply effect to character
-        /// </summary>
-        /// <param name="character"></param>
-        void InitEquipments(CharacterBehaviourBase character);
-    }
-
-    public class EquipmentEffectApplier : MonoBehaviour, IEquipmentEffectApplier
+    public class EquipmentEffectApplier : MonoBehaviour, ICharacterComponent
     {
         [SerializeField] private CharacterEquipments _equipments;
         [SerializeField] private InfiniteEffectScriptableObject _equipmentEffectBase;
 
-        private ILevelCalculator _equipmentAttributeCalculator = new DefaultAttributeFromLevelCalculator();
+        private readonly ILevelCalculator _equipmentAttributeCalculator = new DefaultAttributeFromLevelCalculator();
         private CharacterBehaviourBase _character;
 
-        public void InitEquipments(CharacterBehaviourBase character)
+
+        public void Init(CharacterBehaviourBase characterBehaviourBase)
+        {
+            InitEquipments(characterBehaviourBase);
+        }
+
+        /// <summary>
+        /// Find all <see cref="EquipmentInfo"/> in <see cref="CharacterEquipments"/> then create and apply effect to character
+        /// </summary>
+        private void InitEquipments(CharacterBehaviourBase character)
         {
             _character = character;
             ClearEquipmentsHandlers();
@@ -65,7 +65,7 @@ namespace CryptoQuest.Gameplay
 
             // Code smell here
             CreateAndSetEffectDefToEquipment(equipment);
-            var activeEffectSpec = _character.ApplyEffect(_character.CreateEffectSpecFromEquipment(equipment));
+            var activeEffectSpec = _character.ApplyEffect(CreateEffectSpecFromEquipment(equipment));
             equipment.SetActiveEffectSpec(activeEffectSpec);
         }
 
@@ -98,6 +98,19 @@ namespace CryptoQuest.Gameplay
 
             equipmentEffectDef.EffectDetails.Modifiers = modifiers;
             return equipmentEffectDef;
+        }
+
+
+        /// <summary>
+        /// Create a <see cref="GameplayEffectSpec"/> using the character
+        /// </summary>
+        /// <param name="equipment"></param>
+        /// <returns>A gameplay spec that can be use to apply into the system</returns>
+        private GameplayEffectSpec CreateEffectSpecFromEquipment(EquipmentInfo equipment)
+        {
+            return equipment.IsValid() == false
+                ? new GameplayEffectSpec()
+                : _character.GameplayAbilitySystem.MakeOutgoingSpec(equipment.EffectDef);
         }
     }
 }

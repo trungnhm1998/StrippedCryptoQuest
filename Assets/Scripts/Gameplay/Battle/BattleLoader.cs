@@ -24,7 +24,6 @@ namespace CryptoQuest.Gameplay.Battle
 
         [Header("Events to listen to")]
         [SerializeField] private VoidEventChannelSO _onBattleEndEventChannel;
-        [SerializeField] private VoidEventChannelSO _onSceneLoadedEventChannel;
 
         [Header("Events to raise")]
         [SerializeField] private UnloadSceneEventChannelSO _unloadSceneEvent;
@@ -36,7 +35,6 @@ namespace CryptoQuest.Gameplay.Battle
         private void OnEnable()
         {
             _onBattleEndEventChannel.EventRaised += OnBattleEnd;
-            _onSceneLoadedEventChannel.EventRaised += OnSceneLoaded;
             LoadBattle += LoadingBattle;
             LoadBattleWithId += LoadingBattle;
         }
@@ -44,7 +42,6 @@ namespace CryptoQuest.Gameplay.Battle
         private void OnDisable()
         {
             _onBattleEndEventChannel.EventRaised -= OnBattleEnd;
-            _onSceneLoadedEventChannel.EventRaised -= OnSceneLoaded;
             LoadBattle -= LoadingBattle;
             LoadBattleWithId -= LoadingBattle;
 
@@ -83,11 +80,6 @@ namespace CryptoQuest.Gameplay.Battle
         private void SpiralInDone()
         {
             _loadSceneEventChannelSo.RequestLoad(_battleSceneSO);
-        }
-
-        private void OnSceneLoaded()
-        {
-            _spiralConfigSo.OnFadeOut();
         }
 
         private void StartBattle()

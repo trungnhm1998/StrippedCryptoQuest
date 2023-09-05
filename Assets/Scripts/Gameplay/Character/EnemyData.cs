@@ -3,7 +3,6 @@ using CryptoQuest.Gameplay.Inventory.Items;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
 using UnityEditor;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
 
 namespace CryptoQuest.Gameplay.Character
 {
@@ -18,7 +17,7 @@ namespace CryptoQuest.Gameplay.Character
     public class EnemyData : CharacterData
     {
         [field: SerializeField] public int Exp { get; private set; }
-        [field: SerializeField] public AssetReference Prefab { get; private set; }
+        [field: SerializeField] public GameObject Prefab { get; private set; }
 
         [field: SerializeField] public AttributeWithValue[] Stats { get; private set; } =
             Array.Empty<AttributeWithValue>();
@@ -45,7 +44,7 @@ namespace CryptoQuest.Gameplay.Character
             });
         }
 
-        public void Editor_SetMonsterPrefab(AssetReference prefab)
+        public void Editor_SetMonsterPrefab(GameObject prefab)
         {
             Prefab = prefab;
         }

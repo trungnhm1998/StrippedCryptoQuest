@@ -1,6 +1,7 @@
 ﻿using CryptoQuest.Gameplay.Character;
 using UnityEngine;
 using UnityEngine.Assertions;
+using UnityEngine.Serialization;
 
 namespace CryptoQuest.Gameplay.PlayerParty
 {
@@ -10,17 +11,22 @@ namespace CryptoQuest.Gameplay.PlayerParty
     /// </summary>
     public class PartySlot : MonoBehaviour
     {
-        [SerializeField] private CharacterBehaviourBase _character;
-        public CharacterBehaviourBase Character => _character;
+        [FormerlySerializedAs("_character")] [SerializeField]
+        private CharacterBehaviourBase _characterComponent;
+
+        public CharacterBehaviourBase CharacterComponent => _characterComponent;
+        private CharacterSpec _characterSpec;
 
         public void Init(CharacterSpec character)
         {
-            _character.Init(character);
+            if (character.IsValid() == false) return;
+            _characterSpec = character;
+            _characterComponent.Init(character);
         }
-        
+
         public bool IsValid()
         {
-            return _character != null && _character.Spec.IsValid();
+            return _characterComponent != null && _characterSpec.IsValid();
         }
     }
 }
