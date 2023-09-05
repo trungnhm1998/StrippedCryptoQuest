@@ -1,4 +1,3 @@
-using IndiGames.Core.UI.FadeController;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -30,12 +29,12 @@ namespace CryptoQuest.UI.SpiralFX
             DoneFadeOut?.Invoke();
         }
 
-        public void OnSpiralIn()
+        public void ShowSpiral()
         {
             SpiralIn?.Invoke();
         }
 
-        public void OnSpiralOut()
+        public void HideSpiral()
         {
             SpiralOut?.Invoke();
         }

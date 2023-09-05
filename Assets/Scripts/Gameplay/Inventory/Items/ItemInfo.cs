@@ -6,7 +6,7 @@ using UnityEngine;
 namespace CryptoQuest.Gameplay.Inventory.Items
 {
     [Serializable]
-    public abstract class ItemInfo<TDef> where TDef : GenericItem
+    public abstract class ItemInfo
     {
         [SerializeField, ReadOnly] private string _id;
 
@@ -16,18 +16,24 @@ namespace CryptoQuest.Gameplay.Inventory.Items
             set => _id = value;
         }
 
-        [field: SerializeField] public TDef Data { get; private set; } // TODO: Primitive item ID instead
-        [field: SerializeField] public bool IsNftItem { get; private set; }
-
-        protected ItemInfo(TDef baseGenericItem) : this()
-        {
-            Data = baseGenericItem;
-        }
-
         protected ItemInfo()
         {
             _id = Guid.NewGuid().ToString();
         }
+    }
+
+    [Serializable]
+    public abstract class ItemInfo<TDef> : ItemInfo where TDef : GenericItem
+    {
+        [field: SerializeField] public TDef Data { get; private set; } // TODO: Primitive item ID instead
+        [field: SerializeField] public bool IsNftItem { get; private set; }
+
+        protected ItemInfo(TDef baseGenericItem)
+        {
+            Data = baseGenericItem;
+        }
+        
+        protected ItemInfo() { }
 
         public virtual bool IsValid()
         {

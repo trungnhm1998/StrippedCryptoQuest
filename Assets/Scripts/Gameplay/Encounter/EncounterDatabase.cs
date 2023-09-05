@@ -7,7 +7,6 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace CryptoQuest.Gameplay.Encounter
 {
-    [CreateAssetMenu(fileName = "BattleFieldsDatabase", menuName = "Data/BattleFieldsDatabase")]
     public class EncounterDatabase : ScriptableObject
     {
         [Serializable]
@@ -19,47 +18,58 @@ namespace CryptoQuest.Gameplay.Encounter
 
         [SerializeField] private List<Encounter> _battlefields;
 
-        private Dictionary<string, AssetReferenceT<EncounterData>> _lookup = new();
-        private Dictionary<string, EncounterData> _loadedEncounters = new();
+        private Dictionary<string, AssetReferenceT<EncounterData>> _lookup = null;
 
-        private void OnEnable()
+        private Dictionary<string, AssetReferenceT<EncounterData>> Lookup
         {
-            _lookup = new();
-            _loadedEncounters = new();
-
-            foreach (var map in _battlefields)
+            get
             {
-                _lookup.Add(map.ID, map.Battlefield);
+                if (_lookup != null && _lookup.Count > 0)
+                    return _lookup;
+
+                _lookup = new();
+                _loadedEncounters = new();
+
+                foreach (var map in _battlefields)
+                {
+                    _lookup.Add(map.ID, map.Battlefield);
+                }
+
+                return _lookup;
             }
         }
 
+        private Dictionary<string, EncounterData> _loadedEncounters = new();
+
         private void OnDisable()
         {
-            _lookup.Clear();
+            Lookup.Clear();
             _loadedEncounters.Clear();
         }
 
-        public void PreloadEncounter(string encounterId)
+        public AsyncOperationHandle<EncounterData> PreloadEncounter(string encounterId)
         {
-            if (!_lookup.TryGetValue(encounterId, out var encounter))
+            if (!Lookup.TryGetValue(encounterId, out var encounter))
             {
-                Debug.LogWarning($"Try to load encounter with id {encounterId} but not found in database {name}");
-                return;
+                Debug.LogWarning($"Try to load encounter with id \"{encounterId}\" but not found in database {name}");
+                return default;
             }
 
             if (!encounter.RuntimeKeyIsValid())
             {
                 Debug.LogWarning($"Encounter with id {encounterId} is not valid");
-                return;
+                return default;
             }
 
             if (_loadedEncounters.ContainsKey(encounterId))
             {
                 Debug.Log($"Encounter {encounterId} already loaded");
-                return;
+                return default;
             }
 
-            Addressables.LoadAssetAsync<EncounterData>(encounter).Completed += EncounterAreaDataLoaded;
+            var handle = Addressables.LoadAssetAsync<EncounterData>(encounter);
+            handle.Completed += EncounterAreaDataLoaded;
+            return handle;
         }
 
         private void EncounterAreaDataLoaded(AsyncOperationHandle<EncounterData> encounterAsyncOp)
@@ -76,15 +86,17 @@ namespace CryptoQuest.Gameplay.Encounter
             }
         }
 
-        public EncounterData GetEncounterData(string encounterId)
+        public bool TryGetEncounterData(string encounterId, out EncounterData encounter)
         {
             if (!_loadedEncounters.TryGetValue(encounterId, out var encounterData))
             {
-                Debug.LogWarning($"Encounter data with id {encounterId} not found in database {name}");
-                encounterData = CreateInstance<EncounterData>(); // to avoid null reference exception
+                Debug.LogWarning($"Encounter data with id {encounterId} not yet loaded");
+                encounter = null;
+                return false;
             }
 
-            return encounterData;
+            encounter = encounterData;
+            return true;
         }
     }
 }

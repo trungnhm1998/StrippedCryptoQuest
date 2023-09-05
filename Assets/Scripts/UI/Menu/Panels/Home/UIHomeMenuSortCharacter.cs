@@ -31,7 +31,7 @@ namespace CryptoQuest.UI.Menu.Panels.Home
         [SerializeField] private GameObject _sortKeysUi;
 
         // private UICharacterCardButton _selectedCardButtonHolder;
-        private List<HeroDataSO> _activeMembersData = new();
+        private List<HeroData> _activeMembersData = new();
         private List<AttributeSystemBehaviour> _activeMembersAttribute = new();
 
         private int _currentIndex = 0;
@@ -47,14 +47,14 @@ namespace CryptoQuest.UI.Menu.Panels.Home
         }
 
         private int _indexHolder;
-        private HeroDataSO _memberStats;
+        private HeroData _memberStats;
         private IParty _party;
 
         private void OnValidate()
         {
-            if (_partySlots.Length != PartyConstants.PARTY_SIZE)
+            if (_partySlots.Length != PartyConstants.MAX_PARTY_SIZE)
             {
-                Array.Resize(ref _partySlots, PartyConstants.PARTY_SIZE);
+                Array.Resize(ref _partySlots, PartyConstants.MAX_PARTY_SIZE);
             }
 
             _partySlots = GetComponentsInChildren<UIPartySlot>();

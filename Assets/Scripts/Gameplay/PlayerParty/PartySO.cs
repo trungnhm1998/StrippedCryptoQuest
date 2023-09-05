@@ -1,13 +1,12 @@
 using System;
 using CryptoQuest.Gameplay.Character;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace CryptoQuest.Gameplay.PlayerParty
 {
     public static class PartyConstants
     {
-        public const int PARTY_SIZE = 4;
+        public const int MAX_PARTY_SIZE = 4;
     }
 
     public interface IParty
@@ -19,16 +18,16 @@ namespace CryptoQuest.Gameplay.PlayerParty
     [CreateAssetMenu(menuName = "Gameplay/Party SO")]
     public class PartySO : ScriptableObject, IParty
     {
-        [FormerlySerializedAs("Members")] [SerializeField]
-        private CharacterSpec[] _members = new CharacterSpec[PartyConstants.PARTY_SIZE];
+        [SerializeField]
+        private CharacterSpec[] _members = new CharacterSpec[PartyConstants.MAX_PARTY_SIZE];
 
         public CharacterSpec[] Members => _members;
 
         private void OnValidate()
         {
-            if (_members.Length != PartyConstants.PARTY_SIZE)
+            if (_members.Length != PartyConstants.MAX_PARTY_SIZE)
             {
-                Array.Resize(ref _members, PartyConstants.PARTY_SIZE);
+                Array.Resize(ref _members, PartyConstants.MAX_PARTY_SIZE);
             }
         }
 
@@ -40,13 +39,13 @@ namespace CryptoQuest.Gameplay.PlayerParty
         /// <param name="destinationIndex"></param>
         public bool Sort(int sourceIndex, int destinationIndex)
         {
-            if (sourceIndex is < 0 or >= PartyConstants.PARTY_SIZE)
+            if (sourceIndex is < 0 or >= PartyConstants.MAX_PARTY_SIZE)
             {
                 Debug.LogError("PartySO::Sort::Invalid source index");
                 return false;
             }
 
-            if (destinationIndex is < 0 or >= PartyConstants.PARTY_SIZE)
+            if (destinationIndex is < 0 or >= PartyConstants.MAX_PARTY_SIZE)
             {
                 Debug.LogError("PartySO::Sort::Invalid destination index");
                 return false;

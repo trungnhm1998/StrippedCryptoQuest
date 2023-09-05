@@ -9,7 +9,21 @@ ScriptedImporter:
   assetBundleVariant: 
   script: {fileID: 11500000, guid: 1fa25d03934ea624a82bf2fcee6f0873, type: 3}
   missingFiles: []
-  errors: []
+  errors:
+  - "Custom importer 'PrefabWithBoxCollider2D' threw an exception. Message = 'Object
+    reference not set to an instance of an object', Stack:\n  at SuperTiled2Unity.Editor.GameObjectExtensions.FindMethodBySignature
+    (UnityEngine.MonoBehaviour component, System.String name, System.Type paramType)
+    [0x00015] in H:\\project\\indi-games\\unity\\CryptoQuestClient\\Assets\\Plugins\\SuperTiled2Unity\\Scripts\\Editor\\Extensions\\GameObjectExtensions.cs:203
+    \r\n  at SuperTiled2Unity.Editor.GameObjectExtensions.BroadcastProperty (UnityEngine.GameObject
+    go, SuperTiled2Unity.CustomProperty property, System.Collections.Generic.Dictionary`2[TKey,TValue]
+    objectsById) [0x0011d] in H:\\project\\indi-games\\unity\\CryptoQuestClient\\Assets\\Plugins\\SuperTiled2Unity\\Scripts\\Editor\\Extensions\\GameObjectExtensions.cs:176
+    \r\n  at CryptoQuestEditor.SuperTiled2Unity.PrefabWithBoxCollider2D.SetUpCustomProperties
+    (SuperTiled2Unity.SuperObject[] supers, System.Collections.Generic.Dictionary`2[TKey,TValue]
+    objectsById) [0x00044] in H:\\project\\indi-games\\unity\\CryptoQuestClient\\Assets\\Plugins\\CQSuperTiled2Unity\\Editor\\PrefabWithBoxCollider2D.cs:85
+    \r\n  at CryptoQuestEditor.SuperTiled2Unity.PrefabWithBoxCollider2D.TmxAssetImported
+    (SuperTiled2Unity.Editor.TmxAssetImportedArgs args) [0x0008f] in H:\\project\\indi-games\\unity\\CryptoQuestClient\\Assets\\Plugins\\CQSuperTiled2Unity\\Editor\\PrefabWithBoxCollider2D.cs:29
+    \r\n  at SuperTiled2Unity.Editor.TmxAssetImporter.RunCustomImporterType (System.Type
+    type) [0x00050] in H:\\project\\indi-games\\unity\\CryptoQuestClient\\Assets\\Plugins\\SuperTiled2Unity\\Scripts\\Editor\\Importers\\TmxAssetImporter.cs:493 "
   warnings: []
   missingSortingLayers: []
   missingLayers: []

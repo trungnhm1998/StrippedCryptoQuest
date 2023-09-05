@@ -1,6 +1,4 @@
 using System.Collections.Generic;
-using CryptoQuest.Gameplay.Battle.Core.Components.BattleUnit;
-using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Events;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
