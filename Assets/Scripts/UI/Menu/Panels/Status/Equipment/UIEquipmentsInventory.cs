@@ -102,7 +102,8 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
         private EquipmentSlot.EType _slotType;
         private EEquipmentCategory _category;
 
-        public void Show(CharacterSpec inspectingChar, EquipmentSlot.EType modifyingSlotType, EEquipmentCategory category)
+        public void Show(CharacterSpec inspectingChar, EquipmentSlot.EType modifyingSlotType,
+            EEquipmentCategory category)
         {
             _category = category;
             Reset();
@@ -242,30 +243,17 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
             var equipmentItem = Instantiate(_equipmentItemPrefab, _scrollRect.content);
             equipmentItem.Init(equipment);
 
-            ValidateEquipment(equipment, equipmentItem);
-
             equipmentItem.Inspecting += OnPreviewEquipmentStats;
             equipmentItem.EquipItem += EquipEquipment;
             _equipmentItems.Add(equipmentItem);
 
-            ValidateEquipmentByClass(equipment, equipmentItem);
-        }
-
-        private void ValidateEquipmentByClass(EquipmentInfo equipment, UIEquipmentItem equipmentItem)
-        {
-            CharacterClass[] equipmentAllowedClasses = equipment.Data.EquipmentType.AllowedClasses;
-            CharacterClass characterClass = _inspectingCharacter.Class;
-
-            if (equipmentAllowedClasses == null || equipmentAllowedClasses.Length <= 0) return;
-
-            if (Array.Exists(equipmentAllowedClasses, value => value == characterClass)) return;
-            equipmentItem.DeactivateButton();
+            ValidateEquipment(equipment, equipmentItem);
         }
 
 
         private void ValidateEquipment(EquipmentInfo equipment, UIEquipmentItem equipmentItem)
         {
-            if (equipment.ValidateCharacter(_inspectingCharacter)) return;
+            if (equipment.IsValidWith(_inspectingCharacter)) return;
 
             equipmentItem.DeactivateButton();
         }
