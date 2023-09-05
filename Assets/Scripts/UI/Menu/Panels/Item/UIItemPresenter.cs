@@ -1,11 +1,7 @@
-﻿using CryptoQuest.Gameplay;
-using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item;
+﻿using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.ActionTypes;
 using CryptoQuest.Gameplay.PlayerParty;
 using CryptoQuest.UI.Menu.MenuStates.ItemStates;
-using CryptoQuest.UI.Menu.Panels.Item.States;
-using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
-using IndiGames.GameplayAbilitySystem.EffectSystem;
 using UnityEngine;
 
 namespace CryptoQuest.UI.Menu.Panels.Item
@@ -24,7 +20,7 @@ namespace CryptoQuest.UI.Menu.Panels.Item
 
         private void Awake()
         {
-            _uiConsumableMenuPanel.StateMachine.AddState(UISingleItemState.Item, new UISingleItemState(this));
+            _uiConsumableMenuPanel.StateMachine.AddState(SingleItemState.Item, new SingleItemState(this));
             _binder.Bind(this);
 
             UIConsumableItem.Using += GetItem;
@@ -69,7 +65,7 @@ namespace CryptoQuest.UI.Menu.Panels.Item
 
         public void Execute()
         {
-            _uiConsumableMenuPanel.StateMachine.RequestStateChange(UISingleItemState.Item);
+            _uiConsumableMenuPanel.StateMachine.RequestStateChange(SingleItemState.Item);
         }
     }
 }
