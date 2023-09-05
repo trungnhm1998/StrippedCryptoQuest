@@ -12,6 +12,10 @@ namespace CryptoQuest.UI.Menu.Panels.Skill
     /// </summary>
     public class UISkillMenu : UIMenuPanel
     {
+        [Header("State Context")]
+        [SerializeField] private UICharacterSelection _charactersPanel;
+        public UICharacterSelection CharactersPanel => _charactersPanel;
+
         /// <summary>
         /// Return the specific state machine for this panel.
         /// </summary>
@@ -22,19 +26,6 @@ namespace CryptoQuest.UI.Menu.Panels.Skill
         public override StateBase<string> GetPanelState(MenuManager menuManager)
         {
             return new SkillMenuStateMachine(this);
-        }
-
-        [SerializeField] private ServiceProvider _provider;
-
-        [Header("State Context")]
-        [SerializeField] private UICharacterSelection _charactersPanel;
-        public UICharacterSelection CharactersPanel => _charactersPanel;
-
-        private IParty _party;
-
-        private void Awake()
-        {
-            _party = _provider.PartyController.Party;
         }
     }
 }

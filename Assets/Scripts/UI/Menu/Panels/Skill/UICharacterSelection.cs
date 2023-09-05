@@ -8,17 +8,6 @@ namespace CryptoQuest.UI.Menu.Panels.Skill
     {
         [SerializeField] private UISkillCharacterButton _defaultSelection;
 
-        void Start()
-        {
-        
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-        
-        }
-
         public void Init()
         {
             _defaultSelection.Select();
@@ -26,7 +15,6 @@ namespace CryptoQuest.UI.Menu.Panels.Skill
 
         public void DeInit()
         {
-            // _defaultSelection.Select();
         }
     }
 }
