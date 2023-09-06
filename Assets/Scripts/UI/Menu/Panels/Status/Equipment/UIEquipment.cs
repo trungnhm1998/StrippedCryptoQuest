@@ -11,6 +11,7 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
     {
         [SerializeField] private TooltipProvider _tooltipProvider;
         [SerializeField] private Image _icon;
+        [SerializeField] private GameObject _iconNFT;
         [SerializeField] private LocalizeStringEvent _nameLocalize;
         [SerializeField] private TMP_Text _nameText;
         [SerializeField] private RectTransform _tooltipPosition;
@@ -35,6 +36,7 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
             _nameLocalize.StringReference = def.DisplayName;
             _nameText.color = _enabledColor;
             _icon.sprite = def.EquipmentType.Icon;
+            _iconNFT.SetActive(equipment.IsNftItem);
         }
 
         public void DisableButton()
