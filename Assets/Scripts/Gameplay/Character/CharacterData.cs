@@ -1,5 +1,5 @@
-using Microsoft.CodeAnalysis;
 using UnityEngine;
+using UnityEngine.Localization;
 
 namespace CryptoQuest.Gameplay.Character
 {
@@ -10,8 +10,8 @@ namespace CryptoQuest.Gameplay.Character
     public class CharacterData : ScriptableObject
     {
         [field: SerializeField] public int Id { get; private set; }
-        [field: SerializeField] public LocalizableString Name { get; private set; }
-        [field: SerializeField] public LocalizableString Description { get; private set; }
+        [field: SerializeField] public LocalizedString Name { get; private set; }
+        [field: SerializeField] public LocalizedString Description { get; private set; }
         [field: SerializeField] public Elemental Element { get; private set; }
 
         /// <summary>
