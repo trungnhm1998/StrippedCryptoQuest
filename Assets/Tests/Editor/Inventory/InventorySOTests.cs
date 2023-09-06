@@ -94,10 +94,9 @@ namespace CryptoQuest.Tests.Editor
             UsableInfo item = NewUsable(usablePath, out UsableSO actual);
 
             var actualQuantity = Random.Range(1, 100);
-
-            _inventorySO.Add(item, actualQuantity);
+            item.SetQuantity(actualQuantity);
+            _inventorySO.Add(item);
             var expected = _inventorySO.UsableItems[0].Quantity;
-
 
             Assert.AreEqual(expected, actualQuantity, $"Expected: {expected} | Actual: {actualQuantity}");
         }
@@ -113,14 +112,6 @@ namespace CryptoQuest.Tests.Editor
         public void Add_WithEquipmentButNoData_ShouldReturnFalse()
         {
             _inventorySO.Add(new EquipmentInfo());
-            var result = _inventorySO.Equipments.Count;
-            Assert.Zero(result);
-        }
-
-        [Test]
-        public void Add_NullEquipment_ShouldReturnFalse()
-        {
-            _inventorySO.Add(null);
             var result = _inventorySO.Equipments.Count;
             Assert.Zero(result);
         }

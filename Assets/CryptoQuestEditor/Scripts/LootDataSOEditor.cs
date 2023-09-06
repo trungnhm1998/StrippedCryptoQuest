@@ -1,15 +1,15 @@
 using CryptoQuest.Gameplay.Inventory.Currency;
 using CryptoQuest.Gameplay.Inventory.Items;
-using CryptoQuest.Gameplay.Treasure;
+using CryptoQuest.Gameplay.Loot;
 using UnityEditor;
 using UnityEngine;
 
 namespace CryptoQuestEditor
 {
-    [CustomEditor(typeof(TreasureDataSO))]
-    public class TreasureDataSOEditor : Editor
+    [CustomEditor(typeof(LootTable))]
+    public class LootDataSOEditor : Editor
     {
-        private TreasureDataSO Target => target as TreasureDataSO;
+        private LootTable Target => target as LootTable;
 
         public override void OnInspectorGUI()
         {
@@ -33,17 +33,17 @@ namespace CryptoQuestEditor
 
         private void Editor_AddLoot(EquipmentInfo equipment)
         {
-            Target.LootInfos.Add(equipment);
+            Target.LootInfos.Add(new EquipmentLootInfo(equipment));
         }
 
         private void Editor_AddLoot(UsableInfo consumable)
         {
-            Target.LootInfos.Add(consumable);
+            Target.LootInfos.Add(new UsableLootInfo(consumable));
         }
 
         private void Editor_AddLoot(CurrencyInfo currency)
         {
-            Target.LootInfos.Add(currency);
+            Target.LootInfos.Add(new CurrencyLootInfo(currency));
         }
     }
 }

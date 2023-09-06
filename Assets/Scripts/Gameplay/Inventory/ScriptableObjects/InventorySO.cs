@@ -1,9 +1,12 @@
 using System.Collections.Generic;
 using CryptoQuest.Config;
+using CryptoQuest.Gameplay.Inventory.Currency;
 using CryptoQuest.Gameplay.Inventory.Items;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Container;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Type;
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 using UnityEngine;
 using ESlotType =
     CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Container.EquipmentSlot.EType;
@@ -16,12 +19,13 @@ namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects
         [SerializeField] private InventoryConfigSO _inventoryConfig;
         [field: SerializeField] public List<UsableInfo> UsableItems { get; private set; }
         [field: SerializeField] public List<EquipmentInfo> Equipments { get; private set; } = new();
+        [field: SerializeField] public WalletControllerSO WalletController { get; private set; }
 
         /// <summary>
         /// This is inventory for equipment
         /// and make management by compartments and for easy-to-work UI
         /// </summary>
-        [SerializeField] private List<InventoryContainer> _inventories;
+        [SerializeField] private List<InventoryContainer> _inventories = new();
 
         private Dictionary<EEquipmentCategory, int> _inventoriesCache = new();
 
@@ -118,7 +122,7 @@ namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects
                 _inventoriesCache[inventory.EquipmentCategory] = index;
             }
         }
-        
+
 
         #region Equipment
 
@@ -149,19 +153,20 @@ namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects
             Equipments.Remove(equipment);
         }
 
-        public bool Add(UsableInfo item, int quantity = 1)
+        public bool Add(UsableInfo item)
         {
-            if (quantity <= 0)
-            {
-                Debug.LogWarning($"Quantity is less than 0");
-                return false;
-            }
-
             if (item == null)
             {
                 Debug.LogWarning($"Item is null");
                 return false;
             }
+
+            if (item.Quantity <= 0)
+            {
+                Debug.LogWarning($"Quantity is less than 0");
+                return false;
+            }
+
 
             if (item.Data == null)
             {
@@ -169,9 +174,16 @@ namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects
                 return false;
             }
 
-            item.SetQuantity(item.Quantity + quantity);
+            foreach (var usableItem in UsableItems)
+            {
+                if (usableItem.Data == item.Data)
+                {
+                    usableItem.SetQuantity(usableItem.Quantity + item.Quantity);
+                    return true;
+                }
+            }
 
-            UsableItems.Add(item);
+            UsableItems.Add(new UsableInfo(item.Data, item.Quantity));
 
             return true;
         }
@@ -188,6 +200,23 @@ namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects
             }
 
             return true;
+        }
+
+        public void Add(CurrencyInfo currency)
+        {
+            if (currency == null || !currency.IsValid())
+            {
+                Debug.LogWarning($"Currency is null or invalid");
+                return;
+            }
+
+            WalletController.UpdateCurrencyAmount(currency.Data, currency.Amount);
+        }
+
+        public void Remove(CurrencyInfo currency)
+        {
+            if (currency.Amount < 0)
+                Add(currency);
         }
 
         /// <summary>

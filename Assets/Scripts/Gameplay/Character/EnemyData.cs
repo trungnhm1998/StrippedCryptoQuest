@@ -1,7 +1,11 @@
 ﻿using System;
+using CryptoQuest.Gameplay.Inventory.Currency;
 using CryptoQuest.Gameplay.Inventory.Items;
+using CryptoQuest.Gameplay.Loot;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 using UnityEngine;
 
 namespace CryptoQuest.Gameplay.Character
@@ -10,7 +14,7 @@ namespace CryptoQuest.Gameplay.Character
     public struct Drop
     {
         public float Chance;
-        [SerializeReference] public ItemInfo Item;
+        [SerializeReference] public LootInfo LootItem;
     }
 
     [CreateAssetMenu(menuName = "Create EnemyData", fileName = "EnemyData", order = 0)]
@@ -30,7 +34,7 @@ namespace CryptoQuest.Gameplay.Character
         {
             ArrayUtility.Add(ref _drops, new Drop()
             {
-                Item = equipment,
+                LootItem = new EquipmentLootInfo(equipment),
                 Chance = 1
             });
         }
@@ -39,7 +43,16 @@ namespace CryptoQuest.Gameplay.Character
         {
             ArrayUtility.Add(ref _drops, new Drop()
             {
-                Item = consumable,
+                LootItem = new UsableLootInfo(consumable),
+                Chance = 1
+            });
+        }
+
+        public void Editor_AddDrop(CurrencyInfo currencyInfo)
+        {
+            ArrayUtility.Add(ref _drops, new Drop()
+            {
+                LootItem = new CurrencyLootInfo(currencyInfo),
                 Chance = 1
             });
         }
