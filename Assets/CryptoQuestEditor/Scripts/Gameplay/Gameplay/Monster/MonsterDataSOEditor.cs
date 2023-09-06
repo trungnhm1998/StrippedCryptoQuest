@@ -6,7 +6,7 @@ using CryptoQuest.Gameplay.Character;
 using CryptoQuest.Gameplay.Encounter;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.ScriptableObjects;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
-using ScriptableObjectBrowser;
+using IndiGames.Tools.ScriptableObjectBrowser;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -27,8 +27,8 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Monster
 
         public MonsterDataSOEditor()
         {
-            this.createDataFolder = false;
-            this.defaultStoragePath = "Assets/ScriptableObjects/Data/Monster";
+            CreateDataFolder = false;
+            DefaultStoragePath = "Assets/ScriptableObjects/Data/Monster";
         }
 
         public override void ImportBatchData(string directory, Action<ScriptableObject> callback)
@@ -41,7 +41,7 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Monster
                 string[] splitedData = allLines[index].Split('\t');
                 string name = splitedData[4];
                 string replacedName = name.Replace(" ", "");
-                string path = this.defaultStoragePath + "/" + replacedName + ".asset";
+                string path = DefaultStoragePath + "/" + replacedName + ".asset";
                 if (!DataValidator.IsStringsNotNull(splitedData, new List<int>()
                         { 3, 5, 22, 23, 24, 25, 26, 27 }))
                     continue;

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Type;
-using ScriptableObjectBrowser;
+using IndiGames.Tools.ScriptableObjectBrowser;
 using UnityEditor;
 using UnityEngine;
 
@@ -13,9 +13,9 @@ namespace CryptoQuestEditor.Gameplay.Inventory
 
         public EquipmentTypeSOEditor()
         {
-            this.createDataFolder = false;
+            CreateDataFolder = false;
 
-            this.defaultStoragePath = "Assets/ScriptableObjects/Data/Inventory/ItemTypes/Equipments";
+            DefaultStoragePath = "Assets/ScriptableObjects/Data/Inventory/ItemTypes/Equipments";
         }
 
         public override void ImportBatchData(string directory, Action<ScriptableObject> callback)
@@ -29,7 +29,7 @@ namespace CryptoQuestEditor.Gameplay.Inventory
                 var id = splitedData[0];
                 var weaponType = splitedData[1];
                 var name = splitedData[3].Replace(" ", "_");
-                var path = this.defaultStoragePath + "/" + name + ".asset";
+                var path = DefaultStoragePath + "/" + name + ".asset";
 
                 if (weaponType == "1") continue;
 

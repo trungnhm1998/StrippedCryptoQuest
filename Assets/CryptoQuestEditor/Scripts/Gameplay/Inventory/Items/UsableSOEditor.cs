@@ -2,7 +2,7 @@ using System;
 using System.IO;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Type;
-using ScriptableObjectBrowser;
+using IndiGames.Tools.ScriptableObjectBrowser;
 using UnityEditor;
 using UnityEngine;
 
@@ -15,9 +15,9 @@ namespace CryptoQuestEditor.Gameplay.Inventory
 
         public UsableSOEditor()
         {
-            this.createDataFolder = false;
+            CreateDataFolder = false;
 
-            this.defaultStoragePath = "Assets/ScriptableObjects/Data/Inventory/Items/Usables";
+            DefaultStoragePath = "Assets/ScriptableObjects/Data/Inventory/Items/Usables";
         }
 
         /// <summary>
@@ -36,7 +36,7 @@ namespace CryptoQuestEditor.Gameplay.Inventory
                 string id = splitedData[0];
                 string name = DEFAULT_NAME + id;
                 string type = splitedData[5];
-                string path = this.defaultStoragePath + "/" + name + ".asset";
+                string path = DefaultStoragePath + "/" + name + ".asset";
 
                 UsableSO instance = null;
 

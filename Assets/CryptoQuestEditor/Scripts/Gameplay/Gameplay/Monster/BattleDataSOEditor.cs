@@ -1,13 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using CryptoQuest.Gameplay.BaseGameplayData;
-using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data;
-using CryptoQuest.Gameplay.Character;
 using CryptoQuest.Gameplay.Encounter;
-using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
-using ScriptableObjectBrowser;
+using IndiGames.Tools.ScriptableObjectBrowser;
 using UnityEditor;
 using UnityEngine;
 
@@ -20,8 +15,8 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Monster
 
         public BattleDataSOEditor()
         {
-            this.createDataFolder = false;
-            this.defaultStoragePath = "Assets/ScriptableObjects/Data/MonsterParty";
+            CreateDataFolder = false;
+            DefaultStoragePath = "Assets/ScriptableObjects/Data/MonsterParty";
         }
 
         public override void ImportBatchData(string directory, Action<ScriptableObject> callback)
@@ -33,7 +28,7 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Monster
                 // get data form tsv file
                 string[] splitedData = allLines[index].Split('\t');
                 string name = DEFAULT_NAME + splitedData[0];
-                string path = this.defaultStoragePath + "/" + name + ".asset";
+                string path = DefaultStoragePath + "/" + name + ".asset";
                 MonsterPartyDataModel dataModel = new MonsterPartyDataModel()
                 {
                     MonserPartyId = int.Parse(splitedData[0]),

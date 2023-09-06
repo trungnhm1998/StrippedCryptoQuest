@@ -2,11 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using CryptoQuest.Gameplay.Battle;
 using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Calculation;
 using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data;
 using CryptoQuest.Gameplay.Encounter;
-using ScriptableObjectBrowser;
+using IndiGames.Tools.ScriptableObjectBrowser;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -21,8 +20,8 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Monster
 
         public BattlefieldDataSOEditor()
         {
-            this.createDataFolder = false;
-            this.defaultStoragePath = "Assets/ScriptableObjects/Data/BattleFieldData";
+            CreateDataFolder = false;
+            DefaultStoragePath = "Assets/ScriptableObjects/Data/BattleFieldData";
         }
 
         public override void ImportBatchData(string directory, Action<ScriptableObject> callback)
@@ -34,7 +33,7 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Monster
                 // get data form tsv file
                 string[] splitedData = allLines[index].Split('\t');
                 string name = DEFAULT_NAME + splitedData[0];
-                string path = this.defaultStoragePath + "/" + name + ".asset";
+                string path = DefaultStoragePath + "/" + name + ".asset";
 
                 List<BattleEncounterSetupDataModel> monsterGroup = new();
                 bool isAbleToSetupEncounterData = CanSetUpBattleEncounterModel(monsterGroup, splitedData);
