@@ -17,6 +17,8 @@ namespace CryptoQuest.UI.Menu.Panels.Home
         public void SetAvatar(Sprite avatar);
         public void SetElement(Sprite elementIcon);
         public void SetLevel(int lvl);
+        public void SetExp(float exp);
+        public void SetMaxExp(int maxExp);
     }
 
     public interface ICharacterStats
@@ -25,8 +27,6 @@ namespace CryptoQuest.UI.Menu.Panels.Home
         public void SetMaxHp(float maxHp);
         public void SetCurrentMp(float currentMp);
         public void SetMaxMp(float maxMp);
-        public void SetExp(float exp);
-        public void SetMaxExp(int maxExp);
     }
 
     public class UICharacterInfo : MonoBehaviour, ICharacterInfo, ICharacterStats

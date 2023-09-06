@@ -11,6 +11,7 @@ using UnityEngine;
 using UnityEngine.Localization;
 using UnityEngine.Localization.Components;
 using UnityEngine.UI;
+using CryptoQuest.UI.Character;
 
 namespace CryptoQuest.UI.Menu.Panels.Status
 {
@@ -27,6 +28,7 @@ namespace CryptoQuest.UI.Menu.Panels.Status
         [SerializeField] private LocalizeStringEvent _localizedClassName;
         [SerializeField] private TMP_Text _name;
         [SerializeField] private List<UIElementAttribute> _elementAttributes;
+        [SerializeField] private UIAttributeBar _expBar;
 
         private string _lvlTxtFormat = string.Empty; // could made this into static
         private CharacterSpec _inspectingCharacter;
@@ -132,6 +134,16 @@ namespace CryptoQuest.UI.Menu.Panels.Status
         public void SetElement(Sprite elementIcon)
         {
             _characterElement.sprite = elementIcon;
+        }
+        
+        public void SetExp(float exp)
+        {
+            _expBar.SetValue(exp);
+        }
+
+        public void SetMaxExp(int maxExp)
+        {
+            _expBar.SetMaxValue(maxExp);
         }
 
         public void SetLevel(int lvl)

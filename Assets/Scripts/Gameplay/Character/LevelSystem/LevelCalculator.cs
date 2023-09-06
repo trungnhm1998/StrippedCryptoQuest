@@ -5,18 +5,20 @@ namespace CryptoQuest.Gameplay.Character.LevelSystem
     public interface ILevelCalculator
     {
         int[] RequiredExps { get; }
+        int[] AccumulatedExps { get; }
         int CalculateCurrentLevel(float currentExp);
-
     }
 
     public class LevelCalculator : ILevelCalculator
     {
         private int _maxLevel;
+        public int[] AccumulatedExps { get; set; }
         public int[] RequiredExps { get; set; }
 
         public LevelCalculator(int maxLevel)
         {
             _maxLevel = maxLevel;
+            CalculateAccumulatedExps();
             InitRequiredExps();
         }
 
@@ -25,32 +27,29 @@ namespace CryptoQuest.Gameplay.Character.LevelSystem
             RequiredExps = new int[_maxLevel];
             RequiredExps[0] = 0;
 
-            var accumulatedExps = CalculateAccumulatedExps();
-
             for (int i = 1; i < _maxLevel; i++)
             {
-                RequiredExps[i] = accumulatedExps[i] - accumulatedExps[i - 1];
+                RequiredExps[i] = AccumulatedExps[i] - AccumulatedExps[i - 1];
             }
         }
 
-        private int[] CalculateAccumulatedExps()
+        private void CalculateAccumulatedExps()
         {
-            var accumulatedExps = new int[_maxLevel];
-            accumulatedExps[0] = 0;
+            AccumulatedExps = new int[_maxLevel];
+            AccumulatedExps[0] = 0;
             
             var calculator = new AccumulatedExpCalculator();
             for (int i = 1; i < _maxLevel; i++)
             {
-                accumulatedExps[i] = (int) calculator.CalculateAccumulatedExp(i + 1);
+                AccumulatedExps[i] = (int) calculator.CalculateAccumulatedExp(i + 1);
             }
-            return accumulatedExps;
         }
 
         public int CalculateCurrentLevel(float currentExp)
         {
-            for (int i = 0; i < RequiredExps.Length; i++)
+            for (int i = 0; i < AccumulatedExps.Length; i++)
             {
-                if (currentExp >= RequiredExps[i]) continue;
+                if (currentExp >= AccumulatedExps[i]) continue;
                 return i;
             }
             // Return max level if currentExp excess

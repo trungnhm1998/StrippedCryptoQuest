@@ -32,7 +32,7 @@ namespace CryptoQuest.UI.Character
         {
             _bar.fillAmount = 1;
             _currentValue.text = $"{(int)value}";
-            _bar.fillAmount = _maxValueFloat == 0 ? 0: value / _maxValueFloat;
+            _bar.fillAmount = _maxValueFloat == 0 ? 0 : value / _maxValueFloat;
         }
     }
 }

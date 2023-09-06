@@ -24,14 +24,13 @@ namespace CryptoQuest.Gameplay.Character
         [field: SerializeField] public float Experience { get; set; }
 
         // I use static here so we only have to create level calculator once
-        // Also call .Level first to make sure that calculator being created
-        public static ILevelCalculator LevelCalculator { get; private set; }
+        private static ILevelCalculator _levelCalculator;
         public int Level 
         {
             get 
             {
-                LevelCalculator ??= new LevelCalculator(StatsDef.MaxLevel);
-                return LevelCalculator.CalculateCurrentLevel(Experience);
+                _levelCalculator ??= new LevelCalculator(StatsDef.MaxLevel);
+                return _levelCalculator.CalculateCurrentLevel(Experience);
             }
         }
 
@@ -81,6 +80,19 @@ namespace CryptoQuest.Gameplay.Character
             uiCharacterInfo.SetClass(Class.Name);
             uiCharacterInfo.SetAvatar(_avatar);
             BackgroundInfo.SetupUI(uiCharacterInfo);
+            SetupExpUI(uiCharacterInfo);
+        }
+
+        private void SetupExpUI(ICharacterInfo uiCharacterInfo)
+        {
+            var cachedLevel = Level;
+            var isMaxedLevel = cachedLevel == StatsDef.MaxLevel;
+            var nextLevelRequireExp = _levelCalculator.RequiredExps[isMaxedLevel ? cachedLevel - 1 : cachedLevel];
+            uiCharacterInfo.SetMaxExp(nextLevelRequireExp);
+            
+            var currentLevelAccumulateExp = _levelCalculator.AccumulatedExps[cachedLevel - 1];
+            var currentExp = isMaxedLevel ? nextLevelRequireExp : Experience - currentLevelAccumulateExp;
+            uiCharacterInfo.SetExp(currentExp);
         }
     }
 }

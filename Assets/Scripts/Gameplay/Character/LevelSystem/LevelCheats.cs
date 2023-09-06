@@ -34,17 +34,16 @@ namespace CryptoQuest.Gameplay.Character.LevelSystem
 
         public void AddExpToCharacter(CommandArg[] args)
         {
-            var party = _provider.PartyController.Party;
+            var partyController = _provider.PartyController;
             var memberIndex = args[0].Int;
             var expToAdd = args[1].Int;
 
-            if (0 < memberIndex || memberIndex >= party.Members.Length)
+            if (!partyController.TryGetMemberAtIndex(memberIndex, out var character))
             {
                 Debug.LogWarning($"Member index not valid");
                 return;
             }
-            var member = party.Members[memberIndex];
-            LevelController.AddExpRequested?.Invoke(member, expToAdd);
+            LevelController.AddExpRequested?.Invoke(character.Spec, expToAdd);
         }
     }
 }
