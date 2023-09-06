@@ -1,13 +1,13 @@
 ﻿using UnityEngine;
 
-namespace CryptoQuest.Gameplay.Inventory.Items
+namespace CryptoQuest.Gameplay.Helper
 {
-    public interface ILevelCalculator
+    public interface ILevelAttributeCalculator
     {
         float GetValueAtLevel(int level, CappedAttributeDef attributeDef, int maxLevel);
     }
 
-    public class DefaultAttributeFromLevelCalculator : ILevelCalculator
+    public class DefaultLevelAttributeCalculator : ILevelAttributeCalculator
     {
         public float GetValueAtLevel(int level, CappedAttributeDef attributeDef, int maxLevel)
         {

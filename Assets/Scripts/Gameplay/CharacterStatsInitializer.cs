@@ -1,5 +1,6 @@
 ﻿using CryptoQuest.Gameplay.Character;
-using CryptoQuest.Gameplay.Inventory.Items;
+using CryptoQuest.Gameplay.Helper;
+using IndiGames.GameplayAbilitySystem.AttributeSystem.Components;
 using UnityEngine;
 
 namespace CryptoQuest.Gameplay
@@ -7,7 +8,7 @@ namespace CryptoQuest.Gameplay
     public class CharacterStatsInitializer : MonoBehaviour, ICharacterComponent
     {
         private CharacterBehaviourBase _characterBehaviour;
-        private readonly ILevelCalculator _levelCalculator = new DefaultAttributeFromLevelCalculator();
+        private readonly ILevelAttributeCalculator _levelAttributeCalculator = new DefaultLevelAttributeCalculator();
 
         public void Init(CharacterBehaviourBase characterBehaviourBase)
         {
@@ -42,7 +43,7 @@ namespace CryptoQuest.Gameplay
                 var attributeDef = attributeDefs[i];
                 _characterBehaviour.AttributeSystem.AddAttribute(attributeDef.Attribute);
                 var baseValueAtLevel =
-                    _levelCalculator.GetValueAtLevel(charLvl, attributeDef, characterAllowedMaxLvl);
+                    _levelAttributeCalculator.GetValueAtLevel(charLvl, attributeDef, characterAllowedMaxLvl);
                 _characterBehaviour.AttributeSystem.SetAttributeBaseValue(attributeDef.Attribute, baseValueAtLevel);
             }
 

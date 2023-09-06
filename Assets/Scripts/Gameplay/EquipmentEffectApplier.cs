@@ -5,6 +5,7 @@ using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Container;
 using IndiGames.GameplayAbilitySystem.EffectSystem;
 using IndiGames.GameplayAbilitySystem.Implementation.BasicEffect;
 using UnityEngine;
+using CryptoQuest.Gameplay.Helper;
 
 namespace CryptoQuest.Gameplay
 {
@@ -13,7 +14,7 @@ namespace CryptoQuest.Gameplay
         [SerializeField] private CharacterEquipments _equipments;
         [SerializeField] private InfiniteEffectScriptableObject _equipmentEffectBase;
 
-        private readonly ILevelCalculator _equipmentAttributeCalculator = new DefaultAttributeFromLevelCalculator();
+        private readonly ILevelAttributeCalculator _equipmentAttributeCalculator = new DefaultLevelAttributeCalculator();
         private CharacterBehaviourBase _character;
 
 

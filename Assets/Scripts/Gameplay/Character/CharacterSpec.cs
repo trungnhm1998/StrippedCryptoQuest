@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using CryptoQuest.Gameplay.Character.LevelSystem;
 using CryptoQuest.Gameplay.Inventory;
 using CryptoQuest.Gameplay.Skill;
 using CryptoQuest.UI.Menu.Panels.Home;
 using IndiGames.GameplayAbilitySystem.AbilitySystem;
+using IndiGames.Core.EditorTools.Attributes.ReadOnlyAttribute;
 using UnityEngine;
+using CryptoQuest.Gameplay.Character.LevelSystem;
 
 namespace CryptoQuest.Gameplay.Character
 {
@@ -22,17 +23,8 @@ namespace CryptoQuest.Gameplay.Character
         [field: SerializeField] public StatsDef StatsDef { get; set; }
         [field: SerializeField] public CharacterEquipments Equipments { get; private set; }
         [field: SerializeField] public float Experience { get; set; }
+        [field: SerializeField, ReadOnly] public int Level { get; set; }
 
-        // I use static here so we only have to create level calculator once
-        private static ILevelCalculator _levelCalculator;
-        public int Level 
-        {
-            get 
-            {
-                _levelCalculator ??= new LevelCalculator(StatsDef.MaxLevel);
-                return _levelCalculator.CalculateCurrentLevel(Experience);
-            }
-        }
 
         // TODO: #1136 Remove serialize and load runtime using Class, Element info
         [field: SerializeField] private CharacterSkillSet _skillSet;
@@ -85,12 +77,15 @@ namespace CryptoQuest.Gameplay.Character
 
         private void SetupExpUI(ICharacterInfo uiCharacterInfo)
         {
+            var levelCalculator = CharacterLevelComponent.LevelCalculator;
+            if (levelCalculator == null) return;
+
             var cachedLevel = Level;
             var isMaxedLevel = cachedLevel == StatsDef.MaxLevel;
-            var nextLevelRequireExp = _levelCalculator.RequiredExps[isMaxedLevel ? cachedLevel - 1 : cachedLevel];
+            var nextLevelRequireExp = levelCalculator.RequiredExps[isMaxedLevel ? cachedLevel - 1 : cachedLevel];
             uiCharacterInfo.SetMaxExp(nextLevelRequireExp);
             
-            var currentLevelAccumulateExp = _levelCalculator.AccumulatedExps[cachedLevel - 1];
+            var currentLevelAccumulateExp = levelCalculator.AccumulatedExps[cachedLevel - 1];
             var currentExp = isMaxedLevel ? nextLevelRequireExp : Experience - currentLevelAccumulateExp;
             uiCharacterInfo.SetExp(currentExp);
         }

@@ -18,6 +18,7 @@ namespace CryptoQuest.Gameplay.Character.LevelSystem
         public LevelCalculator(int maxLevel)
         {
             _maxLevel = maxLevel;
+            if (_maxLevel <= 0) return;
             CalculateAccumulatedExps();
             InitRequiredExps();
         }

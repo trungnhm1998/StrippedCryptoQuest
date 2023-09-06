@@ -43,7 +43,8 @@ namespace CryptoQuest.Gameplay.Character.LevelSystem
                 Debug.LogWarning($"Member index not valid");
                 return;
             }
-            LevelController.AddExpRequested?.Invoke(character.Spec, expToAdd);
+            if (!character.TryGetComponent<CharacterLevelComponent>(out var levelComponent)) return;
+            levelComponent.AddExp(expToAdd);
         }
     }
 }
