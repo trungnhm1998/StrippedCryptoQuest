@@ -21,6 +21,7 @@ namespace IndiGames.GameplayAbilitySystem.AttributeSystem.Components
         public event PostAttributeChangeDelegate PostAttributeChange;
         [SerializeField] private bool _initOnAwake = true;
         [SerializeField] private bool _updateOnLateUpdate = false;
+
         /// <summary>
         /// Use this to clamp or doing any logic pre and post attribute change
         /// </summary>
@@ -185,6 +186,8 @@ namespace IndiGames.GameplayAbilitySystem.AttributeSystem.Components
                 var evaluatedAttribute = oldAttributeValue
                     .Attribute.CalculateCurrentAttributeValue(oldAttributeValue, _attributeValues);
 
+                if (evaluatedAttribute.CurrentValue.NearlyEqual(oldAttributeValue.CurrentValue)) continue;
+                
                 foreach (var preAttributeChangeChannel in _attributeEvents)
                 {
                     preAttributeChangeChannel.PreAttributeChange(this, ref evaluatedAttribute);

@@ -1,3 +1,4 @@
+using CryptoQuest.Gameplay.Battle.Core;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.ActionTypes;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Type;
 using UnityEngine;
@@ -9,12 +10,15 @@ namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item
     {
         [field: Header("Usable Item")]
         [field: SerializeField] public UsableTypeSO UsableTypeSO { get; private set; }
+
         [field: SerializeField] public ActionDefinitionBase ActionDefinition { get; private set; }
 
         [field: SerializeField] public SimpleAbilitySO Ability { get; private set; }
-        
+
         public ActionSpecificationBase Action => ActionDefinition.Create();
 
+        [field: Header("Item Effect Info"), SerializeField]
+        public SkillInfo ItemAbilityInfo { get; private set; }
 
 #if UNITY_EDITOR
         /// <summary>

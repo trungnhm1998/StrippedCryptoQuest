@@ -10,22 +10,23 @@ namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Calculation
         fileName = "Item Calculation")]
     public class ItemCalculation : EffectExecutionCalculationBase
     {
+        private const float PERCENTAGE = 100f;
+
         public override void Execute(ref CustomExecutionParameters executionParams,
             ref List<EffectAttributeModifier> outModifiers)
         {
             CryptoQuestGameplayEffectSpec effectSpec = (CryptoQuestGameplayEffectSpec)executionParams.EffectSpec;
             SkillParameters skillParameters = effectSpec.SkillParam;
-
             CustomExecutionAttributeCaptureDef targetedAttribute = skillParameters.targetAttribute;
-
             AttributeScriptableObject attribute = targetedAttribute.Attribute;
-            float value = skillParameters.BasePower;
-
             EAttributeModifierType modifierType = EAttributeModifierType.Add;
+
+            float value = skillParameters.BasePower;
 
             if (!skillParameters.IsFixed)
             {
                 modifierType = EAttributeModifierType.Multiply;
+                value /= PERCENTAGE;
             }
 
             EffectAttributeModifier modifier = new EffectAttributeModifier()
@@ -34,6 +35,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Calculation
                 ModifierType = modifierType,
                 Value = value,
             };
+
             outModifiers.Add(modifier);
         }
     }

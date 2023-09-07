@@ -1,8 +1,9 @@
 using System;
 using System.Collections.Generic;
 using CryptoQuest.Gameplay.Inventory.Items;
-using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item;
+using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Type;
+using CryptoQuest.System;
 using PolyAndCode.UI;
 using UnityEngine;
 
@@ -15,10 +16,11 @@ namespace CryptoQuest.UI.Menu.Panels.Item
         [SerializeField] private RecyclableScrollRect _recyclableScrollRect;
         [SerializeField] private GameObject _content;
         [field: SerializeField] public UsableTypeSO Type { get; private set; }
-
-        private IConsumablesProvider _consumablesProvider;
+        [field: SerializeField] public ServiceProvider ServiceProvider { get; private set; }
+        
         private readonly List<UIConsumableItem> _uiConsumables = new();
         private UIConsumableItem _currentInspectingItem;
+        private InventorySO _inventory;
 
         private bool _interactable;
 
@@ -37,7 +39,7 @@ namespace CryptoQuest.UI.Menu.Panels.Item
 
         private void Awake()
         {
-            _consumablesProvider = GetComponent<IConsumablesProvider>(); // TODO: Find a better way to inject
+            _inventory = ServiceProvider.Inventory;
             _recyclableScrollRect.Initialize(this);
         }
 
@@ -45,7 +47,7 @@ namespace CryptoQuest.UI.Menu.Panels.Item
 
         public int GetItemCount()
         {
-            return _consumablesProvider.Items.Count;
+            return _inventory.UsableItems.Count;
         }
 
 
@@ -59,7 +61,7 @@ namespace CryptoQuest.UI.Menu.Panels.Item
             }
 
             _uiConsumables.Add(item);
-            item.Init(_consumablesProvider.Items[index]);
+            item.Init(_inventory.UsableItems[index]);
             item.Inspecting += OnInspecting;
             if (_currentInspectingItem != null)
             {
