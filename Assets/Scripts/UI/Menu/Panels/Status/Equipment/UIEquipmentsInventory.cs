@@ -205,6 +205,7 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
             if (equipmentItem == null) return;
             EventSystem.current.SetSelectedGameObject(null);
             Debug.Log($"RemoveEquipmentFromInventory {equipmentItem} idx: {index}");
+            _serviceProvider.InventoryController.Remove(equipment);
             _equipmentItems.RemoveAt(index);
             DestroyEquipmentRow(equipmentItem);
             EventSystem.current.SetSelectedGameObject(_unEquipButton.gameObject);
@@ -221,6 +222,7 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
             if (equipment.IsValid() && equipment != _currentlyEquippingItem.Equipment) return;
             _currentlyEquippingItem.gameObject.SetActive(false);
             _currentlyEquippingItem.Reset();
+            _serviceProvider.InventoryController.Add(equipment);
             InstantiateNewEquipmentUI(equipment);
         }
 
