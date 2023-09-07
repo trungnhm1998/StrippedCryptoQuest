@@ -10,8 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 945723615823538876}
   - component: {fileID: 1728740042780277220}
+  - component: {fileID: -7092969450105637204}
   m_Layer: 0
-  m_Name: LootController
+  m_Name: RewardSystem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -44,6 +45,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2054073df19fd5441a99bb4c8625b60e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _inventorySo: {fileID: 11400000, guid: 7730f28a7d8180e4bb6cacc9b7dc2d7e, type: 2}
   _lootDatabase: {fileID: 11400000, guid: 974e33f7c8e29bd439bd2d9457eb2440, type: 2}
-  _requestGetLootEvent: {fileID: 11400000, guid: b0f0fc4f0b0f06644b76e5c51461750e, type: 2}
+  _saveData:
+    OpenedChests: []
+--- !u!114 &-7092969450105637204
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3903980966337446675}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cdf555673a3a4d83aa2a45e0801ff949, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _serviceProvider: {fileID: 11400000, guid: 8c870727215fbcf48976e7263a1a2485, type: 2}

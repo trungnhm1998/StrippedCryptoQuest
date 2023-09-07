@@ -12,6 +12,7 @@ namespace CryptoQuest.Gameplay.Encounter
         /// For quest, event or simply force by cheat
         /// </summary>
         [SerializeField] private StringEventChannelSO _triggerBattleEncounterEvent;
+
         [SerializeField] private float _minEncounterSteps = 3f;
         [SerializeField] private float _maxEncounterSteps = 5f; // allow half a step?
         [SerializeField] private EncounterDatabase _database;
@@ -42,18 +43,21 @@ namespace CryptoQuest.Gameplay.Encounter
 
         private void RegisterStepHandler(HeroBehaviour hero, string encounterId)
         {
-            hero.Step += OnUpdateStepBeforeTriggerBattle;
             if (_database.TryGetEncounterData(encounterId, out _currentEncounterData))
             {
                 _maxEncounterSteps = _currentEncounterData.EncounterRate;
                 GenerateRandomStepTilNextTrigger();
+                hero.Step += OnUpdateStepBeforeTriggerBattle;
+                return;
             }
-            else
+
+            var handle = _database.PreloadEncounter(encounterId);
+            if (handle.IsValid() == false) return;
+            handle.Completed += asyncHandle =>
             {
-                var handle = _database.PreloadEncounter(encounterId);
-                if (handle.IsValid() == false) return;
-                handle.Completed += SetupEncounterConfigAfterLoaded;
-            }
+                SetupEncounterConfigAfterLoaded(asyncHandle);
+                hero.Step += OnUpdateStepBeforeTriggerBattle;
+            };
         }
 
         private void SetupEncounterConfigAfterLoaded(AsyncOperationHandle<EncounterData> handle)
@@ -77,6 +81,7 @@ namespace CryptoQuest.Gameplay.Encounter
                 Debug.Log("EncounterManager::TriggerBattle - already in battle");
                 return;
             }
+
             var battle = encounter.GetRandomBattlefield();
             Debug.Log($"Trigger battle with encounter {encounter.name} - battle {battle.name}");
             BattleLoader.RequestLoadBattle(battle);

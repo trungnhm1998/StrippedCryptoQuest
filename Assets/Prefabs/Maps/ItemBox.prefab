@@ -10,13 +10,12 @@ GameObject:
   m_Component:
   - component: {fileID: 8760706386356096684}
   - component: {fileID: 7448748245259074581}
-  - component: {fileID: 1493501154217320657}
   - component: {fileID: 3766418695427879641}
   - component: {fileID: 9117972456579424186}
   m_Layer: 0
   m_Name: ItemBox
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 1206586993520771344, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -33,7 +32,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &7448748245259074581
 SpriteRenderer:
@@ -73,8 +72,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 607842835
-  m_SortingLayer: 2
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: -1233761358, guid: 9ead6fe0d324e664b91809cc32030a99, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -87,51 +86,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!61 &1493501154217320657
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 445979765437780271}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.84, y: 0.93}
-    newSize: {x: 1, y: 1}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1}
-  m_EdgeRadius: 0
 --- !u!114 &3766418695427879641
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -144,9 +98,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f6a2699293d24446bd88f864204a048, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _chestEventChannel: {fileID: 11400000, guid: 45d20837d5147a8469263f39595bd88c, type: 2}
-  _chestData: {fileID: 11400000, guid: 98f48bcf9b4b77746938c34b0c18a513, type: 2}
+  _guid: 46c6caa4-fed9-4dc7-942e-92fe3e0dbd2e
+  _sceneLoadedEvent: {fileID: 11400000, guid: b8b96e43d21a7bf4c96df4cb83c2b764, type: 2}
+  _chestEvent: {fileID: 0}
   _animator: {fileID: 9117972456579424186}
+  _isOpened: 0
+  _treasureId: -1
 --- !u!95 &9117972456579424186
 Animator:
   serializedVersion: 5
