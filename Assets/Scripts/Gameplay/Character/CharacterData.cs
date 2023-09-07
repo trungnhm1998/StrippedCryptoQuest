@@ -1,19 +1,18 @@
+using System;
 using UnityEngine;
 using UnityEngine.Localization;
+using CryptoQuest.Gameplay.BaseGameplayData;
+using UnityEngine.Analytics;
 
 namespace CryptoQuest.Gameplay.Character
 {
     /// <summary>
-    /// structure for [monster](https://docs.google.com/spreadsheets/d/1WkX1DyDOGf6EiAppo8Buz2sUkSKV5OnDENEvmHzKXNQ/edit#gid=1024080951)
+    /// Structure for general character, this will only have persist data of character
+    /// <para>Example: <see cref="EnemyData"/></para> 
     /// </summary>
     [CreateAssetMenu(fileName = "CharacterDataSO", menuName = "Gameplay/Character/Character Data")]
-    public class CharacterData : ScriptableObject
+    public class CharacterData : GenericData
     {
-        [field: SerializeField] public int Id { get; private set; }
-        [field: SerializeField] public LocalizedString Name { get; private set; }
-        [field: SerializeField] public LocalizedString Description { get; private set; }
-        [field: SerializeField] public Elemental Element { get; private set; }
-
         /// <summary>
         /// Factory method
         /// Need to create character info when there're

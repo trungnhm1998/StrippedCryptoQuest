@@ -14,7 +14,7 @@ namespace CryptoQuest.Gameplay.Character
     /// Use this to save game
     /// </summary>
     [Serializable]
-    public class CharacterSpec
+    public class CharacterSpec : ICharacter
     {
         [field: SerializeField] public CharacterBackgroundInfo BackgroundInfo { get; private set; }
         [field: SerializeField] public CharacterClass Class { get; private set; }
@@ -29,6 +29,8 @@ namespace CryptoQuest.Gameplay.Character
 
         private CharacterBehaviourBase _characterComponent;
         public CharacterBehaviourBase CharacterComponent => _characterComponent;
+
+        public CharacterData Data => throw new NotImplementedException();
 
         public bool IsValid()
         {

@@ -29,18 +29,13 @@ namespace CryptoQuest.Gameplay.Battle
         private IEnumerator LoadEnemiesData()
         {
             _loadedEnemyData.Clear();
-            var enemyParty = _bus.CurrentEnemyParty;
+            var enemyParty = _bus.CurrentBattlefield;
             for (var index = 0; index < enemyParty.EnemyIds.Length; index++)
             {
                 var enemyId = enemyParty.EnemyIds[index];
-                yield return _enemyDatabase.AsyncGetEnemyById(enemyId, EnemyLoaded);
+                yield return _enemyDatabase.LoadDataById(enemyId);
+                _loadedEnemyData.Add(_enemyDatabase.GetDataById(enemyId)); // TODO: UNLOAD ENEMY DATA
             }
-        }
-
-        private void EnemyLoaded(EnemyData enemyData)
-        {
-            Debug.Log($"BattleManager::EnemyLoaded() - {enemyData.name}");
-            _loadedEnemyData.Add(enemyData); // TODO: UNLOAD ENEMY DATA
         }
     }
 }

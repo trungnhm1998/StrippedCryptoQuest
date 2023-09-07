@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace CryptoQuestEditor.Gameplay.Gameplay.Monster
 {
-    public class BattleDataSOEditor : ScriptableObjectBrowserEditor<EnemyParty>
+    public class BattleDataSOEditor : ScriptableObjectBrowserEditor<Battlefield>
     {
         private const string DEFAULT_NAME = "MonsterParty_";
         private const int ROW_OFFSET = 2;
@@ -40,11 +40,11 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Monster
                     continue;
                 }
 
-                EnemyParty instance = null;
-                instance = (EnemyParty)AssetDatabase.LoadAssetAtPath(path, typeof(EnemyParty));
+                Battlefield instance = null;
+                instance = (Battlefield)AssetDatabase.LoadAssetAtPath(path, typeof(Battlefield));
                 if (instance == null || !AssetDatabase.Contains(instance))
                 {
-                    instance = ScriptableObject.CreateInstance<EnemyParty>();
+                    instance = ScriptableObject.CreateInstance<Battlefield>();
                 }
 
                 List<string> groups = new()

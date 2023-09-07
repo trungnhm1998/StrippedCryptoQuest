@@ -1,8 +1,9 @@
-using CryptoQuest.Character.MonoBehaviours;
+using System;
+using System.Collections;
 using CryptoQuest.Events;
 using CryptoQuest.Gameplay.Battle;
 using UnityEngine;
-using UnityEngine.ResourceManagement.AsyncOperations;
+using Random = UnityEngine.Random;
 
 namespace CryptoQuest.Gameplay.Encounter
 {
@@ -13,6 +14,7 @@ namespace CryptoQuest.Gameplay.Encounter
         /// </summary>
         [SerializeField] private StringEventChannelSO _triggerBattleEncounterEvent;
 
+        [SerializeField] private GameplayBus _gameplayBus;
         [SerializeField] private float _minEncounterSteps = 3f;
         [SerializeField] private float _maxEncounterSteps = 5f; // allow half a step?
         [SerializeField] private EncounterDatabase _database;
@@ -35,43 +37,34 @@ namespace CryptoQuest.Gameplay.Encounter
             EncounterZone.ExitEncounterZone -= RemoveStepHandler;
         }
 
-        private void RemoveStepHandler(HeroBehaviour hero, string encounterId)
+        private void RemoveStepHandler(string encounterId)
         {
-            hero.Step -= OnUpdateStepBeforeTriggerBattle;
+            if (_currentEncounterData == null) return;
+            _gameplayBus.Hero.Step -= DecrementStepCountBeforeTriggerBattle;
             _currentEncounterData = null; // either null or new EncounterData()
         }
 
-        private void RegisterStepHandler(HeroBehaviour hero, string encounterId)
-        {
-            if (_database.TryGetEncounterData(encounterId, out _currentEncounterData))
-            {
-                _maxEncounterSteps = _currentEncounterData.EncounterRate;
-                GenerateRandomStepTilNextTrigger();
-                hero.Step += OnUpdateStepBeforeTriggerBattle;
-                return;
-            }
+        private void RegisterStepHandler(string encounterId)
+            => StartCoroutine(GetEncounter(encounterId, SetupStepsCounter));
 
-            var handle = _database.PreloadEncounter(encounterId);
-            if (handle.IsValid() == false) return;
-            handle.Completed += asyncHandle =>
-            {
-                SetupEncounterConfigAfterLoaded(asyncHandle);
-                hero.Step += OnUpdateStepBeforeTriggerBattle;
-            };
+        void SetupStepsCounter(EncounterData encounter)
+        {
+            _currentEncounterData = encounter;
+            _maxEncounterSteps = _currentEncounterData.EncounterRate;
+            GenerateRandomStepTilNextTrigger();
+            _gameplayBus.Hero.Step += DecrementStepCountBeforeTriggerBattle;
         }
 
-        private void SetupEncounterConfigAfterLoaded(AsyncOperationHandle<EncounterData> handle)
+        private void LoadEncounterZone(string encounterId)
+            => StartCoroutine(_database.LoadDataById(encounterId));
+
+        private float _stepLeftBeforeTriggerBattle;
+
+        private void DecrementStepCountBeforeTriggerBattle()
         {
-            if (handle.Status == AsyncOperationStatus.Succeeded)
-            {
-                _currentEncounterData = handle.Result;
-                _maxEncounterSteps = _currentEncounterData.EncounterRate;
-                GenerateRandomStepTilNextTrigger();
-            }
-            else
-            {
-                Debug.LogWarning($"Encounter data loaded failed with error {handle.OperationException}");
-            }
+            _stepLeftBeforeTriggerBattle--;
+            if (_stepLeftBeforeTriggerBattle > 0) return;
+            TriggerBattle(_currentEncounterData);
         }
 
         private void TriggerBattle(EncounterData encounter)
@@ -82,55 +75,30 @@ namespace CryptoQuest.Gameplay.Encounter
                 return;
             }
 
+            if (encounter == null)
+            {
+                Debug.LogWarning("EncounterManager::TriggerBattle - encounter is null");
+                return;
+            }
+
+            GenerateRandomStepTilNextTrigger();
             var battle = encounter.GetRandomBattlefield();
             Debug.Log($"Trigger battle with encounter {encounter.name} - battle {battle.name}");
             BattleLoader.RequestLoadBattle(battle);
         }
 
-        private void LoadEncounterZone(string encounterId)
-        {
-            _database.PreloadEncounter(encounterId);
-        }
-
-        private float _stepLeftBeforeTriggerBattle;
-
-        private void OnUpdateStepBeforeTriggerBattle()
-        {
-            _stepLeftBeforeTriggerBattle--;
-            if (!(_stepLeftBeforeTriggerBattle <= 0)) return;
-            GenerateRandomStepTilNextTrigger();
-            if (_database.TryGetEncounterData(_currentEncounterData.ID, out var encounter))
-                TriggerBattle(encounter);
-            else
-                TriggerBattleAsync(_currentEncounterData.ID);
-        }
-
         private void GenerateRandomStepTilNextTrigger()
-        {
-            _stepLeftBeforeTriggerBattle = Random.Range(_minEncounterSteps, _maxEncounterSteps);
-        }
+            => _stepLeftBeforeTriggerBattle = Random.Range(_minEncounterSteps, _maxEncounterSteps);
 
-        private void TriggerBattleAsync(string encounterId)
-        {
-            var handle = _database.PreloadEncounter(encounterId);
-            if (handle.IsValid() == false) return;
-            handle.Completed += InternalTriggerBattleAsync;
-        }
+        private void TriggerBattle(string encounterId) => StartCoroutine(GetEncounter(encounterId, TriggerBattle));
 
-        private void InternalTriggerBattleAsync(AsyncOperationHandle<EncounterData> op)
+        private IEnumerator GetEncounter(string encounterId, Action<EncounterData> callback)
         {
-            if (op.Status == AsyncOperationStatus.Succeeded)
-                TriggerBattle(op.Result);
-            else
-                Debug.LogWarning($"Encounter data loaded failed with error {op.OperationException}");
-        }
-
-        private void TriggerBattle(string encounterId)
-        {
-            if (_database.TryGetEncounterData(encounterId, out var encounter))
-                TriggerBattle(encounter);
-            else
-                TriggerBattleAsync(encounterId);
+            yield return _database.LoadDataById(encounterId);
+            var encounter = _database.GetDataById(encounterId);
+            if (encounter == null)
+                yield break;
+            callback?.Invoke(encounter);
         }
     }
 }

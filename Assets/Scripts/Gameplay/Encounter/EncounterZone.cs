@@ -1,5 +1,4 @@
 using System;
-using CryptoQuest.Character.MonoBehaviours;
 using IndiGames.Core.EditorTools.Attributes.ReadOnlyAttribute;
 using UnityEngine;
 
@@ -8,8 +7,8 @@ namespace CryptoQuest.Gameplay.Encounter
     public class EncounterZone : MonoBehaviour
     {
         public static event Action<string> LoadingEncounterArea;
-        public static event Action<HeroBehaviour, string> EnterEncounterZone;
-        public static event Action<HeroBehaviour, string> ExitEncounterZone;
+        public static event Action<string> EnterEncounterZone;
+        public static event Action<string> ExitEncounterZone;
 
         [Header("Area Configuration")]
         [SerializeField, ReadOnly] private string _playerTag = "Player";
@@ -27,13 +26,13 @@ namespace CryptoQuest.Gameplay.Encounter
         private void OnTriggerEnter2D(Collider2D other)
         {
             if (!other.gameObject.CompareTag(_playerTag)) return;
-            EnterEncounterZone?.Invoke(other.GetComponent<HeroBehaviour>(), _encounterId);
+            EnterEncounterZone?.Invoke(_encounterId);
         }
 
         private void OnTriggerExit2D(Collider2D other)
         {
             if (!other.gameObject.CompareTag(_playerTag)) return;
-            ExitEncounterZone?.Invoke(other.GetComponent<HeroBehaviour>(), _encounterId);
+            ExitEncounterZone?.Invoke(_encounterId);
         }
 
         /// <summary>

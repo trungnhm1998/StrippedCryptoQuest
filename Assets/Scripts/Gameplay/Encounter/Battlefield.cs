@@ -5,7 +5,7 @@ using UnityEngine;
 namespace CryptoQuest.Gameplay.Encounter
 {
     [CreateAssetMenu(menuName = "Gameplay/Battle/Battle Data")]
-    public class EnemyParty : ScriptableObject
+    public class Battlefield : ScriptableObject
     {
         [field: SerializeField] public int Id { get; private set; }
         [SerializeField] private int[] _enemyIds = Array.Empty<int>();

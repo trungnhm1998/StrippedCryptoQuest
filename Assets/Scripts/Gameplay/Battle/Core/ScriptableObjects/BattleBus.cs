@@ -5,12 +5,12 @@ namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects
 {
     public class BattleBus : ScriptableObject
     {
-        public virtual EnemyParty CurrentEnemyParty
+        public virtual Battlefield CurrentBattlefield
         {
-            get => _currentEnemyParty;
-            set => _currentEnemyParty = value;
+            get => _currentBattlefield;
+            set => _currentBattlefield = value;
         }
 
-        private EnemyParty _currentEnemyParty;
+        private Battlefield _currentBattlefield;
     }
 }

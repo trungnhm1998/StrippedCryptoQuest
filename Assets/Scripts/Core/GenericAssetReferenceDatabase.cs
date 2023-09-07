@@ -9,7 +9,8 @@ using Object = UnityEngine.Object;
 
 namespace CryptoQuest.Core
 {
-    public class GenericAssetReferenceDatabase<TKey, TSerializableObject> : ScriptableObject where TSerializableObject : Object
+    public class GenericAssetReferenceDatabase<TKey, TSerializableObject> : ScriptableObject
+        where TSerializableObject : Object
     {
         [Serializable]
         public struct Map
@@ -31,6 +32,7 @@ namespace CryptoQuest.Core
                 return _map;
             }
         }
+
         private readonly Dictionary<TKey, TSerializableObject> _loadedData = new();
 
         public IEnumerator LoadDataById(TKey id)
@@ -39,26 +41,19 @@ namespace CryptoQuest.Core
                 yield break;
             if (!CacheMap.TryGetValue(id, out var assetRef))
             {
-                Debug.LogWarning($"Loot id {id} is out of range");
+                Debug.LogWarning($"Cannot find asset with id {id} in database");
                 yield break;
             }
 
             var handle = assetRef.LoadAssetAsync();
             yield return handle;
-            if (handle.Status != AsyncOperationStatus.Succeeded)
+            if (handle.Status != AsyncOperationStatus.Succeeded || handle.Result == null)
             {
                 Debug.LogWarning($"Failed to load asset {assetRef} at id {id}");
                 yield break;
             }
 
-            var asset = handle.Result;
-            if (asset == null)
-            {
-                Debug.LogWarning($"Failed to load loot {assetRef} at id {id}");
-                yield break;
-            }
-
-            _loadedData.Add(id, asset);
+            _loadedData.Add(id, handle.Result);
         }
 
         public TSerializableObject GetDataById(TKey id)
@@ -66,7 +61,7 @@ namespace CryptoQuest.Core
             if (_loadedData.TryGetValue(id, out var data))
                 return data;
 
-            Debug.LogError($"Database::GetDataById() - Cannot find/load data with id {id}");
+            Debug.LogWarning($"Database::GetDataById() - Cannot find/load data with id {id}");
             return null; // try not to return null
         }
     }

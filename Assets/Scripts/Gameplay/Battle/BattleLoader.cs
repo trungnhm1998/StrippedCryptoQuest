@@ -14,8 +14,8 @@ namespace CryptoQuest.Gameplay.Battle
     {
         public static event Action<int> LoadBattleWithId;
         public static void RequestLoadBattle(int id) => LoadBattleWithId?.Invoke(id);
-        public static event Action<EnemyParty> LoadBattle;
-        public static void RequestLoadBattle(EnemyParty party) => LoadBattle?.Invoke(party);
+        public static event Action<Battlefield> LoadBattle;
+        public static void RequestLoadBattle(Battlefield party) => LoadBattle?.Invoke(party);
         [SerializeField] private GameStateSO _gameState;
         [SerializeField] private BattleInputSO _battleInput;
         [SerializeField] private SpiralConfigSO _spiralConfigSo;
@@ -30,7 +30,7 @@ namespace CryptoQuest.Gameplay.Battle
         [SerializeField] private LoadSceneEventChannelSO _loadSceneEventChannelSo;
 
         [Header("Config"), SerializeField]
-        private EnemyParty[] _enemyParties = Array.Empty<EnemyParty>();
+        private Battlefield[] _enemyParties = Array.Empty<Battlefield>();
 
         private void OnEnable()
         {
@@ -54,18 +54,24 @@ namespace CryptoQuest.Gameplay.Battle
             var party = Array.Find(_enemyParties, enemyParty => enemyParty.Id == id);
             if (party == null)
             {
-                Debug.LogError($"No enemy party with id \"{id}\" found");
+                Debug.LogWarning($"No enemy party with id \"{id}\" found");
+                return;
+            }
+
+            if (party.EnemyIds.Length == 0)
+            {
+                Debug.LogWarning($"No enemies in party with id \"{id}\" found");
                 return;
             }
 
             LoadingBattle(party);
         }
 
-        private void LoadingBattle(EnemyParty party)
+        private void LoadingBattle(Battlefield party)
         {
             _gameState.UpdateGameState(EGameState.Battle);
             _battleInput.EnableBattleInput();
-            _battleBus.CurrentEnemyParty = party;
+            _battleBus.CurrentBattlefield = party;
             ShowSpiralAndLoadBattleScene();
         }
 
