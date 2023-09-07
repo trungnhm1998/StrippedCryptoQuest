@@ -16,23 +16,16 @@ namespace CryptoQuest.Gameplay.Character
     [Serializable]
     public class CharacterSpec
     {
-
         [field: SerializeField] public CharacterBackgroundInfo BackgroundInfo { get; private set; }
         [field: SerializeField] public CharacterClass Class { get; private set; }
         [field: SerializeField] public Elemental Element { get; set; }
         [field: SerializeField] public StatsDef StatsDef { get; set; }
         [field: SerializeField] public CharacterEquipments Equipments { get; private set; }
         [field: SerializeField] public float Experience { get; set; }
+
         [field: SerializeField, ReadOnly] public int Level { get; set; }
-
-
-        // TODO: #1136 Remove serialize and load runtime using Class, Element info
-        [field: SerializeField] private CharacterSkillSet _skillSet;
-        public CharacterSkillSet SkillSet => _skillSet;
-
-        // TODO: #1136 Remove serialize and load runtime using Class, BaseInfo info
-        [field: SerializeField] private Sprite _avatar;
-        public Sprite Avatar => _avatar;
+        [field: SerializeField, ReadOnly] public CharacterSkillSet SkillSet { get; set; }
+        [field: SerializeField, ReadOnly] public Sprite Avatar { get; set; }
 
         private CharacterBehaviourBase _characterComponent;
         public CharacterBehaviourBase CharacterComponent => _characterComponent;
@@ -47,8 +40,8 @@ namespace CryptoQuest.Gameplay.Character
 
         public List<AbilityData> GetAvailableSkills()
         {
-            if (_skillSet == null) return new();
-            return _skillSet.GetSkillsByCurrentLevel(Level);
+            if (SkillSet == null) return new();
+            return SkillSet.GetSkillsByCurrentLevel(Level);
         }
 
         // TODO: Implement this
@@ -70,7 +63,7 @@ namespace CryptoQuest.Gameplay.Character
             uiCharacterInfo.SetElement(Element.Icon);
             uiCharacterInfo.SetLevel(Level);
             uiCharacterInfo.SetClass(Class.Name);
-            uiCharacterInfo.SetAvatar(_avatar);
+            uiCharacterInfo.SetAvatar(Avatar);
             BackgroundInfo.SetupUI(uiCharacterInfo);
             SetupExpUI(uiCharacterInfo);
         }

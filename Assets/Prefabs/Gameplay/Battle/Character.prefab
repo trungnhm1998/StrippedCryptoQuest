@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: 2460843599423441590}
   - component: {fileID: 2810014679992245933}
   - component: {fileID: 8761274083673420596}
+  - component: {fileID: -768634176979989952}
   m_Layer: 0
   m_Name: Character
   m_TagString: Untagged
@@ -169,8 +170,8 @@ MonoBehaviour:
       <Slots>k__BackingField: []
     <Experience>k__BackingField: 0
     <Level>k__BackingField: 0
-    _skillSet: {fileID: 0}
-    _avatar: {fileID: 0}
+    <SkillSet>k__BackingField: {fileID: 0}
+    <Avatar>k__BackingField: {fileID: 0}
 --- !u!114 &2460843599423441590
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -215,3 +216,16 @@ MonoBehaviour:
   _levelUpResetAttributes:
   - {fileID: 11400000, guid: 77c53593fd92c904aa7689c5a7449df3, type: 2}
   - {fileID: 11400000, guid: a7e3a44d36bf87d44afeb00b236e832e, type: 2}
+--- !u!114 &-768634176979989952
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2011783402802653897}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82d1a6d2f793f20469d15ed45812efcd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _loadAssetCompleteEventChannel: {fileID: 11400000, guid: edebefa22842a7f47a9e91f05261b8cc, type: 2}
