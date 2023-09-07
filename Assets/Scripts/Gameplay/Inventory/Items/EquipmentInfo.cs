@@ -76,7 +76,7 @@ namespace CryptoQuest.Gameplay.Inventory.Items
 
         #endregion
 
-        public bool IsValidWith(CharacterSpec inspectingCharacter)
+        public bool IsCompatibleWithCharacter(CharacterSpec inspectingCharacter)
         {
             if (!IsValid()) return false;
 
@@ -89,7 +89,7 @@ namespace CryptoQuest.Gameplay.Inventory.Items
                 return false;
             }
 
-            if (equipmentAllowedClasses == null || equipmentAllowedClasses.Length <= 0)
+            if (equipmentAllowedClasses.Length <= 0)
             {
                 Debug.LogWarning("Equipment allowed classes is null or empty");
                 return false;
@@ -106,13 +106,7 @@ namespace CryptoQuest.Gameplay.Inventory.Items
 
         public override bool IsValid()
         {
-            if (!base.IsValid()) return false;
-
-            if (Data.EquipmentType == null) return false;
-
-            if (Data.EquipmentType.AllowedClasses == null) return false;
-
-            return true;
+            return base.IsValid() && Data.EquipmentType != null;
         }
     }
 }

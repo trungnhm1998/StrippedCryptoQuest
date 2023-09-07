@@ -253,7 +253,7 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
 
         private void ValidateEquipment(EquipmentInfo equipment, UIEquipmentItem equipmentItem)
         {
-            if (equipment.IsValidWith(_inspectingCharacter)) return;
+            if (equipment.IsCompatibleWithCharacter(_inspectingCharacter)) return;
 
             equipmentItem.DeactivateButton();
         }
