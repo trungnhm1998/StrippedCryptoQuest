@@ -9,7 +9,6 @@ using UnityEngine;
 
 namespace CryptoQuest.UI.Menu.Panels.Home
 {
-    // TODO: refactor getChild() and getComponent() code style
     public class UIHomeMenuSortCharacter : MonoBehaviour
     {
         public event Action SelectedEvent;
@@ -30,18 +29,15 @@ namespace CryptoQuest.UI.Menu.Panels.Home
         [SerializeField] private List<UICharacterCardButton> _cardButtons;
         [SerializeField] private GameObject _sortKeysUi;
 
-        // private UICharacterCardButton _selectedCardButtonHolder;
-        private List<HeroData> _activeMembersData = new();
-        private List<AttributeSystemBehaviour> _activeMembersAttribute = new();
+        private UICharacterCardButton _selectedCardButtonHolder;
 
         private int _currentIndex = 0;
-
         private int CurrentIndex
         {
             get => _currentIndex;
             set
             {
-                int count = _activeMembersData.Count;
+                int count = _partySlots.Length;
                 _currentIndex = (value + count) % count;
             }
         }
@@ -58,6 +54,8 @@ namespace CryptoQuest.UI.Menu.Panels.Home
             }
 
             _partySlots = GetComponentsInChildren<UIPartySlot>();
+
+            Debug.Log($"UIHomeMenuSortCharacter::OnValidate()");
         }
 
         private void Awake()
@@ -69,7 +67,6 @@ namespace CryptoQuest.UI.Menu.Panels.Home
         private void OnEnable()
         {
             UICharacterCardButton.SelectedEvent += ConfirmSelect;
-            OnEnableSortMode();
             _sortKeysUi.SetActive(true);
             LoadPartyMembers();
         }
@@ -104,15 +101,19 @@ namespace CryptoQuest.UI.Menu.Panels.Home
 
         private UICharacterCardButton GetCharacterCard(int index)
         {
-            var cardUI = _characterSlots.GetChild(index).GetComponent<UICharacterCardButton>();
+            var cardUI = _cardButtons[index];
             return cardUI;
         }
 
         private void OnEnableSortMode()
         {
             SortModeEnabledEvent.RaiseEvent();
-            // _selectedCardButtonHolder = GetCharacterCard(CurrentIndex);
-            // _selectedCardButtonHolder.Select();
+
+            Debug.Log($"current index = [{CurrentIndex}]");
+
+            _selectedCardButtonHolder = GetCharacterCard(CurrentIndex);
+            Debug.Log($"current card = [{_selectedCardButtonHolder}]");
+            _selectedCardButtonHolder.Select();
         }
 
         public void ConfirmSelect(UICharacterCardButton card)
@@ -180,6 +181,11 @@ namespace CryptoQuest.UI.Menu.Panels.Home
             {
                 button.enabled = false;
             }
+        }
+
+        public void Init()
+        {
+            OnEnableSortMode();
         }
 
         public void DeInit()

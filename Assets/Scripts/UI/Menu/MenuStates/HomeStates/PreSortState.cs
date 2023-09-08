@@ -6,19 +6,15 @@ namespace CryptoQuest.UI.Menu.MenuStates.HomeStates
 {
     public class PreSortState : HomeStateBase
     {
-        private UIHomeMenuSortCharacter _sortMode;
-
-        public PreSortState(UIHomeMenu panel) : base(panel)
-        {
-            _sortMode = panel.SortMode;
-        }
+        public PreSortState(UIHomeMenu panel) : base(panel) { }
 
         public override void OnEnter()
         {
             base.OnEnter();
             NavigationBar.SetActive(false);
             NavigationBar.HighlightHeader(HomePanel.TypeSO);
-            _sortMode.SelectedEvent += StartSorting;
+            HomePanel.SortMode.SelectedEvent += StartSorting;
+            HomePanel.SortMode.Init();
         }
 
         public override void HandleCancel()
@@ -26,7 +22,7 @@ namespace CryptoQuest.UI.Menu.MenuStates.HomeStates
             base.HandleCancel();
             NavigationBar.SetActive(true);
             NavigationBar.HighlightHeader(HomePanel.TypeSO, true);
-            _sortMode.DeInit();
+            HomePanel.SortMode.DeInit();
             MenuStateMachine.RequestStateChange(HomeMenuStateMachine.Overview);
         }
 
@@ -38,8 +34,8 @@ namespace CryptoQuest.UI.Menu.MenuStates.HomeStates
         public override void OnExit()
         {
             base.OnExit();
-            _sortMode.DeInit();
-            _sortMode.SelectedEvent -= StartSorting;
+            HomePanel.SortMode.DeInit();
+            HomePanel.SortMode.SelectedEvent -= StartSorting;
         }
     }
 }
