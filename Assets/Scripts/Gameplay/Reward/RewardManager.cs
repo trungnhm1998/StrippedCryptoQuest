@@ -1,8 +1,8 @@
 ﻿using CryptoQuest.Gameplay.Inventory.Currency;
 using CryptoQuest.Gameplay.Inventory.Items;
 using CryptoQuest.Gameplay.Loot;
-using CryptoQuest.System;
 using UnityEngine;
+using CryptoQuest.Events;
 
 namespace CryptoQuest.Gameplay.Reward
 {
@@ -18,11 +18,12 @@ namespace CryptoQuest.Gameplay.Reward
 
     public class RewardManager : MonoBehaviour, IRewardManager
     {
-        [SerializeField] private ServiceProvider _serviceProvider;
+        [Header("Raise Event")]
+        [SerializeField] private LootEventChannelSO _addLootRequestEventChannel;
         
-        public void Reward(LootInfo item)
+        public void Reward(LootInfo loot)
         {
-            item.AddItemToInventory(_serviceProvider.Inventory);
+            _addLootRequestEventChannel.RaiseEvent(loot);
         }
     }
 }
