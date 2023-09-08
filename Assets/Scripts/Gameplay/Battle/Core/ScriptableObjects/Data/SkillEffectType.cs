@@ -10,7 +10,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data
         Damage = 1,
         Buff = 2,
         DeBuff = 3,
-        AddAbnormalStatus = 4,
+        AddStateChange = 4,
         RemoveAbnormalStatus = 5,
         Absorption = 6,
         Reflect = 7,

@@ -1,4 +1,6 @@
-﻿using CryptoQuest.Gameplay.PlayerParty;
+﻿using CryptoQuest.Gameplay.Character;
+using CryptoQuest.Gameplay.PlayerParty;
+using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
 using UnityEngine;
 
 namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.ActionTypes
@@ -24,17 +26,19 @@ namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.ActionTypes
 
         protected override void OnExecute()
         {
-            // TODO: REFACTOR PARTY SYSTEM
-            // UsableInfo item = ActionContext.Item;
-            // List<AbilitySystemBehaviour> members = _party.PlayerTeam.Members;
-            //
-            // foreach (var owner in members)
-            // {
-            //     CryptoQuestGameplayEffectSpec ability =
-            //         (CryptoQuestGameplayEffectSpec)owner.MakeOutgoingSpec(item.Data.Ability.Effect);
-            //     
-            //     owner.ApplyEffectSpecToSelf(ability);
-            // }
+            UsableSO item = ActionContext.Item.Data;
+            CharacterSpec[] members = _party.Members;
+
+            foreach (CharacterSpec characterSpec in members)
+            {
+                AbilitySystemBehaviour owner = characterSpec.CharacterComponent.GameplayAbilitySystem;
+
+                CryptoQuestGameplayEffectSpec ability =
+                    (CryptoQuestGameplayEffectSpec)owner.MakeOutgoingSpec(item.Ability.Effect);
+
+                ability.SetParameters(item.ItemAbilityInfo.SkillParameters);
+                owner.ApplyEffectSpecToSelf(ability);
+            }
         }
     }
 }
