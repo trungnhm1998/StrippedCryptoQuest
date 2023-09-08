@@ -4,6 +4,7 @@ using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Localization;
+using UnityEngine.Localization.Components;
 using UnityEngine.UI;
 
 namespace CryptoQuest.UI.Menu.Panels.Status
@@ -29,7 +30,7 @@ namespace CryptoQuest.UI.Menu.Panels.Status
 
         [SerializeField] private GameObject _frame;
         [SerializeField] private GameObject _reverseFrame;
-        [SerializeField] private TMP_Text _description;
+        [SerializeField] private LocalizeStringEvent _descriptionString;
         [SerializeField] private TMP_Text _effectDescription;
         [SerializeField] private Image _illustration;
         [SerializeField] private Image _rarity;
@@ -64,7 +65,7 @@ namespace CryptoQuest.UI.Menu.Panels.Status
 
         public ITooltip WithDescription(LocalizedString dataDescription)
         {
-            _description.text = dataDescription.GetLocalizedString();
+            _descriptionString.StringReference = dataDescription;
             return this;
         }
 
