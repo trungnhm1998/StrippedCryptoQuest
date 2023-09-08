@@ -16,6 +16,9 @@ namespace CryptoQuest.UI.Menu.Panels.Skill
         [SerializeField] private UICharacterSelection _charactersPanel;
         public UICharacterSelection CharactersPanel => _charactersPanel;
 
+        [SerializeField] private UISkillList _skillListPanel;
+        public UISkillList SkillListPanel => _skillListPanel;
+
         [Header("Configs")]
         [SerializeField] private ServiceProvider _provider;
 

@@ -1,7 +1,9 @@
 using CryptoQuest.Gameplay.Character;
+using CryptoQuest.Gameplay.Skill;
 using CryptoQuest.UI.Character;
 using CryptoQuest.UI.Menu.Panels.Home;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.Localization;
 using UnityEngine.UI;
 
