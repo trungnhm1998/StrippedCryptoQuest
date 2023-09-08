@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using CryptoQuest.Gameplay.Battle;
 using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Calculation;
+using CryptoQuest.Gameplay.Loot;
 
 namespace CryptoQuest.Gameplay.Encounter
 {
@@ -56,6 +57,7 @@ namespace CryptoQuest.Gameplay.Encounter
                     return false;
                 totalProbability += encounterSetup.Probability;
             }
+
             return totalProbability == 1;
         }
 
@@ -133,6 +135,7 @@ namespace CryptoQuest.Gameplay.Encounter
         public int MonserPartyId { get; set; }
         public string MonsterGroupingProperty { get; set; }
     }
+
     public class BattleFieldDataModel
     {
         public string BattleFieldId { get; set; }
@@ -151,5 +154,12 @@ namespace CryptoQuest.Gameplay.Encounter
             BattleDataId = battleDataId;
             Probability = encounterRate;
         }
+    }
+
+    public class LootTableDataModel
+    {
+        public int Id { get; set; }
+        public float GoldAmount { get; set; }
+        public List<int> ItemIds { get; set; }
     }
 }
