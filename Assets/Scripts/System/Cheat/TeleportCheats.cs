@@ -1,11 +1,12 @@
-using System;
 using System.Collections.Generic;
 using System.IO;
 using CommandTerminal;
+using IndiGames.Core.EditorTools.Attributes.ReadOnlyAttribute;
 using IndiGames.Core.SceneManagementSystem.Events.ScriptableObjects;
 using IndiGames.Core.SceneManagementSystem.ScriptableObjects;
-using UnityEditor;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace CryptoQuest.System.Cheat
 {
@@ -20,31 +21,22 @@ namespace CryptoQuest.System.Cheat
 
         private void TriggerTeleport(CommandArg[] args)
         {
-            var destination = args[0].String;
-            var guids = AssetDatabase.FindAssets("t:SceneScriptableObject");
-            foreach (var guid in guids)
+            var address = args[0].String;
+            var handle = Addressables.LoadAssetAsync<SceneScriptableObject>(address);
+            handle.Completed += operationHandle =>
             {
-                var sceneSO = AssetDatabase.LoadAssetAtPath<SceneScriptableObject>(AssetDatabase.GUIDToAssetPath(guid));
-
-                if (SimplifyString(sceneSO.name) == SimplifyString(destination))
+                if (operationHandle.Status == AsyncOperationStatus.Succeeded)
                 {
-                    _loadSceneEventChannelSO.RequestLoad(sceneSO);
-                    break;
+                    var scene = operationHandle.Result;
+                    LoadScene(scene);
                 }
-            }
+            };
         }
 
-        private string SimplifyString(string str)
+        private void LoadScene(SceneScriptableObject scene)
         {
-            string returnStr = str
-                .ToLower()
-                .Replace(" ", "")
-                .Replace("_", "")
-                .Replace("Scene", "")
-                .Replace("scene", "")
-                .Replace("-", "")
-                .Replace(".", "");
-            return returnStr;
+            if (scene != null)
+                _loadSceneEventChannelSO.RequestLoad(scene);
         }
     }
 }
