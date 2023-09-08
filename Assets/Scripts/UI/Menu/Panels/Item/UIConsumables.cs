@@ -17,10 +17,9 @@ namespace CryptoQuest.UI.Menu.Panels.Item
         [SerializeField] private GameObject _content;
         [field: SerializeField] public UsableTypeSO Type { get; private set; }
         [field: SerializeField] public ServiceProvider ServiceProvider { get; private set; }
-        
         private readonly List<UIConsumableItem> _uiConsumables = new();
         private UIConsumableItem _currentInspectingItem;
-        private InventorySO _inventory;
+        private List<UsableInfo> _usableItems = new();
 
         private bool _interactable;
 
@@ -39,15 +38,24 @@ namespace CryptoQuest.UI.Menu.Panels.Item
 
         private void Awake()
         {
-            _inventory = ServiceProvider.Inventory;
+            SetConsumableUI();
             _recyclableScrollRect.Initialize(this);
+        }
+
+        private void SetConsumableUI()
+        {
+            foreach (var item in ServiceProvider.Inventory.UsableItems)
+            {
+                if (item.Data.UsableTypeSO == Type)
+                    _usableItems.Add(item);
+            }
         }
 
         #region PLUGINS
 
         public int GetItemCount()
         {
-            return _inventory.UsableItems.Count;
+            return _usableItems.Count;
         }
 
 
@@ -61,7 +69,7 @@ namespace CryptoQuest.UI.Menu.Panels.Item
             }
 
             _uiConsumables.Add(item);
-            item.Init(_inventory.UsableItems[index]);
+            item.Init(_usableItems[index]);
             item.Inspecting += OnInspecting;
             if (_currentInspectingItem != null)
             {
