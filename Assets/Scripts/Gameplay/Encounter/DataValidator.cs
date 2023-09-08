@@ -56,6 +56,7 @@ namespace CryptoQuest.Gameplay.Encounter
                     return false;
                 totalProbability += encounterSetup.Probability;
             }
+
             return totalProbability == 1;
         }
 
@@ -122,7 +123,7 @@ namespace CryptoQuest.Gameplay.Encounter
         public float Defense { get; set; }
         public float EvasionRate { get; set; }
         public float CriticalRate { get; set; }
-        public float Exp { get; set; }
+        public int Exp { get; set; }
         public float Gold { get; set; }
         public string DropItemID { get; set; }
         public string MonsterPrefabName { get; set; }
@@ -133,6 +134,7 @@ namespace CryptoQuest.Gameplay.Encounter
         public int MonserPartyId { get; set; }
         public string MonsterGroupingProperty { get; set; }
     }
+
     public class BattleFieldDataModel
     {
         public string BattleFieldId { get; set; }

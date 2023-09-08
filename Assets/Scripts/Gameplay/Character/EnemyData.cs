@@ -39,6 +39,16 @@ namespace CryptoQuest.Gameplay.Character
             });
         }
 
+        public void Editor_SetEXP(int exp)
+        {
+            Exp = exp;
+        }
+
+        public void Editor_SetStats(AttributeWithValue[] stats)
+        {
+            Stats = stats;
+        }
+
         public void Editor_AddDrop(UsableInfo consumable)
         {
             ArrayUtility.Add(ref _drops, new Drop()
@@ -55,6 +65,11 @@ namespace CryptoQuest.Gameplay.Character
                 LootItem = new CurrencyLootInfo(currencyInfo),
                 Chance = 1
             });
+        }
+
+        public void Editor_ClearDrop()
+        {
+            _drops = Array.Empty<Drop>();
         }
 
         public void Editor_SetMonsterPrefab(GameObject prefab)

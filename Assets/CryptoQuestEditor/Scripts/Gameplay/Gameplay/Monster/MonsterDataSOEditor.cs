@@ -2,11 +2,15 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using CryptoQuest.Gameplay;
+using CryptoQuest.Gameplay.Battle.ScriptableObjects;
 using CryptoQuest.Gameplay.Character;
 using CryptoQuest.Gameplay.Encounter;
+using CryptoQuest.Gameplay.Inventory.Currency;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.ScriptableObjects;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
 using IndiGames.Tools.ScriptableObjectBrowser;
+using NPOI.SS.Formula.Functions;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -19,11 +23,13 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Monster
         private const string DEFAULT_NAME = "Monster";
         private const int ROW_OFFSET = 2;
         private const string ATTRIBUTE_PREFIX = "Default.";
+        private const string GOLD_CURRENCY_ASSET_PATH = "Assets/ScriptableObjects/Currency/Gold.asset";
 
         private const string NORMAL_ATTACK_ABILITY_PATH =
             "Assets/ScriptableObjects/Battle/Skills/Enemy/NormalAttack/EmemyNormalAttack.asset";
 
         private const string PREFAB_PATH = "Assets/Prefabs/Battle/Enemies/";
+        private EnemyDatabase _enemyDatabase;
 
         public MonsterDataSOEditor()
         {
@@ -34,7 +40,8 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Monster
         public override void ImportBatchData(string directory, Action<ScriptableObject> callback)
         {
             string[] allLines = File.ReadAllLines(directory);
-
+            _enemyDatabase = GetEnemyDatabase();
+            List<EnemyDatabase.Map> enemyMap = new();
             for (int index = ROW_OFFSET; index < allLines.Length; index++)
             {
                 // get data form tsv file
@@ -63,7 +70,7 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Monster
                     Defense = float.Parse(splitedData[17]),
                     EvasionRate = float.Parse(splitedData[18].Replace("%", "")),
                     CriticalRate = float.Parse(splitedData[19].Replace("%", "")),
-                    Exp = float.Parse(splitedData[20]),
+                    Exp = int.Parse(splitedData[20]),
                     Gold = float.Parse(splitedData[21]),
                     // DropItemID = splitedData[22]
                     DropItemID = "Drop item id",
@@ -90,8 +97,18 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Monster
                     "SkillPower", "Defense", "EvasionRate", "CriticalRate"
                 };
                 AttributeWithValue[] attributeInitValues = InitAttributeValueSetup(dataModel, attributeNames);
-                // instance.AttributesToInitialize = attributeInitValues;
+                instance.Editor_SetId(dataModel.MonsterId);
+                instance.Editor_SetElement(GetElementalSO(dataModel.ElementId));
+                instance.Editor_ClearDrop();
+                instance.Editor_AddDrop(GetGoldCurrencyRewardInfo(dataModel.Gold));
+                instance.Editor_SetEXP(dataModel.Exp);
+                instance.Editor_SetStats(attributeInitValues);
                 instance.name = replacedName;
+                EnemyDatabase.Map enemyMapData = new EnemyDatabase.Map()
+                {
+                    Id = instance.Id,
+                    Enemy = new AssetReferenceT<EnemyData>(path)
+                };
 
                 if (!AssetDatabase.Contains(instance))
                 {
@@ -103,7 +120,11 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Monster
                 {
                     EditorUtility.SetDirty(instance);
                 }
+
+                enemyMap.Add(enemyMapData);
             }
+
+            _enemyDatabase.Editor_SetEnemyMap(enemyMap.ToArray());
         }
 
         private AbilityScriptableObject GetNormalAttackAbility()
@@ -119,6 +140,36 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Monster
             var path = PREFAB_PATH + prefabName + ".prefab";
             var guid = AssetDatabase.AssetPathToGUID(path);
             return AssetDatabase.LoadAssetAtPath<GameObject>(AssetDatabase.GUIDToAssetPath(guid));
+        }
+
+        private CurrencyInfo GetGoldCurrencyRewardInfo(float amount)
+        {
+            var path = GOLD_CURRENCY_ASSET_PATH;
+            var guid = AssetDatabase.AssetPathToGUID(path);
+            var goldSo = AssetDatabase.LoadAssetAtPath<CurrencySO>(AssetDatabase.GUIDToAssetPath(guid));
+            return new CurrencyInfo(goldSo, amount);
+        }
+
+        private Elemental GetElementalSO(int elementId)
+        {
+            var guids = AssetDatabase.FindAssets("t:Elemental");
+            foreach (var guid in guids)
+            {
+                var asset = AssetDatabase.LoadAssetAtPath<Elemental>(AssetDatabase.GUIDToAssetPath(guid));
+                if (asset.Id == elementId)
+                {
+                    return asset;
+                }
+            }
+
+            return null;
+        }
+
+        private EnemyDatabase GetEnemyDatabase()
+        {
+            var guids = AssetDatabase.FindAssets("t:EnemyDatabase");
+
+            return AssetDatabase.LoadAssetAtPath<EnemyDatabase>(AssetDatabase.GUIDToAssetPath(guids[0]));
         }
 
 

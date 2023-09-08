@@ -54,5 +54,11 @@ namespace CryptoQuest.Gameplay.Battle.ScriptableObjects
             Debug.LogError($"EnemyDatabase::GetEnemyById() - Cannot find/load enemy with id {id}");
             callback?.Invoke(null);
         }
+#if UNITY_EDITOR
+        public void Editor_SetEnemyMap(Map[] enemies)
+        {
+            _enemies = enemies;
+        }
+#endif
     }
 }
