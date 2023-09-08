@@ -23,6 +23,7 @@ namespace CryptoQuest.UI.Menu.MenuStates.HomeStates
             NavigationBar.SetActive(true);
             NavigationBar.HighlightHeader(HomePanel.TypeSO, true);
             HomePanel.SortMode.DeInit();
+            HomePanel.SortMode.SetDefaultSelection();
             MenuStateMachine.RequestStateChange(HomeMenuStateMachine.Overview);
         }
 

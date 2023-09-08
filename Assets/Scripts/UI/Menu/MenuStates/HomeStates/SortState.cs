@@ -5,19 +5,14 @@ namespace CryptoQuest.UI.Menu.MenuStates.HomeStates
 {
     public class SortState : HomeStateBase
     {
-        private UIHomeMenuSortCharacter _sortMode;
-
-        public SortState(UIHomeMenu panel) : base(panel)
-        {
-            _sortMode = panel.SortMode;
-        }
+        public SortState(UIHomeMenu panel) : base(panel) { }
 
         public override void OnEnter()
         {
             base.OnEnter();
             NavigationBar.SetActive(false);
             NavigationBar.HighlightHeader(HomePanel.TypeSO);
-            _sortMode.ConfirmedEvent += ExitSortState;
+            HomePanel.SortMode.ConfirmedEvent += ExitSortState;
         }
 
         public override void HandleCancel()
@@ -25,24 +20,25 @@ namespace CryptoQuest.UI.Menu.MenuStates.HomeStates
             base.HandleCancel();
             NavigationBar.SetActive(true);
             NavigationBar.HighlightHeader(HomePanel.TypeSO, true);
-            _sortMode.CancelSort();
+            HomePanel.SortMode.CancelSort();
             MenuStateMachine.RequestStateChange(HomeMenuStateMachine.PreSort);
         }
 
         public override void Confirm()
         {
             base.Confirm();
-            _sortMode.ConfirmSortOrder();
+            HomePanel.SortMode.ConfirmSortOrder();
         }
 
         public override void HandleNavigate(Vector2 direction)
         {
             base.HandleNavigate(direction);
+            // HomePanel.SortMode.Swap(direction.x);
 
             if (direction.x > 0)
-                _sortMode.SwapRight();
+                HomePanel.SortMode.SwapRight();
             else if (direction.x < 0)
-                _sortMode.SwapLeft();
+                HomePanel.SortMode.SwapLeft();
         }
 
         private void ExitSortState()
@@ -53,8 +49,8 @@ namespace CryptoQuest.UI.Menu.MenuStates.HomeStates
         public override void OnExit()
         {
             base.OnExit();
-            _sortMode.ConfirmSortOrder();
-            _sortMode.ConfirmedEvent -= ExitSortState;
+            HomePanel.SortMode.ConfirmSortOrder();
+            HomePanel.SortMode.ConfirmedEvent -= ExitSortState;
         }
     }
 }
