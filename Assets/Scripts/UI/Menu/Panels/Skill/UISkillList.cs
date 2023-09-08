@@ -53,11 +53,13 @@ namespace CryptoQuest.UI.Menu.Panels.Skill
         {
             GetSkills(characterSpec.GetAvailableSkills());
 
-            // if (isAnotherChar) StartCoroutine(RefreshScrollView());
+            if (isAnotherChar)
+            {
+                StartCoroutine(RefreshScrollView());
+                return;
+            }
 
-            // _scrollRect.Initialize(this);
-
-            StartCoroutine(RefreshScrollView());
+            _scrollRect.Initialize(this);
         }
 
         private void GetSkills(List<AbilityData> skills)
@@ -132,15 +134,14 @@ namespace CryptoQuest.UI.Menu.Panels.Skill
             skill.Configure(_skills[index]);
 
             // bad code, need to be changed
-            // if (index == 0) _defaultSelectedSkill = skill.GetComponent<UISkillButton>();
-            // _defaultSelectedSkill.Select();
+            if (index == 0) _defaultSelectedSkill = skill.GetComponent<UISkillButton>();
         }
         #endregion
 
         #region SkillSelectionState Setup
         public void Init()
         {
-            // _defaultSelectedSkill.Select();
+            _defaultSelectedSkill.Select();
             EnterSkillSelectionEvent?.Invoke();
         }
         #endregion

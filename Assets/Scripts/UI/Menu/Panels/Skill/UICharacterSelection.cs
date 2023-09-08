@@ -46,7 +46,7 @@ namespace CryptoQuest.UI.Menu.Panels.Skill
                 slot.Init(member);
             }
 
-            _cachedGo = _partySlots[0].transform.GetChild(0).gameObject; // Bad code
+            _cachedGo = _partySlots[0].gameObject; // Bad code
         }
 
         private void InspectSelectedCharacter(GameObject selectedCharGo)
