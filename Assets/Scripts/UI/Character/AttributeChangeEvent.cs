@@ -53,6 +53,7 @@ namespace CryptoQuest.UI.Character
                 _attributeSystemReference = value;
 
                 RegisterChangeHandler();
+                UpdateAttributesValue();
             }
         }
 
@@ -77,6 +78,21 @@ namespace CryptoQuest.UI.Character
         {
             if (_attributeSystemReference)
                 _attributeSystemReference.PostAttributeChange -= _handler;
+        }
+        
+        /// <summary>
+        /// Set all observing attribute value to its current value
+        /// so PostAttributeChange will be raised once when setup UI to update attribute display
+        /// </summary>
+        private void UpdateAttributesValue()
+        {
+            var attributeSystem = _attributeSystemReference;
+            foreach (var attributeEvent in AttributeEvents)
+            {
+                var attribute = attributeEvent.Key;
+                if (!attributeSystem.TryGetAttributeValue(attribute, out var attributeValue)) continue;
+                attributeSystem.SetAttributeValue(attribute, attributeValue);
+            }
         }
 
         private void OnAttributeChanged(

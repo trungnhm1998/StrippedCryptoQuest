@@ -24,7 +24,6 @@ namespace CryptoQuest
             member.SetupUI(this);
 
             _attributeChangeEvent.AttributeSystemReference = _memberInSlot.CharacterComponent.AttributeSystem;
-            _memberInSlot.CharacterComponent.AttributeSystem.UpdateAttributeValues();
         }
 
         public void SetAvatar(Sprite avatar)
