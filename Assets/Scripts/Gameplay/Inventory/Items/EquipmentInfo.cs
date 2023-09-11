@@ -11,6 +11,8 @@ namespace CryptoQuest.Gameplay.Inventory.Items
     [Serializable]
     public class EquipmentInfo : ItemInfo<EquipmentSO>, IEquatable<EquipmentInfo>
     {
+        [field: SerializeField] public RaritySO Rarity { get; private set; }
+        [field: SerializeField] public bool IsNftItem { get; private set; }
         [field: SerializeField] public int Level { get; private set; }
         [field: SerializeField] public StatsDef Stats { get; private set; }
         public EquipmentSlot.EType[] RequiredSlots => Data.RequiredSlots;
