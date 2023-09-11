@@ -160,6 +160,11 @@ namespace CryptoQuest.Gameplay.Encounter
     {
         public int Id { get; set; }
         public float GoldAmount { get; set; }
-        public List<int> ItemIds { get; set; }
+        public List<RewardDefs> RewardDefs { get; set; }
+    }
+    public struct RewardDefs 
+    {
+        public string Id;
+        public int Amount;
     }
 }
