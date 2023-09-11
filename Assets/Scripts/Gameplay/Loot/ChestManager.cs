@@ -48,8 +48,8 @@ namespace CryptoQuest.Gameplay.Loot
         private IEnumerator CoAddLoots(ChestBehaviour chest)
         {
             var lootId = chest.Treasure;
-            yield return _lootDatabase.LoadLoots(lootId);
-            var loots = _lootDatabase.GetLoots(lootId);
+            yield return _lootDatabase.LoadDataById(lootId);
+            var loots = _lootDatabase.GetDataById(lootId);
             // TODO: This method should be async wait for server to add the loot into inventory first
             AddLootsToInventory(loots);
             chest.Opened?.Invoke();
