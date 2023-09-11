@@ -23,7 +23,7 @@ namespace CryptoQuest.Gameplay.Battle
             _enemyPartyBehaviour.Init(_loadedEnemies);
         }
 
-        private readonly List<Character.Enemy> _loadedEnemies = new();
+        private readonly List<Character.EnemySpec> _loadedEnemies = new();
 
         private IEnumerator LoadEnemiesData()
         {
@@ -33,10 +33,13 @@ namespace CryptoQuest.Gameplay.Battle
             {
                 var enemyId = enemyParty.EnemyIds[index];
                 yield return _enemyDatabase.LoadDataById(enemyId);
-                var characterSpec = _enemyDatabase
-                    .GetDataById(enemyId)
-                    .CreateCharacterSpec();
-                _loadedEnemies.Add(characterSpec); // TODO: UNLOAD ENEMY DATA
+                var def = _enemyDatabase.GetDataById(enemyId);
+                if (def == null)
+                {
+                    Debug.LogError($"failed to load enemy data with id {enemyId}");
+                    continue;
+                }
+                _loadedEnemies.Add(def.CreateCharacterSpec()); // TODO: UNLOAD ENEMY DATA
             }
         }
     }

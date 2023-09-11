@@ -8,12 +8,12 @@ using UnityEngine.UIElements;
 
 namespace CryptoQuestEditor.Gameplay.Character
 {
-    [CustomEditor(typeof(EnemyData))]
+    [CustomEditor(typeof(EnemyDef))]
     public class EnemyDataEditor : Editor
     {
         [SerializeField] private VisualTreeAsset _uxml;
 
-        private EnemyData Target => target as EnemyData;
+        private EnemyDef Target => target as EnemyDef;
 
         public override VisualElement CreateInspectorGUI()
         {

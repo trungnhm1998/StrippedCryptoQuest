@@ -21,7 +21,7 @@ namespace CryptoQuest.Gameplay.Character
     /// Enemy structure (https://docs.google.com/spreadsheets/d/1WkX1DyDOGf6EiAppo8Buz2sUkSKV5OnDENEvmHzKXNQ/edit#gid=1024080951)
     /// </summary>
     [CreateAssetMenu(menuName = "Create EnemyData", fileName = "EnemyData", order = 0)]
-    public class EnemyData : CharacterData<EnemyData, Enemy>
+    public class EnemyDef : CharacterData<EnemyDef, EnemySpec>
     {
         // This is not experience of the enemy, it's exp player gain after defeat this enemy
         [field: SerializeField] public int Exp { get; private set; }

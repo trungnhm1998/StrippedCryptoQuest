@@ -5,13 +5,13 @@ namespace CryptoQuest.Gameplay.Battle
 {
     public class EnemyBehaviour : MonoBehaviour
     {
-        private EnemyData _enemyData;
+        private EnemyDef _enemyDef;
         private GameObject _enemyModel;
 
-        public void Init(Character.Enemy enemySpec)
+        public void Init(Character.EnemySpec enemySpecSpec)
         {
-            _enemyData = enemySpec.Data;
-            _enemyModel = Instantiate(_enemyData.Prefab, transform);
+            _enemyDef = enemySpecSpec.Data;
+            _enemyModel = Instantiate(_enemyDef.Prefab, transform);
         }
     }
 }
