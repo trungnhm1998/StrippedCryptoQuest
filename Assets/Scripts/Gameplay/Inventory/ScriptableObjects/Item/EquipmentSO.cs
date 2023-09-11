@@ -11,10 +11,40 @@ namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item
         [field: Header("Equipment Item")]
         [field: SerializeField] public EquipmentTypeSO EquipmentType { get; protected set; }
 
-        [field: SerializeField] public RaritySO Rarity { get; private set; }
-        [field: SerializeField] public LocalizedString LocalizedEquipmentType { get; private set; }
         [field: SerializeField] public int RequiredCharacterLevel { get; private set; }
         [field: SerializeField] public EquipmentSlot.EType[] RequiredSlots { get; private set; }
         public EEquipmentCategory EquipmentCategory => EquipmentType.EquipmentCategory;
+
+#if UNITY_EDITOR
+        /// <summary>
+        /// Editor only method to set EquipmentType
+        /// This method will be use in <see cref="CryptoQuestEditor.Gameplay.Inventory.EquipmentSOEditor.ImportBatchData"/>
+        /// </summary>
+        /// <param name="equipmentType"></param>
+        public void Editor_SetEquipmentType(EquipmentTypeSO equipmentType)
+        {
+            EquipmentType = equipmentType;
+        }
+
+        /// <summary>
+        /// Editor only method to set RequiredCharacterLevel
+        /// This method will be use in <see cref="CryptoQuestEditor.Gameplay.Inventory.EquipmentSOEditor.ImportBatchData"/>
+        /// </summary>
+        /// <param name="requiredCharacterLevel"></param>
+        public void Editor_SetRequiredCharacterLevel(int requiredCharacterLevel)
+        {
+            RequiredCharacterLevel = requiredCharacterLevel;
+        }
+
+        /// <summary>
+        /// Editor only method to set RequiredSlots
+        /// This method will be use in <see cref="CryptoQuestEditor.Gameplay.Inventory.EquipmentSOEditor.ImportBatchData"/>
+        /// </summary>
+        /// <param name="requiredSlots"></param>
+        public void Editor_SetRequiredSlots(EquipmentSlot.EType[] requiredSlots)
+        {
+            RequiredSlots = requiredSlots;
+        }
+#endif
     }
 }

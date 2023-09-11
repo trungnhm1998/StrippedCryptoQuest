@@ -65,7 +65,7 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
                 .WithDescription(_equipment.Data.DisplayName)
                 .WithDisplaySprite(_equipment.Data.Image)
                 .WithContentAwareness(_tooltipPosition)
-                .WithRarity(_equipment.Data.Rarity)
+                .WithRarity(_equipment.Rarity)
                 .Show();
         }
 
