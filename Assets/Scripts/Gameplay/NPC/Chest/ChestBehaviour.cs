@@ -21,11 +21,6 @@ namespace CryptoQuest.Gameplay.NPC.Chest
         private static readonly int IsOpening = Animator.StringToHash("IsOpening");
         private static readonly int OpenedState = Animator.StringToHash("Opened");
 
-        private void OnValidate()
-        {
-            if (string.IsNullOrEmpty(_guid)) _guid = Guid.NewGuid().ToString();
-        }
-
         private void Awake()
         {
             _sceneLoadedEvent.EventRaised += LoadChestState;
@@ -62,6 +57,8 @@ namespace CryptoQuest.Gameplay.NPC.Chest
         public void TreasureId(int id)
         {
             _treasureId = id;
+            if (string.IsNullOrEmpty(_guid))
+                _guid = Guid.NewGuid().ToString();
         }
     }
 }

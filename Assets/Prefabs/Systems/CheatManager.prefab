@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 2262791701633051740}
   - component: {fileID: 1268901053087997494}
   - component: {fileID: 7784650765450427001}
+  - component: {fileID: 3014115152584219374}
   m_Layer: 0
   m_Name: CheatManager
   m_TagString: Untagged
@@ -35,7 +36,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &5110442504288256078
 MonoBehaviour:
@@ -147,3 +148,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _provider: {fileID: 11400000, guid: 8c870727215fbcf48976e7263a1a2485, type: 2}
   _characterLevelUpEventChannel: {fileID: 11400000, guid: e57768d8910d6754ebcc69981271224e, type: 2}
+--- !u!114 &3014115152584219374
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 270790438277420143}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5cb8ab91109c36642b4afc6ca0558475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _serviceProvider: {fileID: 11400000, guid: 8c870727215fbcf48976e7263a1a2485, type: 2}
+  _goldSo: {fileID: 11400000, guid: 16b3f6e09fc22d240be1b324116eeb79, type: 2}

@@ -1,8 +1,10 @@
-﻿using CryptoQuest.Gameplay.Inventory.Currency;
+﻿using CryptoQuest.Events;
+using CryptoQuest.Events.UI.Dialogs;
+using CryptoQuest.Gameplay.Inventory.Currency;
 using CryptoQuest.Gameplay.Inventory.Items;
 using CryptoQuest.Gameplay.Loot;
+using CryptoQuest.UI.Dialogs.RewardDialog;
 using UnityEngine;
-using CryptoQuest.Events;
 
 namespace CryptoQuest.Gameplay.Reward
 {
@@ -11,19 +13,21 @@ namespace CryptoQuest.Gameplay.Reward
         /// <summary>
         /// Reward player with item. could be <see cref="EquipmentInfo"/> or <see cref="UsableInfo"/> or <see cref="CurrencyInfo"/>
         /// </summary>
-        /// <param name="item"></param>
-        /// <returns></returns>
-        void Reward(LootInfo item);
+        public void Reward(params LootInfo[] loots);
     }
 
     public class RewardManager : MonoBehaviour, IRewardManager
     {
         [Header("Raise Event")]
         [SerializeField] private LootEventChannelSO _addLootRequestEventChannel;
-        
-        public void Reward(LootInfo loot)
+
+        [SerializeField] private RewardDialogEventChannelSO _showRewardDialogEventChannel;
+
+        public void Reward(params LootInfo[] loots)
         {
-            _addLootRequestEventChannel.RaiseEvent(loot);
+            foreach (var loot in loots)
+                _addLootRequestEventChannel.RaiseEvent(loot);
+            if (loots.Length > 0) _showRewardDialogEventChannel.Show(new RewardDialogData(loots));
         }
     }
 }

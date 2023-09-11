@@ -17,7 +17,6 @@ namespace CryptoQuest.Gameplay.Loot
     {
         [SerializeField] private LootDatabase _lootDatabase;
         [SerializeField] private ChestSave _saveData; // TODO: Move this to save manager
-
         private IRewardManager _rewardManager;
 
         private void Awake()
@@ -51,15 +50,9 @@ namespace CryptoQuest.Gameplay.Loot
             yield return _lootDatabase.LoadDataById(lootId);
             var loots = _lootDatabase.GetDataById(lootId);
             // TODO: This method should be async wait for server to add the loot into inventory first
-            AddLootsToInventory(loots);
+            _rewardManager.Reward(loots.LootInfos.ToArray());
             chest.Opened?.Invoke();
             _saveData.OpenedChests.Add(chest.GUID);
-        }
-
-        private void AddLootsToInventory(LootTable loots)
-        {
-            foreach (var loot in loots.LootInfos)
-                _rewardManager.Reward(loot);
         }
     }
 }

@@ -1,10 +1,7 @@
 using System.Collections;
-using CryptoQuest.Gameplay.Quest;
 using CryptoQuest.Input;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.Localization;
-using UnityEngine.Localization.Components;
 using UnityEngine.UI;
 
 namespace CryptoQuest.UI.Dialogs.RewardDialog
@@ -13,43 +10,43 @@ namespace CryptoQuest.UI.Dialogs.RewardDialog
     {
         [Header("Child Components")]
         [SerializeField] private InputMediatorSO _inputMediator;
+
+        [SerializeField] private float _autoCloseDelay = 1.5f;
         [SerializeField] private Button _defaultSelectButton;
-        [SerializeField] private LocalizeStringEvent _earnedEXP;
-        [SerializeField] private LocalizeStringEvent _earnedGold;
-        [SerializeField] private LocalizeStringEvent _earnedSouls;
-        [SerializeField] private GameObject _rewardedItemPrefab;
-        [SerializeField] private Transform _itemsContainerTransform;
-        [SerializeField] private LocalizedString _noItemString;
+        [SerializeField] private GameObject _topNone;
+        [SerializeField] private GameObject _bottomNone;
+        [field: SerializeField] public UIRewardItem RewardItemPrefab { get; private set; }
+        [field: SerializeField] public Transform TopContainer { get; private set; }
+        [field: SerializeField] public Transform BottomContainer { get; private set; }
 
         public UnityAction CloseButtonPressed;
         private RewardDialogData _rewardDialogData;
 
-        protected override void OnBeforeShow() {
+        protected override void OnBeforeShow()
+        {
+            if (_rewardDialogData.IsValid() == false) return;
+            _inputMediator.DisableAllInput();
             DisplayItemsReward();
         }
 
         protected override void CheckIgnorableForClose() { }
 
-        private void Awake()
+        private IEnumerator Start()
         {
-            StartCoroutine(CoSelectDefaultButton());
-        }
-
-        private IEnumerator CoSelectDefaultButton()
-        {
-            yield return new WaitForSeconds(.03f);
+            yield return null;
             _defaultSelectButton.Select();
         }
 
         public void OnCloseButtonPressed()
         {
-            CloseButtonPressed.Invoke();
+            CloseButtonPressed?.Invoke();
             Close();
         }
 
         public override UIRewardDialog Close()
         {
             gameObject.SetActive(false);
+            _inputMediator.EnableMapGameplayInput();
             return base.Close();
         }
 
@@ -61,33 +58,20 @@ namespace CryptoQuest.UI.Dialogs.RewardDialog
 
         private void DisplayItemsReward()
         {
-            if (_rewardDialogData.ItemNames.Count <= 0)
-            {
-                SetRewardedItemLabel(_noItemString);
-                return;
-            }
+            foreach (var reward in _rewardDialogData.RewardsInfos)
+                reward.CreateUI(this);
 
-            foreach (var itemName in _rewardDialogData.ItemNames)
-            {
-                SetRewardedItemLabel(itemName);
-            }
+            _topNone.SetActive(!(TopContainer.childCount > 0));
+            _bottomNone.SetActive(!(BottomContainer.childCount > 0));
+            if (_topNone.activeSelf && _bottomNone.activeSelf) StartCoroutine(CoAutoClose());
         }
 
-        private LocalizeStringEvent GetRewaredItemLabel()
+        private IEnumerator CoAutoClose()
         {
-            var goItem = Instantiate(_rewardedItemPrefab, _itemsContainerTransform);
-
-            var rewardedItemLabel = goItem.GetComponent<LocalizeStringEvent>();
-
-            return rewardedItemLabel;
+            yield return new WaitForSeconds(_autoCloseDelay);
+            Close();
         }
 
-        private void SetRewardedItemLabel(LocalizedString itemName)
-        {
-            var rewardedItemLabel = 
-                GetRewaredItemLabel();
-
-            rewardedItemLabel.StringReference = itemName;
-        }
+        public UIRewardItem InstantiateReward(Transform parent) => Instantiate(RewardItemPrefab, parent);
     }
 }
