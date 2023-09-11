@@ -7,7 +7,11 @@ using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using Object = UnityEngine.Object;
 
-namespace CryptoQuest.Core
+#if UNITY_EDITOR
+    using UnityEditor;
+#endif
+
+namespace IndiGames.Core.Database
 {
     public class GenericAssetReferenceDatabase<TKey, TSerializableObject> : ScriptableObject
         where TSerializableObject : Object
@@ -20,8 +24,8 @@ namespace CryptoQuest.Core
         }
 
         public event Action<TSerializableObject> DataLoaded;
-
-        [field: SerializeField] public Map[] Maps { get; private set; }
+        [field: SerializeField] private Map[] _maps;
+        public Map[] Maps => _maps;
 
         [NonSerialized] private Dictionary<TKey, AssetReferenceT<TSerializableObject>> _map = new();
 
@@ -84,13 +88,42 @@ namespace CryptoQuest.Core
                 return data.Result;
 
             Debug.LogWarning($"Database::GetDataById() - Cannot find/load data with id {id}");
-            return null; // try not to return null
+            return default(TSerializableObject);
         }
+
 #if UNITY_EDITOR
         public void Editor_SetMaps(Map[] maps)
         {
-            Maps = maps;
+            _maps = maps;
         }
-#endif
+
+        /// <summary>
+        /// You must also declare this in your devired class so it'll show up in editor inspector menu
+        /// </summary>
+        [ContextMenu("Fetch Data In Project")]
+        public virtual void Editor_FetchDataInProject()
+        {
+            _maps = Array.Empty<Map>();
+
+            var assetUids = AssetDatabase.FindAssets("t:" + typeof(TSerializableObject).Name);
+
+            foreach (var uid in assetUids)
+            {
+                var instance = new Map();
+                var path = AssetDatabase.GUIDToAssetPath(uid);
+                var asset = AssetDatabase.LoadAssetAtPath<TSerializableObject>(path);
+                
+                var assetRef = new AssetReferenceT<TSerializableObject>(uid);
+
+                assetRef.SetEditorAsset(asset);
+                Editor_SetInstanceId(ref instance, asset);
+                instance.Data = assetRef;
+                ArrayUtility.Add(ref _maps, instance);
+            }
+            UnityEditor.EditorUtility.SetDirty(this);   
+        }
+
+        protected virtual void Editor_SetInstanceId(ref Map instance, TSerializableObject asset) {}
     }
+#endif
 }

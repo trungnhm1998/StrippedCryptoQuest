@@ -20,8 +20,8 @@ namespace CryptoQuest.Gameplay.Inventory.Items
     [Serializable]
     public abstract class ItemInfo<TDef> : ItemInfo where TDef : GenericItem
     {
-        [field: SerializeField] public TDef Data { get; private set; } // TODO: Primitive item ID instead
-
+        [field: SerializeField] public TDef Data { get; set; } // TODO: Primitive item ID instead
+        
         protected ItemInfo(TDef baseGenericItem)
         {
             Data = baseGenericItem;
