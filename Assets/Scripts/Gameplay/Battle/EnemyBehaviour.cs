@@ -8,10 +8,10 @@ namespace CryptoQuest.Gameplay.Battle
         private EnemyData _enemyData;
         private GameObject _enemyModel;
 
-        public void Init(EnemyData enemyData)
+        public void Init(Character.Enemy enemySpec)
         {
-            _enemyData = enemyData;
-            _enemyModel = Instantiate(enemyData.Prefab, transform);
+            _enemyData = enemySpec.Data;
+            _enemyModel = Instantiate(_enemyData.Prefab, transform);
         }
     }
 }

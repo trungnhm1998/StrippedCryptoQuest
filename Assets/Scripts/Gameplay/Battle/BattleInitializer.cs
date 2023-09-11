@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects;
 using CryptoQuest.Gameplay.Battle.ScriptableObjects;
-using CryptoQuest.Gameplay.Character;
 using UnityEngine;
 
 namespace CryptoQuest.Gameplay.Battle
@@ -21,20 +20,23 @@ namespace CryptoQuest.Gameplay.Battle
         public IEnumerator LoadEnemies()
         {
             yield return LoadEnemiesData();
-            _enemyPartyBehaviour.Init(_loadedEnemyData);
+            _enemyPartyBehaviour.Init(_loadedEnemies);
         }
 
-        private readonly List<EnemyData> _loadedEnemyData = new();
+        private readonly List<Character.Enemy> _loadedEnemies = new();
 
         private IEnumerator LoadEnemiesData()
         {
-            _loadedEnemyData.Clear();
+            _loadedEnemies.Clear();
             var enemyParty = _bus.CurrentBattlefield;
             for (var index = 0; index < enemyParty.EnemyIds.Length; index++)
             {
                 var enemyId = enemyParty.EnemyIds[index];
                 yield return _enemyDatabase.LoadDataById(enemyId);
-                _loadedEnemyData.Add(_enemyDatabase.GetDataById(enemyId)); // TODO: UNLOAD ENEMY DATA
+                var characterSpec = _enemyDatabase
+                    .GetDataById(enemyId)
+                    .CreateCharacterSpec();
+                _loadedEnemies.Add(characterSpec); // TODO: UNLOAD ENEMY DATA
             }
         }
     }

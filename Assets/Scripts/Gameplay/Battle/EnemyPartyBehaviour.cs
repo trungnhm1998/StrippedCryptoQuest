@@ -9,14 +9,14 @@ namespace CryptoQuest.Gameplay.Battle
     {
         [SerializeField] private List<EnemyBehaviour> _enemies;
 
-        public void Init(List<EnemyData> loadedEnemyData)
+        public void Init(List<Character.Enemy> loadedEnemyData)
         {
             for (var index = 0; index < loadedEnemyData.Count; index++)
             {
-                var enemyData = loadedEnemyData[index];
-                if (enemyData == null) continue;
+                var enemySpec = loadedEnemyData[index];
+                if (enemySpec == null) continue;
                 
-                _enemies[index].Init(enemyData);
+                _enemies[index].Init(enemySpec);
             }
         }
     }
