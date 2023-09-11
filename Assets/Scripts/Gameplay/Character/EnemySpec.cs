@@ -8,15 +8,42 @@ namespace CryptoQuest.Gameplay.Character
     [Serializable]
     public class EnemySpec : CharacterInformation<EnemyDef, EnemySpec>
     {
+        public event Action<string> NameChanged;
         private string _displayName = string.Empty;
-        public string DisplayName => _displayName;
 
-        public IEnumerator SetDisplayName(string postFix)
+        public string DisplayName
         {
+            get => _displayName;
+            private set
+            {
+                _displayName = value;
+                NameChanged?.Invoke(_displayName);
+            }
+        }
+
+        public override void Init(EnemyDef data)
+        {
+            base.Init(data);
+            if (IsValid() == false) return;
+
+            Data.Name.GetLocalizedStringAsync(); // this should load the localized string when setting postfix later
+            Data.Name.StringChanged += UpdateDisplayName;
+        }
+
+        private string _postfix = string.Empty;
+
+        private void UpdateDisplayName(string value)
+        {
+            DisplayName = $"{value}{_postfix}";
+        }
+
+        public IEnumerator SetDisplayName(string postfix)
+        {
+            _postfix = postfix;
             if (Data.Name.IsEmpty)
             {
                 Debug.LogWarning($"Localized string not set using default name {Data.Name}");
-                _displayName = $"{Data.Name}{postFix}";
+                DisplayName = $"{Data.Name}{postfix}";
                 yield break;
             }
 
@@ -27,12 +54,18 @@ namespace CryptoQuest.Gameplay.Character
             if (!loadedSuccess)
             {
                 Debug.LogWarning($"Failed to load localized string for enemy using default name {Data.Name}");
-                _displayName = $"{Data.Name}{postFix}";
+                DisplayName = $"{Data.Name}{postfix}";
                 yield break;
             }
 
-            _displayName = $"{handle.Result}{postFix}";
-            Debug.Log($"Enemy name is {_displayName}");
+            DisplayName = $"{handle.Result}{postfix}";
         }
+
+        public override void Release()
+        {
+            Data.Name.StringChanged -= UpdateDisplayName;
+            base.Release(); // this need to be after because Data will be null
+        }
+        
     }
 }

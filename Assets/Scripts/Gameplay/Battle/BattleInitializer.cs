@@ -36,7 +36,8 @@ namespace CryptoQuest.Gameplay.Battle
                 var def = _enemyDatabase.GetDataById(enemyId);
                 if (def == null)
                 {
-                    Debug.LogError($"failed to load enemy data with id {enemyId}");
+                    // TODO: Create mock enemy instead of skipping?
+                    Debug.LogError($"failed to load enemy data with id {enemyId}, skipping...");
                     continue;
                 }
                 _loadedEnemies.Add(def.CreateCharacterSpec()); // TODO: UNLOAD ENEMY DATA
