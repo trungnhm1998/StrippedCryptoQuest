@@ -1,4 +1,4 @@
-﻿using CryptoQuest.UI.Menu.Panels.Home;
+using CryptoQuest.UI.Menu.Panels.Home;
 using UnityEngine;
 
 namespace CryptoQuest.UI.Menu.MenuStates.HomeStates
@@ -33,24 +33,31 @@ namespace CryptoQuest.UI.Menu.MenuStates.HomeStates
         public override void HandleNavigate(Vector2 direction)
         {
             base.HandleNavigate(direction);
-            // HomePanel.SortMode.Swap(direction.x);
+            HandleSwapDirection(direction);
+        }
 
+        /// <summary>
+        /// Using the If condition instead of directly passing x-direction
+        /// like this: <see cref="HomePanel.SortMode.Swap(direction.x)"/> is a must
+        /// because of the appearance of a bug caused by the input system.
+        /// </summary>
+        private void HandleSwapDirection(Vector2 direction)
+        {
             if (direction.x > 0)
                 HomePanel.SortMode.SwapRight();
             else if (direction.x < 0)
                 HomePanel.SortMode.SwapLeft();
         }
 
-        private void ExitSortState()
-        {
-            MenuStateMachine.RequestStateChange(HomeMenuStateMachine.PreSort);
-        }
-
         public override void OnExit()
         {
             base.OnExit();
-            HomePanel.SortMode.ConfirmSortOrder();
             HomePanel.SortMode.ConfirmedEvent -= ExitSortState;
+        }
+
+        private void ExitSortState()
+        {
+            MenuStateMachine.RequestStateChange(HomeMenuStateMachine.PreSort);
         }
     }
 }

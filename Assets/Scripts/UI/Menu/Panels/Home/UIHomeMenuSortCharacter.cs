@@ -1,11 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data;
 using CryptoQuest.Gameplay.PlayerParty;
 using CryptoQuest.System;
 using IndiGames.Core.Events.ScriptableObjects;
-using IndiGames.GameplayAbilitySystem.AttributeSystem.Components;
 using UnityEngine;
 
 namespace CryptoQuest.UI.Menu.Panels.Home
@@ -15,9 +13,9 @@ namespace CryptoQuest.UI.Menu.Panels.Home
         public event Action SelectedEvent;
         public event Action ConfirmedEvent;
         [SerializeField] private ServiceProvider _serviceProvider;
+        [SerializeField] private VoidEventChannelSO _sortFailedEvent;
 
         [Header("Game Components")]
-        [SerializeField] private Transform _characterSlots;
         [SerializeField] private GameObject _topLine;
         [SerializeField] private UIPartySlot[] _partySlots;
         [SerializeField] private GameObject[] _sortLayers;
@@ -59,18 +57,17 @@ namespace CryptoQuest.UI.Menu.Panels.Home
         private void OnEnable()
         {
             UICharacterCardButton.SelectedEvent += ConfirmSelect;
+            _sortFailedEvent.EventRaised += ResetSortOrder;
+
             _sortKeysUi.SetActive(true);
             LoadPartyMembers();
         }
 
         private void OnDisable()
         {
-            UICharacterCardButton.SelectedEvent -= ConfirmSelect;
-        }
-
-        private void OnDestroy()
-        {
             _serviceProvider.PartyProvided -= InitParty;
+            UICharacterCardButton.SelectedEvent -= ConfirmSelect;
+            _sortFailedEvent.EventRaised -= ResetSortOrder;
         }
 
         private void InitParty(IPartyController partyController)
@@ -91,10 +88,31 @@ namespace CryptoQuest.UI.Menu.Panels.Home
             }
         }
 
-        private void OnEnableSortMode()
+        private void EnableSortMode()
         {
             _selectedCardButtonHolder = _partySlots[CurrentIndex].transform.GetChild(0).GetComponent<UICharacterCardButton>();
             _selectedCardButtonHolder.Select();
+        }
+
+        private void SetButtonsActive(bool isEnable)
+        {
+            foreach (var button in _cardButtons)
+            {
+                button.enabled = isEnable;
+            }
+        }
+
+        #region State involved methods
+        public void Init()
+        {
+            EnableSortMode();
+            SetButtonsActive(true);
+        }
+
+        public void DeInit()
+        {
+            SetButtonsActive(false);
+            _sortKeysUi.SetActive(false);
         }
 
         public void ConfirmSelect(UICharacterCardButton card)
@@ -105,6 +123,7 @@ namespace CryptoQuest.UI.Menu.Panels.Home
             _sortKeysUi.SetActive(true);
 
             CurrentIndex = _partySlots.ToList().IndexOf(card.transform.parent.GetComponent<UIPartySlot>());
+            _indexHolder = CurrentIndex;
             _selectedCardButtonHolder = card;
 
             PutToSortLayer(_selectedCardButtonHolder.transform);
@@ -112,8 +131,8 @@ namespace CryptoQuest.UI.Menu.Panels.Home
 
         public void SwapRight()
         {
-            var currentTarget = _sortLayers[CurrentIndex].transform.GetChild(0);
-            var otherTarget = _partySlots[CurrentIndex + 1].transform.GetChild(0);
+            Transform currentTarget = _sortLayers[CurrentIndex].transform.GetChild(0);
+            Transform otherTarget = _partySlots[CurrentIndex + 1].transform.GetChild(0);
 
             PutToNormalLayer(otherTarget, CurrentIndex);
             CurrentIndex++;
@@ -124,8 +143,8 @@ namespace CryptoQuest.UI.Menu.Panels.Home
 
         public void SwapLeft()
         {
-            var currentTarget = _sortLayers[CurrentIndex].transform.GetChild(0);
-            var otherTarget = _partySlots[CurrentIndex - 1].transform.GetChild(0);
+            Transform currentTarget = _sortLayers[CurrentIndex].transform.GetChild(0);
+            Transform otherTarget = _partySlots[CurrentIndex - 1].transform.GetChild(0);
 
             PutToNormalLayer(otherTarget, CurrentIndex);
             CurrentIndex--;
@@ -133,6 +152,31 @@ namespace CryptoQuest.UI.Menu.Panels.Home
 
             _selectedCardButtonHolder = currentTarget.GetComponent<UICharacterCardButton>();
         }
+
+        public void ConfirmSortOrder()
+        {
+            _topLine.SetActive(true);
+
+            PutToNormalLayer(_selectedCardButtonHolder.transform, CurrentIndex);
+
+            _party.Sort(_indexHolder, CurrentIndex);
+
+            // Must delay a bit (0.2s) to avoid bug caused by exiting SortState immediately
+            Invoke(nameof(OnConfirmSortOrder), .2f);
+            _selectedCardButtonHolder.BackToNormalState();
+        }
+
+        public void CancelSort()
+        {
+            ResetSortOrder();
+            _selectedCardButtonHolder.BackToNormalState();
+        }
+
+        public void SetDefaultSelection()
+        {
+            CurrentIndex = 0;
+        }
+        #endregion
 
         private void PutToSortLayer(Transform targetTransform)
         {
@@ -146,56 +190,19 @@ namespace CryptoQuest.UI.Menu.Panels.Home
             targetTransform.localPosition = new Vector3(0, 0, 0);
         }
 
-        public void ConfirmSortOrder()
-        {
-            _topLine.SetActive(true);
-
-            PutToNormalLayer(_selectedCardButtonHolder.transform, CurrentIndex);
-            Invoke(nameof(OnConfirmSortOrder), .2f);
-            _selectedCardButtonHolder.BackToNormalState();
-        }
-
         private void OnConfirmSortOrder()
         {
             ConfirmedEvent?.Invoke();
         }
 
-        public void CancelSort()
+        private void ResetSortOrder()
         {
-            ApplyDataBeforeSort();
-        }
+            var otherTarget = _partySlots[_indexHolder].transform.GetChild(0);
 
-        private void ApplyDataBeforeSort()
-        {
-            var currentTarget = _characterSlots.GetChild(CurrentIndex);
-            currentTarget.SetSiblingIndex(_indexHolder);
+            PutToNormalLayer(otherTarget, CurrentIndex);
+            PutToNormalLayer(_selectedCardButtonHolder.transform, _indexHolder);
 
             CurrentIndex = _indexHolder;
-        }
-
-        private void SetButtonsActive(bool isEnable)
-        {
-            foreach (var button in _cardButtons)
-            {
-                button.enabled = isEnable;
-            }
-        }
-
-        public void Init()
-        {
-            OnEnableSortMode();
-            SetButtonsActive(true);
-        }
-
-        public void DeInit()
-        {
-            SetButtonsActive(false);
-            _sortKeysUi.SetActive(false);
-        }
-
-        public void SetDefaultSelection()
-        {
-            CurrentIndex = 0;
         }
     }
 }
