@@ -9,5 +9,21 @@ namespace CryptoQuest.Gameplay.BaseGameplayData
         [field: SerializeField] public int Id { get; private set; }
         [field: SerializeField] public LocalizedString Name { get; private set; }
         [field: SerializeField] public LocalizedString Description { get; private set; }
+#if UNITY_EDITOR
+        public void Editor_SetId(int id)
+        {
+            Id = id;
+        }
+
+        public void Editor_SetName(LocalizedString nameString)
+        {
+            Name = nameString;
+        }
+
+        public void Editor_SetDescription(LocalizedString description)
+        {
+            Description = description;
+        }
+#endif
     }
 }
