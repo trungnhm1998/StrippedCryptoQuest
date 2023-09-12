@@ -12,6 +12,11 @@ namespace CryptoQuestEditor.Gameplay.Inventory
     {
         private const string DEFAULT_NAME = "Usable";
         private const int ROW_OFFSET = 2;
+        private const int ROW_ITEM_ID = 0;
+        private const int ROW_ITEM_TYPE = 7;
+
+        private const string ITEM_TYPE = "1";
+        private const string DATA_PATH = "Assets/ScriptableObjects/Data/Inventory/UsableTypes/";
 
         public UsableSOBrowserEditor()
         {
@@ -27,15 +32,15 @@ namespace CryptoQuestEditor.Gameplay.Inventory
         /// <param name="callback"></param>
         public override void ImportBatchData(string directory, Action<ScriptableObject> callback)
         {
-            string[] allLines = File.ReadAllLines(directory);
+            string[] rows = File.ReadAllLines(directory);
 
-            for (int index = ROW_OFFSET; index < allLines.Length; index++)
+            for (int index = ROW_OFFSET; index < rows.Length; index++)
             {
                 // get data form tsv file
-                string[] splitedData = allLines[index].Split('\t');
-                string id = splitedData[0];
+                string[] cols = rows[index].Split('\t');
+                string id = cols[ROW_ITEM_ID];
                 string name = DEFAULT_NAME + id;
-                string type = splitedData[5];
+                string type = cols[ROW_ITEM_TYPE];
                 string path = DefaultStoragePath + "/" + name + ".asset";
 
                 UsableSO instance = null;
@@ -49,17 +54,17 @@ namespace CryptoQuestEditor.Gameplay.Inventory
 
                 var keyAsset =
                     (UsableTypeSO)AssetDatabase.LoadAssetAtPath(
-                        "Assets/ScriptableObjects/Data/Inventory/UsableTypes/KeyItem.asset", typeof(UsableTypeSO));
+                        $"{DATA_PATH}KeyItem.asset", typeof(UsableTypeSO));
                 var consumableAsset =
                     (UsableTypeSO)AssetDatabase.LoadAssetAtPath(
-                        "Assets/ScriptableObjects/Data/Inventory/UsableTypes/Consumable.asset", typeof(UsableTypeSO));
+                        $"{DATA_PATH}Consumable.asset", typeof(UsableTypeSO));
 
                 // import Data
                 instance.Editor_SetID(id);
                 instance.name = name;
 
                 instance.Editor_SetUsableType(consumableAsset);
-                if (type == "1")
+                if (type == ITEM_TYPE)
                 {
                     instance.Editor_SetUsableType(keyAsset);
                 }
