@@ -28,7 +28,7 @@ namespace CryptoQuest.Gameplay.Battle
         [field: SerializeField] public AssetReferenceT<Sprite> Background;
 
 #if UNITY_EDITOR
-        public void Editor_SetBattlefieldID(string id)
+        public void Editor_SetID(string id)
         {
             ID = id;
         }

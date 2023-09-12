@@ -75,7 +75,7 @@ namespace CryptoQuest.Gameplay.Encounter
             return count <= 4;
         }
 
-        public static bool MonsterPartyValidator(MonsterPartyDataModel data)
+        public static bool MonsterPartyValidator(EncounterDataModel data)
         {
             var properties = data.GetType().GetProperties();
             foreach (var property in properties)
@@ -130,11 +130,13 @@ namespace CryptoQuest.Gameplay.Encounter
         public string MonsterPrefabName { get; set; }
     }
 
-    public class MonsterPartyDataModel
+    public class EncounterDataModel
     {
-        public int MonserPartyId { get; set; }
-        public string MonsterGroupingProperty { get; set; }
+        public string Id { get; set; }
+        public List<BattlePartyDataModel> BattleParties { get; set; } = new();
+        public string BackgroundId { get; set; }
     }
+
 
     public class BattleFieldDataModel
     {
@@ -142,16 +144,10 @@ namespace CryptoQuest.Gameplay.Encounter
         public List<int> BattleEncounterSetups { get; set; } = new();
     }
 
-    public class BattleEncounterSetupDataModel
+    public class BattlePartyDataModel
     {
         public int BattleDataId { get; set; }
         public float Probability { get; set; }
-
-        public BattleEncounterSetupDataModel(int battleDataId, float encounterRate)
-        {
-            BattleDataId = battleDataId;
-            Probability = encounterRate;
-        }
     }
 
     public class LootTableDataModel

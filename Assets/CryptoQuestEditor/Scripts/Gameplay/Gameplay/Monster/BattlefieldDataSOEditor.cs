@@ -64,23 +64,6 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Monster
             }
         }
 
-        // private List<int> SetUpInstanceBattleEncounter(BattleFieldDataModel dataModel)
-        // {
-        //     List<int> battleEncounterSetups = new();
-        //     foreach (var battleEncounterSetupDataModel in dataModel.BattleEncounterSetups)
-        //     {
-        //         var battleDatas = GetAssetsFromType<Battlefield>().Where(data
-        //             => data.Id == battleEncounterSetupDataModel.BattleDataId);
-        //         if (battleDatas.Count() == 0) continue;
-        //         EncounterData.GroupConfig encounterSetup = new();
-        //         encounterSetup.Probability = battleEncounterSetupDataModel.Probability /
-        //                                      BaseBattleVariable.CORRECTION_PROBABILITY_VALUE;
-        //         encounterSetup.Battlefield = battleDatas.First();
-        //         battleEncounterSetups.Add(encounterSetup);
-        //     }
-        //
-        //     return battleEncounterSetups;
-        // }
 
         private List<int> GetPartyMonsterIds(string groupProperties)
         {
@@ -96,14 +79,6 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Monster
 
             return partyIds;
         }
-
-        // private AssetReferenceT<Sprite> SetUpBattleBackGround(BattleFieldDataModel dataModel)
-        // {
-        //     var backgroundAssets = GetAssetsFromType<BattleBackgroundSO>().Where(data
-        //         => data.Id == dataModel.BackgroundId);
-        //     if (backgroundAssets.Count() == 0) return null;
-        //     return backgroundAssets.First().BattleBackground;
-        // }
        
 
 
@@ -117,26 +92,8 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Monster
             dataModel.BattleEncounterSetups = GetPartyMonsterIds(splitedData[1]);
             return dataModel.BattleEncounterSetups.Count > 0;
         }
-        //
-        //     return DataValidator.IsValidTotalProbability(monsterGroup);
-        // }
-        //
-        // private bool CanSetUpBattleFieldDataModel(BattleFieldDataModel dataModel,
-        //     List<BattleEncounterSetupDataModel> monsterGroup, string[] splitedData)
-        // {
-        //     int battleFieldId = int.Parse(splitedData[0]);
-        //     string chapterId = splitedData[1];
-        //     bool isBackgroundIdNumeric = int.TryParse(splitedData[5], out int backgroundId);
-        //     if (battleFieldId == null || chapterId == null || !isBackgroundIdNumeric || monsterGroup == null)
-        //     {
-        //         Debug.LogWarning("Invalid data");
-        //         return false;
-        //     }
-        //
-        //     dataModel.BattleFieldId = battleFieldId;
-        //     dataModel.BattleEncounterSetups = monsterGroup;
-        //     return true;
-        // }
+      
+      
 
         #endregion
     }
