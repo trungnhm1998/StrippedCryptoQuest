@@ -1,9 +1,11 @@
 using System;
 using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects;
 using CryptoQuest.Gameplay.Encounter;
+using CryptoQuest.Gameplay.Reward;
 using CryptoQuest.Input;
 using CryptoQuest.UI.SpiralFX;
 using IndiGames.Core.Events.ScriptableObjects;
+using IndiGames.Core.SceneManagementSystem;
 using IndiGames.Core.SceneManagementSystem.Events.ScriptableObjects;
 using IndiGames.Core.SceneManagementSystem.ScriptableObjects;
 using UnityEngine;
@@ -27,19 +29,23 @@ namespace CryptoQuest.Gameplay.Battle
 
         [Header("Events to raise")]
         [SerializeField] private UnloadSceneEventChannelSO _unloadSceneEvent;
+
         [SerializeField] private LoadSceneEventChannelSO _loadSceneEventChannelSo;
 
         [Header("Config"), SerializeField]
         private Battlefield[] _enemyParties = Array.Empty<Battlefield>();
 
-        private void OnEnable()
+        private void Awake()
         {
             _onBattleEndEventChannel.EventRaised += OnBattleEnd;
             LoadBattle += LoadingBattle;
             LoadBattleWithId += LoadingBattle;
+
+            BattleManager.BattleCompleted += UnloadBattle;
+            AdditiveGameSceneLoader.SceneUnloaded += BattleUnloaded;
         }
 
-        private void OnDisable()
+        private void OnDestroy()
         {
             _onBattleEndEventChannel.EventRaised -= OnBattleEnd;
             LoadBattle -= LoadingBattle;
@@ -47,6 +53,9 @@ namespace CryptoQuest.Gameplay.Battle
 
             _spiralConfigSo.DoneSpiralIn -= SpiralInDone;
             _spiralConfigSo.DoneFadeOut -= StartBattle;
+
+            BattleManager.BattleCompleted -= UnloadBattle;
+            AdditiveGameSceneLoader.SceneUnloaded -= BattleUnloaded;
         }
 
         private void LoadingBattle(int id)
@@ -70,7 +79,7 @@ namespace CryptoQuest.Gameplay.Battle
         private void LoadingBattle(Battlefield party)
         {
             _gameState.UpdateGameState(EGameState.Battle);
-            _battleInput.EnableBattleInput();
+            _battleInput.DisableAllInput(); // enable battle input when battle is loaded
             _battleBus.CurrentBattlefield = party;
             ShowSpiralAndLoadBattleScene();
         }
@@ -97,6 +106,21 @@ namespace CryptoQuest.Gameplay.Battle
         private void OnBattleEnd()
         {
             _unloadSceneEvent.RequestUnload(_battleSceneSO);
+        }
+
+        private BattleContext _context;
+
+        private void UnloadBattle(BattleContext context)
+        {
+            _context = context;
+            OnBattleEnd();
+        }
+
+        private void BattleUnloaded(SceneScriptableObject scene)
+        {
+            if (scene != _battleSceneSO) return;
+            _battleInput.EnableMapGameplayInput();
+            RewardManager.RewardPlayer(_context.Loots);
         }
     }
 }

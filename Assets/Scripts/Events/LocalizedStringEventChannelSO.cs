@@ -1,35 +1,28 @@
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.Localization;
+using IndiGames.Core.Events.ScriptableObjects;
 
 namespace CryptoQuest.Events
 {
     [CreateAssetMenu(menuName = "Crypto Quest/Events/Localized String Event Channel")]
-    public class LocalizedStringEventChannelSO : ScriptableObject
+    public class LocalizedStringEventChannelSO : GenericEventChannelSO<LocalizedString>
     {
-        public UnityAction<LocalizedString> EventRaised;
 #if UNITY_EDITOR
         [SerializeField] private LocalizedString _debugValue;
         public LocalizedString DebugValue => _debugValue;
 #endif
 
-        public void RaiseEvent(LocalizedString value)
+        public override void RaiseEvent(LocalizedString value)
         {
-            OnRaiseEvent(value);
+            base.RaiseEvent(value);
 #if UNITY_EDITOR
             _debugValue = value;
 #endif
         }
 
-        private void OnRaiseEvent(LocalizedString value)
+        protected override void OnRaiseEvent(LocalizedString value)
         {
-            if (EventRaised == null)
-            {
-                Debug.LogWarning($"Event was raised on {name} but no one was listening.");
-                return;
-            }
-
-            EventRaised.Invoke(value);
+            base.OnRaiseEvent(value);
 #if UNITY_EDITOR
             _debugValue = value;
 #endif

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using CryptoQuest.Gameplay.Loot;
 using CryptoQuest.Gameplay.Reward;
@@ -9,13 +10,23 @@ using UnityEngine;
 
 namespace CryptoQuest.Gameplay.Battle
 {
+    [Serializable]
+    public struct BattleContext
+    {
+        public LootInfo[] Loots;
+    }
+
     public class BattleManager : MonoBehaviour
     {
+        public delegate void BattleEvent(BattleContext context);
+
+        public static event BattleEvent BattleCompleted;
         [SerializeField] private SpiralConfigSO _spiral;
         [SerializeField] private BattleInputSO _input;
         [SerializeField, Header("Listen")] private VoidEventChannelSO _sceneLoadedEvent;
 
         private IBattleInitializer _initializer;
+        private Coroutine _initCoroutine;
 
         private void Awake()
         {
@@ -37,7 +48,7 @@ namespace CryptoQuest.Gameplay.Battle
         private void InitBattle()
         {
             Debug.Log("BattleManager::InitBattle()");
-            StartCoroutine(CoInitBattle());
+            _initCoroutine = StartCoroutine(CoInitBattle());
         }
 
         private IEnumerator CoInitBattle()
@@ -65,12 +76,17 @@ namespace CryptoQuest.Gameplay.Battle
         /// </summary>
         public void WinBattle()
         {
+            _input.DisableAllInput();
+            if (_initCoroutine != null) StopCoroutine(_initCoroutine);
+            var context = new BattleContext();
             List<LootInfo> loots = new();
             var enemies = _initializer.Enemies;
+            // TODO: This also return cloned loot, but we already clone it in RewardManager?
             foreach (var enemy in enemies)
                 loots.AddRange(enemy.GetLoots());
-            if (loots.Count > 0) RewardManager.RewardPlayer(loots.ToArray());
-            // unload battle
+            if (loots.Count > 0) context.Loots = RewardManager.CloneAndMergeLoots(loots.ToArray());
+
+            BattleCompleted?.Invoke(context);
         }
 
         private void FinishInitBattle()

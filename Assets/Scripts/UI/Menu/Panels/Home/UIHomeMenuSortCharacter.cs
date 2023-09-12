@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Codice.Client.BaseCommands.Merge.Xml;
 using CryptoQuest.Gameplay.PlayerParty;
 using CryptoQuest.System;
 using IndiGames.Core.Events.ScriptableObjects;
@@ -84,9 +83,12 @@ namespace CryptoQuest.UI.Menu.Panels.Home
             {
                 var member = _party.Members[index];
                 var slot = _partySlots[index];
+
                 slot.Active(member.IsValid());
                 if (!member.IsValid()) continue;
-                slot.Init(member);
+
+                var childInfo = slot.transform.GetComponentInChildren<UICharacterInfo>();
+                slot.Init(member, childInfo);
             }
         }
 
@@ -170,7 +172,7 @@ namespace CryptoQuest.UI.Menu.Panels.Home
 
             PutToNormalLayer(_selectedCardButtonHolder.transform, CurrentIndex);
 
-            // Must delay a bit (0.2s) to avoid bug caused by exiting and entering SortState immediately
+            // Must delay a bit (0.2s) to avoid bug caused by exiting SortState and entering PreSortState immediately
             Invoke(nameof(OnConfirmSortOrder), .2f);
             _selectedCardButtonHolder.BackToNormalState();
         }

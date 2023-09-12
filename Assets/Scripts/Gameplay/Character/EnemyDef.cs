@@ -15,6 +15,7 @@ namespace CryptoQuest.Gameplay.Character
         public float Chance;
         [SerializeReference] public LootInfo LootItem;
 
+        /// <returns>a cloned of loot config</returns>
         public LootInfo CreateLoot() => LootItem.Clone();
     }
 
