@@ -25,12 +25,21 @@ namespace CryptoQuest.Gameplay.Battle
         public float EncounterRate => _encounterRate;
         [SerializeField] private bool _isEscapable = true;
         public bool IsEscapable => _isEscapable;
-        [field: SerializeField] public AssetReferenceT<Sprite> Background;
+        [field: SerializeField] public Sprite Background { get; private set; }
 
 #if UNITY_EDITOR
-        public void Editor_SetBattlefieldID(string id)
+        public void Editor_SetID(string id)
         {
             ID = id;
+        }
+        public void Editor_SetBackground(Sprite sprite)
+        {
+            Background = sprite;
+        }
+
+        public void Editor_SetGroup(List<GroupConfig> groupConfigs)
+        {
+            _configs = groupConfigs;
         }
 
         public void Editor_SetConfig(List<GroupConfig> config)

@@ -37,17 +37,6 @@ namespace CryptoQuest.Gameplay.Encounter
             return ((!string.IsNullOrEmpty(firstData)) && (!string.IsNullOrEmpty(secondData)));
         }
 
-        public static bool IsValidTotalProbability(List<BattleEncounterSetupDataModel> monsterGroups)
-        {
-            float totalProbability = 0;
-            foreach (var monsterGroup in monsterGroups)
-            {
-                totalProbability += monsterGroup.Probability / BaseBattleVariable.CORRECTION_PROBABILITY_VALUE;
-            }
-
-            return totalProbability == 1;
-        }
-
         public static bool IsCorrectBattleFieldSetup(EncounterData data)
         {
             float totalProbability = 0;
@@ -75,7 +64,7 @@ namespace CryptoQuest.Gameplay.Encounter
             return count <= 4;
         }
 
-        public static bool MonsterPartyValidator(MonsterPartyDataModel data)
+        public static bool MonsterPartyValidator(EncounterDataModel data)
         {
             var properties = data.GetType().GetProperties();
             foreach (var property in properties)
@@ -130,30 +119,24 @@ namespace CryptoQuest.Gameplay.Encounter
         public string MonsterPrefabName { get; set; }
     }
 
-    public class MonsterPartyDataModel
+    public class EncounterDataModel
     {
-        public int MonserPartyId { get; set; }
-        public string MonsterGroupingProperty { get; set; }
+        public string Id { get; set; }
+        public List<BattlePartyDataModel> BattleParties { get; set; } = new();
+        public string BackgroundName { get; set; }
     }
+
 
     public class BattleFieldDataModel
     {
-        public string BattleFieldId { get; set; }
-        public string ChapterId { get; set; }
-        public int BackgroundId { get; set; }
-        public List<BattleEncounterSetupDataModel> BattleEncounterSetups { get; set; } = new();
+        public int BattleFieldId { get; set; }
+        public List<int> BattleEncounterSetups { get; set; } = new();
     }
 
-    public class BattleEncounterSetupDataModel
+    public class BattlePartyDataModel
     {
         public int BattleDataId { get; set; }
         public float Probability { get; set; }
-
-        public BattleEncounterSetupDataModel(int battleDataId, float encounterRate)
-        {
-            BattleDataId = battleDataId;
-            Probability = encounterRate;
-        }
     }
 
     public class LootTableDataModel

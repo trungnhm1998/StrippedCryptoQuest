@@ -10,8 +10,10 @@ namespace CryptoQuest.Character.MonoBehaviours
     public class HeroController : MonoBehaviour, ICharacterController
     {
         [SerializeField] private InputMediatorSO _inputMediator;
+
         [Tooltip("how far the character has to move to trigger a step")]
-        [SerializeField] private float _distancePerStep = .95f;
+        [SerializeField] private float _distanceTilCountAsStep = .95f;
+
         [SerializeField] private float _speed = 4f;
         [SerializeField] private HeroBehaviour _characterBehaviour;
 
@@ -19,6 +21,11 @@ namespace CryptoQuest.Character.MonoBehaviours
         private Vector2 _inputVector;
         private IPlayerVelocityStrategy _velocityStrategy;
         private IInteractionManager _interactionManager;
+        
+        public void SetDistanceTilNextStep(float distance)
+        {
+            _distanceTilCountAsStep = distance;
+        }
 
         private void Awake()
         {
@@ -70,7 +77,7 @@ namespace CryptoQuest.Character.MonoBehaviours
                 Math.Abs(Vector2.Distance(_lastPosition, position)); // don't care about if moving backward or not
             _lastPosition = position;
 
-            if (!(_distance >= _distancePerStep)) return;
+            if (!(_distance >= _distanceTilCountAsStep)) return;
             _distance = 0;
             _characterBehaviour.OnStep();
         }

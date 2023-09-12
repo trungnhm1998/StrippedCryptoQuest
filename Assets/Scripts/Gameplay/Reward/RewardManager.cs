@@ -42,7 +42,7 @@ namespace CryptoQuest.Gameplay.Reward
 
         public void Reward(params LootInfo[] loots)
         {
-            if (loots.Length == 0) return;
+            if (loots == null || loots.Length == 0) return;
             var mergedLoots = CloneAndMergeLoots(loots);
             foreach (var loot in mergedLoots)
                 _addLootRequestEventChannel.RaiseEvent(loot);
