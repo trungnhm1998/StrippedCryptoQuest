@@ -3,6 +3,7 @@ using CryptoQuest.Gameplay.Loot;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
 using UnityEngine;
 #if UNITY_EDITOR
+using CryptoQuest.Gameplay.Inventory.Currency;
 using UnityEditor;
 #endif
 
@@ -39,6 +40,16 @@ namespace CryptoQuest.Gameplay.Character
                 LootItem = loot,
                 Chance = 1
             });
+        }
+
+        public void Editor_SetStats(AttributeWithValue[] stats)
+        {
+            Stats = stats;
+        }
+
+        public void Editor_ClearDrop()
+        {
+            _drops = Array.Empty<Drop>();
         }
 
         public void Editor_SetMonsterPrefab(GameObject prefab)

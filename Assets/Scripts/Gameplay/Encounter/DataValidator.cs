@@ -20,9 +20,9 @@ namespace CryptoQuest.Gameplay.Encounter
             return true;
         }
 
-        public static bool IsStringsNotNull(string[] datas, List<int> columnsException = null)
+        public static bool IsStringsNotNull(string[] datas, int length, List<int> columnsException = null)
         {
-            for (int i = 0; i < datas.Length; i++)
+            for (int i = 0; i < length; i++)
             {
                 if (columnsException != null && columnsException.Contains(i))
                     continue;
@@ -124,7 +124,7 @@ namespace CryptoQuest.Gameplay.Encounter
         public float Defense { get; set; }
         public float EvasionRate { get; set; }
         public float CriticalRate { get; set; }
-        public float Exp { get; set; }
+        public int Exp { get; set; }
         public float Gold { get; set; }
         public string DropItemID { get; set; }
         public string MonsterPrefabName { get; set; }
@@ -162,7 +162,8 @@ namespace CryptoQuest.Gameplay.Encounter
         public float GoldAmount { get; set; }
         public List<RewardDefs> RewardDefs { get; set; }
     }
-    public struct RewardDefs 
+
+    public struct RewardDefs
     {
         public string Id;
         public int Amount;

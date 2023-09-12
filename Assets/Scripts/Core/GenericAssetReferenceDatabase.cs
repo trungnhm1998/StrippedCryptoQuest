@@ -64,5 +64,11 @@ namespace CryptoQuest.Core
             Debug.LogWarning($"Database::GetDataById() - Cannot find/load data with id {id}");
             return null; // try not to return null
         }
+#if UNITY_EDITOR
+        public void Editor_SetMaps(Map[] maps)
+        {
+            Maps = maps;
+        }
+#endif
     }
 }

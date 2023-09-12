@@ -27,5 +27,11 @@ namespace CryptoQuest.Gameplay.Character
             character.Init((TDef)this);
             return character;
         }
+#if UNITY_EDITOR
+        public void Editor_SetElement(Elemental element)
+        {
+            Element = element;
+        }
+#endif
     }
 }
