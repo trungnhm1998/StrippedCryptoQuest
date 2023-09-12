@@ -69,6 +69,10 @@ namespace CryptoQuest.Gameplay.Character
             base.Release(); // this need to be after because Data will be null
         }
 
+        /// <summary>
+        /// Get all lootable items from enemy based on their <see cref="Drop"/> configs
+        /// </summary>
+        /// <returns>Cloned loot</returns>
         public List<LootInfo> GetLoots()
         {
             var drops = Data.Drops;

@@ -1,5 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
+using System.Collections;
 using IndiGames.Core.Events.ScriptableObjects;
 using IndiGames.Core.SceneManagementSystem.Events.ScriptableObjects;
 using IndiGames.Core.SceneManagementSystem.ScriptableObjects;
@@ -13,6 +13,7 @@ namespace IndiGames.Core.SceneManagementSystem
 {
     public class AdditiveGameSceneLoader : MonoBehaviour
     {
+        public static event Action<SceneScriptableObject> SceneUnloaded;
         [SerializeField] private SceneScriptableObject _gameplayManagerSceneSO;
         [SerializeField] private FadeConfigSO _fadeConfigSO;
 
@@ -133,6 +134,8 @@ namespace IndiGames.Core.SceneManagementSystem
 #endif
             }
             _fadeConfigSO.OnFadeOut();
+            yield return new WaitForSeconds(_fadeConfigSO.Duration);
+            SceneUnloaded?.Invoke(sceneToUnload);
         }
 
         private void LoadNewScene()

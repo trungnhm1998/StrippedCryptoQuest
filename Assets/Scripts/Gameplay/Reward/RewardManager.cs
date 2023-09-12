@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using CryptoQuest.Events;
 using CryptoQuest.Events.UI.Dialogs;
 using CryptoQuest.Gameplay.Inventory.Currency;
@@ -41,15 +42,22 @@ namespace CryptoQuest.Gameplay.Reward
 
         public void Reward(params LootInfo[] loots)
         {
-            var mergedLoots = MergeLoots(loots);
+            if (loots.Length == 0) return;
+            var mergedLoots = CloneAndMergeLoots(loots);
             foreach (var loot in mergedLoots)
                 _addLootRequestEventChannel.RaiseEvent(loot);
-            if (mergedLoots.Length > 0) _showRewardDialogEventChannel.Show(new RewardDialogData(mergedLoots));
+            _showRewardDialogEventChannel.Show(new RewardDialogData(mergedLoots));
         }
 
-        public LootInfo[] MergeLoots(params LootInfo[] loots)
+        /// <summary>
+        /// Except equipments, merge all loots with same item data
+        /// e.g. 2x <see cref="CurrencyInfo"/> with same <see cref="CurrencySO"/> will be merged into 1x <see cref="CurrencyInfo"/> with amount 2
+        /// </summary>
+        /// <param name="loots">Contains <see cref="CurrencyLootInfo"/>, <see cref="ExpLoot"/>, <see cref="UsableLootInfo"/>, <see cref="EquipmentLootInfo"/></param>
+        /// <returns>Loots that merged and cloned to be add into inventory</returns>
+        public static LootInfo[] CloneAndMergeLoots(params LootInfo[] loots)
         {
-            List<LootInfo> mergedLoots = new(loots);
+            List<LootInfo> mergedLoots = loots.Select(loot => loot.Clone()).ToList();
             for (var index = 0; index < mergedLoots.Count; index++)
             {
                 var loot = mergedLoots[index];
