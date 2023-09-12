@@ -15,10 +15,10 @@ namespace CryptoQuest.UI.Menu
 
         [Header("Configs")]
         [SerializeField] private InputMediatorSO _inputMediator;
+        [SerializeField] private VoidEventChannelSO _menuOpenedEvent;
 
-        [Header("Game Components")] [SerializeField]
-        private GameObject _contents;
-
+        [Header("Game Components")]
+        [SerializeField] private GameObject _contents;
         [SerializeField] private UINavigationBar _navigationBar;
         public UINavigationBar NavigationBar => _navigationBar;
         [SerializeField] private MenuTypeSO _defaultMenu;
@@ -128,6 +128,7 @@ namespace CryptoQuest.UI.Menu
             _navigationBar.SetActive(true);
             _mainMenuFsm.Init();
             _inputMediator.EnableMenuInput();
+            _menuOpenedEvent.RaiseEvent();
         }
 
         /// <summary>
