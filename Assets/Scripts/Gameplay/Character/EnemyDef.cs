@@ -1,10 +1,9 @@
 ﻿using System;
-using CryptoQuest.Gameplay.Inventory.Currency;
-using CryptoQuest.Gameplay.Inventory.Items;
 using CryptoQuest.Gameplay.Loot;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
 using UnityEngine;
 #if UNITY_EDITOR
+using CryptoQuest.Gameplay.Inventory.Currency;
 using UnityEditor;
 #endif
 
@@ -15,6 +14,8 @@ namespace CryptoQuest.Gameplay.Character
     {
         public float Chance;
         [SerializeReference] public LootInfo LootItem;
+
+        public LootInfo CreateLoot() => LootItem.Clone();
     }
 
     /// <summary>
@@ -23,8 +24,6 @@ namespace CryptoQuest.Gameplay.Character
     [CreateAssetMenu(menuName = "Create EnemyData", fileName = "EnemyData", order = 0)]
     public class EnemyDef : CharacterData<EnemyDef, EnemySpec>
     {
-        // This is not experience of the enemy, it's exp player gain after defeat this enemy
-        [field: SerializeField] public int Exp { get; private set; }
         [field: SerializeField] public GameObject Prefab { get; private set; }
 
         [field: SerializeField] public AttributeWithValue[] Stats { get; private set; } =
@@ -34,41 +33,18 @@ namespace CryptoQuest.Gameplay.Character
         public Drop[] Drops => _drops;
 
 #if UNITY_EDITOR
-        public void Editor_AddDrop(EquipmentInfo equipment)
+        public void Editor_AddDrop(LootInfo loot)
         {
             ArrayUtility.Add(ref _drops, new Drop()
             {
-                LootItem = new EquipmentLootInfo(equipment),
+                LootItem = loot,
                 Chance = 1
             });
-        }
-
-        public void Editor_SetEXP(int exp)
-        {
-            Exp = exp;
         }
 
         public void Editor_SetStats(AttributeWithValue[] stats)
         {
             Stats = stats;
-        }
-
-        public void Editor_AddDrop(UsableInfo consumable)
-        {
-            ArrayUtility.Add(ref _drops, new Drop()
-            {
-                LootItem = new UsableLootInfo(consumable),
-                Chance = 1
-            });
-        }
-
-        public void Editor_AddDrop(CurrencyInfo currencyInfo)
-        {
-            ArrayUtility.Add(ref _drops, new Drop()
-            {
-                LootItem = new CurrencyLootInfo(currencyInfo),
-                Chance = 1
-            });
         }
 
         public void Editor_ClearDrop()

@@ -34,7 +34,7 @@ namespace CryptoQuest.UI.Dialogs.RewardDialog
         protected override void OnCreateUI(UIRewardItem ui)
         {
             ui.RewardContent.StringReference = _localizedString;
-            ui.StringChanged += s =>
+            ui.RewardContent.StringReference.StringChanged += s =>
             {
                 var text = $"{_amount} {s}";
                 ui.SetText(text);
@@ -69,12 +69,19 @@ namespace CryptoQuest.UI.Dialogs.RewardDialog
         protected override void OnCreateUI(UIRewardItem ui)
         {
             ui.RewardContent.StringReference = _consumableLootInfo.Item.Data.DisplayName;
-            ui.StringChanged += s =>
+            ui.RewardContent.StringReference.StringChanged += s =>
             {
                 var quantityText = $" X{_consumableLootInfo.Item.Quantity}";
                 var text = $"{s}{quantityText}";
                 ui.SetText(text);
             };
         }
+    }
+
+    public class GenericReward : Reward
+    {
+        private readonly string _txt;
+        public GenericReward(string str) : base(true) => _txt = str;
+        protected override void OnCreateUI(UIRewardItem ui) => ui.SetText(_txt);
     }
 }

@@ -9,7 +9,13 @@ namespace CryptoQuest.Gameplay.Loot
     [CreateAssetMenu(fileName = "LootTable", menuName = "Gameplay/Loot/Loot Table")]
     public class LootTable : ScriptableObject
     {
-        [field: SerializeField] public string ID { get; private set; }
+        [field: SerializeField] public int ID { get; private set; }
         [SerializeReference] public List<LootInfo> LootInfos = new();
+#if UNITY_EDITOR
+        public void Editor_SetUp(int id)
+        {
+            ID = id;
+        }
+#endif
     }
 }

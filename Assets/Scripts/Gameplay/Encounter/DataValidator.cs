@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using CryptoQuest.Gameplay.Battle;
 using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Calculation;
+using CryptoQuest.Gameplay.Loot;
 
 namespace CryptoQuest.Gameplay.Encounter
 {
@@ -19,9 +20,9 @@ namespace CryptoQuest.Gameplay.Encounter
             return true;
         }
 
-        public static bool IsStringsNotNull(string[] datas, List<int> columnsException = null)
+        public static bool IsStringsNotNull(string[] datas, int length, List<int> columnsException = null)
         {
-            for (int i = 0; i < datas.Length; i++)
+            for (int i = 0; i < length; i++)
             {
                 if (columnsException != null && columnsException.Contains(i))
                     continue;
@@ -151,5 +152,18 @@ namespace CryptoQuest.Gameplay.Encounter
             BattleDataId = battleDataId;
             Probability = encounterRate;
         }
+    }
+
+    public class LootTableDataModel
+    {
+        public int Id { get; set; }
+        public float GoldAmount { get; set; }
+        public List<RewardDefs> RewardDefs { get; set; }
+    }
+
+    public struct RewardDefs
+    {
+        public string Id;
+        public int Amount;
     }
 }

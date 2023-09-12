@@ -32,7 +32,6 @@ MonoBehaviour:
     m_WaitForCompletion: 0
     m_LocalVariables: []
   <Element>k__BackingField: {fileID: 11400000, guid: 45b43c65777683f40ac77dac46dbe86c, type: 2}
-  <Exp>k__BackingField: 630
   <Prefab>k__BackingField: {fileID: 3218328897052263089, guid: df7e4ae31ac914e009cb496474a3f9ec, type: 3}
   <Stats>k__BackingField:
   - <Attribute>k__BackingField: {fileID: 11400000, guid: 692557e6fee799243868270d0b093d7e, type: 2}
@@ -64,14 +63,21 @@ MonoBehaviour:
   _drops:
   - Chance: 1
     LootItem:
-      rid: 2161567567269330989
+      rid: 2161567567269331183
+  - Chance: 1
+    LootItem:
+      rid: 2161567567269331184
   references:
     version: 2
     RefIds:
-    - rid: 2161567567269330989
+    - rid: 2161567567269331183
       type: {class: CurrencyLootInfo, ns: CryptoQuest.Gameplay.Loot, asm: indi-games.crypto-quest}
       data:
         _item:
-          _id: 7fb55c9c-3eae-4bf0-aa28-a4420d46adc9
+          _id: 1b61c5f9-e8f8-4212-bff8-2467e5191232
           <Data>k__BackingField: {fileID: 11400000, guid: 16b3f6e09fc22d240be1b324116eeb79, type: 2}
           <Amount>k__BackingField: 125
+    - rid: 2161567567269331184
+      type: {class: ExpLoot, ns: CryptoQuest.Gameplay.Loot, asm: indi-games.crypto-quest}
+      data:
+        <Exp>k__BackingField: 630

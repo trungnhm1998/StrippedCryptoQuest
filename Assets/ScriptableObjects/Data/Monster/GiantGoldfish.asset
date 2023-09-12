@@ -32,46 +32,52 @@ MonoBehaviour:
     m_WaitForCompletion: 0
     m_LocalVariables: []
   <Element>k__BackingField: {fileID: 11400000, guid: ba6de62bb4e6b1340881a31dcd37f1ee, type: 2}
-  <Exp>k__BackingField: 105
   <Prefab>k__BackingField: {fileID: 0}
   <Stats>k__BackingField:
   - <Attribute>k__BackingField: {fileID: 11400000, guid: 692557e6fee799243868270d0b093d7e, type: 2}
-    <Value>k__BackingField: 1400
+    <Value>k__BackingField: 650
   - <Attribute>k__BackingField: {fileID: 11400000, guid: 77c53593fd92c904aa7689c5a7449df3, type: 2}
-    <Value>k__BackingField: 1400
+    <Value>k__BackingField: 650
   - <Attribute>k__BackingField: {fileID: 11400000, guid: a7e3a44d36bf87d44afeb00b236e832e, type: 2}
-    <Value>k__BackingField: 60
+    <Value>k__BackingField: 0
   - <Attribute>k__BackingField: {fileID: 11400000, guid: 0d7a5bc26b58515459d9e824964fd7f8, type: 2}
-    <Value>k__BackingField: 420
-  - <Attribute>k__BackingField: {fileID: 11400000, guid: 6762f359f1a736c45b2df614e80aef45, type: 2}
     <Value>k__BackingField: 400
+  - <Attribute>k__BackingField: {fileID: 11400000, guid: 6762f359f1a736c45b2df614e80aef45, type: 2}
+    <Value>k__BackingField: 380
   - <Attribute>k__BackingField: {fileID: 11400000, guid: 2b6352f953a4cb54d806baed1b804397, type: 2}
-    <Value>k__BackingField: 280
+    <Value>k__BackingField: 210
   - <Attribute>k__BackingField: {fileID: 11400000, guid: 33fa33f7e21108b4280d1749ac4886e0, type: 2}
     <Value>k__BackingField: 1
   - <Attribute>k__BackingField: {fileID: 11400000, guid: 9ea7ef66c3bae0d47832b0244c8e6ff6, type: 2}
     <Value>k__BackingField: 1
   - <Attribute>k__BackingField: {fileID: 11400000, guid: cff0791781b73cf4ca80877936aedaad, type: 2}
-    <Value>k__BackingField: 420
+    <Value>k__BackingField: 400
   - <Attribute>k__BackingField: {fileID: 11400000, guid: e2ac2354599d7f54ebd4f00865c30caa, type: 2}
     <Value>k__BackingField: 1
   - <Attribute>k__BackingField: {fileID: 11400000, guid: be99df9b1a6f2804abf9dd03f042eb2e, type: 2}
-    <Value>k__BackingField: 400
+    <Value>k__BackingField: 380
   - <Attribute>k__BackingField: {fileID: 11400000, guid: 40f2911ebe67b664f8f2adeb18ea0353, type: 2}
-    <Value>k__BackingField: 9.52
+    <Value>k__BackingField: 8.49
   - <Attribute>k__BackingField: {fileID: 11400000, guid: 1b80f5d6341985e43aa2fa24d468686d, type: 2}
     <Value>k__BackingField: 1
   _drops:
   - Chance: 1
     LootItem:
-      rid: 2161567567269331014
+      rid: 2161567567269331055
+  - Chance: 1
+    LootItem:
+      rid: 2161567567269331056
   references:
     version: 2
     RefIds:
-    - rid: 2161567567269331014
+    - rid: 2161567567269331055
       type: {class: CurrencyLootInfo, ns: CryptoQuest.Gameplay.Loot, asm: indi-games.crypto-quest}
       data:
         _item:
-          _id: 8d295712-6e42-4002-9436-3d907ca71f5e
+          _id: d0746bff-ace0-4fc2-bba4-f0cee696fa4d
           <Data>k__BackingField: {fileID: 11400000, guid: 16b3f6e09fc22d240be1b324116eeb79, type: 2}
-          <Amount>k__BackingField: 50
+          <Amount>k__BackingField: 60
+    - rid: 2161567567269331056
+      type: {class: ExpLoot, ns: CryptoQuest.Gameplay.Loot, asm: indi-games.crypto-quest}
+      data:
+        <Exp>k__BackingField: 50

@@ -11,6 +11,9 @@ namespace CryptoQuest.Gameplay.Loot
         public abstract void AddItemToInventory(InventorySO inventory);
 
         public abstract UI.Dialogs.RewardDialog.Reward CreateRewardUI();
+        public abstract LootInfo Clone();
+
+        public abstract bool Merge(LootInfo otherLoot);
     }
 
     [Serializable]
@@ -18,8 +21,11 @@ namespace CryptoQuest.Gameplay.Loot
     {
         [SerializeField] private TItemInfo _item;
 
-        public TItemInfo Item => _item;
-
+        public TItemInfo Item
+        {
+            get => _item;
+            set => _item = value;
+        }
         public LootInfo(TItemInfo item) => _item = item;
     }
 }

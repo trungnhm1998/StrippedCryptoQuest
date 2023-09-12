@@ -8,10 +8,10 @@ using CryptoQuest.Gameplay.Battle.ScriptableObjects;
 using CryptoQuest.Gameplay.Character;
 using CryptoQuest.Gameplay.Encounter;
 using CryptoQuest.Gameplay.Inventory.Currency;
+using CryptoQuest.Gameplay.Loot;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.ScriptableObjects;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
 using IndiGames.Tools.ScriptableObjectBrowser;
-using NPOI.SS.Formula.Functions;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -78,7 +78,7 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Monster
                 string name = splitedData[4];
                 string replacedName = name.Replace(" ", "");
                 string path = DefaultStoragePath + "/" + replacedName + ".asset";
-                if (!DataValidator.IsStringsNotNull(splitedData, new List<int>()
+                if (!DataValidator.IsStringsNotNull(splitedData, 26, new List<int>()
                     {
                         DESCRIPTION_JP_COLUMN_INDEX, DESCRIPTION_EN_COLUMN_INDEX, SOUL_COLUMN_INDEX,
                         DROP_ITEM_ID_COLUMN_INDEX,
@@ -108,6 +108,7 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Monster
                     DropItemID = "Drop item id",
                     MonsterPrefabName = splitedData[MONSTER_PREFAB_NAME_COLUMN_INDEX]
                 };
+
                 if (!DataValidator.MonsterDataValidator(dataModel))
                 {
                     Debug.Log("Data is not valid");
@@ -133,7 +134,7 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Monster
                 instance.Editor_SetElement(GetElementalSO(dataModel.ElementId));
                 instance.Editor_ClearDrop();
                 instance.Editor_AddDrop(GetGoldCurrencyRewardInfo(dataModel.Gold));
-                instance.Editor_SetEXP(dataModel.Exp);
+                instance.Editor_AddDrop(GetExpLoot(dataModel.Exp));
                 instance.Editor_SetStats(attributeInitValues);
                 instance.name = replacedName;
 
@@ -178,12 +179,18 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Monster
             return AssetDatabase.LoadAssetAtPath<GameObject>(AssetDatabase.GUIDToAssetPath(guid));
         }
 
-        private CurrencyInfo GetGoldCurrencyRewardInfo(float amount)
+        private ExpLoot GetExpLoot(float exp)
+        {
+            return new ExpLoot(exp);
+        }
+
+        private CurrencyLootInfo GetGoldCurrencyRewardInfo(float amount)
         {
             var path = GOLD_CURRENCY_ASSET_PATH;
             var guid = AssetDatabase.AssetPathToGUID(path);
             var goldSo = AssetDatabase.LoadAssetAtPath<CurrencySO>(AssetDatabase.GUIDToAssetPath(guid));
-            return new CurrencyInfo(goldSo, amount);
+            CurrencyInfo currencyInfo = new CurrencyInfo(goldSo, amount);
+            return new CurrencyLootInfo(currencyInfo);
         }
 
         private Elemental GetElementalSO(int elementId)

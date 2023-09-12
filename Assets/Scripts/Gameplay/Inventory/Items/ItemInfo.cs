@@ -8,17 +8,12 @@ namespace CryptoQuest.Gameplay.Inventory.Items
     [Serializable]
     public abstract class ItemInfo
     {
-        [SerializeField, ReadOnly] private string _id;
+        [SerializeField, ReadOnly] private string _id = Guid.NewGuid().ToString();
 
         public string Id
         {
             get => _id;
             set => _id = value;
-        }
-
-        protected ItemInfo()
-        {
-            _id = Guid.NewGuid().ToString();
         }
     }
 
@@ -34,9 +29,6 @@ namespace CryptoQuest.Gameplay.Inventory.Items
 
         protected ItemInfo() { }
 
-        public virtual bool IsValid()
-        {
-            return Data != null;
-        }
+        public virtual bool IsValid() => Data != null;
     }
 }

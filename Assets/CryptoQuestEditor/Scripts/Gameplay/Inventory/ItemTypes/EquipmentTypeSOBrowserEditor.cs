@@ -7,11 +7,15 @@ using UnityEngine;
 
 namespace CryptoQuestEditor.Gameplay.Inventory
 {
-    public class EquipmentTypeSOEditor : ScriptableObjectBrowserEditor<EquipmentTypeSO>
+    public class EquipmentTypeSOBrowserEditor : ScriptableObjectBrowserEditor<EquipmentTypeSO>
     {
         private const int ROW_OFFSET = 2;
+        private const int ROW_NAME = 2;
+        private const int ROW_CATEGORY_ID = 3;
 
-        public EquipmentTypeSOEditor()
+        private const string WEAPON_TYPE = "1";
+
+        public EquipmentTypeSOBrowserEditor()
         {
             CreateDataFolder = false;
 
@@ -20,18 +24,17 @@ namespace CryptoQuestEditor.Gameplay.Inventory
 
         public override void ImportBatchData(string directory, Action<ScriptableObject> callback)
         {
-            string[] allLines = File.ReadAllLines(directory);
+            string[] row = File.ReadAllLines(directory);
 
-            for (var index = ROW_OFFSET; index < allLines.Length; index++)
+            for (var index = ROW_OFFSET; index < row.Length; index++)
             {
                 // get data form tsv file
-                string[] splitedData = allLines[index].Split('\t');
-                var id = splitedData[0];
-                var weaponType = splitedData[1];
-                var name = splitedData[3].Replace(" ", "_");
+                string[] cols = row[index].Split('\t');
+                var weaponType = cols[ROW_CATEGORY_ID];
+                var name = cols[ROW_NAME].Replace(" ", "_");
                 var path = DefaultStoragePath + "/" + name + ".asset";
 
-                if (weaponType == "1") continue;
+                if (weaponType == WEAPON_TYPE) continue;
 
                 EquipmentTypeSO instance = null;
 

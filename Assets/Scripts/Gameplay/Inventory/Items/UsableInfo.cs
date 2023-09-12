@@ -54,5 +54,10 @@ namespace CryptoQuest.Gameplay.Inventory.Items
             };
             action.Execute();
         }
+
+        public UsableInfo Clone()
+        {
+            return new UsableInfo(Data, Quantity);
+        }
     }
 }

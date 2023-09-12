@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using CryptoQuest.Gameplay.Character;
 using CryptoQuest.Gameplay.PlayerParty;
 using CryptoQuest.System;
+using CryptoQuest.UI.Menu.Character;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -17,7 +18,7 @@ namespace CryptoQuest.UI.Menu.Panels.Skill
 
         [SerializeField] private ServiceProvider _serviceProvider;
         [SerializeField] private UICharacterButton _defaultSelection;
-        [SerializeField] private UISkillPartySlot[] _partySlots;
+        [SerializeField] private UICharacterPartySlot[] _partySlots;
 
         private IParty _party;
         private GameObject _cachedGo;

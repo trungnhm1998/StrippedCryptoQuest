@@ -110,5 +110,36 @@ namespace CryptoQuest.Gameplay.Inventory.Items
         {
             return base.IsValid() && Data.EquipmentType != null;
         }
+
+#if UNITY_EDITOR
+
+        /// <summary>
+        /// This method is used to set rarity of equipment
+        /// </summary>
+        /// <param name="rarity"></param>
+        public void Editor_SetRarity(RaritySO rarity)
+        {
+            Rarity = rarity;
+        }
+
+        /// <summary>
+        /// This method is used to set level of equipment
+        /// </summary>
+        /// <param name="isNftItem"></param>
+        public void Editor_SetIsNftItem(bool isNftItem)
+        {
+            IsNftItem = isNftItem;
+        }
+
+        /// <summary>
+        /// This method is used to set level of equipment
+        /// </summary>
+        /// <param name="stats"></param>
+        public void Editor_SetStats(StatsDef stats)
+        {
+            Stats = stats;
+        }
+
+#endif
     }
 }

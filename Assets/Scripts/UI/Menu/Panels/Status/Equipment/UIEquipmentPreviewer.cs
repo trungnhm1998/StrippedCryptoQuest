@@ -45,7 +45,6 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
             _cloneCharacterGO = Instantiate(inspectingChar.CharacterComponent.gameObject, transform);
             _clonedCharacter = _cloneCharacterGO.GetComponent<CharacterBehaviourBase>();
             _clonedCharacter.Init(_clonedCharacter.Spec);
-            
         }
 
         private void CloneEquipingStatus(EquipmentInfo inspectingEquipment, CharacterSpec inspectingChar)
@@ -109,7 +108,6 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
             {
                 CloneCharacter(inspectingChar);
             }
-            
             Debug.Log($"UIEquipmentsInventory::PreviewEquipmentStats {equipment}");
             var clonedAttributeSystem = _clonedCharacter.AttributeSystem;
 
@@ -120,7 +118,10 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
             _clonedCharacter.EffectSystem.UpdateAttributeModifiersUsingAppliedEffects();
 
             List<AttributeValue> afterValues = new(clonedAttributeSystem.AttributeValues);
-            PreviewValue(currentValues, afterValues);
+            if (equipment.IsCompatibleWithCharacter(inspectingChar))
+            {
+                PreviewValue(currentValues, afterValues);
+            }
         }
 
         private void PreviewValue(List<AttributeValue> currentValues, List<AttributeValue> afterValues)

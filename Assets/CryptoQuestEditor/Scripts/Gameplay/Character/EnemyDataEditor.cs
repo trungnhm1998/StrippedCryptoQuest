@@ -1,6 +1,7 @@
 ﻿using CryptoQuest.Gameplay.Character;
 using CryptoQuest.Gameplay.Inventory.Currency;
 using CryptoQuest.Gameplay.Inventory.Items;
+using CryptoQuest.Gameplay.Loot;
 using UnityEditor;
 using UnityEditor.UIElements;
 using UnityEngine;
@@ -23,29 +24,25 @@ namespace CryptoQuestEditor.Gameplay.Character
 
             _uxml.CloneTree(root);
 
-            // add-equipment button
             var addEquipmentButton = root.Q<Button>("add-equipment-button");
-            addEquipmentButton.clicked += () =>
-            {
-                Target.Editor_AddDrop(new EquipmentInfo());
-                EditorUtility.SetDirty(Target);
-            };
+            addEquipmentButton.clicked += () => AddLoot(new EquipmentLootInfo(new EquipmentInfo()));
 
             var addUsableItemButton = root.Q<Button>("add-consumable-button");
-            addUsableItemButton.clicked += () =>
-            {
-                Target.Editor_AddDrop(new UsableInfo());
-                EditorUtility.SetDirty(Target);
-            };
-            var addCurrencyButton = root.Q<Button>("add-currency-button");
-            addCurrencyButton.clicked += () =>
-            {
-                Target.Editor_AddDrop(new CurrencyInfo());
-                EditorUtility.SetDirty(Target);
-            };
+            addUsableItemButton.clicked += () => AddLoot(new UsableLootInfo(new UsableInfo()));
 
+            var addCurrencyButton = root.Q<Button>("add-currency-button");
+            addCurrencyButton.clicked += () => AddLoot(new CurrencyLootInfo(new CurrencyInfo()));
+
+            var addExpButton = root.Q<Button>("add-xp-button");
+            addExpButton.clicked += () => AddLoot(new ExpLoot(0));
 
             return root;
+        }
+
+        private void AddLoot(LootInfo loot)
+        {
+            Target.Editor_AddDrop(loot);
+            EditorUtility.SetDirty(Target);
         }
     }
 }

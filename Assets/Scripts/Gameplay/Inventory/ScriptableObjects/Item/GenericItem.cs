@@ -21,6 +21,26 @@ namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item
         {
             ID = id;
         }
+
+        // set display name an description editor
+
+        /// <summary>
+        /// This method will be use in <see cref="CryptoQuestEditor.Gameplay.Inventory.UsableSOEditor.ImportBatchData"/>
+        /// </summary>
+        /// <param name="displayName"></param>
+        public void Editor_SetDisplayName(LocalizedString displayName)
+        {
+            DisplayName = displayName;
+        }
+
+        /// <summary>
+        /// This method will be use in <see cref="CryptoQuestEditor.Gameplay.Inventory.UsableSOEditor.ImportBatchData"/>
+        /// </summary>
+        /// <param name="description"></param>
+        public void Editor_SetDescription(LocalizedString description)
+        {
+            Description = description;
+        }
 #endif
     }
 }

@@ -44,5 +44,10 @@ namespace CryptoQuest.Gameplay.Inventory.Currency
                 Amount = 0;
             }
         }
+
+        public CurrencyInfo Clone()
+        {
+            return new CurrencyInfo(Data, Amount);
+        }
     }
 }

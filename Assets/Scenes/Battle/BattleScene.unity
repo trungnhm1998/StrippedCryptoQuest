@@ -545,7 +545,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1033825535}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1881708701663024094}
+        m_TargetAssemblyTypeName: CryptoQuest.Gameplay.Battle.BattleManager, indi-games.crypto-quest
+        m_MethodName: WinBattle
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1033825535
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -748,6 +760,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3deeb84024fa8b84e8df688f312dd64d, type: 3}
+--- !u!114 &1881708701663024094 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2865394223401524835, guid: 3deeb84024fa8b84e8df688f312dd64d, type: 3}
+  m_PrefabInstance: {fileID: 1881708701663024093}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 44d96844ef7f41f9876c328c91273c8c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2558389680284865066
 PrefabInstance:
   m_ObjectHideFlags: 0
