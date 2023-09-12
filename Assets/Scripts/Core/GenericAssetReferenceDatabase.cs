@@ -19,9 +19,11 @@ namespace CryptoQuest.Core
             public AssetReferenceT<TSerializableObject> Data;
         }
 
+        public event Action<TSerializableObject> DataLoaded;
+
         [field: SerializeField] public Map[] Maps { get; private set; }
 
-        private Dictionary<TKey, AssetReferenceT<TSerializableObject>> _map = new();
+        [NonSerialized] private Dictionary<TKey, AssetReferenceT<TSerializableObject>> _map = new();
 
         public Dictionary<TKey, AssetReferenceT<TSerializableObject>> CacheMap
         {
@@ -33,12 +35,17 @@ namespace CryptoQuest.Core
             }
         }
 
-        private readonly Dictionary<TKey, TSerializableObject> _loadedData = new();
+        private readonly Dictionary<TKey, AsyncOperationHandle<TSerializableObject>> _loadedData = new();
 
         public IEnumerator LoadDataById(TKey id)
         {
-            if (_loadedData.ContainsKey(id))
+            if (_loadedData.TryGetValue(id, out var loadingHandle))
+            {
+                yield return loadingHandle;
                 yield break;
+            }
+
+            Debug.Log($"Loading {id}");
             if (!CacheMap.TryGetValue(id, out var assetRef))
             {
                 Debug.LogWarning($"Cannot find asset with id {id} in database");
@@ -46,6 +53,7 @@ namespace CryptoQuest.Core
             }
 
             var handle = assetRef.LoadAssetAsync();
+            _loadedData.TryAdd(id, handle); // means we loading it
             yield return handle;
             if (handle.Status != AsyncOperationStatus.Succeeded || handle.Result == null)
             {
@@ -53,13 +61,27 @@ namespace CryptoQuest.Core
                 yield break;
             }
 
-            _loadedData.Add(id, handle.Result);
+            _loadedData[id] = handle;
+            DataLoaded?.Invoke(handle.Result);
         }
+
+        /// <summary>
+        /// Return the handle can use this for loading progress or check if the data is loaded
+        /// Unloading, etc
+        ///
+        /// Use <see cref="AsyncOperationHandle{TObject}.IsValid"/> to check if the handle is valid
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public AsyncOperationHandle<TSerializableObject> GetHandle(TKey id)
+            => _loadedData.TryGetValue(id, out var handle)
+                ? handle
+                : new AsyncOperationHandle<TSerializableObject>();
 
         public TSerializableObject GetDataById(TKey id)
         {
             if (_loadedData.TryGetValue(id, out var data))
-                return data;
+                return data.Result;
 
             Debug.LogWarning($"Database::GetDataById() - Cannot find/load data with id {id}");
             return null; // try not to return null

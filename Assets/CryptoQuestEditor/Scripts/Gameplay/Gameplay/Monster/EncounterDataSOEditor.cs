@@ -89,6 +89,7 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Monster
             }
 
             _encounterDatabase.Editor_SetMaps(maps.ToArray());
+            EditorUtility.SetDirty(_encounterDatabase);
         }
 
         private int _startColumnIndex = 7;

@@ -26,7 +26,7 @@ namespace CryptoQuest.Gameplay.Character
         public override void Init(EnemyDef data)
         {
             base.Init(data);
-            if (IsValid() == false) return;
+            if (IsValid() == false || Data.Name.IsEmpty) return;
 
             Data.Name.GetLocalizedStringAsync(); // this should load the localized string when setting postfix later
             Data.Name.StringChanged += UpdateDisplayName;

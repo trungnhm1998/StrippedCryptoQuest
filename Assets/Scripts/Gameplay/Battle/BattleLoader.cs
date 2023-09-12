@@ -119,6 +119,7 @@ namespace CryptoQuest.Gameplay.Battle
         private void BattleUnloaded(SceneScriptableObject scene)
         {
             if (scene != _battleSceneSO) return;
+            _gameState.UpdateGameState(_gameState.PreviousGameState);
             _battleInput.EnableMapGameplayInput();
             RewardManager.RewardPlayer(_context.Loots);
         }

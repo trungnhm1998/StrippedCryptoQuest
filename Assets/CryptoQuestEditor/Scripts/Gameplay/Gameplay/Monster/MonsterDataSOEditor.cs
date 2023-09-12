@@ -162,6 +162,7 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Monster
             }
 
             _enemyDatabase.Editor_SetMaps(enemyMap.ToArray());
+            EditorUtility.SetDirty(_enemyDatabase);
         }
 
         private AbilityScriptableObject GetNormalAttackAbility()
