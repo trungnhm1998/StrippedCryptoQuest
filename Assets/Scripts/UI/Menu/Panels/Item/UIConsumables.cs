@@ -38,8 +38,13 @@ namespace CryptoQuest.UI.Menu.Panels.Item
 
         private void Awake()
         {
-            SetConsumableUI();
             _recyclableScrollRect.Initialize(this);
+        }
+
+        private void OnEnable()
+        {
+            SetConsumableUI();
+            _recyclableScrollRect.ReloadData();
         }
 
         private void SetConsumableUI()
@@ -89,6 +94,7 @@ namespace CryptoQuest.UI.Menu.Panels.Item
         private void OnDisable()
         {
             _isPreviousHidden = true;
+            _usableItems.Clear();
         }
 
         private void OnDestroy()
