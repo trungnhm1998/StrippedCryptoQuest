@@ -27,6 +27,7 @@ namespace CryptoQuest.System.Cheat
 
         private void OnValidate()
         {
+#if UNITY_EDITOR
             var paths = AssetDatabase.FindAssets("t:SceneScriptableObject");
             var locations = new List<Location>();
             for (var i = 0; i < paths.Length; i++)
@@ -43,6 +44,7 @@ namespace CryptoQuest.System.Cheat
 
             _locations = locations.ToArray();
             EditorUtility.SetDirty(this);
+#endif
         }
 
         public void InitCheats()
