@@ -1,6 +1,4 @@
 ﻿using System;
-using CryptoQuest.Gameplay.Inventory.Currency;
-using CryptoQuest.Gameplay.Inventory.Items;
 using CryptoQuest.Gameplay.Loot;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
 using UnityEngine;
@@ -15,6 +13,8 @@ namespace CryptoQuest.Gameplay.Character
     {
         public float Chance;
         [SerializeReference] public LootInfo LootItem;
+
+        public LootInfo CreateLoot() => LootItem.Clone();
     }
 
     /// <summary>
@@ -34,29 +34,11 @@ namespace CryptoQuest.Gameplay.Character
         public Drop[] Drops => _drops;
 
 #if UNITY_EDITOR
-        public void Editor_AddDrop(EquipmentInfo equipment)
+        public void Editor_AddDrop(LootInfo loot)
         {
             ArrayUtility.Add(ref _drops, new Drop()
             {
-                LootItem = new EquipmentLootInfo(equipment),
-                Chance = 1
-            });
-        }
-
-        public void Editor_AddDrop(UsableInfo consumable)
-        {
-            ArrayUtility.Add(ref _drops, new Drop()
-            {
-                LootItem = new UsableLootInfo(consumable),
-                Chance = 1
-            });
-        }
-
-        public void Editor_AddDrop(CurrencyInfo currencyInfo)
-        {
-            ArrayUtility.Add(ref _drops, new Drop()
-            {
-                LootItem = new CurrencyLootInfo(currencyInfo),
+                LootItem = loot,
                 Chance = 1
             });
         }

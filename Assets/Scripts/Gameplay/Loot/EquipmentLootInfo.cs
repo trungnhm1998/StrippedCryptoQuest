@@ -9,13 +9,17 @@ namespace CryptoQuest.Gameplay.Loot
     public class EquipmentLootInfo : LootInfo<EquipmentInfo>
     {
         public EquipmentLootInfo(EquipmentInfo item) : base(item) { }
-
-        public override void AddItemToInventory(InventorySO inventory)
-        {
-            inventory.Add(Item);
-        }
+        public override void AddItemToInventory(InventorySO inventory) => inventory.Add(Item);
 
         public override UI.Dialogs.RewardDialog.Reward CreateRewardUI()
             => new GenericLocalizedReward(Item.Data.DisplayName);
+
+        public override LootInfo Clone() => new EquipmentLootInfo(Item);
+        /// <summary>
+        ///  equipment loot can't be merged
+        /// </summary>
+        /// <param name="otherLoot"></param>
+        /// <returns></returns>
+        public override bool Merge(LootInfo otherLoot) => false;
     }
 }

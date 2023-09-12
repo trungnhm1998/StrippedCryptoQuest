@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
+using CryptoQuest.Gameplay.Loot;
 using UnityEngine;
 using UnityEngine.ResourceManagement.AsyncOperations;
 
@@ -20,6 +22,8 @@ namespace CryptoQuest.Gameplay.Character
                 NameChanged?.Invoke(_displayName);
             }
         }
+
+        public float Exp => Data.Exp;
 
         public override void Init(EnemyDef data)
         {
@@ -66,6 +70,15 @@ namespace CryptoQuest.Gameplay.Character
             Data.Name.StringChanged -= UpdateDisplayName;
             base.Release(); // this need to be after because Data will be null
         }
-        
+
+        public List<LootInfo> GetLoots()
+        {
+            var drops = Data.Drops;
+            var loots = new List<LootInfo>();
+            foreach (var drop in drops)
+                loots.Add(drop.CreateLoot());
+
+            return loots;
+        }
     }
 }

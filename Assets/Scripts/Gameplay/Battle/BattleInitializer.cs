@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects;
 using CryptoQuest.Gameplay.Battle.ScriptableObjects;
+using CryptoQuest.Gameplay.Character;
 using UnityEngine;
 
 namespace CryptoQuest.Gameplay.Battle
@@ -9,6 +10,7 @@ namespace CryptoQuest.Gameplay.Battle
     public interface IBattleInitializer
     {
         public IEnumerator LoadEnemies();
+        public List<EnemySpec> Enemies { get; }
     }
 
     public class BattleInitializer : MonoBehaviour, IBattleInitializer
@@ -16,14 +18,14 @@ namespace CryptoQuest.Gameplay.Battle
         [SerializeField] private BattleBus _bus;
         [SerializeField] private EnemyPartyBehaviour _enemyPartyBehaviour;
         [SerializeField] private EnemyDatabase _enemyDatabase;
+        public List<EnemySpec> Enemies => _loadedEnemies;
+        private readonly List<EnemySpec> _loadedEnemies = new();
 
         public IEnumerator LoadEnemies()
         {
             yield return LoadEnemiesData();
             _enemyPartyBehaviour.Init(_loadedEnemies);
         }
-
-        private readonly List<Character.EnemySpec> _loadedEnemies = new();
 
         private IEnumerator LoadEnemiesData()
         {
@@ -40,6 +42,7 @@ namespace CryptoQuest.Gameplay.Battle
                     Debug.LogError($"failed to load enemy data with id {enemyId}, skipping...");
                     continue;
                 }
+
                 _loadedEnemies.Add(def.CreateCharacterSpec()); // TODO: UNLOAD ENEMY DATA
             }
         }

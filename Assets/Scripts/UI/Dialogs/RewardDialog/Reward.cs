@@ -77,4 +77,11 @@ namespace CryptoQuest.UI.Dialogs.RewardDialog
             };
         }
     }
+
+    public class GenericReward : Reward
+    {
+        private readonly string _txt;
+        public GenericReward(string str) : base(true) => _txt = str;
+        protected override void OnCreateUI(UIRewardItem ui) => ui.SetText(_txt);
+    }
 }

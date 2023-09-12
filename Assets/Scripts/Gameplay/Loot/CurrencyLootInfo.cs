@@ -9,13 +9,16 @@ namespace CryptoQuest.Gameplay.Loot
     public class CurrencyLootInfo : LootInfo<CurrencyInfo>
     {
         public CurrencyLootInfo(CurrencyInfo item) : base(item) { }
-
-        public override void AddItemToInventory(InventorySO inventory)
+        public override void AddItemToInventory(InventorySO inventory) => inventory.Add(Item);
+        public override UI.Dialogs.RewardDialog.Reward CreateRewardUI() =>
+            new AmountReward(Item.Amount, Item.Data.DisplayName);
+        public override LootInfo Clone() => new CurrencyLootInfo(Item);
+        public override bool Merge(LootInfo otherLoot)
         {
-            inventory.Add(Item);
+            if (otherLoot is not CurrencyLootInfo currencyLoot) return false;
+            if (Item.Data != currencyLoot.Item.Data) return false;
+            Item.UpdateCurrencyAmount(currencyLoot.Item.Amount);
+            return true;
         }
-
-        public override UI.Dialogs.RewardDialog.Reward CreateRewardUI()
-            => new AmountReward(Item.Amount, Item.Data.DisplayName);
     }
 }

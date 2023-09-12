@@ -34,9 +34,6 @@ namespace CryptoQuest.Gameplay.Inventory.Items
 
         protected ItemInfo() { }
 
-        public virtual bool IsValid()
-        {
-            return Data != null;
-        }
+        public virtual bool IsValid() => Data != null;
     }
 }

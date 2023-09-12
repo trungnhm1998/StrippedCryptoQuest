@@ -1,4 +1,7 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
+using CryptoQuest.Gameplay.Loot;
+using CryptoQuest.Gameplay.Reward;
 using CryptoQuest.Input;
 using CryptoQuest.UI.SpiralFX;
 using IndiGames.Core.Events.ScriptableObjects;
@@ -12,11 +15,11 @@ namespace CryptoQuest.Gameplay.Battle
         [SerializeField] private BattleInputSO _input;
         [SerializeField, Header("Listen")] private VoidEventChannelSO _sceneLoadedEvent;
 
-        private IBattleInitializer _battleInitializer;
+        private IBattleInitializer _initializer;
 
         private void Awake()
         {
-            _battleInitializer = GetComponent<IBattleInitializer>();
+            _initializer = GetComponent<IBattleInitializer>();
         }
 
         private void OnEnable()
@@ -39,8 +42,25 @@ namespace CryptoQuest.Gameplay.Battle
 
         private IEnumerator CoInitBattle()
         {
-            yield return _battleInitializer.LoadEnemies();
+            yield return _initializer.LoadEnemies();
             _spiral.HideSpiral();
+            yield return AutoSkip();
+        }
+
+        // TODO: REMOVE THIS
+        private IEnumerator AutoSkip()
+        {
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
+            yield return new WaitForSeconds(2f);
+            List<LootInfo> loots = new();
+            var enemies = _initializer.Enemies;
+            foreach (var enemy in enemies)
+                loots.AddRange(enemy.GetLoots());
+            if (loots.Count > 0) RewardManager.RewardPlayer(loots.ToArray());
+            // unload battle
+#else
+            yield break;
+#endif
         }
 
         private void FinishInitBattle()
