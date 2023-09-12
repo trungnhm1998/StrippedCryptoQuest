@@ -1,4 +1,5 @@
 ﻿using System;
+using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data;
 using CryptoQuest.Gameplay.Inventory.Items;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item;
 using CryptoQuest.Menu;
@@ -18,10 +19,15 @@ namespace CryptoQuest.UI.Menu.Panels.Item
         public event InspectingItem Inspecting;
         [SerializeField] private Image _icon;
         [SerializeField] private LocalizeStringEvent _name;
+        [SerializeField] private Text _nameText;
+        [SerializeField] private Text _charaterX;
         [SerializeField] private Text _quantity;
         [SerializeField] private MultiInputButton _button;
         [SerializeField] private GameObject _selectedBackground;
+        [SerializeField] private Color _disabledColor;
+        [SerializeField] private Color _enabledColor;
         private UsableInfo _consumable;
+        private bool _canClick;
         public UsableInfo Consumable => _consumable;
 
         public bool Interactable
@@ -45,6 +51,7 @@ namespace CryptoQuest.UI.Menu.Panels.Item
 
         public void OnUse()
         {
+            if (!_canClick) return;
             Using?.Invoke(this);
         }
 
@@ -70,7 +77,24 @@ namespace CryptoQuest.UI.Menu.Panels.Item
             _icon.sprite = item.Icon;
             _name.StringReference = item.DisplayName;
             _quantity.text = item.Quantity.ToString();
+
+            var info = _consumable.Data.ItemAbilityInfo;
+            bool isField = info.CheckUsageScenario(EAbilityUsageScenario.Field);
+
+            SetColorText(isField);
         }
+
+        private void SetColorText(bool isField = false)
+        {
+            var color = isField ? _enabledColor : _disabledColor;
+
+            _nameText.color = color;
+            _charaterX.color = color;
+            _quantity.color = color;
+
+            _canClick = isField;
+        }
+
 
         public void Inspect()
         {
