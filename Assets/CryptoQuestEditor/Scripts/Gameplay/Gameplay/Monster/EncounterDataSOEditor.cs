@@ -1,32 +1,40 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using CryptoQuest.Core;
 using CryptoQuest.Gameplay.Battle;
 using CryptoQuest.Gameplay.Encounter;
 using IndiGames.Tools.ScriptableObjectBrowser;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 
 namespace CryptoQuestEditor.Gameplay.Gameplay.Monster
 {
     public class BattleDataSOEditor : ScriptableObjectBrowserEditor<EncounterData>
     {
-        private const string DEFAULT_NAME = "MonsterParty_";
+        private const string DEFAULT_NAME = "";
         private const int ROW_OFFSET = 2;
         private const int COLUMN_ENCOUNTER_ID_INDEX = 0;
-        private const int COLUMN_BATTLE_BG_ID_INDEX = 2;
+        private const int COLUMN_BATTLE_BG_NAME_INDEX = 6;
         private Dictionary<int, Battlefield> _battlefieldDictionary = new();
+        private EncounterDatabase _encounterDatabase;
+        private Dictionary<string, Sprite> _backgrounds = new();
+        private const string BATTLEFIELD_BACKGROUND_DATA_PATH = "Assets/Arts/UI/Battle/Backgrounds";
 
         public BattleDataSOEditor()
         {
             CreateDataFolder = false;
-            DefaultStoragePath = "Assets/ScriptableObjects/Data/MonsterParty";
+            DefaultStoragePath = "Assets/ScriptableObjects/Data/EncounterDatabase";
         }
 
         public override void ImportBatchData(string directory, Action<ScriptableObject> callback)
         {
             string[] allLines = File.ReadAllLines(directory);
-            LoadAndCacheBattleFields()
+            LoadAndCacheBattleFields();
+            LoadAndCacheEncounterDatabase();
+            LoadAndCacheBackgrounds();
+            List<GenericAssetReferenceDatabase<string, EncounterData>.Map> maps = new();
             for (int index = ROW_OFFSET; index < allLines.Length; index++)
             {
                 // get data form tsv file
@@ -38,13 +46,14 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Monster
                 if (string.IsNullOrEmpty(splitedData[COLUMN_ENCOUNTER_ID_INDEX])) continue;
                 dataModel.Id = splitedData[COLUMN_ENCOUNTER_ID_INDEX];
 
-                if (string.IsNullOrEmpty(splitedData[COLUMN_BATTLE_BG_ID_INDEX])) continue;
-                dataModel.BackgroundId = splitedData[COLUMN_BATTLE_BG_ID_INDEX];
+
+                if (string.IsNullOrEmpty(splitedData[COLUMN_BATTLE_BG_NAME_INDEX])) continue;
+                dataModel.BackgroundName = splitedData[COLUMN_BATTLE_BG_NAME_INDEX];
+
 
                 List<BattlePartyDataModel> partiesData = GetBattlePartiesDataModel(splitedData);
                 if (!IsValidBattlePartiesSetUp(partiesData)) continue;
                 dataModel.BattleParties = partiesData;
-
 
                 EncounterData instance = null;
                 instance = (EncounterData)AssetDatabase.LoadAssetAtPath(path, typeof(EncounterData));
@@ -54,6 +63,8 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Monster
                 }
 
                 instance.Editor_SetID(dataModel.Id);
+                instance.Editor_SetGroup(GetGroupConfigs(dataModel));
+                instance.Editor_SetBackground(GetBackgroundSprite(dataModel.BackgroundName));
                 instance.name = name;
 
                 if (!AssetDatabase.Contains(instance))
@@ -66,7 +77,18 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Monster
                 {
                     EditorUtility.SetDirty(instance);
                 }
+
+
+                var guid = AssetDatabase.AssetPathToGUID(path);
+                maps.Add(new GenericAssetReferenceDatabase<string, EncounterData>.Map()
+                {
+                    Id = dataModel.Id,
+                    Data = new AssetReferenceT<EncounterData>(guid)
+                });
+                instance.SetObjectToAddressableGroup("EncounterData");
             }
+
+            _encounterDatabase.Editor_SetMaps(maps.ToArray());
         }
 
         private int _startColumnIndex = 7;
@@ -89,15 +111,56 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Monster
             return battleFieldDataModels;
         }
 
+        private void LoadAndCacheEncounterDatabase()
+        {
+            var guid = AssetDatabase.FindAssets("t:EncounterDatabase")[0];
+            _encounterDatabase = AssetDatabase.LoadAssetAtPath<EncounterDatabase>(AssetDatabase.GUIDToAssetPath(guid));
+        }
+
+        private Sprite GetBackgroundSprite(string name)
+        {
+            bool isFound = _backgrounds.TryGetValue(name.ToLower(), out var result);
+            return isFound ? result : null;
+        }
+
+        private List<EncounterData.GroupConfig> GetGroupConfigs(EncounterDataModel data)
+        {
+            List<EncounterData.GroupConfig> groupConfigs = new();
+            foreach (var party in data.BattleParties)
+            {
+                if (_battlefieldDictionary.TryGetValue(party.BattleDataId, out var battleField))
+                    groupConfigs.Add(new EncounterData.GroupConfig()
+                    {
+                        Probability = party.Probability,
+                        Battlefield = battleField
+                    });
+            }
+
+            return groupConfigs;
+        }
+
         private bool IsValidBattlePartiesSetUp(List<BattlePartyDataModel> datas)
         {
             float totalProbability = 1;
             foreach (var data in datas)
             {
                 totalProbability -= data.Probability;
+                totalProbability = (float)Math.Round(totalProbability, 2);
             }
 
             return totalProbability == 0;
+        }
+
+        private void LoadAndCacheBackgrounds()
+        {
+            string[] fileEntries = Directory.GetFiles("Assets/Arts/UI/Battle/Backgrounds");
+            foreach (string fileName in fileEntries)
+            {
+                string path = fileName.Replace(@"\", "/");
+                if (path.Contains(".meta")) continue;
+                var asset = AssetDatabase.LoadAssetAtPath<Sprite>(path);
+                _backgrounds.TryAdd(asset.name.ToLower(), asset);
+            }
         }
 
         private void LoadAndCacheBattleFields()
@@ -109,91 +172,5 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Monster
                 _battlefieldDictionary.TryAdd(asset.Id, asset);
             }
         }
-        /*
-        private EncounterGroup.CharacterGroup ConfigMonsterDataSOProperties(string groupProperties)
-        {
-            string[] splitArray = groupProperties.Split(",", StringSplitOptions.None);
-            List<CharacterData> monsterDataGroup = new();
-            foreach (var id in splitArray)
-            {
-                if (string.IsNullOrEmpty(id)) continue;
-                var assets = GetAssetsFromType<MonsterData>().Where(monster
-                    => monster.MonsterId == int.Parse(id));
-                MonsterData monsterData = assets.Count() > 0 ? assets.First() : null;
-                if (monsterData != null)
-                {
-                    monsterDataGroup.Add(monsterData);
-                }
-            }
-
-            EncounterGroup.CharacterGroup characterGroup = new();
-            // TODO: REFACTOR ENCOUNTER
-            // characterGroup.Editor_SetCharacters(monsterDataGroup.ToArray());
-            return characterGroup;
-        }
-
-        private EncounterGroup.CharacterGroup[] ConfigMonsterGroup(List<string> groupStrings)
-        {
-            List<EncounterGroup.CharacterGroup> characterGroups = new();
-            foreach (var groupString in groupStrings)
-            {
-                if (!string.IsNullOrEmpty(groupString))
-                {
-                    var characterGroup = ConfigMonsterDataSOProperties(groupString);
-                    characterGroups.Add(characterGroup);
-                }
-            }
-
-            return characterGroups.ToArray();
-        }
-        */
-        //
-        //     return DataValidator.IsValidTotalProbability(monsterGroup);
-        // }
-        //
-
-        private bool CanSetUpBattleFieldDataModel(BattleFieldDataModel dataModel,
-            List<BattleEncounterSetupDataModel> monsterGroup, string[] splitedData)
-        {
-            int battleFieldId = int.Parse(splitedData[0]);
-            string chapterId = splitedData[1];
-            bool isBackgroundIdNumeric = int.TryParse(splitedData[5], out int backgroundId);
-            if (battleFieldId == null || chapterId == null || !isBackgroundIdNumeric || monsterGroup == null)
-            {
-                Debug.LogWarning("Invalid data");
-                return false;
-            }
-
-            dataModel.BattleFieldId = battleFieldId;
-            dataModel.BattleEncounterSetups = monsterGroup;
-            return true;
-        }
-
-        // private AssetReferenceT<Sprite> SetUpBattleBackGround(BattleFieldDataModel dataModel)
-        // {
-        //     var backgroundAssets = GetAssetsFromType<BattleBackgroundSO>().Where(data
-        //         => data.Id == dataModel.BackgroundId);
-        //     if (backgroundAssets.Count() == 0) return null;
-        //     return backgroundAssets.First().BattleBackground;
-        // }
-
-
-        // private List<int> SetUpInstanceBattleEncounter(BattleFieldDataModel dataModel)
-        // {
-        //     List<int> battleEncounterSetups = new();
-        //     foreach (var battleEncounterSetupDataModel in dataModel.BattleEncounterSetups)
-        //     {
-        //         var battleDatas = GetAssetsFromType<Battlefield>().Where(data
-        //             => data.Id == battleEncounterSetupDataModel.BattleDataId);
-        //         if (battleDatas.Count() == 0) continue;
-        //         EncounterData.GroupConfig encounterSetup = new();
-        //         encounterSetup.Probability = battleEncounterSetupDataModel.Probability /
-        //                                      BaseBattleVariable.CORRECTION_PROBABILITY_VALUE;
-        //         encounterSetup.Battlefield = battleDatas.First();
-        //         battleEncounterSetups.Add(encounterSetup);
-        //     }
-        //
-        //     return battleEncounterSetups;
-        // }
     }
 }

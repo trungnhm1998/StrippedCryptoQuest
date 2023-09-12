@@ -37,17 +37,6 @@ namespace CryptoQuest.Gameplay.Encounter
             return ((!string.IsNullOrEmpty(firstData)) && (!string.IsNullOrEmpty(secondData)));
         }
 
-        public static bool IsValidTotalProbability(List<BattleEncounterSetupDataModel> monsterGroups)
-        {
-            float totalProbability = 0;
-            foreach (var monsterGroup in monsterGroups)
-            {
-                totalProbability += monsterGroup.Probability / BaseBattleVariable.CORRECTION_PROBABILITY_VALUE;
-            }
-
-            return totalProbability == 1;
-        }
-
         public static bool IsCorrectBattleFieldSetup(EncounterData data)
         {
             float totalProbability = 0;
@@ -134,7 +123,7 @@ namespace CryptoQuest.Gameplay.Encounter
     {
         public string Id { get; set; }
         public List<BattlePartyDataModel> BattleParties { get; set; } = new();
-        public string BackgroundId { get; set; }
+        public string BackgroundName { get; set; }
     }
 
 
