@@ -67,8 +67,6 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
             {
                 equipmentSlot.ShowEquipmentsInventoryWithType += ShowEquipmentsInventoryWithType;
             }
-
-            Show();
         }
 
         private void OnDisable()

@@ -9,6 +9,8 @@ namespace CryptoQuest.Gameplay.Loot
     public abstract class LootInfo
     {
         public abstract void AddItemToInventory(InventorySO inventory);
+
+        public abstract UI.Dialogs.RewardDialog.Reward CreateRewardUI();
     }
 
     [Serializable]

@@ -24,12 +24,14 @@ namespace CryptoQuest.UI.Dialogs
 
         protected void LoadAssetDialog()
         {
-            bool hasDialogAssetLoaded = _gameObjectAsyncOps.IsValid() && _gameObjectAsyncOps.Status == AsyncOperationStatus.Succeeded;
+            bool hasDialogAssetLoaded = _gameObjectAsyncOps.IsValid() &&
+                                        _gameObjectAsyncOps.Status == AsyncOperationStatus.Succeeded;
             if (hasDialogAssetLoaded)
             {
                 DialogPrefabAssetLoaded(_gameObjectAsyncOps);
                 return;
             }
+
             _dialogPrefab.LoadAssetAsync<GameObject>().Completed += DialogPrefabAssetLoaded;
         }
 
@@ -58,4 +60,3 @@ namespace CryptoQuest.UI.Dialogs
         protected abstract void SetupDialog(T dialog);
     }
 }
-

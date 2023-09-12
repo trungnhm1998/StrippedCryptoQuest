@@ -1,7 +1,9 @@
-﻿using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item;
+﻿using CryptoQuest.Gameplay;
+using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.ActionTypes;
 using CryptoQuest.Gameplay.PlayerParty;
 using CryptoQuest.UI.Menu.MenuStates.ItemStates;
+using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
 using UnityEngine;
 
 namespace CryptoQuest.UI.Menu.Panels.Item
@@ -41,16 +43,15 @@ namespace CryptoQuest.UI.Menu.Panels.Item
 
         private void ActiveAbility(int index)
         {
-            // TODO: REFACTORING PARTY SYSTEM
-            // AbilitySystemBehaviour owner = _partySo.PlayerTeam.Members[index];
-            //
-            // CryptoQuestGameplayEffectSpec ability =
-            //     (CryptoQuestGameplayEffectSpec)owner.MakeOutgoingSpec(_item.Ability.Effect);
-            //
-            // ability.SetParameters(_item.Ability.Info.SkillParameters);
-            // owner.ApplyEffectSpecToSelf(ability);
-            //
-            // Hide();
+            AbilitySystemBehaviour owner = _partySo.Members[index].CharacterComponent.GameplayAbilitySystem;
+
+            CryptoQuestGameplayEffectSpec ability =
+                (CryptoQuestGameplayEffectSpec)owner.MakeOutgoingSpec(_item.Ability.Effect);
+
+            ability.SetParameters(_item.ItemAbilityInfo.SkillParameters);
+            owner.ApplyEffectSpecToSelf(ability);
+
+            Hide();
         }
 
         public void Hide()

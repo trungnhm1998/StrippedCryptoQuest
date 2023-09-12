@@ -77,13 +77,13 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Monster
             List<EncounterData.GroupConfig> battleEncounterSetups = new();
             foreach (var battleEncounterSetupDataModel in dataModel.BattleEncounterSetups)
             {
-                var battleDatas = GetAssetsFromType<EnemyParty>().Where(data
+                var battleDatas = GetAssetsFromType<Battlefield>().Where(data
                     => data.Id == battleEncounterSetupDataModel.BattleDataId);
                 if (battleDatas.Count() == 0) continue;
                 EncounterData.GroupConfig encounterSetup = new();
                 encounterSetup.Probability = battleEncounterSetupDataModel.Probability /
                                              BaseBattleVariable.CORRECTION_PROBABILITY_VALUE;
-                encounterSetup.Party = battleDatas.First();
+                encounterSetup.Battlefield = battleDatas.First();
                 battleEncounterSetups.Add(encounterSetup);
             }
 

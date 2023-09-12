@@ -370,7 +370,20 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 5453601632423951103}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1389026233037904400}
+        m_TargetAssemblyTypeName: CryptoQuest.UI.Menu.Panels.Item.UIItemCharacterSelection,
+          indi-games.crypto-quest
+        m_MethodName: OnClicked
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &473507781823526388
 GameObject:
   m_ObjectHideFlags: 0
@@ -7008,7 +7021,20 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 5593849265467897073}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1389026233037904400}
+        m_TargetAssemblyTypeName: CryptoQuest.UI.Menu.Panels.Item.UIItemCharacterSelection,
+          indi-games.crypto-quest
+        m_MethodName: OnClicked
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 3
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &7061581274910150181
 GameObject:
   m_ObjectHideFlags: 0
@@ -7225,7 +7251,20 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 5544119184926227149}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1389026233037904400}
+        m_TargetAssemblyTypeName: CryptoQuest.UI.Menu.Panels.Item.UIItemCharacterSelection,
+          indi-games.crypto-quest
+        m_MethodName: OnClicked
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &7139308981760604700
 GameObject:
   m_ObjectHideFlags: 0
@@ -8222,7 +8261,20 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 6485711996580799782}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1389026233037904400}
+        m_TargetAssemblyTypeName: CryptoQuest.UI.Menu.Panels.Item.UIItemCharacterSelection,
+          indi-games.crypto-quest
+        m_MethodName: OnClicked
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 2
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &7886561464866355439
 GameObject:
   m_ObjectHideFlags: 0
@@ -9657,8 +9709,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6440227071524369810, guid: f678823e9847c614fbc86d9c145966d1, type: 3}
       propertyPath: _items.Array.size
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6440227071524369810, guid: f678823e9847c614fbc86d9c145966d1, type: 3}
+      propertyPath: _items.Array.data[0].<Data>k__BackingField
+      value: 
+      objectReference: {fileID: 11400000, guid: 332cc0df41750b84999f821d3a1dcceb, type: 2}
     - target: {fileID: 6440227071524369810, guid: f678823e9847c614fbc86d9c145966d1, type: 3}
       propertyPath: _items.Array.data[0].<Item>k__BackingField
       value: 
@@ -9971,7 +10027,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6320747358420644603, guid: 3c82a0ed70b02f54ba487afcff878954, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 116.03
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6507475693016442779, guid: 3c82a0ed70b02f54ba487afcff878954, type: 3}
       propertyPath: m_SizeDelta.x
@@ -10051,7 +10107,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6774039884867353058, guid: 3c82a0ed70b02f54ba487afcff878954, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 84.03
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6774039884867353058, guid: 3c82a0ed70b02f54ba487afcff878954, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -10094,6 +10150,10 @@ PrefabInstance:
     - target: {fileID: 6679036936316141200, guid: a15f2ddded5996e448b5b7415499de83, type: 3}
       propertyPath: m_Name
       value: OcarinaPresenter
+      objectReference: {fileID: 0}
+    - target: {fileID: 6679036936316141200, guid: a15f2ddded5996e448b5b7415499de83, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7031414608644818616, guid: a15f2ddded5996e448b5b7415499de83, type: 3}
       propertyPath: m_SizeDelta.y
@@ -10289,6 +10349,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: UIHeaderName
       objectReference: {fileID: 0}
+    - target: {fileID: 2372507532743596056, guid: 4b335ac08ddde994f9d61a4ee41fa5d0, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4434890422891207019, guid: 4b335ac08ddde994f9d61a4ee41fa5d0, type: 3}
       propertyPath: m_StringReference.m_TableEntryReference.m_KeyId
       value: 292246089728
@@ -10361,7 +10425,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6320747358420644603, guid: 3c82a0ed70b02f54ba487afcff878954, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 89.57
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6507475693016442779, guid: 3c82a0ed70b02f54ba487afcff878954, type: 3}
       propertyPath: m_SizeDelta.x
@@ -10441,7 +10505,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6774039884867353058, guid: 3c82a0ed70b02f54ba487afcff878954, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 255.63
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6774039884867353058, guid: 3c82a0ed70b02f54ba487afcff878954, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -10688,7 +10752,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6320747358420644603, guid: 3c82a0ed70b02f54ba487afcff878954, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 83.445
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6507475693016442779, guid: 3c82a0ed70b02f54ba487afcff878954, type: 3}
       propertyPath: m_SizeDelta.x
@@ -10768,7 +10832,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6774039884867353058, guid: 3c82a0ed70b02f54ba487afcff878954, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 394.64502
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6774039884867353058, guid: 3c82a0ed70b02f54ba487afcff878954, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -10810,7 +10874,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6440227071524369810, guid: f678823e9847c614fbc86d9c145966d1, type: 3}
       propertyPath: _items.Array.size
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6440227071524369810, guid: f678823e9847c614fbc86d9c145966d1, type: 3}
       propertyPath: _items.Array.data[0].<Item>k__BackingField

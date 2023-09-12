@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using CryptoQuest.Gameplay.Character;
 using CryptoQuest.Gameplay.Inventory.Items;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Container;
@@ -45,10 +46,9 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
         {
             _verticalOffset = _singleItemRect.rect.height;
             _inventoryViewport = _scrollRect.viewport;
-            var position = _inventoryViewport.position;
             var rect = _inventoryViewport.rect;
-            _lowerBound = position.y - rect.height / 2;
-            _upperBound = position.y + rect.height / 2 + _verticalOffset;
+            _lowerBound = _verticalOffset * 2;
+            _upperBound = rect.height;
         }
 
         private void OnEnable()
@@ -205,6 +205,7 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
             if (equipmentItem == null) return;
             EventSystem.current.SetSelectedGameObject(null);
             Debug.Log($"RemoveEquipmentFromInventory {equipmentItem} idx: {index}");
+            _serviceProvider.InventoryController.Remove(equipment);
             _equipmentItems.RemoveAt(index);
             DestroyEquipmentRow(equipmentItem);
             EventSystem.current.SetSelectedGameObject(_unEquipButton.gameObject);
@@ -221,6 +222,7 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
             if (equipment.IsValid() && equipment != _currentlyEquippingItem.Equipment) return;
             _currentlyEquippingItem.gameObject.SetActive(false);
             _currentlyEquippingItem.Reset();
+            _serviceProvider.InventoryController.Add(equipment);
             InstantiateNewEquipmentUI(equipment);
         }
 
@@ -253,7 +255,7 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
 
         private void ValidateEquipment(EquipmentInfo equipment, UIEquipmentItem equipmentItem)
         {
-            if (equipment.IsValidWith(_inspectingCharacter)) return;
+            if (equipment.IsCompatibleWithCharacter(_inspectingCharacter)) return;
 
             equipmentItem.DeactivateButton();
         }
@@ -274,6 +276,16 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
         {
             _tooltipProvider.Tooltip.SetSafeArea(_tooltipSafeArea);
             InspectingEquipment?.Invoke(equipment, _inspectingCharacter);
+            GetEquipmentSelected(equipment);
+        }
+
+        private void GetEquipmentSelected(EquipmentInfo equipment)
+        {
+            var item = _equipmentItems.FirstOrDefault(item => item.Equipment == equipment);
+            if (item != null)
+            {
+                AutoScroll(item.GetComponent<MultiInputButton>());
+            }
         }
 
         public void OnUnequip()

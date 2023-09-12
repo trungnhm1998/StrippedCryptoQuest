@@ -26,13 +26,12 @@ namespace CryptoQuest.Gameplay.Inventory.Items
     public abstract class ItemInfo<TDef> : ItemInfo where TDef : GenericItem
     {
         [field: SerializeField] public TDef Data { get; private set; } // TODO: Primitive item ID instead
-        [field: SerializeField] public bool IsNftItem { get; private set; }
 
         protected ItemInfo(TDef baseGenericItem)
         {
             Data = baseGenericItem;
         }
-        
+
         protected ItemInfo() { }
 
         public virtual bool IsValid()

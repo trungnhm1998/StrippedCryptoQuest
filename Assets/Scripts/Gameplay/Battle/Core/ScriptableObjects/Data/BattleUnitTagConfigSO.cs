@@ -1,9 +1,6 @@
-using System.Collections;
 using System.Collections.Generic;
-using CryptoQuest.Gameplay.BaseGameplayData;
-using UnityEngine;
-using IndiGames.GameplayAbilitySystem.AbilitySystem.ScriptableObjects;
 using IndiGames.GameplayAbilitySystem.TagSystem.ScriptableObjects;
+using UnityEngine;
 
 namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data
 {

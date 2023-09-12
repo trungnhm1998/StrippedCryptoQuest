@@ -18,12 +18,12 @@ namespace CryptoQuest.Gameplay.Inventory.Items
         public LocalizedString DisplayName => Data.DisplayName;
         public LocalizedString Description => Data.Description;
 
-        public UsableInfo(UsableSO baseItemSO, int quantity = 0) : base(baseItemSO)
+        public UsableInfo(UsableSO baseItemSO, int quantity = 1) : base(baseItemSO)
         {
             Quantity = quantity;
         }
 
-        public UsableInfo(UsableSO baseItemSO, AbilitySystemBehaviour owner, int quantity = 0) : base(baseItemSO)
+        public UsableInfo(UsableSO baseItemSO, AbilitySystemBehaviour owner, int quantity = 1) : base(baseItemSO)
         {
             Quantity = quantity;
             Owner = owner;

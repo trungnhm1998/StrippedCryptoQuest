@@ -1,17 +1,16 @@
+using CryptoQuest.Gameplay.BaseGameplayData;
 using UnityEngine;
-using UnityEngine.Localization;
 
 namespace CryptoQuest.Gameplay.Character
 {
     /// <summary>
-    /// structure for [monster](https://docs.google.com/spreadsheets/d/1WkX1DyDOGf6EiAppo8Buz2sUkSKV5OnDENEvmHzKXNQ/edit#gid=1024080951)
+    /// Structure for general character, this will only have persist data of character
+    /// <para>Example: <see cref="EnemyDef"/></para> 
     /// </summary>
-    [CreateAssetMenu(fileName = "CharacterDataSO", menuName = "Gameplay/Character/Character Data")]
-    public class CharacterData : ScriptableObject
+    public abstract class CharacterData<TDef, TSpec> : GenericData
+        where TDef : CharacterData<TDef, TSpec>
+        where TSpec : CharacterInformation<TDef, TSpec>, new()
     {
-        [field: SerializeField] public int Id { get; private set; }
-        [field: SerializeField] public LocalizedString Name { get; private set; }
-        [field: SerializeField] public LocalizedString Description { get; private set; }
         [field: SerializeField] public Elemental Element { get; private set; }
 
         /// <summary>
@@ -20,9 +19,13 @@ namespace CryptoQuest.Gameplay.Character
         /// many characters using the same data set, like enemies
         /// </summary>
         /// <returns></returns>
-        public CharacterInformation CreateCharacterInfo()
+        public TSpec CreateCharacterSpec()
         {
-            return new CharacterInformation(this);
+            Debug.Log($"Create character from {name}" +
+                      $"\nis {typeof(TDef)} equals {GetType()} : {this is TDef}");
+            var character = new TSpec();
+            character.Init((TDef)this);
+            return character;
         }
 #if UNITY_EDITOR
         public void Editor_SetId(int id)

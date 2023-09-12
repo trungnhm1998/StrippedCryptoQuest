@@ -1,3 +1,4 @@
+using System;
 using CryptoQuest.Gameplay.Encounter;
 using UnityEngine;
 
@@ -5,12 +6,17 @@ namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects
 {
     public class BattleBus : ScriptableObject
     {
-        public virtual EnemyParty CurrentEnemyParty
+        public Battlefield CurrentBattlefield
         {
-            get => _currentEnemyParty;
-            set => _currentEnemyParty = value;
+            get
+            {
+                if (_currentBattlefield == null)
+                    _currentBattlefield = CreateInstance<Battlefield>();
+                return _currentBattlefield;
+            }
+            set => _currentBattlefield = value;
         }
 
-        private EnemyParty _currentEnemyParty;
+        [NonSerialized] private Battlefield _currentBattlefield = null;
     }
 }

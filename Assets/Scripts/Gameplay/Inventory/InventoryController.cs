@@ -1,5 +1,7 @@
 using CryptoQuest.Gameplay.Inventory.Items;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
+using CryptoQuest.Gameplay.Loot;
+using CryptoQuest.Events;
 using CryptoQuest.System;
 using UnityEngine;
 
@@ -18,9 +20,27 @@ namespace CryptoQuest.Gameplay.Inventory
         [SerializeField] private ServiceProvider _provider;
         public InventorySO Inventory => _inventory;
 
+        [Header("Listening to")]
+        [SerializeField] private LootEventChannelSO _addLootRequestEventChannel;
+
         private void Awake()
         {
             _provider.Provide(this);
+        }
+
+        private void OnEnable()
+        {
+            _addLootRequestEventChannel.EventRaised += AddLoot;
+        }
+
+        private void OnDisable()
+        {
+            _addLootRequestEventChannel.EventRaised -= AddLoot;
+        }
+
+        private void AddLoot(LootInfo loot)
+        {
+            loot.AddItemToInventory(_inventory);
         }
 
         public void Add(EquipmentInfo equipment)

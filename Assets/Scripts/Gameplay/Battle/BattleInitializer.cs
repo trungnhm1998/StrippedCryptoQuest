@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects;
 using CryptoQuest.Gameplay.Battle.ScriptableObjects;
-using CryptoQuest.Gameplay.Character;
 using UnityEngine;
 
 namespace CryptoQuest.Gameplay.Battle
@@ -21,26 +20,28 @@ namespace CryptoQuest.Gameplay.Battle
         public IEnumerator LoadEnemies()
         {
             yield return LoadEnemiesData();
-            _enemyPartyBehaviour.Init(_loadedEnemyData);
+            _enemyPartyBehaviour.Init(_loadedEnemies);
         }
 
-        private readonly List<EnemyData> _loadedEnemyData = new();
+        private readonly List<Character.EnemySpec> _loadedEnemies = new();
 
         private IEnumerator LoadEnemiesData()
         {
-            _loadedEnemyData.Clear();
-            var enemyParty = _bus.CurrentEnemyParty;
+            _loadedEnemies.Clear();
+            var enemyParty = _bus.CurrentBattlefield;
             for (var index = 0; index < enemyParty.EnemyIds.Length; index++)
             {
                 var enemyId = enemyParty.EnemyIds[index];
-                yield return _enemyDatabase.AsyncGetEnemyById(enemyId, EnemyLoaded);
+                yield return _enemyDatabase.LoadDataById(enemyId);
+                var def = _enemyDatabase.GetDataById(enemyId);
+                if (def == null)
+                {
+                    // TODO: Create mock enemy instead of skipping?
+                    Debug.LogError($"failed to load enemy data with id {enemyId}, skipping...");
+                    continue;
+                }
+                _loadedEnemies.Add(def.CreateCharacterSpec()); // TODO: UNLOAD ENEMY DATA
             }
-        }
-
-        private void EnemyLoaded(EnemyData enemyData)
-        {
-            Debug.Log($"BattleManager::EnemyLoaded() - {enemyData.name}");
-            _loadedEnemyData.Add(enemyData); // TODO: UNLOAD ENEMY DATA
         }
     }
 }

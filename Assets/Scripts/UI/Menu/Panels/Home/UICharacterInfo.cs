@@ -1,4 +1,3 @@
-using System;
 using CryptoQuest.Gameplay.Character;
 using CryptoQuest.UI.Character;
 using TMPro;
@@ -59,7 +58,6 @@ namespace CryptoQuest.UI.Menu.Panels.Home
         private void OnEnable()
         {
             _attributeChangeEvent.AttributeSystemReference = _memberInSlot.CharacterComponent.AttributeSystem;
-            _memberInSlot.CharacterComponent.AttributeSystem.UpdateAttributeValues();
         }
 
         #region Setup

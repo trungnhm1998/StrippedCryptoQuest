@@ -18,7 +18,7 @@ using AttributeScriptableObject = CryptoQuest.Character.Attributes.AttributeScri
 
 namespace CryptoQuestEditor.Gameplay.Gameplay.Monster
 {
-    public class MonsterDataSOEditor : ScriptableObjectBrowserEditor<EnemyData>
+    public class MonsterDataSOEditor : ScriptableObjectBrowserEditor<EnemyDef>
     {
         private const string DEFAULT_NAME = "Monster";
         private const int ROW_OFFSET = 2;
@@ -82,11 +82,11 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Monster
                     continue;
                 }
 
-                EnemyData instance = null;
-                instance = (EnemyData)AssetDatabase.LoadAssetAtPath(path, typeof(EnemyData));
+                EnemyDef instance = null;
+                instance = (EnemyDef)AssetDatabase.LoadAssetAtPath(path, typeof(EnemyDef));
                 if (instance == null || !AssetDatabase.Contains(instance))
                 {
-                    instance = ScriptableObject.CreateInstance<EnemyData>();
+                    instance = ScriptableObject.CreateInstance<EnemyDef>();
                 }
 
                 instance.Editor_SetMonsterPrefab(GetMonsterPrefab(dataModel.MonsterPrefabName));

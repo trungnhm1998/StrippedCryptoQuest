@@ -14,7 +14,7 @@ namespace CryptoQuest.Gameplay.Battle
         public struct GroupConfig
         {
             public float Probability;
-            public EnemyParty Party;
+            public Battlefield Battlefield;
         }
 
         [field: SerializeField] public string ID { get; private set; }
@@ -43,7 +43,7 @@ namespace CryptoQuest.Gameplay.Battle
         /// Based on probability, get a battle data
         /// </summary>
         /// <returns>a Battlefield based on <see cref="GroupConfig.Probability"/></returns>
-        public EnemyParty GetRandomBattlefield()
+        public Battlefield GetRandomBattlefield()
         {
             float randomValue = Random.value;
             GroupConfig selectedBattle = _configs[^1];
@@ -57,7 +57,7 @@ namespace CryptoQuest.Gameplay.Battle
                 }
             }
 
-            return selectedBattle.Party;
+            return selectedBattle.Battlefield;
         }
     }
 }

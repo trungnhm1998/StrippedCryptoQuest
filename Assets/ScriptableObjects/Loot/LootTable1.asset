@@ -1,0 +1,48 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04062c3386cb6334ab47a15c9472d64a, type: 3}
+  m_Name: LootTable1
+  m_EditorClassIdentifier: 
+  <ID>k__BackingField: 1
+  LootInfos:
+  - rid: 2161567476913274882
+  - rid: 5542355727408955400
+  - rid: 5542355727408955401
+  references:
+    version: 2
+    RefIds:
+    - rid: 2161567476913274882
+      type: {class: CurrencyLootInfo, ns: CryptoQuest.Gameplay.Loot, asm: indi-games.crypto-quest}
+      data:
+        _item:
+          _id: 621bfd10-0111-4fe3-850a-d63add93bf7d
+          <Data>k__BackingField: {fileID: 11400000, guid: 16b3f6e09fc22d240be1b324116eeb79, type: 2}
+          <Amount>k__BackingField: 20
+    - rid: 5542355727408955400
+      type: {class: EquipmentLootInfo, ns: CryptoQuest.Gameplay.Loot, asm: indi-games.crypto-quest}
+      data:
+        _item:
+          _id: 458b20d4-5036-449b-a50c-39802f7166cb
+          <Data>k__BackingField: {fileID: 11400000, guid: 029ee84f9e2bc0448b3024b28b822932, type: 2}
+          <Rarity>k__BackingField: {fileID: 11400000, guid: e8beacf8f81a8b344bf6874eacf5e198, type: 2}
+          <IsNftItem>k__BackingField: 0
+          <Level>k__BackingField: 0
+          <Stats>k__BackingField:
+            MaxLevel: 0
+            Attributes: []
+    - rid: 5542355727408955401
+      type: {class: UsableLootInfo, ns: CryptoQuest.Gameplay.Loot, asm: indi-games.crypto-quest}
+      data:
+        _item:
+          _id: 376e7ec0-a850-4751-bc05-23a1a348d342
+          <Data>k__BackingField: {fileID: 11400000, guid: 332cc0df41750b84999f821d3a1dcceb, type: 2}
+          <Quantity>k__BackingField: 1

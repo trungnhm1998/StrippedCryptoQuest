@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using CryptoQuest.Gameplay.Character;
 using UnityEngine;
 
@@ -9,14 +8,22 @@ namespace CryptoQuest.Gameplay.Battle
     {
         [SerializeField] private List<EnemyBehaviour> _enemies;
 
-        public void Init(List<EnemyData> loadedEnemyData)
+        private static readonly string[] Postfixes = { "A", "B", "C", "D" };
+
+        /// <summary>
+        /// To separate with other same Enemy in a group
+        /// their name will be post fix with A, B, C, D 
+        /// </summary>
+        public void Init(List<EnemySpec> loadedEnemyData)
         {
+            var dict = new Dictionary<EnemyDef, int>();
             for (var index = 0; index < loadedEnemyData.Count; index++)
             {
-                var enemyData = loadedEnemyData[index];
-                if (enemyData == null) continue;
-                
-                _enemies[index].Init(enemyData);
+                var enemySpec = loadedEnemyData[index];
+                if (enemySpec == null || enemySpec.IsValid() == false) continue;
+                dict.TryAdd(enemySpec.Data, 0);
+                StartCoroutine(enemySpec.SetDisplayName(Postfixes[dict[enemySpec.Data]++]));
+                _enemies[index].Init(enemySpec);
             }
         }
     }

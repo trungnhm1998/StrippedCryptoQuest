@@ -1,23 +1,18 @@
-﻿using CryptoQuest.UI.Menu.Panels.Home;
+using CryptoQuest.UI.Menu.Panels.Home;
 using UnityEngine;
 
 namespace CryptoQuest.UI.Menu.MenuStates.HomeStates
 {
     public class SortState : HomeStateBase
     {
-        private UIHomeMenuSortCharacter _sortMode;
-
-        public SortState(UIHomeMenu panel) : base(panel)
-        {
-            _sortMode = panel.SortMode;
-        }
+        public SortState(UIHomeMenu panel) : base(panel) { }
 
         public override void OnEnter()
         {
             base.OnEnter();
             NavigationBar.SetActive(false);
             NavigationBar.HighlightHeader(HomePanel.TypeSO);
-            _sortMode.ConfirmedEvent += ExitSortState;
+            HomePanel.SortMode.ConfirmedEvent += ExitSortState;
         }
 
         public override void HandleCancel()
@@ -25,36 +20,44 @@ namespace CryptoQuest.UI.Menu.MenuStates.HomeStates
             base.HandleCancel();
             NavigationBar.SetActive(true);
             NavigationBar.HighlightHeader(HomePanel.TypeSO, true);
-            _sortMode.CancelSort();
+            HomePanel.SortMode.CancelSort();
             MenuStateMachine.RequestStateChange(HomeMenuStateMachine.PreSort);
         }
 
         public override void Confirm()
         {
             base.Confirm();
-            _sortMode.ConfirmSortOrder();
+            HomePanel.SortMode.ConfirmSortOrder();
         }
 
         public override void HandleNavigate(Vector2 direction)
         {
             base.HandleNavigate(direction);
-
-            if (direction.x > 0)
-                _sortMode.SwapRight();
-            else if (direction.x < 0)
-                _sortMode.SwapLeft();
+            HandleSwapDirection(direction);
         }
 
-        private void ExitSortState()
+        /// <summary>
+        /// Using the If condition instead of directly passing x-direction
+        /// like this: <see cref="HomePanel.SortMode.Swap(direction.x)"/> is a must
+        /// because of the appearance of a bug caused by the input system.
+        /// </summary>
+        private void HandleSwapDirection(Vector2 direction)
         {
-            MenuStateMachine.RequestStateChange(HomeMenuStateMachine.PreSort);
+            if (direction.x > 0)
+                HomePanel.SortMode.SwapRight();
+            else if (direction.x < 0)
+                HomePanel.SortMode.SwapLeft();
         }
 
         public override void OnExit()
         {
             base.OnExit();
-            _sortMode.ConfirmSortOrder();
-            _sortMode.ConfirmedEvent -= ExitSortState;
+            HomePanel.SortMode.ConfirmedEvent -= ExitSortState;
+        }
+
+        private void ExitSortState()
+        {
+            MenuStateMachine.RequestStateChange(HomeMenuStateMachine.PreSort);
         }
     }
 }
