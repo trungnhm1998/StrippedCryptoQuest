@@ -7,6 +7,7 @@ using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Container;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Type;
 using CryptoQuest.Menu;
 using CryptoQuest.System;
+using CryptoQuest.UI.Menu.MenuStates.StatusStates;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
@@ -263,6 +264,7 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
         private void EquipEquipment(EquipmentInfo equipment)
         {
             _main.EquipItem(equipment);
+            _main.State.RequestStateChange(StatusMenuStateMachine.Status);
         }
 
         private GameObject _cloneChar;
