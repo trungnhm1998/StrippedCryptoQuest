@@ -12,7 +12,7 @@ namespace CryptoQuest.Gameplay.Loot
         public override void AddItemToInventory(InventorySO inventory) => inventory.Add(Item);
         public override UI.Dialogs.RewardDialog.Reward CreateRewardUI() =>
             new AmountReward(Item.Amount, Item.Data.DisplayName);
-        public override LootInfo Clone() => new CurrencyLootInfo(Item);
+        public override LootInfo Clone() => new CurrencyLootInfo(Item.Clone());
         public override bool Merge(LootInfo otherLoot)
         {
             if (otherLoot is not CurrencyLootInfo currencyLoot) return false;

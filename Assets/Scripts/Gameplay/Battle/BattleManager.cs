@@ -47,20 +47,30 @@ namespace CryptoQuest.Gameplay.Battle
             yield return AutoSkip();
         }
 
+
         // TODO: REMOVE THIS
         private IEnumerator AutoSkip()
         {
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
             yield return new WaitForSeconds(2f);
+            WinBattle();
+#else
+            yield break;
+#endif
+        }
+
+        /// <summary>
+        /// DEBUG FUNCTION
+        /// TODO: REMOVE THIS
+        /// </summary>
+        public void WinBattle()
+        {
             List<LootInfo> loots = new();
             var enemies = _initializer.Enemies;
             foreach (var enemy in enemies)
                 loots.AddRange(enemy.GetLoots());
             if (loots.Count > 0) RewardManager.RewardPlayer(loots.ToArray());
             // unload battle
-#else
-            yield break;
-#endif
         }
 
         private void FinishInitBattle()

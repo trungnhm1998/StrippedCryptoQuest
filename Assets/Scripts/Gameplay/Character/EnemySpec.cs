@@ -75,9 +75,7 @@ namespace CryptoQuest.Gameplay.Character
         {
             var drops = Data.Drops;
             var loots = new List<LootInfo>();
-            foreach (var drop in drops)
-                loots.Add(drop.CreateLoot());
-
+            foreach (var drop in drops) loots.Add(drop.CreateLoot());
             return loots;
         }
     }

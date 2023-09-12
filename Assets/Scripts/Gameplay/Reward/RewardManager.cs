@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using CryptoQuest.Events;
 using CryptoQuest.Events.UI.Dialogs;
 using CryptoQuest.Gameplay.Inventory.Currency;
@@ -30,11 +29,22 @@ namespace CryptoQuest.Gameplay.Reward
 
         [SerializeField] private RewardDialogEventChannelSO _showRewardDialogEventChannel;
 
+        private void Awake()
+        {
+            Rewarding += Reward;
+        }
+
+        private void OnDestroy()
+        {
+            Rewarding -= Reward;
+        }
+
         public void Reward(params LootInfo[] loots)
         {
-            foreach (var loot in loots)
+            var mergedLoots = MergeLoots(loots);
+            foreach (var loot in mergedLoots)
                 _addLootRequestEventChannel.RaiseEvent(loot);
-            if (loots.Length > 0) _showRewardDialogEventChannel.Show(new RewardDialogData(loots));
+            if (mergedLoots.Length > 0) _showRewardDialogEventChannel.Show(new RewardDialogData(mergedLoots));
         }
 
         public LootInfo[] MergeLoots(params LootInfo[] loots)
