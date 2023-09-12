@@ -2,25 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using IndiGames.Core.Events.ScriptableObjects;
 
 namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Events
 {
     [CreateAssetMenu(fileName = "PagingDialogEventChannelSO", menuName = "Gameplay/Battle/Events/Paging Dialog Event")]
-    public class PagingDialogEventChannelSO : ScriptableObject
-    {
-        public UnityAction<PagingDialog> EventRaised;
-
-        public void RaiseEvent(PagingDialog pagingDialog)
-        {
-            if (EventRaised == null)
-            {
-                Debug.LogWarning($"Event was raised on {name} but no one was listening.");
-                return;
-            }
-
-            EventRaised.Invoke(pagingDialog);
-        }
-    }
+    public class PagingDialogEventChannelSO : GenericEventChannelSO<PagingDialog> { }
 
     [Serializable]
     public class PagingDialog

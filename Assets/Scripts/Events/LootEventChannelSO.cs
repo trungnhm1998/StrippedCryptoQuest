@@ -1,17 +1,9 @@
 using CryptoQuest.Gameplay.Loot;
 using UnityEngine;
-using UnityEngine.Events;
+using IndiGames.Core.Events.ScriptableObjects;
 
 namespace CryptoQuest.Events
 {
     [CreateAssetMenu(menuName = "Crypto Quest/Events/Loot Event Channel", fileName = "LootEventChannel")]
-    public class LootEventChannelSO : ScriptableObject
-    {
-        public UnityAction<LootInfo> EventRaised;
-
-        public void RaiseEvent(LootInfo loot)
-        {
-            this.CallEventSafely<LootInfo>(EventRaised, loot);
-        }
-    }
+    public class LootEventChannelSO : GenericEventChannelSO<LootInfo> { }
 }
