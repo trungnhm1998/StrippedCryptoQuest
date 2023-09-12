@@ -14,8 +14,9 @@ namespace CryptoQuest.UI.Menu.Panels.Home
             _characterInSlot.gameObject.SetActive(_hasCharacter);
         }
 
-        public void Init(CharacterSpec member)
+        public void Init(CharacterSpec member, UICharacterInfo child)
         {
+            _characterInSlot = child;
             _characterInSlot.Init(member);
         }
     }
