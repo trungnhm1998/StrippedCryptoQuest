@@ -23,8 +23,6 @@ namespace CryptoQuest.Gameplay.Character
     [CreateAssetMenu(menuName = "Create EnemyData", fileName = "EnemyData", order = 0)]
     public class EnemyDef : CharacterData<EnemyDef, EnemySpec>
     {
-        // This is not experience of the enemy, it's exp player gain after defeat this enemy
-        [field: SerializeField] public int Exp { get; private set; }
         [field: SerializeField] public GameObject Prefab { get; private set; }
 
         [field: SerializeField] public AttributeWithValue[] Stats { get; private set; } =

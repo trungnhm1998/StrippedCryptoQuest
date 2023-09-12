@@ -23,8 +23,6 @@ namespace CryptoQuest.Gameplay.Character
             }
         }
 
-        public float Exp => Data.Exp;
-
         public override void Init(EnemyDef data)
         {
             base.Init(data);
