@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Codice.Client.BaseCommands.Merge.Xml;
 using CryptoQuest.Gameplay.PlayerParty;
 using CryptoQuest.System;
 using IndiGames.Core.Events.ScriptableObjects;
@@ -14,6 +15,7 @@ namespace CryptoQuest.UI.Menu.Panels.Home
         public event Action ConfirmedEvent;
         [SerializeField] private ServiceProvider _serviceProvider;
         [SerializeField] private VoidEventChannelSO _sortFailedEvent;
+        [SerializeField] private VoidEventChannelSO _confirmSortEvent;
 
         [Header("Game Components")]
         [SerializeField] private GameObject _topLine;
@@ -131,23 +133,32 @@ namespace CryptoQuest.UI.Menu.Panels.Home
 
         public void SwapRight()
         {
-            Transform currentTarget = _sortLayers[CurrentIndex].transform.GetChild(0);
-            Transform otherTarget = _partySlots[CurrentIndex + 1].transform.GetChild(0);
-
-            PutToNormalLayer(otherTarget, CurrentIndex);
-            CurrentIndex++;
-            PutToSortLayer(currentTarget);
-
-            _selectedCardButtonHolder = currentTarget.GetComponent<UICharacterCardButton>();
+            //Swap to first if currently in the last slot
+            var otherTargetIndex = CurrentIndex < _partySlots.Length - 1 ? CurrentIndex + 1 : 0;
+            Swap(otherTargetIndex);
         }
 
         public void SwapLeft()
         {
+            //Swap to last if currently in the first slot
+            var otherTargetIndex = CurrentIndex >= 1 ? CurrentIndex - 1 : _partySlots.Length - 1;
+            Swap(otherTargetIndex);
+        }
+
+        private void Swap(int otherTargetIndex)
+        {
+            if (_sortLayers[CurrentIndex].transform.childCount <= 0) 
+            {
+                Debug.Log($"There's nothing to sort. Swap failed!");
+                return;
+            }
+
             Transform currentTarget = _sortLayers[CurrentIndex].transform.GetChild(0);
-            Transform otherTarget = _partySlots[CurrentIndex - 1].transform.GetChild(0);
+            Transform otherTarget = _partySlots[otherTargetIndex].transform.GetChild(0);
+            _party.Sort(otherTargetIndex, CurrentIndex);
 
             PutToNormalLayer(otherTarget, CurrentIndex);
-            CurrentIndex--;
+            CurrentIndex = otherTargetIndex;
             PutToSortLayer(currentTarget);
 
             _selectedCardButtonHolder = currentTarget.GetComponent<UICharacterCardButton>();
@@ -159,9 +170,7 @@ namespace CryptoQuest.UI.Menu.Panels.Home
 
             PutToNormalLayer(_selectedCardButtonHolder.transform, CurrentIndex);
 
-            _party.Sort(_indexHolder, CurrentIndex);
-
-            // Must delay a bit (0.2s) to avoid bug caused by exiting SortState immediately
+            // Must delay a bit (0.2s) to avoid bug caused by exiting and entering SortState immediately
             Invoke(nameof(OnConfirmSortOrder), .2f);
             _selectedCardButtonHolder.BackToNormalState();
         }
@@ -193,13 +202,17 @@ namespace CryptoQuest.UI.Menu.Panels.Home
         private void OnConfirmSortOrder()
         {
             ConfirmedEvent?.Invoke();
+            // Server will listen to this event and validate sort
+            _confirmSortEvent.RaiseEvent();
         }
 
         private void ResetSortOrder()
         {
-            var otherTarget = _partySlots[_indexHolder].transform.GetChild(0);
-
-            PutToNormalLayer(otherTarget, CurrentIndex);
+            if (_partySlots[_indexHolder].transform.childCount > 0) 
+            {
+                var otherTarget = _partySlots[_indexHolder].transform.GetChild(0);
+                PutToNormalLayer(otherTarget, CurrentIndex);
+            }
             PutToNormalLayer(_selectedCardButtonHolder.transform, _indexHolder);
 
             CurrentIndex = _indexHolder;
