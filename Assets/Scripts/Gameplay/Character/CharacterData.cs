@@ -28,21 +28,6 @@ namespace CryptoQuest.Gameplay.Character
             return character;
         }
 #if UNITY_EDITOR
-        public void Editor_SetId(int id)
-        {
-            Id = id;
-        }
-
-        public void Editor_SetName(LocalizedString name)
-        {
-            Name = name;
-        }
-
-        public void Editor_SetDescription(LocalizedString description)
-        {
-            Description = description;
-        }
-
         public void Editor_SetElement(Elemental element)
         {
             Element = element;

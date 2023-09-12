@@ -104,11 +104,7 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Monster
                 instance.Editor_SetEXP(dataModel.Exp);
                 instance.Editor_SetStats(attributeInitValues);
                 instance.name = replacedName;
-                EnemyDatabase.Map enemyMapData = new EnemyDatabase.Map()
-                {
-                    Id = instance.Id,
-                    Enemy = new AssetReferenceT<EnemyData>(path)
-                };
+               
 
                 if (!AssetDatabase.Contains(instance))
                 {
@@ -120,11 +116,19 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Monster
                 {
                     EditorUtility.SetDirty(instance);
                 }
-
+                
+                var assetGuid = AssetDatabase.AssetPathToGUID(path);
+                instance.SetObjectToAddressableGroup("Enemy");
+                EnemyDatabase.Map enemyMapData = new EnemyDatabase.Map()
+                {
+                    Id = instance.Id,
+                    Data = new AssetReferenceT<EnemyDef>(assetGuid)
+                };
+                
                 enemyMap.Add(enemyMapData);
             }
-
-            _enemyDatabase.Editor_SetEnemyMap(enemyMap.ToArray());
+         
+            _enemyDatabase.Editor_SetMaps(enemyMap.ToArray());
         }
 
         private AbilityScriptableObject GetNormalAttackAbility()
