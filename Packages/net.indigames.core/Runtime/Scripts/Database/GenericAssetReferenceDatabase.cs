@@ -49,7 +49,7 @@ namespace IndiGames.Core.Database
                 yield break;
             }
 
-            Debug.Log($"Loading {id}");
+            Debug.Log($"Loading {name}: {id}");
             if (!CacheMap.TryGetValue(id, out var assetRef))
             {
                 Debug.LogWarning($"Cannot find asset with id {id} in database");

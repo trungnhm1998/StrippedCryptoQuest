@@ -59,6 +59,7 @@ namespace CryptoQuest.Gameplay.Reward
 
         public bool Merge(CurrencyLootInfo loot)
         {
+            if (_mergingCurrencyLoot == null || _mergingCurrencyLoot.IsValid() == false) return false;
             if (loot.IsValid() == false) return false;
             _mergingCurrencyLoot.Merge(loot);
             return true;
