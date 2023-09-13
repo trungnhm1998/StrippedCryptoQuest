@@ -264,7 +264,7 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
         private void EquipEquipment(EquipmentInfo equipment)
         {
             _main.EquipItem(equipment);
-            _main.State.RequestStateChange(StatusMenuStateMachine.Status);
+            _main.State.RequestStateChange(StatusMenuStateMachine.Equipment);
         }
 
         private GameObject _cloneChar;
