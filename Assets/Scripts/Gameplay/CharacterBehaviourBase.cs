@@ -13,6 +13,7 @@ namespace CryptoQuest.Gameplay
     /// </summary>
     public class CharacterBehaviourBase : MonoBehaviour
     {
+        [SerializeField] private AttributeScriptableObject _hpAttribute;
         [field: SerializeField] public AbilitySystemBehaviour GameplayAbilitySystem { get; private set; }
         [field: SerializeField] public EffectSystemBehaviour EffectSystem { get; private set; }
         [field: SerializeField] public AttributeSystemBehaviour AttributeSystem { get; private set; }
@@ -54,6 +55,14 @@ namespace CryptoQuest.Gameplay
         public void RemoveEffect(IGameplayEffectSpec activeEffectEffectSpec)
         {
             GameplayAbilitySystem.EffectSystem.RemoveEffect(activeEffectEffectSpec as GameplayEffectSpec);
+        }
+
+        public bool IsDead()
+        {
+            if (!AttributeSystem.TryGetAttributeValue(_hpAttribute, out var hpValue))
+                return true;
+
+            return hpValue.CurrentValue <= 0;
         }
     }
 }

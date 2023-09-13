@@ -29,15 +29,20 @@ namespace CryptoQuest.Gameplay.Character.LevelSystem
 
         public void AddExp(float expToAdd)
         {
-            var attributeSystem = _character.AttributeSystem;
-            attributeSystem.TryGetAttributeValue(_expBuffAttribute, out var _expBuffValue);
-
-            if (_expBuffValue.CurrentValue == 0f)
+            if (_character.IsDead())
             {
-                _expBuffValue.CurrentValue = 1;
+                Debug.LogWarning($"CharacterLevelComponent::AddExp: Failed because this character is dead");
+                return;
+            }
+            var attributeSystem = _character.AttributeSystem;
+            attributeSystem.TryGetAttributeValue(_expBuffAttribute, out var expBuffValue);
+
+            if (expBuffValue.CurrentValue == 0f)
+            {
+                expBuffValue.CurrentValue = 1;
             }
 
-            var addedExp = expToAdd * _expBuffValue.CurrentValue;
+            var addedExp = expToAdd * expBuffValue.CurrentValue;
 
             _characterSpec.Experience += addedExp;
 
@@ -54,7 +59,7 @@ namespace CryptoQuest.Gameplay.Character.LevelSystem
             }
             _lastLevel = _characterSpec.Level;
         }
-
+        
         private void CharacterLevelUp()
         {
             RecalculateStats();

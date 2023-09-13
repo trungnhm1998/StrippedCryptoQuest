@@ -1,5 +1,6 @@
 ﻿using System;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
+using CryptoQuest.Gameplay.Reward;
 using CryptoQuest.UI.Dialogs.RewardDialog;
 using UnityEngine;
 
@@ -11,7 +12,10 @@ namespace CryptoQuest.Gameplay.Loot
         [field: SerializeField] public float Exp { get; private set; }
         public ExpLoot(float experiencePoints) => Exp = experiencePoints;
 
-        public override void AddItemToInventory(InventorySO inventory) { }
+        public override void AddItemToInventory(InventorySO inventory)
+        {
+            RewardManager.RewardPlayerExp(Exp);
+        }
 
         public override UI.Dialogs.RewardDialog.Reward CreateRewardUI()
             => new GenericReward($"{Exp} EXP");
