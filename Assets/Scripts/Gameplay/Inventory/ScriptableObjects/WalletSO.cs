@@ -11,14 +11,21 @@ namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects
         public CurrencyInfo Diamond = new();
         public Dictionary<CurrencySO, CurrencyInfo> CurrencyAmounts = new();
 
+#if UNITY_EDITOR
         public void OnValidate()
         {
             if (Gold.Data == null || Soul.Data == null || Diamond.Data == null)
                 return;
             ValidateAmount();
+        }
+#endif
+
+        private void OnEnable()
+        {
             CurrencyAmounts[Gold.Data] = Gold;
             CurrencyAmounts[Diamond.Data] = Diamond;
             CurrencyAmounts[Soul.Data] = Soul;
+            ValidateAmount();
         }
 
         private void ValidateAmount()

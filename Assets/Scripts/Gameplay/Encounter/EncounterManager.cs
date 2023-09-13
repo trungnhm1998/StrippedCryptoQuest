@@ -3,6 +3,7 @@ using System.Collections;
 using CryptoQuest.Events;
 using CryptoQuest.Gameplay.Battle;
 using UnityEngine;
+using UnityEngine.ResourceManagement.AsyncOperations;
 using Random = UnityEngine.Random;
 
 namespace CryptoQuest.Gameplay.Encounter
@@ -95,6 +96,9 @@ namespace CryptoQuest.Gameplay.Encounter
         private IEnumerator GetEncounter(string encounterId, Action<EncounterData> callback)
         {
             yield return _database.LoadDataById(encounterId);
+            var handle = _database.GetHandle(encounterId);
+            yield return handle;
+            if (!handle.IsValid() || handle.Status != AsyncOperationStatus.Succeeded) yield break;
             var encounter = _database.GetDataById(encounterId);
             if (encounter == null)
                 yield break;
