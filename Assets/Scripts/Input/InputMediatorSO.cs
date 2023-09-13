@@ -114,6 +114,12 @@ namespace CryptoQuest.Input
             var actionMap = _inputActions.asset.FindActionMap(actionMapName);
             actionMap.Enable();
         }
+        
+        public void DisableInputMap(string actionMapName)
+        {
+            var actionMap = _inputActions.asset.FindActionMap(actionMapName);
+            actionMap.Disable();
+        }
 
         #endregion
 

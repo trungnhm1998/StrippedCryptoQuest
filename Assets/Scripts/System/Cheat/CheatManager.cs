@@ -1,4 +1,5 @@
-﻿using CommandTerminal;
+﻿using System;
+using CommandTerminal;
 using CryptoQuest.Input;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -80,10 +81,7 @@ namespace CryptoQuest.System.Cheat
 
         public void OnOpenTerminal(InputAction.CallbackContext context)
         {
-            if (context.performed)
-            {
-                ToggleTerminal();
-            }
+            if (context.performed) ToggleTerminal();
         }
 
         private void CloseTerminal()
@@ -96,51 +94,71 @@ namespace CryptoQuest.System.Cheat
 
         public void OnFullSizeModifier(InputAction.CallbackContext context)
         {
-            if (context.performed)
+            Wrapper(() =>
             {
-                _openingFullSizeTerminal = true;
-            }
-            else if (context.canceled)
-            {
-                _openingFullSizeTerminal = false;
-            }
+                if (context.performed)
+                {
+                    _openingFullSizeTerminal = true;
+                }
+                else if (context.canceled)
+                {
+                    _openingFullSizeTerminal = false;
+                }
+            });
         }
 
         public void OnCommandNavigate(InputAction.CallbackContext context)
         {
-            if (context.performed)
+            Wrapper(() =>
             {
-                var readValue = (int)context.ReadValue<float>();
-                if (readValue == 1)
+                if (context.performed)
                 {
-                    _terminal.NextCommand();
+                    var readValue = (int)context.ReadValue<float>();
+                    if (readValue == 1)
+                    {
+                        _terminal.NextCommand();
+                    }
+                    else if (readValue == -1)
+                    {
+                        _terminal.PreviousCommand();
+                    }
                 }
-                else if (readValue == -1)
-                {
-                    _terminal.PreviousCommand();
-                }
-            }
+            });
         }
 
         public void OnClose(InputAction.CallbackContext context)
         {
-            if (context.performed && _terminal.State != TerminalState.Close) CloseTerminal();
+            Wrapper(() =>
+            {
+                if (context.performed && _terminal.State != TerminalState.Close) CloseTerminal();
+            });
         }
 
         public void OnExecute(InputAction.CallbackContext context)
         {
-            if (context.performed)
+            Wrapper(() =>
             {
-                _terminal.EnterPressed();
-            }
+                if (context.performed)
+                {
+                    _terminal.EnterPressed();
+                }
+            });
         }
 
         public void OnComplete(InputAction.CallbackContext context)
         {
-            if (context.performed)
+            Wrapper(() =>
             {
-                _terminal.TabPressed();
-            }
+                if (context.performed)
+                {
+                    _terminal.TabPressed();
+                }
+            });
+        }
+
+        private void Wrapper(Action callback)
+        {
+            if (_terminal.State != TerminalState.Close) callback?.Invoke();
         }
     }
 }
