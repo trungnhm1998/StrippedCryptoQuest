@@ -1,4 +1,4 @@
-using CryptoQuest.Core;
+using IndiGames.Core.Database;
 using CryptoQuest.Gameplay.Battle;
 
 namespace CryptoQuest.Gameplay.Encounter

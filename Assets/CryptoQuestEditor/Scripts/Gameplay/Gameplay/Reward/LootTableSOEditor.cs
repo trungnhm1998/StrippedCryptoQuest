@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using CryptoQuest.Core;
 using CryptoQuest.Gameplay.Battle;
 using CryptoQuest.Gameplay.Encounter;
 using CryptoQuest.Gameplay.Inventory.Currency;
@@ -13,6 +12,7 @@ using IndiGames.Tools.ScriptableObjectBrowser;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using IndiGames.Core.Database;
 
 namespace CryptoQuestEditor.Gameplay.Gameplay.Reward
 {

@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using CryptoQuest.Core;
+using IndiGames.Core.Database;
 using CryptoQuest.Gameplay.Battle;
 using CryptoQuest.Gameplay.Encounter;
 using IndiGames.Tools.ScriptableObjectBrowser;

@@ -1,4 +1,4 @@
-using CryptoQuest.Core;
+using IndiGames.Core.Database;
 using UnityEngine;
 
 namespace CryptoQuest.Gameplay.Loot
@@ -14,12 +14,7 @@ namespace CryptoQuest.Gameplay.Loot
 
         protected override void Editor_SetInstanceId(ref Map instance, LootTable table)
         {
-            if (!int.TryParse(table.ID, out var id))
-            {
-                instance.Id = 0;
-                return;
-            }
-            instance.Id = id;
+            instance.Id = table.ID;
         }
 #endif
     }

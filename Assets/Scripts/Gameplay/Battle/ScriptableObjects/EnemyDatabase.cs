@@ -1,4 +1,4 @@
-﻿using CryptoQuest.Core;
+﻿using IndiGames.Core.Database;
 using CryptoQuest.Gameplay.Character;
 
 namespace CryptoQuest.Gameplay.Battle.ScriptableObjects
