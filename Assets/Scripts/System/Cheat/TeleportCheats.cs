@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using CommandTerminal;
 using IndiGames.Core.SceneManagementSystem.Events.ScriptableObjects;
 using IndiGames.Core.SceneManagementSystem.ScriptableObjects;
-using UnityEditor;
+#if UNITY_EDITOR
+    using UnityEditor;
+#endif
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
@@ -22,7 +24,6 @@ namespace CryptoQuest.System.Cheat
         [SerializeField] private LoadSceneEventChannelSO _loadSceneEventChannelSO;
         [SerializeField] private Location[] _locations;
 
-#if UNITY_EDITOR || DEVELOPMENT_BUILD
         private Dictionary<string, string> _locationDictionary = new();
 
         private void OnValidate()
@@ -77,6 +78,5 @@ namespace CryptoQuest.System.Cheat
             if (asyncOperationHandle.Result != null)
                 _loadSceneEventChannelSO.RequestLoad(asyncOperationHandle.Result);
         }
-#endif
     }
 }
