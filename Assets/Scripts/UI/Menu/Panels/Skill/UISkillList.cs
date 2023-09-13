@@ -40,13 +40,17 @@ namespace CryptoQuest.UI.Menu.Panels.Skill
             UISkillButton.InspectingRow += AutoScroll;
 
             SetupScrollViewInfo();
-            Init(_serviceProvider.PartyController.Party.Members[0]);
         }
 
         private void OnDestroy()
         {
             _characterSelection.UpdateSkillListEvent -= Init;
             UISkillButton.InspectingRow -= AutoScroll;
+        }
+
+        private void OnEnable()
+        {
+            Init(_serviceProvider.PartyController.Party.Members[0]);
         }
 
         private void Init(CharacterSpec characterSpec, bool isAnotherChar = false)
@@ -73,12 +77,13 @@ namespace CryptoQuest.UI.Menu.Panels.Skill
             foreach (Transform child in _scrollRect.content.transform) {
                 Destroy(child.gameObject);
             }
-            yield return new WaitForSeconds(.1f);
+
+            yield return null;
 
             _scrollRect.Initialize(this);
-            yield return new WaitForSeconds(.1f);
+            _scrollRect.ReloadData();
 
-            _defaultSelectedSkill = _scrollRect.content.GetChild(0).GetComponent<UISkillButton>();
+            _defaultSelectedSkill = _scrollRect.content.GetComponentInChildren<UISkillButton>();
             _defaultSelectedSkill.Select();
         }
 

@@ -58,7 +58,6 @@ namespace CryptoQuest.UI.Menu.Panels.Skill
             if (_cachedGo == selectedCharGo.transform.parent.gameObject) return;
             for (var index = 0; index < _partySlots.Length; index++)
             {
-                
                 if (selectedCharGo.transform.parent.gameObject == _partySlots[index].gameObject)
                 {
                     UpdateSkillListEvent?.Invoke(_party.Members[index], true);
