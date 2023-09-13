@@ -44,7 +44,8 @@ namespace CryptoQuest.UI.Menu.Panels.Item
         private void OnEnable()
         {
             SetConsumableUI();
-            _recyclableScrollRect.ReloadData();
+            //TODO: Implement reload inventory in sprint 8
+            // _recyclableScrollRect.ReloadData();
         }
 
         private void SetConsumableUI()
