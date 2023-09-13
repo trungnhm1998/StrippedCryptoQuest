@@ -1,10 +1,14 @@
 ﻿using System;
 using CryptoQuest.Gameplay.Inventory.Items;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
+using CryptoQuest.Gameplay.Reward;
 using UnityEngine;
 
 namespace CryptoQuest.Gameplay.Loot
 {
+    /// <summary>
+    ///  need to be abstract class so we could serialize it in unity
+    /// </summary>
     [Serializable]
     public abstract class LootInfo
     {
@@ -13,7 +17,10 @@ namespace CryptoQuest.Gameplay.Loot
         public abstract UI.Dialogs.RewardDialog.Reward CreateRewardUI();
         public abstract LootInfo Clone();
 
-        public abstract bool Merge(LootInfo otherLoot);
+        public abstract bool AcceptMerger(IRewardMerger merger);
+
+        public abstract bool Merge(IRewardMerger merger);
+        public abstract bool IsValid();
     }
 
     [Serializable]
@@ -27,5 +34,7 @@ namespace CryptoQuest.Gameplay.Loot
             set => _item = value;
         }
         public LootInfo(TItemInfo item) => _item = item;
+
+        public override bool IsValid() => _item != null && _item.IsValid();
     }
 }

@@ -180,7 +180,7 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Monster
             return AssetDatabase.LoadAssetAtPath<GameObject>(AssetDatabase.GUIDToAssetPath(guid));
         }
 
-        private ExpLoot GetExpLoot(float exp)
+        private LootInfo GetExpLoot(float exp)
         {
             return new ExpLoot(exp);
         }

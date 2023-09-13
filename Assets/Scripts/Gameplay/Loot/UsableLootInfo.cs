@@ -1,6 +1,7 @@
 ﻿using System;
 using CryptoQuest.Gameplay.Inventory.Items;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
+using CryptoQuest.Gameplay.Reward;
 using CryptoQuest.UI.Dialogs.RewardDialog;
 
 namespace CryptoQuest.Gameplay.Loot
@@ -12,12 +13,12 @@ namespace CryptoQuest.Gameplay.Loot
         public override void AddItemToInventory(InventorySO inventory) => inventory.Add(Item);
         public override UI.Dialogs.RewardDialog.Reward CreateRewardUI() => new ConsumableReward(this);
         public override LootInfo Clone() => new UsableLootInfo(Item.Clone());
-        public override bool Merge(LootInfo otherLoot)
+        public override bool AcceptMerger(IRewardMerger merger) => merger.Visit(this);
+        public override bool Merge(IRewardMerger merger) => merger.Merge(this);
+
+        public void Merge(UsableLootInfo loot)
         {
-            if (otherLoot is not UsableLootInfo usableLoot) return false;
-            if (Item.Data != usableLoot.Item.Data) return false;
-            Item.SetQuantity(Item.Quantity + usableLoot.Item.Quantity);
-            return true;
+            Item.SetQuantity(Item.Quantity + loot.Item.Quantity);
         }
     }
 }

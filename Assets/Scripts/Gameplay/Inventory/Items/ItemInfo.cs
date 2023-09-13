@@ -15,6 +15,8 @@ namespace CryptoQuest.Gameplay.Inventory.Items
             get => _id;
             set => _id = value;
         }
+
+        public abstract bool IsValid();
     }
 
     [Serializable]
@@ -29,6 +31,6 @@ namespace CryptoQuest.Gameplay.Inventory.Items
 
         protected ItemInfo() { }
 
-        public virtual bool IsValid() => Data != null;
+        public override bool IsValid() => Data != null;
     }
 }

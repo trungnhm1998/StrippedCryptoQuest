@@ -95,24 +95,16 @@ namespace CryptoQuest.Gameplay.Reward
         public static LootInfo[] CloneAndMergeLoots(params LootInfo[] loots)
         {
             List<LootInfo> mergedLoots = loots.Select(loot => loot.Clone()).ToList();
-            for (var index = 0; index < mergedLoots.Count; index++)
+            IRewardMerger rewardMerger = new BasicMerger(ref mergedLoots);
+            var currentLootIndex = 0;
+            while (currentLootIndex < mergedLoots.Count)
             {
-                var loot = mergedLoots[index];
-                MergeThenRemoveOtherLoot(ref mergedLoots, currentLootIndex: index, ref loot);
+                var loot = mergedLoots[currentLootIndex];
+                if (loot.AcceptMerger(rewardMerger))
+                    currentLootIndex++;
             }
 
             return mergedLoots.ToArray();
-        }
-
-        private static void MergeThenRemoveOtherLoot(ref List<LootInfo> loots, int currentLootIndex, ref LootInfo loot)
-        {
-            for (int nextLootIndex = currentLootIndex + 1; nextLootIndex < loots.Count;)
-            {
-                if (loot.Merge(loots[nextLootIndex]))
-                    loots.RemoveAt(nextLootIndex);
-                else
-                    nextLootIndex++;
-            }
         }
     }
 }

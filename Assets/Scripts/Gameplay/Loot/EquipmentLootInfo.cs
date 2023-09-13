@@ -1,6 +1,7 @@
 ﻿using System;
 using CryptoQuest.Gameplay.Inventory.Items;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
+using CryptoQuest.Gameplay.Reward;
 using CryptoQuest.UI.Dialogs.RewardDialog;
 
 namespace CryptoQuest.Gameplay.Loot
@@ -15,11 +16,13 @@ namespace CryptoQuest.Gameplay.Loot
             => new GenericLocalizedReward(Item.Data.DisplayName);
 
         public override LootInfo Clone() => new EquipmentLootInfo(Item.Clone());
+
         /// <summary>
         ///  equipment loot can't be merged
         /// </summary>
-        /// <param name="otherLoot"></param>
+        /// <param name="merger"></param>
         /// <returns></returns>
-        public override bool Merge(LootInfo otherLoot) => false;
+        public override bool AcceptMerger(IRewardMerger merger) => true;
+        public override bool Merge(IRewardMerger merger) => false;
     }
 }

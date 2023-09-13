@@ -27,6 +27,43 @@ namespace CryptoQuest.Tests.Editor.Gameplay
             Assert.AreEqual(2, ((CurrencyLootInfo)mergedLoots[0]).Item.Amount);
         }
 
+        [TestCase(new[] { 2f, 3f }, 5f)]
+        [TestCase(new[] { 10f, 3f }, 13f)]
+        [TestCase(new[] { 1f, 1f, 1f }, 3f)]
+        public void MergeLoots_CurrenciesLoots_OneCurrencyLootWithCorrectAmount(float[] amount, float expected)
+        {
+            LootInfo[] loots = new LootInfo[amount.Length];
+            var currencySO = ScriptableObject.CreateInstance<CurrencySO>();
+            for (var index = 0; index < amount.Length; index++)
+            {
+                var f = amount[index];
+                var currency = new CurrencyInfo(currencySO, f);
+                loots[index] = new CurrencyLootInfo(currency);
+            }
+
+            var mergedLoots = RewardManager.CloneAndMergeLoots(loots);
+
+            Assert.AreEqual(1, mergedLoots.Length);
+            Assert.AreEqual(expected, ((CurrencyLootInfo)mergedLoots[0]).Item.Amount);
+        }
+
+        [TestCase(1f, 1f, 2f)]
+        public void MergeLoots_TwoExpLoot_OneExpLootWithSumOfTwo(float first, float second, float expected)
+        {
+            var firstExpLoot = new ExpLoot(first); // after the merged loots, this should not be modified
+            LootInfo[] loots =
+            {
+                firstExpLoot,
+                new ExpLoot(second)
+            };
+
+            var mergedLoots = RewardManager.CloneAndMergeLoots(loots);
+
+            Assert.AreNotEqual(firstExpLoot, mergedLoots[0]); // should be cloned
+            Assert.AreEqual(1, mergedLoots.Length);
+            Assert.AreEqual(expected, ((ExpLoot)mergedLoots[0]).Exp);
+        }
+
         [Test]
         public void MergeLoots_TwoEquipments_ReturnTwoEquipments()
         {
@@ -45,7 +82,8 @@ namespace CryptoQuest.Tests.Editor.Gameplay
         [Test]
         public void MergeLoots_3Consumables_OneConsumableWithCorrectQuantity()
         {
-            var consumable = new UsableInfo(ScriptableObject.CreateInstance<UsableSO>());
+            var baseItemSO = ScriptableObject.CreateInstance<UsableSO>();
+            var consumable = new UsableInfo(baseItemSO);
             var loots = new[]
             {
                 new UsableLootInfo(consumable),

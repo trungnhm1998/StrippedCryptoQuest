@@ -21,11 +21,10 @@ namespace CryptoQuest.Gameplay.Loot
             => new GenericReward($"{Exp} EXP");
 
         public override LootInfo Clone() => new ExpLoot(Exp);
-        public override bool Merge(LootInfo otherLoot)
-        {
-            if (otherLoot is not ExpLoot expLoot) return false;
-            Exp += expLoot.Exp;
-            return true;
-        }
+        public override bool AcceptMerger(IRewardMerger merger) => merger.Visit(this);
+        public override bool Merge(IRewardMerger merger) => merger.Merge(this);
+        public override bool IsValid() => Exp > 0;
+        
+        public void Merge(ExpLoot loot) => Exp += loot.Exp;
     }
 }
