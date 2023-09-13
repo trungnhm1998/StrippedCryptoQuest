@@ -124,6 +124,6 @@ namespace IndiGames.Core.Database
         }
 
         protected virtual void Editor_SetInstanceId(ref Map instance, TSerializableObject asset) {}
-    }
 #endif
+    }
 }
