@@ -50,6 +50,7 @@ namespace CryptoQuest.UI.Menu.Panels.Skill
 
         private void OnEnable()
         {
+            CleanUpScrollView();
             Init(_serviceProvider.PartyController.Party.Members[0]);
         }
 
@@ -59,7 +60,7 @@ namespace CryptoQuest.UI.Menu.Panels.Skill
 
             if (isAnotherChar)
             {
-                StartCoroutine(RefreshScrollView());
+                StartCoroutine(RefreshSkillList());
                 return;
             }
 
@@ -72,18 +73,32 @@ namespace CryptoQuest.UI.Menu.Panels.Skill
             _skillCount = skills.Count;
         }
 
-        private IEnumerator RefreshScrollView()
+        private IEnumerator RefreshSkillList()
         {
-            foreach (Transform child in _scrollRect.content.transform) {
-                Destroy(child.gameObject);
-            }
-
+            CleanUpScrollView();
             yield return null;
 
             _scrollRect.Initialize(this);
             _scrollRect.ReloadData();
 
-            _defaultSelectedSkill = _scrollRect.content.GetComponentInChildren<UISkillButton>();
+            yield return new WaitForSeconds(.1f);
+            OnSelectFirstSkill();
+        }
+
+        private void CleanUpScrollView()
+        {
+            if (_scrollRect.content.transform.childCount > 0)
+                foreach (Transform child in _scrollRect.content.transform)
+                {
+                    Destroy(child.gameObject);
+                }
+        }
+
+        private void OnSelectFirstSkill()
+        {
+            EnterSkillSelectionEvent?.Invoke();
+
+            _defaultSelectedSkill = _scrollRect.content.GetChild(0).GetComponent<UISkillButton>();
             _defaultSelectedSkill.Select();
         }
 
@@ -137,17 +152,13 @@ namespace CryptoQuest.UI.Menu.Panels.Skill
         {
             var skill = cell as UISkill;
             skill.Configure(_skills[index]);
-
-            // bad code, need to be changed
-            if (index == 0) _defaultSelectedSkill = skill.GetComponent<UISkillButton>();
         }
         #endregion
 
         #region SkillSelectionState Setup
         public void Init()
         {
-            _defaultSelectedSkill.Select();
-            EnterSkillSelectionEvent?.Invoke();
+            OnSelectFirstSkill();
         }
         #endregion
     }

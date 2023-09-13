@@ -28,12 +28,16 @@ namespace CryptoQuest.UI.Menu.Panels.Skill
             UICharacterButton.SelectCharacterEvent += InspectSelectedCharacter;
 
             _party = _serviceProvider.PartyController.Party;
-            LoadPartyMembers();
         }
 
         private void OnDestroy()
         {
             UICharacterButton.SelectCharacterEvent -= InspectSelectedCharacter;
+        }
+
+        private void OnEnable()
+        {
+            LoadPartyMembers();
         }
 
         private void LoadPartyMembers()
