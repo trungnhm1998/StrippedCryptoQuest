@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using CryptoQuest.Gameplay.NPC.Chest;
 using CryptoQuest.Gameplay.Reward;
 using UnityEngine;
+using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace CryptoQuest.Gameplay.Loot
 {
@@ -48,7 +49,10 @@ namespace CryptoQuest.Gameplay.Loot
         {
             var lootId = chest.Treasure;
             yield return _lootDatabase.LoadDataById(lootId);
-            var loots = _lootDatabase.GetDataById(lootId);
+            var handle = _lootDatabase.GetHandle(lootId );
+            yield return handle;
+            if (!handle.IsValid() || handle.Status != AsyncOperationStatus.Succeeded) yield break;
+            var loots = _lootDatabase.GetDataById(lootId); 
             // TODO: This method should be async wait for server to add the loot into inventory first
             _rewardManager.Reward(loots.LootInfos.ToArray());
             chest.Opened?.Invoke();

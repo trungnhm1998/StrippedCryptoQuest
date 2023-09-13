@@ -80,13 +80,16 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Reward
                 {
                     EditorUtility.SetDirty(instance);
                 }
-               
+                var guid = AssetDatabase.AssetPathToGUID(path); 
                 maps.Add(new()
                 {
                     Id = dataModel.Id,
-                    Data = new AssetReferenceT<LootTable>(path),
+                    Data = new AssetReferenceT<LootTable>(guid),
                 });
+                instance.SetObjectToAddressableGroup("LootTable");
             }
+            _lootDatabase.Editor_SetMaps(maps.ToArray());
+            EditorUtility.SetDirty(_lootDatabase); 
         }
 
 
