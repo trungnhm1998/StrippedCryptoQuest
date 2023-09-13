@@ -187,7 +187,7 @@ namespace IndiGames.GameplayAbilitySystem.AttributeSystem.Components
                     .Attribute.CalculateCurrentAttributeValue(oldAttributeValue, _attributeValues);
 
                 if (evaluatedAttribute.CurrentValue.NearlyEqual(oldAttributeValue.CurrentValue)) continue;
-                
+
                 foreach (var preAttributeChangeChannel in _attributeEvents)
                 {
                     preAttributeChangeChannel.PreAttributeChange(this, ref evaluatedAttribute);
@@ -237,8 +237,10 @@ namespace IndiGames.GameplayAbilitySystem.AttributeSystem.Components
             if (!cache.TryGetValue(attribute, out var index)) return;
 
             var attributeValue = _attributeValues[index];
-            attributeValue.BaseValue = attributeValue.CurrentValue = value;
+            attributeValue.BaseValue = value;
             _attributeValues[index] = attributeValue;
+            
+            UpdateAttributeValues();
         }
 
         /// <summary>

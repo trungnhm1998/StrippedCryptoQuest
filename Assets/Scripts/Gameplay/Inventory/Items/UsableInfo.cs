@@ -39,8 +39,12 @@ namespace CryptoQuest.Gameplay.Inventory.Items
         private void Activate()
         {
             if (Owner == null) return;
-            GameplayAbilitySpec gameplayAbilitySpec = Owner.GiveAbility(Data.Ability);
-            Owner.TryActiveAbility(gameplayAbilitySpec);
+
+            CryptoQuestGameplayEffectSpec ability =
+                (CryptoQuestGameplayEffectSpec)Owner.MakeOutgoingSpec(Data.Ability.Effect);
+
+            ability.SetParameters(Data.ItemAbilityInfo.SkillParameters);
+            Owner.ApplyEffectSpecToSelf(ability);
         }
 
         public void UseItem() => Activate();
