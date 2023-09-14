@@ -1,12 +1,11 @@
 ﻿using System.Collections.Generic;
 using IndiGames.GameplayAbilitySystem.AttributeSystem;
 using UnityEngine;
-using CoreAttributeSO = IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects.AttributeScriptableObject;
 
 namespace CryptoQuest.Character.Attributes
 {
     [CreateAssetMenu(menuName = "Crypto Quest/Character/Elemental Attribute")]
-    public class ElementalAttribute : CoreAttributeSO
+    public class ElementalAttribute : AttributeScriptableObject
     {
         public override AttributeValue CalculateInitialValue(
             AttributeValue attributeValue,

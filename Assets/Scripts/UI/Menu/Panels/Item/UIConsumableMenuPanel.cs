@@ -1,21 +1,12 @@
 using System;
 using System.Collections.Generic;
-using CryptoQuest.Character.Attributes;
-using CryptoQuest.Gameplay;
-using CryptoQuest.Gameplay.Character;
 using CryptoQuest.Gameplay.Inventory.Items;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Type;
 using CryptoQuest.UI.Menu.MenuStates.ItemStates;
-using DG.Tweening;
 using FSM;
-using IndiGames.GameplayAbilitySystem.AttributeSystem;
-using IndiGames.GameplayAbilitySystem.AttributeSystem.Components;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.Localization;
 using UnityEngine.Localization.Components;
-using UnityEngine.Localization.SmartFormat.PersistentVariables;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace CryptoQuest.UI.Menu.Panels.Item
@@ -26,31 +17,16 @@ namespace CryptoQuest.UI.Menu.Panels.Item
     /// </summary>
     public class UIConsumableMenuPanel : UIMenuPanel
     {
-        private const int END_ELEMENT = 1;
-
-        private const string CHARACTER_NAME = "characterName";
-        private const string ATTRIBUTE_NAME = "attributeName";
-        private const string ATTRIBUTE_VALUE = "attributeValue";
         public event Action<UsableInfo> Inspecting;
 
         [SerializeField] private UIInventoryTabHeader _inventoryTabHeader;
         [SerializeField] private UIConsumables[] _itemLists;
         [SerializeField] private LocalizeStringEvent _localizeDescription;
 
-        [Header("Logger Attribute"), SerializeField]
-        private LocalizedString _loggerLocalizedString;
-
-        [SerializeField] private LoggerAttribute _loggerAttribute;
-        [SerializeField] private LocalizeStringEvent _loggerDescription;
-        [SerializeField] private GameObject _loggerPanel;
-        [SerializeField] private float _delayTime = 1f;
-
         private readonly Dictionary<UsableTypeSO, int> _itemListCache = new();
         private UIConsumableItem _usingItem;
         private UIConsumables _currentConsumables;
-        private Tween _callbackTween;
         private Text _description;
-        private Text _loggerText;
 
         private int CurrentTabIndex
         {
@@ -72,13 +48,11 @@ namespace CryptoQuest.UI.Menu.Panels.Item
             }
         }
 
-
         private int _currentTabIndex;
 
         private void Awake()
         {
             _description = _localizeDescription.GetComponent<Text>();
-            _loggerText = _loggerDescription.GetComponent<Text>();
             for (var index = 0; index < _itemLists.Length; index++)
             {
                 var itemList = _itemLists[index];
@@ -134,12 +108,6 @@ namespace CryptoQuest.UI.Menu.Panels.Item
         private void OnEnable()
         {
             _previouslyHidden = true;
-            _loggerAttribute.OnAttributeChanged += SetLoggerDescription;
-        }
-
-        private void OnDisable()
-        {
-            _loggerAttribute.OnAttributeChanged -= SetLoggerDescription;
         }
 
         protected override void OnShow()
@@ -177,41 +145,6 @@ namespace CryptoQuest.UI.Menu.Panels.Item
         {
             _localizeDescription.StringReference = item.Description;
             Inspecting?.Invoke(item);
-        }
-
-        private void SetLoggerDescription(AttributeSystemBehaviour attributeSystem, AttributeValue attributeValue)
-        {
-            _callbackTween?.Kill();
-            _loggerPanel.SetActive(true);
-
-            CharacterSpec characterSpec = attributeSystem.GetComponent<CharacterBehaviourBase>().Spec;
-            string attributeName = attributeValue.Attribute.name.Split('.')[END_ELEMENT];
-            string characterName = characterSpec.BackgroundInfo.name;
-
-            _loggerLocalizedString.Add(CHARACTER_NAME, new StringVariable()
-            {
-                Value = characterName
-            });
-
-            _loggerLocalizedString.Add(ATTRIBUTE_NAME, new StringVariable()
-            {
-                Value = attributeName
-            });
-
-            _loggerLocalizedString.Add(ATTRIBUTE_VALUE, new FloatVariable()
-            {
-                Value = attributeValue.CurrentValue
-            });
-
-            _loggerText.text += $"{_loggerLocalizedString.GetLocalizedString()}\n";
-
-            _callbackTween = DOVirtual.DelayedCall(_delayTime, HideLoggerDescription);
-        }
-
-        private void HideLoggerDescription()
-        {
-            _loggerPanel.SetActive(false);
-            _loggerText.text = null;
         }
 
         private void ShowItemsWithType(UsableTypeSO itemType)

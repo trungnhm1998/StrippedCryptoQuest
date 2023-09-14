@@ -1,13 +1,12 @@
 using System.Collections.Generic;
 using IndiGames.GameplayAbilitySystem.AttributeSystem;
 using UnityEngine;
-using CoreAttribute = IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects.AttributeScriptableObject;
 
 namespace CryptoQuest.Character.Attributes
 {
     public class AttributeWithMaxCapped : AttributeScriptableObject
     {
-        [SerializeField] private CoreAttribute _maxAttributeToCap;
+        [SerializeField] private AttributeScriptableObject _maxAttributeToCap;
 
         public override AttributeValue CalculateInitialValue(AttributeValue attributeValue,
             List<AttributeValue> otherAttributeValues)

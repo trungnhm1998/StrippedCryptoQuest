@@ -11191,6 +11191,7 @@ GameObject:
   - component: {fileID: 6400824905690561555}
   - component: {fileID: 5304692199647438999}
   - component: {fileID: 7195668501938518721}
+  - component: {fileID: 1740381547341789024}
   m_Layer: 5
   m_Name: ItemMenu
   m_TagString: Untagged
@@ -11247,7 +11248,20 @@ MonoBehaviour:
   - {fileID: 1161394958959000884}
   - {fileID: 5716652666387983517}
   _localizeDescription: {fileID: 860422895112046314}
-  _loggerLocalizedString:
+--- !u!114 &1740381547341789024
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8696878973401431348}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 086ed56a1e55464eb944390b33d7fb15, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _text: {fileID: 7605724376668282485}
+  _localizedLogger:
     m_TableReference:
       m_TableCollectionName: GUID:eb6ce0c7cd5c2444c9d3345957efb3cb
     m_TableEntryReference:
@@ -11258,32 +11272,46 @@ MonoBehaviour:
     m_LocalVariables:
     - name: characterName
       variable:
-        rid: 1147204341545041927
-    - name: attributeValue
-      variable:
-        rid: 1147204341545041928
+        rid: 8439633895570277051
     - name: attributeName
       variable:
-        rid: 1147204346080919556
+        rid: 8439633895570277052
+    - name: attributeValue
+      variable:
+        rid: 8439633895570277053
   _loggerAttribute: {fileID: 11400000, guid: 89d3d2124663a174c9861322f35b759a, type: 2}
-  _loggerDescription: {fileID: 3102121676854216304}
-  _loggerPanel: {fileID: 4897385070325085708}
+  _description: {fileID: 3102121676854216304}
+  _panel: {fileID: 4897385070325085708}
   _delayTime: 1
   references:
     version: 2
     RefIds:
-    - rid: 1147204341545041927
-      type: {class: StringVariable, ns: UnityEngine.Localization.SmartFormat.PersistentVariables, asm: Unity.Localization}
+    - rid: 8439633895570277051
+      type: {class: LocalizedString, ns: UnityEngine.Localization, asm: Unity.Localization}
       data:
-        m_Value: npc
-    - rid: 1147204341545041928
+        m_TableReference:
+          m_TableCollectionName: GUID:c595a35d5853c61488c828b448142288
+        m_TableEntryReference:
+          m_KeyId: 5630237921280
+          m_Key: 
+        m_FallbackState: 0
+        m_WaitForCompletion: 0
+        m_LocalVariables: []
+    - rid: 8439633895570277052
+      type: {class: LocalizedString, ns: UnityEngine.Localization, asm: Unity.Localization}
+      data:
+        m_TableReference:
+          m_TableCollectionName: GUID:e30fd3db1ff219142abae4fe71314c7b
+        m_TableEntryReference:
+          m_KeyId: 654956916736
+          m_Key: 
+        m_FallbackState: 0
+        m_WaitForCompletion: 0
+        m_LocalVariables: []
+    - rid: 8439633895570277053
       type: {class: FloatVariable, ns: UnityEngine.Localization.SmartFormat.PersistentVariables, asm: Unity.Localization}
       data:
-        m_Value: 1
-    - rid: 1147204346080919556
-      type: {class: StringVariable, ns: UnityEngine.Localization.SmartFormat.PersistentVariables, asm: Unity.Localization}
-      data:
-        m_Value: hp
+        m_Value: 0
 --- !u!1 &8982178870421494969
 GameObject:
   m_ObjectHideFlags: 0

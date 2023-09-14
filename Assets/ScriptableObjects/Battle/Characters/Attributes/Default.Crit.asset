@@ -12,8 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6dc1b97143320d4d8db63bada06bc79, type: 3}
   m_Name: Default.Crit
   m_EditorClassIdentifier: 
-  <DisplayName>k__BackingField: Critical hit rate
-  _shortName: Crit
+  <DisplayName>k__BackingField:
+    m_TableReference:
+      m_TableCollectionName: GUID:e30fd3db1ff219142abae4fe71314c7b
+    m_TableEntryReference:
+      m_KeyId: 146665992192
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
   _icon: {fileID: 0}
   _affectedBy: {fileID: 11400000, guid: 9ea7ef66c3bae0d47832b0244c8e6ff6, type: 2}
   _value: 0.4
+  references:
+    version: 2
+    RefIds: []
