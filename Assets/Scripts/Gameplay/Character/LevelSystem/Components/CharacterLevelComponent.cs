@@ -24,6 +24,7 @@ namespace CryptoQuest.Gameplay.Character.LevelSystem
             _character = character;
             _characterSpec = character.Spec;
             LevelCalculator ??= new LevelCalculator(_characterSpec.StatsDef.MaxLevel);
+            _lastLevel = _characterSpec.Level;
             CalculateLevel();
         }
 
