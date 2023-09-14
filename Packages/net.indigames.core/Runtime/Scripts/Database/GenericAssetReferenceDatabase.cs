@@ -8,7 +8,7 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 using Object = UnityEngine.Object;
 
 #if UNITY_EDITOR
-    using UnityEditor;
+using UnityEditor;
 #endif
 
 namespace IndiGames.Core.Database
@@ -45,7 +45,7 @@ namespace IndiGames.Core.Database
         {
             if (_loadedData.TryGetValue(id, out var loadingHandle))
             {
-                yield return loadingHandle;
+                if (loadingHandle.IsValid()) yield return loadingHandle;
                 yield break;
             }
 
@@ -112,7 +112,7 @@ namespace IndiGames.Core.Database
                 var instance = new Map();
                 var path = AssetDatabase.GUIDToAssetPath(uid);
                 var asset = AssetDatabase.LoadAssetAtPath<TSerializableObject>(path);
-                
+
                 var assetRef = new AssetReferenceT<TSerializableObject>(uid);
 
                 assetRef.SetEditorAsset(asset);
@@ -120,10 +120,11 @@ namespace IndiGames.Core.Database
                 instance.Data = assetRef;
                 ArrayUtility.Add(ref _maps, instance);
             }
-            UnityEditor.EditorUtility.SetDirty(this);   
+
+            UnityEditor.EditorUtility.SetDirty(this);
         }
 
-        protected virtual void Editor_SetInstanceId(ref Map instance, TSerializableObject asset) {}
+        protected virtual void Editor_SetInstanceId(ref Map instance, TSerializableObject asset) { }
 #endif
     }
 }

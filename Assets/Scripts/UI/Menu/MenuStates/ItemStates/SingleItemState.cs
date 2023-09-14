@@ -5,7 +5,7 @@ namespace CryptoQuest.UI.Menu.MenuStates.ItemStates
 {
     public class SingleItemState : MenuStateBase
     {
-        public static readonly string Item = "Item";
+        public static readonly string Item = "ItemForSingleAllyState";
 
         private UIItemPresenter _uiGroupPresenter;
 
