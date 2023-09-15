@@ -1,10 +1,9 @@
-﻿using IndiGames.Core.Common;
+﻿using System.Collections;
+using IndiGames.Core.Common;
 using IndiGames.Core.Events.ScriptableObjects;
 using IndiGames.Core.SceneManagementSystem.Events.ScriptableObjects;
 using IndiGames.Core.SceneManagementSystem.ScriptableObjects;
 using UnityEngine;
-using UnityEngine.ResourceManagement.AsyncOperations;
-using UnityEngine.ResourceManagement.ResourceProviders;
 using UnityEngine.SceneManagement;
 
 namespace IndiGames.Core.EditorTools
@@ -25,34 +24,29 @@ namespace IndiGames.Core.EditorTools
 
         private void Awake()
         {
-             _isStartFromEditor =
-                 !SceneManager.GetSceneByName(_globalManagersSO.SceneReference.editorAsset.name).isLoaded 
-                    && !_globalManagersSO.SceneReference.OperationHandle.IsValid(); 
+            _isStartFromEditor =
+                !SceneManager.GetSceneByName(_globalManagersSO.SceneReference.editorAsset.name).isLoaded
+                && !_globalManagersSO.SceneReference.OperationHandle.IsValid();
         }
 
-        private void Start()
+        private IEnumerator Start()
         {
-            if (_isStartFromEditor)
-                _globalManagersSO.SceneReference.LoadSceneAsync(LoadSceneMode.Additive).Completed +=
-                    GlobalManagersSceneLoaded;
+            if (_isStartFromEditor == false) yield break;
+            yield return _globalManagersSO.SceneReference.LoadSceneAsync(LoadSceneMode.Additive);
+            var coldBootEventAssetHandle = _editorColdBootEventChannelSO.LoadAssetAsync<LoadSceneEventChannelSO>();
+            yield return coldBootEventAssetHandle;
+
+            var coldBootEvent = coldBootEventAssetHandle.Result;
+
+            SetupGameplayManagerSceneOrNotifySceneLoaded(coldBootEvent);
         }
 
-        private void GlobalManagersSceneLoaded(AsyncOperationHandle<SceneInstance> obj)
-        {
-            _editorColdBootEventChannelSO.LoadAssetAsync<LoadSceneEventChannelSO>().Completed +=
-                NotifyColdStartupEventChannelLoaded;
-        }
-
-        private void NotifyColdStartupEventChannelLoaded(AsyncOperationHandle<LoadSceneEventChannelSO> editorColdBootEventChannelOpHandle)
+        private void SetupGameplayManagerSceneOrNotifySceneLoaded(LoadSceneEventChannelSO coldBootEvent)
         {
             if (_thisSceneSO != null)
-            {
-                editorColdBootEventChannelOpHandle.Result.RequestLoad(_thisSceneSO);
-            }
+                coldBootEvent.RequestLoad(_thisSceneSO);
             else
-            {
                 _sceneLoadedEventChannelSO.RaiseEvent();
-            }
         }
 #endif
     }

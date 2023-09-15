@@ -13,7 +13,7 @@ namespace IndiGames.Core.SceneManagementSystem
     // TODO: Class current violate SRP move fading logic to separate class
     public class LinearGameSceneLoader : MonoBehaviour
     {
-        [SerializeField] protected SceneScriptableObject _gameplayManagerSceneSO;
+        [SerializeField] private SceneScriptableObject _gameplayManagerSceneSO;
         [SerializeField] private FadeConfigSO _fadeConfigSO;
 
         [Header("Listening on")]
@@ -24,22 +24,21 @@ namespace IndiGames.Core.SceneManagementSystem
 #endif
 
         [Header("Raise on")]
-        [SerializeField] protected VoidEventChannelSO _sceneLoaded;
+        [SerializeField] private VoidEventChannelSO _sceneLoaded;
+        [SerializeField] private VoidEventChannelSO _sceneUnloading;
 
-        [SerializeField] protected VoidEventChannelSO _sceneUnloading;
-        protected AsyncOperationHandle<SceneInstance> _sceneLoadingOperationHandle;
-        protected AsyncOperationHandle<SceneInstance> _gameplayManagerLoadingOperationHandle;
+        private AsyncOperationHandle<SceneInstance> _sceneLoadingOperationHandle;
+        private AsyncOperationHandle<SceneInstance> _gameplayManagerLoadingOperationHandle;
 
-        protected SceneScriptableObject _sceneToLoad;
-        protected SceneScriptableObject _currentLoadedScene;
-
-        protected SceneInstance _gameplayManagerSceneInstance;
-        protected bool _isLoading;
+        private SceneScriptableObject _sceneToLoad;
+        private SceneScriptableObject _currentlyLoadedScene; // ignore gameplay/global manager scene
+        private SceneInstance _gameplayManagerSceneInstance;
+        private bool _isLoading;
 
         protected virtual void OnEnable()
         {
             _loadMap.LoadingRequested += MapLoadingRequested;
-            _loadTitle.LoadingRequested += TitleSceneLoadingRequested;
+            _loadTitle.LoadingRequested += LoadTitleScene;
 #if UNITY_EDITOR
             _editorColdBoot.LoadingRequested += EditorColdBootLoadingRequested;
 #endif
@@ -48,135 +47,113 @@ namespace IndiGames.Core.SceneManagementSystem
         protected virtual void OnDisable()
         {
             _loadMap.LoadingRequested -= MapLoadingRequested;
-            _loadTitle.LoadingRequested -= TitleSceneLoadingRequested;
+            _loadTitle.LoadingRequested -= LoadTitleScene;
 #if UNITY_EDITOR
             _editorColdBoot.LoadingRequested -= EditorColdBootLoadingRequested;
 #endif
         }
 
-        private void MapLoadingRequested(SceneScriptableObject locationToLoad)
+        private void MapLoadingRequested(SceneScriptableObject gameplaySceneToLoad)
         {
             if (_isLoading) return;
-
-            _sceneToLoad = locationToLoad;
             _isLoading = true;
-
-            if (!_gameplayManagerSceneInstance.Scene.isLoaded)
-            {
-                _gameplayManagerLoadingOperationHandle =
-                    _gameplayManagerSceneSO.SceneReference.LoadSceneAsync(LoadSceneMode.Additive);
-                _gameplayManagerLoadingOperationHandle.Completed += GameplayManagerSceneLoaded;
-            }
-            else
-            {
-                UnloadPreviousScene();
-            }
+            StartCoroutine(CoLoadGameplayScene(gameplaySceneToLoad));
         }
 
-        private void TitleSceneLoadingRequested(SceneScriptableObject mainMenu)
+        /// <summary>
+        /// Gameplay scene will need GameplayManager scene to be loaded first
+        /// </summary>
+        /// <returns></returns>
+        private IEnumerator CoLoadGameplayScene(SceneScriptableObject gameplayScene)
         {
-            _sceneToLoad = mainMenu;
-
-            if (_gameplayManagerSceneInstance.Scene.isLoaded)
-                UnloadPreviousScene();
-            else
-                LoadGameplayManagerScene();
+            yield return CoLoadGameplayManagerSceneIfNotLoaded();
+            yield return CoUnloadPreviousScene();
+            yield return CoLoadNextScene(gameplayScene);
         }
+
+        private void LoadTitleScene(SceneScriptableObject mainMenu)
+            => StartCoroutine(CoLoadNextScene(mainMenu));
 
 #if UNITY_EDITOR
+        /// <summary>
+        /// Support start up from any scene in editor
+        /// </summary>
         private void EditorColdBootLoadingRequested(SceneScriptableObject currentOpenSceneInEditor)
+            => StartCoroutine(Editor_CoSetupScene(currentOpenSceneInEditor));
+
+        private IEnumerator Editor_CoSetupScene(SceneScriptableObject sceneOpenedDirectlyFromEditor)
         {
-            StartCoroutine(CoLoadScene(currentOpenSceneInEditor));
-        }
-
-        private IEnumerator CoLoadScene(SceneScriptableObject currentOpenSceneInEditor)
-        {
-            _currentLoadedScene = currentOpenSceneInEditor;
-
-            if (_currentLoadedScene.SceneType == SceneScriptableObject.Type.Location)
-            {
-                _gameplayManagerLoadingOperationHandle =
-                    _gameplayManagerSceneSO.SceneReference.LoadSceneAsync(LoadSceneMode.Additive, true);
-                yield return _gameplayManagerLoadingOperationHandle;
-                if (!_gameplayManagerLoadingOperationHandle.Result.Scene.IsValid()) yield break;
-                _gameplayManagerSceneInstance = _gameplayManagerLoadingOperationHandle.Result;
-            }
-
-            _sceneLoaded.RaiseEvent();
+            var sceneOpenedFromEditor = SceneManager.GetActiveScene();
+            _sceneToLoad = sceneOpenedDirectlyFromEditor;
+            if (_sceneToLoad.SceneType == SceneScriptableObject.Type.Location)
+                yield return CoLoadGameplayManagerSceneIfNotLoaded();
+            
+            // The currently scene already loaded when open directly through EditorColdBoot
+            // Skip loading and just raised the event
+            OnSceneLoaded(sceneOpenedFromEditor);
         }
 #endif
 
         /// <summary>
-        /// Using callback because WebGL doesn't support threading for async/await
+        /// Loading gameplay manager if needed, for gameplay scene which need gameplay manager
         /// </summary>
-        private void LoadGameplayManagerScene()
+        private IEnumerator CoLoadGameplayManagerSceneIfNotLoaded()
         {
+            if (_gameplayManagerSceneInstance.Scene.isLoaded) yield break;
             _gameplayManagerLoadingOperationHandle =
                 _gameplayManagerSceneSO.SceneReference.LoadSceneAsync(LoadSceneMode.Additive);
-            _gameplayManagerLoadingOperationHandle.Completed += GameplayManagerSceneLoaded;
+            yield return _gameplayManagerLoadingOperationHandle;
+            if (_gameplayManagerLoadingOperationHandle.Result.Scene.IsValid() == false)
+            {
+                Debug.LogError("Failed to load Gameplay Manager Scene");
+                yield break;
+            }
+
+            _gameplayManagerSceneInstance = _gameplayManagerLoadingOperationHandle.Result;
         }
 
-        protected void GameplayManagerSceneLoaded(AsyncOperationHandle<SceneInstance> asyncOpSceneInstance)
+        private IEnumerator CoLoadNextScene(SceneScriptableObject sceneToLoad)
         {
-            _gameplayManagerSceneInstance = asyncOpSceneInstance.Result;
+            _sceneToLoad = sceneToLoad;
+            _sceneLoadingOperationHandle =
+                _sceneToLoad.SceneReference.LoadSceneAsync(LoadSceneMode.Additive, true, 0);
+            yield return _sceneLoadingOperationHandle;
 
-            UnloadPreviousScene();
-        }
-
-        private void UnloadPreviousScene()
-        {
-            _sceneUnloading.RaiseEvent();
-            StartCoroutine(CoUnloadPreviousScene());
+            OnSceneLoaded(_sceneLoadingOperationHandle.Result.Scene);
         }
 
         private IEnumerator CoUnloadPreviousScene()
         {
+            _sceneUnloading.RaiseEvent();
             _fadeConfigSO.OnFadeIn();
             yield return new WaitForSeconds(_fadeConfigSO.Duration);
-            if (_currentLoadedScene != null)
+            if (_currentlyLoadedScene != null)
             {
-                if (_currentLoadedScene.SceneReference.OperationHandle.IsValid())
-                    _currentLoadedScene.SceneReference.UnLoadScene();
+                if (_currentlyLoadedScene.SceneReference.OperationHandle.IsValid())
+                    _currentlyLoadedScene.SceneReference.UnLoadScene();
 #if UNITY_EDITOR
-                else
-                    UnloadSceneWhenStartFromEditor();
+                else UnloadSceneWhenStartFromEditor();
 #endif
             }
 
             Resources.UnloadUnusedAssets();
-            LoadNewScene();
         }
 
 #if UNITY_EDITOR
         /// <summary>
-        /// <c>_currentLoadedSceneSO.SceneReference.OperationHandle</c> would be null because the scene
-        /// already loaded when open directly through EditorColdBoot
+        /// <see cref="_sceneLoadingOperationHandle"/> will be null because the scene is
+        /// already loaded when open directly through EditorColdBoot, we not using using any logic to load the scene
         /// </summary>
-        protected void UnloadSceneWhenStartFromEditor()
-        {
-            SceneManager.UnloadSceneAsync(_currentLoadedScene.SceneReference.editorAsset.name);
-        }
+        private void UnloadSceneWhenStartFromEditor()
+            => SceneManager.UnloadSceneAsync(_currentlyLoadedScene.SceneReference.editorAsset.name);
 #endif
 
-        private void LoadNewScene()
+        private void OnSceneLoaded(Scene scene)
         {
-            _sceneLoadingOperationHandle =
-                _sceneToLoad.SceneReference.LoadSceneAsync(LoadSceneMode.Additive, true, 0);
-            _sceneLoadingOperationHandle.Completed += NewSceneLoaded;
-        }
-
-
-        private void NewSceneLoaded(AsyncOperationHandle<SceneInstance> asyncOpSceneInstance)
-        {
-            _currentLoadedScene = _sceneToLoad;
-
-            var scene = asyncOpSceneInstance.Result.Scene;
+            _currentlyLoadedScene = _sceneToLoad;
             SceneManager.SetActiveScene(scene);
-
             _isLoading = false;
-
-            _fadeConfigSO.OnFadeOut();
-
+            _fadeConfigSO.OnFadeOut(); // TODO: Some scene need to init their logic before fade out
             _sceneLoaded.RaiseEvent();
         }
     }

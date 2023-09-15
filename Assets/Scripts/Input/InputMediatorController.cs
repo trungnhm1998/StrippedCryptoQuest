@@ -10,15 +10,15 @@ namespace CryptoQuest.Input
 
         private void OnEnable()
         {
-            _sceneUnloadingEvent.EventRaised += SceneUnloadingEvent_Raised;
+            _sceneUnloadingEvent.EventRaised += DisableInputWhenSceneUnLoading;
         }
 
         private void OnDisable()
         {
-            _sceneUnloadingEvent.EventRaised -= SceneUnloadingEvent_Raised;
+            _sceneUnloadingEvent.EventRaised -= DisableInputWhenSceneUnLoading;
         }
 
-        private void SceneUnloadingEvent_Raised()
+        private void DisableInputWhenSceneUnLoading()
         {
             _inputMediator.DisableAllInput();
         }

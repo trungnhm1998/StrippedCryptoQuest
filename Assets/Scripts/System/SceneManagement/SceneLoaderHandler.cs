@@ -17,7 +17,6 @@ namespace CryptoQuest.System.SceneManagement
     public class SceneLoaderHandler : LinearGameSceneLoader
     {
         [SerializeField] private SceneLoaderBus _sceneLoadBus;
-        public SceneScriptableObject CurrentLoadedScene => _currentLoadedScene;
 
         private void Awake()
         {

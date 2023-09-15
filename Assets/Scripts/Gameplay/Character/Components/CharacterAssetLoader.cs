@@ -43,7 +43,7 @@ namespace CryptoQuest.Gameplay.Character.Components
         private IEnumerator CoLoadAssets()
         {
             yield return LoadAvatar();
-            yield return LoadSkillSet();
+            // yield return LoadSkillSet(); // TODO: REFACTOR CHARACTER SKILL SET
 
             _loadAssetCompleteEventChannel.RaiseEvent(IsAssetValid);
         }

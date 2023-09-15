@@ -36,6 +36,7 @@ namespace IndiGames.Core.SceneManagementSystem
 
         private SceneInstance _gameplayManagerSceneInstance;
         private bool _isLoading;
+        private Scene _lastActiveScene;
 
         private void OnEnable()
         {
@@ -58,13 +59,15 @@ namespace IndiGames.Core.SceneManagementSystem
         private void SceneLoadingRequested(SceneScriptableObject sceneToLoad)
         {
             if (_isLoading) return;
-            
+            _isLoading = true;
+            _lastActiveScene = SceneManager.GetActiveScene();
+
             _fadeConfigSO.OnFadeIn();
 
             _sceneToLoad = sceneToLoad;
-            _isLoading = true;
 
-            if (!_gameplayManagerSceneInstance.Scene.isLoaded && !_gameplayManagerSceneSO.SceneReference.OperationHandle.IsValid())
+            if (!_gameplayManagerSceneInstance.Scene.isLoaded &&
+                !_gameplayManagerSceneSO.SceneReference.OperationHandle.IsValid())
             {
                 LoadGameplayManagerScene();
                 return;
@@ -76,16 +79,16 @@ namespace IndiGames.Core.SceneManagementSystem
 #if UNITY_EDITOR
         private void EditorColdBootLoadingRequested(SceneScriptableObject currentOpenSceneInEditor)
         {
-           StartCoroutine(CoLoadScene(currentOpenSceneInEditor)); 
+            StartCoroutine(CoLoadScene(currentOpenSceneInEditor));
         }
-        
+
         private IEnumerator CoLoadScene(SceneScriptableObject currentOpenSceneInEditor)
         {
             if (currentOpenSceneInEditor.SceneType == SceneScriptableObject.Type.Location)
             {
                 _gameplayManagerLoadingOperationHandle =
                     _gameplayManagerSceneSO.SceneReference.LoadSceneAsync(LoadSceneMode.Additive, true);
-                yield return _gameplayManagerLoadingOperationHandle; 
+                yield return _gameplayManagerLoadingOperationHandle;
                 if (!_gameplayManagerLoadingOperationHandle.Result.Scene.IsValid()) yield break;
                 _gameplayManagerSceneInstance = _gameplayManagerLoadingOperationHandle.Result;
             }
@@ -133,9 +136,11 @@ namespace IndiGames.Core.SceneManagementSystem
                 }
 #endif
             }
+
             _fadeConfigSO.OnFadeOut();
             yield return new WaitForSeconds(_fadeConfigSO.Duration);
             SceneUnloaded?.Invoke(sceneToUnload);
+            SceneManager.SetActiveScene(_lastActiveScene);
         }
 
         private void LoadNewScene()
@@ -149,11 +154,8 @@ namespace IndiGames.Core.SceneManagementSystem
         {
             var scene = asyncOpSceneInstance.Result.Scene;
             SceneManager.SetActiveScene(scene);
-
             _isLoading = false;
-
             _fadeConfigSO.OnFadeOut();
-
             _sceneLoaded.RaiseEvent();
         }
     }
