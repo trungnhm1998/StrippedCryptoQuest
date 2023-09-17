@@ -17,7 +17,7 @@ namespace CryptoQuest.Gameplay
         [SerializeField] private AttributeScriptableObject _hp;
         [SerializeField] private CustomExecutionAttributeCaptureDef _captureAttack;
         [SerializeField] private CustomExecutionAttributeCaptureDef _captureDefense;
-
+        
 
         public override void Execute(
             ref CustomExecutionParameters executionParams,

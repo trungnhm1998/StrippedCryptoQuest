@@ -22,7 +22,7 @@ namespace CryptoQuest.Gameplay.Character.Components
         {
             _character = character;
             _characterSpec = character.Spec;
-            LoadAssets();
+            // LoadAssets();
         }
 
         /// <summary>
