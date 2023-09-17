@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using CryptoQuest.Character.Hero;
 using CryptoQuest.Gameplay.Character;
 using CryptoQuest.Gameplay.Inventory;
 using CryptoQuest.Gameplay.Inventory.Items;
@@ -107,12 +108,12 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
             _mainPanel.State.RequestStateChange(StatusMenuStateMachine.EquipmentSelection);
         }
 
-        public void SetEquipmentsUI(CharacterEquipments characterEquipments)
+        public void SetEquipmentsUI(Equipments equipments)
         {
             ResetEquipmentsUI();
-            for (int i = 0; i < characterEquipments.Slots.Count; i++)
+            for (int i = 0; i < equipments.Slots.Count; i++)
             {
-                var equipmentSlot = characterEquipments.Slots[i];
+                var equipmentSlot = equipments.Slots[i];
                 if (equipmentSlot.IsValid() == false) continue;
                 var uiEquipmentSlot = EquipmentSlots[equipmentSlot.Type];
                 uiEquipmentSlot.Init(equipmentSlot.Equipment);

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using CryptoQuest.Battle;
 using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Calculation;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
 using IndiGames.GameplayAbilitySystem.EffectSystem;
@@ -22,7 +23,7 @@ namespace CryptoQuest.Gameplay
             ref CustomExecutionParameters executionParams,
             ref List<EffectAttributeModifier> outModifiers)
         {
-            var character = executionParams.SourceAbilitySystemComponent.GetComponent<CharacterBehaviourBase>();
+            var character = executionParams.SourceAbilitySystemComponent.GetComponent<ICharacter>();
             var characterElemental = character.Element;
 
             executionParams.TryGetAttributeValue(new CustomExecutionAttributeCaptureDef()

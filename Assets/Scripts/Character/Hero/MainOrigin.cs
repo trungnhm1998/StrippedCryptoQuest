@@ -1,9 +1,10 @@
-﻿using CryptoQuest.UI.Menu.Panels.Home;
+﻿using CryptoQuest.Character.Hero;
+using CryptoQuest.UI.Menu.Panels.Home;
 using UnityEngine;
 
 namespace CryptoQuest.Gameplay.Character
 {
-    public class MainCharacterBackgroundInfo : CharacterBackgroundInfo
+    public class MainOrigin : Origin
     {
         [field: SerializeField] public string Name { get; set; }
 

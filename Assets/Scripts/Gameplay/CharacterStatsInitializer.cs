@@ -1,6 +1,5 @@
 ﻿using CryptoQuest.Gameplay.Character;
 using CryptoQuest.Gameplay.Helper;
-using IndiGames.GameplayAbilitySystem.AttributeSystem.Components;
 using UnityEngine;
 
 namespace CryptoQuest.Gameplay

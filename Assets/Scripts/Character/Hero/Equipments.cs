@@ -7,15 +7,17 @@ using ESlotType =
     CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Container.EquipmentSlot.EType;
 using ECategory = CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Type.EEquipmentCategory;
 
-namespace CryptoQuest.Gameplay.Inventory
+namespace CryptoQuest.Character.Hero
 {
     /// <summary>
-    /// Using struct here cause the events to be null
+    /// The equipments that the character is wearing
     /// </summary>
     [Serializable]
-    public class CharacterEquipments
+    public class Equipments
     {
+        /// Using struct here cause the events to be null
         public event Action<EquipmentInfo, List<ESlotType>> EquipmentAdded;
+
         public event Action<EquipmentInfo, List<ESlotType>> EquipmentRemoved;
 
         [field: SerializeField] public List<EquipmentSlot> Slots { get; private set; } = new();

@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using CryptoQuest.Character.Ability;
+using CryptoQuest.Character.Hero;
 using CryptoQuest.Gameplay.Inventory;
 using CryptoQuest.Gameplay.Skill;
 using CryptoQuest.UI.Menu.Panels.Home;
@@ -16,14 +18,15 @@ namespace CryptoQuest.Gameplay.Character
     [Serializable]
     public class CharacterSpec
     {
-        [field: SerializeField] public CharacterBackgroundInfo BackgroundInfo { get; private set; }
+        [field: SerializeField] public Origin BackgroundInfo { get; private set; }
         [field: SerializeField] public CharacterClass Class { get; private set; }
         [field: SerializeField] public Elemental Element { get; set; }
         [field: SerializeField] public StatsDef StatsDef { get; set; }
-        [field: SerializeField] public CharacterEquipments Equipments { get; private set; }
+        [field: SerializeField] public Equipments Equipments { get; private set; }
         [field: SerializeField] public float Experience { get; set; }
 
         [field: SerializeField, ReadOnly] public int Level { get; set; }
+
         [field: SerializeField, ReadOnly] public CharacterSkillSet SkillSet { get; set; }
         [field: SerializeField, ReadOnly] public Sprite Avatar { get; set; }
 
@@ -77,7 +80,7 @@ namespace CryptoQuest.Gameplay.Character
             var isMaxedLevel = cachedLevel == StatsDef.MaxLevel;
             var nextLevelRequireExp = levelCalculator.RequiredExps[isMaxedLevel ? cachedLevel - 1 : cachedLevel];
             uiCharacterInfo.SetMaxExp(nextLevelRequireExp);
-            
+
             var currentLevelAccumulateExp = levelCalculator.AccumulatedExps[cachedLevel - 1];
             var currentExp = isMaxedLevel ? nextLevelRequireExp : Experience - currentLevelAccumulateExp;
             uiCharacterInfo.SetExp(currentExp);

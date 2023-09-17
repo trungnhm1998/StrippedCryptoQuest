@@ -1,4 +1,6 @@
-﻿using CryptoQuest.Gameplay.Character;
+﻿using CryptoQuest.Character.Enemy;
+using CryptoQuest.Gameplay.Character;
+using CryptoQuest.Gameplay.Enemy;
 using CryptoQuest.Gameplay.Inventory.Currency;
 using CryptoQuest.Gameplay.Inventory.Items;
 using CryptoQuest.Gameplay.Loot;

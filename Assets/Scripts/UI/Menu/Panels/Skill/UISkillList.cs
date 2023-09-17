@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using CryptoQuest.Gameplay.Character;
@@ -7,7 +6,6 @@ using CryptoQuest.System;
 using PolyAndCode.UI;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace CryptoQuest.UI.Menu.Panels.Skill

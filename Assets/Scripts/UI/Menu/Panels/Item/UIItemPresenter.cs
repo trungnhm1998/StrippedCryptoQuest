@@ -46,7 +46,7 @@ namespace CryptoQuest.UI.Menu.Panels.Item
             AbilitySystemBehaviour owner = _partySo.Members[index].CharacterComponent.GameplayAbilitySystem;
 
             CryptoQuestGameplayEffectSpec ability =
-                (CryptoQuestGameplayEffectSpec)owner.MakeOutgoingSpec(_item.Ability.Effect);
+                (CryptoQuestGameplayEffectSpec)owner.MakeOutgoingSpec(_item.Skill.Effect);
 
             ability.SetParameters(_item.ItemAbilityInfo.SkillParameters);
             owner.ApplyEffectSpecToSelf(ability);

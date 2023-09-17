@@ -1,4 +1,4 @@
-﻿using CryptoQuest.Gameplay.Character;
+﻿using CryptoQuest.Character.Enemy;
 using UnityEngine;
 
 namespace CryptoQuest.Gameplay.Battle

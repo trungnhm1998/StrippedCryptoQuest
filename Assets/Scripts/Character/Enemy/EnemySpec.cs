@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using CryptoQuest.Gameplay.Character;
 using CryptoQuest.Gameplay.Loot;
 using UnityEngine;
 using UnityEngine.ResourceManagement.AsyncOperations;
 
-namespace CryptoQuest.Gameplay.Character
+namespace CryptoQuest.Character.Enemy
 {
     [Serializable]
     public class EnemySpec : CharacterInformation<EnemyDef, EnemySpec>

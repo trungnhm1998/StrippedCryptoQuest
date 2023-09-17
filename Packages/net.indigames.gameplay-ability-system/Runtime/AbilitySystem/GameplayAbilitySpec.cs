@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.ScriptableObjects;
@@ -104,7 +103,8 @@ namespace IndiGames.GameplayAbilitySystem.AbilitySystem
         public virtual void OnAbilityGranted(GameplayAbilitySpec gameplayAbilitySpec) { }
 
         /// <summary>
-        /// Will be called by <see cref="ActivateAbility"/>
+        /// Will be called by <see cref="ActivateAbility"/> when the ability is active, implement this for custom logic
+        /// 
         /// Using IEnumerator so the ability can produce step by step like having delay time, etc...
         /// </summary>
         /// <returns></returns>

@@ -9,8 +9,9 @@ using UnityEngine;
 namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
 {
     /// <summary>
-    /// To manage the character's equipment, equip, unequip, etc.
-    /// make sure this component awake first
+    /// To manage a character's equipment, equip, unequip, etc. in the party
+    /// use <see cref="ServiceProvider.UnequipCharacterEquipmentAtSlot"/> event
+    /// and <see cref="ServiceProvider.EquipCharacterEquipmentAtSlot"/> event to unequip and equip
     /// </summary>
     public class CharacterEquipmentsController : MonoBehaviour
     {
@@ -74,13 +75,13 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
                 Debug.LogWarning($"CharacterEquipmentsController::EquipItem: No character is inspecting");
                 return;
             }
-            
+
             if (equipment.IsValid() == false)
             {
                 Debug.LogWarning($"CharacterEquipmentsController::EquipItem: No equipment is selected");
                 return;
             }
-            
+
             character.Equipments.Equip(equipment);
         }
 
@@ -88,10 +89,11 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
         {
             if (equipment.IsValid() == false)
             {
-                Debug.LogWarning($"CharacterEquipmentsController::RemoveEquipmentFromInventory: No equipment is selected");
+                Debug.LogWarning(
+                    $"CharacterEquipmentsController::RemoveEquipmentFromInventory: No equipment is selected");
                 return;
             }
-            
+
             _provider.InventoryController.Remove(equipment);
         }
 

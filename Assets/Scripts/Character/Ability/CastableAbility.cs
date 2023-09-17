@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using CryptoQuest.Gameplay;
 using CryptoQuest.Gameplay.Battle.Core;
 using IndiGames.GameplayAbilitySystem.AbilitySystem;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
@@ -9,9 +10,13 @@ using IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-namespace CryptoQuest.Gameplay
+namespace CryptoQuest.Character.Ability
 {
-    public class SimpleAbilitySO : AbilityScriptableObject
+    /// <summary>
+    /// https://docs.google.com/spreadsheets/d/1EDrXrT1if63TLam1km_dLx2VvHt2rks2OWXEUq5OEPg/edit#gid=2122798992
+    /// Base data class for character skill
+    /// </summary>
+    public class CastableAbility : AbilityScriptableObject
     {
         [field: SerializeField] public CryptoQuestGameplayEffect Effect { get; private set; }
 
@@ -27,7 +32,7 @@ namespace CryptoQuest.Gameplay
         protected override GameplayAbilitySpec CreateAbility()
         {
             var effectInstance = Instantiate(Effect);
-            var ability = new SimpleGameplayAbilitySpec
+            var ability = new CastableAbilitySpec
             {
                 Effect = effectInstance
             };
@@ -48,13 +53,13 @@ namespace CryptoQuest.Gameplay
         }
     }
 
-    public class SimpleGameplayAbilitySpec : GameplayAbilitySpec
+    public class CastableAbilitySpec : GameplayAbilitySpec
     {
         public event Action NotEnoughResourcesToCast;
         public CryptoQuestGameplayEffect Effect { get; set; }
         private CharacterBehaviourBase _target;
         private AbilitySystemBehaviour _targetSystem;
-        private SimpleAbilitySO AbilityDef => (SimpleAbilitySO)AbilitySO;
+        private CastableAbility SkillDef => (CastableAbility)AbilitySO;
 
         private EffectScriptableObject _costEffect;
 
@@ -62,9 +67,9 @@ namespace CryptoQuest.Gameplay
         {
             base.InitAbility(owner, abilitySO);
 
-            if (AbilityDef.Cost == null) return;
-            _costEffect = Object.Instantiate(AbilityDef.Cost);
-            _costEffect.EffectDetails.Modifiers[0].Value = -AbilityDef.Info.Cost; // I think this is a bad code
+            if (SkillDef.Cost == null) return;
+            _costEffect = Object.Instantiate(SkillDef.Cost); // TODO: Use the owner to instantiate instead
+            _costEffect.EffectDetails.Modifiers[0].Value = -SkillDef.Info.Cost; // I think this is a bad code
         }
 
         public override bool CanActiveAbility()
@@ -117,7 +122,7 @@ namespace CryptoQuest.Gameplay
 
             CryptoQuestGameplayEffectSpec
                 effectSpecSpec = (CryptoQuestGameplayEffectSpec)Owner.MakeOutgoingSpec(Effect);
-            effectSpecSpec.SetParameters(AbilityDef.Info.SkillParameters);
+            effectSpecSpec.SetParameters(SkillDef.Info.SkillParameters);
             _targetSystem.ApplyEffectSpecToSelf(effectSpecSpec);
             yield break;
         }

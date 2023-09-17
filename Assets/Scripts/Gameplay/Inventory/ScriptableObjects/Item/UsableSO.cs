@@ -1,3 +1,4 @@
+using CryptoQuest.Character.Ability;
 using CryptoQuest.Gameplay.Battle.Core;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.ActionTypes;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Type;
@@ -13,7 +14,7 @@ namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item
 
         [field: SerializeField] public ActionDefinitionBase ActionDefinition { get; private set; }
 
-        [field: SerializeField] public SimpleAbilitySO Ability { get; private set; }
+        [field: SerializeField] public CastableAbility Skill { get; private set; }
 
         public ActionSpecificationBase Action => ActionDefinition.Create();
 
@@ -27,7 +28,7 @@ namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item
         /// </summary>
         private void OnValidate()
         {
-            if (Ability == null) return;
+            if (Skill == null) return;
         }
 
         /// <summary>

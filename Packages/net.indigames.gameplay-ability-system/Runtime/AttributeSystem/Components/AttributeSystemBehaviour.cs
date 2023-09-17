@@ -161,7 +161,8 @@ namespace IndiGames.GameplayAbilitySystem.AttributeSystem.Components
             if (cache.ContainsKey(attribute))
             {
                 Debug.LogWarning(
-                    $"AttributeSystemBehaviour::AddAttributes::Try to add duplicate attribute {attribute.name} to the system {name}");
+                    $"AttributeSystemBehaviour::AddAttributes::Try to add duplicate attribute {attribute.name} to the system {name}" +
+                    $"\nSafe to ignore");
                 return;
             }
 
@@ -186,21 +187,26 @@ namespace IndiGames.GameplayAbilitySystem.AttributeSystem.Components
                 var evaluatedAttribute = oldAttributeValue
                     .Attribute.CalculateCurrentAttributeValue(oldAttributeValue, _attributeValues);
 
-                if (evaluatedAttribute.CurrentValue.NearlyEqual(oldAttributeValue.CurrentValue)) continue;
+                UpdateAttributeValueIfNotEquals(evaluatedAttribute, oldAttributeValue, i);
+            }
+        }
 
-                foreach (var preAttributeChangeChannel in _attributeEvents)
-                {
-                    preAttributeChangeChannel.PreAttributeChange(this, ref evaluatedAttribute);
-                }
+        private void UpdateAttributeValueIfNotEquals(AttributeValue newValue, AttributeValue oldValue, int i)
+        {
+            if (newValue.CurrentValue.NearlyEqual(oldValue.CurrentValue)) return;
 
-                PreAttributeChange?.Invoke(oldAttributeValue.Attribute, evaluatedAttribute);
-                _attributeValues[i] = evaluatedAttribute;
-                PostAttributeChange?.Invoke(oldAttributeValue.Attribute, oldAttributeValue, evaluatedAttribute);
+            foreach (var preAttributeChangeChannel in _attributeEvents)
+            {
+                preAttributeChangeChannel.PreAttributeChange(this, ref newValue);
+            }
 
-                foreach (var preAttributeChangeChannel in _attributeEvents)
-                {
-                    preAttributeChangeChannel.PostAttributeChange(this, ref oldAttributeValue, ref evaluatedAttribute);
-                }
+            PreAttributeChange?.Invoke(oldValue.Attribute, newValue);
+            _attributeValues[i] = newValue;
+            PostAttributeChange?.Invoke(oldValue.Attribute, oldValue, newValue);
+
+            foreach (var preAttributeChangeChannel in _attributeEvents)
+            {
+                preAttributeChangeChannel.PostAttributeChange(this, ref oldValue, ref newValue);
             }
         }
 
@@ -234,13 +240,18 @@ namespace IndiGames.GameplayAbilitySystem.AttributeSystem.Components
         public void SetAttributeBaseValue(AttributeScriptableObject attribute, float value)
         {
             var cache = GetAttributeIndexCache();
-            if (!cache.TryGetValue(attribute, out var index)) return;
+            if (!cache.TryGetValue(attribute, out var index))
+            {
+                AddAttribute(attribute);
+                index = _attributeValues.Count - 1;
+            }
 
             var attributeValue = _attributeValues[index];
             attributeValue.BaseValue = value;
-            _attributeValues[index] = attributeValue;
-            
-            UpdateAttributeValues();
+            var evaluatedAttribute = attribute.CalculateCurrentAttributeValue(attributeValue, _attributeValues);
+            UpdateAttributeValueIfNotEquals(evaluatedAttribute, _attributeValues[index], index);
+
+            UpdateAttributeValues(); // This attribute could cause other attribute to change
         }
 
         /// <summary>

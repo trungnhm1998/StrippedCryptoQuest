@@ -1,4 +1,6 @@
+using CryptoQuest.Character.Enemy;
 using CryptoQuest.Gameplay.BaseGameplayData;
+using CryptoQuest.Gameplay.Enemy;
 using UnityEngine;
 
 namespace CryptoQuest.Gameplay.Character
@@ -7,12 +9,10 @@ namespace CryptoQuest.Gameplay.Character
     /// Structure for general character, this will only have persist data of character
     /// <para>Example: <see cref="EnemyDef"/></para> 
     /// </summary>
-    public abstract class CharacterData<TDef, TSpec> : GenericData
+    public abstract class CharacterData<TDef, TSpec> : ScriptableObject
         where TDef : CharacterData<TDef, TSpec>
         where TSpec : CharacterInformation<TDef, TSpec>, new()
     {
-        [field: SerializeField] public Elemental Element { get; private set; }
-
         /// <summary>
         /// Factory method
         /// Need to create character info when there're
@@ -27,11 +27,5 @@ namespace CryptoQuest.Gameplay.Character
             character.Init((TDef)this);
             return character;
         }
-#if UNITY_EDITOR
-        public void Editor_SetElement(Elemental element)
-        {
-            Element = element;
-        }
-#endif
     }
 }

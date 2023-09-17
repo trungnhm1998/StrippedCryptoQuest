@@ -34,7 +34,7 @@ namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.ActionTypes
                 AbilitySystemBehaviour owner = characterSpec.CharacterComponent.GameplayAbilitySystem;
 
                 CryptoQuestGameplayEffectSpec ability =
-                    (CryptoQuestGameplayEffectSpec)owner.MakeOutgoingSpec(item.Ability.Effect);
+                    (CryptoQuestGameplayEffectSpec)owner.MakeOutgoingSpec(item.Skill.Effect);
 
                 ability.SetParameters(item.ItemAbilityInfo.SkillParameters);
                 owner.ApplyEffectSpecToSelf(ability);

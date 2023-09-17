@@ -5,14 +5,14 @@ using UnityEngine.AddressableAssets;
 using UnityEngine.Analytics;
 using UnityEngine.Localization;
 
-namespace CryptoQuest.Gameplay.Character
+namespace CryptoQuest.Character.Hero
 {
     /// <summary>
     /// Where this character come from?
     /// name
     /// age, height, weight
     /// </summary>
-    public class CharacterBackgroundInfo : ScriptableObject
+    public class Origin : ScriptableObject
     {
         [Serializable]
         public struct Information

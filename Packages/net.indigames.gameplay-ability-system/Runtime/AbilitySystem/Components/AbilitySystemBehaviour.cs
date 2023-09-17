@@ -4,7 +4,6 @@ using IndiGames.GameplayAbilitySystem.AttributeSystem.Components;
 using IndiGames.GameplayAbilitySystem.EffectSystem;
 using IndiGames.GameplayAbilitySystem.EffectSystem.Components;
 using IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects;
-using Unity.Collections;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -17,6 +16,7 @@ namespace IndiGames.GameplayAbilitySystem.AbilitySystem.Components
     public partial class AbilitySystemBehaviour : MonoBehaviour
     {
         public delegate void AbilityGranted(GameplayAbilitySpec grantedAbility);
+
         public event AbilityGranted AbilityGrantedEvent;
         [SerializeField] private AttributeSystemBehaviour _attributeSystem;
         public AttributeSystemBehaviour AttributeSystem => _attributeSystem;
@@ -87,10 +87,14 @@ namespace IndiGames.GameplayAbilitySystem.AbilitySystem.Components
             return grantedAbility;
         }
 
+        public T GiveAbility<T>(AbilityScriptableObject abilityDef) where T : GameplayAbilitySpec
+            => (T)GiveAbility(abilityDef); // can I somehow make this generic?
+
         private void OnGrantedAbility(GameplayAbilitySpec gameplayAbilitySpecSpec)
         {
             if (!gameplayAbilitySpecSpec.AbilitySO) return;
-            Debug.Log($"AbilitySystemBehaviour::OnGrantedAbility {gameplayAbilitySpecSpec.AbilitySO.name} to {gameObject.name}");
+            Debug.Log(
+                $"AbilitySystemBehaviour::OnGrantedAbility {gameplayAbilitySpecSpec.AbilitySO.name} to {gameObject.name}");
             gameplayAbilitySpecSpec.OnAbilityGranted(gameplayAbilitySpecSpec);
             AbilityGrantedEvent?.Invoke(gameplayAbilitySpecSpec);
         }

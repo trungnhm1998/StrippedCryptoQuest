@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using CryptoQuest.Character.Hero;
 using CryptoQuest.Gameplay.Inventory;
 using CryptoQuest.Gameplay.Inventory.Items;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Container;
@@ -11,7 +12,7 @@ namespace CryptoQuest.Gameplay
 {
     public class EquipmentEffectApplier : MonoBehaviour, ICharacterComponent
     {
-        [SerializeField] private CharacterEquipments _equipments;
+        [SerializeField] private Equipments _equipments;
         [SerializeField] private InfiniteEffectScriptableObject _equipmentEffectBase;
 
         private readonly ILevelAttributeCalculator _equipmentAttributeCalculator = new DefaultLevelAttributeCalculator();
@@ -24,7 +25,7 @@ namespace CryptoQuest.Gameplay
         }
 
         /// <summary>
-        /// Find all <see cref="EquipmentInfo"/> in <see cref="CharacterEquipments"/> then create and apply effect to character
+        /// Find all <see cref="EquipmentInfo"/> in <see cref="Equipments"/> then create and apply effect to character
         /// </summary>
         private void InitEquipments(CharacterBehaviourBase character)
         {

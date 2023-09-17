@@ -1,6 +1,4 @@
-﻿using CryptoQuest.UI.Menu.MenuStates.SkillStates;
-using CryptoQuest.UI.Menu.Panels.Skill;
-using UnityEngine;
+﻿using CryptoQuest.UI.Menu.Panels.Skill;
 
 namespace CryptoQuest.UI.Menu.MenuStates.SkillStates
 {

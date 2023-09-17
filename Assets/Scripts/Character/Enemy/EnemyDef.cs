@@ -1,13 +1,13 @@
 ﻿using System;
+using CryptoQuest.Gameplay;
+using CryptoQuest.Gameplay.Character;
 using CryptoQuest.Gameplay.Loot;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
-using UnityEngine;
-#if UNITY_EDITOR
-using CryptoQuest.Gameplay.Inventory.Currency;
 using UnityEditor;
-#endif
+using UnityEngine;
+using UnityEngine.Localization;
 
-namespace CryptoQuest.Gameplay.Character
+namespace CryptoQuest.Character.Enemy
 {
     [Serializable]
     public struct Drop
@@ -25,6 +25,10 @@ namespace CryptoQuest.Gameplay.Character
     [CreateAssetMenu(menuName = "Create EnemyData", fileName = "EnemyData", order = 0)]
     public class EnemyDef : CharacterData<EnemyDef, EnemySpec>
     {
+        [field: SerializeField] public LocalizedString Name { get; private set; }
+        [field: SerializeField] public LocalizedString Description { get; private set; }
+        [field: SerializeField] public Elemental Element { get; private set; }
+
         [field: SerializeField] public GameObject Prefab { get; private set; }
 
         [field: SerializeField] public AttributeWithValue[] Stats { get; private set; } =
@@ -56,6 +60,11 @@ namespace CryptoQuest.Gameplay.Character
         public void Editor_SetMonsterPrefab(GameObject prefab)
         {
             Prefab = prefab;
+        }
+
+        public void Editor_SetElement(Elemental element)
+        {
+            Element = element;
         }
 #endif
     }

@@ -1,6 +1,4 @@
-﻿using CryptoQuest.Gameplay.PlayerParty;
-using CryptoQuest.System;
-using CryptoQuest.UI.Menu.MenuStates.SkillStates;
+﻿using CryptoQuest.UI.Menu.MenuStates.SkillStates;
 using FSM;
 using UnityEngine;
 
@@ -18,27 +16,6 @@ namespace CryptoQuest.UI.Menu.Panels.Skill
 
         [SerializeField] private UISkillList _skillListPanel;
         public UISkillList SkillListPanel => _skillListPanel;
-
-        [Header("Configs")]
-        [SerializeField] private ServiceProvider _provider;
-
-        private IParty _party;
-
-        private void Awake()
-        {
-            _party = _provider.PartyController.Party;
-            _provider.PartyProvided += BindParty;
-        }
-
-        private void OnDestroy()
-        {
-            _provider.PartyProvided -= BindParty;
-        }
-
-        private void BindParty(IPartyController partyController)
-        {
-            _party = partyController.Party;
-        }
 
         /// <summary>
         /// Return the specific state machine for this panel.

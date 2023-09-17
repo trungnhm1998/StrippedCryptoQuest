@@ -3,10 +3,12 @@ using System.CodeDom;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using CryptoQuest.Character.Enemy;
 using CryptoQuest.Gameplay;
 using CryptoQuest.Gameplay.Battle.ScriptableObjects;
 using CryptoQuest.Gameplay.Character;
 using CryptoQuest.Gameplay.Encounter;
+using CryptoQuest.Gameplay.Enemy;
 using CryptoQuest.Gameplay.Inventory.Currency;
 using CryptoQuest.Gameplay.Loot;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.ScriptableObjects;
@@ -130,7 +132,6 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Monster
                     "SkillPower", "Defense", "EvasionRate", "CriticalRate"
                 };
                 AttributeWithValue[] attributeInitValues = InitAttributeValueSetup(dataModel, attributeNames);
-                instance.Editor_SetId(dataModel.MonsterId);
                 instance.Editor_SetElement(GetElementalSO(dataModel.ElementId));
                 instance.Editor_ClearDrop();
                 instance.Editor_AddDrop(GetGoldCurrencyRewardInfo(dataModel.Gold));
@@ -154,7 +155,7 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Monster
                 instance.SetObjectToAddressableGroup("Enemy");
                 EnemyDatabase.Map enemyMapData = new EnemyDatabase.Map()
                 {
-                    Id = instance.Id,
+                    Id = dataModel.MonsterId,
                     Data = new AssetReferenceT<EnemyDef>(assetGuid)
                 };
 
