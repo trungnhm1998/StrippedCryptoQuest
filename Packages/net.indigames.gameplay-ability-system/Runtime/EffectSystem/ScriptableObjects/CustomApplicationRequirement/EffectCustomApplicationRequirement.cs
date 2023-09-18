@@ -5,7 +5,9 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects.CustomA
 {
     public abstract class EffectCustomApplicationRequirement : ScriptableObject
     {
-        public abstract bool CanApplyEffect(EffectScriptableObject effect, GameplayEffectSpec effectSpecSpec,
+        public abstract bool CanApplyEffect(
+            GameplayEffectDefinition effect,
+            GameplayEffectSpec effectSpecSpec,
             AbilitySystemBehaviour ownerSystem);
     }
 }

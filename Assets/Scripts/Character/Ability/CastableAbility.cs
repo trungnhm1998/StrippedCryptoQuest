@@ -18,13 +18,13 @@ namespace CryptoQuest.Character.Ability
     /// </summary>
     public class CastableAbility : AbilityScriptableObject
     {
-        [field: SerializeField] public EffectScriptableObject Effect { get; private set; }
+        [field: SerializeField] public GameplayEffectDefinition Effect { get; private set; }
 
         /// <summary>
         /// The effect that cost to cast this ability
         /// The <see cref="GameplayEffectSpec.Source"/> is the caster
         /// </summary>
-        public EffectScriptableObject Cost;
+        public GameplayEffectDefinition Cost;
 
         private SkillInfo _info;
         public SkillInfo Info => _info;
@@ -44,7 +44,7 @@ namespace CryptoQuest.Character.Ability
             _info = info;
         }
 
-        public void InitAbilityEffect(EffectScriptableObject configuredEffect)
+        public void InitAbilityEffect(GameplayEffectDefinition configuredEffect)
         {
             // TODO: REFACTOR GAS
             // if (configuredEffect is CryptoQuestGameplayEffect effectInstance)
@@ -57,12 +57,12 @@ namespace CryptoQuest.Character.Ability
     public class CastableAbilitySpec : GameplayAbilitySpec
     {
         public event Action NotEnoughResourcesToCast;
-        public EffectScriptableObject Effect { get; set; }
+        public GameplayEffectDefinition Effect { get; set; }
         private CharacterBehaviourBase _target;
         private AbilitySystemBehaviour _targetSystem;
         private CastableAbility SkillDef => (CastableAbility)AbilitySO;
 
-        private EffectScriptableObject _costEffect;
+        private GameplayEffectDefinition _costEffect;
 
         public override void InitAbility(AbilitySystemBehaviour owner, AbilityScriptableObject abilitySO)
         {
@@ -86,14 +86,15 @@ namespace CryptoQuest.Character.Ability
         /// <returns>Return true if after subtracted attribute that the cost needs greater than 0</returns>
         public bool CheckCost()
         {
-            if (_costEffect == null) return true;
-            if (Owner == null) return true;
-
-            if (Owner.CanApplyAttributeModifiers(_costEffect)) return true;
-
-            // TODO: Add a tag to indicate that the cost failed
-            Debug.Log($"Not enough {_costEffect.EffectDetails.Modifiers[0].Attribute.name} to cast this ability");
-            NotEnoughResourcesToCast?.Invoke();
+            // TODO: REFACTOR GAS
+            // if (_costEffect == null) return true;
+            // if (Owner == null) return true;
+            //
+            // if (Owner.CanApplyAttributeModifiers(_costEffect)) return true;
+            //
+            // // TODO: Add a tag to indicate that the cost failed
+            // Debug.Log($"Not enough {_costEffect.EffectDetails.Modifiers[0].Attribute.name} to cast this ability");
+            // NotEnoughResourcesToCast?.Invoke();
             return false;
         }
 

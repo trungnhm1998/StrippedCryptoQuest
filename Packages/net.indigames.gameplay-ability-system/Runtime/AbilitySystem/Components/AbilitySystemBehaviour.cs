@@ -150,9 +150,9 @@ namespace IndiGames.GameplayAbilitySystem.AbilitySystem.Components
         /// TODO: Move this into <see cref="GameplayAbilitySpec"/>
         /// Create an effect spec from the effect definition, with this system as the source
         /// </summary>
-        /// <param name="effectDef">The <see cref="EffectScriptableObject"/> that are used to create the spec</param>
+        /// <param name="effectDef">The <see cref="EffectDefinition{T}"/> that are used to create the spec</param>
         /// <returns>New effect spec based on the def</returns>
-        public GameplayEffectSpec MakeOutgoingSpec(EffectScriptableObject effectDef)
+        public GameplayEffectSpec MakeOutgoingSpec(GameplayEffectDefinition effectDef)
         {
             if (effectDef == null)
                 return new GameplayEffectSpec();
@@ -166,7 +166,7 @@ namespace IndiGames.GameplayAbilitySystem.AbilitySystem.Components
             return _effectSystem.ApplyEffectToSelf(effectSpec);
         }
 
-        public bool CanApplyAttributeModifiers(EffectScriptableObject effectDef)
+        public bool CanApplyAttributeModifiers(GameplayEffectDefinition effectDef)
         {
             return _effectSystem.CanApplyAttributeModifiers(effectDef);
         }

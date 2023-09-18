@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.Components;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
-using IndiGames.GameplayAbilitySystem.EffectSystem.EffectApplier;
 using IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects;
 using UnityEngine;
 
@@ -12,7 +11,7 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem.Components
     /// Wrapper around the <see cref="AttributeSystemBehaviour"/> to handle the effects
     /// for every applied effect find all of it modifiers and add it to the attribute in the <see cref="AttributeSystemBehaviour"/>
     /// </summary>
-    public partial class EffectSystemBehaviour : MonoBehaviour
+    public class EffectSystemBehaviour : MonoBehaviour
     {
         /// <summary>
         /// Currently there are no restrictions on add a new effect to the system except
@@ -22,8 +21,6 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem.Components
         private AbilitySystemBehaviour _owner;
         public AbilitySystemBehaviour Owner => _owner;
         private AttributeSystemBehaviour _attributeSystem;
-        private IEffectApplier _effectApplier;
-        private IEffectApplier EffectAppliers => _effectApplier ??= new DefaultEffectApplier(Owner);
 
         public void InitSystem(AbilitySystemBehaviour owner)
         {
@@ -35,10 +32,10 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem.Components
         /// Will create a new AbstractEffect from EffectScriptableObject (data)
         /// this will update the Owner of the effect to this AbilitySystem
         /// </summary>
-        /// <param name="effectSO"></param>
+        /// <param name="def"></param>
         /// <returns></returns>
-        public GameplayEffectSpec GetEffect(EffectScriptableObject effectSO)
-            => effectSO.CreateEffectSpec(Owner);
+        public GameplayEffectSpec GetEffect(GameplayEffectDefinition def)
+            => def.CreateEffectSpec(Owner);
 
         // TODO: Move to AbilityEffectBehaviour
         /// <summary>
@@ -46,14 +43,14 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem.Components
         ///
         /// Create an active effect spec, apply into the system and update the attribute accordingly in this frame
         /// </summary>
-        /// <param name="inEffectSpecSpec"></param>
+        /// <param name="inSpec"></param>
         /// <returns></returns>
-        public ActiveEffectSpecification ApplyEffectToSelf(GameplayEffectSpec inEffectSpecSpec)
+        public ActiveEffectSpecification ApplyEffectToSelf(GameplayEffectSpec inSpec)
         {
-            if (inEffectSpecSpec == null || !inEffectSpecSpec.CanApply()) return new ActiveEffectSpecification();
+            if (inSpec == null || !inSpec.CanApply()) return new ActiveEffectSpecification();
 
-            inEffectSpecSpec.Target = Owner;
-            var activeEffectSpecification = inEffectSpecSpec.Accept(EffectAppliers);
+            inSpec.Target = Owner;
+            var activeEffectSpecification = inSpec.CreateActiveEffectSpec(_owner);
             _appliedEffects.Add(activeEffectSpecification);
             UpdateAttributeModifiersUsingAppliedEffects();
             return activeEffectSpecification;
@@ -65,10 +62,16 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem.Components
         /// </summary>
         public virtual void RemoveEffect(GameplayEffectSpec effectSpec)
         {
+            if (effectSpec.IsValid())
+            {
+                Debug.LogWarning("Try remove invalid effect");
+                return;
+            }
+
             for (int i = _appliedEffects.Count - 1; i >= 0; i--)
             {
                 var effect = _appliedEffects[i];
-                if (effectSpec.Def != effect.EffectSpec.Def) continue;
+                if (effectSpec.CompareTo(effect.EffectSpec) != 1) continue;
 
                 _appliedEffects.RemoveAt(i);
                 break;
@@ -169,10 +172,10 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem.Components
         /// </summary>
         /// <param name="effectDef"></param>
         /// <returns></returns>
-        public bool CanApplyAttributeModifiers(EffectScriptableObject effectDef)
+        public bool CanApplyAttributeModifiers<TDef>(TDef effectDef) where TDef : GameplayEffectDefinition
         {
             var spec = new GameplayEffectSpec();
-            spec.InitEffect(effectDef);
+            spec.InitEffect(effectDef, _owner);
             spec.CalculateModifierMagnitudes();
 
             for (int i = 0; i < spec.Modifiers.Length; i++)

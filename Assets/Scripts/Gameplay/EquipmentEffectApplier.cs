@@ -1,21 +1,21 @@
 using System.Collections.Generic;
 using CryptoQuest.Character.Hero;
-using CryptoQuest.Gameplay.Inventory;
+using CryptoQuest.Gameplay.Helper;
 using CryptoQuest.Gameplay.Inventory.Items;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Container;
 using IndiGames.GameplayAbilitySystem.EffectSystem;
-using IndiGames.GameplayAbilitySystem.Implementation.BasicEffect;
+using IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects;
 using UnityEngine;
-using CryptoQuest.Gameplay.Helper;
 
 namespace CryptoQuest.Gameplay
 {
     public class EquipmentEffectApplier : MonoBehaviour, ICharacterComponent
     {
         [SerializeField] private Equipments _equipments;
-        [SerializeField] private InfiniteEffectScriptableObject _equipmentEffectBase;
+        [SerializeField] private GameplayEffectDefinition _equipmentEffectBase;
 
-        private readonly ILevelAttributeCalculator _equipmentAttributeCalculator = new DefaultLevelAttributeCalculator();
+        private readonly ILevelAttributeCalculator
+            _equipmentAttributeCalculator = new DefaultLevelAttributeCalculator();
         private CharacterBehaviourBase _character;
 
 
@@ -77,7 +77,7 @@ namespace CryptoQuest.Gameplay
             equipment.EffectDef = equipmentEffectDef;
         }
 
-        private InfiniteEffectScriptableObject CreateEffectDefFormEquipment(EquipmentInfo equipment)
+        private GameplayEffectDefinition CreateEffectDefFormEquipment(EquipmentInfo equipment)
         {
             var attributes = equipment.Stats.Attributes;
             var equipmentEffectDef = Instantiate(_equipmentEffectBase); // Using preconfigured effect base
@@ -98,7 +98,10 @@ namespace CryptoQuest.Gameplay
                 };
             }
 
-            equipmentEffectDef.EffectDetails.Modifiers = modifiers;
+            equipmentEffectDef.EffectDetails = new EffectDetails()
+            {
+                Modifiers = modifiers
+            };
             return equipmentEffectDef;
         }
 

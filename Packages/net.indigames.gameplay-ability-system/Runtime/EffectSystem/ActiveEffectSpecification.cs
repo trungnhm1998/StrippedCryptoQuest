@@ -52,10 +52,10 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem
         /// </summary>
         [field: SerializeField] public List<ComputedModifier> ComputedModifiers { get; set; }
 
-        public EModifierType ModifierType => _effectSpec.Def.EffectDetails.StackingType;
+        public EModifierType ModifierType => _effectSpec.EffectDefDetails.StackingType;
         public bool IsActive { get; set; } = true;
         public bool Expired => _effectSpec == null || _effectSpec.IsExpired || IsActive == false;
-        public TagScriptableObject[] GrantedTags => _effectSpec.Def.GrantedTags;
+        public TagScriptableObject[] GrantedTags => _effectSpec.GrantedTags;
 
         /// <summary>
         /// To prevent null reference exception
@@ -92,7 +92,7 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem
         private void ExecuteCustomCalculations(GameplayEffectSpec effectSpec,
             ref List<EffectAttributeModifier> calculatedMagnitudeModifiers)
         {
-            var customCalculations = effectSpec.Def.ExecutionCalculations;
+            var customCalculations = effectSpec.ExecutionCalculations;
             for (int index = 0; index < customCalculations.Length; index++)
             {
                 var customCalculation = customCalculations[index];
@@ -116,7 +116,7 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem
         /// <returns></returns>
         private List<EffectAttributeModifier> CalculateModifierMagnitude(GameplayEffectSpec gameplayEffectSpec)
         {
-            var effectDefModifiers = gameplayEffectSpec.Def.EffectDetails.Modifiers;
+            var effectDefModifiers = gameplayEffectSpec.EffectDefDetails.Modifiers;
             var calculatedModifiers = new List<EffectAttributeModifier>();
 
             for (int i = 0; i < effectDefModifiers.Length; i++)

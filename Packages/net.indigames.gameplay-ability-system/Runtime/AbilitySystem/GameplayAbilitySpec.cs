@@ -113,7 +113,7 @@ namespace IndiGames.GameplayAbilitySystem.AbilitySystem
             yield break;
         }
 
-        protected ActiveEffectSpecification ApplyGameplayEffectToOwner(EffectScriptableObject effectDef)
+        protected ActiveEffectSpecification ApplyGameplayEffectToOwner(GameplayEffectDefinition effectDef)
         {
             if (effectDef)
             {

@@ -3,14 +3,14 @@ using CryptoQuest.Battle.Components;
 using IndiGames.GameplayAbilitySystem.AbilitySystem;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.ScriptableObjects;
-using IndiGames.GameplayAbilitySystem.Implementation.BasicEffect;
+using IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects;
 using UnityEngine;
 
 namespace CryptoQuest.Character.Ability
 {
     public class NormalAttackAbility : AbilityScriptableObject<NormalAttackAbilitySpec>
     {
-        [field: SerializeField] public InstantEffectScriptableObject NormalAttackEffect { get; private set; }
+        [field: SerializeField] public GameplayEffectDefinition NormalAttackEffect { get; private set; }
     }
 
     public class NormalAttackAbilitySpec : GameplayAbilitySpec

@@ -1,21 +1,20 @@
 using System;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
-using IndiGames.GameplayAbilitySystem.EffectSystem.EffectApplier;
 using IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects;
+using IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects.EffectExecutionCalculation;
 using IndiGames.GameplayAbilitySystem.Helper;
+using IndiGames.GameplayAbilitySystem.TagSystem.ScriptableObjects;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
 namespace IndiGames.GameplayAbilitySystem.EffectSystem
 {
+    /// <summary>
+    /// Need to be abstract for unity to serialize
+    /// </summary>
     [Serializable]
-    public partial class GameplayEffectSpec
+    public class GameplayEffectSpec : IComparable<GameplayEffectSpec>
     {
-        /// <summary>
-        /// Which Data/SO the effect is based on
-        /// </summary>
-        public EffectScriptableObject Def { get; private set; }
-
         /// <summary>
         /// The system give/apply this effect
         /// </summary>
@@ -26,17 +25,20 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem
         /// </summary>
         public AbilitySystemBehaviour Target { get; set; }
 
+        public EffectDetails EffectDefDetails { get; set; }
+        public TagScriptableObject[] GrantedTags { get; set; }
+        public EffectExecutionCalculationBase[] ExecutionCalculations { get; set; }
+
         public bool IsExpired { get; set; }
-        public bool RemoveWhenAbilityEnd = true;
 
         public ModifierSpec[] Modifiers = Array.Empty<ModifierSpec>();
 
-        protected IEffectApplier _effectApplier;
+        /// <summary>
+        /// Which Data/SO the effect is based on
+        /// </summary>
+        public GameplayEffectDefinition Def { get; private set; }
 
-        public virtual void InitEffect(EffectScriptableObject effectDef)
-            => InitEffect(effectDef, null);
-
-        public virtual void InitEffect(EffectScriptableObject effectDef, AbilitySystemBehaviour source)
+        public void InitEffect(GameplayEffectDefinition effectDef, AbilitySystemBehaviour source)
         {
             Source = source;
 
@@ -47,8 +49,16 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem
             }
 
             Def = effectDef;
+            EffectDefDetails = Def.EffectDetails;
+            GrantedTags = Def.GrantedTags;
+            ExecutionCalculations = Def.ExecutionCalculations;
+
             Modifiers = new ModifierSpec[Def.EffectDetails.Modifiers.Length];
+
+            OnInitEffect(effectDef, source);
         }
+
+        public virtual void OnInitEffect(GameplayEffectDefinition def, AbilitySystemBehaviour source) { }
 
         public bool CanApply()
         {
@@ -85,23 +95,14 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem
             for (var index = 0; index < Def.CustomApplicationRequirements.Count; index++)
             {
                 var appReq = Def.CustomApplicationRequirements[index];
-                if (appReq != null && !appReq.CanApplyEffect(Def, this, Source))
-                {
-                    Debug.Log($"{appReq} doesn't meet the requirement for {Def.name}");
-                    return false;
-                }
+                if (appReq == null || appReq.CanApplyEffect(Def, this, Source)) continue;
+                Debug.Log($"{appReq} doesn't meet the requirement for {Def.name}");
+                return false;
             }
 
             return true;
         }
 
-        public virtual ActiveEffectSpecification Accept(IEffectApplier effectApplier)
-        {
-            _effectApplier = effectApplier;
-            return new ActiveEffectSpecification();
-        }
-
-        public virtual void Update(float deltaTime) { }
 
         protected virtual bool CheckTagRequirementsMet()
         {
@@ -138,8 +139,18 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem
                 Modifiers[index] = modifierSpec;
             }
         }
+
+        public void Update(float deltaTime) { }
+        public bool IsValid() => Def != null;
+        public int CompareTo(GameplayEffectSpec other) => Def != other.Def ? 0 : 1;
+
+        public ActiveEffectSpecification CreateActiveEffectSpec(AbilitySystemBehaviour owner)
+            => Def.EffectActionBase.CreateActiveEffect(this, owner);
     }
 
+    /// <summary>
+    /// Wrapper for <see cref="GameplayEffectDefinition.EffectDetails.Modifiers"/>
+    /// </summary>
     [Serializable]
     public struct ModifierSpec
     {
@@ -149,28 +160,5 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem
         private ActiveEffectSpecification _activeEffectSpecification;
 
         public float GetEvaluatedMagnitude() => EvaluatedMagnitude;
-    }
-
-    [Obsolete]
-    public class NullEffectSpec : GameplayEffectSpec
-    {
-        private static NullEffectSpec _instance;
-
-        public static NullEffectSpec Instance
-        {
-            get
-            {
-                if (_instance == null)
-                    _instance = new NullEffectSpec();
-                return _instance;
-            }
-        }
-
-        private NullEffectSpec()
-        {
-            IsExpired = true;
-        }
-
-        public override void Update(float deltaTime) { }
     }
 }
