@@ -3,7 +3,15 @@ using System.Collections.Generic;
 
 namespace CryptoQuest.PushdownFSM
 {
-    public class PushdownStateMachine : StateMachine
+    public interface IPushdownStateMachine<TState, TStateBase>
+    {
+        Stack<TStateBase> StateStack { get; }
+        void PushdownState(bool forceInstantly = false);
+        void ResetToNewState(TState state, bool forceInstantly = false);
+        void RequestStateChange(TState state, bool forceInstantly = false);
+    }
+
+    public class PushdownStateMachine : StateMachine, IPushdownStateMachine<string, StateBase>
     {
         public Stack<StateBase> StateStack { get; } = new Stack<StateBase>();
 

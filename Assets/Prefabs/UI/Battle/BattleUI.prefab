@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 227128054399707272}
   - component: {fileID: 6308360112541297638}
-  - component: {fileID: 5917019287224954005}
   m_Layer: 0
   m_Name: BattleUI
   m_TagString: Untagged
@@ -59,21 +58,6 @@ MonoBehaviour:
   _shakeVibrato: 10
   _shakeRandomness: 50
   _isShakeAtStart: 0
---- !u!114 &5917019287224954005
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9170090403351853472}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 78ff78b18ab4d4a4d8ca489d89c199c2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _shakeEffect: {fileID: 6308360112541297638}
-  _doneShakeBattleUIEventChannel: {fileID: 11400000, guid: 172ca9d87acd3a846a93042d9d7a4ea0, type: 2}
-  _shakeBattleUIEventChannel: {fileID: 11400000, guid: e245e2df09cdadd4ba12a6f8afed718a, type: 2}
 --- !u!1001 &4642656047446290376
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -327,10 +311,6 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5126377737464281300, guid: d5457fb5b774c5b4e9c84e8f17b5408d, type: 3}
-      propertyPath: _heroesUI
-      value: 
-      objectReference: {fileID: 462610392579506696}
-    - target: {fileID: 5126377737464281300, guid: d5457fb5b774c5b4e9c84e8f17b5408d, type: 3}
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
@@ -366,14 +346,6 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -0.0006057949
       objectReference: {fileID: 0}
-    - target: {fileID: 7159399541783390298, guid: d5457fb5b774c5b4e9c84e8f17b5408d, type: 3}
-      propertyPath: _heroesUI
-      value: 
-      objectReference: {fileID: 462610392579506696}
-    - target: {fileID: 7521519819756259973, guid: d5457fb5b774c5b4e9c84e8f17b5408d, type: 3}
-      propertyPath: _characterList
-      value: 
-      objectReference: {fileID: 462610392579506696}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -637,17 +609,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9a5d9bfd8f709b24fa4469dbf8843ab1, type: 3}
---- !u!114 &462610392579506696 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6305965631307162064, guid: 9a5d9bfd8f709b24fa4469dbf8843ab1, type: 3}
-  m_PrefabInstance: {fileID: 5902195905883907032}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 93b1ab53cef571345a8cd5011adde76b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!224 &3696303969508854632 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7107567551706081456, guid: 9a5d9bfd8f709b24fa4469dbf8843ab1, type: 3}

@@ -1526,7 +1526,6 @@ GameObject:
   m_Component:
   - component: {fileID: 890004474934808027}
   - component: {fileID: 6379978738960481114}
-  - component: {fileID: 290104958145557614}
   - component: {fileID: 2116829885254534211}
   m_Layer: 0
   m_Name: CharacterSlot
@@ -1572,33 +1571,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7867507681985636873}
   m_CullTransparentMesh: 0
---- !u!114 &290104958145557614
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7867507681985636873}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ac71ca260db9a8f4ca2ba0bb7eb4dab6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _hpAttributeSO: {fileID: 11400000, guid: 77c53593fd92c904aa7689c5a7449df3, type: 2}
-  _battleBus: {fileID: 11400000, guid: 2290057e7f48d1046b5e0a6c3f6dc910, type: 2}
-  _maxHpAttributeSO: {fileID: 11400000, guid: 692557e6fee799243868270d0b093d7e, type: 2}
-  _maxMpAttributeSO: {fileID: 11400000, guid: 0c164956786943a46b545cc58cc139f9, type: 2}
-  _mpAttributeSO: {fileID: 11400000, guid: a7e3a44d36bf87d44afeb00b236e832e, type: 2}
-  _nameText: {fileID: 1288383207135260925}
-  _hpValueText: {fileID: 5928466044962880269}
-  _hpSlider: {fileID: 477243962087833145}
-  _mpValueText: {fileID: 2116041316033756637}
-  _mpSlider: {fileID: 4818611816940543785}
-  _selectFrame: {fileID: 5589686980362493558}
-  _popupItemFrame: {fileID: 4971012684358652206}
-  _characterIcon: {fileID: 6350803417661793921}
-  _itemPopupText: {fileID: 4269484900245486836}
-  _button: {fileID: 2116829885254534211}
 --- !u!114 &2116829885254534211
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1643,7 +1615,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 290104958145557614}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: CryptoQuest.UI.Battle.CharacterInfo.UIHeroInfo,
           indi-games.crypto-quest
         m_MethodName: OnClicked

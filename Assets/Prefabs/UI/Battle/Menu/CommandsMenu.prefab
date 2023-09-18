@@ -298,7 +298,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 490102877632347429}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: CryptoQuest.UI.Battle.UIBattleActionMenu, indi-games.crypto-quest
         m_MethodName: OnUseSkill
         m_Mode: 1
@@ -432,7 +432,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 490102877632347429}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: CryptoQuest.UI.Battle.UIBattleActionMenu, indi-games.crypto-quest
         m_MethodName: OnGuard
         m_Mode: 1
@@ -701,7 +701,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 490102877632347429}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: CryptoQuest.UI.Battle.UIBattleActionMenu, indi-games.crypto-quest
         m_MethodName: OnNormalAttack
         m_Mode: 1
@@ -835,7 +835,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 490102877632347429}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: CryptoQuest.UI.Battle.UIBattleActionMenu, indi-games.crypto-quest
         m_MethodName: OnUseItem
         m_Mode: 1
@@ -1093,9 +1093,8 @@ GameObject:
   - component: {fileID: 653733816899823752}
   - component: {fileID: 2782095523705182995}
   - component: {fileID: 5950388133210088121}
-  - component: {fileID: 490102877632347429}
   - component: {fileID: 6744096226400759985}
-  - component: {fileID: 6832411501745761114}
+  - component: {fileID: 4580466850138721354}
   m_Layer: 0
   m_Name: CommandsMenu
   m_TagString: Untagged
@@ -1165,23 +1164,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &490102877632347429
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4016686727580335480}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8ecebf7e10667484684e70c9ac93c3a6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _battlePanelController: {fileID: 0}
-  _childButonsActivator: {fileID: 6832411501745761114}
-  _heroTurnEventChannel: {fileID: 11400000, guid: 4522380f7b12a9f48a3a14b2ddb652b7, type: 2}
-  _currentUnitName: {fileID: 307844353719758422}
-  _firstButton: {fileID: 7570413273424099088}
 --- !u!114 &6744096226400759985
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1197,7 +1179,7 @@ MonoBehaviour:
   _inputMediator: {fileID: 11400000, guid: 1fb61cdb72f0a484f8e4db68e2011977, type: 2}
   _defaultSelection: {fileID: 0}
   _currentSelection: {fileID: 0}
---- !u!114 &6832411501745761114
+--- !u!114 &4580466850138721354
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1209,8 +1191,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3df9b2bcd7b6c784b80d485a1c4dc974, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _activeColor: {r: 1, g: 1, b: 1, a: 0}
-  _inactiveColor: {r: 0.3773585, g: 0.3773585, b: 0.3773585, a: 0}
+  _activeColor: {r: 0, g: 0, b: 0, a: 0}
+  _inactiveColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!1 &4124627094007968546
 GameObject:
   m_ObjectHideFlags: 0
@@ -2144,7 +2126,6 @@ GameObject:
   - component: {fileID: 1175848610146440674}
   - component: {fileID: 4374957495374623212}
   - component: {fileID: 4441944864693008869}
-  - component: {fileID: 6894763029054040028}
   m_Layer: 0
   m_Name: Escape Button
   m_TagString: Untagged
@@ -2255,7 +2236,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 490102877632347429}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: CryptoQuest.UI.Battle.UIBattleActionMenu, indi-games.crypto-quest
         m_MethodName: OnEscape
         m_Mode: 1
@@ -2267,18 +2248,3 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 1
---- !u!114 &6894763029054040028
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8327503340405990191}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fcb05f5860a0565418a3035077571184, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _retreatAbilitySO: {fileID: 0}
-  _targetedAttributeSO: {fileID: 0}
-  _battlePanelController: {fileID: 0}
