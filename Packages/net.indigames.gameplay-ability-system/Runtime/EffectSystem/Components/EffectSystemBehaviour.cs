@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.Components;
@@ -11,21 +12,29 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem.Components
     /// Wrapper around the <see cref="AttributeSystemBehaviour"/> to handle the effects
     /// for every applied effect find all of it modifiers and add it to the attribute in the <see cref="AttributeSystemBehaviour"/>
     /// </summary>
+    [RequireComponent(typeof(AttributeSystemBehaviour))]
     public class EffectSystemBehaviour : MonoBehaviour
     {
         /// <summary>
         /// Currently there are no restrictions on add a new effect to the system except
         /// when using <see cref="ApplyEffectToSelf"/> which will check <see cref="GameplayEffectSpec.CanApply"/>
         /// </summary>
-        private List<ActiveEffectSpecification> _appliedEffects = new();
+        [SerializeField] private List<ActiveEffectSpecification> _appliedEffects = new();
+        public IReadOnlyList<ActiveEffectSpecification> AppliedEffects => _appliedEffects;
         private AbilitySystemBehaviour _owner;
-        public AbilitySystemBehaviour Owner => _owner;
+
+        public AbilitySystemBehaviour Owner
+        {
+            get => _owner;
+            set => _owner = value;
+        }
+
         private AttributeSystemBehaviour _attributeSystem;
 
-        public void InitSystem(AbilitySystemBehaviour owner)
+        private void Awake()
         {
-            _owner = owner;
-            _attributeSystem = owner.AttributeSystem;
+            _owner = GetComponent<AbilitySystemBehaviour>();
+            _attributeSystem = GetComponent<AttributeSystemBehaviour>();
         }
 
         /// <summary>

@@ -141,9 +141,9 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem
             ComputedModifiers = new();
         }
 
-        public void Update(float deltaTime)
-        {
-            _effectSpec.Update(deltaTime);
-        }
+        public virtual void Update(float deltaTime) { }
+
+        public bool IsValid()
+            => _effectSpec != null && _effectSpec.IsValid() && _effectSpec.IsExpired == false && IsActive;
     }
 }

@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using IndiGames.GameplayAbilitySystem.AbilitySystem.ScriptableObjects;
 using IndiGames.GameplayAbilitySystem.TagSystem.ScriptableObjects;
 using UnityEngine;
 
@@ -7,7 +6,13 @@ namespace IndiGames.GameplayAbilitySystem.AbilitySystem.Components
 {
     public class TagSystemBehaviour : MonoBehaviour
     {
-        public List<TagScriptableObject> GrantedTags = new List<TagScriptableObject>();
+        [field: SerializeField] public List<TagScriptableObject> DefaultTags { get; private set; } = new();
+        [field: SerializeField] public List<TagScriptableObject> GrantedTags { get; private set; } = new();
+
+        private void Awake()
+        {
+            GrantedTags.AddRange(DefaultTags);
+        }
 
         public virtual void AddTags(TagScriptableObject[] tags)
         {

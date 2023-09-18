@@ -4,9 +4,9 @@ using IndiGames.GameplayAbilitySystem.AttributeSystem;
 namespace IndiGames.GameplayAbilitySystem.EffectSystem
 {
     [Serializable]
-    public struct EffectDetails
+    public class EffectDetails
     {
-        public EffectAttributeModifier[] Modifiers;
-        public EModifierType StackingType;
+        public EffectAttributeModifier[] Modifiers = Array.Empty<EffectAttributeModifier>();
+        public EModifierType StackingType = EModifierType.Core;
     }
 }

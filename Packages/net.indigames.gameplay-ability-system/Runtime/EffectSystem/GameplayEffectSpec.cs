@@ -10,7 +10,9 @@ using Random = UnityEngine.Random;
 namespace IndiGames.GameplayAbilitySystem.EffectSystem
 {
     /// <summary>
-    /// Need to be abstract for unity to serialize
+    /// A specification represent an effect that created from <see cref="GameplayEffectDefinition"/>
+    /// When the effect is applied to the system, it will create a new <see cref="ActiveEffectSpecification"/> to store the computed modifier
+    /// Every effect should create from <see cref="GameplayEffectDefinition.CreateEffectSpec"/>
     /// </summary>
     [Serializable]
     public class GameplayEffectSpec : IComparable<GameplayEffectSpec>
@@ -140,7 +142,6 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem
             }
         }
 
-        public void Update(float deltaTime) { }
         public bool IsValid() => Def != null;
         public int CompareTo(GameplayEffectSpec other) => Def != other.Def ? 0 : 1;
 

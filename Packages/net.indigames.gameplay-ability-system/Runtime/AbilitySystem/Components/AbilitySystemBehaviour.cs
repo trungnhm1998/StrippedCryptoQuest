@@ -43,10 +43,10 @@ namespace IndiGames.GameplayAbilitySystem.AbilitySystem.Components
 
         private void ValidateComponents()
         {
-            _attributeSystem = GetComponent<AttributeSystemBehaviour>();
-            _effectSystem = GetComponent<EffectSystemBehaviour>();
-            _tagSystem = GetComponent<TagSystemBehaviour>();
-            _abilityEffectSystem = GetComponent<AbilityEffectBehaviour>();
+            if (!_attributeSystem) _attributeSystem = GetComponent<AttributeSystemBehaviour>();
+            if (!_effectSystem) _effectSystem = GetComponent<EffectSystemBehaviour>();
+            if (!_tagSystem) _tagSystem = GetComponent<TagSystemBehaviour>();
+            if (!_abilityEffectSystem) _abilityEffectSystem = GetComponent<AbilityEffectBehaviour>();
         }
 
         private void Awake()
@@ -56,7 +56,8 @@ namespace IndiGames.GameplayAbilitySystem.AbilitySystem.Components
             Assert.IsNotNull(_effectSystem, $"Effect System is required!");
             Assert.IsNotNull(_abilityEffectSystem, $"Ability Effect System is required!");
             Assert.IsNotNull(_tagSystem, $"Tag System is required!");
-            _effectSystem.InitSystem(this);
+
+            _effectSystem.Owner = this; // prevent circular dependency
         }
 
         /// <summary>

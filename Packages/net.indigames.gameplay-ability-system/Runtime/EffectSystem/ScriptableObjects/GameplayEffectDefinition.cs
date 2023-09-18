@@ -30,10 +30,10 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects
         ///     Affect the attribute system until the effect is removed
         /// </summary>
         [field: SerializeField]
-        public GameplayEffectActionBase EffectActionBase { get; private set; }
+        public GameplayEffectActionBase EffectActionBase { get; set; }
 
         [field: SerializeField, Tooltip("What attribute to affect and how it affected")]
-        public EffectDetails EffectDetails { get; set; }
+        public EffectDetails EffectDetails { get; set; } = new();
 
         [field: SerializeField]
         [Tooltip("When the effect is applied to a target, these tags will be granted through logic of AbilitySystem")]
