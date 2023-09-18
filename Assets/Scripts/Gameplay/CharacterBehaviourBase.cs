@@ -1,10 +1,11 @@
-﻿using CryptoQuest.Gameplay.Character;
+﻿using CryptoQuest.Character.Attributes;
+using CryptoQuest.Gameplay.Character;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.Components;
-using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
 using IndiGames.GameplayAbilitySystem.EffectSystem;
 using IndiGames.GameplayAbilitySystem.EffectSystem.Components;
 using UnityEngine;
+using AttributeScriptableObject = IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects.AttributeScriptableObject;
 
 namespace CryptoQuest.Gameplay
 {
@@ -52,7 +53,7 @@ namespace CryptoQuest.Gameplay
             return GameplayAbilitySystem.ApplyEffectSpecToSelf(effectSpec);
         }
 
-        public void RemoveEffect(IGameplayEffectSpec activeEffectEffectSpec)
+        public void RemoveEffect(GameplayEffectSpec activeEffectEffectSpec)
         {
             GameplayAbilitySystem.EffectSystem.RemoveEffect(activeEffectEffectSpec as GameplayEffectSpec);
         }

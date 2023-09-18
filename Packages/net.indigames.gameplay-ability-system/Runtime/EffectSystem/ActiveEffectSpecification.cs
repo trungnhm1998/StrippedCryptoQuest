@@ -43,8 +43,8 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem
             }
         }
 
-        private IGameplayEffectSpec _effectSpec;
-        public IGameplayEffectSpec EffectSpec => _effectSpec;
+        private GameplayEffectSpec _effectSpec;
+        public GameplayEffectSpec EffectSpec => _effectSpec;
 
         /// <summary>
         /// After calculated magnitude and custom execution calculation
@@ -62,7 +62,7 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem
         /// </summary>
         public ActiveEffectSpecification() { }
 
-        public ActiveEffectSpecification(IGameplayEffectSpec effectSpec)
+        public ActiveEffectSpecification(GameplayEffectSpec effectSpec)
         {
             _effectSpec = effectSpec;
             ComputedModifiers = GenerateEffectModifier(_effectSpec);
@@ -73,7 +73,7 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem
         /// </summary>
         /// <param name="effectSpec"></param>
         /// <returns></returns>
-        private List<ComputedModifier> GenerateEffectModifier(IGameplayEffectSpec effectSpec)
+        private List<ComputedModifier> GenerateEffectModifier(GameplayEffectSpec effectSpec)
         {
             var calculatedMagnitudeModifiers = CalculateModifierMagnitude(effectSpec);
             ExecuteCustomCalculations(effectSpec, ref calculatedMagnitudeModifiers);
@@ -89,7 +89,7 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem
             return computedModifiers;
         }
 
-        private void ExecuteCustomCalculations(IGameplayEffectSpec effectSpec,
+        private void ExecuteCustomCalculations(GameplayEffectSpec effectSpec,
             ref List<EffectAttributeModifier> calculatedMagnitudeModifiers)
         {
             var customCalculations = effectSpec.Def.ExecutionCalculations;
@@ -114,7 +114,7 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem
         /// </summary>
         /// <param name="gameplayEffectSpec"></param>
         /// <returns></returns>
-        private List<EffectAttributeModifier> CalculateModifierMagnitude(IGameplayEffectSpec gameplayEffectSpec)
+        private List<EffectAttributeModifier> CalculateModifierMagnitude(GameplayEffectSpec gameplayEffectSpec)
         {
             var effectDefModifiers = gameplayEffectSpec.Def.EffectDetails.Modifiers;
             var calculatedModifiers = new List<EffectAttributeModifier>();

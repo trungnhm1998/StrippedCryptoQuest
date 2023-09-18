@@ -1,16 +1,16 @@
 ﻿using System.Collections;
-using CryptoQuest.Battle;
-using CryptoQuest.Gameplay;
+using CryptoQuest.Battle.Components;
 using IndiGames.GameplayAbilitySystem.AbilitySystem;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.ScriptableObjects;
+using IndiGames.GameplayAbilitySystem.Implementation.BasicEffect;
 using UnityEngine;
 
 namespace CryptoQuest.Character.Ability
 {
     public class NormalAttackAbility : AbilityScriptableObject<NormalAttackAbilitySpec>
     {
-        [field: SerializeField] public InstantGameplayEffect NormalAttackEffect { get; private set; }
+        [field: SerializeField] public InstantEffectScriptableObject NormalAttackEffect { get; private set; }
     }
 
     public class NormalAttackAbilitySpec : GameplayAbilitySpec
@@ -23,11 +23,11 @@ namespace CryptoQuest.Character.Ability
             _normalAttackAbility = abilitySO as NormalAttackAbility;
         }
 
-        private ICharacter _target;
+        private IDamageable _target;
 
-        public void Execute(ICharacter enemy)
+        public void Execute(IDamageable damageable)
         {
-            _target = enemy;
+            _target = damageable;
             TryActiveAbility();
         }
 
@@ -35,7 +35,7 @@ namespace CryptoQuest.Character.Ability
         {
             // play some effect by raise event 
             var effectSpec = Owner.MakeOutgoingSpec(_normalAttackAbility.NormalAttackEffect);
-            _target.GameplayEffectSystem.ApplyEffectToSelf(effectSpec);
+            _target.ReceiveDamage(effectSpec);
             yield break;
         }
     }

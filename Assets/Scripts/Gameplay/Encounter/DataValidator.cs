@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using CryptoQuest.Gameplay.Battle;
-using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Calculation;
 using CryptoQuest.Gameplay.Loot;
 
 namespace CryptoQuest.Gameplay.Encounter

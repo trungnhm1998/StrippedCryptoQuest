@@ -1,9 +1,10 @@
-﻿using CryptoQuest.Gameplay;
+﻿using CryptoQuest.Character.Attributes;
+using CryptoQuest.Gameplay;
 using IndiGames.GameplayAbilitySystem.AttributeSystem;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.Components;
-using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
 using TMPro;
 using UnityEngine;
+using AttributeScriptableObject = IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects.AttributeScriptableObject;
 
 namespace CryptoQuest.UI.Menu.Panels.Status.Stats
 {

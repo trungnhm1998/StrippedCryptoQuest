@@ -13,12 +13,10 @@ namespace IndiGames.GameplayAbilitySystem.Implementation.BasicEffect
         public float Duration;
     }
 
-    public interface IDurationalEffectSpec : IGameplayEffectSpec { }
-
     /// <summary>
     /// Effect need update over time such as slow or stun enemy for 3 seconds
     /// </summary>
-    public class DurationalEffectSpec : GameplayEffectSpec, IDurationalEffectSpec
+    public class DurationalEffectSpec : GameplayEffectSpec
     {
         private float _remainingDuration;
 

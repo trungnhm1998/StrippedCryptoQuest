@@ -13,7 +13,13 @@ namespace IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects
     [Serializable]
     public struct AttributeWithValue
     {
-        [field: SerializeField] public AttributeScriptableObject Attribute { get; set; }
-        [field: SerializeField] public float Value { get; set; }
+        public AttributeWithValue(AttributeScriptableObject attribute, float value)
+        {
+            Attribute = attribute;
+            Value = value;
+        }
+
+        public AttributeScriptableObject Attribute;
+        public float Value;
     }
 }

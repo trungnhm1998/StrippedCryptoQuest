@@ -8,9 +8,7 @@ namespace IndiGames.GameplayAbilitySystem.Implementation.BasicEffect
     [CreateAssetMenu(fileName = "InfiniteEffect", menuName = "Indigames Ability System/Effects/Infinite Effect")]
     public class InfiniteEffectScriptableObject : EffectScriptableObject<InfiniteEffectSpec> { }
 
-    public interface IInfiniteEffectSpec : IGameplayEffectSpec { }
-
-    public class InfiniteEffectSpec : GameplayEffectSpec, IInfiniteEffectSpec
+    public class InfiniteEffectSpec : GameplayEffectSpec
     {
         public override ActiveEffectSpecification Accept(IEffectApplier effectApplier)
         {

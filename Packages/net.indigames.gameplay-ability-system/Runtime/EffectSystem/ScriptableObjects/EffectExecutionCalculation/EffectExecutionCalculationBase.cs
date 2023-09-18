@@ -35,9 +35,9 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects.EffectE
     {
         public AbilitySystemBehaviour TargetAbilitySystemComponent { get; private set; }
         public AbilitySystemBehaviour SourceAbilitySystemComponent { get; private set; }
-        public IGameplayEffectSpec EffectSpec { get; private set; }
+        public GameplayEffectSpec EffectSpec { get; private set; }
 
-        public CustomExecutionParameters(IGameplayEffectSpec effectSpec)
+        public CustomExecutionParameters(GameplayEffectSpec effectSpec)
         {
             EffectSpec = effectSpec;
             TargetAbilitySystemComponent = effectSpec.Target;

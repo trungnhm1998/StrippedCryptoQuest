@@ -8,17 +8,8 @@ using Random = UnityEngine.Random;
 
 namespace IndiGames.GameplayAbilitySystem.EffectSystem
 {
-    public interface IGameplayEffectSpec
-    {
-        public EffectScriptableObject Def { get; }
-        public bool IsExpired { get; set; }
-        public AbilitySystemBehaviour Target { get; }
-        public AbilitySystemBehaviour Source { get; }
-        public void Update(float deltaTime);
-    }
-
     [Serializable]
-    public partial class GameplayEffectSpec : IGameplayEffectSpec
+    public partial class GameplayEffectSpec
     {
         /// <summary>
         /// Which Data/SO the effect is based on

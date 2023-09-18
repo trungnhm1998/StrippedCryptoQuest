@@ -3,6 +3,7 @@ using System.CodeDom;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using CryptoQuest.Character.Attributes;
 using CryptoQuest.Character.Enemy;
 using CryptoQuest.Gameplay;
 using CryptoQuest.Gameplay.Battle.ScriptableObjects;

@@ -43,13 +43,14 @@ namespace CryptoQuest.UI.Menu.Panels.Item
 
         private void ActiveAbility(int index)
         {
-            AbilitySystemBehaviour owner = _partySo.Members[index].CharacterComponent.GameplayAbilitySystem;
-
-            CryptoQuestGameplayEffectSpec ability =
-                (CryptoQuestGameplayEffectSpec)owner.MakeOutgoingSpec(_item.Skill.Effect);
-
-            ability.SetParameters(_item.ItemAbilityInfo.SkillParameters);
-            owner.ApplyEffectSpecToSelf(ability);
+            // TODO: RÈACTOR GÁ
+            // AbilitySystemBehaviour owner = _partySo.Members[index].CharacterComponent.GameplayAbilitySystem;
+            //
+            // CryptoQuestGameplayEffectSpec ability =
+            //     (CryptoQuestGameplayEffectSpec)owner.MakeOutgoingSpec(_item.Skill.Effect);
+            //
+            // ability.SetParameters(_item.ItemAbilityInfo.SkillParameters);
+            // owner.ApplyEffectSpecToSelf(ability);
 
             Hide();
         }

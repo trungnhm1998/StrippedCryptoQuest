@@ -40,11 +40,12 @@ namespace CryptoQuest.Gameplay.Inventory.Items
         {
             if (Owner == null) return;
 
-            CryptoQuestGameplayEffectSpec ability =
-                (CryptoQuestGameplayEffectSpec)Owner.MakeOutgoingSpec(Data.Skill.Effect);
-
-            ability.SetParameters(Data.ItemAbilityInfo.SkillParameters);
-            Owner.ApplyEffectSpecToSelf(ability);
+            // TODO: REFACTOR GAS
+            // CryptoQuestGameplayEffectSpec ability =
+            //     (CryptoQuestGameplayEffectSpec)Owner.MakeOutgoingSpec(Data.Skill.Effect);
+            //
+            // ability.SetParameters(Data.ItemAbilityInfo.SkillParameters);
+            // Owner.ApplyEffectSpecToSelf(ability);
         }
 
         public void UseItem() => Activate();

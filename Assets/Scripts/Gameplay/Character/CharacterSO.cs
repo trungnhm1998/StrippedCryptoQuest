@@ -1,4 +1,5 @@
 ﻿using System;
+using CryptoQuest.Character.Attributes;
 using UnityEngine;
 using UnityEngine.Analytics;
 using UnityEngine.Localization;

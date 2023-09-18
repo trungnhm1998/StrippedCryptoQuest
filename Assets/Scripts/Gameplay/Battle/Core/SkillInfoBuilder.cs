@@ -1,3 +1,4 @@
+using CryptoQuest.Character.Attributes;
 using CryptoQuest.Gameplay.BaseGameplayData;
 using CryptoQuest.Gameplay.Battle.Core;
 using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data;

@@ -1,10 +1,9 @@
 ﻿using System;
-using CryptoQuest.Character.Attributes;
-using CoreAttributeSO = IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects.AttributeScriptableObject;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using CoreAttributeSO = IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects.AttributeScriptableObject;
 
-namespace CryptoQuest.Gameplay
+namespace CryptoQuest.Character.Attributes
 {
     [CreateAssetMenu(fileName = "Elemental", menuName = "Gameplay/Elemental")]
     public class Elemental : ScriptableObject

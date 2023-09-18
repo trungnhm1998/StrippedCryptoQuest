@@ -32,7 +32,7 @@ namespace CryptoQuest.Tests.Runtime.Battle
             go.name = name ?? go.name;
             return go;
         }
-
+        
         [TearDown]
         public virtual void TearDown()
         {

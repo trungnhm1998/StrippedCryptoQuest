@@ -1,6 +1,5 @@
 ﻿using IndiGames.GameplayAbilitySystem.AbilitySystem;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.ScriptableObjects;
-using UnityEngine;
 
 namespace CryptoQuest.Character.Ability
 {

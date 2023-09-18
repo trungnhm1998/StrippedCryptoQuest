@@ -4,6 +4,7 @@ using IndiGames.GameplayAbilitySystem.AttributeSystem.Components;
 using IndiGames.GameplayAbilitySystem.EffectSystem;
 using IndiGames.GameplayAbilitySystem.EffectSystem.Components;
 using IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects;
+using IndiGames.GameplayAbilitySystem.TagSystem.ScriptableObjects;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -168,6 +169,11 @@ namespace IndiGames.GameplayAbilitySystem.AbilitySystem.Components
         public bool CanApplyAttributeModifiers(EffectScriptableObject effectDef)
         {
             return _effectSystem.CanApplyAttributeModifiers(effectDef);
+        }
+
+        public bool HasTag(TagScriptableObject guardTag)
+        {
+            return _tagSystem.HasTag(guardTag);
         }
     }
 }

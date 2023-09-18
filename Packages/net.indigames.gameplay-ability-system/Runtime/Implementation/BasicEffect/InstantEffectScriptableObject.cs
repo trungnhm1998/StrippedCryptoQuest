@@ -8,9 +8,7 @@ namespace IndiGames.GameplayAbilitySystem.Implementation.BasicEffect
     [CreateAssetMenu(fileName = "InstantEffect", menuName = "Indigames Ability System/Effects/Instant Effect")]
     public class InstantEffectScriptableObject : EffectScriptableObject<InstantEffectSpec> { }
 
-    public interface IInstantEffectSpec : IGameplayEffectSpec { }
-
-    public class InstantEffectSpec : GameplayEffectSpec, IInstantEffectSpec
+    public class InstantEffectSpec : GameplayEffectSpec
     {
         public override void Update(float deltaTime)
         {

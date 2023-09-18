@@ -24,7 +24,7 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem.EffectApplier
         ///
         /// Based on GAS I would want Instant effect as a infinite effect but for now I will modify the base value
         /// </summary>
-        public ActiveEffectSpecification Visit(IInstantEffectSpec instantEffectSpecSpec)
+        public ActiveEffectSpecification Visit(InstantEffectSpec instantEffectSpecSpec)
         {
             Debug.Log(
                 $"DefaultEffectApplier::ApplyInstantEffect {instantEffectSpecSpec.Def.name} to system {_ownerSystem.name}");
@@ -67,10 +67,10 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem.EffectApplier
             return container;
         }
 
-        public ActiveEffectSpecification Visit(IDurationalEffectSpec durationalEffectSpec) =>
+        public ActiveEffectSpecification Visit(DurationalEffectSpec durationalEffectSpec) =>
             InternalVisitDurational(durationalEffectSpec);
 
-        public ActiveEffectSpecification Visit(IInfiniteEffectSpec infiniteEffectSpec) =>
+        public ActiveEffectSpecification Visit(InfiniteEffectSpec infiniteEffectSpec) =>
             InternalVisitDurational(infiniteEffectSpec);
 
         /// <summary>
@@ -78,7 +78,7 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem.EffectApplier
         /// We would want to add this active effect into the applied effect, when the effect is expired
         /// Remove it and recalculate the attribute modifiers will be easier
         /// </summary>
-        private ActiveEffectSpecification InternalVisitDurational(IGameplayEffectSpec effectSpec)
+        private ActiveEffectSpecification InternalVisitDurational(GameplayEffectSpec effectSpec)
         {
             Debug.Log("EffectApplier::InternalVisitDurational::" +
                       $"Apply effect {effectSpec.Def.name} to {_ownerSystem.name}");

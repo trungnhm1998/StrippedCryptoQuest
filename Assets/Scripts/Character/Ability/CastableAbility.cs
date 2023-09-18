@@ -18,7 +18,7 @@ namespace CryptoQuest.Character.Ability
     /// </summary>
     public class CastableAbility : AbilityScriptableObject
     {
-        [field: SerializeField] public CryptoQuestGameplayEffect Effect { get; private set; }
+        [field: SerializeField] public EffectScriptableObject Effect { get; private set; }
 
         /// <summary>
         /// The effect that cost to cast this ability
@@ -46,17 +46,18 @@ namespace CryptoQuest.Character.Ability
 
         public void InitAbilityEffect(EffectScriptableObject configuredEffect)
         {
-            if (configuredEffect is CryptoQuestGameplayEffect effectInstance)
-            {
-                Effect = effectInstance;
-            }
+            // TODO: REFACTOR GAS
+            // if (configuredEffect is CryptoQuestGameplayEffect effectInstance)
+            // {
+            //     Effect = effectInstance;
+            // }
         }
     }
 
     public class CastableAbilitySpec : GameplayAbilitySpec
     {
         public event Action NotEnoughResourcesToCast;
-        public CryptoQuestGameplayEffect Effect { get; set; }
+        public EffectScriptableObject Effect { get; set; }
         private CharacterBehaviourBase _target;
         private AbilitySystemBehaviour _targetSystem;
         private CastableAbility SkillDef => (CastableAbility)AbilitySO;
@@ -68,7 +69,7 @@ namespace CryptoQuest.Character.Ability
             base.InitAbility(owner, abilitySO);
 
             if (SkillDef.Cost == null) return;
-            _costEffect = Object.Instantiate(SkillDef.Cost); // TODO: Use the owner to instantiate instead
+            _costEffect = Object.Instantiate(SkillDef.Cost);
             _costEffect.EffectDetails.Modifiers[0].Value = -SkillDef.Info.Cost; // I think this is a bad code
         }
 
@@ -120,10 +121,11 @@ namespace CryptoQuest.Character.Ability
                 ApplyCost();
             }
 
-            CryptoQuestGameplayEffectSpec
-                effectSpecSpec = (CryptoQuestGameplayEffectSpec)Owner.MakeOutgoingSpec(Effect);
-            effectSpecSpec.SetParameters(SkillDef.Info.SkillParameters);
-            _targetSystem.ApplyEffectSpecToSelf(effectSpecSpec);
+            // TODO: REFACTOR GAS
+            // CryptoQuestGameplayEffectSpec
+            //     effectSpecSpec = (CryptoQuestGameplayEffectSpec)Owner.MakeOutgoingSpec(Effect);
+            // effectSpecSpec.SetParameters(SkillDef.Info.SkillParameters);
+            // _targetSystem.ApplyEffectSpecToSelf(effectSpecSpec);
             yield break;
         }
     }

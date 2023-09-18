@@ -56,6 +56,7 @@ namespace IndiGames.GameplayAbilitySystem.AttributeSystem.Components
 
         public virtual void Init()
         {
+            _attributeIndexCache.Clear();
             InitializeAttributeValues();
             MarkCacheDirty();
             GetAttributeIndexCache();
@@ -239,6 +240,11 @@ namespace IndiGames.GameplayAbilitySystem.AttributeSystem.Components
         /// <param name="value"></param>
         public void SetAttributeBaseValue(AttributeScriptableObject attribute, float value)
         {
+            if (attribute == null)
+            {
+                Debug.LogWarning($"AttributeSystemBehaviour::SetAttributeBaseValue::Attribute is null");
+                return;
+            }
             var cache = GetAttributeIndexCache();
             if (!cache.TryGetValue(attribute, out var index))
             {
