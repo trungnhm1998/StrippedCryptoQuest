@@ -10,8 +10,9 @@ namespace CryptoQuest.UI.Menu.ScriptableObjects
         Skills = 2,
         Items = 3,
         Beast = 4,
-        Option = 5,
-        Navigation = 6,
+        DimensionBox = 5,
+        Option = 6,
+        Navigation = 7,
     }
     
     [CreateAssetMenu(menuName = "Crypto Quest/UI/Menu Type", fileName = "UIMenuPanelType")]
