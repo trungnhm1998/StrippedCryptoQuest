@@ -1,5 +1,4 @@
 ﻿using System;
-using CryptoQuest.System.Dialogue;
 using CryptoQuest.System.Dialogue.Managers;
 using UnityEngine;
 using UnityEngine.Playables;
@@ -16,7 +15,6 @@ namespace CryptoQuest.System.CutsceneSystem.CustomTimelineTracks.YarnSpinnerNode
         /// We need to wait for the player to actually finish reading all the dialogues before we can continue the timeline.
         /// </summary>
         public bool PauseTimelineOnClipEnds = true;
-
 
         private bool _played = false;
 
@@ -60,7 +58,6 @@ namespace CryptoQuest.System.CutsceneSystem.CustomTimelineTracks.YarnSpinnerNode
 
             // pause the timeline until the player finishes reading through all the dialogue (When the dialogue closes)
             Debug.Log("OnBehaviourPause::Pause cutscene");
-            YarnSpinnerDialogueManager.PauseTimelineRequested?.Invoke(true);
         }
     }
 }

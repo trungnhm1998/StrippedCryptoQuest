@@ -1,6 +1,4 @@
-﻿using CryptoQuest.System.CutsceneSystem.CustomTimelineTracks.YarnSpinnerNodeControlTrack;
-using CryptoQuest.System.CutsceneSystem.Events;
-using CryptoQuest.System.Dialogue;
+﻿using CryptoQuest.System.CutsceneSystem.Events;
 using CryptoQuest.System.Dialogue.Managers;
 using UnityEngine;
 using UnityEngine.Events;
@@ -30,16 +28,18 @@ namespace CryptoQuest.System.CutsceneSystem
         private void OnEnable()
         {
             _playCutsceneEvent.PlayCutsceneRequested += PlayCutscene;
-            YarnSpinnerDialogueManager.PauseTimelineRequested += PauseCutscene;
+            _pauseCutsceneEvent.PauseCutsceneRequested += PauseCutscene;
         }
 
         private void OnDisable()
         {
             _playCutsceneEvent.PlayCutsceneRequested -= PlayCutscene;
-            YarnSpinnerDialogueManager.PauseTimelineRequested -= PauseCutscene;
+            _pauseCutsceneEvent.PauseCutsceneRequested -= PauseCutscene;
         }
 
-        private void PlayCutscene(PlayableDirector playableDirector)
+        private CutsceneTrigger _currentCutsceneTrigger;
+
+        private void PlayCutscene(PlayableDirector playableDirector, CutsceneTrigger cutsceneTrigger)
         {
             if (_currentPlayableDirector != null && _currentPlayableDirector.playableGraph.GetRootPlayable(0).IsDone())
             {
@@ -55,6 +55,7 @@ namespace CryptoQuest.System.CutsceneSystem
             if (_currentPlayableDirector != null) _currentPlayableDirector.Stop();
 
             // what happens to the previous cutscene?
+            _currentCutsceneTrigger = cutsceneTrigger;
             _currentPlayableDirector = playableDirector;
             _currentPlayableDirector.Play();
             _currentPlayableDirector.stopped += HandleDirectorStopped;
@@ -65,6 +66,8 @@ namespace CryptoQuest.System.CutsceneSystem
             _currentPlayableDirector.stopped -= HandleDirectorStopped;
             _currentPlayableDirector = null;
             _onCutsceneCompleted.Invoke();
+            _currentCutsceneTrigger.StopCutscene();
+            _currentCutsceneTrigger = null;
         }
 
         private void PauseCutscene(bool isPaused)

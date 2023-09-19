@@ -42,7 +42,17 @@ namespace CryptoQuest.Quest
             StatusChanged(completed);
         }
 
-        public bool HasTaskCompleted(Task task) => false;
+        public bool HasTaskCompleted(Task task)
+        {
+            for (var index = 0; index < _tasks.Length; index++)
+            {
+                var configTask = _tasks[index];
+                if (configTask.Task.CompareTo(task) != 0) continue;
+                return configTask.Completed;
+            }
+
+            return false;
+        }
 
         public bool CanCompleteTask(Task task)
         {

@@ -15,7 +15,6 @@ namespace CryptoQuest.System.Dialogue.Managers
     public class YarnSpinnerDialogueManager : MonoBehaviour
     {
         public static Action<string> PlayDialogueRequested;
-        public static Action<bool> PauseTimelineRequested;
 
         private static List<YarnSpinnerDialogueManager> _systems = new List<YarnSpinnerDialogueManager>();
 
