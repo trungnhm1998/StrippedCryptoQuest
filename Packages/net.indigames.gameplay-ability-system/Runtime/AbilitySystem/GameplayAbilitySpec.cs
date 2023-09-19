@@ -54,7 +54,7 @@ namespace IndiGames.GameplayAbilitySystem.AbilitySystem
             if (!CanActiveAbility()) return;
 
             _isActive = true;
-            _owner.StartCoroutine(InternalActiveAbility());
+            _owner.StartCoroutine(OnAbilityActive());
             _owner.TagSystem.AddTags(AbilitySO.Tags.ActivationTags);
         }
 
@@ -66,7 +66,7 @@ namespace IndiGames.GameplayAbilitySystem.AbilitySystem
             if (!_isActive || _owner == null) return;
 
             _isActive = false;
-            _owner.StopCoroutine(InternalActiveAbility());
+            _owner.StopCoroutine(OnAbilityActive());
             _owner.TagSystem.RemoveTags(AbilitySO.Tags.ActivationTags);
         }
 
@@ -108,7 +108,7 @@ namespace IndiGames.GameplayAbilitySystem.AbilitySystem
         /// Using IEnumerator so the ability can produce step by step like having delay time, etc...
         /// </summary>
         /// <returns></returns>
-        protected virtual IEnumerator InternalActiveAbility()
+        protected virtual IEnumerator OnAbilityActive()
         {
             yield break;
         }

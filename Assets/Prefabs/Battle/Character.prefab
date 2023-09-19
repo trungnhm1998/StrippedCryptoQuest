@@ -20,6 +20,7 @@ GameObject:
   - component: {fileID: 2646967801411730565}
   - component: {fileID: 2040479092207269321}
   - component: {fileID: 2290369476900985526}
+  - component: {fileID: -1982756543291190427}
   m_Layer: 0
   m_Name: Character
   m_TagString: Untagged
@@ -105,6 +106,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e75053713f221bc488f4a0119399a755, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _appliedEffects: []
 --- !u!114 &8912200110041855965
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -129,7 +131,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf959093832aa174aaefc2a59a599ab8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GrantedTags: []
+  <DefaultTags>k__BackingField: []
+  <GrantedTags>k__BackingField: []
 --- !u!114 &8958960056519757308
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -220,3 +223,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _guardAbility: {fileID: 11400000, guid: 17d7f0f05bc808440afa5ce1eaddeb1b, type: 2}
+--- !u!114 &-1982756543291190427
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4052912324221725559}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e206a73f68ea5c943824e0d703803745, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _escapeAbility: {fileID: 11400000, guid: b7f1b6c96aba92e4680d2ca75c6abdd3, type: 2}

@@ -20,7 +20,7 @@ namespace CryptoQuest.Battle.ExecutionCalculations
 
         public static float CalculateProbabilityOfRetreat(float targetMaxAttributeValue, float ownerAttributeValue)
         {
-            return (50 - 50 * (targetMaxAttributeValue - ownerAttributeValue) / 100) / 100;
+            return 50 - (50 * (targetMaxAttributeValue - ownerAttributeValue) / 100);
         }
 
         public static float CalculateEncounterRateBuff(float buff, float passiveBuff)

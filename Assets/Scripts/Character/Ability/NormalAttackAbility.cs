@@ -31,7 +31,7 @@ namespace CryptoQuest.Character.Ability
             TryActiveAbility();
         }
 
-        protected override IEnumerator InternalActiveAbility()
+        protected override IEnumerator OnAbilityActive()
         {
             // play some effect by raise event 
             var effectSpec = Owner.MakeOutgoingSpec(_normalAttackAbility.NormalAttackEffect);

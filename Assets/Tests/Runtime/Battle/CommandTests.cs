@@ -1,10 +1,13 @@
 ﻿using System.Collections.Generic;
 using CryptoQuest.Battle.Commands;
 using CryptoQuest.Battle.Components;
+using CryptoQuest.Battle.ExecutionCalculations;
+using CryptoQuest.Character.Ability;
 using CryptoQuest.Character.Attributes;
 using CryptoQuest.Tests.Runtime.Battle.Builder;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
 using NUnit.Framework;
+using UnityEditor;
 using UnityEngine;
 
 namespace CryptoQuest.Tests.Runtime.Battle
@@ -95,7 +98,97 @@ namespace CryptoQuest.Tests.Runtime.Battle
         }
 
         [TestFixture]
-        public class Escape { }
+        public class Escape : CommandTests
+        {
+            [TestCase(50f, 50f, 50f)]
+            [TestCase(50f, 200f, 125f)]
+            public void CalculateProbabilityOfRetreat(float enemy, float hero, float expected)
+            {
+                var actual = BattleCalculator.CalculateProbabilityOfRetreat(enemy, hero);
+                Assert.AreEqual(expected, actual);
+            }
+
+            [Test]
+            public void Execute_PlayerHaveHigherAgilityThanEnemy_EscapeSuccess()
+            {
+                var escapeAbility =
+                    AssetDatabase.LoadAssetAtPath<EscapeAbility>(
+                        "Assets/ScriptableObjects/Character/Abilities/GA_Escape.asset");
+
+                bool escaped = false;
+                escapeAbility.EscapeFailedEvent += () => escaped = false;
+                escapeAbility.EscapedEvent += () => escaped = true;
+
+                var heroGo = CreateCharacterFromPrefab();
+                var hero = A.Character
+                    .WithStats(new AttributeWithValue[]
+                    {
+                        new(AttributeSets.Agility, 200f)
+                    })
+                    .WithPrefab(heroGo)
+                    .Build();
+                var enemyGo = CreateCharacterFromPrefab();
+                var enemy = A.Character
+                    .WithStats(new AttributeWithValue[]
+                    {
+                        new(AttributeSets.Agility, 50f)
+                    })
+                    .WithPrefab(enemyGo)
+                    .Build();
+
+                enemy.AttributeSystem.TryGetAttributeValue(AttributeSets.Agility, out var enemyAgility);
+                var commands = new List<ICommand>
+                {
+                    new EscapeCommand(heroGo, enemyAgility.CurrentValue)
+                };
+                commands.ForEach(command => command.Execute());
+
+                Assert.IsTrue(escaped);
+
+                // Maybe command could play effect/logs?
+                // async?
+                // Assert.IsTrue(commands.TrueForAll(command => command.IsDone));
+            }
+
+            [Test]
+            public void Execute_EnemyHas200AgiHeroHas50_EscapeFailed()
+            {
+                var escapeAbility =
+                    AssetDatabase.LoadAssetAtPath<EscapeAbility>(
+                        "Assets/ScriptableObjects/Character/Abilities/GA_Escape.asset");
+
+                bool escaped = false;
+                escapeAbility.EscapeFailedEvent += () => escaped = false;
+                escapeAbility.EscapedEvent += () => escaped = true;
+
+                var heroGo = CreateCharacterFromPrefab();
+                var hero = A.Character
+                    .WithStats(new AttributeWithValue[]
+                    {
+                        new(AttributeSets.Agility, 50f)
+                    })
+                    .WithPrefab(heroGo)
+                    .Build();
+                var enemyGo = CreateCharacterFromPrefab();
+                var enemy = A.Character
+                    .WithStats(new AttributeWithValue[]
+                    {
+                        new(AttributeSets.Agility, 200f)
+                    })
+                    .WithPrefab(enemyGo)
+                    .Build();
+
+
+                enemy.AttributeSystem.TryGetAttributeValue(AttributeSets.Agility, out var enemyAgility);
+                var commands = new List<ICommand>
+                {
+                    new EscapeCommand(heroGo, enemyAgility.CurrentValue)
+                };
+                commands.ForEach(command => command.Execute());
+
+                Assert.IsFalse(escaped);
+            }
+        }
 
         [TestFixture]
         public class ConsumeItem { }

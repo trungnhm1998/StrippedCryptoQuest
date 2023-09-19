@@ -114,7 +114,7 @@ namespace CryptoQuest.Character.Ability
             TryActiveAbility();
         }
 
-        protected override IEnumerator InternalActiveAbility()
+        protected override IEnumerator OnAbilityActive()
         {
             // Cost is optional
             if (_costEffect != null)
