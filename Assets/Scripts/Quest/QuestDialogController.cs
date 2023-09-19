@@ -1,5 +1,4 @@
 ﻿using System;
-using CryptoQuest.Quests;
 using CryptoQuest.System.Dialogue.Managers;
 using IndiGames.Core.Events.ScriptableObjects;
 using UnityEngine;

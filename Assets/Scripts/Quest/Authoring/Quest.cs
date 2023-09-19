@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using UnityEngine;
 
-namespace CryptoQuest.Quests
+namespace CryptoQuest.Quest
 {
     [Serializable]
     [CreateAssetMenu(fileName = "Quest", menuName = "Quest System/Quest")]
@@ -18,9 +17,9 @@ namespace CryptoQuest.Quests
         public bool Completed;
 
         [Header("Details")]
-        [SerializeField] private int _currentObjectiveIndex;
+        [SerializeField] private int _currentTaskIndex;
 
-        [SerializeField, NonReorderable] private List<TaskContainer> _tasks = new();
+        [SerializeField, NonReorderable] private TaskContainer[] _tasks = Array.Empty<TaskContainer>();
 
         private void OnEnable()
         {
@@ -47,7 +46,7 @@ namespace CryptoQuest.Quests
 
         public bool CanCompleteTask(Task task)
         {
-            for (var index = 0; index < _tasks.Count; index++)
+            for (var index = 0; index < _tasks.Length; index++)
             {
                 var configTask = _tasks[index];
                 if (configTask.Task.CompareTo(task) != 0) continue;
@@ -66,13 +65,13 @@ namespace CryptoQuest.Quests
 
         public void CompleteTask(Task task)
         {
-            for (var index = 0; index < _tasks.Count; index++)
+            for (var index = 0; index < _tasks.Length; index++)
             {
                 var configTask = _tasks[index];
                 if (configTask.Task.CompareTo(task) != 0) continue;
                 configTask.Completed = true;
 
-                if (index == _tasks.Count - 1)
+                if (index == _tasks.Length - 1)
                 {
                     Completed = true;
                 }

@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace CryptoQuest.Quests
+namespace CryptoQuest.Quest
 {
     public abstract class Task : ScriptableObject, IComparable<Task>
     {

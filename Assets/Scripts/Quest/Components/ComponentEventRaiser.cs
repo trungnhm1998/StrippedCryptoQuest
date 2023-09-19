@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace CryptoQuest.Quests
+namespace CryptoQuest.Quest
 {
     public class ComponentEventRaiser : MonoBehaviour
     {

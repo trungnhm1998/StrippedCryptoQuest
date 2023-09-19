@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace CryptoQuest.Quests
+namespace CryptoQuest.Quest
 {
     /// <summary>
     /// This class is used to create a task
@@ -9,11 +9,11 @@ namespace CryptoQuest.Quests
     [CreateAssetMenu(menuName = "Quest System/Or Task")]
     public class OrTasks : Task
     {
-        public Task[] Objectives;
+        public Task[] Tasks;
 
         public override int CompareTo(Task other)
         {
-            foreach (var objective in Objectives)
+            foreach (var objective in Tasks)
             {
                 if (objective.CompareTo(other) == 0)
                 {

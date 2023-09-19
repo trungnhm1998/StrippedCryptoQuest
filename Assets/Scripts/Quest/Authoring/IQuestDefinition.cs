@@ -1,4 +1,4 @@
-﻿namespace CryptoQuest.Quests
+﻿namespace CryptoQuest.Quest
 {
     public interface IQuestDefinition
     {

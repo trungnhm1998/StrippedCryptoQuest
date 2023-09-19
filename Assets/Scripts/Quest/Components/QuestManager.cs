@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.Assertions;
 
-namespace CryptoQuest.Quests
+namespace CryptoQuest.Quest
 {
     [AddComponentMenu("Quest System/Quest Manager")]
     [DisallowMultipleComponent]

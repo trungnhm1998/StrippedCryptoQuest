@@ -1,6 +1,6 @@
 using System;
 
-namespace CryptoQuest.Quests
+namespace CryptoQuest.Quest
 {
     [Serializable]
     public class QuestProgressionConfigs

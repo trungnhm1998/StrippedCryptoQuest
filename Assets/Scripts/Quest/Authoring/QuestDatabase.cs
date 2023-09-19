@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace CryptoQuest.Quests
+namespace CryptoQuest.Quest
 {
     [CreateAssetMenu(fileName = "QuestDatabase", menuName = "Quest System/Database", order = 0)]
     public class QuestDatabase : ScriptableObject

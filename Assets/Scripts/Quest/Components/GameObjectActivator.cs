@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace CryptoQuest.Quests
+namespace CryptoQuest.Quest
 {
     public class GameObjectActivator : MonoBehaviour
     {

@@ -1,6 +1,6 @@
 ﻿using UnityEngine.Events;
 
-namespace CryptoQuest.Quests
+namespace CryptoQuest.Quest
 {
     public class CutsceneBehaviour : StageBehaviourBase
     {

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace CryptoQuest.Quests
+namespace CryptoQuest.Quest
 {
     /// <summary>
     /// This is where we define the actor that will be connected to a specific quest.
