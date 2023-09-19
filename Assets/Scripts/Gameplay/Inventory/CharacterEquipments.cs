@@ -5,6 +5,7 @@ using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Container;
 using UnityEngine;
 using ESlotType =
     CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Container.EquipmentSlot.EType;
+using ECategory = CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Type.EEquipmentCategory;
 
 namespace CryptoQuest.Gameplay.Inventory
 {
@@ -18,6 +19,7 @@ namespace CryptoQuest.Gameplay.Inventory
         public event Action<EquipmentInfo, List<ESlotType>> EquipmentRemoved;
 
         [field: SerializeField] public List<EquipmentSlot> Slots { get; private set; } = new();
+        public ESlotType ModifyingSlot { get; set; }
 
         /// <summary>
         /// Clear when init character to prevent not unsubscribe correctly
@@ -40,8 +42,7 @@ namespace CryptoQuest.Gameplay.Inventory
             if (equipmentInfo.IsValid() == false) return;
 
             var requiredSlots = equipmentInfo.RequiredSlots;
-            foreach (var slot in requiredSlots)
-                Unequip(GetEquipmentInSlot(slot));
+            Unequip(GetEquipmentInSlot(ModifyingSlot));
 
             OnEquipmentAdded(equipmentInfo, new List<ESlotType>(requiredSlots));
         }
@@ -97,11 +98,18 @@ namespace CryptoQuest.Gameplay.Inventory
         private void OnEquipmentAdded(EquipmentInfo equipment, List<ESlotType> equippedSlots)
         {
             ESlotType[] requiredSlots = equipment.RequiredSlots;
-            foreach (var slot in requiredSlots)
+            ECategory currentEquipmentType = equipment.Data.EquipmentType.EquipmentCategory;
+            if (currentEquipmentType == ECategory.Accessory)
             {
-                SetEquipmentInSlot(equipment, slot);
+                SetEquipmentInSlot(equipment, ModifyingSlot);
             }
-
+            else
+            {
+                foreach (var slot in requiredSlots)
+                {
+                    SetEquipmentInSlot(equipment, slot);
+                }
+            }
             EquipmentAdded?.Invoke(equipment, equippedSlots);
         }
 

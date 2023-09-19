@@ -125,6 +125,7 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
             EquipmentSlot.EType modifyingSlotType)
         {
             var equipment = inspectingCharacter.Equipments.GetEquipmentInSlot(modifyingSlotType);
+            inspectingCharacter.Equipments.ModifyingSlot = modifyingSlotType;
             UpdateCurrentlyEquipping(equipment);
         }
 
