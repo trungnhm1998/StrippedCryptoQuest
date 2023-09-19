@@ -287,7 +287,14 @@ PlayerSettings:
   openGLRequireES31: 0
   openGLRequireES31AEP: 0
   openGLRequireES32: 0
-  m_TemplateCustomTags: {}
+  m_TemplateCustomTags:
+    FIREBASE_API_KEY: 000000000
+    FIREBASE_APP_ID: 000000000
+    FIREBASE_AUTH_DOMAIN: 000000000
+    FIREBASE_MEASUREMENT_ID: 000000000
+    FIREBASE_MESSAGE_SENDER_ID: 000000000
+    FIREBASE_PROJECT_ID: 000000000
+    FIREBASE_STORAGE_BUCKET: 000000000
   mobileMTRendering:
     Android: 1
     iPhone: 1
@@ -543,7 +550,7 @@ PlayerSettings:
   webGLDebugSymbols: 0
   webGLEmscriptenArgs: 
   webGLModulesDirectory: 
-  webGLTemplate: APPLICATION:Minimal
+  webGLTemplate: PROJECT:MinimalWithFirebase
   webGLAnalyzeBuildSize: 0
   webGLUseEmbeddedResources: 0
   webGLCompressionFormat: 1
@@ -680,4 +687,4 @@ PlayerSettings:
   hmiLoadingImage: {fileID: 0}
   platformRequiresReadableAssets: 0
   virtualTexturingSupportEnabled: 0
-  insecureHttpOption: 0
+  insecureHttpOption: 1
