@@ -1,18 +1,20 @@
+using System;
 using CryptoQuest.UI.Menu.Panels.DimensionBox;
 using UnityEngine;
 
 namespace CryptoQuest.UI.Menu.MenuStates.DimensionBoxStates
 {
-    public class FocusDimensionBoxState : DimensionBoxStateBase
+    public class TransferTypeSelectionState : DimensionBoxStateBase
     {
-        public FocusDimensionBoxState(UIDimensionBoxMenu panel) : base(panel) { }
+        public TransferTypeSelectionState(UIDimensionBoxMenu panel) : base(panel) { }
 
         public override void OnEnter()
         {
             base.OnEnter();
             NavigationBar.SetActive(false);
-            DimensionBoxPanel.DimensionBoxTabHeader.Init();
             NavigationBar.HighlightHeader(DimensionBoxPanel.TypeSO);
+            DimensionBoxPanel.DimensionBoxTypeSelection.SetButtonsActive(true);
+            DimensionBoxPanel.DimensionBoxTypeSelection.SetDefaultSelection();
         }
 
         public override void HandleCancel()
@@ -23,10 +25,10 @@ namespace CryptoQuest.UI.Menu.MenuStates.DimensionBoxStates
             MenuStateMachine.RequestStateChange(DimensionBoxMenuStateMachine.NavDimension);
         }
 
-        public override void Interact()
+        public override void OnExit()
         {
-            base.Interact();
-            MenuStateMachine.RequestStateChange(DimensionBoxMenuStateMachine.DimensionBox);
+            base.OnExit();
+            DimensionBoxPanel.DimensionBoxTypeSelection.SetButtonsActive(false);
         }
     }
 }
