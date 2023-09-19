@@ -1,10 +1,20 @@
-﻿using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
+﻿using System;
+using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
+using UnityEngine;
 
 namespace IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects.GameplayEffectActions
 {
-    public class DurationalAction : GameplayEffectActionBase
+    [Serializable]
+    public class DurationalAction : IGameplayEffectAction
     {
-        public override ActiveEffectSpecification CreateActiveEffect(
+        [SerializeField] private float _duration;
+        public DurationalAction() {}
+        public DurationalAction(float duration)
+        {
+            _duration = duration;
+        }
+
+        public ActiveEffectSpecification CreateActiveEffect(
             GameplayEffectSpec inSpec,
             AbilitySystemBehaviour owner) => new(inSpec);
     }

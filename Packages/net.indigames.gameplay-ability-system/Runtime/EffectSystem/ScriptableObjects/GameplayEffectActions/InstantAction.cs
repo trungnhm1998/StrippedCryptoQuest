@@ -3,8 +3,10 @@ using UnityEngine;
 
 namespace IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects.GameplayEffectActions
 {
-    public class InstantAction : GameplayEffectActionBase
+    public class InstantAction : IGameplayEffectAction
     {
+        public InstantAction() { }
+
         /// <summary>
         /// It's mean instantly modify base of the attribute
         /// suitable for non-stats attribute like HP (not MaxHP)
@@ -13,7 +15,7 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects.Gamepla
         ///
         /// Based on GAS I would want Instant effect as a infinite effect but for now I will modify the base value
         /// </summary>
-        public override ActiveEffectSpecification CreateActiveEffect(GameplayEffectSpec inSpec,
+        public ActiveEffectSpecification CreateActiveEffect(GameplayEffectSpec inSpec,
             AbilitySystemBehaviour owner)
         {
             Debug.Log(

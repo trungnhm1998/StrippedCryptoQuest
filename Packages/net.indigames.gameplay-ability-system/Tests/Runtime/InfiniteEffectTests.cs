@@ -14,7 +14,7 @@ namespace IndiGames.GameplayAbilitySystemTests
         {
             var (_, _, effectSystem, _) = CreateAbilitySystem();
             var def = ScriptableObject.CreateInstance<GameplayEffectDefinition>();
-            def.EffectActionBase = ScriptableObject.CreateInstance<InfiniteAction>();
+            def.EffectAction = new InfiniteAction();
             var spec = effectSystem.GetEffect(def);
             var activeSpec = effectSystem.ApplyEffectToSelf(spec);
             Assert.IsTrue(activeSpec.IsValid());
@@ -32,10 +32,13 @@ namespace IndiGames.GameplayAbilitySystemTests
         [UnityTest]
         public IEnumerator AfterDuration_ShouldRemoveFromSystem()
         {
+            var (_, _, effectSystem, _) = CreateAbilitySystem();
+            var def = ScriptableObject.CreateInstance<GameplayEffectDefinition>();
             var duration = 1f;
-
+            def.EffectAction = new DurationalAction(duration);
+            Assert.AreEqual(effectSystem.AppliedEffects.Count, 1);
             yield return new WaitForSeconds(duration);
-            
+            Assert.AreEqual(effectSystem.AppliedEffects.Count, 0);
         }
     }
 }

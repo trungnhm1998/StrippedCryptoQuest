@@ -20,17 +20,17 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects
 
         /// <summary>
         /// How this effect will be applied to target
-        /// - Durational
+        /// - <see cref="DurationalAction"/>
         ///     Affect the attribute system for a duration
-        /// - Instant
+        /// - <see cref="InstantAction"/>
         ///     Change the base value of the attribute system
-        /// - Periodic
+        /// - <see cref="PeriodicAction"/>
         ///     For every period, the effect will be applied to the target base value
-        /// - Infinite
+        /// - <see cref="InfiniteAction"/>
         ///     Affect the attribute system until the effect is removed
         /// </summary>
-        [field: SerializeField]
-        public GameplayEffectActionBase EffectActionBase { get; set; }
+        [field: SerializeReference, ReferenceEnum]
+        public IGameplayEffectAction EffectAction { get; set; } = new DurationalAction();
 
         [field: SerializeField, Tooltip("What attribute to affect and how it affected")]
         public EffectDetails EffectDetails { get; set; } = new();

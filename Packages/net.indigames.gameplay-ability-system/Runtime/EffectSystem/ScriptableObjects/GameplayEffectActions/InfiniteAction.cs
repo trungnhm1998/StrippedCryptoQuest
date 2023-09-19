@@ -2,9 +2,11 @@
 
 namespace IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects.GameplayEffectActions
 {
-    public class InfiniteAction : GameplayEffectActionBase
+    public class InfiniteAction : IGameplayEffectAction
     {
-        public override ActiveEffectSpecification CreateActiveEffect(
+        public InfiniteAction() { }
+
+        public ActiveEffectSpecification CreateActiveEffect(
             GameplayEffectSpec inSpec,
             AbilitySystemBehaviour owner) => new(inSpec);
     }

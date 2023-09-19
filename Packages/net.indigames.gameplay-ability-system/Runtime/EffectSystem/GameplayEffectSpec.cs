@@ -146,7 +146,7 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem
         public int CompareTo(GameplayEffectSpec other) => Def != other.Def ? 0 : 1;
 
         public ActiveEffectSpecification CreateActiveEffectSpec(AbilitySystemBehaviour owner)
-            => Def.EffectActionBase.CreateActiveEffect(this, owner);
+            => Def.EffectAction.CreateActiveEffect(this, owner);
     }
 
     /// <summary>

@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: GE_DamageBase
   m_EditorClassIdentifier: 
   <Description>k__BackingField: 
-  <EffectActionBase>k__BackingField: {fileID: 11400000, guid: e362eb54bc9a19146a6979e83603a205, type: 2}
+  <EffectAction>k__BackingField:
+    rid: 5542355982651228272
   <EffectDetails>k__BackingField:
     Modifiers: []
     StackingType: 0
@@ -25,3 +26,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 3f78234ed50d68c4880ffa78125e9f4a, type: 2}
   <ChanceToApply>k__BackingField: 1
   <CustomApplicationRequirements>k__BackingField: []
+  references:
+    version: 2
+    RefIds:
+    - rid: 5542355982651228272
+      type: {class: InstantAction, ns: IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects.GameplayEffectActions, asm: IndiGames.GameplayAbilitySystem}
