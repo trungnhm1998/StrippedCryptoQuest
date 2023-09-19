@@ -55,19 +55,6 @@ namespace CryptoQuest.Gameplay.Battle
         {
             yield return _initializer.LoadEnemies();
             _spiral.HideSpiral();
-            yield return AutoSkip();
-        }
-
-
-        // TODO: REMOVE THIS
-        private IEnumerator AutoSkip()
-        {
-#if UNITY_EDITOR || DEVELOPMENT_BUILD
-            yield return new WaitForSeconds(2f);
-            WinBattle();
-#else
-            yield break;
-#endif
         }
 
         /// <summary>

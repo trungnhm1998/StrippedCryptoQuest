@@ -31,7 +31,7 @@ namespace CryptoQuest.UI.Dialogs.BattleDialog
             _endActionPhaseEventChannel.EventRaised -= CloseDialog;
         }
 
-        private void Start()
+        private void Awake()
         {
             if (_dialog == null) return;
             _dialog.gameObject.SetActive(false);

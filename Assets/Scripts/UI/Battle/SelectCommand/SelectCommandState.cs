@@ -1,16 +1,16 @@
-using CryptoQuest.PushdownFSM;
+using UnityEngine;
 using CryptoQuest.UI.Battle.StateMachine;
-using FSM;
 
 namespace CryptoQuest.UI.Battle.SelectCommand
 {
-    public class SelectCommandState : PushdownStateBase
+    public class SelectCommandState : BattleMenuStateBase
     {
-        public SelectCommandState(IPushdownStateMachine<string, StateBase> stateMachine)
-         : base(stateMachine) { }
+        public SelectCommandState(BattleMenuStateMachine stateMachine)
+            : base(stateMachine) { }
 
         public override void OnEnter()
         {
+            Debug.Log($"SelectCommandState::OnEnter");
             base.OnEnter();
         }
 

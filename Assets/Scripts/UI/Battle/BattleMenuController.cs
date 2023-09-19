@@ -6,6 +6,7 @@ using UnityEngine;
 using CryptoQuest.PushdownFSM;
 using CryptoQuest.UI.Battle.StateMachine;
 using FSM;
+using CryptoQuest.UI.Battle.StartBattle;
 
 namespace CryptoQuest.UI.Battle
 {
@@ -17,9 +18,9 @@ namespace CryptoQuest.UI.Battle
 
         public InventorySO InventorySO => _serviceProvider.Inventory;
 
-        public IPushdownStateMachine<string, StateBase> BattleMenuFSM  { get; private set; }
+        public PushdownStateMachine BattleMenuFSM  { get; private set; }
 
-        private void Awake()
+        private void Start()
         {
             SetupStateMachine();
         }

@@ -6,9 +6,9 @@ namespace CryptoQuest.PushdownFSM
 {
     public class PushdownStateBase : StateBase
     {
-        protected IPushdownStateMachine<string, StateBase> _pushdownFSM;
+        protected PushdownStateMachine _pushdownFSM;
 
-        public PushdownStateBase(IPushdownStateMachine<string, StateBase> stateMachine) : base(false) 
+        public PushdownStateBase(PushdownStateMachine stateMachine) : base(false) 
         {
             _pushdownFSM = stateMachine;
         }

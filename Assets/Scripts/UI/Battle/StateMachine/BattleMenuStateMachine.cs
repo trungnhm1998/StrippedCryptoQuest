@@ -1,4 +1,5 @@
 using CryptoQuest.PushdownFSM;
+using CryptoQuest.UI.Battle.StartBattle;
 
 namespace CryptoQuest.UI.Battle.StateMachine
 {
@@ -17,17 +18,21 @@ namespace CryptoQuest.UI.Battle.StateMachine
         public BattleMenuStateMachine(BattleMenuController controller) : base(false)
         {
             BattleMenuController = controller;
+            
             AddBattleMenuStates();
 
             // TODO: Setup and init other states here
+
+            SetStartState(UIStartBattle.StartBattleState);
+            Init();
         }
 
         private void AddBattleMenuStates()
         {
-            var uis = BattleMenuController.GetComponentsInChildren<IBattleMenu>();
+            var uis = BattleMenuController.GetComponentsInChildren<IBattleMenu>(true);
             foreach (var ui in uis)
             {
-                var uiState = ui.CreateState(BattleMenuController);
+                var uiState = ui.CreateState(this);
                 AddState(ui.StateName, uiState);
             }
         }

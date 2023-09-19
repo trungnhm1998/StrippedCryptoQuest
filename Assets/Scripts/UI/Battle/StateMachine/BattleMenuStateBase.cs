@@ -12,6 +12,7 @@ namespace CryptoQuest.UI.Battle.StateMachine
             _battleMenuFSM = stateMachine;
             _battleMenuController = stateMachine.BattleMenuController;
         }
+        
         public override void OnEnter()
         {
             base.OnEnter();
