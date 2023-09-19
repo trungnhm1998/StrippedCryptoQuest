@@ -96,6 +96,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 26cdd1be710f15541bd3405898bc1b2e, type: 3}
+--- !u!114 &7435168058143785903 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7477559013534509019, guid: 26cdd1be710f15541bd3405898bc1b2e, type: 3}
+  m_PrefabInstance: {fileID: 66047365823554676}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2998e9d68081455884c44a97f19db7b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &7693632841490575465 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7651584929961104413, guid: 26cdd1be710f15541bd3405898bc1b2e, type: 3}
@@ -182,9 +193,33 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4302499264253339029, guid: ab7522dc47eaf874c8bdfe83d79cbd09, type: 3}
+      propertyPath: _onReactionShowed.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4302499264253339029, guid: ab7522dc47eaf874c8bdfe83d79cbd09, type: 3}
+      propertyPath: _onReactionShowed.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 7435168058143785903}
+    - target: {fileID: 4302499264253339029, guid: ab7522dc47eaf874c8bdfe83d79cbd09, type: 3}
       propertyPath: _onDialogueCompleted.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1297975549445324847}
+    - target: {fileID: 4302499264253339029, guid: ab7522dc47eaf874c8bdfe83d79cbd09, type: 3}
+      propertyPath: _onReactionShowed.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4302499264253339029, guid: ab7522dc47eaf874c8bdfe83d79cbd09, type: 3}
+      propertyPath: _onReactionShowed.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ShowReaction
+      objectReference: {fileID: 0}
+    - target: {fileID: 4302499264253339029, guid: ab7522dc47eaf874c8bdfe83d79cbd09, type: 3}
+      propertyPath: _onReactionShowed.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: CryptoQuest.Gameplay.ReactionManager, indi-games.crypto-quest
+      objectReference: {fileID: 0}
+    - target: {fileID: 4302499264253339029, guid: ab7522dc47eaf874c8bdfe83d79cbd09, type: 3}
+      propertyPath: _onReactionShowed.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 5764864106148934383, guid: ab7522dc47eaf874c8bdfe83d79cbd09, type: 3}
       propertyPath: m_Name
       value: DialogueSystem
