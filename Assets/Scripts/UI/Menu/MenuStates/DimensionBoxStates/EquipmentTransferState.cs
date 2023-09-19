@@ -6,7 +6,6 @@ namespace CryptoQuest.UI.Menu.MenuStates.DimensionBoxStates
     public class EquipmentTransferState : DimensionBoxStateBase
     {
         public EquipmentTransferState(UIDimensionBoxMenu panel) : base(panel) { }
-
         public override void OnEnter()
         {
             base.OnEnter();

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using CryptoQuest.Menu;
 using CryptoQuest.UI.Menu.MenuStates;
 using CryptoQuest.UI.Menu.MenuStates.DimensionBoxStates;
+using CryptoQuest.UI.Menu.Panels.DimensionBox.EquipmentTransferSection;
 using UnityEngine;
 using UnityEngine.Events;
 
