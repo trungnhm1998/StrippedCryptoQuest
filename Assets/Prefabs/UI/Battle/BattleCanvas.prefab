@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8327374613093754269}
   - component: {fileID: 8928747643325053760}
   - component: {fileID: 1473886333895117793}
+  - component: {fileID: 5805807211874167893}
   m_Layer: 0
   m_Name: BattleCanvas
   m_TagString: Untagged
@@ -119,6 +120,21 @@ MonoBehaviour:
   _serviceProvider: {fileID: 11400000, guid: 8c870727215fbcf48976e7263a1a2485, type: 2}
   _battleInput: {fileID: 11400000, guid: d0c44063c591fb8489bc8e1087c0999e, type: 2}
   _battleBus: {fileID: 11400000, guid: 2290057e7f48d1046b5e0a6c3f6dc910, type: 2}
+--- !u!114 &5805807211874167893
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8456580747267762059}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af38c0740d43a4f419a21ea970c9cf53, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _inputMediator: {fileID: 11400000, guid: 1fb61cdb72f0a484f8e4db68e2011977, type: 2}
+  _defaultSelection: {fileID: 0}
+  _currentSelection: {fileID: 0}
 --- !u!1001 &1109961623979322873
 PrefabInstance:
   m_ObjectHideFlags: 0

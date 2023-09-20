@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 4040653118045958498}
   - component: {fileID: 4760999619473875055}
   m_Layer: 0
-  m_Name: ButtonContent
+  m_Name: CommandDetailButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -94,7 +94,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Navigation:
     m_Mode: 2
-    m_WrapAround: 1
+    m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
@@ -123,20 +123,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 5203755868841516334}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 4760999619473875055}
-        m_TargetAssemblyTypeName: CryptoQuest.UI.Battle.UICommandContent, indi-games.crypto-quest
-        m_MethodName: HandleClick
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  IsSelected: 0
+      m_Calls: []
 --- !u!114 &4760999619473875055
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -146,7 +133,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2359656759552357064}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9c8d53ce444c4dfa8839391264071e6b, type: 3}
+  m_Script: {fileID: 11500000, guid: b18c35837baaa024c9a1eeaa42e830a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _label: {fileID: 223701476578676277}
@@ -165,7 +152,7 @@ GameObject:
   - component: {fileID: 223701476578676277}
   - component: {fileID: 4165487624501597148}
   m_Layer: 0
-  m_Name: TargetText
+  m_Name: LabelText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -340,7 +327,7 @@ GameObject:
   - component: {fileID: 2754845053911638329}
   - component: {fileID: 7299844925694843355}
   m_Layer: 0
-  m_Name: AmountText
+  m_Name: ValueText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
