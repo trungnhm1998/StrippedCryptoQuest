@@ -18,7 +18,6 @@ namespace CryptoQuest.UI.Menu.Panels.Item
     /// </summary>
     public class UIConsumableMenuPanel : UIMenuPanel
     {
-        public event Action<ConsumableInfo> Inspecting;
         public event Action ItemConsumed;
         [SerializeField] private ConsumableEventChannel _itemConsumedEvent;
         [SerializeField] private UIInventoryTabHeader _inventoryTabHeader;
@@ -26,7 +25,8 @@ namespace CryptoQuest.UI.Menu.Panels.Item
         [SerializeField] private LocalizeStringEvent _localizeDescription;
 
         private readonly Dictionary<ConsumableType, int> _itemListCache = new();
-        private UIConsumableItem _usingItem;
+        private UIConsumableItem _interactingUI;
+        public ConsumableInfo ConsumingItem => _interactingUI.Consumable;
         private UIConsumables _currentConsumables;
         private Text _description;
 
@@ -78,11 +78,7 @@ namespace CryptoQuest.UI.Menu.Panels.Item
         private void Start()
         {
             _inventoryTabHeader.OpeningTab += ShowItemsWithType;
-            foreach (var itemList in _itemLists)
-            {
-                itemList.Inspecting += InspectingItem;
-            }
-
+            UIConsumables.Inspecting += InspectingItem;
             UIConsumableItem.Using += UseItem;
         }
 
@@ -98,9 +94,9 @@ namespace CryptoQuest.UI.Menu.Panels.Item
                 if (_currentConsumables) _currentConsumables.Interactable = _interactable;
 
                 // TODO: BAD CODE
-                if (_interactable && _usingItem)
+                if (_interactable && _interactingUI)
                 {
-                    EventSystem.current.SetSelectedGameObject(_usingItem.gameObject);
+                    EventSystem.current.SetSelectedGameObject(_interactingUI.gameObject);
                 }
             }
         }
@@ -120,11 +116,7 @@ namespace CryptoQuest.UI.Menu.Panels.Item
         {
             _itemConsumedEvent.EventRaised -= OnItemConsumed;
             _inventoryTabHeader.OpeningTab -= ShowItemsWithType;
-            foreach (var itemList in _itemLists)
-            {
-                itemList.Inspecting -= InspectingItem;
-            }
-
+            UIConsumables.Inspecting += InspectingItem;
             UIConsumableItem.Using -= UseItem;
         }
 
@@ -133,14 +125,13 @@ namespace CryptoQuest.UI.Menu.Panels.Item
 
         private void UseItem(UIConsumableItem selectedConsumableItem)
         {
-            _usingItem = selectedConsumableItem; // to refocus the item when the item usage menu is closed
+            _interactingUI = selectedConsumableItem; // to refocus the item when the item usage menu is closed
             StateMachine.RequestStateChange(ItemMenuStateMachine.ConsumingItem);
         }
 
         private void InspectingItem(ConsumableInfo item)
         {
             _localizeDescription.StringReference = item.Description;
-            Inspecting?.Invoke(item);
         }
 
         private void ShowItemsWithType(ConsumableType itemType)

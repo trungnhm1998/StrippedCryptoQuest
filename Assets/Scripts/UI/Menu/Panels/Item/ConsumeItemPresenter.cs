@@ -1,39 +1,37 @@
-﻿using CryptoQuest.Gameplay;
+﻿using CryptoQuest.Character.Ability;
+using CryptoQuest.Gameplay.Inventory;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item;
-using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.ActionTypes;
-using CryptoQuest.Gameplay.PlayerParty;
-using CryptoQuest.UI.Menu.MenuStates.ItemStates;
-using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
 using UnityEngine;
 
 namespace CryptoQuest.UI.Menu.Panels.Item
 {
-    public class UIItemPresenter : MonoBehaviour, IActionPresenter
+    public class ConsumeItemPresenter : MonoBehaviour
     {
-        [SerializeField] private PresenterBinder _binder;
-        [SerializeField] private PartySO _partySo;
-
-        [Header("UI")]
+        [SerializeField] private ConsumableEventChannel _heroConsumeItem;
         [SerializeField] private UIConsumableMenuPanel _uiConsumableMenuPanel;
-
         [SerializeField] private UIItemCharacterSelection _uiItemCharacterSelection;
 
         private ConsumableSO _item;
 
-        private void Awake()
+        private void OnEnable()
         {
-            _uiConsumableMenuPanel.StateMachine.AddState(SingleItemState.Item, new SingleItemState(this));
-            _binder.Bind(this);
-
-            // UIConsumableItem.Using += GetItem;
+            SingleHeroConsumeAbility.ShowHeroSelection += Show;
         }
 
-        public void Show()
+        /// <summary>
+        /// I don't want to show this panel when the main menu is disabled
+        /// </summary>
+        private void OnDisable()
+        {
+            SingleHeroConsumeAbility.ShowHeroSelection -= Show;
+        }
+
+        private void Show()
         {
             _uiConsumableMenuPanel.Interactable = false;
             _uiItemCharacterSelection.Init();
 
-            _uiItemCharacterSelection.Clicked += ActiveAbility;
+            _uiItemCharacterSelection.Clicked += ConsumeOnCharacterIndex;
         }
 
         private void GetItem(UIConsumableItem currentItem)
@@ -41,8 +39,9 @@ namespace CryptoQuest.UI.Menu.Panels.Item
             _item = currentItem.Consumable.Data;
         }
 
-        private void ActiveAbility(int index)
+        private void ConsumeOnCharacterIndex(int index)
         {
+            ConsumableController.HeroConsumingItem?.Invoke(index, _uiConsumableMenuPanel.ConsumingItem);
             // TODO: RÈACTOR GÁ
             // AbilitySystemBehaviour owner = _partySo.Members[index].CharacterComponent.GameplayAbilitySystem;
             //
@@ -55,19 +54,12 @@ namespace CryptoQuest.UI.Menu.Panels.Item
             Hide();
         }
 
-        public void Hide()
+        private void Hide()
         {
             _uiConsumableMenuPanel.Interactable = true;
             _uiItemCharacterSelection.DeInit();
 
-            _uiItemCharacterSelection.Clicked -= ActiveAbility;
-
-            _uiConsumableMenuPanel.StateMachine.RequestStateChange(ItemMenuStateMachine.InventorySelection);
-        }
-
-        public void Execute()
-        {
-            _uiConsumableMenuPanel.StateMachine.RequestStateChange(SingleItemState.Item);
+            _uiItemCharacterSelection.Clicked -= ConsumeOnCharacterIndex;
         }
     }
 }

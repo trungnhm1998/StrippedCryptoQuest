@@ -1,8 +1,6 @@
-﻿using System;
-using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data;
+﻿using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data;
 using CryptoQuest.Gameplay.Inventory.Items;
 using CryptoQuest.Menu;
-using PolyAndCode.UI;
 using UnityEngine;
 using UnityEngine.Localization.Components;
 using UnityEngine.UI;
@@ -11,11 +9,10 @@ namespace CryptoQuest.UI.Menu.Panels.Item
 {
     public class UIConsumableItem : MonoBehaviour
     {
-        public static event Action<UIConsumableItem> Using;
+        public delegate void UIConsumableItemEvent(UIConsumableItem item);
 
-        public delegate void InspectingItem(UIConsumableItem item);
-
-        public event InspectingItem Inspecting;
+        public static event UIConsumableItemEvent Inspecting;
+        public static event UIConsumableItemEvent Using;
         [SerializeField] private Image _icon;
         [SerializeField] private LocalizeStringEvent _name;
         [SerializeField] private Text _nameText;
@@ -52,7 +49,7 @@ namespace CryptoQuest.UI.Menu.Panels.Item
         {
             if (!_canClick) return;
             Using?.Invoke(this);
-            _consumable.Consuming();
+            _consumable.ConsumeWithCorrectUI(); // this will show a correct UI
         }
 
         private void OnInspectingItem()
@@ -74,18 +71,19 @@ namespace CryptoQuest.UI.Menu.Panels.Item
             _quantity.text = item.Quantity.ToString();
 
 
-            SetColorText(_consumable.Data.UsageScenario == EAbilityUsageScenario.Field);
+            var allowedInField = (_consumable.Data.UsageScenario & EAbilityUsageScenario.Field) > 0;
+            SetColorText(allowedInField);
         }
 
-        private void SetColorText(bool disabled = false)
+        private void SetColorText(bool allowed = false)
         {
-            var color = disabled ? _enabledColor : _disabledColor;
+            var color = allowed ? _enabledColor : _disabledColor;
 
             _nameText.color = color;
             _charaterX.color = color;
             _quantity.color = color;
 
-            _canClick = disabled;
+            _canClick = allowed;
         }
 
 

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using CryptoQuest.Character.Ability;
 using CryptoQuest.Map;
 using IndiGames.GameplayAbilitySystem.AbilitySystem;
+using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
 using UnityEngine;
 
 namespace CryptoQuest.Item.Ocarina
@@ -50,6 +51,8 @@ namespace CryptoQuest.Item.Ocarina
             {
                 yield return null;
             }
+
+            public override void Consume(params AbilitySystemBehaviour[] targets) { }
 
             public void TeleportToTown(OcarinaEntrance town)
             {

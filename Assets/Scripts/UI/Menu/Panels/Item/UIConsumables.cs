@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using CryptoQuest.Gameplay.Inventory.Items;
+using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Type;
 using CryptoQuest.System;
 using UnityEngine;
@@ -8,9 +9,12 @@ using UnityEngine.UI;
 
 namespace CryptoQuest.UI.Menu.Panels.Item
 {
+    /// <summary>
+    /// Render consumables in <see cref="InventorySO"/> filter using <see cref="Type"/>
+    /// </summary>
     public class UIConsumables : MonoBehaviour
     {
-        public event Action<ConsumableInfo> Inspecting;
+        public static event Action<ConsumableInfo> Inspecting;
 
         [SerializeField] private UIConsumableItem _prefab;
         [SerializeField] private ScrollRect _scrollRect;
@@ -37,17 +41,24 @@ namespace CryptoQuest.UI.Menu.Panels.Item
 
         private void OnEnable()
         {
+            UIConsumableItem.Inspecting += UIConsumableItemOnInspecting;
             CleanUpScrollView();
             SetConsumableUI();
         }
 
+        private bool _isPreviousHidden = true;
+
+        private void OnDisable()
+        {
+            UIConsumableItem.Inspecting += UIConsumableItemOnInspecting;
+            _isPreviousHidden = true;
+        }
+
+
         private void CleanUpScrollView()
         {
             foreach (var item in _uiConsumables)
-            {
-                item.Inspecting -= OnInspecting;
                 Destroy(item.gameObject);
-            }
 
             _uiConsumables.Clear();
         }
@@ -64,23 +75,16 @@ namespace CryptoQuest.UI.Menu.Panels.Item
             InspectCurrentItem();
         }
 
+        private void UIConsumableItemOnInspecting(UIConsumableItem item)
+        {
+            _currentInspectingItem = item;
+        }
+
         private void CreateItem(ConsumableInfo consumable)
         {
             var item = Instantiate(_prefab, _scrollRect.content);
             _uiConsumables.Add(item);
             item.Init(consumable);
-            item.Inspecting += OnInspecting;
-            if (_currentInspectingItem != null)
-            {
-                _currentInspectingItem.Inspect();
-            }
-        }
-
-        private bool _isPreviousHidden = true;
-
-        private void OnDisable()
-        {
-            _isPreviousHidden = true;
         }
 
         private void OnInspecting(UIConsumableItem consumableUI)
@@ -94,11 +98,9 @@ namespace CryptoQuest.UI.Menu.Panels.Item
             _content.SetActive(false);
         }
 
-        private bool _showing;
-
         public void Show()
         {
-            EnsureContentIsVisible();
+            _content.SetActive(true);
 
             if (_isPreviousHidden)
             {
@@ -114,12 +116,6 @@ namespace CryptoQuest.UI.Menu.Panels.Item
         }
 
         #region Over engineered
-
-        private void EnsureContentIsVisible()
-        {
-            _content.SetActive(true);
-            _showing = true;
-        }
 
         private void DeselectCurrentInspectingItem()
         {

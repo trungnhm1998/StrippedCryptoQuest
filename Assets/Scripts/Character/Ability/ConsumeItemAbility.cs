@@ -1,5 +1,6 @@
 ﻿using System;
 using IndiGames.GameplayAbilitySystem.AbilitySystem;
+using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.ScriptableObjects;
 
 namespace CryptoQuest.Character.Ability
@@ -32,5 +33,8 @@ namespace CryptoQuest.Character.Ability
     ///
     /// Ocarina should derived from this for logic
     /// </summary>
-    public abstract class ConsumableAbilitySpec : GameplayAbilitySpec { }
+    public abstract class ConsumableAbilitySpec : GameplayAbilitySpec
+    {
+        public abstract void Consume(params AbilitySystemBehaviour[] targets);
+    }
 }

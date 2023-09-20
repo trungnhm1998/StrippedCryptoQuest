@@ -16,7 +16,7 @@ namespace CryptoQuest.UI.Menu.MenuStates.ItemStates
         {
             base.HandleCancel();
             ConsumablePanel.ItemConsumed -= BackToSelectItemState;
-            fsm.RequestStateChange(ItemMenuStateMachine.ItemSelection);
+            BackToSelectItemState();
         }
         
         private void BackToSelectItemState()

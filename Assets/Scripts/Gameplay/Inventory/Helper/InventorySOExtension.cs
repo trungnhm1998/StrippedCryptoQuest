@@ -23,19 +23,19 @@ namespace CryptoQuest.Gameplay.Inventory.Helper
         {
             return GetItemsWithUsageScenario(inventory, EAbilityUsageScenario.Battle | EAbilityUsageScenario.Field);
         }
-        
+
         /// <summary>
         /// Get all item with ability filter with usage scenario
         /// </summary>
         /// <param name="inventory"></param>
         /// <param name="usageScenario"></param>
         /// <returns></returns>
-        public static IEnumerable<ConsumableInfo> GetItemsWithUsageScenario(this InventorySO inventory, EAbilityUsageScenario usageScenario)
+        public static IEnumerable<ConsumableInfo> GetItemsWithUsageScenario(this InventorySO inventory,
+            EAbilityUsageScenario usageScenario)
         {
             foreach (var itemInfo in inventory.Consumables)
             {
-                var abilitySO = itemInfo.Data.Skill;
-                if (!abilitySO.Info.CheckUsageScenario(usageScenario)) continue;
+                if ((itemInfo.Data.UsageScenario & usageScenario) <= 0) continue;
                 yield return itemInfo;
             }
         }
