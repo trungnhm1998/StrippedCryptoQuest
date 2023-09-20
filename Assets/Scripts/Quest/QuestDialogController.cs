@@ -5,9 +5,10 @@ using UnityEngine;
 
 namespace CryptoQuest.Quest
 {
-    public class QuestDialogController : MonoBehaviour
+    public class QuestDialogController : MonoBaseHandler
     {
         public static Action<QuestProgressionConfigs> PlayQuestDialogue;
+        public PlayDialogueEvent PlayDialogueEventChannelSO;
 
         [SerializeField] private VoidEventChannelSO _dialogueCompletedEventChannelSO;
 
@@ -15,14 +16,19 @@ namespace CryptoQuest.Quest
 
         private void OnEnable()
         {
-            PlayQuestDialogue += ShowQuestDialogue;
+            // PlayQuestDialogue += ShowQuestDialogue;
             _dialogueCompletedEventChannelSO.EventRaised += OnDialogueCompleted;
         }
 
         private void OnDisable()
         {
-            PlayQuestDialogue -= ShowQuestDialogue;
+            // PlayQuestDialogue -= ShowQuestDialogue;
             _dialogueCompletedEventChannelSO.EventRaised -= OnDialogueCompleted;
+        }
+
+        public void TriggerQuestDialogue(string yarnNode)
+        {
+            PlayDialogueEventChannelSO.RaiseEvent(yarnNode);
         }
 
         private void ShowQuestDialogue(QuestProgressionConfigs config)
@@ -33,9 +39,11 @@ namespace CryptoQuest.Quest
 
         private void OnDialogueCompleted()
         {
+            OnMonoComplete?.Invoke();
             if (_questDialogue == null) return;
 
             _questDialogue.Progress();
+            _questDialogue.Task.OnComplete();
             _questDialogue = null;
         }
     }

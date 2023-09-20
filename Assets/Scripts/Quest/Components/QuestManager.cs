@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace CryptoQuest.Quest
@@ -8,18 +10,21 @@ namespace CryptoQuest.Quest
     public class QuestManager : MonoBehaviour
     {
         [SerializeField] private QuestDatabase _database;
-        [SerializeField] private Quest _startingQuest;
 
-
-        private void Awake()
+        private void OnEnable()
         {
-            InitQuests();
+            foreach (var quest in _database.Quests)
+            {
+                quest.SubscribeObjective();
+            }
         }
 
-        private void InitQuests()
+        private void OnDisable()
         {
-            Assert.IsNotNull(_database, "Quest database is null.");
-            Assert.IsNotNull(_startingQuest, "Starting quest is null.");
+            foreach (var quest in _database.Quests)
+            {
+                quest.UnsubscribeObjective();
+            }
         }
     }
 }

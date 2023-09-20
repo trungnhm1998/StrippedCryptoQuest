@@ -1,11 +1,11 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace CryptoQuest.Quest
 {
-    [Serializable]
     [CreateAssetMenu(fileName = "Quest", menuName = "Quest System/Quest")]
-    public class Quest : ScriptableObject
+    public class Quest : AbstractObjective
     {
         public event IQuestDefinition.StatusChangedEvent StatusChanged;
 
@@ -14,12 +14,11 @@ namespace CryptoQuest.Quest
         /// <summary>
         /// Only check objectives if this is false..
         /// </summary>
-        public bool Completed;
-
         [Header("Details")]
         [SerializeField] private int _currentTaskIndex;
 
         [SerializeField, NonReorderable] private TaskContainer[] _tasks = Array.Empty<TaskContainer>();
+
 
         private void OnEnable()
         {
@@ -83,10 +82,40 @@ namespace CryptoQuest.Quest
 
                 if (index == _tasks.Length - 1)
                 {
-                    Completed = true;
+                    IsCompleted = true;
                 }
 
                 break;
+            }
+        }
+
+        public override void OnComplete()
+        {
+            IsCompleted = true;
+            OnCompleteObjective?.Invoke();
+        }
+
+        public override void OnProgressChange()
+        {
+            if (Array.TrueForAll(_tasks, task => task.Task.IsCompleted))
+            {
+                OnComplete();
+            }
+        }
+
+        public override void SubscribeObjective()
+        {
+            foreach (var task in _tasks)
+            {
+                task.Task.OnCompleteObjective += OnProgressChange;
+            }
+        }
+
+        public override void UnsubscribeObjective()
+        {
+            foreach (var task in _tasks)
+            {
+                task.Task.OnCompleteObjective -= OnProgressChange;
             }
         }
     }

@@ -44,6 +44,7 @@ namespace CryptoQuest.System.Dialogue.Managers
         /// TODO: Move to a class that manages <see cref="YarnSpinnerDialogueManager"/> and <see cref="DialogueManager"/>
         /// </summary>
         [SerializeField] private GameStateSO _gameState;
+
         [SerializeField] private InputMediatorSO _inputMediator;
 
         [Header("UI")]
@@ -67,11 +68,13 @@ namespace CryptoQuest.System.Dialogue.Managers
         {
             _systems.Add(this);
             PlayDialogueRequested += ShowDialogue;
+            _playDialogueEventEvent.PlayDialogueRequested += ShowDialogue;
         }
 
         private void OnDisable()
         {
             PlayDialogueRequested -= ShowDialogue;
+            _playDialogueEventEvent.PlayDialogueRequested -= ShowDialogue;
             _systems.Remove(this);
         }
 

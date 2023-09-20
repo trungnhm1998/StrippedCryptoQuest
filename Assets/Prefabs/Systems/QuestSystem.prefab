@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 666282647687497273}
-  - component: {fileID: 1254148508344660095}
+  - component: {fileID: 1249662082265426137}
   m_Layer: 0
   m_Name: QuestSystem
   m_TagString: Untagged
@@ -32,7 +32,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1254148508344660095
+--- !u!114 &1249662082265426137
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -41,7 +41,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 5292255704015140054}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3921ccc81f4f48d1beed1cff4e9d7362, type: 3}
+  m_Script: {fileID: 11500000, guid: 7d482f5d33f848d69b6de29f4df450f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _questDatabase: {fileID: 11400000, guid: 2e9952407350bb0489158a918441a931, type: 2}
+  _database: {fileID: 11400000, guid: cf429f0fa839c7d40a35dfff38f44687, type: 2}
+  _startingQuest: {fileID: 0}
+  Quests:
+  - {fileID: 11400000, guid: c23257612589ec14d96d058bc288a86d, type: 2}
