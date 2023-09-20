@@ -53,6 +53,7 @@ namespace CryptoQuest.UI.Dialogs.BattleDialog
             yield return handler;
             if (handler.IsDone)
             {
+                _dialog.gameObject.SetActive(true);
                 _dialog.SetDialogue(handler.Result)
                     .Show();
                 _showBattleLogSuccessEventChannel.RaiseEvent();
@@ -64,7 +65,6 @@ namespace CryptoQuest.UI.Dialogs.BattleDialog
             _localizedMessage = message;
             if (_dialog != null)
             {
-                _dialog.gameObject.SetActive(true);
                 SetupDialog(_dialog);
                 return;
             }

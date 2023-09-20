@@ -189,7 +189,7 @@ GameObject:
   - component: {fileID: 3056814941446944219}
   - component: {fileID: 5121785347240370423}
   m_Layer: 0
-  m_Name: Skill Button
+  m_Name: SkillButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -298,9 +298,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: CryptoQuest.UI.Battle.UIBattleActionMenu, indi-games.crypto-quest
-        m_MethodName: OnUseSkill
+      - m_Target: {fileID: 5493434808150231796}
+        m_TargetAssemblyTypeName: CryptoQuest.UI.Battle.SelectCommand.UISelectCommand,
+          indi-games.crypto-quest
+        m_MethodName: OnSkillPressed
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -323,7 +324,7 @@ GameObject:
   - component: {fileID: 9092069357490290162}
   - component: {fileID: 6514335382208022475}
   m_Layer: 0
-  m_Name: Guard Button
+  m_Name: GuardButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -432,9 +433,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: CryptoQuest.UI.Battle.UIBattleActionMenu, indi-games.crypto-quest
-        m_MethodName: OnGuard
+      - m_Target: {fileID: 5493434808150231796}
+        m_TargetAssemblyTypeName: CryptoQuest.UI.Battle.SelectCommand.UISelectCommand,
+          indi-games.crypto-quest
+        m_MethodName: OnGuardPressed
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -455,8 +457,9 @@ GameObject:
   - component: {fileID: 564648220882056290}
   - component: {fileID: 7474356617754013183}
   - component: {fileID: 307844353719758422}
+  - component: {fileID: 5907462111461217552}
   m_Layer: 0
-  m_Name: PlayerName
+  m_Name: CharacterName
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -579,6 +582,46 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &5907462111461217552
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3055574339688182136}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56eb0353ae6e5124bb35b17aff880f16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_StringReference:
+    m_TableReference:
+      m_TableCollectionName: 
+    m_TableEntryReference:
+      m_KeyId: 0
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  m_FormatArguments: []
+  m_UpdateString:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 307844353719758422}
+        m_TargetAssemblyTypeName: TMPro.TMP_Text, Unity.TextMeshPro
+        m_MethodName: set_text
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  references:
+    version: 2
+    RefIds: []
 --- !u!1 &3116533770531176751
 GameObject:
   m_ObjectHideFlags: 0
@@ -592,7 +635,7 @@ GameObject:
   - component: {fileID: 8692447915437195413}
   - component: {fileID: 7570413273424099088}
   m_Layer: 0
-  m_Name: Attack Button
+  m_Name: AttackButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -701,9 +744,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: CryptoQuest.UI.Battle.UIBattleActionMenu, indi-games.crypto-quest
-        m_MethodName: OnNormalAttack
+      - m_Target: {fileID: 5493434808150231796}
+        m_TargetAssemblyTypeName: CryptoQuest.UI.Battle.SelectCommand.UISelectCommand,
+          indi-games.crypto-quest
+        m_MethodName: OnAttackPressed
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -726,7 +770,7 @@ GameObject:
   - component: {fileID: 8294318329565832115}
   - component: {fileID: 3379886514693606238}
   m_Layer: 0
-  m_Name: Item Button
+  m_Name: ItemButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -835,9 +879,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: CryptoQuest.UI.Battle.UIBattleActionMenu, indi-games.crypto-quest
-        m_MethodName: OnUseItem
+      - m_Target: {fileID: 5493434808150231796}
+        m_TargetAssemblyTypeName: CryptoQuest.UI.Battle.SelectCommand.UISelectCommand,
+          indi-games.crypto-quest
+        m_MethodName: OnItemPressed
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1192,8 +1237,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3df9b2bcd7b6c784b80d485a1c4dc974, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _activeColor: {r: 0, g: 0, b: 0, a: 0}
-  _inactiveColor: {r: 0, g: 0, b: 0, a: 0}
+  _activeColor: {r: 1, g: 1, b: 1, a: 1}
+  _inactiveColor: {r: 0.3773585, g: 0.3773585, b: 0.3773585, a: 1}
 --- !u!114 &5493434808150231796
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1206,6 +1251,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb6ce355388a21e43a4e349831fcf816, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _firstButton: {fileID: 7570413273424099088}
+  _childButtonsActivator: {fileID: 4580466850138721354}
+  _characterName: {fileID: 5907462111461217552}
+  _testCharacterName:
+    m_TableReference:
+      m_TableCollectionName: 
+    m_TableEntryReference:
+      m_KeyId: 0
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!1 &4124627094007968546
 GameObject:
   m_ObjectHideFlags: 0
@@ -1964,7 +2024,7 @@ GameObject:
   - component: {fileID: 2985944849982435294}
   - component: {fileID: 4098692570150169149}
   m_Layer: 0
-  m_Name: EscapeText
+  m_Name: RetreatText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2140,7 +2200,7 @@ GameObject:
   - component: {fileID: 4374957495374623212}
   - component: {fileID: 4441944864693008869}
   m_Layer: 0
-  m_Name: Escape Button
+  m_Name: RetreatButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2249,9 +2309,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: CryptoQuest.UI.Battle.UIBattleActionMenu, indi-games.crypto-quest
-        m_MethodName: OnEscape
+      - m_Target: {fileID: 5493434808150231796}
+        m_TargetAssemblyTypeName: CryptoQuest.UI.Battle.SelectCommand.UISelectCommand,
+          indi-games.crypto-quest
+        m_MethodName: OnRetreatPressed
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
