@@ -30,7 +30,7 @@ namespace CryptoQuestEditor.Gameplay.Character
             addEquipmentButton.clicked += () => AddLoot(new EquipmentLootInfo(new EquipmentInfo()));
 
             var addUsableItemButton = root.Q<Button>("add-consumable-button");
-            addUsableItemButton.clicked += () => AddLoot(new UsableLootInfo(new UsableInfo()));
+            addUsableItemButton.clicked += () => AddLoot(new UsableLootInfo(new ConsumableInfo()));
 
             var addCurrencyButton = root.Q<Button>("add-currency-button");
             addCurrencyButton.clicked += () => AddLoot(new CurrencyLootInfo(new CurrencyInfo()));

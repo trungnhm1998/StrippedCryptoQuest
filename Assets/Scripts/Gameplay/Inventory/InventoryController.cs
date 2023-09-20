@@ -1,11 +1,11 @@
+using System;
+using System.Collections;
+using CryptoQuest.Events;
 using CryptoQuest.Gameplay.Inventory.Items;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
 using CryptoQuest.Gameplay.Loot;
-using CryptoQuest.Events;
 using CryptoQuest.System;
 using UnityEngine;
-using System.Collections;
-using System;
 
 namespace CryptoQuest.Gameplay.Inventory
 {
@@ -15,6 +15,7 @@ namespace CryptoQuest.Gameplay.Inventory
         void Add(EquipmentInfo equipment, string equipmentId);
         void Remove(EquipmentInfo equipment);
         InventorySO Inventory { get; }
+        void Remove(ConsumableInfo consumable);
     }
 
     public class InventoryController : MonoBehaviour, IInventoryController
@@ -76,6 +77,14 @@ namespace CryptoQuest.Gameplay.Inventory
             equipment.Data = equipmentData;
             Add(equipment);
             EquipmentLoadedEvent?.Invoke(equipment);
+        }
+
+        public void Remove(ConsumableInfo consumable)
+        {
+            if (!_inventory.Remove(consumable))
+            {
+                Debug.LogWarning($"Consumable {consumable} not found in inventory");
+            }
         }
     }
 }

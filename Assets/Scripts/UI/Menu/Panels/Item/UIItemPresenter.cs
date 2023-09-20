@@ -18,14 +18,14 @@ namespace CryptoQuest.UI.Menu.Panels.Item
 
         [SerializeField] private UIItemCharacterSelection _uiItemCharacterSelection;
 
-        private UsableSO _item;
+        private ConsumableSO _item;
 
         private void Awake()
         {
             _uiConsumableMenuPanel.StateMachine.AddState(SingleItemState.Item, new SingleItemState(this));
             _binder.Bind(this);
 
-            UIConsumableItem.Using += GetItem;
+            // UIConsumableItem.Using += GetItem;
         }
 
         public void Show()

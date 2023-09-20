@@ -1,7 +1,6 @@
 ﻿using System;
 using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data;
 using CryptoQuest.Gameplay.Inventory.Items;
-using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item;
 using CryptoQuest.Menu;
 using PolyAndCode.UI;
 using UnityEngine;
@@ -10,7 +9,7 @@ using UnityEngine.UI;
 
 namespace CryptoQuest.UI.Menu.Panels.Item
 {
-    public class UIConsumableItem : MonoBehaviour, ICell
+    public class UIConsumableItem : MonoBehaviour
     {
         public static event Action<UIConsumableItem> Using;
 
@@ -26,9 +25,9 @@ namespace CryptoQuest.UI.Menu.Panels.Item
         [SerializeField] private GameObject _selectedBackground;
         [SerializeField] private Color _disabledColor;
         [SerializeField] private Color _enabledColor;
-        private UsableInfo _consumable;
+        private ConsumableInfo _consumable;
+        public ConsumableInfo Consumable => _consumable;
         private bool _canClick;
-        public UsableInfo Consumable => _consumable;
 
         public bool Interactable
         {
@@ -53,11 +52,7 @@ namespace CryptoQuest.UI.Menu.Panels.Item
         {
             if (!_canClick) return;
             Using?.Invoke(this);
-        }
-
-        public void Use()
-        {
-            _consumable.Use();
+            _consumable.Consuming();
         }
 
         private void OnInspectingItem()
@@ -71,28 +66,26 @@ namespace CryptoQuest.UI.Menu.Panels.Item
             _selectedBackground.SetActive(false);
         }
 
-        public void Init(UsableInfo item)
+        public void Init(ConsumableInfo item)
         {
             _consumable = item;
             _icon.sprite = item.Icon;
             _name.StringReference = item.DisplayName;
             _quantity.text = item.Quantity.ToString();
 
-            var info = _consumable.Data.ItemAbilityInfo;
-            bool isField = info.CheckUsageScenario(EAbilityUsageScenario.Field);
 
-            SetColorText(isField);
+            SetColorText(_consumable.Data.UsageScenario == EAbilityUsageScenario.Field);
         }
 
-        private void SetColorText(bool isField = false)
+        private void SetColorText(bool disabled = false)
         {
-            var color = isField ? _enabledColor : _disabledColor;
+            var color = disabled ? _enabledColor : _disabledColor;
 
             _nameText.color = color;
             _charaterX.color = color;
             _quantity.color = color;
 
-            _canClick = isField;
+            _canClick = disabled;
         }
 
 

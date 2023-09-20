@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace IndiGames.GameplayAbilitySystem.AbilitySystem
 {
-    public class GameplayAbilitySpec
+    public abstract class GameplayAbilitySpec
     {
         protected bool _isActive;
         public bool IsActive => _isActive;
@@ -76,7 +76,7 @@ namespace IndiGames.GameplayAbilitySystem.AbilitySystem
         /// <returns></returns>
         public virtual bool CanActiveAbility()
         {
-            return _owner.gameObject.activeSelf && CheckTags();
+            return _owner != null && _owner.isActiveAndEnabled && CheckTags();
         }
 
         /// <summary>
@@ -108,10 +108,7 @@ namespace IndiGames.GameplayAbilitySystem.AbilitySystem
         /// Using IEnumerator so the ability can produce step by step like having delay time, etc...
         /// </summary>
         /// <returns></returns>
-        protected virtual IEnumerator OnAbilityActive()
-        {
-            yield break;
-        }
+        protected abstract IEnumerator OnAbilityActive();
 
         protected ActiveEffectSpecification ApplyGameplayEffectToOwner(GameplayEffectDefinition effectDef)
         {

@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace CryptoQuestEditor.Gameplay.Inventory
 {
-    public class UsableSOBrowserEditor : ScriptableObjectBrowserEditor<UsableSO>
+    public class UsableSOBrowserEditor : ScriptableObjectBrowserEditor<ConsumableSO>
     {
         private const string DEFAULT_NAME = "Usable";
         private const int ROW_OFFSET = 2;
@@ -26,7 +26,7 @@ namespace CryptoQuestEditor.Gameplay.Inventory
         }
 
         /// <summary>
-        /// <see cref="UsableSO.Editor_SetUsableType"/>
+        /// <see cref="ConsumableSO.Editor_SetUsableType"/>
         /// </summary>
         /// <param name="directory"></param>
         /// <param name="callback"></param>
@@ -43,21 +43,21 @@ namespace CryptoQuestEditor.Gameplay.Inventory
                 string type = cols[ROW_ITEM_TYPE];
                 string path = DefaultStoragePath + "/" + name + ".asset";
 
-                UsableSO instance = null;
+                ConsumableSO instance = null;
 
                 // find instance if null create new
-                instance = (UsableSO)AssetDatabase.LoadAssetAtPath(path, typeof(UsableSO));
+                instance = (ConsumableSO)AssetDatabase.LoadAssetAtPath(path, typeof(ConsumableSO));
                 if (instance == null || !AssetDatabase.Contains(instance))
                 {
-                    instance = ScriptableObject.CreateInstance<UsableSO>();
+                    instance = ScriptableObject.CreateInstance<ConsumableSO>();
                 }
 
                 var keyAsset =
-                    (UsableTypeSO)AssetDatabase.LoadAssetAtPath(
-                        $"{DATA_PATH}KeyItem.asset", typeof(UsableTypeSO));
+                    (ConsumableType)AssetDatabase.LoadAssetAtPath(
+                        $"{DATA_PATH}KeyItem.asset", typeof(ConsumableType));
                 var consumableAsset =
-                    (UsableTypeSO)AssetDatabase.LoadAssetAtPath(
-                        $"{DATA_PATH}Consumable.asset", typeof(UsableTypeSO));
+                    (ConsumableType)AssetDatabase.LoadAssetAtPath(
+                        $"{DATA_PATH}Consumable.asset", typeof(ConsumableType));
 
                 // import Data
                 instance.Editor_SetID(id);

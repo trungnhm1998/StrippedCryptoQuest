@@ -3,23 +3,22 @@ using System.Collections.Generic;
 using CryptoQuest.Gameplay.Inventory.Items;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Type;
 using CryptoQuest.System;
-using PolyAndCode.UI;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace CryptoQuest.UI.Menu.Panels.Item
 {
-    public class UIConsumables : MonoBehaviour, IRecyclableScrollRectDataSource
+    public class UIConsumables : MonoBehaviour
     {
-        public event Action<UsableInfo> Inspecting;
+        public event Action<ConsumableInfo> Inspecting;
 
-        [SerializeField] private RecyclableScrollRect _recyclableScrollRect;
+        [SerializeField] private UIConsumableItem _prefab;
+        [SerializeField] private ScrollRect _scrollRect;
         [SerializeField] private GameObject _content;
-        [field: SerializeField] public UsableTypeSO Type { get; private set; }
+        [field: SerializeField] public ConsumableType Type { get; private set; }
         [field: SerializeField] public ServiceProvider ServiceProvider { get; private set; }
         private readonly List<UIConsumableItem> _uiConsumables = new();
         private UIConsumableItem _currentInspectingItem;
-        private List<UsableInfo> _usableItems = new();
 
         private bool _interactable;
 
@@ -36,70 +35,44 @@ namespace CryptoQuest.UI.Menu.Panels.Item
             }
         }
 
-        private void Awake()
-        {
-            _recyclableScrollRect.Initialize(this);
-        }
-
         private void OnEnable()
         {
-            RefreshItemList();
-            SetConsumableUI();
-        }
-
-        private void RefreshItemList()
-        {
             CleanUpScrollView();
-            _recyclableScrollRect.Initialize(this);
+            SetConsumableUI();
         }
 
         private void CleanUpScrollView()
         {
-            foreach (Transform child in _recyclableScrollRect.content.transform)
+            foreach (var item in _uiConsumables)
             {
-                Destroy(child.gameObject);
+                item.Inspecting -= OnInspecting;
+                Destroy(item.gameObject);
             }
+
+            _uiConsumables.Clear();
         }
 
         private void SetConsumableUI()
         {
-            foreach (var item in ServiceProvider.Inventory.UsableItems)
+            foreach (var item in ServiceProvider.Inventory.Consumables)
             {
-                if (item.Data.UsableTypeSO == Type)
-                    _usableItems.Add(item);
-            }
-        }
-
-        #region PLUGINS
-
-        public int GetItemCount()
-        {
-            return _usableItems.Count;
-        }
-
-
-        public void SetCell(ICell cell, int index)
-        {
-            var item = cell as UIConsumableItem;
-            if (item == null)
-            {
-                Debug.Log("Cell is not UIConsumableItem");
-                return;
+                if (item.Data.consumableType == Type)
+                    CreateItem(item);
             }
 
+            SetDefaultInspectingItem();
+            InspectCurrentItem();
+        }
+
+        private void CreateItem(ConsumableInfo consumable)
+        {
+            var item = Instantiate(_prefab, _scrollRect.content);
             _uiConsumables.Add(item);
-            item.Init(_usableItems[index]);
+            item.Init(consumable);
             item.Inspecting += OnInspecting;
             if (_currentInspectingItem != null)
             {
                 _currentInspectingItem.Inspect();
-                return;
-            }
-
-            if (_showing && index == 0)
-            {
-                _currentInspectingItem = item;
-                item.Inspect();
             }
         }
 
@@ -108,15 +81,6 @@ namespace CryptoQuest.UI.Menu.Panels.Item
         private void OnDisable()
         {
             _isPreviousHidden = true;
-            _usableItems.Clear();
-        }
-
-        private void OnDestroy()
-        {
-            foreach (var item in _uiConsumables)
-            {
-                item.Inspecting -= OnInspecting;
-            }
         }
 
         private void OnInspecting(UIConsumableItem consumableUI)
@@ -124,8 +88,6 @@ namespace CryptoQuest.UI.Menu.Panels.Item
             _currentInspectingItem = consumableUI;
             Inspecting?.Invoke(consumableUI.Consumable);
         }
-
-        #endregion
 
         public void Hide()
         {
@@ -147,7 +109,7 @@ namespace CryptoQuest.UI.Menu.Panels.Item
             SetDefaultInspectingItem();
 
             InspectCurrentItem();
-            var firstButton = _recyclableScrollRect.content.GetComponentInChildren<Button>();
+            var firstButton = _scrollRect.content.GetComponentInChildren<Button>();
             if (firstButton != null) firstButton.Select();
         }
 

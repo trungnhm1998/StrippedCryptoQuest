@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using CryptoQuest.Gameplay.Inventory;
 using CryptoQuest.Gameplay.Inventory.Items;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Type;
 using CryptoQuest.UI.Menu.MenuStates.ItemStates;
@@ -17,13 +18,14 @@ namespace CryptoQuest.UI.Menu.Panels.Item
     /// </summary>
     public class UIConsumableMenuPanel : UIMenuPanel
     {
-        public event Action<UsableInfo> Inspecting;
-
+        public event Action<ConsumableInfo> Inspecting;
+        public event Action ItemConsumed;
+        [SerializeField] private ConsumableEventChannel _itemConsumedEvent;
         [SerializeField] private UIInventoryTabHeader _inventoryTabHeader;
         [SerializeField] private UIConsumables[] _itemLists;
         [SerializeField] private LocalizeStringEvent _localizeDescription;
 
-        private readonly Dictionary<UsableTypeSO, int> _itemListCache = new();
+        private readonly Dictionary<ConsumableType, int> _itemListCache = new();
         private UIConsumableItem _usingItem;
         private UIConsumables _currentConsumables;
         private Text _description;
@@ -52,6 +54,7 @@ namespace CryptoQuest.UI.Menu.Panels.Item
 
         private void Awake()
         {
+            _itemConsumedEvent.EventRaised += OnItemConsumed;
             _description = _localizeDescription.GetComponent<Text>();
             for (var index = 0; index < _itemLists.Length; index++)
             {
@@ -59,7 +62,6 @@ namespace CryptoQuest.UI.Menu.Panels.Item
                 _itemListCache.Add(itemList.Type, index);
             }
         }
-
 
         public ItemMenuStateMachine StateMachine { get; set; }
 
@@ -70,10 +72,8 @@ namespace CryptoQuest.UI.Menu.Panels.Item
         /// <returns>The <see cref="ItemMenuStateMachine"/> which derived
         /// <see cref="CryptoQuest.UI.Menu.MenuStates.MenuStateMachine"/> derived
         /// from <see cref="StateMachine"/> which also derived from <see cref="StateBase"/></returns>
-        public override StateBase<string> GetPanelState(MenuManager menuManager)
-        {
-            return StateMachine ??= new ItemMenuStateMachine(this);
-        }
+        public override StateBase<string> GetPanelState(MenuManager menuManager) =>
+            StateMachine ??= new ItemMenuStateMachine(this);
 
         private void Start()
         {
@@ -97,7 +97,7 @@ namespace CryptoQuest.UI.Menu.Panels.Item
                 _interactable = value;
                 if (_currentConsumables) _currentConsumables.Interactable = _interactable;
 
-                // TODO: BADE CODE
+                // TODO: BAD CODE
                 if (_interactable && _usingItem)
                 {
                     EventSystem.current.SetSelectedGameObject(_usingItem.gameObject);
@@ -105,27 +105,20 @@ namespace CryptoQuest.UI.Menu.Panels.Item
             }
         }
 
-        private void OnEnable()
-        {
-            _previouslyHidden = true;
-        }
+        private void OnEnable() => _previouslyHidden = true;
 
         protected override void OnShow()
         {
-            if (_previouslyHidden)
-            {
-                _previouslyHidden = false;
-                ShowItemsWithType(0);
-            }
+            if (!_previouslyHidden) return;
+            _previouslyHidden = false;
+            ShowItemsWithType(0);
         }
 
-        protected override void OnHide()
-        {
-            _previouslyHidden = true;
-        }
+        protected override void OnHide() => _previouslyHidden = true;
 
         private void OnDestroy()
         {
+            _itemConsumedEvent.EventRaised -= OnItemConsumed;
             _inventoryTabHeader.OpeningTab -= ShowItemsWithType;
             foreach (var itemList in _itemLists)
             {
@@ -135,19 +128,22 @@ namespace CryptoQuest.UI.Menu.Panels.Item
             UIConsumableItem.Using -= UseItem;
         }
 
-        private void UseItem(UIConsumableItem consumable)
+        private void OnItemConsumed(ConsumableInfo consumable)
+            => ItemConsumed?.Invoke();
+
+        private void UseItem(UIConsumableItem selectedConsumableItem)
         {
-            _usingItem = consumable;
-            consumable.Use();
+            _usingItem = selectedConsumableItem; // to refocus the item when the item usage menu is closed
+            StateMachine.RequestStateChange(ItemMenuStateMachine.ConsumingItem);
         }
 
-        private void InspectingItem(UsableInfo item)
+        private void InspectingItem(ConsumableInfo item)
         {
             _localizeDescription.StringReference = item.Description;
             Inspecting?.Invoke(item);
         }
 
-        private void ShowItemsWithType(UsableTypeSO itemType)
+        private void ShowItemsWithType(ConsumableType itemType)
         {
             var index = _itemListCache[itemType];
             ShowItemsWithType(index);

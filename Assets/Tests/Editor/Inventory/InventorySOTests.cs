@@ -80,10 +80,10 @@ namespace CryptoQuest.Tests.Editor
         [TestCase(USABLE_PATH + "Usable5005.asset")]
         public void Add_UsableItem_ShouldHaveOneItem(string usablePath)
         {
-            UsableInfo item = NewUsable(usablePath, out UsableSO actual);
+            ConsumableInfo item = NewUsable(usablePath, out ConsumableSO actual);
 
             _inventorySO.Add(item);
-            var expected = _inventorySO.UsableItems[0].Data;
+            var expected = _inventorySO.Consumables[0].Data;
 
             Assert.AreEqual(expected, actual, $"Expected: {expected} | Actual: {actual}");
         }
@@ -91,12 +91,12 @@ namespace CryptoQuest.Tests.Editor
         [TestCase(USABLE_PATH + "Usable5005.asset")]
         public void Add_UsableItem_ShouldReturnExactlyQuantity(string usablePath)
         {
-            UsableInfo item = NewUsable(usablePath, out UsableSO actual);
+            ConsumableInfo item = NewUsable(usablePath, out ConsumableSO actual);
 
             var actualQuantity = Random.Range(1, 100);
             item.SetQuantity(actualQuantity);
             _inventorySO.Add(item);
-            var expected = _inventorySO.UsableItems[0].Quantity;
+            var expected = _inventorySO.Consumables[0].Quantity;
 
             Assert.AreEqual(expected, actualQuantity, $"Expected: {expected} | Actual: {actualQuantity}");
         }
@@ -104,7 +104,7 @@ namespace CryptoQuest.Tests.Editor
         [Test]
         public void Add_ItemWithOutData_ShouldReturnFalse()
         {
-            var result = _inventorySO.Add(new UsableInfo());
+            var result = _inventorySO.Add(new ConsumableInfo());
             Assert.False(result);
         }
 
@@ -116,10 +116,10 @@ namespace CryptoQuest.Tests.Editor
             Assert.Zero(result);
         }
 
-        private UsableInfo NewUsable(string usablePath, out UsableSO item)
+        private ConsumableInfo NewUsable(string usablePath, out ConsumableSO item)
         {
-            item = AssetDatabase.LoadAssetAtPath<UsableSO>(usablePath);
-            return new UsableInfo(item);
+            item = AssetDatabase.LoadAssetAtPath<ConsumableSO>(usablePath);
+            return new ConsumableInfo(item);
         }
 
         private InventoryConfigSO GetInventoryConfig()

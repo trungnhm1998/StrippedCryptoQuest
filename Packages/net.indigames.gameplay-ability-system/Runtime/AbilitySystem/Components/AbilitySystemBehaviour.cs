@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.ScriptableObjects;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.Components;
@@ -69,10 +70,7 @@ namespace IndiGames.GameplayAbilitySystem.AbilitySystem.Components
         public GameplayAbilitySpec GiveAbility(AbilityScriptableObject abilityDef)
         {
             if (abilityDef == null)
-            {
-                Debug.LogWarning($"AbilitySystemBehaviour::GiveAbility::AbilityDef is null");
-                return new GameplayAbilitySpec();
-            }
+                throw new NullReferenceException("AbilitySystemBehaviour::GiveAbility::AbilityDef is null");
 
             for (var index = 0; index < _grantedAbilities.Count; index++)
             {

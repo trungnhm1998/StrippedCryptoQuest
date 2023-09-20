@@ -11,13 +11,13 @@ using UnityEngine.UIElements;
 
 namespace CryptoQuestEditor
 {
-    [CustomEditor(typeof(UsableSO))]
+    [CustomEditor(typeof(ConsumableSO))]
     public class UsableSOEditor : Editor
     {
         private const string MAIN_INVENTORY = "MainInventory";
 
         [SerializeField] private VisualTreeAsset _uxml;
-        private UsableSO Target => target as UsableSO;
+        private ConsumableSO Target => target as ConsumableSO;
         private InventorySO InventorySO { get; set; }
 
         private HelpBox _helpBox;
@@ -68,7 +68,7 @@ namespace CryptoQuestEditor
 
         private void AddEquipment()
         {
-            InventorySO.UsableItems.Add(new UsableInfo(Target));
+            InventorySO.Consumables.Add(new ConsumableInfo(Target));
         }
     }
 }

@@ -21,7 +21,7 @@ namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.ActionTypes
     {
         public struct Context
         {
-            public UsableInfo Item { get; set; }
+            public ConsumableInfo Item { get; set; }
         }
         private IActionPresenter _presenter;
         protected IActionPresenter Presenter => _presenter;

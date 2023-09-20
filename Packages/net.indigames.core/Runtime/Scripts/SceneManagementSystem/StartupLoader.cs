@@ -1,9 +1,8 @@
-﻿using IndiGames.Core.Common;
+﻿using System.Collections;
+using IndiGames.Core.Common;
 using IndiGames.Core.SceneManagementSystem.Events.ScriptableObjects;
 using IndiGames.Core.SceneManagementSystem.ScriptableObjects;
 using UnityEngine;
-using UnityEngine.ResourceManagement.AsyncOperations;
-using UnityEngine.ResourceManagement.ResourceProviders;
 using UnityEngine.SceneManagement;
 
 namespace IndiGames.Core.SceneManagementSystem
@@ -16,21 +15,12 @@ namespace IndiGames.Core.SceneManagementSystem
         [Header("Raise on")]
         [SerializeField] private ScriptableObjectAssetReference<LoadSceneEventChannelSO> _loadMainMenuEventChannelSO;
 
-        private void Start()
+        private IEnumerator Start()
         {
-            _managerScene.SceneReference.LoadSceneAsync(LoadSceneMode.Additive).Completed += OnManagerSceneLoaded;
-        }
-
-        private void OnManagerSceneLoaded(AsyncOperationHandle<SceneInstance> sceneInstanceAsyncOperationHandle)
-        {
-            _loadMainMenuEventChannelSO.LoadAssetAsync().Completed += OnLoadMainMenuEventChannelSOLoaded;
-        }
-
-        private void OnLoadMainMenuEventChannelSOLoaded(
-            AsyncOperationHandle<LoadSceneEventChannelSO> loadMainMenuEventChannel)
-        {
-            loadMainMenuEventChannel.Result.RequestLoad(_titleScene);
-
+            yield return _managerScene.SceneReference.LoadSceneAsync(LoadSceneMode.Additive);
+            var loadTitleEventHandle = _loadMainMenuEventChannelSO.LoadAssetAsync();
+            yield return loadTitleEventHandle;
+            loadTitleEventHandle.Result.RequestLoad(_titleScene);
             SceneManager.UnloadSceneAsync(0);
         }
     }

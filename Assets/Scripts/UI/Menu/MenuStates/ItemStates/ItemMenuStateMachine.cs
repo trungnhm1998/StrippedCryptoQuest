@@ -9,6 +9,7 @@ namespace CryptoQuest.UI.Menu.MenuStates.ItemStates
         public static readonly string InventorySelection = "InventorySelection";
         public static readonly string ItemSelection = "ItemSelection";
         public static readonly string CharacterSelection = "CharacterSelection";
+        public static readonly string ConsumingItem = "ConsumingItem";
 
         /// <summary>
         /// Setup the state machine for Item menu.
@@ -21,6 +22,7 @@ namespace CryptoQuest.UI.Menu.MenuStates.ItemStates
             AddState(Item, new FocusItemState(panel));
             AddState(InventorySelection, new InventorySelectionState(panel));
             AddState(ItemSelection, new ItemSelectionState(panel));
+            AddState(ConsumingItem, new ConsumingItemState(panel));
 
             SetStartState(InventorySelection);
         }

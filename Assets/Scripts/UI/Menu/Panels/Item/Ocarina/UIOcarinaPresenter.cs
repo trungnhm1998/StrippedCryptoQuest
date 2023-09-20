@@ -1,90 +1,98 @@
-﻿using System;
-using CryptoQuest.Events;
-using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.ActionTypes;
-using CryptoQuest.Item.Ocarinas.Data;
-using CryptoQuest.UI.Menu.MenuStates.ItemStates;
-using CryptoQuest.UI.Menu.Panels.Item.Ocarina.States;
+﻿using System.Collections;
+using CryptoQuest.Input;
+using CryptoQuest.Item.Ocarina;
 using IndiGames.Core.Events.ScriptableObjects;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
 namespace CryptoQuest.UI.Menu.Panels.Item.Ocarina
 {
-    public class UIOcarinaPresenter : MonoBehaviour, IActionPresenter
+    public class UIOcarinaPresenter : MonoBehaviour
     {
-        [SerializeField] private PresenterBinder _binder;
-
-        [SerializeField] private OcarinaDefinition _towns;
-
         [SerializeField] private UIConsumableMenuPanel _consumableMenuPanel;
-        [SerializeField] private OcarinaTownButton _townButtonPrefab;
+        [SerializeField] private UIOcarinaTownButton _townButtonPrefab;
         [SerializeField] private GameObject _content;
         [SerializeField] private Transform _townButtonContainer;
 
-        [Header("Raise event on")]
-        [SerializeField] private MapPathEventChannelSO _destinationSelectedEvent;
+        [Header("Listen on")]
+        [SerializeField] private OcarinaAbility _ocarinaAbility;
 
-        [SerializeField] private VoidEventChannelSO _destinationConfirmEvent;
+        [SerializeField] private RegisterTownToOcarinaEventChannelSO _registerTownEvent;
+        [SerializeField] private InputMediatorSO _inputMediator;
+
+        [Header("Raise event on")]
         [SerializeField] private VoidEventChannelSO _forceCloseMenuEvent; // TODO: Also bad code
 
         private void Awake()
         {
-            _consumableMenuPanel.StateMachine.AddState(OcarinaState.Ocarina, new OcarinaState(this));
-            _binder.Bind(this);
-        }
-
-        public void Show()
-        {
-            _consumableMenuPanel.Interactable = false;
-            _content.SetActive(true);
-            DestroyAllChildren();
-
-            for (var index = 0; index < _towns.Locations.Count; index++)
+            _registerTownEvent.EventRaised += RegisterTown;
+            _ocarinaAbility.ShowTownSelection += Show;
+            var locations = _ocarinaAbility.Locations;
+            for (var index = 0; index < locations.Count; index++)
             {
-                var town = _towns.Locations[index];
-                var townButton = Instantiate(_townButtonPrefab, _townButtonContainer);
-                townButton.SetTownName(town);
-
-                townButton.Clicked += UseOcarina;
-
-                if (index == 0)
-                {
-                    EventSystem.current.SetSelectedGameObject(townButton.gameObject);
-                }
+                var town = locations[index];
+                RegisterTown(town);
             }
         }
 
-        private void UseOcarina(OcarinaDefinition.Location location)
+        private void OnDestroy()
         {
-            _forceCloseMenuEvent.RaiseEvent();
-            _destinationSelectedEvent.RaiseEvent(location.Path);
-            _destinationConfirmEvent.RaiseEvent();
-            Hide();
+            _registerTownEvent.EventRaised -= RegisterTown;
+            _ocarinaAbility.ShowTownSelection -= Show;
+            DestroyAllChildren();
         }
 
-        /// <summary>
-        /// TODO: Reuse the buttons instead of destroying them, BAD CODE
-        /// </summary>
+        private void Show()
+        {
+            _inputMediator.MenuCancelEvent += CancelConsuming;
+            _consumableMenuPanel.Interactable = false;
+            _content.SetActive(true);
+            StartCoroutine(CoSelectFirstButton());
+        }
+
+        private IEnumerator CoSelectFirstButton()
+        {
+            yield return null;
+            EventSystem.current.SetSelectedGameObject(_townButtonContainer.GetChild(0).gameObject);
+        }
+
+        private void RegisterTown(OcarinaEntrance town)
+        {
+            var townButton = Instantiate(_townButtonPrefab, _townButtonContainer);
+            townButton.SetTownName(town);
+            townButton.Clicked += UseOcarina;
+            _ocarinaAbility.RegisterTown(town);
+        }
+
+        private void UseOcarina(OcarinaEntrance location)
+        {
+            _forceCloseMenuEvent.RaiseEvent();
+            Hide();
+            var spec = _ocarinaAbility.GetAbilitySpec(null);
+            ((OcarinaAbility.OcarinaAbilitySpec)spec).TeleportToTown(location);
+        }
+
+        // TODO: Reuse buttons instead of destroying them, BAD CODE
         private void DestroyAllChildren()
         {
             while (_townButtonContainer.childCount > 0)
             {
                 var go = _townButtonContainer.GetChild(0).gameObject;
-                go.GetComponent<OcarinaTownButton>().Clicked -= UseOcarina;
+                go.GetComponent<UIOcarinaTownButton>().Clicked -= UseOcarina;
                 DestroyImmediate(go);
             }
         }
 
-        public void Hide()
+        private void CancelConsuming()
+        {
+            _inputMediator.MenuCancelEvent -= CancelConsuming;
+            Hide();
+        }
+
+        private void Hide()
         {
             _consumableMenuPanel.Interactable = true;
             _content.SetActive(false);
-            _consumableMenuPanel.StateMachine.RequestStateChange(ItemMenuStateMachine.InventorySelection);
-        }
-
-        public void Execute()
-        {
-            _consumableMenuPanel.StateMachine.RequestStateChange(OcarinaState.Ocarina);
         }
     }
 }

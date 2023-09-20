@@ -47,6 +47,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5848664317048870931}
+  - component: {fileID: 3719834215773430115}
   m_Layer: 5
   m_Name: Content
   m_TagString: Untagged
@@ -74,6 +75,30 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 747, y: 330}
   m_Pivot: {x: 0.5, y: 1}
+--- !u!114 &3719834215773430115
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2977876953073591907}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a8695521f0d02e499659fee002a26c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Padding:
+    m_Left: 0
+    m_Right: 0
+    m_Top: 0
+    m_Bottom: 0
+  m_ChildAlignment: 0
+  m_StartCorner: 0
+  m_StartAxis: 0
+  m_CellSize: {x: 373.5, y: 61.3}
+  m_Spacing: {x: 0, y: 0}
+  m_Constraint: 0
+  m_ConstraintCount: 2
 --- !u!1 &3247570837115294710
 GameObject:
   m_ObjectHideFlags: 0
@@ -436,7 +461,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7583303049394256495}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 248d9fa993d3e44daa165a75b0063088, type: 3}
+  m_Script: {fileID: 11500000, guid: 1aa08ab6e0800fa44ae55d278d1423e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Content: {fileID: 5848664317048870931}
@@ -457,11 +482,6 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
-  IsGrid: 1
-  PrototypeCell: {fileID: 2171444157869238816, guid: 9e55f94750647f34b9d4108bccc5262f, type: 3}
-  SelfInitialize: 0
-  Direction: 0
-  _segments: 2
 --- !u!114 &7643426442895243828
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -474,7 +494,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c745aeaf787e04d39909d72c86f1aeb9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _recyclableScrollRect: {fileID: 272777385134673198}
+  _prefab: {fileID: 127472247968797357, guid: 9e55f94750647f34b9d4108bccc5262f, type: 3}
+  _scrollRect: {fileID: 272777385134673198}
   _content: {fileID: 2076704773167002764}
   <Type>k__BackingField: {fileID: 0}
   <ServiceProvider>k__BackingField: {fileID: 11400000, guid: 8c870727215fbcf48976e7263a1a2485, type: 2}

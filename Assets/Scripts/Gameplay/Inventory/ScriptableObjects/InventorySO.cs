@@ -17,7 +17,7 @@ namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects
     public class InventorySO : ScriptableObject
     {
         [SerializeField] private InventoryConfigSO _inventoryConfig;
-        [field: SerializeField] public List<UsableInfo> UsableItems { get; private set; }
+        [field: SerializeField] public List<ConsumableInfo> Consumables { get; private set; }
         [field: SerializeField] public List<EquipmentInfo> Equipments { get; private set; } = new();
         [field: SerializeField] public WalletControllerSO WalletController { get; private set; }
 
@@ -153,7 +153,7 @@ namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects
             Equipments.Remove(equipment);
         }
 
-        public bool Add(UsableInfo item)
+        public bool Add(ConsumableInfo item)
         {
             if (item == null)
             {
@@ -174,7 +174,7 @@ namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects
                 return false;
             }
 
-            foreach (var usableItem in UsableItems)
+            foreach (var usableItem in Consumables)
             {
                 if (usableItem.Data == item.Data)
                 {
@@ -183,23 +183,42 @@ namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects
                 }
             }
 
-            UsableItems.Add(new UsableInfo(item.Data, item.Quantity));
+            Consumables.Add(new ConsumableInfo(item.Data, item.Quantity));
 
             return true;
         }
 
-        public bool Remove(UsableInfo item, int quantity = 1)
+        public bool Remove(ConsumableInfo item, int quantity = 1)
         {
             if (quantity <= 0) return false;
 
-            item.SetQuantity(item.Quantity - quantity);
-
-            if (item.Quantity <= 0)
+            if (item == null || !item.IsValid())
             {
-                UsableItems.Remove(item);
+                Debug.LogWarning($"Item is null");
+                return false;
             }
 
-            return true;
+            for (var index = 0; index < Consumables.Count; index++)
+            {
+                var consumable = Consumables[index];
+                if (consumable.Data != item.Data) continue;
+                var consumableQuantity = consumable.Quantity - quantity;
+                if (consumableQuantity <= 0)
+                {
+                    Debug.LogWarning($"Try to remove more {consumable.Data} than you have" +
+                                     $"\ncurrent {consumable.Quantity} removing quantity {quantity}");
+                    Consumables.RemoveAt(index);
+                }
+                else
+                {
+                    consumable.SetQuantity(consumableQuantity);
+                }
+
+                return true;
+            }
+
+            Debug.Log($"Try to remove consumable that wasn't found in the {name}");
+            return false;
         }
 
         public void Add(CurrencyInfo currency)

@@ -21,7 +21,7 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Reward
         private const string DEFAULT_NAME = "LootTable_";
         private const int ROW_OFFSET = 2;
         private const string GOLD_ASSET_PATH = "Assets/ScriptableObjects/Currency/Gold.asset";
-        private Dictionary<string, UsableSO> _usableItems = new();
+        private Dictionary<string, ConsumableSO> _usableItems = new();
         private Dictionary<string, EquipmentSO> _equipmentItems = new();
         private CurrencySO _goldSo;
         private LootDatabase _lootDatabase;
@@ -136,7 +136,7 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Reward
                 var guids = AssetDatabase.FindAssets("t:UsableSO");
                 foreach (var guid in guids)
                 {
-                    var asset = AssetDatabase.LoadAssetAtPath<UsableSO>(AssetDatabase.GUIDToAssetPath(guid));
+                    var asset = AssetDatabase.LoadAssetAtPath<ConsumableSO>(AssetDatabase.GUIDToAssetPath(guid));
                     if (asset != null && !string.IsNullOrEmpty(asset.ID))
                         _usableItems.Add(asset.ID, asset);
                 }
@@ -165,8 +165,8 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Reward
                 Debug.Log(rewardDef.Id + rewardDef.Amount);
                 if (_usableItems.TryGetValue(rewardDef.Id, out var item))
                 {
-                    UsableInfo usableInfo = new UsableInfo(item, rewardDef.Amount);
-                    UsableLootInfo usableLootInfo = new UsableLootInfo(usableInfo);
+                    ConsumableInfo consumableInfo = new ConsumableInfo(item, rewardDef.Amount);
+                    UsableLootInfo usableLootInfo = new UsableLootInfo(consumableInfo);
                     lootInfos.Add(usableLootInfo);
                 }
 

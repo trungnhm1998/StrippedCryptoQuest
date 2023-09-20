@@ -119,17 +119,17 @@ namespace CryptoQuestEditor
 
         private void AddAllUsableItem()
         {
-            UsableSO[] allUsableItem = ToolsHelper.GetAssets<UsableSO>();
+            ConsumableSO[] allUsableItem = ToolsHelper.GetAssets<ConsumableSO>();
 
-            foreach (UsableSO usableItem in allUsableItem)
+            foreach (ConsumableSO usableItem in allUsableItem)
             {
-                Target.UsableItems.Add(new UsableInfo(usableItem));
+                Target.Consumables.Add(new ConsumableInfo(usableItem));
             }
         }
 
         private void RemoveAll()
         {
-            UsableInfo[] usableItems = Target.UsableItems.ToArray();
+            ConsumableInfo[] usableItems = Target.Consumables.ToArray();
             EquipmentInfo[] equipmentItems = Target.Equipments.ToArray();
 
             foreach (var item in usableItems)

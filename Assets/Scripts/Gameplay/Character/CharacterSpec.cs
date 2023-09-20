@@ -48,9 +48,6 @@ namespace CryptoQuest.Gameplay.Character
             return SkillSet.GetSkillsByCurrentLevel(Level);
         }
 
-        // TODO: Implement this
-        public GameplayAbilitySpec CreateSkillSpec(AbilityData data) => new();
-
         public void Init(CharacterBehaviourBase characterBehaviour)
         {
             Bind(characterBehaviour);

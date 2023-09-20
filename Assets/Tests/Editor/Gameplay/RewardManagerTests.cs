@@ -82,8 +82,8 @@ namespace CryptoQuest.Tests.Editor.Gameplay
         [Test]
         public void MergeLoots_3Consumables_OneConsumableWithCorrectQuantity()
         {
-            var baseItemSO = ScriptableObject.CreateInstance<UsableSO>();
-            var consumable = new UsableInfo(baseItemSO);
+            var baseItemSO = ScriptableObject.CreateInstance<ConsumableSO>();
+            var consumable = new ConsumableInfo(baseItemSO);
             var loots = new[]
             {
                 new UsableLootInfo(consumable),

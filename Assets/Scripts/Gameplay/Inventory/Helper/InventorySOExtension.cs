@@ -9,17 +9,17 @@ namespace CryptoQuest.Gameplay.Inventory.Helper
 {
     public static class InventorySOExtension
     {
-        public static IEnumerable<UsableInfo> GetItemsInBattle(this InventorySO inventory)
+        public static IEnumerable<ConsumableInfo> GetItemsInBattle(this InventorySO inventory)
         {
             return GetItemsWithUsageScenario(inventory, EAbilityUsageScenario.Battle);
         }
 
-        public static IEnumerable<UsableInfo> GetItemsInField(this InventorySO inventory)
+        public static IEnumerable<ConsumableInfo> GetItemsInField(this InventorySO inventory)
         {
             return GetItemsWithUsageScenario(inventory, EAbilityUsageScenario.Field);
         }
 
-        public static IEnumerable<UsableInfo> GetItemsInBattleAndField(this InventorySO inventory)
+        public static IEnumerable<ConsumableInfo> GetItemsInBattleAndField(this InventorySO inventory)
         {
             return GetItemsWithUsageScenario(inventory, EAbilityUsageScenario.Battle | EAbilityUsageScenario.Field);
         }
@@ -30,9 +30,9 @@ namespace CryptoQuest.Gameplay.Inventory.Helper
         /// <param name="inventory"></param>
         /// <param name="usageScenario"></param>
         /// <returns></returns>
-        public static IEnumerable<UsableInfo> GetItemsWithUsageScenario(this InventorySO inventory, EAbilityUsageScenario usageScenario)
+        public static IEnumerable<ConsumableInfo> GetItemsWithUsageScenario(this InventorySO inventory, EAbilityUsageScenario usageScenario)
         {
-            foreach (var itemInfo in inventory.UsableItems)
+            foreach (var itemInfo in inventory.Consumables)
             {
                 var abilitySO = itemInfo.Data.Skill;
                 if (!abilitySO.Info.CheckUsageScenario(usageScenario)) continue;

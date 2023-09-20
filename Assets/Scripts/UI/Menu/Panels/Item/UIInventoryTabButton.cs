@@ -7,11 +7,11 @@ namespace CryptoQuest.UI.Menu.Panels.Item
 {
     public class UIInventoryTabButton : MonoBehaviour
     {
-        public event UnityAction<UsableTypeSO> Clicked;
+        public event UnityAction<ConsumableType> Clicked;
         [SerializeField] private GameObject _selectedBackground;
-        [SerializeField] private UsableTypeSO _consumableType;
+        [SerializeField] private ConsumableType _consumableType;
         [SerializeField] private MultiInputButton _button;
-        public UsableTypeSO ConsumableType => _consumableType;
+        public ConsumableType ConsumableType => _consumableType;
 
         private void OnEnable()
         {

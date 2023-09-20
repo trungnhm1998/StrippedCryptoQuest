@@ -7,9 +7,9 @@ using CryptoQuest.UI.Dialogs.RewardDialog;
 namespace CryptoQuest.Gameplay.Loot
 {
     [Serializable]
-    public class UsableLootInfo : LootInfo<UsableInfo>
+    public class UsableLootInfo : LootInfo<ConsumableInfo>
     {
-        public UsableLootInfo(UsableInfo item) : base(item) { }
+        public UsableLootInfo(ConsumableInfo item) : base(item) { }
         public override void AddItemToInventory(InventorySO inventory) => inventory.Add(Item);
         public override UI.Dialogs.RewardDialog.Reward CreateRewardUI() => new ConsumableReward(this);
         public override LootInfo Clone() => new UsableLootInfo(Item.Clone());

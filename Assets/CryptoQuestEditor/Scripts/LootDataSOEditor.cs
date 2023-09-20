@@ -22,7 +22,7 @@ namespace CryptoQuestEditor
 
             if (GUILayout.Button("Add Consumable"))
             {
-                Editor_AddLoot(new UsableInfo());
+                Editor_AddLoot(new ConsumableInfo());
             }
 
             if (GUILayout.Button("Add Currency"))
@@ -36,7 +36,7 @@ namespace CryptoQuestEditor
             Target.LootInfos.Add(new EquipmentLootInfo(equipment));
         }
 
-        private void Editor_AddLoot(UsableInfo consumable)
+        private void Editor_AddLoot(ConsumableInfo consumable)
         {
             Target.LootInfos.Add(new UsableLootInfo(consumable));
         }
