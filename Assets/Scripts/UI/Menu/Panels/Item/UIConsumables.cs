@@ -1,11 +1,11 @@
 using System;
 using System.Collections.Generic;
 using CryptoQuest.Gameplay.Inventory.Items;
-using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Type;
 using CryptoQuest.System;
 using PolyAndCode.UI;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace CryptoQuest.UI.Menu.Panels.Item
 {
@@ -43,9 +43,22 @@ namespace CryptoQuest.UI.Menu.Panels.Item
 
         private void OnEnable()
         {
+            RefreshItemList();
             SetConsumableUI();
-            //TODO: Implement reload inventory in sprint 8
-            // _recyclableScrollRect.ReloadData();
+        }
+
+        private void RefreshItemList()
+        {
+            CleanUpScrollView();
+            _recyclableScrollRect.Initialize(this);
+        }
+
+        private void CleanUpScrollView()
+        {
+            foreach (Transform child in _recyclableScrollRect.content.transform)
+            {
+                Destroy(child.gameObject);
+            }
         }
 
         private void SetConsumableUI()
@@ -134,6 +147,8 @@ namespace CryptoQuest.UI.Menu.Panels.Item
             SetDefaultInspectingItem();
 
             InspectCurrentItem();
+            var firstButton = _recyclableScrollRect.content.GetComponentInChildren<Button>();
+            if (firstButton != null) firstButton.Select();
         }
 
         #region Over engineered
