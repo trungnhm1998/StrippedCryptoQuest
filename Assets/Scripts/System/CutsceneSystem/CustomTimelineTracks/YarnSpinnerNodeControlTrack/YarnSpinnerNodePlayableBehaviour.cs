@@ -58,6 +58,7 @@ namespace CryptoQuest.System.CutsceneSystem.CustomTimelineTracks.YarnSpinnerNode
 
             // pause the timeline until the player finishes reading through all the dialogue (When the dialogue closes)
             Debug.Log("OnBehaviourPause::Pause cutscene");
+            YarnSpinnerDialogueManager.PauseTimelineRequested?.Invoke(true);
         }
     }
 }

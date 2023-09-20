@@ -29,12 +29,16 @@ namespace CryptoQuest.System.CutsceneSystem
         {
             _playCutsceneEvent.PlayCutsceneRequested += PlayCutscene;
             _pauseCutsceneEvent.PauseCutsceneRequested += PauseCutscene;
+
+            YarnSpinnerDialogueManager.PauseTimelineRequested += PauseCutscene;
         }
 
         private void OnDisable()
         {
             _playCutsceneEvent.PlayCutsceneRequested -= PlayCutscene;
             _pauseCutsceneEvent.PauseCutsceneRequested -= PauseCutscene;
+            
+            YarnSpinnerDialogueManager.PauseTimelineRequested -= PauseCutscene;
         }
 
         private CutsceneTrigger _currentCutsceneTrigger;
