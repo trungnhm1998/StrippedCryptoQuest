@@ -1,6 +1,6 @@
 ﻿using System;
+using CryptoQuest.Quest.Authoring;
 using UnityEngine;
-using UnityEngine.Events;
 
 namespace CryptoQuest.Quest
 {

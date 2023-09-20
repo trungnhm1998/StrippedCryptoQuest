@@ -2194,46 +2194,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 6673501893424961519, guid: 16cbf34f7ce2d8b448ba0e99351b0cca, type: 3}
   m_PrefabInstance: {fileID: 561223320}
   m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 526585318}
-  - component: {fileID: 526585319}
-  m_Layer: 0
-  m_Name: QuestDialogController
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &526585318
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 526585317}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1315306661}
-  m_RootOrder: -1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &526585319
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 526585317}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e81fc971774a42fe985834e3630b9bef, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  PlayDialogueEventChannelSO: {fileID: 11400000, guid: 2271886bc7140d040a69b2e1825b986b, type: 2}
-  _dialogueCompletedEventChannelSO: {fileID: 11400000, guid: 3443d2dcf941d6f4fb30303a52302ab5, type: 2}
 --- !u!1001 &710327798
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2995,6 +2955,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e81fc971774a42fe985834e3630b9bef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PlayDialogueEventChannelSO: {fileID: 0}
   _dialogueCompletedEventChannelSO: {fileID: 11400000, guid: 0ebfaf2bc7ac42448a875f02dcc57c49, type: 2}
 --- !u!1 &2125019242
 GameObject:
@@ -3163,32 +3124,8 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 270790438277420143, guid: 59ae4d9d823dd8145afd896d991ad154, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1000921784541637864}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 59ae4d9d823dd8145afd896d991ad154, type: 3}
---- !u!1 &1000921784541637863 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 270790438277420143, guid: 59ae4d9d823dd8145afd896d991ad154, type: 3}
-  m_PrefabInstance: {fileID: 1000921784541637862}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1000921784541637864
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1000921784541637863}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aea68396eb3cf4e4eb86b5fec9a256c2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Quests:
-  - {fileID: 11400000, guid: c23257612589ec14d96d058bc288a86d, type: 2}
-  - {fileID: 11400000, guid: 5e6dbaad003b767439f883711e60dddf, type: 2}
-  - {fileID: 11400000, guid: b40d9167fc2b3c54bab1e07f1824de9d, type: 2}
 --- !u!1001 &1359032933049310752
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3794,29 +3731,8 @@ PrefabInstance:
     - {fileID: 5159234850623390513, guid: 00a44df6a46def5429dc153661ece1db, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 2274096992875071384, guid: 00a44df6a46def5429dc153661ece1db, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 8478033844394479591}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 00a44df6a46def5429dc153661ece1db, type: 3}
---- !u!1 &8478033844394479590 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2274096992875071384, guid: 00a44df6a46def5429dc153661ece1db, type: 3}
-  m_PrefabInstance: {fileID: 8478033844394479589}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &8478033844394479591
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8478033844394479590}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7d482f5d33f848d69b6de29f4df450f0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _database: {fileID: 11400000, guid: cf429f0fa839c7d40a35dfff38f44687, type: 2}
 --- !u!224 &8759938189213178294 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6184527407156393254, guid: 2c1926596870eea4db2714164bc23558, type: 3}

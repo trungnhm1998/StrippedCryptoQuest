@@ -1,11 +1,12 @@
 ﻿using System;
+using CryptoQuest.System.Dialogue.Events;
 using CryptoQuest.System.Dialogue.Managers;
 using IndiGames.Core.Events.ScriptableObjects;
 using UnityEngine;
 
 namespace CryptoQuest.Quest
 {
-    public class QuestDialogController : MonoBaseHandler
+    public class QuestDialogController : MonoBehaviour
     {
         public static Action<QuestProgressionConfigs> PlayQuestDialogue;
         public PlayDialogueEvent PlayDialogueEventChannelSO;
@@ -16,13 +17,13 @@ namespace CryptoQuest.Quest
 
         private void OnEnable()
         {
-            // PlayQuestDialogue += ShowQuestDialogue;
+            PlayQuestDialogue += ShowQuestDialogue;
             _dialogueCompletedEventChannelSO.EventRaised += OnDialogueCompleted;
         }
 
         private void OnDisable()
         {
-            // PlayQuestDialogue -= ShowQuestDialogue;
+            PlayQuestDialogue -= ShowQuestDialogue;
             _dialogueCompletedEventChannelSO.EventRaised -= OnDialogueCompleted;
         }
 
@@ -39,7 +40,6 @@ namespace CryptoQuest.Quest
 
         private void OnDialogueCompleted()
         {
-            OnMonoComplete?.Invoke();
             if (_questDialogue == null) return;
 
             _questDialogue.Progress();
