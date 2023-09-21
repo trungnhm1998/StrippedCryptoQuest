@@ -17,7 +17,7 @@ namespace CryptoQuest.UI.Battle.CommandsMenu
 
         private void Awake()
         {
-            _allButtons = GetComponentsInChildren<Button>();            
+            _allButtons = GetComponentsInChildren<Button>();
             CacheButtonTexts();
         }
 

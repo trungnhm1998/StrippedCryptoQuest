@@ -29,7 +29,7 @@ namespace CryptoQuest.Gameplay.Character
         [field: SerializeField, ReadOnly] public int Level { get; set; }
 
         [field: SerializeField, ReadOnly] public CharacterSkillSet SkillSet { get; set; }
-        [field: SerializeField, ReadOnly] public Sprite Avatar { get; set; }
+        [field: SerializeField] public Sprite Avatar { get; set; }
 
         private CharacterBehaviourBase _characterComponent;
         public CharacterBehaviourBase CharacterComponent => _characterComponent;

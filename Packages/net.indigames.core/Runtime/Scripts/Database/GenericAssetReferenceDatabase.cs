@@ -45,8 +45,12 @@ namespace IndiGames.Core.Database
         {
             if (_loadedData.TryGetValue(id, out var loadingHandle))
             {
-                if (loadingHandle.IsValid()) yield return loadingHandle;
-                yield break;
+                if (loadingHandle.IsValid())
+                {
+                    yield return loadingHandle;
+                    yield break;
+                }
+                _loadedData.Remove(id);
             }
 
             Debug.Log($"Loading {name}: {id}");
