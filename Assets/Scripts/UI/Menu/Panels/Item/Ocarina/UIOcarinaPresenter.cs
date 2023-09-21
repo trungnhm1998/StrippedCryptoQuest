@@ -1,6 +1,6 @@
 ﻿using System.Collections;
-using CryptoQuest.Input;
 using CryptoQuest.Item.Ocarina;
+using CryptoQuest.UI.Menu.MenuStates.ItemStates;
 using IndiGames.Core.Events.ScriptableObjects;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -9,16 +9,15 @@ namespace CryptoQuest.UI.Menu.Panels.Item.Ocarina
 {
     public class UIOcarinaPresenter : MonoBehaviour
     {
-        [SerializeField] private UIConsumableMenuPanel _consumableMenuPanel;
         [SerializeField] private UIOcarinaTownButton _townButtonPrefab;
         [SerializeField] private GameObject _content;
         [SerializeField] private Transform _townButtonContainer;
-
-        [Header("Listen on")]
         [SerializeField] private OcarinaAbility _ocarinaAbility;
 
+        [Header("Listen on")]
+        [SerializeField] private VoidEventChannelSO _showOcarinaMenuEvent;
+
         [SerializeField] private RegisterTownToOcarinaEventChannelSO _registerTownEvent;
-        [SerializeField] private InputMediatorSO _inputMediator;
 
         [Header("Raise event on")]
         [SerializeField] private VoidEventChannelSO _forceCloseMenuEvent; // TODO: Also bad code
@@ -26,7 +25,7 @@ namespace CryptoQuest.UI.Menu.Panels.Item.Ocarina
         private void Awake()
         {
             _registerTownEvent.EventRaised += RegisterTown;
-            _ocarinaAbility.ShowTownSelection += Show;
+            _showOcarinaMenuEvent.EventRaised += Show;
             var locations = _ocarinaAbility.Locations;
             for (var index = 0; index < locations.Count; index++)
             {
@@ -38,14 +37,13 @@ namespace CryptoQuest.UI.Menu.Panels.Item.Ocarina
         private void OnDestroy()
         {
             _registerTownEvent.EventRaised -= RegisterTown;
-            _ocarinaAbility.ShowTownSelection -= Show;
+            _showOcarinaMenuEvent.EventRaised -= Show;
             DestroyAllChildren();
         }
 
         private void Show()
         {
-            _inputMediator.MenuCancelEvent += CancelConsuming;
-            _consumableMenuPanel.Interactable = false;
+            ConsumingItemState.Cancelled += CancelConsuming;
             _content.SetActive(true);
             StartCoroutine(CoSelectFirstButton());
         }
@@ -85,13 +83,12 @@ namespace CryptoQuest.UI.Menu.Panels.Item.Ocarina
 
         private void CancelConsuming()
         {
-            _inputMediator.MenuCancelEvent -= CancelConsuming;
+            ConsumingItemState.Cancelled -= CancelConsuming;
             Hide();
         }
 
         private void Hide()
         {
-            _consumableMenuPanel.Interactable = true;
             _content.SetActive(false);
         }
     }

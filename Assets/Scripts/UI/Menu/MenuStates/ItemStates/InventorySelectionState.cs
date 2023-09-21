@@ -9,8 +9,18 @@ namespace CryptoQuest.UI.Menu.MenuStates.ItemStates
         public override void OnEnter()
         {
             base.OnEnter();
+            ConsumablePanel.Interactable = true;
             NavigationBar.SetActive(false);
             NavigationBar.HighlightHeader(ConsumablePanel.TypeSO);
+
+            UIConsumableItem.Using += UseItem;
+        }
+
+        public override void OnExit()
+        {
+            base.OnExit();
+            ConsumablePanel.Interactable = false;
+            UIConsumableItem.Using -= UseItem;
         }
 
         public override void HandleCancel()
@@ -26,9 +36,10 @@ namespace CryptoQuest.UI.Menu.MenuStates.ItemStates
             ConsumablePanel.ChangeTab(direction);
         }
 
-        private void ViewItems()
+        private void UseItem(UIConsumableItem selectedConsumableItem)
         {
-            MenuStateMachine.RequestStateChange(ItemMenuStateMachine.ItemSelection);
+            // _interactingUI = selectedConsumableItem; // to refocus the item when the item usage menu is closed
+            fsm.RequestStateChange(ItemMenuStateMachine.ConsumingItem);
         }
     }
 }

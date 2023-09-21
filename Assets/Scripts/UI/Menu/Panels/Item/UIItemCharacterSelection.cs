@@ -1,92 +1,81 @@
 ﻿using System;
-using System.Collections.Generic;
-using CryptoQuest.Gameplay.PlayerParty;
-using CryptoQuest.Menu;
 using CryptoQuest.System;
 using CryptoQuest.UI.Menu.Character;
+using CryptoQuest.UI.Menu.MenuStates.ItemStates;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 namespace CryptoQuest.UI.Menu.Panels.Item
 {
     public class UIItemCharacterSelection : MonoBehaviour
     {
-        public event Action<int> Clicked;
+        public event Action<int[]> Confirmed;
         [SerializeField] private ServiceProvider _serviceProvider;
         [SerializeField] private UICharacterPartySlot[] _partySlots;
-        [SerializeField] private List<MultiInputButton> _characterButtons;
 
-        private IParty _party;
-
-        private void Awake()
+        /// <summary>
+        /// Actively update data on reopening
+        /// </summary>
+        private void OnEnable()
         {
-            _party = _serviceProvider.PartyController.Party;
-            _serviceProvider.PartyProvided += InitParty;
-        }
-
-        private void OnDestroy()
-        {
-            _serviceProvider.PartyProvided -= InitParty;
-        }
-
-        private void OnEnable() 
-        {
-            LoadPartyMembers();
-        }
-
-        private void LoadPartyMembers()
-        {
-            for (var index = 0; index < _party.Members.Length; index++)
+            ConsumingItemState.Cancelled += Hide;
+            var party = _serviceProvider.PartyController.Party;
+            for (var index = 0; index < party.Members.Length; index++)
             {
-                var member = _party.Members[index];
+                var member = party.Members[index];
                 var slot = _partySlots[index];
-                slot.Active(member.IsValid());
-                if (!member.IsValid()) continue;
-                slot.Init(member);
+                slot.Init(member, index);
+                slot.SetSelectedCallback(OnHeroSelected);
             }
         }
 
-        public void Init()
+        private void OnDisable()
         {
-            EnableAllButtons();
-            _characterButtons[0].Select();
+            ConsumingItemState.Cancelled -= Hide;
         }
 
-        public void DeInit()
+        /// <summary>
+        /// When a button got pressed, but if we open to select all heroes
+        ///
+        /// use the first button to select all heroes
+        /// </summary>
+        /// <param name="index"></param>
+        private void OnHeroSelected(int index)
         {
-            DisableAllButtons();
+            var indices = _selectingAll ? new int[] { 0, 1, 2, 3 } : new int[] { index };
+            _selectingAll = false;
+            Confirmed?.Invoke(indices);
+        }
+
+        public void Hide()
+        {
+            EnableAllButtons(false);
         }
 
         /// <summary>
         /// Add buttons to unity event system
         /// </summary>
-        private void EnableAllButtons()
+        private void EnableAllButtons(bool enable = true)
         {
-            foreach (var button in _characterButtons)
-            {
-                button.enabled = true;
-            }
+            foreach (var slot in _partySlots)
+                slot.Interactable = enable;
         }
 
-        /// <summary>
-        /// Remove buttons from unity event system
-        /// </summary>
-        private void DisableAllButtons()
+        public void SelectHero()
         {
-            foreach (var button in _characterButtons)
-            {
-                button.enabled = false;
-            }
+            EnableAllButtons();
+            EventSystem.current.SetSelectedGameObject(_partySlots[0].GetComponentInChildren<Selectable>().gameObject);
         }
 
-        public void OnClicked(int index)
-        {
-            Clicked?.Invoke(index);
-        }
+        private bool _selectingAll;
 
-        private void InitParty(IPartyController partyController)
+        public void SelectAllAliveHeroes()
         {
-            _party = _serviceProvider.PartyController.Party;
-            LoadPartyMembers();
+            _selectingAll = true;
+
+            foreach (var slot in _partySlots)
+                slot.Select();
         }
     }
 }

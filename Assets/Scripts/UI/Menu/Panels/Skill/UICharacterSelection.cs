@@ -43,9 +43,7 @@ namespace CryptoQuest.UI.Menu.Panels.Skill
             {
                 var member = _party.Members[index];
                 var slot = _partySlots[index];
-                slot.Active(member.IsValid());
-                if (!member.IsValid()) continue;
-                slot.Init(member);
+                slot.Init(member, index);
             }
 
             _cachedGo = _partySlots[0].gameObject; // Bad code

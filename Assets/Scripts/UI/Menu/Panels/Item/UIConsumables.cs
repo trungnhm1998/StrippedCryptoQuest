@@ -1,5 +1,5 @@
-using System;
 using System.Collections.Generic;
+using CryptoQuest.Gameplay.Inventory;
 using CryptoQuest.Gameplay.Inventory.Items;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Type;
@@ -14,8 +14,6 @@ namespace CryptoQuest.UI.Menu.Panels.Item
     /// </summary>
     public class UIConsumables : MonoBehaviour
     {
-        public static event Action<ConsumableInfo> Inspecting;
-
         [SerializeField] private UIConsumableItem _prefab;
         [SerializeField] private ScrollRect _scrollRect;
         [SerializeField] private GameObject _content;
@@ -36,24 +34,52 @@ namespace CryptoQuest.UI.Menu.Panels.Item
                 {
                     consumableButton.Interactable = value;
                 }
+
+                if (_interactable == false) return;
+                UpdateSelectingItemIfLastWereNull();
+                InspectCurrentItem();
             }
         }
 
         private void OnEnable()
         {
-            UIConsumableItem.Inspecting += UIConsumableItemOnInspecting;
+            _currentInspectingItem = null;
             CleanUpScrollView();
-            SetConsumableUI();
+            RenderConsumables();
+            ConsumableController.ConsumedItem += UpdateUI;
         }
-
-        private bool _isPreviousHidden = true;
 
         private void OnDisable()
         {
-            UIConsumableItem.Inspecting += UIConsumableItemOnInspecting;
-            _isPreviousHidden = true;
+            ConsumableController.ConsumedItem -= UpdateUI;
+            UIConsumableItem.Inspecting -= SaveInspectingItemToSelectLater;
         }
 
+        private void UpdateUI(ConsumableInfo consumable)
+        {
+            if (consumable.IsValid() == false
+                || _currentInspectingItem == null
+                || _currentInspectingItem.Consumable.IsValid() == false) return;
+            
+            // TODO: Update quantity if consumed the same inspected item
+        }
+
+        private void SaveInspectingItemToSelectLater(UIConsumableItem item)
+            => _currentInspectingItem = item;
+
+        public void Hide()
+        {
+            UIConsumableItem.Inspecting -= SaveInspectingItemToSelectLater;
+            _content.SetActive(false);
+        }
+
+        public void Show()
+        {
+            UIConsumableItem.Inspecting += SaveInspectingItemToSelectLater;
+            _content.SetActive(true);
+            UpdateSelectingItemIfLastWereNull();
+            InspectCurrentItem();
+        }
 
         private void CleanUpScrollView()
         {
@@ -63,21 +89,13 @@ namespace CryptoQuest.UI.Menu.Panels.Item
             _uiConsumables.Clear();
         }
 
-        private void SetConsumableUI()
+        private void RenderConsumables()
         {
             foreach (var item in ServiceProvider.Inventory.Consumables)
             {
                 if (item.Data.consumableType == Type)
                     CreateItem(item);
             }
-
-            SetDefaultInspectingItem();
-            InspectCurrentItem();
-        }
-
-        private void UIConsumableItemOnInspecting(UIConsumableItem item)
-        {
-            _currentInspectingItem = item;
         }
 
         private void CreateItem(ConsumableInfo consumable)
@@ -87,43 +105,7 @@ namespace CryptoQuest.UI.Menu.Panels.Item
             item.Init(consumable);
         }
 
-        private void OnInspecting(UIConsumableItem consumableUI)
-        {
-            _currentInspectingItem = consumableUI;
-            Inspecting?.Invoke(consumableUI.Consumable);
-        }
-
-        public void Hide()
-        {
-            _content.SetActive(false);
-        }
-
-        public void Show()
-        {
-            _content.SetActive(true);
-
-            if (_isPreviousHidden)
-            {
-                _isPreviousHidden = false;
-                DeselectCurrentInspectingItem();
-            }
-
-            SetDefaultInspectingItem();
-
-            InspectCurrentItem();
-            var firstButton = _scrollRect.content.GetComponentInChildren<Button>();
-            if (firstButton != null) firstButton.Select();
-        }
-
-        #region Over engineered
-
-        private void DeselectCurrentInspectingItem()
-        {
-            if (!_currentInspectingItem) return;
-            _currentInspectingItem = null;
-        }
-
-        private void SetDefaultInspectingItem()
+        private void UpdateSelectingItemIfLastWereNull()
         {
             if (_currentInspectingItem == null && _uiConsumables.Count > 0)
             {
@@ -135,7 +117,5 @@ namespace CryptoQuest.UI.Menu.Panels.Item
         {
             if (_currentInspectingItem) _currentInspectingItem.Inspect();
         }
-
-        #endregion
     }
 }

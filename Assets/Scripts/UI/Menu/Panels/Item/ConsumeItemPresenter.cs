@@ -1,21 +1,20 @@
-﻿using CryptoQuest.Character.Ability;
-using CryptoQuest.Gameplay.Inventory;
-using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item;
+﻿using CryptoQuest.Gameplay.Inventory;
+using IndiGames.Core.Events.ScriptableObjects;
 using UnityEngine;
 
 namespace CryptoQuest.UI.Menu.Panels.Item
 {
     public class ConsumeItemPresenter : MonoBehaviour
     {
-        [SerializeField] private ConsumableEventChannel _heroConsumeItem;
-        [SerializeField] private UIConsumableMenuPanel _uiConsumableMenuPanel;
+        [SerializeField] private VoidEventChannelSO _showHeroSelection;
+        [SerializeField] private VoidEventChannelSO _selectAllAliveHeroesEvent;
         [SerializeField] private UIItemCharacterSelection _uiItemCharacterSelection;
-
-        private ConsumableSO _item;
 
         private void OnEnable()
         {
-            SingleHeroConsumeAbility.ShowHeroSelection += Show;
+            _showHeroSelection.EventRaised += ShowSelectSingleHeroUI;
+            _selectAllAliveHeroesEvent.EventRaised += ShowSelectAllAliveHeroes;
+            UIConsumableItem.Inspecting += SaveLastInspectingItem;
         }
 
         /// <summary>
@@ -23,43 +22,35 @@ namespace CryptoQuest.UI.Menu.Panels.Item
         /// </summary>
         private void OnDisable()
         {
-            SingleHeroConsumeAbility.ShowHeroSelection -= Show;
+            _showHeroSelection.EventRaised -= ShowSelectSingleHeroUI;
+            _selectAllAliveHeroesEvent.EventRaised -= ShowSelectAllAliveHeroes;
+            UIConsumableItem.Inspecting -= SaveLastInspectingItem;
         }
 
-        private void Show()
-        {
-            _uiConsumableMenuPanel.Interactable = false;
-            _uiItemCharacterSelection.Init();
+        private UIConsumableItem _inspectingItem;
 
-            _uiItemCharacterSelection.Clicked += ConsumeOnCharacterIndex;
+        private void SaveLastInspectingItem(UIConsumableItem item)
+        {
+            _inspectingItem = item;
         }
 
-        private void GetItem(UIConsumableItem currentItem)
+        private void ShowSelectSingleHeroUI()
         {
-            _item = currentItem.Consumable.Data;
+            _uiItemCharacterSelection.Confirmed += ConsumeOnCharacterIndex;
+            _uiItemCharacterSelection.SelectHero();
         }
 
-        private void ConsumeOnCharacterIndex(int index)
+        private void ShowSelectAllAliveHeroes()
         {
-            ConsumableController.HeroConsumingItem?.Invoke(index, _uiConsumableMenuPanel.ConsumingItem);
-            // TODO: RÈACTOR GÁ
-            // AbilitySystemBehaviour owner = _partySo.Members[index].CharacterComponent.GameplayAbilitySystem;
-            //
-            // CryptoQuestGameplayEffectSpec ability =
-            //     (CryptoQuestGameplayEffectSpec)owner.MakeOutgoingSpec(_item.Skill.Effect);
-            //
-            // ability.SetParameters(_item.ItemAbilityInfo.SkillParameters);
-            // owner.ApplyEffectSpecToSelf(ability);
-
-            Hide();
+            _uiItemCharacterSelection.Confirmed += ConsumeOnCharacterIndex;
+            _uiItemCharacterSelection.SelectAllAliveHeroes();
         }
 
-        private void Hide()
+        private void ConsumeOnCharacterIndex(int[] heroIndices)
         {
-            _uiConsumableMenuPanel.Interactable = true;
-            _uiItemCharacterSelection.DeInit();
-
-            _uiItemCharacterSelection.Clicked -= ConsumeOnCharacterIndex;
+            _uiItemCharacterSelection.Hide();
+            _uiItemCharacterSelection.Confirmed -= ConsumeOnCharacterIndex;
+            ConsumableController.OnConsumeItem(_inspectingItem.Consumable, heroIndices);
         }
     }
 }

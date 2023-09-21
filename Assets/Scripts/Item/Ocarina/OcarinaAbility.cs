@@ -4,26 +4,18 @@ using System.Collections.Generic;
 using CryptoQuest.Character.Ability;
 using CryptoQuest.Map;
 using IndiGames.GameplayAbilitySystem.AbilitySystem;
-using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
 using UnityEngine;
 
 namespace CryptoQuest.Item.Ocarina
 {
     public class OcarinaAbility : ConsumeItemAbility
     {
-        public event Action ShowTownSelection;
-
         public event Action<MapPathSO> TeleportToTown;
 
         // TODO: Load from save
         [field: SerializeField] public List<OcarinaEntrance> Locations { get; private set; }
 
         protected override GameplayAbilitySpec CreateAbility() => new OcarinaAbilitySpec(this);
-
-        public override void Consuming()
-        {
-            ShowTownSelection?.Invoke();
-        }
 
         public void RegisterTown(OcarinaEntrance town)
         {
@@ -42,7 +34,7 @@ namespace CryptoQuest.Item.Ocarina
         {
             private readonly OcarinaAbility _def;
 
-            public OcarinaAbilitySpec(OcarinaAbility ocarinaAbility)
+            public OcarinaAbilitySpec(OcarinaAbility ocarinaAbility) : base(ocarinaAbility)
             {
                 _def = ocarinaAbility;
             }
@@ -51,8 +43,6 @@ namespace CryptoQuest.Item.Ocarina
             {
                 yield return null;
             }
-
-            public override void Consume(params AbilitySystemBehaviour[] targets) { }
 
             public void TeleportToTown(OcarinaEntrance town)
             {

@@ -1,21 +1,21 @@
 ﻿using System;
+using System.Collections;
+using CryptoQuest.Character.Attributes;
+using CryptoQuest.Gameplay.Inventory.Items;
+using IndiGames.Core.Events.ScriptableObjects;
 using IndiGames.GameplayAbilitySystem.AbilitySystem;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.ScriptableObjects;
+using UnityEngine;
 
 namespace CryptoQuest.Character.Ability
 {
     /// <summary>
     /// Base data class for consumable such as herb, potion, etc.
     /// </summary>
-    public abstract class ConsumeItemAbility : AbilityScriptableObject
+    public class ConsumeItemAbility : AbilityScriptableObject
     {
-        public event Action ItemConsumed;
-
-        public void OnItemConsumed()
-        {
-            ItemConsumed?.Invoke();
-        }
+        [SerializeField] private VoidEventChannelSO _showConfirmationUI;
 
         /// <summary>
         /// Derived class should raise event to show correct UI if there is any
@@ -25,7 +25,12 @@ namespace CryptoQuest.Character.Ability
         /// - Ocarina with special UI flow
         /// - Target all hero in party (This doesn't have UI flow yet)
         /// </summary>
-        public abstract void Consuming();
+        public void Consuming() => _showConfirmationUI.RaiseEvent();
+
+        protected override GameplayAbilitySpec CreateAbility() => new ConsumableAbilitySpec();
+
+        public ConsumableAbilitySpec GetAbilitySpec(ConsumableInfo consumable,
+            AbilitySystemBehaviour owner) => new(consumable, owner, this);
     }
 
     /// <summary>
@@ -33,8 +38,31 @@ namespace CryptoQuest.Character.Ability
     ///
     /// Ocarina should derived from this for logic
     /// </summary>
-    public abstract class ConsumableAbilitySpec : GameplayAbilitySpec
+    public class ConsumableAbilitySpec : GameplayAbilitySpec
     {
-        public abstract void Consume(params AbilitySystemBehaviour[] targets);
+        private readonly ConsumableInfo _consumable;
+        private readonly AbilitySystemBehaviour _owner;
+        private readonly ConsumeItemAbility _def;
+
+        public ConsumableAbilitySpec() { }
+
+        public ConsumableAbilitySpec(ConsumableInfo consumable, AbilitySystemBehaviour target,
+            ConsumeItemAbility def)
+        {
+            _consumable = consumable;
+            _owner = target;
+            _def = def;
+        }
+
+        public override bool CanActiveAbility()
+        {
+            _owner.AttributeSystem.TryGetAttributeValue(AttributeSets.Health, out var hp);
+            return base.CanActiveAbility() && hp.CurrentValue > 0;
+        }
+
+        protected override IEnumerator OnAbilityActive()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -15,7 +15,7 @@ namespace CryptoQuest.Gameplay.Inventory
         void Add(EquipmentInfo equipment, string equipmentId);
         void Remove(EquipmentInfo equipment);
         InventorySO Inventory { get; }
-        void Remove(ConsumableInfo consumable);
+        bool Remove(ConsumableInfo consumable);
     }
 
     public class InventoryController : MonoBehaviour, IInventoryController
@@ -79,12 +79,6 @@ namespace CryptoQuest.Gameplay.Inventory
             EquipmentLoadedEvent?.Invoke(equipment);
         }
 
-        public void Remove(ConsumableInfo consumable)
-        {
-            if (!_inventory.Remove(consumable))
-            {
-                Debug.LogWarning($"Consumable {consumable} not found in inventory");
-            }
-        }
+        public bool Remove(ConsumableInfo consumable) => _inventory.Remove(consumable);
     }
 }

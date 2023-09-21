@@ -8,7 +8,14 @@ namespace CryptoQuest.Gameplay.Inventory
 {
     public class ConsumableController : MonoBehaviour
     {
-        public static Action<int, ConsumableInfo> HeroConsumingItem;
+        public static event Action<ConsumableInfo, int[]> HeroConsumingItem;
+        public static event Action<ConsumableInfo> ConsumingItem;
+        public static event Action<ConsumableInfo> ConsumedItem;
+
+        public static void OnConsumeItem(ConsumableInfo consumable) => ConsumingItem?.Invoke(consumable);
+
+        public static void OnConsumeItem(ConsumableInfo consumable, params int[] heroIndices)
+            => HeroConsumingItem?.Invoke(consumable, heroIndices);
 
         [SerializeField] private ServiceProvider _serviceProvider;
 
@@ -23,37 +30,35 @@ namespace CryptoQuest.Gameplay.Inventory
         private void Awake()
         {
             _inventoryController = GetComponent<IInventoryController>();
-            HeroConsumingItem += ConsumeItemOnHero;
+            HeroConsumingItem += ConsumeItem;
+            ConsumingItem += ConsumeItem;
         }
 
         private void OnDestroy()
         {
-            HeroConsumingItem -= ConsumeItemOnHero;
+            HeroConsumingItem -= ConsumeItem;
+            ConsumingItem -= ConsumeItem;
         }
 
-        private void ConsumeItemOnHero(int heroIndex, ConsumableInfo consumable)
+        private void ConsumeItem(ConsumableInfo consumable, int[] heroIndices)
         {
-            Debug.Log($"Consuming {consumable.Data} on hero {heroIndex}");
-            // var hero = _serviceProvider.PartyController.Party.Members[heroIndex];
-            // var spec = (ConsumableAbilitySpec)consumable.Data.Ability
-            //     .GetAbilitySpec(null); // Consumable could not have owner
-            // spec.Consume(hero.CharacterComponent.GameplayAbilitySystem);
-        }
-
-        private void OnEnable()
-        {
-            _consumingItemEvent.EventRaised += ConsumeItem;
-        }
-
-        private void OnDisable()
-        {
-            _consumingItemEvent.EventRaised -= ConsumeItem;
+            // TODO: Make sure they the item consumed before remove
+            if (!_inventoryController.Remove(consumable)) return;
+            // TODO: Make sure all heroes are alive
+            Debug.Log($"Consuming {consumable.Data} on {heroIndices.Length} heroes");
+            foreach (var index in heroIndices)
+            {
+                var hero = _serviceProvider.PartyController.Party.Members[index];
+                if (hero.IsValid() == false) continue;
+                var spec = consumable.Data.Ability.GetAbilitySpec(consumable, hero.CharacterComponent.GameplayAbilitySystem);
+                spec.TryActiveAbility();
+            }
         }
 
         private void ConsumeItem(ConsumableInfo consumable)
         {
-            _inventoryController.Remove(consumable);
-            _itemConsumedEvent.RaiseEvent(consumable);
+            if (_inventoryController.Remove(consumable))
+                _itemConsumedEvent.RaiseEvent(consumable);
         }
     }
 }
