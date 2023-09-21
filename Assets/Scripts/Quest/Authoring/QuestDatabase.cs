@@ -1,8 +1,7 @@
 ﻿using System;
-using CryptoQuest.Quest.Authoring;
 using UnityEngine;
 
-namespace CryptoQuest.Quest
+namespace CryptoQuest.Quest.Authoring
 {
     [CreateAssetMenu(fileName = "QuestDatabase", menuName = "Quest System/Database", order = 0)]
     public class QuestDatabase : ScriptableObject

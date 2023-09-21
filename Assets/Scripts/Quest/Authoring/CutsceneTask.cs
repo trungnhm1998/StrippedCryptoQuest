@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace CryptoQuest.Quest
+namespace CryptoQuest.Quest.Authoring
 {
     [CreateAssetMenu(menuName = "Quest System/Stages/Cutscene", fileName = "CutsceneStage")]
     public class CutsceneTask : Task

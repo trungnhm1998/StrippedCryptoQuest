@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace CryptoQuest.Quest
+namespace CryptoQuest.Quest.Components
 {
     public abstract class StageBehaviourBase : MonoBehaviour
     {

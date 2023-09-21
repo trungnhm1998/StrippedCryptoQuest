@@ -1,11 +1,12 @@
-﻿using CryptoQuest.System.CutsceneSystem;
+﻿using CryptoQuest.Quest.Authoring;
+using CryptoQuest.System.CutsceneSystem;
 using UnityEngine;
 
 namespace CryptoQuest.Quest
 {
     public class PlayQuestCutsceneBase : MonoBehaviour
     {
-        [field: SerializeField] public Quest Quest { get; protected set; }
+        [field: SerializeField] public Authoring.Quest Quest { get; protected set; }
         [field: SerializeField] public CutsceneTask Task { get; protected set; }
         [field: SerializeField] public CutsceneTrigger CutsceneTrigger { get; protected set; }
 

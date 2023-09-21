@@ -1,6 +1,7 @@
-﻿using UnityEngine.Events;
+﻿using CryptoQuest.Quest.Authoring;
+using UnityEngine.Events;
 
-namespace CryptoQuest.Quest
+namespace CryptoQuest.Quest.Components
 {
     public class CutsceneBehaviour : StageBehaviourBase
     {

@@ -1,15 +1,12 @@
 ﻿using System;
-using CryptoQuest.Quest.Authoring;
 using UnityEngine;
 
-namespace CryptoQuest.Quest
+namespace CryptoQuest.Quest.Authoring
 {
     [Serializable]
     [CreateAssetMenu(fileName = "Task", menuName = "Quest System/Task")]
     public class Task : AbstractObjective
     {
-        [field: SerializeField] public string Id { get; set; }
-
         public virtual int CompareTo(Task other)
         {
             return this == other ? 0 : -1;

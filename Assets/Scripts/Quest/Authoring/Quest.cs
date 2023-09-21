@@ -1,53 +1,26 @@
 ﻿using System;
-using CryptoQuest.Quest.Authoring;
 using UnityEngine;
 
-namespace CryptoQuest.Quest
+namespace CryptoQuest.Quest.Authoring
 {
     [CreateAssetMenu(fileName = "Quest", menuName = "Quest System/Quest")]
     public class Quest : AbstractObjective
     {
-        public event IQuestDefinition.StatusChangedEvent StatusChanged;
-
-        [SerializeField] private string _id;
-
         /// <summary>
         /// Only check objectives if this is false..
         /// </summary>
         [Header("Details")]
         [SerializeField] private int _currentTaskIndex;
 
-        [SerializeField, NonReorderable] private TaskContainer[] _tasks = Array.Empty<TaskContainer>();
-
-
-        private void OnEnable()
-        {
-            StatusChanged += OnStatusChanged;
-        }
-
-        private void OnDisable()
-        {
-            StatusChanged -= OnStatusChanged;
-        }
-
-        private void OnStatusChanged(bool completed)
-        {
-            if (StatusChanged == null)
-            {
-                Debug.LogWarning("Quest status changed, but no listeners were found.");
-                return;
-            }
-
-            StatusChanged(completed);
-        }
+        [SerializeField] private Task[] _tasks = Array.Empty<Task>();
 
         public bool HasTaskCompleted(Task task)
         {
             for (var index = 0; index < _tasks.Length; index++)
             {
                 var configTask = _tasks[index];
-                if (configTask.Task.CompareTo(task) != 0) continue;
-                return configTask.Completed;
+                if (configTask.CompareTo(task) != 0) continue;
+                return IsCompleted;
             }
 
             return false;
@@ -58,15 +31,11 @@ namespace CryptoQuest.Quest
             for (var index = 0; index < _tasks.Length; index++)
             {
                 var configTask = _tasks[index];
-                if (configTask.Task.CompareTo(task) != 0) continue;
+                if (configTask.CompareTo(task) != 0) continue;
 
                 if (index <= 0) continue;
 
-                var previousTask = _tasks[index - 1];
-                if (!previousTask.Completed)
-                {
-                    return false;
-                }
+                if (!task.IsCompleted) return false;
             }
 
             return true;
@@ -77,12 +46,11 @@ namespace CryptoQuest.Quest
             for (var index = 0; index < _tasks.Length; index++)
             {
                 var configTask = _tasks[index];
-                if (configTask.Task.CompareTo(task) != 0) continue;
-                configTask.Completed = true;
+                if (configTask.CompareTo(task) != 0) continue;
 
                 if (index == _tasks.Length - 1)
                 {
-                    IsCompleted = true;
+                    task.OnComplete();
                 }
 
                 break;
@@ -97,7 +65,7 @@ namespace CryptoQuest.Quest
 
         public override void OnProgressChange()
         {
-            if (Array.TrueForAll(_tasks, task => task.Task.IsCompleted))
+            if (Array.TrueForAll(_tasks, task => task.IsCompleted))
             {
                 OnComplete();
             }
@@ -107,7 +75,7 @@ namespace CryptoQuest.Quest
         {
             foreach (var task in _tasks)
             {
-                task.Task.OnCompleteObjective += OnProgressChange;
+                task.OnCompleteObjective += OnProgressChange;
             }
         }
 
@@ -115,7 +83,7 @@ namespace CryptoQuest.Quest
         {
             foreach (var task in _tasks)
             {
-                task.Task.OnCompleteObjective -= OnProgressChange;
+                task.OnCompleteObjective -= OnProgressChange;
             }
         }
     }

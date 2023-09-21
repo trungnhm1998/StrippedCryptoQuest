@@ -1,4 +1,4 @@
-﻿namespace CryptoQuest.Quest
+﻿namespace CryptoQuest.Quest.Authoring
 {
     public interface IQuestDefinition
     {

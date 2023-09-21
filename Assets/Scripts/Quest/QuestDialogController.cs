@@ -42,7 +42,6 @@ namespace CryptoQuest.Quest
         {
             if (_questDialogue == null) return;
 
-            _questDialogue.Progress();
             _questDialogue.Task.OnComplete();
             _questDialogue = null;
         }

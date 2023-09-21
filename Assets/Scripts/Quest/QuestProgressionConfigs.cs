@@ -1,11 +1,12 @@
 using System;
+using CryptoQuest.Quest.Authoring;
 
 namespace CryptoQuest.Quest
 {
     [Serializable]
     public class QuestProgressionConfigs
     {
-        public Quest Quest;
+        public Authoring.Quest Quest;
         public TalkToNpcTask Task;
         public string YarnNode => Task.YarnNode;
 

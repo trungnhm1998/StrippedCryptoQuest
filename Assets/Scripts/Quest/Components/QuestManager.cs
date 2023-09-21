@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using CryptoQuest.Quest.Authoring;
 using UnityEngine;
-using UnityEngine.Assertions;
 
-namespace CryptoQuest.Quest
+namespace CryptoQuest.Quest.Components
 {
     [AddComponentMenu("Quest System/Quest Manager")]
     [DisallowMultipleComponent]
