@@ -4,6 +4,7 @@ using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.Components;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
 using IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects;
+using IndiGames.GameplayAbilitySystem.TagSystem.ScriptableObjects;
 using UnityEngine;
 
 namespace IndiGames.GameplayAbilitySystem.EffectSystem.Components
@@ -63,6 +64,22 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem.Components
             _appliedEffects.Add(activeEffectSpecification);
             UpdateAttributeModifiersUsingAppliedEffects();
             return activeEffectSpecification;
+        }
+
+        public void ExpireEffectWithTagImmediately(TagScriptableObject tag)
+        {
+            ExpireEffectWithTag(tag);
+            UpdateAttributeModifiersUsingAppliedEffects();
+        }
+
+        public void ExpireEffectWithTag(TagScriptableObject tag)
+        {
+            foreach (var appliedEffect in _appliedEffects)
+            {
+                if (appliedEffect.Expired) continue;
+                if (!appliedEffect.HasTag(tag)) continue;
+                appliedEffect.IsActive = false;
+            }
         }
 
         /// <summary>

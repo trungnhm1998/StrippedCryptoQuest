@@ -36,6 +36,7 @@ namespace CryptoQuest.UI.Menu.Panels.Item
         {
             _button.Selected += OnInspectingItem;
             _button.DeSelected += OnDeselectItem;
+            _button.onClick.AddListener(OnUse);
         }
 
 
@@ -43,6 +44,7 @@ namespace CryptoQuest.UI.Menu.Panels.Item
         {
             _button.Selected -= OnInspectingItem;
             _button.DeSelected -= OnDeselectItem;
+            _button.onClick.RemoveListener(OnUse);
         }
 
         public void OnUse()

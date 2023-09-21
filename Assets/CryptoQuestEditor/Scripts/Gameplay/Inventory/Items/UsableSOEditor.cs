@@ -1,13 +1,15 @@
-using System.Collections;
-using System.Collections.Generic;
+using CryptoQuest.Character.Ability;
 using CryptoQuest.Gameplay.Inventory.Items;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item;
 using CryptoQuestEditor.Helper;
+using IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects;
+using IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects.GameplayEffectActions;
 using UnityEditor;
 using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
+using NotImplementedException = System.NotImplementedException;
 
 namespace CryptoQuestEditor
 {
@@ -17,12 +19,15 @@ namespace CryptoQuestEditor
         private const string MAIN_INVENTORY = "MainInventory";
 
         [SerializeField] private VisualTreeAsset _uxml;
+        public VisualTreeAsset _consumableUxml;
         private ConsumableSO Target => target as ConsumableSO;
         private InventorySO InventorySO { get; set; }
 
         private HelpBox _helpBox;
         private ObjectField _inventoryField;
         private Button _addButton;
+        private Button _addEffectBtn;
+        private Button _addAbilityBtn;
 
         private void OnEnable()
         {
@@ -36,15 +41,40 @@ namespace CryptoQuestEditor
             InspectorElement.FillDefaultInspector(root, serializedObject, this);
 
             _uxml.CloneTree(root);
+            if (_consumableUxml != null) _consumableUxml.CloneTree(root);
 
             _helpBox = root.Q<HelpBox>("help-box");
             _inventoryField = root.Q<ObjectField>("inventory-field");
             _addButton = root.Q<Button>("add-button");
+            _addAbilityBtn = root.Q<Button>("add-ability-button");
+            _addEffectBtn = root.Q<Button>("add-effect-button");
 
             Notification();
 
             _inventoryField.RegisterValueChangedCallback(Notification);
             _addButton.clicked += AddEquipment;
+            if (Target.Effect == null)
+            {
+                _addEffectBtn.text = "Add Effect";
+                _addEffectBtn.clicked += AddConsumableEffect;
+            }
+            else
+            {
+                _addEffectBtn.text = "Remove Effect";
+                _addEffectBtn.clicked += RemoveEffect;
+            }
+
+            if (Target.Ability == null)
+            {
+                _addAbilityBtn.text = "Add Ability";
+                _addAbilityBtn.clicked += AddAbility;
+            }
+            else
+            {
+                _addAbilityBtn.text = "Remove Ability";
+                _addAbilityBtn.clicked += RemoveAbility;
+            }
+
 
             return root;
         }
@@ -69,6 +99,56 @@ namespace CryptoQuestEditor
         private void AddEquipment()
         {
             InventorySO.Consumables.Add(new ConsumableInfo(Target));
+        }
+
+        private void AddAbility()
+        {
+            _addAbilityBtn.clicked -= AddAbility;
+            _addAbilityBtn.clicked += RemoveAbility;
+            _addAbilityBtn.text = "Remove Ability";
+            var ability = CreateInstance<ConsumeItemAbility>();
+            ability.name = $"{Target.name}Ability";
+            AssetDatabase.AddObjectToAsset(ability, Target);
+            AssetDatabase.SaveAssets();
+            AssetDatabase.Refresh();
+            Target.Editor_SetAbility(ability);
+        }
+
+        private void RemoveAbility()
+        {
+            _addAbilityBtn.clicked -= RemoveAbility;
+            _addAbilityBtn.clicked += AddAbility;
+            _addAbilityBtn.text = "Add Ability";
+            AssetDatabase.RemoveObjectFromAsset(Target.Ability);
+            AssetDatabase.SaveAssets();
+            AssetDatabase.Refresh();
+            Target.Editor_SetAbility(null);
+        }
+
+
+        private void RemoveEffect()
+        {
+            _addEffectBtn.clicked -= RemoveEffect;
+            _addEffectBtn.clicked += AddConsumableEffect;
+            _addEffectBtn.text = "Add Effect";
+            AssetDatabase.RemoveObjectFromAsset(Target.Effect);
+            AssetDatabase.SaveAssets();
+            AssetDatabase.Refresh();
+            Target.Editor_SetEffect(null);
+        }
+
+        private void AddConsumableEffect()
+        {
+            _addEffectBtn.clicked -= AddConsumableEffect;
+            _addEffectBtn.clicked += RemoveEffect;
+            _addEffectBtn.text = "Remove Effect";
+            var effect = CreateInstance<GameplayEffectDefinition>();
+            effect.name = $"{Target.name}Effect";
+            effect.EffectAction = new InstantAction();
+            AssetDatabase.AddObjectToAsset(effect, Target);
+            AssetDatabase.SaveAssets();
+            AssetDatabase.Refresh();
+            Target.Editor_SetEffect(effect);
         }
     }
 }

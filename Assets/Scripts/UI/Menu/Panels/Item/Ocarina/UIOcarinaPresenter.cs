@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using CryptoQuest.Events;
 using CryptoQuest.Item.Ocarina;
 using CryptoQuest.UI.Menu.MenuStates.ItemStates;
 using IndiGames.Core.Events.ScriptableObjects;
@@ -9,10 +10,10 @@ namespace CryptoQuest.UI.Menu.Panels.Item.Ocarina
 {
     public class UIOcarinaPresenter : MonoBehaviour
     {
+        [SerializeField] private OcarinaLocations _ocarinaData;
         [SerializeField] private UIOcarinaTownButton _townButtonPrefab;
         [SerializeField] private GameObject _content;
         [SerializeField] private Transform _townButtonContainer;
-        [SerializeField] private OcarinaAbility _ocarinaAbility;
 
         [Header("Listen on")]
         [SerializeField] private VoidEventChannelSO _showOcarinaMenuEvent;
@@ -21,15 +22,15 @@ namespace CryptoQuest.UI.Menu.Panels.Item.Ocarina
 
         [Header("Raise event on")]
         [SerializeField] private VoidEventChannelSO _forceCloseMenuEvent; // TODO: Also bad code
+        [SerializeField] private MapPathEventChannelSO _teleportEvent;
 
         private void Awake()
         {
             _registerTownEvent.EventRaised += RegisterTown;
             _showOcarinaMenuEvent.EventRaised += Show;
-            var locations = _ocarinaAbility.Locations;
-            for (var index = 0; index < locations.Count; index++)
+            for (var index = 0; index < _ocarinaData.Locations.Count; index++)
             {
-                var town = locations[index];
+                var town = _ocarinaData.Locations[index];
                 RegisterTown(town);
             }
         }
@@ -39,6 +40,13 @@ namespace CryptoQuest.UI.Menu.Panels.Item.Ocarina
             _registerTownEvent.EventRaised -= RegisterTown;
             _showOcarinaMenuEvent.EventRaised -= Show;
             DestroyAllChildren();
+        }
+
+        private void RegisterTown(OcarinaEntrance town)
+        {
+            var townButton = Instantiate(_townButtonPrefab, _townButtonContainer);
+            townButton.SetTownName(town);
+            townButton.Clicked += UseOcarina;
         }
 
         private void Show()
@@ -54,20 +62,11 @@ namespace CryptoQuest.UI.Menu.Panels.Item.Ocarina
             EventSystem.current.SetSelectedGameObject(_townButtonContainer.GetChild(0).gameObject);
         }
 
-        private void RegisterTown(OcarinaEntrance town)
-        {
-            var townButton = Instantiate(_townButtonPrefab, _townButtonContainer);
-            townButton.SetTownName(town);
-            townButton.Clicked += UseOcarina;
-            _ocarinaAbility.RegisterTown(town);
-        }
-
         private void UseOcarina(OcarinaEntrance location)
         {
             _forceCloseMenuEvent.RaiseEvent();
             Hide();
-            var spec = _ocarinaAbility.GetAbilitySpec(null);
-            ((OcarinaAbility.OcarinaAbilitySpec)spec).TeleportToTown(location);
+            _teleportEvent.RaiseEvent(location);
         }
 
         // TODO: Reuse buttons instead of destroying them, BAD CODE

@@ -1,5 +1,66 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-7820955059279730747
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbb6112b998064f4ebc8a44f4c80c446, type: 3}
+  m_Name: Usable5012Effect
+  m_EditorClassIdentifier: 
+  <Description>k__BackingField: 
+  <EffectAction>k__BackingField:
+    rid: 7003385982059020290
+  <EffectDetails>k__BackingField:
+    Modifiers:
+    - Attribute: {fileID: 11400000, guid: a7e3a44d36bf87d44afeb00b236e832e, type: 2}
+      ModifierType: 0
+      ModifierMagnitude: {fileID: 0}
+      Value: 50
+    StackingType: 1
+  <GrantedTags>k__BackingField: []
+  <ApplicationTagRequirements>k__BackingField:
+    RequireTags: []
+    IgnoreTags: []
+  <ExecutionCalculations>k__BackingField: []
+  <ChanceToApply>k__BackingField: 1
+  <CustomApplicationRequirements>k__BackingField: []
+  references:
+    version: 2
+    RefIds:
+    - rid: 7003385982059020290
+      type: {class: InstantAction, ns: IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects.GameplayEffectActions, asm: IndiGames.GameplayAbilitySystem}
+--- !u!114 &-6185797814698819460
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae8a1c5f40eaf534e8b2a294dfc60297, type: 3}
+  m_Name: Usable5012Ability
+  m_EditorClassIdentifier: 
+  tags:
+    AbilityTag: {fileID: 0}
+    CancelAbilityWithTags: []
+    BlockAbilityWithTags: []
+    ActivationTags: []
+    OwnerTags:
+      RequireTags: []
+      IgnoreTags: []
+    SourceTags:
+      RequireTags: []
+      IgnoreTags: []
+    TargetTags:
+      RequireTags: []
+      IgnoreTags: []
+  <CancelEffectWithTags>k__BackingField: []
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -32,49 +93,11 @@ MonoBehaviour:
     m_WaitForCompletion: 0
     m_LocalVariables: []
   <Image>k__BackingField: {fileID: 21300000, guid: 39a78fc468a46b94aa0f70f000c7be3f, type: 3}
-  <UsableTypeSO>k__BackingField: {fileID: 11400000, guid: 61acbddf5d47c5545b1c6113317c6e68, type: 2}
-  <ActionDefinition>k__BackingField: {fileID: 11400000, guid: 0a61486b072122543a6f6d965135a65e, type: 2}
-  <Ability>k__BackingField: {fileID: 11400000, guid: 32b7d11cdd85422468f89dfe3249957c, type: 2}
-  <ItemAbilityInfo>k__BackingField:
-    Id: 5012
-    SkillName:
-      m_TableReference:
-        m_TableCollectionName: GUID:effbfeca51889e845a501c4d8053b3e1
-      m_TableEntryReference:
-        m_KeyId: 12
-        m_Key: 
-      m_FallbackState: 0
-      m_WaitForCompletion: 0
-      m_LocalVariables: []
-    SkillDescription:
-      m_TableReference:
-        m_TableCollectionName: GUID:14892b65b1edfe448b064250eaff3b36
-      m_TableEntryReference:
-        m_KeyId: 12
-        m_Key: 
-      m_FallbackState: 0
-      m_WaitForCompletion: 0
-      m_LocalVariables: []
-    SkillIcon: {fileID: 21300000, guid: ad249aa3d3535d841862d6fa27e07bd6, type: 3}
-    Element: {fileID: 0}
-    SkillType: {fileID: 11400000, guid: 13d355b83ae2a11478d2d6ed93b882e9, type: 2}
-    Category: {fileID: 11400000, guid: 5ed162c5f42bc9e42b78f1d44343d381, type: 2}
-    Cost: 0
-    EffectType: {fileID: 11400000, guid: b5a3f2b1f03b96a41a69c0b1ba256c53, type: 2}
-    UsageScenarioSO: {fileID: 11400000, guid: b8715476c4768c64d8ad6d33d8218416, type: 2}
-    SkillParameters:
-      BasePower: 50
-      PowerUpperLimit: 0
-      PowerLowerLimit: 0
-      SkillPowerThreshold: 0
-      PowerValueAdded: 0
-      PowerValueReduced: 0
-      IsFixed: 0
-      ContinuesTurn: 1
-      EffectType: 99
-      targetAttribute:
-        Attribute: {fileID: 11400000, guid: a7e3a44d36bf87d44afeb00b236e832e, type: 2}
-        CaptureFrom: 0
+  <consumableType>k__BackingField: {fileID: 11400000, guid: 38be8846d419c5248a5eda2b4376a348, type: 2}
+  <Effect>k__BackingField: {fileID: -7820955059279730747}
+  <Ability>k__BackingField: {fileID: -6185797814698819460}
+  <UsageScenario>k__BackingField: -1
+  <TargetSelectionEvent>k__BackingField: {fileID: 11400000, guid: cf816191ca3034c4d80534b6369b5834, type: 2}
   references:
     version: 2
     RefIds: []

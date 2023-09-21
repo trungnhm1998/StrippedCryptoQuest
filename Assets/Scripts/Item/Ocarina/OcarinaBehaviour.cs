@@ -1,16 +1,17 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using CryptoQuest.Gameplay;
 using CryptoQuest.Gameplay.Inventory;
 using CryptoQuest.Input;
 using CryptoQuest.Map;
+using CryptoQuest.UI.Menu.Panels.Item.Ocarina;
 using CryptoQuest.UI.SpiralFX;
 using IndiGames.Core.Events.ScriptableObjects;
 using IndiGames.Core.SceneManagementSystem.Events.ScriptableObjects;
 using IndiGames.Core.SceneManagementSystem.ScriptableObjects;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.Serialization;
 
 namespace CryptoQuest.Item.Ocarina
 {
@@ -20,19 +21,14 @@ namespace CryptoQuest.Item.Ocarina
         [SerializeField] private GameplayBus _gameplayBus;
         [SerializeField] private PathStorageSO _pathStorage;
         [SerializeField] private InputMediatorSO _inputMediatorSO;
-
+        [SerializeField] private OcarinaLocations _ocarinaData;
         [Header("Listen")]
         [SerializeField] private VoidEventChannelSO _onSceneLoadedEventChannel;
 
-        [SerializeField] private OcarinaAbility _ocarinaAbility;
         [SerializeField] private RegisterTownToOcarinaEventChannelSO _registerTownEvent;
 
-        [FormerlySerializedAs("_consumeItemEventChannel")]
         [Header("Raise")]
-        [SerializeField] private ConsumableEventChannel _consumedItemEventChannel;
-
         [SerializeField] private SpiralConfigSO _spiralConfig;
-
         [SerializeField] private LoadSceneEventChannelSO _requestLoadMapEvent;
 
         [Header("Ocarina UI")]
@@ -42,14 +38,16 @@ namespace CryptoQuest.Item.Ocarina
 
         private void Awake()
         {
+            _registerTownEvent.EventRaised += RegisterTown;
             _ocarinaUI.SetActive(false);
-            _ocarinaAbility.TeleportToTown += StartTeleportSequence;
         }
 
         private void OnDestroy()
         {
-            _ocarinaAbility.TeleportToTown -= StartTeleportSequence;
+            _registerTownEvent.EventRaised -= RegisterTown;
         }
+
+        private void RegisterTown(OcarinaEntrance location) => _ocarinaData.Locations.Add(location);
 
         private void StartTeleportSequence(MapPathSO path)
         {
@@ -59,7 +57,6 @@ namespace CryptoQuest.Item.Ocarina
         private IEnumerator CoActivateOcarinaAnim(MapPathSO location)
         {
             _inputMediatorSO.DisableAllInput();
-            _consumedItemEventChannel.RaiseEvent(null); // raise just to fall back state
             _ocarinaUI.SetActive(true);
             yield return _gameplayBus.Hero.ActivateOcarina();
             _ocarinaUI.SetActive(false);

@@ -72,6 +72,7 @@ namespace CryptoQuest.UI.Menu.Panels.Item
 
         public void SelectAllAliveHeroes()
         {
+            SelectHero();
             _selectingAll = true;
 
             foreach (var slot in _partySlots)

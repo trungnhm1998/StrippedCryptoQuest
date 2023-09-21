@@ -1,4 +1,5 @@
 ﻿using System;
+using CryptoQuest.Character.Attributes;
 using CryptoQuest.Gameplay.Character;
 using CryptoQuest.System;
 using UnityEngine;
@@ -13,6 +14,7 @@ namespace CryptoQuest.Gameplay.PlayerParty
 
     public class PartyManager : MonoBehaviour, IPartyController
     {
+        [SerializeField] private AttributeSets _attributeSets; // Just for the asset to load
         [field: SerializeField, Header("Party Config")]
         private PartySO _party;
         public IParty Party => _party;

@@ -37,6 +37,12 @@ namespace IndiGames.GameplayAbilitySystem.AbilitySystem
 
         public virtual void TryActiveAbility()
         {
+            if (AbilitySO == null)
+            {
+                Debug.LogWarning("Try to active a Ability with null data");
+                return;
+            }
+
             if (_owner == null)
             {
                 Debug.LogWarning($"Try to active a Ability [{AbilitySO.name}] with invalid owner");

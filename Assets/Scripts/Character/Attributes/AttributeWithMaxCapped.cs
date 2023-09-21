@@ -7,6 +7,7 @@ namespace CryptoQuest.Character.Attributes
     public class AttributeWithMaxCapped : AttributeScriptableObject
     {
         [SerializeField] private AttributeScriptableObject _maxAttributeToCap;
+        public AttributeScriptableObject CappedAttribute => _maxAttributeToCap;
 
         public override AttributeValue CalculateInitialValue(AttributeValue attributeValue,
             List<AttributeValue> otherAttributeValues)

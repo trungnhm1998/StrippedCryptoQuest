@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using IndiGames.GameplayAbilitySystem.AttributeSystem;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
 using IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects.EffectExecutionCalculation;
@@ -22,9 +23,11 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem
             public AttributeScriptableObject Attribute;
             public Modifier Modifier;
             public EAttributeModifierType ModifierType;
+            public ModifierComputationSO ModifierComputation;
 
             public ComputedModifier(EffectAttributeModifier modifierDef)
             {
+                ModifierComputation = modifierDef.ModifierMagnitude;
                 Attribute = modifierDef.Attribute;
                 ModifierType = modifierDef.ModifierType;
                 Modifier = new Modifier();
@@ -145,5 +148,7 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem
 
         public bool IsValid()
             => _effectSpec != null && _effectSpec.IsValid() && _effectSpec.IsExpired == false && IsActive;
+
+        public bool HasTag(TagScriptableObject tag) => _effectSpec.GrantedTags.Contains(tag);
     }
 }

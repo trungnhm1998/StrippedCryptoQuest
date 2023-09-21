@@ -36,7 +36,11 @@ namespace CryptoQuest.Gameplay.Inventory.Items
             // Owner.ApplyEffectSpecToSelf(ability);
         }
 
-        public void ConsumeWithCorrectUI() => Data.Ability.Consuming();
+        public void ConsumeWithCorrectUI()
+        {
+            // I can pass this into the event
+            Data.TargetSelectionEvent.RaiseEvent();
+        }
 
         public ConsumableInfo Clone()
         {

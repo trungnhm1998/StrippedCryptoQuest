@@ -19,9 +19,6 @@ namespace CryptoQuest.Gameplay.Inventory
 
         [SerializeField] private ServiceProvider _serviceProvider;
 
-        [Header("Listening to")]
-        [SerializeField] private ConsumableEventChannel _consumingItemEvent;
-
         [Header("Raise on")]
         [SerializeField] private ConsumableEventChannel _itemConsumedEvent;
 
@@ -42,17 +39,30 @@ namespace CryptoQuest.Gameplay.Inventory
 
         private void ConsumeItem(ConsumableInfo consumable, int[] heroIndices)
         {
-            // TODO: Make sure they the item consumed before remove
-            if (!_inventoryController.Remove(consumable)) return;
-            // TODO: Make sure all heroes are alive
-            Debug.Log($"Consuming {consumable.Data} on {heroIndices.Length} heroes");
+            bool ableToUseOnAtLeastOneHero = false;
+
             foreach (var index in heroIndices)
             {
                 var hero = _serviceProvider.PartyController.Party.Members[index];
                 if (hero.IsValid() == false) continue;
-                var spec = consumable.Data.Ability.GetAbilitySpec(consumable, hero.CharacterComponent.GameplayAbilitySystem);
+                var spec = hero
+                    .CharacterComponent
+                    .GameplayAbilitySystem
+                    .GiveAbility<ConsumableAbilitySpec>(consumable.Data.Ability);
+                spec.SetConsumable(consumable);
                 spec.TryActiveAbility();
+
+                if (spec.CanActiveAbility() && !ableToUseOnAtLeastOneHero)
+                    ableToUseOnAtLeastOneHero = true;
             }
+
+            if (ableToUseOnAtLeastOneHero && _inventoryController.Remove(consumable))
+            {
+                Debug.Log($"Consuming {consumable.Data} on {heroIndices.Length} heroes");
+            }
+
+            // TODO: Raise consumed failed?
+            _itemConsumedEvent.RaiseEvent(consumable);
         }
 
         private void ConsumeItem(ConsumableInfo consumable)

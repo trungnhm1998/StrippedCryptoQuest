@@ -1,6 +1,8 @@
 using CryptoQuest.Character.Ability;
 using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Type;
+using IndiGames.Core.Events.ScriptableObjects;
+using IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects;
 using UnityEngine;
 
 namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item
@@ -12,13 +14,34 @@ namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item
         [field: SerializeField, Header("Usable Item")]
         public ConsumableType consumableType { get; private set; }
 
+        [field: SerializeField] public GameplayEffectDefinition Effect { get; private set; }
         [field: SerializeField] public ConsumeItemAbility Ability { get; private set; }
         [field: SerializeField] public EAbilityUsageScenario UsageScenario { get; private set; }
+
+        /// <summary>
+        /// Derived class should raise event to show correct UI if there is any
+        ///
+        /// currently we have behavior:
+        /// - Single target hero
+        /// - Ocarina with special UI flow
+        /// - Target all hero in party (This doesn't have UI flow yet)
+        /// </summary>
+        [field: SerializeField] public VoidEventChannelSO TargetSelectionEvent { get; private set; }
 
 #if UNITY_EDITOR
         public void Editor_SetUsableType(ConsumableType type)
         {
             consumableType = type;
+        }
+
+        public void Editor_SetEffect(GameplayEffectDefinition effect)
+        {
+            Effect = effect;
+        }
+
+        public void Editor_SetAbility(ConsumeItemAbility ability)
+        {
+            Ability = ability;
         }
 #endif
     }
