@@ -1,8 +1,7 @@
 using System;
-using CryptoQuest.Gameplay.Inventory.Items;
 using UnityEngine;
 
-namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Container
+namespace CryptoQuest.Item.Equipment
 {
     [Serializable]
     public struct EquipmentSlot

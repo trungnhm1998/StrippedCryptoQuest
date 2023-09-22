@@ -1,4 +1,4 @@
-﻿using CryptoQuest.Gameplay.Inventory.Items;
+﻿using CryptoQuest.Item.Equipment;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Localization.Components;

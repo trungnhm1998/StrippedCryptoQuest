@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using CryptoQuest.Character.Hero;
-using CryptoQuest.Gameplay.Inventory;
-using CryptoQuest.Gameplay.Inventory.Items;
-using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Container;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Type;
+using CryptoQuest.Item.Equipment;
 using UnityEngine;
 
 namespace CryptoQuest.UI.Menu.Panels.Status.Equipment

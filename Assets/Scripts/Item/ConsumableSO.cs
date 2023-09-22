@@ -5,7 +5,7 @@ using IndiGames.Core.Events.ScriptableObjects;
 using IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects;
 using UnityEngine;
 
-namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item
+namespace CryptoQuest.Item
 {
     [CreateAssetMenu(fileName = "Usable Item", menuName = "Crypto Quest/Inventory/Usable Item")]
     public class ConsumableSO : GenericItem

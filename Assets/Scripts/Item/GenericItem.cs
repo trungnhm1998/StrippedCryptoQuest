@@ -1,7 +1,8 @@
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 using UnityEngine.Localization;
 
-namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item
+namespace CryptoQuest.Item
 {
     public class GenericItem : ScriptableObject
     {
@@ -10,7 +11,7 @@ namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item
 
         [field: SerializeField] public LocalizedString DisplayName { get; private set; }
         [field: SerializeField] public LocalizedString Description { get; private set; }
-        [field: SerializeField] public Sprite Image { get; private set; }
+        [field: SerializeField] public AssetReferenceT<Sprite> Image { get; private set; }
 
 #if UNITY_EDITOR
         /// <summary>

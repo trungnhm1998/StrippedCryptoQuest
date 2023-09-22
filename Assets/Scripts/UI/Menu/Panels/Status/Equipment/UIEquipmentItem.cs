@@ -1,5 +1,5 @@
 ﻿using System;
-using CryptoQuest.Gameplay.Inventory.Items;
+using CryptoQuest.Item.Equipment;
 using CryptoQuest.Menu;
 using UnityEngine;
 using UnityEngine.Events;

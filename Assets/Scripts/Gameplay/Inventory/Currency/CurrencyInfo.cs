@@ -1,5 +1,5 @@
 using System;
-using CryptoQuest.Gameplay.Inventory.Items;
+using CryptoQuest.Item;
 using UnityEngine;
 
 namespace CryptoQuest.Gameplay.Inventory.Currency

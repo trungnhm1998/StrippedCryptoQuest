@@ -5,9 +5,10 @@ using System.Linq;
 using CryptoQuest.Gameplay.Battle;
 using CryptoQuest.Gameplay.Encounter;
 using CryptoQuest.Gameplay.Inventory.Currency;
-using CryptoQuest.Gameplay.Inventory.Items;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item;
 using CryptoQuest.Gameplay.Loot;
+using CryptoQuest.Item;
+using CryptoQuest.Item.Equipment;
 using IndiGames.Tools.ScriptableObjectBrowser;
 using UnityEditor;
 using UnityEngine;
@@ -22,7 +23,7 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Reward
         private const int ROW_OFFSET = 2;
         private const string GOLD_ASSET_PATH = "Assets/ScriptableObjects/Currency/Gold.asset";
         private Dictionary<string, ConsumableSO> _usableItems = new();
-        private Dictionary<string, EquipmentSO> _equipmentItems = new();
+        private Dictionary<string, EquipmentDef> _equipmentItems = new();
         private CurrencySO _goldSo;
         private LootDatabase _lootDatabase;
         public LootTableSOEditor()
@@ -147,10 +148,10 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Reward
         {
             if (_equipmentItems.Count == 0)
             {
-                var guids = AssetDatabase.FindAssets("t:EquipmentSO");
+                var guids = AssetDatabase.FindAssets("t:Definition");
                 foreach (var guid in guids)
                 {
-                    var asset = AssetDatabase.LoadAssetAtPath<EquipmentSO>(AssetDatabase.GUIDToAssetPath(guid));
+                    var asset = AssetDatabase.LoadAssetAtPath<EquipmentDef>(AssetDatabase.GUIDToAssetPath(guid));
                     if (asset != null && !string.IsNullOrEmpty(asset.ID))
                         _equipmentItems.Add(asset.ID, asset);
                 }
@@ -174,7 +175,7 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Reward
                 {
                     for (int i = 0; i < rewardDef.Amount; i++)
                     {
-                        EquipmentInfo equipmentInfo = new EquipmentInfo(equipment);
+                        EquipmentInfo equipmentInfo = new EquipmentInfo(equipment.ID);
                         EquipmentLootInfo equipmentLootInfo = new EquipmentLootInfo(equipmentInfo);
                         lootInfos.Add(equipmentLootInfo);
                     }

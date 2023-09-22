@@ -1,6 +1,5 @@
 ﻿using CryptoQuest.Character.Hero;
-using CryptoQuest.Gameplay.Inventory;
-using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Container;
+using CryptoQuest.Item.Equipment;
 using NUnit.Framework;
 
 namespace CryptoQuest.Tests.Editor.Items

@@ -1,8 +1,7 @@
 using System.Collections.Generic;
 using CryptoQuest.Character.Hero;
 using CryptoQuest.Gameplay.Helper;
-using CryptoQuest.Gameplay.Inventory.Items;
-using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Container;
+using CryptoQuest.Item.Equipment;
 using IndiGames.GameplayAbilitySystem.EffectSystem;
 using IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects;
 using UnityEngine;
@@ -79,7 +78,7 @@ namespace CryptoQuest.Gameplay
 
         private GameplayEffectDefinition CreateEffectDefFormEquipment(EquipmentInfo equipment)
         {
-            var attributes = equipment.Stats.Attributes;
+            var attributes = equipment.Stats;
             var equipmentEffectDef = Instantiate(_equipmentEffectBase); // Using preconfigured effect base
 
             var modifiers = new EffectAttributeModifier[attributes.Length];
@@ -87,8 +86,7 @@ namespace CryptoQuest.Gameplay
             {
                 var attribute = attributes[i];
                 // TODO: Use magnitude calculation here
-                var attributeValue =
-                    _equipmentAttributeCalculator.GetValueAtLevel(equipment.Level, attribute, equipment.Stats.MaxLevel);
+                var attributeValue = equipment.Level * equipment.ValuePerLvl;
 
                 modifiers[i] = new EffectAttributeModifier
                 {

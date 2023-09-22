@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections;
 using CryptoQuest.Character.Attributes;
-using CryptoQuest.Gameplay.Inventory.Items;
+using CryptoQuest.Item;
 using IndiGames.GameplayAbilitySystem.AbilitySystem;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.ScriptableObjects;
 using IndiGames.GameplayAbilitySystem.EffectSystem;

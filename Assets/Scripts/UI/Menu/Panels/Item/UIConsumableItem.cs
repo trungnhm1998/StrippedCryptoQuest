@@ -1,8 +1,11 @@
-﻿using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data;
-using CryptoQuest.Gameplay.Inventory.Items;
+﻿using System.Collections;
+using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data;
+using CryptoQuest.Item;
 using CryptoQuest.Menu;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 using UnityEngine.Localization.Components;
+using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.UI;
 
 namespace CryptoQuest.UI.Menu.Panels.Item
@@ -25,6 +28,7 @@ namespace CryptoQuest.UI.Menu.Panels.Item
         private ConsumableInfo _consumable;
         public ConsumableInfo Consumable => _consumable;
         private bool _canClick;
+        private AsyncOperationHandle<Sprite> _handle;
 
         public bool Interactable
         {
@@ -45,13 +49,16 @@ namespace CryptoQuest.UI.Menu.Panels.Item
             _button.Selected -= OnInspectingItem;
             _button.DeSelected -= OnDeselectItem;
             _button.onClick.RemoveListener(OnUse);
+
+            if (_handle.IsValid()) Addressables.Release(_handle);
+            _handle = default;
         }
 
         public void OnUse()
         {
             if (!_canClick) return;
             Using?.Invoke(this);
-            _consumable.ConsumeWithCorrectUI(); // this will show a correct UI
+            _consumable.Consuming(); // this will show a correct UI
         }
 
         private void OnInspectingItem()
@@ -68,13 +75,20 @@ namespace CryptoQuest.UI.Menu.Panels.Item
         public void Init(ConsumableInfo item)
         {
             _consumable = item;
-            _icon.sprite = item.Icon;
+            StartCoroutine(CoLoadIcon());
             _name.StringReference = item.DisplayName;
             _quantity.text = item.Quantity.ToString();
 
 
             var allowedInField = (_consumable.Data.UsageScenario & EAbilityUsageScenario.Field) > 0;
             SetColorText(allowedInField);
+        }
+
+        private IEnumerator CoLoadIcon()
+        {
+            _handle = _consumable.Icon.LoadAssetAsync<Sprite>();
+            yield return _handle;
+            _icon.sprite = _handle.Result;
         }
 
         private void SetColorText(bool allowed = false)

@@ -1,21 +1,20 @@
 ﻿using System;
 using CryptoQuest.Gameplay.Character;
-using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item;
-using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Container;
+using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
 using IndiGames.GameplayAbilitySystem.EffectSystem;
 using IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects;
 using UnityEngine;
 
-namespace CryptoQuest.Gameplay.Inventory.Items
+namespace CryptoQuest.Item.Equipment
 {
     [Serializable]
-    public class EquipmentInfo : ItemInfo<EquipmentSO>, IEquatable<EquipmentInfo>
+    public class EquipmentInfo : ItemInfo, IEquatable<EquipmentInfo>
     {
-        [field: SerializeField] public RaritySO Rarity { get; private set; }
-        [field: SerializeField] public bool IsNftItem { get; private set; }
+        [field: SerializeField] public string DefinitionId { get; private set; }
         [field: SerializeField] public int Level { get; private set; }
-        [field: SerializeField] public StatsDef Stats { get; private set; }
-        public EquipmentSlot.EType[] RequiredSlots => Data.RequiredSlots;
+        public EquipmentPrefab Data => _asset;
+        public AttributeWithValue[] Stats => Def.Stats;
+        public EquipmentSlot.EType[] RequiredSlots => _asset.RequiredSlots;
 
         public GameplayEffectDefinition EffectDef { get; set; }
 
@@ -25,10 +24,25 @@ namespace CryptoQuest.Gameplay.Inventory.Items
         /// </summary>
         private ActiveEffectSpecification _activeEffect = new();
 
-        public EquipmentInfo() { }
-        public EquipmentInfo(EquipmentSO data) : base(data) { }
-
         public ActiveEffectSpecification ActiveEffect => _activeEffect;
+        public bool IsNftItem => Def.IsNft;
+        public RaritySO Rarity => Def.Rarity;
+        public float ValuePerLvl => Def.ValuePerLvl;
+        public EquipmentDef Def { get; set; }
+
+        private EquipmentPrefab _asset;
+
+        public EquipmentInfo()
+        {
+            Level = 1;
+        }
+
+        public EquipmentInfo(string definitionId, int lvl = 1)
+        {
+            DefinitionId = definitionId;
+            Level = lvl;
+        }
+
 
         public void SetActiveEffectSpec(ActiveEffectSpecification applyEquipmentEffect)
         {
@@ -63,15 +77,14 @@ namespace CryptoQuest.Gameplay.Inventory.Items
 
         public override bool Equals(object obj) => Equals(obj as EquipmentInfo);
 
-        public override int GetHashCode() => (Id, Data).GetHashCode();
+        public override int GetHashCode() => (Id, Def.ID).GetHashCode();
 
         public EquipmentInfo Clone()
         {
-            return new EquipmentInfo(Data)
+            return new EquipmentInfo(DefinitionId)
             {
                 Id = Id,
                 Level = Level,
-                Stats = Stats,
                 EffectDef = EffectDef,
             };
         }
@@ -82,10 +95,10 @@ namespace CryptoQuest.Gameplay.Inventory.Items
         {
             if (!IsValid()) return false;
 
-            CharacterClass[] equipmentAllowedClasses = Data.EquipmentType.AllowedClasses;
+            CharacterClass[] equipmentAllowedClasses = _asset.EquipmentType.AllowedClasses;
             CharacterClass characterClass = inspectingCharacter.Class;
 
-            if (Data.RequiredCharacterLevel > inspectingCharacter.Level)
+            if (_asset.RequiredCharacterLevel > inspectingCharacter.Level)
             {
                 Debug.LogWarning("Character level is not enough");
                 return false;
@@ -108,38 +121,7 @@ namespace CryptoQuest.Gameplay.Inventory.Items
 
         public override bool IsValid()
         {
-            return base.IsValid() && Data.EquipmentType != null;
+            return Def != null && _asset != null && _asset.EquipmentType != null;
         }
-
-#if UNITY_EDITOR
-
-        /// <summary>
-        /// This method is used to set rarity of equipment
-        /// </summary>
-        /// <param name="rarity"></param>
-        public void Editor_SetRarity(RaritySO rarity)
-        {
-            Rarity = rarity;
-        }
-
-        /// <summary>
-        /// This method is used to set level of equipment
-        /// </summary>
-        /// <param name="isNftItem"></param>
-        public void Editor_SetIsNftItem(bool isNftItem)
-        {
-            IsNftItem = isNftItem;
-        }
-
-        /// <summary>
-        /// This method is used to set level of equipment
-        /// </summary>
-        /// <param name="stats"></param>
-        public void Editor_SetStats(StatsDef stats)
-        {
-            Stats = stats;
-        }
-
-#endif
     }
 }

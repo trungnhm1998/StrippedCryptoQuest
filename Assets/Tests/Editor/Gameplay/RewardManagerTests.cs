@@ -1,8 +1,9 @@
 ﻿using CryptoQuest.Gameplay.Inventory.Currency;
-using CryptoQuest.Gameplay.Inventory.Items;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item;
 using CryptoQuest.Gameplay.Loot;
 using CryptoQuest.Gameplay.Reward;
+using CryptoQuest.Item;
+using CryptoQuest.Item.Equipment;
 using NUnit.Framework;
 using UnityEngine;
 
@@ -67,7 +68,7 @@ namespace CryptoQuest.Tests.Editor.Gameplay
         [Test]
         public void MergeLoots_TwoEquipments_ReturnTwoEquipments()
         {
-            var equipment = new EquipmentInfo(ScriptableObject.CreateInstance<EquipmentSO>());
+            var equipment = new EquipmentInfo();
             var loots = new[]
             {
                 new EquipmentLootInfo(equipment),

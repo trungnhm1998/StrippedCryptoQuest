@@ -1,7 +1,7 @@
 ﻿using System;
-using CryptoQuest.Gameplay.Inventory.Items;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
 using CryptoQuest.Gameplay.Reward;
+using CryptoQuest.Item.Equipment;
 using CryptoQuest.UI.Dialogs.RewardDialog;
 
 namespace CryptoQuest.Gameplay.Loot

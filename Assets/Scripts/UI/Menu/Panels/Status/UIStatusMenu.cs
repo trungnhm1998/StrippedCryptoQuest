@@ -1,8 +1,7 @@
 using System;
 using CryptoQuest.Gameplay.Character;
-using CryptoQuest.Gameplay.Inventory.Items;
-using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Container;
 using CryptoQuest.Gameplay.PlayerParty;
+using CryptoQuest.Item.Equipment;
 using CryptoQuest.System;
 using CryptoQuest.UI.Character;
 using CryptoQuest.UI.Menu.MenuStates.StatusStates;

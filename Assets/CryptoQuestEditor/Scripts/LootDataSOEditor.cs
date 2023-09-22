@@ -1,6 +1,7 @@
 using CryptoQuest.Gameplay.Inventory.Currency;
-using CryptoQuest.Gameplay.Inventory.Items;
 using CryptoQuest.Gameplay.Loot;
+using CryptoQuest.Item;
+using CryptoQuest.Item.Equipment;
 using UnityEditor;
 using UnityEngine;
 

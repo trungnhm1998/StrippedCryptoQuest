@@ -1,22 +1,20 @@
-using CryptoQuest.Gameplay.Inventory.Items;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
-using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item;
+using CryptoQuest.Item.Equipment;
 using CryptoQuestEditor.Helper;
 using UnityEditor;
 using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
-using Object = UnityEngine.Object;
 
 namespace CryptoQuestEditor
 {
-    [CustomEditor(typeof(EquipmentSO))]
-    public class EquipmentSOEditor : Editor
+    [CustomEditor(typeof(EquipmentDef))]
+    public class EquipmentDefinitionEditor : Editor
     {
         private const string MAIN_INVENTORY = "MainInventory";
 
         [SerializeField] private VisualTreeAsset _uxml;
-        private EquipmentSO Target => target as EquipmentSO;
+        private EquipmentDef Target => target as EquipmentDef;
         private InventorySO InventorySO { get; set; }
 
         private HelpBox _helpBox;
@@ -38,6 +36,7 @@ namespace CryptoQuestEditor
 
             _helpBox = root.Q<HelpBox>("help-box");
             _inventoryField = root.Q<ObjectField>("inventory-field");
+            _inventoryField.value = InventorySO;
             _addButton = root.Q<Button>("add-button");
 
             Notification();
@@ -67,7 +66,7 @@ namespace CryptoQuestEditor
 
         private void AddEquipment()
         {
-            InventorySO.Equipments.Add(new EquipmentInfo(Target));
+            InventorySO.Equipments.Add(new EquipmentInfo(Target.ID));
         }
     }
 }

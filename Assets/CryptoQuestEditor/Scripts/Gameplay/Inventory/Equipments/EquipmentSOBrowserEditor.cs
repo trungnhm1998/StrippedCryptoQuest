@@ -1,9 +1,8 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
-using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item;
-using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Container;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Type;
+using CryptoQuest.Item.Equipment;
 using CryptoQuestEditor.Helper;
 using IndiGames.Tools.ScriptableObjectBrowser;
 using UnityEditor;
@@ -14,7 +13,7 @@ using UnityEngine.Localization.Tables;
 
 namespace CryptoQuestEditor
 {
-    public class EquipmentSOBrowserEditor : ScriptableObjectBrowserEditor<EquipmentSO>
+    public class EquipmentSOBrowserEditor : ScriptableObjectBrowserEditor<EquipmentPrefab>
     {
         private const int ROW_OFFSET = 2;
 
@@ -57,13 +56,13 @@ namespace CryptoQuestEditor
                 string name = $"{GetNameBySlot(slot)}_{id}";
                 string path = $"{GetPathBySlot(slot)}/{name}.asset";
 
-                EquipmentSO instance = null;
+                EquipmentPrefab instance = null;
 
                 // find instance if null create new
-                instance = (EquipmentSO)AssetDatabase.LoadAssetAtPath(path, typeof(EquipmentSO));
+                instance = (EquipmentPrefab)AssetDatabase.LoadAssetAtPath(path, typeof(EquipmentPrefab));
                 if (instance == null || !AssetDatabase.Contains(instance))
                 {
-                    instance = ScriptableObject.CreateInstance<EquipmentSO>();
+                    instance = ScriptableObject.CreateInstance<EquipmentPrefab>();
                 }
 
                 // import Data

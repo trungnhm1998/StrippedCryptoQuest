@@ -1,8 +1,8 @@
 ﻿using System;
 using CryptoQuest.Gameplay.Character;
-using CryptoQuest.Gameplay.Inventory.Items;
+using CryptoQuest.Item.Equipment;
 using UnityEngine;
-using SlotType = CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Container.EquipmentSlot.EType;
+using SlotType = CryptoQuest.Item.Equipment.EquipmentSlot.EType;
 
 namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Type
 {

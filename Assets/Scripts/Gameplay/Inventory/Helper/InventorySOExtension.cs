@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data;
-using CryptoQuest.Gameplay.Inventory.Items;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item;
+using CryptoQuest.Item;
 using UnityEngine;
 
 namespace CryptoQuest.Gameplay.Inventory.Helper

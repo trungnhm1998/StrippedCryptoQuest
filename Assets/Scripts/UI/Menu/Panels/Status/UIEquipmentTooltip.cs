@@ -1,10 +1,14 @@
-﻿using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item;
+﻿using System.Collections;
+using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item;
+using CryptoQuest.Item;
 using CryptoQuest.UI.Menu.Panels.Status.Equipment;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 using UnityEngine.Localization;
 using UnityEngine.Localization.Components;
+using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.UI;
 
 namespace CryptoQuest.UI.Menu.Panels.Status
@@ -16,6 +20,7 @@ namespace CryptoQuest.UI.Menu.Panels.Status
         ITooltip WithHeader(LocalizedString dataDisplayName);
         ITooltip WithDescription(LocalizedString dataDescription);
         ITooltip WithDisplaySprite(Sprite equipmentTypeIcon);
+        ITooltip WithDisplaySprite(AssetReferenceT<Sprite> equipmentTypeIcon);
         ITooltip WithPosition(Vector3 tooltipPositionPosition);
         ITooltip WithContentAwareness(RectTransform tooltipPosition);
         ITooltip SetSafeArea(RectTransform tooltipSafeArea);
@@ -54,6 +59,8 @@ namespace CryptoQuest.UI.Menu.Panels.Status
         /// </summary>
         public void Hide()
         {
+            if (_handle.IsValid()) Addressables.Release(_handle);
+            _handle = default;
             _tween?.Kill();
             _content.SetActive(false);
         }
@@ -74,6 +81,20 @@ namespace CryptoQuest.UI.Menu.Panels.Status
             if (equipmentImage == null) return this;
             _illustration.sprite = equipmentImage;
             return this;
+        }
+
+        public ITooltip WithDisplaySprite(AssetReferenceT<Sprite> equipmentTypeIcon)
+        {
+            if (equipmentTypeIcon == null) return this;
+            StartCoroutine(LoadSpriteAndSet(equipmentTypeIcon));
+            return this;
+        }
+
+        private IEnumerator LoadSpriteAndSet(AssetReferenceT<Sprite> equipmentTypeIcon)
+        {
+            _handle = equipmentTypeIcon.LoadAssetAsync<Sprite>();
+            yield return _handle;
+            _illustration.sprite = _handle.Result;
         }
 
         public ITooltip WithPosition(Vector3 position)
@@ -118,6 +139,7 @@ namespace CryptoQuest.UI.Menu.Panels.Status
         /// or use it size to 
         /// </summary>
         private RectTransform _tooltipTarget;
+        private AsyncOperationHandle<Sprite> _handle;
 
         /// <summary>
         /// Try to place the tooltip either above or below the rect transform

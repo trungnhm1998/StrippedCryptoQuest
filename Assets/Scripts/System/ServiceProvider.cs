@@ -1,11 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using CryptoQuest.Gameplay.Character;
-using CryptoQuest.Gameplay.Inventory;
-using CryptoQuest.Gameplay.Inventory.Items;
-using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
-using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Container;
-using CryptoQuest.Gameplay.PlayerParty;
 using UnityEngine;
 
 namespace CryptoQuest.System

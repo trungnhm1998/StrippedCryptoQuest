@@ -1,10 +1,9 @@
 using System;
 using System.Collections.Generic;
-using CryptoQuest.Gameplay.Inventory.Items;
-using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Container;
+using CryptoQuest.Item.Equipment;
 using UnityEngine;
 using ESlotType =
-    CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Container.EquipmentSlot.EType;
+    CryptoQuest.Item.Equipment.EquipmentSlot.EType;
 using ECategory = CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Type.EEquipmentCategory;
 
 namespace CryptoQuest.Character.Hero

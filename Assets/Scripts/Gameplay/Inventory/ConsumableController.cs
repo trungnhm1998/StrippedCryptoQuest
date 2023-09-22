@@ -1,7 +1,7 @@
 ﻿using System;
 using CryptoQuest.Character.Ability;
-using CryptoQuest.Gameplay.Inventory.Items;
 using CryptoQuest.Gameplay.PlayerParty;
+using CryptoQuest.Item;
 using CryptoQuest.System;
 using UnityEngine;
 

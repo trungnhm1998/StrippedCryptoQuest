@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
 using CryptoQuest.Gameplay.Inventory;
-using CryptoQuest.Gameplay.Inventory.Items;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Type;
+using CryptoQuest.Item;
 using CryptoQuest.UI.Menu.MenuStates.ItemStates;
 using FSM;
 using UnityEngine;

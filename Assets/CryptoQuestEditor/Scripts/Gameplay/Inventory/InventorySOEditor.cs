@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using CryptoQuest.Gameplay;
-using CryptoQuest.Gameplay.Inventory.Items;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
-using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item;
+using CryptoQuest.Item;
+using CryptoQuest.Item.Equipment;
 using CryptoQuestEditor.Helper;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
 using UnityEditor;
@@ -109,11 +109,11 @@ namespace CryptoQuestEditor
 
         private void AddAllEquipment()
         {
-            EquipmentSO[] allEquipment = ToolsHelper.GetAssets<EquipmentSO>();
+            var allEquipment = ToolsHelper.GetAssets<EquipmentDef>();
 
-            foreach (EquipmentSO equipment in allEquipment)
+            foreach (var equipment in allEquipment)
             {
-                Target.Equipments.Add(new EquipmentInfo(equipment));
+                Target.Equipments.Add(new EquipmentInfo(equipment.ID, 1));
             }
         }
 
@@ -155,9 +155,9 @@ namespace CryptoQuestEditor
             string[] rows = File.ReadAllLines(path);
             string[] headerFields = rows[ROW_HEADER].Split('\t');
 
-            EquipmentSO[] equipments = ToolsHelper.GetAssets<EquipmentSO>();
+            var equipments = ToolsHelper.GetAssets<EquipmentDef>();
 
-            Dictionary<string, EquipmentSO> lookupTable =
+            Dictionary<string, EquipmentDef> lookupTable =
                 equipments.ToDictionary(equipment => equipment.ID, value => value);
 
             for (int index = ROW_OFFSET; index < rows.Length; index++)
@@ -166,7 +166,7 @@ namespace CryptoQuestEditor
                 string id = cols[ROW_FOREIGN_KEY];
                 if (!lookupTable.TryGetValue(id, out var equipment)) continue;
 
-                var instance = new EquipmentInfo(equipment);
+                var instance = new EquipmentInfo(equipment.ID);
                 FillEquipmentData(cols, instance, headerFields);
                 Target.Equipments.Add(instance);
             }
@@ -176,8 +176,8 @@ namespace CryptoQuestEditor
         {
             int maxLevelEquipment = Convert.ToInt32(cols[ROW_MAX_LEVEL]);
 
-            instance.Editor_SetRarity(GetRarity(ParseData(cols[ROW_RARITY_ID])));
-            instance.Editor_SetIsNftItem(IsNftItem(cols[ROW_IS_NFT_ITEM]));
+            // instance.Editor_SetRarity(GetRarity(ParseData(cols[ROW_RARITY_ID])));
+            // instance.Editor_SetIsNftItem(IsNftItem(cols[ROW_IS_NFT_ITEM]));
 
             SetEquipmentStats(cols, headerFields, instance, maxLevelEquipment);
         }
@@ -222,7 +222,7 @@ namespace CryptoQuestEditor
             stats.Attributes = attributes.Values.ToArray();
             stats.MaxLevel = maxLevelEquipment;
 
-            instance.Editor_SetStats(stats);
+            // instance.Editor_SetStats(stats);
         }
 
 

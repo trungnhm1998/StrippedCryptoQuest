@@ -1,9 +1,8 @@
 ﻿using System;
-using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item;
 using IndiGames.Core.EditorTools.Attributes.ReadOnlyAttribute;
 using UnityEngine;
 
-namespace CryptoQuest.Gameplay.Inventory.Items
+namespace CryptoQuest.Item
 {
     [Serializable]
     public abstract class ItemInfo

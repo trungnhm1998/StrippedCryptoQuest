@@ -1,16 +1,16 @@
 using System;
-using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 using UnityEngine.Localization;
 
-namespace CryptoQuest.Gameplay.Inventory.Items
+namespace CryptoQuest.Item
 {
     [Serializable]
     public class ConsumableInfo : ItemInfo<ConsumableSO>
     {
         [field: SerializeField] public int Quantity { get; private set; } = 1;
 
-        public Sprite Icon => Data.Image;
+        public AssetReferenceT<Sprite> Icon => Data.Image;
         public LocalizedString DisplayName => Data.DisplayName;
         public LocalizedString Description => Data.Description;
 
@@ -26,17 +26,7 @@ namespace CryptoQuest.Gameplay.Inventory.Items
             Quantity = quantity;
         }
 
-        private void Activate()
-        {
-            // TODO: REFACTOR GAS
-            // CryptoQuestGameplayEffectSpec ability =
-            //     (CryptoQuestGameplayEffectSpec)Owner.MakeOutgoingSpec(Data.Skill.Effect);
-            //
-            // ability.SetParameters(Data.ItemAbilityInfo.SkillParameters);
-            // Owner.ApplyEffectSpecToSelf(ability);
-        }
-
-        public void ConsumeWithCorrectUI()
+        public void Consuming()
         {
             // I can pass this into the event
             Data.TargetSelectionEvent.RaiseEvent();
@@ -45,6 +35,23 @@ namespace CryptoQuest.Gameplay.Inventory.Items
         public ConsumableInfo Clone()
         {
             return new ConsumableInfo(Data, Quantity);
+        }
+
+        public override bool IsValid()
+        {
+            if (Data == null)
+            {
+                Debug.LogWarning("Consumable doesn't have Data");
+                return false;
+            }
+
+            if (Quantity <= 0)
+            {
+                Debug.LogWarning($"Consumable {Data} is less than 0");
+                return false;
+            }
+
+            return base.IsValid();
         }
     }
 }

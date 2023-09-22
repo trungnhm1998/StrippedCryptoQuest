@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.Localization;
 
-namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item
+namespace CryptoQuest.Item
 {
     public class RaritySO : ScriptableObject
     {

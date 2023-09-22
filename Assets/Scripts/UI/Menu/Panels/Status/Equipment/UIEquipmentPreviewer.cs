@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using CryptoQuest.Gameplay;
 using CryptoQuest.Gameplay.Character;
-using CryptoQuest.Gameplay.Inventory.Items;
+using CryptoQuest.Item.Equipment;
 using CryptoQuest.UI.Menu.Panels.Status.Stats;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
 using IndiGames.GameplayAbilitySystem.AttributeSystem;
