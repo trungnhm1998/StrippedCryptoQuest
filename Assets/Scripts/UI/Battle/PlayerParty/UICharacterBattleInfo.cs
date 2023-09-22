@@ -17,15 +17,15 @@ namespace CryptoQuest.UI.Battle.PlayerParty
         [SerializeField] private UIAttributeBar _mpBar;
         [SerializeField] private AttributeChangeEvent _attributeChangeEvent;
 
-        private CharacterSpec _memberInSlot;
+        public CharacterSpec Member { get; private set; }
 
         public void Init(CharacterSpec member)
         {
-            _memberInSlot = member;
-            member.SetupUI(this);
+            Member = member;
+            Member.SetupUI(this);
 
-            if (_memberInSlot.CharacterComponent == null) return;
-            _attributeChangeEvent.AttributeSystemReference = _memberInSlot.CharacterComponent.AttributeSystem;
+            if (Member.CharacterComponent == null) return;
+            _attributeChangeEvent.AttributeSystemReference = Member.CharacterComponent.AttributeSystem;
         }
 
         public void SetBattleAvatar(Sprite avatar)

@@ -1055,7 +1055,7 @@ namespace CryptoQuest.Input
                     ""name"": ""Navigate"",
                     ""type"": ""PassThrough"",
                     ""id"": ""0488747e-ecd7-4ac1-bb48-4f674e8ade97"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false

@@ -10,7 +10,9 @@ namespace CryptoQuest.UI.Battle.PlayerParty
     {
         [SerializeField] private BattleAvatarDatabase _avatarDatabase;
         [SerializeField] private ServiceProvider _serviceProvider;
+
         [SerializeField] private UICharacterBattleInfo[] _characterUis;
+        public UICharacterBattleInfo[] CharacterUIs => _characterUis;
 
         private IParty _party;
         

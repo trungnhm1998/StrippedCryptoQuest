@@ -27,12 +27,19 @@ namespace CryptoQuest.UI.Battle
         
         private void OnEnable()
         {
+            _battleInput.EnableBattleInput();
             _battleInput.CancelEvent += OnInputMenuCancel;
         }
 
         private void OnDisable()
         {
             _battleInput.CancelEvent -= OnInputMenuCancel;
+            _battleInput.DisableBattleInput();
+        }
+
+        public void ChangeState(string state)
+        {
+            BattleMenuFSM?.RequestStateChange(state);
         }
 
         private void SetupStateMachine()

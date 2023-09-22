@@ -52,7 +52,7 @@ namespace CryptoQuest.Input
 
         public void OnNavigate(InputAction.CallbackContext context)
         {
-            NavigateEvent?.Invoke(context.ReadValue<Vector2>());
+            if (context.performed) NavigateEvent?.Invoke(context.ReadValue<Vector2>());
         }
 
         public void OnSubmit(InputAction.CallbackContext context)
