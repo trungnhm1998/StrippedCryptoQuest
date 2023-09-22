@@ -23,7 +23,6 @@ namespace CryptoQuest.Character.Enemy
     /// <summary>
     /// Enemy structure (https://docs.google.com/spreadsheets/d/1WkX1DyDOGf6EiAppo8Buz2sUkSKV5OnDENEvmHzKXNQ/edit#gid=1024080951)
     /// </summary>
-    [CreateAssetMenu(menuName = "Create EnemyData", fileName = "EnemyData", order = 0)]
     public class EnemyDef : CharacterData<EnemyDef, EnemySpec>
     {
         [field: SerializeField] public LocalizedString Name { get; private set; }

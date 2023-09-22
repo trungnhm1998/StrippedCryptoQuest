@@ -1,10 +1,9 @@
-using IndiGames.Core.Database;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item;
+using IndiGames.Core.Database;
 using UnityEngine;
 
-namespace CryptoQuest.Gameplay.Loot
+namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects
 {
-    [CreateAssetMenu(fileName = "EquipmentDatabase", menuName = "Create EquipmentDatabase")]
     public class EquipmentDatabaseSO : GenericAssetReferenceDatabase<string, EquipmentSO>
     {
 #if UNITY_EDITOR

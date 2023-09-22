@@ -5,7 +5,6 @@ using UnityEngine;
 
 namespace CryptoQuest.Character.Ability
 {
-    [CreateAssetMenu(menuName = "Create @FullRecoveryComputation", fileName = "FullRecoveryComputation", order = 0)]
     public class FullRecoveryComputation : ModifierComputationSO
     {
         [SerializeField, Range(0, 1)] private float _multiplier = 1f;
