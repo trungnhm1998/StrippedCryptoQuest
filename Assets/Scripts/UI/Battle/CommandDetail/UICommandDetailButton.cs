@@ -49,7 +49,7 @@ namespace CryptoQuest.UI.Battle.CommandDetail
             _button.interactable = _buttonInfo.IsInteractable; 
             _button.onClick.RemoveAllListeners();
             _button.onClick.AddListener(_buttonInfo.OnHandleClick);
-            if (_index == 0) _button.Select();
+            if (_index == 0 && _button.interactable) _button.Select();
         }
 
         public void OnSelectButton()

@@ -28,14 +28,12 @@ namespace CryptoQuest.UI.Battle.SelectCommand
 
         public void ChangeToSkillState()
         {
-            Debug.Log($"ChangeToSkillState:: Not Implemented");
-            // TODO: Implement change to skill state logic here
+            _battleMenuFSM.RequestStateChange(BattleMenuStateMachine.SelectSkillState);
         }
 
         public void ChangeToItemState()
         {
-            Debug.Log($"ChangeToItemState:: Not Implemented");
-            // TODO: Implement change to item state logic here
+            _battleMenuFSM.RequestStateChange(BattleMenuStateMachine.SelectItemState);
         }
 
     }

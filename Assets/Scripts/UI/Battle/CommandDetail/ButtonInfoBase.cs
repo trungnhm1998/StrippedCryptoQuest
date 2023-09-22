@@ -8,7 +8,7 @@ namespace CryptoQuest.UI.Battle.CommandDetail
     {
         [field: SerializeField] public string Label { get; protected set; }
         [field: SerializeField] public string Value { get; protected set; }
-        [field: SerializeField] public bool IsInteractable { get; protected set; }
+        [field: SerializeField] public bool IsInteractable { get; protected set; } = true;
 
         protected ButtonInfoBase(string label, string value = "", bool isInteractable = true)
         {

@@ -10,7 +10,6 @@ namespace CryptoQuest.UI.Battle.CommandDetail
 {
     public class UICommandDetailPanel : MonoBehaviour
     {
-        public static Action<List<ButtonInfoBase>> RequestShowCommandDetail;
 
         [SerializeField] private GameObject _scrollViewContent;
         [SerializeField] private ChildButtonsActivator _childButonsActivator;
@@ -24,19 +23,10 @@ namespace CryptoQuest.UI.Battle.CommandDetail
                 OnRelease, OnDestroyPool);
         }
 
-        private void OnEnable()
-        {
-            RequestShowCommandDetail += ShowCommandDetail;
-        }
-
-        private void OnDisable()
-        {
-            RequestShowCommandDetail -= ShowCommandDetail;
-        }
-
         public void ShowCommandDetail(List<ButtonInfoBase> buttonInfos)
         {
             SetActiveContent(true);
+            ReleaseAllButton();
 
             for (int i = 0; i < buttonInfos.Count; i++)
             {
@@ -56,6 +46,15 @@ namespace CryptoQuest.UI.Battle.CommandDetail
         public void SetActiveContent(bool value)
         {
             _scrollViewContent.SetActive(value);
+        }
+
+        private void ReleaseAllButton()
+        {
+            foreach (Transform button in _scrollViewContent.transform)
+            {
+                // The button release from pool when being disable
+                button.gameObject.SetActive(false);
+            }
         }
 
         private UICommandDetailButton OnCreate()

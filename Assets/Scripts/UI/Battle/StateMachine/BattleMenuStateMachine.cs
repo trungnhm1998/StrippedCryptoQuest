@@ -22,6 +22,10 @@ namespace CryptoQuest.UI.Battle.StateMachine
             AddBattleMenuStates();
 
             // TODO: Setup and init other states here
+            AddState(SelectSingleEnemyState, new SelectSingleEnemyState(this));
+            AddState(SelectEnemyGroupState, new SelectEnemyGroupState(this));
+            AddState(SelectSkillState, new SelectSkillState(this));
+            AddState(SelectItemState, new SelectItemState(this));
 
             SetStartState(UIStartBattle.StartBattleState);
             Init();
