@@ -86,6 +86,8 @@ namespace CryptoQuest.UI.Menu
             _inputMediator.MenuInteractEvent -= Interact;
             _inputMediator.MenuConfirmedEvent -= _mainMenuFsm.Confirm;
             _inputMediator.MenuResetEvent -= Reset;
+            
+            _mainMenuFsm.OnExit();
         }
 
         #region State Machine Delegates

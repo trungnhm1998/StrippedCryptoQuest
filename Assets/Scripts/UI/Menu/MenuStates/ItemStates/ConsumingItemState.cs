@@ -11,14 +11,14 @@ namespace CryptoQuest.UI.Menu.MenuStates.ItemStates
         public override void OnEnter()
         {
             base.OnEnter();
-            ConsumablePanel.ItemConsumed += BackToSelectItemState;
+            _consumablePanel.ItemConsumed += BackToSelectItemState;
         }
 
         public override void HandleCancel()
         {
             Cancelled?.Invoke();
             base.HandleCancel();
-            ConsumablePanel.ItemConsumed -= BackToSelectItemState;
+            _consumablePanel.ItemConsumed -= BackToSelectItemState;
             BackToSelectItemState();
         }
 

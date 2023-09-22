@@ -12,14 +12,14 @@ namespace CryptoQuest.UI.Menu.MenuStates.ItemStates
         {
             base.OnEnter();
             NavigationBar.SetActive(false);
-            NavigationBar.HighlightHeader(ConsumablePanel.TypeSO);
+            NavigationBar.HighlightHeader(_consumablePanel.TypeSO);
         }
 
         public override void HandleCancel()
         {
             base.HandleCancel();
             NavigationBar.SetActive(true);
-            NavigationBar.HighlightHeader(ConsumablePanel.TypeSO, true);
+            NavigationBar.HighlightHeader(_consumablePanel.TypeSO, true);
             MenuStateMachine.RequestStateChange(ItemMenuStateMachine.InventorySelection);
         }
 

@@ -1,4 +1,5 @@
 ﻿using CryptoQuest.UI.Menu.Panels.Item;
+using UnityEngine;
 
 namespace CryptoQuest.UI.Menu.MenuStates.ItemStates
 {
@@ -9,9 +10,9 @@ namespace CryptoQuest.UI.Menu.MenuStates.ItemStates
         public override void OnEnter()
         {
             base.OnEnter();
-            ConsumablePanel.Interactable = true;
+            _consumablePanel.Interactable = true;
             NavigationBar.SetActive(false);
-            NavigationBar.HighlightHeader(ConsumablePanel.TypeSO);
+            NavigationBar.HighlightHeader(_consumablePanel.TypeSO);
 
             UIConsumableItem.Using += UseItem;
         }
@@ -19,7 +20,7 @@ namespace CryptoQuest.UI.Menu.MenuStates.ItemStates
         public override void OnExit()
         {
             base.OnExit();
-            ConsumablePanel.Interactable = false;
+            _consumablePanel.Interactable = false;
             UIConsumableItem.Using -= UseItem;
         }
 
@@ -27,18 +28,17 @@ namespace CryptoQuest.UI.Menu.MenuStates.ItemStates
         {
             base.HandleCancel();
             NavigationBar.SetActive(true);
-            NavigationBar.HighlightHeader(ConsumablePanel.TypeSO, true);
+            NavigationBar.HighlightHeader(_consumablePanel.TypeSO, true);
             MenuStateMachine.RequestStateChange(ItemMenuStateMachine.NavItem);
         }
 
         public override void ChangeTab(float direction)
         {
-            ConsumablePanel.ChangeTab(direction);
+            _consumablePanel.ChangeTab(direction);
         }
 
         private void UseItem(UIConsumableItem selectedConsumableItem)
         {
-            // _interactingUI = selectedConsumableItem; // to refocus the item when the item usage menu is closed
             fsm.RequestStateChange(ItemMenuStateMachine.ConsumingItem);
         }
     }
