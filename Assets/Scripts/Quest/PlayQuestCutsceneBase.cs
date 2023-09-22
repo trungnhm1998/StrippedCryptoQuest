@@ -12,9 +12,7 @@ namespace CryptoQuest.Quest
 
         protected void PlayCutscene()
         {
-            if (Quest.IsCompleted) return;
-            if (!Quest.CanCompleteTask(Task)) return;
-            if (Quest.HasTaskCompleted(Task)) return;
+            if (!Quest.HasQuestCompleted(Task)) return;
             if (!Task.PlayOnLoaded) return;
 
             CutsceneTrigger.PlayCutscene();

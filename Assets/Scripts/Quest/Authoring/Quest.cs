@@ -13,29 +13,48 @@ namespace CryptoQuest.Quest.Authoring
         [SerializeField] private int _currentTaskIndex;
 
         [SerializeField] private Task[] _tasks = Array.Empty<Task>();
+        public Task[] Tasks => _tasks;
 
-        public bool HasTaskCompleted(Task task)
+
+        public Task GetCurrentTask()
         {
             for (var index = 0; index < _tasks.Length; index++)
             {
-                var configTask = _tasks[index];
-                if (configTask.CompareTo(task) != 0) continue;
-                return IsCompleted;
+                var nextTask = _tasks[index];
+                if (!nextTask.IsCompleted)
+                {
+                    _currentTaskIndex = index;
+                    return nextTask;
+                }
             }
 
-            return false;
+            return null;
         }
 
-        public bool CanCompleteTask(Task task)
+        public bool HasQuestCompleted(Task task)
         {
-            for (var index = 0; index < _tasks.Length; index++)
+            if (IsCompleted)
             {
-                var configTask = _tasks[index];
-                if (configTask.CompareTo(task) != 0) continue;
+                Debug.LogWarning($"Quest: <color=red>{name}</color> is completed, next task is " +
+                                 $"<color=yellow>{task.name}</color> .");
+                return false;
+            }
 
-                if (index <= 0) continue;
+            if (!CanCompleteTask(task))
+            {
+                Debug.LogWarning($"Task: <color=red>{task.name}</color> was completed.");
+                return false;
+            }
 
-                if (!task.IsCompleted) return false;
+            return true;
+        }
+
+        private bool CanCompleteTask(Task task)
+        {
+            foreach (var currentTask in _tasks)
+            {
+                if (!currentTask.EqualTo(task)) continue;
+                if (currentTask.IsCompleted) return false;
             }
 
             return true;
@@ -43,22 +62,16 @@ namespace CryptoQuest.Quest.Authoring
 
         public void CompleteTask(Task task)
         {
-            for (var index = 0; index < _tasks.Length; index++)
+            foreach (var configTask in _tasks)
             {
-                var configTask = _tasks[index];
-                if (configTask.CompareTo(task) != 0) continue;
-
-                if (index == _tasks.Length - 1)
-                {
-                    task.OnComplete();
-                }
-
-                break;
+                if (!configTask.EqualTo(task)) continue;
+                task.OnComplete();
             }
         }
 
         public override void OnComplete()
         {
+            Debug.Log($"Quest: <color=green>{name}</color> is completed.");
             IsCompleted = true;
             OnCompleteObjective?.Invoke();
         }

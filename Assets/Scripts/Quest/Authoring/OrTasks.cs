@@ -11,16 +11,17 @@ namespace CryptoQuest.Quest.Authoring
     {
         public Task[] Tasks;
 
-        public override int CompareTo(Task other)
+        public override bool EqualTo(Task other)
         {
             foreach (var objective in Tasks)
             {
-                if (objective.CompareTo(other) == 0)
+                if (objective.EqualTo(other))
                 {
-                    return 0;
+                    return true;
                 }
             }
-            return base.CompareTo(other);
+
+            return base.EqualTo(other);
         }
     }
 }

@@ -12,9 +12,7 @@ namespace CryptoQuest.Quest
 
         public bool CanProgress()
         {
-            if (Quest.IsCompleted) return false;
-            if (!Quest.CanCompleteTask(Task)) return false;
-            if (Quest.HasTaskCompleted(Task)) return false;
+            if (Quest.HasQuestCompleted(Task)) return false;
 
             return true;
         }
