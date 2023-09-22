@@ -1,9 +1,9 @@
 using System;
 using UnityEngine;
 using UnityEngine.Localization;
-using CryptoQuest.UI.Menu.Panels.DimensionBox.EquipmentTransferSection.Interfaces;
+using CryptoQuest.UI.Menu.Panels.DimensionBox.Interfaces;
 
-namespace CryptoQuest.UI.Menu.Panels.DimensionBox.EquipmentTransferSection
+namespace CryptoQuest.UI.Menu.Panels.DimensionBox.EquipmentTransferSection.Models
 {
     [Serializable]
     public struct MockData : IData

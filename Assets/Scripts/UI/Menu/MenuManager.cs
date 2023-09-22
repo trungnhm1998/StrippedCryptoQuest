@@ -69,6 +69,7 @@ namespace CryptoQuest.UI.Menu
             _inputMediator.MenuSubmitEvent += Submit; // South Button
             _inputMediator.MenuInteractEvent += Interact;
             _inputMediator.MenuConfirmedEvent += _mainMenuFsm.Confirm;
+            _inputMediator.MenuResetEvent += Reset;
         }
 
         private void OnDisable()
@@ -84,7 +85,7 @@ namespace CryptoQuest.UI.Menu
             _inputMediator.MenuSubmitEvent -= Submit;
             _inputMediator.MenuInteractEvent -= Interact;
             _inputMediator.MenuConfirmedEvent -= _mainMenuFsm.Confirm;
-
+            _inputMediator.MenuResetEvent -= Reset;
         }
 
         #region State Machine Delegates
@@ -115,6 +116,11 @@ namespace CryptoQuest.UI.Menu
         private void Submit()
         {
             _mainMenuFsm.OnLogic();
+        }
+
+        private void Reset()
+        {
+            _mainMenuFsm.Reset();
         }
 
         #endregion

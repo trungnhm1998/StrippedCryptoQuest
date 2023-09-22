@@ -52,6 +52,11 @@ namespace CryptoQuest.UI.Menu.MenuStates
         {
             ActiveState.Confirm();
         }
+
+        public void Reset()
+        {
+            ActiveState.Reset();
+        }
         #endregion
 
     }

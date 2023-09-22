@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Localization;
 
-namespace CryptoQuest.UI.Menu.Panels.DimensionBox.EquipmentTransferSection.Interfaces
+namespace CryptoQuest.UI.Menu.Panels.DimensionBox.Interfaces
 {
     public interface IData
     {

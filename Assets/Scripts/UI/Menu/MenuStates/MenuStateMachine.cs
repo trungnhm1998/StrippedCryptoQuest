@@ -74,5 +74,11 @@ namespace CryptoQuest.UI.Menu.MenuStates
             Debug.Log($"{GetType().Name}::HandleNavigate{direction.ToString()}::{_panel.name}");
             ActiveState.HandleNavigate(direction);
         }
+
+        public virtual void Reset()
+        {
+            Debug.Log($"{GetType().Name}::Reset");
+            ActiveState.Reset();
+        }
     }
 }

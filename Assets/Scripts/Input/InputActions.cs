@@ -118,6 +118,15 @@ namespace CryptoQuest.Input
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""MenuReset"",
+                    ""type"": ""Button"",
+                    ""id"": ""3d07c32e-75b4-4e16-9df5-b16f87a41bf4"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -591,6 +600,28 @@ namespace CryptoQuest.Input
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
                     ""action"": ""MenuStart"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""fa5a1b97-1f43-4b9f-9f51-518ad6774f66"",
+                    ""path"": ""<Gamepad>/buttonNorth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""MenuReset"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8b439817-c673-476c-a783-c58cca3c6bd2"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""MnK"",
+                    ""action"": ""MenuReset"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1625,6 +1656,7 @@ namespace CryptoQuest.Input
             m_Menus_ChangeTab = m_Menus.FindAction("ChangeTab", throwIfNotFound: true);
             m_Menus_MenuInteract = m_Menus.FindAction("MenuInteract", throwIfNotFound: true);
             m_Menus_MenuStart = m_Menus.FindAction("MenuStart", throwIfNotFound: true);
+            m_Menus_MenuReset = m_Menus.FindAction("MenuReset", throwIfNotFound: true);
             // MapGameplay
             m_MapGameplay = asset.FindActionMap("MapGameplay", throwIfNotFound: true);
             m_MapGameplay_MoveUp = m_MapGameplay.FindAction("MoveUp", throwIfNotFound: true);
@@ -1722,6 +1754,7 @@ namespace CryptoQuest.Input
         private readonly InputAction m_Menus_ChangeTab;
         private readonly InputAction m_Menus_MenuInteract;
         private readonly InputAction m_Menus_MenuStart;
+        private readonly InputAction m_Menus_MenuReset;
         public struct MenusActions
         {
             private @InputActions m_Wrapper;
@@ -1736,6 +1769,7 @@ namespace CryptoQuest.Input
             public InputAction @ChangeTab => m_Wrapper.m_Menus_ChangeTab;
             public InputAction @MenuInteract => m_Wrapper.m_Menus_MenuInteract;
             public InputAction @MenuStart => m_Wrapper.m_Menus_MenuStart;
+            public InputAction @MenuReset => m_Wrapper.m_Menus_MenuReset;
             public InputActionMap Get() { return m_Wrapper.m_Menus; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -1775,6 +1809,9 @@ namespace CryptoQuest.Input
                 @MenuStart.started += instance.OnMenuStart;
                 @MenuStart.performed += instance.OnMenuStart;
                 @MenuStart.canceled += instance.OnMenuStart;
+                @MenuReset.started += instance.OnMenuReset;
+                @MenuReset.performed += instance.OnMenuReset;
+                @MenuReset.canceled += instance.OnMenuReset;
             }
 
             private void UnregisterCallbacks(IMenusActions instance)
@@ -1809,6 +1846,9 @@ namespace CryptoQuest.Input
                 @MenuStart.started -= instance.OnMenuStart;
                 @MenuStart.performed -= instance.OnMenuStart;
                 @MenuStart.canceled -= instance.OnMenuStart;
+                @MenuReset.started -= instance.OnMenuReset;
+                @MenuReset.performed -= instance.OnMenuReset;
+                @MenuReset.canceled -= instance.OnMenuReset;
             }
 
             public void RemoveCallbacks(IMenusActions instance)
@@ -2152,6 +2192,7 @@ namespace CryptoQuest.Input
             void OnChangeTab(InputAction.CallbackContext context);
             void OnMenuInteract(InputAction.CallbackContext context);
             void OnMenuStart(InputAction.CallbackContext context);
+            void OnMenuReset(InputAction.CallbackContext context);
         }
         public interface IMapGameplayActions
         {

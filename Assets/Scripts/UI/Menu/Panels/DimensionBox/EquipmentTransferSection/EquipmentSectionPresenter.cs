@@ -1,7 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using CryptoQuest.UI.Menu.Panels.DimensionBox.EquipmentTransferSection.Interfaces;
+using CryptoQuest.UI.Menu.Panels.DimensionBox.Interfaces;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -9,11 +9,17 @@ namespace CryptoQuest.UI.Menu.Panels.DimensionBox.EquipmentTransferSection
 {
     public class EquipmentSectionPresenter : MonoBehaviour
     {
-        [SerializeField] private UnityEvent<List<IData>> SetDataEvent;
+        [SerializeField] private UnityEvent<List<IData>> SetGameDataEvent;
+        [SerializeField] private UnityEvent<List<IData>> SetWalletDataEvent;
+
         [SerializeField] private Transform _gameNftList;
         [SerializeField] private Transform _wallet;
 
-        private IEquipmentModel _model;
+        private IGameEquipmentModel _gameModel;
+        private IWalletEquipmentModel _walletModel;
+
+        private List<IData> _gameData = new();
+        private List<IData> _walletData = new();
 
         private void Awake()
         {
@@ -25,17 +31,38 @@ namespace CryptoQuest.UI.Menu.Panels.DimensionBox.EquipmentTransferSection
             UITransferItem.SelectItemEvent -= ItemSelected;
         }
 
-        private IEnumerator Start()
+        public void GetEquipments()
         {
-            _model = GetComponent<IEquipmentModel>();
-            yield return _model.CoGetData();
-            var data = _model.Data;
-            SetDataEvent.Invoke(data);
+            StartCoroutine(GetGameEquipments());
+            StartCoroutine(GetWalletEquipments());
+        }
+
+        private IEnumerator GetGameEquipments()
+        {
+            _gameModel = GetComponentInChildren<IGameEquipmentModel>();
+            yield return _gameModel.CoGetData();
+            _gameData = _gameModel.Data;
+            SetGameDataEvent.Invoke(_gameData);
+        }
+
+        private IEnumerator GetWalletEquipments()
+        {
+            _walletModel = GetComponentInChildren<IWalletEquipmentModel>();
+            yield return _walletModel.CoGetData();
+            _walletData = _walletModel.Data;
+            SetWalletDataEvent.Invoke(_walletData);
         }
 
         private void ItemSelected(UITransferItem currentItem)
         {
-            currentItem.Transfer(_wallet);
+            var itemParent = currentItem.Parent == _gameNftList ? _wallet : _gameNftList;
+            currentItem.Transfer(itemParent);
+        }
+
+        public void ResetTransfer()
+        {
+            SetGameDataEvent.Invoke(_gameData);
+            SetWalletDataEvent.Invoke(_walletData);
         }
     }
 }

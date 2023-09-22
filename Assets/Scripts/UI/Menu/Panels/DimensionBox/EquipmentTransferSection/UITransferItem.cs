@@ -1,4 +1,4 @@
-using CryptoQuest.UI.Menu.Panels.DimensionBox.EquipmentTransferSection.Interfaces;
+using CryptoQuest.UI.Menu.Panels.DimensionBox.Interfaces;
 using PolyAndCode.UI;
 using UnityEngine;
 using UnityEngine.Events;
@@ -15,6 +15,9 @@ namespace CryptoQuest.UI.Menu.Panels.DimensionBox.EquipmentTransferSection
         [SerializeField] private LocalizeStringEvent _name;
         [SerializeField] private GameObject _pendingTag;
         [SerializeField] private GameObject _equippedTag;
+
+        private Transform _parent;
+        public Transform Parent { get => _parent; set => _parent = value; }
 
         private bool _isSelected = false;
 
@@ -35,6 +38,7 @@ namespace CryptoQuest.UI.Menu.Panels.DimensionBox.EquipmentTransferSection
         public void Transfer(Transform parent)
         {
             gameObject.transform.SetParent(parent);
+            _parent = parent;
         }
     }
 }

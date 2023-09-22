@@ -1,14 +1,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using CryptoQuest.UI.Menu.Panels.DimensionBox.EquipmentTransferSection.Interfaces;
+using CryptoQuest.UI.Menu.Panels.DimensionBox.Interfaces;
 using UnityEngine;
 using UnityEngine.Localization;
-using UnityEngine.Localization.SmartFormat.PersistentVariables;
 
-namespace CryptoQuest.UI.Menu.Panels.DimensionBox.EquipmentTransferSection
+namespace CryptoQuest.UI.Menu.Panels.DimensionBox.EquipmentTransferSection.Models
 {
-    public class MockEquipmentModel : MonoBehaviour, IEquipmentModel
+    public class MockGameEquipmentModel : MonoBehaviour, IGameEquipmentModel
     {
         public int MockLength;
         public Sprite[] MockIcon;

@@ -1,12 +1,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using CryptoQuest.UI.Menu.Panels.DimensionBox.EquipmentTransferSection.Interfaces;
+using CryptoQuest.UI.Menu.Panels.DimensionBox.Interfaces;
 using UnityEngine;
 
-namespace CryptoQuest.UI.Menu.Panels.DimensionBox.EquipmentTransferSection
+namespace CryptoQuest.UI.Menu.Panels.DimensionBox.EquipmentTransferSection.Models
 {
-    public class RealEquipmentModel : MonoBehaviour, IEquipmentModel
+    public class RealEquipmentModel : MonoBehaviour, IGameEquipmentModel
     {
         public List<IData> Data => throw new NotImplementedException();
 

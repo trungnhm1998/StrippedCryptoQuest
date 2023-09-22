@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.Collections;
 using UnityEngine;
 
 namespace CryptoQuest.UI.Menu.Panels.DimensionBox
@@ -9,14 +6,16 @@ namespace CryptoQuest.UI.Menu.Panels.DimensionBox
     {
         [SerializeField] private GameObject _contents;
 
-        public void EnterTransferSection()
+        public virtual void EnterTransferSection()
         {
             _contents.SetActive(true);
         }
 
-        public void ExitTransferSection()
+        public virtual void ExitTransferSection()
         {
             _contents.SetActive(false);
         }
+
+        public virtual void ResetTransfer() { }
     }
 }

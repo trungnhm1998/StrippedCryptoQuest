@@ -2,9 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
-namespace CryptoQuest.UI.Menu.Panels.DimensionBox.EquipmentTransferSection.Interfaces
+namespace CryptoQuest.UI.Menu.Panels.DimensionBox.Interfaces
 {
-    public interface IEquipmentModel
+    public interface IGameEquipmentModel
     {
         public List<IData> Data { get; }
         public IEnumerator CoGetData();

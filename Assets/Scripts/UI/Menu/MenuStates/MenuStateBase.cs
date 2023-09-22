@@ -27,7 +27,7 @@ namespace CryptoQuest.UI.Menu.MenuStates
         }
 
         /// <summary>
-        /// Handle pressing East button on the controller.
+        /// Handle pressing East button on the controller or Esc button on the keyboard.
         /// </summary>
         public virtual void HandleCancel()
         {
@@ -35,7 +35,7 @@ namespace CryptoQuest.UI.Menu.MenuStates
         }
 
         /// <summary>
-        /// Handle pressing West button on the controller.
+        /// Handle pressing West button on the controller or F button on the keyboard.
         /// </summary>
         public virtual void Interact()
         {
@@ -43,7 +43,7 @@ namespace CryptoQuest.UI.Menu.MenuStates
         }
 
         /// <summary>
-        /// Handle pressing South button on the controller.
+        /// Handle pressing South button on the controller or Space/Enter button on the keyboard.
         /// </summary>
         public virtual void Confirm()
         {
@@ -59,5 +59,10 @@ namespace CryptoQuest.UI.Menu.MenuStates
         {
             Debug.Log($"{GetType().Name}/HandleNavigate/{direction}");
         }
+
+        /// <summary>
+        /// Handle pressing North button on the controller or R button on the keyboard.
+        /// </summary>
+        public virtual void Reset() { }
     }
 }
