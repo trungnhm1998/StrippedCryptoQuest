@@ -12,12 +12,12 @@ namespace CryptoQuest.UI.Menu.Panels.Home
     {
         public event Action SelectedEvent;
         public event Action ConfirmedEvent;
-        [SerializeField] private ServiceProvider _serviceProvider;
         [SerializeField] private VoidEventChannelSO _sortFailedEvent;
         [SerializeField] private VoidEventChannelSO _confirmSortEvent;
 
         [Header("Game Components")]
         [SerializeField] private GameObject _topLine;
+
         [SerializeField] private UIPartySlot[] _partySlots;
         [SerializeField] private GameObject[] _sortLayers;
         [SerializeField] private List<UICharacterCardButton> _cardButtons;
@@ -26,18 +26,18 @@ namespace CryptoQuest.UI.Menu.Panels.Home
         private UICharacterCardButton _selectedCardButtonHolder;
 
         private int _currentIndex = 0;
+
         private int CurrentIndex
         {
             get => _currentIndex;
             set
             {
-                int count = _party.Members.Length;
+                int count = ServiceProvider.GetService<IPartyController>().Party.Members.Length;
                 _currentIndex = (value + count) % count;
             }
         }
 
         private int _indexHolder;
-        private IParty _party;
 
         private void OnValidate()
         {
@@ -47,12 +47,6 @@ namespace CryptoQuest.UI.Menu.Panels.Home
             }
 
             _partySlots = GetComponentsInChildren<UIPartySlot>();
-        }
-
-        private void Awake()
-        {
-            _party = _serviceProvider.PartyController.Party;
-            _serviceProvider.PartyProvided += InitParty;
         }
 
         private void OnEnable()
@@ -66,22 +60,21 @@ namespace CryptoQuest.UI.Menu.Panels.Home
 
         private void OnDisable()
         {
-            _serviceProvider.PartyProvided -= InitParty;
             UICharacterCardButton.SelectedEvent -= ConfirmSelect;
             _sortFailedEvent.EventRaised -= ResetSortOrder;
         }
 
-        private void InitParty(IPartyController partyController)
+        private void Start()
         {
-            _party = _serviceProvider.PartyController.Party;
             LoadPartyMembers();
         }
 
         private void LoadPartyMembers()
         {
-            for (var index = 0; index < _party.Members.Length; index++)
+            var party = ServiceProvider.GetService<IPartyController>().Party;
+            for (var index = 0; index < party.Members.Length; index++)
             {
-                var member = _party.Members[index];
+                var member = party.Members[index];
                 var slot = _partySlots[index];
 
                 slot.Active(member.IsValid());
@@ -94,7 +87,8 @@ namespace CryptoQuest.UI.Menu.Panels.Home
 
         private void EnableSortMode()
         {
-            _selectedCardButtonHolder = _partySlots[CurrentIndex].transform.GetChild(0).GetComponent<UICharacterCardButton>();
+            _selectedCardButtonHolder =
+                _partySlots[CurrentIndex].transform.GetChild(0).GetComponent<UICharacterCardButton>();
             _selectedCardButtonHolder.Select();
         }
 
@@ -107,6 +101,7 @@ namespace CryptoQuest.UI.Menu.Panels.Home
         }
 
         #region State involved methods
+
         public void Init()
         {
             EnableSortMode();
@@ -149,7 +144,7 @@ namespace CryptoQuest.UI.Menu.Panels.Home
 
         private void Swap(int otherTargetIndex)
         {
-            if (_sortLayers[CurrentIndex].transform.childCount <= 0) 
+            if (_sortLayers[CurrentIndex].transform.childCount <= 0)
             {
                 Debug.Log($"There's nothing to sort. Swap failed!");
                 return;
@@ -157,7 +152,7 @@ namespace CryptoQuest.UI.Menu.Panels.Home
 
             Transform currentTarget = _sortLayers[CurrentIndex].transform.GetChild(0);
             Transform otherTarget = _partySlots[otherTargetIndex].transform.GetChild(0);
-            _party.Sort(otherTargetIndex, CurrentIndex);
+            ServiceProvider.GetService<IPartyController>().Party.Sort(otherTargetIndex, CurrentIndex);
 
             PutToNormalLayer(otherTarget, CurrentIndex);
             CurrentIndex = otherTargetIndex;
@@ -187,6 +182,7 @@ namespace CryptoQuest.UI.Menu.Panels.Home
         {
             CurrentIndex = 0;
         }
+
         #endregion
 
         private void PutToSortLayer(Transform targetTransform)
@@ -210,11 +206,12 @@ namespace CryptoQuest.UI.Menu.Panels.Home
 
         private void ResetSortOrder()
         {
-            if (_partySlots[_indexHolder].transform.childCount > 0) 
+            if (_partySlots[_indexHolder].transform.childCount > 0)
             {
                 var otherTarget = _partySlots[_indexHolder].transform.GetChild(0);
                 PutToNormalLayer(otherTarget, CurrentIndex);
             }
+
             PutToNormalLayer(_selectedCardButtonHolder.transform, _indexHolder);
 
             CurrentIndex = _indexHolder;

@@ -18,7 +18,6 @@ namespace CryptoQuest.UI.Menu.Panels.Item
         [SerializeField] private ScrollRect _scrollRect;
         [SerializeField] private GameObject _content;
         [field: SerializeField] public ConsumableType Type { get; private set; }
-        [field: SerializeField] public ServiceProvider ServiceProvider { get; private set; }
         private readonly List<UIConsumableItem> _uiConsumables = new();
         private UIConsumableItem _currentInspectingItem;
 
@@ -60,7 +59,7 @@ namespace CryptoQuest.UI.Menu.Panels.Item
             if (consumable.IsValid() == false
                 || _currentInspectingItem == null
                 || _currentInspectingItem.Consumable.IsValid() == false) return;
-            
+
             // TODO: Update quantity if consumed the same inspected item
         }
 
@@ -91,7 +90,8 @@ namespace CryptoQuest.UI.Menu.Panels.Item
 
         private void RenderConsumables()
         {
-            foreach (var item in ServiceProvider.Inventory.Consumables)
+            var inventory = ServiceProvider.GetService<IInventoryController>().Inventory;
+            foreach (var item in inventory.Consumables)
             {
                 if (item.Data.consumableType == Type)
                     CreateItem(item);

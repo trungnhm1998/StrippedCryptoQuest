@@ -21,8 +21,6 @@ namespace CryptoQuest.UI.Menu.Panels.Status
         public event Action Show;
         public event Action Hide;
 
-        [SerializeField] private ServiceProvider _provider;
-
         [field: SerializeField, Header("State Context")]
         public UICharacterEquipmentsPanel CharacterEquipmentsPanel { get; private set; }
 
@@ -36,17 +34,19 @@ namespace CryptoQuest.UI.Menu.Panels.Status
 
         private void Awake()
         {
-            _party = _provider.PartyController.Party;
             CharacterPanel.InspectingCharacter += InspectCharacter;
             // This is event could not be fired because the scene contains this component is not loaded yet
-            _provider.PartyProvided += BindParty;
             CharacterEquipmentsPanel.UnequipEquipmentAtSlot += UnequipEquipmentAtSlot;
+        }
+
+        private void Start()
+        {
+            _party = ServiceProvider.GetService<IPartyController>().Party;
         }
 
         private void OnDestroy()
         {
             CharacterPanel.InspectingCharacter -= InspectCharacter;
-            _provider.PartyProvided -= BindParty;
             CharacterEquipmentsPanel.UnequipEquipmentAtSlot -= UnequipEquipmentAtSlot;
         }
 
@@ -70,17 +70,14 @@ namespace CryptoQuest.UI.Menu.Panels.Status
                 return;
             }
 
-            _provider.UnequipEquipmentAtSlot(_inspectingCharacter, slot);
+            // TODO: REFACTOR PARTY
+            // _provider.UnequipEquipmentAtSlot(_inspectingCharacter, slot);
         }
 
         public void EquipItem(EquipmentInfo equipment)
         {
-            _provider.EquipEquipment(_inspectingCharacter, equipment);
-        }
-
-        private void BindParty(IPartyController partyController)
-        {
-            _party = partyController.Party;
+            // TODO: REFACTOR PARTY
+            // _provider.EquipEquipment(_inspectingCharacter, equipment);
         }
 
         private void InspectCharacter(CharacterSpec characterSpec)

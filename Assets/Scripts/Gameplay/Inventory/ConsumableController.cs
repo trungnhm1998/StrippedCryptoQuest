@@ -1,6 +1,7 @@
 ﻿using System;
 using CryptoQuest.Character.Ability;
 using CryptoQuest.Gameplay.Inventory.Items;
+using CryptoQuest.Gameplay.PlayerParty;
 using CryptoQuest.System;
 using UnityEngine;
 
@@ -16,8 +17,6 @@ namespace CryptoQuest.Gameplay.Inventory
 
         public static void OnConsumeItem(ConsumableInfo consumable, params int[] heroIndices)
             => HeroConsumingItem?.Invoke(consumable, heroIndices);
-
-        [SerializeField] private ServiceProvider _serviceProvider;
 
         [Header("Raise on")]
         [SerializeField] private ConsumableEventChannel _itemConsumedEvent;
@@ -41,9 +40,10 @@ namespace CryptoQuest.Gameplay.Inventory
         {
             bool ableToUseOnAtLeastOneHero = false;
 
+            var party = ServiceProvider.GetService<IPartyController>().Party;
             foreach (var index in heroIndices)
             {
-                var hero = _serviceProvider.PartyController.Party.Members[index];
+                var hero = party.Members[index];
                 if (hero.IsValid() == false) continue;
                 var spec = hero
                     .CharacterComponent

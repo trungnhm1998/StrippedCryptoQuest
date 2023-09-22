@@ -13,7 +13,6 @@ namespace CryptoQuest.UI.Menu.Panels.Skill
         public UnityAction SelectedCharacterEvent;
         public UnityAction<CharacterSpec, bool> UpdateSkillListEvent;
 
-        [SerializeField] private ServiceProvider _serviceProvider;
         [SerializeField] private UICharacterButton _defaultSelection;
         [SerializeField] private UICharacterPartySlot[] _partySlots;
 
@@ -23,8 +22,7 @@ namespace CryptoQuest.UI.Menu.Panels.Skill
         private void Awake()
         {
             UICharacterButton.SelectCharacterEvent += InspectSelectedCharacter;
-
-            _party = _serviceProvider.PartyController.Party;
+            _party = ServiceProvider.GetService<IPartyController>().Party;
         }
 
         private void OnDestroy()

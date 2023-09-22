@@ -15,10 +15,11 @@ namespace CryptoQuest.Gameplay.PlayerParty
     public class PartyManager : MonoBehaviour, IPartyController
     {
         [SerializeField] private AttributeSets _attributeSets; // Just for the asset to load
+
         [field: SerializeField, Header("Party Config")]
         private PartySO _party;
+
         public IParty Party => _party;
-        [SerializeField] private ServiceProvider _provider;
 
         [SerializeField, Space] private PartySlot[] _partySlots = new PartySlot[PartyConstants.MAX_PARTY_SIZE];
 
@@ -32,14 +33,14 @@ namespace CryptoQuest.Gameplay.PlayerParty
             _partySlots = GetComponentsInChildren<PartySlot>();
         }
 
-        // TODO: Remove below if refactor InitParty back to Awake 
+
         /// <summary>
         /// Note: If you using party at awake or start and active in the same scene with this
         /// You should get this through binding event <see cref="ServiceProvider.PartyProvided"/>
         /// </summary>
-        private void Start()
+        private void Awake()
         {
-            _provider.Provide(this);
+            ServiceProvider.Provide<IPartyController>(this);
             InitParty();
         }
 

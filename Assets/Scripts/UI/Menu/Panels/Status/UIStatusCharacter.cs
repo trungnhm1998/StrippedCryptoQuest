@@ -18,10 +18,11 @@ namespace CryptoQuest.UI.Menu.Panels.Status
     public class UIStatusCharacter : MonoBehaviour, ICharacterInfo
     {
         public event Action<CharacterSpec> InspectingCharacter;
-        [SerializeField] private ServiceProvider _provider;
         [SerializeField] private UIStatusMenu _statusMenu;
+
         [Header("Character Info UI References")]
         [SerializeField] private Image _avatar;
+
         [SerializeField] private Image _characterElement;
         [SerializeField] private TMP_Text _level;
         [SerializeField] private LocalizeStringEvent _localizedName;
@@ -34,6 +35,7 @@ namespace CryptoQuest.UI.Menu.Panels.Status
         private CharacterSpec _inspectingCharacter;
         private AttributeSystemBehaviour _inspectingAttributeSystem;
         private int _currentIndex;
+        private IParty _party;
 
         private int CurrentIndex
         {
@@ -49,7 +51,10 @@ namespace CryptoQuest.UI.Menu.Panels.Status
             }
         }
 
-        private IParty PlayerParty => _provider.PartyController.Party;
+        private void Start()
+        {
+            _party = ServiceProvider.GetService<IPartyController>().Party;
+        }
 
         private void OnEnable()
         {
@@ -63,7 +68,7 @@ namespace CryptoQuest.UI.Menu.Panels.Status
 
         private void InspectFirstCharacter()
         {
-            InspectCharacter(PlayerParty.Members[0]);
+            InspectCharacter(_party.Members[0]);
         }
 
         public void ChangeCharacter(float direction)
@@ -80,11 +85,11 @@ namespace CryptoQuest.UI.Menu.Panels.Status
         /// <param name="direction">-1 for left and 1 for right</param>
         private CharacterSpec GetTheNextValidMemberInParty(int direction)
         {
-            var memberInParty = PlayerParty.Members[CurrentIndex];
+            var memberInParty = _party.Members[CurrentIndex];
             while (memberInParty.IsValid() == false)
             {
                 CurrentIndex += direction;
-                memberInParty = PlayerParty.Members[CurrentIndex];
+                memberInParty = _party.Members[CurrentIndex];
             }
 
             return memberInParty;
@@ -135,7 +140,7 @@ namespace CryptoQuest.UI.Menu.Panels.Status
         {
             _characterElement.sprite = elementIcon;
         }
-        
+
         public void SetExp(float exp)
         {
             _expBar.SetValue(exp);

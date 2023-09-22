@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using CryptoQuest.Gameplay.Character;
 using CryptoQuest.Gameplay.Inventory;
 using CryptoQuest.Gameplay.Inventory.Items;
@@ -19,48 +20,22 @@ namespace CryptoQuest.System
     /// Then load the next scene where we need these services
     ///
     /// This is an anti-pattern, every time a new service is added, we need to update this provider
+    /// We need to inject before actually using, all setup has to be done before hand
     /// TODO: refactor to use dependency injection
     /// </summary>
-    public class ServiceProvider : ScriptableObject
+    public static class ServiceProvider
     {
-        public delegate void EquipmentWithSlotHandler(CharacterSpec charIndexInParty,
-            EquipmentSlot.EType slotType);
+        private static readonly Dictionary<Type, object> Services = new Dictionary<Type, object>();
 
-        public event EquipmentWithSlotHandler UnequipCharacterEquipmentAtSlot;
-        public event Action<CharacterSpec, EquipmentInfo> EquipCharacterEquipmentAtSlot;
-        public event Action<IPartyController> PartyProvided;
-        public IInventoryController InventoryController { get; private set; }
-
-        public IPartyController PartyController { get; private set; }
-
-        public InventorySO Inventory => InventoryController.Inventory;
-
-        private void ProvideBase(object service)
+        public static void Provide<T>(T service)
         {
-            Debug.Log($"Bind service [{service.GetType().Name}] to {name}");
+            Debug.Log($"Bind service [{service.GetType().Name}]");
+            Services[typeof(T)] = service;
         }
 
-        public void Provide(IInventoryController service)
+        public static T GetService<T>()
         {
-            ProvideBase(service);
-            InventoryController = service;
-        }
-
-        public void Provide(IPartyController service)
-        {
-            ProvideBase(service);
-            PartyController = service;
-            PartyProvided?.Invoke(service);
-        }
-
-        public void UnequipEquipmentAtSlot(CharacterSpec inspectingChar, EquipmentSlot.EType slotType)
-        {
-            UnequipCharacterEquipmentAtSlot?.Invoke(inspectingChar, slotType);
-        }
-
-        public void EquipEquipment(CharacterSpec inspectingCharacter, EquipmentInfo equipment)
-        {
-            EquipCharacterEquipmentAtSlot?.Invoke(inspectingCharacter, equipment);
+            return (T)Services[typeof(T)];
         }
     }
 }

@@ -1,25 +1,21 @@
-using CryptoQuest.Gameplay.PlayerParty;
-using CryptoQuest.System;
-using UnityEngine;
 using System.Collections;
 using CryptoQuest.Gameplay.Character;
+using CryptoQuest.Gameplay.PlayerParty;
+using CryptoQuest.System;
+using IndiGames.Core.Events.ScriptableObjects;
+using UnityEngine;
 
 namespace CryptoQuest.UI.Battle.PlayerParty
 {
     public class PlayerPartyPresenter : MonoBehaviour
     {
         [SerializeField] private BattleAvatarDatabase _avatarDatabase;
-        [SerializeField] private ServiceProvider _serviceProvider;
-
         [SerializeField] private UICharacterBattleInfo[] _characterUis;
         public UICharacterBattleInfo[] CharacterUIs => _characterUis;
 
         private IParty _party;
-        
-#if UNITY_EDITOR
-        [Header("Debug")]
-        [SerializeField] private PartySO _testParty;
 
+#if UNITY_EDITOR
         private void OnValidate()
         {
             _characterUis = GetComponentsInChildren<UICharacterBattleInfo>(true);
@@ -28,35 +24,16 @@ namespace CryptoQuest.UI.Battle.PlayerParty
 
         private void Awake()
         {
-            _party = _serviceProvider.PartyController?.Party;
-            _serviceProvider.PartyProvided += InitParty;
+            InitParty();
         }
 
-        private void OnEnable()
+        private void InitParty()
         {
-#if UNITY_EDITOR
-            if (_testParty) _party = _testParty;
-#endif
-            CoLoadPartyMembers();
+            _party = ServiceProvider.GetService<IPartyController>().Party;
+            StartCoroutine(CoLoadPartyMembers());
         }
 
-        private void OnDestroy()
-        {
-            _serviceProvider.PartyProvided -= InitParty;
-        }
-
-        private void InitParty(IPartyController partyController)
-        {
-            _party ??= _serviceProvider.PartyController.Party;
-            CoLoadPartyMembers();
-        }
-
-        private void CoLoadPartyMembers()
-        {
-            StartCoroutine(LoadPartyMembers());
-        }
-
-        private IEnumerator LoadPartyMembers()
+        private IEnumerator CoLoadPartyMembers()
         {
             for (var index = 0; index < _party.Members.Length; index++)
             {
@@ -66,11 +43,11 @@ namespace CryptoQuest.UI.Battle.PlayerParty
                 if (!characterUI.gameObject.activeSelf) continue;
 
                 characterUI.Init(member);
-                yield return LoadBattleAvatar(member, characterUI);
+                yield return CoLoadBattleAvatar(member, characterUI);
             }
         }
 
-        private IEnumerator LoadBattleAvatar(CharacterSpec character, UICharacterBattleInfo characterUI)
+        private IEnumerator CoLoadBattleAvatar(CharacterSpec character, UICharacterBattleInfo characterUI)
         {
             var id = $"{character.BackgroundInfo.Label.labelString}_{character.Class.Label.labelString}";
             yield return _avatarDatabase.LoadDataById(id);

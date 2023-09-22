@@ -32,8 +32,6 @@ namespace CryptoQuest.Gameplay.Reward
         public static event Action<float> RewardExpEvent;
         public static void RewardPlayerExp(float exp) => RewardExpEvent?.Invoke(exp);
 
-        [SerializeField] private ServiceProvider _serviceProvider;
-
         [Header("Raise Event")]
         [SerializeField] private LootEventChannelSO _addLootRequestEventChannel;
 
@@ -45,25 +43,17 @@ namespace CryptoQuest.Gameplay.Reward
         {
             Rewarding += Reward;
             RewardExpEvent += RewardExp;
-            _serviceProvider.PartyProvided += BindParty;
         }
 
-        private void OnEnable()
+        private void Start()
         {
-            BindParty(_serviceProvider.PartyController);
+            _party = ServiceProvider.GetService<IPartyController>().Party;
         }
 
         private void OnDestroy()
         {
             Rewarding -= Reward;
             RewardExpEvent -= RewardExp;
-            _serviceProvider.PartyProvided -= BindParty;
-        }
-
-        private void BindParty(IPartyController partyController)
-        {
-            if (partyController == null) return;
-            _party ??= partyController.Party;
         }
 
         public void Reward(params LootInfo[] loots)

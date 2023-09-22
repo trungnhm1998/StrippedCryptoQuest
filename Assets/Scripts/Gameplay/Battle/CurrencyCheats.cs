@@ -1,4 +1,5 @@
 using CommandTerminal;
+using CryptoQuest.Gameplay.Inventory;
 using CryptoQuest.Gameplay.Inventory.Currency;
 using CryptoQuest.Gameplay.Loot;
 using CryptoQuest.System;
@@ -9,7 +10,6 @@ namespace CryptoQuest.Gameplay.Battle
 {
     public class CurrencyCheats : MonoBehaviour, ICheatInitializer
     {
-        [SerializeField] private ServiceProvider _serviceProvider;
         [SerializeField] private CurrencySO _goldSo;
 
         public void InitCheats()
@@ -23,7 +23,7 @@ namespace CryptoQuest.Gameplay.Battle
             float amount = args[0].Float;
             CurrencyInfo goldInfo = new(_goldSo, amount);
             CurrencyLootInfo goldLootInfo = new(goldInfo);
-            goldLootInfo.AddItemToInventory(_serviceProvider.Inventory);
+            goldLootInfo.AddItemToInventory(ServiceProvider.GetService<IInventoryController>().Inventory);
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using CryptoQuest.Gameplay.PlayerParty;
 using CryptoQuest.System;
 using CryptoQuest.UI.Menu.Character;
 using CryptoQuest.UI.Menu.MenuStates.ItemStates;
@@ -11,7 +12,6 @@ namespace CryptoQuest.UI.Menu.Panels.Item
     public class UIItemCharacterSelection : MonoBehaviour
     {
         public event Action<int[]> Confirmed;
-        [SerializeField] private ServiceProvider _serviceProvider;
         [SerializeField] private UICharacterPartySlot[] _partySlots;
 
         /// <summary>
@@ -20,7 +20,7 @@ namespace CryptoQuest.UI.Menu.Panels.Item
         private void OnEnable()
         {
             ConsumingItemState.Cancelled += Hide;
-            var party = _serviceProvider.PartyController.Party;
+            var party = ServiceProvider.GetService<IPartyController>().Party;
             for (var index = 0; index < party.Members.Length; index++)
             {
                 var member = party.Members[index];

@@ -1,6 +1,7 @@
 using CryptoQuest.System;
 using CommandTerminal;
 using CryptoQuest.Events;
+using CryptoQuest.Gameplay.PlayerParty;
 using CryptoQuest.System.Cheat;
 using UnityEngine;
 
@@ -8,7 +9,6 @@ namespace CryptoQuest.Gameplay.Character.LevelSystem
 {
     public class LevelCheats : MonoBehaviour, ICheatInitializer
     {
-        [SerializeField] private ServiceProvider _provider;
         [SerializeField] private CharacterSpecEventChannelSO _characterLevelUpEventChannel;
 
         public void InitCheats()
@@ -34,7 +34,7 @@ namespace CryptoQuest.Gameplay.Character.LevelSystem
 
         public void AddExpToCharacter(CommandArg[] args)
         {
-            var partyController = _provider.PartyController;
+            var partyController = ServiceProvider.GetService<IPartyController>();
             var memberIndex = args[0].Int;
             var expToAdd = args[1].Int;
 

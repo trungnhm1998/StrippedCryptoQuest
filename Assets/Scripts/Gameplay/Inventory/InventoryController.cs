@@ -23,7 +23,6 @@ namespace CryptoQuest.Gameplay.Inventory
         public event Action<EquipmentInfo> EquipmentLoadedEvent;
         [SerializeField] private EquipmentDatabaseSO _equipmentDatabase;
         [SerializeField] private InventorySO _inventory;
-        [SerializeField] private ServiceProvider _provider;
         public InventorySO Inventory => _inventory;
 
         [Header("Listening to")]
@@ -31,7 +30,7 @@ namespace CryptoQuest.Gameplay.Inventory
 
         private void Awake()
         {
-            _provider.Provide(this);
+            ServiceProvider.Provide<IInventoryController>(this);
         }
 
         private void OnEnable()

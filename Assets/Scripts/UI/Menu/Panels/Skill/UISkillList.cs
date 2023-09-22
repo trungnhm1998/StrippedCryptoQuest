@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using CryptoQuest.Gameplay.Character;
+using CryptoQuest.Gameplay.PlayerParty;
 using CryptoQuest.Gameplay.Skill;
 using CryptoQuest.System;
 using PolyAndCode.UI;
@@ -14,7 +15,6 @@ namespace CryptoQuest.UI.Menu.Panels.Skill
     {
         public static UnityAction EnterSkillSelectionEvent;
 
-        [SerializeField] private ServiceProvider _serviceProvider;
         [SerializeField] private UICharacterSelection _characterSelection;
 
         [Header("Scroll View Configs")]
@@ -49,7 +49,7 @@ namespace CryptoQuest.UI.Menu.Panels.Skill
         private void OnEnable()
         {
             CleanUpScrollView();
-            Init(_serviceProvider.PartyController.Party.Members[0]);
+            Init(ServiceProvider.GetService<IPartyController>().Party.Members[0]);
         }
 
         private void Init(CharacterSpec characterSpec, bool isAnotherChar = false)
