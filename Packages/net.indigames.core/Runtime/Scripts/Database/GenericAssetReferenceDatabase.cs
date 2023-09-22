@@ -13,7 +13,15 @@ using UnityEditor;
 
 namespace IndiGames.Core.Database
 {
-    public class GenericAssetReferenceDatabase<TKey, TSerializableObject> : ScriptableObject
+    public abstract class GenericAssetReferenceDatabase : ScriptableObject
+    {
+#if UNITY_EDITOR
+        public abstract Type GetAssetType();
+        public abstract void Editor_FetchDataInProject();
+#endif
+    }
+
+    public class GenericAssetReferenceDatabase<TKey, TSerializableObject> : GenericAssetReferenceDatabase
         where TSerializableObject : Object
     {
         [Serializable]
@@ -50,6 +58,7 @@ namespace IndiGames.Core.Database
                     yield return loadingHandle;
                     yield break;
                 }
+
                 _loadedData.Remove(id);
             }
 
@@ -104,8 +113,7 @@ namespace IndiGames.Core.Database
         /// <summary>
         /// You must also declare this in your devired class so it'll show up in editor inspector menu
         /// </summary>
-        [ContextMenu("Fetch Data In Project")]
-        public virtual void Editor_FetchDataInProject()
+        public override void Editor_FetchDataInProject()
         {
             _maps = Array.Empty<Map>();
 
@@ -120,7 +128,7 @@ namespace IndiGames.Core.Database
                 var assetRef = new AssetReferenceT<TSerializableObject>(uid);
 
                 assetRef.SetEditorAsset(asset);
-                Editor_SetInstanceId(ref instance, asset);
+                instance.Id = Editor_GetInstanceId(asset);
                 instance.Data = assetRef;
                 ArrayUtility.Add(ref _maps, instance);
             }
@@ -128,7 +136,14 @@ namespace IndiGames.Core.Database
             UnityEditor.EditorUtility.SetDirty(this);
         }
 
-        protected virtual void Editor_SetInstanceId(ref Map instance, TSerializableObject asset) { }
+        protected virtual TKey Editor_GetInstanceId(TSerializableObject asset) => default(TKey);
+
+        public override Type GetAssetType()
+        {
+            var type = GetType();
+            var genericType = type.BaseType?.GetGenericArguments()[1];
+            return genericType;
+        }
 #endif
     }
 }
