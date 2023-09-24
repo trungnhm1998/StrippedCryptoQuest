@@ -10,11 +10,13 @@ namespace CryptoQuest.Item.Equipment
     [Serializable]
     public class EquipmentInfo : ItemInfo, IEquatable<EquipmentInfo>
     {
-        [field: SerializeField] public string DefinitionId { get; private set; }
+        [SerializeField] private string _definitionId;
+        public string DefinitionId => _definitionId;
+
         [field: SerializeField] public int Level { get; private set; }
-        public EquipmentPrefab Data => _asset;
+        public EquipmentPrefab Data => Prefab;
         public AttributeWithValue[] Stats => Def.Stats;
-        public EquipmentSlot.EType[] RequiredSlots => _asset.RequiredSlots;
+        public EquipmentSlot.EType[] RequiredSlots => Prefab.RequiredSlots;
 
         public GameplayEffectDefinition EffectDef { get; set; }
 
@@ -29,8 +31,7 @@ namespace CryptoQuest.Item.Equipment
         public RaritySO Rarity => Def.Rarity;
         public float ValuePerLvl => Def.ValuePerLvl;
         public EquipmentDef Def { get; set; }
-
-        private EquipmentPrefab _asset;
+        public EquipmentPrefab Prefab { get; set; }
 
         public EquipmentInfo()
         {
@@ -39,7 +40,7 @@ namespace CryptoQuest.Item.Equipment
 
         public EquipmentInfo(string definitionId, int lvl = 1)
         {
-            DefinitionId = definitionId;
+            _definitionId = definitionId;
             Level = lvl;
         }
 
@@ -95,10 +96,10 @@ namespace CryptoQuest.Item.Equipment
         {
             if (!IsValid()) return false;
 
-            CharacterClass[] equipmentAllowedClasses = _asset.EquipmentType.AllowedClasses;
+            CharacterClass[] equipmentAllowedClasses = Prefab.EquipmentType.AllowedClasses;
             CharacterClass characterClass = inspectingCharacter.Class;
 
-            if (_asset.RequiredCharacterLevel > inspectingCharacter.Level)
+            if (Prefab.RequiredCharacterLevel > inspectingCharacter.Level)
             {
                 Debug.LogWarning("Character level is not enough");
                 return false;
@@ -121,7 +122,7 @@ namespace CryptoQuest.Item.Equipment
 
         public override bool IsValid()
         {
-            return Def != null && _asset != null && _asset.EquipmentType != null;
+            return Def != null && Prefab != null && Prefab.EquipmentType != null;
         }
     }
 }

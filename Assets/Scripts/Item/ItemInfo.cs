@@ -22,7 +22,7 @@ namespace CryptoQuest.Item
     public abstract class ItemInfo<TDef> : ItemInfo where TDef : GenericItem
     {
         [field: SerializeField] public TDef Data { get; set; } // TODO: Primitive item ID instead
-        
+
         protected ItemInfo(TDef baseGenericItem)
         {
             Data = baseGenericItem;

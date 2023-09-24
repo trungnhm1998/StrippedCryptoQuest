@@ -1,6 +1,5 @@
 ﻿using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
 
 namespace CryptoQuest.Item.Equipment
 {
@@ -10,7 +9,7 @@ namespace CryptoQuest.Item.Equipment
     [CreateAssetMenu(fileName = "Equipment", menuName = "Crypto Quest/Inventory/Equipment Def")]
     public class EquipmentDef : ScriptableObject
     {
-        [field: SerializeField] public int PrefabId { get; private set; }
+        [field: SerializeField] public string PrefabId { get; private set; }
         [field: SerializeField] public string ID { get; private set; }
         [field: SerializeField] public bool IsNft { get; private set; }
         [field: SerializeField] public RaritySO Rarity { get; private set; }

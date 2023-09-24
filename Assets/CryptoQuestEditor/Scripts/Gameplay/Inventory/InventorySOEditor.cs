@@ -113,8 +113,11 @@ namespace CryptoQuestEditor
 
             foreach (var equipment in allEquipment)
             {
-                Target.Equipments.Add(new EquipmentInfo(equipment.ID, 1));
+                Target.Editor_Add(new EquipmentInfo(equipment.ID));
             }
+
+            EditorUtility.SetDirty(Target);
+            AssetDatabase.SaveAssets();
         }
 
         private void AddAllUsableItem()
@@ -168,7 +171,7 @@ namespace CryptoQuestEditor
 
                 var instance = new EquipmentInfo(equipment.ID);
                 FillEquipmentData(cols, instance, headerFields);
-                Target.Equipments.Add(instance);
+                Target.Editor_Add(instance);
             }
         }
 

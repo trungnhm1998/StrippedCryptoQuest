@@ -12,7 +12,6 @@ namespace CryptoQuest.Gameplay.Inventory
 {
     public interface IInventoryController
     {
-        public event Action EquipmentsLoaded;
         void Add(EquipmentInfo equipment);
         void Remove(EquipmentInfo equipment);
         InventorySO Inventory { get; }
@@ -21,8 +20,6 @@ namespace CryptoQuest.Gameplay.Inventory
 
     public class InventoryController : MonoBehaviour, IInventoryController
     {
-        public event Action EquipmentsLoaded;
-        [SerializeField] private EquipmentDatabaseSO _equipmentDatabase;
         [SerializeField] private InventorySO _inventory;
         public InventorySO Inventory => _inventory;
 
@@ -40,15 +37,20 @@ namespace CryptoQuest.Gameplay.Inventory
 
         private IEnumerator LoadAllEquipment()
         {
-            foreach (var equipment in _inventory.Equipments)
+            for (var index = 0; index < _inventory.Equipments.Count; index++)
             {
-                var defId = equipment.DefinitionId;
-                yield return _definitionDatabase.CoLoadEquipmentById(defId);
-                var def = _definitionDatabase.GetEquipmentDefById(defId);
-                equipment.Def = def;
+                var equipment = _inventory.Equipments[index];
+
+                void InitEquipmentCallback(EquipmentDef def, EquipmentPrefab prefab)
+                {
+                    equipment.Def = def;
+                    equipment.Prefab = prefab;
+                }
+
+                yield return _definitionDatabase.Provide(equipment, InitEquipmentCallback);
             }
 
-            EquipmentsLoaded?.Invoke();
+            _inventory.OnLoaded();
         }
 
         private void OnEnable()

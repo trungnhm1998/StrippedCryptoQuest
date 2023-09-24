@@ -1,6 +1,7 @@
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
+using System;
 using System.Collections.Generic;
 using CryptoQuest.Config;
 using CryptoQuest.Gameplay.Inventory.Currency;
@@ -15,10 +16,14 @@ namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects
     [CreateAssetMenu(menuName = "Crypto Quest/Inventory/Inventory")]
     public class InventorySO : ScriptableObject
     {
+        public event Action Loaded;
         [SerializeField] private InventoryConfigSO _inventoryConfig;
         [field: SerializeField] public List<ConsumableInfo> Consumables { get; private set; } = new();
-        [field: SerializeField] public List<EquipmentInfo> Equipments { get; private set; } = new();
+        [SerializeField] private List<EquipmentInfo> _equipments = new();
+        public IReadOnlyList<EquipmentInfo> Equipments => _equipments;
         [field: SerializeField] public WalletControllerSO WalletController { get; private set; }
+
+        public void OnLoaded() => Loaded?.Invoke();
 
         #region Inventory Editor
 
@@ -59,7 +64,7 @@ namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects
                 return false;
             }
 
-            Equipments.Add(equipment);
+            _equipments.Add(equipment);
             return true;
         }
 
@@ -71,7 +76,7 @@ namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects
                 return false;
             }
 
-            return Equipments.Remove(equipment);
+            return _equipments.Remove(equipment);
         }
 
         public bool Add(ConsumableInfo item, int quantity = 1)
@@ -147,5 +152,12 @@ namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects
         }
 
         #endregion
+
+#if UNITY_EDITOR
+        public void Editor_Add(EquipmentInfo equipment)
+        {
+            _equipments.Add(equipment);
+        }
+#endif
     }
 }

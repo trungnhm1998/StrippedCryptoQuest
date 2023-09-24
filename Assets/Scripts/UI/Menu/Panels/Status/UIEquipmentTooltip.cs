@@ -92,6 +92,7 @@ namespace CryptoQuest.UI.Menu.Panels.Status
 
         private IEnumerator LoadSpriteAndSet(AssetReferenceT<Sprite> equipmentTypeIcon)
         {
+            if (equipmentTypeIcon.RuntimeKeyIsValid() == false) yield break;
             _handle = equipmentTypeIcon.LoadAssetAsync<Sprite>();
             yield return _handle;
             _illustration.sprite = _handle.Result;
