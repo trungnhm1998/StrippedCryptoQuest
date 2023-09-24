@@ -7,7 +7,7 @@ namespace CryptoQuest.Battle.Components
         private ICharacter _character;
         public ICharacter Character => _character;
 
-        private void Awake()
+        protected virtual void Awake()
         {
             _character = GetComponent<ICharacter>();
         }

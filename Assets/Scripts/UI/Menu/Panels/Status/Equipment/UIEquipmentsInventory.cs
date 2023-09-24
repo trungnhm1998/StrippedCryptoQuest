@@ -11,6 +11,7 @@ using CryptoQuest.UI.Menu.MenuStates.StatusStates;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
@@ -22,7 +23,8 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
     {
         public event Action UnequipPressed;
         public event Action<EquipmentInfo, CharacterSpec> InspectingEquipment;
-        [SerializeField] private UIStatusMenu _main;
+        [FormerlySerializedAs("_main")]
+        [SerializeField] private UIStatusMenu _statusPanel;
 
         [Header("Configs")]
         [SerializeField] private ScrollRect _scrollRect;
@@ -264,8 +266,8 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
 
         private void EquipEquipment(EquipmentInfo equipment)
         {
-            _main.EquipItem(equipment);
-            _main.State.RequestStateChange(StatusMenuStateMachine.Equipment);
+            _statusPanel.EquipItem(equipment);
+            _statusPanel.State.RequestStateChange(StatusMenuStateMachine.Equipment);
         }
 
         private GameObject _cloneChar;

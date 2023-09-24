@@ -2,7 +2,6 @@
 using CryptoQuest.Item.Equipment;
 using CryptoQuest.Menu;
 using UnityEngine;
-using UnityEngine.Events;
 
 namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
 {

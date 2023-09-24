@@ -1,13 +1,10 @@
-﻿using CryptoQuest.System;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
 {
     // TODO: REFACTOR PARTY
     /// <summary>
     /// To manage a character's equipment, equip, unequip, etc. in the party
-    /// use <see cref="ServiceProvider.UnequipCharacterEquipmentAtSlot"/> event
-    /// and <see cref="ServiceProvider.EquipCharacterEquipmentAtSlot"/> event to unequip and equip
     /// </summary>
     public class CharacterEquipmentsController : MonoBehaviour
     {
