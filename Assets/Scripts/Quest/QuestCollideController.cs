@@ -12,13 +12,17 @@ namespace CryptoQuest.Quest
         private void OnTriggerEnter2D(Collider2D other)
         {
             if (_actionType == ECollideActionType.OnEnter)
+            {
                 _objectiveToComplete.OnComplete();
+            }
         }
 
         private void OnTriggerExit2D(Collider2D other)
         {
             if (_actionType == ECollideActionType.OnExit)
+            {
                 _objectiveToComplete.OnComplete();
+            }
         }
 
         private enum ECollideActionType

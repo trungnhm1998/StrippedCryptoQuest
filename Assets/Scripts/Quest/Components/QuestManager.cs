@@ -1,4 +1,5 @@
-﻿using CryptoQuest.Quest.Authoring;
+﻿using System.Collections.Generic;
+using CryptoQuest.Quest.Authoring;
 using UnityEngine;
 
 namespace CryptoQuest.Quest.Components
@@ -8,6 +9,8 @@ namespace CryptoQuest.Quest.Components
     public class QuestManager : MonoBehaviour
     {
         [SerializeField] private QuestDatabase _database;
+        [SerializeField] private List<string> _completedQuests; // GUIDs
+        public List<string> CompletedQuests => _completedQuests;
 
         private void OnEnable()
         {

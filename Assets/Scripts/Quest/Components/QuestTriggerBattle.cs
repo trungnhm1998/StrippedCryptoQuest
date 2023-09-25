@@ -1,14 +1,14 @@
+﻿using CryptoQuest.Gameplay.Battle;
+using CryptoQuest.Gameplay.Encounter;
 using CryptoQuest.Quest.Authoring;
 using UnityEngine;
-using UnityEngine.Events;
 
-namespace CryptoQuest.Quest.Components
+namespace CryptoQuest.Quest
 {
-    public class RaiseEventWhenObjectiveCompleted : MonoBehaviour
+    public class QuestTriggerBattle : MonoBehaviour
     {
         [field: SerializeReference] private AbstractObjective _quest;
-
-        public UnityEvent OnQuestCompleted;
+        [field: SerializeField] private Battlefield _battlefieldToLoad;
 
         private void OnEnable()
         {
@@ -25,7 +25,7 @@ namespace CryptoQuest.Quest.Components
 
         private void OnCompleted()
         {
-            OnQuestCompleted?.Invoke();
+            BattleLoader.RequestLoadBattle(_battlefieldToLoad.Id);
         }
     }
 }

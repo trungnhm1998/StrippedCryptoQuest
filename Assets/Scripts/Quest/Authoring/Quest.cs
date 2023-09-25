@@ -71,9 +71,8 @@ namespace CryptoQuest.Quest.Authoring
 
         public override void OnComplete()
         {
+            base.OnComplete();
             Debug.Log($"Quest: <color=green>{name}</color> is completed.");
-            IsCompleted = true;
-            OnCompleteObjective?.Invoke();
         }
 
         public override void OnProgressChange()

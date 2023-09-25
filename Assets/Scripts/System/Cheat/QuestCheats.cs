@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using CommandTerminal;
-using CryptoQuest.Quest;
 using CryptoQuest.Quest.Authoring;
 using UnityEngine;
 
@@ -30,9 +29,7 @@ namespace CryptoQuest.System.Cheat
                 return;
             }
 
-            var quest = _questDictionary[questName];
-
-            quest.OnComplete();
+            _questDictionary[questName].OnComplete();
         }
     }
 }

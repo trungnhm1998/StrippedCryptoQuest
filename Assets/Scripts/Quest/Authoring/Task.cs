@@ -15,8 +15,7 @@ namespace CryptoQuest.Quest.Authoring
         public override void OnComplete()
         {
             Debug.Log($"Task: <color=green>{name}</color> was completed.");
-            IsCompleted = true;
-            OnCompleteObjective?.Invoke();
+            base.OnComplete();
         }
 
         public override void OnProgressChange()
@@ -24,9 +23,5 @@ namespace CryptoQuest.Quest.Authoring
             //TODO: implement task count. Ex: Kill 10 enemies
             OnObjectiveProgressChange?.Invoke();
         }
-
-        public override void SubscribeObjective() { }
-
-        public override void UnsubscribeObjective() { }
     }
 }
