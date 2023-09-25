@@ -1,0 +1,100 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-8387746003425807630
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae8a1c5f40eaf534e8b2a294dfc60297, type: 3}
+  m_Name: Usable5008Ability
+  m_EditorClassIdentifier: 
+  tags:
+    AbilityTag: {fileID: 0}
+    CancelAbilityWithTags: []
+    BlockAbilityWithTags: []
+    ActivationTags: []
+    OwnerTags:
+      RequireTags: []
+      IgnoreTags: []
+    SourceTags:
+      RequireTags: []
+      IgnoreTags: []
+    TargetTags:
+      RequireTags: []
+      IgnoreTags: []
+  <CancelEffectWithTags>k__BackingField:
+  - {fileID: 11400000, guid: 8755f45596e5790498880855432c7b33, type: 2}
+--- !u!114 &-5686906365298120419
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbb6112b998064f4ebc8a44f4c80c446, type: 3}
+  m_Name: Usable5008Effect
+  m_EditorClassIdentifier: 
+  <Description>k__BackingField: 
+  <EffectAction>k__BackingField:
+    rid: 373976276420264457
+  <EffectDetails>k__BackingField:
+    Modifiers: []
+    StackingType: 1
+  <GrantedTags>k__BackingField: []
+  <ApplicationTagRequirements>k__BackingField:
+    RequireTags: []
+    IgnoreTags: []
+  <ExecutionCalculations>k__BackingField: []
+  <ChanceToApply>k__BackingField: 1
+  <CustomApplicationRequirements>k__BackingField: []
+  references:
+    version: 2
+    RefIds:
+    - rid: 373976276420264457
+      type: {class: InstantAction, ns: IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects.GameplayEffectActions, asm: IndiGames.GameplayAbilitySystem}
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 375c3ad7973540259bd96e25eae2a51e, type: 3}
+  m_Name: Usable5008
+  m_EditorClassIdentifier: 
+  <ID>k__BackingField: 5008
+  <DisplayName>k__BackingField:
+    m_TableReference:
+      m_TableCollectionName: GUID:effbfeca51889e845a501c4d8053b3e1
+    m_TableEntryReference:
+      m_KeyId: 8
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  <Description>k__BackingField:
+    m_TableReference:
+      m_TableCollectionName: GUID:14892b65b1edfe448b064250eaff3b36
+    m_TableEntryReference:
+      m_KeyId: 8
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  <Image>k__BackingField: {fileID: 21300000, guid: 79b35fd1225f2394c94f7fabebf9470b, type: 3}
+  <consumableType>k__BackingField: {fileID: 11400000, guid: 38be8846d419c5248a5eda2b4376a348, type: 2}
+  <Effect>k__BackingField: {fileID: -5686906365298120419}
+  <Ability>k__BackingField: {fileID: -8387746003425807630}
+  <UsageScenario>k__BackingField: 2
+  <TargetSelectionEvent>k__BackingField: {fileID: 11400000, guid: cf816191ca3034c4d80534b6369b5834, type: 2}
+  references:
+    version: 2
+    RefIds: []

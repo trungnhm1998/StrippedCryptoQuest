@@ -16,7 +16,15 @@ MonoBehaviour:
   <EffectAction>k__BackingField:
     rid: 7003385982059020291
   <EffectDetails>k__BackingField:
-    Modifiers: []
+    Modifiers:
+    - Attribute: {fileID: 11400000, guid: 77c53593fd92c904aa7689c5a7449df3, type: 2}
+      ModifierType: 0
+      ModifierMagnitude: {fileID: 11400000, guid: 8b08d0be865da3d4faa8a15ac538bfc8, type: 2}
+      Value: 1
+    - Attribute: {fileID: 11400000, guid: 77c53593fd92c904aa7689c5a7449df3, type: 2}
+      ModifierType: 0
+      ModifierMagnitude: {fileID: 11400000, guid: 7936113d530c8a249b7043bfe62594e4, type: 2}
+      Value: 1
     StackingType: 1
   <GrantedTags>k__BackingField: []
   <ApplicationTagRequirements>k__BackingField:
@@ -54,7 +62,8 @@ MonoBehaviour:
       RequireTags: []
       IgnoreTags: []
     TargetTags:
-      RequireTags: []
+      RequireTags:
+      - {fileID: 11400000, guid: c60a47c5f453a024d8657f7b3cafc7cc, type: 2}
       IgnoreTags: []
   <CancelEffectWithTags>k__BackingField: []
 --- !u!114 &11400000
@@ -88,11 +97,11 @@ MonoBehaviour:
     m_FallbackState: 0
     m_WaitForCompletion: 0
     m_LocalVariables: []
-  <Image>k__BackingField: {fileID: 21300000, guid: 35251f78a4d801b46b4b3e14e201e8e9, type: 3}
+  <Image>k__BackingField: {fileID: 21300000, guid: 79b35fd1225f2394c94f7fabebf9470b, type: 3}
   <consumableType>k__BackingField: {fileID: 11400000, guid: 38be8846d419c5248a5eda2b4376a348, type: 2}
   <Effect>k__BackingField: {fileID: -6455513288305733289}
   <Ability>k__BackingField: {fileID: -4575289052110758149}
-  <UsageScenario>k__BackingField: 0
+  <UsageScenario>k__BackingField: -1
   <TargetSelectionEvent>k__BackingField: {fileID: 11400000, guid: cf816191ca3034c4d80534b6369b5834, type: 2}
   references:
     version: 2
