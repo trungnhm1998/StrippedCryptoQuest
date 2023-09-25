@@ -1,9 +1,7 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using CryptoQuest.Gameplay.Quest;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Localization;
 
 namespace CryptoQuest.Events.UI.Dialogs
 {
@@ -11,6 +9,7 @@ namespace CryptoQuest.Events.UI.Dialogs
     {
         public event UnityAction<Action, Action> ShowEvent;
         public event UnityAction HideEvent;
+        public event UnityAction<LocalizedString> SetMessageEvent;
 
         public void Show(Action yesButtonPressed, Action noButtonPressed)
         {
@@ -20,6 +19,11 @@ namespace CryptoQuest.Events.UI.Dialogs
         public void Hide()
         {
             OnHide();
+        }
+
+        public void SetMessage(LocalizedString message)
+        {
+            OnSetMessage(message);
         }
 
         private void OnHide()
@@ -42,6 +46,11 @@ namespace CryptoQuest.Events.UI.Dialogs
             }
 
             ShowEvent.Invoke(yesButtonPressed, noButtonPressed);
+        }
+
+        private void OnSetMessage(LocalizedString message)
+        {
+            SetMessageEvent?.Invoke(message);
         }
     }
 }

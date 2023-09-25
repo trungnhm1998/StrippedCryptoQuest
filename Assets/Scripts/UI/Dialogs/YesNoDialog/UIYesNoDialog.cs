@@ -2,6 +2,8 @@ using System;
 using System.Collections;
 using CryptoQuest.Input;
 using UnityEngine;
+using UnityEngine.Localization;
+using UnityEngine.Localization.Components;
 using UnityEngine.UI;
 
 namespace CryptoQuest.UI.Dialogs.YesNoDialog
@@ -11,11 +13,11 @@ namespace CryptoQuest.UI.Dialogs.YesNoDialog
         [Header("Child Components")]
         [SerializeField] private InputMediatorSO _inputMediator;
         [SerializeField] private Button _defaultSelectButton;
+        [SerializeField] private LocalizeStringEvent _messageUi;
 
-        public Action YesPressed;
-        public Action NoPressed;
-
-        protected override void OnBeforeShow() { }
+        private Action _yesPressed;
+        private Action _noPressed;
+        private LocalizedString _message;
 
         protected override void CheckIgnorableForClose() { }
 
@@ -38,12 +40,37 @@ namespace CryptoQuest.UI.Dialogs.YesNoDialog
 
         public void OnYesButtonPressed()
         {
-            YesPressed.Invoke();
+            Debug.Log($"UIYesNoDialog::YesPressed");
+            _yesPressed?.Invoke();
         }
 
         public void OnNoButtonPressed()
         {
-            NoPressed.Invoke();
+            Debug.Log($"UIYesNoDialog::RequestCloseDialog");
+            _noPressed?.Invoke();
+        }
+
+        public UIYesNoDialog SetButtonsEvent(Action yes, Action no)
+        {
+            _yesPressed = yes;
+            _noPressed = no;
+            return this;
+        }
+
+        public UIYesNoDialog SetMessage(LocalizedString message)
+        {
+            _message = message;
+            return this;
+        }
+
+        protected override void OnBeforeShow()
+        {
+            UpdateUIMessage();
+        }
+
+        private void UpdateUIMessage()
+        {
+            _messageUi.StringReference = _message;
         }
     }
 }

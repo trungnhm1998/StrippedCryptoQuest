@@ -33,5 +33,11 @@ namespace CryptoQuest.UI.Menu.MenuStates.DimensionBoxStates
             base.Reset();
             DimensionBoxPanel.EquipmentTransferSection.ResetTransfer();
         }
+
+        public override void Interact()
+        {
+            base.Interact();
+            DimensionBoxPanel.EquipmentTransferSection.SendItems();
+        }
     }
 }
