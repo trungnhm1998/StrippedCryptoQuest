@@ -10,6 +10,7 @@ using IndiGames.GameplayAbilitySystem.AbilitySystem;
 using IndiGames.Core.EditorTools.Attributes.ReadOnlyAttribute;
 using UnityEngine;
 using CryptoQuest.Gameplay.Character.LevelSystem;
+using CryptoQuest.Gameplay.Character.LevelSystem.Components;
 
 namespace CryptoQuest.Gameplay.Character
 {

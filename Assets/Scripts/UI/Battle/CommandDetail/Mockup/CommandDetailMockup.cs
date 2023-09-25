@@ -1,7 +1,7 @@
-using UnityEngine;
 using System;
 using System.Collections.Generic;
-using CryptoQuest.UI.Battle.StateMachine;
+using CryptoQuest.Battle;
+using UnityEngine;
 using UnityEngine.Events;
 
 namespace CryptoQuest.UI.Battle.CommandDetail.Mockup
@@ -39,7 +39,7 @@ namespace CryptoQuest.UI.Battle.CommandDetail.Mockup
 
     public class CommandDetailMockup : MonoBehaviour
     {
-        [SerializeField] private BattleMenuController _battleMenuController;
+        [SerializeField] private BattleStateMachine _battleStateMachine;
         [SerializeField] private MockupButtonInfo[] _buttonInfos;
         [SerializeField] private MockupButtonInfo[] _itemButtonInfos;
         [SerializeField] private MockupButtonInfo[] _skillButtonInfos;
@@ -53,19 +53,11 @@ namespace CryptoQuest.UI.Battle.CommandDetail.Mockup
         private void OnEnable()
         {
             CommandDetailPresenter.InspectButton += InspectingButton;
-            SelectSingleEnemyState.EnteredState += OnEnterSelectSingleEnemyState;
-            SelectEnemyGroupState.EnteredState += OnEnterSelectEnemyGroupState;
-            SelectSkillState.EnteredState += OnEnterSelectSkillState;
-            SelectItemState.EnteredState += OnEnterSelectItemState;
         }
 
         private void OnDisable()
         {
             CommandDetailPresenter.InspectButton -= InspectingButton;
-            SelectSingleEnemyState.EnteredState -= OnEnterSelectSingleEnemyState;
-            SelectEnemyGroupState.EnteredState -= OnEnterSelectEnemyGroupState;
-            SelectSkillState.EnteredState -= OnEnterSelectSkillState;
-            SelectItemState.EnteredState -= OnEnterSelectItemState;
         }
 
         private void OnEnterSelectSingleEnemyState()
@@ -101,12 +93,10 @@ namespace CryptoQuest.UI.Battle.CommandDetail.Mockup
 
         public void ChangeToSelectSingleEnemyState()
         {
-            _battleMenuController.BattleMenuFSM?.RequestStateChange(BattleMenuStateMachine.SelectSingleEnemyState);
         }
 
         public void ChangeToSelectGroupEnemyState()
         {
-            _battleMenuController.BattleMenuFSM?.RequestStateChange(BattleMenuStateMachine.SelectEnemyGroupState);
         }
     }
 }

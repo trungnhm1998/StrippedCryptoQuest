@@ -4,7 +4,7 @@ using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
 using IndiGames.GameplayAbilitySystem.TagSystem.ScriptableObjects;
 
-namespace CryptoQuest.Gameplay.Battle.Helper
+namespace CryptoQuest.Gameplay.Battle.Core.Helper
 {
     public static class AbilitySystemExtension
     {

@@ -1,4 +1,4 @@
-using CryptoQuest.Gameplay.Battle.Helper;
+using CryptoQuest.Gameplay.Battle.Core.Helper;
 using NUnit.Framework;
 
 namespace CryptoQuest.Tests.Editor.Battle

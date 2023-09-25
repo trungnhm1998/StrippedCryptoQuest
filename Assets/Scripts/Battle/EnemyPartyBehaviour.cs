@@ -1,10 +1,9 @@
 ﻿using System.Collections.Generic;
+using CryptoQuest.Battle.Components;
 using CryptoQuest.Character.Enemy;
-using CryptoQuest.Gameplay.Character;
-using CryptoQuest.Gameplay.Enemy;
 using UnityEngine;
 
-namespace CryptoQuest.Gameplay.Battle
+namespace CryptoQuest.Battle
 {
     public class EnemyPartyBehaviour : MonoBehaviour
     {

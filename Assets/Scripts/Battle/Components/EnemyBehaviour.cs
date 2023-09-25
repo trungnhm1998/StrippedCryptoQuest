@@ -1,7 +1,7 @@
 ﻿using CryptoQuest.Character.Enemy;
 using UnityEngine;
 
-namespace CryptoQuest.Gameplay.Battle
+namespace CryptoQuest.Battle.Components
 {
     public class EnemyBehaviour : MonoBehaviour
     {
@@ -10,6 +10,13 @@ namespace CryptoQuest.Gameplay.Battle
         private EnemyDef _enemyDef;
         private GameObject _enemyModel;
 
+        private ICharacter _battleCharacter;
+
+        private void Awake()
+        {
+            _battleCharacter = GetComponent<ICharacter>();
+        }
+
         public void Init(EnemySpec enemySpec)
         {
             _spec = enemySpec;
@@ -17,6 +24,10 @@ namespace CryptoQuest.Gameplay.Battle
             _displayName = _spec.DisplayName;
             _enemyDef = _spec.Data;
             _enemyModel = Instantiate(_enemyDef.Prefab, transform);
+            
+            var statsInitializer = GetComponent<IStatsInitializer>();
+            statsInitializer.SetStats(_enemyDef.Stats);
+            _battleCharacter.Init(_enemyDef.Element);
         }
 
         private void OnDestroy()

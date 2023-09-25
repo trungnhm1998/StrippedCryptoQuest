@@ -1,8 +1,7 @@
-﻿using CryptoQuest.Character.Hero;
-using CryptoQuest.UI.Menu.Panels.Home;
+﻿using CryptoQuest.UI.Menu.Panels.Home;
 using UnityEngine;
 
-namespace CryptoQuest.Gameplay.Character
+namespace CryptoQuest.Character.Hero
 {
     public class MainOrigin : Origin
     {

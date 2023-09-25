@@ -1,10 +1,10 @@
-using UnityEngine;
-using CryptoQuest.Events;
-using AttributeScriptableObject = IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects.AttributeScriptableObject;
 using CryptoQuest.Character.Attributes;
+using CryptoQuest.Events;
 using CryptoQuest.Gameplay.Helper;
+using UnityEngine;
+using AttributeScriptableObject = IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects.AttributeScriptableObject;
 
-namespace CryptoQuest.Gameplay.Character.LevelSystem
+namespace CryptoQuest.Gameplay.Character.LevelSystem.Components
 {
     public class CharacterLevelComponent : MonoBehaviour, ICharacterComponent
     {

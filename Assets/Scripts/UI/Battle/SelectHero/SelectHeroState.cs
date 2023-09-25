@@ -1,33 +1,18 @@
-using UnityEngine;
-using CryptoQuest.UI.Battle.StateMachine;
 using System;
+using CryptoQuest.PushdownFSM;
 
 namespace CryptoQuest.UI.Battle.SelectHero
 {
-    public class SelectHeroState : BattleMenuStateBase
+    public class SelectHeroState : IState
     {
-        public static event Action EnteredState;
-
-        private UISelectHeroButton _selectHeroButton;
-
-        public SelectHeroState(BattleMenuStateMachine stateMachine, UISelectHeroButton button)
-            : base(stateMachine)
+        public void OnEnter()
         {
-            _selectHeroButton = button;
+            throw new NotImplementedException();
         }
 
-        public override void OnEnter()
+        public void OnExit()
         {
-            base.OnEnter();
-            EnteredState?.Invoke();
-            _selectHeroButton.SetUIActive(true);
-            _selectHeroButton.SelectButton();
-        }
-
-        public override void OnExit()
-        {
-            base.OnExit();
-            _selectHeroButton.SetUIActive(false);
+            throw new NotImplementedException();
         }
     }
 }

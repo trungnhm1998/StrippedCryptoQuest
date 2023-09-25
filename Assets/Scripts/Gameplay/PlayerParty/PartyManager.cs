@@ -1,4 +1,5 @@
 ﻿using System;
+using CryptoQuest.Battle.Components;
 using CryptoQuest.Character.Attributes;
 using CryptoQuest.Gameplay.Character;
 using CryptoQuest.System;
@@ -8,7 +9,7 @@ namespace CryptoQuest.Gameplay.PlayerParty
 {
     public interface IPartyController
     {
-        bool TryGetMemberAtIndex(int charIndexInParty, out CharacterBehaviourBase character);
+        bool TryGetMemberAtIndex(int charIndexInParty, out IHero character);
         IParty Party { get; }
     }
 
@@ -33,11 +34,6 @@ namespace CryptoQuest.Gameplay.PlayerParty
             _partySlots = GetComponentsInChildren<PartySlot>();
         }
 
-
-        /// <summary>
-        /// Note: If you using party at awake or start and active in the same scene with this
-        /// You should get this through binding event <see cref="ServiceProvider.PartyProvided"/>
-        /// </summary>
         private void Awake()
         {
             ServiceProvider.Provide<IPartyController>(this);
@@ -58,7 +54,7 @@ namespace CryptoQuest.Gameplay.PlayerParty
             }
         }
 
-        public bool TryGetMemberAtIndex(int charIndexInParty, out CharacterBehaviourBase character)
+        public bool TryGetMemberAtIndex(int charIndexInParty, out IHero character)
         {
             character = _partySlots[0].CharacterComponent; // first slot suppose to never be null
 

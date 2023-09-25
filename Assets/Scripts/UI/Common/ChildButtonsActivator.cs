@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace CryptoQuest.UI.Battle.CommandsMenu
+namespace CryptoQuest.UI.Common
 {
     public class ChildButtonsActivator : MonoBehaviour
     {

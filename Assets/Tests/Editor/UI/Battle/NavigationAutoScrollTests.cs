@@ -1,5 +1,4 @@
-﻿using CryptoQuest.UI.Battle.CommandsMenu;
-using CryptoQuest.UI.Common;
+﻿using CryptoQuest.UI.Common;
 using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.UI;

@@ -1,4 +1,5 @@
-﻿using CryptoQuest.Character.Attributes;
+﻿using System;
+using CryptoQuest.Character.Attributes;
 using CryptoQuest.Gameplay.Character;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.Components;
@@ -12,6 +13,7 @@ namespace CryptoQuest.Gameplay
     /// <summary>
     /// Should be a component on scene so that we can use the update
     /// </summary>
+    [Obsolete]
     public class CharacterBehaviourBase : MonoBehaviour
     {
         [SerializeField] private AttributeScriptableObject _hpAttribute;

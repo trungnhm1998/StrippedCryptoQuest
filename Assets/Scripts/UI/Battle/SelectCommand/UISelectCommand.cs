@@ -1,8 +1,5 @@
-using System;
-using CryptoQuest.UI.Battle.CommandsMenu;
-using CryptoQuest.UI.Battle.StateMachine;
-using FSM;
-using TMPro;
+using CryptoQuest.Battle;
+using CryptoQuest.UI.Common;
 using UnityEngine;
 using UnityEngine.Localization;
 using UnityEngine.Localization.Components;
@@ -10,18 +7,9 @@ using UnityEngine.UI;
 
 namespace CryptoQuest.UI.Battle.SelectCommand
 {
-    public class UISelectCommand : MonoBehaviour, IBattleMenu
+    public class UISelectCommand : MonoBehaviour
     {
-        public static Action<LocalizedString> RequestSetCharacterName;
-        public static event Action SelectedAttack;
-        public static event Action SelectedSkill;
-        public static event Action SelectedItem;
-        public static event Action SelectedGuard;
-        public static event Action SelectedRetreat;
-        
-        public static readonly string SelectCommandState = "SelectCommand";
-        public string StateName => SelectCommandState;
-
+        [SerializeField] private BattleStateMachine _stateMachine;
         [SerializeField] private Button _firstButton;
         [SerializeField] private ChildButtonsActivator _childButtonsActivator;
         [SerializeField] private LocalizeStringEvent _characterName;
@@ -29,22 +17,12 @@ namespace CryptoQuest.UI.Battle.SelectCommand
 
         private SelectCommandState _selectCommandState;
 
-        public StateBase<string> CreateState(BattleMenuStateMachine machine)
-        {
-            _selectCommandState = new SelectCommandState(machine, this);
-            return _selectCommandState;
-        }
-
         private void OnEnable()
         {
-            RequestSetCharacterName += SetCharacterName;
-            RequestSetCharacterName?.Invoke(_testCharacterName);
+            _stateMachine.GoToState(new SelectCommandState(this));
         }
 
-        private void OnDisable()
-        {
-            RequestSetCharacterName -= SetCharacterName;
-        }
+        private void OnDisable() { }
 
         private void SetCharacterName(LocalizedString characterName)
         {
@@ -63,32 +41,15 @@ namespace CryptoQuest.UI.Battle.SelectCommand
 
         #region Method setup in UI
 
-        public void OnAttackPressed()
-        {
-            SelectedAttack?.Invoke();
-        }
+        public void OnAttackPressed() { }
 
-        public void OnSkillPressed()
-        {
-            SelectedSkill?.Invoke();
-            _selectCommandState.ChangeToSkillState();
-        }
+        public void OnSkillPressed() { }
 
-        public void OnItemPressed()
-        {
-            SelectedItem?.Invoke();
-            _selectCommandState.ChangeToItemState();
-        }
+        public void OnItemPressed() { }
 
-        public void OnGuardPressed()
-        {
-            SelectedGuard?.Invoke();
-        }
+        public void OnGuardPressed() { }
 
-        public void OnRetreatPressed()
-        {
-            SelectedRetreat?.Invoke();
-        }
+        public void OnRetreatPressed() { }
 
         #endregion
     }

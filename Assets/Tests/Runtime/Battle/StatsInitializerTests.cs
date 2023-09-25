@@ -25,7 +25,7 @@ namespace CryptoQuest.Tests.Runtime.Battle
                 new(AttributeSets.Strength, 50f),
             });
 
-            character.Init();
+            character.Init(character.Element);
 
             character.AttributeSystem.TryGetAttributeValue(AttributeSets.Health, out var health);
             Assert.AreEqual(100f, health.CurrentValue);

@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using CryptoQuest.Battle;
 using CryptoQuest.Character.Enemy;
 using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects;
 using CryptoQuest.Gameplay.Battle.ScriptableObjects;
@@ -25,11 +26,11 @@ namespace CryptoQuest.Gameplay.Battle
 
         public IEnumerator LoadEnemies()
         {
-            yield return LoadEnemiesData();
+            yield return LoadEnemiesAssets();
             _enemyPartyBehaviour.Init(_loadedEnemies);
         }
 
-        private IEnumerator LoadEnemiesData()
+        private IEnumerator LoadEnemiesAssets()
         {
             _loadedEnemies.Clear();
             var enemyParty = _bus.CurrentBattlefield;

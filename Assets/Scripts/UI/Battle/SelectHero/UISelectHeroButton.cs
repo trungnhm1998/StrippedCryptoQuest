@@ -1,34 +1,19 @@
 using System;
-using CryptoQuest.Gameplay.Character;
 using CryptoQuest.Menu;
-using CryptoQuest.UI.Battle.CommandDetail;
-using CryptoQuest.UI.Battle.PlayerParty;
-using CryptoQuest.UI.Battle.StateMachine;
-using FSM;
-using TMPro;
 using UnityEngine;
 using UnityEngine.Localization;
 using UnityEngine.Localization.Components;
-using UnityEngine.UI;
 
 namespace CryptoQuest.UI.Battle.SelectHero
 {
     [RequireComponent(typeof(MultiInputButton))]
-    public class UISelectHeroButton : MonoBehaviour, IBattleMenu
+    public class UISelectHeroButton : MonoBehaviour
     {
         public event Action ConfirmPressed;
-
-        public static readonly string SelectHeroState = "SelectHero";
-        public string StateName => SelectHeroState;
 
         [SerializeField] private MultiInputButton _button;
         [SerializeField] private GameObject _content;
         [SerializeField] private LocalizeStringEvent _label;
-
-        public StateBase<string> CreateState(BattleMenuStateMachine machine)
-        {
-            return new SelectHeroState(machine, this);;
-        }
 
         private void OnValidate()
         {

@@ -1,8 +1,8 @@
 using System.Collections.Generic;
-using UnityEngine;
 using System.Linq;
+using UnityEngine;
 
-namespace CryptoQuest.Gameplay.Battle.Helper
+namespace CryptoQuest.Gameplay.Battle.Core.Helper
 {
     public static class CommonBattleHelper
     {

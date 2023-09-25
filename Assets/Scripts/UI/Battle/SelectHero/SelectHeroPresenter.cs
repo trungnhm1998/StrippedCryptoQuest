@@ -1,9 +1,8 @@
-using UnityEngine;
-using CryptoQuest.UI.Battle.StateMachine;
-using CryptoQuest.Input;
-using CryptoQuest.UI.Battle.PlayerParty;
 using System;
 using CryptoQuest.Gameplay.Character;
+using CryptoQuest.Input;
+using CryptoQuest.UI.Battle.PlayerParty;
+using UnityEngine;
 using UnityEngine.Localization;
 
 namespace CryptoQuest.UI.Battle.SelectHero
@@ -33,14 +32,12 @@ namespace CryptoQuest.UI.Battle.SelectHero
 
         private void OnEnable()
         {
-            SelectHeroState.EnteredState += EnterSelectHeroState;
             _selectHeroButton.ConfirmPressed += OnConfirmCharacter;
             _battleInput.NavigateEvent += NavigateSelectHero;
         }
 
         private void OnDisable()
         {
-            SelectHeroState.EnteredState -= EnterSelectHeroState;
             _selectHeroButton.ConfirmPressed -= OnConfirmCharacter;
             _battleInput.NavigateEvent -= NavigateSelectHero;
         }

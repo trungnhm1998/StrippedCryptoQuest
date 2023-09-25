@@ -50,10 +50,9 @@ namespace CryptoQuest.Tests.Runtime.Battle.Builder
             }
 
             var character = _characterGameObject.GetComponent<ICharacter>();
-            _characterGameObject.GetComponent<Element>().SetElement(_elemental);
             var statsInitializer = _characterGameObject.GetComponent<IStatsInitializer>();
             statsInitializer.SetStats(_stats);
-            character.Init();
+            character.Init(_elemental);
             return character;
         }
     }

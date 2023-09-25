@@ -3,7 +3,7 @@ using CryptoQuest.Gameplay.Encounter;
 using CryptoQuest.Quest.Authoring;
 using UnityEngine;
 
-namespace CryptoQuest.Quest
+namespace CryptoQuest.Quest.Components
 {
     public class QuestTriggerBattle : MonoBehaviour
     {

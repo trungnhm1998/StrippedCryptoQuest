@@ -21,6 +21,7 @@ namespace CryptoQuest.Gameplay.Battle
         public delegate void BattleEvent(BattleContext context);
 
         public static event BattleEvent BattleCompleted;
+        public event Action Initialized;
         [SerializeField] private SpiralConfigSO _spiral;
         [SerializeField] private BattleInputSO _input;
         [SerializeField, Header("Listen")] private VoidEventChannelSO _sceneLoadedEvent;
@@ -36,13 +37,11 @@ namespace CryptoQuest.Gameplay.Battle
         private void OnEnable()
         {
             _sceneLoadedEvent.EventRaised += InitBattle;
-            _spiral.DoneSpiralOut += FinishInitBattle;
         }
 
         private void OnDisable()
         {
             _sceneLoadedEvent.EventRaised -= InitBattle;
-            _spiral.DoneSpiralOut -= FinishInitBattle;
         }
 
         private void InitBattle()
@@ -55,6 +54,8 @@ namespace CryptoQuest.Gameplay.Battle
         {
             yield return _initializer.LoadEnemies();
             _spiral.HideSpiral();
+            yield return new WaitForSeconds(_spiral.Duration);
+            FinishInitBattle();
         }
 
         /// <summary>
@@ -80,6 +81,8 @@ namespace CryptoQuest.Gameplay.Battle
         {
             _input.EnableBattleInput();
             Debug.Log("BattleManager::Battle Initialized");
+            
+            Initialized?.Invoke();
         }
     }
 }

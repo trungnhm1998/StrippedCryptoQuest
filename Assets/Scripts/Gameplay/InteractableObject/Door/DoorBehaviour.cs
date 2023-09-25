@@ -1,9 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
 using CryptoQuest.Character;
 using UnityEngine;
 
-namespace CryptoQuest.Scripts.Gameplay.InteractableObject
+namespace CryptoQuest.Gameplay.InteractableObject.Door
 {
     public class DoorBehaviour : MonoBehaviour, IInteractable
     {

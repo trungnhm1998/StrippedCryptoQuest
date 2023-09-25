@@ -1,6 +1,7 @@
 using CryptoQuest.System;
 using CommandTerminal;
 using CryptoQuest.Events;
+using CryptoQuest.Gameplay.Character.LevelSystem.Components;
 using CryptoQuest.Gameplay.PlayerParty;
 using CryptoQuest.System.Cheat;
 using UnityEngine;
@@ -43,7 +44,7 @@ namespace CryptoQuest.Gameplay.Character.LevelSystem
                 Debug.LogWarning($"Member index not valid");
                 return;
             }
-            if (!character.TryGetComponent<CharacterLevelComponent>(out var levelComponent)) return;
+            if (!character.GameObject.TryGetComponent<CharacterLevelComponent>(out var levelComponent)) return;
             levelComponent.AddExp(expToAdd);
         }
     }

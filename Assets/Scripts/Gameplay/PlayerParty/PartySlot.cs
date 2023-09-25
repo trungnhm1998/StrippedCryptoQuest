@@ -1,4 +1,5 @@
-﻿using CryptoQuest.Gameplay.Character;
+﻿using CryptoQuest.Battle.Components;
+using CryptoQuest.Gameplay.Character;
 using UnityEngine;
 
 namespace CryptoQuest.Gameplay.PlayerParty
@@ -9,21 +10,25 @@ namespace CryptoQuest.Gameplay.PlayerParty
     /// </summary>
     public class PartySlot : MonoBehaviour
     {
-        [SerializeField] private CharacterBehaviourBase _characterComponent;
-
-        public CharacterBehaviourBase CharacterComponent => _characterComponent;
         private CharacterSpec _characterSpec;
+        private IHero _hero;
+        public IHero CharacterComponent => _hero;
+
+        private void Awake()
+        {
+            _hero = GetComponentInChildren<IHero>();
+        }
 
         public void Init(CharacterSpec character)
         {
             if (character.IsValid() == false) return;
             _characterSpec = character;
-            _characterComponent.Init(character);
+            _hero.Init(character);
         }
 
         public bool IsValid()
         {
-            return _characterComponent != null && _characterSpec.IsValid();
+            return _hero != null && _characterSpec.IsValid();
         }
     }
 }
