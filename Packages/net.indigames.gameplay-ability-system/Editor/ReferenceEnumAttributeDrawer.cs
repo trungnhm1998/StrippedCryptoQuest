@@ -34,7 +34,7 @@ namespace IndiGamesEditor.GameplayAbilitySystem
                 // get type from full type name using reflection
                 var genericType = asm.GetType(typeName); // got the interface
                 var types = GetTypes(genericType).ToList();
-                var selected = EditorGUILayout.Popup("Derived Types",
+                var selected = EditorGUILayout.Popup(property.displayName,
                     types.FindIndex(t => t.Name == selectedType.Name),
                     types.Select(t => t.Name).ToArray());
                 bool changed = selected != -1 && selectedType != types[selected];

@@ -9,15 +9,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7a38777f3c724cd4cbf2eb2442d2d9bd, type: 3}
-  m_Name: ClampMPToMaxMP
+  m_Script: {fileID: 11500000, guid: 43ca8783168572046ab004c7abd00547, type: 3}
+  m_Name: ClampMPToMin
   m_EditorClassIdentifier: 
   _attribute: {fileID: 11400000, guid: a7e3a44d36bf87d44afeb00b236e832e, type: 2}
-  _maxAttribute: {fileID: 11400000, guid: 0c164956786943a46b545cc58cc139f9, type: 2}
+  _minValue: 0
   <ClampAction>k__BackingField:
-    rid: 4580806806658351163
+    rid: 4580806806658351168
   references:
     version: 2
     RefIds:
-    - rid: 4580806806658351163
+    - rid: 4580806806658351168
       type: {class: DoNothing, ns: CryptoQuest.Character.Attributes.ClampEventAction, asm: indi-games.crypto-quest}

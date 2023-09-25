@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
+using CryptoQuest.Character.Attributes.ClampEventAction;
 using IndiGames.GameplayAbilitySystem.AttributeSystem;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.Components;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
+using IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects;
 using UnityEngine;
 using CoreAttribute = IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects.AttributeScriptableObject;
 
@@ -11,25 +13,27 @@ namespace CryptoQuest.Character.Attributes
     {
         [SerializeField] private CoreAttribute _attribute;
         [SerializeField] private CoreAttribute _maxAttribute;
+        
+        [field: SerializeReference, ReferenceEnum]
+        public IClampAction ClampAction { get; set; } = new DoNothing();
 
         public override void PreAttributeChange(AttributeSystemBehaviour attributeSystem,
             ref AttributeValue newAttributeValue)
         {
             if (_attribute != newAttributeValue.Attribute) return;
             var cacheDict = attributeSystem.GetAttributeIndexCache();
-            ClampAttributeToMax(_attribute, _maxAttribute, ref newAttributeValue, cacheDict, attributeSystem);
+            ClampAttributeToMax(ref newAttributeValue, cacheDict, attributeSystem);
         }
 
-        private void ClampAttributeToMax(CoreAttribute attribute,
-            CoreAttribute maxAttribute,
-            ref AttributeValue newAttributeValue,
+        private void ClampAttributeToMax(ref AttributeValue newAttributeValue,
             Dictionary<CoreAttribute, int> cacheDict, AttributeSystemBehaviour attributeSystemBehaviour)
         {
-            if (!cacheDict.TryGetValue(attribute, out int attributeIdx)
+            if (!cacheDict.TryGetValue(_attribute, out int attributeIdx)
                 || !cacheDict.TryGetValue(_maxAttribute, out int maxAttributeIdx))
             {
-                Debug.LogWarning($"Try to clamp attribute {attribute.name} to max attribute {maxAttribute.name} " +
+                Debug.LogWarning($"Try to clamp attribute {_attribute.name} to max attribute {_maxAttribute.name} " +
                                  $"but one or both of them are not in the attribute system.");
+                ClampAction?.OnClampFailed(attributeSystemBehaviour);
                 return;
             }
 
@@ -40,15 +44,19 @@ namespace CryptoQuest.Character.Attributes
             {
                 newAttributeValue.CurrentValue = maxAttributeValue.CurrentValue;
                 Debug.Log(
-                    $"Clamped current attribute {attribute.name} from [{preChange.CurrentValue}] to [{newAttributeValue.CurrentValue}]");
+                    $"Clamped current attribute {_attribute.name} from [{preChange.CurrentValue}] to [{newAttributeValue.CurrentValue}]");
             }
 
             if (newAttributeValue.BaseValue > maxAttributeValue.BaseValue)
             {
                 newAttributeValue.BaseValue = maxAttributeValue.BaseValue;
                 Debug.Log(
-                    $"Clamped base {maxAttribute.name} from [{preChange.BaseValue}] to [{newAttributeValue.BaseValue}].");
+                    $"Clamped base {_maxAttribute.name} from [{preChange.BaseValue}] to [{newAttributeValue.BaseValue}].");
+                ClampAction?.OnClampSuccess(attributeSystemBehaviour);
+                return;
             }
+
+            ClampAction?.OnClampFailed(attributeSystemBehaviour);
         }
 
         public override void PostAttributeChange(AttributeSystemBehaviour attributeSystem,

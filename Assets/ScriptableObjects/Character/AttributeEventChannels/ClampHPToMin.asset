@@ -9,17 +9,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7a38777f3c724cd4cbf2eb2442d2d9bd, type: 3}
-  m_Name: ClampHPToMaxHP
+  m_Script: {fileID: 11500000, guid: 43ca8783168572046ab004c7abd00547, type: 3}
+  m_Name: ClampHPToMin
   m_EditorClassIdentifier: 
   _attribute: {fileID: 11400000, guid: 77c53593fd92c904aa7689c5a7449df3, type: 2}
-  _maxAttribute: {fileID: 11400000, guid: 692557e6fee799243868270d0b093d7e, type: 2}
+  _minValue: 0
   <ClampAction>k__BackingField:
-    rid: 4580806806658351166
+    rid: 4580806806658351171
   references:
     version: 2
     RefIds:
-    - rid: 4580806806658351166
+    - rid: 4580806806658351171
       type: {class: ApplyTagOnClamp, ns: CryptoQuest.Character.Attributes.ClampEventAction, asm: indi-games.crypto-quest}
       data:
-        _tagToApply: {fileID: 11400000, guid: 8bd1bb491c9733b459bbe7b9271a48db, type: 2}
+        _tagToApply: {fileID: 11400000, guid: c60a47c5f453a024d8657f7b3cafc7cc, type: 2}
