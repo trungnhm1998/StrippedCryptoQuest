@@ -6,7 +6,7 @@ namespace CryptoQuest.UI.Menu.Panels.Item
 {
     public class UIInventoryTabHeader : MonoBehaviour
     {
-        public event Action<ConsumableType> OpeningTab;
+        public event Action<EConsumeable> OpeningTab;
         [SerializeField] private UIInventoryTabButton[] _tabButtons;
 
         /// <summary>
@@ -30,13 +30,13 @@ namespace CryptoQuest.UI.Menu.Panels.Item
 
         private UIInventoryTabButton _lastSelectedTabButton;
 
-        private void OpenTab(ConsumableType consumableType)
+        private void OpenTab(EConsumeable consumableType)
         {
             HighlightTab(consumableType);
             OpeningTab?.Invoke(consumableType);
         }
         
-        public void HighlightTab(ConsumableType type)
+        public void HighlightTab(EConsumeable type)
         {
             foreach (var tabButton in _tabButtons)
             {

@@ -17,7 +17,7 @@ namespace CryptoQuest.UI.Menu.Panels.Item
         [SerializeField] private UIConsumableItem _prefab;
         [SerializeField] private ScrollRect _scrollRect;
         [SerializeField] private GameObject _content;
-        [field: SerializeField] public ConsumableType Type { get; private set; }
+        [field: SerializeField] public EConsumeable Type { get; private set; }
         private readonly List<UIConsumableItem> _uiConsumables = new();
         private UIConsumableItem _currentInspectingItem;
 

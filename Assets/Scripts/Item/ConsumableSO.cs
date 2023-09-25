@@ -12,7 +12,7 @@ namespace CryptoQuest.Item
     {
         // TODO: Use enum https://github.com/indigames/CryptoQuestClient/issues/1406
         [field: SerializeField, Header("Usable Item")]
-        public ConsumableType consumableType { get; private set; }
+        public EConsumeable consumableType { get; private set; }
 
         [field: SerializeField] public GameplayEffectDefinition Effect { get; private set; }
         [field: SerializeField] public ConsumeItemAbility Ability { get; private set; }
@@ -29,7 +29,7 @@ namespace CryptoQuest.Item
         [field: SerializeField] public VoidEventChannelSO TargetSelectionEvent { get; private set; }
 
 #if UNITY_EDITOR
-        public void Editor_SetUsableType(ConsumableType type)
+        public void Editor_SetUsableType(EConsumeable type)
         {
             consumableType = type;
         }

@@ -24,7 +24,7 @@ namespace CryptoQuest.UI.Menu.Panels.Item
         [SerializeField] private UIConsumables[] _itemLists;
         [SerializeField] private LocalizeStringEvent _localizeDescription;
 
-        private readonly Dictionary<ConsumableType, int> _itemListCache = new();
+        private readonly Dictionary<EConsumeable, int> _itemListCache = new();
         private UIConsumables _currentConsumables;
         private Text _description;
 
@@ -120,7 +120,7 @@ namespace CryptoQuest.UI.Menu.Panels.Item
             _localizeDescription.StringReference = item.Consumable.Description;
         }
 
-        private void ShowItemsWithType(ConsumableType itemType)
+        private void ShowItemsWithType(EConsumeable itemType)
         {
             var index = _itemListCache[itemType];
             ShowItemsWithType(index);

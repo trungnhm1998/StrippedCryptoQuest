@@ -53,21 +53,14 @@ namespace CryptoQuestEditor.Gameplay.Inventory
                     instance = ScriptableObject.CreateInstance<ConsumableSO>();
                 }
 
-                var keyAsset =
-                    (ConsumableType)AssetDatabase.LoadAssetAtPath(
-                        $"{DATA_PATH}KeyItem.asset", typeof(ConsumableType));
-                var consumableAsset =
-                    (ConsumableType)AssetDatabase.LoadAssetAtPath(
-                        $"{DATA_PATH}Consumable.asset", typeof(ConsumableType));
-
                 // import Data
                 instance.Editor_SetID(id);
                 instance.name = name;
 
-                instance.Editor_SetUsableType(consumableAsset);
+                instance.Editor_SetUsableType(EConsumeable.Consumable);
                 if (type == ITEM_TYPE)
                 {
-                    instance.Editor_SetUsableType(keyAsset);
+                    instance.Editor_SetUsableType(EConsumeable.Key);
                 }
 
                 // Save data
