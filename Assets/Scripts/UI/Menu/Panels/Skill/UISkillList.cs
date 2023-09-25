@@ -19,31 +19,22 @@ namespace CryptoQuest.UI.Menu.Panels.Skill
 
         [Header("Scroll View Configs")]
         [SerializeField] private RecyclableScrollRect _scrollRect;
-        [SerializeField] private RectTransform _singleItemRect;
         [SerializeField] private GameObject _upArrow;
         [SerializeField] private GameObject _downArrow;
 
         private List<AbilityData> _skills = new();
         private int _skillCount = 0;
         private UISkillButton _defaultSelectedSkill;
-
-        private RectTransform _skillListViewport;
         private float _verticalOffset;
-        private float _lowerBound;
-        private float _upperBound;
 
         private void Awake()
         {
             _characterSelection.UpdateSkillListEvent += Init;
-            UISkillButton.InspectingRow += AutoScroll;
-
-            SetupScrollViewInfo();
         }
 
         private void OnDestroy()
         {
             _characterSelection.UpdateSkillListEvent -= Init;
-            UISkillButton.InspectingRow -= AutoScroll;
         }
 
         private void OnEnable()
@@ -85,11 +76,10 @@ namespace CryptoQuest.UI.Menu.Panels.Skill
 
         private void CleanUpScrollView()
         {
-            if (_scrollRect.content.transform.childCount > 0)
-                foreach (Transform child in _scrollRect.content.transform)
-                {
-                    Destroy(child.gameObject);
-                }
+            foreach (Transform child in _scrollRect.content.transform)
+            {
+                Destroy(child.gameObject);
+            }
         }
 
         private void OnSelectFirstSkill()
@@ -98,33 +88,6 @@ namespace CryptoQuest.UI.Menu.Panels.Skill
 
             _defaultSelectedSkill = _scrollRect.content.GetChild(0).GetComponent<UISkillButton>();
             _defaultSelectedSkill.Select();
-        }
-
-        #region Auto Scroll View Setup
-        private void SetupScrollViewInfo()
-        {
-            _verticalOffset = _singleItemRect.rect.height;
-            _skillListViewport = _scrollRect.viewport;
-            var position = _skillListViewport.position;
-            var rect = _skillListViewport.rect;
-            _lowerBound = position.y - rect.height / 2;
-            _upperBound = position.y + rect.height / 2 + _verticalOffset;
-        }
-
-        private void AutoScroll(Button button)
-        {
-            var selectedRowPositionY = button.transform.position.y;
-
-            if (selectedRowPositionY <= _lowerBound)
-            {
-                _scrollRect.content.anchoredPosition += Vector2.up * _verticalOffset;
-            }
-            else if (selectedRowPositionY >= _upperBound)
-            {
-                _scrollRect.content.anchoredPosition += Vector2.down * _verticalOffset;
-            }
-
-            DisplayNavigateArrows();
         }
 
         private bool ShouldMoveUp => _scrollRect.content.anchoredPosition.y > _verticalOffset;
@@ -138,7 +101,6 @@ namespace CryptoQuest.UI.Menu.Panels.Skill
             _upArrow.SetActive(ShouldMoveUp);
             _downArrow.SetActive(ShouldMoveDown);
         }
-        #endregion
 
         #region Recyclable Scroll View Setup
         public int GetItemCount()

@@ -27,31 +27,19 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
         [SerializeField] private UIStatusMenu _statusPanel;
 
         [Header("Configs")]
+        [SerializeField] private UIStatusMenu _main;
         [SerializeField] private ScrollRect _scrollRect;
 
+        [Space]
         [SerializeField] private UIEquipmentItem _equipmentItemPrefab;
         [SerializeField] private UIEquipment _currentlyEquippingItem;
         [SerializeField] private TooltipProvider _tooltipProvider;
         [SerializeField] private RectTransform _tooltipSafeArea;
         [SerializeField] private GameObject _contents;
         [SerializeField] private MultiInputButton _unEquipButton;
-        [SerializeField] private RectTransform _singleItemRect;
         [SerializeField] private UIEquipmentPreviewer _equipmentPreviewer;
 
-        private float _verticalOffset;
-        private RectTransform _inventoryViewport;
-        private float _lowerBound;
-        private float _upperBound;
         private List<UIEquipmentItem> _equipmentItems = new();
-
-        private void Awake()
-        {
-            _verticalOffset = _singleItemRect.rect.height;
-            _inventoryViewport = _scrollRect.viewport;
-            var rect = _inventoryViewport.rect;
-            _lowerBound = _verticalOffset * 2;
-            _upperBound = rect.height;
-        }
 
         private void OnEnable()
         {
@@ -69,36 +57,6 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
         /// Reset to position to top of the list
         /// </summary>
         /// <param name="context"></param>
-        private void NavigateMenu(InputAction.CallbackContext context)
-        {
-            if (EventSystem.current.currentSelectedGameObject.name == _unEquipButton.gameObject.name)
-            {
-                _scrollRect.content.anchoredPosition = Vector2.zero;
-            }
-        }
-
-        private void AutoScroll(Button button)
-        {
-            var selectedRowPositionY = button.transform.position.y;
-
-            if (selectedRowPositionY <= _lowerBound)
-            {
-                _scrollRect.content.anchoredPosition += Vector2.up * _verticalOffset;
-            }
-            else if (selectedRowPositionY >= _upperBound)
-            {
-                _scrollRect.content.anchoredPosition += Vector2.down * _verticalOffset;
-            }
-        }
-
-        private void AlignItemRow(float selectedRowPositionY, float lowerBound)
-        {
-            if (selectedRowPositionY <= lowerBound + _verticalOffset)
-            {
-                var diff = (lowerBound + _verticalOffset) - selectedRowPositionY;
-                _scrollRect.content.anchoredPosition += Vector2.up * diff;
-            }
-        }
 
         private CharacterSpec _inspectingCharacter;
         private EquipmentSlot.EType _slotType;
@@ -256,7 +214,6 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
             ValidateEquipment(equipment, equipmentItem);
         }
 
-
         private void ValidateEquipment(EquipmentInfo equipment, UIEquipmentItem equipmentItem)
         {
             if (equipment.IsCompatibleWithCharacter(_inspectingCharacter)) return;
@@ -281,16 +238,6 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
         {
             _tooltipProvider.Tooltip.SetSafeArea(_tooltipSafeArea);
             InspectingEquipment?.Invoke(equipment, _inspectingCharacter);
-            GetEquipmentSelected(equipment);
-        }
-
-        private void GetEquipmentSelected(EquipmentInfo equipment)
-        {
-            var item = _equipmentItems.FirstOrDefault(item => item.Equipment == equipment);
-            if (item != null)
-            {
-                AutoScroll(item.GetComponent<MultiInputButton>());
-            }
         }
 
         public void OnUnequip()
