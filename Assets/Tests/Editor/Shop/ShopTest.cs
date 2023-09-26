@@ -54,7 +54,7 @@ namespace CryptoQuest.Tests.Editor.Shop
 
             foreach (var item in items)
             {
-                Assert.AreNotEqual(item.Data.consumableType, EConsumeable.Key, "Expected: Usable item except key item");
+                Assert.AreNotEqual(item.Data.ConsumableType, EConsumableType.Key, "Expected: Usable item except key item");
             }
         }
     }

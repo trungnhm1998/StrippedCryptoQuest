@@ -55,8 +55,9 @@ namespace CryptoQuest.Gameplay.Inventory
                     ableToUseOnAtLeastOneHero = true;
             }
 
-            if (ableToUseOnAtLeastOneHero && _inventoryController.Remove(consumable))
+            if (ableToUseOnAtLeastOneHero)
             {
+                consumable.OnConsumed(_inventoryController);
                 Debug.Log($"Consuming {consumable.Data} on {heroIndices.Length} heroes");
             }
 

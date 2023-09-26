@@ -1,4 +1,6 @@
 using System;
+using CryptoQuest.Gameplay.Inventory;
+using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Type;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.Localization;
@@ -8,6 +10,8 @@ namespace CryptoQuest.Item
     [Serializable]
     public class ConsumableInfo : ItemInfo<ConsumableSO>
     {
+        public static event Action<ConsumableInfo> QuantityReduced;
+
         [field: SerializeField] public int Quantity { get; private set; } = 1;
 
         public AssetReferenceT<Sprite> Icon => Data.Image;
@@ -33,6 +37,20 @@ namespace CryptoQuest.Item
         {
             // I can pass this into the event
             Data.TargetSelectionEvent.RaiseEvent();
+        }
+
+        public void OnConsumed(IInventoryController inventoryController)
+        {
+            ReduceQuantityOnUsed(inventoryController);
+        }
+
+        private void ReduceQuantityOnUsed(IInventoryController inventoryController)
+        {
+            if (Data.ConsumableType == EConsumableType.Key) return;
+            if (inventoryController.Remove(this))
+            {
+                QuantityReduced?.Invoke(this);
+            }
         }
 
         public ConsumableInfo Clone()

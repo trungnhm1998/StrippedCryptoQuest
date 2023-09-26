@@ -57,10 +57,10 @@ namespace CryptoQuestEditor.Gameplay.Inventory
                 instance.Editor_SetID(id);
                 instance.name = name;
 
-                instance.Editor_SetUsableType(EConsumeable.Consumable);
+                instance.Editor_SetUsableType(EConsumableType.Consumable);
                 if (type == ITEM_TYPE)
                 {
-                    instance.Editor_SetUsableType(EConsumeable.Key);
+                    instance.Editor_SetUsableType(EConsumableType.Key);
                 }
 
                 // Save data

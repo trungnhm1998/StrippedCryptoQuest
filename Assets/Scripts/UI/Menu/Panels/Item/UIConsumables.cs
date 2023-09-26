@@ -17,7 +17,7 @@ namespace CryptoQuest.UI.Menu.Panels.Item
         [SerializeField] private UIConsumableItem _prefab;
         [SerializeField] private ScrollRect _scrollRect;
         [SerializeField] private GameObject _content;
-        [field: SerializeField] public EConsumeable Type { get; private set; }
+        [field: SerializeField] public EConsumableType Type { get; private set; }
         private readonly List<UIConsumableItem> _uiConsumables = new();
         private UIConsumableItem _currentInspectingItem;
 
@@ -45,22 +45,27 @@ namespace CryptoQuest.UI.Menu.Panels.Item
             _currentInspectingItem = null;
             CleanUpScrollView();
             RenderConsumables();
-            ConsumableController.ConsumedItem += UpdateUI;
+            ConsumableInfo.QuantityReduced += UpdateUI;
         }
 
         private void OnDisable()
         {
-            ConsumableController.ConsumedItem -= UpdateUI;
+            ConsumableInfo.QuantityReduced -= UpdateUI;
             UIConsumableItem.Inspecting -= SaveInspectingItemToSelectLater;
         }
 
         private void UpdateUI(ConsumableInfo consumable)
         {
-            if (consumable.IsValid() == false
-                || _currentInspectingItem == null
-                || _currentInspectingItem.Consumable.IsValid() == false) return;
+            if (!consumable.IsValid() || _currentInspectingItem == null
+                || !_currentInspectingItem.Consumable.IsValid()) return;
 
-            // TODO: Update quantity if consumed the same inspected item
+            if (consumable.Quantity <= 0)
+            {
+                Destroy(_currentInspectingItem.gameObject);
+                return;
+            }
+            
+            _currentInspectingItem.SetQuantityText(consumable);
         }
 
         private void SaveInspectingItemToSelectLater(UIConsumableItem item)
@@ -93,7 +98,7 @@ namespace CryptoQuest.UI.Menu.Panels.Item
             var inventory = ServiceProvider.GetService<IInventoryController>().Inventory;
             foreach (var item in inventory.Consumables)
             {
-                if (item.Data.consumableType == Type)
+                if (item.Data.ConsumableType == Type)
                     CreateItem(item);
             }
         }

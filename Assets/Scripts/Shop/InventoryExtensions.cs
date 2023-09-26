@@ -48,7 +48,7 @@ public static class InventoryExtensions
 
         foreach (var item in inventory.Consumables)
         {
-            if (item.Data.consumableType != EConsumeable.Key)
+            if (item.Data.ConsumableType != EConsumableType.Key)
             {
                 consumableList.Add(item);
             }

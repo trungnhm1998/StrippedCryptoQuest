@@ -77,11 +77,15 @@ namespace CryptoQuest.UI.Menu.Panels.Item
             _consumable = item;
             StartCoroutine(CoLoadIcon());
             _name.StringReference = item.DisplayName;
-            _quantity.text = item.Quantity.ToString();
-
+            SetQuantityText(item);
 
             var allowedInField = (_consumable.Data.UsageScenario & EAbilityUsageScenario.Field) > 0;
             SetColorText(allowedInField);
+        }
+
+        public void SetQuantityText(ConsumableInfo item)
+        {
+            _quantity.text = item.Quantity.ToString();
         }
 
         private IEnumerator CoLoadIcon()
