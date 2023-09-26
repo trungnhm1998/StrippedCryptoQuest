@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 2368079525648974495}
   - component: {fileID: 8810242967914207612}
   - component: {fileID: 5345452806465044398}
-  - component: {fileID: 6472570922793623173}
   m_Layer: 0
   m_Name: TriggerCutsceneZone
   m_TagString: Untagged
@@ -32,7 +31,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &8810242967914207612
 BoxCollider2D:
@@ -91,21 +90,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2775f4af5c7496990a78f96a0e9bbd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <Quest>k__BackingField: {fileID: 0}
-  <Task>k__BackingField: {fileID: 0}
-  <CutsceneTrigger>k__BackingField: {fileID: 0}
---- !u!114 &6472570922793623173
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7400677895011199947}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 91c2822b216f040449670f1c69c4a06e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
   _quest: {fileID: 0}
   OnQuestCompleted:
     m_PersistentCalls:
@@ -120,5 +104,5 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 1
+          m_BoolArgument: 0
+        m_CallState: 2

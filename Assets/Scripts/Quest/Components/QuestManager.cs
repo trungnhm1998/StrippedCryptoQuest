@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using CryptoQuest.Quest.Authoring;
+using IndiGames.Core.EditorTools.Attributes.ReadOnlyAttribute;
 using UnityEngine;
 
 namespace CryptoQuest.Quest.Components
@@ -8,24 +10,29 @@ namespace CryptoQuest.Quest.Components
     [DisallowMultipleComponent]
     public class QuestManager : MonoBehaviour
     {
-        [SerializeField] private QuestDatabase _database;
-        [SerializeField] private List<string> _completedQuests; // GUIDs
-        public List<string> CompletedQuests => _completedQuests;
+        public static Action<QuestSO> OnTriggerQuest;
+
+        [field: SerializeField, ReadOnly] public List<string> InProgressQuests { get; private set; } = new();
+        [field: SerializeField, ReadOnly] public List<string> CompletedQuests { get; private set; } = new();
+        [field: ReadOnly] public List<Authoring.Quest> Quests { get; private set; } = new();
 
         private void OnEnable()
         {
-            foreach (var quest in _database.Quests)
-            {
-                quest.SubscribeObjective();
-            }
+            OnTriggerQuest += TriggerQuest;
         }
 
         private void OnDisable()
         {
-            foreach (var quest in _database.Quests)
-            {
-                quest.UnsubscribeObjective();
-            }
+            OnTriggerQuest -= TriggerQuest;
+        }
+
+        private void TriggerQuest(QuestSO questDef)
+        {
+            var currentQuest = questDef.CreateQuest(this);
+            currentQuest.TriggerQuest();
+
+            Quests.Add(currentQuest);
+            InProgressQuests.Add(questDef.Guid);
         }
     }
 }

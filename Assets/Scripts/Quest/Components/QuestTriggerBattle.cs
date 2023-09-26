@@ -7,20 +7,18 @@ namespace CryptoQuest.Quest
 {
     public class QuestTriggerBattle : MonoBehaviour
     {
-        [field: SerializeReference] private AbstractObjective _quest;
-        [field: SerializeField] private Battlefield _battlefieldToLoad;
+        [field: SerializeReference] private AbstractObjective _objective;
+
+        [SerializeField] private Battlefield _battlefieldToLoad;
 
         private void OnEnable()
         {
-            if (_quest.IsCompleted)
-                OnCompleted();
-
-            _quest.OnCompleteObjective += OnCompleted;
+            _objective.OnCompleteObjective += OnCompleted;
         }
 
         private void OnDisable()
         {
-            _quest.OnCompleteObjective -= OnCompleted;
+            _objective.OnCompleteObjective -= OnCompleted;
         }
 
         private void OnCompleted()

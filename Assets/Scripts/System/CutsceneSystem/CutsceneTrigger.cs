@@ -10,8 +10,21 @@ namespace CryptoQuest.System.CutsceneSystem
         public event Action FinishedCutscene;
         [SerializeField] private PlayableDirector _playableDirector;
 
+        [Header("Listening to")]
+        [SerializeField] private QuestCutsceneDef questCutsceneDef;
+        
         [Header("Raise on")]
         [SerializeField] private PlayCutsceneEvent _playCutsceneEvent;
+
+        private void OnEnable()
+        {
+           questCutsceneDef.EventRaised += PlayCutscene; 
+        }
+
+        private void OnDisable()
+        {
+           questCutsceneDef.EventRaised -= PlayCutscene; 
+        }
 
         public void PlayCutscene()
         {

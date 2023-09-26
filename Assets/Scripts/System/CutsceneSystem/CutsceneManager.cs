@@ -11,6 +11,7 @@ namespace CryptoQuest.System.CutsceneSystem
 {
     public class CutsceneManager : MonoBehaviour
     {
+        public static event UnityAction CutsceneCompleted;
         [Header("Listening to")]
         [SerializeField]
         private PlayCutsceneEvent _playCutsceneEvent;
@@ -37,7 +38,7 @@ namespace CryptoQuest.System.CutsceneSystem
         {
             _playCutsceneEvent.PlayCutsceneRequested -= PlayCutscene;
             _pauseCutsceneEvent.PauseCutsceneRequested -= PauseCutscene;
-            
+
             YarnSpinnerDialogueManager.PauseTimelineRequested -= PauseCutscene;
         }
 
@@ -69,9 +70,10 @@ namespace CryptoQuest.System.CutsceneSystem
         {
             _currentPlayableDirector.stopped -= HandleDirectorStopped;
             _currentPlayableDirector = null;
-            _onCutsceneCompleted.Invoke();
             _currentCutsceneTrigger.StopCutscene();
             _currentCutsceneTrigger = null;
+            _onCutsceneCompleted.Invoke();
+            CutsceneCompleted?.Invoke();
         }
 
         private void PauseCutscene(bool isPaused)

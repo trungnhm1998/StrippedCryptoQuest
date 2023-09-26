@@ -495,6 +495,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playableDirector: {fileID: 286272213}
+  questCutsceneDef: {fileID: 0}
   _playCutsceneEvent: {fileID: 11400000, guid: 2928508143105974490c1502398d744e, type: 2}
 --- !u!114 &286272212
 MonoBehaviour:
@@ -968,7 +969,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91c2822b216f040449670f1c69c4a06e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _quest: {fileID: 11400000, guid: 0f1692f41698b9a408526834ff8513cc, type: 2}
+  _quest: {fileID: 0}
   OnQuestCompleted:
     m_PersistentCalls:
       m_Calls:
@@ -996,7 +997,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91c2822b216f040449670f1c69c4a06e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _quest: {fileID: 11400000, guid: e31c172bdf641474687c31bff35c8823, type: 2}
+  _quest: {fileID: 0}
   OnQuestCompleted:
     m_PersistentCalls:
       m_Calls:
@@ -1148,9 +1149,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2775f4af5c7496990a78f96a0e9bbd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <Quest>k__BackingField: {fileID: 11400000, guid: 0f1692f41698b9a408526834ff8513cc, type: 2}
-  <Task>k__BackingField: {fileID: 11400000, guid: aaf67ab99ec9ef44d91459c1e67509b1, type: 2}
-  <CutsceneTrigger>k__BackingField: {fileID: 286272211}
 --- !u!61 &1341374512
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2107,4 +2105,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e3f1d1abb4f44bda74bb825b1c8c488, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _quest: {fileID: 11400000, guid: e31c172bdf641474687c31bff35c8823, type: 2}
