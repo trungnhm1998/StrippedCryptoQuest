@@ -1,7 +1,6 @@
 using CryptoQuest.UI.Menu.Panels;
 using FSM;
 using UnityEngine;
-using NotImplementedException = System.NotImplementedException;
 
 namespace CryptoQuest.UI.Menu.MenuStates
 {

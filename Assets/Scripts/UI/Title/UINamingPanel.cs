@@ -1,6 +1,4 @@
 ﻿using System.Collections;
-using CryptoQuest.Input;
-using CryptoQuest.Menu;
 using CryptoQuest.System.Settings;
 using IndiGames.Core.SaveSystem;
 using TMPro;
@@ -14,13 +12,9 @@ namespace CryptoQuest.UI.Title
 {
     public class UINamingPanel : MonoBehaviour
     {
-        [SerializeField] private InputMediatorSO _inputMediator;
-        [SerializeField] private SaveSystemSO _saveSystemSO;
-
-        [SerializeField] private Button _confirm;
-        [SerializeField] private MenuSelectionHandler _selectionHandler;
-
-        [SerializeField] private TMP_InputField _nameInput;
+        [field: SerializeField] public Button ConfirmButton { get; private set; }
+        [field: SerializeField] public SaveSystemSO SaveSystemSO { get; private set; }
+        [field: SerializeField] public TMP_InputField NameInput { get; private set; }
         [SerializeField] private TextMeshProUGUI _validationText;
         [SerializeField] private LocalizeStringEvent _validationStringEvent;
         [SerializeField] private Color _validColor;
@@ -28,7 +22,7 @@ namespace CryptoQuest.UI.Title
 
         [SerializeField] private TextAsset _badWordAsset;
         [SerializeField] private TextAsset _specialCharacterAsset;
-
+        [SerializeField] private SaveSystemSO _tempSaveInfo;
         private IStringValidator _nameValidator;
 
         public UnityAction ConfirmNameButtonPressed;
@@ -39,38 +33,31 @@ namespace CryptoQuest.UI.Title
 
         private void Awake()
         {
+            _tempSaveInfo.PlayerName = "";
             _nameValidator = new NameValidator(_badWordAsset, _specialCharacterAsset);
         }
 
         private void OnEnable()
         {
-            _inputMediator.MenuCancelEvent += BackToStartScreen;
-            _inputMediator.MenuTabPressed += NavigateToNextInput;
-            _inputMediator.MenuConfirmedEvent += HandleInputSubmit;
-            _nameInput.onSubmit.AddListener(MenuSubmitEvent);
-
-            _selectionHandler.UpdateDefault(_nameInput.gameObject);
+            NameInput.onSubmit.AddListener(MenuSubmitEvent);
+            NameInput.Select();
             StartCoroutine(CoSelectNameInput());
         }
 
         private void OnDisable()
         {
-            _selectionHandler.Unselect();
-            _inputMediator.MenuCancelEvent -= BackToStartScreen;
-            _inputMediator.MenuTabPressed -= NavigateToNextInput;
-            _inputMediator.MenuConfirmedEvent -= HandleInputSubmit;
-            _nameInput.onSubmit.RemoveListener(MenuSubmitEvent);
+            NameInput.onSubmit.RemoveListener(MenuSubmitEvent);
         }
 
         public void OnConfirmButtonPressed()
         {
             if (!_isInputValid)
             {
-                _nameInput.Select();
+                NameInput.Select();
                 return;
             }
 
-            _saveSystemSO.PlayerName = _nameInput.text;
+            SaveSystemSO.PlayerName = NameInput.text;
             ConfirmNameButtonPressed?.Invoke();
         }
 
@@ -79,16 +66,21 @@ namespace CryptoQuest.UI.Title
             _isInputValid = IsNameValid(input);
         }
 
+        public bool IsInputValid()
+        {
+            return _isInputValid;
+        }
+
         private void HandleInputSubmit()
         {
-            if (EventSystem.current.currentSelectedGameObject != _nameInput.gameObject) return;
-            MenuSubmitEvent(_nameInput.text);
+            if (EventSystem.current.currentSelectedGameObject != NameInput.gameObject) return;
+            MenuSubmitEvent(NameInput.text);
         }
 
         private void MenuSubmitEvent(string input)
         {
             if (IsNameValid(input))
-                _confirm.Select();
+                ConfirmButton.Select();
         }
 
         private void BackToStartScreen()
@@ -106,21 +98,25 @@ namespace CryptoQuest.UI.Title
             return isValid;
         }
 
+        public void SetTempName(string text)
+        {
+            _tempSaveInfo.PlayerName = text;
+        }
+
         private void NavigateToNextInput()
         {
             var currentSelected = EventSystem.current.currentSelectedGameObject;
 
-            if (currentSelected == _nameInput.gameObject)
-                _confirm.Select();
+            if (currentSelected == NameInput.gameObject)
+                ConfirmButton.Select();
             else
-                _nameInput.Select();
+                NameInput.Select();
         }
 
         private IEnumerator CoSelectNameInput()
         {
-            _inputMediator.DisableAllInput();
             yield return new WaitForSeconds(.03f); // highlight event system bug workaround
-            _nameInput.Select();
+            NameInput.Select();
         }
     }
 }

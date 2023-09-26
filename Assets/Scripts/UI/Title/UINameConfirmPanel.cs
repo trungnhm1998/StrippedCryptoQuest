@@ -1,44 +1,31 @@
 ﻿using System.Collections;
-using CryptoQuest.Input;
+using IndiGames.Core.SaveSystem;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.UI;
 
 namespace CryptoQuest.UI.Title
 {
     public class UINameConfirmPanel : MonoBehaviour
     {
-        [SerializeField] private InputMediatorSO _inputMediator;
-        [SerializeField] private Button _yesButton;
-
-        public UnityAction YesButtonPressed;
-        public UnityAction NoButtonPressed;
+        [SerializeField] private SaveSystemSO _saveSystemSo;
+        [SerializeField] private SaveSystemSO _tempSaveInfo;
+        [field: SerializeField] public Button YesButton { get; private set; }
+        [field: SerializeField] public Button NoButton { get; private set; }
 
         private void OnEnable()
         {
             StartCoroutine(CoSelectYesButton());
-            _inputMediator.MenuCancelEvent += OnNoButtonPressed;
         }
 
         private IEnumerator CoSelectYesButton()
         {
             yield return new WaitForSeconds(.03f);
-            _yesButton.Select();
+            YesButton.Select();
         }
 
-        private void OnDisable()
+        public void ConfirmPlayerName()
         {
-            _inputMediator.MenuCancelEvent -= OnNoButtonPressed;
-        }
-
-        public void OnYesButtonPressed()
-        {
-            YesButtonPressed?.Invoke();
-        }
-
-        public void OnNoButtonPressed()
-        {
-            NoButtonPressed?.Invoke();
+            _saveSystemSo.PlayerName = _tempSaveInfo.PlayerName;
         }
     }
 }

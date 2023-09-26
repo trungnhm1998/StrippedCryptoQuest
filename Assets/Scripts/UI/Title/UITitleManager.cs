@@ -2,46 +2,73 @@
 using IndiGames.Core.Events.ScriptableObjects;
 using IndiGames.Core.SaveSystem;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace CryptoQuest.UI.Title
 {
     public class UITitleManager : MonoBehaviour
     {
-        [SerializeField] private InputMediatorSO _inputMediator;
         [SerializeField] private SaveSystemSO _saveSystem;
 
         [Header("UI")]
         [SerializeField] private UIStartGame _startGamePanel;
 
+        [SerializeField] private UITitleSetting _titleSetting;
         [SerializeField] private UINamingPanel _namingPanel;
         [SerializeField] private UINameConfirmPanel _confirmationPanel;
+        [FormerlySerializedAs("_socialButtonPanel")] [SerializeField] private UISocialPanel socialPanel;
+        [SerializeField] private UISignInPanel _signInPanel;
+        [SerializeField] private UIOptionPanel _optionPanel;
 
         [Header("Listen on")]
         [SerializeField] private VoidEventChannelSO _sceneLoadedChannel;
+
+        [SerializeField] private VoidEventChannelSO _loginSuccessEventChannel;
 
         [Header("Raise on")]
         [SerializeField] private VoidEventChannelSO _startNewGameChannel;
 
         [SerializeField] private VoidEventChannelSO _continueGameChannel;
 
+
         private bool _hasSaveData;
 
         private void Awake()
         {
-            _inputMediator.DisableAllInput();
             _hasSaveData = _saveSystem.LoadSaveGame();
+        }
+
+        private void OnEnable()
+        {
+            _loginSuccessEventChannel.EventRaised += HandleLoginSuccess;
+        }
+
+        private void OnDisable()
+        {
+            _loginSuccessEventChannel.EventRaised -= HandleLoginSuccess;
         }
 
         private void Start()
         {
-            ShowStartGamePanel();
+            ShowSocialButtonPanel();
+        }
+
+        private void ShowSocialButtonPanel()
+        {
+            socialPanel.gameObject.SetActive(true);
+            _confirmationPanel.gameObject.SetActive(false);
+            _namingPanel.gameObject.SetActive(false);
+            _startGamePanel.gameObject.SetActive(false);
         }
 
         private void ShowStartGamePanel()
         {
+            _startGamePanel.InitStartGameUI();
             _startGamePanel.StartButtonPressed += HandleStartButtonPressed;
             _namingPanel.CancelEvent -= ShowStartGamePanel;
 
+            socialPanel.gameObject.SetActive(false);
+            _signInPanel.gameObject.SetActive(false);
             _confirmationPanel.gameObject.SetActive(false);
             _namingPanel.gameObject.SetActive(false);
             _startGamePanel.gameObject.SetActive(true);
@@ -59,9 +86,6 @@ namespace CryptoQuest.UI.Title
 
         private void ShowNamingPanel()
         {
-            _confirmationPanel.YesButtonPressed -= HandleNameConfirmed;
-            _confirmationPanel.NoButtonPressed -= ShowNamingPanel;
-
             _startGamePanel.gameObject.SetActive(false);
             _confirmationPanel.gameObject.SetActive(false);
             _namingPanel.gameObject.SetActive(true);
@@ -76,19 +100,13 @@ namespace CryptoQuest.UI.Title
             _namingPanel.gameObject.SetActive(false);
             _confirmationPanel.gameObject.SetActive(true);
 
-            _confirmationPanel.YesButtonPressed += HandleNameConfirmed;
-            _confirmationPanel.NoButtonPressed += ShowNamingPanel;
-
             _namingPanel.CancelEvent -= ShowStartGamePanel;
             _namingPanel.ConfirmNameButtonPressed -= ShowNameConfirmationPopup;
         }
 
-        private void HandleNameConfirmed()
+        private void HandleLoginSuccess()
         {
-            _confirmationPanel.YesButtonPressed -= HandleNameConfirmed;
-            _confirmationPanel.NoButtonPressed -= ShowNamingPanel;
-
-            _startNewGameChannel.RaiseEvent();
+            ShowStartGamePanel();
         }
     }
 }

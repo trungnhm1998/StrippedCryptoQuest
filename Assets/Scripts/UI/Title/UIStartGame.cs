@@ -1,5 +1,5 @@
-using System.Collections;
-using CryptoQuest.Input;
+using IndiGames.Core.Events.ScriptableObjects;
+using IndiGames.Core.SaveSystem;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -8,30 +8,29 @@ namespace CryptoQuest.UI.Title
 {
     public class UIStartGame : MonoBehaviour
     {
-        [SerializeField] private Button _startGame;
-        [SerializeField] private InputMediatorSO _inputMediator;
-
+        [field: SerializeField] public Button StartGameBtn { get; private set; }
+        [SerializeField] private VoidEventChannelSO _startGameEventChannel;
+        [SerializeField] private SaveSystemSO _saveSystemSo;
         public UnityAction StartButtonPressed;
 
-        private void OnEnable()
+        public void InitStartGameUI()
         {
-            _inputMediator.MenuConfirmedEvent += OnStartButtonPressed;
-        }
-
-        private void OnDisable()
-        {
-            _inputMediator.MenuConfirmedEvent -= OnStartButtonPressed;
-        }
-
-        private IEnumerator Start()
-        {
-            yield return new WaitForSeconds(0.5f); // event system bug workaround
-            _startGame.Select();
+            StartGameBtn.Select();
         }
 
         public void OnStartButtonPressed()
         {
             StartButtonPressed?.Invoke();
+        }
+
+        public void StartGame()
+        {
+            _startGameEventChannel.RaiseEvent();
+        }
+
+        public bool IsPlayerNameExist()
+        {
+            return !string.IsNullOrEmpty(_saveSystemSo.PlayerName);
         }
     }
 }
