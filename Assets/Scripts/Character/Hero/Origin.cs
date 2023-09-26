@@ -1,7 +1,5 @@
 ﻿using System;
-using CryptoQuest.UI.Menu.Panels.Home;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
 using UnityEngine.Analytics;
 using UnityEngine.Localization;
 
@@ -27,11 +25,5 @@ namespace CryptoQuest.Character.Hero
         }
 
         [field: SerializeField] public Information DetailInformation { get; set; }
-        [field: SerializeField] public AssetLabelReference Label { get; private set; }
-
-        public virtual void SetupUI(ICharacterInfo uiCharacterInfo)
-        {
-            uiCharacterInfo.SetLocalizedName(DetailInformation.LocalizedName);
-        }
     }
 }

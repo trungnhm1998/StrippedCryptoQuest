@@ -1,6 +1,9 @@
 using CryptoQuest.Battle.Components;
 using CryptoQuest.Character.Attributes;
+using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
+using IndiGames.GameplayAbilitySystem.AttributeSystem.Components;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
+using IndiGames.GameplayAbilitySystem.EffectSystem.Components;
 using UnityEditor;
 using UnityEngine;
 
@@ -9,24 +12,16 @@ namespace CryptoQuest.Tests.Runtime.Battle.Builder
     public class CharacterBuilder
     {
         private const string ATTRIBUTE_SETS = "Assets/ScriptableObjects/Character/Attributes/AttributeSets.asset";
-        private const string CHARACTER_PREFAB_ASSET = "Assets/Prefabs/Battle/Character.prefab";
         private Elemental _elemental = An.Element.Fire;
         private GameObject _characterGameObject;
         public GameObject CharacterGameObject => _characterGameObject;
 
-        private AttributeWithValue[] _stats = new AttributeWithValue[]
+        private AttributeWithValue[] _stats =
         {
             new(AttributeSets.MaxHealth, 100f),
             new(AttributeSets.Health, 100f),
             new(AttributeSets.Strength, 50f),
         };
-
-
-        public CharacterBuilder WithPrefab(GameObject prefab)
-        {
-            _characterGameObject = prefab;
-            return this;
-        }
 
         public CharacterBuilder WithElement(Elemental elemental)
         {
@@ -43,15 +38,17 @@ namespace CryptoQuest.Tests.Runtime.Battle.Builder
         public ICharacter Build()
         {
             var attributeSets = AssetDatabase.LoadAssetAtPath<AttributeSets>(ATTRIBUTE_SETS);
-            if (_characterGameObject == null)
-            {
-                var prefab = AssetDatabase.LoadAssetAtPath<GameObject>(CHARACTER_PREFAB_ASSET);
-                _characterGameObject = Object.Instantiate(prefab);
-            }
-
+            _characterGameObject = new GameObject();
+            _characterGameObject.AddComponent<AttributeSystemBehaviour>();
+            _characterGameObject.AddComponent<EffectSystemBehaviour>();
+            _characterGameObject.AddComponent<AbilitySystemBehaviour>();
+            _characterGameObject.AddComponent<CryptoQuest.Battle.Components.Character>();
+            var statsProvider = _characterGameObject.AddComponent<InlineStatsProvider>();
+            statsProvider.ProvideStats(_stats);
+            _characterGameObject.AddComponent<SimpleStatsInitializer>();
+            _characterGameObject.AddComponent<Element>();
             var character = _characterGameObject.GetComponent<ICharacter>();
-            var statsInitializer = _characterGameObject.GetComponent<IStatsInitializer>();
-            statsInitializer.SetStats(_stats);
+
             character.Init(_elemental);
             return character;
         }

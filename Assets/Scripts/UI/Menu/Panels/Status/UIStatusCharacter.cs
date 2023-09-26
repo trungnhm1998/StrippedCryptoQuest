@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using CryptoQuest.Battle.Components;
 using CryptoQuest.Gameplay.Character;
 using CryptoQuest.Gameplay.PlayerParty;
 using CryptoQuest.System;
@@ -17,7 +18,7 @@ namespace CryptoQuest.UI.Menu.Panels.Status
 {
     public class UIStatusCharacter : MonoBehaviour, ICharacterInfo
     {
-        public event Action<CharacterSpec> InspectingCharacter;
+        public event Action<HeroBehaviour> InspectingCharacter;
         [SerializeField] private UIStatusMenu _statusMenu;
 
         [Header("Character Info UI References")]
@@ -32,10 +33,10 @@ namespace CryptoQuest.UI.Menu.Panels.Status
         [SerializeField] private UIAttributeBar _expBar;
 
         private string _lvlTxtFormat = string.Empty; // could made this into static
-        private CharacterSpec _inspectingCharacter;
+        private HeroBehaviour _inspectingHero;
         private AttributeSystemBehaviour _inspectingAttributeSystem;
         private int _currentIndex;
-        private IParty _party;
+        private IPartyController _party;
 
         private int CurrentIndex
         {
@@ -53,7 +54,7 @@ namespace CryptoQuest.UI.Menu.Panels.Status
 
         private void Start()
         {
-            _party = ServiceProvider.GetService<IPartyController>().Party;
+            _party = ServiceProvider.GetService<IPartyController>();
         }
 
         private void OnEnable()
@@ -68,7 +69,7 @@ namespace CryptoQuest.UI.Menu.Panels.Status
 
         private void InspectFirstCharacter()
         {
-            InspectCharacter(_party.Members[0]);
+            InspectCharacter(_party.Slots[0].HeroBehaviour);
         }
 
         public void ChangeCharacter(float direction)
@@ -83,26 +84,26 @@ namespace CryptoQuest.UI.Menu.Panels.Status
         /// Will wrap if needed
         /// </summary>
         /// <param name="direction">-1 for left and 1 for right</param>
-        private CharacterSpec GetTheNextValidMemberInParty(int direction)
+        private HeroBehaviour GetTheNextValidMemberInParty(int direction)
         {
-            var memberInParty = _party.Members[CurrentIndex];
+            var memberInParty = _party.Slots[CurrentIndex];
             while (memberInParty.IsValid() == false)
             {
                 CurrentIndex += direction;
-                memberInParty = _party.Members[CurrentIndex];
+                memberInParty = _party.Slots[CurrentIndex];
             }
 
-            return memberInParty;
+            return memberInParty.HeroBehaviour;
         }
 
-        private void InspectCharacter(CharacterSpec character)
+        private void InspectCharacter(HeroBehaviour hero)
         {
-            if (character.IsValid() == false) return;
-            _inspectingCharacter = character;
-            _inspectingAttributeSystem = _inspectingCharacter.CharacterComponent.AttributeSystem;
+            if (hero.IsValid() == false) return;
+            _inspectingHero = hero;
+            _inspectingAttributeSystem = _inspectingHero.GetComponent<AttributeSystemBehaviour>();
             RenderElementsStats(_inspectingAttributeSystem);
-            _inspectingCharacter.SetupUI(this);
-            InspectingCharacter?.Invoke(_inspectingCharacter);
+            _inspectingHero.SetupUI(this);
+            InspectingCharacter?.Invoke(_inspectingHero);
         }
 
         private void RenderElementsStats(AttributeSystemBehaviour attributeSystem)

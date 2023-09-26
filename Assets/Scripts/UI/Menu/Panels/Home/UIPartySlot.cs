@@ -1,4 +1,5 @@
-﻿using CryptoQuest.Gameplay.Character;
+﻿using CryptoQuest.Battle.Components;
+using CryptoQuest.Gameplay.Character;
 using UnityEngine;
 
 namespace CryptoQuest.UI.Menu.Panels.Home
@@ -14,7 +15,7 @@ namespace CryptoQuest.UI.Menu.Panels.Home
             _characterInSlot.gameObject.SetActive(_hasCharacter);
         }
 
-        public void Init(CharacterSpec member, UICharacterInfo child)
+        public void Init(HeroBehaviour member, UICharacterInfo child)
         {
             _characterInSlot = child;
             _characterInSlot.Init(member);

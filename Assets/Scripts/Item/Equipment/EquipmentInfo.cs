@@ -1,4 +1,5 @@
 ﻿using System;
+using CryptoQuest.Battle.Components;
 using CryptoQuest.Gameplay.Character;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
 using IndiGames.GameplayAbilitySystem.EffectSystem;
@@ -95,14 +96,14 @@ namespace CryptoQuest.Item.Equipment
 
         #endregion
 
-        public bool IsCompatibleWithCharacter(CharacterSpec inspectingCharacter)
+        public bool IsCompatibleWithHero(HeroBehaviour hero)
         {
             if (!IsValid()) return false;
 
             CharacterClass[] equipmentAllowedClasses = Prefab.EquipmentType.AllowedClasses;
-            CharacterClass characterClass = inspectingCharacter.Class;
+            CharacterClass characterClass = hero.Class;
 
-            if (Prefab.RequiredCharacterLevel > inspectingCharacter.Level)
+            if (Prefab.RequiredCharacterLevel > hero.Level)
             {
                 Debug.LogWarning("Character level is not enough");
                 return false;

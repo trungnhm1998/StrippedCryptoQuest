@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using CryptoQuest.Battle.Components;
 using CryptoQuest.Gameplay.Character;
 using CryptoQuest.Gameplay.PlayerParty;
 using CryptoQuest.Gameplay.Skill;
@@ -26,6 +27,7 @@ namespace CryptoQuest.UI.Menu.Panels.Skill
         private int _skillCount = 0;
         private UISkillButton _defaultSelectedSkill;
         private float _verticalOffset;
+        private IPartyController _partyController;
 
         private void Awake()
         {
@@ -40,20 +42,22 @@ namespace CryptoQuest.UI.Menu.Panels.Skill
         private void OnEnable()
         {
             CleanUpScrollView();
-            Init(ServiceProvider.GetService<IPartyController>().Party.Members[0]);
+            _partyController = ServiceProvider.GetService<IPartyController>();
+            Init(_partyController.Slots[0].HeroBehaviour); // First slot should never be null/empty
         }
 
-        private void Init(CharacterSpec characterSpec, bool isAnotherChar = false)
+        private void Init(HeroBehaviour hero, bool isAnotherChar = false)
         {
-            GetSkills(characterSpec.GetAvailableSkills());
-
-            if (isAnotherChar)
-            {
-                StartCoroutine(RefreshSkillList());
-                return;
-            }
-
-            _scrollRect.Initialize(this);
+            // TODO: REFACTOR HERO SKILLS
+            // GetSkills(hero.GetAvailableSkills());
+            //
+            // if (isAnotherChar)
+            // {
+            //     StartCoroutine(RefreshSkillList());
+            //     return;
+            // }
+            //
+            // _scrollRect.Initialize(this);
         }
 
         private void GetSkills(List<AbilityData> skills)

@@ -1,14 +1,12 @@
-﻿using System.Linq;
-using System.Collections.Generic;
-using System.Diagnostics;
+﻿using System.Collections.Generic;
+using System.Linq;
+using CryptoQuest.Battle.Components;
 using CryptoQuest.Gameplay;
 using CryptoQuest.Gameplay.Character;
 using CryptoQuest.Item.Equipment;
 using CryptoQuest.UI.Menu.Panels.Status.Stats;
-using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
 using IndiGames.GameplayAbilitySystem.AttributeSystem;
 using UnityEngine;
-using Debug = UnityEngine.Debug;
 
 namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
 {
@@ -24,47 +22,49 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
         private void OnEnable()
         {
             _equipmentsInventory.InspectingEquipment += PreviewEquipment;
-            _characterStatusUI.InspectingCharacter += CloneCharacter;
+            _characterStatusUI.InspectingCharacter += CloneHero;
         }
 
         private void OnDisable()
         {
             _equipmentsInventory.InspectingEquipment -= PreviewEquipment;
-            _characterStatusUI.InspectingCharacter -= CloneCharacter;
+            _characterStatusUI.InspectingCharacter -= CloneHero;
         }
 
         /// <summary>
         /// Clone the character when inspect so we will have a mannequine to apply equipment
         /// </summary>
-        /// <param name="inspectingChar"></param>
-        private void CloneCharacter(CharacterSpec inspectingChar)
+        /// <param name="hero"></param>
+        private void CloneHero(HeroBehaviour hero)
         {
-            if (inspectingChar.IsValid() == false) return;
+            if (hero.IsValid() == false) return;
             if (_cloneCharacterGO != null) Destroy(_cloneCharacterGO);
 
-            _cloneCharacterGO = Instantiate(inspectingChar.CharacterComponent.gameObject, transform);
+            _cloneCharacterGO = Instantiate(hero.gameObject, transform);
+            // TODO: REFACTOR EQUIPMENTS
             _clonedCharacter = _cloneCharacterGO.GetComponent<CharacterBehaviourBase>();
             _clonedCharacter.Init(_clonedCharacter.Spec);
         }
 
-        private void CloneEquipingStatus(EquipmentInfo inspectingEquipment, CharacterSpec inspectingChar)
+        private void CloneEquipingStatus(EquipmentInfo inspectingEquipment, HeroBehaviour inspectingChar)
         {
-            if (_clonedCharacter == null) return;
-            var originalEquipments = inspectingChar.Equipments.Slots;
-            var clonedEquipments = _clonedCharacter.Spec.Equipments;
-            var clonedEquipmentSlots = clonedEquipments.Slots;
-
-            foreach (var equipment in clonedEquipmentSlots.ToList())
-            {
-                clonedEquipments.Unequip(equipment.Equipment);
-            }
-
-            foreach (var equipment in originalEquipments)
-            {
-                clonedEquipments.Equip(equipment.Equipment.Clone());
-            }
-
-            _clonedCharacter.EffectSystem.UpdateAttributeModifiersUsingAppliedEffects();
+            // TODO: REFACTOR EQUIPMENTS
+            // if (_clonedCharacter == null) return;
+            // var originalEquipments = inspectingChar.Equipments.Slots;
+            // var clonedEquipments = _clonedCharacter.Spec.Equipments;
+            // var clonedEquipmentSlots = clonedEquipments.Slots;
+            //
+            // foreach (var equipment in clonedEquipmentSlots.ToList())
+            // {
+            //     clonedEquipments.Unequip(equipment.Equipment);
+            // }
+            //
+            // foreach (var equipment in originalEquipments)
+            // {
+            //     clonedEquipments.Equip(equipment.Equipment.Clone());
+            // }
+            //
+            // _clonedCharacter.EffectSystem.UpdateAttributeModifiersUsingAppliedEffects();
         }
 
         /// <summary>
@@ -73,8 +73,8 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
         /// else equip to preview
         /// </summary>
         /// <param name="inspectingEquipment"></param>
-        /// <param name="inspectingChar"></param>
-        private void CheckEquipInspect(EquipmentInfo inspectingEquipment, CharacterSpec inspectingChar)
+        /// <param name="inspectingHero"></param>
+        private void CheckEquipInspect(EquipmentInfo inspectingEquipment, HeroBehaviour inspectingHero)
         {
             var clonedCharacterSpec = _clonedCharacter.Spec;
             var clonedEquipmentsBehaviour = clonedCharacterSpec.Equipments;
@@ -97,28 +97,28 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
         /// Then Equip the clone equipment to preview 
         /// </summary>
         /// <param name="equipment">to preview stats</param>
-        /// <param name="inspectingChar">on which character</param>
-        private void PreviewEquipment(EquipmentInfo equipment, CharacterSpec inspectingChar)
+        /// <param name="inspectingHero">on which character</param>
+        private void PreviewEquipment(EquipmentInfo equipment, HeroBehaviour inspectingHero)
         {
             ResetAttributesUI();
 
-            if (inspectingChar.IsValid() == false || !equipment.IsValid()) return;
+            if (inspectingHero.IsValid() == false || !equipment.IsValid()) return;
 
             if (_cloneCharacterGO == null)
             {
-                CloneCharacter(inspectingChar);
+                CloneHero(inspectingHero);
             }
             Debug.Log($"UIEquipmentsInventory::PreviewEquipmentStats {equipment}");
             var clonedAttributeSystem = _clonedCharacter.AttributeSystem;
 
-            CloneEquipingStatus(equipment, inspectingChar);
+            CloneEquipingStatus(equipment, inspectingHero);
             List<AttributeValue> currentValues = new(clonedAttributeSystem.AttributeValues);
 
-            CheckEquipInspect(equipment, inspectingChar);
+            CheckEquipInspect(equipment, inspectingHero);
             _clonedCharacter.EffectSystem.UpdateAttributeModifiersUsingAppliedEffects();
 
             List<AttributeValue> afterValues = new(clonedAttributeSystem.AttributeValues);
-            if (equipment.IsCompatibleWithCharacter(inspectingChar))
+            if (equipment.IsCompatibleWithHero(inspectingHero))
             {
                 PreviewValue(currentValues, afterValues);
             }

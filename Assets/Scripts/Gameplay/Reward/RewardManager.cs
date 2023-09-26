@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using CryptoQuest.Battle.Components;
 using CryptoQuest.Events;
 using CryptoQuest.Events.UI.Dialogs;
 using CryptoQuest.Gameplay.Character.LevelSystem;
-using CryptoQuest.Gameplay.Character.LevelSystem.Components;
 using CryptoQuest.Gameplay.Inventory.Currency;
 using CryptoQuest.Gameplay.Loot;
 using CryptoQuest.Gameplay.PlayerParty;
@@ -39,7 +39,7 @@ namespace CryptoQuest.Gameplay.Reward
 
         [SerializeField] private RewardDialogEventChannelSO _showRewardDialogEventChannel;
 
-        private IParty _party;
+        private IPartyController _party;
 
         private void Awake()
         {
@@ -49,7 +49,7 @@ namespace CryptoQuest.Gameplay.Reward
 
         private void Start()
         {
-            _party = ServiceProvider.GetService<IPartyController>().Party;
+            _party = ServiceProvider.GetService<IPartyController>();
         }
 
         private void OnDestroy()
@@ -69,12 +69,11 @@ namespace CryptoQuest.Gameplay.Reward
 
         private void RewardExp(float exp)
         {
-            foreach (var member in _party.Members)
+            foreach (var slot in _party.Slots)
             {
-                var characterBehaviour = member.CharacterComponent;
-                if (!characterBehaviour.TryGetComponent<CharacterLevelComponent>(out var levelcomponent))
-                    continue;
-                levelcomponent.AddExp(exp);
+                if (!slot.IsValid()) continue;
+                var levelSystem = slot.HeroBehaviour.GetComponent<LevelSystem>(); // Force error hero needed this
+                levelSystem.AddExp(exp);
             }
         }
 

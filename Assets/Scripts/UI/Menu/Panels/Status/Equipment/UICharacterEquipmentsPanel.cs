@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using CryptoQuest.Character.Hero;
+using CryptoQuest.Battle.Components;
 using CryptoQuest.Gameplay.Character;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Type;
 using CryptoQuest.Item.Equipment;
@@ -8,6 +8,7 @@ using CryptoQuest.Menu;
 using CryptoQuest.UI.Menu.MenuStates.StatusStates;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using Equipments = CryptoQuest.Character.Hero.Equipments;
 
 namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
 {
@@ -29,7 +30,7 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
         [SerializeField] private TooltipProvider _tooltipProvider;
         [SerializeField] private RectTransform _tooltipSafeArea;
 
-        private CharacterSpec _currentInspectingCharacter;
+        private HeroBehaviour _inspectingHero;
         private Dictionary<EquipmentSlot.EType, UICharacterEquipmentSlot> _equipmentSlotsCache = new();
 
         private Dictionary<EquipmentSlot.EType, UICharacterEquipmentSlot> EquipmentSlots
@@ -77,17 +78,18 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
         }
 
 
-        private void UpdateCharacterEquipments(CharacterSpec charSpec)
+        private void UpdateCharacterEquipments(HeroBehaviour hero)
         {
-            _currentInspectingCharacter = charSpec;
-            if (charSpec.IsValid() == false) return;
+            _inspectingHero = hero;
+            if (hero.IsValid() == false) return;
 
-            foreach (var equipmentSlot in _equipmentSlots)
-            {
-                equipmentSlot.RemoveCharacterEquipmentsEvents(_currentInspectingCharacter.Equipments);
-                equipmentSlot.Init(_currentInspectingCharacter.Equipments.GetEquipmentInSlot(equipmentSlot.SlotType));
-                equipmentSlot.RegisterCharacterEquipmentsEvents(_currentInspectingCharacter.Equipments);
-            }
+            // TODO: REFACTOR EQUIPMENTS
+            // foreach (var equipmentSlot in _equipmentSlots)
+            // {
+            //     equipmentSlot.RemoveCharacterEquipmentsEvents(_inspectingHero.Equipments);
+            //     equipmentSlot.Init(_inspectingHero.Equipments.GetEquipmentInSlot(equipmentSlot.SlotType));
+            //     equipmentSlot.RegisterCharacterEquipmentsEvents(_inspectingHero.Equipments);
+            // }
         }
 
         private EquipmentSlot.EType _modifyingSlotType;
@@ -152,7 +154,8 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
 
         public void Show()
         {
-            SetEquipmentsUI(_currentInspectingCharacter.Equipments);
+            // TODO: REFACTOR EQUIPMENTS
+            // SetEquipmentsUI(_inspectingHero.Equipments);
 
             _tooltipProvider.Tooltip.SetSafeArea(_tooltipSafeArea);
             _equipmentSlotParent.SetActive(true);

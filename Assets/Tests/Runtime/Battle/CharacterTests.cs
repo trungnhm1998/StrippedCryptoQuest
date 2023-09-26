@@ -14,20 +14,13 @@ namespace CryptoQuest.Tests.Runtime.Battle
         [SetUp]
         public void Setup()
         {
-            _characterGameObject = CreateCharacterFromPrefab();
-            _character = A.Character.WithPrefab(_characterGameObject).Build();
+            _character = A.Character.Build();
         }
 
         [Test, Category("Smokes")]
         public void Create_ShouldHaveAbilitySystem()
         {
             Assert.NotNull(_character.AbilitySystem);
-        }
-
-        [Test, Category("Smokes")]
-        public void Create_ShouldHaveInterfaceStatsInitializer()
-        {
-            Assert.IsTrue(_characterGameObject.TryGetComponent<IStatsInitializer>(out _));
         }
     }
 }

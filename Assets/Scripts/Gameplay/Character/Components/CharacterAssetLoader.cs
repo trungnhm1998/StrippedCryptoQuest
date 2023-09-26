@@ -37,9 +37,10 @@ namespace CryptoQuest.Gameplay.Character.Components
         {
             _characterSpec.Avatar = null;
             _characterSpec.SkillSet = null;
-            StartCoroutine(CoLoadAssets());
+            // StartCoroutine(CoLoadAssets());
         }
 
+        /*
         private IEnumerator CoLoadAssets()
         {
             yield return LoadAvatar();
@@ -47,12 +48,14 @@ namespace CryptoQuest.Gameplay.Character.Components
 
             _loadAssetCompleteEventChannel.RaiseEvent(IsAssetValid);
         }
+        */
 
         /// <summary>
         /// Load Avatar required 2 label correctly setup
         /// So the setup must be correct or it'll fail fast and throw exception
         /// </summary>
         /// <returns></returns>
+        /*
         private IEnumerator LoadAvatar()
         {
             Debug.Log($"LoadAvatar:: {_characterSpec.BackgroundInfo} - {_characterSpec.Class}");
@@ -68,6 +71,7 @@ namespace CryptoQuest.Gameplay.Character.Components
                 Addressables.MergeMode.Intersection
             );
         }
+        */
 
         private void AvatarLoaded(Sprite loadedSprite)
         {

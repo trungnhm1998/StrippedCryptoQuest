@@ -2,15 +2,15 @@
 
 namespace CryptoQuest.Battle.Components
 {
-    [RequireComponent(typeof(Hero))]
+    [RequireComponent(typeof(HeroBehaviour))]
     public class Equipments : CharacterComponentBase
     {
-        private Hero _hero;
+        private HeroBehaviour _heroBehaviour;
 
         protected override void Awake()
         {
             base.Awake();
-            _hero = GetComponent<Hero>();
+            _heroBehaviour = GetComponent<HeroBehaviour>();
         }
 
         public override void Init() { }

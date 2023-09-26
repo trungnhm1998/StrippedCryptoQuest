@@ -1,4 +1,5 @@
-﻿using CryptoQuest.Gameplay.Battle;
+﻿using CryptoQuest.Battle;
+using CryptoQuest.Gameplay.Battle;
 using CryptoQuest.Gameplay.Encounter;
 using CryptoQuest.Quest.Authoring;
 using UnityEngine;

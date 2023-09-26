@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using CryptoQuest.Battle;
 using CryptoQuest.Character.Attributes;
 using CryptoQuest.Gameplay.Battle;
 using CryptoQuest.Gameplay.Encounter;

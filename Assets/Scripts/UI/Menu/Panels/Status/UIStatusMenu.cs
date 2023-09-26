@@ -1,4 +1,5 @@
 using System;
+using CryptoQuest.Battle.Components;
 using CryptoQuest.Gameplay.Character;
 using CryptoQuest.Gameplay.PlayerParty;
 using CryptoQuest.Item.Equipment;
@@ -7,6 +8,7 @@ using CryptoQuest.UI.Character;
 using CryptoQuest.UI.Menu.MenuStates.StatusStates;
 using CryptoQuest.UI.Menu.Panels.Status.Equipment;
 using FSM;
+using IndiGames.GameplayAbilitySystem.AttributeSystem.Components;
 using UnityEngine;
 
 namespace CryptoQuest.UI.Menu.Panels.Status
@@ -27,9 +29,9 @@ namespace CryptoQuest.UI.Menu.Panels.Status
         public UIEquipmentsInventory EquipmentsInventoryPanel => _equipmentsInventoryPanel;
         [field: SerializeField] public UIStatusCharacter CharacterPanel { get; private set; }
         [SerializeField] private AttributeChangeEvent _attributeChangeEvent;
-        private CharacterSpec _inspectingCharacter;
-        public CharacterSpec InspectingCharacter => _inspectingCharacter; // Should have using ICharacter
-        private IParty _party;
+        private HeroBehaviour _inspectingHero;
+        public HeroBehaviour InspectingHero => _inspectingHero; // Should have using ICharacter
+        private IPartyController _party;
 
         private void Awake()
         {
@@ -40,7 +42,7 @@ namespace CryptoQuest.UI.Menu.Panels.Status
 
         private void Start()
         {
-            _party = ServiceProvider.GetService<IPartyController>().Party;
+            _party = ServiceProvider.GetService<IPartyController>();
         }
 
         private void OnDestroy()
@@ -63,7 +65,7 @@ namespace CryptoQuest.UI.Menu.Panels.Status
 
         private void UnequipEquipmentAtSlot(EquipmentSlot.EType slot)
         {
-            if (!_inspectingCharacter.IsValid())
+            if (!_inspectingHero.IsValid())
             {
                 Debug.Log($"UIStatusMenu::UnequipEquipmentAtSlot: No character is inspecting");
                 return;
@@ -79,14 +81,14 @@ namespace CryptoQuest.UI.Menu.Panels.Status
             // _provider.EquipEquipment(_inspectingCharacter, equipment);
         }
 
-        private void InspectCharacter(CharacterSpec characterSpec)
+        private void InspectCharacter(HeroBehaviour hero)
         {
-            if (characterSpec.IsValid() == false) return;
-            _inspectingCharacter = characterSpec;
+            if (hero.IsValid() == false) return;
+            _inspectingHero = hero;
 
-            var charAttributeSystem = characterSpec.CharacterComponent.AttributeSystem;
-            _attributeChangeEvent.AttributeSystemReference = charAttributeSystem;
-            CharacterEquipmentsPanel.SetEquipmentsUI(_inspectingCharacter.Equipments);
+            _attributeChangeEvent.AttributeSystemReference = hero.GetComponent<AttributeSystemBehaviour>();
+            // TODO: REFACTOR HERO EQUIPMENTS
+            // CharacterEquipmentsPanel.SetEquipmentsUI(_inspectingHero.Equipments);
         }
 
 

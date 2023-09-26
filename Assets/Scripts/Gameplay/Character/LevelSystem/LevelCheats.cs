@@ -1,7 +1,7 @@
 using CryptoQuest.System;
 using CommandTerminal;
+using CryptoQuest.Battle.Components;
 using CryptoQuest.Events;
-using CryptoQuest.Gameplay.Character.LevelSystem.Components;
 using CryptoQuest.Gameplay.PlayerParty;
 using CryptoQuest.System.Cheat;
 using UnityEngine;
@@ -39,12 +39,12 @@ namespace CryptoQuest.Gameplay.Character.LevelSystem
             var memberIndex = args[0].Int;
             var expToAdd = args[1].Int;
 
-            if (!partyController.TryGetMemberAtIndex(memberIndex, out var character))
+            if (!partyController.GetHero(memberIndex, out var hero))
             {
                 Debug.LogWarning($"Member index not valid");
                 return;
             }
-            if (!character.GameObject.TryGetComponent<CharacterLevelComponent>(out var levelComponent)) return;
+            if (!hero.GameObject.TryGetComponent<CryptoQuest.Battle.Components.LevelSystem>(out var levelComponent)) return;
             levelComponent.AddExp(expToAdd);
         }
     }

@@ -6,6 +6,7 @@ using CryptoQuest.Gameplay.Loot;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 using UnityEngine.Localization;
 
 namespace CryptoQuest.Character.Enemy
@@ -30,6 +31,7 @@ namespace CryptoQuest.Character.Enemy
         [field: SerializeField] public Elemental Element { get; private set; }
 
         [field: SerializeField] public GameObject Prefab { get; private set; }
+        [field: SerializeField] public AssetReferenceT<GameObject> Model { get; private set; }
 
         [field: SerializeField] public AttributeWithValue[] Stats { get; private set; } =
             Array.Empty<AttributeWithValue>();

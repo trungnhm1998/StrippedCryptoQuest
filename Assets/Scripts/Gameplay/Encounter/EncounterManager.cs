@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using CryptoQuest.Battle;
 using CryptoQuest.Events;
 using CryptoQuest.Gameplay.Battle;
 using UnityEngine;

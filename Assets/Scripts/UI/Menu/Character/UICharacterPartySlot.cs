@@ -1,5 +1,5 @@
 using System;
-using CryptoQuest.Gameplay.Character;
+using CryptoQuest.Battle.Components;
 using CryptoQuest.Menu;
 using UnityEngine;
 using UnityEngine.UI;
@@ -24,13 +24,10 @@ namespace CryptoQuest.UI.Menu.Character
 
         private int _indexInParty;
 
-        public void Init(CharacterSpec member, int idxInParty)
+        public void Init(HeroBehaviour hero, int idxInParty)
         {
-            _characterInSlot.gameObject.SetActive(member.IsValid());
-            if (member.IsValid() == false) return;
-
             _indexInParty = idxInParty;
-            _characterInSlot.Init(member);
+            _characterInSlot.Init(hero);
             _button.onClick.AddListener(OnPressed);
             _button.Selected += Select;
             _button.DeSelected += Deselect;

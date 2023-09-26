@@ -1,4 +1,5 @@
 ﻿using CommandTerminal;
+using CryptoQuest.Battle;
 using CryptoQuest.Events;
 using CryptoQuest.System.Cheat;
 using UnityEngine;

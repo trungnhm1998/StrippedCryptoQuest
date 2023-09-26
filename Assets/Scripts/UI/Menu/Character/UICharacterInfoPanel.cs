@@ -1,6 +1,8 @@
+using CryptoQuest.Battle.Components;
 using CryptoQuest.Gameplay.Character;
 using CryptoQuest.UI.Character;
 using CryptoQuest.UI.Menu.Panels.Home;
+using IndiGames.GameplayAbilitySystem.AttributeSystem.Components;
 using UnityEngine;
 using UnityEngine.Localization;
 using UnityEngine.UI;
@@ -14,14 +16,14 @@ namespace CryptoQuest.UI.Menu.Character
         [SerializeField] private UIAttributeBar _mpBar;
         [SerializeField] private AttributeChangeEvent _attributeChangeEvent;
 
-        private CharacterSpec _memberInSlot;
+        private HeroBehaviour _hero;
 
-        public void Init(CharacterSpec member)
+        public void Init(HeroBehaviour hero)
         {
-            _memberInSlot = member;
-            member.SetupUI(this);
+            _hero = hero;
+            _hero.SetupUI(this);
 
-            _attributeChangeEvent.AttributeSystemReference = _memberInSlot.CharacterComponent.AttributeSystem;
+            _attributeChangeEvent.AttributeSystemReference = _hero.GetComponent<AttributeSystemBehaviour>();
         }
 
         public void SetAvatar(Sprite avatar)

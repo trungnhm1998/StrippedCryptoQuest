@@ -1,3 +1,4 @@
+using CryptoQuest.Battle.Components;
 using CryptoQuest.Gameplay.Character;
 using CryptoQuest.Gameplay.PlayerParty;
 using CryptoQuest.System;
@@ -11,18 +12,18 @@ namespace CryptoQuest.UI.Menu.Panels.Skill
     {
         public static UnityAction EnterCharacterSelectionEvent;
         public UnityAction SelectedCharacterEvent;
-        public UnityAction<CharacterSpec, bool> UpdateSkillListEvent;
+        public UnityAction<HeroBehaviour, bool> UpdateSkillListEvent;
 
         [SerializeField] private UICharacterButton _defaultSelection;
         [SerializeField] private UICharacterPartySlot[] _partySlots;
 
-        private IParty _party;
+        private IPartyController _party;
         private GameObject _cachedGo;
 
         private void Awake()
         {
             UICharacterButton.SelectCharacterEvent += InspectSelectedCharacter;
-            _party = ServiceProvider.GetService<IPartyController>().Party;
+            _party = ServiceProvider.GetService<IPartyController>();
         }
 
         private void OnDestroy()
@@ -37,11 +38,11 @@ namespace CryptoQuest.UI.Menu.Panels.Skill
 
         private void LoadPartyMembers()
         {
-            for (var index = 0; index < _party.Members.Length; index++)
+            for (var index = 0; index < _party.Slots.Length; index++)
             {
-                var member = _party.Members[index];
-                var slot = _partySlots[index];
-                slot.Init(member, index);
+                var member = _party.Slots[index];
+                var ui = _partySlots[index];
+                ui.Init(member.HeroBehaviour, index);
             }
 
             _cachedGo = _partySlots[0].gameObject; // Bad code
@@ -57,7 +58,7 @@ namespace CryptoQuest.UI.Menu.Panels.Skill
             {
                 if (selectedCharGo.transform.parent.gameObject == _partySlots[index].gameObject)
                 {
-                    UpdateSkillListEvent?.Invoke(_party.Members[index], true);
+                    UpdateSkillListEvent?.Invoke(_party.Slots[index].HeroBehaviour, true);
                     _cachedGo = _partySlots[index].gameObject;
                     return;
                 }

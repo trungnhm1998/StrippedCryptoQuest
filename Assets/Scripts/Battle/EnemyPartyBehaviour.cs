@@ -8,6 +8,7 @@ namespace CryptoQuest.Battle
     public class EnemyPartyBehaviour : MonoBehaviour
     {
         [SerializeField] private List<EnemyBehaviour> _enemies;
+        public List<EnemyBehaviour> Enemies => _enemies;
 
         private static readonly string[] Postfixes = { "A", "B", "C", "D" };
 
@@ -23,8 +24,7 @@ namespace CryptoQuest.Battle
                 var enemySpec = loadedEnemyData[index];
                 if (enemySpec == null || enemySpec.IsValid() == false) continue;
                 dict.TryAdd(enemySpec.Data, 0);
-                StartCoroutine(enemySpec.SetDisplayName(Postfixes[dict[enemySpec.Data]++]));
-                _enemies[index].Init(enemySpec);
+                _enemies[index].Init(enemySpec, Postfixes[dict[enemySpec.Data]++]);
             }
         }
     }

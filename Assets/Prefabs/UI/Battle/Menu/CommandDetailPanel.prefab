@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 757444238403550170}
   - component: {fileID: 267959486955562734}
   - component: {fileID: 3164042532792681934}
+  - component: {fileID: 7184214199926410854}
   m_Layer: 0
   m_Name: CommandDetailPanel
   m_TagString: Untagged
@@ -107,6 +108,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _commandDetailPanel: {fileID: 267959486955562734}
+--- !u!114 &7184214199926410854
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7772489417049266562}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 698f29464c7d38c45bf7a801e9f46568, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _battleManager: {fileID: 0}
+  _content: {fileID: 8048439073891481476}
+  _enemyPrefab: {fileID: 1676715279052400272, guid: 5f76a999e6416bd4ca834dceb2a0863b, type: 3}
 --- !u!1001 &7129935144768768747
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -237,5 +253,10 @@ GameObject:
 --- !u!224 &7083241326282800046 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 53520145032147269, guid: 51cf57ff6fc442f4db7738d04dcff92d, type: 3}
+  m_PrefabInstance: {fileID: 7129935144768768747}
+  m_PrefabAsset: {fileID: 0}
+--- !u!224 &8048439073891481476 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 955698311680556399, guid: 51cf57ff6fc442f4db7738d04dcff92d, type: 3}
   m_PrefabInstance: {fileID: 7129935144768768747}
   m_PrefabAsset: {fileID: 0}

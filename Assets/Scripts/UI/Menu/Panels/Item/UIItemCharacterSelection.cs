@@ -20,13 +20,15 @@ namespace CryptoQuest.UI.Menu.Panels.Item
         private void OnEnable()
         {
             ConsumingItemState.Cancelled += Hide;
-            var party = ServiceProvider.GetService<IPartyController>().Party;
-            for (var index = 0; index < party.Members.Length; index++)
+            var party = ServiceProvider.GetService<IPartyController>();
+            for (var index = 0; index < party.Slots.Length; index++)
             {
-                var member = party.Members[index];
-                var slot = _partySlots[index];
-                slot.Init(member, index);
-                slot.SetSelectedCallback(OnHeroSelected);
+                var slot = party.Slots[index];
+                var ui = _partySlots[index];
+                ui.gameObject.SetActive(slot.IsValid());
+                if (!slot.IsValid()) continue;
+                ui.Init(slot.HeroBehaviour, index);
+                ui.SetSelectedCallback(OnHeroSelected);
             }
         }
 

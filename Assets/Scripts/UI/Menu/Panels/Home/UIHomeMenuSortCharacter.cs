@@ -32,12 +32,15 @@ namespace CryptoQuest.UI.Menu.Panels.Home
             get => _currentIndex;
             set
             {
-                int count = ServiceProvider.GetService<IPartyController>().Party.Members.Length;
+                int count = PartyController.Size;
                 _currentIndex = (value + count) % count;
             }
         }
 
         private int _indexHolder;
+
+        private IPartyController PartyController => _partyController ??= ServiceProvider.GetService<IPartyController>();
+        private IPartyController _partyController;
 
         private void OnValidate()
         {
@@ -48,6 +51,7 @@ namespace CryptoQuest.UI.Menu.Panels.Home
 
             _partySlots = GetComponentsInChildren<UIPartySlot>();
         }
+
 
         private void OnEnable()
         {
@@ -64,24 +68,18 @@ namespace CryptoQuest.UI.Menu.Panels.Home
             _sortFailedEvent.EventRaised -= ResetSortOrder;
         }
 
-        private void Start()
-        {
-            LoadPartyMembers();
-        }
-
         private void LoadPartyMembers()
         {
-            var party = ServiceProvider.GetService<IPartyController>().Party;
-            for (var index = 0; index < party.Members.Length; index++)
+            for (var index = 0; index < PartyController.Slots.Length; index++)
             {
-                var member = party.Members[index];
-                var slot = _partySlots[index];
+                var slot = PartyController.Slots[index];
+                var uiPartySlot = _partySlots[index];
 
-                slot.Active(member.IsValid());
-                if (!member.IsValid()) continue;
+                uiPartySlot.Active(slot.IsValid());
+                if (!slot.IsValid()) continue;
 
-                var childInfo = slot.transform.GetComponentInChildren<UICharacterInfo>();
-                slot.Init(member, childInfo);
+                var childInfo = uiPartySlot.transform.GetComponentInChildren<UICharacterInfo>();
+                uiPartySlot.Init(slot.HeroBehaviour, childInfo);
             }
         }
 
@@ -152,7 +150,7 @@ namespace CryptoQuest.UI.Menu.Panels.Home
 
             Transform currentTarget = _sortLayers[CurrentIndex].transform.GetChild(0);
             Transform otherTarget = _partySlots[otherTargetIndex].transform.GetChild(0);
-            ServiceProvider.GetService<IPartyController>().Party.Sort(otherTargetIndex, CurrentIndex);
+            PartyController.Sort(otherTargetIndex, CurrentIndex);
 
             PutToNormalLayer(otherTarget, CurrentIndex);
             CurrentIndex = otherTargetIndex;

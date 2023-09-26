@@ -28,15 +28,11 @@ namespace CryptoQuest.Tests.Runtime.Battle
                 new(AttributeSets.Health, 100f),
                 new(AttributeSets.Strength, 50f),
             };
-            _heroGo = CreateCharacterFromPrefab();
             _hero = A.Character
                 .WithStats(stats)
-                .WithPrefab(_heroGo)
                 .WithElement(An.Element.Fire).Build();
-            _enemyGo = CreateCharacterFromPrefab();
             _enemy = A.Character
                 .WithStats(stats)
-                .WithPrefab(_enemyGo)
                 .WithElement(An.Element.Water).Build();
         }
 
@@ -118,27 +114,24 @@ namespace CryptoQuest.Tests.Runtime.Battle
                 escapeAbility.EscapeFailedEvent += () => escaped = false;
                 escapeAbility.EscapedEvent += () => escaped = true;
 
-                var heroGo = CreateCharacterFromPrefab();
                 var hero = A.Character
                     .WithStats(new AttributeWithValue[]
                     {
                         new(AttributeSets.Agility, 200f)
                     })
-                    .WithPrefab(heroGo)
                     .Build();
-                var enemyGo = CreateCharacterFromPrefab();
-                var enemy = A.Character
+                var enemyBuilder = A.Character;
+                var enemy = enemyBuilder
                     .WithStats(new AttributeWithValue[]
                     {
                         new(AttributeSets.Agility, 50f)
                     })
-                    .WithPrefab(enemyGo)
                     .Build();
 
                 enemy.AttributeSystem.TryGetAttributeValue(AttributeSets.Agility, out var enemyAgility);
                 var commands = new List<ICommand>
                 {
-                    new EscapeCommand(heroGo, enemyAgility.CurrentValue)
+                    new EscapeCommand(enemyBuilder.CharacterGameObject, enemyAgility.CurrentValue)
                 };
                 commands.ForEach(command => command.Execute());
 
@@ -160,28 +153,25 @@ namespace CryptoQuest.Tests.Runtime.Battle
                 escapeAbility.EscapeFailedEvent += () => escaped = false;
                 escapeAbility.EscapedEvent += () => escaped = true;
 
-                var heroGo = CreateCharacterFromPrefab();
-                var hero = A.Character
+                var characterBuilder = A.Character;
+                var hero = characterBuilder
                     .WithStats(new AttributeWithValue[]
                     {
                         new(AttributeSets.Agility, 50f)
                     })
-                    .WithPrefab(heroGo)
                     .Build();
-                var enemyGo = CreateCharacterFromPrefab();
                 var enemy = A.Character
                     .WithStats(new AttributeWithValue[]
                     {
                         new(AttributeSets.Agility, 200f)
                     })
-                    .WithPrefab(enemyGo)
                     .Build();
 
 
                 enemy.AttributeSystem.TryGetAttributeValue(AttributeSets.Agility, out var enemyAgility);
                 var commands = new List<ICommand>
                 {
-                    new EscapeCommand(heroGo, enemyAgility.CurrentValue)
+                    new EscapeCommand(characterBuilder.CharacterGameObject, enemyAgility.CurrentValue)
                 };
                 commands.ForEach(command => command.Execute());
 

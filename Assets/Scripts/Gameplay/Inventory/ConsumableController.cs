@@ -3,6 +3,7 @@ using CryptoQuest.Character.Ability;
 using CryptoQuest.Gameplay.PlayerParty;
 using CryptoQuest.Item;
 using CryptoQuest.System;
+using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
 using UnityEngine;
 
 namespace CryptoQuest.Gameplay.Inventory
@@ -40,15 +41,13 @@ namespace CryptoQuest.Gameplay.Inventory
         {
             bool ableToUseOnAtLeastOneHero = false;
 
-            var party = ServiceProvider.GetService<IPartyController>().Party;
+            var party = ServiceProvider.GetService<IPartyController>();
             foreach (var index in heroIndices)
             {
-                var hero = party.Members[index];
+                var hero = party.Slots[index].HeroBehaviour;
                 if (hero.IsValid() == false) continue;
-                var spec = hero
-                    .CharacterComponent
-                    .GameplayAbilitySystem
-                    .GiveAbility<ConsumableAbilitySpec>(consumable.Data.Ability);
+                var abilitySystem = hero.GetComponent<AbilitySystemBehaviour>();
+                var spec = abilitySystem.GiveAbility<ConsumableAbilitySpec>(consumable.Data.Ability);
                 spec.SetConsumable(consumable);
                 spec.TryActiveAbility();
 

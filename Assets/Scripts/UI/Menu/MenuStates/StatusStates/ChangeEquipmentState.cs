@@ -11,7 +11,7 @@ namespace CryptoQuest.UI.Menu.MenuStates.StatusStates
             base.OnEnter();
             StatusPanel.CharacterEquipmentsPanel.Hide();
             StatusPanel.EquipmentsInventoryPanel.Show(
-                StatusPanel.InspectingCharacter,
+                StatusPanel.InspectingHero,
                 StatusPanel.CharacterEquipmentsPanel.ModifyingSlotType,
                 StatusPanel.CharacterEquipmentsPanel.EquipmentCategory);
         }

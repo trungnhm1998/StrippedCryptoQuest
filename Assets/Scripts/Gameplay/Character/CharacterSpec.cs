@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using CryptoQuest.Battle.Components;
 using CryptoQuest.Character.Ability;
 using CryptoQuest.Character.Attributes;
 using CryptoQuest.Character.Hero;
@@ -10,7 +11,8 @@ using IndiGames.GameplayAbilitySystem.AbilitySystem;
 using IndiGames.Core.EditorTools.Attributes.ReadOnlyAttribute;
 using UnityEngine;
 using CryptoQuest.Gameplay.Character.LevelSystem;
-using CryptoQuest.Gameplay.Character.LevelSystem.Components;
+using UnityEngine.Localization;
+using Equipments = CryptoQuest.Character.Hero.Equipments;
 
 namespace CryptoQuest.Gameplay.Character
 {
@@ -31,6 +33,7 @@ namespace CryptoQuest.Gameplay.Character
 
         [field: SerializeField, ReadOnly] public CharacterSkillSet SkillSet { get; set; }
         [field: SerializeField] public Sprite Avatar { get; set; }
+        [field: SerializeField] public LocalizedString Name { get; private set; }
 
         private CharacterBehaviourBase _characterComponent;
         public CharacterBehaviourBase CharacterComponent => _characterComponent;
@@ -58,31 +61,6 @@ namespace CryptoQuest.Gameplay.Character
         public void Bind(CharacterBehaviourBase characterBehaviour)
         {
             _characterComponent = characterBehaviour;
-        }
-
-        public void SetupUI(ICharacterInfo uiCharacterInfo)
-        {
-            uiCharacterInfo.SetElement(Element.Icon);
-            uiCharacterInfo.SetLevel(Level);
-            uiCharacterInfo.SetClass(Class.Name);
-            uiCharacterInfo.SetAvatar(Avatar);
-            BackgroundInfo.SetupUI(uiCharacterInfo);
-            SetupExpUI(uiCharacterInfo);
-        }
-
-        private void SetupExpUI(ICharacterInfo uiCharacterInfo)
-        {
-            var levelCalculator = CharacterLevelComponent.LevelCalculator;
-            if (levelCalculator == null) return;
-
-            var cachedLevel = Level;
-            var isMaxedLevel = cachedLevel == StatsDef.MaxLevel;
-            var nextLevelRequireExp = levelCalculator.RequiredExps[isMaxedLevel ? cachedLevel - 1 : cachedLevel];
-            uiCharacterInfo.SetMaxExp(nextLevelRequireExp);
-
-            var currentLevelAccumulateExp = levelCalculator.AccumulatedExps[cachedLevel - 1];
-            var currentExp = isMaxedLevel ? nextLevelRequireExp : Experience - currentLevelAccumulateExp;
-            uiCharacterInfo.SetExp(currentExp);
         }
     }
 }

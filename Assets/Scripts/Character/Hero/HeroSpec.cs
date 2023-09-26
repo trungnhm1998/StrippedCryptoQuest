@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using CryptoQuest.Character.Ability;
-using CryptoQuest.Gameplay.Character;
-using IndiGames.Core.EditorTools.Attributes.ReadOnlyAttribute;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.Components;
 using UnityEngine;
 
@@ -11,18 +7,15 @@ namespace CryptoQuest.Character.Hero
     /// <summary>
     /// Runtime hero data, use this to save game
     ///
+    /// User should have bunch of Heroes in their profile
+    ///
     /// Use the <see cref="AttributeSystemBehaviour"/> to get the runtime stats
     /// </summary>
     [Serializable]
-    public class HeroSpec : CharacterInformation<HeroDef, HeroSpec>
+    public class HeroSpec
     {
-        /// <summary>
-        /// Use this render skill
-        /// </summary>
-        [field: SerializeField] public List<CastableAbility> LearnedAbilities { get; set; }
-
+        [field: SerializeField] public int Id { get; private set; }
+        [field: SerializeField] public UnitSO Unit { get; private set; }
         [field: SerializeField] public float Experience { get; set; }
-        [field: SerializeField, ReadOnly] public int Level { get; set; }
-        [field: SerializeField] public Equipments Equipments { get; private set; }
     }
 }

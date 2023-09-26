@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using CryptoQuest.Battle.Components;
 using CryptoQuest.Gameplay.Character;
 using CryptoQuest.Gameplay.Inventory;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Type;
@@ -22,16 +23,19 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
     public class UIEquipmentsInventory : MonoBehaviour
     {
         public event Action UnequipPressed;
-        public event Action<EquipmentInfo, CharacterSpec> InspectingEquipment;
+        public event Action<EquipmentInfo, HeroBehaviour> InspectingEquipment;
+
         [FormerlySerializedAs("_main")]
         [SerializeField] private UIStatusMenu _statusPanel;
 
         [Header("Configs")]
         [SerializeField] private UIStatusMenu _main;
+
         [SerializeField] private ScrollRect _scrollRect;
 
         [Space]
         [SerializeField] private UIEquipmentItem _equipmentItemPrefab;
+
         [SerializeField] private UIEquipment _currentlyEquippingItem;
         [SerializeField] private TooltipProvider _tooltipProvider;
         [SerializeField] private RectTransform _tooltipSafeArea;
@@ -57,20 +61,21 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
         /// Reset to position to top of the list
         /// </summary>
         /// <param name="context"></param>
+        private HeroBehaviour _inspectingCharacter;
 
-        private CharacterSpec _inspectingCharacter;
         private EquipmentSlot.EType _slotType;
         private EEquipmentCategory _category;
 
-        public void Show(CharacterSpec inspectingChar, EquipmentSlot.EType modifyingSlotType,
+        public void Show(HeroBehaviour inspectingChar, EquipmentSlot.EType modifyingSlotType,
             EEquipmentCategory category)
         {
             _category = category;
             Reset();
             _slotType = modifyingSlotType;
             _inspectingCharacter = inspectingChar;
-            _inspectingCharacter.Equipments.EquipmentAdded += UpdateInventoryAndEquippingUI;
-            _inspectingCharacter.Equipments.EquipmentRemoved += RemoveCurrentlyEquipping;
+            // TODO: REFACTOR EQUIPMENTS
+            // _inspectingCharacter.Equipments.EquipmentAdded += UpdateInventoryAndEquippingUI;
+            // _inspectingCharacter.Equipments.EquipmentRemoved += RemoveCurrentlyEquipping;
             _scrollRect.content.anchoredPosition = Vector2.zero;
             _tooltipProvider.Tooltip.SetSafeArea(_tooltipSafeArea);
             _contents.SetActive(true);
@@ -80,12 +85,13 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
             PreviewUnselectEquipment();
         }
 
-        private void RenderCurrentlyEquipItem(CharacterSpec inspectingCharacter,
+        private void RenderCurrentlyEquipItem(HeroBehaviour inspectingCharacter,
             EquipmentSlot.EType modifyingSlotType)
         {
-            var equipment = inspectingCharacter.Equipments.GetEquipmentInSlot(modifyingSlotType);
-            inspectingCharacter.Equipments.ModifyingSlot = modifyingSlotType;
-            UpdateCurrentlyEquipping(equipment);
+            // TODO: REFACTOR EQUIPMENTS
+            // var equipment = inspectingCharacter.Equipments.GetEquipmentInSlot(modifyingSlotType);
+            // inspectingCharacter.Equipments.ModifyingSlot = modifyingSlotType;
+            // UpdateCurrentlyEquipping(equipment);
         }
 
         private void UpdateCurrentlyEquipping(EquipmentInfo equipment)
@@ -102,8 +108,9 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
 
         public void Hide()
         {
-            _inspectingCharacter.Equipments.EquipmentAdded -= UpdateInventoryAndEquippingUI;
-            _inspectingCharacter.Equipments.EquipmentRemoved -= RemoveCurrentlyEquipping;
+            // TODO: REFACTOR EQUIPMENTS
+            // _inspectingCharacter.Equipments.EquipmentAdded -= UpdateInventoryAndEquippingUI;
+            // _inspectingCharacter.Equipments.EquipmentRemoved -= RemoveCurrentlyEquipping;
             _tooltipProvider.Tooltip.Hide();
             _contents.SetActive(false);
             Reset();
@@ -216,7 +223,7 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
 
         private void ValidateEquipment(EquipmentInfo equipment, UIEquipmentItem equipmentItem)
         {
-            if (equipment.IsCompatibleWithCharacter(_inspectingCharacter)) return;
+            if (equipment.IsCompatibleWithHero(_inspectingCharacter)) return;
 
             equipmentItem.DeactivateButton();
         }
