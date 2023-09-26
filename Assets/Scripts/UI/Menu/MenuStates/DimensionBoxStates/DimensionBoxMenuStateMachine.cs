@@ -1,4 +1,3 @@
-using System.Diagnostics;
 using CryptoQuest.UI.Menu.Panels.DimensionBox;
 
 namespace CryptoQuest.UI.Menu.MenuStates.DimensionBoxStates
@@ -20,6 +19,7 @@ namespace CryptoQuest.UI.Menu.MenuStates.DimensionBoxStates
             AddState(NavDimension, new GenericUnfocusState(TransferTypeSelection));
             AddState(TransferTypeSelection, new TransferTypeSelectionState(panel));
             AddState(EquipmentTransfer, new EquipmentTransferState(panel));
+            AddState(MetadTransfer, new MetadTransferState(panel));
 
             SetStartState(TransferTypeSelection);
         }
