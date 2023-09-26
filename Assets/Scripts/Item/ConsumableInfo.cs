@@ -14,6 +14,9 @@ namespace CryptoQuest.Item
         public LocalizedString DisplayName => Data.DisplayName;
         public LocalizedString Description => Data.Description;
 
+        public override int Price => Data.Price;
+        public override int SellPrice => Data.SellPrice;
+
         public ConsumableInfo(ConsumableSO baseItemSO, int quantity = 1) : base(baseItemSO)
         {
             Quantity = quantity;

@@ -1971,6 +1971,215 @@ namespace CryptoQuest.Input
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Shop"",
+            ""id"": ""86bccbc7-6b89-4079-9a20-f67ab60a4ab1"",
+            ""actions"": [
+                {
+                    ""name"": ""Submit"",
+                    ""type"": ""Button"",
+                    ""id"": ""889bc09b-f797-4be8-b4db-57c0dce524ab"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Cancel"",
+                    ""type"": ""Button"",
+                    ""id"": ""8bf2e97e-d3a7-44a5-a5af-89924944951b"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ChangeTab"",
+                    ""type"": ""Button"",
+                    ""id"": ""7ee51d6d-186c-4116-9927-5f2507d06c2b"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Back"",
+                    ""type"": ""Button"",
+                    ""id"": ""465797bb-7a1f-4ceb-9bd6-445ce5e11ec3"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""51e46fc1-a910-4859-a82b-6e2395090894"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""MnK"",
+                    ""action"": ""Cancel"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""dae61453-7fd3-45ba-b639-8fa066d9734b"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Cancel"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""29f0e6b7-ff6b-46df-a938-c529573c4113"",
+                    ""path"": ""<Keyboard>/enter"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""MnK"",
+                    ""action"": ""Submit"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""061dcc38-bed5-4a6c-bc93-7b2362cf109f"",
+                    ""path"": ""<Keyboard>/numpadEnter"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""MnK"",
+                    ""action"": ""Submit"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""54f48592-8a02-437f-8c28-6f52f51d2bcf"",
+                    ""path"": ""*/{Submit}"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""MnK;Gamepad"",
+                    ""action"": ""Submit"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""05174e41-79a8-4e57-9aed-9ac9dfa857f7"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""MnK"",
+                    ""action"": ""Submit"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5bf98c77-0635-4643-a699-a1e8c9d0bb50"",
+                    ""path"": ""*/{Cancel}"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad;MnK"",
+                    ""action"": ""Cancel"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""LeftRightShoulders"",
+                    ""id"": ""4056ca19-2bff-4c25-a09b-8713edd6428a"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ChangeTab"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""341de9ae-8921-4dab-bbce-b1ff27e904e6"",
+                    ""path"": ""<Gamepad>/leftShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""ChangeTab"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""f785b95c-524b-482d-b45c-4fc70a10399e"",
+                    ""path"": ""<Gamepad>/rightShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""ChangeTab"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""Q/E"",
+                    ""id"": ""c75ee50f-3cd0-4172-a0b6-71d1625522cb"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ChangeTab"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""e9048380-8dc1-4976-8574-ecdd65a4145c"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""MnK"",
+                    ""action"": ""ChangeTab"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""f5897347-f061-40fc-a4ca-dfe6c5e9edf3"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""MnK"",
+                    ""action"": ""ChangeTab"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ce661f2d-990b-4ca6-9768-db2d41125722"",
+                    ""path"": ""<Keyboard>/b"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Back"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""641859ac-ee05-42be-8894-af7ab91d8b42"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Back"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": [
@@ -2050,6 +2259,12 @@ namespace CryptoQuest.Input
             m_Title_Cancel = m_Title.FindAction("Cancel", throwIfNotFound: true);
             m_Title_Confirm = m_Title.FindAction("Confirm", throwIfNotFound: true);
             m_Title_Tab = m_Title.FindAction("Tab", throwIfNotFound: true);
+            // Shop
+            m_Shop = asset.FindActionMap("Shop", throwIfNotFound: true);
+            m_Shop_Submit = m_Shop.FindAction("Submit", throwIfNotFound: true);
+            m_Shop_Cancel = m_Shop.FindAction("Cancel", throwIfNotFound: true);
+            m_Shop_ChangeTab = m_Shop.FindAction("ChangeTab", throwIfNotFound: true);
+            m_Shop_Back = m_Shop.FindAction("Back", throwIfNotFound: true);
         }
 
         public void Dispose()
@@ -2615,6 +2830,76 @@ namespace CryptoQuest.Input
             }
         }
         public TitleActions @Title => new TitleActions(this);
+
+        // Shop
+        private readonly InputActionMap m_Shop;
+        private List<IShopActions> m_ShopActionsCallbackInterfaces = new List<IShopActions>();
+        private readonly InputAction m_Shop_Submit;
+        private readonly InputAction m_Shop_Cancel;
+        private readonly InputAction m_Shop_ChangeTab;
+        private readonly InputAction m_Shop_Back;
+        public struct ShopActions
+        {
+            private @InputActions m_Wrapper;
+            public ShopActions(@InputActions wrapper) { m_Wrapper = wrapper; }
+            public InputAction @Submit => m_Wrapper.m_Shop_Submit;
+            public InputAction @Cancel => m_Wrapper.m_Shop_Cancel;
+            public InputAction @ChangeTab => m_Wrapper.m_Shop_ChangeTab;
+            public InputAction @Back => m_Wrapper.m_Shop_Back;
+            public InputActionMap Get() { return m_Wrapper.m_Shop; }
+            public void Enable() { Get().Enable(); }
+            public void Disable() { Get().Disable(); }
+            public bool enabled => Get().enabled;
+            public static implicit operator InputActionMap(ShopActions set) { return set.Get(); }
+            public void AddCallbacks(IShopActions instance)
+            {
+                if (instance == null || m_Wrapper.m_ShopActionsCallbackInterfaces.Contains(instance)) return;
+                m_Wrapper.m_ShopActionsCallbackInterfaces.Add(instance);
+                @Submit.started += instance.OnSubmit;
+                @Submit.performed += instance.OnSubmit;
+                @Submit.canceled += instance.OnSubmit;
+                @Cancel.started += instance.OnCancel;
+                @Cancel.performed += instance.OnCancel;
+                @Cancel.canceled += instance.OnCancel;
+                @ChangeTab.started += instance.OnChangeTab;
+                @ChangeTab.performed += instance.OnChangeTab;
+                @ChangeTab.canceled += instance.OnChangeTab;
+                @Back.started += instance.OnBack;
+                @Back.performed += instance.OnBack;
+                @Back.canceled += instance.OnBack;
+            }
+
+            private void UnregisterCallbacks(IShopActions instance)
+            {
+                @Submit.started -= instance.OnSubmit;
+                @Submit.performed -= instance.OnSubmit;
+                @Submit.canceled -= instance.OnSubmit;
+                @Cancel.started -= instance.OnCancel;
+                @Cancel.performed -= instance.OnCancel;
+                @Cancel.canceled -= instance.OnCancel;
+                @ChangeTab.started -= instance.OnChangeTab;
+                @ChangeTab.performed -= instance.OnChangeTab;
+                @ChangeTab.canceled -= instance.OnChangeTab;
+                @Back.started -= instance.OnBack;
+                @Back.performed -= instance.OnBack;
+                @Back.canceled -= instance.OnBack;
+            }
+
+            public void RemoveCallbacks(IShopActions instance)
+            {
+                if (m_Wrapper.m_ShopActionsCallbackInterfaces.Remove(instance))
+                    UnregisterCallbacks(instance);
+            }
+
+            public void SetCallbacks(IShopActions instance)
+            {
+                foreach (var item in m_Wrapper.m_ShopActionsCallbackInterfaces)
+                    UnregisterCallbacks(item);
+                m_Wrapper.m_ShopActionsCallbackInterfaces.Clear();
+                AddCallbacks(instance);
+            }
+        }
+        public ShopActions @Shop => new ShopActions(this);
         private int m_GamepadSchemeIndex = -1;
         public InputControlScheme GamepadScheme
         {
@@ -2685,6 +2970,13 @@ namespace CryptoQuest.Input
             void OnCancel(InputAction.CallbackContext context);
             void OnConfirm(InputAction.CallbackContext context);
             void OnTab(InputAction.CallbackContext context);
+        }
+        public interface IShopActions
+        {
+            void OnSubmit(InputAction.CallbackContext context);
+            void OnCancel(InputAction.CallbackContext context);
+            void OnChangeTab(InputAction.CallbackContext context);
+            void OnBack(InputAction.CallbackContext context);
         }
     }
 }

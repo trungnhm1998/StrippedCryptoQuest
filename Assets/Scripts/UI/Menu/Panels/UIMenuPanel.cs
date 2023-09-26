@@ -1,3 +1,4 @@
+using CryptoQuest.Menu;
 using CryptoQuest.UI.Menu.ScriptableObjects;
 using FSM;
 using UnityEngine;

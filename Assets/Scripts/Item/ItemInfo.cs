@@ -15,6 +15,9 @@ namespace CryptoQuest.Item
             set => _id = value;
         }
 
+        public abstract int Price { get; }
+        public abstract int SellPrice { get; }
+
         public abstract bool IsValid();
     }
 

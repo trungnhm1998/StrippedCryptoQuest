@@ -33,6 +33,9 @@ namespace CryptoQuest.Item.Equipment
         public EquipmentDef Def { get; set; }
         public EquipmentPrefab Prefab { get; set; }
 
+        public override int Price => Def.Price;
+        public override int SellPrice => Def.SellPrice;
+
         public EquipmentInfo()
         {
             Level = 1;

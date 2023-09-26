@@ -8,6 +8,9 @@ namespace CryptoQuest.Gameplay.Inventory.Currency
     public class CurrencyInfo : ItemInfo<CurrencySO>
     {
         [field: SerializeField] public float Amount { get; private set; } = 0;
+        public override int Price => 0;
+        public override int SellPrice => 0;
+
         public CurrencyInfo() { }
 
         public CurrencyInfo(CurrencySO item, float amount) : base(item)
