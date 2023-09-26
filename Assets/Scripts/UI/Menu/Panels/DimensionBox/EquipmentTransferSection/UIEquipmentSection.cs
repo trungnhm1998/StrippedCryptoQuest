@@ -5,6 +5,8 @@ namespace CryptoQuest.UI.Menu.Panels.DimensionBox.EquipmentTransferSection
 {
     public class UIEquipmentSection : UITransferSection
     {
+        public static event UnityAction InspectItemEvent;
+
         [SerializeField] private UnityEvent EnterTransferSectionEvent;
         [SerializeField] private UnityEvent ResetTransferEvent;
 
@@ -18,6 +20,11 @@ namespace CryptoQuest.UI.Menu.Panels.DimensionBox.EquipmentTransferSection
         {
             base.ResetTransfer();
             ResetTransferEvent.Invoke();
+        }
+
+        public void OnInspectItem()
+        {
+            InspectItemEvent?.Invoke();
         }
     }
 }

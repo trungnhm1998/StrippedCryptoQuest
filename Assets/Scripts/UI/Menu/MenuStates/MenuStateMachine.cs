@@ -80,5 +80,14 @@ namespace CryptoQuest.UI.Menu.MenuStates
             Debug.Log($"{GetType().Name}::Reset");
             ActiveState.Reset();
         }
+
+        /// <summary>
+        /// Use this method to execute actions that are important.
+        /// </summary>
+        public virtual void Execute()
+        {
+            Debug.Log($"{GetType().Name}::Execute");
+            ActiveState.Execute();
+        }
     }
 }

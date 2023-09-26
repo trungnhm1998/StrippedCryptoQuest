@@ -155,7 +155,7 @@ namespace CryptoQuest.UI.Menu.Panels.Status
 
         public void Show()
         {
-            Hide();
+            // Hide();
             _tween = DOVirtual.DelayedCall(_waitBeforePopupTooltip, SetupAndShow);
         }
 

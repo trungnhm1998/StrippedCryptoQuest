@@ -1,8 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
-using CryptoQuest.Menu;
 using CryptoQuest.UI.Menu.Panels.DimensionBox.Interfaces;
-using PolyAndCode.UI;
+using CryptoQuest.UI.Menu.Panels.Status.Equipment;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,6 +11,8 @@ namespace CryptoQuest.UI.Menu.Panels.DimensionBox.EquipmentTransferSection
     {
         [SerializeField] protected ScrollRect _scrollRect;
         [SerializeField] private GameObject _singleItemPrefab;
+        [SerializeField] private TooltipProvider _tooltipProvider;
+        [SerializeField] private RectTransform _tooltipSafeArea;
 
         private List<IData> _itemList = new List<IData>();
 
@@ -21,6 +22,7 @@ namespace CryptoQuest.UI.Menu.Panels.DimensionBox.EquipmentTransferSection
             _itemList = data;
             RenderData();
             Invoke(nameof(SetDefaultSelection), .1f);
+            _tooltipProvider.Tooltip.SetSafeArea(_tooltipSafeArea);
         }
 
         /// <summary>

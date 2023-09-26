@@ -70,6 +70,7 @@ namespace CryptoQuest.UI.Menu
             _inputMediator.MenuInteractEvent += Interact;
             _inputMediator.MenuConfirmedEvent += _mainMenuFsm.Confirm;
             _inputMediator.MenuResetEvent += Reset;
+            _inputMediator.MenuExecuteEvent += Execute;
         }
 
         private void OnDisable()
@@ -86,6 +87,7 @@ namespace CryptoQuest.UI.Menu
             _inputMediator.MenuInteractEvent -= Interact;
             _inputMediator.MenuConfirmedEvent -= _mainMenuFsm.Confirm;
             _inputMediator.MenuResetEvent -= Reset;
+            _inputMediator.MenuExecuteEvent -= Execute;
             
             _mainMenuFsm.OnExit();
         }
@@ -123,6 +125,11 @@ namespace CryptoQuest.UI.Menu
         private void Reset()
         {
             _mainMenuFsm.Reset();
+        }
+
+        private void Execute()
+        {
+            _mainMenuFsm.Execute();
         }
 
         #endregion

@@ -64,5 +64,12 @@ namespace CryptoQuest.UI.Menu.MenuStates
         /// Handle pressing North button on the controller or R button on the keyboard.
         /// </summary>
         public virtual void Reset() { }
+
+        /// <summary>
+        /// Use this method to execute actions that are important.
+        /// <para/>
+        /// Handle pressing Menu button on the controller or C button on the keyboard.
+        /// </summary>
+        public virtual void Execute() { }
     }
 }

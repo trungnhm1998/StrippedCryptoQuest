@@ -103,6 +103,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "MenuExecute",
+                    "type": "Button",
+                    "id": "d51b5f68-7872-4b26-bd14-4afb123d24e9",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -598,6 +607,28 @@
                     "processors": "",
                     "groups": "MnK",
                     "action": "MenuReset",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "1bf686f4-2cc8-4166-b0a7-24b8d10f413a",
+                    "path": "<Gamepad>/start",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "MenuExecute",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "4abb0caf-caa8-4f5d-9633-eafe959b4f46",
+                    "path": "<Keyboard>/c",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "MnK",
+                    "action": "MenuExecute",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

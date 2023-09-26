@@ -39,6 +39,7 @@ namespace CryptoQuest.Input
         public event UnityAction MenuTabPressed;
         public event UnityAction MenuCancelEvent;
         public event UnityAction MenuResetEvent;
+        public event UnityAction MenuExecuteEvent;
 
         #endregion
 
@@ -254,6 +255,11 @@ namespace CryptoQuest.Input
         public void OnMenuReset(InputAction.CallbackContext context)
         {
             if (context.performed) MenuResetEvent?.Invoke();
+        }
+
+        public void OnMenuExecute(InputAction.CallbackContext context)
+        {
+            if (context.performed) MenuExecuteEvent?.Invoke();
         }
 
         #endregion

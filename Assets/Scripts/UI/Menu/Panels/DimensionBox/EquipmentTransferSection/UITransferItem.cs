@@ -1,4 +1,6 @@
 using CryptoQuest.UI.Menu.Panels.DimensionBox.Interfaces;
+using CryptoQuest.UI.Menu.Panels.Status;
+using CryptoQuest.UI.Menu.Panels.Status.Equipment;
 using PolyAndCode.UI;
 using UnityEngine;
 using UnityEngine.Events;
@@ -16,10 +18,25 @@ namespace CryptoQuest.UI.Menu.Panels.DimensionBox.EquipmentTransferSection
         [SerializeField] private GameObject _pendingTag;
         [SerializeField] private GameObject _equippedTag;
 
+        [SerializeField] private TooltipProvider _tooltipProvider;
+        [SerializeField] private RectTransform _tooltipPosition;
+
         private Transform _parent;
         public Transform Parent { get => _parent; set => _parent = value; }
 
         private bool _isSelected = false;
+        private ITooltip _tooltip;
+
+        private void Awake()
+        {
+            _tooltip = _tooltipProvider.Tooltip;
+            UIEquipmentSection.InspectItemEvent += ReceivedInspectingRequest;
+        }
+
+        private void OnDestroy()
+        {
+            UIEquipmentSection.InspectItemEvent -= ReceivedInspectingRequest;
+        }
 
         public void ConfigureCell(IData itemInfo)
         {
@@ -39,6 +56,28 @@ namespace CryptoQuest.UI.Menu.Panels.DimensionBox.EquipmentTransferSection
         {
             gameObject.transform.SetParent(parent);
             _parent = parent;
+        }
+
+        public void OnInspecting(bool isInspecting)
+        {
+            if (isInspecting == false)
+            {
+                _tooltip.Hide();
+                return;
+            }
+
+            _tooltip
+                .WithLevel(1)
+                .WithDisplaySprite(_icon.sprite)
+                .WithContentAwareness(_tooltipPosition);
+
+            Debug.Log($"tooltip = [{_tooltip}]");
+        }
+
+        public void ReceivedInspectingRequest()
+        {
+            Debug.Log($"ReceivedInspectingRequest::tooltip = [{_tooltip}]");
+            _tooltip.Show();
         }
     }
 }
