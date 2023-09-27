@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using CommandTerminal;
 using CryptoQuest.Character.Attributes;
 using CryptoQuest.Gameplay.PlayerParty;
+using IndiGames.GameplayAbilitySystem.AttributeSystem.Components;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -31,6 +32,7 @@ namespace CryptoQuest.System.Cheat
                 var attribute = AssetDatabase.LoadAssetAtPath<CoreAttributeSO>(path);
                 attributes.Add(attribute);
             }
+
             _targetAttributes = attributes.ToArray();
             EditorUtility.SetDirty(this);
 #endif
@@ -70,32 +72,17 @@ namespace CryptoQuest.System.Cheat
         private void ModifyAttributeValue(CoreAttributeSO attribute, float newValue, int characterIndex)
         {
             var party = ServiceProvider.GetService<IPartyController>();
-            if (party == null || party.Party == null)
-            {
-                Debug.LogWarning($"Party not found!");
-                return;
-            }
-
-            var members = party.Party.Members;
-            if (0 > characterIndex || characterIndex >= members.Length || !members[characterIndex].IsValid()) 
+            if (!party.GetHero(characterIndex, out var hero))
             {
                 Debug.LogWarning($"Character index is not valid!");
                 return;
             }
 
-            var character = members[characterIndex];
-            if (!character.IsValid() || character.CharacterComponent == null
-                || character.CharacterComponent.AttributeSystem == null)
-            {
-                Debug.LogWarning($"Character in index {characterIndex} is not valid!");
-                return;
-            } 
-
-            var attributeSystem = character.CharacterComponent.AttributeSystem;
+            var attributeSystem = hero.GetComponent<AttributeSystemBehaviour>();
             if (!attributeSystem.TryGetAttributeValue(attribute, out var currentValue)) return;
 
             attributeSystem.SetAttributeBaseValue(attribute, newValue);
-            Debug.Log($"Updated base value of {character}'s attribute {attribute} to {newValue}");
+            Debug.Log($"Updated base value of {hero.Spec.Unit}'s attribute {attribute} to {newValue}");
         }
     }
 }
