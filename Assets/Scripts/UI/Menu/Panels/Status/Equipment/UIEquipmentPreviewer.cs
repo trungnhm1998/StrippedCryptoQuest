@@ -32,11 +32,12 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
         }
 
         /// <summary>
-        /// Clone the character when inspect so we will have a mannequine to apply equipment
+        /// Clone the character when inspect so we will have a mannequin to apply equipment
         /// </summary>
         /// <param name="hero"></param>
         private void CloneHero(HeroBehaviour hero)
         {
+            return;
             if (hero.IsValid() == false) return;
             if (_cloneCharacterGO != null) Destroy(_cloneCharacterGO);
 

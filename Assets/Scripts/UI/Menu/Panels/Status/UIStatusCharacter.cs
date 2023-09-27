@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using CryptoQuest.Battle.Components;
-using CryptoQuest.Gameplay.Character;
 using CryptoQuest.Gameplay.PlayerParty;
 using CryptoQuest.System;
+using CryptoQuest.UI.Character;
 using CryptoQuest.UI.Menu.Panels.Home;
 using CryptoQuest.UI.Menu.Panels.Status.Stats;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.Components;
@@ -12,7 +12,6 @@ using UnityEngine;
 using UnityEngine.Localization;
 using UnityEngine.Localization.Components;
 using UnityEngine.UI;
-using CryptoQuest.UI.Character;
 
 namespace CryptoQuest.UI.Menu.Panels.Status
 {
@@ -38,17 +37,17 @@ namespace CryptoQuest.UI.Menu.Panels.Status
         private int _currentIndex;
         private IPartyController _party;
 
-        private int CurrentIndex
+        public int CurrentIndex
         {
             get => _currentIndex;
-            set
+            private set
             {
-                _currentIndex = value switch
-                {
-                    < 0 => PartyConstants.MAX_PARTY_SIZE - 1,
-                    >= PartyConstants.MAX_PARTY_SIZE => 0,
-                    _ => value
-                };
+                if (value < 0)
+                    _currentIndex = _party.Size - 1;
+                else if (value >= _party.Size)
+                    _currentIndex = 0;
+                else
+                    _currentIndex = value;
             }
         }
 
@@ -57,26 +56,15 @@ namespace CryptoQuest.UI.Menu.Panels.Status
             _party = ServiceProvider.GetService<IPartyController>();
         }
 
-        private void OnEnable()
-        {
-            _statusMenu.Show += InspectFirstCharacter;
-        }
-
         private void OnDisable()
         {
-            _statusMenu.Show -= InspectFirstCharacter;
-        }
-
-        private void InspectFirstCharacter()
-        {
-            InspectCharacter(_party.Slots[0].HeroBehaviour);
+            CurrentIndex = 0;
         }
 
         public void ChangeCharacter(float direction)
         {
             var directionX = (int)direction;
             if (directionX == 0) return;
-            CurrentIndex += directionX;
             InspectCharacter(GetTheNextValidMemberInParty(directionX));
         }
 
@@ -86,15 +74,17 @@ namespace CryptoQuest.UI.Menu.Panels.Status
         /// <param name="direction">-1 for left and 1 for right</param>
         private HeroBehaviour GetTheNextValidMemberInParty(int direction)
         {
-            var memberInParty = _party.Slots[CurrentIndex];
-            while (memberInParty.IsValid() == false)
+            PartySlot partySlot;
+            do
             {
                 CurrentIndex += direction;
-                memberInParty = _party.Slots[CurrentIndex];
-            }
+                partySlot = _party.Slots[CurrentIndex];
+            } while (!partySlot.IsValid());
 
-            return memberInParty.HeroBehaviour;
+            return partySlot.HeroBehaviour;
         }
+
+        public void InspectCharacter(int index) => InspectCharacter(_party.Slots[index].HeroBehaviour);
 
         private void InspectCharacter(HeroBehaviour hero)
         {
@@ -102,8 +92,22 @@ namespace CryptoQuest.UI.Menu.Panels.Status
             _inspectingHero = hero;
             _inspectingAttributeSystem = _inspectingHero.GetComponent<AttributeSystemBehaviour>();
             RenderElementsStats(_inspectingAttributeSystem);
-            _inspectingHero.SetupUI(this);
+            SetupUI(_inspectingHero);
             InspectingCharacter?.Invoke(_inspectingHero);
+        }
+
+        private void SetupUI(HeroBehaviour hero)
+        {
+            var spec = hero.Spec;
+            SetElement(hero.Element.Icon);
+            SetLevel(hero.Level);
+            SetClass(hero.Class.Name);
+            SetLocalizedName(hero.DetailsInfo.LocalizedName);
+
+            // TODO: IMPLEMENT
+            // SetAvatar();
+            SetMaxExp(1234);
+            SetExp(11);
         }
 
         private void RenderElementsStats(AttributeSystemBehaviour attributeSystem)

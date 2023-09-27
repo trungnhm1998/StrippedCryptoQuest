@@ -17,5 +17,6 @@ namespace CryptoQuest.Character.Hero
         [field: SerializeField] public int Id { get; private set; }
         [field: SerializeField] public UnitSO Unit { get; private set; }
         [field: SerializeField] public float Experience { get; set; }
+        [field: SerializeField] public Equipments Equipments { get; private set; }
     }
 }

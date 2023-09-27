@@ -13,6 +13,7 @@ namespace CryptoQuest.UI.Menu.MenuStates.StatusStates
             NavigationBar.SetActive(false);
             NavigationBar.HighlightHeader(StatusPanel.TypeSO);
             StatusPanel.CharacterEquipmentsPanel.Show();
+            StatusPanel.CharacterPanel.InspectCharacter(StatusPanel.CharacterPanel.CurrentIndex);
         }
 
         public override void HandleCancel()

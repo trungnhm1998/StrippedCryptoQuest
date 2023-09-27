@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using CryptoQuest.Battle.Components;
-using CryptoQuest.Gameplay.Character;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Type;
 using CryptoQuest.Item.Equipment;
 using CryptoQuest.Menu;

@@ -1,6 +1,4 @@
-using System;
 using CryptoQuest.Battle.Components;
-using CryptoQuest.Gameplay.Character;
 using CryptoQuest.Gameplay.PlayerParty;
 using CryptoQuest.Item.Equipment;
 using CryptoQuest.System;
@@ -19,9 +17,6 @@ namespace CryptoQuest.UI.Menu.Panels.Status
     /// </summary>
     public class UIStatusMenu : UIMenuPanel
     {
-        public event Action Show;
-        public event Action Hide;
-
         [field: SerializeField, Header("State Context")]
         public UICharacterEquipmentsPanel CharacterEquipmentsPanel { get; private set; }
 
@@ -49,18 +44,6 @@ namespace CryptoQuest.UI.Menu.Panels.Status
         {
             CharacterPanel.InspectingCharacter -= InspectCharacter;
             CharacterEquipmentsPanel.UnequipEquipmentAtSlot -= UnequipEquipmentAtSlot;
-        }
-
-        protected override void OnShow()
-        {
-            base.OnShow();
-            Show?.Invoke();
-        }
-
-        protected override void OnHide()
-        {
-            base.OnHide();
-            Hide?.Invoke();
         }
 
         private void UnequipEquipmentAtSlot(EquipmentSlot.EType slot)
