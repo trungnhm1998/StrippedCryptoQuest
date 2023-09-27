@@ -1,4 +1,5 @@
 using System;
+using CryptoQuest.Battle.Events;
 using CryptoQuest.Gameplay;
 using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects;
 using CryptoQuest.Gameplay.Encounter;
@@ -27,6 +28,7 @@ namespace CryptoQuest.Battle
 
         [Header("Events to listen to")]
         [SerializeField] private VoidEventChannelSO _onBattleEndEventChannel;
+        [SerializeField] private BattleEventSO _endBattleEvent;
 
         [Header("Events to raise")]
         [SerializeField] private UnloadSceneEventChannelSO _unloadSceneEvent;
@@ -42,7 +44,7 @@ namespace CryptoQuest.Battle
             LoadBattle += LoadingBattle;
             LoadBattleWithId += LoadingBattle;
 
-            BattleManager.BattleCompleted += UnloadBattle;
+            _endBattleEvent.EventRaised += UnloadBattle;
             AdditiveGameSceneLoader.SceneUnloaded += BattleUnloaded;
         }
 
@@ -55,7 +57,7 @@ namespace CryptoQuest.Battle
             _spiralConfigSo.DoneSpiralIn -= SpiralInDone;
             _spiralConfigSo.DoneFadeOut -= StartBattle;
 
-            BattleManager.BattleCompleted -= UnloadBattle;
+            _endBattleEvent.EventRaised -= UnloadBattle;
             AdditiveGameSceneLoader.SceneUnloaded -= BattleUnloaded;
         }
 

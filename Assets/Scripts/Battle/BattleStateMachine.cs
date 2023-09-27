@@ -1,55 +1,42 @@
+using CryptoQuest.Battle.Events;
+using CryptoQuest.Battle.States;
 using CryptoQuest.Battle.UI.CommandDetail;
 using CryptoQuest.Battle.UI.SelectCommand;
 using CryptoQuest.Battle.UI.StartBattle;
 using CryptoQuest.Input;
+using CryptoQuest.UI.SpiralFX;
+using IndiGames.Core.Events.ScriptableObjects;
 using UnityEngine;
 
 namespace CryptoQuest.Battle
 {
     public interface IState
     {
-        void OnEnter(StateMachine stateMachine);
-        void OnExit(StateMachine stateMachine);
+        void OnEnter(BattleStateMachine battleStateMachine);
+        void OnExit(BattleStateMachine battleStateMachine);
     }
 
-    public class StateMachine : MonoBehaviour
+    public class BattleStateMachine : MonoBehaviour
     {
         [field: SerializeField] public BattleInputSO BattleInput { get; private set; }
-        [SerializeField] private BattleManager _battleManager;
 
-        #region Context
+        #region State Context
 
         [field: SerializeField] public GameObject BattleUI { get; private set; }
         [field: SerializeField] public UIIntroBattle IntroUI { get; private set; }
         [field: SerializeField] public UISelectCommand CommandUI { get; private set; }
         [field: SerializeField] public CommandDetailPresenter CommandDetailPresenter { get; private set; }
-        [field: SerializeField] public EnemiesPresenter EnemiesPresenter { get; private set; }
+        [field: SerializeField] public SpiralConfigSO Spiral { get; private set; }
+        [field: SerializeField] public VoidEventChannelSO SceneLoadedEvent { get; private set; }
+        [field: SerializeField] public BattleEventSO BattleEndedEvent { get; private set; }
 
         #endregion
-
-        private StateFactory _stateFactory;
-        public StateFactory Factory => _stateFactory;
 
         private IState _currentState;
 
         private void Awake()
         {
-            _stateFactory = new StateFactory(this);
-        }
-
-        private void OnEnable()
-        {
-            _battleManager.Initialized += StartBattle;
-        }
-
-        private void OnDisable()
-        {
-            _battleManager.Initialized -= StartBattle;
-        }
-
-        private void StartBattle()
-        {
-            ChangeState(_stateFactory.CreateIntro());
+            ChangeState(new Loading());
         }
 
         public void ChangeState(IState state)

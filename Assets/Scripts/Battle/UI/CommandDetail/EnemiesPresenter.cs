@@ -7,38 +7,25 @@ namespace CryptoQuest.Battle.UI.CommandDetail
 {
     public class EnemiesPresenter : MonoBehaviour
     {
-        [SerializeField] private BattleManager _battleManager;
         [SerializeField] private Transform _content;
         [SerializeField] private UIEnemy _enemyPrefab;
 
         private readonly List<UIEnemy> _enemies = new();
 
-        private void OnEnable()
+        public void Init(List<EnemyBehaviour> enemies)
         {
-            _battleManager.Initialized += Init;
-        }
-
-        private void OnDisable()
-        {
-            _battleManager.Initialized -= Init;
-        }
-
-        private void Init()
-        {
-            var enemies = _battleManager.Enemies;
-            foreach (var t in enemies)
+            foreach (var enemy in enemies)
             {
-                if (t.IsValid() == false) continue;
+                if (enemy.IsValid() == false) continue;
                 var uiEnemy = Instantiate(_enemyPrefab, _content);
                 uiEnemy.gameObject.SetActive(false);
-                uiEnemy.Show(t);
+                uiEnemy.Show(enemy);
                 _enemies.Add(uiEnemy);
             }
         }
 
-        public void Show()
+        public void Show(List<EnemyBehaviour> enemies)
         {
-            var enemies = _battleManager.Enemies;
             bool selected = false;
             for (var index = 0; index < enemies.Count; index++)
             {

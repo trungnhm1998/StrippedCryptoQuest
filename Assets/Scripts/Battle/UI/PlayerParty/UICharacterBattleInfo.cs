@@ -1,7 +1,5 @@
 using CryptoQuest.Battle.Components;
-using CryptoQuest.Gameplay.Character;
 using CryptoQuest.UI.Character;
-using CryptoQuest.UI.Menu.Panels.Home;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.Components;
 using UnityEngine;
 using UnityEngine.Localization;
@@ -57,13 +55,5 @@ namespace CryptoQuest.Battle.UI.PlayerParty
         {
             _mpBar.SetMaxValue(maxMp);
         }
-
-        public void SetAvatar(Sprite avatar) { }
-        public void SetName(string charName) { }
-        public void SetClass(LocalizedString localizedClassName) { }
-        public void SetElement(Sprite elementIcon) { }
-        public void SetLevel(int lvl) { }
-        public void SetExp(float exp) { }
-        public void SetMaxExp(int maxExp) { }
     }
 }

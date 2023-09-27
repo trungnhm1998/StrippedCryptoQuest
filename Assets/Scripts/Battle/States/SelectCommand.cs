@@ -13,38 +13,38 @@ namespace CryptoQuest.Battle.States
     /// Select the command of all the heroes in party
     ///
     /// only exit this state after selected commands for all heroes
+    ///
+    /// This class has a Push down state machine for each member/hero in party
     /// </summary>
     public class SelectCommand : IState
     {
         private UISelectCommand _selectCommandUI;
         private int _currentHeroIndex = 0;
         private Dictionary<int, ICommand> _heroCommands = new Dictionary<int, ICommand>();
-        private StateMachine _stateMachine;
+        private BattleStateMachine _battleStateMachine;
         private IPartyController _party;
+        private EnemyPartyManager _enemyPartyManager;
 
-        public SelectCommand(UISelectCommand fsmCommandUI)
+        public void OnEnter(BattleStateMachine battleStateMachine)
         {
-            _selectCommandUI = fsmCommandUI;
-        }
-
-        public void OnEnter(StateMachine stateMachine)
-        {
-            _stateMachine = stateMachine;
+            _battleStateMachine = battleStateMachine;
+            _selectCommandUI = battleStateMachine.CommandUI;
+            _enemyPartyManager = battleStateMachine.GetComponent<EnemyPartyManager>();
             _selectCommandUI.AttackCommandPressed += ChangeToSelectEnemyState;
 
-            stateMachine.BattleUI.SetActive(true);
+            battleStateMachine.BattleUI.SetActive(true);
             _party = ServiceProvider.GetService<IPartyController>();
             EnableCommandMenu();
         }
 
         private void EnableCommandMenu()
         {
-            _stateMachine.EnemiesPresenter.Hide();
+            _enemyPartyManager.EnemiesPresenter.Hide();
             _selectCommandUI.SetActiveCommandsMenu(true);
             _selectCommandUI.SelectFirstButton();
         }
 
-        public void OnExit(StateMachine stateMachine)
+        public void OnExit(BattleStateMachine battleStateMachine)
         {
             _selectCommandUI.AttackCommandPressed -= ChangeToSelectEnemyState;
         }
@@ -52,11 +52,11 @@ namespace CryptoQuest.Battle.States
         private void ChangeToSelectEnemyState()
         {
             UIEnemy.EnemySelected += SelectEnemy;
-            _stateMachine.BattleInput.InputActions.BattleMenu.Cancel.performed += CancelPressed;
+            _battleStateMachine.BattleInput.InputActions.BattleMenu.Cancel.performed += CancelPressed;
             // _stateMachine.ChangeState(new SelectEnemy());
             _selectCommandUI.SetActiveCommandsMenu(false);
             // show all enemies in details panel
-            _stateMachine.EnemiesPresenter.Show();
+            _enemyPartyManager.EnemiesPresenter.Show(_enemyPartyManager.Enemies);
         }
 
         private void SelectEnemy(EnemyBehaviour enemy)
@@ -70,7 +70,7 @@ namespace CryptoQuest.Battle.States
         private void CancelPressed(InputAction.CallbackContext obj)
         {
             UIEnemy.EnemySelected -= SelectEnemy;
-            _stateMachine.BattleInput.InputActions.BattleMenu.Cancel.performed -= CancelPressed;
+            _battleStateMachine.BattleInput.InputActions.BattleMenu.Cancel.performed -= CancelPressed;
             EnableCommandMenu();
         }
     }

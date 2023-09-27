@@ -1,38 +1,29 @@
-﻿using CryptoQuest.Battle.UI.StartBattle;
-using CryptoQuest.UI.Dialogs.BattleDialog;
+﻿using CryptoQuest.UI.Dialogs.BattleDialog;
 
 namespace CryptoQuest.Battle.States
 {
     public class Intro : IState
     {
-        private readonly UIIntroBattle _introBattleUI;
-        private UIGenericDialog _dialog;
+        private BattleStateMachine _battleStateMachine;
 
-        public Intro(UIIntroBattle introBattleUI)
-        {
-            _introBattleUI = introBattleUI;
-        }
+        private readonly UIGenericDialog _dialog;
 
-        private StateMachine _stateMachine;
-
-        public void OnEnter(StateMachine stateMachine)
-        {
-            _stateMachine = stateMachine;
-            GenericDialogController.Instance.CreateDialog(PromptCreated);
-        }
-
-        private void PromptCreated(UIGenericDialog dialog)
+        public Intro(UIGenericDialog dialog)
         {
             _dialog = dialog;
+        }
+
+        public void OnEnter(BattleStateMachine battleStateMachine)
+        {
+            _battleStateMachine = battleStateMachine;
+            var introUI = _battleStateMachine.IntroUI;
             _dialog
-                .WithAutoHide(_introBattleUI.Duration)
-                .WithHideCallback(GotoSelectCommandState)
-                .WithMessage(_introBattleUI.IntroMessage)
+                .WithAutoHide(introUI.Duration)
+                .WithHideCallback(() => _battleStateMachine.ChangeState(new SelectCommand()))
+                .WithMessage(introUI.IntroMessage)
                 .Show();
         }
 
-        private void GotoSelectCommandState() => _stateMachine.ChangeState(_stateMachine.Factory.CreateCommand());
-
-        public void OnExit(StateMachine stateMachine) { }
+        public void OnExit(BattleStateMachine battleStateMachine) { }
     }
 }

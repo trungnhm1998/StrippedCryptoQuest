@@ -2,10 +2,10 @@
 {
     public class SelectEnemy : IState
     {
-        public void OnEnter(StateMachine stateMachine)
+        public void OnEnter(BattleStateMachine battleStateMachine)
         {
         }
 
-        public void OnExit(StateMachine stateMachine) { }
+        public void OnExit(BattleStateMachine battleStateMachine) { }
     }
 }

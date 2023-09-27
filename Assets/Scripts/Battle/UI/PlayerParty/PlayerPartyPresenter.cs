@@ -1,6 +1,5 @@
 using System.Collections;
 using CryptoQuest.Battle.Components;
-using CryptoQuest.Gameplay.Character;
 using CryptoQuest.Gameplay.PlayerParty;
 using CryptoQuest.System;
 using UnityEngine;
@@ -30,10 +29,10 @@ namespace CryptoQuest.Battle.UI.PlayerParty
         private void InitParty()
         {
             _party = ServiceProvider.GetService<IPartyController>();
-            StartCoroutine(CoLoadPartyMembers());
+            LoadHeroesUI();
         }
 
-        private IEnumerator CoLoadPartyMembers()
+        private void LoadHeroesUI()
         {
             for (var index = 0; index < _party.Slots.Length; index++)
             {
@@ -43,7 +42,13 @@ namespace CryptoQuest.Battle.UI.PlayerParty
                 if (slot.IsValid() == false) continue;
 
                 characterUI.Init(slot.HeroBehaviour);
-                yield return CoLoadBattleAvatar(slot.HeroBehaviour, characterUI);
+            }
+
+            for (var index = 0; index < _party.Slots.Length; index++)
+            {
+                var slot = _party.Slots[index];
+                if (slot.IsValid() == false) continue;
+                StartCoroutine(CoLoadBattleAvatar(slot.HeroBehaviour, _characterUis[index]));
             }
         }
 
