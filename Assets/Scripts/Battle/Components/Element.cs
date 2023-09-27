@@ -2,6 +2,9 @@
 
 namespace CryptoQuest.Battle.Components
 {
+    /// <summary>
+    /// Due to <see cref="ElementalAttribute.CalculateInitialValue"/> this component need to be call after <see cref="HeroStatsInitializer"/>
+    /// </summary>
     public class Element : CharacterComponentBase
     {
         private Elemental _element;
