@@ -29,6 +29,20 @@ MonoBehaviour:
       IgnoreTags: []
   <CancelEffectWithTags>k__BackingField:
   - {fileID: 11400000, guid: d5148c2f84eb0c44d9554c0b9f6f5af3, type: 2}
+  <Conditions>k__BackingField:
+  - rid: 4580806851823665156
+  references:
+    version: 2
+    RefIds:
+    - rid: 4580806851823665156
+      type: {class: PassAtleastOneTag, ns: CryptoQuest.Character.Ability.AbilityCondition, asm: indi-games.crypto-quest}
+      data:
+        _acceptTags:
+        - {fileID: 11400000, guid: d5148c2f84eb0c44d9554c0b9f6f5af3, type: 2}
+        _denyTags:
+        - {fileID: 11400000, guid: 8bd1bb491c9733b459bbe7b9271a48db, type: 2}
+        - {fileID: 11400000, guid: 015803e32e1e1fe4b8fe96384e19c156, type: 2}
+        - {fileID: 11400000, guid: c60a47c5f453a024d8657f7b3cafc7cc, type: 2}
 --- !u!114 &-6244691624653815735
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -98,8 +112,14 @@ MonoBehaviour:
     m_FallbackState: 0
     m_WaitForCompletion: 0
     m_LocalVariables: []
-  <Image>k__BackingField: {fileID: 21300000, guid: 79b35fd1225f2394c94f7fabebf9470b, type: 3}
-  <consumableType>k__BackingField: {fileID: 11400000, guid: 38be8846d419c5248a5eda2b4376a348, type: 2}
+  <Image>k__BackingField:
+    m_AssetGUID: 
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0
+  <consumableType>k__BackingField: 0
+  <Price>k__BackingField: 0
+  <SellPrice>k__BackingField: 0
   <Effect>k__BackingField: {fileID: -6244691624653815735}
   <Ability>k__BackingField: {fileID: -7898822780469849782}
   <UsageScenario>k__BackingField: -1

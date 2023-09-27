@@ -31,8 +31,14 @@ MonoBehaviour:
     m_FallbackState: 0
     m_WaitForCompletion: 0
     m_LocalVariables: []
-  <Image>k__BackingField: {fileID: 21300000, guid: 19b11b253daaff6418ffc3c08ab6207f, type: 3}
-  <consumableType>k__BackingField: {fileID: 11400000, guid: 38be8846d419c5248a5eda2b4376a348, type: 2}
+  <Image>k__BackingField:
+    m_AssetGUID: 
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0
+  <consumableType>k__BackingField: 0
+  <Price>k__BackingField: 0
+  <SellPrice>k__BackingField: 0
   <Effect>k__BackingField: {fileID: 4686496716223965038}
   <Ability>k__BackingField: {fileID: 6295226544784559179}
   <UsageScenario>k__BackingField: -1
@@ -93,7 +99,9 @@ MonoBehaviour:
     ActivationTags: []
     OwnerTags:
       RequireTags: []
-      IgnoreTags: []
+      IgnoreTags:
+      - {fileID: 11400000, guid: 8bd1bb491c9733b459bbe7b9271a48db, type: 2}
+      - {fileID: 11400000, guid: c60a47c5f453a024d8657f7b3cafc7cc, type: 2}
     SourceTags:
       RequireTags: []
       IgnoreTags: []
@@ -101,3 +109,7 @@ MonoBehaviour:
       RequireTags: []
       IgnoreTags: []
   <CancelEffectWithTags>k__BackingField: []
+  <Conditions>k__BackingField: []
+  references:
+    version: 2
+    RefIds: []
