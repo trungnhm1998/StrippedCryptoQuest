@@ -4,10 +4,10 @@ using UnityEngine;
 
 namespace IndiGamesEditor.Core
 {
-    [CustomEditor(typeof(GenericAssetReferenceDatabase), true)]
+    [CustomEditor(typeof(AssetReferenceDatabaseT), true)]
     public class DatabaseEditor : Editor
     {
-        private GenericAssetReferenceDatabase Target => (GenericAssetReferenceDatabase) target;
+        private AssetReferenceDatabaseT Target => (AssetReferenceDatabaseT) target;
         public override void OnInspectorGUI()
         {
             base.OnInspectorGUI();

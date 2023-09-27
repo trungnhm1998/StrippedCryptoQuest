@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace CryptoQuest.Item
 {
-    public class ConsumableDatabase : GenericAssetReferenceDatabase<string, ConsumableSO>
+    public class ConsumableDatabase : AssetReferenceDatabaseT<string, ConsumableSO>
     {
 #if UNITY_EDITOR
         protected override string Editor_GetInstanceId(ConsumableSO consumable) => consumable.ID;

@@ -39,7 +39,7 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Reward
             LoadAndCacheAllItem();
             LoadAndCacheAllEquipments();
             LoadLootDatabaseSo();
-            List<GenericAssetReferenceDatabase<int, LootTable>.Map> maps = new();
+            List<AssetReferenceDatabaseT<int, LootTable>.Map> maps = new();
             for (int index = ROW_OFFSET; index < allLines.Length; index++)
             {
                 // get data form tsv file

@@ -5,5 +5,5 @@ using CryptoQuest.Gameplay.Enemy;
 
 namespace CryptoQuest.Gameplay.Battle.ScriptableObjects
 {
-    public class EnemyDatabase : GenericAssetReferenceDatabase<int, EnemyDef> { }
+    public class EnemyDatabase : AssetReferenceDatabaseT<int, EnemyDef> { }
 }

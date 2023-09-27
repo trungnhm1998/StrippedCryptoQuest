@@ -12,7 +12,7 @@ using UnityEditor;
 
 namespace IndiGames.Core.Database
 {
-    public abstract class GenericAssetReferenceDatabase : ScriptableObject
+    public abstract class AssetReferenceDatabaseT : ScriptableObject
     {
 #if UNITY_EDITOR
         public abstract Type GetAssetType();
@@ -20,7 +20,7 @@ namespace IndiGames.Core.Database
 #endif
     }
 
-    public class GenericAssetReferenceDatabase<TKey, TSerializableObject> : GenericAssetReferenceDatabase
+    public class AssetReferenceDatabaseT<TKey, TSerializableObject> : AssetReferenceDatabaseT
         where TSerializableObject : Object
     {
         [Serializable]

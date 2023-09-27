@@ -3,5 +3,5 @@ using CryptoQuest.Gameplay.Battle;
 
 namespace CryptoQuest.Gameplay.Encounter
 {
-    public class EncounterDatabase : GenericAssetReferenceDatabase<string, EncounterData> { }
+    public class EncounterDatabase : AssetReferenceDatabaseT<string, EncounterData> { }
 }

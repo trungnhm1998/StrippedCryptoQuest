@@ -34,7 +34,7 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Monster
             LoadAndCacheBattleFields();
             LoadAndCacheEncounterDatabase();
             LoadAndCacheBackgrounds();
-            List<GenericAssetReferenceDatabase<string, EncounterData>.Map> maps = new();
+            List<AssetReferenceDatabaseT<string, EncounterData>.Map> maps = new();
             for (int index = ROW_OFFSET; index < allLines.Length; index++)
             {
                 // get data form tsv file
@@ -80,7 +80,7 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Monster
 
 
                 var guid = AssetDatabase.AssetPathToGUID(path);
-                maps.Add(new GenericAssetReferenceDatabase<string, EncounterData>.Map()
+                maps.Add(new AssetReferenceDatabaseT<string, EncounterData>.Map()
                 {
                     Id = dataModel.Id,
                     Data = new AssetReferenceT<EncounterData>(guid)

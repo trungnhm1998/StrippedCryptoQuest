@@ -3,5 +3,5 @@ using UnityEngine;
 
 namespace CryptoQuest.Battle.UI.PlayerParty
 {
-    public class BattleAvatarDatabase : GenericAssetReferenceDatabase<string, Sprite> { }
+    public class BattleAvatarDatabase : AssetReferenceDatabaseT<string, Sprite> { }
 }
