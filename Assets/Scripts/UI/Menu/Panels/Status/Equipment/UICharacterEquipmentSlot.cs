@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using CryptoQuest.Character.Hero;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Type;
 using CryptoQuest.Item.Equipment;
 using UnityEngine;
@@ -33,22 +32,10 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
             ShowEquipmentsInventoryWithType?.Invoke(SlotType, EquipmentCategory);
         }
 
-        public void RegisterCharacterEquipmentsEvents(Equipments charSpecEquipments)
-        {
-            charSpecEquipments.EquipmentAdded += UpdateEquipmentUI;
-            charSpecEquipments.EquipmentRemoved += UpdateEquipmentUI;
-        }
-
         private void UpdateEquipmentUI(EquipmentInfo equipment, List<EquipmentSlot.EType> eTypes)
         {
             if (eTypes.Contains(SlotType))
                 Init(equipment);
-        }
-
-        public void RemoveCharacterEquipmentsEvents(Equipments charSpecEquipments)
-        {
-            charSpecEquipments.EquipmentAdded -= UpdateEquipmentUI;
-            charSpecEquipments.EquipmentRemoved -= UpdateEquipmentUI;
         }
     }
 }

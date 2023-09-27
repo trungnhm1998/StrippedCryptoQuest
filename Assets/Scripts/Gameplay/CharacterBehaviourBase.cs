@@ -50,16 +50,6 @@ namespace CryptoQuest.Gameplay
             }
         }
 
-        public ActiveEffectSpecification ApplyEffect(GameplayEffectSpec effectSpec)
-        {
-            return GameplayAbilitySystem.ApplyEffectSpecToSelf(effectSpec);
-        }
-
-        public void RemoveEffect(GameplayEffectSpec activeEffectEffectSpec)
-        {
-            GameplayAbilitySystem.EffectSystem.RemoveEffect(activeEffectEffectSpec as GameplayEffectSpec);
-        }
-
         public bool IsDead()
         {
             if (!AttributeSystem.TryGetAttributeValue(_hpAttribute, out var hpValue))

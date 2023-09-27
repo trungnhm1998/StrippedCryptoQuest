@@ -12,8 +12,6 @@ namespace CryptoQuest.Item.Equipment
         [field: Header("Equipment Item")]
         [field: SerializeField] public EquipmentTypeSO EquipmentType { get; protected set; }
 
-        [field: SerializeField] public int RequiredCharacterLevel { get; private set; }
-
         /// <summary>
         /// This equipment will occupy these slots
         ///
@@ -30,7 +28,6 @@ namespace CryptoQuest.Item.Equipment
 
 #if UNITY_EDITOR
         public void Editor_SetEquipmentType(EquipmentTypeSO type) => EquipmentType = type;
-        public void Editor_SetRequiredCharacterLevel(int requiredLvl) => RequiredCharacterLevel = requiredLvl;
         public void Editor_SetRequiredSlots(EquipmentSlot.EType[] requiredSlots) => RequiredSlots = requiredSlots;
 #endif
     }

@@ -20,7 +20,7 @@ namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects
         [SerializeField] private InventoryConfigSO _inventoryConfig;
         [field: SerializeField] public List<ConsumableInfo> Consumables { get; private set; } = new();
         [SerializeField] private List<EquipmentInfo> _equipments = new();
-        public IReadOnlyList<EquipmentInfo> Equipments => _equipments;
+        public List<EquipmentInfo> Equipments => _equipments;
         [field: SerializeField] public WalletControllerSO WalletController { get; private set; }
 
         public void OnLoaded() => Loaded?.Invoke();

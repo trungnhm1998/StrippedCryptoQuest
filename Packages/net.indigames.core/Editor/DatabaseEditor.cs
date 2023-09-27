@@ -16,6 +16,9 @@ namespace IndiGamesEditor.Core
             {
                 Debug.Log($"{Target.GetAssetType()}");
                 Target.Editor_FetchDataInProject();
+                
+                EditorUtility.SetDirty(target);
+                AssetDatabase.SaveAssets();
             }
         }
     }

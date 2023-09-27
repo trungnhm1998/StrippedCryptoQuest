@@ -70,7 +70,6 @@ namespace CryptoQuestEditor
                 instance.name = name;
 
                 instance.Editor_SetEquipmentType(GetEquipmentType(ParseData(cols[ROW_EQUIPMENT_TYPE_ID])));
-                instance.Editor_SetRequiredCharacterLevel(ParseData(cols[ROW_CHARACTER_LEVEL_REQUIREMENT]));
                 instance.Editor_SetRequiredSlots(GetRequiredSlots(cols[ROW_EQUIPMENT_SLOT_ID]));
 
                 var displayName = LocalizedString(cols, out var description);

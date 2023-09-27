@@ -15,9 +15,9 @@ namespace CryptoQuest.Tests.Runtime.Battle
     public class CommandTests : BattleFixtureBase
     {
         private GameObject _heroGo;
-        private ICharacter _hero;
+        private CryptoQuest.Battle.Components.Character _hero;
         private GameObject _enemyGo;
-        private ICharacter _enemy;
+        private CryptoQuest.Battle.Components.Character _enemy;
 
         [SetUp]
         public void Setup()

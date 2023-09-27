@@ -18,6 +18,7 @@ namespace CryptoQuest.Item.Equipment
         public EquipmentPrefab Data => Prefab;
         public AttributeWithValue[] Stats => Def.Stats;
         public EquipmentSlot.EType[] RequiredSlots => Prefab.RequiredSlots;
+        public EquipmentSlot.EType[] AllowedSlots => Prefab.AllowedSlots;
 
         public GameplayEffectDefinition EffectDef { get; set; }
 
@@ -90,7 +91,8 @@ namespace CryptoQuest.Item.Equipment
             {
                 Id = Id,
                 Level = Level,
-                EffectDef = EffectDef,
+                Def = Def,
+                Prefab = Prefab
             };
         }
 
@@ -103,7 +105,7 @@ namespace CryptoQuest.Item.Equipment
             CharacterClass[] equipmentAllowedClasses = Prefab.EquipmentType.AllowedClasses;
             CharacterClass characterClass = hero.Class;
 
-            if (Prefab.RequiredCharacterLevel > hero.Level)
+            if (Def.RequiredCharacterLevel > hero.Level)
             {
                 Debug.LogWarning("Character level is not enough");
                 return false;
@@ -126,7 +128,9 @@ namespace CryptoQuest.Item.Equipment
 
         public override bool IsValid()
         {
-            return Def != null && Prefab != null && Prefab.EquipmentType != null;
+            return !string.IsNullOrEmpty(_definitionId);
         }
+
+        public bool Loaded() => Prefab != null && Prefab.EquipmentType != null && Def != null;
     }
 }

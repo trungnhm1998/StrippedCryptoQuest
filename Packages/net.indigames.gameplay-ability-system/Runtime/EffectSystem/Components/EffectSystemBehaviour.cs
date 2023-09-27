@@ -16,11 +16,14 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem.Components
     [RequireComponent(typeof(AttributeSystemBehaviour))]
     public class EffectSystemBehaviour : MonoBehaviour
     {
+        [SerializeField] private bool _useUpdate;
+
         /// <summary>
         /// Currently there are no restrictions on add a new effect to the system except
         /// when using <see cref="ApplyEffectToSelf"/> which will check <see cref="GameplayEffectSpec.CanApply"/>
         /// </summary>
         [SerializeField] private List<ActiveEffectSpecification> _appliedEffects = new();
+
         public IReadOnlyList<ActiveEffectSpecification> AppliedEffects => _appliedEffects;
         private AbilitySystemBehaviour _owner;
 
@@ -88,7 +91,7 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem.Components
         /// </summary>
         public virtual void RemoveEffect(GameplayEffectSpec effectSpec)
         {
-            if (effectSpec.IsValid())
+            if (effectSpec == null || !effectSpec.IsValid())
             {
                 Debug.LogWarning("Try remove invalid effect");
                 return;
@@ -109,7 +112,7 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem.Components
 
         private void Update()
         {
-            UpdateAttributeModifiersUsingAppliedEffects();
+            if (_useUpdate) UpdateAttributeModifiersUsingAppliedEffects();
         }
 
         public void UpdateAttributeModifiersUsingAppliedEffects()
@@ -176,7 +179,7 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem.Components
             for (var index = 0; index < _appliedEffects.Count; index++)
             {
                 var effectContainer = _appliedEffects[index];
-                if (!effectContainer.Expired)
+                if (effectContainer != null && !effectContainer.Expired)
                     effectContainer.Update(Time.deltaTime);
             }
         }
@@ -186,10 +189,13 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem.Components
             for (var i = _appliedEffects.Count - 1; i >= 0; i--)
             {
                 var effect = _appliedEffects[i];
-                if (!effect.Expired) continue;
+                if (effect != null && effect.IsValid() && !effect.Expired) continue;
 
                 _appliedEffects.RemoveAt(i);
-                Owner.TagSystem.RemoveTags(effect.GrantedTags);
+                if (effect != null && effect.EffectSpec != null)
+                {
+                    Owner.TagSystem.RemoveTags(effect.GrantedTags);
+                }
             }
         }
 

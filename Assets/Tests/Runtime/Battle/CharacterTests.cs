@@ -1,6 +1,4 @@
-﻿using CryptoQuest.Battle;
-using CryptoQuest.Battle.Components;
-using CryptoQuest.Tests.Runtime.Battle.Builder;
+﻿using CryptoQuest.Tests.Runtime.Battle.Builder;
 using NUnit.Framework;
 using UnityEngine;
 
@@ -9,7 +7,7 @@ namespace CryptoQuest.Tests.Runtime.Battle
     public class CharacterTests : BattleFixtureBase
     {
         private GameObject _characterGameObject;
-        private ICharacter _character;
+        private CryptoQuest.Battle.Components.Character _character;
 
         [SetUp]
         public void Setup()

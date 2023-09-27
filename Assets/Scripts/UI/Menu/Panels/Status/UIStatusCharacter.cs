@@ -4,7 +4,6 @@ using CryptoQuest.Battle.Components;
 using CryptoQuest.Gameplay.PlayerParty;
 using CryptoQuest.System;
 using CryptoQuest.UI.Character;
-using CryptoQuest.UI.Menu.Panels.Home;
 using CryptoQuest.UI.Menu.Panels.Status.Stats;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.Components;
 using TMPro;
@@ -15,7 +14,7 @@ using UnityEngine.UI;
 
 namespace CryptoQuest.UI.Menu.Panels.Status
 {
-    public class UIStatusCharacter : MonoBehaviour, ICharacterInfo
+    public class UIStatusCharacter : MonoBehaviour
     {
         public event Action<HeroBehaviour> InspectingCharacter;
         [SerializeField] private UIStatusMenu _statusMenu;
@@ -33,6 +32,14 @@ namespace CryptoQuest.UI.Menu.Panels.Status
 
         private string _lvlTxtFormat = string.Empty; // could made this into static
         private HeroBehaviour _inspectingHero;
+
+        public HeroBehaviour InspectingHero
+        {
+            get
+            {
+                return _inspectingHero ??= _party.Slots[CurrentIndex].HeroBehaviour;
+            }
+        }
         private AttributeSystemBehaviour _inspectingAttributeSystem;
         private int _currentIndex;
         private IPartyController _party;

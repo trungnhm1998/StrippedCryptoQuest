@@ -1,5 +1,4 @@
 using CryptoQuest.Battle.Components;
-using CryptoQuest.Gameplay.Character;
 using CryptoQuest.UI.Character;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.Components;
 using TMPro;
@@ -10,26 +9,6 @@ using UnityEngine.UI;
 
 namespace CryptoQuest.UI.Menu.Panels.Home
 {
-    public interface ICharacterInfo
-    {
-        public void SetLocalizedName(LocalizedString localizedName);
-        public void SetName(string charName);
-        public void SetClass(LocalizedString localizedClassName);
-        public void SetAvatar(Sprite avatar);
-        public void SetElement(Sprite elementIcon);
-        public void SetLevel(int lvl);
-        public void SetExp(float exp);
-        public void SetMaxExp(int maxExp);
-    }
-
-    public interface ICharacterStats
-    {
-        public void SetCurrentHp(float currentHp);
-        public void SetMaxHp(float maxHp);
-        public void SetCurrentMp(float currentMp);
-        public void SetMaxMp(float maxMp);
-    }
-
     public class UICharacterInfo : MonoBehaviour
     {
         // general info

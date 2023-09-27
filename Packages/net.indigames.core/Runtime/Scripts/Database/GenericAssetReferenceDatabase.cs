@@ -6,7 +6,6 @@ using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using Object = UnityEngine.Object;
-
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -132,8 +131,6 @@ namespace IndiGames.Core.Database
                 instance.Data = assetRef;
                 ArrayUtility.Add(ref _maps, instance);
             }
-
-            UnityEditor.EditorUtility.SetDirty(this);
         }
 
         protected virtual TKey Editor_GetInstanceId(TSerializableObject asset) => default(TKey);

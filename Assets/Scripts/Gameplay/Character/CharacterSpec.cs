@@ -55,7 +55,6 @@ namespace CryptoQuest.Gameplay.Character
         public void Init(CharacterBehaviourBase characterBehaviour)
         {
             Bind(characterBehaviour);
-            Equipments.ClearEventRegistration();
         }
 
         public void Bind(CharacterBehaviourBase characterBehaviour)

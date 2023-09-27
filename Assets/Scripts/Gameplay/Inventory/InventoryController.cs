@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using CryptoQuest.Events;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
@@ -35,19 +34,14 @@ namespace CryptoQuest.Gameplay.Inventory
             StartCoroutine(LoadAllEquipment());
         }
 
+
         private IEnumerator LoadAllEquipment()
         {
             for (var index = 0; index < _inventory.Equipments.Count; index++)
             {
                 var equipment = _inventory.Equipments[index];
-
-                void InitEquipmentCallback(EquipmentDef def, EquipmentPrefab prefab)
-                {
-                    equipment.Def = def;
-                    equipment.Prefab = prefab;
-                }
-
-                yield return _definitionDatabase.Provide(equipment, InitEquipmentCallback);
+                yield return _definitionDatabase.Load(equipment);
+                _inventory.Equipments[index] = equipment;
             }
 
             _inventory.OnLoaded();

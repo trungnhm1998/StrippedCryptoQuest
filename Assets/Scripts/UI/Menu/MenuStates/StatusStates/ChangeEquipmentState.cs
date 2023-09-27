@@ -10,10 +10,7 @@ namespace CryptoQuest.UI.Menu.MenuStates.StatusStates
         {
             base.OnEnter();
             StatusPanel.CharacterEquipmentsPanel.Hide();
-            StatusPanel.EquipmentsInventoryPanel.Show(
-                StatusPanel.InspectingHero,
-                StatusPanel.CharacterEquipmentsPanel.ModifyingSlotType,
-                StatusPanel.CharacterEquipmentsPanel.EquipmentCategory);
+            StatusPanel.EquipmentsInventoryPanel.Show();
         }
 
         public override void HandleCancel()

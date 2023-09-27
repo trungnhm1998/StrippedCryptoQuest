@@ -35,7 +35,7 @@ namespace CryptoQuest.Tests.Runtime.Battle.Builder
             return this;
         }
 
-        public ICharacter Build()
+        public CryptoQuest.Battle.Components.Character Build()
         {
             var attributeSets = AssetDatabase.LoadAssetAtPath<AttributeSets>(ATTRIBUTE_SETS);
             _characterGameObject = new GameObject();
@@ -47,7 +47,7 @@ namespace CryptoQuest.Tests.Runtime.Battle.Builder
             statsProvider.ProvideStats(_stats);
             _characterGameObject.AddComponent<SimpleStatsInitializer>();
             _characterGameObject.AddComponent<Element>();
-            var character = _characterGameObject.GetComponent<ICharacter>();
+            var character = _characterGameObject.GetComponent<CryptoQuest.Battle.Components.Character>();
 
             character.Init(_elemental);
             return character;

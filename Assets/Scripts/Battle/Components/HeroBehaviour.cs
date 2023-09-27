@@ -2,8 +2,6 @@
 using CryptoQuest.Character.Hero;
 using CryptoQuest.Gameplay;
 using CryptoQuest.Gameplay.Character;
-using CryptoQuest.UI.Menu.Panels.Home;
-using Palmmedia.ReportGenerator.Core.Parser.Analysis;
 using UnityEngine;
 
 namespace CryptoQuest.Battle.Components
@@ -11,23 +9,23 @@ namespace CryptoQuest.Battle.Components
     /// <summary>
     /// To interact with Gameplay Ability System
     /// </summary>
-    public class HeroBehaviour : MonoBehaviour
+    public class HeroBehaviour : MonoBehaviour, IEquipmentsProvider
     {
         public int Level => 1;
-        public Origin.Information DetailsInfo => _spec.Unit.Origin.DetailInformation;
-        public StatsDef Stats => _spec.Unit.Stats;
-        public Elemental Element => _spec.Unit.Element;
+        public Origin.Information DetailsInfo => Spec.Unit.Origin.DetailInformation;
+        public StatsDef Stats => Spec.Unit.Stats;
+        public Elemental Element => Spec.Unit.Element;
         public GameObject GameObject => gameObject;
-        public CharacterClass Class => _spec.Unit.Class;
+        public CharacterClass Class => Spec.Unit.Class;
 
-        private ICharacter _characterComponent;
-        private HeroSpec _spec;
-        public HeroSpec Spec => _spec;
+        private Character _characterComponent;
+        [SerializeField] private HeroSpec _spec;
+        public HeroSpec Spec { get => _spec; set => _spec = value; }
         private LevelSystem _levelSystem;
 
         private void Awake()
         {
-            _characterComponent = GetComponent<ICharacter>();
+            _characterComponent = GetComponent<Character>();
             _levelSystem = GetComponent<LevelSystem>();
         }
 
@@ -43,40 +41,12 @@ namespace CryptoQuest.Battle.Components
         /// <param name="character"></param>
         public void Init(HeroSpec character)
         {
-            _spec = character;
+            Spec = character;
             // Need level before I can init the character
             _characterComponent.Init(Element);
         }
 
-
-        public void SetupUI(ICharacterInfo uiCharacterInfo)
-        {
-            uiCharacterInfo.SetElement(Element.Icon);
-            uiCharacterInfo.SetLevel(Level);
-            // uiCharacterInfo.SetClass(Class.Name);
-            // uiCharacterInfo.SetAvatar(Avatar);
-            // BackgroundInfo.SetupUI(uiCharacterInfo);
-            SetupExpUI(uiCharacterInfo);
-        }
-
-        private void SetupExpUI(ICharacterInfo uiCharacterInfo)
-        {
-            var levelCalculator = LevelSystem.LevelCalculator;
-            if (levelCalculator == null) return;
-
-            // var cachedLevel = Level;
-            // var isMaxedLevel = cachedLevel == StatsDef.MaxLevel;
-            // var nextLevelRequireExp = levelCalculator.RequiredExps[isMaxedLevel ? cachedLevel - 1 : cachedLevel];
-            // uiCharacterInfo.SetMaxExp(nextLevelRequireExp);
-            //
-            // var currentLevelAccumulateExp = levelCalculator.AccumulatedExps[cachedLevel - 1];
-            // var currentExp = isMaxedLevel ? nextLevelRequireExp : Experience - currentLevelAccumulateExp;
-            // uiCharacterInfo.SetExp(currentExp);
-        }
-
-        public bool IsValid()
-        {
-            return _spec != null;
-        }
+        public bool IsValid() => Spec.IsValid();
+        public Equipments GetEquipments() => Spec.Equipments;
     }
 }

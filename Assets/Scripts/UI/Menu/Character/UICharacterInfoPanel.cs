@@ -1,15 +1,12 @@
 using CryptoQuest.Battle.Components;
-using CryptoQuest.Gameplay.Character;
 using CryptoQuest.UI.Character;
-using CryptoQuest.UI.Menu.Panels.Home;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.Components;
 using UnityEngine;
-using UnityEngine.Localization;
 using UnityEngine.UI;
 
 namespace CryptoQuest.UI.Menu.Character
 {
-    public class UICharacterInfoPanel : MonoBehaviour, ICharacterInfo, ICharacterStats
+    public class UICharacterInfoPanel : MonoBehaviour
     {
         [SerializeField] private Image _avatar;
         [SerializeField] private UIAttributeBar _hpBar;
@@ -21,7 +18,7 @@ namespace CryptoQuest.UI.Menu.Character
         public void Init(HeroBehaviour hero)
         {
             _hero = hero;
-            _hero.SetupUI(this);
+            // TODO: REFACTOR CHARACTER
 
             _attributeChangeEvent.AttributeSystemReference = _hero.GetComponent<AttributeSystemBehaviour>();
         }
@@ -50,13 +47,5 @@ namespace CryptoQuest.UI.Menu.Character
         {
             _mpBar.SetMaxValue(maxMp);
         }
-
-        public void SetLocalizedName(LocalizedString localizedName) { }
-        public void SetName(string charName) { }
-        public void SetClass(LocalizedString localizedClassName) { }
-        public void SetElement(Sprite elementIcon) { }
-        public void SetLevel(int lvl) { }
-        public void SetExp(float exp) { }
-        public void SetMaxExp(int maxExp) { }
     }
 }

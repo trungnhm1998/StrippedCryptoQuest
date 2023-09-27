@@ -8,8 +8,8 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
     // wrapper for UIEquipment
     public class UIEquipmentItem : MonoBehaviour
     {
-        public event Action<EquipmentInfo> Inspecting;
-        public event Action<EquipmentInfo> EquipItem;
+        public event Action<UIEquipmentItem> Inspecting;
+        public event Action<UIEquipmentItem> EquipItem;
 
         [SerializeField] private UIEquipment _equipmentUI;
 
@@ -30,7 +30,7 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
         private void OnSelected()
         {
             if (_equipmentUI.Equipment.IsValid())
-                Inspecting?.Invoke(_equipmentUI.Equipment);
+                Inspecting?.Invoke(this);
         }
 
         public void Init(EquipmentInfo equipment)
@@ -48,7 +48,7 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
         public void OnEquip()
         {
             if (!_canClick) return;
-            EquipItem?.Invoke(_equipmentUI.Equipment);
+            EquipItem?.Invoke(this);
         }
     }
 }

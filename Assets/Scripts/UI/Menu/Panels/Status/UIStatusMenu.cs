@@ -1,6 +1,5 @@
 using CryptoQuest.Battle.Components;
 using CryptoQuest.Gameplay.PlayerParty;
-using CryptoQuest.Item.Equipment;
 using CryptoQuest.System;
 using CryptoQuest.UI.Character;
 using CryptoQuest.UI.Menu.MenuStates.StatusStates;
@@ -24,51 +23,20 @@ namespace CryptoQuest.UI.Menu.Panels.Status
         public UIEquipmentsInventory EquipmentsInventoryPanel => _equipmentsInventoryPanel;
         [field: SerializeField] public UIStatusCharacter CharacterPanel { get; private set; }
         [SerializeField] private AttributeChangeEvent _attributeChangeEvent;
-        private HeroBehaviour _inspectingHero;
-        public HeroBehaviour InspectingHero => _inspectingHero; // Should have using ICharacter
-        private IPartyController _party;
 
         private void Awake()
         {
             CharacterPanel.InspectingCharacter += InspectCharacter;
-            // This is event could not be fired because the scene contains this component is not loaded yet
-            CharacterEquipmentsPanel.UnequipEquipmentAtSlot += UnequipEquipmentAtSlot;
-        }
-
-        private void Start()
-        {
-            _party = ServiceProvider.GetService<IPartyController>();
         }
 
         private void OnDestroy()
         {
             CharacterPanel.InspectingCharacter -= InspectCharacter;
-            CharacterEquipmentsPanel.UnequipEquipmentAtSlot -= UnequipEquipmentAtSlot;
-        }
-
-        private void UnequipEquipmentAtSlot(EquipmentSlot.EType slot)
-        {
-            if (!_inspectingHero.IsValid())
-            {
-                Debug.Log($"UIStatusMenu::UnequipEquipmentAtSlot: No character is inspecting");
-                return;
-            }
-
-            // TODO: REFACTOR PARTY
-            // _provider.UnequipEquipmentAtSlot(_inspectingCharacter, slot);
-        }
-
-        public void EquipItem(EquipmentInfo equipment)
-        {
-            // TODO: REFACTOR PARTY
-            // _provider.EquipEquipment(_inspectingCharacter, equipment);
         }
 
         private void InspectCharacter(HeroBehaviour hero)
         {
             if (hero.IsValid() == false) return;
-            _inspectingHero = hero;
-
             _attributeChangeEvent.AttributeSystemReference = hero.GetComponent<AttributeSystemBehaviour>();
             // TODO: REFACTOR HERO EQUIPMENTS
             // CharacterEquipmentsPanel.SetEquipmentsUI(_inspectingHero.Equipments);

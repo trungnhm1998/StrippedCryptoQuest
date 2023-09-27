@@ -12,11 +12,13 @@ namespace CryptoQuest.Character.Hero
     /// Use the <see cref="AttributeSystemBehaviour"/> to get the runtime stats
     /// </summary>
     [Serializable]
-    public class HeroSpec
+    public struct HeroSpec
     {
         [field: SerializeField] public int Id { get; private set; }
-        [field: SerializeField] public UnitSO Unit { get; private set; }
+        [field: SerializeField] public UnitSO Unit { get; set; }
         [field: SerializeField] public float Experience { get; set; }
-        [field: SerializeField] public Equipments Equipments { get; private set; }
+        [field: SerializeField] public Equipments Equipments { get; set; }
+        
+        public bool IsValid() => Unit != null;
     }
 }

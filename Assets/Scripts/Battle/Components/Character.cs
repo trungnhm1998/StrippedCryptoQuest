@@ -1,13 +1,14 @@
 ﻿using CryptoQuest.Character.Attributes;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.Components;
+using IndiGames.GameplayAbilitySystem.EffectSystem;
 using IndiGames.GameplayAbilitySystem.EffectSystem.Components;
 using UnityEngine;
 
 namespace CryptoQuest.Battle.Components
 {
     [RequireComponent(typeof(AbilitySystemBehaviour))]
-    public class Character : MonoBehaviour, ICharacter
+    public class Character : MonoBehaviour
     {
         #region GAS
 
@@ -34,6 +35,16 @@ namespace CryptoQuest.Battle.Components
             var components = GetComponents<CharacterComponentBase>();
             foreach (var comp in components)
                 comp.Init();
+        }
+
+        public ActiveEffectSpecification ApplyEffect(GameplayEffectSpec effectSpec)
+        {
+            return AbilitySystem.ApplyEffectSpecToSelf(effectSpec);
+        }
+
+        public void RemoveEffect(GameplayEffectSpec activeEffectEffectSpec)
+        {
+            GameplayEffectSystem.RemoveEffect(activeEffectEffectSpec as GameplayEffectSpec);
         }
     }
 }

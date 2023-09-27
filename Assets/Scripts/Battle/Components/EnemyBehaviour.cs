@@ -29,14 +29,14 @@ namespace CryptoQuest.Battle.Components
         private EnemyDef _enemyDef;
         private GameObject _enemyModel;
 
-        private ICharacter _battleCharacter;
+        private Character _battleCharacter;
         private SkeletonAnimation _skeletonAnimation;
         private AsyncOperationHandle<string> _localizedNameHandle;
         private AsyncOperationHandle<GameObject> _modelHandle;
 
         private void Awake()
         {
-            _battleCharacter = GetComponent<ICharacter>();
+            _battleCharacter = GetComponent<Character>();
         }
 
         public void Init(EnemySpec enemySpec, string postfix)

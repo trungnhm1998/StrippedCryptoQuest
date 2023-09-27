@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using CryptoQuest.Battle.Components;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Type;
@@ -7,14 +6,14 @@ using CryptoQuest.Menu;
 using CryptoQuest.UI.Menu.MenuStates.StatusStates;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using Equipments = CryptoQuest.Character.Hero.Equipments;
 
 namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
 {
+    /// <summary>
+    /// Show currently equipped equipments
+    /// </summary>
     public class UICharacterEquipmentsPanel : MonoBehaviour
     {
-        public event Action<EquipmentSlot.EType> UnequipEquipmentAtSlot;
-
         // refs
         [SerializeField] private UIStatusMenu _mainPanel;
         [SerializeField] private UIStatusCharacter _characterPanel;
@@ -29,7 +28,6 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
         [SerializeField] private TooltipProvider _tooltipProvider;
         [SerializeField] private RectTransform _tooltipSafeArea;
 
-        private HeroBehaviour _inspectingHero;
         private Dictionary<EquipmentSlot.EType, UICharacterEquipmentSlot> _equipmentSlotsCache = new();
 
         private Dictionary<EquipmentSlot.EType, UICharacterEquipmentSlot> EquipmentSlots
@@ -49,37 +47,45 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
             }
         }
 
+        private void Awake() => ResetEquipmentsUI();
+
 #if UNITY_EDITOR
-        private void OnValidate()
-        {
-            _equipmentSlots = GetComponentsInChildren<UICharacterEquipmentSlot>();
-        }
+        private void OnValidate() => _equipmentSlots = GetComponentsInChildren<UICharacterEquipmentSlot>();
 #endif
 
         private void OnEnable()
         {
             _characterPanel.InspectingCharacter += UpdateCharacterEquipments;
-            _equipmentsInventoryPanel.UnequipPressed += UnequipCurrentSlot;
             foreach (var equipmentSlot in _equipmentSlots)
-            {
                 equipmentSlot.ShowEquipmentsInventoryWithType += ShowEquipmentsInventoryWithType;
-            }
         }
 
         private void OnDisable()
         {
             _characterPanel.InspectingCharacter -= UpdateCharacterEquipments;
-            _equipmentsInventoryPanel.UnequipPressed -= UnequipCurrentSlot;
             foreach (var equipmentSlot in _equipmentSlots)
-            {
                 equipmentSlot.ShowEquipmentsInventoryWithType -= ShowEquipmentsInventoryWithType;
-            }
         }
 
+        public void Show()
+        {
+            // TODO: REFACTOR EQUIPMENTS
+            SetEquipmentsUI(_characterPanel.InspectingHero);
+
+            _tooltipProvider.Tooltip.SetSafeArea(_tooltipSafeArea);
+            _equipmentSlotParent.SetActive(true);
+            _defaultSelection.Select();
+        }
+
+        public void Hide()
+        {
+            _tooltipProvider.Tooltip.Hide();
+            _equipmentSlotParent.SetActive(false);
+        }
 
         private void UpdateCharacterEquipments(HeroBehaviour hero)
         {
-            _inspectingHero = hero;
+            // _inspectingHero = hero;
             if (hero.IsValid() == false) return;
 
             // TODO: REFACTOR EQUIPMENTS
@@ -91,22 +97,21 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
             // }
         }
 
-        private EquipmentSlot.EType _modifyingSlotType;
-        public EquipmentSlot.EType ModifyingSlotType => _modifyingSlotType;
-        public EEquipmentCategory EquipmentCategory { get; private set; }
+        public EquipmentSlot.EType EquippingSlot { get; private set; }
 
-        private void UnequipCurrentSlot() => UnequipEquipmentAtSlot?.Invoke(_modifyingSlotType);
+        public EEquipmentCategory ModifyingEquipmentCategory { get; private set; }
 
         private void ShowEquipmentsInventoryWithType(EquipmentSlot.EType slotType, EEquipmentCategory category)
         {
             HideToolTipAndDeselectCurrentSelectedButton();
-            EquipmentCategory = category;
-            _modifyingSlotType = slotType;
+            ModifyingEquipmentCategory = category;
+            EquippingSlot = slotType;
             _mainPanel.State.RequestStateChange(StatusMenuStateMachine.EquipmentSelection);
         }
 
-        public void SetEquipmentsUI(Equipments equipments)
+        private void SetEquipmentsUI(HeroBehaviour hero)
         {
+            var equipments = hero.GetComponent<EquipmentsController>().Equipments;
             ResetEquipmentsUI();
             for (int i = 0; i < equipments.Slots.Count; i++)
             {
@@ -148,25 +153,5 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
                 equipmentSlot.Reset();
             }
         }
-
-        #region State context
-
-        public void Show()
-        {
-            // TODO: REFACTOR EQUIPMENTS
-            // SetEquipmentsUI(_inspectingHero.Equipments);
-
-            _tooltipProvider.Tooltip.SetSafeArea(_tooltipSafeArea);
-            _equipmentSlotParent.SetActive(true);
-            _defaultSelection.Select();
-        }
-
-        public void Hide()
-        {
-            _tooltipProvider.Tooltip.Hide();
-            _equipmentSlotParent.SetActive(false);
-        }
-
-        #endregion
     }
 }

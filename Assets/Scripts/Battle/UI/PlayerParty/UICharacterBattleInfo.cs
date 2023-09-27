@@ -10,7 +10,7 @@ using UnityEngine.UI;
 
 namespace CryptoQuest.Battle.UI.PlayerParty
 {
-    public class UICharacterBattleInfo : MonoBehaviour, ICharacterInfo, ICharacterStats
+    public class UICharacterBattleInfo : MonoBehaviour
     {
         [SerializeField] private LocalizeStringEvent _characterName;
         [SerializeField] private Image _avatar;
@@ -23,7 +23,7 @@ namespace CryptoQuest.Battle.UI.PlayerParty
         public void Init(HeroBehaviour hero)
         {
             Hero = hero;
-            Hero.SetupUI(this);
+            // TODO: REFACTOR CHARACTER
 
             if (Hero == null) return;
             _attributeChangeEvent.AttributeSystemReference = Hero.GetComponent<AttributeSystemBehaviour>();
