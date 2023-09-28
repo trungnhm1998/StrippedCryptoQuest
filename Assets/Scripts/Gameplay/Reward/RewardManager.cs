@@ -8,6 +8,7 @@ using CryptoQuest.Gameplay.Character.LevelSystem;
 using CryptoQuest.Gameplay.Inventory.Currency;
 using CryptoQuest.Gameplay.Loot;
 using CryptoQuest.Gameplay.PlayerParty;
+using CryptoQuest.Gameplay.Reward.ScriptableObjects;
 using CryptoQuest.Item;
 using CryptoQuest.Item.Equipment;
 using CryptoQuest.System;
@@ -28,23 +29,20 @@ namespace CryptoQuest.Gameplay.Reward
     {
         public delegate void RewardEvent(params LootInfo[] loots);
 
-        public static event RewardEvent Rewarding;
-        public static void RewardPlayer(params LootInfo[] loots) => Rewarding?.Invoke(loots);
-
         public static event Action<float> RewardExpEvent;
         public static void RewardPlayerExp(float exp) => RewardExpEvent?.Invoke(exp);
 
         [Header("Raise Event")]
         [SerializeField] private LootEventChannelSO _addLootRequestEventChannel;
-
         [SerializeField] private RewardDialogEventChannelSO _showRewardDialogEventChannel;
+        [SerializeField] private RewardSO _rewardEventChannel;
 
         private IPartyController _party;
 
         private void Awake()
         {
-            Rewarding += Reward;
-            RewardExpEvent += RewardExp;
+            _rewardEventChannel.OnRewardEvent += Reward;
+            _rewardEventChannel.OnRewardExpEvent += RewardExp;
         }
 
         private void Start()
@@ -54,8 +52,8 @@ namespace CryptoQuest.Gameplay.Reward
 
         private void OnDestroy()
         {
-            Rewarding -= Reward;
-            RewardExpEvent -= RewardExp;
+            _rewardEventChannel.OnRewardEvent -= Reward;
+            _rewardEventChannel.OnRewardExpEvent -= RewardExp;
         }
 
         public void Reward(params LootInfo[] loots)

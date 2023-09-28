@@ -4,6 +4,7 @@ using CryptoQuest.Gameplay;
 using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects;
 using CryptoQuest.Gameplay.Encounter;
 using CryptoQuest.Gameplay.Reward;
+using CryptoQuest.Gameplay.Reward.ScriptableObjects;
 using CryptoQuest.Input;
 using CryptoQuest.UI.SpiralFX;
 using IndiGames.Core.Events.ScriptableObjects;
@@ -32,8 +33,8 @@ namespace CryptoQuest.Battle
 
         [Header("Events to raise")]
         [SerializeField] private UnloadSceneEventChannelSO _unloadSceneEvent;
-
         [SerializeField] private LoadSceneEventChannelSO _loadSceneEventChannelSo;
+        [SerializeField] private RewardSO _rewardEventChannel;
 
         [Header("Config"), SerializeField]
         private Battlefield[] _enemyParties = Array.Empty<Battlefield>();
@@ -124,7 +125,7 @@ namespace CryptoQuest.Battle
             if (scene != _battleSceneSO) return;
             _gameState.UpdateGameState(_gameState.PreviousGameState);
             _battleInput.EnableMapGameplayInput();
-            RewardManager.RewardPlayer(_context.Loots);
+            _rewardEventChannel.RewardRaiseEvent(_context.Loots);
         }
     }
 }
