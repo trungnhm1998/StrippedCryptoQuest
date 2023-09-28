@@ -4,7 +4,7 @@ using CryptoQuest.UI.Menu.Panels.DimensionBox.Interfaces;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace CryptoQuest.UI.Menu.Panels.DimensionBox
+namespace CryptoQuest.UI.Menu.Panels.DimensionBox.MetadTransferSection
 {
     public class MockupMetadModel : MonoBehaviour, IMetadModel
     {

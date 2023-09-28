@@ -1,11 +1,13 @@
 using System.Collections;
 using CryptoQuest.UI.Menu.Panels.DimensionBox.Interfaces;
 using UnityEngine;
+using UnityEngine.Events;
 
-namespace CryptoQuest.UI.Menu.Panels.DimensionBox
+namespace CryptoQuest.UI.Menu.Panels.DimensionBox.MetadTransferSection
 {
     public class MetadSectionPresenter : MonoBehaviour
     {
+        [SerializeField] private UnityEvent<bool> _confirmTransferEvent;
         [SerializeField] private UIDimensionBoxMetadUI _dimensionBoxMetadUI;
         private IMetadModel _model;
         private float _inputDiamond;
@@ -14,15 +16,11 @@ namespace CryptoQuest.UI.Menu.Panels.DimensionBox
         private void OnEnable()
         {
             StartCoroutine(Init());
-            UIDimensionBoxMetadUI.ConfirmTransferEvent += SetCurrency;
-            UIMetadSection.InputValueEvent += CheckTransferStatus;
             _model.CurrencyUpdated += UpdateCurrency;
         }
 
         private void OnDisable()
         {
-            UIDimensionBoxMetadUI.ConfirmTransferEvent -= SetCurrency;
-            UIMetadSection.InputValueEvent -= CheckTransferStatus;
             _model.CurrencyUpdated -= UpdateCurrency;
         }
 
@@ -39,22 +37,22 @@ namespace CryptoQuest.UI.Menu.Panels.DimensionBox
             _dimensionBoxMetadUI.SetCurrentMetad(ingameMetad, webMetad);
         }
 
-        private void CheckTransferStatus(float inputValue, bool isIngameWallet)
+        public void CheckTransferStatus(float inputValue, bool isIngameWallet)
         {
             var ingameMetad = _model.GetIngameMetad();
             var webMetad = _model.GetWebMetad();
             _isIngameWallet = isIngameWallet;
             _inputDiamond = inputValue;
             float currentDiamond = _isIngameWallet ? ingameMetad : webMetad;
-            var isTransferSuccess = currentDiamond >= _inputDiamond && _inputDiamond != 0;
-            _dimensionBoxMetadUI.ShowMessage(isTransferSuccess);
+            var isTransferSuccess = currentDiamond >= _inputDiamond && _inputDiamond > 0;
+            _confirmTransferEvent.Invoke(isTransferSuccess);
         }
 
-        private void SetCurrency(bool isSuccess)
+        public void SetCurrency(bool isSuccess)
         {
             if (isSuccess)
                 _model.UpdateCurrency(_inputDiamond, _isIngameWallet);
-                
+
             var ingameMetad = _model.GetIngameMetad();
             var webMetad = _model.GetWebMetad();
             _dimensionBoxMetadUI.SetCurrentMetad(ingameMetad, webMetad);

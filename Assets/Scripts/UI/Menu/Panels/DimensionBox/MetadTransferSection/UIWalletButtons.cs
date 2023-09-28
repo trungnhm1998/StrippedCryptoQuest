@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
-namespace CryptoQuest.UI.Menu.Panels.DimensionBox
+namespace CryptoQuest.UI.Menu.Panels.DimensionBox.MetadTransferSection
 {
     public enum EWalletType
     {

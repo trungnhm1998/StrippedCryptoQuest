@@ -1,5 +1,6 @@
 using CryptoQuest.UI.Menu.MenuStates.DimensionBoxStates;
 using CryptoQuest.UI.Menu.Panels.DimensionBox.EquipmentTransferSection;
+using CryptoQuest.UI.Menu.Panels.DimensionBox.MetadTransferSection;
 using FSM;
 using UnityEngine;
 

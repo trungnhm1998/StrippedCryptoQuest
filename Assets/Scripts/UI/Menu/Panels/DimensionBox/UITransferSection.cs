@@ -8,7 +8,7 @@ namespace CryptoQuest.UI.Menu.Panels.DimensionBox
     {
         [SerializeField] protected YesNoDialogEventChannelSO _yesNoDialogEventSO;
         [SerializeField] private GameObject _contents;
-        [SerializeField] private LocalizedString _message;
+        [SerializeField] protected LocalizedString _message;
 
         public virtual void EnterTransferSection()
         {

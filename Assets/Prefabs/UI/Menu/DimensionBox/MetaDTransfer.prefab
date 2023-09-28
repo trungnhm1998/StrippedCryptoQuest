@@ -90,12 +90,75 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 024a815f5b507354a97fb9d3757b7620, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _yesNoDialogEventSO: {fileID: 11400000, guid: c437779d68d43a547b9ce625c9a4bd65, type: 2}
   _contents: {fileID: 6518553972692849377}
+  _message:
+    m_TableReference:
+      m_TableCollectionName: GUID:eb6ce0c7cd5c2444c9d3345957efb3cb
+    m_TableEntryReference:
+      m_KeyId: 29744238375903232
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  _confirmClickedEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4379700191915731829}
+        m_TargetAssemblyTypeName: CryptoQuest.UI.Menu.Panels.DimensionBox.MetadSectionPresenter,
+          indi-games.crypto-quest
+        m_MethodName: SetCurrency
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  _inputValueEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4379700191915731829}
+        m_TargetAssemblyTypeName: CryptoQuest.UI.Menu.Panels.DimensionBox.MetadSectionPresenter,
+          indi-games.crypto-quest
+        m_MethodName: CheckTransferStatus
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  _transferMessageSuccess:
+    m_TableReference:
+      m_TableCollectionName: GUID:eb6ce0c7cd5c2444c9d3345957efb3cb
+    m_TableEntryReference:
+      m_KeyId: 29744238375903232
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  _transferMessageFail:
+    m_TableReference:
+      m_TableCollectionName: GUID:eb6ce0c7cd5c2444c9d3345957efb3cb
+    m_TableEntryReference:
+      m_KeyId: 14905611560513537
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
   _defaultSelection: {fileID: 5963043118915654714}
   _walletButtons:
   - {fileID: 2697688361725210407}
   - {fileID: 5459208578178882608}
   _inputField: {fileID: 7505862495176802867}
+  references:
+    version: 2
+    RefIds: []
 --- !u!114 &4379700191915731829
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -108,6 +171,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7abc63877b875c40b33c72b36fa7b6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _confirmTransferEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 64577036535574209}
+        m_TargetAssemblyTypeName: CryptoQuest.UI.Menu.Panels.DimensionBox.UIMetadSection,
+          indi-games.crypto-quest
+        m_MethodName: ValidateTransferMetad
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   _dimensionBoxMetadUI: {fileID: 5489823011685335059}
 --- !u!114 &4003657727928533375
 MonoBehaviour:
@@ -263,6 +342,26 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1228406627444286845, guid: a866879b1fabb254aa888821d0e4c4d2, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1228406627444286845, guid: a866879b1fabb254aa888821d0e4c4d2, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1228406627444286845, guid: a866879b1fabb254aa888821d0e4c4d2, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1228406627444286845, guid: a866879b1fabb254aa888821d0e4c4d2, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1228406627444286845, guid: a866879b1fabb254aa888821d0e4c4d2, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1450364098113467364, guid: a866879b1fabb254aa888821d0e4c4d2, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -300,6 +399,26 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2113212865876058431, guid: a866879b1fabb254aa888821d0e4c4d2, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2114028160030569654, guid: a866879b1fabb254aa888821d0e4c4d2, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2114028160030569654, guid: a866879b1fabb254aa888821d0e4c4d2, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2114028160030569654, guid: a866879b1fabb254aa888821d0e4c4d2, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2114028160030569654, guid: a866879b1fabb254aa888821d0e4c4d2, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2114028160030569654, guid: a866879b1fabb254aa888821d0e4c4d2, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
@@ -555,10 +674,6 @@ PrefabInstance:
       propertyPath: m_SizeDelta.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5902667192602778525, guid: a866879b1fabb254aa888821d0e4c4d2, type: 3}
-      propertyPath: _metadSection
-      value: 
-      objectReference: {fileID: 64577036535574209}
     - target: {fileID: 5968530451653350625, guid: a866879b1fabb254aa888821d0e4c4d2, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0

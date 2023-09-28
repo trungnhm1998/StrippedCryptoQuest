@@ -29,5 +29,17 @@ namespace CryptoQuest.UI.Menu.MenuStates.DimensionBoxStates
             base.OnExit();
             DimensionBoxPanel.MetadTransferSection.ExitTransferSection();
         }
+        
+        public override void Reset()
+        {
+            base.Reset();
+            DimensionBoxPanel.MetadTransferSection.ResetTransfer();
+        }
+
+        public override void Execute()
+        {
+            base.Execute();
+            DimensionBoxPanel.MetadTransferSection.SendItems();
+        }
     }
 }
