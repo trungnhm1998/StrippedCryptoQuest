@@ -53,8 +53,6 @@ namespace CryptoQuest.Quest.Components
 
         private void RewardReceived(LootInfo[] loots)
         {
-            RewardManager.RewardPlayer(loots);
-
             _currentQuest.OnRewardReceived -= RewardReceived;
         }
 
