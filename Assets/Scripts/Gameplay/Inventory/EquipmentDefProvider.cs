@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using CryptoQuest.Item.Equipment;
+using CryptoQuest.System;
 using UnityEngine;
 
 namespace CryptoQuest.Gameplay.Inventory
@@ -13,7 +14,12 @@ namespace CryptoQuest.Gameplay.Inventory
     {
         [SerializeField] private EquipmentDatabaseSO _equipmentDatabase;
         [SerializeField] private EquipmentDefineDatabase _definitionDatabase;
-        
+
+        private void Awake()
+        {
+            ServiceProvider.Provide<IEquipmentDefProvider>(this);
+        }
+
         public IEnumerator Load(EquipmentInfo equipment)
         {
             yield return _definitionDatabase.LoadDataById(equipment.DefinitionId);

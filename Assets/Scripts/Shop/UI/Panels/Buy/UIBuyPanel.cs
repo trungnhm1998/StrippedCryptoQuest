@@ -20,13 +20,9 @@ namespace CryptoQuest.Shop.UI.Panels.Buy
         [SerializeField] private YesNoDialogEventChannelSO _yesNoDialogEventChannelSO;
         [SerializeField] private GameObject _itemInfo;
         [SerializeField] private GameObject _partyInfo;
-
-        [SerializeField] private UIShopBuy[] _itemLists;
-
         [SerializeField] private UIResultPanel _resultPanel;
-
-        private readonly Dictionary<ETypeShop, int> _itemListCache = new();
-        private UIShopBuy _currentShopItem;
+        [SerializeField] private UIShopBuy _uiShopBuy;
+        
         private ShopManager _shopManager;
         private IShopItemData _currentBuyItem;
 
@@ -38,29 +34,19 @@ namespace CryptoQuest.Shop.UI.Panels.Buy
 
         private void Awake()
         {
-            for (var index = 0; index < _itemLists.Length; index++)
-            {
-                var itemList = _itemLists[index];
-                itemList.OnSubmit += OnSubmitBuy;
-                _itemListCache.Add(itemList.ShopType, index);
-            }
+            _uiShopBuy.OnSubmit += OnSubmitBuy;
         }
 
         private void OnDestroy()
         {
-            for (var index = 0; index < _itemLists.Length; index++)
-            {
-                var itemList = _itemLists[index];
-                itemList.OnSubmit -= OnSubmitBuy;
-            }
+            _uiShopBuy.OnSubmit -= OnSubmitBuy;
         }
 
         protected override void OnShow()
         {
             _itemInfo.gameObject.SetActive(true);
             _partyInfo.gameObject.SetActive(true);
-
-            ShowItemsWithType(_shopManager.ShopInfo.Type);
+            ShowItem();
         }
 
         protected override void OnHide()
@@ -68,31 +54,13 @@ namespace CryptoQuest.Shop.UI.Panels.Buy
             _itemInfo.gameObject.SetActive(false);
             _partyInfo.gameObject.SetActive(false);
         }
-
-        private void ShowItemsWithType(ETypeShop itemType)
-        {
-            var index = _itemListCache[itemType];
-            ShowItemsWithType(index);
-        }
-
-        private void ShowItemsWithType(int tabIndex)
-        {
-            foreach (var item in _itemLists)
-            {
-                item.Hide();
-            }
-
-            _currentShopItem = _itemLists[tabIndex];
-            _currentShopItem.SetItemShopTable(_shopManager.ShopInfo.ItemTable);
-            _currentShopItem.Show();
-        }
-
         private void OnSubmitBuy(IShopItemData shopItemInfo)
         {
             _currentBuyItem = shopItemInfo;
+            _shopManager.HideDialog();
 
             _buyMessage.Arguments = new object[] { _currentBuyItem.Price };
-            _shopManager.ShowDialog(_buyMessage);
+            _yesNoDialogEventChannelSO.SetMessage(_buyMessage);
             _yesNoDialogEventChannelSO.Show(OnPressYesButtonDialog, OnPressNoButtonDialog);
         }
 
@@ -107,7 +75,13 @@ namespace CryptoQuest.Shop.UI.Panels.Buy
         {
             _yesNoDialogEventChannelSO.Hide();
             _shopManager.ShowDialog(DiaglogMessage);
-            ShowItemsWithType(0);
+            ShowItem();
         }
+
+        private void ShowItem()
+        {
+            _uiShopBuy.SetItemShopTable(_shopManager.ShopInfo);
+            _uiShopBuy.Show();
+        }    
     }
 }

@@ -5,6 +5,7 @@ using CryptoQuest.Menu;
 using CryptoQuest.Shop.UI.Panels;
 using CryptoQuest.Shop.UI.ScriptableObjects;
 using CryptoQuest.Shop.UI.ShopStates;
+using IndiGames.Core.Events.ScriptableObjects;
 using UnityEngine;
 using UnityEngine.Localization;
 using UnityEngine.UI;
@@ -32,9 +33,10 @@ namespace CryptoQuest.Shop.UI
         [Header("Listen Events")]
         [SerializeField] private ShowShopEventChannelSO _showShopEvent;
         [SerializeField] private LocalizedStringEventChannelSO _showShopDialogEventChannel;
+        [SerializeField] private VoidEventChannelSO _hideDialogEventChannel;
         [SerializeField] private LocalizedString _exitMessage;
 
-        public ShopInfo ShopInfo { get; private set; }
+        public ShopItemTable ShopInfo { get; private set; }
 
         private ShopStateMachine _shopFsm;
         private void Awake()
@@ -93,7 +95,7 @@ namespace CryptoQuest.Shop.UI
 
         #endregion
 
-        private void ShowShop(ShopInfo shopinfo)
+        private void ShowShop(ShopItemTable shopinfo)
         {
             ShopInfo = shopinfo;
             Initialize();
@@ -123,8 +125,14 @@ namespace CryptoQuest.Shop.UI
 
         public void ShowDialog(LocalizedString message)
         {
-            _showShopDialogEventChannel?.RaiseEvent(message);
+            _showShopDialogEventChannel.RaiseEvent(message);
         }
+
+        public void HideDialog()
+        {
+            _hideDialogEventChannel.RaiseEvent();
+        }
+
         public void RequestChangeState(string state)
         {
             _shopFsm.RequestStateChange(state);

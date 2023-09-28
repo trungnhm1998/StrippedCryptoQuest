@@ -21,9 +21,16 @@ namespace CryptoQuest.Item
         public override int Price => Data.Price;
         public override int SellPrice => Data.SellPrice;
 
+        public string DataId { get; private set; }
+
         public ConsumableInfo(ConsumableSO baseItemSO, int quantity = 1) : base(baseItemSO)
         {
             Quantity = quantity;
+        }
+
+        public ConsumableInfo(string dataId)
+        {
+            DataId = dataId;
         }
 
         public ConsumableInfo() { }

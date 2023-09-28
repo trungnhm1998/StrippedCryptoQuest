@@ -24,7 +24,6 @@ namespace CryptoQuest.Shop.UI.Panels.Item
         [SerializeField] private Transform _scrollContentParent;
 
         [field: SerializeField] public ShopStateSO ShopState { get; private set; }
-        [field: SerializeField] public ETypeShop ShopType { get; private set; }
 
         public InventorySO _inventorySO { get; private set; }
 
@@ -56,6 +55,7 @@ namespace CryptoQuest.Shop.UI.Panels.Item
         protected IEnumerator SelectDefaultButton()
         {
             yield return null;
+            _defaultItem = _scrollContentParent.GetChild(0).GetComponent<UIShopItem>();
             _defaultItem?.Select();
         }
 
@@ -64,18 +64,13 @@ namespace CryptoQuest.Shop.UI.Panels.Item
             OnSubmit?.Invoke(shopItemInfo);
         }
 
-        protected void InstantiateItem(IShopItemData itemShopData, bool isBuy, int index)
+        protected void InstantiateItem(IShopItemData itemShopData, bool isBuy)
         {
             var uiItem = GetShopItem();
 
             uiItem.Init(itemShopData, isBuy);
             uiItem.gameObject.SetActive(true);
             uiItem.gameObject.transform.SetAsLastSibling();
-
-            if (index == 0)
-            {
-                _defaultItem = uiItem;
-            }
         }
 
         private UIShopItem GetShopItem()

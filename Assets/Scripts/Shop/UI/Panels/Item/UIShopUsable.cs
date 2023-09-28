@@ -17,7 +17,7 @@ namespace CryptoQuest.Shop.UI.Panels.Item
             {
                 IShopItemData shopItemData = new ConsumableItem(listItem[i]);
 
-                InstantiateItem(shopItemData, true, i);
+                InstantiateItem(shopItemData, false);
             }
         }
     }

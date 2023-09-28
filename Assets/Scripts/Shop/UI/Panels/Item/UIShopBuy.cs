@@ -7,10 +7,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using System;
 
 namespace CryptoQuest.Shop.UI.Panels.Item
 {
-    public abstract class UIShopBuy : UIShop
+    public class UIShopBuy : UIShop
     {
         protected ShopItemTable _shopItemTable;
 
@@ -24,6 +25,22 @@ namespace CryptoQuest.Shop.UI.Panels.Item
             _shopItemTable = shopItemTable;
             ResetShopItem();
             InitItem();
+        }
+
+        private IEnumerator LoadItemTable(ShopItemTable shopItemTable)
+        {
+            yield return shopItemTable.LoadItem(CreateItem);
+            yield return SelectDefaultButton();
+        }
+
+        private void CreateItem(IShopItemData shopItemData)
+        {
+            InstantiateItem(shopItemData, true);
+        }    
+
+        protected override void InitItem()
+        {
+            StartCoroutine(LoadItemTable(_shopItemTable));
         }
     }
 }

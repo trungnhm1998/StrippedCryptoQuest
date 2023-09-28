@@ -21,7 +21,7 @@ namespace CryptoQuest.Shop.UI.Panels.Item
             {
                 IShopItemData shopItemData = new EquipmentItem(listItem[i]);
 
-                InstantiateItem(shopItemData, false, i);
+                InstantiateItem(shopItemData, false);
             }
         }
     }

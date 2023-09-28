@@ -6,7 +6,7 @@ using UnityEngine;
 namespace CryptoQuest.Shop.UI.ScriptableObjects
 {
     [CreateAssetMenu(menuName = "Crypto Quest/Shop/Events/Show Shop Event Channel")]
-    public class ShowShopEventChannelSO : GenericEventChannelSO<ShopInfo>
+    public class ShowShopEventChannelSO : GenericEventChannelSO<ShopItemTable>
     {
 
     }
