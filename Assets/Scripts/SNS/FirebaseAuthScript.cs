@@ -79,7 +79,9 @@ namespace CryptoQuest.SNS
 
         public void Start()
         {
+#if !UNITY_EDITOR
             FirebaseAuth.OnAuthStateChanged(gameObject.name, "OnUserSignedIn", "OnUserSignedOut");
+#endif
         }
 
         private IEnumerator LoginWithBackend()

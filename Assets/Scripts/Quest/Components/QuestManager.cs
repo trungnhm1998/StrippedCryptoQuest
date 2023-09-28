@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using CryptoQuest.Gameplay.Loot;
-using CryptoQuest.Gameplay.Reward;
+using CryptoQuest.Gameplay.Reward.ScriptableObjects;
 using CryptoQuest.Quest.Authoring;
 using CryptoQuest.Quest.Events;
 using IndiGames.Core.EditorTools.Attributes.ReadOnlyAttribute;
@@ -15,6 +15,7 @@ namespace CryptoQuest.Quest.Components
     {
         public static Action<IQuestConfigure> OnConfigureQuest;
 
+        [SerializeField] private RewardSO _rewardEventChannel;
         [SerializeField] private QuestTriggerEventChannelSO questTriggerEventChannel;
         [field: SerializeField, ReadOnly] public List<string> InProgressQuests { get; private set; } = new();
         [field: SerializeField, ReadOnly] public List<string> CompletedQuests { get; private set; } = new();
@@ -53,6 +54,7 @@ namespace CryptoQuest.Quest.Components
 
         private void RewardReceived(LootInfo[] loots)
         {
+            _rewardEventChannel.RewardRaiseEvent(loots);
             _currentQuest.OnRewardReceived -= RewardReceived;
         }
 
