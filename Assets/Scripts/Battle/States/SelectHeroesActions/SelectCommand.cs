@@ -73,7 +73,7 @@ namespace CryptoQuest.Battle.States.SelectHeroesActions
         public void OnGuardPressed()
         {
             Debug.Log("SelectCommandState::OnGuardPressed");
-            Fsm.AddCommand(_hero, new GuardCommand(_hero));
+            Fsm.PushCommand(_hero, new GuardCommand(_hero));
             NextHero();
         }
 

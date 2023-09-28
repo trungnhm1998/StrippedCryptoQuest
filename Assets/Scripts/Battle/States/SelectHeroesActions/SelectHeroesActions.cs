@@ -89,7 +89,7 @@ namespace CryptoQuest.Battle.States.SelectHeroesActions
         public bool GetNextAliveHero(out HeroBehaviour hero)
         {
             hero = null;
-            if (++_currentHeroIndex>= _party.Size) return false;
+            if (++_currentHeroIndex >= _party.Size) return false;
             bool canHeroFunctions;
             do
             {
@@ -100,13 +100,19 @@ namespace CryptoQuest.Battle.States.SelectHeroesActions
             return true;
         }
 
-        public void AddCommand(HeroBehaviour heroBehaviour, ICommand command)
+        public void PushCommand(HeroBehaviour heroBehaviour, ICommand command)
         {
             HeroCommands.Push(new HeroCommand
             {
                 HeroBehaviour = heroBehaviour,
                 Command = command
             });
+        }
+
+        public void PopCommand()
+        {
+            if (HeroCommands.Count > 0)
+                HeroCommands.Pop();
         }
 
         public void GoToPresentState()
