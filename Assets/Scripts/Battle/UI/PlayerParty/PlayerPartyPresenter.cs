@@ -1,5 +1,6 @@
 using System.Collections;
 using CryptoQuest.Battle.Components;
+using CryptoQuest.Character.Hero.AvatarProvider;
 using CryptoQuest.Gameplay.PlayerParty;
 using CryptoQuest.System;
 using UnityEngine;
@@ -8,11 +9,11 @@ namespace CryptoQuest.Battle.UI.PlayerParty
 {
     public class PlayerPartyPresenter : MonoBehaviour
     {
-        [SerializeField] private BattleAvatarDatabase _avatarDatabase;
         [SerializeField] private UICharacterBattleInfo[] _characterUis;
         public UICharacterBattleInfo[] CharacterUIs => _characterUis;
 
         private IPartyController _party;
+        private IHeroAvatarProvider _heroAvatarProvider;
 
 #if UNITY_EDITOR
         private void OnValidate()
@@ -24,6 +25,7 @@ namespace CryptoQuest.Battle.UI.PlayerParty
         private void Awake()
         {
             InitParty();
+            _heroAvatarProvider = GetComponent<IHeroAvatarProvider>();
         }
 
         private void InitParty()
@@ -54,10 +56,8 @@ namespace CryptoQuest.Battle.UI.PlayerParty
 
         private IEnumerator CoLoadBattleAvatar(HeroBehaviour hero, UICharacterBattleInfo characterUI)
         {
-            yield break; // TODO: REFACTOR CHARACTER
-            // var id = $"{character.BackgroundInfo.Label.labelString}_{character.Class.Label.labelString}";
-            // yield return _avatarDatabase.LoadDataById(id);
-            // characterUI.SetBattleAvatar(_avatarDatabase.GetDataById(id));
+            yield return _heroAvatarProvider.LoadAvatarAsync(hero);
+            characterUI.SetBattleAvatar(hero.BattleAvatar);
         }
     }
 }

@@ -562,6 +562,7 @@ GameObject:
   - component: {fileID: 7965848160767364178}
   - component: {fileID: 3797002016233899039}
   - component: {fileID: 6184574510126152131}
+  - component: {fileID: 3750977852534917715}
   m_Layer: 5
   m_Name: CharacterSlots
   m_TagString: Untagged
@@ -650,6 +651,19 @@ MonoBehaviour:
   - {fileID: 6122756559540842281}
   - {fileID: 5909136242494472234}
   _sortKeysUi: {fileID: 5900637789985669690}
+--- !u!114 &3750977852534917715
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6271493106398774388}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d79ce06a1a8c9448a26e224f672f5a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _avatarDatabase: {fileID: 11400000, guid: 4e881a60ba36d4e47a693fccb876d2a2, type: 2}
 --- !u!1 &6622668946029197371
 GameObject:
   m_ObjectHideFlags: 0
@@ -967,6 +981,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1047201365981666183}
     m_Modifications:
+    - target: {fileID: 5355637706248454720, guid: 3c82a0ed70b02f54ba487afcff878954, type: 3}
+      propertyPath: m_text
+      value: Q/E
+      objectReference: {fileID: 0}
+    - target: {fileID: 6507475693016442779, guid: 3c82a0ed70b02f54ba487afcff878954, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 114431645548707615, guid: 7bdf12494356e6144b56df590e2d6385, type: 3}
       propertyPath: m_Name
       value: ChangeCharacter
@@ -1110,14 +1132,6 @@ PrefabInstance:
     - target: {fileID: 9164237197475625269, guid: 7bdf12494356e6144b56df590e2d6385, type: 3}
       propertyPath: m_SizeDelta.x
       value: 16.54
-      objectReference: {fileID: 0}
-    - target: {fileID: 5355637706248454720, guid: 3c82a0ed70b02f54ba487afcff878954, type: 3}
-      propertyPath: m_text
-      value: Q/E
-      objectReference: {fileID: 0}
-    - target: {fileID: 6507475693016442779, guid: 3c82a0ed70b02f54ba487afcff878954, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

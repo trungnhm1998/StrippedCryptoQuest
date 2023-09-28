@@ -17,6 +17,8 @@ namespace CryptoQuest.Battle.Components
         public Elemental Element => Spec.Unit.Element;
         public GameObject GameObject => gameObject;
         public CharacterClass Class => Spec.Unit.Class;
+        public Sprite Avatar { get; set; }
+        public Sprite BattleAvatar { get; set; }
 
         private Character _characterComponent;
         [SerializeField] private HeroSpec _spec;

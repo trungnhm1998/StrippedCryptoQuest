@@ -19,6 +19,7 @@ namespace CryptoQuest.UI.Menu.Character
         {
             _hero = hero;
             // TODO: REFACTOR CHARACTER
+            SetAvatar(hero.Avatar);
 
             _attributeChangeEvent.AttributeSystemReference = _hero.GetComponent<AttributeSystemBehaviour>();
         }

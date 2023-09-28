@@ -1,6 +1,10 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using CryptoQuest.Battle.Components;
+using CryptoQuest.Character.Hero.AvatarProvider;
+
 using CryptoQuest.Gameplay.PlayerParty;
 using CryptoQuest.System;
 using IndiGames.Core.Events.ScriptableObjects;
@@ -41,6 +45,12 @@ namespace CryptoQuest.UI.Menu.Panels.Home
 
         private IPartyController PartyController => _partyController ??= ServiceProvider.GetService<IPartyController>();
         private IPartyController _partyController;
+        private IHeroAvatarProvider _heroAvatarProvider;
+
+        private void Awake()
+        {
+            _heroAvatarProvider = GetComponent<IHeroAvatarProvider>();
+        }
 
         private void OnValidate()
         {
@@ -80,7 +90,14 @@ namespace CryptoQuest.UI.Menu.Panels.Home
 
                 var childInfo = uiPartySlot.transform.GetComponentInChildren<UICharacterInfo>();
                 uiPartySlot.Init(slot.HeroBehaviour, childInfo);
+                StartCoroutine(CoLoadAvatar(slot.HeroBehaviour, childInfo));
             }
+        }
+
+        private IEnumerator CoLoadAvatar(HeroBehaviour hero, UICharacterInfo characterUI)
+        {
+            yield return _heroAvatarProvider.LoadAvatarAsync(hero);
+            characterUI.SetAvatar(hero.Avatar);
         }
 
         private void EnableSortMode()

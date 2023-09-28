@@ -111,8 +111,7 @@ namespace CryptoQuest.UI.Menu.Panels.Status
             SetClass(hero.Class.Name);
             SetLocalizedName(hero.DetailsInfo.LocalizedName);
 
-            // TODO: IMPLEMENT
-            // SetAvatar();
+            SetAvatar(hero.Avatar);
             SetMaxExp(1234);
             SetExp(11);
         }
