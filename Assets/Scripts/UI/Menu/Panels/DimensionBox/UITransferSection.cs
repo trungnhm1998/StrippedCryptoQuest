@@ -1,5 +1,6 @@
 using CryptoQuest.Events.UI.Dialogs;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.Localization;
 
 namespace CryptoQuest.UI.Menu.Panels.DimensionBox
@@ -28,14 +29,14 @@ namespace CryptoQuest.UI.Menu.Panels.DimensionBox
             _yesNoDialogEventSO.SetMessage(_message);
         }
 
-        private void YesButtonPressed()
+        protected virtual void YesButtonPressed()
         {
             // Call API to send items
             Debug.Log($"UITransferSection::Confirm send DBox items");
             _yesNoDialogEventSO.Hide();
         }
 
-        private void NoButtonPressed()
+        protected virtual void NoButtonPressed()
         {
             _yesNoDialogEventSO.Hide();
         }

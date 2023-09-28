@@ -13,7 +13,7 @@ namespace CryptoQuest.UI.Menu.MenuStates.DimensionBoxStates
             NavigationBar.SetActive(false);
             NavigationBar.HighlightHeader(DimensionBoxPanel.TypeSO);
             DimensionBoxPanel.MetadTransferSection.EnterTransferSection();
-            DimensionBoxPanel.MetadTransferSection.Init();
+            DimensionBoxPanel.MetadTransferSection.InitMetadTransferSection();
         }
 
         public override void HandleCancel()

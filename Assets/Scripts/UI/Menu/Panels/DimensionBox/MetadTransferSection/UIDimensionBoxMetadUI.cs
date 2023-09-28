@@ -1,11 +1,4 @@
-using System;
-using CryptoQuest.Events;
-using CryptoQuest.Events.UI.Dialogs;
-using TMPro;
 using UnityEngine;
-using UnityEngine.Events;
-using UnityEngine.Localization;
-using UnityEngine.Localization.Components;
 using UnityEngine.UI;
 
 namespace CryptoQuest.UI.Menu.Panels.DimensionBox.MetadTransferSection

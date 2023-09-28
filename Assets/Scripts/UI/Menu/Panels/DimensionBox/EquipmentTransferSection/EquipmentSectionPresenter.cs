@@ -12,6 +12,7 @@ namespace CryptoQuest.UI.Menu.Panels.DimensionBox.EquipmentTransferSection
     public class EquipmentSectionPresenter : MonoBehaviour
     {
         [SerializeField] private YesNoDialogEventChannelSO _yesNoDialogEventSO;
+        [SerializeField] private UIEquipmentSection _uiEquipmentSection;
         [SerializeField] private Transform _gameBoard;
         [SerializeField] private Transform _walletBoard;
 
@@ -28,16 +29,23 @@ namespace CryptoQuest.UI.Menu.Panels.DimensionBox.EquipmentTransferSection
         private List<IData> _gameData = new();
         private List<IData> _walletData = new();
 
-        private void Awake()
+
+        // This method subscribe to the EnterTransferSectionEvent on scene.
+        public void StateEntered()
         {
             UITransferItem.SelectItemEvent += ItemSelected;
             _yesNoDialogEventSO.HideEvent += HideDialog;
+            _uiEquipmentSection.SendingPhaseEvent += CheckIsOnSendingPhase;
+
+            GetEquipments();
         }
 
-        private void OnDestroy()
+        // This method subscribe to the ExitTransferSectionEvent on scene.
+        public void StateExited()
         {
             UITransferItem.SelectItemEvent -= ItemSelected;
             _yesNoDialogEventSO.HideEvent -= HideDialog;
+            _uiEquipmentSection.SendingPhaseEvent -= CheckIsOnSendingPhase;
         }
 
         private void ItemSelected(UITransferItem currentItem)
@@ -51,10 +59,13 @@ namespace CryptoQuest.UI.Menu.Panels.DimensionBox.EquipmentTransferSection
             _hideDialogEvent.Invoke();
         }
 
-        /// <summary>
-        /// This method subscribe to the EnterTransferSectionEvent on scene.
-        /// </summary>
-        public void GetEquipments()
+        private void CheckIsOnSendingPhase(bool isOnSendingPhase)
+        {
+            SetInteractableAllButtons(_gameBoard, !isOnSendingPhase);
+            SetInteractableAllButtons(_walletBoard, !isOnSendingPhase);
+        }
+
+        private void GetEquipments()
         {
             StartCoroutine(GetGameEquipments());
             StartCoroutine(GetWalletEquipments());
