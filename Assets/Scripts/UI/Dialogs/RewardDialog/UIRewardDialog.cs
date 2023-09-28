@@ -18,6 +18,7 @@ namespace CryptoQuest.UI.Dialogs.RewardDialog
         [field: SerializeField] public UIRewardItem RewardItemPrefab { get; private set; }
         [field: SerializeField] public Transform TopContainer { get; private set; }
         [field: SerializeField] public Transform BottomContainer { get; private set; }
+        [SerializeField] private RewardScroll _scroll;
 
         public UnityAction CloseButtonPressed;
         private RewardDialogData _rewardDialogData;
@@ -64,6 +65,7 @@ namespace CryptoQuest.UI.Dialogs.RewardDialog
             _topNone.SetActive(!(TopContainer.childCount > 0));
             _bottomNone.SetActive(!(BottomContainer.childCount > 0));
             if (_topNone.activeSelf && _bottomNone.activeSelf) StartCoroutine(CoAutoClose());
+            _scroll.UpdateStep();
         }
 
         private IEnumerator CoAutoClose()
