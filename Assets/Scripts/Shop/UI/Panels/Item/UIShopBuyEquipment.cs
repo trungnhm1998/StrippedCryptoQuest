@@ -4,7 +4,6 @@ using CryptoQuest.UI.Menu.Panels.Status.Equipment;
 using PolyAndCode.UI;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditorInternal.VersionControl;
 using UnityEngine;
 
 namespace CryptoQuest.Shop.UI.Panels.Item
