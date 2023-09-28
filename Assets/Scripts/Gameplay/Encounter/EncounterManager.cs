@@ -49,7 +49,7 @@ namespace CryptoQuest.Gameplay.Encounter
         private void RegisterStepHandler(string encounterId)
             => StartCoroutine(GetEncounter(encounterId, SetupStepsCounter));
 
-        void SetupStepsCounter(EncounterData encounter)
+        private void SetupStepsCounter(EncounterData encounter)
         {
             _currentEncounterData = encounter;
             _maxEncounterSteps = _currentEncounterData.EncounterRate;

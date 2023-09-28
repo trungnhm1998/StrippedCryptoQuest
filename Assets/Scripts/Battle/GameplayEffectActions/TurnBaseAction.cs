@@ -8,14 +8,13 @@ using NotImplementedException = System.NotImplementedException;
 namespace CryptoQuest.Battle.GameplayEffectActions
 {
     [Serializable]
-    public class TurnBaseAction : IGameplayEffectAction
+    public class TurnBaseAction : CounterAction
     {
-        [SerializeField] private int _turnDuration;
-        public TurnBaseAction() { }
-
-        public ActiveEffectSpecification CreateActiveEffect(GameplayEffectSpec inSpec, AbilitySystemBehaviour owner)
+        public TurnBaseAction() : base() {}
+        
+        public TurnBaseAction(int counter) : base(counter)
         {
-            throw new NotImplementedException();
+            // TODO: Set next turn event here as reduce counter event
         }
     }
 }

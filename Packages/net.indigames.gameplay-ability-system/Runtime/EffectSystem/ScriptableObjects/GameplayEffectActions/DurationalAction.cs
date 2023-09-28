@@ -16,6 +16,24 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects.Gamepla
 
         public ActiveEffectSpecification CreateActiveEffect(
             GameplayEffectSpec inSpec,
-            AbilitySystemBehaviour owner) => new(inSpec);
+            AbilitySystemBehaviour owner) => new DurationEffectSpecification(_duration, inSpec);
+    }
+
+    [Serializable]
+    public class DurationEffectSpecification : ActiveEffectSpecification
+    {
+        private float _duration = 0;
+
+        public DurationEffectSpecification(float duration, GameplayEffectSpec effect) : base(effect)
+        {
+            _duration = duration;
+        }
+
+        public override void Update(float deltaTime)
+        {
+            base.Update(deltaTime);
+            _duration -= deltaTime;
+            if (_duration <= 0) EffectSpec.IsExpired = true;
+        }
     }
 }

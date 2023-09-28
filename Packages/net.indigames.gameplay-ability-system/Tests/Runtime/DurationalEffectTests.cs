@@ -7,22 +7,20 @@ using UnityEngine.TestTools;
 
 namespace IndiGames.GameplayAbilitySystemTests
 {
-    public class InfiniteEffectTests : FixtureBase
+    public class DurationalEffectTests : FixtureBase
     {
         [UnityTest]
-        public IEnumerator IsActive_False_ShouldRemoveFromSystem()
+        public IEnumerator AfterDuration_ShouldRemoveFromSystem()
         {
             var (_, _, effectSystem, _) = CreateAbilitySystem();
             var def = ScriptableObject.CreateInstance<GameplayEffectDefinition>();
-            def.EffectAction = new InfiniteAction();
+            var duration = 1f;
+            def.EffectAction = new DurationalAction(duration);
             var spec = effectSystem.GetEffect(def);
             var activeSpec = effectSystem.ApplyEffectToSelf(spec);
             Assert.IsTrue(activeSpec.IsValid());
-            yield return null;
             Assert.AreEqual(1, effectSystem.AppliedEffects.Count);
-            yield return null;
-            activeSpec.IsActive = false;
-            yield return null;
+            yield return new WaitForSeconds(duration);
             Assert.AreEqual(0, effectSystem.AppliedEffects.Count);
         }
     }
