@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 666282647687497273}
-  - component: {fileID: 1249662082265426137}
+  - component: {fileID: 378290335412794126}
   m_Layer: 0
   m_Name: QuestManager
   m_TagString: Untagged
@@ -30,9 +30,9 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1249662082265426137
+--- !u!114 &378290335412794126
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d482f5d33f848d69b6de29f4df450f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _database: {fileID: 11400000, guid: cf429f0fa839c7d40a35dfff38f44687, type: 2}
-  _startingQuest: {fileID: 0}
-  Quests:
-  - {fileID: 11400000, guid: c23257612589ec14d96d058bc288a86d, type: 2}
+  questTriggerEventChannel: {fileID: 11400000, guid: fdefe5ff6c97c9946a9e874eb074f93f, type: 2}
+  _addLootRequestEventChannel: {fileID: 11400000, guid: 5b2a9f4e0c11e954bbd8d96c7b5d775e, type: 2}
+  <InProgressQuests>k__BackingField: []
+  <CompletedQuests>k__BackingField: []

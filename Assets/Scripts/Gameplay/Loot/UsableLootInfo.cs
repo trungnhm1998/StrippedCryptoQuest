@@ -10,7 +10,7 @@ namespace CryptoQuest.Gameplay.Loot
     public class UsableLootInfo : LootInfo<ConsumableInfo>
     {
         public UsableLootInfo(ConsumableInfo item) : base(item) { }
-        public override void AddItemToInventory(InventorySO inventory) => inventory.Add(Item);
+        public override void AddItemToInventory(InventorySO inventory) => inventory.Add(Item, Item.Quantity);
         public override UI.Dialogs.RewardDialog.Reward CreateRewardUI() => new ConsumableReward(this);
         public override LootInfo Clone() => new UsableLootInfo(Item.Clone());
         public override bool AcceptMerger(IRewardMerger merger) => merger.Visit(this);

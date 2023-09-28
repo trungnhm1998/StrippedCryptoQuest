@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2368079525648974495}
   - component: {fileID: 8810242967914207612}
-  - component: {fileID: 5345452806465044398}
+  - component: {fileID: 4283104722309444704}
   m_Layer: 0
   m_Name: TriggerCutsceneZone
   m_TagString: Untagged
@@ -40,7 +40,7 @@ BoxCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7400677895011199947}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:
@@ -78,7 +78,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 3, y: 3}
   m_EdgeRadius: 0
---- !u!114 &5345452806465044398
+--- !u!114 &4283104722309444704
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -87,22 +87,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 7400677895011199947}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b2775f4af5c7496990a78f96a0e9bbd8, type: 3}
+  m_Script: {fileID: 11500000, guid: 3d796a7c14674ae78d806500e58213b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _quest: {fileID: 0}
-  OnQuestCompleted:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 8810242967914207612}
-        m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
-        m_MethodName: set_enabled
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+  _questToComplete: {fileID: 0}
+  questTriggerEventChannel: {fileID: 11400000, guid: fdefe5ff6c97c9946a9e874eb074f93f, type: 2}
+  _actionType: 0

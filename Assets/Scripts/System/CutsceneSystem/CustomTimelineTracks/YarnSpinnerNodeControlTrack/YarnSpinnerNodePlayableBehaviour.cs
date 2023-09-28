@@ -16,7 +16,7 @@ namespace CryptoQuest.System.CutsceneSystem.CustomTimelineTracks.YarnSpinnerNode
         /// </summary>
         public bool PauseTimelineOnClipEnds = true;
 
-        private bool _played = false;
+        protected bool _played = false;
 
         /// <summary>
         /// Show dialogue using YarnSpinner.

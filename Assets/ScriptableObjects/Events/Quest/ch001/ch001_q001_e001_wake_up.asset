@@ -1,0 +1,41 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea096083c3354ef8b7757a9213b4e5a2, type: 3}
+  m_Name: ch001_q001_e001_wake_up
+  m_EditorClassIdentifier: 
+  _guid: fd7c73dffc37da645a17bcbb15508f0c
+  <QuestID>k__BackingField: ch001_q001
+  <QuestName>k__BackingField: Audience With The King
+  <EventID>k__BackingField: ch001_q001_e001_wake_up
+  <EventName>k__BackingField: wake_up
+  <EventDescription>k__BackingField: "Cut scene th\u1EE9c d\u1EADy tr\xEAn gi\u01B0\u1EDDng,
+    n\xF3i chuy\u1EC7n v\u1EDBi Emma ( ti\xEAn )   "
+  _rewards:
+  - RewardItem:
+      rid: 8512414138962542614
+  - RewardItem:
+      rid: 8512414138962542615
+  _cutsceneQuestSO: {fileID: 11400000, guid: adc99ed2d9dfcc442b04888e620a3cf7, type: 2}
+  references:
+    version: 2
+    RefIds:
+    - rid: 8512414138962542614
+      type: {class: ExpLoot, ns: CryptoQuest.Gameplay.Loot, asm: indi-games.crypto-quest}
+      data:
+        <Exp>k__BackingField: 100
+    - rid: 8512414138962542615
+      type: {class: CurrencyLootInfo, ns: CryptoQuest.Gameplay.Loot, asm: indi-games.crypto-quest}
+      data:
+        _item:
+          _id: af39ced3-52b0-4cd4-a7f7-1364a6cd5c51
+          <Data>k__BackingField: {fileID: 11400000, guid: 16b3f6e09fc22d240be1b324116eeb79, type: 2}
+          <Amount>k__BackingField: 200

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using CryptoQuest.Gameplay;
 using CryptoQuest.Input;
@@ -62,6 +61,7 @@ namespace CryptoQuest.System.Dialogue.Managers
         [SerializeField] private UnityEvent<string> _onReactionShowed;
 
         [SerializeField] private UnityEvent _onDialogueCompleted;
+        [SerializeField] private UnityEvent<string> _onCompleteQuest;
 
         private Yarn.Dialogue Dialogue => _dialogueRunner.Dialogue;
 
@@ -121,6 +121,24 @@ namespace CryptoQuest.System.Dialogue.Managers
             }
 
             Instance.ShowReaction(reactionName);
+        }
+
+        [YarnCommand("completequest")]
+        public static void CompleteQuest(string questName)
+        {
+            if (Instance == null)
+            {
+                Debug.LogWarning("YarnSpinnerDialogueManager::CompleteQuest: _instance is null");
+                return;
+            }
+
+            Instance.OnCompleteQuest(questName);
+        }
+
+        private void OnCompleteQuest(string questName)
+        {
+            Debug.Log($"YarnSpinnerDialogueManager::OnCompleteQuest: questName[{questName}]");
+            _onCompleteQuest?.Invoke(questName);
         }
 
         private void ShowReaction(string reactionName)
