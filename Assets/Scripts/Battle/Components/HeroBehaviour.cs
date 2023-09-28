@@ -6,6 +6,7 @@ using CryptoQuest.Character.Hero;
 using CryptoQuest.Gameplay;
 using CryptoQuest.Gameplay.Character;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
+using IndiGames.GameplayAbilitySystem.AttributeSystem.Components;
 using IndiGames.GameplayAbilitySystem.TagSystem.ScriptableObjects;
 using UnityEngine;
 
@@ -16,7 +17,7 @@ namespace CryptoQuest.Battle.Components
     /// </summary>
     public class HeroBehaviour : MonoBehaviour, IEquipmentsProvider
     {
-        public int Level => 1;
+        public int Level { get; set; } = 1;
         public Origin.Information DetailsInfo => Spec.Unit.Origin.DetailInformation;
         public StatsDef Stats => Spec.Unit.Stats;
         public Elemental Element => Spec.Unit.Element;
@@ -26,6 +27,8 @@ namespace CryptoQuest.Battle.Components
         public Sprite BattleAvatar { get; set; }
 
         private Character _characterComponent;
+        public AttributeSystemBehaviour AttributeSystem => _characterComponent.AttributeSystem;
+
         [SerializeField] private HeroSpec _spec;
 
         public HeroSpec Spec
@@ -58,6 +61,7 @@ namespace CryptoQuest.Battle.Components
         public void Init(HeroSpec character)
         {
             Spec = character;
+            _levelSystem.Init(this);
             // Need level before I can init the character
             _characterComponent.Init(Element);
         }
@@ -85,6 +89,12 @@ namespace CryptoQuest.Battle.Components
 
             component = (T)value;
             return true;
+        }
+
+        public void RequestAddExp(float exp)
+        {
+            // TODO: Request to server here
+            _spec.Experience += exp;
         }
     }
 }

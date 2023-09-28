@@ -37,8 +37,14 @@ namespace CryptoQuest.UI.Menu.Panels.Home
             SetElement(_hero.Element.Icon);
             SetLevel(_hero.Level);
             SetClass(_hero.Class.Name);
-            SetExp(0);
-            SetMaxExp(123);
+            SetupExpUI(hero);
+        }
+
+        private void SetupExpUI(HeroBehaviour hero)
+        {
+            if (!hero.TryGetComponent<LevelSystem>(out var levelSystem)) return;
+            SetMaxExp(levelSystem.GetNextLevelRequireExp());
+            SetExp(levelSystem.GetCurrentLevelExp());
         }
 
         private void OnEnable()

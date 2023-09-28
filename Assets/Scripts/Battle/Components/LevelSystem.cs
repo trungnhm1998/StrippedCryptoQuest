@@ -1,4 +1,7 @@
+using System;
 using CryptoQuest.Character.Attributes;
+using CryptoQuest.Character.Hero;
+using CryptoQuest.Character.Tag;
 using CryptoQuest.Events;
 using CryptoQuest.Gameplay;
 using CryptoQuest.Gameplay.Character;
@@ -15,7 +18,8 @@ namespace CryptoQuest.Battle.Components
     [RequireComponent(typeof(HeroBehaviour))]
     public class LevelSystem : MonoBehaviour
     {
-        [SerializeField] private CharacterSpecEventChannelSO _characterLevelUpEventChannel;
+        public static event Action<HeroBehaviour> HeroLeveledUp;
+
         [SerializeField] private AttributeScriptableObject _expBuffAttribute;
         [SerializeField] private AttributeWithMaxCapped[] _levelUpResetAttributes;
 
@@ -23,21 +27,19 @@ namespace CryptoQuest.Battle.Components
         public static ILevelCalculator LevelCalculator { get; private set; }
         private ILevelAttributeCalculator _levelAttributeCalculator = new DefaultLevelAttributeCalculator();
         private int _lastLevel = 0;
-        private CharacterBehaviourBase _character;
-        private CharacterSpec _characterSpec;
+        private HeroBehaviour _character;
 
-        public void Init(CharacterBehaviourBase character)
+        public void Init(HeroBehaviour character)
         {
             _character = character;
-            _characterSpec = character.Spec;
-            LevelCalculator ??= new LevelCalculator(_characterSpec.StatsDef.MaxLevel);
-            _lastLevel = _characterSpec.Level;
+            LevelCalculator ??= new LevelCalculator(_character.Stats.MaxLevel);
+            _lastLevel = _character.Level;
             CalculateLevel();
         }
 
         public void AddExp(float expToAdd)
         {
-            if (_character.IsDead())
+            if (_character.HasTag(TagsDef.Dead))
             {
                 Debug.LogWarning($"CharacterLevelComponent::AddExp: Failed because this character is dead");
                 return;
@@ -53,27 +55,27 @@ namespace CryptoQuest.Battle.Components
 
             var addedExp = expToAdd * expBuffValue.CurrentValue;
 
-            _characterSpec.Experience += addedExp;
+            _character.RequestAddExp(addedExp);
 
             CalculateLevel();
         }
 
         private void CalculateLevel()
         {
-            _characterSpec.Level = LevelCalculator.CalculateCurrentLevel(_characterSpec.Experience);
+            _character.Level = LevelCalculator.CalculateCurrentLevel(_character.Spec.Experience);
 
-            if (_lastLevel < _characterSpec.Level)
+            if (_lastLevel < _character.Level)
             {
                 CharacterLevelUp();
             }
 
-            _lastLevel = _characterSpec.Level;
+            _lastLevel = _character.Level;
         }
 
         private void CharacterLevelUp()
         {
             RecalculateStats();
-            _characterLevelUpEventChannel.RaiseEvent(_characterSpec);
+            HeroLeveledUp?.Invoke(_character);
         }
 
         /// <summary>
@@ -83,8 +85,8 @@ namespace CryptoQuest.Battle.Components
         private void RecalculateStats()
         {
             var attributeSystem = _character.AttributeSystem;
-            var attributeDefs = _characterSpec.StatsDef.Attributes;
-            var characterAllowedMaxLvl = _characterSpec.StatsDef.MaxLevel;
+            var attributeDefs = _character.Stats.Attributes;
+            var characterAllowedMaxLvl = _character.Stats.MaxLevel;
 
             for (var i = 0; i < attributeDefs.Length; i++)
             {
@@ -94,7 +96,7 @@ namespace CryptoQuest.Battle.Components
                 var lastLevelBaseValue =
                     _levelAttributeCalculator.GetValueAtLevel(_lastLevel, attributeDef, characterAllowedMaxLvl);
                 var currentLevelBaseValue =
-                    _levelAttributeCalculator.GetValueAtLevel(_characterSpec.Level, attributeDef,
+                    _levelAttributeCalculator.GetValueAtLevel(_character.Level, attributeDef,
                         characterAllowedMaxLvl);
                 var additionBaseValue = currentLevelBaseValue - lastLevelBaseValue;
 
@@ -117,6 +119,20 @@ namespace CryptoQuest.Battle.Components
                     attributeToReset.CalculateInitialValue(attributeValue, attributeSystem.AttributeValues);
                 attributeSystem.SetAttributeValue(attributeToReset, resetValue);
             }
+        }
+
+        private bool IsMaxedLevel => _character.Level == _character.Stats.MaxLevel;
+
+        public int GetNextLevelRequireExp()
+        {
+            var currentLevel = _character.Level;
+            return LevelCalculator.RequiredExps[IsMaxedLevel ? currentLevel - 1 : currentLevel];
+        }
+
+        public int GetCurrentLevelExp()
+        {
+            var currentLevelAccumulateExp = LevelCalculator.AccumulatedExps[_character.Level - 1];
+            return IsMaxedLevel ? GetNextLevelRequireExp() : (int) (_character.Spec.Experience - currentLevelAccumulateExp);
         }
     }
 }

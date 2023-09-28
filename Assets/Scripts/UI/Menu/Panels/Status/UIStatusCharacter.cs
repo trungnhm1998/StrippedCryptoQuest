@@ -112,8 +112,14 @@ namespace CryptoQuest.UI.Menu.Panels.Status
             SetLocalizedName(hero.DetailsInfo.LocalizedName);
 
             SetAvatar(hero.Avatar);
-            SetMaxExp(1234);
-            SetExp(11);
+            SetupExpUI(hero);
+        }
+
+        private void SetupExpUI(HeroBehaviour hero)
+        {
+            if (!hero.TryGetComponent<LevelSystem>(out var levelSystem)) return;
+            SetMaxExp(levelSystem.GetNextLevelRequireExp());
+            SetExp(levelSystem.GetCurrentLevelExp());
         }
 
         private void RenderElementsStats(AttributeSystemBehaviour attributeSystem)
