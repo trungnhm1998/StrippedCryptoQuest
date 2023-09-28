@@ -1,4 +1,5 @@
-﻿using CryptoQuest.UI.Title.TitleStates;
+﻿using CryptoQuest.Events;
+using CryptoQuest.UI.Title.TitleStates;
 using IndiGames.Core.Events.ScriptableObjects;
 using UnityEngine;
 
@@ -9,9 +10,9 @@ namespace CryptoQuest.UI.Title
         [field: SerializeField] public TitlePanelController TitlePanelController { get; private set; }
         [field: SerializeField] public StartGamePanelController StartGamePanelController { get; set; }
         [field: SerializeField] public UISignInPanel UISignInPanel { get; private set; }
-        [SerializeField] private VoidEventChannelSO _onRequestLoginEventChannel;
+        [SerializeField] private AuthenticateFormInfoEventChannelSO _onRequestLoginEventChannel;
         [SerializeField] private VoidEventChannelSO _onLoginSuccesEventChannel;
-        [SerializeField] private VoidEventChannelSO _onLoginFailedEventChannel;
+        [SerializeField] private StringEventChannelSO _onLoginFailedEventChannel;
 
         public void Subscribe()
         {
@@ -27,7 +28,7 @@ namespace CryptoQuest.UI.Title
 
         public void OnLoginFormSubmit()
         {
-            _onRequestLoginEventChannel.RaiseEvent();
+            _onRequestLoginEventChannel.RaiseEvent(UISignInPanel.GetFormInfo());
         }
 
         public void ChangeState(IState state)
@@ -45,7 +46,7 @@ namespace CryptoQuest.UI.Title
             ChangeState(new MailLoginState(this));
         }
 
-        private void OnLoginFailed()
+        private void OnLoginFailed(string error)
         {
             ChangeState(new LoginFormFailedState(this));
         }

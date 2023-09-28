@@ -9,7 +9,6 @@ namespace CryptoQuest.UI.Title
 {
     public class UISocialPanel : MonoBehaviour
     {
-        [field: SerializeField] public TitleStateMachine TitleStateMachine { get; private set; }
         [SerializeField] private VoidEventChannelSO _requestWalletLoginEventChannel;
         [SerializeField] private VoidEventChannelSO _requestTwitterLoginEventChannel;
         [SerializeField] private VoidEventChannelSO _requestFacebookLoginEventChannel;
@@ -35,7 +34,6 @@ namespace CryptoQuest.UI.Title
         {
             _requestTwitterLoginEventChannel.RaiseEvent();
         }
-
 
         public void RequestGmailLogin()
         {

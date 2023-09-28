@@ -5,7 +5,7 @@ namespace CryptoQuest.UI.Title.TitleStates
     public class SocialLoginState : IState
     {
         protected UISocialPanel _socialPanel;
-        private TitlePanelController _titlePanelController;
+        protected TitlePanelController _titlePanelController;
 
         protected SocialLoginState(TitlePanelController titlePanelController)
         {
@@ -13,14 +13,8 @@ namespace CryptoQuest.UI.Title.TitleStates
             _socialPanel = titlePanelController.SocialPanel;
         }
 
-        public virtual void OnEnter()
-        {
-            _titlePanelController.Subscribe();
-        }
+        public virtual void OnEnter() { }
 
-        public virtual void OnExit()
-        {
-            _titlePanelController.Unsubscribe();
-        }
+        public virtual void OnExit() { }
     }
 }

@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using CryptoQuest.SocialLogin;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,6 +12,8 @@ namespace CryptoQuest.UI.Title
         [field: SerializeField] public List<Selectable> Selectables { get; private set; }
         [field: SerializeField] public Button SignInButton { get; private set; }
         [field: SerializeField] public GameObject LoginFailedPanel { get; private set; }
+        [SerializeField] private TMP_InputField _emailInputField;
+        [SerializeField] private TMP_InputField _passwordInputField;
         private int _currenSelectIndex = 0;
 
         private IEnumerator Start()
@@ -25,6 +29,15 @@ namespace CryptoQuest.UI.Title
             _currenSelectIndex = _currenSelectIndex >= Selectables.Count ? 0 : _currenSelectIndex;
             var selectable = Selectables[_currenSelectIndex];
             selectable.Select();
+        }
+
+        public AuthenticateFormInfo GetFormInfo()
+        {
+            return new AuthenticateFormInfo
+            {
+                Email = _emailInputField.text,
+                Password = _passwordInputField.text
+            };
         }
     }
 }

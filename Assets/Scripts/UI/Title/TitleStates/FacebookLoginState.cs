@@ -8,6 +8,7 @@
         {
             base.OnEnter();
             _socialPanel.RequestFacebookLogin();
+            _titlePanelController.ChangeState(new SocialLoginLoading());
         }
     }
 }

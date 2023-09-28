@@ -8,6 +8,7 @@
         {
             base.OnEnter();
             _socialPanel.RequestTwitterLogin();
+            _titlePanelController.ChangeState(new SocialLoginLoading());
         }
     }
 }

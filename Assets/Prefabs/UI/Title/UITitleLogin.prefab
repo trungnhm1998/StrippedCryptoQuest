@@ -131,7 +131,7 @@ MonoBehaviour:
   <TitlePanelController>k__BackingField: {fileID: 8517934351116879143}
   <StartGamePanelController>k__BackingField: {fileID: 6390932725500995841}
   <UISignInPanel>k__BackingField: {fileID: 8454871571168750425}
-  _onRequestLoginEventChannel: {fileID: 11400000, guid: 4ea7a436d6f9e7047ace8a59031f16f4, type: 2}
+  _onRequestLoginEventChannel: {fileID: 11400000, guid: 42c6c6009c535d14eb5f21afdb41dae4, type: 2}
   _onLoginSuccesEventChannel: {fileID: 11400000, guid: bdcc9955a4a0c65478e902cf10f8a19a, type: 2}
   _onLoginFailedEventChannel: {fileID: 11400000, guid: 24896d15604d5524abb5432da082c11d, type: 2}
 --- !u!114 &6390932725500995841
@@ -961,6 +961,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2126657160377855260}
     m_Modifications:
+    - target: {fileID: 947335417918221063, guid: efe71b21114fe204292b1322276d1bb5, type: 3}
+      propertyPath: m_StringReference.m_TableEntryReference.m_KeyId
+      value: 32554438252142592
+      objectReference: {fileID: 0}
     - target: {fileID: 1038011130909130473, guid: efe71b21114fe204292b1322276d1bb5, type: 3}
       propertyPath: m_InputType
       value: 2
@@ -968,6 +972,14 @@ PrefabInstance:
     - target: {fileID: 1038011130909130473, guid: efe71b21114fe204292b1322276d1bb5, type: 3}
       propertyPath: m_ContentType
       value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1038011130909130473, guid: efe71b21114fe204292b1322276d1bb5, type: 3}
+      propertyPath: m_CharacterLimit
+      value: 254
+      objectReference: {fileID: 0}
+    - target: {fileID: 1120467318257408496, guid: efe71b21114fe204292b1322276d1bb5, type: 3}
+      propertyPath: m_StringReference.m_TableEntryReference.m_KeyId
+      value: 32554566966943744
       objectReference: {fileID: 0}
     - target: {fileID: 2035601124424143300, guid: efe71b21114fe204292b1322276d1bb5, type: 3}
       propertyPath: m_Pivot.x
@@ -1065,6 +1077,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: SignInPanel
       objectReference: {fileID: 0}
+    - target: {fileID: 5353481516580154977, guid: efe71b21114fe204292b1322276d1bb5, type: 3}
+      propertyPath: m_CharacterLimit
+      value: 254
+      objectReference: {fileID: 0}
+    - target: {fileID: 6013884227711986355, guid: efe71b21114fe204292b1322276d1bb5, type: 3}
+      propertyPath: m_StringReference.m_TableEntryReference.m_KeyId
+      value: 32567344104579072
+      objectReference: {fileID: 0}
+    - target: {fileID: 6192436937682807429, guid: efe71b21114fe204292b1322276d1bb5, type: 3}
+      propertyPath: _emailInputField
+      value: 
+      objectReference: {fileID: 7705988143135698877}
+    - target: {fileID: 6192436937682807429, guid: efe71b21114fe204292b1322276d1bb5, type: 3}
+      propertyPath: _passwordInputField
+      value: 
+      objectReference: {fileID: 3377006958059323189}
     - target: {fileID: 6192436937682807429, guid: efe71b21114fe204292b1322276d1bb5, type: 3}
       propertyPath: <SignInButton>k__BackingField
       value: 
@@ -1085,7 +1113,13 @@ PrefabInstance:
       propertyPath: <Selectables>k__BackingField.Array.data[2]
       value: 
       objectReference: {fileID: 7172519957680276880}
-    m_RemovedComponents: []
+    - target: {fileID: 7229769185098281957, guid: efe71b21114fe204292b1322276d1bb5, type: 3}
+      propertyPath: m_text
+      value: Enter Password
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 1737795068752806466, guid: efe71b21114fe204292b1322276d1bb5, type: 3}
+    - {fileID: 7436219703547015249, guid: efe71b21114fe204292b1322276d1bb5, type: 3}
     m_RemovedGameObjects:
     - {fileID: 3088551295643392953, guid: efe71b21114fe204292b1322276d1bb5, type: 3}
     m_AddedGameObjects: []
@@ -1159,6 +1193,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 2035601124424143300, guid: efe71b21114fe204292b1322276d1bb5, type: 3}
   m_PrefabInstance: {fileID: 2358277001050620380}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &7705988143135698877 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5353481516580154977, guid: efe71b21114fe204292b1322276d1bb5, type: 3}
+  m_PrefabInstance: {fileID: 2358277001050620380}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2da0c512f12947e489f739169773d7ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &7817111626428902040 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5530910636269529924, guid: efe71b21114fe204292b1322276d1bb5, type: 3}
@@ -2016,7 +2061,7 @@ PrefabInstance:
     - target: {fileID: 524340468061886003, guid: 260333c911feba7419182faf81603130, type: 3}
       propertyPath: _requestGmailLoginEventChannel
       value: 
-      objectReference: {fileID: 11400000, guid: 4ea7a436d6f9e7047ace8a59031f16f4, type: 2}
+      objectReference: {fileID: 11400000, guid: 5d11f532f9b67aa4bbdb155dc4202a32, type: 2}
     - target: {fileID: 524340468061886003, guid: 260333c911feba7419182faf81603130, type: 3}
       propertyPath: <WalletLoginBtn>k__BackingField
       value: 
@@ -2024,7 +2069,7 @@ PrefabInstance:
     - target: {fileID: 524340468061886003, guid: 260333c911feba7419182faf81603130, type: 3}
       propertyPath: _requestWalletLoginEventChannel
       value: 
-      objectReference: {fileID: 11400000, guid: 4ea7a436d6f9e7047ace8a59031f16f4, type: 2}
+      objectReference: {fileID: 11400000, guid: 08fec9f7464752c4b9aff7f9114b82bf, type: 2}
     - target: {fileID: 524340468061886003, guid: 260333c911feba7419182faf81603130, type: 3}
       propertyPath: <TwitterLoginBtn>k__BackingField
       value: 
@@ -2032,7 +2077,7 @@ PrefabInstance:
     - target: {fileID: 524340468061886003, guid: 260333c911feba7419182faf81603130, type: 3}
       propertyPath: _requestTwitterLoginEventChannel
       value: 
-      objectReference: {fileID: 11400000, guid: 4ea7a436d6f9e7047ace8a59031f16f4, type: 2}
+      objectReference: {fileID: 11400000, guid: c1b57d513fcb7e645ae890249887127c, type: 2}
     - target: {fileID: 524340468061886003, guid: 260333c911feba7419182faf81603130, type: 3}
       propertyPath: <FacebookLoginBtn>k__BackingField
       value: 
@@ -2044,7 +2089,7 @@ PrefabInstance:
     - target: {fileID: 524340468061886003, guid: 260333c911feba7419182faf81603130, type: 3}
       propertyPath: _requestFacebookLoginEventChannel
       value: 
-      objectReference: {fileID: 11400000, guid: 4ea7a436d6f9e7047ace8a59031f16f4, type: 2}
+      objectReference: {fileID: 11400000, guid: 292609d96d61a3f44a2097cb40c1c89d, type: 2}
     - target: {fileID: 865321093539701025, guid: 260333c911feba7419182faf81603130, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0

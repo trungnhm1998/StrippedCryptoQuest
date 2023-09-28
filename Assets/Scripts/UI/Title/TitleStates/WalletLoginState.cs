@@ -8,6 +8,7 @@
         {
             base.OnEnter();
             _socialPanel.RequestWalletLogin();
+            _titlePanelController.ChangeState(new SocialLoginLoading());
         }
     }
 }

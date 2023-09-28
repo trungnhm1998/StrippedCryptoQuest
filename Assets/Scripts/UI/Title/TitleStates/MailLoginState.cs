@@ -38,6 +38,7 @@ namespace CryptoQuest.UI.Title.TitleStates
         private void OnSignInButtonPressed()
         {
             _mailLoginController.OnLoginFormSubmit();
+            _mailLoginController.ChangeState(new SocialLoginLoading());
         }
 
         private void OnSignInCancel()

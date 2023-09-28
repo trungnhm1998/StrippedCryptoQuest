@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using CryptoQuest.Events;
 using CryptoQuest.UI.Title.TitleStates;
 using IndiGames.Core.Events.ScriptableObjects;
 using UnityEngine;
@@ -12,20 +13,20 @@ namespace CryptoQuest.UI.Title
         [field: SerializeField] public StartGamePanelController StartGamePanelController { get; private set; }
         [field: SerializeField] public UISocialPanel SocialPanel { get; private set; }
         [SerializeField] private VoidEventChannelSO _onLoginSuccesEventChannel;
-        [SerializeField] private VoidEventChannelSO _onLoginFailedEventChannel;
+        [SerializeField] private StringEventChannelSO _onLoginFailedEventChannel;
 
         private void Awake()
         {
             ChangeState(new TitleState(this));
         }
 
-        public void Subscribe()
+        public void OnEnable()
         {
             _onLoginSuccesEventChannel.EventRaised += OnLoginSuccessEventChannel;
             _onLoginFailedEventChannel.EventRaised += OnLoginFailedEventChannel;
         }
 
-        public void Unsubscribe()
+        public void OnDisable()
         {
             _onLoginSuccesEventChannel.EventRaised -= OnLoginSuccessEventChannel;
             _onLoginFailedEventChannel.EventRaised -= OnLoginFailedEventChannel;
@@ -36,7 +37,7 @@ namespace CryptoQuest.UI.Title
             ChangeState(new StartGameState(StartGamePanelController));
         }
 
-        private void OnLoginFailedEventChannel()
+        private void OnLoginFailedEventChannel(string error)
         {
             ChangeState(new SocialLoginFailedState(this));
         }
@@ -51,7 +52,7 @@ namespace CryptoQuest.UI.Title
             StartCoroutine(CoSelectDefault());
         }
 
-        public IEnumerator CoSelectDefault()
+        private IEnumerator CoSelectDefault()
         {
             yield return new WaitForSeconds(.5f);
             SocialPanel.TwitterLoginBtn.Select();
