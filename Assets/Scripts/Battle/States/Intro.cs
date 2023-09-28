@@ -19,11 +19,14 @@ namespace CryptoQuest.Battle.States
             var introUI = _battleStateMachine.IntroUI;
             _dialog
                 .WithAutoHide(introUI.Duration)
-                .WithHideCallback(() => _battleStateMachine.ChangeState(new SelectCommand()))
+                .WithHideCallback(() => _battleStateMachine.ChangeState(new SelectHeroesActions.SelectHeroesActions()))
                 .WithMessage(introUI.IntroMessage)
                 .Show();
         }
 
-        public void OnExit(BattleStateMachine battleStateMachine) { }
+        public void OnExit(BattleStateMachine battleStateMachine)
+        {
+            _dialog.Release();
+        }
     }
 }

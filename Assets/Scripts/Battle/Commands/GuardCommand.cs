@@ -1,20 +1,19 @@
-﻿using System;
-using CryptoQuest.Battle.Components;
-using UnityEngine;
+﻿using CryptoQuest.Battle.Components;
 
 namespace CryptoQuest.Battle.Commands
 {
     public class GuardCommand : ICommand
     {
-        private GameObject _heroGo;
-        public GuardCommand(GameObject heroGo)
+        private readonly HeroBehaviour _hero;
+
+        public GuardCommand(HeroBehaviour hero)
         {
-            _heroGo = heroGo;
+            _hero = hero;
         }
 
         public void Execute()
         {
-            _heroGo.GetComponent<GuardBehaviour>().GuardUntilEndOfTurn();
+            _hero.GetComponent<GuardBehaviour>().GuardUntilEndOfTurn();
         }
     }
 }

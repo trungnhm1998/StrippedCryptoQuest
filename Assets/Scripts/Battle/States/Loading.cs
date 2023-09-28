@@ -1,7 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
-using CryptoQuest.Gameplay.Loot;
-using CryptoQuest.Gameplay.Reward;
 using CryptoQuest.UI.Dialogs.BattleDialog;
 using UnityEngine;
 
@@ -17,20 +14,18 @@ namespace CryptoQuest.Battle.States
         {
             _battleStateMachine = battleStateMachine;
             _initializer = battleStateMachine.GetComponent<IBattleInitializer>();
-            battleStateMachine.SceneLoadedEvent.EventRaised += InitBattle;
             GenericDialogController.Instance.CreateDialog(PromptCreated);
+            InitBattle();
         }
 
         private Intro _introState;
+
         private void PromptCreated(UIGenericDialog dialog)
         {
             _introState = new Intro(dialog);
         }
 
-        public void OnExit(BattleStateMachine battleStateMachine)
-        {
-            battleStateMachine.SceneLoadedEvent.EventRaised -= InitBattle;
-        }
+        public void OnExit(BattleStateMachine battleStateMachine) { }
 
         private void InitBattle()
         {
@@ -48,17 +43,17 @@ namespace CryptoQuest.Battle.States
 
         private void WinBattle()
         {
-            _battleStateMachine.BattleInput.DisableAllInput();
-            if (_initCoroutine != null) _battleStateMachine.StopCoroutine(_initCoroutine);
-            var context = new BattleContext();
-            List<LootInfo> loots = new();
-            var enemies = _initializer.Enemies;
-            // TODO: This also return cloned loot, but we already clone it in RewardManager?
-            foreach (var enemy in enemies)
-                loots.AddRange(enemy.GetLoots());
-            if (loots.Count > 0) context.Loots = RewardManager.CloneAndMergeLoots(loots.ToArray());
-
-            _battleStateMachine.BattleEndedEvent.RaiseEvent(context);
+            // _battleStateMachine.BattleInput.DisableAllInput();
+            // if (_initCoroutine != null) _battleStateMachine.StopCoroutine(_initCoroutine);
+            // var context = new BattleContext();
+            // List<LootInfo> loots = new();
+            // var enemies = _initializer.Enemies;
+            // // TODO: This also return cloned loot, but we already clone it in RewardManager?
+            // foreach (var enemy in enemies)
+            //     loots.AddRange(enemy.GetLoots());
+            // if (loots.Count > 0) context.Loots = RewardManager.CloneAndMergeLoots(loots.ToArray());
+            //
+            // _battleStateMachine.BattleEndedEvent.RaiseEvent(context);
         }
 
         private void FinishInitBattle()

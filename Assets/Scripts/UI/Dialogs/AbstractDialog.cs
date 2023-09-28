@@ -21,7 +21,7 @@ namespace CryptoQuest.UI.Dialogs
             }
         }
 
-        private void Release()
+        public void Release()
         {
             Destroy(gameObject);
         }

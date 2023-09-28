@@ -24,12 +24,7 @@ namespace CryptoQuest.Battle.UI.PlayerParty
 
         private void Awake()
         {
-            InitParty();
             _heroAvatarProvider = GetComponent<IHeroAvatarProvider>();
-        }
-
-        private void InitParty()
-        {
             _party = ServiceProvider.GetService<IPartyController>();
             LoadHeroesUI();
         }
@@ -46,6 +41,7 @@ namespace CryptoQuest.Battle.UI.PlayerParty
                 characterUI.Init(slot.HeroBehaviour);
             }
 
+            if (_heroAvatarProvider == null) return;
             for (var index = 0; index < _party.Slots.Length; index++)
             {
                 var slot = _party.Slots[index];

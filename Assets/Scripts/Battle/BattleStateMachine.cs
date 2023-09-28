@@ -12,10 +12,10 @@ namespace CryptoQuest.Battle
 {
     public interface IState
     {
-        void OnEnter(BattleStateMachine battleStateMachine);
-        void OnExit(BattleStateMachine battleStateMachine);
+        void OnEnter(BattleStateMachine stateMachine);
+        void OnExit(BattleStateMachine stateMachine);
     }
-
+    
     public class BattleStateMachine : MonoBehaviour
     {
         [field: SerializeField] public BattleInputSO BattleInput { get; private set; }
@@ -35,6 +35,16 @@ namespace CryptoQuest.Battle
         private IState _currentState;
 
         private void Awake()
+        {
+            SceneLoadedEvent.EventRaised += GotoLoadingState;
+        }
+
+        private void OnDestroy()
+        {
+            SceneLoadedEvent.EventRaised -= GotoLoadingState;
+        }
+
+        private void GotoLoadingState()
         {
             ChangeState(new Loading());
         }

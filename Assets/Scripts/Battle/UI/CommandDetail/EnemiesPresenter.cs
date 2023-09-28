@@ -8,6 +8,7 @@ namespace CryptoQuest.Battle.UI.CommandDetail
     public class EnemiesPresenter : MonoBehaviour
     {
         [SerializeField] private Transform _content;
+        [SerializeField] private EnemyPartyManager _enemyPartyManager;
         [SerializeField] private UIEnemy _enemyPrefab;
 
         private readonly List<UIEnemy> _enemies = new();
@@ -16,7 +17,7 @@ namespace CryptoQuest.Battle.UI.CommandDetail
         {
             foreach (var enemy in enemies)
             {
-                if (enemy.IsValid() == false) continue;
+                if (enemy.Spec.IsValid() == false) continue; // Model might not loaded yet
                 var uiEnemy = Instantiate(_enemyPrefab, _content);
                 uiEnemy.gameObject.SetActive(false);
                 uiEnemy.Show(enemy);
@@ -24,8 +25,9 @@ namespace CryptoQuest.Battle.UI.CommandDetail
             }
         }
 
-        public void Show(List<EnemyBehaviour> enemies)
+        public void Show()
         {
+            var enemies = _enemyPartyManager.Enemies;
             bool selected = false;
             for (var index = 0; index < enemies.Count; index++)
             {

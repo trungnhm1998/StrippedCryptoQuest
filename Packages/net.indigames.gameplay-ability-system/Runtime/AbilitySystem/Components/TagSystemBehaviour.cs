@@ -9,7 +9,7 @@ namespace IndiGames.GameplayAbilitySystem.AbilitySystem.Components
         [field: SerializeField] public List<TagScriptableObject> DefaultTags { get; private set; } = new();
         [field: SerializeField] public List<TagScriptableObject> GrantedTags { get; private set; } = new();
 
-        private void Awake()
+        protected virtual void Awake()
         {
             GrantedTags.AddRange(DefaultTags);
         }

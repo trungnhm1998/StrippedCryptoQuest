@@ -2,7 +2,10 @@
 using CryptoQuest.Character.Hero;
 using CryptoQuest.Gameplay;
 using CryptoQuest.Gameplay.Character;
+using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
+using IndiGames.GameplayAbilitySystem.TagSystem.ScriptableObjects;
 using UnityEngine;
+using NotImplementedException = System.NotImplementedException;
 
 namespace CryptoQuest.Battle.Components
 {
@@ -24,11 +27,13 @@ namespace CryptoQuest.Battle.Components
         [SerializeField] private HeroSpec _spec;
         public HeroSpec Spec { get => _spec; set => _spec = value; }
         private LevelSystem _levelSystem;
+        private TagSystemBehaviour _tagSystem;
 
         private void Awake()
         {
             _characterComponent = GetComponent<Character>();
             _levelSystem = GetComponent<LevelSystem>();
+            _tagSystem = GetComponent<TagSystemBehaviour>();
         }
 
         /// <summary>
@@ -50,5 +55,7 @@ namespace CryptoQuest.Battle.Components
 
         public bool IsValid() => Spec.IsValid();
         public Equipments GetEquipments() => Spec.Equipments;
+
+        public bool HasTag(TagScriptableObject tagSO) => _tagSystem.HasTag(tagSO);
     }
 }

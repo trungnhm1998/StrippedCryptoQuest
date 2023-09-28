@@ -1276,6 +1276,7 @@ GameObject:
   - component: {fileID: 3461113988344811302}
   - component: {fileID: 3093670217696909352}
   - component: {fileID: 6078440254588742512}
+  - component: {fileID: 6078440254588742513}
   m_Layer: 0
   m_Name: CharactersStatus
   m_TagString: Untagged
@@ -1362,6 +1363,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _bus: {fileID: 11400000, guid: 2290057e7f48d1046b5e0a6c3f6dc910, type: 2}
   _enemyPartyBehaviour: {fileID: 8909492559710276275}
+  _enemiesPresenter: {fileID: 8954003092095494607}
   _enemyDatabase: {fileID: 11400000, guid: 0213cf2cacc9b66489f313240a923fdf, type: 2}
 --- !u!224 &621356617812498010
 RectTransform:
@@ -5345,6 +5347,7 @@ GameObject:
   - component: {fileID: 615438965784563282}
   - component: {fileID: 7116505576077580197}
   - component: {fileID: 7116505576077580196}
+  - component: {fileID: 7116505576077580198}
   m_Layer: 0
   m_Name: BattleManager
   m_TagString: Untagged
@@ -8436,12 +8439,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7db05be7e11cf1e40a081144c3866db5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _avatarDatabase: {fileID: 11400000, guid: eab65875271cb4b44b2c7ce5a51159a4, type: 2}
   _characterUis:
   - {fileID: 6356206384261141516}
   - {fileID: 8640519865333184275}
   - {fileID: 3484236969184600058}
   - {fileID: 8330401353181785705}
+--- !u!114 &6078440254588742513
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 506159726896176490}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ced89cde3249614a8e71b0f9a1109e0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _avatarDatabase: {fileID: 11400000, guid: eab65875271cb4b44b2c7ce5a51159a4, type: 2}
 --- !u!114 &6098062097584182290
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9972,6 +9987,19 @@ MonoBehaviour:
   <Spiral>k__BackingField: {fileID: 11400000, guid: 2708a2e85420add4493974ea482cd235, type: 2}
   <SceneLoadedEvent>k__BackingField: {fileID: 11400000, guid: d463f98507ffd95459feb67b21dd1ecc, type: 2}
   <BattleEndedEvent>k__BackingField: {fileID: 11400000, guid: 8a69f584e68c6d54a8aca598bef348b2, type: 2}
+--- !u!114 &7116505576077580198
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3846955041373722987}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79691d0ed9c327544aa968e61ddc0b0e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <CommandPanel>k__BackingField: {fileID: 3148632503289432661}
 --- !u!222 &7123578387863342309
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -12811,6 +12839,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _content: {fileID: 9174068365749576702}
+  _enemyPartyManager: {fileID: 7116505576077580196}
   _enemyPrefab: {fileID: 1676715279052400272, guid: 5f76a999e6416bd4ca834dceb2a0863b, type: 3}
 --- !u!224 &8965203355244924851
 RectTransform:

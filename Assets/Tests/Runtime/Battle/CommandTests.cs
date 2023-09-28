@@ -78,7 +78,7 @@ namespace CryptoQuest.Tests.Runtime.Battle
 
                 var commands = new List<ICommand>
                 {
-                    new GuardCommand(_heroGo),
+                    new GuardCommand(_hero.GetComponent<HeroBehaviour>()),
                     new NormalAttackCommand(_enemyGo, _heroGo)
                 };
                 commands.ForEach(command => command.Execute());

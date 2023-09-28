@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using CryptoQuest.Battle.UI.CommandDetail;
 using CryptoQuest.Character.Enemy;
 using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects;
 using CryptoQuest.Gameplay.Battle.ScriptableObjects;
@@ -10,21 +11,21 @@ namespace CryptoQuest.Battle
     public interface IBattleInitializer
     {
         public IEnumerator LoadEnemies();
-        public List<EnemySpec> Enemies { get; }
     }
 
     public class BattleInitializer : MonoBehaviour, IBattleInitializer
     {
         [SerializeField] private BattleBus _bus;
         [SerializeField] private EnemyPartyBehaviour _enemyPartyBehaviour;
+        [SerializeField] private EnemiesPresenter _enemiesPresenter;
         [SerializeField] private EnemyDatabase _enemyDatabase;
-        public List<EnemySpec> Enemies => _loadedEnemies;
         private readonly List<EnemySpec> _loadedEnemies = new();
 
         public IEnumerator LoadEnemies()
         {
             yield return LoadEnemiesAssets();
             _enemyPartyBehaviour.Init(_loadedEnemies);
+            _enemiesPresenter.Init(_enemyPartyBehaviour.Enemies);
         }
 
         private IEnumerator LoadEnemiesAssets()

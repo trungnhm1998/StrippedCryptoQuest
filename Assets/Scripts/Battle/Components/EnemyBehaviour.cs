@@ -26,6 +26,7 @@ namespace CryptoQuest.Battle.Components
 
         public string DisplayName { get; private set; }
         private EnemySpec _spec = new();
+        public EnemySpec Spec => _spec;
         private EnemyDef _enemyDef;
         private GameObject _enemyModel;
 
