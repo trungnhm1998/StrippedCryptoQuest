@@ -72,5 +72,12 @@ namespace CryptoQuest.UI.Dialogs.YesNoDialog
         {
             _messageUi.StringReference = _message;
         }
+
+        public override UIYesNoDialog Close()
+        {
+            Visible = false;
+            Destroy(gameObject);
+            return this;
+        }
     }
 }

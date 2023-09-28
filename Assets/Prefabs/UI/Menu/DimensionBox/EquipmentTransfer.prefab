@@ -455,7 +455,7 @@ GameObject:
   - component: {fileID: 3187153094386191638}
   - component: {fileID: 4834510091051079115}
   m_Layer: 5
-  m_Name: ScrollView
+  m_Name: GameScrollView
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -873,14 +873,14 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  InspectItemEvent:
+  _switchBoardEvent:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 7556614621654538182, guid: e35d3d64c6413ae41a195283d27252bd, type: 3}
-        m_TargetAssemblyTypeName: CryptoQuest.UI.Menu.Panels.DimensionBox.EquipmentTransferSection.UITransferItem,
+      - m_Target: {fileID: 6208045424827285828}
+        m_TargetAssemblyTypeName: CryptoQuest.UI.Menu.Panels.DimensionBox.EquipmentTransferSection.EquipmentSectionPresenter,
           indi-games.crypto-quest
-        m_MethodName: ReceivedInspectingRequest
-        m_Mode: 1
+        m_MethodName: SwitchBoardRequested
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -904,10 +904,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c11d7c5d11993ac4cb5b16a9639a705f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SetGameDataEvent:
+  _yesNoDialogEventSO: {fileID: 11400000, guid: c437779d68d43a547b9ce625c9a4bd65, type: 2}
+  _gameBoard: {fileID: 2486350762544883410}
+  _walletBoard: {fileID: 5902259601409037659}
+  _setGameDataEvent:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 7048735624487227387}
+      - m_Target: {fileID: 486476826151495437}
         m_TargetAssemblyTypeName: CryptoQuest.UI.Menu.Panels.DimensionBox.EquipmentTransferSection.UIEquipmentList,
           indi-games.crypto-quest
         m_MethodName: SetData
@@ -920,10 +923,10 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  SetWalletDataEvent:
+  _setWalletDataEvent:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 4366080418550170634}
+      - m_Target: {fileID: 6289944482933506466}
         m_TargetAssemblyTypeName: CryptoQuest.UI.Menu.Panels.DimensionBox.EquipmentTransferSection.UIEquipmentList,
           indi-games.crypto-quest
         m_MethodName: SetData
@@ -936,8 +939,54 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  _gameNftList: {fileID: 2486350762544883410}
-  _wallet: {fileID: 5902259601409037659}
+  _hideDialogEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 486476826151495437}
+        m_TargetAssemblyTypeName: CryptoQuest.UI.Menu.Panels.DimensionBox.EquipmentTransferSection.UIEquipmentList,
+          indi-games.crypto-quest
+        m_MethodName: SetDefaultSelection
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  _switchToWalletBoardEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6289944482933506466}
+        m_TargetAssemblyTypeName: CryptoQuest.UI.Menu.Panels.DimensionBox.EquipmentTransferSection.UIEquipmentList,
+          indi-games.crypto-quest
+        m_MethodName: SetDefaultSelection
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  _switchToGameBoardEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 486476826151495437}
+        m_TargetAssemblyTypeName: CryptoQuest.UI.Menu.Panels.DimensionBox.EquipmentTransferSection.UIEquipmentList,
+          indi-games.crypto-quest
+        m_MethodName: SetDefaultSelection
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &5998404003219197275
 GameObject:
   m_ObjectHideFlags: 0
@@ -1465,7 +1514,7 @@ GameObject:
   - component: {fileID: 6267209124416344830}
   - component: {fileID: 8762715882538056887}
   - component: {fileID: 2312836480894557273}
-  - component: {fileID: 7048735624487227387}
+  - component: {fileID: 486476826151495437}
   - component: {fileID: 3688426471027795154}
   m_Layer: 5
   m_Name: Game
@@ -1518,7 +1567,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75902edd6da39ac409e0182c88cd1ad3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MockLength: 20
+  MockLength: 17
   MockIcon:
   - {fileID: 21300000, guid: 290756aed63787e41b9a420820e125eb, type: 3}
   - {fileID: 21300000, guid: 790ff3487bb17544ab628d1e13d4f53d, type: 3}
@@ -1556,7 +1605,7 @@ MonoBehaviour:
   references:
     version: 2
     RefIds: []
---- !u!114 &7048735624487227387
+--- !u!114 &486476826151495437
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1565,7 +1614,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6707792699223619053}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1110a58503d476447a48c8a322099cb5, type: 3}
+  m_Script: {fileID: 11500000, guid: 0bd361ddfcb6f274599c4574d0fc1dc2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _scrollRect: {fileID: 3187153094386191638}
@@ -1905,7 +1954,7 @@ GameObject:
   - component: {fileID: 8935590643880660700}
   - component: {fileID: 3970553787595444730}
   m_Layer: 5
-  m_Name: ScrollView
+  m_Name: WalletScrollView
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2231,7 +2280,7 @@ GameObject:
   - component: {fileID: 3217792183208408763}
   - component: {fileID: 8537295703014124657}
   - component: {fileID: 1122872189319123344}
-  - component: {fileID: 4366080418550170634}
+  - component: {fileID: 6289944482933506466}
   - component: {fileID: 807221824392197003}
   m_Layer: 5
   m_Name: Wallet
@@ -2321,7 +2370,7 @@ MonoBehaviour:
   references:
     version: 2
     RefIds: []
---- !u!114 &4366080418550170634
+--- !u!114 &6289944482933506466
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2330,7 +2379,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8207209190969370380}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e438f53551322b64889a2c4de24561d6, type: 3}
+  m_Script: {fileID: 11500000, guid: 0bd361ddfcb6f274599c4574d0fc1dc2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _scrollRect: {fileID: 8935590643880660700}

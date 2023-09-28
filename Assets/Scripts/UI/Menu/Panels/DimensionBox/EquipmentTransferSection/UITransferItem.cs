@@ -18,6 +18,7 @@ namespace CryptoQuest.UI.Menu.Panels.DimensionBox.EquipmentTransferSection
         [SerializeField] private GameObject _pendingTag;
         [SerializeField] private GameObject _equippedTag;
 
+        [Header("Tooltip")]
         [SerializeField] private TooltipProvider _tooltipProvider;
         [SerializeField] private RectTransform _tooltipPosition;
 
@@ -25,7 +26,9 @@ namespace CryptoQuest.UI.Menu.Panels.DimensionBox.EquipmentTransferSection
         public Transform Parent { get => _parent; set => _parent = value; }
 
         private bool _isSelected = false;
+        private bool _isEquipped = false;
         private ITooltip _tooltip;
+        private bool _isShowTooltip = false;
 
         private void Awake()
         {
@@ -42,10 +45,14 @@ namespace CryptoQuest.UI.Menu.Panels.DimensionBox.EquipmentTransferSection
         {
             _icon.sprite = itemInfo.GetIcon();
             _name.StringReference = itemInfo.GetLocalizedName();
+
+            _isEquipped = itemInfo.IsEquipped();
+            _equippedTag.SetActive(_isEquipped);
         }
 
         public void OnSelectToTransfer()
         {
+            if (_isEquipped) return;
             SelectItemEvent?.Invoke(this);
 
             _isSelected = !_isSelected;
@@ -70,14 +77,14 @@ namespace CryptoQuest.UI.Menu.Panels.DimensionBox.EquipmentTransferSection
                 .WithLevel(1)
                 .WithDisplaySprite(_icon.sprite)
                 .WithContentAwareness(_tooltipPosition);
-
-            Debug.Log($"tooltip = [{_tooltip}]");
         }
 
         public void ReceivedInspectingRequest()
         {
-            Debug.Log($"ReceivedInspectingRequest::tooltip = [{_tooltip}]");
-            _tooltip.Show();
+            _isShowTooltip = !_isShowTooltip;
+
+            if (_isShowTooltip) _tooltip.Show();
+            else _tooltip.Hide();
         }
     }
 }

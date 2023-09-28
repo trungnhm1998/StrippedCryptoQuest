@@ -23,7 +23,7 @@ namespace CryptoQuest.UI.Menu.Panels.DimensionBox.EquipmentTransferSection.Model
 
             for (var i = 0; i < MockLength; i++)
             {
-                var obj = new MockData(MockIcon[i], MockName);
+                var obj = new MockData(MockIcon[i], MockName, false);
                 _mockData.Add(obj);
             }
 

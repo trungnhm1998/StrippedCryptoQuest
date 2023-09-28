@@ -31,7 +31,10 @@ namespace CryptoQuest.UI.Common
         private void Update()
         {
             if (!_useUpdate) return;
+
             _current = EventSystem.current.currentSelectedGameObject;
+            if (_current == null) return;
+
             if (IsBeingUsed()) return;
             Scroll();
         }

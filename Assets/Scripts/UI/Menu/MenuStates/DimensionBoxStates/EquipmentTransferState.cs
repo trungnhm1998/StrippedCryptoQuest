@@ -36,7 +36,7 @@ namespace CryptoQuest.UI.Menu.MenuStates.DimensionBoxStates
 
         public override void Execute()
         {
-            base.Interact();
+            base.Execute();
             DimensionBoxPanel.EquipmentTransferSection.SendItems();
         }
 
@@ -44,6 +44,12 @@ namespace CryptoQuest.UI.Menu.MenuStates.DimensionBoxStates
         {
             base.Interact();
             DimensionBoxPanel.EquipmentTransferSection.OnInspectItem();
+        }
+
+        public override void HandleNavigate(Vector2 direction)
+        {
+            if (direction.x != 0)
+                DimensionBoxPanel.EquipmentTransferSection.OnSwitchBoard(direction);
         }
     }
 }

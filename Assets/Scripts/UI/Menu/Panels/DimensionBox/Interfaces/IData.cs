@@ -10,5 +10,6 @@ namespace CryptoQuest.UI.Menu.Panels.DimensionBox.Interfaces
     {
         public Sprite GetIcon();
         public LocalizedString GetLocalizedName();
+        public bool IsEquipped();
     }
 }

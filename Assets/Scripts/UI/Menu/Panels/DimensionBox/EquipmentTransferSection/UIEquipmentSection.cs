@@ -9,6 +9,7 @@ namespace CryptoQuest.UI.Menu.Panels.DimensionBox.EquipmentTransferSection
 
         [SerializeField] private UnityEvent EnterTransferSectionEvent;
         [SerializeField] private UnityEvent ResetTransferEvent;
+        [SerializeField] private UnityEvent<Vector2> _switchBoardEvent;
 
         public override void EnterTransferSection()
         {
@@ -25,6 +26,11 @@ namespace CryptoQuest.UI.Menu.Panels.DimensionBox.EquipmentTransferSection
         public void OnInspectItem()
         {
             InspectItemEvent?.Invoke();
+        }
+
+        public void OnSwitchBoard(Vector2 direction)
+        {
+            _switchBoardEvent.Invoke(direction);
         }
     }
 }

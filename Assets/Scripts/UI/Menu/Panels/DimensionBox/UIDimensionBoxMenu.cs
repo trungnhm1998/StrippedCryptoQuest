@@ -11,7 +11,6 @@ namespace CryptoQuest.UI.Menu.Panels.DimensionBox
         [field: SerializeField] public UIEquipmentSection EquipmentTransferSection { get; private set; }
         [field: SerializeField] public UIMetadSection MetadTransferSection { get; private set; }
 
-
         private void Awake()
         {
             DimensionBoxTypeSelection.MainPanel = this;
