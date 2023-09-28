@@ -28,5 +28,10 @@ namespace CryptoQuest.Battle.States
         {
             _dialog.Release();
         }
+
+        public void OnDestroy(BattleStateMachine battleStateMachine)
+        {
+            _dialog.Release();
+        }
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections;
 using CryptoQuest.Character.Enemy;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
+using IndiGames.GameplayAbilitySystem.TagSystem.ScriptableObjects;
 using Spine.Unity;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -105,5 +106,7 @@ namespace CryptoQuest.Battle.Components
         }
 
         public void ProvideStats(AttributeWithValue[] attributeWithValues) { }
+
+        public bool HasTag(TagScriptableObject tagSO) => _battleCharacter.HasTag(tagSO);
     }
 }

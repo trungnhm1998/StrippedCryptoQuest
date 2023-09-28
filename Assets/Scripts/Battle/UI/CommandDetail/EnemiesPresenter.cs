@@ -47,9 +47,12 @@ namespace CryptoQuest.Battle.UI.CommandDetail
 
         public void Hide()
         {
-            foreach (var enemy in _enemies)
+            for (var index = 0; index < _enemies.Count; index++)
             {
+                var enemy = _enemies[index];
+                if (enemy == null) continue;
                 enemy.gameObject.SetActive(false);
+                _enemyPartyManager.Enemies[index].SetAlpha(1f);
             }
         }
     }

@@ -26,6 +26,7 @@ namespace CryptoQuest.Battle.States
         }
 
         public void OnExit(BattleStateMachine battleStateMachine) { }
+        public void OnDestroy(BattleStateMachine battleStateMachine) { }
 
         private void InitBattle()
         {

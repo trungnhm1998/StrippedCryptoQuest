@@ -23,6 +23,7 @@ namespace CryptoQuest.Battle.Commands
             }
 
             _attacker.Attack(_target);
+            Debug.Log("NormalAttackCommand::Executed");
         }
     }
 }

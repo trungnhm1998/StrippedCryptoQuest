@@ -5348,6 +5348,8 @@ GameObject:
   - component: {fileID: 7116505576077580197}
   - component: {fileID: 7116505576077580196}
   - component: {fileID: 7116505576077580198}
+  - component: {fileID: 7116505576077580199}
+  - component: {fileID: 7116505576077580200}
   m_Layer: 0
   m_Name: BattleManager
   m_TagString: Untagged
@@ -10000,6 +10002,32 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <CommandPanel>k__BackingField: {fileID: 3148632503289432661}
+--- !u!114 &7116505576077580199
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3846955041373722987}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a199695cb7574749a75484127ab7dc9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _enemyPartyManager: {fileID: 7116505576077580196}
+  _sceneLoadedEvent: {fileID: 11400000, guid: d463f98507ffd95459feb67b21dd1ecc, type: 2}
+--- !u!114 &7116505576077580200
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3846955041373722987}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9fd81c9a3b39657468faf712ed2274fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!222 &7123578387863342309
 CanvasRenderer:
   m_ObjectHideFlags: 0

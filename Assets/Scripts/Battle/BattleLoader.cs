@@ -112,9 +112,9 @@ namespace CryptoQuest.Battle
             _unloadSceneEvent.RequestUnload(_battleSceneSO);
         }
 
-        private BattleContext _context;
+        private CompletedContext _context;
 
-        private void UnloadBattle(BattleContext context)
+        private void UnloadBattle(CompletedContext context)
         {
             _context = context;
             OnBattleEnd();

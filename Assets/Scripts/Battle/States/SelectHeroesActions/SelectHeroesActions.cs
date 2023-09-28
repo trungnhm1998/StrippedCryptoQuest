@@ -15,6 +15,7 @@ namespace CryptoQuest.Battle.States.SelectHeroesActions
 
         public abstract void OnEnter();
         public abstract void OnExit();
+        public virtual void OnDestroy() { }
     }
 
     public class StateFactory
@@ -49,9 +50,9 @@ namespace CryptoQuest.Battle.States.SelectHeroesActions
         public EnemyPartyManager EnemyPartyManager => _enemyPartyManager;
         private int _currentHeroIndex = 0;
         public StateFactory StateFactory { get; private set; } = new();
-        private Stack<HeroCommand> HeroCommands { get; set; } = new Stack<HeroCommand>();
 
         private readonly Stack<StateBase> _stateStack = new Stack<StateBase>();
+        private BattlePresenter _presenter;
 
         public void OnEnter(BattleStateMachine battleStateMachine)
         {
@@ -59,6 +60,8 @@ namespace CryptoQuest.Battle.States.SelectHeroesActions
             _enemyPartyManager = battleStateMachine.GetComponent<EnemyPartyManager>();
             _selectCommandUI = battleStateMachine.CommandUI;
             _party = ServiceProvider.GetService<IPartyController>();
+            _presenter = battleStateMachine.GetComponent<BattlePresenter>();
+            _presenter.CommandPanel.SetActive(true);
 
             _currentHeroIndex = 0;
 
@@ -69,6 +72,16 @@ namespace CryptoQuest.Battle.States.SelectHeroesActions
         public void OnExit(BattleStateMachine battleStateMachine)
         {
             // battleStateMachine.BattleUI.SetActive(false);
+            OnDestroy(battleStateMachine);
+        }
+
+        public void OnDestroy(BattleStateMachine battleStateMachine)
+        {
+            // popup states and call OnDestroy
+            while (_stateStack.Count > 0)
+            {
+                _stateStack.Pop()?.OnDestroy();
+            }
         }
 
         public void PushState(StateBase state)
@@ -100,24 +113,9 @@ namespace CryptoQuest.Battle.States.SelectHeroesActions
             return true;
         }
 
-        public void PushCommand(HeroBehaviour heroBehaviour, ICommand command)
-        {
-            HeroCommands.Push(new HeroCommand
-            {
-                HeroBehaviour = heroBehaviour,
-                Command = command
-            });
-        }
-
-        public void PopCommand()
-        {
-            if (HeroCommands.Count > 0)
-                HeroCommands.Pop();
-        }
-
         public void GoToPresentState()
         {
-            _battleStateMachine.ChangeState(new Present(HeroCommands));
+            _battleStateMachine.ChangeState(new Present());
         }
     }
 }

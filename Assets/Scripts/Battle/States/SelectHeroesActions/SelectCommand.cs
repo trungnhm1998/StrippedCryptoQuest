@@ -22,7 +22,9 @@ namespace CryptoQuest.Battle.States.SelectHeroesActions
             EnableCommandMenu();
         }
 
-        public override void OnExit()
+        public override void OnExit() => OnDestroy();
+
+        public override void OnDestroy()
         {
             Fsm.SelectCommandUI.RegisterCallback(null);
             DisableCommandMenu();
@@ -73,7 +75,7 @@ namespace CryptoQuest.Battle.States.SelectHeroesActions
         public void OnGuardPressed()
         {
             Debug.Log("SelectCommandState::OnGuardPressed");
-            Fsm.PushCommand(_hero, new GuardCommand(_hero));
+            _hero.SetCommand(new GuardCommand(_hero));
             NextHero();
         }
 

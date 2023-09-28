@@ -1,11 +1,11 @@
-﻿using CryptoQuest.Character.Attributes;
+﻿using CryptoQuest.Battle.Commands;
+using CryptoQuest.Character.Attributes;
 using CryptoQuest.Character.Hero;
 using CryptoQuest.Gameplay;
 using CryptoQuest.Gameplay.Character;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
 using IndiGames.GameplayAbilitySystem.TagSystem.ScriptableObjects;
 using UnityEngine;
-using NotImplementedException = System.NotImplementedException;
 
 namespace CryptoQuest.Battle.Components
 {
@@ -25,7 +25,13 @@ namespace CryptoQuest.Battle.Components
 
         private Character _characterComponent;
         [SerializeField] private HeroSpec _spec;
-        public HeroSpec Spec { get => _spec; set => _spec = value; }
+
+        public HeroSpec Spec
+        {
+            get => _spec;
+            set => _spec = value;
+        }
+
         private LevelSystem _levelSystem;
         private TagSystemBehaviour _tagSystem;
 
@@ -56,6 +62,8 @@ namespace CryptoQuest.Battle.Components
         public bool IsValid() => Spec.IsValid();
         public Equipments GetEquipments() => Spec.Equipments;
 
-        public bool HasTag(TagScriptableObject tagSO) => _tagSystem.HasTag(tagSO);
+        public bool HasTag(TagScriptableObject tagSO) => _characterComponent.HasTag(tagSO);
+
+        public void SetCommand(ICommand command) => _characterComponent.SetCommand(command);
     }
 }
