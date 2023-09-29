@@ -24,6 +24,7 @@ namespace CryptoQuest.Battle.UI.PlayerParty
             // TODO: REFACTOR CHARACTER
 
             if (Hero == null) return;
+            SetLocalizedName(hero.DetailsInfo.LocalizedName);
             _attributeChangeEvent.AttributeSystemReference = Hero.GetComponent<AttributeSystemBehaviour>();
         }
 
@@ -46,6 +47,7 @@ namespace CryptoQuest.Battle.UI.PlayerParty
         {
             _hpBar.SetMaxValue(maxHp);
         }
+
         public void SetCurrentMp(float currentMp)
         {
             _mpBar.SetValue(currentMp);
