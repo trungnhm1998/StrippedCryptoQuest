@@ -90,7 +90,8 @@ namespace CryptoQuest.UI.Menu.Panels.Item
 
         private IEnumerator CoLoadIcon()
         {
-            if (_consumable.Icon.RuntimeKeyIsValid() == false) yield break;
+            if (_consumable.Icon == null) yield break;
+            if (!_consumable.Icon.RuntimeKeyIsValid()) yield break;
             _handle = _consumable.Icon.LoadAssetAsync<Sprite>();
             yield return _handle;
             _icon.sprite = _handle.Result;

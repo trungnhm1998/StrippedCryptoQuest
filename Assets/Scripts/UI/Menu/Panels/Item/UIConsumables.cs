@@ -43,8 +43,6 @@ namespace CryptoQuest.UI.Menu.Panels.Item
         private void OnEnable()
         {
             _currentInspectingItem = null;
-            CleanUpScrollView();
-            RenderConsumables();
             ConsumableInfo.QuantityReduced += UpdateUI;
         }
 
@@ -81,6 +79,8 @@ namespace CryptoQuest.UI.Menu.Panels.Item
         {
             UIConsumableItem.Inspecting += SaveInspectingItemToSelectLater;
             _content.SetActive(true);
+            CleanUpScrollView();
+            RenderConsumables();
             UpdateSelectingItemIfLastWereNull();
             InspectCurrentItem();
         }
