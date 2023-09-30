@@ -12,7 +12,7 @@ namespace CryptoQuest.UI.Menu.Panels.Skill
     public class UISkillButton : MultiInputButton
     {
         public static event UnityAction<Button> InspectingRow;
-        public static event UnityAction<AbilityData> SelectingSkillEvent;
+        public static event UnityAction<Gameplay.Skill.Skill> SelectingSkillEvent;
 
         [SerializeField] private UISkill _singleSkill;
 
@@ -50,7 +50,7 @@ namespace CryptoQuest.UI.Menu.Panels.Skill
 
         public override void OnSelect(BaseEventData eventData)
         {
-            SelectingSkillEvent?.Invoke(_singleSkill.CachedAbilityData);
+            SelectingSkillEvent?.Invoke(_singleSkill.CachedSkill);
             InspectingRow?.Invoke(this);
             base.OnSelect(eventData);
         }

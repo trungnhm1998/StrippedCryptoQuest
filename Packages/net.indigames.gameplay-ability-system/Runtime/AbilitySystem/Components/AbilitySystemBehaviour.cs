@@ -156,8 +156,7 @@ namespace IndiGames.GameplayAbilitySystem.AbilitySystem.Components
             if (effectDef == null)
                 return new GameplayEffectSpec();
 
-            GameplayEffectSpec effectSpecSpec = effectDef.CreateEffectSpec(this);
-            return effectSpecSpec;
+            return effectDef.CreateEffectSpec(this);
         }
 
         public ActiveEffectSpecification ApplyEffectSpecToSelf(GameplayEffectSpec effectSpec)

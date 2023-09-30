@@ -10,6 +10,9 @@ namespace CryptoQuest.Character.Hero
     /// User should have bunch of Heroes in their profile
     ///
     /// Use the <see cref="AttributeSystemBehaviour"/> to get the runtime stats
+    ///
+    /// <para>I'm not saving skill/abilities here instead I'll get it at run time using the <see cref="UnitSO"/> from combination of
+    /// <see cref="Elemental"/> and <see cref="CharacterClass"/></para>
     /// </summary>
     [Serializable]
     public struct HeroSpec
@@ -18,7 +21,6 @@ namespace CryptoQuest.Character.Hero
         [field: SerializeField] public UnitSO Unit { get; set; }
         [field: SerializeField] public float Experience { get; set; }
         [field: SerializeField] public Equipments Equipments { get; set; }
-        
         public bool IsValid() => Unit != null;
     }
 }

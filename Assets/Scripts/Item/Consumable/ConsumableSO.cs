@@ -10,9 +10,9 @@ namespace CryptoQuest.Item
     [CreateAssetMenu(fileName = "Usable Item", menuName = "Crypto Quest/Inventory/Usable Item")]
     public class ConsumableSO : GenericItem
     {
-        // TODO: Use enum https://github.com/indigames/CryptoQuestClient/issues/1406
         [field: SerializeField, Header("Usable Item")]
         public EConsumableType ConsumableType { get; private set; }
+
         [field: SerializeField] public int Price { get; private set; }
         [field: SerializeField] public int SellPrice { get; private set; }
 

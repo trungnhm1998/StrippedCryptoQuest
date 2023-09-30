@@ -12,7 +12,7 @@ namespace CryptoQuest.Gameplay.Character
         public struct LevelSkillContainer
         {
             public int LevelRequire;
-            public AbilityData[] Skills;
+            public Skill.Skill[] Skills;
         }
 
         [SerializeField] private LevelSkillContainer[] _levelSkills;
@@ -22,11 +22,11 @@ namespace CryptoQuest.Gameplay.Character
         /// Get all skill in this skill set
         /// </summary>
         /// <value></value>
-        public List<AbilityData> Skills
+        public List<Skill.Skill> Skills
         {
             get
             {
-                var allSkills = new List<AbilityData>();
+                var allSkills = new List<Skill.Skill>();
                 foreach (var levelSkill in _levelSkills)
                 {
                     allSkills.AddRange(levelSkill.Skills);
@@ -35,9 +35,9 @@ namespace CryptoQuest.Gameplay.Character
             }
         }
 
-        public List<AbilityData> GetSkillsByCurrentLevel(int level)
+        public List<Skill.Skill> GetSkillsByCurrentLevel(int level)
         {
-            var result = new List<AbilityData>();
+            var result = new List<Skill.Skill>();
             
             foreach (var skill in LevelSkills)
             {

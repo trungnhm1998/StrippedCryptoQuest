@@ -1,4 +1,6 @@
-﻿using CryptoQuest.Battle.Commands;
+﻿using System;
+using System.Collections.Generic;
+using CryptoQuest.Battle.Commands;
 using CryptoQuest.Character.Attributes;
 using CryptoQuest.Character.Hero;
 using CryptoQuest.Gameplay;
@@ -34,6 +36,7 @@ namespace CryptoQuest.Battle.Components
 
         private LevelSystem _levelSystem;
         private TagSystemBehaviour _tagSystem;
+        private readonly Dictionary<Type, Component> _cachedComponents = new();
 
         private void Awake()
         {
@@ -65,5 +68,23 @@ namespace CryptoQuest.Battle.Components
         public bool HasTag(TagScriptableObject tagSO) => _characterComponent.HasTag(tagSO);
 
         public void SetCommand(ICommand command) => _characterComponent.SetCommand(command);
+        
+        /// <summary>
+        /// Same as Unity's <see cref="GameObject.TryGetComponent{T}(out T)"/> but with a cache
+        /// </summary>
+        public new bool TryGetComponent<T>(out T component) where T : Component
+        {
+            var type = typeof(T);
+            if (!_cachedComponents.TryGetValue(type, out var value))
+            {
+                if (base.TryGetComponent(out component))
+                    _cachedComponents.Add(type, component);
+
+                return component != null;
+            }
+
+            component = (T)value;
+            return true;
+        }
     }
 }

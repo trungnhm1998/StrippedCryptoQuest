@@ -18,9 +18,9 @@ namespace CryptoQuest.UI.Menu.Panels.Skill
             UISkillButton.SelectingSkillEvent -= Configure;
         }
 
-        private void Configure(AbilityData abilityData)
+        private void Configure(Gameplay.Skill.Skill skill)
         {
-            _description.StringReference = abilityData.SkillInfo.SkillDescription;
+            _description.StringReference = skill.SkillInfo.SkillDescription;
         }
     }
 }

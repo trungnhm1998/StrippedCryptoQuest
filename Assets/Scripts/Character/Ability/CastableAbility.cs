@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections;
-using CryptoQuest.Gameplay;
+using CryptoQuest.Character.Attributes;
 using CryptoQuest.Gameplay.Battle.Core;
 using IndiGames.GameplayAbilitySystem.AbilitySystem;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
@@ -26,51 +26,42 @@ namespace CryptoQuest.Character.Ability
         /// </summary>
         public GameplayEffectDefinition Cost;
 
-        private SkillInfo _info;
-        public SkillInfo Info => _info;
+        [field: SerializeField] public SkillInfo Parameters { get; private set; }
+        [field: SerializeField] public SkillTargetType TargetType { get; private set; }
 
         protected override GameplayAbilitySpec CreateAbility()
         {
-            var effectInstance = Instantiate(Effect);
-            var ability = new CastableAbilitySpec
-            {
-                Effect = effectInstance
-            };
+            var ability = new CastableAbilitySpec(this);
             return ability;
-        }
-
-        public void InitAbilityInfo(SkillInfo info)
-        {
-            _info = info;
-        }
-
-        public void InitAbilityEffect(GameplayEffectDefinition configuredEffect)
-        {
-            // TODO: REFACTOR GAS
-            // if (configuredEffect is CryptoQuestGameplayEffect effectInstance)
-            // {
-            //     Effect = effectInstance;
-            // }
         }
     }
 
     public class CastableAbilitySpec : GameplayAbilitySpec
     {
         public event Action NotEnoughResourcesToCast;
-        public GameplayEffectDefinition Effect { get; set; }
-        private CharacterBehaviourBase _target;
         private AbilitySystemBehaviour _targetSystem;
-        private CastableAbility SkillDef => (CastableAbility)AbilitySO;
-
         private GameplayEffectDefinition _costEffect;
+        private readonly CastableAbility _def;
+
+        public CastableAbilitySpec(CastableAbility def)
+        {
+            _def = def;
+        }
 
         public override void InitAbility(AbilitySystemBehaviour owner, AbilityScriptableObject abilitySO)
         {
             base.InitAbility(owner, abilitySO);
 
-            if (SkillDef.Cost == null) return;
-            _costEffect = Object.Instantiate(SkillDef.Cost);
-            _costEffect.EffectDetails.Modifiers[0].Value = -SkillDef.Info.Cost; // I think this is a bad code
+            if (_def.Cost == null) return;
+            _costEffect = Object.Instantiate(_def.Cost);
+            _costEffect.EffectDetails.Modifiers = new[]
+            {
+                new EffectAttributeModifier()
+                {
+                    Attribute = AttributeSets.Mana,
+                    Value = -_def.Parameters.Cost
+                }
+            };
         }
 
         public override bool CanActiveAbility()
@@ -86,15 +77,12 @@ namespace CryptoQuest.Character.Ability
         /// <returns>Return true if after subtracted attribute that the cost needs greater than 0</returns>
         public bool CheckCost()
         {
-            // TODO: REFACTOR GAS
-            // if (_costEffect == null) return true;
-            // if (Owner == null) return true;
-            //
-            // if (Owner.CanApplyAttributeModifiers(_costEffect)) return true;
-            //
-            // // TODO: Add a tag to indicate that the cost failed
-            // Debug.Log($"Not enough {_costEffect.EffectDetails.Modifiers[0].Attribute.name} to cast this ability");
-            // NotEnoughResourcesToCast?.Invoke();
+            if (_costEffect == null) return true;
+            if (Owner == null) return true;
+            if (Owner.CanApplyAttributeModifiers(_costEffect)) return true;
+
+            Debug.Log($"Not enough {_costEffect.EffectDetails.Modifiers[0].Attribute.name} to cast this ability");
+            NotEnoughResourcesToCast?.Invoke();
             return false;
         }
 
@@ -105,28 +93,26 @@ namespace CryptoQuest.Character.Ability
             ApplyGameplayEffectToOwner(_costEffect);
         }
 
+        private AbilitySystemBehaviour[] _targets;
 
-        public void Active(CharacterBehaviourBase target)
+        public void Execute(params AbilitySystemBehaviour[] characters)
         {
-            _target = target;
-            _targetSystem = target.GameplayAbilitySystem;
-
+            _targets = characters;
             TryActiveAbility();
         }
 
         protected override IEnumerator OnAbilityActive()
         {
-            // Cost is optional
-            if (_costEffect != null)
-            {
-                ApplyCost();
-            }
+            ApplyCost();
 
             // TODO: REFACTOR GAS
-            // CryptoQuestGameplayEffectSpec
-            //     effectSpecSpec = (CryptoQuestGameplayEffectSpec)Owner.MakeOutgoingSpec(Effect);
-            // effectSpecSpec.SetParameters(SkillDef.Info.SkillParameters);
-            // _targetSystem.ApplyEffectSpecToSelf(effectSpecSpec);
+            var spec = (CQEffectSpec)Owner.MakeOutgoingSpec(_def.Effect);
+            spec.Parameters = _def.Parameters.SkillParameters;
+            foreach (var target in _targets)
+            {
+                target.ApplyEffectSpecToSelf(spec);
+            }
+
             yield break;
         }
     }

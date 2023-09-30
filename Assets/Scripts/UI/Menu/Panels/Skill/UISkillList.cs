@@ -23,7 +23,7 @@ namespace CryptoQuest.UI.Menu.Panels.Skill
         [SerializeField] private GameObject _upArrow;
         [SerializeField] private GameObject _downArrow;
 
-        private List<AbilityData> _skills = new();
+        private List<Gameplay.Skill.Skill> _skills = new();
         private int _skillCount = 0;
         private UISkillButton _defaultSelectedSkill;
         private float _verticalOffset;
@@ -60,7 +60,7 @@ namespace CryptoQuest.UI.Menu.Panels.Skill
             // _scrollRect.Initialize(this);
         }
 
-        private void GetSkills(List<AbilityData> skills)
+        private void GetSkills(List<Gameplay.Skill.Skill> skills)
         {
             _skills = skills;
             _skillCount = skills.Count;

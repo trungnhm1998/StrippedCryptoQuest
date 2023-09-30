@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using CryptoQuest.Battle.Events;
 using CryptoQuest.Battle.States;
 using CryptoQuest.Battle.UI.CommandDetail;
@@ -16,10 +18,12 @@ namespace CryptoQuest.Battle
         void OnExit(BattleStateMachine stateMachine);
         void OnDestroy(BattleStateMachine battleStateMachine);
     }
-    
+
     public class BattleStateMachine : MonoBehaviour
     {
         [field: SerializeField] public BattleInputSO BattleInput { get; private set; }
+
+        private readonly Dictionary<Type, Component> _cachedComponents = new();
 
         #region State Context
 
@@ -57,6 +61,24 @@ namespace CryptoQuest.Battle
             _currentState?.OnExit(this);
             _currentState = state;
             _currentState.OnEnter(this);
+        }
+
+        /// <summary>
+        /// Same as Unity's <see cref="GameObject.TryGetComponent{T}(out T)"/> but with a cache
+        /// </summary>
+        public new bool TryGetComponent<T>(out T component) where T : Component
+        {
+            var type = typeof(T);
+            if (!_cachedComponents.TryGetValue(type, out var value))
+            {
+                if (base.TryGetComponent(out component))
+                    _cachedComponents.Add(type, component);
+
+                return component != null;
+            }
+
+            component = (T)value;
+            return true;
         }
     }
 }

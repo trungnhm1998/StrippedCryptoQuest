@@ -45,6 +45,7 @@ namespace CryptoQuestEditor
 
             _helpBox = root.Q<HelpBox>("help-box");
             _inventoryField = root.Q<ObjectField>("inventory-field");
+            _inventoryField.value = InventorySO;
             _addButton = root.Q<Button>("add-button");
             _addAbilityBtn = root.Q<Button>("add-ability-button");
             _addEffectBtn = root.Q<Button>("add-effect-button");

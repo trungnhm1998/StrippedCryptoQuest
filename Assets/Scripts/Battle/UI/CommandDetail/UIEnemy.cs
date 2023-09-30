@@ -8,7 +8,7 @@ namespace CryptoQuest.Battle.UI.CommandDetail
 {
     internal class UIEnemy : MonoBehaviour
     {
-        public static event Action<EnemyBehaviour> EnemySelected;
+        public event Action<EnemyBehaviour> Selected;
         [SerializeField] private TMP_Text _name;
         private EnemyBehaviour _enemy;
 
@@ -47,7 +47,7 @@ namespace CryptoQuest.Battle.UI.CommandDetail
 
         public void OnPressed()
         {
-            EnemySelected?.Invoke(_enemy);
+            Selected?.Invoke(_enemy);
         }
     }
 }

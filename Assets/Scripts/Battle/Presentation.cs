@@ -6,7 +6,7 @@ using UnityEngine;
 namespace CryptoQuest.Battle
 {
     /// <summary>
-    /// I need a mono for coroutine
+    /// I need a mono for coroutine, or using a tween library but it still using mono under the hood
     /// </summary>
     public class Presentation : MonoBehaviour
     {

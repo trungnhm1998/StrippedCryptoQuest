@@ -5,13 +5,26 @@ using CryptoQuest.Battle.UI.SelectCommand;
 using CryptoQuest.Character.Tag;
 using CryptoQuest.Gameplay.PlayerParty;
 using CryptoQuest.System;
+using UnityEngine;
 
 namespace CryptoQuest.Battle.States.SelectHeroesActions
 {
     public abstract class StateBase
     {
-        protected StateBase(SelectHeroesActions fsm) => Fsm = fsm;
+        public StateBase(HeroBehaviour hero, SelectHeroesActions fsm)
+        {
+            Hero = hero;
+            Fsm = fsm;
+        }
+
         protected SelectHeroesActions Fsm { get; private set; }
+
+        /// <summary>
+        /// The hero that is currently in this state
+        ///
+        /// we could have 2 <see cref="SelectCommand"/> in the stack but the hero is different
+        /// </summary>
+        protected HeroBehaviour Hero { get; private set; }
 
         public abstract void OnEnter();
         public abstract void OnExit();
@@ -77,7 +90,6 @@ namespace CryptoQuest.Battle.States.SelectHeroesActions
 
         public void OnDestroy(BattleStateMachine battleStateMachine)
         {
-            // popup states and call OnDestroy
             while (_stateStack.Count > 0)
             {
                 _stateStack.Pop()?.OnDestroy();
@@ -99,6 +111,9 @@ namespace CryptoQuest.Battle.States.SelectHeroesActions
                 _stateStack.Peek()?.OnEnter();
         }
 
+        public bool TryGetComponent<T>(out T component) where T : Component
+            => _battleStateMachine.TryGetComponent(out component);
+
         public bool GetNextAliveHero(out HeroBehaviour hero)
         {
             hero = null;
@@ -116,6 +131,21 @@ namespace CryptoQuest.Battle.States.SelectHeroesActions
         public void GoToPresentState()
         {
             _battleStateMachine.ChangeState(new Present());
+        }
+
+        /// <summary>
+        /// Try to get next alive hero and push <see cref="SelectCommand"/> state, otherwise go to present state
+        /// </summary>
+        public void GoToNextState()
+        {
+            if (GetNextAliveHero(out var hero))
+                PushState(new SelectCommand(hero, this));
+            else
+            {
+                Debug.Log("Battle::SelectHeroesActions cannot get next alive hero" +
+                          "\nThis could be because we at the end of the party list or all heroes are dead");
+                GoToPresentState();
+            }
         }
     }
 }

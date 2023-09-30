@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -18,7 +19,6 @@ namespace CryptoQuest.UI.Common
         private float _verticalOffset;
         private float _lowerBound;
         private float _upperBound;
-        private GameObject _current;
 
         private void Awake()
         {
@@ -30,23 +30,16 @@ namespace CryptoQuest.UI.Common
 
         private void Update()
         {
-            if (!_useUpdate) return;
-
-            _current = EventSystem.current.currentSelectedGameObject;
-            if (_current == null) return;
-
-            if (IsBeingUsed()) return;
-            Scroll();
+            if (_useUpdate) Scroll();
         }
 
         private float NormalizePositionFromDifferentPivots(Rect rect)
         {
             if (_viewport.pivot.y == 0)
                 return _viewport.position.y + (rect.height / 2);
-            else if (_viewport.pivot.y == 0.5)
+            if (Math.Abs(_viewport.pivot.y - 0.5) < 0.1)
                 return _viewport.position.y;
-            else
-                return _viewport.position.y - (rect.height / 2);
+            return _viewport.position.y - (rect.height / 2);
         }
 
         private void CalculateBoundariesByHeight()
@@ -61,14 +54,19 @@ namespace CryptoQuest.UI.Common
         /// <summary>
         /// Check if the currently selected items belong to the scroll view that you want to use.
         /// </summary>
-        private bool IsBeingUsed()
+        private bool IsSelectedChildOfScrollRect(GameObject selectedGameObject)
         {
-            return _current.transform.parent != _scrollRect.content;
+            return selectedGameObject.transform.parent == _scrollRect.content;
         }
 
         public void Scroll()
         {
-            var selectedRowPositionY = _current.transform.position.y;
+            var current = EventSystem.current.currentSelectedGameObject;
+            if (current == null) return;
+
+            if (IsSelectedChildOfScrollRect(current) == false) return;
+
+            var selectedRowPositionY = current.transform.position.y;
             ScrollUpIfOutOfLowerBound(selectedRowPositionY);
             ScrollDownIfOutOfUpperBound(selectedRowPositionY);
         }

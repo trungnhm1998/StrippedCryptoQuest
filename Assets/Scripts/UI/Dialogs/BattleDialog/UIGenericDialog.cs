@@ -89,8 +89,6 @@ namespace CryptoQuest.UI.Dialogs.BattleDialog
 
         private void InternalShow()
         {
-            _inputMediator.DisableAllInput();
-            _inputMediator.EnableInputMap("Dialogues");
             _nextMark.SetActive(false);
             _dialogText.text = _message;
             base.Show();

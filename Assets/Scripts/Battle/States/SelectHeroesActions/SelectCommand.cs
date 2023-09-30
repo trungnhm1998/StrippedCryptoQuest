@@ -2,23 +2,24 @@
 using CryptoQuest.Battle.Components;
 using CryptoQuest.Battle.UI.SelectCommand;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 namespace CryptoQuest.Battle.States.SelectHeroesActions
 {
     public class SelectCommand : StateBase, ISelectCommandCallback
     {
-        private readonly HeroBehaviour _hero;
-        private HeroBehaviour _currentHero;
+        public SelectCommand(HeroBehaviour hero, SelectHeroesActions fsm) : base(hero, fsm) { }
 
-        public SelectCommand(HeroBehaviour hero, SelectHeroesActions fsm) : base(fsm)
-        {
-            _hero = hero;
-        }
+        private GameObject _lastSelectedCommand;
 
         public override void OnEnter()
         {
             Fsm.SelectCommandUI.RegisterCallback(this);
+            if (_lastSelectedCommand != null)
+                EventSystem.current.SetSelectedGameObject(_lastSelectedCommand);
+            else
+                Fsm.SelectCommandUI.SelectFirstButton();
             EnableCommandMenu();
         }
 
@@ -58,24 +59,30 @@ namespace CryptoQuest.Battle.States.SelectHeroesActions
         public void OnAttackPressed()
         {
             Debug.Log("SelectCommandState::OnAttackPressed");
-            Fsm.PushState(new AttackEnemy(_hero, Fsm));
+            _lastSelectedCommand = EventSystem.current.currentSelectedGameObject;
+            DisableCommandMenu();
+            Fsm.PushState(new AttackEnemy(Hero, Fsm));
         }
 
         public void OnSkillPressed()
         {
             Debug.Log("SelectCommandState::OnSkillPressed");
-            Fsm.PushState(new CastSkillOnEnemy(_hero, Fsm));
+            _lastSelectedCommand = EventSystem.current.currentSelectedGameObject;
+            DisableCommandMenu();
+            Fsm.PushState(new SelectingSkill(Hero, Fsm));
         }
 
         public void OnItemPressed()
         {
             Debug.Log("SelectCommandState::OnItemPressed");
+            _lastSelectedCommand = EventSystem.current.currentSelectedGameObject;
+            NextHero();
         }
 
         public void OnGuardPressed()
         {
             Debug.Log("SelectCommandState::OnGuardPressed");
-            _hero.SetCommand(new GuardCommand(_hero));
+            Hero.SetCommand(new GuardCommand(Hero));
             NextHero();
         }
 
@@ -98,13 +105,11 @@ namespace CryptoQuest.Battle.States.SelectHeroesActions
         {
             // _enemyPartyManager.EnemiesPresenter.Hide();
             Fsm.SelectCommandUI.SetActiveCommandsMenu(true);
-            Fsm.SelectCommandUI.SelectFirstButton();
         }
-
 
         private void DisableCommandMenu()
         {
-            Fsm.SelectCommandUI.SetActiveCommandsMenu(true);
+            Fsm.SelectCommandUI.SetActiveCommandsMenu(false);
         }
     }
 }

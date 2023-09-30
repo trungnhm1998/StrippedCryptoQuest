@@ -46,7 +46,7 @@ namespace CryptoQuest.Gameplay.Character
                    && StatsDef.Attributes.Length > 0;
         }
 
-        public List<AbilityData> GetAvailableSkills()
+        public List<Skill.Skill> GetAvailableSkills()
         {
             if (SkillSet == null) return new();
             return SkillSet.GetSkillsByCurrentLevel(Level);

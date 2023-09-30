@@ -1,4 +1,4 @@
-using CryptoQuest.Gameplay;
+using CryptoQuest.Battle.Components;
 using CryptoQuest.Gameplay.Battle.Core;
 using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data;
 using IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects.EffectExecutionCalculation;
@@ -58,8 +58,7 @@ namespace CryptoQuest.Battle.ExecutionCalculations
 
         public static float CalculateElementalRateFromParams(CustomExecutionParameters executionParams)
         {
-            var character = executionParams.SourceAbilitySystemComponent.GetComponent<CharacterBehaviourBase>();
-            var characterElemental = character.Element;
+            var characterElemental = executionParams.SourceAbilitySystemComponent.GetComponent<Element>().ElementValue;
             if (characterElemental == null) return 1;
             executionParams.TryGetAttributeValue(new CustomExecutionAttributeCaptureDef()
             {

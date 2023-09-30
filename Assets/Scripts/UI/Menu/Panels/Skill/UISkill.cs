@@ -15,12 +15,12 @@ namespace CryptoQuest.UI.Menu.Panels.Skill
         [SerializeField] private LocalizeStringEvent _skillName;
         [SerializeField] private Text _quantity;
 
-        public AbilityData CachedAbilityData { get; private set; }
+        public Gameplay.Skill.Skill CachedSkill { get; private set; }
 
-        public void Configure(AbilityData abilityData)
+        public void Configure(Gameplay.Skill.Skill skill)
         {
-            CachedAbilityData = abilityData;
-            _skillName.StringReference = abilityData.SkillInfo.SkillName;
+            CachedSkill = skill;
+            _skillName.StringReference = skill.SkillInfo.SkillName;
         }
     }
 }

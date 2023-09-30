@@ -5,6 +5,7 @@ using CryptoQuest.Character.Enemy;
 using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects;
 using CryptoQuest.Gameplay.Battle.ScriptableObjects;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace CryptoQuest.Battle
 {
@@ -17,7 +18,8 @@ namespace CryptoQuest.Battle
     {
         [SerializeField] private BattleBus _bus;
         [SerializeField] private EnemyPartyBehaviour _enemyPartyBehaviour;
-        [SerializeField] private EnemiesPresenter _enemiesPresenter;
+        [FormerlySerializedAs("_enemiesPresenter")]
+        [SerializeField] private SelectEnemyPresenter _selectEnemyPresenter;
         [SerializeField] private EnemyDatabase _enemyDatabase;
         private readonly List<EnemySpec> _loadedEnemies = new();
 
@@ -25,7 +27,7 @@ namespace CryptoQuest.Battle
         {
             yield return LoadEnemiesAssets();
             _enemyPartyBehaviour.Init(_loadedEnemies);
-            _enemiesPresenter.Init(_enemyPartyBehaviour.Enemies);
+            _selectEnemyPresenter.Init(_enemyPartyBehaviour.Enemies);
         }
 
         private IEnumerator LoadEnemiesAssets()
