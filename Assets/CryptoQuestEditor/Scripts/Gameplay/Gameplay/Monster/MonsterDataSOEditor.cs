@@ -1,23 +1,21 @@
 using System;
-using System.CodeDom;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using CryptoQuest.Character.Attributes;
 using CryptoQuest.Character.Enemy;
-using CryptoQuest.Gameplay;
 using CryptoQuest.Gameplay.Battle.ScriptableObjects;
-using CryptoQuest.Gameplay.Character;
 using CryptoQuest.Gameplay.Encounter;
-using CryptoQuest.Gameplay.Enemy;
 using CryptoQuest.Gameplay.Inventory.Currency;
 using CryptoQuest.Gameplay.Loot;
+using CryptoQuest.Item;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.ScriptableObjects;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
 using IndiGames.Tools.ScriptableObjectBrowser;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using UnityEngine.Localization;
 using AttributeScriptableObject = CryptoQuest.Character.Attributes.AttributeScriptableObject;
 
 namespace CryptoQuestEditor.Gameplay.Gameplay.Monster
@@ -62,17 +60,19 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Monster
 
         private const string PREFAB_PATH = "Assets/Prefabs/Battle/Enemies/";
         private EnemyDatabase _enemyDatabase;
+        private Dictionary<string, ConsumableSO> _allConsumableDatasDictionary;
 
         public MonsterDataSOEditor()
         {
             CreateDataFolder = false;
-            DefaultStoragePath = "Assets/ScriptableObjects/Data/Monster";
+            DefaultStoragePath = "Assets/ScriptableObjects/Character/Enemies";
         }
 
         public override void ImportBatchData(string directory, Action<ScriptableObject> callback)
         {
             string[] allLines = File.ReadAllLines(directory);
             _enemyDatabase = GetEnemyDatabase();
+            _allConsumableDatasDictionary = GetAllConsumableSos();
             List<EnemyDatabase.Map> enemyMap = new();
             for (int index = ROW_OFFSET; index < allLines.Length; index++)
             {
@@ -81,16 +81,13 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Monster
                 string name = splitedData[4];
                 string replacedName = name.Replace(" ", "");
                 string path = DefaultStoragePath + "/" + replacedName + ".asset";
-                if (!DataValidator.IsStringsNotNull(splitedData, 26, new List<int>()
-                    {
-                        DESCRIPTION_JP_COLUMN_INDEX, DESCRIPTION_EN_COLUMN_INDEX, SOUL_COLUMN_INDEX,
-                        DROP_ITEM_ID_COLUMN_INDEX,
-                        DROP_ITEM_NAME_COLUMN_INDEX, DROP_ITEM_RATE_COLUMN_INDEX, MONSTER_PREFAB_NAME_COLUMN_INDEX
-                    }))
-                    continue;
+                float dropRate = string.IsNullOrEmpty(splitedData[DROP_ITEM_RATE_COLUMN_INDEX])
+                    ? 0
+                    : float.Parse(splitedData[DROP_ITEM_RATE_COLUMN_INDEX]);
                 MonsterUnitDataModel dataModel = new MonsterUnitDataModel()
                 {
                     MonsterId = int.Parse(splitedData[ID_COLUMN_INDEX]),
+                    LocalizedKey = splitedData[LOCALIZE_KEY_COLUMN_INDEX],
                     MonsterName = splitedData[NAME_EN_COLUMN_INDEX],
                     ElementId = int.Parse(splitedData[ELEMENT_ID_COLUMN_INDEX]),
                     MaxHP = float.Parse(splitedData[MAX_HP_COLUMN_INDEX]),
@@ -108,13 +105,15 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Monster
                     CriticalRate = float.Parse(splitedData[CRITICAL_RATE_COLUMN_INDEX].Replace("%", "")),
                     Exp = int.Parse(splitedData[EXP_COLUMN_INDEX]),
                     Gold = float.Parse(splitedData[GOLD_COLUMN_INDEX]),
-                    DropItemID = "Drop item id",
+                    DropItemID = splitedData[DROP_ITEM_ID_COLUMN_INDEX],
+                    DropItemRate = dropRate,
                     MonsterPrefabName = splitedData[MONSTER_PREFAB_NAME_COLUMN_INDEX]
                 };
+                dataModel.DropItemID = string.IsNullOrEmpty(dataModel.DropItemID) ? "0" : dataModel.DropItemID;
 
                 if (!DataValidator.MonsterDataValidator(dataModel))
                 {
-                    Debug.Log("Data is not valid");
+                    Debug.Log($"Data {dataModel.MonsterId} is not valid");
                     continue;
                 }
 
@@ -125,7 +124,6 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Monster
                     instance = ScriptableObject.CreateInstance<EnemyDef>();
                 }
 
-                instance.Editor_SetMonsterPrefab(GetMonsterPrefab(dataModel.MonsterPrefabName));
                 List<string> attributeNames = new()
                 {
                     "MaxHP", "HP", "MP", "Strength",
@@ -133,13 +131,21 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Monster
                     "SkillPower", "Defense", "EvasionRate", "CriticalRate"
                 };
                 AttributeWithValue[] attributeInitValues = InitAttributeValueSetup(dataModel, attributeNames);
+                instance.Editor_SetNameKey(GetLocalizedStringRef(dataModel.LocalizedKey));
+                instance.Editor_SetMonsterModelAssetRef(GetMonsterModelAssetRef(dataModel.MonsterPrefabName));
                 instance.Editor_SetElement(GetElementalSO(dataModel.ElementId));
                 instance.Editor_ClearDrop();
-                instance.Editor_AddDrop(GetGoldCurrencyRewardInfo(dataModel.Gold));
+
+                if (dataModel.Gold > 0)
+                    instance.Editor_AddDrop(GetGoldCurrencyRewardInfo(dataModel.Gold));
+
                 instance.Editor_AddDrop(GetExpLoot(dataModel.Exp));
+
+                UsableLootInfo usableLootInfo = GetUsableLootInfo(dataModel.DropItemID);
+                if (usableLootInfo != null)
+                    instance.Editor_AddDrop(usableLootInfo, dataModel.DropItemRate);
                 instance.Editor_SetStats(attributeInitValues);
                 instance.name = replacedName;
-
 
                 if (!AssetDatabase.Contains(instance))
                 {
@@ -175,11 +181,19 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Monster
             return ability;
         }
 
-        private GameObject GetMonsterPrefab(string prefabName)
+        private LocalizedString GetLocalizedStringRef(string keyName)
+        {
+            LocalizedString key = new LocalizedString();
+            key.TableReference = "Enemies";
+            key.TableEntryReference = keyName;
+            return key;
+        }
+
+        private AssetReferenceT<GameObject> GetMonsterModelAssetRef(string prefabName)
         {
             var path = PREFAB_PATH + prefabName + ".prefab";
             var guid = AssetDatabase.AssetPathToGUID(path);
-            return AssetDatabase.LoadAssetAtPath<GameObject>(AssetDatabase.GUIDToAssetPath(guid));
+            return new AssetReferenceT<GameObject>(guid);
         }
 
         private LootInfo GetExpLoot(float exp)
@@ -216,6 +230,28 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Monster
             var guids = AssetDatabase.FindAssets("t:EnemyDatabase");
 
             return AssetDatabase.LoadAssetAtPath<EnemyDatabase>(AssetDatabase.GUIDToAssetPath(guids[0]));
+        }
+
+        private Dictionary<string, ConsumableSO> GetAllConsumableSos()
+        {
+            Dictionary<string, ConsumableSO> consumableSos = new();
+            var guids = AssetDatabase.FindAssets("t:ConsumableSO");
+            foreach (var guid in guids)
+            {
+                var consumable = AssetDatabase.LoadAssetAtPath<ConsumableSO>(AssetDatabase.GUIDToAssetPath(guid));
+                if (consumable != null && !string.IsNullOrEmpty(consumable.ID))
+                    consumableSos.Add(consumable.ID, consumable);
+            }
+
+            return consumableSos;
+        }
+
+        private UsableLootInfo GetUsableLootInfo(string itemId)
+        {
+            bool isExist = _allConsumableDatasDictionary.TryGetValue(itemId, out ConsumableSO consumableSo);
+            if (!isExist) return null;
+            ConsumableInfo consumableInfo = new ConsumableInfo(consumableSo);
+            return new UsableLootInfo(consumableInfo);
         }
 
 

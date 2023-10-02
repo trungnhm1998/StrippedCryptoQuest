@@ -14,58 +14,83 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Name>k__BackingField:
     m_TableReference:
-      m_TableCollectionName: GUID:fccb473c0a4c1024baec44e0d7e3e724
+      m_TableCollectionName: Enemies
     m_TableEntryReference:
-      m_KeyId: 159160844288
-      m_Key: 
+      m_KeyId: 0
+      m_Key: SLIME_1001
     m_FallbackState: 0
     m_WaitForCompletion: 0
     m_LocalVariables: []
   <Description>k__BackingField:
     m_TableReference:
-      m_TableCollectionName: GUID:fccb473c0a4c1024baec44e0d7e3e724
+      m_TableCollectionName: Enemies
     m_TableEntryReference:
-      m_KeyId: 405311963136
-      m_Key: 
+      m_KeyId: 0
+      m_Key: SLIME_1001_DESCRIPTION
     m_FallbackState: 0
     m_WaitForCompletion: 0
     m_LocalVariables: []
   <Element>k__BackingField: {fileID: 11400000, guid: ba6de62bb4e6b1340881a31dcd37f1ee, type: 2}
-  <Prefab>k__BackingField: {fileID: 3374771771659683637, guid: 60cd9884a82a549768b163cbf29a6825, type: 3}
   <Model>k__BackingField:
     m_AssetGUID: 60cd9884a82a549768b163cbf29a6825
     m_SubObjectName: 
     m_SubObjectType: 
     m_EditorAssetChanged: 0
   <Stats>k__BackingField:
-  - Attribute: {fileID: 11400000, guid: cff0791781b73cf4ca80877936aedaad, type: 2}
-    Value: 20
   - Attribute: {fileID: 11400000, guid: 692557e6fee799243868270d0b093d7e, type: 2}
-    Value: 100
+    Value: 70
   - Attribute: {fileID: 11400000, guid: 77c53593fd92c904aa7689c5a7449df3, type: 2}
-    Value: 100
-  - Attribute: {fileID: 11400000, guid: 2b6352f953a4cb54d806baed1b804397, type: 2}
-    Value: 5
+    Value: 70
+  - Attribute: {fileID: 11400000, guid: a7e3a44d36bf87d44afeb00b236e832e, type: 2}
+    Value: 0
   - Attribute: {fileID: 11400000, guid: 0d7a5bc26b58515459d9e824964fd7f8, type: 2}
-    Value: 20
+    Value: 70
+  - Attribute: {fileID: 11400000, guid: 6762f359f1a736c45b2df614e80aef45, type: 2}
+    Value: 50
+  - Attribute: {fileID: 11400000, guid: 2b6352f953a4cb54d806baed1b804397, type: 2}
+    Value: 30
+  - Attribute: {fileID: 11400000, guid: 33fa33f7e21108b4280d1749ac4886e0, type: 2}
+    Value: 100
+  - Attribute: {fileID: 11400000, guid: 9ea7ef66c3bae0d47832b0244c8e6ff6, type: 2}
+    Value: 1
+  - Attribute: {fileID: 11400000, guid: cff0791781b73cf4ca80877936aedaad, type: 2}
+    Value: 70
+  - Attribute: {fileID: 11400000, guid: e2ac2354599d7f54ebd4f00865c30caa, type: 2}
+    Value: 100
+  - Attribute: {fileID: 11400000, guid: be99df9b1a6f2804abf9dd03f042eb2e, type: 2}
+    Value: 50
+  - Attribute: {fileID: 11400000, guid: 40f2911ebe67b664f8f2adeb18ea0353, type: 2}
+    Value: 3.9
+  - Attribute: {fileID: 11400000, guid: 1b80f5d6341985e43aa2fa24d468686d, type: 2}
+    Value: 1
   _drops:
   - Chance: 1
     LootItem:
-      rid: 5542355824755867778
+      rid: 3959803220583252613
   - Chance: 1
     LootItem:
-      rid: 5542355824755867779
+      rid: 3959803220583252614
+  - Chance: 0.05
+    LootItem:
+      rid: 3959803220583252615
   references:
     version: 2
     RefIds:
-    - rid: 5542355824755867778
+    - rid: 3959803220583252613
       type: {class: CurrencyLootInfo, ns: CryptoQuest.Gameplay.Loot, asm: indi-games.crypto-quest}
       data:
         _item:
-          _id: 105cf241-33aa-4785-beee-2f657aa86564
+          _id: 5137c884-f597-48eb-813b-41216b81c83f
           <Data>k__BackingField: {fileID: 11400000, guid: 16b3f6e09fc22d240be1b324116eeb79, type: 2}
           <Amount>k__BackingField: 1
-    - rid: 5542355824755867779
+    - rid: 3959803220583252614
       type: {class: ExpLoot, ns: CryptoQuest.Gameplay.Loot, asm: indi-games.crypto-quest}
       data:
         <Exp>k__BackingField: 1
+    - rid: 3959803220583252615
+      type: {class: UsableLootInfo, ns: CryptoQuest.Gameplay.Loot, asm: indi-games.crypto-quest}
+      data:
+        _item:
+          _id: 4f0b60b5-857a-4165-8f07-637cbe50fcbb
+          <Data>k__BackingField: {fileID: 11400000, guid: 332cc0df41750b84999f821d3a1dcceb, type: 2}
+          <Quantity>k__BackingField: 1

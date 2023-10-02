@@ -27,7 +27,6 @@ namespace CryptoQuest.Character.Enemy
     {
         [field: SerializeField] public LocalizedString Name { get; private set; }
         [field: SerializeField] public Elemental Element { get; private set; }
-        [field: SerializeField] public GameObject Prefab { get; private set; }
         [field: SerializeField] public AssetReferenceT<GameObject> Model { get; private set; }
 
         [field: SerializeField] public AttributeWithValue[] Stats { get; private set; } =
@@ -59,9 +58,23 @@ namespace CryptoQuest.Character.Enemy
             });
         }
 
+        public void Editor_AddDrop(LootInfo loot, float chance)
+        {
+            ArrayUtility.Add(ref _drops, new Drop()
+            {
+                LootItem = loot,
+                Chance = chance
+            });
+        }
+
         public void Editor_SetStats(AttributeWithValue[] stats)
         {
             Stats = stats;
+        }
+
+        public void Editor_SetNameKey(LocalizedString name)
+        {
+            Name = name;
         }
 
         public void Editor_ClearDrop()
@@ -69,9 +82,9 @@ namespace CryptoQuest.Character.Enemy
             _drops = Array.Empty<Drop>();
         }
 
-        public void Editor_SetMonsterPrefab(GameObject prefab)
+        public void Editor_SetMonsterModelAssetRef(AssetReferenceT<GameObject> assetReference)
         {
-            Prefab = prefab;
+            Model = assetReference;
         }
 
         public void Editor_SetElement(Elemental element)

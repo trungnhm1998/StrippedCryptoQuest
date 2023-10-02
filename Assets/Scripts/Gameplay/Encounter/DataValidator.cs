@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using CryptoQuest.Gameplay.Battle;
-using CryptoQuest.Gameplay.Loot;
 
 namespace CryptoQuest.Gameplay.Encounter
 {
@@ -97,6 +96,7 @@ namespace CryptoQuest.Gameplay.Encounter
     public class MonsterUnitDataModel
     {
         public int MonsterId { get; set; }
+        public string LocalizedKey { get; set; }
         public string MonsterName { get; set; }
         public int ElementId { get; set; }
         public float MaxHP { get; set; }
@@ -115,6 +115,7 @@ namespace CryptoQuest.Gameplay.Encounter
         public int Exp { get; set; }
         public float Gold { get; set; }
         public string DropItemID { get; set; }
+        public float DropItemRate { get; set; }
         public string MonsterPrefabName { get; set; }
     }
 
