@@ -39,6 +39,7 @@ namespace CryptoQuest.UI.Common
             foreach (var pair in _buttonTextMap)
             {
                 var button = pair.Key;
+                if (button == null) continue; // TODO: WHY IS THIS NULL?
                 var buttonTexts = pair.Value;
 
                 button.interactable = isActive;

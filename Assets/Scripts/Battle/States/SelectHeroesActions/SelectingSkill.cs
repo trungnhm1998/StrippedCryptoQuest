@@ -27,9 +27,9 @@ namespace CryptoQuest.Battle.States.SelectHeroesActions
 
         public override void OnExit()
         {
+            UnregisterEvents();
             _skillPresenter.Hide();
             _selectEnemyPresenter.Hide();
-            UnregisterEvents();
         }
 
         private void RegisterEvents()

@@ -1,6 +1,5 @@
 using System.Collections.Generic;
-using CryptoQuest.Gameplay;
-using CryptoQuest.Gameplay.Battle.Core;
+using CryptoQuest.Character.Ability;
 using IndiGames.GameplayAbilitySystem.EffectSystem;
 using IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects.EffectExecutionCalculation;
 using UnityEngine;
@@ -18,24 +17,25 @@ namespace CryptoQuest.Battle.ExecutionCalculations
         public override void Execute(ref CustomExecutionParameters executionParams,
             ref List<EffectAttributeModifier> outModifiers)
         {
-            // TODO: REFACTOR GAS
-            // CryptoQuestGameplayEffectSpec effectSpec = (CryptoQuestGameplayEffectSpec)executionParams.EffectSpec;
-            // SkillParameters skillParameters = effectSpec.SkillParam;
-            // executionParams.TryGetAttributeValue(_baseMagicAttack, out var baseMagicAttack);
-            // var targetedAttributeDef = skillParameters.targetAttribute;
-            // float baseMagicValue = BattleCalculator.CalculateBaseDamage(skillParameters, baseMagicAttack.CurrentValue,
-            //     Random.Range(_lowerRandomRange, _upperRandomRange));
-            //
-            // if (baseMagicValue > 0f)
-            // {
-            //     var modifier = new EffectAttributeModifier()
-            //     {
-            //         Attribute = targetedAttributeDef.Attribute,
-            //         ModifierType = EAttributeModifierType.Add,
-            //         Value = baseMagicValue
-            //     };
-            //     outModifiers.Add(modifier);
-            // }
+            var effectSpec = (CQEffectSpec)executionParams.EffectSpec;
+            executionParams.TryGetAttributeValue(_baseMagicAttack, out var baseMagicAttack);
+            var targetedAttributeDef = effectSpec.Parameters.targetAttribute;
+            float baseMagicValue = BattleCalculator.CalculateBaseDamage(effectSpec.Parameters,
+                baseMagicAttack.CurrentValue,
+                Random.Range(_lowerRandomRange, _upperRandomRange));
+
+            Debug.Log($"Magic value: {baseMagicAttack}");
+
+            if (baseMagicValue > 0f)
+            {
+                var modifier = new EffectAttributeModifier()
+                {
+                    Attribute = targetedAttributeDef.Attribute,
+                    ModifierType = EAttributeModifierType.Add,
+                    Value = baseMagicValue
+                };
+                outModifiers.Add(modifier);
+            }
         }
     }
 }

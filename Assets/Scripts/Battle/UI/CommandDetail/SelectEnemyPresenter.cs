@@ -78,6 +78,7 @@ namespace CryptoQuest.Battle.UI.CommandDetail
         {
             foreach (var enemy in _enemies)
             {
+                if (!enemy) continue; // TODO: Why this happen?
                 enemy.Selected -= OnEnemySelected;
                 Destroy(enemy.gameObject);
             }

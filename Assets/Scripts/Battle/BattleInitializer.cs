@@ -18,7 +18,6 @@ namespace CryptoQuest.Battle
     {
         [SerializeField] private BattleBus _bus;
         [SerializeField] private EnemyPartyBehaviour _enemyPartyBehaviour;
-        [FormerlySerializedAs("_enemiesPresenter")]
         [SerializeField] private SelectEnemyPresenter _selectEnemyPresenter;
         [SerializeField] private EnemyDatabase _enemyDatabase;
         private readonly List<EnemySpec> _loadedEnemies = new();

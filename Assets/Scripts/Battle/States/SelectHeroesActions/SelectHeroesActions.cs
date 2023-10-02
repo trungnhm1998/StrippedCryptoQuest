@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using CryptoQuest.Battle.Commands;
 using CryptoQuest.Battle.Components;
@@ -24,7 +25,7 @@ namespace CryptoQuest.Battle.States.SelectHeroesActions
         ///
         /// we could have 2 <see cref="SelectCommand"/> in the stack but the hero is different
         /// </summary>
-        protected HeroBehaviour Hero { get; private set; }
+        public HeroBehaviour Hero { get; private set; }
 
         public abstract void OnEnter();
         public abstract void OnExit();
@@ -60,7 +61,6 @@ namespace CryptoQuest.Battle.States.SelectHeroesActions
         private IPartyController _party;
         private EnemyPartyManager _enemyPartyManager;
         public EnemyPartyManager EnemyPartyManager => _enemyPartyManager;
-        private int _currentHeroIndex = 0;
         public StateFactory StateFactory { get; private set; } = new();
 
         private readonly Stack<StateBase> _stateStack = new Stack<StateBase>();
@@ -75,10 +75,20 @@ namespace CryptoQuest.Battle.States.SelectHeroesActions
             _presenter = battleStateMachine.GetComponent<BattlePresenter>();
             _presenter.CommandPanel.SetActive(true);
 
-            _currentHeroIndex = 0;
-
             battleStateMachine.BattleUI.SetActive(true);
-            PushState(new SelectCommand(_party.Slots[_currentHeroIndex].HeroBehaviour, this));
+            PushState(new SelectCommand(GetFirstAliveHeroInParty(), this));
+        }
+
+        private HeroBehaviour GetFirstAliveHeroInParty()
+        {
+            for (var i = 0; i < _party.Size; i++)
+            {
+                var hero = _party.Slots[i].HeroBehaviour;
+                if (hero == null || !hero.IsValid() || hero.HasTag(TagsDef.Dead)) continue;
+                return hero;
+            }
+
+            throw new Exception("Cannot find any alive hero in party");
         }
 
         public void OnExit(BattleStateMachine battleStateMachine)
@@ -99,6 +109,7 @@ namespace CryptoQuest.Battle.States.SelectHeroesActions
 
         public void PopState()
         {
+            if (_stateStack.Count <= 1) return;
             _stateStack.Peek()?.OnExit();
             _stateStack.Pop();
             if (_stateStack.Count > 0)
@@ -121,18 +132,29 @@ namespace CryptoQuest.Battle.States.SelectHeroesActions
         public bool TryGetComponent<T>(out T component) where T : Component
             => _battleStateMachine.TryGetComponent(out component);
 
-        public bool GetNextAliveHero(out HeroBehaviour hero)
+        public bool GetNextAliveHero(out HeroBehaviour nextHero)
         {
-            hero = null;
-            if (++_currentHeroIndex >= _party.Size) return false;
-            bool canHeroFunctions;
-            do
+            nextHero = null;
+            var current = _stateStack.Peek().Hero;
+            var index = 0;
+            for (int i = 0; i < _party.Slots.Length; i++)
             {
-                hero = _party.Slots[_currentHeroIndex].HeroBehaviour;
-                canHeroFunctions = hero != null && hero.IsValid() && !hero.HasTag(TagsDef.Dead);
-            } while (canHeroFunctions == false);
-
-            return true;
+                var slot = _party.Slots[i];
+                if (slot.HeroBehaviour == current)
+                {
+                    index = i;
+                    break;
+                }
+            }
+            
+            for (int i = index + 1; i < _party.Slots.Length; i++)
+            {
+                var slot = _party.Slots[i];
+                if (slot.HeroBehaviour == null || !slot.HeroBehaviour.IsValid() || slot.HeroBehaviour.HasTag(TagsDef.Dead)) continue;
+                nextHero = slot.HeroBehaviour;
+                return true;
+            }
+            return false;
         }
 
         public void GoToPresentState()

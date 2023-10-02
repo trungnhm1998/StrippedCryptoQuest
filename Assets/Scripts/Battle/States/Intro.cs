@@ -26,7 +26,7 @@ namespace CryptoQuest.Battle.States
 
         public void OnExit(BattleStateMachine battleStateMachine)
         {
-            _dialog.Release();
+            if (_dialog) _dialog.Release();
         }
     }
 }

@@ -17,11 +17,15 @@ namespace CryptoQuest.Battle.UI.CommandDetail
         private void Awake()
         {
             _button = GetComponent<MultiInputButton>();
+        }
+
+        private void OnEnable()
+        {
             _button.Selected += SelectEnemy;
             _button.DeSelected += DeSelectEnemy;
         }
 
-        private void OnDestroy()
+        private void OnDisable()
         {
             _button.Selected -= SelectEnemy;
             _button.DeSelected -= DeSelectEnemy;

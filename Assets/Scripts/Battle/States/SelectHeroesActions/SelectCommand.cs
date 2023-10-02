@@ -24,39 +24,20 @@ namespace CryptoQuest.Battle.States.SelectHeroesActions
             EnableCommandMenu();
 
             Fsm.BattleStateMachine.BattleInput.InputActions.BattleMenu.Cancel.performed += CancelPressed;
+            Debug.Log($"Select command for {Hero.Spec.Unit.Origin.name}");
         }
 
         public override void OnExit()
         {
+            Fsm.BattleStateMachine.BattleInput.InputActions.BattleMenu.Cancel.performed -= CancelPressed;
             Fsm.SelectCommandUI.RegisterCallback(null);
             DisableCommandMenu();
-            Fsm.BattleStateMachine.BattleInput.InputActions.BattleMenu.Cancel.performed -= CancelPressed;
-        }
-
-        private void ChangeToSelectEnemyState()
-        {
-            // UIEnemy.EnemySelected += SelectEnemy;
-            // _battleStateMachine.BattleInput.InputActions.BattleMenu.Cancel.performed += CancelPressed;
-            // _stateMachine.ChangeState(new SelectEnemy());
-            // _selectCommandUI.SetActiveCommandsMenu(false);
-            // show all enemies in details panel
-            // _enemyPartyManager.EnemiesPresenter.Show(_enemyPartyManager.Enemies);
-        }
-
-        private void SelectEnemy(EnemyBehaviour enemy)
-        {
-            // UIEnemy.EnemySelected -= SelectEnemy;
-            // ServiceProvider.GetService<IPartyController>().TryGetMemberAtIndex(_currentHeroIndex, out var hero);
-            // _heroCommands[_currentHeroIndex] = new NormalAttackCommand(hero.GameObject, enemy.gameObject);
-            // _currentHeroIndex++;
+            Debug.Log($"Exit Select command for {Hero.Spec.Unit.Origin.name}");
         }
 
         private void CancelPressed(InputAction.CallbackContext obj)
         {
-            // UIEnemy.EnemySelected -= SelectEnemy;
-            // _battleStateMachine.BattleInput.InputActions.BattleMenu.Cancel.performed -= CancelPressed;
-            // EnableCommandMenu();
-            Fsm.PopToLastSelectCommandState();
+            Fsm.PopState();
         }
 
         public void OnAttackPressed()

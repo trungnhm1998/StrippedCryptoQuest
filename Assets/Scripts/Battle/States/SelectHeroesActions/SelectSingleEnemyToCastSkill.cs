@@ -30,8 +30,8 @@ namespace CryptoQuest.Battle.States.SelectHeroesActions
 
         public override void OnExit()
         {
-            _selectEnemyPresenter.Hide();
             Fsm.BattleStateMachine.BattleInput.InputActions.BattleMenu.Cancel.performed -= CancelPressed;
+            _selectEnemyPresenter.Hide();
         }
 
         private void CancelPressed(InputAction.CallbackContext obj)

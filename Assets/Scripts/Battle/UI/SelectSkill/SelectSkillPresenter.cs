@@ -91,6 +91,7 @@ namespace CryptoQuest.Battle.UI.SelectSkill
         {
             foreach (var skill in _skills)
             {
+                if (skill == null) continue; // TODO: WHY SKILL == NULL?
                 skill.Selected -= SelectingTarget;
                 Destroy(skill.gameObject);
             }
