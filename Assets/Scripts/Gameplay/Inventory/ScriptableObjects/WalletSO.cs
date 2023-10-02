@@ -18,10 +18,19 @@ namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects
                 return;
             ValidateAmount();
         }
+
+        public void Editor_Enable()
+        {
+            OnEnable();
+        }
 #endif
 
         private void OnEnable()
         {
+#if UNITY_EDITOR
+            if (Gold.Data == null || Soul.Data == null || Diamond.Data == null)
+                return;
+#endif
             CurrencyAmounts[Gold.Data] = Gold;
             CurrencyAmounts[Diamond.Data] = Diamond;
             CurrencyAmounts[Soul.Data] = Soul;

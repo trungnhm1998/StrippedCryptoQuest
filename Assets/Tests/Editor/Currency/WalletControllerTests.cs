@@ -10,6 +10,7 @@ namespace CryptoQuest.Tests.Editor.Currency
     {
         private WalletSO _walletSo;
         private WalletControllerSO _walletControllerSo;
+        private WalletController _walletController;
         private CurrencySO goldSo;
         private CurrencySO diamondSo;
         private CurrencySO soulSo;
@@ -17,20 +18,22 @@ namespace CryptoQuest.Tests.Editor.Currency
         [SetUp]
         public void Setup()
         {
-            _walletSo = ScriptableObject.CreateInstance<WalletSO>();
+            _walletControllerSo = ScriptableObject.CreateInstance<WalletControllerSO>();
             goldSo = ScriptableObject.CreateInstance<CurrencySO>();
             diamondSo = ScriptableObject.CreateInstance<CurrencySO>();
             soulSo = ScriptableObject.CreateInstance<CurrencySO>();
+            _walletSo = ScriptableObject.CreateInstance<WalletSO>();
             _walletSo.Gold = new CurrencyInfo(goldSo, 0);
             _walletSo.Diamond = new CurrencyInfo(diamondSo, 0);
             _walletSo.Soul = new CurrencyInfo(soulSo, 0);
-
+            _walletSo.Editor_Enable();
 
             _walletSo.Gold.SetCurrencyAmount(0);
             _walletSo.Diamond.SetCurrencyAmount(0);
             _walletSo.Soul.SetCurrencyAmount(0);
-            _walletControllerSo = ScriptableObject.CreateInstance<WalletControllerSO>();
-            _walletControllerSo.Wallet = _walletSo;
+            _walletController = Object.Instantiate(new GameObject()).AddComponent<WalletController>();
+            _walletController.Editor_SetWallet(_walletSo);
+            _walletController.Editor_SetWalletController(_walletControllerSo);
         }
 
         [TestCase(0, 0, 0, 4, 2, 3, 4, 2, 3)]
@@ -39,7 +42,8 @@ namespace CryptoQuest.Tests.Editor.Currency
         [TestCase(-3, -1, -5, 0, 0, 0, 0, 0, 0)]
         [TestCase(3.1f, 2.1f, 5.2f, 3.1111111111111111f, 5.222222222222222222f, 1.11111111111111111111f,
             6.2111111111111111f, 7.322222222222222222f, 6.31111111111111111111f)]
-        public void WalletController_UpdateCurrency_ReturnCorrectUpdatedValue(float defaultGold, float defaultDiamond, float defaultSoul,
+        public void WalletController_UpdateCurrency_ReturnCorrectUpdatedValue(float defaultGold, float defaultDiamond,
+            float defaultSoul,
             float amountToUpdateGold, float amountToUpdateDiamond,
             float amountToUpdateSoul, float expectedGold, float expectedDiamond, float expectedSoul)
         {
@@ -47,9 +51,9 @@ namespace CryptoQuest.Tests.Editor.Currency
             _walletSo.Gold.SetCurrencyAmount(defaultGold);
             _walletSo.Diamond.SetCurrencyAmount(defaultDiamond);
             _walletSo.Soul.SetCurrencyAmount(defaultSoul);
-            _walletControllerSo.UpdateCurrencyAmount(_walletSo.Gold.Data, amountToUpdateGold);
-            _walletControllerSo.UpdateCurrencyAmount(_walletSo.Diamond.Data, amountToUpdateDiamond);
-            _walletControllerSo.UpdateCurrencyAmount(_walletSo.Soul.Data, amountToUpdateSoul);
+            _walletController.UpdateCurrencyAmount(_walletSo.Gold.Data, amountToUpdateGold);
+            _walletController.UpdateCurrencyAmount(_walletSo.Diamond.Data, amountToUpdateDiamond);
+            _walletController.UpdateCurrencyAmount(_walletSo.Soul.Data, amountToUpdateSoul);
             _walletSo.OnValidate();
             Assert.AreEqual(expectedGold, _walletSo.Gold.Amount);
             Assert.AreEqual(expectedDiamond, _walletSo.Diamond.Amount);

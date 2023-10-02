@@ -5,17 +5,17 @@ namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects
 {
     public class WalletControllerSO : ScriptableObject, ICurrenciesController
     {
-        public WalletSO Wallet;
+        private ICurrenciesController _walletController;
+        public void Provide(ICurrenciesController walletController) => _walletController = walletController;
 
         public void GetCurrencyInfo(CurrencySO currencySo, out CurrencyInfo currencyInfo)
         {
-            Wallet.CurrencyAmounts.TryGetValue(currencySo, out currencyInfo);
+            _walletController.GetCurrencyInfo(currencySo, out currencyInfo);
         }
 
         public void UpdateCurrencyAmount(CurrencySO currencySo, float amount)
         {
-            GetCurrencyInfo(currencySo, out var currencyInfo);
-            currencyInfo.UpdateCurrencyAmount(amount);
+            _walletController.UpdateCurrencyAmount(currencySo, amount);
         }
     }
 }
