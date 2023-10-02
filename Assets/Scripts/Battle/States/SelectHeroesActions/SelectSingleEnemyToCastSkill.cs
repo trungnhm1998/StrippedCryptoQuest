@@ -42,7 +42,7 @@ namespace CryptoQuest.Battle.States.SelectHeroesActions
         private void CreateCommandToCastSkillOnEnemy(EnemyBehaviour enemy)
         {
             var castSkillCommand =
-                new CastSkillCommand(Hero.CharacterComponent, _selectedSkill.Skill, enemy.CharacterComponent);
+                new CastSkillCommand(Hero, _selectedSkill.Skill, enemy);
             Hero.TryGetComponent(out Components.Character character);
             character.SetCommand(castSkillCommand);
             Fsm.GoToNextState();

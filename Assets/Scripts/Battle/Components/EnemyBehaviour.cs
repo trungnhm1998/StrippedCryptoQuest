@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using CryptoQuest.Character.Enemy;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
-using IndiGames.GameplayAbilitySystem.TagSystem.ScriptableObjects;
 using Spine.Unity;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -21,7 +19,8 @@ namespace CryptoQuest.Battle.Components
         void ProvideStats(AttributeWithValue[] attributeWithValues);
     }
 
-    public class EnemyBehaviour : MonoBehaviour, IStatsProvider
+    [DisallowMultipleComponent]
+    public class EnemyBehaviour : Character, IStatsProvider
     {
         public AttributeWithValue[] Stats => _enemyDef.Stats;
 
@@ -31,16 +30,9 @@ namespace CryptoQuest.Battle.Components
         private EnemyDef _enemyDef;
         private GameObject _enemyModel;
 
-        private Character _battleCharacter;
-        public Character CharacterComponent => _battleCharacter;
         private SkeletonAnimation _skeletonAnimation;
         private AsyncOperationHandle<string> _localizedNameHandle;
         private AsyncOperationHandle<GameObject> _modelHandle;
-
-        private void Awake()
-        {
-            _battleCharacter = GetComponent<Character>();
-        }
 
         public void Init(EnemySpec enemySpec, string postfix)
         {
@@ -49,7 +41,7 @@ namespace CryptoQuest.Battle.Components
             _enemyDef = _spec.Data;
 
             // Stats
-            _battleCharacter.Init(_enemyDef.Element);
+            base.Init(_enemyDef.Element);
 
             // Visuals
             StartCoroutine(CoInstantiateModel());
@@ -107,7 +99,5 @@ namespace CryptoQuest.Battle.Components
         }
 
         public void ProvideStats(AttributeWithValue[] attributeWithValues) { }
-
-        public bool HasTag(TagScriptableObject tagSO) => _battleCharacter.HasTag(tagSO);
     }
 }

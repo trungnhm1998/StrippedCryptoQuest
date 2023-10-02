@@ -6,7 +6,6 @@ using IndiGames.GameplayAbilitySystem.EffectSystem;
 using IndiGames.GameplayAbilitySystem.EffectSystem.Components;
 using IndiGames.GameplayAbilitySystem.TagSystem.ScriptableObjects;
 using UnityEngine;
-using NotImplementedException = System.NotImplementedException;
 
 namespace CryptoQuest.Battle.Components
 {
@@ -25,7 +24,7 @@ namespace CryptoQuest.Battle.Components
         private Elemental _element;
         public Elemental Element => _element;
 
-        private void Awake()
+        protected virtual void Awake()
         {
             _gas = GetComponent<AbilitySystemBehaviour>();
             _command = new NullCommand(this);
@@ -48,13 +47,13 @@ namespace CryptoQuest.Battle.Components
 
         public void RemoveEffect(GameplayEffectSpec activeEffectEffectSpec)
         {
-            GameplayEffectSystem.RemoveEffect(activeEffectEffectSpec as GameplayEffectSpec);
+            GameplayEffectSystem.RemoveEffect(activeEffectEffectSpec);
         }
 
         public bool HasTag(TagScriptableObject tagSO) => _gas.TagSystem.HasTag(tagSO);
 
         private ICommand _command;
-        
+
         public void SetCommand(ICommand command)
         {
             _command = command;

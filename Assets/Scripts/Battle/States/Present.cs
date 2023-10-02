@@ -10,7 +10,7 @@
         {
             _stateMachine = stateMachine;
             _battleContext = stateMachine.GetComponent<BattleContext>();
-            var presentation = stateMachine.GetComponent<Presentation>();
+            var presentation = stateMachine.GetComponent<PresentBehaviour>();
             _presenter = stateMachine.GetComponent<BattlePresenter>();
             _presenter.CommandPanel.SetActive(false);
 

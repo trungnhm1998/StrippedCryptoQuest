@@ -1,13 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using CryptoQuest.Battle.Commands;
 using CryptoQuest.Character.Attributes;
 using CryptoQuest.Character.Hero;
 using CryptoQuest.Gameplay;
 using CryptoQuest.Gameplay.Character;
-using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
-using IndiGames.GameplayAbilitySystem.AttributeSystem.Components;
-using IndiGames.GameplayAbilitySystem.TagSystem.ScriptableObjects;
 using UnityEngine;
 
 namespace CryptoQuest.Battle.Components
@@ -15,7 +11,8 @@ namespace CryptoQuest.Battle.Components
     /// <summary>
     /// To interact with Gameplay Ability System
     /// </summary>
-    public class HeroBehaviour : MonoBehaviour, IEquipmentsProvider
+    [DisallowMultipleComponent]
+    public class HeroBehaviour : Character, IEquipmentsProvider
     {
         public int Level { get; set; } = 1;
         public Origin.Information DetailsInfo => Spec.Unit.Origin.DetailInformation;
@@ -26,10 +23,6 @@ namespace CryptoQuest.Battle.Components
         public Sprite Avatar { get; set; }
         public Sprite BattleAvatar { get; set; }
 
-        private Character _characterComponent;
-        public Character CharacterComponent => _characterComponent;
-        public AttributeSystemBehaviour AttributeSystem => _characterComponent.AttributeSystem;
-
         [SerializeField] private HeroSpec _spec;
 
         public HeroSpec Spec
@@ -39,14 +32,12 @@ namespace CryptoQuest.Battle.Components
         }
 
         private LevelSystem _levelSystem;
-        private TagSystemBehaviour _tagSystem;
         private readonly Dictionary<Type, Component> _cachedComponents = new();
 
-        private void Awake()
+        protected override void Awake()
         {
-            _characterComponent = GetComponent<Character>();
+            base.Awake();
             _levelSystem = GetComponent<LevelSystem>();
-            _tagSystem = GetComponent<TagSystemBehaviour>();
         }
 
         /// <summary>
@@ -64,16 +55,12 @@ namespace CryptoQuest.Battle.Components
             Spec = character;
             _levelSystem.Init(this);
             // Need level before I can init the character
-            _characterComponent.Init(Element);
+            Init(Element);
         }
 
         public bool IsValid() => Spec.IsValid();
         public Equipments GetEquipments() => Spec.Equipments;
 
-        public bool HasTag(TagScriptableObject tagSO) => _characterComponent.HasTag(tagSO);
-
-        public void SetCommand(ICommand command) => _characterComponent.SetCommand(command);
-        
         /// <summary>
         /// Same as Unity's <see cref="GameObject.TryGetComponent{T}(out T)"/> but with a cache
         /// </summary>
