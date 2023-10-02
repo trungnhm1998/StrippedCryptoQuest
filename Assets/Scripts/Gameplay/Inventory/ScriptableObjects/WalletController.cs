@@ -1,12 +1,13 @@
 using CryptoQuest.Gameplay.Inventory.Currency;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects
 {
     public class WalletController : MonoBehaviour, ICurrenciesController
     {
         [SerializeField] private WalletControllerSO _walletController;
-        [SerializeField] private WalletSO _wallet;
+        [field: SerializeField] public WalletSO Wallet { get; set; }
 
         public void Awake()
         {
@@ -15,7 +16,7 @@ namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects
 
         public void GetCurrencyInfo(CurrencySO currencySo, out CurrencyInfo currencyInfo)
         {
-            _wallet.CurrencyAmounts.TryGetValue(currencySo, out currencyInfo);
+            Wallet.TryGetValue(currencySo, out currencyInfo);
         }
 
         public void UpdateCurrencyAmount(CurrencySO currencySo, float amount)
@@ -28,10 +29,10 @@ namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects
         {
             _walletController = walletControllerSo;
         }
-        
+
         public void Editor_SetWallet(WalletSO walletSo)
         {
-            _wallet = walletSo;
+            Wallet = walletSo;
         }
 #endif
     }
