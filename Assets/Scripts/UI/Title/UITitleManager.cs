@@ -1,8 +1,6 @@
-﻿using CryptoQuest.Input;
-using IndiGames.Core.Events.ScriptableObjects;
+﻿using IndiGames.Core.Events.ScriptableObjects;
 using IndiGames.Core.SaveSystem;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace CryptoQuest.UI.Title
 {
@@ -16,7 +14,7 @@ namespace CryptoQuest.UI.Title
         [SerializeField] private UITitleSetting _titleSetting;
         [SerializeField] private UINamingPanel _namingPanel;
         [SerializeField] private UINameConfirmPanel _confirmationPanel;
-        [FormerlySerializedAs("_socialButtonPanel")] [SerializeField] private UISocialPanel socialPanel;
+        [SerializeField] private UISocialPanel socialPanel;
         [SerializeField] private UISignInPanel _signInPanel;
         [SerializeField] private UIOptionPanel _optionPanel;
 

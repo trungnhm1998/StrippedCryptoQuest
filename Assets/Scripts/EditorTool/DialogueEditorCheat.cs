@@ -37,6 +37,6 @@ namespace CryptoQuest.EditorTool
                 _lineView.UserRequestedViewAdvancement();
             }
         }
-    }
 #endif
+    }
 }

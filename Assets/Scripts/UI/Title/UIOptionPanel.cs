@@ -1,8 +1,6 @@
 using System.Collections;
-using CryptoQuest.Input;
 using CryptoQuest.System.Settings;
 using UnityEngine;
-using UnityEngine.Events;
 
 namespace CryptoQuest.UI.Title
 {

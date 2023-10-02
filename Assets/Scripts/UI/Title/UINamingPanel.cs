@@ -1,10 +1,8 @@
-﻿using System.Collections;
-using CryptoQuest.System.Settings;
+﻿using CryptoQuest.System.Settings;
 using IndiGames.Core.SaveSystem;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.EventSystems;
 using UnityEngine.Localization.Components;
 using UnityEngine.UI;
 
@@ -33,21 +31,19 @@ namespace CryptoQuest.UI.Title
 
         private void Awake()
         {
-            _tempSaveInfo.PlayerName = "";
+            _tempSaveInfo.PlayerName = string.Empty;
             _nameValidator = new NameValidator(_badWordAsset, _specialCharacterAsset);
         }
 
         private void OnEnable()
         {
             NameInput.onSubmit.AddListener(MenuSubmitEvent);
-            NameInput.Select();
-            StartCoroutine(CoSelectNameInput());
+            Invoke(nameof(SelectInputField), 0);
         }
 
-        private void OnDisable()
-        {
-            NameInput.onSubmit.RemoveListener(MenuSubmitEvent);
-        }
+        private void OnDisable() => NameInput.onSubmit.RemoveListener(MenuSubmitEvent);
+
+        private void SelectInputField() => NameInput.Select();
 
         public void OnConfirmButtonPressed()
         {
@@ -61,21 +57,9 @@ namespace CryptoQuest.UI.Title
             ConfirmNameButtonPressed?.Invoke();
         }
 
-        public void ValidateInput(string input)
-        {
-            _isInputValid = IsNameValid(input);
-        }
+        public void ValidateInput(string input) => _isInputValid = IsNameValid(input);
 
-        public bool IsInputValid()
-        {
-            return _isInputValid;
-        }
-
-        private void HandleInputSubmit()
-        {
-            if (EventSystem.current.currentSelectedGameObject != NameInput.gameObject) return;
-            MenuSubmitEvent(NameInput.text);
-        }
+        public bool IsInputValid() => _isInputValid;
 
         private void MenuSubmitEvent(string input)
         {
@@ -83,10 +67,7 @@ namespace CryptoQuest.UI.Title
                 ConfirmButton.Select();
         }
 
-        private void BackToStartScreen()
-        {
-            CancelEvent?.Invoke();
-        }
+        private void BackToStartScreen() => CancelEvent?.Invoke();
 
         private bool IsNameValid(string input)
         {
@@ -98,25 +79,6 @@ namespace CryptoQuest.UI.Title
             return isValid;
         }
 
-        public void SetTempName(string text)
-        {
-            _tempSaveInfo.PlayerName = text;
-        }
-
-        private void NavigateToNextInput()
-        {
-            var currentSelected = EventSystem.current.currentSelectedGameObject;
-
-            if (currentSelected == NameInput.gameObject)
-                ConfirmButton.Select();
-            else
-                NameInput.Select();
-        }
-
-        private IEnumerator CoSelectNameInput()
-        {
-            yield return new WaitForSeconds(.03f); // highlight event system bug workaround
-            NameInput.Select();
-        }
+        public void SetTempName(string text) => _tempSaveInfo.PlayerName = text;
     }
 }

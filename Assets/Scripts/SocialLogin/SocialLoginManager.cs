@@ -104,13 +104,21 @@ namespace CryptoQuest.SocialLogin
         /// </summary>
         private IEnumerator CoLoginSuccess()
         {
+#if UNITY_EDITOR
+            yield return new WaitForSeconds(.5f);
+#else
             yield return new WaitForSeconds(5f);
+#endif
             _loginSuccessEvent.RaiseEvent();
         }
 
         private IEnumerator CoLoginFail()
         {
+#if UNITY_EDITOR
+            yield return new WaitForSeconds(.5f);
+#else
             yield return new WaitForSeconds(3f);
+#endif
             _loginFailEvent.RaiseEvent("Login Failed");
         }
     }

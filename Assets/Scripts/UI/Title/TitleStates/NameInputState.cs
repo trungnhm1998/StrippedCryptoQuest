@@ -2,7 +2,6 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
-using NotImplementedException = System.NotImplementedException;
 
 namespace CryptoQuest.UI.Title.TitleStates
 {

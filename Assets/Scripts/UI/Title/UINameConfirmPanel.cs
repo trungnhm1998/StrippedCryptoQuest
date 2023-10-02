@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using IndiGames.Core.SaveSystem;
+﻿using IndiGames.Core.SaveSystem;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,20 +11,8 @@ namespace CryptoQuest.UI.Title
         [field: SerializeField] public Button YesButton { get; private set; }
         [field: SerializeField] public Button NoButton { get; private set; }
 
-        private void OnEnable()
-        {
-            StartCoroutine(CoSelectYesButton());
-        }
-
-        private IEnumerator CoSelectYesButton()
-        {
-            yield return new WaitForSeconds(.03f);
-            YesButton.Select();
-        }
-
-        public void ConfirmPlayerName()
-        {
-            _saveSystemSo.PlayerName = _tempSaveInfo.PlayerName;
-        }
+        private void OnEnable() => Invoke(nameof(SelectYesButton), 0);
+        private void SelectYesButton() => YesButton.Select();
+        public void ConfirmPlayerName() => _saveSystemSo.PlayerName = _tempSaveInfo.PlayerName;
     }
 }

@@ -1,8 +1,5 @@
-using System.Collections;
-using CryptoQuest.Menu;
 using IndiGames.Core.Events.ScriptableObjects;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.UI;
 
 namespace CryptoQuest.UI.Title
