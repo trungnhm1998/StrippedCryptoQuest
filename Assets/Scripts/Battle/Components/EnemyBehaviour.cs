@@ -30,6 +30,8 @@ namespace CryptoQuest.Battle.Components
         public override string DisplayName => _displayName;
         private EnemySpec _spec = new();
         public EnemySpec Spec => _spec;
+
+
         private EnemyDef _enemyDef;
         private GameObject _enemyModel;
 

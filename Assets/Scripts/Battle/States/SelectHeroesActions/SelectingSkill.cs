@@ -20,29 +20,14 @@ namespace CryptoQuest.Battle.States.SelectHeroesActions
             _skillPresenter.Show(Hero);
             _skillPresenter.SelectSingleEnemyCallback = SelectEnemyToCastSkillOn;
             _skillPresenter.SelectSingleHeroCallback = SelectHeroToCastSkillOn;
-            RegisterEvents();
         }
 
         public override void OnExit()
         {
-            UnregisterEvents();
             _skillPresenter.Hide();
         }
-
-        private void RegisterEvents()
-        {
-            Fsm.BattleStateMachine.BattleInput.InputActions.BattleMenu.Cancel.performed += CancelPressed;
-        }
-
-        private void UnregisterEvents()
-        {
-            Fsm.BattleStateMachine.BattleInput.InputActions.BattleMenu.Cancel.performed -= CancelPressed;
-        }
-
-        private void CancelPressed(InputAction.CallbackContext obj)
-        {
-            if (obj.performed) Fsm.PopState();
-        }
+        
+        public override void OnCancel() { }
 
         private void SelectEnemyToCastSkillOn(UISkill skillUI)
         {

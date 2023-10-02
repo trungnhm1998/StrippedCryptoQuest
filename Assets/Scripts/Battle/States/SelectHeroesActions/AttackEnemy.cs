@@ -18,12 +18,10 @@ namespace CryptoQuest.Battle.States.SelectHeroesActions
         {
             _selectEnemyPresenter.Show();
             _selectEnemyPresenter.RegisterEnemySelectedCallback(CreateAttackCommand);
-            Fsm.BattleStateMachine.BattleInput.InputActions.BattleMenu.Cancel.performed += CancelPressed;
         }
 
         public override void OnExit()
         {
-            Fsm.BattleStateMachine.BattleInput.InputActions.BattleMenu.Cancel.performed -= CancelPressed;
             _selectEnemyPresenter.Hide();
         }
 
@@ -35,9 +33,6 @@ namespace CryptoQuest.Battle.States.SelectHeroesActions
             Fsm.GoToNextState();
         }
 
-        private void CancelPressed(InputAction.CallbackContext obj)
-        {
-            if (obj.performed) Fsm.PopState();
-        }
+        public override void OnCancel() { }
     }
 }

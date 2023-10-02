@@ -29,6 +29,7 @@ namespace CryptoQuest.Battle.States.SelectHeroesActions
 
         public abstract void OnEnter();
         public abstract void OnExit();
+        public abstract void OnCancel();
     }
 
     public class StateFactory
@@ -75,6 +76,8 @@ namespace CryptoQuest.Battle.States.SelectHeroesActions
             _presenter = battleStateMachine.GetComponent<BattlePresenter>();
             _presenter.CommandPanel.SetActive(true);
 
+            battleStateMachine.BattleInput.CancelEvent += CancelPressed;
+
             battleStateMachine.BattleUI.SetActive(true);
             PushState(new SelectCommand(GetFirstAliveHeroInParty(), this));
         }
@@ -93,11 +96,19 @@ namespace CryptoQuest.Battle.States.SelectHeroesActions
 
         public void OnExit(BattleStateMachine battleStateMachine)
         {
+            battleStateMachine.BattleInput.CancelEvent -= CancelPressed;
             // battleStateMachine.BattleUI.SetActive(false);
             while (_stateStack.Count > 0)
             {
                 _stateStack.Pop()?.OnExit();
             }
+        }
+
+        private void CancelPressed()
+        {
+            var popState = _stateStack.Peek();
+            PopState();
+            popState?.OnCancel();
         }
 
         public void PushState(StateBase state)
@@ -118,7 +129,6 @@ namespace CryptoQuest.Battle.States.SelectHeroesActions
 
         public void PopToLastSelectCommandState()
         {
-            PopState();
             while (_stateStack.Peek() is not SelectCommand)
             {
                 PopState();

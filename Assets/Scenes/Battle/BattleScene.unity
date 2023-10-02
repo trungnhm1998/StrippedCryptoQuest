@@ -123,6 +123,56 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &37686711
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 37686712}
+  - component: {fileID: 37686713}
+  m_Layer: 0
+  m_Name: SelectItemPresenter
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &37686712
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 37686711}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7116505576077580195}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &37686713
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 37686711}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f2380373fdd3bb4d80817d4a11e737d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _autoScroll: {fileID: 1415878836909279780}
+  _input: {fileID: 11400000, guid: d0c44063c591fb8489bc8e1087c0999e, type: 2}
+  _itemScroll: {fileID: 1415878836909279781}
+  _itemPrefab: {fileID: 7580961180523968948, guid: bce9fbfd344824344bdb305c18fdd798, type: 3}
+  _singleHeroChannel: {fileID: 11400000, guid: cf816191ca3034c4d80534b6369b5834, type: 2}
+  _singleEnemyChannel: {fileID: 11400000, guid: a5c9d024c1c00a7448a6f2974d1521d4, type: 2}
 --- !u!114 &207560448 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7801837947260614059, guid: d0eacd5a881766b4ca08ec4b770526a2, type: 3}
@@ -451,7 +501,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 0
     m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
@@ -1356,6 +1406,28 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 3110689978637270772, guid: d0eacd5a881766b4ca08ec4b770526a2, type: 3}
   m_PrefabInstance: {fileID: 1415878836909279776}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1415878836909279780 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1398729345043877067, guid: d0eacd5a881766b4ca08ec4b770526a2, type: 3}
+  m_PrefabInstance: {fileID: 1415878836909279776}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db680cf6b1e7353428c6159ae1ee1dec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1415878836909279781 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8007205568479952908, guid: d0eacd5a881766b4ca08ec4b770526a2, type: 3}
+  m_PrefabInstance: {fileID: 1415878836909279776}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1aa08ab6e0800fa44ae55d278d1423e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3148632503289432661 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7287248083317083516, guid: d0eacd5a881766b4ca08ec4b770526a2, type: 3}
@@ -1384,17 +1456,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &4254201562561237428 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2399052062455574540, guid: d0eacd5a881766b4ca08ec4b770526a2, type: 3}
-  m_PrefabInstance: {fileID: 1415878836909279776}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 297b474b3aec3664ba50b5f3e8dcc203, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &4750489533933643525 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1150176476869230030, guid: d0eacd5a881766b4ca08ec4b770526a2, type: 3}
@@ -1530,6 +1591,7 @@ Transform:
   m_Children:
   - {fileID: 1253872320}
   - {fileID: 1169412495}
+  - {fileID: 37686712}
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1563,7 +1625,6 @@ MonoBehaviour:
   <BattleUI>k__BackingField: {fileID: 4750489533933643525}
   <IntroUI>k__BackingField: {fileID: 6217317452887572703}
   <CommandUI>k__BackingField: {fileID: 78955201203678911}
-  <CommandDetailPresenter>k__BackingField: {fileID: 4254201562561237428}
   <Spiral>k__BackingField: {fileID: 11400000, guid: 2708a2e85420add4493974ea482cd235, type: 2}
   <SceneLoadedEvent>k__BackingField: {fileID: 11400000, guid: d463f98507ffd95459feb67b21dd1ecc, type: 2}
   <BattleEndedEvent>k__BackingField: {fileID: 11400000, guid: 8a69f584e68c6d54a8aca598bef348b2, type: 2}
@@ -1623,7 +1684,7 @@ MonoBehaviour:
   _autoScroll: {fileID: 1415878836909279777}
   _input: {fileID: 11400000, guid: d0c44063c591fb8489bc8e1087c0999e, type: 2}
   _skillList: {fileID: 1415878836909279778}
-  _skillPrefab: {fileID: 3294512297934803112, guid: 1f9b3c9eba401734e8cdd6a3d8cebc8f, type: 3}
+  _skillPrefab: {fileID: 3966912095438748167, guid: 07fa0527d5a895c4a9eab8a40f261290, type: 3}
   _singleHeroChannel: {fileID: 11400000, guid: 22b78d0c574a9b64984629f7aedc22ea, type: 2}
   _singleEnemyChannel: {fileID: 11400000, guid: 6cd304533bdab184cb6240d08cf35473, type: 2}
 --- !u!114 &8909492559710276275 stripped

@@ -1,30 +1,28 @@
 ﻿using CryptoQuest.Battle.Commands;
 using CryptoQuest.Battle.Components;
 using CryptoQuest.Battle.UI.CommandDetail;
+using CryptoQuest.Battle.UI.SelectItem;
 using CryptoQuest.Battle.UI.SelectSkill;
 using UnityEngine.InputSystem;
 
 namespace CryptoQuest.Battle.States.SelectHeroesActions
 {
-    public class SelectSingleEnemyToCastSkill : StateBase
+    public class SelectSingleEnemyToUseItem : StateBase
     {
-        private readonly UISkill _selectedSkill;
-        private readonly SelectSkillPresenter _skillPresenter;
+        private readonly UIItem _selectedItem;
         private readonly SelectEnemyPresenter _selectEnemyPresenter;
 
-        public SelectSingleEnemyToCastSkill(UISkill selectedSkill, HeroBehaviour hero, SelectHeroesActions fsm) :
+        public SelectSingleEnemyToUseItem(UIItem selectedItem, HeroBehaviour hero, SelectHeroesActions fsm) :
             base(hero, fsm)
         {
-            Fsm.TryGetComponent(out _skillPresenter);
-            _selectedSkill = selectedSkill;
+            _selectedItem = selectedItem;
             _selectEnemyPresenter = fsm.BattleStateMachine.gameObject.GetComponentInChildren<SelectEnemyPresenter>();
         }
 
         public override void OnEnter()
         {
-            _skillPresenter.Hide();
             _selectEnemyPresenter.Show();
-            _selectEnemyPresenter.RegisterEnemySelectedCallback(CreateCommandToCastSkillOnEnemy);
+            _selectEnemyPresenter.RegisterEnemySelectedCallback(CreateCommandToUseItemOnEnemy);
         }
 
         public override void OnExit()
@@ -34,11 +32,10 @@ namespace CryptoQuest.Battle.States.SelectHeroesActions
 
         public override void OnCancel() { }
 
-        private void CreateCommandToCastSkillOnEnemy(EnemyBehaviour enemy)
+        private void CreateCommandToUseItemOnEnemy(EnemyBehaviour enemy)
         {
-            var castSkillCommand =
-                new CastSkillCommand(Hero, _selectedSkill.Skill, enemy);
-            Hero.SetCommand(castSkillCommand);
+            var useItemCommand = new ConsumeItemCommand(Hero, _selectedItem.Item, enemy, true);
+            Hero.SetCommand(useItemCommand);
             Fsm.GoToNextState();
         }
     }

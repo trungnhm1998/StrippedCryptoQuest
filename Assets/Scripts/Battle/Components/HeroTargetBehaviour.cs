@@ -15,7 +15,7 @@ namespace CryptoQuest.Battle.Components
         /// </summary>
         public void UpdateTargetIfNeeded(BattleContext context)
         {
-            if (Target.IsValid()) return;
+            if (Target == null || Target.IsValid()) return;
             var enemy = context.Enemies[0];
             enemy.AttributeSystem.TryGetAttributeValue(AttributeSets.Health, out var hp);
 

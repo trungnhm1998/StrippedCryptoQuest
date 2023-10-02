@@ -22,20 +22,17 @@ namespace CryptoQuest.Battle.States.SelectHeroesActions
             else
                 Fsm.SelectCommandUI.SelectFirstButton();
             EnableCommandMenu();
-
-            Fsm.BattleStateMachine.BattleInput.InputActions.BattleMenu.Cancel.performed += CancelPressed;
         }
 
         public override void OnExit()
         {
-            Fsm.BattleStateMachine.BattleInput.InputActions.BattleMenu.Cancel.performed -= CancelPressed;
             Fsm.SelectCommandUI.RegisterCallback(null);
             DisableCommandMenu();
         }
 
-        private void CancelPressed(InputAction.CallbackContext obj)
+        public override void OnCancel()
         {
-            if (obj.performed) Fsm.PopToLastSelectCommandState();
+            Fsm.PopToLastSelectCommandState();
         }
 
         public void OnAttackPressed()
@@ -58,30 +55,21 @@ namespace CryptoQuest.Battle.States.SelectHeroesActions
         {
             Debug.Log("SelectCommandState::OnItemPressed");
             _lastSelectedCommand = EventSystem.current.currentSelectedGameObject;
-            NextHero();
+            Fsm.PushState(new SelectingItem(Hero, Fsm));
         }
 
         public void OnGuardPressed()
         {
             Debug.Log("SelectCommandState::OnGuardPressed");
             Hero.SetCommand(new GuardCommand(Hero));
-            NextHero();
+            Fsm.GoToNextState();
         }
 
         public void OnRetreatPressed()
         {
             Debug.Log("SelectCommandState::OnRetreatPressed");
-            NextHero();
+            Fsm.GoToNextState();
         }
-
-        private void NextHero()
-        {
-            if (Fsm.GetNextAliveHero(out var nextHero))
-                Fsm.PushState(new SelectCommand(nextHero, Fsm));
-            else
-                Fsm.GoToPresentState();
-        }
-
 
         private void EnableCommandMenu()
         {

@@ -40,14 +40,14 @@ namespace CryptoQuest.Character.Attributes
             var maxAttributeValue = attributeSystemBehaviour.AttributeValues[maxAttributeIdx];
             var preChange = newAttributeValue.Clone();
 
-            if (newAttributeValue.CurrentValue > maxAttributeValue.CurrentValue)
+            if (newAttributeValue.CurrentValue >= maxAttributeValue.CurrentValue)
             {
                 newAttributeValue.CurrentValue = maxAttributeValue.CurrentValue;
                 Debug.Log(
                     $"Clamped current attribute {_attribute.name} from [{preChange.CurrentValue}] to [{newAttributeValue.CurrentValue}]");
             }
 
-            if (newAttributeValue.BaseValue > maxAttributeValue.BaseValue)
+            if (newAttributeValue.BaseValue >= maxAttributeValue.BaseValue)
             {
                 newAttributeValue.BaseValue = maxAttributeValue.BaseValue;
                 Debug.Log(

@@ -31,7 +31,6 @@ namespace CryptoQuest.Battle
         [field: SerializeField] public GameObject BattleUI { get; private set; }
         [field: SerializeField] public UIIntroBattle IntroUI { get; private set; }
         [field: SerializeField] public UISelectCommand CommandUI { get; private set; }
-        [field: SerializeField] public CommandDetailPresenter CommandDetailPresenter { get; private set; }
         [field: SerializeField] public SpiralConfigSO Spiral { get; private set; }
         [field: SerializeField] public VoidEventChannelSO SceneLoadedEvent { get; private set; }
         [field: SerializeField] public BattleEventSO BattleEndedEvent { get; private set; }
@@ -48,7 +47,11 @@ namespace CryptoQuest.Battle
             SceneLoadedEvent.EventRaised += GotoLoadingState;
         }
 
-        private void OnDestroy()
+        /// <summary>
+        /// I use OnDisable to prevent error in editor
+        /// because when state Exit it only disabling GO and those GO already destroyed 
+        /// </summary>
+        private void OnDisable()
         {
             SceneLoadedEvent.EventRaised -= GotoLoadingState;
             _currentState.OnExit(this);
