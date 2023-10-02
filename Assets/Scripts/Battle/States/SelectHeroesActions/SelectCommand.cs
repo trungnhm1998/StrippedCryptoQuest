@@ -24,7 +24,6 @@ namespace CryptoQuest.Battle.States.SelectHeroesActions
             EnableCommandMenu();
 
             Fsm.BattleStateMachine.BattleInput.InputActions.BattleMenu.Cancel.performed += CancelPressed;
-            Debug.Log($"Select command for {Hero.Spec.Unit.Origin.name}");
         }
 
         public override void OnExit()
@@ -32,12 +31,11 @@ namespace CryptoQuest.Battle.States.SelectHeroesActions
             Fsm.BattleStateMachine.BattleInput.InputActions.BattleMenu.Cancel.performed -= CancelPressed;
             Fsm.SelectCommandUI.RegisterCallback(null);
             DisableCommandMenu();
-            Debug.Log($"Exit Select command for {Hero.Spec.Unit.Origin.name}");
         }
 
         private void CancelPressed(InputAction.CallbackContext obj)
         {
-            Fsm.PopState();
+            Fsm.PopToLastSelectCommandState();
         }
 
         public void OnAttackPressed()

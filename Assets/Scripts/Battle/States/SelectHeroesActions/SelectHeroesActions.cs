@@ -118,15 +118,11 @@ namespace CryptoQuest.Battle.States.SelectHeroesActions
 
         public void PopToLastSelectCommandState()
         {
-            if (_stateStack.Count <= 1) return;
-            var currentState = _stateStack.Pop();
-            do
+            PopState();
+            while (_stateStack.Peek() is not SelectCommand)
             {
-                currentState.OnExit();
-                currentState = _stateStack.Pop();
-            } while (currentState is not SelectCommand);
-
-            currentState.OnEnter();
+                PopState();
+            }
         }
 
         public bool TryGetComponent<T>(out T component) where T : Component
@@ -146,14 +142,16 @@ namespace CryptoQuest.Battle.States.SelectHeroesActions
                     break;
                 }
             }
-            
+
             for (int i = index + 1; i < _party.Slots.Length; i++)
             {
                 var slot = _party.Slots[i];
-                if (slot.HeroBehaviour == null || !slot.HeroBehaviour.IsValid() || slot.HeroBehaviour.HasTag(TagsDef.Dead)) continue;
+                if (slot.HeroBehaviour == null || !slot.HeroBehaviour.IsValid() ||
+                    slot.HeroBehaviour.HasTag(TagsDef.Dead)) continue;
                 nextHero = slot.HeroBehaviour;
                 return true;
             }
+
             return false;
         }
 
