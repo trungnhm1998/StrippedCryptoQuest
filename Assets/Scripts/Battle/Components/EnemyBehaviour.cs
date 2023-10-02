@@ -32,6 +32,7 @@ namespace CryptoQuest.Battle.Components
         private GameObject _enemyModel;
 
         private Character _battleCharacter;
+        public Character CharacterComponent => _battleCharacter;
         private SkeletonAnimation _skeletonAnimation;
         private AsyncOperationHandle<string> _localizedNameHandle;
         private AsyncOperationHandle<GameObject> _modelHandle;

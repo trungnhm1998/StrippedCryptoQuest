@@ -12,6 +12,7 @@ namespace CryptoQuest.Battle.UI.SelectHero
         public event Action ConfirmPressed;
 
         [SerializeField] private MultiInputButton _button;
+        public MultiInputButton Button => _button;
         [SerializeField] private GameObject _content;
         [SerializeField] private LocalizeStringEvent _label;
 

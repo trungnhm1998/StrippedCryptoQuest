@@ -1,29 +1,26 @@
-﻿using CryptoQuest.Battle.Components;
-using CryptoQuest.Character.Ability;
-using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
+﻿using CryptoQuest.Character.Ability;
 using UnityEngine;
 
 namespace CryptoQuest.Battle.Commands
 {
     public class CastSkillCommand : ICommand
     {
-        private HeroBehaviour _hero;
-        private CastableAbility _selectedSkill;
-        private EnemyBehaviour _enemy;
+        private readonly Components.Character _owner;
+        private readonly CastableAbility _selectedSkill;
+        private readonly Components.Character _target;
 
-        public CastSkillCommand(HeroBehaviour hero, CastableAbility selectedSkill, EnemyBehaviour enemy)
+        public CastSkillCommand(Components.Character owner, CastableAbility selectedSkill, Components.Character target)
         {
-            _enemy = enemy;
+            _target = target;
             _selectedSkill = selectedSkill;
-            _hero = hero;
+            _owner = owner;
         }
 
         public void Execute()
         {
-            Debug.Log($"{_hero.name} casting {_selectedSkill.name} on {_enemy.name}");
-            _hero.TryGetComponent(out AbilitySystemBehaviour abilitySystem);
-            var spec = abilitySystem.GiveAbility<CastableAbilitySpec>(_selectedSkill);
-            spec.Execute(_enemy.GetComponent<AbilitySystemBehaviour>());
+            Debug.Log($"{_owner.name} casting {_selectedSkill.name} on {_target.name}");
+            var spec = _owner.AbilitySystem.GiveAbility<CastableAbilitySpec>(_selectedSkill);
+            spec.Execute(_target.AbilitySystem);
         }
     }
 }

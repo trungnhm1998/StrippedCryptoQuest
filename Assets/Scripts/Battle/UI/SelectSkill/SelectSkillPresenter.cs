@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using CryptoQuest.Battle.Components;
 using CryptoQuest.Character.Ability;
 using CryptoQuest.Input;
+using CryptoQuest.Menu;
 using CryptoQuest.UI.Common;
 using DG.Tweening;
 using UnityEngine;
@@ -85,6 +86,21 @@ namespace CryptoQuest.Battle.UI.SelectSkill
         private void OnSingleEnemy(CastableAbility skill) => SelectSingleEnemyCallback?.Invoke(_lastSelectedSkill);
 
         public SkillTargetTypeDelegate SelectSingleHeroCallback { get; set; }
+        private bool _interactable;
+
+        public bool Interactable
+        {
+            get => _interactable;
+            set
+            {
+                _interactable = value;
+                foreach (var skill in _skills)
+                {
+                    skill.GetComponent<MultiInputButton>().interactable = value;
+                }
+            }
+        }
+
         private void OnSingleHero(CastableAbility skill) => SelectSingleHeroCallback?.Invoke(_lastSelectedSkill);
 
         private void DestroyAllSkillButtons()

@@ -27,6 +27,7 @@ namespace CryptoQuest.Battle.Components
         public Sprite BattleAvatar { get; set; }
 
         private Character _characterComponent;
+        public Character CharacterComponent => _characterComponent;
         public AttributeSystemBehaviour AttributeSystem => _characterComponent.AttributeSystem;
 
         [SerializeField] private HeroSpec _spec;

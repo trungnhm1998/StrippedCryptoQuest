@@ -2,7 +2,9 @@ using System;
 using CryptoQuest.Battle.Components;
 using CryptoQuest.Battle.UI.PlayerParty;
 using CryptoQuest.Input;
+using DG.Tweening;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.Localization;
 
 namespace CryptoQuest.Battle.UI.SelectHero
@@ -30,9 +32,21 @@ namespace CryptoQuest.Battle.UI.SelectHero
             _battleInput.NavigateEvent -= NavigateSelectHero;
         }
 
-        public void SetUILabel(LocalizedString str)
+
+        public void Show(LocalizedString str)
         {
             _selectHeroButton.SetLabel(str);
+            SetCurrentCharacter(0);
+            _selectHeroButton.SetUIActive(true);
+            DOVirtual.DelayedCall(0.16f, () =>
+            {
+                EventSystem.current.SetSelectedGameObject(_selectHeroButton.Button.gameObject);
+            });
+        }
+
+        public void Hide()
+        {
+            _selectHeroButton.SetUIActive(false);
         }
 
         private void NavigateSelectHero(Vector2 direction)
