@@ -28,7 +28,6 @@ namespace CryptoQuest.Battle.States.SelectHeroesActions
 
         public abstract void OnEnter();
         public abstract void OnExit();
-        public virtual void OnDestroy() { }
     }
 
     public class StateFactory
@@ -85,14 +84,9 @@ namespace CryptoQuest.Battle.States.SelectHeroesActions
         public void OnExit(BattleStateMachine battleStateMachine)
         {
             // battleStateMachine.BattleUI.SetActive(false);
-            OnDestroy(battleStateMachine);
-        }
-
-        public void OnDestroy(BattleStateMachine battleStateMachine)
-        {
             while (_stateStack.Count > 0)
             {
-                _stateStack.Pop()?.OnDestroy();
+                _stateStack.Pop()?.OnExit();
             }
         }
 
@@ -109,6 +103,18 @@ namespace CryptoQuest.Battle.States.SelectHeroesActions
             _stateStack.Pop();
             if (_stateStack.Count > 0)
                 _stateStack.Peek()?.OnEnter();
+        }
+
+        public void PopToLastSelectCommandState()
+        {
+            var currentState = _stateStack.Pop();
+            do
+            {
+                currentState.OnExit();
+                currentState = _stateStack.Pop();
+            } while (currentState is not SelectCommand && _stateStack.Count > 0);
+
+            currentState.OnEnter();
         }
 
         public bool TryGetComponent<T>(out T component) where T : Component

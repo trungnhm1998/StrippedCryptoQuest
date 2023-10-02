@@ -23,11 +23,6 @@ namespace CryptoQuest.Battle.States.SelectHeroesActions
 
         public override void OnExit()
         {
-            OnDestroy();
-        }
-
-        public override void OnDestroy()
-        {
             Fsm.BattleStateMachine.BattleInput.InputActions.BattleMenu.Cancel.performed -= CancelPressed;
             _selectEnemyPresenter.Hide();
         }

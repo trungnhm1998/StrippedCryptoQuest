@@ -16,7 +16,6 @@ namespace CryptoQuest.Battle
     {
         void OnEnter(BattleStateMachine stateMachine);
         void OnExit(BattleStateMachine stateMachine);
-        void OnDestroy(BattleStateMachine battleStateMachine);
     }
 
     public class BattleStateMachine : MonoBehaviour
@@ -47,7 +46,7 @@ namespace CryptoQuest.Battle
         private void OnDestroy()
         {
             SceneLoadedEvent.EventRaised -= GotoLoadingState;
-            _currentState.OnDestroy(this);
+            _currentState.OnExit(this);
         }
 
         private void GotoLoadingState()

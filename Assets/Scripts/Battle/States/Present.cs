@@ -19,7 +19,6 @@
         }
 
         public void OnExit(BattleStateMachine stateMachine) { }
-        public void OnDestroy(BattleStateMachine battleStateMachine) { }
 
         private void BackToSelectHeroesAction()
         {

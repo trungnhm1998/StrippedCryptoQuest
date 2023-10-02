@@ -21,14 +21,15 @@ namespace CryptoQuest.Battle.States.SelectHeroesActions
             else
                 Fsm.SelectCommandUI.SelectFirstButton();
             EnableCommandMenu();
+
+            Fsm.BattleStateMachine.BattleInput.InputActions.BattleMenu.Cancel.performed += CancelPressed;
         }
 
-        public override void OnExit() => OnDestroy();
-
-        public override void OnDestroy()
+        public override void OnExit()
         {
             Fsm.SelectCommandUI.RegisterCallback(null);
             DisableCommandMenu();
+            Fsm.BattleStateMachine.BattleInput.InputActions.BattleMenu.Cancel.performed -= CancelPressed;
         }
 
         private void ChangeToSelectEnemyState()
@@ -54,6 +55,7 @@ namespace CryptoQuest.Battle.States.SelectHeroesActions
             // UIEnemy.EnemySelected -= SelectEnemy;
             // _battleStateMachine.BattleInput.InputActions.BattleMenu.Cancel.performed -= CancelPressed;
             // EnableCommandMenu();
+            Fsm.PopToLastSelectCommandState();
         }
 
         public void OnAttackPressed()

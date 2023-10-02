@@ -5,6 +5,5 @@
         public void OnEnter(BattleStateMachine battleStateMachine) { }
 
         public void OnExit(BattleStateMachine battleStateMachine) { }
-        public void OnDestroy(BattleStateMachine battleStateMachine) { }
     }
 }
