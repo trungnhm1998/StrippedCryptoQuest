@@ -9,7 +9,7 @@ namespace CryptoQuest.UI.Common
     {
         [SerializeField] private ScrollRect _scrollRect;
 
-        [Tooltip("Template item of the scroll view")]
+        [Tooltip("Template item of the scroll view which will be instantiated on runtime")]
         [SerializeField] private RectTransform _singleItemRect;
 
         [Tooltip("Enable this flag to run the auto-scroll logic in the Update()")]
@@ -47,8 +47,8 @@ namespace CryptoQuest.UI.Common
             var rect = _viewport.rect;
             float yPosViewport = NormalizePositionFromDifferentPivots(rect);
 
-            _lowerBound = yPosViewport - rect.height / 2 + _verticalOffset;
-            _upperBound = yPosViewport + rect.height / 2 + _verticalOffset;
+            _lowerBound = yPosViewport - rect.height / 2 + _verticalOffset / 2;
+            _upperBound = yPosViewport + rect.height / 2 + _verticalOffset / 2;
         }
 
         /// <summary>
