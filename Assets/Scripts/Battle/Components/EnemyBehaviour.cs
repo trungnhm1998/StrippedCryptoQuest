@@ -1,5 +1,7 @@
 ﻿using System.Collections;
+using CryptoQuest.Battle.Commands;
 using CryptoQuest.Character.Enemy;
+using CryptoQuest.Character.Tag;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
 using Spine.Unity;
 using UnityEngine;
@@ -24,13 +26,15 @@ namespace CryptoQuest.Battle.Components
     {
         public AttributeWithValue[] Stats => _enemyDef.Stats;
 
-        public string DisplayName { get; private set; }
+        private string _displayName;
+        public override string DisplayName => _displayName;
         private EnemySpec _spec = new();
         public EnemySpec Spec => _spec;
         private EnemyDef _enemyDef;
         private GameObject _enemyModel;
 
         private SkeletonAnimation _skeletonAnimation;
+        public SkeletonAnimation SkeletonAnimation => _skeletonAnimation;
         private AsyncOperationHandle<string> _localizedNameHandle;
         private AsyncOperationHandle<GameObject> _modelHandle;
 
@@ -61,7 +65,7 @@ namespace CryptoQuest.Battle.Components
             if (_spec.Data.Name.IsEmpty)
             {
                 Debug.LogWarning($"Localized string not set using default name {_spec.Data.Name}");
-                DisplayName = $"{_spec.Data.Name}{postfix}";
+                _displayName = $"{_spec.Data.Name}{postfix}";
                 yield break;
             }
 
@@ -73,13 +77,14 @@ namespace CryptoQuest.Battle.Components
             if (!loadedSuccess)
             {
                 Debug.LogWarning($"Failed to load localized string for enemy using default name {_spec.Data.Name}");
-                DisplayName = $"{_spec.Data.Name}{postfix}";
+                _displayName = $"{_spec.Data.Name}{postfix}";
                 yield break;
             }
 
-            DisplayName = $"{_localizedNameHandle.Result}{postfix}";
+            _displayName = $"{_localizedNameHandle.Result}{postfix}";
         }
 
+        public Color Color => _skeletonAnimation.Skeleton.GetColor();
         public void SetAlpha(float alpha)
         {
             var color = _skeletonAnimation.Skeleton.GetColor();
@@ -87,8 +92,11 @@ namespace CryptoQuest.Battle.Components
             _skeletonAnimation.Skeleton.SetColor(color);
         }
 
-        // TODO: Check enemy is alive
-        public bool IsValid() => _spec.IsValid() && _enemyModel != null;
+        /// <returns>true if enemy has data, model loaded and is not dead</returns>
+        public override bool IsValid()
+        {
+            return _spec.IsValid() && _enemyModel != null && !HasTag(TagsDef.Dead);
+        }
 
         private void OnDestroy()
         {
@@ -99,5 +107,18 @@ namespace CryptoQuest.Battle.Components
         }
 
         public void ProvideStats(AttributeWithValue[] attributeWithValues) { }
+
+        protected override IEnumerator OnPreExecuteCommand()
+        {
+            Command = new NormalAttackCommand(this, Targeting.Target);
+            SetAlpha(1);
+            yield return base.OnPreExecuteCommand();
+        }
+
+        protected override IEnumerator OnPostExecuteCommand()
+        {
+            SetAlpha(0.5f);
+            yield return base.OnPostExecuteCommand();
+        }
     }
 }

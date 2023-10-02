@@ -10,6 +10,8 @@ namespace CryptoQuest.Battle
     /// </summary>
     public class PresentBehaviour : MonoBehaviour
     {
+        [SerializeField] private BattleContext _battleContext;
+
         public void ExecuteCharacterCommands(IEnumerable<Components.Character> characters, Action onComplete)
         {
             StartCoroutine(CoPresentation(characters, onComplete));
@@ -17,14 +19,24 @@ namespace CryptoQuest.Battle
 
         private IEnumerator CoPresentation(IEnumerable<Components.Character> characters, Action onComplete)
         {
+            ChangeAllEnemiesOpacity(0.5f);
+
             foreach (var character in characters)
             {
-                character.ExecuteCommand();
-                // TODO: different command will have different log, e.g. buff entire party would show line by line and cost 4s
-                yield return new WaitForSeconds(1f);
+                character.UpdateTarget(_battleContext);
+                yield return character.ExecuteCommand();
             }
 
+            ChangeAllEnemiesOpacity(1f);
             onComplete?.Invoke();
+        }
+
+        private void ChangeAllEnemiesOpacity(float f)
+        {
+            foreach (var enemy in _battleContext.Enemies)
+            {
+                if (enemy.IsValid()) enemy.SetAlpha(f);
+            }
         }
     }
 }

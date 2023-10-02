@@ -1,4 +1,5 @@
-﻿using CryptoQuest.Battle.Components;
+﻿using System.Collections;
+using CryptoQuest.Battle.Components;
 using UnityEngine;
 
 namespace CryptoQuest.Battle.Commands
@@ -14,9 +15,10 @@ namespace CryptoQuest.Battle.Commands
             _highestEnemySpeed = highestEnemySpeed;
         }
 
-        public void Execute()
+        public IEnumerator Execute()
         {
             _escapeBehaviour.Escape(_highestEnemySpeed);
+            yield break;
         }
     }
 }

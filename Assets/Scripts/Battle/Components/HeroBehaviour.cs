@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using CryptoQuest.Character.Attributes;
+﻿using CryptoQuest.Character.Attributes;
 using CryptoQuest.Character.Hero;
+using CryptoQuest.Character.Tag;
 using CryptoQuest.Gameplay;
 using CryptoQuest.Gameplay.Character;
 using UnityEngine;
@@ -18,6 +17,7 @@ namespace CryptoQuest.Battle.Components
         public Origin.Information DetailsInfo => Spec.Unit.Origin.DetailInformation;
         public StatsDef Stats => Spec.Unit.Stats;
         public Elemental Element => Spec.Unit.Element;
+        public override string DisplayName => DetailsInfo.LocalizedName.GetLocalizedString();
         public GameObject GameObject => gameObject;
         public CharacterClass Class => Spec.Unit.Class;
         public Sprite Avatar { get; set; }
@@ -32,7 +32,6 @@ namespace CryptoQuest.Battle.Components
         }
 
         private LevelSystem _levelSystem;
-        private readonly Dictionary<Type, Component> _cachedComponents = new();
 
         protected override void Awake()
         {
@@ -58,26 +57,8 @@ namespace CryptoQuest.Battle.Components
             Init(Element);
         }
 
-        public bool IsValid() => Spec.IsValid();
+        public override bool IsValid() => Spec.IsValid() && !HasTag(TagsDef.Dead);
         public Equipments GetEquipments() => Spec.Equipments;
-
-        /// <summary>
-        /// Same as Unity's <see cref="GameObject.TryGetComponent{T}(out T)"/> but with a cache
-        /// </summary>
-        public new bool TryGetComponent<T>(out T component) where T : Component
-        {
-            var type = typeof(T);
-            if (!_cachedComponents.TryGetValue(type, out var value))
-            {
-                if (base.TryGetComponent(out component))
-                    _cachedComponents.Add(type, component);
-
-                return component != null;
-            }
-
-            component = (T)value;
-            return true;
-        }
 
         public void RequestAddExp(float exp)
         {

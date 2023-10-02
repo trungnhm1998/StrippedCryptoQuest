@@ -43,7 +43,7 @@ namespace CryptoQuest.Tests.Runtime.Battle
             public void Execute_FireHeroAttackWaterEnemy_DamageGreaterThan15()
             {
                 _enemy.AttributeSystem.TryGetAttributeValue(AttributeSets.Health, out var enemyHPBefore);
-                var command = new NormalAttackCommand(_heroGo, _enemyGo);
+                var command = new NormalAttackCommand(_hero, _enemy);
                 command.Execute();
 
                 _enemy.AttributeSystem.TryGetAttributeValue(AttributeSets.Health, out var enemyHPAfter);
@@ -55,7 +55,7 @@ namespace CryptoQuest.Tests.Runtime.Battle
             {
                 _enemy.Init(An.Element.Fire);
                 _enemy.AttributeSystem.TryGetAttributeValue(AttributeSets.Health, out var enemyHPBefore);
-                var command = new NormalAttackCommand(_heroGo, _enemyGo);
+                var command = new NormalAttackCommand(_hero, _enemy);
                 command.Execute();
 
                 _enemy.AttributeSystem.TryGetAttributeValue(AttributeSets.Health, out var enemyHPAfter);
@@ -79,7 +79,7 @@ namespace CryptoQuest.Tests.Runtime.Battle
                 var commands = new List<ICommand>
                 {
                     new GuardCommand(_hero.GetComponent<HeroBehaviour>()),
-                    new NormalAttackCommand(_enemyGo, _heroGo)
+                    new NormalAttackCommand(_enemy, _hero)
                 };
                 commands.ForEach(command => command.Execute());
 

@@ -6,6 +6,10 @@ namespace IndiGames.GameplayAbilitySystem.AbilitySystem.Components
 {
     public class TagSystemBehaviour : MonoBehaviour
     {
+        public delegate void TagEvent(params TagScriptableObject[] tag);
+
+        public event TagEvent TagAdded;
+        public event TagEvent TagRemoved;
         [field: SerializeField] public List<TagScriptableObject> DefaultTags { get; private set; } = new();
         [field: SerializeField] public List<TagScriptableObject> GrantedTags { get; private set; } = new();
 
@@ -17,11 +21,13 @@ namespace IndiGames.GameplayAbilitySystem.AbilitySystem.Components
         public virtual void AddTags(TagScriptableObject[] tags)
         {
             GrantedTags.AddRange(tags);
+            TagAdded?.Invoke(tags);
         }
 
         public virtual void AddTags(TagScriptableObject tag)
         {
             GrantedTags.Add(tag);
+            TagAdded?.Invoke(tag);
         }
 
         public virtual void RemoveTags(TagScriptableObject[] tags)
@@ -29,6 +35,7 @@ namespace IndiGames.GameplayAbilitySystem.AbilitySystem.Components
             foreach (var tag in tags)
             {
                 GrantedTags.Remove(tag);
+                TagRemoved?.Invoke(tag);
             }
         }
 

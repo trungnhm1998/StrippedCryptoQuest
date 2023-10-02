@@ -1,7 +1,12 @@
-﻿namespace CryptoQuest.Battle.Commands
+﻿using System.Collections;
+
+namespace CryptoQuest.Battle.Commands
 {
     public class ConsumeItemCommand : ICommand
     {
-        public void Execute() { }
+        public IEnumerator Execute()
+        {
+            yield break;
+        }
     }
 }

@@ -1,19 +1,30 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using CryptoQuest.Battle.Components;
 using CryptoQuest.Character.Hero;
-using CryptoQuest.Gameplay.Character;
 using CryptoQuest.System;
 using UnityEngine;
 
 namespace CryptoQuest.Gameplay.PlayerParty
 {
+    public static class PartyConstants
+    {
+        public const int MAX_PARTY_SIZE = 4;
+    }
+
     public interface IPartyController
     {
         // bool TryGetMemberAtIndex(int charIndexInParty, out IHero character);
         // IParty Party { get; }
         public PartySlot[] Slots { get; }
         int Size { get; }
+
+        /// <summary>
+        /// The order will be setup using sort feature in menu
+        /// </summary>
+        List<HeroBehaviour> OrderedAliveMembers { get; }
+
         bool Sort(int sourceIndex, int destinationIndex);
         bool GetHero(int slotIndex, out HeroBehaviour hero);
     }
@@ -26,6 +37,9 @@ namespace CryptoQuest.Gameplay.PlayerParty
         public int Size => _size;
         private int _size;
         private IPartyProvider _partyProvider;
+
+        public List<HeroBehaviour> OrderedAliveMembers =>
+            (from slot in _partySlots where slot.IsValid() select slot.HeroBehaviour).ToList();
 
         private void OnValidate()
         {
@@ -106,8 +120,9 @@ namespace CryptoQuest.Gameplay.PlayerParty
 
             List<HeroSpec> heroes = new List<HeroSpec>();
             foreach (var slot in _partySlots)
-                if (slot.IsValid()) heroes.Add(slot.HeroBehaviour.Spec);
-            
+                if (slot.IsValid())
+                    heroes.Add(slot.HeroBehaviour.Spec);
+
             _partyProvider.SetParty(heroes.ToArray());
 
             return true;

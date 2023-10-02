@@ -1,4 +1,5 @@
-﻿using CryptoQuest.Battle.Components;
+﻿using System.Collections;
+using CryptoQuest.Battle.Components;
 
 namespace CryptoQuest.Battle.Commands
 {
@@ -11,9 +12,10 @@ namespace CryptoQuest.Battle.Commands
             _hero = hero;
         }
 
-        public void Execute()
+        public IEnumerator Execute()
         {
             _hero.GetComponent<GuardBehaviour>().GuardUntilEndOfTurn();
+            yield break;
         }
     }
 }

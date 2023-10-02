@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using CryptoQuest.Battle.Components;
 using CryptoQuest.Character.Attributes;
 using CryptoQuest.Character.Tag;
 using CryptoQuest.Gameplay.PlayerParty;
@@ -13,7 +14,9 @@ namespace CryptoQuest.Battle
     {
         [SerializeField] private EnemyPartyManager _enemyPartyManager;
         [SerializeField] private VoidEventChannelSO _sceneLoadedEvent; // Awake only work if we start from correct flow
+        public List<EnemyBehaviour> Enemies => _enemyPartyManager.Enemies;
         private IPartyController _party;
+        public IPartyController PlayerParty => _party;
 
         private void Awake()
         {
@@ -27,6 +30,7 @@ namespace CryptoQuest.Battle
 
         private void OnSceneLoaded()
         {
+            // TODO: Use SO as a cross scene IPartyController that can be Serialized, either way need to wait for scene loaded event if start from editor
             _party = ServiceProvider.GetService<IPartyController>();
         }
 

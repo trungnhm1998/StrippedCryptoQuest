@@ -29,7 +29,7 @@ namespace CryptoQuest.Battle.States.SelectHeroesActions
 
         private void CreateAttackCommand(EnemyBehaviour enemy)
         {
-            var normalAttackCommand = new NormalAttackCommand(Hero.gameObject, enemy.gameObject);
+            var normalAttackCommand = new NormalAttackCommand(Hero, enemy);
             Hero.TryGetComponent<Components.Character>(out var character);
             character.SetCommand(normalAttackCommand);
             Fsm.GoToNextState();

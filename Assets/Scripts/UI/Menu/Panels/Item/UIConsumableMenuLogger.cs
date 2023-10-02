@@ -1,7 +1,6 @@
 using System.Collections;
+using CryptoQuest.Battle.Components;
 using CryptoQuest.Character.Attributes;
-using CryptoQuest.Gameplay;
-using CryptoQuest.Gameplay.Character;
 using DG.Tweening;
 using IndiGames.GameplayAbilitySystem.AttributeSystem;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.Components;
@@ -39,11 +38,11 @@ namespace CryptoQuest.UI.Menu.Panels.Item
         private void SetLoggerDescription(AttributeSystemBehaviour attributeSystem, AttributeValue attributeValue)
         {
             _callbackTween?.Kill();
-            if (attributeSystem.TryGetComponent<CharacterBehaviourBase>(out var characterBehaviour) == false) return;
+            if (attributeSystem.TryGetComponent<HeroBehaviour>(out var characterBehaviour) == false) return;
             _panel.SetActive(true);
 
-            CharacterSpec characterSpec = characterBehaviour.Spec;
-            LocalizedString characterName = characterSpec.BackgroundInfo.DetailInformation.LocalizedName;
+            var characterSpec = characterBehaviour.Spec;
+            LocalizedString characterName = characterSpec.Unit.Origin.DetailInformation.LocalizedName;
             LocalizedString attributeName = ((AttributeScriptableObject)attributeValue.Attribute).DisplayName;
             LocalizedString localizedString = _localizedLogger;
 

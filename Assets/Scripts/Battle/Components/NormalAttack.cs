@@ -6,16 +6,18 @@ namespace CryptoQuest.Battle.Components
     public class NormalAttack : CharacterComponentBase
     {
         [SerializeField] private NormalAttackAbility _normalAttackAbility;
-
         private NormalAttackAbilitySpec _spec;
+
         public override void Init()
         {
             _spec = Character.AbilitySystem.GiveAbility<NormalAttackAbilitySpec>(_normalAttackAbility);
         }
 
-        public void Attack(IDamageable damageable)
+        public void Attack()
         {
-            _spec.Execute(damageable);
+            var target = GetComponent<ITargeting>().Target;
+            Debug.Log($"{Character.DisplayName} attacking {target.DisplayName}");
+            _spec.Execute(target.GetComponent<IDamageable>());
         }
     }
 }

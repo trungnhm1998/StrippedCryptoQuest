@@ -10,7 +10,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.Helper
         /// <para>This method will random from 0 to sum of the weights to get the distance</para>
         /// <para>And reduce that until the distance is small than zero</para>
         /// <para>So the higher weigth will have more chance to be in the distance</para>
-        /// Read more: <ref>https://blog.bruce-hill.com/a-faster-weighted-random-choice</ref> 
+        /// Read more: https://blog.bruce-hill.com/a-faster-weighted-random-choice
         /// </summary>
         /// <param name="weights"></param>
         /// <param name="seed"></param>
@@ -27,6 +27,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.Helper
                 if (remainingDist < 0) return index;
                 index++;
             }
+
             return -1;
         }
     }
