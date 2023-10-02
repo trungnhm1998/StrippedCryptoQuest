@@ -107,12 +107,13 @@ namespace CryptoQuest.Battle.States.SelectHeroesActions
 
         public void PopToLastSelectCommandState()
         {
+            if (_stateStack.Count <= 1) return;
             var currentState = _stateStack.Pop();
             do
             {
                 currentState.OnExit();
                 currentState = _stateStack.Pop();
-            } while (currentState is not SelectCommand && _stateStack.Count > 0);
+            } while (currentState is not SelectCommand);
 
             currentState.OnEnter();
         }

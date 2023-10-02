@@ -15,6 +15,7 @@ namespace CryptoQuest.Battle.States.SelectHeroesActions
 
         public override void OnEnter()
         {
+            Fsm.SelectCommandUI.SetCharacterName(Hero.Spec.Unit.Origin.DetailInformation.LocalizedName);
             Fsm.SelectCommandUI.RegisterCallback(this);
             if (_lastSelectedCommand != null)
                 EventSystem.current.SetSelectedGameObject(_lastSelectedCommand);
