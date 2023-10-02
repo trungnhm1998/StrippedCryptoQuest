@@ -1,18 +1,12 @@
 using System;
 using CryptoQuest.Battle.Components;
 using CryptoQuest.Battle.UI.PlayerParty;
-using CryptoQuest.Gameplay.Character;
 using CryptoQuest.Input;
 using UnityEngine;
 using UnityEngine.Localization;
 
 namespace CryptoQuest.Battle.UI.SelectHero
 {
-    public interface ISelectHeroModel
-    {
-        LocalizedString Label { get; }
-    }
-
     public class SelectHeroPresenter : MonoBehaviour
     {
         public static event Action<HeroBehaviour> ConfirmSelectCharacter;
@@ -23,12 +17,6 @@ namespace CryptoQuest.Battle.UI.SelectHero
 
         private int _currentIndex;
         private HeroBehaviour _inspectingCharacter;
-        private ISelectHeroModel _selectHeroModel;
-
-        private void Awake()
-        {
-            _selectHeroModel = GetComponent<ISelectHeroModel>();
-        }
 
         private void OnEnable()
         {
@@ -42,15 +30,9 @@ namespace CryptoQuest.Battle.UI.SelectHero
             _battleInput.NavigateEvent -= NavigateSelectHero;
         }
 
-        public void SetUILabel(ISelectHeroModel model)
+        public void SetUILabel(LocalizedString str)
         {
-            _selectHeroButton.SetLabel(model?.Label);
-        }
-
-        private void EnterSelectHeroState()
-        {
-            SetCurrentCharacter(0);
-            SetUILabel(_selectHeroModel);
+            _selectHeroButton.SetLabel(str);
         }
 
         private void NavigateSelectHero(Vector2 direction)

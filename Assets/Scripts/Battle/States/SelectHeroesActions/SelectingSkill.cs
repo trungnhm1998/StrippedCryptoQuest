@@ -49,13 +49,14 @@ namespace CryptoQuest.Battle.States.SelectHeroesActions
 
         private void SelectEnemyToCastSkillOn(UISkill skillUI)
         {
-            Fsm.PushState(new SelectSingleEnemyToCastSkill(skillUI, Hero, Fsm));
             Debug.Log("SelectingSkill::SelectEnemyToCastSkillOn");
+            Fsm.PushState(new SelectSingleEnemyToCastSkill(skillUI, Hero, Fsm));
         }
 
         private void SelectHeroToCastSkillOn(UISkill skillUI)
         {
             Debug.Log("SelectingSkill::SelectHeroToCastSkillOn");
+            Fsm.PushState(new SelectSingleHeroToCastSkill(skillUI, Hero, Fsm));
         }
     }
 }
