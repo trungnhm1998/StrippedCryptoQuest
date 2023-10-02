@@ -9,6 +9,7 @@ namespace CryptoQuest.SNS
     /// </summary>
     public class FirebaseAuth
     {
+#if UNITY_WEBGL
         /// <summary>
         /// Creates a user with email and password
         /// </summary>
@@ -66,5 +67,18 @@ namespace CryptoQuest.SNS
         /// <param name="onUserSignedOut"> Name of the method to call when the operation was unsuccessful. Method must have signature: void Method(string output) </param>
         [DllImport("__Internal")]
         public static extern void OnAuthStateChanged(string objectName, string onUserSignedIn, string onUserSignedOut);
+#else
+        public static void CreateUserWithEmailAndPassword(string email, string password, string objectName, string callback, string fallback) { }
+
+        public static void SignInWithEmailAndPassword(string email, string password, string objectName, string callback, string fallback) { }
+
+        public static void SignInWithGoogle(string objectName, string callback, string fallback) { }
+
+        public static void SignInWithFacebook(string objectName, string callback, string fallback) { }
+
+        public static void SignOut(string objectName, string callback, string fallback) { }
+
+        public static void OnAuthStateChanged(string objectName, string onUserSignedIn, string onUserSignedOut) { }
+#endif
     }
 }

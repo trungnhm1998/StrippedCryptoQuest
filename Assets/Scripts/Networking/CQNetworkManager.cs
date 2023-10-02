@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace CryptoQuest.Networking
 {
-    public class BasicNetManager : NetworkManager
+    public class CQNetworkManager : NetworkManager
     {
         /// <summary>
         /// Runs on both Server and Client

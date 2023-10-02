@@ -44,7 +44,12 @@ namespace IndiGamesEditor.UnityBuilderAction
             // Define BuildPlayer Options
             var buildPlayerOptions = new BuildPlayerOptions
             {
+#if UNITY_2021_2_OR_NEWER
+				 // If standalone server, build battle scene only
+				scenes = (buildSubtarget == StandaloneBuildSubtarget.Server) ? new string[]{"Assets/Scenes/Battle/BattleScene.unity"} : scenes,
+#else
                 scenes = scenes,
+#endif
                 locationPathName = options["customBuildPath"],
                 target = (BuildTarget)Enum.Parse(typeof(BuildTarget), options["buildTarget"]),
                 options = buildOptions,

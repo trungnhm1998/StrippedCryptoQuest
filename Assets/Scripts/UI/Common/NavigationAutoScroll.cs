@@ -35,7 +35,7 @@ namespace CryptoQuest.UI.Common
 
         private void CheckButtonPosition()
         {
-            if (_firstButton == null || _lastButton == null) return;
+            if (_firstButton == null || _lastButton == null || _scrollRect == null || EventSystem.current == null) return;
 
             var currentButton = EventSystem.current.currentSelectedGameObject;
 

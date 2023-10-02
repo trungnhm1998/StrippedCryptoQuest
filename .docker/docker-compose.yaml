@@ -1,0 +1,10 @@
+version: '3.8'
+
+services:
+  crypto-quest-gs:
+    container_name: crypto-quest-gs
+    image: crypto-quest-gs
+    build: .
+    ports:
+      - "7777:7777/udp"
+      - "7778:7778"
