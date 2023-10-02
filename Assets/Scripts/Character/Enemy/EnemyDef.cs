@@ -1,7 +1,5 @@
 ﻿using System;
 using CryptoQuest.Character.Attributes;
-using CryptoQuest.Gameplay;
-using CryptoQuest.Gameplay.Character;
 using CryptoQuest.Gameplay.Loot;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
 using UnityEditor;
@@ -24,12 +22,11 @@ namespace CryptoQuest.Character.Enemy
     /// <summary>
     /// Enemy structure (https://docs.google.com/spreadsheets/d/1WkX1DyDOGf6EiAppo8Buz2sUkSKV5OnDENEvmHzKXNQ/edit#gid=1024080951)
     /// </summary>
-    public class EnemyDef : CharacterData<EnemyDef, EnemySpec>
+    [Serializable]
+    public class EnemyDef : ScriptableObject
     {
         [field: SerializeField] public LocalizedString Name { get; private set; }
-        [field: SerializeField] public LocalizedString Description { get; private set; }
         [field: SerializeField] public Elemental Element { get; private set; }
-
         [field: SerializeField] public GameObject Prefab { get; private set; }
         [field: SerializeField] public AssetReferenceT<GameObject> Model { get; private set; }
 
@@ -38,6 +35,19 @@ namespace CryptoQuest.Character.Enemy
 
         [SerializeField] private Drop[] _drops = Array.Empty<Drop>();
         public Drop[] Drops => _drops;
+
+        /// <summary>
+        /// Factory method
+        /// Need to create character info when there're
+        /// many characters using the same data set, like enemies
+        /// </summary>
+        /// <returns>New spec to use at runtime for this enemy</returns>
+        public EnemySpec CreateCharacterSpec()
+        {
+            var character = new EnemySpec();
+            character.Init(this);
+            return character;
+        }
 
 #if UNITY_EDITOR
         public void Editor_AddDrop(LootInfo loot)
