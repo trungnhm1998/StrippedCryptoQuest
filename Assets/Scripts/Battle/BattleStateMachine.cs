@@ -4,6 +4,7 @@ using CryptoQuest.Battle.Events;
 using CryptoQuest.Battle.States;
 using CryptoQuest.Battle.UI.CommandDetail;
 using CryptoQuest.Battle.UI.SelectCommand;
+using CryptoQuest.Battle.UI.SelectHero;
 using CryptoQuest.Battle.UI.StartBattle;
 using CryptoQuest.Input;
 using CryptoQuest.UI.SpiralFX;
@@ -20,6 +21,7 @@ namespace CryptoQuest.Battle
 
     public class BattleStateMachine : MonoBehaviour
     {
+        [field: SerializeField] public InputMediatorSO InputMediator { get; private set; }
         [field: SerializeField] public BattleInputSO BattleInput { get; private set; }
 
         private readonly Dictionary<Type, Component> _cachedComponents = new();
@@ -33,8 +35,11 @@ namespace CryptoQuest.Battle
         [field: SerializeField] public SpiralConfigSO Spiral { get; private set; }
         [field: SerializeField] public VoidEventChannelSO SceneLoadedEvent { get; private set; }
         [field: SerializeField] public BattleEventSO BattleEndedEvent { get; private set; }
+        [field: SerializeField] public SelectHeroPresenter SelectHeroPresenter { get; private set; }
 
         #endregion
+
+        #region State management
 
         private IState _currentState;
 
@@ -79,5 +84,7 @@ namespace CryptoQuest.Battle
             component = (T)value;
             return true;
         }
+
+        #endregion
     }
 }

@@ -134,6 +134,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 778c240fcc304b04bbf24a2369d9ff07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &215128385 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4557534340575319327, guid: d0eacd5a881766b4ca08ec4b770526a2, type: 3}
+  m_PrefabInstance: {fileID: 1415878836909279776}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &366721491
 GameObject:
   m_ObjectHideFlags: 0
@@ -649,6 +654,17 @@ MonoBehaviour:
   _content: {fileID: 1415878836909279779}
   _enemyPartyManager: {fileID: 7116505576077580196}
   _enemyPrefab: {fileID: 1676715279052400272, guid: 5f76a999e6416bd4ca834dceb2a0863b, type: 3}
+--- !u!114 &1343290371 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3975206951188476836, guid: d0eacd5a881766b4ca08ec4b770526a2, type: 3}
+  m_PrefabInstance: {fileID: 1415878836909279776}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af7d13da29b6deb4c8263f9f7d95a7f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1388055417
 GameObject:
   m_ObjectHideFlags: 0
@@ -1173,6 +1189,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -230
       objectReference: {fileID: 0}
+    - target: {fileID: 3975206951188476836, guid: d0eacd5a881766b4ca08ec4b770526a2, type: 3}
+      propertyPath: _playerPartyPresenter
+      value: 
+      objectReference: {fileID: 1169412496}
     - target: {fileID: 4463206549349502206, guid: d0eacd5a881766b4ca08ec4b770526a2, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -1277,6 +1297,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BattleCanvas
       objectReference: {fileID: 0}
+    - target: {fileID: 5949446545983247603, guid: d0eacd5a881766b4ca08ec4b770526a2, type: 3}
+      propertyPath: _content
+      value: 
+      objectReference: {fileID: 215128385}
     - target: {fileID: 7408242417448721803, guid: d0eacd5a881766b4ca08ec4b770526a2, type: 3}
       propertyPath: m_SizeDelta.y
       value: 35
@@ -2246,6 +2270,7 @@ MonoBehaviour:
   <Spiral>k__BackingField: {fileID: 11400000, guid: 2708a2e85420add4493974ea482cd235, type: 2}
   <SceneLoadedEvent>k__BackingField: {fileID: 11400000, guid: d463f98507ffd95459feb67b21dd1ecc, type: 2}
   <BattleEndedEvent>k__BackingField: {fileID: 11400000, guid: 8a69f584e68c6d54a8aca598bef348b2, type: 2}
+  <SelectHeroPresenter>k__BackingField: {fileID: 1343290371}
 --- !u!114 &7116505576077580198
 MonoBehaviour:
   m_ObjectHideFlags: 0

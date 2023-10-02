@@ -35,7 +35,7 @@ namespace CryptoQuest.Battle.States.SelectHeroesActions
 
         private void CancelPressed(InputAction.CallbackContext obj)
         {
-            Fsm.PopToLastSelectCommandState();
+            if (obj.performed) Fsm.PopToLastSelectCommandState();
         }
 
         public void OnAttackPressed()

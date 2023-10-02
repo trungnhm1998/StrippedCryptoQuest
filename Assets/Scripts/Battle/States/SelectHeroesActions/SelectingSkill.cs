@@ -1,5 +1,4 @@
 ﻿using CryptoQuest.Battle.Components;
-using CryptoQuest.Battle.UI.CommandDetail;
 using CryptoQuest.Battle.UI.SelectSkill;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -9,12 +8,10 @@ namespace CryptoQuest.Battle.States.SelectHeroesActions
     public class SelectingSkill : StateBase
     {
         private readonly SelectSkillPresenter _skillPresenter;
-        private readonly SelectEnemyPresenter _selectEnemyPresenter;
 
         public SelectingSkill(HeroBehaviour hero, SelectHeroesActions fsm) : base(hero, fsm)
         {
             Fsm.TryGetComponent(out _skillPresenter);
-            _selectEnemyPresenter = fsm.BattleStateMachine.gameObject.GetComponentInChildren<SelectEnemyPresenter>();
         }
 
         public override void OnEnter()
@@ -29,7 +26,6 @@ namespace CryptoQuest.Battle.States.SelectHeroesActions
         {
             UnregisterEvents();
             _skillPresenter.Hide();
-            _selectEnemyPresenter.Hide();
         }
 
         private void RegisterEvents()
@@ -44,7 +40,7 @@ namespace CryptoQuest.Battle.States.SelectHeroesActions
 
         private void CancelPressed(InputAction.CallbackContext obj)
         {
-            Fsm.PopState();
+            if (obj.performed) Fsm.PopState();
         }
 
         private void SelectEnemyToCastSkillOn(UISkill skillUI)
