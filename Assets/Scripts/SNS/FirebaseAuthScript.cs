@@ -4,6 +4,7 @@ using UnityEngine.Networking;
 using System;
 using System.Collections;
 using CryptoQuest.Environment;
+using CryptoQuest.Networking.RestAPI;
 
 namespace CryptoQuest.SNS
 {
@@ -47,28 +48,23 @@ namespace CryptoQuest.SNS
         }
 
         [SerializeField] private EnvironmentSO _environmentSO;
+        [SerializeField] private AuthorizationSO _authorizationSO;
 
         private string _backEndUrl => _environmentSO.BackEndUrl;
 
-        private UserProfile _profile;
-
         public UserProfile Profile
         {
-            get { return _profile; }
+            get { return _authorizationSO.Profile; }
         }
-
-        private ApiToken _accessToken;
 
         public ApiToken AccessToken
         {
-            get { return _accessToken; }
+            get { return _authorizationSO.AccessToken; }
         }
-
-        private ApiToken _refreshToken;
 
         public ApiToken RefreshToken
         {
-            get { return _refreshToken; }
+            get { return _authorizationSO.RefreshToken; }
         }
 
         public InputField emailInputField;
@@ -104,16 +100,16 @@ namespace CryptoQuest.SNS
                         JsonUtility.FromJson<LoginResponsePayload>(request.downloadHandler.text);
                     if (responsePayload != null && responsePayload.data != null)
                     {
-                        _profile = responsePayload.data.user;
+                        _authorizationSO.Profile = responsePayload.data.user;
                         Debug.Log("API Logged: " + Profile.id + " - " + Profile.email);
 
-                        _accessToken = responsePayload.data.token.access;
+                        _authorizationSO.AccessToken = responsePayload.data.token.access;
                         Debug.Log("AccessToken: " + AccessToken.token);
 
-                        _refreshToken = responsePayload.data.token.refresh;
+                        _authorizationSO.RefreshToken = responsePayload.data.token.refresh;
                         Debug.Log("RefreshToken: " + RefreshToken.token);
 
-                        OnSignedInSuccess?.Invoke(_profile);
+                        OnSignedInSuccess?.Invoke(_authorizationSO.Profile);
                     }
                 }
             }
@@ -135,9 +131,7 @@ namespace CryptoQuest.SNS
         {
             Debug.Log(info);
             _fbUser = null;
-            _accessToken = null;
-            _refreshToken = null;
-            _profile = null;
+            _authorizationSO.Clear();
         }
 
         public void OnError(string error)
@@ -148,7 +142,7 @@ namespace CryptoQuest.SNS
 
         public bool IsLoggedIn()
         {
-            return _fbUser != null && _profile != null && _accessToken != null;
+            return _fbUser != null && Profile != null && AccessToken != null;
         }
 
         public void SignOut()
