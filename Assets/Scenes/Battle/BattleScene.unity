@@ -184,11 +184,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 778c240fcc304b04bbf24a2369d9ff07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &215128385 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4557534340575319327, guid: d0eacd5a881766b4ca08ec4b770526a2, type: 3}
-  m_PrefabInstance: {fileID: 1415878836909279776}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &366721491
 GameObject:
   m_ObjectHideFlags: 0
@@ -993,6 +988,11 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!224 &1734655234 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 3170776822661602867, guid: d0eacd5a881766b4ca08ec4b770526a2, type: 3}
+  m_PrefabInstance: {fileID: 1415878836909279776}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1766113292
 GameObject:
   m_ObjectHideFlags: 0
@@ -1204,6 +1204,18 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -130
       objectReference: {fileID: 0}
+    - target: {fileID: 3171031742716112437, guid: d0eacd5a881766b4ca08ec4b770526a2, type: 3}
+      propertyPath: m_Spacing
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3171031742716112437, guid: d0eacd5a881766b4ca08ec4b770526a2, type: 3}
+      propertyPath: m_ChildForceExpandWidth
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3171031742716112437, guid: d0eacd5a881766b4ca08ec4b770526a2, type: 3}
+      propertyPath: m_ChildForceExpandHeight
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3384946842736054262, guid: d0eacd5a881766b4ca08ec4b770526a2, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1
@@ -1344,13 +1356,9 @@ PrefabInstance:
       propertyPath: m_Name
       value: BattleCanvas
       objectReference: {fileID: 0}
-    - target: {fileID: 5949446545983247603, guid: d0eacd5a881766b4ca08ec4b770526a2, type: 3}
-      propertyPath: _content
-      value: 
-      objectReference: {fileID: 215128385}
-    - target: {fileID: 7408242417448721803, guid: d0eacd5a881766b4ca08ec4b770526a2, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 35
+    - target: {fileID: 6805893542457794793, guid: d0eacd5a881766b4ca08ec4b770526a2, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8351032622830401841, guid: d0eacd5a881766b4ca08ec4b770526a2, type: 3}
       propertyPath: m_AnchorMax.y
@@ -1368,13 +1376,7 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -30
       objectReference: {fileID: 0}
-    - target: {fileID: 8388591799896436558, guid: d0eacd5a881766b4ca08ec4b770526a2, type: 3}
-      propertyPath: _enemyPartyManager
-      value: 
-      objectReference: {fileID: 7116505576077580196}
-    m_RemovedComponents:
-    - {fileID: 2360707387490147878, guid: d0eacd5a881766b4ca08ec4b770526a2, type: 3}
-    - {fileID: 6114870028074278648, guid: d0eacd5a881766b4ca08ec4b770526a2, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -1449,6 +1451,7 @@ GameObject:
   - component: {fileID: 7116505576077580199}
   - component: {fileID: 7116505576077580200}
   - component: {fileID: 7116505576077580201}
+  - component: {fileID: 7116505576077580202}
   m_Layer: 0
   m_Name: BattleManager
   m_TagString: Untagged
@@ -1687,6 +1690,21 @@ MonoBehaviour:
   _skillPrefab: {fileID: 3966912095438748167, guid: 07fa0527d5a895c4a9eab8a40f261290, type: 3}
   _singleHeroChannel: {fileID: 11400000, guid: 22b78d0c574a9b64984629f7aedc22ea, type: 2}
   _singleEnemyChannel: {fileID: 11400000, guid: 6cd304533bdab184cb6240d08cf35473, type: 2}
+--- !u!114 &7116505576077580202
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3846955041373722987}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5944cff694a424409456d963e2d1a74, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _enemyPartyManager: {fileID: 7116505576077580196}
+  _groupContainer: {fileID: 1734655234}
+  _groupPrefab: {fileID: 768459220001107692, guid: 1eb7ebc4c015db847beb8bb26b476b88, type: 3}
 --- !u!114 &8909492559710276275 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4666074599004791690, guid: f5fa023033362a04f99acf1098ae54bc, type: 3}

@@ -33,6 +33,7 @@ namespace CryptoQuest.Battle.Components
 
 
         private EnemyDef _enemyDef;
+        public EnemyDef Def => _enemyDef;
         private GameObject _enemyModel;
 
         private SkeletonAnimation _skeletonAnimation;
@@ -87,6 +88,7 @@ namespace CryptoQuest.Battle.Components
         }
 
         public Color Color => _skeletonAnimation.Skeleton.GetColor();
+
         public void SetAlpha(float alpha)
         {
             var color = _skeletonAnimation.Skeleton.GetColor();
