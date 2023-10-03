@@ -16,6 +16,19 @@ namespace CryptoQuest.Battle.UI.SelectItem
     {
         public delegate void ItemTargetTypeDelegate(UIItem item);
 
+        public ItemTargetTypeDelegate SelectSingleEnemyCallback { get; set; }
+        private void OnSingleEnemy() => SelectSingleEnemyCallback?.Invoke(_lastSelectedItem);
+
+        public ItemTargetTypeDelegate SelectSingleHeroCallback { get; set; }
+        private void OnSingleHero() => SelectSingleHeroCallback?.Invoke(_lastSelectedItem);
+
+        public ItemTargetTypeDelegate SelectAllEnemyCallback { get; set; }
+        private void OnTargetAllEnemy() => SelectAllEnemyCallback?.Invoke(_lastSelectedItem);
+        
+        public ItemTargetTypeDelegate SelectAllHeroCallback { get; set; }
+        private void OnTargetAllHero() => SelectAllHeroCallback?.Invoke(_lastSelectedItem);
+
+
         [SerializeField] private AutoScroll _autoScroll;
         [SerializeField] private BattleInputSO _input;
         [SerializeField] private ScrollRect _itemScroll;
@@ -24,6 +37,8 @@ namespace CryptoQuest.Battle.UI.SelectItem
         [Header("State event context")]
         [SerializeField] private VoidEventChannelSO _singleHeroChannel;
         [SerializeField] private VoidEventChannelSO _singleEnemyChannel;
+        [SerializeField] private VoidEventChannelSO _allEnemyChannel;
+        [SerializeField] private VoidEventChannelSO _allHeroChannel;
 
         private UIItem _lastSelectedItem;
         private UIItem _firstItem;
@@ -65,6 +80,8 @@ namespace CryptoQuest.Battle.UI.SelectItem
             _input.NavigateEvent += UpdateAutoScroll;
             _singleHeroChannel.EventRaised += OnSingleHero;
             _singleEnemyChannel.EventRaised += OnSingleEnemy;
+            _allEnemyChannel.EventRaised += OnTargetAllEnemy;
+            _allHeroChannel.EventRaised += OnTargetAllHero;
         }
 
         private void UnregisterEvents()
@@ -72,6 +89,8 @@ namespace CryptoQuest.Battle.UI.SelectItem
             _input.NavigateEvent -= UpdateAutoScroll;
             _singleHeroChannel.EventRaised -= OnSingleHero;
             _singleEnemyChannel.EventRaised -= OnSingleEnemy;
+            _allEnemyChannel.EventRaised -= OnTargetAllEnemy;
+            _allHeroChannel.EventRaised -= OnTargetAllHero;
         }
 
         private void InitItemButtons()
@@ -94,12 +113,6 @@ namespace CryptoQuest.Battle.UI.SelectItem
             SetActiveScroll(false);
             UnregisterEvents();
         }
-
-        public ItemTargetTypeDelegate SelectSingleEnemyCallback { get; set; }
-        private void OnSingleEnemy() => SelectSingleEnemyCallback?.Invoke(_lastSelectedItem);
-
-        public ItemTargetTypeDelegate SelectSingleHeroCallback { get; set; }
-        private void OnSingleHero() => SelectSingleHeroCallback?.Invoke(_lastSelectedItem);
 
         private void SelectingTarget(UIItem itemUI)
         {

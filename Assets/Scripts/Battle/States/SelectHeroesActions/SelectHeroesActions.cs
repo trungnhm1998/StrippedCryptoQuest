@@ -60,6 +60,7 @@ namespace CryptoQuest.Battle.States.SelectHeroesActions
         private BattleStateMachine _battleStateMachine;
         public BattleStateMachine BattleStateMachine => _battleStateMachine;
         private IPartyController _party;
+        public IPartyController PlayerParty => _party;
         private EnemyPartyManager _enemyPartyManager;
         public EnemyPartyManager EnemyPartyManager => _enemyPartyManager;
         public StateFactory StateFactory { get; private set; } = new();

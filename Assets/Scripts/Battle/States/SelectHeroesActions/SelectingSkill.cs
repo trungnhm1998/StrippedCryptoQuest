@@ -1,7 +1,7 @@
-﻿using CryptoQuest.Battle.Components;
+﻿using CryptoQuest.Battle.Commands;
+using CryptoQuest.Battle.Components;
 using CryptoQuest.Battle.UI.SelectSkill;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 namespace CryptoQuest.Battle.States.SelectHeroesActions
 {
@@ -20,6 +20,8 @@ namespace CryptoQuest.Battle.States.SelectHeroesActions
             _skillPresenter.Show(Hero);
             _skillPresenter.SelectSingleEnemyCallback = SelectEnemyToCastSkillOn;
             _skillPresenter.SelectSingleHeroCallback = SelectHeroToCastSkillOn;
+            _skillPresenter.SelectAllHeroCallback = SelectAllHeroToCastSkillOn;
+            _skillPresenter.SelectAllEnemyCallback = SelectAllEnemyToCastSkillOn;
         }
 
         public override void OnExit()
@@ -42,5 +44,31 @@ namespace CryptoQuest.Battle.States.SelectHeroesActions
             Debug.Log("SelectingSkill::SelectHeroToCastSkillOn");
             Fsm.PushState(new SelectSingleHeroToCastSkill(skillUI, Hero, Fsm));
         }
+
+        private void SelectAllHeroToCastSkillOn(UISkill skillUI)
+        {
+            _skillPresenter.Interactable = false;
+            Debug.Log("SelectingSkill::SelectAllHeroToCastSkillOn");
+
+            var heroes = Fsm.PlayerParty.OrderedAliveMembers.ToArray();
+            CreateMultipleTargetCommand(skillUI, heroes);
+        }
+
+        private void SelectAllEnemyToCastSkillOn(UISkill skillUI)
+        {
+            _skillPresenter.Interactable = false;
+            Debug.Log("SelectingSkill::SelectAllEnemyToCastSkillOn");
+        
+            var enemies = Fsm.EnemyPartyManager.Enemies.ToArray();
+            CreateMultipleTargetCommand(skillUI, enemies);
+        }
+
+        private void CreateMultipleTargetCommand(UISkill skillUI, params Components.Character[] characters)
+        {
+            var useItemCommand = new MultipleTargetCastSkillCommand(Hero, skillUI.Skill, characters);
+            Hero.SetCommand(useItemCommand);
+            Fsm.GoToNextState();
+        }
+
     }
 }

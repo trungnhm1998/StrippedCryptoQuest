@@ -13,27 +13,38 @@ namespace CryptoQuest.Battle.Commands
     {
         private readonly Components.Character _owner;
         private ConsumableInfo _selectedItem;
-        private Components.Character _target;
+        private Components.Character[] _targets;
 
         public ConsumeItemCommand(Components.Character owner, ConsumableInfo selectedItem,
-            Components.Character target, bool isTargetEnemy = false)
+            params Components.Character[] targets)
         {
-            if (isTargetEnemy) owner.Targeting.Target = target;
-            _target = target;
+            _targets = targets;
             _selectedItem = selectedItem;
             _owner = owner;
         }
         
         public IEnumerator Execute()
         {
-            Debug.Log($"{_owner.name} using {_selectedItem.Data.name} on {_target.name}");
-            var spec = _target.AbilitySystem.GiveAbility<ConsumableAbilitySpec>(_selectedItem.Data.Ability);
-            spec.SetConsumable(_selectedItem);
-            if (spec.CanActiveAbility())
+            var inventoryController = ServiceProvider.GetService<IInventoryController>();
+            bool ableToUseOnAtLeastOneHero = false;
+            foreach (var target in _targets)
             {
-                _selectedItem.OnConsumed(ServiceProvider.GetService<IInventoryController>());
+                if (!target.IsValid()) continue;
+                Debug.Log($"{_owner.DisplayName} using {_selectedItem.Data.name} on {target.DisplayName}");
+                var spec = target.AbilitySystem.GiveAbility<ConsumableAbilitySpec>(_selectedItem.Data.Ability);
+                spec.SetConsumable(_selectedItem);
+                if (spec.CanActiveAbility() && !ableToUseOnAtLeastOneHero)
+                {
+                    ableToUseOnAtLeastOneHero = true;
+                }
+                spec.TryActiveAbility();
             }
-            spec.TryActiveAbility();
+            
+            if (ableToUseOnAtLeastOneHero)
+            {
+                _selectedItem.OnConsumed(inventoryController);
+            }
+           
             yield break;
         }
     }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using CharacterComponenet = CryptoQuest.Battle.Components.Character;
 using CryptoQuest.Character.Ability.AbilityCondition;
 using CryptoQuest.Item;
 using IndiGames.GameplayAbilitySystem.AbilitySystem;
@@ -7,6 +8,7 @@ using IndiGames.GameplayAbilitySystem.AbilitySystem.ScriptableObjects;
 using IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects;
 using IndiGames.GameplayAbilitySystem.TagSystem.ScriptableObjects;
 using UnityEngine;
+using CryptoQuest.Gameplay.Inventory;
 
 namespace CryptoQuest.Character.Ability
 {

@@ -28,6 +28,8 @@ namespace CryptoQuest.Battle.States.SelectHeroesActions
             
             _selectItemPresenter.SelectSingleEnemyCallback = SelectEnemyToUseItemOn;
             _selectItemPresenter.SelectSingleHeroCallback = SelectHeroToUseItemOn;
+            _selectItemPresenter.SelectAllEnemyCallback = SelectAllEnemyToUseItemOn;
+            _selectItemPresenter.SelectAllHeroCallback = SelectAllHeroToUseItemOn;
         }
 
         private void SelectEnemyToUseItemOn(UIItem itemUI)
@@ -40,6 +42,29 @@ namespace CryptoQuest.Battle.States.SelectHeroesActions
         {
             Debug.Log("SelectingSkill::SelectHeroToCastSkillOn");
             Fsm.PushState(new SelectSingleHeroToUseItem(_selectItemPresenter, Hero, Fsm));
+        }
+
+        private void SelectAllEnemyToUseItemOn(UIItem itemUI)
+        {
+            Debug.Log("SelectingSkill::SelectAllEnemyToUseItemOn");
+
+            var enemies = Fsm.EnemyPartyManager.Enemies.ToArray();
+            CreateMultipleTargetCommand(enemies);
+        }
+
+        private void SelectAllHeroToUseItemOn(UIItem itemUI)
+        {
+            Debug.Log("SelectingSkill::SelectAllHeroToUseItemOn");
+
+            var heroes = Fsm.PlayerParty.OrderedAliveMembers.ToArray();
+            CreateMultipleTargetCommand(heroes);
+        }
+
+        private void CreateMultipleTargetCommand(params Components.Character[] characters)
+        {
+            var useItemCommand = new ConsumeItemCommand(Hero, _selectItemPresenter.LastSelectedItem.Item, characters);
+            Hero.SetCommand(useItemCommand);
+            Fsm.GoToNextState();
         }
 
         public override void OnExit() 

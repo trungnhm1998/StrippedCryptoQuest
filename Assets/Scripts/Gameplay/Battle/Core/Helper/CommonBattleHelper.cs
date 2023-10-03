@@ -34,17 +34,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.Helper
             return -1;
         }
 
-        public static float GetHighestAttributeValue(this List<EnemyBehaviour> characters, AttributeScriptableObject attribute)
-        {
-            return characters.GetHighestAttributeValue<EnemyBehaviour>(attribute);
-        }
-
-        public static float GetHighestAttributeValue(this List<CharacterComponent> characters, AttributeScriptableObject attribute)
-        {
-            return characters.GetHighestAttributeValue<CharacterComponent>(attribute);
-        }
-
-        private static float GetHighestAttributeValue<T>(this List<T> characters, AttributeScriptableObject attribute)
+        public static float GetHighestAttributeValue<T>(this List<T> characters, AttributeScriptableObject attribute)
             where T : CharacterComponent
         {
             var highestValue = 0f;

@@ -12,6 +12,7 @@ using NUnit.Framework;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.TestTools;
+using CharacterComponent = CryptoQuest.Battle.Components.Character;
 
 namespace CryptoQuest.Tests.Runtime.Battle
 {
@@ -142,8 +143,8 @@ namespace CryptoQuest.Tests.Runtime.Battle
                     })
                     .Build();
 
-                var enemies = new List<CryptoQuest.Battle.Components.Character>() { enemy, enemy2 };
-                var highestAgi = enemies.GetHighestAttributeValue(AttributeSets.Agility);
+                var enemies = new List<CharacterComponent>() { enemy, enemy2 };
+                var highestAgi = enemies.GetHighestAttributeValue<CharacterComponent>(AttributeSets.Agility);
 
                 Assert.AreEqual(150f, highestAgi);
 
@@ -200,8 +201,8 @@ namespace CryptoQuest.Tests.Runtime.Battle
                     })
                     .Build();
 
-                var enemies = new List<CryptoQuest.Battle.Components.Character>() { enemy, enemy2 };
-                var highestAgi = enemies.GetHighestAttributeValue(AttributeSets.Agility);
+                var enemies = new List<CharacterComponent>() { enemy, enemy2 };
+                var highestAgi = enemies.GetHighestAttributeValue<CharacterComponent>(AttributeSets.Agility);
                 var commands = new List<ICommand>
                 {
                     new RetreatCommand(hero.GetComponent<HeroBehaviour>(), highestAgi)

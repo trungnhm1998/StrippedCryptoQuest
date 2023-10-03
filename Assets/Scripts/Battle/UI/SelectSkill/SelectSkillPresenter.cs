@@ -15,6 +15,18 @@ namespace CryptoQuest.Battle.UI.SelectSkill
     {
         public delegate void SkillTargetTypeDelegate(UISkill skill);
 
+        public SkillTargetTypeDelegate SelectSingleEnemyCallback { get; set; }
+        private void OnSingleEnemy(CastableAbility skill) => SelectSingleEnemyCallback?.Invoke(_lastSelectedSkill);
+
+        public SkillTargetTypeDelegate SelectSingleHeroCallback { get; set; }
+        private void OnSingleHero(CastableAbility skill) => SelectSingleHeroCallback?.Invoke(_lastSelectedSkill);
+
+        public SkillTargetTypeDelegate SelectAllHeroCallback { get; set; }
+        private void OnSelectAllHero(CastableAbility skill) => SelectAllHeroCallback?.Invoke(_lastSelectedSkill);
+
+        public SkillTargetTypeDelegate SelectAllEnemyCallback { get; set; }
+        private void OnSelectAllEnemy(CastableAbility skill) => SelectAllEnemyCallback?.Invoke(_lastSelectedSkill);
+
         [SerializeField] private AutoScroll _autoScroll;
         [SerializeField] private BattleInputSO _input;
         [SerializeField] private ScrollRect _skillList;
@@ -23,6 +35,8 @@ namespace CryptoQuest.Battle.UI.SelectSkill
         [SerializeField, Header("State event context")]
         private SkillTargetType _singleHeroChannel;
         [SerializeField] private SkillTargetType _singleEnemyChannel;
+        [SerializeField] private SkillTargetType _allHeroChannel;
+        [SerializeField] private SkillTargetType _allEnemyChannel;
 
         private HeroBehaviour _hero;
         private UISkill _lastSelectedSkill;
@@ -41,6 +55,8 @@ namespace CryptoQuest.Battle.UI.SelectSkill
             _input.NavigateEvent += UpdateAutoScroll;
             _singleHeroChannel.EventRaised += OnSingleHero;
             _singleEnemyChannel.EventRaised += OnSingleEnemy;
+            _allHeroChannel.EventRaised += OnSelectAllHero;
+            _allEnemyChannel.EventRaised += OnSelectAllEnemy;
         }
 
         private void UnregisterEvents()
@@ -48,6 +64,8 @@ namespace CryptoQuest.Battle.UI.SelectSkill
             _input.NavigateEvent -= UpdateAutoScroll;
             _singleHeroChannel.EventRaised -= OnSingleHero;
             _singleEnemyChannel.EventRaised -= OnSingleEnemy;
+            _allHeroChannel.EventRaised -= OnSelectAllHero;
+            _allEnemyChannel.EventRaised -= OnSelectAllEnemy;
         }
 
         private void SelectFirstOrLastSelectedSkill()
@@ -82,10 +100,6 @@ namespace CryptoQuest.Battle.UI.SelectSkill
             UnregisterEvents();
         }
 
-        public SkillTargetTypeDelegate SelectSingleEnemyCallback { get; set; }
-        private void OnSingleEnemy(CastableAbility skill) => SelectSingleEnemyCallback?.Invoke(_lastSelectedSkill);
-
-        public SkillTargetTypeDelegate SelectSingleHeroCallback { get; set; }
         private bool _interactable;
 
         public bool Interactable
@@ -101,7 +115,6 @@ namespace CryptoQuest.Battle.UI.SelectSkill
             }
         }
 
-        private void OnSingleHero(CastableAbility skill) => SelectSingleHeroCallback?.Invoke(_lastSelectedSkill);
 
         private void DestroyAllSkillButtons()
         {

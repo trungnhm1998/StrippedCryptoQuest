@@ -77,7 +77,8 @@ namespace CryptoQuest.Battle.States.SelectHeroesActions
         public void OnRetreatPressed()
         {
             Debug.Log("SelectCommandState::OnRetreatPressed");
-            var highestAgi = Fsm.EnemyPartyManager.Enemies.GetHighestAttributeValue(AttributeSets.Agility);
+            var highestAgi = Fsm.EnemyPartyManager.Enemies
+                .GetHighestAttributeValue<EnemyBehaviour>(AttributeSets.Agility);
             Hero.SetCommand(new RetreatCommand(Hero, highestAgi));
 
             Fsm.GoToNextState();

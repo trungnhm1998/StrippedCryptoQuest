@@ -34,7 +34,7 @@ namespace CryptoQuest.Battle.States.SelectHeroesActions
 
         private void CreateCommandToUseItemOnEnemy(EnemyBehaviour enemy)
         {
-            var useItemCommand = new ConsumeItemCommand(Hero, _selectedItem.Item, enemy, true);
+            var useItemCommand = new ConsumeItemCommand(Hero, _selectedItem.Item, enemy);
             Hero.SetCommand(useItemCommand);
             Fsm.GoToNextState();
         }
