@@ -10,6 +10,13 @@ using UnityEditor;
 using CryptoQuest.Character;
 using UnityEditor.VersionControl;
 using CryptoQuest.Shop.UI.ScriptableObjects;
+using CryptoQuest.Item.Equipment;
+using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
+using CryptoQuest.Shop.UI.Item;
+using CryptoQuest.Item;
+using CryptoQuest.Shop;
+using CryptoQuest.System;
+using CryptoQuest.Gameplay.Inventory;
 
 namespace CryptoQuest.Tests.Runtime.Shop
 {
@@ -19,13 +26,25 @@ namespace CryptoQuest.Tests.Runtime.Shop
     {
 #if UNITY_EDITOR
         private const string SHOP_SCENE = "Assets/Tests/Runtime/Shop/Shop.unity";
+        private const string EQUIPMENT_DEF_DATABASE = "Assets/ScriptableObjects/Inventory/EquipmentDefDatabase.asset";
+        private const string EQUIPMENT_DATABASE = "Assets/ScriptableObjects/Inventory/EquipmentDatabase.asset";
+        private const string CONSUMABLE_DATABASE = "Assets/ScriptableObjects/Inventory/ConsumableDatabase.asset";
+        private const string INVENTORY_PATH = "Assets/ScriptableObjects/Inventory/MainInventory.asset";
+
         private string shopObjectName = "ShopPanel";
         private string shopDialogName = "DialogPanel";
         private ShowShopEventChannelSO _showShopEvent;
+        private InventorySO _inventorySO;
+        private ShopInventoryController _shopInventoryController;
+        private IEquipmentDefProvider _equipmentDefProvider;
+        private IConsumableProvider _consumableProvider;
 
         [UnitySetUp]
         public IEnumerator OneTimeSetUp()
         {
+            _inventorySO = AssetDatabase.LoadAssetAtPath<InventorySO>(INVENTORY_PATH);
+
+            Assert.IsNotNull(_inventorySO, "_inventorySO database could not be null");
             //Load event
 
             var eventGuids = AssetDatabase.FindAssets("t:ShowShopEventChannelSO");
@@ -35,10 +54,13 @@ namespace CryptoQuest.Tests.Runtime.Shop
                 _showShopEvent = AssetDatabase.LoadAssetAtPath<ShowShopEventChannelSO>(AssetDatabase.GUIDToAssetPath(eventGuid));
             }
 
-            Assert.IsNotNull(_showShopEvent,  "show shop event could not be null!");
+            Assert.IsNotNull(_showShopEvent, "show shop event could not be null!");
 
             yield return EditorSceneManager.LoadSceneAsyncInPlayMode(SHOP_SCENE, new LoadSceneParameters(LoadSceneMode.Single));
 
+            _shopInventoryController = ServiceProvider.GetService<ShopInventoryController>();
+            _equipmentDefProvider = ServiceProvider.GetService<IEquipmentDefProvider>();
+            _consumableProvider = ServiceProvider.GetService<IConsumableProvider>();
 
         }
         [UnityTest]
@@ -67,7 +89,75 @@ namespace CryptoQuest.Tests.Runtime.Shop
         }
 
 
+        [UnityTest]
+        public IEnumerator BuyEquipmentItem_207011000110_WithEnoughMoney_ReturnSuccess()
+        {
+            string itemId = "201011000111";
 
+            var equipment = new EquipmentInfo(itemId);
+
+            yield return _equipmentDefProvider.Load(equipment);
+
+            IShopItem shopItem = new EquipmentItem(equipment);
+
+            _inventorySO.WalletController.Wallet.Gold.SetCurrencyAmount(equipment.Price * 2);
+
+            var result = shopItem.TryToBuy(_shopInventoryController);
+
+            Assert.IsTrue(result, "Expect : buy item sucess");
+        }
+
+        [UnityTest]
+        public IEnumerator BuyEquipmentItem_201011000111_WithNotEnoughMoney_ReturnFail()
+        {
+            string itemId = "201011000111";
+
+            var equipment = new EquipmentInfo(itemId);
+
+            yield return _equipmentDefProvider.Load(equipment);
+
+            IShopItem shopItem = new EquipmentItem(equipment);
+
+            _inventorySO.WalletController.Wallet.Gold.SetCurrencyAmount(0);
+
+            var result = shopItem.TryToBuy(_shopInventoryController);
+
+            Assert.IsFalse(result, "Expect : buy item fail");
+        }
+
+        [UnityTest]
+        public IEnumerator BuyConsumableItem_5001_WithEnoughMoney_ReturnSuccess()
+        {
+            string itemId = "5001";
+
+            var item = new ConsumableInfo(itemId);
+            yield return _consumableProvider.Load(item);
+
+            IShopItem shopItem = new ConsumableItem(item);
+
+
+            _inventorySO.WalletController.Wallet.Gold.SetCurrencyAmount(item.Price * 2);
+
+            var result = shopItem.TryToBuy(_shopInventoryController);
+
+            Assert.IsTrue(result, "Expect : buy item sucess");
+        }
+
+        [UnityTest]
+        public IEnumerator BuyConsumableItem_5001_WithNotEnoughMoney_ReturnFail()
+        {
+            string itemId = "5001";
+            var item = new ConsumableInfo(itemId);
+            yield return _consumableProvider.Load(item);
+
+            IShopItem shopItem = new ConsumableItem(item);
+
+            _inventorySO.WalletController.Wallet.Gold.SetCurrencyAmount(0);
+
+            var result = shopItem.TryToBuy(_shopInventoryController);
+
+            Assert.IsFalse(result, "Expect : buy item sucess");
+        }
 #endif
     }
 }

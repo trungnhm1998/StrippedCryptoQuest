@@ -1,9 +1,4 @@
-using CryptoQuest.Item;
-using CryptoQuest.Shop;
-using PolyAndCode.UI;
-using System.Collections.Generic;
-using System.Linq;
-using UnityEngine;
+using CryptoQuest.Shop.UI.Item;
 
 namespace CryptoQuest.Shop.UI.Panels.Item
 {
@@ -15,7 +10,7 @@ namespace CryptoQuest.Shop.UI.Panels.Item
 
             for (int i = 0; i < listItem.Count; i++)
             {
-                IShopItemData shopItemData = new ConsumableItem(listItem[i]);
+                IShopItem shopItemData = new ConsumableItem(listItem[i]);
 
                 InstantiateItem(shopItemData, false);
             }

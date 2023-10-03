@@ -2,6 +2,7 @@ using CryptoQuest.Events.UI.Dialogs;
 using CryptoQuest.Item;
 using CryptoQuest.Item.Equipment;
 using CryptoQuest.Shop;
+using CryptoQuest.Shop.UI.Item;
 using CryptoQuest.Shop.UI.Panels.Item;
 using CryptoQuest.Shop.UI.Panels.Result;
 using CryptoQuest.Shop.UI.ScriptableObjects;
@@ -23,8 +24,9 @@ namespace CryptoQuest.Shop.UI.Panels.Buy
         [SerializeField] private UIResultPanel _resultPanel;
         [SerializeField] private UIShopBuy _uiShopBuy;
         
-        private ShopManager _shopManager;
-        private IShopItemData _currentBuyItem;
+        private ShopManager _shopManager; 
+        private IShopItem _currentBuyItem;
+        private bool _isBuying = false;
 
         public override StateBase<string> GetPanelState(ShopManager shopManager)
         {
@@ -54,8 +56,9 @@ namespace CryptoQuest.Shop.UI.Panels.Buy
             _itemInfo.gameObject.SetActive(false);
             _partyInfo.gameObject.SetActive(false);
         }
-        private void OnSubmitBuy(IShopItemData shopItemInfo)
+        private void OnSubmitBuy(IShopItem shopItemInfo)
         {
+            _isBuying = true;
             _currentBuyItem = shopItemInfo;
             _shopManager.HideDialog();
 
@@ -66,13 +69,17 @@ namespace CryptoQuest.Shop.UI.Panels.Buy
 
         private void OnPressYesButtonDialog()
         {
+            _isBuying = false;
             _yesNoDialogEventChannelSO.Hide();
-            _resultPanel.InitResult(true, State.name);
+
+            var isSuccess = _shopManager.RequestBuy(_currentBuyItem);
+            _resultPanel.InitResult(isSuccess, State.name);
             _shopManager.RequestChangeState(ShopStateMachine.Result);
         }
 
         private void OnPressNoButtonDialog()
         {
+            _isBuying = false;
             _yesNoDialogEventChannelSO.Hide();
             _shopManager.ShowDialog(DiaglogMessage);
             ShowItem();
@@ -82,6 +89,16 @@ namespace CryptoQuest.Shop.UI.Panels.Buy
         {
             _uiShopBuy.SetItemShopTable(_shopManager.ShopInfo);
             _uiShopBuy.Show();
-        }    
+        }
+        public bool RequestGoBack()
+        {
+            if (_isBuying)
+            {
+                OnPressNoButtonDialog();
+                return false;
+            }
+
+            return true;
+        }
     }
 }

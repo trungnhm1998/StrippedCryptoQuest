@@ -1,5 +1,6 @@
 using CryptoQuest.Events.UI.Dialogs;
 using CryptoQuest.Item;
+using CryptoQuest.Shop.UI.Item;
 using CryptoQuest.Shop.UI.Panels.Item;
 using CryptoQuest.Shop.UI.Panels.Result;
 using CryptoQuest.Shop.UI.ScriptableObjects;
@@ -26,7 +27,7 @@ namespace CryptoQuest.Shop.UI.Panels.Sell
 
         private readonly Dictionary<ShopStateSO, int> _itemListCache = new();
         private UIShop _currentShop;
-        private IShopItemData _currentSellItem;
+        private IShopItem _currentSellItem;
         private ShopManager _shopManager;
 
 
@@ -116,9 +117,10 @@ namespace CryptoQuest.Shop.UI.Panels.Sell
             ShowItemsWithType(CurrentTabIndex);
         }
 
-        private void OnSubmitSell(IShopItemData shopItemData)
+        private void OnSubmitSell(IShopItem shopItemData)
         {
             _currentSellItem = shopItemData;
+            _shopManager.HideDialog();
 
             _sellMessage.Arguments = new object[] { _currentSellItem.SellPrice };
             _shopManager.ShowDialog(_sellMessage);

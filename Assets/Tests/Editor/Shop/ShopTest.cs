@@ -2,6 +2,7 @@ using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Type;
 using CryptoQuest.Shop;
+using CryptoQuest.Shop.UI.Item;
 using CryptoQuest.Shop.UI.Panels.Item;
 using NUnit.Framework;
 using System.Collections;

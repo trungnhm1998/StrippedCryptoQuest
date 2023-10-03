@@ -1,13 +1,5 @@
-using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item;
-using CryptoQuest.Shop;
-using CryptoQuest.System;
-using CryptoQuest.Shop.UI.ScriptableObjects;
-using PolyAndCode.UI;
 using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.Events;
-using System;
+using CryptoQuest.Shop.UI.Item;
 
 namespace CryptoQuest.Shop.UI.Panels.Item
 {
@@ -33,7 +25,7 @@ namespace CryptoQuest.Shop.UI.Panels.Item
             yield return SelectDefaultButton();
         }
 
-        private void CreateItem(IShopItemData shopItemData)
+        private void CreateItem(IShopItem shopItemData)
         {
             InstantiateItem(shopItemData, true);
         }    

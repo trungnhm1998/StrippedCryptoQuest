@@ -5,8 +5,11 @@ namespace CryptoQuest.Shop.UI.ShopStates.Buy
 {
     public class ShopBuyState : ShopStateBase
     {
+        private UIBuyPanel _buyPanel;
+
         public ShopBuyState(UIBuyPanel panel) : base (panel)
         {
+            _buyPanel = panel;
         }
 
         public override void OnEnter()
@@ -17,7 +20,10 @@ namespace CryptoQuest.Shop.UI.ShopStates.Buy
         public override void HandleBack()
         {
             base.HandleBack();
-            _shopStateMachine.RequestStateChange(ShopStateMachine.Menu);
+            if(_buyPanel.RequestGoBack())
+            {
+                _shopStateMachine.RequestStateChange(ShopStateMachine.Menu);
+            }    
         }
     }
 }

@@ -1,9 +1,9 @@
+using CryptoQuest.Gameplay.Inventory.Currency;
+using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
 using CryptoQuest.Item;
 using CryptoQuest.Item.Equipment;
 using CryptoQuest.Menu;
-using CryptoQuest.Shop.UI.ScriptableObjects;
-using CryptoQuest.UI.Menu.Panels.Status;
-using PolyAndCode.UI;
+using CryptoQuest.Shop.UI.Item;
 using System;
 using System.Collections;
 using TMPro;
@@ -17,7 +17,7 @@ namespace CryptoQuest.Shop.UI.Panels.Item
 {
     public class UIShopItem : MonoBehaviour
     {
-        public Action<IShopItemData> OnSubmit;
+        public Action<IShopItem> OnSubmit;
 
         [SerializeField] private MultiInputButton _button;
         [SerializeField] private Image _icon;
@@ -26,7 +26,7 @@ namespace CryptoQuest.Shop.UI.Panels.Item
         [SerializeField] private GameObject _gemInfo;
         private const string CURRENCY = "G";
 
-        private IShopItemData _shopItemData;
+        private IShopItem _shopItemData;
 
         private void OnEnable()
         {
@@ -38,7 +38,7 @@ namespace CryptoQuest.Shop.UI.Panels.Item
             StartCoroutine(LoadSpriteAndSet(_shopItemData.Icon));
         }
 
-        public void Init(IShopItemData shopItemData, bool isBuy)
+        public void Init(IShopItem shopItemData, bool isBuy)
         {
             _shopItemData = shopItemData;
             _nameText.StringReference = _shopItemData.DisplayName;
@@ -63,50 +63,6 @@ namespace CryptoQuest.Shop.UI.Panels.Item
             yield return handle;
 
             _icon.sprite = handle.Result;
-        }
-    }
-
-    public interface IShopItemData
-    {
-        public ItemInfo Item { get; }
-        public AssetReferenceT<Sprite> Icon { get; }
-        public LocalizedString DisplayName { get; }
-        public int Price { get; }
-        public int SellPrice { get; }
-        public bool HasGem { get; }
-    }
-
-    public class EquipmentItem : IShopItemData
-    {
-        public ItemInfo Item => _equipment;
-        public AssetReferenceT<Sprite> Icon => _equipment.Data.Image;
-        public LocalizedString DisplayName => _equipment.Data.DisplayName;
-        public int Price => _equipment.Price;
-        public int SellPrice => _equipment.SellPrice;
-        public bool HasGem => true;
-
-        private EquipmentInfo _equipment;
-
-        public EquipmentItem(EquipmentInfo equipmentInfo)
-        {
-            _equipment = equipmentInfo;
-        }
-    }
-
-    public class ConsumableItem : IShopItemData
-    {
-        public ItemInfo Item => _consumable;
-        public AssetReferenceT<Sprite> Icon => _consumable.Data.Image;
-        public LocalizedString DisplayName => _consumable.Data.DisplayName;
-        public int Price => _consumable.Price;
-        public int SellPrice => _consumable.SellPrice;
-        public bool HasGem => false;
-
-        private ConsumableInfo _consumable;
-
-        public ConsumableItem(ConsumableInfo consumableInfo)
-        {
-            _consumable = consumableInfo;
         }
     }
 }

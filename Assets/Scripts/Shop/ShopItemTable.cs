@@ -1,6 +1,4 @@
-using CryptoQuest.Item;
-using CryptoQuest.Item.Equipment;
-using CryptoQuest.Shop.UI.Panels.Item;
+using CryptoQuest.Shop.UI.Item;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -14,6 +12,6 @@ namespace CryptoQuest.Shop
         public int Id;
         public List<string> Items = new ();
 
-        public abstract IEnumerator LoadItem(Action<IShopItemData> callback);
+        public abstract IEnumerator LoadItem(Action<IShopItem> callback);
     }
 }

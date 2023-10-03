@@ -1,6 +1,4 @@
-using CryptoQuest.Item.Equipment;
-using PolyAndCode.UI;
-using UnityEngine;
+using CryptoQuest.Shop.UI.Item;
 
 namespace CryptoQuest.Shop.UI.Panels.Item
 {
@@ -13,7 +11,7 @@ namespace CryptoQuest.Shop.UI.Panels.Item
 
             for (int i = 0; i < listItem.Count; i++)
             {
-                IShopItemData shopItemData = new EquipmentItem(listItem[i]);
+                IShopItem shopItemData = new EquipmentItem(listItem[i]);
 
                 InstantiateItem(shopItemData, false);
             }

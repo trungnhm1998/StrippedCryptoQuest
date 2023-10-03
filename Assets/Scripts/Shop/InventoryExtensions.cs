@@ -2,10 +2,8 @@ using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Type;
 using CryptoQuest.Item;
 using CryptoQuest.Item.Equipment;
-using CryptoQuest.Shop.UI.Panels.Item;
-using System.Collections;
+using CryptoQuest.Shop.UI.Item;
 using System.Collections.Generic;
-using UnityEngine;
 
 public static class InventoryExtensions
 {

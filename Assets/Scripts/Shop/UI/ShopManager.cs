@@ -2,9 +2,12 @@ using CryptoQuest.Events;
 using CryptoQuest.Gameplay.Inventory.Currency;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
 using CryptoQuest.Menu;
+using CryptoQuest.Shop.UI.Item;
 using CryptoQuest.Shop.UI.Panels;
+using CryptoQuest.Shop.UI.Panels.Item;
 using CryptoQuest.Shop.UI.ScriptableObjects;
 using CryptoQuest.Shop.UI.ShopStates;
+using CryptoQuest.System;
 using IndiGames.Core.Events.ScriptableObjects;
 using UnityEngine;
 using UnityEngine.Localization;
@@ -39,6 +42,8 @@ namespace CryptoQuest.Shop.UI
         public ShopItemTable ShopInfo { get; private set; }
 
         private ShopStateMachine _shopFsm;
+        private IShopInventoryController _shopInventoryController;
+
         private void Awake()
         {
             SetupMenuStateMachines();
@@ -114,6 +119,7 @@ namespace CryptoQuest.Shop.UI
 
         private void Initialize()
         {
+            _shopInventoryController = ServiceProvider.GetService<IShopInventoryController>();
             UpdateGoldAmount();
         }
 
@@ -136,6 +142,17 @@ namespace CryptoQuest.Shop.UI
         public void RequestChangeState(string state)
         {
             _shopFsm.RequestStateChange(state);
+        }
+
+        public bool RequestBuy(IShopItem item)
+        {
+            if (item.TryToBuy(_shopInventoryController))
+            {
+                UpdateGoldAmount();
+                return true;
+            }
+
+            return false;
         }
 
     }

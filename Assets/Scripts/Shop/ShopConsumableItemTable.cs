@@ -1,4 +1,5 @@
 using CryptoQuest.Item;
+using CryptoQuest.Shop.UI.Item;
 using CryptoQuest.Shop.UI.Panels.Item;
 using CryptoQuest.System;
 using System;
@@ -10,7 +11,7 @@ namespace CryptoQuest.Shop
     [CreateAssetMenu(fileName = "New shop table", menuName = "Crypto Quest/Shop/New Consumable Table")]
     public class ShopConsumableItemTable : ShopItemTable
     {
-        public override IEnumerator LoadItem(Action<IShopItemData> callback)
+        public override IEnumerator LoadItem(Action<IShopItem> callback)
         {
             var consumableProvider = ServiceProvider.GetService<IConsumableProvider>();
             for (int i = 0; i < Items.Count; i++)
@@ -19,7 +20,7 @@ namespace CryptoQuest.Shop
 
                 yield return consumableProvider.Load(consumable);
 
-                IShopItemData shopItemData = new ConsumableItem(consumable);
+                IShopItem shopItemData = new ConsumableItem(consumable);
 
                 callback.Invoke(shopItemData);
             }

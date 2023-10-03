@@ -2,21 +2,20 @@ using CryptoQuest.Events.UI.Dialogs;
 using CryptoQuest.Shop;
 using CryptoQuest.System;
 using CryptoQuest.Shop.UI.ScriptableObjects;
-using PolyAndCode.UI;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
 using CryptoQuest.Gameplay.Inventory;
-using CryptoQuest.Item;
+using CryptoQuest.Shop.UI.Item;
 
 namespace CryptoQuest.Shop.UI.Panels.Item
 {
     public abstract class UIShop : MonoBehaviour
     {
         [Header("Raise Event")]
-        public Action<IShopItemData> OnSubmit;
+        public Action<IShopItem> OnSubmit;
 
         [Header("Shop Config")]
         [SerializeField] protected GameObject _content;
@@ -59,12 +58,12 @@ namespace CryptoQuest.Shop.UI.Panels.Item
             _defaultItem?.Select();
         }
 
-        protected void OnItemSubmit(IShopItemData shopItemInfo)
+        protected void OnItemSubmit(IShopItem shopItemInfo)
         {
             OnSubmit?.Invoke(shopItemInfo);
         }
 
-        protected void InstantiateItem(IShopItemData itemShopData, bool isBuy)
+        protected void InstantiateItem(IShopItem itemShopData, bool isBuy)
         {
             var uiItem = GetShopItem();
 
