@@ -18,7 +18,7 @@ namespace CryptoQuest.EditorTool
         [SerializeField] private Color _colorText;
         [SerializeField] private Rect _debugRect = new Rect(Screen.width - 560, 20, 120, 20);
 
-#if UNITY_EDITOR || DEVELOPMENT_BUIL
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
         private void OnGUI()
         {
             bool isDialogueState = _gameState.CurrentGameState == EGameState.Dialogue;
