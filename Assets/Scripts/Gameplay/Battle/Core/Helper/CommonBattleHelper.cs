@@ -1,6 +1,9 @@
 using System.Collections.Generic;
 using System.Linq;
+using CharacterComponent = CryptoQuest.Battle.Components.Character;
+using CryptoQuest.Character.Attributes;
 using UnityEngine;
+using CryptoQuest.Battle.Components;
 
 namespace CryptoQuest.Gameplay.Battle.Core.Helper
 {
@@ -29,6 +32,33 @@ namespace CryptoQuest.Gameplay.Battle.Core.Helper
             }
 
             return -1;
+        }
+
+        public static float GetHighestAttributeValue(this List<EnemyBehaviour> characters, AttributeScriptableObject attribute)
+        {
+            return characters.GetHighestAttributeValue<EnemyBehaviour>(attribute);
+        }
+
+        public static float GetHighestAttributeValue(this List<CharacterComponent> characters, AttributeScriptableObject attribute)
+        {
+            return characters.GetHighestAttributeValue<CharacterComponent>(attribute);
+        }
+
+        private static float GetHighestAttributeValue<T>(this List<T> characters, AttributeScriptableObject attribute)
+            where T : CharacterComponent
+        {
+            var highestValue = 0f;
+            foreach (var character in characters)
+            {
+                var attributeSystem = character.AttributeSystem;
+                if (!attributeSystem.TryGetAttributeValue(attribute, out var attributeValue)) continue;
+                if (attributeValue.CurrentValue >= highestValue)
+                {
+                    highestValue = attributeValue.CurrentValue;
+                }
+            }
+
+            return highestValue;
         }
     }
 }

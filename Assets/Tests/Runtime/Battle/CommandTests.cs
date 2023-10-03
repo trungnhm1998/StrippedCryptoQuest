@@ -1,14 +1,17 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using CryptoQuest.Battle.Commands;
 using CryptoQuest.Battle.Components;
 using CryptoQuest.Battle.ExecutionCalculations;
 using CryptoQuest.Character.Ability;
 using CryptoQuest.Character.Attributes;
+using CryptoQuest.Gameplay.Battle.Core.Helper;
 using CryptoQuest.Tests.Runtime.Battle.Builder;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
 using NUnit.Framework;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.TestTools;
 
 namespace CryptoQuest.Tests.Runtime.Battle
 {
@@ -93,7 +96,7 @@ namespace CryptoQuest.Tests.Runtime.Battle
         }
 
         [TestFixture]
-        public class Escape : CommandTests
+        public class Retreat : CommandTests
         {
             [TestCase(50f, 50f, 50f)]
             [TestCase(50f, 200f, 125f)]
@@ -103,16 +106,16 @@ namespace CryptoQuest.Tests.Runtime.Battle
                 Assert.AreEqual(expected, actual);
             }
 
-            [Test]
-            public void Execute_PlayerHaveHigherAgilityThanEnemy_EscapeSuccess()
+            [UnityTest]
+            public IEnumerator Execute_PlayerHaveHigherAgilityThanEnemies_RetreatSuccess()
             {
-                var escapeAbility =
-                    AssetDatabase.LoadAssetAtPath<EscapeAbility>(
-                        "Assets/ScriptableObjects/Character/Abilities/GA_Escape.asset");
+                var retreatAbility =
+                    AssetDatabase.LoadAssetAtPath<RetreatAbility>(
+                        "Assets/ScriptableObjects/Character/Abilities/GA_Retreat.asset");
 
-                bool escaped = false;
-                escapeAbility.EscapeFailedEvent += () => escaped = false;
-                escapeAbility.EscapedEvent += () => escaped = true;
+                bool retreated = false;
+                retreatAbility.RetreatFailedEvent += () => retreated = false;
+                retreatAbility.RetreatedEvent += () => retreated = true;
 
                 var hero = A.Character
                     .WithStats(new AttributeWithValue[]
@@ -120,6 +123,11 @@ namespace CryptoQuest.Tests.Runtime.Battle
                         new(AttributeSets.Agility, 200f)
                     })
                     .Build();
+                hero.gameObject.AddComponent<RetreatBehaviour>();
+                var retreatBehaviour = hero.GetComponent<RetreatBehaviour>();
+                retreatBehaviour.Editor_SetAbility(retreatAbility);
+                retreatBehaviour.Init();
+
                 var enemyBuilder = A.Character;
                 var enemy = enemyBuilder
                     .WithStats(new AttributeWithValue[]
@@ -127,31 +135,44 @@ namespace CryptoQuest.Tests.Runtime.Battle
                         new(AttributeSets.Agility, 50f)
                     })
                     .Build();
+                var enemy2 = enemyBuilder
+                    .WithStats(new AttributeWithValue[]
+                    {
+                        new(AttributeSets.Agility, 150f)
+                    })
+                    .Build();
 
-                enemy.AttributeSystem.TryGetAttributeValue(AttributeSets.Agility, out var enemyAgility);
+                var enemies = new List<CryptoQuest.Battle.Components.Character>() { enemy, enemy2 };
+                var highestAgi = enemies.GetHighestAttributeValue(AttributeSets.Agility);
+
+                Assert.AreEqual(150f, highestAgi);
+
                 var commands = new List<ICommand>
                 {
-                    new EscapeCommand(enemyBuilder.CharacterGameObject, enemyAgility.CurrentValue)
+                    new RetreatCommand(hero.GetComponent<HeroBehaviour>(), highestAgi)
                 };
-                commands.ForEach(command => command.Execute());
+                foreach (var command in commands)
+                {
+                    yield return command.Execute();
+                }
 
-                Assert.IsTrue(escaped);
+                Assert.IsTrue(retreated);
 
                 // Maybe command could play effect/logs?
                 // async?
                 // Assert.IsTrue(commands.TrueForAll(command => command.IsDone));
             }
 
-            [Test]
-            public void Execute_EnemyHas200AgiHeroHas50_EscapeFailed()
+            [UnityTest]
+            public IEnumerator Execute_PlayerHaveLowerAgilityThanOneEnemy_RetreatFailed()
             {
-                var escapeAbility =
-                    AssetDatabase.LoadAssetAtPath<EscapeAbility>(
-                        "Assets/ScriptableObjects/Character/Abilities/GA_Escape.asset");
+                var retreatAbility =
+                    AssetDatabase.LoadAssetAtPath<RetreatAbility>(
+                        "Assets/ScriptableObjects/Character/Abilities/GA_Retreat.asset");
 
-                bool escaped = false;
-                escapeAbility.EscapeFailedEvent += () => escaped = false;
-                escapeAbility.EscapedEvent += () => escaped = true;
+                bool retreated = false;
+                retreatAbility.RetreatFailedEvent += () => retreated = false;
+                retreatAbility.RetreatedEvent += () => retreated = true;
 
                 var characterBuilder = A.Character;
                 var hero = characterBuilder
@@ -160,22 +181,37 @@ namespace CryptoQuest.Tests.Runtime.Battle
                         new(AttributeSets.Agility, 50f)
                     })
                     .Build();
-                var enemy = A.Character
+                hero.gameObject.AddComponent<RetreatBehaviour>();
+                var retreatBehaviour = hero.GetComponent<RetreatBehaviour>();
+                retreatBehaviour.Editor_SetAbility(retreatAbility);
+                retreatBehaviour.Init();
+
+                var enemyBuilder = A.Character;
+                var enemy = enemyBuilder
                     .WithStats(new AttributeWithValue[]
                     {
-                        new(AttributeSets.Agility, 200f)
+                        new(AttributeSets.Agility, 25f)
+                    })
+                    .Build();
+                var enemy2 = enemyBuilder
+                    .WithStats(new AttributeWithValue[]
+                    {
+                        new(AttributeSets.Agility, 150f)
                     })
                     .Build();
 
-
-                enemy.AttributeSystem.TryGetAttributeValue(AttributeSets.Agility, out var enemyAgility);
+                var enemies = new List<CryptoQuest.Battle.Components.Character>() { enemy, enemy2 };
+                var highestAgi = enemies.GetHighestAttributeValue(AttributeSets.Agility);
                 var commands = new List<ICommand>
                 {
-                    new EscapeCommand(characterBuilder.CharacterGameObject, enemyAgility.CurrentValue)
+                    new RetreatCommand(hero.GetComponent<HeroBehaviour>(), highestAgi)
                 };
-                commands.ForEach(command => command.Execute());
+                foreach (var command in commands)
+                {
+                    yield return command.Execute();
+                }
 
-                Assert.IsFalse(escaped);
+                Assert.IsFalse(retreated);
             }
         }
 

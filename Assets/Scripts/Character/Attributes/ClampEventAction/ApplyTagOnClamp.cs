@@ -18,7 +18,7 @@ namespace CryptoQuest.Character.Attributes.ClampEventAction
         public void OnClampFailed(AttributeSystemBehaviour attributeSystem)
         {
             if (!attributeSystem.TryGetComponent<TagSystemBehaviour>(out var tagSystem)) return;
-            if (tagSystem.HasTag(_tagToApply)) tagSystem.RemoveTags(new TagScriptableObject[] {_tagToApply});
+            tagSystem.RemoveTags(new TagScriptableObject[] {_tagToApply});
         }
     }
 }

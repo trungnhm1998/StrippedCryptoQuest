@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace CryptoQuest.Tests.Runtime.Battle.Builder
 {
-    public class CharacterBuilder
+    public class CharacterBuilder<T> where T : CryptoQuest.Battle.Components.Character
     {
         private const string ATTRIBUTE_SETS = "Assets/ScriptableObjects/Character/Attributes/AttributeSets.asset";
         private Elemental _elemental = An.Element.Fire;
@@ -23,31 +23,31 @@ namespace CryptoQuest.Tests.Runtime.Battle.Builder
             new(AttributeSets.Strength, 50f),
         };
 
-        public CharacterBuilder WithElement(Elemental elemental)
+        public CharacterBuilder<T> WithElement(Elemental elemental)
         {
             _elemental = elemental;
             return this;
         }
 
-        public CharacterBuilder WithStats(AttributeWithValue[] stats)
+        public CharacterBuilder<T> WithStats(AttributeWithValue[] stats)
         {
             _stats = stats;
             return this;
         }
 
-        public CryptoQuest.Battle.Components.Character Build()
+        public T Build()
         {
             var attributeSets = AssetDatabase.LoadAssetAtPath<AttributeSets>(ATTRIBUTE_SETS);
             _characterGameObject = new GameObject();
             _characterGameObject.AddComponent<AttributeSystemBehaviour>();
             _characterGameObject.AddComponent<EffectSystemBehaviour>();
             _characterGameObject.AddComponent<AbilitySystemBehaviour>();
-            _characterGameObject.AddComponent<CryptoQuest.Battle.Components.Character>();
+            _characterGameObject.AddComponent<T>();
             var statsProvider = _characterGameObject.AddComponent<InlineStatsProvider>();
             statsProvider.ProvideStats(_stats);
             _characterGameObject.AddComponent<SimpleStatsInitializer>();
             _characterGameObject.AddComponent<Element>();
-            var character = _characterGameObject.GetComponent<CryptoQuest.Battle.Components.Character>();
+            var character = _characterGameObject.GetComponent<T>();
 
             character.Init(_elemental);
             return character;

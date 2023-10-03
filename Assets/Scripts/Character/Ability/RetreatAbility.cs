@@ -8,13 +8,13 @@ using UnityEngine.Events;
 
 namespace CryptoQuest.Character.Ability
 {
-    public class EscapeAbility : AbilityScriptableObject<EscapeAbilitySpec>
+    public class RetreatAbility : AbilityScriptableObject<RetreatAbilitySpec>
     {
-        public UnityAction EscapedEvent;
-        public UnityAction EscapeFailedEvent;
+        public UnityAction RetreatedEvent;
+        public UnityAction RetreatFailedEvent;
     }
 
-    public class EscapeAbilitySpec : GameplayAbilitySpec
+    public class RetreatAbilitySpec : GameplayAbilitySpec
     {
         private float _enemySpeed;
 
@@ -32,17 +32,16 @@ namespace CryptoQuest.Character.Ability
             var probabilityOfRetreat =
                 BattleCalculator.CalculateProbabilityOfRetreat(_enemySpeed, agility.CurrentValue);
             var canActive = probabilityOfRetreat > 0 && rand <= probabilityOfRetreat;
-
             // TODO: Maybe implement template method pattern here
             if (!canActive)
-                ((EscapeAbility)AbilitySO).EscapeFailedEvent?.Invoke();
+                ((RetreatAbility)AbilitySO).RetreatFailedEvent?.Invoke();
 
             return base.CanActiveAbility() && canActive;
         }
 
         protected override IEnumerator OnAbilityActive()
         {
-            ((EscapeAbility)AbilitySO).EscapedEvent?.Invoke();
+            ((RetreatAbility)AbilitySO).RetreatedEvent?.Invoke();
             yield break;
         }
     }

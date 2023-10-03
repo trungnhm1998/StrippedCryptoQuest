@@ -4,20 +4,20 @@ using UnityEngine;
 
 namespace CryptoQuest.Battle.Commands
 {
-    public class EscapeCommand : ICommand
+    public class RetreatCommand : ICommand
     {
-        private readonly EscapeBehaviour _escapeBehaviour;
+        private readonly RetreatBehaviour _retreatBehaviour;
         private readonly float _highestEnemySpeed;
 
-        public EscapeCommand(GameObject heroGo, float highestEnemySpeed)
+        public RetreatCommand(HeroBehaviour hero, float highestEnemySpeed)
         {
-            _escapeBehaviour = heroGo.GetComponent<EscapeBehaviour>();
+            _retreatBehaviour = hero.GetComponent<RetreatBehaviour>();
             _highestEnemySpeed = highestEnemySpeed;
         }
 
         public IEnumerator Execute()
         {
-            _escapeBehaviour.Escape(_highestEnemySpeed);
+            _retreatBehaviour.Retreat(_highestEnemySpeed);
             yield break;
         }
     }

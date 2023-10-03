@@ -1,9 +1,11 @@
 ﻿using CryptoQuest.Battle.Commands;
 using CryptoQuest.Battle.Components;
 using CryptoQuest.Battle.UI.SelectCommand;
+using CryptoQuest.Character.Attributes;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
+using CryptoQuest.Gameplay.Battle.Core.Helper;
 
 namespace CryptoQuest.Battle.States.SelectHeroesActions
 {
@@ -68,6 +70,9 @@ namespace CryptoQuest.Battle.States.SelectHeroesActions
         public void OnRetreatPressed()
         {
             Debug.Log("SelectCommandState::OnRetreatPressed");
+            var highestAgi = Fsm.EnemyPartyManager.Enemies.GetHighestAttributeValue(AttributeSets.Agility);
+            Hero.SetCommand(new RetreatCommand(Hero, highestAgi));
+
             Fsm.GoToNextState();
         }
 

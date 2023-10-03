@@ -1,6 +1,6 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
+using CryptoQuest.Battle.Events;
 using UnityEngine;
 
 namespace CryptoQuest.Battle
@@ -11,13 +11,14 @@ namespace CryptoQuest.Battle
     public class PresentBehaviour : MonoBehaviour
     {
         [SerializeField] private BattleContext _battleContext;
+        private RoundEndedEvent _roundEndedEvent = new RoundEndedEvent();
 
-        public void ExecuteCharacterCommands(IEnumerable<Components.Character> characters, Action onComplete)
+        public void ExecuteCharacterCommands(IEnumerable<Components.Character> characters)
         {
-            StartCoroutine(CoPresentation(characters, onComplete));
+            StartCoroutine(CoPresentation(characters));
         }
 
-        private IEnumerator CoPresentation(IEnumerable<Components.Character> characters, Action onComplete)
+        private IEnumerator CoPresentation(IEnumerable<Components.Character> characters)
         {
             ChangeAllEnemiesOpacity(0.5f);
 
@@ -28,7 +29,7 @@ namespace CryptoQuest.Battle
             }
 
             ChangeAllEnemiesOpacity(1f);
-            onComplete?.Invoke();
+            BattleEventBus.RaiseEvent<RoundEndedEvent>(_roundEndedEvent);
         }
 
         private void ChangeAllEnemiesOpacity(float f)
