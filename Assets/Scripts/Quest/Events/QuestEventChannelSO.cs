@@ -5,5 +5,5 @@ using UnityEngine;
 namespace CryptoQuest.Quest.Events
 {
     [CreateAssetMenu(menuName = "Crypto Quest/Events/Quest Event Channel", fileName = "QuestEventChannelSO")]
-    public class QuestTriggerEventChannelSO : GenericEventChannelSO<QuestSO> { }
+    public class QuestEventChannelSO : GenericEventChannelSO<QuestSO> { }
 }

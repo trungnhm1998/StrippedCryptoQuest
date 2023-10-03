@@ -15,9 +15,15 @@ namespace CryptoQuest.Quest.Components
     {
         public static Action<IQuestConfigure> OnConfigureQuest;
 
+        [SerializeField] private QuestEventChannelSO _triggerQuestEventChannel;
+        [SerializeField] private QuestEventChannelSO _giveQuestEventChannel;
         [SerializeField] private RewardSO _rewardEventChannel;
-        [SerializeField] private QuestTriggerEventChannelSO questTriggerEventChannel;
+
         [field: SerializeField, ReadOnly] public List<string> InProgressQuests { get; private set; } = new();
+
+        [field: ReadOnly] public List<QuestInfo> InProgressQuestInfos { get; private set; } =
+            new();
+
         [field: SerializeField, ReadOnly] public List<string> CompletedQuests { get; private set; } = new();
         [field: ReadOnly] public List<QuestInfo> Quests { get; private set; } = new();
 
@@ -27,13 +33,15 @@ namespace CryptoQuest.Quest.Components
         private void OnEnable()
         {
             OnConfigureQuest += ConfigureQuestHolder;
-            questTriggerEventChannel.EventRaised += TriggerQuest;
+            _triggerQuestEventChannel.EventRaised += TriggerQuest;
+            _giveQuestEventChannel.EventRaised += GiveQuest;
         }
 
         private void OnDisable()
         {
             OnConfigureQuest -= ConfigureQuestHolder;
-            questTriggerEventChannel.EventRaised -= TriggerQuest;
+            _triggerQuestEventChannel.EventRaised -= TriggerQuest;
+            _giveQuestEventChannel.EventRaised -= GiveQuest;
         }
 
         private void TriggerQuest(QuestSO questDef)
@@ -52,6 +60,13 @@ namespace CryptoQuest.Quest.Components
             _currentQuest.OnQuestCompleted += QuestCompleted;
         }
 
+        private void GiveQuest(QuestSO questSo)
+        {
+            var questInfo = questSo.CreateQuest(this);
+            InProgressQuestInfos.Add(questInfo);
+            questInfo.GiveQuest();
+        }
+
         private void RewardReceived(LootInfo[] loots)
         {
             _rewardEventChannel.RewardRaiseEvent(loots);
@@ -62,7 +77,6 @@ namespace CryptoQuest.Quest.Components
         {
             CompletedQuests.Add(_currentQuest.Guid);
             InProgressQuests.Remove(_currentQuest.Guid);
-
             _currentQuest.OnQuestCompleted -= QuestCompleted;
         }
 

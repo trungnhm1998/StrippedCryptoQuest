@@ -29,11 +29,13 @@ namespace CryptoQuest.Battle
 
         [Header("Events to listen to")]
         [SerializeField] private VoidEventChannelSO _onBattleEndEventChannel;
+
         [SerializeField] private BattleEventSO _endBattleEvent;
 
         [Header("Events to raise")]
         [SerializeField] private UnloadSceneEventChannelSO _unloadSceneEvent;
         [SerializeField] private LoadSceneEventChannelSO _loadSceneEventChannelSo;
+        [SerializeField] private BattleResultEventSO _battleCompletedEvent;
         [SerializeField] private RewardSO _rewardEventChannel;
 
         [Header("Config"), SerializeField]
@@ -109,8 +111,21 @@ namespace CryptoQuest.Battle
 
         private void OnBattleEnd()
         {
+            NotifyBattleResult();
             _unloadSceneEvent.RequestUnload(_battleSceneSO);
         }
+
+        private void NotifyBattleResult()
+        {
+            BattleResultInfo result = new()
+            {
+                IsWin = true, // this depends on the battle result, but for now we assume it's always win
+                Battlefield = _battleBus.CurrentBattlefield,
+                BattleContext = _context
+            };
+            _battleCompletedEvent.RaiseEvent(result);
+        }
+
 
         private CompletedContext _context;
 

@@ -1,13 +1,14 @@
 ﻿using CryptoQuest.Quest.Authoring;
 using CryptoQuest.Quest.Events;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace CryptoQuest.Quest.Components
 {
     public class CompleteQuestOnCollide : MonoBehaviour
     {
         [SerializeField] private QuestSO _questToComplete;
-        [SerializeField] private QuestTriggerEventChannelSO questTriggerEventChannel;
+        [SerializeField] private QuestEventChannelSO _questEventChannelSo;
 
         [SerializeField] private ECollideActionType _actionType;
 
@@ -16,7 +17,7 @@ namespace CryptoQuest.Quest.Components
             if (!other.CompareTag("Player")) return;
             if (_actionType != ECollideActionType.OnEnter) return;
 
-            questTriggerEventChannel.RaiseEvent(_questToComplete);
+            _questEventChannelSo.RaiseEvent(_questToComplete);
         }
 
         private void OnTriggerExit2D(Collider2D other)
@@ -24,7 +25,7 @@ namespace CryptoQuest.Quest.Components
             if (!other.CompareTag("Player")) return;
             if (_actionType != ECollideActionType.OnExit) return;
 
-            questTriggerEventChannel.RaiseEvent(_questToComplete);
+            _questEventChannelSo.RaiseEvent(_questToComplete);
         }
 
         private enum ECollideActionType

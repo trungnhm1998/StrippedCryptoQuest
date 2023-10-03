@@ -44,5 +44,7 @@ namespace CryptoQuest.Quest.Categories
 
             CutsceneManager.CutsceneCompleted -= FinishQuest;
         }
+
+        public override void GiveQuest() { }
     }
 }

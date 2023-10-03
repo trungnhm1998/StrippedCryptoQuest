@@ -19,5 +19,7 @@ namespace CryptoQuest.Quest.Categories
             base.TriggerQuest();
             FinishQuest();
         }
+
+        public override void GiveQuest() { }
     }
 }

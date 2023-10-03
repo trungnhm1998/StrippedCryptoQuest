@@ -33,7 +33,7 @@ Transform:
   - {fileID: 7693632841490575465}
   - {fileID: 2875370832011413627}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &66047365823554676
 PrefabInstance:
@@ -350,6 +350,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 4852143487191309482}
     m_Modifications:
+    - target: {fileID: 378290335412794126, guid: 6a9f787dfc0f345459a00588887e8d00, type: 3}
+      propertyPath: _giveQuestEventChannel
+      value: 
+      objectReference: {fileID: 11400000, guid: da57ae63ba992064e8d3ec26238fc35a, type: 2}
+    - target: {fileID: 378290335412794126, guid: 6a9f787dfc0f345459a00588887e8d00, type: 3}
+      propertyPath: _triggerQuestEventChannel
+      value: 
+      objectReference: {fileID: 11400000, guid: fdefe5ff6c97c9946a9e874eb074f93f, type: 2}
     - target: {fileID: 666282647687497273, guid: 6a9f787dfc0f345459a00588887e8d00, type: 3}
       propertyPath: m_RootOrder
       value: 7
@@ -402,13 +410,35 @@ PrefabInstance:
     - {fileID: 1249662082265426137, guid: 6a9f787dfc0f345459a00588887e8d00, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5292255704015140054, guid: 6a9f787dfc0f345459a00588887e8d00, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7485606423578617354}
   m_SourcePrefab: {fileID: 100100000, guid: 6a9f787dfc0f345459a00588887e8d00, type: 3}
 --- !u!4 &2875370832011413627 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 666282647687497273, guid: 6a9f787dfc0f345459a00588887e8d00, type: 3}
   m_PrefabInstance: {fileID: 3375520489436139074}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &7469673555416824468 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5292255704015140054, guid: 6a9f787dfc0f345459a00588887e8d00, type: 3}
+  m_PrefabInstance: {fileID: 3375520489436139074}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &7485606423578617354
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7469673555416824468}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 775a85e79ca74f9580e7c6c11f17eb5e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _battleCompletedEvent: {fileID: 11400000, guid: e12642aa0785b734aa0d70cd555f1f69, type: 2}
+  _triggerQuestEventChannel: {fileID: 11400000, guid: fdefe5ff6c97c9946a9e874eb074f93f, type: 2}
 --- !u!1001 &3892973245962222679
 PrefabInstance:
   m_ObjectHideFlags: 0

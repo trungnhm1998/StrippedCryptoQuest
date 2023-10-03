@@ -9,5 +9,6 @@ namespace CryptoQuest.Quest.Authoring
         public abstract void TriggerQuest();
         public abstract void FinishQuest();
         public abstract bool IsValid();
+        public abstract void GiveQuest();
     }
 }

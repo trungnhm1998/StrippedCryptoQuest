@@ -41,5 +41,7 @@ namespace CryptoQuest.Quest.Categories
 
             YarnQuestHandler.OnDialogCompleted -= FinishQuest;
         }
+
+        public override void GiveQuest() { }
     }
 }

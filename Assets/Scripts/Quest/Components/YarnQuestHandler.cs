@@ -3,6 +3,7 @@ using CryptoQuest.Quest.Authoring;
 using CryptoQuest.Quest.Events;
 using IndiGames.Core.Events.ScriptableObjects;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace CryptoQuest.Quest.Components
 {
@@ -11,7 +12,7 @@ namespace CryptoQuest.Quest.Components
         public static Action<YarnQuestDef> OnUpdateCurrentNode;
         public static Action OnDialogCompleted;
         public static Action<string> OnQuestCompleted;
-        [SerializeField] private QuestTriggerEventChannelSO _questTriggerEventChannelSo;
+        [SerializeField] private QuestEventChannelSO _questEventChannelSo;
         [SerializeField] private VoidEventChannelSO _dialogCompletedEventChannelSo;
         private YarnQuestDef _current;
 
@@ -45,7 +46,7 @@ namespace CryptoQuest.Quest.Components
             foreach (var possibleOutComeQuest in _current.PossibleOutcomeQuests)
             {
                 if (possibleOutComeQuest.QuestName == questName)
-                    _questTriggerEventChannelSo.RaiseEvent(possibleOutComeQuest);
+                    _questEventChannelSo.RaiseEvent(possibleOutComeQuest);
             }
 
             _current = null;
