@@ -1,4 +1,5 @@
 using CryptoQuest.Gameplay.Inventory.Currency;
+using CryptoQuest.System;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -12,6 +13,7 @@ namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects
         public void Awake()
         {
             _walletController.Provide(this);
+            ServiceProvider.Provide<ICurrenciesController>(this);
         }
 
         public void GetCurrencyInfo(CurrencySO currencySo, out CurrencyInfo currencyInfo)
