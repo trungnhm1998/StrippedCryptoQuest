@@ -6,13 +6,13 @@ namespace CryptoQuest.Quest.Categories
 {
     public class BasicTriggerQuestSO : QuestSO
     {
-        public override QuestInfo CreateQuest(QuestManager questManager) => new BasicTriggerQuestData(this);
+        public override QuestInfo CreateQuest(QuestManager questManager) => new BasicTriggerQuestInfo(this);
     }
 
     [Serializable]
-    public class BasicTriggerQuestData : QuestData<BasicTriggerQuestSO>
+    public class BasicTriggerQuestInfo : QuestInfo<BasicTriggerQuestSO>
     {
-        public BasicTriggerQuestData(BasicTriggerQuestSO basicTriggerQuestSO) : base(basicTriggerQuestSO) { }
+        public BasicTriggerQuestInfo(BasicTriggerQuestSO basicTriggerQuestSO) : base(basicTriggerQuestSO) { }
 
         public override void TriggerQuest()
         {

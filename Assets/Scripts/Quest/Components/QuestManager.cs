@@ -84,7 +84,7 @@ namespace CryptoQuest.Quest.Components
         {
             foreach (var quest in Quests)
             {
-                if (quest.GetBaseData() == questSo)
+                if (quest.BaseData == questSo)
                     return true;
             }
 

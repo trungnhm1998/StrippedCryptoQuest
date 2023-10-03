@@ -8,26 +8,26 @@ using UnityEngine;
 namespace CryptoQuest.Quest.Categories
 {
     [CreateAssetMenu(menuName = "Crypto Quest/Quest System/Cutscene Quest", fileName = "CutsceneQuestSO", order = 0)]
-    public class CutsceneQuestSO : QuestSO<CutsceneQuestData>
+    public class CutsceneQuestSO : QuestSO<CutsceneQuestInfo>
     {
         [SerializeField] QuestCutsceneDef _cutsceneQuestSO;
 
         public override QuestInfo CreateQuest(QuestManager questManager) =>
-            new CutsceneQuestData(this, _cutsceneQuestSO);
+            new CutsceneQuestInfo(this, _cutsceneQuestSO);
     }
 
     [Serializable]
-    public class CutsceneQuestData : QuestData<CutsceneQuestSO>
+    public class CutsceneQuestInfo : QuestInfo<CutsceneQuestSO>
     {
         private readonly QuestCutsceneDef _cutsceneDef;
 
-        public CutsceneQuestData(CutsceneQuestSO cutsceneQuestSO,
+        public CutsceneQuestInfo(CutsceneQuestSO cutsceneQuestSO,
             QuestCutsceneDef questCutsceneDef) : base(cutsceneQuestSO)
         {
             _cutsceneDef = questCutsceneDef;
         }
 
-        public CutsceneQuestData() { }
+        public CutsceneQuestInfo() { }
 
         public override void TriggerQuest()
         {

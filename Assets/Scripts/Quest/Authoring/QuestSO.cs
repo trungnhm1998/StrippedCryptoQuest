@@ -20,7 +20,6 @@ namespace CryptoQuest.Quest.Authoring
     {
         public Action OnQuestCompleted;
         public Action<LootInfo[]> OnRewardReceived;
-        public abstract QuestInfo CreateQuest(QuestManager questManager);
         [field: SerializeField] public string QuestID { get; private set; }
         [field: SerializeField] public string QuestName { get; private set; }
 
@@ -30,8 +29,8 @@ namespace CryptoQuest.Quest.Authoring
 
         [SerializeField] private QuestReward[] _rewards = Array.Empty<QuestReward>();
         public QuestReward[] Rewards => _rewards;
+        public abstract QuestInfo CreateQuest(QuestManager questManager);
 
-       
 #if UNITY_EDITOR
         public void Editor_AddReward(LootInfo loot)
         {

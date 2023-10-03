@@ -1,7 +1,5 @@
-﻿using System;
-using CryptoQuest.Quest.Authoring;
+﻿using CryptoQuest.Quest.Authoring;
 using CryptoQuest.Quest.Events;
-using IndiGames.Core.Events.ScriptableObjects;
 using UnityEngine;
 
 namespace CryptoQuest.Quest.Components
@@ -17,5 +15,7 @@ namespace CryptoQuest.Quest.Components
 
             _giveQuestEventChannel.RaiseEvent(_quest);
         }
+
+        public void SetQuestData(QuestSO questData) => _quest = questData;
     }
 }

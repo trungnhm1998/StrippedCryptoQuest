@@ -16,7 +16,7 @@ namespace CryptoQuest.Quest
             => new BattleQuestInfo(questManager, this);
     }
 
-    public class BattleQuestInfo : QuestData<BattleQuestSO>
+    public class BattleQuestInfo : QuestInfo<BattleQuestSO>
     {
         private readonly QuestBattleController _questBattleController;
 

@@ -12,16 +12,15 @@ namespace CryptoQuest.Quest.Categories
         [field: SerializeField] public YarnDialogWithQuestSo YarnDialogWithQuestSo { get; private set; }
 
         public override QuestInfo CreateQuest(QuestManager questManager) =>
-            new InteractQuestData(this, YarnDialogWithQuestSo);
+            new InteractQuestInfo(this, YarnDialogWithQuestSo);
     }
 
     [Serializable]
-    public class InteractQuestData : QuestData<InteractQuestSO>
+    public class InteractQuestInfo : QuestInfo<InteractQuestSO>
     {
         private readonly YarnDialogWithQuestSo _yarnDialogWithQuestSo;
 
-
-        public InteractQuestData(InteractQuestSO interactQuestSO, YarnDialogWithQuestSo yarnDialogWithQuestSo) : base(
+        public InteractQuestInfo(InteractQuestSO interactQuestSO, YarnDialogWithQuestSo yarnDialogWithQuestSo) : base(
             interactQuestSO)
         {
             _yarnDialogWithQuestSo = yarnDialogWithQuestSo;
