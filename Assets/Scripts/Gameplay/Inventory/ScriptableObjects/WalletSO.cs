@@ -28,13 +28,12 @@ namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects
 
         private void OnEnable()
         {
-#if UNITY_EDITOR
-            if (Gold.Data == null || Soul.Data == null || Diamond.Data == null)
-                return;
-#endif
-            _currencyAmounts[Gold.Data] = Gold;
-            _currencyAmounts[Diamond.Data] = Diamond;
-            _currencyAmounts[Soul.Data] = Soul;
+            if (Gold.Data)
+                _currencyAmounts[Gold.Data] = Gold;
+            if (Diamond.Data)
+                _currencyAmounts[Diamond.Data] = Diamond;
+            if (Soul.Data)
+                _currencyAmounts[Soul.Data] = Soul;
             ValidateAmount();
         }
 
