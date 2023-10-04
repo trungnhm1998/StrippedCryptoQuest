@@ -10,7 +10,10 @@ namespace CryptoQuest.Shop
     {
         public bool TryToBuy(EquipmentInfo equipmentItem);
         public bool TryToBuy(ConsumableInfo equipmentItem);
+        public bool TryToSell(EquipmentInfo equipmentItem);
+        public bool TryToSell(ConsumableInfo equipmentItem);
     }
+  
     public class ShopInventoryController : MonoBehaviour, IShopInventoryController
     {
         [SerializeField] private InventoryController _inventoryController;
@@ -43,6 +46,22 @@ namespace CryptoQuest.Shop
             return true;
         }
 
-    }
+        public bool TryToSell(EquipmentInfo equipmentItem)
+        {
+            if (!_inventoryController.Inventory.Remove(equipmentItem)) return false;
 
+            _inventoryController.Inventory.WalletController.Wallet.Gold.UpdateCurrencyAmount(equipmentItem.SellPrice);
+
+            return true;
+        }
+
+        public bool TryToSell(ConsumableInfo consumable)
+        {
+            if (!_inventoryController.Inventory.Remove(consumable, consumable.Quantity)) return false;
+
+            _inventoryController.Inventory.WalletController.Wallet.Gold.UpdateCurrencyAmount(consumable.SellPrice);
+
+            return true;
+        }
+    }
 }

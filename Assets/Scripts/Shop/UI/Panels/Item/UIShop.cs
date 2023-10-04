@@ -54,8 +54,11 @@ namespace CryptoQuest.Shop.UI.Panels.Item
         protected IEnumerator SelectDefaultButton()
         {
             yield return null;
-            _defaultItem = _scrollContentParent.GetChild(0).GetComponent<UIShopItem>();
-            _defaultItem?.Select();
+            if(_scrollContentParent.childCount > 0)
+            {
+                _defaultItem = _scrollContentParent.GetChild(0).GetComponent<UIShopItem>();
+                _defaultItem?.Select();
+            }    
         }
 
         protected void OnItemSubmit(IShopItem shopItemInfo)

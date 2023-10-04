@@ -29,6 +29,7 @@ namespace CryptoQuest.Shop.UI.Panels.Sell
         private UIShop _currentShop;
         private IShopItem _currentSellItem;
         private ShopManager _shopManager;
+        private bool _isSelling = false;
 
 
         private int _currentTabIndex;
@@ -119,26 +120,42 @@ namespace CryptoQuest.Shop.UI.Panels.Sell
 
         private void OnSubmitSell(IShopItem shopItemData)
         {
+            _isSelling = true;
             _currentSellItem = shopItemData;
             _shopManager.HideDialog();
 
             _sellMessage.Arguments = new object[] { _currentSellItem.SellPrice };
-            _shopManager.ShowDialog(_sellMessage);
+            _yesNoDialogEventChannelSO.SetMessage(_sellMessage);
             _yesNoDialogEventChannelSO.Show(OnPressYesButtonDialog, OnPressNoButtonDialog);
         }
 
         private void OnPressYesButtonDialog()
         {
+            _isSelling = false;
             _yesNoDialogEventChannelSO.Hide();
-            _resultPanel.InitResult(false, State.name);
+
+            var isSuccess = _shopManager.RequestSell(_currentSellItem);
+            _resultPanel.InitResult(isSuccess, State.name);
             _shopManager.RequestChangeState(ShopStateMachine.Result);
         }
 
         private void OnPressNoButtonDialog()
         {
+            _isSelling = false;
             _yesNoDialogEventChannelSO.Hide();
             _shopManager.ShowDialog(DiaglogMessage);
-            ShowItemsWithType(0);
+            ShowItemsWithType(CurrentTabIndex);
+        }
+
+        public bool RequestGoBack()
+        {
+            if (_isSelling)
+            {
+                OnPressNoButtonDialog();
+                return false;
+            }
+
+            return true;
         }
     }
 }

@@ -20,7 +20,10 @@ namespace CryptoQuest.Shop.UI.ShopStates.Sell
         public override void HandleBack()
         {
             base.HandleBack();
-            _shopStateMachine.RequestStateChange(ShopStateMachine.Menu);
+            if (_uiSellPanel.RequestGoBack())
+            {
+                _shopStateMachine.RequestStateChange(ShopStateMachine.Menu);
+            }
         }
 
         public override void ChangeTab(float direction)

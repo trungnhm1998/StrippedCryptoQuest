@@ -15,7 +15,7 @@ namespace CryptoQuest.Tests.Editor.Shop
     [TestFixture]
     public class ShopTest
     {
-        private const string INVENTORY_PATH = "Assets/ScriptableObjects/Inventories/TestInventory.asset";
+        private const string INVENTORY_PATH = "Assets/ScriptableObjects/Inventory/MainInventory.asset";
         private InventorySO _inventorySO;
 
         [SetUp]

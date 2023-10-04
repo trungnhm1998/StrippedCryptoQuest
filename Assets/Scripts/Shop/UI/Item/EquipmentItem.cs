@@ -25,5 +25,6 @@ namespace CryptoQuest.Shop.UI.Item
         }
 
         public bool TryToBuy(IShopInventoryController controller) => controller.TryToBuy(_equipment);
+        public bool TryToSell(IShopInventoryController controller) => controller.TryToSell(_equipment);
     }
 }

@@ -155,5 +155,15 @@ namespace CryptoQuest.Shop.UI
             return false;
         }
 
+        public bool RequestSell(IShopItem item)
+        {
+            if (item.TryToSell(_shopInventoryController))
+            {
+                UpdateGoldAmount();
+                return true;
+            }
+
+            return false;
+        }
     }
 }

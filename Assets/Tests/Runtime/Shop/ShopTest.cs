@@ -35,7 +35,7 @@ namespace CryptoQuest.Tests.Runtime.Shop
         private string shopDialogName = "DialogPanel";
         private ShowShopEventChannelSO _showShopEvent;
         private InventorySO _inventorySO;
-        private ShopInventoryController _shopInventoryController;
+        private IShopInventoryController _shopInventoryController;
         private IEquipmentDefProvider _equipmentDefProvider;
         private IConsumableProvider _consumableProvider;
 
@@ -58,7 +58,7 @@ namespace CryptoQuest.Tests.Runtime.Shop
 
             yield return EditorSceneManager.LoadSceneAsyncInPlayMode(SHOP_SCENE, new LoadSceneParameters(LoadSceneMode.Single));
 
-            _shopInventoryController = ServiceProvider.GetService<ShopInventoryController>();
+            _shopInventoryController = ServiceProvider.GetService<IShopInventoryController>();
             _equipmentDefProvider = ServiceProvider.GetService<IEquipmentDefProvider>();
             _consumableProvider = ServiceProvider.GetService<IConsumableProvider>();
 
@@ -157,6 +157,95 @@ namespace CryptoQuest.Tests.Runtime.Shop
             var result = shopItem.TryToBuy(_shopInventoryController);
 
             Assert.IsFalse(result, "Expect : buy item sucess");
+        }
+
+        [UnityTest]
+        public IEnumerator SellItemFromInventory_WithWeaponItem_ItemRemoveSuccessAndGoldIncrease()
+        {
+            yield return new WaitForSeconds(5); // Wait for inventory data loaded
+            var items = _inventorySO.GetWeapons();
+            var goldInfo = _inventorySO.WalletController.Wallet.Gold;
+
+            foreach (var item in items)
+            {
+                IShopItem shopItem = new EquipmentItem(item);
+
+                var currentGold = goldInfo.Amount;
+                var sellPrice = shopItem.SellPrice;
+
+                var result = shopItem.TryToSell(_shopInventoryController);
+
+                Assert.IsTrue(result, "Expected : Sell Success");
+
+                Assert.AreEqual(goldInfo.Amount, currentGold + sellPrice, "Expected : New Amount equal last amount + selling price");
+
+                foreach (var equip in _inventorySO.Equipments)
+                {
+                    Assert.AreNotEqual(equip.Id, item.Id, "Expected : Item removed from inventory");
+                }
+            }
+        }
+
+        [UnityTest]
+        public IEnumerator SellItemFromInventory_WithNonWeaponItem_ItemRemoveSuccessAndGoldIncrease()
+        {
+            yield return new WaitForSeconds(5); // Wait for inventory data loaded
+            var items = _inventorySO.GetNonWeapons();
+            var goldInfo = _inventorySO.WalletController.Wallet.Gold;
+
+            foreach (var item in items)
+            {
+                IShopItem shopItem = new EquipmentItem(item);
+
+                var currentGold = goldInfo.Amount;
+                var sellPrice = shopItem.SellPrice;
+
+                var result = shopItem.TryToSell(_shopInventoryController);
+
+                Assert.IsTrue(result, "Expected : Sell Success");
+
+                Assert.AreEqual(goldInfo.Amount, currentGold + sellPrice, "Expected : New Amount equal last amount + selling price");
+
+                foreach (var equip in _inventorySO.Equipments)
+                {
+                    Assert.AreNotEqual(equip.Id, item.Id, "Expected : Item removed from inventory");
+                }
+            }
+        }
+
+        [UnityTest]
+        public IEnumerator SellItemFromInventory_WithConsumableItem_ItemRemoveSuccessAndGoldIncrease()
+        {
+            yield return null;
+            var items = _inventorySO.GetConsumables();
+            var goldInfo = _inventorySO.WalletController.Wallet.Gold;
+
+            foreach (var item in items)
+            {
+                IShopItem shopItem = new ConsumableItem(item);
+
+                var currentGold = goldInfo.Amount;
+                var sellPrice = shopItem.SellPrice;
+                var quantity = item.Quantity - 1;
+
+                var result = shopItem.TryToSell(_shopInventoryController);
+
+                Assert.IsTrue(result, "Expected : Sell Success");
+
+                Assert.AreEqual(goldInfo.Amount, currentGold + sellPrice, "Expected : New Amount equal last amount + selling price");
+
+                foreach (var consumable in _inventorySO.Consumables)
+                {
+                    if (item.Quantity > 1 && consumable.Data.ID == item.Data.ID)
+                    {
+                        Assert.AreEqual(consumable.Quantity, quantity, "Expected : Item quantity decrease 1 from inventory");
+                    }
+                    else
+                    {
+                        Assert.AreNotEqual(consumable.Data.ID, item.Data.ID, "Expected : Item removed from inventory");
+                    }
+                }
+            }
         }
 #endif
     }

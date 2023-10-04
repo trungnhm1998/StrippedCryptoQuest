@@ -17,5 +17,6 @@ namespace CryptoQuest.Shop.UI.Item
         public bool HasGem { get; }
 
         public bool TryToBuy(IShopInventoryController controller);
+        public bool TryToSell(IShopInventoryController controller);
     }
 }
