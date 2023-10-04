@@ -12,6 +12,8 @@ namespace CryptoQuest.Battle
 
         private static readonly string[] Postfixes = { "A", "B", "C", "D" };
 
+        private IGameObjectAlign<EnemyBehaviour> _enemyAlign = new EnemiesCenterAlign();
+
         /// <summary>
         /// To separate with other same Enemy in a group
         /// their name will be post fix with A, B, C, D 
@@ -26,6 +28,8 @@ namespace CryptoQuest.Battle
                 dict.TryAdd(enemySpec.Data, 0);
                 _enemies[index].Init(enemySpec, Postfixes[dict[enemySpec.Data]++]);
             }
+
+            _enemyAlign?.Align(_enemies);
         }
     }
 }
