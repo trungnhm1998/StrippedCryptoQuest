@@ -1,5 +1,6 @@
 using CryptoQuest.Menu;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace CryptoQuest.BlackSmith.EvolveStates.UI
 {
@@ -8,20 +9,23 @@ namespace CryptoQuest.BlackSmith.EvolveStates.UI
         [SerializeField] private MultiInputButton _defaultSelection;
         [SerializeField] private GameObject _upgradePanel;
         [SerializeField] private GameObject _evolvePanel;
+        [SerializeField] private UnityEvent _upgradeButtonPressedEvent;
+        [SerializeField] private UnityEvent _evolveButtonPressedEvent;
 
         private void Awake()
         {
             _defaultSelection.Select();
         }
 
-        public void UpgradeButtonPressed()
+        public void OnUpgradeButtonPressed()
         {
             _upgradePanel.SetActive(true);
+            _upgradeButtonPressedEvent.Invoke();
         }
 
-        public void EvolveButtonPressed()
+        public void OnEvolveButtonPressed()
         {
-            _evolvePanel.SetActive(true);
+            _evolveButtonPressedEvent.Invoke();
         }
     }
 }
