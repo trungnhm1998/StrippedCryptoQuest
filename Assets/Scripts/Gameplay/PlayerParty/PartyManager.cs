@@ -55,6 +55,10 @@ namespace CryptoQuest.Gameplay.PlayerParty
         {
             ServiceProvider.Provide<IPartyController>(this);
             _partyProvider = GetComponent<IPartyProvider>();
+        }
+
+        private void Start()
+        {
             InitParty();
         }
 
