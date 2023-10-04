@@ -2,7 +2,7 @@ using CryptoQuest.Menu;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace CryptoQuest.BlackSmith.EvolveStates.UI
+namespace CryptoQuest.BlackSmith
 {
     public class UIBlackSmithOverview : MonoBehaviour
     {
@@ -12,7 +12,7 @@ namespace CryptoQuest.BlackSmith.EvolveStates.UI
         [SerializeField] private UnityEvent _upgradeButtonPressedEvent;
         [SerializeField] private UnityEvent _evolveButtonPressedEvent;
 
-        private void Awake()
+        public void InputEnabled()
         {
             _defaultSelection.Select();
         }

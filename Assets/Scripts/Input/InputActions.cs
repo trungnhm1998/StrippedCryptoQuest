@@ -2602,6 +2602,56 @@ namespace CryptoQuest.Input
                     ""isPartOfComposite"": true
                 }
             ]
+        },
+        {
+            ""name"": ""BlackSmith"",
+            ""id"": ""fbb0ebf6-6c11-44d1-83cc-8192211f0f98"",
+            ""actions"": [
+                {
+                    ""name"": ""Cancel"",
+                    ""type"": ""Button"",
+                    ""id"": ""74d94666-f0ef-4176-8931-9886a37d1c5c"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""d0ba12ca-79cd-4027-9f04-661f1cf32671"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""MnK"",
+                    ""action"": ""Cancel"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""fb5ca0e1-fa7e-4933-bb21-65f4d689e462"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Cancel"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a44503cf-0bf1-4096-8b1a-0b4c70ae6af1"",
+                    ""path"": ""*/{Cancel}"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad;MnK"",
+                    ""action"": ""Cancel"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": [
@@ -2691,6 +2741,9 @@ namespace CryptoQuest.Input
             // Reward
             m_Reward = asset.FindActionMap("Reward", throwIfNotFound: true);
             m_Reward_Navigate = m_Reward.FindAction("Navigate", throwIfNotFound: true);
+            // BlackSmith
+            m_BlackSmith = asset.FindActionMap("BlackSmith", throwIfNotFound: true);
+            m_BlackSmith_Cancel = m_BlackSmith.FindAction("Cancel", throwIfNotFound: true);
         }
 
         public void Dispose()
@@ -3380,6 +3433,52 @@ namespace CryptoQuest.Input
             }
         }
         public RewardActions @Reward => new RewardActions(this);
+
+        // BlackSmith
+        private readonly InputActionMap m_BlackSmith;
+        private List<IBlackSmithActions> m_BlackSmithActionsCallbackInterfaces = new List<IBlackSmithActions>();
+        private readonly InputAction m_BlackSmith_Cancel;
+        public struct BlackSmithActions
+        {
+            private @InputActions m_Wrapper;
+            public BlackSmithActions(@InputActions wrapper) { m_Wrapper = wrapper; }
+            public InputAction @Cancel => m_Wrapper.m_BlackSmith_Cancel;
+            public InputActionMap Get() { return m_Wrapper.m_BlackSmith; }
+            public void Enable() { Get().Enable(); }
+            public void Disable() { Get().Disable(); }
+            public bool enabled => Get().enabled;
+            public static implicit operator InputActionMap(BlackSmithActions set) { return set.Get(); }
+            public void AddCallbacks(IBlackSmithActions instance)
+            {
+                if (instance == null || m_Wrapper.m_BlackSmithActionsCallbackInterfaces.Contains(instance)) return;
+                m_Wrapper.m_BlackSmithActionsCallbackInterfaces.Add(instance);
+                @Cancel.started += instance.OnCancel;
+                @Cancel.performed += instance.OnCancel;
+                @Cancel.canceled += instance.OnCancel;
+            }
+
+            private void UnregisterCallbacks(IBlackSmithActions instance)
+            {
+                @Cancel.started -= instance.OnCancel;
+                @Cancel.performed -= instance.OnCancel;
+                @Cancel.canceled -= instance.OnCancel;
+            }
+
+            public void RemoveCallbacks(IBlackSmithActions instance)
+            {
+                if (m_Wrapper.m_BlackSmithActionsCallbackInterfaces.Remove(instance))
+                    UnregisterCallbacks(instance);
+            }
+
+            public void SetCallbacks(IBlackSmithActions instance)
+            {
+                foreach (var item in m_Wrapper.m_BlackSmithActionsCallbackInterfaces)
+                    UnregisterCallbacks(item);
+                m_Wrapper.m_BlackSmithActionsCallbackInterfaces.Clear();
+                AddCallbacks(instance);
+            }
+        }
+        public BlackSmithActions @BlackSmith => new BlackSmithActions(this);
         private int m_GamepadSchemeIndex = -1;
         public InputControlScheme GamepadScheme
         {
@@ -3462,6 +3561,10 @@ namespace CryptoQuest.Input
         public interface IRewardActions
         {
             void OnNavigate(InputAction.CallbackContext context);
+        }
+        public interface IBlackSmithActions
+        {
+            void OnCancel(InputAction.CallbackContext context);
         }
     }
 }
