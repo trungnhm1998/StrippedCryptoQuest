@@ -15,7 +15,6 @@ namespace IndiGames.Core.Database
     public abstract class AssetReferenceDatabaseT : ScriptableObject
     {
 #if UNITY_EDITOR
-        [SerializeReference] private List<IPlugin> _plugins;
         public abstract Type GetAssetType();
         public abstract void Editor_FetchDataInProject();
 #endif

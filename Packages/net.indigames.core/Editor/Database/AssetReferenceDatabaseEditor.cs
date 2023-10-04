@@ -1,43 +1,40 @@
-﻿using System;
-using IndiGames.Core.Database;
+﻿using IndiGames.Core.Database;
 using UnityEditor;
+using UnityEditor.UIElements;
 using UnityEditorInternal;
-using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace IndiGamesEditor.Core.Database
 {
     [CustomEditor(typeof(AssetReferenceDatabaseT), true)]
     public class AssetReferenceDatabaseEditor : Editor
     {
-        private AssetReferenceDatabaseT Target => (AssetReferenceDatabaseT) target;
+        private AssetReferenceDatabaseT Target => (AssetReferenceDatabaseT)target;
         private SerializedProperty _plugins;
         private ReorderableList _pluginList;
 
-        private void OnEnable()
+        protected virtual void OnEnable()
         {
             _plugins = serializedObject.FindProperty("_plugins");
         }
 
-        public override void OnInspectorGUI()
+        public override VisualElement CreateInspectorGUI()
         {
-            base.OnInspectorGUI();
+            var root = new VisualElement();
 
-            if (GUILayout.Button("Load all data"))
+            InspectorElement.FillDefaultInspector(root, serializedObject, this);
+
+            // add Load all data button
+            root.Add(new Button(() =>
             {
-                Debug.Log($"{Target.GetAssetType()}");
                 Target.Editor_FetchDataInProject();
-                
                 EditorUtility.SetDirty(target);
                 AssetDatabase.SaveAssets();
-            }
-            
-
-            if (GUILayout.Button("Create Plugin"))
+            })
             {
-                // var plugin = Activator.CreateInstance<GoogleSheetsPlugin>();
-                // _plugin.managedReferenceValue = plugin;
-                // serializedObject.ApplyModifiedProperties();
-            }
+                text = "Load all data",
+            });
+            return root;
         }
     }
 }
