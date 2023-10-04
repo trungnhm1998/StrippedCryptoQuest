@@ -27,9 +27,9 @@ namespace IndiGames.Core.Tests.Editor.SaveSystem
         }
 
         [Test]
-        public void SaveData_PlayerName_ShouldBeEmpty()
+        public void SaveData_PlayerName_ShouldBeSameAsEditorSetting()
         {
-            Assert.IsEmpty(_saveSystemSO._saveData.playerName, "saveData.playerName should be empty.");
+            Assert.AreEqual(_saveSystemSO._saveData.playerName, "New Player", "saveData.playerName should be `New Player`.");
         }
 
         [Test]

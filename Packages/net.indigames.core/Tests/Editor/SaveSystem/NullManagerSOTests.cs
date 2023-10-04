@@ -29,11 +29,10 @@ namespace IndiGames.Core.Tests.Editor.SaveSystem
         }
 
         [Test]
-        public void LoadSaveGame_ShouldReturnFalse()
+        public void LoadSaveGame_ShouldReturnTrue()
         {
-            Assert.False(_nullSaveManagerSO.Load(out var saveData), "LoadSaveGame should return false.");
-            Assert.AreEqual(NullSaveManagerSO.DefaultPlayerName, saveData.playerName,
-                "saveData.playerName should be the default player name.");
+            Assert.True(_nullSaveManagerSO.Load(out var saveData), "LoadSaveGame should return true.");
+            Assert.AreEqual(saveData.playerName, SaveData.DEFAULT_PLAYER_NAME, "saveData.playerName should be the default player name.");
         }
     }
 }

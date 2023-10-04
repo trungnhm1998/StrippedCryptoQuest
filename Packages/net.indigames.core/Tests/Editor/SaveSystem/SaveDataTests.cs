@@ -7,11 +7,11 @@ namespace IndiGames.Core.Tests.Editor.SaveSystem
     public class SaveDataTests
     {
         [Test]
-        public void playerName_ShouldBeEmpty()
+        public void playerName_ShouldBeDefaultName()
         {
             var saveData = new SaveData();
 
-            Assert.IsEmpty(saveData.playerName, "saveData.playerName should be empty.");
+            Assert.AreEqual(saveData.playerName, SaveData.DEFAULT_PLAYER_NAME, "saveData.playerName should be the default player name.");
         }
 
         [Test]

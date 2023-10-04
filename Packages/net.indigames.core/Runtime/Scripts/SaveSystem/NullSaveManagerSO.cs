@@ -2,20 +2,18 @@
 {
     public class NullSaveManagerSO : SaveManagerSO
     {
-        public const string DefaultPlayerName = "Null Player";
+        private SaveData saveDate;
 
         public override bool Save(SaveData saveData)
         {
+            this.saveDate = saveData;
             return true;
         }
 
         public override bool Load(out SaveData saveData)
         {
-            saveData = new SaveData()
-            {
-                playerName = DefaultPlayerName,
-            };
-            return false;
+            saveData = this.saveDate;
+            return true;
         }
     }
 }

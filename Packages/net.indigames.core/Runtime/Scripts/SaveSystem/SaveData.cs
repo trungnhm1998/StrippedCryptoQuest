@@ -6,7 +6,9 @@ namespace IndiGames.Core.SaveSystem
     [Serializable]
     public class SaveData
     {
-        public string playerName = "";
+        public const string DEFAULT_PLAYER_NAME = "New Player";
+
+        public string playerName = DEFAULT_PLAYER_NAME;
 
         public string ToJson()
         {

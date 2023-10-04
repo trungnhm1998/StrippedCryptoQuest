@@ -7,6 +7,7 @@ namespace IndiGames.Core.SaveSystem
         [SerializeField] private SaveManagerSO _saveManagerSO;
 
         public SaveData _saveData = new SaveData();
+
         public string PlayerName
         {
             get => _saveData.playerName;
