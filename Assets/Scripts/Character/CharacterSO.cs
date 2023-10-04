@@ -1,10 +1,8 @@
 ﻿using System;
 using CryptoQuest.Character.Attributes;
 using UnityEngine;
-using UnityEngine.Analytics;
-using UnityEngine.Localization;
 
-namespace CryptoQuest.Gameplay.Character
+namespace CryptoQuest.Character
 {
     public class CharacterSO : ScriptableObject
     {

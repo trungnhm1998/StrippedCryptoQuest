@@ -15,6 +15,7 @@ namespace IndiGames.Core.Database
     public abstract class AssetReferenceDatabaseT : ScriptableObject
     {
 #if UNITY_EDITOR
+        [SerializeReference] private List<IPlugin> _plugins;
         public abstract Type GetAssetType();
         public abstract void Editor_FetchDataInProject();
 #endif
@@ -103,6 +104,19 @@ namespace IndiGames.Core.Database
             return default(TSerializableObject);
         }
 
+        public bool TryGetDataById(TKey id, out TSerializableObject asset)
+        {
+            asset = default(TSerializableObject);
+            if (_loadedData.TryGetValue(id, out var data))
+            {
+                asset = data.Result;
+                return true;
+            }
+
+            Debug.LogWarning($"Database::GetDataById() - Cannot find/load data with id {id}");
+            return false;
+        }
+
 #if UNITY_EDITOR
         public void Editor_SetMaps(Map[] maps)
         {
@@ -123,6 +137,7 @@ namespace IndiGames.Core.Database
                 var instance = new Map();
                 var path = AssetDatabase.GUIDToAssetPath(uid);
                 var asset = AssetDatabase.LoadAssetAtPath<TSerializableObject>(path);
+                if (Editor_Validate((asset, path)) == false) continue;
 
                 var assetRef = new AssetReferenceT<TSerializableObject>(uid);
 
@@ -132,6 +147,8 @@ namespace IndiGames.Core.Database
                 ArrayUtility.Add(ref _maps, instance);
             }
         }
+
+        protected virtual bool Editor_Validate((TSerializableObject asset, string path) data) => true;
 
         protected virtual TKey Editor_GetInstanceId(TSerializableObject asset) => default(TKey);
 

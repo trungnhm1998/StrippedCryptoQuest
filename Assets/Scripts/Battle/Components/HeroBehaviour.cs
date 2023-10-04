@@ -1,8 +1,8 @@
-﻿using CryptoQuest.Character.Attributes;
+﻿using CryptoQuest.Character;
+using CryptoQuest.Character.Attributes;
 using CryptoQuest.Character.Hero;
 using CryptoQuest.Character.Tag;
 using CryptoQuest.Gameplay;
-using CryptoQuest.Gameplay.Character;
 using UnityEngine;
 
 namespace CryptoQuest.Battle.Components

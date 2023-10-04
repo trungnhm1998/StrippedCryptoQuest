@@ -1,8 +1,8 @@
 ﻿using CryptoQuest.Character.Movement;
 using NUnit.Framework;
-using CryptoQuest.Gameplay.Character.LevelSystem;
 using UnityEngine;
 using System.IO;
+using CryptoQuest.Character.LevelSystem;
 
 namespace CryptoQuest.Tests.Editor.Gameplay.Character.LevelSystem
 {

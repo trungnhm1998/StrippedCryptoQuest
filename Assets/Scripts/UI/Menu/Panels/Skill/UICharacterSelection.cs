@@ -1,5 +1,4 @@
 using CryptoQuest.Battle.Components;
-using CryptoQuest.Gameplay.Character;
 using CryptoQuest.Gameplay.PlayerParty;
 using CryptoQuest.System;
 using CryptoQuest.UI.Menu.Character;

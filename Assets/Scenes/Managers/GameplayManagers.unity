@@ -469,6 +469,916 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!1 &249968202
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 249968203}
+  - component: {fileID: 249968204}
+  m_Layer: 0
+  m_Name: SkillsProvider
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &249968203
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 249968202}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 17
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &249968204
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 249968202}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d1d7b28186d40cbb617bd58f47666df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _database: {fileID: 11400000, guid: 338fd88f08d84f04fa27cc24b322579f, type: 2}
+  _skillMappings:
+  - SkillId: 2001
+    Level: 3
+    ClassId: 1010
+    ElementId: 1
+  - SkillId: 2002
+    Level: 10
+    ClassId: 1010
+    ElementId: 1
+  - SkillId: 2004
+    Level: 20
+    ClassId: 1010
+    ElementId: 1
+  - SkillId: 2003
+    Level: 25
+    ClassId: 1010
+    ElementId: 1
+  - SkillId: 2001
+    Level: 3
+    ClassId: 1010
+    ElementId: 2
+  - SkillId: 2002
+    Level: 10
+    ClassId: 1010
+    ElementId: 2
+  - SkillId: 2004
+    Level: 20
+    ClassId: 1010
+    ElementId: 2
+  - SkillId: 2003
+    Level: 25
+    ClassId: 1010
+    ElementId: 2
+  - SkillId: 2001
+    Level: 3
+    ClassId: 1010
+    ElementId: 3
+  - SkillId: 2002
+    Level: 10
+    ClassId: 1010
+    ElementId: 3
+  - SkillId: 2004
+    Level: 20
+    ClassId: 1010
+    ElementId: 3
+  - SkillId: 2003
+    Level: 25
+    ClassId: 1010
+    ElementId: 3
+  - SkillId: 2001
+    Level: 3
+    ClassId: 1010
+    ElementId: 4
+  - SkillId: 2002
+    Level: 10
+    ClassId: 1010
+    ElementId: 4
+  - SkillId: 2004
+    Level: 20
+    ClassId: 1010
+    ElementId: 4
+  - SkillId: 2003
+    Level: 25
+    ClassId: 1010
+    ElementId: 4
+  - SkillId: 2001
+    Level: 3
+    ClassId: 1010
+    ElementId: 5
+  - SkillId: 2002
+    Level: 10
+    ClassId: 1010
+    ElementId: 5
+  - SkillId: 2004
+    Level: 20
+    ClassId: 1010
+    ElementId: 5
+  - SkillId: 2003
+    Level: 25
+    ClassId: 1010
+    ElementId: 5
+  - SkillId: 2001
+    Level: 3
+    ClassId: 1010
+    ElementId: 6
+  - SkillId: 2002
+    Level: 10
+    ClassId: 1010
+    ElementId: 6
+  - SkillId: 2004
+    Level: 20
+    ClassId: 1010
+    ElementId: 6
+  - SkillId: 2003
+    Level: 25
+    ClassId: 1010
+    ElementId: 6
+  - SkillId: 2001
+    Level: 3
+    ClassId: 1010
+    ElementId: 7
+  - SkillId: 2002
+    Level: 10
+    ClassId: 1010
+    ElementId: 7
+  - SkillId: 2004
+    Level: 20
+    ClassId: 1010
+    ElementId: 7
+  - SkillId: 2003
+    Level: 25
+    ClassId: 1010
+    ElementId: 7
+  - SkillId: 1001
+    Level: 1
+    ClassId: 1020
+    ElementId: 1
+  - SkillId: 1004
+    Level: 8
+    ClassId: 1020
+    ElementId: 1
+  - SkillId: 1002
+    Level: 10
+    ClassId: 1020
+    ElementId: 1
+  - SkillId: 1079
+    Level: 11
+    ClassId: 1020
+    ElementId: 1
+  - SkillId: 1007
+    Level: 14
+    ClassId: 1020
+    ElementId: 1
+  - SkillId: 1064
+    Level: 15
+    ClassId: 1020
+    ElementId: 1
+  - SkillId: 1003
+    Level: 40
+    ClassId: 1020
+    ElementId: 1
+  - SkillId: 1010
+    Level: 1
+    ClassId: 1020
+    ElementId: 2
+  - SkillId: 1004
+    Level: 8
+    ClassId: 1020
+    ElementId: 2
+  - SkillId: 1011
+    Level: 10
+    ClassId: 1020
+    ElementId: 2
+  - SkillId: 1079
+    Level: 11
+    ClassId: 1020
+    ElementId: 2
+  - SkillId: 1013
+    Level: 14
+    ClassId: 1020
+    ElementId: 2
+  - SkillId: 1064
+    Level: 15
+    ClassId: 1020
+    ElementId: 2
+  - SkillId: 1012
+    Level: 40
+    ClassId: 1020
+    ElementId: 2
+  - SkillId: 1019
+    Level: 1
+    ClassId: 1020
+    ElementId: 3
+  - SkillId: 1004
+    Level: 8
+    ClassId: 1020
+    ElementId: 3
+  - SkillId: 1020
+    Level: 10
+    ClassId: 1020
+    ElementId: 3
+  - SkillId: 1079
+    Level: 11
+    ClassId: 1020
+    ElementId: 3
+  - SkillId: 1022
+    Level: 14
+    ClassId: 1020
+    ElementId: 3
+  - SkillId: 1064
+    Level: 15
+    ClassId: 1020
+    ElementId: 3
+  - SkillId: 1021
+    Level: 40
+    ClassId: 1020
+    ElementId: 3
+  - SkillId: 1028
+    Level: 1
+    ClassId: 1020
+    ElementId: 4
+  - SkillId: 1004
+    Level: 8
+    ClassId: 1020
+    ElementId: 4
+  - SkillId: 1029
+    Level: 10
+    ClassId: 1020
+    ElementId: 4
+  - SkillId: 1079
+    Level: 11
+    ClassId: 1020
+    ElementId: 4
+  - SkillId: 1031
+    Level: 14
+    ClassId: 1020
+    ElementId: 4
+  - SkillId: 1064
+    Level: 15
+    ClassId: 1020
+    ElementId: 4
+  - SkillId: 1030
+    Level: 40
+    ClassId: 1020
+    ElementId: 4
+  - SkillId: 1037
+    Level: 1
+    ClassId: 1020
+    ElementId: 5
+  - SkillId: 1004
+    Level: 8
+    ClassId: 1020
+    ElementId: 5
+  - SkillId: 1038
+    Level: 10
+    ClassId: 1020
+    ElementId: 5
+  - SkillId: 1079
+    Level: 11
+    ClassId: 1020
+    ElementId: 5
+  - SkillId: 1040
+    Level: 14
+    ClassId: 1020
+    ElementId: 5
+  - SkillId: 1064
+    Level: 15
+    ClassId: 1020
+    ElementId: 5
+  - SkillId: 1039
+    Level: 40
+    ClassId: 1020
+    ElementId: 5
+  - SkillId: 1046
+    Level: 1
+    ClassId: 1020
+    ElementId: 6
+  - SkillId: 1004
+    Level: 8
+    ClassId: 1020
+    ElementId: 6
+  - SkillId: 1047
+    Level: 10
+    ClassId: 1020
+    ElementId: 6
+  - SkillId: 1079
+    Level: 11
+    ClassId: 1020
+    ElementId: 6
+  - SkillId: 1049
+    Level: 14
+    ClassId: 1020
+    ElementId: 6
+  - SkillId: 1064
+    Level: 15
+    ClassId: 1020
+    ElementId: 6
+  - SkillId: 1048
+    Level: 40
+    ClassId: 1020
+    ElementId: 6
+  - SkillId: 1055
+    Level: 1
+    ClassId: 1020
+    ElementId: 7
+  - SkillId: 1004
+    Level: 8
+    ClassId: 1020
+    ElementId: 7
+  - SkillId: 1056
+    Level: 10
+    ClassId: 1020
+    ElementId: 7
+  - SkillId: 1079
+    Level: 11
+    ClassId: 1020
+    ElementId: 7
+  - SkillId: 1058
+    Level: 14
+    ClassId: 1020
+    ElementId: 7
+  - SkillId: 1064
+    Level: 15
+    ClassId: 1020
+    ElementId: 7
+  - SkillId: 1057
+    Level: 40
+    ClassId: 1020
+    ElementId: 7
+  - SkillId: 1076
+    Level: 1
+    ClassId: 1030
+    ElementId: 1
+  - SkillId: 1065
+    Level: 5
+    ClassId: 1030
+    ElementId: 1
+  - SkillId: 1081
+    Level: 12
+    ClassId: 1030
+    ElementId: 1
+  - SkillId: 1066
+    Level: 15
+    ClassId: 1030
+    ElementId: 1
+  - SkillId: 1077
+    Level: 20
+    ClassId: 1030
+    ElementId: 1
+  - SkillId: 1082
+    Level: 30
+    ClassId: 1030
+    ElementId: 1
+  - SkillId: 1076
+    Level: 1
+    ClassId: 1030
+    ElementId: 2
+  - SkillId: 1065
+    Level: 5
+    ClassId: 1030
+    ElementId: 2
+  - SkillId: 1081
+    Level: 12
+    ClassId: 1030
+    ElementId: 2
+  - SkillId: 1066
+    Level: 15
+    ClassId: 1030
+    ElementId: 2
+  - SkillId: 1077
+    Level: 20
+    ClassId: 1030
+    ElementId: 2
+  - SkillId: 1082
+    Level: 30
+    ClassId: 1030
+    ElementId: 2
+  - SkillId: 1076
+    Level: 1
+    ClassId: 1030
+    ElementId: 3
+  - SkillId: 1065
+    Level: 5
+    ClassId: 1030
+    ElementId: 3
+  - SkillId: 1081
+    Level: 12
+    ClassId: 1030
+    ElementId: 3
+  - SkillId: 1066
+    Level: 15
+    ClassId: 1030
+    ElementId: 3
+  - SkillId: 1077
+    Level: 20
+    ClassId: 1030
+    ElementId: 3
+  - SkillId: 1082
+    Level: 30
+    ClassId: 1030
+    ElementId: 3
+  - SkillId: 1076
+    Level: 1
+    ClassId: 1030
+    ElementId: 4
+  - SkillId: 1065
+    Level: 5
+    ClassId: 1030
+    ElementId: 4
+  - SkillId: 1081
+    Level: 12
+    ClassId: 1030
+    ElementId: 4
+  - SkillId: 1066
+    Level: 15
+    ClassId: 1030
+    ElementId: 4
+  - SkillId: 1077
+    Level: 20
+    ClassId: 1030
+    ElementId: 4
+  - SkillId: 1082
+    Level: 30
+    ClassId: 1030
+    ElementId: 4
+  - SkillId: 1076
+    Level: 1
+    ClassId: 1030
+    ElementId: 5
+  - SkillId: 1065
+    Level: 5
+    ClassId: 1030
+    ElementId: 5
+  - SkillId: 1081
+    Level: 12
+    ClassId: 1030
+    ElementId: 5
+  - SkillId: 1066
+    Level: 15
+    ClassId: 1030
+    ElementId: 5
+  - SkillId: 1077
+    Level: 20
+    ClassId: 1030
+    ElementId: 5
+  - SkillId: 1082
+    Level: 30
+    ClassId: 1030
+    ElementId: 5
+  - SkillId: 1076
+    Level: 1
+    ClassId: 1030
+    ElementId: 6
+  - SkillId: 1065
+    Level: 5
+    ClassId: 1030
+    ElementId: 6
+  - SkillId: 1081
+    Level: 12
+    ClassId: 1030
+    ElementId: 6
+  - SkillId: 1066
+    Level: 15
+    ClassId: 1030
+    ElementId: 6
+  - SkillId: 1077
+    Level: 20
+    ClassId: 1030
+    ElementId: 6
+  - SkillId: 1082
+    Level: 30
+    ClassId: 1030
+    ElementId: 6
+  - SkillId: 1076
+    Level: 1
+    ClassId: 1030
+    ElementId: 7
+  - SkillId: 1065
+    Level: 5
+    ClassId: 1030
+    ElementId: 7
+  - SkillId: 1081
+    Level: 12
+    ClassId: 1030
+    ElementId: 7
+  - SkillId: 1066
+    Level: 15
+    ClassId: 1030
+    ElementId: 7
+  - SkillId: 1077
+    Level: 20
+    ClassId: 1030
+    ElementId: 7
+  - SkillId: 1082
+    Level: 30
+    ClassId: 1030
+    ElementId: 7
+  - SkillId: 1055
+    Level: 3
+    ClassId: 1040
+    ElementId: 1
+  - SkillId: 2012
+    Level: 5
+    ClassId: 1040
+    ElementId: 1
+  - SkillId: 1074
+    Level: 12
+    ClassId: 1040
+    ElementId: 1
+  - SkillId: 2013
+    Level: 15
+    ClassId: 1040
+    ElementId: 1
+  - SkillId: 1055
+    Level: 3
+    ClassId: 1040
+    ElementId: 2
+  - SkillId: 2012
+    Level: 5
+    ClassId: 1040
+    ElementId: 2
+  - SkillId: 1074
+    Level: 12
+    ClassId: 1040
+    ElementId: 2
+  - SkillId: 2013
+    Level: 15
+    ClassId: 1040
+    ElementId: 2
+  - SkillId: 1055
+    Level: 3
+    ClassId: 1040
+    ElementId: 3
+  - SkillId: 2012
+    Level: 5
+    ClassId: 1040
+    ElementId: 3
+  - SkillId: 1074
+    Level: 12
+    ClassId: 1040
+    ElementId: 3
+  - SkillId: 2013
+    Level: 15
+    ClassId: 1040
+    ElementId: 3
+  - SkillId: 1055
+    Level: 3
+    ClassId: 1040
+    ElementId: 4
+  - SkillId: 2012
+    Level: 5
+    ClassId: 1040
+    ElementId: 4
+  - SkillId: 1074
+    Level: 12
+    ClassId: 1040
+    ElementId: 4
+  - SkillId: 2013
+    Level: 15
+    ClassId: 1040
+    ElementId: 4
+  - SkillId: 1055
+    Level: 3
+    ClassId: 1040
+    ElementId: 5
+  - SkillId: 2012
+    Level: 5
+    ClassId: 1040
+    ElementId: 5
+  - SkillId: 1074
+    Level: 12
+    ClassId: 1040
+    ElementId: 5
+  - SkillId: 2013
+    Level: 15
+    ClassId: 1040
+    ElementId: 5
+  - SkillId: 1055
+    Level: 3
+    ClassId: 1040
+    ElementId: 6
+  - SkillId: 2012
+    Level: 5
+    ClassId: 1040
+    ElementId: 6
+  - SkillId: 1074
+    Level: 12
+    ClassId: 1040
+    ElementId: 6
+  - SkillId: 2013
+    Level: 15
+    ClassId: 1040
+    ElementId: 6
+  - SkillId: 1055
+    Level: 3
+    ClassId: 1040
+    ElementId: 7
+  - SkillId: 2012
+    Level: 5
+    ClassId: 1040
+    ElementId: 7
+  - SkillId: 1074
+    Level: 12
+    ClassId: 1040
+    ElementId: 7
+  - SkillId: 2013
+    Level: 15
+    ClassId: 1040
+    ElementId: 7
+  - SkillId: 2014
+    Level: 3
+    ClassId: 1050
+    ElementId: 1
+  - SkillId: 2015
+    Level: 5
+    ClassId: 1050
+    ElementId: 1
+  - SkillId: 2016
+    Level: 12
+    ClassId: 1050
+    ElementId: 1
+  - SkillId: 2017
+    Level: 15
+    ClassId: 1050
+    ElementId: 1
+  - SkillId: 2014
+    Level: 3
+    ClassId: 1050
+    ElementId: 2
+  - SkillId: 2015
+    Level: 5
+    ClassId: 1050
+    ElementId: 2
+  - SkillId: 2016
+    Level: 12
+    ClassId: 1050
+    ElementId: 2
+  - SkillId: 2017
+    Level: 15
+    ClassId: 1050
+    ElementId: 2
+  - SkillId: 2014
+    Level: 3
+    ClassId: 1050
+    ElementId: 3
+  - SkillId: 2015
+    Level: 5
+    ClassId: 1050
+    ElementId: 3
+  - SkillId: 2016
+    Level: 12
+    ClassId: 1050
+    ElementId: 3
+  - SkillId: 2017
+    Level: 15
+    ClassId: 1050
+    ElementId: 3
+  - SkillId: 2014
+    Level: 3
+    ClassId: 1050
+    ElementId: 4
+  - SkillId: 2015
+    Level: 5
+    ClassId: 1050
+    ElementId: 4
+  - SkillId: 2016
+    Level: 12
+    ClassId: 1050
+    ElementId: 4
+  - SkillId: 2017
+    Level: 15
+    ClassId: 1050
+    ElementId: 4
+  - SkillId: 2014
+    Level: 3
+    ClassId: 1050
+    ElementId: 5
+  - SkillId: 2015
+    Level: 5
+    ClassId: 1050
+    ElementId: 5
+  - SkillId: 2016
+    Level: 12
+    ClassId: 1050
+    ElementId: 5
+  - SkillId: 2017
+    Level: 15
+    ClassId: 1050
+    ElementId: 5
+  - SkillId: 2014
+    Level: 3
+    ClassId: 1050
+    ElementId: 6
+  - SkillId: 2015
+    Level: 5
+    ClassId: 1050
+    ElementId: 6
+  - SkillId: 2016
+    Level: 12
+    ClassId: 1050
+    ElementId: 6
+  - SkillId: 2017
+    Level: 15
+    ClassId: 1050
+    ElementId: 6
+  - SkillId: 2014
+    Level: 3
+    ClassId: 1050
+    ElementId: 7
+  - SkillId: 2015
+    Level: 5
+    ClassId: 1050
+    ElementId: 7
+  - SkillId: 2016
+    Level: 12
+    ClassId: 1050
+    ElementId: 7
+  - SkillId: 2017
+    Level: 15
+    ClassId: 1050
+    ElementId: 7
+  - SkillId: 2018
+    Level: 3
+    ClassId: 1060
+    ElementId: 1
+  - SkillId: 2019
+    Level: 10
+    ClassId: 1060
+    ElementId: 1
+  - SkillId: 2020
+    Level: 12
+    ClassId: 1060
+    ElementId: 1
+  - SkillId: 2021
+    Level: 20
+    ClassId: 1060
+    ElementId: 1
+  - SkillId: 1063
+    Level: 99
+    ClassId: 1060
+    ElementId: 1
+  - SkillId: 2018
+    Level: 3
+    ClassId: 1060
+    ElementId: 2
+  - SkillId: 2019
+    Level: 10
+    ClassId: 1060
+    ElementId: 2
+  - SkillId: 2020
+    Level: 12
+    ClassId: 1060
+    ElementId: 2
+  - SkillId: 2021
+    Level: 20
+    ClassId: 1060
+    ElementId: 2
+  - SkillId: 1063
+    Level: 99
+    ClassId: 1060
+    ElementId: 2
+  - SkillId: 2018
+    Level: 3
+    ClassId: 1060
+    ElementId: 3
+  - SkillId: 2019
+    Level: 10
+    ClassId: 1060
+    ElementId: 3
+  - SkillId: 2020
+    Level: 12
+    ClassId: 1060
+    ElementId: 3
+  - SkillId: 2021
+    Level: 20
+    ClassId: 1060
+    ElementId: 3
+  - SkillId: 1063
+    Level: 99
+    ClassId: 1060
+    ElementId: 3
+  - SkillId: 2018
+    Level: 3
+    ClassId: 1060
+    ElementId: 4
+  - SkillId: 2019
+    Level: 10
+    ClassId: 1060
+    ElementId: 4
+  - SkillId: 2020
+    Level: 12
+    ClassId: 1060
+    ElementId: 4
+  - SkillId: 2021
+    Level: 20
+    ClassId: 1060
+    ElementId: 4
+  - SkillId: 1063
+    Level: 99
+    ClassId: 1060
+    ElementId: 4
+  - SkillId: 2018
+    Level: 3
+    ClassId: 1060
+    ElementId: 5
+  - SkillId: 2019
+    Level: 10
+    ClassId: 1060
+    ElementId: 5
+  - SkillId: 2020
+    Level: 12
+    ClassId: 1060
+    ElementId: 5
+  - SkillId: 2021
+    Level: 20
+    ClassId: 1060
+    ElementId: 5
+  - SkillId: 1063
+    Level: 99
+    ClassId: 1060
+    ElementId: 5
+  - SkillId: 2018
+    Level: 3
+    ClassId: 1060
+    ElementId: 6
+  - SkillId: 2019
+    Level: 10
+    ClassId: 1060
+    ElementId: 6
+  - SkillId: 2020
+    Level: 12
+    ClassId: 1060
+    ElementId: 6
+  - SkillId: 2021
+    Level: 20
+    ClassId: 1060
+    ElementId: 6
+  - SkillId: 1063
+    Level: 99
+    ClassId: 1060
+    ElementId: 6
+  - SkillId: 2018
+    Level: 3
+    ClassId: 1060
+    ElementId: 7
+  - SkillId: 2019
+    Level: 10
+    ClassId: 1060
+    ElementId: 7
+  - SkillId: 2020
+    Level: 12
+    ClassId: 1060
+    ElementId: 7
+  - SkillId: 2021
+    Level: 20
+    ClassId: 1060
+    ElementId: 7
+  - SkillId: 1063
+    Level: 99
+    ClassId: 1060
+    ElementId: 7
+  - SkillId: 1076
+    Level: 3
+    ClassId: 2010
+    ElementId: 6
+  - SkillId: 1046
+    Level: 5
+    ClassId: 2010
+    ElementId: 6
+  - SkillId: 2003
+    Level: 10
+    ClassId: 2010
+    ElementId: 6
+  - SkillId: 1049
+    Level: 12
+    ClassId: 2010
+    ElementId: 6
+  - SkillId: 2009
+    Level: 15
+    ClassId: 2010
+    ElementId: 6
+  - SkillId: 2011
+    Level: 25
+    ClassId: 2010
+    ElementId: 6
 --- !u!1001 &561223320
 PrefabInstance:
   m_ObjectHideFlags: 0

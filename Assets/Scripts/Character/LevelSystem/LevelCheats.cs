@@ -1,12 +1,12 @@
-using CryptoQuest.System;
 using CommandTerminal;
+using CryptoQuest.Battle.Components;
 using CryptoQuest.Gameplay.PlayerParty;
+using CryptoQuest.System;
 using CryptoQuest.System.Cheat;
 using UnityEngine;
 using LevelSystemBehavior = CryptoQuest.Battle.Components.LevelSystem;
-using CryptoQuest.Battle.Components;
 
-namespace CryptoQuest.Gameplay.Character.LevelSystem
+namespace CryptoQuest.Character.LevelSystem
 {
     public class LevelCheats : MonoBehaviour, ICheatInitializer
     {

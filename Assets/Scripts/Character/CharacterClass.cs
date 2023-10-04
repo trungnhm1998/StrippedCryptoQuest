@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
-namespace CryptoQuest.Gameplay.Character
+namespace CryptoQuest.Character
 {
     public class CharacterClass : GenericData
     {

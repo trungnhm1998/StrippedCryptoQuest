@@ -1,5 +1,5 @@
 ﻿using System;
-using CryptoQuest.Gameplay.Character;
+using CryptoQuest.Character;
 using UnityEngine;
 using SlotType = CryptoQuest.Item.Equipment.EquipmentSlot.EType;
 

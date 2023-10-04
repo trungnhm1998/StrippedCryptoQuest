@@ -4,7 +4,6 @@ using System.Linq;
 using CryptoQuest.Battle.Components;
 using CryptoQuest.Events;
 using CryptoQuest.Events.UI.Dialogs;
-using CryptoQuest.Gameplay.Character.LevelSystem;
 using CryptoQuest.Gameplay.Inventory.Currency;
 using CryptoQuest.Gameplay.Loot;
 using CryptoQuest.Gameplay.PlayerParty;

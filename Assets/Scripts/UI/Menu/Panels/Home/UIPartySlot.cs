@@ -1,5 +1,4 @@
 ﻿using CryptoQuest.Battle.Components;
-using CryptoQuest.Gameplay.Character;
 using UnityEngine;
 
 namespace CryptoQuest.UI.Menu.Panels.Home

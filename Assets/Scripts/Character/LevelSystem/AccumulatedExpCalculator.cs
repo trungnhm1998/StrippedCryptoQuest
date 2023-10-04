@@ -1,6 +1,6 @@
 using System;
 
-namespace CryptoQuest.Gameplay.Character.LevelSystem
+namespace CryptoQuest.Character.LevelSystem
 {
     public interface IAccumulatedExpCalculator
     {

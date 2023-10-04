@@ -1,11 +1,7 @@
 using System;
 using CryptoQuest.Character.Attributes;
-using CryptoQuest.Character.Hero;
+using CryptoQuest.Character.LevelSystem;
 using CryptoQuest.Character.Tag;
-using CryptoQuest.Events;
-using CryptoQuest.Gameplay;
-using CryptoQuest.Gameplay.Character;
-using CryptoQuest.Gameplay.Character.LevelSystem;
 using CryptoQuest.Gameplay.Helper;
 using UnityEngine;
 using AttributeScriptableObject = IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects.AttributeScriptableObject;
@@ -28,6 +24,15 @@ namespace CryptoQuest.Battle.Components
         private ILevelAttributeCalculator _levelAttributeCalculator = new DefaultLevelAttributeCalculator();
         private int _lastLevel = 0;
         private HeroBehaviour _character;
+
+        public int Level
+        {
+            get
+            {
+                var currentLevel = LevelCalculator.CalculateCurrentLevel(_character.Spec.Experience);
+                return currentLevel <= 0 ? 1 : currentLevel;
+            }
+        }
 
         public void Init(HeroBehaviour character)
         {
@@ -132,7 +137,9 @@ namespace CryptoQuest.Battle.Components
         public int GetCurrentLevelExp()
         {
             var currentLevelAccumulateExp = LevelCalculator.AccumulatedExps[_character.Level - 1];
-            return IsMaxedLevel ? GetNextLevelRequireExp() : (int) (_character.Spec.Experience - currentLevelAccumulateExp);
+            return IsMaxedLevel
+                ? GetNextLevelRequireExp()
+                : (int)(_character.Spec.Experience - currentLevelAccumulateExp);
         }
     }
 }

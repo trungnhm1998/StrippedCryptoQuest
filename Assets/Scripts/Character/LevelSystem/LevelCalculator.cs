@@ -1,6 +1,4 @@
-using UnityEngine;
-
-namespace CryptoQuest.Gameplay.Character.LevelSystem
+namespace CryptoQuest.Character.LevelSystem
 {
     public interface ILevelCalculator
     {

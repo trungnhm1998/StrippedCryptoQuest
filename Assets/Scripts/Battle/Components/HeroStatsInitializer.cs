@@ -1,5 +1,4 @@
 ﻿using CryptoQuest.Gameplay;
-using CryptoQuest.Gameplay.Character;
 using CryptoQuest.Gameplay.Helper;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.Components;
 

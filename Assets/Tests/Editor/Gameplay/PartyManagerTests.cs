@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using CryptoQuest.Gameplay.Character;
 using CryptoQuest.Gameplay.PlayerParty;
 using NUnit.Framework;
 using UnityEngine;

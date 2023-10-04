@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using CryptoQuest.Battle.Components;
-using CryptoQuest.Gameplay.Character;
 using CryptoQuest.Gameplay.PlayerParty;
 using CryptoQuest.Gameplay.Skill;
 using CryptoQuest.System;
