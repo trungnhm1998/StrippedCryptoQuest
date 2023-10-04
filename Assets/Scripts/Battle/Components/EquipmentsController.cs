@@ -11,6 +11,7 @@ using UnityEngine;
 using ESlotType =
     CryptoQuest.Item.Equipment.EquipmentSlot.EType;
 using ECategory = CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Type.EEquipmentCategory;
+using CryptoQuest.System;
 
 namespace CryptoQuest.Battle.Components
 {
@@ -48,7 +49,7 @@ namespace CryptoQuest.Battle.Components
         /// </summary>
         private IEnumerator InitEquipments()
         {
-            var equipmentDefProvider = GetComponent<IEquipmentDefProvider>();
+            var equipmentDefProvider = ServiceProvider.GetService<IEquipmentDefProvider>();
             foreach (var equipmentSlot in _equipments.Slots)
             {
                 if (equipmentSlot.IsValid())
