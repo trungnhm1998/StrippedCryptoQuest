@@ -1,4 +1,5 @@
 
+using CryptoQuest.Battle.Components;
 using TinyMessenger;
 
 namespace CryptoQuest.Battle.Events
@@ -18,4 +19,9 @@ namespace CryptoQuest.Battle.Events
     public class SelectedDetailButtonEvent : IndexEvent { } 
     
     public class DeSelectedDetailButtonEvent : IndexEvent { } 
+
+    public class HighlightHeroEvent : BattleEvent
+    {
+        public HeroBehaviour Hero { get; set; }
+    }
 }

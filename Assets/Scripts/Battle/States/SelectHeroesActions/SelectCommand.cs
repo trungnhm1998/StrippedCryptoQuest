@@ -1,5 +1,6 @@
 ﻿using CryptoQuest.Battle.Commands;
 using CryptoQuest.Battle.Components;
+using CryptoQuest.Battle.Events;
 using CryptoQuest.Battle.UI;
 using CryptoQuest.Battle.UI.SelectCommand;
 using CryptoQuest.Character.Attributes;
@@ -16,12 +17,16 @@ namespace CryptoQuest.Battle.States.SelectHeroesActions
         public SelectCommand(HeroBehaviour hero, SelectHeroesActions fsm) : base(hero, fsm)
         {
             Fsm.TryGetComponent(out _enemyGroupPresenter);
+            _heroEventObject = new HighlightHeroEvent() { Hero = hero };
         }
 
         private GameObject _lastSelectedCommand;
+        private HighlightHeroEvent _heroEventObject;
 
         public override void OnEnter()
         {
+            BattleEventBus.RaiseEvent<HighlightHeroEvent>(_heroEventObject);
+            
             Fsm.SelectCommandUI.SetCharacterName(Hero.Spec.Unit.Origin.DetailInformation.LocalizedName);
             Fsm.SelectCommandUI.RegisterCallback(this);
             if (_lastSelectedCommand != null)
