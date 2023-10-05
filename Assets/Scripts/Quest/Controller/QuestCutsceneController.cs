@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using CryptoQuest.Quest.Categories;
 using CryptoQuest.System.CutsceneSystem;
 using CryptoQuest.System.CutsceneSystem.Events;
-using UnityEditor;
 
 namespace CryptoQuest.Quest
 {
