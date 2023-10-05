@@ -29,7 +29,6 @@ namespace CryptoQuest.Battle.Commands
             bool ableToUseOnAtLeastOneHero = false;
             foreach (var target in _targets)
             {
-                if (!target.IsValid()) continue;
                 Debug.Log($"{_owner.DisplayName} using {_selectedItem.Data.name} on {target.DisplayName}");
                 var spec = target.AbilitySystem.GiveAbility<ConsumableAbilitySpec>(_selectedItem.Data.Ability);
                 spec.SetConsumable(_selectedItem);
