@@ -19,7 +19,6 @@ namespace CryptoQuest.Shop.UI.Panels.Buy
     {
         [SerializeField] private LocalizedString _buyMessage;
         [SerializeField] private YesNoDialogEventChannelSO _yesNoDialogEventChannelSO;
-        [SerializeField] private GameObject _itemInfo;
         [SerializeField] private GameObject _partyInfo;
         [SerializeField] private UIResultPanel _resultPanel;
         [SerializeField] private UIShopBuy _uiShopBuy;
@@ -46,15 +45,14 @@ namespace CryptoQuest.Shop.UI.Panels.Buy
 
         protected override void OnShow()
         {
-            _itemInfo.gameObject.SetActive(true);
             _partyInfo.gameObject.SetActive(true);
             ShowItem();
         }
 
         protected override void OnHide()
         {
-            _itemInfo.gameObject.SetActive(false);
             _partyInfo.gameObject.SetActive(false);
+            _uiShopBuy.Hide();
         }
         private void OnSubmitBuy(IShopItem shopItemInfo)
         {

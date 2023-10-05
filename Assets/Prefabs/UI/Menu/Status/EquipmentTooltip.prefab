@@ -576,6 +576,7 @@ RectTransform:
   - {fileID: 7205423996597288384}
   - {fileID: 3248801189299998849}
   - {fileID: 5838953213808283190}
+  - {fileID: 5595383092952455458}
   m_Father: {fileID: 6905558904980552707}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -789,7 +790,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &3248801189299998849
 RectTransform:
   m_ObjectHideFlags: 0
@@ -839,6 +840,82 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_Sprite: {fileID: 21300000, guid: a624735f19e2a5c40a3c426000e06231, type: 3}
+  m_Type: 1
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!1 &4640152260702076785
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5595383092952455458}
+  - component: {fileID: 7794387882557764728}
+  - component: {fileID: 7958398624350063815}
+  m_Layer: 5
+  m_Name: NonPointerFrame
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &5595383092952455458
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4640152260702076785}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4198871641249232431}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 560, y: 245}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &7794387882557764728
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4640152260702076785}
+  m_CullTransparentMesh: 1
+--- !u!114 &7958398624350063815
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4640152260702076785}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 2899fcca42ad3834a9b84232744eeab9, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1121,7 +1198,7 @@ RectTransform:
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 560, y: 250}
-  m_Pivot: {x: 0.04, y: 1}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &8276383393759886440
 GameObject:
   m_ObjectHideFlags: 0
@@ -1172,16 +1249,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d53205f067ae4169bacb09169c88680b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _tooltipProvider: {fileID: 11400000, guid: 4fb2b24d90db2604c8ef9ad0e7969c79, type: 2}
+  <Type>k__BackingField: 1
   _content: {fileID: 7727079900987198833}
-  _frame: {fileID: 3153780552092855522}
-  _reverseFrame: {fileID: 5068959197797504670}
+  _nonPointerFrame: {fileID: 4640152260702076785}
+  _pointerFrame: {fileID: 3153780552092855522}
+  _pointerReverseFrame: {fileID: 5068959197797504670}
   _descriptionString: {fileID: 6321004146744648989}
-  _effectDescription: {fileID: 8707488975563061486}
   _illustration: {fileID: 183704206750198643}
+  _waitBeforePopupTooltip: 0.5
+  _effectDescription: {fileID: 8707488975563061486}
   _rarity: {fileID: 7521831462650585220}
   _level: {fileID: 7597207394903992419}
-  _waitBeforePopupTooltip: 0.5
 --- !u!1 &8291320154567397430
 GameObject:
   m_ObjectHideFlags: 0

@@ -22,7 +22,6 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
         [SerializeField] private ScrollRect _scrollRect;
         [SerializeField] private UIEquipmentItem _equipmentItemPrefab;
         [SerializeField] private UIEquipment _currentlyEquippingItem;
-        [SerializeField] private TooltipProvider _tooltipProvider;
         [SerializeField] private RectTransform _tooltipSafeArea;
         [SerializeField] private GameObject _contents;
         [SerializeField] private MultiInputButton _unEquipButton;
@@ -31,6 +30,7 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
         private List<UIEquipmentItem> _equipmentItems = new();
         private HeroBehaviour InspectingHero => _characterPanel.InspectingHero;
         private EquipmentsController _equipmentsController;
+        private ITooltip _tooltip;
 
         private void OnEnable()
         {
@@ -45,6 +45,11 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
             _unEquipButton.Selected -= PreviewUnselectEquipment;
         }
 
+        private void Awake()
+        {
+            _tooltip = TooltipFactory.Instance.GetTooltip(ETooltipType.Equipment);
+        }
+
         public void Show()
         {
             Reset();
@@ -52,7 +57,7 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
             _equipmentsController.Removed += RemoveCurrentlyEquipping;
             _equipmentsController.Equipped += UpdateInventoryAndEquippingUI;
             _scrollRect.content.anchoredPosition = Vector2.zero;
-            _tooltipProvider.Tooltip.SetSafeArea(_tooltipSafeArea);
+            _tooltip.SetSafeArea(_tooltipSafeArea);
             _contents.SetActive(true);
             _unEquipButton.Select();
             InstantiateEquipments();
@@ -82,7 +87,7 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
         public void Hide()
         {
             Reset();
-            _tooltipProvider.Tooltip.Hide();
+            _tooltip.Hide();
             _contents.SetActive(false);
             // TODO: Implement Preview System
             // _equipmentPreviewer.ResetAttributesUI();
@@ -129,7 +134,7 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
                 return;
             }
 
-            _tooltipProvider.Tooltip.Hide();
+            _tooltip.Hide();
 
             EventSystem.current.SetSelectedGameObject(null);
             Debug.Log($"RemoveEquipmentFromInventory {equipment}");
@@ -202,14 +207,14 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
 
         private void PreviewUnselectEquipment()
         {
-            _tooltipProvider.Tooltip.SetSafeArea(_tooltipSafeArea);
+            _tooltip.SetSafeArea(_tooltipSafeArea);
             // TODO: Implement Preview System
             // _equipmentPreviewer.PreviewUnequipEquipment(_currentlyEquippingItem.Equipment, InspectingHero);
         }
 
         private void OnPreviewEquipmentStats(UIEquipmentItem equippingItemUI)
         {
-            _tooltipProvider.Tooltip.SetSafeArea(_tooltipSafeArea);
+            _tooltip.SetSafeArea(_tooltipSafeArea);
             // TODO: Implement Preview System
             // _equipmentPreviewer.PreviewEquipment(equipment, _equipmentsPanel.EquippingSlot, InspectingHero);
         }

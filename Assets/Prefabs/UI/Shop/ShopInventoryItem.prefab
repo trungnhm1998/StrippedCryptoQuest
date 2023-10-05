@@ -55,7 +55,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &3219008794013664032
 RectTransform:
   m_ObjectHideFlags: 0
@@ -198,7 +198,7 @@ RectTransform:
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -251,6 +251,7 @@ GameObject:
   - component: {fileID: 6966472442823776791}
   - component: {fileID: 4338302398076731015}
   - component: {fileID: 2536202719577619812}
+  - component: {fileID: 2647431490219974226}
   m_Layer: 5
   m_Name: Items Panel
   m_TagString: Untagged
@@ -302,7 +303,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Content: {fileID: 200676153132828734}
   m_Horizontal: 0
-  m_Vertical: 1
+  m_Vertical: 0
   m_MovementType: 1
   m_Elasticity: 0.1
   m_Inertia: 1
@@ -312,12 +313,27 @@ MonoBehaviour:
   m_HorizontalScrollbar: {fileID: 0}
   m_VerticalScrollbar: {fileID: 4364820043628339452}
   m_HorizontalScrollbarVisibility: 0
-  m_VerticalScrollbarVisibility: 1
+  m_VerticalScrollbarVisibility: 0
   m_HorizontalScrollbarSpacing: 0
   m_VerticalScrollbarSpacing: 0
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &2647431490219974226
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3271077347407847201}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db680cf6b1e7353428c6159ae1ee1dec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _scrollRect: {fileID: 2536202719577619812}
+  _singleItemRect: {fileID: 4493974615691473294, guid: 8882d7e204524a24e84efc11f7967165, type: 3}
+  _useUpdate: 1
 --- !u!1 &3673488246625027390
 GameObject:
   m_ObjectHideFlags: 0
@@ -393,7 +409,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -20, y: 0}
+  m_SizeDelta: {x: 0, y: -10}
   m_Pivot: {x: 0, y: 1}
 --- !u!222 &7875156508944150462
 CanvasRenderer:
@@ -499,10 +515,10 @@ MonoBehaviour:
   m_Padding:
     m_Left: 0
     m_Right: 0
-    m_Top: 5
-    m_Bottom: 5
+    m_Top: 0
+    m_Bottom: 0
   m_ChildAlignment: 1
-  m_Spacing: 0
+  m_Spacing: 5
   m_ChildForceExpandWidth: 0
   m_ChildForceExpandHeight: 0
   m_ChildControlWidth: 0
@@ -577,5 +593,5 @@ MonoBehaviour:
   _content: {fileID: 3673488246625027390}
   _itemTemplate: {fileID: 418906792323428154, guid: 8882d7e204524a24e84efc11f7967165, type: 3}
   _scrollContentParent: {fileID: 200676153132828734}
+  _previewItem: {fileID: 0}
   <ShopState>k__BackingField: {fileID: 0}
-  <ShopType>k__BackingField: 0

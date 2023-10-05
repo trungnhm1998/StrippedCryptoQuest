@@ -111,6 +111,7 @@ namespace CryptoQuest.Shop.UI
 
         public void HideShop()
         {
+            _shopFsm.OnExit();
             _menuSelectionHandler.Unselect();
             _shopContent.SetActive(false);
             _showShopDialogEventChannel?.RaiseEvent(_exitMessage);

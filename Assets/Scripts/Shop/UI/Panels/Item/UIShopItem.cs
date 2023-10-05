@@ -18,6 +18,7 @@ namespace CryptoQuest.Shop.UI.Panels.Item
     public class UIShopItem : MonoBehaviour
     {
         public Action<IShopItem> OnSubmit;
+        public Action<IShopItem> OnSelected;
 
         [SerializeField] private MultiInputButton _button;
         [SerializeField] private Image _icon;
@@ -30,12 +31,19 @@ namespace CryptoQuest.Shop.UI.Panels.Item
 
         private void OnEnable()
         {
+            _button.Selected += OnSelect;
+
             if (_shopItemData == null || _shopItemData.Icon == null)
             {
                 return;
             }
 
             StartCoroutine(LoadSpriteAndSet(_shopItemData.Icon));
+        }
+
+        private void OnDisable()
+        {
+            _button.Selected -= OnSelect;
         }
 
         public void Init(IShopItem shopItemData, bool isBuy)
@@ -54,6 +62,12 @@ namespace CryptoQuest.Shop.UI.Panels.Item
         public void Select()
         {
             _button.Select();
+            OnSelected?.Invoke(_shopItemData);
+        }
+
+        private void OnSelect()
+        {
+            OnSelected?.Invoke(_shopItemData);
         }
 
         private IEnumerator LoadSpriteAndSet(AssetReferenceT<Sprite> equipmentTypeIcon)

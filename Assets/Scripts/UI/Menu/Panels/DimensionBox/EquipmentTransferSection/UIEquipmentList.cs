@@ -5,6 +5,7 @@ using CryptoQuest.UI.Menu.Panels.Status.Equipment;
 using CryptoQuest.Menu;
 using UnityEngine;
 using UnityEngine.UI;
+using CryptoQuest.UI.Menu.Panels.Status;
 
 namespace CryptoQuest.UI.Menu.Panels.DimensionBox.EquipmentTransferSection
 {
@@ -12,10 +13,15 @@ namespace CryptoQuest.UI.Menu.Panels.DimensionBox.EquipmentTransferSection
     {
         [SerializeField] protected ScrollRect _scrollRect;
         [SerializeField] private GameObject _singleItemPrefab;
-        [SerializeField] private TooltipProvider _tooltipProvider;
         [SerializeField] private RectTransform _tooltipSafeArea;
 
         private List<IData> _itemList = new List<IData>();
+        private ITooltip _tooltip;
+
+        private void Awake()
+        {
+            _tooltip = TooltipFactory.Instance.GetTooltip(ETooltipType.Equipment);
+        }
 
         /// <summary>
         /// This method is a subscribed event and set up on scene.
@@ -25,7 +31,7 @@ namespace CryptoQuest.UI.Menu.Panels.DimensionBox.EquipmentTransferSection
             CleanUpScrollView();
             _itemList = data;
             RenderData();
-            _tooltipProvider.Tooltip.SetSafeArea(_tooltipSafeArea);
+            _tooltip.SetSafeArea(_tooltipSafeArea);
             CheckEmptyGameEquipmentList(isGameEquipmentListEmpty);
         }
 

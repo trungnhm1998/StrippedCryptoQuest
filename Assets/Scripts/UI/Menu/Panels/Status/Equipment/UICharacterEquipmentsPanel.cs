@@ -25,8 +25,10 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
         [SerializeField] private UIEquipmentSlotButton _defaultSelection;
 
         // Tooltips
-        [SerializeField] private TooltipProvider _tooltipProvider;
+        private ITooltip _tooltip;
         [SerializeField] private RectTransform _tooltipSafeArea;
+        [SerializeField] private Vector2 _minPivotTooltip = Vector2.zero;
+        [SerializeField] private Vector2 _maxPivotTooltip = Vector2.one;
 
         private Dictionary<EquipmentSlot.EType, UICharacterEquipmentSlot> _equipmentSlotsCache = new();
 
@@ -47,7 +49,15 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
             }
         }
 
-        private void Awake() => ResetEquipmentsUI();
+        private void Awake()
+        {
+            ResetEquipmentsUI();
+            _tooltip = TooltipFactory.Instance.GetTooltip(ETooltipType.Equipment);
+            _tooltip.WithBoderPointer(true)
+                .WithLocalPosition(Vector3.zero)
+                .WithScale(Vector3.one)
+                .WithRangePivot(_minPivotTooltip, _maxPivotTooltip);
+        }
 
 #if UNITY_EDITOR
         private void OnValidate() => _equipmentSlots = GetComponentsInChildren<UICharacterEquipmentSlot>();
@@ -72,14 +82,14 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
             // TODO: REFACTOR EQUIPMENTS
             SetEquipmentsUI(_characterPanel.InspectingHero);
 
-            _tooltipProvider.Tooltip.SetSafeArea(_tooltipSafeArea);
+            _tooltip.SetSafeArea(_tooltipSafeArea);
             _equipmentSlotParent.SetActive(true);
             _defaultSelection.Select();
         }
 
         public void Hide()
         {
-            _tooltipProvider.Tooltip.Hide();
+            _tooltip.Hide();
             _equipmentSlotParent.SetActive(false);
         }
 
@@ -137,7 +147,7 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
 
         private MultiInputButton HideToolTipAndDeselectCurrentSelectedButton()
         {
-            _tooltipProvider.Tooltip.Hide();
+            _tooltip.Hide();
             var currentSelected = EventSystem.current.currentSelectedGameObject;
             if (currentSelected == null) return null;
             var button = currentSelected.GetComponent<MultiInputButton>();

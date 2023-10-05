@@ -21,6 +21,7 @@ namespace CryptoQuest.Shop.UI.Panels.Item
         [SerializeField] protected GameObject _content;
         [SerializeField] protected UIShopItem _itemTemplate;
         [SerializeField] private Transform _scrollContentParent;
+        [SerializeField] private PreviewItem _previewItem;
 
         [field: SerializeField] public ShopStateSO ShopState { get; private set; }
 
@@ -41,6 +42,7 @@ namespace CryptoQuest.Shop.UI.Panels.Item
         public void Hide()
         {
             _content.SetActive(false);
+            _previewItem.Hide();
         }
 
         public virtual void Show()
@@ -56,14 +58,19 @@ namespace CryptoQuest.Shop.UI.Panels.Item
             yield return null;
             if(_scrollContentParent.childCount > 0)
             {
-                _defaultItem = _scrollContentParent.GetChild(0).GetComponent<UIShopItem>();
+                _defaultItem = _scrollContentParent.GetComponentInChildren<UIShopItem>();
                 _defaultItem?.Select();
             }    
         }
 
-        protected void OnItemSubmit(IShopItem shopItemInfo)
+        private void OnItemSubmit(IShopItem shopItemInfo)
         {
             OnSubmit?.Invoke(shopItemInfo);
+        }
+
+        private void OnItemSelected(IShopItem shopItemInfo)
+        {
+            shopItemInfo.PreviewItem(_previewItem);
         }
 
         protected void InstantiateItem(IShopItem itemShopData, bool isBuy)
@@ -88,6 +95,7 @@ namespace CryptoQuest.Shop.UI.Panels.Item
             var item = Instantiate(_itemTemplate, _scrollContentParent);
             item.gameObject.SetActive(false);
             item.OnSubmit += OnItemSubmit;
+            item.OnSelected += OnItemSelected;
             _uiItems.Add(item);
 
             return item;

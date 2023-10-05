@@ -9,7 +9,6 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
 {
     public class UIEquipment : MonoBehaviour
     {
-        [SerializeField] private TooltipProvider _tooltipProvider;
         [SerializeField] private Image _icon;
         [SerializeField] private GameObject _iconNFT;
         [SerializeField] private LocalizeStringEvent _nameLocalize;
@@ -25,7 +24,7 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
 
         private void Awake()
         {
-            _tooltip = _tooltipProvider.Tooltip;
+            _tooltip = TooltipFactory.Instance.GetTooltip(ETooltipType.Equipment);
         }
 
         public void Init(EquipmentInfo equipment)

@@ -19,7 +19,6 @@ namespace CryptoQuest.UI.Menu.Panels.DimensionBox.EquipmentTransferSection
         [SerializeField] private GameObject _equippedTag;
 
         [Header("Tooltip")]
-        [SerializeField] private TooltipProvider _tooltipProvider;
         [SerializeField] private RectTransform _tooltipPosition;
 
         private Transform _parent;
@@ -32,7 +31,7 @@ namespace CryptoQuest.UI.Menu.Panels.DimensionBox.EquipmentTransferSection
 
         private void Awake()
         {
-            _tooltip = _tooltipProvider.Tooltip;
+            _tooltip = TooltipFactory.Instance.GetTooltip(ETooltipType.Equipment);
             UIEquipmentSection.InspectItemEvent += ReceivedInspectingRequest;
         }
 

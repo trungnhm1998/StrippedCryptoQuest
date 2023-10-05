@@ -17,7 +17,6 @@ namespace CryptoQuest.Shop.UI.Panels.Sell
     {
         [SerializeField] private LocalizedString _sellMessage;
         [SerializeField] private YesNoDialogEventChannelSO _yesNoDialogEventChannelSO;
-        [SerializeField] private GameObject _itemInfo;
         [SerializeField] private GameObject _helpNavigateInfo;
 
         [SerializeField] private UIShopInventoryTabHeader _inventoryTabHeader;
@@ -86,15 +85,14 @@ namespace CryptoQuest.Shop.UI.Panels.Sell
 
         protected override void OnShow()
         {
-            _itemInfo.gameObject.SetActive(true);
             _helpNavigateInfo.gameObject.SetActive(true);
             ShowItemsWithType(0);
         }
 
         protected override void OnHide()
         {
-            _itemInfo.gameObject.SetActive(false);
             _helpNavigateInfo.gameObject.SetActive(false);
+            _currentShop.Hide();
         }
 
         private void ShowItemsWithType(ShopStateSO itemType)

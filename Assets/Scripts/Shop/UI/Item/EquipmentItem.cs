@@ -2,6 +2,7 @@ using CryptoQuest.Gameplay.Inventory.Currency;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
 using CryptoQuest.Item;
 using CryptoQuest.Item.Equipment;
+using CryptoQuest.UI.Menu.Panels.Status;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.Localization;
@@ -26,5 +27,6 @@ namespace CryptoQuest.Shop.UI.Item
 
         public bool TryToBuy(IShopInventoryController controller) => controller.TryToBuy(_equipment);
         public bool TryToSell(IShopInventoryController controller) => controller.TryToSell(_equipment);
+        public void PreviewItem(IPreviewItem preview) => preview.Preview(_equipment);
     }
 }

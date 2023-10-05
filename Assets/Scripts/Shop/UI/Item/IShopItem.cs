@@ -1,6 +1,7 @@
 using CryptoQuest.Gameplay.Inventory.Currency;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
 using CryptoQuest.Item;
+using CryptoQuest.UI.Menu.Panels.Status;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.Localization;
@@ -18,5 +19,6 @@ namespace CryptoQuest.Shop.UI.Item
 
         public bool TryToBuy(IShopInventoryController controller);
         public bool TryToSell(IShopInventoryController controller);
+        public void PreviewItem(IPreviewItem uishop);
     }
 }
