@@ -831,7 +831,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <Input>k__BackingField: {fileID: 11400000, guid: 1fb61cdb72f0a484f8e4db68e2011977, type: 2}
-  <UpgradePanel>k__BackingField: {fileID: 6895545558518968966}
+  <Content>k__BackingField: {fileID: 0}
+  <SelectedEquipmentPanel>k__BackingField: {fileID: 0}
+  <UpgradeEquipmentPanel>k__BackingField: {fileID: 0}
+  <UpgradeResultPanel>k__BackingField: {fileID: 0}
+  <SelectActionPanel>k__BackingField: {fileID: 0}
+  _upgradeEquipment:
+    m_PersistentCalls:
+      m_Calls: []
+  _initListEquipment:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!95 &7590839118796361145
 Animator:
   serializedVersion: 5
@@ -1124,7 +1134,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0825bde6c5ac86e46968b42ad8ea236b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <Input>k__BackingField: {fileID: 11400000, guid: 1fb61cdb72f0a484f8e4db68e2011977, type: 2}
+  <Input>k__BackingField: {fileID: 4422885797340229464}
   <EvolvePanel>k__BackingField: {fileID: 5951786930772008756}
 --- !u!95 &4193685876521040809
 Animator:
@@ -1317,6 +1327,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8466942690046463327}
   - component: {fileID: 3550756289094277949}
+  - component: {fileID: 5746246475852014017}
   m_Layer: 5
   m_Name: EvolvePanel
   m_TagString: Untagged
@@ -1373,6 +1384,62 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &5746246475852014017
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5951786930772008756}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 407e3279098a3bb4f80377a30567dc70, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _mockLength: 10
+  _mockIcons:
+  - {fileID: 21300000, guid: 290756aed63787e41b9a420820e125eb, type: 3}
+  - {fileID: 21300000, guid: 790ff3487bb17544ab628d1e13d4f53d, type: 3}
+  - {fileID: 21300000, guid: 58e5a49760bd3d94b99c58c3169460bc, type: 3}
+  - {fileID: 21300000, guid: cf031f7d0f78f554a9ed3f83725e91e0, type: 3}
+  - {fileID: 21300000, guid: a766108930007a54aa45347b4bb4a0a8, type: 3}
+  - {fileID: 21300000, guid: 343f7d5662c313649bcbcdc2422998e5, type: 3}
+  - {fileID: 21300000, guid: f8c82f8988c5d7240b42f60f6009be89, type: 3}
+  - {fileID: 21300000, guid: 8a813767cf244f9488aed10feb0a2317, type: 3}
+  - {fileID: 21300000, guid: 5b9383ee24b62b245bf6065692760eb4, type: 3}
+  - {fileID: 21300000, guid: bf066ff9770140e46b721063433a3caa, type: 3}
+  - {fileID: 21300000, guid: 30f8119f4dcedfa49bb5e717dc593c20, type: 3}
+  - {fileID: 21300000, guid: be151c5fea0798f448065a52c4c00cfd, type: 3}
+  - {fileID: 21300000, guid: d500740b2e73fc74ab115c2b69aeae49, type: 3}
+  - {fileID: 21300000, guid: ead550b8f3e1c5349b7f0e4453445b21, type: 3}
+  - {fileID: 21300000, guid: 1afd8bb4539287a4eb1ee09e7982c15f, type: 3}
+  - {fileID: 21300000, guid: 32f1116a9cd422e49ab5b0e412e11a98, type: 3}
+  - {fileID: 21300000, guid: 991ca97ceb6257141a0a85889be5345a, type: 3}
+  - {fileID: 21300000, guid: 40e86bd325629314785bc8311a307d3d, type: 3}
+  - {fileID: 21300000, guid: 7f122400dc2abde4082869a3c66047cc, type: 3}
+  - {fileID: 21300000, guid: f7071200e09de8b479d632439ae33a35, type: 3}
+  - {fileID: 21300000, guid: e2577dc66f452ea4a9dcc5b3ddd99bbf, type: 3}
+  - {fileID: 21300000, guid: 8e5d0edb14405394fac081db91c8af5a, type: 3}
+  - {fileID: 21300000, guid: 3608cf0c2b102944c90b519cc3fe5113, type: 3}
+  - {fileID: 21300000, guid: ee5a27ab0968e1449bcdb7d06058ac38, type: 3}
+  _mockName:
+    m_TableReference:
+      m_TableCollectionName: 
+    m_TableEntryReference:
+      m_KeyId: 0
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  _mockRaritySprite:
+  - {fileID: 21300000, guid: 59fd7ea7fce3a4946a75d58b9e6387f4, type: 3}
+  - {fileID: 21300000, guid: d9194cd0f129443c29e2670489fcfe88, type: 3}
+  - {fileID: 21300000, guid: 392adfc50993347969924ad9e2fadd22, type: 3}
+  - {fileID: 21300000, guid: c05b0f2c623884aabb44d60570f1b991, type: 3}
+  - {fileID: 21300000, guid: 638eb3a6aee0c4662aa7f106d05a5c79, type: 3}
+  references:
+    version: 2
+    RefIds: []
 --- !u!1 &6447188243457297044
 GameObject:
   m_ObjectHideFlags: 0
@@ -1660,22 +1727,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9b2076417570af47b7971d4bd0431f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _instantiateData:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 5767534575990820389}
-        m_TargetAssemblyTypeName: CryptoQuest.BlackSmith.Upgrade.MVP.UIUpgradeEquipment,
-          indi-games.crypto-quest
-        m_MethodName: InstantiateData
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+  _upgradeEquipment: {fileID: 0}
+  _result: {fileID: 0}
 --- !u!1 &7028314294104043103
 GameObject:
   m_ObjectHideFlags: 0
@@ -3057,17 +3110,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1aa08ab6e0800fa44ae55d278d1423e3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &5767534575990820389 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6572568944118838517, guid: 5ca502f14f7d541469a88d88f92582dc, type: 3}
-  m_PrefabInstance: {fileID: 809542383250242256}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4818f7c4d10a1ff4fa79deaab6071804, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &4972339601597763980

@@ -1,6 +1,6 @@
-using CryptoQuest.Gameplay.Inventory;
-using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
-using CryptoQuest.System;
+using System.Collections;
+using System.Collections.Generic;
+using CryptoQuest.BlackSmith.Interface;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -8,17 +8,25 @@ namespace CryptoQuest.BlackSmith.Evolve.UI
 {
     public class EvolvePresenter : MonoBehaviour
     {
-        [SerializeField] private UnityEvent<InventorySO> _getInventoryEvent;
+        [SerializeField] private UnityEvent<List<IEvolvableData>> _getInventoryEvent;
+
+        private IEvolvableEquipment _equipmentModel;
+        private List<IEvolvableData> _gameData = new();
 
         private void Start()
         {
-            GetInventory();
+            StartCoroutine(GetEquipments());
         }
 
-        private void GetInventory()
+        private IEnumerator GetEquipments()
         {
-            var inventory = ServiceProvider.GetService<IInventoryController>().Inventory;
-            _getInventoryEvent.Invoke(inventory);
+            _equipmentModel = GetComponentInChildren<IEvolvableEquipment>();
+            yield return _equipmentModel.CoGetData();
+
+            if (_equipmentModel.EvolvableData.Count <= 0) yield break;
+
+            _gameData = _equipmentModel.EvolvableData;
+            _getInventoryEvent.Invoke(_gameData);
         }
 
     }

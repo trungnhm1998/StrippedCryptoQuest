@@ -1,9 +1,8 @@
 using System;
-using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
-using CryptoQuest.Item.Equipment;
+using System.Collections.Generic;
+using CryptoQuest.BlackSmith.Interface;
 using CryptoQuest.Menu;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.UI;
 
 namespace CryptoQuest.BlackSmith.EvolveStates.UI
@@ -13,18 +12,17 @@ namespace CryptoQuest.BlackSmith.EvolveStates.UI
         [SerializeField] private ScrollRect _scrollRect;
         [SerializeField] private GameObject _itemPrefab;
 
-        public void RenderEquipments(InventorySO inventory)
+        public void RenderEquipments(List<IEvolvableData> data)
         {
-            for (int i = 0; i < inventory.Equipments.Count; i++)
+            for (int i = 0; i < data.Count; i++)
             {
-                var equipment = inventory.Equipments[i];
-                InstantiateNewEquipmentUI(equipment);
+                InstantiateNewEquipmentUI(data[i]);
             }
 
             SelectDefaultButton();
         }
 
-        private void InstantiateNewEquipmentUI(EquipmentInfo equipment)
+        private void InstantiateNewEquipmentUI(IEvolvableData equipment)
         {
             var go = Instantiate(_itemPrefab, _scrollRect.content);
             go.GetComponent<UIEquipmentItem>().SetItemData(equipment);
