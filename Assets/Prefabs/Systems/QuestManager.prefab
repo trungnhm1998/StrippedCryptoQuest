@@ -9,7 +9,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 666282647687497273}
-  - component: {fileID: 378290335412794126}
+  - component: {fileID: 2610851588546578189}
+  - component: {fileID: 800690595273299539}
+  - component: {fileID: 5970865285635464750}
+  - component: {fileID: 5732774167976230999}
   m_Layer: 0
   m_Name: QuestManager
   m_TagString: Untagged
@@ -32,7 +35,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &378290335412794126
+--- !u!114 &2610851588546578189
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -44,7 +47,57 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d482f5d33f848d69b6de29f4df450f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _onSceneLoadedChannel: {fileID: 11400000, guid: b8b96e43d21a7bf4c96df4cb83c2b764, type: 2}
+  _triggerQuestEventChannel: {fileID: 11400000, guid: fdefe5ff6c97c9946a9e874eb074f93f, type: 2}
+  _giveQuestEventChannel: {fileID: 11400000, guid: da57ae63ba992064e8d3ec26238fc35a, type: 2}
   _rewardEventChannel: {fileID: 11400000, guid: 0c66ec2affb834745a47ac989a1fbcc3, type: 2}
-  questTriggerEventChannel: {fileID: 11400000, guid: fdefe5ff6c97c9946a9e874eb074f93f, type: 2}
-  <InProgressQuests>k__BackingField: []
+  <InProgressQuest>k__BackingField:
+  - rid: 4635144192667680801
   <CompletedQuests>k__BackingField: []
+  references:
+    version: 2
+    RefIds:
+    - rid: 4635144192667680801
+      type: {class: CutsceneQuestInfo, ns: CryptoQuest.Quest.Categories, asm: crypto-quest.quest}
+      data:
+        <Data>k__BackingField: {fileID: 11400000, guid: fd7c73dffc37da645a17bcbb15508f0c, type: 2}
+--- !u!114 &800690595273299539
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5292255704015140054}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63d7a9bc6934434f9fcbc857785b6bf1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <TriggerQuestEventChannel>k__BackingField: {fileID: 11400000, guid: fdefe5ff6c97c9946a9e874eb074f93f, type: 2}
+--- !u!114 &5970865285635464750
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5292255704015140054}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 877fb76b4ecc4d899a98ba2673feb9a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <TriggerQuestEventChannel>k__BackingField: {fileID: 11400000, guid: fdefe5ff6c97c9946a9e874eb074f93f, type: 2}
+--- !u!114 &5732774167976230999
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5292255704015140054}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 775a85e79ca74f9580e7c6c11f17eb5e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _battleCompletedEvent: {fileID: 11400000, guid: e12642aa0785b734aa0d70cd555f1f69, type: 2}
+  _triggerQuestEventChannel: {fileID: 11400000, guid: fdefe5ff6c97c9946a9e874eb074f93f, type: 2}

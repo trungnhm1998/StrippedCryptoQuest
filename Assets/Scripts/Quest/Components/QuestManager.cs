@@ -1,10 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using CryptoQuest.Gameplay.Loot;
 using CryptoQuest.Gameplay.Reward.ScriptableObjects;
 using CryptoQuest.Quest.Authoring;
 using CryptoQuest.Quest.Events;
-using IndiGames.Core.EditorTools.Attributes.ReadOnlyAttribute;
+using IndiGames.Core.Events.ScriptableObjects;
+using UnityEditor;
 using UnityEngine;
 
 namespace CryptoQuest.Quest.Components
@@ -15,23 +15,31 @@ namespace CryptoQuest.Quest.Components
     {
         public static Action<IQuestConfigure> OnConfigureQuest;
 
+        [Header("Listening Channels")]
+        [SerializeField] private VoidEventChannelSO _onSceneLoadedChannel;
+
+        [Header("Quest Events")]
         [SerializeField] private QuestEventChannelSO _triggerQuestEventChannel;
+
         [SerializeField] private QuestEventChannelSO _giveQuestEventChannel;
         [SerializeField] private RewardSO _rewardEventChannel;
 
-        [field: SerializeField, ReadOnly] public List<string> InProgressQuests { get; private set; } = new();
+        [field: SerializeReference] public QuestInfo[] InProgressQuest { get; set; }
+        [field: SerializeReference] public QuestInfo[] CompletedQuests { get; set; }
 
-        [field: ReadOnly] public List<QuestInfo> InProgressQuestInfos { get; private set; } =
-            new();
-
-        [field: SerializeField, ReadOnly] public List<string> CompletedQuests { get; private set; } = new();
-        [field: ReadOnly] public List<QuestInfo> Quests { get; private set; } = new();
-
-        private QuestSO _currentQuest;
+        private QuestSO _currentQuestData;
         private QuestInfo _currentQuestInfo;
 
         private void OnEnable()
         {
+            // This is a temp fix, because we have one quest on beginning
+            // So I don't want to create new for this 
+            // ehehe (*/ω＼*)
+            InProgressQuest ??= Array.Empty<QuestInfo>();
+            CompletedQuests ??= Array.Empty<QuestInfo>();
+
+            _onSceneLoadedChannel.EventRaised += LoadingFirstQuest;
+
             OnConfigureQuest += ConfigureQuestHolder;
             _triggerQuestEventChannel.EventRaised += TriggerQuest;
             _giveQuestEventChannel.EventRaised += GiveQuest;
@@ -39,50 +47,73 @@ namespace CryptoQuest.Quest.Components
 
         private void OnDisable()
         {
+            _onSceneLoadedChannel.EventRaised -= LoadingFirstQuest;
+
             OnConfigureQuest -= ConfigureQuestHolder;
             _triggerQuestEventChannel.EventRaised -= TriggerQuest;
             _giveQuestEventChannel.EventRaised -= GiveQuest;
         }
 
-        private void TriggerQuest(QuestSO questDef)
+        private void LoadingFirstQuest()
         {
-            _currentQuest = questDef;
+            if (InProgressQuest == null) return;
 
-            if (InProgressQuests.Contains(_currentQuest.Guid) || CompletedQuests.Contains(_currentQuest.Guid)) return;
-
-            var currentQuest = _currentQuest.CreateQuest(this);
-            currentQuest.TriggerQuest();
-
-            Quests.Add(currentQuest);
-            InProgressQuests.Add(_currentQuest.Guid);
-
-            _currentQuest.OnRewardReceived += RewardReceived;
-            _currentQuest.OnQuestCompleted += QuestCompleted;
+            QuestSO firstQuestData = InProgressQuest[0].BaseData;
+            GiveQuest(firstQuestData);
         }
 
-        private void GiveQuest(QuestSO questSo)
+        private void TriggerQuest(QuestSO questData)
         {
-            var questInfo = questSo.CreateQuest(this);
-            InProgressQuestInfos.Add(questInfo);
-            questInfo.GiveQuest();
+            foreach (var progressQuestInfo in InProgressQuest)
+            {
+                if (progressQuestInfo.BaseData != questData) continue;
+
+                progressQuestInfo.TriggerQuest();
+                _currentQuestInfo = progressQuestInfo;
+            }
+
+            _currentQuestData.OnRewardReceived += RewardReceived;
+            _currentQuestData.OnQuestCompleted += QuestCompleted;
+        }
+
+        private void GiveQuest(QuestSO questData)
+        {
+            QuestInfo currentQuestInfo = questData.CreateQuest(this);
+
+            if (!ArrayUtility.Contains(InProgressQuest, currentQuestInfo))
+            {
+                QuestInfo[] inProgressQuestInfos = InProgressQuest;
+                ArrayUtility.Add(ref inProgressQuestInfos, currentQuestInfo);
+                InProgressQuest = inProgressQuestInfos;
+            }
+
+            _currentQuestData = questData;
+
+            currentQuestInfo.GiveQuest();
         }
 
         private void RewardReceived(LootInfo[] loots)
         {
             _rewardEventChannel.RewardRaiseEvent(loots);
-            _currentQuest.OnRewardReceived -= RewardReceived;
+            _currentQuestData.OnRewardReceived -= RewardReceived;
         }
 
         private void QuestCompleted()
         {
-            CompletedQuests.Add(_currentQuest.Guid);
-            InProgressQuests.Remove(_currentQuest.Guid);
-            _currentQuest.OnQuestCompleted -= QuestCompleted;
+            QuestInfo[] inProgressQuestInfos = InProgressQuest;
+            ArrayUtility.RemoveAt(ref inProgressQuestInfos, Array.IndexOf(inProgressQuestInfos, _currentQuestInfo));
+            InProgressQuest = inProgressQuestInfos;
+
+            QuestInfo[] completedQuests = CompletedQuests;
+            ArrayUtility.Add(ref completedQuests, _currentQuestInfo);
+            CompletedQuests = completedQuests;
+
+            _currentQuestData.OnQuestCompleted -= QuestCompleted;
         }
 
         private bool IsQuestTriggered(QuestSO questSo)
         {
-            foreach (var quest in Quests)
+            foreach (var quest in CompletedQuests)
             {
                 if (quest.BaseData == questSo)
                     return true;

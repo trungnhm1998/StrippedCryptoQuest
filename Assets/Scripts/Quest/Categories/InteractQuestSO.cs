@@ -1,7 +1,6 @@
 ﻿using System;
 using CryptoQuest.Quest.Authoring;
 using CryptoQuest.Quest.Components;
-using CryptoQuest.System.Dialogue.Managers;
 using UnityEngine;
 
 namespace CryptoQuest.Quest.Categories
@@ -12,35 +11,25 @@ namespace CryptoQuest.Quest.Categories
         [field: SerializeField] public YarnDialogWithQuestSo YarnDialogWithQuestSo { get; private set; }
 
         public override QuestInfo CreateQuest(QuestManager questManager) =>
-            new InteractQuestInfo(this, YarnDialogWithQuestSo);
+            new InteractQuestInfo(this, questManager);
     }
 
     [Serializable]
     public class InteractQuestInfo : QuestInfo<InteractQuestSO>
     {
-        private readonly YarnDialogWithQuestSo _yarnDialogWithQuestSo;
+        private readonly QuestInteractController _questInteractController;
 
-        public InteractQuestInfo(InteractQuestSO interactQuestSO, YarnDialogWithQuestSo yarnDialogWithQuestSo) : base(
+        public InteractQuestInfo(InteractQuestSO interactQuestSO,
+            QuestManager questManager) : base(
             interactQuestSO)
         {
-            _yarnDialogWithQuestSo = yarnDialogWithQuestSo;
+            _questInteractController = questManager.GetComponent<QuestInteractController>();
         }
 
-        public override void TriggerQuest()
+        public override void GiveQuest()
         {
-            base.TriggerQuest();
-            YarnQuestHandler.OnUpdateCurrentNode?.Invoke(_yarnDialogWithQuestSo.YarnQuestDef);
-            YarnSpinnerDialogueManager.PlayDialogueRequested.Invoke(_yarnDialogWithQuestSo.YarnQuestDef.YarnNode);
-            YarnQuestHandler.OnDialogCompleted += FinishQuest;
+            _questInteractController.GiveQuest(this);
+            _questInteractController.TriggerQuest(this);
         }
-
-        public override void FinishQuest()
-        {
-            base.FinishQuest();
-
-            YarnQuestHandler.OnDialogCompleted -= FinishQuest;
-        }
-
-        public override void GiveQuest() { }
     }
 }

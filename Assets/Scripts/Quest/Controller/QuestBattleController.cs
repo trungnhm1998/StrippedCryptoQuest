@@ -9,7 +9,7 @@ namespace CryptoQuest.Quest
 {
     public class QuestBattleController : MonoBehaviour
     {
-        private List<BattleQuestInfo> _currentlyProcessQuests = new();
+        private readonly List<BattleQuestInfo> _currentlyProcessQuests = new();
         [SerializeField] private BattleResultEventSO _battleCompletedEvent;
         [SerializeField] private QuestEventChannelSO _triggerQuestEventChannel;
 

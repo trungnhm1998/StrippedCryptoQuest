@@ -1,7 +1,6 @@
 ﻿using System;
 using CryptoQuest.Quest.Authoring;
 using CryptoQuest.Quest.Components;
-using CryptoQuest.System.CutsceneSystem;
 using CryptoQuest.System.CutsceneSystem.Events;
 using UnityEngine;
 
@@ -10,41 +9,29 @@ namespace CryptoQuest.Quest.Categories
     [CreateAssetMenu(menuName = "Crypto Quest/Quest System/Cutscene Quest", fileName = "CutsceneQuestSO", order = 0)]
     public class CutsceneQuestSO : QuestSO<CutsceneQuestInfo>
     {
-        [SerializeField] QuestCutsceneDef _cutsceneQuestSO;
+        [field: SerializeField] public QuestCutsceneDef CutSceneToLoad { get; private set; }
 
         public override QuestInfo CreateQuest(QuestManager questManager) =>
-            new CutsceneQuestInfo(this, _cutsceneQuestSO);
+            new CutsceneQuestInfo(this, questManager);
     }
 
     [Serializable]
     public class CutsceneQuestInfo : QuestInfo<CutsceneQuestSO>
     {
-        private readonly QuestCutsceneDef _cutsceneDef;
+        private readonly QuestCutsceneController _questCutsceneController;
 
         public CutsceneQuestInfo(CutsceneQuestSO cutsceneQuestSO,
-            QuestCutsceneDef questCutsceneDef) : base(cutsceneQuestSO)
+            QuestManager questManager) : base(cutsceneQuestSO)
         {
-            _cutsceneDef = questCutsceneDef;
+            _questCutsceneController = questManager.GetComponent<QuestCutsceneController>();
         }
 
         public CutsceneQuestInfo() { }
 
-        public override void TriggerQuest()
+        public override void GiveQuest()
         {
-            if (!_cutsceneDef.PlayOnLoaded) return;
-            base.TriggerQuest();
-
-            _cutsceneDef.RaiseEvent();
-            CutsceneManager.CutsceneCompleted += FinishQuest;
+            _questCutsceneController.GiveQuest(this);
+            _questCutsceneController.TriggerCutscene(this);
         }
-
-        public override void FinishQuest()
-        {
-            base.FinishQuest();
-
-            CutsceneManager.CutsceneCompleted -= FinishQuest;
-        }
-
-        public override void GiveQuest() { }
     }
 }
