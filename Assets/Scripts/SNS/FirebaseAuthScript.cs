@@ -5,6 +5,10 @@ using System;
 using System.Collections;
 using CryptoQuest.Environment;
 using CryptoQuest.Networking.RestAPI;
+using Newtonsoft.Json;
+using System.Net;
+using CryptoQuest.System;
+using CryptoQuest.Networking;
 
 namespace CryptoQuest.SNS
 {
@@ -30,27 +34,29 @@ namespace CryptoQuest.SNS
         [Serializable]
         public class LoginResponsePayload
         {
-            public LoginData data;
+            [JsonProperty("data")]
+            public LoginData Data;
         }
 
         [Serializable]
         public class LoginData
         {
-            public UserProfile user;
-            public ApiTokenData token;
+            [JsonProperty("user")]
+            public UserProfile User;
+            [JsonProperty("token")]
+            public ApiTokenData Token;
         }
 
         [Serializable]
         public class ApiTokenData
         {
+            [JsonProperty("access")]
             public ApiToken access;
+            [JsonProperty("refresh")]
             public ApiToken refresh;
         }
 
-        [SerializeField] private EnvironmentSO _environmentSO;
         [SerializeField] private AuthorizationSO _authorizationSO;
-
-        private string _backEndUrl => _environmentSO.BackEndUrl;
 
         public UserProfile Profile
         {
@@ -73,6 +79,8 @@ namespace CryptoQuest.SNS
 
         private FirebaseUser _fbUser;
 
+        private const string URL_LOGIN = "/auth/crypto/login";
+
         public void Start()
         {
 #if !UNITY_EDITOR
@@ -80,40 +88,32 @@ namespace CryptoQuest.SNS
 #endif
         }
 
-        private IEnumerator LoginWithBackend()
+        private void LoginWithBackend()
         {
+            var restAPINetworkController = ServiceProvider.GetService<IRestAPINetworkController>();
+
             LoginRequestPayload payload = new LoginRequestPayload(_fbUser.stsTokenManager.accessToken);
-            using (UnityWebRequest request = UnityWebRequest.Post(_backEndUrl + "/auth/crypto/login",
-                       JsonUtility.ToJson(payload), "application/json"))
-            {
-                yield return request.SendWebRequest();
 
-                if (request.result != UnityWebRequest.Result.Success)
-                {
-                    Debug.Log(request.error);
-                    OnSignedInFailed?.Invoke(request.error);
-                }
-                else
-                {
-                    Debug.Log("Payload: " + request.downloadHandler.text);
-                    LoginResponsePayload responsePayload =
-                        JsonUtility.FromJson<LoginResponsePayload>(request.downloadHandler.text);
-                    if (responsePayload != null && responsePayload.data != null)
-                    {
-                        _authorizationSO.Profile = responsePayload.data.user;
-                        Debug.Log("API Logged: " + Profile.id + " - " + Profile.email);
-
-                        _authorizationSO.AccessToken = responsePayload.data.token.access;
-                        Debug.Log("AccessToken: " + AccessToken.token);
-
-                        _authorizationSO.RefreshToken = responsePayload.data.token.refresh;
-                        Debug.Log("RefreshToken: " + RefreshToken.token);
-
-                        OnSignedInSuccess?.Invoke(_authorizationSO.Profile);
-                    }
-                }
-            }
+            restAPINetworkController.Post(URL_LOGIN, JsonConvert.SerializeObject(payload), OnLoginBESuccess, OnLoginBEFail);
         }
+
+        private void OnLoginBEFail(Exception exception)
+        {
+            Debug.Log(exception.Message);
+            OnSignedInFailed?.Invoke(exception.Message);
+        }   
+        
+        private void OnLoginBESuccess(UnityWebRequest request)
+        {
+            Debug.Log("Payload: " + request.downloadHandler.text);
+
+            _authorizationSO.Init(request.downloadHandler.text);
+            
+            if(_authorizationSO.Profile != null)
+            {
+                OnSignedInSuccess?.Invoke(_authorizationSO.Profile);
+            }    
+        }    
 
         public void OnUserSignedIn(string userJson)
         {
@@ -122,7 +122,7 @@ namespace CryptoQuest.SNS
                 _fbUser = JsonUtility.FromJson<FirebaseUser>(userJson);
                 if (_fbUser != null)
                 {
-                    StartCoroutine(LoginWithBackend());
+                    LoginWithBackend();
                 }
             }
         }

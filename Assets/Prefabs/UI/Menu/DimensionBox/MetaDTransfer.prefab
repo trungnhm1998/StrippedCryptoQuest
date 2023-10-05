@@ -49,7 +49,7 @@ GameObject:
   - component: {fileID: 136271343719424614}
   - component: {fileID: 64577036535574209}
   - component: {fileID: 4379700191915731829}
-  - component: {fileID: 4003657727928533375}
+  - component: {fileID: 4228324210021400173}
   m_Layer: 5
   m_Name: MetaDTransfer
   m_TagString: Untagged
@@ -101,9 +101,6 @@ MonoBehaviour:
     m_FallbackState: 0
     m_WaitForCompletion: 0
     m_LocalVariables: []
-  _stateEnteredEvent:
-    m_PersistentCalls:
-      m_Calls: []
   _confirmClickedEvent:
     m_PersistentCalls:
       m_Calls:
@@ -191,7 +188,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   _dimensionBoxMetadUI: {fileID: 5489823011685335059}
---- !u!114 &4003657727928533375
+--- !u!114 &4228324210021400173
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -200,11 +197,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 6688586537837070210}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e24fd8aea5d92d54597b199a8e924bd6, type: 3}
+  m_Script: {fileID: 11500000, guid: 5a555bf166d74b5459584e081a30b3e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _environmentSO: {fileID: 11400000, guid: 044bb9ac0c90ea6478ea806187957cac, type: 2}
+  _authorizationSO: {fileID: 11400000, guid: 438e69365b259f948bd642f6d2b7a18b, type: 2}
   _wallet: {fileID: 11400000, guid: e349636f15671994ba195728c42a551b, type: 2}
-  WebMetad: 500
 --- !u!1 &7670315405103401197
 GameObject:
   m_ObjectHideFlags: 0

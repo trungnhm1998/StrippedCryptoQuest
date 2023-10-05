@@ -6,6 +6,7 @@ using UnityEngine.Networking;
 using static CryptoQuest.SNS.FirebaseAuthScript;
 using UniRx;
 using System;
+using Newtonsoft.Json;
 
 namespace CryptoQuest.Networking.RestAPI
 {
@@ -53,19 +54,7 @@ namespace CryptoQuest.Networking.RestAPI
         private void Result(UnityWebRequest webRequest)
         {
             Debug.Log(webRequest.downloadHandler.text);
-            LoginResponsePayload responsePayload =
-                JsonUtility.FromJson<LoginResponsePayload>(webRequest.downloadHandler.text);
-            if (responsePayload != null && responsePayload.data != null)
-            {
-                _authorizationSO.Profile = responsePayload.data.user;
-                Debug.Log("API Logged: " + _authorizationSO.Profile.id + " - " + _authorizationSO.Profile.email);
-
-                _authorizationSO.AccessToken = responsePayload.data.token.access;
-                Debug.Log("AccessToken: " + _authorizationSO.AccessToken.token);
-
-                _authorizationSO.RefreshToken = responsePayload.data.token.refresh;
-                Debug.Log("RefreshToken: " + _authorizationSO.RefreshToken.token);
-            }
+            _authorizationSO.Init(webRequest.downloadHandler.text);
         }
 #endif
 

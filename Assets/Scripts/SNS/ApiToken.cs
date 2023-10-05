@@ -1,12 +1,15 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 
 namespace CryptoQuest.SNS
 {
     [Serializable]
     public class ApiToken
     {
-        public string token;
+        [JsonProperty("token")]
+        public string Token { get; set; }
 
-        public DateTime expires;
+        [JsonProperty("expires")]
+        public DateTime Expires { get; set; }
     }
 }
