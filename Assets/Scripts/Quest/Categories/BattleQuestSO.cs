@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace CryptoQuest.Quest
 {
-    [CreateAssetMenu(menuName = "Crypto Quest/Quest System", fileName = "BattleQuestSO")]
+    [CreateAssetMenu(menuName = "Crypto Quest/Quest System/Battle QuestSO", fileName = "BattleQuestSO")]
     public class BattleQuestSO : QuestSO
     {
         [field: SerializeField] public Battlefield BattlefieldToLoad { get; private set; }

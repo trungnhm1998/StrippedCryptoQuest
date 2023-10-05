@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace CryptoQuest.Quest.Actor
 {
-    public class ActorManager : MonoBehaviour
+    public class ActorSpawner : MonoBehaviour
     {
         [SerializeField] private ActorSO _actorDef;
         [SerializeField] private Transform _spawnPoint;

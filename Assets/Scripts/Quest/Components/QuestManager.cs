@@ -1,10 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using CryptoQuest.Gameplay.Loot;
 using CryptoQuest.Gameplay.Reward.ScriptableObjects;
 using CryptoQuest.Quest.Authoring;
 using CryptoQuest.Quest.Events;
 using IndiGames.Core.Events.ScriptableObjects;
-using UnityEditor;
 using UnityEngine;
 
 namespace CryptoQuest.Quest.Components
@@ -24,8 +24,8 @@ namespace CryptoQuest.Quest.Components
         [SerializeField] private QuestEventChannelSO _giveQuestEventChannel;
         [SerializeField] private RewardSO _rewardEventChannel;
 
-        [field: SerializeReference] public QuestInfo[] InProgressQuest { get; set; }
-        [field: SerializeReference] public QuestInfo[] CompletedQuests { get; set; }
+        [field: SerializeReference] public List<QuestInfo> InProgressQuest { get; set; }
+        [field: SerializeReference] public List<QuestInfo> CompletedQuests { get; set; }
 
         private QuestSO _currentQuestData;
         private QuestInfo _currentQuestInfo;
@@ -35,8 +35,8 @@ namespace CryptoQuest.Quest.Components
             // This is a temp fix, because we have one quest on beginning
             // So I don't want to create new for this 
             // ehehe (*/ω＼*)
-            InProgressQuest ??= Array.Empty<QuestInfo>();
-            CompletedQuests ??= Array.Empty<QuestInfo>();
+            InProgressQuest ??= new();
+            CompletedQuests ??= new();
 
             _onSceneLoadedChannel.EventRaised += LoadingFirstQuest;
 
@@ -80,11 +80,9 @@ namespace CryptoQuest.Quest.Components
         {
             QuestInfo currentQuestInfo = questData.CreateQuest(this);
 
-            if (!ArrayUtility.Contains(InProgressQuest, currentQuestInfo))
+            if (!InProgressQuest.Contains(currentQuestInfo))
             {
-                QuestInfo[] inProgressQuestInfos = InProgressQuest;
-                ArrayUtility.Add(ref inProgressQuestInfos, currentQuestInfo);
-                InProgressQuest = inProgressQuestInfos;
+                InProgressQuest.Add(currentQuestInfo);
             }
 
             _currentQuestData = questData;
@@ -100,13 +98,8 @@ namespace CryptoQuest.Quest.Components
 
         private void QuestCompleted()
         {
-            QuestInfo[] inProgressQuestInfos = InProgressQuest;
-            ArrayUtility.RemoveAt(ref inProgressQuestInfos, Array.IndexOf(inProgressQuestInfos, _currentQuestInfo));
-            InProgressQuest = inProgressQuestInfos;
-
-            QuestInfo[] completedQuests = CompletedQuests;
-            ArrayUtility.Add(ref completedQuests, _currentQuestInfo);
-            CompletedQuests = completedQuests;
+            InProgressQuest.Remove(_currentQuestInfo);
+            CompletedQuests.Add(_currentQuestInfo);
 
             _currentQuestData.OnQuestCompleted -= QuestCompleted;
         }

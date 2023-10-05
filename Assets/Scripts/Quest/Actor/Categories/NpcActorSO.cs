@@ -7,12 +7,9 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace CryptoQuest.Quest.Actor
 {
-    [CreateAssetMenu(menuName = "Create NpcActorDef", fileName = "NpcActorDef", order = 0)]
+    [CreateAssetMenu(menuName = "Crypto Quest/Quest System/Actor/NpcActorSO", fileName = "NpcActorDef")]
     public class NpcActorSO : ActorSO<NpcActorInfo>
     {
-        [field: SerializeField] public string Name { get; private set; }
-        [field: SerializeField] public QuestSO QuestData { get; private set; }
-
         public override ActorInfo CreateActor(QuestManager questManager) =>
             new NpcActorInfo(this, QuestData);
     }

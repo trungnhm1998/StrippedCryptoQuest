@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using CryptoQuest.Quest.Categories;
 using CryptoQuest.System.CutsceneSystem;
 using CryptoQuest.System.CutsceneSystem.Events;
@@ -8,12 +9,12 @@ namespace CryptoQuest.Quest
 {
     public class QuestCutsceneController : BaseQuestController
     {
-        private CutsceneQuestInfo[] _currentlyCutsceneQuests = Array.Empty<CutsceneQuestInfo>();
+        private List<CutsceneQuestInfo> _currentlyCutsceneQuests = new();
         private QuestCutsceneDef _currentCutscene;
 
         public void GiveQuest(CutsceneQuestInfo questInfo)
         {
-            ArrayUtility.Add(ref _currentlyCutsceneQuests, questInfo);
+            _currentlyCutsceneQuests.Add(questInfo);
         }
 
         public void TriggerCutscene(CutsceneQuestInfo questInfo)
@@ -39,8 +40,7 @@ namespace CryptoQuest.Quest
         private void HandleCutsceneResult(CutsceneQuestInfo processingQuest)
         {
             processingQuest.FinishQuest();
-            ArrayUtility.RemoveAt(ref _currentlyCutsceneQuests,
-                Array.IndexOf(_currentlyCutsceneQuests, processingQuest));
+            _currentlyCutsceneQuests.Remove(processingQuest);
             CutsceneManager.CutsceneCompleted -= OnQuestFinish;
         }
     }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using CryptoQuest.Quest.Authoring;
 using CryptoQuest.Quest.Categories;
 using CryptoQuest.Quest.Components;
@@ -9,12 +10,12 @@ namespace CryptoQuest.Quest
 {
     public class QuestInteractController : BaseQuestController
     {
-        private InteractQuestInfo[] _currentlyInteractQuests = Array.Empty<InteractQuestInfo>();
+        private List<InteractQuestInfo> _currentlyInteractQuests => new();
         private YarnDialogWithQuestSo _currentInteractQuest;
 
         public void GiveQuest(InteractQuestInfo questInfo)
         {
-            ArrayUtility.Add(ref _currentlyInteractQuests, questInfo);
+            _currentlyInteractQuests.Add(questInfo);
         }
 
         public void TriggerQuest(InteractQuestInfo questInfo)
@@ -43,8 +44,7 @@ namespace CryptoQuest.Quest
         {
             processingQuest.FinishQuest();
 
-            ArrayUtility.RemoveAt(ref _currentlyInteractQuests,
-                Array.IndexOf(_currentlyInteractQuests, processingQuest));
+            _currentlyInteractQuests.Remove(processingQuest);
 
             YarnQuestHandler.OnDialogCompleted -= OnQuestFinish;
         }

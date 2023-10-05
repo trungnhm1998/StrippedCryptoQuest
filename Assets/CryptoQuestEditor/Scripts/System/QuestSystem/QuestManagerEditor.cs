@@ -44,17 +44,15 @@ namespace CryptoQuestEditor.System.QuestSystem
             if (questData == null) return;
 
             QuestInfo currentQuestInfo = questData.CreateQuest(Target);
-            QuestInfo[] targetInProgressQuest = Target.InProgressQuest;
 
-            targetInProgressQuest ??= Array.Empty<QuestInfo>();
-            ArrayUtility.Add(ref targetInProgressQuest, currentQuestInfo);
-            Target.InProgressQuest = targetInProgressQuest; 
+            Target.InProgressQuest ??= new();
+            Target.InProgressQuest.Add(currentQuestInfo);
         }
 
         private void ClearData()
         {
-            Target.InProgressQuest = Array.Empty<QuestInfo>();
-            Target.CompletedQuests = Array.Empty<QuestInfo>();
+            Target.InProgressQuest = new();
+            Target.CompletedQuests = new();
         }
     }
 }
