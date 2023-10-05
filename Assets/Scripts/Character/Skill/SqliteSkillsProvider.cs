@@ -24,12 +24,13 @@ namespace CryptoQuest.Character
             _database.Initialized -= OnDatabaseInitialized;
         }
 
-        private void OnDatabaseInitialized()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void GetSkills(HeroBehaviour hero, Action<List<CastableAbility>> skillsLoadedCallback) { }
+        private void OnDatabaseInitialized() { }
 #endif
+
+        public void GetSkills(HeroBehaviour hero, Action<List<CastableAbility>> skillsLoadedCallback)
+        {
+#if UNITY_EDITOR || !UNITY_WEBGL || !PLATFORM_WEBGL
+#endif
+        }
     }
 }
