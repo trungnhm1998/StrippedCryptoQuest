@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.Components;
@@ -22,7 +21,7 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem.Components
         /// Currently there are no restrictions on add a new effect to the system except
         /// when using <see cref="ApplyEffectToSelf"/> which will check <see cref="GameplayEffectSpec.CanApply"/>
         /// </summary>
-        [SerializeField] private List<ActiveEffectSpecification> _appliedEffects = new();
+        [SerializeReference] private List<ActiveEffectSpecification> _appliedEffects = new();
 
         public IReadOnlyList<ActiveEffectSpecification> AppliedEffects => _appliedEffects;
         private AbilitySystemBehaviour _owner;
@@ -102,7 +101,7 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem.Components
                 var effect = _appliedEffects[i];
                 if (effectSpec.CompareTo(effect.EffectSpec) != 1) continue;
 
-                _appliedEffects.RemoveAt(i);
+                RemoveEffectAtIndex(i);
                 break;
             }
 
@@ -149,6 +148,7 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem.Components
         private void AddModifiersToAttributeWithEffect(ActiveEffectSpecification activeEffect)
         {
             if (activeEffect.Expired) return;
+            if (activeEffect.CanApplyModifiersToAttributeSystem() == false) return;
 
             for (var index = 0; index < activeEffect.ComputedModifiers.Count; index++)
             {
@@ -190,12 +190,33 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem.Components
             {
                 var effect = _appliedEffects[i];
                 if (effect != null && effect.IsValid() && !effect.Expired) continue;
+                RemoveEffectAtIndex(i);
+            }
+        }
 
-                _appliedEffects.RemoveAt(i);
-                if (effect != null && effect.EffectSpec != null)
+        public bool HasTag(TagScriptableObject tagSO)
+        {
+            // find all tags from all effects
+            foreach (var effect in _appliedEffects)
+            {
+                if (effect.HasTag(tagSO)) return true;
+            }
+
+            return Owner.HasTag(tagSO);
+        }
+
+        public List<TagScriptableObject> GrantedTags
+        {
+            get
+            {
+                var tags = new List<TagScriptableObject>();
+                foreach (var effect in _appliedEffects)
                 {
-                    Owner.TagSystem.RemoveTags(effect.GrantedTags);
+                    tags.AddRange(effect.GrantedTags);
                 }
+
+                tags.AddRange(Owner.TagSystem.GrantedTags);
+                return tags;
             }
         }
 
@@ -225,6 +246,28 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem.Components
             }
 
             return true;
+        }
+
+        private void OnDestroy()
+        {
+            RemoveAllEffects();
+        }
+
+        private void RemoveAllEffects()
+        {
+            for (int i = _appliedEffects.Count - 1; i >= 0; i--)
+            {
+                RemoveEffectAtIndex(i);
+            }
+        }
+
+        private void RemoveEffectAtIndex(int index)
+        {
+            var effect = _appliedEffects[index];
+            _appliedEffects.RemoveAt(index);
+            if (effect == null || effect.EffectSpec == null) return;
+            Owner.TagSystem.RemoveTags(effect.GrantedTags);
+            effect.Release();
         }
     }
 }

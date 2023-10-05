@@ -1,8 +1,10 @@
-﻿using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
+﻿using System;
+using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
 using UnityEngine;
 
 namespace IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects.GameplayEffectActions
 {
+    [Serializable]
     public class InstantAction : IGameplayEffectAction
     {
         public InstantAction() { }

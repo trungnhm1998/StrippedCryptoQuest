@@ -18,7 +18,7 @@ namespace CryptoQuest.Battle.Commands
 
         public IEnumerator Execute()
         {
-            Debug.Log($"{_owner.name} casting {_selectedSkill.name} on {_owner.Targeting.Target.name}");
+            Debug.Log($"{_owner.DisplayName} casting {_selectedSkill.name} on {_owner.Targeting.Target.DisplayName}");
             var spec = _owner.AbilitySystem.GiveAbility<CastableAbilitySpec>(_selectedSkill);
             spec.Execute(_owner.Targeting.Target.AbilitySystem);
             yield break;

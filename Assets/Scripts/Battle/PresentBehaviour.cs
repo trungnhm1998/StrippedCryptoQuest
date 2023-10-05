@@ -24,8 +24,10 @@ namespace CryptoQuest.Battle
 
             foreach (var character in characters)
             {
+                yield return character.PreTurn();
                 character.UpdateTarget(_battleContext);
                 yield return character.ExecuteCommand();
+                yield return character.PostTurn();
             }
 
             ChangeAllEnemiesOpacity(1f);

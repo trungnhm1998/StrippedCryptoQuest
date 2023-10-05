@@ -46,7 +46,7 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem
             }
         }
 
-        private GameplayEffectSpec _effectSpec;
+        [SerializeField] private GameplayEffectSpec _effectSpec;
         public GameplayEffectSpec EffectSpec => _effectSpec;
 
         /// <summary>
@@ -150,5 +150,20 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem
             => _effectSpec != null && _effectSpec.IsValid() && _effectSpec.IsExpired == false && IsActive;
 
         public bool HasTag(TagScriptableObject tag) => _effectSpec.GrantedTags.Contains(tag);
+
+        /// <summary>
+        /// By default instant, duration and infinite effect can be applied to attribute system
+        ///
+        /// Periodic should only apply internally when the interval is reached
+        /// </summary>
+        /// <returns></returns>
+        public virtual bool CanApplyModifiersToAttributeSystem() => true;
+
+        public void Release()
+        {
+            OnRelease();
+        }
+
+        protected virtual void OnRelease() { }
     }
 }

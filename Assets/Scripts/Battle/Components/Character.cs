@@ -3,12 +3,15 @@ using System.Collections;
 using System.Collections.Generic;
 using CryptoQuest.Battle.Commands;
 using CryptoQuest.Character.Attributes;
+using CryptoQuest.Character.Tag;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
+using IndiGames.GameplayAbilitySystem.AttributeSystem;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.Components;
 using IndiGames.GameplayAbilitySystem.EffectSystem;
 using IndiGames.GameplayAbilitySystem.EffectSystem.Components;
 using IndiGames.GameplayAbilitySystem.TagSystem.ScriptableObjects;
 using UnityEngine;
+using AttributeScriptableObject = IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects.AttributeScriptableObject;
 
 namespace CryptoQuest.Battle.Components
 {
@@ -35,7 +38,7 @@ namespace CryptoQuest.Battle.Components
         {
             _targetComponent = GetComponent<ITargeting>();
             _gas = GetComponent<AbilitySystemBehaviour>();
-            _command = new NullCommand(this);
+            _command = NullCommand.Instance;
         }
 
         public void Init(Elemental element)
@@ -60,6 +63,7 @@ namespace CryptoQuest.Battle.Components
 
         public bool HasTag(TagScriptableObject tagSO) => _gas.TagSystem.HasTag(tagSO);
 
+        // TODO: Move to class CommandHandler, currently violate SRP
         private ICommand _command;
 
         public ICommand Command
@@ -84,13 +88,86 @@ namespace CryptoQuest.Battle.Components
 
         protected virtual IEnumerator OnPostExecuteCommand()
         {
-            _command = new NullCommand(this);
+            _command = NullCommand.Instance;
             yield return new WaitForSeconds(1f);
         }
 
         protected virtual IEnumerator OnPreExecuteCommand()
         {
             yield return new WaitForSeconds(1f);
+        }
+
+        public event Action OnTurnStarted;
+        /// <summary>
+        /// Update turn of effect turn base, apply effect present it
+        /// </summary>
+        public IEnumerator PreTurn()
+        {
+            _cache.Clear();
+            AbilitySystem.AttributeSystem.PostAttributeChange += CacheChange;
+            OnTurnStarted?.Invoke();
+            AbilitySystem.AttributeSystem.PostAttributeChange -= CacheChange;
+            yield return LogChanges();
+            yield return LogAbnormal();
+        }
+
+        private IEnumerator LogChanges()
+        {
+            while (_cache.Count > 0)
+            {
+                var info = _cache.Dequeue();
+                var attribute = info.Attribute;
+                var oldValue = info.OldValue;
+                var newValue = info.NewValue;
+                var delta = newValue.CurrentValue - oldValue.CurrentValue;
+                var deltaString = delta > 0 ? $"+{delta}" : $"{delta}";
+                var log = $"{attribute.name} {deltaString}";
+                Debug.Log(log);
+                yield return new WaitForSeconds(0.5f);
+            }
+        }
+
+        struct Info
+        {
+            public AttributeScriptableObject Attribute;
+            public AttributeValue OldValue;
+            public AttributeValue NewValue;
+        }
+
+        private readonly Queue<Info> _cache = new();
+
+        private void CacheChange(AttributeScriptableObject attribute, AttributeValue oldValue,
+            AttributeValue newValue)
+        {
+            _cache.Enqueue(new Info()
+            {
+                Attribute = attribute,
+                OldValue = oldValue,
+                NewValue = newValue
+            });
+        }
+
+        private IEnumerator LogAbnormal()
+        {
+            var tags = AbilitySystem.EffectSystem.GrantedTags;
+            bool hasAbnormal = false;
+            foreach (var tagDef in tags)
+            {
+                if (tagDef.IsChildOf(TagsDef.Abnormal) == false) continue;
+                hasAbnormal = true;
+                Debug.Log($"Abnormal: {tagDef.name}");
+                yield return new WaitForSeconds(0.5f);
+            }
+
+            if (hasAbnormal) _command = new SkipTurnCommand(this);
+        }
+
+        /// <summary>
+        /// Remove any effect that expired at the beginning of the turn
+        /// </summary>
+        public IEnumerator PostTurn()
+        {
+            yield break;
         }
 
         public abstract bool IsValid();
@@ -117,22 +194,6 @@ namespace CryptoQuest.Battle.Components
 
             component = (T)value;
             return true;
-        }
-    }
-
-    public class NullCommand : ICommand
-    {
-        private readonly Character _character;
-
-        public NullCommand(Character character)
-        {
-            _character = character;
-        }
-
-        public IEnumerator Execute()
-        {
-            Debug.LogWarning($"No command for {_character.gameObject.name}.");
-            yield break;
         }
     }
 }

@@ -105,7 +105,6 @@ namespace CryptoQuest.Character.Ability
         {
             ApplyCost();
 
-            // TODO: REFACTOR GAS
             var spec = (CQEffectSpec)Owner.MakeOutgoingSpec(_def.Effect);
             spec.Parameters = _def.Parameters.SkillParameters;
             foreach (var target in _targets)

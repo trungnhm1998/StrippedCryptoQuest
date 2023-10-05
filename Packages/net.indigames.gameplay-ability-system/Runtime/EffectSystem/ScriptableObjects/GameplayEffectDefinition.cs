@@ -29,7 +29,7 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects
         /// - <see cref="InfiniteAction"/>
         ///     Affect the attribute system until the effect is removed
         /// </summary>
-        [field: SerializeReference, ReferenceEnum]
+        [field: SerializeReference, SubclassSelector]
         public IGameplayEffectAction EffectAction { get; set; } = new DurationalAction();
 
         [field: SerializeField, Tooltip("What attribute to affect and how it affected")]

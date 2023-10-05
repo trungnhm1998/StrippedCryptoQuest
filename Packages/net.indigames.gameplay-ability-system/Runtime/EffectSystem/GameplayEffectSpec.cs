@@ -28,7 +28,7 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem
         public AbilitySystemBehaviour Target { get; set; }
 
         public EffectDetails EffectDefDetails { get; set; }
-        public TagScriptableObject[] GrantedTags { get; set; }
+        [field: SerializeField] public TagScriptableObject[] GrantedTags { get; set; }
         public EffectExecutionCalculationBase[] ExecutionCalculations { get; set; }
 
         public bool IsExpired { get; set; }
@@ -38,7 +38,7 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem
         /// <summary>
         /// Which Data/SO the effect is based on
         /// </summary>
-        public GameplayEffectDefinition Def { get; private set; }
+        [field: SerializeField] public GameplayEffectDefinition Def { get; private set; }
 
         public void InitEffect(GameplayEffectDefinition effectDef, AbilitySystemBehaviour source)
         {
