@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.Localization;
 
 namespace CryptoQuest.Battle.UI.CommandDetail
 {
@@ -7,6 +8,7 @@ namespace CryptoQuest.Battle.UI.CommandDetail
     public abstract class ButtonInfoBase
     {
         [field: SerializeField] public string Label { get; protected set; }
+        [field: SerializeField] public LocalizedString LocalizedLabel { get; protected set; }
         [field: SerializeField] public string Value { get; protected set; }
         [field: SerializeField] public bool IsInteractable { get; protected set; } = true;
 

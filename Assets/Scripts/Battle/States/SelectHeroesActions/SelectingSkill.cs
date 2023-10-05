@@ -22,6 +22,7 @@ namespace CryptoQuest.Battle.States.SelectHeroesActions
             _skillPresenter.SelectSingleHeroCallback = SelectHeroToCastSkillOn;
             _skillPresenter.SelectAllHeroCallback = SelectAllHeroToCastSkillOn;
             _skillPresenter.SelectAllEnemyCallback = SelectAllEnemyToCastSkillOn;
+            _skillPresenter.SelectEnemyGroupCallback = SelectEnemyGroupToCastSkillOn;
         }
 
         public override void OnExit()
@@ -61,6 +62,13 @@ namespace CryptoQuest.Battle.States.SelectHeroesActions
         
             var enemies = Fsm.EnemyPartyManager.Enemies.ToArray();
             CreateMultipleTargetCommand(skillUI, enemies);
+        }
+
+        private void SelectEnemyGroupToCastSkillOn(UISkill skillUI)
+        {
+            _skillPresenter.Interactable = false;
+            Debug.Log("SelectingSkill::SelectEnemyGroupToCastSkillOn");
+            Fsm.PushState(new SelectEnemyGroupToCastSkill(skillUI.Skill, Hero, Fsm));
         }
 
         private void CreateMultipleTargetCommand(UISkill skillUI, params Components.Character[] characters)

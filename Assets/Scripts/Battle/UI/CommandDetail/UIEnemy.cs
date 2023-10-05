@@ -33,12 +33,18 @@ namespace CryptoQuest.Battle.UI.CommandDetail
 
         private void SelectEnemy()
         {
-            _enemy.SetAlpha(1);
+            SetAlphaEnemy(1);
         }
 
         private void DeSelectEnemy()
         {
-            _enemy.SetAlpha(0.5f);
+            SetAlphaEnemy(0.5f);
+        }
+
+        private void SetAlphaEnemy(float alpha)
+        {
+            if (!_enemy.IsValid()) return;
+            _enemy.SetAlpha(alpha);
         }
 
         public void Show(EnemyBehaviour enemy)

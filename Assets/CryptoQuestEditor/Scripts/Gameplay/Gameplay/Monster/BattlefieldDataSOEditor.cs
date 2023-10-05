@@ -20,7 +20,7 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Monster
         public BattlefieldDataSOEditor()
         {
             CreateDataFolder = false;
-            DefaultStoragePath = "Assets/ScriptableObjects/Data/Battlefields";
+            DefaultStoragePath = "Assets/ScriptableObjects/Battlefields";
         }
 
         public override void ImportBatchData(string directory, Action<ScriptableObject> callback)
@@ -46,8 +46,8 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Monster
                 }
 
                 instance.Editor_SetId(dataModel.BattleFieldId);
-                var enemyGroup = dataModel.BattleEncounterSetups;
-                instance.Editor_SetEnemyGroups(enemyGroup.ToArray());
+                var enemyGroup = dataModel.BattleEnemyGroups;
+                instance.Editor_SetEnemyGroups(enemyGroup);
                 instance.name = name;
 
                 if (!AssetDatabase.Contains(instance))
@@ -89,10 +89,20 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Monster
             if (!isIdValid) return false;
             dataModel.BattleFieldId = fieldId;
             dataModel.BattleEncounterSetups = GetPartyMonsterIds(splitedData[1]);
+            dataModel.BattleEnemyGroups.Clear();
+            GetMonsterGroupData(dataModel, splitedData[2]);
+            GetMonsterGroupData(dataModel, splitedData[3]);
+            GetMonsterGroupData(dataModel, splitedData[4]);
+            GetMonsterGroupData(dataModel, splitedData[5]);
             return dataModel.BattleEncounterSetups.Count > 0;
         }
-      
-      
+
+        private void GetMonsterGroupData(BattleFieldDataModel dataModel, string group)
+        {
+            var groups = GetPartyMonsterIds(group);
+            if (groups.Count <= 0) return;
+            dataModel.BattleEnemyGroups.Add(groups.ToArray());
+        }
 
         #endregion
     }

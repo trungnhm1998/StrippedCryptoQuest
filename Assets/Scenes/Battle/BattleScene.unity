@@ -217,6 +217,17 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &403977525 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1843986069948517507, guid: d0eacd5a881766b4ca08ec4b770526a2, type: 3}
+  m_PrefabInstance: {fileID: 1415878836909279776}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb1951c97ae243b41b0a852eccf6459a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &447902171
 GameObject:
   m_ObjectHideFlags: 0
@@ -726,6 +737,7 @@ GameObject:
   - component: {fileID: 1388055420}
   - component: {fileID: 1388055419}
   - component: {fileID: 1388055418}
+  - component: {fileID: 1388055424}
   m_Layer: 0
   m_Name: NetworkManager
   m_TagString: Untagged
@@ -876,6 +888,48 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1388055424
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1388055417}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8aab4c8111b7c411b9b92cf3dbc5bd4e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dontDestroyOnLoad: 1
+  runInBackground: 1
+  autoStartServerBuild: 1
+  autoConnectClientBuild: 0
+  sendRate: 60
+  offlineScene: 
+  onlineScene: 
+  transport: {fileID: 0}
+  networkAddress: localhost
+  maxConnections: 100
+  disconnectInactiveConnections: 0
+  disconnectInactiveTimeout: 60
+  authenticator: {fileID: 0}
+  playerPrefab: {fileID: 0}
+  autoCreatePlayer: 1
+  playerSpawnMethod: 0
+  spawnPrefabs: []
+  snapshotSettings:
+    bufferTimeMultiplier: 2
+    bufferLimit: 32
+    catchupNegativeThreshold: -1
+    catchupPositiveThreshold: 1
+    catchupSpeed: 0.019999999552965164
+    slowdownSpeed: 0.03999999910593033
+    driftEmaDuration: 1
+    dynamicAdjustment: 1
+    dynamicAdjustmentTolerance: 1
+    deliveryTimeEmaDuration: 2
+  connectionQualityInterval: 3
+  timeInterpolationGui: 0
 --- !u!114 &1495758717 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3406164309647666005, guid: d0eacd5a881766b4ca08ec4b770526a2, type: 3}
@@ -990,11 +1044,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!224 &1734655234 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 3170776822661602867, guid: d0eacd5a881766b4ca08ec4b770526a2, type: 3}
-  m_PrefabInstance: {fileID: 1415878836909279776}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1766113292
 GameObject:
   m_ObjectHideFlags: 0
@@ -1694,6 +1743,7 @@ MonoBehaviour:
   _singleEnemyChannel: {fileID: 11400000, guid: 6cd304533bdab184cb6240d08cf35473, type: 2}
   _allHeroChannel: {fileID: 11400000, guid: 46a0f0c64b7c6eb4584f5549f7e03dbc, type: 2}
   _allEnemyChannel: {fileID: 11400000, guid: 19c9657f2e131e64284f1680adb801c6, type: 2}
+  _enemyGroupChannel: {fileID: 11400000, guid: 624a3a7057f6ef548a8bf1ae04a98d35, type: 2}
 --- !u!114 &7116505576077580202
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1707,8 +1757,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enemyPartyManager: {fileID: 7116505576077580196}
-  _groupContainer: {fileID: 1734655234}
-  _groupPrefab: {fileID: 768459220001107692, guid: 1eb7ebc4c015db847beb8bb26b476b88, type: 3}
+  _enemyGroupUI: {fileID: 403977525}
 --- !u!114 &8909492559710276275 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4666074599004791690, guid: f5fa023033362a04f99acf1098ae54bc, type: 3}

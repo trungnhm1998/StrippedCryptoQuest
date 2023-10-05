@@ -1,46 +1,67 @@
 ﻿using System;
+using CryptoQuest.Battle.Events;
 using CryptoQuest.Menu;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Localization.Components;
 using UnityEngine.Pool;
 
 namespace CryptoQuest.Battle.UI.CommandDetail
 {
     public class UICommandDetailButton : MonoBehaviour
     {
-        public static event Action<int> InspectingButton;
-
         [SerializeField] private TMP_Text _label;
+        [SerializeField] private LocalizeStringEvent _labelStringEvent;
         [SerializeField] private TMP_Text _value;
         [SerializeField] private MultiInputButton _button;
 
         private ButtonInfoBase _buttonInfo;
         private int _index;
 
-        private IObjectPool<UICommandDetailButton> _objectPool;
-        public IObjectPool<UICommandDetailButton> ObjectPool
-        {
-            set => _objectPool = value;
-        }
+        private SelectedDetailButtonEvent _selectedEvent;
+        private DeSelectedDetailButtonEvent _deSelectedEvent;
 
         public void Init(ButtonInfoBase info, int index)
         {
             _index = index;
-            _label.text = info.Label;
+            CreateEvents();
+
+            if (!string.IsNullOrEmpty(info.Label))
+            {
+                _label.text = info.Label;
+            }
+
+            if (info.LocalizedLabel != null)
+            {
+                _labelStringEvent.StringReference = info.LocalizedLabel;
+            }
             _value.text = info.Value;
             _buttonInfo = info;
             SetupButtonInfo();
         }
 
+        public void Select()
+        {
+            if (!_button.interactable) return;
+            _button.Select();
+        }
+
         private void OnEnable()
         {
             _button.Selected += OnSelectButton;
+            _button.DeSelected += OnDeSelectButton;
         }
 
         private void OnDisable()
         {
             _button.Selected -= OnSelectButton;
-            ReleaseToPool();
+            _button.DeSelected -= OnDeSelectButton;
+        }
+
+        private void CreateEvents()
+        {
+            _selectedEvent = new SelectedDetailButtonEvent() { Index = _index };
+            _deSelectedEvent = new DeSelectedDetailButtonEvent() { Index = _index };
         }
 
         private void SetupButtonInfo()
@@ -48,17 +69,18 @@ namespace CryptoQuest.Battle.UI.CommandDetail
             _button.interactable = _buttonInfo.IsInteractable; 
             _button.onClick.RemoveAllListeners();
             _button.onClick.AddListener(_buttonInfo.OnHandleClick);
-            if (_index == 0 && _button.interactable) _button.Select();
+            if (_index == 0)
+                Select();
         }
 
-        public void OnSelectButton()
+        private void OnSelectButton()
         {
-            InspectingButton?.Invoke(_index);
+            BattleEventBus.RaiseEvent<SelectedDetailButtonEvent>(_selectedEvent);
         }
 
-        private void ReleaseToPool()
+        private void OnDeSelectButton()
         {
-            _objectPool?.Release(this);
+            BattleEventBus.RaiseEvent<DeSelectedDetailButtonEvent>(_deSelectedEvent);
         }
     }
 }

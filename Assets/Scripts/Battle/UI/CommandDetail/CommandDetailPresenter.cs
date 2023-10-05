@@ -9,19 +9,9 @@ namespace CryptoQuest.Battle.UI.CommandDetail
 
         [SerializeField] private UICommandDetailPanel _commandDetailPanel;
 
-        private void OnEnable()
-        {
-            UICommandDetailButton.InspectingButton += InspectingButton;
-        }
-
-        private void OnDisable()
-        {
-            UICommandDetailButton.InspectingButton -= InspectingButton;
-        }
-
         public void ShowCommandDetail(ICommandDetailModel infos)
         {
-            _commandDetailPanel.ShowCommandDetail(infos.Infos);
+            _commandDetailPanel.ShowCommandDetail(infos);
         }
 
         private void InspectingButton(int index)

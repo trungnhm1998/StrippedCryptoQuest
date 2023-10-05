@@ -27,6 +27,9 @@ namespace CryptoQuest.Battle.UI.SelectSkill
         public SkillTargetTypeDelegate SelectAllEnemyCallback { get; set; }
         private void OnSelectAllEnemy(CastableAbility skill) => SelectAllEnemyCallback?.Invoke(_lastSelectedSkill);
 
+        public SkillTargetTypeDelegate SelectEnemyGroupCallback { get; set; }
+        private void OnSelectEnemyGroup(CastableAbility skill) => SelectEnemyGroupCallback?.Invoke(_lastSelectedSkill);
+
         [SerializeField] private AutoScroll _autoScroll;
         [SerializeField] private BattleInputSO _input;
         [SerializeField] private ScrollRect _skillList;
@@ -37,6 +40,7 @@ namespace CryptoQuest.Battle.UI.SelectSkill
         [SerializeField] private SkillTargetType _singleEnemyChannel;
         [SerializeField] private SkillTargetType _allHeroChannel;
         [SerializeField] private SkillTargetType _allEnemyChannel;
+        [SerializeField] private SkillTargetType _enemyGroupChannel;
 
         private HeroBehaviour _hero;
         private UISkill _lastSelectedSkill;
@@ -57,6 +61,7 @@ namespace CryptoQuest.Battle.UI.SelectSkill
             _singleEnemyChannel.EventRaised += OnSingleEnemy;
             _allHeroChannel.EventRaised += OnSelectAllHero;
             _allEnemyChannel.EventRaised += OnSelectAllEnemy;
+            _enemyGroupChannel.EventRaised += OnSelectEnemyGroup;
         }
 
         private void UnregisterEvents()
@@ -66,6 +71,7 @@ namespace CryptoQuest.Battle.UI.SelectSkill
             _singleEnemyChannel.EventRaised -= OnSingleEnemy;
             _allHeroChannel.EventRaised -= OnSelectAllHero;
             _allEnemyChannel.EventRaised -= OnSelectAllEnemy;
+            _enemyGroupChannel.EventRaised -= OnSelectEnemyGroup;
         }
 
         private void SelectFirstOrLastSelectedSkill()

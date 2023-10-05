@@ -1,77 +1,115 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using CryptoQuest.Battle.Components;
-using CryptoQuest.Character.Enemy;
-using DG.Tweening;
+﻿using System;
+using CryptoQuest.Battle.Events;
+using CryptoQuest.Battle.UI.CommandDetail;
+using TinyMessenger;
 using UnityEngine;
 
 namespace CryptoQuest.Battle.UI
 {
     public class EnemyGroupPresenter : MonoBehaviour
     {
-        [SerializeField] private EnemyPartyManager _enemyPartyManager;
-        [SerializeField] private Transform _groupContainer;
-        [SerializeField] private UIEnemyGroup _groupPrefab;
-        private readonly List<UIEnemyGroup> _groupsButton = new();
+        private const float SELECTED_ALPHA = 1f;
+        private const float DESELECTED_ALPHA = 0.5f;
 
-        public void Show(bool selectFirstGroup = false)
+        [SerializeField] private EnemyPartyManager _enemyPartyManager;
+        [SerializeField] private UICommandDetailPanel _enemyGroupUI;
+
+        private TinyMessageSubscriptionToken _selectedEventToken;
+        private TinyMessageSubscriptionToken _deSelectedEventToken;
+        private Action<EnemyGroup> _confirmedEnemyGroupCallback;
+
+        public void Show(bool interactable = false)
         {
-            DestroyAllChildren();
-            var groups = CreateGroups();
+            _selectedEventToken = BattleEventBus.SubscribeEvent<SelectedDetailButtonEvent>(OnSelectedGroup);
+            _deSelectedEventToken = BattleEventBus.SubscribeEvent<DeSelectedDetailButtonEvent>(OnDeSelectedGroup);
+
+            var groups = _enemyPartyManager.EnemyParty.EnemyGroups;
+            var model = new CommandDetailModel();
+
+            SetAllGroupAlpha(interactable ? DESELECTED_ALPHA : SELECTED_ALPHA);
 
             foreach (var group in groups)
             {
-                var uiGroup = Instantiate(_groupPrefab, _groupContainer);
-                uiGroup.Init(group);
-                _groupsButton.Add(uiGroup);
+                model.AddInfo(new EnemyGroupButtonInfo(group, OnConfirmGroup, interactable));
             }
+            _enemyGroupUI.ShowCommandDetail(model);
 
-            _groupContainer.gameObject.SetActive(true);
+            _enemyGroupUI.SetActiveContent(true);
 
-            if (selectFirstGroup)
-            {
-                DOVirtual.DelayedCall(0.5f, () => _groupsButton[0].Select());
-            }
         }
 
         public void Hide()
         {
-            _groupContainer.gameObject.SetActive(false);
+            SetAllGroupAlpha(SELECTED_ALPHA);
+            BattleEventBus.UnsubscribeEvent(_selectedEventToken);
+            BattleEventBus.UnsubscribeEvent(_deSelectedEventToken);
+            _enemyGroupUI.SetActiveContent(false);
         }
 
-        private void DestroyAllChildren()
+        public void RegisterSelectEnemyGroupCallback(Action<EnemyGroup> callback)
         {
-            foreach (var group in _groupsButton)
-            {
-                Destroy(group);
-            }
-
-            _groupsButton.Clear();
+            _confirmedEnemyGroupCallback = callback;
         }
 
-        private List<EnemyGroup> CreateGroups()
+        private void OnSelectedGroup(SelectedDetailButtonEvent eventObject)
         {
-            var enemies = _enemyPartyManager.Enemies;
-            var groups = new Dictionary<EnemyDef, EnemyGroup>();
+            var groups = _enemyPartyManager.EnemyParty.EnemyGroups;
+            var selectedGroup = groups[eventObject.Index];
+            SetEnemyGroupAlpha(selectedGroup, SELECTED_ALPHA);
+        }
 
-            foreach (var enemy in enemies)
+        private void OnDeSelectedGroup(DeSelectedDetailButtonEvent eventObject)
+        {
+            var groups = _enemyPartyManager.EnemyParty.EnemyGroups;
+            var selectedGroup = groups[eventObject.Index];
+            SetEnemyGroupAlpha(selectedGroup, DESELECTED_ALPHA);
+        }
+
+        private void SetEnemyGroupAlpha(EnemyGroup group, float alpha)
+        {
+            foreach (var enemy in group.Enemies)
             {
-                if (enemy.IsValid() == false) continue;
-                if (!groups.TryGetValue(enemy.Def, out var group))
-                {
-                    group = new EnemyGroup()
-                    {
-                        Def = enemy.Def,
-                        Enemies = new List<EnemyBehaviour>()
-                    };
-
-                    groups.Add(enemy.Def, group);
-                }
-
-                group.Enemies.Add(enemy);
+                if (!enemy.IsValid()) continue;
+                enemy.SetAlpha(alpha);
             }
+        }
 
-            return groups.Values.ToList();
+        private void SetAllGroupAlpha(float alpha)
+        {
+            var groups = _enemyPartyManager.EnemyParty.EnemyGroups;
+            foreach (var group in groups)
+            {
+                SetEnemyGroupAlpha(group, alpha);
+            }
+        }
+
+        private void OnConfirmGroup(EnemyGroup group)
+        {
+            _confirmedEnemyGroupCallback?.Invoke(group);
+        }
+    }
+    
+    [Serializable]
+    public class EnemyGroupButtonInfo : ButtonInfoBase
+    {
+        private EnemyGroup _enemyGroup;
+        private Action<EnemyGroup> _enemyGroupCallback;
+
+        public EnemyGroupButtonInfo(EnemyGroup enemyGroup, Action<EnemyGroup> enemyGroupCallback,
+            bool interactable) : base("", isInteractable: interactable)
+        {
+            _enemyGroup = enemyGroup;
+            LocalizedLabel = _enemyGroup.Def.Name;
+            if (_enemyGroup.Count > 1)
+            {
+                Value = $"x{_enemyGroup.Count.ToString()}";
+            }
+            _enemyGroupCallback = enemyGroupCallback;
+        }
+
+        public override void OnHandleClick()
+        {
+            _enemyGroupCallback?.Invoke(_enemyGroup);
         }
     }
 }

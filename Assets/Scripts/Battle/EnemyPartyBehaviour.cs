@@ -10,6 +10,8 @@ namespace CryptoQuest.Battle
         [SerializeField] private List<EnemyBehaviour> _enemies;
         public List<EnemyBehaviour> Enemies => _enemies;
 
+        public List<EnemyGroup> EnemyGroups { get; private set; } = new();
+
         private static readonly string[] Postfixes = { "A", "B", "C", "D" };
 
         private IGameObjectAlign<EnemyBehaviour> _enemyAlign = new EnemiesCenterAlign();
@@ -27,9 +29,17 @@ namespace CryptoQuest.Battle
                 if (enemySpec == null || enemySpec.IsValid() == false) continue;
                 dict.TryAdd(enemySpec.Data, 0);
                 _enemies[index].Init(enemySpec, Postfixes[dict[enemySpec.Data]++]);
+                AddEnemyToGroup(_enemies[index], enemySpec);
             }
 
             _enemyAlign?.Align(_enemies);
+        }
+
+        private void AddEnemyToGroup(EnemyBehaviour enemy, EnemySpec spec)
+        {
+            var group = EnemyGroups.Find(g => g.EnemySpecs.Contains(spec));
+            if (!group.IsValid()) return;
+            group.Enemies.Add(enemy);
         }
     }
 }

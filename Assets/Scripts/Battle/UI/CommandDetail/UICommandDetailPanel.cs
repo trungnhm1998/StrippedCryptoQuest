@@ -2,17 +2,21 @@ using System.Collections.Generic;
 using CryptoQuest.UI.Common;
 using UnityEngine;
 using UnityEngine.Pool;
+using UnityEngine.UI;
+using UnityEngine.UIElements;
 
 namespace CryptoQuest.Battle.UI.CommandDetail
 {
     public class UICommandDetailPanel : MonoBehaviour
     {
-
-        [SerializeField] private GameObject _scrollViewContent;
+        [SerializeField] private ScrollRect _scrollRect;
         [SerializeField] private ChildButtonsActivator _childButonsActivator;
         [SerializeField] private UICommandDetailButton _buttonPrefab;
+        [SerializeField] private bool _isOneTimeInit = true;
 
+        private UICommandDetailButton _firstButton;
         private IObjectPool<UICommandDetailButton> _buttonPool;
+        private List<UICommandDetailButton> _buttons = new();
 
         private void Awake()
         {
@@ -20,19 +24,29 @@ namespace CryptoQuest.Battle.UI.CommandDetail
                 OnRelease, OnDestroyPool);
         }
 
-        public void ShowCommandDetail(List<ButtonInfoBase> buttonInfos)
+        public void ShowCommandDetail(ICommandDetailModel model)
         {
             SetActiveContent(true);
+
+            if (!_isOneTimeInit || _scrollRect.content.childCount <= 0)
+            {
+                InitButtons(model);
+            }
+            
+            if (_firstButton != null) _firstButton.Select();
+            _childButonsActivator.CacheButtonTexts();
+        }
+
+        private void InitButtons(ICommandDetailModel model)
+        {
             ReleaseAllButton();
 
-            for (int i = 0; i < buttonInfos.Count; i++)
+            for (int i = 0; i < model.Infos.Count; i++)
             {
-                ButtonInfoBase info = buttonInfos[i];
+                ButtonInfoBase info = model.Infos[i];
                 UICommandDetailButton button = _buttonPool.Get();
                 button.Init(info, i);
             }
-
-            _childButonsActivator.CacheButtonTexts();
         }
 
         public void SetActiveButtons(bool isActive)
@@ -42,40 +56,41 @@ namespace CryptoQuest.Battle.UI.CommandDetail
 
         public void SetActiveContent(bool value)
         {
-            _scrollViewContent.SetActive(value);
+            _scrollRect.content.gameObject.SetActive(value);
         }
 
         private void ReleaseAllButton()
         {
-            foreach (Transform button in _scrollViewContent.transform)
+            foreach (var button in _buttons)
             {
-                // The button release from pool when being disable
-                button.gameObject.SetActive(false);
+                _buttonPool.Release(button);
             }
+            _buttons = new();
+            _firstButton = null;
         }
 
         private UICommandDetailButton OnCreate()
         {
-            var button = Instantiate(_buttonPrefab, _scrollViewContent.transform);
-            button.ObjectPool = _buttonPool;
+            var button = Instantiate(_buttonPrefab, _scrollRect.content.transform);
             return button;
         }
 
-        private void OnGet(UICommandDetailButton obj)
+        private void OnGet(UICommandDetailButton button)
         {
-            // To make sure that buttons is in order
-            obj.transform.SetAsLastSibling();
-            obj.gameObject.SetActive(true);
+            if (_firstButton == null) _firstButton = button;
+            button.transform.SetAsLastSibling();
+            button.gameObject.SetActive(true);
+            _buttons.Add(button);
         }
 
-        private void OnRelease(UICommandDetailButton obj)
+        private void OnRelease(UICommandDetailButton button)
         {
-            obj.gameObject.SetActive(false);
+            button.gameObject.SetActive(false);
         }
 
-        private void OnDestroyPool(UICommandDetailButton obj)
+        private void OnDestroyPool(UICommandDetailButton button)
         {
-            Destroy(obj.gameObject);
+            Destroy(button.gameObject);
         }
     }
 }

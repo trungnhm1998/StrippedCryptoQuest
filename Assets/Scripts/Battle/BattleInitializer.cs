@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using CryptoQuest.Battle.UI.CommandDetail;
 using CryptoQuest.Character.Enemy;
 using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects;
@@ -32,10 +33,22 @@ namespace CryptoQuest.Battle
         private IEnumerator LoadEnemiesAssets()
         {
             _loadedEnemies.Clear();
-            var enemyParty = _bus.CurrentBattlefield;
-            for (var index = 0; index < enemyParty.EnemyIds.Length; index++)
+            var enemyGroups = _bus.CurrentBattlefield.EnemyGroups;
+            for (var index = 0; index < enemyGroups.Length; index++)
             {
-                var enemyId = enemyParty.EnemyIds[index];
+                var enemyGroupIds = enemyGroups[index];
+                yield return LoadEnemyGroupsAssets(enemyGroupIds.EnemyIds);
+            }
+        }
+
+        private IEnumerator LoadEnemyGroupsAssets(IList<int> enemyIds)
+        {
+            var enemyGroup = new EnemyGroup();
+            enemyGroup.Init();
+
+            for (var index = 0; index < enemyIds.Count; index++)
+            {
+                var enemyId = enemyIds[index];
                 yield return _enemyDatabase.LoadDataById(enemyId);
                 var def = _enemyDatabase.GetDataById(enemyId);
                 if (def == null)
@@ -44,9 +57,13 @@ namespace CryptoQuest.Battle
                     Debug.LogError($"failed to load enemy data with id {enemyId}, skipping...");
                     continue;
                 }
-
-                _loadedEnemies.Add(def.CreateCharacterSpec()); // TODO: UNLOAD ENEMY DATA
+                enemyGroup.Def = def;
+                var spec = def.CreateCharacterSpec();
+                enemyGroup.EnemySpecs.Add(spec);
+                _loadedEnemies.Add(spec); // TODO: UNLOAD ENEMY DATA
             }
+            
+            _enemyPartyBehaviour.EnemyGroups.Add(enemyGroup);
         }
     }
 }
