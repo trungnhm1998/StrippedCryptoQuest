@@ -1,11 +1,9 @@
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
-using CryptoQuest.Networking;
 using CryptoQuest.System;
 using CryptoQuest.UI.Menu.Panels.DimensionBox.Interfaces;
 using Newtonsoft.Json;
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Networking;
@@ -25,6 +23,8 @@ namespace CryptoQuest.Networking.Menu.DimensionBox
     public class MetadAPI : MonoBehaviour, IMetadModel
     {
         public event UnityAction<float, float> CurrencyUpdated;
+        public event UnityAction OnSendSuccess;
+        public event UnityAction OnSendFailed;
 
         private IRestAPINetworkController _restAPINetworkController;
         private ICurrenciesController _currenciesController;
@@ -41,41 +41,62 @@ namespace CryptoQuest.Networking.Menu.DimensionBox
         {
             _currenciesController = ServiceProvider.GetService<ICurrenciesController>();
             _restAPINetworkController = ServiceProvider.GetService<IRestAPINetworkController>();
-            _restAPINetworkController.Get(URL_LOAD_METAD, OnSuccess, OnFail);
+            _restAPINetworkController.Get(URL_LOAD_METAD, OnLoadDataSuccess, OnLoadDataFail);
             yield return null;
         }
 
-        public void CoTransferDiamondToMeta(float value)
+        public void TransferDiamondToMetad(float value)
         {
-            CoTransferMetad(URL_TRANSFER_TO_METAD, value);
-        }    
+            Debug.Log("MetadAPI Execute transfer diamond to metad");
+            TransferMetad(URL_TRANSFER_TO_METAD, value);
+        }
 
-        public void CoTransferMetadToDiamond(float value)
+        public void TransferMetadToDiamond(float value)
         {
-            CoTransferMetad(URL_TRANSFER_TO_DIAMOND, value);
-        }    
+            Debug.Log("MetadAPI Execute transfer metad to diamond");
+            TransferMetad(URL_TRANSFER_TO_DIAMOND, value);
+        }
 
-        private void CoTransferMetad(string url, float value)
+        private void TransferMetad(string url, float value)
         {
             var payload = new MetadPayload(value);
 
-            _restAPINetworkController.Post(url, JsonConvert.SerializeObject(payload), OnSuccess, OnFail);
-        }    
-        private void OnSuccess(UnityWebRequest request)
-        {
-            Debug.Log($"Dimention::LoadData success : {request.downloadHandler.text}");
-            var data = JsonConvert.DeserializeObject<MetadResponseData>(request.downloadHandler.text);
-            WebMetad = data.Data.Metad;
-            _currenciesController.Wallet.Diamond.SetCurrencyAmount(data.Diamond);
-            CurrencyUpdated?.Invoke(IngameMetad, WebMetad);
+            _restAPINetworkController.Post(url, JsonConvert.SerializeObject(payload), OnSendWalletSuccess, OnSendWalletFailed);
         }
 
-        private void OnFail(Exception error)
+        private void OnLoadDataSuccess(UnityWebRequest request)
+        {
+            Debug.Log($"Dimention::LoadData success : {request.downloadHandler.text}");
+            UpdateCurrency(request.downloadHandler.text);
+        }
+
+        private void OnLoadDataFail(Exception error)
         {
             Debug.Log($"Dimention::LoadData fail : {error.Message}");
         }
 
+        private void OnSendWalletSuccess(UnityWebRequest request)
+        {
+            Debug.Log($"Dimention::SendWallet success : {request.downloadHandler.text}");
+            UpdateCurrency(request.downloadHandler.text);
+            OnSendSuccess?.Invoke();
+        }
+
+        private void OnSendWalletFailed(Exception exception)
+        {
+            Debug.Log($"Dimention::LoadData fail : {exception.Message}");
+            OnSendFailed?.Invoke();
+        }
+
         #endregion
+
+        private void UpdateCurrency(string dataJson)
+        {
+            var data = JsonConvert.DeserializeObject<MetadResponseData>(dataJson);
+            WebMetad = data.Data.Metad;
+            _currenciesController.Wallet.Diamond.SetCurrencyAmount(data.Diamond);
+            CurrencyUpdated?.Invoke(IngameMetad, WebMetad);
+        }
 
         public float GetIngameMetad()
         {
@@ -85,21 +106,6 @@ namespace CryptoQuest.Networking.Menu.DimensionBox
         public float GetWebMetad()
         {
             return WebMetad;
-        }
-
-        public void UpdateCurrency(float inputValue, bool isIngameWallet)
-        {
-            if (isIngameWallet)
-            {
-                WebMetad += inputValue;
-                _currenciesController.Wallet.Diamond.SetCurrencyAmount(_currenciesController.Wallet.Diamond.Amount - inputValue);
-            }
-            else
-            {
-                WebMetad -= inputValue;
-                _currenciesController.Wallet.Diamond.SetCurrencyAmount(_currenciesController.Wallet.Diamond.Amount + inputValue);
-            }
-            CurrencyUpdated?.Invoke(IngameMetad, WebMetad);
         }
     }
 }

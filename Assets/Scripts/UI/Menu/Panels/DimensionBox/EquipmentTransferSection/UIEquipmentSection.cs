@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Localization;
 
 namespace CryptoQuest.UI.Menu.Panels.DimensionBox.EquipmentTransferSection
 {
@@ -8,6 +9,7 @@ namespace CryptoQuest.UI.Menu.Panels.DimensionBox.EquipmentTransferSection
         public static event UnityAction InspectItemEvent;
         public event UnityAction<bool> SendingPhaseEvent;
 
+        [SerializeField] protected LocalizedString _message;
         [SerializeField] private UnityEvent EnterTransferSectionEvent;
         [SerializeField] private UnityEvent ExitTransferSectionEvent;
         [SerializeField] private UnityEvent ResetTransferEvent;
@@ -44,6 +46,7 @@ namespace CryptoQuest.UI.Menu.Panels.DimensionBox.EquipmentTransferSection
         public override void SendItems()
         {
             base.SendItems();
+            _yesNoDialogEventSO.SetMessage(_message);
             SendingPhaseEvent?.Invoke(true);
         }
 

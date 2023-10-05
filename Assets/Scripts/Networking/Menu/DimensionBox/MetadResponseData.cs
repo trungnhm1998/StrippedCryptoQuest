@@ -28,7 +28,7 @@ namespace CryptoQuest.Networking.Menu.DimensionBox
         public int Gold { get; set; }
 
         [JsonProperty("diamond")]
-        public int Diamond { get; set; }
+        public float Diamond { get; set; }
 
         [JsonProperty("soul")]
         public int Soul { get; set; }

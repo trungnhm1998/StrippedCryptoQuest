@@ -9,6 +9,9 @@ namespace CryptoQuest.UI.Menu.Panels.DimensionBox.MetadTransferSection
     public class MockupMetadModel : MonoBehaviour, IMetadModel
     {
         public event UnityAction<float, float> CurrencyUpdated;
+        public event UnityAction OnSendSuccess;
+        public event UnityAction OnSendFailed;
+
         [SerializeField] private WalletSO _wallet;
         [SerializeField] private float WebMetad;
         public float IngameMetad => _wallet.Diamond.Amount;

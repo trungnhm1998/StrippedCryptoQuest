@@ -1,7 +1,7 @@
+using CryptoQuest.UI.Menu.Panels.DimensionBox.Interfaces;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.Localization;
 using UnityEngine.UI;
 
@@ -9,16 +9,19 @@ namespace CryptoQuest.UI.Menu.Panels.DimensionBox.MetadTransferSection
 {
     public class UIMetadSection : UITransferSection
     {
-        [SerializeField] private UnityEvent<bool> _confirmClickedEvent;
-        [SerializeField] private UnityEvent<float, bool> _inputValueEvent;
         [SerializeField] private LocalizedString _transferMessageSuccess;
         [SerializeField] private LocalizedString _transferMessageFail;
         [SerializeField] private Button _defaultSelection;
         [SerializeField] private List<UIWalletButtons> _walletButtons;
         [SerializeField] private TMP_InputField _inputField;
-        private bool _isSuccessTransfer;
         private bool _isSelectedButton;
-        private EWalletType _walletType;
+        private UIWalletButtons _currentWallet;
+        private IMetadModel _model;
+
+        private void Awake()
+        {
+            _model = GetComponent<IMetadModel>();
+        }
 
         public override void EnterTransferSection()
         {
@@ -35,6 +38,9 @@ namespace CryptoQuest.UI.Menu.Panels.DimensionBox.MetadTransferSection
 
         private void SubscribeButtonEvents()
         {
+            _model.OnSendSuccess += NotifySuccess;
+            _model.OnSendFailed += NotifyFailed;
+
             foreach (var button in _walletButtons)
             {
                 button.SelectedEvent += OpenTab;
@@ -43,6 +49,9 @@ namespace CryptoQuest.UI.Menu.Panels.DimensionBox.MetadTransferSection
 
         private void UnsubscribeEvents()
         {
+            _model.OnSendSuccess -= NotifySuccess;
+            _model.OnSendFailed -= NotifyFailed;
+
             foreach (var button in _walletButtons)
             {
                 button.SelectedEvent -= OpenTab;
@@ -63,20 +72,15 @@ namespace CryptoQuest.UI.Menu.Panels.DimensionBox.MetadTransferSection
             if (!_isSelectedButton) return;
 
             base.SendItems();
-            SubmitSendMetad(_inputField.text);
+            _yesNoDialogEventSO.SetMessage(_currentWallet.SendingMessage);
             SetActiveAllButton(false);
-        }
-
-        public void ValidateTransferMetad(bool isSuccess)
-        {
-            _isSuccessTransfer = isSuccess;
-            _yesNoDialogEventSO.SetMessage(_message = isSuccess == true ? _transferMessageSuccess : _transferMessageFail);
         }
 
         protected override void YesButtonPressed()
         {
             base.YesButtonPressed();
-            _confirmClickedEvent?.Invoke(_isSuccessTransfer);
+            float quantityInput = float.Parse(_inputField.text);
+            _currentWallet.Send(quantityInput);
             ResetTransfer();
         }
 
@@ -91,18 +95,12 @@ namespace CryptoQuest.UI.Menu.Panels.DimensionBox.MetadTransferSection
             InitMetadTransferSection();
         }
 
-        private void SubmitSendMetad(string input)
-        {
-            float quantityMetadInput = float.Parse(input);
-            _inputValueEvent.Invoke(quantityMetadInput, _walletType == EWalletType.IngameWallet);
-        }
-
         private void OpenTab(UIWalletButtons button)
         {
+            _currentWallet = button;
             _isSelectedButton = true;
             _inputField.Select();
-            button.SetHighlight(true);
-            _walletType = button.WalletType;
+            _currentWallet.SetHighlight(true);
         }
 
         private void SetActiveAllButton(bool isActive)
@@ -119,6 +117,16 @@ namespace CryptoQuest.UI.Menu.Panels.DimensionBox.MetadTransferSection
             {
                 button.SetHighlight(false);
             }
+        }
+
+        private void NotifySuccess()
+        {
+            //TODO Nofity when success
+        }
+
+        private void NotifyFailed()
+        {
+            //TODO Notifi when fail
         }
     }
 }

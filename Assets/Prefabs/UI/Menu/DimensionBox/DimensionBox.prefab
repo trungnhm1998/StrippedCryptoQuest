@@ -933,6 +933,14 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -35
       objectReference: {fileID: 0}
+    - target: {fileID: 64577036535574209, guid: 9eb65c5b2c4c3e44889984f316f79b4a, type: 3}
+      propertyPath: _walletButtons.Array.data[0]
+      value: 
+      objectReference: {fileID: 5641068223625997733}
+    - target: {fileID: 64577036535574209, guid: 9eb65c5b2c4c3e44889984f316f79b4a, type: 3}
+      propertyPath: _walletButtons.Array.data[1]
+      value: 
+      objectReference: {fileID: 8954887910962170023}
     - target: {fileID: 136271343719424614, guid: 9eb65c5b2c4c3e44889984f316f79b4a, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -1421,6 +1429,19 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.x
       value: 20.71
       objectReference: {fileID: 0}
+    - target: {fileID: 4356071680712779565, guid: 9eb65c5b2c4c3e44889984f316f79b4a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 8954887910962170023}
+    - target: {fileID: 4356071680712779565, guid: 9eb65c5b2c4c3e44889984f316f79b4a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnClicked
+      objectReference: {fileID: 0}
+    - target: {fileID: 4356071680712779565, guid: 9eb65c5b2c4c3e44889984f316f79b4a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: CryptoQuest.UI.Menu.Panels.DimensionBox.MetadTransferSection.UIWalletButtons,
+        indi-games.crypto-quest
+      objectReference: {fileID: 0}
     - target: {fileID: 4610819415806281277, guid: 9eb65c5b2c4c3e44889984f316f79b4a, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1
@@ -1501,6 +1522,14 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -41.5
       objectReference: {fileID: 0}
+    - target: {fileID: 5204880778046232318, guid: 9eb65c5b2c4c3e44889984f316f79b4a, type: 3}
+      propertyPath: _metadAPI
+      value: 
+      objectReference: {fileID: 4385499587487368502}
+    - target: {fileID: 5204880778046232318, guid: 9eb65c5b2c4c3e44889984f316f79b4a, type: 3}
+      propertyPath: _arrowSelected
+      value: 
+      objectReference: {fileID: 82494257605340337}
     - target: {fileID: 5264099611168217305, guid: 9eb65c5b2c4c3e44889984f316f79b4a, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1
@@ -1536,6 +1565,19 @@ PrefabInstance:
     - target: {fileID: 5697549040490876783, guid: 9eb65c5b2c4c3e44889984f316f79b4a, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: 20.595001
+      objectReference: {fileID: 0}
+    - target: {fileID: 5963043118915654714, guid: 9eb65c5b2c4c3e44889984f316f79b4a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 5641068223625997733}
+    - target: {fileID: 5963043118915654714, guid: 9eb65c5b2c4c3e44889984f316f79b4a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnClicked
+      objectReference: {fileID: 0}
+    - target: {fileID: 5963043118915654714, guid: 9eb65c5b2c4c3e44889984f316f79b4a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: CryptoQuest.UI.Menu.Panels.DimensionBox.MetadTransferSection.UIWalletButtons,
+        indi-games.crypto-quest
       objectReference: {fileID: 0}
     - target: {fileID: 6099289583815436419, guid: 9eb65c5b2c4c3e44889984f316f79b4a, type: 3}
       propertyPath: m_SizeDelta.x
@@ -1677,11 +1719,25 @@ PrefabInstance:
       propertyPath: m_SizeDelta.x
       value: 60.489998
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2776591761726531049, guid: 9eb65c5b2c4c3e44889984f316f79b4a, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 9183570798725599518, guid: 9eb65c5b2c4c3e44889984f316f79b4a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8954887910962170023}
   m_SourcePrefab: {fileID: 100100000, guid: 9eb65c5b2c4c3e44889984f316f79b4a, type: 3}
+--- !u!1 &82494257605340337 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 529030860710582250, guid: 9eb65c5b2c4c3e44889984f316f79b4a, type: 3}
+  m_PrefabInstance: {fileID: 464551173950339931}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &432009673130255297 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 255759970631080090, guid: 9eb65c5b2c4c3e44889984f316f79b4a, type: 3}
+  m_PrefabInstance: {fileID: 464551173950339931}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &474855622254613914 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 64577036535574209, guid: 9eb65c5b2c4c3e44889984f316f79b4a, type: 3}
@@ -1698,6 +1754,77 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 136271343719424614, guid: 9eb65c5b2c4c3e44889984f316f79b4a, type: 3}
   m_PrefabInstance: {fileID: 464551173950339931}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &4049408414396493734 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4485595860479530237, guid: 9eb65c5b2c4c3e44889984f316f79b4a, type: 3}
+  m_PrefabInstance: {fileID: 464551173950339931}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &4179774529067474038 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4356071680712779565, guid: 9eb65c5b2c4c3e44889984f316f79b4a, type: 3}
+  m_PrefabInstance: {fileID: 464551173950339931}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8719235135640988229}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &4385499587487368502 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4228324210021400173, guid: 9eb65c5b2c4c3e44889984f316f79b4a, type: 3}
+  m_PrefabInstance: {fileID: 464551173950339931}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a555bf166d74b5459584e081a30b3e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &5641068223625997733 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5204880778046232318, guid: 9eb65c5b2c4c3e44889984f316f79b4a, type: 3}
+  m_PrefabInstance: {fileID: 464551173950339931}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c658b0a29ce73d54a8d639b62fd415d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &8719235135640988229 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9183570798725599518, guid: 9eb65c5b2c4c3e44889984f316f79b4a, type: 3}
+  m_PrefabInstance: {fileID: 464551173950339931}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &8954887910962170023
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8719235135640988229}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7c05cba00510a7458407e4e5fdd532d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _selectedBackground: {fileID: 432009673130255297}
+  _arrowSelected: {fileID: 4049408414396493734}
+  _metadAPI: {fileID: 4385499587487368502}
+  <SendingMessage>k__BackingField:
+    m_TableReference:
+      m_TableCollectionName: GUID:eb6ce0c7cd5c2444c9d3345957efb3cb
+    m_TableEntryReference:
+      m_KeyId: 29744238375903232
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  <Button>k__BackingField: {fileID: 4179774529067474038}
+  references:
+    version: 2
+    RefIds: []
 --- !u!1001 &1156363454433221600
 PrefabInstance:
   m_ObjectHideFlags: 0

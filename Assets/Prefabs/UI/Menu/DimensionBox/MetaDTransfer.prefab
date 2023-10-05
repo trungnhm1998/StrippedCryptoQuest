@@ -92,47 +92,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _yesNoDialogEventSO: {fileID: 11400000, guid: c437779d68d43a547b9ce625c9a4bd65, type: 2}
   _contents: {fileID: 6518553972692849377}
-  _message:
-    m_TableReference:
-      m_TableCollectionName: GUID:eb6ce0c7cd5c2444c9d3345957efb3cb
-    m_TableEntryReference:
-      m_KeyId: 29744238375903232
-      m_Key: 
-    m_FallbackState: 0
-    m_WaitForCompletion: 0
-    m_LocalVariables: []
-  _confirmClickedEvent:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 4379700191915731829}
-        m_TargetAssemblyTypeName: CryptoQuest.UI.Menu.Panels.DimensionBox.MetadSectionPresenter,
-          indi-games.crypto-quest
-        m_MethodName: SetCurrency
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  _inputValueEvent:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 4379700191915731829}
-        m_TargetAssemblyTypeName: CryptoQuest.UI.Menu.Panels.DimensionBox.MetadSectionPresenter,
-          indi-games.crypto-quest
-        m_MethodName: CheckTransferStatus
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
   _transferMessageSuccess:
     m_TableReference:
       m_TableCollectionName: GUID:eb6ce0c7cd5c2444c9d3345957efb3cb
@@ -153,8 +112,8 @@ MonoBehaviour:
     m_LocalVariables: []
   _defaultSelection: {fileID: 5963043118915654714}
   _walletButtons:
-  - {fileID: 2697688361725210407}
-  - {fileID: 5459208578178882608}
+  - {fileID: 0}
+  - {fileID: 0}
   _inputField: {fileID: 7505862495176802867}
   references:
     version: 2
@@ -200,9 +159,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a555bf166d74b5459584e081a30b3e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _environmentSO: {fileID: 11400000, guid: 044bb9ac0c90ea6478ea806187957cac, type: 2}
-  _authorizationSO: {fileID: 11400000, guid: 438e69365b259f948bd642f6d2b7a18b, type: 2}
-  _wallet: {fileID: 11400000, guid: e349636f15671994ba195728c42a551b, type: 2}
 --- !u!1 &7670315405103401197
 GameObject:
   m_ObjectHideFlags: 0
@@ -1105,28 +1061,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a866879b1fabb254aa888821d0e4c4d2, type: 3}
---- !u!114 &2697688361725210407 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4086353919434028201, guid: a866879b1fabb254aa888821d0e4c4d2, type: 3}
-  m_PrefabInstance: {fileID: 2145323626825898894}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: baf3da89bb02ab14098e4d19a1ab7c91, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &5459208578178882608 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6198845621519763390, guid: a866879b1fabb254aa888821d0e4c4d2, type: 3}
-  m_PrefabInstance: {fileID: 2145323626825898894}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: baf3da89bb02ab14098e4d19a1ab7c91, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &5489823011685335059 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5902667192602778525, guid: a866879b1fabb254aa888821d0e4c4d2, type: 3}

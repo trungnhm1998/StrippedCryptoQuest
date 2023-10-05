@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 1361263854349206807}
   - component: {fileID: 5217898989891288457}
   - component: {fileID: 2618004141902186495}
-  - component: {fileID: 3822896895794978706}
   - component: {fileID: 4809080391754687631}
+  - component: {fileID: 6360989505313302091}
   m_Layer: 5
   m_Name: WalletSelection
   m_TagString: Untagged
@@ -81,21 +81,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &3822896895794978706
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 125029606945395388}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: baf3da89bb02ab14098e4d19a1ab7c91, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _selectedBackground: {fileID: 9025791349217647416}
-  _arrowSelected: {fileID: 0}
-  <WalletType>k__BackingField: 0
 --- !u!114 &4809080391754687631
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -140,8 +125,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3822896895794978706}
-        m_TargetAssemblyTypeName: CryptoQuest.UI.Menu.Panels.DimensionBox.UIWalletButtons,
+      - m_Target: {fileID: 6360989505313302091}
+        m_TargetAssemblyTypeName: CryptoQuest.UI.Menu.Panels.DimensionBox.MetadTransferSection.UIWalletButtons,
           indi-games.crypto-quest
         m_MethodName: OnClicked
         m_Mode: 1
@@ -153,6 +138,33 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &6360989505313302091
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 125029606945395388}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c658b0a29ce73d54a8d639b62fd415d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _selectedBackground: {fileID: 9025791349217647416}
+  _arrowSelected: {fileID: 0}
+  <SendingMessage>k__BackingField:
+    m_TableReference:
+      m_TableCollectionName: GUID:eb6ce0c7cd5c2444c9d3345957efb3cb
+    m_TableEntryReference:
+      m_KeyId: 29744238375903232
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  <Button>k__BackingField: {fileID: 4809080391754687631}
+  references:
+    version: 2
+    RefIds: []
 --- !u!1 &399681933951199024
 GameObject:
   m_ObjectHideFlags: 0

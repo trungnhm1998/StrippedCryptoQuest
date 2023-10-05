@@ -1,24 +1,24 @@
 using System;
 using CryptoQuest.Menu;
+using CryptoQuest.Networking.Menu.DimensionBox;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Localization;
+using UnityEngine.Networking;
 using UnityEngine.UI;
 
 namespace CryptoQuest.UI.Menu.Panels.DimensionBox.MetadTransferSection
 {
-    public enum EWalletType
-    {
-        IngameWallet = 0,
-        WebWallet = 1,
-    }
     [RequireComponent(typeof(Button))]
-    public class UIWalletButtons : MonoBehaviour
+    public abstract class UIWalletButtons : MonoBehaviour
     {
         public event UnityAction<UIWalletButtons> SelectedEvent;
         [SerializeField] private GameObject _selectedBackground;
         [SerializeField] private GameObject _arrowSelected;
+        [SerializeField] protected MetadAPI _metadAPI;
+        [field: SerializeField] public LocalizedString SendingMessage { get; private set; }
+
         [field: SerializeField] public Button Button { get; private set; }
-        [field: SerializeField] public EWalletType WalletType { get; private set; }
 
         private void OnValidate()
         {
@@ -38,5 +38,7 @@ namespace CryptoQuest.UI.Menu.Panels.DimensionBox.MetadTransferSection
             _selectedBackground.SetActive(isActive);
             _arrowSelected.SetActive(isActive);
         }
+
+        public abstract void Send(float value);
     }
 }

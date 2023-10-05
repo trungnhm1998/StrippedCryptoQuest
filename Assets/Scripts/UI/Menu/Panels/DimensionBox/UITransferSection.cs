@@ -9,7 +9,6 @@ namespace CryptoQuest.UI.Menu.Panels.DimensionBox
     {
         [SerializeField] protected YesNoDialogEventChannelSO _yesNoDialogEventSO;
         [SerializeField] private GameObject _contents;
-        [SerializeField] protected LocalizedString _message;
 
         public virtual void EnterTransferSection()
         {
@@ -26,13 +25,10 @@ namespace CryptoQuest.UI.Menu.Panels.DimensionBox
         public virtual void SendItems()
         {
             _yesNoDialogEventSO.Show(YesButtonPressed, NoButtonPressed);
-            _yesNoDialogEventSO.SetMessage(_message);
         }
 
         protected virtual void YesButtonPressed()
         {
-            // Call API to send items
-            Debug.Log($"UITransferSection::Confirm send DBox items");
             _yesNoDialogEventSO.Hide();
         }
 
