@@ -53,10 +53,6 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
         {
             ResetEquipmentsUI();
             _tooltip = TooltipFactory.Instance.GetTooltip(ETooltipType.Equipment);
-            _tooltip.WithBoderPointer(true)
-                .WithLocalPosition(Vector3.zero)
-                .WithScale(Vector3.one)
-                .WithRangePivot(_minPivotTooltip, _maxPivotTooltip);
         }
 
 #if UNITY_EDITOR
@@ -65,6 +61,11 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
 
         private void OnEnable()
         {
+            _tooltip.WithBoderPointer(true)
+                .WithLocalPosition(Vector3.zero)
+                .WithScale(Vector3.one)
+                .WithRangePivot(_minPivotTooltip, _maxPivotTooltip);
+
             _characterPanel.InspectingCharacter += UpdateCharacterEquipments;
             foreach (var equipmentSlot in _equipmentSlots)
                 equipmentSlot.ShowEquipmentsInventoryWithType += ShowEquipmentsInventoryWithType;

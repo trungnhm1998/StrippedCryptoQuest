@@ -50,7 +50,7 @@ namespace CryptoQuest.Battle.Components
         private IEnumerator InitEquipments()
         {
             var equipmentDefProvider = ServiceProvider.GetService<IEquipmentDefProvider>();
-            foreach (var equipmentSlot in _equipments.Slots)
+            foreach (var equipmentSlot in _equipments.Slots.ToList())
             {
                 if (equipmentSlot.IsValid())
                     yield return equipmentDefProvider.Load(equipmentSlot.Equipment);

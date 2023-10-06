@@ -18,7 +18,8 @@ namespace CryptoQuest.Shop.UI.Item
         private void SetupTooltip(ETooltipType type)
         {
             _tooltip = TooltipFactory.Instance.GetTooltip(type);
-            _tooltip.WithPivot(_tooltipPivot)
+            _tooltip.WithContentAwareness(null)
+                .WithPivot(_tooltipPivot)
                 .WithLocalPosition(_tooltipPosition.localPosition)
                 .WithScale(_tooltipPosition.localScale)
                 .WithBoderPointer(_hasPointerBoder)
