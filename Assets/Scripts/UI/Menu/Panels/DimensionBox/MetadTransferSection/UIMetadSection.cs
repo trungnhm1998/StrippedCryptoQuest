@@ -1,4 +1,7 @@
+using CryptoQuest.Events.UI.Dialogs;
+using CryptoQuest.UI.Dialogs.OneButtonDialog;
 using CryptoQuest.UI.Menu.Panels.DimensionBox.Interfaces;
+using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -17,10 +20,26 @@ namespace CryptoQuest.UI.Menu.Panels.DimensionBox.MetadTransferSection
         private bool _isSelectedButton;
         private UIWalletButtons _currentWallet;
         private IMetadModel _model;
+        private UIOneButtonDialog _resultDialog;
 
         private void Awake()
         {
             _model = GetComponent<IMetadModel>();
+        }
+
+        private void OnEnable()
+        {
+            GenericOneButtonDialogController.Instance.CreateDialog(OnDialogCreate);
+        }
+
+        private void OnDisable()
+        {
+            _resultDialog?.Release();
+        }
+
+        private void OnDialogCreate(UIOneButtonDialog dialog)
+        {
+            _resultDialog = dialog;
         }
 
         public override void EnterTransferSection()
@@ -121,12 +140,22 @@ namespace CryptoQuest.UI.Menu.Panels.DimensionBox.MetadTransferSection
 
         private void NotifySuccess()
         {
-            //TODO Nofity when success
+            _resultDialog.WithMessage(_transferMessageSuccess)
+                .WithButtonsEvent(OnDialogPress)
+                .Show();
         }
 
         private void NotifyFailed()
         {
-            //TODO Notifi when fail
+            _resultDialog.WithMessage(_transferMessageFail)
+                .WithButtonsEvent(OnDialogPress)
+                .Show();
         }
+
+        private void OnDialogPress()
+        {
+            _resultDialog.Hide();
+            ResetTransfer();
+        }    
     }
 }

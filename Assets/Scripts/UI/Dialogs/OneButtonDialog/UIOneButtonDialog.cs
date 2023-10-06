@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 namespace CryptoQuest.UI.Dialogs.OneButtonDialog
 {
-    public class UIOneButtonDialog : ModalWindow<UIOneButtonDialog>
+    public class UIOneButtonDialog : AbstractDialog
     {
         [Header("Child Components")]
         [SerializeField] private InputMediatorSO _inputMediator;
@@ -20,17 +20,21 @@ namespace CryptoQuest.UI.Dialogs.OneButtonDialog
         private LocalizedString _message;
         private LocalizedString _buttonText;
 
-        protected override void CheckIgnorableForClose() { }
-
         private void OnEnable()
         {
-            StartCoroutine(CoSelectDefaultButton());
             _inputMediator.MenuCancelEvent += OnButtonPressed;
         }
 
         private void OnDisable()
         {
             _inputMediator.MenuCancelEvent -= OnButtonPressed;
+        }
+
+        public override void Show()
+        {
+            base.Show();
+            UpdateUIMessage();
+            StartCoroutine(CoSelectDefaultButton());
         }
 
         private IEnumerator CoSelectDefaultButton()
@@ -45,13 +49,13 @@ namespace CryptoQuest.UI.Dialogs.OneButtonDialog
             _buttonPressed?.Invoke();
         }
 
-        public UIOneButtonDialog SetButtonsEvent(Action action)
+        public UIOneButtonDialog WithButtonsEvent(Action action)
         {
             _buttonPressed = action;
             return this;
         }
 
-        public UIOneButtonDialog SetButtonText(LocalizedString text)
+        public UIOneButtonDialog WithButtonText(LocalizedString text)
         {
             if(text != null)
             {
@@ -60,15 +64,10 @@ namespace CryptoQuest.UI.Dialogs.OneButtonDialog
             return this;
         }    
 
-        public UIOneButtonDialog SetMessage(LocalizedString message)
+        public UIOneButtonDialog WithMessage(LocalizedString message)
         {
             _message = message;
             return this;
-        }
-
-        protected override void OnBeforeShow()
-        {
-            UpdateUIMessage();
         }
 
         private void UpdateUIMessage()
@@ -78,13 +77,6 @@ namespace CryptoQuest.UI.Dialogs.OneButtonDialog
             {
                 _buttonTextUi.StringReference = _buttonText;
             }    
-        }
-
-        public override UIOneButtonDialog Close()
-        {
-            Visible = false;
-            Destroy(gameObject);
-            return this;
         }
     }
 }

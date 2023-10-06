@@ -484,7 +484,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &4327092780162310320
 RectTransform:
   m_ObjectHideFlags: 0
@@ -503,9 +503,9 @@ RectTransform:
   m_Father: {fileID: 8759938187778997364}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 38}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 0}
+  m_AnchoredPosition: {x: 0, y: 188}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &3899739026275214210
@@ -541,9 +541,9 @@ RectTransform:
   m_Father: {fileID: 0}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0}
-  m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: 150}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &4538712044239627910
@@ -558,12 +558,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5adcc9c444aab9e4593d093987a5feb7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animator: {fileID: 3537686293215316460}
-  headerText: {fileID: 0}
-  bodyText: {fileID: 0}
-  closeButton: {fileID: 0}
-  backgroundButton: {fileID: 0}
-  buttonsRoot: {fileID: 0}
+  _autoRelease: 0
+  _releaseTimeout: 5
+  _content: {fileID: 3426673102168637838}
   _inputMediator: {fileID: 11400000, guid: 1fb61cdb72f0a484f8e4db68e2011977, type: 2}
   _defaultSelectButton: {fileID: 2736592127187316408}
   _messageUi: {fileID: 7546136205252735399}
