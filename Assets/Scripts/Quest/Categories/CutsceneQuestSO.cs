@@ -1,6 +1,7 @@
 ﻿using System;
 using CryptoQuest.Quest.Authoring;
 using CryptoQuest.Quest.Components;
+using CryptoQuest.Quest.Controller;
 using CryptoQuest.System.CutsceneSystem.Events;
 using UnityEngine;
 
@@ -21,13 +22,15 @@ namespace CryptoQuest.Quest.Categories
         private readonly QuestCutsceneController _questCutsceneController;
 
         public CutsceneQuestInfo(CutsceneQuestSO cutsceneQuestSO,
-            QuestManager questManager) : base(cutsceneQuestSO)
+            QuestManager questManager) : base(questManager, cutsceneQuestSO)
         {
             _questCutsceneController = questManager.GetComponent<QuestCutsceneController>();
             _questCutsceneController.QuestManager = questManager;
         }
 
-        public CutsceneQuestInfo() { }
+        public CutsceneQuestInfo()
+        {
+        }
 
         public override void TriggerQuest()
         {
@@ -37,6 +40,7 @@ namespace CryptoQuest.Quest.Categories
 
         public override void GiveQuest()
         {
+            base.GiveQuest();
             _questCutsceneController.GiveQuest(this);
             _questCutsceneController.TriggerCutscene(this);
         }

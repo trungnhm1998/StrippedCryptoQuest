@@ -2995,6 +2995,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -18
       objectReference: {fileID: 0}
+    - target: {fileID: 7824022806748111936, guid: 16cbf34f7ce2d8b448ba0e99351b0cca, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -19.99997
+      objectReference: {fileID: 0}
     - target: {fileID: 7945686848848164669, guid: 16cbf34f7ce2d8b448ba0e99351b0cca, type: 3}
       propertyPath: m_SizeDelta.x
       value: 156.48999
@@ -4649,6 +4653,34 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 784710109500639567, guid: 00a44df6a46def5429dc153661ece1db, type: 3}
+      propertyPath: <InProgressQuest>k__BackingField.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2567962762689460405, guid: 00a44df6a46def5429dc153661ece1db, type: 3}
+      propertyPath: _onCompleteQuest.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2567962762689460405, guid: 00a44df6a46def5429dc153661ece1db, type: 3}
+      propertyPath: _onCompleteQuest.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 8478033844394479593}
+    - target: {fileID: 2567962762689460405, guid: 00a44df6a46def5429dc153661ece1db, type: 3}
+      propertyPath: _onCompleteQuest.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2567962762689460405, guid: 00a44df6a46def5429dc153661ece1db, type: 3}
+      propertyPath: _onCompleteQuest.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: QuestCompleted
+      objectReference: {fileID: 0}
+    - target: {fileID: 2567962762689460405, guid: 00a44df6a46def5429dc153661ece1db, type: 3}
+      propertyPath: _onCompleteQuest.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: CryptoQuest.Quest.Components.YarnQuestManager, crypto-quest.quest
+      objectReference: {fileID: 0}
+    - target: {fileID: 2567962762689460405, guid: 00a44df6a46def5429dc153661ece1db, type: 3}
+      propertyPath: _onCompleteQuest.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 3320225057915180270, guid: 00a44df6a46def5429dc153661ece1db, type: 3}
       propertyPath: m_Name
       value: NarrativeSystems
@@ -4729,6 +4761,10 @@ PrefabInstance:
       propertyPath: _gameDialogueController
       value: 
       objectReference: {fileID: 53356040}
+    - target: {fileID: 7485606423578617354, guid: 00a44df6a46def5429dc153661ece1db, type: 3}
+      propertyPath: _giveQuestEventChannel
+      value: 
+      objectReference: {fileID: 11400000, guid: da57ae63ba992064e8d3ec26238fc35a, type: 2}
     - target: {fileID: 7588319599363231506, guid: 00a44df6a46def5429dc153661ece1db, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -4840,7 +4876,13 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7469673555416824468, guid: 00a44df6a46def5429dc153661ece1db, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8478033844394479592}
+    - targetCorrespondingSourceObject: {fileID: 7469673555416824468, guid: 00a44df6a46def5429dc153661ece1db, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8478033844394479593}
   m_SourcePrefab: {fileID: 100100000, guid: 00a44df6a46def5429dc153661ece1db, type: 3}
 --- !u!114 &8478033844394479590 stripped
 MonoBehaviour:
@@ -4853,6 +4895,40 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ddcdd604a328c4ab296f048eb7b3a925, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &8478033844394479591 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7469673555416824468, guid: 00a44df6a46def5429dc153661ece1db, type: 3}
+  m_PrefabInstance: {fileID: 8478033844394479589}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &8478033844394479592
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8478033844394479591}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d579544c617748aea8d65a3710fc2e07, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _loadNextSceneEventChannelSO: {fileID: 11400000, guid: 932ea26428d5f4c4f8bdfd48ebc80873, type: 2}
+  _onSceneLoadedEventChannelSO: {fileID: 11400000, guid: b8b96e43d21a7bf4c96df4cb83c2b764, type: 2}
+  _triggerQuestEventChannelSO: {fileID: 11400000, guid: fdefe5ff6c97c9946a9e874eb074f93f, type: 2}
+--- !u!114 &8478033844394479593
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8478033844394479591}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a1ae8a2eab3343f5950c2093123b44f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _questEventChannelSo: {fileID: 11400000, guid: fdefe5ff6c97c9946a9e874eb074f93f, type: 2}
+  _dialogCompletedEventChannelSo: {fileID: 11400000, guid: 3443d2dcf941d6f4fb30303a52302ab5, type: 2}
 --- !u!224 &8759938189213178294 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6184527407156393254, guid: 2c1926596870eea4db2714164bc23558, type: 3}

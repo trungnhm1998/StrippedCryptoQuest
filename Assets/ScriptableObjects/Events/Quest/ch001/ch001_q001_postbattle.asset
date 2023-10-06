@@ -1,0 +1,44 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea096083c3354ef8b7757a9213b4e5a2, type: 3}
+  m_Name: ch001_q001_postbattle
+  m_EditorClassIdentifier: 
+  _guid: b8024bf83558cdc4fa049ca2093425e6
+  <QuestID>k__BackingField: ch001_q001
+  <QuestName>k__BackingField: Audience With The King
+  <EventID>k__BackingField: ch001_q001_prebattle
+  <EventName>k__BackingField: present
+  <EventDescription>k__BackingField: prebattle cutscene
+  _rewards:
+  - RewardItem:
+      rid: 8512414161886511114
+  - RewardItem:
+      rid: 8512414161886511115
+  <NextAction>k__BackingField: {fileID: 11400000, guid: 7bcf993ddd10d0449b2fe3abf3ca5102, type: 2}
+  <CutSceneToLoad>k__BackingField: {fileID: 11400000, guid: d830c5a26b6431c499e07312cdaba974, type: 2}
+  references:
+    version: 2
+    RefIds:
+    - rid: 8512414161886511114
+      type: {class: CurrencyLootInfo, ns: CryptoQuest.Gameplay.Loot, asm: indi-games.crypto-quest}
+      data:
+        _item:
+          _id: 2814c89a-6dd4-47f7-9d26-7ff7f99cbbae
+          <Data>k__BackingField: {fileID: 11400000, guid: 16b3f6e09fc22d240be1b324116eeb79, type: 2}
+          <Amount>k__BackingField: 500
+    - rid: 8512414161886511115
+      type: {class: CurrencyLootInfo, ns: CryptoQuest.Gameplay.Loot, asm: indi-games.crypto-quest}
+      data:
+        _item:
+          _id: f3803840-ad55-4f73-9a2b-c14c025b7a06
+          <Data>k__BackingField: {fileID: 11400000, guid: 2869f59bdcbd4de4090ae28b6ca6b435, type: 2}
+          <Amount>k__BackingField: 3

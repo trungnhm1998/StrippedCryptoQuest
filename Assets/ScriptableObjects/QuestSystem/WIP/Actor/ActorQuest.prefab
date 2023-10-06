@@ -367,6 +367,7 @@ GameObject:
   - component: {fileID: 7212975523445164420}
   - component: {fileID: 7987131790748627591}
   - component: {fileID: 4822922526553118902}
+  - component: {fileID: 7256203790389555238}
   m_Layer: 0
   m_Name: ActorQuest
   m_TagString: Untagged
@@ -517,6 +518,19 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 1
+      - m_Target: {fileID: 7256203790389555238}
+        m_TargetAssemblyTypeName: CryptoQuest.Quest.Components.YarnQuestDialogueProvider,
+          crypto-quest.quest
+        m_MethodName: ShowDialogue
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   _reactionBehaviour: {fileID: 4609567423221021952}
 --- !u!114 &4822922526553118902
 MonoBehaviour:
@@ -531,6 +545,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _quest: {fileID: 0}
+  _giveQuestEventChannel: {fileID: 11400000, guid: da57ae63ba992064e8d3ec26238fc35a, type: 2}
+--- !u!114 &7256203790389555238
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9034630757791044706}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e0f914224494639bb928d2274d6c7ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _yarnQuestNode: {fileID: 0}
   _giveQuestEventChannel: {fileID: 11400000, guid: da57ae63ba992064e8d3ec26238fc35a, type: 2}
 --- !u!1001 &680184019751921035
 PrefabInstance:

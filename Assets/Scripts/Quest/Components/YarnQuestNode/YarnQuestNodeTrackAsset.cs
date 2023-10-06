@@ -1,5 +1,4 @@
 ﻿using System;
-using CryptoQuest.System.CutsceneSystem.CustomTimelineTracks.YarnSpinnerNodeControlTrack;
 using UnityEngine.Timeline;
 using Yarn.Unity;
 

@@ -2,16 +2,18 @@
 using CryptoQuest.Battle;
 using CryptoQuest.Battle.Events;
 using CryptoQuest.Gameplay.Encounter;
+using CryptoQuest.Quest.Components;
 using CryptoQuest.Quest.Events;
 using UnityEngine;
 
-namespace CryptoQuest.Quest
+namespace CryptoQuest.Quest.Controllers
 {
     public class QuestBattleController : MonoBehaviour
     {
         private readonly List<BattleQuestInfo> _currentlyProcessQuests = new();
         [SerializeField] private BattleResultEventSO _battleCompletedEvent;
         [SerializeField] private QuestEventChannelSO _triggerQuestEventChannel;
+        [SerializeField] private QuestEventChannelSO _giveQuestEventChannel;
 
         private void OnEnable()
         {
@@ -23,14 +25,12 @@ namespace CryptoQuest.Quest
             _battleCompletedEvent.EventRaised -= OnBattleCompleted;
         }
 
-        public void TriggerBattle(Battlefield battlefield)
-        {
-            BattleLoader.RequestLoadBattle(battlefield);
-        }
 
         public void GiveQuest(BattleQuestInfo questInfo)
         {
             _currentlyProcessQuests.Add(questInfo);
+            _giveQuestEventChannel.RaiseEvent(questInfo.Data.WinQuest);
+            _giveQuestEventChannel.RaiseEvent(questInfo.Data.LoseQuest);
         }
 
         private void OnBattleCompleted(BattleResultInfo result)
@@ -49,8 +49,17 @@ namespace CryptoQuest.Quest
             bool isWinBattle = result.IsWin;
             var winQuest = info.Data.WinQuest;
             var loseQuest = info.Data.LoseQuest;
-            _triggerQuestEventChannel.RaiseEvent(isWinBattle ? winQuest : loseQuest);
-            _currentlyProcessQuests.Remove(info);
+            if (isWinBattle)
+            {
+                _triggerQuestEventChannel.RaiseEvent(winQuest);
+                _triggerQuestEventChannel.RaiseEvent(info.Data);
+                QuestManager.OnRemoveProgressingQuest?.Invoke(loseQuest);
+                _currentlyProcessQuests.Remove(info);
+            }
+            else
+            {
+                _triggerQuestEventChannel.RaiseEvent(loseQuest);
+            }
         }
     }
 }

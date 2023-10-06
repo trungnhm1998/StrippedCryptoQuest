@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using CryptoQuest.Gameplay.Loot;
 using CryptoQuest.Gameplay.Reward.ScriptableObjects;
 using CryptoQuest.Quest.Authoring;
@@ -13,16 +14,15 @@ namespace CryptoQuest.Quest.Components
     public class QuestManager : MonoBehaviour
     {
         public static Action<IQuestConfigure> OnConfigureQuest;
+        public static Action<QuestSO> OnRemoveProgressingQuest;
 
-        [Header("Quest Events")]
-        [SerializeField] private QuestEventChannelSO _triggerQuestEventChannel;
+        [Header("Quest Events")] [SerializeField]
+        private QuestEventChannelSO _triggerQuestEventChannel;
 
         [SerializeField] private QuestEventChannelSO _giveQuestEventChannel;
         [SerializeField] private RewardSO _rewardEventChannel;
 
-        [field: Header("Quest Data")]
         [field: SerializeReference] public List<QuestInfo> InProgressQuest { get; set; } = new();
-
         [field: SerializeReference] public List<QuestInfo> CompletedQuests { get; set; } = new();
 
         private QuestSO _currentQuestData;
@@ -33,6 +33,7 @@ namespace CryptoQuest.Quest.Components
             OnConfigureQuest += ConfigureQuestHolder;
             _triggerQuestEventChannel.EventRaised += TriggerQuest;
             _giveQuestEventChannel.EventRaised += GiveQuest;
+            OnRemoveProgressingQuest += RemoveProgressingQuest;
         }
 
         private void OnDisable()
@@ -40,14 +41,7 @@ namespace CryptoQuest.Quest.Components
             OnConfigureQuest -= ConfigureQuestHolder;
             _triggerQuestEventChannel.EventRaised -= TriggerQuest;
             _giveQuestEventChannel.EventRaised -= GiveQuest;
-        }
-
-        public void GiveQuest(QuestSO questData)
-        {
-            QuestInfo currentQuestInfo = questData.CreateQuest(this);
-            InProgressQuest.Add(currentQuestInfo);
-
-            currentQuestInfo.GiveQuest();
+            OnRemoveProgressingQuest -= RemoveProgressingQuest;
         }
 
         public void TriggerQuest(QuestSO questData)
@@ -57,7 +51,24 @@ namespace CryptoQuest.Quest.Components
                 if (progressQuestInfo.BaseData != questData) continue;
 
                 _currentQuestInfo = progressQuestInfo;
-                progressQuestInfo.TriggerQuest();
+                break;
+            }
+
+            _currentQuestData = questData;
+            _currentQuestData.OnRewardReceived += RewardReceived;
+            _currentQuestData.OnQuestCompleted += QuestCompleted;
+            _currentQuestInfo.TriggerQuest();
+        }
+
+        private void GiveQuest(QuestSO questData)
+        {
+            if (IsQuestTriggered(questData)) return;
+            QuestInfo currentQuestInfo = questData.CreateQuest(this);
+
+            if (!InProgressQuest.Contains(currentQuestInfo))
+            {
+                InProgressQuest.Add(currentQuestInfo);
+                currentQuestInfo.GiveQuest();
             }
 
             _currentQuestData = questData;
@@ -68,7 +79,7 @@ namespace CryptoQuest.Quest.Components
 
         private void RewardReceived(LootInfo[] loots)
         {
-            _rewardEventChannel.RewardRaiseEvent(loots);
+            // _rewardEventChannel.RewardRaiseEvent(loots);
             _currentQuestData.OnRewardReceived -= RewardReceived;
         }
 
@@ -96,6 +107,15 @@ namespace CryptoQuest.Quest.Components
         {
             questConfigure.IsQuestCompleted = IsQuestTriggered(questConfigure.Quest);
             questConfigure.Configure();
+        }
+
+        private void RemoveProgressingQuest(QuestSO quest)
+        {
+            foreach (var inProgressQuest in InProgressQuest.ToList())
+            {
+                if (inProgressQuest.BaseData != quest) continue;
+                InProgressQuest.Remove(inProgressQuest);
+            }
         }
     }
 }

@@ -3,7 +3,7 @@ using CryptoQuest.Quest.Categories;
 using CryptoQuest.System.CutsceneSystem;
 using CryptoQuest.System.CutsceneSystem.Events;
 
-namespace CryptoQuest.Quest
+namespace CryptoQuest.Quest.Controller
 {
     public class QuestCutsceneController : BaseQuestController
     {

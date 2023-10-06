@@ -1,6 +1,7 @@
 ﻿using CryptoQuest.Gameplay.Encounter;
 using CryptoQuest.Quest.Authoring;
 using CryptoQuest.Quest.Components;
+using CryptoQuest.Quest.Controllers;
 using UnityEngine;
 
 namespace CryptoQuest.Quest
@@ -20,17 +21,21 @@ namespace CryptoQuest.Quest
     {
         private readonly QuestBattleController _questBattleController;
 
-        public BattleQuestInfo(QuestManager questManager, BattleQuestSO questDef) : base(questDef)
+        public BattleQuestInfo(QuestManager questManager, BattleQuestSO questDef) : base(questManager, questDef)
         {
             _questBattleController = questManager.GetComponent<QuestBattleController>();
         }
 
-        public override void TriggerQuest() { }
+        public override void TriggerQuest()
+        {
+            base.TriggerQuest();
+            FinishQuest();
+        }
 
         public override void GiveQuest()
         {
+            base.GiveQuest();
             _questBattleController.GiveQuest(this);
-            _questBattleController.TriggerBattle(Data.BattlefieldToLoad);
         }
     }
 }

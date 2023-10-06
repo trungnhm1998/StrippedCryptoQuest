@@ -19,6 +19,7 @@ namespace CryptoQuest.Quest.Components
         private void OnTriggerEnter2D(Collider2D other) => GiveQuest(other, ECollideActionType.OnEnter);
 
         private void OnTriggerExit2D(Collider2D other) => GiveQuest(other, ECollideActionType.OnExit);
+        // public QuestEventChannelSO QuestTriggerChannelSo;
 
         private void GiveQuest(Collider2D other, ECollideActionType collideType)
         {
@@ -28,6 +29,7 @@ namespace CryptoQuest.Quest.Components
             _collider2D.enabled = false;
 
             _questGiverChannelSo.RaiseEvent(_questToComplete);
+            // QuestTriggerChannelSo.RaiseEvent(_questToComplete);
         }
 
         private enum ECollideActionType

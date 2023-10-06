@@ -15,6 +15,7 @@ namespace CryptoQuest.Map
 
         [Header("Refs")]
         [SerializeField] private LoadSceneEventChannelSO _loadNextSceneEventChannelSO;
+
         [SerializeField] private BoxCollider2D _collider;
         [SerializeField] private PathStorageSO _transitionSO;
         [SerializeField, ReadOnly] private string _playerTag = "Player";
@@ -43,6 +44,12 @@ namespace CryptoQuest.Map
             Gizmos.color = new Color(0, 255, 0, .3f);
             Gizmos.matrix = transform.localToWorldMatrix;
             Gizmos.DrawCube(new Vector3(_collider.offset.x, _collider.offset.y, -2), _collider.size);
+        }
+
+        public void SetUpTeleportInfo(SceneScriptableObject nextScene, MapPathSO mapPath)
+        {
+            _nextScene = nextScene;
+            _mapPath = mapPath;
         }
     }
 }

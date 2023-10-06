@@ -27,7 +27,7 @@ namespace CryptoQuest.Quest.Components.YarnQuestNode
             {
                 if (!playable.GetGraph().IsPlaying()) return;
                 if (string.IsNullOrEmpty(YarnNodeName)) return;
-                YarnQuestHandler.OnUpdateCurrentNode?.Invoke(_yarnDialogWithQuestSo.YarnQuestDef);
+                YarnQuestManager.OnUpdateCurrentNode?.Invoke(_yarnDialogWithQuestSo.YarnQuestDef);
                 string yarnNode = _yarnDialogWithQuestSo.YarnQuestDef.YarnNode;
                 YarnSpinnerDialogueManager.PlayDialogueRequested?.Invoke(yarnNode);
             }

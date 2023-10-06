@@ -3,7 +3,7 @@ using CryptoQuest.Quest.Components;
 using UnityEngine;
 using UnityEngine.ResourceManagement.AsyncOperations;
 
-namespace CryptoQuest.Quest.Actor
+namespace CryptoQuest.Quest.Actor.Categories
 {
     [CreateAssetMenu(menuName = "Crypto Quest/Quest System/Actor/TriggerZoneActorSO", fileName = "TriggerZoneActorSO")]
     public class TriggerZoneActorSO : ActorSO<TriggerZoneActorInfo>
@@ -15,9 +15,14 @@ namespace CryptoQuest.Quest.Actor
     public class TriggerZoneActorInfo : ActorInfo<TriggerZoneActorSO>
     {
         private GameObject _gameObject;
-        public TriggerZoneActorInfo(TriggerZoneActorSO triggerZoneActorSO) : base(triggerZoneActorSO) { }
 
-        public TriggerZoneActorInfo() { }
+        public TriggerZoneActorInfo(TriggerZoneActorSO triggerZoneActorSO) : base(triggerZoneActorSO)
+        {
+        }
+
+        public TriggerZoneActorInfo()
+        {
+        }
 
         public override IEnumerator Spawn(Transform parent)
         {
@@ -40,8 +45,6 @@ namespace CryptoQuest.Quest.Actor
             Object.Destroy(_gameObject);
 
             Data.QuestData.OnQuestCompleted -= CompleteQuestHandle;
-            
-            
         }
     }
 }

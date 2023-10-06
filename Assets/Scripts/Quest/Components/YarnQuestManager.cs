@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using CryptoQuest.Quest.Authoring;
+using CryptoQuest.Quest.Categories;
 using CryptoQuest.Quest.Events;
 using IndiGames.Core.Events.ScriptableObjects;
 using UnityEngine;
@@ -7,7 +9,7 @@ using UnityEngine.Serialization;
 
 namespace CryptoQuest.Quest.Components
 {
-    public class YarnQuestHandler : MonoBehaviour
+    public class YarnQuestManager : MonoBehaviour
     {
         public static Action<YarnQuestDef> OnUpdateCurrentNode;
         public static Action OnDialogCompleted;
@@ -15,6 +17,8 @@ namespace CryptoQuest.Quest.Components
         [SerializeField] private QuestEventChannelSO _questEventChannelSo;
         [SerializeField] private VoidEventChannelSO _dialogCompletedEventChannelSo;
         private YarnQuestDef _current;
+        private List<DialogueQuestInfo> _currentlyProcessDialogueQuests = new();
+        private QuestSO _dialogueQuestSo;
 
         private void OnEnable()
         {
@@ -38,18 +42,26 @@ namespace CryptoQuest.Quest.Components
         private void OnDialogueCompleted()
         {
             OnDialogCompleted?.Invoke();
+            if (_dialogueQuestSo == null) return;
+            _questEventChannelSo.RaiseEvent(_dialogueQuestSo);
+        }
+
+        public void GiveQuest(DialogueQuestInfo questInfo)
+        {
+            if (_currentlyProcessDialogueQuests.Contains(questInfo)) return;
+            _currentlyProcessDialogueQuests.Add(questInfo);
         }
 
         public void QuestCompleted(string questName)
         {
-            if (_current == null) return;
-            foreach (var possibleOutComeQuest in _current.PossibleOutcomeQuests)
+            // if (_current == null) return;
+            foreach (var possibleOutComeQuest in _currentlyProcessDialogueQuests)
             {
-                if (possibleOutComeQuest.QuestName == questName)
-                    _questEventChannelSo.RaiseEvent(possibleOutComeQuest);
+                if (possibleOutComeQuest.Data.QuestName == questName)
+                    _dialogueQuestSo = possibleOutComeQuest.Data;
             }
 
-            _current = null;
+            // _current = null;
         }
     }
 }

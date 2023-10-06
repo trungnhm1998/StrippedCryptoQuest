@@ -6,20 +6,21 @@ namespace CryptoQuest.Quest.Categories
 {
     public class BasicTriggerQuestSO : QuestSO
     {
-        public override QuestInfo CreateQuest(QuestManager questManager) => new BasicTriggerQuestInfo(this);
+        public override QuestInfo CreateQuest(QuestManager questManager) =>
+            new BasicTriggerQuestInfo(questManager, this);
     }
 
     [Serializable]
     public class BasicTriggerQuestInfo : QuestInfo<BasicTriggerQuestSO>
     {
-        public BasicTriggerQuestInfo(BasicTriggerQuestSO basicTriggerQuestSO) : base(basicTriggerQuestSO) { }
+        public BasicTriggerQuestInfo(QuestManager questManager, BasicTriggerQuestSO basicTriggerQuestSO)
+            : base(questManager, basicTriggerQuestSO) { }
 
         public override void TriggerQuest()
         {
-            base.TriggerQuest();
             FinishQuest();
+            if (Data.NextAction != null)
+                _questManager.StartCoroutine(Data.NextAction.Execute());
         }
-
-        public override void GiveQuest() { }
     }
 }

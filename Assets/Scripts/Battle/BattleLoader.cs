@@ -33,6 +33,7 @@ namespace CryptoQuest.Battle
 
         [Header("Events to raise")]
         [SerializeField] private UnloadSceneEventChannelSO _unloadSceneEvent;
+
         [SerializeField] private LoadSceneEventChannelSO _loadSceneEventChannelSo;
         [SerializeField] private BattleResultEventSO _battleCompletedEvent;
         [SerializeField] private RewardSO _rewardEventChannel;

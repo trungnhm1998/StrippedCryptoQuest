@@ -24,9 +24,9 @@ namespace CryptoQuest.Quest
             
             QuestManager.TriggerQuest(questInfo.Data);
 
-            YarnQuestHandler.OnUpdateCurrentNode?.Invoke(yarnDialogData);
+            YarnQuestManager.OnUpdateCurrentNode?.Invoke(yarnDialogData);
             YarnSpinnerDialogueManager.PlayDialogueRequested.Invoke(yarnDialogData.YarnNode);
-            YarnQuestHandler.OnDialogCompleted += OnQuestFinish;
+            YarnQuestManager.OnDialogCompleted += OnQuestFinish;
         }
 
         protected override void OnQuestFinish()
@@ -45,7 +45,7 @@ namespace CryptoQuest.Quest
 
             _currentlyInteractQuests.Remove(processingQuest);
 
-            YarnQuestHandler.OnDialogCompleted -= OnQuestFinish;
+            YarnQuestManager.OnDialogCompleted -= OnQuestFinish;
         }
     }
 }

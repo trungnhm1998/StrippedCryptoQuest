@@ -4,7 +4,7 @@ using CryptoQuest.Quest.Components;
 using UnityEngine;
 using UnityEngine.ResourceManagement.AsyncOperations;
 
-namespace CryptoQuest.Quest.Actor
+namespace CryptoQuest.Quest.Actor.Categories
 {
     [CreateAssetMenu(menuName = "Crypto Quest/Quest System/Actor/NpcActorSO", fileName = "NpcActorDef")]
     public class NpcActorSO : ActorSO<NpcActorInfo>
@@ -17,9 +17,13 @@ namespace CryptoQuest.Quest.Actor
     public class NpcActorInfo : ActorInfo<NpcActorSO>
     {
         public NpcActorInfo(NpcActorSO npcActorSO) : base(
-            npcActorSO) { }
+            npcActorSO)
+        {
+        }
 
-        public NpcActorInfo() { }
+        public NpcActorInfo()
+        {
+        }
 
         public override IEnumerator Spawn(Transform parent)
         {
@@ -30,7 +34,7 @@ namespace CryptoQuest.Quest.Actor
 
             QuestGiver questActor = handle.Result.GetComponent<QuestGiver>();
             questActor.SetQuestData(Data.QuestData);
-            
+
             questActor.GiveQuest();
         }
     }
