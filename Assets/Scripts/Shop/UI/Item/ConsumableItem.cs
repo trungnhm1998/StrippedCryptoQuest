@@ -1,6 +1,7 @@
 using CryptoQuest.Gameplay.Inventory.Currency;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
 using CryptoQuest.Item;
+using CryptoQuest.Shop.UI.Panels.PreviewCharacter;
 using CryptoQuest.UI.Menu.Panels.Status;
 using System.Collections;
 using System.Collections.Generic;
@@ -29,5 +30,6 @@ namespace CryptoQuest.Shop.UI.Item
         public bool TryToBuy(IShopInventoryController controller) => controller.TryToBuy(_consumable);
         public bool TryToSell(IShopInventoryController controller) => controller.TryToSell(_consumable);
         public void PreviewItem(IPreviewItem preview) => preview.Preview(_consumable);
+        public void PreviewStat(IPreviewCharacter preview) { }
     }
 }

@@ -1,15 +1,24 @@
 using System.Collections;
 using CryptoQuest.Shop.UI.Item;
+using CryptoQuest.Shop.UI.Panels.PreviewCharacter;
+using UnityEngine;
 
 namespace CryptoQuest.Shop.UI.Panels.Item
 {
     public class UIShopBuy : UIShop
     {
+        [SerializeField] private UIPreviewCharacterPanel _uiPreviewCharacterPanel;
         protected ShopItemTable _shopItemTable;
 
         public override void Show()
         {
             _content.SetActive(true);
+        }
+
+        protected override void OnItemSelected(IShopItem shopItemInfo)
+        {
+            base.OnItemSelected(shopItemInfo);
+            shopItemInfo.PreviewStat(_uiPreviewCharacterPanel);
         }
 
         public void SetItemShopTable(ShopItemTable shopItemTable)

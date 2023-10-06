@@ -68,7 +68,7 @@ namespace CryptoQuest.Shop.UI.Panels.Item
             OnSubmit?.Invoke(shopItemInfo);
         }
 
-        private void OnItemSelected(IShopItem shopItemInfo)
+        protected virtual void OnItemSelected(IShopItem shopItemInfo)
         {
             shopItemInfo.PreviewItem(_previewItem);
         }
