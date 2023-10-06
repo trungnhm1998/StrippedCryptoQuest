@@ -44,6 +44,12 @@ namespace CryptoQuest.Battle.UI
             SetAllGroupAlpha(SELECTED_ALPHA);
             BattleEventBus.UnsubscribeEvent(_selectedEventToken);
             BattleEventBus.UnsubscribeEvent(_deSelectedEventToken);
+
+        #if UNITY_EDITOR
+            // Prevent error when turn off play mode in editor only
+            if (_enemyGroupUI.gameObject == null) return;
+        #endif
+
             _enemyGroupUI.SetActiveContent(false);
         }
 
