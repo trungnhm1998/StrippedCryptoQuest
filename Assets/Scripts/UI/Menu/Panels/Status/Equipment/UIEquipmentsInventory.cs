@@ -156,7 +156,6 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
             if (equipment.IsValid() && equipment != _currentlyEquippingItem.Equipment) return;
             _currentlyEquippingItem.gameObject.SetActive(false);
             _currentlyEquippingItem.Reset();
-            ServiceProvider.GetService<IInventoryController>().Add(equipment);
             InstantiateNewEquipmentUI(equipment);
         }
 
