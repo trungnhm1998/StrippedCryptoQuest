@@ -1,4 +1,3 @@
-using Codice.Client.BaseCommands;
 using CryptoQuest.Battle.Components;
 using CryptoQuest.Item.Equipment;
 using CryptoQuest.UI.Menu.Panels.Status.Equipment;
