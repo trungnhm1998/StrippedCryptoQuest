@@ -41,7 +41,7 @@ namespace CryptoQuest.Battle.UI.CommandDetail
             SetAlphaEnemy(0.5f);
         }
 
-        private void SetAlphaEnemy(float alpha)
+        public void SetAlphaEnemy(float alpha)
         {
             if (!_enemy.IsValid()) return;
             _enemy.SetAlpha(alpha);

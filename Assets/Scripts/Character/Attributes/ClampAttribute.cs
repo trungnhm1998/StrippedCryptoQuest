@@ -47,9 +47,9 @@ namespace CryptoQuest.Character.Attributes
                     $"Clamped current attribute {_attribute.name} from [{preChange.CurrentValue}] to [{newAttributeValue.CurrentValue}]");
             }
 
-            if (newAttributeValue.BaseValue >= maxAttributeValue.BaseValue)
+            if (newAttributeValue.BaseValue >= maxAttributeValue.CurrentValue)
             {
-                newAttributeValue.BaseValue = maxAttributeValue.BaseValue;
+                newAttributeValue.BaseValue = maxAttributeValue.CurrentValue;
                 Debug.Log(
                     $"Clamped base {_maxAttribute.name} from [{preChange.BaseValue}] to [{newAttributeValue.BaseValue}].");
                 ClampAction?.OnClampSuccess(attributeSystemBehaviour);

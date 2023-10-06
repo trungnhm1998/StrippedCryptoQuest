@@ -67,10 +67,10 @@ namespace CryptoQuest.Battle.UI.CommandDetail
         {
             for (var index = 0; index < _enemies.Count; index++)
             {
-                var enemy = _enemies[index];
-                if (enemy == null) continue;
-                enemy.gameObject.SetActive(false);
-                _enemyPartyManager.Enemies[index].SetAlpha(1f);
+                var enemyUI = _enemies[index];
+                if (enemyUI == null) continue;
+                enemyUI.SetAlphaEnemy(1f);
+                enemyUI.gameObject.SetActive(false);
             }
         }
 

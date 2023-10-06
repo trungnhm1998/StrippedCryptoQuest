@@ -30,6 +30,7 @@ namespace CryptoQuest.Battle.UI
 
             foreach (var group in groups)
             {
+                if (group.Count <= 0) continue;
                 model.AddInfo(new EnemyGroupButtonInfo(group, OnConfirmGroup, interactable));
             }
             _enemyGroupUI.ShowCommandDetail(model);

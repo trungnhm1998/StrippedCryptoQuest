@@ -188,27 +188,15 @@ namespace IndiGames.GameplayAbilitySystem.AttributeSystem.Components
                 var evaluatedAttribute = oldAttributeValue
                     .Attribute.CalculateCurrentAttributeValue(oldAttributeValue, _attributeValues);
 
-                UpdateAttributeValueIfNotEquals(evaluatedAttribute, oldAttributeValue, i);
+                UpdateAttributeValueIfNotEquals(evaluatedAttribute, oldAttributeValue);
             }
         }
 
-        private void UpdateAttributeValueIfNotEquals(AttributeValue newValue, AttributeValue oldValue, int i)
+        private void UpdateAttributeValueIfNotEquals(AttributeValue newValue, AttributeValue oldValue)
         {
             if (newValue.CurrentValue.NearlyEqual(oldValue.CurrentValue)) return;
 
-            foreach (var preAttributeChangeChannel in _attributeEvents)
-            {
-                preAttributeChangeChannel.PreAttributeChange(this, ref newValue);
-            }
-
-            PreAttributeChange?.Invoke(oldValue.Attribute, newValue);
-            _attributeValues[i] = newValue;
-            PostAttributeChange?.Invoke(oldValue.Attribute, oldValue, newValue);
-
-            foreach (var preAttributeChangeChannel in _attributeEvents)
-            {
-                preAttributeChangeChannel.PostAttributeChange(this, ref oldValue, ref newValue);
-            }
+            SetAttributeValue(oldValue.Attribute, newValue);
         }
 
         /// <summary>
@@ -255,7 +243,7 @@ namespace IndiGames.GameplayAbilitySystem.AttributeSystem.Components
             var attributeValue = _attributeValues[index];
             attributeValue.BaseValue = value;
             var evaluatedAttribute = attribute.CalculateCurrentAttributeValue(attributeValue, _attributeValues);
-            UpdateAttributeValueIfNotEquals(evaluatedAttribute, _attributeValues[index], index);
+            UpdateAttributeValueIfNotEquals(evaluatedAttribute, _attributeValues[index]);
 
             UpdateAttributeValues(); // This attribute could cause other attribute to change
         }
@@ -270,10 +258,20 @@ namespace IndiGames.GameplayAbilitySystem.AttributeSystem.Components
             var cache = GetAttributeIndexCache();
             if (!cache.TryGetValue(attribute, out var index)) return;
 
+            foreach (var preAttributeChangeChannel in _attributeEvents)
+            {
+                preAttributeChangeChannel.PreAttributeChange(this, ref attributeValue);
+            }
+
             var oldValue = _attributeValues[index];
             PreAttributeChange?.Invoke(oldValue.Attribute, attributeValue);
             _attributeValues[index] = attributeValue;
             PostAttributeChange?.Invoke(attributeValue.Attribute, oldValue, attributeValue);
+            
+            foreach (var preAttributeChangeChannel in _attributeEvents)
+            {
+                preAttributeChangeChannel.PostAttributeChange(this, ref oldValue, ref attributeValue);
+            }
         }
 
         public void ResetAllAttributes()
