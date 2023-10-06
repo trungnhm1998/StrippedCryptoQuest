@@ -11,13 +11,21 @@ namespace CryptoQuest.System.Cheat
     /// </summary>
     public class CheatManager : MonoBehaviour, InputActions.ITerminalActions, ICheatInitializer
     {
-        private const string ACTION_MAP_NAME = "Terminal";
+        public static string ACTION_MAP_NAME = "Terminal";
+        [SerializeField] private Animator _stateMachine;
         [SerializeField] private Terminal _terminal;
+        public Terminal Terminal => _terminal;
         [SerializeField] private InputMediatorSO _inputMediatorSO;
+        public InputMediatorSO Input => _inputMediatorSO;
 
         private void OnEnable()
         {
             _inputMediatorSO.InputActions.Terminal.SetCallbacks(this);
+            EnableTerminalInput();
+        }
+
+        public void EnableTerminalInput()
+        {
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
             _inputMediatorSO.InputActions.Terminal.Enable();
 #endif
@@ -30,33 +38,13 @@ namespace CryptoQuest.System.Cheat
 
         private string _previouslyEnabledInputMap = "";
 
-        private void ToggleTerminal()
+        public void EnableLastEnabledActionMap()
         {
-            UpdateLastEnabledActionMap();
-            if (_terminal.State == TerminalState.Close)
-            {
-                _inputMediatorSO.DisableAllInput();
-                if (_openingFullSizeTerminal)
-                {
-                    _terminal.OpenFull();
-                }
-                else
-                {
-                    _terminal.OpenSmall();
-                }
-            }
-            else
-            {
-                CloseTerminal();
-            }
+            if (string.IsNullOrEmpty(_previouslyEnabledInputMap) == false)
+                _inputMediatorSO.EnableInputMap(_previouslyEnabledInputMap);
         }
 
-        private void EnableLastEnabledActionMap()
-        {
-            _inputMediatorSO.EnableInputMap(_previouslyEnabledInputMap);
-        }
-
-        private void UpdateLastEnabledActionMap()
+        public void CacheLastEnabledActionMap()
         {
             var assetActionMaps = _inputMediatorSO.InputActions.asset.actionMaps;
             foreach (var actionMap in assetActionMaps)
@@ -69,96 +57,44 @@ namespace CryptoQuest.System.Cheat
             }
         }
 
-        public void InitCheats()
-        {
-            Terminal.Shell.AddCommand("hello", HelloWorld, 0, 0, "Says Hello world");
-        }
+        public void InitCheats() { }
 
-        private void HelloWorld(CommandArg[] commandArgs)
-        {
-            Debug.Log("Hello world");
-        }
+        public Action OnOpenTerminalPressed;
 
         public void OnOpenTerminal(InputAction.CallbackContext context)
         {
-            if (context.performed) ToggleTerminal();
+            if (context.performed) OnOpenTerminalPressed?.Invoke();
         }
 
-        private void CloseTerminal()
-        {
-            _terminal.Close();
-            EnableLastEnabledActionMap();
-        }
+        public static readonly int FullSize = Animator.StringToHash("FullSize");
 
-        private bool _openingFullSizeTerminal = false;
+        public void OnFullSizeModifier(InputAction.CallbackContext context) =>
+            _stateMachine.SetBool(FullSize, context.performed);
 
-        public void OnFullSizeModifier(InputAction.CallbackContext context)
-        {
-            Wrapper(() =>
-            {
-                if (context.performed)
-                {
-                    _openingFullSizeTerminal = true;
-                }
-                else if (context.canceled)
-                {
-                    _openingFullSizeTerminal = false;
-                }
-            });
-        }
+        public Action<InputAction.CallbackContext> OnCommandNavigatePressed { get; set; }
 
-        public void OnCommandNavigate(InputAction.CallbackContext context)
-        {
-            Wrapper(() =>
-            {
-                if (context.performed)
-                {
-                    var readValue = (int)context.ReadValue<float>();
-                    if (readValue == 1)
-                    {
-                        _terminal.NextCommand();
-                    }
-                    else if (readValue == -1)
-                    {
-                        _terminal.PreviousCommand();
-                    }
-                }
-            });
-        }
+        public void OnCommandNavigate(InputAction.CallbackContext context) =>
+            OnCommandNavigatePressed?.Invoke(context);
+
+        public Action OnCloseTerminalPressed { get; set; }
 
         public void OnClose(InputAction.CallbackContext context)
         {
-            Wrapper(() =>
-            {
-                if (context.performed && _terminal.State != TerminalState.Close) CloseTerminal();
-            });
+            if (context.performed) OnCloseTerminalPressed?.Invoke();
         }
+
+        public Action OnEnterPressed { get; set; }
 
         public void OnExecute(InputAction.CallbackContext context)
         {
-            Wrapper(() =>
-            {
-                if (context.performed)
-                {
-                    _terminal.EnterPressed();
-                }
-            });
+            if (context.performed) OnEnterPressed?.Invoke();
         }
+
+        public Action OnTabPressed { get; set; }
 
         public void OnComplete(InputAction.CallbackContext context)
         {
-            Wrapper(() =>
-            {
-                if (context.performed)
-                {
-                    _terminal.TabPressed();
-                }
-            });
-        }
-
-        private void Wrapper(Action callback)
-        {
-            if (_terminal.State != TerminalState.Close) callback?.Invoke();
+            if (context.performed) OnTabPressed?.Invoke();
         }
     }
 }

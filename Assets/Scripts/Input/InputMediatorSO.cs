@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using CryptoQuest.System.Cheat;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
@@ -73,9 +74,12 @@ namespace CryptoQuest.Input
         public void DisableAllInput()
         {
             _inputCached.Clear();
-            _inputActions.MapGameplay.Disable();
-            _inputActions.Menus.Disable();
-            _inputActions.Dialogues.Disable();
+            foreach (var actionMap in _inputActions.asset.actionMaps)
+            {
+                if (string.Compare(CheatManager.ACTION_MAP_NAME, actionMap.name,
+                        StringComparison.InvariantCultureIgnoreCase) == 0) continue;
+                    actionMap.Disable();
+            }
         }
 
         private void CreateInputInstanceIfNeeded()
@@ -112,7 +116,7 @@ namespace CryptoQuest.Input
             var actionMap = _inputActions.asset.FindActionMap(actionMapName);
             actionMap.Enable();
         }
-        
+
         public void DisableInputMap(string actionMapName)
         {
             var actionMap = _inputActions.asset.FindActionMap(actionMapName);
