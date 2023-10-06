@@ -1,11 +1,10 @@
-using UnityEditor;
+using CryptoQuest.Core;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
 namespace CryptoQuest.Input
 {
-    [FilePath("Assets/ScriptableObjects/Input/BattleInput.asset", FilePathAttribute.Location.ProjectFolder)]
     public class BattleInput : ScriptableSingleton<BattleInput>,
         InputActions.IBattleMenuActions
     {

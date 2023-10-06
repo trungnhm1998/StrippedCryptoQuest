@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
+using CryptoQuest.Core;
 using CryptoQuest.System.Cheat;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
@@ -9,7 +9,6 @@ using UnityEngine.InputSystem;
 namespace CryptoQuest.Input
 {
     // TODO: Move action map interfaces to separate scriptable objects
-    [FilePath("Assets/ScriptableObjects/Input/InputMediatorSO.asset", FilePathAttribute.Location.ProjectFolder)]
     public class InputMediatorSO : ScriptableSingleton<InputMediatorSO>,
         InputActions.IMapGameplayActions,
         InputActions.IMenusActions,
@@ -65,8 +64,8 @@ namespace CryptoQuest.Input
             }
         }
 
-        private void OnEnable()
-            => CreateInputInstanceIfNeeded();
+        protected override void OnLoaded() =>
+            CreateInputInstanceIfNeeded();
 
         private void OnDisable()
             => DisableAllInput();
@@ -80,7 +79,7 @@ namespace CryptoQuest.Input
             {
                 if (string.Compare(CheatManager.ACTION_MAP_NAME, actionMap.name,
                         StringComparison.InvariantCultureIgnoreCase) == 0) continue;
-                    actionMap.Disable();
+                actionMap.Disable();
             }
         }
 
