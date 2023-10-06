@@ -82,6 +82,9 @@ namespace CryptoQuest.Battle.UI
         private void OnEnable()
         {
             BattleInput.instance.NavigateEvent += NavigateSelectCommand;
+
+            if (!Interactable) return;
+            
             if (SelectLastManagedSelectedButton()) return;
             if (_isSelectFirstButtonOnEnable)
             {
@@ -97,7 +100,7 @@ namespace CryptoQuest.Battle.UI
 
         private void NavigateSelectCommand(Vector2 dir)
         {
-            if (!Interactable) return;
+            if (!Interactable || dir.y == 0) return;
             CurrentIndex += (int)dir.y * -1;
             EventSystem.current.SetSelectedGameObject(_buttonsContainer.GetChild(CurrentIndex).gameObject);
         }

@@ -12,6 +12,9 @@ namespace CryptoQuest.Battle.UI.SelectSkill
     {
         public delegate void SkillTargetTypeDelegate(UISkill skill);
 
+        public SkillTargetTypeDelegate SelectSelfCallback { get; set; }
+        private void OnTargetSelf (CastableAbility skill) => SelectSelfCallback?.Invoke(_selectedSkill);
+
         public SkillTargetTypeDelegate SelectSingleEnemyCallback { get; set; }
         private void OnSingleEnemy(CastableAbility skill) => SelectSingleEnemyCallback?.Invoke(_selectedSkill);
 
@@ -39,6 +42,7 @@ namespace CryptoQuest.Battle.UI.SelectSkill
         [SerializeField] private SkillTargetType _allHeroChannel;
         [SerializeField] private SkillTargetType _allEnemyChannel;
         [SerializeField] private SkillTargetType _enemyGroupChannel;
+        [SerializeField] private SkillTargetType _targetSelfChannel;
 
         private HeroBehaviour _hero;
         private readonly List<UISkill> _skills = new List<UISkill>();
@@ -61,6 +65,7 @@ namespace CryptoQuest.Battle.UI.SelectSkill
             _allHeroChannel.EventRaised += OnSelectAllHero;
             _allEnemyChannel.EventRaised += OnSelectAllEnemy;
             _enemyGroupChannel.EventRaised += OnSelectEnemyGroup;
+            _targetSelfChannel.EventRaised += OnTargetSelf;
         }
 
         private void UnregisterEvents()
@@ -71,6 +76,7 @@ namespace CryptoQuest.Battle.UI.SelectSkill
             _allHeroChannel.EventRaised -= OnSelectAllHero;
             _allEnemyChannel.EventRaised -= OnSelectAllEnemy;
             _enemyGroupChannel.EventRaised -= OnSelectEnemyGroup;
+            _targetSelfChannel.EventRaised -= OnTargetSelf;
         }
 
         private void CreateSkillButtonsDifferentHero(HeroBehaviour hero)

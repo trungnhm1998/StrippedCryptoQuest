@@ -22,6 +22,7 @@ namespace CryptoQuest.Battle.States.SelectHeroesActions
             _skillPresenter.SelectAllHeroCallback = SelectAllHeroToCastSkillOn;
             _skillPresenter.SelectAllEnemyCallback = SelectAllEnemyToCastSkillOn;
             _skillPresenter.SelectEnemyGroupCallback = SelectEnemyGroupToCastSkillOn;
+            _skillPresenter.SelectSelfCallback = SelectSelfToCastSkillOn;
         }
 
         public override void OnExit()
@@ -72,11 +73,20 @@ namespace CryptoQuest.Battle.States.SelectHeroesActions
 
         private void CreateMultipleTargetCommand(UISkill skillUI, params Components.Character[] characters)
         {
-            var useItemCommand = new MultipleTargetCastSkillCommand(Hero, skillUI.Skill, characters);
+            var castSkillCommand = new MultipleTargetCastSkillCommand(Hero, skillUI.Skill, characters);
             Hero.TryGetComponent(out CommandExecutor commandExecutor);
-            commandExecutor.SetCommand(useItemCommand);
+            commandExecutor.SetCommand(castSkillCommand);
             Fsm.GoToNextState();
         }
 
+        private void SelectSelfToCastSkillOn(UISkill skillUI)
+        {
+            _skillPresenter.Show(Hero, false);
+            Debug.Log("SelectingSkill::SelectSelfToCastSkillOn");
+            var castSkillCommand = new CastSkillCommand(Hero, skillUI.Skill, Hero);
+            Hero.TryGetComponent(out CommandExecutor commandExecutor);
+            commandExecutor.SetCommand(castSkillCommand);
+            Fsm.GoToNextState();
+        }
     }
 }

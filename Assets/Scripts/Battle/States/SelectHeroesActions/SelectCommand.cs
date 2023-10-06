@@ -5,6 +5,7 @@ using CryptoQuest.Battle.UI;
 using CryptoQuest.Battle.UI.SelectCommand;
 using CryptoQuest.Character.Attributes;
 using CryptoQuest.Gameplay.Battle.Core.Helper;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -12,6 +13,7 @@ namespace CryptoQuest.Battle.States.SelectHeroesActions
 {
     public class SelectCommand : StateBase, ISelectCommandCallback
     {
+        private const float SELECT_DELAY = 0.1f;
         private EnemyGroupPresenter _enemyGroupPresenter;
 
         public SelectCommand(HeroBehaviour hero, SelectHeroesActions fsm) : base(hero, fsm)
@@ -29,10 +31,9 @@ namespace CryptoQuest.Battle.States.SelectHeroesActions
             
             Fsm.SelectCommandUI.SetCharacterName(Hero.Spec.Unit.Origin.DetailInformation.LocalizedName);
             Fsm.SelectCommandUI.RegisterCallback(this);
-            if (_lastSelectedCommand != null)
-                EventSystem.current.SetSelectedGameObject(_lastSelectedCommand);
-            else
-                Fsm.SelectCommandUI.SelectFirstButton();
+            
+            DOVirtual.DelayedCall(SELECT_DELAY, SelectButton);
+
             _enemyGroupPresenter.Show();
             EnableCommandMenu();
         }
@@ -75,6 +76,7 @@ namespace CryptoQuest.Battle.States.SelectHeroesActions
         public void OnGuardPressed()
         {
             Debug.Log("SelectCommandState::OnGuardPressed");
+            _lastSelectedCommand = EventSystem.current.currentSelectedGameObject;
             Hero.TryGetComponent(out CommandExecutor commandExecutor);
             commandExecutor.SetCommand(new GuardCommand(Hero));
             Fsm.GoToNextState();
@@ -83,6 +85,7 @@ namespace CryptoQuest.Battle.States.SelectHeroesActions
         public void OnRetreatPressed()
         {
             Debug.Log("SelectCommandState::OnRetreatPressed");
+            _lastSelectedCommand = EventSystem.current.currentSelectedGameObject;
             var highestAgi = Fsm.EnemyPartyManager.Enemies
                 .GetHighestAttributeValue<EnemyBehaviour>(AttributeSets.Agility);
             Hero.TryGetComponent(out CommandExecutor commandExecutor);
@@ -93,13 +96,20 @@ namespace CryptoQuest.Battle.States.SelectHeroesActions
 
         private void EnableCommandMenu()
         {
-            // _enemyPartyManager.EnemiesPresenter.Hide();
             Fsm.SelectCommandUI.SetActiveCommandsMenu(true);
         }
 
         private void DisableCommandMenu()
         {
             Fsm.SelectCommandUI.SetActiveCommandsMenu(false);
+        }
+
+        private void SelectButton()
+        {
+            if (_lastSelectedCommand != null)
+                EventSystem.current.SetSelectedGameObject(_lastSelectedCommand);
+            else
+                Fsm.SelectCommandUI.SelectFirstButton();
         }
     }
 }

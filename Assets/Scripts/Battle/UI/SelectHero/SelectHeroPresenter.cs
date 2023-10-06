@@ -11,6 +11,7 @@ namespace CryptoQuest.Battle.UI.SelectHero
 {
     public class SelectHeroPresenter : MonoBehaviour
     {
+        private const float SELECT_DELAY = 0.1f;
         public static event Action<HeroBehaviour> ConfirmSelectCharacter;
 
         [SerializeField] private PlayerPartyPresenter _playerPartyPresenter;
@@ -37,7 +38,7 @@ namespace CryptoQuest.Battle.UI.SelectHero
             _selectHeroButton.SetLabel(str);
             SetCurrentCharacter(0);
             _selectHeroButton.SetUIActive(true);
-            DOVirtual.DelayedCall(0.16f, () =>
+            DOVirtual.DelayedCall(SELECT_DELAY, () =>
             {
                 EventSystem.current.SetSelectedGameObject(_selectHeroButton.Button.gameObject);
             });
