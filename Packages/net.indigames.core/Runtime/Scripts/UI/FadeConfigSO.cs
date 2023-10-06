@@ -1,9 +1,8 @@
 ﻿using UnityEngine;
 using UnityEngine.Events;
 
-namespace IndiGames.Core.UI.FadeController
+namespace IndiGames.Core.UI
 {
-    [CreateAssetMenu(menuName = "IndiGames Core/UI/Fade Config")]
     public class FadeConfigSO : ScriptableObject
     {
         [SerializeField] private float _duration = .3f;

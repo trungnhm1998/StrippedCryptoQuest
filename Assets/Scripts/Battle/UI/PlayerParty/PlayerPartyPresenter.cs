@@ -1,10 +1,13 @@
 using System.Collections;
 using CryptoQuest.Battle.Components;
+using CryptoQuest.Battle.Events;
 using CryptoQuest.Character.Hero.AvatarProvider;
 using CryptoQuest.Gameplay.PlayerParty;
 using CryptoQuest.System;
 using IndiGames.Core.Events.ScriptableObjects;
+using TinyMessenger;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 
 namespace CryptoQuest.Battle.UI.PlayerParty
 {
@@ -16,14 +19,17 @@ namespace CryptoQuest.Battle.UI.PlayerParty
 
         private IPartyController _party;
         private IHeroAvatarProvider _heroAvatarProvider;
+        private TinyMessageSubscriptionToken _token;
 
         private void Awake()
         {
+            _token = BattleEventBus.SubscribeEvent<UnloadingEvent>(UnloadAvatars);
             _sceneLoadedEvent.EventRaised += LoadPlayerPartyUI;
         }
 
         private void OnDestroy()
         {
+            BattleEventBus.UnsubscribeEvent(_token);
             _sceneLoadedEvent.EventRaised -= LoadPlayerPartyUI;
         }
 
@@ -63,6 +69,15 @@ namespace CryptoQuest.Battle.UI.PlayerParty
         {
             yield return _heroAvatarProvider.LoadAvatarAsync(hero);
             characterUI.SetBattleAvatar(hero.BattleAvatar);
+        }
+
+        private void UnloadAvatars(UnloadingEvent _)
+        {
+            foreach (var slot in _party.Slots)
+            {
+                if (slot.HeroBehaviour && slot.HeroBehaviour.BattleAvatar)
+                    Addressables.Release(slot.HeroBehaviour.BattleAvatar);
+            }
         }
     }
 }

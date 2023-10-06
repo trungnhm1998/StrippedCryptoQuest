@@ -58,7 +58,7 @@ namespace CryptoQuest.Gameplay.Loot
 
             var loots = handle.Result;
             // TODO: This method should be async wait for server to add the loot into inventory first
-            _rewardManager.Reward(loots.LootInfos.ToArray());
+            _rewardManager.Reward(loots.LootInfos);
             chest.Opened?.Invoke();
             _saveData.OpenedChests.Add(chest.GUID);
         }

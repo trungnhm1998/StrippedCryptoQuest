@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace CryptoQuest.Core
+namespace IndiGames.Core.Common
 {
     public class ScriptableSingleton<T> : ScriptableObject where T : ScriptableObject
     {

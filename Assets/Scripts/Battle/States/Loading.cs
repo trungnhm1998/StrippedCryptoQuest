@@ -41,21 +41,6 @@ namespace CryptoQuest.Battle.States
             FinishInitBattle();
         }
 
-        private void WinBattle()
-        {
-            // _battleStateMachine.BattleInput.DisableAllInput();
-            // if (_initCoroutine != null) _battleStateMachine.StopCoroutine(_initCoroutine);
-            // var context = new BattleContext();
-            // List<LootInfo> loots = new();
-            // var enemies = _initializer.Enemies;
-            // // TODO: This also return cloned loot, but we already clone it in RewardManager?
-            // foreach (var enemy in enemies)
-            //     loots.AddRange(enemy.GetLoots());
-            // if (loots.Count > 0) context.Loots = RewardManager.CloneAndMergeLoots(loots.ToArray());
-            //
-            // _battleStateMachine.BattleEndedEvent.RaiseEvent(context);
-        }
-
         private void FinishInitBattle()
         {
             _battleStateMachine.BattleInput.EnableBattleInput();

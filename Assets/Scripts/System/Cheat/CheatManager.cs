@@ -26,7 +26,7 @@ namespace CryptoQuest.System.Cheat
 
         public void EnableTerminalInput()
         {
-#if UNITY_EDITOR || DEVELOPMENT_BUILD
+#if !PRODUCTION_BUILD
             _inputMediatorSO.InputActions.Terminal.Enable();
 #endif
         }

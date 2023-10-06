@@ -47,6 +47,24 @@ namespace IndiGames.Core.Database
         }
 
         private readonly Dictionary<TKey, AsyncOperationHandle<TSerializableObject>> _loadedData = new();
+        
+        public void ReleaseDataById(TKey id)
+        {
+            if (!_loadedData.TryGetValue(id, out var handle)) return;
+            if (!handle.IsValid()) return;
+            Addressables.Release(handle);
+            _loadedData.Remove(id);
+        }
+        
+        public void ReleaseAllData()
+        {
+            foreach (var handle in _loadedData.Values)
+            {
+                if (!handle.IsValid()) continue;
+                Addressables.Release(handle);
+            }
+            _loadedData.Clear();
+        }
 
         public IEnumerator LoadDataById(TKey id)
         {

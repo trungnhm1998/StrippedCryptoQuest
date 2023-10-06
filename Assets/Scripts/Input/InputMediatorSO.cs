@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using CryptoQuest.Core;
 using CryptoQuest.System.Cheat;
+using IndiGames.Core.Common;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;

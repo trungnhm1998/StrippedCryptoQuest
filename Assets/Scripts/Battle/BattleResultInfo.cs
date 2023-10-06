@@ -1,7 +1,9 @@
-﻿using CryptoQuest.Gameplay.Encounter;
+﻿using System;
+using CryptoQuest.Gameplay.Encounter;
 
 namespace CryptoQuest.Battle
 {
+    [Obsolete]
     public class BattleResultInfo
     {
         public bool IsWin { get; set; }

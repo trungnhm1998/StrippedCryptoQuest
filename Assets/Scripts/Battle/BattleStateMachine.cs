@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using CryptoQuest.Battle.Events;
 using CryptoQuest.Battle.States;
 using CryptoQuest.Battle.UI.SelectCommand;
 using CryptoQuest.Battle.UI.SelectHero;
@@ -31,7 +30,6 @@ namespace CryptoQuest.Battle
         [field: SerializeField] public UISelectCommand CommandUI { get; private set; }
         [field: SerializeField] public SpiralConfigSO Spiral { get; private set; }
         [field: SerializeField] public VoidEventChannelSO SceneLoadedEvent { get; private set; }
-        [field: SerializeField] public BattleEventSO BattleEndedEvent { get; private set; }
         [field: SerializeField] public SelectHeroPresenter SelectHeroPresenter { get; private set; }
 
         #endregion
@@ -49,10 +47,14 @@ namespace CryptoQuest.Battle
         /// I use OnDisable to prevent error in editor
         /// because when state Exit it only disabling GO and those GO already destroyed 
         /// </summary>
-        private void OnDisable()
+        private void OnDisable() => Unload();
+        
+        public void Unload()
         {
-            SceneLoadedEvent.EventRaised -= GotoLoadingState;
             _currentState?.OnExit(this);
+            _currentState = null;
+            SceneLoadedEvent.EventRaised -= GotoLoadingState;
+            _cachedComponents.Clear();
         }
 
         private void GotoLoadingState()

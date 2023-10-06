@@ -168,7 +168,7 @@ namespace CryptoQuest.Battle.States.SelectHeroesActions
 
         public void GoToPresentState()
         {
-            _battleStateMachine.ChangeState(new Present());
+            _battleStateMachine.ChangeState(new RoundPresentation());
         }
 
         /// <summary>

@@ -1,12 +1,15 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using CryptoQuest.Battle.Commands;
 using CryptoQuest.Character.Enemy;
 using CryptoQuest.Character.Tag;
+using CryptoQuest.Gameplay.Loot;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
 using Spine.Unity;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
+using NotImplementedException = System.NotImplementedException;
 
 namespace CryptoQuest.Battle.Components
 {
@@ -111,5 +114,7 @@ namespace CryptoQuest.Battle.Components
         }
 
         public void ProvideStats(AttributeWithValue[] attributeWithValues) { }
+
+        public IEnumerable<LootInfo> GetLoots() => _spec.GetLoots();
     }
 }

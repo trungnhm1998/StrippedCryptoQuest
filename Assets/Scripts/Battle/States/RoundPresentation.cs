@@ -3,7 +3,7 @@ using TinyMessenger;
 
 namespace CryptoQuest.Battle.States
 {
-    public class Present : IState
+    public class RoundPresentation : IState
     {
         private BattlePresenter _presenter;
         private BattleContext _battleContext;
@@ -14,7 +14,7 @@ namespace CryptoQuest.Battle.States
         {
             _stateMachine = stateMachine;
             _battleContext = stateMachine.GetComponent<BattleContext>();
-            var presentation = stateMachine.GetComponent<PresentBehaviour>();
+            var presentation = stateMachine.GetComponent<RoundPresenter>();
             _presenter = stateMachine.GetComponent<BattlePresenter>();
             _presenter.CommandPanel.SetActive(false);
 

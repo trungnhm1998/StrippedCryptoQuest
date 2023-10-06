@@ -3,7 +3,6 @@ using CryptoQuest.Battle.Events;
 using CryptoQuest.Gameplay;
 using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects;
 using CryptoQuest.Gameplay.Encounter;
-using CryptoQuest.Gameplay.Reward;
 using CryptoQuest.Gameplay.Reward.ScriptableObjects;
 using CryptoQuest.Input;
 using CryptoQuest.UI.SpiralFX;
@@ -27,6 +26,7 @@ namespace CryptoQuest.Battle
         [SerializeField] private SceneScriptableObject _battleSceneSO;
 
         [Header("Events to listen to")]
+        [Obsolete]
         [SerializeField] private VoidEventChannelSO _onBattleEndEventChannel;
 
         [SerializeField] private BattleEventSO _endBattleEvent;
@@ -35,6 +35,7 @@ namespace CryptoQuest.Battle
         [SerializeField] private UnloadSceneEventChannelSO _unloadSceneEvent;
 
         [SerializeField] private LoadSceneEventChannelSO _loadSceneEventChannelSo;
+        [Obsolete]
         [SerializeField] private BattleResultEventSO _battleCompletedEvent;
         [SerializeField] private RewardSO _rewardEventChannel;
 
@@ -109,12 +110,14 @@ namespace CryptoQuest.Battle
             _spiralConfigSo.DoneFadeOut -= StartBattle;
         }
 
+        [Obsolete]
         private void OnBattleEnd()
         {
             NotifyBattleResult();
             _unloadSceneEvent.RequestUnload(_battleSceneSO);
         }
 
+        [Obsolete]
         private void NotifyBattleResult()
         {
             BattleResultInfo result = new()
@@ -135,6 +138,7 @@ namespace CryptoQuest.Battle
             OnBattleEnd();
         }
 
+        [Obsolete]
         private void BattleUnloaded(SceneScriptableObject scene)
         {
             if (scene != _battleSceneSO) return;

@@ -1,6 +1,6 @@
-using UnityEngine;
 using System.Collections;
 using CryptoQuest.Battle.Components;
+using UnityEngine;
 
 namespace CryptoQuest.Character.Hero.AvatarProvider
 {

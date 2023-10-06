@@ -1,7 +1,6 @@
 ﻿using CryptoQuest.Battle.Events;
 using CryptoQuest.Character.Ability;
 using CryptoQuest.Character.Tag;
-using IndiGames.Core.Events.ScriptableObjects;
 using IndiGames.GameplayAbilitySystem.TagSystem.ScriptableObjects;
 using TinyMessenger;
 using UnityEngine;
@@ -29,7 +28,7 @@ namespace CryptoQuest.Battle.Components
         {
             _spec = Character.AbilitySystem.GiveAbility<GuardAbilitySpec>(_guardAbility);
         }
-        
+
         public void GuardUntilEndOfTurn()
         {
             _spec.TryActiveAbility();
@@ -38,7 +37,7 @@ namespace CryptoQuest.Battle.Components
         private void RemoveGuardTag(RoundEndedEvent eventObject)
         {
             var tagSystem = Character.AbilitySystem.TagSystem;
-            tagSystem.RemoveTags(new TagScriptableObject[] {TagsDef.Guard});
+            tagSystem.RemoveTags(new TagScriptableObject[] { TagsDef.Guard });
         }
     }
 }

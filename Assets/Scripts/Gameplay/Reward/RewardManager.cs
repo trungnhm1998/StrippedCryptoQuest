@@ -7,7 +7,7 @@ using CryptoQuest.Events.UI.Dialogs;
 using CryptoQuest.Gameplay.Inventory.Currency;
 using CryptoQuest.Gameplay.Loot;
 using CryptoQuest.Gameplay.PlayerParty;
-using CryptoQuest.Gameplay.Reward.ScriptableObjects;
+using CryptoQuest.Gameplay.Reward.Events;
 using CryptoQuest.Item;
 using CryptoQuest.Item.Equipment;
 using CryptoQuest.System;
@@ -21,27 +21,27 @@ namespace CryptoQuest.Gameplay.Reward
         /// <summary>
         /// Reward player with item. could be <see cref="EquipmentInfo"/> or <see cref="ConsumableInfo"/> or <see cref="CurrencyInfo"/>
         /// </summary>
-        public void Reward(params LootInfo[] loots);
+        public void Reward(List<LootInfo> loots);
     }
 
     public class RewardManager : MonoBehaviour, IRewardManager
     {
-        public delegate void RewardEvent(params LootInfo[] loots);
-
-        public static event Action<float> RewardExpEvent;
+        public static event Action<float> RewardExpEvent; // TODO: this might not need
         public static void RewardPlayerExp(float exp) => RewardExpEvent?.Invoke(exp);
+        
+        [Header("Listen Event")]
+        [SerializeField] private RewardLootEvent _rewardLootEvent;
 
         [Header("Raise Event")]
         [SerializeField] private LootEventChannelSO _addLootRequestEventChannel;
         [SerializeField] private RewardDialogEventChannelSO _showRewardDialogEventChannel;
-        [SerializeField] private RewardSO _rewardEventChannel;
 
         private IPartyController _party;
 
         private void Awake()
         {
-            _rewardEventChannel.OnRewardEvent += Reward;
-            _rewardEventChannel.OnRewardExpEvent += RewardExp;
+            _rewardLootEvent.EventRaised += Reward;
+            RewardExpEvent += RewardExp;
         }
 
         private void Start()
@@ -51,13 +51,13 @@ namespace CryptoQuest.Gameplay.Reward
 
         private void OnDestroy()
         {
-            _rewardEventChannel.OnRewardEvent -= Reward;
-            _rewardEventChannel.OnRewardExpEvent -= RewardExp;
+            _rewardLootEvent.EventRaised -= Reward;
+            RewardExpEvent -= RewardExp;
         }
 
-        public void Reward(params LootInfo[] loots)
+        public void Reward(List<LootInfo> loots)
         {
-            if (loots == null || loots.Length == 0) return;
+            if (loots == null || loots.Count == 0) return;
             var mergedLoots = CloneAndMergeLoots(loots);
             foreach (var loot in mergedLoots)
                 _addLootRequestEventChannel.RaiseEvent(loot);
@@ -80,9 +80,10 @@ namespace CryptoQuest.Gameplay.Reward
         /// </summary>
         /// <param name="loots">Contains <see cref="CurrencyLootInfo"/>, <see cref="ExpLoot"/>, <see cref="UsableLootInfo"/>, <see cref="EquipmentLootInfo"/></param>
         /// <returns>Loots that merged and cloned to be add into inventory</returns>
-        public static LootInfo[] CloneAndMergeLoots(params LootInfo[] loots)
+        public static List<LootInfo> CloneAndMergeLoots(List<LootInfo> loots)
         {
-            List<LootInfo> mergedLoots = loots.Select(loot => loot.Clone()).ToList();
+            if (loots == null || loots.Count == 0) return new List<LootInfo>();
+            var mergedLoots = loots.Select(loot => loot.Clone()).ToList();
             IRewardMerger rewardMerger = new BasicMerger(ref mergedLoots);
             var currentLootIndex = 0;
             while (currentLootIndex < mergedLoots.Count)
@@ -92,7 +93,7 @@ namespace CryptoQuest.Gameplay.Reward
                     currentLootIndex++;
             }
 
-            return mergedLoots.ToArray();
+            return mergedLoots;
         }
     }
 }

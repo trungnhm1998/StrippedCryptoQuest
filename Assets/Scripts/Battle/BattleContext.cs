@@ -3,6 +3,8 @@ using System.Linq;
 using CryptoQuest.Battle.Components;
 using CryptoQuest.Character.Attributes;
 using CryptoQuest.Character.Tag;
+using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects;
+using CryptoQuest.Gameplay.Encounter;
 using CryptoQuest.Gameplay.PlayerParty;
 using CryptoQuest.System;
 using IndiGames.Core.Events.ScriptableObjects;
@@ -12,11 +14,13 @@ namespace CryptoQuest.Battle
 {
     public class BattleContext : MonoBehaviour
     {
+        [SerializeField] private BattleBus _battleBus;
         [SerializeField] private EnemyPartyManager _enemyPartyManager;
         [SerializeField] private VoidEventChannelSO _sceneLoadedEvent; // Awake only work if we start from correct flow
         public List<EnemyBehaviour> Enemies => _enemyPartyManager.Enemies;
         private IPartyController _party;
         public IPartyController PlayerParty => _party;
+        public Battlefield CurrentBattlefield => _battleBus.CurrentBattlefield;
 
         private void Awake()
         {
