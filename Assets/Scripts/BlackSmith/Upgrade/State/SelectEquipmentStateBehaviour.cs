@@ -1,5 +1,3 @@
-using CryptoQuest.Input;
-using NPOI.SS.Formula.Functions;
 using UnityEngine;
 
 namespace CryptoQuest.BlackSmith.Upgrade.StateMachine
@@ -20,7 +18,7 @@ namespace CryptoQuest.BlackSmith.Upgrade.StateMachine
 
         public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
-            _stateController.SelectedEquipmentPanel.SetActive(false);    
+            _stateController.SelectedEquipmentPanel.SetActive(false);
         }
 
         private void GoToUpgradeState()
