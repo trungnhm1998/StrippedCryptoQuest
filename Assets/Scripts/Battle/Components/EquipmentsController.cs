@@ -159,6 +159,7 @@ namespace CryptoQuest.Battle.Components
                 if (equippingSlot != slot)
                     SetEquipmentInSlot(equipment, slot);
 
+            equipment.Equipped(_hero.Spec.Id);
             ApplyEquipmentEffectToCharacter(equipment);
             Equipped?.Invoke(equipment);
         }
@@ -206,6 +207,7 @@ namespace CryptoQuest.Battle.Components
         {
             // EquipmentRemoved?.Invoke(equipment, equippedSlots);
             RemoveEquipmentEffectFromCharacter(equipment);
+            equipment.UnEquipped();
             Removed?.Invoke(equipment);
         }
 

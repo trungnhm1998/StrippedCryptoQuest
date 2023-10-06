@@ -15,7 +15,7 @@ public static class InventoryExtensions
         foreach (var item in inventory.Equipments)
         {
             if (item.Data.EquipmentCategory == EEquipmentCategory.Weapon
-             && !item.IsNftItem)
+             && !item.IsNftItem && !item.IsEquipped)
             {
                 weaponList.Add(item);
             }
@@ -31,7 +31,7 @@ public static class InventoryExtensions
         foreach (var item in inventory.Equipments)
         {
             if (item.Data.EquipmentCategory != EEquipmentCategory.Weapon
-             && !item.IsNftItem)
+             && !item.IsNftItem && !item.IsEquipped)
             {
                 nonWeaponList.Add(item);
             }

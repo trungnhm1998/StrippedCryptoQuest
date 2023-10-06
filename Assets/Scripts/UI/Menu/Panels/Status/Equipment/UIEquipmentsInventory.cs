@@ -138,7 +138,6 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
 
             EventSystem.current.SetSelectedGameObject(null);
             Debug.Log($"RemoveEquipmentFromInventory {equipment}");
-            ServiceProvider.GetService<IInventoryController>().Remove(equipment);
             DestroyEquipmentRow(_equippingItemToBeRemoveFromInventory);
             _equippingItemToBeRemoveFromInventory = null;
             EventSystem.current.SetSelectedGameObject(_unEquipButton.gameObject);
@@ -170,7 +169,7 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
             {
                 var equipment = inventory.Equipments[i];
                 if (_equipmentsPanel.ModifyingEquipmentCategory ==
-                    equipment.Data.EquipmentCategory)
+                    equipment.Data.EquipmentCategory && !equipment.IsEquipped)
                     InstantiateNewEquipmentUI(equipment);
             }
 

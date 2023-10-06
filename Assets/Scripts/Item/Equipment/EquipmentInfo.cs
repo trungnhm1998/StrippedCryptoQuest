@@ -38,6 +38,9 @@ namespace CryptoQuest.Item.Equipment
         public override int Price => Def.Price;
         public override int SellPrice => Def.SellPrice;
 
+        private int _heroEquippedId = 0;
+        public bool IsEquipped => _heroEquippedId != 0;
+
         public EquipmentInfo()
         {
             Level = 1;
@@ -136,6 +139,16 @@ namespace CryptoQuest.Item.Equipment
         public override bool IsValid()
         {
             return !string.IsNullOrEmpty(_definitionId);
+        }
+
+        public void UnEquipped()
+        {
+            _heroEquippedId = 0;
+        }
+
+        public void Equipped(int heroId)
+        {
+            _heroEquippedId = heroId;
         }
 
         public bool Loaded() => Prefab != null && Prefab.EquipmentType != null && Def != null;
