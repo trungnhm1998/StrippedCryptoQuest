@@ -25,7 +25,7 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Monster
         public BattleDataSOEditor()
         {
             CreateDataFolder = false;
-            DefaultStoragePath = "Assets/ScriptableObjects/Data/EncounterDatabase";
+            DefaultStoragePath = "Assets/ScriptableObjects/Encounters";
         }
 
         public override void ImportBatchData(string directory, Action<ScriptableObject> callback)
@@ -154,7 +154,7 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Monster
 
         private void LoadAndCacheBackgrounds()
         {
-            string[] fileEntries = Directory.GetFiles("Assets/Arts/UI/Battle/Backgrounds");
+            string[] fileEntries = Directory.GetFiles(BATTLEFIELD_BACKGROUND_DATA_PATH);
             foreach (string fileName in fileEntries)
             {
                 string path = fileName.Replace(@"\", "/");
