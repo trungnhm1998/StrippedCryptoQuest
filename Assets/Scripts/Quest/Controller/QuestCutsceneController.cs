@@ -17,10 +17,8 @@ namespace CryptoQuest.Quest
 
         public void TriggerCutscene(CutsceneQuestInfo questInfo)
         {
-            TriggerQuestEventChannel.RaiseEvent(questInfo.Data);
-
+            QuestManager.TriggerQuest(questInfo.Data);
             _currentCutscene = questInfo.Data.CutSceneToLoad;
-            _currentCutscene.RaiseEvent();
 
             CutsceneManager.CutsceneCompleted += OnQuestFinish;
         }

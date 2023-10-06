@@ -24,9 +24,16 @@ namespace CryptoQuest.Quest.Categories
             QuestManager questManager) : base(cutsceneQuestSO)
         {
             _questCutsceneController = questManager.GetComponent<QuestCutsceneController>();
+            _questCutsceneController.QuestManager = questManager;
         }
 
         public CutsceneQuestInfo() { }
+
+        public override void TriggerQuest()
+        {
+            base.TriggerQuest();
+            Data.CutSceneToLoad.RaiseEvent();
+        }
 
         public override void GiveQuest()
         {

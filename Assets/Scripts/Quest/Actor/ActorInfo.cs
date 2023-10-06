@@ -9,7 +9,7 @@ namespace CryptoQuest.Quest.Actor
     {
         public abstract bool IsValid();
 
-        public abstract IEnumerator Spawn(Transform transform);
+        public abstract IEnumerator Spawn(Transform parent);
     }
 
     [Serializable]

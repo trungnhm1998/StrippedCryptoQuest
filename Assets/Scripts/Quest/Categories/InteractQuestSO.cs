@@ -24,6 +24,7 @@ namespace CryptoQuest.Quest.Categories
             interactQuestSO)
         {
             _questInteractController = questManager.GetComponent<QuestInteractController>();
+            _questInteractController.QuestManager = questManager;
         }
 
         public override void GiveQuest()

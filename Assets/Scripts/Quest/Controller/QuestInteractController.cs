@@ -18,10 +18,11 @@ namespace CryptoQuest.Quest
 
         public void TriggerQuest(InteractQuestInfo questInfo)
         {
-            TriggerQuestEventChannel.RaiseEvent(questInfo.Data);
             _currentInteractQuest = questInfo.Data.YarnDialogWithQuestSo;
 
             YarnQuestDef yarnDialogData = questInfo.Data.YarnDialogWithQuestSo.YarnQuestDef;
+            
+            QuestManager.TriggerQuest(questInfo.Data);
 
             YarnQuestHandler.OnUpdateCurrentNode?.Invoke(yarnDialogData);
             YarnSpinnerDialogueManager.PlayDialogueRequested.Invoke(yarnDialogData.YarnNode);

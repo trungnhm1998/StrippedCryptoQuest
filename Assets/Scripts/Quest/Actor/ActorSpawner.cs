@@ -1,5 +1,4 @@
-﻿using CryptoQuest.Quest.Components;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace CryptoQuest.Quest.Actor
 {
@@ -8,8 +7,6 @@ namespace CryptoQuest.Quest.Actor
         [SerializeField] private ActorSO _actorDef;
         [SerializeField] private Transform _spawnPoint;
 
-        [SerializeField] private QuestManager _questManager;
-
         private void OnEnable()
         {
             SpawnActor();
@@ -17,7 +14,7 @@ namespace CryptoQuest.Quest.Actor
 
         private void SpawnActor()
         {
-            ActorInfo actor = _actorDef.CreateActor(_questManager);
+            ActorInfo actor = _actorDef.CreateActor();
             StartCoroutine(actor.Spawn(_spawnPoint));
         }
     }
