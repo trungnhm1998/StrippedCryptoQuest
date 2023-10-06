@@ -17,10 +17,13 @@ namespace CryptoQuest.BlackSmith.Upgrade
 {
     public class UpgradeEquipment : IUpgradeEquipment
     {
-        public ItemInfo Item => _equipment;
+        public EquipmentInfo Equipment => _equipment;
         public LocalizedString DisplayName => _equipment.Data.DisplayName;
-        public AssetReferenceT<Sprite> Icon => _equipment.Data.Image;
+        public Sprite Icon => _equipment.Data.EquipmentType.Icon;
+        public Sprite Rarity => _equipment.Rarity.Icon;
+        public AssetReferenceT<Sprite> Illustration => _equipment.Data.Image;
         public float Cost => _equipment.Price;
+        public int Level => _equipment.Level;
         private EquipmentInfo _equipment;
 
         public UpgradeEquipment(EquipmentInfo equipmentInfo)

@@ -13,33 +13,30 @@ namespace CryptoQuest.BlackSmith.Upgrade
 {
     public class UIUpgradeItem : MonoBehaviour
     {
-        public static event UnityAction<UIUpgradeItem> SelectItemEvent;
+        public static event UnityAction<UIUpgradeItem> SelectedItemEvent;
         [SerializeField] private LocalizeStringEvent _displayName;
         [SerializeField] private Image _icon;
         [SerializeField] private TextMeshProUGUI _cost;
         [SerializeField] private GameObject _selectedBackground;
+        [SerializeField] private GameObject _selectedPanel;
+        [SerializeField] private GameObject _costPanel;
         [SerializeField] private MultiInputButton _button;
-
-
-        private IEnumerator LoadSpriteAndSet(AssetReferenceT<Sprite> equipmentTypeIcon)
-        {
-            if (equipmentTypeIcon.RuntimeKeyIsValid() == false) yield break;
-            var handle = equipmentTypeIcon.LoadAssetAsync<Sprite>();
-            yield return handle;
-            _icon.sprite = handle.Result;
-        }
         
+        public IUpgradeEquipment Equipment;
+
         public void ConfigureCell(IUpgradeEquipment equipment)
         {
-            _displayName.StringReference = equipment.DisplayName;
-            _cost.text = equipment.Cost.ToString();
-            StartCoroutine(LoadSpriteAndSet(equipment.Icon));
+            Equipment = equipment;
+            _displayName.StringReference = Equipment.DisplayName;
+            _cost.text = Equipment.Cost.ToString();
+            _icon.sprite = equipment.Icon;
         }
 
         private void OnEnable()
         {
             _button.Selected += OnSeleceted;
             _button.DeSelected += OnDeselected;
+            _button.onClick.AddListener(SelectedEquipment);
         }
 
         private void OnDisable()
@@ -51,12 +48,19 @@ namespace CryptoQuest.BlackSmith.Upgrade
         private void OnSeleceted()
         {
             _selectedBackground.SetActive(true);
-            SelectItemEvent?.Invoke(this);
         }
 
         private void OnDeselected()
         {
             _selectedBackground.SetActive(false);
+        }
+
+        private void SelectedEquipment()
+        {
+            SelectedItemEvent?.Invoke(this);
+            _selectedPanel.SetActive(true);
+            _costPanel.SetActive(false);
+            _button.interactable = false;
         }
     }
 }

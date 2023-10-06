@@ -9,21 +9,51 @@ using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-namespace CryptoQuest.BlackSmith.Upgrade.MVP
+namespace CryptoQuest.BlackSmith.Upgrade
 {
     public class UpgradePresenter : MonoBehaviour
     {
-        [SerializeField] private UnityEvent<InventorySO> _instantiateData;
+        [SerializeField] private UIUpgradeEquipment _upgradeEquipment;
+        [SerializeField] private UIUpgradeResult _result;
+        private IUpgradeEquipment _equipmentData;
 
         private void OnEnable()
         {
             Init();
+            UIUpgradeItem.SelectedItemEvent += OnSelecetedEquipment;
+            // _input.NavigateEvent += SelectLevelToUpgrade; Because remove old input action to resolved conflict
         }
 
-        private void Init()
+        private void OnDisable()
+        {
+            UIUpgradeItem.SelectedItemEvent -= OnSelecetedEquipment;
+            // _input.NavigateEvent -= SelectLevelToUpgrade; Because remove old input action to resolved conflict
+        }
+
+        public void Init()
         {
             var inventory = ServiceProvider.GetService<IInventoryController>().Inventory;
-            _instantiateData.Invoke(inventory);
+            _upgradeEquipment.InstantiateData(inventory);
+        }
+
+        private void OnSelecetedEquipment(UIUpgradeItem item)
+        {
+            _upgradeEquipment.SelectedEquipment(item);
+            _equipmentData = item.Equipment;
+        }
+
+        public void UpgradeEquipment()
+        {
+            _upgradeEquipment.SetLevel(_equipmentData);
+            _result.RenderEquipment(_equipmentData);
+        }
+
+        private void SelectLevelToUpgrade(Vector2 direction)
+        {
+            if (direction.y > 0)    
+                _upgradeEquipment.SetValue(1, _equipmentData);
+            if (direction.y < 0)
+                _upgradeEquipment.SetValue(-1, _equipmentData);
         }
     }
 }

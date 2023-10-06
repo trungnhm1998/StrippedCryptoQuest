@@ -152,5 +152,7 @@ namespace CryptoQuest.Item.Equipment
         }
 
         public bool Loaded() => Prefab != null && Prefab.EquipmentType != null && Def != null;
+
+        public void SetLevel(int level) => Level = level;
     }
 }

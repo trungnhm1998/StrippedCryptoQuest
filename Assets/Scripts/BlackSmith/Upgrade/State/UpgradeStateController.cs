@@ -1,11 +1,29 @@
 using CryptoQuest.Input;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace CryptoQuest.BlackSmith.Upgrade.StateMachine
 {
     public class UpgradeStateController : MonoBehaviour
     {
         [field: SerializeField] public InputMediatorSO Input { get; private set; }
-        [field: SerializeField] public GameObject UpgradePanel {get; private set;}
+        [field: SerializeField] public GameObject Content { get; private set; }
+        [field: SerializeField] public GameObject SelectedEquipmentPanel { get; private set; }
+        [field: SerializeField] public GameObject UpgradeEquipmentPanel { get; private set; }
+        [field: SerializeField] public GameObject UpgradeResultPanel { get; private set; }
+        [field: SerializeField] public GameObject SelectActionPanel { get; private set; }
+        [SerializeField] private UnityEvent _upgradeEquipment;
+        [SerializeField] private UnityEvent _initListEquipment;
+
+
+        public void InstantiateEquipment()
+        {
+            _initListEquipment.Invoke();
+        }
+
+        public void UpgradeEquipment()
+        {
+            _upgradeEquipment.Invoke();
+        }
     }
 }

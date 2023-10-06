@@ -1,5 +1,6 @@
 
 using CryptoQuest.Item;
+using CryptoQuest.Item.Equipment;
 using TMPro;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -9,9 +10,12 @@ namespace CryptoQuest.BlackSmith.Interface
 {
     public interface IUpgradeEquipment
     {
-        public ItemInfo Item { get; }
+        public EquipmentInfo Equipment { get; }
         public LocalizedString DisplayName { get; }
-        public AssetReferenceT<Sprite> Icon { get; }
+        public Sprite Icon { get; }
+        public Sprite Rarity { get; }
+        public AssetReferenceT<Sprite> Illustration { get; }
         public float Cost { get; }
+        public int Level { get;}
     }
 }

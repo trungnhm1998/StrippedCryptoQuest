@@ -1,35 +1,31 @@
 using CryptoQuest.Input;
+using NPOI.SS.Formula.Functions;
 using UnityEngine;
 
 namespace CryptoQuest.BlackSmith.Upgrade.StateMachine
 {
-    public class UpgradeStateBehaviour : StateMachineBehaviour
+    public class SelectEquipmentStateBehaviour : StateMachineBehaviour
     {
         private Animator _animator;
         private UpgradeStateController _stateController;
-        private static readonly int _submit = Animator.StringToHash("isSuccess");
-        private static readonly int _exit = Animator.StringToHash("isSelect");
+        private static readonly int _submit = Animator.StringToHash("isUpgrade");
 
         public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
             _stateController = animator.GetComponent<UpgradeStateController>();
             _animator = animator;
-            _stateController.UpgradeEquipmentPanel.SetActive(true);
+            _stateController.SelectedEquipmentPanel.SetActive(true);
+            _stateController.InstantiateEquipment();
         }
 
         public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
-            _stateController.UpgradeEquipmentPanel.SetActive(false);
+            _stateController.SelectedEquipmentPanel.SetActive(false);    
         }
 
-        private void ChangeState()
+        private void GoToUpgradeState()
         {
             _animator.SetTrigger(_submit);
-        }
-
-        private void ExitState()
-        {
-            _animator.SetTrigger(_exit);
         }
     }
 }
