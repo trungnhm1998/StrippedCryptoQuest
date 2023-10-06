@@ -33,7 +33,7 @@ Transform:
   - {fileID: 5906982312686812867}
   - {fileID: 6139083143608544396}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &3749515835686532430
 SpriteRenderer:
@@ -120,6 +120,31 @@ PrefabInstance:
       propertyPath: _animator
       value: 
       objectReference: {fileID: -5847186505076383299}
+    - target: {fileID: 855496539777480150, guid: efad7a9a1c23aa04aa442ae047f064ea, type: 3}
+      propertyPath: _interacted.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 855496539777480150, guid: efad7a9a1c23aa04aa442ae047f064ea, type: 3}
+      propertyPath: _interacted.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 11400000, guid: b96eb7869638dbf45b903a3af81dc10a, type: 2}
+    - target: {fileID: 855496539777480150, guid: efad7a9a1c23aa04aa442ae047f064ea, type: 3}
+      propertyPath: _interacted.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: RaiseEvent
+      objectReference: {fileID: 0}
+    - target: {fileID: 855496539777480150, guid: efad7a9a1c23aa04aa442ae047f064ea, type: 3}
+      propertyPath: _interacted.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: IndiGames.Core.Events.ScriptableObjects.GenericEventChannelSO`1[[CryptoQuest.Shop.ShopItemTable,
+        Shop
+      objectReference: {fileID: 0}
+    - target: {fileID: 855496539777480150, guid: efad7a9a1c23aa04aa442ae047f064ea, type: 3}
+      propertyPath: _interacted.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgument
+      value: 
+      objectReference: {fileID: 11400000, guid: 5e51b831b0a3eda42b047492816156bb, type: 2}
+    - target: {fileID: 855496539777480150, guid: efad7a9a1c23aa04aa442ae047f064ea, type: 3}
+      propertyPath: _interacted.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: CryptoQuest.Shop.ShopItemTable, Shop
+      objectReference: {fileID: 0}
     - target: {fileID: 7014187444642297253, guid: efad7a9a1c23aa04aa442ae047f064ea, type: 3}
       propertyPath: m_Name
       value: NPC_Behaviour
@@ -168,7 +193,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5911867612410417997, guid: efad7a9a1c23aa04aa442ae047f064ea, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
