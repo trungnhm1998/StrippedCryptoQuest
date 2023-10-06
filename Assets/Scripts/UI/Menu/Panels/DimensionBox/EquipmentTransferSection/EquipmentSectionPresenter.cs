@@ -87,6 +87,7 @@ namespace CryptoQuest.UI.Menu.Panels.DimensionBox.EquipmentTransferSection
         {
             _walletModel = GetComponentInChildren<IWalletEquipmentModel>();
             yield return _walletModel.CoGetData();
+            yield return new WaitUntil(() => _walletModel.IsLoaded);
 
             if (_walletModel.Data.Count <= 0) yield break;
 

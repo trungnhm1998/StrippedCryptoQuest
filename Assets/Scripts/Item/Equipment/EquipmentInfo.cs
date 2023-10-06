@@ -43,6 +43,13 @@ namespace CryptoQuest.Item.Equipment
             Level = 1;
         }
 
+        public EquipmentInfo(string id, string definitionId, int lvl)
+        {
+            Id = id;
+            _definitionId = definitionId;
+            Level = lvl;
+        }
+
         public EquipmentInfo(string definitionId, int lvl = 1)
         {
             _definitionId = definitionId;

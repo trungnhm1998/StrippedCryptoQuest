@@ -27,7 +27,7 @@ namespace CryptoQuest.UI.Menu.Panels.DimensionBox.EquipmentTransferSection.Model
                 Random rand = new Random();
                 bool isEquipped = rand.Next(100) < 20 ? true : false;
 
-                var obj = new MockData(MockIcon[i], MockName, isEquipped);
+                var obj = new MockData(null, MockName, isEquipped);
                 _mockData.Add(obj);
             }
 

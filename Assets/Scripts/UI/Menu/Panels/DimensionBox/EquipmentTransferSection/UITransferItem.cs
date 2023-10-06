@@ -2,7 +2,9 @@ using CryptoQuest.UI.Menu.Panels.DimensionBox.Interfaces;
 using CryptoQuest.UI.Menu.Panels.Status;
 using CryptoQuest.UI.Menu.Panels.Status.Equipment;
 using PolyAndCode.UI;
+using System.Collections;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 using UnityEngine.Events;
 using UnityEngine.Localization.Components;
 using UnityEngine.UI;
@@ -42,11 +44,26 @@ namespace CryptoQuest.UI.Menu.Panels.DimensionBox.EquipmentTransferSection
 
         public void ConfigureCell(IData itemInfo)
         {
-            _icon.sprite = itemInfo.GetIcon();
+            var icon = itemInfo.GetIcon();
+
+            if (icon != null)
+            {
+                StartCoroutine(LoadSpriteAndSet(itemInfo.GetIcon()));
+            }
+
             _name.StringReference = itemInfo.GetLocalizedName();
 
             _isEquipped = itemInfo.IsEquipped();
             _equippedTag.SetActive(_isEquipped);
+        }
+
+        private IEnumerator LoadSpriteAndSet(AssetReferenceT<Sprite> equipmentTypeIcon)
+        {
+            if (equipmentTypeIcon.RuntimeKeyIsValid() == false) yield break;
+            var handle = equipmentTypeIcon.LoadAssetAsync<Sprite>();
+            yield return handle;
+
+            _icon.sprite = handle.Result;
         }
 
         public void OnSelectToTransfer()
