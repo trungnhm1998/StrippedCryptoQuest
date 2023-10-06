@@ -111,18 +111,5 @@ namespace CryptoQuest.Battle.Components
         }
 
         public void ProvideStats(AttributeWithValue[] attributeWithValues) { }
-
-        protected override IEnumerator OnPreExecuteCommand()
-        {
-            Command = new NormalAttackCommand(this, Targeting.Target);
-            SetAlpha(1);
-            yield return base.OnPreExecuteCommand();
-        }
-
-        protected override IEnumerator OnPostExecuteCommand()
-        {
-            SetAlpha(0.5f);
-            yield return base.OnPostExecuteCommand();
-        }
     }
 }

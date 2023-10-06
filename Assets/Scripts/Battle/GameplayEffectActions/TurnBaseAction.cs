@@ -1,4 +1,5 @@
 ﻿using System;
+using CryptoQuest.Battle.Components;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
 using IndiGames.GameplayAbilitySystem.EffectSystem;
 using IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects.GameplayEffectActions;
@@ -26,6 +27,7 @@ namespace CryptoQuest.Battle.GameplayEffectActions
         [SerializeField] private AbilitySystemBehaviour _owner;
 
         private Components.Character _character;
+        private CommandExecutor _commandExecutor;
 
         public TurnBaseActiveEffectSpec(TurnBaseAction turnBaseAction, GameplayEffectSpec inSpec,
             AbilitySystemBehaviour owner) : base(inSpec)
@@ -35,12 +37,13 @@ namespace CryptoQuest.Battle.GameplayEffectActions
             _inSpec = inSpec;
             _turnBaseAction = turnBaseAction;
             _character = owner.GetComponent<Components.Character>();
-            _character.OnTurnStarted += UpdateTurn;
+            _character.TryGetComponent(out _commandExecutor);
+            _commandExecutor.OnTurnStarted += UpdateTurn;
         }
 
         protected override void OnRelease()
         {
-            _character.OnTurnStarted -= UpdateTurn;
+            _commandExecutor.OnTurnStarted += UpdateTurn;
         }
 
         private void UpdateTurn()

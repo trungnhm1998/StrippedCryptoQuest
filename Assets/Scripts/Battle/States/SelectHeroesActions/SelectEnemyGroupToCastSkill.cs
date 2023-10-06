@@ -1,10 +1,8 @@
 ﻿using CryptoQuest.Battle.Commands;
 using CryptoQuest.Battle.Components;
 using CryptoQuest.Battle.UI;
-using CryptoQuest.Battle.UI.CommandDetail;
 using CryptoQuest.Battle.UI.SelectSkill;
 using CryptoQuest.Character.Ability;
-using UnityEngine.InputSystem;
 
 namespace CryptoQuest.Battle.States.SelectHeroesActions
 {
@@ -40,7 +38,8 @@ namespace CryptoQuest.Battle.States.SelectHeroesActions
         {
             var castSkillCommand = new MultipleTargetCastSkillCommand(Hero, _selectedSkill,
                 enemyGroup.GetAliveEnemies().ToArray());
-            Hero.SetCommand(castSkillCommand);
+            Hero.TryGetComponent(out CommandExecutor commandExecutor);
+            commandExecutor.SetCommand(castSkillCommand);
             Fsm.GoToNextState();
         }
     }

@@ -35,6 +35,7 @@ namespace CryptoQuest.Battle.UI
 
         private void CacheLastSelectedButton()
         {
+            if (EventSystem.current == null) return; // editor bug
             var currentSelectedGameObject = EventSystem.current.currentSelectedGameObject;
             if (currentSelectedGameObject == null) return;
             if (currentSelectedGameObject.transform.IsChildOf(_buttonsContainer) == false) return;

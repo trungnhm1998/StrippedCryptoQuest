@@ -1,7 +1,6 @@
 ﻿using CryptoQuest.Battle.Commands;
 using CryptoQuest.Battle.Components;
 using CryptoQuest.Battle.UI.CommandDetail;
-using UnityEngine.InputSystem;
 
 namespace CryptoQuest.Battle.States.SelectHeroesActions
 {
@@ -28,8 +27,8 @@ namespace CryptoQuest.Battle.States.SelectHeroesActions
         private void CreateAttackCommand(EnemyBehaviour enemy)
         {
             var normalAttackCommand = new NormalAttackCommand(Hero, enemy);
-            Hero.TryGetComponent<Components.Character>(out var character);
-            character.SetCommand(normalAttackCommand);
+            Hero.TryGetComponent(out CommandExecutor commandExecutor);
+            commandExecutor.SetCommand(normalAttackCommand);
             Fsm.GoToNextState();
         }
 

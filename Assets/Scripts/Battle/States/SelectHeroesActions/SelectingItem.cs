@@ -63,7 +63,8 @@ namespace CryptoQuest.Battle.States.SelectHeroesActions
         private void CreateMultipleTargetCommand(params Components.Character[] characters)
         {
             var useItemCommand = new ConsumeItemCommand(Hero, _selectItemPresenter.LastSelectedItem.Item, characters);
-            Hero.SetCommand(useItemCommand);
+            Hero.TryGetComponent(out CommandExecutor commandExecutor);
+            commandExecutor.SetCommand(useItemCommand);
             Fsm.GoToNextState();
         }
 

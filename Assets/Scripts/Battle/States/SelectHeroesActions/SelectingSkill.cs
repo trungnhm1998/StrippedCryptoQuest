@@ -73,7 +73,8 @@ namespace CryptoQuest.Battle.States.SelectHeroesActions
         private void CreateMultipleTargetCommand(UISkill skillUI, params Components.Character[] characters)
         {
             var useItemCommand = new MultipleTargetCastSkillCommand(Hero, skillUI.Skill, characters);
-            Hero.SetCommand(useItemCommand);
+            Hero.TryGetComponent(out CommandExecutor commandExecutor);
+            commandExecutor.SetCommand(useItemCommand);
             Fsm.GoToNextState();
         }
 

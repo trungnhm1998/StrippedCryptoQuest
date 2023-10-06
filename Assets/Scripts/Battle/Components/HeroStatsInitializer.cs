@@ -35,7 +35,7 @@ namespace CryptoQuest.Battle.Components
         /// <summary>
         /// We will need a base stats such as STR, INT, DEX, etc. these need to init first
         ///
-        /// Use the <see cref="CharacterSpec.StatsDef"/> which contains the base stats to init
+        /// Use the <see cref="StatsDef"/> which contains the base stats to init
         /// </summary>
         private void InitBaseStats()
         {

@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 8656428607854147778}
   - component: {fileID: 4037193618119441079}
   - component: {fileID: -4121390316738243953}
+  - component: {fileID: 6892743965682012810}
   m_Layer: 0
   m_Name: EnemyGAS
   m_TagString: Untagged
@@ -120,6 +121,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _useUpdate: 0
   _appliedEffects: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!114 &4641478807552375571
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -250,3 +254,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _fadeoutDuration: 1.5
+--- !u!114 &6892743965682012810
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3644504107888459060}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85d6961f0e794eb180dbff6da82ca125, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _enemyBehaviour: {fileID: 2313801004738519680}

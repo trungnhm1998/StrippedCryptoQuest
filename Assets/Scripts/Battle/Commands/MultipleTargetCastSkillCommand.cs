@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Linq;
+using CryptoQuest.Battle.Components;
 using CryptoQuest.Character.Ability;
 using UnityEngine;
 

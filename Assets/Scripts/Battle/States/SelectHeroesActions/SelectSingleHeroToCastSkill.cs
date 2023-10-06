@@ -39,7 +39,8 @@ namespace CryptoQuest.Battle.States.SelectHeroesActions
         private void CastSkillOnHero(HeroBehaviour selectedHero)
         {
             var castSkillCommand = new CastSkillCommand(Hero, _selectedSkillUI.Skill, selectedHero);
-            Hero.SetCommand(castSkillCommand);
+            Hero.TryGetComponent(out CommandExecutor commandExecutor);
+            commandExecutor.SetCommand(castSkillCommand);
             Fsm.GoToNextState();
         }
     }

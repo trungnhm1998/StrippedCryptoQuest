@@ -75,7 +75,8 @@ namespace CryptoQuest.Battle.States.SelectHeroesActions
         public void OnGuardPressed()
         {
             Debug.Log("SelectCommandState::OnGuardPressed");
-            Hero.SetCommand(new GuardCommand(Hero));
+            Hero.TryGetComponent(out CommandExecutor commandExecutor);
+            commandExecutor.SetCommand(new GuardCommand(Hero));
             Fsm.GoToNextState();
         }
 
@@ -84,7 +85,8 @@ namespace CryptoQuest.Battle.States.SelectHeroesActions
             Debug.Log("SelectCommandState::OnRetreatPressed");
             var highestAgi = Fsm.EnemyPartyManager.Enemies
                 .GetHighestAttributeValue<EnemyBehaviour>(AttributeSets.Agility);
-            Hero.SetCommand(new RetreatCommand(Hero, highestAgi));
+            Hero.TryGetComponent(out CommandExecutor commandExecutor);
+            commandExecutor.SetCommand(new RetreatCommand(Hero, highestAgi));
 
             Fsm.GoToNextState();
         }

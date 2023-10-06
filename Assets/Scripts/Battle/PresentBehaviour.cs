@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using CryptoQuest.Battle.Components;
 using CryptoQuest.Battle.Events;
 using UnityEngine;
 
@@ -24,10 +25,11 @@ namespace CryptoQuest.Battle
 
             foreach (var character in characters)
             {
-                yield return character.PreTurn();
+                character.TryGetComponent(out CommandExecutor commandExecutor);
+                yield return commandExecutor.PreTurn();
                 character.UpdateTarget(_battleContext);
-                yield return character.ExecuteCommand();
-                yield return character.PostTurn();
+                yield return commandExecutor.ExecuteCommand();
+                yield return commandExecutor.PostTurn();
             }
 
             ChangeAllEnemiesOpacity(1f);

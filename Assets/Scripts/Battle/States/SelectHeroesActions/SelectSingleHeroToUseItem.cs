@@ -40,7 +40,8 @@ namespace CryptoQuest.Battle.States.SelectHeroesActions
         private void UseItemOnHero(HeroBehaviour selectedHero)
         {
             var useItemCommand = new ConsumeItemCommand(Hero, _selectedItemUI.Item, selectedHero);
-            Hero.SetCommand(useItemCommand);
+            Hero.TryGetComponent(out CommandExecutor commandExecutor);
+            commandExecutor.SetCommand(useItemCommand);
             Fsm.GoToNextState();
         }
     }
