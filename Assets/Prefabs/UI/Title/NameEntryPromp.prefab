@@ -232,17 +232,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b97fb36c97748e49ce037863e093512, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _inputMediator: {fileID: 11400000, guid: 1fb61cdb72f0a484f8e4db68e2011977, type: 2}
-  _saveSystemSO: {fileID: 11400000, guid: 839abfc1e6ec7704ea1a6eab9160e6b6, type: 2}
-  _confirm: {fileID: 606546665574542925}
-  _selectionHandler: {fileID: 3967818804326162791}
-  _nameInput: {fileID: 6198431179645180393}
+  <ConfirmButton>k__BackingField: {fileID: 0}
+  <SaveSystemSO>k__BackingField: {fileID: 0}
+  <NameInput>k__BackingField: {fileID: 0}
   _validationText: {fileID: 8893628092102747817}
   _validationStringEvent: {fileID: 4208990684001578608}
   _validColor: {r: 1, g: 1, b: 1, a: 1}
   _invalidColor: {r: 1, g: 0, b: 0, a: 1}
   _badWordAsset: {fileID: 4900000, guid: 36f17ad5a8a2c314eaf42464e7736309, type: 3}
   _specialCharacterAsset: {fileID: 4900000, guid: 6a51fdd70bf5f074e9b6d4a4ba86380c, type: 3}
+  _tempSaveInfo: {fileID: 11400000, guid: 839abfc1e6ec7704ea1a6eab9160e6b6, type: 2}
 --- !u!114 &3967818804326162791
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -258,7 +257,6 @@ MonoBehaviour:
   _inputMediator: {fileID: 11400000, guid: 1fb61cdb72f0a484f8e4db68e2011977, type: 2}
   _defaultSelection: {fileID: 0}
   _currentSelection: {fileID: 0}
-  _mouseSelection: {fileID: 0}
 --- !u!1 &1041321756658275062
 GameObject:
   m_ObjectHideFlags: 0
@@ -854,7 +852,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  IsSelected: 0
 --- !u!1 &7020017499990342364
 GameObject:
   m_ObjectHideFlags: 0

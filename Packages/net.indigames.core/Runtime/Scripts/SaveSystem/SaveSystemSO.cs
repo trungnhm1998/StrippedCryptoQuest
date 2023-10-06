@@ -6,7 +6,13 @@ namespace IndiGames.Core.SaveSystem
     {
         [SerializeField] private SaveManagerSO _saveManagerSO;
 
-        public SaveData _saveData = new SaveData();
+        [SerializeField] private SaveData _saveData = new SaveData();
+
+        public SaveData SaveData
+        {
+            get => _saveData;
+            set => _saveData = value;
+        }
 
         public string PlayerName
         {

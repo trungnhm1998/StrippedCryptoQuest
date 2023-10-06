@@ -23,13 +23,13 @@ namespace IndiGames.Core.Tests.Editor.SaveSystem
         [Test]
         public void SaveData_ShouldNotBeNull()
         {
-            Assert.IsNotNull(_saveSystemSO._saveData, "saveData should not be null.");
+            Assert.IsNotNull(_saveSystemSO.SaveData, "saveData should not be null.");
         }
 
         [Test]
         public void SaveData_PlayerName_ShouldBeSameAsEditorSetting()
         {
-            Assert.AreEqual(_saveSystemSO._saveData.playerName, "New Player", "saveData.playerName should be `New Player`.");
+            Assert.AreEqual(_saveSystemSO.SaveData.playerName, "New Player", "saveData.playerName should be `New Player`.");
         }
 
         [Test]
@@ -42,19 +42,19 @@ namespace IndiGames.Core.Tests.Editor.SaveSystem
         public void LoadSaveGame_IfHasSaveGame_ShouldHaveDifferentName()
         {
             const string mockPlayerName = "Test Player Name";
-            _saveSystemSO._saveData = new SaveData { playerName = mockPlayerName };
+            _saveSystemSO.SaveData = new SaveData { playerName = mockPlayerName };
 
             var hasSaveGame = _saveSystemSO.LoadSaveGame();
             if (!hasSaveGame) Assert.Pass();
             Assert.IsTrue(hasSaveGame, "LoadSaveGame should return true.");
-            Assert.AreNotEqual(mockPlayerName, _saveSystemSO._saveData.playerName,
+            Assert.AreNotEqual(mockPlayerName, _saveSystemSO.SaveData.playerName,
                 $"saveData.playerName should be {mockPlayerName}.");
         }
 
         [TearDown]
         public void Teardown()
         {
-            _saveSystemSO._saveData = new SaveData();
+            _saveSystemSO.SaveData = new SaveData();
             _saveSystemSO = null;
         }
     }

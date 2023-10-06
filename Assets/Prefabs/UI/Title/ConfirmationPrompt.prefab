@@ -134,7 +134,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  IsSelected: 0
 --- !u!1 &1414638867150569722
 GameObject:
   m_ObjectHideFlags: 0
@@ -445,7 +444,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  IsSelected: 0
 --- !u!1 &2633214935775757059
 GameObject:
   m_ObjectHideFlags: 0
@@ -621,8 +619,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5aaefcaed02342218726d47d7bb02add, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _inputMediator: {fileID: 11400000, guid: 1fb61cdb72f0a484f8e4db68e2011977, type: 2}
-  _yesButton: {fileID: 2640007633060447992}
+  _saveSystemSo: {fileID: 11400000, guid: 839abfc1e6ec7704ea1a6eab9160e6b6, type: 2}
+  _tempSaveInfo: {fileID: 11400000, guid: 839abfc1e6ec7704ea1a6eab9160e6b6, type: 2}
+  <YesButton>k__BackingField: {fileID: 0}
+  <NoButton>k__BackingField: {fileID: 0}
 --- !u!114 &2056541002854785658
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -638,7 +638,6 @@ MonoBehaviour:
   _inputMediator: {fileID: 11400000, guid: 1fb61cdb72f0a484f8e4db68e2011977, type: 2}
   _defaultSelection: {fileID: 0}
   _currentSelection: {fileID: 0}
-  _mouseSelection: {fileID: 0}
 --- !u!1 &4482922762571902362
 GameObject:
   m_ObjectHideFlags: 0
