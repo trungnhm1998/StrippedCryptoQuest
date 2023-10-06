@@ -16,7 +16,6 @@ namespace CryptoQuest.Battle.States.SelectHeroesActions
 
         public override void OnEnter()
         {
-            _skillPresenter.Interactable = true;
             _skillPresenter.Show(Hero);
             _skillPresenter.SelectSingleEnemyCallback = SelectEnemyToCastSkillOn;
             _skillPresenter.SelectSingleHeroCallback = SelectHeroToCastSkillOn;
@@ -34,21 +33,21 @@ namespace CryptoQuest.Battle.States.SelectHeroesActions
 
         private void SelectEnemyToCastSkillOn(UISkill skillUI)
         {
-            _skillPresenter.Interactable = false;
+            _skillPresenter.Show(Hero, false);
             Debug.Log("SelectingSkill::SelectEnemyToCastSkillOn");
             Fsm.PushState(new SelectSingleEnemyToCastSkill(skillUI, Hero, Fsm));
         }
 
         private void SelectHeroToCastSkillOn(UISkill skillUI)
         {
-            _skillPresenter.Interactable = false;
+            _skillPresenter.Show(Hero, false);
             Debug.Log("SelectingSkill::SelectHeroToCastSkillOn");
             Fsm.PushState(new SelectSingleHeroToCastSkill(skillUI, Hero, Fsm));
         }
 
         private void SelectAllHeroToCastSkillOn(UISkill skillUI)
         {
-            _skillPresenter.Interactable = false;
+            _skillPresenter.Show(Hero, false);
             Debug.Log("SelectingSkill::SelectAllHeroToCastSkillOn");
 
             var heroes = Fsm.PlayerParty.OrderedAliveMembers.ToArray();
@@ -57,7 +56,7 @@ namespace CryptoQuest.Battle.States.SelectHeroesActions
 
         private void SelectAllEnemyToCastSkillOn(UISkill skillUI)
         {
-            _skillPresenter.Interactable = false;
+            _skillPresenter.Show(Hero, false);
             Debug.Log("SelectingSkill::SelectAllEnemyToCastSkillOn");
         
             var enemies = Fsm.EnemyPartyManager.Enemies.ToArray();
@@ -66,7 +65,7 @@ namespace CryptoQuest.Battle.States.SelectHeroesActions
 
         private void SelectEnemyGroupToCastSkillOn(UISkill skillUI)
         {
-            _skillPresenter.Interactable = false;
+            _skillPresenter.Show(Hero, false);
             Debug.Log("SelectingSkill::SelectEnemyGroupToCastSkillOn");
             Fsm.PushState(new SelectEnemyGroupToCastSkill(skillUI.Skill, Hero, Fsm));
         }

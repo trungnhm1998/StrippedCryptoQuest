@@ -13,6 +13,7 @@ namespace CryptoQuest.Battle.UI
 
         [SerializeField] private EnemyPartyManager _enemyPartyManager;
         [SerializeField] private UICommandDetailPanel _enemyGroupUI;
+        [SerializeField] private VerticalButtonSelector _buttonSelector;
 
         private TinyMessageSubscriptionToken _selectedEventToken;
         private TinyMessageSubscriptionToken _deSelectedEventToken;
@@ -20,6 +21,7 @@ namespace CryptoQuest.Battle.UI
 
         public void Show(bool interactable = false)
         {
+            _buttonSelector.Interactable = interactable;
             _selectedEventToken = BattleEventBus.SubscribeEvent<SelectedDetailButtonEvent>(OnSelectedGroup);
             _deSelectedEventToken = BattleEventBus.SubscribeEvent<DeSelectedDetailButtonEvent>(OnDeSelectedGroup);
 
@@ -41,6 +43,7 @@ namespace CryptoQuest.Battle.UI
 
         public void Hide()
         {
+            _buttonSelector.Interactable = false;
             SetAllGroupAlpha(SELECTED_ALPHA);
             BattleEventBus.UnsubscribeEvent(_selectedEventToken);
             BattleEventBus.UnsubscribeEvent(_deSelectedEventToken);

@@ -233,6 +233,7 @@ namespace IndiGames.GameplayAbilitySystem.AttributeSystem.Components
                 Debug.LogWarning($"AttributeSystemBehaviour::SetAttributeBaseValue::Attribute is null");
                 return;
             }
+
             var cache = GetAttributeIndexCache();
             if (!cache.TryGetValue(attribute, out var index))
             {
@@ -260,17 +261,17 @@ namespace IndiGames.GameplayAbilitySystem.AttributeSystem.Components
 
             foreach (var preAttributeChangeChannel in _attributeEvents)
             {
-                preAttributeChangeChannel.PreAttributeChange(this, ref attributeValue);
+                if (preAttributeChangeChannel) preAttributeChangeChannel.PreAttributeChange(this, ref attributeValue);
             }
 
             var oldValue = _attributeValues[index];
             PreAttributeChange?.Invoke(oldValue.Attribute, attributeValue);
             _attributeValues[index] = attributeValue;
             PostAttributeChange?.Invoke(attributeValue.Attribute, oldValue, attributeValue);
-            
+
             foreach (var preAttributeChangeChannel in _attributeEvents)
             {
-                preAttributeChangeChannel.PostAttributeChange(this, ref oldValue, ref attributeValue);
+                if (preAttributeChangeChannel) preAttributeChangeChannel.PostAttributeChange(this, ref oldValue, ref attributeValue);
             }
         }
 

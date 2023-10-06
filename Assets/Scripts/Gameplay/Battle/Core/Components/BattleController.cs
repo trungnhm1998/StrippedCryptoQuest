@@ -7,7 +7,6 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components
 {
     public class BattleController : MonoBehaviour
     {
-        [SerializeField] private BattleInputSO _battleInput;
         [SerializeField] private BattleBus _battleBus;
 
         [Header("Listen Events")]
@@ -17,7 +16,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components
         
         private void OnDisable()
         {
-            _battleInput.DisableBattleInput();
+            BattleInput.instance.DisableBattleInput();
         }
     }   
 }

@@ -2,7 +2,6 @@ using CryptoQuest.UI.Common;
 using UnityEngine;
 using UnityEngine.Localization;
 using UnityEngine.Localization.Components;
-using UnityEngine.UI;
 
 namespace CryptoQuest.Battle.UI.SelectCommand
 {
@@ -17,8 +16,8 @@ namespace CryptoQuest.Battle.UI.SelectCommand
 
     public class UISelectCommand : MonoBehaviour
     {
-        [SerializeField] private Button _firstButton;
         [SerializeField] private ChildButtonsActivator _childButtonsActivator;
+        [SerializeField] private VerticalButtonSelector _buttonSelector;
         [SerializeField] private LocalizeStringEvent _characterName;
         private ISelectCommandCallback _commandCallback;
 
@@ -27,13 +26,9 @@ namespace CryptoQuest.Battle.UI.SelectCommand
             _characterName.StringReference = characterName;
         }
 
-        public void SelectFirstButton()
-        {
-            _firstButton.Select();
-        }
-
         public void SetActiveCommandsMenu(bool isActive)
         {
+            _buttonSelector.Interactable = isActive;
             _childButtonsActivator.SetActiveButtons(isActive);
         }
         
@@ -48,5 +43,10 @@ namespace CryptoQuest.Battle.UI.SelectCommand
         public void OnGuardPressed() => _commandCallback?.OnGuardPressed();
 
         public void OnRetreatPressed() => _commandCallback?.OnRetreatPressed();
+
+        public void SelectFirstButton()
+        {
+            _buttonSelector.SelectFirstButton();
+        }
     }
 }

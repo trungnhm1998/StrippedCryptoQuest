@@ -30,7 +30,6 @@ namespace CryptoQuest.Battle.UI.SelectItem
 
 
         [SerializeField] private AutoScroll _autoScroll;
-        [SerializeField] private BattleInputSO _input;
         [SerializeField] private ScrollRect _itemScroll;
         [SerializeField] private UIItem _itemPrefab;
 
@@ -77,7 +76,7 @@ namespace CryptoQuest.Battle.UI.SelectItem
 
         private void RegisterEvents()
         {
-            _input.NavigateEvent += UpdateAutoScroll;
+            BattleInput.instance.NavigateEvent += UpdateAutoScroll;
             _singleHeroChannel.EventRaised += OnSingleHero;
             _singleEnemyChannel.EventRaised += OnSingleEnemy;
             _allEnemyChannel.EventRaised += OnTargetAllEnemy;
@@ -86,7 +85,7 @@ namespace CryptoQuest.Battle.UI.SelectItem
 
         private void UnregisterEvents()
         {
-            _input.NavigateEvent -= UpdateAutoScroll;
+            BattleInput.instance.NavigateEvent -= UpdateAutoScroll;
             _singleHeroChannel.EventRaised -= OnSingleHero;
             _singleEnemyChannel.EventRaised -= OnSingleEnemy;
             _allEnemyChannel.EventRaised -= OnTargetAllEnemy;

@@ -2,11 +2,8 @@ using System.Collections.Generic;
 using CryptoQuest.Battle.Components;
 using CryptoQuest.Character.Ability;
 using CryptoQuest.Input;
-using CryptoQuest.Menu;
 using CryptoQuest.UI.Common;
-using DG.Tweening;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace CryptoQuest.Battle.UI.SelectSkill
@@ -16,47 +13,49 @@ namespace CryptoQuest.Battle.UI.SelectSkill
         public delegate void SkillTargetTypeDelegate(UISkill skill);
 
         public SkillTargetTypeDelegate SelectSingleEnemyCallback { get; set; }
-        private void OnSingleEnemy(CastableAbility skill) => SelectSingleEnemyCallback?.Invoke(_lastSelectedSkill);
+        private void OnSingleEnemy(CastableAbility skill) => SelectSingleEnemyCallback?.Invoke(_selectedSkill);
 
         public SkillTargetTypeDelegate SelectSingleHeroCallback { get; set; }
-        private void OnSingleHero(CastableAbility skill) => SelectSingleHeroCallback?.Invoke(_lastSelectedSkill);
+        private void OnSingleHero(CastableAbility skill) => SelectSingleHeroCallback?.Invoke(_selectedSkill);
 
         public SkillTargetTypeDelegate SelectAllHeroCallback { get; set; }
-        private void OnSelectAllHero(CastableAbility skill) => SelectAllHeroCallback?.Invoke(_lastSelectedSkill);
+        private void OnSelectAllHero(CastableAbility skill) => SelectAllHeroCallback?.Invoke(_selectedSkill);
 
         public SkillTargetTypeDelegate SelectAllEnemyCallback { get; set; }
-        private void OnSelectAllEnemy(CastableAbility skill) => SelectAllEnemyCallback?.Invoke(_lastSelectedSkill);
+        private void OnSelectAllEnemy(CastableAbility skill) => SelectAllEnemyCallback?.Invoke(_selectedSkill);
 
         public SkillTargetTypeDelegate SelectEnemyGroupCallback { get; set; }
-        private void OnSelectEnemyGroup(CastableAbility skill) => SelectEnemyGroupCallback?.Invoke(_lastSelectedSkill);
+        private void OnSelectEnemyGroup(CastableAbility skill) => SelectEnemyGroupCallback?.Invoke(_selectedSkill);
 
+        [SerializeField] private VerticalButtonSelector _buttonSelector;
         [SerializeField] private AutoScroll _autoScroll;
-        [SerializeField] private BattleInputSO _input;
         [SerializeField] private ScrollRect _skillList;
         [SerializeField] private UISkill _skillPrefab;
 
         [SerializeField, Header("State event context")]
         private SkillTargetType _singleHeroChannel;
+
         [SerializeField] private SkillTargetType _singleEnemyChannel;
         [SerializeField] private SkillTargetType _allHeroChannel;
         [SerializeField] private SkillTargetType _allEnemyChannel;
         [SerializeField] private SkillTargetType _enemyGroupChannel;
 
         private HeroBehaviour _hero;
-        private UISkill _lastSelectedSkill;
         private readonly List<UISkill> _skills = new List<UISkill>();
 
-        public void Show(HeroBehaviour hero)
+        public void Show(HeroBehaviour hero, bool interactable = true)
         {
             CreateSkillButtonsDifferentHero(hero);
-            DOVirtual.DelayedCall(0.1f, SelectFirstOrLastSelectedSkill);
             _skillList.gameObject.SetActive(true);
             RegisterEvents();
+            _buttonSelector.Interactable = interactable;
+            if (interactable)
+                _buttonSelector.SelectFirstButton();
         }
 
         private void RegisterEvents()
         {
-            _input.NavigateEvent += UpdateAutoScroll;
+            BattleInput.instance.NavigateEvent += UpdateAutoScroll;
             _singleHeroChannel.EventRaised += OnSingleHero;
             _singleEnemyChannel.EventRaised += OnSingleEnemy;
             _allHeroChannel.EventRaised += OnSelectAllHero;
@@ -66,23 +65,12 @@ namespace CryptoQuest.Battle.UI.SelectSkill
 
         private void UnregisterEvents()
         {
-            _input.NavigateEvent -= UpdateAutoScroll;
+            BattleInput.instance.NavigateEvent -= UpdateAutoScroll;
             _singleHeroChannel.EventRaised -= OnSingleHero;
             _singleEnemyChannel.EventRaised -= OnSingleEnemy;
             _allHeroChannel.EventRaised -= OnSelectAllHero;
             _allEnemyChannel.EventRaised -= OnSelectAllEnemy;
             _enemyGroupChannel.EventRaised -= OnSelectEnemyGroup;
-        }
-
-        private void SelectFirstOrLastSelectedSkill()
-        {
-            if (_lastSelectedSkill != null)
-            {
-                EventSystem.current.SetSelectedGameObject(_lastSelectedSkill.gameObject);
-                _lastSelectedSkill = null;
-            }
-            else
-                EventSystem.current.SetSelectedGameObject(_skillList.content.GetChild(0).gameObject);
         }
 
         private void CreateSkillButtonsDifferentHero(HeroBehaviour hero)
@@ -102,25 +90,10 @@ namespace CryptoQuest.Battle.UI.SelectSkill
 
         public void Hide()
         {
+            _buttonSelector.Interactable = false;
             _skillList.gameObject.SetActive(false);
             UnregisterEvents();
         }
-
-        private bool _interactable;
-
-        public bool Interactable
-        {
-            get => _interactable;
-            set
-            {
-                _interactable = value;
-                foreach (var skill in _skills)
-                {
-                    skill.GetComponent<MultiInputButton>().interactable = value;
-                }
-            }
-        }
-
 
         private void DestroyAllSkillButtons()
         {
@@ -140,9 +113,11 @@ namespace CryptoQuest.Battle.UI.SelectSkill
             UnregisterEvents();
         }
 
+        private UISkill _selectedSkill;
+
         private void SelectingTarget(UISkill skillUI)
         {
-            _lastSelectedSkill = skillUI;
+            _selectedSkill = skillUI;
             skillUI.Skill.TargetType.RaiseEvent(skillUI.Skill);
         }
 

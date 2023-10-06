@@ -1,10 +1,12 @@
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
 namespace CryptoQuest.Input
 {
-    public class BattleInputSO : ScriptableObject,
+    [FilePath("Assets/ScriptableObjects/Input/BattleInput.asset", FilePathAttribute.Location.ProjectFolder)]
+    public class BattleInput : ScriptableSingleton<BattleInput>,
         InputActions.IBattleMenuActions
     {
         [SerializeField] private InputMediatorSO _inputMediator;

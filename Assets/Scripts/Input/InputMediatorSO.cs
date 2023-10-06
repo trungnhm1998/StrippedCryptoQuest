@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using CryptoQuest.System.Cheat;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
@@ -8,7 +9,8 @@ using UnityEngine.InputSystem;
 namespace CryptoQuest.Input
 {
     // TODO: Move action map interfaces to separate scriptable objects
-    public class InputMediatorSO : ScriptableObject,
+    [FilePath("Assets/ScriptableObjects/Input/InputMediatorSO.asset", FilePathAttribute.Location.ProjectFolder)]
+    public class InputMediatorSO : ScriptableSingleton<InputMediatorSO>,
         InputActions.IMapGameplayActions,
         InputActions.IMenusActions,
         InputActions.IDialoguesActions

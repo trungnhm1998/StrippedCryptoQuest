@@ -2021,6 +2021,7 @@ GameObject:
   - component: {fileID: 2420718645030105429}
   - component: {fileID: 4266533038678953840}
   - component: {fileID: 3953866784287909262}
+  - component: {fileID: -3604530584615525792}
   m_Layer: 0
   m_Name: CommandsMenu
   m_TagString: Untagged
@@ -2131,9 +2132,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb6ce355388a21e43a4e349831fcf816, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _firstButton: {fileID: 694122186587434746}
   _childButtonsActivator: {fileID: 4266533038678953840}
+  _buttonSelector: {fileID: -3604530584615525792}
   _characterName: {fileID: 4425238858829870245}
+--- !u!114 &-3604530584615525792
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7826758241213938867}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ed5b5bff75b4a25b7a607574093d6e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _firstSelectedButton: {fileID: 2247714777481692291}
+  _isSelectFirstButtonOnEnable: 1
+  _buttonsContainer: {fileID: 3534309589987872390}
 --- !u!1 &8724456930964408944
 GameObject:
   m_ObjectHideFlags: 0

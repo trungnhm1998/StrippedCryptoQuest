@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using CryptoQuest.Battle.Events;
 using CryptoQuest.Battle.States;
-using CryptoQuest.Battle.UI.CommandDetail;
 using CryptoQuest.Battle.UI.SelectCommand;
 using CryptoQuest.Battle.UI.SelectHero;
 using CryptoQuest.Battle.UI.StartBattle;
@@ -21,8 +20,7 @@ namespace CryptoQuest.Battle
 
     public class BattleStateMachine : MonoBehaviour
     {
-        [field: SerializeField] public InputMediatorSO InputMediator { get; private set; }
-        [field: SerializeField] public BattleInputSO BattleInput { get; private set; }
+        [field: SerializeField] public BattleInput BattleInput { get; private set; }
 
         private readonly Dictionary<Type, Component> _cachedComponents = new();
 
@@ -54,7 +52,7 @@ namespace CryptoQuest.Battle
         private void OnDisable()
         {
             SceneLoadedEvent.EventRaised -= GotoLoadingState;
-            _currentState.OnExit(this);
+            _currentState?.OnExit(this);
         }
 
         private void GotoLoadingState()

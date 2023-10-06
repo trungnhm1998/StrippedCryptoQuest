@@ -13,7 +13,6 @@ namespace CryptoQuest.Battle.UI.SelectHero
     {
         public static event Action<HeroBehaviour> ConfirmSelectCharacter;
 
-        [SerializeField] private BattleInputSO _battleInput;
         [SerializeField] private PlayerPartyPresenter _playerPartyPresenter;
         [SerializeField] private UISelectHeroButton _selectHeroButton;
 
@@ -23,13 +22,13 @@ namespace CryptoQuest.Battle.UI.SelectHero
         private void OnEnable()
         {
             _selectHeroButton.ConfirmPressed += OnConfirmCharacter;
-            _battleInput.NavigateEvent += NavigateSelectHero;
+            BattleInput.instance.NavigateEvent += NavigateSelectHero;
         }
 
         private void OnDisable()
         {
             _selectHeroButton.ConfirmPressed -= OnConfirmCharacter;
-            _battleInput.NavigateEvent -= NavigateSelectHero;
+            BattleInput.instance.NavigateEvent -= NavigateSelectHero;
         }
 
 
