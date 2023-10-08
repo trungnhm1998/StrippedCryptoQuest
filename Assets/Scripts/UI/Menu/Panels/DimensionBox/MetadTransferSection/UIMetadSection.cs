@@ -29,12 +29,12 @@ namespace CryptoQuest.UI.Menu.Panels.DimensionBox.MetadTransferSection
 
         private void OnEnable()
         {
-            GenericOneButtonDialogController.Instance.CreateDialog(OnDialogCreate);
+            GenericOneButtonDialogController.Instance.Instantiate(OnDialogCreate);
         }
 
         private void OnDisable()
         {
-            _resultDialog?.Release();
+            GenericOneButtonDialogController.Instance.Release(_resultDialog);
         }
 
         private void OnDialogCreate(UIOneButtonDialog dialog)

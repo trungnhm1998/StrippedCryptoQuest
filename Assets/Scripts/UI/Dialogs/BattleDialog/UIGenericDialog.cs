@@ -15,19 +15,15 @@ namespace CryptoQuest.UI.Dialogs.BattleDialog
         [Header("UI")]
         [SerializeField] private Text _dialogText;
         [SerializeField] private GameObject _nextMark;
-
-        private void OnEnable()
+        
+        private bool _requireInput;
+        public UIGenericDialog RequireInput()
         {
-            _inputMediator.NextDialoguePressed += Hide;
-        }
-
-        private void OnDisable()
-        {
-            _inputMediator.NextDialoguePressed -= Hide;
+            _requireInput = true;
+            return this;
         }
 
         private string _message;
-
         public UIGenericDialog WithMessage(string message)
         {
             _message = message;
@@ -91,6 +87,9 @@ namespace CryptoQuest.UI.Dialogs.BattleDialog
         {
             _nextMark.SetActive(false);
             _dialogText.text = _message;
+            _inputMediator.NextDialoguePressed += Hide;
+            _inputMediator.DisableAllInput();
+            _inputMediator.EnableInputMap("Dialogues");
             base.Show();
 
             if (_autoHideDuration > 0)
@@ -99,6 +98,7 @@ namespace CryptoQuest.UI.Dialogs.BattleDialog
 
         public override void Hide()
         {
+            _inputMediator.NextDialoguePressed -= Hide;
             base.Hide();
             _dialogText.text = "";
             _hideCallback?.Invoke();

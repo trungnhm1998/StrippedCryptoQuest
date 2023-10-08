@@ -45,4 +45,12 @@ namespace CryptoQuest.Battle.Events
     {
         public HeroBehaviour Hero { get; set; }
     }
+    
+    public class ShowPromptEvent : BattleEvent
+    {
+        public string Prompt { get; set; }
+        public bool IsConcat { get; set; }
+    }
+    
+    public class HidePromptEvent : BattleEvent { }
 }

@@ -1,4 +1,6 @@
-﻿using CryptoQuest.UI.Dialogs.BattleDialog;
+﻿using System;
+using CryptoQuest.UI.Dialogs.BattleDialog;
+using UnityEngine;
 
 namespace CryptoQuest.Battle.States
 {
@@ -22,11 +24,20 @@ namespace CryptoQuest.Battle.States
                 .WithHideCallback(() => _battleStateMachine.ChangeState(new SelectHeroesActions.SelectHeroesActions()))
                 .WithMessage(introUI.IntroMessage)
                 .Show();
+            _battleStateMachine.BattleInput.EnableBattleInput();
         }
 
         public void OnExit(BattleStateMachine battleStateMachine)
         {
-            if (_dialog) _dialog.Release();
+            try
+            {
+                GenericDialogController.Instance.Release(_dialog);
+            }
+            catch (Exception e)
+            {
+                Debug.LogWarning(e);
+                throw;
+            }
         }
     }
 }

@@ -51,9 +51,9 @@ namespace CryptoQuest.Battle
         
         public void Unload()
         {
+            SceneLoadedEvent.EventRaised -= GotoLoadingState;
             _currentState?.OnExit(this);
             _currentState = null;
-            SceneLoadedEvent.EventRaised -= GotoLoadingState;
             _cachedComponents.Clear();
         }
 

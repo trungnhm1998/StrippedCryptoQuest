@@ -1,4 +1,5 @@
-﻿using DG.Tweening;
+﻿using System.Collections;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -6,7 +7,7 @@ namespace CryptoQuest.UI.Common
 {
     public class UIShakeEffect : MonoBehaviour
     {
-        public UnityAction ShakeComplete;
+        public event UnityAction ShakeComplete;
 
         [SerializeField] private RectTransform _rect;
         [SerializeField] private float _shakeDuration = .5f;
@@ -31,6 +32,13 @@ namespace CryptoQuest.UI.Common
         {
             _rect.DOShakePosition(_shakeDuration, _shakeStrength, _shakeVibrato, _shakeRandomness)
                 .OnComplete(() => ShakeComplete?.Invoke());
+        }
+
+        public IEnumerator CoShake()
+        {
+            _rect.DOShakePosition(_shakeDuration, _shakeStrength, _shakeVibrato, _shakeRandomness);
+            yield return new WaitForSeconds(_shakeDuration);
+            ShakeComplete?.Invoke();
         }
     }
 }
