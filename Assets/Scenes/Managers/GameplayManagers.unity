@@ -3609,7 +3609,6 @@ Transform:
   - {fileID: 53356041}
   - {fileID: 711183416}
   - {fileID: 1389597222}
-  - {fileID: 2008261989}
   - {fileID: 1918178543}
   m_Father: {fileID: 0}
   m_RootOrder: 3
@@ -4063,52 +4062,6 @@ MonoBehaviour:
     m_EditorAssetChanged: 0
   _dialogsContainer: {fileID: 2125019243}
   _yesNoDialogEventSO: {fileID: 11400000, guid: c437779d68d43a547b9ce625c9a4bd65, type: 2}
---- !u!1 &2008261988
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2008261989}
-  - component: {fileID: 2008261990}
-  m_Layer: 0
-  m_Name: QuestDialogController
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2008261989
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2008261988}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 1
-  m_Children: []
-  m_Father: {fileID: 1315306661}
-  m_RootOrder: -1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2008261990
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2008261988}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7cc65a05b7c64b639a496b70a284a6cb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _playDialogueEventChannel: {fileID: 11400000, guid: 2271886bc7140d040a69b2e1825b986b, type: 2}
-  _dialogCompletedEvent: {fileID: 11400000, guid: 3443d2dcf941d6f4fb30303a52302ab5, type: 2}
 --- !u!1 &2125019242
 GameObject:
   m_ObjectHideFlags: 0
@@ -4761,10 +4714,6 @@ PrefabInstance:
       propertyPath: _gameDialogueController
       value: 
       objectReference: {fileID: 53356040}
-    - target: {fileID: 7485606423578617354, guid: 00a44df6a46def5429dc153661ece1db, type: 3}
-      propertyPath: _giveQuestEventChannel
-      value: 
-      objectReference: {fileID: 11400000, guid: da57ae63ba992064e8d3ec26238fc35a, type: 2}
     - target: {fileID: 7588319599363231506, guid: 00a44df6a46def5429dc153661ece1db, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -4876,13 +4825,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 7469673555416824468, guid: 00a44df6a46def5429dc153661ece1db, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 8478033844394479592}
-    - targetCorrespondingSourceObject: {fileID: 7469673555416824468, guid: 00a44df6a46def5429dc153661ece1db, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 8478033844394479593}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 00a44df6a46def5429dc153661ece1db, type: 3}
 --- !u!114 &8478033844394479590 stripped
 MonoBehaviour:
@@ -4895,40 +4838,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ddcdd604a328c4ab296f048eb7b3a925, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &8478033844394479591 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7469673555416824468, guid: 00a44df6a46def5429dc153661ece1db, type: 3}
+--- !u!114 &8478033844394479593 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6498129919235405818, guid: 00a44df6a46def5429dc153661ece1db, type: 3}
   m_PrefabInstance: {fileID: 8478033844394479589}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &8478033844394479592
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8478033844394479591}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d579544c617748aea8d65a3710fc2e07, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _loadNextSceneEventChannelSO: {fileID: 11400000, guid: 932ea26428d5f4c4f8bdfd48ebc80873, type: 2}
-  _onSceneLoadedEventChannelSO: {fileID: 11400000, guid: b8b96e43d21a7bf4c96df4cb83c2b764, type: 2}
-  _triggerQuestEventChannelSO: {fileID: 11400000, guid: fdefe5ff6c97c9946a9e874eb074f93f, type: 2}
---- !u!114 &8478033844394479593
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8478033844394479591}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a1ae8a2eab3343f5950c2093123b44f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _questEventChannelSo: {fileID: 11400000, guid: fdefe5ff6c97c9946a9e874eb074f93f, type: 2}
-  _dialogCompletedEventChannelSo: {fileID: 11400000, guid: 3443d2dcf941d6f4fb30303a52302ab5, type: 2}
 --- !u!224 &8759938189213178294 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6184527407156393254, guid: 2c1926596870eea4db2714164bc23558, type: 3}

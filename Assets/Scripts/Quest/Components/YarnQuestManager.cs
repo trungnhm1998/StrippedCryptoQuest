@@ -5,7 +5,6 @@ using CryptoQuest.Quest.Categories;
 using CryptoQuest.Quest.Events;
 using IndiGames.Core.Events.ScriptableObjects;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace CryptoQuest.Quest.Components
 {
@@ -54,14 +53,11 @@ namespace CryptoQuest.Quest.Components
 
         public void QuestCompleted(string questName)
         {
-            // if (_current == null) return;
             foreach (var possibleOutComeQuest in _currentlyProcessDialogueQuests)
             {
                 if (possibleOutComeQuest.Data.QuestName == questName)
                     _dialogueQuestSo = possibleOutComeQuest.Data;
             }
-
-            // _current = null;
         }
     }
 }

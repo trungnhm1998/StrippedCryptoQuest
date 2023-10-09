@@ -15,14 +15,8 @@ namespace CryptoQuest.Quest.Actor.Categories
     public class TriggerZoneActorInfo : ActorInfo<TriggerZoneActorSO>
     {
         private GameObject _gameObject;
-
-        public TriggerZoneActorInfo(TriggerZoneActorSO triggerZoneActorSO) : base(triggerZoneActorSO)
-        {
-        }
-
-        public TriggerZoneActorInfo()
-        {
-        }
+        public TriggerZoneActorInfo(TriggerZoneActorSO triggerZoneActorSO) : base(triggerZoneActorSO) { }
+        public TriggerZoneActorInfo() { }
 
         public override IEnumerator Spawn(Transform parent)
         {
@@ -34,8 +28,7 @@ namespace CryptoQuest.Quest.Actor.Categories
             _gameObject = handle.Result;
 
             QuestColliderTrigger colliderTrigger = handle.Result.GetComponent<QuestColliderTrigger>();
-            colliderTrigger.SetColliderBoxSize(Data.SizeBox);
-            colliderTrigger.SetQuestData(Data.QuestData);
+            colliderTrigger.Init(Data.QuestData, Data.SizeBox);
 
             Data.QuestData.OnQuestCompleted += CompleteQuestHandle;
         }

@@ -22,8 +22,13 @@ namespace CryptoQuest.Quest.Components
         [SerializeField] private QuestEventChannelSO _giveQuestEventChannel;
         [SerializeField] private RewardSO _rewardEventChannel;
 
-        [field: SerializeReference] public List<QuestInfo> InProgressQuest { get; set; } = new();
-        [field: SerializeReference] public List<QuestInfo> CompletedQuests { get; set; } = new();
+        [field: SerializeReference, HideInInspector]
+        public List<QuestInfo> InProgressQuest { get; private set; } = new();
+
+        [field: SerializeReference, HideInInspector]
+        public List<QuestInfo> CompletedQuests { get; private set; } = new();
+
+        private readonly List<string> _completedQuestsId = new();
 
         private QuestSO _currentQuestData;
         private QuestInfo _currentQuestInfo;
@@ -54,18 +59,15 @@ namespace CryptoQuest.Quest.Components
                 break;
             }
 
-            _currentQuestData = questData;
-            _currentQuestData.OnRewardReceived += RewardReceived;
-            _currentQuestData.OnQuestCompleted += QuestCompleted;
             _currentQuestInfo.TriggerQuest();
         }
 
-        private void GiveQuest(QuestSO questData)
+        public void GiveQuest(QuestSO questData)
         {
             if (IsQuestTriggered(questData)) return;
             QuestInfo currentQuestInfo = questData.CreateQuest(this);
 
-            if (!InProgressQuest.Contains(currentQuestInfo))
+            if (!_completedQuestsId.Contains(questData.Guid))
             {
                 InProgressQuest.Add(currentQuestInfo);
                 currentQuestInfo.GiveQuest();
@@ -79,7 +81,7 @@ namespace CryptoQuest.Quest.Components
 
         private void RewardReceived(LootInfo[] loots)
         {
-            // _rewardEventChannel.RewardRaiseEvent(loots);
+            _rewardEventChannel.RewardRaiseEvent(loots);
             _currentQuestData.OnRewardReceived -= RewardReceived;
         }
 
@@ -88,6 +90,7 @@ namespace CryptoQuest.Quest.Components
             InProgressQuest.Remove(_currentQuestInfo);
 
             CompletedQuests.Add(_currentQuestInfo);
+            _completedQuestsId.Add(_currentQuestInfo.BaseData.Guid);
 
             _currentQuestData.OnQuestCompleted -= QuestCompleted;
         }

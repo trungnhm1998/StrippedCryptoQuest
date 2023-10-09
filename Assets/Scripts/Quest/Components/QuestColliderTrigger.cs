@@ -12,14 +12,16 @@ namespace CryptoQuest.Quest.Components
         [SerializeField] private ECollideActionType _actionType;
         [SerializeField] private BoxCollider2D _collider2D;
 
-        public void SetQuestData(QuestSO questData) => _questToComplete = questData;
-
-        public void SetColliderBoxSize(Vector2 size) => _collider2D.size = size;
+        public void Init(QuestSO questData, Vector2 size)
+        {
+            _questToComplete = questData;
+            _collider2D.size = size;
+            _collider2D.enabled = true;
+        }
 
         private void OnTriggerEnter2D(Collider2D other) => GiveQuest(other, ECollideActionType.OnEnter);
 
         private void OnTriggerExit2D(Collider2D other) => GiveQuest(other, ECollideActionType.OnExit);
-        // public QuestEventChannelSO QuestTriggerChannelSo;
 
         private void GiveQuest(Collider2D other, ECollideActionType collideType)
         {
@@ -29,7 +31,6 @@ namespace CryptoQuest.Quest.Components
             _collider2D.enabled = false;
 
             _questGiverChannelSo.RaiseEvent(_questToComplete);
-            // QuestTriggerChannelSo.RaiseEvent(_questToComplete);
         }
 
         private enum ECollideActionType

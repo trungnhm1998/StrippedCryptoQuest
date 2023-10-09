@@ -19,8 +19,6 @@ namespace CryptoQuest.Quest.Authoring
     [Serializable]
     public abstract class QuestInfo<TDef> : QuestInfo where TDef : QuestSO
     {
-        private const string DEBUG_QUEST_HEADER = "<size=18><color=red>[QUEST-SYSTEM]</color>";
-        private const string DEBUG_QUEST_FOOTER = "</size>";
         protected QuestManager _questManager { get; private set; }
         [field: SerializeField] public TDef Data { get; protected set; }
 
@@ -34,20 +32,18 @@ namespace CryptoQuest.Quest.Authoring
 
         public override QuestSO BaseData => Data;
 
-        protected QuestInfo()
-        {
-        }
+        protected QuestInfo() { }
 
         public override void TriggerQuest()
         {
             Debug.Log(
-                $"{DEBUG_QUEST_HEADER} Start Quest: <color=green>[{Data.QuestName}] - [{Data.EventName}]</color> {DEBUG_QUEST_FOOTER}");
+                $"QuestSystem::Start Quest: <color=green>[{Data.QuestName}] - [{Data.EventName}]</color>");
         }
 
         public override void FinishQuest()
         {
             Debug.Log(
-                $"{DEBUG_QUEST_HEADER} Finish Quest: <color=green>[{Data.QuestName}] - [{Data.EventName}]</color> {DEBUG_QUEST_FOOTER}");
+                $"QuestSystem::Finish Quest: <color=green>[{Data.QuestName}] - [{Data.EventName}]</color>");
             Data.OnQuestCompleted?.Invoke();
             if (Data.NextAction != null)
                 _questManager.StartCoroutine(Data.NextAction.Execute());
@@ -58,7 +54,7 @@ namespace CryptoQuest.Quest.Authoring
         public override void GiveQuest()
         {
             Debug.Log(
-                $"{DEBUG_QUEST_HEADER} Give Quest: <color=green>[{Data.QuestName}] - [{Data.EventName}]</color> {DEBUG_QUEST_FOOTER}");
+                $"QuestSystem::Give Quest: <color=green>[{Data.QuestName}] - [{Data.EventName}]</color>");
         }
 
         private LootInfo[] GetRewards()

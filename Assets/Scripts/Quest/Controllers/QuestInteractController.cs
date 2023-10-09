@@ -3,12 +3,13 @@ using CryptoQuest.Quest.Authoring;
 using CryptoQuest.Quest.Categories;
 using CryptoQuest.Quest.Components;
 using CryptoQuest.System.Dialogue.Managers;
+using UnityEngine;
 
 namespace CryptoQuest.Quest
 {
     public class QuestInteractController : BaseQuestController
     {
-        private List<InteractQuestInfo> _currentlyInteractQuests => new();
+        private List<InteractQuestInfo> _currentlyInteractQuests = new();
         private YarnDialogWithQuestSo _currentInteractQuest;
 
         public void GiveQuest(InteractQuestInfo questInfo)
@@ -20,12 +21,8 @@ namespace CryptoQuest.Quest
         {
             _currentInteractQuest = questInfo.Data.YarnDialogWithQuestSo;
 
-            YarnQuestDef yarnDialogData = questInfo.Data.YarnDialogWithQuestSo.YarnQuestDef;
-            
             QuestManager.TriggerQuest(questInfo.Data);
 
-            YarnQuestManager.OnUpdateCurrentNode?.Invoke(yarnDialogData);
-            YarnSpinnerDialogueManager.PlayDialogueRequested.Invoke(yarnDialogData.YarnNode);
             YarnQuestManager.OnDialogCompleted += OnQuestFinish;
         }
 
@@ -42,7 +39,6 @@ namespace CryptoQuest.Quest
         private void HandleInteractResult(InteractQuestInfo processingQuest)
         {
             processingQuest.FinishQuest();
-
             _currentlyInteractQuests.Remove(processingQuest);
 
             YarnQuestManager.OnDialogCompleted -= OnQuestFinish;

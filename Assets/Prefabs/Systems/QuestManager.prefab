@@ -12,7 +12,9 @@ GameObject:
   - component: {fileID: 2610851588546578189}
   - component: {fileID: 800690595273299539}
   - component: {fileID: 5970865285635464750}
-  - component: {fileID: 5732774167976230999}
+  - component: {fileID: 5276658975124613192}
+  - component: {fileID: 1452079691479674896}
+  - component: {fileID: 8427849791668091320}
   m_Layer: 0
   m_Name: QuestManager
   m_TagString: Untagged
@@ -79,8 +81,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 877fb76b4ecc4d899a98ba2673feb9a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _triggerCutsceneEvent: {fileID: 11400000, guid: fdefe5ff6c97c9946a9e874eb074f93f, type: 2}
---- !u!114 &5732774167976230999
+--- !u!114 &5276658975124613192
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -94,3 +95,33 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _battleCompletedEvent: {fileID: 11400000, guid: e12642aa0785b734aa0d70cd555f1f69, type: 2}
   _triggerQuestEventChannel: {fileID: 11400000, guid: fdefe5ff6c97c9946a9e874eb074f93f, type: 2}
+  _giveQuestEventChannel: {fileID: 11400000, guid: da57ae63ba992064e8d3ec26238fc35a, type: 2}
+--- !u!114 &1452079691479674896
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5292255704015140054}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d579544c617748aea8d65a3710fc2e07, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _loadNextSceneEventChannelSO: {fileID: 11400000, guid: 932ea26428d5f4c4f8bdfd48ebc80873, type: 2}
+  _onSceneLoadedEventChannelSO: {fileID: 11400000, guid: b8b96e43d21a7bf4c96df4cb83c2b764, type: 2}
+  _triggerQuestEventChannelSO: {fileID: 11400000, guid: fdefe5ff6c97c9946a9e874eb074f93f, type: 2}
+--- !u!114 &8427849791668091320
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5292255704015140054}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a1ae8a2eab3343f5950c2093123b44f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _questEventChannelSo: {fileID: 11400000, guid: fdefe5ff6c97c9946a9e874eb074f93f, type: 2}
+  _dialogCompletedEventChannelSo: {fileID: 11400000, guid: 3443d2dcf941d6f4fb30303a52302ab5, type: 2}

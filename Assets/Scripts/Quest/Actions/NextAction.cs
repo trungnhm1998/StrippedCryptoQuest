@@ -1,9 +1,9 @@
 ﻿using System.Collections;
-using UnityEngine;
+using IndiGames.Core.SaveSystem.ScriptableObjects;
 
 namespace CryptoQuest.Quest.Actions
 {
-    public abstract class NextAction : ScriptableObject
+    public abstract class NextAction : SerializableScriptableObject
     {
         public abstract IEnumerator Execute();
     }

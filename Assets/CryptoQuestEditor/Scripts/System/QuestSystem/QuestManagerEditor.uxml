@@ -1,0 +1,12 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
+    <ui:VisualElement style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); max-height: 1px; min-height: 10px; height: 1px; border-top-width: 1px; border-left-color: rgb(70, 70, 70); border-right-color: rgb(70, 70, 70); border-top-color: rgb(70, 70, 70); border-bottom-color: rgb(70, 70, 70); border-bottom-width: 0; margin-top: 10px;" />
+    <ui:Label tabindex="-1" text="Tool Editor" display-tooltip-when-elided="true" style="font-size: 24px; -unity-font-style: bold; -unity-font: url(&apos;project://database/Assets/Fonts/Mplus1-Black.ttf?fileID=12800000&amp;guid=dd09ab6ed89294671a80ceee568a7f12&amp;type=3#Mplus1-Black&apos;); -unity-text-align: upper-center;" />
+    <ui:Label tabindex="-1" text="Add Quest Inprogress" display-tooltip-when-elided="true" style="font-size: 12px; -unity-font-style: bold; -unity-font: url(&apos;project://database/Assets/Fonts/Mplus1-Black.ttf?fileID=12800000&amp;guid=dd09ab6ed89294671a80ceee568a7f12&amp;type=3#Mplus1-Black&apos;); -unity-text-align: upper-center; margin-top: -3px; margin-bottom: 5px; color: rgb(152, 152, 152); align-self: stretch;" />
+    <ui:VisualElement style="flex-direction: row; justify-content: space-around; align-self: auto;">
+        <ui:ListView name="inprogess-quest" show-add-remove-footer="false" />
+        <ui:ListView name="complete-quest" show-add-remove-footer="false" />
+    </ui:VisualElement>
+    <ui:VisualElement name="button-field" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); flex-direction: row; flex-wrap: wrap; justify-content: center;">
+        <ui:Button text="Clear All" display-tooltip-when-elided="true" name="clear-button" />
+    </ui:VisualElement>
+</ui:UXML>

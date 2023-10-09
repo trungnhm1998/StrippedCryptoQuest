@@ -1,6 +1,7 @@
 ﻿using System;
 using CryptoQuest.Quest.Authoring;
 using CryptoQuest.Quest.Components;
+using CryptoQuest.System.Dialogue.Managers;
 using UnityEngine;
 
 namespace CryptoQuest.Quest.Categories
@@ -25,6 +26,21 @@ namespace CryptoQuest.Quest.Categories
         {
             _questInteractController = questManager.GetComponent<QuestInteractController>();
             _questInteractController.QuestManager = questManager;
+        }
+
+        public override void TriggerQuest()
+        {
+            base.TriggerQuest();
+
+            YarnQuestDef yarnDialogData = Data.YarnDialogWithQuestSo.YarnQuestDef;
+            YarnQuestManager.OnUpdateCurrentNode?.Invoke(yarnDialogData);
+            YarnSpinnerDialogueManager.PlayDialogueRequested.Invoke(yarnDialogData.YarnNode);
+        }
+
+        public override void FinishQuest()
+        {
+            base.FinishQuest();
+            YarnQuestManager.OnQuestCompleted.Invoke(Data.QuestName);
         }
 
         public override void GiveQuest()
