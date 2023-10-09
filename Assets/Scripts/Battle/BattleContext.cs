@@ -22,6 +22,10 @@ namespace CryptoQuest.Battle
         public IPartyController PlayerParty => _party;
         public Battlefield CurrentBattlefield => _battleBus.CurrentBattlefield;
 
+        public List<EnemyBehaviour> AliveEnemies { get; private set;} = new();
+        public List<HeroBehaviour> AliveHeroes { get; private set;} = new();
+
+
         private void Awake()
         {
             _sceneLoadedEvent.EventRaised += OnSceneLoaded;
@@ -62,6 +66,20 @@ namespace CryptoQuest.Battle
                 character.AttributeSystem.TryGetAttributeValue(AttributeSets.Agility, out var agi);
                 return agi.CurrentValue;
             }).ToList();
+        }
+
+        public bool IsAllEnemiesDead => AliveEnemies.Count <= 0;
+        public bool IsAllHeroesDead => AliveHeroes.Count <= 0;
+
+        /// <summary>
+        /// Use this each turn to update and cache characters alive status
+        /// </summary>
+        public void UpdateBattleContext()
+        {
+            AliveEnemies = Enemies.Where(enemy => enemy.IsValid()).ToList();
+            AliveHeroes = PlayerParty.Slots
+                .Where(slot => slot.IsValid())
+                .Select(slot => slot.HeroBehaviour).ToList();
         }
 
         private static Components.Character TryGetCharacter(Component character)

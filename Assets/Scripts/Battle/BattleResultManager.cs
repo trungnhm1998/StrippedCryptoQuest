@@ -28,6 +28,7 @@ namespace CryptoQuest.Battle
         {
             _roundPresenter.Lost += OnLost;
             _roundPresenter.Won += OnWon;
+            _roundPresenter.EndBattle += OnEndBattle;
 
             _forceWonEventToken = BattleEventBus.SubscribeEvent<ForceWinBattleEvent>(ForceWon);
             _forceLoseEventToken = BattleEventBus.SubscribeEvent<ForceLoseBattleEvent>(ForceLose);
@@ -37,6 +38,7 @@ namespace CryptoQuest.Battle
         {
             _roundPresenter.Lost -= OnLost;
             _roundPresenter.Won -= OnWon;
+            _roundPresenter.EndBattle -= OnEndBattle;
 
             BattleEventBus.UnsubscribeEvent(_forceWonEventToken);
             BattleEventBus.UnsubscribeEvent(_forceLoseEventToken);
@@ -46,6 +48,7 @@ namespace CryptoQuest.Battle
         private void ForceLose(ForceLoseBattleEvent _) => StartCoroutine(CoOnPresentLost());
         private void OnWon() => StartCoroutine(CoOnPresentWon());
         private void OnLost() => StartCoroutine(CoOnPresentLost());
+        private void OnEndBattle() => StartCoroutine(CoOnPresentEnd());
 
         private IEnumerator CoOnPresentWon()
         {
@@ -69,7 +72,18 @@ namespace CryptoQuest.Battle
         {
             Debug.Log("Show dialog Battle Lost");
             yield return FadeInAndUnloadBattle();
+            // TODO: Unload current battle field scene and load last saved scene
             BattleEventBus.RaiseEvent(new BattleLostEvent()
+            {
+                Battlefield = _battleContext.CurrentBattlefield,
+            });
+        }
+        
+        private IEnumerator CoOnPresentEnd()
+        {
+            Debug.Log("Show dialog Battle End");
+            yield return FadeInAndUnloadBattle();
+            BattleEventBus.RaiseEvent(new BattleEndedEvent()
             {
                 Battlefield = _battleContext.CurrentBattlefield,
             });

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using CryptoQuest.Battle.Components;
 using CryptoQuest.Battle.Events;
+using CryptoQuest.Character.Ability;
 using CryptoQuest.Gameplay.PlayerParty;
 using CryptoQuest.System;
 using UnityEngine;
@@ -17,8 +18,24 @@ namespace CryptoQuest.Battle
     {
         public event Action Lost;
         public event Action Won;
+        public event Action EndBattle;
+
         [SerializeField] private BattleContext _battleContext;
+        [SerializeField] private RetreatAbility _retreatAbility;
         private readonly RoundEndedEvent _roundEndedEvent = new();
+
+        private bool _isBattleEnded;
+
+
+        private void OnEnable()
+        {
+            _retreatAbility.RetreatedEvent += OnEndBattle;
+        }
+
+        private void OnDisable()
+        {
+            _retreatAbility.RetreatedEvent -= OnEndBattle;
+        }
 
         public void ExecuteCharacterCommands(IEnumerable<Components.Character> characters)
         {
@@ -36,12 +53,18 @@ namespace CryptoQuest.Battle
                 character.UpdateTarget(_battleContext);
                 yield return commandExecutor.ExecuteCommand();
                 yield return commandExecutor.PostTurn();
-                if (CanContinueRound() == false) break;
+                if (!CanContinueRound()) break;
             }
 
             ChangeAllEnemiesOpacity(1f);
             BattleEventBus.RaiseEvent(_roundEndedEvent); // Need to be raise so guard tag can be remove
             OnRoundEndedCheck();
+        }
+
+        private bool CanContinueRound()
+        {
+            _battleContext.UpdateBattleContext();
+            return !IsWon() && !IsLost() && !_isBattleEnded;
         }
 
         /// <summary>
@@ -53,24 +76,29 @@ namespace CryptoQuest.Battle
             {
                 Debug.Log("Battle Won");
                 Won?.Invoke();
+                return;
             }
-            else if (IsLost())
+
+            if (IsLost())
             {
                 Debug.Log("Battle Lost");
                 Lost?.Invoke();
             }
         }
 
-        private bool CanContinueRound() => IsWon() == false && IsLost() == false;
+        private bool IsWon() => _battleContext.IsAllEnemiesDead;
+        
+        private bool IsLost() => _battleContext.IsAllHeroesDead;
 
-        private bool IsWon() =>
-            _battleContext.Enemies.All(enemy => !enemy.IsValid()); // TODO: Cache and reset on round started
-
-        // TODO: Cache and reset on round started
-        private static bool IsLost()
+        /// <summary>
+        /// When battle ended with retreat player will not have reward 
+        /// but still stay in the battle field scene
+        /// TODO: steal ability/behaviour can listen to this event and add stealed loot 
+        /// </summary>
+        private void OnEndBattle()
         {
-            var playerParty = ServiceProvider.GetService<IPartyController>();
-            return playerParty.Slots.Any(slot => slot.IsValid()) == false;
+            _isBattleEnded = true;
+            EndBattle?.Invoke();
         }
 
         private void ChangeAllEnemiesOpacity(float f)
