@@ -8,6 +8,7 @@ using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
 using Spine.Unity;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using UnityEngine.Localization;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using NotImplementedException = System.NotImplementedException;
 
@@ -31,6 +32,7 @@ namespace CryptoQuest.Battle.Components
 
         private string _displayName;
         public override string DisplayName => _displayName;
+        public override LocalizedString LocalizedName => Def.Name;
         private EnemySpec _spec = new();
         public EnemySpec Spec => _spec;
 

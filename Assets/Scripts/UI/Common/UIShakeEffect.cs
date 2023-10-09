@@ -1,13 +1,13 @@
-﻿using System.Collections;
-using DG.Tweening;
+﻿using DG.Tweening;
+using IndiGames.Core.Events.ScriptableObjects;
 using UnityEngine;
-using UnityEngine.Events;
 
 namespace CryptoQuest.UI.Common
 {
     public class UIShakeEffect : MonoBehaviour
     {
-        public event UnityAction ShakeComplete;
+        [SerializeField] private VoidEventChannelSO _shakeEvent;
+        [SerializeField] private VoidEventChannelSO _shakeCompleteEvent;
 
         [SerializeField] private RectTransform _rect;
         [SerializeField] private float _shakeDuration = .5f;
@@ -22,23 +22,26 @@ namespace CryptoQuest.UI.Common
             _rect = GetComponent<RectTransform>();
         }
 
+        private void OnEnable()
+        {
+            _shakeEvent.EventRaised += Shake;
+        }
+
+        private void OnDisable()
+        {
+            _shakeEvent.EventRaised -= Shake;
+        }
+
         private void Start()
         {
             if (!_isShakeAtStart) return;
             Shake();
         }
 
-        public void Shake()
+        private void Shake()
         {
             _rect.DOShakePosition(_shakeDuration, _shakeStrength, _shakeVibrato, _shakeRandomness)
-                .OnComplete(() => ShakeComplete?.Invoke());
-        }
-
-        public IEnumerator CoShake()
-        {
-            _rect.DOShakePosition(_shakeDuration, _shakeStrength, _shakeVibrato, _shakeRandomness);
-            yield return new WaitForSeconds(_shakeDuration);
-            ShakeComplete?.Invoke();
+                .OnComplete(() => _shakeCompleteEvent.RaiseEvent());
         }
     }
 }

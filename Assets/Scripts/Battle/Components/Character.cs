@@ -7,6 +7,7 @@ using IndiGames.GameplayAbilitySystem.EffectSystem;
 using IndiGames.GameplayAbilitySystem.EffectSystem.Components;
 using IndiGames.GameplayAbilitySystem.TagSystem.ScriptableObjects;
 using UnityEngine;
+using UnityEngine.Localization;
 
 namespace CryptoQuest.Battle.Components
 {
@@ -28,6 +29,7 @@ namespace CryptoQuest.Battle.Components
         private Elemental _element;
         public Elemental Element => _element;
         public abstract string DisplayName { get; }
+        public abstract LocalizedString LocalizedName { get; }
 
         protected virtual void Awake()
         {

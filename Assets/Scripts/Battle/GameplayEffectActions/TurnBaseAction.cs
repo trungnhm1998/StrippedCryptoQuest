@@ -1,5 +1,6 @@
 ﻿using System;
 using CryptoQuest.Battle.Components;
+using CryptoQuest.Battle.Events;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
 using IndiGames.GameplayAbilitySystem.EffectSystem;
 using IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects.GameplayEffectActions;
@@ -43,12 +44,21 @@ namespace CryptoQuest.Battle.GameplayEffectActions
 
         protected override void OnRelease()
         {
-            _commandExecutor.OnTurnStarted += UpdateTurn;
+            _commandExecutor.OnTurnStarted -= UpdateTurn;
         }
 
         private void UpdateTurn()
         {
-            if (_turn <= 0) return;
+            if (_turn <= 0 || Expired)
+            {
+                BattleEventBus.RaiseEvent(new EffectExpired()
+                {
+                    Character = _owner.GetComponent<Components.Character>(),
+                    Effect = this
+                });
+                return;
+            }
+
             ModifyOwnerAttribute();
             _turn--;
             if (_turn <= 0)

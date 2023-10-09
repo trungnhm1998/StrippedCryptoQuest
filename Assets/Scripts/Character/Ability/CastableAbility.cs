@@ -1,5 +1,6 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
+using CryptoQuest.Battle.Components;
+using CryptoQuest.Battle.Events;
 using CryptoQuest.Character.Attributes;
 using CryptoQuest.Gameplay.Battle.Core;
 using IndiGames.GameplayAbilitySystem.AbilitySystem;
@@ -8,7 +9,6 @@ using IndiGames.GameplayAbilitySystem.AbilitySystem.ScriptableObjects;
 using IndiGames.GameplayAbilitySystem.EffectSystem;
 using IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects;
 using UnityEngine;
-using Object = UnityEngine.Object;
 
 namespace CryptoQuest.Character.Ability
 {
@@ -26,20 +26,15 @@ namespace CryptoQuest.Character.Ability
         /// </summary>
         public GameplayEffectDefinition Cost;
 
+        [field: SerializeField] public float SuccessRate { get; private set; }
         [field: SerializeField] public SkillInfo Parameters { get; private set; }
         [field: SerializeField] public SkillTargetType TargetType { get; private set; }
 
-        protected override GameplayAbilitySpec CreateAbility()
-        {
-            var ability = new CastableAbilitySpec(this);
-            return ability;
-        }
+        protected override GameplayAbilitySpec CreateAbility() => new CastableAbilitySpec(this);
     }
 
     public class CastableAbilitySpec : GameplayAbilitySpec
     {
-        public event Action NotEnoughResourcesToCast;
-        private AbilitySystemBehaviour _targetSystem;
         private GameplayEffectDefinition _costEffect;
         private readonly CastableAbility _def;
 
@@ -66,7 +61,7 @@ namespace CryptoQuest.Character.Ability
 
         public override bool CanActiveAbility()
         {
-            return base.CanActiveAbility() && CheckCost();
+            return base.CanActiveAbility() && CheckCost() && CanCast();
         }
 
         /// <summary>
@@ -75,18 +70,29 @@ namespace CryptoQuest.Character.Ability
         /// is greater than 0 apply the effect
         /// </summary>
         /// <returns>Return true if after subtracted attribute that the cost needs greater than 0</returns>
-        public bool CheckCost()
+        private bool CheckCost()
         {
             if (_costEffect == null) return true;
             if (Owner == null) return true;
             if (Owner.CanApplyAttributeModifiers(_costEffect)) return true;
 
             Debug.Log($"Not enough {_costEffect.EffectDetails.Modifiers[0].Attribute.name} to cast this ability");
-            NotEnoughResourcesToCast?.Invoke();
+            BattleEventBus.RaiseEvent(new MpNotEnoughEvent());
             return false;
         }
 
-        public void ApplyCost()
+        private bool CanCast()
+        {
+            var result = Random.Range(0, 100) < _def.SuccessRate;
+            if (!result)
+            {
+                Debug.Log($"Failed to cast {_def.name}");
+                BattleEventBus.RaiseEvent(new CastSkillFailedEvent());
+            }
+            return result;
+        }
+
+        private void ApplyCost()
         {
             if (_costEffect == null) return;
 
@@ -109,10 +115,21 @@ namespace CryptoQuest.Character.Ability
             spec.Parameters = _def.Parameters.SkillParameters;
             foreach (var target in _targets)
             {
+                if (IsTargetEvaded(target))
+                {
+                    BattleEventBus.RaiseEvent(new MissedEvent());
+                    continue;
+                }
                 target.ApplyEffectSpecToSelf(spec);
             }
 
             yield break;
+        }
+        
+        private bool IsTargetEvaded(AbilitySystemBehaviour target)
+        {
+            var evadeBehaviour = target.GetComponent<IEvadable>();
+            return evadeBehaviour != null && evadeBehaviour.TryEvade();
         }
     }
 }

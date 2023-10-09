@@ -64,6 +64,7 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem.Components
             inSpec.Target = Owner;
             var activeEffectSpecification = inSpec.CreateActiveEffectSpec(_owner);
             _appliedEffects.Add(activeEffectSpecification);
+            Owner.TagSystem.AddTags(activeEffectSpecification.GrantedTags);
             UpdateAttributeModifiersUsingAppliedEffects();
             return activeEffectSpecification;
         }
@@ -194,31 +195,7 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem.Components
             }
         }
 
-        public bool HasTag(TagScriptableObject tagSO)
-        {
-            // find all tags from all effects
-            foreach (var effect in _appliedEffects)
-            {
-                if (effect.HasTag(tagSO)) return true;
-            }
-
-            return Owner.HasTag(tagSO);
-        }
-
-        public List<TagScriptableObject> GrantedTags
-        {
-            get
-            {
-                var tags = new List<TagScriptableObject>();
-                foreach (var effect in _appliedEffects)
-                {
-                    tags.AddRange(effect.GrantedTags);
-                }
-
-                tags.AddRange(Owner.TagSystem.GrantedTags);
-                return tags;
-            }
-        }
+        public List<TagScriptableObject> GrantedTags => _owner.TagSystem.GrantedTags;
 
         /// <summary>
         /// Tests if all modifiers in this GameplayEffect will leave the attribute > 0.f

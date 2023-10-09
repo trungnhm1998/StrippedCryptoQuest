@@ -1,14 +1,20 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using CryptoQuest.Character.Attributes;
 using IndiGames.GameplayAbilitySystem.AbilitySystem;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.ScriptableObjects;
+using UnityEngine;
+using UnityEngine.Localization;
 
 namespace CryptoQuest.Character.Ability
 {
     /// <summary>
     /// <see cref="AbilityTags"/> should contains the guard tag
     /// </summary>
-    public class GuardAbility : AbilityScriptableObject<GuardAbilitySpec> { }
+    public class GuardAbility : AbilityScriptableObject<GuardAbilitySpec>
+    {
+        [field: SerializeField] public LocalizedString Description { get; private set; }
+    }
 
     /// <summary>
     /// this doesn't do anything for now, beside when the ability is active, the character will have a guard tag
@@ -17,8 +23,10 @@ namespace CryptoQuest.Character.Ability
     /// </summary>
     public class GuardAbilitySpec : GameplayAbilitySpec
     {
+        public event Action GuardActivatedEvent;
         protected override IEnumerator OnAbilityActive()
         {
+            GuardActivatedEvent?.Invoke();
             yield break;
         }
     }

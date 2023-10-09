@@ -4,6 +4,7 @@ using CryptoQuest.Character.Hero;
 using CryptoQuest.Character.Tag;
 using CryptoQuest.Gameplay;
 using UnityEngine;
+using UnityEngine.Localization;
 
 namespace CryptoQuest.Battle.Components
 {
@@ -18,6 +19,7 @@ namespace CryptoQuest.Battle.Components
         public StatsDef Stats => Spec.Unit.Stats;
         public Elemental Element => Spec.Unit.Element;
         public override string DisplayName => DetailsInfo.LocalizedName.GetLocalizedString();
+        public override LocalizedString LocalizedName => DetailsInfo.LocalizedName;
         public GameObject GameObject => gameObject;
         public CharacterClass Class => Spec.Unit.Class;
         public Sprite Avatar { get; set; }

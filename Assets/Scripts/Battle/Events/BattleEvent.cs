@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using CryptoQuest.Battle.Components;
 using CryptoQuest.Gameplay.Encounter;
 using CryptoQuest.Gameplay.Loot;
+using IndiGames.GameplayAbilitySystem.EffectSystem;
 using TinyMessenger;
 
 namespace CryptoQuest.Battle.Events
@@ -30,6 +31,8 @@ namespace CryptoQuest.Battle.Events
     public class BattleLostEvent : BattleEndedEvent { }
 
     public class BattleCleanUpFinishedEvent : BattleEvent { }
+
+    public class LoadedEvent : BattleEvent { }
     public class UnloadingEvent : BattleEvent { }
 
     public class IndexEvent : BattleEvent
@@ -45,12 +48,34 @@ namespace CryptoQuest.Battle.Events
     {
         public HeroBehaviour Hero { get; set; }
     }
-    
+
     public class ShowPromptEvent : BattleEvent
     {
         public string Prompt { get; set; }
         public bool IsConcat { get; set; }
     }
-    
+
     public class HidePromptEvent : BattleEvent { }
+
+    public abstract class LogEvent : BattleEvent
+    {
+        public Components.Character Character { get; set; }
+    }
+
+    public class NormalAttackEvent : LogEvent
+    {
+        public Components.Character Target { get; set; }
+    }
+    public class GuardedEvent : LogEvent { }
+
+    public class EffectExpired : LogEvent
+    {
+        public ActiveEffectSpecification Effect { get; set; }
+    }
+
+    public class MpNotEnoughEvent : LogEvent { }
+
+    public class CastSkillFailedEvent : LogEvent { }
+
+    public class MissedEvent : LogEvent { }
 }

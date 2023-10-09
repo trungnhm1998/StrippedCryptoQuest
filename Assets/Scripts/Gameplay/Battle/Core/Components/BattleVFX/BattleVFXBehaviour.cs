@@ -1,19 +1,11 @@
-using UnityEngine;
-using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data;
 using System;
+using UnityEngine;
 
 namespace CryptoQuest.Gameplay.Battle.Core.Components.BattleVFX
 {
     public class BattleVFXBehaviour : MonoBehaviour
     {
-        public Action CompleteVFX;
-
-        protected BattleActionDataSO _actionData;
-
-        public virtual void Init(BattleActionDataSO data)
-        {
-            _actionData = data;
-        }
+        public event Action CompleteVFX;
 
         protected void FinishVFX()
         {

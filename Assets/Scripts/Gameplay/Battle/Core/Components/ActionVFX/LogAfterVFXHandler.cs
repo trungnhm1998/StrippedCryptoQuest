@@ -39,7 +39,6 @@ namespace CryptoQuest.Gameplay.Battle.Core.Components.ActionVFX
         {
             var vfxObject = handle.Result;
             if (!vfxObject.TryGetComponent<BattleVFXBehaviour>(out var vfxBehaviour)) return;
-            vfxBehaviour.Init(_actionData);
             vfxBehaviour.CompleteVFX += OnEffectComplete;
         }
 

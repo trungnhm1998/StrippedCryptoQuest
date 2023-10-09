@@ -35,7 +35,7 @@ RectTransform:
   m_Children:
   - {fileID: 6336081975624304522}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -213,6 +213,14 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -230
       objectReference: {fileID: 0}
+    - target: {fileID: 4912647140689766573, guid: e690eeae105673945bc5e45e20a108e1, type: 3}
+      propertyPath: _shakeEvent
+      value: 
+      objectReference: {fileID: 11400000, guid: e245e2df09cdadd4ba12a6f8afed718a, type: 2}
+    - target: {fileID: 4912647140689766573, guid: e690eeae105673945bc5e45e20a108e1, type: 3}
+      propertyPath: _shakeCompleteEvent
+      value: 
+      objectReference: {fileID: 11400000, guid: 172ca9d87acd3a846a93042d9d7a4ea0, type: 2}
     - target: {fileID: 5362442366569237413, guid: e690eeae105673945bc5e45e20a108e1, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1
@@ -376,7 +384,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _firstSelectedButton: {fileID: 0}
-  _isSelectFirstButtonOnEnable: 1
+  _wrapAround: 0
+  _isSelectFirstButtonOnEnable: 0
+  _isSelectLastManagedButtonOnEnable: 0
   _buttonsContainer: {fileID: 473399511658219304}
 --- !u!224 &473399511658219304 stripped
 RectTransform:
@@ -401,7 +411,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _firstSelectedButton: {fileID: 0}
+  _wrapAround: 0
   _isSelectFirstButtonOnEnable: 1
+  _isSelectLastManagedButtonOnEnable: 1
   _buttonsContainer: {fileID: 1443906114789123009}
 --- !u!224 &1443906114789123009 stripped
 RectTransform:
@@ -431,7 +443,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _firstSelectedButton: {fileID: 0}
-  _isSelectFirstButtonOnEnable: 1
+  _wrapAround: 0
+  _isSelectFirstButtonOnEnable: 0
+  _isSelectLastManagedButtonOnEnable: 0
   _buttonsContainer: {fileID: 3110689978637270772}
 --- !u!1 &4557534340575319327 stripped
 GameObject:
@@ -456,7 +470,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _firstSelectedButton: {fileID: 0}
+  _wrapAround: 0
   _isSelectFirstButtonOnEnable: 0
+  _isSelectLastManagedButtonOnEnable: 0
   _buttonsContainer: {fileID: 7408242417448721803}
 --- !u!224 &6336081975624304522 stripped
 RectTransform:

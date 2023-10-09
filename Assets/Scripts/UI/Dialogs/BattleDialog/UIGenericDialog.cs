@@ -14,9 +14,11 @@ namespace CryptoQuest.UI.Dialogs.BattleDialog
 
         [Header("UI")]
         [SerializeField] private Text _dialogText;
+
         [SerializeField] private GameObject _nextMark;
-        
+
         private bool _requireInput;
+
         public UIGenericDialog RequireInput()
         {
             _requireInput = true;
@@ -24,6 +26,7 @@ namespace CryptoQuest.UI.Dialogs.BattleDialog
         }
 
         private string _message;
+
         public UIGenericDialog WithMessage(string message)
         {
             _message = message;
@@ -64,12 +67,13 @@ namespace CryptoQuest.UI.Dialogs.BattleDialog
             _dialogText.text += "\n" + messageHandle.Result;
         }
 
-        public override void Show()
+        public override void Show() => StartCoroutine(CoShow());
+
+        public IEnumerator CoShow()
         {
             if (_localizedMessage != null)
             {
-                StartCoroutine(CoShowWithLocalizedMessage());
-                return;
+                yield return CoShowWithLocalizedMessage();
             }
 
             InternalShow();
@@ -80,16 +84,19 @@ namespace CryptoQuest.UI.Dialogs.BattleDialog
             var messageHandle = _localizedMessage.GetLocalizedStringAsync();
             yield return messageHandle;
             _message = messageHandle.Result;
-            InternalShow();
         }
 
         private void InternalShow()
         {
             _nextMark.SetActive(false);
             _dialogText.text = _message;
-            _inputMediator.NextDialoguePressed += Hide;
-            _inputMediator.DisableAllInput();
-            _inputMediator.EnableInputMap("Dialogues");
+            if (_requireInput)
+            {
+                _inputMediator.NextDialoguePressed += Hide;
+                _inputMediator.DisableAllInput();
+                _inputMediator.EnableInputMap("Dialogues");
+            }
+
             base.Show();
 
             if (_autoHideDuration > 0)
@@ -98,7 +105,11 @@ namespace CryptoQuest.UI.Dialogs.BattleDialog
 
         public override void Hide()
         {
-            _inputMediator.NextDialoguePressed -= Hide;
+            if (_requireInput)
+            {
+                _inputMediator.NextDialoguePressed -= Hide;
+            }
+
             base.Hide();
             _dialogText.text = "";
             _hideCallback?.Invoke();
@@ -110,6 +121,11 @@ namespace CryptoQuest.UI.Dialogs.BattleDialog
         {
             _autoHideDuration = duration;
             return this;
+        }
+
+        public void Clear()
+        {
+            _dialogText.text = "";
         }
     }
 }

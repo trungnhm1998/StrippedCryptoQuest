@@ -1,29 +1,27 @@
 ﻿using System.Collections;
 using CryptoQuest.Battle.Components;
 using IndiGames.GameplayAbilitySystem.AbilitySystem;
-using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.ScriptableObjects;
 using IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects;
 using UnityEngine;
 
 namespace CryptoQuest.Character.Ability
 {
-    public class NormalAttackAbility : AbilityScriptableObject<NormalAttackAbilitySpec>
+    public class NormalAttackAbility : AbilityScriptableObject
     {
         [field: SerializeField] public GameplayEffectDefinition NormalAttackEffect { get; private set; }
+        protected override GameplayAbilitySpec CreateAbility() => new NormalAttackAbilitySpec(this);
     }
 
     public class NormalAttackAbilitySpec : GameplayAbilitySpec
     {
-        private NormalAttackAbility _normalAttackAbility;
-
-        public override void InitAbility(AbilitySystemBehaviour owner, AbilityScriptableObject abilitySO)
-        {
-            base.InitAbility(owner, abilitySO);
-            _normalAttackAbility = abilitySO as NormalAttackAbility;
-        }
-
+        private readonly NormalAttackAbility _normalAttackAbility;
         private IDamageable _target;
+
+        public NormalAttackAbilitySpec(NormalAttackAbility normalAttackAbility)
+        {
+            _normalAttackAbility = normalAttackAbility;
+        }
 
         public void Execute(IDamageable damageable)
         {

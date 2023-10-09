@@ -1,5 +1,6 @@
 ﻿using IndiGames.GameplayAbilitySystem.TagSystem.ScriptableObjects;
 using UnityEngine;
+using UnityEngine.Localization;
 
 namespace CryptoQuest.Character.Tag
 {
@@ -8,5 +9,6 @@ namespace CryptoQuest.Character.Tag
     public class TagSO : TagScriptableObject
     {
         [field: SerializeField] public Sprite Icon { get; private set; }
+        [field: SerializeField] public LocalizedString Description { get; private set; }
     }
 }

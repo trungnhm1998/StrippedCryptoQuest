@@ -52,7 +52,11 @@ namespace CryptoQuest.UI.Dialogs
             var index = _cachedDialogs[dialogToRelease];
             _dialogs.RemoveAt(index);
             _cachedDialogs.Remove(dialogToRelease);
-            if (_releaseCoroutines.TryGetValue(dialogToRelease, out var coroutine)) StopCoroutine(coroutine);
+            if (_releaseCoroutines.TryGetValue(dialogToRelease, out var coroutine))
+            {
+                if (coroutine != null) StopCoroutine(coroutine);
+            }
+
             _releaseCoroutines.Remove(dialogToRelease);
             Destroy(dialogToRelease.gameObject);
 
@@ -62,7 +66,7 @@ namespace CryptoQuest.UI.Dialogs
         private void ReleaseAssetIfNoDialog()
         {
             if (_dialogs.Count > 0) return;
-            Addressables.Release(_handler);
+            if (_handler.IsValid()) Addressables.Release(_handler);
         }
 
         private IEnumerator LoadDialogPrefab(Action<T> createdCallback, bool autoRelease, float releaseTimeout)

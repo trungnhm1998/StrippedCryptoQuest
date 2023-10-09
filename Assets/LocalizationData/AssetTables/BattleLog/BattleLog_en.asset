@@ -16,7 +16,8 @@ MonoBehaviour:
     m_Code: en
   m_SharedData: {fileID: 11400000, guid: 810dd60b781de0a4589f9f164a4b0a8c, type: 2}
   m_Metadata:
-    m_Items: []
+    m_Items:
+    - rid: 7132078038104408069
   m_TableData:
   - m_Id: 942007443456
     m_Localized: A {monster.name} appears!
@@ -27,9 +28,10 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 942057775104
-    m_Localized: '{character.name} attacks!'
+    m_Localized: '{CharacterName} attacks!'
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 7132078038104408069
   - m_Id: 942057775105
     m_Localized: '{character.name} has been poisoned!'
     m_Metadata:
@@ -182,13 +184,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 942061969437
-    m_Localized: '{character.name} takes no damage!'
+    m_Localized: '{CharacterName} takes no damage!'
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 7132078038104408069
   - m_Id: 942061969438
-    m_Localized: '{damage.number} damage to the {character.name}!!'
+    m_Localized: '{DamageNumber} damage to the {CharacterName}!!'
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 7132078038104408069
   - m_Id: 942061969439
     m_Localized: '{character.name} was defeated!'
     m_Metadata:
@@ -204,7 +208,8 @@ MonoBehaviour:
   - m_Id: 942061969442
     m_Localized: '{character.name} is in a defensive stance.'
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 7132078038104408069
   - m_Id: 942061969443
     m_Localized: '{character.name}''s {attribute.name} is increased.'
     m_Metadata:
@@ -271,4 +276,8 @@ MonoBehaviour:
       m_Items: []
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: 7132078038104408069
+      type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_Entries: 22e04457db00000000e00457db0000001ee04457db0000001de04457db000000

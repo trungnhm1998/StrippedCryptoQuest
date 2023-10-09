@@ -4,9 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using CryptoQuest.Battle.Components;
 using CryptoQuest.Battle.Events;
+using CryptoQuest.Battle.UI.Logs;
 using CryptoQuest.Character.Ability;
-using CryptoQuest.Gameplay.PlayerParty;
-using CryptoQuest.System;
 using UnityEngine;
 
 namespace CryptoQuest.Battle
@@ -18,14 +17,12 @@ namespace CryptoQuest.Battle
     {
         public event Action Lost;
         public event Action Won;
-        public event Action EndBattle;
-
+        [SerializeField] private LogPresenter _logPresenter;
         [SerializeField] private BattleContext _battleContext;
         [SerializeField] private RetreatAbility _retreatAbility;
         private readonly RoundEndedEvent _roundEndedEvent = new();
-
+        public event Action EndBattle;
         private bool _isBattleEnded;
-
 
         private void OnEnable()
         {
@@ -48,14 +45,18 @@ namespace CryptoQuest.Battle
 
             foreach (var character in characters)
             {
+                _logPresenter.Clear();
                 character.TryGetComponent(out CommandExecutor commandExecutor);
                 yield return commandExecutor.PreTurn();
                 character.UpdateTarget(_battleContext);
                 yield return commandExecutor.ExecuteCommand();
                 yield return commandExecutor.PostTurn();
-                if (!CanContinueRound()) break;
+                yield return new WaitUntil(() => _logPresenter.Finished);
+                if (CanContinueRound() == false) break;
             }
 
+            yield return new WaitUntil(() => _logPresenter.Finished);
+            _logPresenter.HideAndClear();
             ChangeAllEnemiesOpacity(1f);
             BattleEventBus.RaiseEvent(_roundEndedEvent); // Need to be raise so guard tag can be remove
             OnRoundEndedCheck();

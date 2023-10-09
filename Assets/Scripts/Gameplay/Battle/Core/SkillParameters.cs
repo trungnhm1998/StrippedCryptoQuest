@@ -9,7 +9,7 @@ using UnityEngine.Localization;
 namespace CryptoQuest.Gameplay.Battle.Core
 {
     [Serializable]
-    public class SkillParameters : AbilityParameters
+    public class SkillParameters
     {
         public float BasePower;
         public float PowerUpperLimit;

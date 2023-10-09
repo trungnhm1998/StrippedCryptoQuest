@@ -16,7 +16,8 @@ MonoBehaviour:
     m_Code: ja
   m_SharedData: {fileID: 11400000, guid: 810dd60b781de0a4589f9f164a4b0a8c, type: 2}
   m_Metadata:
-    m_Items: []
+    m_Items:
+    - rid: 7132078038104408070
   m_TableData:
   - m_Id: 942007443456
     m_Localized: "{monster.name}\u304C\u3042\u3089\u308F\u308C\u305F\uFF01"
@@ -27,9 +28,10 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 942057775104
-    m_Localized: "{character.name}\u306E\u653B\u6483\uFF01"
+    m_Localized: "{CharacterName}\u306E\u653B\u6483\uFF01"
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 7132078038104408070
   - m_Id: 942057775105
     m_Localized: "{character.name}\u306F\u6BD2\u306B\u4FB5\u3055\u308C\u305F"
     m_Metadata:
@@ -175,13 +177,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 942061969437
-    m_Localized: "{character.name}\u306B\u30C0\u30E1\u30FC\u30B8\u3092\u4E0E\u3048\u3089\u308C\u306A\u3044"
+    m_Localized: "{CharacterName}\u306B\u30C0\u30E1\u30FC\u30B8\u3092\u4E0E\u3048\u3089\u308C\u306A\u3044"
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 7132078038104408070
   - m_Id: 942061969438
-    m_Localized: "{character.name}\u306B{damage.number}\u306E\u30C0\u30E1\u30FC\u30B8\uFF01"
+    m_Localized: "{CharacterName}\u306B{DamageNumber}\u306E\u30C0\u30E1\u30FC\u30B8\uFF01"
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 7132078038104408070
   - m_Id: 942061969439
     m_Localized: "{character.name}\u3092\u5012\u3057\u305F\uFF01"
     m_Metadata:
@@ -197,7 +201,8 @@ MonoBehaviour:
   - m_Id: 942061969442
     m_Localized: "{character.name}\u306F\u9632\u5FA1\u3092\u3057\u3066\u3044\u308B"
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 7132078038104408070
   - m_Id: 942061969443
     m_Localized: "{character.name}\u306E{attribute.name}\u304C\u30A2\u30C3\u30D7\u3057\u305F\u3002"
     m_Metadata:
@@ -264,4 +269,8 @@ MonoBehaviour:
       m_Items: []
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: 7132078038104408070
+      type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_Entries: 22e04457db00000000e00457db0000001ee04457db0000001de04457db000000

@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using CryptoQuest.Battle.Events;
 using CryptoQuest.UI.Dialogs.BattleDialog;
 using UnityEngine;
 
@@ -28,6 +29,10 @@ namespace CryptoQuest.Battle.States
             yield return new WaitForSeconds(_battleStateMachine.Spiral.Duration);
         }
 
-        private void ChangeToIntroState(UIGenericDialog dialog) => _battleStateMachine.ChangeState(new Intro(dialog));
+        private void ChangeToIntroState(UIGenericDialog dialog)
+        {
+            _battleStateMachine.ChangeState(new Intro(dialog));
+            BattleEventBus.RaiseEvent(new LoadedEvent());
+        }
     }
 }
