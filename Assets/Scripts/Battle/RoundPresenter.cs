@@ -70,7 +70,7 @@ namespace CryptoQuest.Battle
         private static bool IsLost()
         {
             var playerParty = ServiceProvider.GetService<IPartyController>();
-            return playerParty.Slots.Any(slot => slot.IsValid());
+            return playerParty.Slots.Any(slot => slot.IsValid()) == false;
         }
 
         private void ChangeAllEnemiesOpacity(float f)
