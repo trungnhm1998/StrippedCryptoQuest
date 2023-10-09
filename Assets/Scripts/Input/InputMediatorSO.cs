@@ -73,9 +73,23 @@ namespace CryptoQuest.Input
 
         #region Main
 
+        /// <summary>
+        /// Disable all input in this mediator, not all input in action map
+        /// </summary>
         public void DisableAllInput()
         {
             _inputCached.Clear();
+
+            _inputActions.Menus.Disable();
+            _inputActions.MapGameplay.Disable();
+            _inputActions.Dialogues.Disable();
+        }
+
+        /// <summary>
+        /// Disable all inputs in input action so use it with caution
+        /// </summary>
+        public void DisableAllInputs()
+        {
             foreach (var actionMap in _inputActions.asset.actionMaps)
             {
                 if (string.Compare(CheatManager.ACTION_MAP_NAME, actionMap.name,
@@ -215,6 +229,12 @@ namespace CryptoQuest.Input
 
         public void OnNavigate(InputAction.CallbackContext context)
         {
+            HandleMenuNavigate(context);
+        }
+
+        private void HandleMenuNavigate(InputAction.CallbackContext context)
+        {
+            if (!_inputActions.Menus.enabled) return;
             MenuNavigationContextEvent?.Invoke(context);
             if (context.performed) MenuNavigateEvent?.Invoke(context.ReadValue<Vector2>());
         }
