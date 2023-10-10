@@ -3,6 +3,7 @@ using CryptoQuest.Gameplay.PlayerParty;
 using CryptoQuest.Item.Equipment;
 using CryptoQuest.System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Pool;
 
@@ -30,9 +31,12 @@ namespace CryptoQuest.Shop.UI.Panels.PreviewCharacter
             _characters.Clear();
             foreach (var character in _party.Slots)
             {
-                var charInfo = _charPool.Get();
-                charInfo.Init(character.HeroBehaviour);
-                _characters.Add(charInfo);
+                if(character.IsValid())
+                {
+                    var charInfo = _charPool.Get();
+                    charInfo.Init(character.HeroBehaviour);
+                    _characters.Add(charInfo);
+                }    
             }
         }
 
