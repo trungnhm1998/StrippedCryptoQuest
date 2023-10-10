@@ -8,11 +8,11 @@ namespace CryptoQuest.Battle.States.SelectHeroesActions
 {
     public class SelectEnemyGroupToCastSkill : StateBase
     {
-        private readonly CastableAbility _selectedSkill;
+        private readonly CastSkillAbility _selectedSkill;
         private readonly SelectSkillPresenter _skillPresenter;
         private readonly EnemyGroupPresenter _enemyGroupPresenter;
 
-        public SelectEnemyGroupToCastSkill(CastableAbility selectedSkill, HeroBehaviour hero,
+        public SelectEnemyGroupToCastSkill(CastSkillAbility selectedSkill, HeroBehaviour hero,
             SelectHeroesActions fsm) : base(hero, fsm)
         {
             Fsm.TryGetComponent(out _skillPresenter);

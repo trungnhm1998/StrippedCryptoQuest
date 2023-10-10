@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using CryptoQuest.Character.Attributes;
+using CryptoQuest.Character.Tag;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.Components;
 using IndiGames.GameplayAbilitySystem.EffectSystem;
@@ -60,6 +61,7 @@ namespace CryptoQuest.Battle.Components
         public bool HasTag(TagScriptableObject tagSO) => _gas.TagSystem.HasTag(tagSO);
 
         public abstract bool IsValid();
+        public virtual bool IsValidAndAlive() => IsValid() && !HasTag(TagsDef.Dead);
 
         /// <summary>
         /// For enemy this will be random target, for hero this will be selected target if it's dead select next lowest hp target

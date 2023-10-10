@@ -10,7 +10,7 @@ namespace CryptoQuest.Battle
         public EnemyDef Def;
         public List<EnemyBehaviour> Enemies;
         public List<EnemySpec> EnemySpecs;
-        public int Count => Enemies.Where(e => e.IsValid()).Count();
+        public int Count => Enemies.Where(e => e.IsValidAndAlive()).Count();
 
         public void Init()
         {
@@ -25,7 +25,7 @@ namespace CryptoQuest.Battle
 
         public List<EnemyBehaviour> GetAliveEnemies()
         {
-            return Enemies.Where(e => e.IsValid()).ToList();
+            return Enemies.Where(e => e.IsValidAndAlive()).ToList();
         }
     }
 }

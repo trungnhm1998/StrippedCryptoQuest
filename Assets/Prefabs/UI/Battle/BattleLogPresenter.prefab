@@ -37,7 +37,7 @@ Transform:
   - {fileID: 2704798854172030109}
   - {fileID: 6458483129730023107}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2603140895196176383
 MonoBehaviour:
@@ -165,7 +165,7 @@ GameObject:
   - component: {fileID: 3609803679854329241}
   - component: {fileID: 4258185162229591690}
   m_Layer: 0
-  m_Name: ConsumItem
+  m_Name: ConsumeItem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -198,7 +198,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2899ff3321deb844f803fdf833e1104c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _useConsumItemMessage:
+  _consumeItemMessage:
     m_TableReference:
       m_TableCollectionName: GUID:810dd60b781de0a4589f9f164a4b0a8c
     m_TableEntryReference:
@@ -319,17 +319,10 @@ MonoBehaviour:
       m_Key: 
     m_FallbackState: 0
     m_WaitForCompletion: 0
-    m_LocalVariables:
-    - name: character
-      variable:
-        rid: 7132078038104408068
+    m_LocalVariables: []
   references:
     version: 2
-    RefIds:
-    - rid: 7132078038104408068
-      type: {class: ObjectVariable, ns: UnityEngine.Localization.SmartFormat.PersistentVariables, asm: Unity.Localization}
-      data:
-        m_Value: {fileID: 9175012115146774876}
+    RefIds: []
 --- !u!1 &8888720777664487684
 GameObject:
   m_ObjectHideFlags: 0

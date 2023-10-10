@@ -18,17 +18,17 @@ namespace CryptoQuest.Gameplay.Battle.Core.Helper
             }
         }
 
-        public static IEnumerable<CastableAbilitySpec> GetAbilitiesInBattle(this AbilitySystemBehaviour owner)
+        public static IEnumerable<CastSkillAbilitySpec> GetAbilitiesInBattle(this AbilitySystemBehaviour owner)
         {
             return GetAbilitiesWithUsageScenario(owner, EAbilityUsageScenario.Battle);
         }
 
-        public static IEnumerable<CastableAbilitySpec> GetAbilitiesInField(this AbilitySystemBehaviour owner)
+        public static IEnumerable<CastSkillAbilitySpec> GetAbilitiesInField(this AbilitySystemBehaviour owner)
         {
             return GetAbilitiesWithUsageScenario(owner, EAbilityUsageScenario.Field);
         }
 
-        public static IEnumerable<CastableAbilitySpec> GetAbilitiesInBattleAndField(this AbilitySystemBehaviour owner)
+        public static IEnumerable<CastSkillAbilitySpec> GetAbilitiesInBattleAndField(this AbilitySystemBehaviour owner)
         {
             return GetAbilitiesWithUsageScenario(owner, EAbilityUsageScenario.Battle | EAbilityUsageScenario.Field);
         }
@@ -39,7 +39,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.Helper
         /// <param name="owner"></param>
         /// <param name="usageScenario"></param>
         /// <returns></returns>
-        public static IEnumerable<CastableAbilitySpec> GetAbilitiesWithUsageScenario(
+        public static IEnumerable<CastSkillAbilitySpec> GetAbilitiesWithUsageScenario(
             this AbilitySystemBehaviour owner,
             EAbilityUsageScenario usageScenario)
         {

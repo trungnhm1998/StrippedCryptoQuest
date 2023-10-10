@@ -21,8 +21,9 @@ namespace CryptoQuest.Battle.Components
 
         private void OnDestroy()
         {
-            if (IsValid()) _abnormalCharacter.AbilitySystem.TagSystem.TagAdded -= AddAbnormal;
-            if (IsValid()) _abnormalCharacter.AbilitySystem.TagSystem.TagRemoved -= RemoveAbnormal;
+            if (Character.IsValid() == false) return;
+            _abnormalCharacter.AbilitySystem.TagSystem.TagAdded -= AddAbnormal;
+            _abnormalCharacter.AbilitySystem.TagSystem.TagRemoved -= RemoveAbnormal;
         }
 
         private void AddAbnormal(TagScriptableObject[] tagsAdded)
@@ -31,26 +32,26 @@ namespace CryptoQuest.Battle.Components
             {
                 if (abnormal.IsChildOf(TagsDef.Abnormal) == false) continue;
                 if (abnormal is not TagSO abnormalTag) continue;
-                BattleEventBus.RaiseEvent(new AbnormalEvent()
+                BattleEventBus.RaiseEvent(new EffectAffectingEvent()
                 {
                     Character = _abnormalCharacter,
-                    Reason = abnormalTag.Description
+                    Reason = abnormalTag.AddedMessage
                 });
             }
         }
 
         private void RemoveAbnormal(TagScriptableObject[] tagsAdded)
         {
-            if(tagsAdded.Contains(TagsDef.Dead))
+            if (tagsAdded.Contains(TagsDef.Dead))
             {
                 return;
-            }    
+            }
 
             foreach (var abnormal in tagsAdded)
             {
                 if (abnormal.IsChildOf(TagsDef.Abnormal) == false) continue;
                 if (abnormal is not TagSO abnormalTag) continue;
-                BattleEventBus.RaiseEvent(new AbnormalEvent()
+                BattleEventBus.RaiseEvent(new EffectAffectingEvent()
                 {
                     Character = _abnormalCharacter,
                     Reason = abnormalTag.RemoveMessage

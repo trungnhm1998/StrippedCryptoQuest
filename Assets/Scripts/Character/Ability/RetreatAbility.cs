@@ -1,5 +1,5 @@
 ﻿using System.Collections;
-using CryptoQuest.Battle.ExecutionCalculations;
+using CryptoQuest.Battle.EffectCalculations;
 using CryptoQuest.Character.Attributes;
 using IndiGames.GameplayAbilitySystem.AbilitySystem;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.ScriptableObjects;

@@ -15,16 +15,16 @@ namespace CryptoQuest.Battle.Components
         /// </summary>
         public void UpdateTargetIfNeeded(BattleContext context)
         {
-            if (Target == null || Target.IsValid()) return;
+            if (Target == null || Target.IsValidAndAlive()) return;
             var enemy = context.Enemies[0];
             enemy.AttributeSystem.TryGetAttributeValue(AttributeSets.Health, out var hp);
 
             for (int i = 1; i < context.Enemies.Count; i++)
             {
                 var currentEnemy = context.Enemies[i];
-                if (currentEnemy.IsValid() == false) continue;
+                if (currentEnemy.IsValidAndAlive() == false) continue;
                 // probably dead already
-                if (enemy.IsValid() == false)
+                if (enemy.IsValidAndAlive() == false)
                 {
                     enemy = currentEnemy;
                     continue;

@@ -86,7 +86,7 @@ namespace CryptoQuest.Battle.Events
 
     public class CastSkillEvent : LogEvent
     {
-        public CastableAbility Skill { get; set; }
+        public CastSkillAbility Skill { get; set; }
     }
 
     public class ConsumeItemEvent : LogEvent
@@ -95,8 +95,14 @@ namespace CryptoQuest.Battle.Events
         public Components.Character Target { get; set; }
     }
 
-    public class AbnormalEvent : LogEvent
+    public class EffectEvent : LogEvent
     {
         public LocalizedString Reason { get; set; }
     }
+
+    public class EffectAddedEvent : EffectEvent { }
+
+    public class EffectRemovedEvent : EffectEvent { }
+
+    public class EffectAffectingEvent : EffectEvent { }
 }

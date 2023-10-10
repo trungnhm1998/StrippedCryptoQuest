@@ -63,7 +63,7 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects
         /// </summary>
         /// <param name="ownerSystem">from owner</param>
         /// <returns></returns>
-        public virtual GameplayEffectSpec CreateEffectSpec(AbilitySystemBehaviour ownerSystem)
+        public GameplayEffectSpec CreateEffectSpec(AbilitySystemBehaviour ownerSystem)
         {
             var effect = CreateEffect();
             effect.InitEffect(this, ownerSystem);

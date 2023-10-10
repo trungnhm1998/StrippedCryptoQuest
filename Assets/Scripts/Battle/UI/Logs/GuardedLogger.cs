@@ -9,8 +9,6 @@ namespace CryptoQuest.Battle.UI.Logs
     {
         [SerializeField] private LocalizedString _logMessage;
         private TinyMessageSubscriptionToken _token;
-        private string _characterName;
-        public new string name => _characterName;
 
         private void OnEnable()
         {
@@ -24,7 +22,7 @@ namespace CryptoQuest.Battle.UI.Logs
 
         private void Listener(GuardedEvent ctx)
         {
-            _characterName = ctx.Character.DisplayName;
+            _logMessage.Add(Constants.CHARACTER_NAME, ctx.Character.LocalizedName);
             Logger.AppendLog(_logMessage);
         }
     }

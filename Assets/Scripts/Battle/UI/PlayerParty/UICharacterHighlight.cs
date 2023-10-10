@@ -43,7 +43,7 @@ namespace CryptoQuest.Battle.UI.PlayerParty
 
         private void SetHighlightHero(HighlightHeroEvent heroEvent)
         {
-            bool isHeroValid = _characterUI.Hero.IsValid() && 
+            bool isHeroValid = _characterUI.Hero.IsValidAndAlive() && 
                 (heroEvent.Hero != null && heroEvent.Hero == _characterUI.Hero);
             SetHighlight(isHeroValid);
         }

@@ -6,7 +6,7 @@ using IndiGames.GameplayAbilitySystem.EffectSystem;
 using IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects.EffectExecutionCalculation;
 using UnityEngine;
 
-namespace CryptoQuest.Battle.ExecutionCalculations
+namespace CryptoQuest.Battle.EffectCalculations
 {
     public class MagicDamageCalculation : EffectExecutionCalculationBase
     {
@@ -17,7 +17,7 @@ namespace CryptoQuest.Battle.ExecutionCalculations
         public override void Execute(ref CustomExecutionParameters executionParams,
             ref List<EffectAttributeModifier> outModifiers)
         {
-            var effectSpec = (CQEffectSpec)executionParams.EffectSpec;
+            var effectSpec = (EffectSpec)executionParams.EffectSpec;
             if (effectSpec == null) return;
             SkillParameters skillParameters = effectSpec.Parameters;
             CustomExecutionAttributeCaptureDef targetAttribute = skillParameters.targetAttribute;

@@ -17,7 +17,5 @@ namespace CryptoQuest.Battle.Components
         /// Called after <see cref="HeroSpec"/> provided
         /// </summary>
         public abstract void Init();
-
-        protected bool IsValid() => _character != null && _character.IsValid();
     }
 }

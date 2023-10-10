@@ -1,9 +1,12 @@
 ﻿using System;
+using System.Linq;
 using CryptoQuest.Battle.Components;
 using CryptoQuest.Battle.Events;
+using CryptoQuest.Character.Ability;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
 using IndiGames.GameplayAbilitySystem.EffectSystem;
 using IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects.GameplayEffectActions;
+using IndiGames.GameplayAbilitySystem.TagSystem.ScriptableObjects;
 using UnityEngine;
 
 namespace CryptoQuest.Battle.GameplayEffectActions
@@ -11,29 +14,30 @@ namespace CryptoQuest.Battle.GameplayEffectActions
     [Serializable]
     public class TurnBaseAction : IGameplayEffectAction
     {
-        [field: SerializeField] public int Turn { get; private set; }
-
         public ActiveEffectSpecification CreateActiveEffect(GameplayEffectSpec inSpec, AbilitySystemBehaviour owner)
         {
-            return new TurnBaseActiveEffectSpec(this, inSpec, owner);
+            return inSpec is not EffectSpec spec
+                ? new ActiveEffectSpecification()
+                : new TurnBaseActiveEffectSpec(this, spec, owner);
         }
     }
 
     [Serializable]
     public class TurnBaseActiveEffectSpec : ActiveEffectSpecification
     {
+        public override TagScriptableObject[] GrantedTags => _inSpec.Parameters.GrantedTags;
         [SerializeField] private int _turn;
         [SerializeField] private TurnBaseAction _turnBaseAction;
-        [SerializeField] private GameplayEffectSpec _inSpec;
+        [SerializeField] private EffectSpec _inSpec;
         [SerializeField] private AbilitySystemBehaviour _owner;
 
         private Components.Character _character;
         private CommandExecutor _commandExecutor;
 
-        public TurnBaseActiveEffectSpec(TurnBaseAction turnBaseAction, GameplayEffectSpec inSpec,
+        public TurnBaseActiveEffectSpec(TurnBaseAction turnBaseAction, EffectSpec inSpec,
             AbilitySystemBehaviour owner) : base(inSpec)
         {
-            _turn = turnBaseAction.Turn;
+            _turn = inSpec.Parameters.ContinuesTurn;
             _owner = owner;
             _inSpec = inSpec;
             _turnBaseAction = turnBaseAction;
@@ -67,7 +71,7 @@ namespace CryptoQuest.Battle.GameplayEffectActions
             }
         }
 
-        // TODO: Refactor this
+        // TODO: DRY with instant effect, refactor
         private void ModifyOwnerAttribute()
         {
             for (int index = 0; index < ComputedModifiers.Count; index++)

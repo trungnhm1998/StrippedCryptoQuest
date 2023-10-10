@@ -10,11 +10,11 @@ namespace CryptoQuest.Battle.Commands
     public class MultipleTargetCastSkillCommand : ICommand
     {
         private readonly Components.Character _owner;
-        private readonly CastableAbility _selectedSkill;
+        private readonly CastSkillAbility _selectedSkill;
         private Components.Character[] _targets;
 
         public MultipleTargetCastSkillCommand(Components.Character owner,
-            CastableAbility selectedSkill, params Components.Character[] targets)
+            CastSkillAbility selectedSkill, params Components.Character[] targets)
         {
             _targets = targets;
             _selectedSkill = selectedSkill;
@@ -28,8 +28,8 @@ namespace CryptoQuest.Battle.Commands
                 Character = _owner,
                 Skill = _selectedSkill
             });
-            var spec = _owner.AbilitySystem.GiveAbility<CastableAbilitySpec>(_selectedSkill);
-            var targetSystems = _targets.Where(t => t.IsValid())
+            var spec = _owner.AbilitySystem.GiveAbility<CastSkillAbilitySpec>(_selectedSkill);
+            var targetSystems = _targets.Where(t => t.IsValidAndAlive())
                 .Select(t => t.AbilitySystem).ToArray();
             Debug.Log($"{_owner.DisplayName} casting multiple target skill {_selectedSkill.name}");
             spec.Execute(targetSystems);

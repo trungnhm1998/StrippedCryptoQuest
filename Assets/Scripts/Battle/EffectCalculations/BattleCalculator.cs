@@ -4,7 +4,7 @@ using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data;
 using IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects.EffectExecutionCalculation;
 using UnityEngine;
 
-namespace CryptoQuest.Battle.ExecutionCalculations
+namespace CryptoQuest.Battle.EffectCalculations
 {
     public static class BattleCalculator
     {

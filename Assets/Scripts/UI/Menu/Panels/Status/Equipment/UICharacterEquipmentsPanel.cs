@@ -97,7 +97,7 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
         private void UpdateCharacterEquipments(HeroBehaviour hero)
         {
             // _inspectingHero = hero;
-            if (hero.IsValid() == false) return;
+            if (hero.IsValidAndAlive() == false) return;
 
             // TODO: REFACTOR EQUIPMENTS
             // foreach (var equipmentSlot in _equipmentSlots)

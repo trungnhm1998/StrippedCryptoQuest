@@ -19,7 +19,7 @@ namespace CryptoQuest.Character
             ServiceProvider.Provide<ISkillsProvider>(this);
         }
 
-        public void GetSkills(HeroBehaviour hero, Action<List<CastableAbility>> skillsLoadedCallback)
+        public void GetSkills(HeroBehaviour hero, Action<List<CastSkillAbility>> skillsLoadedCallback)
         {
             hero.TryGetComponent(out Battle.Components.LevelSystem levelSystem);
             hero.TryGetComponent(out Element elementComp);
@@ -34,9 +34,9 @@ namespace CryptoQuest.Character
         }
 
         private IEnumerator CoLoadSkills(List<HeroSkillsSet> skillMappings,
-            Action<List<CastableAbility>> skillsLoadedCallback)
+            Action<List<CastSkillAbility>> skillsLoadedCallback)
         {
-            var skills = new List<CastableAbility>();
+            var skills = new List<CastSkillAbility>();
             foreach (var skillMapping in skillMappings)
             {
                 Debug.Log($"Load skill {skillMapping.Skill}");

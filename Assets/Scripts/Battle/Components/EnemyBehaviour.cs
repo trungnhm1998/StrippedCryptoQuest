@@ -1,8 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using CryptoQuest.Battle.Commands;
 using CryptoQuest.Character.Enemy;
-using CryptoQuest.Character.Tag;
 using CryptoQuest.Gameplay.Loot;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
 using Spine.Unity;
@@ -10,7 +8,6 @@ using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.Localization;
 using UnityEngine.ResourceManagement.AsyncOperations;
-using NotImplementedException = System.NotImplementedException;
 
 namespace CryptoQuest.Battle.Components
 {
@@ -102,10 +99,7 @@ namespace CryptoQuest.Battle.Components
         }
 
         /// <returns>true if enemy has data, model loaded and is not dead</returns>
-        public override bool IsValid()
-        {
-            return _spec.IsValid() && _enemyModel != null && !HasTag(TagsDef.Dead);
-        }
+        public override bool IsValid() => _spec.IsValid();
 
         private void OnDestroy()
         {

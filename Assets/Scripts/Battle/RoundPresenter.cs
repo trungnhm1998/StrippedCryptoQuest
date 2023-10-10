@@ -47,11 +47,13 @@ namespace CryptoQuest.Battle
             {
                 _logPresenter.Clear();
                 character.TryGetComponent(out CommandExecutor commandExecutor);
-                yield return commandExecutor.PreTurn();
+                commandExecutor.PreTurn();
+                yield return new WaitUntil(() => _logPresenter.Finished); // TODO: I think this is a bad code
                 character.UpdateTarget(_battleContext);
                 yield return commandExecutor.ExecuteCommand();
+                yield return new WaitUntil(() => _logPresenter.Finished); // TODO: I think this is a bad code
                 yield return commandExecutor.PostTurn();
-                yield return new WaitUntil(() => _logPresenter.Finished);
+                yield return new WaitUntil(() => _logPresenter.Finished); // TODO: I think this is a bad code
                 if (CanContinueRound() == false) break;
             }
 
@@ -104,7 +106,7 @@ namespace CryptoQuest.Battle
 
         private void ChangeAllEnemiesOpacity(float f)
         {
-            foreach (var enemy in _battleContext.Enemies.Where(enemy => enemy.IsValid()))
+            foreach (var enemy in _battleContext.Enemies.Where(enemy => enemy.IsValidAndAlive()))
             {
                 enemy.SetAlpha(f);
             }

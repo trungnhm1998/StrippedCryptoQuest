@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using CryptoQuest.Battle.Commands;
+using CryptoQuest.Battle.Events;
 using CryptoQuest.Character.Tag;
 using IndiGames.GameplayAbilitySystem.AttributeSystem;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
-using IndiGames.GameplayAbilitySystem.TagSystem.ScriptableObjects;
 using UnityEngine;
 
 namespace CryptoQuest.Battle.Components
@@ -30,7 +31,7 @@ namespace CryptoQuest.Battle.Components
         public IEnumerator ExecuteCommand()
         {
             // this character could die during presentation phase
-            if (IsValid() == false) yield break;
+            if (Character.IsValidAndAlive() == false) yield break;
             yield return OnPreExecuteCommand();
             yield return _command.Execute(); // this should not be null
             yield return OnPostExecuteCommand();
@@ -57,17 +58,17 @@ namespace CryptoQuest.Battle.Components
         /// <summary>
         /// Update turn of effect turn base, apply effect present it
         /// </summary>
-        public IEnumerator PreTurn()
+        public void PreTurn()
         {
             _cache.Clear();
+            LogAbnormal();
             Character.AbilitySystem.AttributeSystem.PostAttributeChange += CacheChange;
             OnTurnStarted?.Invoke();
             Character.AbilitySystem.AttributeSystem.PostAttributeChange -= CacheChange;
-            yield return LogChanges();
-            yield return LogAbnormal();
+            LogChanges();
         }
 
-        private IEnumerator LogChanges()
+        private void LogChanges()
         {
             while (_cache.Count > 0)
             {
@@ -79,7 +80,6 @@ namespace CryptoQuest.Battle.Components
                 var deltaString = delta > 0 ? $"+{delta}" : $"{delta}";
                 var log = $"{attribute.name} {deltaString}";
                 Debug.Log(log);
-                yield return new WaitForSeconds(0.5f);
             }
         }
 
@@ -104,19 +104,23 @@ namespace CryptoQuest.Battle.Components
             _cache.Enqueue(info);
         }
 
-        private IEnumerator LogAbnormal()
+        private void LogAbnormal()
         {
-            var tags = Character.AbilitySystem.EffectSystem.GrantedTags;
-            bool hasAbnormal = false;
+            var tags = Character.AbilitySystem.EffectSystem.GrantedTags.Distinct();
             foreach (var tagDef in tags)
             {
-                if (tagDef.IsChildOf(TagsDef.Abnormal) == false) continue;
-                hasAbnormal = true;
+                if (tagDef.IsChildOf(TagsDef.Abnormal))
+                    _command = new SkipTurnCommand(Character);
                 Debug.Log($"Abnormal: {tagDef.name}");
-                yield return new WaitForSeconds(0.5f);
+                if (tagDef is not TagSO abnormalTag) continue;
+                if (abnormalTag.AffectMessage.IsEmpty) continue;
+                
+                BattleEventBus.RaiseEvent(new EffectAffectingEvent()
+                {
+                    Character = Character,
+                    Reason = abnormalTag.AffectMessage
+                });
             }
-
-            if (hasAbnormal) _command = new SkipTurnCommand(Character);
         }
 
         /// <summary>

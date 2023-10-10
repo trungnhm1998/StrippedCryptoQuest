@@ -166,6 +166,7 @@ namespace CryptoQuest.Battle.Components
 
         private void ApplyEquipmentEffectToCharacter(EquipmentInfo equipment)
         {
+            // TODO: Should I allow equip dead character?
             if (_hero.IsValid() == false || equipment.IsValid() == false)
                 return;
 

@@ -13,22 +13,22 @@ namespace CryptoQuest.Battle.UI.SelectSkill
         public delegate void SkillTargetTypeDelegate(UISkill skill);
 
         public SkillTargetTypeDelegate SelectSelfCallback { get; set; }
-        private void OnTargetSelf (CastableAbility skill) => SelectSelfCallback?.Invoke(_selectedSkill);
+        private void OnTargetSelf (CastSkillAbility skill) => SelectSelfCallback?.Invoke(_selectedSkill);
 
         public SkillTargetTypeDelegate SelectSingleEnemyCallback { get; set; }
-        private void OnSingleEnemy(CastableAbility skill) => SelectSingleEnemyCallback?.Invoke(_selectedSkill);
+        private void OnSingleEnemy(CastSkillAbility skill) => SelectSingleEnemyCallback?.Invoke(_selectedSkill);
 
         public SkillTargetTypeDelegate SelectSingleHeroCallback { get; set; }
-        private void OnSingleHero(CastableAbility skill) => SelectSingleHeroCallback?.Invoke(_selectedSkill);
+        private void OnSingleHero(CastSkillAbility skill) => SelectSingleHeroCallback?.Invoke(_selectedSkill);
 
         public SkillTargetTypeDelegate SelectAllHeroCallback { get; set; }
-        private void OnSelectAllHero(CastableAbility skill) => SelectAllHeroCallback?.Invoke(_selectedSkill);
+        private void OnSelectAllHero(CastSkillAbility skill) => SelectAllHeroCallback?.Invoke(_selectedSkill);
 
         public SkillTargetTypeDelegate SelectAllEnemyCallback { get; set; }
-        private void OnSelectAllEnemy(CastableAbility skill) => SelectAllEnemyCallback?.Invoke(_selectedSkill);
+        private void OnSelectAllEnemy(CastSkillAbility skill) => SelectAllEnemyCallback?.Invoke(_selectedSkill);
 
         public SkillTargetTypeDelegate SelectEnemyGroupCallback { get; set; }
-        private void OnSelectEnemyGroup(CastableAbility skill) => SelectEnemyGroupCallback?.Invoke(_selectedSkill);
+        private void OnSelectEnemyGroup(CastSkillAbility skill) => SelectEnemyGroupCallback?.Invoke(_selectedSkill);
 
         [SerializeField] private BattleInput _battleInput;
         [SerializeField] private VerticalButtonSelector _buttonSelector;

@@ -8,6 +8,7 @@ using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.ScriptableObjects;
 using IndiGames.GameplayAbilitySystem.EffectSystem;
 using IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects;
+using IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects.GameplayEffectActions;
 using UnityEngine;
 
 namespace CryptoQuest.Character.Ability
@@ -16,47 +17,42 @@ namespace CryptoQuest.Character.Ability
     /// https://docs.google.com/spreadsheets/d/1EDrXrT1if63TLam1km_dLx2VvHt2rks2OWXEUq5OEPg/edit#gid=2122798992
     /// Base data class for character skill
     /// </summary>
-    public class CastableAbility : AbilityScriptableObject
+    public class CastSkillAbility : AbilityScriptableObject
     {
-        [field: SerializeField] public GameplayEffectDefinition Effect { get; private set; }
-
-        /// <summary>
-        /// The effect that cost to cast this ability
-        /// The <see cref="GameplayEffectSpec.Source"/> is the caster
-        /// </summary>
-        public GameplayEffectDefinition Cost;
-
-        [field: SerializeField] public float SuccessRate { get; private set; }
+        [field: SerializeField] public GameplayEffectSO Effect { get; private set; }
+        [field: SerializeField] public float SuccessRate { get; private set; } = 100;
         [field: SerializeField] public SkillInfo Parameters { get; private set; }
         [field: SerializeField] public SkillTargetType TargetType { get; private set; }
 
-        protected override GameplayAbilitySpec CreateAbility() => new CastableAbilitySpec(this);
+        protected override GameplayAbilitySpec CreateAbility() => new CastSkillAbilitySpec(this);
     }
 
-    public class CastableAbilitySpec : GameplayAbilitySpec
+    public class CastSkillAbilitySpec : GameplayAbilitySpec
     {
         private GameplayEffectDefinition _costEffect;
-        private readonly CastableAbility _def;
+        private readonly CastSkillAbility _def;
+        public CastSkillAbility Def => _def;
 
-        public CastableAbilitySpec(CastableAbility def)
-        {
-            _def = def;
-        }
+        public CastSkillAbilitySpec(CastSkillAbility def) => _def = def;
 
         public override void InitAbility(AbilitySystemBehaviour owner, AbilityScriptableObject abilitySO)
         {
             base.InitAbility(owner, abilitySO);
 
-            if (_def.Cost == null) return;
-            _costEffect = Object.Instantiate(_def.Cost);
-            _costEffect.EffectDetails.Modifiers = new[]
-            {
-                new EffectAttributeModifier()
+            _costEffect = ScriptableObject.CreateInstance<GameplayEffectDefinition>();
+            _costEffect.EffectAction = new InstantAction();
+            _costEffect.EffectDetails = new EffectDetails()
                 {
-                    Attribute = AttributeSets.Mana,
-                    Value = -_def.Parameters.Cost
-                }
-            };
+                    Modifiers = new EffectAttributeModifier[]
+                    {
+                        new()
+                        {
+                            Attribute = AttributeSets.Mana,
+                            ModifierType = EAttributeModifierType.Add,
+                            Value = -_def.Parameters.Cost
+                        }
+                    }
+                };
         }
 
         public override bool CanActiveAbility()
@@ -89,6 +85,7 @@ namespace CryptoQuest.Character.Ability
                 Debug.Log($"Failed to cast {_def.name}");
                 BattleEventBus.RaiseEvent(new CastSkillFailedEvent());
             }
+
             return result;
         }
 
@@ -111,8 +108,7 @@ namespace CryptoQuest.Character.Ability
         {
             ApplyCost();
 
-            var spec = (CQEffectSpec)Owner.MakeOutgoingSpec(_def.Effect);
-            spec.Parameters = _def.Parameters.SkillParameters;
+            var spec = CreateEffectSpec();
             foreach (var target in _targets)
             {
                 if (IsTargetEvaded(target))
@@ -120,12 +116,19 @@ namespace CryptoQuest.Character.Ability
                     BattleEventBus.RaiseEvent(new MissedEvent());
                     continue;
                 }
+
                 target.ApplyEffectSpecToSelf(spec);
             }
 
             yield break;
         }
-        
+
+        private EffectSpec CreateEffectSpec()
+        {
+            var clonedDef = Object.Instantiate(_def.Effect);
+            return clonedDef.CreateEffectSpec(Owner, this);
+        }
+
         private bool IsTargetEvaded(AbilitySystemBehaviour target)
         {
             var evadeBehaviour = target.GetComponent<IEvadable>();

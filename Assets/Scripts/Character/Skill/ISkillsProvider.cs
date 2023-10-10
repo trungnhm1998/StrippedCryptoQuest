@@ -7,6 +7,6 @@ namespace CryptoQuest.Character
 {
     public interface ISkillsProvider
     {
-        void GetSkills(HeroBehaviour hero, Action<List<CastableAbility>> skillsLoadedCallback);
+        void GetSkills(HeroBehaviour hero, Action<List<CastSkillAbility>> skillsLoadedCallback);
     }
 }

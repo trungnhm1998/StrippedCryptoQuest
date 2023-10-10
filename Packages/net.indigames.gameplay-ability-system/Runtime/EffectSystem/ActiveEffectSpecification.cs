@@ -58,7 +58,7 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem
         public EModifierType ModifierType => _effectSpec.EffectDefDetails.StackingType;
         public bool IsActive { get; set; } = true;
         public bool Expired => _effectSpec == null || _effectSpec.IsExpired || IsActive == false;
-        public TagScriptableObject[] GrantedTags => _effectSpec.GrantedTags;
+        public virtual TagScriptableObject[] GrantedTags => _effectSpec.GrantedTags;
 
         /// <summary>
         /// To prevent null reference exception

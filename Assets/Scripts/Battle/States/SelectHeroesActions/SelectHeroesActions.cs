@@ -88,7 +88,7 @@ namespace CryptoQuest.Battle.States.SelectHeroesActions
             for (var i = 0; i < _party.Size; i++)
             {
                 var hero = _party.Slots[i].HeroBehaviour;
-                if (hero == null || !hero.IsValid() || hero.HasTag(TagsDef.Dead)) continue;
+                if (hero == null || !hero.IsValidAndAlive() || hero.HasTag(TagsDef.Dead)) continue;
                 return hero;
             }
 
@@ -157,7 +157,7 @@ namespace CryptoQuest.Battle.States.SelectHeroesActions
             for (int i = index + 1; i < _party.Slots.Length; i++)
             {
                 var slot = _party.Slots[i];
-                if (slot.HeroBehaviour == null || !slot.HeroBehaviour.IsValid() ||
+                if (slot.HeroBehaviour == null || !slot.HeroBehaviour.IsValidAndAlive() ||
                     slot.HeroBehaviour.HasTag(TagsDef.Dead)) continue;
                 nextHero = slot.HeroBehaviour;
                 return true;

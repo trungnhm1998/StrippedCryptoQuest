@@ -79,7 +79,7 @@ namespace CryptoQuest.Battle.UI
         {
             foreach (var enemy in group.Enemies)
             {
-                if (!enemy.IsValid()) continue;
+                if (!enemy.IsValidAndAlive()) continue;
                 enemy.SetAlpha(alpha);
             }
         }

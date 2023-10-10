@@ -5,7 +5,7 @@ using IndiGames.GameplayAbilitySystem.EffectSystem;
 using IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects.EffectExecutionCalculation;
 using UnityEngine;
 
-namespace CryptoQuest.Battle.ExecutionCalculations
+namespace CryptoQuest.Battle.EffectCalculations
 {
     public class DamageCalculation : EffectExecutionCalculationBase
     {

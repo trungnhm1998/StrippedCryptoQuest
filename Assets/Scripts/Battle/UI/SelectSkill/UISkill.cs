@@ -13,10 +13,10 @@ namespace CryptoQuest.Battle.UI.SelectSkill
         [SerializeField] private TMP_Text _cost;
         [SerializeField] private LocalizeStringEvent _nameStringEvent;
 
-        private CastableAbility _skill;
-        public CastableAbility Skill => _skill;
+        private CastSkillAbility _skill;
+        public CastSkillAbility Skill => _skill;
 
-        public void Init(CastableAbility skill)
+        public void Init(CastSkillAbility skill)
         {
             _skill = skill;
             _nameStringEvent.StringReference = skill.Parameters.SkillName;

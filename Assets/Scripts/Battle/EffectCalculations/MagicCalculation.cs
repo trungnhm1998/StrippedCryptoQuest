@@ -4,7 +4,7 @@ using IndiGames.GameplayAbilitySystem.EffectSystem;
 using IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects.EffectExecutionCalculation;
 using UnityEngine;
 
-namespace CryptoQuest.Battle.ExecutionCalculations
+namespace CryptoQuest.Battle.EffectCalculations
 {
     [CreateAssetMenu(fileName = "HealCalculation",
         menuName = "Gameplay/Battle/Effects/Execution Calculations/Heal Calculation")]
@@ -17,7 +17,7 @@ namespace CryptoQuest.Battle.ExecutionCalculations
         public override void Execute(ref CustomExecutionParameters executionParams,
             ref List<EffectAttributeModifier> outModifiers)
         {
-            var effectSpec = (CQEffectSpec)executionParams.EffectSpec;
+            var effectSpec = (EffectSpec)executionParams.EffectSpec;
             executionParams.TryGetAttributeValue(_baseMagicAttack, out var baseMagicAttack);
             var targetedAttributeDef = effectSpec.Parameters.targetAttribute;
             float baseMagicValue = BattleCalculator.CalculateBaseDamage(effectSpec.Parameters,

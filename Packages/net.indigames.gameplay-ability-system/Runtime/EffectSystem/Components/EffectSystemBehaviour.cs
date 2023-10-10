@@ -242,7 +242,7 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem.Components
         {
             var effect = _appliedEffects[index];
             _appliedEffects.RemoveAt(index);
-            if (effect == null || effect.EffectSpec == null) return;
+            if (effect?.EffectSpec == null) return;
             Owner.TagSystem.RemoveTags(effect.GrantedTags);
             effect.Release();
         }

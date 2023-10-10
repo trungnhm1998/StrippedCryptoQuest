@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using CryptoQuest.Battle.Commands;
 using CryptoQuest.Battle.Components;
-using CryptoQuest.Battle.ExecutionCalculations;
+using CryptoQuest.Battle.EffectCalculations;
 using CryptoQuest.Character.Ability;
 using CryptoQuest.Character.Attributes;
 using CryptoQuest.Gameplay.Battle.Core.Helper;

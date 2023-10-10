@@ -24,7 +24,7 @@ namespace CryptoQuestEditor.Character
     }
 
     [CustomEditor(typeof(SkillDatabase))]
-    public class SkillDatabaseEditor : DatabaseImporterEditor<SkillDatabase, int, CastableAbility, CsvSkill>
+    public class SkillDatabaseEditor : DatabaseImporterEditor<SkillDatabase, int, CastSkillAbility, CsvSkill>
     {
         // Assets/ScriptableObjects/Character/Skills/TargetTypes/AllAllies.asset
         private const string TargetTypePath = "Assets/ScriptableObjects/Character/Skills/TargetTypes/";
@@ -43,7 +43,7 @@ namespace CryptoQuestEditor.Character
 
         protected override int GetId(CsvSkill data) => data.Id;
 
-        protected override void OnAssetModified(ref SerializedObject serializeObjectInstance, CastableAbility asset,
+        protected override void OnAssetModified(ref SerializedObject serializeObjectInstance, CastSkillAbility asset,
             CsvSkill data)
         {
             serializeObjectInstance.FindProperty("<Parameters>k__BackingField.Id").intValue = data.Id;

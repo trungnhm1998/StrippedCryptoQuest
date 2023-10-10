@@ -1,6 +1,4 @@
 using CryptoQuest.Battle.Components;
-using CryptoQuest.Gameplay.PlayerParty;
-using CryptoQuest.System;
 using CryptoQuest.UI.Character;
 using CryptoQuest.UI.Menu.MenuStates.StatusStates;
 using CryptoQuest.UI.Menu.Panels.Status.Equipment;

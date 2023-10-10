@@ -27,7 +27,7 @@ namespace CryptoQuest.Character
         private void OnDatabaseInitialized() { }
 #endif
 
-        public void GetSkills(HeroBehaviour hero, Action<List<CastableAbility>> skillsLoadedCallback)
+        public void GetSkills(HeroBehaviour hero, Action<List<CastSkillAbility>> skillsLoadedCallback)
         {
 #if UNITY_EDITOR || !UNITY_WEBGL || !PLATFORM_WEBGL
 #endif

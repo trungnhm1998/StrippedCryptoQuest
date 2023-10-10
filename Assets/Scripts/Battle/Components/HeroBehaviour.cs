@@ -1,7 +1,6 @@
 ﻿using CryptoQuest.Character;
 using CryptoQuest.Character.Attributes;
 using CryptoQuest.Character.Hero;
-using CryptoQuest.Character.Tag;
 using CryptoQuest.Gameplay;
 using UnityEngine;
 using UnityEngine.Localization;
@@ -59,7 +58,8 @@ namespace CryptoQuest.Battle.Components
             Init(Element);
         }
 
-        public override bool IsValid() => Spec.IsValid() && !HasTag(TagsDef.Dead);
+        public override bool IsValid() => _spec.IsValid();
+
         public Equipments GetEquipments() => Spec.Equipments;
 
         public void RequestAddExp(float exp)

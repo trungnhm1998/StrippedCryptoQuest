@@ -8,9 +8,9 @@ namespace CryptoQuest.Battle.Commands
     public class CastSkillCommand : ICommand
     {
         private readonly Components.Character _owner;
-        private readonly CastableAbility _selectedSkill;
+        private readonly CastSkillAbility _selectedSkill;
 
-        public CastSkillCommand(Components.Character owner, CastableAbility selectedSkill, Components.Character target)
+        public CastSkillCommand(Components.Character owner, CastSkillAbility selectedSkill, Components.Character target)
         {
             owner.Targeting.Target = target;
             _selectedSkill = selectedSkill;
@@ -25,7 +25,7 @@ namespace CryptoQuest.Battle.Commands
                 Skill = _selectedSkill
             });
             Debug.Log($"{_owner.DisplayName} casting {_selectedSkill.name} on {_owner.Targeting.Target.DisplayName}");
-            var spec = _owner.AbilitySystem.GiveAbility<CastableAbilitySpec>(_selectedSkill);
+            var spec = _owner.AbilitySystem.GiveAbility<CastSkillAbilitySpec>(_selectedSkill);
             spec.Execute(_owner.Targeting.Target.AbilitySystem);
             yield break;
         }

@@ -19,7 +19,7 @@ namespace CryptoQuest.Battle.Components
 
         private void OnDestroy()
         {
-            if (IsValid()) _enemyBehaviour.AbilitySystem.TagSystem.TagAdded -= CheckIfDeadTagAdded;
+            if (Character.IsValid()) _enemyBehaviour.AbilitySystem.TagSystem.TagAdded -= CheckIfDeadTagAdded;
         }
 
         private void CheckIfDeadTagAdded(TagScriptableObject[] tagsAdded)

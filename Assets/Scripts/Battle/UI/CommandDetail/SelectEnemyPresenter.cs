@@ -48,7 +48,7 @@ namespace CryptoQuest.Battle.UI.CommandDetail
             bool selected = false;
             for (var index = 0; index < enemies.Count; index++)
             {
-                if (!enemies[index].IsValid()) continue;
+                if (!enemies[index].IsValidAndAlive()) continue;
 
                 enemies[index].SetAlpha(0.5f);
 
