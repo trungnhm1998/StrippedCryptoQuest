@@ -13,7 +13,7 @@ namespace CryptoQuest.Battle
 
         private void Awake()
         {
-            _endEventToken = BattleEventBus.SubscribeEvent<BattleEndedEvent>(HandleWon);
+            _endEventToken = BattleEventBus.SubscribeEvent<BattleEndedEvent>(HandleEnd);
         }
 
         private void OnDestroy()
@@ -21,7 +21,7 @@ namespace CryptoQuest.Battle
             BattleEventBus.UnsubscribeEvent(_endEventToken);
         }
 
-        private void HandleWon(BattleEndedEvent context)
+        private void HandleEnd(BattleEndedEvent context)
         {
             AdditiveGameSceneLoader.SceneUnloaded += UnloadedScene;
             UnloadBattleScene();

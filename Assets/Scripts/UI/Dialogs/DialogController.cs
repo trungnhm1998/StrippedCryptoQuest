@@ -59,19 +59,24 @@ namespace CryptoQuest.UI.Dialogs
 
             _releaseCoroutines.Remove(dialogToRelease);
             Destroy(dialogToRelease.gameObject);
-
-            ReleaseAssetIfNoDialog();
         }
 
-        private void ReleaseAssetIfNoDialog()
+        private void ReleaseAssets()
         {
             if (_dialogs.Count > 0) return;
-            if (_handler.IsValid()) Addressables.Release(_handler);
+            if (_handler.IsValid()) 
+            {
+                Addressables.Release(_handler);
+                _prefab.ReleaseAsset();
+            }
         }
 
         private IEnumerator LoadDialogPrefab(Action<T> createdCallback, bool autoRelease, float releaseTimeout)
         {
-            _handler = _prefab.LoadAssetAsync<GameObject>();
+            if (!_handler.IsValid())
+            {
+                _handler = _prefab.LoadAssetAsync<GameObject>();
+            }
             yield return _handler;
             if (!_handler.IsDone) yield break;
 
