@@ -13,9 +13,9 @@ namespace CryptoQuest.Quest.Components.YarnQuestNode
 
         public override Playable CreatePlayable(PlayableGraph graph, GameObject owner)
         {
+            _template.SetYarnQuestSo(_yarnDialogWithQuest);
             var playable = ScriptPlayable<YarnQuestNodePlayableBehaviour>.Create(graph, _template);
 
-            _template.SetYarnQuestSo(_yarnDialogWithQuest);
             return playable;
         }
     }

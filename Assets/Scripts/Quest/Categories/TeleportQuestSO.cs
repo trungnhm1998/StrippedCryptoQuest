@@ -2,9 +2,11 @@
 using CryptoQuest.Quest.Components;
 using CryptoQuest.Quest.Controllers;
 using IndiGames.Core.SceneManagementSystem.ScriptableObjects;
+using UnityEngine;
 
 namespace CryptoQuest.Quest.Categories
 {
+    [CreateAssetMenu(menuName = "QuestSystem/Quests/Teleport Quest", fileName = "TeleportQuestSO")]
     public class TeleportQuestSO : QuestSO
     {
         public SceneScriptableObject Destination;

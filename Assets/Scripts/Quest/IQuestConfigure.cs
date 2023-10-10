@@ -4,8 +4,7 @@ namespace CryptoQuest.Quest
 {
     public interface IQuestConfigure
     {
-        QuestSO Quest { get; set; }
-        bool IsQuestCompleted { get; set; }
-        void Configure();
+        QuestSO QuestToTrack { get; set; }
+        void Configure(bool isQuestCompleted);
     }
 }

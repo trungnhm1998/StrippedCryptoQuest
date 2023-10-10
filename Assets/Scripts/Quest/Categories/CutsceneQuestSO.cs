@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace CryptoQuest.Quest.Categories
 {
-    [CreateAssetMenu(menuName = "Crypto Quest/Quest System/Cutscene Quest", fileName = "CutsceneQuestSO", order = 0)]
+    [CreateAssetMenu(menuName = "QuestSystem/Quests/Cutscene Quest", fileName = "CutsceneQuestSO", order = 0)]
     public class CutsceneQuestSO : QuestSO<CutsceneQuestInfo>
     {
         [field: SerializeField] public QuestCutsceneDef CutSceneToLoad { get; private set; }
@@ -28,21 +28,12 @@ namespace CryptoQuest.Quest.Categories
             _questCutsceneController.QuestManager = questManager;
         }
 
-        public CutsceneQuestInfo()
-        {
-        }
+        public CutsceneQuestInfo() { }
 
         public override void TriggerQuest()
         {
             base.TriggerQuest();
             Data.CutSceneToLoad.RaiseEvent();
-        }
-
-        public override void GiveQuest()
-        {
-            base.GiveQuest();
-            _questCutsceneController.GiveQuest(this);
-            _questCutsceneController.TriggerCutscene(this);
         }
     }
 }

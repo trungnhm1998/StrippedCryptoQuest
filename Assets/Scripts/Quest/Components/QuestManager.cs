@@ -28,7 +28,7 @@ namespace CryptoQuest.Quest.Components
         [field: SerializeReference, HideInInspector]
         public List<QuestInfo> CompletedQuests { get; private set; } = new();
 
-        private readonly List<string> _completedQuestsId = new();
+        private List<string> _completedQuestsId = new();
 
         private QuestSO _currentQuestData;
         private QuestInfo _currentQuestInfo;
@@ -108,8 +108,7 @@ namespace CryptoQuest.Quest.Components
 
         private void ConfigureQuestHolder(IQuestConfigure questConfigure)
         {
-            questConfigure.IsQuestCompleted = IsQuestTriggered(questConfigure.Quest);
-            questConfigure.Configure();
+            questConfigure.Configure(IsQuestTriggered(questConfigure.QuestToTrack));
         }
 
         private void RemoveProgressingQuest(QuestSO quest)

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using CryptoQuest.Events;
 using CryptoQuest.Gameplay;
 using CryptoQuest.Input;
 using CryptoQuest.System.CutsceneSystem.Events;
@@ -47,14 +48,11 @@ namespace CryptoQuest.System.Dialogue.Managers
 
         [SerializeField] private InputMediatorSO _inputMediator;
 
-        [Header("UI")]
-        [SerializeField] private DialogueRunner _dialogueRunner;
+        [Header("UI")] [SerializeField] private DialogueRunner _dialogueRunner;
 
-        [Header("Listen to")]
-        [SerializeField] private PlayDialogueEvent _playDialogueEventEvent;
+        [Header("Listen to")] [SerializeField] private PlayDialogueEvent _playDialogueEventEvent;
 
-        [Header("Raise on")]
-        [SerializeField] private VoidEventChannelSO _dialogueCompletedEventChannelSO;
+        [Header("Raise on")] [SerializeField] private VoidEventChannelSO _dialogueCompletedEventChannelSO;
 
         [SerializeField] private PauseCutsceneEvent _pauseCutsceneEvent;
 
@@ -62,6 +60,7 @@ namespace CryptoQuest.System.Dialogue.Managers
 
         [SerializeField] private UnityEvent _onDialogueCompleted;
         [SerializeField] private UnityEvent<string> _onCompleteQuest;
+        [SerializeField] private StringEventChannelSO _onCompleteQuestEventChannelSO;
 
         private Yarn.Dialogue Dialogue => _dialogueRunner.Dialogue;
 
@@ -123,7 +122,7 @@ namespace CryptoQuest.System.Dialogue.Managers
             Instance.ShowReaction(reactionName);
         }
 
-        [YarnCommand("completequest")]
+        [YarnCommand("quest")]
         public static void CompleteQuest(string questName)
         {
             if (Instance == null)
@@ -139,6 +138,7 @@ namespace CryptoQuest.System.Dialogue.Managers
         {
             Debug.Log($"YarnSpinnerDialogueManager::OnCompleteQuest: questName[{questName}]");
             _onCompleteQuest?.Invoke(questName);
+            _onCompleteQuestEventChannelSO.RaiseEvent(questName);
         }
 
         private void ShowReaction(string reactionName)

@@ -2,9 +2,11 @@
 using CryptoQuest.Quest.Actions;
 using CryptoQuest.Quest.Authoring;
 using CryptoQuest.Quest.Components;
+using UnityEngine;
 
 namespace CryptoQuest.Quest.Categories
 {
+    [CreateAssetMenu(menuName = "QuestSystem/Quests/Dialogue Quest", fileName = "DialogueQuestSO")]
     public class DialogueQuestSO : QuestSO
     {
         public NextAction NextAction;
@@ -19,7 +21,9 @@ namespace CryptoQuest.Quest.Categories
         private YarnQuestManager _yarnQuestManager;
 
         public DialogueQuestInfo(QuestManager questManager, DialogueQuestSO questSo)
-            : base(questManager, questSo) { }
+            : base(questManager, questSo)
+        {
+        }
 
         public override void TriggerQuest()
         {

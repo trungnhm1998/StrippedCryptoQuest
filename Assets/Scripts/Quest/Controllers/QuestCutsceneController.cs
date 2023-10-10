@@ -1,43 +1,83 @@
-﻿using System.Collections.Generic;
-using CryptoQuest.Quest.Categories;
+﻿using System;
+using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+using CryptoQuest.Events;
+using CryptoQuest.Quest.Authoring;
+using CryptoQuest.Quest.Components;
+using CryptoQuest.Quest.Events;
 using CryptoQuest.System.CutsceneSystem;
-using CryptoQuest.System.CutsceneSystem.Events;
+using UnityEngine;
 
 namespace CryptoQuest.Quest.Controller
 {
     public class QuestCutsceneController : BaseQuestController
     {
-        private List<CutsceneQuestInfo> _currentlyCutsceneQuests = new();
-        private QuestCutsceneDef _currentCutscene;
+        public static Action<YarnQuestDef> RegisterYarnQuestDef;
+        [SerializeField] private QuestEventChannelSO _giveQuestEventChannelSo;
+        [SerializeField] private QuestEventChannelSO _triggerQuestEventChannelSo;
+        [SerializeField] private StringEventChannelSO _dialogueOptionQuestEventChannelSo;
+        private List<QuestInfo> _branchingQuests = new();
+        private List<QuestInfo> _pendingBranchingQuests = new();
 
-        public void GiveQuest(CutsceneQuestInfo questInfo)
+        private void OnEnable()
         {
-            _currentlyCutsceneQuests.Add(questInfo);
+            RegisterYarnQuestDef += RegisterYarnQuest;
         }
 
-        public void TriggerCutscene(CutsceneQuestInfo questInfo)
+        private void OnDisable()
         {
-            QuestManager.TriggerQuest(questInfo.Data);
-            _currentCutscene = questInfo.Data.CutSceneToLoad;
+            RegisterYarnQuestDef -= RegisterYarnQuest;
+        }
 
+        public void GiveBranchingQuest(QuestInfo questInfo)
+        {
+            _branchingQuests.Add(questInfo);
+        }
+
+        private void RegisterYarnQuest(YarnQuestDef yarnQuestDef)
+        {
+            SubscribeYarn();
+            foreach (var outcomeQuest in yarnQuestDef.PossibleOutcomeQuests)
+            {
+                _giveQuestEventChannelSo.RaiseEvent(outcomeQuest);
+            }
+        }
+
+        private void SubscribeYarn()
+        {
+            _dialogueOptionQuestEventChannelSo.EventRaised += OnDialogueOptionSelected;
             CutsceneManager.CutsceneCompleted += OnQuestFinish;
+        }
+
+        private void UnsubscribeYarn()
+        {
+            CutsceneManager.CutsceneCompleted -= OnQuestFinish;
+            _dialogueOptionQuestEventChannelSo.EventRaised -= OnDialogueOptionSelected;
+        }
+
+        private void OnDialogueOptionSelected(string questName)
+        {
+            foreach (var quest in _branchingQuests)
+            {
+                if (quest.BaseData.QuestName != questName) continue;
+                _pendingBranchingQuests.Add(quest);
+            }
         }
 
         protected override void OnQuestFinish()
         {
-            foreach (var processingQuest in _currentlyCutsceneQuests)
-            {
-                if (processingQuest.Data.CutSceneToLoad != _currentCutscene) continue;
-                HandleCutsceneResult(processingQuest);
-                break;
-            }
+            ExecuteBranchingQuests();
+            UnsubscribeYarn();
         }
 
-        private void HandleCutsceneResult(CutsceneQuestInfo processingQuest)
+        private void ExecuteBranchingQuests()
         {
-            processingQuest.FinishQuest();
-            _currentlyCutsceneQuests.Remove(processingQuest);
-            CutsceneManager.CutsceneCompleted -= OnQuestFinish;
+            foreach (var quest in _pendingBranchingQuests)
+            {
+                _triggerQuestEventChannelSo.RaiseEvent(quest.BaseData);
+            }
+
+            _pendingBranchingQuests.Clear();
         }
     }
 }

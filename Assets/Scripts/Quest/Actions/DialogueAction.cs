@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace CryptoQuest.Quest.Actions
 {
-    [CreateAssetMenu(menuName = "Quest/Actions/DialogueAction")]
+    [CreateAssetMenu(menuName = "QuestSystem/Actions/DialogueAction")]
     public class DialogueAction : NextAction
     {
         [SerializeField] private YarnDialogWithQuestSo _yarnQuestNode;

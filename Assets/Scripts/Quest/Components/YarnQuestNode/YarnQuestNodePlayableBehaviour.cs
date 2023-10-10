@@ -1,5 +1,6 @@
 ﻿using System;
 using CryptoQuest.Quest.Authoring;
+using CryptoQuest.Quest.Controller;
 using CryptoQuest.System.CutsceneSystem.CustomTimelineTracks.YarnSpinnerNodeControlTrack;
 using CryptoQuest.System.Dialogue.Managers;
 using UnityEngine;
@@ -27,7 +28,7 @@ namespace CryptoQuest.Quest.Components.YarnQuestNode
             {
                 if (!playable.GetGraph().IsPlaying()) return;
                 if (string.IsNullOrEmpty(YarnNodeName)) return;
-                YarnQuestManager.OnUpdateCurrentNode?.Invoke(_yarnDialogWithQuestSo.YarnQuestDef);
+                QuestCutsceneController.RegisterYarnQuestDef?.Invoke(_yarnDialogWithQuestSo.YarnQuestDef);
                 string yarnNode = _yarnDialogWithQuestSo.YarnQuestDef.YarnNode;
                 YarnSpinnerDialogueManager.PlayDialogueRequested?.Invoke(yarnNode);
             }

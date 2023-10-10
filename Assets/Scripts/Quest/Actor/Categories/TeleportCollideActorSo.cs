@@ -8,7 +8,7 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace CryptoQuest.Quest.Actor.Categories
 {
-    [CreateAssetMenu(menuName = "Crypto Quest/Quest System/Actor/TeleportCollideActorSO",
+    [CreateAssetMenu(menuName = "QuestSystem/Actor/TeleportCollideActorSO",
         fileName = "TeleportCollideActor")]
     public class TeleportCollideActorSo : ActorSO<TeleportCollideActorInfo>
     {
@@ -34,13 +34,18 @@ namespace CryptoQuest.Quest.Actor.Categories
         public override IEnumerator Spawn(Transform parent)
         {
             AsyncOperationHandle<GameObject> handle =
-                Data.Prefab.InstantiateAsync(parent.position, Quaternion.identity);
+                Data.Prefab.InstantiateAsync(parent.position, Quaternion.identity, parent);
 
             yield return handle;
             var actor = handle.Result;
-            actor.transform.SetParent(parent);
             GoTo actorConfig = handle.Result.GetComponent<GoTo>();
             actorConfig.SetUpTeleportInfo(Data.Destination, Data.Path);
+
+            if (!handle.Result.TryGetComponent<BoxCollider2D>(out var targetCollider2D)) yield break;
+            if (!parent.TryGetComponent<BoxCollider2D>(out var parentCollider2D)) yield break;
+
+            targetCollider2D.size = parentCollider2D.size;
+            targetCollider2D.isTrigger = parentCollider2D.isTrigger;
         }
     }
 }

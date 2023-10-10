@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace CryptoQuest.Quest.Actions
 {
-    [CreateAssetMenu(menuName = "Quest/Actions/BattleAction")]
+    [CreateAssetMenu(menuName = "QuestSystem/Actions/BattleAction")]
     public class BattleAction : NextAction
     {
         public QuestEventChannelSO GiveQuestEventChannel;

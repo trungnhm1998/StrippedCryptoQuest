@@ -2,6 +2,7 @@
 using CryptoQuest.Quest.Authoring;
 using CryptoQuest.Quest.Categories;
 using CryptoQuest.Quest.Components;
+using CryptoQuest.Quest.Controller;
 using CryptoQuest.System.Dialogue.Managers;
 using UnityEngine;
 

@@ -4,9 +4,9 @@ using CryptoQuest.Quest.Components;
 using CryptoQuest.Quest.Controllers;
 using UnityEngine;
 
-namespace CryptoQuest.Quest
+namespace CryptoQuest.Quest.Categories
 {
-    [CreateAssetMenu(menuName = "Crypto Quest/Quest System/Battle QuestSO", fileName = "BattleQuestSO")]
+    [CreateAssetMenu(menuName = "QuestSystem/Quests/Battle QuestSO", fileName = "BattleQuestSO")]
     public class BattleQuestSO : QuestSO
     {
         [field: SerializeField] public Battlefield BattlefieldToLoad { get; private set; }

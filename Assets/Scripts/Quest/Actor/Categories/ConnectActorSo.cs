@@ -6,7 +6,7 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace CryptoQuest.Quest.Actor.Categories
 {
-    [CreateAssetMenu(menuName = "Crypto Quest/Quest System/Actor/ConnectActorSO", fileName = "ConnectActor")]
+    [CreateAssetMenu(menuName = "QuestSystem/Actor/ConnectActorSO", fileName = "ConnectActor")]
     public class ConnectActorSo : ActorSO<ConnectActorInfo>
     {
         public override ActorInfo CreateActor() =>

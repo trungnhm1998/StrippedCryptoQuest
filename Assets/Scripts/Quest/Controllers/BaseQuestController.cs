@@ -1,7 +1,7 @@
 ﻿using CryptoQuest.Quest.Components;
 using UnityEngine;
 
-namespace CryptoQuest.Quest
+namespace CryptoQuest.Quest.Controller
 {
     public abstract class BaseQuestController : MonoBehaviour
     {

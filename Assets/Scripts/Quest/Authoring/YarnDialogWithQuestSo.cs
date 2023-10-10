@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace CryptoQuest.Quest.Authoring
 {
-    [CreateAssetMenu(fileName = "YarnDialogQuest", menuName = "Quest System/Yarn Dialog Quest")]
+    [CreateAssetMenu(fileName = "YarnDialogQuest", menuName = "QuestSystem/Yarn/Yarn Dialog Quest Node")]
     public class YarnDialogWithQuestSo : ScriptableObject
     {
         public YarnQuestDef YarnQuestDef;

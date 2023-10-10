@@ -33,7 +33,7 @@ namespace CryptoQuest.Quest.Components
             _questGiverChannelSo.RaiseEvent(_questToComplete);
         }
 
-        private enum ECollideActionType
+        public enum ECollideActionType
         {
             OnEnter = 0,
             OnExit = 1

@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace CryptoQuest.Quest.Actions
 {
-    [CreateAssetMenu(menuName = "Quest/Actions/Teleport")]
+    [CreateAssetMenu(menuName = "QuestSystem/Actions/Teleport")]
     public class TeleportAction : NextAction
     {
         public QuestEventChannelSO GiveQuestEventChannel;

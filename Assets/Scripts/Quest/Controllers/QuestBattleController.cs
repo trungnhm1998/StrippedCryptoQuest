@@ -2,6 +2,7 @@
 using CryptoQuest.Battle;
 using CryptoQuest.Battle.Events;
 using CryptoQuest.Gameplay.Encounter;
+using CryptoQuest.Quest.Categories;
 using CryptoQuest.Quest.Components;
 using CryptoQuest.Quest.Events;
 using UnityEngine;

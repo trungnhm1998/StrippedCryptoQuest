@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace CryptoQuest.Quest.Categories
 {
-    [CreateAssetMenu(menuName = "Crypto Quest/Quest System/Interact Quest", fileName = "InteractQuestSO")]
+    [CreateAssetMenu(menuName = "QuestSystem/Quests/Interact Quest", fileName = "InteractQuestSO")]
     public class InteractQuestSO : QuestSO
     {
         [field: SerializeField] public YarnDialogWithQuestSo YarnDialogWithQuestSo { get; private set; }
