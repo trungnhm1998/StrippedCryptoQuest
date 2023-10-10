@@ -16,6 +16,7 @@ namespace CryptoQuest.Battle
     /// </summary>
     public class BattleResultManager : MonoBehaviour
     {
+        [SerializeField] private BattleInput _battleInput;
         [SerializeField] private BattleContext _battleContext;
         [SerializeField] private FadeConfigSO _fadeController;
         [SerializeField] private BattleStateMachine _battleStateMachine;
@@ -91,7 +92,7 @@ namespace CryptoQuest.Battle
 
         private IEnumerator FadeInAndUnloadBattle()
         {
-            BattleInput.instance.DisableAllInput();
+            _battleInput.DisableAllInput();
             yield return new WaitForSeconds(_showDialogDelay);
             _fadeController.OnFadeIn();
             yield return new WaitForSeconds(_fadeController.Duration);

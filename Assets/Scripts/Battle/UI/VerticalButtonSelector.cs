@@ -8,6 +8,7 @@ namespace CryptoQuest.Battle.UI
 {
     public class VerticalButtonSelector : MonoBehaviour
     {
+        [SerializeField] private BattleInput _battleInput;
         [SerializeField] private GameObject _firstSelectedButton;
         [SerializeField] private bool _wrapAround;
         [SerializeField] private bool _isSelectFirstButtonOnEnable;
@@ -81,7 +82,7 @@ namespace CryptoQuest.Battle.UI
 
         private void OnEnable()
         {
-            BattleInput.instance.NavigateEvent += NavigateSelectCommand;
+            _battleInput.NavigateEvent += NavigateSelectCommand;
 
             if (!Interactable) return;
             
@@ -94,7 +95,7 @@ namespace CryptoQuest.Battle.UI
 
         private void OnDisable()
         {
-            BattleInput.instance.NavigateEvent -= NavigateSelectCommand;
+            _battleInput.NavigateEvent -= NavigateSelectCommand;
             CacheLastSelectedButton();
         }
 

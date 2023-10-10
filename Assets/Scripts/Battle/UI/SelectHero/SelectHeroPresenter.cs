@@ -14,6 +14,7 @@ namespace CryptoQuest.Battle.UI.SelectHero
         private const float SELECT_DELAY = 0.1f;
         public static event Action<HeroBehaviour> ConfirmSelectCharacter;
 
+        [SerializeField] private BattleInput _battleInput;
         [SerializeField] private PlayerPartyPresenter _playerPartyPresenter;
         [SerializeField] private UISelectHeroButton _selectHeroButton;
 
@@ -23,13 +24,13 @@ namespace CryptoQuest.Battle.UI.SelectHero
         private void OnEnable()
         {
             _selectHeroButton.ConfirmPressed += OnConfirmCharacter;
-            BattleInput.instance.NavigateEvent += NavigateSelectHero;
+            _battleInput.NavigateEvent += NavigateSelectHero;
         }
 
         private void OnDisable()
         {
             _selectHeroButton.ConfirmPressed -= OnConfirmCharacter;
-            BattleInput.instance.NavigateEvent -= NavigateSelectHero;
+            _battleInput.NavigateEvent -= NavigateSelectHero;
         }
 
 
@@ -67,6 +68,7 @@ namespace CryptoQuest.Battle.UI.SelectHero
             if (!IsIndexValid(index)) return;
             _currentIndex = index;
             var characterUI = _playerPartyPresenter.CharacterUIs[index];
+            if (characterUI.Hero == null) return;
             _inspectingCharacter = characterUI.Hero;
             _selectHeroButton.SetUIPosition(characterUI.transform.position);
         }

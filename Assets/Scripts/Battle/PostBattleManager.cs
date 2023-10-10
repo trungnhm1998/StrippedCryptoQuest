@@ -14,6 +14,7 @@ namespace CryptoQuest.Battle
     /// </summary>
     public abstract class PostBattleManager : MonoBehaviour
     {
+        [SerializeField] private InputMediatorSO _inputMediator;
         [SerializeField] private FadeConfigSO _fadeController;
         [SerializeField] private SceneScriptableObject _battleSceneSO;
         protected SceneScriptableObject BattleSceneSO => _battleSceneSO;
@@ -32,7 +33,7 @@ namespace CryptoQuest.Battle
             yield return new WaitForSeconds(_fadeController.Duration);
             OnFadeOut();
             // TODO: After battle there could be a cutscene, so we should enable correct input
-            InputMediatorSO.instance.EnableMapGameplayInput();
+            _inputMediator.EnableMapGameplayInput();
         }
 
         protected virtual void OnFadeOut() { }

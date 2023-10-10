@@ -41,6 +41,9 @@ namespace CryptoQuest.UI.Menu.Panels.Skill
             {
                 var member = _party.Slots[index];
                 var ui = _partySlots[index];
+                
+                ui.gameObject.SetActive(member.IsValid());
+                if (!member.IsValid()) continue;
                 ui.Init(member.HeroBehaviour, index);
             }
 

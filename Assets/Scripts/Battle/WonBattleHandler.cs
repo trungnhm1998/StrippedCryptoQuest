@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace CryptoQuest.Battle
 {
-    class WonBattleHandler : PostBattleManager
+    public class WonBattleHandler : PostBattleManager
     {
         [SerializeField] private RewardLootEvent _rewardLootEvent;
         private TinyMessageSubscriptionToken _wonToken;

@@ -102,6 +102,7 @@ GameObject:
   - component: {fileID: 5068194100640841924}
   - component: {fileID: 8901389554244495952}
   - component: {fileID: 7684280182235377367}
+  - component: {fileID: 2038378277564938250}
   m_Layer: 5
   m_Name: Content
   m_TagString: Untagged
@@ -169,6 +170,24 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &2038378277564938250
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7002436138045680288}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ed5b5bff75b4a25b7a607574093d6e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _battleInput: {fileID: 11400000, guid: d0c44063c591fb8489bc8e1087c0999e, type: 2}
+  _firstSelectedButton: {fileID: 0}
+  _wrapAround: 0
+  _isSelectFirstButtonOnEnable: 0
+  _isSelectLastManagedButtonOnEnable: 0
+  _buttonsContainer: {fileID: 5068194100640841924}
 --- !u!1 &7581748462485077157
 GameObject:
   m_ObjectHideFlags: 0

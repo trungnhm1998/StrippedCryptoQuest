@@ -10,7 +10,7 @@ using UnityEngine.InputSystem;
 namespace CryptoQuest.Input
 {
     // TODO: Move action map interfaces to separate scriptable objects
-    public class InputMediatorSO : ScriptableSingleton<InputMediatorSO>,
+    public class InputMediatorSO : ScriptableObject,
         InputActions.IMapGameplayActions,
         InputActions.IMenusActions,
         InputActions.IDialoguesActions
@@ -65,7 +65,7 @@ namespace CryptoQuest.Input
             }
         }
 
-        protected override void OnLoaded() =>
+        protected void OnEnable() =>
             CreateInputInstanceIfNeeded();
 
         private void OnDisable()

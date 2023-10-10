@@ -20,6 +20,8 @@ namespace CryptoQuest.Battle
         public static void RequestLoadBattle(int id) => LoadBattleWithId?.Invoke(id);
         public static event Action<Battlefield> LoadBattle;
         public static void RequestLoadBattle(Battlefield party) => LoadBattle?.Invoke(party);
+        
+        [SerializeField] private BattleInput _battleInput;
         [SerializeField] private GameStateSO _gameState;
         [SerializeField] private SpiralConfigSO _spiralConfigSo;
         [SerializeField] private BattleBus _battleBus;
@@ -86,7 +88,7 @@ namespace CryptoQuest.Battle
         private void LoadingBattle(Battlefield party)
         {
             _gameState.UpdateGameState(EGameState.Battle);
-            BattleInput.instance.DisableAllInput(); // enable battle input when battle is loaded
+            _battleInput.DisableAllInput(); // enable battle input when battle is loaded
             _battleBus.CurrentBattlefield = party;
             ShowSpiralAndLoadBattleScene();
         }
@@ -143,7 +145,7 @@ namespace CryptoQuest.Battle
         {
             if (scene != _battleSceneSO) return;
             _gameState.UpdateGameState(_gameState.PreviousGameState);
-            BattleInput.instance.EnableMapGameplayInput();
+            _battleInput.EnableMapGameplayInput();
             _rewardEventChannel.RewardRaiseEvent(_context.Loots);
         }
     }

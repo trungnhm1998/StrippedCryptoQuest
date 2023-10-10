@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 
 namespace CryptoQuest.Input
 {
-    public class BattleInput : ScriptableSingleton<BattleInput>,
+    public class BattleInput : ScriptableObject,
         InputActions.IBattleMenuActions
     {
         [SerializeField] private InputMediatorSO _inputMediator;

@@ -28,7 +28,7 @@ namespace CryptoQuest.Battle.UI.SelectItem
         public ItemTargetTypeDelegate SelectAllHeroCallback { get; set; }
         private void OnTargetAllHero() => SelectAllHeroCallback?.Invoke(_lastSelectedItem);
 
-
+        [SerializeField] private BattleInput _battleInput;
         [SerializeField] private AutoScroll _autoScroll;
         [SerializeField] private ScrollRect _itemScroll;
         [SerializeField] private UIItem _itemPrefab;
@@ -76,7 +76,7 @@ namespace CryptoQuest.Battle.UI.SelectItem
 
         private void RegisterEvents()
         {
-            BattleInput.instance.NavigateEvent += UpdateAutoScroll;
+            _battleInput.NavigateEvent += UpdateAutoScroll;
             _singleHeroChannel.EventRaised += OnSingleHero;
             _singleEnemyChannel.EventRaised += OnSingleEnemy;
             _allEnemyChannel.EventRaised += OnTargetAllEnemy;
@@ -85,7 +85,7 @@ namespace CryptoQuest.Battle.UI.SelectItem
 
         private void UnregisterEvents()
         {
-            BattleInput.instance.NavigateEvent -= UpdateAutoScroll;
+            _battleInput.NavigateEvent -= UpdateAutoScroll;
             _singleHeroChannel.EventRaised -= OnSingleHero;
             _singleEnemyChannel.EventRaised -= OnSingleEnemy;
             _allEnemyChannel.EventRaised -= OnTargetAllEnemy;

@@ -144,6 +144,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8573998311978599527}
   - component: {fileID: 7289392193135905097}
+  - component: {fileID: 8027012147725706806}
   m_Layer: 0
   m_Name: Enemies
   m_TagString: Untagged
@@ -197,6 +198,24 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &8027012147725706806
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7417669960616751323}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ed5b5bff75b4a25b7a607574093d6e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _battleInput: {fileID: 11400000, guid: d0c44063c591fb8489bc8e1087c0999e, type: 2}
+  _firstSelectedButton: {fileID: 0}
+  _wrapAround: 0
+  _isSelectFirstButtonOnEnable: 0
+  _isSelectLastManagedButtonOnEnable: 0
+  _buttonsContainer: {fileID: 8573998311978599527}
 --- !u!1 &8077781849222779400
 GameObject:
   m_ObjectHideFlags: 0
