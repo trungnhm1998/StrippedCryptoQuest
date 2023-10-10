@@ -1,9 +1,7 @@
 ﻿using System.Collections.Generic;
-using CryptoQuest.Character.Attributes.ClampEventAction;
 using IndiGames.GameplayAbilitySystem.AttributeSystem;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.Components;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
-using IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects;
 using UnityEngine;
 using CoreAttribute = IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects.AttributeScriptableObject;
 
@@ -14,9 +12,6 @@ namespace CryptoQuest.Character.Attributes
     {
         [SerializeField] private CoreAttribute _attribute;
         [SerializeField] private float _minValue;
-        
-        [field: SerializeReference, ReferenceEnum]
-        public IClampAction ClampAction { get; set; } = new DoNothing();
 
         public override void PreAttributeChange(AttributeSystemBehaviour attributeSystem,
             ref AttributeValue newAttributeValue)
@@ -32,14 +27,12 @@ namespace CryptoQuest.Character.Attributes
             if (!cacheDict.TryGetValue(_attribute, out int attributeIdx))
             {
                 Debug.LogWarning($"Try to clamp attribute {_attribute.name} to min value [{_minValue}] " +
-                    $"but the attribute is not in the attribute system.");
-                ClampAction?.OnClampFailed(attributeSystem);
+                                 $"but the attribute is not in the attribute system.");
                 return;
             }
 
             var preChange = newAttributeValue.Clone();
 
-            
             if (newAttributeValue.CurrentValue <= _minValue)
             {
                 newAttributeValue.CurrentValue = _minValue;
@@ -47,16 +40,11 @@ namespace CryptoQuest.Character.Attributes
                     $"Clamped current {_attribute.name} from [{preChange.BaseValue}] to [{_minValue}].");
             }
 
-            if (newAttributeValue.BaseValue <= _minValue)
-            {
-                newAttributeValue.BaseValue = _minValue;
-                Debug.Log(
-                    $"Clamped base {_attribute.name} from [{preChange.BaseValue}] to [{_minValue}].");
-                ClampAction?.OnClampSuccess(attributeSystem);
-                return;
-            }
+            if (newAttributeValue.BaseValue > _minValue) return;
 
-            ClampAction?.OnClampFailed(attributeSystem);
+            newAttributeValue.BaseValue = _minValue;
+            Debug.Log(
+                $"Clamped base {_attribute.name} from [{preChange.BaseValue}] to [{_minValue}].");
         }
 
         public override void PostAttributeChange(AttributeSystemBehaviour attributeSystem,

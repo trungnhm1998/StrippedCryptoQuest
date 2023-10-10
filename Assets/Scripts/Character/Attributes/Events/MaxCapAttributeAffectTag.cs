@@ -1,10 +1,8 @@
 ﻿using System.Collections.Generic;
-using CryptoQuest.Character.Attributes.ClampEventAction;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
 using IndiGames.GameplayAbilitySystem.AttributeSystem;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.Components;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
-using IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects;
 using IndiGames.GameplayAbilitySystem.TagSystem.ScriptableObjects;
 using UnityEngine;
 using CoreAttribute = IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects.AttributeScriptableObject;
@@ -22,9 +20,10 @@ namespace CryptoQuest.Character.Attributes
 
         public override void PostAttributeChange(AttributeSystemBehaviour attributeSystem,
             ref AttributeValue oldAttributeValue,
-            ref AttributeValue newAttributeValue) 
+            ref AttributeValue newAttributeValue)
         {
-            if (_attribute != newAttributeValue.Attribute && _attribute.CappedAttribute != newAttributeValue.Attribute) return;
+            if (_attribute != newAttributeValue.Attribute &&
+                _attribute.CappedAttribute != newAttributeValue.Attribute) return;
             var cacheDict = attributeSystem.GetAttributeIndexCache();
             CheckApplyTag(attributeSystem, cacheDict, attributeSystem);
         }
@@ -51,7 +50,7 @@ namespace CryptoQuest.Character.Attributes
                 return;
             }
 
-            tagSystem.RemoveTags(new TagScriptableObject[] {_tagToAffect});
+            tagSystem.RemoveTags(_tagToAffect);
         }
     }
 }

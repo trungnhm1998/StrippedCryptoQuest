@@ -1,21 +1,22 @@
 ﻿using System.Collections.Generic;
-using CryptoQuest.Character.Attributes.ClampEventAction;
 using IndiGames.GameplayAbilitySystem.AttributeSystem;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.Components;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
-using IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects;
 using UnityEngine;
 using CoreAttribute = IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects.AttributeScriptableObject;
 
 namespace CryptoQuest.Character.Attributes
 {
+    /// <summary>
+    /// Clamp the target attribute to the current value of the max attribute
+    ///
+    /// example: clamp health to max health or mana to max mana
+    /// well the only 2 cases I can think of right now
+    /// </summary>
     public class ClampAttribute : AttributesEventBase
     {
         [SerializeField] private CoreAttribute _attribute;
         [SerializeField] private CoreAttribute _maxAttribute;
-        
-        [field: SerializeReference, ReferenceEnum]
-        public IClampAction ClampAction { get; set; } = new DoNothing();
 
         public override void PreAttributeChange(AttributeSystemBehaviour attributeSystem,
             ref AttributeValue newAttributeValue)
@@ -33,7 +34,6 @@ namespace CryptoQuest.Character.Attributes
             {
                 Debug.LogWarning($"Try to clamp attribute {_attribute.name} to max attribute {_maxAttribute.name} " +
                                  $"but one or both of them are not in the attribute system.");
-                ClampAction?.OnClampFailed(attributeSystemBehaviour);
                 return;
             }
 
@@ -47,16 +47,11 @@ namespace CryptoQuest.Character.Attributes
                     $"Clamped current attribute {_attribute.name} from [{preChange.CurrentValue}] to [{newAttributeValue.CurrentValue}]");
             }
 
-            if (newAttributeValue.BaseValue >= maxAttributeValue.CurrentValue)
-            {
-                newAttributeValue.BaseValue = maxAttributeValue.CurrentValue;
-                Debug.Log(
-                    $"Clamped base {_maxAttribute.name} from [{preChange.BaseValue}] to [{newAttributeValue.BaseValue}].");
-                ClampAction?.OnClampSuccess(attributeSystemBehaviour);
-                return;
-            }
+            if (newAttributeValue.BaseValue < maxAttributeValue.CurrentValue) return;
 
-            ClampAction?.OnClampFailed(attributeSystemBehaviour);
+            newAttributeValue.BaseValue = maxAttributeValue.CurrentValue;
+            Debug.Log(
+                $"Clamped base {_maxAttribute.name} from [{preChange.BaseValue}] to [{newAttributeValue.BaseValue}].");
         }
 
         public override void PostAttributeChange(AttributeSystemBehaviour attributeSystem,

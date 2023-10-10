@@ -18,19 +18,13 @@ namespace IndiGames.GameplayAbilitySystem.AbilitySystem.Components
             GrantedTags.AddRange(DefaultTags);
         }
 
-        public virtual void AddTags(TagScriptableObject[] tags)
+        public virtual void AddTags(params TagScriptableObject[] tags)
         {
             GrantedTags.AddRange(tags);
             TagAdded?.Invoke(tags);
         }
 
-        public virtual void AddTags(TagScriptableObject tag)
-        {
-            GrantedTags.Add(tag);
-            TagAdded?.Invoke(tag);
-        }
-
-        public virtual void RemoveTags(TagScriptableObject[] tags)
+        public virtual void RemoveTags(params TagScriptableObject[] tags)
         {
             foreach (var tag in tags)
             {

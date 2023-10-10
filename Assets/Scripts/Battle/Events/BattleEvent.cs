@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using CryptoQuest.Battle.Components;
 using CryptoQuest.Character.Ability;
-using CryptoQuest.Character.Tag;
 using CryptoQuest.Gameplay.Encounter;
 using CryptoQuest.Gameplay.Loot;
 using CryptoQuest.Item;
@@ -37,6 +36,7 @@ namespace CryptoQuest.Battle.Events
     public class BattleCleanUpFinishedEvent : BattleEvent { }
 
     public class LoadedEvent : BattleEvent { }
+
     public class UnloadingEvent : BattleEvent { }
 
     public class IndexEvent : BattleEvent
@@ -70,6 +70,7 @@ namespace CryptoQuest.Battle.Events
     {
         public Components.Character Target { get; set; }
     }
+
     public class GuardedEvent : LogEvent { }
 
     public class EffectExpired : LogEvent
@@ -93,8 +94,6 @@ namespace CryptoQuest.Battle.Events
         public ConsumableInfo ItemInfo { get; set; }
         public Components.Character Target { get; set; }
     }
-
-    public class DeadEvent : LogEvent { }
 
     public class AbnormalEvent : LogEvent
     {
