@@ -1,5 +1,6 @@
 ﻿using IndiGames.Core.Events.ScriptableObjects;
 using IndiGames.Core.SaveSystem;
+using System.Threading.Tasks;
 using UnityEngine;
 
 namespace CryptoQuest.UI.Title
@@ -33,7 +34,11 @@ namespace CryptoQuest.UI.Title
 
         private void Awake()
         {
-            _hasSaveData = _saveSystem.LoadSaveGame();
+            var task = new Task(async () =>
+            {
+                _hasSaveData = await _saveSystem.LoadSaveGame();
+            });
+            task.RunSynchronously(TaskScheduler.FromCurrentSynchronizationContext());            
         }
 
         private void OnEnable()

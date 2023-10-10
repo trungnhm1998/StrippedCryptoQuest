@@ -1,19 +1,22 @@
-﻿namespace IndiGames.Core.SaveSystem
+﻿using System.Threading.Tasks;
+
+namespace IndiGames.Core.SaveSystem
 {
     public class NullSaveManagerSO : SaveManagerSO
     {
-        private SaveData saveDate;
+        private SaveData saveData;
 
-        public override bool Save(SaveData saveData)
+        public override async Task<bool> SaveAsync(SaveData saveData)
         {
-            this.saveDate = saveData;
+            this.saveData = saveData;
+            await Task.Delay(1);
             return true;
         }
 
-        public override bool Load(out SaveData saveData)
+        public override async Task<SaveData> LoadAsync()
         {
-            saveData = this.saveDate;
-            return true;
+            await Task.Delay(1);
+            return this.saveData;
         }
     }
 }

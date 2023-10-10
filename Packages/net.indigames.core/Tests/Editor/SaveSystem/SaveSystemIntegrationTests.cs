@@ -1,5 +1,6 @@
 ﻿using IndiGames.Core.SaveSystem;
 using NUnit.Framework;
+using System.Threading.Tasks;
 using UnityEditor;
 
 namespace IndiGames.Core.Tests.Editor.SaveSystem
@@ -29,22 +30,22 @@ namespace IndiGames.Core.Tests.Editor.SaveSystem
         [Test]
         public void SaveData_PlayerName_ShouldBeSameAsEditorSetting()
         {
-            Assert.AreEqual(_saveSystemSO.SaveData.playerName, "New Player", "saveData.playerName should be `New Player`.");
+            Assert.AreEqual(_saveSystemSO.SaveData.playerName, SaveData.DEFAULT_PLAYER_NAME, "saveData.playerName should be `New Player`.");
         }
 
         [Test]
-        public void SaveGame_ShouldReturnTrue()
+        public async Task SaveGame_ShouldReturnTrue()
         {
-            Assert.IsTrue(_saveSystemSO.SaveGame(), "SaveGame should return true.");
+            Assert.IsTrue(await _saveSystemSO.SaveGame(), "SaveGame should return true.");
         }
 
         [Test]
-        public void LoadSaveGame_IfHasSaveGame_ShouldHaveDifferentName()
+        public async Task LoadSaveGame_IfHasSaveGame_ShouldHaveDifferentName()
         {
             const string mockPlayerName = "Test Player Name";
             _saveSystemSO.SaveData = new SaveData { playerName = mockPlayerName };
 
-            var hasSaveGame = _saveSystemSO.LoadSaveGame();
+            var hasSaveGame = await _saveSystemSO.LoadSaveGame();
             if (!hasSaveGame) Assert.Pass();
             Assert.IsTrue(hasSaveGame, "LoadSaveGame should return true.");
             Assert.AreNotEqual(mockPlayerName, _saveSystemSO.SaveData.playerName,

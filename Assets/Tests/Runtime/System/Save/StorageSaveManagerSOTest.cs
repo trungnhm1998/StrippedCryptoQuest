@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Threading.Tasks;
 using CryptoQuest.System.Save;
 using IndiGames.Core.SaveSystem;
 using IndiGames.Core.SceneManagementSystem;
@@ -28,15 +29,16 @@ namespace CryptoQuest.Tests.Runtime.System.Save
         }
 
         [Test]
-        public void SaveGame_ShouldReturnTrue()
+        public async Task SaveGame_ShouldReturnTrue()
         {
-            Assert.IsTrue(_saveManagerSO.Save(new SaveData()), "SaveGame should return true.");
+            Assert.IsTrue(await _saveManagerSO.SaveAsync(new SaveData()), "SaveGame should return true.");
         }
 
         [Test]
-        public void LoadSaveGame_ShouldReturnTrue()
+        public async Task LoadSaveGame_ShouldReturnTrue()
         {
-            Assert.True(_saveManagerSO.Load(out var saveData), "LoadSaveGame should return true.");
+            var saveData = await _saveManagerSO.LoadAsync();
+            Assert.NotNull(saveData, "LoadSaveGame should return non null value.");
             Assert.AreEqual(saveData.playerName, SaveData.DEFAULT_PLAYER_NAME, "saveData.playerName should be the default player name.");
         }
     }

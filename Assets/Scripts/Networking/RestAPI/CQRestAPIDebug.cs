@@ -26,9 +26,6 @@ namespace CryptoQuest.Networking.RestAPI
             }
         }
 
-        private const string DEBUG_TOKEN = "c1CRi-qi8jfOJHJ5rjH2tO9xjSA_UUORQ1eRBt59BY8.sc6AO3PQnOrQV0hG4SoQ6mTeU8r1n4-WKuCuzrpnmw1";
-        private const string DEBUG_KEY = "GQwuFb5HYRrbodgHmlyeJPXYDfRUpxkOZrFlWarb";
-
         private void Start()
         {
             DebugLogin();
@@ -38,10 +35,10 @@ namespace CryptoQuest.Networking.RestAPI
         {
             string url = _environmentSO.BackEndUrl + "/crypto/debug/login";
 
-            var payload = new DebugLoginPayLoad(DEBUG_TOKEN);
+            var payload = new DebugLoginPayLoad(_environmentSO.DEBUG_TOKEN);
 
             Dictionary<string, string> headers = new();
-            headers.Add("DEBUG_KEY", DEBUG_KEY);
+            headers.Add("DEBUG_KEY", _environmentSO.DEBUG_KEY);
 
             HttpClient.Post(url, JsonUtility.ToJson(payload), headers).Subscribe(Result, OnFailed);
         }

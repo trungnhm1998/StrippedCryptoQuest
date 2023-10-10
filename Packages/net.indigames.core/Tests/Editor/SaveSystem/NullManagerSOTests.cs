@@ -1,5 +1,6 @@
 ﻿using IndiGames.Core.SaveSystem;
 using NUnit.Framework;
+using System.Threading.Tasks;
 using UnityEditor;
 
 namespace IndiGames.Core.Tests.Editor.SaveSystem
@@ -23,15 +24,16 @@ namespace IndiGames.Core.Tests.Editor.SaveSystem
         }
 
         [Test]
-        public void SaveGame_ShouldReturnTrue()
+        public async Task SaveGame_ShouldReturnTrue()
         {
-            Assert.IsTrue(_nullSaveManagerSO.Save(new SaveData()), "SaveGame should return true.");
+            Assert.IsTrue(await _nullSaveManagerSO.SaveAsync(new SaveData()), "SaveGame should return true.");
         }
 
         [Test]
-        public void LoadSaveGame_ShouldReturnTrue()
+        public async Task LoadSaveGame_ShouldReturnTrue()
         {
-            Assert.True(_nullSaveManagerSO.Load(out var saveData), "LoadSaveGame should return true.");
+            var saveData = await _nullSaveManagerSO.LoadAsync();
+            Assert.NotNull(saveData, "LoadSaveGame should return not null value.");
             Assert.AreEqual(saveData.playerName, SaveData.DEFAULT_PLAYER_NAME, "saveData.playerName should be the default player name.");
         }
     }

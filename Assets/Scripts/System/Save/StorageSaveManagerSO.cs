@@ -2,20 +2,26 @@ using UnityEngine;
 using System;
 using System.IO;
 using IndiGames.Core.SaveSystem;
-
+using System.Threading.Tasks;
 
 namespace CryptoQuest.System.Save
 {
     public class StorageSaveManagerSO : SaveManagerSO
     {
-        public override bool Save(SaveData saveData)
+        [Header("Save Config")]
+        [SerializeField] protected string fileName;
+        [SerializeField] protected bool useEncryption;
+        [SerializeField] protected string encryptionCode;
+
+        public async override Task<bool> SaveAsync(SaveData saveData)
         {
             // use Path.Combine to account for different OS's having different path separators
-            var fullPath = Path.Combine(Application.persistentDataPath, "Prefs", fileName);
+            var tmpPath = Path.Combine(Application.persistentDataPath, "Prefs", "tmp_" + fileName);
+            var filePath = Path.Combine(Application.persistentDataPath, "Prefs", fileName);
             try
             {
                 // create the directory the file will be written to if it doesn't already exist
-                Directory.CreateDirectory(Path.GetDirectoryName(fullPath));
+                Directory.CreateDirectory(Path.GetDirectoryName(tmpPath));
 
                 // serialize the save data into json
                 var jsonData = saveData.ToJson();
@@ -26,24 +32,50 @@ namespace CryptoQuest.System.Save
                     jsonData = EncryptDecrypt(jsonData);
                 }
 
-                // write the serialized data to the file
-                using (FileStream stream = new FileStream(fullPath, FileMode.Create))
+                try
                 {
-                    using (StreamWriter writer = new StreamWriter(stream))
+                    if (File.Exists(tmpPath))
+                    {
+                        File.Delete(tmpPath);
+                    }
+                } catch { }
+
+                // write the serialized data to the file
+                using (var stream = new FileStream(tmpPath, FileMode.Create))
+                {
+                    using (var writer = new StreamWriter(stream))
                     {
                         writer.Write(jsonData);
                     }
                 }
+
+                await Task.Delay(1);
+
+                var saved = false;
+                while (!saved)
+                {
+                    try
+                    {
+                        if (File.Exists(filePath))
+                        {
+                            File.Delete(filePath);
+                        }
+                        File.Move(tmpPath, filePath);
+                        saved = true;
+                    }
+                    catch { }
+                }
+
+                return true;
             }
             catch (Exception e)
             {
-                Debug.LogError("Error occured when trying to save data to file: " + fullPath + "\n" + e);
+                Debug.LogError("Error occured when trying to save data to file: " + filePath + "\n" + e);
             }
-            
-            return true;
+            return false;
         }
 
-        public override bool Load(out SaveData saveData)
+        public async override Task<SaveData> LoadAsync()
         {
             // use Path.Combine to account for different OS's having different path separators
             var fullPath = Path.Combine(Application.persistentDataPath, "Prefs", fileName);
@@ -61,6 +93,8 @@ namespace CryptoQuest.System.Save
                         }
                     }
 
+                    await Task.Delay(1);
+
                     // optionally decrypt the data
                     if (useEncryption)
                     {
@@ -68,17 +102,34 @@ namespace CryptoQuest.System.Save
                     }
 
                     // load saveData from json
-                    saveData = new SaveData();
+                    var saveData = new SaveData();
                     saveData.LoadFromJson(jsonData);
-                    return true;
+                    return saveData;
                 }
             }
             catch (Exception e)
             {
                 Debug.LogError("Error occured when trying to load data from file: " + fullPath + "\n" + e);
             }
-            saveData = null;
-            return false;
+            return null;
+        }
+
+        //Simple XOR encryption/decryption
+        protected string EncryptDecrypt(string data)
+        {
+            // if encryption code is not set, return non-encrypted data
+            if (!useEncryption || encryptionCode.Length == 0)
+            {
+                return data;
+            }
+
+            // simple XOR encryption
+            var modifiedData = "";
+            for (var i = 0; i < data.Length; i++)
+            {
+                modifiedData += (char)(data[i] ^ encryptionCode[i % encryptionCode.Length]);
+            }
+            return modifiedData;
         }
     }
 }

@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using UnityEngine;
 
 namespace IndiGames.Core.SaveSystem
@@ -20,14 +21,15 @@ namespace IndiGames.Core.SaveSystem
             set => _saveData.playerName = value;
         }
 
-        public bool SaveGame()
+        public async Task<bool> SaveGame()
         {
-            return _saveManagerSO.Save(_saveData);
+            return await _saveManagerSO.SaveAsync(_saveData);
         }
 
-        public bool LoadSaveGame()
+        public async Task<bool> LoadSaveGame()
         {
-            return _saveManagerSO.Load(out _saveData);
+            _saveData = await _saveManagerSO.LoadAsync();
+            return _saveData != null;
         }
     }
 }

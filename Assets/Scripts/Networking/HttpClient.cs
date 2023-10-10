@@ -5,11 +5,73 @@ using System.Collections.Generic;
 using System.Net;
 using UnityEngine;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace CryptoQuest.Networking
 {
     public static class HttpClient
     {
+        public async static Task<UnityWebRequest> GetAsync(string url, Dictionary<string, string> headers = null)
+        {
+            try
+            {
+                var req = UnityWebRequest.Get(url);
+                if (headers != null)
+                {
+                    foreach (var item in headers)
+                    {
+                        req.SetRequestHeader(item.Key, item.Value);
+                    }
+                }
+                return (await req.SendWebRequest().AsAsyncOperationObservable(new Progress<float>()).ToTask()).webRequest;
+            }
+            catch (Exception) { }
+            return null;
+        }
+
+        public async static Task<UnityWebRequest> PostAsync(string url, WWWForm formData, Dictionary<string, string> headers = null)
+        {
+            try
+            {
+                var req = UnityWebRequest.Post(url, formData);
+                if (headers != null)
+                {
+                    foreach (var item in headers)
+                    {
+                        req.SetRequestHeader(item.Key, item.Value);
+                    }
+                }
+                return (await req.SendWebRequest().AsAsyncOperationObservable(new Progress<float>()).ToTask()).webRequest;
+            }
+            catch (Exception ex)
+            {
+                Debug.LogException(ex);
+            }
+
+            return null;
+        }
+
+        public async static Task<UnityWebRequest> PostAsync(string url, string bodyData, Dictionary<string, string> headers = null)
+        {
+            try
+            {
+                var req = UnityWebRequest.Post(url, bodyData, "application/json");
+                if (headers != null)
+                {
+                    foreach (var item in headers)
+                    {
+                        req.SetRequestHeader(item.Key, item.Value);
+                    }
+                }
+                return (await req.SendWebRequest().AsAsyncOperationObservable(new Progress<float>()).ToTask()).webRequest;
+            }
+            catch (Exception ex) {
+                Debug.LogException(ex);
+            }
+
+            return null;
+        }
+
         public static IObservable<UnityWebRequest> Get(string url, Dictionary<string, string> headers = null)
         {
             return FetchUrl(url, UnityWebRequest.Get, headers);
