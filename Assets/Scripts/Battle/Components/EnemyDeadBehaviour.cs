@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using CryptoQuest.Battle.Events;
 using CryptoQuest.Character.Tag;
 using DG.Tweening;
 using IndiGames.GameplayAbilitySystem.TagSystem.ScriptableObjects;
@@ -30,8 +31,16 @@ namespace CryptoQuest.Battle.Components
                 _enemyBehaviour.SetAlpha(1f);
                 DOTween.To(() => _enemyBehaviour.Color.a,
                     x => _enemyBehaviour.SetAlpha(x),
-                    0f, _fadeoutDuration).SetEase(Ease.InCubic);
+                    0f, _fadeoutDuration).SetEase(Ease.InCubic).OnComplete(OnDead);
             }
         }
+
+        private void OnDead()
+        {
+            BattleEventBus.RaiseEvent(new DeadEvent()
+            {
+                Character = _enemyBehaviour
+            });
+        }    
     }
 }

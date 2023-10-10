@@ -5,6 +5,7 @@ using CryptoQuest.Battle.Commands;
 using CryptoQuest.Character.Tag;
 using IndiGames.GameplayAbilitySystem.AttributeSystem;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
+using IndiGames.GameplayAbilitySystem.TagSystem.ScriptableObjects;
 using UnityEngine;
 
 namespace CryptoQuest.Battle.Components

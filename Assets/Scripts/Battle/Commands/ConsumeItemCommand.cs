@@ -6,6 +6,7 @@ using UnityEngine;
 using System.Collections;
 using CryptoQuest.System;
 using CryptoQuest.Gameplay.Inventory;
+using CryptoQuest.Battle.Events;
 
 namespace CryptoQuest.Battle.Commands
 {
@@ -29,6 +30,12 @@ namespace CryptoQuest.Battle.Commands
             bool ableToUseOnAtLeastOneHero = false;
             foreach (var target in _targets)
             {
+                BattleEventBus.RaiseEvent(new ConsumeItemEvent()
+                {
+                    Character = _owner,
+                    ItemInfo = _selectedItem,
+                    Target = target,
+                });
                 Debug.Log($"{_owner.DisplayName} using {_selectedItem.Data.name} on {target.DisplayName}");
                 var spec = target.AbilitySystem.GiveAbility<ConsumableAbilitySpec>(_selectedItem.Data.Ability);
                 spec.SetConsumable(_selectedItem);

@@ -1,9 +1,13 @@
 using System.Collections.Generic;
 using CryptoQuest.Battle.Components;
+using CryptoQuest.Character.Ability;
+using CryptoQuest.Character.Tag;
 using CryptoQuest.Gameplay.Encounter;
 using CryptoQuest.Gameplay.Loot;
+using CryptoQuest.Item;
 using IndiGames.GameplayAbilitySystem.EffectSystem;
 using TinyMessenger;
+using UnityEngine.Localization;
 
 namespace CryptoQuest.Battle.Events
 {
@@ -78,4 +82,22 @@ namespace CryptoQuest.Battle.Events
     public class CastSkillFailedEvent : LogEvent { }
 
     public class MissedEvent : LogEvent { }
+
+    public class CastSkillEvent : LogEvent
+    {
+        public CastableAbility Skill { get; set; }
+    }
+
+    public class ConsumeItemEvent : LogEvent
+    {
+        public ConsumableInfo ItemInfo { get; set; }
+        public Components.Character Target { get; set; }
+    }
+
+    public class DeadEvent : LogEvent { }
+
+    public class AbnormalEvent : LogEvent
+    {
+        public LocalizedString Reason { get; set; }
+    }
 }

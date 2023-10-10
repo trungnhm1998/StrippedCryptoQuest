@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Linq;
 using CryptoQuest.Battle.Components;
+using CryptoQuest.Battle.Events;
 using CryptoQuest.Character.Ability;
 using UnityEngine;
 
@@ -22,6 +23,11 @@ namespace CryptoQuest.Battle.Commands
 
         public IEnumerator Execute()
         {
+            BattleEventBus.RaiseEvent(new CastSkillEvent()
+            {
+                Character = _owner,
+                Skill = _selectedSkill
+            });
             var spec = _owner.AbilitySystem.GiveAbility<CastableAbilitySpec>(_selectedSkill);
             var targetSystems = _targets.Where(t => t.IsValid())
                 .Select(t => t.AbilitySystem).ToArray();
