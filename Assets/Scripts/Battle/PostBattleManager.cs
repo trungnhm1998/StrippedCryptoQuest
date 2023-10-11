@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using CryptoQuest.Gameplay;
 using CryptoQuest.Input;
 using IndiGames.Core.SceneManagementSystem.Events.ScriptableObjects;
 using IndiGames.Core.SceneManagementSystem.ScriptableObjects;
@@ -17,6 +18,7 @@ namespace CryptoQuest.Battle
         [SerializeField] private InputMediatorSO _inputMediator;
         [SerializeField] private FadeConfigSO _fadeController;
         [SerializeField] private SceneScriptableObject _battleSceneSO;
+        [SerializeField] private GameStateSO _gameState;
         protected SceneScriptableObject BattleSceneSO => _battleSceneSO;
         [SerializeField] private UnloadSceneEventChannelSO _unloadSceneEvent;
 
@@ -33,9 +35,12 @@ namespace CryptoQuest.Battle
             yield return new WaitForSeconds(_fadeController.Duration);
             OnFadeOut();
             // TODO: After battle there could be a cutscene, so we should enable correct input
+            _gameState.UpdateGameState(EGameState.Field);
             _inputMediator.EnableMapGameplayInput();
         }
 
-        protected virtual void OnFadeOut() { }
+        protected virtual void OnFadeOut()
+        {
+        }
     }
 }

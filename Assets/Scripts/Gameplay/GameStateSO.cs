@@ -16,14 +16,11 @@ namespace CryptoQuest.Gameplay
 
     public class GameStateSO : ScriptableObject
     {
-        [field: SerializeField, ReadOnly]
-        public EGameState CurrentGameState { get; private set; }
+        [field: SerializeField, ReadOnly] public EGameState CurrentGameState { get; private set; }
 
-        [field: SerializeField, ReadOnly]
-        public EGameState PreviousGameState { get; private set; }
+        [field: SerializeField, ReadOnly] public EGameState PreviousGameState { get; private set; }
 
-        [Header("Events")]
-        [SerializeField] private VoidEventChannelSO _enterBattleEventChannel;
+        [Header("Events")] [SerializeField] private VoidEventChannelSO _enterBattleEventChannel;
         [SerializeField] private VoidEventChannelSO _enterFieldEventChannel;
 
         private void OnEnable()

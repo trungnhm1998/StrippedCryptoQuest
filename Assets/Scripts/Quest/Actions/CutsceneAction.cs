@@ -10,6 +10,7 @@ namespace CryptoQuest.Quest.Actions
         public QuestCutsceneDef CutsceneDef;
         public float Delay = 0.5f;
 
+
         public override IEnumerator Execute()
         {
             yield return new WaitForSeconds(Delay);

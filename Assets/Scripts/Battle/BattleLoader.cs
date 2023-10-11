@@ -20,29 +20,26 @@ namespace CryptoQuest.Battle
         public static void RequestLoadBattle(int id) => LoadBattleWithId?.Invoke(id);
         public static event Action<Battlefield> LoadBattle;
         public static void RequestLoadBattle(Battlefield party) => LoadBattle?.Invoke(party);
-        
+
         [SerializeField] private BattleInput _battleInput;
         [SerializeField] private GameStateSO _gameState;
         [SerializeField] private SpiralConfigSO _spiralConfigSo;
         [SerializeField] private BattleBus _battleBus;
         [SerializeField] private SceneScriptableObject _battleSceneSO;
 
-        [Header("Events to listen to")]
-        [Obsolete]
-        [SerializeField] private VoidEventChannelSO _onBattleEndEventChannel;
+        [Header("Events to listen to")] [Obsolete] [SerializeField]
+        private VoidEventChannelSO _onBattleEndEventChannel;
 
         [SerializeField] private BattleEventSO _endBattleEvent;
 
-        [Header("Events to raise")]
-        [SerializeField] private UnloadSceneEventChannelSO _unloadSceneEvent;
+        [Header("Events to raise")] [SerializeField]
+        private UnloadSceneEventChannelSO _unloadSceneEvent;
 
         [SerializeField] private LoadSceneEventChannelSO _loadSceneEventChannelSo;
-        [Obsolete]
-        [SerializeField] private BattleResultEventSO _battleCompletedEvent;
+        [Obsolete] [SerializeField] private BattleResultEventSO _battleCompletedEvent;
         [SerializeField] private RewardSO _rewardEventChannel;
 
-        [Header("Config"), SerializeField]
-        private Battlefield[] _enemyParties = Array.Empty<Battlefield>();
+        [Header("Config"), SerializeField] private Battlefield[] _enemyParties = Array.Empty<Battlefield>();
 
         private void Awake()
         {
@@ -125,8 +122,7 @@ namespace CryptoQuest.Battle
             BattleResultInfo result = new()
             {
                 IsWin = true, // this depends on the battle result, but for now we assume it's always win
-                Battlefield = _battleBus.CurrentBattlefield,
-                BattleContext = _context
+                Battlefield = _battleBus.CurrentBattlefield
             };
             _battleCompletedEvent.RaiseEvent(result);
         }

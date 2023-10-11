@@ -1,8 +1,10 @@
-﻿using CryptoQuest.System.CutsceneSystem.Events;
+﻿using CryptoQuest.Gameplay;
+using CryptoQuest.System.CutsceneSystem.Events;
 using CryptoQuest.System.Dialogue.Managers;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Playables;
+using UnityEngine.Serialization;
 #if UNITY_EDITOR
 using UnityEditor.Timeline;
 #endif
@@ -12,8 +14,8 @@ namespace CryptoQuest.System.CutsceneSystem
     public class CutsceneManager : MonoBehaviour
     {
         public static event UnityAction CutsceneCompleted;
-        [Header("Listening to")]
-        [SerializeField]
+
+        [Header("Listening to")] [SerializeField]
         private PlayCutsceneEvent _playCutsceneEvent;
 
         [SerializeField] private PauseCutsceneEvent _pauseCutsceneEvent;

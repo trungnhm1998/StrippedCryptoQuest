@@ -8,6 +8,5 @@ namespace CryptoQuest.Battle
     {
         public bool IsWin { get; set; }
         public Battlefield Battlefield { get; set; }
-        public CompletedContext BattleContext { get; set; }
     }
 }

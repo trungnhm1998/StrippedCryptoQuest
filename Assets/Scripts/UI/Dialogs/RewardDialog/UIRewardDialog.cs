@@ -1,4 +1,5 @@
 using System.Collections;
+using CryptoQuest.Gameplay;
 using CryptoQuest.Input;
 using UnityEngine;
 using UnityEngine.Events;
@@ -8,9 +9,10 @@ namespace CryptoQuest.UI.Dialogs.RewardDialog
 {
     public class UIRewardDialog : ModalWindow<UIRewardDialog>
     {
-        [Header("Child Components")]
-        [SerializeField] private InputMediatorSO _inputMediator;
+        [Header("Child Components")] [SerializeField]
+        private InputMediatorSO _inputMediator;
 
+        [SerializeField] private GameStateSO _gameStateSo;
         [SerializeField] private float _autoCloseDelay = 1.5f;
         [SerializeField] private Button _defaultSelectButton;
         [SerializeField] private GameObject _topNone;
@@ -30,7 +32,9 @@ namespace CryptoQuest.UI.Dialogs.RewardDialog
             DisplayItemsReward();
         }
 
-        protected override void CheckIgnorableForClose() { }
+        protected override void CheckIgnorableForClose()
+        {
+        }
 
         private IEnumerator Start()
         {
@@ -47,7 +51,8 @@ namespace CryptoQuest.UI.Dialogs.RewardDialog
         public override UIRewardDialog Close()
         {
             gameObject.SetActive(false);
-            _inputMediator.EnableMapGameplayInput();
+            if (_gameStateSo.CurrentGameState == EGameState.Field)
+                _inputMediator.EnableMapGameplayInput();
             return base.Close();
         }
 

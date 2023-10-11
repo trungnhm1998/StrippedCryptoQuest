@@ -1366,6 +1366,7 @@ MonoBehaviour:
   backgroundButton: {fileID: 0}
   buttonsRoot: {fileID: 0}
   _inputMediator: {fileID: 11400000, guid: 1fb61cdb72f0a484f8e4db68e2011977, type: 2}
+  _gameStateSo: {fileID: 11400000, guid: 189395e2c5502c14ca5eed5a3c189d8d, type: 2}
   _autoCloseDelay: 1.5
   _defaultSelectButton: {fileID: 4899500312240695118}
   _topNone: {fileID: 8014353246616186042}
@@ -1576,6 +1577,10 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 9b5007b8-11cb-4a17-a32d-69bd2cd2bd7d
     m_ActionName: Reward/Navigate[/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 74d94666-f0ef-4176-8931-9886a37d1c5c
+    m_ActionName: BlackSmith/Cancel[/Keyboard/escape]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Reward
@@ -1594,7 +1599,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _scrollRect: {fileID: 5990842619468933819}
-  _singleItemRect: {fileID: 384322352476933200, guid: 8cc284be296533243a2c18b9e48ebe6a, type: 3}
   _arrowUpHint: {fileID: 7044620078606304646}
   _arrowDownHint: {fileID: 2513884358059239986}
 --- !u!1 &4129492596461807134

@@ -1,12 +1,15 @@
 ﻿using CryptoQuest.Battle.Events;
+using CryptoQuest.Gameplay.Encounter;
 using IndiGames.Core.SceneManagementSystem;
 using IndiGames.Core.SceneManagementSystem.ScriptableObjects;
 using TinyMessenger;
+using UnityEngine;
 
 namespace CryptoQuest.Battle
 {
     public class LostBattleHandler : PostBattleManager
     {
+        [SerializeField] private BattleResultEventSO _battleCompletedEvent;
         private TinyMessageSubscriptionToken _lostToken;
 
         private void Awake()
@@ -26,6 +29,7 @@ namespace CryptoQuest.Battle
             _context = lostContext;
             AdditiveGameSceneLoader.SceneUnloaded += TeleportToClosestTownAfterSceneUnloaded;
             UnloadBattleScene();
+            NotifyBattleResult(_context.Battlefield);
         }
 
         private void TeleportToClosestTownAfterSceneUnloaded(SceneScriptableObject scene)
@@ -34,6 +38,16 @@ namespace CryptoQuest.Battle
             if (scene != BattleSceneSO) return;
 
             FinishPresentationAndEnableInput();
+        }
+
+        private void NotifyBattleResult(Battlefield battlefield)
+        {
+            BattleResultInfo result = new()
+            {
+                IsWin = false, //obsolete 
+                Battlefield = battlefield
+            };
+            _battleCompletedEvent.RaiseEvent(result);
         }
     }
 }
