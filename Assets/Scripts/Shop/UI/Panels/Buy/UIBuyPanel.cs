@@ -53,6 +53,10 @@ namespace CryptoQuest.Shop.UI.Panels.Buy
         {
             _partyInfo.gameObject.SetActive(false);
             _uiShopBuy.Hide();
+            if(_isBuying)
+            {
+                _yesNoDialogEventChannelSO.Hide();
+            }    
         }
         private void OnSubmitBuy(IShopItem shopItemInfo)
         {

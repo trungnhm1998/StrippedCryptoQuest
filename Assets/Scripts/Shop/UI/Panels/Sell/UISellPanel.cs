@@ -93,6 +93,10 @@ namespace CryptoQuest.Shop.UI.Panels.Sell
         {
             _helpNavigateInfo.gameObject.SetActive(false);
             _currentShop.Hide();
+            if(_isSelling)
+            {
+                _yesNoDialogEventChannelSO.Hide();
+            }    
         }
 
         private void ShowItemsWithType(ShopStateSO itemType)
