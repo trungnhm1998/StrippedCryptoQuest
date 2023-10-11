@@ -173,6 +173,27 @@ public class ResizeTilesetEditor
                 ModifyAttributeFloat(element, "height", resizeFactor);
             }
 
+            foreach (XmlElement element in root.SelectNodes("//polygon"))
+            {
+                ModifyAttributeFloat(element, "x", resizeFactor);
+                ModifyAttributeFloat(element, "y", resizeFactor);
+                ModifyAttributeFloat(element, "width", resizeFactor);
+                ModifyAttributeFloat(element, "height", resizeFactor);
+                if (element == null) continue;
+                var attr = "points";
+                var value = element.GetAttribute(attr);
+                var vectors = value.Split(" ");
+                var result = "";
+                foreach (var item in vectors)
+                {
+                    var points = item.Split(",");
+                    var x = float.Parse(points[0])/resizeFactor;
+                    var y = float.Parse(points[1])/resizeFactor;
+                    result += $"{x.ToString()},{y.ToString()} ";
+                }
+                element.SetAttribute(attr, result[0..^1]);
+            }
+
             doc.Save(tmxFilePath);
 
             Debug.Log($"{tmxFilePath} modified and saved.");
