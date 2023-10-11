@@ -10,7 +10,8 @@ namespace CryptoQuest.System.Cheat.States
             base.OnStateEnter(animator, stateInfo, layerIndex);
             Manager.Terminal.Close();
             Manager.OnOpenTerminalPressed = OpenTerminal;
-            Manager.EnableLastEnabledActionMap();
+            // TODO: refactor this Manager.EnableLastEnabledActionMap(); method 
+            // because it cause error when open terminal and use cheat to enable another input 
             Manager.OnCommandNavigatePressed = null;
             Manager.OnCloseTerminalPressed = null;
             Manager.OnEnterPressed = null;

@@ -8,8 +8,10 @@ namespace CryptoQuest.System.Cheat.States
         public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
             base.OnStateEnter(animator, stateInfo, layerIndex);
-            Manager.CacheLastEnabledActionMap();
-            Manager.Input.DisableAllInput();
+            
+            // TODO: refactor this cache and Manager.Input.DisableAllInput(); method
+            // so user can't operate while terminal opening
+            
             Manager.OnCommandNavigatePressed = NavigateCommand;
             Manager.OnCloseTerminalPressed = () => animator.Play("Close");
             Manager.OnEnterPressed = () => Manager.Terminal.EnterPressed();
