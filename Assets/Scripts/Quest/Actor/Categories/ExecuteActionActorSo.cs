@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using CryptoQuest.EditorTool;
 using CryptoQuest.Quest.Actions;
 using CryptoQuest.Quest.Components;
 using UnityEngine;
@@ -11,9 +12,8 @@ namespace CryptoQuest.Quest.Actor.Categories
     public class ExecuteActionActorSo : ActorSO<ExecuteActionActorInfo>
     {
         [field: Header("Config Settings")]
-        [field: SerializeField] public Vector2 SizeBox { get; private set; }
-
         [field: SerializeField] public NextAction Action { get; private set; }
+
         [field: SerializeField] public QuestColliderTrigger.ECollideActionType CollideActionType { get; private set; }
 
         public override ActorInfo CreateActor() =>
@@ -33,14 +33,16 @@ namespace CryptoQuest.Quest.Actor.Categories
             yield return handle;
 
             TriggerActionCollider actor = handle.Result.GetComponent<TriggerActionCollider>();
-            actor.SetAction(Data.Action, Data.SizeBox);
+            actor.SetAction(Data.Action);
             actor.SetCollideActionType(Data.CollideActionType);
+
+            if (!parent.TryGetComponent<ShowCubeWireUtil>(out var showCubeWireUtil)) yield break;
+            actor.SetBoxSize(showCubeWireUtil.SizeBox);
 
             if (!handle.Result.TryGetComponent<BoxCollider2D>(out var targetCollider2D)) yield break;
             if (!parent.TryGetComponent<BoxCollider2D>(out var parentCollider2D)) yield break;
 
             targetCollider2D.size = parentCollider2D.size;
-            targetCollider2D.isTrigger = parentCollider2D.isTrigger;
         }
     }
 }
