@@ -1,5 +1,5 @@
 using System;
-using CryptoQuest.Battle.EffectCalculations;
+using CryptoQuest.AbilitySystem.Executions;
 using CryptoQuest.Gameplay.Battle.Core;
 using NUnit.Framework;
 

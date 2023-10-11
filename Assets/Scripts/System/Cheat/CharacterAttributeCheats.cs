@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using CommandTerminal;
-using CryptoQuest.Character.Attributes;
 using CryptoQuest.Gameplay.PlayerParty;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.Components;
 

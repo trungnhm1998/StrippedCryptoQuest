@@ -1,56 +1,53 @@
-﻿using System;
+﻿using CryptoQuest.AbilitySystem;
 using CryptoQuest.Battle.Events;
-using CryptoQuest.Character.Tag;
-using IndiGames.GameplayAbilitySystem.EffectSystem;
+using CryptoQuest.System;
 using IndiGames.GameplayAbilitySystem.TagSystem.ScriptableObjects;
 
 namespace CryptoQuest.Battle.Components
 {
     public class AbnormalMessenger : CharacterComponentBase
     {
+        private ITagAssetProvider _tagAssetProvider;
+
+        private ITagAssetProvider TagAssetProvider =>
+            _tagAssetProvider ??= ServiceProvider.GetService<ITagAssetProvider>();
         public override void Init()
         {
-            Character.AbilitySystem.EffectSystem.EffectAdded += LogEffectAdded;
-            Character.AbilitySystem.EffectSystem.EffectRemoved += LogEffectRemoved;
+            Character.AbilitySystem.TagSystem.TagAdded += LogEffectAdded;
+            Character.AbilitySystem.TagSystem.TagRemoved += LogEffectRemoved;
         }
 
         private void OnDestroy()
         {
             if (Character.IsValid() == false) return;
-            Character.AbilitySystem.EffectSystem.EffectAdded -= LogEffectAdded;
-            Character.AbilitySystem.EffectSystem.EffectRemoved -= LogEffectRemoved;
+            Character.AbilitySystem.TagSystem.TagAdded -= LogEffectAdded;
+            Character.AbilitySystem.TagSystem.TagRemoved -= LogEffectRemoved;
         }
 
-        private void LogEffectRemoved(ActiveEffectSpecification activeEffect)
+        private void LogEffectAdded(params TagScriptableObject[] tagScriptableObjects)
         {
-            RaiseEventForTags(activeEffect.GrantedTags, tag =>
+            foreach (var tagScriptableObject in tagScriptableObjects)
             {
-                BattleEventBus.RaiseEvent(new EffectRemovedEvent()
-                {
-                    Character = Character,
-                    Reason = tag.RemoveMessage,
-                });
-            });
-        }
-
-        private void LogEffectAdded(ActiveEffectSpecification activeEffect)
-        {
-            RaiseEventForTags(activeEffect.GrantedTags, tag =>
-            {
+                if (!TagAssetProvider.TryGetTagAsset(tagScriptableObject, out var tagAsset)) continue;
                 BattleEventBus.RaiseEvent(new EffectAddedEvent()
                 {
                     Character = Character,
-                    Reason = tag.AddedMessage,
+                    Reason = tagAsset.AddedMessage,
                 });
-            });
+            }
         }
 
-        private static void RaiseEventForTags(TagScriptableObject[] tags, Action<TagSO> action)
+        private void LogEffectRemoved(params TagScriptableObject[] tagScriptableObjects)
         {
-            foreach (var tag in tags)
+            foreach (var tagScriptableObject in tagScriptableObjects)
             {
-                if (tag is not TagSO tagSO) continue;
-                action(tagSO);
+                if (!TagAssetProvider.TryGetTagAsset(tagScriptableObject, out var tagAsset)) continue;
+                if (Character.HasTag(tagScriptableObject)) continue;
+                BattleEventBus.RaiseEvent(new EffectRemovedEvent()
+                {
+                    Character = Character,
+                    Reason = tagAsset.RemoveMessage,
+                });
             }
         }
     }

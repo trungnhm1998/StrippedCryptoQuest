@@ -17,5 +17,12 @@ namespace CryptoQuest.Battle.Components
         /// Called after <see cref="HeroSpec"/> provided
         /// </summary>
         public abstract void Init();
+
+        public void Reset() => OnReset();
+
+        /// <summary>
+        /// If this character is valid OnReset will be called when the character is destroyed.
+        /// </summary>
+        protected virtual void OnReset() { }
     }
 }

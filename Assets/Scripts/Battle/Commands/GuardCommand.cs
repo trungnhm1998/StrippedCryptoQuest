@@ -12,10 +12,9 @@ namespace CryptoQuest.Battle.Commands
             _hero = hero;
         }
 
-        public IEnumerator Execute()
+        public void Execute()
         {
             _hero.GetComponent<GuardBehaviour>().GuardUntilEndOfTurn();
-            yield break;
         }
     }
 }

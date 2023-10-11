@@ -12,10 +12,9 @@ namespace CryptoQuest.Battle.Commands
             _character = character;
         }
 
-        public IEnumerator Execute()
+        public void Execute()
         {
             Debug.Log($"{_character.DisplayName} Skip turn");
-            yield break;
         }
     }
 }

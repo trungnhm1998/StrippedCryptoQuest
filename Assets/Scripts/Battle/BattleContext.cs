@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using CryptoQuest.AbilitySystem;
+using CryptoQuest.AbilitySystem.Attributes;
 using CryptoQuest.Battle.Components;
-using CryptoQuest.Character.Attributes;
-using CryptoQuest.Character.Tag;
 using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects;
 using CryptoQuest.Gameplay.Encounter;
 using CryptoQuest.Gameplay.PlayerParty;

@@ -1,8 +1,8 @@
 ﻿using System.Collections;
+using CryptoQuest.AbilitySystem;
+using CryptoQuest.AbilitySystem.Attributes;
 using CryptoQuest.Battle.Components;
 using CryptoQuest.Battle.Events;
-using CryptoQuest.Character.Attributes;
-using CryptoQuest.Character.Tag;
 using UnityEngine;
 
 namespace CryptoQuest.Battle.Commands
@@ -23,12 +23,12 @@ namespace CryptoQuest.Battle.Commands
             _targetComponent.Target = targetCharacter;
         }
 
-        public IEnumerator Execute()
+        public void Execute()
         {
             if (_attacker == null || _targetComponent.Target == null)
             {
                 Debug.LogWarning("Failed to execute NormalAttackCommand. Attacker or target is null.");
-                yield break;
+                return;
             }
 
             BattleEventBus.RaiseEvent(new NormalAttackEvent()
@@ -43,13 +43,12 @@ namespace CryptoQuest.Battle.Commands
                 {
                     Character = _targetCharacter
                 });
-                yield break;
             }
 
             _targetComponent.Target.AttributeSystem.TryGetAttributeValue(AttributeSets.Health, out var hpBefore);
             Debug.Log(
                 $"NormalAttackCommand::Executed::Before {hpBefore.CurrentValue} has dead tag {_targetComponent.Target.HasTag(TagsDef.Dead)}");
-            yield return _attacker.Attack();
+            _attacker.Attack();
             _targetComponent.Target.AttributeSystem.TryGetAttributeValue(AttributeSets.Health, out var hpAfter);
             Debug.Log(
                 $"NormalAttackCommand::Executed::After {hpAfter.CurrentValue} has dead tag {_targetComponent.Target.HasTag(TagsDef.Dead)}");

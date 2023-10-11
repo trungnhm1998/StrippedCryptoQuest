@@ -13,20 +13,22 @@ MonoBehaviour:
   m_Name: GE_EquipmentBase
   m_EditorClassIdentifier: 
   <Description>k__BackingField: equipment effect
-  <EffectAction>k__BackingField:
-    rid: 5542355996444983301
+  _policy:
+    rid: 7132078137632358629
   <EffectDetails>k__BackingField:
     Modifiers: []
     StackingType: 0
+  <IsStack>k__BackingField: 0
   <GrantedTags>k__BackingField: []
   <ApplicationTagRequirements>k__BackingField:
     RequireTags: []
     IgnoreTags: []
+  <RemoveGameplayEffectsWithTags>k__BackingField: []
   <ExecutionCalculations>k__BackingField: []
   <ChanceToApply>k__BackingField: 1
   <CustomApplicationRequirements>k__BackingField: []
   references:
     version: 2
     RefIds:
-    - rid: 5542355996444983301
-      type: {class: InstantAction, ns: IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects.GameplayEffectActions, asm: IndiGames.GameplayAbilitySystem}
+    - rid: 7132078137632358629
+      type: {class: InfinitePolicy, ns: IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects.GameplayEffectActions, asm: IndiGames.GameplayAbilitySystem}

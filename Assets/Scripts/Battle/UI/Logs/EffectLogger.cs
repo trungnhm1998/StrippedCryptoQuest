@@ -1,5 +1,6 @@
 using CryptoQuest.Battle.Events;
 using TinyMessenger;
+using UnityEngine.Localization.SmartFormat.PersistentVariables;
 
 namespace CryptoQuest.Battle.UI.Logs
 {
@@ -29,7 +30,10 @@ namespace CryptoQuest.Battle.UI.Logs
         private void LogAbnormalStatus(EffectEvent skillEvent)
         {
             var castMessage = skillEvent.Reason;
-            castMessage.Add(Constants.CHARACTER_NAME, skillEvent.Character.LocalizedName);
+            castMessage.Add(Constants.CHARACTER_NAME, new StringVariable()
+            {
+                Value = skillEvent.Character.DisplayName
+            });
             Logger.AppendLog(castMessage);
         }
     }

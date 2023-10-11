@@ -1,4 +1,4 @@
-using CryptoQuest.Character.Ability;
+using CryptoQuest.AbilitySystem.Abilities;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item;
 using CryptoQuest.Item;
@@ -145,7 +145,7 @@ namespace CryptoQuestEditor
             _addEffectBtn.text = "Remove Effect";
             var effect = CreateInstance<GameplayEffectDefinition>();
             effect.name = $"{Target.name}Effect";
-            effect.EffectAction = new InstantAction();
+            effect.Policy = new InstantPolicy();
             AssetDatabase.AddObjectToAsset(effect, Target);
             AssetDatabase.SaveAssets();
             AssetDatabase.Refresh();

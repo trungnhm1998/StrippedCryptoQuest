@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
+using CryptoQuest.AbilitySystem.Attributes;
 using CharacterComponent = CryptoQuest.Battle.Components.Character;
-using CryptoQuest.Character.Attributes;
 using UnityEngine;
 using CryptoQuest.Battle.Components;
 

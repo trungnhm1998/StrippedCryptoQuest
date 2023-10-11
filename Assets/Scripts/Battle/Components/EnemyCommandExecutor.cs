@@ -1,4 +1,3 @@
-using System.Collections;
 using CryptoQuest.Battle.Commands;
 using CryptoQuest.Battle.Events;
 using UnityEngine;
@@ -9,25 +8,24 @@ namespace CryptoQuest.Battle.Components
     {
         [SerializeField] private EnemyBehaviour _enemyBehaviour;
 
-        private HighlightEnemyEvent _highlightEvent = new HighlightEnemyEvent();
-        private ResetHighlightEnemyEvent _resetHighlightEvent = new ResetHighlightEnemyEvent();
+        private readonly HighlightEnemyEvent _highlightEvent = new();
+        private readonly ResetHighlightEnemyEvent _resetHighlightEvent = new();
 
         private void Start()
         {
             _highlightEvent.Enemy = _enemyBehaviour;
         }
 
-        protected override IEnumerator OnPreExecuteCommand()
+        protected override void OnPreExecuteCommand()
         {
             Command = new NormalAttackCommand(Character, Character.Targeting.Target);
-            BattleEventBus.RaiseEvent<HighlightEnemyEvent>(_highlightEvent);
-            yield return base.OnPreExecuteCommand();
+            BattleEventBus.RaiseEvent(_highlightEvent);
         }
 
-        protected override IEnumerator OnPostExecuteCommand()
+        protected override void OnPostExecuteCommand()
         {
-            BattleEventBus.RaiseEvent<ResetHighlightEnemyEvent>(_resetHighlightEvent);
-            yield return base.OnPostExecuteCommand();
+            base.OnPostExecuteCommand();
+            BattleEventBus.RaiseEvent(_resetHighlightEvent);
         }
     }
 }

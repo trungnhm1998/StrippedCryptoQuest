@@ -15,7 +15,7 @@ namespace IndiGames.GameplayAbilitySystemTests
             var (_, _, effectSystem, _) = CreateAbilitySystem();
             var def = ScriptableObject.CreateInstance<GameplayEffectDefinition>();
             var duration = 1f;
-            def.EffectAction = new DurationalAction(duration);
+            def.Policy = new DurationalPolicy(duration);
             var spec = effectSystem.GetEffect(def);
             var activeSpec = effectSystem.ApplyEffectToSelf(spec);
             Assert.IsTrue(activeSpec.IsValid());

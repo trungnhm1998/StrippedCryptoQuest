@@ -1,5 +1,5 @@
 using System;
-using CryptoQuest.Character.Ability;
+using CryptoQuest.AbilitySystem.Abilities;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Localization.Components;

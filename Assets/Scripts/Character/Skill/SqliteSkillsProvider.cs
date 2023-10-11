@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using CryptoQuest.AbilitySystem.Abilities;
 using CryptoQuest.Battle.Components;
-using CryptoQuest.Character.Ability;
 using CryptoQuest.Core;
 using UnityEngine;
 #if UNITY_EDITOR || !UNITY_WEBGL || !PLATFORM_WEBGL

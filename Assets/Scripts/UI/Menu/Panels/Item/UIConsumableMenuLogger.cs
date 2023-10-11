@@ -1,6 +1,7 @@
 using System.Collections;
+using CryptoQuest.AbilitySystem.Attributes;
+using CryptoQuest.AbilitySystem.Attributes.Events;
 using CryptoQuest.Battle.Components;
-using CryptoQuest.Character.Attributes;
 using DG.Tweening;
 using IndiGames.GameplayAbilitySystem.AttributeSystem;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.Components;

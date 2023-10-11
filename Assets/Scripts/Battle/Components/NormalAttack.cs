@@ -1,5 +1,5 @@
 ﻿using System.Collections;
-using CryptoQuest.Character.Ability;
+using CryptoQuest.AbilitySystem.Abilities;
 using UnityEngine;
 using NotImplementedException = System.NotImplementedException;
 
@@ -15,10 +15,10 @@ namespace CryptoQuest.Battle.Components
             _spec = Character.AbilitySystem.GiveAbility<NormalAttackAbilitySpec>(_normalAttackAbility);
         }
 
-        public IEnumerator Attack()
+        public void Attack()
         {
             var target = GetComponent<ITargeting>().Target;
-            yield return OnPreAttack(target);
+            OnPreAttack(target);
             Debug.Log($"{Character.DisplayName} attacking {target.DisplayName}");
             _spec.Execute(target.GetComponent<IDamageable>());
         }
@@ -28,9 +28,8 @@ namespace CryptoQuest.Battle.Components
         /// </summary>
         /// <param name="target"></param>
         /// <returns></returns>
-        protected virtual IEnumerator OnPreAttack(Character target)
+        protected virtual void OnPreAttack(Character target)
         {
-            yield break;
         }
     }
 }

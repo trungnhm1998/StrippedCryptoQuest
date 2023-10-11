@@ -1,5 +1,5 @@
 ﻿using System.Linq;
-using CryptoQuest.Character.Tag;
+using CryptoQuest.AbilitySystem;
 using DG.Tweening;
 using IndiGames.GameplayAbilitySystem.TagSystem.ScriptableObjects;
 using UnityEngine;

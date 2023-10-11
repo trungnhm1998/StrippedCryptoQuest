@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using CryptoQuest.Character.Attributes;
+using CryptoQuest.AbilitySystem.Attributes;
 using CryptoQuest.Character.Enemy;
 using CryptoQuest.Gameplay.Battle.ScriptableObjects;
 using CryptoQuest.Gameplay.Encounter;
@@ -16,7 +16,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.Localization;
-using AttributeScriptableObject = CryptoQuest.Character.Attributes.AttributeScriptableObject;
+using AttributeScriptableObject = CryptoQuest.AbilitySystem.Attributes.AttributeScriptableObject;
 
 namespace CryptoQuestEditor.Gameplay.Gameplay.Monster
 {

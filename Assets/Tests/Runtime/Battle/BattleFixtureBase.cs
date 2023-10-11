@@ -1,4 +1,4 @@
-﻿using CryptoQuest.Character.Attributes;
+﻿using CryptoQuest.AbilitySystem.Attributes;
 using NUnit.Framework;
 using UnityEditor;
 using UnityEngine;

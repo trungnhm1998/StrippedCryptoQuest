@@ -1,8 +1,8 @@
-﻿using CryptoQuest.Battle.Commands;
+﻿using CryptoQuest.AbilitySystem.Abilities;
+using CryptoQuest.Battle.Commands;
 using CryptoQuest.Battle.Components;
 using CryptoQuest.Battle.UI;
 using CryptoQuest.Battle.UI.SelectSkill;
-using CryptoQuest.Character.Ability;
 
 namespace CryptoQuest.Battle.States.SelectHeroesActions
 {

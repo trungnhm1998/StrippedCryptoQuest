@@ -1,6 +1,6 @@
 ﻿using System.Collections;
+using CryptoQuest.AbilitySystem.Abilities;
 using CryptoQuest.Battle.Events;
-using CryptoQuest.Character.Ability;
 using UnityEngine;
 
 namespace CryptoQuest.Battle.Commands
@@ -17,7 +17,7 @@ namespace CryptoQuest.Battle.Commands
             _owner = owner;
         }
 
-        public IEnumerator Execute()
+        public void Execute()
         {
             BattleEventBus.RaiseEvent(new CastSkillEvent()
             {
@@ -27,7 +27,6 @@ namespace CryptoQuest.Battle.Commands
             Debug.Log($"{_owner.DisplayName} casting {_selectedSkill.name} on {_owner.Targeting.Target.DisplayName}");
             var spec = _owner.AbilitySystem.GiveAbility<CastSkillAbilitySpec>(_selectedSkill);
             spec.Execute(_owner.Targeting.Target.AbilitySystem);
-            yield break;
         }
     }
 }

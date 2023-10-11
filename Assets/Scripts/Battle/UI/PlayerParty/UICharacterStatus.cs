@@ -1,5 +1,6 @@
 using System.Collections.Generic;
-using CryptoQuest.Character.Tag;
+using CryptoQuest.AbilitySystem;
+using CryptoQuest.System;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
 using IndiGames.GameplayAbilitySystem.TagSystem.ScriptableObjects;
 using UnityEngine;
@@ -10,12 +11,17 @@ namespace CryptoQuest.Battle.UI.PlayerParty
     [RequireComponent(typeof(UICharacterBattleInfo))]
     public class UICharacterStatus : MonoBehaviour
     {
+        private ITagAssetProvider _tagAssetProvider;
+
+        private ITagAssetProvider TagAssetProvider =>
+            _tagAssetProvider ??= ServiceProvider.GetService<ITagAssetProvider>();
+
         [SerializeField] private UICharacterBattleInfo _characterUI;
         [SerializeField] private Transform _statusContainer;
         [SerializeField] private UIStatusIcon _statusIconPrefab;
 
         private IObjectPool<UIStatusIcon> _statusIconPool;
-        private Dictionary<TagSO, UIStatusIcon> _tagIconDict = new();
+        private Dictionary<TagScriptableObject, UIStatusIcon> _tagIconDict = new();
         private TagSystemBehaviour CharacterTagSystem => _characterUI.Hero.AbilitySystem.TagSystem;
 
         private void OnValidate()
@@ -45,12 +51,11 @@ namespace CryptoQuest.Battle.UI.PlayerParty
         {
             foreach (var baseTag in baseTags)
             {
-                // TODO?: Is having a tag-icon mapping better than devired then reflection like this? 
-                if (baseTag is not TagSO tagSO) continue;
-                if (_tagIconDict.TryGetValue(tagSO, out _)) continue;
+                if (!TagAssetProvider.TryGetTagAsset(baseTag, out var tagAsset)) continue;
+                if (_tagIconDict.TryGetValue(baseTag, out _)) continue;
                 var statusIcon = _statusIconPool.Get();
-                statusIcon.SetIcon(tagSO.Icon);
-                _tagIconDict.Add(tagSO, statusIcon);
+                statusIcon.SetIcon(tagAsset.Icon);
+                _tagIconDict.Add(baseTag, statusIcon);
             }
         }
 
@@ -58,9 +63,9 @@ namespace CryptoQuest.Battle.UI.PlayerParty
         {
             foreach (var baseTag in baseTags)
             {
-                if (baseTag is not TagSO tagSO) continue;
-                if (!_tagIconDict.TryGetValue(tagSO, out var statusIcon)) continue;
-                _tagIconDict.Remove(tagSO);
+                if (!TagAssetProvider.TryGetTagAsset(baseTag, out var tagAsset)) continue;
+                if (!_tagIconDict.TryGetValue(baseTag, out var statusIcon)) continue;
+                _tagIconDict.Remove(baseTag);
                 statusIcon.ReleaseToPool();
             }
         }
@@ -71,6 +76,7 @@ namespace CryptoQuest.Battle.UI.PlayerParty
             {
                 icon.ReleaseToPool();
             }
+
             _tagIconDict.Clear();
         }
 

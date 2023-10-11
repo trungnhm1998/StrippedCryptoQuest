@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using CryptoQuest.Character.Attributes;
-using CryptoQuest.Character.Tag;
+using CryptoQuest.AbilitySystem;
+using CryptoQuest.AbilitySystem.Attributes;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.Components;
 using IndiGames.GameplayAbilitySystem.EffectSystem;
@@ -15,6 +15,9 @@ namespace CryptoQuest.Battle.Components
     [RequireComponent(typeof(AbilitySystemBehaviour))]
     public abstract class Character : MonoBehaviour
     {
+        public event Action TurnStarted;
+        public event Action TurnEnded;
+
         #region GAS
 
         private AbilitySystemBehaviour _gas;
@@ -48,7 +51,15 @@ namespace CryptoQuest.Battle.Components
                 comp.Init();
         }
 
-        public ActiveEffectSpecification ApplyEffect(GameplayEffectSpec effectSpec)
+        private void OnDestroy()
+        {
+            if (IsValid() == false) return;
+            var components = GetComponents<CharacterComponentBase>();
+            foreach (var comp in components)
+                comp.Reset();
+        }
+
+        public ActiveGameplayEffect ApplyEffect(GameplayEffectSpec effectSpec)
         {
             return AbilitySystem.ApplyEffectSpecToSelf(effectSpec);
         }
@@ -86,5 +97,13 @@ namespace CryptoQuest.Battle.Components
             component = (T)value;
             return true;
         }
+
+        public void OnTurnStarted()
+        {
+            _gas.EffectSystem.UpdateAttributeModifiersUsingAppliedEffects(); // this also remove expired effects
+            TurnStarted?.Invoke();
+        }
+
+        public void OnTurnEnded() => TurnEnded?.Invoke();
     }
 }

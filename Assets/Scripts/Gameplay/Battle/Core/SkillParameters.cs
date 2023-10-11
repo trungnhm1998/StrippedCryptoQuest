@@ -1,6 +1,6 @@
 using System;
-using CryptoQuest.Character.Attributes;
-using CryptoQuest.Character.Tag;
+using CryptoQuest.AbilitySystem;
+using CryptoQuest.AbilitySystem.Attributes;
 using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data;
 using IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects.EffectExecutionCalculation;
 using UnityEngine;
@@ -11,7 +11,6 @@ namespace CryptoQuest.Gameplay.Battle.Core
     [Serializable]
     public class SkillParameters
     {
-        [field: SerializeField] public TagSO[] GrantedTags { get; private set; }
         public Elemental Element;
         public float BasePower;
         public float PowerUpperLimit;
@@ -36,7 +35,6 @@ namespace CryptoQuest.Gameplay.Battle.Core
         public SkillType SkillType;
         public SkillCategory Category;
         public float Cost;
-        public SkillEffectType EffectType;
 
         public EAbilityUsageScenario UsageScenarioSO;
 

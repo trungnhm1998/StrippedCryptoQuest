@@ -92,7 +92,7 @@ namespace IndiGames.GameplayAbilitySystem.AbilitySystem
         /// <returns></returns>
         public virtual bool CanActiveAbility()
         {
-            return _owner != null && _owner.isActiveAndEnabled && CheckTags();
+            return _owner != null && _owner.isActiveAndEnabled && DoesAbilitySatisfyTagRequirements();
         }
 
         /// <summary>
@@ -100,7 +100,7 @@ namespace IndiGames.GameplayAbilitySystem.AbilitySystem
         /// and none of the Ignore tags
         /// Source and Target are not implemented yet
         /// </summary>
-        protected virtual bool CheckTags()
+        protected virtual bool DoesAbilitySatisfyTagRequirements()
         {
             return AbilitySystemHelper.SystemHasAllTags(_owner, AbilitySO.Tags.OwnerTags.RequireTags)
                    // && AbilitySystemHelper.SystemHasAllTags(Source, AbilitySO.Tags.SourceTags.RequireTags)
@@ -126,28 +126,21 @@ namespace IndiGames.GameplayAbilitySystem.AbilitySystem
         /// <returns></returns>
         protected abstract IEnumerator OnAbilityActive();
 
-        protected ActiveEffectSpecification ApplyGameplayEffectToOwner(GameplayEffectDefinition effectDef)
+        protected ActiveGameplayEffect ApplyGameplayEffectToOwner(GameplayEffectDefinition effectDef)
         {
-            if (effectDef)
-            {
-                var effectSpec = Owner.MakeOutgoingSpec(effectDef);
-                if (effectSpec != null)
-                {
-                    return ApplyGameplayEffectSpecToOwner(effectSpec);
-                }
-            }
-
-            return new ActiveEffectSpecification();
+            if (effectDef == null) return new ActiveGameplayEffect();
+            var effectSpec = Owner.MakeOutgoingSpec(effectDef);
+            return effectSpec != null ? ApplyGameplayEffectSpecToOwner(effectSpec) : new ActiveGameplayEffect();
         }
 
-        private ActiveEffectSpecification ApplyGameplayEffectSpecToOwner(GameplayEffectSpec effectSpec)
+        private ActiveGameplayEffect ApplyGameplayEffectSpecToOwner(GameplayEffectSpec effectSpec)
         {
             if (effectSpec != null)
             {
                 return Owner.ApplyEffectSpecToSelf(effectSpec);
             }
 
-            return new ActiveEffectSpecification();
+            return new ActiveGameplayEffect();
         }
     }
 }

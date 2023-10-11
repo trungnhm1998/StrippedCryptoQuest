@@ -24,11 +24,11 @@ namespace CryptoQuest.Item.Equipment
 
         /// <summary>
         /// The effect that being active when this equipment is equipped
-        /// this contains all <see cref="ActiveEffectSpecification.ComputedModifiers"/> that this equipment give to the character
+        /// this contains all <see cref="ActiveGameplayEffect.ComputedModifiers"/> that this equipment give to the character
         /// </summary>
-        private ActiveEffectSpecification _activeEffect = new();
+        private ActiveGameplayEffect _activeGameplayEffect = new();
 
-        public ActiveEffectSpecification ActiveEffect => _activeEffect;
+        public ActiveGameplayEffect activeGameplayEffect => _activeGameplayEffect;
         public bool IsNftItem => Def.IsNft;
         public RaritySO Rarity => Def.Rarity;
         public float ValuePerLvl => Def.ValuePerLvl;
@@ -60,9 +60,9 @@ namespace CryptoQuest.Item.Equipment
         }
 
 
-        public void SetActiveEffectSpec(ActiveEffectSpecification applyEquipmentEffect)
+        public void SetActiveEffectSpec(ActiveGameplayEffect applyEquipmentGameplayEffect)
         {
-            _activeEffect = applyEquipmentEffect;
+            _activeGameplayEffect = applyEquipmentGameplayEffect;
         }
 
         /// <summary>

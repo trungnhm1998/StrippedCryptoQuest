@@ -1,6 +1,6 @@
 using System.Collections.Generic;
+using CryptoQuest.AbilitySystem.Abilities;
 using CryptoQuest.Battle.Components;
-using CryptoQuest.Character.Ability;
 using CryptoQuest.Gameplay.Encounter;
 using CryptoQuest.Gameplay.Loot;
 using CryptoQuest.Item;
@@ -79,11 +79,6 @@ namespace CryptoQuest.Battle.Events
     }
 
     public class GuardedEvent : LogEvent { }
-
-    public class EffectExpired : LogEvent
-    {
-        public ActiveEffectSpecification Effect { get; set; }
-    }
 
     public class MpNotEnoughEvent : LogEvent { }
 

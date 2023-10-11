@@ -1,6 +1,6 @@
 using System.Collections.Generic;
+using CryptoQuest.AbilitySystem.Abilities;
 using CryptoQuest.Battle.Components;
-using CryptoQuest.Character.Ability;
 using CryptoQuest.Input;
 using CryptoQuest.UI.Common;
 using UnityEngine;

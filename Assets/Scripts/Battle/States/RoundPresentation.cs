@@ -12,6 +12,7 @@ namespace CryptoQuest.Battle.States
 
         public void OnEnter(BattleStateMachine stateMachine)
         {
+            _roundEndedEventToken = BattleEventBus.SubscribeEvent<RoundEndedEvent>(BackToSelectHeroesAction);
             _stateMachine = stateMachine;
             _battleContext = stateMachine.GetComponent<BattleContext>();
             var presentation = stateMachine.GetComponent<RoundPresenter>();
@@ -20,7 +21,6 @@ namespace CryptoQuest.Battle.States
 
             var sortedAliveCharacterBasedOnAgi = _battleContext.GetSortedAliveCharacterBasedOnAgi();
             presentation.ExecuteCharacterCommands(sortedAliveCharacterBasedOnAgi);
-            _roundEndedEventToken = BattleEventBus.SubscribeEvent<RoundEndedEvent>(BackToSelectHeroesAction);
         }
 
         public void OnExit(BattleStateMachine stateMachine)

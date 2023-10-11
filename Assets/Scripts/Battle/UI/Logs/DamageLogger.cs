@@ -50,7 +50,12 @@ namespace CryptoQuest.Battle.UI.Logs
                 });
             }
 
-            localizedMessage.Add(Constants.CHARACTER_NAME, owner.GetComponent<Components.Character>().LocalizedName);
+            var character = owner.GetComponent<Components.Character>();
+            Debug.Log($"{character.LocalizedName.GetLocalizedString()}: {damage}");
+            localizedMessage.Add(Constants.CHARACTER_NAME, new StringVariable()
+            {
+                Value = character.DisplayName
+            });
 
             Logger.AppendLog(localizedMessage);
         }

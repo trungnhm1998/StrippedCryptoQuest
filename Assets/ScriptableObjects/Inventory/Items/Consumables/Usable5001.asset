@@ -1,6 +1,38 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-2295345102931552506
+--- !u!114 &-6469371510399456163
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbb6112b998064f4ebc8a44f4c80c446, type: 3}
+  m_Name: Usable5001Effect
+  m_EditorClassIdentifier: 
+  <Description>k__BackingField: 
+  _policy:
+    rid: 8460399251496370195
+  <EffectDetails>k__BackingField:
+    Modifiers: []
+    StackingType: 1
+  <IsStack>k__BackingField: 0
+  <GrantedTags>k__BackingField: []
+  <ApplicationTagRequirements>k__BackingField:
+    RequireTags: []
+    IgnoreTags: []
+  <RemoveGameplayEffectsWithTags>k__BackingField: []
+  <ExecutionCalculations>k__BackingField: []
+  <ChanceToApply>k__BackingField: 1
+  <CustomApplicationRequirements>k__BackingField: []
+  references:
+    version: 2
+    RefIds:
+    - rid: 8460399251496370195
+      type: {class: InstantPolicy, ns: IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects.GameplayEffectActions, asm: IndiGames.GameplayAbilitySystem}
+--- !u!114 &-4041050348825011073
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -19,54 +51,19 @@ MonoBehaviour:
     ActivationTags: []
     OwnerTags:
       RequireTags: []
-      IgnoreTags:
-      - {fileID: 11400000, guid: 8bd1bb491c9733b459bbe7b9271a48db, type: 2}
-      - {fileID: 11400000, guid: c60a47c5f453a024d8657f7b3cafc7cc, type: 2}
+      IgnoreTags: []
     SourceTags:
       RequireTags: []
       IgnoreTags: []
     TargetTags:
       RequireTags: []
-      IgnoreTags: []
+      IgnoreTags:
+      - {fileID: 11400000, guid: 8bd1bb491c9733b459bbe7b9271a48db, type: 2}
   <CancelEffectWithTags>k__BackingField: []
   <Conditions>k__BackingField: []
   references:
     version: 2
     RefIds: []
---- !u!114 &-180565398745742342
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fbb6112b998064f4ebc8a44f4c80c446, type: 3}
-  m_Name: Usable5001Effect
-  m_EditorClassIdentifier: 
-  <Description>k__BackingField: Restores HP
-  <EffectAction>k__BackingField:
-    rid: 7003385980283256839
-  <EffectDetails>k__BackingField:
-    Modifiers:
-    - Attribute: {fileID: 11400000, guid: 77c53593fd92c904aa7689c5a7449df3, type: 2}
-      ModifierType: 0
-      ModifierMagnitude: {fileID: 0}
-      Value: 50
-    StackingType: 1
-  <GrantedTags>k__BackingField: []
-  <ApplicationTagRequirements>k__BackingField:
-    RequireTags: []
-    IgnoreTags: []
-  <ExecutionCalculations>k__BackingField: []
-  <ChanceToApply>k__BackingField: 1
-  <CustomApplicationRequirements>k__BackingField: []
-  references:
-    version: 2
-    RefIds:
-    - rid: 7003385980283256839
-      type: {class: InstantAction, ns: IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects.GameplayEffectActions, asm: IndiGames.GameplayAbilitySystem}
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -79,6 +76,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 375c3ad7973540259bd96e25eae2a51e, type: 3}
   m_Name: Usable5001
   m_EditorClassIdentifier: 
+  _guid: 332cc0df41750b84999f821d3a1dcceb
   <ID>k__BackingField: 5001
   <DisplayName>k__BackingField:
     m_TableReference:
@@ -106,8 +104,8 @@ MonoBehaviour:
   <ConsumableType>k__BackingField: 0
   <Price>k__BackingField: 1000
   <SellPrice>k__BackingField: 500
-  <Effect>k__BackingField: {fileID: -180565398745742342}
-  <Ability>k__BackingField: {fileID: -2295345102931552506}
+  <Effect>k__BackingField: {fileID: 0}
+  <Ability>k__BackingField: {fileID: -4041050348825011073}
   <UsageScenario>k__BackingField: -1
   <TargetSelectionEvent>k__BackingField: {fileID: 11400000, guid: cf816191ca3034c4d80534b6369b5834, type: 2}
   references:

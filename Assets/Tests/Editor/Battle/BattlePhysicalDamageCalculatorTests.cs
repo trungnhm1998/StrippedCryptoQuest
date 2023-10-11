@@ -1,4 +1,4 @@
-using CryptoQuest.Battle.EffectCalculations;
+using CryptoQuest.AbilitySystem.Executions;
 using NUnit.Framework;
 
 namespace CryptoQuest.Tests.Editor.Battle

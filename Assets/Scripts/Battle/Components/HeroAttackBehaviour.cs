@@ -9,12 +9,12 @@ namespace CryptoQuest.Battle.Components
     {
         [SerializeField] private AssetReference _visualEffect;
 
-        protected override IEnumerator OnPreAttack(Character target)
+        protected override void OnPreAttack(Character target)
         {
-            var handle = _visualEffect.InstantiateAsync(target.transform);
-            yield return handle;
-            var vfx = handle.Result.GetComponent<BattleVFXBehaviour>();
-            yield return new WaitUntil(() => vfx == null);
+            // var handle = _visualEffect.InstantiateAsync(target.transform);
+            // yield return handle;
+            // var vfx = handle.Result.GetComponent<BattleVFXBehaviour>();
+            // yield return new WaitUntil(() => vfx == null);
         }
     }
 }

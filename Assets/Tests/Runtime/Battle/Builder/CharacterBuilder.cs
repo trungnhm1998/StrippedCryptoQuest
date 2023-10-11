@@ -1,5 +1,5 @@
+using CryptoQuest.AbilitySystem.Attributes;
 using CryptoQuest.Battle.Components;
-using CryptoQuest.Character.Attributes;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.Components;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;

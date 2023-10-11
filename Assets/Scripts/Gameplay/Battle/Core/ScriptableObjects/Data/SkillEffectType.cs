@@ -1,6 +1,3 @@
-using CryptoQuest.Gameplay.BaseGameplayData;
-using UnityEngine;
-
 namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data
 {
     public enum EEffectType
@@ -16,7 +13,4 @@ namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data
         Restore = 9,
         Special = 99,
     }
-
-    [CreateAssetMenu(fileName = "SkillEffectType", menuName = "Gameplay/Battle/Data/SkillEffectType")]
-    public class SkillEffectType : GenericData { }
 }

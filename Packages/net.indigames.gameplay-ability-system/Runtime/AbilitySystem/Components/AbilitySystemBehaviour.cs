@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.ScriptableObjects;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.Components;
 using IndiGames.GameplayAbilitySystem.EffectSystem;
@@ -21,10 +22,20 @@ namespace IndiGames.GameplayAbilitySystem.AbilitySystem.Components
 
         public event AbilityGranted AbilityGrantedEvent;
         [SerializeField] private AttributeSystemBehaviour _attributeSystem;
-        public AttributeSystemBehaviour AttributeSystem => _attributeSystem;
+
+        public AttributeSystemBehaviour AttributeSystem
+        {
+            get => _attributeSystem;
+            set => _attributeSystem = value;
+        }
 
         [SerializeField] private EffectSystemBehaviour _effectSystem;
-        public EffectSystemBehaviour EffectSystem => _effectSystem;
+
+        public EffectSystemBehaviour EffectSystem
+        {
+            get => _effectSystem;
+            set => _effectSystem = value;
+        }
 
         [SerializeField] private AbilityEffectBehaviour _abilityEffectSystem;
         public AbilityEffectBehaviour AbilityEffectSystem => _abilityEffectSystem;
@@ -150,28 +161,36 @@ namespace IndiGames.GameplayAbilitySystem.AbilitySystem.Components
         /// Create an effect spec from the effect definition, with this system as the source
         /// </summary>
         /// <param name="effectDef">The <see cref="EffectDefinition{T}"/> that are used to create the spec</param>
+        /// <param name="context"></param>
         /// <returns>New effect spec based on the def</returns>
-        public GameplayEffectSpec MakeOutgoingSpec(GameplayEffectDefinition effectDef)
+        public GameplayEffectSpec MakeOutgoingSpec(GameplayEffectDefinition effectDef,
+            GameplayEffectContextHandle context = null)
         {
             if (effectDef == null)
                 return new GameplayEffectSpec();
 
-            return effectDef.CreateEffectSpec(this);
+            if (context == null || context.IsValid())
+                context = MakeEffectContext();
+
+            return effectDef.CreateEffectSpec(this, context);
         }
 
-        public ActiveEffectSpecification ApplyEffectSpecToSelf(GameplayEffectSpec effectSpec)
+        public GameplayEffectContextHandle MakeEffectContext()
         {
-            return _effectSystem.ApplyEffectToSelf(effectSpec);
+            var context = new GameplayEffectContextHandle(new GameplayEffectContext());
+            context.Get().AddInstigator(gameObject);
+            return context;
         }
 
-        public bool CanApplyAttributeModifiers(GameplayEffectDefinition effectDef)
-        {
-            return _effectSystem.CanApplyAttributeModifiers(effectDef);
-        }
+        public ActiveGameplayEffect ApplyEffectSpecToSelf(GameplayEffectSpec effectSpec) =>
+            _effectSystem.ApplyEffectToSelf(effectSpec);
 
-        public bool HasTag(TagScriptableObject guardTag)
-        {
-            return _tagSystem.HasTag(guardTag);
-        }
+        public bool CanApplyAttributeModifiers(GameplayEffectDefinition effectDef) =>
+            _effectSystem.CanApplyAttributeModifiers(effectDef);
+
+        public bool HasTag(TagScriptableObject gameplayTag) => _tagSystem.HasTag(gameplayTag);
+
+        public GameplayAbilitySpec FindAbilitySpecFromDef(AbilityScriptableObject abilityDef)
+            => _grantedAbilities.FirstOrDefault(spec => spec.AbilitySO == abilityDef);
     }
 }

@@ -14,7 +14,7 @@ namespace IndiGames.GameplayAbilitySystemTests
         {
             var (_, _, effectSystem, _) = CreateAbilitySystem();
             var def = ScriptableObject.CreateInstance<GameplayEffectDefinition>();
-            def.EffectAction = new InfiniteAction();
+            def.Policy = new InfinitePolicy();
             var spec = effectSystem.GetEffect(def);
             var activeSpec = effectSystem.ApplyEffectToSelf(spec);
             Assert.IsTrue(activeSpec.IsValid());

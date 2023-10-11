@@ -1,9 +1,9 @@
-using System;
 using System.Collections.Generic;
+using System.Linq;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.Components;
-using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
 using IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects;
+using IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects.GameplayEffectActions;
 using IndiGames.GameplayAbilitySystem.TagSystem.ScriptableObjects;
 using UnityEngine;
 
@@ -16,18 +16,15 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem.Components
     [RequireComponent(typeof(AttributeSystemBehaviour))]
     public class EffectSystemBehaviour : MonoBehaviour
     {
-        public event Action<ActiveEffectSpecification> EffectAdded;
-        public event Action<ActiveEffectSpecification> EffectRemoved;
-
         [SerializeField] private bool _useUpdate;
 
         /// <summary>
         /// Currently there are no restrictions on add a new effect to the system except
         /// when using <see cref="ApplyEffectToSelf"/> which will check <see cref="GameplayEffectSpec.CanApply"/>
         /// </summary>
-        [SerializeReference] private List<ActiveEffectSpecification> _appliedEffects = new();
+        [SerializeReference] private List<ActiveGameplayEffect> _appliedEffects = new();
 
-        public IReadOnlyList<ActiveEffectSpecification> AppliedEffects => _appliedEffects;
+        public IReadOnlyList<ActiveGameplayEffect> AppliedEffects => _appliedEffects;
         private AbilitySystemBehaviour _owner;
 
         public AbilitySystemBehaviour Owner
@@ -38,7 +35,13 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem.Components
 
         private AttributeSystemBehaviour _attributeSystem;
 
-        private void Awake()
+        public AttributeSystemBehaviour AttributeSystem
+        {
+            get => _attributeSystem;
+            set => _attributeSystem = value;
+        }
+
+        protected virtual void Awake()
         {
             _owner = GetComponent<AbilitySystemBehaviour>();
             _attributeSystem = GetComponent<AttributeSystemBehaviour>();
@@ -51,7 +54,7 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem.Components
         /// <param name="def"></param>
         /// <returns></returns>
         public GameplayEffectSpec GetEffect(GameplayEffectDefinition def)
-            => def.CreateEffectSpec(Owner);
+            => def.CreateEffectSpec(Owner, Owner.MakeEffectContext());
 
         // TODO: Move to AbilityEffectBehaviour
         /// <summary>
@@ -61,45 +64,47 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem.Components
         /// </summary>
         /// <param name="inSpec"></param>
         /// <returns></returns>
-        public ActiveEffectSpecification ApplyEffectToSelf(GameplayEffectSpec inSpec)
+        public ActiveGameplayEffect ApplyEffectToSelf(GameplayEffectSpec inSpec)
         {
-            if (inSpec == null || !inSpec.CanApply()) return new ActiveEffectSpecification();
-
-            if (TryToStackEffectIfPossible(inSpec, out var effect))
-                return effect;
+            if (inSpec == null || !inSpec.CanApply()) return new ActiveGameplayEffect();
 
             inSpec.Target = Owner;
-            var activeEffectSpecification = inSpec.CreateActiveEffectSpec(_owner);
+            var activeEffectSpecification = inSpec.CreateActiveEffectSpec();
+            if (activeEffectSpecification is InstantActiveEffectPolicy)
+            {
+                activeEffectSpecification.ExecuteActiveEffect();
+                return activeEffectSpecification;
+            }
+
             _appliedEffects.Add(activeEffectSpecification);
             Owner.TagSystem.AddTags(activeEffectSpecification.GrantedTags);
             UpdateAttributeSystemModifiers();
-            UpdateEffects();
-            // TODO: The check currently only to skip instant effect, could've done better
-            if (activeEffectSpecification.IsActive) EffectAdded?.Invoke(activeEffectSpecification);
+
+            AttemptRemoveActiveEffectsOnEffectApplication(activeEffectSpecification);
+
+            var instigator = inSpec.Context.Get().InstigatorAbilitySystemComponent;
+            OnGameplayEffectAppliedToSelf(instigator, inSpec);
+            if (instigator != null) instigator.EffectSystem.OnGameplayEffectAppliedToTarget(this, inSpec);
+
             return activeEffectSpecification;
         }
 
-        private bool TryToStackEffectIfPossible(GameplayEffectSpec inSpec, out ActiveEffectSpecification effect)
+        private void OnGameplayEffectAppliedToTarget(EffectSystemBehaviour effectSystemBehaviour,
+            GameplayEffectSpec inSpec) { }
+
+        private void OnGameplayEffectAppliedToSelf(AbilitySystemBehaviour instigator, GameplayEffectSpec inSpec) { }
+
+        /// <summary>
+        /// When an effect being applied to the system, we need to check if there's any effect that can be removed
+        /// </summary>
+        /// <param name="activeEffectSpecification">applying effect</param>
+        /// TODO: Implement
+        private void AttemptRemoveActiveEffectsOnEffectApplication(ActiveGameplayEffect activeEffectSpecification) { }
+
+        private ActiveGameplayEffect FindStackableActiveGameplayEffect(GameplayEffectSpec inSpec)
         {
-            if (inSpec.Def.IsStack == false)
-            {
-                effect = new ActiveEffectSpecification();
-                return false;
-            }
-
-            foreach (var activeEffect in _appliedEffects)
-            {
-                if (!activeEffect.AreEquals(inSpec)) continue;
-                effect = activeEffect;
-                activeEffect.UpdateStackCount(inSpec);
-                UpdateAttributeSystemModifiers();
-                UpdateEffects();
-                if (activeEffect.IsActive) EffectAdded?.Invoke(activeEffect);
-                return true;
-            }
-
-            effect = new ActiveEffectSpecification();
-            return false;
+            if (!inSpec.Def.IsStack || inSpec.Def.Policy is InstantPolicy) return null;
+            return _appliedEffects.FirstOrDefault(appliedEffect => appliedEffect.Spec.Def == inSpec.Def);
         }
 
         public void ExpireEffectWithTagImmediately(TagScriptableObject tag)
@@ -140,7 +145,18 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem.Components
             }
 
             // after remove the effect from system we need to update the attribute modifiers
-            ForceUpdateAttributeSystemModifiers();
+            UpdateAttributeSystemModifiers();
+        }
+
+        public ActiveGameplayEffect GetLargestGameplayEffectMagnitude(GameplayEffectSpec spec)
+        {
+            var largestMagnitudeEffect = new ActiveGameplayEffect();
+            foreach (var effect in _appliedEffects)
+            {
+                if (effect.Spec.Def != spec.Def) continue;
+            }
+
+            return largestMagnitudeEffect;
         }
 
         private void Update()
@@ -148,7 +164,7 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem.Components
             if (_useUpdate) UpdateAttributeModifiersUsingAppliedEffects();
         }
 
-        public void UpdateAttributeModifiersUsingAppliedEffects()
+        public virtual void UpdateAttributeModifiersUsingAppliedEffects()
         {
             UpdateAttributeSystemModifiers();
             UpdateEffects();
@@ -156,59 +172,16 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem.Components
         }
 
         /// <summary>
-        /// Force the system to check all effects and update their status
-        /// </summary>
-        public void ForceUpdateAttributeSystemModifiers()
-        {
-            UpdateAttributeSystemModifiers();
-            _attributeSystem.UpdateAttributeValues();
-        }
-
-        /// <summary>
-        /// 1. Reset all attributes to their base value
+        /// 1. Remove all modifier from attribute value
         /// 2. Add all modifiers from all active effects
         /// </summary>
-        protected virtual void UpdateAttributeSystemModifiers()
+        public void UpdateAttributeSystemModifiers()
         {
             _attributeSystem.ResetAttributeModifiers();
-            for (var index = 0; index < _appliedEffects.Count; index++)
-            {
-                var effect = _appliedEffects[index];
-                if (effect.Expired) continue;
-                AddModifiersToAttributeWithEffect(effect);
-            }
+            foreach (var effect in _appliedEffects.Where(effect => !effect.Expired)) effect.ExecuteActiveEffect();
         }
 
-        private void AddModifiersToAttributeWithEffect(ActiveEffectSpecification activeEffect)
-        {
-            if (activeEffect.Expired) return;
-            if (activeEffect.CanApplyModifiersToAttributeSystem() == false) return;
-
-            for (var index = 0; index < activeEffect.ComputedModifiers.Count; index++)
-            {
-                var computedModifier = activeEffect.ComputedModifiers[index];
-
-                AddAttributeToSystemIfNotExists(computedModifier.Attribute);
-                _attributeSystem.TryAddModifierToAttribute(
-                    computedModifier.Modifier,
-                    computedModifier.Attribute,
-                    activeEffect.ModifierType);
-            }
-        }
-
-        /// <summary>
-        /// The case is we have an effect with modifier want to affect an attribute that is not in the system yet
-        ///
-        /// e.g. Modifier to increase gold drop rate, but the attribute system does not have gold drop rate attribute.
-        /// We can either add the attribute to the system or this method would add it for us. only at runtime
-        /// </summary>
-        private void AddAttributeToSystemIfNotExists(AttributeScriptableObject attribute)
-        {
-            if (!_attributeSystem.HasAttribute(attribute, out _))
-                _attributeSystem.AddAttribute(attribute);
-        }
-
-        protected virtual void UpdateEffects()
+        private void UpdateEffects()
         {
             for (var index = 0; index < _appliedEffects.Count; index++)
             {
@@ -218,7 +191,7 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem.Components
             }
         }
 
-        protected virtual void RemoveExpiredEffects()
+        public void RemoveExpiredEffects()
         {
             for (var i = _appliedEffects.Count - 1; i >= 0; i--)
             {
@@ -228,18 +201,15 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem.Components
             }
         }
 
-        public List<TagScriptableObject> GrantedTags => _owner.TagSystem.GrantedTags;
-
         /// <summary>
         /// Tests if all modifiers in this GameplayEffect will leave the attribute > 0.f
         /// </summary>
         /// <param name="effectDef"></param>
         /// <returns></returns>
-        public bool CanApplyAttributeModifiers<TDef>(TDef effectDef) where TDef : GameplayEffectDefinition
+        public bool CanApplyAttributeModifiers(GameplayEffectDefinition effectDef)
         {
             var spec = new GameplayEffectSpec();
             spec.InitEffect(effectDef, _owner);
-            spec.CalculateModifierMagnitudes();
 
             for (int i = 0; i < spec.Modifiers.Length; i++)
             {
@@ -247,7 +217,7 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem.Components
                 var modSpec = spec.Modifiers[i];
 
                 // Only worry about additive.  Anything else passes.
-                if (modDef.ModifierType != EAttributeModifierType.Add) continue;
+                if (modDef.OperationType != EAttributeModifierOperationType.Add) continue;
                 if (modDef.Attribute == null) continue;
 
                 if (!_attributeSystem.TryGetAttributeValue(modDef.Attribute, out var attributeValue)) continue;
@@ -258,27 +228,32 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem.Components
             return true;
         }
 
-        private void OnDestroy()
-        {
-            RemoveAllEffects();
-        }
-
-        private void RemoveAllEffects()
-        {
-            for (int i = _appliedEffects.Count - 1; i >= 0; i--)
-            {
-                RemoveEffectAtIndex(i);
-            }
-        }
-
         private void RemoveEffectAtIndex(int index)
         {
             var effect = _appliedEffects[index];
             _appliedEffects.RemoveAt(index);
             if (effect?.Spec == null) return;
             Owner.TagSystem.RemoveTags(effect.GrantedTags);
-            effect.Release();
-            EffectRemoved?.Invoke(effect);
         }
+
+        [SerializeField] private List<PreEffectExecuteEvent> _preEffectExecuteEvents = new();
+
+        /// <summary>
+        /// Called just before modifying the value of an attribute. AttributeSet can make additional modifications here. Return true to continue, or false to throw out the modification.
+        /// Note this is only called during an 'execute'. E.g., a modification to the 'base value' of an attribute. It is not called during an application of a GameplayEffect, such as a 5 ssecond +10 movement speed buff.
+        /// </summary>
+        public bool PreGameplayEffectExecute(GameplayEffectModCallbackData executeData)
+        {
+            var ignore = true;
+            foreach (var preEffectExecuteEvent in _preEffectExecuteEvents)
+            {
+                if (preEffectExecuteEvent == null) continue;
+                ignore |= preEffectExecuteEvent.Execute(executeData);
+            }
+
+            return ignore;
+        }
+
+        public void PostGameplayEffectExecute(GameplayEffectModCallbackData executeData) { }
     }
 }

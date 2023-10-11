@@ -1,9 +1,9 @@
-﻿using CryptoQuest.Battle.Commands;
+﻿using CryptoQuest.AbilitySystem.Attributes;
+using CryptoQuest.Battle.Commands;
 using CryptoQuest.Battle.Components;
 using CryptoQuest.Battle.Events;
 using CryptoQuest.Battle.UI;
 using CryptoQuest.Battle.UI.SelectCommand;
-using CryptoQuest.Character.Attributes;
 using CryptoQuest.Gameplay.Battle.Core.Helper;
 using DG.Tweening;
 using UnityEngine;

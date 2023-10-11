@@ -1,4 +1,4 @@
-﻿using CryptoQuest.Character.Ability;
+﻿using CryptoQuest.AbilitySystem.Abilities;
 using IndiGames.Core.Database;
 
 namespace CryptoQuest.Character

@@ -60,7 +60,7 @@ namespace CryptoQuest.UI.Dialogs.BattleDialog
         /// </summary>
         /// <param name="message"></param>
         /// <returns></returns>
-        private IEnumerator CoAppendMessage(LocalizedString message)
+        public IEnumerator CoAppendMessage(LocalizedString message)
         {
             var messageHandle = message.GetLocalizedStringAsync();
             yield return messageHandle;

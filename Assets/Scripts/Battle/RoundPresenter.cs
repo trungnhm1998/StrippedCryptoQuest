@@ -2,10 +2,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using CryptoQuest.AbilitySystem.Abilities;
 using CryptoQuest.Battle.Components;
 using CryptoQuest.Battle.Events;
 using CryptoQuest.Battle.UI.Logs;
-using CryptoQuest.Character.Ability;
 using TinyMessenger;
 using UnityEngine;
 
@@ -49,26 +49,26 @@ namespace CryptoQuest.Battle
 
         private IEnumerator CoPresentation(IEnumerable<Components.Character> characters)
         {
+            _logPresenter.Show();
             ChangeAllEnemiesOpacity(1f);
 
             foreach (var character in characters)
             {
+                if (character.IsValidAndAlive() == false) continue; // could die because of last turn
                 _logPresenter.Clear();
+                character.OnTurnStarted();
                 character.TryGetComponent(out CommandExecutor commandExecutor);
-                commandExecutor.PreTurn();
-                yield return new WaitUntil(() => _logPresenter.Finished); // TODO: I think this is a bad code
                 character.UpdateTarget(_battleContext);
-                yield return commandExecutor.ExecuteCommand();
-                yield return new WaitUntil(() => _logPresenter.Finished); // TODO: I think this is a bad code
-                yield return commandExecutor.PostTurn();
-                yield return new WaitUntil(() => _logPresenter.Finished); // TODO: I think this is a bad code
+                commandExecutor.ExecuteCommand();
+                character.OnTurnEnded();
                 if (CanContinueRound() == false) break;
             }
 
-            yield return new WaitUntil(() => _logPresenter.Finished);
+            // yield return new WaitUntil(() => _logPresenter.Finished);
             _logPresenter.HideAndClear();
             BattleEventBus.RaiseEvent(_roundEndedEvent); // Need to be raise so guard tag can be remove
             OnRoundEndedCheck();
+            yield break;
         }
 
         private bool CanContinueRound()
@@ -97,7 +97,7 @@ namespace CryptoQuest.Battle
         }
 
         private bool IsWon() => _battleContext.IsAllEnemiesDead;
-        
+
         private bool IsLost() => _battleContext.IsAllHeroesDead;
 
         /// <summary>

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
+using CryptoQuest.AbilitySystem.Abilities;
 using CryptoQuest.Character;
-using CryptoQuest.Character.Ability;
 using CsvHelper;
 using CsvHelper.Configuration.Attributes;
 using IndiGamesEditor.Core.Database;

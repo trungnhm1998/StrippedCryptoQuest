@@ -1,5 +1,5 @@
 ﻿using System;
-using CryptoQuest.Character.Ability;
+using CryptoQuest.AbilitySystem.Abilities;
 using CryptoQuest.Gameplay.PlayerParty;
 using CryptoQuest.Item;
 using CryptoQuest.System;

@@ -1,5 +1,5 @@
 ﻿using System;
-using CryptoQuest.Character.Attributes;
+using CryptoQuest.AbilitySystem.Attributes;
 using CryptoQuest.Gameplay.Loot;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
 using UnityEditor;

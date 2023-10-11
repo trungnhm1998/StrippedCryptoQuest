@@ -20,17 +20,22 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects
 
         /// <summary>
         /// How this effect will be applied to target
-        /// - <see cref="DurationalAction"/>
+        /// - <see cref="DurationalPolicy"/>
         ///     Affect the attribute system for a duration
-        /// - <see cref="InstantAction"/>
+        /// - <see cref="InstantPolicy"/>
         ///     Change the base value of the attribute system
-        /// - <see cref="PeriodicAction"/>
+        /// - <see cref="PeriodicPolicy"/>
         ///     For every period, the effect will be applied to the target base value
-        /// - <see cref="InfiniteAction"/>
+        /// - <see cref="InfinitePolicy"/>
         ///     Affect the attribute system until the effect is removed
         /// </summary>
-        [field: SerializeReference, SubclassSelector]
-        public IGameplayEffectAction EffectAction { get; set; } = new DurationalAction();
+        [SerializeReference, SubclassSelector]
+        private IGameplayEffectPolicy _policy = new InstantPolicy();
+        public IGameplayEffectPolicy Policy
+        {
+            get => _policy;
+            set => _policy = value;
+        }
 
         [field: SerializeField, Tooltip("What attribute to affect and how it affected")]
         public EffectDetails EffectDetails { get; set; } = new();
@@ -78,9 +83,11 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects
         /// </summary>
         /// <param name="ownerSystem">from owner</param>
         /// <returns></returns>
-        public GameplayEffectSpec CreateEffectSpec(AbilitySystemBehaviour ownerSystem)
+        public GameplayEffectSpec CreateEffectSpec(AbilitySystemBehaviour ownerSystem,
+            GameplayEffectContextHandle context)
         {
             var effect = CreateEffect();
+            effect.Context = context;
             effect.InitEffect(this, ownerSystem);
             return effect;
         }

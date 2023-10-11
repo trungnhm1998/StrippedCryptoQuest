@@ -1,7 +1,7 @@
 using System;
-using CryptoQuest.Character.Attributes;
+using CryptoQuest.AbilitySystem;
+using CryptoQuest.AbilitySystem.Attributes;
 using CryptoQuest.Character.LevelSystem;
-using CryptoQuest.Character.Tag;
 using CryptoQuest.Gameplay.Helper;
 using UnityEngine;
 using AttributeScriptableObject = IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects.AttributeScriptableObject;

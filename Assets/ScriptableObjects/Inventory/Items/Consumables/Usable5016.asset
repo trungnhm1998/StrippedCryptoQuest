@@ -1,36 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-3589372604536829408
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ae8a1c5f40eaf534e8b2a294dfc60297, type: 3}
-  m_Name: Usable5016Ability
-  m_EditorClassIdentifier: 
-  tags:
-    AbilityTag: {fileID: 0}
-    CancelAbilityWithTags: []
-    BlockAbilityWithTags: []
-    ActivationTags: []
-    OwnerTags:
-      RequireTags: []
-      IgnoreTags: []
-    SourceTags:
-      RequireTags: []
-      IgnoreTags: []
-    TargetTags:
-      RequireTags: []
-      IgnoreTags: []
-  <CancelEffectWithTags>k__BackingField: []
-  <Conditions>k__BackingField: []
-  references:
-    version: 2
-    RefIds: []
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -43,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 375c3ad7973540259bd96e25eae2a51e, type: 3}
   m_Name: Usable5016
   m_EditorClassIdentifier: 
+  _guid: 667c486bd1d87674cadfb6d9c1ce00e5
   <ID>k__BackingField: 5016
   <DisplayName>k__BackingField:
     m_TableReference:
@@ -70,49 +40,10 @@ MonoBehaviour:
   <ConsumableType>k__BackingField: 0
   <Price>k__BackingField: 1000
   <SellPrice>k__BackingField: 500
-  <Effect>k__BackingField: {fileID: 810714014987607081}
-  <Ability>k__BackingField: {fileID: -3589372604536829408}
+  <Effect>k__BackingField: {fileID: 0}
+  <Ability>k__BackingField: {fileID: 0}
   <UsageScenario>k__BackingField: 1
   <TargetSelectionEvent>k__BackingField: {fileID: 11400000, guid: 2237ed65df15d4b45ad05eb7f701ea64, type: 2}
   references:
     version: 2
     RefIds: []
---- !u!114 &810714014987607081
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fbb6112b998064f4ebc8a44f4c80c446, type: 3}
-  m_Name: Usable5016Effect
-  m_EditorClassIdentifier: 
-  <Description>k__BackingField: 
-  <EffectAction>k__BackingField:
-    rid: 4580806851823665178
-  <EffectDetails>k__BackingField:
-    Modifiers:
-    - Attribute: {fileID: 11400000, guid: 24a1586ced727e44589346aa7eb0c294, type: 2}
-      ModifierType: 0
-      ModifierMagnitude: {fileID: 0}
-      Value: 10
-    StackingType: 1
-  <IsStack>k__BackingField: 0
-  <GrantedTags>k__BackingField: []
-  <ApplicationTagRequirements>k__BackingField:
-    RequireTags: []
-    IgnoreTags: []
-  <RemoveGameplayEffectsWithTags>k__BackingField: []
-  <ExecutionCalculations>k__BackingField: []
-  <ChanceToApply>k__BackingField: 1
-  <CustomApplicationRequirements>k__BackingField: []
-  references:
-    version: 2
-    RefIds:
-    - rid: 4580806851823665178
-      type: {class: StepCounterAction, ns: CryptoQuest.Gameplay.Encounter.GameplayEffectActions, asm: indi-games.crypto-quest}
-      data:
-        _counter: 50
-        _gameplayBus: {fileID: 11400000, guid: a26ff341568973e46a1d4449052d5bb0, type: 2}

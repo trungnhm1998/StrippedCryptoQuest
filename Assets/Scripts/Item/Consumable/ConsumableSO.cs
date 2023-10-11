@@ -1,4 +1,4 @@
-using CryptoQuest.Character.Ability;
+using CryptoQuest.AbilitySystem.Abilities;
 using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Type;
 using IndiGames.Core.Events.ScriptableObjects;

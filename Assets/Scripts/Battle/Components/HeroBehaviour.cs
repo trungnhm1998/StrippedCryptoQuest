@@ -1,5 +1,5 @@
-﻿using CryptoQuest.Character;
-using CryptoQuest.Character.Attributes;
+﻿using CryptoQuest.AbilitySystem.Attributes;
+using CryptoQuest.Character;
 using CryptoQuest.Character.Hero;
 using CryptoQuest.Gameplay;
 using UnityEngine;

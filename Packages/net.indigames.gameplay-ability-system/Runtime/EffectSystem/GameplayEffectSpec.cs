@@ -10,8 +10,9 @@ using Random = UnityEngine.Random;
 namespace IndiGames.GameplayAbilitySystem.EffectSystem
 {
     /// <summary>
+    /// <para>GameplayEffect.h/cpp</para>
     /// A specification represent an effect that created from <see cref="GameplayEffectDefinition"/>
-    /// When the effect is applied to the system, it will create a new <see cref="ActiveEffectSpecification"/> to store the computed modifier
+    /// When the effect is applied to the system, it will create a new <see cref="ActiveGameplayEffect"/> to store the computed modifier
     /// Every effect should create from <see cref="GameplayEffectDefinition.CreateEffectSpec"/>
     /// </summary>
     [Serializable]
@@ -28,13 +29,19 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem
         public AbilitySystemBehaviour Target { get; set; }
 
         public EffectDetails EffectDefDetails { get; set; }
-        [field: SerializeField] public TagScriptableObject[] GrantedTags { get; set; }
+        public TagScriptableObject[] GrantedTags { get; set; }
         public EffectExecutionCalculationBase[] ExecutionCalculations { get; set; }
 
         public bool IsExpired { get; set; }
 
-        public ModifierSpec[] Modifiers = Array.Empty<ModifierSpec>();
-        public int StackCount;
+        /// <summary>
+        /// Calculated modifiers for this effect
+        /// </summary>
+        public ModifierSpec[] Modifiers { get; set; } = Array.Empty<ModifierSpec>();
+
+        public int StackCount { get; set; }
+
+        public GameplayEffectContextHandle Context { get; set; }
 
         /// <summary>
         /// Which Data/SO the effect is based on
@@ -57,7 +64,7 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem
             ExecutionCalculations = Def.ExecutionCalculations;
 
             Modifiers = new ModifierSpec[Def.EffectDetails.Modifiers.Length];
-
+            CalculateModifierMagnitudes();
             OnInitEffect(effectDef, source);
         }
 
@@ -106,7 +113,6 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem
             return true;
         }
 
-
         protected virtual bool CheckTagRequirementsMet()
         {
             var tagConditionDetail = Def.ApplicationTagRequirements;
@@ -114,7 +120,8 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem
                    && AbilitySystemHelper.SystemHasNoneTags(Source, tagConditionDetail.IgnoreTags);
         }
 
-        public void CalculateModifierMagnitudes()
+
+        private void CalculateModifierMagnitudes()
         {
             var effectSODetails = Def.EffectDetails;
             for (var index = 0; index < effectSODetails.Modifiers.Length; index++)
@@ -127,12 +134,12 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem
                 {
                     Debug.LogWarning(
                         $"GameplayEffectSpec::calculateModifierMagnitudes::Effect {Def.name} has a modifier with no ModifierMagnitude at idx[{index}].");
-                    modifierSpec.EvaluatedMagnitude = modifierDef.Value; // TODO: THIS IS A CHEAT
+                    modifierSpec.EvaluatedMagnitude = modifierDef.Value;
                     Modifiers[index] = modifierSpec;
                     continue;
                 }
 
-                if (modifierMagnitude.AttemptCalculateMagnitude(this, out modifierSpec.EvaluatedMagnitude) == false)
+                if (modifierMagnitude.AttemptCalculateMagnitude(this, ref modifierSpec.EvaluatedMagnitude) == false)
                 {
                     modifierSpec.EvaluatedMagnitude = 0;
                     Debug.Log($"Modifier on spec {Def.name} failed to calculate magnitude. Falling back to 0.");
@@ -146,8 +153,20 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem
         public bool IsValid() => Def != null;
         public int CompareTo(GameplayEffectSpec other) => Def != other.Def ? 0 : 1;
 
-        public ActiveEffectSpecification CreateActiveEffectSpec(AbilitySystemBehaviour owner)
-            => Def.EffectAction.CreateActiveEffect(this, owner);
+        public ActiveGameplayEffect CreateActiveEffectSpec()
+            => Def.Policy.CreateActiveEffect(this);
+
+        public float GetModifierMagnitude(int modifierIdx)
+        {
+            // TODO: Implement stacking
+            // if (bFactorInStackCount)
+            // {
+            //     ModMagnitude = GameplayEffectUtilities::ComputeStackedModifierMagnitude(SingleEvaluatedMagnitude,
+            //         StackCount, Def->Modifiers[ModifierIdx].ModifierOp);
+            // }
+
+            return Modifiers[modifierIdx].GetEvaluatedMagnitude();
+        }
     }
 
     /// <summary>
@@ -159,7 +178,7 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem
         public float EvaluatedMagnitude;
 
         private GameplayEffectSpec _effectSpec;
-        private ActiveEffectSpecification _activeEffectSpecification;
+        private ActiveGameplayEffect _activeGameplayEffect;
 
         public float GetEvaluatedMagnitude() => EvaluatedMagnitude;
     }

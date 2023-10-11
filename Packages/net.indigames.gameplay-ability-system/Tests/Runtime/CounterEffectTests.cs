@@ -16,16 +16,16 @@ namespace IndiGames.GameplayAbilitySystemTests
             var (_, _, effectSystem, _) = CreateAbilitySystem();
             var def = ScriptableObject.CreateInstance<GameplayEffectDefinition>();
             var counter = 5;
-            var counterAction = new CounterAction(counter);
-            CounterEvent += CounterEffectSpecification.ReduceCounterEvent;
-            def.EffectAction = counterAction;
+            var counterAction = new CounterPolicy(counter);
+            CounterEvent += CounterGameplayEffect.ReduceCounterEvent;
+            def.Policy = counterAction;
             var spec = effectSystem.GetEffect(def);
             var activeSpec = effectSystem.ApplyEffectToSelf(spec);
             Assert.IsTrue(activeSpec.IsValid());
             Assert.AreEqual(1, effectSystem.AppliedEffects.Count);
             yield return ReduceCounter(counter);
             Assert.AreEqual(0, effectSystem.AppliedEffects.Count);
-            CounterEvent -= CounterEffectSpecification.ReduceCounterEvent;
+            CounterEvent -= CounterGameplayEffect.ReduceCounterEvent;
         }
 
         private Action CounterEvent;

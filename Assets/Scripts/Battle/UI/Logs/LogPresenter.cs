@@ -1,6 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using CryptoQuest.UI.Dialogs.BattleDialog;
+using FSM;
 using IndiGames.Core.Events.ScriptableObjects;
 using UnityEngine;
 using UnityEngine.Localization;
@@ -15,8 +15,10 @@ namespace CryptoQuest.Battle.UI.Logs
         [SerializeField] private float _hideDelay = 1f;
         private UIGenericDialog _dialog;
         private readonly Queue<LocalizedString> _lines = new();
-        private bool _finished = true;
-        public bool Finished => _lines.Count == 0 && _finished;
+        public bool Finished => _presenting == false && _lines.Count == 0;
+        private int _count;
+        private bool _presenting;
+        private float _timer;
 
         private void Awake()
         {
@@ -39,38 +41,24 @@ namespace CryptoQuest.Battle.UI.Logs
             GenericDialogController.Instance.Instantiate(dialog => _dialog = dialog, false);
         }
 
+        public void Show() => _dialog.Show();
+
         public void AppendLog(LocalizedString message)
         {
-            _lines.Enqueue(message);
-            if (_finished == false) return;
-            StartCoroutine(CoShow());
-        }
-
-        private IEnumerator CoShow()
-        {
-            _finished = false;
-            yield return _dialog.WithMessage(_lines.Peek()).CoShow();
-            yield return new WaitForSeconds(_delayBetweenLines);
-            _lines.Dequeue();
-            var count = MAX_LINE;
-            while (_lines.Count > 0)
+            if (message.IsEmpty)
             {
-                count--;
-                if (count <= 0)
-                {
-                    count = MAX_LINE;
-                    _dialog.Clear();
-                }
-                yield return _dialog.AppendMessage(_lines.Peek());
-                yield return new WaitForSeconds(_delayBetweenLines);
-                _lines.Dequeue();
+                Debug.LogWarning("Try to append empty message");
+                return;
             }
 
-            _finished = true;
+            Debug.Log($"LogPresenter::AppendLog {message.GetLocalizedString()}");
+            _lines.Enqueue(message);
         }
 
         public void Clear()
         {
+            _presenting = false;
+            _count = MAX_LINE;
             _lines.Clear();
             _dialog.Clear();
         }

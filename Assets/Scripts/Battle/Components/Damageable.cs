@@ -5,7 +5,7 @@ namespace CryptoQuest.Battle.Components
 {
     public interface IDamageable
     {
-        public ActiveEffectSpecification ReceiveDamage(GameplayEffectSpec damageSpec);
+        public ActiveGameplayEffect ReceiveDamage(GameplayEffectSpec damageSpec);
     }
 
     public class Damageable : CharacterComponentBase, IDamageable
@@ -14,6 +14,6 @@ namespace CryptoQuest.Battle.Components
 
         public override void Init() => _abilitySystem = Character.AbilitySystem;
 
-        public ActiveEffectSpecification ReceiveDamage(GameplayEffectSpec damageSpec) => _abilitySystem.ApplyEffectSpecToSelf(damageSpec);
+        public ActiveGameplayEffect ReceiveDamage(GameplayEffectSpec damageSpec) => _abilitySystem.ApplyEffectSpecToSelf(damageSpec);
     }
 }

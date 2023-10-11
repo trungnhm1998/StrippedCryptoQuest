@@ -9,10 +9,9 @@ namespace CryptoQuest.Battle.Components
         private static NullCommand _instance;
         public static NullCommand Instance => _instance ??= new NullCommand();
 
-        public IEnumerator Execute()
+        public void Execute()
         {
             Debug.LogWarning($"No command");
-            yield break;
         }
     }
 }

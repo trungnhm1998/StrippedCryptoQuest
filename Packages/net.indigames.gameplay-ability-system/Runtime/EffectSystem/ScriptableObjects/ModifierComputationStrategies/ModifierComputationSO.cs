@@ -3,6 +3,9 @@ using UnityEngine;
 namespace IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects.ModifierComputationStrategies
 {
     /// <summary>
+    /// FGameplayEffectModifierMagnitude
+    /// To prevent multiple instance of computation class, we use ScriptableObject as a "singleton"
+    /// 
     /// - Scalable Float
     ///     Use Level the scale the value
     /// - Attribute Based
@@ -11,7 +14,6 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects.Modifie
     /// - Custom Calculation Class
     ///     <see cref="DefaultFloatComputation"/>
     /// - Set By Caller
-    ///     Imagine player holding a button 
     /// </summary>
     public abstract class ModifierComputationSO : ScriptableObject
     {
@@ -22,16 +24,13 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects.Modifie
         public abstract void Initialize(GameplayEffectSpec effectSpec);
 
         /// <summary>
-        /// Function called when the magnitude is calculated, usually after the target has been assigned
+        ///  Attempts to calculate the magnitude given the provided spec. May fail if necessary information (such as captured attributes) is missing from
         /// </summary>
-        /// <param name="effectSpec">Gameplay Effect Spec</param>
-        /// <returns></returns>
-        public abstract float? CalculateMagnitude(GameplayEffectSpec effectSpec);
-
-        public virtual bool AttemptCalculateMagnitude(GameplayEffectSpec gameplayEffectSpec,
-            out float evaluatedMagnitude)
-        {
-            throw new System.NotImplementedException();
-        }
+        /// <param name="gameplayEffectSpec">Relevant spec to use to calculate the magnitude with</param>
+        /// <param name="evaluatedMagnitude">out calculated value of the magnitude, will be set to 0f if its failed</param>
+        /// <returns>true if the calculation was successful, false if it was not</returns>
+        public abstract bool AttemptCalculateMagnitude(
+            GameplayEffectSpec gameplayEffectSpec,
+            ref float evaluatedMagnitude);
     }
 }

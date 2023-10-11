@@ -1,5 +1,5 @@
-﻿using CryptoQuest.Battle.Events;
-using CryptoQuest.Character.Ability;
+﻿using CryptoQuest.AbilitySystem.Abilities;
+using CryptoQuest.Battle.Events;
 using TinyMessenger;
 using UnityEngine;
 

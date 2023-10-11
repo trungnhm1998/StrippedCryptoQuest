@@ -1,4 +1,4 @@
-﻿using CryptoQuest.Character.Ability;
+﻿using CryptoQuest.AbilitySystem.Abilities;
 using UnityEngine;
 
 namespace CryptoQuest.Battle.Components

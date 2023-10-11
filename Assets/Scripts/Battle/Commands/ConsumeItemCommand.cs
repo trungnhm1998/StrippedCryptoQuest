@@ -1,9 +1,9 @@
 ﻿using CryptoQuest.Battle.Components;
-using CryptoQuest.Character.Ability;
 using CryptoQuest.Item;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
 using UnityEngine;
 using System.Collections;
+using CryptoQuest.AbilitySystem.Abilities;
 using CryptoQuest.System;
 using CryptoQuest.Gameplay.Inventory;
 using CryptoQuest.Battle.Events;
@@ -24,7 +24,7 @@ namespace CryptoQuest.Battle.Commands
             _owner = owner;
         }
         
-        public IEnumerator Execute()
+        public void Execute()
         {
             var inventoryController = ServiceProvider.GetService<IInventoryController>();
             bool ableToUseOnAtLeastOneHero = false;
@@ -50,8 +50,6 @@ namespace CryptoQuest.Battle.Commands
             {
                 _selectedItem.OnConsumed(inventoryController);
             }
-           
-            yield break;
         }
     }
 }

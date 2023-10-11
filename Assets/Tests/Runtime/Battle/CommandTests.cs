@@ -1,10 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using CryptoQuest.AbilitySystem.Abilities;
+using CryptoQuest.AbilitySystem.Attributes;
+using CryptoQuest.AbilitySystem.Executions;
 using CryptoQuest.Battle.Commands;
 using CryptoQuest.Battle.Components;
-using CryptoQuest.Battle.EffectCalculations;
-using CryptoQuest.Character.Ability;
-using CryptoQuest.Character.Attributes;
 using CryptoQuest.Gameplay.Battle.Core.Helper;
 using CryptoQuest.Tests.Runtime.Battle.Builder;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
@@ -19,9 +19,9 @@ namespace CryptoQuest.Tests.Runtime.Battle
     public class CommandTests : BattleFixtureBase
     {
         private GameObject _heroGo;
-        private CryptoQuest.Battle.Components.Character _hero;
+        private CharacterComponent _hero;
         private GameObject _enemyGo;
-        private CryptoQuest.Battle.Components.Character _enemy;
+        private CharacterComponent _enemy;
 
         [SetUp]
         public void Setup()
@@ -107,8 +107,8 @@ namespace CryptoQuest.Tests.Runtime.Battle
                 Assert.AreEqual(expected, actual);
             }
 
-            [UnityTest]
-            public IEnumerator Execute_PlayerHaveHigherAgilityThanEnemies_RetreatSuccess()
+            [Test]
+            public void Execute_PlayerHaveHigherAgilityThanEnemies_RetreatSuccess()
             {
                 var retreatAbility =
                     AssetDatabase.LoadAssetAtPath<RetreatAbility>(
@@ -154,7 +154,7 @@ namespace CryptoQuest.Tests.Runtime.Battle
                 };
                 foreach (var command in commands)
                 {
-                    yield return command.Execute();
+                     command.Execute();
                 }
 
                 Assert.IsTrue(retreated);
@@ -164,8 +164,8 @@ namespace CryptoQuest.Tests.Runtime.Battle
                 // Assert.IsTrue(commands.TrueForAll(command => command.IsDone));
             }
 
-            [UnityTest]
-            public IEnumerator Execute_PlayerHaveLowerAgilityThanOneEnemy_RetreatFailed()
+            [Test]
+            public void Execute_PlayerHaveLowerAgilityThanOneEnemy_RetreatFailed()
             {
                 var retreatAbility =
                     AssetDatabase.LoadAssetAtPath<RetreatAbility>(
@@ -209,7 +209,7 @@ namespace CryptoQuest.Tests.Runtime.Battle
                 };
                 foreach (var command in commands)
                 {
-                    yield return command.Execute();
+                    command.Execute();
                 }
 
                 Assert.IsFalse(retreated);

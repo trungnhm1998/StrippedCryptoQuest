@@ -16,8 +16,11 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem
         public AttributeScriptableObject Attribute;
 
         [Tooltip("Select which type of modifier")]
-        public EAttributeModifierType ModifierType;
+        public EAttributeModifierOperationType OperationType;
 
+        /// <summary>
+        /// Magnitude of this modifier
+        /// </summary>
         [Tooltip("How the Magnitude of this modifier will be calculated")]
         [CanBeNull]
         public ModifierComputationSO ModifierMagnitude;
@@ -30,17 +33,18 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem
             return new EffectAttributeModifier
             {
                 Attribute = Attribute,
-                ModifierType = ModifierType,
+                OperationType = OperationType,
                 ModifierMagnitude = ModifierMagnitude,
                 Value = Value
             };
         }
     }
 
-    public enum EAttributeModifierType
+    public enum EAttributeModifierOperationType
     {
-        Add,
-        Multiply,
-        Override
+        Add = 0,
+        Multiply = 1,
+        Division = 2,
+        Override = 3
     }
 }

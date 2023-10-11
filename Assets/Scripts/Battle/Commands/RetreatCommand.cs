@@ -15,10 +15,9 @@ namespace CryptoQuest.Battle.Commands
             _highestEnemySpeed = highestEnemySpeed;
         }
 
-        public IEnumerator Execute()
+        public void Execute()
         {
             _retreatBehaviour.Retreat(_highestEnemySpeed);
-            yield break;
         }
     }
 }

@@ -1,41 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-9037828786837305625
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fbb6112b998064f4ebc8a44f4c80c446, type: 3}
-  m_Name: Usable5030Effect
-  m_EditorClassIdentifier: 
-  <Description>k__BackingField: 
-  <EffectAction>k__BackingField:
-    rid: 373976276420264489
-  <EffectDetails>k__BackingField:
-    Modifiers:
-    - Attribute: {fileID: 11400000, guid: 6762f359f1a736c45b2df614e80aef45, type: 2}
-      ModifierType: 0
-      ModifierMagnitude: {fileID: 0}
-      Value: 1
-    StackingType: 1
-  <IsStack>k__BackingField: 0
-  <GrantedTags>k__BackingField: []
-  <ApplicationTagRequirements>k__BackingField:
-    RequireTags: []
-    IgnoreTags: []
-  <RemoveGameplayEffectsWithTags>k__BackingField: []
-  <ExecutionCalculations>k__BackingField: []
-  <ChanceToApply>k__BackingField: 1
-  <CustomApplicationRequirements>k__BackingField: []
-  references:
-    version: 2
-    RefIds:
-    - rid: 373976276420264489
-      type: {class: InfiniteAction, ns: IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects.GameplayEffectActions, asm: IndiGames.GameplayAbilitySystem}
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -48,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 375c3ad7973540259bd96e25eae2a51e, type: 3}
   m_Name: Usable5030
   m_EditorClassIdentifier: 
+  _guid: 2e8f98d127e23414ba3d272d6a4e48c5
   <ID>k__BackingField: 5030
   <DisplayName>k__BackingField:
     m_TableReference:
@@ -75,41 +40,10 @@ MonoBehaviour:
   <ConsumableType>k__BackingField: 0
   <Price>k__BackingField: 1000
   <SellPrice>k__BackingField: 500
-  <Effect>k__BackingField: {fileID: -9037828786837305625}
-  <Ability>k__BackingField: {fileID: 8914824557409111207}
+  <Effect>k__BackingField: {fileID: 0}
+  <Ability>k__BackingField: {fileID: 0}
   <UsageScenario>k__BackingField: 1
   <TargetSelectionEvent>k__BackingField: {fileID: 11400000, guid: cf816191ca3034c4d80534b6369b5834, type: 2}
-  references:
-    version: 2
-    RefIds: []
---- !u!114 &8914824557409111207
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ae8a1c5f40eaf534e8b2a294dfc60297, type: 3}
-  m_Name: Usable5030Ability
-  m_EditorClassIdentifier: 
-  tags:
-    AbilityTag: {fileID: 0}
-    CancelAbilityWithTags: []
-    BlockAbilityWithTags: []
-    ActivationTags: []
-    OwnerTags:
-      RequireTags: []
-      IgnoreTags: []
-    SourceTags:
-      RequireTags: []
-      IgnoreTags: []
-    TargetTags:
-      RequireTags: []
-      IgnoreTags: []
-  <CancelEffectWithTags>k__BackingField: []
-  <Conditions>k__BackingField: []
   references:
     version: 2
     RefIds: []

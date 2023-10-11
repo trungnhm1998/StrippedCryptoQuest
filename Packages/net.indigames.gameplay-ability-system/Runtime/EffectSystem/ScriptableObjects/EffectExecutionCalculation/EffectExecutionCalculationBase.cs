@@ -4,7 +4,6 @@ using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
 using IndiGames.GameplayAbilitySystem.AttributeSystem;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects.EffectExecutionCalculation
 {
@@ -75,8 +74,17 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects.EffectE
         }
     }
 
+    public class GameplayEffectCustomExecutionOutput
+    {
+        public readonly List<GameplayModifierEvaluatedData> Modifiers = new();
+
+        public void Add(GameplayModifierEvaluatedData modifier) => Modifiers.Add(modifier);
+    }
+
     /// <summary>
     /// Override this to create custom logic for calculating the effect modifiers before it is applied to the target.
+    ///
+    /// Modifiers will be apply by <see cref="ActiveGameplayEffect"/>
     /// </summary>
     public abstract class EffectExecutionCalculationBase : ScriptableObject
     {
@@ -86,11 +94,11 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects.EffectE
         /// by default this will do nothing
         /// 
         /// For case attack that depends on the source damage and target defends
-        /// this would add a new -HP modifier with Add type to the list
+        /// this would add a new -HP modifier with Add type to the <see cref="outModifiers"/>
         /// </summary>
         /// <param name="executionParams"></param>
-        /// <param name="outModifiers"></param>
+        /// <param name="outModifiers">List of modifier that calculation added</param>
         public abstract void Execute(ref CustomExecutionParameters executionParams,
-            ref List<EffectAttributeModifier> outModifiers);
+            ref GameplayEffectCustomExecutionOutput outModifiers);
     }
 }
