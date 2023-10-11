@@ -13,6 +13,9 @@ namespace CryptoQuest.Battle
     /// 
     /// Reward if won or teleport to closest town if lost after battle scene unloaded then will fade out
     /// </summary>
+
+    // TODO?: A little DRY here since concrete class have to drag all the field with the same object
+    // Can refactor this to a separate component so other handler can Unload battle
     public abstract class PostBattleManager : MonoBehaviour
     {
         [SerializeField] private InputMediatorSO _inputMediator;

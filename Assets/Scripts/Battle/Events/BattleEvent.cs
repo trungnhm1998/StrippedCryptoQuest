@@ -32,6 +32,7 @@ namespace CryptoQuest.Battle.Events
     public class ForceLoseBattleEvent : BattleEvent { }
 
     public class BattleLostEvent : BattleEndedEvent { }
+    public class BattleRetreatedEvent : BattleEndedEvent { }
 
     public class BattleCleanUpFinishedEvent : BattleEvent { }
 

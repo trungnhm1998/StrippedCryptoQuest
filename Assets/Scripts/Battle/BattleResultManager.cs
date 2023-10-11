@@ -84,7 +84,7 @@ namespace CryptoQuest.Battle
         {
             Debug.Log("Show dialog Battle End");
             yield return FadeInAndUnloadBattle();
-            BattleEventBus.RaiseEvent(new BattleEndedEvent()
+            BattleEventBus.RaiseEvent(new BattleRetreatedEvent()
             {
                 Battlefield = _battleContext.CurrentBattlefield,
             });
