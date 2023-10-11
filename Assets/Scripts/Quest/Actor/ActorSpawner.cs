@@ -7,7 +7,11 @@ namespace CryptoQuest.Quest.Actor
     public class ActorSpawner : MonoBehaviour
     {
         [SerializeField] private VoidEventChannelSO _onSceneLoadedEventChannel;
+        [SerializeField] private Transform _spawnPoint;
+
+        [Header("Actor Settings")]
         [SerializeField] private ActorSO _actorDef;
+
         [SerializeField] private ActorSettingSO _actorSpawnSetting;
         [SerializeField] private ActorSettingSO _actorDeSpawnSetting;
 
@@ -37,37 +41,43 @@ namespace CryptoQuest.Quest.Actor
 
         private void ConfigureActors()
         {
-            QuestManager.OnConfigureQuest?.Invoke(_actorDeSpawnSetting != null
+            ActorSettingSO actorSetting = _actorDeSpawnSetting != null
                 ? _actorDeSpawnSetting
-                : _actorSpawnSetting);
+                : _actorSpawnSetting;
+
+            QuestManager.OnConfigureQuest?.Invoke(actorSetting);
         }
 
         private void InitSpawnSetting()
         {
-            if (_actorSpawnSetting == null)
-                ActivateSpawnActor();
-            else
+            if (_actorSpawnSetting != null)
+            {
                 QuestManager.OnConfigureQuest?.Invoke(_actorSpawnSetting);
+                return;
+            }
+
+            ActivateSpawnActor();
         }
 
 
         private void ActivateSpawnActor()
         {
             ActorInfo actor = _actorDef.CreateActor();
-            if (transform != null)
-                StartCoroutine(actor.Spawn(transform));
+            if (_spawnPoint.transform == null) return;
+
+            StartCoroutine(actor.Spawn(_spawnPoint.transform));
         }
 
         private void ActivateDeSpawnActor()
         {
-            if (transform.gameObject != null)
-                Destroy(transform.gameObject);
+            if (transform.gameObject == null) return;
+
+            Destroy(transform.gameObject);
         }
 
         private void Spawn(bool isQuestCompleted)
         {
-            if (isQuestCompleted)
-                ActivateSpawnActor();
+            if (isQuestCompleted) ActivateSpawnActor();
             _actorSpawnSetting.QuestToTrack.OnQuestCompleted += ActivateSpawnActor;
         }
 
