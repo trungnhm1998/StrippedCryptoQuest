@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using CryptoQuest.Character.Tag;
+using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
 using IndiGames.GameplayAbilitySystem.TagSystem.ScriptableObjects;
 using UnityEngine;
 using UnityEngine.Pool;
@@ -15,6 +16,7 @@ namespace CryptoQuest.Battle.UI.PlayerParty
 
         private IObjectPool<UIStatusIcon> _statusIconPool;
         private Dictionary<TagSO, UIStatusIcon> _tagIconDict = new();
+        private TagSystemBehaviour CharacterTagSystem => _characterUI.Hero.AbilitySystem.TagSystem;
 
         private void OnValidate()
         {
@@ -28,14 +30,14 @@ namespace CryptoQuest.Battle.UI.PlayerParty
 
         private void OnEnable()
         {
-            _characterUI.Hero.AbilitySystem.TagSystem.TagAdded += TagAdded;
-            _characterUI.Hero.AbilitySystem.TagSystem.TagRemoved += TagRemoved;
+            CharacterTagSystem.TagAdded += TagAdded;
+            CharacterTagSystem.TagRemoved += TagRemoved;
         }
 
         private void OnDisable()
         {
-            _characterUI.Hero.AbilitySystem.TagSystem.TagAdded -= TagAdded;
-            _characterUI.Hero.AbilitySystem.TagSystem.TagRemoved -= TagRemoved;
+            CharacterTagSystem.TagAdded -= TagAdded;
+            CharacterTagSystem.TagRemoved -= TagRemoved;
             ReleaseAllIcon();
         }
 
@@ -45,6 +47,7 @@ namespace CryptoQuest.Battle.UI.PlayerParty
             {
                 // TODO?: Is having a tag-icon mapping better than devired then reflection like this? 
                 if (baseTag is not TagSO tagSO) continue;
+                if (_tagIconDict.TryGetValue(tagSO, out _)) continue;
                 var statusIcon = _statusIconPool.Get();
                 statusIcon.SetIcon(tagSO.Icon);
                 _tagIconDict.Add(tagSO, statusIcon);
