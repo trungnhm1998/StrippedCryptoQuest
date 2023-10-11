@@ -53,7 +53,7 @@ namespace CryptoQuest.Battle.EffectCalculations
             {
                 Attribute = _hp,
                 ModifierType = EAttributeModifierType.Add,
-                Value = -damageDone
+                Value = -Mathf.RoundToInt(damageDone)
             };
             outModifiers.Add(modifier);
         }

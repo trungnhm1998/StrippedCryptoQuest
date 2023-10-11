@@ -80,7 +80,7 @@ namespace CryptoQuest.Battle.GameplayEffectActions
             LogAffectingStatus();
             ModifyOwnerAttribute();
             _turn--;
-            Debug.Log($"TurnBaseAction::UpdateTurn::[{_spec.AbilitySpec.AbilitySO.name}] turn[{_turn}] left");
+            Debug.Log($"TurnBaseAction::UpdateTurn::skill effect [{_spec.AbilitySpec.AbilitySO.name}] has [{_turn}] turns left");
             if (_turn <= 0)
             {
                 _spec.IsExpired = true;

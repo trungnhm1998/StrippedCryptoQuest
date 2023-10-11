@@ -24,7 +24,7 @@ namespace CryptoQuest.Battle.EffectCalculations
             {
                 Attribute = targetAttribute.Attribute,
                 ModifierType = EAttributeModifierType.Add,
-                Value = -damageValue
+                Value = -Mathf.RoundToInt(damageValue)
             };
             outModifiers.Add(modifier);
         }

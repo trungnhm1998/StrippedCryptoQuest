@@ -26,16 +26,15 @@ namespace CryptoQuest.Battle.EffectCalculations
 
             Debug.Log($"Magic value: {baseMagicAttack}");
 
-            if (baseMagicValue > 0f)
+            if (baseMagicValue <= 0f) return;
+
+            var modifier = new EffectAttributeModifier()
             {
-                var modifier = new EffectAttributeModifier()
-                {
-                    Attribute = targetedAttributeDef.Attribute,
-                    ModifierType = EAttributeModifierType.Add,
-                    Value = baseMagicValue
-                };
-                outModifiers.Add(modifier);
-            }
+                Attribute = targetedAttributeDef.Attribute,
+                ModifierType = EAttributeModifierType.Add,
+                Value = Mathf.RoundToInt(baseMagicValue) * -1
+            };
+            outModifiers.Add(modifier);
         }
     }
 }

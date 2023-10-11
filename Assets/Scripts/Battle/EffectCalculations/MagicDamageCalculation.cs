@@ -32,6 +32,7 @@ namespace CryptoQuest.Battle.EffectCalculations
                 damageValue = effectType == EEffectType.RemoveAbnormalStatus
                     ? baseMagicDamageFixedValue
                     : baseMagicDamageFixedValue * elementalRate;
+                damageValue = Mathf.RoundToInt(damageValue);
             }
             else
             {
@@ -43,8 +44,8 @@ namespace CryptoQuest.Battle.EffectCalculations
             }
             
             var mod = BattleCalculator.GetEffectTypeValueCorrection(effectType);
-            
-            Debug.Log("magic damage dealt: " + damageValue * mod);
+
+            Debug.Log("magic damage dealt: " + damageValue);
             if (damageValue <= 0f) return;
             var modifier = new EffectAttributeModifier()
             {

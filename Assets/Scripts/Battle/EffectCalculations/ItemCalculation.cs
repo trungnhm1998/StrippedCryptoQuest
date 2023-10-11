@@ -22,22 +22,22 @@ namespace CryptoQuest.Battle.EffectCalculations
             CustomExecutionAttributeCaptureDef targetedAttribute = skillParameters.targetAttribute;
             AttributeScriptableObject attribute = targetedAttribute.Attribute;
             EAttributeModifierType modifierType = EAttributeModifierType.Add;
-            
+
             float value = skillParameters.BasePower;
-            
+
             if (!skillParameters.IsFixed)
             {
                 modifierType = EAttributeModifierType.Multiply;
                 value /= PERCENTAGE;
             }
-            
-            EffectAttributeModifier modifier = new EffectAttributeModifier()
+
+            var modifier = new EffectAttributeModifier()
             {
                 Attribute = attribute,
                 ModifierType = modifierType,
-                Value = value,
+                Value = Mathf.RoundToInt(value)
             };
-            
+
             outModifiers.Add(modifier);
         }
     }

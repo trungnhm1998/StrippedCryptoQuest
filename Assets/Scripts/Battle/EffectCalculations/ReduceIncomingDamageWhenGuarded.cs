@@ -34,7 +34,7 @@ namespace CryptoQuest.Battle.EffectCalculations
         {
             var newModifier = modifier.Clone();
             var reducedDamage = modifier.Value / 2;
-            newModifier.Value = reducedDamage;
+            newModifier.Value = Mathf.RoundToInt(reducedDamage);
 
             Debug.Log($"Guard activated, reduce damage from: {modifier.Value} to {reducedDamage}");
 

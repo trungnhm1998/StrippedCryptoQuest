@@ -24,28 +24,27 @@ namespace CryptoQuest.Battle.EffectCalculations
             var elementalRate = BattleCalculator.CalculateElementalRateFromParams(executionParams);
             executionParams.TryGetAttributeValue(_baseAttack, out var baseAttack);
             executionParams.TryGetAttributeValue(_baseDefense, out var baseDefense);
-            
+
             float baseDamageValue = BattleCalculator.CalculateBaseDamage(skillParameters, baseAttack.CurrentValue,
                 Random.Range(_lowerRandomRange, _upperRandomRange));
             float damageValue = 0;
             if (skillParameters.IsFixed)
-                damageValue = BattleCalculator.CalculateFixedPhysicalDamage(baseDamageValue, elementalRate);
+                damageValue = Mathf.RoundToInt(BattleCalculator.CalculateFixedPhysicalDamage(baseDamageValue, elementalRate));
             else
                 damageValue =
                     BattleCalculator.CalculatePercentPhysicalDamage(baseDamageValue, baseAttack.CurrentValue,
                         baseDefense.CurrentValue, elementalRate);
             var mod = BattleCalculator.GetEffectTypeValueCorrection(effectType);
-            
-            if (baseDamageValue > 0f)
+
+            if (damageValue <= 0f) return;
+
+            var modifier = new EffectAttributeModifier()
             {
-                var modifier = new EffectAttributeModifier()
-                {
-                    Attribute = targetedAttributeSO.Attribute,
-                    ModifierType = EAttributeModifierType.Add,
-                    Value = damageValue * mod
-                };
-                outModifiers.Add(modifier);
-            }
+                Attribute = targetedAttributeSO.Attribute,
+                ModifierType = EAttributeModifierType.Add,
+                Value = damageValue * mod
+            };
+            outModifiers.Add(modifier);
         }
     }
 }
