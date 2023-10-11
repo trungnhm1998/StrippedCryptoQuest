@@ -28,6 +28,8 @@ namespace CryptoQuest.Battle.UI.SelectItem
         public ItemTargetTypeDelegate SelectAllHeroCallback { get; set; }
         private void OnTargetAllHero() => SelectAllHeroCallback?.Invoke(_lastSelectedItem);
 
+
+        [SerializeField] private VerticalButtonSelector _buttonSelector;
         [SerializeField] private BattleInput _battleInput;
         [SerializeField] private AutoScroll _autoScroll;
         [SerializeField] private ScrollRect _itemScroll;
@@ -54,8 +56,14 @@ namespace CryptoQuest.Battle.UI.SelectItem
         {
             InitItemButtons();
             DOVirtual.DelayedCall(0.1f, SelectFirstOrLastSelectedSkill);
+            SetInteractive(true);
             SetActiveScroll(true);
             RegisterEvents();
+        }
+
+        public void SetInteractive(bool value)
+        {
+            _buttonSelector.Interactable = value;
         }
 
         public void SetActiveScroll(bool value)
@@ -109,6 +117,7 @@ namespace CryptoQuest.Battle.UI.SelectItem
 
         public void Hide()
         {
+            SetInteractive(false);
             SetActiveScroll(false);
             UnregisterEvents();
         }

@@ -25,6 +25,7 @@ namespace CryptoQuest.Battle.States.SelectHeroesActions
         {
             _selectHeroPresenter.Show(_selectedItemUI.Item.Data.DisplayName);
             _itemPresenter.SetActiveScroll(true);
+            _itemPresenter.SetInteractive(false);
             SelectHeroPresenter.ConfirmSelectCharacter += UseItemOnHero;
         }
 
