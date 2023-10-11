@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using CryptoQuest.Battle.Commands;
-using CryptoQuest.Battle.Events;
-using CryptoQuest.Character.Tag;
 using IndiGames.GameplayAbilitySystem.AttributeSystem;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
 using UnityEngine;
@@ -62,13 +59,15 @@ namespace CryptoQuest.Battle.Components
         {
             _cache.Clear();
             Character.GameplayEffectSystem.UpdateAttributeModifiersUsingAppliedEffects();
-            LogAbnormal();
             Character.AbilitySystem.AttributeSystem.PostAttributeChange += CacheChange;
-            OnTurnStarted?.Invoke();
+            OnTurnStarted?.Invoke(); // this will cause turn base effect to update
             Character.AbilitySystem.AttributeSystem.PostAttributeChange -= CacheChange;
             LogChanges();
         }
 
+        /// <summary>
+        /// Currently for only debug purpose
+        /// </summary>
         private void LogChanges()
         {
             while (_cache.Count > 0)
@@ -103,25 +102,6 @@ namespace CryptoQuest.Battle.Components
                 NewValue = newValue
             };
             _cache.Enqueue(info);
-        }
-
-        private void LogAbnormal()
-        {
-            var tags = Character.AbilitySystem.EffectSystem.GrantedTags.Distinct();
-            foreach (var tagDef in tags)
-            {
-                if (tagDef.IsChildOf(TagsDef.Abnormal))
-                    _command = new SkipTurnCommand(Character);
-                Debug.Log($"Abnormal: {tagDef.name}");
-                if (tagDef is not TagSO abnormalTag) continue;
-                if (abnormalTag.AffectMessage.IsEmpty) continue;
-                
-                BattleEventBus.RaiseEvent(new EffectAffectingEvent()
-                {
-                    Character = Character,
-                    Reason = abnormalTag.AffectMessage
-                });
-            }
         }
 
         /// <summary>

@@ -65,14 +65,8 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem.Components
         {
             if (inSpec == null || !inSpec.CanApply()) return new ActiveEffectSpecification();
 
-            if (inSpec.Def.IsStack && TryGetActiveEffectWithSameDef(inSpec.Def, out var activeEffect) && activeEffect.AreEquals(inSpec))
-            {
-                activeEffect.UpdateStackCount(inSpec);
-                UpdateAttributeSystemModifiers();
-                UpdateEffects();
-                if (activeEffect.IsActive) EffectAdded?.Invoke(activeEffect);
-                return activeEffect;
-            }
+            if (TryToStackEffectIfPossible(inSpec, out var effect))
+                return effect;
 
             inSpec.Target = Owner;
             var activeEffectSpecification = inSpec.CreateActiveEffectSpec(_owner);
@@ -85,19 +79,26 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem.Components
             return activeEffectSpecification;
         }
 
-        private bool TryGetActiveEffectWithSameDef(GameplayEffectDefinition def,
-            out ActiveEffectSpecification effectSpecification)
+        private bool TryToStackEffectIfPossible(GameplayEffectSpec inSpec, out ActiveEffectSpecification effect)
         {
-            foreach (var effect in _appliedEffects)
+            if (inSpec.Def.IsStack == false)
             {
-                if (effect.Spec.Def == def)
-                {
-                    effectSpecification = effect;
-                    return true;
-                }
+                effect = new ActiveEffectSpecification();
+                return false;
             }
 
-            effectSpecification = new ActiveEffectSpecification();
+            foreach (var activeEffect in _appliedEffects)
+            {
+                if (!activeEffect.AreEquals(inSpec)) continue;
+                effect = activeEffect;
+                activeEffect.UpdateStackCount(inSpec);
+                UpdateAttributeSystemModifiers();
+                UpdateEffects();
+                if (activeEffect.IsActive) EffectAdded?.Invoke(activeEffect);
+                return true;
+            }
+
+            effect = new ActiveEffectSpecification();
             return false;
         }
 

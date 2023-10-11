@@ -24,21 +24,21 @@ namespace CryptoQuest.Battle.GameplayEffectActions
     [Serializable]
     public class TurnBaseActiveEffectSpec : ActiveEffectSpecification
     {
-        public override TagScriptableObject[] GrantedTags => _inSpec.Parameters.GrantedTags;
+        public override TagScriptableObject[] GrantedTags => _spec.Parameters.GrantedTags;
         [SerializeField] private int _turn;
         [SerializeField] private TurnBaseAction _turnBaseAction;
-        [SerializeField] private EffectSpec _inSpec;
+        [SerializeField] private EffectSpec _spec;
         [SerializeField] private AbilitySystemBehaviour _owner;
 
         private Components.Character _character;
         private CommandExecutor _commandExecutor;
 
-        public TurnBaseActiveEffectSpec(TurnBaseAction turnBaseAction, EffectSpec inSpec,
-            AbilitySystemBehaviour owner) : base(inSpec)
+        public TurnBaseActiveEffectSpec(TurnBaseAction turnBaseAction, EffectSpec spec,
+            AbilitySystemBehaviour owner) : base(spec)
         {
-            _turn = inSpec.Parameters.ContinuesTurn;
+            _turn = spec.Parameters.ContinuesTurn;
             _owner = owner;
-            _inSpec = inSpec;
+            _spec = spec;
             _turnBaseAction = turnBaseAction;
             _character = owner.GetComponent<Components.Character>();
             _character.TryGetComponent(out _commandExecutor);
@@ -61,7 +61,7 @@ namespace CryptoQuest.Battle.GameplayEffectActions
         {
             var areEquals = base.AreEquals(inSpec);
             if (inSpec is not EffectSpec spec) return false;
-            if (_inSpec.AbilitySpec.AbilitySO != spec.AbilitySpec.AbilitySO) return false;
+            if (_spec.AbilitySpec.AbilitySO != spec.AbilitySpec.AbilitySO) return false;
             return areEquals;
         }
 
@@ -77,12 +77,27 @@ namespace CryptoQuest.Battle.GameplayEffectActions
                 return;
             }
 
+            LogAffectingStatus();
             ModifyOwnerAttribute();
             _turn--;
-            Debug.Log($"TurnBaseAction::UpdateTurn::turn[{_turn}] left");
+            Debug.Log($"TurnBaseAction::UpdateTurn::[{_spec.AbilitySpec.AbilitySO.name}] turn[{_turn}] left");
             if (_turn <= 0)
             {
-                _inSpec.IsExpired = true;
+                _spec.IsExpired = true;
+            }
+        }
+
+        private void LogAffectingStatus()
+        {
+            var grantedTags = _spec.AbilitySpec.Def.Parameters.SkillParameters.GrantedTags;
+            foreach (var tag in grantedTags)
+            {
+                if (tag.AffectMessage.IsEmpty) continue;
+                BattleEventBus.RaiseEvent(new EffectAffectingEvent()
+                {
+                    Character = _owner.GetComponent<Components.Character>(),
+                    Reason = tag.AffectMessage
+                });
             }
         }
 
@@ -111,10 +126,10 @@ namespace CryptoQuest.Battle.GameplayEffectActions
                         break;
                 }
 
-                _owner.AttributeSystem.SetAttributeBaseValue(attribute, attributeValue.BaseValue);
                 Debug.Log($"TurnBaseEffect::Modify attribute {attribute.name} " +
                           $"\nbase value[{attributeValue.BaseValue}] " +
                           $"\ncurrentValue[{attributeValue.CurrentValue}]");
+                _owner.AttributeSystem.SetAttributeBaseValue(attribute, attributeValue.BaseValue);
             }
         }
 
