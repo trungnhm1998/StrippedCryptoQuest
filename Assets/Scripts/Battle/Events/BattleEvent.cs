@@ -54,6 +54,12 @@ namespace CryptoQuest.Battle.Events
         public HeroBehaviour Hero { get; set; }
     }
 
+    public class HighlightEnemyEvent : BattleEvent
+    {
+        public EnemyBehaviour Enemy { get; set; }
+    }
+    public class ResetHighlightEnemyEvent : BattleEvent { }
+
     public class ShowPromptEvent : BattleEvent
     {
         public string Prompt { get; set; }

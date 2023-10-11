@@ -6,6 +6,7 @@ using CryptoQuest.Battle.Components;
 using CryptoQuest.Battle.Events;
 using CryptoQuest.Battle.UI.Logs;
 using CryptoQuest.Character.Ability;
+using TinyMessenger;
 using UnityEngine;
 
 namespace CryptoQuest.Battle
@@ -24,14 +25,21 @@ namespace CryptoQuest.Battle
         public event Action EndBattle;
         private bool _isBattleEnded;
 
+        private TinyMessageSubscriptionToken _highlightEnemyToken;
+        private TinyMessageSubscriptionToken _resetHighlightEnemyToken;
+
         private void OnEnable()
         {
             _retreatAbility.RetreatedEvent += OnEndBattle;
+            _highlightEnemyToken = BattleEventBus.SubscribeEvent<HighlightEnemyEvent>(HightlightEnemy);
+            _resetHighlightEnemyToken = BattleEventBus.SubscribeEvent<ResetHighlightEnemyEvent>(ResetHightlightEnemy);
         }
 
         private void OnDisable()
         {
             _retreatAbility.RetreatedEvent -= OnEndBattle;
+            BattleEventBus.UnsubscribeEvent(_highlightEnemyToken);
+            BattleEventBus.UnsubscribeEvent(_resetHighlightEnemyToken);
         }
 
         public void ExecuteCharacterCommands(IEnumerable<Components.Character> characters)
@@ -41,7 +49,7 @@ namespace CryptoQuest.Battle
 
         private IEnumerator CoPresentation(IEnumerable<Components.Character> characters)
         {
-            ChangeAllEnemiesOpacity(0.5f);
+            ChangeAllEnemiesOpacity(1f);
 
             foreach (var character in characters)
             {
@@ -59,7 +67,6 @@ namespace CryptoQuest.Battle
 
             yield return new WaitUntil(() => _logPresenter.Finished);
             _logPresenter.HideAndClear();
-            ChangeAllEnemiesOpacity(1f);
             BattleEventBus.RaiseEvent(_roundEndedEvent); // Need to be raise so guard tag can be remove
             OnRoundEndedCheck();
         }
@@ -110,6 +117,17 @@ namespace CryptoQuest.Battle
             {
                 enemy.SetAlpha(f);
             }
+        }
+
+        private void HightlightEnemy(HighlightEnemyEvent eventObject)
+        {
+            ChangeAllEnemiesOpacity(0.5f);
+            eventObject.Enemy.SetAlpha(1f);
+        }
+
+        private void ResetHightlightEnemy(ResetHighlightEnemyEvent eventObject)
+        {
+            ChangeAllEnemiesOpacity(1f);
         }
     }
 }
