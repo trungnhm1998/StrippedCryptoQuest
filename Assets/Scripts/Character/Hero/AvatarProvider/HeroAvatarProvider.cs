@@ -29,17 +29,26 @@ namespace CryptoQuest.Character.Hero.AvatarProvider
                 yield break;
             }
 
-            if (hero.Avatar != null)
+            if (CheckValidAvatar(hero))
             {
                 Debug.LogWarning($"Avatar already loaded!");
                 yield break;
             }
 
-
             var id = $"{hero.DetailsInfo.Id}-{hero.Class.Id}";
 
             yield return _avatarDatabase.LoadDataById(id);
             AvatarLoaded(hero, _avatarDatabase.GetDataById(id));
+        }
+
+        protected virtual bool CheckValidAvatar(HeroBehaviour hero)
+        {
+            if (hero.Avatar != null)
+            {
+                AvatarLoaded(hero, hero.Avatar);
+                return true;
+            }
+            return false;
         }
 
         protected virtual void AvatarLoaded(HeroBehaviour hero, Sprite avatar)
