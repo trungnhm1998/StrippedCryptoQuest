@@ -1,6 +1,6 @@
 using System;
 using System.Collections;
-using CryptoQuest.BlackSmith.EvolveStates;
+using CryptoQuest.BlackSmith.ScriptableObjects;
 using CryptoQuest.Input;
 using IndiGames.Core.Events.ScriptableObjects;
 using UnityEngine;
@@ -14,22 +14,28 @@ namespace CryptoQuest.BlackSmith
         [SerializeField] private GameObject _upgradeStateController;
         [SerializeField] private BlackSmithInputManager _blackSmithInput;
         [SerializeField] private VoidEventChannelSO _sceneLoadedEvent;
-        [SerializeField] private UnityEvent _inputEnabledEvent;
+        [SerializeField] private ShowBlackSmithEventChannelSO _openBlackSmithEvent;
+        [SerializeField] private UnityEvent _blackSmithOpenedEvent;
 
         private void OnEnable()
         {
-            _sceneLoadedEvent.EventRaised += EnableBlackSmithInput;
+            _openBlackSmithEvent.EventRaised += OpenBlackSmith;
         }
 
         private void OnDisable()
         {
-            _sceneLoadedEvent.EventRaised -= EnableBlackSmithInput;
+            _openBlackSmithEvent.EventRaised -= OpenBlackSmith;
+        }
+
+        private void OpenBlackSmith()
+        {
+            EnableBlackSmithInput();
+            _blackSmithOpenedEvent.Invoke();
         }
 
         private void EnableBlackSmithInput()
         {
             _blackSmithInput.EnableInput();
-            _inputEnabledEvent.Invoke();
         }
 
         public void EvolveButtonPressed()
