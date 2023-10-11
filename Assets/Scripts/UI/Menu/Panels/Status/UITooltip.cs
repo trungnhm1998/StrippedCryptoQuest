@@ -215,10 +215,13 @@ namespace CryptoQuest.UI.Menu.Panels.Status
 
         private IEnumerator LoadSpriteAndSet(AssetReferenceT<Sprite> itemIcon)
         {
-            if (itemIcon.RuntimeKeyIsValid() == false) yield break;
-            _handle = itemIcon.LoadAssetAsync<Sprite>();
-            yield return _handle;
-            _illustration.sprite = _handle.Result;
+            if(!itemIcon.OperationHandle.IsValid())
+            {
+                if (itemIcon.RuntimeKeyIsValid() == false) yield break;
+                _handle = itemIcon.LoadAssetAsync<Sprite>();
+                yield return _handle;
+            }
+            _illustration.sprite = (Sprite)itemIcon.OperationHandle.Result;
         }
     }
 }

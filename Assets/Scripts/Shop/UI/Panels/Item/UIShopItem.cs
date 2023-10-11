@@ -1,7 +1,3 @@
-using CryptoQuest.Gameplay.Inventory.Currency;
-using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
-using CryptoQuest.Item;
-using CryptoQuest.Item.Equipment;
 using CryptoQuest.Menu;
 using CryptoQuest.Shop.UI.Item;
 using System;
@@ -9,8 +5,8 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
-using UnityEngine.Localization;
 using UnityEngine.Localization.Components;
+using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.UI;
 
 namespace CryptoQuest.Shop.UI.Panels.Item
@@ -28,6 +24,7 @@ namespace CryptoQuest.Shop.UI.Panels.Item
         private const string CURRENCY = "G";
 
         private IShopItem _shopItemData;
+        private AsyncOperationHandle<Sprite> _handle;
 
         private void OnEnable()
         {
@@ -44,6 +41,8 @@ namespace CryptoQuest.Shop.UI.Panels.Item
         private void OnDisable()
         {
             _button.Selected -= OnSelect;
+            if (_handle.IsValid()) Addressables.Release(_handle);
+            _handle = default;
         }
 
         public void Init(IShopItem shopItemData, bool isBuy)
@@ -72,11 +71,13 @@ namespace CryptoQuest.Shop.UI.Panels.Item
 
         private IEnumerator LoadSpriteAndSet(AssetReferenceT<Sprite> equipmentTypeIcon)
         {
-            if (equipmentTypeIcon.RuntimeKeyIsValid() == false) yield break;
-            var handle = equipmentTypeIcon.LoadAssetAsync<Sprite>();
-            yield return handle;
-
-            _icon.sprite = handle.Result;
+            if (!equipmentTypeIcon.OperationHandle.IsValid())
+            {
+                if (equipmentTypeIcon.RuntimeKeyIsValid() == false) yield break;
+                _handle = equipmentTypeIcon.LoadAssetAsync<Sprite>();
+                yield return _handle;
+            }
+            _icon.sprite = (Sprite)equipmentTypeIcon.OperationHandle.Result;
         }
     }
 }
