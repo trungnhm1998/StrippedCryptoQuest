@@ -64,7 +64,8 @@ namespace CryptoQuest.UI.Dialogs.BattleDialog
         {
             var messageHandle = message.GetLocalizedStringAsync();
             yield return messageHandle;
-            _dialogText.text += "\n" + messageHandle.Result;
+            var newLine = string.IsNullOrEmpty(_dialogText.text) ? "" : "\n";
+            _dialogText.text += newLine + messageHandle.Result;
         }
 
         public override void Show() => StartCoroutine(CoShow());

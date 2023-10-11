@@ -9,6 +9,7 @@ namespace CryptoQuest.Battle.UI.Logs
 {
     public class LogPresenter : MonoBehaviour
     {
+        private const int MAX_LINE = 3;
         [SerializeField] private VoidEventChannelSO _sceneLoadedEvent;
         [SerializeField] private float _delayBetweenLines = 0.5f;
         [SerializeField] private float _hideDelay = 1f;
@@ -51,8 +52,15 @@ namespace CryptoQuest.Battle.UI.Logs
             yield return _dialog.WithMessage(_lines.Peek()).CoShow();
             yield return new WaitForSeconds(_delayBetweenLines);
             _lines.Dequeue();
+            var count = MAX_LINE;
             while (_lines.Count > 0)
             {
+                count--;
+                if (count <= 0)
+                {
+                    count = MAX_LINE;
+                    _dialog.Clear();
+                }
                 yield return _dialog.AppendMessage(_lines.Peek());
                 yield return new WaitForSeconds(_delayBetweenLines);
                 _lines.Dequeue();
