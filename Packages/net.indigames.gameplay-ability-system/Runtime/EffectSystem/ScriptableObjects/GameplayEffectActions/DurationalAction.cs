@@ -33,7 +33,7 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects.Gamepla
         {
             base.Update(deltaTime);
             _duration -= deltaTime;
-            if (_duration <= 0) EffectSpec.IsExpired = true;
+            if (_duration <= 0) Spec.IsExpired = true;
         }
     }
 }

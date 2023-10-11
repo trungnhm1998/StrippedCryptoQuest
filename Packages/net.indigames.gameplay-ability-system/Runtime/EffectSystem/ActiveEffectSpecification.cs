@@ -7,6 +7,7 @@ using IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects.EffectExecu
 using IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects.ModifierComputationStrategies;
 using IndiGames.GameplayAbilitySystem.TagSystem.ScriptableObjects;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace IndiGames.GameplayAbilitySystem.EffectSystem
 {
@@ -46,8 +47,10 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem
             }
         }
 
-        [SerializeField] private GameplayEffectSpec _effectSpec;
-        public GameplayEffectSpec EffectSpec => _effectSpec;
+        [FormerlySerializedAs("_effectSpec")] [SerializeField]
+        private GameplayEffectSpec _spec;
+
+        public GameplayEffectSpec Spec => _spec;
 
         /// <summary>
         /// After calculated magnitude and custom execution calculation
@@ -55,20 +58,20 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem
         /// </summary>
         [field: SerializeField] public List<ComputedModifier> ComputedModifiers { get; set; }
 
-        public EModifierType ModifierType => _effectSpec.EffectDefDetails.StackingType;
+        public EModifierType ModifierType => _spec.EffectDefDetails.StackingType;
         public bool IsActive { get; set; } = true;
-        public bool Expired => _effectSpec == null || _effectSpec.IsExpired || IsActive == false;
-        public virtual TagScriptableObject[] GrantedTags => _effectSpec.GrantedTags;
+        public bool Expired => _spec == null || _spec.IsExpired || IsActive == false;
+        public virtual TagScriptableObject[] GrantedTags => _spec.GrantedTags;
 
         /// <summary>
         /// To prevent null reference exception
         /// </summary>
         public ActiveEffectSpecification() { }
 
-        public ActiveEffectSpecification(GameplayEffectSpec effectSpec)
+        public ActiveEffectSpecification(GameplayEffectSpec spec)
         {
-            _effectSpec = effectSpec;
-            ComputedModifiers = GenerateEffectModifier(_effectSpec);
+            _spec = spec;
+            ComputedModifiers = GenerateEffectModifier(_spec);
         }
 
         /// <summary>
@@ -147,9 +150,9 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem
         public virtual void Update(float deltaTime) { }
 
         public bool IsValid()
-            => _effectSpec != null && _effectSpec.IsValid() && _effectSpec.IsExpired == false && IsActive;
+            => _spec != null && _spec.IsValid() && _spec.IsExpired == false && IsActive;
 
-        public bool HasTag(TagScriptableObject tag) => _effectSpec.GrantedTags.Contains(tag);
+        public bool HasTag(TagScriptableObject tag) => _spec.GrantedTags.Contains(tag);
 
         /// <summary>
         /// By default instant, duration and infinite effect can be applied to attribute system
@@ -165,5 +168,16 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem
         }
 
         protected virtual void OnRelease() { }
+
+        public void UpdateStackCount(GameplayEffectSpec inSpec)
+        {
+            if (inSpec.IsValid() == false) return;
+            if (inSpec.Def != _spec.Def) return;
+
+            _spec.StackCount++;
+            OnSpecStackChanged(inSpec);
+        }
+
+        protected virtual void OnSpecStackChanged(GameplayEffectSpec otherSpec) { }
     }
 }

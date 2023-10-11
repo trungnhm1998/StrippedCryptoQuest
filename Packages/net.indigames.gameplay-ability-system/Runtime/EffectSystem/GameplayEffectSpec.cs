@@ -34,6 +34,7 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem
         public bool IsExpired { get; set; }
 
         public ModifierSpec[] Modifiers = Array.Empty<ModifierSpec>();
+        public int StackCount;
 
         /// <summary>
         /// Which Data/SO the effect is based on

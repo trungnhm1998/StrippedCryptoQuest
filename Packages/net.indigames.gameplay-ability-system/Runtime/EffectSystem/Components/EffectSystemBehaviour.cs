@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.Components;
@@ -15,6 +16,9 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem.Components
     [RequireComponent(typeof(AttributeSystemBehaviour))]
     public class EffectSystemBehaviour : MonoBehaviour
     {
+        public event Action<ActiveEffectSpecification> EffectAdded;
+        public event Action<ActiveEffectSpecification> EffectRemoved;
+
         [SerializeField] private bool _useUpdate;
 
         /// <summary>
@@ -61,12 +65,40 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem.Components
         {
             if (inSpec == null || !inSpec.CanApply()) return new ActiveEffectSpecification();
 
+            if (inSpec.Def.IsStack && TryGetActiveEffectWithSameDef(inSpec.Def, out var activeEffect))
+            {
+                activeEffect.UpdateStackCount(inSpec);
+                UpdateAttributeSystemModifiers();
+                UpdateEffects();
+                if (activeEffect.IsActive) EffectAdded?.Invoke(activeEffect);
+                return activeEffect;
+            }
+
             inSpec.Target = Owner;
             var activeEffectSpecification = inSpec.CreateActiveEffectSpec(_owner);
             _appliedEffects.Add(activeEffectSpecification);
             Owner.TagSystem.AddTags(activeEffectSpecification.GrantedTags);
-            UpdateAttributeModifiersUsingAppliedEffects();
+            UpdateAttributeSystemModifiers();
+            UpdateEffects();
+            // TODO: The check currently only to skip instant effect, could've done better
+            if (activeEffectSpecification.IsActive) EffectAdded?.Invoke(activeEffectSpecification);
             return activeEffectSpecification;
+        }
+
+        private bool TryGetActiveEffectWithSameDef(GameplayEffectDefinition def,
+            out ActiveEffectSpecification effectSpecification)
+        {
+            foreach (var effect in _appliedEffects)
+            {
+                if (effect.Spec.Def == def)
+                {
+                    effectSpecification = effect;
+                    return true;
+                }
+            }
+
+            effectSpecification = new ActiveEffectSpecification();
+            return false;
         }
 
         public void ExpireEffectWithTagImmediately(TagScriptableObject tag)
@@ -100,7 +132,7 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem.Components
             for (int i = _appliedEffects.Count - 1; i >= 0; i--)
             {
                 var effect = _appliedEffects[i];
-                if (effectSpec.CompareTo(effect.EffectSpec) != 1) continue;
+                if (effectSpec.CompareTo(effect.Spec) != 1) continue;
 
                 RemoveEffectAtIndex(i);
                 break;
@@ -242,9 +274,10 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem.Components
         {
             var effect = _appliedEffects[index];
             _appliedEffects.RemoveAt(index);
-            if (effect?.EffectSpec == null) return;
+            if (effect?.Spec == null) return;
             Owner.TagSystem.RemoveTags(effect.GrantedTags);
             effect.Release();
+            EffectRemoved?.Invoke(effect);
         }
     }
 }

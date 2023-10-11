@@ -36,12 +36,27 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects
         public EffectDetails EffectDetails { get; set; } = new();
 
         [field: SerializeField]
+        public bool IsStack { get; private set; }
+
+        [field: SerializeField]
         [Tooltip("When the effect is applied to a target, these tags will be granted through logic of AbilitySystem")]
         public TagScriptableObject[] GrantedTags { get; private set; } = Array.Empty<TagScriptableObject>();
 
+        /// <summary>
+        /// Tags on the Target that determine if a GameplayEffect can be applied to the Target.
+        /// If these requirements are not met, the GameplayEffect is not applied.
+        /// </summary>
         [field: SerializeField,
                 Tooltip("These tags must be present or must not (ignore tags) for the effect to be applied.")]
         public TagRequireIgnoreDetails ApplicationTagRequirements { get; private set; } = new();
+
+        /// <summary>
+        /// GameplayEffects on the Target that have any of these tags in their Asset Tags or Granted Tags
+        /// will be removed from the Target when this GameplayEffect is successfully applied.
+        /// </summary>
+        [field: SerializeField]
+        public TagScriptableObject[] RemoveGameplayEffectsWithTags { get; private set; } =
+            Array.Empty<TagScriptableObject>();
 
         /// <summary>
         /// e.g. Need to calculate based on caster's attribute

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using CryptoQuest.Battle.Components;
 using CryptoQuest.Battle.Events;
 using CryptoQuest.Character.Ability;
@@ -51,6 +50,13 @@ namespace CryptoQuest.Battle.GameplayEffectActions
             _commandExecutor.OnTurnStarted -= UpdateTurn;
         }
 
+        protected override void OnSpecStackChanged(GameplayEffectSpec otherSpec)
+        {
+            if (otherSpec is not EffectSpec spec) return;
+            Debug.Log($"TurnBaseAction::OnStackChanged::from [{_turn}] to [{spec.Parameters.ContinuesTurn}] turn");
+            _turn = spec.Parameters.ContinuesTurn;
+        }
+
         private void UpdateTurn()
         {
             if (_turn <= 0 || Expired)
@@ -65,6 +71,7 @@ namespace CryptoQuest.Battle.GameplayEffectActions
 
             ModifyOwnerAttribute();
             _turn--;
+            Debug.Log($"TurnBaseAction::UpdateTurn::turn[{_turn}] left");
             if (_turn <= 0)
             {
                 _inSpec.IsExpired = true;

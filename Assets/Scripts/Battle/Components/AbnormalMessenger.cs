@@ -1,32 +1,29 @@
 ﻿using System;
 using CryptoQuest.Battle.Events;
 using CryptoQuest.Character.Tag;
-using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
+using IndiGames.GameplayAbilitySystem.EffectSystem;
 using IndiGames.GameplayAbilitySystem.TagSystem.ScriptableObjects;
 
 namespace CryptoQuest.Battle.Components
 {
     public class AbnormalMessenger : CharacterComponentBase
     {
-        private TagSystemBehaviour _tagSystem;
-
         public override void Init()
         {
-            _tagSystem = GetComponent<TagSystemBehaviour>();
-            _tagSystem.TagAdded += OnTagAdded;
-            _tagSystem.TagRemoved += OnTagRemoved;
+            Character.AbilitySystem.EffectSystem.EffectAdded += LogEffectAdded;
+            Character.AbilitySystem.EffectSystem.EffectRemoved += LogEffectRemoved;
         }
 
         private void OnDestroy()
         {
             if (Character.IsValid() == false) return;
-            _tagSystem.TagAdded -= OnTagAdded;
-            _tagSystem.TagRemoved -= OnTagRemoved;
+            Character.AbilitySystem.EffectSystem.EffectAdded -= LogEffectAdded;
+            Character.AbilitySystem.EffectSystem.EffectRemoved -= LogEffectRemoved;
         }
 
-        private void OnTagRemoved(TagScriptableObject[] tagScriptableObjects)
+        private void LogEffectRemoved(ActiveEffectSpecification activeEffect)
         {
-            RaiseEventForTags(tagScriptableObjects, tag =>
+            RaiseEventForTags(activeEffect.GrantedTags, tag =>
             {
                 BattleEventBus.RaiseEvent(new EffectRemovedEvent()
                 {
@@ -36,9 +33,9 @@ namespace CryptoQuest.Battle.Components
             });
         }
 
-        private void OnTagAdded(TagScriptableObject[] tagScriptableObjects)
+        private void LogEffectAdded(ActiveEffectSpecification activeEffect)
         {
-            RaiseEventForTags(tagScriptableObjects, tag =>
+            RaiseEventForTags(activeEffect.GrantedTags, tag =>
             {
                 BattleEventBus.RaiseEvent(new EffectAddedEvent()
                 {

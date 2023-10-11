@@ -123,11 +123,7 @@ namespace CryptoQuest.Character.Ability
             yield break;
         }
 
-        private EffectSpec CreateEffectSpec()
-        {
-            var clonedDef = Object.Instantiate(_def.Effect);
-            return clonedDef.CreateEffectSpec(Owner, this);
-        }
+        private EffectSpec CreateEffectSpec() => _def.Effect.CreateEffectSpec(Owner, this);
 
         private bool IsTargetEvaded(AbilitySystemBehaviour target)
         {

@@ -68,7 +68,7 @@ namespace CryptoQuest.Battle.Components
         private void RemoveEquipmentEffectFromCharacter(EquipmentInfo equipment)
         {
             if (equipment.ActiveEffect == null) return;
-            Character.RemoveEffect(equipment.ActiveEffect.EffectSpec); // TODO: REFACTOR
+            Character.RemoveEffect(equipment.ActiveEffect.Spec); // TODO: REFACTOR
         }
 
         private void CreateAndSetEffectDefToEquipment(EquipmentInfo equipment)

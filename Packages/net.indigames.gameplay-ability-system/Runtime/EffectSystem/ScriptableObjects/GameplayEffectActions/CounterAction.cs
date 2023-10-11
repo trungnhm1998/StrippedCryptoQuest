@@ -51,7 +51,7 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects.Gamepla
             _counter--;
             if (_counter <= 0) 
             {
-                EffectSpec.IsExpired = true;
+                Spec.IsExpired = true;
                 RemoveRegistEvent();
             }
         }

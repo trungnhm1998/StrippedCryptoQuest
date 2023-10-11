@@ -61,6 +61,7 @@ namespace CryptoQuest.Battle.Components
         public void PreTurn()
         {
             _cache.Clear();
+            Character.GameplayEffectSystem.UpdateAttributeModifiersUsingAppliedEffects();
             LogAbnormal();
             Character.AbilitySystem.AttributeSystem.PostAttributeChange += CacheChange;
             OnTurnStarted?.Invoke();
