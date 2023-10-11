@@ -18,6 +18,7 @@ namespace CryptoQuest.Character.Ability
     public class EffectSpec : GameplayEffectSpec
     {
         private readonly CastSkillAbilitySpec _abilitySpec;
+        public CastSkillAbilitySpec AbilitySpec => _abilitySpec;
         public SkillParameters Parameters => _abilitySpec.Def.Parameters.SkillParameters;
 
         public EffectSpec(CastSkillAbilitySpec abilitySpec)

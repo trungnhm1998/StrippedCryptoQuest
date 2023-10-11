@@ -171,11 +171,16 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem
 
         public void UpdateStackCount(GameplayEffectSpec inSpec)
         {
-            if (inSpec.IsValid() == false) return;
-            if (inSpec.Def != _spec.Def) return;
-
+            if (!AreEquals(inSpec)) return;
             _spec.StackCount++;
             OnSpecStackChanged(inSpec);
+        }
+
+        public virtual bool AreEquals(GameplayEffectSpec inSpec)
+        {
+            if (inSpec.IsValid() == false) return false;
+            if (inSpec.Def != _spec.Def) return false;
+            return true;
         }
 
         protected virtual void OnSpecStackChanged(GameplayEffectSpec otherSpec) { }

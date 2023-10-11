@@ -65,7 +65,7 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem.Components
         {
             if (inSpec == null || !inSpec.CanApply()) return new ActiveEffectSpecification();
 
-            if (inSpec.Def.IsStack && TryGetActiveEffectWithSameDef(inSpec.Def, out var activeEffect))
+            if (inSpec.Def.IsStack && TryGetActiveEffectWithSameDef(inSpec.Def, out var activeEffect) && activeEffect.AreEquals(inSpec))
             {
                 activeEffect.UpdateStackCount(inSpec);
                 UpdateAttributeSystemModifiers();

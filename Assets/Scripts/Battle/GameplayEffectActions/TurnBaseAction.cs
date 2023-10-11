@@ -57,6 +57,14 @@ namespace CryptoQuest.Battle.GameplayEffectActions
             _turn = spec.Parameters.ContinuesTurn;
         }
 
+        public override bool AreEquals(GameplayEffectSpec inSpec)
+        {
+            var areEquals = base.AreEquals(inSpec);
+            if (inSpec is not EffectSpec spec) return false;
+            if (_inSpec.AbilitySpec.AbilitySO != spec.AbilitySpec.AbilitySO) return false;
+            return areEquals;
+        }
+
         private void UpdateTurn()
         {
             if (_turn <= 0 || Expired)
