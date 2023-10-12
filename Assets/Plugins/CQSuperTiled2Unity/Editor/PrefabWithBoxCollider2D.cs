@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using CryptoQuest.Gameplay.Encounter;
 using SuperTiled2Unity;
 using SuperTiled2Unity.Editor;
 using UnityEngine;
@@ -14,6 +15,7 @@ namespace CryptoQuestEditor.SuperTiled2Unity
     {
         private ST2USettings _settings;
         private SuperImportContext _context;
+        private const string POLY_ENCOUNTER = "unity:IsPolyEncounter";
 
         public override void TmxAssetImported(TmxAssetImportedArgs args)
         {
@@ -38,6 +40,15 @@ namespace CryptoQuestEditor.SuperTiled2Unity
         {
             foreach (var so in supers)
             {
+                var properties = so.GetComponent<SuperCustomProperties>();
+                if (properties.TryGetCustomProperty(POLY_ENCOUNTER, out CustomProperty isPolyEncounter))
+                {
+                    if (isPolyEncounter.GetValueAsBool())
+                    {
+                        objectsById[so.m_Id].AddComponent<EncounterZone>();
+                        continue;
+                    }
+                }
                 var prefab = GetPrefabReplacement(so.m_Type);
                 if (prefab == null) continue;
 
