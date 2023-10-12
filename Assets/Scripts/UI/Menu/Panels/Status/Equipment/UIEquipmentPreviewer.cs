@@ -153,7 +153,7 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
             }
         }
 
-        private void ResetAttributesUI()
+        public void ResetAttributesUI()
         {
             for (var i = 0; i < _uiAttributes.Length; i++)
             {

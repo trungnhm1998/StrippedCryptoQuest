@@ -89,8 +89,7 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
             Reset();
             _tooltip.Hide();
             _contents.SetActive(false);
-            // TODO: Implement Preview System
-            // _equipmentPreviewer.ResetAttributesUI();
+            _equipmentPreviewer.ResetAttributesUI();
         }
 
         private void Reset()
@@ -206,15 +205,13 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
         private void PreviewUnselectEquipment()
         {
             _tooltip.SetSafeArea(_tooltipSafeArea);
-            // TODO: Implement Preview System
-            // _equipmentPreviewer.PreviewUnequipEquipment(_currentlyEquippingItem.Equipment, InspectingHero);
+            _equipmentPreviewer.PreviewUnequipEquipment(_currentlyEquippingItem.Equipment, InspectingHero);
         }
 
         private void OnPreviewEquipmentStats(UIEquipmentItem equippingItemUI)
         {
             _tooltip.SetSafeArea(_tooltipSafeArea);
-            // TODO: Implement Preview System
-            // _equipmentPreviewer.PreviewEquipment(equipment, _equipmentsPanel.EquippingSlot, InspectingHero);
+            _equipmentPreviewer.PreviewEquipment(equippingItemUI.Equipment, _equipmentsPanel.EquippingSlot, InspectingHero);
         }
 
         private void Unequip()
