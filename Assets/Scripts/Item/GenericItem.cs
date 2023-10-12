@@ -1,10 +1,11 @@
+using IndiGames.Core.SaveSystem.ScriptableObjects;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.Localization;
 
 namespace CryptoQuest.Item
 {
-    public class GenericItem : ScriptableObject
+    public class GenericItem : SerializableScriptableObject
     {
         [field: Header("Item Generic Data")]
         [field: SerializeField] public string ID { get; private set; }
