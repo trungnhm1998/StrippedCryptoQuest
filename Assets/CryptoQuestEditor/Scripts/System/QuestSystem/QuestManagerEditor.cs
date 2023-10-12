@@ -26,11 +26,7 @@ namespace CryptoQuestEditor.System.QuestSystem
             InspectorElement.FillDefaultInspector(root, serializedObject, this);
 
             _uxml.CloneTree(root);
-
-            var clearButton = root.Q<Button>("clear-button");
-            clearButton.clicked += ClearData;
-
-            _inprogressScrollView = root.Q<ListView>("inprogess-quest");
+            _inprogressScrollView = root.Q<ListView>("inprogress-quest");
             _completeScrollView = root.Q<ListView>("complete-quest");
             ReloadData();
 
@@ -41,33 +37,25 @@ namespace CryptoQuestEditor.System.QuestSystem
         private void ReloadData()
         {
             _inprogressScrollView.makeItem = () => new Label();
-            Target.InProgressQuest.ForEach(quest =>
+            _inprogressScrollView.bindItem = (element, index) =>
             {
-                _inprogressScrollView.bindItem = (element, index) =>
-                {
-                    var label = element as Label;
-                    label.text = quest.BaseData.name;
-                };
-            });
+                var label = element as Label;
+                label.text = Target.InProgressQuest[index].BaseData.name;
+            };
             _inprogressScrollView.itemsSource = Target.InProgressQuest;
             _inprogressScrollView.fixedItemHeight = 20;
             _inprogressScrollView.selectionType = SelectionType.None;
 
             _completeScrollView.makeItem = () => new Label();
-            Target.CompletedQuests.ForEach(quest =>
+            _completeScrollView.bindItem = (element, index) =>
             {
-                _completeScrollView.bindItem = (element, index) =>
-                {
-                    var label = element as Label;
-                    label.text = quest.BaseData.name;
-                };
-            });
+                var label = element as Label;
+                label.text = Target.CompletedQuests[index].BaseData.name;
+            };
 
             _completeScrollView.itemsSource = Target.CompletedQuests;
             _completeScrollView.fixedItemHeight = 20;
             _completeScrollView.selectionType = SelectionType.None;
         }
-
-        private void ClearData() { }
     }
 }
