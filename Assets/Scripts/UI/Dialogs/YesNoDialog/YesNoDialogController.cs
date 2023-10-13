@@ -36,7 +36,7 @@ namespace CryptoQuest.UI.Dialogs.YesNoDialog
 
         private void HideDialogRequested()
         {
-            _uiYesNoDialog.Close();
+            _uiYesNoDialog?.Close();
         }
 
         protected override void UnregisterEvents()
