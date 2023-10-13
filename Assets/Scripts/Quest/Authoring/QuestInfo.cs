@@ -44,8 +44,10 @@ namespace CryptoQuest.Quest.Authoring
             Debug.Log($"QuestSystem::Finish Quest: <color=green>[{Data.QuestName}] - [{Data.EventName}]</color>");
             Data.OnQuestCompleted?.Invoke();
 
-            if (Data.Rewards.Length <= 0) return;
-            Data.OnRewardReceived?.Invoke(GetRewards());
+            if (Data.Rewards.Length > 0)
+            {
+                Data.OnRewardReceived?.Invoke(GetRewards());
+            }
 
             if (Data.NextAction == null) return;
             _questManager.StartCoroutine(Data.NextAction.Execute());
