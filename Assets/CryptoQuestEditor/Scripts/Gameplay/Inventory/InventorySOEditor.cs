@@ -137,12 +137,12 @@ namespace CryptoQuestEditor
 
             foreach (var item in usableItems)
             {
-                Target.Remove(item);
+                Target.Consumables.RemoveAll(info => info == item);
             }
 
             foreach (var item in equipmentItems)
             {
-                Target.Remove(item);
+                Target.Equipments.RemoveAll(info => info == item);
             }
         }
 
