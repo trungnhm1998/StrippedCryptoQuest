@@ -85,7 +85,8 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
             var clonedAttributeSystem = _cloneBehaviour.GetComponent<AttributeSystemBehaviour>();
             List<AttributeValue> currentValues = new(clonedAttributeSystem.AttributeValues);
             var clonedEquipmentsController = _cloneBehaviour.GetComponent<EquipmentsController>();
-            clonedEquipmentsController.Unequip(equipment);
+            var cloneEquipment = equipment.Clone();
+            clonedEquipmentsController.Unequip(cloneEquipment);
             _cloneBehaviour.GetComponent<EffectSystemBehaviour>().UpdateAttributeModifiersUsingAppliedEffects();
             List<AttributeValue> afterValues = new(clonedAttributeSystem.AttributeValues);
             PreviewValue(currentValues, afterValues);

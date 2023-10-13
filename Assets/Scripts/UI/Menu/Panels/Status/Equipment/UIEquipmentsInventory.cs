@@ -205,7 +205,7 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
         private void PreviewUnselectEquipment()
         {
             _tooltip.SetSafeArea(_tooltipSafeArea);
-            // _equipmentPreviewer.PreviewUnequipEquipment(_currentlyEquippingItem.Equipment, InspectingHero);
+            _equipmentPreviewer.PreviewUnequipEquipment(_currentlyEquippingItem.Equipment, InspectingHero);
         }
 
         private void OnPreviewEquipmentStats(UIEquipmentItem equippingItemUI)
