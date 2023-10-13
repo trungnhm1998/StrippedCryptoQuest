@@ -34,21 +34,18 @@ namespace CryptoQuest.Battle.States.SelectHeroesActions
 
         private void SelectEnemyToCastSkillOn(UISkill skillUI)
         {
-            _skillPresenter.Show(Hero, false);
             Debug.Log("SelectingSkill::SelectEnemyToCastSkillOn");
             Fsm.PushState(new SelectSingleEnemyToCastSkill(skillUI, Hero, Fsm));
         }
 
         private void SelectHeroToCastSkillOn(UISkill skillUI)
         {
-            _skillPresenter.Show(Hero, false);
             Debug.Log("SelectingSkill::SelectHeroToCastSkillOn");
             Fsm.PushState(new SelectSingleHeroToCastSkill(skillUI, Hero, Fsm));
         }
 
         private void SelectAllHeroToCastSkillOn(UISkill skillUI)
         {
-            _skillPresenter.Show(Hero, false);
             Debug.Log("SelectingSkill::SelectAllHeroToCastSkillOn");
 
             var heroes = Fsm.PlayerParty.OrderedAliveMembers.ToArray();
@@ -57,7 +54,6 @@ namespace CryptoQuest.Battle.States.SelectHeroesActions
 
         private void SelectAllEnemyToCastSkillOn(UISkill skillUI)
         {
-            _skillPresenter.Show(Hero, false);
             Debug.Log("SelectingSkill::SelectAllEnemyToCastSkillOn");
         
             var enemies = Fsm.EnemyPartyManager.Enemies.ToArray();
@@ -66,7 +62,6 @@ namespace CryptoQuest.Battle.States.SelectHeroesActions
 
         private void SelectEnemyGroupToCastSkillOn(UISkill skillUI)
         {
-            _skillPresenter.Show(Hero, false);
             Debug.Log("SelectingSkill::SelectEnemyGroupToCastSkillOn");
             Fsm.PushState(new SelectEnemyGroupToCastSkill(skillUI.Skill, Hero, Fsm));
         }
@@ -81,7 +76,6 @@ namespace CryptoQuest.Battle.States.SelectHeroesActions
 
         private void SelectSelfToCastSkillOn(UISkill skillUI)
         {
-            _skillPresenter.Show(Hero, false, false);
             Debug.Log("SelectingSkill::SelectSelfToCastSkillOn");
             var castSkillCommand = new CastSkillCommand(Hero, skillUI.Skill, Hero);
             Hero.TryGetComponent(out CommandExecutor commandExecutor);

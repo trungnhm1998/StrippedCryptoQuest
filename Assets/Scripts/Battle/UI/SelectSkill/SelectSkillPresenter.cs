@@ -48,14 +48,11 @@ namespace CryptoQuest.Battle.UI.SelectSkill
         private HeroBehaviour _hero;
         private readonly List<UISkill> _skills = new List<UISkill>();
 
-        public void Show(HeroBehaviour hero, bool interactable = true, bool isRegisterEvent = true)
+        public void Show(HeroBehaviour hero, bool interactable = true)
         {
             CreateSkillButtonsDifferentHero(hero);
             _skillList.gameObject.SetActive(true);
-            if(isRegisterEvent)
-            {
-                RegisterEvents();
-            }    
+            RegisterEvents();
             _buttonSelector.Interactable = interactable;
             if (interactable)
                 _buttonSelector.SelectFirstButton();
