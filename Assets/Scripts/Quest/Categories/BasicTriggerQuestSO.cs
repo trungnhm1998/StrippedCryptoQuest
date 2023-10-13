@@ -16,15 +16,12 @@ namespace CryptoQuest.Quest.Categories
     public class BasicTriggerQuestInfo : QuestInfo<BasicTriggerQuestSO>
     {
         public BasicTriggerQuestInfo(QuestManager questManager, BasicTriggerQuestSO basicTriggerQuestSO)
-            : base(questManager, basicTriggerQuestSO)
-        {
-        }
+            : base(questManager, basicTriggerQuestSO) { }
 
         public override void TriggerQuest()
         {
+            base.TriggerQuest();
             FinishQuest();
-            if (Data.NextAction != null)
-                _questManager.StartCoroutine(Data.NextAction.Execute());
         }
     }
 }

@@ -36,19 +36,19 @@ namespace CryptoQuest.Quest.Authoring
 
         public override void TriggerQuest()
         {
-            Debug.Log(
-                $"QuestSystem::Start Quest: <color=green>[{Data.QuestName}] - [{Data.EventName}]</color>");
+            Debug.Log($"QuestSystem::Start Quest: <color=green>[{Data.QuestName}] - [{Data.EventName}]</color>");
         }
 
         public override void FinishQuest()
         {
-            Debug.Log(
-                $"QuestSystem::Finish Quest: <color=green>[{Data.QuestName}] - [{Data.EventName}]</color>");
+            Debug.Log($"QuestSystem::Finish Quest: <color=green>[{Data.QuestName}] - [{Data.EventName}]</color>");
             Data.OnQuestCompleted?.Invoke();
-            if (Data.NextAction != null)
-                _questManager.StartCoroutine(Data.NextAction.Execute());
+
             if (Data.Rewards.Length <= 0) return;
             Data.OnRewardReceived?.Invoke(GetRewards());
+
+            if (Data.NextAction == null) return;
+            _questManager.StartCoroutine(Data.NextAction.Execute());
         }
 
         public override void GiveQuest()

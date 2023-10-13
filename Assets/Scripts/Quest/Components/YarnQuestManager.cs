@@ -55,8 +55,8 @@ namespace CryptoQuest.Quest.Components
         {
             foreach (var possibleOutComeQuest in _currentlyProcessDialogueQuests)
             {
-                if (possibleOutComeQuest.Data.QuestName == questName)
-                    _dialogueQuestSo = possibleOutComeQuest.Data;
+                if (possibleOutComeQuest.Data.QuestName != questName) continue;
+                _dialogueQuestSo = possibleOutComeQuest.Data;
             }
         }
     }

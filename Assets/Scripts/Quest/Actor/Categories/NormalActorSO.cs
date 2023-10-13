@@ -24,9 +24,6 @@ namespace CryptoQuest.Quest.Actor
                 Data.Prefab.InstantiateAsync(parent.position, Quaternion.identity, parent);
 
             yield return handle;
-
-            QuestGiver questActor = handle.Result.GetComponent<QuestGiver>();
-            questActor.SetQuestData(Data.QuestData);
         }
     }
 }

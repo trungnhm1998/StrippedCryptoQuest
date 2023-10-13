@@ -7,7 +7,6 @@ namespace CryptoQuest.Quest.Actor
 {
     public abstract class ActorSO : SerializableScriptableObject
     {
-        [field: SerializeField] public QuestSO QuestData { get; private set; }
         [field: SerializeField] public AssetReference Prefab { get; private set; }
         public abstract ActorInfo CreateActor();
     }

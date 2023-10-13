@@ -16,20 +16,14 @@ namespace CryptoQuest.Quest.Actor.Categories
         public MapPathSO Path;
 
         public override ActorInfo CreateActor() =>
-            new TeleportCollideActorInfo(this, QuestData);
+            new TeleportCollideActorInfo(this);
     }
 
     [Serializable]
     public class TeleportCollideActorInfo : ActorInfo<TeleportCollideActorSo>
     {
-        public TeleportCollideActorInfo(TeleportCollideActorSo actorSo, QuestSO questData) : base(
-            actorSo)
-        {
-        }
-
-        public TeleportCollideActorInfo()
-        {
-        }
+        public TeleportCollideActorInfo(TeleportCollideActorSo actorSo) : base(actorSo) { }
+        public TeleportCollideActorInfo() { }
 
         public override IEnumerator Spawn(Transform parent)
         {

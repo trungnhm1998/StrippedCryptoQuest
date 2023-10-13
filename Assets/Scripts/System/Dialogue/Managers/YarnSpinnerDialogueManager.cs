@@ -59,7 +59,6 @@ namespace CryptoQuest.System.Dialogue.Managers
         [SerializeField] private UnityEvent<string> _onReactionShowed;
 
         [SerializeField] private UnityEvent _onDialogueCompleted;
-        [SerializeField] private UnityEvent<string> _onCompleteQuest;
         [SerializeField] private StringEventChannelSO _onCompleteQuestEventChannelSO;
 
         private Yarn.Dialogue Dialogue => _dialogueRunner.Dialogue;
@@ -137,7 +136,6 @@ namespace CryptoQuest.System.Dialogue.Managers
         private void OnCompleteQuest(string questName)
         {
             Debug.Log($"YarnSpinnerDialogueManager::OnCompleteQuest: questName[{questName}]");
-            _onCompleteQuest?.Invoke(questName);
             _onCompleteQuestEventChannelSO.RaiseEvent(questName);
         }
 

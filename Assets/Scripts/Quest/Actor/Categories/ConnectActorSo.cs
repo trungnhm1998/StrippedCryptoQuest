@@ -16,14 +16,8 @@ namespace CryptoQuest.Quest.Actor.Categories
     [Serializable]
     public class ConnectActorInfo : ActorInfo<ConnectActorSo>
     {
-        public ConnectActorInfo(ConnectActorSo actorSo) : base(
-            actorSo)
-        {
-        }
-
-        public ConnectActorInfo()
-        {
-        }
+        public ConnectActorInfo(ConnectActorSo actorSo) : base(actorSo) { }
+        public ConnectActorInfo() { }
 
         public override IEnumerator Spawn(Transform parent)
         {
@@ -31,10 +25,6 @@ namespace CryptoQuest.Quest.Actor.Categories
                 Data.Prefab.InstantiateAsync(parent.position, Quaternion.identity);
 
             yield return handle;
-
-            QuestGiver questActor = handle.Result.GetComponent<QuestGiver>();
-            questActor.SetQuestData(Data.QuestData);
-            questActor.GiveQuest();
         }
     }
 }
