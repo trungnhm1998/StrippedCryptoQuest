@@ -13,15 +13,15 @@ namespace CryptoQuest.UI.Menu.Character
         [SerializeField] private UIAttributeBar _mpBar;
         [SerializeField] private AttributeChangeEvent _attributeChangeEvent;
 
-        private HeroBehaviour _hero;
+        public HeroBehaviour Hero { get; private set; }
 
         public void Init(HeroBehaviour hero)
         {
-            _hero = hero;
+            Hero = hero;
             // TODO: REFACTOR CHARACTER
             SetAvatar(hero.Avatar);
 
-            _attributeChangeEvent.AttributeSystemReference = _hero.GetComponent<AttributeSystemBehaviour>();
+            _attributeChangeEvent.AttributeSystemReference = Hero.GetComponent<AttributeSystemBehaviour>();
         }
 
         public void SetAvatar(Sprite avatar)

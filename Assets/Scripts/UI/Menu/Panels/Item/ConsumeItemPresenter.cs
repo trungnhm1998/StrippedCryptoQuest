@@ -42,8 +42,7 @@ namespace CryptoQuest.UI.Menu.Panels.Item
 
         private void ShowSelectAllAliveHeroes()
         {
-            _uiItemCharacterSelection.Confirmed += ConsumeOnCharacterIndex;
-            _uiItemCharacterSelection.SelectAllAliveHeroes();
+            ConsumableController.OnConsumeItem(_inspectingItem.Consumable, new int[4] {0, 1, 2, 3});
         }
 
         private void ConsumeOnCharacterIndex(int[] heroIndices)

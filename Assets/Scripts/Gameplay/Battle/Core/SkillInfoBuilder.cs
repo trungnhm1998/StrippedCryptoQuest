@@ -18,7 +18,7 @@ namespace CryptoQuest.Gameplay.Battle.Core
         private SkillEffectType _effectType;
         private bool _isFixed;
         private SkillParameters _skillParameters;
-        private AbilityUsageScenarioSO _usageScenario;
+        private EAbilityUsageScenario _usageScenario;
 
         public SkillInfo Build()
         {
@@ -91,7 +91,7 @@ namespace CryptoQuest.Gameplay.Battle.Core
             return this;
         }
 
-        public SkillInfoBuilder WithUsageScenario(AbilityUsageScenarioSO usageScenario)
+        public SkillInfoBuilder WithUsageScenario(EAbilityUsageScenario usageScenario)
         {
             _usageScenario = usageScenario;
             return this;

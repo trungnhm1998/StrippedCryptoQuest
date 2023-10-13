@@ -37,14 +37,14 @@ namespace CryptoQuest.Gameplay.Battle.Core
         public float Cost;
         public SkillEffectType EffectType;
 
-        public AbilityUsageScenarioSO UsageScenarioSO;
+        public EAbilityUsageScenario UsageScenarioSO;
 
         // public BattleTargetTypeSO TargetType;
         public SkillParameters SkillParameters;
 
         public bool CheckUsageScenario(EAbilityUsageScenario usageScenario)
         {
-            return (UsageScenarioSO != null) && (UsageScenarioSO.UsageScenario.HasFlag(usageScenario));
+            return UsageScenarioSO.HasFlag(usageScenario);
         }
     }
 }

@@ -17,6 +17,8 @@ namespace CryptoQuest.UI.Menu.Panels.Skill
         [SerializeField] private UISkillList _skillListPanel;
         public UISkillList SkillListPanel => _skillListPanel;
 
+        [field: SerializeField] public UITagetSingleCharacter TargetSingleCharacterUI { get; private set; }
+
         /// <summary>
         /// Return the specific state machine for this panel.
         /// </summary>

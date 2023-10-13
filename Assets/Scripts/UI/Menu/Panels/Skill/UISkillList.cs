@@ -1,41 +1,50 @@
+using System;
+using SkillDef = CryptoQuest.Gameplay.Skill.Skill;
 using System.Collections;
 using System.Collections.Generic;
 using CryptoQuest.Battle.Components;
 using CryptoQuest.Gameplay.PlayerParty;
-using CryptoQuest.Gameplay.Skill;
 using CryptoQuest.System;
-using PolyAndCode.UI;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Pool;
 using UnityEngine.UI;
+using Mirror;
+using CryptoQuest.Character.Ability;
 
 namespace CryptoQuest.UI.Menu.Panels.Skill
 {
-    public class UISkillList : MonoBehaviour, IRecyclableScrollRectDataSource
+    public class UISkillList : MonoBehaviour
     {
         public static UnityAction EnterSkillSelectionEvent;
 
         [SerializeField] private UICharacterSelection _characterSelection;
 
         [Header("Scroll View Configs")]
-        [SerializeField] private RecyclableScrollRect _scrollRect;
+        [SerializeField] private ScrollRect _scrollRect;
+
         [SerializeField] private GameObject _upArrow;
         [SerializeField] private GameObject _downArrow;
+        [SerializeField] private UISkill _prefab;
+        private IObjectPool<UISkill> _skillUIPool;
 
-        private List<Gameplay.Skill.Skill> _skills = new();
-        private int _skillCount = 0;
+        public IObjectPool<UISkill> SkillUIPool =>
+            _skillUIPool ??= new ObjectPool<UISkill>(OnCreate, OnGet, OnRelease, OnDestroySkill);
+
+        private List<UISkill> _skillUIs = new();
+
         private UISkillButton _defaultSelectedSkill;
         private float _verticalOffset;
         private IPartyController _partyController;
 
         private void Awake()
         {
-            _characterSelection.UpdateSkillListEvent += Init;
+            _characterSelection.InspectingCharacterEvent += Init;
         }
 
         private void OnDestroy()
         {
-            _characterSelection.UpdateSkillListEvent -= Init;
+            _characterSelection.InspectingCharacterEvent -= Init;
         }
 
         private void OnEnable()
@@ -45,51 +54,39 @@ namespace CryptoQuest.UI.Menu.Panels.Skill
             Init(_partyController.Slots[0].HeroBehaviour); // First slot should never be null/empty
         }
 
-        private void Init(HeroBehaviour hero, bool isAnotherChar = false)
+        private void Init(HeroBehaviour hero)
         {
-            // TODO: REFACTOR HERO SKILLS
-            // GetSkills(hero.GetAvailableSkills());
-            //
-            // if (isAnotherChar)
-            // {
-            //     StartCoroutine(RefreshSkillList());
-            //     return;
-            // }
-            //
-            // _scrollRect.Initialize(this);
-        }
+            if (!hero.TryGetComponent(out HeroSkills skillsComponent)) return;
+            var skills = skillsComponent.Skills;
 
-        private void GetSkills(List<Gameplay.Skill.Skill> skills)
-        {
-            _skills = skills;
-            _skillCount = skills.Count;
-        }
-
-        private IEnumerator RefreshSkillList()
-        {
             CleanUpScrollView();
-            yield return null;
-
-            _scrollRect.Initialize(this);
-            _scrollRect.ReloadData();
-
-            yield return new WaitForSeconds(.1f);
+            InitSkillList(skills);
             OnSelectFirstSkill();
+        }
+
+        private void InitSkillList(IReadOnlyList<CastSkillAbility> skills)
+        {
+            foreach (var skill in skills)
+            {
+                var skillUI = SkillUIPool.Get();
+                skillUI.Init(skill);
+            }
         }
 
         private void CleanUpScrollView()
         {
-            foreach (Transform child in _scrollRect.content.transform)
+            foreach (var ui in _skillUIs)
             {
-                Destroy(child.gameObject);
+                SkillUIPool.Release(ui);
             }
+            _skillUIs = new();
         }
 
         private void OnSelectFirstSkill()
         {
             EnterSkillSelectionEvent?.Invoke();
 
-            _defaultSelectedSkill = _scrollRect.content.GetChild(0).GetComponent<UISkillButton>();
+            _defaultSelectedSkill = _scrollRect.content.GetComponentInChildren<UISkillButton>();
             _defaultSelectedSkill.Select();
         }
 
@@ -105,24 +102,35 @@ namespace CryptoQuest.UI.Menu.Panels.Skill
             _downArrow.SetActive(ShouldMoveDown);
         }
 
-        #region Recyclable Scroll View Setup
-        public int GetItemCount()
-        {
-            return _skillCount;
-        }
-
-        public void SetCell(ICell cell, int index)
-        {
-            var skill = cell as UISkill;
-            skill.Configure(_skills[index]);
-        }
-        #endregion
-
         #region SkillSelectionState Setup
+
         public void Init()
         {
             OnSelectFirstSkill();
         }
+
+        #endregion
+
+        #region Pool Callbacks
+
+        private void OnDestroySkill(UISkill skillUI)
+        {
+            Destroy(skillUI);
+        }
+
+        private void OnRelease(UISkill skillUI)
+        {
+            skillUI.gameObject.SetActive(false);
+        }
+
+        private void OnGet(UISkill skillUI)
+        {
+            _skillUIs.Add(skillUI);
+            skillUI.gameObject.SetActive(true);
+        }
+
+        private UISkill OnCreate() => Instantiate(_prefab, _scrollRect.content);
+
         #endregion
     }
 }

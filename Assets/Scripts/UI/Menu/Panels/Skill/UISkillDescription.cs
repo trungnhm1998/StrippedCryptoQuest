@@ -1,3 +1,4 @@
+using CryptoQuest.Character.Ability;
 using CryptoQuest.Gameplay.Skill;
 using UnityEngine;
 using UnityEngine.Localization.Components;
@@ -10,17 +11,17 @@ namespace CryptoQuest.UI.Menu.Panels.Skill
 
         private void Awake()
         {
-            UISkillButton.SelectingSkillEvent += Configure;
+            UISkill.InspectingSkillEvent += Configure;
         }
 
         private void OnDestroy()
         {
-            UISkillButton.SelectingSkillEvent -= Configure;
+            UISkill.InspectingSkillEvent -= Configure;
         }
 
-        private void Configure(Gameplay.Skill.Skill skill)
+        private void Configure(CastSkillAbility skill)
         {
-            _description.StringReference = skill.SkillInfo.SkillDescription;
+            _description.StringReference = skill.Parameters.SkillDescription;
         }
     }
 }

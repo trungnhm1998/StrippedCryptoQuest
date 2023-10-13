@@ -12,6 +12,8 @@ namespace CryptoQuest.UI.Menu.Character
         [SerializeField] private MultiInputButton _button;
         [SerializeField] private UICharacterInfoPanel _characterInSlot;
 
+        public Image SelectBorder => _selectBorder;
+
         public bool Interactable
         {
             get => _button.enabled;
@@ -23,9 +25,11 @@ namespace CryptoQuest.UI.Menu.Character
         }
 
         private int _indexInParty;
+        public HeroBehaviour Hero { get; private set; }
 
         public void Init(HeroBehaviour hero, int idxInParty)
         {
+            Hero = hero;
             _indexInParty = idxInParty;
             _characterInSlot.Init(hero);
             _button.onClick.AddListener(OnPressed);

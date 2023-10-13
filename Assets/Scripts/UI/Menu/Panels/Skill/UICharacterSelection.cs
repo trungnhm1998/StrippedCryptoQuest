@@ -11,7 +11,7 @@ namespace CryptoQuest.UI.Menu.Panels.Skill
     {
         public static UnityAction EnterCharacterSelectionEvent;
         public UnityAction SelectedCharacterEvent;
-        public UnityAction<HeroBehaviour, bool> UpdateSkillListEvent;
+        public UnityAction<HeroBehaviour> InspectingCharacterEvent;
 
         [SerializeField] private UICharacterButton _defaultSelection;
         [SerializeField] private UICharacterPartySlot[] _partySlots;
@@ -60,7 +60,7 @@ namespace CryptoQuest.UI.Menu.Panels.Skill
             {
                 if (selectedCharGo.transform.parent.gameObject == _partySlots[index].gameObject)
                 {
-                    UpdateSkillListEvent?.Invoke(_party.Slots[index].HeroBehaviour, true);
+                    InspectingCharacterEvent?.Invoke(_party.Slots[index].HeroBehaviour);
                     _cachedGo = _partySlots[index].gameObject;
                     return;
                 }

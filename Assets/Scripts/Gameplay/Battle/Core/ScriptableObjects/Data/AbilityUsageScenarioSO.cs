@@ -7,6 +7,7 @@ using UnityEngine;
 namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data
 {
     [CreateAssetMenu(fileName = "AbilityUsageScenario", menuName = "Gameplay/Battle/Data/Ability Usage Scenario")]
+    [Obsolete]
     public class AbilityUsageScenarioSO : GenericData
     {
         /// <summary>

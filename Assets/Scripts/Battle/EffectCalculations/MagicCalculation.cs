@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using CryptoQuest.Character.Ability;
+using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data;
 using IndiGames.GameplayAbilitySystem.EffectSystem;
 using IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects.EffectExecutionCalculation;
 using UnityEngine;
@@ -32,7 +33,8 @@ namespace CryptoQuest.Battle.EffectCalculations
             {
                 Attribute = targetedAttributeDef.Attribute,
                 ModifierType = EAttributeModifierType.Add,
-                Value = Mathf.RoundToInt(baseMagicValue) * -1
+                // TODO: Refactor this when implement buff effect
+                Value = Mathf.RoundToInt(baseMagicValue) * (effectSpec.Parameters.EffectType == EEffectType.Restore ? 1 : -1)
             };
             outModifiers.Add(modifier);
         }

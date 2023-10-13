@@ -1,6 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
-using CryptoQuest.Gameplay.Skill;
+using CryptoQuest.Character.Ability;
 using CryptoQuest.Menu;
 using UnityEngine;
 using UnityEngine.Events;
@@ -11,11 +9,6 @@ namespace CryptoQuest.UI.Menu.Panels.Skill
 {
     public class UISkillButton : MultiInputButton
     {
-        public static event UnityAction<Button> InspectingRow;
-        public static event UnityAction<Gameplay.Skill.Skill> SelectingSkillEvent;
-
-        [SerializeField] private UISkill _singleSkill;
-
         protected override void Awake()
         {
             base.Awake();
@@ -38,21 +31,6 @@ namespace CryptoQuest.UI.Menu.Panels.Skill
         private void DisableButton()
         {
             interactable = false;
-        }
-
-        /// <summary>
-        /// Activate an ability in Skill Menu.
-        /// </summary>
-        public void UseAbility()
-        {
-            Debug.Log($"Skill selected");
-        }
-
-        public override void OnSelect(BaseEventData eventData)
-        {
-            SelectingSkillEvent?.Invoke(_singleSkill.CachedSkill);
-            InspectingRow?.Invoke(this);
-            base.OnSelect(eventData);
         }
     }
 }
