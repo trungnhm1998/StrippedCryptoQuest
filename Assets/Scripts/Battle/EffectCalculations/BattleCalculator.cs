@@ -1,4 +1,5 @@
 using CryptoQuest.Battle.Components;
+using CryptoQuest.Character.Ability;
 using CryptoQuest.Gameplay.Battle.Core;
 using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data;
 using IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects.EffectExecutionCalculation;
@@ -60,6 +61,7 @@ namespace CryptoQuest.Battle.EffectCalculations
         {
             var characterElemental = executionParams.SourceAbilitySystemComponent.GetComponent<Element>().ElementValue;
             if (characterElemental == null) return 1;
+            var targetedElement = characterElemental;
             executionParams.TryGetAttributeValue(new CustomExecutionAttributeCaptureDef()
             {
                 Attribute = characterElemental.AttackAttribute,
@@ -71,8 +73,26 @@ namespace CryptoQuest.Battle.EffectCalculations
                 CaptureFrom = EGameplayEffectCaptureSource.Target
             }, out var elementalDef, 1f);
 
-            Debug.Log("elemental attack" + elementalAtk.CurrentValue
-                                         + " elemental def" + elementalDef.CurrentValue);
+
+            var effectSpec = (EffectSpec)executionParams.EffectSpec;
+            SkillParameters skillParameters = effectSpec.Parameters;
+            if (skillParameters.Element != null)
+            {
+                targetedElement = skillParameters.Element;
+                executionParams.TryGetAttributeValue(new CustomExecutionAttributeCaptureDef()
+                {
+                    Attribute = skillParameters.Element.AttackAttribute,
+                    CaptureFrom = EGameplayEffectCaptureSource.Source
+                }, out elementalAtk, 1f);
+                executionParams.TryGetAttributeValue(new CustomExecutionAttributeCaptureDef()
+                {
+                    Attribute = skillParameters.Element.ResistanceAttribute,
+                    CaptureFrom = EGameplayEffectCaptureSource.Target
+                }, out elementalDef, 1f);
+            }
+
+            Debug.Log(
+                $"targeted element {targetedElement.name} elemental attack{elementalAtk.CurrentValue} elemental def{elementalDef.CurrentValue}");
             var elementalRate = elementalAtk.CurrentValue / elementalDef.CurrentValue;
             elementalRate = elementalRate == 0 ? 1 : elementalRate;
             return elementalRate;

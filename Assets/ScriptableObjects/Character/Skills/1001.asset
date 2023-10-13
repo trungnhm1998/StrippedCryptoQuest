@@ -27,7 +27,7 @@ MonoBehaviour:
       RequireTags: []
       IgnoreTags: []
   <Effect>k__BackingField: {fileID: 11400000, guid: f4945dcd5cb8dbb428edb20917f51754, type: 2}
-  Cost: {fileID: 11400000, guid: 724c10b9ef7be0d478ce06b128d223c4, type: 2}
+  <SuccessRate>k__BackingField: 100
   <Parameters>k__BackingField:
     Id: 1001
     SkillName:
@@ -54,8 +54,10 @@ MonoBehaviour:
     Category: {fileID: 0}
     Cost: 10
     EffectType: {fileID: 0}
-    UsageScenarioSO: {fileID: 0}
+    UsageScenarioSO: 0
     SkillParameters:
+      <GrantedTags>k__BackingField: []
+      Element: {fileID: 11400000, guid: 45b43c65777683f40ac77dac46dbe86c, type: 2}
       BasePower: 20
       PowerUpperLimit: 40
       PowerLowerLimit: 10

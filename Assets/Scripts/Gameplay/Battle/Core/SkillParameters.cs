@@ -11,7 +11,8 @@ namespace CryptoQuest.Gameplay.Battle.Core
     [Serializable]
     public class SkillParameters
     {
-        [field : SerializeField] public TagSO[] GrantedTags { get; private set; }
+        [field: SerializeField] public TagSO[] GrantedTags { get; private set; }
+        public Elemental Element;
         public float BasePower;
         public float PowerUpperLimit;
         public float PowerLowerLimit;
