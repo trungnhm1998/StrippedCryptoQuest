@@ -171,7 +171,6 @@ MonoBehaviour:
   _ocarinaData: {fileID: 11400000, guid: e1a8fc228b0646346b1744f53d19c13b, type: 2}
   _onSceneLoadedEventChannel: {fileID: 11400000, guid: b8b96e43d21a7bf4c96df4cb83c2b764, type: 2}
   _registerTownEvent: {fileID: 11400000, guid: 3ea2dceec7e7a764da0d5ccbd12c59be, type: 2}
-  _consumedItemEventChannel: {fileID: 11400000, guid: 7f9f171c27956064183e0fd0db7439ca, type: 2}
   _spiralConfig: {fileID: 11400000, guid: 2708a2e85420add4493974ea482cd235, type: 2}
   _requestLoadMapEvent: {fileID: 11400000, guid: 932ea26428d5f4c4f8bdfd48ebc80873, type: 2}
   _ocarinaUI: {fileID: 4583751640661796588}
@@ -216,6 +215,34 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8633054299452432712}
     m_Modifications:
+    - target: {fileID: 3109088554574154816, guid: a15f2ddded5996e448b5b7415499de83, type: 3}
+      propertyPath: _teleportEvent.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3109088554574154816, guid: a15f2ddded5996e448b5b7415499de83, type: 3}
+      propertyPath: _teleportEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3109088554574154816, guid: a15f2ddded5996e448b5b7415499de83, type: 3}
+      propertyPath: _teleportEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 8894603393239616001}
+    - target: {fileID: 3109088554574154816, guid: a15f2ddded5996e448b5b7415499de83, type: 3}
+      propertyPath: _teleportEvent.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3109088554574154816, guid: a15f2ddded5996e448b5b7415499de83, type: 3}
+      propertyPath: _teleportEvent.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: StartTeleportSequence
+      objectReference: {fileID: 0}
+    - target: {fileID: 3109088554574154816, guid: a15f2ddded5996e448b5b7415499de83, type: 3}
+      propertyPath: _teleportEvent.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: CryptoQuest.Item.Ocarina.OcarinaBehaviour, indi-games.crypto-quest
+      objectReference: {fileID: 0}
+    - target: {fileID: 3109088554574154816, guid: a15f2ddded5996e448b5b7415499de83, type: 3}
+      propertyPath: _teleportEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 6679036936316141200, guid: a15f2ddded5996e448b5b7415499de83, type: 3}
       propertyPath: m_Name
       value: OcarinaPresenter

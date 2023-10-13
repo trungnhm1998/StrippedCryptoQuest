@@ -5,7 +5,6 @@ using CryptoQuest.Gameplay.PlayerParty;
 using CryptoQuest.System;
 using CryptoQuest.UI.Menu.Panels.Skill;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace CryptoQuest.UI.Menu.Panels.Item
 {

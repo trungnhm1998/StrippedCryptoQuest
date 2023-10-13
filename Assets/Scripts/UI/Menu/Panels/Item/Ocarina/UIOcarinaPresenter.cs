@@ -1,9 +1,11 @@
 ﻿using System.Collections;
 using CryptoQuest.Events;
 using CryptoQuest.Item.Ocarina;
+using CryptoQuest.Map;
 using CryptoQuest.UI.Menu.MenuStates.ItemStates;
 using IndiGames.Core.Events.ScriptableObjects;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
 namespace CryptoQuest.UI.Menu.Panels.Item.Ocarina
@@ -22,7 +24,7 @@ namespace CryptoQuest.UI.Menu.Panels.Item.Ocarina
 
         [Header("Raise event on")]
         [SerializeField] private VoidEventChannelSO _forceCloseMenuEvent; // TODO: Also bad code
-        [SerializeField] private MapPathEventChannelSO _teleportEvent;
+        [SerializeField] private UnityEvent<MapPathSO> _teleportEvent;
 
         private void Awake()
         {
@@ -66,7 +68,7 @@ namespace CryptoQuest.UI.Menu.Panels.Item.Ocarina
         {
             _forceCloseMenuEvent.RaiseEvent();
             Hide();
-            _teleportEvent.RaiseEvent(location);
+            _teleportEvent.Invoke(location);
         }
 
         // TODO: Reuse buttons instead of destroying them, BAD CODE

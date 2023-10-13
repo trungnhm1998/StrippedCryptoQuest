@@ -1,6 +1,3 @@
-using System;
-using SkillDef = CryptoQuest.Gameplay.Skill.Skill;
-using System.Collections;
 using System.Collections.Generic;
 using CryptoQuest.Battle.Components;
 using CryptoQuest.Gameplay.PlayerParty;
@@ -9,7 +6,6 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Pool;
 using UnityEngine.UI;
-using Mirror;
 using CryptoQuest.Character.Ability;
 
 namespace CryptoQuest.UI.Menu.Panels.Skill
@@ -126,6 +122,7 @@ namespace CryptoQuest.UI.Menu.Panels.Skill
         private void OnGet(UISkill skillUI)
         {
             _skillUIs.Add(skillUI);
+            skillUI.transform.SetAsLastSibling();
             skillUI.gameObject.SetActive(true);
         }
 

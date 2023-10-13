@@ -49,10 +49,10 @@ namespace CryptoQuest.Gameplay.Inventory
                 var abilitySystem = hero.GetComponent<AbilitySystemBehaviour>();
                 var spec = abilitySystem.GiveAbility<ConsumableAbilitySpec>(consumable.Data.Ability);
                 spec.SetConsumable(consumable);
-                spec.TryActiveAbility();
 
                 if (spec.CanActiveAbility() && !ableToUseOnAtLeastOneHero)
                     ableToUseOnAtLeastOneHero = true;
+                spec.TryActiveAbility();
             }
 
             if (ableToUseOnAtLeastOneHero)
