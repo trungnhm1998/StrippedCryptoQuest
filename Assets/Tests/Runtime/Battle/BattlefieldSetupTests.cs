@@ -87,36 +87,42 @@ namespace CryptoQuest.Tests.Runtime.Battle
         }
 
         [UnityTest]
+        [Timeout(100000000)]
         public IEnumerator BattlefieldSetup_1000s_ReturnCorrectEnemyCount()
         {
             yield return BattleFieldTest(_battlefields1k);
         }
 
         [UnityTest]
+        [Timeout(100000000)]
         public IEnumerator BattlefieldSetup_2000s_ReturnCorrectEnemyCount()
         {
             yield return BattleFieldTest(_battlefields2k);
         }
 
         [UnityTest]
+        [Timeout(100000000)]
         public IEnumerator BattlefieldSetup_3000s_ReturnCorrectEnemyCount()
         {
             yield return BattleFieldTest(_battlefields3k);
         }
 
         [UnityTest]
+        [Timeout(100000000)]
         public IEnumerator BattlefieldSetup_4000s_ReturnCorrectEnemyCount()
         {
             yield return BattleFieldTest(_battlefields4k);
         }
 
         [UnityTest]
+        [Timeout(100000000)]
         public IEnumerator BattlefieldSetup_5000s_ReturnCorrectEnemyCount()
         {
             yield return BattleFieldTest(_battlefields5k);
         }
 
         [UnityTest]
+        [Timeout(100000000)]
         public IEnumerator BattlefieldSetup_Remain_ReturnCorrectEnemyCount()
         {
             yield return BattleFieldTest(_battlefieldsRemain);

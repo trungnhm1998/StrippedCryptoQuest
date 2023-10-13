@@ -25,11 +25,13 @@ namespace CryptoQuest.Character.Enemy
     [Serializable]
     public class EnemyDef : ScriptableObject
     {
+        [field: SerializeField] public int Id { get; private set; }
         [field: SerializeField] public LocalizedString Name { get; private set; }
         [field: SerializeField] public Elemental Element { get; private set; }
         [field: SerializeField] public AssetReferenceT<GameObject> Model { get; private set; }
 
-        [field: SerializeField] public AttributeWithValue[] Stats { get; private set; } =
+        [field: SerializeField]
+        public AttributeWithValue[] Stats { get; private set; } =
             Array.Empty<AttributeWithValue>();
 
         [SerializeField] private Drop[] _drops = Array.Empty<Drop>();

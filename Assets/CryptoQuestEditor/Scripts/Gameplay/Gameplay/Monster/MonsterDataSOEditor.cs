@@ -131,6 +131,13 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Monster
                     "SkillPower", "Defense", "EvasionRate", "CriticalRate"
                 };
                 AttributeWithValue[] attributeInitValues = InitAttributeValueSetup(dataModel, attributeNames);
+                //<Id>k__BackingField 
+                var serializedObject = new SerializedObject(instance);
+                var property = serializedObject.FindProperty("<Id>k__BackingField");
+                property.intValue = dataModel.MonsterId;
+                serializedObject.ApplyModifiedProperties();
+                serializedObject.Update();
+                
                 instance.Editor_SetNameKey(GetLocalizedStringRef(dataModel.LocalizedKey));
                 instance.Editor_SetMonsterModelAssetRef(GetMonsterModelAssetRef(dataModel.MonsterPrefabName));
                 instance.Editor_SetElement(GetElementalSO(dataModel.ElementId));
