@@ -100,12 +100,12 @@ namespace CryptoQuest.Battle
 
         private void SpiralInDone()
         {
+            _spiralConfigSo.DoneSpiralIn -= SpiralInDone;
             _loadSceneEventChannelSo.RequestLoad(_battleSceneSO);
         }
 
         private void StartBattle()
         {
-            _spiralConfigSo.DoneSpiralIn -= SpiralInDone;
             _spiralConfigSo.DoneFadeOut -= StartBattle;
         }
 
