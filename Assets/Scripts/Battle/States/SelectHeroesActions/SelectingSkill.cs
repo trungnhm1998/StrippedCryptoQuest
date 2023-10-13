@@ -81,7 +81,7 @@ namespace CryptoQuest.Battle.States.SelectHeroesActions
 
         private void SelectSelfToCastSkillOn(UISkill skillUI)
         {
-            _skillPresenter.Show(Hero, false);
+            _skillPresenter.Show(Hero, false, false);
             Debug.Log("SelectingSkill::SelectSelfToCastSkillOn");
             var castSkillCommand = new CastSkillCommand(Hero, skillUI.Skill, Hero);
             Hero.TryGetComponent(out CommandExecutor commandExecutor);
