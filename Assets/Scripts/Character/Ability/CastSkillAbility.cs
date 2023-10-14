@@ -79,7 +79,10 @@ namespace CryptoQuest.Character.Ability
 
         private bool CanCast()
         {
-            var result = Random.Range(0, 100) < _def.SuccessRate;
+            var roll = Random.Range(0, 100);
+            var result = roll < _def.SuccessRate;
+            var resultMessage = result ? "Success" : "Failed";
+            Debug.Log($"Casting {_def.name} with success rate {_def.SuccessRate} and roll {roll}: {resultMessage}");
             if (!result)
             {
                 Debug.Log($"Failed to cast {_def.name}");

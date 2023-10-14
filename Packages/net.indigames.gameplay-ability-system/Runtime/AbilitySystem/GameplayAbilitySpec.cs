@@ -56,26 +56,35 @@ namespace IndiGames.GameplayAbilitySystem.AbilitySystem
         /// <summary>
         /// Not the same as granted a ability, ability might be granted but not activate yet
         /// </summary>
-        public virtual void ActivateAbility()
+        public void ActivateAbility()
         {
             if (!CanActiveAbility()) return;
+            _owner.StartCoroutine(InternalActiveAbility());
+        }
 
+        private IEnumerator InternalActiveAbility()
+        {
             _isActive = true;
-            _owner.StartCoroutine(OnAbilityActive());
+            yield return OnAbilityActive();
             _owner.TagSystem.AddTags(AbilitySO.Tags.ActivationTags);
         }
 
         /// <summary>
         /// Not the same as ability being removed, ability ended but still in the system
+        ///
+        /// This should always be called
         /// </summary>
-        public virtual void EndAbility()
+        public void EndAbility()
         {
             if (!_isActive || _owner == null) return;
 
             _isActive = false;
             _owner.StopCoroutine(OnAbilityActive());
             _owner.TagSystem.RemoveTags(AbilitySO.Tags.ActivationTags);
+            OnAbilityEnded();
         }
+
+        protected virtual void OnAbilityEnded() { }
 
         /// <summary>
         /// Need the owner to active so we could use the coroutine
