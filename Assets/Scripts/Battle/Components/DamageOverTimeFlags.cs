@@ -15,10 +15,15 @@ namespace CryptoQuest.Battle.Components
         private TinyMessageSubscriptionToken _roundEndedEvent;
 
         public override void Init() { } // This component got added at runtime so Init will not called
-        private void Start() => _roundEndedEvent = BattleEventBus.SubscribeEvent<RoundEndedEvent>(ClearFlags);
-        protected override void OnReset() => BattleEventBus.UnsubscribeEvent(_roundEndedEvent);
+        protected override void Awake()
+        {
+            base.Awake();
+             Character.TurnEnded += ClearFlags;
+        }
 
-        private void ClearFlags(RoundEndedEvent ctx)
+        protected override void OnReset() => Character.TurnEnded -= ClearFlags;
+
+        private void ClearFlags()
         {
             _damageOverTimeTags.Clear();
         }

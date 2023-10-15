@@ -24,12 +24,14 @@ namespace CryptoQuest.Battle
         private readonly RoundEndedEvent _roundEndedEvent = new();
         public event Action EndBattle;
         private bool _isBattleEnded;
+        private int _roundCount;
 
         private TinyMessageSubscriptionToken _highlightEnemyToken;
         private TinyMessageSubscriptionToken _resetHighlightEnemyToken;
 
         private void OnEnable()
         {
+            _roundCount = 0;
             _retreatAbility.RetreatedEvent += OnEndBattle;
             _highlightEnemyToken = BattleEventBus.SubscribeEvent<HighlightEnemyEvent>(HightlightEnemy);
             _resetHighlightEnemyToken = BattleEventBus.SubscribeEvent<ResetHighlightEnemyEvent>(ResetHightlightEnemy);
@@ -42,13 +44,12 @@ namespace CryptoQuest.Battle
             BattleEventBus.UnsubscribeEvent(_resetHighlightEnemyToken);
         }
 
-        public void ExecuteCharacterCommands(IEnumerable<Components.Character> characters)
-        {
+        public void ExecuteCharacterCommands(IEnumerable<Components.Character> characters) => 
             StartCoroutine(CoPresentation(characters));
-        }
 
         private IEnumerator CoPresentation(IEnumerable<Components.Character> characters)
         {
+            Debug.Log($"Presenting round [{++_roundCount}]");
             _logPresenter.Show();
             ChangeAllEnemiesOpacity(1f);
 
