@@ -10,13 +10,13 @@ namespace CryptoQuest.System.CutsceneSystem.CustomTimelineTracks.FadeTransitionT
     public class FadeTransitionPlayableAsset : PlayableAsset, ITimelineClipAsset
     {
         public float BlackScreenDuration = 1f;
-        [SerializeField] private YarnSpinnerNodePlayableBehaviour _template;
+        [SerializeField] private FadeTransitionPlayableBehavior _template;
         public ClipCaps clipCaps => ClipCaps.None;
 
         public override Playable CreatePlayable(PlayableGraph graph, GameObject owner)
         {
-            var playable = ScriptPlayable<YarnSpinnerNodePlayableBehaviour>.Create(graph, _template);
-            // _template.BlackScreenDuration = BlackScreenDuration;
+            var playable = ScriptPlayable<FadeTransitionPlayableBehavior>.Create(graph, _template);
+            _template.BlackScreenDuration = BlackScreenDuration;
 
             return playable;
         }

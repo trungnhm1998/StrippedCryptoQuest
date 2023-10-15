@@ -33,7 +33,7 @@ Transform:
   - {fileID: 7693632841490575465}
   - {fileID: 2875370832011413627}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &66047365823554676
 PrefabInstance:
@@ -192,6 +192,10 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4302499264253339029, guid: ab7522dc47eaf874c8bdfe83d79cbd09, type: 3}
+      propertyPath: _onCompleteQuestEventChannelSO
+      value: 
+      objectReference: {fileID: 11400000, guid: d1320590a1ab68e4389435932acb3474, type: 2}
     - target: {fileID: 4302499264253339029, guid: ab7522dc47eaf874c8bdfe83d79cbd09, type: 3}
       propertyPath: _onReactionShowed.m_PersistentCalls.m_Calls.Array.size
       value: 1
@@ -406,6 +410,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: QuestManager
       objectReference: {fileID: 0}
+    - target: {fileID: 5970865285635464750, guid: 6a9f787dfc0f345459a00588887e8d00, type: 3}
+      propertyPath: _giveQuestEventChannelSo
+      value: 
+      objectReference: {fileID: 11400000, guid: da57ae63ba992064e8d3ec26238fc35a, type: 2}
+    - target: {fileID: 5970865285635464750, guid: 6a9f787dfc0f345459a00588887e8d00, type: 3}
+      propertyPath: _triggerQuestEventChannelSo
+      value: 
+      objectReference: {fileID: 11400000, guid: fdefe5ff6c97c9946a9e874eb074f93f, type: 2}
+    - target: {fileID: 5970865285635464750, guid: 6a9f787dfc0f345459a00588887e8d00, type: 3}
+      propertyPath: _dialogueOptionQuestEventChannelSo
+      value: 
+      objectReference: {fileID: 11400000, guid: d1320590a1ab68e4389435932acb3474, type: 2}
     m_RemovedComponents:
     - {fileID: 1249662082265426137, guid: 6a9f787dfc0f345459a00588887e8d00, type: 3}
     - {fileID: 5732774167976230999, guid: 6a9f787dfc0f345459a00588887e8d00, type: 3}
@@ -477,14 +493,17 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4950832394449208065, guid: ff7b0481443d3cc43a41dc8c2e3fdd1d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6519034041490333009}
   m_SourcePrefab: {fileID: 100100000, guid: ff7b0481443d3cc43a41dc8c2e3fdd1d, type: 3}
 --- !u!114 &1297975549445324847 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2595704407961746552, guid: ff7b0481443d3cc43a41dc8c2e3fdd1d, type: 3}
   m_PrefabInstance: {fileID: 3892973245962222679}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 8264806115570171734}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8bd9b1eafaa2439da8f3d4bca3e2289a, type: 3}
@@ -495,3 +514,21 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 573841164295349176, guid: ff7b0481443d3cc43a41dc8c2e3fdd1d, type: 3}
   m_PrefabInstance: {fileID: 3892973245962222679}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &8264806115570171734 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4950832394449208065, guid: ff7b0481443d3cc43a41dc8c2e3fdd1d, type: 3}
+  m_PrefabInstance: {fileID: 3892973245962222679}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &6519034041490333009
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8264806115570171734}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a8a6d6fbda045f39f025dddf46fdc7d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _blackScreen: {fileID: 0}

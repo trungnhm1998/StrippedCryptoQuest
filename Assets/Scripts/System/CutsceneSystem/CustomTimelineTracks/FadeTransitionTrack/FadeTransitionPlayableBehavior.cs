@@ -10,8 +10,6 @@ namespace CryptoQuest.System.CutsceneSystem.CustomTimelineTracks.FadeTransitionT
         [HideInInspector]
         public float BlackScreenDuration;
 
-        // public bool PauseTimelineOnClipEnds = true;
-
         private bool _played = false;
 
         public override void ProcessFrame(Playable playable, FrameData info, object playerData)
@@ -24,6 +22,7 @@ namespace CryptoQuest.System.CutsceneSystem.CustomTimelineTracks.FadeTransitionT
             {
                 if (!playable.GetGraph().IsPlaying()) return;
                 if (BlackScreenDuration <= 0) return;
+                TransitionCutsceneController.OnBlackOut?.Invoke(BlackScreenDuration);
             }
         }
     }
