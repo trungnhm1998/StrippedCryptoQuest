@@ -1,9 +1,4 @@
-using CryptoQuest.Character.Ability;
 using CryptoQuest.Menu;
-using UnityEngine;
-using UnityEngine.Events;
-using UnityEngine.EventSystems;
-using UnityEngine.UI;
 
 namespace CryptoQuest.UI.Menu.Panels.Skill
 {

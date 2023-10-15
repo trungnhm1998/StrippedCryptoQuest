@@ -1,5 +1,4 @@
-using CryptoQuest.Character.Ability;
-using CryptoQuest.Gameplay.Skill;
+using CryptoQuest.AbilitySystem.Abilities;
 using UnityEngine;
 using UnityEngine.Localization.Components;
 

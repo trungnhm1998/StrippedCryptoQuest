@@ -1,5 +1,4 @@
 using CryptoQuest.Battle.Components;
-using CryptoQuest.Character.Ability;
 using CryptoQuest.Gameplay.Battle.Core;
 using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data;
 using IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects.EffectExecutionCalculation;
@@ -59,6 +58,7 @@ namespace CryptoQuest.AbilitySystem.Executions
 
         public static float CalculateElementalRateFromParams(CustomExecutionParameters executionParams)
         {
+            var context = GameplayEffectContext.ExtractEffectContext(executionParams.EffectSpec.Context);
             var characterElemental = executionParams.SourceAbilitySystemComponent.GetComponent<Element>().ElementValue;
             if (characterElemental == null) return 1;
             var targetedElement = characterElemental;
@@ -74,19 +74,17 @@ namespace CryptoQuest.AbilitySystem.Executions
             }, out var elementalDef, 1f);
 
 
-            var effectSpec = (EffectSpec)executionParams.EffectSpec;
-            SkillParameters skillParameters = effectSpec.Parameters;
-            if (skillParameters.Element != null)
+            if (context.Parameters.Element != null)
             {
-                targetedElement = skillParameters.Element;
+                targetedElement = context.Parameters.Element;
                 executionParams.TryGetAttributeValue(new CustomExecutionAttributeCaptureDef()
                 {
-                    Attribute = skillParameters.Element.AttackAttribute,
+                    Attribute = context.Parameters.Element.AttackAttribute,
                     CaptureFrom = EGameplayEffectCaptureSource.Source
                 }, out elementalAtk, 1f);
                 executionParams.TryGetAttributeValue(new CustomExecutionAttributeCaptureDef()
                 {
-                    Attribute = skillParameters.Element.ResistanceAttribute,
+                    Attribute = context.Parameters.Element.ResistanceAttribute,
                     CaptureFrom = EGameplayEffectCaptureSource.Target
                 }, out elementalDef, 1f);
             }

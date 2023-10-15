@@ -1,8 +1,8 @@
 using UnityEngine;
 using UnityEngine.Localization.Components;
 using UnityEngine.UI;
-using CryptoQuest.Character.Ability;
 using System;
+using CryptoQuest.AbilitySystem.Abilities;
 using TMPro;
 using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data;
 

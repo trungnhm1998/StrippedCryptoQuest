@@ -1,6 +1,6 @@
 ﻿using System;
+using CryptoQuest.AbilitySystem.Abilities;
 using CryptoQuest.Battle.Components;
-using CryptoQuest.Character.Ability;
 using CryptoQuest.Gameplay.PlayerParty;
 using CryptoQuest.System;
 using CryptoQuest.UI.Menu.Panels.Skill;

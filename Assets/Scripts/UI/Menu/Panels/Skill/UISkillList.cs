@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using CryptoQuest.AbilitySystem.Abilities;
 using CryptoQuest.Battle.Components;
 using CryptoQuest.Gameplay.PlayerParty;
 using CryptoQuest.System;
@@ -6,7 +7,6 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Pool;
 using UnityEngine.UI;
-using CryptoQuest.Character.Ability;
 
 namespace CryptoQuest.UI.Menu.Panels.Skill
 {
