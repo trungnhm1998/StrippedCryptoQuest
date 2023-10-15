@@ -2,6 +2,7 @@
 using TinyMessenger;
 using UnityEngine;
 using UnityEngine.Localization;
+using UnityEngine.Localization.SmartFormat.PersistentVariables;
 
 namespace CryptoQuest.Battle.UI.Logs
 {
@@ -23,7 +24,10 @@ namespace CryptoQuest.Battle.UI.Logs
         private void LogAttack(NormalAttackEvent ctx)
         {
             var attackLogMessage = _attackLogMessage;
-            attackLogMessage.Add(Constants.CHARACTER_NAME, ctx.Character.LocalizedName);
+            attackLogMessage.Add(Constants.CHARACTER_NAME, new StringVariable()
+            {
+                Value = ctx.Character.DisplayName
+            });
             Logger.AppendLog(attackLogMessage);
         }
     }
