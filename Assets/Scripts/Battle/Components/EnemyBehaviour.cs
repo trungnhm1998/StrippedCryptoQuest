@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using CryptoQuest.Battle.Commands;
 using CryptoQuest.Character.Enemy;
 using CryptoQuest.Gameplay.Loot;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
@@ -112,5 +113,12 @@ namespace CryptoQuest.Battle.Components
         public void ProvideStats(AttributeWithValue[] attributeWithValues) { }
 
         public IEnumerable<LootInfo> GetLoots() => _spec.GetLoots();
+
+        public override void OnTurnStarted()
+        {
+            TryGetComponent<CommandExecutor>(out var commandExecutor);
+            commandExecutor.SetCommand(new NormalAttackCommand(this, Targeting.Target));
+            base.OnTurnStarted();
+        }
     }
 }

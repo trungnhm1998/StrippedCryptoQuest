@@ -98,12 +98,12 @@ namespace CryptoQuest.Battle.Components
             return true;
         }
 
-        public void OnTurnStarted()
+        public virtual void OnTurnStarted()
         {
             _gas.EffectSystem.UpdateAttributeModifiersUsingAppliedEffects(); // this also remove expired effects
             TurnStarted?.Invoke();
         }
 
-        public void OnTurnEnded() => TurnEnded?.Invoke();
+        public virtual void OnTurnEnded() => TurnEnded?.Invoke();
     }
 }

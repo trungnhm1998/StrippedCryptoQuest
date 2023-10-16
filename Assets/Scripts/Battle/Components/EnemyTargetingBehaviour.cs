@@ -20,7 +20,7 @@ namespace CryptoQuest.Battle.Components
             var isIndexValid = (0 <= weightRandomIndex) && (weightRandomIndex < aliveHeroes.Count);
             var selectedUnit =
                 isIndexValid ? aliveHeroes[weightRandomIndex] : aliveHeroes[0];
-            Target=  selectedUnit.IsValidAndAlive() ? selectedUnit : null;
+            Target = selectedUnit.IsValidAndAlive() ? selectedUnit : null;
         }
     }
 }

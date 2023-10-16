@@ -18,7 +18,6 @@ namespace CryptoQuest.Battle.Components
 
         protected override void OnPreExecuteCommand()
         {
-            Command = new NormalAttackCommand(Character, Character.Targeting.Target);
             BattleEventBus.RaiseEvent(_highlightEvent);
         }
 
