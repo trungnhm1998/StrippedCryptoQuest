@@ -1,5 +1,4 @@
 ﻿using System;
-using CryptoQuest.Quest.Actions;
 using CryptoQuest.Quest.Authoring;
 using CryptoQuest.Quest.Components;
 using UnityEngine;
@@ -9,8 +8,6 @@ namespace CryptoQuest.Quest.Categories
     [CreateAssetMenu(menuName = "QuestSystem/Quests/Dialogue Quest", fileName = "DialogueQuestSO")]
     public class DialogueQuestSO : QuestSO
     {
-        public NextAction NextAction;
-
         public override QuestInfo CreateQuest(QuestManager questManager)
             => new DialogueQuestInfo(questManager, this);
     }

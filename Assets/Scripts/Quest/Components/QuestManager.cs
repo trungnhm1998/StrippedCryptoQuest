@@ -15,6 +15,7 @@ namespace CryptoQuest.Quest.Components
     {
         public static Action<IQuestConfigure> OnConfigureQuest;
         public static Action<QuestSO> OnRemoveProgressingQuest;
+        public static Action<QuestSO> OnQuestCompleted;
 
         [Header("Quest Events")] [SerializeField]
         private QuestEventChannelSO _triggerQuestEventChannel;
@@ -39,6 +40,7 @@ namespace CryptoQuest.Quest.Components
             _triggerQuestEventChannel.EventRaised += TriggerQuest;
             _giveQuestEventChannel.EventRaised += GiveQuest;
             OnRemoveProgressingQuest += RemoveProgressingQuest;
+            OnQuestCompleted += QuestCompleted;
         }
 
         private void OnDisable()
@@ -47,6 +49,7 @@ namespace CryptoQuest.Quest.Components
             _triggerQuestEventChannel.EventRaised -= TriggerQuest;
             _giveQuestEventChannel.EventRaised -= GiveQuest;
             OnRemoveProgressingQuest -= RemoveProgressingQuest;
+            OnQuestCompleted -= QuestCompleted;
         }
 
         public void TriggerQuest(QuestSO questData)
@@ -59,12 +62,19 @@ namespace CryptoQuest.Quest.Components
                 break;
             }
 
+            if (IsQuestTriggered(questData)) return;
+
             _currentQuestInfo.TriggerQuest();
         }
 
         public void GiveQuest(QuestSO questData)
         {
             if (IsQuestTriggered(questData)) return;
+
+            foreach (var progressingQuest in InProgressQuest)
+                if (progressingQuest.BaseData == questData)
+                    return;
+
             QuestInfo currentQuestInfo = questData.CreateQuest(this);
 
             if (!_completedQuestsId.Contains(questData.Guid))
@@ -74,7 +84,6 @@ namespace CryptoQuest.Quest.Components
             }
 
             _currentQuestData = questData;
-            questData.OnQuestCompleted += QuestCompleted;
             questData.OnRewardReceived += RewardReceived;
         }
 
@@ -91,8 +100,24 @@ namespace CryptoQuest.Quest.Components
 
             CompletedQuests.Add(_currentQuestInfo);
             _completedQuestsId.Add(_currentQuestInfo.BaseData.Guid);
+        }
 
-            _currentQuestData.OnQuestCompleted -= QuestCompleted;
+        private void UpdateQuestProgress(QuestInfo questInfo)
+        {
+            InProgressQuest.Remove(questInfo);
+
+            CompletedQuests.Add(questInfo);
+            _completedQuestsId.Add(questInfo.BaseData.Guid);
+        }
+
+        private void QuestCompleted(QuestSO questSo)
+        {
+            foreach (var progressQuestInfo in InProgressQuest)
+            {
+                if (progressQuestInfo.BaseData != questSo) continue;
+                UpdateQuestProgress(progressQuestInfo);
+                break;
+            }
         }
 
         private bool IsQuestTriggered(QuestSO questSo)

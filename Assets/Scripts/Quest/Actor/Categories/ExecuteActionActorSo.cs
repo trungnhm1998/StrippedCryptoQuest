@@ -12,9 +12,11 @@ namespace CryptoQuest.Quest.Actor.Categories
     public class ExecuteActionActorSo : ActorSO<ExecuteActionActorInfo>
     {
         [field: Header("Config Settings")]
-        [field: SerializeField] public NextAction Action { get; private set; }
+        [field: SerializeField]
+        public NextAction Action { get; private set; }
 
         [field: SerializeField] public QuestColliderTrigger.ECollideActionType CollideActionType { get; private set; }
+        [field: SerializeField] public bool IsRepeatable { get; private set; } = false;
 
         public override ActorInfo CreateActor() =>
             new ExecuteActionActorInfo(this);
@@ -22,8 +24,13 @@ namespace CryptoQuest.Quest.Actor.Categories
 
     public class ExecuteActionActorInfo : ActorInfo<ExecuteActionActorSo>
     {
-        public ExecuteActionActorInfo(ExecuteActionActorSo actorSo) : base(actorSo) { }
-        public ExecuteActionActorInfo() { }
+        public ExecuteActionActorInfo(ExecuteActionActorSo actorSo) : base(actorSo)
+        {
+        }
+
+        public ExecuteActionActorInfo()
+        {
+        }
 
         public override IEnumerator Spawn(Transform parent)
         {
@@ -35,6 +42,7 @@ namespace CryptoQuest.Quest.Actor.Categories
             TriggerActionCollider actor = handle.Result.GetComponent<TriggerActionCollider>();
             actor.SetAction(Data.Action);
             actor.SetCollideActionType(Data.CollideActionType);
+            actor.SetRepeatType(Data.IsRepeatable);
 
             if (!parent.TryGetComponent<ShowCubeWireUtil>(out var showCubeWireUtil)) yield break;
             actor.SetBoxSize(showCubeWireUtil.SizeBox);

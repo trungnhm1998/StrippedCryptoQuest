@@ -10,6 +10,7 @@ namespace CryptoQuest.Quest.Components
 
         private NextAction _nextAction;
         private ECollideActionType _collideActionType;
+        private bool _isRepeatable;
 
         public void SetBoxSize(Vector2 componentSizeBox) => _collider2D.size = componentSizeBox;
 
@@ -18,6 +19,8 @@ namespace CryptoQuest.Quest.Components
             _nextAction = nextAction;
             _collider2D.enabled = true;
         }
+
+        public void SetRepeatType(bool isRepeatable) => _isRepeatable = isRepeatable;
 
         public void SetCollideActionType(ECollideActionType collideActionType) =>
             _collideActionType = collideActionType;
@@ -37,7 +40,7 @@ namespace CryptoQuest.Quest.Components
         private void Execute()
         {
             StartCoroutine(_nextAction.Execute());
-            _collider2D.enabled = false;
+            _collider2D.enabled = _isRepeatable;
         }
     }
 }

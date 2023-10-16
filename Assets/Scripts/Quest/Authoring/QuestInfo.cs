@@ -32,7 +32,9 @@ namespace CryptoQuest.Quest.Authoring
 
         public override QuestSO BaseData => Data;
 
-        protected QuestInfo() { }
+        protected QuestInfo()
+        {
+        }
 
         public override void TriggerQuest()
         {
@@ -43,6 +45,7 @@ namespace CryptoQuest.Quest.Authoring
         {
             Debug.Log($"QuestSystem::Finish Quest: <color=green>[{Data.QuestName}] - [{Data.EventName}]</color>");
             Data.OnQuestCompleted?.Invoke();
+            QuestManager.OnQuestCompleted?.Invoke(Data);
 
             if (Data.Rewards.Length > 0)
             {
