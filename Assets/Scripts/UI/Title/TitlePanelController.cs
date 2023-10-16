@@ -1,6 +1,7 @@
 ﻿using CryptoQuest.Events;
 using CryptoQuest.UI.Title.TitleStates;
 using IndiGames.Core.Events.ScriptableObjects;
+using System.Collections;
 using UnityEngine;
 
 namespace CryptoQuest.UI.Title
@@ -27,13 +28,26 @@ namespace CryptoQuest.UI.Title
             _onLoginFailedEventChannel.EventRaised -= OnLoginFailedEventChannel;
         }
 
-        private void OnLoginSuccessEventChannel() => ChangeState(new StartGameState(StartGamePanelController));
+        private void OnLoginSuccessEventChannel()
+        {
+            StopAllCoroutines();
+            ChangeState(new StartGameState(StartGamePanelController));
+        }    
 
         private void OnLoginFailedEventChannel(string error) => ChangeState(new SocialLoginFailedState(this));
 
         public void ChangeState(IState state) => TitleStateMachine.ChangeState(state);
 
-        public void SelectDefault() => Invoke(nameof(SelectTwitterButton), 0.5f);
+        public void SelectDefault()
+        {
+            StartCoroutine(SelectDefaultButton());
+        }    
+
+        private IEnumerator SelectDefaultButton()
+        {
+            yield return new WaitForSeconds(0.5f);
+            SelectTwitterButton();
+        }    
 
         private void SelectTwitterButton() => SocialPanel.TwitterLoginBtn.Select();
     }

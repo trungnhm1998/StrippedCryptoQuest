@@ -78,16 +78,18 @@ namespace CryptoQuest.SNS
         public InputField passwordInputField;
 
         private FirebaseUser _fbUser;
+        private bool _isSigning = false;
 
         private const string URL_LOGIN = "/auth/crypto/login";
 
         public void Start()
         {
+            _isSigning = false;
 #if !UNITY_EDITOR
             FirebaseAuth.OnAuthStateChanged(gameObject.name, "OnUserSignedIn", "OnUserSignedOut");
 #endif
         }
-
+        
         private void LoginWithBackend()
         {
             var restAPINetworkController = ServiceProvider.GetService<IRestAPINetworkController>();
@@ -101,29 +103,38 @@ namespace CryptoQuest.SNS
         {
             Debug.Log(exception.Message);
             OnSignedInFailed?.Invoke(exception.Message);
-        }   
-        
+            _isSigning = false;
+        }
+
         private void OnLoginBESuccess(UnityWebRequest request)
         {
             Debug.Log("Payload: " + request.downloadHandler.text);
 
             _authorizationSO.Init(request.downloadHandler.text);
-            
-            if(_authorizationSO.Profile != null)
+
+            if (_authorizationSO.Profile != null)
             {
+                Debug.Log("FirebaseAuthScript: Login BE success");
                 OnSignedInSuccess?.Invoke(_authorizationSO.Profile);
-            }    
-        }    
+            }
+            _isSigning = false;
+        }
 
         public void OnUserSignedIn(string userJson)
         {
-            if (!IsLoggedIn())
+            if (!IsLoggedIn() && !_isSigning)
             {
+                _isSigning = true;
                 _fbUser = JsonUtility.FromJson<FirebaseUser>(userJson);
                 if (_fbUser != null)
                 {
+                    Debug.Log("FirebaseAuthScript: Try to login BE");
                     LoginWithBackend();
-                }
+                } 
+                else
+                {
+                    _isSigning = false;
+                }    
             }
         }
 
@@ -157,6 +168,7 @@ namespace CryptoQuest.SNS
         {
             if (!IsLoggedIn())
             {
+                Debug.Log("FirebaseAuthScript: Create user with email and password");
                 FirebaseAuth.CreateUserWithEmailAndPassword(emailInputField.text, passwordInputField.text,
                     gameObject.name, "OnUserSignedIn", "OnError");
             }
@@ -170,6 +182,7 @@ namespace CryptoQuest.SNS
         {
             if (!IsLoggedIn())
             {
+                Debug.Log("FirebaseAuthScript: Sign in with email and password no param");
                 FirebaseAuth.SignInWithEmailAndPassword(emailInputField.text, passwordInputField.text, gameObject.name,
                     "OnUserSignedIn", "OnError");
             }
@@ -183,6 +196,7 @@ namespace CryptoQuest.SNS
         {
             if (!IsLoggedIn())
             {
+                Debug.Log("FirebaseAuthScript: Sign in with email and passs with param");
                 FirebaseAuth.SignInWithEmailAndPassword(email, password, gameObject.name, "OnUserSignedIn", "OnError");
             }
             else
@@ -195,6 +209,7 @@ namespace CryptoQuest.SNS
         {
             if (!IsLoggedIn())
             {
+                Debug.Log("FirebaseAuthScript: Sign with google");
                 FirebaseAuth.SignInWithGoogle(gameObject.name, "OnUserSignedIn", "OnError");
             }
             else
@@ -207,6 +222,7 @@ namespace CryptoQuest.SNS
         {
             if (!IsLoggedIn())
             {
+                Debug.Log("FirebaseAuthScript: Sign with Facebook");
                 FirebaseAuth.SignInWithFacebook(gameObject.name, "OnUserSignedIn", "OnError");
             }
             else

@@ -36,6 +36,8 @@ namespace CryptoQuest.SocialLogin
             _requestGoogleLoginEvent.EventRaised += OnRequestGoogleLogin;
             _requestWalletLoginEvent.EventRaised += OnRequestWalletLogin;
             _requestAuthenticateFormWithFormEvent.EventRaised += OnLoginWithEmailAndPassword;
+            _firebaseAuthScript.OnSignedInSuccess += OnSignInSuccess;
+            _firebaseAuthScript.OnSignedInFailed += OnSignInFailed;
         }
 
         private void OnDisable()
@@ -45,6 +47,8 @@ namespace CryptoQuest.SocialLogin
             _requestGoogleLoginEvent.EventRaised -= OnRequestGoogleLogin;
             _requestWalletLoginEvent.EventRaised -= OnRequestWalletLogin;
             _requestAuthenticateFormWithFormEvent.EventRaised -= OnLoginWithEmailAndPassword;
+            _firebaseAuthScript.OnSignedInSuccess -= OnSignInSuccess;
+            _firebaseAuthScript.OnSignedInFailed -= OnSignInFailed;
         }
 
         private void OnRequestFacebookLogin()
@@ -55,7 +59,7 @@ namespace CryptoQuest.SocialLogin
         private void OnRequestGoogleLogin()
         {
             _firebaseAuthScript.SignInWithGoogle();
-            Subscribe();
+            
         }
 
         private void OnRequestTwitterLogin()
@@ -71,30 +75,15 @@ namespace CryptoQuest.SocialLogin
         private void OnLoginWithEmailAndPassword(AuthenticateFormInfo authenticateFormInfo)
         {
             _firebaseAuthScript.SignInWithEmailAndPassword(authenticateFormInfo.Email, authenticateFormInfo.Password);
-            Subscribe();
-        }
-
-        private void Subscribe()
-        {
-            _firebaseAuthScript.OnSignedInSuccess += OnSignInSuccess;
-            _firebaseAuthScript.OnSignedInFailed += OnSignInFailed;
-        }
-
-        private void Unsubscribe()
-        {
-            _firebaseAuthScript.OnSignedInSuccess -= OnSignInSuccess;
-            _firebaseAuthScript.OnSignedInFailed -= OnSignInFailed;
         }
 
         private void OnSignInSuccess(UserProfile userProfile)
         {
-            Unsubscribe();
             _loginSuccessEvent.RaiseEvent();
         }
 
         private void OnSignInFailed(string error)
         {
-            Unsubscribe();
             _loginFailEvent.RaiseEvent(error);
         }
 

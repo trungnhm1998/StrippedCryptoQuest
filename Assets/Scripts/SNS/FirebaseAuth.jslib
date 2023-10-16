@@ -7,6 +7,7 @@ mergeInto(LibraryManager.library, {
             const parsedCallback = UTF8ToString(callback);
             const parsedFallback = UTF8ToString(fallback);        
             firebase.auth().createUserWithEmailAndPassword(parsedEmail, parsedPassword).then((result) => {
+				console.log("Create usser and signed with Email and passsword:", result)
                 window.unityInstance.SendMessage(parsedObjectName, parsedCallback, JSON.stringify(result.user));
             }).catch(function (error) {
                 window.unityInstance.SendMessage(parsedObjectName, parsedFallback, JSON.stringify(error, Object.getOwnPropertyNames(error)));
@@ -23,6 +24,7 @@ mergeInto(LibraryManager.library, {
             const parsedCallback = UTF8ToString(callback);
             const parsedFallback = UTF8ToString(fallback);
             firebase.auth().signInWithEmailAndPassword(parsedEmail, parsedPassword).then((result) => {
+				console.log("SignedIn with Email and passsword:", result)
                 window.unityInstance.SendMessage(parsedObjectName, parsedCallback, JSON.stringify(result.user));
             }).catch(function (error) {
                 window.unityInstance.SendMessage(parsedObjectName, parsedFallback, JSON.stringify(error, Object.getOwnPropertyNames(error)));
@@ -68,7 +70,8 @@ mergeInto(LibraryManager.library, {
             const parsedObjectName = UTF8ToString(objectName);
             const parsedCallback = UTF8ToString(callback);
             const parsedFallback = UTF8ToString(fallback);
-            firebase.auth().signOut().then(() => {                
+            firebase.auth().signOut().then(() => {    
+				console.log("signOut")
                 window.unityInstance.SendMessage(parsedObjectName, parsedCallback, "User signed out");
             }).catch(function (error) {
                 window.unityInstance.SendMessage(parsedObjectName, parsedFallback, JSON.stringify(error, Object.getOwnPropertyNames(error)));
@@ -84,8 +87,10 @@ mergeInto(LibraryManager.library, {
             const parsedOnUserSignedOut = UTF8ToString(onUserSignedOut);
             firebase.auth().onAuthStateChanged((user) => {
                 if (user) {
+					console.log("SignedIn with OnAuthStateChanged")
                     window.unityInstance.SendMessage(parsedObjectName, parsedOnUserSignedIn, JSON.stringify(user));
                 } else {
+					console.log("SignedOut with OnAuthStateChanged")
                     window.unityInstance.SendMessage(parsedObjectName, parsedOnUserSignedOut, "User signed out");
                 }
             })
