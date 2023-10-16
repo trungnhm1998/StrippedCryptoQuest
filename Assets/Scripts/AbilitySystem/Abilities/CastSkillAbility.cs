@@ -23,29 +23,21 @@ namespace CryptoQuest.AbilitySystem.Abilities
     ///
     /// Ability to cast an effect on targets (self, enemy, ally, ...) which cost mana to cast and has a chance to fail
     /// </summary>
-    public class CastSkillAbility : AbilityScriptableObject
+    public abstract class CastSkillAbility : AbilityScriptableObject
     {
-        [field: SerializeField] public GameplayEffectDefinition Effect { get; private set; }
-        [field: SerializeField] public float SuccessRate { get; private set; } = 100;
         [SerializeField] private GameplayEffectContext _context;
         public GameplayEffectContext Context => _context;
         [field: SerializeField, Obsolete] public SkillInfo Parameters { get; private set; }
+        [field: SerializeField] public float SuccessRate { get; private set; } = 100;
+        [SerializeField] private float _mpToCast = 3f;
+        public float MpToCast => _mpToCast;
         [field: SerializeField] public SkillTargetType TargetType { get; private set; }
-
-        private void OnValidate()
-        {
-            if (_context == null) return;
-            _context = new GameplayEffectContext(Parameters);
-        }
-
-        protected override GameplayAbilitySpec CreateAbility() => new CastSkillAbilitySpec(this);
     }
 
-    public class CastSkillAbilitySpec : GameplayAbilitySpec
+    public abstract class CastSkillAbilitySpec : GameplayAbilitySpec
     {
         private GameplayEffectDefinition _costEffect;
         private readonly CastSkillAbility _def;
-        public CastSkillAbility Def => _def;
 
         public CastSkillAbilitySpec(CastSkillAbility def) => _def = def;
 
@@ -63,7 +55,7 @@ namespace CryptoQuest.AbilitySystem.Abilities
                     {
                         Attribute = AttributeSets.Mana,
                         OperationType = EAttributeModifierOperationType.Add,
-                        Value = -_def.Parameters.Cost
+                        Value = -_def.MpToCast
                     }
                 }
             };
@@ -114,6 +106,7 @@ namespace CryptoQuest.AbilitySystem.Abilities
         }
 
         private AbilitySystemBehaviour[] _targets;
+        protected AbilitySystemBehaviour[] Targets => _targets;
 
         public void Execute(params AbilitySystemBehaviour[] characters)
         {
@@ -125,8 +118,8 @@ namespace CryptoQuest.AbilitySystem.Abilities
         {
             ApplyCost();
             if (CanCast() == false) yield break;
-
-            foreach (var target in _targets)
+            
+            foreach (var target in Targets)
             {
                 if (IsTargetEvaded(target))
                 {
@@ -134,11 +127,17 @@ namespace CryptoQuest.AbilitySystem.Abilities
                     continue;
                 }
 
-                AffectingTarget(target);
+                yield return InternalExecute(target);
             }
         }
+        
+        /// <summary>
+        /// After all check has passed cost, cast success rate, evade, ... then execute the ability
+        /// </summary>
+        /// <param name="target"></param>
+        /// <returns></returns>
+        protected abstract IEnumerator InternalExecute(AbilitySystemBehaviour target);
 
-        private void AffectingTarget(AbilitySystemBehaviour target) => target.ApplyEffectSpecToSelf(CreateEffectSpec());
 
         private ActiveGameplayEffect GetActiveEffectWithTag(AbilitySystemBehaviour target, TagScriptableObject tag)
         {
@@ -146,8 +145,6 @@ namespace CryptoQuest.AbilitySystem.Abilities
             return appliedEffects.FirstOrDefault(x => x.GrantedTags.Contains(tag));
         }
 
-        private GameplayEffectSpec CreateEffectSpec() =>
-            _def.Effect.CreateEffectSpec(Owner, new GameplayEffectContextHandle(_def.Context));
 
         private bool IsTargetEvaded(AbilitySystemBehaviour target)
         {

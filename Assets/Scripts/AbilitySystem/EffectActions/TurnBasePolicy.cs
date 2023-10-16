@@ -55,13 +55,13 @@ namespace CryptoQuest.AbilitySystem.EffectActions
         {
             switch (_policyDef.TriggerType)
             {
+                case TurnBasePolicy.ETriggerType.Always:
                 case TurnBasePolicy.ETriggerType.OnTurnStart:
                     _character.TurnStarted += ModifyTargetAttributeIfPeriodic;
                     break;
                 case TurnBasePolicy.ETriggerType.OnTurnEnd:
                     _character.TurnEnded += ModifyTargetAttributeIfPeriodic;
                     break;
-                case TurnBasePolicy.ETriggerType.Always:
                 default:
                     return;
             }
@@ -76,13 +76,13 @@ namespace CryptoQuest.AbilitySystem.EffectActions
         {
             switch (_policyDef.TriggerType)
             {
+                case TurnBasePolicy.ETriggerType.Always:
                 case TurnBasePolicy.ETriggerType.OnTurnStart:
                     _character.TurnStarted -= ModifyTargetAttributeIfPeriodic;
                     break;
                 case TurnBasePolicy.ETriggerType.OnTurnEnd:
                     _character.TurnEnded -= ModifyTargetAttributeIfPeriodic;
                     break;
-                case TurnBasePolicy.ETriggerType.Always:
                 default:
                     return;
             }
@@ -90,7 +90,6 @@ namespace CryptoQuest.AbilitySystem.EffectActions
 
         private void ModifyTargetAttributeIfPeriodic()
         {
-            if (_policyDef.TriggerType == TurnBasePolicy.ETriggerType.Always) return;
             if (_turnsLeft <= 0) return;
 
             LogAffectingStatus();
