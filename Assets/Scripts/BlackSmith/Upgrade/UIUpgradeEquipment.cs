@@ -1,9 +1,8 @@
+using System;
 using System.Collections;
 using CryptoQuest.BlackSmith.Interface;
-using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
@@ -11,6 +10,8 @@ namespace CryptoQuest.BlackSmith.Upgrade
 {
     public class UIUpgradeEquipment : MonoBehaviour
     {
+        public Action<UIUpgradeItem> OnSelected;
+        public Action<UIUpgradeItem> OnSubmit;
         [SerializeField] private ScrollRect _scrollRect;
         [SerializeField] private GameObject _equipmentPrefab;
         [SerializeField] private GameObject _previewObject;
@@ -33,6 +34,15 @@ namespace CryptoQuest.BlackSmith.Upgrade
             _levelToUpgrade.text = _selectLevelToUpgrade.ToString();
         }
 
+        private void OnItemPressed(UIUpgradeItem item)
+        {
+            OnSubmit?.Invoke(item);
+        }
+        private void OnItemSelected(UIUpgradeItem item)
+        {
+            OnSelected?.Invoke(item);
+        }
+
         public void InstantiateData(IUpgradeModel model)
         {
             ChangeLocation(_defaultPanel);
@@ -41,6 +51,8 @@ namespace CryptoQuest.BlackSmith.Upgrade
             {
                 var obj = Instantiate(_equipmentPrefab, _scrollRect.content).GetComponent<UIUpgradeItem>();
                 obj.ConfigureCell(model.ListEquipment[i]);
+                obj.OnItemSelected += OnItemSelected;
+                obj.OnSubmit += OnItemPressed;
             }
             StartCoroutine(SelectDefaultButton());
         }
@@ -69,6 +81,7 @@ namespace CryptoQuest.BlackSmith.Upgrade
             if (_scrollRect.content.childCount == 0) yield break;
             var firstItemGO = _scrollRect.content.GetChild(0).gameObject.GetComponent<UIUpgradeItem>();
             EventSystem.current.SetSelectedGameObject(firstItemGO.gameObject);
+            OnSelected?.Invoke(firstItemGO);
         }
 
         public void SelectedEquipment(UIUpgradeItem item)

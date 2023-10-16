@@ -1,8 +1,8 @@
+using System;
 using CryptoQuest.BlackSmith.Interface;
 using CryptoQuest.Menu;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.Localization.Components;
 using UnityEngine.UI;
 
@@ -10,7 +10,8 @@ namespace CryptoQuest.BlackSmith.Upgrade
 {
     public class UIUpgradeItem : MonoBehaviour
     {
-        public static event UnityAction<UIUpgradeItem> SelectedItemEvent;
+        public event Action<UIUpgradeItem> OnSubmit;
+        public event Action<UIUpgradeItem> OnItemSelected;
         [SerializeField] private LocalizeStringEvent _displayName;
         [SerializeField] private Image _icon;
         [SerializeField] private TextMeshProUGUI _cost;
@@ -31,19 +32,20 @@ namespace CryptoQuest.BlackSmith.Upgrade
 
         private void OnEnable()
         {
-            _button.Selected += OnSeleceted;
+            _button.Selected += OnSelected;
             _button.DeSelected += OnDeselected;
             _button.onClick.AddListener(SelectedEquipment);
         }
 
         private void OnDisable()
         {
-            _button.Selected -= OnSeleceted;
+            _button.Selected -= OnSelected;
             _button.DeSelected -= OnDeselected;
         }
 
-        private void OnSeleceted()
+        private void OnSelected()
         {
+            OnItemSelected?.Invoke(this);
             _selectedBackground.SetActive(true);
         }
 
@@ -54,7 +56,7 @@ namespace CryptoQuest.BlackSmith.Upgrade
 
         private void SelectedEquipment()
         {
-            SelectedItemEvent?.Invoke(this);
+            OnSubmit?.Invoke(this);
             _selectedPanel.SetActive(true);
             _costPanel.SetActive(false);
             _button.interactable = false;

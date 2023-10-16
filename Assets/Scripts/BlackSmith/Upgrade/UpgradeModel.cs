@@ -1,9 +1,6 @@
-using System.Collections;
 using System.Collections.Generic;
 using CryptoQuest.BlackSmith.Interface;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
-using CryptoQuest.Menu;
-using TMPro;
 using UnityEngine;
 
 namespace CryptoQuest.BlackSmith.Upgrade

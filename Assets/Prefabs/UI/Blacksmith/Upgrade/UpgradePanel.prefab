@@ -1064,6 +1064,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1264018890248534232}
+  - component: {fileID: 233807806202071319}
   m_Layer: 5
   m_Name: Preview
   m_TagString: Untagged
@@ -1092,6 +1093,26 @@ RectTransform:
   m_AnchoredPosition: {x: 236, y: 237.5}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &233807806202071319
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1296906115651271267}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4818f7c4d10a1ff4fa79deaab6071804, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _scrollRect: {fileID: 1857313807143289220}
+  _equipmentPrefab: {fileID: 7484008959422308721, guid: 10400d1beae400f4abe086c8fc9b7c5d, type: 3}
+  _previewObject: {fileID: 4388493080766038563}
+  _upgradeEquipmentPanel: {fileID: 4349658414975700508}
+  _selectedEquipmentPanel: {fileID: 4349658414975700508}
+  _defaultPanel: {fileID: 1264018890248534232}
+  _resultPanel: {fileID: 8470969760876586814}
+  _levelToUpgrade: {fileID: 8133699508648063321}
 --- !u!1 &1337096214278365858
 GameObject:
   m_ObjectHideFlags: 0
@@ -2109,8 +2130,8 @@ GameObject:
   m_Component:
   - component: {fileID: 5338290623673761665}
   - component: {fileID: 833284269075262286}
-  - component: {fileID: 4525102219068117680}
   - component: {fileID: 416877400320688558}
+  - component: {fileID: 7079725767497469443}
   m_Layer: 5
   m_Name: UpgradePanel
   m_TagString: Untagged
@@ -2151,34 +2172,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9b2076417570af47b7971d4bd0431f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _upgradeEquipment: {fileID: 4525102219068117680}
+  _upgradeEquipment: {fileID: 233807806202071319}
   _equipmentDetail: {fileID: 2190197558254288756}
   _input: {fileID: 0}
-  _listCharacter:
-  - {fileID: 5033617836346854979}
-  - {fileID: 2445205617751409247}
-  - {fileID: 3336053643306952132}
-  - {fileID: 9041288851205591579}
---- !u!114 &4525102219068117680
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2494902465980156063}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4818f7c4d10a1ff4fa79deaab6071804, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _scrollRect: {fileID: 1857313807143289220}
-  _equipmentPrefab: {fileID: 7484008959422308721, guid: 10400d1beae400f4abe086c8fc9b7c5d, type: 3}
-  _previewObject: {fileID: 4388493080766038563}
-  _upgradeEquipmentPanel: {fileID: 4349658414975700508}
-  _selectedEquipmentPanel: {fileID: 4349658414975700508}
-  _defaultPanel: {fileID: 1264018890248534232}
-  _resultPanel: {fileID: 8470969760876586814}
-  _levelToUpgrade: {fileID: 8133699508648063321}
 --- !u!114 &416877400320688558
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2191,6 +2187,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c79bb87a6a808da45b9b24bc087a57eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &7079725767497469443
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2494902465980156063}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9a25a4772fc5874eb73d8ca5c1ab6b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _input: {fileID: 0}
+  _listCharacter:
+  - {fileID: 5033617836346854979}
+  - {fileID: 2445205617751409247}
+  - {fileID: 3336053643306952132}
+  - {fileID: 9041288851205591579}
+  _upgradeEquipment: {fileID: 233807806202071319}
 --- !u!1 &2558848237846958603
 GameObject:
   m_ObjectHideFlags: 0
