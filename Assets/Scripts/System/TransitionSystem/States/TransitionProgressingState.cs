@@ -18,7 +18,6 @@ namespace CryptoQuest.States
 
         public void OnExit()
         {
-            _presenter.ResetToDefault();
         }
     }
 }

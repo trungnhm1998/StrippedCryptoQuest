@@ -1,3 +1,5 @@
+using UnityEngine;
+
 namespace CryptoQuest.States
 {
     public class SpiralInState : ITransitionState
@@ -13,6 +15,7 @@ namespace CryptoQuest.States
 
         public void OnEnter()
         {
+            if (_transitionSystem.CurState is TransitionProgressingState) return;
             _presenter.SpiralIn();
             _presenter.OnTransitionInComplete += HandleFadeInComplete;
         }

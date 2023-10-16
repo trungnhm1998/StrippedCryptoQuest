@@ -23,9 +23,16 @@ namespace CryptoQuest.Battle
 
         [SerializeField] private BattleInput _battleInput;
         [SerializeField] private GameStateSO _gameState;
-        [SerializeField] private SpiralConfigSO _spiralConfigSo;
         [SerializeField] private BattleBus _battleBus;
         [SerializeField] private SceneScriptableObject _battleSceneSO;
+
+        [Header("TransitionConfig")] [SerializeField]
+        private SpiralConfigSO _spiralConfigSo;
+
+        [SerializeField] private TransitionEventChannelSO _transitionEventChannelSo;
+
+        [field: SerializeReference] private AbstractTransition _transitionIn;
+        [field: SerializeReference] private AbstractTransition _transitionOut;
 
         [Header("Events to listen to")] [Obsolete] [SerializeField]
         private VoidEventChannelSO _onBattleEndEventChannel;
@@ -95,7 +102,8 @@ namespace CryptoQuest.Battle
             _spiralConfigSo.Color = Color.black;
             _spiralConfigSo.DoneSpiralIn += SpiralInDone;
             _spiralConfigSo.DoneFadeOut += StartBattle;
-            _spiralConfigSo.ShowSpiral();
+            // _spiralConfigSo.ShowSpiral();
+            _transitionEventChannelSo.RaiseEvent(_transitionIn);
         }
 
         private void SpiralInDone()

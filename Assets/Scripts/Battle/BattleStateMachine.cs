@@ -29,6 +29,8 @@ namespace CryptoQuest.Battle
         [field: SerializeField] public UIIntroBattle IntroUI { get; private set; }
         [field: SerializeField] public UISelectCommand CommandUI { get; private set; }
         [field: SerializeField] public SpiralConfigSO Spiral { get; private set; }
+        [field: SerializeField] public TransitionEventChannelSO TransitionEventChannelSo { get; private set; }
+        [field: SerializeField] public AbstractTransition TransitionOut { get; private set; }
         [field: SerializeField] public VoidEventChannelSO SceneLoadedEvent { get; private set; }
         [field: SerializeField] public SelectHeroPresenter SelectHeroPresenter { get; private set; }
 
@@ -48,7 +50,7 @@ namespace CryptoQuest.Battle
         /// because when state Exit it only disabling GO and those GO already destroyed 
         /// </summary>
         private void OnDisable() => Unload();
-        
+
         public void Unload()
         {
             SceneLoadedEvent.EventRaised -= GotoLoadingState;

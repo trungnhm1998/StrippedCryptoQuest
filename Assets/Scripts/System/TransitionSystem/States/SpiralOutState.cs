@@ -13,6 +13,7 @@ namespace CryptoQuest.States
 
         public void OnEnter()
         {
+            _presenter.ResetToDefault();
             _presenter.SpiralOut();
             _presenter.OnTransitionOutComplete += HandleFadeOutComplete;
         }

@@ -14,6 +14,7 @@ namespace CryptoQuest
         [SerializeField] private TransitionEventChannelSO _requestTransition;
         [field: SerializeField] public TransitionPresenter Presenter { get; private set; }
         private ITransitionState _curState;
+        public ITransitionState CurState => _curState;
 
         private void OnEnable()
         {
