@@ -1,3 +1,4 @@
+using CryptoQuest.Input;
 using UnityEngine;
 
 namespace CryptoQuest.BlackSmith.Upgrade.StateMachine
@@ -5,20 +6,25 @@ namespace CryptoQuest.BlackSmith.Upgrade.StateMachine
     public class SelectEquipmentStateBehaviour : StateMachineBehaviour
     {
         private Animator _animator;
+        private BlackSmithInputManager _input;
         private UpgradeStateController _stateController;
         private static readonly int _submit = Animator.StringToHash("isUpgrade");
 
         public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
-            _stateController = animator.GetComponent<UpgradeStateController>();
             _animator = animator;
+            _stateController = animator.GetComponent<UpgradeStateController>();
+            _input = _stateController.InputManager;
             _stateController.SelectedEquipmentPanel.SetActive(true);
+            _stateController.SelectActionPanel.SetActive(false);
             _stateController.InstantiateEquipment();
+            _input.SubmitEvent += GoToUpgradeState;
         }
 
         public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
             _stateController.SelectedEquipmentPanel.SetActive(false);
+            _input.SubmitEvent -= GoToUpgradeState;
         }
 
         private void GoToUpgradeState()

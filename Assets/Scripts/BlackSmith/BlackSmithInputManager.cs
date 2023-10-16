@@ -10,6 +10,8 @@ namespace CryptoQuest.BlackSmith
         [SerializeField] private InputMediatorSO _inputMediatorSO;
 
         public event UnityAction CancelEvent;
+        public event UnityAction SubmitEvent;
+        public event UnityAction<Vector2> NavigateEvent;
 
         private void OnEnable()
         {
@@ -32,9 +34,21 @@ namespace CryptoQuest.BlackSmith
             _inputMediatorSO.InputActions.BlackSmith.Disable();
         }
 
+        #region Events
+        public void OnNavigate(InputAction.CallbackContext context)
+        {
+            if (context.performed) NavigateEvent?.Invoke(context.ReadValue<Vector2>());
+        }
+
+        public void OnSubmit(InputAction.CallbackContext context)
+        {
+            if (context.performed) SubmitEvent?.Invoke();
+        }
+
         public void OnCancel(InputAction.CallbackContext context)
         {
             if (context.performed) CancelEvent?.Invoke();
         }
+        #endregion
     }
 }

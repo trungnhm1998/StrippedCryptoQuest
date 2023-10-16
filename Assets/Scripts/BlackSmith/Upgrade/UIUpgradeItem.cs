@@ -1,11 +1,8 @@
-using System.Collections;
 using CryptoQuest.BlackSmith.Interface;
 using CryptoQuest.Menu;
 using TMPro;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
 using UnityEngine.Events;
-using UnityEngine.Localization;
 using UnityEngine.Localization.Components;
 using UnityEngine.UI;
 
@@ -21,14 +18,14 @@ namespace CryptoQuest.BlackSmith.Upgrade
         [SerializeField] private GameObject _selectedPanel;
         [SerializeField] private GameObject _costPanel;
         [SerializeField] private MultiInputButton _button;
-        
-        public IUpgradeEquipment Equipment;
+
+        public IUpgradeEquipment UpgradeEquipment { get; private set; }
 
         public void ConfigureCell(IUpgradeEquipment equipment)
         {
-            Equipment = equipment;
-            _displayName.StringReference = Equipment.DisplayName;
-            _cost.text = Equipment.Cost.ToString();
+            UpgradeEquipment = equipment;
+            _displayName.StringReference = UpgradeEquipment.DisplayName;
+            _cost.text = UpgradeEquipment.Cost.ToString();
             _icon.sprite = equipment.Icon;
         }
 

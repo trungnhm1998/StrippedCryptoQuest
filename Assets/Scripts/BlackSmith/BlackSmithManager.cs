@@ -62,6 +62,7 @@ namespace CryptoQuest.BlackSmith
         public void UpgradeButtonPressed()
         {
             _upgradeStateController.SetActive(true);
+            _blackSmithInput.EnableInput();
         }
     }
 }

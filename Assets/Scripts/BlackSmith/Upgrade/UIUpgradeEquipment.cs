@@ -1,10 +1,9 @@
 using System.Collections;
 using CryptoQuest.BlackSmith.Interface;
-using CryptoQuest.Gameplay.Inventory;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
-using CryptoQuest.System;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
@@ -14,37 +13,42 @@ namespace CryptoQuest.BlackSmith.Upgrade
     {
         [SerializeField] private ScrollRect _scrollRect;
         [SerializeField] private GameObject _equipmentPrefab;
+        [SerializeField] private GameObject _previewObject;
         [SerializeField] private RectTransform _upgradeEquipmentPanel;
         [SerializeField] private Transform _selectedEquipmentPanel;
+        [SerializeField] private Transform _defaultPanel;
+        [SerializeField] private Transform _resultPanel;
         [SerializeField] private TextMeshProUGUI _levelToUpgrade;
-        private int _upgradeLevel;
+        private int _selectLevelToUpgrade;
+        private int _currentLevel;
 
         public void SetValue(int level, IUpgradeEquipment item)
         {
-            int currentLevel = _upgradeLevel;
-            currentLevel += level;
+            _currentLevel += level;
+            if (_currentLevel >= item.Level && _currentLevel <= item.Equipment.Def.MaxLevel)
+                _selectLevelToUpgrade = _currentLevel;
 
-            if (currentLevel < item.Level) return;
-            _upgradeLevel = currentLevel;
-            _levelToUpgrade.text = _upgradeLevel.ToString();
+            else
+                _currentLevel = _selectLevelToUpgrade;
+            _levelToUpgrade.text = _selectLevelToUpgrade.ToString();
         }
 
-        public void InstantiateData(InventorySO inventory)
+        public void InstantiateData(IUpgradeModel model)
         {
+            ChangeLocation(_defaultPanel);
             CleanUpScrollView();
-            var listItem = inventory.Equipments;
-            foreach (var item in listItem)
+            for (int i = 0; i < model.ListEquipment.Count; i++)
             {
-                IUpgradeEquipment equipmentData = new UpgradeEquipment(item);
-                var equipment = Instantiate(_equipmentPrefab, _scrollRect.content).GetComponent<UIUpgradeItem>();
-                equipment.ConfigureCell(equipmentData);
+                var obj = Instantiate(_equipmentPrefab, _scrollRect.content).GetComponent<UIUpgradeItem>();
+                obj.ConfigureCell(model.ListEquipment[i]);
             }
             StartCoroutine(SelectDefaultButton());
         }
 
         public void SetLevel(IUpgradeEquipment item)
         {
-            item.Equipment.SetLevel(_upgradeLevel);
+            item.Equipment.SetLevel(_selectLevelToUpgrade);
+            ChangeLocation(_resultPanel);
         }
 
         private void CleanUpScrollView()
@@ -63,14 +67,21 @@ namespace CryptoQuest.BlackSmith.Upgrade
         {
             yield return null;
             if (_scrollRect.content.childCount == 0) yield break;
-            var firstItemGO = _scrollRect.content.GetChild(0).gameObject;
-            EventSystem.current.SetSelectedGameObject(firstItemGO);
+            var firstItemGO = _scrollRect.content.GetChild(0).gameObject.GetComponent<UIUpgradeItem>();
+            EventSystem.current.SetSelectedGameObject(firstItemGO.gameObject);
         }
 
         public void SelectedEquipment(UIUpgradeItem item)
         {
             item.transform.SetParent(_upgradeEquipmentPanel);
-            _levelToUpgrade.text = item.Equipment.Level.ToString();
+            _currentLevel = item.UpgradeEquipment.Level;
+            _levelToUpgrade.text = _currentLevel.ToString();
+        }
+
+        private void ChangeLocation(Transform transform)
+        {
+            _previewObject.transform.SetParent(transform);
+            _previewObject.transform.localPosition = new Vector3(0, 0, 0);
         }
     }
 }
