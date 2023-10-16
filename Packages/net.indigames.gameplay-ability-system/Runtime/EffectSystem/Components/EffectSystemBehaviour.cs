@@ -69,6 +69,7 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem.Components
             if (inSpec == null || !inSpec.CanApply()) return new ActiveGameplayEffect();
 
             inSpec.Target = Owner;
+            inSpec.CalculateModifierMagnitudes();
             var activeEffectSpecification = inSpec.CreateActiveEffectSpec();
             if (activeEffectSpecification is InstantActiveEffectPolicy)
             {
@@ -178,7 +179,11 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem.Components
         public void UpdateAttributeSystemModifiers()
         {
             _attributeSystem.ResetAttributeModifiers();
-            foreach (var effect in _appliedEffects.Where(effect => !effect.Expired)) effect.ExecuteActiveEffect();
+            foreach (var effect in _appliedEffects.Where(effect => !effect.Expired))
+            {
+                effect.Spec.CalculateModifierMagnitudes();
+                effect.ExecuteActiveEffect();
+            }
         }
 
         private void UpdateEffects()

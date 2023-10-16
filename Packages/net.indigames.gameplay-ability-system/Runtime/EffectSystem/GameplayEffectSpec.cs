@@ -64,7 +64,6 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem
             ExecutionCalculations = Def.ExecutionCalculations;
 
             Modifiers = new ModifierSpec[Def.EffectDetails.Modifiers.Length];
-            CalculateModifierMagnitudes();
             OnInitEffect(effectDef, source);
         }
 
@@ -120,8 +119,7 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem
                    && AbilitySystemHelper.SystemHasNoneTags(Source, tagConditionDetail.IgnoreTags);
         }
 
-
-        private void CalculateModifierMagnitudes()
+        public void CalculateModifierMagnitudes()
         {
             var effectSODetails = Def.EffectDetails;
             for (var index = 0; index < effectSODetails.Modifiers.Length; index++)
