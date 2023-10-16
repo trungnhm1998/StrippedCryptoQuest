@@ -15,8 +15,8 @@ namespace CryptoQuest.BlackSmith
         [SerializeField] private YesNoDialogEventChannelSO _yesNoDialogEventSO;
         [SerializeField] private LocalizedString _message;
 
-        private UIDialogueForGenericMerchant _dialog;
-        public UIDialogueForGenericMerchant Dialog { get => _dialog; }
+        private UIDialogueForGenericMerchant _dialogue;
+        public UIDialogueForGenericMerchant Dialogue { get => _dialogue; }
 
         public void BlackSmithOpened()
         {
@@ -25,10 +25,26 @@ namespace CryptoQuest.BlackSmith
 
         private void DialogInstantiated(UIDialogueForGenericMerchant dialog)
         {
-            _dialog = dialog;
-            _dialog
+            _dialogue = dialog;
+            _dialogue
                 .SetMessage(_message)
                 .Show();
+        }
+
+        public void ShowConfirmDialog(LocalizedString confirmMessage)
+        {
+            _yesNoDialogEventSO.SetMessage(confirmMessage);
+            _yesNoDialogEventSO.Show(YesButtonPressed, NoButtonPressed);
+        }
+
+        private void YesButtonPressed()
+        {
+            _yesNoDialogEventSO.Hide();
+        }
+
+        private void NoButtonPressed()
+        {
+            _yesNoDialogEventSO.Hide();
         }
     }
 }

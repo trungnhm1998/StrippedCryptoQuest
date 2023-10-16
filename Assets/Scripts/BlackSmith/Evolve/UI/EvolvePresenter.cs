@@ -12,10 +12,12 @@ namespace CryptoQuest.BlackSmith.Evolve.UI
 {
     public class EvolvePresenter : MonoBehaviour
     {
-        [SerializeField] private UIEvolveEquipmentList _evolvableEquipmentListUi;
-        [SerializeField] private LocalizedString _message;
-        [SerializeField] private LocalizedString _message1;
         [SerializeField] private BlackSmithDialogManager _dialogManager;
+        [SerializeField] private UIEvolveEquipmentList _evolvableEquipmentListUi;
+        [SerializeField] private UIConfirmPanel _confirmPanel;
+        [SerializeField] private LocalizedString _selectTargetMessage;
+        [SerializeField] private LocalizedString _selectMaterialMessage;
+        [SerializeField] private LocalizedString _confirmMessage;
 
         [Header("Unity Events")]
         [SerializeField] private UnityEvent<List<IEvolvableData>> _getInventoryEvent;
@@ -26,27 +28,32 @@ namespace CryptoQuest.BlackSmith.Evolve.UI
 
         private void OnEnable()
         {
-            StartCoroutine(GetEquipments());
-            _dialogManager.Dialog.SetMessage(_message);
+            StartCoroutine(GetEquipment());
+            _dialogManager.Dialogue.SetMessage(_selectTargetMessage);
         }
 
         private void OnDisable()
         {
-            StopCoroutine(GetEquipments());
+            StopCoroutine(GetEquipment());
             UnregisterEquipmentEvent();
         }
 
-        private IEnumerator GetEquipments()
+        private IEnumerator GetEquipment()
         {
             _equipmentModel = GetComponentInChildren<IEvolvableEquipment>();
             yield return _equipmentModel.CoGetData();
+            SetEquipmentDataInterval();
+        }
 
-            Debug.Log($"_equipmentModel.EvolvableData = {_equipmentModel.EvolvableData.Count}");
+        private void SetEquipmentDataInterval()
+        {
+            while (_gameData.Count <= 0)
+            {
+                _gameData = _equipmentModel.EvolvableData;
 
-            _gameData = _equipmentModel.EvolvableData;
-
-            Debug.Log($"_gameData = {_gameData.Count}");
-            _getInventoryEvent.Invoke(_gameData);
+                Debug.Log($"_gameData = {_gameData.Count}");
+                _getInventoryEvent.Invoke(_gameData);
+            }
         }
 
         public void FinishedRenderEquipmentList()
@@ -60,6 +67,7 @@ namespace CryptoQuest.BlackSmith.Evolve.UI
             {
                 item.InspectingEquipmentEvent += InspectingEquipment;
                 item.SelectedEquipmentEvent += EquipmentSelected;
+                item.SelectedEquipmentAsMaterialEvent += MaterialSelected;
             }
         }
 
@@ -69,6 +77,7 @@ namespace CryptoQuest.BlackSmith.Evolve.UI
             {
                 item.InspectingEquipmentEvent -= InspectingEquipment;
                 item.SelectedEquipmentEvent -= EquipmentSelected;
+                item.SelectedEquipmentAsMaterialEvent -= MaterialSelected;
             }
         }
 
@@ -77,16 +86,33 @@ namespace CryptoQuest.BlackSmith.Evolve.UI
             _viewEquipmentDetailEvent.Invoke(equipmentData);
         }
 
-        private void EquipmentSelected(UIEquipmentItem singleEquipmentUi)
+        private void EquipmentSelected(UIEquipmentItem selectedEquipment)
         {
             foreach (var item in _evolvableEquipmentListUi.EquipmentList)
             {
-                if (item.EquipmentData != singleEquipmentUi.EquipmentData)
-                {
-                    item.gameObject.SetActive(false);
-                }
+                HideEquipmentThatIsNotMaterial(item, selectedEquipment);
+                NotifyToOtherEquipmentThatTheTargetWasPicked(item, selectedEquipment);
             }
-            _dialogManager.Dialog.SetMessage(_message1);
+            _dialogManager.Dialogue.SetMessage(_selectMaterialMessage);
+        }
+
+        private void HideEquipmentThatIsNotMaterial(UIEquipmentItem itemInList, UIEquipmentItem itemSelected)
+        {
+            if (itemInList.EquipmentData != itemSelected.EquipmentData)
+                itemInList.gameObject.SetActive(false);
+        }
+
+        private void NotifyToOtherEquipmentThatTheTargetWasPicked(UIEquipmentItem itemInList, UIEquipmentItem itemSelected)
+        {
+            if (itemInList.EquipmentData == itemSelected.EquipmentData)
+                itemInList.IsTargetSelected = true;
+        }
+
+        private void MaterialSelected(UIEquipmentItem selectedMaterial)
+        {
+            _confirmPanel.gameObject.SetActive(true);
+            _dialogManager.Dialogue.Hide();
+            _dialogManager.ShowConfirmDialog(_confirmMessage);
         }
     }
 }

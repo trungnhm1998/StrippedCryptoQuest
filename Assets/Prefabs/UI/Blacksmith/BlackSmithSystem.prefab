@@ -1368,6 +1368,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _evolvableEquipmentListUi: {fileID: 0}
+  _message:
+    m_TableReference:
+      m_TableCollectionName: 
+    m_TableEntryReference:
+      m_KeyId: 0
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  _message1:
+    m_TableReference:
+      m_TableCollectionName: 
+    m_TableEntryReference:
+      m_KeyId: 0
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  _dialogManager: {fileID: 0}
   _getInventoryEvent:
     m_PersistentCalls:
       m_Calls:
@@ -1387,6 +1406,9 @@ MonoBehaviour:
   _viewEquipmentDetailEvent:
     m_PersistentCalls:
       m_Calls: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!1 &6447188243457297044
 GameObject:
   m_ObjectHideFlags: 0
@@ -1732,6 +1754,9 @@ MonoBehaviour:
   _sceneLoadedEvent: {fileID: 11400000, guid: b8b96e43d21a7bf4c96df4cb83c2b764, type: 2}
   _openBlackSmithEvent: {fileID: 0}
   _blackSmithOpenedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  _blackSmithClosedEvent:
     m_PersistentCalls:
       m_Calls: []
 --- !u!114 &4422885797340229464

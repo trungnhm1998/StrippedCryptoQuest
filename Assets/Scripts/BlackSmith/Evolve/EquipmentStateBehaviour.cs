@@ -21,7 +21,7 @@ namespace CryptoQuest.BlackSmith.EvolveStates
             _stateControllerInput.CancelEvent += GoToConfirmState;
 
             _stateController.EvolvePanel.SetActive(true);
-        } 
+        }
 
         private void GoToConfirmState()
         {
