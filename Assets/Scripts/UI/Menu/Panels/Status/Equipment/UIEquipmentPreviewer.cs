@@ -55,7 +55,6 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
         public void PreviewEquipment(EquipmentInfo equipment, EquipmentSlot.EType equippingSlot,
             HeroBehaviour inspectingHero)
         {
-            return;
             if (inspectingHero.IsValid() == false || !equipment.IsValid()) return;
 
             ResetAttributesUI();
@@ -80,7 +79,6 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
 
         public void PreviewUnequipEquipment(EquipmentInfo equipment, HeroBehaviour inspectingHero)
         {
-            return;
             if (inspectingHero.IsValid() == false || !equipment.IsValid()) return;
             ResetAttributesUI();
             CloneHero(inspectingHero);
@@ -158,7 +156,6 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
 
         public void ResetAttributesUI()
         {
-            return;
             for (var i = 0; i < _uiAttributes.Length; i++)
             {
                 _uiAttributes[i].ResetAttributeUI();

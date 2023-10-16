@@ -12,6 +12,7 @@ using ESlotType =
     CryptoQuest.Item.Equipment.EquipmentSlot.EType;
 using ECategory = CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Type.EEquipmentCategory;
 using CryptoQuest.System;
+using IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects.GameplayEffectActions;
 
 namespace CryptoQuest.Battle.Components
 {
@@ -81,6 +82,7 @@ namespace CryptoQuest.Battle.Components
         {
             var attributes = equipment.Stats;
             var equipmentEffectDef = ScriptableObject.CreateInstance<GameplayEffectDefinition>();
+            equipmentEffectDef.Policy = new InfinitePolicy();
 
             var modifiers = new EffectAttributeModifier[attributes.Length];
             for (int i = 0; i < attributes.Length; i++)
