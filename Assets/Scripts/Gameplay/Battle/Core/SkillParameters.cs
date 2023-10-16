@@ -22,6 +22,7 @@ namespace CryptoQuest.Gameplay.Battle.Core
         public int ContinuesTurn = 1;
         public EEffectType EffectType;
         public CustomExecutionAttributeCaptureDef targetAttribute;
+        public string VfxId;
     }
 
     [Serializable]

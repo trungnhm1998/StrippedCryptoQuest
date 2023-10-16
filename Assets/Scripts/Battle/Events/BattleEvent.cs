@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using CryptoQuest.AbilitySystem.Abilities;
 using CryptoQuest.Battle.Components;
@@ -89,6 +90,13 @@ namespace CryptoQuest.Battle.Events
     public class CastSkillEvent : LogEvent
     {
         public CastSkillAbility Skill { get; set; }
+    }
+
+    public class CastSkillEffectEvent : LogEvent
+    {
+        public CastSkillAbility Skill { get; set; }
+        public Components.Character Target { get; set; }
+        public Action OnComplete { get; set; }
     }
 
     public class ConsumeItemEvent : LogEvent
