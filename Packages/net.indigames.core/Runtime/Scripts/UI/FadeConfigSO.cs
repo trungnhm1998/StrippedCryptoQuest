@@ -10,6 +10,8 @@ namespace IndiGames.Core.UI
 
         public event UnityAction FadeIn;
         public event UnityAction FadeOut;
+        public UnityAction FadeInComplete;
+        public UnityAction FadeOutComplete;
 
         public void OnFadeIn()
         {

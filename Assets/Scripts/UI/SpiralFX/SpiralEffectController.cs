@@ -11,8 +11,7 @@ namespace CryptoQuest.UI.SpiralFX
     {
         [SerializeField] protected SpiralConfigSO _spiralConfig;
 
-        [Header("Spiral")]
-        [SerializeField] private Image _baseHorizontal;
+        [Header("Spiral")] [SerializeField] private Image _baseHorizontal;
 
         [SerializeField] private Image _baseVertical;
         [SerializeField] private List<Image> _spiralMasks;
@@ -80,7 +79,7 @@ namespace CryptoQuest.UI.SpiralFX
             _spiralConfig.OnFinishFadeOut();
         }
 
-        private void SpiralIn()
+        public void SpiralIn()
         {
             ResetSpiralSize();
             _baseHorizontal.gameObject.SetActive(true);
@@ -126,13 +125,25 @@ namespace CryptoQuest.UI.SpiralFX
             }
         }
 
-        private void SpiralOut()
+        public void SpiralOut()
         {
             StartCoroutine(StartReverseSpiral());
         }
 
         private IEnumerator StartReverseSpiral()
         {
+            _baseHorizontal.rectTransform.sizeDelta =
+                new Vector2(_screenWidth, _baseHorizontal.rectTransform.sizeDelta.y);
+            _baseVertical.rectTransform.sizeDelta = new Vector2(_baseVertical.rectTransform.sizeDelta.x, _screenHeight);
+            _baseHorizontal.gameObject.SetActive(true);
+            _baseVertical.gameObject.SetActive(true);
+            for (int i = 0; i < _spiralMasks.Count; i++)
+            {
+                _spiralMasks[i].gameObject.SetActive(true);
+                _spiralMasks[i].color = _spiralConfig.Color;
+                _spiralMasks[i].fillAmount = 1;
+            }
+
             SpiralReveseSpin();
             yield return new WaitForSeconds(_spiralDuration / 2);
             _sequence = DOTween.Sequence();
@@ -141,10 +152,7 @@ namespace CryptoQuest.UI.SpiralFX
                     new Vector2(0, _baseHorizontal.rectTransform.sizeDelta.y), _spiralDuration / 2))
                 .Join(_baseVertical.rectTransform.DOSizeDelta(
                     new Vector2(_baseVertical.rectTransform.sizeDelta.x, 0), _spiralDuration / 2))
-                .OnComplete(() =>
-                {
-                    _spiralConfig.OnFinishSpiralOut();
-                });
+                .OnComplete(() => { _spiralConfig.OnFinishSpiralOut(); });
         }
 
 
@@ -159,6 +167,19 @@ namespace CryptoQuest.UI.SpiralFX
 
             _baseHorizontal.rectTransform.sizeDelta = _horizontalStartSize;
             _baseVertical.rectTransform.sizeDelta = _verticalStartSize;
+        }
+
+        public void RestoreDefault()
+        {
+            // ResetSpiralSize();
+            _baseHorizontal.gameObject.SetActive(false);
+            _baseVertical.gameObject.SetActive(false);
+            for (int i = 0; i < _spiralMasks.Count; i++)
+            {
+                _spiralMasks[i].gameObject.SetActive(false);
+                _spiralMasks[i].color = _spiralConfig.Color;
+                _spiralMasks[i].fillAmount = 0;
+            }
         }
     }
 }
