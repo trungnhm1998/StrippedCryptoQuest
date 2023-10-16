@@ -2,14 +2,20 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using CryptoQuest.BlackSmith.Interface;
+using CryptoQuest.Events.UI.Dialogs;
+using CryptoQuest.UI.Dialogs.Dialogue;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Localization;
 
 namespace CryptoQuest.BlackSmith.Evolve.UI
 {
     public class EvolvePresenter : MonoBehaviour
     {
         [SerializeField] private UIEvolveEquipmentList _evolvableEquipmentListUi;
+        [SerializeField] private LocalizedString _message;
+        [SerializeField] private LocalizedString _message1;
+        [SerializeField] private BlackSmithDialogManager _dialogManager;
 
         [Header("Unity Events")]
         [SerializeField] private UnityEvent<List<IEvolvableData>> _getInventoryEvent;
@@ -18,13 +24,15 @@ namespace CryptoQuest.BlackSmith.Evolve.UI
         private IEvolvableEquipment _equipmentModel;
         private List<IEvolvableData> _gameData = new();
 
-        private void Start()
+        private void OnEnable()
         {
             StartCoroutine(GetEquipments());
+            _dialogManager.Dialog.SetMessage(_message);
         }
 
         private void OnDisable()
         {
+            StopCoroutine(GetEquipments());
             UnregisterEquipmentEvent();
         }
 
@@ -33,9 +41,11 @@ namespace CryptoQuest.BlackSmith.Evolve.UI
             _equipmentModel = GetComponentInChildren<IEvolvableEquipment>();
             yield return _equipmentModel.CoGetData();
 
-            if (_equipmentModel.EvolvableData.Count <= 0) yield break;
+            Debug.Log($"_equipmentModel.EvolvableData = {_equipmentModel.EvolvableData.Count}");
 
             _gameData = _equipmentModel.EvolvableData;
+
+            Debug.Log($"_gameData = {_gameData.Count}");
             _getInventoryEvent.Invoke(_gameData);
         }
 
@@ -76,6 +86,7 @@ namespace CryptoQuest.BlackSmith.Evolve.UI
                     item.gameObject.SetActive(false);
                 }
             }
+            _dialogManager.Dialog.SetMessage(_message1);
         }
     }
 }

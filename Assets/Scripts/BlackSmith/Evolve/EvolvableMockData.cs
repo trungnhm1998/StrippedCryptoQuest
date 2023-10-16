@@ -19,7 +19,7 @@ namespace CryptoQuest.BlackSmith.Interface
             LocalizedName = name;
             Level = level;
             Stars = stars;
-            Gold= gold;
+            Gold = gold;
             Metad = metad;
             Rarity = rarity;
         }

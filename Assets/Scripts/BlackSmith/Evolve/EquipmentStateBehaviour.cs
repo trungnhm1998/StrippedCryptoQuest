@@ -7,6 +7,7 @@ namespace CryptoQuest.BlackSmith.EvolveStates
     {
         private BlackSmithInputManager _stateControllerInput;
         private Animator _animator;
+        private EvolveStateController _stateController;
         private static readonly int ConfirmState = Animator.StringToHash("isConfirm");
 
         public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -14,17 +15,17 @@ namespace CryptoQuest.BlackSmith.EvolveStates
             _animator = animator;
 
             Debug.Log("Enter equipment state");
-            var stateController = animator.GetComponent<EvolveStateController>();
+            _stateController = animator.GetComponent<EvolveStateController>();
 
-            _stateControllerInput = stateController.Input;
+            _stateControllerInput = _stateController.Input;
             _stateControllerInput.CancelEvent += GoToConfirmState;
 
-            stateController.EvolvePanel.SetActive(true);
-        }
+            _stateController.EvolvePanel.SetActive(true);
+        } 
 
         private void GoToConfirmState()
         {
-            _animator.SetTrigger(ConfirmState);
+            _stateController.EvolvePanel.SetActive(false);
         }
 
         public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)

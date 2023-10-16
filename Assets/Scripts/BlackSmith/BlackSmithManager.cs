@@ -15,16 +15,21 @@ namespace CryptoQuest.BlackSmith
         [SerializeField] private BlackSmithInputManager _blackSmithInput;
         [SerializeField] private VoidEventChannelSO _sceneLoadedEvent;
         [SerializeField] private ShowBlackSmithEventChannelSO _openBlackSmithEvent;
+
+        [Header("Unity Events")]
         [SerializeField] private UnityEvent _blackSmithOpenedEvent;
+        [SerializeField] private UnityEvent _blackSmithClosedEvent;
 
         private void OnEnable()
         {
             _openBlackSmithEvent.EventRaised += OpenBlackSmith;
+            _blackSmithInput.CancelEvent += CloseBlackSmith;
         }
 
         private void OnDisable()
         {
             _openBlackSmithEvent.EventRaised -= OpenBlackSmith;
+            _blackSmithInput.CancelEvent -= CloseBlackSmith;
         }
 
         private void OpenBlackSmith()
@@ -33,9 +38,20 @@ namespace CryptoQuest.BlackSmith
             _blackSmithOpenedEvent.Invoke();
         }
 
+        private void CloseBlackSmith()
+        {
+            DisableBlackSmithInput();
+            _blackSmithClosedEvent.Invoke();
+        }
+
         private void EnableBlackSmithInput()
         {
             _blackSmithInput.EnableInput();
+        }
+
+        private void DisableBlackSmithInput()
+        {
+            _blackSmithInput.DisableInput();
         }
 
         public void EvolveButtonPressed()

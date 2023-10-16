@@ -22,6 +22,12 @@ namespace CryptoQuest.BlackSmith
             StartCoroutine(CoSelectDefault());
         }
 
+        public void BlackSmithClosed()
+        {
+            _blackSmithOverview.SetActive(false);
+            StopCoroutine(CoSelectDefault());
+        }
+
         private IEnumerator CoSelectDefault()
         {
             yield return null;
