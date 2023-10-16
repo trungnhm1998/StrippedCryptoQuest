@@ -15,7 +15,6 @@ namespace CryptoQuest.Battle.UI.CommandDetail
         [SerializeField] protected TMP_Text _value;
         [SerializeField] private MultiInputButton _button;
 
-        public IObjectPool<UICommandDetailButton> Pool { get; set; }
         private ButtonInfoBase _buttonInfo;
         private int _index;
 
@@ -47,13 +46,13 @@ namespace CryptoQuest.Battle.UI.CommandDetail
             _button.Select();
         }
 
-        protected virtual void OnEnable()
+        private void OnEnable()
         {
             _button.Selected += OnSelectButton;
             _button.DeSelected += OnDeSelectButton;
         }
 
-        protected virtual void OnDisable()
+        private void OnDisable()
         {
             _button.Selected -= OnSelectButton;
             _button.DeSelected -= OnDeSelectButton;
@@ -80,11 +79,6 @@ namespace CryptoQuest.Battle.UI.CommandDetail
         private void OnDeSelectButton()
         {
             BattleEventBus.RaiseEvent<DeSelectedDetailButtonEvent>(_deSelectedEvent);
-        }
-
-        public void ReleaseToPool()
-        {
-            Pool.Release(this);
         }
     }
 }

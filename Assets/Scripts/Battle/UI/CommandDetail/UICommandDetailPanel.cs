@@ -83,7 +83,6 @@ namespace CryptoQuest.Battle.UI.CommandDetail
         private UICommandDetailButton OnCreate()
         {
             var button = Instantiate(_buttonPrefab, _buttonContainer.transform);
-            button.Pool = _buttonPool;
             return button;
         }
 

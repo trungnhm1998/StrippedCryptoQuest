@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-1271396061102453609
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae8a1c5f40eaf534e8b2a294dfc60297, type: 3}
+  m_Name: Usable5032Ability
+  m_EditorClassIdentifier: 
+  tags:
+    AbilityTag: {fileID: 0}
+    CancelAbilityWithTags: []
+    BlockAbilityWithTags: []
+    ActivationTags: []
+    OwnerTags:
+      RequireTags: []
+      IgnoreTags: []
+    SourceTags:
+      RequireTags: []
+      IgnoreTags: []
+    TargetTags:
+      RequireTags: []
+      IgnoreTags: []
+  <CancelEffectWithTags>k__BackingField: []
+  <Conditions>k__BackingField: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12,6 +43,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 375c3ad7973540259bd96e25eae2a51e, type: 3}
   m_Name: Usable5032
   m_EditorClassIdentifier: 
+  _guid: 6aa2900c2ec6add468e8faa5628d743a
   <ID>k__BackingField: 5032
   <DisplayName>k__BackingField:
     m_TableReference:
@@ -40,9 +72,41 @@ MonoBehaviour:
   <Price>k__BackingField: 0
   <SellPrice>k__BackingField: 0
   <Effect>k__BackingField: {fileID: 0}
-  <Ability>k__BackingField: {fileID: 0}
+  <Ability>k__BackingField: {fileID: -1271396061102453609}
   <UsageScenario>k__BackingField: 1
   <TargetSelectionEvent>k__BackingField: {fileID: 11400000, guid: 192513f33a566fd44b1f88cdd450408c, type: 2}
   references:
     version: 2
     RefIds: []
+--- !u!114 &2166810964540922595
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbb6112b998064f4ebc8a44f4c80c446, type: 3}
+  m_Name: Usable5032Effect
+  m_EditorClassIdentifier: 
+  <Description>k__BackingField: 
+  _policy:
+    rid: 4476345301540798529
+  <EffectDetails>k__BackingField:
+    Modifiers: []
+    StackingType: 1
+  <IsStack>k__BackingField: 0
+  <GrantedTags>k__BackingField: []
+  <ApplicationTagRequirements>k__BackingField:
+    RequireTags: []
+    IgnoreTags: []
+  <RemoveGameplayEffectsWithTags>k__BackingField: []
+  <ExecutionCalculations>k__BackingField: []
+  <ChanceToApply>k__BackingField: 1
+  <CustomApplicationRequirements>k__BackingField: []
+  references:
+    version: 2
+    RefIds:
+    - rid: 4476345301540798529
+      type: {class: InstantPolicy, ns: IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects.GameplayEffectActions, asm: IndiGames.GameplayAbilitySystem}

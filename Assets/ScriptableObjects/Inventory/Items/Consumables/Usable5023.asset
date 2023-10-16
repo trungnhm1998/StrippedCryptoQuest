@@ -40,10 +40,78 @@ MonoBehaviour:
   <ConsumableType>k__BackingField: 0
   <Price>k__BackingField: 1000
   <SellPrice>k__BackingField: 500
-  <Effect>k__BackingField: {fileID: 0}
-  <Ability>k__BackingField: {fileID: 0}
+  <Effect>k__BackingField: {fileID: 1566070096231027635}
+  <Ability>k__BackingField: {fileID: 8923341706991726884}
   <UsageScenario>k__BackingField: 2
   <TargetSelectionEvent>k__BackingField: {fileID: 11400000, guid: afe68c25b6454c249b43ac0f18296a58, type: 2}
+  references:
+    version: 2
+    RefIds: []
+--- !u!114 &1566070096231027635
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbb6112b998064f4ebc8a44f4c80c446, type: 3}
+  m_Name: Usable5023Effect
+  m_EditorClassIdentifier: 
+  <Description>k__BackingField: 
+  _policy:
+    rid: 4476345301540798518
+  <EffectDetails>k__BackingField:
+    Modifiers:
+    - Attribute: {fileID: 11400000, guid: 77c53593fd92c904aa7689c5a7449df3, type: 2}
+      OperationType: 0
+      ModifierMagnitude: {fileID: 0}
+      Value: -100
+    StackingType: 1
+  <IsStack>k__BackingField: 0
+  <GrantedTags>k__BackingField: []
+  <ApplicationTagRequirements>k__BackingField:
+    RequireTags: []
+    IgnoreTags: []
+  <RemoveGameplayEffectsWithTags>k__BackingField: []
+  <ExecutionCalculations>k__BackingField: []
+  <ChanceToApply>k__BackingField: 1
+  <CustomApplicationRequirements>k__BackingField: []
+  references:
+    version: 2
+    RefIds:
+    - rid: 4476345301540798518
+      type: {class: InstantPolicy, ns: IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects.GameplayEffectActions, asm: IndiGames.GameplayAbilitySystem}
+--- !u!114 &8923341706991726884
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae8a1c5f40eaf534e8b2a294dfc60297, type: 3}
+  m_Name: Usable5023Ability
+  m_EditorClassIdentifier: 
+  tags:
+    AbilityTag: {fileID: 0}
+    CancelAbilityWithTags: []
+    BlockAbilityWithTags: []
+    ActivationTags: []
+    OwnerTags:
+      RequireTags: []
+      IgnoreTags:
+      - {fileID: 11400000, guid: c60a47c5f453a024d8657f7b3cafc7cc, type: 2}
+    SourceTags:
+      RequireTags: []
+      IgnoreTags: []
+    TargetTags:
+      RequireTags: []
+      IgnoreTags: []
+  <CancelEffectWithTags>k__BackingField: []
+  <Conditions>k__BackingField: []
   references:
     version: 2
     RefIds: []
