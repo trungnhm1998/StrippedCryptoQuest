@@ -1,7 +1,8 @@
 using CryptoQuest.States;
+using IndiGames.Core.Events.ScriptableObjects;
 using UnityEngine;
 
-namespace CryptoQuest
+namespace CryptoQuest.System.TransitionSystem
 {
     public interface ITransitionState
     {
@@ -13,18 +14,26 @@ namespace CryptoQuest
     {
         [SerializeField] private TransitionEventChannelSO _requestTransition;
         [field: SerializeField] public TransitionPresenter Presenter { get; private set; }
+
+        [Header("Transition for Scene Loaded")]
+        [SerializeField] private AbstractTransition _sceneLoadedTransition;
+
+        [SerializeField] private VoidEventChannelSO _onSceneLoadedEventChannelSO;
+
         private ITransitionState _curState;
         public ITransitionState CurState => _curState;
 
         private void OnEnable()
         {
             _requestTransition.EventRaised += HandleTransitionRequest;
+            _onSceneLoadedEventChannelSO.EventRaised += HandleSceneLoaded;
             ChangeState(new TransitionIdleState(this));
         }
 
         private void OnDisable()
         {
             _requestTransition.EventRaised -= HandleTransitionRequest;
+            _onSceneLoadedEventChannelSO.EventRaised -= HandleSceneLoaded;
         }
 
         private void HandleTransitionRequest(AbstractTransition transition)
@@ -40,6 +49,11 @@ namespace CryptoQuest
 
             _curState = state;
             _curState.OnEnter();
+        }
+
+        private void HandleSceneLoaded()
+        {
+            HandleTransitionRequest(_sceneLoadedTransition);
         }
     }
 }

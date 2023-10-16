@@ -1,4 +1,5 @@
 using CryptoQuest.States;
+using CryptoQuest.System.TransitionSystem;
 using UnityEngine;
 
 namespace CryptoQuest.TransitionTypes

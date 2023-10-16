@@ -1,3 +1,5 @@
+using CryptoQuest.System.TransitionSystem;
+
 namespace CryptoQuest.States
 {
     public class TransitionIdleState : ITransitionState

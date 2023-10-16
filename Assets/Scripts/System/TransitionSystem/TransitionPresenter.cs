@@ -1,41 +1,47 @@
 using CryptoQuest.UI.SpiralFX;
-using IndiGames.Core.UI;
+using DG.Tweening;
+using IndiGames.Core.Events.ScriptableObjects;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
-namespace CryptoQuest
+namespace CryptoQuest.System.TransitionSystem
 {
     public class TransitionPresenter : MonoBehaviour
     {
         public UnityAction OnTransitionInComplete;
         public UnityAction OnTransitionOutComplete;
-        public static UnityAction OnTransitionProgressed;
-        public FadeConfigSO FadeConfigSO;
-        public SpiralConfigSO SpiralConfigSO;
-        public SpiralEffectController SpiralEffectController;
-        public Image ProgressImage;
+        [SerializeField] private VoidEventChannelSO _onTransitionProgressedEvent;
+        [SerializeField] private SpiralConfigSO _spiralConfigSO;
+        [SerializeField] private SpiralEffectController _spiralEffectController;
+        [SerializeField] private Image _progressImage;
 
         private void OnEnable()
         {
-            SpiralConfigSO.DoneSpiralIn += OnTransitionInCompleted;
-            SpiralConfigSO.DoneSpiralOut += OnTransitionOutCompleted;
-            FadeConfigSO.FadeInComplete += OnTransitionInCompleted;
-            FadeConfigSO.FadeOutComplete += OnTransitionOutCompleted;
+            _spiralConfigSO.DoneSpiralIn += OnTransitionInCompleted;
+            _spiralConfigSO.DoneSpiralOut += OnTransitionOutCompleted;
         }
 
         private void OnDisable()
         {
-            SpiralConfigSO.DoneSpiralIn -= OnTransitionInCompleted;
-            SpiralConfigSO.DoneSpiralOut -= OnTransitionOutCompleted;
-            FadeConfigSO.FadeInComplete -= OnTransitionInCompleted;
-            FadeConfigSO.FadeOutComplete -= OnTransitionOutCompleted;
+            _spiralConfigSO.DoneSpiralIn -= OnTransitionInCompleted;
+            _spiralConfigSO.DoneSpiralOut -= OnTransitionOutCompleted;
         }
 
         public void Fadein()
         {
-            ProgressImage.color = Color.black;
-            FadeConfigSO.OnFadeIn();
+            _progressImage.color = new Color(_progressImage.color.r, _progressImage.color.g, _progressImage.color.b, 0);
+            _progressImage.gameObject.SetActive(true);
+            _progressImage.DOFade(1, 0.5f)
+                .OnComplete(OnTransitionInCompleted);
+        }
+
+        public void FadeOut()
+        {
+            _progressImage.gameObject.SetActive(true);
+            _progressImage.DOFade(0, 0.5f)
+                .OnComplete(OnTransitionOutCompleted);
         }
 
         private void OnTransitionInCompleted()
@@ -48,32 +54,29 @@ namespace CryptoQuest
             OnTransitionOutComplete?.Invoke();
         }
 
-        public void FadeOut()
-        {
-            FadeConfigSO.OnFadeOut();
-        }
 
         public void SpiralIn()
         {
-            ProgressImage.color = SpiralConfigSO.Color;
-            SpiralEffectController.SpiralIn();
+            _progressImage.color = _spiralConfigSO.Color;
+            _spiralEffectController.SpiralIn();
         }
 
         public void SpiralOut()
         {
-            SpiralEffectController.SpiralOut();
+            _spiralEffectController.SpiralOut();
         }
 
         public void TransitionProgressed()
         {
-            ProgressImage.gameObject.SetActive(true);
-            OnTransitionProgressed?.Invoke();
+            _progressImage.gameObject.SetActive(true);
+            _progressImage.color = new Color(_progressImage.color.r, _progressImage.color.g, _progressImage.color.b, 1);
+            _onTransitionProgressedEvent.RaiseEvent();
         }
 
         public void ResetToDefault()
         {
-            SpiralEffectController.RestoreDefault();
-            ProgressImage.gameObject.SetActive(false);
+            _spiralEffectController.RestoreDefault();
+            _progressImage.gameObject.SetActive(false);
         }
     }
 }

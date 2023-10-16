@@ -1,4 +1,6 @@
-namespace CryptoQuest.States
+using CryptoQuest.States;
+
+namespace CryptoQuest.System.TransitionSystem.States
 {
     public class FadeOutState : ITransitionState
     {
@@ -21,7 +23,7 @@ namespace CryptoQuest.States
         private void HandleFadeOutComplete()
         {
             _transitionSystem.ChangeState(new TransitionIdleState(_transitionSystem));
-            _presenter.OnTransitionInComplete -= HandleFadeOutComplete;
+            _presenter.OnTransitionOutComplete -= HandleFadeOutComplete;
         }
 
         public void OnExit()

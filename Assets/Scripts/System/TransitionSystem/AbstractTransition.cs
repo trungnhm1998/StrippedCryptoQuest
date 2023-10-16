@@ -1,3 +1,4 @@
+using CryptoQuest.System.TransitionSystem;
 using UnityEngine;
 
 namespace CryptoQuest

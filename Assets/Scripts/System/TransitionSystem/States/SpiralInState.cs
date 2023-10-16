@@ -1,3 +1,5 @@
+using CryptoQuest.System.TransitionSystem;
+using CryptoQuest.System.TransitionSystem.States;
 using UnityEngine;
 
 namespace CryptoQuest.States
