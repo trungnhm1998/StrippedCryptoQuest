@@ -132,7 +132,7 @@ namespace CryptoQuest.Battle.States.SelectHeroesActions
         {
             while (_stateStack.Peek() is not SelectCommand)
             {
-                PopState();
+                CancelPressed();
             }
         }
 

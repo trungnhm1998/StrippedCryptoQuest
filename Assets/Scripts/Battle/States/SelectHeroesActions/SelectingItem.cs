@@ -1,6 +1,7 @@
 ﻿using System;
 using CryptoQuest.Battle.Commands;
 using CryptoQuest.Battle.Components;
+using CryptoQuest.Battle.Events;
 using CryptoQuest.Battle.UI.CommandDetail;
 using CryptoQuest.Battle.UI.SelectCommand;
 using CryptoQuest.Battle.UI.SelectItem;
@@ -16,6 +17,7 @@ namespace CryptoQuest.Battle.States.SelectHeroesActions
     public class SelectingItem : StateBase
     {
         private SelectItemPresenter _selectItemPresenter;
+        private ConsumableInfo _selectedItem;
 
         public SelectingItem(HeroBehaviour hero, SelectHeroesActions fsm) : base(hero, fsm)
         {
@@ -25,26 +27,34 @@ namespace CryptoQuest.Battle.States.SelectHeroesActions
         public override void OnEnter()
         {
             _selectItemPresenter.Show();
-            
+            _selectItemPresenter.SelectedItemEvent += CacheSelectedItem;
+
             _selectItemPresenter.SelectSingleEnemyCallback = SelectEnemyToUseItemOn;
             _selectItemPresenter.SelectSingleHeroCallback = SelectHeroToUseItemOn;
             _selectItemPresenter.SelectAllEnemyCallback = SelectAllEnemyToUseItemOn;
             _selectItemPresenter.SelectAllHeroCallback = SelectAllHeroToUseItemOn;
         }
 
-        private void SelectEnemyToUseItemOn(UIItem itemUI)
+        private void CacheSelectedItem(ConsumableInfo item)
         {
-            Debug.Log("SelectingSkill::SelectEnemyToCastSkillOn");
-            Fsm.PushState(new SelectSingleEnemyToUseItem(itemUI, Hero, Fsm));
+            // I cached instead of using SelectedItem in Presenter
+            // because SelectedItem in Presenter is mutual between hero select state
+            _selectedItem = item;
         }
 
-        private void SelectHeroToUseItemOn(UIItem itemUI)
+        private void SelectEnemyToUseItemOn(ConsumableInfo item)
+        {
+            Debug.Log("SelectingSkill::SelectEnemyToCastSkillOn");
+            Fsm.PushState(new SelectSingleEnemyToUseItem(item, Hero, Fsm));
+        }
+
+        private void SelectHeroToUseItemOn(ConsumableInfo item)
         {
             Debug.Log("SelectingSkill::SelectHeroToCastSkillOn");
             Fsm.PushState(new SelectSingleHeroToUseItem(_selectItemPresenter, Hero, Fsm));
         }
 
-        private void SelectAllEnemyToUseItemOn(UIItem itemUI)
+        private void SelectAllEnemyToUseItemOn(ConsumableInfo item)
         {
             Debug.Log("SelectingSkill::SelectAllEnemyToUseItemOn");
 
@@ -52,7 +62,7 @@ namespace CryptoQuest.Battle.States.SelectHeroesActions
             CreateMultipleTargetCommand(enemies);
         }
 
-        private void SelectAllHeroToUseItemOn(UIItem itemUI)
+        private void SelectAllHeroToUseItemOn(ConsumableInfo item)
         {
             Debug.Log("SelectingSkill::SelectAllHeroToUseItemOn");
 
@@ -62,7 +72,7 @@ namespace CryptoQuest.Battle.States.SelectHeroesActions
 
         private void CreateMultipleTargetCommand(params Components.Character[] characters)
         {
-            var useItemCommand = new ConsumeItemCommand(Hero, _selectItemPresenter.LastSelectedItem.Item, characters);
+            var useItemCommand = new ConsumeItemCommand(Hero, _selectItemPresenter.SelectedItem, characters);
             Hero.TryGetComponent(out CommandExecutor commandExecutor);
             commandExecutor.SetCommand(useItemCommand);
             Fsm.GoToNextState();
@@ -70,9 +80,20 @@ namespace CryptoQuest.Battle.States.SelectHeroesActions
 
         public override void OnExit() 
         {
+            _selectItemPresenter.SelectedItemEvent -= CacheSelectedItem;
             _selectItemPresenter.Hide();
         }
 
-        public override void OnCancel() { }
+        public override void OnCancel() 
+        {
+            // Only raise event if hero select item this state
+            if (_selectedItem == null || !_selectedItem.IsValid()) return;
+            BattleEventBus.RaiseEvent<CancelSelectedItemEvent>(
+                new CancelSelectedItemEvent() 
+                { 
+                    ItemInfo = _selectedItem
+                }
+            );
+        }
     }
 }

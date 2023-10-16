@@ -13,7 +13,6 @@ namespace CryptoQuest.Battle.UI
 
         [SerializeField] private EnemyPartyManager _enemyPartyManager;
         [SerializeField] private UICommandDetailPanel _enemyGroupUI;
-        [SerializeField] private VerticalButtonSelector _buttonSelector;
 
         private TinyMessageSubscriptionToken _selectedEventToken;
         private TinyMessageSubscriptionToken _deSelectedEventToken;
@@ -21,38 +20,46 @@ namespace CryptoQuest.Battle.UI
 
         public void Show(bool interactable = false)
         {
-            _buttonSelector.Interactable = interactable;
             _selectedEventToken = BattleEventBus.SubscribeEvent<SelectedDetailButtonEvent>(OnSelectedGroup);
             _deSelectedEventToken = BattleEventBus.SubscribeEvent<DeSelectedDetailButtonEvent>(OnDeSelectedGroup);
 
+
+            ShowEnemyGroupUI(interactable);
+            
+            SetAllGroupAlpha(interactable ? DESELECTED_ALPHA : SELECTED_ALPHA);
+        }
+
+        private void ShowEnemyGroupUI(bool interactable = false)
+        {
+            _enemyGroupUI.Interactable = interactable;
             var groups = _enemyPartyManager.EnemyParty.EnemyGroups;
             var model = new CommandDetailModel();
-
-            SetAllGroupAlpha(interactable ? DESELECTED_ALPHA : SELECTED_ALPHA);
-
             foreach (var group in groups)
             {
                 if (group.Count <= 0) continue;
                 model.AddInfo(new EnemyGroupButtonInfo(group, OnConfirmGroup, interactable));
             }
             _enemyGroupUI.ShowCommandDetail(model);
-
             _enemyGroupUI.SetActiveContent(true);
-
         }
 
         public void Hide()
         {
-        #if UNITY_EDITOR
-            // Prevent error when turn off play mode in editor only
-            if (_enemyGroupUI == null || _buttonSelector == null) return;
-        #endif
-
-            _buttonSelector.Interactable = false;
-            SetAllGroupAlpha(SELECTED_ALPHA);
             BattleEventBus.UnsubscribeEvent(_selectedEventToken);
             BattleEventBus.UnsubscribeEvent(_deSelectedEventToken);
 
+            SetAllGroupAlpha(SELECTED_ALPHA);
+
+            HideEnemyGroupUI();
+        }
+
+        private void HideEnemyGroupUI()
+        {
+        #if UNITY_EDITOR
+            // Prevent error when turn off play mode in editor only
+            if (_enemyGroupUI == null) return;
+        #endif
+            _enemyGroupUI.Interactable = false;
             _enemyGroupUI.SetActiveContent(false);
         }
 

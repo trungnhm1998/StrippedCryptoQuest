@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace CryptoQuest.Battle.UI.CommandDetail
 {
+    [Obsolete]
     public class CommandDetailPresenter : MonoBehaviour
     {
         public static event Action<int> InspectButton;

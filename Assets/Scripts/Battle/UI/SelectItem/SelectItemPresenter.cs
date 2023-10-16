@@ -1,12 +1,17 @@
+using System;
 using System.Collections.Generic;
+using CryptoQuest.Battle.Events;
+using CryptoQuest.Battle.UI.CommandDetail;
 using CryptoQuest.Gameplay.Inventory;
 using CryptoQuest.Gameplay.Inventory.Helper;
 using CryptoQuest.Input;
+using CryptoQuest.Item;
 using CryptoQuest.System;
 using CryptoQuest.UI.Common;
 using DG.Tweening;
 using IndiGames.Core.Events.ScriptableObjects;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
@@ -14,26 +19,22 @@ namespace CryptoQuest.Battle.UI.SelectItem
 {
     public class SelectItemPresenter : MonoBehaviour
     {
-        public delegate void ItemTargetTypeDelegate(UIItem item);
+        public event Action<ConsumableInfo> SelectedItemEvent;
+        public delegate void ItemTargetTypeDelegate(ConsumableInfo item);
 
         public ItemTargetTypeDelegate SelectSingleEnemyCallback { get; set; }
-        private void OnSingleEnemy() => SelectSingleEnemyCallback?.Invoke(_lastSelectedItem);
+        private void OnSingleEnemy() => SelectSingleEnemyCallback?.Invoke(_selectedItem);
 
         public ItemTargetTypeDelegate SelectSingleHeroCallback { get; set; }
-        private void OnSingleHero() => SelectSingleHeroCallback?.Invoke(_lastSelectedItem);
+        private void OnSingleHero() => SelectSingleHeroCallback?.Invoke(_selectedItem);
 
         public ItemTargetTypeDelegate SelectAllEnemyCallback { get; set; }
-        private void OnTargetAllEnemy() => SelectAllEnemyCallback?.Invoke(_lastSelectedItem);
+        private void OnTargetAllEnemy() => SelectAllEnemyCallback?.Invoke(_selectedItem);
         
         public ItemTargetTypeDelegate SelectAllHeroCallback { get; set; }
-        private void OnTargetAllHero() => SelectAllHeroCallback?.Invoke(_lastSelectedItem);
+        private void OnTargetAllHero() => SelectAllHeroCallback?.Invoke(_selectedItem);
 
-
-        [SerializeField] private VerticalButtonSelector _buttonSelector;
-        [SerializeField] private BattleInput _battleInput;
-        [SerializeField] private AutoScroll _autoScroll;
-        [SerializeField] private ScrollRect _itemScroll;
-        [SerializeField] private UIItem _itemPrefab;
+        [SerializeField] private UICommandDetailPanel _itemListUI;
 
         [Header("State event context")]
         [SerializeField] private VoidEventChannelSO _singleHeroChannel;
@@ -41,78 +42,51 @@ namespace CryptoQuest.Battle.UI.SelectItem
         [SerializeField] private VoidEventChannelSO _allEnemyChannel;
         [SerializeField] private VoidEventChannelSO _allHeroChannel;
 
-        private UIItem _lastSelectedItem;
-        private UIItem _firstItem;
-        public UIItem LastSelectedItem => _lastSelectedItem;
-        
-        private readonly List<UIItem> _items = new List<UIItem>();
+        private ConsumableInfo _selectedItem;
+        public ConsumableInfo SelectedItem => _selectedItem;
 
-        private void OnDisable()
+        private void OnEnable()
         {
-            UnregisterEvents();
+            SetInteractive(false);
         }
 
         public void Show()
         {
-            InitItemButtons();
-            DOVirtual.DelayedCall(0.1f, SelectFirstOrLastSelectedSkill);
             SetInteractive(true);
+            ShowItemListUI();
             SetActiveScroll(true);
             RegisterEvents();
         }
 
         public void SetInteractive(bool value)
         {
-            _buttonSelector.Interactable = value;
+            _itemListUI.Interactable = value;
         }
 
         public void SetActiveScroll(bool value)
         {
-            _itemScroll.gameObject.SetActive(value);
+            _itemListUI.SetActiveContent(value);
         }
 
-        private void SelectFirstOrLastSelectedSkill()
+        private void ShowItemListUI()
         {
-            if (_lastSelectedItem != null)
-            {
-                EventSystem.current.SetSelectedGameObject(_lastSelectedItem.gameObject);
-                _lastSelectedItem = null;
-                return;
-            }
-            EventSystem.current.SetSelectedGameObject(_firstItem.gameObject);
-        }
-
-        private void RegisterEvents()
-        {
-            _battleInput.NavigateEvent += UpdateAutoScroll;
-            _singleHeroChannel.EventRaised += OnSingleHero;
-            _singleEnemyChannel.EventRaised += OnSingleEnemy;
-            _allEnemyChannel.EventRaised += OnTargetAllEnemy;
-            _allHeroChannel.EventRaised += OnTargetAllHero;
-        }
-
-        private void UnregisterEvents()
-        {
-            _battleInput.NavigateEvent -= UpdateAutoScroll;
-            _singleHeroChannel.EventRaised -= OnSingleHero;
-            _singleEnemyChannel.EventRaised -= OnSingleEnemy;
-            _allEnemyChannel.EventRaised -= OnTargetAllEnemy;
-            _allHeroChannel.EventRaised -= OnTargetAllHero;
-        }
-
-        private void InitItemButtons()
-        {
-            if (_items.Count > 0) return;
-            DestroyAllItems();
             var inventory = ServiceProvider.GetService<IInventoryController>().Inventory;
+            var model = new CommandDetailModel();
+
             foreach (var item in inventory.GetItemsInBattle())
             {
-                var itemUI = Instantiate<UIItem>(_itemPrefab, _itemScroll.content);
-                itemUI.Selected += SelectingTarget;
-                _items.Add(itemUI);
-                itemUI.Init(item);
-                if (_firstItem == null) _firstItem = itemUI;
+                var itemButtonInfo = new ItemButtonInfo(item, ConfirmSelectItem);
+                model.AddInfo(itemButtonInfo);
             }
+
+            _itemListUI.ShowCommandDetail(model);
+        }
+
+        private void ConfirmSelectItem(ConsumableInfo item)
+        {
+            _selectedItem = item;
+            SelectedItemEvent?.Invoke(item);
+            item.Consuming();
         }
 
         public void Hide()
@@ -121,27 +95,51 @@ namespace CryptoQuest.Battle.UI.SelectItem
             SetActiveScroll(false);
             UnregisterEvents();
         }
-
-        private void SelectingTarget(UIItem itemUI)
-        {
-            _lastSelectedItem = itemUI;
-            itemUI.Item.Consuming();
-        }
         
-        private void DestroyAllItems()
+        private void OnDisable()
         {
-            foreach (var item in _items)
-            {
-                item.Selected -= SelectingTarget;
-                Destroy(item.gameObject);
-            }
-
-            _items.Clear();
+            UnregisterEvents();
         }
 
-        private void UpdateAutoScroll(Vector2 direction)
+        private void RegisterEvents()
         {
-            _autoScroll.Scroll();
+            _singleHeroChannel.EventRaised += OnSingleHero;
+            _singleEnemyChannel.EventRaised += OnSingleEnemy;
+            _allEnemyChannel.EventRaised += OnTargetAllEnemy;
+            _allHeroChannel.EventRaised += OnTargetAllHero;
+        }
+
+        private void UnregisterEvents()
+        {
+            _singleHeroChannel.EventRaised -= OnSingleHero;
+            _singleEnemyChannel.EventRaised -= OnSingleEnemy;
+            _allEnemyChannel.EventRaised -= OnTargetAllEnemy;
+            _allHeroChannel.EventRaised -= OnTargetAllHero;
+        }
+    }
+
+    [Serializable]
+    public class ItemButtonInfo : ButtonInfoBase
+    {
+        public ConsumableInfo Item { get; private set; }
+        private Action<ConsumableInfo> _itemCallback;
+
+        public ItemButtonInfo(ConsumableInfo item, Action<ConsumableInfo> itemCallback)
+            : base("", $"x{item.Quantity.ToString()}")
+        {
+            Item = item;
+            LocalizedLabel = item.DisplayName;
+            _itemCallback = itemCallback;
+        }
+
+        public override void OnHandleClick()
+        {
+            _itemCallback?.Invoke(Item);
+        }
+
+        public override void Accept(IButtonUI ui)
+        {
+            ui.Visit(this);
         }
     }
 }

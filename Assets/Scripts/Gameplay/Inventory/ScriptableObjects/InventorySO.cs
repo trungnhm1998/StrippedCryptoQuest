@@ -120,6 +120,7 @@ namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects
                 {
                     Debug.LogWarning($"Try to remove more {consumable.Data} than you have" +
                                      $"\ncurrent {consumable.Quantity} removing quantity {quantity}");
+                    consumable.SetQuantity(0);
                     Consumables.RemoveAt(index);
                 }
                 else

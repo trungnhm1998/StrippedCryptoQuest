@@ -1,4 +1,5 @@
 using System;
+using CryptoQuest.Battle.UI.SelectItem;
 using UnityEngine;
 using UnityEngine.Localization;
 
@@ -20,5 +21,16 @@ namespace CryptoQuest.Battle.UI.CommandDetail
         }
 
         public abstract void OnHandleClick();
+
+        /// <summary>
+        /// I use visitor here to have customize ui function that need specific info
+        /// </summary>
+        /// <param name="ui"></param>
+        public virtual void Accept(IButtonUI ui) { }
+    }
+
+    public interface IButtonUI
+    {
+        void Visit(ItemButtonInfo itemButtonInfo);
     }
 }

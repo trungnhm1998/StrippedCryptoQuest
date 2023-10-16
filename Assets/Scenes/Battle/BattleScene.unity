@@ -167,11 +167,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f2380373fdd3bb4d80817d4a11e737d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _buttonSelector: {fileID: 913071899}
-  _battleInput: {fileID: 11400000, guid: d0c44063c591fb8489bc8e1087c0999e, type: 2}
-  _autoScroll: {fileID: 1415878836909279780}
-  _itemScroll: {fileID: 1415878836909279781}
-  _itemPrefab: {fileID: 7580961180523968948, guid: bce9fbfd344824344bdb305c18fdd798, type: 3}
+  _itemListUI: {fileID: 1960562506}
   _singleHeroChannel: {fileID: 11400000, guid: cf816191ca3034c4d80534b6369b5834, type: 2}
   _singleEnemyChannel: {fileID: 11400000, guid: a5c9d024c1c00a7448a6f2974d1521d4, type: 2}
   _allEnemyChannel: {fileID: 11400000, guid: afe68c25b6454c249b43ac0f18296a58, type: 2}
@@ -540,17 +536,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 778c240fcc304b04bbf24a2369d9ff07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &913071899 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 695017833050078880, guid: d0eacd5a881766b4ca08ec4b770526a2, type: 3}
-  m_PrefabInstance: {fileID: 1415878836909279776}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ed5b5bff75b4a25b7a607574093d6e4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1169412494
 GameObject:
   m_ObjectHideFlags: 0
@@ -791,17 +776,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 778c240fcc304b04bbf24a2369d9ff07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1606608505 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4382931157995480389, guid: d0eacd5a881766b4ca08ec4b770526a2, type: 3}
-  m_PrefabInstance: {fileID: 1415878836909279776}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ed5b5bff75b4a25b7a607574093d6e4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1892081476 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2536973058580455835, guid: d0eacd5a881766b4ca08ec4b770526a2, type: 3}
@@ -811,6 +785,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 778c240fcc304b04bbf24a2369d9ff07, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1960562506 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4923663406694924381, guid: d0eacd5a881766b4ca08ec4b770526a2, type: 3}
+  m_PrefabInstance: {fileID: 1415878836909279776}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb1951c97ae243b41b0a852eccf6459a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &78955201203678911 stripped
@@ -1038,28 +1023,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 3110689978637270772, guid: d0eacd5a881766b4ca08ec4b770526a2, type: 3}
   m_PrefabInstance: {fileID: 1415878836909279776}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1415878836909279780 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1398729345043877067, guid: d0eacd5a881766b4ca08ec4b770526a2, type: 3}
-  m_PrefabInstance: {fileID: 1415878836909279776}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: db680cf6b1e7353428c6159ae1ee1dec, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1415878836909279781 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8007205568479952908, guid: d0eacd5a881766b4ca08ec4b770526a2, type: 3}
-  m_PrefabInstance: {fileID: 1415878836909279776}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1aa08ab6e0800fa44ae55d278d1423e3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &3148632503289432661 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7287248083317083516, guid: d0eacd5a881766b4ca08ec4b770526a2, type: 3}
@@ -1342,7 +1305,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _enemyPartyManager: {fileID: 7116505576077580196}
   _enemyGroupUI: {fileID: 403977525}
-  _buttonSelector: {fileID: 1606608505}
 --- !u!114 &8909492559710276275 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4666074599004791690, guid: f5fa023033362a04f99acf1098ae54bc, type: 3}

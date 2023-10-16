@@ -22,6 +22,7 @@ namespace CryptoQuest.Battle.Commands
             _targets = targets;
             _selectedItem = selectedItem;
             _owner = owner;
+            BattleEventBus.RaiseEvent<SelectedItemEvent>(new SelectedItemEvent() { ItemInfo = selectedItem });
         }
         
         public void Execute()

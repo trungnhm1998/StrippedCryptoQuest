@@ -115,4 +115,13 @@ namespace CryptoQuest.Battle.Events
     public class EffectRemovedEvent : EffectEvent { }
 
     public class EffectAffectingEvent : EffectEvent { }
+
+
+    public class ItemEvent : BattleEvent
+    {
+        public ConsumableInfo ItemInfo { get; set; }
+    }
+    public class SelectedItemEvent : ItemEvent { }
+
+    public class CancelSelectedItemEvent : ItemEvent { }
 }

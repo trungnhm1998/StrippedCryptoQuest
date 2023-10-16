@@ -9,14 +9,25 @@ namespace CryptoQuest.Battle.UI.CommandDetail
 {
     public class UICommandDetailPanel : MonoBehaviour
     {
-        [SerializeField] private ScrollRect _scrollRect;
+        [SerializeField] private Transform _buttonContainer;
         [SerializeField] private ChildButtonsActivator _childButonsActivator;
         [SerializeField] private UICommandDetailButton _buttonPrefab;
+        [SerializeField] private VerticalButtonSelector _buttonSelector;
         [SerializeField] private bool _isOneTimeInit = true;
 
-        private UICommandDetailButton _firstButton;
         private IObjectPool<UICommandDetailButton> _buttonPool;
         private List<UICommandDetailButton> _buttons = new();
+
+        private bool _interactable = true;
+        public bool Interactable
+        {
+            get => _interactable;
+            set
+            {
+                _interactable = value;
+                _buttonSelector.Interactable = value;
+            }
+        }
 
         private void Awake()
         {
@@ -28,12 +39,13 @@ namespace CryptoQuest.Battle.UI.CommandDetail
         {
             SetActiveContent(true);
 
-            if (!_isOneTimeInit || _scrollRect.content.childCount <= 0)
+            if (!_isOneTimeInit || _buttonContainer.childCount <= 0)
             {
                 InitButtons(model);
             }
+
+            if (_interactable) _buttonSelector.SelectFirstButton();
             
-            if (_firstButton != null) _firstButton.Select();
             _childButonsActivator.CacheButtonTexts();
         }
 
@@ -56,7 +68,7 @@ namespace CryptoQuest.Battle.UI.CommandDetail
 
         public void SetActiveContent(bool value)
         {
-            _scrollRect.content.gameObject.SetActive(value);
+            _buttonContainer.gameObject.SetActive(value);
         }
 
         private void ReleaseAllButton()
@@ -66,18 +78,17 @@ namespace CryptoQuest.Battle.UI.CommandDetail
                 _buttonPool.Release(button);
             }
             _buttons = new();
-            _firstButton = null;
         }
 
         private UICommandDetailButton OnCreate()
         {
-            var button = Instantiate(_buttonPrefab, _scrollRect.content.transform);
+            var button = Instantiate(_buttonPrefab, _buttonContainer.transform);
+            button.Pool = _buttonPool;
             return button;
         }
 
         private void OnGet(UICommandDetailButton button)
         {
-            if (_firstButton == null) _firstButton = button;
             button.transform.SetAsLastSibling();
             button.gameObject.SetActive(true);
             _buttons.Add(button);

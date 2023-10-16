@@ -1,18 +1,16 @@
 ﻿using CryptoQuest.Battle.Commands;
 using CryptoQuest.Battle.Components;
 using CryptoQuest.Battle.UI.CommandDetail;
-using CryptoQuest.Battle.UI.SelectItem;
-using CryptoQuest.Battle.UI.SelectSkill;
-using UnityEngine.InputSystem;
+using CryptoQuest.Item;
 
 namespace CryptoQuest.Battle.States.SelectHeroesActions
 {
     public class SelectSingleEnemyToUseItem : StateBase
     {
-        private readonly UIItem _selectedItem;
+        private readonly ConsumableInfo _selectedItem;
         private readonly SelectEnemyPresenter _selectEnemyPresenter;
 
-        public SelectSingleEnemyToUseItem(UIItem selectedItem, HeroBehaviour hero, SelectHeroesActions fsm) :
+        public SelectSingleEnemyToUseItem(ConsumableInfo selectedItem, HeroBehaviour hero, SelectHeroesActions fsm) :
             base(hero, fsm)
         {
             _selectedItem = selectedItem;
@@ -34,7 +32,7 @@ namespace CryptoQuest.Battle.States.SelectHeroesActions
 
         private void CreateCommandToUseItemOnEnemy(EnemyBehaviour enemy)
         {
-            var useItemCommand = new ConsumeItemCommand(Hero, _selectedItem.Item, enemy);
+            var useItemCommand = new ConsumeItemCommand(Hero, _selectedItem, enemy);
             Hero.TryGetComponent(out CommandExecutor commandExecutor);
             commandExecutor.SetCommand(useItemCommand);
             Fsm.GoToNextState();

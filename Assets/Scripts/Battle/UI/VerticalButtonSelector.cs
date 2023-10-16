@@ -108,14 +108,31 @@ namespace CryptoQuest.Battle.UI
 
         public void SelectFirstButton()
         {
-            CurrentIndex = 0;
+            var firstChild = GetFirstValidChild();
+            if (firstChild == null) return;
+
             DOVirtual.DelayedCall(SELECT_DELAY, () =>
             {
                 var buttonToSelect = _firstSelectedButton == null
-                    ? _buttonsContainer.GetChild(0).gameObject
-                    : _firstSelectedButton;
+                    ? firstChild.gameObject : _firstSelectedButton;
                 EventSystem.current.SetSelectedGameObject(buttonToSelect);
             });
+        }
+
+        /// <summary>
+        /// To prevent select invalid child or there's no child
+        /// </summary>
+        /// <returns></returns>
+        private GameObject GetFirstValidChild()
+        {
+            CurrentIndex = 0;
+            foreach (Transform child in _buttonsContainer)
+            {
+                if (child.gameObject.activeSelf) 
+                    return child.gameObject;
+                CurrentIndex++;
+            }   
+            return null;
         }
     }
 }
