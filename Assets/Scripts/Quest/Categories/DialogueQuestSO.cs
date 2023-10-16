@@ -18,9 +18,7 @@ namespace CryptoQuest.Quest.Categories
         private YarnQuestManager _yarnQuestManager;
 
         public DialogueQuestInfo(QuestManager questManager, DialogueQuestSO questSo)
-            : base(questManager, questSo)
-        {
-        }
+            : base(questManager, questSo) { }
 
         public override void TriggerQuest()
         {

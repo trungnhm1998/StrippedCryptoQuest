@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using CryptoQuest.Events;
 using CryptoQuest.Quest.Authoring;
-using CryptoQuest.Quest.Components;
 using CryptoQuest.Quest.Events;
 using CryptoQuest.System.CutsceneSystem;
 using UnityEngine;

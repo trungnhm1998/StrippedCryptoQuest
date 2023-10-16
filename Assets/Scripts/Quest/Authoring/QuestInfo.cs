@@ -58,8 +58,7 @@ namespace CryptoQuest.Quest.Authoring
 
         public override void GiveQuest()
         {
-            Debug.Log(
-                $"QuestSystem::Give Quest: <color=green>[{Data.QuestName}] - [{Data.EventName}]</color>");
+            Debug.Log($"QuestSystem::Give Quest: <color=green>[{Data.QuestName}] - [{Data.EventName}]</color>");
         }
 
         private LootInfo[] GetRewards()

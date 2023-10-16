@@ -1,46 +1,38 @@
 ﻿using CryptoQuest.Quest.Actions;
 using UnityEngine;
-using ECollideActionType = CryptoQuest.Quest.Components.QuestColliderTrigger.ECollideActionType;
 
 namespace CryptoQuest.Quest.Components
 {
     public class TriggerActionCollider : MonoBehaviour
     {
-        [field: SerializeField] private BoxCollider2D _collider2D { get; set; }
+        [field: SerializeField] public BoxCollider2D BoxCollider2D { get; set; }
 
         private NextAction _nextAction;
         private ECollideActionType _collideActionType;
         private bool _isRepeatable;
 
-        public void SetBoxSize(Vector2 componentSizeBox) => _collider2D.size = componentSizeBox;
-
         public void SetAction(NextAction nextAction)
         {
             _nextAction = nextAction;
-            _collider2D.enabled = true;
+            BoxCollider2D.enabled = true;
         }
-
+        public void SetBoxSize(Vector2 componentSizeBox) => BoxCollider2D.size = componentSizeBox;
         public void SetRepeatType(bool isRepeatable) => _isRepeatable = isRepeatable;
+        public void SetCollideActionType(ECollideActionType collideActionType) => _collideActionType = collideActionType;
+        private void OnTriggerEnter2D(Collider2D other) => Execute(other, ECollideActionType.OnEnter);
+        private void OnTriggerExit2D(Collider2D other) => Execute(other, ECollideActionType.OnExit);
 
-        public void SetCollideActionType(ECollideActionType collideActionType) =>
-            _collideActionType = collideActionType;
-
-        private void OnTriggerEnter2D(Collider2D other)
+        private void Execute(Collider2D other, ECollideActionType collideType)
         {
-            if (_collideActionType == ECollideActionType.OnEnter)
-                Execute();
-        }
+            if (!other.CompareTag("Player")) return;
 
-        private void OnTriggerExit2D(Collider2D other)
-        {
-            if (_collideActionType == ECollideActionType.OnExit)
-                Execute();
-        }
+            if (!BoxCollider2D.enabled) return;
 
-        private void Execute()
-        {
+            if (_collideActionType != collideType) return;
+
+            BoxCollider2D.enabled = _isRepeatable;
+
             StartCoroutine(_nextAction.Execute());
-            _collider2D.enabled = _isRepeatable;
         }
     }
 }
