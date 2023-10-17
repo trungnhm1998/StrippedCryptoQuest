@@ -73,11 +73,7 @@ namespace CryptoQuest.Battle.UI.PlayerParty
 
         private void UnloadAvatars(UnloadingEvent _)
         {
-            foreach (var slot in _party.Slots)
-            {
-                if (slot.HeroBehaviour && slot.HeroBehaviour.BattleAvatar)
-                    Addressables.Release(slot.HeroBehaviour.BattleAvatar);
-            }
+           //TODO: refactor unload player avatar https://github.com/indigames/CryptoQuestClient/issues/1896
         }
     }
 }
