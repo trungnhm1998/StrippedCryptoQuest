@@ -12,6 +12,7 @@ namespace CryptoQuest.BlackSmith.Upgrade
     {
         public Action<UIUpgradeItem> OnSelected;
         public Action<UIUpgradeItem> OnSubmit;
+        public Action<int> GotLevelEvent;
         [SerializeField] private ScrollRect _scrollRect;
         [SerializeField] private GameObject _equipmentPrefab;
         [SerializeField] private GameObject _previewObject;
@@ -19,25 +20,42 @@ namespace CryptoQuest.BlackSmith.Upgrade
         [SerializeField] private Transform _selectedEquipmentPanel;
         [SerializeField] private Transform _defaultPanel;
         [SerializeField] private Transform _resultPanel;
-        [SerializeField] private TextMeshProUGUI _levelToUpgrade;
+        [SerializeField] private TextMeshProUGUI _level;
+        [SerializeField] private TextMeshProUGUI _cost;
+        [SerializeField] private Color _validColor;
+        [SerializeField] private Color _inValidColor;
         private int _selectLevelToUpgrade;
         private int _currentLevel;
+        private int _levelToUpgrade;
+        private bool _isValid;
 
-        public void SetValue(int level, IUpgradeEquipment item)
+        public void SetValue(int level, IUpgradeEquipment item, float gold)
         {
             _currentLevel += level;
-            if (_currentLevel >= item.Level && _currentLevel <= item.Equipment.Def.MaxLevel)
+            if (_currentLevel > item.Level && _currentLevel <= item.Equipment.Def.MaxLevel)
                 _selectLevelToUpgrade = _currentLevel;
 
             else
                 _currentLevel = _selectLevelToUpgrade;
-            _levelToUpgrade.text = _selectLevelToUpgrade.ToString();
+
+            _levelToUpgrade = _currentLevel - item.Level;
+            _isValid = gold >= _levelToUpgrade * item.Cost;
+            _level.text = _selectLevelToUpgrade.ToString();
+            CostToUpgrade(item);
+        }
+
+        private void CostToUpgrade(IUpgradeEquipment item)
+        {
+            _cost.color = _isValid ? _validColor : _inValidColor;
+            _cost.text = $"{_levelToUpgrade * item.Cost} G";
+            GotLevelEvent?.Invoke(_levelToUpgrade);
         }
 
         private void OnItemPressed(UIUpgradeItem item)
         {
             OnSubmit?.Invoke(item);
         }
+
         private void OnItemSelected(UIUpgradeItem item)
         {
             OnSelected?.Invoke(item);
@@ -57,9 +75,10 @@ namespace CryptoQuest.BlackSmith.Upgrade
             StartCoroutine(SelectDefaultButton());
         }
 
-        public void SetLevel(IUpgradeEquipment item)
+        public void SetLevel(IUpgradeEquipment item, UIEquipmentDetails details)
         {
-            item.Equipment.SetLevel(_selectLevelToUpgrade);
+            item.Equipment.SetLevel(_currentLevel);
+            details.RenderData(item.Equipment);
             ChangeLocation(_resultPanel);
         }
 
@@ -87,8 +106,10 @@ namespace CryptoQuest.BlackSmith.Upgrade
         public void SelectedEquipment(UIUpgradeItem item)
         {
             item.transform.SetParent(_upgradeEquipmentPanel);
-            _currentLevel = item.UpgradeEquipment.Level;
-            _levelToUpgrade.text = _currentLevel.ToString();
+            _selectLevelToUpgrade = item.UpgradeEquipment.Level + 1;
+            _currentLevel = _selectLevelToUpgrade;
+            _level.text = _currentLevel.ToString();
+            CostToUpgrade(item.UpgradeEquipment);
         }
 
         private void ChangeLocation(Transform transform)

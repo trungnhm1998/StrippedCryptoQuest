@@ -15,7 +15,8 @@ namespace CryptoQuest.BlackSmith.Upgrade
             foreach (var equipment in listEquipment)
             {
                 IUpgradeEquipment equipmentData = new MockUpgradeEquipment(equipment);
-                _upgradeData.Add(equipmentData);
+                if (equipment.Level < equipment.Def.MaxLevel)
+                    _upgradeData.Add(equipmentData);
             }
         }
     }

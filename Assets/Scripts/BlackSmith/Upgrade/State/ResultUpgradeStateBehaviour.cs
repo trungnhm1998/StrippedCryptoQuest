@@ -16,7 +16,6 @@ namespace CryptoQuest.BlackSmith.Upgrade.StateMachine
             _stateController = animator.GetComponent<UpgradeStateController>();
             _input = _stateController.InputManager;
             _stateController.UpgradeResultPanel.SetActive(true);
-            _stateController.UpgradeEquipment();
             _input.SubmitEvent += SubmitUpgrade;
         }
 

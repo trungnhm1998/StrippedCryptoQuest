@@ -9,37 +9,41 @@ namespace CryptoQuest.BlackSmith.Upgrade
 {
     public class CurrencyPresenter : MonoBehaviour
     {
-        [SerializeField] private UIBlackSmithCurrency _currency;
+        [SerializeField] private UIBlackSmithCurrency _currencyUI;
         public event UnityAction OnSendSuccess;
         public event UnityAction OnSendFailed;
         private ICurrenciesController _currenciesController;
         public float Gold { get; private set; }
-        private float _diamond;
+        public float Diamond { get; private set; }
 
         private void OnEnable()
         {
             _currenciesController = ServiceProvider.GetService<ICurrenciesController>();
-            GetCurrencies();
+            UpdateCurrenciesUI();
         }
 
-        private void GetCurrencies()
+        private void UpdateCurrenciesUI()
         {
             Gold = _currenciesController.Wallet.Gold.Amount;
-            _diamond = _currenciesController.Wallet.Diamond.Amount;
-            _currency.UpdateCurrency(Gold, _diamond);
+            Diamond = _currenciesController.Wallet.Diamond.Amount;
+            _currencyUI.UpdateCurrency(Gold, Diamond);
         }
 
         public void CurrencyNeeded(float quantityGold, float quantityDiamond)
         {
-            if (Gold >= quantityGold && _diamond >= quantityDiamond)
+            var goldSO = _currenciesController.Wallet.Gold;
+            var diamondSO = _currenciesController.Wallet.Diamond;
+            if (!goldSO.CanUpdateAmount(-quantityGold)
+                          || !diamondSO.CanUpdateAmount(-quantityDiamond))
             {
-                _currenciesController.Wallet.Gold.SetCurrencyAmount(Gold - quantityGold);
-                _currenciesController.Wallet.Diamond.SetCurrencyAmount(_diamond - quantityDiamond);
-                GetCurrencies();
-                OnSendSuccess.Invoke();
-            }
-            else
                 OnSendFailed.Invoke();
+                return;
+            }
+
+            _currenciesController.UpdateCurrencyAmount(goldSO.Data, -quantityGold);
+            _currenciesController.UpdateCurrencyAmount(diamondSO.Data, -quantityGold);
+            UpdateCurrenciesUI();
+            OnSendSuccess.Invoke();
         }
     }
 }
