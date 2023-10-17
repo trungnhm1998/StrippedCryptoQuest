@@ -30,7 +30,6 @@ namespace CryptoQuest.Battle.States
             yield return new WaitForSeconds(_battleStateMachine.Spiral.Duration);
             var transition = _battleStateMachine.TransitionOut;
             _battleStateMachine.TransitionEventChannelSo.RaiseEvent(transition);
-            // _battleStateMachine.Spiral.HideSpiral();
         }
 
         private void ChangeToIntroState(UIGenericDialog dialog)

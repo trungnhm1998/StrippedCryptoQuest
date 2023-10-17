@@ -5,9 +5,8 @@ using UnityEngine.Playables;
 namespace CryptoQuest.System.CutsceneSystem.CustomTimelineTracks.FadeTransitionTrack
 {
     [Serializable]
-    public class FadeTransitionPlayableBehavior : PlayableBehaviour
+    public class TransitionPlayableBehavior : PlayableBehaviour
     {
-        [HideInInspector] public float BlackScreenDuration;
         [HideInInspector] public AbstractTransition Transition;
         [HideInInspector] public TransitionEventChannelSO TransitionEvent;
         private bool _played = false;
@@ -21,8 +20,6 @@ namespace CryptoQuest.System.CutsceneSystem.CustomTimelineTracks.FadeTransitionT
             if (Application.isPlaying)
             {
                 if (!playable.GetGraph().IsPlaying()) return;
-                if (BlackScreenDuration <= 0) return;
-                // TransitionCutsceneController.OnBlackOut?.Invoke(BlackScreenDuration);
                 TransitionEvent.RaiseEvent(Transition);
             }
         }
