@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using CryptoQuest.Battle;
 using CryptoQuest.Battle.Events;
 using CryptoQuest.Gameplay.Encounter;
 using CryptoQuest.Quest.Categories;
@@ -11,56 +10,70 @@ namespace CryptoQuest.Quest.Controllers
 {
     public class QuestBattleController : MonoBehaviour
     {
-        private readonly List<BattleQuestInfo> _currentlyProcessQuests = new();
-        [SerializeField] private BattleResultEventSO _battleCompletedEvent;
+        private List<BattleQuestInfo> _currentlyProcessQuests = new();
+        [SerializeField] private BattleResultEventSO _battleWonEvent;
+        [SerializeField] private BattleResultEventSO _battleLostEvent;
         [SerializeField] private QuestEventChannelSO _triggerQuestEventChannel;
         [SerializeField] private QuestEventChannelSO _giveQuestEventChannel;
 
         private void OnEnable()
         {
-            _battleCompletedEvent.EventRaised += OnBattleCompleted;
+            _battleWonEvent.EventRaised += OnBattleWon;
+            _battleLostEvent.EventRaised += OnBattleLost;
         }
 
         private void OnDisable()
         {
-            _battleCompletedEvent.EventRaised -= OnBattleCompleted;
+            _battleWonEvent.EventRaised -= OnBattleWon;
+            _battleLostEvent.EventRaised -= OnBattleLost;
         }
 
 
         public void GiveQuest(BattleQuestInfo questInfo)
         {
             _currentlyProcessQuests.Add(questInfo);
-            _giveQuestEventChannel.RaiseEvent(questInfo.Data.WinQuest);
-            _giveQuestEventChannel.RaiseEvent(questInfo.Data.LoseQuest);
+            if (questInfo.Data.FirstTimeLoseQuest != null)
+                _giveQuestEventChannel.RaiseEvent(questInfo.Data.FirstTimeLoseQuest);
         }
 
-        private void OnBattleCompleted(BattleResultInfo result)
+        private void OnBattleLost(Battlefield battlefield)
         {
-            var battleField = result.Battlefield;
             foreach (var processingQuest in _currentlyProcessQuests)
             {
-                if (processingQuest.Data.BattlefieldToLoad != battleField) continue;
-                HandleBattleResult(processingQuest, result);
+                if (processingQuest.Data.BattlefieldToConquer != battlefield) continue;
+                HandleBattleLost(processingQuest);
                 break;
             }
         }
 
-        private void HandleBattleResult(BattleQuestInfo info, BattleResultInfo result)
+        private void OnBattleWon(Battlefield battlefield)
         {
-            bool isWinBattle = result.IsWin;
-            var winQuest = info.Data.WinQuest;
-            var loseQuest = info.Data.LoseQuest;
-            if (isWinBattle)
+            foreach (var processingQuest in _currentlyProcessQuests)
             {
-                _triggerQuestEventChannel.RaiseEvent(winQuest);
-                _triggerQuestEventChannel.RaiseEvent(info.Data);
-                QuestManager.OnRemoveProgressingQuest?.Invoke(loseQuest);
-                _currentlyProcessQuests.Remove(info);
+                if (processingQuest.Data.BattlefieldToConquer != battlefield) continue;
+                HandleBattleWon(processingQuest);
+                break;
             }
-            else
-            {
+        }
+
+        private void HandleBattleLost(BattleQuestInfo info)
+        {
+            var loseQuest = info.Data.FirstTimeLoseQuest;
+
+            if (info.Data.FirstTimeLoseQuest != null)
                 _triggerQuestEventChannel.RaiseEvent(loseQuest);
-            }
+
+            if (info.Data.GiveRepeatBattleQuest != null)
+                _giveQuestEventChannel.RaiseEvent(info.Data.GiveRepeatBattleQuest);
+        }
+
+        private void HandleBattleWon(BattleQuestInfo info)
+        {
+            var loseQuest = info.Data.FirstTimeLoseQuest;
+            _triggerQuestEventChannel.RaiseEvent(info.Data);
+            if (info.Data.FirstTimeLoseQuest != null)
+                QuestManager.OnRemoveProgressingQuest?.Invoke(loseQuest);
+            _currentlyProcessQuests.Remove(info);
         }
     }
 }

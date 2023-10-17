@@ -43,7 +43,6 @@ namespace CryptoQuest.Battle
         private UnloadSceneEventChannelSO _unloadSceneEvent;
 
         [SerializeField] private LoadSceneEventChannelSO _loadSceneEventChannelSo;
-        [Obsolete] [SerializeField] private BattleResultEventSO _battleCompletedEvent;
         [SerializeField] private RewardSO _rewardEventChannel;
 
         [Header("Config"), SerializeField] private Battlefield[] _enemyParties = Array.Empty<Battlefield>();
@@ -120,21 +119,8 @@ namespace CryptoQuest.Battle
         [Obsolete]
         private void OnBattleEnd()
         {
-            NotifyBattleResult();
             _unloadSceneEvent.RequestUnload(_battleSceneSO);
         }
-
-        [Obsolete]
-        private void NotifyBattleResult()
-        {
-            BattleResultInfo result = new()
-            {
-                IsWin = true, // this depends on the battle result, but for now we assume it's always win
-                Battlefield = _battleBus.CurrentBattlefield
-            };
-            _battleCompletedEvent.RaiseEvent(result);
-        }
-
 
         private CompletedContext _context;
 

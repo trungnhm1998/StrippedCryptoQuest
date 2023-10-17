@@ -14,6 +14,7 @@ namespace CryptoQuest.Quest.Actor.Categories
         [field: Header("Config Settings")]
         [field: SerializeField]
         public NextAction Action { get; private set; }
+
         [field: SerializeField] public ECollideActionType CollideActionType { get; private set; }
         [field: SerializeField] public bool IsRepeatable { get; private set; } = false;
 
@@ -23,8 +24,13 @@ namespace CryptoQuest.Quest.Actor.Categories
 
     public class ExecuteActionActorInfo : ActorInfo<ExecuteActionActorSo>
     {
-        public ExecuteActionActorInfo(ExecuteActionActorSo actorSo) : base(actorSo) { }
-        public ExecuteActionActorInfo() { }
+        public ExecuteActionActorInfo(ExecuteActionActorSo actorSo) : base(actorSo)
+        {
+        }
+
+        public ExecuteActionActorInfo()
+        {
+        }
 
         public override IEnumerator Spawn(Transform parent)
         {

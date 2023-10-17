@@ -14,7 +14,7 @@ namespace CryptoQuest.Battle
 {
     public class LostBattleHandler : PostBattleManager
     {
-        [SerializeField] private BattleResultEventSO _battleCompletedEvent;
+        [SerializeField] private BattleResultEventSO _battleLostEvent;
         [SerializeField] private int _divideGold = 2;
         [SerializeField] private AttributeWithMaxCapped[] _resetAttributes;
         private TinyMessageSubscriptionToken _lostToken;
@@ -34,11 +34,11 @@ namespace CryptoQuest.Battle
         private void HandleLost(BattleLostEvent lostContext)
         {
             _context = lostContext;
+            _battleLostEvent.RaiseEvent(lostContext.Battlefield);
             DecreaseGold();
             RestoreCharacter();
             AdditiveGameSceneLoader.SceneUnloaded += TeleportToClosestTownAfterSceneUnloaded;
             UnloadBattleScene();
-            NotifyBattleResult(_context.Battlefield);
         }
 
         private void TeleportToClosestTownAfterSceneUnloaded(SceneScriptableObject scene)
@@ -47,16 +47,6 @@ namespace CryptoQuest.Battle
             if (scene != BattleSceneSO) return;
 
             FinishPresentationAndEnableInput();
-        }
-
-        private void NotifyBattleResult(Battlefield battlefield)
-        {
-            BattleResultInfo result = new()
-            {
-                IsWin = false, //obsolete 
-                Battlefield = battlefield
-            };
-            _battleCompletedEvent.RaiseEvent(result);
         }
 
         private void DecreaseGold()

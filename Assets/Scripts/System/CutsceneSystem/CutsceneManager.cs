@@ -14,6 +14,7 @@ namespace CryptoQuest.System.CutsceneSystem
     public class CutsceneManager : MonoBehaviour
     {
         public static event UnityAction CutsceneCompleted;
+        public static event UnityAction<PlayableDirector> CutsceneFinished;
 
         [Header("Listening to")] [SerializeField]
         private PlayCutsceneEvent _playCutsceneEvent;
@@ -75,6 +76,7 @@ namespace CryptoQuest.System.CutsceneSystem
             _currentCutsceneTrigger.StopCutscene();
             _currentCutsceneTrigger = null;
             _onCutsceneCompleted.Invoke();
+            CutsceneFinished?.Invoke(director);
             CutsceneCompleted?.Invoke();
         }
 

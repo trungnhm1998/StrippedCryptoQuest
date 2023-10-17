@@ -91,14 +91,6 @@ namespace CryptoQuest.Quest.Components
             _currentQuestData.OnRewardReceived -= RewardReceived;
         }
 
-        private void QuestCompleted()
-        {
-            InProgressQuest.Remove(_currentQuestInfo);
-
-            CompletedQuests.Add(_currentQuestInfo);
-            _completedQuestsId.Add(_currentQuestInfo.BaseData.Guid);
-        }
-
         private void UpdateQuestProgress(QuestInfo questInfo)
         {
             InProgressQuest.Remove(questInfo);

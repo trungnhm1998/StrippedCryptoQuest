@@ -16,9 +16,13 @@ namespace CryptoQuest.Quest.Components
             _nextAction = nextAction;
             BoxCollider2D.enabled = true;
         }
+
         public void SetBoxSize(Vector2 componentSizeBox) => BoxCollider2D.size = componentSizeBox;
         public void SetRepeatType(bool isRepeatable) => _isRepeatable = isRepeatable;
-        public void SetCollideActionType(ECollideActionType collideActionType) => _collideActionType = collideActionType;
+
+        public void SetCollideActionType(ECollideActionType collideActionType) =>
+            _collideActionType = collideActionType;
+
         private void OnTriggerEnter2D(Collider2D other) => Execute(other, ECollideActionType.OnEnter);
         private void OnTriggerExit2D(Collider2D other) => Execute(other, ECollideActionType.OnExit);
 

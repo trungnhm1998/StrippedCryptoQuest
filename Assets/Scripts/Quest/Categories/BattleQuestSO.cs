@@ -9,9 +9,9 @@ namespace CryptoQuest.Quest.Categories
     [CreateAssetMenu(menuName = "QuestSystem/Quests/Battle QuestSO", fileName = "BattleQuestSO")]
     public class BattleQuestSO : QuestSO
     {
-        [field: SerializeField] public Battlefield BattlefieldToLoad { get; private set; }
-        [field: SerializeField] public QuestSO WinQuest { get; private set; }
-        [field: SerializeField] public QuestSO LoseQuest { get; private set; }
+        [field: SerializeField] public Battlefield BattlefieldToConquer { get; private set; }
+        [field: SerializeField] public QuestSO FirstTimeLoseQuest { get; private set; }
+        [field: SerializeField] public QuestSO GiveRepeatBattleQuest { get; private set; }
 
         public override QuestInfo CreateQuest(QuestManager questManager)
             => new BattleQuestInfo(questManager, this);

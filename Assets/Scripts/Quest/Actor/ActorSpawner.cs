@@ -9,8 +9,8 @@ namespace CryptoQuest.Quest.Actor
         [SerializeField] private VoidEventChannelSO _onSceneLoadedEventChannel;
         [SerializeField] private Transform _spawnPoint;
 
-        [Header("Actor Settings")]
-        [SerializeField] private ActorSO _actorDef;
+        [Header("Actor Settings")] [SerializeField]
+        private ActorSO _actorDef;
 
         [SerializeField] private ActorSettingSO _actorSpawnSetting;
         [SerializeField] private ActorSettingSO _actorDeSpawnSetting;
@@ -62,35 +62,43 @@ namespace CryptoQuest.Quest.Actor
 
         private void ActivateSpawnActor()
         {
+            StopAllCoroutines();
             ActorInfo actor = _actorDef.CreateActor();
             if (_spawnPoint.transform == null) return;
 
             StartCoroutine(actor.Spawn(_spawnPoint.transform));
+            if (_actorSpawnSetting != null)
+                _actorSpawnSetting.QuestToTrack.OnQuestCompleted -= ActivateSpawnActor;
         }
 
         private void ActivateDeSpawnActor()
         {
-            if (transform.gameObject == null) return;
+            StopAllCoroutines();
+            if (_spawnPoint.transform.gameObject == null) return;
 
             Destroy(transform.gameObject);
+
+            if (_actorDeSpawnSetting != null)
+                _actorDeSpawnSetting.QuestToTrack.OnQuestCompleted -= ActivateDeSpawnActor;
         }
 
         private void Spawn(bool isQuestCompleted)
         {
-            if (isQuestCompleted) ActivateSpawnActor();
-            _actorSpawnSetting.QuestToTrack.OnQuestCompleted += ActivateSpawnActor;
+            if (isQuestCompleted)
+                ActivateSpawnActor();
+            else
+                _actorSpawnSetting.QuestToTrack.OnQuestCompleted += ActivateSpawnActor;
         }
 
         private void DeSpawn(bool isQuestCompleted)
         {
             if (isQuestCompleted)
-            {
                 ActivateDeSpawnActor();
-                return;
+            else
+            {
+                _actorDeSpawnSetting.QuestToTrack.OnQuestCompleted += ActivateDeSpawnActor;
+                InitSpawnSetting();
             }
-
-            _actorDeSpawnSetting.QuestToTrack.OnQuestCompleted += ActivateDeSpawnActor;
-            InitSpawnSetting();
         }
     }
 }
