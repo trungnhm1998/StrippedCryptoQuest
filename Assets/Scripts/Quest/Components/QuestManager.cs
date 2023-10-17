@@ -54,17 +54,14 @@ namespace CryptoQuest.Quest.Components
 
         public void TriggerQuest(QuestSO questData)
         {
+            if (IsQuestTriggered(questData)) return;
             foreach (var progressQuestInfo in InProgressQuest)
             {
                 if (progressQuestInfo.BaseData != questData) continue;
 
-                _currentQuestInfo = progressQuestInfo;
+                progressQuestInfo.TriggerQuest();
                 break;
             }
-
-            if (IsQuestTriggered(questData)) return;
-
-            _currentQuestInfo.TriggerQuest();
         }
 
         public void GiveQuest(QuestSO questData)

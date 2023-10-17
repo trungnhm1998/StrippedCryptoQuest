@@ -1,5 +1,97 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-9139126163302857698
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4fd7e0bc468426896e9f1ce54739fbd, type: 3}
+  m_Name: Yarn Quest Node Track Asset
+  m_EditorClassIdentifier: 
+  m_Version: 3
+  m_AnimClip: {fileID: 0}
+  m_Locked: 0
+  m_Muted: 0
+  m_CustomPlayableFullTypename: 
+  m_Curves: {fileID: 0}
+  m_Parent: {fileID: 11400000}
+  m_Children: []
+  m_Clips:
+  - m_Version: 1
+    m_Start: 6.966666666666667
+    m_ClipIn: 0
+    m_Asset: {fileID: 9134534478161442443}
+    m_Duration: 0.23333333333333384
+    m_TimeScale: 1
+    m_ParentTrack: {fileID: -9139126163302857698}
+    m_EaseInDuration: 0
+    m_EaseOutDuration: 0
+    m_BlendInDuration: 0
+    m_BlendOutDuration: 0
+    m_MixInCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    m_MixOutCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    m_BlendInCurveMode: 0
+    m_BlendOutCurveMode: 0
+    m_ExposedParameterNames: []
+    m_AnimationCurves: {fileID: 0}
+    m_Recordable: 0
+    m_PostExtrapolationMode: 0
+    m_PreExtrapolationMode: 0
+    m_PostExtrapolationTime: 0
+    m_PreExtrapolationTime: 0
+    m_DisplayName: YarnQuestNodePlayableAsset
+  m_Markers:
+    m_Objects: []
 --- !u!114 &-8823243285551403396
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -221,22 +313,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fde0d25a170598d46a0b9dc16b4527a5, type: 3}
   m_Name: ActivationPlayableAsset(Clone)
   m_EditorClassIdentifier: 
---- !u!114 &-7954040983745597807
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 90fb794a295e73545af71bcdb7375791, type: 3}
-  m_Name: CinemachineShot
-  m_EditorClassIdentifier: 
-  DisplayName: 
-  VirtualCamera:
-    exposedName: 16dbd022234491c47b076370ce8cd797
-    defaultValue: {fileID: 0}
 --- !u!114 &-7302895830678710333
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -261,9 +337,9 @@ MonoBehaviour:
   m_Clips:
   - m_Version: 1
     m_Start: 1.5
-    m_ClipIn: 0
+    m_ClipIn: 0.5
     m_Asset: {fileID: -4038915664616679286}
-    m_Duration: 5.7
+    m_Duration: 5.700000000000001
     m_TimeScale: 1
     m_ParentTrack: {fileID: -7302895830678710333}
     m_EaseInDuration: 0
@@ -426,57 +502,6 @@ MonoBehaviour:
   m_Children: []
   m_Clips:
   - m_Version: 1
-    m_Start: 0
-    m_ClipIn: 0
-    m_Asset: {fileID: -7954040983745597807}
-    m_Duration: 1
-    m_TimeScale: 1
-    m_ParentTrack: {fileID: -5736786151725474694}
-    m_EaseInDuration: 0
-    m_EaseOutDuration: 0
-    m_BlendInDuration: -1
-    m_BlendOutDuration: 0.5
-    m_MixInCurve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 1
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    m_MixOutCurve:
-      serializedVersion: 2
-      m_Curve: []
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    m_BlendInCurveMode: 0
-    m_BlendOutCurveMode: 0
-    m_ExposedParameterNames: []
-    m_AnimationCurves: {fileID: 0}
-    m_Recordable: 0
-    m_PostExtrapolationMode: 0
-    m_PreExtrapolationMode: 0
-    m_PostExtrapolationTime: 0
-    m_PreExtrapolationTime: 0
-    m_DisplayName: Virtual Camera
-  - m_Version: 1
     m_Start: 1.5
     m_ClipIn: 0
     m_Asset: {fileID: 6839856676208948073}
@@ -485,29 +510,11 @@ MonoBehaviour:
     m_ParentTrack: {fileID: -5736786151725474694}
     m_EaseInDuration: 0
     m_EaseOutDuration: 0
-    m_BlendInDuration: 0.5
+    m_BlendInDuration: 0.8666666666666671
     m_BlendOutDuration: -1
     m_MixInCurve:
       serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 1
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
+      m_Curve: []
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
@@ -546,16 +553,16 @@ MonoBehaviour:
     m_PreExtrapolationTime: 0
     m_DisplayName: VCamCutscene
   - m_Version: 1
-    m_Start: 0.5
+    m_Start: 0
     m_ClipIn: 0
     m_Asset: {fileID: 7254837236419380986}
-    m_Duration: 1.5
+    m_Duration: 2.366666666666667
     m_TimeScale: 1
     m_ParentTrack: {fileID: -5736786151725474694}
     m_EaseInDuration: 0
     m_EaseOutDuration: 0
-    m_BlendInDuration: 0.5
-    m_BlendOutDuration: 0.5
+    m_BlendInDuration: -1
+    m_BlendOutDuration: 0.8666666666666671
     m_MixInCurve:
       serializedVersion: 2
       m_Curve: []
@@ -564,7 +571,25 @@ MonoBehaviour:
       m_RotationOrder: 4
     m_MixOutCurve:
       serializedVersion: 2
-      m_Curve: []
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
@@ -854,6 +879,8 @@ MonoBehaviour:
   - {fileID: 4538715823015574855}
   - {fileID: 2583236494377413264}
   - {fileID: 5350100212779269929}
+  - {fileID: -9139126163302857698}
+  - {fileID: 919860087162244955}
   m_FixedDuration: 0
   m_EditorSettings:
     m_Framerate: 60
@@ -970,6 +997,29 @@ MonoBehaviour:
   m_OpenClipOffsetRotation: {x: 0, y: 0, z: 0, w: 1}
   m_Rotation: {x: 0, y: 0, z: 0, w: 1}
   m_ApplyOffsets: 0
+--- !u!114 &919860087162244955
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1a0fc6c8e7793e42ad1ffdfdd7034f5, type: 3}
+  m_Name: Transition Track Asset
+  m_EditorClassIdentifier: 
+  m_Version: 3
+  m_AnimClip: {fileID: 0}
+  m_Locked: 0
+  m_Muted: 0
+  m_CustomPlayableFullTypename: 
+  m_Curves: {fileID: 0}
+  m_Parent: {fileID: 11400000}
+  m_Children: []
+  m_Clips: []
+  m_Markers:
+    m_Objects: []
 --- !u!114 &1204233144054142152
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1011,7 +1061,7 @@ MonoBehaviour:
     m_Start: 1.5
     m_ClipIn: 0
     m_Asset: {fileID: -3150531632387166309}
-    m_Duration: 5.7
+    m_Duration: 5.700000000000001
     m_TimeScale: 1
     m_ParentTrack: {fileID: 1835243286100838161}
     m_EaseInDuration: 0
@@ -1445,7 +1495,7 @@ MonoBehaviour:
     m_Start: 1.5
     m_ClipIn: 0
     m_Asset: {fileID: 8534790929905355470}
-    m_Duration: 1.9
+    m_Duration: 1.8999999999999995
     m_TimeScale: 1
     m_ParentTrack: {fileID: 3976617135188112091}
     m_EaseInDuration: 0
@@ -1676,10 +1726,10 @@ MonoBehaviour:
   m_Children: []
   m_Clips:
   - m_Version: 1
-    m_Start: 3.816666666666667
+    m_Start: 4
     m_ClipIn: 0
     m_Asset: {fileID: 1204233144054142152}
-    m_Duration: 0.983333333333333
+    m_Duration: 0.25
     m_TimeScale: 1
     m_ParentTrack: {fileID: 5350100212779269929}
     m_EaseInDuration: 0
@@ -1748,7 +1798,7 @@ MonoBehaviour:
     m_Start: 6.366666666666666
     m_ClipIn: 0
     m_Asset: {fileID: -8823243285551403396}
-    m_Duration: 0.5500000000000007
+    m_Duration: 0.3333333333333339
     m_TimeScale: 1
     m_ParentTrack: {fileID: 5350100212779269929}
     m_EaseInDuration: 0
@@ -2100,7 +2150,7 @@ MonoBehaviour:
     m_Start: 1.5
     m_ClipIn: 0
     m_Asset: {fileID: 4664654674952255886}
-    m_Duration: 5.7
+    m_Duration: 5.700000000000001
     m_TimeScale: 1
     m_ParentTrack: {fileID: 6551906581370210713}
     m_EaseInDuration: 0
@@ -2561,3 +2611,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fde0d25a170598d46a0b9dc16b4527a5, type: 3}
   m_Name: ActivationPlayableAsset
   m_EditorClassIdentifier: 
+--- !u!114 &9134534478161442443
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 826ceb9ed908420c89db4316f386df6e, type: 3}
+  m_Name: YarnQuestNodePlayableAsset
+  m_EditorClassIdentifier: 
+  _yarnDialogWithQuest: {fileID: 11400000, guid: 068aabd22a1c7f24fa8e38b93857afdd, type: 2}
+  _template:
+    YarnNodeName: Start
+    PauseTimelineOnClipEnds: 0

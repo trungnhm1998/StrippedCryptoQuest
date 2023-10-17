@@ -20,9 +20,40 @@ Emma: If it comes to this...! #line:ch2chasethief5
 Bravo: My Hero, What are we going to do! Do you still want to chase after him?! #line:ch2chasethief6
 -> YES #line:ch2chasethief7
     Bravo: Alright! Then follow me! #line:ch2chasethief8
+    <<jump CompleteCh2ChaseThief_Ready>>
 -> NO #line:ch2chasethief9
+    <<jump CompleteCh2ChaseThief_NotReady>>
     Emma: Well, we're going into the Lost Forest, so why don't we get a few things ready? #line:ch2chasethief10
     Emma: But without your wallet... Oh, you have a little bit of money that you've separated in another luggage. #line:ch2chasethief11
     Emma: Then let's get ready with that extra money and go after him. #line:ch2chasethief12
     Emma: I don't think that the thief will be able to get through the Lost Forest that easily, so I don't think we need to rush. #line:ch2chasethief13
+    
+===
+
+title: CompleteCh2ChaseThief
+tags:
+---
+<<quest ch002_q002_e005_chase_thief>>
+===
+
+title: ch002_q002_e005_chase_thief_confirm
+tags:
+---
+Bravo: My Hero, What are we going to do! Do you still want to chase after him?! #line:ch2confirmchasethief1
+->YES #line:ch2confirmchasethief2
+    Bravo: Alright! Then follow me! #line:ch2confirmchasethief3
+    <<jump CompleteCh2ChaseThief_Ready>>
+-> NO #line:ch2confirmchasethief4
+===
+
+title: CompleteCh2ChaseThief_Ready
+tags:
+---
+<<quest ch002_q002_e006_confirm_chase>>
+===
+
+title: CompleteCh2ChaseThief_NotReady
+tags:
+---
+<<quest Ch2ChaseThief_NotReady>>
 ===
