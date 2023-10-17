@@ -1,12 +1,9 @@
-using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data;
 using IndiGames.GameplayAbilitySystem.EffectSystem;
 using IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects.EffectExecutionCalculation;
 using UnityEngine;
 
 namespace CryptoQuest.AbilitySystem.Executions
 {
-    [CreateAssetMenu(fileName = "HealCalculation",
-        menuName = "Gameplay/Battle/Effects/Execution Calculations/Heal Calculation")]
     public class MagicCalculation : EffectExecutionCalculationBase
     {
         [SerializeField] private CustomExecutionAttributeCaptureDef _baseMagicAttack;
@@ -20,22 +17,21 @@ namespace CryptoQuest.AbilitySystem.Executions
             var context = GameplayEffectContext.ExtractEffectContext(spec.Context);
             var parameters = context.SkillInfo.SkillParameters;
             executionParams.TryGetAttributeValue(_baseMagicAttack, out var baseMagicAttack);
+            Debug.Log($"Calculation::Magic atk: {baseMagicAttack.CurrentValue}");
             var targetedAttributeDef = parameters.targetAttribute;
             float baseMagicValue = BattleCalculator.CalculateBaseDamage(parameters,
                 baseMagicAttack.CurrentValue,
                 Random.Range(_lowerRandomRange, _upperRandomRange));
 
-            Debug.Log($"Magic value: {baseMagicAttack}");
+            Debug.Log($"Calculation::Magic Power: {baseMagicValue}");
 
             if (baseMagicValue <= 0f) return;
 
             var modifier = new GameplayModifierEvaluatedData()
             {
                 Attribute = targetedAttributeDef.Attribute,
-                // TODO: Refactor this when implement buff effect
-                Magnitude = Mathf.RoundToInt(baseMagicValue) *
-                            (context.Parameters.EffectType == EEffectType.Restore ? 1 : -1),
-                ModifierOp = EAttributeModifierOperationType.Add,
+                Magnitude = Mathf.RoundToInt(baseMagicValue),
+                OpType = EAttributeModifierOperationType.Add,
             };
             outModifiers.Add(modifier);
         }

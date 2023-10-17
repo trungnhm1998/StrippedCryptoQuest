@@ -97,7 +97,7 @@ namespace CryptoQuest.AbilitySystem.EffectActions
             _turnsLeft--;
             Debug.Log(
                 $"TurnBaseAction::UpdateTurn::skill effect has [{_turnsLeft}] turns left");
-            if (_turnsLeft <= 0) IsActive = false;
+            if (_turnsLeft <= 0) IsActive = false; // Will be remove when next turn started
         }
 
         private void LogAffectingStatus()
@@ -113,7 +113,7 @@ namespace CryptoQuest.AbilitySystem.EffectActions
                 BattleEventBus.RaiseEvent(new EffectAffectingEvent()
                 {
                     Character = Spec.Target.GetComponent<Battle.Components.Character>(),
-                    Reason = tagAsset.AffectMessage
+                    Tag = tag
                 });
             }
         }
@@ -136,7 +136,7 @@ namespace CryptoQuest.AbilitySystem.EffectActions
                 var evalData = new GameplayModifierEvaluatedData()
                 {
                     Attribute = modifier.Attribute,
-                    ModifierOp = modifier.OperationType,
+                    OpType = modifier.OperationType,
                     Magnitude = Spec.GetModifierMagnitude(index)
                 };
                 InternalExecuteMod(Spec, evalData);

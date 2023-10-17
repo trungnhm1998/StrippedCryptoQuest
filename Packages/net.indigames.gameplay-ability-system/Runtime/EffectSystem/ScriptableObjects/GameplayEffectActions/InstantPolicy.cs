@@ -34,7 +34,7 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects.Gamepla
                 var evalData = new GameplayModifierEvaluatedData()
                 {
                     Attribute = modifier.Attribute,
-                    ModifierOp = modifier.OperationType,
+                    OpType = modifier.OperationType,
                     Magnitude = Spec.GetModifierMagnitude(index)
                 };
                 modifySuccess |= InternalExecuteMod(Spec, evalData);

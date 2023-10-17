@@ -2,6 +2,7 @@
 {
     public static class Constants
     {
+        public static readonly string ATTRIBUTE_NAME = "AttributeName";
         public static readonly string CHARACTER_NAME = "CharacterName";
         public static readonly string CHARACTER_TARGET_NAME = "CharacterTargetName";
         public static readonly string DAMAGE_NUMBER = "DamageNumber";

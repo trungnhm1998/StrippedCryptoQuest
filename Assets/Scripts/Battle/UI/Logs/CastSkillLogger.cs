@@ -2,6 +2,7 @@ using CryptoQuest.Battle.Events;
 using TinyMessenger;
 using UnityEngine;
 using UnityEngine.Localization;
+using UnityEngine.Localization.SmartFormat.PersistentVariables;
 
 namespace CryptoQuest.Battle.UI.Logs
 {
@@ -24,7 +25,14 @@ namespace CryptoQuest.Battle.UI.Logs
         {
             var castMessage = _castSkillMessage;
             castMessage.Add(Constants.CHARACTER_NAME, skillEvent.Character.LocalizedName);
-            castMessage.Add(Constants.SKILL_NAME, skillEvent.Skill.Parameters.SkillName);
+            var localizedSkillName = skillEvent.Skill.Parameters.SkillName;
+            if (localizedSkillName.IsEmpty)
+                castMessage.Add(Constants.SKILL_NAME, new StringVariable()
+                {
+                    Value = skillEvent.Skill.name
+                });
+            else
+                castMessage.Add(Constants.SKILL_NAME, localizedSkillName);
             Logger.AppendLog(castMessage);
         }
     }

@@ -35,8 +35,9 @@ Transform:
   - {fileID: 2795479537145360612}
   - {fileID: 3609803679854329241}
   - {fileID: 2704798854172030109}
+  - {fileID: 4000472001125200130}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2603140895196176383
 MonoBehaviour:
@@ -53,6 +54,102 @@ MonoBehaviour:
   _sceneLoadedEvent: {fileID: 11400000, guid: d463f98507ffd95459feb67b21dd1ecc, type: 2}
   _delayBetweenLines: 2
   _hideDelay: 3
+--- !u!1 &675744433675110931
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4000472001125200130}
+  - component: {fileID: 8959174264903867277}
+  m_Layer: 0
+  m_Name: BuffAndDebuffs
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4000472001125200130
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 675744433675110931}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3441466529967231316}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8959174264903867277
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 675744433675110931}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5edd8697967b436d85df80ea2f27a094, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _characterAttributeChangeEvent: {fileID: 11400000, guid: 8530eb711d1ffb74081abe7dc655eea4, type: 2}
+  _buffMessage:
+    m_TableReference:
+      m_TableCollectionName: GUID:810dd60b781de0a4589f9f164a4b0a8c
+    m_TableEntryReference:
+      m_KeyId: 942061969443
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  _debuffMessage:
+    m_TableReference:
+      m_TableCollectionName: GUID:810dd60b781de0a4589f9f164a4b0a8c
+    m_TableEntryReference:
+      m_KeyId: 942061969444
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  _buffWearOffMessage:
+    m_TableReference:
+      m_TableCollectionName: GUID:810dd60b781de0a4589f9f164a4b0a8c
+    m_TableEntryReference:
+      m_KeyId: 942061969445
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  _debuffWearOffMessage:
+    m_TableReference:
+      m_TableCollectionName: GUID:810dd60b781de0a4589f9f164a4b0a8c
+    m_TableEntryReference:
+      m_KeyId: 942061969446
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  _tagAttributeMappings:
+  - Tag: {fileID: 11400000, guid: eca5a2e509a3b2141933a1ef52c206e7, type: 2}
+    Attribute: {fileID: 11400000, guid: cff0791781b73cf4ca80877936aedaad, type: 2}
+  - Tag: {fileID: 11400000, guid: 0674b2b9be5a47241aca2b4fb30a62a2, type: 2}
+    Attribute: {fileID: 11400000, guid: cff0791781b73cf4ca80877936aedaad, type: 2}
+  - Tag: {fileID: 11400000, guid: 5bbc1e37ce21ebb40bff8350e3f1c14f, type: 2}
+    Attribute: {fileID: 11400000, guid: 5dc883e70879e63439409cab7e7351b1, type: 2}
+  - Tag: {fileID: 11400000, guid: 35e1d984ecd85d04483c5eeb2e40103b, type: 2}
+    Attribute: {fileID: 11400000, guid: 5dc883e70879e63439409cab7e7351b1, type: 2}
+  _ignoredAttributes:
+  - {fileID: 11400000, guid: 77c53593fd92c904aa7689c5a7449df3, type: 2}
+  - {fileID: 11400000, guid: a7e3a44d36bf87d44afeb00b236e832e, type: 2}
+  references:
+    version: 2
+    RefIds: []
 --- !u!1 &1311728983820639505
 GameObject:
   m_ObjectHideFlags: 0
@@ -327,7 +424,7 @@ MonoBehaviour:
     m_FallbackState: 0
     m_WaitForCompletion: 0
     m_LocalVariables: []
-  _heroHealthChangeEvent: {fileID: 11400000, guid: 8530eb711d1ffb74081abe7dc655eea4, type: 2}
+  _notifyDamage: {fileID: 11400000, guid: 24121cd333778ae46b7758ccdfc73aca, type: 2}
   references:
     version: 2
     RefIds: []

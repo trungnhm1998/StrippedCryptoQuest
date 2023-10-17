@@ -8,6 +8,7 @@ using UnityEngine;
 
 namespace CryptoQuest.AbilitySystem.Abilities
 {
+    [CreateAssetMenu(menuName = "Crypto Quest/Ability System/Abilites/Cast Skill With Effect", fileName = "CastEffectsOnTargetAbility")]
     public class CastEffectsOnTargetAbility : CastSkillAbility
     {
         [SerializeField] private GameplayEffectDefinition[] _effects = Array.Empty<GameplayEffectDefinition>();

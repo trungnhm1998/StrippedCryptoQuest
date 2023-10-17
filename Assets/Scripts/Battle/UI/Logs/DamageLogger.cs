@@ -1,8 +1,5 @@
-﻿using CryptoQuest.Battle.Character;
-using CryptoQuest.Battle.Events;
-using IndiGames.GameplayAbilitySystem.AttributeSystem;
-using IndiGames.GameplayAbilitySystem.AttributeSystem.Components;
-using TinyMessenger;
+﻿using System;
+using CryptoQuest.AbilitySystem.Executions;
 using UnityEngine;
 using UnityEngine.Localization;
 using UnityEngine.Localization.SmartFormat.PersistentVariables;
@@ -13,44 +10,32 @@ namespace CryptoQuest.Battle.UI.Logs
     {
         [SerializeField] private LocalizedString _damageMessage;
         [SerializeField] private LocalizedString _noDamageMessage;
-        [SerializeField] private AttributeChangeEvent _heroHealthChangeEvent;
-        private TinyMessageSubscriptionToken _token;
+        [SerializeField] private NotifyDamage _notifyDamage;
 
         private void Awake()
         {
-            _token = BattleEventBus.SubscribeEvent<LoadedEvent>(RegisterEvent);
+            _notifyDamage.DamageDealt += LogDamage;
         }
 
         private void OnDestroy()
         {
-            BattleEventBus.UnsubscribeEvent(_token);
-            _heroHealthChangeEvent.Changed -= LogDamage;
+            _notifyDamage.DamageDealt -= LogDamage;
         }
 
-        private void RegisterEvent(LoadedEvent ctx)
-        {
-            _heroHealthChangeEvent.Changed += LogDamage;
-        }
-
-        private void LogDamage(AttributeSystemBehaviour owner, AttributeValue oldVal,
-            AttributeValue newVal)
+        private void LogDamage(Components.Character character, float damage)
         {
             LocalizedString localizedMessage;
-            var damage = Mathf.RoundToInt(oldVal.CurrentValue - newVal.CurrentValue);
-            if (damage <= 0)
-            {
-                localizedMessage = _noDamageMessage;
-            }
-            else
+            if (damage < 0)
             {
                 localizedMessage = _damageMessage;
                 localizedMessage.Add(Constants.DAMAGE_NUMBER, new FloatVariable()
                 {
-                    Value = damage
+                    Value = Math.Abs(damage)
                 });
             }
+            else
+                localizedMessage = _noDamageMessage;
 
-            var character = owner.GetComponent<Components.Character>();
             Debug.Log($"{character.LocalizedName.GetLocalizedString()}: {damage}");
             localizedMessage.Add(Constants.CHARACTER_NAME, new StringVariable()
             {

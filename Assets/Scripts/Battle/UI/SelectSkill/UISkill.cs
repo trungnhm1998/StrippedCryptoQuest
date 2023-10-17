@@ -19,8 +19,9 @@ namespace CryptoQuest.Battle.UI.SelectSkill
         public void Init(CastSkillAbility skill)
         {
             _skill = skill;
+            _name.text = skill.name;
             _nameStringEvent.StringReference = skill.Parameters.SkillName;
-            _cost.text = skill.Parameters.Cost.ToString();
+            _cost.text = skill.MpToCast.ToString();
         }
 
         public void OnPressed()

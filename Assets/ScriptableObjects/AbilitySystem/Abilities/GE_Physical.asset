@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fbb6112b998064f4ebc8a44f4c80c446, type: 3}
-  m_Name: GE_DamageBase
+  m_Name: GE_Physical
   m_EditorClassIdentifier: 
   <Description>k__BackingField: 
   _policy:
-    rid: 8460399276080234549
+    rid: 7132078137632358650
   <EffectDetails>k__BackingField:
     Modifiers: []
     StackingType: 0
@@ -25,12 +25,13 @@ MonoBehaviour:
     IgnoreTags: []
   <RemoveGameplayEffectsWithTags>k__BackingField: []
   <ExecutionCalculations>k__BackingField:
-  - {fileID: 11400000, guid: 3f78234ed50d68c4880ffa78125e9f4a, type: 2}
+  - {fileID: 11400000, guid: 22f459e52180ea24e8bee671c5bf81c3, type: 2}
   - {fileID: 11400000, guid: daa97cbcac0ec6a428ac284caacc9e0c, type: 2}
+  - {fileID: 11400000, guid: 24121cd333778ae46b7758ccdfc73aca, type: 2}
   <ChanceToApply>k__BackingField: 1
   <CustomApplicationRequirements>k__BackingField: []
   references:
     version: 2
     RefIds:
-    - rid: 8460399276080234549
+    - rid: 7132078137632358650
       type: {class: InstantPolicy, ns: IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects.GameplayEffectActions, asm: IndiGames.GameplayAbilitySystem}

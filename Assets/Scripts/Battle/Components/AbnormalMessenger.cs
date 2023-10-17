@@ -7,10 +7,6 @@ namespace CryptoQuest.Battle.Components
 {
     public class AbnormalMessenger : CharacterComponentBase
     {
-        private ITagAssetProvider _tagAssetProvider;
-
-        private ITagAssetProvider TagAssetProvider =>
-            _tagAssetProvider ??= ServiceProvider.GetService<ITagAssetProvider>();
         public override void Init()
         {
             Character.AbilitySystem.TagSystem.TagAdded += LogEffectAdded;
@@ -28,11 +24,10 @@ namespace CryptoQuest.Battle.Components
         {
             foreach (var tagScriptableObject in tagScriptableObjects)
             {
-                if (!TagAssetProvider.TryGetTagAsset(tagScriptableObject, out var tagAsset)) continue;
                 BattleEventBus.RaiseEvent(new EffectAddedEvent()
                 {
+                    Tag = tagScriptableObject,
                     Character = Character,
-                    Reason = tagAsset.AddedMessage,
                 });
             }
         }
@@ -41,12 +36,10 @@ namespace CryptoQuest.Battle.Components
         {
             foreach (var tagScriptableObject in tagScriptableObjects)
             {
-                if (!TagAssetProvider.TryGetTagAsset(tagScriptableObject, out var tagAsset)) continue;
-                if (Character.HasTag(tagScriptableObject)) continue;
                 BattleEventBus.RaiseEvent(new EffectRemovedEvent()
                 {
+                    Tag = tagScriptableObject,
                     Character = Character,
-                    Reason = tagAsset.RemoveMessage,
                 });
             }
         }

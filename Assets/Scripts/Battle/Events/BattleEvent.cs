@@ -5,9 +5,8 @@ using CryptoQuest.Battle.Components;
 using CryptoQuest.Gameplay.Encounter;
 using CryptoQuest.Gameplay.Loot;
 using CryptoQuest.Item;
-using IndiGames.GameplayAbilitySystem.EffectSystem;
+using IndiGames.GameplayAbilitySystem.TagSystem.ScriptableObjects;
 using TinyMessenger;
-using UnityEngine.Localization;
 
 namespace CryptoQuest.Battle.Events
 {
@@ -33,6 +32,7 @@ namespace CryptoQuest.Battle.Events
     public class ForceLoseBattleEvent : BattleEvent { }
 
     public class BattleLostEvent : BattleEndedEvent { }
+
     public class BattleRetreatedEvent : BattleEndedEvent { }
 
     public class BattleCleanUpFinishedEvent : BattleEvent { }
@@ -59,6 +59,7 @@ namespace CryptoQuest.Battle.Events
     {
         public EnemyBehaviour Enemy { get; set; }
     }
+
     public class ResetHighlightEnemyEvent : BattleEvent { }
 
     public class ShowPromptEvent : BattleEvent
@@ -70,6 +71,16 @@ namespace CryptoQuest.Battle.Events
     public class HidePromptEvent : BattleEvent { }
 
     public abstract class LogEvent : BattleEvent
+    {
+        public Components.Character Character { get; set; }
+    }
+
+    public class TurnStartedEvent : BattleEvent
+    {
+        public Components.Character Character { get; set; }
+    }
+    
+    public class ExecutingCommandEvent : BattleEvent
     {
         public Components.Character Character { get; set; }
     }
@@ -105,9 +116,12 @@ namespace CryptoQuest.Battle.Events
         public Components.Character Target { get; set; }
     }
 
+    /// <summary>
+    ///  Currently support <see cref="TagScriptableObject"/> which might be wrong for some cases
+    /// </summary>
     public class EffectEvent : LogEvent
     {
-        public LocalizedString Reason { get; set; }
+        public TagScriptableObject Tag { get; set; }
     }
 
     public class EffectAddedEvent : EffectEvent { }
@@ -121,6 +135,7 @@ namespace CryptoQuest.Battle.Events
     {
         public ConsumableInfo ItemInfo { get; set; }
     }
+
     public class SelectedItemEvent : ItemEvent { }
 
     public class CancelSelectedItemEvent : ItemEvent { }

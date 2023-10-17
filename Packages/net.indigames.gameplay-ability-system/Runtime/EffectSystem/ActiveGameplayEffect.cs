@@ -116,7 +116,7 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem
         {
             // apply modifier after execute custom calculation
             foreach (var modifier in _computedModifiers)
-                AddModifierToAttribute(modifier.Attribute, modifier.ModifierOp, modifier.Magnitude);
+                AddModifierToAttribute(modifier.Attribute, modifier.OpType, modifier.Magnitude);
         }
 
         private void AddModifierToAttribute(AttributeScriptableObject attribute, EAttributeModifierOperationType opType, float magnitude)
@@ -161,7 +161,7 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem
              */
             if (targetSystem.PreGameplayEffectExecute(executeData) == false) return false;
 
-            ModifyAttributeBaseValue(modEvalData.Attribute, modEvalData.ModifierOp, modEvalData.Magnitude, ref executeData);
+            ModifyAttributeBaseValue(modEvalData.Attribute, modEvalData.OpType, modEvalData.Magnitude, ref executeData);
 
             targetSystem.PostGameplayEffectExecute(executeData);
 

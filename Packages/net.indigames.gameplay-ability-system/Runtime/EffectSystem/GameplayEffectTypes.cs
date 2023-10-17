@@ -51,14 +51,14 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem
     public struct GameplayModifierEvaluatedData
     {
         public AttributeScriptableObject Attribute;
-        public EAttributeModifierOperationType ModifierOp;
+        public EAttributeModifierOperationType OpType;
         public float Magnitude;
 
         public GameplayModifierEvaluatedData(AttributeScriptableObject hp, EAttributeModifierOperationType add,
             int magnitude)
         {
             Attribute = hp;
-            ModifierOp = add;
+            OpType = add;
             Magnitude = magnitude;
         }
 
@@ -67,7 +67,7 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem
             return new GameplayModifierEvaluatedData()
             {
                 Attribute = Attribute,
-                ModifierOp = ModifierOp,
+                OpType = OpType,
                 Magnitude = Magnitude
             };
         }

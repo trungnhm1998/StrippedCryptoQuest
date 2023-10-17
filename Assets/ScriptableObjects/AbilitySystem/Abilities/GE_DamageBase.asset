@@ -10,30 +10,28 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fbb6112b998064f4ebc8a44f4c80c446, type: 3}
-  m_Name: GE_AtkBuff
+  m_Name: GE_DamageBase
   m_EditorClassIdentifier: 
   <Description>k__BackingField: 
   _policy:
-    rid: 7132078137632358618
+    rid: 8460399276080234549
   <EffectDetails>k__BackingField:
     Modifiers: []
-    StackingType: 1
+    StackingType: 0
   <IsStack>k__BackingField: 0
-  <GrantedTags>k__BackingField:
-  - {fileID: 11400000, guid: eca5a2e509a3b2141933a1ef52c206e7, type: 2}
+  <GrantedTags>k__BackingField: []
   <ApplicationTagRequirements>k__BackingField:
     RequireTags: []
     IgnoreTags: []
   <RemoveGameplayEffectsWithTags>k__BackingField: []
-  <ExecutionCalculations>k__BackingField: []
+  <ExecutionCalculations>k__BackingField:
+  - {fileID: 11400000, guid: 3f78234ed50d68c4880ffa78125e9f4a, type: 2}
+  - {fileID: 11400000, guid: daa97cbcac0ec6a428ac284caacc9e0c, type: 2}
+  - {fileID: 11400000, guid: 24121cd333778ae46b7758ccdfc73aca, type: 2}
   <ChanceToApply>k__BackingField: 1
   <CustomApplicationRequirements>k__BackingField: []
   references:
     version: 2
     RefIds:
-    - rid: 7132078137632358618
-      type: {class: TurnBasePolicy, ns: CryptoQuest.AbilitySystem.EffectActions, asm: indi-games.crypto-quest}
-      data:
-        _turn: 3
-        _isPeriodic: 0
-        _grantedTagsAfterModified: []
+    - rid: 8460399276080234549
+      type: {class: InstantPolicy, ns: IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects.GameplayEffectActions, asm: IndiGames.GameplayAbilitySystem}

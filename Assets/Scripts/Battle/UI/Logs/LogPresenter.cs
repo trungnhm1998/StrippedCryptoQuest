@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using CryptoQuest.UI.Dialogs.BattleDialog;
-using FSM;
 using IndiGames.Core.Events.ScriptableObjects;
 using UnityEngine;
 using UnityEngine.Localization;

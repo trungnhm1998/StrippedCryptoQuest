@@ -28,7 +28,7 @@ namespace CryptoQuest.AbilitySystem.Executions
             var modifier = new GameplayModifierEvaluatedData()
             {
                 Attribute = targetAttribute.Attribute,
-                ModifierOp = EAttributeModifierOperationType.Add,
+                OpType = EAttributeModifierOperationType.Add,
                 Magnitude = -Mathf.RoundToInt(damageValue)
             };
             outModifiers.Add(modifier);

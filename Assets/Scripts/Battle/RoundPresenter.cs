@@ -44,7 +44,7 @@ namespace CryptoQuest.Battle
             BattleEventBus.UnsubscribeEvent(_resetHighlightEnemyToken);
         }
 
-        public void ExecuteCharacterCommands(IEnumerable<Components.Character> characters) => 
+        public void ExecuteCharacterCommands(IEnumerable<Components.Character> characters) =>
             StartCoroutine(CoPresentation(characters));
 
         private IEnumerator CoPresentation(IEnumerable<Components.Character> characters)
@@ -57,9 +57,11 @@ namespace CryptoQuest.Battle
             {
                 if (character.IsValidAndAlive() == false) continue; // could die because of last turn
                 _logPresenter.Clear();
+                OnTurnStarting(character);
                 character.OnTurnStarted();
                 character.TryGetComponent(out CommandExecutor commandExecutor);
                 character.UpdateTarget(_battleContext);
+                OnExecutingCommand(character);
                 commandExecutor.ExecuteCommand();
                 character.OnTurnEnded();
                 if (CanContinueRound() == false) break;
@@ -70,6 +72,22 @@ namespace CryptoQuest.Battle
             BattleEventBus.RaiseEvent(_roundEndedEvent); // Need to be raise so guard tag can be remove
             OnRoundEndedCheck();
             yield break;
+        }
+
+        private static void OnTurnStarting(Components.Character character)
+        {
+            BattleEventBus.RaiseEvent(new TurnStartedEvent()
+            {
+                Character = character
+            });
+        }
+
+        private static void OnExecutingCommand(Components.Character character)
+        {
+            BattleEventBus.RaiseEvent(new ExecutingCommandEvent()
+            {
+                Character = character
+            });
         }
 
         private bool CanContinueRound()

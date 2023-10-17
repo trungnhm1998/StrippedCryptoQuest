@@ -37,7 +37,7 @@ namespace CryptoQuest.AbilitySystem.Executions
             return new GameplayModifierEvaluatedData()
             {
                 Attribute = AttributeSets.Health,
-                ModifierOp = EAttributeModifierOperationType.Add,
+                OpType = EAttributeModifierOperationType.Add,
                 Magnitude = Mathf.RoundToInt(reducedDamage)
             };
         }

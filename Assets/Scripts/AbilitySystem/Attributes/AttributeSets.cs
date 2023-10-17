@@ -10,6 +10,7 @@ namespace CryptoQuest.AbilitySystem.Attributes
         public static AttributeScriptableObject Mana;
         public static AttributeScriptableObject Attack;
         public static AttributeScriptableObject MagicAttack;
+        public static AttributeScriptableObject MagicValue;
         public static AttributeScriptableObject Strength;
         public static AttributeScriptableObject Defense;
         public static AttributeScriptableObject Agility;
@@ -20,6 +21,7 @@ namespace CryptoQuest.AbilitySystem.Attributes
         [SerializeField] private AttributeScriptableObject _maxMana;
         [SerializeField] private AttributeScriptableObject _attack;
         [SerializeField] private AttributeScriptableObject _magicAttack;
+        [SerializeField] private AttributeScriptableObject _magicValue;
         [SerializeField] private AttributeScriptableObject _strength;
         [SerializeField] private AttributeScriptableObject _defense;
         [SerializeField] private AttributeScriptableObject _agility;
@@ -32,6 +34,7 @@ namespace CryptoQuest.AbilitySystem.Attributes
             Mana = _mana;
             Attack = _attack;
             MagicAttack = _magicAttack;
+            MagicValue = _magicValue;
             Strength = _strength;
             Defense = _defense;
             Agility = _agility;
