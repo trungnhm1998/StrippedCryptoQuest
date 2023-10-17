@@ -1,4 +1,5 @@
 ﻿using System;
+using CryptoQuest.AbilitySystem.Abilities;
 using CryptoQuest.AbilitySystem.Attributes;
 using CryptoQuest.Gameplay.Loot;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
@@ -19,6 +20,13 @@ namespace CryptoQuest.Character.Enemy
         public LootInfo CreateLoot() => LootItem.Clone();
     }
 
+    [Serializable]
+    public struct Skills
+    {
+        public float Probability;
+        public CastSkillAbility SkillDef;
+    }
+
     /// <summary>
     /// Enemy structure (https://docs.google.com/spreadsheets/d/1WkX1DyDOGf6EiAppo8Buz2sUkSKV5OnDENEvmHzKXNQ/edit#gid=1024080951)
     /// </summary>
@@ -36,6 +44,11 @@ namespace CryptoQuest.Character.Enemy
 
         [SerializeField] private Drop[] _drops = Array.Empty<Drop>();
         public Drop[] Drops => _drops;
+
+        [SerializeField] private float _normalAttackProbability = 1f;
+        public float NormalAttackProbability => _normalAttackProbability;
+        [SerializeField] private Skills[] _skills = Array.Empty<Skills>();
+        public Skills[] Skills => _skills;
 
         /// <summary>
         /// Factory method

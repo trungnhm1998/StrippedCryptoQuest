@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using CryptoQuest.Battle.Commands;
 using CryptoQuest.Character.Enemy;
@@ -26,6 +27,8 @@ namespace CryptoQuest.Battle.Components
     [DisallowMultipleComponent]
     public class EnemyBehaviour : Character, IStatsProvider
     {
+        public event Action PreTurnStarted;
+
         public AttributeWithValue[] Stats => _enemyDef.Stats;
 
         private string _displayName;
@@ -116,8 +119,9 @@ namespace CryptoQuest.Battle.Components
 
         public override void OnTurnStarted()
         {
-            TryGetComponent<CommandExecutor>(out var commandExecutor);
-            commandExecutor.SetCommand(new NormalAttackCommand(this, Targeting.Target));
+            // I need PreTurnStarted event to setup enemy action because
+            // in TurnStarted event there's AbnormalBehaviour that reset the command if enemy is Cced
+            PreTurnStarted?.Invoke();
             base.OnTurnStarted();
         }
     }
