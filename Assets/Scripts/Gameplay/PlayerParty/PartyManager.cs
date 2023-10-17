@@ -39,7 +39,7 @@ namespace CryptoQuest.Gameplay.PlayerParty
         private IPartyProvider _partyProvider;
 
         public List<HeroBehaviour> OrderedAliveMembers =>
-            (from slot in _partySlots where slot.IsValid() select slot.HeroBehaviour).ToList();
+            (from slot in _partySlots where slot.HeroBehaviour.IsValidAndAlive() select slot.HeroBehaviour).ToList();
 
         private void OnValidate()
         {

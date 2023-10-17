@@ -68,7 +68,7 @@ namespace CryptoQuest.Gameplay.Reward
         {
             foreach (var slot in _party.Slots)
             {
-                if (!slot.IsValid()) continue;
+                if (!slot.HeroBehaviour.IsValidAndAlive()) continue;
                 var levelSystem = slot.HeroBehaviour.GetComponent<LevelSystem>(); // Force error hero needed this
                 levelSystem.AddExp(exp);
             }

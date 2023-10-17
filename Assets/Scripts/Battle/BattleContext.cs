@@ -51,9 +51,9 @@ namespace CryptoQuest.Battle
             var aliveCharacters = (from enemy in _enemyPartyManager.Enemies
                 where enemy.IsValidAndAlive()
                 select TryGetCharacter(enemy)).ToList();
-            aliveCharacters.AddRange(from hero in _party.Slots
-                where hero.IsValid() && !hero.HeroBehaviour.HasTag(TagsDef.Dead)
-                select TryGetCharacter(hero.HeroBehaviour));
+            aliveCharacters.AddRange(from slot in _party.Slots
+                where slot.HeroBehaviour.IsValidAndAlive()
+                select TryGetCharacter(slot.HeroBehaviour));
 
             return aliveCharacters;
         }
@@ -78,7 +78,7 @@ namespace CryptoQuest.Battle
         {
             AliveEnemies = Enemies.Where(enemy => enemy.IsValidAndAlive()).ToList();
             AliveHeroes = PlayerParty.Slots
-                .Where(slot => slot.IsValid())
+                .Where(slot => slot.HeroBehaviour.IsValidAndAlive())
                 .Select(slot => slot.HeroBehaviour).ToList();
         }
 
