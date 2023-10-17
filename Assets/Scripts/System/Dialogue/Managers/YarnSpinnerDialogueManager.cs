@@ -14,6 +14,7 @@ namespace CryptoQuest.System.Dialogue.Managers
 {
     public class YarnSpinnerDialogueManager : MonoBehaviour
     {
+        public static Action<string> DialogueCompletedEvent;
         public static Action<string> PlayDialogueRequested;
         public static Action<bool> PauseTimelineRequested;
 
@@ -60,6 +61,7 @@ namespace CryptoQuest.System.Dialogue.Managers
 
         [SerializeField] private UnityEvent _onDialogueCompleted;
         [SerializeField] private StringEventChannelSO _onCompleteQuestEventChannelSO;
+        private string _currentYarnNode;
 
         private Yarn.Dialogue Dialogue => _dialogueRunner.Dialogue;
 
@@ -87,6 +89,7 @@ namespace CryptoQuest.System.Dialogue.Managers
                 return;
             }
 
+            _currentYarnNode = yarnNodeName;
             Debug.Log($"YarnSpinnerDialogueManager::ShowDialogue: yarnNodeName[{yarnNodeName}]");
             _gameState.UpdateGameState(EGameState.Dialogue);
             _inputMediator.EnableDialogueInput();
@@ -102,7 +105,9 @@ namespace CryptoQuest.System.Dialogue.Managers
 
             // support cross scene
             if (_dialogueCompletedEventChannelSO != null) _dialogueCompletedEventChannelSO.RaiseEvent();
+            DialogueCompletedEvent?.Invoke(_currentYarnNode);
             _onDialogueCompleted.Invoke();
+            _currentYarnNode = "";
         }
 
         /// <summary>

@@ -17,6 +17,7 @@ namespace CryptoQuest.System.CutsceneSystem.CustomTimelineTracks.YarnSpinnerNode
         public bool PauseTimelineOnClipEnds = true;
 
         protected bool _played = false;
+        private bool _hasCompleted = false;
 
         /// <summary>
         /// Show dialogue using YarnSpinner.
@@ -26,11 +27,13 @@ namespace CryptoQuest.System.CutsceneSystem.CustomTimelineTracks.YarnSpinnerNode
             if (_played)
                 return;
             _played = true;
+            _hasCompleted = false;
 
             if (Application.isPlaying)
             {
                 if (!playable.GetGraph().IsPlaying()) return;
                 if (string.IsNullOrEmpty(YarnNodeName)) return;
+                YarnSpinnerDialogueManager.DialogueCompletedEvent += OnDialogueCompleted;
                 YarnSpinnerDialogueManager.PlayDialogueRequested?.Invoke(YarnNodeName);
             }
 #if UNITY_EDITOR
@@ -41,6 +44,14 @@ namespace CryptoQuest.System.CutsceneSystem.CustomTimelineTracks.YarnSpinnerNode
 #endif
         }
 
+        private void OnDialogueCompleted(string yarnNode)
+        {
+            YarnSpinnerDialogueManager.DialogueCompletedEvent -= OnDialogueCompleted;
+            if (yarnNode != YarnNodeName) return;
+            _hasCompleted = true;
+        }
+
+
         /// <summary>
         /// Try to pause the timeline when the player reading the dialogue
         /// </summary>
@@ -49,7 +60,8 @@ namespace CryptoQuest.System.CutsceneSystem.CustomTimelineTracks.YarnSpinnerNode
             if (!Application.isPlaying
                 || !playable.GetGraph().IsPlaying()
                 || playable.GetGraph().GetRootPlayable(0).IsDone()
-                || !_played)
+                || !_played
+                || _hasCompleted)
             {
                 return;
             }

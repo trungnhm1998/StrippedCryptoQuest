@@ -827,6 +827,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: -9
       objectReference: {fileID: 0}
+    - target: {fileID: 6640117740706423746, guid: 236c0a519355ba944849d552595f8baf, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -10
+      objectReference: {fileID: 0}
     - target: {fileID: 8004070437169698952, guid: 236c0a519355ba944849d552595f8baf, type: 3}
       propertyPath: m_Name
       value: CameraManager
@@ -1091,6 +1095,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8535778768834675998, guid: c9938e6f34205b34ab892461eea2f252, type: 3}
   m_PrefabInstance: {fileID: 1382301079}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1466976766 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 788007295726386178, guid: 85d99ab03fad8e54493ca0e468f81585, type: 3}
+  m_PrefabInstance: {fileID: 7500221467558605728}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9e07f409ddb4fd0a9e1ab4046463478, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1468907544
 GameObject:
   m_ObjectHideFlags: 0
@@ -1119,12 +1134,12 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 7679248570134023167}
   - {fileID: 6647893257621328320}
   - {fileID: 2139758864}
   - {fileID: 1653893663654358993}
   - {fileID: 5993775084334466259}
   - {fileID: 8131031301050571277}
+  - {fileID: 7679248570134023167}
   m_Father: {fileID: 1552465669}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1593,9 +1608,102 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1468907545}
     m_Modifications:
+    - target: {fileID: 2342369118641659258, guid: 904ebe9c3d85cd84a928b4d4b7fc84bf, type: 3}
+      propertyPath: _quest
+      value: 
+      objectReference: {fileID: 11400000, guid: 267061751f2164641aa06dcd920f0aa8, type: 2}
+    - target: {fileID: 2342369118641659258, guid: 904ebe9c3d85cd84a928b4d4b7fc84bf, type: 3}
+      propertyPath: _defaultQuest
+      value: 
+      objectReference: {fileID: 11400000, guid: 55c6b121dc3253f49a2a0c69ac25d8b0, type: 2}
+    - target: {fileID: 2342369118641659258, guid: 904ebe9c3d85cd84a928b4d4b7fc84bf, type: 3}
+      propertyPath: _actorSpawnSetting
+      value: 
+      objectReference: {fileID: 11400000, guid: bfc7301d19529e24e8dc60a804189234, type: 2}
+    - target: {fileID: 2342369118641659258, guid: 904ebe9c3d85cd84a928b4d4b7fc84bf, type: 3}
+      propertyPath: _dialogueProviderBehaviour
+      value: 
+      objectReference: {fileID: 1853855815819068334}
+    - target: {fileID: 3464239803684338321, guid: 904ebe9c3d85cd84a928b4d4b7fc84bf, type: 3}
+      propertyPath: _interacted.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3464239803684338321, guid: 904ebe9c3d85cd84a928b4d4b7fc84bf, type: 3}
+      propertyPath: _interacted.m_PersistentCalls.m_Calls.Array.data[3].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3464239803684338321, guid: 904ebe9c3d85cd84a928b4d4b7fc84bf, type: 3}
+      propertyPath: _interacted.m_PersistentCalls.m_Calls.Array.data[4].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3464239803684338321, guid: 904ebe9c3d85cd84a928b4d4b7fc84bf, type: 3}
+      propertyPath: _interacted.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1853855815819068336}
+    - target: {fileID: 3464239803684338321, guid: 904ebe9c3d85cd84a928b4d4b7fc84bf, type: 3}
+      propertyPath: _interacted.m_PersistentCalls.m_Calls.Array.data[2].m_Target
+      value: 
+      objectReference: {fileID: 1853855815819068336}
+    - target: {fileID: 3464239803684338321, guid: 904ebe9c3d85cd84a928b4d4b7fc84bf, type: 3}
+      propertyPath: _interacted.m_PersistentCalls.m_Calls.Array.data[3].m_Target
+      value: 
+      objectReference: {fileID: 1853855815819068336}
+    - target: {fileID: 3464239803684338321, guid: 904ebe9c3d85cd84a928b4d4b7fc84bf, type: 3}
+      propertyPath: _interacted.m_PersistentCalls.m_Calls.Array.data[2].m_CallState
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3464239803684338321, guid: 904ebe9c3d85cd84a928b4d4b7fc84bf, type: 3}
+      propertyPath: _interacted.m_PersistentCalls.m_Calls.Array.data[3].m_CallState
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3464239803684338321, guid: 904ebe9c3d85cd84a928b4d4b7fc84bf, type: 3}
+      propertyPath: _interacted.m_PersistentCalls.m_Calls.Array.data[4].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3464239803684338321, guid: 904ebe9c3d85cd84a928b4d4b7fc84bf, type: 3}
+      propertyPath: _interacted.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: GiveQuest
+      objectReference: {fileID: 0}
+    - target: {fileID: 3464239803684338321, guid: 904ebe9c3d85cd84a928b4d4b7fc84bf, type: 3}
+      propertyPath: _interacted.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
+      value: GiveQuest
+      objectReference: {fileID: 0}
+    - target: {fileID: 3464239803684338321, guid: 904ebe9c3d85cd84a928b4d4b7fc84bf, type: 3}
+      propertyPath: _interacted.m_PersistentCalls.m_Calls.Array.data[3].m_MethodName
+      value: GiveQuest
+      objectReference: {fileID: 0}
+    - target: {fileID: 3464239803684338321, guid: 904ebe9c3d85cd84a928b4d4b7fc84bf, type: 3}
+      propertyPath: _interacted.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: CryptoQuest.Quest.Components.QuestGiver, crypto-quest.quests
+      objectReference: {fileID: 0}
+    - target: {fileID: 3464239803684338321, guid: 904ebe9c3d85cd84a928b4d4b7fc84bf, type: 3}
+      propertyPath: _interacted.m_PersistentCalls.m_Calls.Array.data[2].m_TargetAssemblyTypeName
+      value: CryptoQuest.Quest.Components.QuestGiver, crypto-quest.quests
+      objectReference: {fileID: 0}
+    - target: {fileID: 3464239803684338321, guid: 904ebe9c3d85cd84a928b4d4b7fc84bf, type: 3}
+      propertyPath: _interacted.m_PersistentCalls.m_Calls.Array.data[3].m_TargetAssemblyTypeName
+      value: CryptoQuest.Quest.Components.QuestGiver, crypto-quest.quests
+      objectReference: {fileID: 0}
+    - target: {fileID: 3464239803684338321, guid: 904ebe9c3d85cd84a928b4d4b7fc84bf, type: 3}
+      propertyPath: _interacted.m_PersistentCalls.m_Calls.Array.data[4].m_TargetAssemblyTypeName
+      value: CryptoQuest.Character.DialogueProviders.SingleLineDialogueProvider,
+        indi-games.crypto-quest
+      objectReference: {fileID: 0}
+    - target: {fileID: 3464239803684338321, guid: 904ebe9c3d85cd84a928b4d4b7fc84bf, type: 3}
+      propertyPath: _interacted.m_PersistentCalls.m_Calls.Array.data[3].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 3464239803684338321, guid: 904ebe9c3d85cd84a928b4d4b7fc84bf, type: 3}
+      propertyPath: _interacted.m_PersistentCalls.m_Calls.Array.data[4].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 3798836808392977427, guid: 904ebe9c3d85cd84a928b4d4b7fc84bf, type: 3}
       propertyPath: m_Name
-      value: BadGirl
+      value: TavernKeeper
+      objectReference: {fileID: 0}
+    - target: {fileID: 3830178179191062502, guid: 904ebe9c3d85cd84a928b4d4b7fc84bf, type: 3}
+      propertyPath: _dialogueLine.m_TableEntryReference.m_KeyId
+      value: 40609278116589570
       objectReference: {fileID: 0}
     - target: {fileID: 5696322683362052437, guid: 904ebe9c3d85cd84a928b4d4b7fc84bf, type: 3}
       propertyPath: m_RootOrder
@@ -1641,11 +1749,46 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 0}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6528882986974460642, guid: 904ebe9c3d85cd84a928b4d4b7fc84bf, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1853855815819068336}
   m_SourcePrefab: {fileID: 100100000, guid: 904ebe9c3d85cd84a928b4d4b7fc84bf, type: 3}
+--- !u!114 &1853855815819068334 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3830178179191062502, guid: 904ebe9c3d85cd84a928b4d4b7fc84bf, type: 3}
+  m_PrefabInstance: {fileID: 1853855815819068333}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1853855815819068335}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9e07f409ddb4fd0a9e1ab4046463478, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &1853855815819068335 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6528882986974460642, guid: 904ebe9c3d85cd84a928b4d4b7fc84bf, type: 3}
+  m_PrefabInstance: {fileID: 1853855815819068333}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1853855815819068336
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1853855815819068335}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb7d143d685548668d723a43dd6d5def, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _dialogueProviderBehaviour: {fileID: 1853855815819068334}
+  _quest: {fileID: 11400000, guid: 267061751f2164641aa06dcd920f0aa8, type: 2}
+  _giveQuestEventChannel: {fileID: 11400000, guid: da57ae63ba992064e8d3ec26238fc35a, type: 2}
 --- !u!4 &5993775084334466259 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 615882610972554322, guid: 23f3b4712f973ae44908154d94eeb92c, type: 3}
@@ -1664,6 +1807,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1468907545}
     m_Modifications:
+    - target: {fileID: 2254565061982314142, guid: 85d99ab03fad8e54493ca0e468f81585, type: 3}
+      propertyPath: _actorSpawnSetting
+      value: 
+      objectReference: {fileID: 11400000, guid: bfc7301d19529e24e8dc60a804189234, type: 2}
+    - target: {fileID: 2254565061982314142, guid: 85d99ab03fad8e54493ca0e468f81585, type: 3}
+      propertyPath: _dialogueProviderBehaviour
+      value: 
+      objectReference: {fileID: 1466976766}
+    - target: {fileID: 2254565061982314142, guid: 85d99ab03fad8e54493ca0e468f81585, type: 3}
+      propertyPath: _onSceneLoadedEventChannel
+      value: 
+      objectReference: {fileID: 11400000, guid: b8b96e43d21a7bf4c96df4cb83c2b764, type: 2}
     - target: {fileID: 2538675920530218734, guid: 85d99ab03fad8e54493ca0e468f81585, type: 3}
       propertyPath: m_RootOrder
       value: 5

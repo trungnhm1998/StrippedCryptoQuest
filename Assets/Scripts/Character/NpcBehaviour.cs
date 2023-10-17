@@ -1,7 +1,5 @@
-using CryptoQuest.Character.DialogueProviders;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.Serialization;
 
 namespace CryptoQuest.Character
 {
@@ -14,8 +12,6 @@ namespace CryptoQuest.Character
 
         [SerializeField] private ReactionBehaviour _reactionBehaviour;
 
-        private DialogueProviderBehaviour _dialogueProviderBehaviour;
-        private NPCFacingDirection _npcFacingDirection; // TODO: violate DIP
 
         /// <summary>
         /// This will cause a stutter on scene load. Luckily, we have a fade in effect.
@@ -24,16 +20,21 @@ namespace CryptoQuest.Character
         {
             // var allBehaviours = GetComponents<ICharacterBehaviour>(); // TODO: this might be a better way to get all the behaviours
             // due to sear amount of NPCs in the game, use TryGetComponent instead of GetComponent then add NullDialogueController
-            _dialogueProviderBehaviour = GetComponent<DialogueProviderBehaviour>();
-            _npcFacingDirection = GetComponent<NPCFacingDirection>();
+        }
+
+        private void OnValidate()
+        {
+            if (_interacted.GetPersistentEventCount() <= 2) return;
+            for (int index = 2; index < _interacted.GetPersistentEventCount(); index++)
+            {
+                _interacted.SetPersistentListenerState(index, UnityEventCallState.Off);
+            }
         }
 
         public void Interact()
         {
             Interacted?.Invoke(this);
             _interacted.Invoke();
-            if (_dialogueProviderBehaviour) _dialogueProviderBehaviour.ShowDialogue();
-            if (_npcFacingDirection) _npcFacingDirection.FacePlayer();
         }
 
         public void ShowReaction(Reaction reaction)
