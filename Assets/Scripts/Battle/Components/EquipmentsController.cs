@@ -70,6 +70,7 @@ namespace CryptoQuest.Battle.Components
         {
             if (equipment.activeGameplayEffect == null) return;
             Character.RemoveEffect(equipment.activeGameplayEffect.Spec); // TODO: REFACTOR
+            Character.AbilitySystem.AttributeSystem.UpdateAttributeValues();
         }
 
         private void CreateAndSetEffectDefToEquipment(EquipmentInfo equipment)

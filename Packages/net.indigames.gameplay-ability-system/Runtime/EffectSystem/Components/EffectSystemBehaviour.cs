@@ -146,7 +146,7 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem.Components
             }
 
             // after remove the effect from system we need to update the attribute modifiers
-            UpdateAttributeSystemModifiers();
+            UpdateAttributeModifiersUsingAppliedEffects();
         }
 
         private void Update()
