@@ -43,7 +43,6 @@ namespace CryptoQuest.System.TransitionSystem
 
         public void ChangeState(ITransitionState state)
         {
-            Debug.Log("Transition state changed to " + state);
             if (_curState != null)
                 _curState.OnExit();
 

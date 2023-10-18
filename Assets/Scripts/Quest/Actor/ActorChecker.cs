@@ -1,24 +1,71 @@
-﻿using CryptoQuest.Quest.Events;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace CryptoQuest.Quest.Actor
 {
     public class ActorChecker : MonoBehaviour
     {
-        [SerializeField] private GameObject _gameObject;
-        [SerializeField] private ActiveActorEventChannelSO _activeActorEventChannel;
         [SerializeField] private ActorSO _actor;
+        [SerializeField] private Transform _spawnPoint;
 
-        private void OnEnable() => _activeActorEventChannel.EventRaised += ActiveActor;
-        private void OnDisable() => _activeActorEventChannel.EventRaised -= ActiveActor;
+        [Header("Actor Settings")]
+        [SerializeField] private ActorSettingSO _actorSpawnAfterDoneSetting;
 
-        private void ActiveActor(ActorSO currentActor, bool isActive)
+        [SerializeField] private ActorSettingSO _actorDeSpawnBeforeStart;
+
+        private void OnEnable()
         {
-            if (_actor == null) return;
+            if (_actorSpawnAfterDoneSetting) _actorSpawnAfterDoneSetting.OnConfigure += Spawn;
+            if (_actorDeSpawnBeforeStart) _actorDeSpawnBeforeStart.OnConfigure += DeSpawn;
+        }
 
-            if (currentActor != _actor) return;
+        private void OnDisable()
+        {
+            if (_actorSpawnAfterDoneSetting) _actorSpawnAfterDoneSetting.QuestToTrack.OnQuestCompleted -= ActiveActor;
+            if (_actorDeSpawnBeforeStart) _actorDeSpawnBeforeStart.QuestToTrack.OnQuestCompleted -= DeActiveActor;
+        }
 
-            if (gameObject != null) _gameObject.SetActive(isActive);
+        private void Spawn(bool isCompleted)
+        {
+            _actorSpawnAfterDoneSetting.OnConfigure -= Spawn;
+
+            if (!isCompleted)
+            {
+                _actorSpawnAfterDoneSetting.QuestToTrack.OnQuestCompleted += ActiveActor;
+                return;
+            }
+
+            ActiveActor();
+        }
+
+        private void DeSpawn(bool isCompleted)
+        {
+            _actorDeSpawnBeforeStart.OnConfigure -= DeSpawn;
+
+            if (!isCompleted)
+            {
+                _actorDeSpawnBeforeStart.QuestToTrack.OnQuestCompleted += DeActiveActor;
+                return;
+            }
+
+            DeActiveActor();
+        }
+
+        private void DeActiveActor()
+        {
+            if (transform.childCount <= 0) return;
+            foreach (Transform child in _spawnPoint)
+            {
+                Destroy(child);
+            }
+        }
+
+        private void ActiveActor()
+        {
+            if (!_actor) return;
+
+            ActorInfo actor = _actor.CreateActor();
+
+            StartCoroutine(actor.Spawn(_spawnPoint));
         }
     }
 }

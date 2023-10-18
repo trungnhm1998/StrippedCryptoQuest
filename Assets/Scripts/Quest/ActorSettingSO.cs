@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace CryptoQuest.Quest
 {
-    [CreateAssetMenu(fileName = "ActorSettingSO", menuName = "QuestSystem/Quests/ActorSetlting/Actor Setting")]
+    [CreateAssetMenu(fileName = "ActorSettingSO", menuName = "QuestSystem/Quests/ActorSetting/Actor Setting")]
     public class ActorSettingSO : ScriptableObject, IQuestConfigure
     {
         [field: SerializeReference] public QuestSO QuestToTrack { get; set; }

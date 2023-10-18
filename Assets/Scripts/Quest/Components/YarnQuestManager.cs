@@ -14,12 +14,16 @@ namespace CryptoQuest.Quest.Components
         public static Action<YarnQuestDef> OnUpdateCurrentNode;
         public static Action OnDialogCompleted;
         public static Action<string> OnQuestCompleted;
+
         [SerializeField] private QuestEventChannelSO _questEventChannelSo;
         [SerializeField] private VoidEventChannelSO _dialogCompletedEventChannelSo;
         [SerializeField] private StringEventChannelSO _questCompletedEventChannelSo;
+
         private YarnQuestDef _current;
-        private List<DialogueQuestInfo> _currentlyProcessDialogueQuests = new();
         private QuestSO _dialogueQuestSo;
+
+        private readonly List<DialogueQuestInfo> _currentlyProcessDialogueQuests = new();
+        private readonly List<string> _currentlyProcessQuestsID = new();
 
         private void OnEnable()
         {
@@ -51,7 +55,9 @@ namespace CryptoQuest.Quest.Components
 
         public void GiveQuest(DialogueQuestInfo questInfo)
         {
-            if (_currentlyProcessDialogueQuests.Contains(questInfo)) return;
+            if (_currentlyProcessQuestsID.Contains(questInfo.Data.Guid)) return;
+            
+            _currentlyProcessQuestsID.Add(questInfo.Data.Guid);
             _currentlyProcessDialogueQuests.Add(questInfo);
         }
 
@@ -60,6 +66,7 @@ namespace CryptoQuest.Quest.Components
             foreach (var possibleOutComeQuest in _currentlyProcessDialogueQuests)
             {
                 if (possibleOutComeQuest.Data.QuestName != questName) continue;
+                
                 _questEventChannelSo.RaiseEvent(possibleOutComeQuest.Data);
                 break;
             }
