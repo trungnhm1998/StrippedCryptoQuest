@@ -149,17 +149,6 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem.Components
             UpdateAttributeSystemModifiers();
         }
 
-        public ActiveGameplayEffect GetLargestGameplayEffectMagnitude(GameplayEffectSpec spec)
-        {
-            var largestMagnitudeEffect = new ActiveGameplayEffect();
-            foreach (var effect in _appliedEffects)
-            {
-                if (effect.Spec.Def != spec.Def) continue;
-            }
-
-            return largestMagnitudeEffect;
-        }
-
         private void Update()
         {
             if (_useUpdate) UpdateAttributeModifiersUsingAppliedEffects();
@@ -176,7 +165,7 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem.Components
         /// 1. Remove all modifier from attribute value
         /// 2. Add all modifiers from all active effects
         /// </summary>
-        public void UpdateAttributeSystemModifiers()
+        public virtual void UpdateAttributeSystemModifiers()
         {
             _attributeSystem.ResetAttributeModifiers();
             foreach (var effect in _appliedEffects.Where(effect => !effect.Expired))

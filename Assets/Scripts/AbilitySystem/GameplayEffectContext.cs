@@ -1,4 +1,5 @@
 ﻿using System;
+using CryptoQuest.AbilitySystem.Abilities;
 using CryptoQuest.Gameplay.Battle.Core;
 using IndiGames.GameplayAbilitySystem.EffectSystem;
 using UnityEngine;
@@ -13,8 +14,10 @@ namespace CryptoQuest.AbilitySystem
         {
             _skillInfo = skillInfo;
         }
-
         [SerializeField] private SkillInfo _skillInfo;
+        [SerializeField] private int _turns = 3;
+        public int Turns => _turns;
+        public CastSkillAbility Skill { get; set; }
         public SkillInfo SkillInfo => _skillInfo;
         public SkillParameters Parameters => _skillInfo.SkillParameters;
 

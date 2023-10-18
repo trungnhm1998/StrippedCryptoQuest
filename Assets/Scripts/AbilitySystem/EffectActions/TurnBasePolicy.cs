@@ -19,8 +19,6 @@ namespace CryptoQuest.AbilitySystem.EffectActions
             OnTurnEnd = 2, // Apply the effect to the target on turn end
         }
 
-        [SerializeField] private int _turn = 1;
-        public int Turn => _turn;
         [SerializeField] private ETriggerType _triggerType = ETriggerType.Always;
         public ETriggerType TriggerType => _triggerType;
 
@@ -43,8 +41,9 @@ namespace CryptoQuest.AbilitySystem.EffectActions
         public TurnBasePolicyActiveEffect(TurnBasePolicy policyDef,
             GameplayEffectSpec spec) : base(spec)
         {
+            var context = GameplayEffectContext.ExtractEffectContext(spec.Context);
             _policyDef = policyDef;
-            _turnsLeft = policyDef.Turn;
+            _turnsLeft = context.Turns == 0 ? 3 : context.Turns;
             _character = Spec.Target.GetComponent<Battle.Components.Character>();
             if (_character.TryGetComponent(out _damageOverTimeFlagsFlags) == false)
                 _damageOverTimeFlagsFlags = _character.gameObject.AddComponent<DamageOverTimeFlags>();
