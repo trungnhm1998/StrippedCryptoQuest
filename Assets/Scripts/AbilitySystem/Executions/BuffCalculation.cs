@@ -25,8 +25,12 @@ namespace CryptoQuest.AbilitySystem.Executions
                 var outMod = outModifiers.Modifiers[index];
                 if (outMod.Attribute != parameters.targetAttribute.Attribute) continue;
                 outMod.Magnitude /= 100f * (int)_statusType;
-                var statusType = _statusType == StatusType.Buff ? "+" : "-";
-                Debug.Log($"Calculation::Buff {outMod.Attribute} increase {statusType}{outMod.Magnitude}");
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
+                var sign = _statusType == StatusType.Buff ? "+" : "-";
+                var type = parameters.IsFixed ? "" : "%";
+                var isIncrease = _statusType == StatusType.Buff ? "increase" : "decrease";
+                Debug.Log($"Calculation::Buff {outMod.Attribute.name} {isIncrease} {sign}{Mathf.Abs(outMod.Magnitude)}{type}");
+#endif
                 outMod.OpType = parameters.IsFixed
                     ? EAttributeModifierOperationType.Add
                     : EAttributeModifierOperationType.Multiply;

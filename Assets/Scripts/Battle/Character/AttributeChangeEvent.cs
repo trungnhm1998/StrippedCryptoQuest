@@ -1,6 +1,7 @@
 ﻿using IndiGames.GameplayAbilitySystem.AttributeSystem;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.Components;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
+using UnityEngine;
 
 namespace CryptoQuest.Battle.Character
 {
@@ -16,7 +17,16 @@ namespace CryptoQuest.Battle.Character
 
         public override void PostAttributeChange(AttributeSystemBehaviour attributeSystem,
             ref AttributeValue oldAttributeValue,
-            ref AttributeValue newAttributeValue) =>
+            ref AttributeValue newAttributeValue)
+        {
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
+            if (Mathf.Approximately(oldAttributeValue.CurrentValue, newAttributeValue.CurrentValue) == false)
+            {
+                Debug.Log(
+                    $"Attribute {attributeSystem.name}.{newAttributeValue.Attribute.name} changed from {oldAttributeValue.CurrentValue} to {newAttributeValue.CurrentValue}");
+            }
+#endif
             Changed?.Invoke(attributeSystem, oldAttributeValue, newAttributeValue);
+        }
     }
 }
