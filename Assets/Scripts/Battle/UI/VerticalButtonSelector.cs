@@ -108,13 +108,11 @@ namespace CryptoQuest.Battle.UI
 
         public void SelectFirstButton()
         {
-            var firstChild = GetFirstValidChild();
-            if (firstChild == null) return;
-
             DOVirtual.DelayedCall(SELECT_DELAY, () =>
             {
+                var firstChild = GetFirstValidChild();
                 var buttonToSelect = _firstSelectedButton == null
-                    ? firstChild.gameObject : _firstSelectedButton;
+                    ? firstChild : _firstSelectedButton;
                 EventSystem.current.SetSelectedGameObject(buttonToSelect);
             });
         }
