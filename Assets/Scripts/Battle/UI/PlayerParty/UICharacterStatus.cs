@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using CryptoQuest.AbilitySystem;
 using CryptoQuest.System;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
@@ -19,9 +20,17 @@ namespace CryptoQuest.Battle.UI.PlayerParty
         [SerializeField] private UICharacterBattleInfo _characterUI;
         [SerializeField] private Transform _statusContainer;
         [SerializeField] private UIStatusIcon _statusIconPrefab;
+        [SerializeField] private TagScriptableObject[] _disallowedMultipleTags;
 
         private IObjectPool<UIStatusIcon> _statusIconPool;
-        private Dictionary<TagScriptableObject, UIStatusIcon> _tagIconDict = new();
+
+        private struct Map
+        {
+            public TagScriptableObject Tag;
+            public UIStatusIcon Icon;
+        }
+
+        private readonly List<Map> _statusIcons = new List<Map>();
         private TagSystemBehaviour CharacterTagSystem => _characterUI.Hero.AbilitySystem.TagSystem;
 
         private void OnValidate()
@@ -52,10 +61,15 @@ namespace CryptoQuest.Battle.UI.PlayerParty
             foreach (var baseTag in baseTags)
             {
                 if (!TagAssetProvider.TryGetTagAsset(baseTag, out var tagAsset)) continue;
-                if (_tagIconDict.TryGetValue(baseTag, out _)) continue;
+                if (_disallowedMultipleTags.Contains(baseTag) && _statusIcons.Any(map => map.Tag == baseTag))
+                    continue;
                 var statusIcon = _statusIconPool.Get();
                 statusIcon.SetIcon(tagAsset.Icon);
-                _tagIconDict.Add(baseTag, statusIcon);
+                _statusIcons.Add(new Map()
+                {
+                    Icon = statusIcon,
+                    Tag = baseTag
+                });
             }
         }
 
@@ -63,21 +77,27 @@ namespace CryptoQuest.Battle.UI.PlayerParty
         {
             foreach (var baseTag in baseTags)
             {
-                if (!TagAssetProvider.TryGetTagAsset(baseTag, out var tagAsset)) continue;
-                if (!_tagIconDict.TryGetValue(baseTag, out var statusIcon)) continue;
-                _tagIconDict.Remove(baseTag);
-                statusIcon.ReleaseToPool();
+                for (int i = _statusIcons.Count - 1; i >= 0; i--)
+                {
+                    var map = _statusIcons[i];
+                    if (map.Tag != baseTag) continue;
+                    // prevent remove tag if it's disallowed multiple tag and there's another tag with same base tag
+                    if (_disallowedMultipleTags.Contains(baseTag) && CharacterTagSystem.HasTag(baseTag)) continue;
+                    map.Icon.ReleaseToPool();
+                    _statusIcons.RemoveAt(i);
+                    return;
+                }
             }
         }
 
         private void ReleaseAllIcon()
         {
-            foreach (var icon in _tagIconDict.Values)
+            foreach (var map in _statusIcons)
             {
-                icon.ReleaseToPool();
+                map.Icon.ReleaseToPool();
             }
 
-            _tagIconDict.Clear();
+            _statusIcons.Clear();
         }
 
         private void OnGet(UIStatusIcon icon)
