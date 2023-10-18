@@ -24,6 +24,7 @@ namespace IndiGames.GameplayAbilitySystem.AttributeSystem
                 Overriding = b.Overriding
             };
         }
-        
+
+        public override string ToString() => $"Additive: {Additive}, Multiplicative: {Multiplicative}, Overriding: {Overriding}";
     }
 }

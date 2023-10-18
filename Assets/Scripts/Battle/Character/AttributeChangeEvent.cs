@@ -24,6 +24,9 @@ namespace CryptoQuest.Battle.Character
             {
                 Debug.Log(
                     $"Attribute {attributeSystem.name}.{newAttributeValue.Attribute.name} changed from {oldAttributeValue.CurrentValue} to {newAttributeValue.CurrentValue}");
+                attributeSystem.TryGetAttributeValue(newAttributeValue.Attribute, out var attribute);
+                Debug.Log($"Core modifier: [{attribute.CoreModifier.ToString()}]");
+                Debug.Log($"External modifier: [{attribute.ExternalModifier.ToString()}]");
             }
 #endif
             Changed?.Invoke(attributeSystem, oldAttributeValue, newAttributeValue);
