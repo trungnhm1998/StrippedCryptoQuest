@@ -25,6 +25,9 @@ namespace CryptoQuest.Battle.UI.Logs
         private void LogDamage(Components.Character character, float damage)
         {
             LocalizedString localizedMessage;
+            // Escape early here because damage > 0 equal healing
+            if (damage > 0) return;
+
             if (damage < 0)
             {
                 localizedMessage = _damageMessage;
@@ -36,7 +39,6 @@ namespace CryptoQuest.Battle.UI.Logs
             else
                 localizedMessage = _noDamageMessage;
 
-            Debug.Log($"{character.LocalizedName.GetLocalizedString()}: {damage}");
             localizedMessage.Add(Constants.CHARACTER_NAME, new StringVariable()
             {
                 Value = character.DisplayName

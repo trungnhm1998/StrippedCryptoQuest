@@ -28,13 +28,11 @@ namespace CryptoQuest.Battle.UI.Logs
             public AttributeScriptableObject Attribute;
         }
 
-        [SerializeField] private AttributeChangeEvent _characterAttributeChangeEvent;
         [SerializeField] private LocalizedString _buffMessage;
         [SerializeField] private LocalizedString _debuffMessage;
         [SerializeField] private LocalizedString _buffWearOffMessage;
         [SerializeField] private LocalizedString _debuffWearOffMessage;
         [SerializeField] private TagAttributeMapping[] _tagAttributeMappings;
-        [SerializeField] private CoreAttribute[] _ignoredAttributes;
 
         private TinyMessageSubscriptionToken _effectAffectingMessage;
         private TinyMessageSubscriptionToken _effectAdded;
@@ -49,41 +47,19 @@ namespace CryptoQuest.Battle.UI.Logs
 
         private void OnEnable()
         {
-            _characterAttributeChangeEvent.Changed += LogAttributeChange;
             _effectRemoved = BattleEventBus.SubscribeEvent<EffectRemovedEvent>(LogOnBuffRemoved);
         }
 
         private void OnDisable()
         {
-            _characterAttributeChangeEvent.Changed -= LogAttributeChange;
             BattleEventBus.UnsubscribeEvent(_effectRemoved);
-        }
-
-        private void LogAttributeChange(AttributeSystemBehaviour owner, AttributeValue oldVal,
-            AttributeValue newVal)
-        {
-            if (_ignoredAttributes.Contains(newVal.Attribute)) return;
-            if (Mathf.Approximately(oldVal.CurrentValue, newVal.CurrentValue)) return;
-            var isIncrease = oldVal.CurrentValue < newVal.CurrentValue;
-            var message = isIncrease ? _buffMessage : _debuffMessage;
-            if (owner.TryGetComponent(out Components.Character character) == false) return;
-            message.Add(Constants.CHARACTER_NAME, new StringVariable()
-            {
-                Value = character.DisplayName
-            });
-
-            message.Add(Constants.ATTRIBUTE_NAME, new StringVariable()
-            {
-                Value = newVal.Attribute.name
-            });
-
-            Logger.AppendLog(message);
         }
 
         private void LogOnBuffAdded(EffectAddedEvent ctx)
         {
             if (IsBuffOrDebuff(ctx, out var tag, out var isBuff)) return;
-
+            // TODO: #1930 Listen to effect added event and check to show log 
+            // if the buff/debuff is lower and not gonna be applied  
             var message = isBuff ? _buffMessage : _debuffMessage;
             LogMessage(ctx, message, tag);
         }

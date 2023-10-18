@@ -6,6 +6,7 @@ using CryptoQuest.AbilitySystem.Abilities;
 using CryptoQuest.Battle.Components;
 using CryptoQuest.Battle.Events;
 using CryptoQuest.Battle.UI.Logs;
+using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
 using TinyMessenger;
 using UnityEngine;
 
@@ -124,7 +125,7 @@ namespace CryptoQuest.Battle
         /// but still stay in the battle field scene
         /// TODO: steal ability/behaviour can listen to this event and add stealed loot 
         /// </summary>
-        private void OnEndBattle()
+        private void OnEndBattle(AbilitySystemBehaviour owner)
         {
             _isBattleEnded = true;
             EndBattle?.Invoke();

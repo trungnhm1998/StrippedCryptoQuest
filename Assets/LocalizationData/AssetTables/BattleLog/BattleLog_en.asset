@@ -20,7 +20,7 @@ MonoBehaviour:
     - rid: 7132078038104408069
   m_TableData:
   - m_Id: 942007443456
-    m_Localized: A {monster.name} appears!
+    m_Localized: A {MonsterName} appears!
     m_Metadata:
       m_Items: []
   - m_Id: 942053580800
@@ -162,15 +162,16 @@ MonoBehaviour:
   - m_Id: 942061969427
     m_Localized: '{CharacterName} is revived!'
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 7132078038104408069
   - m_Id: 942061969428
-    m_Localized: '{CharacterName} uses {item.name}
+    m_Localized: '{CharacterName} uses {ItemName}
 
       {CharacterName} is revided!'
     m_Metadata:
       m_Items: []
   - m_Id: 942061969429
-    m_Localized: '{CharacterName} uses {item.name}
+    m_Localized: '{CharacterName} uses {ItemName}
 
       However, {CharacterName}
       was not revived.'
@@ -192,13 +193,10 @@ MonoBehaviour:
       m_Items:
       - rid: 7132078038104408069
   - m_Id: 942061969433
-    m_Localized: '{CharacterName}''s HP restored.'
+    m_Localized: '{CharacterName}''s {AttributeName} restored.'
     m_Metadata:
-      m_Items: []
-  - m_Id: 942061969434
-    m_Localized: '{CharacterName}''s SP restored.'
-    m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 7132078038104408069
   - m_Id: 942061969435
     m_Localized: It does not seem to work.
     m_Metadata:
@@ -264,7 +262,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 942061969449
-    m_Localized: '{CharacterName} stole {item.name} from {CharacterName}.'
+    m_Localized: '{CharacterName} stole {ItemName} from {CharacterName}.'
     m_Metadata:
       m_Items: []
   - m_Id: 942061969450
@@ -284,11 +282,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 942061969454
-    m_Localized: Nullified {ability.name} from {CharacterName}.
+    m_Localized: Nullified {AbilityName} from {CharacterName}.
     m_Metadata:
       m_Items: []
   - m_Id: 942061969455
-    m_Localized: The effect of {ability.name} on {CharacterName} expired.
+    m_Localized: The effect of {AbilityName} on {CharacterName} expired.
     m_Metadata:
       m_Items: []
   - m_Id: 942061969456
@@ -300,11 +298,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 942061969458
-    m_Localized: '{CharacterName}''s {ability.name} nullification effect has expired.'
+    m_Localized: '{CharacterName}''s {AbilityName} nullification effect has expired.'
     m_Metadata:
       m_Items: []
   - m_Id: 1402910728826880
-    m_Localized: '{CharacterName} use item {item.name} on {CharacterName}'
+    m_Localized: '{CharacterName} use item {ItemName} on {CharacterName}'
     m_Metadata:
       m_Items:
       - rid: 7132078038104408069
@@ -314,4 +312,4 @@ MonoBehaviour:
     - rid: 7132078038104408069
       type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:
-        m_Entries: 22e04457db00000000e00457db0000001ee04457db0000001de04457db00000000e04457db00000004e04457db00000006e04457db0000000fe04457db0000000ee04457db00000012e04457db00000018e04457db00000020e04457db00000000b0a49bf0fb040001e00457db00000002e00457db00000003e00457db00000004e00457db00000005e00457db00000006e00457db00000007e00457db00000001e04457db00000003e04457db00000005e04457db0000000be04457db0000000ce04457db0000000de04457db00000010e04457db00000008e04457db00000009e04457db0000000ae04457db00000023e04457db00000024e04457db00000025e04457db00000026e04457db000000
+        m_Entries: 22e04457db00000000e00457db0000001ee04457db0000001de04457db00000000e04457db00000004e04457db00000006e04457db0000000fe04457db0000000ee04457db00000012e04457db00000018e04457db00000020e04457db00000000b0a49bf0fb040001e00457db00000002e00457db00000003e00457db00000004e00457db00000005e00457db00000006e00457db00000007e00457db00000001e04457db00000003e04457db00000005e04457db0000000be04457db0000000ce04457db0000000de04457db00000010e04457db00000008e04457db00000009e04457db0000000ae04457db00000023e04457db00000024e04457db00000025e04457db00000026e04457db00000019e04457db00000013e04457db000000

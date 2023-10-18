@@ -20,7 +20,7 @@ MonoBehaviour:
     - rid: 7132078038104408070
   m_TableData:
   - m_Id: 942007443456
-    m_Localized: "{monster.name}\u304C\u3042\u3089\u308F\u308C\u305F\uFF01"
+    m_Localized: "{MonsterName}\u304C\u3042\u3089\u308F\u308C\u305F\uFF01"
     m_Metadata:
       m_Items: []
   - m_Id: 942053580800
@@ -160,15 +160,16 @@ MonoBehaviour:
       m_Items:
       - rid: 7132078038104408070
   - m_Id: 942061969427
-    m_Localized: "{1}\u306F\u751F\u304D\u8FD4\u3063\u305F"
+    m_Localized: "{CharacterName}\u306F\u751F\u304D\u8FD4\u3063\u305F"
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 7132078038104408070
   - m_Id: 942061969428
-    m_Localized: "{CharacterName}\u306F{item.name}\u3092\u4F7F\u3063\u305F\u3002\n{CharacterName}\u306F\u751F\u304D\u8FD4\u3063\u305F\uFF01"
+    m_Localized: "{CharacterName}\u306F{ItemName}\u3092\u4F7F\u3063\u305F\u3002\n{CharacterName}\u306F\u751F\u304D\u8FD4\u3063\u305F\uFF01"
     m_Metadata:
       m_Items: []
   - m_Id: 942061969429
-    m_Localized: "{CharacterName}\u306F{item.name}\u3092\u4F7F\u3063\u305F\u3002\n\u3057\u304B\u3057\u3001{CharacterName}\u306F\u751F\u304D\u8FD4\u3089\u306A\u304B\u3063\u305F"
+    m_Localized: "{CharacterName}\u306F{ItemName}\u3092\u4F7F\u3063\u305F\u3002\n\u3057\u304B\u3057\u3001{CharacterName}\u306F\u751F\u304D\u8FD4\u3089\u306A\u304B\u3063\u305F"
     m_Metadata:
       m_Items: []
   - m_Id: 942061969430
@@ -185,13 +186,10 @@ MonoBehaviour:
       m_Items:
       - rid: 7132078038104408070
   - m_Id: 942061969433
-    m_Localized: "{CharacterName}\u306EHP\u304C\u56DE\u5FA9\u3057\u305F"
+    m_Localized: "{CharacterName}\u306E{AttributeName}\u304C\u56DE\u5FA9\u3057\u305F"
     m_Metadata:
-      m_Items: []
-  - m_Id: 942061969434
-    m_Localized: "{CharacterName}\u306ESP\u304C\u56DE\u5FA9\u3057\u305F"
-    m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 7132078038104408070
   - m_Id: 942061969435
     m_Localized: "\u52B9\u679C\u304C\u306A\u3044\u3088\u3046\u3060"
     m_Metadata:
@@ -215,7 +213,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 942061969440
-    m_Localized: "{CharacterName}\u306E{SkillName}!\uFF01"
+    m_Localized: "{CharacterName}\u306E{skill.name}!\uFF01"
     m_Metadata:
       m_Items:
       - rid: 7132078038104408070
@@ -257,7 +255,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 942061969449
-    m_Localized: "{CharacterName}\u306F{CharacterName}\u304B\u3089{item.name}\u3092\u76D7\u3093\u3060"
+    m_Localized: "{CharacterName}\u306F{CharacterName}\u304B\u3089{ItemName}\u3092\u76D7\u3093\u3060"
     m_Metadata:
       m_Items: []
   - m_Id: 942061969450
@@ -277,11 +275,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 942061969454
-    m_Localized: "{CharacterName}\u306E{ability.name}\u3092\u7121\u52B9\u306B\u3057\u305F"
+    m_Localized: "{CharacterName}\u306E{AbilityName}\u3092\u7121\u52B9\u306B\u3057\u305F"
     m_Metadata:
       m_Items: []
   - m_Id: 942061969455
-    m_Localized: "{CharacterName}\u306E{ability.name}\u306E\u52B9\u679C\u304C\u5207\u308C\u305F"
+    m_Localized: "{CharacterName}\u306E{AbilityName}\u306E\u52B9\u679C\u304C\u5207\u308C\u305F"
     m_Metadata:
       m_Items: []
   - m_Id: 942061969456
@@ -293,11 +291,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 942061969458
-    m_Localized: "{CharacterName}\u306E{ability.name}\u7121\u52B9\u306E\u52B9\u679C\u304C\u5207\u308C\u305F"
+    m_Localized: "{CharacterName}\u306E{AbilityName}\u7121\u52B9\u306E\u52B9\u679C\u304C\u5207\u308C\u305F"
     m_Metadata:
       m_Items: []
   - m_Id: 1402910728826880
-    m_Localized: "{CharacterName}\u306F{CharacterName}\u306B{item.name}\u3092\u4F7F\u7528\u3057\u307E\u3057\u305F\u3002"
+    m_Localized: "{CharacterName}\u306F{CharacterName}\u306B{ItemName}\u3092\u4F7F\u7528\u3057\u307E\u3057\u305F\u3002"
     m_Metadata:
       m_Items:
       - rid: 7132078038104408070
@@ -307,4 +305,4 @@ MonoBehaviour:
     - rid: 7132078038104408070
       type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:
-        m_Entries: 22e04457db00000000e00457db0000001ee04457db0000001de04457db00000000e04457db00000004e04457db00000006e04457db0000000fe04457db0000000ee04457db00000012e04457db00000018e04457db00000020e04457db00000000b0a49bf0fb040001e00457db00000002e00457db00000003e00457db00000004e00457db00000005e00457db00000006e00457db00000007e00457db00000001e04457db00000003e04457db00000005e04457db0000000be04457db0000000ce04457db0000000de04457db00000010e04457db00000008e04457db00000009e04457db0000000ae04457db00000023e04457db00000024e04457db00000025e04457db00000026e04457db000000
+        m_Entries: 22e04457db00000000e00457db0000001ee04457db0000001de04457db00000000e04457db00000004e04457db00000006e04457db0000000fe04457db0000000ee04457db00000012e04457db00000018e04457db00000020e04457db00000000b0a49bf0fb040001e00457db00000002e00457db00000003e00457db00000004e00457db00000005e00457db00000006e00457db00000007e00457db00000001e04457db00000003e04457db00000005e04457db0000000be04457db0000000ce04457db0000000de04457db00000010e04457db00000008e04457db00000009e04457db0000000ae04457db00000023e04457db00000024e04457db00000025e04457db00000026e04457db00000019e04457db00000013e04457db000000

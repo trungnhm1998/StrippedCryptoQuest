@@ -5,6 +5,7 @@ using CryptoQuest.Battle.Components;
 using DG.Tweening;
 using IndiGames.GameplayAbilitySystem.AttributeSystem;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.Components;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Localization;
 using UnityEngine.Localization.SmartFormat.PersistentVariables;
@@ -14,60 +15,34 @@ namespace CryptoQuest.UI.Menu.Panels.Item
 {
     public class UIConsumableMenuLogger : MonoBehaviour
     {
-        private const string CHARACTER_NAME = "characterName";
-        private const string ATTRIBUTE_NAME = "attributeName";
-        private const string ATTRIBUTE_VALUE = "attributeValue";
-
-        [SerializeField] private LocalizedString _localizedLogger;
-        [SerializeField] private LoggerAttribute _loggerAttribute;
-        [SerializeField] private Text _text;
+        [SerializeField] private TMP_Text _text;
         [SerializeField] private GameObject _panel;
         [SerializeField] private float _delayTime = 1f;
 
-        private Tween _callbackTween;
+        private Tween _delayTween;
 
-        private void OnEnable()
+        /// <summary>
+        /// Set logger text and auto hide the panel after _delayTime
+        /// When there's new log, the auto hide is cancel and the hiding time is reset
+        /// </summary>
+        /// <param name="localizedLog"></param>
+        public void SetLoggerText(LocalizedString localizedLog)
         {
-            _loggerAttribute.OnAttributeChanged += SetLoggerDescription;
-        }
-
-        private void OnDisable()
-        {
-            _loggerAttribute.OnAttributeChanged -= SetLoggerDescription;
-        }
-
-        private void SetLoggerDescription(AttributeSystemBehaviour attributeSystem, AttributeValue attributeValue)
-        {
-            _callbackTween?.Kill();
-            if (attributeSystem.TryGetComponent<HeroBehaviour>(out var characterBehaviour) == false) return;
+            _delayTween?.Kill();
             _panel.SetActive(true);
+            StartCoroutine(CoGetAndSetText(localizedLog));
 
-            var characterSpec = characterBehaviour.Spec;
-            LocalizedString characterName = characterSpec.Unit.Origin.DetailInformation.LocalizedName;
-            LocalizedString attributeName = ((AttributeScriptableObject)attributeValue.Attribute).DisplayName;
-            LocalizedString localizedString = _localizedLogger;
-
-            localizedString.Add(CHARACTER_NAME, characterName);
-            localizedString.Add(ATTRIBUTE_NAME, attributeName);
-            localizedString.Add(ATTRIBUTE_VALUE, new FloatVariable()
-            {
-                Value = attributeValue.CurrentValue
-            });
-
-            StartCoroutine(CoSetText(localizedString));
-
-            _callbackTween = DOVirtual.DelayedCall(_delayTime, HideLoggerDescription);
+            _delayTween = DOVirtual.DelayedCall(_delayTime, HideLoggerPanel);
         }
 
-        private IEnumerator CoSetText(LocalizedString str)
+        private IEnumerator CoGetAndSetText(LocalizedString localizedLog)
         {
-            var handle = str.GetLocalizedStringAsync();
+            var handle = localizedLog.GetLocalizedStringAsync();
             yield return handle;
             _text.text += $"{handle.Result}\n";
         }
 
-
-        private void HideLoggerDescription()
+        private void HideLoggerPanel()
         {
             _panel.SetActive(false);
             _text.text = "";

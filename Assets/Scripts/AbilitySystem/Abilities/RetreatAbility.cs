@@ -2,21 +2,30 @@
 using CryptoQuest.AbilitySystem.Attributes;
 using CryptoQuest.AbilitySystem.Executions;
 using IndiGames.GameplayAbilitySystem.AbilitySystem;
+using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.ScriptableObjects;
 using UnityEngine;
 using UnityEngine.Events;
 
 namespace CryptoQuest.AbilitySystem.Abilities
 {
-    public class RetreatAbility : AbilityScriptableObject<RetreatAbilitySpec>
+    public class RetreatAbility : AbilityScriptableObject
     {
-        public UnityAction RetreatedEvent;
-        public UnityAction RetreatFailedEvent;
+        public UnityAction<AbilitySystemBehaviour> RetreatedEvent;
+        public UnityAction<AbilitySystemBehaviour> RetreatFailedEvent;
+        protected override GameplayAbilitySpec CreateAbility() => new RetreatAbilitySpec(this);
+
     }
 
     public class RetreatAbilitySpec : GameplayAbilitySpec
     {
         private float _enemySpeed;
+        private RetreatAbility _retreatAbility;
+
+        public RetreatAbilitySpec(RetreatAbility retreatAbility)
+        {
+            _retreatAbility = retreatAbility;
+        }
 
         public void Execute(float highestEnemyAgility)
         {
@@ -33,15 +42,14 @@ namespace CryptoQuest.AbilitySystem.Abilities
                 BattleCalculator.CalculateProbabilityOfRetreat(_enemySpeed, agility.CurrentValue);
             var canActive = probabilityOfRetreat > 0 && rand <= probabilityOfRetreat;
             // TODO: Maybe implement template method pattern here
-            if (!canActive)
-                ((RetreatAbility)AbilitySO).RetreatFailedEvent?.Invoke();
+            if (!canActive) _retreatAbility.RetreatFailedEvent?.Invoke(Owner);
 
             return base.CanActiveAbility() && canActive;
         }
 
         protected override IEnumerator OnAbilityActive()
         {
-            ((RetreatAbility)AbilitySO).RetreatedEvent?.Invoke();
+            _retreatAbility.RetreatedEvent?.Invoke(Owner);
             yield break;
         }
     }

@@ -7,6 +7,7 @@ using CryptoQuest.Battle.Commands;
 using CryptoQuest.Battle.Components;
 using CryptoQuest.Gameplay.Battle.Core.Helper;
 using CryptoQuest.Tests.Runtime.Battle.Builder;
+using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
 using NUnit.Framework;
 using UnityEditor;
@@ -115,8 +116,8 @@ namespace CryptoQuest.Tests.Runtime.Battle
                         "Assets/ScriptableObjects/Character/Abilities/GA_Retreat.asset");
 
                 bool retreated = false;
-                retreatAbility.RetreatFailedEvent += () => retreated = false;
-                retreatAbility.RetreatedEvent += () => retreated = true;
+                retreatAbility.RetreatFailedEvent += (AbilitySystemBehaviour owner) => retreated = false;
+                retreatAbility.RetreatedEvent += (AbilitySystemBehaviour owner) => retreated = true;
 
                 var hero = A.Character
                     .WithStats(new AttributeWithValue[]
@@ -172,8 +173,8 @@ namespace CryptoQuest.Tests.Runtime.Battle
                         "Assets/ScriptableObjects/Character/Abilities/GA_Retreat.asset");
 
                 bool retreated = false;
-                retreatAbility.RetreatFailedEvent += () => retreated = false;
-                retreatAbility.RetreatedEvent += () => retreated = true;
+                retreatAbility.RetreatFailedEvent += (AbilitySystemBehaviour owner) => retreated = false;
+                retreatAbility.RetreatedEvent += (AbilitySystemBehaviour owner) => retreated = true;
 
                 var characterBuilder = A.Character;
                 var hero = characterBuilder
