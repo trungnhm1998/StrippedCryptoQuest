@@ -1,6 +1,6 @@
 ﻿using System;
 using CryptoQuest.Quest.Authoring;
-using CryptoQuest.Quest.Controller;
+using CryptoQuest.Quest.Controllers;
 using CryptoQuest.System.CutsceneSystem.CustomTimelineTracks.YarnSpinnerNodeControlTrack;
 using CryptoQuest.System.Dialogue.Managers;
 using UnityEngine;

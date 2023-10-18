@@ -1,5 +1,4 @@
-﻿using CryptoQuest.Quest.Authoring;
-using IndiGames.Core.SaveSystem.ScriptableObjects;
+﻿using IndiGames.Core.SaveSystem.ScriptableObjects;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 

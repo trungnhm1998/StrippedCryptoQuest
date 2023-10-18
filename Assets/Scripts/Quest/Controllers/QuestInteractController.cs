@@ -2,11 +2,8 @@
 using CryptoQuest.Quest.Authoring;
 using CryptoQuest.Quest.Categories;
 using CryptoQuest.Quest.Components;
-using CryptoQuest.Quest.Controller;
-using CryptoQuest.System.Dialogue.Managers;
-using UnityEngine;
 
-namespace CryptoQuest.Quest
+namespace CryptoQuest.Quest.Controllers
 {
     public class QuestInteractController : BaseQuestController
     {

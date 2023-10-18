@@ -12,7 +12,6 @@ namespace CryptoQuest.Character
 
         [SerializeField] private ReactionBehaviour _reactionBehaviour;
 
-
         /// <summary>
         /// This will cause a stutter on scene load. Luckily, we have a fade in effect.
         /// </summary>

@@ -15,24 +15,27 @@ namespace CryptoQuest.Quest.Actor
         [SerializeField] private ActorSettingSO _actorSpawnSetting;
         [SerializeField] private ActorSettingSO _actorDeSpawnSetting;
 
+        private bool _isSpawned;
+        private bool _isDeSpawned;
+
         private void OnEnable()
         {
             _onSceneLoadedEventChannel.EventRaised += ConfigureActors;
-            if (_actorSpawnSetting != null) _actorSpawnSetting.OnConfigure += Spawn;
-            if (_actorDeSpawnSetting != null) _actorDeSpawnSetting.OnConfigure += DeSpawn;
+            if (_actorSpawnSetting) _actorSpawnSetting.OnConfigure += Spawn;
+            if (_actorDeSpawnSetting) _actorDeSpawnSetting.OnConfigure += DeSpawn;
         }
 
         private void OnDisable()
         {
             _onSceneLoadedEventChannel.EventRaised -= ConfigureActors;
             //TODO: these codes smell, need refactor   
-            if (_actorSpawnSetting != null)
+            if (_actorSpawnSetting)
             {
                 _actorSpawnSetting.OnConfigure -= Spawn;
                 _actorSpawnSetting.QuestToTrack.OnQuestCompleted -= ActivateSpawnActor;
             }
 
-            if (_actorDeSpawnSetting != null)
+            if (_actorDeSpawnSetting)
             {
                 _actorDeSpawnSetting.OnConfigure -= DeSpawn;
                 _actorDeSpawnSetting.QuestToTrack.OnQuestCompleted -= ActivateDeSpawnActor;
@@ -50,7 +53,7 @@ namespace CryptoQuest.Quest.Actor
 
         private void InitSpawnSetting()
         {
-            if (_actorSpawnSetting != null)
+            if (_actorSpawnSetting)
             {
                 QuestManager.OnConfigureQuest?.Invoke(_actorSpawnSetting);
                 return;
@@ -59,46 +62,47 @@ namespace CryptoQuest.Quest.Actor
             ActivateSpawnActor();
         }
 
-
         private void ActivateSpawnActor()
         {
             StopAllCoroutines();
             ActorInfo actor = _actorDef.CreateActor();
-            if (_spawnPoint.transform == null) return;
+
+            if (!_spawnPoint && _isSpawned) return;
 
             StartCoroutine(actor.Spawn(_spawnPoint.transform));
-            if (_actorSpawnSetting != null)
-                _actorSpawnSetting.QuestToTrack.OnQuestCompleted -= ActivateSpawnActor;
+
+            _isSpawned = true;
         }
 
         private void ActivateDeSpawnActor()
         {
-            StopAllCoroutines();
-            if (_spawnPoint.transform.gameObject == null) return;
+            if (!_spawnPoint && _isDeSpawned) return;
 
-            Destroy(transform.gameObject);
-
-            if (_actorDeSpawnSetting != null)
-                _actorDeSpawnSetting.QuestToTrack.OnQuestCompleted -= ActivateDeSpawnActor;
+            Destroy(transform.gameObject, 1);
+            _isSpawned = true;
         }
 
         private void Spawn(bool isQuestCompleted)
         {
-            if (isQuestCompleted)
-                ActivateSpawnActor();
-            else
+            if (!isQuestCompleted)
+            {
                 _actorSpawnSetting.QuestToTrack.OnQuestCompleted += ActivateSpawnActor;
+                return;
+            }
+
+            ActivateSpawnActor();
         }
 
         private void DeSpawn(bool isQuestCompleted)
         {
-            if (isQuestCompleted)
-                ActivateDeSpawnActor();
-            else
+            if (!isQuestCompleted)
             {
                 _actorDeSpawnSetting.QuestToTrack.OnQuestCompleted += ActivateDeSpawnActor;
                 InitSpawnSetting();
+                return;
             }
+
+            ActivateDeSpawnActor();
         }
     }
 }

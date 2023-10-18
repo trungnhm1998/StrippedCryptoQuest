@@ -29,7 +29,7 @@ namespace CryptoQuest.Quest.Components
         [field: SerializeReference, HideInInspector]
         public List<QuestInfo> CompletedQuests { get; private set; } = new();
 
-        private List<string> _completedQuestsId = new();
+        private readonly List<string> _completedQuestsId = new();
 
         private QuestSO _currentQuestData;
         private QuestInfo _currentQuestInfo;
@@ -37,29 +37,33 @@ namespace CryptoQuest.Quest.Components
         private void OnEnable()
         {
             OnConfigureQuest += ConfigureQuestHolder;
-            _triggerQuestEventChannel.EventRaised += TriggerQuest;
-            _giveQuestEventChannel.EventRaised += GiveQuest;
             OnRemoveProgressingQuest += RemoveProgressingQuest;
             OnQuestCompleted += QuestCompleted;
+
+            _triggerQuestEventChannel.EventRaised += TriggerQuest;
+            _giveQuestEventChannel.EventRaised += GiveQuest;
         }
 
         private void OnDisable()
         {
             OnConfigureQuest -= ConfigureQuestHolder;
-            _triggerQuestEventChannel.EventRaised -= TriggerQuest;
-            _giveQuestEventChannel.EventRaised -= GiveQuest;
             OnRemoveProgressingQuest -= RemoveProgressingQuest;
             OnQuestCompleted -= QuestCompleted;
+
+            _triggerQuestEventChannel.EventRaised -= TriggerQuest;
+            _giveQuestEventChannel.EventRaised -= GiveQuest;
         }
 
         public void TriggerQuest(QuestSO questData)
         {
             if (IsQuestTriggered(questData)) return;
+            
             foreach (var progressQuestInfo in InProgressQuest)
             {
                 if (progressQuestInfo.BaseData != questData) continue;
 
                 progressQuestInfo.TriggerQuest();
+                _currentQuestInfo = progressQuestInfo;
                 break;
             }
         }

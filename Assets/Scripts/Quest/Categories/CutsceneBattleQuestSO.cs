@@ -3,10 +3,7 @@ using CryptoQuest.Battle.Events;
 using CryptoQuest.Gameplay.Encounter;
 using CryptoQuest.Quest.Authoring;
 using CryptoQuest.Quest.Components;
-using CryptoQuest.Quest.Controller;
-using CryptoQuest.Quest.Controllers;
 using CryptoQuest.System.CutsceneSystem;
-using CryptoQuest.System.CutsceneSystem.Events;
 using UnityEngine;
 using UnityEngine.Playables;
 

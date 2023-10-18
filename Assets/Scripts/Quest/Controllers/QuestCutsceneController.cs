@@ -6,7 +6,7 @@ using CryptoQuest.Quest.Events;
 using CryptoQuest.System.CutsceneSystem;
 using UnityEngine;
 
-namespace CryptoQuest.Quest.Controller
+namespace CryptoQuest.Quest.Controllers
 {
     public class QuestCutsceneController : BaseQuestController
     {

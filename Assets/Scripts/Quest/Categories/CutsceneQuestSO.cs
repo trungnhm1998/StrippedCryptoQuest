@@ -1,7 +1,7 @@
 ﻿using System;
 using CryptoQuest.Quest.Authoring;
 using CryptoQuest.Quest.Components;
-using CryptoQuest.Quest.Controller;
+using CryptoQuest.Quest.Controllers;
 using CryptoQuest.System.CutsceneSystem.Events;
 using UnityEngine;
 

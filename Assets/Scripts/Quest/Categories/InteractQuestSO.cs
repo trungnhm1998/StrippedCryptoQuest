@@ -1,6 +1,8 @@
 ﻿using System;
 using CryptoQuest.Quest.Authoring;
 using CryptoQuest.Quest.Components;
+using CryptoQuest.Quest.Controllers;
+using CryptoQuest.Quest.Events;
 using CryptoQuest.System.Dialogue.Managers;
 using UnityEngine;
 
@@ -10,6 +12,8 @@ namespace CryptoQuest.Quest.Categories
     public class InteractQuestSO : QuestSO
     {
         [field: SerializeField] public YarnDialogWithQuestSo YarnDialogWithQuestSo { get; private set; }
+
+        [field: SerializeField] public QuestEventChannelSO GiveQuestEventChannel { get; private set; }
 
         public override QuestInfo CreateQuest(QuestManager questManager) =>
             new InteractQuestInfo(this, questManager);
@@ -35,6 +39,10 @@ namespace CryptoQuest.Quest.Categories
             YarnQuestDef yarnDialogData = Data.YarnDialogWithQuestSo.YarnQuestDef;
             YarnQuestManager.OnUpdateCurrentNode?.Invoke(yarnDialogData);
             YarnSpinnerDialogueManager.PlayDialogueRequested.Invoke(yarnDialogData.YarnNode);
+            foreach (var possibleOutcomeQuest in yarnDialogData.PossibleOutcomeQuests)
+            {
+                Data.GiveQuestEventChannel.RaiseEvent(possibleOutcomeQuest);
+            }
         }
 
         public override void FinishQuest()
