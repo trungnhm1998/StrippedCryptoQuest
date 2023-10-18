@@ -11,6 +11,7 @@ namespace IndiGames.Core.EditorTools
     public class EditorColdBoot : MonoBehaviour
     {
 #if UNITY_EDITOR
+        public SceneScriptableObject ThisScene => _thisSceneSO;
         [SerializeField] private SceneScriptableObject _thisSceneSO;
         [SerializeField] private SceneScriptableObject _globalManagersSO;
 
