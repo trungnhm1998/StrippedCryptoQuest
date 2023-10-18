@@ -11,7 +11,7 @@ namespace CryptoQuest.BlackSmith.Upgrade
 {
     public class UpgradePresenter : MonoBehaviour
     {
-        [SerializeField] private BlackSmithDialogManager _dialogManager;
+        [SerializeField] private BlackSmithDialogsPresenter _dialogManager;
         [SerializeField] private UIUpgradeEquipment _upgradeEquipment;
         [SerializeField] private UIEquipmentDetails _equipmentDetail;
         [SerializeField] private BlackSmithInputManager _input;

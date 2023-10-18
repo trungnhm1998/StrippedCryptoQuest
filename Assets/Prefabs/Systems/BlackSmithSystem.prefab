@@ -1047,7 +1047,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <Input>k__BackingField: {fileID: 4422885797340229464}
-  <EvolvePanel>k__BackingField: {fileID: 5951786930772008756}
+  <DialogsPresenter>k__BackingField: {fileID: 793426756844449142}
+  <EvolvePanel>k__BackingField: {fileID: 3550756289094277949}
+  <EvolveEquipmentList>k__BackingField: {fileID: 5465497957038638614}
+  <ConfirmPanel>k__BackingField: {fileID: 2267966249666564977}
 --- !u!95 &4193685876521040809
 Animator:
   serializedVersion: 5
@@ -1585,38 +1588,6 @@ MonoBehaviour:
     m_FallbackState: 0
     m_WaitForCompletion: 0
     m_LocalVariables: []
-  _confirmYesEvent:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 8711231219661051317}
-        m_TargetAssemblyTypeName: CryptoQuest.BlackSmith.Upgrade.UpgradePresenter,
-          indi-games.crypto-quest
-        m_MethodName: ProceedUpgrade
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  _confirmNoEvent:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 8711231219661051317}
-        m_TargetAssemblyTypeName: CryptoQuest.BlackSmith.Upgrade.UpgradePresenter,
-          indi-games.crypto-quest
-        m_MethodName: CancelUpgrade
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
   references:
     version: 2
     RefIds: []
@@ -2897,11 +2868,39 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a33760125eb62ec4f930300c7cd609e9, type: 3}
---- !u!1 &5951786930772008756 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 9127332478317329931, guid: a33760125eb62ec4f930300c7cd609e9, type: 3}
+--- !u!114 &2267966249666564977 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3696150601360765518, guid: a33760125eb62ec4f930300c7cd609e9, type: 3}
   m_PrefabInstance: {fileID: 3184663043540197695}
   m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7e1867be5c0ad8449aed2cdbc4a7a1f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &3550756289094277949 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2122567761047976450, guid: a33760125eb62ec4f930300c7cd609e9, type: 3}
+  m_PrefabInstance: {fileID: 3184663043540197695}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00b7fae7265149d449d3d0543861895e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &5465497957038638614 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7488196749638395689, guid: a33760125eb62ec4f930300c7cd609e9, type: 3}
+  m_PrefabInstance: {fileID: 3184663043540197695}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af208f0c51fdb984fac4970c853ac042, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &8466942690046463327 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6463419379983346784, guid: a33760125eb62ec4f930300c7cd609e9, type: 3}

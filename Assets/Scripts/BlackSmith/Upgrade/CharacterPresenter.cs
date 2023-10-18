@@ -1,4 +1,6 @@
+using System.Collections;
 using System.Collections.Generic;
+using CryptoQuest.Battle.Components;
 using CryptoQuest.Character.Hero.AvatarProvider;
 using CryptoQuest.Gameplay.PlayerParty;
 using CryptoQuest.System;
@@ -10,8 +12,8 @@ namespace CryptoQuest.BlackSmith.Upgrade
     {
         [SerializeField] private List<UIUpgradeCharacter> _listCharacter;
         [SerializeField] private UIUpgradeEquipment _upgradeEquipment;
-        private IHeroAvatarProvider _heroAvatarProvider;
         private IPartyController _partyController;
+        private IHeroAvatarProvider _heroAvatarProvider;
 
         private void OnEnable()
         {
@@ -27,7 +29,6 @@ namespace CryptoQuest.BlackSmith.Upgrade
         private void Init()
         {
             _partyController = ServiceProvider.GetService<IPartyController>();
-            _heroAvatarProvider = GetComponent<IHeroAvatarProvider>();
             DisableCharacterObjects();
             LoadCharacterDetail();
         }
@@ -42,7 +43,9 @@ namespace CryptoQuest.BlackSmith.Upgrade
             for (int i = 0; i < _partyController.Slots.Length; i++)
             {
                 _listCharacter[i].gameObject.SetActive(true);
-                _listCharacter[i].LoadCharacterDetail(_partyController.Slots[i].HeroBehaviour, _heroAvatarProvider);
+                _listCharacter[i].LoadCharacterDetail(_partyController.Slots[i].HeroBehaviour);
+
+                StartCoroutine(CoLoadAvatar(_partyController.Slots[i].HeroBehaviour, _listCharacter[i]));
             }
         }
 
@@ -61,6 +64,12 @@ namespace CryptoQuest.BlackSmith.Upgrade
             {
                 _listCharacter[i].Preview(item.UpgradeEquipment.Equipment);
             }
+        }
+
+        private IEnumerator CoLoadAvatar(HeroBehaviour hero, UIUpgradeCharacter characterUI)
+        {
+            yield return _heroAvatarProvider.LoadAvatarAsync(hero);
+            characterUI.SetAvatar(hero.Avatar);
         }
     }
 }

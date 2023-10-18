@@ -1,22 +1,43 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace CryptoQuest.BlackSmith.EvolveStates
 {
     public class ConfirmStateBehaviour : StateMachineBehaviour
     {
+        private EvolveStateController _stateController;
+        private Animator _animator;
+        private BlackSmithInputManager _stateControllerInput;
+        
+        private static readonly int SelectEquipmentState = Animator.StringToHash("isSelectEquipment");
+
         public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
-            Debug.Log("Enter confirm state");
 
-            var stateController = animator.GetComponent<EvolveStateController>();
+            _animator = animator;
+
+            _stateController = animator.GetComponent<EvolveStateController>();
+            _stateControllerInput = _stateController.Input;
+
+            _stateController.ConfirmPanel.gameObject.SetActive(true);
+
+            _stateControllerInput.CancelEvent += ExitConfirmState;
+            _stateController.EvolvePanel.ExitConfirmPhaseEvent += ExitConfirmState;
         }
 
-        public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) { }
+        private void ExitConfirmState()
+        {
+            _animator.SetTrigger(SelectEquipmentState);
+        }
 
-        public override void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) { }
+        public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+        {
+            _stateControllerInput.CancelEvent -= ExitConfirmState;
+            _stateController.EvolvePanel.ExitConfirmPhaseEvent -= ExitConfirmState;
 
-        public override void OnStateMove(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) { }
 
-        public override void OnStateIK(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) { }
+            _stateController.ConfirmPanel.gameObject.SetActive(false);
+            _stateController.DialogsPresenter.HideConfirmDialog();
+        }
     }
 }

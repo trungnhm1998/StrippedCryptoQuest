@@ -1,11 +1,12 @@
-﻿using CryptoQuest.Input;
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.Localization;
 
 namespace CryptoQuest.BlackSmith.EvolveStates
 {
     public class EquipmentStateBehaviour : StateMachineBehaviour
     {
-        private BlackSmithInputManager _stateControllerInput;
+        [SerializeField] private LocalizedString _selectTargetMessage;
+
         private Animator _animator;
         private EvolveStateController _stateController;
         private static readonly int ConfirmState = Animator.StringToHash("isConfirm");
@@ -14,23 +15,35 @@ namespace CryptoQuest.BlackSmith.EvolveStates
         {
             _animator = animator;
 
-            Debug.Log("Enter equipment state");
             _stateController = animator.GetComponent<EvolveStateController>();
+            _stateController.EvolvePanel.EnterConfirmPhaseEvent += GoToConfirmState;
+            _stateController.EvolvePanel.HadMethodRunned = false; // Code smell
 
-            _stateControllerInput = _stateController.Input;
-            _stateControllerInput.CancelEvent += GoToConfirmState;
-
-            _stateController.EvolvePanel.SetActive(true);
+            GetDataFromPresenterAndPassToScrollView();
+            SetUpDialogs();
         }
 
         private void GoToConfirmState()
         {
-            _stateController.EvolvePanel.SetActive(false);
+            _animator.SetTrigger(ConfirmState);
+        }
+
+        private void SetUpDialogs()
+        {
+            _stateController.DialogsPresenter.Dialogue
+                .SetMessage(_selectTargetMessage)
+                .Show();
+        }
+
+        private void GetDataFromPresenterAndPassToScrollView()
+        {
+            var data = _stateController.EvolvePanel.GameData;
+            _stateController.EvolveEquipmentList.RenderEquipments(data);
         }
 
         public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
-            _stateControllerInput.CancelEvent -= GoToConfirmState;
+            _stateController.EvolvePanel.EnterConfirmPhaseEvent -= GoToConfirmState;
         }
     }
 }

@@ -1,12 +1,10 @@
 using CryptoQuest.Battle.Components;
-using CryptoQuest.Character.Hero.AvatarProvider;
 using CryptoQuest.Item.Equipment;
 using CryptoQuest.UI.Menu.Panels.Status.Equipment;
 using CryptoQuest.UI.Menu.Panels.Status.Stats;
 using IndiGames.GameplayAbilitySystem.AttributeSystem;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.Components;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Localization.Components;
@@ -22,7 +20,6 @@ namespace CryptoQuest.BlackSmith.Upgrade
         [SerializeField] private List<UIAttribute> _attribute;
         [SerializeField] private UIEquipmentPreviewer _previewer;
         private AttributeSystemBehaviour _attributeSystemBehaviour;
-        private IHeroAvatarProvider _heroAvatarProvider;
         private EquipmentInfo _equipment = null;
         private HeroBehaviour _hero;
         private int _previewSlotIndex = 0;
@@ -37,7 +34,6 @@ namespace CryptoQuest.BlackSmith.Upgrade
             {
                 SetStat(attribute, attribute.Attribute);
             }
-            StartCoroutine(CoLoadAvatar(heroAvatar));
         }
 
         private void SetStat(UIAttribute attribute, AttributeScriptableObject attributeSO)

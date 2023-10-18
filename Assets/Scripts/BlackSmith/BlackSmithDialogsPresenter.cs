@@ -1,8 +1,4 @@
-using System;
-using System.Collections;
 using CryptoQuest.Events.UI.Dialogs;
-using CryptoQuest.Menu;
-using CryptoQuest.System.Dialogue.Events;
 using CryptoQuest.UI.Dialogs.Dialogue;
 using UnityEngine;
 using UnityEngine.Events;
@@ -10,14 +6,13 @@ using UnityEngine.Localization;
 
 namespace CryptoQuest.BlackSmith
 {
-    public class BlackSmithDialogManager : MonoBehaviour
+    public class BlackSmithDialogsPresenter : MonoBehaviour
     {
+        public event UnityAction ConfirmYesEvent;
+        public event UnityAction ConfirmNoEvent;
+
         [SerializeField] private YesNoDialogEventChannelSO _yesNoDialogEventSO;
         [SerializeField] private LocalizedString _message;
-
-        [Header("Unity Events")]
-        [SerializeField] private UnityEvent _confirmYesEvent;
-        [SerializeField] private UnityEvent _confirmNoEvent;
 
         private UIDialogueForGenericMerchant _dialogue;
         public UIDialogueForGenericMerchant Dialogue { get => _dialogue; }
@@ -43,13 +38,18 @@ namespace CryptoQuest.BlackSmith
 
         private void YesButtonPressed()
         {
-            _confirmYesEvent.Invoke();
-            _yesNoDialogEventSO.Hide();
+            ConfirmYesEvent?.Invoke();
+            HideConfirmDialog();
         }
 
         private void NoButtonPressed()
         {
-            _confirmNoEvent.Invoke();
+            ConfirmNoEvent?.Invoke();
+            HideConfirmDialog();
+        }
+
+        public void HideConfirmDialog()
+        {
             _yesNoDialogEventSO.Hide();
         }
     }

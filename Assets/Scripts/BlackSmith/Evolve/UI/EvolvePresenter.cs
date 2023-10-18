@@ -11,7 +11,11 @@ namespace CryptoQuest.BlackSmith.Evolve.UI
 {
     public class EvolvePresenter : MonoBehaviour
     {
-        [SerializeField] private BlackSmithDialogManager _dialogManager;
+        public event UnityAction WaitForDataAvailableEvent;
+        public event UnityAction EnterConfirmPhaseEvent;
+        public event UnityAction ExitConfirmPhaseEvent;
+
+        [SerializeField] private BlackSmithDialogsPresenter _dialogManager;
 
         [SerializeField] private UIEvolveEquipmentList _evolvableEquipmentListUi;
         [SerializeField] private UIEquipmentDetail _equipmentDetailUi;
@@ -19,52 +23,60 @@ namespace CryptoQuest.BlackSmith.Evolve.UI
         [SerializeField] private UIConfirmPanel _confirmPanel;
         [SerializeField] private UIResultPanel _resultPanel;
 
-        [SerializeField] private LocalizedString _selectTargetMessage;
         [SerializeField] private LocalizedString _selectMaterialMessage;
         [SerializeField] private LocalizedString _confirmMessage;
         [SerializeField] private LocalizedString _evolveSuccessMessage;
         [SerializeField] private LocalizedString _evolveFailedMessage;
 
-
         [Header("Unity Events")]
-        [SerializeField] private UnityEvent<List<IEvolvableData>> _getInventoryEvent;
         [SerializeField] private UnityEvent<IEvolvableData> _viewEquipmentDetailEvent;
         [SerializeField] private UnityEvent<IEvolvableData> _evolveSuccessEvent;
         [SerializeField] private UnityEvent<IEvolvableData> _evolveFailedEvent;
 
         private IEvolvableEquipment _equipmentModel;
         private List<IEvolvableData> _gameData = new();
+        public List<IEvolvableData> GameData { get => _gameData; }
 
         private UIEquipmentItem _selectedEquipment;
 
+        /// <summary>
+        /// Somehow the MaterialSelected method run 3 times after canceling the YesNoDialog/pressing Esc to turn back so this is the temp solution. Might refactor later.
+        /// </summary>
+        public bool HadMethodRunned { get; set; }
+
         private void OnEnable()
         {
+            _dialogManager.ConfirmYesEvent += ProceedEvolve;
+            _dialogManager.ConfirmNoEvent += CancelEvolve;
+
             StartCoroutine(GetEquipment());
-            _dialogManager.Dialogue.SetMessage(_selectTargetMessage);
         }
 
         private void OnDisable()
         {
+            _dialogManager.ConfirmYesEvent -= ProceedEvolve;
+            _dialogManager.ConfirmNoEvent -= CancelEvolve;
+
             StopCoroutine(GetEquipment());
             UnregisterEquipmentEvent();
         }
 
-        private IEnumerator GetEquipment()
+        public IEnumerator GetEquipment()
         {
             _equipmentModel = GetComponentInChildren<IEvolvableEquipment>();
             yield return _equipmentModel.CoGetData();
-            SetEquipmentDataInterval();
+            SaveEquipmentDataInterval();
         }
 
-        private void SetEquipmentDataInterval()
+        private void SaveEquipmentDataInterval()
         {
             while (_gameData.Count <= 0)
             {
                 _gameData = _equipmentModel.EvolvableData;
 
                 Debug.Log($"_gameData = {_gameData.Count}");
-                _getInventoryEvent.Invoke(_gameData);
             }
+            WaitForDataAvailableEvent?.Invoke();
         }
 
         public void FinishedRenderEquipmentList()
@@ -122,20 +134,24 @@ namespace CryptoQuest.BlackSmith.Evolve.UI
 
         private void MaterialSelected(UIEquipmentItem selectedMaterial)
         {
-            _confirmPanel.gameObject.SetActive(true);
+            if (HadMethodRunned) return;
+            HadMethodRunned = true;
+
+            EnterConfirmPhaseEvent?.Invoke();
             _dialogManager.Dialogue.Hide();
             _dialogManager.ShowConfirmDialog(_confirmMessage);
         }
 
-        public void ProceedEvolve()
+        private void ProceedEvolve()
         {
             _confirmPanel.gameObject.SetActive(false);
             CheckEvolveResult();
         }
 
-        public void CancelEvolve()
+        private void CancelEvolve()
         {
             _confirmPanel.gameObject.SetActive(false);
+            ExitConfirmPhaseEvent?.Invoke();
         }
 
         private void CheckEvolveResult()
@@ -148,8 +164,6 @@ namespace CryptoQuest.BlackSmith.Evolve.UI
             Random rand = new Random();
             int rd = rand.Next(100);
             bool isSuccess = rd < _selectedEquipment.EquipmentData.Rate;
-
-            Debug.Log($"Evolve Rate = {rd}");
 
             if (isSuccess)
             {

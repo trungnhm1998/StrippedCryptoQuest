@@ -4,5 +4,6 @@ using UnityEngine;
 
 namespace CryptoQuest.BlackSmith.Evolve.UI
 {
+    // TODO: Implement this after connect API with real EquipmentInfo
     public class UICharactersPreview : MonoBehaviour { }
 }

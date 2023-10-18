@@ -4,12 +4,13 @@ using CryptoQuest.Battle.Components;
 using CryptoQuest.BlackSmith.Upgrade;
 using CryptoQuest.Character.Hero.AvatarProvider;
 using CryptoQuest.Gameplay.PlayerParty;
+using CryptoQuest.Item.Equipment;
 using CryptoQuest.System;
 using UnityEngine;
 
-namespace CryptoQuest
+namespace CryptoQuest.BlackSmith.Evolve.UI
 {
-    public class CharactersPresenter : MonoBehaviour
+    public class CharacterPartyPresenter : MonoBehaviour
     {
         [SerializeField] private List<UIUpgradeCharacter> _listCharacter;
         private IPartyController _partyController;
@@ -51,6 +52,15 @@ namespace CryptoQuest
         {
             yield return _heroAvatarProvider.LoadAvatarAsync(hero);
             characterUI.SetAvatar(hero.Avatar);
+        }
+
+        private void PreviewCharacterStats(UIEquipmentItem item)
+        {
+            if (item == null) return;
+            for (int i = 0; i < _partyController.Slots.Length; i++)
+            {
+                _listCharacter[i].Preview((EquipmentInfo)item.EquipmentData);
+            }
         }
 
     }
