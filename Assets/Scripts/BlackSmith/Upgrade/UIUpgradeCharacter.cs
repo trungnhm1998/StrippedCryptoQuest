@@ -25,10 +25,9 @@ namespace CryptoQuest.BlackSmith.Upgrade
         private IHeroAvatarProvider _heroAvatarProvider;
         private EquipmentInfo _equipment = null;
         private HeroBehaviour _hero;
-        private int _previewSlotIndex = 0;        
+        private int _previewSlotIndex = 0;
 
-
-        public void LoadCharacterDetail(HeroBehaviour hero, IHeroAvatarProvider heroAvatar)
+        public void LoadCharacterDetail(HeroBehaviour hero)
         {
             _equipment = null;
             _hero = hero;
@@ -59,10 +58,9 @@ namespace CryptoQuest.BlackSmith.Upgrade
             _equipment = equipmentInfo;
         }
 
-        private IEnumerator CoLoadAvatar(IHeroAvatarProvider heroAvatar)
+        public void SetAvatar(Sprite avatar)
         {
-            yield return heroAvatar.LoadAvatarAsync(_hero);
-            _avatar.sprite = _hero.Avatar;
+            _avatar.sprite = avatar;
         }
     }
 }
