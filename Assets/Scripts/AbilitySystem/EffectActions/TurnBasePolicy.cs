@@ -94,8 +94,10 @@ namespace CryptoQuest.AbilitySystem.EffectActions
             LogAffectingStatus();
             ExecutePeriodicEffect();
             _turnsLeft--;
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
             Debug.Log(
-                $"TurnBaseAction::UpdateTurn::skill effect has [{_turnsLeft}] turns left");
+                $"AbilitySystem::[{_character.DisplayName}] [{Spec.Def.name}] has [{_turnsLeft}] turns left");
+#endif
             if (_turnsLeft <= 0) IsActive = false; // Will be remove when next turn started
         }
 
