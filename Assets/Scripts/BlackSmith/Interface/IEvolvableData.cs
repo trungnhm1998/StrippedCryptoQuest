@@ -15,5 +15,6 @@ namespace CryptoQuest.BlackSmith.Interface
         int Gold { get; }
         float Metad { get; }
         Sprite Rarity { get; }
+        int Rate { get; }
     }
 }

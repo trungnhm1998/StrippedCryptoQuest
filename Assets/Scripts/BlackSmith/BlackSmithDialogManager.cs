@@ -15,6 +15,10 @@ namespace CryptoQuest.BlackSmith
         [SerializeField] private YesNoDialogEventChannelSO _yesNoDialogEventSO;
         [SerializeField] private LocalizedString _message;
 
+        [Header("Unity Events")]
+        [SerializeField] private UnityEvent _confirmYesEvent;
+        [SerializeField] private UnityEvent _confirmNoEvent;
+
         private UIDialogueForGenericMerchant _dialogue;
         public UIDialogueForGenericMerchant Dialogue { get => _dialogue; }
 
@@ -39,11 +43,13 @@ namespace CryptoQuest.BlackSmith
 
         private void YesButtonPressed()
         {
+            _confirmYesEvent.Invoke();
             _yesNoDialogEventSO.Hide();
         }
 
         private void NoButtonPressed()
         {
+            _confirmNoEvent.Invoke();
             _yesNoDialogEventSO.Hide();
         }
     }

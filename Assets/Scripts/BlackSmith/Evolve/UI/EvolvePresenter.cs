@@ -2,29 +2,40 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using CryptoQuest.BlackSmith.Interface;
-using CryptoQuest.Events.UI.Dialogs;
-using CryptoQuest.UI.Dialogs.Dialogue;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Localization;
+using Random = System.Random;
 
 namespace CryptoQuest.BlackSmith.Evolve.UI
 {
     public class EvolvePresenter : MonoBehaviour
     {
         [SerializeField] private BlackSmithDialogManager _dialogManager;
+
         [SerializeField] private UIEvolveEquipmentList _evolvableEquipmentListUi;
+        [SerializeField] private UIEquipmentDetail _equipmentDetailUi;
+        [SerializeField] private UICharactersPreview _characterPreviewUi;
         [SerializeField] private UIConfirmPanel _confirmPanel;
+        [SerializeField] private UIResultPanel _resultPanel;
+
         [SerializeField] private LocalizedString _selectTargetMessage;
         [SerializeField] private LocalizedString _selectMaterialMessage;
         [SerializeField] private LocalizedString _confirmMessage;
+        [SerializeField] private LocalizedString _evolveSuccessMessage;
+        [SerializeField] private LocalizedString _evolveFailedMessage;
+
 
         [Header("Unity Events")]
         [SerializeField] private UnityEvent<List<IEvolvableData>> _getInventoryEvent;
         [SerializeField] private UnityEvent<IEvolvableData> _viewEquipmentDetailEvent;
+        [SerializeField] private UnityEvent<IEvolvableData> _evolveSuccessEvent;
+        [SerializeField] private UnityEvent<IEvolvableData> _evolveFailedEvent;
 
         private IEvolvableEquipment _equipmentModel;
         private List<IEvolvableData> _gameData = new();
+
+        private UIEquipmentItem _selectedEquipment;
 
         private void OnEnable()
         {
@@ -88,6 +99,7 @@ namespace CryptoQuest.BlackSmith.Evolve.UI
 
         private void EquipmentSelected(UIEquipmentItem selectedEquipment)
         {
+            _selectedEquipment = selectedEquipment;
             foreach (var item in _evolvableEquipmentListUi.EquipmentList)
             {
                 HideEquipmentThatIsNotMaterial(item, selectedEquipment);
@@ -113,6 +125,44 @@ namespace CryptoQuest.BlackSmith.Evolve.UI
             _confirmPanel.gameObject.SetActive(true);
             _dialogManager.Dialogue.Hide();
             _dialogManager.ShowConfirmDialog(_confirmMessage);
+        }
+
+        public void ProceedEvolve()
+        {
+            _confirmPanel.gameObject.SetActive(false);
+            CheckEvolveResult();
+        }
+
+        public void CancelEvolve()
+        {
+            _confirmPanel.gameObject.SetActive(false);
+        }
+
+        private void CheckEvolveResult()
+        {
+            _resultPanel.gameObject.SetActive(true);
+            _evolvableEquipmentListUi.gameObject.SetActive(false);
+            _equipmentDetailUi.gameObject.SetActive(false);
+            _characterPreviewUi.gameObject.SetActive(false);
+
+            Random rand = new Random();
+            int rd = rand.Next(100);
+            bool isSuccess = rd < _selectedEquipment.EquipmentData.Rate;
+
+            Debug.Log($"Evolve Rate = {rd}");
+
+            if (isSuccess)
+            {
+                _evolveSuccessEvent.Invoke(_selectedEquipment.EquipmentData);
+                _dialogManager.Dialogue.SetMessage(_evolveSuccessMessage);
+            }
+            else
+            {
+                _evolveFailedEvent.Invoke(_selectedEquipment.EquipmentData);
+                _dialogManager.Dialogue.SetMessage(_evolveFailedMessage);
+            }
+
+            _dialogManager.Dialogue.Show();
         }
     }
 }

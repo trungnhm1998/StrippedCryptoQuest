@@ -11,29 +11,25 @@ namespace CryptoQuest.BlackSmith.Evolve
     public class EvolvableMockEquipmentModel : MonoBehaviour, IEvolvableEquipment
     {
         private const int MAX_ICON_NUMBER = 24;
-        private const int MAX_RARITY_NUMBER = 5;
+        private const int MAX_RARITY_NUMBER = 13;
 
         [SerializeField] private int _mockLength;
         [SerializeField] private Sprite[] _mockIcons;
         [SerializeField] private LocalizedString _mockName;
         [SerializeField] private Sprite[] _mockRaritySprite = new Sprite[MAX_RARITY_NUMBER];
 
-        private string[] _rarities = { "common", "uncommon", "rare", "epic", "legend" };
-        private Dictionary<string, int> _raritiesMap = new();
-        private int[] _maxStars = { 3, 3, 3, 4, 5 };
+        private int[] _evolableStars = { 1, 2, 1, 2, 1, 2, 1, 2, 3, 1, 2, 3, 4 };
+        private int[] _golds = { 300, 500, 600, 900, 1200, 1600, 2400, 2900, 3900, 4800, 5400, 6600, 9000 };
+        private int[] _rates = { 50, 30, 50, 40, 60, 50, 70, 60, 50, 80, 70, 60, 50 };
 
         private List<IEvolvableData> _mockData;
         public List<IEvolvableData> EvolvableData => _mockData;
-
-        private Sprite _raritySprite;
-        private string _rarity;
 
         public IEnumerator CoGetData()
         {
             yield return new WaitForSeconds(1f);
             _mockData = new List<IEvolvableData>();
 
-            InitRaritiesMap();
             InitMockData();
             RandomlyDuplicateDataToCreateMaterial();
         }
@@ -45,10 +41,12 @@ namespace CryptoQuest.BlackSmith.Evolve
                 Random rand = new Random();
                 int iconIdx = rand.Next(MAX_ICON_NUMBER - 1);
 
-                int star = RandomEquipmentStar();
+                int rdIndex = rand.Next(MAX_RARITY_NUMBER - 1);
+                int star = _evolableStars[rdIndex];
                 int level = star * 10;
 
-                var obj = new EvolvableMockData(_mockIcons[iconIdx], _mockName, level, star, 100, 1.0f, _raritySprite);
+                var obj = new EvolvableMockData(_mockIcons[iconIdx], _mockName, level, star, _golds[rdIndex], _golds[rdIndex], _mockRaritySprite[rdIndex], _rates[rdIndex]);
+
                 _mockData.Add(obj);
             }
         }
@@ -56,35 +54,9 @@ namespace CryptoQuest.BlackSmith.Evolve
         private void RandomlyDuplicateDataToCreateMaterial()
         {
             Random rand = new Random();
-            int dupAmount = rand.Next(4);
+            int dupAmount = dupAmount = rand.Next(1, 4);
 
             _mockData = _mockData.SelectMany(t => Enumerable.Repeat(t, dupAmount)).ToList();
-        }
-
-        private void InitRaritiesMap()
-        {
-            for (int i = 0; i < _mockRaritySprite.Length; i++)
-            {
-                _raritiesMap.Add(_rarities[i], _maxStars[i]);
-            }
-        }
-
-        private int RandomEquipmentStar()
-        {
-            Random rand = new Random();
-            _raritySprite = RandomEquipmentRarity();
-            _raritiesMap.TryGetValue(_rarity, out var maxStar);
-            return rand.Next(1, maxStar - 1);
-        }
-
-        private Sprite RandomEquipmentRarity()
-        {
-            Random rand = new Random();
-            int raritiesMapIdx = rand.Next(MAX_RARITY_NUMBER);
-
-            _rarity = _rarities[raritiesMapIdx];
-
-            return _mockRaritySprite[raritiesMapIdx];
         }
     }
 }

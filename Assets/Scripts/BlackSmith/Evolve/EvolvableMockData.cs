@@ -12,8 +12,9 @@ namespace CryptoQuest.BlackSmith.Interface
         public int Gold { get; private set; }
         public float Metad { get; private set; }
         public Sprite Rarity { get; private set; }
+        public int Rate { get; private set; }
 
-        public EvolvableMockData(Sprite icon, LocalizedString name, int level, int stars, int gold, float metad, Sprite rarity)
+        public EvolvableMockData(Sprite icon, LocalizedString name, int level, int stars, int gold, float metad, Sprite rarity, int rate)
         {
             Icon = icon;
             LocalizedName = name;
@@ -22,6 +23,7 @@ namespace CryptoQuest.BlackSmith.Interface
             Gold = gold;
             Metad = metad;
             Rarity = rarity;
+            Rate = rate;
         }
     }
 }
