@@ -16,6 +16,7 @@ namespace CryptoQuest.BlackSmith.Upgrade
         [SerializeField] private ScrollRect _scrollRect;
         [SerializeField] private GameObject _equipmentPrefab;
         [SerializeField] private GameObject _previewObject;
+        [SerializeField] private GameObject _confirmPanel;
         [SerializeField] private RectTransform _upgradeEquipmentPanel;
         [SerializeField] private Transform _selectedEquipmentPanel;
         [SerializeField] private Transform _defaultPanel;
@@ -28,8 +29,9 @@ namespace CryptoQuest.BlackSmith.Upgrade
         private int _currentLevel;
         private int _levelToUpgrade;
         private bool _isValid;
+        private float _gold;
 
-        public void SetValue(int level, IUpgradeEquipment item, float gold)
+        public void SetValue(int level, IUpgradeEquipment item)
         {
             _currentLevel += level;
             if (_currentLevel > item.Level && _currentLevel <= item.Equipment.Def.MaxLevel)
@@ -37,15 +39,14 @@ namespace CryptoQuest.BlackSmith.Upgrade
 
             else
                 _currentLevel = _selectLevelToUpgrade;
-
-            _levelToUpgrade = _currentLevel - item.Level;
-            _isValid = gold >= _levelToUpgrade * item.Cost;
             _level.text = _selectLevelToUpgrade.ToString();
             CostToUpgrade(item);
         }
 
         private void CostToUpgrade(IUpgradeEquipment item)
         {
+            _levelToUpgrade = _currentLevel - item.Level;
+            _isValid = _gold >= _levelToUpgrade * item.Cost;
             _cost.color = _isValid ? _validColor : _inValidColor;
             _cost.text = $"{_levelToUpgrade * item.Cost} G";
             GotLevelEvent?.Invoke(_levelToUpgrade);
@@ -103,8 +104,9 @@ namespace CryptoQuest.BlackSmith.Upgrade
             OnSelected?.Invoke(firstItemGO);
         }
 
-        public void SelectedEquipment(UIUpgradeItem item)
+        public void SelectedEquipment(UIUpgradeItem item, float gold)
         {
+            _gold = gold;
             item.transform.SetParent(_upgradeEquipmentPanel);
             _selectLevelToUpgrade = item.UpgradeEquipment.Level + 1;
             _currentLevel = _selectLevelToUpgrade;
@@ -117,5 +119,7 @@ namespace CryptoQuest.BlackSmith.Upgrade
             _previewObject.transform.SetParent(transform);
             _previewObject.transform.localPosition = new Vector3(0, 0, 0);
         }
+
+        public void ShowConfirmPanel(bool isShowPanel) => _confirmPanel.SetActive(isShowPanel);
     }
 }

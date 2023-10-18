@@ -7,7 +7,8 @@ namespace CryptoQuest.BlackSmith.Upgrade.StateMachine
 {
     public class UpgradeStateController : MonoBehaviour
     {
-        public UnityAction OnUpgradeSuccess;
+        public UnityAction UpgradeEvent;
+        public UnityAction ExitUpgradeEvent;
         [field: SerializeField] public BlackSmithInputManager InputManager { get; private set; }
         [field: SerializeField] public GameObject SelectedEquipmentPanel { get; private set; }
         [field: SerializeField] public GameObject UpgradeEquipmentPanel { get; private set; }

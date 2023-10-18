@@ -4,6 +4,7 @@ using CryptoQuest.BlackSmith.Upgrade.StateMachine;
 using CryptoQuest.Gameplay.Inventory;
 using CryptoQuest.System;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.Localization;
 
 namespace CryptoQuest.BlackSmith.Upgrade
@@ -36,8 +37,14 @@ namespace CryptoQuest.BlackSmith.Upgrade
             _upgradeEquipment.GotLevelEvent += GetLevelToUpgrade;
             _input.NavigateEvent += HandleNavigation;
             _input.SubmitEvent += UpgradeEquipment;
+            _input.CancelEvent += ExitUpgrade;
             _currencyController.OnSendSuccess += NotifySuccess;
-            _currencyController.OnSendFailed += NotifyFailed;
+        }
+
+        private void ExitUpgrade()
+        {
+            if (!_isSelectedEquipment) return;
+            _upgradeController.ExitUpgradeEvent?.Invoke();
         }
 
         private void OnDisable()
@@ -47,8 +54,8 @@ namespace CryptoQuest.BlackSmith.Upgrade
             _upgradeEquipment.GotLevelEvent -= GetLevelToUpgrade;
             _input.SubmitEvent -= UpgradeEquipment;
             _input.NavigateEvent -= HandleNavigation;
+            _input.CancelEvent -= ExitUpgrade;
             _currencyController.OnSendSuccess -= NotifySuccess;
-            _currencyController.OnSendFailed -= NotifyFailed;
         }
 
         private void GetLevelToUpgrade(int level) => _level = level;
@@ -75,8 +82,9 @@ namespace CryptoQuest.BlackSmith.Upgrade
 
         private void OnItemSubmit(UIUpgradeItem item)
         {
+            float currentGold = _currencyController.Gold;
             _dialogManager.Dialogue.SetMessage(_upgradeMessage);
-            _upgradeEquipment.SelectedEquipment(item);
+            _upgradeEquipment.SelectedEquipment(item, currentGold);
             _equipmentData = item.UpgradeEquipment;
             _isSelectedEquipment = true;
         }
@@ -90,9 +98,9 @@ namespace CryptoQuest.BlackSmith.Upgrade
 
         private void HandleNavigation(Vector2 direction)
         {
-            float currentGold = _currencyController.Gold;
+            if(!_isSelectedEquipment) return;
             if (_equipmentData == null || (int)direction.y == 0) return;
-            _upgradeEquipment.SetValue((int)direction.y, _equipmentData, currentGold);
+            _upgradeEquipment.SetValue((int)direction.y, _equipmentData);
         }
 
         private void LoadEquipmentDetail()
@@ -103,15 +111,24 @@ namespace CryptoQuest.BlackSmith.Upgrade
 
         private void NotifySuccess()
         {
-            _dialogManager.Dialogue.SetMessage(_resultMessage);
-            _upgradeController.OnUpgradeSuccess?.Invoke();
-            _upgradeEquipment.SetLevel(_equipmentData, _equipmentDetail);
-            Debug.Log("Upgrade Success!!!"); //TODO: Add confirm UI & Dialog 
+            _isSelectedEquipment = false;
+            _dialogManager.Dialogue.Hide();
+            _dialogManager.ShowConfirmDialog(_confirmUpgradeMessage);
+            _upgradeEquipment.ShowConfirmPanel(true);
         }
 
-        private void NotifyFailed()
+        public void ProceedUpgrade()
         {
-            Debug.Log("Upgrade Fail!!!"); //TODO: Add confirm UI & Dialog 
+            _upgradeEquipment.ShowConfirmPanel(false);
+            _upgradeController.UpgradeEvent?.Invoke();
+            _upgradeEquipment.SetLevel(_equipmentData, _equipmentDetail);
+            _dialogManager.Dialogue.SetMessage(_resultMessage);
+        }
+
+        public void CancelUpgrade()
+        {
+            _upgradeEquipment.ShowConfirmPanel(false);
+            _isSelectedEquipment = true;
         }
     }
 }

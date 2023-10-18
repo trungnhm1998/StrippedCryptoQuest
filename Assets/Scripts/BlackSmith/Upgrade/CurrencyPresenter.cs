@@ -11,7 +11,6 @@ namespace CryptoQuest.BlackSmith.Upgrade
     {
         [SerializeField] private UIBlackSmithCurrency _currencyUI;
         public event UnityAction OnSendSuccess;
-        public event UnityAction OnSendFailed;
         private ICurrenciesController _currenciesController;
         public float Gold { get; private set; }
         public float Diamond { get; private set; }
@@ -33,13 +32,7 @@ namespace CryptoQuest.BlackSmith.Upgrade
         {
             var goldSO = _currenciesController.Wallet.Gold;
             var diamondSO = _currenciesController.Wallet.Diamond;
-            if (!goldSO.CanUpdateAmount(-quantityGold)
-                          || !diamondSO.CanUpdateAmount(-quantityDiamond))
-            {
-                OnSendFailed.Invoke();
-                return;
-            }
-
+            if (!goldSO.CanUpdateAmount(-quantityGold) || !diamondSO.CanUpdateAmount(-quantityDiamond)) return;
             _currenciesController.UpdateCurrencyAmount(goldSO.Data, -quantityGold);
             _currenciesController.UpdateCurrencyAmount(diamondSO.Data, -quantityGold);
             UpdateCurrenciesUI();

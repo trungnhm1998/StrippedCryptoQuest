@@ -6,7 +6,6 @@ namespace CryptoQuest.BlackSmith.Upgrade.StateMachine
     public class UpgradeStateBehaviour : StateMachineBehaviour
     {
         private Animator _animator;
-        private BlackSmithInputManager _input;
         private UpgradeStateController _stateController;
         private static readonly int _submit = Animator.StringToHash("isSuccess");
         private static readonly int _exit = Animator.StringToHash("isSelect");
@@ -16,16 +15,15 @@ namespace CryptoQuest.BlackSmith.Upgrade.StateMachine
             _animator = animator;
             _stateController = animator.GetComponent<UpgradeStateController>();
             _stateController.UpgradeEquipmentPanel.SetActive(true);
-            _stateController.OnUpgradeSuccess += ChangeState;
-            _input = _stateController.InputManager;
-            _input.CancelEvent += ExitState;
+            _stateController.UpgradeEvent += ChangeState;
+            _stateController.ExitUpgradeEvent += ExitState;
         }
 
         public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
             _stateController.UpgradeEquipmentPanel.SetActive(false);
-            _stateController.OnUpgradeSuccess -= ChangeState;
-            _input.CancelEvent -= ExitState;
+            _stateController.UpgradeEvent -= ChangeState;
+            _stateController.ExitUpgradeEvent -= ExitState;
         }
 
         private void ChangeState()
