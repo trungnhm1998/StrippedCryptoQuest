@@ -1,9 +1,11 @@
 ﻿using CryptoQuest.AbilitySystem.Attributes;
 using CryptoQuest.Battle.Components;
 using CryptoQuest.Battle.Events;
+using CryptoQuest.Gameplay;
 using CryptoQuest.Gameplay.Encounter;
 using CryptoQuest.Gameplay.Inventory;
 using CryptoQuest.Gameplay.PlayerParty;
+using CryptoQuest.Map.CheckPoint;
 using CryptoQuest.System;
 using IndiGames.Core.SceneManagementSystem;
 using IndiGames.Core.SceneManagementSystem.ScriptableObjects;
@@ -39,6 +41,7 @@ namespace CryptoQuest.Battle
             RestoreCharacter();
             AdditiveGameSceneLoader.SceneUnloaded += TeleportToClosestTownAfterSceneUnloaded;
             UnloadBattleScene();
+            
         }
 
         private void TeleportToClosestTownAfterSceneUnloaded(SceneScriptableObject scene)
@@ -46,9 +49,10 @@ namespace CryptoQuest.Battle
             AdditiveGameSceneLoader.SceneUnloaded -= TeleportToClosestTownAfterSceneUnloaded;
             if (scene != BattleSceneSO) return;
 
-            FinishPresentationAndEnableInput();
-        }
-
+            var checkPointController = ServiceProvider.GetService<ICheckPointController>();
+            checkPointController.BackToCheckPoint();
+        }   
+        
         private void DecreaseGold()
         {
             var inventoryController = ServiceProvider.GetService<IInventoryController>();

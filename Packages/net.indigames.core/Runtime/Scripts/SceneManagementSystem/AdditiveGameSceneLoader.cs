@@ -36,7 +36,6 @@ namespace IndiGames.Core.SceneManagementSystem
 
         private SceneInstance _gameplayManagerSceneInstance;
         private bool _isLoading;
-        private Scene _lastActiveScene;
 
         private void OnEnable()
         {
@@ -60,7 +59,6 @@ namespace IndiGames.Core.SceneManagementSystem
         {
             if (_isLoading) return;
             _isLoading = true;
-            _lastActiveScene = SceneManager.GetActiveScene();
 
             _fadeConfigSO.OnFadeIn();
 
@@ -136,11 +134,7 @@ namespace IndiGames.Core.SceneManagementSystem
                 }
 #endif
             }
-
-            _fadeConfigSO.OnFadeOut();
-            yield return new WaitForSeconds(_fadeConfigSO.Duration);
             SceneUnloaded?.Invoke(sceneToUnload);
-            SceneManager.SetActiveScene(_lastActiveScene);
         }
 
         private void LoadNewScene()

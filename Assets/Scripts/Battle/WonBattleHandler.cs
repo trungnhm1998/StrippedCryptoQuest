@@ -1,9 +1,11 @@
 ﻿using CryptoQuest.Battle.Events;
+using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects;
 using CryptoQuest.Gameplay.Reward.Events;
 using IndiGames.Core.SceneManagementSystem;
 using IndiGames.Core.SceneManagementSystem.ScriptableObjects;
 using TinyMessenger;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace CryptoQuest.Battle
 {
@@ -11,6 +13,7 @@ namespace CryptoQuest.Battle
     {
         [SerializeField] private RewardLootEvent _rewardLootEvent;
         [SerializeField] private BattleResultEventSO _battleWonEvent;
+        [SerializeField] private BattleBus _battleBus;
         private TinyMessageSubscriptionToken _wonToken;
 
         private void Awake()
@@ -38,6 +41,7 @@ namespace CryptoQuest.Battle
         {
             AdditiveGameSceneLoader.SceneUnloaded -= RewardAfterSceneUnloaded;
             if (scene != BattleSceneSO) return;
+            SceneManager.SetActiveScene(_battleBus.LastActiveScene);
             FinishPresentationAndEnableInput();
         }
 

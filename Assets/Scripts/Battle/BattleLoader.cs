@@ -11,6 +11,7 @@ using IndiGames.Core.SceneManagementSystem;
 using IndiGames.Core.SceneManagementSystem.Events.ScriptableObjects;
 using IndiGames.Core.SceneManagementSystem.ScriptableObjects;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace CryptoQuest.Battle
 {
@@ -93,6 +94,7 @@ namespace CryptoQuest.Battle
             _gameState.UpdateGameState(EGameState.Battle);
             _battleInput.DisableAllInput(); // enable battle input when battle is loaded
             _battleBus.CurrentBattlefield = party;
+            _battleBus.LastActiveScene = SceneManager.GetActiveScene();
             ShowSpiralAndLoadBattleScene();
         }
 

@@ -3749,27 +3749,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1233230308}
-  - component: {fileID: 1233230307}
+  - component: {fileID: 1233230309}
   m_Layer: 0
-  m_Name: CheckPointProvider
+  m_Name: CheckPointController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1233230307
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1233230306}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8935c988484b1f046929cd975e81e50e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _loadSceneEvent: {fileID: 11400000, guid: 932ea26428d5f4c4f8bdfd48ebc80873, type: 2}
 --- !u!4 &1233230308
 Transform:
   m_ObjectHideFlags: 0
@@ -3785,6 +3772,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 19
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1233230309
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1233230306}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7818f556668e8e14281b89fca4a8e993, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _loadSceneEvent: {fileID: 11400000, guid: 932ea26428d5f4c4f8bdfd48ebc80873, type: 2}
+  _LoadCheckPointSceneEvent: {fileID: 11400000, guid: 4ddda79c1b7339e48b18c5c7395d5430, type: 2}
 --- !u!1001 &1254590495
 PrefabInstance:
   m_ObjectHideFlags: 0

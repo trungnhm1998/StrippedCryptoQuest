@@ -9,9 +9,9 @@ namespace CryptoQuest.Map
 {
     public class SpawnManager : MonoBehaviour
     {
-        [SerializeField] private InputMediatorSO _inputMediator;
-        [SerializeField] private GameplayBus _gameplayBus;
-        [SerializeField] private HeroBehaviour _heroPrefab;
+        [SerializeField] protected InputMediatorSO _inputMediator;
+        [SerializeField] protected GameplayBus _gameplayBus;
+        [SerializeField] protected HeroBehaviour _heroPrefab;
         [SerializeField] private PathStorageSO _pathStorage;
         [SerializeField] private CharacterBehaviour.EFacingDirection _defaultFacingDirection;
 
@@ -57,7 +57,7 @@ namespace CryptoQuest.Map
             _inputMediator.EnableMapGameplayInput();
         }
 
-        private void SpawnPlayer()
+        protected virtual void SpawnPlayer()
         {
             if (_defaultSpawnPoint == null) return;
 

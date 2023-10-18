@@ -29,12 +29,13 @@ namespace CryptoQuest.Map.CheckPoint
 
         private void SaveCheckPoint()
         {
-            var checkPointProvider = ServiceProvider.GetService<ICheckPointProvider>();
-            checkPointProvider.SaveCheckPoint(transform.position);
+            var checkPointController = ServiceProvider.GetService<ICheckPointController>();
+            checkPointController.SaveCheckPoint(transform.position, _lookDirection);
         }
 
         /// <summary>
         /// This will be called when SuperTiled2Unity has finished importing the component.
+        /// 0 : Left - 1 : Right - 2 : Up - 3: Down
         /// </summary>
         /// <param name="Direction"></param>
         public void Direction(int direction)
