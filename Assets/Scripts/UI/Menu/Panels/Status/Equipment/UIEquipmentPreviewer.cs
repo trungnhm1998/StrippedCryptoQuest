@@ -63,8 +63,11 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
                 CloneHero(inspectingHero);
 
             Debug.Log($"UIEquipmentsInventory::PreviewEquipmentStats {equipment}");
+
+            var current = inspectingHero.GetComponent<AttributeSystemBehaviour>();
+            List<AttributeValue> currentValues = new(current.AttributeValues);
+
             var clonedAttributeSystem = _cloneBehaviour.GetComponent<AttributeSystemBehaviour>();
-            List<AttributeValue> currentValues = new(clonedAttributeSystem.AttributeValues);
             EquipEquipmentToMannequin(equipment, equippingSlot);
 
             CheckEquipInspect(equipment, inspectingHero);
@@ -82,8 +85,11 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
             if (inspectingHero.IsValid() == false || !equipment.IsValid()) return;
             ResetAttributesUI();
             CloneHero(inspectingHero);
+
+            var current = inspectingHero.GetComponent<AttributeSystemBehaviour>();
+            List<AttributeValue> currentValues = new(current.AttributeValues);
+
             var clonedAttributeSystem = _cloneBehaviour.GetComponent<AttributeSystemBehaviour>();
-            List<AttributeValue> currentValues = new(clonedAttributeSystem.AttributeValues);
             var clonedEquipmentsController = _cloneBehaviour.GetComponent<EquipmentsController>();
             var cloneEquipment = equipment.Clone();
             clonedEquipmentsController.Unequip(cloneEquipment);
