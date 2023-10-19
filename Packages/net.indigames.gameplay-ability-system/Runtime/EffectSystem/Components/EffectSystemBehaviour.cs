@@ -139,10 +139,10 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem.Components
             for (int i = _appliedEffects.Count - 1; i >= 0; i--)
             {
                 var effect = _appliedEffects[i];
-                if (effectSpec.CompareTo(effect.Spec) != 1) continue;
-
-                RemoveEffectAtIndex(i);
-                break;
+                if (effect.IsValid() == false || effectSpec.CompareTo(effect.Spec) == 1)
+                {
+                    RemoveEffectAtIndex(i);
+                } 
             }
 
             // after remove the effect from system we need to update the attribute modifiers

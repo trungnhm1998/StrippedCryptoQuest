@@ -30,6 +30,7 @@ namespace CryptoQuest.AbilitySystem
             var largestMagnitudeEffect = new ActiveGameplayEffect();
             foreach (var effect in AppliedEffects)
             {
+                if (effect.IsValid() == false) continue;
                 if (effect.Spec.Def != spec.Def) continue;
                 if (!largestMagnitudeEffect.IsValid())
                 {
