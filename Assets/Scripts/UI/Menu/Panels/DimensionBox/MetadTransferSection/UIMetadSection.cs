@@ -1,9 +1,7 @@
 using CryptoQuest.Events.UI.Dialogs;
 using CryptoQuest.UI.Dialogs.OneButtonDialog;
 using CryptoQuest.UI.Menu.Panels.DimensionBox.Interfaces;
-using System;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 using UnityEngine.Localization;
 using UnityEngine.UI;
@@ -16,7 +14,7 @@ namespace CryptoQuest.UI.Menu.Panels.DimensionBox.MetadTransferSection
         [SerializeField] private LocalizedString _transferMessageFail;
         [SerializeField] private Button _defaultSelection;
         [SerializeField] private List<UIWalletButtons> _walletButtons;
-        [SerializeField] private TMP_InputField _inputField;
+        [SerializeField] private InputField _inputField;
         private bool _isSelectedButton;
         private UIWalletButtons _currentWallet;
         private IMetadModel _model;
