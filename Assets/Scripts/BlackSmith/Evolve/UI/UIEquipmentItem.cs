@@ -31,7 +31,7 @@ namespace CryptoQuest.BlackSmith.Evolve.UI
 
         public void SetItemData(IEvolvableData equipment)
         {
-            ResetState();
+            ResetItemStates();
 
             _icon.sprite = equipment.Icon;
             _nameLocalize.StringReference = equipment.LocalizedName;
@@ -39,11 +39,12 @@ namespace CryptoQuest.BlackSmith.Evolve.UI
             _equipmentData = equipment;
         }
 
-        private void ResetState()
+        private void ResetItemStates()
         {
             _isTarget = false;
             _isMaterialSelected = false;
             _isTargetSelected = false;
+            _selectedTag.SetActive(false);
         }
 
         public void OnSelect(BaseEventData eventData)
