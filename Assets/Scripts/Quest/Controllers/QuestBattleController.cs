@@ -48,11 +48,11 @@ namespace CryptoQuest.Quest.Controllers
 
         private void OnBattleWon(Battlefield battlefield)
         {
-            foreach (var processingQuest in _currentlyProcessQuests)
+            for (var index = _currentlyProcessQuests.Count - 1; index > -1; index--)
             {
+                var processingQuest = _currentlyProcessQuests[index];
                 if (processingQuest.Data.BattlefieldToConquer != battlefield) continue;
                 HandleBattleWon(processingQuest);
-                break;
             }
         }
 

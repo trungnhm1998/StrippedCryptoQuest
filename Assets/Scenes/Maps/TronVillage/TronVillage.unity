@@ -2306,6 +2306,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ch001_q001_e007_losebattle_slime
       objectReference: {fileID: 0}
+    - target: {fileID: 3333037854368456845, guid: d03b5d7230b5d9e4b86645b57e5a6ae8, type: 3}
+      propertyPath: _actorSpawnSetting
+      value: 
+      objectReference: {fileID: 11400000, guid: 04e66a7df65a75247926804c47421335, type: 2}
     - target: {fileID: 8984086941309419374, guid: d03b5d7230b5d9e4b86645b57e5a6ae8, type: 3}
       propertyPath: m_RootOrder
       value: -1
@@ -2358,6 +2362,11 @@ PrefabInstance:
 --- !u!4 &2065831148 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8984086941309419374, guid: d03b5d7230b5d9e4b86645b57e5a6ae8, type: 3}
+  m_PrefabInstance: {fileID: 2065831147}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &2065831149 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5697790082156167711, guid: d03b5d7230b5d9e4b86645b57e5a6ae8, type: 3}
   m_PrefabInstance: {fileID: 2065831147}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2110691272
@@ -2828,9 +2837,21 @@ PrefabInstance:
     m_TransformParent: {fileID: 1285507405898280325}
     m_Modifications:
     - target: {fileID: 3872213669153757677, guid: 4a4d43b94510737469334412be2a121b, type: 3}
+      propertyPath: m_SceneBindings.Array.size
+      value: 42
+      objectReference: {fileID: 0}
+    - target: {fileID: 3872213669153757677, guid: 4a4d43b94510737469334412be2a121b, type: 3}
+      propertyPath: m_SceneBindings.Array.data[41].key
+      value: 
+      objectReference: {fileID: 6320013288798491428, guid: 518fc4a1e6bcdfc41bf8b2ccbaebc3ad, type: 2}
+    - target: {fileID: 3872213669153757677, guid: 4a4d43b94510737469334412be2a121b, type: 3}
       propertyPath: m_SceneBindings.Array.data[30].value
       value: 
       objectReference: {fileID: 151856480}
+    - target: {fileID: 3872213669153757677, guid: 4a4d43b94510737469334412be2a121b, type: 3}
+      propertyPath: m_SceneBindings.Array.data[41].value
+      value: 
+      objectReference: {fileID: 2065831149}
     - target: {fileID: 4083590554618746476, guid: 4a4d43b94510737469334412be2a121b, type: 3}
       propertyPath: m_Name
       value: cs_ch001_q001_e005_lostbattle_slime

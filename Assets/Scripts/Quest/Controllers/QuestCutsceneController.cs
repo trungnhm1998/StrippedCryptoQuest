@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using CryptoQuest.Events;
+using CryptoQuest.Quest.Actions;
 using CryptoQuest.Quest.Authoring;
 using CryptoQuest.Quest.Events;
 using CryptoQuest.System.CutsceneSystem;
@@ -10,6 +11,7 @@ namespace CryptoQuest.Quest.Controllers
 {
     public class QuestCutsceneController : BaseQuestController
     {
+        public static Action<NextAction> OnTriggerNextAction;
         public static Action<YarnQuestDef> RegisterYarnQuestDef;
         [SerializeField] private QuestEventChannelSO _giveQuestEventChannelSo;
         [SerializeField] private QuestEventChannelSO _triggerQuestEventChannelSo;
@@ -20,11 +22,18 @@ namespace CryptoQuest.Quest.Controllers
         private void OnEnable()
         {
             RegisterYarnQuestDef += RegisterYarnQuest;
+            OnTriggerNextAction += TriggerNextAction;
         }
 
         private void OnDisable()
         {
             RegisterYarnQuestDef -= RegisterYarnQuest;
+            OnTriggerNextAction -= TriggerNextAction;
+        }
+
+        private void TriggerNextAction(NextAction nextAction)
+        {
+            StartCoroutine(nextAction.Execute());
         }
 
         public void GiveBranchingQuest(QuestInfo questInfo)
