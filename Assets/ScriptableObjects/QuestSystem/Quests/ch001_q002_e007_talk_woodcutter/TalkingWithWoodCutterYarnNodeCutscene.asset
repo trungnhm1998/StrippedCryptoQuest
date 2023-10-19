@@ -9,9 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5e21235983e40424c9fd2143c265c07c, type: 3}
-  m_Name: SaveSystem
+  m_Script: {fileID: 11500000, guid: 8cc06c6b026e4c9a919679e934209b3d, type: 3}
+  m_Name: TalkingWithWoodCutterYarnNodeCutscene
   m_EditorClassIdentifier: 
-  _saveManagerSO: {fileID: 11400000, guid: f63c97050d32e154193efb99f2cf6862, type: 2}
-  _saveData:
-    playerName: Nigga
+  YarnQuestDef:
+    YarnNode: CompletedTalkWithWoodCutter
+    PossibleOutcomeQuests:
+    - {fileID: 11400000, guid: 13d19ca47be8c324590e113b6a7dfdf0, type: 2}

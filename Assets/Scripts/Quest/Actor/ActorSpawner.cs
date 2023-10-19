@@ -65,7 +65,7 @@ namespace CryptoQuest.Quest.Actor
         {
             if (!_spawnPoint) return;
 
-            Destroy(gameObject);
+            Destroy(gameObject, 1);
         }
 
         private void Spawn(bool isQuestCompleted)

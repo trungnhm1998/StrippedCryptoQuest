@@ -24,18 +24,14 @@ namespace CryptoQuest.Quest.Actor.Categories
 
     public class ExecuteActionActorInfo : ActorInfo<ExecuteActionActorSo>
     {
-        public ExecuteActionActorInfo(ExecuteActionActorSo actorSo) : base(actorSo)
-        {
-        }
+        public ExecuteActionActorInfo(ExecuteActionActorSo actorSo) : base(actorSo) { }
 
-        public ExecuteActionActorInfo()
-        {
-        }
+        public ExecuteActionActorInfo() { }
 
         public override IEnumerator Spawn(Transform parent)
         {
             AsyncOperationHandle<GameObject> handle =
-                Data.Prefab.InstantiateAsync(parent.position, Quaternion.identity, parent);
+                Data.Prefab.InstantiateAsync(parent.position, parent.rotation, parent);
 
             yield return handle;
 

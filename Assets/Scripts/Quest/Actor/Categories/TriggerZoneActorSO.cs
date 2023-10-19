@@ -20,7 +20,7 @@ namespace CryptoQuest.Quest.Actor.Categories
         public override IEnumerator Spawn(Transform parent)
         {
             AsyncOperationHandle<GameObject> handle =
-                Data.Prefab.InstantiateAsync(parent.position, Quaternion.identity, parent);
+                Data.Prefab.InstantiateAsync(parent.position, parent.rotation, parent);
 
             yield return handle;
 
