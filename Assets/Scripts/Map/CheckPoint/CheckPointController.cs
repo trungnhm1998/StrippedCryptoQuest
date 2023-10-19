@@ -31,6 +31,7 @@ namespace CryptoQuest.Map.CheckPoint
         private bool _isBackToCheckPoint = false;
 
         [SerializeField] private LoadSceneEventChannelSO _loadSceneEvent;
+        [SerializeField] private SceneScriptableObject _defaultCheckpoint;
 
         private void Awake()
         {
@@ -42,13 +43,15 @@ namespace CryptoQuest.Map.CheckPoint
             _loadSceneEvent.LoadingRequested -= SaveNewLoadedSceneForCheckpoint;
         }
 
-#if UNITY_EDITOR
         private void Start()
         {
+#if UNITY_EDITOR
             var editorColdBoot = FindObjectOfType<EditorColdBoot>();
             _currentScene = editorColdBoot.ThisScene;
-        }
 #endif
+            _lastCheckPointScene = _defaultCheckpoint;
+        }
+
         private void SaveNewLoadedSceneForCheckpoint(SceneScriptableObject nextScene)
         {
             _currentScene = nextScene;
