@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using CryptoQuest.Gameplay.Loot;
-using CryptoQuest.Gameplay.Reward.ScriptableObjects;
+using CryptoQuest.Gameplay.Reward.Events;
 using CryptoQuest.Quest.Authoring;
 using CryptoQuest.Quest.Events;
 using UnityEngine;
@@ -21,7 +21,7 @@ namespace CryptoQuest.Quest.Components
         private QuestEventChannelSO _triggerQuestEventChannel;
 
         [SerializeField] private QuestEventChannelSO _giveQuestEventChannel;
-        [SerializeField] private RewardSO _rewardEventChannel;
+        [SerializeField] private RewardLootEvent _rewardEventChannel;
 
         [field: SerializeReference, HideInInspector]
         public List<QuestInfo> InProgressQuest { get; private set; } = new();
@@ -57,7 +57,7 @@ namespace CryptoQuest.Quest.Components
         public void TriggerQuest(QuestSO questData)
         {
             if (IsQuestTriggered(questData)) return;
-            
+
             foreach (var progressQuestInfo in InProgressQuest)
             {
                 if (progressQuestInfo.BaseData != questData) continue;
@@ -89,9 +89,9 @@ namespace CryptoQuest.Quest.Components
         }
 
 
-        private void RewardReceived(LootInfo[] loots)
+        private void RewardReceived(List<LootInfo> loots)
         {
-            _rewardEventChannel.RewardRaiseEvent(loots);
+            _rewardEventChannel.EventRaised(loots);
             _currentQuestData.OnRewardReceived -= RewardReceived;
         }
 

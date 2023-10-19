@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using CryptoQuest.Gameplay.Loot;
 using CryptoQuest.Quest.Components;
@@ -31,10 +32,7 @@ namespace CryptoQuest.Quest.Authoring
         }
 
         public override QuestSO BaseData => Data;
-
-        protected QuestInfo()
-        {
-        }
+        protected QuestInfo() { }
 
         public override void TriggerQuest()
         {
@@ -61,10 +59,10 @@ namespace CryptoQuest.Quest.Authoring
             Debug.Log($"QuestSystem::Give Quest: <color=green>[{Data.QuestName}] - [{Data.EventName}]</color>");
         }
 
-        private LootInfo[] GetRewards()
+        private List<LootInfo> GetRewards()
         {
             QuestReward[] rewards = Data.Rewards;
-            return rewards.Select(reward => reward.CreateReward()).ToArray();
+            return rewards.Select(reward => reward.CreateReward()).ToList();
         }
 
         public override bool IsValid() => Data != null;

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using CryptoQuest.Quest.Authoring;
 using CryptoQuest.Quest.Components;
 using UnityEditor;
@@ -15,47 +16,32 @@ namespace CryptoQuestEditor.System.QuestSystem
         [SerializeField] private VisualTreeAsset _uxml;
         private QuestManager Target => target as QuestManager;
 
-        private ListView _inprogressScrollView;
-        private ListView _completeScrollView;
-
+        private VisualElement _root;
 
         public override VisualElement CreateInspectorGUI()
         {
-            var root = new VisualElement();
+            _root = new VisualElement();
+            InspectorElement.FillDefaultInspector(_root, serializedObject, this);
+            _uxml.CloneTree(_root);
 
-            InspectorElement.FillDefaultInspector(root, serializedObject, this);
+            InitializeListView("inprogress-quest", Target.InProgressQuest);
+            InitializeListView("complete-quest", Target.CompletedQuests);
 
-            _uxml.CloneTree(root);
-            _inprogressScrollView = root.Q<ListView>("inprogress-quest");
-            _completeScrollView = root.Q<ListView>("complete-quest");
-            ReloadData();
-
-            return root;
+            return _root;
         }
 
-
-        private void ReloadData()
+        private void InitializeListView(string listViewName, List<QuestInfo> targetCompletedQuests)
         {
-            _inprogressScrollView.makeItem = () => new Label();
-            _inprogressScrollView.bindItem = (element, index) =>
+            ListView listView = _root.Q<ListView>(listViewName);
+            listView.makeItem = () => new Label();
+            listView.bindItem = (element, index) =>
             {
                 var label = element as Label;
-                label.text = Target.InProgressQuest[index].BaseData.name;
+                label.text = targetCompletedQuests.ElementAt(index).BaseData.name;
             };
-            _inprogressScrollView.itemsSource = Target.InProgressQuest;
-            _inprogressScrollView.fixedItemHeight = 20;
-            _inprogressScrollView.selectionType = SelectionType.None;
-
-            _completeScrollView.makeItem = () => new Label();
-            _completeScrollView.bindItem = (element, index) =>
-            {
-                var label = element as Label;
-                label.text = Target.CompletedQuests[index].BaseData.name;
-            };
-
-            _completeScrollView.itemsSource = Target.CompletedQuests;
-            _completeScrollView.fixedItemHeight = 20;
-            _completeScrollView.selectionType = SelectionType.None;
+            listView.itemsSource = targetCompletedQuests;
+            listView.fixedItemHeight = 20;
+            listView.selectionType = SelectionType.None;
         }
     }
 }

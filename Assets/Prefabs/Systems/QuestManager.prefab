@@ -51,7 +51,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _triggerQuestEventChannel: {fileID: 11400000, guid: fdefe5ff6c97c9946a9e874eb074f93f, type: 2}
   _giveQuestEventChannel: {fileID: 11400000, guid: da57ae63ba992064e8d3ec26238fc35a, type: 2}
-  _rewardEventChannel: {fileID: 11400000, guid: 0c66ec2affb834745a47ac989a1fbcc3, type: 2}
+  _rewardEventChannel: {fileID: 11400000, guid: ccc993e9c220b754ba79858ef25648d4, type: 2}
   <InProgressQuest>k__BackingField: []
   <CompletedQuests>k__BackingField: []
   references:
@@ -81,6 +81,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 877fb76b4ecc4d899a98ba2673feb9a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _giveQuestEventChannelSo: {fileID: 11400000, guid: da57ae63ba992064e8d3ec26238fc35a, type: 2}
+  _triggerQuestEventChannelSo: {fileID: 11400000, guid: fdefe5ff6c97c9946a9e874eb074f93f, type: 2}
+  _dialogueOptionQuestEventChannelSo: {fileID: 11400000, guid: d1320590a1ab68e4389435932acb3474, type: 2}
 --- !u!114 &5276658975124613192
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -93,7 +96,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 775a85e79ca74f9580e7c6c11f17eb5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _battleCompletedEvent: {fileID: 11400000, guid: e12642aa0785b734aa0d70cd555f1f69, type: 2}
+  _battleWonEvent: {fileID: 11400000, guid: e12642aa0785b734aa0d70cd555f1f69, type: 2}
+  _battleLostEvent: {fileID: 11400000, guid: bb7a81f4387c7f04fb566fc033533c3c, type: 2}
   _triggerQuestEventChannel: {fileID: 11400000, guid: fdefe5ff6c97c9946a9e874eb074f93f, type: 2}
   _giveQuestEventChannel: {fileID: 11400000, guid: da57ae63ba992064e8d3ec26238fc35a, type: 2}
 --- !u!114 &1452079691479674896
@@ -125,3 +129,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _questEventChannelSo: {fileID: 11400000, guid: fdefe5ff6c97c9946a9e874eb074f93f, type: 2}
   _dialogCompletedEventChannelSo: {fileID: 11400000, guid: 3443d2dcf941d6f4fb30303a52302ab5, type: 2}
+  _questCompletedEventChannelSo: {fileID: 11400000, guid: d1320590a1ab68e4389435932acb3474, type: 2}

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using CryptoQuest.Gameplay.Loot;
 using CryptoQuest.Quest.Actions;
 using CryptoQuest.Quest.Components;
@@ -23,7 +24,7 @@ namespace CryptoQuest.Quest.Authoring
     public abstract class QuestSO : SerializableScriptableObject
     {
         public Action OnQuestCompleted;
-        public Action<LootInfo[]> OnRewardReceived;
+        public Action<List<LootInfo>> OnRewardReceived;
         [field: SerializeField] public string QuestID { get; private set; }
         [field: SerializeField] public string QuestName { get; private set; }
         [field: SerializeField] public string EventID { get; private set; }
