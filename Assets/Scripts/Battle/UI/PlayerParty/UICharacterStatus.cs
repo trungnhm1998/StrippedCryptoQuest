@@ -20,17 +20,10 @@ namespace CryptoQuest.Battle.UI.PlayerParty
         [SerializeField] private UICharacterBattleInfo _characterUI;
         [SerializeField] private Transform _statusContainer;
         [SerializeField] private UIStatusIcon _statusIconPrefab;
-        [SerializeField] private TagScriptableObject[] _disallowedMultipleTags;
 
         private IObjectPool<UIStatusIcon> _statusIconPool;
 
-        private struct Map
-        {
-            public TagScriptableObject Tag;
-            public UIStatusIcon Icon;
-        }
-
-        private readonly List<Map> _statusIcons = new List<Map>();
+        private readonly Dictionary<TagScriptableObject, UIStatusIcon> _statusIcons = new();
         private TagSystemBehaviour CharacterTagSystem => _characterUI.Hero.AbilitySystem.TagSystem;
 
         private void OnValidate()
@@ -38,10 +31,8 @@ namespace CryptoQuest.Battle.UI.PlayerParty
             _characterUI = GetComponent<UICharacterBattleInfo>();
         }
 
-        private void Awake()
-        {
+        private void Awake() =>
             _statusIconPool ??= new ObjectPool<UIStatusIcon>(OnCreate, OnGet, OnRelease, OnDestroyIcon);
-        }
 
         private void OnEnable()
         {
@@ -60,16 +51,11 @@ namespace CryptoQuest.Battle.UI.PlayerParty
         {
             foreach (var baseTag in baseTags)
             {
+                if (_statusIcons.ContainsKey(baseTag)) continue;
                 if (!TagAssetProvider.TryGetTagAsset(baseTag, out var tagAsset)) continue;
-                if (_disallowedMultipleTags.Contains(baseTag) && _statusIcons.Any(map => map.Tag == baseTag))
-                    continue;
                 var statusIcon = _statusIconPool.Get();
                 statusIcon.SetIcon(tagAsset.Icon);
-                _statusIcons.Add(new Map()
-                {
-                    Icon = statusIcon,
-                    Tag = baseTag
-                });
+                _statusIcons.TryAdd(baseTag, statusIcon);
             }
         }
 
@@ -77,26 +63,15 @@ namespace CryptoQuest.Battle.UI.PlayerParty
         {
             foreach (var baseTag in baseTags)
             {
-                for (int i = _statusIcons.Count - 1; i >= 0; i--)
-                {
-                    var map = _statusIcons[i];
-                    if (map.Tag != baseTag) continue;
-                    // prevent remove tag if it's disallowed multiple tag and there's another tag with same base tag
-                    if (_disallowedMultipleTags.Contains(baseTag) && CharacterTagSystem.HasTag(baseTag)) continue;
-                    map.Icon.ReleaseToPool();
-                    _statusIcons.RemoveAt(i);
-                    return;
-                }
+                if (!_statusIcons.TryGetValue(baseTag, out var icon) || CharacterTagSystem.HasTag(baseTag)) continue;
+                icon.ReleaseToPool();
+                _statusIcons.Remove(baseTag);
             }
         }
 
         private void ReleaseAllIcon()
         {
-            foreach (var map in _statusIcons)
-            {
-                map.Icon.ReleaseToPool();
-            }
-
+            foreach (var icon in _statusIcons.Values) icon.ReleaseToPool();
             _statusIcons.Clear();
         }
 
@@ -107,17 +82,10 @@ namespace CryptoQuest.Battle.UI.PlayerParty
             icon.gameObject.SetActive(true);
         }
 
-        private UIStatusIcon OnCreate()
-            => Instantiate<UIStatusIcon>(_statusIconPrefab, _statusContainer);
+        private UIStatusIcon OnCreate() => Instantiate(_statusIconPrefab, _statusContainer);
 
-        private void OnRelease(UIStatusIcon icon)
-        {
-            icon.gameObject.SetActive(false);
-        }
+        private void OnRelease(UIStatusIcon icon) => icon.gameObject.SetActive(false);
 
-        private void OnDestroyIcon(UIStatusIcon icon)
-        {
-            Destroy(icon.gameObject);
-        }
+        private void OnDestroyIcon(UIStatusIcon icon) => Destroy(icon.gameObject);
     }
 }
