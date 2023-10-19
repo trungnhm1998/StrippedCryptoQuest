@@ -1,18 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using CryptoQuest.AbilitySystem;
 using CryptoQuest.AbilitySystem.Attributes;
-using CryptoQuest.Battle.Character;
 using CryptoQuest.Battle.Events;
-using IndiGames.GameplayAbilitySystem.AttributeSystem;
-using IndiGames.GameplayAbilitySystem.AttributeSystem.Components;
 using IndiGames.GameplayAbilitySystem.TagSystem.ScriptableObjects;
 using TinyMessenger;
 using UnityEngine;
 using UnityEngine.Localization;
 using UnityEngine.Localization.SmartFormat.PersistentVariables;
-using CoreAttribute = IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects.AttributeScriptableObject;
 
 namespace CryptoQuest.Battle.UI.Logs
 {
@@ -28,16 +23,19 @@ namespace CryptoQuest.Battle.UI.Logs
             public AttributeScriptableObject Attribute;
         }
 
-        [SerializeField] private LocalizedString _buffMessage;
-        [SerializeField] private LocalizedString _debuffMessage;
+        [SerializeField] private StatChangedLogger _statChangedLogger;
+
+        [SerializeField] private LocalizedString _applyFailMessage;
         [SerializeField] private LocalizedString _buffWearOffMessage;
         [SerializeField] private LocalizedString _debuffWearOffMessage;
         [SerializeField] private TagAttributeMapping[] _tagAttributeMappings;
 
-        private TinyMessageSubscriptionToken _effectAffectingMessage;
         private TinyMessageSubscriptionToken _effectAdded;
         private TinyMessageSubscriptionToken _effectRemoved;
         private readonly Dictionary<TagScriptableObject, AttributeScriptableObject> _tagAttributeMap = new();
+
+        private bool _isJustAddEffect;
+        private Components.Character _lastCharacterGotEffect;
 
         private void Awake()
         {
@@ -48,25 +46,48 @@ namespace CryptoQuest.Battle.UI.Logs
         private void OnEnable()
         {
             _effectRemoved = BattleEventBus.SubscribeEvent<EffectRemovedEvent>(LogOnBuffRemoved);
+            _effectAdded = BattleEventBus.SubscribeEvent<EffectAddedEvent>(LogOnBuffAdded);
+            _statChangedLogger.StatsChangedWithSameValue += LogApplyFail;
+            _statChangedLogger.StatsChanged += ResetJustAddEffectFlag;
         }
 
         private void OnDisable()
         {
             BattleEventBus.UnsubscribeEvent(_effectRemoved);
+            BattleEventBus.UnsubscribeEvent(_effectAdded);
+            _statChangedLogger.StatsChangedWithSameValue -= LogApplyFail;
+            _statChangedLogger.StatsChanged -= ResetJustAddEffectFlag;
         }
 
         private void LogOnBuffAdded(EffectAddedEvent ctx)
         {
-            if (IsBuffOrDebuff(ctx, out var tag, out var isBuff)) return;
-            // TODO: #1930 Listen to effect added event and check to show log 
-            // if the buff/debuff is lower and not gonna be applied  
-            var message = isBuff ? _buffMessage : _debuffMessage;
-            LogMessage(ctx, message, tag);
+            if (!IsBuffOrDebuff(ctx, out var tag, out var isBuff)) return;
+            _isJustAddEffect = true;
+            _lastCharacterGotEffect = ctx.Character;
+        }
+
+        private void LogApplyFail(Components.Character character, LocalizedString attributeName)
+        {
+            /// Since effect applied after tag is granted so if there's changed event
+            /// it'll be called after LogOnBuffAdded and LogApplyFail will only be raised
+            /// when there is a buff and the stats value isnt changed
+            if (!_isJustAddEffect || character != _lastCharacterGotEffect) return;
+            _isJustAddEffect = false;
+
+            _applyFailMessage.Add(Constants.ATTRIBUTE_NAME, attributeName);
+            Logger.AppendLog(_applyFailMessage);
+        }
+
+        private void ResetJustAddEffectFlag(Components.Character character, LocalizedString attributeName)
+        {
+            /// When stat changed successful, reset the just added flag
+            if (character != _lastCharacterGotEffect) return; 
+            _isJustAddEffect = false;
         }
 
         private void LogOnBuffRemoved(EffectRemovedEvent ctx)
         {
-            if (IsBuffOrDebuff(ctx, out var tag, out var isBuff)) return;
+            if (!IsBuffOrDebuff(ctx, out var tag, out var isBuff)) return;
 
             var message = isBuff ? _buffWearOffMessage : _debuffWearOffMessage;
             LogMessage(ctx, message, tag);
@@ -99,7 +120,7 @@ namespace CryptoQuest.Battle.UI.Logs
             tag = ctx.Tag;
             isBuff = tag.IsChildOf(TagsDef.Buff);
             var isDebuff = tag.IsChildOf(TagsDef.DeBuff);
-            return isBuff == false && isDebuff == false;
+            return isBuff || isDebuff;
         }
     }
 }

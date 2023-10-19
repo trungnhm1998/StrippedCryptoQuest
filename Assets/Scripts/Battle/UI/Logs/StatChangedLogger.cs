@@ -7,13 +7,15 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Localization;
 using System.Linq;
-using CryptoQuest.Battle.Components;
-using CryptoQuest.Battle.UI.Logs;
+using System;
 
 namespace CryptoQuest.Battle.UI.Logs
 {
     public class StatChangedLogger : MonoBehaviour
     {
+        public event Action<Components.Character, LocalizedString> StatsChangedWithSameValue;
+        public event Action<Components.Character, LocalizedString> StatsChanged;
+
         [SerializeField] private UnityEvent<LocalizedString> _presentLoggerEvent;
 
         [SerializeField] private LocalizedString _increasedLog;
@@ -47,18 +49,24 @@ namespace CryptoQuest.Battle.UI.Logs
             if (!_attributesNameDict.TryGetValue(changedAttribute.GetInstanceID(), out var attributeName))
                 return;
             
-            if (Mathf.Approximately(oldValue.CurrentValue, newValue.CurrentValue)) return;
+            if (!attributeSystem.TryGetComponent(out Components.Character character)) return;
+
+            if (Mathf.Approximately(oldValue.CurrentValue, newValue.CurrentValue))
+            {
+                StatsChangedWithSameValue?.Invoke(character, attributeName);
+                return;
+            }
             var isJustInit = oldValue.CurrentValue == 0;
             if (isJustInit) return;
             
             var isIncrease = oldValue.CurrentValue < newValue.CurrentValue;
             var log = isIncrease ? _increasedLog : _decreasedLog;
-            if (!attributeSystem.TryGetComponent(out Components.Character character)) return;
             
             log.Add(Constants.CHARACTER_NAME, character.LocalizedName);
             log.Add(Constants.ATTRIBUTE_NAME, attributeName);
 
             _presentLoggerEvent.Invoke(log);            
+            StatsChanged?.Invoke(character, attributeName);
         }
     }
 }
