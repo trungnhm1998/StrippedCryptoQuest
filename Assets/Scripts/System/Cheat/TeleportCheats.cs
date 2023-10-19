@@ -9,6 +9,7 @@ using IndiGames.Core.SceneManagementSystem.ScriptableObjects;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
+using UnityEngine.SceneManagement;
 
 namespace CryptoQuest.System.Cheat
 {
@@ -67,6 +68,12 @@ namespace CryptoQuest.System.Cheat
                 Debug.LogWarning($"Scene {sceneName} not found");
                 return;
             }
+
+            if(SceneManager.GetSceneByName(sceneName).isLoaded)
+            {
+                Debug.LogWarning($"Scene {sceneName} is already loaded");
+                return;
+            }    
 
             var handle = Addressables.LoadAssetAsync<SceneScriptableObject>(guid);
             handle.Completed += LoadScene;

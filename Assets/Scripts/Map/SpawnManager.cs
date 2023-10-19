@@ -25,6 +25,7 @@ namespace CryptoQuest.Map
         {
             _mapEntrances = FindObjectsOfType<GoFrom>();
             _defaultSpawnPoint = transform.GetChild(0);
+            OnAwake();
         }
 
         private Transform GetSpawnPoint()
@@ -71,5 +72,7 @@ namespace CryptoQuest.Map
             _gameplayBus.Hero = heroInstance;
             _gameplayBus.RaiseHeroSpawnedEvent();
         }
+
+        protected virtual void OnAwake() { }
     }
 }
