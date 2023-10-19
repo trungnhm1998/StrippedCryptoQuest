@@ -159,6 +159,7 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem.Components
             UpdateAttributeSystemModifiers();
             UpdateEffects();
             RemoveExpiredEffects();
+            _attributeSystem.UpdateAttributeValues();
         }
 
         /// <summary>
