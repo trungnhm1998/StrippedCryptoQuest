@@ -19,6 +19,9 @@ namespace CryptoQuest.UI.Menu.Panels.DimensionBox.MetadTransferSection
         private UIWalletButtons _currentWallet;
         private IMetadModel _model;
         private UIOneButtonDialog _resultDialog;
+        private float _ingameMetad;
+        private float _webMetad;
+        private bool _isIngameWallet;
 
         private void Awake()
         {
@@ -82,6 +85,8 @@ namespace CryptoQuest.UI.Menu.Panels.DimensionBox.MetadTransferSection
             _inputField.text = "0";
             _isSelectedButton = false;
             _defaultSelection.Select();
+            _ingameMetad = _model.GetIngameMetad();
+            _webMetad = _model.GetWebMetad();
         }
 
         public override void SendItems()
@@ -118,6 +123,7 @@ namespace CryptoQuest.UI.Menu.Panels.DimensionBox.MetadTransferSection
             _isSelectedButton = true;
             _inputField.Select();
             _currentWallet.SetHighlight(true);
+            _isIngameWallet = _currentWallet.GetComponent<UIGameWalletButtons>() ? true : false;
         }
 
         private void SetActiveAllButton(bool isActive)
@@ -154,6 +160,20 @@ namespace CryptoQuest.UI.Menu.Panels.DimensionBox.MetadTransferSection
         {
             _resultDialog.Hide();
             ResetTransfer();
-        }    
+        }
+
+        public void ValidateInputField()
+        {
+            if (string.IsNullOrEmpty(_inputField.text)) return;
+
+            float quantityInput = float.Parse(_inputField.text);
+            if (_isIngameWallet && quantityInput > _ingameMetad)
+                _inputField.text = _ingameMetad.ToString();
+
+            if (!_isIngameWallet && quantityInput > _webMetad)
+                _inputField.text = _webMetad.ToString();
+                
+            _inputField.text = _inputField.text[0].ToString() == "0" ? _inputField.text = _inputField.text.Remove(0, 1) : _inputField.text;
+        }
     }
 }
