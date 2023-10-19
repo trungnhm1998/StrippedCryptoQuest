@@ -18,7 +18,7 @@ namespace CryptoQuest.Quest.Actor
         private void OnEnable()
         {
             _onSceneLoadedEventChannel.EventRaised += ConfigureActors;
-            
+
             if (_actorSpawnSetting) _actorSpawnSetting.OnConfigure += Spawn;
             if (_actorDeSpawnSetting) _actorDeSpawnSetting.OnConfigure += DeSpawn;
         }
@@ -26,7 +26,7 @@ namespace CryptoQuest.Quest.Actor
         private void OnDisable()
         {
             _onSceneLoadedEventChannel.EventRaised -= ConfigureActors;
-            
+
             //TODO: these codes smell, need refactor   
             if (_actorSpawnSetting) _actorSpawnSetting.QuestToTrack.OnQuestCompleted -= ActivateSpawnActor;
             if (_actorDeSpawnSetting) _actorDeSpawnSetting.QuestToTrack.OnQuestCompleted -= ActivateDeSpawnActor;
@@ -65,13 +65,13 @@ namespace CryptoQuest.Quest.Actor
         {
             if (!_spawnPoint) return;
 
-            Destroy(transform.gameObject);
+            Destroy(gameObject);
         }
 
         private void Spawn(bool isQuestCompleted)
         {
             _actorSpawnSetting.OnConfigure -= Spawn;
-            
+
             if (!isQuestCompleted)
             {
                 _actorSpawnSetting.QuestToTrack.OnQuestCompleted += ActivateSpawnActor;
@@ -84,7 +84,7 @@ namespace CryptoQuest.Quest.Actor
         private void DeSpawn(bool isQuestCompleted)
         {
             _actorDeSpawnSetting.OnConfigure -= DeSpawn;
-            
+
             if (!isQuestCompleted)
             {
                 InitSpawnSetting();
