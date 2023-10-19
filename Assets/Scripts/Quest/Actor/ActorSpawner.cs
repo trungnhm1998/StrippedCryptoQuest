@@ -57,7 +57,6 @@ namespace CryptoQuest.Quest.Actor
             if (!_spawnPoint) return;
 
             ActorInfo actor = _actorDef.CreateActor();
-
             StartCoroutine(actor.Spawn(_spawnPoint));
         }
 
@@ -65,7 +64,7 @@ namespace CryptoQuest.Quest.Actor
         {
             if (!_spawnPoint) return;
 
-            Destroy(gameObject, 1);
+            Destroy(gameObject);
         }
 
         private void Spawn(bool isQuestCompleted)
