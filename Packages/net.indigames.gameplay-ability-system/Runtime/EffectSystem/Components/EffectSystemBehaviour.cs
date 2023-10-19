@@ -22,7 +22,7 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem.Components
         /// Currently there are no restrictions on add a new effect to the system except
         /// when using <see cref="ApplyEffectToSelf"/> which will check <see cref="GameplayEffectSpec.CanApply"/>
         /// </summary>
-        [SerializeReference] private List<ActiveGameplayEffect> _appliedEffects = new();
+        private readonly List<ActiveGameplayEffect> _appliedEffects = new();
 
         public IReadOnlyList<ActiveGameplayEffect> AppliedEffects => _appliedEffects;
         private AbilitySystemBehaviour _owner;
