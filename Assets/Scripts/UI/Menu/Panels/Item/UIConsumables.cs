@@ -81,7 +81,7 @@ namespace CryptoQuest.UI.Menu.Panels.Item
             _content.SetActive(true);
             CleanUpScrollView();
             RenderConsumables();
-            UpdateSelectingItemIfLastWereNull();
+            UpdateSelectingItem();
             InspectCurrentItem();
         }
 
@@ -112,11 +112,19 @@ namespace CryptoQuest.UI.Menu.Panels.Item
 
         private void UpdateSelectingItemIfLastWereNull()
         {
-            if (_currentInspectingItem == null && _uiConsumables.Count > 0)
+            if (_currentInspectingItem == null)
             {
-                _currentInspectingItem = _uiConsumables[0];
+                UpdateSelectingItem();
             }
         }
+
+        private void UpdateSelectingItem()
+        {
+            if(_uiConsumables.Count > 0)
+            {
+                _currentInspectingItem = _uiConsumables[0];
+            }    
+        }    
 
         private void InspectCurrentItem()
         {

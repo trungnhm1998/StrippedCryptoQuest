@@ -111,8 +111,14 @@ namespace CryptoQuest.UI.Menu.Panels.Item
 
         public void Inspect()
         {
-            _button.Select();
+            StartCoroutine(CoSelectButton());
             OnInspectingItem();
         }
+
+        IEnumerator CoSelectButton()
+        {
+            yield return null;
+            _button.Select();
+        }    
     }
 }
