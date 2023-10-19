@@ -1,4 +1,5 @@
 ﻿using System;
+using CryptoQuest.AbilitySystem.Attributes;
 using CryptoQuest.AbilitySystem.Executions;
 using UnityEngine;
 using UnityEngine.Localization;
@@ -28,16 +29,18 @@ namespace CryptoQuest.Battle.UI.Logs
             // Escape early here because damage > 0 equal healing
             if (damage > 0) return;
 
-            if (damage < 0)
+            if (Mathf.Approximately(damage, 0f))
+                localizedMessage = _noDamageMessage;
+            else
             {
+                character.AttributeSystem.TryGetAttributeValue(AttributeSets.Health, out var hp);
+                damage = hp.CurrentValue - Math.Abs(damage) < 0 ? hp.CurrentValue : Math.Abs(damage);
                 localizedMessage = _damageMessage;
                 localizedMessage.Add(Constants.DAMAGE_NUMBER, new FloatVariable()
                 {
                     Value = Math.Abs(damage)
                 });
             }
-            else
-                localizedMessage = _noDamageMessage;
 
             localizedMessage.Add(Constants.CHARACTER_NAME, new StringVariable()
             {
