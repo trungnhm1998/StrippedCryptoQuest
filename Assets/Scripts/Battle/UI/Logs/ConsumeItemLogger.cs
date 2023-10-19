@@ -30,7 +30,7 @@ namespace CryptoQuest.Battle.UI.Logs
             castMessage.Add(Constants.CHARACTER_NAME, consumeEvent.Character.LocalizedName);
             castMessage.Add(Constants.ITEM_NAME, consumeEvent.ItemInfo.Data.DisplayName);
             castMessage.Add(Constants.CHARACTER_TARGET_NAME, consumeEvent.Target.LocalizedName);
-            Logger.AppendLog(castMessage);
+            Logger.QueueLog(castMessage);
         }
 
         private void LogConsumeItemFail(ConsumeItemFailEvent eventObject)

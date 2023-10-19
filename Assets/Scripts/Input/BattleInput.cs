@@ -1,5 +1,3 @@
-using CryptoQuest.Core;
-using IndiGames.Core.Common;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;

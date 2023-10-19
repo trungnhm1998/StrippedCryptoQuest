@@ -37,11 +37,13 @@ namespace CryptoQuest.Battle
         #endregion
 
         #region State management
+        public IState HandleActions { get; private set; } // I want this state to have it owns state-state
 
         private IState _currentState;
 
         private void Awake()
         {
+            HandleActions = new ExecuteCharactersActions();
             SceneLoadedEvent.EventRaised += GotoLoadingState;
         }
 

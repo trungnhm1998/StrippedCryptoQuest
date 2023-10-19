@@ -47,7 +47,7 @@ namespace CryptoQuest.Battle.UI.Logs
                 Value = character.DisplayName
             });
 
-            Logger.AppendLog(localizedMessage);
+            Logger.QueueLog(localizedMessage);
         }
     }
 }

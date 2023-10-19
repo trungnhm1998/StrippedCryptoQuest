@@ -1,8 +1,8 @@
+using CryptoQuest.Battle.Events;
+using TinyMessenger;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Localization;
-using CryptoQuest.AbilitySystem.Abilities;
-using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
 
 namespace CryptoQuest.Battle.UI.Logs
 {
@@ -10,39 +10,34 @@ namespace CryptoQuest.Battle.UI.Logs
     {
         [SerializeField] private UnityEvent<LocalizedString> _presentLoggerEvent;
 
-        [SerializeField] private RetreatAbility _retreatAbility;
         [SerializeField] private LocalizedString _retreatSuccessLog;
         [SerializeField] private LocalizedString _retreatFailLog;
+        private TinyMessageSubscriptionToken _retreatSucceedEvent;
+        private TinyMessageSubscriptionToken _retreatFailedEvent;
 
         private void OnEnable()
         {
-            _retreatAbility.RetreatedEvent += OnRetreatSuccess;
-            _retreatAbility.RetreatFailedEvent += OnRetreatFail;
+            _retreatSucceedEvent = BattleEventBus.SubscribeEvent<RetreatSucceedEvent>(OnRetreatSucceed);
+            _retreatFailedEvent = BattleEventBus.SubscribeEvent<RetreatFailedEvent>(OnRetreatFailed);
         }
 
         private void OnDisable()
         {
-            _retreatAbility.RetreatedEvent -= OnRetreatSuccess;
-            _retreatAbility.RetreatFailedEvent -= OnRetreatFail;
+            BattleEventBus.UnsubscribeEvent(_retreatSucceedEvent);
+            BattleEventBus.UnsubscribeEvent(_retreatFailedEvent);
         }
 
-        private void OnRetreatSuccess(AbilitySystemBehaviour owner)
-        {         
-            if (!owner.TryGetComponent<Components.Character>(out var character)) return;
-
-            var characterName = character.LocalizedName;
+        private void OnRetreatSucceed(RetreatSucceedEvent ctx)
+        {
+            var characterName = ctx.Character.LocalizedName;
             _retreatSuccessLog.Add(Constants.CHARACTER_NAME, characterName);
-
             _presentLoggerEvent.Invoke(_retreatSuccessLog);
         }
 
-        private void OnRetreatFail(AbilitySystemBehaviour owner)
-        {         
-            if (!owner.TryGetComponent<Components.Character>(out var character)) return;
-
-            var characterName = character.LocalizedName;
+        private void OnRetreatFailed(RetreatFailedEvent ctx)
+        {
+            var characterName = ctx.Character.LocalizedName;
             _retreatFailLog.Add(Constants.CHARACTER_NAME, characterName);
-            
             _presentLoggerEvent.Invoke(_retreatFailLog);
         }
     }

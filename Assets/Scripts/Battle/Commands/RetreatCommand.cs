@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using CryptoQuest.Battle.Components;
-using UnityEngine;
+﻿using CryptoQuest.Battle.Components;
 
 namespace CryptoQuest.Battle.Commands
 {
@@ -15,9 +13,6 @@ namespace CryptoQuest.Battle.Commands
             _highestEnemySpeed = highestEnemySpeed;
         }
 
-        public void Execute()
-        {
-            _retreatBehaviour.Retreat(_highestEnemySpeed);
-        }
+        public void Execute() => _retreatBehaviour.Retreat(_highestEnemySpeed);
     }
 }

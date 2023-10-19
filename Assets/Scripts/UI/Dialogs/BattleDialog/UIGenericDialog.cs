@@ -46,6 +46,13 @@ namespace CryptoQuest.UI.Dialogs.BattleDialog
             StartCoroutine(CoAppendMessage(message));
             return this;
         }
+        
+        public UIGenericDialog AppendMessage(string message)
+        {
+            var newLine = string.IsNullOrEmpty(_dialogText.text) ? "" : "\n";
+            _dialogText.text += newLine + message;
+            return this;
+        }
 
         private Action _hideCallback;
 

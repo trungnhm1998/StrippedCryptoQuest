@@ -75,7 +75,7 @@ namespace CryptoQuest.Battle.UI.Logs
             _isJustAddEffect = false;
 
             _applyFailMessage.Add(Constants.ATTRIBUTE_NAME, attributeName);
-            Logger.AppendLog(_applyFailMessage);
+            Logger.QueueLog(_applyFailMessage);
         }
 
         private void ResetJustAddEffectFlag(Components.Character character, LocalizedString attributeName)
@@ -112,7 +112,7 @@ namespace CryptoQuest.Battle.UI.Logs
                 message.Add(Constants.ATTRIBUTE_NAME, tagMap.DisplayName);
             }
 
-            Logger.AppendLog(message);
+            Logger.QueueLog(message);
         }
 
         private static bool IsBuffOrDebuff(EffectEvent ctx, out TagScriptableObject tag, out bool isBuff)

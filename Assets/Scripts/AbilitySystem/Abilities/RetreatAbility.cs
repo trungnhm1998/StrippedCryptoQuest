@@ -1,20 +1,16 @@
 ﻿using System.Collections;
 using CryptoQuest.AbilitySystem.Attributes;
 using CryptoQuest.AbilitySystem.Executions;
+using CryptoQuest.Battle.Events;
 using IndiGames.GameplayAbilitySystem.AbilitySystem;
-using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.ScriptableObjects;
 using UnityEngine;
-using UnityEngine.Events;
 
 namespace CryptoQuest.AbilitySystem.Abilities
 {
     public class RetreatAbility : AbilityScriptableObject
     {
-        public UnityAction<AbilitySystemBehaviour> RetreatedEvent;
-        public UnityAction<AbilitySystemBehaviour> RetreatFailedEvent;
         protected override GameplayAbilitySpec CreateAbility() => new RetreatAbilitySpec(this);
-
     }
 
     public class RetreatAbilitySpec : GameplayAbilitySpec
@@ -35,25 +31,24 @@ namespace CryptoQuest.AbilitySystem.Abilities
             TryActiveAbility();
         }
 
-        public override bool CanActiveAbility()
+        protected override IEnumerator OnAbilityActive()
         {
             Owner.AttributeSystem.TryGetAttributeValue(AttributeSets.Agility, out var agility);
+            var character = Owner.GetComponent<Battle.Components.Character>();
 
             var rand = Random.Range(0f, 100f);
             var probabilityOfRetreat =
                 BattleCalculator.CalculateProbabilityOfRetreat(_enemySpeed, agility.CurrentValue);
             var canActive = probabilityOfRetreat > 0 && rand <= probabilityOfRetreat && CanRetreatBattle;
-            // TODO: Maybe implement template method pattern here
-            if (!canActive) _retreatAbility.RetreatFailedEvent?.Invoke(Owner);
+            if (!canActive)
+            {
+                BattleEventBus.RaiseEvent(new RetreatFailedEvent { Character = character });
+                EndAbility();
+                yield break;
+            }
 
-            return base.CanActiveAbility() && canActive;
-        }
-
-        protected override IEnumerator OnAbilityActive()
-        {
-            _retreatAbility.RetreatedEvent?.Invoke(Owner);
+            BattleEventBus.RaiseEvent(new RetreatSucceedEvent { Character = character });
             EndAbility();
-            yield break;
         }
     }
 }

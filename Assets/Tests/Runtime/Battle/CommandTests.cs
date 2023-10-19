@@ -5,6 +5,7 @@ using CryptoQuest.AbilitySystem.Attributes;
 using CryptoQuest.AbilitySystem.Executions;
 using CryptoQuest.Battle.Commands;
 using CryptoQuest.Battle.Components;
+using CryptoQuest.Battle.Events;
 using CryptoQuest.Gameplay.Battle.Core.Helper;
 using CryptoQuest.Tests.Runtime.Battle.Builder;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
@@ -100,6 +101,8 @@ namespace CryptoQuest.Tests.Runtime.Battle
         [TestFixture]
         public class Retreat : CommandTests
         {
+            private const string RETREAT_ABILITY = "Assets/ScriptableObjects/AbilitySystem/Abilities/GA_Retreat.asset";
+
             [TestCase(50f, 50f, 50f)]
             [TestCase(50f, 200f, 125f)]
             public void CalculateProbabilityOfRetreat(float enemy, float hero, float expected)
@@ -112,12 +115,12 @@ namespace CryptoQuest.Tests.Runtime.Battle
             public void Execute_PlayerHaveHigherAgilityThanEnemies_RetreatSuccess()
             {
                 var retreatAbility =
-                    AssetDatabase.LoadAssetAtPath<RetreatAbility>(
-                        "Assets/ScriptableObjects/Character/Abilities/GA_Retreat.asset");
+                    AssetDatabase.LoadAssetAtPath<RetreatAbility>(RETREAT_ABILITY);
 
                 bool retreated = false;
-                retreatAbility.RetreatFailedEvent += (AbilitySystemBehaviour owner) => retreated = false;
-                retreatAbility.RetreatedEvent += (AbilitySystemBehaviour owner) => retreated = true;
+
+                BattleEventBus.SubscribeEvent<RetreatSucceedEvent>(_ => retreated = true);
+                BattleEventBus.SubscribeEvent<RetreatFailedEvent>(_ => retreated = false);
 
                 var hero = A.Character
                     .WithStats(new AttributeWithValue[]
@@ -155,7 +158,7 @@ namespace CryptoQuest.Tests.Runtime.Battle
                 };
                 foreach (var command in commands)
                 {
-                     command.Execute();
+                    command.Execute();
                 }
 
                 Assert.IsTrue(retreated);
@@ -169,13 +172,13 @@ namespace CryptoQuest.Tests.Runtime.Battle
             public void Execute_PlayerHaveLowerAgilityThanOneEnemy_RetreatFailed()
             {
                 var retreatAbility =
-                    AssetDatabase.LoadAssetAtPath<RetreatAbility>(
-                        "Assets/ScriptableObjects/Character/Abilities/GA_Retreat.asset");
-
+                    AssetDatabase.LoadAssetAtPath<RetreatAbility>(RETREAT_ABILITY);
+                
                 bool retreated = false;
-                retreatAbility.RetreatFailedEvent += (AbilitySystemBehaviour owner) => retreated = false;
-                retreatAbility.RetreatedEvent += (AbilitySystemBehaviour owner) => retreated = true;
-
+                
+                BattleEventBus.SubscribeEvent<RetreatSucceedEvent>(_ => retreated = true);
+                BattleEventBus.SubscribeEvent<RetreatFailedEvent>(_ => retreated = false);
+                
                 var characterBuilder = A.Character;
                 var hero = characterBuilder
                     .WithStats(new AttributeWithValue[]
@@ -187,7 +190,7 @@ namespace CryptoQuest.Tests.Runtime.Battle
                 var retreatBehaviour = hero.GetComponent<RetreatBehaviour>();
                 retreatBehaviour.Editor_SetAbility(retreatAbility);
                 retreatBehaviour.Init();
-
+                
                 var enemyBuilder = A.Character;
                 var enemy = enemyBuilder
                     .WithStats(new AttributeWithValue[]
@@ -201,7 +204,7 @@ namespace CryptoQuest.Tests.Runtime.Battle
                         new(AttributeSets.Agility, 150f)
                     })
                     .Build();
-
+                
                 var enemies = new List<CharacterComponent>() { enemy, enemy2 };
                 var highestAgi = enemies.GetHighestAttributeValue<CharacterComponent>(AttributeSets.Agility);
                 var commands = new List<ICommand>
@@ -212,7 +215,7 @@ namespace CryptoQuest.Tests.Runtime.Battle
                 {
                     command.Execute();
                 }
-
+                
                 Assert.IsFalse(retreated);
             }
         }

@@ -24,10 +24,12 @@ namespace CryptoQuest.AbilitySystem.Abilities
     public class GuardAbilitySpec : GameplayAbilitySpec
     {
         public event Action GuardActivatedEvent;
+
         protected override IEnumerator OnAbilityActive()
         {
+            // only end ability when round ended, this prevent edge case to active guard twice in a round
+            // but yet, it doesn't matter much
             GuardActivatedEvent?.Invoke();
-            EndAbility();
             yield break;
         }
     }

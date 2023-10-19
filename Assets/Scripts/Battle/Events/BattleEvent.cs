@@ -15,6 +15,20 @@ namespace CryptoQuest.Battle.Events
         public object Sender { get; } = null;
     }
 
+    public abstract class RetreatEvent : BattleEvent
+    {
+        public Components.Character Character { get; set; }
+    }
+
+    public class RetreatSucceedEvent : RetreatEvent { }
+
+    public class RetreatFailedEvent : RetreatEvent { }
+
+    public class RoundStartedEvent : BattleEvent
+    {
+        public int Round { get; set; }
+    }
+
     public class RoundEndedEvent : BattleEvent { }
 
     public class BattleEndedEvent : BattleEvent
@@ -27,9 +41,13 @@ namespace CryptoQuest.Battle.Events
         public List<LootInfo> Loots { get; set; }
     }
 
-    public class ForceWinBattleEvent : BattleEvent { }
+    public abstract class TurnResultEvent : BattleEvent { }
 
-    public class ForceLoseBattleEvent : BattleEvent { }
+    public class TurnWonEvent : TurnResultEvent { }
+
+    public class TurnLostEvent : TurnResultEvent { }
+
+    public class RetreatedEvent : TurnResultEvent { }
 
     public class BattleLostEvent : BattleEndedEvent { }
 
@@ -79,7 +97,7 @@ namespace CryptoQuest.Battle.Events
     {
         public Components.Character Character { get; set; }
     }
-    
+
     public class ExecutingCommandEvent : BattleEvent
     {
         public Components.Character Character { get; set; }

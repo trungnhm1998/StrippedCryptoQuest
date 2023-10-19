@@ -13,16 +13,22 @@ namespace CryptoQuest.System.Cheat
             // Terminal.Shell.AddCommand("bat.kill", TriggerKillCharacter, 1, 1, "Kill character");
             Terminal.Shell.AddCommand("bat.win", TriggerWinBattle, 0, 0, "Instantly win current battle");
             Terminal.Shell.AddCommand("bat.lose", TriggerLoseBattle, 0, 0, "Instantly lose current battle");
+            Terminal.Shell.AddCommand("bat.retreat", InstantlyRetreat, 0, 0, "Instantly retreat current battle");
         }
 
         private void TriggerLoseBattle(CommandArg[] obj)
         {
-            BattleEventBus.RaiseEvent(new ForceLoseBattleEvent());
+            BattleEventBus.RaiseEvent(new TurnLostEvent());
         }
 
         private void TriggerWinBattle(CommandArg[] obj)
         {
-            BattleEventBus.RaiseEvent(new ForceWinBattleEvent());
+            BattleEventBus.RaiseEvent(new TurnWonEvent());
+        }
+
+        private void InstantlyRetreat(CommandArg[] obj)
+        {
+            BattleEventBus.RaiseEvent(new RetreatedEvent());
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿using System;
 using CryptoQuest.UI.Dialogs.BattleDialog;
 using IndiGames.Core.Events.ScriptableObjects;
 using UnityEngine;
@@ -6,19 +6,18 @@ using UnityEngine.Localization;
 
 namespace CryptoQuest.Battle.UI.Logs
 {
+    /// <summary>
+    /// This more like a view than a presenter because it not getting data from anywhere
+    /// </summary>
     public class LogPresenter : MonoBehaviour
     {
+        public event Action<LocalizedString> AppendingLogEvent;
         private const int MAX_LINE = 3;
         [SerializeField] private VoidEventChannelSO _sceneLoadedEvent;
         [SerializeField] private float _delayBetweenLines = 0.5f;
+        public float DelayBetweenLines => _delayBetweenLines;
         [SerializeField] private float _hideDelay = 1f;
         private UIGenericDialog _dialog;
-        private readonly Queue<LocalizedString> _lines = new();
-        public bool Finished => _presenting == false && _lines.Count == 0;
-        private int _count;
-        private bool _presenting;
-        private float _timer;
-
         private void Awake()
         {
             _sceneLoadedEvent.EventRaised += OnSceneLoaded; // Only start from editor need this
@@ -29,7 +28,7 @@ namespace CryptoQuest.Battle.UI.Logs
             }
         }
 
-        private void OnDisable()
+        private void OnDestroy()
         {
             _sceneLoadedEvent.EventRaised -= OnSceneLoaded;
             GenericDialogController.Instance.Release(_dialog);
@@ -40,9 +39,12 @@ namespace CryptoQuest.Battle.UI.Logs
             GenericDialogController.Instance.Instantiate(dialog => _dialog = dialog, false);
         }
 
-        public void Show() => _dialog.Show();
+        public void Show()
+        {
+            if (_dialog) _dialog.Show();
+        }
 
-        public void AppendLog(LocalizedString message)
+        public void QueueLog(LocalizedString message)
         {
             if (message.IsEmpty)
             {
@@ -51,20 +53,30 @@ namespace CryptoQuest.Battle.UI.Logs
             }
 
             Debug.Log($"LogPresenter::AppendLog {message.GetLocalizedString()}");
-            _lines.Enqueue(message);
+            AppendingLogEvent?.Invoke(message);
+        }
+
+        private int _lineCount;
+        public void Append(string message)
+        {
+            if (_lineCount >= MAX_LINE)
+            {
+                _lineCount = 0;
+                Clear();
+            }
+
+            _dialog.AppendMessage(message);
+            _lineCount++;
         }
 
         public void Clear()
         {
-            _presenting = false;
-            _count = MAX_LINE;
-            _lines.Clear();
-            _dialog.Clear();
+            if (_dialog) _dialog.Clear();
         }
 
         public void HideAndClear()
         {
-            _dialog.Hide();
+            if (_dialog) _dialog.Hide();
             Clear();
         }
     }

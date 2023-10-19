@@ -23,7 +23,7 @@ namespace CryptoQuest.Battle.UI.Logs
         private void Listener(GuardedEvent ctx)
         {
             _logMessage.Add(Constants.CHARACTER_NAME, ctx.Character.LocalizedName);
-            Logger.AppendLog(_logMessage);
+            Logger.QueueLog(_logMessage);
         }
     }
 }
