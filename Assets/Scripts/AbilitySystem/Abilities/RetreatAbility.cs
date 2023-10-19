@@ -50,6 +50,7 @@ namespace CryptoQuest.AbilitySystem.Abilities
         protected override IEnumerator OnAbilityActive()
         {
             _retreatAbility.RetreatedEvent?.Invoke(Owner);
+            EndAbility();
             yield break;
         }
     }

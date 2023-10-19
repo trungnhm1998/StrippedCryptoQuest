@@ -27,6 +27,7 @@ namespace CryptoQuest.AbilitySystem.Abilities
         protected override IEnumerator OnAbilityActive()
         {
             GuardActivatedEvent?.Invoke();
+            EndAbility();
             yield break;
         }
     }

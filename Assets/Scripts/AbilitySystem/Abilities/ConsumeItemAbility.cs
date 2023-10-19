@@ -67,6 +67,7 @@ namespace CryptoQuest.AbilitySystem.Abilities
             var effect = _consumable.Data.Effect;
             var effectSpec = Owner.MakeOutgoingSpec(effect);
             Owner.ApplyEffectSpecToSelf(effectSpec);
+            EndAbility();
             yield break;
         }
 

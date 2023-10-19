@@ -92,7 +92,7 @@ namespace IndiGames.GameplayAbilitySystem.AbilitySystem
         /// <returns></returns>
         public virtual bool CanActiveAbility()
         {
-            return _owner != null && _owner.isActiveAndEnabled && DoesAbilitySatisfyTagRequirements();
+            return !_isActive && _owner != null && _owner.isActiveAndEnabled && DoesAbilitySatisfyTagRequirements();
         }
 
         /// <summary>

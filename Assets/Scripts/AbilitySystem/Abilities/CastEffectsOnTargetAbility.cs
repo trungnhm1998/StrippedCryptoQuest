@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using IndiGames.GameplayAbilitySystem.AbilitySystem;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
 using IndiGames.GameplayAbilitySystem.EffectSystem;
@@ -8,7 +9,8 @@ using UnityEngine;
 
 namespace CryptoQuest.AbilitySystem.Abilities
 {
-    [CreateAssetMenu(menuName = "Crypto Quest/Ability System/Abilites/Cast Skill With Effect", fileName = "CastEffectsOnTargetAbility")]
+    [CreateAssetMenu(menuName = "Crypto Quest/Ability System/Abilites/Cast Skill With Effect",
+        fileName = "CastEffectsOnTargetAbility")]
     public class CastEffectsOnTargetAbility : CastSkillAbility
     {
         [SerializeField] private GameplayEffectDefinition[] _effects = Array.Empty<GameplayEffectDefinition>();
@@ -21,6 +23,8 @@ namespace CryptoQuest.AbilitySystem.Abilities
     public class CastEffectsOnTargetAbilitySpec : CastSkillAbilitySpec
     {
         private readonly CastEffectsOnTargetAbility _def;
+        private List<GameplayEffectSpec> _effectSpecs = new();
+
         public CastEffectsOnTargetAbilitySpec(CastEffectsOnTargetAbility def) : base(def)
         {
             _def = def;
@@ -30,13 +34,25 @@ namespace CryptoQuest.AbilitySystem.Abilities
         {
             foreach (var effectDef in _def.Effects)
             {
-                target.ApplyEffectSpecToSelf(CreateEffectSpec(effectDef));
+                var gameplayEffectSpec = CreateEffectSpec(effectDef);
+                _effectSpecs.Add(gameplayEffectSpec);
+                target.ApplyEffectSpecToSelf(gameplayEffectSpec);
             }
+
             yield break;
         }
-        
 
         private GameplayEffectSpec CreateEffectSpec(GameplayEffectDefinition def) =>
             def.CreateEffectSpec(Owner, new GameplayEffectContextHandle(_def.Context));
+
+        protected override void Cleanup()
+        {
+            foreach (var effectSpec in _effectSpecs)
+            {
+                effectSpec.IsExpired = true;
+            }
+
+            _effectSpecs.Clear();
+        }
     }
 }

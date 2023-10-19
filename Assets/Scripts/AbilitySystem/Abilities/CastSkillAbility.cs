@@ -12,6 +12,7 @@ using IndiGames.GameplayAbilitySystem.EffectSystem;
 using IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects;
 using IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects.GameplayEffectActions;
 using IndiGames.GameplayAbilitySystem.TagSystem.ScriptableObjects;
+using TinyMessenger;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -106,6 +107,9 @@ namespace CryptoQuest.AbilitySystem.Abilities
         }
 
         private AbilitySystemBehaviour[] _targets;
+        private TinyMessageSubscriptionToken _wonEvent;
+        private TinyMessageSubscriptionToken _lostEvent;
+        private TinyMessageSubscriptionToken _retreatEvent;
         protected AbilitySystemBehaviour[] Targets => _targets;
 
         public void Execute(params AbilitySystemBehaviour[] characters)
@@ -118,7 +122,9 @@ namespace CryptoQuest.AbilitySystem.Abilities
         {
             ApplyCost();
             if (CanCast() == false) yield break;
-            
+
+            RegisterBattleEndedEvents();
+
             foreach (var target in Targets)
             {
                 if (IsTargetEvaded(target))
@@ -129,8 +135,27 @@ namespace CryptoQuest.AbilitySystem.Abilities
 
                 yield return InternalExecute(target);
             }
+
+            EndAbility();
         }
-        
+
+        private void RegisterBattleEndedEvents()
+        {
+            _wonEvent = BattleEventBus.SubscribeEvent<BattleWonEvent>(CleanupAbility);
+            _lostEvent = BattleEventBus.SubscribeEvent<BattleLostEvent>(CleanupAbility);
+            _retreatEvent = BattleEventBus.SubscribeEvent<BattleRetreatedEvent>(CleanupAbility);
+        }
+
+        private void CleanupAbility(BattleEndedEvent ctx)
+        {
+            BattleEventBus.UnsubscribeEvent(_wonEvent);
+            BattleEventBus.UnsubscribeEvent(_lostEvent);
+            BattleEventBus.UnsubscribeEvent(_retreatEvent);
+            Cleanup();
+        }
+
+        protected virtual void Cleanup() { }
+
         /// <summary>
         /// After all check has passed cost, cast success rate, evade, ... then execute the ability
         /// </summary>
@@ -145,9 +170,10 @@ namespace CryptoQuest.AbilitySystem.Abilities
             return appliedEffects.FirstOrDefault(x => x.GrantedTags.Contains(tag));
         }
 
-
         private bool IsTargetEvaded(AbilitySystemBehaviour target)
         {
+            var skillTarget = _def.TargetType.Target;
+            if ((skillTarget | SkillTargetType.Type.SameTeam) == SkillTargetType.Type.SameTeam) return false;
             var evadeBehaviour = target.GetComponent<IEvadable>();
             return evadeBehaviour != null && evadeBehaviour.TryEvade();
         }

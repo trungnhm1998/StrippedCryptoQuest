@@ -11,14 +11,11 @@ using UnityEngine;
 
 namespace CryptoQuest.Battle
 {
-    /// <summary>
-    /// I need a mono for coroutine, or using a tween library but it still using mono under the hood
-    /// </summary>
+    // TODO: Move logic into RoundPresentation.cs
     public class RoundPresenter : MonoBehaviour
     {
         public event Action Lost;
         public event Action Won;
-        [SerializeField] private LogPresenter _logPresenter;
         [SerializeField] private BattleContext _battleContext;
         [SerializeField] private RetreatAbility _retreatAbility;
         private readonly RoundEndedEvent _roundEndedEvent = new();
@@ -33,8 +30,8 @@ namespace CryptoQuest.Battle
         {
             _roundCount = 0;
             _retreatAbility.RetreatedEvent += OnEndBattle;
-            _highlightEnemyToken = BattleEventBus.SubscribeEvent<HighlightEnemyEvent>(HightlightEnemy);
-            _resetHighlightEnemyToken = BattleEventBus.SubscribeEvent<ResetHighlightEnemyEvent>(ResetHightlightEnemy);
+            _highlightEnemyToken = BattleEventBus.SubscribeEvent<HighlightEnemyEvent>(HighlightEnemy);
+            _resetHighlightEnemyToken = BattleEventBus.SubscribeEvent<ResetHighlightEnemyEvent>(ResetHighlightEnemy);
         }
 
         private void OnDisable()
@@ -47,13 +44,11 @@ namespace CryptoQuest.Battle
         public void ExecuteCharacterCommands(IEnumerable<Components.Character> characters)
         {
             Debug.Log($"Presenting round [{++_roundCount}]");
-            _logPresenter.Show();
             ChangeAllEnemiesOpacity(1f);
 
             foreach (var character in characters)
             {
                 if (character.IsValidAndAlive() == false) continue; // could die because of last turn
-                _logPresenter.Clear();
                 OnTurnStarting(character);
                 character.OnTurnStarted();
                 character.TryGetComponent(out CommandExecutor commandExecutor);
@@ -65,7 +60,6 @@ namespace CryptoQuest.Battle
             }
 
             // yield return new WaitUntil(() => _logPresenter.Finished);
-            _logPresenter.HideAndClear();
             BattleEventBus.RaiseEvent(_roundEndedEvent); // Need to be raise so guard tag can be remove
             OnCheckRoundResult();
         }
@@ -128,21 +122,15 @@ namespace CryptoQuest.Battle
 
         private void ChangeAllEnemiesOpacity(float f)
         {
-            foreach (var enemy in _battleContext.Enemies.Where(enemy => enemy.IsValidAndAlive()))
-            {
-                enemy.SetAlpha(f);
-            }
+            foreach (var enemy in _battleContext.Enemies.Where(enemy => enemy.IsValidAndAlive())) enemy.SetAlpha(f);
         }
 
-        private void HightlightEnemy(HighlightEnemyEvent eventObject)
+        private void HighlightEnemy(HighlightEnemyEvent eventObject)
         {
             ChangeAllEnemiesOpacity(0.5f);
             eventObject.Enemy.SetAlpha(1f);
         }
 
-        private void ResetHightlightEnemy(ResetHighlightEnemyEvent eventObject)
-        {
-            ChangeAllEnemiesOpacity(1f);
-        }
+        private void ResetHighlightEnemy(ResetHighlightEnemyEvent eventObject) => ChangeAllEnemiesOpacity(1f);
     }
 }

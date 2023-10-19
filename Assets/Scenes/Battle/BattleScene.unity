@@ -454,7 +454,7 @@ Transform:
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &657291626 stripped
 MonoBehaviour:
@@ -536,6 +536,51 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 05d7f8559fc55b24695d448b0e8ca392, type: 3}
+--- !u!1 &891665761
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 891665763}
+  - component: {fileID: 891665762}
+  m_Layer: 0
+  m_Name: VfxAndLogPresenter
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &891665762
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 891665761}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c77d0466ca14d17a5a7cf57c63413a7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _logPresenter: {fileID: 445290122}
+--- !u!4 &891665763
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 891665761}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &909464723 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2235472367684801331, guid: d0eacd5a881766b4ca08ec4b770526a2, type: 3}
@@ -773,7 +818,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1495758717 stripped
 MonoBehaviour:
@@ -973,7 +1018,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4463206549349502206, guid: d0eacd5a881766b4ca08ec4b770526a2, type: 3}
       propertyPath: m_RootOrder
-      value: 7
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 4463206549349502206, guid: d0eacd5a881766b4ca08ec4b770526a2, type: 3}
       propertyPath: m_AnchorMax.x
@@ -1105,6 +1150,7 @@ GameObject:
   - component: {fileID: 7116505576077580200}
   - component: {fileID: 7116505576077580201}
   - component: {fileID: 7116505576077580202}
+  - component: {fileID: 7116505576077580203}
   m_Layer: 0
   m_Name: BattleManager
   m_TagString: Untagged
@@ -1139,7 +1185,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5867635358138730054, guid: 4c327de21deb06a48b820d72f4fb9072, type: 3}
       propertyPath: m_RootOrder
-      value: 8
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 5867635358138730054, guid: 4c327de21deb06a48b820d72f4fb9072, type: 3}
       propertyPath: m_AnchorMax.x
@@ -1327,7 +1373,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9fd81c9a3b39657468faf712ed2274fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _logPresenter: {fileID: 445290122}
   _battleContext: {fileID: 7116505576077580199}
   _retreatAbility: {fileID: 11400000, guid: b7f1b6c96aba92e4680d2ca75c6abdd3, type: 2}
 --- !u!114 &7116505576077580201
@@ -1367,6 +1412,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _enemyPartyManager: {fileID: 7116505576077580196}
   _enemyGroupUI: {fileID: 403977525}
+--- !u!114 &7116505576077580203
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3846955041373722987}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 966802992c9c4fa387ef5b5c1252dfd4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &8909492559710276275 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4666074599004791690, guid: f5fa023033362a04f99acf1098ae54bc, type: 3}

@@ -34,6 +34,7 @@ namespace CryptoQuest.AbilitySystem.Abilities
             // play some effect by raise event 
             var effectSpec = Owner.MakeOutgoingSpec(_normalAttackAbility.NormalAttackEffect);
             _target.ReceiveDamage(effectSpec);
+            EndAbility();
             yield break;
         }
     }
