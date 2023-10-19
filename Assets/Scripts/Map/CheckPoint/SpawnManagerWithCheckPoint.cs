@@ -18,7 +18,6 @@ namespace CryptoQuest.Map.CheckPoint
 
         protected override void OnAwake()
         {
-            GenericDialogController.Instance.Instantiate(OnDialogLoaded, false);
             _showCheckPointMessageSO.EventRaised += ShowCheckPointMessage;
         }
 
@@ -40,7 +39,7 @@ namespace CryptoQuest.Map.CheckPoint
 
                 _gameplayBus.Hero = heroInstance;
                 _gameplayBus.RaiseHeroSpawnedEvent();
-                ShowCheckPointMessage();
+                StartCoroutine(CoLoadDialogAndShowMessage());
             }
             else
             {
@@ -48,9 +47,13 @@ namespace CryptoQuest.Map.CheckPoint
             }    
         }
 
-        private void OnDialogLoaded(UIGenericDialog dialog)
+        private IEnumerator CoLoadDialogAndShowMessage()
         {
-            _dialog = dialog;
+            if(_dialog == null)
+            {
+                yield return GenericDialogController.Instance.CoInstantiate(dialog => _dialog = dialog, false);
+            }
+            _dialog.WithMessage(_revivalMessage).RequireInput().WithHideCallback(EnableMapInput).Show();
         }    
 
         private void EnableMapInput()
@@ -60,7 +63,7 @@ namespace CryptoQuest.Map.CheckPoint
         
         private void ShowCheckPointMessage()
         {
-            _dialog.WithMessage(_revivalMessage).RequireInput().WithHideCallback(EnableMapInput).Show();
+            StartCoroutine(CoLoadDialogAndShowMessage());
         }    
     }
 }
