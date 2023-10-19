@@ -1,7 +1,5 @@
-﻿using System.Collections;
-using CryptoQuest.AbilitySystem.Abilities;
+﻿using CryptoQuest.AbilitySystem.Abilities;
 using UnityEngine;
-using NotImplementedException = System.NotImplementedException;
 
 namespace CryptoQuest.Battle.Components
 {

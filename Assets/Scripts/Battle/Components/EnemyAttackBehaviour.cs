@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using IndiGames.Core.Events.ScriptableObjects;
+﻿using IndiGames.Core.Events.ScriptableObjects;
 using UnityEngine;
 
 namespace CryptoQuest.Battle.Components

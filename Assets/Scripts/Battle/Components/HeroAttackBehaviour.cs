@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using CryptoQuest.Gameplay.Battle.Core.Components.BattleVFX;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.AddressableAssets;
 
 namespace CryptoQuest.Battle.Components

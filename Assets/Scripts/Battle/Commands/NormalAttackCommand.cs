@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using CryptoQuest.AbilitySystem;
-using CryptoQuest.AbilitySystem.Attributes;
-using CryptoQuest.Battle.Components;
+﻿using CryptoQuest.Battle.Components;
 using CryptoQuest.Battle.Events;
 using UnityEngine;
 
@@ -45,13 +42,7 @@ namespace CryptoQuest.Battle.Commands
                 });
             }
 
-            _targetComponent.Target.AttributeSystem.TryGetAttributeValue(AttributeSets.Health, out var hpBefore);
-            Debug.Log(
-                $"NormalAttackCommand::Executed::Before {hpBefore.CurrentValue} has dead tag {_targetComponent.Target.HasTag(TagsDef.Dead)}");
             _attacker.Attack();
-            _targetComponent.Target.AttributeSystem.TryGetAttributeValue(AttributeSets.Health, out var hpAfter);
-            Debug.Log(
-                $"NormalAttackCommand::Executed::After {hpAfter.CurrentValue} has dead tag {_targetComponent.Target.HasTag(TagsDef.Dead)}");
         }
 
         private bool IsTargetEvaded()

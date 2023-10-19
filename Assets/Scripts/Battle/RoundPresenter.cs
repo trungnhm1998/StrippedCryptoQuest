@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using CryptoQuest.AbilitySystem.Abilities;
@@ -45,10 +44,7 @@ namespace CryptoQuest.Battle
             BattleEventBus.UnsubscribeEvent(_resetHighlightEnemyToken);
         }
 
-        public void ExecuteCharacterCommands(IEnumerable<Components.Character> characters) =>
-            StartCoroutine(CoPresentation(characters));
-
-        private IEnumerator CoPresentation(IEnumerable<Components.Character> characters)
+        public void ExecuteCharacterCommands(IEnumerable<Components.Character> characters)
         {
             Debug.Log($"Presenting round [{++_roundCount}]");
             _logPresenter.Show();
@@ -71,8 +67,7 @@ namespace CryptoQuest.Battle
             // yield return new WaitUntil(() => _logPresenter.Finished);
             _logPresenter.HideAndClear();
             BattleEventBus.RaiseEvent(_roundEndedEvent); // Need to be raise so guard tag can be remove
-            OnRoundEndedCheck();
-            yield break;
+            OnCheckRoundResult();
         }
 
         private static void OnTurnStarting(Components.Character character)
@@ -98,21 +93,21 @@ namespace CryptoQuest.Battle
         }
 
         /// <summary>
-        /// Always check won before lost because of skill that killed enemy by sacrificing self
+        /// Need at least one surviving character to win
         /// </summary>
-        private void OnRoundEndedCheck()
+        private void OnCheckRoundResult()
         {
+            if (IsLost())
+            {
+                Debug.Log("Battle Lost");
+                Lost?.Invoke();
+            }
+
             if (IsWon())
             {
                 Debug.Log("Battle Won");
                 Won?.Invoke();
                 return;
-            }
-
-            if (IsLost())
-            {
-                Debug.Log("Battle Lost");
-                Lost?.Invoke();
             }
         }
 
