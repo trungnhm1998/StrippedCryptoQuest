@@ -3,6 +3,7 @@ using System.Linq;
 using IndiGames.GameplayAbilitySystem.EffectSystem;
 using IndiGames.GameplayAbilitySystem.EffectSystem.Components;
 using IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects;
+using UnityEngine;
 
 namespace CryptoQuest.AbilitySystem
 {
@@ -40,7 +41,7 @@ namespace CryptoQuest.AbilitySystem
                 {
                     var otherEffectEvaluatedMod = effect.ComputedModifiers[index];
                     var currentLargestEffectEvaluatedMod = largestMagnitudeEffect.ComputedModifiers[index];
-                    if (otherEffectEvaluatedMod.Magnitude > currentLargestEffectEvaluatedMod.Magnitude)
+                    if (Mathf.Abs(otherEffectEvaluatedMod.Magnitude) > Mathf.Abs(currentLargestEffectEvaluatedMod.Magnitude))
                     {
                         largestMagnitudeEffect = effect;
                         break;
