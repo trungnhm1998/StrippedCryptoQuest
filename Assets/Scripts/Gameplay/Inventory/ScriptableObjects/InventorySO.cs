@@ -26,7 +26,8 @@ namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects
         [SerializeField] private List<EquipmentInfo> _equipments = new();
         public List<EquipmentInfo> Equipments => _equipments;
 
-        [SerializeField] public WalletControllerSO WalletController { get; private set; }
+        public WalletControllerSO WalletController => _walletController;
+        [SerializeField] private WalletControllerSO _walletController;
 
         public void OnLoaded() => Loaded?.Invoke();
 
