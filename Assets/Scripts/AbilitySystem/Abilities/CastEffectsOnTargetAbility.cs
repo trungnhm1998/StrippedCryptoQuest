@@ -30,7 +30,7 @@ namespace CryptoQuest.AbilitySystem.Abilities
             _def = def;
         }
 
-        protected override IEnumerator InternalExecute(AbilitySystemBehaviour target)
+        protected override void InternalExecute(AbilitySystemBehaviour target)
         {
             foreach (var effectDef in _def.Effects)
             {
@@ -38,8 +38,6 @@ namespace CryptoQuest.AbilitySystem.Abilities
                 _effectSpecs.Add(gameplayEffectSpec);
                 target.ApplyEffectSpecToSelf(gameplayEffectSpec);
             }
-
-            yield break;
         }
 
         private GameplayEffectSpec CreateEffectSpec(GameplayEffectDefinition def) =>

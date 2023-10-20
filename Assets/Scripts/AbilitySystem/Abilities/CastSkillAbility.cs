@@ -133,7 +133,7 @@ namespace CryptoQuest.AbilitySystem.Abilities
                     continue;
                 }
 
-                yield return InternalExecute(target);
+                InternalExecute(target);
             }
 
             EndAbility();
@@ -161,7 +161,7 @@ namespace CryptoQuest.AbilitySystem.Abilities
         /// </summary>
         /// <param name="target"></param>
         /// <returns></returns>
-        protected abstract IEnumerator InternalExecute(AbilitySystemBehaviour target);
+        protected abstract void InternalExecute(AbilitySystemBehaviour target);
 
 
         private ActiveGameplayEffect GetActiveEffectWithTag(AbilitySystemBehaviour target, TagScriptableObject tag)
