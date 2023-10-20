@@ -25,6 +25,11 @@
 
         document.body.style.textAlign = "left";
       }
+      else {
+        var canvas = document.querySelector("#unity-canvas");
+        canvas.style.width = (canvas.width * 0.9) + "px";
+        canvas.style.height = (canvas.height * 0.9) + "px";
+      }
       createUnityInstance(document.querySelector("#unity-canvas"), {
         dataUrl: "Build/{{{ DATA_FILENAME }}}",
         frameworkUrl: "Build/{{{ FRAMEWORK_FILENAME }}}",
