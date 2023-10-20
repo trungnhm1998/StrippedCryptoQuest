@@ -34,7 +34,14 @@ namespace CryptoQuest.Map.CheckPoint
             {
                 _checkPointController.FinishBackToCheckPoint();
 
-                var heroInstance = Instantiate(_heroPrefab, _checkPointController.CheckPointPosition, Quaternion.identity);
+                var position = _checkPointController.CheckPointPosition;
+
+                if(position == Vector3.zero)
+                {
+                    position = transform.GetChild(1).transform.position; // Set default position
+                }    
+
+                var heroInstance = Instantiate(_heroPrefab, position, Quaternion.identity);
                 heroInstance.SetFacingDirection(_checkPointController.FacingDirection);
 
                 _gameplayBus.Hero = heroInstance;
