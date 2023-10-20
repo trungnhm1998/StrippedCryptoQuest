@@ -1,6 +1,5 @@
 using IndiGames.Core.Events.ScriptableObjects;
 using IndiGames.Core.SaveSystem;
-using IndiGames.Core.SaveSystem.ScriptableObjects;
 using IndiGames.Core.SceneManagementSystem.ScriptableObjects;
 using System;
 using System.Collections.Generic;
@@ -9,49 +8,30 @@ using UnityEngine;
 
 namespace CryptoQuest.System.SaveSystem
 {
-    [Serializable]
     [CreateAssetMenu(menuName = "Crypto Quest/SaveSystem/SaveSystemSO")]
-    public class SaveSystemSO : SerializableScriptableObject, ISaveSystem
+    public class SaveSystemSO : ScriptableObject, ISaveSystem
     {
         [SerializeField] protected SaveManagerSO _saveManagerSO;
         [SerializeField] protected VoidEventChannelSO _sceneLoadedEvent;
 
-        [SerializeField] private string _playerName;
         public string PlayerName
         {
-            get => _playerName;
-            set => _playerName = value;
+            get => _saveData.player;
+            set => _saveData.player = value;
         }
 
-        [SerializeField] private string _scene;
-
-        [Serializable]
-        public class KeyValue
-        {
-            [SerializeField] public string Key;
-
-            [SerializeField] public string Value;
-
-            public KeyValue(string key, string value)
-            {
-                Key = key;
-                Value = value;
-            }
-        }
-
-        [SerializeField] protected List<KeyValue> _saveDatas;
-
+        [SerializeField] private SaveData _saveData = new();
         private bool isSceneLoading = false;
 
         private string Save()
         {
             if(!string.IsNullOrEmpty(PlayerName))
             {
-                var saveData = JsonUtility.ToJson(this);
+                var saveData = JsonUtility.ToJson(_saveData);
                 Debug.Log("Save: " + saveData);
                 return saveData;
             }
-            return null;            
+            return null;
         }
 
         private bool Load(string json)
@@ -59,7 +39,7 @@ namespace CryptoQuest.System.SaveSystem
             if(!string.IsNullOrEmpty(json))
             {
                 Debug.Log("Load Save: " + json);
-                JsonUtility.FromJsonOverwrite(json, this);
+                JsonUtility.FromJsonOverwrite(json, _saveData);
                 return true;
             }
             return false;
@@ -68,7 +48,7 @@ namespace CryptoQuest.System.SaveSystem
         public bool SaveGame()
         {
             var saveData = Save();
-            if (string.IsNullOrEmpty(saveData)) return false;            
+            if (string.IsNullOrEmpty(saveData)) return false;
             return _saveManagerSO.Save(saveData);
         }
 
@@ -100,15 +80,19 @@ namespace CryptoQuest.System.SaveSystem
 
         public bool SaveScene(SceneScriptableObject sceneSO)
         {
-            _scene = JsonUtility.ToJson(sceneSO);            
-            return SaveGame(); ;
+            if(!isSceneLoading)
+            {
+                _saveData.scene = JsonUtility.ToJson(sceneSO);
+                return SaveGame();
+            }
+            return false;
         }
 
         public bool LoadScene(SceneScriptableObject sceneSO)
         {
-            if(!string.IsNullOrEmpty(_scene) && sceneSO != null)
+            if(!isSceneLoading && !string.IsNullOrEmpty(_saveData.scene) && sceneSO != null)
             {
-                JsonUtility.FromJsonOverwrite(_scene, sceneSO);
+                JsonUtility.FromJsonOverwrite(_saveData.scene, sceneSO);
                 _sceneLoadedEvent.EventRaised += OnSceneLoaded;
                 isSceneLoading = true;
                 return true;
@@ -118,29 +102,43 @@ namespace CryptoQuest.System.SaveSystem
 
         public bool LoadObject(IJsonSerializable jObject)
         {
-            foreach(var data in _saveDatas)
+            try
             {
-                if (data != null && data.Value != null && data.Key == jObject.Key)
+                foreach (var data in _saveData.objects)
                 {
-                    return jObject.FromJson(data.Value);
+                    if (data != null && data.Value != null && data.Key == jObject.Key)
+                    {
+                        return jObject.FromJson(data.Value);
+                    }
                 }
-            }                       
+            }
+            catch (Exception ex)
+            {
+                Debug.LogException(ex);
+            }
             return false;
         }
 
         public bool SaveObject(IJsonSerializable jObject)
         {
-            if(jObject != null)
+            try 
             {
-                foreach (var data in _saveDatas)
+                if (jObject != null)
                 {
-                    if(data.Key == jObject.Key)
+                    foreach (var data in _saveData.objects)
                     {
-                        return false;
+                        if (data.Key == jObject.Key)
+                        {
+                            return false;
+                        }
                     }
+                    _saveData.objects.Add(new KeyValue(jObject.Key, jObject.ToJson()));
+                    return SaveGame();
                 }
-                _saveDatas.Add(new KeyValue(jObject.Key, jObject.ToJson()));
-                return SaveGame();
+            }
+            catch (Exception ex) 
+            {
+                Debug.LogException(ex);
             }
             return false;
         }

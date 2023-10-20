@@ -1,8 +1,12 @@
+#if !UNITY_WEBGL || UNITY_EDITOR
+#define USE_FILE_SYSTEM
+#endif
+
 using UnityEngine;
 using System;
 using System.Threading.Tasks;
 
-#if UNITY_EDITOR || !UNITY_WEBGL
+#if USE_FILE_SYSTEM
 using System.IO;
 using System.Threading;
 #endif
@@ -29,10 +33,7 @@ namespace CryptoQuest.System.SaveSystem
             }
             Debug.Log("Save() jsonData length: " + jsonData.Length);
 
-#if UNITY_WEBGL && !UNITY_EDITOR
-            PlayerPrefs.SetString(fileName, jsonData);
-            return true;
-#else
+#if USE_FILE_SYSTEM
             // use Path.Combine to account for different OS's having different path separators
             var filePath = Path.Combine(Application.persistentDataPath, fileName);
             Debug.Log("Save() filePath: " + filePath);
@@ -71,8 +72,11 @@ namespace CryptoQuest.System.SaveSystem
             {
                 Debug.LogError("Error occured when trying to save data to file: " + filePath + "\n" + e);
             }
-            Debug.Log("Save() return = " + false);          
+            Debug.Log("Save() return = " + false);
             return false;
+#else
+            PlayerPrefs.SetString(fileName, jsonData);
+            return true;
 #endif
         }
 
@@ -81,9 +85,7 @@ namespace CryptoQuest.System.SaveSystem
             // load the serialized data from the file
             string jsonData = null;
 
-#if UNITY_WEBGL && !UNITY_EDITOR
-            jsonData = PlayerPrefs.GetString(fileName, null);
-#else
+#if USE_FILE_SYSTEM
             // use Path.Combine to account for different OS's having different path separators
             var filePath = Path.Combine(Application.persistentDataPath, fileName);
             Debug.Log("LoadSave() filePath: " + filePath);
@@ -110,6 +112,8 @@ namespace CryptoQuest.System.SaveSystem
             {
                 Debug.LogError("Error occured when trying to load data from file: " + filePath + "\n" + e);
             }
+#else
+            jsonData = PlayerPrefs.GetString(fileName, null);
 #endif
             if (string.IsNullOrEmpty(jsonData))
             {

@@ -7,9 +7,9 @@ namespace CryptoQuest.Item
     [Serializable]
     public abstract class ItemInfo
     {
-        [SerializeField, ReadOnly] private long _id = -1;
+        [SerializeField, ReadOnly] private string _id = Guid.NewGuid().ToString();
 
-        public long Id
+        public string Id
         {
             get => _id;
             set => _id = value;
@@ -24,7 +24,8 @@ namespace CryptoQuest.Item
     [Serializable]
     public abstract class ItemInfo<TDef> : ItemInfo where TDef : GenericItem
     {
-        [field: SerializeField] public TDef Data { get; set; } // TODO: Primitive item ID instead
+        // TODO: Primitive item ID instead
+        public TDef Data;
 
         protected ItemInfo(TDef baseGenericItem)
         {

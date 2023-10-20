@@ -44,7 +44,7 @@ namespace CryptoQuest.UI.Title
         private void Start()
         {
             ShowSocialButtonPanel();
-            _hasSaveData = _saveSystem?.PlayerName != null;
+            _hasSaveData = _saveSystem != null && _saveSystem.PlayerName != null;
         }
 
         private void ShowSocialButtonPanel()

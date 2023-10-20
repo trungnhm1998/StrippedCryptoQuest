@@ -102,7 +102,7 @@ namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects
                 }
             }
 
-            Consumables.Add(new ConsumableInfo(item.Data, quantity));
+            _consumables.Add(new ConsumableInfo(item.Data, quantity));
 
             return true;
         }
@@ -127,7 +127,7 @@ namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects
                     Debug.LogWarning($"Try to remove more {consumable.Data} than you have" +
                                      $"\ncurrent {consumable.Quantity} removing quantity {quantity}");
                     consumable.SetQuantity(0);
-                    Consumables.RemoveAt(index);
+                    _consumables.RemoveAt(index);
                 }
                 else
                 {
