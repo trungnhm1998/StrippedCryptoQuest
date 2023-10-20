@@ -3,11 +3,13 @@ using CryptoQuest.Battle.Events;
 using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects;
 using TinyMessenger;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace CryptoQuest.Battle
 {
     public class HandleLost : MonoBehaviour
     {
+        [SerializeField] private UnityEvent _onLost;
         [SerializeField] private BattleUnloader _unloader;
         [SerializeField] private BattleBus _battleBus;
         private TinyMessageSubscriptionToken _turnLostEvent;
@@ -20,7 +22,11 @@ namespace CryptoQuest.Battle
             {
                 if (_isLost) StartCoroutine(CoOnPresentLost());
             });
-            _turnLostEvent = BattleEventBus.SubscribeEvent<TurnLostEvent>(_ => _isLost = true);
+            _turnLostEvent = BattleEventBus.SubscribeEvent<TurnLostEvent>(_ =>
+            {
+                _isLost = true;
+                _onLost.Invoke();
+            });
         }
 
         private void OnDestroy()

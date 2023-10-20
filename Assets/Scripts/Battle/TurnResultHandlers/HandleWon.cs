@@ -6,11 +6,13 @@ using CryptoQuest.Gameplay.Loot;
 using CryptoQuest.Gameplay.Reward;
 using TinyMessenger;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace CryptoQuest.Battle
 {
     public class HandleWon : MonoBehaviour
     {
+        [SerializeField] private UnityEvent _onWon;
         [SerializeField] private BattleUnloader _unloader;
         [SerializeField] private BattleContext _context;
         private TinyMessageSubscriptionToken _wonEvent;
@@ -30,7 +32,11 @@ namespace CryptoQuest.Battle
             BattleEventBus.UnsubscribeEvent(_wonEvent);
         }
 
-        private void CacheState(TurnWonEvent _) => _hasWon = true;
+        private void CacheState(TurnWonEvent _)
+        {
+            _hasWon = true;
+            _onWon.Invoke();
+        }
 
         private void PresentLoseBattle(FinishedPresentingEvent finishedPresentingEvent)
         {

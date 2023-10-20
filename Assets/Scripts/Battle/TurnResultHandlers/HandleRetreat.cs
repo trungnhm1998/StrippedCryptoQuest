@@ -3,11 +3,13 @@ using CryptoQuest.Battle.Events;
 using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects;
 using TinyMessenger;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace CryptoQuest.Battle
 {
     public class HandleRetreat : MonoBehaviour
     {
+        [SerializeField] private UnityEvent _onRetreated;
         [SerializeField] private BattleUnloader _unloader;
         [SerializeField] private BattleBus _bus;
         private TinyMessageSubscriptionToken _retreatedEvent;
@@ -30,7 +32,11 @@ namespace CryptoQuest.Battle
             BattleEventBus.UnsubscribeEvent(_retreatedEvent);
         }
 
-        private void CacheState(RetreatedEvent ctx) => _canRetreat = true;
+        private void CacheState(RetreatedEvent ctx)
+        {
+            _canRetreat = true;
+            _onRetreated.Invoke();
+        }
 
         private IEnumerator CoOnPresentEnd()
         {

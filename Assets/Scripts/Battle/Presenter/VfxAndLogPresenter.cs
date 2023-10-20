@@ -6,7 +6,6 @@ using CryptoQuest.Input;
 using TinyMessenger;
 using UnityEngine;
 using UnityEngine.Localization;
-using NotImplementedException = System.NotImplementedException;
 
 namespace CryptoQuest.Battle.Presenter
 {
