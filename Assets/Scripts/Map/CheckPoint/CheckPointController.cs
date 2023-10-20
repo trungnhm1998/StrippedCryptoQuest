@@ -94,7 +94,6 @@ namespace CryptoQuest.Map.CheckPoint
 
         public void BackToCheckPoint()
         {
-            EnableCheckPoint();
             if (SceneManager.GetSceneByName(_lastSceneCheckPointName).isLoaded)
             {
                 _gameplayBus.Hero.transform.position = _lastCheckPointPosition;
@@ -105,6 +104,7 @@ namespace CryptoQuest.Map.CheckPoint
             }
             else
             {
+                EnableCheckPoint();
                 _loadSceneEvent.RequestLoad(_lastCheckPointScene);
             }    
         }
