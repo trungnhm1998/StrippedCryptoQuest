@@ -12,7 +12,6 @@ namespace CryptoQuest.UI.Menu.MenuStates.StatusStates
             base.OnEnter();
             NavigationBar.SetActive(false);
             NavigationBar.HighlightHeader(StatusPanel.TypeSO);
-            StatusPanel.CharacterEquipmentsPanel.Show();
             StatusPanel.CharacterPanel.InspectCharacter(StatusPanel.CharacterPanel.CurrentIndex);
         }
 

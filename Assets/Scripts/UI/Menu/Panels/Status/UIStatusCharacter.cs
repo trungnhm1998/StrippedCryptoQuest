@@ -100,6 +100,7 @@ namespace CryptoQuest.UI.Menu.Panels.Status
             _inspectingAttributeSystem = _inspectingHero.GetComponent<AttributeSystemBehaviour>();
             RenderElementsStats(_inspectingAttributeSystem);
             SetupUI(_inspectingHero);
+            _statusMenu.CharacterEquipmentsPanel.Show();
             InspectingCharacter?.Invoke(_inspectingHero);
         }
 
