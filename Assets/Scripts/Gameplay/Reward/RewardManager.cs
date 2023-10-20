@@ -89,7 +89,7 @@ namespace CryptoQuest.Gameplay.Reward
             while (currentLootIndex < mergedLoots.Count)
             {
                 var loot = mergedLoots[currentLootIndex];
-                if (loot.AcceptMerger(rewardMerger))
+                if (!loot.AcceptMerger(rewardMerger))
                 {
                     Debug.LogWarning($"Something wrong when merging this loot: {loot}");
                 }
