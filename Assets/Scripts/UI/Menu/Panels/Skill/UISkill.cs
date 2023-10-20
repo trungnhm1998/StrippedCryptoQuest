@@ -47,9 +47,12 @@ namespace CryptoQuest.UI.Menu.Panels.Skill
             _cost.text = skill.Parameters.Cost.ToString();
 
             SetDisable(!skill.Parameters.UsageScenarioSO.HasFlag(EAbilityUsageScenario.Field));
-            
-            _skillButton.onClick.RemoveAllListeners();
-            _skillButton.onClick.AddListener(OnPressButton);
+
+            if (!_isDisabled)
+            {
+                _skillButton.onClick.RemoveAllListeners();
+                _skillButton.onClick.AddListener(OnPressButton);
+            }
         }
 
         private void OnPressButton()
