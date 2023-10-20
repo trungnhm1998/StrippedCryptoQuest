@@ -5,6 +5,7 @@ using CryptoQuest.Gameplay;
 using CryptoQuest.Input;
 using CryptoQuest.System.CutsceneSystem.Events;
 using CryptoQuest.System.Dialogue.Events;
+using CryptoQuest.System.SaveSystem;
 using IndiGames.Core.Events.ScriptableObjects;
 using UnityEngine;
 using UnityEngine.Events;
@@ -48,6 +49,7 @@ namespace CryptoQuest.System.Dialogue.Managers
         [SerializeField] private GameStateSO _gameState;
 
         [SerializeField] private InputMediatorSO _inputMediator;
+        [SerializeField] private SaveSystemSO _saveSystem;
 
         [Header("UI")] [SerializeField] private DialogueRunner _dialogueRunner;
 
@@ -64,6 +66,8 @@ namespace CryptoQuest.System.Dialogue.Managers
         private string _currentYarnNode;
 
         private Yarn.Dialogue Dialogue => _dialogueRunner.Dialogue;
+
+        private void Awake() => _dialogueRunner.AddFunction("GetPlayerName", GetPlayerName);
 
         private void OnEnable()
         {
@@ -109,6 +113,8 @@ namespace CryptoQuest.System.Dialogue.Managers
             _onDialogueCompleted.Invoke();
             _currentYarnNode = "";
         }
+
+        private string GetPlayerName() => _saveSystem.PlayerName;
 
         /// <summary>
         /// Because of this method I have to use singleton or else the system use Find with name in a large scene
