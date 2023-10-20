@@ -58,17 +58,19 @@ namespace CryptoQuest.UI.Menu
         /// </summary>
         private void OnEnable()
         {
+            if (_mainMenuFsm != null)
+            {
+                _inputMediator.MenuNavigateEvent += _mainMenuFsm.HandleNavigate;
+                _inputMediator.MenuConfirmedEvent += _mainMenuFsm.Confirm;
+            }
             _onCloseMainMenuEventChannel.EventRaised += CloseMainMenu;
             _navigationBar.MenuChanged += ChangeMenu;
-
-            _inputMediator.MenuNavigateEvent += _mainMenuFsm.HandleNavigate;
             _inputMediator.ShowMainMenu += ShowMainMenu; // Start Button
             _inputMediator.StartPressed += CloseMainMenu; // also start button but only in main menu
             _inputMediator.MenuCancelEvent += MenuCancelEventRaised; // East Button
             _inputMediator.TabChangeEvent += ChangeTab; // shoulder LB/RB
             _inputMediator.MenuSubmitEvent += Submit; // South Button
             _inputMediator.MenuInteractEvent += Interact;
-            _inputMediator.MenuConfirmedEvent += _mainMenuFsm.Confirm;
             _inputMediator.MenuResetEvent += Reset;
             _inputMediator.MenuExecuteEvent += Execute;
         }
@@ -78,18 +80,22 @@ namespace CryptoQuest.UI.Menu
             _onCloseMainMenuEventChannel.EventRaised -= CloseMainMenu;
             _navigationBar.MenuChanged -= ChangeMenu;
 
-            _inputMediator.MenuNavigateEvent -= _mainMenuFsm.HandleNavigate;
             _inputMediator.ShowMainMenu -= ShowMainMenu;
             _inputMediator.StartPressed -= CloseMainMenu; // also start button but only in main menu
             _inputMediator.MenuCancelEvent -= MenuCancelEventRaised;
             _inputMediator.TabChangeEvent -= ChangeTab;
             _inputMediator.MenuSubmitEvent -= Submit;
             _inputMediator.MenuInteractEvent -= Interact;
-            _inputMediator.MenuConfirmedEvent -= _mainMenuFsm.Confirm;
+
             _inputMediator.MenuResetEvent -= Reset;
             _inputMediator.MenuExecuteEvent -= Execute;
-            
-            _mainMenuFsm.OnExit();
+
+            if (_mainMenuFsm != null)
+            {
+                _inputMediator.MenuConfirmedEvent -= _mainMenuFsm.Confirm;
+                _inputMediator.MenuNavigateEvent -= _mainMenuFsm.HandleNavigate;
+                _mainMenuFsm.OnExit();
+            }
         }
 
         #region State Machine Delegates

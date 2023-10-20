@@ -1,4 +1,5 @@
-﻿using IndiGames.Core.SaveSystem;
+﻿using CryptoQuest.System;
+using CryptoQuest.System.SaveSystem;
 
 namespace CryptoQuest.UI.Title.TitleStates
 {
@@ -30,6 +31,17 @@ namespace CryptoQuest.UI.Title.TitleStates
             _startGamePanel.gameObject.SetActive(false);
         }
 
+        private bool IsPlayerNameExist()
+        {
+            var saveSystem = ServiceProvider.GetService<ISaveSystem>();
+            if (saveSystem != null)
+            {
+                saveSystem.LoadSaveGame();
+                return !string.IsNullOrEmpty(saveSystem.PlayerName);
+            }
+            return false;
+        }
+
         private void SettingButtonPressed()
         {
             _startGamePanelController.ChangeState(new GameSettingState(_startGamePanelController));
@@ -37,7 +49,7 @@ namespace CryptoQuest.UI.Title.TitleStates
 
         private void StartGameButtonPressed()
         {
-            bool isPlayerNameExist = _startGamePanel.IsPlayerNameExist();
+            bool isPlayerNameExist = IsPlayerNameExist();
             HandleStartGame(isPlayerNameExist);
         }
 

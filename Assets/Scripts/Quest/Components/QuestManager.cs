@@ -5,13 +5,16 @@ using CryptoQuest.Gameplay.Loot;
 using CryptoQuest.Gameplay.Reward.Events;
 using CryptoQuest.Quest.Authoring;
 using CryptoQuest.Quest.Events;
+using CryptoQuest.System;
+using CryptoQuest.System.SaveSystem;
+using IndiGames.Core.SaveSystem;
 using UnityEngine;
 
 namespace CryptoQuest.Quest.Components
 {
     [AddComponentMenu("Quest System/Quest Manager")]
     [DisallowMultipleComponent]
-    public class QuestManager : MonoBehaviour
+    public class QuestManager : MonoBehaviour, IJsonSerializable
     {
         public static Action<IQuestConfigure> OnConfigureQuest;
         public static Action<QuestSO> OnRemoveProgressingQuest;
@@ -23,16 +26,22 @@ namespace CryptoQuest.Quest.Components
         [SerializeField] private QuestEventChannelSO _giveQuestEventChannel;
         [SerializeField] private RewardLootEvent _rewardEventChannel;
 
-        [field: SerializeReference, HideInInspector]
-        public List<QuestInfo> InProgressQuest { get; private set; } = new();
+        [SerializeField, HideInInspector] private List<QuestInfo> _inProgressQuest = new();
+        public List<QuestInfo> InProgressQuest => _inProgressQuest;
 
-        [field: SerializeReference, HideInInspector]
-        public List<QuestInfo> CompletedQuests { get; private set; } = new();
+        [SerializeField, HideInInspector] private List<QuestInfo> _completedQuests = new();
+        public List<QuestInfo> CompletedQuests => _completedQuests;
 
         private readonly List<string> _completedQuestsId = new();
 
         private QuestSO _currentQuestData;
         private QuestInfo _currentQuestInfo;
+        private ISaveSystem _saveSystem;
+
+        private void Awake()
+        {
+            _saveSystem = ServiceProvider.GetService<ISaveSystem>();
+        }
 
         private void OnEnable()
         {
@@ -52,6 +61,11 @@ namespace CryptoQuest.Quest.Components
 
             _triggerQuestEventChannel.EventRaised -= TriggerQuest;
             _giveQuestEventChannel.EventRaised -= GiveQuest;
+        }
+
+        private void Start()
+        {
+            _saveSystem?.LoadObject(this);
         }
 
         public void TriggerQuest(QuestSO questData)
@@ -86,6 +100,7 @@ namespace CryptoQuest.Quest.Components
 
             _currentQuestData = questData;
             questData.OnRewardReceived += RewardReceived;
+            _saveSystem?.SaveObject(this);
         }
 
 
@@ -93,6 +108,7 @@ namespace CryptoQuest.Quest.Components
         {
             _rewardEventChannel.EventRaised(loots);
             _currentQuestData.OnRewardReceived -= RewardReceived;
+            _saveSystem?.SaveObject(this);
         }
 
         private void UpdateQuestProgress(QuestInfo questInfo)
@@ -111,6 +127,7 @@ namespace CryptoQuest.Quest.Components
                 UpdateQuestProgress(progressQuestInfo);
                 break;
             }
+            _saveSystem?.SaveObject(this);
         }
 
         private bool IsQuestTriggered(QuestSO questSo)
@@ -136,6 +153,21 @@ namespace CryptoQuest.Quest.Components
                 if (inProgressQuest.BaseData != quest) continue;
                 InProgressQuest.Remove(inProgressQuest);
             }
+            _saveSystem?.SaveObject(this);
         }
+
+        #region SaveSystem
+        public string Key => this.name;
+
+        public string ToJson()
+        {
+            return JsonUtility.ToJson(this);
+        }
+
+        public bool FromJson(string json)
+        {
+            try { JsonUtility.FromJsonOverwrite(json, this); return true; } catch { return false; }
+        }
+        #endregion
     }
 }

@@ -12,7 +12,8 @@ namespace CryptoQuest.Item
     {
         public static event Action<ConsumableInfo> QuantityReduced;
 
-        [field: SerializeField] public int Quantity { get; private set; } = 1;
+        [SerializeField] private int _quantity = 1;
+        public int Quantity => _quantity;
 
         public AssetReferenceT<Sprite> Icon => Data.Image;
         public LocalizedString DisplayName => Data.DisplayName;
@@ -25,7 +26,7 @@ namespace CryptoQuest.Item
 
         public ConsumableInfo(ConsumableSO baseItemSO, int quantity = 1) : base(baseItemSO)
         {
-            Quantity = quantity;
+            _quantity = quantity;
         }
 
         public ConsumableInfo(string dataId)
@@ -37,7 +38,7 @@ namespace CryptoQuest.Item
 
         public void SetQuantity(int quantity)
         {
-            Quantity = quantity;
+            _quantity = quantity;
         }
 
         public void Consuming()

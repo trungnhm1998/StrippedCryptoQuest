@@ -1,6 +1,6 @@
 using CryptoQuest.Events;
 using CryptoQuest.Input;
-using IndiGames.Core.SaveSystem;
+using CryptoQuest.System.SaveSystem;
 using UnityEngine;
 using Yarn.Unity;
 
@@ -11,9 +11,10 @@ namespace CryptoQuest.System.Dialogue
         private DialogueRunner _dialogueRunner;
         private InMemoryVariableStorage _yarnVariableStorage;
         [SerializeField] private StringEventChannelSO _onTriggerEndDialogue;
-        [SerializeField] private SaveSystemSO _saveSystemSO;
         [SerializeField] private StringEventChannelSO _onTriggerStartDialogue;
         [SerializeField] private InputMediatorSO _inputMediator;
+
+        private ISaveSystem _saveSystem;
 
         private void Awake()
         {
@@ -21,6 +22,7 @@ namespace CryptoQuest.System.Dialogue
 
             _yarnVariableStorage = FindObjectOfType<InMemoryVariableStorage>();
             _dialogueRunner.AddCommandHandler<string>("EndDialogue", OnDialogueEnd);
+            _saveSystem = ServiceProvider.GetService<ISaveSystem>();
         }
 
         private void OnEnable()
@@ -35,7 +37,10 @@ namespace CryptoQuest.System.Dialogue
 
         private void Start()
         {
-            _yarnVariableStorage.SetValue("$playerName", _saveSystemSO.PlayerName);
+            if(_saveSystem != null)
+            {
+                _yarnVariableStorage.SetValue("$playerName", _saveSystem.PlayerName);
+            }
         }
 
         private void OnDialogueEnd(string str)

@@ -5,19 +5,24 @@ using CryptoQuest.Gameplay.Loot;
 using CryptoQuest.Item;
 using CryptoQuest.Item.Equipment;
 using CryptoQuest.System;
+using CryptoQuest.System.SaveSystem;
+using IndiGames.Core.SaveSystem;
 using UnityEngine;
 
 namespace CryptoQuest.Gameplay.Inventory
 {
     public interface IInventoryController
     {
-        void Add(EquipmentInfo equipment);
-        void Remove(EquipmentInfo equipment);
         InventorySO Inventory { get; }
+
+        void Add(EquipmentInfo equipment);
+
+        void Remove(EquipmentInfo equipment);
+
         bool Remove(ConsumableInfo consumable);
     }
 
-    public class InventoryController : MonoBehaviour, IInventoryController
+    public class InventoryController : MonoBehaviour, IInventoryController, IJsonSerializable
     {
         [SerializeField] private InventorySO _inventory;
         public InventorySO Inventory => _inventory;
@@ -26,11 +31,13 @@ namespace CryptoQuest.Gameplay.Inventory
         [SerializeField] private LootEventChannelSO _addLootRequestEventChannel;
 
         private IEquipmentDefProvider _definitionDatabase;
+        private ISaveSystem _saveSystem;
 
         private void Awake()
         {
             ServiceProvider.Provide<IInventoryController>(this);
             _definitionDatabase = GetComponent<IEquipmentDefProvider>();
+            _saveSystem = ServiceProvider.GetService<ISaveSystem>();
             StartCoroutine(LoadAllEquipment());
         }
 
@@ -45,6 +52,7 @@ namespace CryptoQuest.Gameplay.Inventory
             }
 
             _inventory.OnLoaded();
+            _saveSystem?.SaveObject(this);
         }
 
         private void OnEnable()
@@ -57,9 +65,45 @@ namespace CryptoQuest.Gameplay.Inventory
             _addLootRequestEventChannel.EventRaised -= AddLoot;
         }
 
+        private void Start()
+        {
+            _saveSystem?.LoadObject(this);
+        }
+
         private void AddLoot(LootInfo loot) => loot.AddItemToInventory(_inventory);
-        public void Add(EquipmentInfo equipment) => _inventory.Add(equipment);
-        public void Remove(EquipmentInfo equipment) => _inventory.Remove(equipment);
-        public bool Remove(ConsumableInfo consumable) => _inventory.Remove(consumable);
+
+        public void Add(EquipmentInfo equipment)
+        {
+            _inventory.Add(equipment);
+            _saveSystem?.SaveObject(this);
+        }
+
+        public void Remove(EquipmentInfo equipment)
+        {
+            _inventory.Remove(equipment);
+            _saveSystem?.SaveObject(this);
+        }
+
+        public bool Remove(ConsumableInfo consumable)
+        {
+            var result = _inventory.Remove(consumable);
+            _saveSystem?.SaveObject(this);
+            return result;
+        }
+
+        #region SaveSystem
+        public string Key { get { return this.name; } }
+
+        public string ToJson()
+        {
+            return JsonUtility.ToJson(_inventory);
+        }
+
+        public bool FromJson(string json)
+        {
+            try { JsonUtility.FromJsonOverwrite(json, _inventory); return true; } catch { }
+            return false;
+        }
+        #endregion
     }
 }

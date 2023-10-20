@@ -1,9 +1,10 @@
-﻿using UnityEngine;
+﻿using IndiGames.Core.SaveSystem.ScriptableObjects;
+using UnityEngine;
 using UnityEngine.Events;
 
 namespace IndiGames.Core.Events.ScriptableObjects
 {
-    public abstract class GenericEventChannelSO<T> : ScriptableObject
+    public abstract class GenericEventChannelSO<T> : SerializableScriptableObject
     {
         public UnityAction<T> EventRaised;
 

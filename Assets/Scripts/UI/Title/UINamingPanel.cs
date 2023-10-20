@@ -1,5 +1,6 @@
-﻿using CryptoQuest.System.Settings;
-using IndiGames.Core.SaveSystem;
+﻿using CryptoQuest.System;
+using CryptoQuest.System.SaveSystem;
+using CryptoQuest.System.Settings;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -11,7 +12,6 @@ namespace CryptoQuest.UI.Title
     public class UINamingPanel : MonoBehaviour
     {
         [field: SerializeField] public Button ConfirmButton { get; private set; }
-        [field: SerializeField] public SaveSystemSO SaveSystemSO { get; private set; }
         [field: SerializeField] public TMP_InputField NameInput { get; private set; }
         [SerializeField] private TextMeshProUGUI _validationText;
         [SerializeField] private LocalizeStringEvent _validationStringEvent;
@@ -26,6 +26,7 @@ namespace CryptoQuest.UI.Title
         public UnityAction ConfirmNameButtonPressed;
         public UnityAction CancelEvent;
         private bool _isInputValid;
+        private ISaveSystem _saveSystem;
 
         private const string VALIDATION_TABLE_ENTRY = "TITLE_VALIDATE_";
 
@@ -33,6 +34,7 @@ namespace CryptoQuest.UI.Title
         {
             _tempSaveInfo.PlayerName = string.Empty;
             _nameValidator = new NameValidator(_badWordAsset, _specialCharacterAsset);
+            _saveSystem = ServiceProvider.GetService<ISaveSystem>();
         }
 
         private void OnEnable()
@@ -53,7 +55,12 @@ namespace CryptoQuest.UI.Title
                 return;
             }
 
-            SaveSystemSO.PlayerName = NameInput.text;
+            if(_saveSystem != null)
+            {
+                _saveSystem.PlayerName = NameInput.text;
+                _saveSystem.SaveGame();
+            }
+
             ConfirmNameButtonPressed?.Invoke();
         }
 

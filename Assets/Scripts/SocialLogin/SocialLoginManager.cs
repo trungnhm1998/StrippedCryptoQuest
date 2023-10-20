@@ -18,7 +18,6 @@ namespace CryptoQuest.SocialLogin
 
         [Header("Listen on")]
         [SerializeField] private VoidEventChannelSO _requestTwitterLoginEvent;
-
         [SerializeField] private VoidEventChannelSO _requestFacebookLoginEvent;
         [SerializeField] private VoidEventChannelSO _requestGoogleLoginEvent;
         [SerializeField] private VoidEventChannelSO _requestWalletLoginEvent;
@@ -26,7 +25,6 @@ namespace CryptoQuest.SocialLogin
 
         [Header("Raise on")]
         [SerializeField] private VoidEventChannelSO _loginSuccessEvent;
-
         [SerializeField] private StringEventChannelSO _loginFailEvent;
 
         private void OnEnable()
@@ -98,7 +96,7 @@ namespace CryptoQuest.SocialLogin
 #else
             yield return new WaitForSeconds(5f);
 #endif
-            _loginSuccessEvent.RaiseEvent();
+            OnSignInSuccess(null);
         }
 
         private IEnumerator CoLoginFail()
@@ -108,7 +106,7 @@ namespace CryptoQuest.SocialLogin
 #else
             yield return new WaitForSeconds(3f);
 #endif
-            _loginFailEvent.RaiseEvent("Login Failed");
+           OnSignInFailed("Login Failed");
         }
     }
 }

@@ -31,6 +31,8 @@ namespace IndiGames.Core.SceneManagementSystem
         private AsyncOperationHandle<SceneInstance> _gameplayManagerLoadingOperationHandle;
 
         private SceneScriptableObject _sceneToLoad;
+        protected SceneScriptableObject SceneToLoad => _sceneToLoad;
+
         private SceneScriptableObject _currentlyLoadedScene; // ignore gameplay/global manager scene
         private SceneInstance _gameplayManagerSceneInstance;
         private bool _isLoading;

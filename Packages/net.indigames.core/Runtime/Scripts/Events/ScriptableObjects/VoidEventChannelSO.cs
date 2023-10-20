@@ -1,10 +1,11 @@
-﻿using UnityEngine;
+﻿using IndiGames.Core.SaveSystem.ScriptableObjects;
+using UnityEngine;
 using UnityEngine.Events;
 
 namespace IndiGames.Core.Events.ScriptableObjects
 {
     [CreateAssetMenu(menuName = "Core/Events/Void Event Channel")]
-    public class VoidEventChannelSO : ScriptableObject
+    public class VoidEventChannelSO : SerializableScriptableObject
     {
         public UnityAction EventRaised;
 

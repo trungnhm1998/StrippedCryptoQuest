@@ -10,18 +10,23 @@ using CryptoQuest.Item.Equipment;
 using UnityEngine;
 using ESlotType =
     CryptoQuest.Item.Equipment.EquipmentSlot.EType;
+using IndiGames.Core.SaveSystem.ScriptableObjects;
 
 namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects
 {
     [CreateAssetMenu(menuName = "Crypto Quest/Inventory/Inventory")]
-    public class InventorySO : ScriptableObject
+    public class InventorySO : SerializableScriptableObject
     {
         public event Action Loaded;
         [SerializeField] private InventoryConfigSO _inventoryConfig;
-        [field: SerializeField] public List<ConsumableInfo> Consumables { get; private set; } = new();
+
+        [SerializeField] private List<ConsumableInfo> _consumables = new();
+        public List<ConsumableInfo> Consumables => _consumables;
+
         [SerializeField] private List<EquipmentInfo> _equipments = new();
         public List<EquipmentInfo> Equipments => _equipments;
-        [field: SerializeField] public WalletControllerSO WalletController { get; private set; }
+
+        [SerializeField] public WalletControllerSO WalletController { get; private set; }
 
         public void OnLoaded() => Loaded?.Invoke();
 

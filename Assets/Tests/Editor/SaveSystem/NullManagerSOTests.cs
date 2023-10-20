@@ -1,9 +1,9 @@
-﻿using IndiGames.Core.SaveSystem;
+﻿using CryptoQuest.System.SaveSystem;
 using NUnit.Framework;
 using System.Threading.Tasks;
 using UnityEditor;
 
-namespace IndiGames.Core.Tests.Editor.SaveSystem
+namespace CryptoQuest.Tests.Editor.SaveSystem
 {
     [TestFixture]
     public class NullManagerSOTests
@@ -26,7 +26,7 @@ namespace IndiGames.Core.Tests.Editor.SaveSystem
         [Test]
         public async Task SaveGame_ShouldReturnTrue()
         {
-            Assert.IsTrue(await _nullSaveManagerSO.SaveAsync(new SaveData()), "SaveGame should return true.");
+            Assert.IsTrue(await _nullSaveManagerSO.SaveAsync("{}"), "SaveGame should return true.");
         }
 
         [Test]
@@ -34,7 +34,6 @@ namespace IndiGames.Core.Tests.Editor.SaveSystem
         {
             var saveData = await _nullSaveManagerSO.LoadAsync();
             Assert.NotNull(saveData, "LoadSaveGame should return not null value.");
-            Assert.AreEqual(saveData.playerName, SaveData.DEFAULT_PLAYER_NAME, "saveData.playerName should be the default player name.");
         }
     }
 }

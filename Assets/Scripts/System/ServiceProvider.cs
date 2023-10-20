@@ -29,7 +29,7 @@ namespace CryptoQuest.System
 
         public static T GetService<T>()
         {
-            return (T)Services[typeof(T)];
+            return Services.ContainsKey(typeof(T)) ? (T)Services[typeof(T)] : default(T);
         }
     }
 }

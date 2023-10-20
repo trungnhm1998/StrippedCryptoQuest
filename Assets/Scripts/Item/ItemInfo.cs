@@ -7,9 +7,9 @@ namespace CryptoQuest.Item
     [Serializable]
     public abstract class ItemInfo
     {
-        [SerializeField, ReadOnly] private string _id = Guid.NewGuid().ToString();
+        [SerializeField, ReadOnly] private long _id = -1;
 
-        public string Id
+        public long Id
         {
             get => _id;
             set => _id = value;

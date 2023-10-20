@@ -14,7 +14,9 @@ namespace CryptoQuest.Item.Equipment
         [SerializeField] private string _definitionId;
         public string DefinitionId => _definitionId;
 
-        [field: SerializeField] public int Level { get; private set; }
+        [SerializeField] private int _level = 1;
+        public int Level => _level;
+
         public EquipmentPrefab Data => Prefab;
         public AttributeWithValue[] Stats => Def.Stats;
         public EquipmentSlot.EType[] RequiredSlots => Prefab.RequiredSlots;
@@ -43,20 +45,20 @@ namespace CryptoQuest.Item.Equipment
 
         public EquipmentInfo()
         {
-            Level = 1;
+            _level = 1;
         }
 
-        public EquipmentInfo(string id, string definitionId, int lvl)
+        public EquipmentInfo(long id, string definitionId, int lvl)
         {
             Id = id;
             _definitionId = definitionId;
-            Level = lvl;
+            _level = lvl;
         }
 
         public EquipmentInfo(string definitionId, int lvl = 1)
         {
             _definitionId = definitionId;
-            Level = lvl;
+            _level = lvl;
         }
 
 
@@ -100,7 +102,7 @@ namespace CryptoQuest.Item.Equipment
             return new EquipmentInfo(DefinitionId)
             {
                 Id = Id,
-                Level = Level,
+                _level = Level,
                 Def = Def,
                 Prefab = Prefab
             };
@@ -153,6 +155,6 @@ namespace CryptoQuest.Item.Equipment
 
         public bool Loaded() => Prefab != null && Prefab.EquipmentType != null && Def != null;
 
-        public void SetLevel(int level) => Level = level;
+        public void SetLevel(int level) => _level = level;
     }
 }

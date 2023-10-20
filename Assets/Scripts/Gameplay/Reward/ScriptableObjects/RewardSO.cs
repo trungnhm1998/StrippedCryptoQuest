@@ -1,12 +1,10 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using CryptoQuest.Gameplay.Loot;
-using UnityEngine;
+using IndiGames.Core.SaveSystem.ScriptableObjects;
 
 namespace CryptoQuest.Gameplay.Reward.ScriptableObjects
 {
-    public class RewardSO : ScriptableObject
+    public class RewardSO : SerializableScriptableObject
     {
         public event Action<LootInfo[]> OnRewardEvent;
         public event Action<float> OnRewardExpEvent;

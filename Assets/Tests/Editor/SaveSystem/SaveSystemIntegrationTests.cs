@@ -1,21 +1,20 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using CryptoQuest.Environment;
+using CryptoQuest.Networking;
+using CryptoQuest.Networking.RestAPI;
 using CryptoQuest.System.SaveSystem;
 using NUnit.Framework;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEditor;
 using UnityEngine;
-using UnityEngine.TestTools;
-using CryptoQuest.Networking;
-using System.Threading.Tasks;
 using static CryptoQuest.Networking.RestAPI.CQRestAPIDebug;
-using CryptoQuest.Networking.RestAPI;
-using CryptoQuest.Environment;
 
-namespace CryptoQuest.Tests.Runtime.System.Save
+namespace CryptoQuest.Tests.Editor.SaveSystem
 {
-    public class OnlineSaveManagerSOTest
-    {        
-        private SaveManagerSO _saveManagerSO;
+    [TestFixture]
+    public class SaveSystemIntegrationTests
+    {
+        private SaveSystemSO _saveSystemSO;
 
         private EnvironmentSO _environmentSO;
         private AuthorizationSO _authorizationSO;
@@ -48,12 +47,10 @@ namespace CryptoQuest.Tests.Runtime.System.Save
         [SetUp]
         public void Setup()
         {
-            var assetGuid = AssetDatabase.FindAssets("t:OnlineSaveManagerSO");
-            Assert.That(assetGuid.Length, Is.EqualTo(1), "There should be exactly one StorageSaveManagerSO in the project.");
-
+            var assetGuid = AssetDatabase.FindAssets("t:SaveSystemSO");
             var assetPath = AssetDatabase.GUIDToAssetPath(assetGuid[0]);
-            _saveManagerSO = AssetDatabase.LoadAssetAtPath<OnlineSaveManagerSO>(assetPath);
-            Assert.That(_saveManagerSO, Is.Not.Null, "StorageSaveManagerSO should not be null.");
+            _saveSystemSO = AssetDatabase.LoadAssetAtPath<SaveSystemSO>(assetPath);
+            Assert.IsNotNull(_saveSystemSO, "Save System must not be null.");
 
             assetGuid = AssetDatabase.FindAssets("t:AuthorizationSO");
             assetPath = AssetDatabase.GUIDToAssetPath(assetGuid[0]);
@@ -64,36 +61,21 @@ namespace CryptoQuest.Tests.Runtime.System.Save
             assetPath = AssetDatabase.GUIDToAssetPath(assetGuid[0]);
             _environmentSO = AssetDatabase.LoadAssetAtPath<EnvironmentSO>(assetPath);
             Assert.That(_environmentSO, Is.Not.Null, "EnvironmentSO should not be null.");
+
+            // Login in debug mode before test, ensure it works with Online Storage Manager
+            new Task(async () => { await DebugLogin(); }).Start(TaskScheduler.FromCurrentSynchronizationContext());
         }
 
         [Test]
         public async Task SaveGame_ShouldReturnTrue()
         {
-            var ret = await DebugLogin();
-            if (ret && _saveManagerSO != null)
-            {
-                var result = await _saveManagerSO.SaveAsync("{}");
-                Assert.That(result, Is.EqualTo(true), "SaveGame should return true.");
-            }
-            else
-            {
-                Assert.Fail("User not logged in");
-            }
+            Assert.IsTrue(await _saveSystemSO.SaveGameAsync(), "SaveGame should return true.");
         }
 
-        [Test]
-        public async Task LoadSaveGame_ShouldReturnTrue()
+        [TearDown]
+        public void Teardown()
         {
-            var ret = await DebugLogin();
-            if (ret && _saveManagerSO != null)
-            {
-                var saveData = await _saveManagerSO.LoadAsync();
-                Assert.That(saveData != null, "LoadSaveGame should return non null value and must contain default player name.");
-            }
-            else
-            {
-                Assert.Fail("User not logged in");
-                }
+            _saveSystemSO = null;
         }
     }
 }

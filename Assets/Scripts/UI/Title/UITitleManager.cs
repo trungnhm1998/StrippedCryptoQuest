@@ -1,6 +1,5 @@
-﻿using IndiGames.Core.Events.ScriptableObjects;
-using IndiGames.Core.SaveSystem;
-using System.Threading.Tasks;
+﻿using CryptoQuest.System.SaveSystem;
+using IndiGames.Core.Events.ScriptableObjects;
 using UnityEngine;
 
 namespace CryptoQuest.UI.Title
@@ -32,15 +31,6 @@ namespace CryptoQuest.UI.Title
 
         private bool _hasSaveData;
 
-        private void Awake()
-        {
-            var task = new Task(async () =>
-            {
-                _hasSaveData = await _saveSystem.LoadSaveGame();
-            });
-            task.RunSynchronously(TaskScheduler.FromCurrentSynchronizationContext());            
-        }
-
         private void OnEnable()
         {
             _loginSuccessEventChannel.EventRaised += HandleLoginSuccess;
@@ -54,6 +44,7 @@ namespace CryptoQuest.UI.Title
         private void Start()
         {
             ShowSocialButtonPanel();
+            _hasSaveData = _saveSystem?.PlayerName != null;
         }
 
         private void ShowSocialButtonPanel()
