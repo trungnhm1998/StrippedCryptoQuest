@@ -142,5 +142,14 @@ namespace CryptoQuest.System.SaveSystem
             }
             return false;
         }
+
+        #region Editor Tools
+
+#if UNITY_EDITOR
+        public void Editor_ClearSave() => _saveData = new SaveData();
+        public void Editor_OpenSaveFolder() => Application.OpenURL(Application.persistentDataPath);
+
+#endif
+        #endregion
     }
 }
