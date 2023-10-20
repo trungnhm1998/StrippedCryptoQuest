@@ -8,16 +8,20 @@ namespace CryptoQuest.Battle.UI.Logs
     public class ConsumeItemLogger : LoggerComponentBase
     {
         [SerializeField] private LocalizedString _consumeItemMessage;
+        [SerializeField] private LocalizedString _consumeItemFailMessage;
         private TinyMessageSubscriptionToken _useConsumeItemEvent;
+        private TinyMessageSubscriptionToken _consumeItemFailEvent;
 
         private void OnEnable()
         {
             _useConsumeItemEvent = BattleEventBus.SubscribeEvent<ConsumeItemEvent>(LogConsumeItem);
+            _consumeItemFailEvent = BattleEventBus.SubscribeEvent<ConsumeItemFailEvent>(LogConsumeItemFail);
         }
 
         private void OnDisable()
         {
             BattleEventBus.UnsubscribeEvent(_useConsumeItemEvent);
+            BattleEventBus.UnsubscribeEvent(_consumeItemFailEvent);
         }
 
         private void LogConsumeItem(ConsumeItemEvent consumeEvent)
@@ -27,6 +31,11 @@ namespace CryptoQuest.Battle.UI.Logs
             castMessage.Add(Constants.ITEM_NAME, consumeEvent.ItemInfo.Data.DisplayName);
             castMessage.Add(Constants.CHARACTER_TARGET_NAME, consumeEvent.Target.LocalizedName);
             Logger.AppendLog(castMessage);
+        }
+
+        private void LogConsumeItemFail(ConsumeItemFailEvent eventObject)
+        {
+            Logger.AppendLog(_consumeItemFailMessage);
         }
     }
 }

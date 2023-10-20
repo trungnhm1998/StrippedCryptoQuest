@@ -60,8 +60,7 @@ namespace CryptoQuest.AbilitySystem.Abilities
         {
             foreach (var tag in _def.CancelEffectWithTags)
             {
-                Debug.Log($"Cancel effect with tag {tag}");
-                Owner.EffectSystem.ExpireEffectWithTag(tag);
+                Owner.EffectSystem.ExpireEffectWithTagImmediately(tag);
             }
 
             var effect = _consumable.Data.Effect;

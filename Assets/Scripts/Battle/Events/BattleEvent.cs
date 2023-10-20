@@ -116,6 +116,8 @@ namespace CryptoQuest.Battle.Events
         public Components.Character Target { get; set; }
     }
 
+    public class ConsumeItemFailEvent : BattleEvent { }
+
     /// <summary>
     ///  Currently support <see cref="TagScriptableObject"/> which might be wrong for some cases
     /// </summary>

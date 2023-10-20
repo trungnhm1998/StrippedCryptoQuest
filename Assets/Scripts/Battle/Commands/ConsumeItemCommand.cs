@@ -50,7 +50,10 @@ namespace CryptoQuest.Battle.Commands
             if (ableToUseOnAtLeastOneHero)
             {
                 _selectedItem.OnConsumed(inventoryController);
+                return;
             }
+
+            BattleEventBus.RaiseEvent(new ConsumeItemFailEvent());
         }
     }
 }

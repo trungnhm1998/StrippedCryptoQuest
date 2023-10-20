@@ -2,6 +2,7 @@ using CryptoQuest.AbilitySystem;
 using CryptoQuest.Battle.Events;
 using CryptoQuest.System;
 using TinyMessenger;
+using UnityEngine;
 using UnityEngine.Localization;
 using UnityEngine.Localization.SmartFormat.PersistentVariables;
 
@@ -37,26 +38,41 @@ namespace CryptoQuest.Battle.UI.Logs
 
         private void LogOnEffectAdded(EffectAddedEvent ctx)
         {
-            if (!CanLog(ctx, out var asset)) return;
+            if (!CanLogWhenActive(ctx, out var asset)) return;
             LogAbnormalStatus(asset.AddedMessage, ctx);
         }
 
         private void LogOnEffectAffecting(EffectAffectingEvent ctx)
         {
-            if (!CanLog(ctx, out var asset)) return;
+            if (!CanLogWhenActive(ctx, out var asset)) return;
             LogAbnormalStatus(asset.AffectMessage, ctx);
         }
 
         private void LogOnEffectRemoved(EffectRemovedEvent ctx)
         {
-            if (!CanLog(ctx, out var asset)) return;
+            if (!CanLogWhenRemove(ctx, out var asset)) return;
             LogAbnormalStatus(asset.RemoveMessage, ctx);
         }
 
-        private bool CanLog(EffectEvent ctx, out TagAsset asset)
+        private bool CanLogWhenActive(EffectEvent ctx, out TagAsset asset)
         {
             asset = default;
-            return !IsDamageOverTimeOrCrowdControlTag(ctx) && TagAssetProvider.TryGetTagAsset(ctx.Tag, out asset);
+            // When effect added and effecting need to check has tag in system
+            return TryGetValidTagAsset(ctx, out asset) && ctx.Character.HasTag(ctx.Tag);
+        }
+
+        private bool CanLogWhenRemove(EffectEvent ctx, out TagAsset asset)
+        {
+            asset = default;
+            // When removed system has to check all tag has been remove
+            return TryGetValidTagAsset(ctx, out asset) && !ctx.Character.HasTag(ctx.Tag);
+        }
+
+        private bool TryGetValidTagAsset(EffectEvent ctx, out TagAsset asset)
+        {
+            var isContextValid = IsDamageOverTimeOrCrowdControlTag(ctx);
+            asset = default;
+            return isContextValid && TagAssetProvider.TryGetTagAsset(ctx.Tag, out asset);
         }
 
         /// <summary>
@@ -67,9 +83,8 @@ namespace CryptoQuest.Battle.UI.Logs
         private static bool IsDamageOverTimeOrCrowdControlTag(EffectEvent ctx)
         {
             var gameplayTag = ctx.Tag;
-            var isDamageOverTimeOrCc = gameplayTag.IsChildOf(TagsDef.DamageOverTime) ||
-                                       gameplayTag.IsChildOf(TagsDef.CrowdControl);
-            return isDamageOverTimeOrCc && ctx.Character.HasTag(gameplayTag);
+            return gameplayTag.IsChildOf(TagsDef.DamageOverTime) ||
+                gameplayTag.IsChildOf(TagsDef.CrowdControl);
         }
 
         private void LogAbnormalStatus(LocalizedString contextMessage, EffectEvent ctx)
