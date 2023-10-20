@@ -19,8 +19,17 @@ namespace CryptoQuest.Quest.Actor
         {
             _onSceneLoadedEventChannel.EventRaised += ConfigureActors;
 
-            if (_actorSpawnSetting) _actorSpawnSetting.OnConfigure += Spawn;
-            if (_actorDeSpawnSetting) _actorDeSpawnSetting.OnConfigure += DeSpawn;
+            if (_actorSpawnSetting)
+            {
+                _actorSpawnSetting.OnConfigure += Spawn;
+                _actorSpawnSetting.Subscribe();
+            }
+
+            if (_actorDeSpawnSetting)
+            {
+                _actorDeSpawnSetting.OnConfigure += DeSpawn;
+                _actorDeSpawnSetting.Subscribe();
+            }
         }
 
         private void OnDisable()
@@ -28,8 +37,17 @@ namespace CryptoQuest.Quest.Actor
             _onSceneLoadedEventChannel.EventRaised -= ConfigureActors;
 
             //TODO: these codes smell, need refactor   
-            if (_actorSpawnSetting) _actorSpawnSetting.QuestToTrack.OnQuestCompleted -= ActivateSpawnActor;
-            if (_actorDeSpawnSetting) _actorDeSpawnSetting.QuestToTrack.OnQuestCompleted -= ActivateDeSpawnActor;
+            if (_actorSpawnSetting)
+            {
+                _actorSpawnSetting.OnQuestCompleted -= ActivateSpawnActor;
+                _actorSpawnSetting.Unsubscribe();
+            }
+
+            if (_actorDeSpawnSetting)
+            {
+                _actorDeSpawnSetting.OnQuestCompleted -= ActivateDeSpawnActor;
+                _actorDeSpawnSetting.Unsubscribe();
+            }
         }
 
         private void ConfigureActors()
@@ -73,7 +91,7 @@ namespace CryptoQuest.Quest.Actor
 
             if (!isQuestCompleted)
             {
-                _actorSpawnSetting.QuestToTrack.OnQuestCompleted += ActivateSpawnActor;
+                _actorSpawnSetting.OnQuestCompleted += ActivateSpawnActor;
                 return;
             }
 
@@ -87,7 +105,7 @@ namespace CryptoQuest.Quest.Actor
             if (!isQuestCompleted)
             {
                 InitSpawnSetting();
-                _actorDeSpawnSetting.QuestToTrack.OnQuestCompleted += ActivateDeSpawnActor;
+                _actorDeSpawnSetting.OnQuestCompleted += ActivateDeSpawnActor;
                 return;
             }
 

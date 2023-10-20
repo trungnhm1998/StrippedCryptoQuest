@@ -1,10 +1,11 @@
-﻿using CryptoQuest.Quest.Authoring;
+﻿using System.Collections.Generic;
+using CryptoQuest.Quest.Authoring;
 
 namespace CryptoQuest.Quest
 {
     public interface IQuestConfigure
     {
-        QuestSO QuestToTrack { get; set; }
+        List<QuestSO> QuestsToTrack { get; set; }
         void Configure(bool isQuestCompleted);
     }
 }

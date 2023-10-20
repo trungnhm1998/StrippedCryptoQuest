@@ -35,6 +35,7 @@ namespace CryptoQuestEditor
         {
             Target.Editor_ClearSave();
             EditorUtility.SetDirty(Target);
+            AssetDatabase.SaveAssets();
         }
     }
 }

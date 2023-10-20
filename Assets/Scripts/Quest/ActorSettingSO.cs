@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using CryptoQuest.Quest.Authoring;
 using UnityEngine;
 
@@ -7,12 +8,19 @@ namespace CryptoQuest.Quest
     [CreateAssetMenu(fileName = "ActorSettingSO", menuName = "QuestSystem/Quests/ActorSetting/Actor Setting")]
     public class ActorSettingSO : ScriptableObject, IQuestConfigure
     {
-        [field: SerializeReference] public QuestSO QuestToTrack { get; set; }
         public Action<bool> OnConfigure;
+        public Action OnQuestCompleted;
 
-        public void Configure(bool isQuestCompleted)
+        [field: SerializeReference] public List<QuestSO> QuestsToTrack { get; set; } = new();
+
+        public void Configure(bool isQuestCompleted) => OnConfigure?.Invoke(isQuestCompleted);
+        public void Subscribe() => QuestsToTrack.ForEach(q => q.OnQuestCompleted += SetupQuest);
+        public void Unsubscribe() => QuestsToTrack.ForEach(q => q.OnQuestCompleted -= SetupQuest);
+
+        private void SetupQuest()
         {
-            OnConfigure?.Invoke(isQuestCompleted);
+            QuestsToTrack.ForEach(q => q.OnQuestCompleted -= SetupQuest);
+            OnQuestCompleted?.Invoke();
         }
     }
 }
