@@ -23,12 +23,16 @@ namespace CryptoQuest.Battle.UI.Logs
 
         private void LogAttack(NormalAttackEvent ctx)
         {
-            var attackLogMessage = _attackLogMessage;
-            attackLogMessage.Add(Constants.CHARACTER_NAME, new StringVariable()
+            var msg = new LocalizedString(_attackLogMessage.TableReference, _attackLogMessage.TableEntryReference)
             {
-                Value = ctx.Character.DisplayName
-            });
-            Logger.QueueLog(attackLogMessage);
+                {
+                    Constants.CHARACTER_NAME, new StringVariable()
+                    {
+                        Value = ctx.Character.DisplayName
+                    }
+                }
+            };
+            Logger.QueueLog(msg);
         }
     }
 }

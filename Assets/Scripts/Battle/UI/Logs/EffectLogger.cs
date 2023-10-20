@@ -90,11 +90,16 @@ namespace CryptoQuest.Battle.UI.Logs
         private void LogAbnormalStatus(LocalizedString contextMessage, EffectEvent ctx)
         {
             if (contextMessage.IsEmpty) return;
-            contextMessage.Add(Constants.CHARACTER_NAME, new StringVariable()
+            var msg = new LocalizedString(contextMessage.TableReference, contextMessage.TableEntryReference)
             {
-                Value = ctx.Character.DisplayName
-            });
-            Logger.QueueLog(contextMessage);
+                {
+                    Constants.CHARACTER_NAME, new StringVariable()
+                    {
+                        Value = ctx.Character.DisplayName
+                    }
+                }
+            };
+            Logger.QueueLog(msg);
         }
     }
 }

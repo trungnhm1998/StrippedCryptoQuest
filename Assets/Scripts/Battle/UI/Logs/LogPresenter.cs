@@ -1,4 +1,5 @@
 ﻿using System;
+using CryptoQuest.Battle.Presenter;
 using CryptoQuest.UI.Dialogs.BattleDialog;
 using IndiGames.Core.Events.ScriptableObjects;
 using UnityEngine;
@@ -11,13 +12,14 @@ namespace CryptoQuest.Battle.UI.Logs
     /// </summary>
     public class LogPresenter : MonoBehaviour
     {
-        public event Action<LocalizedString> AppendingLogEvent;
         private const int MAX_LINE = 3;
+        [SerializeField] private VfxAndLogPresenter _vfxAndLogPresenter;
         [SerializeField] private VoidEventChannelSO _sceneLoadedEvent;
         [SerializeField] private float _delayBetweenLines = 0.5f;
         public float DelayBetweenLines => _delayBetweenLines;
         [SerializeField] private float _hideDelay = 1f;
         private UIGenericDialog _dialog;
+
         private void Awake()
         {
             _sceneLoadedEvent.EventRaised += OnSceneLoaded; // Only start from editor need this
@@ -53,10 +55,12 @@ namespace CryptoQuest.Battle.UI.Logs
             }
 
             Debug.Log($"LogPresenter::AppendLog {message.GetLocalizedString()}");
-            AppendingLogEvent?.Invoke(message);
+            var command = new PresentLogCommand(message);
+            _vfxAndLogPresenter.EnqueueCommand(command);
         }
 
         private int _lineCount;
+
         public void Append(string message)
         {
             if (_lineCount >= MAX_LINE)

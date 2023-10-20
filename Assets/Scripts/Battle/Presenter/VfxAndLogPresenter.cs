@@ -32,27 +32,16 @@ namespace CryptoQuest.Battle.Presenter
             GetNextCommand = new GetNextCommandState();
             
             _startPresentingEvent = BattleEventBus.SubscribeEvent<StartPresentingEvent>(ShowDialog);
-
-            _logPresenter.AppendingLogEvent += EnqueueLogNewCommand;
         }
 
-        private void EnqueueLogNewCommand(LocalizedString message)
+        public void EnqueueCommand(IPresentCommand command)
         {
-            StartCoroutine(CoEnqueueLogNewCommand(message));
-        }
-
-        private IEnumerator CoEnqueueLogNewCommand(LocalizedString message)
-        {
-            var handle = message.GetLocalizedStringAsync();
-            yield return handle;
-            _commands.Enqueue(new PresentLogCommand(handle.Result));
+            _commands.Enqueue(command);
         }
 
         private void OnDestroy()
         {
             BattleEventBus.UnsubscribeEvent(_startPresentingEvent);
-
-            _logPresenter.AppendingLogEvent -= EnqueueLogNewCommand;
 
             _currentState?.Exit();
         }

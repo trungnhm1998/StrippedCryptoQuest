@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using CryptoQuest.AbilitySystem.Attributes;
 using CryptoQuest.Battle.Character;
 using IndiGames.GameplayAbilitySystem.AttributeSystem;
@@ -6,8 +8,6 @@ using IndiGames.GameplayAbilitySystem.AttributeSystem.Components;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Localization;
-using System.Linq;
-using System;
 
 namespace CryptoQuest.Battle.UI.Logs
 {
@@ -19,8 +19,7 @@ namespace CryptoQuest.Battle.UI.Logs
         [SerializeField] private UnityEvent<LocalizedString> _presentLoggerEvent;
 
         [SerializeField] private LocalizedString _increasedLog;
-        [SerializeField] private LocalizedString _decreasedLog
-        ;
+        [SerializeField] private LocalizedString _decreasedLog;
         [SerializeField] private AttributeChangeEvent _attributeChangeEvent;
         [SerializeField] private AttributeScriptableObject[] _affectedAttributes;
 
@@ -28,7 +27,7 @@ namespace CryptoQuest.Battle.UI.Logs
 
         private void Awake()
         {
-            _attributesNameDict = _affectedAttributes.ToDictionary(keySelector:attr => attr.GetInstanceID(),
+            _attributesNameDict = _affectedAttributes.ToDictionary(keySelector: attr => attr.GetInstanceID(),
                 attr => attr.DisplayName);
         }
 
@@ -48,7 +47,7 @@ namespace CryptoQuest.Battle.UI.Logs
             var changedAttribute = oldValue.Attribute;
             if (!_attributesNameDict.TryGetValue(changedAttribute.GetInstanceID(), out var attributeName))
                 return;
-            
+
             if (!attributeSystem.TryGetComponent(out Components.Character character)) return;
 
             if (Mathf.Approximately(oldValue.CurrentValue, newValue.CurrentValue))
@@ -56,16 +55,19 @@ namespace CryptoQuest.Battle.UI.Logs
                 StatsChangedWithSameValue?.Invoke(character, attributeName);
                 return;
             }
+
             var isJustInit = oldValue.CurrentValue == 0;
             if (isJustInit) return;
-            
-            var isIncrease = oldValue.CurrentValue < newValue.CurrentValue;
-            var log = isIncrease ? _increasedLog : _decreasedLog;
-            
-            log.Add(Constants.CHARACTER_NAME, character.LocalizedName);
-            log.Add(Constants.ATTRIBUTE_NAME, attributeName);
 
-            _presentLoggerEvent.Invoke(log);            
+            var isIncrease = oldValue.CurrentValue < newValue.CurrentValue;
+            var localizedLog = isIncrease ? _increasedLog : _decreasedLog;
+            var log = new LocalizedString(localizedLog.TableReference, localizedLog.TableEntryReference)
+            {
+                { Constants.CHARACTER_NAME, character.LocalizedName },
+                { Constants.ATTRIBUTE_NAME, attributeName }
+            };
+
+            _presentLoggerEvent.Invoke(log);
             StatsChanged?.Invoke(character, attributeName);
         }
     }

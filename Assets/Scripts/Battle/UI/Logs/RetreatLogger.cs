@@ -30,15 +30,17 @@ namespace CryptoQuest.Battle.UI.Logs
         private void OnRetreatSucceed(RetreatSucceedEvent ctx)
         {
             var characterName = ctx.Character.LocalizedName;
-            _retreatSuccessLog.Add(Constants.CHARACTER_NAME, characterName);
-            _presentLoggerEvent.Invoke(_retreatSuccessLog);
+            var msg = new LocalizedString(_retreatSuccessLog.TableReference, _retreatSuccessLog.TableEntryReference)
+                { { Constants.CHARACTER_NAME, characterName } };
+            _presentLoggerEvent.Invoke(msg);
         }
 
         private void OnRetreatFailed(RetreatFailedEvent ctx)
         {
             var characterName = ctx.Character.LocalizedName;
-            _retreatFailLog.Add(Constants.CHARACTER_NAME, characterName);
-            _presentLoggerEvent.Invoke(_retreatFailLog);
+            var msg = new LocalizedString(_retreatFailLog.TableReference, _retreatFailLog.TableEntryReference)
+                { { Constants.CHARACTER_NAME, characterName } };
+            _presentLoggerEvent.Invoke(msg);
         }
     }
 }

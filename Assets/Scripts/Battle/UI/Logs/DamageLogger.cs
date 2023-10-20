@@ -25,29 +25,35 @@ namespace CryptoQuest.Battle.UI.Logs
 
         private void LogDamage(Components.Character character, float damage)
         {
-            LocalizedString localizedMessage;
+            LocalizedString msg;
             // Escape early here because damage > 0 equal healing
             if (damage > 0) return;
 
             if (Mathf.Approximately(damage, 0f))
-                localizedMessage = _noDamageMessage;
+                msg =
+                    new LocalizedString(_noDamageMessage.TableReference, _noDamageMessage.TableEntryReference);
             else
             {
                 character.AttributeSystem.TryGetAttributeValue(AttributeSets.Health, out var hp);
                 damage = hp.CurrentValue - Math.Abs(damage) < 0 ? hp.CurrentValue : Math.Abs(damage);
-                localizedMessage = _damageMessage;
-                localizedMessage.Add(Constants.DAMAGE_NUMBER, new FloatVariable()
-                {
-                    Value = Math.Abs(damage)
-                });
+                msg =
+                    new LocalizedString(_damageMessage.TableReference, _damageMessage.TableEntryReference)
+                    {
+                        {
+                            Constants.DAMAGE_NUMBER, new FloatVariable()
+                            {
+                                Value = Math.Abs(damage)
+                            }
+                        }
+                    };
             }
 
-            localizedMessage.Add(Constants.CHARACTER_NAME, new StringVariable()
+            msg.Add(Constants.CHARACTER_NAME, new StringVariable()
             {
                 Value = character.DisplayName
             });
 
-            Logger.QueueLog(localizedMessage);
+            Logger.QueueLog(msg);
         }
     }
 }

@@ -11,4 +11,6 @@
     /// raise this to handle change to the next state or end the battle accordingly
     /// </summary>
     public class FinishedPresentingEvent : BattleEvent { }
+    
+    public class ShakeUIEvent : BattleEvent { }
 }

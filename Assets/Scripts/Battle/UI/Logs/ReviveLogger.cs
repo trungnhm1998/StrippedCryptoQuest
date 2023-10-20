@@ -1,11 +1,11 @@
+using CryptoQuest.AbilitySystem.Attributes;
 using CryptoQuest.Battle.Character;
+using CryptoQuest.Battle.Components;
 using IndiGames.GameplayAbilitySystem.AttributeSystem;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.Components;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Localization;
-using CryptoQuest.Battle.Components;
-using CryptoQuest.AbilitySystem.Attributes;
 
 namespace CryptoQuest.Battle.UI.Logs
 {
@@ -37,9 +37,10 @@ namespace CryptoQuest.Battle.UI.Logs
             if (!attributeSystem.TryGetComponent<HeroBehaviour>(out var hero)) return;
 
             var heroName = hero.DetailsInfo.LocalizedName;
-            _localizedLog.Add(Constants.CHARACTER_NAME, heroName);
+            var msg = new LocalizedString(_localizedLog.TableReference, _localizedLog.TableEntryReference)
+                { { Constants.CHARACTER_NAME, heroName } };
 
-            _presentLoggerEvent.Invoke(_localizedLog);            
+            _presentLoggerEvent.Invoke(msg);
         }
     }
 }

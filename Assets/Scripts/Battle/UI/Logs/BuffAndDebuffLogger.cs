@@ -68,20 +68,24 @@ namespace CryptoQuest.Battle.UI.Logs
 
         private void LogApplyFail(Components.Character character, LocalizedString attributeName)
         {
-            /// Since effect applied after tag is granted so if there's changed event
-            /// it'll be called after LogOnBuffAdded and LogApplyFail will only be raised
-            /// when there is a buff and the stats value isnt changed
+            /*
+            / Since effect applied after tag is granted so if there's changed event
+            / it'll be called after LogOnBuffAdded and LogApplyFail will only be raised
+            / when there is a buff and the stats value isnt changed
+            */
             if (!_isJustAddEffect || character != _lastCharacterGotEffect) return;
             _isJustAddEffect = false;
 
-            _applyFailMessage.Add(Constants.ATTRIBUTE_NAME, attributeName);
-            Logger.QueueLog(_applyFailMessage);
+            var applyFailMessage = new LocalizedString();
+            applyFailMessage.SetReference(_applyFailMessage.TableReference, _applyFailMessage.TableEntryReference);
+            applyFailMessage.Add(Constants.ATTRIBUTE_NAME, attributeName);
+            Logger.QueueLog(applyFailMessage);
         }
 
         private void ResetJustAddEffectFlag(Components.Character character, LocalizedString attributeName)
         {
             /// When stat changed successful, reset the just added flag
-            if (character != _lastCharacterGotEffect) return; 
+            if (character != _lastCharacterGotEffect) return;
             _isJustAddEffect = false;
         }
 
@@ -95,24 +99,29 @@ namespace CryptoQuest.Battle.UI.Logs
 
         private void LogMessage(EffectEvent ctx, LocalizedString message, TagScriptableObject tag)
         {
-            message.Add(Constants.CHARACTER_NAME, new StringVariable()
+            var msg = new LocalizedString(message.TableReference, message.TableEntryReference)
             {
-                Value = ctx.Character.DisplayName
-            });
+                {
+                    Constants.CHARACTER_NAME, new StringVariable()
+                    {
+                        Value = ctx.Character.DisplayName
+                    }
+                }
+            };
             var tagMap = _tagAttributeMap[tag];
             if (tagMap.DisplayName.IsEmpty)
             {
-                message.Add(Constants.ATTRIBUTE_NAME, new StringVariable()
+                msg.Add(Constants.ATTRIBUTE_NAME, new StringVariable()
                 {
                     Value = tagMap.name
                 });
             }
             else
             {
-                message.Add(Constants.ATTRIBUTE_NAME, tagMap.DisplayName);
+                msg.Add(Constants.ATTRIBUTE_NAME, tagMap.DisplayName);
             }
 
-            Logger.QueueLog(message);
+            Logger.QueueLog(msg);
         }
 
         private static bool IsBuffOrDebuff(EffectEvent ctx, out TagScriptableObject tag, out bool isBuff)

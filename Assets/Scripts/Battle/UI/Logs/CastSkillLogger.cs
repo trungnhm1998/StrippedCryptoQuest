@@ -23,7 +23,8 @@ namespace CryptoQuest.Battle.UI.Logs
 
         private void LogCastSkill(CastSkillEvent skillEvent)
         {
-            var castMessage = _castSkillMessage;
+            var castMessage = new LocalizedString();
+            castMessage.SetReference(_castSkillMessage.TableReference, _castSkillMessage.TableEntryReference);
             castMessage.Add(Constants.CHARACTER_NAME, skillEvent.Character.LocalizedName);
             var localizedSkillName = skillEvent.Skill.Parameters.SkillName;
             if (localizedSkillName.IsEmpty)
