@@ -23,7 +23,7 @@ namespace CryptoQuest.Character
 
         private void OnValidate()
         {
-            if (_interacted.GetPersistentEventCount() <= 2) return;
+            if (_interacted.GetPersistentEventCount() <= 4) return;
             for (int index = 2; index < _interacted.GetPersistentEventCount(); index++)
             {
                 _interacted.SetPersistentListenerState(index, UnityEventCallState.Off);
