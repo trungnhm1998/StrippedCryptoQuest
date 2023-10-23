@@ -9,8 +9,15 @@ namespace CryptoQuest.UI.Menu.Panels.DimensionBox.Interfaces
 {
     public interface IData
     {
-        public AssetReferenceT<Sprite> GetIcon();
+        public Sprite GetIcon();
         public LocalizedString GetLocalizedName();
+    }
+
+    public interface INFT : IData { }
+
+    public interface IGame : IData
+    {
         public bool IsEquipped();
     }
+
 }

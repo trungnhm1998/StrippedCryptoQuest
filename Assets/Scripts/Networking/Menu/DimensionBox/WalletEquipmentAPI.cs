@@ -14,7 +14,7 @@ namespace CryptoQuest.Networking.Menu.DimensionBox
 {
     public class WalletEquipmentAPI : MonoBehaviour, IWalletEquipmentModel
     {
-        public List<IData> Data { get; private set; }
+        public List<INFT> Data { get; private set; }
         public bool IsLoaded { get; private set; }
 
         private IRestAPINetworkController _restAPINetworkController;
@@ -50,7 +50,7 @@ namespace CryptoQuest.Networking.Menu.DimensionBox
         {
             var data = JsonConvert.DeserializeObject<WalletEquipmentResponseData>(jsonData);
 
-            Data ??= new List<IData>();
+            Data ??= new List<INFT>();
             Data.Clear();
             StartCoroutine(LoadAllData(data.Data.Equipments));
         }
@@ -64,7 +64,7 @@ namespace CryptoQuest.Networking.Menu.DimensionBox
                 var equip = new EquipmentInfo(item.Id.ToString(), item.EquipmentId, item.Lv);
                 yield return defProvider.Load(equip);
 
-                var obj = new EquipmentModelData(equip.Data.Image, equip.Data.DisplayName, false);
+                var obj = new WalletEquipmentData(equip);
                 Data.Add(obj);
             }
 

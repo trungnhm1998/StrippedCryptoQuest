@@ -17,8 +17,8 @@ namespace CryptoQuest.UI.Menu.Panels.DimensionBox.EquipmentTransferSection
         [SerializeField] private Transform _walletBoard;
 
         [Header("Events set up on scene")]
-        [SerializeField] private UnityEvent<List<IData>, bool> _setGameDataEvent;
-        [SerializeField] private UnityEvent<List<IData>, bool> _setWalletDataEvent;
+        [SerializeField] private UnityEvent<List<IGame>, bool> _setGameDataEvent;
+        [SerializeField] private UnityEvent<List<INFT>, bool> _setWalletDataEvent;
         [SerializeField] private UnityEvent _hideDialogEvent;
         [SerializeField] private UnityEvent _switchToWalletBoardEvent;
         [SerializeField] private UnityEvent _switchToGameBoardEvent;
@@ -26,8 +26,8 @@ namespace CryptoQuest.UI.Menu.Panels.DimensionBox.EquipmentTransferSection
         private IGameEquipmentModel _gameModel;
         private IWalletEquipmentModel _walletModel;
 
-        private List<IData> _gameData = new();
-        private List<IData> _walletData = new();
+        private List<IGame> _gameData = new();
+        private List<INFT> _walletData = new();
 
 
         // This method subscribe to the EnterTransferSectionEvent on scene.
@@ -92,7 +92,7 @@ namespace CryptoQuest.UI.Menu.Panels.DimensionBox.EquipmentTransferSection
             if (_walletModel.Data.Count <= 0) yield break;
 
             _walletData = _walletModel.Data;
-            _setWalletDataEvent.Invoke(_walletData, _gameData.Count <= 0 ? true : false);
+            _setWalletDataEvent.Invoke(_walletData, _walletData.Count <= 0 ? true : false);
         }
 
         /// <summary>

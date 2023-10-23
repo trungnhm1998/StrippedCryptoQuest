@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using CryptoQuest.UI.Menu.Panels.DimensionBox.Interfaces;
-using CryptoQuest.UI.Menu.Panels.Status.Equipment;
 using CryptoQuest.Menu;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,13 +8,12 @@ using CryptoQuest.UI.Menu.Panels.Status;
 
 namespace CryptoQuest.UI.Menu.Panels.DimensionBox.EquipmentTransferSection
 {
-    public class UIEquipmentList : MonoBehaviour
+    public abstract class UIEquipmentList : MonoBehaviour
     {
         [SerializeField] protected ScrollRect _scrollRect;
-        [SerializeField] private GameObject _singleItemPrefab;
-        [SerializeField] private RectTransform _tooltipSafeArea;
+        [SerializeField] protected GameObject _singleItemPrefab;
+        [SerializeField] protected RectTransform _tooltipSafeArea;
 
-        private List<IData> _itemList = new List<IData>();
         private ITooltip _tooltip;
 
         private void Awake()
@@ -23,16 +21,12 @@ namespace CryptoQuest.UI.Menu.Panels.DimensionBox.EquipmentTransferSection
             _tooltip = TooltipFactory.Instance.GetTooltip(ETooltipType.Equipment);
         }
 
-        /// <summary>
-        /// This method is a subscribed event and set up on scene.
-        /// </summary>
-        public void SetData(List<IData> data, bool isGameEquipmentListEmpty = false)
+        protected void AfterSaveData(bool isEquipmentListEmpty = false)
         {
             CleanUpScrollView();
-            _itemList = data;
             RenderData();
             _tooltip.SetSafeArea(_tooltipSafeArea);
-            CheckEmptyGameEquipmentList(isGameEquipmentListEmpty);
+            CheckEmptyGameEquipmentList(isEquipmentListEmpty);
         }
 
         /// <summary>
@@ -77,14 +71,6 @@ namespace CryptoQuest.UI.Menu.Panels.DimensionBox.EquipmentTransferSection
             item.Parent = _scrollRect.content;
         }
 
-        protected virtual void RenderData()
-        {
-            foreach (var itemData in _itemList)
-            {
-                var item = Instantiate(_singleItemPrefab, _scrollRect.content).GetComponent<UITransferItem>();
-                item.ConfigureCell(itemData);
-                SetParentIdentity(item);
-            }
-        }
+        protected abstract void RenderData();
     }
 }

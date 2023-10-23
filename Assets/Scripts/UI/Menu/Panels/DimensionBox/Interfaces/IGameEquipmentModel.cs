@@ -6,7 +6,7 @@ namespace CryptoQuest.UI.Menu.Panels.DimensionBox.Interfaces
 {
     public interface IGameEquipmentModel
     {
-        public List<IData> Data { get; }
+        public List<IGame> Data { get; }
         public IEnumerator CoGetData();
     }
 }

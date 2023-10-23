@@ -14,20 +14,21 @@ namespace CryptoQuest.UI.Menu.Panels.DimensionBox.EquipmentTransferSection.Model
         public Sprite[] MockIcon;
         public LocalizedString MockName;
 
-        private List<IData> _mockData;
-        public List<IData> Data => _mockData;
+        private List<IGame> _mockData;
+        public List<IGame> Data => _mockData;
 
         public IEnumerator CoGetData()
         {
             yield return new WaitForSeconds(1f);
-            _mockData = new List<IData>();
+            _mockData = new List<IGame>();
 
             for (var i = 0; i < MockLength; i++)
             {
                 Random rand = new Random();
                 bool isEquipped = rand.Next(100) < 20 ? true : false;
+                int rdIconIdx = rand.Next(MockIcon.Length - 1);
 
-                var obj = new MockData(null, MockName, isEquipped);
+                var obj = new MockData(MockIcon[rdIconIdx], MockName, isEquipped);
                 _mockData.Add(obj);
             }
 

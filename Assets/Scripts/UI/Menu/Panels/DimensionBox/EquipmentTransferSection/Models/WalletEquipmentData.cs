@@ -1,27 +1,28 @@
-using System;
+using CryptoQuest.Item.Equipment;
+using CryptoQuest.UI.Menu.Panels.DimensionBox.Interfaces;
 using UnityEngine;
 using UnityEngine.Localization;
-using CryptoQuest.UI.Menu.Panels.DimensionBox.Interfaces;
-using UnityEngine.AddressableAssets;
 
 namespace CryptoQuest.UI.Menu.Panels.DimensionBox.EquipmentTransferSection.Models
 {
-    [Serializable]
-    public struct MockData : IGame
+    public class WalletEquipmentData : INFT
     {
         private Sprite _icon;
         private LocalizedString _name;
-        private bool _isEquipped;
 
-        public MockData(Sprite icon, LocalizedString name, bool isEquipped)
+        public WalletEquipmentData(Sprite icon, LocalizedString name)
         {
             _icon = icon;
             _name = name;
-            _isEquipped = isEquipped;
+        }
+
+        public WalletEquipmentData(EquipmentInfo equipmentInfo)
+        {
+            _icon = equipmentInfo.Data.EquipmentType.Icon;
+            _name = equipmentInfo.Data.DisplayName;
         }
 
         public Sprite GetIcon() { return _icon; }
         public LocalizedString GetLocalizedName() { return _name; }
-        public bool IsEquipped() { return _isEquipped; }
     }
 }

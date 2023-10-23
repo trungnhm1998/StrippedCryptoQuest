@@ -44,16 +44,10 @@ namespace CryptoQuest.UI.Menu.Panels.DimensionBox.EquipmentTransferSection
 
         public void ConfigureCell(IData itemInfo)
         {
-            var icon = itemInfo.GetIcon();
-
-            if (icon != null)
-            {
-                StartCoroutine(LoadSpriteAndSet(itemInfo.GetIcon()));
-            }
-
+            _icon.sprite = itemInfo.GetIcon();
             _name.StringReference = itemInfo.GetLocalizedName();
 
-            _isEquipped = itemInfo.IsEquipped();
+            // _isEquipped = itemInfo.IsEquipped();
             _equippedTag.SetActive(_isEquipped);
         }
 
