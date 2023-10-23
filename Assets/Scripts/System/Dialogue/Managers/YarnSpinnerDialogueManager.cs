@@ -117,7 +117,7 @@ namespace CryptoQuest.System.Dialogue.Managers
         private string GetPlayerName()
         {
 #if UNITY_EDITOR
-            return _saveSystem.PlayerName ?? "Abel";
+            return string.IsNullOrEmpty(_saveSystem.PlayerName) ? "Abel" : _saveSystem.PlayerName;
 #else
             return _saveSystem.PlayerName;
 #endif
