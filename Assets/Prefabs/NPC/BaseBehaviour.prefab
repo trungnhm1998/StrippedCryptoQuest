@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 855496539777480150}
   - component: {fileID: -7282767136337057274}
   - component: {fileID: 5945930552364842115}
-  - component: {fileID: 1075129886672040097}
+  - component: {fileID: 6310331648778874382}
   m_Layer: 0
   m_Name: BaseBehaviour
   m_TagString: NPC
@@ -62,8 +62,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 1
-      - m_Target: {fileID: 1075129886672040097}
-        m_TargetAssemblyTypeName: CryptoQuest.Character.DialogueProviders.SingleLineDialogueProvider,
+      - m_Target: {fileID: 6310331648778874382}
+        m_TargetAssemblyTypeName: CryptoQuest.Character.DialogueProviders.YarnDialogueProvider,
           indi-games.crypto-quest
         m_MethodName: ShowDialogue
         m_Mode: 1
@@ -148,7 +148,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.51, y: 0.8}
   m_EdgeRadius: 0
---- !u!114 &1075129886672040097
+--- !u!114 &6310331648778874382
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -157,19 +157,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7014187444642297253}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a9e07f409ddb4fd0a9e1ab4046463478, type: 3}
+  m_Script: {fileID: 11500000, guid: aa757523e0c144ec8cd33d7fa9a51452, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _dialogueLine:
-    m_TableReference:
-      m_TableCollectionName: GUID:4be45ea04057b7b4c8f80bc12990e0f8
-    m_TableEntryReference:
-      m_KeyId: 395938514145280
-      m_Key: 
-    m_FallbackState: 0
-    m_WaitForCompletion: 0
-    m_LocalVariables: []
-  _playLocalizedLineEventEvent: {fileID: 11400000, guid: a5c02db9f0a54854080e16f16a2ba339, type: 2}
-  references:
-    version: 2
-    RefIds: []
+  _yarnNodeName: ch002_q001_e006_postbattle_giantlizard4
