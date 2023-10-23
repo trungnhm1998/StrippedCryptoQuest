@@ -1,6 +1,8 @@
 ﻿using CryptoQuest.Input;
+using CryptoQuest.UI.Common;
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
@@ -99,7 +101,7 @@ namespace CryptoQuest.Battle.UI
             CacheLastSelectedButton();
         }
 
-        private void NavigateSelectCommand(Vector2 dir)
+        protected virtual void NavigateSelectCommand(Vector2 dir)
         {
             if (!Interactable || dir.y == 0) return;
             CurrentIndex += (int)dir.y * -1;
@@ -114,8 +116,11 @@ namespace CryptoQuest.Battle.UI
                 var buttonToSelect = _firstSelectedButton == null
                     ? firstChild : _firstSelectedButton;
                 EventSystem.current.SetSelectedGameObject(buttonToSelect);
+                OnSelectFirstButton();
             });
         }
+
+        protected virtual void OnSelectFirstButton() { }
 
         /// <summary>
         /// To prevent select invalid child or there's no child
