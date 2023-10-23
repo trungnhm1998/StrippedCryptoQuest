@@ -1,15 +1,17 @@
-﻿using CryptoQuest.Battle.Events;
+﻿using System.Collections;
+using CryptoQuest.Battle.Events;
 using IndiGames.Core.Events.ScriptableObjects;
 using TinyMessenger;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace CryptoQuest.Battle.Presenter
+namespace CryptoQuest.Battle.Presenter.Commands
 {
     public class ShakeUICommand : IPresentCommand
     {
         private readonly VoidEventChannelSO _shakeEventSO;
         private readonly VoidEventChannelSO _shakeCompleteEventSO;
+        private bool _shaken;
 
         public ShakeUICommand(VoidEventChannelSO shakeEventSO, VoidEventChannelSO shakeCompleteEventSO)
         {
@@ -17,35 +19,22 @@ namespace CryptoQuest.Battle.Presenter
             _shakeEventSO = shakeEventSO;
         }
 
-        public StateBase GetState() => new ShakeUIState(_shakeEventSO, _shakeCompleteEventSO);
-    }
-
-    public class ShakeUIState : StateBase
-    {
-        private readonly VoidEventChannelSO _shakeEventSO;
-        private readonly VoidEventChannelSO _shakeCompleteEventSO;
-
-        public ShakeUIState(VoidEventChannelSO shakeEventSO, VoidEventChannelSO shakeCompleteEventSO)
+        ~ShakeUICommand()
         {
-            _shakeCompleteEventSO = shakeCompleteEventSO;
-            _shakeEventSO = shakeEventSO;
+            _shakeCompleteEventSO.EventRaised -= OnShakeComplete;
         }
 
-        protected override void OnEnter()
+        public IEnumerator Present()
         {
-            _shakeEventSO.RaiseEvent();
             _shakeCompleteEventSO.EventRaised += OnShakeComplete;
+            _shakeEventSO.RaiseEvent();
+            yield return new WaitUntil(() => _shaken);
         }
 
         private void OnShakeComplete()
         {
             _shakeCompleteEventSO.EventRaised -= OnShakeComplete;
-            StateMachine.ChangeState(StateMachine.GetNextCommand);
-        }
-
-        protected override void OnExit()
-        {
-            _shakeCompleteEventSO.EventRaised -= OnShakeComplete;
+            _shaken = true;
         }
     }
 

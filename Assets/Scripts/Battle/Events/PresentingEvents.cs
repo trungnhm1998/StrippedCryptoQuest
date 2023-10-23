@@ -13,4 +13,9 @@
     public class FinishedPresentingEvent : BattleEvent { }
     
     public class ShakeUIEvent : BattleEvent { }
+
+    public class HeroNormalAttackEvent : BattleEvent
+    {
+        public Components.Character Target { get; set; }
+    }
 }

@@ -1,9 +1,12 @@
-﻿using System;
+﻿using CryptoQuest.Battle.Events;
 using CryptoQuest.Battle.Presenter;
+using CryptoQuest.Battle.Presenter.Commands;
 using CryptoQuest.UI.Dialogs.BattleDialog;
 using IndiGames.Core.Events.ScriptableObjects;
+using TinyMessenger;
 using UnityEngine;
 using UnityEngine.Localization;
+using UnityEngine.Serialization;
 
 namespace CryptoQuest.Battle.UI.Logs
 {
@@ -13,15 +16,24 @@ namespace CryptoQuest.Battle.UI.Logs
     public class LogPresenter : MonoBehaviour
     {
         private const int MAX_LINE = 3;
-        [SerializeField] private VfxAndLogPresenter _vfxAndLogPresenter;
+
+        [FormerlySerializedAs("_vfxAndLogPresenter")] [SerializeField]
+        private RoundEventsPresenter _roundEventsPresenter;
+
         [SerializeField] private VoidEventChannelSO _sceneLoadedEvent;
         [SerializeField] private float _delayBetweenLines = 0.5f;
         public float DelayBetweenLines => _delayBetweenLines;
         [SerializeField] private float _hideDelay = 1f;
         private UIGenericDialog _dialog;
+        private TinyMessageSubscriptionToken _turnStartingEvent;
+        private TinyMessageSubscriptionToken _roundStartedEvent;
+        private TinyMessageSubscriptionToken _roundEndedEvent;
 
         private void Awake()
         {
+            _roundStartedEvent = BattleEventBus.SubscribeEvent<RoundStartedEvent>(QueueShowDialog);
+            _roundEndedEvent = BattleEventBus.SubscribeEvent<RoundEndedEvent>(QueueHideDialog);
+            _turnStartingEvent = BattleEventBus.SubscribeEvent<TurnStartedEvent>(QueueClearDialog);
             _sceneLoadedEvent.EventRaised += OnSceneLoaded; // Only start from editor need this
             var loggers = GetComponentsInChildren<LoggerComponentBase>();
             foreach (var logger in loggers)
@@ -32,14 +44,21 @@ namespace CryptoQuest.Battle.UI.Logs
 
         private void OnDestroy()
         {
+            BattleEventBus.UnsubscribeEvent(_roundStartedEvent);
+            BattleEventBus.UnsubscribeEvent(_roundEndedEvent);
+            BattleEventBus.UnsubscribeEvent(_turnStartingEvent);
             _sceneLoadedEvent.EventRaised -= OnSceneLoaded;
             GenericDialogController.Instance.Release(_dialog);
         }
 
-        private void OnSceneLoaded()
-        {
-            GenericDialogController.Instance.Instantiate(dialog => _dialog = dialog, false);
-        }
+        private void QueueHideDialog(RoundEndedEvent _) => _roundEventsPresenter.EnqueueCommand(new HideDialog(this));
+
+        private void QueueShowDialog(RoundStartedEvent ctx) =>
+            _roundEventsPresenter.EnqueueCommand(new ShowDialog(this, ctx.Round));
+
+        private void QueueClearDialog(TurnStartedEvent ctx) => _roundEventsPresenter.EnqueueCommand(new ClearLog(this));
+
+        private void OnSceneLoaded() => GenericDialogController.Instance.Instantiate(dialog => _dialog = dialog, false);
 
         public void Show()
         {
@@ -55,8 +74,9 @@ namespace CryptoQuest.Battle.UI.Logs
             }
 
             Debug.Log($"LogPresenter::AppendLog {message.GetLocalizedString()}");
-            var command = new PresentLogCommand(message);
-            _vfxAndLogPresenter.EnqueueCommand(command);
+            var command = new PresentLogCommand(this, message);
+            StartCoroutine(command.Load());
+            _roundEventsPresenter.EnqueueCommand(command);
         }
 
         private int _lineCount;

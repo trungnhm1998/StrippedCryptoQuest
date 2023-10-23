@@ -140,12 +140,12 @@ namespace CryptoQuest.AbilitySystem.EffectActions
 
         private void ExecutePeriodicEffect()
         {
-            if (_policyDef.TriggerType == TurnBasePolicy.ETriggerType.Always) return;
             foreach (var grantedTag in Spec.GrantedTags)
             {
                 if (_damageOverTimeFlagsFlags.FlagRaised(grantedTag)) return;
-                ModifyBaseAttributeValueWithEvaluatedEffectModifiers();
-                _damageOverTimeFlagsFlags.RaiseFlag(grantedTag);
+                if (_policyDef.TriggerType != TurnBasePolicy.ETriggerType.Always)
+                    ModifyBaseAttributeValueWithEvaluatedEffectModifiers();
+                _damageOverTimeFlagsFlags.RaiseFlag(grantedTag); // this prevent multiple damage over time and log
             }
         }
 
