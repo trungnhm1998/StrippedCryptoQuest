@@ -1,11 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using CryptoQuest.Battle.Events;
 using CryptoQuest.Battle.UI.Logs;
 using CryptoQuest.Input;
 using TinyMessenger;
 using UnityEngine;
-using UnityEngine.Localization;
 
 namespace CryptoQuest.Battle.Presenter
 {
@@ -24,47 +22,33 @@ namespace CryptoQuest.Battle.Presenter
         public StateBase GetNextCommand { get; private set; }
 
         private TinyMessageSubscriptionToken _startPresentingEvent;
+        private TinyMessageSubscriptionToken _turnStartingEvent;
 
         private void Awake()
         {
             Idle = new IdleState();
             Hide = new HideState();
             GetNextCommand = new GetNextCommandState();
-            
+
             _startPresentingEvent = BattleEventBus.SubscribeEvent<StartPresentingEvent>(ShowDialog);
+            _turnStartingEvent = BattleEventBus.SubscribeEvent<TurnStartedEvent>(ClearDialog);
         }
 
-        public void EnqueueCommand(IPresentCommand command)
-        {
-            _commands.Enqueue(command);
-        }
+        public void EnqueueCommand(IPresentCommand command) => _commands.Enqueue(command);
 
         private void OnDestroy()
         {
             BattleEventBus.UnsubscribeEvent(_startPresentingEvent);
+            BattleEventBus.UnsubscribeEvent(_turnStartingEvent);
 
             _currentState?.Exit();
         }
 
-        private void Start()
-        {
-            ChangeState(Hide);
-        }
+        private void Start() => ChangeState(Hide);
 
-        private void ShowDialog(StartPresentingEvent startPresentingEvent)
-        {
-            ChangeState(Idle);
-        }
+        private void ShowDialog(StartPresentingEvent startPresentingEvent) => ChangeState(Idle);
 
-        private void ClearDialog(TurnStartedEvent ctx)
-        {
-            _logPresenter.Clear();
-        }
-
-        private void HideAndClearLog(RoundEndedEvent ctx)
-        {
-            ChangeState(Hide);
-        }
+        private void ClearDialog(TurnStartedEvent ctx) => _commands.Enqueue(new ClearLog(_logPresenter));
 
         public void ChangeState(StateBase state)
         {

@@ -75,6 +75,7 @@ namespace CryptoQuest.Battle.UI.Logs
 
         public void Clear()
         {
+            _lineCount = 0;
             if (_dialog) _dialog.Clear();
         }
 
