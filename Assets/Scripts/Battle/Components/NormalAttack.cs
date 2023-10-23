@@ -26,8 +26,6 @@ namespace CryptoQuest.Battle.Components
         /// </summary>
         /// <param name="target"></param>
         /// <returns></returns>
-        protected virtual void OnPreAttack(Character target)
-        {
-        }
+        protected virtual void OnPreAttack(Character target) { }
     }
 }

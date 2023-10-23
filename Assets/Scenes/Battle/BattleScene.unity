@@ -352,17 +352,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb1951c97ae243b41b0a852eccf6459a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &445290122 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2603140895196176383, guid: 80573ccdc1f429c40878686468e1fcee, type: 3}
-  m_PrefabInstance: {fileID: 248533003}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 46c65ad917bf44d4a2cb94a6f1e4347e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &447902171
 GameObject:
   m_ObjectHideFlags: 0
@@ -613,7 +602,7 @@ GameObject:
   - component: {fileID: 891665763}
   - component: {fileID: 891665762}
   m_Layer: 0
-  m_Name: VfxAndLogPresenter
+  m_Name: RoundEventsPresenter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -632,7 +621,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _input: {fileID: 11400000, guid: d0c44063c591fb8489bc8e1087c0999e, type: 2}
-  _logPresenter: {fileID: 445290122}
 --- !u!4 &891665763
 Transform:
   m_ObjectHideFlags: 0
@@ -659,6 +647,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 891740774}
+  - component: {fileID: 891740775}
   m_Layer: 0
   m_Name: NormalAttackVfx
   m_TagString: Untagged
@@ -681,6 +670,24 @@ Transform:
   m_Father: {fileID: 891665763}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &891740775
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 891740773}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0422241150404c3fb315c5c1c0ff7ce5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _roundEventsPresenter: {fileID: 891665762}
+  _visualEffect:
+    m_AssetGUID: cc43335335d454510b73d22ea8e40121
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0
 --- !u!114 &909464723 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2235472367684801331, guid: d0eacd5a881766b4ca08ec4b770526a2, type: 3}
