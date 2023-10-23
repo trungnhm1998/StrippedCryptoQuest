@@ -27,6 +27,8 @@ namespace CryptoQuest.AbilitySystem.Abilities
     public abstract class CastSkillAbility : AbilityScriptableObject
     {
         [SerializeField] private GameplayEffectContext _context;
+        [SerializeField] private int _vfxId;
+        public int VfxId => _vfxId;
         public GameplayEffectContext Context => _context;
         [field: SerializeField, Obsolete] public SkillInfo Parameters { get; private set; }
         [field: SerializeField] public float SuccessRate { get; private set; } = 100;
@@ -46,6 +48,7 @@ namespace CryptoQuest.AbilitySystem.Abilities
         {
             base.InitAbility(owner, abilitySO);
 
+            _character = owner.GetComponent<Battle.Components.Character>();
             _costEffect = ScriptableObject.CreateInstance<GameplayEffectDefinition>();
             _costEffect.Policy = new InstantPolicy();
             _costEffect.EffectDetails = new EffectDetails()
@@ -110,6 +113,7 @@ namespace CryptoQuest.AbilitySystem.Abilities
         private TinyMessageSubscriptionToken _wonEvent;
         private TinyMessageSubscriptionToken _lostEvent;
         private TinyMessageSubscriptionToken _retreatEvent;
+        private Battle.Components.Character _character;
         protected AbilitySystemBehaviour[] Targets => _targets;
 
         public void Execute(params AbilitySystemBehaviour[] characters)
@@ -133,6 +137,7 @@ namespace CryptoQuest.AbilitySystem.Abilities
                     continue;
                 }
 
+                BattleEventBus.RaiseEvent(new CastSkillEvent(_def, target) { Character = _character });
                 InternalExecute(target);
             }
 

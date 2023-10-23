@@ -1,10 +1,10 @@
-using System;
 using System.Collections.Generic;
 using CryptoQuest.AbilitySystem.Abilities;
 using CryptoQuest.Battle.Components;
 using CryptoQuest.Gameplay.Encounter;
 using CryptoQuest.Gameplay.Loot;
 using CryptoQuest.Item;
+using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
 using IndiGames.GameplayAbilitySystem.TagSystem.ScriptableObjects;
 using TinyMessenger;
 
@@ -118,16 +118,15 @@ namespace CryptoQuest.Battle.Events
 
     public class CastSkillEvent : LogEvent
     {
-        public CastSkillAbility Skill { get; set; }
+        public CastSkillAbility Skill { get; private set; }
+        public Components.Character Target { get; private set; }
+        public CastSkillEvent(CastSkillAbility skill, AbilitySystemBehaviour target)
+        {
+            Skill = skill;
+            Target = target.GetComponent<Components.Character>();
+        }
     }
-
-    public class CastSkillEffectEvent : LogEvent
-    {
-        public CastSkillAbility Skill { get; set; }
-        public Components.Character Target { get; set; }
-        public Action OnComplete { get; set; }
-    }
-
+    
     public class ConsumeItemEvent : LogEvent
     {
         public ConsumableInfo ItemInfo { get; set; }

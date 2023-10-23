@@ -31,7 +31,13 @@ namespace IndiGames.Core.Database
         }
 
         public event Action<TSerializableObject> DataLoaded;
-        [field: SerializeField] private Map[] _maps;
+        [field: SerializeField]
+#if UNITY_EDITOR
+        protected 
+        #else
+        private
+#endif
+        Map[] _maps;
         public Map[] Maps => _maps;
 
         [NonSerialized] private Dictionary<TKey, AssetReferenceT<TSerializableObject>> _map = new();
@@ -47,7 +53,7 @@ namespace IndiGames.Core.Database
         }
 
         private readonly Dictionary<TKey, AsyncOperationHandle<TSerializableObject>> _loadedData = new();
-        
+
         public void ReleaseDataById(TKey id)
         {
             if (!_loadedData.TryGetValue(id, out var handle)) return;
@@ -55,7 +61,7 @@ namespace IndiGames.Core.Database
             Addressables.Release(handle);
             _loadedData.Remove(id);
         }
-        
+
         public void ReleaseAllData()
         {
             foreach (var handle in _loadedData.Values)
@@ -63,6 +69,7 @@ namespace IndiGames.Core.Database
                 if (!handle.IsValid()) continue;
                 Addressables.Release(handle);
             }
+
             _loadedData.Clear();
         }
 

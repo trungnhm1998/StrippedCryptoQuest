@@ -54,7 +54,6 @@ namespace CryptoQuest.Battle.Presenter
                 _presented = false;
                 _presentingCoroutine = StartCoroutine(CoInternalPresent(command));
                 yield return new WaitUntil(() => _presented);
-                Debug.Log("Presented");
             }
 
             _input.ConfirmedEvent -= InputOnConfirmedEvent;

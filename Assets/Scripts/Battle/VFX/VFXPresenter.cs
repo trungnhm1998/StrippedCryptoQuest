@@ -1,49 +1,54 @@
 using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using CryptoQuest.Battle.Components;
-using CryptoQuest.AbilitySystem.Abilities;
 using CryptoQuest.Battle.Events;
+using CryptoQuest.Battle.Presenter;
+using CryptoQuest.Battle.Presenter.Commands;
 using TinyMessenger;
+using UnityEngine;
 
 namespace CryptoQuest.Battle.VFX
 {
     public class VFXPresenter : MonoBehaviour
     {
+        [SerializeField] private RoundEventsPresenter _roundEventsPresenter;
         [SerializeField] private VFXDatabase _vfxDatabase;
         private TinyMessageSubscriptionToken _castSkillEvent;
 
-        private void OnEnable()
+        private void OnEnable() =>
+            _castSkillEvent = BattleEventBus.SubscribeEvent<CastSkillEvent>(QueueUpVfxCommand);
+
+        private void OnDisable() => BattleEventBus.UnsubscribeEvent(_castSkillEvent);
+
+        private void OnDestroy()
         {
-            _castSkillEvent = BattleEventBus.SubscribeEvent<CastSkillEffectEvent>(CastSkillVFX);
+            _vfxDatabase.ReleaseAllData();
         }
 
-        private void OnDisable()
+        private void QueueUpVfxCommand(CastSkillEvent ctx)
         {
-            BattleEventBus.UnsubscribeEvent(_castSkillEvent);
+            var skillVfxId = ctx.Skill.VfxId;
+            StartCoroutine(_vfxDatabase.LoadDataById(skillVfxId));
+            QueueUpVfx(skillVfxId, ctx.Target);
         }
 
-        private void CastSkillVFX(CastSkillEffectEvent ctx)
+        public void QueueUpVfx(int vfxId, Components.Character ctxTarget)
         {
-            StartCoroutine(OnPreAttack(ctx));
-        }    
+            var presentCommand = new VfxCommand(vfxId, ctxTarget.transform.position, this);
+            _roundEventsPresenter.EnqueueCommand(presentCommand);
+        }
 
-        public IEnumerator OnPreAttack(CastSkillEffectEvent ctx)
+        public IEnumerator PresentVfx(int vfxId, Vector3 transformPosition)
         {
-            if(ctx.Target is not EnemyBehaviour)
+            yield return _vfxDatabase.LoadDataById(vfxId); // just to make sure
+            var vfxPrefab = _vfxDatabase.GetDataById(vfxId);
+            ParticleSystemRenderer[] childs = vfxPrefab.GetComponentsInChildren<ParticleSystemRenderer>();
+            foreach (ParticleSystemRenderer psr in childs)
             {
-                Debug.Log("Not target enemy");
-                yield break;
+                psr.sortingOrder = 1000;
+                psr.sortingLayerName = "Battle";
             }
-            string vfxId = ctx.Skill.Parameters.SkillParameters.VfxId;
-            yield return _vfxDatabase.LoadDataById(vfxId);
-            var vfx = _vfxDatabase.GetDataById(vfxId);
-            if(vfx != null)
-            {
-                vfx.Init();
-                yield return vfx.Execute(ctx.Target.transform);
-            }
-            ctx.OnComplete?.Invoke();
+
+            var vfx = Instantiate(vfxPrefab, transformPosition, Quaternion.identity);
+            yield return new WaitUntil(() => vfx == null);
         }
     }
 }
