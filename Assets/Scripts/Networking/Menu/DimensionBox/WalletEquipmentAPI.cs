@@ -36,13 +36,13 @@ namespace CryptoQuest.Networking.Menu.DimensionBox
 
         private void OnLoadDataSuccess(UnityWebRequest request)
         {
-            Debug.Log($"DimentionEquipment::LoadData success : {request.downloadHandler.text}");
+            Debug.Log($"DimensionEquipment::LoadData success : {request.downloadHandler.text}");
             UpdateEquipmentData(request.downloadHandler.text);
         }
 
         private void OnLoadDataFail(Exception error)
         {
-            Debug.Log($"DimentionEquipment::LoadData fail : {error.Message}");
+            Debug.Log($"DimensionEquipment::LoadData fail : {error.Message}");
             IsLoaded = true;
         }
 

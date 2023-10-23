@@ -8,9 +8,7 @@ namespace CryptoQuest.UI.Menu.Panels.DimensionBox.EquipmentTransferSection
     {
         private List<IGame> _gameEquipmentList = new List<IGame>();
 
-        /// <summary>
-        /// This method is a subscribed event and set up on scene.
-        /// </summary>
+        // This method subscribes to _setGameDataEvent and set up on scene.
         public void SetGameData(List<IGame> data, bool isGameEquipmentListEmpty = false)
         {
             _gameEquipmentList = data;

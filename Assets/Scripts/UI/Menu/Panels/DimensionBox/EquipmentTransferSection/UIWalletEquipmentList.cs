@@ -1,10 +1,5 @@
-using System.Collections;
 using System.Collections.Generic;
 using CryptoQuest.UI.Menu.Panels.DimensionBox.Interfaces;
-using CryptoQuest.Menu;
-using UnityEngine;
-using UnityEngine.UI;
-using CryptoQuest.UI.Menu.Panels.Status;
 
 namespace CryptoQuest.UI.Menu.Panels.DimensionBox.EquipmentTransferSection
 {
@@ -12,6 +7,7 @@ namespace CryptoQuest.UI.Menu.Panels.DimensionBox.EquipmentTransferSection
     {
         private List<INFT> _walletEquipmentList = new List<INFT>();
 
+        // This method subscribes to _setWalletDataEvent and set up on scene.
         public void SetWalletData(List<INFT> data, bool isWalletEquipmentListEmpty = false)
         {
             _walletEquipmentList = data;

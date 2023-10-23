@@ -10,12 +10,6 @@ namespace CryptoQuest.UI.Menu.Panels.DimensionBox.EquipmentTransferSection.Model
         private Sprite _icon;
         private LocalizedString _name;
 
-        public WalletEquipmentData(Sprite icon, LocalizedString name)
-        {
-            _icon = icon;
-            _name = name;
-        }
-
         public WalletEquipmentData(EquipmentInfo equipmentInfo)
         {
             _icon = equipmentInfo.Data.EquipmentType.Icon;

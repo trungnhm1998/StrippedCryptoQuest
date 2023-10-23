@@ -30,7 +30,7 @@ namespace CryptoQuest.UI.Menu.Panels.DimensionBox.EquipmentTransferSection
         private List<INFT> _walletData = new();
 
 
-        // This method subscribe to the EnterTransferSectionEvent on scene.
+        // This method subscribe to the _enterTransferSectionEvent on scene.
         public void StateEntered()
         {
             UITransferItem.SelectItemEvent += ItemSelected;
@@ -40,7 +40,7 @@ namespace CryptoQuest.UI.Menu.Panels.DimensionBox.EquipmentTransferSection
             GetEquipments();
         }
 
-        // This method subscribe to the ExitTransferSectionEvent on scene.
+        // This method subscribe to the _exitTransferSectionEvent on scene.
         public void StateExited()
         {
             UITransferItem.SelectItemEvent -= ItemSelected;
@@ -96,7 +96,7 @@ namespace CryptoQuest.UI.Menu.Panels.DimensionBox.EquipmentTransferSection
         }
 
         /// <summary>
-        /// This method subscribe to the ResetTransferEvent on scene.
+        /// This method subscribe to the _resetTransferEvent on scene.
         /// </summary>
         public void ResetTransfer()
         {
@@ -108,7 +108,7 @@ namespace CryptoQuest.UI.Menu.Panels.DimensionBox.EquipmentTransferSection
         }
 
         /// <summary>
-        /// This method subscribe to the SwitchBoardEvent on scene.
+        /// This method subscribe to the _switchBoardEvent on scene.
         /// </summary>
         public void SwitchBoardRequested(Vector2 direction)
         {

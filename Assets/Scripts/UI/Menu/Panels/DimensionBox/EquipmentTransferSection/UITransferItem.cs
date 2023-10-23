@@ -1,17 +1,13 @@
 using CryptoQuest.UI.Menu.Panels.DimensionBox.Interfaces;
 using CryptoQuest.UI.Menu.Panels.Status;
-using CryptoQuest.UI.Menu.Panels.Status.Equipment;
-using PolyAndCode.UI;
-using System.Collections;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
 using UnityEngine.Events;
 using UnityEngine.Localization.Components;
 using UnityEngine.UI;
 
 namespace CryptoQuest.UI.Menu.Panels.DimensionBox.EquipmentTransferSection
 {
-    public class UITransferItem : MonoBehaviour, ICell
+    public class UITransferItem : MonoBehaviour
     {
         public static event UnityAction<UITransferItem> SelectItemEvent;
 
@@ -42,22 +38,23 @@ namespace CryptoQuest.UI.Menu.Panels.DimensionBox.EquipmentTransferSection
             UIEquipmentSection.InspectItemEvent -= ReceivedInspectingRequest;
         }
 
-        public void ConfigureCell(IData itemInfo)
+        public void ConfigureCell(INFT itemInfo)
         {
-            _icon.sprite = itemInfo.GetIcon();
-            _name.StringReference = itemInfo.GetLocalizedName();
+            SetDataToUI(itemInfo);
+        }
 
-            // _isEquipped = itemInfo.IsEquipped();
+        public void ConfigureCell(IGame itemInfo)
+        {
+            SetDataToUI(itemInfo);
+
+            _isEquipped = itemInfo.IsEquipped();
             _equippedTag.SetActive(_isEquipped);
         }
 
-        private IEnumerator LoadSpriteAndSet(AssetReferenceT<Sprite> equipmentTypeIcon)
+        private void SetDataToUI(IData itemInfo)
         {
-            if (equipmentTypeIcon.RuntimeKeyIsValid() == false) yield break;
-            var handle = equipmentTypeIcon.LoadAssetAsync<Sprite>();
-            yield return handle;
-
-            _icon.sprite = handle.Result;
+            _icon.sprite = itemInfo.GetIcon();
+            _name.StringReference = itemInfo.GetLocalizedName();
         }
 
         public void OnSelectToTransfer()

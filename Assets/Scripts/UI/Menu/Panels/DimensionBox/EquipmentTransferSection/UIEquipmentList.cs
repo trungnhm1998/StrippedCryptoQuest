@@ -1,6 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
-using CryptoQuest.UI.Menu.Panels.DimensionBox.Interfaces;
 using CryptoQuest.Menu;
 using UnityEngine;
 using UnityEngine.UI;
@@ -39,17 +37,13 @@ namespace CryptoQuest.UI.Menu.Panels.DimensionBox.EquipmentTransferSection
             SetDefaultSelection();
         }
 
-        /// <summary>
-        /// This method subscribe to the HideDialogEvent and also is called when the switch-board event invokes on scene.
-        /// </summary>
+        // This method subscribe to the HideDialogEvent and also is called when the _switchToWalletBoardEvent/_switchToGameBoardEvent invokes on scene.
         public void SetDefaultSelection()
         {
             StartCoroutine(CoSetDefaultSelection());
         }
 
-        /// <summary>
-        /// Must delay this method a bit to let the scroll view finish initializing.
-        /// </summary>
+        // Must delay this method a bit to let the scroll view finish initializing.
         private IEnumerator CoSetDefaultSelection()
         {
             yield return new WaitForSeconds(.1f);

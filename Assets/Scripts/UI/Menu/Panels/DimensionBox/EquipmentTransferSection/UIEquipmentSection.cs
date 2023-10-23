@@ -10,27 +10,27 @@ namespace CryptoQuest.UI.Menu.Panels.DimensionBox.EquipmentTransferSection
         public event UnityAction<bool> SendingPhaseEvent;
 
         [SerializeField] protected LocalizedString _message;
-        [SerializeField] private UnityEvent EnterTransferSectionEvent;
-        [SerializeField] private UnityEvent ExitTransferSectionEvent;
-        [SerializeField] private UnityEvent ResetTransferEvent;
+        [SerializeField] private UnityEvent _enterTransferSectionEvent;
+        [SerializeField] private UnityEvent _exitTransferSectionEvent;
+        [SerializeField] private UnityEvent _resetTransferEvent;
         [SerializeField] private UnityEvent<Vector2> _switchBoardEvent;
 
         public override void EnterTransferSection()
         {
             base.EnterTransferSection();
-            EnterTransferSectionEvent.Invoke();
+            _enterTransferSectionEvent.Invoke();
         }
 
         public override void ExitTransferSection()
         {
             base.ExitTransferSection();
-            ExitTransferSectionEvent.Invoke();
+            _exitTransferSectionEvent.Invoke();
         }
 
         public override void ResetTransfer()
         {
             base.ResetTransfer();
-            ResetTransferEvent.Invoke();
+            _resetTransferEvent.Invoke();
         }
 
         public void OnInspectItem()

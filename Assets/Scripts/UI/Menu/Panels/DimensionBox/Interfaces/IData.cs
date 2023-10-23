@@ -1,8 +1,5 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
+using CryptoQuest.UI.Menu.Panels.DimensionBox.EquipmentTransferSection;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
 using UnityEngine.Localization;
 
 namespace CryptoQuest.UI.Menu.Panels.DimensionBox.Interfaces
