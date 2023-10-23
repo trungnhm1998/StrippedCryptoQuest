@@ -26,16 +26,19 @@ namespace CryptoQuest.Battle.UI.Logs
 
         private void LogConsumeItem(ConsumeItemEvent consumeEvent)
         {
-            var castMessage = _consumeItemMessage;
-            castMessage.Add(Constants.CHARACTER_NAME, consumeEvent.Character.LocalizedName);
-            castMessage.Add(Constants.ITEM_NAME, consumeEvent.ItemInfo.Data.DisplayName);
-            castMessage.Add(Constants.CHARACTER_TARGET_NAME, consumeEvent.Target.LocalizedName);
-            Logger.QueueLog(castMessage);
+            var useMessage = new LocalizedString(_consumeItemMessage.TableReference, 
+                _consumeItemMessage.TableEntryReference)
+            {
+                { Constants.CHARACTER_NAME, consumeEvent.Character.LocalizedName },
+                { Constants.ITEM_NAME, consumeEvent.ItemInfo.Data.DisplayName },
+                { Constants.CHARACTER_TARGET_NAME, consumeEvent.Target.LocalizedName },
+            };
+            Logger.QueueLog(useMessage);
         }
 
         private void LogConsumeItemFail(ConsumeItemFailEvent eventObject)
         {
-            Logger.AppendLog(_consumeItemFailMessage);
+            Logger.QueueLog(_consumeItemFailMessage);
         }
     }
 }
