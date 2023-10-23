@@ -1,10 +1,12 @@
 ﻿using CryptoQuest.AbilitySystem.Abilities;
+using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects;
 using UnityEngine;
 
 namespace CryptoQuest.Battle.Components
 {
     public class RetreatBehaviour : CharacterComponentBase
     {
+        [SerializeField] private BattleBus _battleBus;
         [SerializeField] private RetreatAbility _retreatAbility;
 
         private RetreatAbilitySpec _spec;
@@ -16,6 +18,7 @@ namespace CryptoQuest.Battle.Components
 
         public void Retreat(float highestEnemySpeed)
         {
+            _spec.CanRetreatBattle = _battleBus.CurrentBattlefield.CanRetreat;
             _spec.Execute(highestEnemySpeed);
         }
 

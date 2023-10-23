@@ -16,6 +16,8 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Monster
     {
         private const string DEFAULT_NAME = "";
         private const int ROW_OFFSET = 1;
+        private const string BATTLE_AREA_TYPE = "Battle Area";
+        private const string EVENT_BATTLE_TYPE = "Event Battle";
 
         public BattlefieldDataSOEditor()
         {
@@ -48,6 +50,10 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Monster
                 instance.Editor_SetId(dataModel.BattleFieldId);
                 var enemyGroup = dataModel.BattleEnemyGroups;
                 instance.Editor_SetEnemyGroups(enemyGroup);
+
+                var canRetreat = dataModel.BattleType == BattleFieldDataModel.EBattleType.BattleArea;
+                instance.Editor_SetRetreat(canRetreat);
+
                 instance.name = name;
 
                 if (!AssetDatabase.Contains(instance))
@@ -94,6 +100,12 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Monster
             GetMonsterGroupData(dataModel, splitedData[3]);
             GetMonsterGroupData(dataModel, splitedData[4]);
             GetMonsterGroupData(dataModel, splitedData[5]);
+
+            dataModel.BattleType = BattleFieldDataModel.EBattleType.BattleArea;
+            if (splitedData[6] == EVENT_BATTLE_TYPE)
+            {
+                dataModel.BattleType = BattleFieldDataModel.EBattleType.EventBattle;
+            }
             return dataModel.BattleEncounterSetups.Count > 0;
         }
 

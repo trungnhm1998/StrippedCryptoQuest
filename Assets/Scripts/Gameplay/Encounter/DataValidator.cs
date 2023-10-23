@@ -132,6 +132,13 @@ namespace CryptoQuest.Gameplay.Encounter
         public int BattleFieldId { get; set; }
         public List<int> BattleEncounterSetups { get; set; } = new();
         public List<int[]> BattleEnemyGroups { get; set; } = new();
+        public EBattleType BattleType { get; set; }
+
+        public enum EBattleType
+        {
+            BattleArea = 0,
+            EventBattle = 1
+        }
     }
 
     public class BattlePartyDataModel

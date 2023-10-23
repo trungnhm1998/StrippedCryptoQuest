@@ -22,6 +22,8 @@ namespace CryptoQuest.AbilitySystem.Abilities
         private float _enemySpeed;
         private RetreatAbility _retreatAbility;
 
+        public bool CanRetreatBattle { get; set; } = true;
+
         public RetreatAbilitySpec(RetreatAbility retreatAbility)
         {
             _retreatAbility = retreatAbility;
@@ -40,7 +42,7 @@ namespace CryptoQuest.AbilitySystem.Abilities
             var rand = Random.Range(0f, 100f);
             var probabilityOfRetreat =
                 BattleCalculator.CalculateProbabilityOfRetreat(_enemySpeed, agility.CurrentValue);
-            var canActive = probabilityOfRetreat > 0 && rand <= probabilityOfRetreat;
+            var canActive = probabilityOfRetreat > 0 && rand <= probabilityOfRetreat && CanRetreatBattle;
             // TODO: Maybe implement template method pattern here
             if (!canActive) _retreatAbility.RetreatFailedEvent?.Invoke(Owner);
 

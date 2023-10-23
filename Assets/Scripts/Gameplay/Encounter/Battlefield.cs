@@ -12,6 +12,9 @@ namespace CryptoQuest.Gameplay.Encounter
     public class Battlefield : ScriptableObject
     {
         [field: SerializeField] public int Id { get; private set; }
+        [SerializeField] private bool _canRetreat = true;
+        public bool CanRetreat => _canRetreat;
+
         [SerializeField] private EnemyGroupId[] _enemyGroups = Array.Empty<EnemyGroupId>();
         public EnemyGroupId[] EnemyGroups => _enemyGroups;
 
@@ -52,6 +55,11 @@ namespace CryptoQuest.Gameplay.Encounter
                 };
                 _enemyGroups[i] = enemyGroup;
             }
+        }
+
+        public void Editor_SetRetreat(bool value)
+        {
+            _canRetreat = value;
         }
 #endif
     }
