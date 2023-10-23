@@ -48,7 +48,9 @@ namespace CryptoQuest.UI.Common
             float yPosViewport = NormalizePositionFromDifferentPivots(rect);
 
             _lowerBound = yPosViewport - rect.height / 2 + _verticalOffset / 2;
+            _lowerBound = Mathf.Round(_lowerBound);
             _upperBound = yPosViewport + rect.height / 2 + _verticalOffset / 2;
+            _upperBound = Mathf.Round(_upperBound);
         }
 
         /// <summary>
@@ -67,6 +69,9 @@ namespace CryptoQuest.UI.Common
             if (IsSelectedChildOfScrollRect(current) == false) return;
 
             var selectedRowPositionY = current.transform.position.y;
+            // Sometime the difference between position and bound are so small
+            // and cause auto scroll not working, so I round it
+            selectedRowPositionY = Mathf.Round(selectedRowPositionY);
             ScrollUpIfOutOfLowerBound(selectedRowPositionY);
             ScrollDownIfOutOfUpperBound(selectedRowPositionY);
         }
