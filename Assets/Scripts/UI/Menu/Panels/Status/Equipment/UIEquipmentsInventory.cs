@@ -59,9 +59,9 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
             _scrollRect.content.anchoredPosition = Vector2.zero;
             _tooltip.SetSafeArea(_tooltipSafeArea);
             _contents.SetActive(true);
-            _unEquipButton.Select();
             InstantiateEquipments();
             RenderCurrentlyEquipItem();
+            _unEquipButton.Select();
             PreviewUnselectEquipment();
         }
 
@@ -204,8 +204,10 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
 
         private void PreviewUnselectEquipment()
         {
+            if (!_currentlyEquippingItem.Equipment.IsValid()) return;
+
             _tooltip.SetSafeArea(_tooltipSafeArea);
-            _equipmentPreviewer.PreviewUnequipEquipment(_currentlyEquippingItem.Equipment, InspectingHero);
+            _equipmentPreviewer.PreviewUnequipEquipment(_equipmentsPanel.EquippingSlot, InspectingHero);
         }
 
         private void OnPreviewEquipmentStats(UIEquipmentItem equippingItemUI)
@@ -218,6 +220,7 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
         {
             var equipmentsController = _equipmentsController;
             equipmentsController.Unequip(_equipmentsPanel.EquippingSlot);
+            _equipmentPreviewer.ResetAttributesUI();
         }
     }
 }

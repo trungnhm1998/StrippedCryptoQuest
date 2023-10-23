@@ -126,8 +126,7 @@ namespace CryptoQuest.Shop.UI
 
         private void UpdateGoldAmount()
         {
-            _walletControllerSO.GetCurrencyInfo(_goldSO, out _goldInfo);
-            _goldAmount.text = _goldInfo.Amount.ToString();
+            _goldAmount.text = _walletControllerSO.Wallet.Gold.Amount.ToString();
         }
 
         public void ShowDialog(LocalizedString message)

@@ -185,6 +185,19 @@ namespace CryptoQuest.Battle.Components
             Unequip(equipment);
         }
 
+        public void UnequipAll()
+        {
+            for (var index = 0; index < _equipments.Slots.Count; index++)
+            {
+                var slot = _equipments.Slots[index];
+                if (slot.IsValid())
+                {
+                    OnEquipmentRemoved(slot.Equipment);
+                    SetEquipmentInSlot(new EquipmentInfo(), slot.Type);
+                }
+            }
+        }    
+
         /// <summary>
         /// Unequip the equipment in all required slots, and raise an event,
         /// InventoryController, or some manager should listen to this event and add the equipment back to inventory
