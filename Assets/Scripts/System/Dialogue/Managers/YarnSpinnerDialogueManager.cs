@@ -114,7 +114,14 @@ namespace CryptoQuest.System.Dialogue.Managers
             _currentYarnNode = "";
         }
 
-        private string GetPlayerName() => _saveSystem.PlayerName;
+        private string GetPlayerName()
+        {
+#if UNITY_EDITOR
+            return _saveSystem.PlayerName ?? "Abel";
+#else
+            return _saveSystem.PlayerName;
+#endif
+        }
 
         /// <summary>
         /// Because of this method I have to use singleton or else the system use Find with name in a large scene
