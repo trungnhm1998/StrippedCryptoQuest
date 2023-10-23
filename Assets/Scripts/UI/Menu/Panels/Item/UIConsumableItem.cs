@@ -71,7 +71,7 @@ namespace CryptoQuest.UI.Menu.Panels.Item
         public void Init(UIConsumables consumables, ConsumableInfo item)
         {
             _consumable = item;
-            StartCoroutine(consumables.GetConsumableAvatar(item.Id, item.Icon, avatar => _icon.sprite = avatar));
+            StartCoroutine(consumables.GetConsumableAvatar(item.DataId, item.Icon, avatar => _icon.sprite = avatar));
             _name.StringReference = item.DisplayName;
             SetQuantityText(item);
 

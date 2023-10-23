@@ -155,7 +155,7 @@ namespace CryptoQuest.UI.Menu.Panels.Item
             if (!asset.RuntimeKeyIsValid()) yield break;
             var handle = asset.LoadAssetAsync<Sprite>();
             yield return handle;
-            _avatarCache.Add(id, handle);
+            _avatarCache[id] = handle;
             callback?.Invoke(handle.Result);
         }
     }
