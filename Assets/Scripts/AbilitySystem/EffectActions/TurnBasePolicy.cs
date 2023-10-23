@@ -5,6 +5,8 @@ using CryptoQuest.Battle.Events;
 using CryptoQuest.System;
 using IndiGames.GameplayAbilitySystem.EffectSystem;
 using IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects.GameplayEffectActions;
+using IndiGames.GameplayAbilitySystem.TagSystem.ScriptableObjects;
+using TinyMessenger;
 using UnityEngine;
 
 namespace CryptoQuest.AbilitySystem.EffectActions
@@ -37,6 +39,7 @@ namespace CryptoQuest.AbilitySystem.EffectActions
         private TurnBasePolicy _policyDef;
         private Battle.Components.Character _character;
         private DamageOverTimeFlags _damageOverTimeFlagsFlags;
+        private readonly TinyMessageSubscriptionToken _unloadingEvent;
 
         public TurnBasePolicyActiveEffect(TurnBasePolicy policyDef,
             GameplayEffectSpec spec) : base(spec)
@@ -48,6 +51,8 @@ namespace CryptoQuest.AbilitySystem.EffectActions
             if (_character.TryGetComponent(out _damageOverTimeFlagsFlags) == false)
                 _damageOverTimeFlagsFlags = _character.gameObject.AddComponent<DamageOverTimeFlags>();
             RegisterWhenEffectWillBeApply();
+            spec.Target.TagSystem.TagAdded += ExpiredEffectWhenTargetDie;
+            _unloadingEvent = BattleEventBus.SubscribeEvent<UnloadingEvent>(ExpiredEffect);
         }
 
         private void RegisterWhenEffectWillBeApply()
@@ -69,6 +74,8 @@ namespace CryptoQuest.AbilitySystem.EffectActions
         ~TurnBasePolicyActiveEffect()
         {
             UnregisterWhenEffectWillBeApply();
+            Spec.Target.TagSystem.TagAdded -= ExpiredEffectWhenTargetDie;
+            BattleEventBus.UnsubscribeEvent(_unloadingEvent);
         }
 
         private void UnregisterWhenEffectWillBeApply()
@@ -87,12 +94,24 @@ namespace CryptoQuest.AbilitySystem.EffectActions
             }
         }
 
+        private void ExpiredEffect(UnloadingEvent ctx) => Spec.Target.EffectSystem.RemoveEffect(Spec);
+
+        private void ExpiredEffectWhenTargetDie(TagScriptableObject[] tag)
+        {
+            if (tag.Length == 0) return;
+            if (tag[0] != TagsDef.Dead) return;
+            _turnsLeft = 0;
+            IsActive = false;
+            Spec.Target.EffectSystem.RemoveEffect(Spec);
+        }
+
         private void ModifyTargetAttributeIfPeriodic()
         {
             if (_turnsLeft <= 0) return;
 
             LogAffectingStatus();
             ExecutePeriodicEffect();
+
             _turnsLeft--;
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
             Debug.Log(
@@ -121,6 +140,7 @@ namespace CryptoQuest.AbilitySystem.EffectActions
 
         private void ExecutePeriodicEffect()
         {
+            if (_policyDef.TriggerType == TurnBasePolicy.ETriggerType.Always) return;
             foreach (var grantedTag in Spec.GrantedTags)
             {
                 if (_damageOverTimeFlagsFlags.FlagRaised(grantedTag)) return;

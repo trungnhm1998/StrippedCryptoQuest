@@ -1,6 +1,11 @@
 ﻿using System;
 using CryptoQuest.AbilitySystem.Attributes;
 using CryptoQuest.AbilitySystem.Executions;
+using CryptoQuest.Battle.Character;
+using CryptoQuest.Battle.Events;
+using IndiGames.GameplayAbilitySystem.AttributeSystem;
+using IndiGames.GameplayAbilitySystem.AttributeSystem.Components;
+using TinyMessenger;
 using UnityEngine;
 using UnityEngine.Localization;
 using UnityEngine.Localization.SmartFormat.PersistentVariables;
@@ -11,16 +16,34 @@ namespace CryptoQuest.Battle.UI.Logs
     {
         [SerializeField] private LocalizedString _damageMessage;
         [SerializeField] private LocalizedString _noDamageMessage;
-        [SerializeField] private NotifyDamage _notifyDamage;
+        [SerializeField] private AttributeChangeEvent _attributeChangeEvent;
+        private TinyMessageSubscriptionToken _roundStartedEvent;
 
         private void Awake()
         {
-            _notifyDamage.DamageDealt += LogDamage;
+            _roundStartedEvent = BattleEventBus.SubscribeEvent<LoadedEvent>(RegisterEvents);
+        }
+
+        private void RegisterEvents(LoadedEvent _)
+        {
+            _attributeChangeEvent.Changed += Notify;
         }
 
         private void OnDestroy()
         {
-            _notifyDamage.DamageDealt -= LogDamage;
+            BattleEventBus.UnsubscribeEvent(_roundStartedEvent);
+            _attributeChangeEvent.Changed -= Notify;
+        }
+
+        /// <summary>
+        /// To handle Damage Overtime
+        /// </summary>
+        private void Notify(AttributeSystemBehaviour owner, AttributeValue oldVal, AttributeValue newVal)
+        {
+            if (newVal.Attribute != AttributeSets.Health) return;
+            var damage = newVal.CurrentValue - oldVal.CurrentValue;
+            if (Mathf.Approximately(damage, 0)) return;
+            LogDamage(owner.GetComponent<Components.Character>(), damage);
         }
 
         private void LogDamage(Components.Character character, float damage)

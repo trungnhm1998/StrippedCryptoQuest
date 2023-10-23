@@ -41,7 +41,7 @@ Transform:
   - {fileID: 8935436346460376688}
   - {fileID: 3064709006144079425}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2603140895196176383
 MonoBehaviour:
@@ -55,6 +55,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46c65ad917bf44d4a2cb94a6f1e4347e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _vfxAndLogPresenter: {fileID: 0}
   _sceneLoadedEvent: {fileID: 11400000, guid: d463f98507ffd95459feb67b21dd1ecc, type: 2}
   _delayBetweenLines: 2
   _hideDelay: 3
@@ -441,7 +442,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  _retreatAbility: {fileID: 11400000, guid: b7f1b6c96aba92e4680d2ca75c6abdd3, type: 2}
   _retreatSuccessLog:
     m_TableReference:
       m_TableCollectionName: GUID:810dd60b781de0a4589f9f164a4b0a8c
@@ -749,6 +749,7 @@ MonoBehaviour:
     m_WaitForCompletion: 0
     m_LocalVariables: []
   _notifyDamage: {fileID: 11400000, guid: 24121cd333778ae46b7758ccdfc73aca, type: 2}
+  _attributeChangeEvent: {fileID: 11400000, guid: 8530eb711d1ffb74081abe7dc655eea4, type: 2}
   references:
     version: 2
     RefIds: []
