@@ -1,10 +1,15 @@
+using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using CryptoQuest.Gameplay.Inventory;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Type;
 using CryptoQuest.Item;
 using CryptoQuest.System;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.UI;
 
 namespace CryptoQuest.UI.Menu.Panels.Item
@@ -20,6 +25,7 @@ namespace CryptoQuest.UI.Menu.Panels.Item
         [field: SerializeField] public EConsumableType Type { get; private set; }
         private readonly List<UIConsumableItem> _uiConsumables = new();
         private UIConsumableItem _currentInspectingItem;
+        private Dictionary<string, AsyncOperationHandle<Sprite>> _avatarCache = new();
 
         private bool _interactable;
 
@@ -50,6 +56,12 @@ namespace CryptoQuest.UI.Menu.Panels.Item
         {
             ConsumableInfo.QuantityReduced -= UpdateUI;
             UIConsumableItem.Inspecting -= SaveInspectingItemToSelectLater;
+
+            foreach (var handle in _avatarCache)
+            {
+                if (handle.Value.IsValid()) Addressables.Release(handle.Value);
+            }
+            _avatarCache.Clear();
         }
 
         private void UpdateUI(ConsumableInfo consumable)
@@ -62,7 +74,7 @@ namespace CryptoQuest.UI.Menu.Panels.Item
                 Destroy(_currentInspectingItem.gameObject);
                 return;
             }
-            
+
             _currentInspectingItem.SetQuantityText(consumable);
         }
 
@@ -107,7 +119,7 @@ namespace CryptoQuest.UI.Menu.Panels.Item
         {
             var item = Instantiate(_prefab, _scrollRect.content);
             _uiConsumables.Add(item);
-            item.Init(consumable);
+            item.Init(this, consumable);
         }
 
         private void UpdateSelectingItemIfLastWereNull()
@@ -120,15 +132,31 @@ namespace CryptoQuest.UI.Menu.Panels.Item
 
         private void UpdateSelectingItem()
         {
-            if(_uiConsumables.Count > 0)
+            if (_uiConsumables.Count > 0)
             {
                 _currentInspectingItem = _uiConsumables[0];
-            }    
-        }    
+            }
+        }
 
         private void InspectCurrentItem()
         {
             if (_currentInspectingItem) _currentInspectingItem.Inspect();
+        }
+
+        public IEnumerator GetConsumableAvatar(string id, AssetReferenceT<Sprite> asset, Action<Sprite> callback)
+        {
+            if (_avatarCache.Keys.Contains(id))
+            {
+                callback?.Invoke(_avatarCache[id].Result);
+                yield break;
+            }
+
+            if (asset == null) yield break;
+            if (!asset.RuntimeKeyIsValid()) yield break;
+            var handle = asset.LoadAssetAsync<Sprite>();
+            yield return handle;
+            _avatarCache.Add(id, handle);
+            callback?.Invoke(handle.Result);
         }
     }
 }

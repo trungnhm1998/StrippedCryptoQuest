@@ -28,7 +28,6 @@ namespace CryptoQuest.UI.Menu.Panels.Item
         private ConsumableInfo _consumable;
         public ConsumableInfo Consumable => _consumable;
         private bool _canClick;
-        private AsyncOperationHandle<Sprite> _handle;
 
         public bool Interactable
         {
@@ -49,9 +48,6 @@ namespace CryptoQuest.UI.Menu.Panels.Item
             _button.Selected -= OnInspectingItem;
             _button.DeSelected -= OnDeselectItem;
             _button.onClick.RemoveListener(OnUse);
-
-            if (_handle.IsValid()) Addressables.Release(_handle);
-            _handle = default;
         }
 
         public void OnUse()
@@ -72,10 +68,10 @@ namespace CryptoQuest.UI.Menu.Panels.Item
             _selectedBackground.SetActive(false);
         }
 
-        public void Init(ConsumableInfo item)
+        public void Init(UIConsumables consumables, ConsumableInfo item)
         {
             _consumable = item;
-            StartCoroutine(CoLoadIcon());
+            StartCoroutine(consumables.GetConsumableAvatar(item.Id, item.Icon, avatar => _icon.sprite = avatar));
             _name.StringReference = item.DisplayName;
             SetQuantityText(item);
 
@@ -86,15 +82,6 @@ namespace CryptoQuest.UI.Menu.Panels.Item
         public void SetQuantityText(ConsumableInfo item)
         {
             _quantity.text = item.Quantity.ToString();
-        }
-
-        private IEnumerator CoLoadIcon()
-        {
-            if (_consumable.Icon == null) yield break;
-            if (!_consumable.Icon.RuntimeKeyIsValid()) yield break;
-            _handle = _consumable.Icon.LoadAssetAsync<Sprite>();
-            yield return _handle;
-            _icon.sprite = _handle.Result;
         }
 
         private void SetColorText(bool allowed = false)
