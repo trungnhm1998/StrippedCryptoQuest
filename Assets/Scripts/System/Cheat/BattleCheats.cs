@@ -19,16 +19,19 @@ namespace CryptoQuest.System.Cheat
         private void TriggerLoseBattle(CommandArg[] obj)
         {
             BattleEventBus.RaiseEvent(new TurnLostEvent());
+            BattleEventBus.RaiseEvent(new FinishedPresentingEvent());
         }
 
         private void TriggerWinBattle(CommandArg[] obj)
         {
             BattleEventBus.RaiseEvent(new TurnWonEvent());
+            BattleEventBus.RaiseEvent(new FinishedPresentingEvent());
         }
 
         private void InstantlyRetreat(CommandArg[] obj)
         {
             BattleEventBus.RaiseEvent(new RetreatedEvent());
+            BattleEventBus.RaiseEvent(new FinishedPresentingEvent());
         }
     }
 }
