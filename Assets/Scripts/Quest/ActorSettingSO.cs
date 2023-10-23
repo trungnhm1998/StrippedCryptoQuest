@@ -10,17 +10,19 @@ namespace CryptoQuest.Quest
     {
         public Action<bool> OnConfigure;
         public Action OnQuestCompleted;
-
         [field: SerializeReference] public List<QuestSO> QuestsToTrack { get; set; } = new();
 
-        public void Configure(bool isQuestCompleted) => OnConfigure?.Invoke(isQuestCompleted);
-        public void Subscribe() => QuestsToTrack.ForEach(q => q.OnQuestCompleted += SetupQuest);
-        public void Unsubscribe() => QuestsToTrack.ForEach(q => q.OnQuestCompleted -= SetupQuest);
+        private bool _questCompletedSubscribed = true;
 
-        private void SetupQuest()
+        public void Configure(bool isQuestCompleted) => OnConfigure?.Invoke(isQuestCompleted);
+        public void Subscribe() => QuestsToTrack.ForEach(questData => questData.OnQuestCompleted += OnQuestCompletedHandler);
+        public void Unsubscribe() => QuestsToTrack.ForEach(questData => questData.OnQuestCompleted -= OnQuestCompletedHandler);
+        private void OnQuestCompletedHandler()
         {
-            QuestsToTrack.ForEach(q => q.OnQuestCompleted -= SetupQuest);
+            if (!_questCompletedSubscribed) return;
+
             OnQuestCompleted?.Invoke();
+            _questCompletedSubscribed = false;
         }
     }
 }

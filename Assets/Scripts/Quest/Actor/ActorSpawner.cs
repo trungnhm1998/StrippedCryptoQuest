@@ -1,4 +1,5 @@
-﻿using CryptoQuest.Quest.Components;
+﻿using System;
+using CryptoQuest.Quest.Components;
 using IndiGames.Core.Events.ScriptableObjects;
 using UnityEngine;
 
@@ -19,35 +20,16 @@ namespace CryptoQuest.Quest.Actor
         {
             _onSceneLoadedEventChannel.EventRaised += ConfigureActors;
 
-            if (_actorSpawnSetting)
-            {
-                _actorSpawnSetting.OnConfigure += Spawn;
-                _actorSpawnSetting.Subscribe();
-            }
-
-            if (_actorDeSpawnSetting)
-            {
-                _actorDeSpawnSetting.OnConfigure += DeSpawn;
-                _actorDeSpawnSetting.Subscribe();
-            }
+            SubscribeSetting(_actorSpawnSetting, Spawn);
+            SubscribeSetting(_actorDeSpawnSetting, DeSpawn);
         }
 
         private void OnDisable()
         {
             _onSceneLoadedEventChannel.EventRaised -= ConfigureActors;
 
-            //TODO: these codes smell, need refactor   
-            if (_actorSpawnSetting)
-            {
-                _actorSpawnSetting.OnQuestCompleted -= ActivateSpawnActor;
-                _actorSpawnSetting.Unsubscribe();
-            }
-
-            if (_actorDeSpawnSetting)
-            {
-                _actorDeSpawnSetting.OnQuestCompleted -= ActivateDeSpawnActor;
-                _actorDeSpawnSetting.Unsubscribe();
-            }
+            UnsubscribeSetting(_actorSpawnSetting, ActivateSpawnActor);
+            UnsubscribeSetting(_actorDeSpawnSetting, ActivateDeSpawnActor);
         }
 
         private void ConfigureActors()
@@ -111,5 +93,25 @@ namespace CryptoQuest.Quest.Actor
 
             ActivateDeSpawnActor();
         }
+
+        #region Extensions
+
+        private void SubscribeSetting(ActorSettingSO setting, Action<bool> configureAction)
+        {
+            if (!setting) return;
+
+            setting.OnConfigure += configureAction;
+            setting.Subscribe();
+        }
+
+        private void UnsubscribeSetting(ActorSettingSO setting, Action activateAction)
+        {
+            if (!setting) return;
+            
+            setting.OnQuestCompleted -= activateAction;
+            setting.Unsubscribe();
+        }
+
+        #endregion
     }
 }
