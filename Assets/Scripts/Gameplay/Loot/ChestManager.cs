@@ -75,6 +75,8 @@ namespace CryptoQuest.Gameplay.Loot
         }
 
         #region SaveSystem
+        
+        // TODO: Change key, `name` will be different when build release
         public string Key { get { return this.name; } }
 
         public string ToJson()

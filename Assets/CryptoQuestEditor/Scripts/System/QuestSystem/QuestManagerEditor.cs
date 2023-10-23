@@ -37,7 +37,7 @@ namespace CryptoQuestEditor.System.QuestSystem
             listView.bindItem = (element, index) =>
             {
                 var label = element as Label;
-                label.text = targetCompletedQuests.ElementAt(index).BaseData.name;
+                label.text = targetCompletedQuests.ElementAt(index).BaseData ? targetCompletedQuests.ElementAt(index).BaseData.name : "ItemExample";
             };
             listView.itemsSource = targetCompletedQuests;
             listView.fixedItemHeight = 20;

@@ -18,7 +18,7 @@ namespace CryptoQuest.Battle
 
         private void OnDestroy()
         {
-            BattleEventBus.UnsubscribeEvent(_endEventToken);
+            if (_endEventToken != null) BattleEventBus.UnsubscribeEvent(_endEventToken);
         }
 
         private void HandleEnd(BattleRetreatedEvent context)

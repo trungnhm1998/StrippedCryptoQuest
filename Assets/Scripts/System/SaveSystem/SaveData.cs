@@ -23,6 +23,6 @@ namespace CryptoQuest.System.SaveSystem
     {
         public string player;
         public string scene;
-        public List<KeyValue> objects;
+        public List<KeyValue> objects = new();
     }
 }

@@ -46,7 +46,7 @@ namespace CryptoQuest.UI.Title
 
         private void HandleStartNewGame()
         {
-            _saveSystem?.LoadScene(_sceneToLoad);
+            _saveSystem?.LoadScene(ref _sceneToLoad);
             _loadMapChannel.RequestLoad(_sceneToLoad);
         }
     }

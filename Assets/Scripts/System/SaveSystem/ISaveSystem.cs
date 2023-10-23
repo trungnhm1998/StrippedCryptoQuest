@@ -7,7 +7,7 @@ public interface ISaveSystem
     string PlayerName { get; set; }
 
     bool SaveScene(SceneScriptableObject sceneSO);
-    bool LoadScene(SceneScriptableObject sceneSO);
+    bool LoadScene(ref SceneScriptableObject sceneSO);
 
     bool LoadObject(IJsonSerializable jObject);
     bool SaveObject(IJsonSerializable jObject);

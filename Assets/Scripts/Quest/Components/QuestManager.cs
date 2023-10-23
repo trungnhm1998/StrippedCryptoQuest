@@ -6,19 +6,25 @@ using CryptoQuest.Gameplay.Reward.Events;
 using CryptoQuest.Quest.Authoring;
 using CryptoQuest.Quest.Events;
 using CryptoQuest.System;
-using CryptoQuest.System.SaveSystem;
 using IndiGames.Core.SaveSystem;
 using UnityEngine;
 
 namespace CryptoQuest.Quest.Components
 {
+    [Serializable]
+    public class QuestData
+    {
+        public List<string> InProgressQuest = new();
+        public List<string> CompletedQuests = new();
+    }
+
     [AddComponentMenu("Quest System/Quest Manager")]
     [DisallowMultipleComponent]
     public class QuestManager : MonoBehaviour, IJsonSerializable
     {
         public static Action<IQuestConfigure> OnConfigureQuest;
         public static Action<QuestSO> OnRemoveProgressingQuest;
-        public static Action<QuestSO> OnQuestCompleted;
+        public Action<QuestSO> OnQuestCompleted;
 
         [Header("Quest Events")] [SerializeField]
         private QuestEventChannelSO _triggerQuestEventChannel;
@@ -26,20 +32,19 @@ namespace CryptoQuest.Quest.Components
         [SerializeField] private QuestEventChannelSO _giveQuestEventChannel;
         [SerializeField] private RewardLootEvent _rewardEventChannel;
 
-        [SerializeField, HideInInspector] private List<QuestInfo> _inProgressQuest = new();
-        public List<QuestInfo> InProgressQuest => _inProgressQuest;
+        [field: SerializeReference, HideInInspector]
+        public List<QuestInfo> InProgressQuest { get; private set; } = new();
 
-        [SerializeField, HideInInspector] private List<QuestInfo> _completedQuests = new();
-        public List<QuestInfo> CompletedQuests => _completedQuests;
+        [field: SerializeReference, HideInInspector]
+        public List<QuestInfo> CompletedQuests { get; private set; } = new();
 
-        private readonly List<string> _completedQuestsId = new();
-
-        private QuestSO _currentQuestData;
-        private QuestInfo _currentQuestInfo;
+        [SerializeField, HideInInspector] private QuestSO _currentQuestData;
+        private QuestData _questData = new();
         private ISaveSystem _saveSystem;
 
         private void Awake()
         {
+            ServiceProvider.Provide(this);
             _saveSystem = ServiceProvider.GetService<ISaveSystem>();
         }
 
@@ -74,25 +79,32 @@ namespace CryptoQuest.Quest.Components
 
             foreach (var progressQuestInfo in InProgressQuest)
             {
-                if (progressQuestInfo.BaseData != questData) continue;
+                if (progressQuestInfo.Guid != questData.Guid) continue;
 
                 progressQuestInfo.TriggerQuest();
-                _currentQuestInfo = progressQuestInfo;
                 break;
             }
+        }
+
+        private bool IsQuestCompleted(QuestSO questData)
+        {
+            if (questData != null && CompletedQuests.Count() > 0)
+            {
+                return CompletedQuests.Any(questInfo => questData.Guid == questInfo.Guid);
+            }
+
+            return false;
         }
 
         public void GiveQuest(QuestSO questData)
         {
             if (IsQuestTriggered(questData)) return;
 
-            foreach (var progressingQuest in InProgressQuest)
-                if (progressingQuest.BaseData == questData)
-                    return;
+            if (InProgressQuest.Any(questInfo => questInfo.Guid == questData.Guid)) return;
 
-            QuestInfo currentQuestInfo = questData.CreateQuest(this);
+            QuestInfo currentQuestInfo = questData.CreateQuest();
 
-            if (!_completedQuestsId.Contains(questData.Guid))
+            if (!IsQuestCompleted(questData))
             {
                 InProgressQuest.Add(currentQuestInfo);
                 currentQuestInfo.GiveQuest();
@@ -100,6 +112,7 @@ namespace CryptoQuest.Quest.Components
 
             _currentQuestData = questData;
             questData.OnRewardReceived += RewardReceived;
+
             _saveSystem?.SaveObject(this);
         }
 
@@ -108,37 +121,31 @@ namespace CryptoQuest.Quest.Components
         {
             _rewardEventChannel.EventRaised(loots);
             _currentQuestData.OnRewardReceived -= RewardReceived;
+
             _saveSystem?.SaveObject(this);
         }
 
         private void UpdateQuestProgress(QuestInfo questInfo)
         {
             InProgressQuest.Remove(questInfo);
-
             CompletedQuests.Add(questInfo);
-            _completedQuestsId.Add(questInfo.BaseData.Guid);
         }
 
         private void QuestCompleted(QuestSO questSo)
         {
             foreach (var progressQuestInfo in InProgressQuest)
             {
-                if (progressQuestInfo.BaseData != questSo) continue;
+                if (progressQuestInfo.Guid != questSo.Guid) continue;
                 UpdateQuestProgress(progressQuestInfo);
                 break;
             }
+
             _saveSystem?.SaveObject(this);
         }
 
         private bool IsQuestTriggered(QuestSO questSo)
         {
-            foreach (var quest in CompletedQuests)
-            {
-                if (quest.BaseData == questSo)
-                    return true;
-            }
-
-            return false;
+            return CompletedQuests.Any(quest => quest.Guid == questSo.Guid);
         }
 
         private void ConfigureQuestHolder(IQuestConfigure questConfigure)
@@ -150,24 +157,76 @@ namespace CryptoQuest.Quest.Components
         {
             foreach (var inProgressQuest in InProgressQuest.ToList())
             {
-                if (inProgressQuest.BaseData != quest) continue;
+                if (inProgressQuest.Guid != quest.Guid) continue;
                 InProgressQuest.Remove(inProgressQuest);
             }
+
             _saveSystem?.SaveObject(this);
         }
 
         #region SaveSystem
+
+        // TODO: Change key, `name` will be different when build release
         public string Key => this.name;
 
         public string ToJson()
         {
-            return JsonUtility.ToJson(this);
+            var inProgressQuest = _questData.InProgressQuest;
+            var completedQuests = _questData.CompletedQuests;
+
+            foreach (var item in InProgressQuest)
+            {
+                if (inProgressQuest.Contains(item.Guid)) continue;
+                inProgressQuest.Add(item.Guid);
+            }
+
+            foreach (var item in CompletedQuests)
+            {
+                if (completedQuests.Contains(item.Guid)) continue;
+                completedQuests.Add(item.Guid);
+
+                if (!inProgressQuest.Contains(item.Guid)) continue;
+                inProgressQuest.Remove(item.Guid);
+            }
+
+            return JsonUtility.ToJson(_questData);
         }
 
         public bool FromJson(string json)
         {
-            try { JsonUtility.FromJsonOverwrite(json, this); return true; } catch { return false; }
+            try
+            {
+                if (!string.IsNullOrEmpty(json))
+                {
+                    JsonUtility.FromJsonOverwrite(json, _questData);
+                    if (_questData.InProgressQuest.Count() > 0 || _questData.CompletedQuests.Count() > 0)
+                    {
+                        InProgressQuest.Clear();
+                        foreach (var item in _questData.InProgressQuest)
+                        {
+                            QuestSO questData = (QuestSO)ScriptableObjectRegistry.FindByGuid(item);
+                            InProgressQuest.Add(questData.CreateQuest());
+                        }
+
+                        CompletedQuests.Clear();
+                        foreach (var item in _questData.CompletedQuests)
+                        {
+                            QuestSO questData = (QuestSO)ScriptableObjectRegistry.FindByGuid(item);
+                            CompletedQuests.Add(questData.CreateQuest());
+                        }
+                    }
+
+                    return true;
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.LogException(ex);
+            }
+
+            return false;
         }
+
         #endregion
     }
 }

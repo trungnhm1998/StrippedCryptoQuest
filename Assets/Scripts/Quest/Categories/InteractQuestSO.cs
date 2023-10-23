@@ -1,4 +1,5 @@
 ﻿using System;
+using CryptoQuest.System;
 using CryptoQuest.Quest.Authoring;
 using CryptoQuest.Quest.Components;
 using CryptoQuest.Quest.Controllers;
@@ -15,22 +16,16 @@ namespace CryptoQuest.Quest.Categories
 
         [field: SerializeField] public QuestEventChannelSO GiveQuestEventChannel { get; private set; }
 
-        public override QuestInfo CreateQuest(QuestManager questManager) =>
-            new InteractQuestInfo(this, questManager);
+        public override QuestInfo CreateQuest() =>
+            new InteractQuestInfo(this);
     }
 
     [Serializable]
     public class InteractQuestInfo : QuestInfo<InteractQuestSO>
     {
-        private readonly QuestInteractController _questInteractController;
-
-        public InteractQuestInfo(InteractQuestSO interactQuestSO,
-            QuestManager questManager) : base(
+        public InteractQuestInfo(InteractQuestSO interactQuestSO) : base(
             interactQuestSO)
-        {
-            _questInteractController = questManager.GetComponent<QuestInteractController>();
-            _questInteractController.QuestManager = questManager;
-        }
+        {}
 
         public override void TriggerQuest()
         {
@@ -53,8 +48,10 @@ namespace CryptoQuest.Quest.Categories
 
         public override void GiveQuest()
         {
-            _questInteractController.GiveQuest(this);
-            _questInteractController.TriggerQuest(this);
+            var questManager = ServiceProvider.GetService<QuestManager>();
+            var questInteractController = questManager?.GetComponent<QuestInteractController>();
+            questInteractController?.GiveQuest(this);
+            questInteractController?.TriggerQuest(this);
         }
     }
 }

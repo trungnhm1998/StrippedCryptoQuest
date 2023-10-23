@@ -7,6 +7,8 @@ using IndiGames.Core.SceneManagementSystem.ScriptableObjects;
 using IndiGames.Core.UI;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using IndiGames.Core.SaveSystem;
+using System;
 #if UNITY_EDITOR
 using IndiGames.Core.EditorTools;
 #endif
@@ -22,18 +24,19 @@ namespace CryptoQuest.Map.CheckPoint
         void BackToCheckPoint();
         void FinishBackToCheckPoint();
     }
-    public class CheckPointController : MonoBehaviour, ICheckPointController
+
+    public class CheckPointController : MonoBehaviour, ICheckPointController, IJsonSerializable
     {
         public bool IsBackToCheckPoint => _isBackToCheckPoint;
         public Vector3 CheckPointPosition => _lastCheckPointPosition;
         public CharacterBehaviour.EFacingDirection FacingDirection => GetFacingDirection();
 
-        private SceneScriptableObject _lastCheckPointScene;
-        private string _lastSceneCheckPointName;
-        private SceneScriptableObject _currentScene;
-        private Vector3 _lastCheckPointPosition;
-        private int _lastCheckPointFacingDirection;
-        private bool _isBackToCheckPoint = false;
+        [SerializeField] private SceneScriptableObject _lastCheckPointScene;
+        [SerializeField] private string _lastSceneCheckPointName;
+        [SerializeField] private SceneScriptableObject _currentScene;
+        [SerializeField] private Vector3 _lastCheckPointPosition;
+        [SerializeField] private int _lastCheckPointFacingDirection;
+        [SerializeField] private bool _isBackToCheckPoint = false;
 
         [SerializeField] private VoidEventChannelSO _showCheckPointMessageSO;
         [SerializeField] private LoadSceneEventChannelSO _loadSceneEvent;
@@ -41,10 +44,13 @@ namespace CryptoQuest.Map.CheckPoint
         [SerializeField] private GameplayBus _gameplayBus;
         [SerializeField] private FadeConfigSO _fadeController;
 
+        private ISaveSystem _saveSystem;
+
         private void Awake()
         {
             ServiceProvider.Provide<ICheckPointController>(this);
             _loadSceneEvent.LoadingRequested += SaveNewLoadedSceneForCheckpoint;
+            _saveSystem = ServiceProvider.GetService<ISaveSystem>();
         }
         private void OnDestroy()
         {
@@ -60,11 +66,13 @@ namespace CryptoQuest.Map.CheckPoint
             _lastCheckPointScene = _defaultCheckpoint;
             _lastCheckPointPosition = Vector3.zero;
             _lastCheckPointFacingDirection = 1;
+            _saveSystem?.LoadObject(this);
         }
 
         private void SaveNewLoadedSceneForCheckpoint(SceneScriptableObject nextScene)
         {
             _currentScene = nextScene;
+            _saveSystem.SaveObject(this);
             Debug.Log("Checkpoint: Set current scene " + nextScene.name);
         }
 
@@ -74,6 +82,7 @@ namespace CryptoQuest.Map.CheckPoint
             _lastCheckPointScene = _currentScene;
             _lastCheckPointPosition = position;
             _lastCheckPointFacingDirection = facingDirection;
+            _saveSystem.SaveObject(this);
             Debug.Log($"Checkpoint: Save checkpoint at {_lastCheckPointScene.name} at {position.ToString()}");
         }
 
@@ -108,5 +117,26 @@ namespace CryptoQuest.Map.CheckPoint
                 _loadSceneEvent.RequestLoad(_lastCheckPointScene);
             }    
         }
+
+        #region SaveLoad
+        // TODO: Change key, `name` will be different when build release
+        public string Key => this.name;
+
+        public string ToJson()
+        {
+            return JsonUtility.ToJson(this);
+        }
+
+        public bool FromJson(string json)
+        {
+            try
+            {
+                JsonUtility.FromJsonOverwrite(json, this);
+                return true;
+            }
+            catch (Exception ex) { Debug.LogException(ex); }
+            return false;
+        }
+        #endregion
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using CryptoQuest.System;
 using CryptoQuest.Quest.Authoring;
 using CryptoQuest.Quest.Components;
 using UnityEngine;
@@ -8,17 +9,15 @@ namespace CryptoQuest.Quest.Categories
     [CreateAssetMenu(menuName = "QuestSystem/Quests/Dialogue Quest", fileName = "DialogueQuestSO")]
     public class DialogueQuestSO : QuestSO
     {
-        public override QuestInfo CreateQuest(QuestManager questManager)
-            => new DialogueQuestInfo(questManager, this);
+        public override QuestInfo CreateQuest()
+            => new DialogueQuestInfo(this);
     }
 
     [Serializable]
     public class DialogueQuestInfo : QuestInfo<DialogueQuestSO>
     {
-        private YarnQuestManager _yarnQuestManager;
-
-        public DialogueQuestInfo(QuestManager questManager, DialogueQuestSO questSo)
-            : base(questManager, questSo) { }
+        public DialogueQuestInfo(DialogueQuestSO questSo)
+            : base(questSo) { }
 
         public override void TriggerQuest()
         {
@@ -29,8 +28,9 @@ namespace CryptoQuest.Quest.Categories
         public override void GiveQuest()
         {
             base.GiveQuest();
-            _yarnQuestManager = _questManager.GetComponent<YarnQuestManager>();
-            _yarnQuestManager.GiveQuest(this);
+            var questManager = ServiceProvider.GetService<QuestManager>();
+            var yarnQuestManager = questManager?.GetComponent<YarnQuestManager>();
+            yarnQuestManager?.GiveQuest(this);
         }
     }
 }

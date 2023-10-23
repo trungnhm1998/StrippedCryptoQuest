@@ -1,4 +1,5 @@
 ﻿using System;
+using CryptoQuest.System;
 using CryptoQuest.Quest.Authoring;
 using CryptoQuest.Quest.Components;
 using CryptoQuest.Quest.Controllers;
@@ -10,26 +11,23 @@ namespace CryptoQuest.Quest.Categories
         fileName = "CutsceneBranchingQuestSO")]
     public class CutsceneBranchingQuestSO : QuestSO
     {
-        public override QuestInfo CreateQuest(QuestManager questManager)
-            => new CutsceneBranchingQuestInfo(questManager, this);
+        public override QuestInfo CreateQuest()
+            => new CutsceneBranchingQuestInfo(this);
     }
 
     [Serializable]
     public class CutsceneBranchingQuestInfo : QuestInfo<CutsceneBranchingQuestSO>
-    {
-        private readonly QuestCutsceneController _questCutsceneController;
-
-        public CutsceneBranchingQuestInfo(QuestManager questManager, CutsceneBranchingQuestSO questSo)
-            : base(questManager, questSo)
+    {        public CutsceneBranchingQuestInfo(CutsceneBranchingQuestSO questSo)
+            : base(questSo)
         {
-            _questCutsceneController = questManager.GetComponent<QuestCutsceneController>();
-            _questCutsceneController.QuestManager = questManager;
         }
 
         public override void GiveQuest()
         {
             base.GiveQuest();
-            _questCutsceneController.GiveBranchingQuest(this);
+            var questManager = ServiceProvider.GetService<QuestManager>();
+            var questCutsceneController = questManager?.GetComponent<QuestCutsceneController>();
+            questCutsceneController?.GiveBranchingQuest(this);
         }
 
         public override void TriggerQuest()

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using CryptoQuest.Gameplay.Loot;
 using CryptoQuest.Quest.Actions;
-using CryptoQuest.Quest.Components;
 using IndiGames.Core.SaveSystem.ScriptableObjects;
 using UnityEngine;
 
@@ -25,6 +24,7 @@ namespace CryptoQuest.Quest.Authoring
     {
         public Action OnQuestCompleted;
         public Action<List<LootInfo>> OnRewardReceived;
+
         [field: SerializeField] public string QuestID { get; private set; }
         [field: SerializeField] public string QuestName { get; private set; }
         [field: SerializeField] public string EventID { get; private set; }
@@ -36,7 +36,7 @@ namespace CryptoQuest.Quest.Authoring
 
         [SerializeField] private QuestReward[] _rewards = Array.Empty<QuestReward>();
         public QuestReward[] Rewards => _rewards;
-        public abstract QuestInfo CreateQuest(QuestManager questManager);
+        public abstract QuestInfo CreateQuest();
 
 #if UNITY_EDITOR
         public void Editor_AddReward(LootInfo loot)
@@ -56,6 +56,6 @@ namespace CryptoQuest.Quest.Authoring
 
     public abstract class QuestSO<T> : QuestSO where T : QuestInfo, new()
     {
-        public override QuestInfo CreateQuest(QuestManager questManager) => new T();
+        public override QuestInfo CreateQuest() => new T();
     }
 }

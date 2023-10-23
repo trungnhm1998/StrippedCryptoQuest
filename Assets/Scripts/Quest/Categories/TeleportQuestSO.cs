@@ -1,4 +1,5 @@
-﻿using CryptoQuest.Quest.Authoring;
+﻿using CryptoQuest.System;
+using CryptoQuest.Quest.Authoring;
 using CryptoQuest.Quest.Components;
 using CryptoQuest.Quest.Controllers;
 using IndiGames.Core.SceneManagementSystem.ScriptableObjects;
@@ -11,18 +12,14 @@ namespace CryptoQuest.Quest.Categories
     {
         public SceneScriptableObject Destination;
 
-        public override QuestInfo CreateQuest(QuestManager questManager)
-            => new TeleportQuestInfo(questManager, this);
+        public override QuestInfo CreateQuest()
+            => new TeleportQuestInfo(this);
     }
 
     public class TeleportQuestInfo : QuestInfo<TeleportQuestSO>
     {
-        private QuestManager _questManager;
-        private QuestTeleportController _questTeleportController;
-
-        public TeleportQuestInfo(QuestManager questManager, TeleportQuestSO teleportQuestSo) : base(teleportQuestSo)
+        public TeleportQuestInfo(TeleportQuestSO teleportQuestSo) : base(teleportQuestSo)
         {
-            _questManager = questManager;
         }
 
         public override void TriggerQuest()
@@ -33,8 +30,9 @@ namespace CryptoQuest.Quest.Categories
         public override void GiveQuest()
         {
             base.GiveQuest();
-            _questTeleportController = _questManager.GetComponent<QuestTeleportController>();
-            _questTeleportController.GiveQuest(this);
+            var questManager = ServiceProvider.GetService<QuestManager>();
+            var questTeleportController = questManager?.GetComponent<QuestTeleportController>();
+            questTeleportController?.GiveQuest(this);
         }
     }
 }

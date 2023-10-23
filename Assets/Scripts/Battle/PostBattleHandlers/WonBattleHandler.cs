@@ -23,7 +23,7 @@ namespace CryptoQuest.Battle
 
         private void OnDestroy()
         {
-            BattleEventBus.UnsubscribeEvent(_wonToken);
+            if(_wonToken != null ) BattleEventBus.UnsubscribeEvent(_wonToken);
         }
 
         private BattleWonEvent _context;

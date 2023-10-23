@@ -1,7 +1,8 @@
-﻿using CryptoQuest.Gameplay.Encounter;
+﻿using CryptoQuest.System;
+using CryptoQuest.Gameplay.Encounter;
 using CryptoQuest.Quest.Authoring;
-using CryptoQuest.Quest.Components;
 using CryptoQuest.Quest.Controllers;
+using CryptoQuest.Quest.Components;
 using UnityEngine;
 
 namespace CryptoQuest.Quest.Categories
@@ -13,17 +14,14 @@ namespace CryptoQuest.Quest.Categories
         [field: SerializeField] public QuestSO FirstTimeLoseQuest { get; private set; }
         [field: SerializeField] public QuestSO GiveRepeatBattleQuest { get; private set; }
 
-        public override QuestInfo CreateQuest(QuestManager questManager)
-            => new BattleQuestInfo(questManager, this);
+        public override QuestInfo CreateQuest()
+            => new BattleQuestInfo(this);
     }
 
     public class BattleQuestInfo : QuestInfo<BattleQuestSO>
     {
-        private readonly QuestBattleController _questBattleController;
-
-        public BattleQuestInfo(QuestManager questManager, BattleQuestSO questDef) : base(questManager, questDef)
-        {
-            _questBattleController = questManager.GetComponent<QuestBattleController>();
+        public BattleQuestInfo(BattleQuestSO questDef) : base(questDef)
+        {            
         }
 
         public override void TriggerQuest()
@@ -35,7 +33,9 @@ namespace CryptoQuest.Quest.Categories
         public override void GiveQuest()
         {
             base.GiveQuest();
-            _questBattleController.GiveQuest(this);
+            var questManager = ServiceProvider.GetService<QuestManager>();
+            var questBattleController = questManager?.GetComponent<QuestBattleController>();
+            questBattleController?.GiveQuest(this);
         }
     }
 }

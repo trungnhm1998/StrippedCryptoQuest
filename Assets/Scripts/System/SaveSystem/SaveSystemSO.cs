@@ -2,7 +2,6 @@ using IndiGames.Core.Events.ScriptableObjects;
 using IndiGames.Core.SaveSystem;
 using IndiGames.Core.SceneManagementSystem.ScriptableObjects;
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 
@@ -88,10 +87,11 @@ namespace CryptoQuest.System.SaveSystem
             return false;
         }
 
-        public bool LoadScene(SceneScriptableObject sceneSO)
+        public bool LoadScene(ref SceneScriptableObject sceneSO)
         {
             if(!isSceneLoading && !string.IsNullOrEmpty(_saveData.scene) && sceneSO != null)
             {
+                sceneSO = SceneScriptableObject.CreateInstance<SceneScriptableObject>();
                 JsonUtility.FromJsonOverwrite(_saveData.scene, sceneSO);
                 _sceneLoadedEvent.EventRaised += OnSceneLoaded;
                 isSceneLoading = true;
@@ -129,6 +129,7 @@ namespace CryptoQuest.System.SaveSystem
                     {
                         if (data.Key == jObject.Key)
                         {
+                            // TODO: Implement Update Object in SaveData 
                             return false;
                         }
                     }

@@ -16,7 +16,7 @@ namespace CryptoQuest.Quest.Categories
         [field: SerializeField] public PlayableAsset CutsceneDefToTrack { get; private set; }
         [field: SerializeField] public Battlefield BattleToTrack { get; private set; }
 
-        public override QuestInfo CreateQuest(QuestManager questManager)
+        public override QuestInfo CreateQuest()
             => new CutsceneBattleQuestInfo(this);
     }
 

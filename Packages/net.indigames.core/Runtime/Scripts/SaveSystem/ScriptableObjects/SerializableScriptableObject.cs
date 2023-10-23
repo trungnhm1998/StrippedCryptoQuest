@@ -9,6 +9,11 @@ namespace IndiGames.Core.SaveSystem.ScriptableObjects
         [SerializeField, ReadOnly] private string _guid;
         public string Guid => _guid;
 
+        public SerializableScriptableObject()
+        {
+            ScriptableObjectRegistry.AddScriptableObject(this);
+        }
+
 #if UNITY_EDITOR
         private void OnValidate()
         {
