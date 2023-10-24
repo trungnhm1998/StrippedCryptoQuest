@@ -29,6 +29,7 @@ namespace CryptoQuest.BlackSmith.Upgrade
         private void Init()
         {
             _partyController = ServiceProvider.GetService<IPartyController>();
+            _heroAvatarProvider = GetComponent<IHeroAvatarProvider>();
             DisableCharacterObjects();
             LoadCharacterDetail();
         }

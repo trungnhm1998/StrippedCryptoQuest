@@ -32,6 +32,7 @@ namespace CryptoQuest.BlackSmith
         public void DisableInput()
         {
             _inputMediatorSO.InputActions.BlackSmith.Disable();
+            _inputMediatorSO.EnableMapGameplayInput();
         }
 
         #region Events

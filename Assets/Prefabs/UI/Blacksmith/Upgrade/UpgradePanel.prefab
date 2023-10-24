@@ -973,6 +973,7 @@ MonoBehaviour:
   _scrollRect: {fileID: 1857313807143289220}
   _equipmentPrefab: {fileID: 7484008959422308721, guid: 10400d1beae400f4abe086c8fc9b7c5d, type: 3}
   _previewObject: {fileID: 4388493080766038563}
+  _confirmPanel: {fileID: 6118874024736596016}
   _upgradeEquipmentPanel: {fileID: 4349658414975700508}
   _selectedEquipmentPanel: {fileID: 4349658414975700508}
   _defaultPanel: {fileID: 1264018890248534232}
@@ -1924,7 +1925,7 @@ GameObject:
   - component: {fileID: 833284269075262286}
   - component: {fileID: 416877400320688558}
   - component: {fileID: 7079725767497469443}
-  - component: {fileID: 7253011581301119967}
+  - component: {fileID: 7344746696239031843}
   m_Layer: 5
   m_Name: UpgradePanel
   m_TagString: Untagged
@@ -1965,11 +1966,51 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9b2076417570af47b7971d4bd0431f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _dialogManager: {fileID: 0}
   _upgradeEquipment: {fileID: 233807806202071319}
   _equipmentDetail: {fileID: 2190197558254288756}
   _input: {fileID: 0}
   _currencyController: {fileID: 0}
   _upgradeController: {fileID: 0}
+  _selectEquipmentMessage:
+    m_TableReference:
+      m_TableCollectionName: 
+    m_TableEntryReference:
+      m_KeyId: 0
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  _upgradeMessage:
+    m_TableReference:
+      m_TableCollectionName: 
+    m_TableEntryReference:
+      m_KeyId: 0
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  _confirmUpgradeMessage:
+    m_TableReference:
+      m_TableCollectionName: 
+    m_TableEntryReference:
+      m_KeyId: 0
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  _resultMessage:
+    m_TableReference:
+      m_TableCollectionName: 
+    m_TableEntryReference:
+      m_KeyId: 0
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!114 &416877400320688558
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2000,7 +2041,7 @@ MonoBehaviour:
   - {fileID: 3336053643306952132}
   - {fileID: 9041288851205591579}
   _upgradeEquipment: {fileID: 233807806202071319}
---- !u!114 &7253011581301119967
+--- !u!114 &7344746696239031843
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2009,10 +2050,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 2494902465980156063}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b3f625973cd937141a8cf7326e2d2014, type: 3}
+  m_Script: {fileID: 11500000, guid: 1d79ce06a1a8c9448a26e224f672f5a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _currencyUI: {fileID: 0}
+  _avatarDatabase: {fileID: 11400000, guid: 4e881a60ba36d4e47a693fccb876d2a2, type: 2}
 --- !u!1 &2558848237846958603
 GameObject:
   m_ObjectHideFlags: 0
@@ -3305,6 +3346,7 @@ RectTransform:
   - {fileID: 6647087326150013271}
   - {fileID: 1808718171215744873}
   - {fileID: 1264018890248534232}
+  - {fileID: 901804583247332368}
   m_Father: {fileID: 5338290623673761665}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4516,6 +4558,42 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!1 &6118874024736596016
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 901804583247332368}
+  m_Layer: 5
+  m_Name: ConfirmPanel
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &901804583247332368
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6118874024736596016}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4545049671489482734}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &6207491757440981963
 GameObject:
   m_ObjectHideFlags: 0
@@ -4666,7 +4744,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1808718171215744873
 RectTransform:
   m_ObjectHideFlags: 0

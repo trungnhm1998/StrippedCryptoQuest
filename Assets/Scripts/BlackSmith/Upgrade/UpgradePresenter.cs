@@ -39,6 +39,8 @@ namespace CryptoQuest.BlackSmith.Upgrade
             _input.SubmitEvent += UpgradeEquipment;
             _input.CancelEvent += ExitUpgrade;
             _currencyController.OnSendSuccess += NotifySuccess;
+            _dialogManager.ConfirmYesEvent += ProceedUpgrade;
+            _dialogManager.ConfirmNoEvent += CancelUpgrade;
         }
 
         private void ExitUpgrade()
@@ -56,6 +58,8 @@ namespace CryptoQuest.BlackSmith.Upgrade
             _input.NavigateEvent -= HandleNavigation;
             _input.CancelEvent -= ExitUpgrade;
             _currencyController.OnSendSuccess -= NotifySuccess;
+            _dialogManager.ConfirmYesEvent -= ProceedUpgrade;
+            _dialogManager.ConfirmNoEvent -= CancelUpgrade;
         }
 
         private void GetLevelToUpgrade(int level) => _level = level;

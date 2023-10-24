@@ -320,40 +320,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a306630fba66c3845a98cfc3219e5812, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _stateController: {fileID: 66244354324394845}
   _defaultSelection: {fileID: 1563079617343824899}
   _upgradePanel: {fileID: 5902888222767724132}
+  _evolvePanel: {fileID: 5951786930772008756}
   _blackSmithOverview: {fileID: 6489611939984276158}
   _selectActionPanel: {fileID: 3670029482196554067}
-  _upgradeButtonPressedEvent:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 9058123044060222455}
-        m_TargetAssemblyTypeName: CryptoQuest.BlackSmith.BlackSmithManager, indi-games.crypto-quest
-        m_MethodName: UpgradeButtonPressed
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  _evolveButtonPressedEvent:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 9058123044060222455}
-        m_TargetAssemblyTypeName: CryptoQuest.BlackSmith.BlackSmithManager, indi-games.crypto-quest
-        m_MethodName: EvolveButtonPressed
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!1 &3670029482196554067
 GameObject:
   m_ObjectHideFlags: 0
@@ -688,93 +660,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!1 &4279968763351171868
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 5546071256079860614}
-  - component: {fileID: 8058187497690247277}
-  - component: {fileID: 7590839118796361145}
-  m_Layer: 0
-  m_Name: UpgradeController
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &5546071256079860614
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4279968763351171868}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1596803904737653867}
-  m_RootOrder: -1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8058187497690247277
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4279968763351171868}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ad2f0f3915fd02344a8872815c134606, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <InputManager>k__BackingField: {fileID: 4422885797340229464}
-  <SelectedEquipmentPanel>k__BackingField: {fileID: 8616959997127091916}
-  <UpgradeEquipmentPanel>k__BackingField: {fileID: 1294947631587067167}
-  <UpgradeResultPanel>k__BackingField: {fileID: 3798862608191997768}
-  <SelectActionPanel>k__BackingField: {fileID: 3670029482196554067}
-  _initListEquipment:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 8711231219661051317}
-        m_TargetAssemblyTypeName: CryptoQuest.BlackSmith.Upgrade.UpgradePresenter,
-          indi-games.crypto-quest
-        m_MethodName: Init
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
---- !u!95 &7590839118796361145
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4279968763351171868}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 95067a819a7941544b2cab521c232fd8, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &4378072542717702860
 GameObject:
   m_ObjectHideFlags: 0
@@ -1001,77 +886,6 @@ MonoBehaviour:
   references:
     version: 2
     RefIds: []
---- !u!1 &5494347846052102045
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 6088517746610162175}
-  - component: {fileID: 8270920860027874368}
-  - component: {fileID: 4193685876521040809}
-  m_Layer: 0
-  m_Name: EvolveController
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &6088517746610162175
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5494347846052102045}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1596803904737653867}
-  m_RootOrder: -1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8270920860027874368
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5494347846052102045}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0825bde6c5ac86e46968b42ad8ea236b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <Input>k__BackingField: {fileID: 4422885797340229464}
-  <DialogsPresenter>k__BackingField: {fileID: 793426756844449142}
-  <EvolvePanel>k__BackingField: {fileID: 3550756289094277949}
-  <EvolveEquipmentList>k__BackingField: {fileID: 5465497957038638614}
-  <ConfirmPanel>k__BackingField: {fileID: 2267966249666564977}
---- !u!95 &4193685876521040809
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5494347846052102045}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: efcc93c1bd62bad4e8700f6f3dc71d32, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &5844261098894543407
 GameObject:
   m_ObjectHideFlags: 0
@@ -1485,8 +1299,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 5546071256079860614}
-  - {fileID: 6088517746610162175}
+  - {fileID: 2969481327409109950}
   - {fileID: 2571732419833616035}
   m_Father: {fileID: 0}
   m_RootOrder: -1
@@ -1503,11 +1316,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a58fac3c7fcd2f4b9d0b687fd14673e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _evolveStateController: {fileID: 5494347846052102045}
-  _upgradeStateController: {fileID: 4279968763351171868}
+  _stateController: {fileID: 8082923448623585899}
   _blackSmithInput: {fileID: 4422885797340229464}
   _sceneLoadedEvent: {fileID: 11400000, guid: b8b96e43d21a7bf4c96df4cb83c2b764, type: 2}
   _openBlackSmithEvent: {fileID: 11400000, guid: 89ccebfc5c87e0a4ea141c22b57df94c, type: 2}
+  _blacksmithController: {fileID: 66244354324394845}
   _blackSmithOpenedEvent:
     m_PersistentCalls:
       m_Calls:
@@ -1538,7 +1351,32 @@ MonoBehaviour:
         m_CallState: 2
   _blackSmithClosedEvent:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 793426756844449142}
+        m_TargetAssemblyTypeName: CryptoQuest.BlackSmith.BlackSmithDialogsPresenter,
+          indi-games.crypto-quest
+        m_MethodName: BlackSmithClosed
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 6364007139924188164}
+        m_TargetAssemblyTypeName: CryptoQuest.BlackSmith.UIBlackSmith, indi-games.crypto-quest
+        m_MethodName: BlackSmithClosed
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &4422885797340229464
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1681,82 +1519,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_HorizontalFit: 2
   m_VerticalFit: 0
---- !u!1 &7936831740767372868
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1902326568486648908}
-  - component: {fileID: 2728438179550273736}
-  - component: {fileID: 3036862395351879190}
-  m_Layer: 5
-  m_Name: ConfirmPanel
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &1902326568486648908
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7936831740767372868}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 5505557752240705813}
-  m_RootOrder: -1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!222 &2728438179550273736
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7936831740767372868}
-  m_CullTransparentMesh: 1
---- !u!114 &3036862395351879190
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7936831740767372868}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.78431374}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
 --- !u!1 &7991389662570659060
 GameObject:
   m_ObjectHideFlags: 0
@@ -1837,6 +1599,127 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: 123
+--- !u!1 &8082923448623585899
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2969481327409109950}
+  - component: {fileID: 6187549410496921269}
+  - component: {fileID: 7410071279949022750}
+  - component: {fileID: 66244354324394845}
+  - component: {fileID: 8005150969163343599}
+  m_Layer: 0
+  m_Name: BlackSmithController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &2969481327409109950
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8082923448623585899}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1596803904737653867}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6187549410496921269
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8082923448623585899}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad2f0f3915fd02344a8872815c134606, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <InputManager>k__BackingField: {fileID: 4422885797340229464}
+  <UIBlackSmith>k__BackingField: {fileID: 6364007139924188164}
+  <SelectedEquipmentPanel>k__BackingField: {fileID: 8616959997127091916}
+  <UpgradeEquipmentPanel>k__BackingField: {fileID: 1294947631587067167}
+  <UpgradeResultPanel>k__BackingField: {fileID: 3798862608191997768}
+  <SelectActionPanel>k__BackingField: {fileID: 3670029482196554067}
+  _initListEquipment:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8711231219661051317}
+        m_TargetAssemblyTypeName: CryptoQuest.BlackSmith.Upgrade.UpgradePresenter,
+          indi-games.crypto-quest
+        m_MethodName: Init
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &7410071279949022750
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8082923448623585899}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0825bde6c5ac86e46968b42ad8ea236b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Input>k__BackingField: {fileID: 4422885797340229464}
+  <DialogsPresenter>k__BackingField: {fileID: 793426756844449142}
+  <EvolvePanel>k__BackingField: {fileID: 3550756289094277949}
+  <EvolveEquipmentList>k__BackingField: {fileID: 5465497957038638614}
+  <ConfirmPanel>k__BackingField: {fileID: 2267966249666564977}
+  <UIBlackSmith>k__BackingField: {fileID: 6364007139924188164}
+--- !u!114 &66244354324394845
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8082923448623585899}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83ac14893ca9717429d177eadc5de3ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Input>k__BackingField: {fileID: 4422885797340229464}
+--- !u!95 &8005150969163343599
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8082923448623585899}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 333ce860cd1ae7546bc13e02afd1be5f, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &8115650706381431225
 GameObject:
   m_ObjectHideFlags: 0
@@ -2249,6 +2132,10 @@ PrefabInstance:
       propertyPath: _dialogManager
       value: 
       objectReference: {fileID: 793426756844449142}
+    - target: {fileID: 2122567761047976450, guid: a33760125eb62ec4f930300c7cd609e9, type: 3}
+      propertyPath: _evolveController
+      value: 
+      objectReference: {fileID: 7410071279949022750}
     - target: {fileID: 2152584089743659671, guid: a33760125eb62ec4f930300c7cd609e9, type: 3}
       propertyPath: m_SizeDelta.x
       value: 108
@@ -2974,7 +2861,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2122567761047976450, guid: a33760125eb62ec4f930300c7cd609e9, type: 3}
   m_PrefabInstance: {fileID: 3184663043540197695}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 5951786930772008756}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 00b7fae7265149d449d3d0543861895e, type: 3}
@@ -2991,6 +2878,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af208f0c51fdb984fac4970c853ac042, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &5951786930772008756 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9127332478317329931, guid: a33760125eb62ec4f930300c7cd609e9, type: 3}
+  m_PrefabInstance: {fileID: 3184663043540197695}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &8466942690046463327 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6463419379983346784, guid: a33760125eb62ec4f930300c7cd609e9, type: 3}
@@ -3154,10 +3046,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3253703785073511029}
     m_Modifications:
-    - target: {fileID: 233807806202071319, guid: 5ca502f14f7d541469a88d88f92582dc, type: 3}
-      propertyPath: _confirmPanel
-      value: 
-      objectReference: {fileID: 7936831740767372868}
     - target: {fileID: 833284269075262286, guid: 5ca502f14f7d541469a88d88f92582dc, type: 3}
       propertyPath: _input
       value: 
@@ -3169,7 +3057,7 @@ PrefabInstance:
     - target: {fileID: 833284269075262286, guid: 5ca502f14f7d541469a88d88f92582dc, type: 3}
       propertyPath: _upgradeController
       value: 
-      objectReference: {fileID: 8058187497690247277}
+      objectReference: {fileID: 6187549410496921269}
     - target: {fileID: 833284269075262286, guid: 5ca502f14f7d541469a88d88f92582dc, type: 3}
       propertyPath: _currencyController
       value: 
@@ -3294,20 +3182,70 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6118874024736596016, guid: 5ca502f14f7d541469a88d88f92582dc, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 7253011581301119967, guid: 5ca502f14f7d541469a88d88f92582dc, type: 3}
     m_RemovedGameObjects: []
-    m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: 4545049671489482734, guid: 5ca502f14f7d541469a88d88f92582dc, type: 3}
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6118874024736596016, guid: 5ca502f14f7d541469a88d88f92582dc, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1902326568486648908}
-    m_AddedComponents: []
+      addedObject: {fileID: 7542575033113866708}
+    - targetCorrespondingSourceObject: {fileID: 6118874024736596016, guid: 5ca502f14f7d541469a88d88f92582dc, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7773001975412014615}
   m_SourcePrefab: {fileID: 100100000, guid: 5ca502f14f7d541469a88d88f92582dc, type: 3}
 --- !u!1 &1294947631587067167 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7101188159403031524, guid: 5ca502f14f7d541469a88d88f92582dc, type: 3}
   m_PrefabInstance: {fileID: 8319530612148305659}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &2854845119941336779 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6118874024736596016, guid: 5ca502f14f7d541469a88d88f92582dc, type: 3}
+  m_PrefabInstance: {fileID: 8319530612148305659}
+  m_PrefabAsset: {fileID: 0}
+--- !u!222 &7542575033113866708
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2854845119941336779}
+  m_CullTransparentMesh: 1
+--- !u!114 &7773001975412014615
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2854845119941336779}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.78431374}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  m_Type: 1
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
 --- !u!1 &3798862608191997768 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5173699640605424051, guid: 5ca502f14f7d541469a88d88f92582dc, type: 3}
@@ -3316,11 +3254,6 @@ GameObject:
 --- !u!224 &4134728915464290682 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5338290623673761665, guid: 5ca502f14f7d541469a88d88f92582dc, type: 3}
-  m_PrefabInstance: {fileID: 8319530612148305659}
-  m_PrefabAsset: {fileID: 0}
---- !u!224 &5505557752240705813 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 4545049671489482734, guid: 5ca502f14f7d541469a88d88f92582dc, type: 3}
   m_PrefabInstance: {fileID: 8319530612148305659}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &5902888222767724132 stripped

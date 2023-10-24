@@ -10,6 +10,7 @@ namespace CryptoQuest.BlackSmith.EvolveStates
         private Animator _animator;
         private EvolveStateController _stateController;
         private static readonly int ConfirmState = Animator.StringToHash("isConfirm");
+        private static readonly int ExitState = Animator.StringToHash("isBlackSmithState");
 
         public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
@@ -18,7 +19,7 @@ namespace CryptoQuest.BlackSmith.EvolveStates
             _stateController = animator.GetComponent<EvolveStateController>();
             _stateController.EvolvePanel.EnterConfirmPhaseEvent += GoToConfirmState;
             _stateController.EvolvePanel.HadMethodRunned = false; // Code smell
-
+            _stateController.Input.CancelEvent += BackToBlackSmithState;
             GetDataFromPresenterAndPassToScrollView();
             SetUpDialogs();
         }
@@ -38,12 +39,20 @@ namespace CryptoQuest.BlackSmith.EvolveStates
         private void GetDataFromPresenterAndPassToScrollView()
         {
             var data = _stateController.EvolvePanel.GameData;
+            _stateController.ExitConfirmPhaseEvent?.Invoke();
             _stateController.EvolveEquipmentList.RenderEquipments(data);
         }
 
         public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
             _stateController.EvolvePanel.EnterConfirmPhaseEvent -= GoToConfirmState;
+            _stateController.Input.CancelEvent -= BackToBlackSmithState;
+        }
+
+        private void BackToBlackSmithState()
+        {
+            _stateController.UIBlackSmith.BlackSmithOpened();
+            _animator.SetTrigger(ExitState);
         }
     }
 }

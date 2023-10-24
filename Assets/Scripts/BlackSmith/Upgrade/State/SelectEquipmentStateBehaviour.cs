@@ -9,6 +9,7 @@ namespace CryptoQuest.BlackSmith.Upgrade.StateMachine
         private BlackSmithInputManager _input;
         private UpgradeStateController _stateController;
         private static readonly int _submit = Animator.StringToHash("isUpgrade");
+        private static readonly int _exit = Animator.StringToHash("isBlackSmithState");
 
         public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
@@ -19,17 +20,25 @@ namespace CryptoQuest.BlackSmith.Upgrade.StateMachine
             _stateController.SelectActionPanel.SetActive(false);
             _stateController.InstantiateEquipment();
             _input.SubmitEvent += GoToUpgradeState;
+            _input.CancelEvent += ExitState;
         }
 
         public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
             _stateController.SelectedEquipmentPanel.SetActive(false);
             _input.SubmitEvent -= GoToUpgradeState;
+            _input.CancelEvent -= ExitState;
         }
 
         private void GoToUpgradeState()
         {
             _animator.SetTrigger(_submit);
+        }
+
+        private void ExitState()
+        {
+            _stateController.UIBlackSmith.BlackSmithOpened();
+            _animator.SetTrigger(_exit);
         }
     }
 }

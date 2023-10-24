@@ -10,6 +10,7 @@ namespace CryptoQuest.BlackSmith.Upgrade.StateMachine
         public UnityAction UpgradeEvent;
         public UnityAction ExitUpgradeEvent;
         [field: SerializeField] public BlackSmithInputManager InputManager { get; private set; }
+        [field: SerializeField] public UIBlackSmith UIBlackSmith { get; private set; }
         [field: SerializeField] public GameObject SelectedEquipmentPanel { get; private set; }
         [field: SerializeField] public GameObject UpgradeEquipmentPanel { get; private set; }
         [field: SerializeField] public GameObject UpgradeResultPanel { get; private set; }

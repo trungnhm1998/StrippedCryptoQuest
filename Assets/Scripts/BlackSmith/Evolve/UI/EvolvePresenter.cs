@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using CryptoQuest.BlackSmith.EvolveStates;
 using CryptoQuest.BlackSmith.Interface;
 using UnityEngine;
 using UnityEngine.Events;
@@ -16,6 +17,7 @@ namespace CryptoQuest.BlackSmith.Evolve.UI
         public event UnityAction ExitConfirmPhaseEvent;
 
         [SerializeField] private BlackSmithDialogsPresenter _dialogManager;
+        [SerializeField] private EvolveStateController _evolveController;
 
         [SerializeField] private UIEvolveEquipmentList _evolvableEquipmentListUi;
         [SerializeField] private UIEquipmentDetail _equipmentDetailUi;
@@ -48,6 +50,7 @@ namespace CryptoQuest.BlackSmith.Evolve.UI
         {
             _dialogManager.ConfirmYesEvent += ProceedEvolve;
             _dialogManager.ConfirmNoEvent += CancelEvolve;
+            _evolveController.ExitConfirmPhaseEvent += ShowEvolveEquipment;
 
             StartCoroutine(GetEquipment());
         }
@@ -56,6 +59,7 @@ namespace CryptoQuest.BlackSmith.Evolve.UI
         {
             _dialogManager.ConfirmYesEvent -= ProceedEvolve;
             _dialogManager.ConfirmNoEvent -= CancelEvolve;
+            _evolveController.ExitConfirmPhaseEvent -= ShowEvolveEquipment;
 
             StopCoroutine(GetEquipment());
             UnregisterEquipmentEvent();
@@ -177,6 +181,14 @@ namespace CryptoQuest.BlackSmith.Evolve.UI
             }
 
             _dialogManager.Dialogue.Show();
+        }
+
+        private void ShowEvolveEquipment()
+        {
+            _resultPanel.gameObject.SetActive(false);
+            _evolvableEquipmentListUi.gameObject.SetActive(true);
+            _equipmentDetailUi.gameObject.SetActive(true);
+            _characterPreviewUi.gameObject.SetActive(true);            
         }
     }
 }
