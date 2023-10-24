@@ -93,14 +93,29 @@ namespace CryptoQuest.Battle.Events
         public Components.Character Character { get; set; }
     }
 
-    public class TurnStartedEvent : BattleEvent
+    public abstract class TurnEvent : BattleEvent
     {
-        public Components.Character Character { get; set; }
+        public Components.Character Character { get; }
+
+        public TurnEvent(Components.Character character)
+        {
+            Character = character;
+        }
     }
 
-    public class ExecutingCommandEvent : BattleEvent
+    public class TurnStartedEvent : TurnEvent
     {
-        public Components.Character Character { get; set; }
+        public TurnStartedEvent(Components.Character character) : base(character) { }
+    }
+
+    public class TurnEndedEvent : TurnEvent
+    {
+        public TurnEndedEvent(Components.Character character) : base(character) { }
+    }
+
+    public class ExecutingCommandEvent : TurnEvent
+    {
+        public ExecutingCommandEvent(Components.Character character) : base(character) { }
     }
 
     public class NormalAttackEvent : LogEvent
@@ -120,6 +135,7 @@ namespace CryptoQuest.Battle.Events
     {
         public CastSkillAbility Skill { get; set; }
     }
+
     public class CastSkillEvent : LogEvent
     {
         public CastSkillAbility Skill { get; private set; }

@@ -54,6 +54,7 @@ namespace CryptoQuest.Battle.States
                 OnExecutingCommand(character);
                 commandExecutor.ExecuteCommand();
                 character.OnTurnEnded();
+                OnTurnEnded(character);
                 if (IsRoundContinuable() == false) break;
             }
 
@@ -64,11 +65,14 @@ namespace CryptoQuest.Battle.States
             _stateMachine.ChangeState(new PresentActions());
         }
 
+        private static void OnTurnEnded(Components.Character character) => 
+            BattleEventBus.RaiseEvent(new TurnEndedEvent(character));
+
         private static void OnTurnStarting(Components.Character character) =>
-            BattleEventBus.RaiseEvent(new TurnStartedEvent { Character = character });
+            BattleEventBus.RaiseEvent(new TurnStartedEvent(character));
 
         private static void OnExecutingCommand(Components.Character character) =>
-            BattleEventBus.RaiseEvent(new ExecutingCommandEvent { Character = character });
+            BattleEventBus.RaiseEvent(new ExecutingCommandEvent(character));
 
         private bool IsRoundContinuable()
         {
