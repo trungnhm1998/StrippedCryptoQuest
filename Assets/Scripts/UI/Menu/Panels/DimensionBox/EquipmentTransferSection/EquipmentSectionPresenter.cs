@@ -29,6 +29,9 @@ namespace CryptoQuest.UI.Menu.Panels.DimensionBox.EquipmentTransferSection
         private List<IGame> _gameData = new();
         private List<INFT> _walletData = new();
 
+        private List<int> _selectedWalletEquipmentIds = new();
+        public List<int> SelectedWalletEquipmentIds { get => _selectedWalletEquipmentIds; private set => _selectedWalletEquipmentIds = value; }
+
 
         // This method subscribe to the _enterTransferSectionEvent on scene.
         public void StateEntered()
@@ -50,8 +53,19 @@ namespace CryptoQuest.UI.Menu.Panels.DimensionBox.EquipmentTransferSection
 
         private void ItemSelected(UITransferItem currentItem)
         {
-            var itemParent = currentItem.Parent == _gameBoard ? _walletBoard : _gameBoard;
-            currentItem.Transfer(itemParent);
+            Transform itemNewParent;
+            if (currentItem.Parent == _gameBoard)
+            {
+                itemNewParent = _walletBoard;
+            }
+            else
+            {
+                itemNewParent = _gameBoard;
+                Int32.TryParse(currentItem.Data.GetId(), out int element);
+                _selectedWalletEquipmentIds.Add(element);
+            }
+
+            currentItem.Transfer(itemNewParent);
         }
 
         private void HideDialog()

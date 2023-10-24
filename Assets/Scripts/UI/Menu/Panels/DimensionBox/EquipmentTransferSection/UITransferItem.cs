@@ -27,6 +27,8 @@ namespace CryptoQuest.UI.Menu.Panels.DimensionBox.EquipmentTransferSection
         private ITooltip _tooltip;
         private bool _isShowTooltip = false;
 
+        public IData Data { get; private set; }
+
         private void Awake()
         {
             _tooltip = TooltipFactory.Instance.GetTooltip(ETooltipType.Equipment);
@@ -40,11 +42,13 @@ namespace CryptoQuest.UI.Menu.Panels.DimensionBox.EquipmentTransferSection
 
         public void ConfigureCell(INFT itemInfo)
         {
+            Data = itemInfo;
             SetDataToUI(itemInfo);
         }
 
         public void ConfigureCell(IGame itemInfo)
         {
+            Data = itemInfo;
             SetDataToUI(itemInfo);
 
             _isEquipped = itemInfo.IsEquipped();

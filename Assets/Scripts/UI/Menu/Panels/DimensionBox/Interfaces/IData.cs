@@ -6,6 +6,7 @@ namespace CryptoQuest.UI.Menu.Panels.DimensionBox.Interfaces
 {
     public interface IData
     {
+        public string GetId();
         public Sprite GetIcon();
         public LocalizedString GetLocalizedName();
     }

@@ -572,6 +572,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _yesNoDialogEventSO: {fileID: 11400000, guid: c437779d68d43a547b9ce625c9a4bd65, type: 2}
   _contents: {fileID: 5267451176052827714}
+  _presenter: {fileID: 6208045424827285828}
   _message:
     m_TableReference:
       m_TableCollectionName: GUID:eb6ce0c7cd5c2444c9d3345957efb3cb
@@ -636,6 +637,22 @@ MonoBehaviour:
         m_TargetAssemblyTypeName: CryptoQuest.UI.Menu.Panels.DimensionBox.EquipmentTransferSection.EquipmentSectionPresenter,
           indi-games.crypto-quest
         m_MethodName: SwitchBoardRequested
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  _confirmTransferFromWallet:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 746864468890056985}
+        m_TargetAssemblyTypeName: CryptoQuest.Networking.Menu.DimensionBox.WalletEquipmentAPI,
+          indi-games.crypto-quest
+        m_MethodName: Transfer
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1543,7 +1560,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3937fe3d26de1b41ab6e0fc163d01c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _environmentSO: {fileID: 11400000, guid: 044bb9ac0c90ea6478ea806187957cac, type: 2}
 --- !u!114 &807221824392197003
 MonoBehaviour:
   m_ObjectHideFlags: 0

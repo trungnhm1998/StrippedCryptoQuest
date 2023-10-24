@@ -9,6 +9,6 @@ namespace CryptoQuest.UI.Menu.Panels.DimensionBox.Interfaces
         public bool IsLoaded { get; }
         public List<INFT> Data { get; }
         public IEnumerator CoGetData();
-        public void Transfer();
+        public void Transfer(int[] values);
     }
 }
