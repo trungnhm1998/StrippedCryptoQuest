@@ -47,7 +47,7 @@ namespace CryptoQuest.Battle.UI.PlayerParty
             ReleaseAllIcon();
         }
 
-        private void TagAdded(params TagScriptableObject[] baseTags)
+        protected virtual void TagAdded(params TagScriptableObject[] baseTags)
         {
             foreach (var baseTag in baseTags)
             {
@@ -59,7 +59,7 @@ namespace CryptoQuest.Battle.UI.PlayerParty
             }
         }
 
-        private void TagRemoved(params TagScriptableObject[] baseTags)
+        protected virtual void TagRemoved(params TagScriptableObject[] baseTags)
         {
             foreach (var baseTag in baseTags)
             {

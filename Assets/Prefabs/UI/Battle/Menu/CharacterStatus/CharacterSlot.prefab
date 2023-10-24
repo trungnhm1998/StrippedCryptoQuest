@@ -87,10 +87,10 @@ GameObject:
   - component: {fileID: 8923509586246165866}
   - component: {fileID: 4387242029356355378}
   - component: {fileID: 4371193696325226368}
-  - component: {fileID: 9058480666049631786}
+  - component: {fileID: 2562716174181068654}
   - component: {fileID: 1233654444942069478}
+  - component: {fileID: 2190014803718100450}
   - component: {fileID: 9191080636879237965}
-  - component: {fileID: 4282288512364195271}
   m_Layer: 0
   m_Name: CharacterSlot
   m_TagString: Untagged
@@ -176,7 +176,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &9058480666049631786
+--- !u!114 &2562716174181068654
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -185,7 +185,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3205603525084858913}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 778c240fcc304b04bbf24a2369d9ff07, type: 3}
+  m_Script: {fileID: 11500000, guid: 80a90ceffadbbb5438169b8fd349da04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _characterName: {fileID: 5779544777246520070}
@@ -211,7 +211,7 @@ MonoBehaviour:
     Event:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 9058480666049631786}
+        - m_Target: {fileID: 2562716174181068654}
           m_TargetAssemblyTypeName: CryptoQuest.UI.Battle.PlayerParty.UICharacterBattleInfo,
             indi-games.crypto-quest
           m_MethodName: SetMaxHp
@@ -228,7 +228,7 @@ MonoBehaviour:
     Event:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 9058480666049631786}
+        - m_Target: {fileID: 2562716174181068654}
           m_TargetAssemblyTypeName: CryptoQuest.UI.Battle.PlayerParty.UICharacterBattleInfo,
             indi-games.crypto-quest
           m_MethodName: SetCurrentHp
@@ -245,7 +245,7 @@ MonoBehaviour:
     Event:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 9058480666049631786}
+        - m_Target: {fileID: 2562716174181068654}
           m_TargetAssemblyTypeName: CryptoQuest.UI.Battle.PlayerParty.UICharacterBattleInfo,
             indi-games.crypto-quest
           m_MethodName: SetMaxMp
@@ -262,7 +262,7 @@ MonoBehaviour:
     Event:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 9058480666049631786}
+        - m_Target: {fileID: 2562716174181068654}
           m_TargetAssemblyTypeName: CryptoQuest.UI.Battle.PlayerParty.UICharacterBattleInfo,
             indi-games.crypto-quest
           m_MethodName: SetCurrentMp
@@ -275,6 +275,21 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+--- !u!114 &2190014803718100450
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3205603525084858913}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1156c8be72bf784c88eb793fd03362e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _characterUI: {fileID: 2562716174181068654}
+  _statusContainer: {fileID: 1383735925114816970}
+  _statusIconPrefab: {fileID: 517267109635766672, guid: 9d24be712edeb0b46bddb2dcb42c3c14, type: 3}
 --- !u!114 &9191080636879237965
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -287,35 +302,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b574954383027c74cb922ee2e582586d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _characterUI: {fileID: 9058480666049631786}
+  _characterUI: {fileID: 2562716174181068654}
   _background: {fileID: 1920765067750710967}
   _highlightColor: {r: 0, g: 0, b: 1, a: 1}
---- !u!114 &4282288512364195271
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3205603525084858913}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fdd08bf9a0f49d949845ba592e653d07, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _characterUI: {fileID: 9058480666049631786}
-  _statusContainer: {fileID: 1383735925114816970}
-  _statusIconPrefab: {fileID: 517267109635766672, guid: 9d24be712edeb0b46bddb2dcb42c3c14, type: 3}
-  _disallowedMultipleTags:
-  - {fileID: 11400000, guid: f7fdc7a607fce8640a34de731daabe5d, type: 2}
-  - {fileID: 11400000, guid: 40eafefeb9f88df45af1a1e5d3f1855c, type: 2}
-  - {fileID: 11400000, guid: c803c1f131126e14f9004b058ebce102, type: 2}
-  - {fileID: 11400000, guid: 8755f45596e5790498880855432c7b33, type: 2}
-  - {fileID: 11400000, guid: d4100e96597b6a54dbdc69f2a93e4f14, type: 2}
-  - {fileID: 11400000, guid: c60a47c5f453a024d8657f7b3cafc7cc, type: 2}
-  - {fileID: 11400000, guid: 56cd0564909e73b4c837abf466b1be98, type: 2}
-  - {fileID: 11400000, guid: 8b1f390f94969d046969b7b610152371, type: 2}
-  - {fileID: 11400000, guid: f246b17eee672f44288a2b47ad53f795, type: 2}
-  - {fileID: 11400000, guid: 3ac7844b77ddcce4c9b8f4351bd93d43, type: 2}
 --- !u!1 &3397661618275471480
 GameObject:
   m_ObjectHideFlags: 0

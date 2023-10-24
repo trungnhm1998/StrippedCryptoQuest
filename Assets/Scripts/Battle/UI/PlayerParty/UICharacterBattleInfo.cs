@@ -38,7 +38,7 @@ namespace CryptoQuest.Battle.UI.PlayerParty
             _characterName.StringReference = localizedName;
         }
 
-        public void SetCurrentHp(float currentHp)
+        public virtual void SetCurrentHp(float currentHp)
         {
             _hpBar.SetValue(currentHp);
         }
@@ -48,7 +48,7 @@ namespace CryptoQuest.Battle.UI.PlayerParty
             _hpBar.SetMaxValue(maxHp);
         }
 
-        public void SetCurrentMp(float currentMp)
+        public virtual void SetCurrentMp(float currentMp)
         {
             _mpBar.SetValue(currentMp);
         }

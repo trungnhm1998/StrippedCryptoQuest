@@ -16,6 +16,7 @@ namespace CryptoQuest.Battle.Presenter
         [SerializeField] private BattleInput _input;
         private readonly Queue<IPresentCommand> _eventCommands = new();
         private TinyMessageSubscriptionToken _startPresentingEvent;
+        private TinyMessageSubscriptionToken _enqueueCommandEvent;
 
         private bool _presented;
         private Coroutine _presentingCoroutine;
@@ -23,15 +24,22 @@ namespace CryptoQuest.Battle.Presenter
         private void Awake()
         {
             _startPresentingEvent = BattleEventBus.SubscribeEvent<StartPresentingEvent>(StartPresenting);
+            _enqueueCommandEvent = BattleEventBus.SubscribeEvent<EnqueuePresentCommandEvent>(EnqueueCommand);
         }
 
         private void OnDestroy()
         {
             BattleEventBus.UnsubscribeEvent(_startPresentingEvent);
+            BattleEventBus.UnsubscribeEvent(_enqueueCommandEvent);
             _input.ConfirmedEvent -= InputOnConfirmedEvent;
         }
 
         public void EnqueueCommand(IPresentCommand command) => _eventCommands.Enqueue(command);
+
+        private void EnqueueCommand(EnqueuePresentCommandEvent eventObject)
+        {
+            EnqueueCommand(eventObject.PresentCommand);
+        }
 
         private void StartPresenting(StartPresentingEvent startPresentingEvent)
         {

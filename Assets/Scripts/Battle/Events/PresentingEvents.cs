@@ -1,6 +1,17 @@
-﻿namespace CryptoQuest.Battle.Events
+﻿using CryptoQuest.Battle.Presenter.Commands;
+
+namespace CryptoQuest.Battle.Events
 {
     public class StartPresentingEvent : BattleEvent { }
+    public class EnqueuePresentCommandEvent : BattleEvent 
+    {
+        public IPresentCommand PresentCommand { get; private set; }
+
+        public EnqueuePresentCommandEvent(IPresentCommand command)
+        {
+            PresentCommand = command;
+        }
+    }
 
     /// <summary>
     /// After all logs and vfx has been presented
