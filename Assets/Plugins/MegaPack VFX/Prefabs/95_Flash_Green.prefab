@@ -10,8 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4681888243693958767}
   - component: {fileID: 4681888243693958765}
-  - component: {fileID: 8554767374851472011}
   - component: {fileID: 2412317405243518730}
+  - component: {fileID: -8518277886756734639}
+  - component: {fileID: 8592561865162953652}
   m_Layer: 0
   m_Name: 95_Flash_Green
   m_TagString: Untagged
@@ -74,34 +75,18 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1790926715
   m_SortingLayer: 4
-  m_SortingOrder: 9
+  m_SortingOrder: 1000
   m_Sprite: {fileID: 21300000, guid: c4698041b8a825946a08f71b69898a07, type: 3}
   m_Color: {r: 0, g: 1, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.16, y: 0.16}
+  m_Size: {x: 0.01, y: 0.01}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &8554767374851472011
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4681888243693958766}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ea757641b84203141ad4ca0e25aa2806, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _spriteRenderer: {fileID: 4681888243693958765}
-  _flashSpeed: 0.5
-  _startColor: {r: 0, g: 1, b: 0, a: 1}
-  _endColor: {r: 0, g: 1, b: 0, a: 0}
 --- !u!114 &2412317405243518730
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -115,3 +100,29 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _delay: 2.1
+--- !u!114 &-8518277886756734639
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4681888243693958766}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb41057a33784958a7e4c12e29fd7b6b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _spriteRenderer: {fileID: 4681888243693958765}
+--- !u!114 &8592561865162953652
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4681888243693958766}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4be229a70b594ec28cb9a5e2dc313a6b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _offset: {x: 0, y: 0.2, z: 0}
