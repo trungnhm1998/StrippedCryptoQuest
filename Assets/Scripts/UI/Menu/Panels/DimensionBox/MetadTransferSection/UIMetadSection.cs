@@ -101,7 +101,7 @@ namespace CryptoQuest.UI.Menu.Panels.DimensionBox.MetadTransferSection
         protected override void YesButtonPressed()
         {
             base.YesButtonPressed();
-            float quantityInput = float.Parse(_inputField.text);
+            float quantityInput = string.IsNullOrEmpty(_inputField.text) ? 0 : float.Parse(_inputField.text);
             _currentWallet.Send(quantityInput);
             ResetTransfer();
         }
@@ -165,15 +165,19 @@ namespace CryptoQuest.UI.Menu.Panels.DimensionBox.MetadTransferSection
         public void ValidateInputField()
         {
             if (string.IsNullOrEmpty(_inputField.text)) return;
-
+            
+            if (_inputField.text.StartsWith("-"))
+            {
+                _inputField.text = null;
+                return;
+            }
+            
             float quantityInput = float.Parse(_inputField.text);
             if (_isIngameWallet && quantityInput > _ingameMetad)
                 _inputField.text = _ingameMetad.ToString();
 
             if (!_isIngameWallet && quantityInput > _webMetad)
                 _inputField.text = _webMetad.ToString();
-                
-            _inputField.text = _inputField.text[0].ToString() == "0" ? _inputField.text = _inputField.text.Remove(0, 1) : _inputField.text;
         }
     }
 }
