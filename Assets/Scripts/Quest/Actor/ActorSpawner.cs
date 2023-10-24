@@ -45,6 +45,7 @@ namespace CryptoQuest.Quest.Actor
         {
             if (_actorSpawnSetting)
             {
+                _actorDeSpawnSetting.OnQuestCompleted -= ActivateDeSpawnActor;
                 QuestManager.OnConfigureQuest?.Invoke(_actorSpawnSetting);
                 return;
             }
@@ -64,7 +65,7 @@ namespace CryptoQuest.Quest.Actor
         {
             if (!_spawnPoint) return;
 
-            Destroy(gameObject);
+            DestroyImmediate(gameObject);
         }
 
         private void Spawn(bool isQuestCompleted)
@@ -107,7 +108,7 @@ namespace CryptoQuest.Quest.Actor
         private void UnsubscribeSetting(ActorSettingSO setting, Action activateAction)
         {
             if (!setting) return;
-            
+
             setting.OnQuestCompleted -= activateAction;
             setting.Unsubscribe();
         }
