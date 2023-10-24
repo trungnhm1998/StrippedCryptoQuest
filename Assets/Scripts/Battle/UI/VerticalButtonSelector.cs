@@ -53,6 +53,7 @@ namespace CryptoQuest.Battle.UI
             DOVirtual.DelayedCall(SELECT_DELAY, () =>
             {
                 EventSystem.current.SetSelectedGameObject(_lastSelectedButton);
+                CurrentIndex = _lastSelectedButton.transform.GetSiblingIndex();
                 _lastSelectedButton = null;
             });
             return true;

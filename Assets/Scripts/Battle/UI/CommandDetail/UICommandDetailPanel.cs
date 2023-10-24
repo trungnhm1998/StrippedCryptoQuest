@@ -44,9 +44,12 @@ namespace CryptoQuest.Battle.UI.CommandDetail
                 InitButtons(model);
             }
 
-            if (_interactable) _buttonSelector.SelectFirstButton();
-            
             _childButonsActivator.CacheButtonTexts();
+        }
+
+        public void SelectFirstButton()
+        {
+            _buttonSelector.SelectFirstButton();
         }
 
         private void InitButtons(ICommandDetailModel model)

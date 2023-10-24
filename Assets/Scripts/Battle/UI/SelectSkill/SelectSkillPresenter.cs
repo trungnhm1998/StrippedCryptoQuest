@@ -53,9 +53,9 @@ namespace CryptoQuest.Battle.UI.SelectSkill
             CreateSkillButtonsDifferentHero(hero);
             _skillList.gameObject.SetActive(true);
             RegisterEvents();
-            _buttonSelector.Interactable = interactable;
             if (interactable)
                 _buttonSelector.SelectFirstButton();
+            _buttonSelector.Interactable = interactable;
         }
 
         private void RegisterEvents()

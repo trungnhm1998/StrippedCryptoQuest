@@ -52,6 +52,7 @@ namespace CryptoQuest.Battle.UI.SelectItem
 
         public void Show()
         {
+            _itemListUI.SelectFirstButton();
             SetInteractive(true);
             ShowItemListUI();
             SetActiveScroll(true);
