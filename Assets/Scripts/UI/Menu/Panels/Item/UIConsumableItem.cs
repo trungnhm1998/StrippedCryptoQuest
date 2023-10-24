@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using AssetReferenceSprite;
 using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data;
 using CryptoQuest.Item;
 using CryptoQuest.Menu;
@@ -68,10 +69,10 @@ namespace CryptoQuest.UI.Menu.Panels.Item
             _selectedBackground.SetActive(false);
         }
 
-        public void Init(UIConsumables consumables, ConsumableInfo item)
+        public void Init(ConsumableInfo item)
         {
             _consumable = item;
-            StartCoroutine(consumables.GetConsumableAvatar(item.DataId, item.Icon, avatar => _icon.sprite = avatar));
+            StartCoroutine(CoLoadIcon());
             _name.StringReference = item.DisplayName;
             SetQuantityText(item);
 
@@ -82,6 +83,19 @@ namespace CryptoQuest.UI.Menu.Panels.Item
         public void SetQuantityText(ConsumableInfo item)
         {
             _quantity.text = item.Quantity.ToString();
+        }
+
+        private IEnumerator CoLoadIcon()
+        {
+            if (_consumable.Icon == null) yield break;
+            if (!_consumable.Icon.RuntimeKeyIsValid()) yield break;
+
+            _consumable.Icon.LoadSpriteAndSet(_icon);
+        }
+
+        private void SetIcon(Sprite sprite)
+        {
+            _icon.sprite = sprite;
         }
 
         private void SetColorText(bool allowed = false)
