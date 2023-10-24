@@ -45,7 +45,7 @@ namespace CryptoQuest.AbilitySystem.Executions
                 correctedElementalPower;
             damageDone += (damageDone * Random.Range(_lowerRandomRange, _upperRandomRange));
 
-            if (damageDone <= 0f) return;
+            if (damageDone <= 0f) damageDone = 0;
 
             Debug.Log($"Damage done: {damageDone}");
             outModifiers.Add(new GameplayModifierEvaluatedData(

@@ -42,7 +42,6 @@ namespace CryptoQuest.Battle.UI.Logs
         {
             if (newVal.Attribute != AttributeSets.Health) return;
             var damage = newVal.CurrentValue - oldVal.CurrentValue;
-            if (Mathf.Approximately(damage, 0)) return;
             LogDamage(owner.GetComponent<Components.Character>(), damage);
         }
 

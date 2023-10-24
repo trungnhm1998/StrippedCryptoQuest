@@ -244,7 +244,7 @@ namespace IndiGames.GameplayAbilitySystem.AttributeSystem.Components
             var attributeValue = _attributeValues[index];
             attributeValue.BaseValue = value;
             var evaluatedAttribute = attribute.CalculateCurrentAttributeValue(attributeValue, _attributeValues);
-            UpdateAttributeValueIfNotEquals(evaluatedAttribute, _attributeValues[index]);
+            SetAttributeValue(attribute, evaluatedAttribute);
 
             UpdateAttributeValues(); // This attribute could cause other attribute to change
         }
