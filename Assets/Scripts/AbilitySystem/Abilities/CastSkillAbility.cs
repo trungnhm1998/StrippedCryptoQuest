@@ -42,6 +42,7 @@ namespace CryptoQuest.AbilitySystem.Abilities
     {
         private GameplayEffectDefinition _costEffect;
         private readonly CastSkillAbility _def;
+        public CastSkillAbility Def => _def;
         private AbilitySystemBehaviour[] _targets;
         private TinyMessageSubscriptionToken _wonEvent;
         private TinyMessageSubscriptionToken _lostEvent;
@@ -72,9 +73,19 @@ namespace CryptoQuest.AbilitySystem.Abilities
             };
         }
 
+        public override bool TryActiveAbility()
+        {
+            BattleEventBus.RaiseEvent(new CastingSkillEvent()
+            {
+                Character = _character,
+                Skill = _def
+            });
+            return base.TryActiveAbility();
+        }
+
         public override bool CanActiveAbility()
         {
-            if (AbilitySystemHelper.SystemHasNoneTags(_targets[0], AbilitySO.Tags.TargetTags.IgnoreTags))
+            if (!AbilitySystemHelper.SystemHasNoneTags(_targets[0], AbilitySO.Tags.TargetTags.IgnoreTags))
             {
                 BattleEventBus.RaiseEvent(new CastInvalidEvent(this, _character, _targets[0]));
                 return false;

@@ -13,7 +13,7 @@ namespace CryptoQuest.Battle.UI.Logs
 
         private void OnEnable()
         {
-            _castSkillEvent = BattleEventBus.SubscribeEvent<CastSkillEvent>(LogCastSkill);
+            _castSkillEvent = BattleEventBus.SubscribeEvent<CastingSkillEvent>(LogCastSkill);
         }
 
         private void OnDisable()
@@ -21,7 +21,7 @@ namespace CryptoQuest.Battle.UI.Logs
             BattleEventBus.UnsubscribeEvent(_castSkillEvent);
         }
 
-        private void LogCastSkill(CastSkillEvent skillEvent)
+        private void LogCastSkill(CastingSkillEvent skillEvent)
         {
             var castMessage =
                 new LocalizedString(_castSkillMessage.TableReference, _castSkillMessage.TableEntryReference)

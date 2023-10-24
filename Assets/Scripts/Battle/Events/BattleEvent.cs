@@ -116,6 +116,10 @@ namespace CryptoQuest.Battle.Events
 
     public class MissedEvent : LogEvent { }
 
+    public class CastingSkillEvent : LogEvent
+    {
+        public CastSkillAbility Skill { get; set; }
+    }
     public class CastSkillEvent : LogEvent
     {
         public CastSkillAbility Skill { get; private set; }
