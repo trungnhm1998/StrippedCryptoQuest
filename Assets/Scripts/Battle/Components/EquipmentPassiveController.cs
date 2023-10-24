@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using CryptoQuest.AbilitySystem.Abilities;
 using CryptoQuest.Item.Equipment;
 
@@ -15,19 +16,18 @@ namespace CryptoQuest.Battle.Components
         {
             base.Awake();
             _equipmentsController = GetComponent<EquipmentsController>();
-        }
 
-        public override void Init()
-        {
             _equipmentsController.Equipped += GrantPassive;
             _equipmentsController.Removed += RemovePassive;
         }
 
-        protected override void OnReset()
+        private void OnDestroy()
         {
             _equipmentsController.Equipped -= GrantPassive;
             _equipmentsController.Removed -= RemovePassive;
         }
+
+        public override void Init() { }
 
         private void GrantPassive(EquipmentInfo equipment)
         {

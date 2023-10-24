@@ -5,14 +5,14 @@ using System.Linq;
 using CryptoQuest.Character.Hero;
 using CryptoQuest.Gameplay.Inventory;
 using CryptoQuest.Item.Equipment;
+using CryptoQuest.System;
 using IndiGames.GameplayAbilitySystem.EffectSystem;
 using IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects;
+using IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects.GameplayEffectActions;
 using UnityEngine;
 using ESlotType =
     CryptoQuest.Item.Equipment.EquipmentSlot.EType;
 using ECategory = CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Type.EEquipmentCategory;
-using CryptoQuest.System;
-using IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects.GameplayEffectActions;
 
 namespace CryptoQuest.Battle.Components
 {
@@ -164,7 +164,6 @@ namespace CryptoQuest.Battle.Components
 
             equipment.Equipped(_hero.Spec.Id);
             ApplyEquipmentEffectToCharacter(equipment);
-            Equipped?.Invoke(equipment);
         }
 
         private void ApplyEquipmentEffectToCharacter(EquipmentInfo equipment)
@@ -177,6 +176,7 @@ namespace CryptoQuest.Battle.Components
             CreateAndSetEffectDefToEquipment(equipment);
             var activeEffectSpec = Character.ApplyEffect(CreateEffectSpecFromEquipment(equipment));
             equipment.SetActiveEffectSpec(activeEffectSpec);
+            Equipped?.Invoke(equipment);
         }
 
         public void Unequip(ESlotType slotToUnequip)
