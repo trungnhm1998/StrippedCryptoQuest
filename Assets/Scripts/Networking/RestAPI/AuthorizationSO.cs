@@ -8,7 +8,6 @@ using static CryptoQuest.SNS.FirebaseAuthScript;
 
 namespace CryptoQuest.Networking.RestAPI
 {
-    [CreateAssetMenu(menuName ="AUthro/x")]
     public class AuthorizationSO : ScriptableObject
     {
         public Action<ApiToken> OnAccessTokenChanged;

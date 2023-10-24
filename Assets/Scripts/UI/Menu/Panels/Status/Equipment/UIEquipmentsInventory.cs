@@ -204,7 +204,11 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
 
         private void PreviewUnselectEquipment()
         {
-            if (!_currentlyEquippingItem.Equipment.IsValid()) return;
+            if (!_currentlyEquippingItem.Equipment.IsValid())
+            {
+                _equipmentPreviewer.ResetAttributesUI();
+                return;
+            }
 
             _tooltip.SetSafeArea(_tooltipSafeArea);
             _equipmentPreviewer.PreviewUnequipEquipment(_equipmentsPanel.EquippingSlot, InspectingHero);

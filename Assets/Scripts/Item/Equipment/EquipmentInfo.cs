@@ -1,4 +1,5 @@
 ﻿using System;
+using CryptoQuest.AbilitySystem.Abilities;
 using CryptoQuest.Battle.Components;
 using CryptoQuest.Character;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
@@ -22,25 +23,26 @@ namespace CryptoQuest.Item.Equipment
         public EquipmentSlot.EType[] RequiredSlots => Prefab.RequiredSlots;
         public EquipmentSlot.EType[] AllowedSlots => Prefab.AllowedSlots;
 
-        public GameplayEffectDefinition EffectDef { get; set; }
+        [field: NonSerialized] public GameplayEffectDefinition EffectDef { get; set; }
 
         /// <summary>
         /// The effect that being active when this equipment is equipped
         /// this contains all <see cref="ActiveGameplayEffect.ComputedModifiers"/> that this equipment give to the character
         /// </summary>
-        private ActiveGameplayEffect _activeGameplayEffect = new();
+        [NonSerialized] private ActiveGameplayEffect _activeGameplayEffect = new();
 
         public ActiveGameplayEffect activeGameplayEffect => _activeGameplayEffect;
         public bool IsNftItem => Def.IsNft;
         public RaritySO Rarity => Def.Rarity;
         public float ValuePerLvl => Def.ValuePerLvl;
-        public EquipmentDef Def { get; set; }
-        public EquipmentPrefab Prefab { get; set; }
+        [field: NonSerialized] public EquipmentDef Def { get; set; }
+        [field: NonSerialized] public EquipmentPrefab Prefab { get; set; }
 
         public override int Price => Def.Price;
         public override int SellPrice => Def.SellPrice;
 
-        private int _heroEquippedId = 0;
+        [NonSerialized] private int _heroEquippedId = 0;
+        public PassiveAbility Passive => Def.Passive;
         public bool IsEquipped => _heroEquippedId != 0;
 
         public EquipmentInfo()
@@ -66,15 +68,6 @@ namespace CryptoQuest.Item.Equipment
         {
             _activeGameplayEffect = applyEquipmentGameplayEffect;
         }
-
-        /// <summary>
-        /// Maybe this equipment have some kind of ability/passive skill?
-        ///
-        /// e.g.
-        /// Something like while equip this item, you have 10% chance to do something
-        /// When health is below 50%, your stats boost by 10%
-        /// </summary>
-        protected void Activate() { }
 
         #region Utils
 

@@ -1,4 +1,5 @@
-﻿using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
+﻿using CryptoQuest.AbilitySystem.Abilities;
+using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
 using UnityEngine;
 
 namespace CryptoQuest.Item.Equipment
@@ -22,11 +23,6 @@ namespace CryptoQuest.Item.Equipment
         [field: SerializeField] public int RandomBonus { get; private set; }
         [field: SerializeField] public float ValuePerLvl { get; private set; }
         [field: SerializeField] public AttributeWithValue[] Stats { get; private set; }
-
-#if UNITY_EDITOR
-        public void Editor_SetRarity(RaritySO rarity) => Rarity = rarity;
-        public void Editor_SetIsNftItem(bool isNftItem) => IsNft = isNftItem;
-        public void Editor_SetStats(AttributeWithValue[] stats) => Stats = stats;
-#endif
+        [field: SerializeField] public PassiveAbility Passive { get; private set; }
     }
 }

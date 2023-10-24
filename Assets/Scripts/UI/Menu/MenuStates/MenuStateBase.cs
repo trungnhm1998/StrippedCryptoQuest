@@ -17,48 +17,31 @@ namespace CryptoQuest.UI.Menu.MenuStates
         public override void OnEnter()
         {
             base.OnEnter();
-            Debug.Log($"{GetType().Name}/OnEnter");
         }
 
         public override void OnExit()
         {
             base.OnExit();
-            Debug.Log($"{GetType().Name}/OnExit");
         }
 
         /// <summary>
         /// Handle pressing East button on the controller or Esc button on the keyboard.
         /// </summary>
-        public virtual void HandleCancel()
-        {
-            Debug.Log($"{GetType().Name}/HandleCancel");
-        }
+        public virtual void HandleCancel() { }
 
         /// <summary>
         /// Handle pressing West button on the controller or F button on the keyboard.
         /// </summary>
-        public virtual void Interact()
-        {
-            Debug.Log($"{GetType().Name}/Interact");
-        }
+        public virtual void Interact() { }
 
         /// <summary>
         /// Handle pressing South button on the controller or Space/Enter button on the keyboard.
         /// </summary>
-        public virtual void Confirm()
-        {
-            Debug.Log($"{GetType().Name}/Confirm");
-        }
+        public virtual void Confirm() { }
 
-        public virtual void ChangeTab(float direction)
-        {
-            Debug.Log($"{GetType().Name}/ChangeTab/{direction}");
-        }
+        public virtual void ChangeTab(float direction) { }
 
-        public virtual void HandleNavigate(Vector2 direction)
-        {
-            Debug.Log($"{GetType().Name}/HandleNavigate/{direction}");
-        }
+        public virtual void HandleNavigate(Vector2 direction) { }
 
         /// <summary>
         /// Handle pressing North button on the controller or R button on the keyboard.

@@ -16,6 +16,8 @@ namespace CryptoQuest.AbilitySystem.Abilities
     [CreateAssetMenu(menuName = "Crypto Quest/Ability System/Passive Ability", fileName = "Passive")]
     public class PassiveAbility : AbilityScriptableObject
     {
+        [SerializeField] private GameplayEffectContext _context;
+        public GameplayEffectContext Context => _context;
         [SerializeField] private GameplayEffectDefinition _effect; // Should be infinite type
 
         /// <summary>
@@ -33,6 +35,7 @@ namespace CryptoQuest.AbilitySystem.Abilities
     {
         private readonly PassiveAbility _passiveAbility;
         private GameplayEffectSpec _effectSpec;
+        private ActiveGameplayEffect _activeEffectSpec;
 
         public PassiveAbilitySpec(PassiveAbility passiveAbility)
         {
@@ -47,9 +50,9 @@ namespace CryptoQuest.AbilitySystem.Abilities
 
         protected override IEnumerator OnAbilityActive()
         {
-            _effectSpec = _passiveAbility.PassiveEffect.CreateEffectSpec(Owner, Owner.MakeEffectContext());
-            Owner.ApplyEffectSpecToSelf(_effectSpec);
-            yield break;
+            if (_passiveAbility.PassiveEffect == null) yield break;
+            _effectSpec = _passiveAbility.PassiveEffect.CreateEffectSpec(Owner, new GameplayEffectContextHandle(_passiveAbility.Context));
+            _activeEffectSpec = Owner.ApplyEffectSpecToSelf(_effectSpec);
         }
 
         /// <summary>
@@ -59,7 +62,7 @@ namespace CryptoQuest.AbilitySystem.Abilities
         public override void OnAbilityRemoved(GameplayAbilitySpec gameplayAbilitySpec)
         {
             base.OnAbilityRemoved(gameplayAbilitySpec);
-            EndAbility();
+            _activeEffectSpec.IsActive = false;
         }
 
         protected override void OnAbilityEnded() => Owner.EffectSystem.RemoveEffect(_effectSpec);

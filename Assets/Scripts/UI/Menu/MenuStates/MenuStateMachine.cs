@@ -32,51 +32,43 @@ namespace CryptoQuest.UI.Menu.MenuStates
         /// </summary>
         public override void OnEnter()
         {
-            Debug.Log($"{GetType().Name}/OnEnter/{_panel.name}");
             _panel.Show();
             base.OnEnter();
         }
 
         public override void OnExit()
         {
-            Debug.Log($"{GetType().Name}::OnExit::{_panel.name}");
             base.OnExit();
             _panel.Hide();
         }
 
         public virtual void HandleCancel()
         {
-            Debug.Log($"{GetType().Name}::HandleCancel::{_panel.name}");
             ActiveState.HandleCancel();
         }
 
         public virtual void Interact()
         {
-            Debug.Log($"{GetType().Name}::Interact::{_panel.name}");
             ActiveState.Interact();
         }
 
         public virtual void Confirm()
         {
-            Debug.Log($"{GetType().Name}::Confirm::{_panel.name}");
             ActiveState.Confirm();
         }
 
         public virtual void ChangeTab(float direction)
         {
-            Debug.Log($"{GetType().Name}::ChangeTab::{_panel.name}");
             ActiveState.ChangeTab(direction);
         }
 
         public virtual void HandleNavigate(Vector2 direction)
         {
-            Debug.Log($"{GetType().Name}::HandleNavigate{direction.ToString()}::{_panel.name}");
             ActiveState.HandleNavigate(direction);
         }
 
         public virtual void Reset()
         {
-            Debug.Log($"{GetType().Name}::Reset");
             ActiveState.Reset();
         }
 
@@ -85,7 +77,6 @@ namespace CryptoQuest.UI.Menu.MenuStates
         /// </summary>
         public virtual void Execute()
         {
-            Debug.Log($"{GetType().Name}::Execute");
             ActiveState.Execute();
         }
     }
