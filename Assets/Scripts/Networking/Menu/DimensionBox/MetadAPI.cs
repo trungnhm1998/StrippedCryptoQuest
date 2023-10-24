@@ -31,30 +31,26 @@ namespace CryptoQuest.Networking.Menu.DimensionBox
         private float WebMetad;
         public float IngameMetad => _currenciesController.Wallet.Diamond.Amount;
 
-        private const string LOAD_METAD_PATH = "/crypto/dimention/token";
-        private const string TRANSFER_TO_METAD_PATH = "/crypto/dimention/token/to";
-        private const string TRANSFER_TO_DIAMOND_PATH = "/crypto/dimention/token/from";
-
         #region Network
 
         public IEnumerator CoLoadData()
         {
             _currenciesController = ServiceProvider.GetService<ICurrenciesController>();
             _restAPINetworkController = ServiceProvider.GetService<IRestClientController>();
-            _restAPINetworkController.Get(LOAD_METAD_PATH, OnLoadDataSuccess, OnLoadDataFail);
+            _restAPINetworkController.Get(Constants.LOAD_METAD_PATH, OnLoadDataSuccess, OnLoadDataFail);
             yield return null;
         }
 
         public void TransferDiamondToMetad(float value)
         {
             Debug.Log("MetadAPI Execute transfer diamond to metad");
-            TransferMetad(TRANSFER_TO_METAD_PATH, value);
+            TransferMetad(Constants.TRANSFER_TO_METAD_PATH, value);
         }
 
         public void TransferMetadToDiamond(float value)
         {
             Debug.Log("MetadAPI Execute transfer metad to diamond");
-            TransferMetad(TRANSFER_TO_DIAMOND_PATH, value);
+            TransferMetad(Constants.TRANSFER_TO_DIAMOND_PATH, value);
         }
 
         private void TransferMetad(string path, float value)

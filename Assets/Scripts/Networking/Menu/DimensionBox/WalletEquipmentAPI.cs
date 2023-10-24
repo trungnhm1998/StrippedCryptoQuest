@@ -1,92 +1,69 @@
-using CryptoQuest.Gameplay.Inventory;
-using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
-using CryptoQuest.Item.Equipment;
 using CryptoQuest.System;
-using CryptoQuest.UI.Menu.Panels.DimensionBox.Interfaces;
 using Newtonsoft.Json;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Proyecto26;
 
 namespace CryptoQuest.Networking.Menu.DimensionBox
 {
-    public class WalletEquipmentData
+    public class WalletEquipmentTransferData
     {
         [JsonProperty("ids")]
         public int[] Ids;
-        public WalletEquipmentData(int[] value)
+        public WalletEquipmentTransferData(int[] values)
         {
-            Ids = value;
+            Ids = values;
         }
     }
 
-    public class WalletEquipmentAPI : MonoBehaviour, IWalletEquipmentModel
+    public class WalletEquipmentAPI : MonoBehaviour
     {
-        public List<INFT> Data { get; private set; }
-        public bool IsLoaded { get; private set; }
-
         private IRestClientController _restAPINetworkController;
 
-        private const string LOAD_EQUIPMENT_PATH = "/crypto/equipments?source=1";
-        private const string UPDATE_EQUIPMENT_FROM_WALLET_PATH = "/crypto/equipments/dimention/from";
+        public bool IsFinishFetchData { get; private set; }
+        public string RawEquipmentData { get; private set; }
 
-        private List<Equipment> _equipmentRawData;
-        public List<Equipment> EquipmentRawData => _equipmentRawData;
-
-        public IEnumerator CoGetData()
+        private void Awake()
         {
-            IsLoaded = false;
-            yield return null;
             _restAPINetworkController = ServiceProvider.GetService<IRestClientController>();
-            _restAPINetworkController.Get(LOAD_EQUIPMENT_PATH, OnLoadDataSuccess, OnLoadDataFail);
         }
 
-        public void Transfer(int[] values)
+        private void OnEnable()
         {
-            var data = new WalletEquipmentData(values);
-
-            _restAPINetworkController.Put(UPDATE_EQUIPMENT_FROM_WALLET_PATH, JsonConvert.SerializeObject(data), OnLoadDataSuccess, OnLoadDataFail);
+            IsFinishFetchData = false;
         }
 
-        private void OnLoadDataSuccess(ResponseHelper res)
+        public void LoadEquipmentFromWallet()
+        {
+            _restAPINetworkController.Get(Constants.LOAD_EQUIPMENT_PATH, OnSuccess, OnFail);
+        }
+
+        public void UpdateEquipmentFromWallet(int[] values)
+        {
+            var data = new WalletEquipmentTransferData(values);
+
+            _restAPINetworkController.Put(Constants.UPDATE_EQUIPMENT_FROM_WALLET_PATH, JsonConvert.SerializeObject(data), OnSuccess, OnFail);
+        }
+
+        private void OnSuccess(ResponseHelper res)
         {
             Debug.Log($"DimensionEquipment::LoadData success : {res.Text}");
-            UpdateEquipmentData(res.Text);
+            RawEquipmentData = res.Text;
+            IsFinishFetchData = true;
         }
 
-        private void OnLoadDataFail(Exception error)
+        private void OnFail(Exception error)
         {
             Debug.Log($"DimensionEquipment::LoadData fail : {error.Message}");
-            IsLoaded = true;
+            IsFinishFetchData = true;
         }
 
-        private void UpdateEquipmentData(string jsonData)
+        public List<Equipment> GetDataConvertedFromJson(string jsonData)
         {
             var data = JsonConvert.DeserializeObject<WalletEquipmentResponseData>(jsonData);
 
-            Data ??= new List<INFT>();
-            Data.Clear();
-            StartCoroutine(LoadAllData(data.Data.Equipments));
-        }
-
-        private IEnumerator LoadAllData(List<Equipment> equipments)
-        {
-            var defProvider = ServiceProvider.GetService<IEquipmentDefProvider>();
-
-            _equipmentRawData = equipments;
-
-            foreach (var item in equipments)
-            {
-                var equip = new EquipmentInfo(item.Id.ToString(), item.EquipmentId, item.Lv);
-                yield return defProvider.Load(equip);
-
-                var obj = new UI.Menu.Panels.DimensionBox.EquipmentTransferSection.Models.WalletEquipmentData(equip);
-                Data.Add(obj);
-            }
-
-            IsLoaded = true;
+            return data.Data.Equipments;
         }
     }
 }
