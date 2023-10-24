@@ -21,6 +21,7 @@ namespace CryptoQuest.Battle.Presenter.Commands
 
         public IEnumerator Present()
         {
+            if (_vfxId < 0) yield break;
             yield return _presenter.PresentVfx(_vfxId, _transformPosition);
         }
     }

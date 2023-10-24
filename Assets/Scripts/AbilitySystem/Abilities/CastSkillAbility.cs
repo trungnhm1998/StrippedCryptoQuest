@@ -27,7 +27,7 @@ namespace CryptoQuest.AbilitySystem.Abilities
     public abstract class CastSkillAbility : AbilityScriptableObject
     {
         [SerializeField] private GameplayEffectContext _context;
-        [SerializeField] private int _vfxId;
+        [SerializeField] private int _vfxId = -1;
         public int VfxId => _vfxId;
         public GameplayEffectContext Context => _context;
         [field: SerializeField, Obsolete] public SkillInfo Parameters { get; private set; }
