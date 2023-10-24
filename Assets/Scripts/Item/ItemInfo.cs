@@ -1,5 +1,4 @@
 ﻿using System;
-using IndiGames.Core.EditorTools.Attributes.ReadOnlyAttribute;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -8,7 +7,7 @@ namespace CryptoQuest.Item
     [Serializable]
     public abstract class ItemInfo
     {
-        [SerializeField, ReadOnly] private string _id = Guid.NewGuid().ToString();
+        [SerializeField] private string _id;
 
         public string Id
         {

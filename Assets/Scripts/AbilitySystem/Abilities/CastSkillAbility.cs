@@ -11,6 +11,7 @@ using IndiGames.GameplayAbilitySystem.AbilitySystem.ScriptableObjects;
 using IndiGames.GameplayAbilitySystem.EffectSystem;
 using IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects;
 using IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects.GameplayEffectActions;
+using IndiGames.GameplayAbilitySystem.Helper;
 using IndiGames.GameplayAbilitySystem.TagSystem.ScriptableObjects;
 using TinyMessenger;
 using UnityEngine;
@@ -41,6 +42,12 @@ namespace CryptoQuest.AbilitySystem.Abilities
     {
         private GameplayEffectDefinition _costEffect;
         private readonly CastSkillAbility _def;
+        private AbilitySystemBehaviour[] _targets;
+        private TinyMessageSubscriptionToken _wonEvent;
+        private TinyMessageSubscriptionToken _lostEvent;
+        private TinyMessageSubscriptionToken _retreatEvent;
+        private Battle.Components.Character _character;
+        protected AbilitySystemBehaviour[] Targets => _targets;
 
         public CastSkillAbilitySpec(CastSkillAbility def) => _def = def;
 
@@ -67,6 +74,12 @@ namespace CryptoQuest.AbilitySystem.Abilities
 
         public override bool CanActiveAbility()
         {
+            if (AbilitySystemHelper.SystemHasNoneTags(_targets[0], AbilitySO.Tags.TargetTags.IgnoreTags))
+            {
+                BattleEventBus.RaiseEvent(new CastInvalidEvent(this, _character, _targets[0]));
+                return false;
+            }
+
             return base.CanActiveAbility() && CheckCost();
         }
 
@@ -108,13 +121,6 @@ namespace CryptoQuest.AbilitySystem.Abilities
 
             ApplyGameplayEffectToOwner(_costEffect);
         }
-
-        private AbilitySystemBehaviour[] _targets;
-        private TinyMessageSubscriptionToken _wonEvent;
-        private TinyMessageSubscriptionToken _lostEvent;
-        private TinyMessageSubscriptionToken _retreatEvent;
-        private Battle.Components.Character _character;
-        protected AbilitySystemBehaviour[] Targets => _targets;
 
         public void Execute(params AbilitySystemBehaviour[] characters)
         {

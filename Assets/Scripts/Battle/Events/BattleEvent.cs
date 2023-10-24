@@ -120,13 +120,14 @@ namespace CryptoQuest.Battle.Events
     {
         public CastSkillAbility Skill { get; private set; }
         public Components.Character Target { get; private set; }
+
         public CastSkillEvent(CastSkillAbility skill, AbilitySystemBehaviour target)
         {
             Skill = skill;
             Target = target.GetComponent<Components.Character>();
         }
     }
-    
+
     public class ConsumeItemEvent : LogEvent
     {
         public ConsumableInfo ItemInfo { get; set; }
@@ -158,4 +159,18 @@ namespace CryptoQuest.Battle.Events
     public class SelectedItemEvent : ItemEvent { }
 
     public class CancelSelectedItemEvent : ItemEvent { }
+
+    public class CastInvalidEvent : LogEvent
+    {
+        public CastSkillAbilitySpec Skill { get; }
+        public AbilitySystemBehaviour Target { get; }
+
+        public CastInvalidEvent(CastSkillAbilitySpec skill, Components.Character character,
+            AbilitySystemBehaviour target)
+        {
+            Skill = skill;
+            Character = character;
+            Target = target;
+        }
+    }
 }

@@ -126,7 +126,7 @@ namespace IndiGames.GameplayAbilitySystem.AttributeSystem.Components
 
             var attributeWithNewModifer =
                 attributeValue.Attribute.CalculateCurrentAttributeValue(attributeValue, _attributeValues);
-            UpdateAttributeValueIfNotEquals(attributeWithNewModifer, _attributeValues[index]);
+            SetAttributeValue(attributeToModify, attributeWithNewModifer);
 
             return true;
         }

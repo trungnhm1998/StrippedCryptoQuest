@@ -58,13 +58,6 @@ namespace CryptoQuest.AbilitySystem.Abilities
         /// <summary>
         /// When un equip the equipment, remove the ability
         /// </summary>
-        /// <param name="gameplayAbilitySpec"></param>
-        public override void OnAbilityRemoved(GameplayAbilitySpec gameplayAbilitySpec)
-        {
-            base.OnAbilityRemoved(gameplayAbilitySpec);
-            _activeEffectSpec.IsActive = false;
-        }
-
         protected override void OnAbilityEnded() => Owner.EffectSystem.RemoveEffect(_effectSpec);
     }
 }
