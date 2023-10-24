@@ -99,6 +99,8 @@ namespace CryptoQuest.Battle.UI.Logs
 
         private void LogMessage(EffectEvent ctx, LocalizedString message, TagScriptableObject tag)
         {
+            if (!ctx.Character.IsValidAndAlive()) return;
+
             var msg = new LocalizedString(message.TableReference, message.TableEntryReference)
             {
                 {

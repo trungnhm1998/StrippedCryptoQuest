@@ -90,6 +90,8 @@ namespace CryptoQuest.Battle.UI.Logs
         private void LogAbnormalStatus(LocalizedString contextMessage, EffectEvent ctx)
         {
             if (contextMessage.IsEmpty) return;
+            if (ctx.Tag != TagsDef.Dead && !ctx.Character.IsValidAndAlive()) return;
+
             var msg = new LocalizedString(contextMessage.TableReference, contextMessage.TableEntryReference)
             {
                 {

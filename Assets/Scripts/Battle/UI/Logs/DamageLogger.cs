@@ -58,17 +58,15 @@ namespace CryptoQuest.Battle.UI.Logs
             else
             {
                 character.AttributeSystem.TryGetAttributeValue(AttributeSets.Health, out var hp);
-                damage = hp.CurrentValue - Math.Abs(damage) < 0 ? hp.CurrentValue : Math.Abs(damage);
-                msg =
-                    new LocalizedString(_damageMessage.TableReference, _damageMessage.TableEntryReference)
+                msg = new LocalizedString(_damageMessage.TableReference, _damageMessage.TableEntryReference)
+                {
                     {
+                        Constants.DAMAGE_NUMBER, new FloatVariable()
                         {
-                            Constants.DAMAGE_NUMBER, new FloatVariable()
-                            {
-                                Value = Math.Abs(damage)
-                            }
+                            Value = Math.Abs(damage)
                         }
-                    };
+                    }
+                };
             }
 
             msg.Add(Constants.CHARACTER_NAME, new StringVariable()

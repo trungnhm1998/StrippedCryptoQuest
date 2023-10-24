@@ -55,17 +55,20 @@ namespace CryptoQuest.AbilitySystem.Attributes.Events
         {
             if (attributeSystem.TryGetComponent(out TagSystemBehaviour tagSystem) == false) return;
             if (_condition.Attribute != newAttributeValue.Attribute) return;
-            if (_condition.IsMet(newAttributeValue) == false) return;
+            if (_condition.IsMet(newAttributeValue) == false)
+            {
+                if (tagSystem.HasTag(_condition.TagToApply))
+                {
+                    tagSystem.RemoveTags(_condition.TagToApply);
+                }
+                return;
+            }
+            
             var ctx = new Context()
             {
                 TagToApply = _condition.TagToApply,
                 Character = attributeSystem.GetComponent<Battle.Components.Character>()
             };
-            if (tagSystem.HasTag(_condition.TagToApply))
-            {
-                tagSystem.RemoveTags(_condition.TagToApply);
-                return;
-            }
 
             tagSystem.AddTags(_condition.TagToApply);
         }
