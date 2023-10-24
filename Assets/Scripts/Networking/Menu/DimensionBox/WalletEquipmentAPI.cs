@@ -1,4 +1,5 @@
 using CryptoQuest.Gameplay.Inventory;
+using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
 using CryptoQuest.Item.Equipment;
 using CryptoQuest.System;
 using CryptoQuest.UI.Menu.Panels.DimensionBox.EquipmentTransferSection.Models;
@@ -9,6 +10,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
+using Proyecto26;
+using CryptoQuest.Environment;
 
 namespace CryptoQuest.Networking.Menu.DimensionBox
 {
@@ -17,16 +20,16 @@ namespace CryptoQuest.Networking.Menu.DimensionBox
         public List<INFT> Data { get; private set; }
         public bool IsLoaded { get; private set; }
 
-        private IRestAPINetworkController _restAPINetworkController;
+        private IRestClientController _restAPINetworkController;
 
-        private const string URL_LOAD_EQUIPMENT = "/crypto/equipments?source=1";
+        private const string LOAD_EQUIPMENT_PATH = "/crypto/equipments?source=1";
 
         public IEnumerator CoGetData()
         {
             IsLoaded = false;
             yield return null;
-            _restAPINetworkController = ServiceProvider.GetService<IRestAPINetworkController>();
-            _restAPINetworkController.Get(URL_LOAD_EQUIPMENT, OnLoadDataSuccess, OnLoadDataFail);
+            _restAPINetworkController = ServiceProvider.GetService<IRestClientController>();
+            _restAPINetworkController.Get(LOAD_EQUIPMENT_PATH, OnLoadDataSuccess, OnLoadDataFail);
         }
 
         public void Transfer()
@@ -34,10 +37,10 @@ namespace CryptoQuest.Networking.Menu.DimensionBox
             throw new global::System.NotImplementedException();
         }
 
-        private void OnLoadDataSuccess(UnityWebRequest request)
+        private void OnLoadDataSuccess(ResponseHelper res)
         {
-            Debug.Log($"DimensionEquipment::LoadData success : {request.downloadHandler.text}");
-            UpdateEquipmentData(request.downloadHandler.text);
+            Debug.Log($"DimensionEquipment::LoadData success : {res.Text}");
+            UpdateEquipmentData(res.Text);
         }
 
         private void OnLoadDataFail(Exception error)

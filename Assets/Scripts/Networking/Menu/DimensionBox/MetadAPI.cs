@@ -2,11 +2,11 @@ using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
 using CryptoQuest.System;
 using CryptoQuest.UI.Menu.Panels.DimensionBox.Interfaces;
 using Newtonsoft.Json;
+using Proyecto26;
 using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.Networking;
 
 namespace CryptoQuest.Networking.Menu.DimensionBox
 {
@@ -26,65 +26,65 @@ namespace CryptoQuest.Networking.Menu.DimensionBox
         public event UnityAction OnSendSuccess;
         public event UnityAction OnSendFailed;
 
-        private IRestAPINetworkController _restAPINetworkController;
+        private IRestClientController _restAPINetworkController;
         private ICurrenciesController _currenciesController;
         private float WebMetad;
         public float IngameMetad => _currenciesController.Wallet.Diamond.Amount;
 
-        private const string URL_LOAD_METAD = "/crypto/dimention/token";
-        private const string URL_TRANSFER_TO_METAD = "/crypto/dimention/token/to";
-        private const string URL_TRANSFER_TO_DIAMOND = "/crypto/dimention/token/from";
+        private const string LOAD_METAD_PATH = "/crypto/dimention/token";
+        private const string TRANSFER_TO_METAD_PATH = "/crypto/dimention/token/to";
+        private const string TRANSFER_TO_DIAMOND_PATH = "/crypto/dimention/token/from";
 
         #region Network
 
         public IEnumerator CoLoadData()
         {
             _currenciesController = ServiceProvider.GetService<ICurrenciesController>();
-            _restAPINetworkController = ServiceProvider.GetService<IRestAPINetworkController>();
-            _restAPINetworkController.Get(URL_LOAD_METAD, OnLoadDataSuccess, OnLoadDataFail);
+            _restAPINetworkController = ServiceProvider.GetService<IRestClientController>();
+            _restAPINetworkController.Get(LOAD_METAD_PATH, OnLoadDataSuccess, OnLoadDataFail);
             yield return null;
         }
 
         public void TransferDiamondToMetad(float value)
         {
             Debug.Log("MetadAPI Execute transfer diamond to metad");
-            TransferMetad(URL_TRANSFER_TO_METAD, value);
+            TransferMetad(TRANSFER_TO_METAD_PATH, value);
         }
 
         public void TransferMetadToDiamond(float value)
         {
             Debug.Log("MetadAPI Execute transfer metad to diamond");
-            TransferMetad(URL_TRANSFER_TO_DIAMOND, value);
+            TransferMetad(TRANSFER_TO_DIAMOND_PATH, value);
         }
 
-        private void TransferMetad(string url, float value)
+        private void TransferMetad(string path, float value)
         {
             var payload = new MetadPayload(value);
 
-            _restAPINetworkController.Post(url, JsonConvert.SerializeObject(payload), OnSendWalletSuccess, OnSendWalletFailed);
+            _restAPINetworkController.Post(path, JsonConvert.SerializeObject(payload), OnSendWalletSuccess, OnSendWalletFailed);
         }
 
-        private void OnLoadDataSuccess(UnityWebRequest request)
+        private void OnLoadDataSuccess(ResponseHelper res)
         {
-            Debug.Log($"Dimention::LoadData success : {request.downloadHandler.text}");
-            UpdateCurrency(request.downloadHandler.text);
+            Debug.Log($"Dimension::LoadData success : {res.Text}");
+            UpdateCurrency(res.Text);
         }
 
         private void OnLoadDataFail(Exception error)
         {
-            Debug.Log($"Dimention::LoadData fail : {error.Message}");
+            Debug.Log($"Dimension::LoadData fail : {error.Message}");
         }
 
-        private void OnSendWalletSuccess(UnityWebRequest request)
+        private void OnSendWalletSuccess(ResponseHelper res)
         {
-            Debug.Log($"Dimention::SendWallet success : {request.downloadHandler.text}");
-            UpdateCurrency(request.downloadHandler.text);
+            Debug.Log($"Dimension::SendWallet success : {res.Text}");
+            UpdateCurrency(res.Text);
             OnSendSuccess?.Invoke();
         }
 
         private void OnSendWalletFailed(Exception exception)
         {
-            Debug.Log($"Dimention::LoadData fail : {exception.Message}");
+            Debug.Log($"Dimension::LoadData fail : {exception.Message}");
             OnSendFailed?.Invoke();
         }
 

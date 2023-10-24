@@ -1,14 +1,11 @@
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.Networking;
 using System;
-using System.Collections;
-using CryptoQuest.Environment;
 using CryptoQuest.Networking.RestAPI;
 using Newtonsoft.Json;
-using System.Net;
 using CryptoQuest.System;
 using CryptoQuest.Networking;
+using Proyecto26;
 
 namespace CryptoQuest.SNS
 {
@@ -89,10 +86,10 @@ namespace CryptoQuest.SNS
             FirebaseAuth.OnAuthStateChanged(gameObject.name, "OnUserSignedIn", "OnUserSignedOut");
 #endif
         }
-        
+
         private void LoginWithBackend()
         {
-            var restAPINetworkController = ServiceProvider.GetService<IRestAPINetworkController>();
+            var restAPINetworkController = ServiceProvider.GetService<IRestClientController>();
 
             LoginRequestPayload payload = new LoginRequestPayload(_fbUser.stsTokenManager.accessToken);
 
@@ -106,11 +103,11 @@ namespace CryptoQuest.SNS
             _isSigning = false;
         }
 
-        private void OnLoginBESuccess(UnityWebRequest request)
+        private void OnLoginBESuccess(ResponseHelper res)
         {
-            Debug.Log("Payload: " + request.downloadHandler.text);
+            Debug.Log("Payload: " + res.Text);
 
-            _authorizationSO.Init(request.downloadHandler.text);
+            _authorizationSO.Init(res.Text);
 
             if (_authorizationSO.Profile != null)
             {
@@ -134,7 +131,7 @@ namespace CryptoQuest.SNS
                 else
                 {
                     _isSigning = false;
-                }    
+                }
             }
         }
 
