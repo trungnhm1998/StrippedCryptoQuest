@@ -54,15 +54,17 @@ namespace CryptoQuest.UI.Menu.Panels.Item
 
         private void UpdateUI(ConsumableInfo consumable)
         {
-            if (!consumable.IsValid() || _currentInspectingItem == null
-                || !_currentInspectingItem.Consumable.IsValid()) return;
+            if (consumable.Data == null || _currentInspectingItem == null
+                || _currentInspectingItem.Consumable.Data == null) return;
 
             if (consumable.Quantity <= 0)
             {
+                _uiConsumables.Remove(_currentInspectingItem);
                 Destroy(_currentInspectingItem.gameObject);
+                UpdateSelectingItem();
                 return;
             }
-            
+
             _currentInspectingItem.SetQuantityText(consumable);
         }
 
@@ -123,8 +125,8 @@ namespace CryptoQuest.UI.Menu.Panels.Item
             if (_uiConsumables.Count > 0)
             {
                 _currentInspectingItem = _uiConsumables[0];
-            }    
-        }    
+            }
+        }
 
         private void InspectCurrentItem()
         {

@@ -93,11 +93,6 @@ namespace CryptoQuest.UI.Menu.Panels.Item
             _consumable.Icon.LoadSpriteAndSet(_icon);
         }
 
-        private void SetIcon(Sprite sprite)
-        {
-            _icon.sprite = sprite;
-        }
-
         private void SetColorText(bool allowed = false)
         {
             var color = allowed ? _enabledColor : _disabledColor;
