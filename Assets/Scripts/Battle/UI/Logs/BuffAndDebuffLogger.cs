@@ -2,7 +2,12 @@
 using System.Collections.Generic;
 using CryptoQuest.AbilitySystem;
 using CryptoQuest.AbilitySystem.Attributes;
+using CryptoQuest.Battle.Character;
 using CryptoQuest.Battle.Events;
+using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
+using IndiGames.GameplayAbilitySystem.AttributeSystem;
+using IndiGames.GameplayAbilitySystem.AttributeSystem.Components;
+using IndiGames.GameplayAbilitySystem.EffectSystem;
 using IndiGames.GameplayAbilitySystem.TagSystem.ScriptableObjects;
 using TinyMessenger;
 using UnityEngine;
@@ -23,8 +28,10 @@ namespace CryptoQuest.Battle.UI.Logs
             public AttributeScriptableObject Attribute;
         }
 
-        [SerializeField] private StatChangedLogger _statChangedLogger;
+        [SerializeField] private AttributeChangeEvent _attributeChangeEvent;
 
+        [SerializeField] private LocalizedString _buffLog;
+        [SerializeField] private LocalizedString _debuffLog;
         [SerializeField] private LocalizedString _applyFailMessage;
         [SerializeField] private LocalizedString _buffWearOffMessage;
         [SerializeField] private LocalizedString _debuffWearOffMessage;
@@ -34,8 +41,7 @@ namespace CryptoQuest.Battle.UI.Logs
         private TinyMessageSubscriptionToken _effectRemoved;
         private readonly Dictionary<TagScriptableObject, AttributeScriptableObject> _tagAttributeMap = new();
 
-        private bool _isJustAddEffect;
-        private Components.Character _lastCharacterGotEffect;
+        private EffectAddedEvent _lastCtx;
 
         private void Awake()
         {
@@ -47,46 +53,55 @@ namespace CryptoQuest.Battle.UI.Logs
         {
             _effectRemoved = BattleEventBus.SubscribeEvent<EffectRemovedEvent>(LogOnBuffRemoved);
             _effectAdded = BattleEventBus.SubscribeEvent<EffectAddedEvent>(LogOnBuffAdded);
-            _statChangedLogger.StatsChangedWithSameValue += LogApplyFail;
-            _statChangedLogger.StatsChanged += ResetJustAddEffectFlag;
+            _attributeChangeEvent.Changed += OnAttributeChanged;
         }
 
         private void OnDisable()
         {
             BattleEventBus.UnsubscribeEvent(_effectRemoved);
             BattleEventBus.UnsubscribeEvent(_effectAdded);
-            _statChangedLogger.StatsChangedWithSameValue -= LogApplyFail;
-            _statChangedLogger.StatsChanged -= ResetJustAddEffectFlag;
+            _attributeChangeEvent.Changed -= OnAttributeChanged;
         }
 
         private void LogOnBuffAdded(EffectAddedEvent ctx)
         {
             if (!IsBuffOrDebuff(ctx, out var tag, out var isBuff)) return;
-            _isJustAddEffect = true;
-            _lastCharacterGotEffect = ctx.Character;
+            if (!ctx.Character.TryGetComponent(out EffectSystem effectSystem)) return;
+            _lastCtx = ctx;
         }
 
-        private void LogApplyFail(Components.Character character, LocalizedString attributeName)
+        private void OnAttributeChanged(AttributeSystemBehaviour attributeSystem, AttributeValue oldValue,
+            AttributeValue newValue)
         {
-            /*
-            / Since effect applied after tag is granted so if there's changed event
-            / it'll be called after LogOnBuffAdded and LogApplyFail will only be raised
-            / when there is a buff and the stats value isnt changed
-            */
-            if (!_isJustAddEffect || character != _lastCharacterGotEffect) return;
-            _isJustAddEffect = false;
+            if (!attributeSystem.TryGetComponent(out Components.Character character)) return;
 
+            if (_lastCtx == null || character != _lastCtx.Character) return;
+
+            if (!IsBuffOrDebuff(_lastCtx, out var tag, out var isBuff)) return;
+
+            if (!character.TryGetComponent(out EffectSystem effectSystem)) return;
+
+            var lastestEffect = effectSystem.AppliedEffects[^1];
+            var largestEffect = effectSystem.GetLargestGameplayEffectMagnitude(lastestEffect.Spec);
+
+            if (largestEffect != lastestEffect) 
+            {
+                LogApplyFail(_lastCtx.Tag);
+                _lastCtx = null;
+                return;
+            }
+
+            var message = isBuff ? _buffLog : _debuffLog;
+            LogMessage(_lastCtx, message, tag);
+            _lastCtx = null;
+        }
+
+        private void LogApplyFail(TagScriptableObject tag)
+        {
             var applyFailMessage = new LocalizedString();
             applyFailMessage.SetReference(_applyFailMessage.TableReference, _applyFailMessage.TableEntryReference);
-            applyFailMessage.Add(Constants.ATTRIBUTE_NAME, attributeName);
+            applyFailMessage.Add(Constants.ATTRIBUTE_NAME, GetAttributeName(tag));
             Logger.QueueLog(applyFailMessage);
-        }
-
-        private void ResetJustAddEffectFlag(Components.Character character, LocalizedString attributeName)
-        {
-            /// When stat changed successful, reset the just added flag
-            if (character != _lastCharacterGotEffect) return;
-            _isJustAddEffect = false;
         }
 
         private void LogOnBuffRemoved(EffectRemovedEvent ctx)
@@ -110,20 +125,21 @@ namespace CryptoQuest.Battle.UI.Logs
                     }
                 }
             };
-            var tagMap = _tagAttributeMap[tag];
-            if (tagMap.DisplayName.IsEmpty)
-            {
-                msg.Add(Constants.ATTRIBUTE_NAME, new StringVariable()
-                {
-                    Value = tagMap.name
-                });
-            }
-            else
-            {
-                msg.Add(Constants.ATTRIBUTE_NAME, tagMap.DisplayName);
-            }
+            msg.Add(Constants.ATTRIBUTE_NAME, GetAttributeName(tag));
 
             Logger.QueueLog(msg);
+        }
+
+        private const string ATTRIBUTE_NAME_INVALID = "AttributeNameInvalid";
+
+        private IVariable GetAttributeName(TagScriptableObject tag)
+        {
+            if (!_tagAttributeMap.TryGetValue(tag, out var attribute) || attribute.DisplayName.IsEmpty)
+                return new StringVariable()
+                {
+                    Value = ATTRIBUTE_NAME_INVALID
+                };
+            return attribute.DisplayName;
         }
 
         private static bool IsBuffOrDebuff(EffectEvent ctx, out TagScriptableObject tag, out bool isBuff)

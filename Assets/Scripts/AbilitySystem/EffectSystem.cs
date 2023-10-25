@@ -25,7 +25,7 @@ namespace CryptoQuest.AbilitySystem
             }
         }
 
-        private ActiveGameplayEffect GetLargestGameplayEffectMagnitude(GameplayEffectSpec spec)
+        public ActiveGameplayEffect GetLargestGameplayEffectMagnitude(GameplayEffectSpec spec)
         {
             var largestMagnitudeEffect = new ActiveGameplayEffect();
             foreach (var effect in AppliedEffects)
