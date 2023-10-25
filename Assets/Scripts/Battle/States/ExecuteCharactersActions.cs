@@ -1,5 +1,6 @@
 ﻿using CryptoQuest.Battle.Components;
 using CryptoQuest.Battle.Events;
+using CryptoQuest.Battle.Presenter.Commands;
 using TinyMessenger;
 using UnityEngine;
 
@@ -28,7 +29,7 @@ namespace CryptoQuest.Battle.States
             _presenter = stateMachine.GetComponent<BattlePresenter>();
             _presenter.CommandPanel.SetActive(false);
 
-            _retreatSucceedEvent = BattleEventBus.SubscribeEvent<RetreatSucceedEvent>(OnEndBattle);
+            _retreatSucceedEvent = BattleEventBus.SubscribeEvent<RetreatSucceedEvent>(OnRetreatSuccess);
 
             ExecuteCharactersCommands();
         }
@@ -108,10 +109,16 @@ namespace CryptoQuest.Battle.States
         /// When battle ended with retreat player will not have reward 
         /// but still stay in the battle field scene
         /// </summary>
-        private void OnEndBattle(RetreatSucceedEvent retreatSucceedEvent)
+        public void OnEndBattle()
+        {
+            BattleEventBus.RaiseEvent(new BattleRetreatedEvent());
+        }
+
+        private void OnRetreatSuccess(RetreatSucceedEvent retreatSucceedEvent)
         {
             _isBattleEnded = true;
-            BattleEventBus.RaiseEvent(new BattleRetreatedEvent());
+            var presentCommand = new RetreatSuccessCommand(this);
+            BattleEventBus.RaiseEvent(new EnqueuePresentCommandEvent(presentCommand));
         }
     }
 }
