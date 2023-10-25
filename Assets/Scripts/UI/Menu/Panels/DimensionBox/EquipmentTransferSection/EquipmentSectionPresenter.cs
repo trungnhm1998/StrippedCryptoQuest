@@ -29,8 +29,8 @@ namespace CryptoQuest.UI.Menu.Panels.DimensionBox.EquipmentTransferSection
         private List<IGame> _gameData = new();
         private List<INFT> _walletData = new();
 
-        private List<int> _selectedWalletEquipmentIds = new();
-        public List<int> SelectedWalletEquipmentIds { get => _selectedWalletEquipmentIds; private set => _selectedWalletEquipmentIds = value; }
+        private List<uint> _selectedWalletEquipmentIds = new();
+        public List<uint> SelectedWalletEquipmentIds { get => _selectedWalletEquipmentIds; private set => _selectedWalletEquipmentIds = value; }
 
 
         // This method subscribe to the _enterTransferSectionEvent on scene.
@@ -62,9 +62,7 @@ namespace CryptoQuest.UI.Menu.Panels.DimensionBox.EquipmentTransferSection
             else
             {
                 itemNewParent = _gameBoard;
-
-                Int32.TryParse(currentItem.Data.GetId(), out int element);
-                _selectedWalletEquipmentIds.Add(element);
+                _selectedWalletEquipmentIds.Add(currentItem.Data.GetId());
             }
 
             currentItem.Transfer(itemNewParent);

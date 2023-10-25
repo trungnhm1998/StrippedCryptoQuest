@@ -42,7 +42,7 @@ namespace CryptoQuest.UI.Menu.Panels.DimensionBox.EquipmentTransferSection.Model
 
             foreach (var item in equipments)
             {
-                var equip = new EquipmentInfo(item.Id.ToString(), item.EquipmentId, item.Lv);
+                var equip = new EquipmentInfo(item.Id, item.EquipmentId, item.Lv);
                 yield return defProvider.Load(equip);
 
                 var obj = new WalletEquipmentData(equip);

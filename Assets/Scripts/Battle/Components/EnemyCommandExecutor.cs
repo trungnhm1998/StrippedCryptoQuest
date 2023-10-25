@@ -22,7 +22,6 @@ namespace CryptoQuest.Battle.Components
 
         protected override void OnPostExecuteCommand()
         {
-            base.OnPostExecuteCommand();
             BattleEventBus.RaiseEvent(_resetHighlightEvent);
         }
     }

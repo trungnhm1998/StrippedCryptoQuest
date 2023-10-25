@@ -53,7 +53,7 @@ namespace CryptoQuest.Networking.Menu.DimensionBox
     public class Equipment
     {
         [JsonProperty("id")]
-        public int Id { get; set; }
+        public uint Id { get; set; }
 
         [JsonProperty("equipmentTokenId")]
         public string EquipmentTokenId { get; set; }

@@ -1,4 +1,3 @@
-using CryptoQuest.UI.Menu.Panels.DimensionBox.EquipmentTransferSection;
 using UnityEngine;
 using UnityEngine.Localization;
 
@@ -6,7 +5,7 @@ namespace CryptoQuest.UI.Menu.Panels.DimensionBox.Interfaces
 {
     public interface IData
     {
-        public string GetId();
+        public uint GetId();
         public Sprite GetIcon();
         public LocalizedString GetLocalizedName();
     }
@@ -17,5 +16,4 @@ namespace CryptoQuest.UI.Menu.Panels.DimensionBox.Interfaces
     {
         public bool IsEquipped();
     }
-
 }

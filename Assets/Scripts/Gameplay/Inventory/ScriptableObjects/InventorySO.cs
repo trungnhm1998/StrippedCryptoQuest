@@ -22,7 +22,7 @@ namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects
     class ConsumableData
     {
         public string Guid;
-        public string Id;
+        public uint Id;
         public int Quantity;
     }
 
@@ -31,7 +31,7 @@ namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects
     {
         public string DefGuid;
         public string PrefabGuid;
-        public string Id;
+        public uint Id;
         public string DefinitionId;
         public int Level;
     }

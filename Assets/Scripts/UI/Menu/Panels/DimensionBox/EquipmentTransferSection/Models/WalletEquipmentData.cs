@@ -7,7 +7,7 @@ namespace CryptoQuest.UI.Menu.Panels.DimensionBox.EquipmentTransferSection.Model
 {
     public class WalletEquipmentData : INFT
     {
-        private string _id;
+        private uint _id;
         private Sprite _icon;
         private LocalizedString _name;
 
@@ -18,7 +18,7 @@ namespace CryptoQuest.UI.Menu.Panels.DimensionBox.EquipmentTransferSection.Model
             _name = equipmentInfo.Data.DisplayName;
         }
 
-        public string GetId() { return _id; }
+        public uint GetId() { return _id; }
         public Sprite GetIcon() { return _icon; }
         public LocalizedString GetLocalizedName() { return _name; }
     }

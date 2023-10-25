@@ -1,4 +1,5 @@
 ﻿using CryptoQuest.Battle.Commands;
+using CryptoQuest.Battle.Events;
 
 namespace CryptoQuest.Battle.Components
 {
@@ -26,15 +27,14 @@ namespace CryptoQuest.Battle.Components
             OnPreExecuteCommand();
             _command.Execute(); // this should not be null
             OnPostExecuteCommand();
+            _command = NullCommand.Instance;
+            BattleEventBus.RaiseEvent(new PostActionEvent(Character));
         }
 
 
         protected virtual void OnPreExecuteCommand() { }
 
-        protected virtual void OnPostExecuteCommand()
-        {
-            _command = NullCommand.Instance;
-        }
+        protected virtual void OnPostExecuteCommand() { }
 
         public override void Init()
         {

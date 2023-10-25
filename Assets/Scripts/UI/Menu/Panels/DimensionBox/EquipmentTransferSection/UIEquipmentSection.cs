@@ -16,7 +16,7 @@ namespace CryptoQuest.UI.Menu.Panels.DimensionBox.EquipmentTransferSection
         [SerializeField] private UnityEvent _exitTransferSectionEvent;
         [SerializeField] private UnityEvent _resetTransferEvent;
         [SerializeField] private UnityEvent<Vector2> _switchBoardEvent;
-        [SerializeField] private UnityEvent<int[]> _confirmTransferFromWallet;
+        [SerializeField] private UnityEvent<uint[]> _confirmTransferFromWallet;
 
         public override void EnterTransferSection()
         {
@@ -58,7 +58,7 @@ namespace CryptoQuest.UI.Menu.Panels.DimensionBox.EquipmentTransferSection
             base.YesButtonPressed();
             SendingPhaseEvent?.Invoke(false);
 
-            int[] data = _presenter.SelectedWalletEquipmentIds.ToArray();
+            uint[] data = _presenter.SelectedWalletEquipmentIds.ToArray();
             _confirmTransferFromWallet.Invoke(data);
         }
 

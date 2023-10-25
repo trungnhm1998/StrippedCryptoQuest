@@ -97,7 +97,7 @@ namespace CryptoQuest.Battle.Events
     {
         public Components.Character Character { get; }
 
-        public TurnEvent(Components.Character character)
+        protected TurnEvent(Components.Character character)
         {
             Character = character;
         }
@@ -116,6 +116,11 @@ namespace CryptoQuest.Battle.Events
     public class ExecutingCommandEvent : TurnEvent
     {
         public ExecutingCommandEvent(Components.Character character) : base(character) { }
+    }
+
+    public class PostActionEvent : TurnEvent
+    {
+        public PostActionEvent(Components.Character character) : base(character) { }
     }
 
     public class NormalAttackEvent : LogEvent
