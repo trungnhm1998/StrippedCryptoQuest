@@ -15,14 +15,47 @@ namespace CryptoQuest.Quest
         private bool _questCompletedSubscribed = true;
 
         public void Configure(bool isQuestCompleted) => OnConfigure?.Invoke(isQuestCompleted);
-        public void Subscribe() => QuestsToTrack.ForEach(questData => questData.OnQuestCompleted += OnQuestCompletedHandler);
-        public void Unsubscribe() => QuestsToTrack.ForEach(questData => questData.OnQuestCompleted -= OnQuestCompletedHandler);
+
+        public void Subscribe() =>
+            QuestsToTrack.ForEach(questData => questData.OnQuestCompleted += OnQuestCompletedHandler);
+
+        public void Unsubscribe() =>
+            QuestsToTrack.ForEach(questData => questData.OnQuestCompleted -= OnQuestCompletedHandler);
+
         private void OnQuestCompletedHandler()
         {
             if (!_questCompletedSubscribed) return;
 
             OnQuestCompleted?.Invoke();
             _questCompletedSubscribed = false;
+        }
+
+        public ActorSettingInfo CreateActorSettingInfo() =>
+            new ActorSettingInfo(this);
+    }
+
+    public class ActorSettingInfo : IQuestConfigure
+    {
+        public Action<bool> OnConfigure;
+        public Action OnQuestCompleted;
+        public List<QuestSO> QuestsToTrack { get; set; } = new();
+
+        public ActorSettingInfo(ActorSettingSO data)
+        {
+            QuestsToTrack = data.QuestsToTrack;
+        }
+
+        public void Configure(bool isQuestCompleted) => OnConfigure?.Invoke(isQuestCompleted);
+
+        public void Subscribe() =>
+            QuestsToTrack.ForEach(questData => questData.OnQuestCompleted += OnQuestCompletedHandler);
+
+        public void Unsubscribe() =>
+            QuestsToTrack.ForEach(questData => questData.OnQuestCompleted -= OnQuestCompletedHandler);
+
+        private void OnQuestCompletedHandler()
+        {
+            OnQuestCompleted?.Invoke();
         }
     }
 }
