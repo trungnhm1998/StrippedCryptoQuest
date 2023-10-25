@@ -141,11 +141,14 @@ namespace CryptoQuest.Battle.Events
         public CastSkillAbility Skill { get; set; }
     }
 
+    public class ReflectDamageEvent : LogEvent { }
+
     public class PlayVfxEvent : BattleEvent
     {
         public int VfxId { get; }
         public PlayVfxEvent(int vfxId) => VfxId = vfxId;
     }
+
     public class CastSkillEvent : LogEvent
     {
         public CastSkillAbility Skill { get; private set; }
@@ -202,12 +205,5 @@ namespace CryptoQuest.Battle.Events
             Character = character;
             Target = target;
         }
-    }
-
-    public class ReceivedPhysicalDamageEvent : BattleEvent
-    {
-        public Components.Character Receiver { get; set; }
-        public Components.Character Dealer { get; set; }
-        public float Damage { get; set; }
     }
 }

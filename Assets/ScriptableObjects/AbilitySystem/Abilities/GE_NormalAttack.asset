@@ -10,29 +10,30 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fbb6112b998064f4ebc8a44f4c80c446, type: 3}
-  m_Name: GE_Burn
+  m_Name: GE_NormalAttack
   m_EditorClassIdentifier: 
   <Description>k__BackingField: 
   _policy:
-    rid: 7132078137632358619
+    rid: 8460399276080234549
   <EffectDetails>k__BackingField:
     Modifiers: []
-    StackingType: 1
+    StackingType: 0
   <IsStack>k__BackingField: 0
-  <GrantedTags>k__BackingField:
-  - {fileID: 11400000, guid: 8755f45596e5790498880855432c7b33, type: 2}
+  <GrantedTags>k__BackingField: []
   <ApplicationTagRequirements>k__BackingField:
     RequireTags: []
     IgnoreTags: []
   <RemoveGameplayEffectsWithTags>k__BackingField: []
   <ExecutionCalculations>k__BackingField:
-  - {fileID: 11400000, guid: 5ef26ebfdb66db44eb65c8858295da8b, type: 2}
+  - {fileID: 11400000, guid: 3f78234ed50d68c4880ffa78125e9f4a, type: 2}
+  - {fileID: 11400000, guid: daa97cbcac0ec6a428ac284caacc9e0c, type: 2}
+  - {fileID: 11400000, guid: d1260275b681c2f408db524becf69c6f, type: 2}
+  - {fileID: 11400000, guid: 5cfde0b58cab9d848a3cd31f4a20c1ee, type: 2}
+  - {fileID: 11400000, guid: 478d06224d35c4c47bb707b06f89d3eb, type: 2}
   <ChanceToApply>k__BackingField: 1
   <CustomApplicationRequirements>k__BackingField: []
   references:
     version: 2
     RefIds:
-    - rid: 7132078137632358619
-      type: {class: TurnBasePolicy, ns: CryptoQuest.AbilitySystem.EffectActions, asm: indi-games.crypto-quest}
-      data:
-        _triggerType: 1
+    - rid: 8460399276080234549
+      type: {class: InstantPolicy, ns: IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects.GameplayEffectActions, asm: IndiGames.GameplayAbilitySystem}

@@ -1,4 +1,3 @@
-using CryptoQuest.Battle.Events;
 using CryptoQuest.Gameplay.Battle.Core;
 using IndiGames.GameplayAbilitySystem.EffectSystem;
 using IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects.EffectExecutionCalculation;
@@ -45,13 +44,6 @@ namespace CryptoQuest.AbilitySystem.Executions
             var mod = BattleCalculator.GetEffectTypeValueCorrection(effectType);
 
             if (damageValue <= 0f) return;
-            BattleEventBus.RaiseEvent(new ReceivedPhysicalDamageEvent()
-            {
-                Dealer = executionParams.SourceAbilitySystemComponent.GetComponent<Battle.Components.Character>(),
-                Receiver = executionParams.TargetAbilitySystemComponent.GetComponent<Battle.Components.Character>(),
-                Damage = damageValue
-            });
-
             var modifier = new GameplayModifierEvaluatedData()
             {
                 Attribute = targetedAttributeSO.Attribute,

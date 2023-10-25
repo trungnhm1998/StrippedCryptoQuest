@@ -48,7 +48,7 @@ namespace CryptoQuest.Gameplay.Inventory
             }
 
             _inventory.OnLoaded();
-            _saveSystem?.SaveObject(this);
+            // _saveSystem?.SaveObject(this);
         }
 
         private void OnEnable()

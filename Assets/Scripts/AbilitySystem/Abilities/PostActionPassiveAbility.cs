@@ -30,8 +30,6 @@ namespace CryptoQuest.AbilitySystem.Abilities
 
         public PostActionPassiveAbilitySpec(PostActionPassiveAbility def) => _def = def;
 
-        ~PostActionPassiveAbilitySpec() => UnregisterPostActionEvent();
-
         protected override IEnumerator OnAbilityActive()
         {
             if (_def.Context.Parameters.targetAttribute.Attribute == null) yield break;
@@ -46,8 +44,6 @@ namespace CryptoQuest.AbilitySystem.Abilities
             Owner.ApplyEffectSpecToSelf(effectSpec);
         }
 
-        protected override void OnAbilityEnded() => UnregisterPostActionEvent();
-
-        private void UnregisterPostActionEvent() => Character.TurnEnded -= ApplyEffectPostAction;
+        protected override void OnAbilityEnded() => Character.TurnEnded -= ApplyEffectPostAction;
     }
 }

@@ -72,6 +72,11 @@ namespace IndiGames.GameplayAbilitySystem.AbilitySystem.Components
             _effectSystem.Owner = this; // prevent circular dependency
         }
 
+        private void OnDestroy()
+        {
+            RemoveAllAbilities();
+        }
+
         /// <summary>
         /// Add/Give/Grant ability to the system. Only ability that in the system can be active
         /// There's only 1 ability per system (no duplicate ability)
