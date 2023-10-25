@@ -233,10 +233,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 6981682760572782556}
     m_Modifications:
-    - target: {fileID: 1731360935000182590, guid: 453d7026fe7df4b4e861c33d788f9f45, type: 3}
-      propertyPath: questCutsceneDef
-      value: 
-      objectReference: {fileID: 11400000, guid: 9e74e8d711230134797ae02fdc9ad392, type: 2}
     - target: {fileID: 4414341839223721585, guid: 453d7026fe7df4b4e861c33d788f9f45, type: 3}
       propertyPath: m_Name
       value: cs_ch001_q003_e007_belau
@@ -286,21 +282,9 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8239929161965676886, guid: 453d7026fe7df4b4e861c33d788f9f45, type: 3}
-      propertyPath: m_SceneBindings.Array.size
-      value: 123
-      objectReference: {fileID: 0}
-    - target: {fileID: 8239929161965676886, guid: 453d7026fe7df4b4e861c33d788f9f45, type: 3}
-      propertyPath: m_SceneBindings.Array.data[122].key
-      value: 
-      objectReference: {fileID: -6382676599248767546, guid: 4736529d296a9c04a83a6bdc755d75c2, type: 2}
-    - target: {fileID: 8239929161965676886, guid: 453d7026fe7df4b4e861c33d788f9f45, type: 3}
       propertyPath: m_SceneBindings.Array.data[97].value
       value: 
       objectReference: {fileID: 537648927}
-    - target: {fileID: 8239929161965676886, guid: 453d7026fe7df4b4e861c33d788f9f45, type: 3}
-      propertyPath: m_SceneBindings.Array.data[122].value
-      value: 
-      objectReference: {fileID: 7545569452688597077, guid: fd1bb024d3fdff84baeee5e91a4b47e9, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2292,14 +2276,34 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6746964905341171565, guid: 83abdce494083c647b46b32943d82d1d, type: 3}
+      propertyPath: _trackNames.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6746964905341171565, guid: 83abdce494083c647b46b32943d82d1d, type: 3}
+      propertyPath: _trackNames.Array.data[1]
+      value: HeroPos
+      objectReference: {fileID: 0}
+    - target: {fileID: 6746964905341171565, guid: 83abdce494083c647b46b32943d82d1d, type: 3}
+      propertyPath: _objectsToBindTags.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6746964905341171565, guid: 83abdce494083c647b46b32943d82d1d, type: 3}
+      propertyPath: _objectsToBindTags.Array.data[1]
+      value: Player
+      objectReference: {fileID: 0}
     - target: {fileID: 8239929161965676886, guid: 83abdce494083c647b46b32943d82d1d, type: 3}
       propertyPath: m_SceneBindings.Array.size
-      value: 99
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 8239929161965676886, guid: 83abdce494083c647b46b32943d82d1d, type: 3}
       propertyPath: m_SceneBindings.Array.data[98].key
       value: 
       objectReference: {fileID: 6015641402436226783, guid: 0df1a8f66be781e42af7ad98217d606f, type: 2}
+    - target: {fileID: 8239929161965676886, guid: 83abdce494083c647b46b32943d82d1d, type: 3}
+      propertyPath: m_SceneBindings.Array.data[99].key
+      value: 
+      objectReference: {fileID: 7709729671391144623, guid: 0df1a8f66be781e42af7ad98217d606f, type: 2}
     - target: {fileID: 8239929161965676886, guid: 83abdce494083c647b46b32943d82d1d, type: 3}
       propertyPath: m_SceneBindings.Array.data[88].value
       value: 
@@ -2920,11 +2924,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 875503467561801157, guid: fae20d2560d6f52498fb4c9d355fc051, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 30.429146
+      value: 31.41
       objectReference: {fileID: 0}
     - target: {fileID: 875503467561801157, guid: fae20d2560d6f52498fb4c9d355fc051, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -18.768583
+      value: -18.4
       objectReference: {fileID: 0}
     - target: {fileID: 3201211258944078729, guid: fae20d2560d6f52498fb4c9d355fc051, type: 3}
       propertyPath: m_Name
@@ -3269,7 +3273,7 @@ PrefabInstance:
     - target: {fileID: 5061212954895977977, guid: 755af1675de6c264d8b0189a9987911c, type: 3}
       propertyPath: _actorSpawnSetting
       value: 
-      objectReference: {fileID: 11400000, guid: 2f20102406da80a47a0889a2036ddaee, type: 2}
+      objectReference: {fileID: 11400000, guid: 97795884c57988d4198466271e855163, type: 2}
     - target: {fileID: 5061212954895977977, guid: 755af1675de6c264d8b0189a9987911c, type: 3}
       propertyPath: _actorDeSpawnSetting
       value: 
