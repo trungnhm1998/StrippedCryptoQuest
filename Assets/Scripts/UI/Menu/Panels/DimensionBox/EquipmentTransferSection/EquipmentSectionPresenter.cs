@@ -54,20 +54,23 @@ namespace CryptoQuest.UI.Menu.Panels.DimensionBox.EquipmentTransferSection
         private void ItemSelected(UITransferItem currentItem)
         {
             Transform itemNewParent;
-            if (currentItem.Parent == _gameBoard)
+            var isGameboardAsCurrentParent = currentItem.Parent == _gameBoard;
+            if (isGameboardAsCurrentParent)
             {
-                SetInteractableAllButtons(_gameBoard, false);
                 itemNewParent = _walletBoard;
             }
             else
             {
-                SetInteractableAllButtons(_walletBoard, false);
                 itemNewParent = _gameBoard;
+
                 Int32.TryParse(currentItem.Data.GetId(), out int element);
                 _selectedWalletEquipmentIds.Add(element);
             }
 
             currentItem.Transfer(itemNewParent);
+
+            SetInteractableAllButtons(_gameBoard, !isGameboardAsCurrentParent);
+            SetInteractableAllButtons(_walletBoard, isGameboardAsCurrentParent);
         }
 
         private void HideDialog()

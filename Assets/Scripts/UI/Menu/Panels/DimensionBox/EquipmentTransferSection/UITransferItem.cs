@@ -1,3 +1,4 @@
+using CryptoQuest.Menu;
 using CryptoQuest.UI.Menu.Panels.DimensionBox.Interfaces;
 using CryptoQuest.UI.Menu.Panels.Status;
 using UnityEngine;
@@ -11,6 +12,7 @@ namespace CryptoQuest.UI.Menu.Panels.DimensionBox.EquipmentTransferSection
     {
         public static event UnityAction<UITransferItem> SelectItemEvent;
 
+        [SerializeField] private MultiInputButton _button;
         [SerializeField] private Image _icon;
         [SerializeField] private LocalizeStringEvent _name;
         [SerializeField] private GameObject _pendingTag;
@@ -18,6 +20,8 @@ namespace CryptoQuest.UI.Menu.Panels.DimensionBox.EquipmentTransferSection
 
         [Header("Tooltip")]
         [SerializeField] private RectTransform _tooltipPosition;
+        [SerializeField] private Vector2 _minPivotTooltip = Vector2.zero;
+        [SerializeField] private Vector2 _maxPivotTooltip = Vector2.one;
 
         private Transform _parent;
         public Transform Parent { get => _parent; set => _parent = value; }
@@ -32,6 +36,11 @@ namespace CryptoQuest.UI.Menu.Panels.DimensionBox.EquipmentTransferSection
         private void Awake()
         {
             _tooltip = TooltipFactory.Instance.GetTooltip(ETooltipType.Equipment);
+            _tooltip.WithBoderPointer(true)
+                .WithLocalPosition(Vector3.zero)
+                .WithScale(new Vector3(.7f, .7f, 0))
+                .WithRangePivot(_minPivotTooltip, _maxPivotTooltip);
+
             UIEquipmentSection.InspectItemEvent += ReceivedInspectingRequest;
         }
 
@@ -74,6 +83,11 @@ namespace CryptoQuest.UI.Menu.Panels.DimensionBox.EquipmentTransferSection
         {
             gameObject.transform.SetParent(parent);
             _parent = parent;
+        }
+
+        private void Select()
+        {
+            _button.OnSelect(null);
         }
 
         public void OnInspecting(bool isInspecting)
