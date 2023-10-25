@@ -24,6 +24,10 @@ namespace CryptoQuest.Quest.Actor
         private ActorSettingInfo _actorDeSpawnSetting;
 
 
+        private ActorInfo _actor;
+
+        private void Start() => _actor = _actorDef.CreateActor();
+
         private void OnEnable()
         {
             _onSceneLoadedEventChannel.EventRaised += ConfigureActors;
@@ -64,15 +68,14 @@ namespace CryptoQuest.Quest.Actor
         {
             if (!_spawnPoint) return;
 
-            ActorInfo actor = _actorDef.CreateActor();
-            StartCoroutine(actor.Spawn(_spawnPoint));
+            StartCoroutine(_actor.Spawn(_spawnPoint));
         }
 
         private void ActivateDeSpawnActor()
         {
             if (!_spawnPoint) return;
 
-            DestroyImmediate(gameObject);
+            StartCoroutine(_actor.DeSpawn(gameObject));
         }
 
         private void Spawn(bool isQuestCompleted)

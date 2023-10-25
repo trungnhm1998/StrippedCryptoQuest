@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections;
-using CryptoQuest.Quest.Components;
 using UnityEngine;
 using UnityEngine.ResourceManagement.AsyncOperations;
+using Object = UnityEngine.Object;
 
 namespace CryptoQuest.Quest.Actor.Categories
 {
@@ -16,15 +16,30 @@ namespace CryptoQuest.Quest.Actor.Categories
     [Serializable]
     public class ConnectActorInfo : ActorInfo<ConnectActorSo>
     {
+        private AsyncOperationHandle<GameObject> _handle;
         public ConnectActorInfo(ConnectActorSo actorSo) : base(actorSo) { }
         public ConnectActorInfo() { }
 
         public override IEnumerator Spawn(Transform parent)
         {
-            AsyncOperationHandle<GameObject> handle =
-                Data.Prefab.InstantiateAsync(parent.position, parent.rotation);
+            _handle = Data.Prefab.InstantiateAsync(parent.position, parent.rotation);
 
-            yield return handle;
+            yield return _handle;
+        }
+
+        public override IEnumerator DeSpawn(GameObject parent)
+        {
+            if (!_handle.IsValid())
+            {
+                Object.Destroy(parent);
+                yield break;
+            }
+
+            yield return _handle;
+
+            if (!parent.TryGetComponent<ActorSpawner>(out var actorSpawner)) yield break;
+
+            Object.Destroy(actorSpawner.gameObject);
         }
     }
 }

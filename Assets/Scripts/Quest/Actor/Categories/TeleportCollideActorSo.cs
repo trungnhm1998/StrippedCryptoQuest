@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections;
 using CryptoQuest.Map;
-using CryptoQuest.Quest.Authoring;
 using IndiGames.Core.SceneManagementSystem.ScriptableObjects;
 using UnityEngine;
 using UnityEngine.ResourceManagement.AsyncOperations;
+using Object = UnityEngine.Object;
 
 namespace CryptoQuest.Quest.Actor.Categories
 {
@@ -22,24 +22,39 @@ namespace CryptoQuest.Quest.Actor.Categories
     [Serializable]
     public class TeleportCollideActorInfo : ActorInfo<TeleportCollideActorSo>
     {
+        private AsyncOperationHandle<GameObject> _handle;
         public TeleportCollideActorInfo(TeleportCollideActorSo actorSo) : base(actorSo) { }
         public TeleportCollideActorInfo() { }
 
         public override IEnumerator Spawn(Transform parent)
         {
-            AsyncOperationHandle<GameObject> handle =
-                Data.Prefab.InstantiateAsync(parent.position, parent.rotation, parent);
+            _handle = Data.Prefab.InstantiateAsync(parent.position, parent.rotation, parent);
 
-            yield return handle;
-            var actor = handle.Result;
-            GoTo actorConfig = handle.Result.GetComponent<GoTo>();
+            yield return _handle;
+
+            GoTo actorConfig = _handle.Result.GetComponent<GoTo>();
             actorConfig.SetUpTeleportInfo(Data.Destination, Data.Path);
 
-            if (!handle.Result.TryGetComponent<BoxCollider2D>(out var targetCollider2D)) yield break;
+            if (!_handle.Result.TryGetComponent<BoxCollider2D>(out var targetCollider2D)) yield break;
             if (!parent.TryGetComponent<BoxCollider2D>(out var parentCollider2D)) yield break;
 
             targetCollider2D.size = parentCollider2D.size;
             targetCollider2D.isTrigger = parentCollider2D.isTrigger;
+        }
+
+        public override IEnumerator DeSpawn(GameObject parent)
+        {
+            if (!_handle.IsValid())
+            {
+                Object.Destroy(parent);
+                yield break;
+            }
+
+            yield return _handle;
+
+            if (!parent.TryGetComponent<ActorSpawner>(out var actorSpawner)) yield break;
+
+            Object.Destroy(actorSpawner.gameObject);
         }
     }
 }

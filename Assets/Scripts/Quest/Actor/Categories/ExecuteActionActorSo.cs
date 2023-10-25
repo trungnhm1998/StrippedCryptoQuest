@@ -24,18 +24,18 @@ namespace CryptoQuest.Quest.Actor.Categories
 
     public class ExecuteActionActorInfo : ActorInfo<ExecuteActionActorSo>
     {
+        private AsyncOperationHandle<GameObject> _handle;
         public ExecuteActionActorInfo(ExecuteActionActorSo actorSo) : base(actorSo) { }
 
         public ExecuteActionActorInfo() { }
 
         public override IEnumerator Spawn(Transform parent)
         {
-            AsyncOperationHandle<GameObject> handle =
-                Data.Prefab.InstantiateAsync(parent.position, parent.rotation, parent);
+            _handle = Data.Prefab.InstantiateAsync(parent.position, parent.rotation, parent);
 
-            yield return handle;
+            yield return _handle;
 
-            TriggerActionCollider actor = handle.Result.GetComponent<TriggerActionCollider>();
+            TriggerActionCollider actor = _handle.Result.GetComponent<TriggerActionCollider>();
             actor.SetAction(Data.Action);
             actor.SetCollideActionType(Data.CollideActionType);
             actor.SetRepeatType(Data.IsRepeatable);
@@ -43,10 +43,25 @@ namespace CryptoQuest.Quest.Actor.Categories
             if (!parent.TryGetComponent<ShowCubeWireUtil>(out var showCubeWireUtil)) yield break;
             actor.SetBoxSize(showCubeWireUtil.SizeBox);
 
-            if (!handle.Result.TryGetComponent<BoxCollider2D>(out var targetCollider2D)) yield break;
+            if (!_handle.Result.TryGetComponent<BoxCollider2D>(out var targetCollider2D)) yield break;
             if (!parent.TryGetComponent<BoxCollider2D>(out var parentCollider2D)) yield break;
 
             targetCollider2D.size = parentCollider2D.size;
+        }
+
+        public override IEnumerator DeSpawn(GameObject parent)
+        {
+            if (!_handle.IsValid())
+            {
+                Object.Destroy(parent);
+                yield break;
+            }
+
+            yield return _handle;
+
+            if (!parent.TryGetComponent<ActorSpawner>(out var actorSpawner)) yield break;
+
+            Object.Destroy(actorSpawner.gameObject);
         }
     }
 }

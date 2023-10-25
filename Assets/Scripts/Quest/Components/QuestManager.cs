@@ -203,7 +203,7 @@ namespace CryptoQuest.Quest.Components
 
         private void ConfigureQuestHolder(IQuestConfigure questConfigure)
         {
-            questConfigure.QuestsToTrack.ForEach(q => questConfigure.Configure(IsQuestTriggered(q)));
+            questConfigure.QuestsToTrack.ForEach(questData => questConfigure.Configure(IsQuestTriggered(questData)));
         }
 
         private void RemoveProgressingQuest(QuestSO quest)

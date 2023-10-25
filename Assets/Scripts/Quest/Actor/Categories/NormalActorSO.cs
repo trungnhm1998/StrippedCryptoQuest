@@ -6,6 +6,7 @@ using CryptoQuest.Quest.Authoring;
 using CryptoQuest.Quest.Components;
 using UnityEngine;
 using UnityEngine.ResourceManagement.AsyncOperations;
+using Object = UnityEngine.Object;
 
 namespace CryptoQuest.Quest.Actor.Categories
 {
@@ -23,15 +24,15 @@ namespace CryptoQuest.Quest.Actor.Categories
     [Serializable]
     public class NormalActorInfo : ActorInfo<NormalActorSO>
     {
+        private AsyncOperationHandle<GameObject> _handle;
         public NormalActorInfo(NormalActorSO npcActorSO) : base(npcActorSO) { }
         public NormalActorInfo() { }
 
         public override IEnumerator Spawn(Transform parent)
         {
-            AsyncOperationHandle<GameObject> handle =
-                Data.Prefab.InstantiateAsync(parent.position, parent.rotation, parent);
+            _handle = Data.Prefab.InstantiateAsync(parent.position, parent.rotation, parent);
 
-            yield return handle;
+            yield return _handle;
 
             if (Data.Quest == null) yield break;
 
@@ -46,6 +47,21 @@ namespace CryptoQuest.Quest.Actor.Categories
             if (!npcBehaviour.TryGetComponent<QuestTrigger>(out var questGiver)) yield break;
 
             questGiver.Init(Data.Quest, actionCollider);
+        }
+
+        public override IEnumerator DeSpawn(GameObject parent)
+        {
+            if (!_handle.IsValid())
+            {
+                Object.Destroy(parent);
+                yield break;
+            }
+
+            yield return _handle;
+
+            if (!parent.TryGetComponent<ActorSpawner>(out var actorSpawner)) yield break;
+
+            Object.Destroy(actorSpawner.gameObject);
         }
     }
 }

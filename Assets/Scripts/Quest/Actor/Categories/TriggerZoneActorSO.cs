@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using CryptoQuest.Quest.Components;
 using UnityEngine;
 using UnityEngine.ResourceManagement.AsyncOperations;
 
@@ -14,21 +13,36 @@ namespace CryptoQuest.Quest.Actor.Categories
 
     public class TriggerZoneActorInfo : ActorInfo<TriggerZoneActorSO>
     {
+        private AsyncOperationHandle<GameObject> _handle;
         public TriggerZoneActorInfo(TriggerZoneActorSO triggerZoneActorSO) : base(triggerZoneActorSO) { }
         public TriggerZoneActorInfo() { }
 
         public override IEnumerator Spawn(Transform parent)
         {
-            AsyncOperationHandle<GameObject> handle =
-                Data.Prefab.InstantiateAsync(parent.position, parent.rotation, parent);
+            _handle = Data.Prefab.InstantiateAsync(parent.position, parent.rotation, parent);
 
-            yield return handle;
+            yield return _handle;
 
-            if (!handle.Result.TryGetComponent<BoxCollider2D>(out var targetCollider2D)) yield break;
+            if (!_handle.Result.TryGetComponent<BoxCollider2D>(out var targetCollider2D)) yield break;
             if (!parent.TryGetComponent<BoxCollider2D>(out var parentCollider2D)) yield break;
 
             targetCollider2D.size = parentCollider2D.size;
             targetCollider2D.isTrigger = parentCollider2D.isTrigger;
+        }
+
+        public override IEnumerator DeSpawn(GameObject parent)
+        {
+            if (!_handle.IsValid())
+            {
+                Object.Destroy(parent);
+                yield break;
+            }
+
+            yield return _handle;
+
+            if (!parent.TryGetComponent<ActorSpawner>(out var actorSpawner)) yield break;
+
+            Object.Destroy(actorSpawner.gameObject);
         }
     }
 }

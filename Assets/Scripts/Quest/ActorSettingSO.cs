@@ -12,26 +12,20 @@ namespace CryptoQuest.Quest
         public Action OnQuestCompleted;
         [field: SerializeReference] public List<QuestSO> QuestsToTrack { get; set; } = new();
 
-        private bool _questCompletedSubscribed = true;
+        public void Configure(bool isQuestCompleted)
+        {
+            OnConfigure?.Invoke(isQuestCompleted);
 
-        public void Configure(bool isQuestCompleted) => OnConfigure?.Invoke(isQuestCompleted);
-
-        public void Subscribe() =>
-            QuestsToTrack.ForEach(questData => questData.OnQuestCompleted += OnQuestCompletedHandler);
-
-        public void Unsubscribe() =>
-            QuestsToTrack.ForEach(questData => questData.OnQuestCompleted -= OnQuestCompletedHandler);
+            if (!isQuestCompleted) return;
+            OnQuestCompletedHandler();
+        }
 
         private void OnQuestCompletedHandler()
         {
-            if (!_questCompletedSubscribed) return;
-
             OnQuestCompleted?.Invoke();
-            _questCompletedSubscribed = false;
         }
 
-        public ActorSettingInfo CreateActorSettingInfo() =>
-            new ActorSettingInfo(this);
+        public ActorSettingInfo CreateActorSettingInfo() => new(this);
     }
 
     public class ActorSettingInfo : IQuestConfigure
@@ -45,7 +39,13 @@ namespace CryptoQuest.Quest
             QuestsToTrack = data.QuestsToTrack;
         }
 
-        public void Configure(bool isQuestCompleted) => OnConfigure?.Invoke(isQuestCompleted);
+        public void Configure(bool isQuestCompleted)
+        {
+            OnConfigure?.Invoke(isQuestCompleted);
+
+            if (!isQuestCompleted) return;
+            OnQuestCompletedHandler();
+        }
 
         public void Subscribe() =>
             QuestsToTrack.ForEach(questData => questData.OnQuestCompleted += OnQuestCompletedHandler);
