@@ -1,7 +1,9 @@
 using CryptoQuest.Events.UI.Dialogs;
+using CryptoQuest.Input;
 using CryptoQuest.UI.Dialogs.OneButtonDialog;
 using CryptoQuest.UI.Menu.Panels.DimensionBox.Interfaces;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using UnityEngine;
 using UnityEngine.Localization;
 using UnityEngine.UI;
@@ -10,6 +12,7 @@ namespace CryptoQuest.UI.Menu.Panels.DimensionBox.MetadTransferSection
 {
     public class UIMetadSection : UITransferSection
     {
+        [SerializeField] private InputMediatorSO _input;
         [SerializeField] private LocalizedString _transferMessageSuccess;
         [SerializeField] private LocalizedString _transferMessageFail;
         [SerializeField] private Button _defaultSelection;
@@ -22,6 +25,7 @@ namespace CryptoQuest.UI.Menu.Panels.DimensionBox.MetadTransferSection
         private float _ingameMetad;
         private float _webMetad;
         private bool _isIngameWallet;
+        private bool _isTransferMetad;
 
         private void Awake()
         {
@@ -80,6 +84,7 @@ namespace CryptoQuest.UI.Menu.Panels.DimensionBox.MetadTransferSection
 
         public void InitMetadTransferSection()
         {
+            _isTransferMetad = false;
             SetActiveAllButton(true);
             UnHighlightAllButtons();
             _inputField.text = "0";
@@ -91,11 +96,13 @@ namespace CryptoQuest.UI.Menu.Panels.DimensionBox.MetadTransferSection
 
         public override void SendItems()
         {
-            if (!_isSelectedButton) return;
-
-            base.SendItems();
+            if (!_isSelectedButton || _isTransferMetad) return;
+            
+            _isTransferMetad = true;
+            _input.DisableAllInput();
             _yesNoDialogEventSO.SetMessage(_currentWallet.SendingMessage);
             SetActiveAllButton(false);
+            base.SendItems();
         }
 
         protected override void YesButtonPressed()
@@ -103,13 +110,11 @@ namespace CryptoQuest.UI.Menu.Panels.DimensionBox.MetadTransferSection
             base.YesButtonPressed();
             float quantityInput = string.IsNullOrEmpty(_inputField.text) ? 0 : float.Parse(_inputField.text);
             _currentWallet.Send(quantityInput);
-            ResetTransfer();
         }
 
         protected override void NoButtonPressed()
         {
             base.NoButtonPressed();
-            ResetTransfer();
         }
 
         public override void ResetTransfer()
@@ -160,18 +165,20 @@ namespace CryptoQuest.UI.Menu.Panels.DimensionBox.MetadTransferSection
         {
             _resultDialog.Hide();
             ResetTransfer();
+            _input.EnableMenuInput();
         }
 
         public void ValidateInputField()
         {
             if (string.IsNullOrEmpty(_inputField.text)) return;
             
-            if (_inputField.text.StartsWith("-"))
+            var pattern = Regex.Match(_inputField.text, @"[^0-9]");
+            if (_inputField.text.Substring(0, 1) == pattern.ToString())
             {
                 _inputField.text = null;
                 return;
             }
-            
+
             float quantityInput = float.Parse(_inputField.text);
             if (_isIngameWallet && quantityInput > _ingameMetad)
                 _inputField.text = _ingameMetad.ToString();
