@@ -49,7 +49,7 @@ namespace CryptoQuest.Battle.UI.CommandDetail
 
         public void SelectFirstButton()
         {
-            _buttonSelector.SelectFirstButton();
+            if (_interactable) _buttonSelector.SelectFirstButton();
         }
 
         private void InitButtons(ICommandDetailModel model)
