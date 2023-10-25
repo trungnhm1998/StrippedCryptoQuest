@@ -48,8 +48,12 @@ namespace CryptoQuest.Battle.UI
         private bool SelectLastManagedSelectedButton()
         {
             if (!_isSelectLastManagedButtonOnEnable || !_interactable) return false;
-            if (_lastSelectedButton == null || !_lastSelectedButton.transform.IsChildOf(_buttonsContainer))
+            if (_lastSelectedButton == null || !_lastSelectedButton.transform.IsChildOf(_buttonsContainer)
+                || !_lastSelectedButton.activeSelf)
+            {
+                SelectFirstButton();
                 return false;
+            }
             DOVirtual.DelayedCall(SELECT_DELAY, () =>
             {
                 EventSystem.current.SetSelectedGameObject(_lastSelectedButton);
@@ -60,7 +64,7 @@ namespace CryptoQuest.Battle.UI
         }
 
         private int _currentIndex;
-        private const float SELECT_DELAY = 0.1f;
+        private const float SELECT_DELAY = 0.05f;
 
         private int CurrentIndex
         {

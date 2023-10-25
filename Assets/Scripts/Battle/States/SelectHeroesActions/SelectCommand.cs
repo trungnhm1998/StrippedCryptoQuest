@@ -13,7 +13,7 @@ namespace CryptoQuest.Battle.States.SelectHeroesActions
 {
     public class SelectCommand : StateBase, ISelectCommandCallback
     {
-        private const float SELECT_DELAY = 0.1f;
+        private const float SELECT_DELAY = 0.05f;
         private EnemyGroupPresenter _enemyGroupPresenter;
 
         public SelectCommand(HeroBehaviour hero, SelectHeroesActions fsm) : base(hero, fsm)
@@ -22,7 +22,6 @@ namespace CryptoQuest.Battle.States.SelectHeroesActions
             _heroEventObject = new HighlightHeroEvent() { Hero = hero };
         }
 
-        private GameObject _lastSelectedCommand;
         private HighlightHeroEvent _heroEventObject;
 
         public override void OnEnter()
@@ -53,7 +52,6 @@ namespace CryptoQuest.Battle.States.SelectHeroesActions
         public void OnAttackPressed()
         {
             Debug.Log("SelectCommandState::OnAttackPressed");
-            _lastSelectedCommand = EventSystem.current.currentSelectedGameObject;
             DisableCommandMenu();
             Fsm.PushState(new AttackEnemy(Hero, Fsm));
         }
@@ -61,7 +59,6 @@ namespace CryptoQuest.Battle.States.SelectHeroesActions
         public void OnSkillPressed()
         {
             Debug.Log("SelectCommandState::OnSkillPressed");
-            _lastSelectedCommand = EventSystem.current.currentSelectedGameObject;
             DisableCommandMenu();
             Fsm.PushState(new SelectingSkill(Hero, Fsm));
         }
@@ -69,14 +66,12 @@ namespace CryptoQuest.Battle.States.SelectHeroesActions
         public void OnItemPressed()
         {
             Debug.Log("SelectCommandState::OnItemPressed");
-            _lastSelectedCommand = EventSystem.current.currentSelectedGameObject;
             Fsm.PushState(new SelectingItem(Hero, Fsm));
         }
 
         public void OnGuardPressed()
         {
             Debug.Log("SelectCommandState::OnGuardPressed");
-            _lastSelectedCommand = EventSystem.current.currentSelectedGameObject;
             Hero.TryGetComponent(out CommandExecutor commandExecutor);
             commandExecutor.SetCommand(new GuardCommand(Hero));
             Fsm.GoToNextState();
@@ -85,7 +80,6 @@ namespace CryptoQuest.Battle.States.SelectHeroesActions
         public void OnRetreatPressed()
         {
             Debug.Log("SelectCommandState::OnRetreatPressed");
-            _lastSelectedCommand = EventSystem.current.currentSelectedGameObject;
             var highestAgi = Fsm.EnemyPartyManager.Enemies
                 .GetHighestAttributeValue<EnemyBehaviour>(AttributeSets.Agility);
             Hero.TryGetComponent(out CommandExecutor commandExecutor);
@@ -106,10 +100,7 @@ namespace CryptoQuest.Battle.States.SelectHeroesActions
 
         private void SelectButton()
         {
-            if (_lastSelectedCommand != null)
-                EventSystem.current.SetSelectedGameObject(_lastSelectedCommand);
-            else
-                Fsm.SelectCommandUI.SelectFirstButton();
+            Fsm.SelectCommandUI.SelectFirstButton();
         }
     }
 }

@@ -62,6 +62,8 @@ namespace CryptoQuest.Battle.UI.CommandDetail
                 UICommandDetailButton button = _buttonPool.Get();
                 button.Init(info, i);
             }
+            
+            SelectFirstButton();
         }
 
         public void SetActiveButtons(bool isActive)

@@ -32,6 +32,7 @@ namespace CryptoQuest.UI.Common
 
         private void OnEnable()
         {
+            DisplayNavigateArrows();
             NavigateEvent += DisplayNavigateArrows;
         }
 

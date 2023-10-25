@@ -76,6 +76,11 @@ namespace CryptoQuest.UI.Common
             ScrollDownIfOutOfUpperBound(selectedRowPositionY);
         }
 
+        public void ScrollToTop()
+        {
+            _scrollRect.verticalNormalizedPosition = 1f;
+        }
+
         private void ScrollUpIfOutOfLowerBound(float selectedRowPositionY)
         {
             if (selectedRowPositionY <= _lowerBound)

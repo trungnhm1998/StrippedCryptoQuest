@@ -11,7 +11,7 @@ namespace CryptoQuest.Battle.UI.SelectHero
 {
     public class SelectHeroPresenter : MonoBehaviour
     {
-        private const float SELECT_DELAY = 0.1f;
+        private const float SELECT_DELAY = 0.05f;
         public static event Action<HeroBehaviour> ConfirmSelectCharacter;
 
         [SerializeField] private BattleInput _battleInput;

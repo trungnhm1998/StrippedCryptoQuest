@@ -23,7 +23,7 @@ namespace CryptoQuest.Battle.UI
         protected override void OnSelectFirstButton()
         {
             base.OnSelectFirstButton();
-            _autoScroll.Scroll();
+            _autoScroll.ScrollToTop();
             ScrollArrowsBehaviour.NavigateEvent?.Invoke();
         }
     }
