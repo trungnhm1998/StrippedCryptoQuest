@@ -22,6 +22,7 @@ namespace IndiGamesEditor.GameplayAbilitySystem
             // bind granted-abilities label to the length
             var grantedAbilitiesLabel = root.Q<Label>("granted-abilities");
             var gas = (AbilitySystemBehaviour)target;
+            grantedAbilitiesLabel.text = $"{gas.GrantedAbilities.Count}";
             // register event when granted abilities changed
             gas.AbilityGrantedEvent += _ => { grantedAbilitiesLabel.text = $"{gas.GrantedAbilities.Count}"; };
 

@@ -141,6 +141,11 @@ namespace CryptoQuest.Battle.Events
         public CastSkillAbility Skill { get; set; }
     }
 
+    public class PlayVfxEvent : BattleEvent
+    {
+        public int VfxId { get; }
+        public PlayVfxEvent(int vfxId) => VfxId = vfxId;
+    }
     public class CastSkillEvent : LogEvent
     {
         public CastSkillAbility Skill { get; private set; }

@@ -16,6 +16,7 @@ namespace CryptoQuest.Battle.Presenter.Commands
 
         private void OnDestroy() => BattleEventBus.UnsubscribeEvent(_normalAttackEvent);
 
-        private void EnqueueNormalAttackVfx(HeroNormalAttackEvent ctx) => _vfxPresenter.QueueUpVfx(_vfxId, ctx.Target);
+        private void EnqueueNormalAttackVfx(HeroNormalAttackEvent ctx) =>
+            _vfxPresenter.QueueUpVfx(_vfxId, ctx.Target.transform.position);
     }
 }

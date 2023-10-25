@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using CryptoQuest.Battle.Events;
 using CryptoQuest.Battle.Presenter;
@@ -12,11 +13,19 @@ namespace CryptoQuest.Battle.VFX
         [SerializeField] private RoundEventsPresenter _roundEventsPresenter;
         [SerializeField] private VFXDatabase _vfxDatabase;
         private TinyMessageSubscriptionToken _castSkillEvent;
+        private TinyMessageSubscriptionToken _playVfxEvent;
 
-        private void OnEnable() =>
+        private void OnEnable()
+        {
             _castSkillEvent = BattleEventBus.SubscribeEvent<CastSkillEvent>(QueueUpVfxCommand);
+            _playVfxEvent = BattleEventBus.SubscribeEvent<PlayVfxEvent>(QueueVfxCommand);
+        }
 
-        private void OnDisable() => BattleEventBus.UnsubscribeEvent(_castSkillEvent);
+        private void OnDisable()
+        {
+            BattleEventBus.UnsubscribeEvent(_castSkillEvent);
+            BattleEventBus.UnsubscribeEvent(_playVfxEvent);
+        }
 
         private void OnDestroy()
         {
@@ -26,13 +35,24 @@ namespace CryptoQuest.Battle.VFX
         private void QueueUpVfxCommand(CastSkillEvent ctx)
         {
             var skillVfxId = ctx.Skill.VfxId;
-            StartCoroutine(_vfxDatabase.LoadDataById(skillVfxId));
-            QueueUpVfx(skillVfxId, ctx.Target);
+            QueueVfxCommand(ctx, skillVfxId);
+        }
+        
+        private void QueueVfxCommand(PlayVfxEvent ctx)
+        {
+            StartCoroutine(_vfxDatabase.LoadDataById(ctx.VfxId));
+            QueueUpVfx(ctx.VfxId, Vector3.zero);
         }
 
-        public void QueueUpVfx(int vfxId, Components.Character ctxTarget)
+        private void QueueVfxCommand(CastSkillEvent ctx, int skillVfxId)
         {
-            var presentCommand = new VfxCommand(vfxId, ctxTarget.transform.position, this);
+            StartCoroutine(_vfxDatabase.LoadDataById(skillVfxId));
+            QueueUpVfx(skillVfxId, ctx.Target.transform.position);
+        }
+
+        public void QueueUpVfx(int vfxId, Vector3 position = default)
+        {
+            var presentCommand = new VfxCommand(vfxId, position, this);
             _roundEventsPresenter.EnqueueCommand(presentCommand);
         }
 

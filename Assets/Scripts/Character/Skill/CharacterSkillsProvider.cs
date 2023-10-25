@@ -41,7 +41,7 @@ namespace CryptoQuest.Character
             {
                 Debug.Log($"Load skill {skillMapping.Skill}");
                 yield return _database.LoadDataById(skillMapping.Skill);
-                if (_database.TryGetDataById(skillMapping.Skill, out var skill))
+                if (_database.TryGetDataById(skillMapping.Skill, out var skill) && skill != null)
                     skills.Add(skill);
             }
 

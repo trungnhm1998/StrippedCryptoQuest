@@ -16,6 +16,8 @@ namespace CryptoQuest.AbilitySystem.Abilities
 
     public class PassiveAbilitySpec : GameplayAbilitySpec
     {
+        private Battle.Components.Character _character;
+        protected Battle.Components.Character Character => _character ??= Owner.GetComponent<Battle.Components.Character>();
         public override void OnAbilityGranted(GameplayAbilitySpec gameplayAbilitySpec)
         {
             base.OnAbilityGranted(gameplayAbilitySpec);
