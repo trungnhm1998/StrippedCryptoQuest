@@ -62,11 +62,6 @@ namespace CryptoQuest.Quest.Actor
 
         private void ActivateSpawnActor()
         {
-            if (_actorDef.name == "ch002_q002_e008_prebattle_thief_slime_actor")
-            {
-                Debug.Log("ch002_q002_e008_prebattle_thief_slime_actor spawned");
-            }
-
             if (!_spawnPoint) return;
 
             ActorInfo actor = _actorDef.CreateActor();
@@ -75,11 +70,6 @@ namespace CryptoQuest.Quest.Actor
 
         private void ActivateDeSpawnActor()
         {
-            if (_actorDef.name == "ch002_q002_e008_prebattle_thief_slime_actor")
-            {
-                Debug.Log("ch002_q002_e008_prebattle_thief_slime_actor despawned");
-            }
-
             if (!_spawnPoint) return;
 
             DestroyImmediate(gameObject);
