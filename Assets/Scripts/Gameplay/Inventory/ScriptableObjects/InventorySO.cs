@@ -12,6 +12,9 @@ using ESlotType =
     CryptoQuest.Item.Equipment.EquipmentSlot.EType;
 using IndiGames.Core.SaveSystem.ScriptableObjects;
 using IndiGames.Core.SaveSystem;
+using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
+using System.Collections;
 
 namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects
 {
@@ -41,7 +44,7 @@ namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects
     }
 
     [CreateAssetMenu(menuName = "Crypto Quest/Inventory/Inventory")]
-    public class InventorySO : SerializableScriptableObject, IJsonSerializable
+    public class InventorySO : SerializableScriptableObject
     {
         public event Action Loaded;
         [SerializeField] private InventoryConfigSO _inventoryConfig;
@@ -217,43 +220,52 @@ namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects
             return JsonUtility.ToJson(inventoryData);
         }
 
-        public bool FromJson(string json)
+        public IEnumerator CoFromJson(string json)
         {
-            try
-            {
-                Consumables.Clear();
-                Equipments.Clear();
+            Consumables.Clear();
+            Equipments.Clear();
 
-                var inventoryData = new InventoryData();
-                JsonUtility.FromJsonOverwrite(json, inventoryData);
-                foreach (var consumableData in inventoryData.Consumables)
-                {
-                    var dataSO = (ConsumableSO)ScriptableObjectRegistry.FindByGuid(consumableData.Guid);
-                    var consumable = new ConsumableInfo(dataSO, consumableData.Quantity)
-                    {
-                        Id = consumableData.Id
-                    };
-                    Consumables.Add(consumable);
-                }
-                foreach (var equipmentData in inventoryData.Equipments)
-                {
-                    var defSO = (EquipmentDef)ScriptableObjectRegistry.FindByGuid(equipmentData.DefGuid);
-                    var prefabSO = (EquipmentPrefab)ScriptableObjectRegistry.FindByGuid(equipmentData.PrefabGuid);
-                    var equipment = new EquipmentInfo(equipmentData.DefinitionId, equipmentData.Level)
-                    {
-                        Def = defSO,
-                        Prefab = prefabSO,
-                        Id = equipmentData.Id
-                    };
-                    Equipments.Add(equipment);
-                }
-                return true;
-            }
-            catch(Exception ex)
+            var inventoryData = new InventoryData();
+            JsonUtility.FromJsonOverwrite(json, inventoryData);
+            foreach (var consumableData in inventoryData.Consumables)
             {
-                Debug.LogException(ex);
+                var dataSoHandle = Addressables.LoadAssetAsync<ConsumableSO>(consumableData.Guid);
+                {
+                    yield return dataSoHandle;
+                    if (dataSoHandle.Status == AsyncOperationStatus.Succeeded)
+                    {
+                        var consumable = new ConsumableInfo(dataSoHandle.Result, consumableData.Quantity)
+                        {
+                            Id = consumableData.Id
+                        };
+                        Consumables.Add(consumable);
+                    }
+                }
             }
-            return false;
+            foreach (var equipmentData in inventoryData.Equipments)
+            {
+                var defSoHandle = Addressables.LoadAssetAsync<EquipmentDef>(equipmentData.DefGuid);
+                {
+                    yield return defSoHandle;
+                    if (defSoHandle.Status == AsyncOperationStatus.Succeeded)
+                    {
+                        var prefabSoHandle = Addressables.LoadAssetAsync<EquipmentPrefab>(equipmentData.PrefabGuid);
+                        {
+                            yield return prefabSoHandle;
+                            if (prefabSoHandle.Status == AsyncOperationStatus.Succeeded)
+                            {
+                                var equipment = new EquipmentInfo(equipmentData.DefinitionId, equipmentData.Level)
+                                {
+                                    Def = defSoHandle.Result,
+                                    Prefab = prefabSoHandle.Result,
+                                    Id = equipmentData.Id
+                                };
+                                Equipments.Add(equipment);
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 }

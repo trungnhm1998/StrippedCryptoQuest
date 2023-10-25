@@ -63,8 +63,12 @@ namespace CryptoQuest.Gameplay.Inventory
 
         private void Start()
         {
-            _saveSystem?.LoadObject(this);
-            StartCoroutine(LoadAllEquipment());
+            // Equipement should be loaded after load save data
+            // Otherwise just load it from SO as is
+            if(_saveSystem == null || !_saveSystem.LoadObject(this))
+            {
+                StartCoroutine(LoadAllEquipment());
+            }
         }
 
         private void AddLoot(LootInfo loot) => loot.AddItemToInventory(_inventory);
@@ -102,9 +106,15 @@ namespace CryptoQuest.Gameplay.Inventory
 
         public bool FromJson(string json)
         {
-            return _inventory.FromJson(json);
+            StartCoroutine(CoFromJson(json));
+            return true;
         }
 
+        public IEnumerator CoFromJson(string json)
+        {
+            yield return StartCoroutine(_inventory.CoFromJson(json));
+            yield return StartCoroutine(LoadAllEquipment());
+        }
         #endregion
     }
 }

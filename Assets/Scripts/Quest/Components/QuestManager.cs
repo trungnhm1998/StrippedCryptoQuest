@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using CryptoQuest.Gameplay.Loot;
@@ -8,6 +9,8 @@ using CryptoQuest.Quest.Events;
 using CryptoQuest.System;
 using IndiGames.Core.SaveSystem;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace CryptoQuest.Quest.Components
 {
@@ -119,7 +122,7 @@ namespace CryptoQuest.Quest.Components
         public void GiveQuest(QuestSO questData)
         {
             // Find and remove completed quest
-            // This allow parent quest to respawn childquest when it not finished
+            // This allow parent-quest to respawn child-quest when it not finished
             // while child(s) may finished already (eg: CompletedSlimeQuest)
             var questIdx = CompletedQuests.FindIndex(quest => quest.Guid == questData.Guid);
             if(questIdx != -1)
@@ -225,43 +228,49 @@ namespace CryptoQuest.Quest.Components
 
         public bool FromJson(string json)
         {
-            try
+            StartCoroutine(CoFromJson(json));
+            return true;
+        }
+
+        public IEnumerator CoFromJson(string json)
+        {
+            if (!string.IsNullOrEmpty(json))
             {
-                if (!string.IsNullOrEmpty(json))
+                var questData = new QuestData();
+                JsonUtility.FromJsonOverwrite(json, questData);
+                if (questData.InProgressQuest.Count() > 0 || questData.CompletedQuests.Count() > 0)
                 {
-                    var questData = new QuestData();
-                    JsonUtility.FromJsonOverwrite(json, questData);
-                    if (questData.InProgressQuest.Count() > 0 || questData.CompletedQuests.Count() > 0)
+                    CompletedQuests.Clear();
+                    InProgressQuest.Clear();
+
+                    foreach (var guid in questData.CompletedQuests)
                     {
-                        CompletedQuests.Clear();
-                        InProgressQuest.Clear();
-
-                        foreach (var item in questData.CompletedQuests)
+                        var questSoHandle = Addressables.LoadAssetAsync<QuestSO>(guid);
                         {
-                            var questSO = (QuestSO)ScriptableObjectRegistry.FindByGuid(item);
-                            GiveQuest(questSO);
-                        }
-
-                        foreach (var item in questData.InProgressQuest)
-                        {
-                            var questSO = (QuestSO)ScriptableObjectRegistry.FindByGuid(item);
-                            GiveQuest(questSO);
-                        }
-
-                        foreach (var item in questData.CompletedQuests)
-                        {
-                            var questSO = (QuestSO)ScriptableObjectRegistry.FindByGuid(item);
-                            QuestCompleted(questSO);
+                            yield return questSoHandle;
+                            if (questSoHandle.Status == AsyncOperationStatus.Succeeded)
+                            {
+                                var questSO = questSoHandle.Result;
+                                GiveQuest(questSO);
+                                QuestCompleted(questSO);
+                            }
                         }
                     }
-                    return true;
+
+                    foreach (var guid in questData.InProgressQuest)
+                    {
+                        var questSoHandle = Addressables.LoadAssetAsync<QuestSO>(guid);
+                        {
+                            yield return questSoHandle;
+                            if (questSoHandle.Status == AsyncOperationStatus.Succeeded)
+                            {
+                                var questSO = questSoHandle.Result;
+                                GiveQuest(questSO);
+                            }
+                        }
+                    }
                 }
             }
-            catch (Exception ex)
-            {
-                Debug.LogException(ex);
-            }
-            return false;
         }
         #endregion
     }

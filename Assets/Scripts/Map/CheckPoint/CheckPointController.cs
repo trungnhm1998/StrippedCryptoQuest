@@ -9,6 +9,9 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using IndiGames.Core.SaveSystem;
 using System;
+using System.Collections;
+using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
 #if UNITY_EDITOR
 using IndiGames.Core.EditorTools;
 #endif
@@ -23,6 +26,16 @@ namespace CryptoQuest.Map.CheckPoint
         void SaveCheckPoint(Vector3 position, int facingDirection);
         void BackToCheckPoint();
         void FinishBackToCheckPoint();
+    }
+
+    [Serializable]
+    class CheckPointData
+    {
+        public string LastSceneGuid;
+        public string LastSceneName;
+        public Vector3 LastPosition;
+        public int LastDirection;
+        public string CurrentSceneGuid;
     }
 
     public class CheckPointController : MonoBehaviour, ICheckPointController, ISaveObject
@@ -123,18 +136,49 @@ namespace CryptoQuest.Map.CheckPoint
 
         public string ToJson()
         {
-            return JsonUtility.ToJson(this);
+            var checkPointData = new CheckPointData()
+            {
+                LastSceneGuid = _lastCheckPointScene.Guid,
+                LastSceneName = _lastSceneCheckPointName,
+                LastPosition = _lastCheckPointPosition,
+                LastDirection = _lastCheckPointFacingDirection,
+                CurrentSceneGuid = _currentScene.Guid
+            };
+            return JsonUtility.ToJson(checkPointData);
         }
 
         public bool FromJson(string json)
         {
-            try
+            StartCoroutine(CoFromJson(json));
+            return true;
+        }
+
+        public IEnumerator CoFromJson(string json)
+        {
+            if (!string.IsNullOrEmpty(json))
             {
-                JsonUtility.FromJsonOverwrite(json, this);
-                return true;
+                var checkPointData = new CheckPointData();
+                JsonUtility.FromJsonOverwrite(json, checkPointData);
+                var lastSoHandle = Addressables.LoadAssetAsync<SceneScriptableObject>(checkPointData.LastSceneGuid);
+                {
+                    yield return lastSoHandle;
+                    if (lastSoHandle.Status == AsyncOperationStatus.Succeeded)
+                    {
+                        _lastCheckPointScene = lastSoHandle.Result;
+                    }
+                }
+                var currentSoHandle = Addressables.LoadAssetAsync<SceneScriptableObject>(checkPointData.CurrentSceneGuid);
+                {
+                    yield return currentSoHandle;
+                    if (currentSoHandle.Status == AsyncOperationStatus.Succeeded)
+                    {
+                        _currentScene = currentSoHandle.Result;
+                    }
+                }
+                _lastSceneCheckPointName = checkPointData.LastSceneName;
+                _lastCheckPointPosition = checkPointData.LastPosition;
+                _lastCheckPointFacingDirection = checkPointData.LastDirection;
             }
-            catch (Exception ex) { Debug.LogException(ex); }
-            return false;
         }
         #endregion
     }
