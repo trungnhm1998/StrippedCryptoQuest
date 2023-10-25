@@ -129,8 +129,8 @@ namespace CryptoQuest.System.SaveSystem
                     {
                         if (data.Key == jObject.Key)
                         {
-                            // TODO: Implement Update Object in SaveData 
-                            return false;
+                            _saveData.objects.Remove(data);
+                            break;
                         }
                     }
                     _saveData.objects.Add(new KeyValue(jObject.Key, jObject.ToJson()));
