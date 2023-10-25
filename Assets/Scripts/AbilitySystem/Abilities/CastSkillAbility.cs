@@ -73,16 +73,6 @@ namespace CryptoQuest.AbilitySystem.Abilities
             };
         }
 
-        public override bool TryActiveAbility()
-        {
-            BattleEventBus.RaiseEvent(new CastingSkillEvent()
-            {
-                Character = _character,
-                Skill = _def
-            });
-            return base.TryActiveAbility();
-        }
-
         public override bool CanActiveAbility()
         {
             if (!AbilitySystemHelper.SystemHasNoneTags(_targets[0], AbilitySO.Tags.TargetTags.IgnoreTags))
@@ -91,7 +81,7 @@ namespace CryptoQuest.AbilitySystem.Abilities
                 return false;
             }
 
-            return base.CanActiveAbility() && CheckCost();
+            return base.CanActiveAbility();
         }
 
         /// <summary>
@@ -100,7 +90,7 @@ namespace CryptoQuest.AbilitySystem.Abilities
         /// is greater than 0 apply the effect
         /// </summary>
         /// <returns>Return true if after subtracted attribute that the cost needs greater than 0</returns>
-        private bool CheckCost()
+        public bool CheckCost()
         {
             if (_costEffect == null) return true;
             if (Owner == null) return true;
@@ -111,30 +101,13 @@ namespace CryptoQuest.AbilitySystem.Abilities
             return false;
         }
 
-        private bool CanCast()
-        {
-            var roll = Random.Range(0, 100);
-            var result = roll < _def.SuccessRate;
-            var resultMessage = result ? "Success" : "Failed";
-            Debug.Log($"Casting {_def.name} with success rate {_def.SuccessRate} and roll {roll}: {resultMessage}");
-            if (!result)
-            {
-                Debug.Log($"Failed to cast {_def.name}");
-                BattleEventBus.RaiseEvent(new CastSkillFailedEvent());
-            }
-
-            return result;
-        }
-
-        private void ApplyCost()
-        {
-            if (_costEffect == null) return;
-
-            ApplyGameplayEffectToOwner(_costEffect);
-        }
-
         public void Execute(params AbilitySystemBehaviour[] characters)
         {
+            BattleEventBus.RaiseEvent(new CastingSkillEvent()
+            {
+                Character = _character,
+                Skill = _def
+            });
             _targets = characters;
             TryActiveAbility();
         }
@@ -161,12 +134,43 @@ namespace CryptoQuest.AbilitySystem.Abilities
             EndAbility();
         }
 
+        private bool CanCast()
+        {
+            var roll = Random.Range(0, 100);
+            var result = roll < _def.SuccessRate;
+            var resultMessage = result ? "Success" : "Failed";
+            Debug.Log($"Casting {_def.name} with success rate {_def.SuccessRate} and roll {roll}: {resultMessage}");
+            if (!result)
+            {
+                Debug.Log($"Failed to cast {_def.name}");
+                BattleEventBus.RaiseEvent(new CastSkillFailedEvent());
+            }
+
+            return result;
+        }
+
+        private void ApplyCost()
+        {
+            if (_costEffect == null) return;
+
+            ApplyGameplayEffectToOwner(_costEffect);
+        }
+
         private void RegisterBattleEndedEvents()
         {
             _wonEvent = BattleEventBus.SubscribeEvent<BattleWonEvent>(CleanupAbility);
             _lostEvent = BattleEventBus.SubscribeEvent<BattleLostEvent>(CleanupAbility);
             _retreatEvent = BattleEventBus.SubscribeEvent<BattleRetreatedEvent>(CleanupAbility);
         }
+
+        private bool IsTargetEvaded(AbilitySystemBehaviour target)
+        {
+            var skillTarget = _def.TargetType.Target;
+            if ((skillTarget | SkillTargetType.Type.SameTeam) == SkillTargetType.Type.SameTeam) return false;
+            var evadeBehaviour = target.GetComponent<IEvadable>();
+            return evadeBehaviour != null && evadeBehaviour.TryEvade();
+        }
+        protected abstract void InternalExecute(AbilitySystemBehaviour target);
 
         private void CleanupAbility(BattleEndedEvent ctx)
         {
@@ -183,21 +187,12 @@ namespace CryptoQuest.AbilitySystem.Abilities
         /// </summary>
         /// <param name="target"></param>
         /// <returns></returns>
-        protected abstract void InternalExecute(AbilitySystemBehaviour target);
 
 
         private ActiveGameplayEffect GetActiveEffectWithTag(AbilitySystemBehaviour target, TagScriptableObject tag)
         {
             var appliedEffects = target.EffectSystem.AppliedEffects;
             return appliedEffects.FirstOrDefault(x => x.GrantedTags.Contains(tag));
-        }
-
-        private bool IsTargetEvaded(AbilitySystemBehaviour target)
-        {
-            var skillTarget = _def.TargetType.Target;
-            if ((skillTarget | SkillTargetType.Type.SameTeam) == SkillTargetType.Type.SameTeam) return false;
-            var evadeBehaviour = target.GetComponent<IEvadable>();
-            return evadeBehaviour != null && evadeBehaviour.TryEvade();
         }
     }
 }

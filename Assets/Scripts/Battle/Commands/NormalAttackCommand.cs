@@ -43,6 +43,7 @@ namespace CryptoQuest.Battle.Commands
             }
 
             _attacker.Attack();
+            BattleEventBus.RaiseEvent(new RepeatableCommandExecutedEvent(_attackerCharacter, this));
         }
 
         private bool IsTargetEvaded()

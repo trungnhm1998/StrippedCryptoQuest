@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using CryptoQuest.Battle.Components;
 using CryptoQuest.Battle.Events;
 using IndiGames.GameplayAbilitySystem.AbilitySystem;
 using IndiGames.GameplayAbilitySystem.EffectSystem;
@@ -32,8 +33,8 @@ namespace CryptoQuest.AbilitySystem.Abilities
 
         protected override IEnumerator OnAbilityActive()
         {
-            if (_def.Context.Parameters.targetAttribute.Attribute == null) yield break;
-            Character.TurnEnded += ApplyEffectPostAction;
+            if (!Character.TryGetComponent(out CommandExecutor commandExecutor)) yield break;
+            commandExecutor.PostExecuteCommand += ApplyEffectPostAction;
         }
 
         private void ApplyEffectPostAction()
@@ -44,6 +45,10 @@ namespace CryptoQuest.AbilitySystem.Abilities
             Owner.ApplyEffectSpecToSelf(effectSpec);
         }
 
-        protected override void OnAbilityEnded() => Character.TurnEnded -= ApplyEffectPostAction;
+        protected override void OnAbilityEnded()
+        {
+            if (!Character.TryGetComponent(out CommandExecutor commandExecutor)) return;
+            commandExecutor.PostExecuteCommand -= ApplyEffectPostAction;
+        }
     }
 }

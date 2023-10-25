@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using CryptoQuest.AbilitySystem.Abilities;
+using CryptoQuest.Battle.Events;
 using UnityEngine;
 
 namespace CryptoQuest.Battle.Commands
@@ -25,6 +26,7 @@ namespace CryptoQuest.Battle.Commands
                 .Select(t => t.AbilitySystem).ToArray();
             Debug.Log($"{_owner.DisplayName} casting multiple target skill {_selectedSkill.name}");
             spec.Execute(targetSystems);
+            BattleEventBus.RaiseEvent(new RepeatableCommandExecutedEvent(_owner, this));
         }
     }
 }

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using CryptoQuest.AbilitySystem.Abilities;
+using CryptoQuest.Battle.Commands;
 using CryptoQuest.Battle.Components;
 using CryptoQuest.Gameplay.Encounter;
 using CryptoQuest.Gameplay.Loot;
@@ -13,6 +14,18 @@ namespace CryptoQuest.Battle.Events
     public class BattleEvent : ITinyMessage
     {
         public object Sender { get; } = null;
+    }
+
+    public class RepeatableCommandExecutedEvent : BattleEvent
+    {
+        public Components.Character Character { get; }
+        public ICommand Command { get; }
+
+        public RepeatableCommandExecutedEvent(Components.Character character, ICommand command)
+        {
+            Character = character;
+            Command = command;
+        }
     }
 
     public abstract class RetreatEvent : BattleEvent
@@ -116,11 +129,6 @@ namespace CryptoQuest.Battle.Events
     public class ExecutingCommandEvent : TurnEvent
     {
         public ExecutingCommandEvent(Components.Character character) : base(character) { }
-    }
-
-    public class PostActionEvent : TurnEvent
-    {
-        public PostActionEvent(Components.Character character) : base(character) { }
     }
 
     public class NormalAttackEvent : LogEvent

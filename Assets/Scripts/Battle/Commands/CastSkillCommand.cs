@@ -1,4 +1,5 @@
 ﻿using CryptoQuest.AbilitySystem.Abilities;
+using CryptoQuest.Battle.Events;
 using UnityEngine;
 
 namespace CryptoQuest.Battle.Commands
@@ -20,6 +21,7 @@ namespace CryptoQuest.Battle.Commands
             Debug.Log($"{_owner.DisplayName} casting {_selectedSkill.name} on {_owner.Targeting.Target.DisplayName}");
             var spec = _owner.AbilitySystem.GiveAbility<CastSkillAbilitySpec>(_selectedSkill);
             spec.Execute(_owner.Targeting.Target.AbilitySystem);
+            BattleEventBus.RaiseEvent(new RepeatableCommandExecutedEvent(_owner, this));
         }
     }
 }

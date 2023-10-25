@@ -10,6 +10,11 @@ using UnityEngine;
 
 namespace CryptoQuest.AbilitySystem.Abilities
 {
+    /// <summary>
+    /// TODO: Rename to apply effect to target (self/or the damage dealer) when damage dealt
+    ///
+    /// Will apply <see cref="ReflectDamageEffect"/> to the damage dealer when damage dealt
+    /// </summary>
     public class ReflectDamagePassive : PassiveAbility
     {
         [field: SerializeField] public DealingDamageEvent PhysicalDamageEvent { get; private set; }
@@ -32,7 +37,7 @@ namespace CryptoQuest.AbilitySystem.Abilities
 
         protected override IEnumerator OnAbilityActive()
         {
-            _def.PhysicalDamageEvent.DamageDealt += ReflectDamage;
+            _def.PhysicalDamageEvent.DamageDealt += ReflectDamage; // more like passive trigger when damage dealt
             yield break;
         }
 

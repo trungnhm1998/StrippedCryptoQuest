@@ -1,10 +1,12 @@
-﻿using CryptoQuest.AbilitySystem.Abilities;
+﻿using System;
+using CryptoQuest.AbilitySystem.Abilities;
 using UnityEngine;
 
 namespace CryptoQuest.Battle.Components
 {
     public class NormalAttack : CharacterComponentBase
     {
+        public event Action Attacked;
         [SerializeField] private NormalAttackAbility _normalAttackAbility;
         private NormalAttackAbilitySpec _spec;
 
@@ -19,6 +21,7 @@ namespace CryptoQuest.Battle.Components
             OnPreAttack(target);
             Debug.Log($"{Character.DisplayName} attacking {target.DisplayName}");
             _spec.Execute(target.GetComponent<IDamageable>());
+            Attacked?.Invoke();
         }
 
         /// <summary>
