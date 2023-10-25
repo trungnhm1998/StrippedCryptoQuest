@@ -93,8 +93,11 @@ namespace CryptoQuest.Quest.Components
 
         public void TriggerQuest(QuestSO questData)
         {
-            if (IsQuestTriggered(questData)) return;
-
+            if (IsQuestTriggered(questData))
+            {
+                Debug.Log("TriggerQuest(), Already triggered: " + questData.QuestName);
+                return;
+            }
             foreach (var progressQuestInfo in InProgressQuest)
             {
                 if (progressQuestInfo.Guid != questData.Guid) continue;
@@ -110,15 +113,31 @@ namespace CryptoQuest.Quest.Components
             {
                 return CompletedQuests.Any(questInfo => questData.Guid == questInfo.Guid);
             }
-
             return false;
         }
 
         public void GiveQuest(QuestSO questData)
         {
-            if (IsQuestTriggered(questData)) return;
+            // Find and remove completed quest
+            // This allow parent quest to respawn childquest when it not finished
+            // while child(s) may finished already (eg: CompletedSlimeQuest)
+            var questIdx = CompletedQuests.FindIndex(quest => quest.Guid == questData.Guid);
+            if(questIdx != -1)
+            {
+                CompletedQuests.RemoveAt(questIdx);
+            }
 
-            if (InProgressQuest.Any(questInfo => questInfo.Guid == questData.Guid)) return;
+            if (IsQuestTriggered(questData))
+            {
+                Debug.Log("GiveQuest(), Already triggered: " + questData.QuestName);
+                return;
+            }
+
+            if (InProgressQuest.Any(questInfo => questInfo.Guid == questData.Guid))
+            {
+                Debug.Log("GiveQuest(), Already inprogress: " + questData.QuestName);
+                return;
+            }
 
             QuestInfo currentQuestInfo = questData.CreateQuest();
 
@@ -126,6 +145,10 @@ namespace CryptoQuest.Quest.Components
             {
                 InProgressQuest.Add(currentQuestInfo);
                 currentQuestInfo.GiveQuest();
+            }
+            else
+            {
+                Debug.Log("GiveQuest(), Already completed: " + questData.QuestName);
             }
 
             _currentQuestData = questData;
@@ -210,18 +233,25 @@ namespace CryptoQuest.Quest.Components
                     JsonUtility.FromJsonOverwrite(json, questData);
                     if (questData.InProgressQuest.Count() > 0 || questData.CompletedQuests.Count() > 0)
                     {
-                        InProgressQuest.Clear();
-                        foreach (var item in questData.InProgressQuest)
-                        {
-                            QuestSO questSO = (QuestSO)ScriptableObjectRegistry.FindByGuid(item);
-                            InProgressQuest.Add(questSO.CreateQuest());
-                        }
-
                         CompletedQuests.Clear();
+                        InProgressQuest.Clear();
+
                         foreach (var item in questData.CompletedQuests)
                         {
-                            QuestSO questSO = (QuestSO)ScriptableObjectRegistry.FindByGuid(item);
-                            CompletedQuests.Add(questSO.CreateQuest());
+                            var questSO = (QuestSO)ScriptableObjectRegistry.FindByGuid(item);
+                            GiveQuest(questSO);
+                        }
+
+                        foreach (var item in questData.InProgressQuest)
+                        {
+                            var questSO = (QuestSO)ScriptableObjectRegistry.FindByGuid(item);
+                            GiveQuest(questSO);
+                        }
+
+                        foreach (var item in questData.CompletedQuests)
+                        {
+                            var questSO = (QuestSO)ScriptableObjectRegistry.FindByGuid(item);
+                            QuestCompleted(questSO);
                         }
                     }
                     return true;

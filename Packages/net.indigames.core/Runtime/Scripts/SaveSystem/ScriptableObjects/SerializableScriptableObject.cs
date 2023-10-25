@@ -9,7 +9,7 @@ namespace IndiGames.Core.SaveSystem.ScriptableObjects
         [SerializeField, ReadOnly] private string _guid;
         public string Guid => _guid;
 
-        public SerializableScriptableObject()
+        private void OnEnable()
         {
             ScriptableObjectRegistry.AddScriptableObject(this);
         }
