@@ -1,10 +1,8 @@
-using System;
 using CryptoQuest.BlackSmith.Interface;
 using CryptoQuest.BlackSmith.Upgrade.StateMachine;
 using CryptoQuest.Gameplay.Inventory;
 using CryptoQuest.System;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.Localization;
 
 namespace CryptoQuest.BlackSmith.Upgrade
@@ -77,7 +75,7 @@ namespace CryptoQuest.BlackSmith.Upgrade
 
         public void Init()
         {
-            _dialogManager.Dialogue.SetMessage(_selectEquipmentMessage);
+            _dialogManager.Dialogue.SetMessage(_selectEquipmentMessage).Show();
             var inventory = ServiceProvider.GetService<IInventoryController>().Inventory;
             _upgradeModel.CoGetData(inventory);
             _upgradeEquipment.InstantiateData(_upgradeModel);
@@ -87,7 +85,7 @@ namespace CryptoQuest.BlackSmith.Upgrade
         private void OnItemSubmit(UIUpgradeItem item)
         {
             float currentGold = _currencyController.Gold;
-            _dialogManager.Dialogue.SetMessage(_upgradeMessage);
+            _dialogManager.Dialogue.SetMessage(_upgradeMessage).Show();
             _upgradeEquipment.SelectedEquipment(item, currentGold);
             _equipmentData = item.UpgradeEquipment;
             _isSelectedEquipment = true;
@@ -126,7 +124,7 @@ namespace CryptoQuest.BlackSmith.Upgrade
             _upgradeEquipment.ShowConfirmPanel(false);
             _upgradeController.UpgradeEvent?.Invoke();
             _upgradeEquipment.SetLevel(_equipmentData, _equipmentDetail);
-            _dialogManager.Dialogue.SetMessage(_resultMessage);
+            _dialogManager.Dialogue.SetMessage(_resultMessage).Show();
         }
 
         public void CancelUpgrade()

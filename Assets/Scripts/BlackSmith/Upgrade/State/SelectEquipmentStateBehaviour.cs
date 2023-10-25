@@ -1,10 +1,12 @@
 using CryptoQuest.Input;
 using UnityEngine;
+using UnityEngine.Localization;
 
 namespace CryptoQuest.BlackSmith.Upgrade.StateMachine
 {
     public class SelectEquipmentStateBehaviour : StateMachineBehaviour
     {
+        [SerializeField] private LocalizedString _selectTargetMessage;
         private Animator _animator;
         private BlackSmithInputManager _input;
         private UpgradeStateController _stateController;
@@ -18,6 +20,7 @@ namespace CryptoQuest.BlackSmith.Upgrade.StateMachine
             _input = _stateController.InputManager;
             _stateController.SelectedEquipmentPanel.SetActive(true);
             _stateController.SelectActionPanel.SetActive(false);
+            _stateController.UpgradePresenter.Init();
             _input.SubmitEvent += GoToUpgradeState;
             _input.CancelEvent += ExitState;
         }
@@ -38,6 +41,7 @@ namespace CryptoQuest.BlackSmith.Upgrade.StateMachine
         {
             _stateController.UIBlackSmith.BlackSmithOpened();
             _animator.SetTrigger(_exit);
+            _stateController.DialogsPresenter.Dialogue.SetMessage(_selectTargetMessage).Show();
         }
     }
 }

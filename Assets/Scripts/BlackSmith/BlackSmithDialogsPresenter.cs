@@ -15,10 +15,9 @@ namespace CryptoQuest.BlackSmith
         [SerializeField] private LocalizedString _message;
         private UIDialogueForGenericMerchant _dialogue;
         public UIDialogueForGenericMerchant Dialogue { get => _dialogue; }
-
         public void BlackSmithOpened()
         {
-            GenericMerchantDialogueController.Instance.Instantiate(DialogInstantiated, false);
+            GenericMerchantDialogueController.Instance.Instantiate(DialogInstantiated);
         }
 
         public void BlackSmithClosed()

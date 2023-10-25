@@ -6,6 +6,7 @@ namespace CryptoQuest.BlackSmith.EvolveStates
     public class EquipmentStateBehaviour : StateMachineBehaviour
     {
         [SerializeField] private LocalizedString _selectTargetMessage;
+        [SerializeField] private LocalizedString _defaultBlackSmithMessage;
 
         private Animator _animator;
         private EvolveStateController _stateController;
@@ -53,6 +54,9 @@ namespace CryptoQuest.BlackSmith.EvolveStates
         {
             _stateController.UIBlackSmith.BlackSmithOpened();
             _animator.SetTrigger(ExitState);
+            _stateController.DialogsPresenter.Dialogue
+                .SetMessage(_defaultBlackSmithMessage)
+                .Show();
         }
     }
 }

@@ -1,7 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using CryptoQuest.BlackSmith.EvolveStates;
-using CryptoQuest.BlackSmith.Upgrade.StateMachine;
 using UnityEngine;
 
 namespace CryptoQuest.BlackSmith.StateMachine
