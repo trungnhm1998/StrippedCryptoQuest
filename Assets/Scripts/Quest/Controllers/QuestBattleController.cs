@@ -32,8 +32,6 @@ namespace CryptoQuest.Quest.Controllers
         public void GiveQuest(BattleQuestInfo questInfo)
         {
             _currentlyProcessQuests.Add(questInfo);
-            if (questInfo.Data.FirstTimeLoseQuest != null)
-                _giveQuestEventChannel.RaiseEvent(questInfo.Data.FirstTimeLoseQuest);
         }
 
         private void OnBattleLost(Battlefield battlefield)
@@ -61,7 +59,10 @@ namespace CryptoQuest.Quest.Controllers
             var loseQuest = info.Data.FirstTimeLoseQuest;
 
             if (info.Data.FirstTimeLoseQuest != null)
+            {
+                _giveQuestEventChannel.RaiseEvent(loseQuest);
                 _triggerQuestEventChannel.RaiseEvent(loseQuest);
+            }
 
             if (info.Data.GiveRepeatBattleQuest != null)
                 _giveQuestEventChannel.RaiseEvent(info.Data.GiveRepeatBattleQuest);
