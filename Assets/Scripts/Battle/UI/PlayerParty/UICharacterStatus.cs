@@ -24,7 +24,7 @@ namespace CryptoQuest.Battle.UI.PlayerParty
         private IObjectPool<UIStatusIcon> _statusIconPool;
 
         private readonly Dictionary<TagScriptableObject, UIStatusIcon> _statusIcons = new();
-        private TagSystemBehaviour CharacterTagSystem => _characterUI.Hero.AbilitySystem.TagSystem;
+        protected TagSystemBehaviour CharacterTagSystem => _characterUI.Hero.AbilitySystem.TagSystem;
 
         private void OnValidate()
         {
@@ -38,6 +38,7 @@ namespace CryptoQuest.Battle.UI.PlayerParty
         {
             CharacterTagSystem.TagAdded += TagAdded;
             CharacterTagSystem.TagRemoved += TagRemoved;
+            ShowDeadTagAtStart();
         }
 
         private void OnDisable()
@@ -45,6 +46,13 @@ namespace CryptoQuest.Battle.UI.PlayerParty
             CharacterTagSystem.TagAdded -= TagAdded;
             CharacterTagSystem.TagRemoved -= TagRemoved;
             ReleaseAllIcon();
+        }
+
+        protected virtual void ShowDeadTagAtStart()
+        {
+            if (!CharacterTagSystem.HasTag(TagsDef.Dead)) return;
+            
+            TagAdded(TagsDef.Dead);
         }
 
         protected virtual void TagAdded(params TagScriptableObject[] baseTags)

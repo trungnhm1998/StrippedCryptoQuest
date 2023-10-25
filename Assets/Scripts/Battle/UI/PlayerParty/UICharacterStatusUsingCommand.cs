@@ -1,4 +1,5 @@
 using System.Collections;
+using CryptoQuest.AbilitySystem;
 using CryptoQuest.Battle.Events;
 using CryptoQuest.Battle.Presenter.Commands;
 using IndiGames.GameplayAbilitySystem.TagSystem.ScriptableObjects;
@@ -42,6 +43,12 @@ namespace CryptoQuest.Battle.UI.PlayerParty
             base.TagRemoved(tags);
         }
 
+        protected override void ShowDeadTagAtStart()
+        {
+            if (!CharacterTagSystem.HasTag(TagsDef.Dead)) return;
+            base.TagAdded(TagsDef.Dead);
+        }
+
         protected override void TagAdded(params TagScriptableObject[] baseTags)
         {
             var command = new CharacterStatusIconCommand(this, baseTags);
@@ -51,7 +58,7 @@ namespace CryptoQuest.Battle.UI.PlayerParty
 
         protected override void TagRemoved(params TagScriptableObject[] baseTags)
         {
-            var command = new CharacterStatusIconCommand(this, baseTags, true);
+            var command = new CharacterStatusIconCommand(this, baseTags, false);
             BattleEventBus.RaiseEvent<EnqueuePresentCommandEvent>(
                 new EnqueuePresentCommandEvent(command));
         }

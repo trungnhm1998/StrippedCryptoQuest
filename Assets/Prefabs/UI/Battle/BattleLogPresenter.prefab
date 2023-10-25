@@ -37,11 +37,10 @@ Transform:
   - {fileID: 2704798854172030109}
   - {fileID: 2608840321175283310}
   - {fileID: 4000472001125200130}
-  - {fileID: 2200237069299910402}
   - {fileID: 3064709006144079425}
   - {fileID: 3353893834988660309}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2603140895196176383
 MonoBehaviour:
@@ -534,78 +533,6 @@ MonoBehaviour:
     m_FallbackState: 0
     m_WaitForCompletion: 0
     m_LocalVariables: []
-  references:
-    version: 2
-    RefIds: []
---- !u!1 &8735606496887888592
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2200237069299910402}
-  - component: {fileID: 4349962670036054303}
-  m_Layer: 0
-  m_Name: Revive
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2200237069299910402
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8735606496887888592}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 1
-  m_Children: []
-  m_Father: {fileID: 3441466529967231316}
-  m_RootOrder: -1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4349962670036054303
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8735606496887888592}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f2f0c66bcbf3c4f43a175078cc110199, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _presentLoggerEvent:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2603140895196176383}
-        m_TargetAssemblyTypeName: CryptoQuest.Battle.UI.Logs.LogPresenter, indi-games.crypto-quest
-        m_MethodName: QueueLog
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  _localizedLog:
-    m_TableReference:
-      m_TableCollectionName: GUID:810dd60b781de0a4589f9f164a4b0a8c
-    m_TableEntryReference:
-      m_KeyId: 942061969427
-      m_Key: 
-    m_FallbackState: 0
-    m_WaitForCompletion: 0
-    m_LocalVariables: []
-  _attributeChangeEvent: {fileID: 11400000, guid: 8530eb711d1ffb74081abe7dc655eea4, type: 2}
   references:
     version: 2
     RefIds: []

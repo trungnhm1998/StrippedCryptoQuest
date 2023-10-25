@@ -70,7 +70,8 @@ namespace CryptoQuest.AbilitySystem.Attributes.Events
                 Character = attributeSystem.GetComponent<Battle.Components.Character>()
             };
 
-            tagSystem.AddTags(_condition.TagToApply);
+            if (!tagSystem.HasTag(_condition.TagToApply))
+                tagSystem.AddTags(_condition.TagToApply);
         }
         
         public override void PreAttributeChange(AttributeSystemBehaviour attributeSystem,

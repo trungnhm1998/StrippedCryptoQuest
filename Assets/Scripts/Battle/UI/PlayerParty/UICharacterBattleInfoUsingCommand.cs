@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using CryptoQuest.Battle.Events;
 using CryptoQuest.Battle.Presenter.Commands;
+using TinyMessenger;
 
 namespace CryptoQuest.Battle.UI.PlayerParty
 {
@@ -26,19 +27,20 @@ namespace CryptoQuest.Battle.UI.PlayerParty
     public class UICharacterBattleInfoUsingCommand : UICharacterBattleInfo
     {
         private bool _isStartedTurn = false;
+        private TinyMessageSubscriptionToken _roundStartedEventToken;
 
         private void OnEnable()
         {
             _isStartedTurn = false;
-            Hero.TurnStarted += SetStartedTurn;
+            _roundStartedEventToken = BattleEventBus.SubscribeEvent<RoundStartedEvent>(SetStartedRound);
         }
 
         private void OnDisable()
         {
-            Hero.TurnStarted -= SetStartedTurn;
+            BattleEventBus.UnsubscribeEvent(_roundStartedEventToken);
         }
 
-        private void SetStartedTurn()
+        private void SetStartedRound(RoundStartedEvent eventObject)
         {
             _isStartedTurn = true;
         }
