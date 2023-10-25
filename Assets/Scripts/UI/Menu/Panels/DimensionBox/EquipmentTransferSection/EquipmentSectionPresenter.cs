@@ -20,8 +20,8 @@ namespace CryptoQuest.UI.Menu.Panels.DimensionBox.EquipmentTransferSection
         [SerializeField] private UnityEvent<List<IGame>, bool> _setGameDataEvent;
         [SerializeField] private UnityEvent<List<INFT>, bool> _setWalletDataEvent;
         [SerializeField] private UnityEvent _hideDialogEvent;
-        [SerializeField] private UnityEvent _switchToWalletBoardEvent;
-        [SerializeField] private UnityEvent _switchToGameBoardEvent;
+        [SerializeField] private UnityEvent<Transform> _switchToWalletBoardEvent;
+        [SerializeField] private UnityEvent<Transform> _switchToGameBoardEvent;
 
         private IGameEquipmentModel _gameModel;
         private IWalletEquipmentModel _walletModel;
@@ -56,10 +56,12 @@ namespace CryptoQuest.UI.Menu.Panels.DimensionBox.EquipmentTransferSection
             Transform itemNewParent;
             if (currentItem.Parent == _gameBoard)
             {
+                SetInteractableAllButtons(_gameBoard, false);
                 itemNewParent = _walletBoard;
             }
             else
             {
+                SetInteractableAllButtons(_walletBoard, false);
                 itemNewParent = _gameBoard;
                 Int32.TryParse(currentItem.Data.GetId(), out int element);
                 _selectedWalletEquipmentIds.Add(element);
@@ -83,7 +85,6 @@ namespace CryptoQuest.UI.Menu.Panels.DimensionBox.EquipmentTransferSection
         {
             StartCoroutine(GetGameEquipments());
             StartCoroutine(GetWalletEquipments());
-            SetInteractableAllButtons(_walletBoard, false);
         }
 
         private IEnumerator GetGameEquipments()
@@ -107,11 +108,11 @@ namespace CryptoQuest.UI.Menu.Panels.DimensionBox.EquipmentTransferSection
 
             _walletData = _walletModel.Data;
             _setWalletDataEvent.Invoke(_walletData, _walletData.Count <= 0 ? true : false);
+
+            SetInteractableAllButtons(_walletBoard, false);
         }
 
-        /// <summary>
-        /// This method subscribe to the _resetTransferEvent on scene.
-        /// </summary>
+        // This method subscribe to the _resetTransferEvent on scene.
         public void ResetTransfer()
         {
             if (_gameData.Count > 0)
@@ -121,9 +122,7 @@ namespace CryptoQuest.UI.Menu.Panels.DimensionBox.EquipmentTransferSection
                 _setWalletDataEvent.Invoke(_walletData, _gameData.Count <= 0 ? true : false);
         }
 
-        /// <summary>
-        /// This method subscribe to the _switchBoardEvent on scene.
-        /// </summary>
+        // This method subscribe to the _switchBoardEvent on scene.
         public void SwitchBoardRequested(Vector2 direction)
         {
             SwitchToWalletBoard(direction);
@@ -132,21 +131,21 @@ namespace CryptoQuest.UI.Menu.Panels.DimensionBox.EquipmentTransferSection
 
         private void SwitchToWalletBoard(Vector2 direction)
         {
-            if (direction.x > 0)
+            if (direction.x > 0 && _walletBoard.childCount > 0)
             {
                 SetInteractableAllButtons(_gameBoard, false);
                 SetInteractableAllButtons(_walletBoard, true);
-                _switchToWalletBoardEvent.Invoke();
+                _switchToWalletBoardEvent.Invoke(_walletBoard);
             }
         }
 
         private void SwitchToGameBoard(Vector2 direction)
         {
-            if (direction.x < 0)
+            if (direction.x < 0 && _gameBoard.childCount > 0)
             {
                 SetInteractableAllButtons(_walletBoard, false);
                 SetInteractableAllButtons(_gameBoard, true);
-                _switchToGameBoardEvent.Invoke();
+                _switchToGameBoardEvent.Invoke(_gameBoard);
             }
         }
 

@@ -18,7 +18,7 @@ namespace CryptoQuest.UI.Menu.Panels.DimensionBox.EquipmentTransferSection
         {
             foreach (var itemData in _walletEquipmentList)
             {
-                var item = Instantiate(_singleItemPrefab, _scrollRect.content).GetComponent<UITransferItem>();
+                var item = Instantiate(_singleItemPrefab, _scrollRectContent).GetComponent<UITransferItem>();
                 item.ConfigureCell(itemData);
                 SetParentIdentity(item);
             }

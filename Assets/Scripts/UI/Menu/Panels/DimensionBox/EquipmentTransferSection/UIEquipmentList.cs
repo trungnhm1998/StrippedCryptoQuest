@@ -8,7 +8,7 @@ namespace CryptoQuest.UI.Menu.Panels.DimensionBox.EquipmentTransferSection
 {
     public abstract class UIEquipmentList : MonoBehaviour
     {
-        [SerializeField] protected ScrollRect _scrollRect;
+        [SerializeField] protected Transform _scrollRectContent;
         [SerializeField] protected GameObject _singleItemPrefab;
         [SerializeField] protected RectTransform _tooltipSafeArea;
 
@@ -38,23 +38,24 @@ namespace CryptoQuest.UI.Menu.Panels.DimensionBox.EquipmentTransferSection
         }
 
         // This method subscribe to the HideDialogEvent and also is called when the _switchToWalletBoardEvent/_switchToGameBoardEvent invokes on scene.
-        public void SetDefaultSelection()
+        public void SetDefaultSelection(Transform targetScrollRect = null)
         {
-            StartCoroutine(CoSetDefaultSelection());
+            StartCoroutine(CoSetDefaultSelection(targetScrollRect));
         }
 
-        // Must delay this method a bit to let the scroll view finish initializing.
-        private IEnumerator CoSetDefaultSelection()
+        // Must delay this method a bit to prevent bug of unity event system
+        private IEnumerator CoSetDefaultSelection(Transform targetScrollRect = null)
         {
+            var board = targetScrollRect ? targetScrollRect : _scrollRectContent;
             yield return new WaitForSeconds(.1f);
 
-            var firstButton = _scrollRect.content.GetComponentInChildren<MultiInputButton>();
+            var firstButton = board.GetComponentInChildren<MultiInputButton>();
             firstButton.Select();
         }
 
         protected virtual void CleanUpScrollView()
         {
-            foreach (Transform child in _scrollRect.content)
+            foreach (Transform child in _scrollRectContent)
             {
                 Destroy(child.gameObject);
             }
@@ -62,7 +63,7 @@ namespace CryptoQuest.UI.Menu.Panels.DimensionBox.EquipmentTransferSection
 
         protected virtual void SetParentIdentity(UITransferItem item)
         {
-            item.Parent = _scrollRect.content;
+            item.Parent = _scrollRectContent;
         }
 
         protected abstract void RenderData();
