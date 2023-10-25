@@ -20,7 +20,6 @@ namespace CryptoQuest.UI.Menu.Panels.Item
         [SerializeField] private Image _icon;
         [SerializeField] private LocalizeStringEvent _name;
         [SerializeField] private Text _nameText;
-        [SerializeField] private Text _charaterX;
         [SerializeField] private Text _quantity;
         [SerializeField] private MultiInputButton _button;
         [SerializeField] private GameObject _selectedBackground;
@@ -82,7 +81,7 @@ namespace CryptoQuest.UI.Menu.Panels.Item
 
         public void SetQuantityText(ConsumableInfo item)
         {
-            _quantity.text = item.Quantity.ToString();
+            _quantity.text = $"x{item.Quantity}";
         }
 
         private IEnumerator CoLoadIcon()
@@ -98,7 +97,6 @@ namespace CryptoQuest.UI.Menu.Panels.Item
             var color = allowed ? _enabledColor : _disabledColor;
 
             _nameText.color = color;
-            _charaterX.color = color;
             _quantity.color = color;
 
             _canClick = allowed;
