@@ -7,10 +7,11 @@ namespace CryptoQuest.BlackSmith.Upgrade
 {
     public class UpgradeModel : MonoBehaviour, IUpgradeModel
     {
-        private List<IUpgradeEquipment> _upgradeData = new();
+        private List<IUpgradeEquipment> _upgradeData;
         public List<IUpgradeEquipment> ListEquipment => _upgradeData;
         public void CoGetData(InventorySO inventory)
         {
+            _upgradeData = new();
             var listEquipment = inventory.Equipments;
             foreach (var equipment in listEquipment)
             {

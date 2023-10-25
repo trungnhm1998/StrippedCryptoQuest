@@ -9,7 +9,6 @@ namespace CryptoQuest.BlackSmith.StateMachine
     public class BlackSmithStateBehaviour : StateMachineBehaviour
     {
         private Animator _animator;
-        private BlackSmithInputManager _input;
         private BlackSmithStateController _stateController;
         private static readonly int _upgrade = Animator.StringToHash("isUpgradeState");
         private static readonly int _evolve = Animator.StringToHash("isEvolveState");
@@ -20,30 +19,26 @@ namespace CryptoQuest.BlackSmith.StateMachine
             _stateController = animator.GetComponent<BlackSmithStateController>();
             _stateController.OpenUpgradeEvent += OpenUpgradeState;
             _stateController.OpenEvolveEvent += OpenEvolveState;
-            _input = _stateController.Input;
-            _input.CancelEvent += ExitState;
+            _stateController.ExitStateEvent?.Invoke(true);
+            _stateController.UIBlackSmith.Init();
         }
 
         public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
             _stateController.OpenUpgradeEvent -= OpenUpgradeState;
             _stateController.OpenEvolveEvent -= OpenEvolveState;
-            _input.CancelEvent -= ExitState;
         }
 
         private void OpenUpgradeState()
         {
             _animator.SetTrigger(_upgrade);
+            _stateController.ExitStateEvent?.Invoke(false);
         }
 
         private void OpenEvolveState()
         {
             _animator.SetTrigger(_evolve);
-        }
-
-        private void ExitState()
-        {
-            _stateController.CloseStateEvent?.Invoke();
+            _stateController.ExitStateEvent?.Invoke(false);
         }
     }
 }

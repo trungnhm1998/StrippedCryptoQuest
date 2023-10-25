@@ -1,15 +1,14 @@
 using System.Collections;
 using CryptoQuest.BlackSmith.StateMachine;
-using CryptoQuest.Menu;
 using UnityEngine;
-using UnityEngine.Events;
+using UnityEngine.UI;
 
 namespace CryptoQuest.BlackSmith
 {
     public class UIBlackSmith : MonoBehaviour
     {
         [SerializeField] private BlackSmithStateController _stateController;
-        [SerializeField] private MultiInputButton _defaultSelection;
+        [SerializeField] private Button _defaultSelection;
         [SerializeField] private GameObject _upgradePanel;
         [SerializeField] private GameObject _evolvePanel;
         [SerializeField] private GameObject _blackSmithOverview;
@@ -17,15 +16,14 @@ namespace CryptoQuest.BlackSmith
 
         public void BlackSmithOpened()
         {
-            Init();
-            _blackSmithOverview.SetActive(true);
             StartCoroutine(CoSelectDefault());
+            _blackSmithOverview.SetActive(true);
         }
 
         public void BlackSmithClosed()
         {
-            _blackSmithOverview.SetActive(false);
             StopCoroutine(CoSelectDefault());
+            _blackSmithOverview.SetActive(false);
         }
 
         private IEnumerator CoSelectDefault()
@@ -46,7 +44,7 @@ namespace CryptoQuest.BlackSmith
             _stateController.OpenEvolveEvent?.Invoke();
         }
 
-        private void Init()
+        public void Init()
         {
             _evolvePanel.SetActive(false);
             _upgradePanel.SetActive(false);

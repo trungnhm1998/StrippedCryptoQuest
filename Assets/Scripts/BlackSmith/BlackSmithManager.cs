@@ -14,7 +14,6 @@ namespace CryptoQuest.BlackSmith
 {
     public class BlackSmithManager : MonoBehaviour
     {
-        [SerializeField] private GameObject _stateController;
         [SerializeField] private BlackSmithInputManager _blackSmithInput;
         [SerializeField] private VoidEventChannelSO _sceneLoadedEvent;
         [SerializeField] private ShowBlackSmithEventChannelSO _openBlackSmithEvent;
@@ -23,30 +22,34 @@ namespace CryptoQuest.BlackSmith
         [Header("Unity Events")]
         [SerializeField] private UnityEvent _blackSmithOpenedEvent;
         [SerializeField] private UnityEvent _blackSmithClosedEvent;
+        private bool isExitState;
 
         private void OnEnable()
         {
             _openBlackSmithEvent.EventRaised += OpenBlackSmith;
-            _blacksmithController.CloseStateEvent += CloseBlackSmith;
+            _blackSmithInput.CancelEvent += CloseBlackSmith;
+            _blacksmithController.ExitStateEvent += CanExitBlackSmith;
         }
 
         private void OnDisable()
         {
             _openBlackSmithEvent.EventRaised -= OpenBlackSmith;
-            _blacksmithController.CloseStateEvent -= CloseBlackSmith;
+            _blackSmithInput.CancelEvent -= CloseBlackSmith;
+            _blacksmithController.ExitStateEvent -= CanExitBlackSmith;
         }
 
         private void OpenBlackSmith()
         {
             EnableBlackSmithInput();
-            _stateController.SetActive(true);
+            _blacksmithController.gameObject.SetActive(true);
             _blackSmithOpenedEvent.Invoke();
         }
 
         private void CloseBlackSmith()
         {
+            if (!isExitState) return;
             DisableBlackSmithInput();
-            _stateController.SetActive(false);
+            _blacksmithController.gameObject.SetActive(false);
             _blackSmithClosedEvent.Invoke();
         }
 
@@ -58,6 +61,11 @@ namespace CryptoQuest.BlackSmith
         private void DisableBlackSmithInput()
         {
             _blackSmithInput.DisableInput();
+        }
+
+        private void CanExitBlackSmith(bool isExit)
+        {
+            isExitState = isExit;
         }
     }
 }

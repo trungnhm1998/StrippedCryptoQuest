@@ -15,11 +15,5 @@ namespace CryptoQuest.BlackSmith.Upgrade.StateMachine
         [field: SerializeField] public GameObject UpgradeEquipmentPanel { get; private set; }
         [field: SerializeField] public GameObject UpgradeResultPanel { get; private set; }
         [field: SerializeField] public GameObject SelectActionPanel { get; private set; }
-        [SerializeField] private UnityEvent _initListEquipment;
-
-        public void InstantiateEquipment()
-        {
-            _initListEquipment.Invoke();
-        }
     }
 }

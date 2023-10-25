@@ -18,7 +18,6 @@ namespace CryptoQuest.BlackSmith.Upgrade.StateMachine
             _input = _stateController.InputManager;
             _stateController.SelectedEquipmentPanel.SetActive(true);
             _stateController.SelectActionPanel.SetActive(false);
-            _stateController.InstantiateEquipment();
             _input.SubmitEvent += GoToUpgradeState;
             _input.CancelEvent += ExitState;
         }
