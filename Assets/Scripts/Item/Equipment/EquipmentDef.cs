@@ -1,4 +1,5 @@
 ﻿using CryptoQuest.AbilitySystem.Abilities;
+using IndiGames.Core.SaveSystem.ScriptableObjects;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
 using UnityEngine;
 
@@ -8,7 +9,7 @@ namespace CryptoQuest.Item.Equipment
     /// Define the equipment, stats, and other properties of an equipment
     /// </summary>
     [CreateAssetMenu(fileName = "Equipment", menuName = "Crypto Quest/Inventory/Equipment Def")]
-    public class EquipmentDef : ScriptableObject
+    public class EquipmentDef : SerializableScriptableObject
     {
         [field: SerializeField] public string PrefabId { get; private set; }
         [field: SerializeField] public string ID { get; private set; }

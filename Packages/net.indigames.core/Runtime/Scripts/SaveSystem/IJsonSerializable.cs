@@ -5,10 +5,6 @@
     /// </summary>
     public interface IJsonSerializable
     {
-        /// <summary>
-        /// Serialize key for json
-        /// </summary>
-        string Key { get; }
 
         /// <summary>
         /// Save data to json string

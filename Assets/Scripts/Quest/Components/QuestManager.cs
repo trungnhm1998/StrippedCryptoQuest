@@ -12,15 +12,34 @@ using UnityEngine;
 namespace CryptoQuest.Quest.Components
 {
     [Serializable]
-    public class QuestData
+    public class QuestData: IJsonSerializable
     {
         public List<string> InProgressQuest = new();
         public List<string> CompletedQuests = new();
+
+        public bool FromJson(string json)
+        {
+            try
+            {
+                JsonUtility.FromJsonOverwrite(json, this);
+                return true;
+            }
+            catch(Exception ex)
+            {
+                Debug.LogException(ex);
+            }
+            return false;
+        }
+
+        public string ToJson()
+        {
+            return JsonUtility.ToJson(this);
+        }
     }
 
     [AddComponentMenu("Quest System/Quest Manager")]
     [DisallowMultipleComponent]
-    public class QuestManager : MonoBehaviour, IJsonSerializable
+    public class QuestManager : MonoBehaviour, ISaveObject
     {
         public static Action<IQuestConfigure> OnConfigureQuest;
         public static Action<QuestSO> OnRemoveProgressingQuest;
@@ -39,7 +58,6 @@ namespace CryptoQuest.Quest.Components
         public List<QuestInfo> CompletedQuests { get; private set; } = new();
 
         [SerializeField, HideInInspector] private QuestSO _currentQuestData;
-        private QuestData _questData = new();
         private ISaveSystem _saveSystem;
 
         private void Awake()
@@ -166,30 +184,20 @@ namespace CryptoQuest.Quest.Components
 
         #region SaveSystem
 
-        // TODO: Change key, `name` will be different when build release
-        public string Key => this.name;
+        public string Key => "Quest";
 
         public string ToJson()
         {
-            var inProgressQuest = _questData.InProgressQuest;
-            var completedQuests = _questData.CompletedQuests;
-
+            var questData = new QuestData();
             foreach (var item in InProgressQuest)
             {
-                if (inProgressQuest.Contains(item.Guid)) continue;
-                inProgressQuest.Add(item.Guid);
+                questData.InProgressQuest.Add(item.Guid);
             }
-
             foreach (var item in CompletedQuests)
             {
-                if (completedQuests.Contains(item.Guid)) continue;
-                completedQuests.Add(item.Guid);
-
-                if (!inProgressQuest.Contains(item.Guid)) continue;
-                inProgressQuest.Remove(item.Guid);
+                questData.CompletedQuests.Add(item.Guid);
             }
-
-            return JsonUtility.ToJson(_questData);
+            return questData.ToJson();
         }
 
         public bool FromJson(string json)
@@ -198,24 +206,24 @@ namespace CryptoQuest.Quest.Components
             {
                 if (!string.IsNullOrEmpty(json))
                 {
-                    JsonUtility.FromJsonOverwrite(json, _questData);
-                    if (_questData.InProgressQuest.Count() > 0 || _questData.CompletedQuests.Count() > 0)
+                    var questData = new QuestData();
+                    JsonUtility.FromJsonOverwrite(json, questData);
+                    if (questData.InProgressQuest.Count() > 0 || questData.CompletedQuests.Count() > 0)
                     {
                         InProgressQuest.Clear();
-                        foreach (var item in _questData.InProgressQuest)
+                        foreach (var item in questData.InProgressQuest)
                         {
-                            QuestSO questData = (QuestSO)ScriptableObjectRegistry.FindByGuid(item);
-                            InProgressQuest.Add(questData.CreateQuest());
+                            QuestSO questSO = (QuestSO)ScriptableObjectRegistry.FindByGuid(item);
+                            InProgressQuest.Add(questSO.CreateQuest());
                         }
 
                         CompletedQuests.Clear();
-                        foreach (var item in _questData.CompletedQuests)
+                        foreach (var item in questData.CompletedQuests)
                         {
-                            QuestSO questData = (QuestSO)ScriptableObjectRegistry.FindByGuid(item);
-                            CompletedQuests.Add(questData.CreateQuest());
+                            QuestSO questSO = (QuestSO)ScriptableObjectRegistry.FindByGuid(item);
+                            CompletedQuests.Add(questSO.CreateQuest());
                         }
                     }
-
                     return true;
                 }
             }
@@ -223,10 +231,8 @@ namespace CryptoQuest.Quest.Components
             {
                 Debug.LogException(ex);
             }
-
             return false;
         }
-
         #endregion
     }
 }

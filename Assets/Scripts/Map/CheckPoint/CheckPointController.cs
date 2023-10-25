@@ -25,7 +25,7 @@ namespace CryptoQuest.Map.CheckPoint
         void FinishBackToCheckPoint();
     }
 
-    public class CheckPointController : MonoBehaviour, ICheckPointController, IJsonSerializable
+    public class CheckPointController : MonoBehaviour, ICheckPointController, ISaveObject
     {
         public bool IsBackToCheckPoint => _isBackToCheckPoint;
         public Vector3 CheckPointPosition => _lastCheckPointPosition;
@@ -119,8 +119,7 @@ namespace CryptoQuest.Map.CheckPoint
         }
 
         #region SaveLoad
-        // TODO: Change key, `name` will be different when build release
-        public string Key => this.name;
+        public string Key => "CheckPoint";
 
         public string ToJson()
         {

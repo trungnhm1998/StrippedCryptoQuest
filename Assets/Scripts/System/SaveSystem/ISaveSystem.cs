@@ -9,8 +9,8 @@ public interface ISaveSystem
     bool SaveScene(SceneScriptableObject sceneSO);
     bool LoadScene(ref SceneScriptableObject sceneSO);
 
-    bool LoadObject(IJsonSerializable jObject);
-    bool SaveObject(IJsonSerializable jObject);
+    bool LoadObject(ISaveObject jObject);
+    bool SaveObject(ISaveObject jObject);
 
     bool SaveGame();
     bool LoadSaveGame();

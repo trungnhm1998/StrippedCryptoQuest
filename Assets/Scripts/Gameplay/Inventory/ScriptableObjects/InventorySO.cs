@@ -11,11 +11,37 @@ using UnityEngine;
 using ESlotType =
     CryptoQuest.Item.Equipment.EquipmentSlot.EType;
 using IndiGames.Core.SaveSystem.ScriptableObjects;
+using IndiGames.Core.SaveSystem;
 
 namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects
 {
+    [Serializable]
+    class ConsumableData
+    {
+        public string Guid;
+        public string Id;
+        public int Quantity;
+    }
+
+    [Serializable]
+    class EquipmentData
+    {
+        public string DefGuid;
+        public string PrefabGuid;
+        public string Id;
+        public string DefinitionId;
+        public int Level;
+    }
+
+    [Serializable]
+    class InventoryData
+    {
+        public List<EquipmentData> Equipments = new();
+        public List<ConsumableData> Consumables = new();
+    }
+
     [CreateAssetMenu(menuName = "Crypto Quest/Inventory/Inventory")]
-    public class InventorySO : SerializableScriptableObject
+    public class InventorySO : SerializableScriptableObject, IJsonSerializable
     {
         public event Action Loaded;
         [SerializeField] private InventoryConfigSO _inventoryConfig;
@@ -166,5 +192,68 @@ namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects
             _equipments.Add(equipment);
         }
 #endif
+
+        public string ToJson()
+        {
+            var inventoryData = new InventoryData();
+            foreach(var consumable in Consumables)
+            {
+                var consumableData = new ConsumableData();
+                consumableData.Guid = consumable.Data.Guid;
+                consumableData.Id = consumable.Id;
+                consumableData.Quantity = consumable.Quantity;
+                inventoryData.Consumables.Add(consumableData);
+            }
+            foreach (var equipment in Equipments)
+            {
+                var equipmentData = new EquipmentData();
+                equipmentData.DefGuid = equipment.Def.Guid;
+                equipmentData.PrefabGuid = equipment.Prefab.Guid;
+                equipmentData.Id = equipment.Id;
+                equipmentData.DefinitionId = equipment.DefinitionId;
+                equipmentData.Level = equipment.Level;
+                inventoryData.Equipments.Add(equipmentData);
+            }
+            return JsonUtility.ToJson(inventoryData);
+        }
+
+        public bool FromJson(string json)
+        {
+            try
+            {
+                Consumables.Clear();
+                Equipments.Clear();
+
+                var inventoryData = new InventoryData();
+                JsonUtility.FromJsonOverwrite(json, inventoryData);
+                foreach (var consumableData in inventoryData.Consumables)
+                {
+                    var dataSO = (ConsumableSO)ScriptableObjectRegistry.FindByGuid(consumableData.Guid);
+                    var consumable = new ConsumableInfo(dataSO, consumableData.Quantity)
+                    {
+                        Id = consumableData.Id
+                    };
+                    Consumables.Add(consumable);
+                }
+                foreach (var equipmentData in inventoryData.Equipments)
+                {
+                    var defSO = (EquipmentDef)ScriptableObjectRegistry.FindByGuid(equipmentData.DefGuid);
+                    var prefabSO = (EquipmentPrefab)ScriptableObjectRegistry.FindByGuid(equipmentData.PrefabGuid);
+                    var equipment = new EquipmentInfo(equipmentData.DefinitionId, equipmentData.Level)
+                    {
+                        Def = defSO,
+                        Prefab = prefabSO,
+                        Id = equipmentData.Id
+                    };
+                    Equipments.Add(equipment);
+                }
+                return true;
+            }
+            catch(Exception ex)
+            {
+                Debug.LogException(ex);
+            }
+            return false;
+        }
     }
 }

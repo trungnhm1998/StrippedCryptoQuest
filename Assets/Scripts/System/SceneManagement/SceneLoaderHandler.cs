@@ -28,8 +28,16 @@ namespace CryptoQuest.System.SceneManagement
         {
             if (SceneToLoad.SceneType == SceneScriptableObject.Type.Location)
             {
-                Debug.Log("ISceneLoaderHandler, OnSceneLoaded save data...");
-                _saveSystemSO.SaveScene(SceneToLoad);
+                if(_saveSystemSO.IsSceneLoading)
+                {
+                    Debug.Log("ISceneLoaderHandler, OnSceneLoaded, loaded scene...");
+                    _saveSystemSO.OnSceneLoaded(); 
+                }
+                else
+                {
+                    Debug.Log("ISceneLoaderHandler, OnSceneLoaded, save scene...");
+                    _saveSystemSO.SaveScene(SceneToLoad);
+                }
             }
         }
     }

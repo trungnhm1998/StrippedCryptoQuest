@@ -11,7 +11,7 @@ namespace CryptoQuest.System.SaveSystem
     public class SaveSystemSO : ScriptableObject, ISaveSystem
     {
         [SerializeField] protected SaveManagerSO _saveManagerSO;
-        [SerializeField] protected VoidEventChannelSO _sceneLoadedEvent;
+        [SerializeField] private SaveData _saveData = new();
 
         public string PlayerName
         {
@@ -19,8 +19,8 @@ namespace CryptoQuest.System.SaveSystem
             set => _saveData.player = value;
         }
 
-        [SerializeField] private SaveData _saveData = new();
-        private bool isSceneLoading = false;
+        private bool _isSceneLoading = false;
+        public bool IsSceneLoading => _isSceneLoading;
 
         private string Save()
         {
@@ -68,18 +68,14 @@ namespace CryptoQuest.System.SaveSystem
             return Load(await _saveManagerSO.LoadAsync());
         }
 
-        private void OnSceneLoaded()
+        public void OnSceneLoaded()
         {
-            if(isSceneLoading)
-            {
-                _sceneLoadedEvent.EventRaised -= OnSceneLoaded;
-                isSceneLoading = false;
-            }
+            _isSceneLoading = false;
         }
 
         public bool SaveScene(SceneScriptableObject sceneSO)
         {
-            if(!isSceneLoading)
+            if(!_isSceneLoading)
             {
                 _saveData.scene = JsonUtility.ToJson(sceneSO);
                 return SaveGame();
@@ -89,18 +85,17 @@ namespace CryptoQuest.System.SaveSystem
 
         public bool LoadScene(ref SceneScriptableObject sceneSO)
         {
-            if(!isSceneLoading && !string.IsNullOrEmpty(_saveData.scene) && sceneSO != null)
+            if(!_isSceneLoading && !string.IsNullOrEmpty(_saveData.scene) && sceneSO != null)
             {
                 sceneSO = SceneScriptableObject.CreateInstance<SceneScriptableObject>();
                 JsonUtility.FromJsonOverwrite(_saveData.scene, sceneSO);
-                _sceneLoadedEvent.EventRaised += OnSceneLoaded;
-                isSceneLoading = true;
+                _isSceneLoading = true;
                 return true;
             }
             return false;
         }
 
-        public bool LoadObject(IJsonSerializable jObject)
+        public bool LoadObject(ISaveObject jObject)
         {
             try
             {
@@ -119,7 +114,7 @@ namespace CryptoQuest.System.SaveSystem
             return false;
         }
 
-        public bool SaveObject(IJsonSerializable jObject)
+        public bool SaveObject(ISaveObject jObject)
         {
             try 
             {
@@ -147,10 +142,18 @@ namespace CryptoQuest.System.SaveSystem
         #region Editor Tools
 
 #if UNITY_EDITOR
-        public void Editor_ClearSave() => _saveData = new SaveData();
-        public void Editor_OpenSaveFolder() => Application.OpenURL(Application.persistentDataPath);
+        public void Editor_ClearSave()
+        {
+            _saveData = new SaveData();
+            SaveGame();
+        }
 
+        public void Editor_OpenSaveFolder()
+        {
+            Application.OpenURL(Application.persistentDataPath);
+        }
 #endif
+
         #endregion
     }
 }

@@ -5,8 +5,6 @@ using CryptoQuest.Gameplay.Loot;
 using CryptoQuest.Item;
 using CryptoQuest.Item.Equipment;
 using CryptoQuest.System;
-using CryptoQuest.System.SaveSystem;
-using IndiGames.Core.SaveSystem;
 using UnityEngine;
 
 namespace CryptoQuest.Gameplay.Inventory
@@ -22,7 +20,7 @@ namespace CryptoQuest.Gameplay.Inventory
         bool Remove(ConsumableInfo consumable);
     }
 
-    public class InventoryController : MonoBehaviour, IInventoryController, IJsonSerializable
+    public class InventoryController : MonoBehaviour, IInventoryController, ISaveObject
     {
         [SerializeField] private InventorySO _inventory;
         public InventorySO Inventory => _inventory;
@@ -38,9 +36,7 @@ namespace CryptoQuest.Gameplay.Inventory
             ServiceProvider.Provide<IInventoryController>(this);
             _definitionDatabase = GetComponent<IEquipmentDefProvider>();
             _saveSystem = ServiceProvider.GetService<ISaveSystem>();
-            StartCoroutine(LoadAllEquipment());
         }
-
 
         private IEnumerator LoadAllEquipment()
         {
@@ -68,6 +64,7 @@ namespace CryptoQuest.Gameplay.Inventory
         private void Start()
         {
             _saveSystem?.LoadObject(this);
+            StartCoroutine(LoadAllEquipment());
         }
 
         private void AddLoot(LootInfo loot) => loot.AddItemToInventory(_inventory);
@@ -92,20 +89,22 @@ namespace CryptoQuest.Gameplay.Inventory
         }
 
         #region SaveSystem
-        
-        // TODO: Change key, `name` will be different when build release
-        public string Key { get { return this.name; } }
+
+        public string Key
+        {
+            get { return "Inventory"; }
+        }
 
         public string ToJson()
         {
-            return JsonUtility.ToJson(_inventory);
+            return _inventory.ToJson();
         }
 
         public bool FromJson(string json)
         {
-            try { JsonUtility.FromJsonOverwrite(json, _inventory); return true; } catch { }
-            return false;
+            return _inventory.FromJson(json);
         }
+
         #endregion
     }
 }

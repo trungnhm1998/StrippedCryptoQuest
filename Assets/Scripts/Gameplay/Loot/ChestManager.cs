@@ -16,7 +16,7 @@ namespace CryptoQuest.Gameplay.Loot
         public List<string> OpenedChests = new();
     }
 
-    public class ChestManager : MonoBehaviour, IJsonSerializable
+    public class ChestManager : MonoBehaviour, ISaveObject
     {
         [SerializeField] private LootDatabase _lootDatabase;
         [SerializeField] private ChestSave _saveData; // TODO: Move this to save manager
@@ -74,10 +74,8 @@ namespace CryptoQuest.Gameplay.Loot
             _saveSystem?.SaveObject(this);
         }
 
-        #region SaveSystem
-        
-        // TODO: Change key, `name` will be different when build release
-        public string Key { get { return this.name; } }
+        #region SaveSystem        
+        public string Key { get { return "Chest"; } }
 
         public string ToJson()
         {
