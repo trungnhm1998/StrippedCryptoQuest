@@ -166,9 +166,16 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
             for (int i = 0; i < inventory.Equipments.Count; i++)
             {
                 var equipment = inventory.Equipments[i];
-                if (_equipmentsPanel.ModifyingEquipmentCategory ==
-                    equipment.Data.EquipmentCategory && !equipment.IsEquipped)
-                    InstantiateNewEquipmentUI(equipment);
+                try
+                {
+                    if (_equipmentsPanel.ModifyingEquipmentCategory ==
+                        equipment.Data.EquipmentCategory && !equipment.IsEquipped)
+                        InstantiateNewEquipmentUI(equipment);
+                }
+                catch (Exception e)
+                {
+                    Debug.Log($"equipment at {i} is null");
+                }
             }
 
             Debug.Log($"InstantiateEquipments {_equipmentItems.Count}");
@@ -217,7 +224,8 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
         private void OnPreviewEquipmentStats(UIEquipmentItem equippingItemUI)
         {
             _tooltip.SetSafeArea(_tooltipSafeArea);
-            _equipmentPreviewer.PreviewEquipment(equippingItemUI.Equipment, _equipmentsPanel.EquippingSlot, InspectingHero);
+            _equipmentPreviewer.PreviewEquipment(equippingItemUI.Equipment, _equipmentsPanel.EquippingSlot,
+                InspectingHero);
         }
 
         private void Unequip()

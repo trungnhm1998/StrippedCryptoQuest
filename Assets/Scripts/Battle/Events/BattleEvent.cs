@@ -203,4 +203,11 @@ namespace CryptoQuest.Battle.Events
             Target = target;
         }
     }
+
+    public class ReceivedPhysicalDamageEvent : BattleEvent
+    {
+        public Components.Character Receiver { get; set; }
+        public Components.Character Dealer { get; set; }
+        public float Damage { get; set; }
+    }
 }

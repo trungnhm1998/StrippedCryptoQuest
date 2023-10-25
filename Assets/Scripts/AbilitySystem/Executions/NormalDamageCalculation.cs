@@ -1,4 +1,5 @@
 ﻿using CryptoQuest.Battle.Components;
+using CryptoQuest.Battle.Events;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
 using IndiGames.GameplayAbilitySystem.EffectSystem;
 using IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects.EffectExecutionCalculation;
@@ -6,7 +7,7 @@ using UnityEngine;
 
 namespace CryptoQuest.AbilitySystem.Executions
 {
-    public class DamageCalculation : EffectExecutionCalculationBase
+    public class NormalDamageCalculation : EffectExecutionCalculationBase
     {
         [Header("Config")]
         [SerializeField] private float _lowerRandomRange = -0.05f;
@@ -46,7 +47,13 @@ namespace CryptoQuest.AbilitySystem.Executions
             damageDone += (damageDone * Random.Range(_lowerRandomRange, _upperRandomRange));
 
             if (damageDone <= 0f) damageDone = 0;
-
+            else
+                BattleEventBus.RaiseEvent(new ReceivedPhysicalDamageEvent()
+                {
+                    Dealer = executionParams.SourceAbilitySystemComponent.GetComponent<Battle.Components.Character>(),
+                    Receiver = executionParams.TargetAbilitySystemComponent.GetComponent<Battle.Components.Character>(),
+                    Damage = damageDone
+                });
             Debug.Log($"Damage done: {damageDone}");
             outModifiers.Add(new GameplayModifierEvaluatedData(
                 // TODO: Would it be better if I add Damage attribute that will be -health?
