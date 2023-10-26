@@ -199,23 +199,35 @@ namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects
         public string ToJson()
         {
             var inventoryData = new InventoryData();
-            foreach(var consumable in Consumables)
+            foreach (var consumable in Consumables)
             {
-                var consumableData = new ConsumableData();
-                consumableData.Guid = consumable.Data.Guid;
-                consumableData.Id = consumable.Id;
-                consumableData.Quantity = consumable.Quantity;
-                inventoryData.Consumables.Add(consumableData);
+                if (consumable != null && consumable.Data != null)
+                {
+                    var consumableData = new ConsumableData();
+                    consumableData.Guid = consumable.Data.Guid;
+                    consumableData.Id = consumable.Id;
+                    consumableData.Quantity = consumable.Quantity;
+                    inventoryData.Consumables.Add(consumableData);
+                }
             }
             foreach (var equipment in Equipments)
             {
-                var equipmentData = new EquipmentData();
-                equipmentData.DefGuid = equipment.Def.Guid;
-                equipmentData.PrefabGuid = equipment.Prefab.Guid;
-                equipmentData.Id = equipment.Id;
-                equipmentData.DefinitionId = equipment.DefinitionId;
-                equipmentData.Level = equipment.Level;
-                inventoryData.Equipments.Add(equipmentData);
+                if (equipment != null)
+                {
+                    var equipmentData = new EquipmentData();
+                    if (equipment.Def != null)
+                    {
+                        equipmentData.DefGuid = equipment.Def.Guid;
+                    }
+                    if (equipment.Prefab != null)
+                    {
+                        equipmentData.PrefabGuid = equipment.Prefab.Guid;
+                    }
+                    equipmentData.Id = equipment.Id;
+                    equipmentData.DefinitionId = equipment.DefinitionId;
+                    equipmentData.Level = equipment.Level;
+                    inventoryData.Equipments.Add(equipmentData);
+                }
             }
             return JsonUtility.ToJson(inventoryData);
         }
@@ -244,27 +256,29 @@ namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects
             }
             foreach (var equipmentData in inventoryData.Equipments)
             {
-                var defSoHandle = Addressables.LoadAssetAsync<EquipmentDef>(equipmentData.DefGuid);
+                var equipment = new EquipmentInfo(equipmentData.DefinitionId, equipmentData.Level)
                 {
+                    Id = equipmentData.Id
+                };
+                if (!string.IsNullOrEmpty(equipmentData.DefGuid))
+                {
+                    var defSoHandle = Addressables.LoadAssetAsync<EquipmentDef>(equipmentData.DefGuid);
                     yield return defSoHandle;
                     if (defSoHandle.Status == AsyncOperationStatus.Succeeded)
                     {
-                        var prefabSoHandle = Addressables.LoadAssetAsync<EquipmentPrefab>(equipmentData.PrefabGuid);
-                        {
-                            yield return prefabSoHandle;
-                            if (prefabSoHandle.Status == AsyncOperationStatus.Succeeded)
-                            {
-                                var equipment = new EquipmentInfo(equipmentData.DefinitionId, equipmentData.Level)
-                                {
-                                    Def = defSoHandle.Result,
-                                    Prefab = prefabSoHandle.Result,
-                                    Id = equipmentData.Id
-                                };
-                                Equipments.Add(equipment);
-                            }
-                        }
+                        equipment.Def = defSoHandle.Result;
                     }
                 }
+                if (!string.IsNullOrEmpty(equipmentData.PrefabGuid))
+                {
+                    var prefabSoHandle = Addressables.LoadAssetAsync<EquipmentPrefab>(equipmentData.PrefabGuid);
+                    yield return prefabSoHandle;
+                    if (prefabSoHandle.Status == AsyncOperationStatus.Succeeded)
+                    {
+                        equipment.Prefab = prefabSoHandle.Result;
+                    }
+                }
+                Equipments.Add(equipment);
             }
         }
     }
