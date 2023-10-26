@@ -8,7 +8,7 @@ namespace CryptoQuest.Gameplay.InteractableObject.Door
         [SerializeField] private GameObject _interactableObject;
         private bool _isOpenning = false;
 
-        private bool _canInteract = false;
+        private bool _canInteract = true;
 
         public void Interact()
         {
