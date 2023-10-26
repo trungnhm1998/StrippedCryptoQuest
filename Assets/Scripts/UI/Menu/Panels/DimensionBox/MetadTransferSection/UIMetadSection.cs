@@ -2,6 +2,7 @@ using CryptoQuest.Events.UI.Dialogs;
 using CryptoQuest.Input;
 using CryptoQuest.UI.Dialogs.OneButtonDialog;
 using CryptoQuest.UI.Menu.Panels.DimensionBox.Interfaces;
+using CryptoQuest.UI.Title;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using UnityEngine;
@@ -99,7 +100,6 @@ namespace CryptoQuest.UI.Menu.Panels.DimensionBox.MetadTransferSection
             if (!_isSelectedButton || _isTransferMetad) return;
             
             _isTransferMetad = true;
-            _input.DisableAllInput();
             _yesNoDialogEventSO.SetMessage(_currentWallet.SendingMessage);
             SetActiveAllButton(false);
             base.SendItems();
@@ -110,11 +110,14 @@ namespace CryptoQuest.UI.Menu.Panels.DimensionBox.MetadTransferSection
             base.YesButtonPressed();
             float quantityInput = string.IsNullOrEmpty(_inputField.text) ? 0 : float.Parse(_inputField.text);
             _currentWallet.Send(quantityInput);
+            _input.DisableAllInput();
+            LoadingController.OnEnableLoadingPanel?.Invoke();
         }
 
         protected override void NoButtonPressed()
         {
             base.NoButtonPressed();
+            ResetTransfer();
         }
 
         public override void ResetTransfer()
@@ -152,6 +155,7 @@ namespace CryptoQuest.UI.Menu.Panels.DimensionBox.MetadTransferSection
             _resultDialog.WithMessage(_transferMessageSuccess)
                 .WithButtonsEvent(OnDialogPress)
                 .Show();
+            LoadingController.OnDisableLoadingPanel?.Invoke();
         }
 
         private void NotifyFailed()
@@ -159,6 +163,7 @@ namespace CryptoQuest.UI.Menu.Panels.DimensionBox.MetadTransferSection
             _resultDialog.WithMessage(_transferMessageFail)
                 .WithButtonsEvent(OnDialogPress)
                 .Show();
+            LoadingController.OnDisableLoadingPanel?.Invoke();
         }
 
         private void OnDialogPress()
