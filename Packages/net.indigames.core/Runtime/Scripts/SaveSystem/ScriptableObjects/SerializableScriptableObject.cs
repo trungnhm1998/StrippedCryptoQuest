@@ -10,7 +10,7 @@ namespace IndiGames.Core.SaveSystem.ScriptableObjects
         public string Guid => _guid;
 
 #if UNITY_EDITOR
-        private void OnValidate()
+        protected virtual void OnValidate()
         {
             var assetPath = AssetDatabase.GetAssetPath(this);
             _guid = AssetDatabase.AssetPathToGUID(assetPath);

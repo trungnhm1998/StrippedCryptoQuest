@@ -1,4 +1,5 @@
-﻿using CryptoQuest.AbilitySystem.Abilities;
+﻿using System;
+using CryptoQuest.AbilitySystem.Abilities;
 using IndiGames.Core.SaveSystem.ScriptableObjects;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
 using UnityEngine;
@@ -24,6 +25,7 @@ namespace CryptoQuest.Item.Equipment
         [field: SerializeField] public int RandomBonus { get; private set; }
         [field: SerializeField] public float ValuePerLvl { get; private set; }
         [field: SerializeField] public AttributeWithValue[] Stats { get; private set; }
-        [field: SerializeField] public PassiveAbility Passive { get; private set; }
+        [SerializeField] private PassiveAbility[] _passives = Array.Empty<PassiveAbility>();
+        public PassiveAbility[] Passives => _passives;
     }
 }

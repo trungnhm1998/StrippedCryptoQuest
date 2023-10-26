@@ -46,7 +46,7 @@ namespace CryptoQuest.AbilitySystem.EffectActions
         {
             var context = GameplayEffectContext.ExtractEffectContext(spec.Context);
             _policyDef = policyDef;
-            _turnsLeft = context.Turns == 0 ? 3 : context.Turns;
+            _turnsLeft = context == null || context.Turns == 0 ? 3 : context.Turns;
             _character = Spec.Target.GetComponent<Battle.Components.Character>();
             if (_character.TryGetComponent(out _damageOverTimeFlagsFlags) == false)
                 _damageOverTimeFlagsFlags = _character.gameObject.AddComponent<DamageOverTimeFlags>();
@@ -149,6 +149,7 @@ namespace CryptoQuest.AbilitySystem.EffectActions
             }
         }
 
+        // ReSharper disable Unity.PerformanceAnalysis
         private void ModifyBaseAttributeValueWithEvaluatedEffectModifiers()
         {
             for (var index = 0; index < Spec.Def.EffectDetails.Modifiers.Length; index++)
@@ -161,9 +162,27 @@ namespace CryptoQuest.AbilitySystem.EffectActions
                     Magnitude = Spec.GetModifierMagnitude(index)
                 };
                 InternalExecuteMod(Spec, evalData);
+                // TODO: Refactor DRY
+                BattleEventBus.RaiseEvent(new DamageOverTimeEvent()
+                {
+                    Character = _character,
+                    AffectingAttribute = evalData.Attribute,
+                    Magnitude = evalData.Magnitude
+                });
             }
 
-            foreach (var evalData in ComputedModifiers) InternalExecuteMod(Spec, evalData);
+            foreach (var evalData in ComputedModifiers)
+            {
+                InternalExecuteMod(Spec, evalData);
+                
+                // TODO: Refactor DRY
+                BattleEventBus.RaiseEvent(new DamageOverTimeEvent()
+                {
+                    Character = _character,
+                    AffectingAttribute = evalData.Attribute,
+                    Magnitude = evalData.Magnitude
+                });
+            }
         }
 
         public override void ExecuteActiveEffect()

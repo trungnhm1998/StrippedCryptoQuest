@@ -1808,7 +1808,7 @@ namespace CryptoQuest.Input
                 {
                     ""name"": """",
                     ""id"": ""32324820-295e-4bb0-bb45-fc1f9c89492d"",
-                    ""path"": ""<Keyboard>/escape"",
+                    ""path"": ""<Keyboard>/backquote"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""MnK"",

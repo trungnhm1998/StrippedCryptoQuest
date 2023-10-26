@@ -42,7 +42,7 @@ namespace CryptoQuest.Item.Equipment
         public override int SellPrice => Def.SellPrice;
 
         [NonSerialized] private int _heroEquippedId = 0;
-        public PassiveAbility Passive => Def.Passive;
+        public PassiveAbility[] Passives => Def.Passives;
         public bool IsEquipped => _heroEquippedId != 0;
 
         public EquipmentInfo()

@@ -16,6 +16,14 @@ namespace CryptoQuest.Battle
 
         private IGameObjectAlign<EnemyBehaviour> _enemyAlign = new EnemiesCenterAlign();
 
+        private void Awake()
+        {
+            foreach (var enemy in _enemies)
+            {
+                enemy.gameObject.SetActive(false);
+            }
+        }
+
         /// <summary>
         /// To separate with other same Enemy in a group
         /// their name will be post fix with A, B, C, D 
@@ -28,8 +36,10 @@ namespace CryptoQuest.Battle
                 var enemySpec = loadedEnemyData[index];
                 if (enemySpec == null || enemySpec.IsValid() == false) continue;
                 dict.TryAdd(enemySpec.Data, 0);
-                _enemies[index].Init(enemySpec, Postfixes[dict[enemySpec.Data]++]);
-                AddEnemyToGroup(_enemies[index], enemySpec);
+                var enemyBehaviour = _enemies[index];
+                enemyBehaviour.gameObject.SetActive(true);
+                enemyBehaviour.Init(enemySpec, Postfixes[dict[enemySpec.Data]++]);
+                AddEnemyToGroup(enemyBehaviour, enemySpec);
             }
 
             _enemyAlign?.Align(_enemies);

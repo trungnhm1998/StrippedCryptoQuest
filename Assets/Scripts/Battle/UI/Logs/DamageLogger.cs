@@ -1,5 +1,7 @@
 ﻿using System;
+using CryptoQuest.AbilitySystem.Attributes;
 using CryptoQuest.AbilitySystem.Executions;
+using CryptoQuest.Battle.Events;
 using TinyMessenger;
 using UnityEngine;
 using UnityEngine.Localization;
@@ -12,13 +14,29 @@ namespace CryptoQuest.Battle.UI.Logs
         [SerializeField] private LocalizedString _damageMessage;
         [SerializeField] private LocalizedString _noDamageMessage;
         [SerializeField] private DealingDamageEvent _receivedDamageEvent;
-        private TinyMessageSubscriptionToken _roundStartedEvent;
+        private TinyMessageSubscriptionToken _damageOverTimeEvent;
 
-        private void Awake() => _receivedDamageEvent.DamageDealt += LogDamage;
+        private void Awake()
+        {
+            _receivedDamageEvent.DamageDealt += DamageDealt_LogDamage;
+            _damageOverTimeEvent = BattleEventBus.SubscribeEvent<DamageOverTimeEvent>(LogDoT);
+        }
 
-        private void OnDestroy() => _receivedDamageEvent.DamageDealt -= LogDamage;
+        private void OnDestroy()
+        {
+            _receivedDamageEvent.DamageDealt -= DamageDealt_LogDamage;
+            BattleEventBus.UnsubscribeEvent(_damageOverTimeEvent);
+        }
+        
+        private void LogDoT(DamageOverTimeEvent ctx)
+        {
+            if (ctx.AffectingAttribute != AttributeSets.Health) return;
+            LogDamage(ctx.Character, ctx.Magnitude);
+        }
 
-        private void LogDamage(Components.Character dealer, Components.Character receiver, float damage)
+        private void DamageDealt_LogDamage(Components.Character dealer, Components.Character receiver, float damage) => LogDamage(receiver, damage);
+
+        private void LogDamage(Components.Character receiver, float damage)
         {
             LocalizedString msg;
 

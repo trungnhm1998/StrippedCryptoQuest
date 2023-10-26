@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using CryptoQuest.AbilitySystem.Abilities;
 using CryptoQuest.Item.Equipment;
 
@@ -9,8 +8,7 @@ namespace CryptoQuest.Battle.Components
     {
         private EquipmentsController _equipmentsController;
 
-        private readonly Dictionary<EquipmentInfo, PassiveAbilitySpec> _passives =
-            new Dictionary<EquipmentInfo, PassiveAbilitySpec>();
+        private readonly Dictionary<EquipmentInfo, PassiveAbilitySpec[]> _passives = new();
 
         protected override void Awake()
         {
@@ -31,16 +29,26 @@ namespace CryptoQuest.Battle.Components
 
         private void GrantPassive(EquipmentInfo equipment)
         {
-            PassiveAbility passive = equipment.Passive;
-            if (passive == null) return;
-            var spec = Character.AbilitySystem.GiveAbility<PassiveAbilitySpec>(passive);
-            _passives.Add(equipment, spec);
+            var passiveSpecs = new PassiveAbilitySpec[equipment.Passives.Length];
+            for (var index = 0; index < equipment.Passives.Length; index++)
+            {
+                var passive = equipment.Passives[index];
+                if (passive == null) continue;
+                var spec = Character.AbilitySystem.GiveAbility<PassiveAbilitySpec>(passive);
+                passiveSpecs[index] = spec;
+            }
+
+            _passives.Add(equipment, passiveSpecs);
         }
 
         private void RemovePassive(EquipmentInfo equipment)
         {
-            if (_passives.TryGetValue(equipment, out var passive) == false) return;
-            Character.AbilitySystem.RemoveAbility(passive);
+            if (_passives.TryGetValue(equipment, out var passives) == false) return;
+            foreach (var passive in passives)
+            {
+                Character.AbilitySystem.RemoveAbility(passive);
+            }
+
             _passives.Remove(equipment);
         }
     }

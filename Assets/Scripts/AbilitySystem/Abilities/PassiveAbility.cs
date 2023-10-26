@@ -13,7 +13,16 @@ namespace CryptoQuest.AbilitySystem.Abilities
     /// This will use with <see cref="EquipmentInfo"/>, the equipment will have a passive ability
     /// </summary>
     [CreateAssetMenu(menuName = "Crypto Quest/Ability System/Passive/Simple Passive Ability", fileName = "Passive")]
-    public class PassiveAbility : AbilityScriptableObject<PassiveAbilitySpec> { }
+    public class PassiveAbility : AbilityScriptableObject<PassiveAbilitySpec>
+    {
+        [field: SerializeField] public int Id { get; private set; }
+        [field: SerializeField, Range(0, 1f)] public float SuccessRate { get; private set; } = 1f;
+
+        private void OnValidate()
+        {
+            Id = int.Parse(name);
+        }
+    }
 
     public class PassiveAbilitySpec : GameplayAbilitySpec
     {

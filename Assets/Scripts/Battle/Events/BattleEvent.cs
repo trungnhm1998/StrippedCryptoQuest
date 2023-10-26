@@ -6,6 +6,7 @@ using CryptoQuest.Gameplay.Encounter;
 using CryptoQuest.Gameplay.Loot;
 using CryptoQuest.Item;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
+using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
 using IndiGames.GameplayAbilitySystem.TagSystem.ScriptableObjects;
 using TinyMessenger;
 
@@ -167,6 +168,12 @@ namespace CryptoQuest.Battle.Events
             Skill = skill;
             Target = target.GetComponent<Components.Character>();
         }
+    }
+    
+    public class DamageOverTimeEvent : LogEvent
+    {
+        public AttributeScriptableObject AffectingAttribute { get; set; }
+        public float Magnitude { get; set; }
     }
 
     public class ConsumeItemEvent : LogEvent

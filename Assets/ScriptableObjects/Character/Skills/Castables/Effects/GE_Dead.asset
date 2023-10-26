@@ -10,29 +10,26 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fbb6112b998064f4ebc8a44f4c80c446, type: 3}
-  m_Name: GE_Poison
+  m_Name: GE_Dead
   m_EditorClassIdentifier: 
   <Description>k__BackingField: 
   _policy:
-    rid: 7132078137632358658
+    rid: 7132078404940857421
   <EffectDetails>k__BackingField:
     Modifiers: []
     StackingType: 1
   <IsStack>k__BackingField: 0
   <GrantedTags>k__BackingField:
-  - {fileID: 11400000, guid: 3ac7844b77ddcce4c9b8f4351bd93d43, type: 2}
+  - {fileID: 11400000, guid: c60a47c5f453a024d8657f7b3cafc7cc, type: 2}
   <ApplicationTagRequirements>k__BackingField:
     RequireTags: []
     IgnoreTags: []
   <RemoveGameplayEffectsWithTags>k__BackingField: []
-  <ExecutionCalculations>k__BackingField:
-  - {fileID: 11400000, guid: 5ef26ebfdb66db44eb65c8858295da8b, type: 2}
+  <ExecutionCalculations>k__BackingField: []
   <ChanceToApply>k__BackingField: 1
   <CustomApplicationRequirements>k__BackingField: []
   references:
     version: 2
     RefIds:
-    - rid: 7132078137632358658
-      type: {class: TurnBasePolicy, ns: CryptoQuest.AbilitySystem.EffectActions, asm: indi-games.crypto-quest}
-      data:
-        _triggerType: 1
+    - rid: 7132078404940857421
+      type: {class: InfinitePolicy, ns: IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects.GameplayEffectActions, asm: IndiGames.GameplayAbilitySystem}
