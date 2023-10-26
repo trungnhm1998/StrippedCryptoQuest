@@ -15,7 +15,7 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 namespace CryptoQuest.Quest.Components
 {
     [Serializable]
-    public class QuestData: IJsonSerializable
+    public class QuestData : IJsonSerializable
     {
         public List<string> InProgressQuest = new();
         public List<string> CompletedQuests = new();
@@ -98,13 +98,15 @@ namespace CryptoQuest.Quest.Components
         {
             if (IsQuestTriggered(questData))
             {
-                Debug.Log("TriggerQuest(), Already triggered: " + questData.QuestName);
+                Debug.Log($"<color=green>QuestManager::TriggerQuest::Already triggered: {questData.QuestName}</color>");
                 return;
             }
+
             foreach (var progressQuestInfo in InProgressQuest)
             {
                 if (progressQuestInfo.Guid != questData.Guid) continue;
 
+                Debug.Log($"<color=green>QuestManager::TriggerQuest::Triggered: {questData.QuestName}</color>");
                 progressQuestInfo.TriggerQuest();
                 break;
             }
@@ -116,6 +118,7 @@ namespace CryptoQuest.Quest.Components
             {
                 return CompletedQuests.Any(questInfo => questData.Guid == questInfo.Guid);
             }
+
             return false;
         }
 
@@ -125,20 +128,21 @@ namespace CryptoQuest.Quest.Components
             // This allow parent-quest to respawn child-quest when it not finished
             // while child(s) may finished already (eg: CompletedSlimeQuest)
             var questIdx = CompletedQuests.FindIndex(quest => quest.Guid == questData.Guid);
-            if(questIdx != -1)
+            if (questIdx != -1)
             {
                 CompletedQuests.RemoveAt(questIdx);
+                Debug.Log($"<color=green>QuestManager::GiveQuest::Remove completed: {questData.QuestName}</color>");
             }
 
             if (IsQuestTriggered(questData))
             {
-                Debug.Log("GiveQuest(), Already triggered: " + questData.QuestName);
+                Debug.Log($"<color=green>QuestManager::GiveQuest::Already triggered: {questData.QuestName}</color>");
                 return;
             }
 
             if (InProgressQuest.Any(questInfo => questInfo.Guid == questData.Guid))
             {
-                Debug.Log("GiveQuest(), Already inprogress: " + questData.QuestName);
+                Debug.Log($"<color=green>QuestManager::GiveQuest::Already inprogress: {questData.QuestName}</color>");
                 return;
             }
 
@@ -146,12 +150,13 @@ namespace CryptoQuest.Quest.Components
 
             if (!IsQuestCompleted(questData))
             {
+                Debug.Log($"<color=green>QuestManager::GiveQuest::Give: {questData.QuestName}</color>");
                 InProgressQuest.Add(currentQuestInfo);
                 currentQuestInfo.GiveQuest();
             }
             else
             {
-                Debug.Log("GiveQuest(), Already completed: " + questData.QuestName);
+                Debug.Log($"<color=green>QuestManager::GiveQuest::Already completed: {questData.QuestName}</color>");
             }
 
             _currentQuestData = questData;
