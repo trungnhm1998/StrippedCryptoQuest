@@ -23,9 +23,8 @@ namespace CryptoQuest.Quest.Categories
     [Serializable]
     public class InteractQuestInfo : QuestInfo<InteractQuestSO>
     {
-        public InteractQuestInfo(InteractQuestSO interactQuestSO) : base(
-            interactQuestSO)
-        {}
+        private QuestInteractController _questInteractController;
+        public InteractQuestInfo(InteractQuestSO interactQuestSO) : base(interactQuestSO) { }
 
         public override void TriggerQuest()
         {
@@ -38,6 +37,8 @@ namespace CryptoQuest.Quest.Categories
             {
                 Data.GiveQuestEventChannel.RaiseEvent(possibleOutcomeQuest);
             }
+            
+            _questInteractController?.TriggerQuest(this);
         }
 
         public override void FinishQuest()
@@ -49,9 +50,8 @@ namespace CryptoQuest.Quest.Categories
         public override void GiveQuest()
         {
             var questManager = ServiceProvider.GetService<QuestManager>();
-            var questInteractController = questManager?.GetComponent<QuestInteractController>();
-            questInteractController?.GiveQuest(this);
-            questInteractController?.TriggerQuest(this);
+            _questInteractController = questManager?.GetComponent<QuestInteractController>();
+            _questInteractController?.GiveQuest(this);
         }
     }
 }

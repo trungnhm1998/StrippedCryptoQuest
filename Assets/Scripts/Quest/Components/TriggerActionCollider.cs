@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace CryptoQuest.Quest.Components
 {
+    [RequireComponent(typeof(BoxCollider2D))]
     public class TriggerActionCollider : MonoBehaviour
     {
         [field: SerializeField] public BoxCollider2D BoxCollider2D { get; set; }

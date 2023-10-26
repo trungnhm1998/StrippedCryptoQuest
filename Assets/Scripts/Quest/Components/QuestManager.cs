@@ -27,10 +27,11 @@ namespace CryptoQuest.Quest.Components
                 JsonUtility.FromJsonOverwrite(json, this);
                 return true;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Debug.LogException(ex);
             }
+
             return false;
         }
 
@@ -52,6 +53,7 @@ namespace CryptoQuest.Quest.Components
         private QuestEventChannelSO _triggerQuestEventChannel;
 
         [SerializeField] private QuestEventChannelSO _giveQuestEventChannel;
+        [SerializeField] private QuestEventChannelSO _removeQuestEventChannel;
         [SerializeField] private RewardLootEvent _rewardEventChannel;
 
         [field: SerializeReference, HideInInspector]
@@ -77,6 +79,7 @@ namespace CryptoQuest.Quest.Components
 
             _triggerQuestEventChannel.EventRaised += TriggerQuest;
             _giveQuestEventChannel.EventRaised += GiveQuest;
+            _removeQuestEventChannel.EventRaised += RemoveProgressingQuest;
         }
 
         private void OnDisable()
@@ -87,6 +90,7 @@ namespace CryptoQuest.Quest.Components
 
             _triggerQuestEventChannel.EventRaised -= TriggerQuest;
             _giveQuestEventChannel.EventRaised -= GiveQuest;
+            _removeQuestEventChannel.EventRaised -= RemoveProgressingQuest;
         }
 
         private void Start()
@@ -224,10 +228,12 @@ namespace CryptoQuest.Quest.Components
             {
                 questData.InProgressQuest.Add(item.Guid);
             }
+
             foreach (var item in CompletedQuests)
             {
                 questData.CompletedQuests.Add(item.Guid);
             }
+
             return questData.ToJson();
         }
 
@@ -277,6 +283,7 @@ namespace CryptoQuest.Quest.Components
                 }
             }
         }
+
         #endregion
     }
 }

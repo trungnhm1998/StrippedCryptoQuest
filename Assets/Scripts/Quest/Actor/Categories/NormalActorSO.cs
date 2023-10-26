@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using CryptoQuest.Character;
+using CryptoQuest.EditorTool;
 using CryptoQuest.Quest.Authoring;
 using CryptoQuest.Quest.Components;
 using UnityEngine;
@@ -35,8 +36,14 @@ namespace CryptoQuest.Quest.Actor.Categories
             if (Data.Quest == null) yield break;
 
             NPCBehaviour npcBehaviour = parent.GetComponentInChildren<NPCBehaviour>();
+            GiverActionCollider actionCollider = parent.GetComponentInChildren<GiverActionCollider>();
 
-            if (!npcBehaviour.TryGetComponent<QuestGiver>(out var questGiver)) yield break;
+            actionCollider.SetQuest(Data.Quest);
+            
+            if (!parent.TryGetComponent<ShowCubeWireUtil>(out var showCubeWireUtil)) yield break;
+            actionCollider.SetBoxSize(showCubeWireUtil.SizeBox);
+
+            if (!npcBehaviour.TryGetComponent<QuestTrigger>(out var questGiver)) yield break;
 
             questGiver.Init(Data.Quest);
         }
