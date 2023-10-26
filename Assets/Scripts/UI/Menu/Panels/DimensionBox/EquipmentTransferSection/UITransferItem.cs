@@ -1,18 +1,18 @@
-using CryptoQuest.Menu;
 using CryptoQuest.UI.Menu.Panels.DimensionBox.Interfaces;
 using CryptoQuest.UI.Menu.Panels.Status;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.EventSystems;
 using UnityEngine.Localization.Components;
 using UnityEngine.UI;
 
 namespace CryptoQuest.UI.Menu.Panels.DimensionBox.EquipmentTransferSection
 {
-    public class UITransferItem : MonoBehaviour
+    public class UITransferItem : MonoBehaviour, ISelectHandler
     {
+        public event UnityAction<UITransferItem> CurrentHoveredItemEvent;
         public static event UnityAction<UITransferItem> SelectItemEvent;
 
-        [SerializeField] private MultiInputButton _button;
         [SerializeField] private Image _icon;
         [SerializeField] private LocalizeStringEvent _name;
         [SerializeField] private GameObject _pendingTag;
@@ -40,13 +40,6 @@ namespace CryptoQuest.UI.Menu.Panels.DimensionBox.EquipmentTransferSection
                 .WithLocalPosition(Vector3.zero)
                 .WithScale(new Vector3(.7f, .7f, 0))
                 .WithRangePivot(_minPivotTooltip, _maxPivotTooltip);
-
-            UIEquipmentSection.InspectItemEvent += ReceivedInspectingRequest;
-        }
-
-        private void OnDestroy()
-        {
-            UIEquipmentSection.InspectItemEvent -= ReceivedInspectingRequest;
         }
 
         public void ConfigureCell(INFT itemInfo)
@@ -85,11 +78,6 @@ namespace CryptoQuest.UI.Menu.Panels.DimensionBox.EquipmentTransferSection
             _parent = parent;
         }
 
-        private void Select()
-        {
-            _button.OnSelect(null);
-        }
-
         public void OnInspecting(bool isInspecting)
         {
             if (isInspecting == false)
@@ -110,6 +98,12 @@ namespace CryptoQuest.UI.Menu.Panels.DimensionBox.EquipmentTransferSection
 
             if (_isShowTooltip) _tooltip.Show();
             else _tooltip.Hide();
+        }
+
+        public void OnSelect(BaseEventData eventData)
+        {
+            var itemUi = eventData.selectedObject.GetComponent<UITransferItem>();
+            CurrentHoveredItemEvent?.Invoke(itemUi);
         }
     }
 }

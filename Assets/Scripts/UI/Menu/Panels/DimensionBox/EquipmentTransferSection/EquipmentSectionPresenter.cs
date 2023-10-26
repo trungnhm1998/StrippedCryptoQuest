@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using CryptoQuest.Events.UI.Dialogs;
@@ -41,6 +40,7 @@ namespace CryptoQuest.UI.Menu.Panels.DimensionBox.EquipmentTransferSection
             _uiEquipmentSection.SendingPhaseEvent += CheckIsOnSendingPhase;
 
             GetEquipments();
+            StartCoroutine(CoSubscribeEventForHoveredItems());
         }
 
         // This method subscribe to the _exitTransferSectionEvent on scene.
@@ -49,6 +49,9 @@ namespace CryptoQuest.UI.Menu.Panels.DimensionBox.EquipmentTransferSection
             UITransferItem.SelectItemEvent -= ItemSelected;
             _yesNoDialogEventSO.HideEvent -= HideDialog;
             _uiEquipmentSection.SendingPhaseEvent -= CheckIsOnSendingPhase;
+
+            UnSubscribeEventForHoveredItems();
+            UnSubscribeInspectingEventForCurrentItem();
         }
 
         private void ItemSelected(UITransferItem currentItem)
@@ -156,6 +159,37 @@ namespace CryptoQuest.UI.Menu.Panels.DimensionBox.EquipmentTransferSection
             {
                 item.GetComponent<MultiInputButton>().interactable = interactable;
             }
+        }
+
+        private IEnumerator CoSubscribeEventForHoveredItems()
+        {
+            yield return new WaitUntil(() => _gameBoard.childCount == _gameData.Count);
+            foreach (Transform item in _gameBoard)
+            {
+                var itemUi = item.GetComponent<UITransferItem>();
+                itemUi.CurrentHoveredItemEvent += SubscribeInspectingEventForCurrentItem;
+            }
+        }
+
+        private void UnSubscribeEventForHoveredItems()
+        {
+            foreach (Transform item in _gameBoard)
+            {
+                var itemUi = item.GetComponent<UITransferItem>();
+                itemUi.CurrentHoveredItemEvent -= SubscribeInspectingEventForCurrentItem;
+            }
+        }
+
+        private UITransferItem _currentItem;
+        private void SubscribeInspectingEventForCurrentItem(UITransferItem currentItem)
+        {
+            _currentItem = currentItem;
+            _uiEquipmentSection.InspectItemEvent += _currentItem.ReceivedInspectingRequest;
+        }
+        
+        private void UnSubscribeInspectingEventForCurrentItem()
+        {
+            _uiEquipmentSection.InspectItemEvent -= _currentItem.ReceivedInspectingRequest;
         }
     }
 }

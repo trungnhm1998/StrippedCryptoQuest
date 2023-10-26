@@ -6,7 +6,7 @@ namespace CryptoQuest.UI.Menu.Panels.DimensionBox.EquipmentTransferSection
 {
     public class UIEquipmentSection : UITransferSection
     {
-        public static event UnityAction InspectItemEvent;
+        public event UnityAction InspectItemEvent;
         public event UnityAction<bool> SendingPhaseEvent;
 
         [SerializeField] private EquipmentSectionPresenter _presenter;
