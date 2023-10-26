@@ -22,7 +22,7 @@ namespace CryptoQuest.BlackSmith
 
         public void BlackSmithClosed()
         {
-            GenericMerchantDialogueController.Instance.Release(_dialogue);
+            Destroy(_dialogue.gameObject); // TODO: code smell here
         }
 
         private void DialogInstantiated(UIDialogueForGenericMerchant dialog)
