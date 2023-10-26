@@ -19,8 +19,6 @@ namespace CryptoQuest.Quest.Controllers
         {
             _currentInteractQuest = questInfo.Data.YarnDialogWithQuestSo;
 
-            _questManager?.TriggerQuest(questInfo.Data);
-
             YarnQuestManager.OnDialogCompleted += OnQuestFinish;
         }
 

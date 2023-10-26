@@ -29,6 +29,7 @@ namespace IndiGames.Core.UI
 
         private void InLogic()
         {
+            // TODO: Convert to animator
             _fadeImg.enabled = true;
             _fadeImg.DOBlendableColor(_fadeInColor, _config.Duration)
                 .OnComplete(() => _config.FadeInComplete?.Invoke());

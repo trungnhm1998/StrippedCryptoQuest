@@ -10,8 +10,18 @@ namespace CryptoQuest.Quest.Components
         public QuestSO Quest { get; private set; }
 
         [SerializeField] private QuestEventChannelSO _triggerQuestEventChannel;
+        private GiverActionCollider _actionCollider;
 
-        public void Init(QuestSO dataQuest) => Quest = dataQuest;
-        public void TriggerQuest() => _triggerQuestEventChannel.RaiseEvent(Quest);
+        public void Init(QuestSO dataQuest, GiverActionCollider actionCollider)
+        {
+            Quest = dataQuest;
+            _actionCollider = actionCollider;
+        }
+
+        public void TriggerQuest()
+        {
+            _triggerQuestEventChannel.RaiseEvent(Quest);
+            _actionCollider.BoxCollider2D.enabled = false;
+        }
     }
 }

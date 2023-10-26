@@ -39,13 +39,13 @@ namespace CryptoQuest.Quest.Actor.Categories
             GiverActionCollider actionCollider = parent.GetComponentInChildren<GiverActionCollider>();
 
             actionCollider.SetQuest(Data.Quest);
-            
+
             if (!parent.TryGetComponent<ShowCubeWireUtil>(out var showCubeWireUtil)) yield break;
             actionCollider.SetBoxSize(showCubeWireUtil.SizeBox);
 
             if (!npcBehaviour.TryGetComponent<QuestTrigger>(out var questGiver)) yield break;
 
-            questGiver.Init(Data.Quest);
+            questGiver.Init(Data.Quest, actionCollider);
         }
     }
 }

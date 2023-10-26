@@ -7,17 +7,18 @@ namespace CryptoQuest.Quest.Components
     [RequireComponent(typeof(BoxCollider2D))]
     public class GiverActionCollider : MonoBehaviour
     {
-        [field: SerializeField] public BoxCollider2D BoxCollider2D { get; set; }
-        
+        [field: SerializeField] public BoxCollider2D BoxCollider2D { get; private set; }
+
         [SerializeField] private QuestEventChannelSO _giveQuestEventChannel;
         [SerializeField] private QuestEventChannelSO _removeQuestEventChannel;
 
         private QuestSO _questData;
         private ECollideActionType _collideActionType;
+        private bool _hasEntered;
 
         public void SetQuest(QuestSO questData) => _questData = questData;
         public void SetBoxSize(Vector2 componentSizeBox) => BoxCollider2D.size = componentSizeBox;
-        
+
         private void OnTriggerEnter2D(Collider2D other) => Execute(other, ECollideActionType.OnEnter);
         private void OnTriggerExit2D(Collider2D other) => Execute(other, ECollideActionType.OnExit);
 
@@ -25,13 +26,15 @@ namespace CryptoQuest.Quest.Components
         {
             if (!other.CompareTag("Player")) return;
 
-            if (collideType != ECollideActionType.OnEnter)
+            if (collideType == ECollideActionType.OnEnter && !_hasEntered)
             {
-                _removeQuestEventChannel.RaiseEvent(_questData);
+                _giveQuestEventChannel.RaiseEvent(_questData);
+                _hasEntered = true;
                 return;
             }
 
-            _giveQuestEventChannel.RaiseEvent(_questData);
+            _removeQuestEventChannel.RaiseEvent(_questData);
+            _hasEntered = false;
         }
     }
 }
