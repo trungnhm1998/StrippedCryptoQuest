@@ -89,8 +89,8 @@ GameObject:
   - component: {fileID: 4746999339283940182}
   - component: {fileID: 1879772587667198695}
   - component: {fileID: 2238533855647616475}
-  - component: {fileID: 7376980655918145056}
   - component: {fileID: 6253877721969946727}
+  - component: {fileID: 6451546783395669688}
   m_Layer: 0
   m_Name: UICommandDetailList
   m_TagString: Untagged
@@ -206,21 +206,6 @@ MonoBehaviour:
   _buttonPrefab: {fileID: -5872238508827734839, guid: 0feff2831db30a14a87946cf23cdc371, type: 3}
   _buttonSelector: {fileID: 5533600307582011776}
   _isOneTimeInit: 1
---- !u!114 &7376980655918145056
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6266271885246978286}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: db680cf6b1e7353428c6159ae1ee1dec, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _scrollRect: {fileID: 1879772587667198695}
-  _singleItemRect: {fileID: 8925879796825787899, guid: 173cc793d5ca4a942904247dacd5b8fc, type: 3}
-  _useUpdate: 0
 --- !u!114 &6253877721969946727
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -235,6 +220,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _activeColor: {r: 1, g: 1, b: 1, a: 1}
   _inactiveColor: {r: 0.3773585, g: 0.3773585, b: 0.3773585, a: 1}
+--- !u!114 &6451546783395669688
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6266271885246978286}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37cc09a082d7bde4cbb5326f40d71bc0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _scrollRect: {fileID: 1879772587667198695}
+  _singleItemRect: {fileID: 8925879796825787899, guid: 173cc793d5ca4a942904247dacd5b8fc, type: 3}
+  _useUpdate: 1
 --- !u!1 &6323273035929106516
 GameObject:
   m_ObjectHideFlags: 0
@@ -517,4 +517,4 @@ MonoBehaviour:
   _isSelectFirstButtonOnEnable: 1
   _isSelectLastManagedButtonOnEnable: 1
   _buttonsContainer: {fileID: 8329652044308141507}
-  _autoScroll: {fileID: 7376980655918145056}
+  _autoScroll: {fileID: 6451546783395669688}

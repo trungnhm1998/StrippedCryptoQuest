@@ -1,10 +1,5 @@
-﻿using CryptoQuest.Input;
-using CryptoQuest.UI.Common;
-using DG.Tweening;
+﻿using CryptoQuest.UI.Common;
 using UnityEngine;
-using UnityEngine.Events;
-using UnityEngine.EventSystems;
-using UnityEngine.UI;
 
 namespace CryptoQuest.Battle.UI
 {

@@ -5,9 +5,12 @@ using UnityEngine.UI;
 
 namespace CryptoQuest.UI.Common
 {
+    /// <summary>
+    /// Vertical auto scroll on select some gameObject inside scroll
+    /// </summary>
     public class AutoScroll : MonoBehaviour
     {
-        [SerializeField] private ScrollRect _scrollRect;
+        [SerializeField] protected ScrollRect _scrollRect;
 
         [Tooltip("Template item of the scroll view which will be instantiated on runtime")]
         [SerializeField] private RectTransform _singleItemRect;
@@ -15,7 +18,7 @@ namespace CryptoQuest.UI.Common
         [Tooltip("Enable this flag to run the auto-scroll logic in the Update()")]
         [SerializeField] private bool _useUpdate = true;
 
-        private RectTransform _viewport;
+        protected RectTransform _viewport;
         private float _verticalOffset;
         private float _lowerBound;
         private float _upperBound;
@@ -33,15 +36,19 @@ namespace CryptoQuest.UI.Common
             if (_useUpdate) Scroll();
         }
 
+        protected virtual float GetViewportY() => _viewport.position.y;
+
         private float NormalizePositionFromDifferentPivots(Rect rect)
         {
+            var yPos = GetViewportY();
             if (_viewport.pivot.y == 0)
-                return _viewport.position.y + (rect.height / 2);
+                return yPos + (rect.height / 2);
             if (Math.Abs(_viewport.pivot.y - 0.5) < 0.1)
-                return _viewport.position.y;
-            return _viewport.position.y - (rect.height / 2);
+                return yPos;
+            return yPos - (rect.height / 2);
         }
 
+        private const int OFFSET = 2; 
         private void CalculateBoundariesByHeight()
         {
             var rect = _viewport.rect;
@@ -50,7 +57,7 @@ namespace CryptoQuest.UI.Common
             _lowerBound = yPosViewport - rect.height / 2 + _verticalOffset / 2;
             _lowerBound = Mathf.Round(_lowerBound);
             _upperBound = yPosViewport + rect.height / 2 + _verticalOffset / 2;
-            _upperBound = Mathf.Round(_upperBound);
+            _upperBound = Mathf.Round(_upperBound) - OFFSET;
         }
 
         /// <summary>
@@ -68,13 +75,16 @@ namespace CryptoQuest.UI.Common
 
             if (IsSelectedChildOfScrollRect(current) == false) return;
 
-            var selectedRowPositionY = current.transform.position.y;
+            var selectedRowPositionY = CalculatedSelectedObjectY(current);
             // Sometime the difference between position and bound are so small
             // and cause auto scroll not working, so I round it
             selectedRowPositionY = Mathf.Round(selectedRowPositionY);
             ScrollUpIfOutOfLowerBound(selectedRowPositionY);
             ScrollDownIfOutOfUpperBound(selectedRowPositionY);
         }
+
+        protected virtual float CalculatedSelectedObjectY(GameObject currentSelected)
+            => currentSelected.transform.position.y;
 
         public void ScrollToTop()
         {

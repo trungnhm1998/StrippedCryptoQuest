@@ -30,9 +30,7 @@ namespace CryptoQuest.Battle.UI.SelectSkill
         public SkillTargetTypeDelegate SelectEnemyGroupCallback { get; set; }
         private void OnSelectEnemyGroup(CastSkillAbility skill) => SelectEnemyGroupCallback?.Invoke(_selectedSkill);
 
-        [SerializeField] private BattleInput _battleInput;
         [SerializeField] private VerticalButtonSelector _buttonSelector;
-        [SerializeField] private AutoScroll _autoScroll;
         [SerializeField] private ScrollRect _skillList;
         [SerializeField] private UISkill _skillPrefab;
 
@@ -60,7 +58,6 @@ namespace CryptoQuest.Battle.UI.SelectSkill
 
         private void RegisterEvents()
         {
-            _battleInput.NavigateEvent += UpdateAutoScroll;
             _singleHeroChannel.EventRaised += OnSingleHero;
             _singleEnemyChannel.EventRaised += OnSingleEnemy;
             _allHeroChannel.EventRaised += OnSelectAllHero;
@@ -71,7 +68,6 @@ namespace CryptoQuest.Battle.UI.SelectSkill
 
         private void UnregisterEvents()
         {
-            _battleInput.NavigateEvent -= UpdateAutoScroll;
             _singleHeroChannel.EventRaised -= OnSingleHero;
             _singleEnemyChannel.EventRaised -= OnSingleEnemy;
             _allHeroChannel.EventRaised -= OnSelectAllHero;
@@ -126,11 +122,6 @@ namespace CryptoQuest.Battle.UI.SelectSkill
         {
             _selectedSkill = skillUI;
             skillUI.Skill.TargetType.RaiseEvent(skillUI.Skill);
-        }
-
-        private void UpdateAutoScroll(Vector2 direction)
-        {
-            _autoScroll.Scroll();
         }
     }
 }
