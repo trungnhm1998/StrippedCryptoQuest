@@ -12,6 +12,9 @@ using UnityEngine;
 
 namespace CryptoQuest.Battle
 {
+    /// <summary>
+    /// Holds the context of current battle, all heroes and enemies
+    /// </summary>
     public class BattleContext : MonoBehaviour
     {
         [SerializeField] private BattleBus _battleBus;
@@ -22,12 +25,13 @@ namespace CryptoQuest.Battle
         public IPartyController PlayerParty => _party;
         public Battlefield CurrentBattlefield => _battleBus.CurrentBattlefield;
 
-        public List<EnemyBehaviour> AliveEnemies { get; private set;} = new();
-        public List<HeroBehaviour> AliveHeroes { get; private set;} = new();
+        public List<EnemyBehaviour> AliveEnemies { get; private set; } = new();
+        public List<HeroBehaviour> AliveHeroes { get; private set; } = new();
 
 
         private void Awake()
         {
+            _battleBus.CurrentBattleContext = this;
             _sceneLoadedEvent.EventRaised += OnSceneLoaded;
         }
 

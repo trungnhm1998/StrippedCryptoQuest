@@ -6,6 +6,5 @@
     public interface ITargeting
     {
         public Character Target { get; set; }
-        public void UpdateTargetIfNeeded(BattleContext context);
     }
 }

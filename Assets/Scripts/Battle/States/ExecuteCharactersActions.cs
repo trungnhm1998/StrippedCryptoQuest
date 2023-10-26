@@ -51,7 +51,6 @@ namespace CryptoQuest.Battle.States
                 OnTurnStarting(character);
                 character.OnTurnStarted();
                 character.TryGetComponent(out CommandExecutor commandExecutor);
-                character.UpdateTarget(_battleContext);
                 OnExecutingCommand(character);
                 commandExecutor.ExecuteCommand();
                 character.OnTurnEnded();

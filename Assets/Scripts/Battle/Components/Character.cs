@@ -75,12 +75,6 @@ namespace CryptoQuest.Battle.Components
         public virtual bool IsValidAndAlive() => IsValid() && !HasTag(TagsDef.Dead);
 
         /// <summary>
-        /// For enemy this will be random target, for hero this will be selected target if it's dead select next lowest hp target
-        /// </summary>
-        /// <param name="context">Holds the context of current battle, all heroes and enemies</param>
-        public void UpdateTarget(BattleContext context) => Targeting.UpdateTargetIfNeeded(context);
-
-        /// <summary>
         /// Same as Unity's <see cref="GameObject.TryGetComponent{T}(out T)"/> but with a cache
         /// </summary>
         public new bool TryGetComponent<T>(out T component) where T : Component
