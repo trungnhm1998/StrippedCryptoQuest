@@ -22,7 +22,10 @@ namespace CryptoQuest.Battle.Components
         private void DieWhenDeadTagAdded(TagScriptableObject[] tagScriptableObjects)
         {
             if (tagScriptableObjects.Contains(TagsDef.Dead) == false) return;
-            Character.AttributeSystem.SetAttributeValue(AttributeSets.Health, new AttributeValue());
+            Character.AttributeSystem.SetAttributeValue(AttributeSets.Health, new AttributeValue()
+            {
+                Attribute = AttributeSets.Health
+            });
         }
     }
 }
