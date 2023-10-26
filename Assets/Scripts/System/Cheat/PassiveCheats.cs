@@ -60,6 +60,7 @@ namespace CryptoQuest.System.Cheat
         }
 
         private readonly Dictionary<int, Dictionary<int, GameplayAbilitySpec>> _passiveSpecDict = new();
+
         private void AddPassiveToCharacter(CommandArg[] args)
         {
             var passiveId = args[0].Int;
@@ -77,7 +78,6 @@ namespace CryptoQuest.System.Cheat
                 yield break;
             }
 
-            Debug.Log($"Character name [{character.DisplayName}]");
             if (!_passiveDict.TryGetValue(passiveId, out var passiveAssetRef))
             {
                 Debug.LogWarning($"Doesn't support passive [{passiveId}].");
@@ -89,8 +89,21 @@ namespace CryptoQuest.System.Cheat
             var passiveAbility = handle.Result;
             _passiveSpecDict.TryAdd(characterId, new Dictionary<int, GameplayAbilitySpec>());
             _passiveSpecDict[characterId].TryAdd(passiveId, character.AbilitySystem.GiveAbility(passiveAbility));
+            Debug.Log($"Add passive [{passiveId}] to character [{character.DisplayName}] with id [{characterId}].");
         }
 
-        private void RemovePassiveFromCharacter(CommandArg[] args) { }
+        private void RemovePassiveFromCharacter(CommandArg[] args)
+        {
+            var passiveId = args[0].Int;
+            var characterId = args[1].Int;
+
+            if (_passiveSpecDict.TryGetValue(characterId, out var characterPassivesDict) == false) return;
+            if (characterPassivesDict.TryGetValue(passiveId, out var spec) == false) return;
+
+            var character = CharacterCheats.Instance.GetCharacter(characterId);
+            character.AbilitySystem.RemoveAbility(spec);
+            
+            Debug.Log($"remove passive [{passiveId}] from character [{character.DisplayName}] with id [{characterId}].");
+        }
     }
 }
