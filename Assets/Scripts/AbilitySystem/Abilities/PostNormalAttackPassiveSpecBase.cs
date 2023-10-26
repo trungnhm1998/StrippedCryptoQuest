@@ -18,6 +18,6 @@ namespace CryptoQuest.AbilitySystem.Abilities
                 normalAttack.Attacked -= OnAttacked;
         }
 
-        protected abstract void OnAttacked();
+        protected abstract void OnAttacked(Battle.Components.Character character);
     }
 }

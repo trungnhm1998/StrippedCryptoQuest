@@ -1,9 +1,15 @@
 ﻿using CryptoQuest.Battle.Events;
+using UnityEngine;
 
 namespace CryptoQuest.Battle.Components
 {
-    class EnemyAttackBehaviour : NormalAttack
+    class EnemyAttackBehaviour : MonoBehaviour
     {
-        protected override void OnPreAttack(Character target) => BattleEventBus.RaiseEvent(new ShakeUIEvent());
+        private NormalAttack _attackBehaviour;
+
+        private void Awake() => _attackBehaviour = GetComponent<NormalAttack>();
+        private void OnEnable() => _attackBehaviour.Attacking += ShakeUI;
+        private void OnDisable() => _attackBehaviour.Attacking -= ShakeUI;
+        private void ShakeUI(Character target) => BattleEventBus.RaiseEvent(new ShakeUIEvent());
     }
 }

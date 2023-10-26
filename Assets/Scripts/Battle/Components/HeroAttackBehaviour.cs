@@ -1,10 +1,17 @@
 ﻿using CryptoQuest.Battle.Events;
+using UnityEngine;
 
 namespace CryptoQuest.Battle.Components
 {
-    public class HeroAttackBehaviour : NormalAttack
+    public class HeroAttackBehaviour : MonoBehaviour
     {
-        protected override void OnPreAttack(Character target) =>
+        private NormalAttack _attackBehaviour;
+
+        private void Awake() => _attackBehaviour = GetComponent<NormalAttack>();
+        private void OnEnable() => _attackBehaviour.Attacking += PlayVfx;
+        private void OnDisable() => _attackBehaviour.Attacking -= PlayVfx;
+
+        private void PlayVfx(Character target) =>
             BattleEventBus.RaiseEvent(new HeroNormalAttackEvent { Target = target });
     }
 }
