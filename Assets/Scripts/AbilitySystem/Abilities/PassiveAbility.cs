@@ -16,8 +16,10 @@ namespace CryptoQuest.AbilitySystem.Abilities
     public class PassiveAbility : AbilityScriptableObject<PassiveAbilitySpec>
     {
         [field: SerializeField] public int Id { get; private set; }
-        [field: SerializeField, Range(0, 1f)] public float SuccessRate { get; private set; } = 1f;
 
+        [SerializeField] private GameplayEffectContext _context;
+        public GameplayEffectContext Context => _context;
+        
         private void OnValidate()
         {
             Id = int.Parse(name);
@@ -26,12 +28,14 @@ namespace CryptoQuest.AbilitySystem.Abilities
 
     public class PassiveAbilitySpec : GameplayAbilitySpec
     {
+        protected GameplayEffectContext SkillContext { get; private set; }
         protected Battle.Components.Character Character { get; private set; }
 
         public override void InitAbility(AbilitySystemBehaviour owner, AbilityScriptableObject abilitySO)
         {
             base.InitAbility(owner, abilitySO);
             Character = owner.GetComponent<Battle.Components.Character>();
+            SkillContext = ((PassiveAbility)abilitySO).Context;
         }
 
         public override void OnAbilityGranted(GameplayAbilitySpec gameplayAbilitySpec)

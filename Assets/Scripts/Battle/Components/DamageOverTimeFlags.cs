@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using CryptoQuest.Battle.Events;
 using IndiGames.GameplayAbilitySystem.TagSystem.ScriptableObjects;
 using TinyMessenger;
 using UnityEngine;
@@ -15,10 +14,11 @@ namespace CryptoQuest.Battle.Components
         private TinyMessageSubscriptionToken _roundEndedEvent;
 
         public override void Init() { } // This component got added at runtime so Init will not called
+
         protected override void Awake()
         {
             base.Awake();
-             Character.TurnEnded += ClearFlags;
+            Character.TurnEnded += ClearFlags;
         }
 
         protected override void OnReset() => Character.TurnEnded -= ClearFlags;

@@ -42,13 +42,17 @@ namespace CryptoQuest.AbilitySystem
                 {
                     var otherEffectEvaluatedMod = effect.ComputedModifiers[index];
                     var currentLargestEffectEvaluatedMod = largestMagnitudeEffect.ComputedModifiers[index];
-                    if (Mathf.Abs(otherEffectEvaluatedMod.Magnitude) > Mathf.Abs(currentLargestEffectEvaluatedMod.Magnitude))
+                    if (Mathf.Abs(otherEffectEvaluatedMod.Magnitude) >
+                        Mathf.Abs(currentLargestEffectEvaluatedMod.Magnitude))
                     {
+                        Debug.Log(
+                            $"Largest magnitude effect is {largestMagnitudeEffect.Spec.Def.name} with {otherEffectEvaluatedMod.Attribute}: {otherEffectEvaluatedMod.Magnitude}");
                         largestMagnitudeEffect = effect;
                         break;
                     }
                 }
             }
+
 
             return largestMagnitudeEffect;
         }

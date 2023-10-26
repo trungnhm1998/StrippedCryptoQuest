@@ -22,6 +22,7 @@ namespace CryptoQuest.AbilitySystem.EffectActions
         }
 
         [SerializeField] private ETriggerType _triggerType = ETriggerType.Always;
+        [field: SerializeField] public bool TriggerInstantlyAfterApplied { get; private set; }
         public ETriggerType TriggerType => _triggerType;
 
         public ActiveGameplayEffect CreateActiveEffect(GameplayEffectSpec inSpec) =>
@@ -53,6 +54,7 @@ namespace CryptoQuest.AbilitySystem.EffectActions
             RegisterWhenEffectWillBeApply();
             spec.Target.TagSystem.TagAdded += ExpiredEffectWhenTargetDie;
             _unloadingEvent = BattleEventBus.SubscribeEvent<UnloadingEvent>(ExpiredEffect);
+            if (_policyDef.TriggerInstantlyAfterApplied) ModifyTargetAttributeIfPeriodic();
         }
 
         private void RegisterWhenEffectWillBeApply()
@@ -109,6 +111,7 @@ namespace CryptoQuest.AbilitySystem.EffectActions
         {
             if (_turnsLeft <= 0) return;
 
+            // TODO: Skip these 2 lines if there is an effect with same def has larger magnitude
             LogAffectingStatus();
             ExecutePeriodicEffect();
 
@@ -140,16 +143,22 @@ namespace CryptoQuest.AbilitySystem.EffectActions
 
         private void ExecutePeriodicEffect()
         {
+            /*
+             * This is to prevent same turn-based effect to be applied multiple times
+             */
             foreach (var grantedTag in Spec.GrantedTags)
             {
                 if (_damageOverTimeFlagsFlags.FlagRaised(grantedTag)) return;
                 if (_policyDef.TriggerType != TurnBasePolicy.ETriggerType.Always)
                     ModifyBaseAttributeValueWithEvaluatedEffectModifiers();
-                _damageOverTimeFlagsFlags.RaiseFlag(grantedTag); // this prevent multiple damage over time and log
+                _damageOverTimeFlagsFlags.RaiseFlag(grantedTag); // TODO: Use the Effect Def it self could be better because not every effect def has tag
             }
+
+            // In case simple restore
+            if (Spec.GrantedTags.Length == 0)
+                ModifyBaseAttributeValueWithEvaluatedEffectModifiers();
         }
 
-        // ReSharper disable Unity.PerformanceAnalysis
         private void ModifyBaseAttributeValueWithEvaluatedEffectModifiers()
         {
             for (var index = 0; index < Spec.Def.EffectDetails.Modifiers.Length; index++)
@@ -163,12 +172,7 @@ namespace CryptoQuest.AbilitySystem.EffectActions
                 };
                 InternalExecuteMod(Spec, evalData);
                 // TODO: Refactor DRY
-                BattleEventBus.RaiseEvent(new DamageOverTimeEvent()
-                {
-                    Character = _character,
-                    AffectingAttribute = evalData.Attribute,
-                    Magnitude = evalData.Magnitude
-                });
+                OnDamageOverTimeTaken(evalData);
             }
 
             foreach (var evalData in ComputedModifiers)
@@ -176,13 +180,20 @@ namespace CryptoQuest.AbilitySystem.EffectActions
                 InternalExecuteMod(Spec, evalData);
                 
                 // TODO: Refactor DRY
-                BattleEventBus.RaiseEvent(new DamageOverTimeEvent()
-                {
-                    Character = _character,
-                    AffectingAttribute = evalData.Attribute,
-                    Magnitude = evalData.Magnitude
-                });
+                OnDamageOverTimeTaken(evalData);
+
             }
+        }
+
+        private void OnDamageOverTimeTaken(GameplayModifierEvaluatedData evalData)
+        {
+            if (evalData.Magnitude > 0) return; // healing
+            BattleEventBus.RaiseEvent(new DamageOverTimeEvent()
+            {
+                Character = _character,
+                AffectingAttribute = evalData.Attribute,
+                Magnitude = evalData.Magnitude
+            });
         }
 
         public override void ExecuteActiveEffect()

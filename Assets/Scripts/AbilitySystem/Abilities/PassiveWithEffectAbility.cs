@@ -9,8 +9,6 @@ namespace CryptoQuest.AbilitySystem.Abilities
     [CreateAssetMenu(menuName = "Crypto Quest/Ability System/Passive/Passive With Effect", fileName = "PassiveWithEffectAbility")]
     public class PassiveWithEffectAbility : PassiveAbility
     {
-        [SerializeField] private GameplayEffectContext _context;
-        public GameplayEffectContext Context => _context;
         [SerializeField] private GameplayEffectDefinition _effect; // Should be infinite type
 
         /// <summary>
@@ -32,7 +30,7 @@ namespace CryptoQuest.AbilitySystem.Abilities
         protected override IEnumerator OnAbilityActive()
         {
             if (_def.PassiveEffect == null) yield break;
-            var contextHandle = new GameplayEffectContextHandle(_def.Context);
+            var contextHandle = new GameplayEffectContextHandle(SkillContext);
             _effectSpec = _def.PassiveEffect.CreateEffectSpec(Owner, contextHandle);
             _activeEffectSpec = Owner.ApplyEffectSpecToSelf(_effectSpec);
         }

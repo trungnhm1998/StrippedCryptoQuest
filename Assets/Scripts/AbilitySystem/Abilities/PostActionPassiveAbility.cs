@@ -16,8 +16,6 @@ namespace CryptoQuest.AbilitySystem.Abilities
     public class PostActionPassiveAbility : PassiveAbility
     {
         [field: SerializeField] public int vfxId { get; private set; } = -1;
-        [SerializeField] private GameplayEffectContext _context;
-        public GameplayEffectContext Context => _context;
         [SerializeField] private GameplayEffectDefinition _effect; // Should be infinite type
         public GameplayEffectDefinition EffectToApply => _effect;
 
@@ -39,7 +37,7 @@ namespace CryptoQuest.AbilitySystem.Abilities
 
         private void ApplyEffectPostAction()
         {
-            var contextHandle = new GameplayEffectContextHandle(_def.Context);
+            var contextHandle = new GameplayEffectContextHandle(SkillContext);
             var effectSpec = _def.EffectToApply.CreateEffectSpec(Owner, contextHandle);
             BattleEventBus.RaiseEvent(new PlayVfxEvent(_def.vfxId));
             Owner.ApplyEffectSpecToSelf(effectSpec);

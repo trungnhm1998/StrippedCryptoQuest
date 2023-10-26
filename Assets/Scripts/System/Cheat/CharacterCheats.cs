@@ -12,6 +12,7 @@ namespace CryptoQuest.System.Cheat
 
         private void Awake()
         {
+            _cache.Clear();
             if (Instance != null)
             {
                 Destroy(gameObject);
@@ -39,7 +40,8 @@ namespace CryptoQuest.System.Cheat
                 Debug.Log($"Character [{character.DisplayName}] id: [{character.GetInstanceID()}]");
             }
         }
-        
-        public Battle.Components.Character GetCharacter(int instanceId) => _cache.TryGetValue(instanceId, out var character) ? character : null;
+
+        public Battle.Components.Character GetCharacter(int instanceId) =>
+            _cache.TryGetValue(instanceId, out var character) ? character : null;
     }
 }

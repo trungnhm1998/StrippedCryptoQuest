@@ -13,12 +13,16 @@ namespace CryptoQuest.Gameplay.PlayerParty
         private HeroBehaviour _hero;
         public HeroBehaviour HeroBehaviour => _hero;
 
-        private void Awake() => _hero = GetComponentInChildren<HeroBehaviour>();
+        private void Awake()
+        {
+            _hero = GetComponentInChildren<HeroBehaviour>();
+            _hero.gameObject.SetActive(false);
+        }
 
         public void Init(HeroSpec hero)
         {
+            _hero.gameObject.SetActive(true);
             _hero.Init(hero);
-            _hero.gameObject.SetActive(IsValid());
         }
 
         public bool IsValid() => _hero != null && _hero.IsValid();

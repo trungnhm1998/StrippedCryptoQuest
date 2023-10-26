@@ -9,8 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dcd68d684c1a4e4e970fceced9d28af5, type: 3}
-  m_Name: 4001
+  m_Script: {fileID: 11500000, guid: 15e76b104968436b8b5b8d0cd9cf148e, type: 3}
+  m_Name: 3030
   m_EditorClassIdentifier: 
   tags:
     AbilityTag: {fileID: 0}
@@ -26,10 +26,10 @@ MonoBehaviour:
     TargetTags:
       RequireTags: []
       IgnoreTags: []
-  <Id>k__BackingField: 4001
+  <Id>k__BackingField: 3030
   _context:
     _skillInfo:
-      Id: 4001
+      Id: 0
       SkillName:
         m_TableReference:
           m_TableCollectionName: 
@@ -56,21 +56,22 @@ MonoBehaviour:
       UsageScenarioSO: 0
       SkillParameters:
         Element: {fileID: 0}
-        BasePower: 20
-        PowerUpperLimit: 24
-        PowerLowerLimit: 10
+        BasePower: 50
+        PowerUpperLimit: 60
+        PowerLowerLimit: 25
         SkillPowerThreshold: 200
         PowerValueAdded: 0.2
         PowerValueReduced: 0.2
-        IsFixed: 0
+        IsFixed: 1
         ContinuesTurn: 1
-        EffectType: 0
+        EffectType: 9
         targetAttribute:
-          Attribute: {fileID: 11400000, guid: cff0791781b73cf4ca80877936aedaad, type: 2}
+          Attribute: {fileID: 11400000, guid: 77c53593fd92c904aa7689c5a7449df3, type: 2}
           CaptureFrom: 0
         VfxId: 
-    _turns: 0
-  _effect: {fileID: 11400000, guid: d5e943da4d9592b468fd78df8996b9cd, type: 2}
+    _turns: 3
+  <SuccessRate>k__BackingField: 1
+  <Effect>k__BackingField: {fileID: 11400000, guid: b115d3af78a135d4cac04cb7358f89e9, type: 2}
   references:
     version: 2
     RefIds: []
