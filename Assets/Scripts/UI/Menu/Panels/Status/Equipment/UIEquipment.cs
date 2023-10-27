@@ -2,7 +2,6 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.Localization.Components;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
@@ -32,7 +31,8 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
             if (equipment.IsValid() == false) return;
             _equipment = equipment;
             var def = equipment.Data;
-            _nameLocalize.StringReference = def.DisplayName;
+            _nameText.text = equipment.Def.name;
+            if (!def.DisplayName.IsEmpty) _nameLocalize.StringReference = def.DisplayName;
             _nameText.color = _enabledColor;
             _icon.sprite = def.EquipmentType.Icon;
             _iconNFT.SetActive(equipment.IsNftItem);

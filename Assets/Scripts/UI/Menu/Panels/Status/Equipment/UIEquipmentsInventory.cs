@@ -31,7 +31,6 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
         private HeroBehaviour InspectingHero => _characterPanel.InspectingHero;
         private EquipmentsController _equipmentsController;
         private ITooltip _tooltip;
-        private IInventoryController _inventoryController;
 
         private void OnEnable()
         {
@@ -53,8 +52,6 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
 
         public void Show()
         {
-            _inventoryController ??= ServiceProvider.GetService<IInventoryController>();
-
             Reset();
             _equipmentsController = InspectingHero.GetComponent<EquipmentsController>();
             RegistEquippingEvents();
@@ -174,19 +171,12 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
         {
             _equipmentItems.Clear();
             _equipmentItems = new();
-            var inventory = _inventoryController.Inventory;
+            var inventory = ServiceProvider.GetService<IInventoryController>().Inventory;
             for (int i = 0; i < inventory.Equipments.Count; i++)
             {
                 var equipment = inventory.Equipments[i];
-                try
-                {
-                    if (_equipmentsPanel.ModifyingEquipmentCategory == equipment.Data.EquipmentCategory)
-                        InstantiateNewEquipmentUI(equipment);
-                }
-                catch (Exception e)
-                {
-                    Debug.Log($"equipment at {i} is null");
-                }
+                if (_equipmentsPanel.ModifyingEquipmentCategory == equipment.Data.EquipmentCategory)
+                    InstantiateNewEquipmentUI(equipment);
             }
 
             Debug.Log($"InstantiateEquipments {_equipmentItems.Count}");
@@ -232,7 +222,8 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
             }
 
             _tooltip.SetSafeArea(_tooltipSafeArea);
-            _equipmentPreviewer.PreviewUnequipEquipment(_currentlyEquippingItem.Equipment, _equipmentsPanel.EquippingSlot, InspectingHero);
+            _equipmentPreviewer.PreviewUnequipEquipment(_currentlyEquippingItem.Equipment,
+                _equipmentsPanel.EquippingSlot, InspectingHero);
 
             RegistEquippingEvents();
         }

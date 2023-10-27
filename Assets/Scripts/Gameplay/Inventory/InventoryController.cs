@@ -37,6 +37,8 @@ namespace CryptoQuest.Gameplay.Inventory
             ServiceProvider.Provide<IInventoryController>(this);
             _definitionDatabase = GetComponent<IEquipmentDefProvider>();
             _saveSystem = ServiceProvider.GetService<ISaveSystem>();
+            
+            StartCoroutine(LoadAllEquipment());
         }
 
         private IEnumerator LoadAllEquipment()
@@ -60,16 +62,6 @@ namespace CryptoQuest.Gameplay.Inventory
         private void OnDisable()
         {
             _addLootRequestEventChannel.EventRaised -= AddLoot;
-        }
-
-        private void Start()
-        {
-            // Equipement should be loaded after load save data
-            // Otherwise just load it from SO as is
-            if(_saveSystem == null || !_saveSystem.LoadObject(this))
-            {
-                StartCoroutine(LoadAllEquipment());
-            }
         }
 
         private void AddLoot(LootInfo loot)
