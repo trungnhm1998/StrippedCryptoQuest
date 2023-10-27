@@ -45,6 +45,7 @@ namespace CryptoQuest.Item.Ocarina
         private void OnDestroy()
         {
             _registerTownEvent.EventRaised -= RegisterTown;
+            _onSceneLoadedEventChannel.EventRaised -= HideSpiralAfterSceneLoaded;
         }
 
         private void RegisterTown(OcarinaEntrance location) => _ocarinaData.Locations.Add(location);
