@@ -14,29 +14,36 @@ namespace CryptoQuest.BlackSmith.Upgrade
         private ICurrenciesController _currenciesController;
         public float Gold { get; private set; }
         public float Diamond { get; private set; }
+        private WalletSO _wallet;
+        private float _quantityGold, _quantityDiamond;
 
         private void OnEnable()
         {
             _currenciesController = ServiceProvider.GetService<ICurrenciesController>();
+            _wallet = _currenciesController.Wallet;
             UpdateCurrenciesUI();
         }
 
         private void UpdateCurrenciesUI()
         {
-            Gold = _currenciesController.Wallet.Gold.Amount;
-            Diamond = _currenciesController.Wallet.Diamond.Amount;
+            Gold = _wallet.Gold.Amount;
+            Diamond = _wallet.Diamond.Amount;
             _currencyUI.UpdateCurrency(Gold, Diamond);
         }
 
-        public void CurrencyNeeded(float quantityGold, float quantityDiamond)
+        public void CurrencyNeeded(float gold, float diamond)
         {
-            var goldSO = _currenciesController.Wallet.Gold;
-            var diamondSO = _currenciesController.Wallet.Diamond;
-            if (!goldSO.CanUpdateAmount(-quantityGold) || !diamondSO.CanUpdateAmount(-quantityDiamond)) return;
-            _currenciesController.UpdateCurrencyAmount(goldSO.Data, -quantityGold);
-            _currenciesController.UpdateCurrencyAmount(diamondSO.Data, -quantityGold);
-            UpdateCurrenciesUI();
+            _quantityGold = gold;
+            _quantityDiamond = diamond;
+            if (!_wallet.Gold.CanUpdateAmount(-_quantityGold) || !_wallet.Diamond.CanUpdateAmount(-_quantityDiamond)) return;
             OnSendSuccess.Invoke();
+        }
+
+        public void UpdateCurrencyAmout()
+        {
+            _currenciesController.UpdateCurrencyAmount(_wallet.Gold.Data, -_quantityGold);
+            _currenciesController.UpdateCurrencyAmount(_wallet.Diamond.Data, -_quantityDiamond);
+            UpdateCurrenciesUI();
         }
     }
 }

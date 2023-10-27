@@ -19,6 +19,7 @@ namespace CryptoQuest.BlackSmith.Upgrade
         [SerializeField] private GameObject _selectedPanel;
         [SerializeField] private GameObject _costPanel;
         [SerializeField] private MultiInputButton _button;
+        private bool _isSelected = false;
 
         public IUpgradeEquipment UpgradeEquipment { get; private set; }
 
@@ -45,6 +46,7 @@ namespace CryptoQuest.BlackSmith.Upgrade
 
         private void OnSelected()
         {
+            if(_isSelected) return;
             OnItemSelected?.Invoke(this);
             _selectedBackground.SetActive(true);
         }
@@ -60,6 +62,7 @@ namespace CryptoQuest.BlackSmith.Upgrade
             _selectedPanel.SetActive(true);
             _costPanel.SetActive(false);
             _button.interactable = false;
+            _isSelected = true;
         }
     }
 }

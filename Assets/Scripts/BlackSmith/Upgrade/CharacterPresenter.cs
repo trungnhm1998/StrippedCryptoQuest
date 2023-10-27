@@ -36,6 +36,7 @@ namespace CryptoQuest.BlackSmith.Upgrade
 
         private void OnItemSelected(UIUpgradeItem item)
         {
+            if (item == null) return;
             PreviewCharacterStats(item);
         }
 
@@ -60,7 +61,6 @@ namespace CryptoQuest.BlackSmith.Upgrade
 
         private void PreviewCharacterStats(UIUpgradeItem item)
         {
-            if (item == null) return;
             for (int i = 0; i < _partyController.Slots.Length; i++)
             {
                 _listCharacter[i].Preview(item.UpgradeEquipment.Equipment);
