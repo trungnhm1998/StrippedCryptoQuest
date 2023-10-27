@@ -14,6 +14,7 @@ namespace IndiGames.Core.EditorTools
         public SceneScriptableObject ThisScene => _thisSceneSO;
         [SerializeField] private SceneScriptableObject _thisSceneSO;
         [SerializeField] private SceneScriptableObject _globalManagersSO;
+        [SerializeField] private SceneAssetReference[] _additionalScenes;
 
         [SerializeField]
         private ScriptableObjectAssetReference<LoadSceneEventChannelSO> _editorColdBootEventChannelSO;
@@ -38,6 +39,10 @@ namespace IndiGames.Core.EditorTools
             yield return coldBootEventAssetHandle;
 
             var coldBootEvent = coldBootEventAssetHandle.Result;
+            foreach (var sceneAssetReference in _additionalScenes)
+            {
+                yield return sceneAssetReference.LoadSceneAsync(LoadSceneMode.Additive);
+            }
 
             SetupGameplayManagerSceneOrNotifySceneLoaded(coldBootEvent);
         }

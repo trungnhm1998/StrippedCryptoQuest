@@ -1,9 +1,9 @@
-using CryptoQuest.System;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using UnityEngine;
+using CryptoQuest.System;
+using Newtonsoft.Json;
 using Proyecto26;
+using UnityEngine;
 
 namespace CryptoQuest.Networking.Menu.DimensionBox
 {
@@ -11,6 +11,7 @@ namespace CryptoQuest.Networking.Menu.DimensionBox
     {
         [JsonProperty("ids")]
         public int[] Ids;
+
         public WalletEquipmentTransferData(int[] values)
         {
             Ids = values;
@@ -19,14 +20,14 @@ namespace CryptoQuest.Networking.Menu.DimensionBox
 
     public class WalletEquipmentAPI : MonoBehaviour
     {
-        private IRestClientController _restAPINetworkController;
+        private IRestClient _restAPINetwork;
 
         public bool IsFinishFetchData { get; private set; }
         public string RawEquipmentData { get; private set; }
 
         private void Awake()
         {
-            _restAPINetworkController = ServiceProvider.GetService<IRestClientController>();
+            _restAPINetwork = ServiceProvider.GetService<IRestClient>();
         }
 
         private void OnEnable()
@@ -36,14 +37,16 @@ namespace CryptoQuest.Networking.Menu.DimensionBox
 
         public void LoadEquipmentFromWallet()
         {
-            _restAPINetworkController.Get(Constants.LOAD_EQUIPMENT_PATH, OnSuccess, OnFail);
+            // TODO: REFACTOR NETWORK
+            // _restAPINetwork.Get(Constants.LOAD_EQUIPMENT_PATH, OnSuccess, OnFail);
         }
 
         public void UpdateEquipmentFromWallet(int[] values)
         {
             var data = new WalletEquipmentTransferData(values);
 
-            _restAPINetworkController.Put(Constants.UPDATE_EQUIPMENT_FROM_WALLET_PATH, JsonConvert.SerializeObject(data), OnSuccess, OnFail);
+            // TODO: REFACTOR NETWORK
+            // _restAPINetwork.Put(Constants.UPDATE_EQUIPMENT_FROM_WALLET_PATH, JsonConvert.SerializeObject(data), OnSuccess, OnFail);
         }
 
         private void OnSuccess(ResponseHelper res)

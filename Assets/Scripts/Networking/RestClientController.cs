@@ -1,72 +1,101 @@
-using CryptoQuest.Environment;
-using CryptoQuest.Networking.RestAPI;
-using CryptoQuest.SNS;
-using CryptoQuest.System;
-using Proyecto26;
 using System;
+using System.Collections.Generic;
+using CryptoQuest.Environment;
+using CryptoQuest.System;
+using Newtonsoft.Json;
+using Proyecto26;
+using UniRx;
 using UnityEngine;
+using PluginRestClient = Proyecto26.RestClient;
 
 namespace CryptoQuest.Networking
 {
-    public interface IRestClientController
+    public interface IRestClient
     {
-        void Get(string path, Action<ResponseHelper> OnSuccess, Action<Exception> OnFail);
+        public IObservable<TResponse> Post<TResponse>(string path, object body = null,
+            Dictionary<string, string> headers = null);
 
-        void Post(string path, string data, Action<ResponseHelper> OnSuccess, Action<Exception> OnFail);
-
-        void Put(string path, string data, Action<ResponseHelper> OnSuccess, Action<Exception> OnFail);
+        public IObservable<TResponse> Get<TResponse>(string path, object body = null,
+            Dictionary<string, string> headers = null);
     }
 
-    public class RestClientController : MonoBehaviour, IRestClientController
+    /// <summary>
+    /// Implementation for IRestClient that using <see cref="RestClient"/> plugin
+    ///
+    /// This doesn't need to be a MonoBehaviour, but it's easier to use it as a MonoBehaviour, otherwise need to inject it somewhere
+    /// </summary>
+    public class RestClientController : MonoBehaviour, IRestClient
     {
-        [SerializeField] private EnvironmentSO _environmentSO;
-        [SerializeField] private AuthorizationSO _authorizationSO;
+        private EnvironmentSO Env => ServiceProvider.GetService<EnvironmentSO>();
+        private void Awake() => ServiceProvider.Provide<IRestClient>(this);
 
-        private string _host = "";
-
-        private void Awake()
+        public IObservable<TResponse> Post<TResponse>(string path, object body = null,
+            Dictionary<string, string> headers = null)
         {
-            ServiceProvider.Provide<IRestClientController>(this);
-            _host = _environmentSO.BackEndUrl;
+            return Observable.Create<TResponse>(observer =>
+            {
+                var generateRequest = GenerateRequest(path, body, headers);
+                PluginRestClient.Post<TResponse>(generateRequest)
+                    .Then(observer.OnNext)
+                    .Catch(observer.OnError)
+                    .Finally(observer.OnCompleted);
+
+                return Disposable.Empty;
+            });
         }
 
-        private void OnEnable()
+        public IObservable<TResponse> Get<TResponse>(string path, object body = null,
+            Dictionary<string, string> headers = null)
         {
-            _authorizationSO.OnAccessTokenChanged += InitHeader;
+            return Observable.Create<TResponse>(observer =>
+            {
+                var generateRequest = GenerateRequest(path, body, headers);
+                PluginRestClient.Get<TResponse>(generateRequest)
+                    .Then(observer.OnNext)
+                    .Catch(observer.OnError)
+                    .Finally(observer.OnCompleted);
+
+                return Disposable.Empty;
+            });
         }
 
-        private void OnDisable()
+        private RequestHelper GenerateRequest(string path, object body = null,
+            Dictionary<string, string> headers = null)
         {
-            _authorizationSO.OnAccessTokenChanged -= InitHeader;
+            var request = new RequestHelper
+            {
+                Uri = $"{Env.API}{path}",
+                BodyString = JsonConvert.SerializeObject(body),
+                Headers = MergeHeaders(headers),
+#if DEVELOPMENT_BUILD || UNITY_EDITOR
+                EnableDebug = true,
+#endif
+            };
+
+            return request;
         }
 
-        private void InitHeader(ApiToken token)
+        private static Dictionary<string, string> MergeHeaders(Dictionary<string, string> headers)
         {
-            RestClient.DefaultRequestHeaders["Authorization"] = $"Bearer {token.Token}";
-        }
+            var defaultHeaders = new Dictionary<string, string>
+            {
+                { "Content-Type", "application/json" },
+                { "Accept", "application/json" },
+            };
 
-        public void Get(string path, Action<ResponseHelper> OnSuccess, Action<Exception> OnFail)
-        {
-            RestClient
-                    .Get($"{_host}{path}")
-                    .Then(res => OnSuccess(res))
-                    .Catch(OnFail);
-        }
+            var finalHeaders = new Dictionary<string, string>();
+            foreach (var header in defaultHeaders)
+            {
+                finalHeaders.TryAdd(header.Key, header.Value);
+            }
 
-        public void Post(string path, string data, Action<ResponseHelper> OnSuccess, Action<Exception> OnFail)
-        {
-            RestClient
-                    .Post($"{_host}{path}", data)
-                    .Then(res => OnSuccess(res))
-                    .Catch(OnFail);
-        }
+            if (headers == null) return finalHeaders;
+            foreach (var header in headers)
+            {
+                finalHeaders.TryAdd(header.Key, header.Value);
+            }
 
-        public void Put(string path, string data, Action<ResponseHelper> OnSuccess, Action<Exception> OnFail)
-        {
-            RestClient
-                    .Put($"{_host}{path}", data)
-                    .Then(res => OnSuccess(res))
-                    .Catch(OnFail);
+            return finalHeaders;
         }
     }
 }
