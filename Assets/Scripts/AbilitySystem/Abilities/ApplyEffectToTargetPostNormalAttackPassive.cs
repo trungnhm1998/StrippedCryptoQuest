@@ -29,11 +29,16 @@ namespace CryptoQuest.AbilitySystem.Abilities
             _abilitySO = (ApplyEffectToTargetPostNormalAttackPassive)abilitySO;
         }
 
-        protected override void OnAttacked(Battle.Components.Character target)
+        protected override void OnAttacked(PostAttackContext postAttackContext)
         {
             if (FailedToActive()) return;
+            var target = postAttackContext.Target;
             RemovePreviousEffectIfExisted();
-            var gameplayEffectContextHandle = new GameplayEffectContextHandle(SkillContext);
+            var postNormalAttackContext = new PostNormalAttackContext(SkillContext)
+            {
+                AttackContext = postAttackContext
+            };
+            var gameplayEffectContextHandle = new GameplayEffectContextHandle(postNormalAttackContext);
             var effectSpec = _abilitySO.Effect.CreateEffectSpec(Owner, gameplayEffectContextHandle);
             if (SkillContext.Parameters.targetAttribute.CaptureFrom == EGameplayEffectCaptureSource.Source)
                 target = Character;

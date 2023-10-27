@@ -1,11 +1,12 @@
 ﻿using CryptoQuest.AbilitySystem.Abilities;
+using CryptoQuest.AbilitySystem.Attributes;
 using UnityEngine;
 
 namespace CryptoQuest.Battle.Components
 {
     public class NormalAttack : CharacterComponentBase
     {
-        public delegate void AttackDelegate(Character target);
+        public delegate void AttackDelegate(Character attacker, Character target, float damage);
 
         public event AttackDelegate Attacking;
         public event AttackDelegate Attacked;
@@ -18,10 +19,12 @@ namespace CryptoQuest.Battle.Components
         public void Attack()
         {
             var target = GetComponent<ITargeting>().Target;
-            Attacking?.Invoke(target);
+            Attacking?.Invoke(Character, target, 0f);
             Debug.Log($"{Character.DisplayName} attacking {target.DisplayName}");
+            target.AttributeSystem.TryGetAttributeValue(AttributeSets.Health, out var health);
             _spec.Execute(target.GetComponent<IDamageable>());
-            Attacked?.Invoke(target);
+            target.AttributeSystem.TryGetAttributeValue(AttributeSets.Health, out var healthAfterTakingDamage);
+            Attacked?.Invoke(Character, target, health.CurrentValue - healthAfterTakingDamage.CurrentValue);
         }
     }
 }

@@ -1,7 +1,7 @@
-﻿using CryptoQuest.AbilitySystem.Attributes;
-using CryptoQuest.Gameplay.Battle.Core;
+﻿using CryptoQuest.AbilitySystem.Abilities;
+using CryptoQuest.AbilitySystem.Attributes;
+using CryptoQuest.Battle.Events;
 using IndiGames.GameplayAbilitySystem.EffectSystem;
-using IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects;
 using IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects.EffectExecutionCalculation;
 using UnityEngine;
 using CoreEffectContext = IndiGames.GameplayAbilitySystem.EffectSystem.GameplayEffectContext;
@@ -10,41 +10,33 @@ namespace CryptoQuest.AbilitySystem.Executions
 {
     public class AbsorbCalculation : EffectExecutionCalculationBase
     {
-        /// <summary>
-        /// This will contains the exec cal for absorb calculation
-        /// 
-        /// either this or create at runtime
-        /// </summary>
-        [SerializeField] private GameplayEffectDefinition _absorbEffectDefinition;
-
         public override void Execute(ref CustomExecutionParameters executionParams,
             ref GameplayEffectCustomExecutionOutput outModifiers)
         {
-            var context = GameplayEffectContext.ExtractEffectContext(executionParams.EffectSpec.Context);
-            var sourceSystem = executionParams.SourceAbilitySystemComponent;
-            if (sourceSystem.TagSystem.HasTag(TagsDef.Absorb) == false) return;
+            var spec = executionParams.EffectSpec;
+            var specContext = spec.Context.Get();
+            if (specContext is not PostNormalAttackContext context) return;
 
-            // find the damage from out modifier
-            float damage = 0f;
-            foreach (var evaluatedMod in outModifiers.Modifiers)
+            executionParams.SourceAbilitySystemComponent.AttributeSystem.TryGetAttributeValue(AttributeSets.MagicAttack,
+                out var magicPower);
+            var skillParameters = context.SkillInfo.SkillParameters;
+            var skillPower =
+                BattleCalculator.CalculateMagicSkillBasePower(skillParameters, magicPower.CurrentValue);
+            var absorbDamage = context.AttackContext.Damage / skillPower;
+            Debug.Log($"Absorb [{absorbDamage}] damage dealt was [{context.AttackContext.Damage}] skill power [{skillPower}]");
+            var modifier = new GameplayModifierEvaluatedData()
             {
-                if (evaluatedMod.Attribute != AttributeSets.Health) continue;
-                damage += evaluatedMod.Magnitude;
-            }
-
-            var absorbContext = new DamageDealtContext(damage, context.SkillInfo);
-            var absorbSpec = _absorbEffectDefinition.CreateEffectSpec(sourceSystem, new GameplayEffectContextHandle(absorbContext));
-            sourceSystem.ApplyEffectSpecToSelf(absorbSpec);
-        }
-    }
-
-    public class DamageDealtContext : GameplayEffectContext
-    {
-        public float Damage { get; private set; }
-
-        public DamageDealtContext(float damage, SkillInfo skillInfo) : base(skillInfo)
-        {
-            Damage = damage;
+                Attribute = skillParameters.targetAttribute.Attribute,
+                OpType = EAttributeModifierOperationType.Add,
+                Magnitude = absorbDamage
+            };
+            outModifiers.Add(modifier);
+            BattleEventBus.RaiseEvent(new AbsorbingEvent()
+            {
+                Character = context.AttackContext.Target,
+                AbsorbingAttribute = modifier.Attribute,
+                Value = modifier.Magnitude,
+            });
         }
     }
 }

@@ -20,7 +20,8 @@ namespace CryptoQuest.Tests.Editor.Battle
                 .WithPowerValueAdded(0.5f)
                 .Build();
 
-            float calculatedValue = BattleCalculator.CalculateBaseDamage(skillParameters, 10, 0.01f);
+            float calculatedValue = BattleCalculator.CalculateMagicSkillBasePower(skillParameters, 10);
+            calculatedValue.Offset(0.01f);
             Assert.AreEqual(10.1f, calculatedValue);
         }
 
@@ -34,7 +35,8 @@ namespace CryptoQuest.Tests.Editor.Battle
                 .Build();
 
             float randomValue = 0f;
-            float calculatedValue = BattleCalculator.CalculateBaseDamage(skillParameters, 0, randomValue);
+            float calculatedValue = BattleCalculator.CalculateMagicSkillBasePower(skillParameters, 0);
+            calculatedValue.Offset(randomValue);
             float expectedValue = skillParameters.PowerLowerLimit + skillParameters.PowerLowerLimit * randomValue;
             Assert.AreEqual(expectedValue, calculatedValue);
         }
@@ -49,7 +51,8 @@ namespace CryptoQuest.Tests.Editor.Battle
                 .Build();
 
             float randomValue = 0.01f;
-            float calculatedValue = BattleCalculator.CalculateBaseDamage(skillParameters, 100, randomValue);
+            float calculatedValue = BattleCalculator.CalculateMagicSkillBasePower(skillParameters, 100);
+            calculatedValue.Offset(randomValue);
             float expectedValue = skillParameters.PowerUpperLimit + skillParameters.PowerUpperLimit * randomValue;
             Assert.AreEqual(expectedValue, calculatedValue);
         }
@@ -64,7 +67,8 @@ namespace CryptoQuest.Tests.Editor.Battle
                 .Build();
 
             float randomValue = 0.01f;
-            float calculatedValue = BattleCalculator.CalculateBaseDamage(skillParameters, -100, randomValue);
+            float calculatedValue = BattleCalculator.CalculateMagicSkillBasePower(skillParameters, -100);
+            calculatedValue.Offset(randomValue);
             float expectedValue = skillParameters.PowerLowerLimit + skillParameters.PowerLowerLimit * randomValue;
             Assert.AreEqual(expectedValue, calculatedValue);
         }
@@ -79,7 +83,8 @@ namespace CryptoQuest.Tests.Editor.Battle
                 .Build();
 
             float randomValue = 0.01f;
-            float calculatedValue = BattleCalculator.CalculateBaseDamage(skillParameters, 10, randomValue);
+            float calculatedValue = BattleCalculator.CalculateMagicSkillBasePower(skillParameters, 10);
+            calculatedValue.Offset(randomValue);
             float expectedValue = skillParameters.PowerLowerLimit + skillParameters.PowerLowerLimit * randomValue;
             Assert.AreEqual(expectedValue, calculatedValue);
         }
@@ -94,7 +99,8 @@ namespace CryptoQuest.Tests.Editor.Battle
                 .Build();
 
             float randomValue = 0.01f;
-            float calculatedValue = BattleCalculator.CalculateBaseDamage(skillParameters, -100, randomValue);
+            float calculatedValue = BattleCalculator.CalculateMagicSkillBasePower(skillParameters, -100);
+            calculatedValue.Offset(randomValue);
             float expectedValue = skillParameters.PowerLowerLimit + skillParameters.PowerLowerLimit * randomValue;
             Assert.AreEqual(expectedValue, calculatedValue);
         }

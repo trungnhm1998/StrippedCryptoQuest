@@ -10,6 +10,6 @@ namespace CryptoQuest.Battle.Components
         private void Awake() => _attackBehaviour = GetComponent<NormalAttack>();
         private void OnEnable() => _attackBehaviour.Attacking += ShakeUI;
         private void OnDisable() => _attackBehaviour.Attacking -= ShakeUI;
-        private void ShakeUI(Character target) => BattleEventBus.RaiseEvent(new ShakeUIEvent());
+        private void ShakeUI(Character target, Character character, float damage) => BattleEventBus.RaiseEvent(new ShakeUIEvent());
     }
 }

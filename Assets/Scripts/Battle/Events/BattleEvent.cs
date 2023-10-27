@@ -102,11 +102,6 @@ namespace CryptoQuest.Battle.Events
 
     public class HidePromptEvent : BattleEvent { }
 
-    public abstract class LogEvent : BattleEvent
-    {
-        public Components.Character Character { get; set; }
-    }
-
     public abstract class TurnEvent : BattleEvent
     {
         public Components.Character Character { get; }
@@ -132,6 +127,45 @@ namespace CryptoQuest.Battle.Events
         public ExecutingCommandEvent(Components.Character character) : base(character) { }
     }
 
+    /// <summary>
+    ///  Currently support <see cref="TagScriptableObject"/> which might be wrong for some cases
+    /// </summary>
+    public class EffectEvent : LogEvent
+    {
+        public TagScriptableObject Tag { get; set; }
+    }
+
+    public class PlayVfxEvent : BattleEvent
+    {
+        public int VfxId { get; }
+        public PlayVfxEvent(int vfxId) => VfxId = vfxId;
+    }
+
+    public class ConsumeItemFailEvent : BattleEvent { }
+
+    public class EffectAddedEvent : EffectEvent { }
+
+    public class EffectRemovedEvent : EffectEvent { }
+
+    public class EffectAffectingEvent : EffectEvent { }
+
+
+    public class ItemEvent : BattleEvent
+    {
+        public ConsumableInfo ItemInfo { get; set; }
+    }
+
+    public class SelectedItemEvent : ItemEvent { }
+
+    public class CancelSelectedItemEvent : ItemEvent { }
+
+    #region Log Events
+
+    public abstract class LogEvent : BattleEvent
+    {
+        public Components.Character Character { get; set; }
+    }
+
     public class NormalAttackEvent : LogEvent
     {
         public Components.Character Target { get; set; }
@@ -152,11 +186,6 @@ namespace CryptoQuest.Battle.Events
 
     public class ReflectDamageEvent : LogEvent { }
 
-    public class PlayVfxEvent : BattleEvent
-    {
-        public int VfxId { get; }
-        public PlayVfxEvent(int vfxId) => VfxId = vfxId;
-    }
 
     public class CastSkillEvent : LogEvent
     {
@@ -169,7 +198,7 @@ namespace CryptoQuest.Battle.Events
             Target = target.GetComponent<Components.Character>();
         }
     }
-    
+
     public class DamageOverTimeEvent : LogEvent
     {
         public AttributeScriptableObject AffectingAttribute { get; set; }
@@ -182,31 +211,6 @@ namespace CryptoQuest.Battle.Events
         public Components.Character Target { get; set; }
     }
 
-    public class ConsumeItemFailEvent : BattleEvent { }
-
-    /// <summary>
-    ///  Currently support <see cref="TagScriptableObject"/> which might be wrong for some cases
-    /// </summary>
-    public class EffectEvent : LogEvent
-    {
-        public TagScriptableObject Tag { get; set; }
-    }
-
-    public class EffectAddedEvent : EffectEvent { }
-
-    public class EffectRemovedEvent : EffectEvent { }
-
-    public class EffectAffectingEvent : EffectEvent { }
-
-
-    public class ItemEvent : BattleEvent
-    {
-        public ConsumableInfo ItemInfo { get; set; }
-    }
-
-    public class SelectedItemEvent : ItemEvent { }
-
-    public class CancelSelectedItemEvent : ItemEvent { }
 
     public class CastInvalidEvent : LogEvent
     {
@@ -221,4 +225,12 @@ namespace CryptoQuest.Battle.Events
             Target = target;
         }
     }
+    
+    public class AbsorbingEvent : LogEvent
+    {
+        public AttributeScriptableObject AbsorbingAttribute { get; set; }
+        public float Value { get; set; }
+    }
+
+    #endregion
 }

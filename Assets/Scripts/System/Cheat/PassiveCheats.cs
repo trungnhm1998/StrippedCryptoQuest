@@ -63,13 +63,26 @@ namespace CryptoQuest.System.Cheat
 
         private void AddPassiveToCharacter(CommandArg[] args)
         {
-            var passiveId = args[0].Int;
+            var passiveIds = ExtractPassiveIds(args);
             var characterId = args[1].Int;
-
-            StartCoroutine(LoadPassiveAndAddToCharacterCo(passiveId, characterId));
+            foreach (var passiveId in passiveIds)
+                StartCoroutine(LoadThenAddPassiveToCharacterCo(characterId, passiveId));
         }
 
-        private IEnumerator LoadPassiveAndAddToCharacterCo(int passiveId, int characterId)
+        private static int[] ExtractPassiveIds(CommandArg[] args)
+        {
+            var strPassiveIds = args[0].String.Split(',');
+            var passiveIds = new int[strPassiveIds.Length];
+            for (var index = 0; index < strPassiveIds.Length; index++)
+            {
+                var strId = strPassiveIds[index];
+                passiveIds[index] = int.Parse(strId);
+            }
+
+            return passiveIds;
+        }
+
+        private IEnumerator LoadThenAddPassiveToCharacterCo(int characterId, int passiveId)
         {
             var character = CharacterCheats.Instance.GetCharacter(characterId);
             if (character == null)
@@ -94,16 +107,21 @@ namespace CryptoQuest.System.Cheat
 
         private void RemovePassiveFromCharacter(CommandArg[] args)
         {
-            var passiveId = args[0].Int;
+            var passiveIds = ExtractPassiveIds(args);
             var characterId = args[1].Int;
+            foreach (var passiveId in passiveIds) RemovePassiveFromCharacter(characterId, passiveId);
+        }
 
+        private void RemovePassiveFromCharacter(int characterId, int passiveId)
+        {
             if (_passiveSpecDict.TryGetValue(characterId, out var characterPassivesDict) == false) return;
             if (characterPassivesDict.TryGetValue(passiveId, out var spec) == false) return;
 
             var character = CharacterCheats.Instance.GetCharacter(characterId);
             character.AbilitySystem.RemoveAbility(spec);
-            
-            Debug.Log($"remove passive [{passiveId}] from character [{character.DisplayName}] with id [{characterId}].");
+
+            Debug.Log(
+                $"remove passive [{passiveId}] from character [{character.DisplayName}] with id [{characterId}].");
         }
     }
 }

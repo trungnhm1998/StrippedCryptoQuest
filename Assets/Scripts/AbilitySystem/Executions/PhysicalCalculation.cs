@@ -31,8 +31,8 @@ namespace CryptoQuest.AbilitySystem.Executions
             executionParams.TryGetAttributeValue(_baseAttack, out var baseAttack);
             executionParams.TryGetAttributeValue(_baseDefense, out var baseDefense);
 
-            float baseDamageValue = BattleCalculator.CalculateBaseDamage(skillParameters, baseAttack.CurrentValue,
-                Random.Range(_lowerRandomRange, _upperRandomRange));
+            float baseDamageValue = BattleCalculator.CalculateMagicSkillBasePower(skillParameters, baseAttack.CurrentValue);
+            baseDamageValue.Offset(Random.Range(_lowerRandomRange, _upperRandomRange));
             float damageValue = 0;
             if (skillParameters.IsFixed)
                 damageValue =

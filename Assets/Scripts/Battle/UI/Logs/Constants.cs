@@ -2,12 +2,13 @@
 {
     public static class Constants
     {
-        public static readonly string ATTRIBUTE_NAME = "AttributeName";
-        public static readonly string CHARACTER_NAME = "CharacterName";
-        public static readonly string CHARACTER_TARGET_NAME = "CharacterTargetName";
-        public static readonly string DAMAGE_NUMBER = "DamageNumber";
-        public static readonly string ITEM_NAME = "ItemName";
-        public static readonly string SKILL_NAME = "SkillName";
-        public static readonly string ABILITY_NAME = "AbilityName";
+        public const string ATTRIBUTE_NAME = "AttributeName";
+        public const string CHARACTER_NAME = "CharacterName";
+        public const string CHARACTER_TARGET_NAME = "CharacterTargetName";
+        public const string DAMAGE_NUMBER = "DamageNumber";
+        public const string ITEM_NAME = "ItemName";
+        public const string SKILL_NAME = "SkillName";
+        public const string ABILITY_NAME = "AbilityName";
+        public const string NUMBER = "number";
     }
 }

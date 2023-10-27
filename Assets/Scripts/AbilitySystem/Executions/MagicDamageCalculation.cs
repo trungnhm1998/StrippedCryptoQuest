@@ -32,17 +32,18 @@ namespace CryptoQuest.AbilitySystem.Executions
             float damageValue = 0;
             if (skillParameters.IsFixed)
             {
-                float baseMagicDamageFixedValue = BattleCalculator.CalculateBaseDamage(skillParameters,
-                    baseAttack.CurrentValue, Random.Range(_lowerRandomRange, _upperRandomRange));
+                float skillPower = BattleCalculator.CalculateMagicSkillBasePower(skillParameters,
+                    baseAttack.CurrentValue);
+                skillPower.Offset(Random.Range(_lowerRandomRange, _upperRandomRange));
                 damageValue = effectType == EEffectType.RemoveAbnormalStatus
-                    ? baseMagicDamageFixedValue
-                    : baseMagicDamageFixedValue * elementalRate;
+                    ? skillPower
+                    : skillPower * elementalRate;
                 damageValue = Mathf.RoundToInt(damageValue);
             }
             else
             {
-                float percentage = BattleCalculator.CalculateBaseDamage(skillParameters,
-                    baseAttack.CurrentValue, 0);
+                float percentage = BattleCalculator.CalculateMagicSkillBasePower(skillParameters,
+                    baseAttack.CurrentValue);
                 executionParams.TryGetAttributeValue(targetAttribute, out var targetedAttributeValue);
                 damageValue = targetedAttributeValue.CurrentValue *
                               (percentage / BaseBattleVariable.CORRECTION_PROBABILITY_VALUE);

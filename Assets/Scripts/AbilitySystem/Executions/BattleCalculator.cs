@@ -8,14 +8,30 @@ namespace CryptoQuest.AbilitySystem.Executions
 {
     public static class BattleCalculator
     {
-        public static float CalculateBaseDamage(SkillParameters skillParameters, float attackPower, float modifierScale)
+        private const float LOWER_RANDOM_RANGE = -0.05f;
+        private const float UPPER_RANDOM_RANGE = 0.05f;
+
+        public static float CalculateMagicSkillBasePower(SkillParameters skillParameters, float magicPower)
         {
             float damage =
-                (skillParameters.BasePower + (attackPower - skillParameters.SkillPowerThreshold) *
-                    skillParameters.PowerValueAdded);
-            damage = Mathf.Clamp(damage, skillParameters.PowerLowerLimit, skillParameters.PowerUpperLimit);
-            float baseDamage = damage + damage * modifierScale;
-            return baseDamage;
+                (skillParameters.BasePower +
+                 (magicPower - skillParameters.SkillPowerThreshold) * skillParameters.PowerValueAdded);
+            if (skillParameters.PowerLowerLimit != 0 ||
+                skillParameters.PowerUpperLimit != 0) // skip thresh hold clamp if not set
+                damage = Mathf.Clamp(damage, skillParameters.PowerLowerLimit, skillParameters.PowerUpperLimit);
+            return damage;
+        }
+
+        /// <summary>
+        /// Off set the power a bit
+        /// </summary>
+        /// <param name="value">the magic or physical damage</param>
+        /// <param name="offset"></param>
+        /// <returns></returns>
+        public static void Offset(this ref float value, float offset = 0)
+        {
+            float rndDamageOffset = value * offset;
+            value += rndDamageOffset;
         }
 
         public static float CalculateProbabilityOfRetreat(float targetMaxAttributeValue, float ownerAttributeValue)
