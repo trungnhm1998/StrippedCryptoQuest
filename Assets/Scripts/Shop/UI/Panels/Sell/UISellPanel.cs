@@ -60,6 +60,7 @@ namespace CryptoQuest.Shop.UI.Panels.Sell
 
         private void OnEnable()
         {
+            _currentTabIndex = 0;
             _inventoryTabHeader.OpeningTab += ShowItemsWithType;
         }
 
@@ -86,7 +87,7 @@ namespace CryptoQuest.Shop.UI.Panels.Sell
         protected override void OnShow()
         {
             _helpNavigateInfo.gameObject.SetActive(true);
-            ShowItemsWithType(0);
+            ShowItemsWithType(CurrentTabIndex);
         }
 
         protected override void OnHide()

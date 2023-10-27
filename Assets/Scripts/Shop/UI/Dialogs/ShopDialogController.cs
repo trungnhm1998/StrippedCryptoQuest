@@ -2,6 +2,7 @@ using CryptoQuest.Events;
 using CryptoQuest.UI.Dialogs;
 using IndiGames.Core.Events.ScriptableObjects;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.Localization;
 
 namespace CryptoQuest.Shop.UI.Dialogs
@@ -38,6 +39,7 @@ namespace CryptoQuest.Shop.UI.Dialogs
 
         private void ShowDialog(LocalizedString message)
         {
+            EventSystem.current.SetSelectedGameObject(null);
             if (_dialog != null)
             {
                 _dialog.gameObject.SetActive(true);
