@@ -16,9 +16,6 @@ namespace CryptoQuest.UI.Menu.Panels.DimensionBox.EquipmentTransferSection.Model
         public List<INFT> Data { get; private set; }
         public bool IsLoaded { get; private set; }
 
-        private List<Equipment> _convertedEquipmentData;
-        public List<Equipment> ConvertedEquipmentData => _convertedEquipmentData;
-
         public IEnumerator CoGetData()
         {
             Data ??= new List<INFT>();
@@ -30,10 +27,10 @@ namespace CryptoQuest.UI.Menu.Panels.DimensionBox.EquipmentTransferSection.Model
 
             yield return new WaitUntil(() => _walletEquipmentAPI.IsFinishFetchData);
 
-            var rawData = _walletEquipmentAPI.RawEquipmentData;
-            _convertedEquipmentData = _walletEquipmentAPI.GetDataConvertedFromJson(rawData);
+            if (_walletEquipmentAPI.RawEquipmentData == null) yield break;
+            var convertedEquipmentData = _walletEquipmentAPI.GetDataConvertedFromJson(_walletEquipmentAPI.RawEquipmentData);
 
-            StartCoroutine(CreateNewEquipment(_convertedEquipmentData));
+            StartCoroutine(CreateNewEquipment(convertedEquipmentData));
         }
 
         private IEnumerator CreateNewEquipment(List<Equipment> equipments)
