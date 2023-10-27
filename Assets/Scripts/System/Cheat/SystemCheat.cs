@@ -1,4 +1,5 @@
 ﻿using CommandTerminal;
+using DG.Tweening;
 using UnityEngine;
 
 namespace CryptoQuest.System.Cheat
@@ -15,6 +16,7 @@ namespace CryptoQuest.System.Cheat
         {
             var newSpeed = obj[0].Float;
             Time.timeScale = newSpeed;
+            DOTween.timeScale = newSpeed;
 
             Debug.Log($"Updated game speed to {newSpeed}");
         }
