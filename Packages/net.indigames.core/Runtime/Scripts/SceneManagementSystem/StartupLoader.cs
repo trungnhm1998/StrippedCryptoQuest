@@ -11,6 +11,7 @@ namespace IndiGames.Core.SceneManagementSystem
     {
         [SerializeField] private SceneScriptableObject _managerScene;
         [SerializeField] private SceneScriptableObject _titleScene;
+        [SerializeField] private SceneAssetReference _networkManager;
 
         [Header("Raise on")]
         [SerializeField] private ScriptableObjectAssetReference<LoadSceneEventChannelSO> _loadMainMenuEventChannelSO;
@@ -20,6 +21,7 @@ namespace IndiGames.Core.SceneManagementSystem
             yield return _managerScene.SceneReference.LoadSceneAsync(LoadSceneMode.Additive);
             var loadTitleEventHandle = _loadMainMenuEventChannelSO.LoadAssetAsync();
             yield return loadTitleEventHandle;
+            _networkManager.LoadSceneAsync(LoadSceneMode.Additive);
             loadTitleEventHandle.Result.RequestLoad(_titleScene);
             SceneManager.UnloadSceneAsync(0);
         }

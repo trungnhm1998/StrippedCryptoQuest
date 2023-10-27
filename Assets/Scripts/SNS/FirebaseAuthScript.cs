@@ -1,11 +1,11 @@
+using System;
+using CryptoQuest.Networking;
+using CryptoQuest.Networking.API;
+using CryptoQuest.System;
+using Newtonsoft.Json;
+using Proyecto26;
 using UnityEngine;
 using UnityEngine.UI;
-using System;
-using CryptoQuest.Networking.RestAPI;
-using Newtonsoft.Json;
-using CryptoQuest.System;
-using CryptoQuest.Networking;
-using Proyecto26;
 
 namespace CryptoQuest.SNS
 {
@@ -40,6 +40,7 @@ namespace CryptoQuest.SNS
         {
             [JsonProperty("user")]
             public UserProfile User;
+
             [JsonProperty("token")]
             public ApiTokenData Token;
         }
@@ -49,26 +50,26 @@ namespace CryptoQuest.SNS
         {
             [JsonProperty("access")]
             public ApiToken access;
+
             [JsonProperty("refresh")]
             public ApiToken refresh;
         }
 
-        [SerializeField] private AuthorizationSO _authorizationSO;
-
-        public UserProfile Profile
-        {
-            get { return _authorizationSO.Profile; }
-        }
-
-        public ApiToken AccessToken
-        {
-            get { return _authorizationSO.AccessToken; }
-        }
-
-        public ApiToken RefreshToken
-        {
-            get { return _authorizationSO.RefreshToken; }
-        }
+        // TODO: REFACTOR NETWORK
+        // public UserProfile Profile
+        // {
+        //     get { return _authorizationSO.Profile; }
+        // }
+        //
+        // public ApiToken AccessToken
+        // {
+        //     get { return _authorizationSO.AccessToken; }
+        // }
+        //
+        // public ApiToken RefreshToken
+        // {
+        //     get { return _authorizationSO.RefreshToken; }
+        // }
 
         public InputField emailInputField;
 
@@ -89,11 +90,12 @@ namespace CryptoQuest.SNS
 
         private void LoginWithBackend()
         {
-            var restAPINetworkController = ServiceProvider.GetService<IRestClientController>();
+            var restAPINetworkController = ServiceProvider.GetService<IRestClient>();
 
             LoginRequestPayload payload = new LoginRequestPayload(_fbUser.stsTokenManager.accessToken);
 
-            restAPINetworkController.Post(URL_LOGIN, JsonConvert.SerializeObject(payload), OnLoginBESuccess, OnLoginBEFail);
+            // restAPINetworkController.Post(URL_LOGIN, JsonConvert.SerializeObject(payload), OnLoginBESuccess,
+            //     OnLoginBEFail);
         }
 
         private void OnLoginBEFail(Exception exception)
@@ -107,13 +109,14 @@ namespace CryptoQuest.SNS
         {
             Debug.Log("Payload: " + res.Text);
 
-            _authorizationSO.Init(res.Text);
+            // _authorizationSO.Init(res.Text);
+            //
+            // if (_authorizationSO.Profile != null)
+            // {
+            //     Debug.Log("FirebaseAuthScript: Login BE success");
+            //     OnSignedInSuccess?.Invoke(_authorizationSO.Profile);
+            // }
 
-            if (_authorizationSO.Profile != null)
-            {
-                Debug.Log("FirebaseAuthScript: Login BE success");
-                OnSignedInSuccess?.Invoke(_authorizationSO.Profile);
-            }
             _isSigning = false;
         }
 
@@ -127,7 +130,7 @@ namespace CryptoQuest.SNS
                 {
                     Debug.Log("FirebaseAuthScript: Try to login BE");
                     LoginWithBackend();
-                } 
+                }
                 else
                 {
                     _isSigning = false;
@@ -139,7 +142,7 @@ namespace CryptoQuest.SNS
         {
             Debug.Log(info);
             _fbUser = null;
-            _authorizationSO.Clear();
+            // _authorizationSO.Clear();
         }
 
         public void OnError(string error)
@@ -150,7 +153,8 @@ namespace CryptoQuest.SNS
 
         public bool IsLoggedIn()
         {
-            return _fbUser != null && Profile != null && AccessToken != null;
+            // return _fbUser != null && Profile != null && AccessToken != null;
+            return false;
         }
 
         public void SignOut()

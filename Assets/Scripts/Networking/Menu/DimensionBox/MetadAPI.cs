@@ -1,10 +1,10 @@
+using System;
+using System.Collections;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
 using CryptoQuest.System;
 using CryptoQuest.UI.Menu.Panels.DimensionBox.Interfaces;
 using Newtonsoft.Json;
 using Proyecto26;
-using System;
-using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -26,7 +26,7 @@ namespace CryptoQuest.Networking.Menu.DimensionBox
         public event UnityAction OnSendSuccess;
         public event UnityAction OnSendFailed;
 
-        private IRestClientController _restAPINetworkController;
+        private IRestClient _restAPINetwork;
         private ICurrenciesController _currenciesController;
         private float WebMetad;
         public float IngameMetad => _currenciesController.Wallet.Diamond.Amount;
@@ -36,8 +36,8 @@ namespace CryptoQuest.Networking.Menu.DimensionBox
         public IEnumerator CoLoadData()
         {
             _currenciesController = ServiceProvider.GetService<ICurrenciesController>();
-            _restAPINetworkController = ServiceProvider.GetService<IRestClientController>();
-            _restAPINetworkController.Get(Constants.LOAD_METAD_PATH, OnLoadDataSuccess, OnLoadDataFail);
+            _restAPINetwork = ServiceProvider.GetService<IRestClient>();
+            // _restAPINetwork.Get(Constants.LOAD_METAD_PATH, OnLoadDataSuccess, OnLoadDataFail);
             yield return null;
         }
 
@@ -57,7 +57,8 @@ namespace CryptoQuest.Networking.Menu.DimensionBox
         {
             var payload = new MetadPayload(value);
 
-            _restAPINetworkController.Post(path, JsonConvert.SerializeObject(payload), OnSendWalletSuccess, OnSendWalletFailed);
+            // TODO: REFACTOR NETWORK
+            // _restAPINetwork.Post(path, JsonConvert.SerializeObject(payload), OnSendWalletSuccess, OnSendWalletFailed);
         }
 
         private void OnLoadDataSuccess(ResponseHelper res)
