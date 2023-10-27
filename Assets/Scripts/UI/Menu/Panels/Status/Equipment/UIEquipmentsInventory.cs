@@ -31,6 +31,7 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
         private HeroBehaviour InspectingHero => _characterPanel.InspectingHero;
         private EquipmentsController _equipmentsController;
         private ITooltip _tooltip;
+        private IInventoryController _inventoryController;
 
         private void OnEnable()
         {
@@ -52,6 +53,8 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
 
         public void Show()
         {
+            _inventoryController ??= ServiceProvider.GetService<IInventoryController>();
+
             Reset();
             _equipmentsController = InspectingHero.GetComponent<EquipmentsController>();
             _equipmentsController.Removed += RemoveCurrentlyEquipping;
@@ -135,8 +138,10 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
 
             _tooltip.Hide();
 
+            // TODO: Move this to EquipmentsController after fixed equipment preview (#2070)
+            _inventoryController.Remove(equipment);
+
             EventSystem.current.SetSelectedGameObject(null);
-            Debug.Log($"RemoveEquipmentFromInventory {equipment}");
             DestroyEquipmentRow(_equippingItemToBeRemoveFromInventory);
             _equippingItemToBeRemoveFromInventory = null;
             EventSystem.current.SetSelectedGameObject(_unEquipButton.gameObject);
@@ -155,6 +160,10 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
             if (equipment.IsValid() && equipment != _currentlyEquippingItem.Equipment) return;
             _currentlyEquippingItem.gameObject.SetActive(false);
             _currentlyEquippingItem.Reset();
+
+            // TODO: Move this to EquipmentsController after fixed equipment preview (#2070)
+            _inventoryController.Add(equipment);
+
             InstantiateNewEquipmentUI(equipment);
         }
 
@@ -162,14 +171,13 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
         {
             _equipmentItems.Clear();
             _equipmentItems = new();
-            var inventory = ServiceProvider.GetService<IInventoryController>().Inventory;
+            var inventory = _inventoryController.Inventory;
             for (int i = 0; i < inventory.Equipments.Count; i++)
             {
                 var equipment = inventory.Equipments[i];
                 try
                 {
-                    if (_equipmentsPanel.ModifyingEquipmentCategory ==
-                        equipment.Data.EquipmentCategory && !equipment.IsEquipped)
+                    if (_equipmentsPanel.ModifyingEquipmentCategory == equipment.Data.EquipmentCategory)
                         InstantiateNewEquipmentUI(equipment);
                 }
                 catch (Exception e)

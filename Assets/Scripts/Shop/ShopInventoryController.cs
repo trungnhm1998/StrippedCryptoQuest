@@ -29,7 +29,7 @@ namespace CryptoQuest.Shop
         public bool TryToBuy(EquipmentInfo equipmentItem)
         {
             if (!HasEnoughGold(equipmentItem)) return false;
-            if (!_inventoryController.Inventory.Add(equipmentItem)) return false;
+            if (!_inventoryController.Add(equipmentItem)) return false;
 
             _inventoryController.Inventory.WalletController.Wallet.Gold.UpdateCurrencyAmount(-equipmentItem.Price);
 
@@ -39,7 +39,7 @@ namespace CryptoQuest.Shop
         public bool TryToBuy(ConsumableInfo consumable)
         {
             if (!HasEnoughGold(consumable)) return false;
-            if (!_inventoryController.Inventory.Add(consumable)) return false;
+            if (!_inventoryController.Add(consumable)) return false;
 
             _inventoryController.Inventory.WalletController.Wallet.Gold.UpdateCurrencyAmount(-consumable.Price);
 
@@ -48,7 +48,7 @@ namespace CryptoQuest.Shop
 
         public bool TryToSell(EquipmentInfo equipmentItem)
         {
-            if (!_inventoryController.Inventory.Remove(equipmentItem)) return false;
+            if (!_inventoryController.Remove(equipmentItem)) return false;
 
             _inventoryController.Inventory.WalletController.Wallet.Gold.UpdateCurrencyAmount(equipmentItem.SellPrice);
 

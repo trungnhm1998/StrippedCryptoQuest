@@ -5,6 +5,8 @@ using CryptoQuest.UI.Menu.Panels.DimensionBox.Interfaces;
 using CryptoQuest.System;
 using UnityEngine;
 using CryptoQuest.Item.Equipment;
+using CryptoQuest.Gameplay.PlayerParty;
+using CryptoQuest.Gameplay.PlayerParty.Helper;
 
 namespace CryptoQuest.UI.Menu.Panels.DimensionBox.EquipmentTransferSection.Models
 {
@@ -13,24 +15,42 @@ namespace CryptoQuest.UI.Menu.Panels.DimensionBox.EquipmentTransferSection.Model
         private List<IGame> _gameEquipmentData;
         public List<IGame> Data => _gameEquipmentData;
 
+        private IPartyController _partyController;
+
         public IEnumerator CoGetData()
         {
             _gameEquipmentData = new List<IGame>();
 
             var equipments = LoadEquipmentsFromInventory();
 
-            foreach (var item in equipments)
+            foreach (var equipment in equipments)
             {
-                var obj = new GameEquipmentData(item);
-                _gameEquipmentData.Add(obj);
+                AddEquipmentData(equipment);
+            }
+
+            foreach (var equipment in LoadEquippedEquipments())
+            {
+                AddEquipmentData(equipment);
             }
 
             yield break;
         }
 
+        private void AddEquipmentData(EquipmentInfo equipment)
+        {
+            var obj = new GameEquipmentData(equipment);
+            _gameEquipmentData.Add(obj);
+        }
+
         private List<EquipmentInfo> LoadEquipmentsFromInventory()
         {
             return ServiceProvider.GetService<IInventoryController>().Inventory.Equipments;
+        }
+
+        private IEnumerable<EquipmentInfo> LoadEquippedEquipments()
+        {
+            _partyController ??= ServiceProvider.GetService<IPartyController>();
+            return _partyController.GetEquippedEquipments();
         }
     }
 }

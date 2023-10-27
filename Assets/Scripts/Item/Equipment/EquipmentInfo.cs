@@ -41,9 +41,14 @@ namespace CryptoQuest.Item.Equipment
         public override int Price => Def.Price;
         public override int SellPrice => Def.SellPrice;
 
-        [NonSerialized] private int _heroEquippedId = 0;
         public PassiveAbility[] Passives => Def.Passives;
-        public bool IsEquipped => _heroEquippedId != 0;
+
+        /// <summary>
+        /// This is not using anywhere yet but
+        /// I saved the equipped hero unit Id just in case
+        /// </summary>
+        [NonSerialized] private int _equippedHeroUnitId = 0;
+        public bool IsEquipped => _equippedHeroUnitId != 0;
 
         public EquipmentInfo()
         {
@@ -81,7 +86,7 @@ namespace CryptoQuest.Item.Equipment
         {
             if (other == null) return false;
             if (ReferenceEquals(this, other)) return true;
-            return Id == other.Id;
+            return this.DefinitionId == other.DefinitionId && Id == other.Id;
         }
 
         public static bool operator !=(EquipmentInfo left, EquipmentInfo right) => !(left == right);
@@ -136,14 +141,14 @@ namespace CryptoQuest.Item.Equipment
             return !string.IsNullOrEmpty(_definitionId);
         }
 
-        public void UnEquipped()
+        public void ResetEquippedHeroUnitId()
         {
-            _heroEquippedId = 0;
+            _equippedHeroUnitId = 0;
         }
 
-        public void Equipped(int heroId)
+        public void SetEquippedHeroUnitId(int heroUnitId)
         {
-            _heroEquippedId = heroId;
+            _equippedHeroUnitId = heroUnitId;
         }
 
         public bool Loaded() => Prefab != null && Prefab.EquipmentType != null && Def != null;

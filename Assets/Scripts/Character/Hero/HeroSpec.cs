@@ -22,5 +22,18 @@ namespace CryptoQuest.Character.Hero
         [field: SerializeField] public float Experience { get; set; }
         [field: SerializeField] public Equipments Equipments { get; set; }
         public bool IsValid() => Unit != null;
+
+        /// <summary>
+        /// Use this to make sure equipped equipment has valid hero id 
+        /// </summary>
+        public void ValidateEquipments()
+        {
+            foreach (var slot in Equipments.Slots)
+            {
+                var equipment = slot.Equipment;
+                if (!equipment.IsValid() || equipment.IsEquipped) continue;
+                equipment.SetEquippedHeroUnitId(Id);
+            }
+        }
     }
 }

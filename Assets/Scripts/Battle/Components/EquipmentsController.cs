@@ -32,6 +32,8 @@ namespace CryptoQuest.Battle.Components
 
         public List<EquipmentSlot> Slots => _equipments.Slots;
 
+        private IInventoryController _inventoryController;
+
         protected override void Awake()
         {
             base.Awake();
@@ -42,6 +44,8 @@ namespace CryptoQuest.Battle.Components
         public override void Init()
         {
             _equipments = _equipmentsProvider.GetEquipments();
+            _inventoryController ??= ServiceProvider.GetService<IInventoryController>();
+
             StartCoroutine(InitEquipments());
         }
 
@@ -162,7 +166,7 @@ namespace CryptoQuest.Battle.Components
                 if (equippingSlot != slot)
                     SetEquipmentInSlot(equipment, slot);
 
-            equipment.Equipped(_hero.Spec.Id);
+            equipment.SetEquippedHeroUnitId(_hero.Spec.Id);
             ApplyEquipmentEffectToCharacter(equipment);
         }
 
@@ -222,9 +226,8 @@ namespace CryptoQuest.Battle.Components
 
         private void OnEquipmentRemoved(EquipmentInfo equipment)
         {
-            // EquipmentRemoved?.Invoke(equipment, equippedSlots);
             RemoveEquipmentEffectFromCharacter(equipment);
-            equipment.UnEquipped();
+            equipment.ResetEquippedHeroUnitId();
             Removed?.Invoke(equipment);
         }
 

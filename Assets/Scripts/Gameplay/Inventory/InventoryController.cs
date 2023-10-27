@@ -13,10 +13,11 @@ namespace CryptoQuest.Gameplay.Inventory
     {
         InventorySO Inventory { get; }
 
-        void Add(EquipmentInfo equipment);
+        bool Add(EquipmentInfo equipment);
 
-        void Remove(EquipmentInfo equipment);
+        bool Remove(EquipmentInfo equipment);
 
+        bool Add(ConsumableInfo consumable);
         bool Remove(ConsumableInfo consumable);
     }
 
@@ -71,18 +72,32 @@ namespace CryptoQuest.Gameplay.Inventory
             }
         }
 
-        private void AddLoot(LootInfo loot) => loot.AddItemToInventory(_inventory);
-
-        public void Add(EquipmentInfo equipment)
+        private void AddLoot(LootInfo loot)
         {
-            _inventory.Add(equipment);
+            loot.AddItemToInventory(_inventory);
             _saveSystem?.SaveObject(this);
         }
 
-        public void Remove(EquipmentInfo equipment)
+        public bool Add(EquipmentInfo equipment)
         {
-            _inventory.Remove(equipment);
+            if (!_inventory.Add(equipment)) return false;
             _saveSystem?.SaveObject(this);
+            return true;
+        }
+
+        public bool Remove(EquipmentInfo equipment)
+        {
+            if (!_inventory.Remove(equipment)) return false;
+
+            _saveSystem?.SaveObject(this);
+            return true;
+        }
+
+        public bool Add(ConsumableInfo consumable)
+        {
+            if (!_inventory.Add(consumable)) return false;
+            _saveSystem?.SaveObject(this);
+            return true;
         }
 
         public bool Remove(ConsumableInfo consumable)
