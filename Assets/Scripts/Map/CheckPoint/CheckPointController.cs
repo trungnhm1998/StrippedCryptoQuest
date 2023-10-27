@@ -37,7 +37,6 @@ namespace CryptoQuest.Map.CheckPoint
         public int LastDirection;
         public string CurrentSceneGuid;
     }
-
     public class CheckPointController : MonoBehaviour, ICheckPointController, ISaveObject
     {
         public bool IsBackToCheckPoint => _isBackToCheckPoint;
@@ -80,6 +79,11 @@ namespace CryptoQuest.Map.CheckPoint
             _lastCheckPointPosition = Vector3.zero;
             _lastCheckPointFacingDirection = 1;
             _saveSystem?.LoadObject(this);
+
+            if(_lastCheckPointScene != _defaultCheckpoint) 
+            {
+                BackToCheckPoint();
+            }            
         }
 
         private void SaveNewLoadedSceneForCheckpoint(SceneScriptableObject nextScene)
