@@ -1,26 +1,39 @@
-﻿using System;
-using CryptoQuest.Audio.AudioData;
+﻿using CryptoQuest.Audio.AudioData;
 using CryptoQuest.Audio.AudioEmitters;
 using CryptoQuest.Audio.Settings;
+using CryptoQuest.System;
+using System;
+using System.Collections;
 using UnityEngine;
 
 namespace CryptoQuest.Audio
 {
-    [RequireComponent((typeof(AudioEmitterPool)))]
-    public class AudioManager : MonoBehaviour
+    [Serializable]
+    public class AudioSave
     {
-        [Header("AudioEmitters Pool")] [SerializeField]
+        public float Volume = 1f;
+    }
+
+    [RequireComponent((typeof(AudioEmitterPool)))]
+    public class AudioManager : SaveObject
+    {
+        [Header("AudioEmitters Pool")]
+        [SerializeField]
         private AudioEmitterPool _pool = default;
 
         [SerializeField] private int _audioEmitterPoolSize = 10;
 
-        [Header("Listening on")] [SerializeField]
+        [Header("Listening on")]
+        [SerializeField]
         private AudioCueEventChannelSO _sfxEventChannel;
 
         [SerializeField] private AudioCueEventChannelSO _backgroundMusicEventChannel;
 
-        [Header("Audio control")] [SerializeField]
+        [Header("Audio control")]
+        [SerializeField]
         private AudioSettingSO audioSettings;
+
+        [SerializeField] private AudioSave _saveData;
 
         private AudioEmitter _playingMusicAudioEmitter;
         private AudioCueSO _currentSfxCue;
@@ -30,10 +43,17 @@ namespace CryptoQuest.Audio
         {
             _pool.Create(_audioEmitterPoolSize);
             _pool.SetParent(this.transform);
+            SaveSystem = ServiceProvider.GetService<ISaveSystem>();
         }
 
-        private void OnEnable()
+        private void Start()
         {
+            InitVolume();
+        }
+
+        protected override void OnEnable()
+        {
+            base.OnEnable();
             _sfxEventChannel.AudioPlayRequested += PlaySfx;
             _sfxEventChannel.AudioStopRequested += StopSfx;
 
@@ -43,8 +63,9 @@ namespace CryptoQuest.Audio
             audioSettings.VolumeChanged += ChangeMasterVolume;
         }
 
-        private void OnDisable()
+        protected override void OnDisable()
         {
+            base.OnDisable();
             _sfxEventChannel.AudioPlayRequested -= PlaySfx;
             _sfxEventChannel.AudioStopRequested -= StopSfx;
 
@@ -52,6 +73,12 @@ namespace CryptoQuest.Audio
             _backgroundMusicEventChannel.AudioStopRequested -= StopBackgroundMusic;
 
             audioSettings.VolumeChanged -= ChangeMasterVolume;
+        }
+
+        private void InitVolume()
+        {
+            _saveData.Volume = audioSettings.Volume;
+            SaveSystem?.SaveObject(this);
         }
 
         public void PlaySfx(AudioCueSO audioCue)
@@ -110,6 +137,7 @@ namespace CryptoQuest.Audio
 
                 Debug.Log($"[AudioManager::PlayBackgroundMusic] Playing background music: {audioCue.name}");
             });
+            SaveSystem?.SaveObject(this);
         }
 
         private void TryToLoadData(AudioCueSO audioCue, Action<AudioClip> callback)
@@ -144,6 +172,9 @@ namespace CryptoQuest.Audio
             if (!IsAudioPlaying()) return;
 
             _playingMusicAudioEmitter.SetVolume(value);
+
+            _saveData.Volume = value;
+            SaveSystem?.SaveObject(this);
         }
 
         private void AudioFinishedPlaying(AudioEmitterValue audioEmitterValue)
@@ -164,5 +195,26 @@ namespace CryptoQuest.Audio
         }
 
         private bool IsAudioPlaying() => _playingMusicAudioEmitter != null && _playingMusicAudioEmitter.IsPlaying();
+
+        #region SaveSystem
+
+        public override string Key => "Volume";
+
+        public override string ToJson()
+        {
+            return JsonUtility.ToJson(_saveData);
+        }
+
+        public override IEnumerator CoFromJson(string json)
+        {
+            if (!string.IsNullOrEmpty(json))
+            {
+                JsonUtility.FromJsonOverwrite(json, _saveData);
+                audioSettings.Volume = _saveData.Volume;
+            }
+            yield return null;
+        }
+
+        #endregion
     }
 }

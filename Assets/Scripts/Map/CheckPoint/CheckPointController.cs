@@ -82,6 +82,9 @@ namespace CryptoQuest.Map.CheckPoint
             var editorColdBoot = FindObjectOfType<EditorColdBoot>();
             _currentScene = editorColdBoot.ThisScene;
 #endif
+            _lastCheckPointScene = _defaultCheckpoint;
+            _lastCheckPointPosition = Vector3.zero;
+            _lastCheckPointFacingDirection = 1;
         }
 
         private void SaveNewLoadedSceneForCheckpoint(SceneScriptableObject nextScene)
@@ -171,6 +174,10 @@ namespace CryptoQuest.Map.CheckPoint
                 _lastSceneCheckPointName = checkPointData.LastSceneName;
                 _lastCheckPointPosition = checkPointData.LastPosition;
                 _lastCheckPointFacingDirection = checkPointData.LastDirection;
+                if(_lastCheckPointScene != _defaultCheckpoint) 
+                {
+                    BackToCheckPoint();
+                }
             }
         }
         #endregion

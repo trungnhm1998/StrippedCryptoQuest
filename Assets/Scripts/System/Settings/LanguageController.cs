@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -8,35 +9,44 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace CryptoQuest.System.Settings
 {
-    public class LanguageController : MonoBehaviour
+    [Serializable]
+    public class LanguageSave
+    {
+        public int LanguageIndex = 0;
+    }
+
+    public class LanguageController : SaveObject
     {
         [Header("UI")]
         [SerializeField] TMP_Dropdown _dropdown;
 
+        [SerializeField] private LanguageSave _saveData;
+
         private int _currentSelectedOption = 0;
         private AsyncOperationHandle _initializeOperation;
-        private List<string> _languagesList = new List<string>();
+        private List<string> _languagesList = new();
 
-        private void Start()
+        protected override void OnEnable()
         {
+            base.OnEnable();
             _initializeOperation = LocalizationSettings.SelectedLocaleAsync;
             _initializeOperation.Completed += InitializeCompleted;
         }
 
-        private void OnDisable()
+        protected override void OnDisable()
         {
+            base.OnDisable();
             LocalizationSettings.SelectedLocaleChanged -= SelectedLocaleChanged;
         }
 
-        public void Initialize()
+        public void OnChangeLanguage(int index)
         {
-            _dropdown.Select();
+            _currentSelectedOption = index;
+            OnSelectionChanged();
         }
 
-        public void DeInitialize()
-        {
-            _dropdown.Hide();
-        }
+        public void Initialize() => _dropdown.Select();
+        public void DeInitialize() => _dropdown.Hide();
 
         private void InitializeLanguage()
         {
@@ -65,17 +75,6 @@ namespace CryptoQuest.System.Settings
             LocalizationSettings.SelectedLocaleChanged += SelectedLocaleChanged;
         }
 
-        private void SelectedLocaleChanged(Locale locale)
-        {
-            var index = LocalizationSettings.AvailableLocales.Locales.IndexOf(locale);
-            _dropdown.value = index;
-        }
-
-        public void OnChangeLanguage(int index)
-        {
-            _currentSelectedOption = index;
-            OnSelectionChanged();
-        }
 
         private void OnSelectionChanged()
         {
@@ -86,5 +85,35 @@ namespace CryptoQuest.System.Settings
 
             LocalizationSettings.SelectedLocaleChanged += SelectedLocaleChanged;
         }
+
+        private void SelectedLocaleChanged(Locale locale)
+        {
+            var index = LocalizationSettings.AvailableLocales.Locales.IndexOf(locale);
+            _dropdown.value = index;
+
+            _saveData.LanguageIndex = index;
+            SaveSystem?.SaveObject(this);
+        }
+
+        #region SaveSystem
+
+        public override string Key => "LanguageIndex";
+
+        public override string ToJson()
+        {
+            return JsonUtility.ToJson(_saveData);
+        }
+
+        public override IEnumerator CoFromJson(string json)
+        {
+            if (!string.IsNullOrEmpty(json))
+            {
+                JsonUtility.FromJsonOverwrite(json, _saveData);
+                OnChangeLanguage(_saveData.LanguageIndex);
+            }
+            yield return null;
+        }
+
+        #endregion
     }
 }

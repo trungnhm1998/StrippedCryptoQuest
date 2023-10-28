@@ -266,9 +266,9 @@ namespace CryptoQuest.Quest.Components
                         }
                     }
 
-                    var lastCutsceneActionQuestIdx = CompletedQuests.FindIndex(quest => quest.BaseData.GetType() == typeof(CutsceneBranchingQuestSO) && quest.BaseData.NextAction != null && quest.BaseData.NextAction.GetType() ==  typeof(CutsceneAction));
-                    var lastCutsceneBattleQuestIdx = CompletedQuests.FindIndex(quest => quest.BaseData.GetType() == typeof(CutsceneBranchingQuestSO) && quest.BaseData.NextAction != null && quest.BaseData.NextAction.GetType() ==  typeof(BattleAction));
-                    var inprogressCutsceneBattleQuestIdx = InProgressQuest.FindIndex(quest => quest.BaseData.GetType() == typeof(CutsceneBranchingQuestSO) && quest.BaseData.NextAction != null && quest.BaseData.NextAction.GetType() ==  typeof(BattleAction));
+                    var lastCutsceneActionQuestIdx = CompletedQuests.FindLastIndex(quest => quest.BaseData.GetType() == typeof(CutsceneBranchingQuestSO) && quest.BaseData.NextAction != null && quest.BaseData.NextAction.GetType() ==  typeof(CutsceneAction));
+                    var lastCutsceneBattleQuestIdx = CompletedQuests.FindLastIndex(quest => quest.BaseData.GetType() == typeof(CutsceneBranchingQuestSO) && quest.BaseData.NextAction != null && quest.BaseData.NextAction.GetType() ==  typeof(BattleAction));
+                    var inprogressCutsceneBattleQuestIdx = InProgressQuest.FindLastIndex(quest => quest.BaseData.GetType() == typeof(CutsceneBranchingQuestSO) && quest.BaseData.NextAction != null && quest.BaseData.NextAction.GetType() ==  typeof(BattleAction));
 
                     // If has CutsceneAction but BattleAction inprogress, retrigger CutsceneAction
                     if(lastCutsceneActionQuestIdx > lastCutsceneBattleQuestIdx && inprogressCutsceneBattleQuestIdx > -1)
@@ -279,8 +279,8 @@ namespace CryptoQuest.Quest.Components
                         GiveQuest(cutsceneQuest.BaseData);
                     }
 
-                    var lastBattleQuestIdx = CompletedQuests.FindIndex(quest => quest.BaseData.GetType() == typeof(BattleQuestSO));
-                    var inprogressBattleQuestIdx = InProgressQuest.FindIndex(quest => quest.BaseData.GetType() == typeof(BattleQuestSO));
+                    var lastBattleQuestIdx = CompletedQuests.FindLastIndex(quest => quest.BaseData.GetType() == typeof(BattleQuestSO));
+                    var inprogressBattleQuestIdx = InProgressQuest.FindLastIndex(quest => quest.BaseData.GetType() == typeof(BattleQuestSO));
 
                     // If has battle inprogress, retrigger CutsceneAction
                     if (lastCutsceneActionQuestIdx < lastCutsceneBattleQuestIdx && lastCutsceneBattleQuestIdx > lastBattleQuestIdx)
