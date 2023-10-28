@@ -28,7 +28,7 @@ namespace CryptoQuest.Quest.Categories
         public override void GiveQuest()
         {
             base.GiveQuest();
-            var questManager = ServiceProvider.GetService<QuestManager>();
+            var questManager = ServiceProvider.GetService<IQuestManager>();
             var yarnQuestManager = questManager?.GetComponent<YarnQuestManager>();
             yarnQuestManager?.GiveQuest(this);
         }

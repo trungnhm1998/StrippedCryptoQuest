@@ -25,7 +25,7 @@ namespace CryptoQuest.Quest.Categories
         public override void GiveQuest()
         {
             base.GiveQuest();
-            var questManager = ServiceProvider.GetService<QuestManager>();
+            var questManager = ServiceProvider.GetService<IQuestManager>();
             var questCutsceneController = questManager?.GetComponent<QuestCutsceneController>();
             questCutsceneController?.GiveBranchingQuest(this);
         }

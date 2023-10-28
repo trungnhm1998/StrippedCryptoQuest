@@ -30,7 +30,7 @@ namespace CryptoQuest.Quest.Categories
         public override void GiveQuest()
         {
             base.GiveQuest();
-            var questManager = ServiceProvider.GetService<QuestManager>();
+            var questManager = ServiceProvider.GetService<IQuestManager>();
             var questTeleportController = questManager?.GetComponent<QuestTeleportController>();
             questTeleportController?.GiveQuest(this);
         }

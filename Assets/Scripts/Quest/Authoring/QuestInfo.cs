@@ -35,7 +35,7 @@ namespace CryptoQuest.Quest.Authoring
         public override void FinishQuest()
         {
             Debug.Log($"QuestSystem::Finish Quest: <color=green>[{Data.QuestName}] - [{Data.EventName}]</color>");
-            QuestManager questManager = ServiceProvider.GetService<QuestManager>();
+            var questManager = ServiceProvider.GetService<IQuestManager>();
 
             Data.OnQuestCompleted?.Invoke();
             questManager?.OnQuestCompleted?.Invoke(Data);

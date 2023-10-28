@@ -33,7 +33,7 @@ namespace CryptoQuest.Quest.Categories
         public override void GiveQuest()
         {
             base.GiveQuest();
-            var questManager = ServiceProvider.GetService<QuestManager>();
+            var questManager = ServiceProvider.GetService<IQuestManager>();
             var questBattleController = questManager?.GetComponent<QuestBattleController>();
             questBattleController?.GiveQuest(this);
         }

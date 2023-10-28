@@ -63,6 +63,7 @@ namespace CryptoQuest.Character.MonoBehaviours
 
         private void FixedUpdate()
         {
+            if (_rigidBody2D == null || _velocityStrategy == null) return;
             _rigidBody2D.velocity = _velocityStrategy.CalculateVelocity(_inputVector, _speed);
             OnCharacterStep();
         }

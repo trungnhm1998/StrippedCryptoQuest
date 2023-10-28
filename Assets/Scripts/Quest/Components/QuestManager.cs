@@ -4,7 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using CryptoQuest.Gameplay.Loot;
 using CryptoQuest.Gameplay.Reward.Events;
+using CryptoQuest.Quest.Actions;
 using CryptoQuest.Quest.Authoring;
+using CryptoQuest.Quest.Categories;
 using CryptoQuest.Quest.Events;
 using CryptoQuest.System;
 using IndiGames.Core.SaveSystem;
@@ -41,15 +43,22 @@ namespace CryptoQuest.Quest.Components
         }
     }
 
-    [AddComponentMenu("Quest System/Quest Manager")]
-    [DisallowMultipleComponent]
-    public class QuestManager : MonoBehaviour, ISaveObject
+    public abstract class IQuestManager : SaveObject
     {
         public static Action<IQuestConfigure> OnConfigureQuest;
         public static Action<QuestSO> OnRemoveProgressingQuest;
         public Action<QuestSO> OnQuestCompleted;
 
-        [Header("Quest Events")] [SerializeField]
+        public abstract void TriggerQuest(QuestSO questData);
+        public abstract void GiveQuest(QuestSO questData);
+    }
+
+    [AddComponentMenu("Quest System/Quest Manager")]
+    [DisallowMultipleComponent]
+    public class QuestManager : IQuestManager
+    {
+        [Header("Quest Events")]
+        [SerializeField]
         private QuestEventChannelSO _triggerQuestEventChannel;
 
         [SerializeField] private QuestEventChannelSO _giveQuestEventChannel;
@@ -63,16 +72,15 @@ namespace CryptoQuest.Quest.Components
         public List<QuestInfo> CompletedQuests { get; private set; } = new();
 
         [SerializeField, HideInInspector] private QuestSO _currentQuestData;
-        private ISaveSystem _saveSystem;
 
         private void Awake()
         {
-            ServiceProvider.Provide(this);
-            _saveSystem = ServiceProvider.GetService<ISaveSystem>();
+            ServiceProvider.Provide<IQuestManager>(this);
         }
 
-        private void OnEnable()
+        protected override void OnEnable()
         {
+            base.OnEnable();
             OnConfigureQuest += ConfigureQuestHolder;
             OnRemoveProgressingQuest += RemoveProgressingQuest;
             OnQuestCompleted += QuestCompleted;
@@ -82,8 +90,9 @@ namespace CryptoQuest.Quest.Components
             _removeQuestEventChannel.EventRaised += RemoveProgressingQuest;
         }
 
-        private void OnDisable()
+        protected override void OnDisable()
         {
+            base.OnDisable();
             OnConfigureQuest -= ConfigureQuestHolder;
             OnRemoveProgressingQuest -= RemoveProgressingQuest;
             OnQuestCompleted -= QuestCompleted;
@@ -93,12 +102,7 @@ namespace CryptoQuest.Quest.Components
             _removeQuestEventChannel.EventRaised -= RemoveProgressingQuest;
         }
 
-        private void Start()
-        {
-            _saveSystem?.LoadObject(this);
-        }
-
-        public void TriggerQuest(QuestSO questData)
+        public override void TriggerQuest(QuestSO questData)
         {
             if (IsQuestTriggered(questData))
             {
@@ -126,18 +130,8 @@ namespace CryptoQuest.Quest.Components
             return false;
         }
 
-        public void GiveQuest(QuestSO questData)
+        public override void GiveQuest(QuestSO questData)
         {
-            // Find and remove completed quest
-            // This allow parent-quest to respawn child-quest when it not finished
-            // while child(s) may finished already (eg: CompletedSlimeQuest)
-            var questIdx = CompletedQuests.FindIndex(quest => quest.Guid == questData.Guid);
-            if (questIdx != -1)
-            {
-                CompletedQuests.RemoveAt(questIdx);
-                Debug.Log($"<color=green>QuestManager::GiveQuest::Remove completed: {questData.QuestName}</color>");
-            }
-
             if (IsQuestTriggered(questData))
             {
                 Debug.Log($"<color=green>QuestManager::GiveQuest::Already triggered: {questData.QuestName}</color>");
@@ -166,16 +160,15 @@ namespace CryptoQuest.Quest.Components
             _currentQuestData = questData;
             questData.OnRewardReceived += RewardReceived;
 
-            _saveSystem?.SaveObject(this);
+            SaveSystem?.SaveObject(this);
         }
-
 
         private void RewardReceived(List<LootInfo> loots)
         {
             _rewardEventChannel.EventRaised(loots);
             _currentQuestData.OnRewardReceived -= RewardReceived;
 
-            _saveSystem?.SaveObject(this);
+            SaveSystem?.SaveObject(this);
         }
 
         private void UpdateQuestProgress(QuestInfo questInfo)
@@ -193,7 +186,7 @@ namespace CryptoQuest.Quest.Components
                 break;
             }
 
-            _saveSystem?.SaveObject(this);
+            SaveSystem?.SaveObject(this);
         }
 
         private bool IsQuestTriggered(QuestSO questSo)
@@ -203,6 +196,12 @@ namespace CryptoQuest.Quest.Components
 
         private void ConfigureQuestHolder(IQuestConfigure questConfigure)
         {
+            StartCoroutine(CoConfigureQuestHolder(questConfigure));
+        }
+
+        private IEnumerator CoConfigureQuestHolder(IQuestConfigure questConfigure)
+        {
+            yield return WaitUntilTrue(IsLoaded);
             questConfigure.QuestsToTrack.ForEach(questData => questConfigure.Configure(IsQuestTriggered(questData)));
         }
 
@@ -214,36 +213,28 @@ namespace CryptoQuest.Quest.Components
                 InProgressQuest.Remove(inProgressQuest);
             }
 
-            _saveSystem?.SaveObject(this);
+            SaveSystem?.SaveObject(this);
         }
 
         #region SaveSystem
 
-        public string Key => "Quest";
+        public override string Key => "Quest";
 
-        public string ToJson()
+        public override string ToJson()
         {
             var questData = new QuestData();
             foreach (var item in InProgressQuest)
             {
                 questData.InProgressQuest.Add(item.Guid);
             }
-
             foreach (var item in CompletedQuests)
             {
                 questData.CompletedQuests.Add(item.Guid);
             }
-
             return questData.ToJson();
         }
 
-        public bool FromJson(string json)
-        {
-            StartCoroutine(CoFromJson(json));
-            return true;
-        }
-
-        public IEnumerator CoFromJson(string json)
+        public override IEnumerator CoFromJson(string json)
         {
             if (!string.IsNullOrEmpty(json))
             {
@@ -257,33 +248,52 @@ namespace CryptoQuest.Quest.Components
                     foreach (var guid in questData.CompletedQuests)
                     {
                         var questSoHandle = Addressables.LoadAssetAsync<QuestSO>(guid);
+                        yield return questSoHandle;
+                        if (questSoHandle.Status == AsyncOperationStatus.Succeeded)
                         {
-                            yield return questSoHandle;
-                            if (questSoHandle.Status == AsyncOperationStatus.Succeeded)
-                            {
-                                var questSO = questSoHandle.Result;
-                                GiveQuest(questSO);
-                                QuestCompleted(questSO);
-                            }
+                            GiveQuest(questSoHandle.Result);
+                            OnQuestCompleted(questSoHandle.Result);
                         }
                     }
 
                     foreach (var guid in questData.InProgressQuest)
                     {
                         var questSoHandle = Addressables.LoadAssetAsync<QuestSO>(guid);
+                        yield return questSoHandle;
+                        if (questSoHandle.Status == AsyncOperationStatus.Succeeded)
                         {
-                            yield return questSoHandle;
-                            if (questSoHandle.Status == AsyncOperationStatus.Succeeded)
-                            {
-                                var questSO = questSoHandle.Result;
-                                GiveQuest(questSO);
-                            }
+                            GiveQuest(questSoHandle.Result);
                         }
+                    }
+
+                    var lastCutsceneActionQuestIdx = CompletedQuests.FindIndex(quest => quest.BaseData.GetType() == typeof(CutsceneBranchingQuestSO) && quest.BaseData.NextAction != null && quest.BaseData.NextAction.GetType() ==  typeof(CutsceneAction));
+                    var lastCutsceneBattleQuestIdx = CompletedQuests.FindIndex(quest => quest.BaseData.GetType() == typeof(CutsceneBranchingQuestSO) && quest.BaseData.NextAction != null && quest.BaseData.NextAction.GetType() ==  typeof(BattleAction));
+                    var inprogressCutsceneBattleQuestIdx = InProgressQuest.FindIndex(quest => quest.BaseData.GetType() == typeof(CutsceneBranchingQuestSO) && quest.BaseData.NextAction != null && quest.BaseData.NextAction.GetType() ==  typeof(BattleAction));
+
+                    // If has CutsceneAction but BattleAction inprogress, retrigger CutsceneAction
+                    if(lastCutsceneActionQuestIdx > lastCutsceneBattleQuestIdx && inprogressCutsceneBattleQuestIdx > -1)
+                    {
+                        var cutsceneQuest = CompletedQuests.ElementAt(lastCutsceneActionQuestIdx);
+                        CompletedQuests.RemoveAt(lastCutsceneActionQuestIdx);
+                        InProgressQuest.RemoveAt(inprogressCutsceneBattleQuestIdx);
+                        GiveQuest(cutsceneQuest.BaseData);
+                    }
+
+                    var lastBattleQuestIdx = CompletedQuests.FindIndex(quest => quest.BaseData.GetType() == typeof(BattleQuestSO));
+                    var inprogressBattleQuestIdx = InProgressQuest.FindIndex(quest => quest.BaseData.GetType() == typeof(BattleQuestSO));
+
+                    // If has battle inprogress, retrigger CutsceneAction
+                    if (lastCutsceneActionQuestIdx < lastCutsceneBattleQuestIdx && lastCutsceneBattleQuestIdx > lastBattleQuestIdx)
+                    {
+                        var cutsceneQuest = CompletedQuests.ElementAt(lastCutsceneActionQuestIdx);
+                        CompletedQuests.RemoveAt(lastCutsceneBattleQuestIdx);
+                        CompletedQuests.RemoveAt(lastCutsceneActionQuestIdx);
+                        if (inprogressBattleQuestIdx >= 0) InProgressQuest.RemoveAt(inprogressBattleQuestIdx);
+                        GiveQuest(cutsceneQuest.BaseData);
                     }
                 }
             }
         }
-
         #endregion
     }
 }

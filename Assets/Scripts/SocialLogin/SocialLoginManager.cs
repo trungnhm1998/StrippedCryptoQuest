@@ -94,7 +94,7 @@ namespace CryptoQuest.SocialLogin
 #if UNITY_EDITOR
             yield return new WaitForSeconds(.5f);
 #else
-            yield return new WaitForSeconds(5f);
+            yield return new WaitForSeconds(1f);
 #endif
             OnSignInSuccess(null);
         }
@@ -104,7 +104,7 @@ namespace CryptoQuest.SocialLogin
 #if UNITY_EDITOR
             yield return new WaitForSeconds(.5f);
 #else
-            yield return new WaitForSeconds(3f);
+            yield return new WaitForSeconds(1f);
 #endif
            OnSignInFailed("Login Failed");
         }

@@ -6,4 +6,10 @@ public interface ISaveObject: IJsonSerializable
     /// Serialize key for json
     /// </summary>
     string Key { get; }
+
+    /// <summary>
+    /// Check if the loading coroutine has finished on this object
+    /// </summary>
+    /// <returns>true/false</returns>
+    bool IsLoaded();
 }

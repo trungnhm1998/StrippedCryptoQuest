@@ -150,7 +150,7 @@ namespace IndiGames.Core.SceneManagementSystem
             => SceneManager.UnloadSceneAsync(_currentlyLoadedScene.SceneReference.editorAsset.name);
 #endif
 
-        private void OnSceneLoaded(Scene scene)
+        protected virtual void OnSceneLoaded(Scene scene)
         {
             _currentlyLoadedScene = _sceneToLoad;
             SceneManager.SetActiveScene(scene);

@@ -19,10 +19,8 @@ namespace CryptoQuest.System.Dialogue
         private void Awake()
         {
             _dialogueRunner = FindObjectOfType<DialogueRunner>();
-
             _yarnVariableStorage = FindObjectOfType<InMemoryVariableStorage>();
             _dialogueRunner.AddCommandHandler<string>("EndDialogue", OnDialogueEnd);
-            _saveSystem = ServiceProvider.GetService<ISaveSystem>();
         }
 
         private void OnEnable()
@@ -37,7 +35,8 @@ namespace CryptoQuest.System.Dialogue
 
         private void Start()
         {
-            if(_saveSystem != null)
+            _saveSystem = ServiceProvider.GetService<ISaveSystem>();
+            if (_saveSystem != null)
             {
                 _yarnVariableStorage.SetValue("$playerName", _saveSystem.PlayerName);
             }

@@ -1,8 +1,8 @@
 using CryptoQuest.System.SaveSystem;
-using IndiGames.Core.Events.ScriptableObjects;
 using IndiGames.Core.SceneManagementSystem;
 using IndiGames.Core.SceneManagementSystem.ScriptableObjects;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace CryptoQuest.System.SceneManagement
 {
@@ -10,33 +10,31 @@ namespace CryptoQuest.System.SceneManagement
     {
         [SerializeField] private SceneLoaderBus _sceneLoadBus;
         [SerializeField] private SaveSystemSO _saveSystemSO;
-        [SerializeField] protected VoidEventChannelSO _sceneLoadedEvent;
 
-        private void Awake()
+        protected override void OnEnable()
         {
             ServiceProvider.Provide<ISaveSystem>(_saveSystemSO);
             _sceneLoadBus.SceneLoader = this;
-            _sceneLoadedEvent.EventRaised += OnSceneLoaded;
+            base.OnEnable();
         }
 
-        private void OnDestroy()
+        protected override void OnSceneLoaded(Scene scene)
         {
-            _sceneLoadedEvent.EventRaised -= OnSceneLoaded;
-        }
-
-        private void OnSceneLoaded()
-        {
+            base.OnSceneLoaded(scene);
             if (SceneToLoad.SceneType == SceneScriptableObject.Type.Location)
             {
-                if(_saveSystemSO.IsSceneLoading)
+                if (_saveSystemSO != null)
                 {
-                    Debug.Log("ISceneLoaderHandler, OnSceneLoaded, loaded scene...");
-                    _saveSystemSO.OnSceneLoaded(); 
-                }
-                else
-                {
-                    Debug.Log("ISceneLoaderHandler, OnSceneLoaded, save scene...");
-                    _saveSystemSO.SaveScene(SceneToLoad);
+                    if (_saveSystemSO.IsLoadingSaveGame())
+                    {
+                        Debug.Log("ISceneLoaderHandler, OnSceneLoaded, loaded scene...");
+                        _saveSystemSO.OnSceneLoaded();
+                    }
+                    else
+                    {
+                        Debug.Log("ISceneLoaderHandler, OnSceneLoaded, save scene...");
+                        _saveSystemSO.SaveScene(SceneToLoad);
+                    }
                 }
             }
         }

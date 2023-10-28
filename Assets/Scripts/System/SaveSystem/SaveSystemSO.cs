@@ -2,6 +2,7 @@ using IndiGames.Core.Events.ScriptableObjects;
 using IndiGames.Core.SaveSystem;
 using IndiGames.Core.SceneManagementSystem.ScriptableObjects;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 
@@ -20,11 +21,10 @@ namespace CryptoQuest.System.SaveSystem
         }
 
         private bool _isSceneLoading = false;
-        public bool IsSceneLoading => _isSceneLoading;
 
         private string Save()
         {
-            if(!string.IsNullOrEmpty(PlayerName))
+            if (!string.IsNullOrEmpty(PlayerName))
             {
                 var saveData = JsonUtility.ToJson(_saveData);
                 Debug.Log("Save: " + saveData);
@@ -35,7 +35,7 @@ namespace CryptoQuest.System.SaveSystem
 
         private bool Load(string json)
         {
-            if(!string.IsNullOrEmpty(json))
+            if (!string.IsNullOrEmpty(json))
             {
                 Debug.Log("Load Save: " + json);
                 JsonUtility.FromJsonOverwrite(json, _saveData);
@@ -64,7 +64,7 @@ namespace CryptoQuest.System.SaveSystem
         }
 
         public virtual async Task<bool> LoadSaveGameAsync()
-        {        
+        {
             return Load(await _saveManagerSO.LoadAsync());
         }
 
@@ -75,7 +75,7 @@ namespace CryptoQuest.System.SaveSystem
 
         public bool SaveScene(SceneScriptableObject sceneSO)
         {
-            if(!_isSceneLoading)
+            if (!IsLoadingSaveGame())
             {
                 _saveData.scene = JsonUtility.ToJson(sceneSO);
                 return SaveGame();
@@ -85,7 +85,7 @@ namespace CryptoQuest.System.SaveSystem
 
         public bool LoadScene(ref SceneScriptableObject sceneSO)
         {
-            if(!_isSceneLoading && !string.IsNullOrEmpty(_saveData.scene) && sceneSO != null)
+            if (!IsLoadingSaveGame() && !string.IsNullOrEmpty(_saveData.scene) && sceneSO != null)
             {
                 sceneSO = SceneScriptableObject.CreateInstance<SceneScriptableObject>();
                 JsonUtility.FromJsonOverwrite(_saveData.scene, sceneSO);
@@ -99,11 +99,14 @@ namespace CryptoQuest.System.SaveSystem
         {
             try
             {
-                foreach (var data in _saveData.objects)
+                if (jObject != null && !jObject.IsLoaded())
                 {
-                    if (data != null && data.Value != null && data.Key == jObject.Key)
+                    foreach (var data in _saveData.objects)
                     {
-                        return jObject.FromJson(data.Value);
+                        if (data != null && data.Value != null && data.Key == jObject.Key)
+                        {
+                            return jObject.FromJson(data.Value);
+                        }
                     }
                 }
             }
@@ -116,27 +119,33 @@ namespace CryptoQuest.System.SaveSystem
 
         public bool SaveObject(ISaveObject jObject)
         {
-            try 
+            if (IsLoadingSaveGame() || jObject == null || !jObject.IsLoaded())
             {
-                if (jObject != null)
-                {
-                    foreach (var data in _saveData.objects)
-                    {
-                        if (data.Key == jObject.Key)
-                        {
-                            _saveData.objects.Remove(data);
-                            break;
-                        }
-                    }
-                    _saveData.objects.Add(new KeyValue(jObject.Key, jObject.ToJson()));
-                    return SaveGame();
-                }
+                return false;
             }
-            catch (Exception ex) 
+            try
+            {
+                foreach (var data in _saveData.objects)
+                {
+                    if (data.Key == jObject.Key)
+                    {
+                        _saveData.objects.Remove(data);
+                        break;
+                    }
+                }
+                _saveData.objects.Add(new KeyValue(jObject.Key, jObject.ToJson()));
+                return SaveGame();
+            }
+            catch (Exception ex)
             {
                 Debug.LogException(ex);
             }
             return false;
+        }
+
+        public bool IsLoadingSaveGame()
+        {
+            return _isSceneLoading;
         }
 
         #region Editor Tools

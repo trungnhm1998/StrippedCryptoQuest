@@ -26,7 +26,6 @@ namespace CryptoQuest.UI.Title
         public UnityAction ConfirmNameButtonPressed;
         public UnityAction CancelEvent;
         private bool _isInputValid;
-        private ISaveSystem _saveSystem;
 
         private const string VALIDATION_TABLE_ENTRY = "TITLE_VALIDATE_";
 
@@ -34,7 +33,6 @@ namespace CryptoQuest.UI.Title
         {
             _tempSaveInfo.PlayerName = string.Empty;
             _nameValidator = new NameValidator(_badWordAsset, _specialCharacterAsset);
-            _saveSystem = ServiceProvider.GetService<ISaveSystem>();
         }
 
         private void OnEnable()
@@ -55,10 +53,11 @@ namespace CryptoQuest.UI.Title
                 return;
             }
 
-            if(_saveSystem != null)
+            var saveSystem = ServiceProvider.GetService<ISaveSystem>();
+            if (saveSystem != null)
             {
-                _saveSystem.PlayerName = NameInput.text;
-                _saveSystem.SaveGame();
+                saveSystem.PlayerName = NameInput.text;
+                saveSystem.SaveGame();
             }
 
             ConfirmNameButtonPressed?.Invoke();

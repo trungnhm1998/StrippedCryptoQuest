@@ -242,16 +242,14 @@ namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects
             foreach (var consumableData in inventoryData.Consumables)
             {
                 var dataSoHandle = Addressables.LoadAssetAsync<ConsumableSO>(consumableData.Guid);
+                yield return dataSoHandle;
+                if (dataSoHandle.Status == AsyncOperationStatus.Succeeded)
                 {
-                    yield return dataSoHandle;
-                    if (dataSoHandle.Status == AsyncOperationStatus.Succeeded)
+                    var consumable = new ConsumableInfo(dataSoHandle.Result, consumableData.Quantity)
                     {
-                        var consumable = new ConsumableInfo(dataSoHandle.Result, consumableData.Quantity)
-                        {
-                            Id = consumableData.Id
-                        };
-                        Consumables.Add(consumable);
-                    }
+                        Id = consumableData.Id
+                    };
+                    Consumables.Add(consumable);
                 }
             }
             foreach (var equipmentData in inventoryData.Equipments)

@@ -19,13 +19,6 @@ namespace CryptoQuest.UI.Title
         [Header("Raise on")]
         [SerializeField] private LoadSceneEventChannelSO _loadMapChannel;
 
-        private ISaveSystem _saveSystem;
-
-        private void Awake()
-        {
-            _saveSystem = ServiceProvider.GetService<ISaveSystem>();
-        }
-
         private void OnEnable()
         {
             _startNewGameChannel.EventRaised += HandleStartNewGame;
@@ -46,7 +39,8 @@ namespace CryptoQuest.UI.Title
 
         private void HandleStartNewGame()
         {
-            _saveSystem?.LoadScene(ref _sceneToLoad);
+            var saveSystem = ServiceProvider.GetService<ISaveSystem>();
+            saveSystem?.LoadScene(ref _sceneToLoad);
             _loadMapChannel.RequestLoad(_sceneToLoad);
         }
     }

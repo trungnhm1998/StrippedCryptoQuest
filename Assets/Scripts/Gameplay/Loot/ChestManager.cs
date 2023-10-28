@@ -3,9 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using CryptoQuest.Gameplay.NPC.Chest;
 using CryptoQuest.Gameplay.Reward;
-using CryptoQuest.System;
-using CryptoQuest.System.SaveSystem;
-using IndiGames.Core.SaveSystem;
 using UnityEngine;
 
 namespace CryptoQuest.Gameplay.Loot
@@ -16,30 +13,30 @@ namespace CryptoQuest.Gameplay.Loot
         public List<string> OpenedChests = new();
     }
 
-    public class ChestManager : MonoBehaviour, ISaveObject
+    public class ChestManager : SaveObject
     {
         [SerializeField] private LootDatabase _lootDatabase;
         [SerializeField] private ChestSave _saveData; // TODO: Move this to save manager
+
         private IRewardManager _rewardManager;
-        private ISaveSystem _saveSystem;
 
         private void Awake()
         {
             _rewardManager ??= GetComponent<IRewardManager>();
-            _saveSystem = ServiceProvider.GetService<ISaveSystem>();
+        }
+
+        protected override void OnEnable()
+        {
+            base.OnEnable();
             ChestBehaviour.LoadingChest += LoadChest;
             ChestBehaviour.Opening += AddLoots;
         }
 
-        private void OnDestroy()
+        protected override void OnDisable()
         {
+            base.OnDisable();
             ChestBehaviour.LoadingChest -= LoadChest;
             ChestBehaviour.Opening -= AddLoots;
-        }
-
-        private void Start()
-        {
-            _saveSystem?.LoadObject(this);
         }
 
         private void LoadChest(ChestBehaviour chest)
@@ -71,25 +68,24 @@ namespace CryptoQuest.Gameplay.Loot
             _rewardManager.Reward(loots.LootInfos);
             chest.Opened?.Invoke();
             _saveData.OpenedChests.Add(chest.GUID);
-            _saveSystem?.SaveObject(this);
+            SaveSystem?.SaveObject(this);
         }
 
         #region SaveSystem        
-        public string Key { get { return "Chest"; } }
+        public override string Key { get { return "Chest"; } }
 
-        public string ToJson()
+        public override string ToJson()
         {
             return JsonUtility.ToJson(_saveData);
         }
 
-        public bool FromJson(string json)
+        public override IEnumerator CoFromJson(string json)
         {
             if (!string.IsNullOrEmpty(json)) 
             {
-                JsonUtility.FromJsonOverwrite(json, _saveData);
-                return true;
+                JsonUtility.FromJsonOverwrite(json, _saveData);                
             }
-            return false;
+            yield return null;
         }
         #endregion
     }
