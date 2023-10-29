@@ -12,9 +12,6 @@ GameObject:
   - component: {fileID: 5359114909688182310}
   - component: {fileID: 5678148707313980099}
   - component: {fileID: 8146135481660554279}
-  - component: {fileID: 4141406715859284465}
-  - component: {fileID: 6390932725500995841}
-  - component: {fileID: 8517934351116879143}
   - component: {fileID: 4841469214657485855}
   m_Layer: 5
   m_Name: UITitleLogin
@@ -46,7 +43,6 @@ RectTransform:
   - {fileID: 2437720326736807921}
   - {fileID: 1864968401700042628}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -116,60 +112,6 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &4141406715859284465
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 637110613254792650}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ae152a8f3be54e348ae23fe03563b586, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <TitlePanelController>k__BackingField: {fileID: 8517934351116879143}
-  <StartGamePanelController>k__BackingField: {fileID: 6390932725500995841}
-  <UISignInPanel>k__BackingField: {fileID: 8454871571168750425}
-  _onRequestLoginEventChannel: {fileID: 11400000, guid: 42c6c6009c535d14eb5f21afdb41dae4, type: 2}
-  _onLoginSuccesEventChannel: {fileID: 11400000, guid: bdcc9955a4a0c65478e902cf10f8a19a, type: 2}
-  _onLoginFailedEventChannel: {fileID: 11400000, guid: 24896d15604d5524abb5432da082c11d, type: 2}
---- !u!114 &6390932725500995841
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 637110613254792650}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f56b5db89178461d8ee1e5a61b4dc2d5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <TitleStateMachine>k__BackingField: {fileID: 4841469214657485855}
-  <UITitleSetting>k__BackingField: {fileID: 4456481050714827572}
-  <UIStartGame>k__BackingField: {fileID: 6340493393892631403}
-  <UIOptionPanel>k__BackingField: {fileID: 1493869783242449373}
-  <UINamingPanel>k__BackingField: {fileID: 7719901092151026516}
-  <UINameConfirmPanel>k__BackingField: {fileID: 4130752318259936642}
-  _startGameEventChannel: {fileID: 11400000, guid: 8d6cbfbf331ac8342b9c8bd86ffb5800, type: 2}
---- !u!114 &8517934351116879143
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 637110613254792650}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3a00668a29a8f6540a90b83804d27bc7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <TitleStateMachine>k__BackingField: {fileID: 4841469214657485855}
-  <StartGamePanelController>k__BackingField: {fileID: 6390932725500995841}
-  <SocialPanel>k__BackingField: {fileID: 6807723101359642498}
-  _onLoginSuccesEventChannel: {fileID: 11400000, guid: bdcc9955a4a0c65478e902cf10f8a19a, type: 2}
-  _onLoginFailedEventChannel: {fileID: 11400000, guid: 24896d15604d5524abb5432da082c11d, type: 2}
 --- !u!114 &4841469214657485855
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -182,6 +124,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb14f8b316b5e3b4c895d1a5c9f9d67b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _inputMediator: {fileID: 11400000, guid: 1fb61cdb72f0a484f8e4db68e2011977, type: 2}
+  _sceneLoadedEvent: {fileID: 11400000, guid: b8b96e43d21a7bf4c96df4cb83c2b764, type: 2}
 --- !u!1 &1446938743743030805
 GameObject:
   m_ObjectHideFlags: 0
@@ -214,7 +158,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3362842202763044998}
-  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
@@ -358,7 +301,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6550987460557862752}
-  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -439,7 +381,6 @@ RectTransform:
   m_Children:
   - {fileID: 4425569903987430045}
   m_Father: {fileID: 3362842202763044998}
-  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
@@ -681,7 +622,7 @@ PrefabInstance:
     - target: {fileID: 6357984586215935116, guid: 2b53e6e36ad79e549b39657f762900b3, type: 3}
       propertyPath: managedReferences[8364171947265229805].m_Value
       value: 
-      objectReference: {fileID: 11400000, guid: 839abfc1e6ec7704ea1a6eab9160e6b6, type: 2}
+      objectReference: {fileID: 11400000, guid: e03daa423d87f3f4eb2ac06589e63ce8, type: 2}
     - target: {fileID: 6357984586215935116, guid: 2b53e6e36ad79e549b39657f762900b3, type: 3}
       propertyPath: m_StringReference.m_LocalVariables.Array.data[0].name
       value: SaveData
@@ -851,17 +792,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &4130752318259936642 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4141170137903060818, guid: 2b53e6e36ad79e549b39657f762900b3, type: 3}
-  m_PrefabInstance: {fileID: 12109014857673424}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5aaefcaed02342218726d47d7bb02add, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &2125556257078230019
@@ -1073,6 +1003,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SignInPanel
       objectReference: {fileID: 0}
+    - target: {fileID: 4224119502016597945, guid: efe71b21114fe204292b1322276d1bb5, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5353481516580154977, guid: efe71b21114fe204292b1322276d1bb5, type: 3}
       propertyPath: m_CharacterLimit
       value: 254
@@ -1081,6 +1015,10 @@ PrefabInstance:
       propertyPath: m_StringReference.m_TableEntryReference.m_KeyId
       value: 32567344104579072
       objectReference: {fileID: 0}
+    - target: {fileID: 6192436937682807429, guid: efe71b21114fe204292b1322276d1bb5, type: 3}
+      propertyPath: _credentials
+      value: 
+      objectReference: {fileID: 11400000, guid: 3bc0ee02274acb749913af55e08d1158, type: 2}
     - target: {fileID: 6192436937682807429, guid: efe71b21114fe204292b1322276d1bb5, type: 3}
       propertyPath: _emailInputField
       value: 
@@ -1172,7 +1110,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 7817111626428902040}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 8454871571168750425}
+        m_TargetAssemblyTypeName: CryptoQuest.UI.Title.UISignInPanel, indi-games.crypto-quest
+        m_MethodName: OnSignInButtonPressed
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &3377006958059323189 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1038011130909130473, guid: efe71b21114fe204292b1322276d1bb5, type: 3}
@@ -1276,7 +1226,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1095468024442913866, guid: 25bfe071c3e1d8b43aea4c4e7e77b07e, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -8063.9985
       objectReference: {fileID: 0}
     - target: {fileID: 1095468024442913866, guid: 25bfe071c3e1d8b43aea4c4e7e77b07e, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1480,6 +1430,10 @@ PrefabInstance:
       propertyPath: m_OnEndEdit.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
+    - target: {fileID: 6896061644043995169, guid: 681a7b2c80f95724ca9fdd6a80311b5b, type: 3}
+      propertyPath: _tempSaveInfo
+      value: 
+      objectReference: {fileID: 11400000, guid: e03daa423d87f3f4eb2ac06589e63ce8, type: 2}
     - target: {fileID: 6896061644043995169, guid: 681a7b2c80f95724ca9fdd6a80311b5b, type: 3}
       propertyPath: _inputMediator
       value: 
@@ -2002,17 +1956,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9caa854ee08550844af7534aa81d22f7, type: 3}
---- !u!114 &1493869783242449373 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5152673610559070221, guid: 9caa854ee08550844af7534aa81d22f7, type: 3}
-  m_PrefabInstance: {fileID: 5997303758948401616}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 08bc41e85cd0fa048b7d7cf1ad8fb59e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!224 &2437720326736807921 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8281616442728220193, guid: 9caa854ee08550844af7534aa81d22f7, type: 3}
@@ -2028,7 +1971,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 425200644706547991, guid: 260333c911feba7419182faf81603130, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 520
       objectReference: {fileID: 0}
     - target: {fileID: 524340468061886003, guid: 260333c911feba7419182faf81603130, type: 3}
       propertyPath: _signInPanel
@@ -2084,35 +2027,35 @@ PrefabInstance:
       objectReference: {fileID: 11400000, guid: 292609d96d61a3f44a2097cb40c1c89d, type: 2}
     - target: {fileID: 865321093539701025, guid: 260333c911feba7419182faf81603130, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 865321093539701025, guid: 260333c911feba7419182faf81603130, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 865321093539701025, guid: 260333c911feba7419182faf81603130, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 330
       objectReference: {fileID: 0}
     - target: {fileID: 865321093539701025, guid: 260333c911feba7419182faf81603130, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -50
       objectReference: {fileID: 0}
     - target: {fileID: 3013125624548144233, guid: 260333c911feba7419182faf81603130, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3013125624548144233, guid: 260333c911feba7419182faf81603130, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3013125624548144233, guid: 260333c911feba7419182faf81603130, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 190
       objectReference: {fileID: 0}
     - target: {fileID: 3013125624548144233, guid: 260333c911feba7419182faf81603130, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -50
       objectReference: {fileID: 0}
     - target: {fileID: 6176278607696914637, guid: 260333c911feba7419182faf81603130, type: 3}
       propertyPath: m_Pivot.x
@@ -2218,37 +2161,41 @@ PrefabInstance:
       propertyPath: m_Name
       value: SocialButtonsPanel
       objectReference: {fileID: 0}
+    - target: {fileID: 8375321888291047439, guid: 260333c911feba7419182faf81603130, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8388455390055928898, guid: 260333c911feba7419182faf81603130, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8388455390055928898, guid: 260333c911feba7419182faf81603130, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8388455390055928898, guid: 260333c911feba7419182faf81603130, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 8388455390055928898, guid: 260333c911feba7419182faf81603130, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -50
       objectReference: {fileID: 0}
     - target: {fileID: 8822571310576180996, guid: 260333c911feba7419182faf81603130, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8822571310576180996, guid: 260333c911feba7419182faf81603130, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8822571310576180996, guid: 260333c911feba7419182faf81603130, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 470
       objectReference: {fileID: 0}
     - target: {fileID: 8822571310576180996, guid: 260333c911feba7419182faf81603130, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -50
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 6987059519057796552, guid: 260333c911feba7419182faf81603130, type: 3}
@@ -2351,9 +2298,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 4141406715859284465}
-        m_TargetAssemblyTypeName: CryptoQuest.UI.Title.MailLoginController, indi-games.crypto-quest
-        m_MethodName: OnMailLoginPressed
+      - m_Target: {fileID: 6807723101359642498}
+        m_TargetAssemblyTypeName: CryptoQuest.UI.Title.UISocialPanel, indi-games.crypto-quest
+        m_MethodName: RequestEmailAndPasswordLogin
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2411,7 +2358,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 790662288291471526}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 6807723101359642498}
+        m_TargetAssemblyTypeName: CryptoQuest.UI.Title.UISocialPanel, indi-games.crypto-quest
+        m_MethodName: RequestTwitterLogin
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &4922999010057561324 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2120405369919858013, guid: 260333c911feba7419182faf81603130, type: 3}
@@ -2460,7 +2419,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 6287585110632300685}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 6807723101359642498}
+        m_TargetAssemblyTypeName: CryptoQuest.UI.Title.UISocialPanel, indi-games.crypto-quest
+        m_MethodName: RequestFacebookLogin
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &6287585110632300685 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1044498317175013692, guid: 260333c911feba7419182faf81603130, type: 3}
@@ -2531,7 +2502,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 8255947360476173765}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 6807723101359642498}
+        m_TargetAssemblyTypeName: CryptoQuest.UI.Title.UISocialPanel, indi-games.crypto-quest
+        m_MethodName: RequestGmailLogin
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &7121382361456097090 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4317557250972546803, guid: 260333c911feba7419182faf81603130, type: 3}
@@ -2580,7 +2563,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 8198740838193304355}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 6807723101359642498}
+        m_TargetAssemblyTypeName: CryptoQuest.UI.Title.UISocialPanel, indi-games.crypto-quest
+        m_MethodName: RequestWalletLogin
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &8198740838193304355 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2952381881094754962, guid: 260333c911feba7419182faf81603130, type: 3}

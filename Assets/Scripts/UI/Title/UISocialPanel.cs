@@ -1,40 +1,40 @@
-using IndiGames.Core.Events.ScriptableObjects;
+using CryptoQuest.Core;
+using CryptoQuest.Networking.Actions;
+using CryptoQuest.UI.Common;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace CryptoQuest.UI.Title
 {
     public class UISocialPanel : MonoBehaviour
     {
-        [SerializeField] private VoidEventChannelSO _requestWalletLoginEventChannel;
-        [SerializeField] private VoidEventChannelSO _requestTwitterLoginEventChannel;
-        [SerializeField] private VoidEventChannelSO _requestFacebookLoginEventChannel;
-        [SerializeField] private VoidEventChannelSO _requestGmailLoginEventChannel;
-        [field: SerializeField] public Button WalletLoginBtn { get; private set; }
-        [field: SerializeField] public Button TwitterLoginBtn { get; private set; }
-        [field: SerializeField] public Button FacebookLoginBtn { get; private set; }
-        [field: SerializeField] public Button GmailLoginBtn { get; private set; }
-        [field: SerializeField] public Button MailLoginBtn { get; private set; }
-        [field: SerializeField] public GameObject LoginFailedPanel { get; private set; }
+        private void OnEnable()
+        {
+            GetComponentInChildren<SelectButtonOnEnable>().Select();
+        }
 
         public void RequestFacebookLogin()
         {
-            _requestFacebookLoginEventChannel.RaiseEvent();
+            ActionDispatcher.Dispatch(new LoginUsingFacebook());
         }
 
         public void RequestWalletLogin()
         {
-            _requestWalletLoginEventChannel.RaiseEvent();
+            ActionDispatcher.Dispatch(new LoginUsingWallet());
         }
 
         public void RequestTwitterLogin()
         {
-            _requestTwitterLoginEventChannel.RaiseEvent();
+            ActionDispatcher.Dispatch(new LoginUsingTwitter());
         }
 
         public void RequestGmailLogin()
         {
-            _requestGmailLoginEventChannel.RaiseEvent();
+            ActionDispatcher.Dispatch(new LoginUsingGoogle());
+        }
+
+        public void RequestEmailAndPasswordLogin()
+        {
+            ActionDispatcher.Dispatch(new LoginUsingEmail());
         }
     }
 }
