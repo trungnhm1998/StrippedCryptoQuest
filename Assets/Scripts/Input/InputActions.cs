@@ -1894,7 +1894,16 @@ namespace CryptoQuest.Input
                 {
                     ""name"": ""Tab"",
                     ""type"": ""Button"",
-                    ""id"": ""91886cf2-2d95-430e-8437-9d6abe943fe6"",
+                    ""id"": ""7724fba8-d917-41cc-b41c-ab33d22f989b"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Shift"",
+                    ""type"": ""Button"",
+                    ""id"": ""79e5d9b9-8e4d-4683-b4e4-e6e3c0bf2e5e"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -2168,12 +2177,23 @@ namespace CryptoQuest.Input
                 },
                 {
                     ""name"": """",
-                    ""id"": ""a14a3877-4fd6-470f-af65-e2e2eac640c6"",
+                    ""id"": ""41b33103-e2df-4b4e-ad36-2b708c0f2a1d"",
                     ""path"": ""<Keyboard>/tab"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""MnK"",
                     ""action"": ""Tab"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""14ec05ae-a3ed-4a22-9eea-5a857d0d2cb5"",
+                    ""path"": ""<Keyboard>/shift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""MnK"",
+                    ""action"": ""Shift"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -3513,6 +3533,7 @@ namespace CryptoQuest.Input
             m_Title_Cancel = m_Title.FindAction("Cancel", throwIfNotFound: true);
             m_Title_Confirm = m_Title.FindAction("Confirm", throwIfNotFound: true);
             m_Title_Tab = m_Title.FindAction("Tab", throwIfNotFound: true);
+            m_Title_Shift = m_Title.FindAction("Shift", throwIfNotFound: true);
             // Shop
             m_Shop = asset.FindActionMap("Shop", throwIfNotFound: true);
             m_Shop_Submit = m_Shop.FindAction("Submit", throwIfNotFound: true);
@@ -4041,6 +4062,7 @@ namespace CryptoQuest.Input
         private readonly InputAction m_Title_Cancel;
         private readonly InputAction m_Title_Confirm;
         private readonly InputAction m_Title_Tab;
+        private readonly InputAction m_Title_Shift;
         public struct TitleActions
         {
             private @InputActions m_Wrapper;
@@ -4050,6 +4072,7 @@ namespace CryptoQuest.Input
             public InputAction @Cancel => m_Wrapper.m_Title_Cancel;
             public InputAction @Confirm => m_Wrapper.m_Title_Confirm;
             public InputAction @Tab => m_Wrapper.m_Title_Tab;
+            public InputAction @Shift => m_Wrapper.m_Title_Shift;
             public InputActionMap Get() { return m_Wrapper.m_Title; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -4074,6 +4097,9 @@ namespace CryptoQuest.Input
                 @Tab.started += instance.OnTab;
                 @Tab.performed += instance.OnTab;
                 @Tab.canceled += instance.OnTab;
+                @Shift.started += instance.OnShift;
+                @Shift.performed += instance.OnShift;
+                @Shift.canceled += instance.OnShift;
             }
 
             private void UnregisterCallbacks(ITitleActions instance)
@@ -4093,6 +4119,9 @@ namespace CryptoQuest.Input
                 @Tab.started -= instance.OnTab;
                 @Tab.performed -= instance.OnTab;
                 @Tab.canceled -= instance.OnTab;
+                @Shift.started -= instance.OnShift;
+                @Shift.performed -= instance.OnShift;
+                @Shift.canceled -= instance.OnShift;
             }
 
             public void RemoveCallbacks(ITitleActions instance)
@@ -4483,6 +4512,7 @@ namespace CryptoQuest.Input
             void OnCancel(InputAction.CallbackContext context);
             void OnConfirm(InputAction.CallbackContext context);
             void OnTab(InputAction.CallbackContext context);
+            void OnShift(InputAction.CallbackContext context);
         }
         public interface IShopActions
         {

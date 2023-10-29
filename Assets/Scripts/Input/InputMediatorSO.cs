@@ -1,8 +1,7 @@
 using System;
 using System.Collections.Generic;
-using CryptoQuest.Core;
+using CryptoQuest.System;
 using CryptoQuest.System.Cheat;
-using IndiGames.Core.Common;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
@@ -65,8 +64,11 @@ namespace CryptoQuest.Input
             }
         }
 
-        protected void OnEnable() =>
+        protected void OnEnable()
+        {
+            ServiceProvider.Provide(this);
             CreateInputInstanceIfNeeded();
+        }
 
         private void OnDisable()
             => DisableAllInput();

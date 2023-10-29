@@ -4,6 +4,7 @@ using CryptoQuest.Environment;
 using CryptoQuest.Networking;
 using CryptoQuest.Networking.Actions;
 using CryptoQuest.Networking.API;
+using CryptoQuest.Sagas;
 using CryptoQuest.System;
 using NUnit.Framework;
 using UnityEditor;
@@ -44,7 +45,7 @@ namespace CryptoQuest.Tests.Runtime.Networking
             yield return null;
             var login = false;
             var token = ActionDispatcher.Bind<LoginFinishedAction>(_ => login = true);
-            ActionDispatcher.Dispatch(new LoginAction());
+            ActionDispatcher.Dispatch(new DebugLoginAction());
             yield return new WaitUntil(() => login);
             ActionDispatcher.Unbind(token);
         }

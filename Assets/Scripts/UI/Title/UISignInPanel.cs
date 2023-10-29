@@ -1,6 +1,7 @@
-using System.Collections;
 using System.Collections.Generic;
-using CryptoQuest.SocialLogin;
+using CryptoQuest.Core;
+using CryptoQuest.Networking;
+using CryptoQuest.Networking.Actions;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,18 +10,25 @@ namespace CryptoQuest.UI.Title
 {
     public class UISignInPanel : MonoBehaviour
     {
+        [SerializeField] private Credentials _credentials;
         [field: SerializeField] public List<Selectable> Selectables { get; private set; }
-        [field: SerializeField] public Button SignInButton { get; private set; }
-        [field: SerializeField] public GameObject LoginFailedPanel { get; private set; }
         [SerializeField] private TMP_InputField _emailInputField;
         [SerializeField] private TMP_InputField _passwordInputField;
         private int _currenSelectIndex = 0;
 
-        private IEnumerator Start()
+        private void OnEnable()
         {
-            yield return true;
-            Selectables[_currenSelectIndex].Select();
+            Invoke(nameof(SelectFirstSelectable), 0);
+
+            if (string.IsNullOrEmpty(_credentials.Email) ||
+                string.IsNullOrEmpty(_credentials.Password))
+                return;
+
+            _emailInputField.text = _credentials.Email;
+            _passwordInputField.text = _credentials.Password;
         }
+
+        private void SelectFirstSelectable() => Selectables[0].Select();
 
         public void HandleDirection(float value)
         {
@@ -31,13 +39,9 @@ namespace CryptoQuest.UI.Title
             selectable.Select();
         }
 
-        public AuthenticateFormInfo GetFormInfo()
+        public void OnSignInButtonPressed()
         {
-            return new AuthenticateFormInfo
-            {
-                Email = _emailInputField.text,
-                Password = _passwordInputField.text
-            };
+            ActionDispatcher.Dispatch(new AuthenticateUsingEmail(_emailInputField.text, _passwordInputField.text));
         }
     }
 }

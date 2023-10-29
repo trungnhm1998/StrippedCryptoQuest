@@ -5,6 +5,7 @@ using CryptoQuest.UI.Menu.Panels.DimensionBox.Interfaces;
 using CryptoQuest.UI.Title;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using CryptoQuest.UI.Core;
 using UnityEngine;
 using UnityEngine.Localization;
 using UnityEngine.UI;

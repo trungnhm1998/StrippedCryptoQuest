@@ -1,32 +1,32 @@
-﻿using CryptoQuest.System;
-using IndiGames.Core.Events.ScriptableObjects;
+﻿using CryptoQuest.Core;
+using CryptoQuest.System;
+using CryptoQuest.System.SaveSystem;
 using IndiGames.Core.SceneManagementSystem.Events.ScriptableObjects;
 using IndiGames.Core.SceneManagementSystem.ScriptableObjects;
+using TinyMessenger;
 using UnityEngine;
 
 namespace CryptoQuest.UI.Title
 {
+    public class StartGameAction : ActionBase { }
+
     public class TitleScreenController : MonoBehaviour
     {
+        [SerializeField] private SaveSystemSO _save;
         [SerializeField] private SceneScriptableObject _sceneToLoad;
-
-        [Header("Listen on")]
-        [SerializeField] private VoidEventChannelSO _startNewGameChannel;
-        [SerializeField] private VoidEventChannelSO _continueGameChannel;
 
         [Header("Raise on")]
         [SerializeField] private LoadSceneEventChannelSO _loadMapChannel;
+        private TinyMessageSubscriptionToken _startGameEvent;
 
         private void OnEnable()
         {
-            _startNewGameChannel.EventRaised += HandleStartNewGame;
-            _continueGameChannel.EventRaised += HandleContinueGame;
+            _startGameEvent = ActionDispatcher.Bind<StartGameAction>(StartGame);
         }
 
         private void OnDisable()
         {
-            _startNewGameChannel.EventRaised -= HandleStartNewGame;
-            _continueGameChannel.EventRaised -= HandleContinueGame;
+            ActionDispatcher.Unbind(_startGameEvent);
         }
 
         // TODO: get scene scriptable object from _saveSystemSO and load it
@@ -41,5 +41,7 @@ namespace CryptoQuest.UI.Title
             saveSystem?.LoadScene(ref _sceneToLoad);
             _loadMapChannel.RequestLoad(_sceneToLoad);
         }
+
+        private void StartGame(StartGameAction _) { }
     }
 }
