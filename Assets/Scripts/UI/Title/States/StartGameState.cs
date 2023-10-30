@@ -27,18 +27,6 @@ namespace CryptoQuest.UI.Title.States
             _startGamePanel.gameObject.SetActive(false);
         }
 
-        private bool IsPlayerNameExist()
-        {
-            var saveSystem = ServiceProvider.GetService<ISaveSystem>();
-            if (saveSystem != null)
-            {
-                saveSystem.LoadSaveGame();
-                return !string.IsNullOrEmpty(saveSystem.PlayerName);
-            }
-
-            return false;
-        }
-
         private void SettingButtonPressed()
         {
             _stateMachine.ChangeState(new SettingState());
@@ -46,19 +34,21 @@ namespace CryptoQuest.UI.Title.States
 
         private void StartGameButtonPressed()
         {
-            bool isPlayerNameExist = IsPlayerNameExist();
-            HandleStartGame(isPlayerNameExist);
-        }
-
-        private void HandleStartGame(bool isPlayerNameExist)
-        {
-            if (!isPlayerNameExist)
+            if (!IsPlayerNameExist())
             {
                 _stateMachine.ChangeState(new NameInputState());
                 return;
             }
 
             ActionDispatcher.Dispatch(new StartGameAction());
+        }
+
+        private bool IsPlayerNameExist()
+        {
+            return false;
+            // TODO: REFACTOR SAVE SYSTEM
+            var saveSystem = ServiceProvider.GetService<ISaveSystem>();
+            return !string.IsNullOrEmpty(saveSystem.PlayerName);
         }
     }
 }

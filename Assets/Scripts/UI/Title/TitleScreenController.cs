@@ -1,47 +1,32 @@
 ﻿using CryptoQuest.Core;
+using CryptoQuest.Sagas;
 using CryptoQuest.System;
 using CryptoQuest.System.SaveSystem;
 using IndiGames.Core.SceneManagementSystem.Events.ScriptableObjects;
 using IndiGames.Core.SceneManagementSystem.ScriptableObjects;
-using TinyMessenger;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace CryptoQuest.UI.Title
 {
     public class StartGameAction : ActionBase { }
 
-    public class TitleScreenController : MonoBehaviour
+    public class TitleScreenController : SagaBase<StartGameAction>
     {
         [SerializeField] private SaveSystemSO _save;
-        [SerializeField] private SceneScriptableObject _sceneToLoad;
+
+        [FormerlySerializedAs("_sceneToLoad")] [SerializeField]
+        private SceneScriptableObject _defaultStartScene;
 
         [Header("Raise on")]
         [SerializeField] private LoadSceneEventChannelSO _loadMapChannel;
-        private TinyMessageSubscriptionToken _startGameEvent;
 
-        private void OnEnable()
+        protected override void HandleAction(StartGameAction ctx)
         {
-            _startGameEvent = ActionDispatcher.Bind<StartGameAction>(StartGame);
-        }
-
-        private void OnDisable()
-        {
-            ActionDispatcher.Unbind(_startGameEvent);
-        }
-
-        // TODO: get scene scriptable object from _saveSystemSO and load it
-        private void HandleContinueGame()
-        {
-            Debug.LogWarning("Try to load saved game.");
-        }
-
-        private void HandleStartNewGame()
-        {
+            
             var saveSystem = ServiceProvider.GetService<ISaveSystem>();
-            saveSystem?.LoadScene(ref _sceneToLoad);
-            _loadMapChannel.RequestLoad(_sceneToLoad);
+            saveSystem?.LoadScene(ref _defaultStartScene);
+            _loadMapChannel.RequestLoad(_defaultStartScene);
         }
-
-        private void StartGame(StartGameAction _) { }
     }
 }

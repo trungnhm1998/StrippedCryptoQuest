@@ -21,8 +21,8 @@ namespace CryptoQuest.System.SaveSystem
     [Serializable]
     public class SaveData
     {
-        public string player;
-        public string scene;
+        public string PlayerName;
+        public string LastExploreScene;
         public List<KeyValue> objects = new();
     }
 }

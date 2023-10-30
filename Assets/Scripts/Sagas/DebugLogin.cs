@@ -33,7 +33,7 @@ namespace CryptoQuest.Sagas
         {
             var restClient = ServiceProvider.GetService<IRestClient>();
             restClient
-                .Post<AuthResponse>(Account.DEBUG_LOGIN, new DebugBody { Token = _debugToken, },
+                .Post<AuthResponse>(Accounts.DEBUG_LOGIN, new DebugBody { Token = _debugToken, },
                     new Dictionary<string, string> { { "DEBUG_KEY", _debugKey }, })
                 .Subscribe(SaveCredentials, DispatchLoginFailed, DispatchLoginFinished);
         }

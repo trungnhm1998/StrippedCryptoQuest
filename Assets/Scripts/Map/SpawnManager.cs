@@ -1,25 +1,13 @@
 ﻿using CryptoQuest.Character.MonoBehaviours;
 using CryptoQuest.Gameplay;
 using CryptoQuest.Input;
-using CryptoQuest.Item.Equipment;
-using CryptoQuest.Networking.Menu.DimensionBox;
 using IndiGames.Core.Events.ScriptableObjects;
-using System;
-using System.Collections;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
-using UnityEngine.ResourceManagement.AsyncOperations;
 using CharacterBehaviour = CryptoQuest.Character.MonoBehaviours.CharacterBehaviour;
 
 namespace CryptoQuest.Map
 {
-    [Serializable]
-    class SpawnData
-    {
-        public string LastTakenPathGuid;
-    }
-
-    public class SpawnManager : SaveObject
+    public class SpawnManager : MonoBehaviour
     {
         [SerializeField] protected InputMediatorSO _inputMediator;
         [SerializeField] protected GameplayBus _gameplayBus;
@@ -46,38 +34,28 @@ namespace CryptoQuest.Map
 
             foreach (var entrance in _mapEntrances)
             {
-                if (entrance.MapPath == _pathStorage.LastTakenPath)
-                {
-                    spawnPoint = entrance.transform;
-                    break;
-                }
+                if (entrance.MapPath != _pathStorage.LastTakenPath) continue;
+                spawnPoint = entrance.transform;
+                break;
             }
 
             return spawnPoint;
         }
 
-        protected override void OnEnable()
+        private void OnEnable()
         {
-            base.OnEnable();
             _sceneLoadedEventChannelSO.EventRaised += HandleSceneLoaded;
         }
 
-        protected override void OnDisable()
+        private void OnDisable()
         {
-            base.OnDisable();
             _sceneLoadedEventChannelSO.EventRaised -= HandleSceneLoaded;
         }
 
         private void HandleSceneLoaded()
         {
-            StartCoroutine(CoSpawnPlayer());
-            _inputMediator.EnableMapGameplayInput();
-        }
-
-        private IEnumerator CoSpawnPlayer()
-        {
-            yield return WaitUntilTrue(IsLoaded);
             SpawnPlayer();
+            _inputMediator.EnableMapGameplayInput();
         }
 
         protected virtual void SpawnPlayer()
@@ -93,44 +71,8 @@ namespace CryptoQuest.Map
 
             _gameplayBus.Hero = heroInstance;
             _gameplayBus.RaiseHeroSpawnedEvent();
-            SaveSystem.SaveObject(this);
         }
 
         protected virtual void OnAwake() { }
-
-        #region SaveSystem
-        public override string Key => "SpawnManager";
-
-        public override string ToJson()
-        {
-            if (_pathStorage != null && _pathStorage.LastTakenPath != null)
-            {
-                var spawnData = new SpawnData()
-                {
-                    LastTakenPathGuid = _pathStorage.LastTakenPath.Guid
-                };
-                return JsonUtility.ToJson(spawnData);
-            }
-            return null;
-        }
-
-        public override IEnumerator CoFromJson(string json)
-        {
-            if (_pathStorage != null && !string.IsNullOrEmpty(json))
-            {
-                var spawnData = new SpawnData();
-                JsonUtility.FromJsonOverwrite(json, spawnData);
-                if (!string.IsNullOrEmpty(spawnData.LastTakenPathGuid))
-                {
-                    var mapSoHandle = Addressables.LoadAssetAsync<MapPathSO>(spawnData.LastTakenPathGuid);
-                    yield return mapSoHandle;
-                    if (mapSoHandle.Status == AsyncOperationStatus.Succeeded)
-                    {
-                        _pathStorage.LastTakenPath = mapSoHandle.Result;
-                    }
-                }
-            }
-        }
-        #endregion
     }
 }
