@@ -5,7 +5,6 @@ using UnityEngine.Events;
 
 namespace CryptoQuest.Language.Settings
 {
-    [CreateAssetMenu(menuName = "Create LanguageSettingSO", fileName = "LanguageSettingSO", order = 0)]
     public class LanguageSettingSO : ScriptableObject
     {
         /// <summary>
