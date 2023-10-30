@@ -27,16 +27,6 @@ namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects
     }
 
     [Serializable]
-    class EquipmentData
-    {
-        public string DefGuid;
-        public string PrefabGuid;
-        public uint Id;
-        public string DefinitionId;
-        public int Level;
-    }
-
-    [Serializable]
     class InventoryData
     {
         public List<EquipmentData> Equipments = new();

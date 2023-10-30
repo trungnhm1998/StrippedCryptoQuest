@@ -10,6 +10,16 @@ using UnityEngine;
 namespace CryptoQuest.Item.Equipment
 {
     [Serializable]
+    public class EquipmentData
+    {
+        public string DefGuid;
+        public string PrefabGuid;
+        public uint Id;
+        public string DefinitionId;
+        public int Level;
+    }
+
+    [Serializable]
     public class EquipmentInfo : ItemInfo, IEquatable<EquipmentInfo>
     {
         [SerializeField] private string _definitionId;

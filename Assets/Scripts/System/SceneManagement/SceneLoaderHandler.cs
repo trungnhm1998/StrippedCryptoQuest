@@ -25,16 +25,13 @@ namespace CryptoQuest.System.SceneManagement
             {
                 if (_saveSystemSO != null)
                 {
-                    if (_saveSystemSO.IsLoadingSaveGame())
-                    {
-                        Debug.Log("ISceneLoaderHandler, OnSceneLoaded, loaded scene...");
-                        _saveSystemSO.OnSceneLoaded();
-                    }
-                    else
+                    if (!_saveSystemSO.IsLoadingSaveGame())
                     {
                         Debug.Log("ISceneLoaderHandler, OnSceneLoaded, save scene...");
                         _saveSystemSO.SaveScene(SceneToLoad);
                     }
+                    Debug.Log("ISceneLoaderHandler, OnSceneLoaded, loaded scene...");
+                    _saveSystemSO.OnSceneLoaded();
                 }
             }
         }

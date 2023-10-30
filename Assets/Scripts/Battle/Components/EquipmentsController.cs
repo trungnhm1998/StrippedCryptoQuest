@@ -13,6 +13,7 @@ using UnityEngine;
 using ESlotType =
     CryptoQuest.Item.Equipment.EquipmentSlot.EType;
 using ECategory = CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Type.EEquipmentCategory;
+using CryptoQuest.Gameplay.PlayerParty;
 
 namespace CryptoQuest.Battle.Components
 {
@@ -169,6 +170,12 @@ namespace CryptoQuest.Battle.Components
             _inventoryController.Remove(equipment);
             equipment.SetEquippedHeroUnitId(_hero.Spec.Id);
             ApplyEquipmentEffectToCharacter(equipment);
+            var partyController = (PartyManager) ServiceProvider.GetService<IPartyController>();
+            var saveSystem = ServiceProvider.GetService<ISaveSystem>();
+            if(saveSystem != null && partyController != null)
+            {
+                saveSystem.SaveObject(partyController);
+            }
         }
 
         private void ApplyEquipmentEffectToCharacter(EquipmentInfo equipment)
@@ -231,6 +238,12 @@ namespace CryptoQuest.Battle.Components
             _inventoryController.Add(equipment);
             equipment.ResetEquippedHeroUnitId();
             Removed?.Invoke(equipment);
+            var partyController = (PartyManager)ServiceProvider.GetService<IPartyController>();
+            var saveSystem = ServiceProvider.GetService<ISaveSystem>();
+            if (saveSystem != null && partyController != null)
+            {
+                saveSystem.SaveObject(partyController);
+            }
         }
 
         private void SetEquipmentInSlot(EquipmentInfo equipment, ESlotType slotType)

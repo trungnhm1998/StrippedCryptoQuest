@@ -29,16 +29,18 @@ namespace CryptoQuest.Battle.Components
 
         private void GrantPassive(EquipmentInfo equipment)
         {
-            var passiveSpecs = new PassiveAbilitySpec[equipment.Passives.Length];
-            for (var index = 0; index < equipment.Passives.Length; index++)
+            if(equipment.Passives.Length > 0)
             {
-                var passive = equipment.Passives[index];
-                if (passive == null) continue;
-                var spec = Character.AbilitySystem.GiveAbility<PassiveAbilitySpec>(passive);
-                passiveSpecs[index] = spec;
+                var passiveSpecs = new PassiveAbilitySpec[equipment.Passives.Length];
+                for (var index = 0; index < equipment.Passives.Length; index++)
+                {
+                    var passive = equipment.Passives[index];
+                    if (passive == null) continue;
+                    var spec = Character.AbilitySystem.GiveAbility<PassiveAbilitySpec>(passive);
+                    passiveSpecs[index] = spec;
+                }
+                _passives.Add(equipment, passiveSpecs);
             }
-
-            _passives.Add(equipment, passiveSpecs);
         }
 
         private void RemovePassive(EquipmentInfo equipment)

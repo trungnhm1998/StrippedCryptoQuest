@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace CryptoQuest.Gameplay.PlayerParty
 {
-    public class MockParty : ScriptableObject, IPartyProvider
+    public class MockParty : ScriptableObject
     {
         [SerializeField] private HeroSpec[] _heroSpecs;
         public HeroSpec[] GetParty() => _heroSpecs;

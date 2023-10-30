@@ -1,9 +1,32 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using CryptoQuest.Item.Equipment;
+using IndiGames.Core.SaveSystem;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.Components;
+using Newtonsoft.Json;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace CryptoQuest.Character.Hero
 {
+    [Serializable]
+    public struct EquipmentSlotData
+    {
+        public EquipmentSlot.EType Type;
+        public EquipmentData Equipment;
+    }
+
+    [Serializable]
+    public struct HeroSpecData
+    {
+        public int Id;
+        public string UnitSOGuid;
+        public float Experience;
+        public string EquipmentSlots;
+    }
+
     /// <summary>
     /// Runtime hero data, use this to save game
     ///
@@ -17,7 +40,7 @@ namespace CryptoQuest.Character.Hero
     [Serializable]
     public struct HeroSpec
     {
-        [field: SerializeField] public int Id { get; private set; }
+        [field: SerializeField] public int Id { get; set; }
         [field: SerializeField] public UnitSO Unit { get; set; }
         [field: SerializeField] public float Experience { get; set; }
         [field: SerializeField] public Equipments Equipments { get; set; }
