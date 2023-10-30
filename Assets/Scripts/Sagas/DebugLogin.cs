@@ -13,52 +13,7 @@ using UnityEngine;
 
 namespace CryptoQuest.Sagas
 {
-    [Serializable]
-    public class DebugLoginResponse
-    {
-        public int code;
-        public bool success;
-        public string message;
-        public int gold;
-        public int diamond;
-        public int soul;
-        public long time;
-        public Data data;
-    }
-
-    [Serializable]
-    public class Data
-    {
-        public UserProfile user;
-        public Token token;
-    }
-
-    [Serializable]
-    public class UserProfile
-    {
-        public string id;
-        public string name;
-        public string socialUserName;
-        public string email;
-        public string avatar_image_url;
-        public string walletAddress;
-    }
-
-    [Serializable]
-    public class Token
-    {
-        public Access access;
-        public Access refresh;
-    }
-
-    [Serializable]
-    public class Access
-    {
-        public string token;
-        public string expires;
-    }
-
-    public class DebugLogin : MonoBehaviour
+    public class DebugLogin : SagaBase<DebugLoginAction>
     {
         [Serializable]
         private struct DebugBody
@@ -67,8 +22,6 @@ namespace CryptoQuest.Sagas
             public string Token;
         }
 
-        [SerializeField] private Credentials _credentials;
-
         [SerializeField] private string _debugToken =
             "c1CRi-qi8jfOJHJ5rjH2tO9xjSA_UUORQ1eRBt59BY8.sc6AO3PQnOrQV0hG4SoQ6mTeU8r1n4-WKuCuzrpnmw1";
 
@@ -76,25 +29,19 @@ namespace CryptoQuest.Sagas
 
         private TinyMessageSubscriptionToken _loginAction;
 
-        private void OnEnable() => _loginAction = ActionDispatcher.Bind<DebugLoginAction>(Login);
-
-        private void OnDisable() => ActionDispatcher.Unbind(_loginAction);
-
-        private void Login(DebugLoginAction _)
+        protected override void HandleAction(DebugLoginAction ctx)
         {
             var restClient = ServiceProvider.GetService<IRestClient>();
             restClient
-                .Post<DebugLoginResponse>(Account.DEBUG_LOGIN, new DebugBody { Token = _debugToken, },
+                .Post<AuthResponse>(Account.DEBUG_LOGIN, new DebugBody { Token = _debugToken, },
                     new Dictionary<string, string> { { "DEBUG_KEY", _debugKey }, })
                 .Subscribe(SaveCredentials, DispatchLoginFailed, DispatchLoginFinished);
         }
 
-        private void SaveCredentials(DebugLoginResponse response)
+        private void SaveCredentials(AuthResponse response)
         {
-            Debug.Log(response.code);
             if (response.code != (int)HttpStatusCode.OK) return;
-            _credentials.Save(response.data);
-            ActionDispatcher.Dispatch(new AuthenticateSucceed());
+            ActionDispatcher.Dispatch(new InternalAuthenticateAction(response.data));
         }
 
         private void DispatchLoginFailed(Exception obj)

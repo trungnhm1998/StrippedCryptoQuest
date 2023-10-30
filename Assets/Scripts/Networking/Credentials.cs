@@ -17,20 +17,11 @@ namespace CryptoQuest.Networking
         [field: SerializeField] public string Email { get; set; }
 
         [field: SerializeField] public string Password { get; set; }
-        [field: SerializeField] public UserProfile Profile { get; private set; }
-        [field: SerializeField] public Access AccessToken { get; private set; }
-        [field: SerializeField] public Access RefreshToken { get; private set; }
+        [field: SerializeField] public CredentialResponse Profile { get; set; }
 
         private void OnEnable()
         {
             ServiceProvider.Provide(this);
-        }
-
-        public void Save(Data responseData)
-        {
-            Profile = responseData.user;
-            AccessToken = responseData.token.access;
-            RefreshToken = responseData.token.refresh;
         }
     }
 }

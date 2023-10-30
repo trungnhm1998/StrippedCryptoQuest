@@ -3,7 +3,6 @@ using CryptoQuest.Core;
 using CryptoQuest.Environment;
 using CryptoQuest.Networking;
 using CryptoQuest.Networking.Actions;
-using CryptoQuest.Networking.API;
 using CryptoQuest.Sagas;
 using CryptoQuest.System;
 using NUnit.Framework;
@@ -29,24 +28,25 @@ namespace CryptoQuest.Tests.Runtime.Networking
             envSo.FindProperty("_apiVersion").stringValue = "/v1";
             envSo.ApplyModifiedProperties();
             ServiceProvider.Provide(env);
+            
+            _credentials = ScriptableObject.CreateInstance<Credentials>();
+            var internalAuth = new GameObject().AddComponent<InternalAuthenticate>();
+            var so = new SerializedObject(internalAuth);
+            so.FindProperty("_credentials").objectReferenceValue = _credentials;
+            so.ApplyModifiedProperties();
         }
 
         [UnitySetUp]
         public IEnumerator Setup()
         {
-            _credentials = ScriptableObject.CreateInstance<Credentials>();
             _restClientController = new GameObject().AddComponent<RestClientController>();
             _debugLogin = new GameObject().AddComponent<DebugLogin>();
-            var so = new SerializedObject(_debugLogin);
-            so.FindProperty("_credentials").objectReferenceValue = _credentials;
-            so.ApplyModifiedProperties();
             yield return null;
         }
         
         [UnityTest]
         public IEnumerator DebugLoginTest()
         {
-            yield return null;
             yield return null;
             var login = false;
             var token = ActionDispatcher.Bind<AuthenticateSucceed>(_ => login = true);

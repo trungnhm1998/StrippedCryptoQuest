@@ -64,7 +64,7 @@ namespace CryptoQuest.Networking
         {
             var request = new RequestHelper
             {
-                Uri = $"{Env.API}{path}",
+                Uri = $"{Env.API}/{path}",
                 BodyString = JsonConvert.SerializeObject(body),
                 Headers = MergeHeaders(headers),
 #if DEVELOPMENT_BUILD || UNITY_EDITOR

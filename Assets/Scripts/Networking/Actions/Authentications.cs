@@ -1,4 +1,5 @@
 using CryptoQuest.Core;
+using CryptoQuest.Sagas;
 
 namespace CryptoQuest.Networking.Actions
 {
@@ -6,11 +7,28 @@ namespace CryptoQuest.Networking.Actions
 
     public class AuthenticateSucceed : ActionBase { }
 
+    public class AuthenticateFailed : ActionBase { }
+
     public class LoginFinishedAction : ActionBase { }
 
     public class LoginFailedAction : ActionBase { }
 
     public class LoginUsingEmail : ActionBase { }
+
+    public class AuthenticateWithBackendAction : ActionBase
+    {
+        public string Token { get; set; }
+    }
+
+    public class InternalAuthenticateAction : ActionBase
+    {
+        public CredentialResponse ResponseCredentialResponse { get; }
+
+        public InternalAuthenticateAction(CredentialResponse responseCredentialResponse)
+        {
+            ResponseCredentialResponse = responseCredentialResponse;
+        }
+    }
 
     public class AuthenticateUsingEmail : ActionBase
     {
@@ -23,6 +41,12 @@ namespace CryptoQuest.Networking.Actions
             Email = email;
         }
     }
+
+    public class RegisterEmailAction : AuthenticateUsingEmail
+    {
+        public RegisterEmailAction(string email, string password) : base(email, password) { }
+    }
+
 
     public class LoginUsingFacebook : ActionBase { }
 
