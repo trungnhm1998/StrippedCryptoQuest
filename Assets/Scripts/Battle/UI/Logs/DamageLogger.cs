@@ -18,13 +18,13 @@ namespace CryptoQuest.Battle.UI.Logs
 
         private void Awake()
         {
-            _receivedDamageEvent.DamageDealt += DamageDealt_LogDamage;
+            _receivedDamageEvent.DamageDealt += LogDamageDealt;
             _damageOverTimeEvent = BattleEventBus.SubscribeEvent<DamageOverTimeEvent>(LogDoT);
         }
 
         private void OnDestroy()
         {
-            _receivedDamageEvent.DamageDealt -= DamageDealt_LogDamage;
+            _receivedDamageEvent.DamageDealt -= LogDamageDealt;
             BattleEventBus.UnsubscribeEvent(_damageOverTimeEvent);
         }
         
@@ -34,7 +34,7 @@ namespace CryptoQuest.Battle.UI.Logs
             LogDamage(ctx.Character, ctx.Magnitude);
         }
 
-        private void DamageDealt_LogDamage(Components.Character dealer, Components.Character receiver, float damage) => LogDamage(receiver, damage);
+        private void LogDamageDealt(Components.Character dealer, Components.Character receiver, float damage) => LogDamage(receiver, damage);
 
         private void LogDamage(Components.Character receiver, float damage)
         {
@@ -60,6 +60,8 @@ namespace CryptoQuest.Battle.UI.Logs
             {
                 Value = receiver.DisplayName
             });
+
+            BattleEventBus.RaiseEvent(new LogDealtDamageEvent(receiver));
 
             Logger.QueueLog(msg);
         }

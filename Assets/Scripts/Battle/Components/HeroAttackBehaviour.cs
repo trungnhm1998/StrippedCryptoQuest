@@ -11,7 +11,7 @@ namespace CryptoQuest.Battle.Components
         private void OnEnable() => _attackBehaviour.Attacking += PlayVfx;
         private void OnDisable() => _attackBehaviour.Attacking -= PlayVfx;
 
-        private void PlayVfx(Character target, Character character, float damage) =>
+        private void PlayVfx(Character character, Character target, float damage) =>
             BattleEventBus.RaiseEvent(new HeroNormalAttackEvent { Target = target });
     }
 }
