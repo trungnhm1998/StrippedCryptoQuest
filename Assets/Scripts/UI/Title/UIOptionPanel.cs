@@ -1,12 +1,13 @@
 using System.Collections;
 using CryptoQuest.System.Settings;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace CryptoQuest.UI.Title
 {
     public class UIOptionPanel : MonoBehaviour
     {
-        [SerializeField] private LanguageController _languageController;
+        [SerializeField] private LanguageSettingController languageSettingController;
 
         public void InitOptionPanel()
         {
@@ -17,7 +18,7 @@ namespace CryptoQuest.UI.Title
         private IEnumerator CoInitialize()
         {
             yield return true;
-            _languageController.Initialize();
+            languageSettingController.Initialize();
         }
     }
 }

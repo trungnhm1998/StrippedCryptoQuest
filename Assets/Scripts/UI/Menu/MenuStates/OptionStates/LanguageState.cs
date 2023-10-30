@@ -6,11 +6,11 @@ namespace CryptoQuest.UI.Menu.MenuStates.OptionStates
 {
     public class LanguageState : OptionStateBase
     {
-        private LanguageController _uiLanguageOverviewPanel;
+        private LanguageSettingController _uiLanguageSettingOverviewPanel;
 
         public LanguageState(UIOptionMenu optionPanel) : base(optionPanel)
         {
-            _uiLanguageOverviewPanel = optionPanel.LanguageController;
+            _uiLanguageSettingOverviewPanel = optionPanel.LanguageSettingController;
         }
 
         public override void OnEnter()
@@ -18,7 +18,7 @@ namespace CryptoQuest.UI.Menu.MenuStates.OptionStates
             base.OnEnter();
             NavigationBar.SetActive(false);
             NavigationBar.HighlightHeader(OptionPanel.TypeSO);
-            _uiLanguageOverviewPanel.Initialize();
+            _uiLanguageSettingOverviewPanel.Initialize();
         }
 
         public override void HandleCancel()
@@ -26,14 +26,14 @@ namespace CryptoQuest.UI.Menu.MenuStates.OptionStates
             base.HandleCancel();
             NavigationBar.SetActive(true);
             NavigationBar.HighlightHeader(OptionPanel.TypeSO, true);
-            _uiLanguageOverviewPanel.DeInitialize();
+            _uiLanguageSettingOverviewPanel.DeInitialize();
             MenuStateMachine.RequestStateChange(OptionMenuStateMachine.NavOption);
         }
 
         public override void OnExit()
         {
             base.OnExit();
-            _uiLanguageOverviewPanel.DeInitialize();
+            _uiLanguageSettingOverviewPanel.DeInitialize();
         }
     }
 }
