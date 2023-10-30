@@ -14,6 +14,8 @@ namespace CryptoQuest.System.SaveSystem
         [SerializeField] protected SaveManagerSO _saveManagerSO;
         [SerializeField] private SaveData _saveData = new();
 
+        private List<ISaveObject> _objects = new();
+
         public string PlayerName
         {
             get => _saveData.player;
@@ -70,6 +72,10 @@ namespace CryptoQuest.System.SaveSystem
 
         public void OnSceneLoaded()
         {
+            foreach(var obj in _objects)
+            {
+                LoadObject(obj);
+            }
             _isSceneLoading = false;
         }
 
@@ -146,6 +152,16 @@ namespace CryptoQuest.System.SaveSystem
         public bool IsLoadingSaveGame()
         {
             return _isSceneLoading;
+        }
+
+        public bool RegisterObject(ISaveObject obj)
+        {
+            if (!_objects.Contains(obj))
+            {
+                _objects.Add(obj);
+                return true;
+            }
+            return false;
         }
 
         #region Editor Tools
