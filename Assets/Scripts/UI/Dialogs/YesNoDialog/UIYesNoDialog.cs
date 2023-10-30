@@ -75,11 +75,9 @@ namespace CryptoQuest.UI.Dialogs.YesNoDialog
 
         public override UIYesNoDialog Close()
         {
-            if(this != null)
-            {
-                Visible = false;
-                Destroy(gameObject);
-            }
+            if (this == null) return this;
+            Visible = false;
+            Destroy(gameObject);
             return this;
         }
     }

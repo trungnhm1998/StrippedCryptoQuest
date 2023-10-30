@@ -1,6 +1,5 @@
 using CryptoQuest.Events.UI.Dialogs;
 using CryptoQuest.UI.Dialogs.Dialogue;
-using UniRx.Triggers;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Localization;
@@ -11,10 +10,12 @@ namespace CryptoQuest.BlackSmith
     {
         public event UnityAction ConfirmYesEvent;
         public event UnityAction ConfirmNoEvent;
+
         [SerializeField] private YesNoDialogEventChannelSO _yesNoDialogEventSO;
         [SerializeField] private LocalizedString _message;
         private UIDialogueForGenericMerchant _dialogue;
         public UIDialogueForGenericMerchant Dialogue { get => _dialogue; }
+
         public void BlackSmithOpened()
         {
             GenericMerchantDialogueController.Instance.Instantiate(DialogInstantiated);
