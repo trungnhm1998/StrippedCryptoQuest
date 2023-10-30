@@ -48,6 +48,8 @@ namespace CryptoQuest.Tavern.States
             _presenter.TavernUiOverview.PartyOrganizationButtonPressedEvent -= EnterPartyOrganization;
 
             _presenter.TavernInputManager.CancelEvent -= ExitTavern;
+            
+            _presenter.TavernUiOverview.gameObject.SetActive(false);
         }
     }
 }
