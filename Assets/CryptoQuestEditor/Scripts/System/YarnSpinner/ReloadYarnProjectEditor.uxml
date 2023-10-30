@@ -1,0 +1,17 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
+    <ui:Label tabindex="-1" text="Tool Editor" display-tooltip-when-elided="true" style="font-size: 24px; -unity-font-style: bold; -unity-font: url(&apos;project://database/Assets/Fonts/Mplus1-Black.ttf?fileID=12800000&amp;guid=dd09ab6ed89294671a80ceee568a7f12&amp;type=3#Mplus1-Black&apos;); -unity-text-align: upper-center;" />
+    <ui:Label tabindex="-1" text="Yarn Spinner - Timeline - Playable Director" display-tooltip-when-elided="true" style="font-size: 12px; -unity-font-style: bold; -unity-font: url(&apos;project://database/Assets/Fonts/Mplus1-Black.ttf?fileID=12800000&amp;guid=dd09ab6ed89294671a80ceee568a7f12&amp;type=3#Mplus1-Black&apos;); -unity-text-align: upper-center; margin-top: -3px; margin-bottom: 5px; color: rgb(152, 152, 152);" />
+    <ui:VisualElement style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); max-height: 1px; min-height: 10px; height: 1px; border-top-width: 1px; border-left-color: rgb(70, 70, 70); border-right-color: rgb(70, 70, 70); border-top-color: rgb(70, 70, 70); border-bottom-color: rgb(70, 70, 70); border-bottom-width: 0; margin-top: 10px;" />
+    <ui:VisualElement name="PlayableDirectorField" style="padding-bottom: 20px;">
+        <ui:Label tabindex="-1" text="Playable Director" parse-escape-sequences="true" display-tooltip-when-elided="true" style="color: rgb(255, 255, 255); -unity-font-style: bold; -unity-font: url(&apos;project://database/Assets/UnityDefaultRuntimeTheme.tss?fileID=2230732570650464555&amp;guid=211ec1e22fc1bd34cac8aac1002bd7f7&amp;type=3#NotInter-Regular&apos;);" />
+        <uie:ObjectField label="Object Field" name="playableAssets" type="UnityEngine.Timeline.TimelineAsset, Unity.Timeline" />
+    </ui:VisualElement>
+    <ui:VisualElement name="YarnSpinnerConfigField" style="padding-bottom: 20px;">
+        <ui:Label tabindex="-1" text="Yarn Spinner Configuration" parse-escape-sequences="true" display-tooltip-when-elided="true" style="color: rgb(255, 255, 255); -unity-font-style: bold; -unity-font: url(&apos;project://database/Assets/UnityDefaultRuntimeTheme.tss?fileID=2230732570650464555&amp;guid=211ec1e22fc1bd34cac8aac1002bd7f7&amp;type=3#NotInter-Regular&apos;);" />
+        <uie:ObjectField label="Yarn Project Config" name="yarnProjectConfig" type="CryptoQuest.System.Dialogue.YarnManager.YarnProjectConfigSO, indi-games.crypto-quest" />
+    </ui:VisualElement>
+    <ui:VisualElement name="ButtonField" style="flex-grow: 1; flex-direction: row; justify-content: center; align-self: center; align-items: flex-start;">
+        <ui:Button text="Replace" parse-escape-sequences="true" display-tooltip-when-elided="true" name="replaceButton" />
+        <ui:Button text="Clear" parse-escape-sequences="true" display-tooltip-when-elided="true" name="clearButton" />
+    </ui:VisualElement>
+</ui:UXML>
