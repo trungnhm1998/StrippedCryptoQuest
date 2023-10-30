@@ -23,10 +23,11 @@ namespace CryptoQuest.Gameplay.Encounter
         [SerializeField] private float _maxEncounterSteps = 5f; // allow half a step?
         [SerializeField] private EncounterDatabase _database;
         [SerializeField] private GameStateSO _gameState;
-        private List<EncounterInfo> _currentEncounterInfos = new();
-        private EncounterData _currentEncounterData;
-        private string _currentEncounterId;
-        private int _currentPriority = -1;
+
+        [Header("Debug")] [SerializeField] private List<EncounterInfo> _currentEncounterInfos = new();
+        [SerializeField] private EncounterData _currentEncounterData;
+        [SerializeField] private int _currentPriority = -1;
+        [SerializeField] private float _stepLeftBeforeTriggerBattle;
 
         private void Awake()
         {
@@ -34,8 +35,8 @@ namespace CryptoQuest.Gameplay.Encounter
             EncounterZone.LoadingEncounterArea += LoadEncounterZone;
             EncounterZone.EnterEncounterZone += RegisterStepHandler;
             EncounterZone.ExitEncounterZone += RemoveStepHandler;
-            EncounterZone.RegisterEncounterZone += Register;
-            EncounterZone.UnregisterEncounterZone += Unregister;
+            EncounterZone.RegisterEncounterInfo += RegisterEncounterInfo;
+            EncounterZone.UnregisterEncounterInfo += UnregisterEncounterInfo;
         }
 
         private void OnDestroy()
@@ -44,24 +45,22 @@ namespace CryptoQuest.Gameplay.Encounter
             EncounterZone.LoadingEncounterArea -= LoadEncounterZone;
             EncounterZone.EnterEncounterZone -= RegisterStepHandler;
             EncounterZone.ExitEncounterZone -= RemoveStepHandler;
-            EncounterZone.RegisterEncounterZone -= Register;
-            EncounterZone.UnregisterEncounterZone -= Unregister;
+            EncounterZone.RegisterEncounterInfo -= RegisterEncounterInfo;
+            EncounterZone.UnregisterEncounterInfo -= UnregisterEncounterInfo;
         }
 
-        private void RegisterStepHandler(EncounterInfo encounterInfo)
+        private void RegisterStepHandler()
         {
-            string encounterId = encounterInfo.EncounterId;
-            Register(encounterInfo);
-            if (_stepLeftBeforeTriggerBattle > 0) return;
-            StartCoroutine(GetEncounter(encounterId, SetupStepsCounter));
+            EncounterInfo highestPriorityEncounter = GetHighestPriorityEncounter();
+            StartCoroutine(GetEncounter(highestPriorityEncounter.EncounterId, SetupStepsCounter));
         }
 
-        private void RemoveStepHandler(EncounterInfo encounterInfo)
+        private void RemoveStepHandler()
         {
-            if (_currentEncounterData == null) return;
-            _gameplayBus.Hero.Step -= DecrementStepCountBeforeTriggerBattle;
             _currentEncounterData = null; // either null or new EncounterData()
-            Unregister(encounterInfo);
+            _gameplayBus.Hero.Step -= DecrementStepCountBeforeTriggerBattle;
+            _stepLeftBeforeTriggerBattle = 0;
+            HandleExitZone();
         }
 
 
@@ -77,6 +76,7 @@ namespace CryptoQuest.Gameplay.Encounter
         {
             _currentEncounterData = encounter;
             _maxEncounterSteps = _currentEncounterData.EncounterRate;
+            if (_stepLeftBeforeTriggerBattle > 0) return;
             GenerateRandomStepTilNextTrigger();
             _gameplayBus.Hero.Step += DecrementStepCountBeforeTriggerBattle;
         }
@@ -84,15 +84,13 @@ namespace CryptoQuest.Gameplay.Encounter
         private void LoadEncounterZone(string encounterId)
             => StartCoroutine(_database.LoadDataById(encounterId));
 
-        private float _stepLeftBeforeTriggerBattle;
 
         private void DecrementStepCountBeforeTriggerBattle()
         {
             if (SafeZoneController.IsSafeZoneActive) return;
             _stepLeftBeforeTriggerBattle--;
             if (_stepLeftBeforeTriggerBattle > 0) return;
-            EncounterInfo encounterInfo = GetHighestPriorityEncounter();
-            StartCoroutine(GetEncounter(encounterInfo.EncounterId, TriggerBattle));
+            TriggerBattle(_currentEncounterData);
         }
 
         private void TriggerBattle(EncounterData encounter)
@@ -134,16 +132,21 @@ namespace CryptoQuest.Gameplay.Encounter
 
         #region Area Priority
 
-        private void Register(EncounterInfo encounterInfo)
+        private void RegisterEncounterInfo(EncounterInfo encounterInfo)
         {
             _currentEncounterInfos.Add(encounterInfo);
             if (_currentPriority < encounterInfo.Priority)
                 _currentPriority = encounterInfo.Priority;
         }
 
-        private void Unregister(EncounterInfo encounterInfo)
+        private void UnregisterEncounterInfo(EncounterInfo encounterInfo)
         {
-            _currentEncounterInfos.Remove(encounterInfo);
+            if (_currentEncounterInfos.Contains(encounterInfo))
+                _currentEncounterInfos.Remove(encounterInfo);
+        }
+
+        private void HandleExitZone()
+        {
             if (_currentEncounterInfos.Count == 0)
             {
                 _currentPriority = -1;
@@ -152,7 +155,8 @@ namespace CryptoQuest.Gameplay.Encounter
 
             _currentPriority = _currentEncounterInfos.Max(x => x.Priority);
             EncounterInfo highestPriorityEncounter = GetHighestPriorityEncounter();
-            StartCoroutine(GetEncounter(highestPriorityEncounter.EncounterId, SetupStepsCounter));
+            var encounterData = _database.GetDataById(highestPriorityEncounter.EncounterId);
+            SetupStepsCounter(encounterData);
         }
 
         #endregion

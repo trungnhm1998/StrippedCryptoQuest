@@ -1,6 +1,5 @@
 using System;
 using IndiGames.Core.EditorTools.Attributes.ReadOnlyAttribute;
-using PlasticGui.WorkspaceWindow;
 using UnityEngine;
 
 namespace CryptoQuest.Gameplay.Encounter
@@ -8,10 +7,10 @@ namespace CryptoQuest.Gameplay.Encounter
     public class EncounterZone : MonoBehaviour
     {
         public static event Action<string> LoadingEncounterArea;
-        public static event Action<EncounterInfo> EnterEncounterZone;
-        public static event Action<EncounterInfo> ExitEncounterZone;
-        public static event Action<EncounterInfo> RegisterEncounterZone;
-        public static event Action<EncounterInfo> UnregisterEncounterZone;
+        public static event Action EnterEncounterZone;
+        public static event Action ExitEncounterZone;
+        public static event Action<EncounterInfo> RegisterEncounterInfo;
+        public static event Action<EncounterInfo> UnregisterEncounterInfo;
 
         [Header("Area Configuration")] [SerializeField, ReadOnly]
         private string _playerTag = "Player";
@@ -32,15 +31,15 @@ namespace CryptoQuest.Gameplay.Encounter
         private void OnTriggerEnter2D(Collider2D other)
         {
             if (!other.gameObject.CompareTag(_playerTag)) return;
-            RegisterEncounterZone?.Invoke(_encounterInfo);
-            EnterEncounterZone?.Invoke(_encounterInfo);
+            RegisterEncounterInfo?.Invoke(_encounterInfo);
+            EnterEncounterZone?.Invoke();
         }
 
         private void OnTriggerExit2D(Collider2D other)
         {
             if (!other.gameObject.CompareTag(_playerTag)) return;
-            UnregisterEncounterZone?.Invoke(_encounterInfo);
-            ExitEncounterZone?.Invoke(_encounterInfo);
+            UnregisterEncounterInfo?.Invoke(_encounterInfo);
+            ExitEncounterZone?.Invoke();
         }
 
         /// <summary>
@@ -58,6 +57,7 @@ namespace CryptoQuest.Gameplay.Encounter
         }
     }
 
+    [Serializable]
     public class EncounterInfo
     {
         public string EncounterId;
