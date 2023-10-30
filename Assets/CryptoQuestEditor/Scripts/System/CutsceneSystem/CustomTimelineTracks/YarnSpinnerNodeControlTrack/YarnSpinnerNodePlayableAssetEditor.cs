@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using CryptoQuest.System.CutsceneSystem.CustomTimelineTracks.YarnSpinnerNodeControlTrack;
+using CryptoQuest.System.Dialogue.Events;
+using CryptoQuest.System.Dialogue.YarnManager;
 using UnityEditor;
 using UnityEditor.Experimental.GraphView;
 using UnityEditor.Timeline;
@@ -29,7 +31,10 @@ namespace CryptoQuestEditor.System.CutsceneSystem.CustomTimelineTracks.YarnSpinn
             if (GUILayout.Button(Target.YarnNodeName, EditorStyles.popup))
             {
                 var provider = CreateInstance<YarnNodeEntriesProvider>(); // TODO: cache this with yarn project
-                provider.YarnProject = TimelineEditor.inspectedDirector.GetGenericBinding(TimelineEditor.selectedClip.GetParentTrack()) as YarnProject;
+                var yarnConfig =
+                    TimelineEditor.inspectedDirector.GetGenericBinding(TimelineEditor.selectedClip.GetParentTrack()) as
+                        YarnProjectConfigSO;
+                provider.YarnProject = yarnConfig?.YarnProject;
                 provider.EntrySelected = nodeName =>
                 {
                     Debug.Log($"Selected {nodeName}");
@@ -47,7 +52,42 @@ namespace CryptoQuestEditor.System.CutsceneSystem.CustomTimelineTracks.YarnSpinn
             GUILayout.Button("Refresh"); // this is a hack to get the YarnNodeName to update
 
             EditorGUILayout.EndHorizontal();
+
+            if (Target.OnYarnProjectConfigEvent == null)
+            {
+                EditorGUILayout.BeginHorizontal();
+                EditorGUILayout.HelpBox(
+                    "OnYarnProjectConfigEvent is null. This will cause a NullReferenceException at runtime.",
+                    MessageType.Warning, true);
+
+                EditorGUILayout.BeginHorizontal();
+                if (GUILayout.Button("Auto Set"))
+                {
+                    Target.OnYarnProjectConfigEvent = GetYarnProjectConfigEvent();
+                    serializedObject.ApplyModifiedProperties();
+                }
+
+                EditorGUILayout.EndHorizontal();
+                EditorGUILayout.EndHorizontal();
+            }
+
+
             serializedObject.ApplyModifiedProperties();
+        }
+
+
+        private YarnProjectConfigEvent GetYarnProjectConfigEvent()
+        {
+            string[] guids = AssetDatabase.FindAssets("t:YarnProjectConfigEvent");
+
+            if (guids.Length == 0)
+            {
+                Debug.LogWarning("No YarnProjectConfigEvent found. Please create one.");
+                return null;
+            }
+
+            string path = AssetDatabase.GUIDToAssetPath(guids[0]);
+            return AssetDatabase.LoadAssetAtPath<YarnProjectConfigEvent>(path);
         }
     }
 

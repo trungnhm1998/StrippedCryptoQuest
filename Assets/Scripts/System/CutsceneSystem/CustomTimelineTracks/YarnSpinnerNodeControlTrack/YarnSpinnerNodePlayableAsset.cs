@@ -1,4 +1,5 @@
 ﻿using System;
+using CryptoQuest.System.Dialogue.Events;
 using UnityEngine;
 using UnityEngine.Localization;
 using UnityEngine.Playables;
@@ -11,6 +12,7 @@ namespace CryptoQuest.System.CutsceneSystem.CustomTimelineTracks.YarnSpinnerNode
     public class YarnSpinnerNodePlayableAsset : PlayableAsset, ITimelineClipAsset
     {
         public string YarnNodeName = "Start";
+        public YarnProjectConfigEvent OnYarnProjectConfigEvent;
 
         [SerializeField] private YarnSpinnerNodePlayableBehaviour _template;
 
@@ -21,6 +23,7 @@ namespace CryptoQuest.System.CutsceneSystem.CustomTimelineTracks.YarnSpinnerNode
             var playable = ScriptPlayable<YarnSpinnerNodePlayableBehaviour>.Create(graph, _template);
 
             _template.YarnNodeName = YarnNodeName;
+            _template.OnYarnProjectConfigEvent = OnYarnProjectConfigEvent;
 
             return playable;
         }
