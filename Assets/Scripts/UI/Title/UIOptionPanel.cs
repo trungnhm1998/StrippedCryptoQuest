@@ -1,7 +1,6 @@
 using System.Collections;
 using CryptoQuest.System.Settings;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace CryptoQuest.UI.Title
 {

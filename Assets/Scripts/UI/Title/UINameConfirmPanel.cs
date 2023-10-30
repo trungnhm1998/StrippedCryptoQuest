@@ -1,21 +1,18 @@
-﻿using CryptoQuest.System;
-using CryptoQuest.System.SaveSystem;
+﻿using System;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace CryptoQuest.UI.Title
 {
     public class UINameConfirmPanel : MonoBehaviour
     {
-        [SerializeField] private SaveSystemSO _tempSaveInfo;
+        public event Action YesPressed;
+        public event Action NoPressed;
+        [SerializeField] private Selectable _yesButton;
 
-        public void ConfirmPlayerName()
-        {
-            var saveSystem = ServiceProvider.GetService<ISaveSystem>();
-            if (saveSystem != null)
-            {
-                saveSystem.PlayerName = _tempSaveInfo.PlayerName;
-                saveSystem.SaveGame();
-            }
-        }
+        private void OnEnable() => Invoke(nameof(SelectYesButton), 0f);
+        private void SelectYesButton() => _yesButton.Select();
+        public void ConfirmPlayerName() => YesPressed?.Invoke();
+        public void NoButtonPressed_BackToNameInput() => NoPressed?.Invoke();
     }
 }

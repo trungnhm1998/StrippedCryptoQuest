@@ -17,6 +17,9 @@ namespace CryptoQuest.Networking
 
         public IObservable<TResponse> Get<TResponse>(string path, object body = null,
             Dictionary<string, string> headers = null);
+
+        public IObservable<string> Get(string path, object body = null,
+            Dictionary<string, string> headers = null);
     }
 
     /// <summary>
@@ -26,19 +29,34 @@ namespace CryptoQuest.Networking
     /// </summary>
     public class RestClientController : MonoBehaviour, IRestClient
     {
+        [SerializeField] private Credentials _credentials;
+        [SerializeField] private EnvironmentSO _environment;
         private EnvironmentSO Env => ServiceProvider.GetService<EnvironmentSO>();
-        private void Awake() => ServiceProvider.Provide<IRestClient>(this);
+
+        private void Awake()
+        {
+            ServiceProvider.Provide(_environment);
+            ServiceProvider.Provide(_credentials);
+            ServiceProvider.Provide<IRestClient>(this);
+        }
 
         public IObservable<TResponse> Post<TResponse>(string path, object body = null,
             Dictionary<string, string> headers = null)
         {
             return Observable.Create<TResponse>(observer =>
             {
-                var generateRequest = GenerateRequest(path, body, headers);
-                PluginRestClient.Post<TResponse>(generateRequest)
-                    .Then(observer.OnNext)
-                    .Catch(observer.OnError)
-                    .Finally(observer.OnCompleted);
+                try
+                {
+                    var generateRequest = GenerateRequest(path, body, headers);
+                    PluginRestClient.Post<TResponse>(generateRequest)
+                        .Then(observer.OnNext)
+                        .Catch(observer.OnError)
+                        .Finally(observer.OnCompleted);
+                }
+                catch (Exception e)
+                {
+                    observer.OnError(e);
+                }
 
                 return Disposable.Empty;
             });
@@ -49,11 +67,41 @@ namespace CryptoQuest.Networking
         {
             return Observable.Create<TResponse>(observer =>
             {
-                var generateRequest = GenerateRequest(path, body, headers);
-                PluginRestClient.Get<TResponse>(generateRequest)
-                    .Then(observer.OnNext)
-                    .Catch(observer.OnError)
-                    .Finally(observer.OnCompleted);
+                try
+                {
+                    var generateRequest = GenerateRequest(path, body, headers);
+                    generateRequest.Method = "GET";
+                    PluginRestClient.Get<TResponse>(generateRequest)
+                        .Then(observer.OnNext)
+                        .Catch(observer.OnError)
+                        .Finally(observer.OnCompleted);
+                }
+                catch (Exception e)
+                {
+                    observer.OnError(e);
+                }
+
+                return Disposable.Empty;
+            });
+        }
+
+        public IObservable<string> Get(string path, object body = null, Dictionary<string, string> headers = null)
+        {
+            return Observable.Create<string>(observer =>
+            {
+                try
+                {
+                    var generateRequest = GenerateRequest(path, body, headers);
+                    generateRequest.Method = "GET";
+                    PluginRestClient.Get(generateRequest)
+                        .Then(helper => observer.OnNext(helper.Text))
+                        .Catch(observer.OnError)
+                        .Finally(observer.OnCompleted);
+                }
+                catch (Exception e)
+                {
+                    observer.OnError(e);
+                }
 
                 return Disposable.Empty;
             });
@@ -62,11 +110,17 @@ namespace CryptoQuest.Networking
         private RequestHelper GenerateRequest(string path, object body = null,
             Dictionary<string, string> headers = null)
         {
+            var mergeHeaders = MergeHeaders(headers);
+            var accessToken = _credentials.Profile.token.access.token;
+            if (!string.IsNullOrEmpty(accessToken)) mergeHeaders.TryAdd("Authorization", "Bearer " + accessToken);
+
+            var bodyString = "";
+            if (body != null) bodyString = JsonConvert.SerializeObject(body);
             var request = new RequestHelper
             {
                 Uri = $"{Env.API}/{path}",
-                BodyString = JsonConvert.SerializeObject(body),
-                Headers = MergeHeaders(headers),
+                BodyString = bodyString,
+                Headers = mergeHeaders,
 #if DEVELOPMENT_BUILD || UNITY_EDITOR
                 EnableDebug = true,
 #endif

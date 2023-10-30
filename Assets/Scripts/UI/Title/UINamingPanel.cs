@@ -1,9 +1,7 @@
-﻿using CryptoQuest.System;
-using CryptoQuest.System.SaveSystem;
+﻿using CryptoQuest.System.SaveSystem;
 using CryptoQuest.System.Settings;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.Localization.Components;
 using UnityEngine.UI;
 
@@ -20,18 +18,15 @@ namespace CryptoQuest.UI.Title
 
         [SerializeField] private TextAsset _badWordAsset;
         [SerializeField] private TextAsset _specialCharacterAsset;
-        [SerializeField] private SaveSystemSO _tempSaveInfo;
+        [SerializeField] private SaveSystemSO _saveSystem;
         private IStringValidator _nameValidator;
 
-        public UnityAction ConfirmNameButtonPressed;
-        public UnityAction CancelEvent;
         private bool _isInputValid;
 
         private const string VALIDATION_TABLE_ENTRY = "TITLE_VALIDATE_";
 
         private void Awake()
         {
-            _tempSaveInfo.PlayerName = string.Empty;
             _nameValidator = new NameValidator(_badWordAsset, _specialCharacterAsset);
         }
 
@@ -53,27 +48,16 @@ namespace CryptoQuest.UI.Title
                 return;
             }
 
-            var saveSystem = ServiceProvider.GetService<ISaveSystem>();
-            if (saveSystem != null)
-            {
-                saveSystem.PlayerName = NameInput.text;
-                saveSystem.SaveGame();
-            }
-
-            ConfirmNameButtonPressed?.Invoke();
+            _saveSystem.PlayerName = NameInput.text;
         }
 
         public void ValidateInput(string input) => _isInputValid = IsNameValid(input);
-
-        public bool IsInputValid() => _isInputValid;
 
         private void MenuSubmitEvent(string input)
         {
             if (IsNameValid(input))
                 ConfirmButton.Select();
         }
-
-        private void BackToStartScreen() => CancelEvent?.Invoke();
 
         private bool IsNameValid(string input)
         {
@@ -84,7 +68,5 @@ namespace CryptoQuest.UI.Title
             _validationText.color = isValid ? _validColor : _invalidColor;
             return isValid;
         }
-
-        public void SetTempName(string text) => _tempSaveInfo.PlayerName = text;
     }
 }

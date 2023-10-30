@@ -7,34 +7,16 @@ namespace CryptoQuest.UI.Title
 {
     public class UISocialPanel : MonoBehaviour
     {
-        private void OnEnable()
-        {
-            GetComponentInChildren<SelectButtonOnEnable>().Select();
-        }
+        private void OnEnable() => GetComponentInChildren<SelectButtonOnEnable>().Select();
 
-        public void RequestFacebookLogin()
-        {
-            ActionDispatcher.Dispatch(new LoginUsingFacebook());
-        }
+        public void RequestFacebookLogin() => ActionDispatcher.Dispatch(new LoginUsingFacebook());
 
-        public void RequestWalletLogin()
-        {
-            ActionDispatcher.Dispatch(new LoginUsingWallet());
-        }
+        public void RequestWalletLogin() => ActionDispatcher.Dispatch(new LoginUsingWallet());
 
-        public void RequestTwitterLogin()
-        {
-            ActionDispatcher.Dispatch(new LoginUsingTwitter());
-        }
+        public void RequestTwitterLogin() => ActionDispatcher.Dispatch(new LoginUsingTwitter());
 
-        public void RequestGmailLogin()
-        {
-            ActionDispatcher.Dispatch(new LoginUsingGoogle());
-        }
+        public void RequestGmailLogin() => ActionDispatcher.Dispatch(new LoginUsingGoogle());
 
-        public void RequestEmailAndPasswordLogin()
-        {
-            ActionDispatcher.Dispatch(new LoginUsingEmail());
-        }
+        public void RequestEmailAndPasswordLogin() => ActionDispatcher.Dispatch(new LoginUsingEmail());
     }
 }

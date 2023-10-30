@@ -26,12 +26,7 @@ namespace CryptoQuest.UI.Title.States
             _namingPanel.ConfirmButton.onClick.RemoveListener(OnNameInputConfirm);
         }
 
-        private void OnNameInputConfirm()
-        {
-            if (!_namingPanel.IsInputValid()) return;
-            _namingPanel.SetTempName(_namingPanel.NameInput.text);
-            _stateMachine.ChangeState(new NameConfirmation());
-        }
+        private void OnNameInputConfirm() => _stateMachine.ChangeState(new NameConfirmation());
 
         private void OnNavigate(Vector2 direction)
         {

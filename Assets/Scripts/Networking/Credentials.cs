@@ -18,10 +18,5 @@ namespace CryptoQuest.Networking
 
         [field: SerializeField] public string Password { get; set; }
         [field: SerializeField] public CredentialResponse Profile { get; set; }
-
-        private void OnEnable()
-        {
-            ServiceProvider.Provide(this);
-        }
     }
 }

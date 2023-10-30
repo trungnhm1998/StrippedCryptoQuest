@@ -1,9 +1,8 @@
-using IndiGames.Core.Events.ScriptableObjects;
-using IndiGames.Core.SaveSystem;
-using IndiGames.Core.SceneManagementSystem.ScriptableObjects;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using IndiGames.Core.SceneManagementSystem.ScriptableObjects;
+using Newtonsoft.Json;
 using UnityEngine;
 
 namespace CryptoQuest.System.SaveSystem
@@ -13,50 +12,44 @@ namespace CryptoQuest.System.SaveSystem
     {
         [SerializeField] protected SaveManagerSO _saveManagerSO;
         [SerializeField] private SaveData _saveData = new();
+        public SaveData SaveData => _saveData;
 
         private List<ISaveObject> _objects = new();
 
         public string PlayerName
         {
-            get => _saveData.player;
-            set => _saveData.player = value;
+            get => _saveData.PlayerName;
+            set => _saveData.PlayerName = value;
         }
 
         private bool _isSceneLoading = false;
 
+        private void OnEnable()
+        {
+        }
+
         private string Save()
         {
-            if (!string.IsNullOrEmpty(PlayerName))
-            {
-                var saveData = JsonUtility.ToJson(_saveData);
-                Debug.Log("Save: " + saveData);
-                return saveData;
-            }
-            return null;
+            var jsonSaveData = JsonConvert.SerializeObject(_saveData);
+            Debug.Log("Save: " + jsonSaveData);
+            return jsonSaveData;
         }
 
         private bool Load(string json)
         {
-            if (!string.IsNullOrEmpty(json))
-            {
-                Debug.Log("Load Save: " + json);
-                JsonUtility.FromJsonOverwrite(json, _saveData);
-                return true;
-            }
-            return false;
+            if (string.IsNullOrEmpty(json)) return false;
+            Debug.Log("Load Save: " + json);
+            _saveData = JsonConvert.DeserializeObject<SaveData>(json);
+            return true;
         }
 
         public bool SaveGame()
         {
             var saveData = Save();
-            if (string.IsNullOrEmpty(saveData)) return false;
-            return _saveManagerSO.Save(saveData);
+            return !string.IsNullOrEmpty(saveData) && _saveManagerSO.Save(saveData);
         }
 
-        public bool LoadSaveGame()
-        {
-            return Load(_saveManagerSO.Load());
-        }
+        public bool LoadSaveGame() => Load(_saveManagerSO.Load());
 
         public virtual async Task<bool> SaveGameAsync()
         {
@@ -95,7 +88,7 @@ namespace CryptoQuest.System.SaveSystem
         {
             if (!IsLoadingSaveGame())
             {
-                _saveData.scene = JsonUtility.ToJson(sceneSO);
+                _saveData.LastExploreScene = JsonUtility.ToJson(sceneSO);
                 return SaveGame();
             }
             return false;
@@ -103,15 +96,12 @@ namespace CryptoQuest.System.SaveSystem
 
         public bool LoadScene(ref SceneScriptableObject sceneSO)
         {
-            if (!IsLoadingSaveGame() && !string.IsNullOrEmpty(_saveData.scene) && sceneSO != null)
-            {
-                sceneSO = SceneScriptableObject.CreateInstance<SceneScriptableObject>();
-                JsonUtility.FromJsonOverwrite(_saveData.scene, sceneSO);
-                _objects.Clear();
-                _isSceneLoading = true;
-                return true;
-            }
-            return false;
+            if (IsLoadingSaveGame() || string.IsNullOrEmpty(_saveData.LastExploreScene)) return false;
+            sceneSO = CreateInstance<SceneScriptableObject>();
+            JsonUtility.FromJsonOverwrite(_saveData.LastExploreScene, sceneSO);
+            _objects.Clear();
+            _isSceneLoading = true;
+            return true;
         }
 
         public bool LoadObject(ISaveObject jObject)

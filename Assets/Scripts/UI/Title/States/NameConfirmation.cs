@@ -1,4 +1,5 @@
 ﻿using CryptoQuest.Core;
+using CryptoQuest.Networking.Actions;
 
 namespace CryptoQuest.UI.Title.States
 {
@@ -12,30 +13,25 @@ namespace CryptoQuest.UI.Title.States
             _stateMachine = stateMachine;
             stateMachine.TryGetComponentInChildren(out _confirmPanel);
             _confirmPanel.gameObject.SetActive(true);
+            _confirmPanel.YesPressed += HandleYesClicked;
+            _confirmPanel.NoPressed += ChangeToInputNameState;
         }
-
 
         public void OnExit(TitleStateMachine stateMachine)
         {
+            _confirmPanel.YesPressed -= HandleYesClicked;
+            _confirmPanel.NoPressed -= ChangeToInputNameState;
             _confirmPanel.gameObject.SetActive(false);
         }
 
         private void HandleYesClicked()
         {
-            _stateMachine.TryGetComponentInChildren(out UINamingPanel namingPanel);
-            bool isInputValid = namingPanel.IsInputValid();
-            if (!isInputValid)
-            {
-                _stateMachine.ChangeState(new NameInputState());
-                return;
-            }
-
-            // ActionDispatcher.Dispatch(new SaveName());
-            // _confirmPanel.ConfirmPlayerName();
-            // _stateMachine.ChangeState(new PlayGameState(_startGamePanelController));
+            _confirmPanel.gameObject.SetActive(false);
+            ActionDispatcher.Dispatch(new SaveGameAction());
+            ActionDispatcher.Dispatch(new StartGameAction());
         }
 
-        private void HandleNoClicked()
+        private void ChangeToInputNameState()
         {
             _stateMachine.ChangeState(new NameInputState());
         }
