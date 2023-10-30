@@ -6,6 +6,6 @@ namespace CryptoQuest.Battle.VFX
     {
         [SerializeField] private Vector3 _offset = new Vector3(0, 0.2f, 0);
 
-        private void Start() => transform.position += _offset;
+        private void Awake() => transform.position += _offset;
     }
 }

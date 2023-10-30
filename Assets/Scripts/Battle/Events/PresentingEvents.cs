@@ -24,6 +24,16 @@ namespace CryptoQuest.Battle.Events
     public class FinishedPresentingEvent : BattleEvent { }
     
     public class ShakeUIEvent : BattleEvent { }
+    
+    public class LogDealtDamageEvent : BattleEvent
+    {
+        public Components.Character Character { get; private set; }
+
+        public LogDealtDamageEvent(Components.Character character)
+        {
+            Character = character;
+        }
+    }
 
     public class HeroNormalAttackEvent : BattleEvent
     {
