@@ -1,5 +1,7 @@
 ﻿using System;
+using CryptoQuest.System.Dialogue.Events;
 using CryptoQuest.System.Dialogue.Managers;
+using CryptoQuest.System.Dialogue.YarnManager;
 using UnityEngine;
 using UnityEngine.Playables;
 
@@ -10,6 +12,9 @@ namespace CryptoQuest.System.CutsceneSystem.CustomTimelineTracks.YarnSpinnerNode
     {
         [HideInInspector]
         public string YarnNodeName = "Start";
+
+        [HideInInspector]
+        public YarnProjectConfigEvent OnYarnProjectConfigEvent;
 
         /// <summary>
         /// We need to wait for the player to actually finish reading all the dialogues before we can continue the timeline.
@@ -24,8 +29,8 @@ namespace CryptoQuest.System.CutsceneSystem.CustomTimelineTracks.YarnSpinnerNode
         /// </summary>
         public override void ProcessFrame(Playable playable, FrameData info, object playerData)
         {
-            if (_played)
-                return;
+            if (_played) return;
+
             _played = true;
             _hasCompleted = false;
 
@@ -33,6 +38,8 @@ namespace CryptoQuest.System.CutsceneSystem.CustomTimelineTracks.YarnSpinnerNode
             {
                 if (!playable.GetGraph().IsPlaying()) return;
                 if (string.IsNullOrEmpty(YarnNodeName)) return;
+                
+                OnYarnProjectConfigEvent.RaiseEvent(playerData as YarnProjectConfigSO);
                 YarnSpinnerDialogueManager.DialogueCompletedEvent += OnDialogueCompleted;
                 YarnSpinnerDialogueManager.PlayDialogueRequested?.Invoke(YarnNodeName);
             }
@@ -50,7 +57,6 @@ namespace CryptoQuest.System.CutsceneSystem.CustomTimelineTracks.YarnSpinnerNode
             if (yarnNode != YarnNodeName) return;
             _hasCompleted = true;
         }
-
 
         /// <summary>
         /// Try to pause the timeline when the player reading the dialogue
