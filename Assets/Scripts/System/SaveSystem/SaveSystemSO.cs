@@ -72,11 +72,23 @@ namespace CryptoQuest.System.SaveSystem
 
         public void OnSceneLoaded()
         {
-            foreach(var obj in _objects)
+            if(_isSceneLoading)
             {
-                LoadObject(obj);
+                foreach (var obj in _objects)
+                {
+                    LoadObject(obj);
+                }
+                _isSceneLoading = false;
             }
-            _isSceneLoading = false;
+            else
+            {
+                // walkaround for trigger IsLoaded() when not load from save file
+                foreach (var obj in _objects)
+                {
+                    if (obj != null) obj.FromJson(null);
+                }
+            }
+            
         }
 
         public bool SaveScene(SceneScriptableObject sceneSO)
@@ -95,6 +107,7 @@ namespace CryptoQuest.System.SaveSystem
             {
                 sceneSO = SceneScriptableObject.CreateInstance<SceneScriptableObject>();
                 JsonUtility.FromJsonOverwrite(_saveData.scene, sceneSO);
+                _objects.Clear();
                 _isSceneLoading = true;
                 return true;
             }

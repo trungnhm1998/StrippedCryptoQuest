@@ -80,7 +80,7 @@ namespace CryptoQuest.UI.Menu
 
         public void SetActive(bool isActive)
         {
-            EventSystem.current.SetSelectedGameObject(null);
+            EventSystem.current?.SetSelectedGameObject(null);
             foreach (var button in _navBarButtons)
             {
                 button.enabled = isActive;

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using CryptoQuest.Battle.Components;
@@ -29,7 +30,7 @@ namespace CryptoQuest.Gameplay.PlayerParty
         bool GetHero(int slotIndex, out HeroBehaviour hero);
     }
 
-    public class PartyManager : MonoBehaviour, IPartyController
+    public class PartyManager : SaveObject, IPartyController
     {
         [SerializeField, Space] private PartySlot[] _partySlots = new PartySlot[PartyConstants.MAX_PARTY_SIZE];
         public PartySlot[] Slots => _partySlots;
@@ -59,6 +60,12 @@ namespace CryptoQuest.Gameplay.PlayerParty
 
         private void Start()
         {
+            StartCoroutine(CoInitParty());
+        }
+
+        private IEnumerator CoInitParty()
+        {
+            yield return WaitUntilTrue(IsLoaded);
             InitParty();
         }
 
@@ -75,6 +82,7 @@ namespace CryptoQuest.Gameplay.PlayerParty
                 var hero = heroes[i];
                 _partySlots[i].Init(hero);
             }
+            SaveSystem?.SaveObject(this);
         }
 
         /// <summary>
@@ -128,7 +136,7 @@ namespace CryptoQuest.Gameplay.PlayerParty
                     heroes.Add(slot.HeroBehaviour.Spec);
 
             _partyProvider.SetParty(heroes.ToArray());
-
+            SaveSystem?.SaveObject(this);
             return true;
         }
 
@@ -151,5 +159,19 @@ namespace CryptoQuest.Gameplay.PlayerParty
             hero = partySlot.HeroBehaviour;
             return true;
         }
+
+        #region SaveSytem
+        public override string Key => "PartyManager";
+
+        public override string ToJson()
+        {
+            return _partyProvider.ToJson();
+        }
+
+        public override IEnumerator CoFromJson(string json)
+        {
+            yield return _partyProvider.CoFromJson(json);
+        }
+        #endregion
     }
 }
