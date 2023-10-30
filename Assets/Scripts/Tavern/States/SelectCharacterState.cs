@@ -6,7 +6,7 @@ namespace CryptoQuest.Tavern.States
     public class SelectCharacterState : StateMachineBehaviour
     {
         private Animator _animator;
-        private TavernPresenter _presenter;
+        private TavernController _controller;
 
         private static readonly int TurnBack = Animator.StringToHash("isTurnBack");
 
@@ -16,16 +16,16 @@ namespace CryptoQuest.Tavern.States
         {
             _animator = animator;
 
-            _presenter = animator.GetComponent<TavernPresenter>();
-            _presenter.UICharacterReplacement.gameObject.SetActive(true);
-            
-            _presenter.TavernInputManager.CancelEvent += CancelCharacterReplacement;
+            _controller = animator.GetComponent<TavernController>();
+            _controller.UICharacterReplacement.gameObject.SetActive(true);
+
+            _controller.TavernInputManager.CancelEvent += CancelCharacterReplacement;
 
         }
 
         private void CancelCharacterReplacement()
         {
-            _presenter.UICharacterReplacement.gameObject.SetActive(false);
+            _controller.UICharacterReplacement.gameObject.SetActive(false);
             _animator.SetTrigger(TurnBack);
 
         }
@@ -33,7 +33,7 @@ namespace CryptoQuest.Tavern.States
         public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo,
             int layerIndex)
         {
-            _presenter.TavernInputManager.CancelEvent -= CancelCharacterReplacement;
+            _controller.TavernInputManager.CancelEvent -= CancelCharacterReplacement;
         }
     }
 }
