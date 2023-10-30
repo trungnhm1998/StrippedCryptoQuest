@@ -114,6 +114,7 @@ namespace CryptoQuest.System.SaveSystem
                             return jObject.FromJson(data.Value);
                         }
                     }
+                    return jObject.FromJson("");
                 }
             }
             catch (Exception ex)
