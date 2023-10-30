@@ -32,10 +32,11 @@ namespace CryptoQuest.Sagas
         {
             if (response.code != (int)HttpStatusCode.OK)
             {
+                ActionDispatcher.Dispatch(new AuthenticateFailed());
                 Debug.Log(JsonConvert.SerializeObject(response));
                 return;
             }
-            
+
             ActionDispatcher.Dispatch(new InternalAuthenticateAction(response.data));
         }
 
@@ -44,8 +45,6 @@ namespace CryptoQuest.Sagas
             Debug.Log("Auth Failed with error: " + obj.Message);
         }
 
-        private void OnCompleted()
-        {
-        }
+        private void OnCompleted() { }
     }
 }

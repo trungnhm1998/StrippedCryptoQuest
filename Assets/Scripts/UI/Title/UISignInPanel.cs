@@ -65,7 +65,7 @@ namespace CryptoQuest.UI.Title
             ActionDispatcher.Dispatch(new AuthenticateUsingEmail(_emailInputField.text, _passwordInputField.text));
         }
 
-        public void RegisterPressed()
+        public void RegisterButtonPressed_RegisterEmailAndLogin()
         {
             if (_hasResult == false) return;
             _hasResult = false;
