@@ -50,8 +50,6 @@ mergeInto(LibraryManager.library, {
 
             firebase.auth().signInWithEmailAndPassword(parsedEmail, parsedPassword).then(function (result) {
                 console.log("Success: signed in for " + JSON.stringify(result));
-
-                console.log("User: " + JSON.stringify(result.user));
                 window.unityInstance.SendMessage(parsedObjectName, parsedCallback, JSON.stringify(result.user));
             }).catch(function (error) {
                 window.unityInstance.SendMessage(parsedObjectName, parsedFallback, JSON.stringify(error, Object.getOwnPropertyNames(error)));
