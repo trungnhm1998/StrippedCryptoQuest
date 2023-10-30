@@ -6,36 +6,19 @@ using UnityEngine;
 
 public abstract class SaveObject : MonoBehaviour, ISaveObject
 {
-    [SerializeField] private VoidEventChannelSO _sceneLoadedEvent;
-
     protected ISaveSystem SaveSystem;
 
     protected bool _loadedFromSave = false;
     public bool IsLoaded() => _loadedFromSave;
 
-
     protected virtual void OnEnable()
     {
-        _sceneLoadedEvent.EventRaised += OnSceneLoaded;
+        SaveSystem = ServiceProvider.GetService<ISaveSystem>();
+        SaveSystem?.RegisterObject(this);
     }
 
     protected virtual void OnDisable()
     {
-        _sceneLoadedEvent.EventRaised -= OnSceneLoaded;
-    }
-
-    protected virtual void OnSceneLoaded()
-    {
-        SaveSystem = ServiceProvider.GetService<ISaveSystem>();
-        if (SaveSystem != null && SaveSystem.IsLoadingSaveGame())
-        {
-            _loadedFromSave = false;
-            SaveSystem.LoadObject(this);
-        }
-        else
-        {
-            _loadedFromSave = true;
-        }
     }
 
     public abstract string Key { get; }
@@ -50,7 +33,15 @@ public abstract class SaveObject : MonoBehaviour, ISaveObject
 
     public bool FromJson(string json)
     {
-        StartCoroutine(CoFromJsonWaiter(json));
+        if (SaveSystem != null && SaveSystem.IsLoadingSaveGame())
+        {
+            _loadedFromSave = false;
+            StartCoroutine(CoFromJsonWaiter(json));
+        }
+        else
+        {
+            _loadedFromSave = true;
+        }
         return true;
     }
 

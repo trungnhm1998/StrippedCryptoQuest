@@ -17,6 +17,8 @@ public interface ISaveSystem
 
     bool IsLoadingSaveGame();
 
+    bool RegisterObject(ISaveObject obj);
+
     Task<bool> SaveGameAsync();
     Task<bool> LoadSaveGameAsync();
 }
