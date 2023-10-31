@@ -6,7 +6,9 @@ namespace IndiGames.Core.UI
     public class FadeConfigSO : ScriptableObject
     {
         [SerializeField] private float _duration = .3f;
+        [SerializeField] private float _waitDuration = .7f;
         public float Duration => _duration;
+        public float WaitDuration => _waitDuration;
 
         public event UnityAction FadeIn;
         public event UnityAction FadeOut;

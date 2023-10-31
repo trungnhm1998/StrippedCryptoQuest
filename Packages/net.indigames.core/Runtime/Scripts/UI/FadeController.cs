@@ -36,13 +36,15 @@ namespace IndiGames.Core.UI
 
         private void OutLogic()
         {
-            _fadeImg.DOBlendableColor(_fadeOutColor, _config.Duration)
-                .OnComplete(() => _config.FadeOutComplete?.Invoke());
             StartCoroutine(CoFadeOut());
         }
 
+
         private IEnumerator CoFadeOut()
         {
+            yield return new WaitForSeconds(_config.WaitDuration);
+            _fadeImg.DOBlendableColor(_fadeOutColor, _config.Duration)
+                .OnComplete(() => _config.FadeOutComplete?.Invoke());
             yield return new WaitForSeconds(_config.Duration);
             _fadeImg.enabled = false;
         }
