@@ -87,15 +87,6 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "MenuStart",
-                    "type": "Button",
-                    "id": "395102bc-566b-44da-aabd-428c5f9c26c8",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "MenuReset",
                     "type": "Button",
                     "id": "3d07c32e-75b4-4e16-9df5-b16f87a41bf4",
@@ -108,6 +99,15 @@
                     "name": "MenuExecute",
                     "type": "Button",
                     "id": "d51b5f68-7872-4b26-bd14-4afb123d24e9",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "CloseMainMenu",
+                    "type": "Button",
+                    "id": "4296c108-861c-4b0a-a83b-a74975226ba6",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -579,17 +579,6 @@
                 },
                 {
                     "name": "",
-                    "id": "92979e55-0b01-4479-9a0c-e06152b7fab5",
-                    "path": "<Gamepad>/start",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Gamepad",
-                    "action": "MenuStart",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "fa5a1b97-1f43-4b9f-9f51-518ad6774f66",
                     "path": "<Gamepad>/buttonNorth",
                     "interactions": "",
@@ -629,6 +618,28 @@
                     "processors": "",
                     "groups": "MnK",
                     "action": "MenuExecute",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "3b011819-3333-47a0-b290-c613c706f408",
+                    "path": "<Keyboard>/tab",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "MnK",
+                    "action": "CloseMainMenu",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "af453f36-1125-44ef-816c-90979d1bc22d",
+                    "path": "<Gamepad>/start",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "CloseMainMenu",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
@@ -818,6 +829,17 @@
                 {
                     "name": "",
                     "id": "53b81d6c-03d4-4dff-94ff-6347b837ec11",
+                    "path": "<Keyboard>/tab",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "MnK",
+                    "action": "MainMenu",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "86327163-c3aa-49b3-b4f5-bcc10c04e338",
                     "path": "<Keyboard>/escape",
                     "interactions": "",
                     "processors": "",

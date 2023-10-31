@@ -30,6 +30,16 @@ namespace CryptoQuest.Menu
             }
         }
 
+        public override void OnPointerEnter(PointerEventData eventData)
+        {
+            Handler.HandleMouseEnter(gameObject);
+        }
+
+        public override void OnPointerExit(PointerEventData eventData)
+        {
+            Handler.HandleMouseExit(gameObject);
+        }
+
         public override void OnSelect(BaseEventData eventData)
         {
             if (!enabled) return;

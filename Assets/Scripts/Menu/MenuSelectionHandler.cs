@@ -9,7 +9,7 @@ namespace CryptoQuest.Menu
     public class MenuSelectionHandler : MonoBehaviour
     {
         [SerializeField] private InputMediatorSO _inputMediator;
-        [SerializeField] [ReadOnly] private GameObject _defaultSelection;
+        [SerializeField] private GameObject _defaultSelection;
         [SerializeField] [ReadOnly] private GameObject _currentSelection;
 
         private void OnEnable()
@@ -63,8 +63,10 @@ namespace CryptoQuest.Menu
                 EventSystem.current.SetSelectedGameObject(_currentSelection);
         }
 
-        public virtual void HandleMoveCursor()
+        private void HandleMoveCursor()
         {
+            if (_mouseSelection != null) EventSystem.current.SetSelectedGameObject(_mouseSelection);
+
             Cursor.visible = true;
         }
 
@@ -74,12 +76,10 @@ namespace CryptoQuest.Menu
         /// <param name="UIElement"></param>
         public void UpdateSelection(GameObject UIElement)
         {
-            if ((UIElement.GetComponent<MultiInputSelectableElement>() != null) ||
-                (UIElement.GetComponent<MultiInputButton>() != null))
-            {
-                // _mouseSelection = UIElement;
-                _currentSelection = UIElement;
-            }
+            if (UIElement.GetComponent<MultiInputSelectableElement>() == null &&
+                UIElement.GetComponent<MultiInputButton>() == null) return;
+            _mouseSelection = UIElement;
+            _currentSelection = UIElement;
         }
 
         // Debug
@@ -99,6 +99,22 @@ namespace CryptoQuest.Menu
             {
                 EventSystem.current.SetSelectedGameObject(_currentSelection);
             }
+        }
+
+        private GameObject _mouseSelection;
+
+        public void HandleMouseEnter(GameObject selectableUI)
+        {
+            _mouseSelection = selectableUI;
+            EventSystem.current.SetSelectedGameObject(_mouseSelection);
+        }
+
+        public void HandleMouseExit(GameObject selectableUI)
+        {
+            if (EventSystem.current.currentSelectedGameObject != selectableUI) return;
+
+            _mouseSelection = null;
+            EventSystem.current.SetSelectedGameObject(_currentSelection);
         }
     }
 }

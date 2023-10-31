@@ -24,13 +24,13 @@ namespace CryptoQuest.Input
         /// <summary>
         /// During field gameplay, this event is raised when the player presses the "Start"/"Tab"/"Escape" button.
         /// </summary>
-        public event UnityAction ShowMainMenu;
+        public event UnityAction ShowMainMenuEvent;
 
         #endregion
 
         #region Menu
 
-        public event UnityAction StartPressed;
+        public event UnityAction CloseMainMenuEvent;
         public event UnityAction<float> TabChangeEvent;
         public event UnityAction<Vector2> MenuNavigateEvent;
         public event UnityAction<InputAction.CallbackContext> MenuNavigationContextEvent;
@@ -38,7 +38,6 @@ namespace CryptoQuest.Input
         public event UnityAction MenuSubmitEvent;
         public event UnityAction MenuMouseMoveEvent;
         public event UnityAction MenuInteractEvent;
-        public event UnityAction MenuTabPressed;
         public event UnityAction MenuCancelEvent;
         public event UnityAction MenuResetEvent;
         public event UnityAction MenuExecuteEvent;
@@ -222,7 +221,7 @@ namespace CryptoQuest.Input
 
         public void OnMainMenu(InputAction.CallbackContext context)
         {
-            if (context.performed) ShowMainMenu?.Invoke();
+            if (context.performed) ShowMainMenuEvent?.Invoke();
         }
 
         #endregion
@@ -275,11 +274,6 @@ namespace CryptoQuest.Input
             if (context.performed) MenuInteractEvent?.Invoke();
         }
 
-        public void OnMenuStart(InputAction.CallbackContext context)
-        {
-            if (context.performed) StartPressed?.Invoke();
-        }
-
         public void OnMenuReset(InputAction.CallbackContext context)
         {
             if (context.performed) MenuResetEvent?.Invoke();
@@ -288,6 +282,11 @@ namespace CryptoQuest.Input
         public void OnMenuExecute(InputAction.CallbackContext context)
         {
             if (context.performed) MenuExecuteEvent?.Invoke();
+        }
+
+        public void OnCloseMainMenu(InputAction.CallbackContext context)
+        {
+            if (context.performed) CloseMainMenuEvent?.Invoke();
         }
 
         #endregion

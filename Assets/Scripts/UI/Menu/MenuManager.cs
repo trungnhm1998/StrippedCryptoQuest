@@ -1,4 +1,3 @@
-using System;
 using CryptoQuest.Input;
 using CryptoQuest.UI.Menu.MenuStates;
 using CryptoQuest.UI.Menu.Panels;
@@ -37,7 +36,7 @@ namespace CryptoQuest.UI.Menu
         /// Through Polymorphism <see cref="UIMenuPanel.GetPanelState"/>, each
         /// UIMenuPanel needs to implement and return correct state machine.
         ///
-        /// State machine will be init when the main menu first open at <see cref="ShowMainMenu"/>.
+        /// State machine will be init when the main menu first open at <see cref="ShowMainMenuEvent"/>.
         /// <seealso cref="UIStatusMenu.GetPanelState"/>
         /// </summary>
         private void SetupMenuStateMachines()
@@ -65,8 +64,8 @@ namespace CryptoQuest.UI.Menu
             }
             _onCloseMainMenuEventChannel.EventRaised += CloseMainMenu;
             _navigationBar.MenuChanged += ChangeMenu;
-            _inputMediator.ShowMainMenu += ShowMainMenu; // Start Button
-            _inputMediator.StartPressed += CloseMainMenu; // also start button but only in main menu
+            _inputMediator.ShowMainMenuEvent += ShowMainMenuEvent; // Start Button
+            _inputMediator.CloseMainMenuEvent += CloseMainMenu; // also start button but only in main menu
             _inputMediator.MenuCancelEvent += MenuCancelEventRaised; // East Button
             _inputMediator.TabChangeEvent += ChangeTab; // shoulder LB/RB
             _inputMediator.MenuSubmitEvent += Submit; // South Button
@@ -80,8 +79,8 @@ namespace CryptoQuest.UI.Menu
             _onCloseMainMenuEventChannel.EventRaised -= CloseMainMenu;
             _navigationBar.MenuChanged -= ChangeMenu;
 
-            _inputMediator.ShowMainMenu -= ShowMainMenu;
-            _inputMediator.StartPressed -= CloseMainMenu; // also start button but only in main menu
+            _inputMediator.ShowMainMenuEvent -= ShowMainMenuEvent;
+            _inputMediator.CloseMainMenuEvent -= CloseMainMenu; // also start button but only in main menu
             _inputMediator.MenuCancelEvent -= MenuCancelEventRaised;
             _inputMediator.TabChangeEvent -= ChangeTab;
             _inputMediator.MenuSubmitEvent -= Submit;
@@ -141,9 +140,9 @@ namespace CryptoQuest.UI.Menu
         #endregion
 
         /// <summary>
-        /// Will open the main menu UI when <see cref="InputMediatorSO.ShowMainMenu"/> were raised.
+        /// Will open the main menu UI when <see cref="InputMediatorSO.ShowMainMenuEvent"/> were raised.
         /// </summary>
-        private void ShowMainMenu()
+        private void ShowMainMenuEvent()
         {
             _contents.SetActive(true);
             _navigationBar.SetActive(true);
