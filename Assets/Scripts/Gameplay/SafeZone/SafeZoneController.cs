@@ -5,7 +5,7 @@ namespace CryptoQuest
 {
     public class SafeZoneController : MonoBehaviour
     {
-        [ReadOnly] public static bool IsSafeZoneActive = false;
+        public static bool IsSafeZoneActive = false;
 
         private void OnEnable()
         {
