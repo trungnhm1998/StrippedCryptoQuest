@@ -64,6 +64,7 @@ namespace CryptoQuest.Gameplay.Encounter
 
         private void DecrementStepCountBeforeTriggerBattle()
         {
+            if (SafeZoneController.IsSafeZoneActive) return;
             _stepLeftBeforeTriggerBattle--;
             if (_stepLeftBeforeTriggerBattle > 0) return;
             TriggerBattle(_currentEncounterData);
