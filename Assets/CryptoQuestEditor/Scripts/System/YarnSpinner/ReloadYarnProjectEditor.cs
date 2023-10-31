@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using CryptoQuest.System.CutsceneSystem.CustomTimelineTracks.YarnSpinnerNodeControlTrack;
 using CryptoQuest.System.Dialogue.YarnManager;
+using JetBrains.Annotations;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEditor.UIElements;
@@ -13,23 +14,46 @@ using UnityEngine.Playables;
 using UnityEngine.SceneManagement;
 using UnityEngine.Timeline;
 using UnityEngine.UIElements;
+using Yarn.Unity.Editor;
 
 namespace CryptoQuestEditor.System.YarnSpinner
 {
     public class ReloadYarnProjectEditor : EditorWindow
     {
         private const string ASSETS_SCENES_MAPS = "Assets/Scenes/Maps";
+        private const string ASSETS_DIALOGUE_PATH = "Assets/Dialogues";
+        private const string DEFAULT_NAME = "yarnConfigClone";
+        private const string YARN_IMPORTER_NAME = "Yarn Importer";
 
         [SerializeField] private VisualTreeAsset _visualTreeAsset;
 
+        /// <summary>
+        /// Single Option
+        /// </summary>
         private ObjectField _yarnProjectConfig;
+
         private ObjectField _cutscenePrefab;
         private Button _replaceButton;
         private Button _clearButton;
 
+        /// <summary>
+        /// Multiple Option
+        /// </summary>
+        private ObjectField _yarnConfigs;
+
+        private IntegerField _indexYarnConfig;
+        private ScrollView _scrollView;
+
+        private TextField _pathName;
+        private Button _replaceAllButton;
+        private Button _initDialogueButton;
+
+        private TabbedMenuController _tabbedMenuController;
+
         private StringBuilder _dependenciesString;
         private string _targetPath;
         private GameObject _currentGo;
+        private readonly List<ObjectField> _objectFields = new();
 
         [MenuItem("Crypto Quest/Reload Yarn Project")]
         public static ReloadYarnProjectEditor ShowWindow()
@@ -49,20 +73,100 @@ namespace CryptoQuestEditor.System.YarnSpinner
         private void InitializeWindow()
         {
             rootVisualElement.Add(_visualTreeAsset.CloneTree());
+            _tabbedMenuController = new TabbedMenuController(rootVisualElement);
+            _tabbedMenuController.RegisterTabCallbacks();
 
+            // Single Option
             _yarnProjectConfig = rootVisualElement.Q<ObjectField>("yarnProjectConfig");
             _cutscenePrefab = rootVisualElement.Q<ObjectField>("cutsceneAssets");
             _replaceButton = rootVisualElement.Q<Button>("replaceButton");
             _clearButton = rootVisualElement.Q<Button>("clearButton");
 
+            // Multiple Option
+            _yarnConfigs = rootVisualElement.Q<ObjectField>("yarnConfig");
+            _indexYarnConfig = rootVisualElement.Q<IntegerField>("indexConfigYarn");
+            _scrollView = rootVisualElement.Q<ScrollView>("yarnConfigScrollView");
+            _pathName = rootVisualElement.Q<TextField>("pathName");
+            _initDialogueButton = rootVisualElement.Q<Button>("initDialogueButton");
+            _replaceAllButton = rootVisualElement.Q<Button>("replaceAllButton");
+
+            _indexYarnConfig.RegisterValueChangedCallback(InitializeConfigYarnIndex);
+            _objectFields.Add(_yarnConfigs);
+
+            // Single Option
             _replaceButton.clicked += Replace;
             _clearButton.clicked += Clear;
+
+            // Multiple Option
+            _initDialogueButton.clicked += InitialDialogueData;
+            _replaceAllButton.clicked += ReplaceAll;
+        }
+
+        private void InitializeConfigYarnIndex(ChangeEvent<int> evt)
+        {
+            _scrollView.Clear();
+            _objectFields.Clear();
+
+            _objectFields.Add(_yarnConfigs);
+
+            int index = _indexYarnConfig.value - 1;
+
+            if (index < 0) return;
+
+            for (int i = 0; i < index; i++)
+            {
+                ObjectField newObjectField = new ObjectField(YARN_IMPORTER_NAME);
+                string name = $"{DEFAULT_NAME}_{i}";
+
+                newObjectField.objectType = typeof(TextAsset);
+                newObjectField.name = name;
+
+                _objectFields.Add(newObjectField);
+            }
+
+            _objectFields.ForEach(field => _scrollView.Add(field));
+        }
+
+        private void InitialDialogueData()
+        {
+            string pathName = _pathName.value;
+            string folderPath = $"{ASSETS_DIALOGUE_PATH}/{pathName}";
+
+
+            foreach (var objectField in _objectFields)
+            {
+                TextAsset obj = objectField.value as TextAsset;
+
+
+                if (!AssetDatabase.IsValidFolder(folderPath))
+                {
+                    AssetDatabase.CreateFolder(ASSETS_DIALOGUE_PATH, pathName);
+                }
+
+                string assetPath = AssetDatabase.GetAssetPath(obj);
+                AssetDatabase.CopyAsset(assetPath, folderPath);
+                AssetDatabase.MoveAsset(assetPath, $"{folderPath}/{obj.name}.yarn");
+            }
+
+            YarnProjectConfigSO yarnProjectConfig = CreateInstance<YarnProjectConfigSO>();
+            yarnProjectConfig.name = _pathName.value;
+
+            AssetDatabase.CreateAsset(yarnProjectConfig, $"{folderPath}/{yarnProjectConfig.name}.asset");
+            AssetDatabase.SaveAssets();
+            AssetDatabase.Refresh();
+
+            YarnEditorUtility.CreateYarnProject();
         }
 
         private void Clear()
         {
             _cutscenePrefab.value = null;
             _yarnProjectConfig.value = null;
+        }
+
+        private void ReplaceAll()
+        {
+            Debug.Log("ReplaceAll");
         }
 
         private void Replace()
