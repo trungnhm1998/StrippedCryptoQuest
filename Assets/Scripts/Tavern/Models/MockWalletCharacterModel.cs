@@ -8,19 +8,19 @@ using Random = System.Random;
 
 namespace CryptoQuest.Tavern.Models
 {
-    public class MockGameCharacterModel : MonoBehaviour, IGameCharacterModel
+    public class MockWalletCharacterModel : MonoBehaviour, IWalletCharacterModel
     {
         [SerializeField] private int _dataLength;
         [SerializeField] private Sprite _classIcon;
         [SerializeField] private LocalizedString[] _localizedNames = new LocalizedString[4];
 
-        private List<IGameCharacterData> _gameData;
-        public List<IGameCharacterData> Data => _gameData;
+        private List<IWalletCharacterData> _walletData;
+        public List<IWalletCharacterData> Data => _walletData;
 
         public IEnumerator CoGetData()
         {
             yield return new WaitForSeconds(1f);
-            _gameData = new List<IGameCharacterData>();
+            _walletData = new List<IWalletCharacterData>();
             InitMockData();
         }
 
@@ -32,9 +32,9 @@ namespace CryptoQuest.Tavern.Models
                 LocalizedString name = _localizedNames[rand.Next(_localizedNames.Length - 1)];
                 int level = rand.Next(1, 99);
 
-                var obj = new GameCharacterData(_classIcon, name, level);
+                var obj = new WalletCharacterData(_classIcon, name, level);
 
-                _gameData.Add(obj);
+                _walletData.Add(obj);
             }
         }
     }

@@ -20,8 +20,9 @@ namespace CryptoQuest.Tavern.Data
             _isInParty = true;
         }
 
-        public GameCharacterData(LocalizedString localizedName, int level)
+        public GameCharacterData(Sprite classIcon, LocalizedString localizedName, int level)
         {
+            _classIcon = classIcon;
             _localizedName = localizedName;
             _level = level;
             _isInParty = false;
@@ -29,7 +30,7 @@ namespace CryptoQuest.Tavern.Data
 
         public GameCharacterData(Sprite classIcon, string name, int level)
         {
-            _classIcon = _classIcon;
+            _classIcon = classIcon;
             _name = name;
             _level = level;
             _isInParty = false;

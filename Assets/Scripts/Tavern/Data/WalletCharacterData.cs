@@ -11,8 +11,9 @@ namespace CryptoQuest.Tavern.Data
         private string _name;
         private int _level;
 
-        public WalletCharacterData(LocalizedString localizedName, int level)
+        public WalletCharacterData(Sprite classIcon, LocalizedString localizedName, int level)
         {
+            _classIcon = classIcon;
             _localizedName = localizedName;
             _level = level;
         }

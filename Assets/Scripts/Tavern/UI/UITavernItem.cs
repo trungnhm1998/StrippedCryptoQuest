@@ -3,6 +3,7 @@ using CryptoQuest.UI.Menu.Panels.Status;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Localization.Components;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace CryptoQuest.Tavern.UI
@@ -14,7 +15,7 @@ namespace CryptoQuest.Tavern.UI
         [SerializeField] private TMP_Text _name;
         [SerializeField] private TMP_Text _level;
         [SerializeField] private GameObject _pendingTag;
-        [SerializeField] private GameObject _equippedTag;
+        [SerializeField] private GameObject _inPartyTag;
 
         [SerializeField] private RectTransform _tooltipPosition;
 
@@ -23,7 +24,7 @@ namespace CryptoQuest.Tavern.UI
         private ITooltip _tooltip;
 
         private bool _isSelected = false;
-        private bool _isEquipped = false;
+        private bool _isInParty = false;
 
         private void Awake()
         {
@@ -37,13 +38,23 @@ namespace CryptoQuest.Tavern.UI
         public void SetItemInfo(IGameCharacterData itemInfo)
         {
             _classIcon.sprite = itemInfo.GetClassIcon();
+            _localizedName.StringReference = itemInfo.GetLocalizedName();
+            _name.text = itemInfo.GetName();
+            _level.text = $"Lv{itemInfo.GetLevel()}";
+            _isInParty = itemInfo.IsInParty();
+        }
+
+        public void SetItemInfo(IWalletCharacterData itemInfo)
+        {
+            _classIcon.sprite = itemInfo.GetClassIcon();
+            _localizedName.StringReference = itemInfo.GetLocalizedName();
             _name.text = itemInfo.GetName();
             _level.text = $"Lv{itemInfo.GetLevel()}";
         }
-        
+
         public void OnSelectToTransfer()
         {
-            if (_isEquipped) return;
+            if (_isInParty) return;
             // SelectItemEvent?.Invoke(this);
 
             _isSelected = !_isSelected;
