@@ -50,7 +50,7 @@ namespace CryptoQuest.Battle
             var loots = new List<LootInfo>();
             foreach (var enemy in _context.Enemies.Where(enemy => enemy.Spec.IsValid()))
             {
-                loots.AddRange(enemy.GetLoots());
+                loots.AddRange(enemy.GetDroppedLoots());
             }
 
             loots = RewardManager.CloneAndMergeLoots(loots);

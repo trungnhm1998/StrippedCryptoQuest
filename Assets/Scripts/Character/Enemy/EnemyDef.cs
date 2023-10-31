@@ -1,12 +1,16 @@
 ﻿using System;
+using System.Collections.Generic;
 using CryptoQuest.AbilitySystem.Abilities;
 using CryptoQuest.AbilitySystem.Attributes;
 using CryptoQuest.Gameplay.Loot;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.Localization;
+
+#if UNITY_EDITOR
+    using UnityEditor;
+#endif
 
 namespace CryptoQuest.Character.Enemy
 {
@@ -45,6 +49,10 @@ namespace CryptoQuest.Character.Enemy
         [SerializeField] private Drop[] _drops = Array.Empty<Drop>();
         public Drop[] Drops => _drops;
 
+        [SerializeReference] private StealableInfo[] _stealableInfos
+            = Array.Empty<StealableInfo>();
+        public StealableInfo[] StealableInfos => _stealableInfos;
+
         [SerializeField] private float _normalAttackProbability = 1f;
         public float NormalAttackProbability => _normalAttackProbability;
         [SerializeField] private Skills[] _skills = Array.Empty<Skills>();
@@ -63,7 +71,35 @@ namespace CryptoQuest.Character.Enemy
             return character;
         }
 
+        /// <summary>
+        /// Get dropped loots with drop chance based on their <see cref="Drop"/> configs
+        /// </summary>
+        /// <returns>Cloned loots</returns>
+        public List<LootInfo> GetDroppedLoots()
+        {
+            var loots = new List<LootInfo>();
+            foreach (var drop in Drops)
+            {
+                var randomChance = UnityEngine.Random.Range(0f, 1f);
+                if (randomChance > drop.Chance) continue;
+                loots.Add(drop.CreateLoot());
+            }
+            return loots;
+        }
+        
 #if UNITY_EDITOR
+        private void OnValidate()
+        {
+            _stealableInfos = Array.Empty<StealableInfo>();
+            foreach (var drop in Drops)
+            {
+                if (drop.LootItem is not UsableLootInfo usableLoot) continue;
+                ArrayUtility.Add(ref _stealableInfos,
+                    new ConsumableStealable(usableLoot, drop.Chance));
+            }
+            EditorUtility.SetDirty(this);
+        }
+
         public void Editor_AddDrop(LootInfo loot)
         {
             ArrayUtility.Add(ref _drops, new Drop()

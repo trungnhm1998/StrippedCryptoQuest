@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using CryptoQuest.AbilitySystem;
 using CryptoQuest.AbilitySystem.Attributes;
-using CryptoQuest.Battle.Character;
 using CryptoQuest.Battle.Events;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
 using IndiGames.GameplayAbilitySystem.AttributeSystem;

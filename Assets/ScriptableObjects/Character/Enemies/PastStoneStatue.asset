@@ -65,6 +65,10 @@ MonoBehaviour:
   - Chance: 0.05
     LootItem:
       rid: 3959803444188677545
+  _stealableInfos:
+  - rid: 5791750092521472113
+  _normalAttackProbability: 1
+  _skills: []
   references:
     version: 2
     RefIds:
@@ -72,8 +76,8 @@ MonoBehaviour:
       type: {class: CurrencyLootInfo, ns: CryptoQuest.Gameplay.Loot, asm: indi-games.crypto-quest}
       data:
         _item:
-          _id: 70a9d9fe-7fd2-4f21-8702-d16ff2218022
-          <Data>k__BackingField: {fileID: 11400000, guid: 16b3f6e09fc22d240be1b324116eeb79, type: 2}
+          _id: 70
+          Data: {fileID: 11400000, guid: 16b3f6e09fc22d240be1b324116eeb79, type: 2}
           <Amount>k__BackingField: 120
     - rid: 3959803444188677544
       type: {class: ExpLoot, ns: CryptoQuest.Gameplay.Loot, asm: indi-games.crypto-quest}
@@ -83,6 +87,15 @@ MonoBehaviour:
       type: {class: UsableLootInfo, ns: CryptoQuest.Gameplay.Loot, asm: indi-games.crypto-quest}
       data:
         _item:
-          _id: 89ab9375-1562-416f-9c91-9866b6609d97
-          <Data>k__BackingField: {fileID: 11400000, guid: 2e8f98d127e23414ba3d272d6a4e48c5, type: 2}
-          <Quantity>k__BackingField: 1
+          _id: 89
+          Data: {fileID: 11400000, guid: 2e8f98d127e23414ba3d272d6a4e48c5, type: 2}
+          _quantity: 1
+    - rid: 5791750092521472113
+      type: {class: ConsumableStealable, ns: CryptoQuest.Gameplay.Loot, asm: indi-games.crypto-quest}
+      data:
+        _chanceToSteal: 0.05
+        _loot:
+          _item:
+            _id: 89
+            Data: {fileID: 11400000, guid: 2e8f98d127e23414ba3d272d6a4e48c5, type: 2}
+            _quantity: 1

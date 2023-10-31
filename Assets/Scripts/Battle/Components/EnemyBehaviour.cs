@@ -115,7 +115,7 @@ namespace CryptoQuest.Battle.Components
 
         public void ProvideStats(AttributeWithValue[] attributeWithValues) { }
 
-        public IEnumerable<LootInfo> GetLoots() => _spec.GetLoots();
+        public IEnumerable<LootInfo> GetDroppedLoots() => _enemyDef.GetDroppedLoots();
 
         public override void OnTurnStarted()
         {

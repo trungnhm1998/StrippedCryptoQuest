@@ -20,17 +20,5 @@ namespace CryptoQuest.Character.Enemy
         {
             Data = null; // remove ref count from the SO which we dynamically loaded
         }
-
-        /// <summary>
-        /// Get all lootable items from enemy based on their <see cref="Drop"/> configs
-        /// </summary>
-        /// <returns>Cloned loot</returns>
-        public List<LootInfo> GetLoots()
-        {
-            var drops = Data.Drops;
-            var loots = new List<LootInfo>();
-            foreach (var drop in drops) loots.Add(drop.CreateLoot());
-            return loots;
-        }
     }
 }
