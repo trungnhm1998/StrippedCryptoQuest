@@ -15,6 +15,7 @@ namespace CryptoQuest.DimensionalBox.UI
         public StateBase Landing { get; private set; }
         public StateBase TransferringMetaDState { get; private set; }
         public StateBase TransferringEquipmentsState { get; private set; }
+        public StateBase ConfirmTransfer { get; set; }
 
         private StateBase _currentState;
 
@@ -23,6 +24,7 @@ namespace CryptoQuest.DimensionalBox.UI
             Landing = new LandingPage(_landingPage);
             TransferringEquipmentsState = new TransferringEquipments(_equipmentsTransferPanel);
             TransferringMetaDState = new TransferringMetaD(_metaDTransferPanel);
+            ConfirmTransfer = new ConfirmTransfer();
         }
 
         private void OnEnable()

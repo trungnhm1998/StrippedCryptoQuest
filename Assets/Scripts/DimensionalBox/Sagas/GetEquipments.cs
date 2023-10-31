@@ -38,6 +38,7 @@ namespace CryptoQuest.DimensionalBox.Sagas
             LoadingController.OnEnableLoadingPanel?.Invoke();
             var restClient = ServiceProvider.GetService<IRestClient>();
             restClient
+                .WithParams(new Dictionary<string, string>() { { "source", $"{((int)ctx.Status).ToString()}" } })
                 .Get<EquipmentsResponse>(API.EQUIPMENTS)
                 // .Get<EquipmentsResponse>(API.EQUIPMENTS + "?source=0") // Listen to different action to get smaller data set for each type
                 .Subscribe(OnGetEquipments, OnError);
@@ -54,12 +55,13 @@ namespace CryptoQuest.DimensionalBox.Sagas
             if (response.code != (int)HttpStatusCode.OK) return;
             UpdateInGameCache(response.data.equipments);
             UpdateInboxCache(response.data.equipments);
-            
+
             LoadingController.OnDisableLoadingPanel?.Invoke();
         }
 
         private void UpdateInGameCache(Equipments[] equipments)
         {
+            if (equipments.Length == 0) return;
             _inGameEquipmentsCache.Clear();
             foreach (var equipment in equipments)
             {
@@ -75,6 +77,7 @@ namespace CryptoQuest.DimensionalBox.Sagas
 
         private void UpdateInboxCache(Equipments[] equipments)
         {
+            if (equipments.Length == 0) return;
             _inBoxEquipmentsCache.Clear();
             foreach (var equipment in equipments)
             {
