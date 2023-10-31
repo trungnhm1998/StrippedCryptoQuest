@@ -24,7 +24,9 @@ namespace CryptoQuest.Gameplay.Encounter
         [SerializeField] private EncounterDatabase _database;
         [SerializeField] private GameStateSO _gameState;
 
-        [Header("Debug")] [SerializeField] private List<EncounterInfo> _currentEncounterInfos = new();
+        [Header("Encounter Priority Infos")] [SerializeField]
+        private List<EncounterInfo> _currentEncounterInfos = new();
+
         [SerializeField] private EncounterData _currentEncounterData;
         [SerializeField] private int _currentPriority = -1;
         [SerializeField] private float _stepLeftBeforeTriggerBattle;
@@ -58,8 +60,6 @@ namespace CryptoQuest.Gameplay.Encounter
         private void RemoveStepHandler()
         {
             _currentEncounterData = null; // either null or new EncounterData()
-            _gameplayBus.Hero.Step -= DecrementStepCountBeforeTriggerBattle;
-            _stepLeftBeforeTriggerBattle = 0;
             HandleExitZone();
         }
 
@@ -116,6 +116,7 @@ namespace CryptoQuest.Gameplay.Encounter
         private void GenerateRandomStepTilNextTrigger()
             => _stepLeftBeforeTriggerBattle = Random.Range(_minEncounterSteps, _maxEncounterSteps);
 
+
         private void TriggerBattle(string encounterId) => StartCoroutine(GetEncounter(encounterId, TriggerBattle));
 
         private IEnumerator GetEncounter(string encounterId, Action<EncounterData> callback)
@@ -150,13 +151,14 @@ namespace CryptoQuest.Gameplay.Encounter
             if (_currentEncounterInfos.Count == 0)
             {
                 _currentPriority = -1;
+                _gameplayBus.Hero.Step -= DecrementStepCountBeforeTriggerBattle;
+                _stepLeftBeforeTriggerBattle = 0;
                 return;
             }
 
             _currentPriority = _currentEncounterInfos.Max(x => x.Priority);
             EncounterInfo highestPriorityEncounter = GetHighestPriorityEncounter();
-            var encounterData = _database.GetDataById(highestPriorityEncounter.EncounterId);
-            SetupStepsCounter(encounterData);
+            StartCoroutine(GetEncounter(highestPriorityEncounter.EncounterId, SetupStepsCounter));
         }
 
         #endregion
