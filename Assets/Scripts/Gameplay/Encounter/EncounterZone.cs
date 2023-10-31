@@ -1,5 +1,6 @@
 using System;
 using IndiGames.Core.EditorTools.Attributes.ReadOnlyAttribute;
+using IndiGames.Core.Events.ScriptableObjects;
 using UnityEngine;
 
 namespace CryptoQuest.Gameplay.Encounter
@@ -24,8 +25,22 @@ namespace CryptoQuest.Gameplay.Encounter
         /// </summary>
         private void Awake()
         {
-            LoadingEncounterArea?.Invoke(_encounterId);
             _encounterInfo = new EncounterInfo(_encounterId, _priority);
+        }
+
+        private void LoadEncounterArea()
+        {
+            LoadingEncounterArea?.Invoke(_encounterId);
+        }
+
+        private void OnEnable()
+        {
+            SceneLoaderDispatch.SceneLoaded += LoadEncounterArea;
+        }
+
+        private void OnDisable()
+        {
+            SceneLoaderDispatch.SceneLoaded -= LoadEncounterArea;
         }
 
         private void OnTriggerEnter2D(Collider2D other)
