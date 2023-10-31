@@ -24,8 +24,19 @@ namespace CryptoQuest.Quest.Components
         public void SetCollideActionType(ECollideActionType collideActionType) =>
             _collideActionType = collideActionType;
 
-        private void OnTriggerEnter2D(Collider2D other) => Execute(other, ECollideActionType.OnEnter);
-        private void OnTriggerExit2D(Collider2D other) => Execute(other, ECollideActionType.OnExit);
+        private void OnTriggerEnter2D(Collider2D other)
+        {
+            if (!other.gameObject.CompareTag("Player")) return;
+            SafeZoneController.OnSafeZoneEntered?.Invoke();
+            Execute(other, ECollideActionType.OnEnter);
+        }
+
+        private void OnTriggerExit2D(Collider2D other)
+        {
+            if (!other.gameObject.CompareTag("Player")) return;
+            SafeZoneController.OnSafeZoneExited?.Invoke();
+            Execute(other, ECollideActionType.OnExit);
+        }
 
         private void Execute(Collider2D other, ECollideActionType collideType)
         {
