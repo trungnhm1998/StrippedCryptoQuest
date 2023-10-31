@@ -31,6 +31,7 @@ namespace CryptoQuest.ChangeClass
         public void DisableInput()
         {
             _inputMediatorSO.InputActions.ChangeClass.Disable();
+            _inputMediatorSO.EnableMapGameplayInput();
         }
         #region Events
         public void OnNavigate(InputAction.CallbackContext context)
