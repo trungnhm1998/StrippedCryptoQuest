@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using CryptoQuest.DimensionalBox.Events;
 using CryptoQuest.DimensionalBox.Objects;
+using CryptoQuest.Events;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -14,10 +15,16 @@ namespace CryptoQuest.DimensionalBox.UI
         public event Action<UIEquipmentList> Initialized;
 
         [SerializeField] private bool _wrapAround = true;
-        [SerializeField] private GetEquipmentsEvent _getEquipmentsEvent;
         [SerializeField] private ScrollRect _scrollView;
         [SerializeField] private EquipmentUIPool _pool;
 
+        [Header("Listen to")]
+        [SerializeField] private GetEquipmentsEvent _getEquipmentsEvent;
+
+        [Header("Raise on")]
+        [SerializeField] private StringEventChannelSO _transferEquipmentEvent;
+
+        private List<UIEquipment> _equipmentsToTransfer = new();
 
         private void OnEnable()
         {
@@ -29,11 +36,14 @@ namespace CryptoQuest.DimensionalBox.UI
             _getEquipmentsEvent.EventRaised -= EventRaised;
         }
 
+        private readonly List<int> _responseIds = new();
+
         private void EventRaised(List<NftEquipment> equipments)
         {
             ClearOldEquipments();
             foreach (var equipment in equipments)
             {
+                _responseIds.Add(equipment.Id);
                 var uiEquipment = _pool.Get();
                 uiEquipment.Pressed += OnTransferring;
                 uiEquipment.transform.SetParent(_scrollView.content);
@@ -45,6 +55,12 @@ namespace CryptoQuest.DimensionalBox.UI
 
         public void Transfer(UIEquipment uiEquipment)
         {
+            if (_responseIds.Contains(uiEquipment.Id) == false)
+            {
+                _equipmentsToTransfer.Add(uiEquipment);
+                uiEquipment.EnablePendingTag(true);
+            }
+
             uiEquipment.Pressed += OnTransferring;
             uiEquipment.transform.SetParent(_scrollView.content);
             uiEquipment.transform.SetAsLastSibling();
@@ -63,6 +79,7 @@ namespace CryptoQuest.DimensionalBox.UI
 
         private void OnTransferring(UIEquipment ui)
         {
+            if (_equipmentsToTransfer.Remove(ui)) ui.EnablePendingTag(false);
             CurrentSelectedIndex -= 1;
             ui.Pressed -= OnTransferring;
             Transferring?.Invoke(ui);
@@ -84,8 +101,13 @@ namespace CryptoQuest.DimensionalBox.UI
             set
             {
                 _currentSelectedIndex = value;
-
                 var childCount = _scrollView.content.transform.childCount;
+                if (childCount == 0)
+                {
+                    _currentSelectedIndex = 0;
+                    return;
+                }
+
                 if (_currentSelectedIndex >= 0 &&
                     _currentSelectedIndex < childCount) return;
                 _currentSelectedIndex = _wrapAround

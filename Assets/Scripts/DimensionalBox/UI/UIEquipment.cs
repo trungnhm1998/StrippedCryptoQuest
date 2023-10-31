@@ -15,9 +15,12 @@ namespace CryptoQuest.DimensionalBox.UI
         [SerializeField] private LocalizeStringEvent _name;
         [SerializeField] private GameObject _pendingTag;
         [SerializeField] private GameObject _equippedTag;
+        
+        public int Id { get; private set; }
 
         public void Initialize(NftEquipment equipment)
         {
+            Id = equipment.Id;
             _nameText.text = "Item " + equipment.Id;
         }
 
@@ -25,5 +28,7 @@ namespace CryptoQuest.DimensionalBox.UI
         {
             Pressed?.Invoke(this);
         }
+
+        public void EnablePendingTag(bool enabling) => _pendingTag.SetActive(enabling);
     }
 }

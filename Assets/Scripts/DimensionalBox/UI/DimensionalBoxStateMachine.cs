@@ -30,7 +30,10 @@ namespace CryptoQuest.DimensionalBox.UI
             ChangeState(Landing);
         }
 
-        private void OnDisable() { }
+        private void OnDisable()
+        {
+            _currentState?.Exit();
+        }
 
         public void ChangeState(StateBase newState)
         {
