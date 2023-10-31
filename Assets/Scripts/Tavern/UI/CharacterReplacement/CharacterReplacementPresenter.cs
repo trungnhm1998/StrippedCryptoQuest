@@ -14,6 +14,7 @@ namespace CryptoQuest.Tavern.UI.CharacterReplacement
 
         [SerializeField] private UICharacterReplacement _uiCharacterReplacement;
         [SerializeField] private UICharacterListGame _uiCharacterListGame;
+        [SerializeField] private UICharacterListWallet _uiCharacterListWallet;
 
         [Header("Dialog Messages")]
         [SerializeField] private LocalizedString _confirmMessage;
@@ -28,7 +29,8 @@ namespace CryptoQuest.Tavern.UI.CharacterReplacement
         {
             _inputManager.ExecuteEvent += SendItemsRequested;
 
-            StartCoroutine(GetGameEquipments());
+            StartCoroutine(GetIngameCharacters());
+            StartCoroutine(GetWalletCharacters());
         }
 
         private void OnDisable()
@@ -36,7 +38,7 @@ namespace CryptoQuest.Tavern.UI.CharacterReplacement
             _inputManager.ExecuteEvent -= SendItemsRequested;
         }
 
-        private IEnumerator GetGameEquipments()
+        private IEnumerator GetIngameCharacters()
         {
             _gameModel = GetComponentInChildren<IGameCharacterModel>();
             yield return _gameModel.CoGetData();
@@ -45,6 +47,17 @@ namespace CryptoQuest.Tavern.UI.CharacterReplacement
 
             _gameData = _gameModel.Data;
             _uiCharacterListGame.SetGameData(_gameData, true);
+        }
+        
+        private IEnumerator GetWalletCharacters()
+        {
+            _walletModel = GetComponentInChildren<IWalletCharacterModel>();
+            yield return _walletModel.CoGetData();
+
+            if (_walletModel.Data.Count <= 0) yield break;
+
+            _walletData = _walletModel.Data;
+            _uiCharacterListWallet.SetWalletData(_walletData, _walletData.Count <= 0 ? true : false);
         }
 
         private void SendItemsRequested()
