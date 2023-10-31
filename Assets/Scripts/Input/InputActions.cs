@@ -3207,6 +3207,33 @@ namespace CryptoQuest.Input
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Reset"",
+                    ""type"": ""Button"",
+                    ""id"": ""a67a3f8e-15f3-4b13-829c-6e74f852d358"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Execute"",
+                    ""type"": ""Button"",
+                    ""id"": ""da23eeb0-1fa4-43de-9c15-607a5915d1af"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Interact"",
+                    ""type"": ""Button"",
+                    ""id"": ""d3e9e2f2-c643-4584-8cfd-5cf7a95fee28"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -3451,6 +3478,72 @@ namespace CryptoQuest.Input
                     ""action"": ""Navigate"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""429f5ef2-7da6-4885-b117-71c9fd6e6c1f"",
+                    ""path"": ""<Gamepad>/buttonNorth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Reset"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a0d7e01a-bd91-494f-b43b-5fc253661336"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""MnK"",
+                    ""action"": ""Reset"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8c8ba664-f2d8-4c6f-adac-81bee69a9425"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Execute"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""cccfdb17-208e-4f86-ae9d-a9397dd27d81"",
+                    ""path"": ""<Keyboard>/c"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""MnK"",
+                    ""action"": ""Execute"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0e1be34f-adc1-42ea-b75a-e85f1760ca34"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Interact"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""30654912-f931-43d3-a2a2-66b1d91318fb"",
+                    ""path"": ""<Keyboard>/f"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""MnK"",
+                    ""action"": ""Interact"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -3558,6 +3651,9 @@ namespace CryptoQuest.Input
             m_Tavern_Cancel = m_Tavern.FindAction("Cancel", throwIfNotFound: true);
             m_Tavern_Navigate = m_Tavern.FindAction("Navigate", throwIfNotFound: true);
             m_Tavern_Submit = m_Tavern.FindAction("Submit", throwIfNotFound: true);
+            m_Tavern_Reset = m_Tavern.FindAction("Reset", throwIfNotFound: true);
+            m_Tavern_Execute = m_Tavern.FindAction("Execute", throwIfNotFound: true);
+            m_Tavern_Interact = m_Tavern.FindAction("Interact", throwIfNotFound: true);
         }
 
         public void Dispose()
@@ -4386,6 +4482,9 @@ namespace CryptoQuest.Input
         private readonly InputAction m_Tavern_Cancel;
         private readonly InputAction m_Tavern_Navigate;
         private readonly InputAction m_Tavern_Submit;
+        private readonly InputAction m_Tavern_Reset;
+        private readonly InputAction m_Tavern_Execute;
+        private readonly InputAction m_Tavern_Interact;
         public struct TavernActions
         {
             private @InputActions m_Wrapper;
@@ -4393,6 +4492,9 @@ namespace CryptoQuest.Input
             public InputAction @Cancel => m_Wrapper.m_Tavern_Cancel;
             public InputAction @Navigate => m_Wrapper.m_Tavern_Navigate;
             public InputAction @Submit => m_Wrapper.m_Tavern_Submit;
+            public InputAction @Reset => m_Wrapper.m_Tavern_Reset;
+            public InputAction @Execute => m_Wrapper.m_Tavern_Execute;
+            public InputAction @Interact => m_Wrapper.m_Tavern_Interact;
             public InputActionMap Get() { return m_Wrapper.m_Tavern; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -4411,6 +4513,15 @@ namespace CryptoQuest.Input
                 @Submit.started += instance.OnSubmit;
                 @Submit.performed += instance.OnSubmit;
                 @Submit.canceled += instance.OnSubmit;
+                @Reset.started += instance.OnReset;
+                @Reset.performed += instance.OnReset;
+                @Reset.canceled += instance.OnReset;
+                @Execute.started += instance.OnExecute;
+                @Execute.performed += instance.OnExecute;
+                @Execute.canceled += instance.OnExecute;
+                @Interact.started += instance.OnInteract;
+                @Interact.performed += instance.OnInteract;
+                @Interact.canceled += instance.OnInteract;
             }
 
             private void UnregisterCallbacks(ITavernActions instance)
@@ -4424,6 +4535,15 @@ namespace CryptoQuest.Input
                 @Submit.started -= instance.OnSubmit;
                 @Submit.performed -= instance.OnSubmit;
                 @Submit.canceled -= instance.OnSubmit;
+                @Reset.started -= instance.OnReset;
+                @Reset.performed -= instance.OnReset;
+                @Reset.canceled -= instance.OnReset;
+                @Execute.started -= instance.OnExecute;
+                @Execute.performed -= instance.OnExecute;
+                @Execute.canceled -= instance.OnExecute;
+                @Interact.started -= instance.OnInteract;
+                @Interact.performed -= instance.OnInteract;
+                @Interact.canceled -= instance.OnInteract;
             }
 
             public void RemoveCallbacks(ITavernActions instance)
@@ -4542,6 +4662,9 @@ namespace CryptoQuest.Input
             void OnCancel(InputAction.CallbackContext context);
             void OnNavigate(InputAction.CallbackContext context);
             void OnSubmit(InputAction.CallbackContext context);
+            void OnReset(InputAction.CallbackContext context);
+            void OnExecute(InputAction.CallbackContext context);
+            void OnInteract(InputAction.CallbackContext context);
         }
     }
 }

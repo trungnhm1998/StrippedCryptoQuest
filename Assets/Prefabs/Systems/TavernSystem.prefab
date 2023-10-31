@@ -5001,8 +5001,8 @@ GameObject:
   m_Component:
   - component: {fileID: 5100953540873881208}
   - component: {fileID: 7613556091984144433}
-  - component: {fileID: 4305042587400454625}
-  - component: {fileID: 4510358780975929191}
+  - component: {fileID: 8994819262526788795}
+  - component: {fileID: 3837038718605405295}
   - component: {fileID: 2529984034296115284}
   m_Layer: 5
   m_Name: Game
@@ -5041,7 +5041,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5558988600215724395}
   m_CullTransparentMesh: 1
---- !u!114 &4305042587400454625
+--- !u!114 &8994819262526788795
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -5050,13 +5050,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 5558988600215724395}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5068fb8811120049b4ded497ea2ca6c, type: 3}
+  m_Script: {fileID: 11500000, guid: adceb8ea21ac4d7880bae5038608d7ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _scrollRectContent: {fileID: 3653239112948855380}
-  _singleItemPrefab: {fileID: 5359383526300462474, guid: e35d3d64c6413ae41a195283d27252bd, type: 3}
+  _singleItemPrefab: {fileID: 5359383526300462474, guid: 889585d42c172ca4697f636850dba26d, type: 3}
   _tooltipSafeArea: {fileID: 1990777814492549238}
---- !u!114 &4510358780975929191
+--- !u!114 &3837038718605405295
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -5065,9 +5065,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 5558988600215724395}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 96ee8bafcb84c9e4c811f3765d3da2cb, type: 3}
+  m_Script: {fileID: 11500000, guid: 02e28a5fad4848019e4b51b39f33550e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _dataLength: 5
+  _classIcon: {fileID: 21300000, guid: ce5cd80f10e324daa97de711617d905f, type: 3}
 --- !u!114 &2529984034296115284
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6026,6 +6028,7 @@ GameObject:
   m_Component:
   - component: {fileID: 196102246441894467}
   - component: {fileID: 9103902860443043447}
+  - component: {fileID: 5830199703012383388}
   m_Layer: 5
   m_Name: UICharacterReplacement
   m_TagString: Untagged
@@ -6065,6 +6068,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fbea0113f8f249b3a9e9353c7cc6843b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _contents: {fileID: 6424980433543688900}
+  _gameScrollContent: {fileID: 3653239112948855380}
+  _walletScrollContent: {fileID: 4745292694727459293}
+--- !u!114 &5830199703012383388
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6885495719857776551}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8cad3d2c2a2b418a91cd196ef394a32c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _inputManager: {fileID: 3871654355000680538}
+  _dialogsManager: {fileID: 5609173416979889765}
+  _uiCharacterReplacement: {fileID: 9103902860443043447}
+  _uiCharacterListGame: {fileID: 8994819262526788795}
+  _confirmMessage:
+    m_TableReference:
+      m_TableCollectionName: GUID:1b702bd02874f6349a9f27f039c75abe
+    m_TableEntryReference:
+      m_KeyId: 838521233408
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!1 &7030177952700985459
 GameObject:
   m_ObjectHideFlags: 0
