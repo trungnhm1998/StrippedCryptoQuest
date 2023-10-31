@@ -1,6 +1,5 @@
 using System;
 using IndiGames.Core.EditorTools.Attributes.ReadOnlyAttribute;
-using IndiGames.Core.Events.ScriptableObjects;
 using UnityEngine;
 
 namespace CryptoQuest.Gameplay.Encounter
