@@ -58,8 +58,14 @@ namespace CryptoQuest.Battle.Components.EnemyComponents
         public override void Init()
         {
             _enemyBehaviour = GetComponent<EnemyBehaviour>();
-            // I listen to log dealth damage event instead of damage event because I want this behaviour to perform before log
-            _logDealtDamageEvent = BattleEventBus.SubscribeEvent<LogDealtDamageEvent>(CreateTakeDamagePresent);
+        }
+
+        private void OnEnable()
+        {
+            // I listen to log dealth damage event instead of damage event
+            // because I want this behaviour to perform before log
+            _logDealtDamageEvent = BattleEventBus.SubscribeEvent<LogDealtDamageEvent>(
+                CreateTakeDamagePresent);
         }
 
         private void OnDestroy()

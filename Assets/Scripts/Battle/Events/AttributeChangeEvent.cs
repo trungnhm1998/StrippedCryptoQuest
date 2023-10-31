@@ -3,7 +3,7 @@ using IndiGames.GameplayAbilitySystem.AttributeSystem.Components;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
 using UnityEngine;
 
-namespace CryptoQuest.Battle.Character
+namespace CryptoQuest.Battle.Events
 {
     public class AttributeChangeEvent : AttributesEventBase
     {

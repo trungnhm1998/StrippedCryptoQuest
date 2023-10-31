@@ -31,6 +31,7 @@ GameObject:
   - component: {fileID: 3109896339780830267}
   - component: {fileID: 6353190227880703360}
   - component: {fileID: 6938198089508690721}
+  - component: {fileID: 4510431391974548953}
   m_Layer: 0
   m_Name: HeroGAS
   m_TagString: Untagged
@@ -45,13 +46,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4052912324221725559}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &9221404562184322809
 MonoBehaviour:
@@ -284,6 +285,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _skills:
+  - {fileID: 11400000, guid: 483d07e3ab7016d4d884bbd34730c226, type: 2}
   - {fileID: 11400000, guid: 1de76e5a56cbe07429d5ad198513dfe0, type: 2}
   - {fileID: 11400000, guid: 128215bbbb4ee564caf12193786b7d93, type: 2}
   - {fileID: 11400000, guid: 042fc627889f6eb4cb5866a81b106b5c, type: 2}
@@ -403,3 +405,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6bc8e701efc4c2d821960354917aebf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &4510431391974548953
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4052912324221725559}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed639457303eaf94cba33682c2398f20, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _addLootRequestEventChannel: {fileID: 11400000, guid: 5b2a9f4e0c11e954bbd8d96c7b5d775e, type: 2}
+  _stealableItemDatabase: {fileID: 11400000, guid: ca20a1e6324ba944383b4dbafb613471, type: 2}
