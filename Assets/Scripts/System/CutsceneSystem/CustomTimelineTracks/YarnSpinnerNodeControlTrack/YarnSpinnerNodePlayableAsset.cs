@@ -5,6 +5,10 @@ using UnityEngine.Localization;
 using UnityEngine.Playables;
 using UnityEngine.Timeline;
 
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
+
 namespace CryptoQuest.System.CutsceneSystem.CustomTimelineTracks.YarnSpinnerNodeControlTrack
 {
     [Serializable]
@@ -27,5 +31,17 @@ namespace CryptoQuest.System.CutsceneSystem.CustomTimelineTracks.YarnSpinnerNode
 
             return playable;
         }
+
+#if UNITY_EDITOR
+        public void Editor_SetConfigEvent()
+        {
+            string[] guids = AssetDatabase.FindAssets("t:YarnProjectConfigEvent");
+
+            if (guids.Length == 0) return;
+
+            string path = AssetDatabase.GUIDToAssetPath(guids[0]);
+            OnYarnProjectConfigEvent = AssetDatabase.LoadAssetAtPath<YarnProjectConfigEvent>(path);
+        }
+#endif
     }
 }
