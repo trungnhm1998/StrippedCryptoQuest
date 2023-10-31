@@ -1,4 +1,4 @@
-using IndiGames.Core.EditorTools.Attributes.ReadOnlyAttribute;
+using System;
 using UnityEngine;
 
 namespace CryptoQuest
@@ -6,17 +6,19 @@ namespace CryptoQuest
     public class SafeZoneController : MonoBehaviour
     {
         public static bool IsSafeZoneActive = false;
+        public static Action OnSafeZoneEntered;
+        public static Action OnSafeZoneExited;
 
         private void OnEnable()
         {
-            SafeZoneBehaviour.OnSafeZoneEntered += EnterSafeZone;
-            SafeZoneBehaviour.OnSafeZoneExited += ExitSafeZone;
+            OnSafeZoneEntered += EnterSafeZone;
+            OnSafeZoneExited += ExitSafeZone;
         }
 
         private void OnDisable()
         {
-            SafeZoneBehaviour.OnSafeZoneEntered -= EnterSafeZone;
-            SafeZoneBehaviour.OnSafeZoneExited -= ExitSafeZone;
+            OnSafeZoneEntered -= EnterSafeZone;
+            OnSafeZoneExited -= ExitSafeZone;
         }
 
 
