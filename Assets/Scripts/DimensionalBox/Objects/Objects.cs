@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace CryptoQuest.DimensionalBox.Sagas
+namespace CryptoQuest.DimensionalBox.Objects
 {
     [Serializable]
     public class EquipmentsResponse
@@ -24,9 +24,10 @@ namespace CryptoQuest.DimensionalBox.Sagas
     {
         public Equipments[] equipments;
     }
-    
+
     public enum EDimensionalBoxStatus
     {
+        All = 0,
         InBox = 1,
         InGame = 2
     }

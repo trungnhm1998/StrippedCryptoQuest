@@ -177,6 +177,8 @@ GameObject:
   m_Component:
   - component: {fileID: 732717039}
   - component: {fileID: 732717040}
+  - component: {fileID: 732717042}
+  - component: {fileID: 732717041}
   m_Layer: 0
   m_Name: Nfts
   m_TagString: Untagged
@@ -213,6 +215,32 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _inGameEvent: {fileID: 11400000, guid: e8600002b7fc64b42969287a176cc7a2, type: 2}
   _inBoxEvent: {fileID: 11400000, guid: 046a55858ee3e114ab4c10e752e5ca19, type: 2}
+--- !u!114 &732717041
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 732717038}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f47d8c00e7ce154ba2b78bdcbde979e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _transferEquipmentsToDimensionalBoxChannel: {fileID: 11400000, guid: 0aedd0780e09ade4cbf7d7bad4684121, type: 2}
+--- !u!114 &732717042
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 732717038}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a353c1e0932334b4c8e4c4ea3c827a1e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _transferEquipmentsToGameChannel: {fileID: 11400000, guid: d087896c13bdf054383302bb70d5e545, type: 2}
 --- !u!1 &878156015
 GameObject:
   m_ObjectHideFlags: 0

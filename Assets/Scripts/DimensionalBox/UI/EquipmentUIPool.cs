@@ -27,7 +27,12 @@ namespace CryptoQuest.DimensionalBox.UI
 
         private void OnGet(UIEquipment equipment) => equipment.gameObject.SetActive(true);
 
-        private void OnRelease(UIEquipment equipment) => equipment.gameObject.SetActive(false);
+        private void OnRelease(UIEquipment equipment)
+        {
+            equipment.gameObject.SetActive(false);
+            equipment.EnablePendingTag(false);
+            equipment.transform.SetParent(transform);
+        }
 
         private void OnDestroyEquipmentUI(UIEquipment equipment) => Destroy(equipment.gameObject);
 

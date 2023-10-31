@@ -20,6 +20,14 @@ namespace CryptoQuest.Networking
 
         public IObservable<string> Get(string path, object body = null,
             Dictionary<string, string> headers = null);
+
+        public IObservable<TResponse> Put<TResponse>(string path, object body = null,
+            Dictionary<string, string> headers = null);
+
+        public IObservable<string> Put(string path, object body = null,
+            Dictionary<string, string> headers = null);
+
+        public IRestClient WithParams(Dictionary<string, string> parameters);
     }
 
     /// <summary>
@@ -107,6 +115,57 @@ namespace CryptoQuest.Networking
             });
         }
 
+        public IObservable<TResponse> Put<TResponse>(string path, object body = null,
+            Dictionary<string, string> headers = null)
+        {
+            return Observable.Create<TResponse>(observer =>
+            {
+                try
+                {
+                    var generateRequest = GenerateRequest(path, body, headers);
+                    PluginRestClient.Put<TResponse>(generateRequest)
+                        .Then(observer.OnNext)
+                        .Catch(observer.OnError)
+                        .Finally(observer.OnCompleted);
+                }
+                catch (Exception e)
+                {
+                    observer.OnError(e);
+                }
+
+                return Disposable.Empty;
+            });
+        }
+
+        public IObservable<string> Put(string path, object body = null, Dictionary<string, string> headers = null)
+        {
+            return Observable.Create<string>(observer =>
+            {
+                try
+                {
+                    var generateRequest = GenerateRequest(path, body, headers);
+                    PluginRestClient.Put(generateRequest)
+                        .Then(helper => observer.OnNext(helper.Text))
+                        .Catch(observer.OnError)
+                        .Finally(observer.OnCompleted);
+                }
+                catch (Exception e)
+                {
+                    observer.OnError(e);
+                }
+
+                return Disposable.Empty;
+            });
+        }
+
+        private Dictionary<string, string> _params;
+
+        public IRestClient WithParams(Dictionary<string, string> parameters)
+        {
+            _params = parameters;
+            return this;
+        }
+
         private RequestHelper GenerateRequest(string path, object body = null,
             Dictionary<string, string> headers = null)
         {
@@ -121,10 +180,13 @@ namespace CryptoQuest.Networking
                 Uri = $"{Env.API}/{path}",
                 BodyString = bodyString,
                 Headers = mergeHeaders,
+                Params = _params,
 #if DEVELOPMENT_BUILD || UNITY_EDITOR
                 EnableDebug = true,
 #endif
             };
+            
+            _params = null;
 
             return request;
         }

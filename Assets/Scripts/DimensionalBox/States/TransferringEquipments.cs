@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using CryptoQuest.Core;
 using CryptoQuest.DimensionalBox.UI;
 using UnityEngine;
@@ -21,6 +20,7 @@ namespace CryptoQuest.DimensionalBox.States
             ActionDispatcher.Dispatch(new GetNftEquipments());
             _equipmentsTransferPanel.SetActive(true);
             StateMachine.Input.MenuCancelEvent += ToSelectTransferTypeState;
+            StateMachine.Input.MenuExecuteEvent += ConfirmTransfer;
             StateMachine.Input.MenuNavigateEvent += MoveBetweenList;
             foreach (var equipmentList in _equipmentLists)
             {
@@ -31,8 +31,8 @@ namespace CryptoQuest.DimensionalBox.States
 
         protected override void OnExit()
         {
-            _equipmentsTransferPanel.SetActive(false);
             StateMachine.Input.MenuCancelEvent -= ToSelectTransferTypeState;
+            StateMachine.Input.MenuExecuteEvent -= ConfirmTransfer;
             StateMachine.Input.MenuNavigateEvent -= MoveBetweenList;
             foreach (var equipmentList in _equipmentLists)
             {
@@ -41,7 +41,17 @@ namespace CryptoQuest.DimensionalBox.States
             }
         }
 
-        private void ToSelectTransferTypeState() => StateMachine.ChangeState(StateMachine.Landing);
+        private void ToSelectTransferTypeState()
+        {
+            _equipmentsTransferPanel.SetActive(false);
+            StateMachine.ChangeState(StateMachine.Landing);
+        }
+
+        private void ConfirmTransfer()
+        {
+            if (_equipmentLists[0].PendingTransfer == false && _equipmentLists[1].PendingTransfer == false) return;
+            StateMachine.ChangeState(StateMachine.ConfirmTransfer);
+        }
 
         /// <summary>
         /// Move between 2 list, order based on Scene Hierarchy

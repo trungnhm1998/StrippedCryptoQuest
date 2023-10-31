@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using CryptoQuest.Core;
 using CryptoQuest.DimensionalBox.Events;
 using CryptoQuest.DimensionalBox.Objects;
+using CryptoQuest.DimensionalBox.States;
 using CryptoQuest.Events;
+using TinyMessenger;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -25,20 +28,24 @@ namespace CryptoQuest.DimensionalBox.UI
         [SerializeField] private StringEventChannelSO _transferEquipmentEvent;
 
         private List<UIEquipment> _equipmentsToTransfer = new();
+        public bool PendingTransfer => _equipmentsToTransfer.Count > 0;
+        private TinyMessageSubscriptionToken _confirmTransferEvent;
 
         private void OnEnable()
         {
-            _getEquipmentsEvent.EventRaised += EventRaised;
+            _confirmTransferEvent = ActionDispatcher.Bind<ConfirmTransferAction>(OnTransferEquipment);
+            _getEquipmentsEvent.EventRaised += Initialize;
         }
 
         private void OnDisable()
         {
-            _getEquipmentsEvent.EventRaised -= EventRaised;
+            ActionDispatcher.Unbind(_confirmTransferEvent);
+            _getEquipmentsEvent.EventRaised -= Initialize;
         }
 
         private readonly List<int> _responseIds = new();
 
-        private void EventRaised(List<NftEquipment> equipments)
+        private void Initialize(List<NftEquipment> equipments)
         {
             ClearOldEquipments();
             foreach (var equipment in equipments)
@@ -69,6 +76,8 @@ namespace CryptoQuest.DimensionalBox.UI
 
         private void ClearOldEquipments()
         {
+            _responseIds.Clear();
+            _equipmentsToTransfer.Clear();
             var oldEquipments = _scrollView.content.GetComponentsInChildren<UIEquipment>();
             foreach (var equipment in oldEquipments)
             {
@@ -128,6 +137,20 @@ namespace CryptoQuest.DimensionalBox.UI
             var childToSelect = _scrollView.content.transform.GetChild(selectedIndex);
             if (childToSelect == null) childToSelect = _scrollView.content.transform.GetChild(0);
             EventSystem.current.SetSelectedGameObject(childToSelect.gameObject);
+        }
+
+        private void OnTransferEquipment(ConfirmTransferAction confirmTransferAction)
+        {
+            if (_equipmentsToTransfer.Count == 0) return;
+            string equipments = "";
+            for (var index = 0; index < _equipmentsToTransfer.Count; index++)
+            {
+                var equipment = _equipmentsToTransfer[index];
+                var comma = index == _equipmentsToTransfer.Count - 1 ? "" : ",";
+                equipments += $"{equipment.Id.ToString()}{comma}";
+            }
+
+            _transferEquipmentEvent.RaiseEvent(equipments);
         }
     }
 }
