@@ -5,6 +5,7 @@ namespace CryptoQuest.ChangeClass.StateMachine
 {
     public class ChangeClassStateBehaviour : StateMachineBehaviour
     {
+        private ChangeClassStateController _stateController;
         private ChangeClassInputManager _input;
         private Animator _animator;
         private static readonly int _submit = Animator.StringToHash("isConfirm");
@@ -13,6 +14,8 @@ namespace CryptoQuest.ChangeClass.StateMachine
         public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
             _animator = animator;
+            _stateController = _animator.GetComponent<ChangeClassStateController>();
+            _input = _stateController.Input;
             _input.SubmitEvent += ChangeState;
             _input.CancelEvent += ExitState;
         }
