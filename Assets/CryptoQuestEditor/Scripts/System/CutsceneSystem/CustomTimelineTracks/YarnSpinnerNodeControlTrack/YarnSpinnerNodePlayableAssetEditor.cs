@@ -63,7 +63,7 @@ namespace CryptoQuestEditor.System.CutsceneSystem.CustomTimelineTracks.YarnSpinn
                 EditorGUILayout.BeginHorizontal();
                 if (GUILayout.Button("Auto Set"))
                 {
-                    Target.OnYarnProjectConfigEvent = GetYarnProjectConfigEvent();
+                    Target.Editor_SetConfigEvent();
                     serializedObject.ApplyModifiedProperties();
                 }
 
@@ -73,21 +73,6 @@ namespace CryptoQuestEditor.System.CutsceneSystem.CustomTimelineTracks.YarnSpinn
 
 
             serializedObject.ApplyModifiedProperties();
-        }
-
-
-        private YarnProjectConfigEvent GetYarnProjectConfigEvent()
-        {
-            string[] guids = AssetDatabase.FindAssets("t:YarnProjectConfigEvent");
-
-            if (guids.Length == 0)
-            {
-                Debug.LogWarning("No YarnProjectConfigEvent found. Please create one.");
-                return null;
-            }
-
-            string path = AssetDatabase.GUIDToAssetPath(guids[0]);
-            return AssetDatabase.LoadAssetAtPath<YarnProjectConfigEvent>(path);
         }
     }
 
