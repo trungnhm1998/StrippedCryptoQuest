@@ -8,7 +8,7 @@ namespace CryptoQuest.Tavern.States
         private Animator _animator;
         private TavernController _controller;
 
-        private static readonly int TurnBack = Animator.StringToHash("isTurnBack");
+        private static readonly int OverviewState = Animator.StringToHash("Overview");
 
 
         public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo,
@@ -26,8 +26,7 @@ namespace CryptoQuest.Tavern.States
         private void CancelCharacterReplacement()
         {
             _controller.UICharacterReplacement.gameObject.SetActive(false);
-            _animator.SetTrigger(TurnBack);
-
+            _animator.Play(OverviewState);
         }
 
         public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo,

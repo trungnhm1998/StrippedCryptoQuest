@@ -12,6 +12,10 @@ namespace CryptoQuest.Tavern
         public event UnityAction CancelEvent;
         public event UnityAction SubmitEvent;
         public event UnityAction<Vector2> NavigateEvent;
+        public event UnityAction ResetEvent;
+        public event UnityAction ExecuteEvent;
+        public event UnityAction InteractEvent;
+
 
         private void OnEnable()
         {
@@ -48,6 +52,21 @@ namespace CryptoQuest.Tavern
         public void OnSubmit(InputAction.CallbackContext context)
         {
             if (context.performed) SubmitEvent?.Invoke();
+        }
+
+        public void OnReset(InputAction.CallbackContext context)
+        {
+            if (context.performed) ResetEvent?.Invoke();
+        }
+
+        public void OnExecute(InputAction.CallbackContext context)
+        {
+            if (context.performed) ExecuteEvent?.Invoke();
+        }
+
+        public void OnInteract(InputAction.CallbackContext context)
+        {
+            if (context.performed) InteractEvent?.Invoke();
         }
     }
 }

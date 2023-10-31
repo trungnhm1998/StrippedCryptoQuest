@@ -7,8 +7,8 @@ namespace CryptoQuest.Tavern.States
         private Animator _animator;
         private TavernController _controller;
 
-        private static readonly int CharacterReplacementState = Animator.StringToHash("isCharacterReplacement");
-        private static readonly int PartyOrganizationState = Animator.StringToHash("isPartyOrganization");
+        private static readonly int CharacterReplacementState = Animator.StringToHash("Character Replacement Idle");
+        private static readonly int PartyOrganizationState = Animator.StringToHash("Party Organization Idle");
 
         public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo,
             int layerIndex)
@@ -32,12 +32,12 @@ namespace CryptoQuest.Tavern.States
 
         private void EnterCharacterReplacement()
         {
-            _animator.SetTrigger(CharacterReplacementState);
+            _animator.Play(CharacterReplacementState);
         }
 
         private void EnterPartyOrganization()
         {
-            _animator.SetTrigger(PartyOrganizationState);
+            _animator.Play(PartyOrganizationState);
         }
 
         public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo,
