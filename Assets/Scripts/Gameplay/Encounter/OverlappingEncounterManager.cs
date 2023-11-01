@@ -57,8 +57,7 @@ namespace CryptoQuest.Gameplay.Encounter
 
         private void UnregisterEncounterInfo(EncounterInfo encounterInfo)
         {
-            if (_currentEncounterInfos.Contains(encounterInfo))
-                _currentEncounterInfos.Remove(encounterInfo);
+            _currentEncounterInfos.Remove(encounterInfo);
         }
 
         private void HandleExitZone()
