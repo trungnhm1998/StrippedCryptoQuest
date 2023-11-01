@@ -7,10 +7,10 @@ namespace CryptoQuest.Tavern.UI.CharacterReplacement
     {
         private List<IWalletCharacterData> _walletCharacterList = new List<IWalletCharacterData>();
 
-        public void SetWalletData(List<IWalletCharacterData> data, bool isGameEquipmentListEmpty = false)
+        public void SetWalletData(List<IWalletCharacterData> data)
         {
             _walletCharacterList = data;
-            AfterSaveData(isGameEquipmentListEmpty);
+            StartCoroutine(AfterSaveData());
         }
 
         protected override void RenderData()

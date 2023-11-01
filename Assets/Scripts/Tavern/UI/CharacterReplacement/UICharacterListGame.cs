@@ -7,10 +7,10 @@ namespace CryptoQuest.Tavern.UI.CharacterReplacement
     {
         private List<IGameCharacterData> _gameCharacterList = new List<IGameCharacterData>();
 
-        public void SetGameData(List<IGameCharacterData> data, bool isGameEquipmentListEmpty = false)
+        public void SetGameData(List<IGameCharacterData> data)
         {
             _gameCharacterList = data;
-            AfterSaveData(isGameEquipmentListEmpty);
+            StartCoroutine(AfterSaveData());
         }
 
         protected override void RenderData()

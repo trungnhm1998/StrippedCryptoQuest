@@ -2,6 +2,7 @@
 using CryptoQuest.UI.Menu;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.Localization.Components;
 using UnityEngine.UI;
 
@@ -9,6 +10,8 @@ namespace CryptoQuest.Tavern.UI
 {
     public class UITavernItem : MonoBehaviour
     {
+        public static event UnityAction<UITavernItem> Pressed;
+
         [SerializeField] private Image _classIcon;
         [SerializeField] private LocalizeStringEvent _localizedName;
         [SerializeField] private TMP_Text _name;
@@ -54,10 +57,16 @@ namespace CryptoQuest.Tavern.UI
         public void OnSelectToTransfer()
         {
             if (_isInParty) return;
-            // SelectItemEvent?.Invoke(this);
+            Pressed?.Invoke(this);
 
             _isSelected = !_isSelected;
             _pendingTag.SetActive(_isSelected);
+        }
+
+        public void Transfer(Transform parent)
+        {
+            gameObject.transform.SetParent(parent);
+            Parent = parent;
         }
 
         public void OnInspecting(bool isInspecting)
