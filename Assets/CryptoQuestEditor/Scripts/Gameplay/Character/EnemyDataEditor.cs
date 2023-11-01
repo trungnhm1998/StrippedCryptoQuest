@@ -26,24 +26,15 @@ namespace CryptoQuestEditor.Gameplay.Character
 
             _uxml.CloneTree(root);
 
-            var addEquipmentButton = root.Q<Button>("add-equipment-button");
-            addEquipmentButton.clicked += () => AddLoot(new EquipmentLootInfo(new EquipmentInfo()));
-
-            var addUsableItemButton = root.Q<Button>("add-consumable-button");
-            addUsableItemButton.clicked += () => AddLoot(new UsableLootInfo(new ConsumableInfo()));
-
-            var addCurrencyButton = root.Q<Button>("add-currency-button");
-            addCurrencyButton.clicked += () => AddLoot(new CurrencyLootInfo(new CurrencyInfo()));
-
-            var addExpButton = root.Q<Button>("add-xp-button");
-            addExpButton.clicked += () => AddLoot(new ExpLoot(0));
+            var addDropButton = root.Q<Button>("add-drop-button");
+            addDropButton.clicked += () => AddLoot();
 
             return root;
         }
 
-        private void AddLoot(LootInfo loot)
+        private void AddLoot()
         {
-            Target.Editor_AddDrop(loot);
+            Target.Editor_AddDrop(Target.DropToAdd.Loot);
             EditorUtility.SetDirty(Target);
         }
     }

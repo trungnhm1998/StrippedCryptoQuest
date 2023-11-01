@@ -88,6 +88,9 @@ namespace CryptoQuest.Character.Enemy
         }
         
 #if UNITY_EDITOR
+        [SerializeReference, SubclassSelector] private IDropToAdd _dropToAdd = new ConsumeDrop();
+        public IDropToAdd DropToAdd => _dropToAdd;
+
         private void OnValidate()
         {
             _stealableInfos = Array.Empty<StealableInfo>();
