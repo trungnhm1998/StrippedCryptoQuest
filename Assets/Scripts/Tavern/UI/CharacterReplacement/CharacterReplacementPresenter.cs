@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using CryptoQuest.Tavern.Interfaces;
+﻿using CryptoQuest.Core;
+using TinyMessenger;
 using UnityEngine;
 using UnityEngine.Localization;
 
@@ -19,45 +17,33 @@ namespace CryptoQuest.Tavern.UI.CharacterReplacement
         [Header("Dialog Messages")]
         [SerializeField] private LocalizedString _confirmMessage;
 
-        private IGameCharacterModel _gameModel;
-        private IWalletCharacterModel _walletModel;
-
-        private List<IGameCharacterData> _gameData = new();
-        private List<IWalletCharacterData> _walletData = new();
+        private TinyMessageSubscriptionToken _getGameDataSucceedEvent;
+        private TinyMessageSubscriptionToken _getWalletDataSucceedEvent;
 
         private void OnEnable()
         {
             _inputManager.ExecuteEvent += SendItemsRequested;
 
-            StartCoroutine(GetIngameCharacters());
-            StartCoroutine(GetWalletCharacters());
+            _getGameDataSucceedEvent = ActionDispatcher.Bind<GetInGameNftCharactersSucceed>(GetInGameCharacters);
+            _getWalletDataSucceedEvent = ActionDispatcher.Bind<GetWalletNftCharactersSucceed>(GetWalletCharacters);
+            ActionDispatcher.Dispatch(new NftCharacterAction());
+        }
+
+        private void GetInGameCharacters(GetInGameNftCharactersSucceed obj)
+        {
+            _uiCharacterListGame.SetGameData(obj.InGameCharacters, true);
+        }
+
+        private void GetWalletCharacters(GetWalletNftCharactersSucceed obj)
+        {
+            _uiCharacterListWallet.SetWalletData(obj.WalletCharacters, true);
         }
 
         private void OnDisable()
         {
             _inputManager.ExecuteEvent -= SendItemsRequested;
-        }
-
-        private IEnumerator GetIngameCharacters()
-        {
-            _gameModel = GetComponentInChildren<IGameCharacterModel>();
-            yield return _gameModel.CoGetData();
-
-            if (_gameModel.Data.Count <= 0) yield break;
-
-            _gameData = _gameModel.Data;
-            _uiCharacterListGame.SetGameData(_gameData, true);
-        }
-        
-        private IEnumerator GetWalletCharacters()
-        {
-            _walletModel = GetComponentInChildren<IWalletCharacterModel>();
-            yield return _walletModel.CoGetData();
-
-            if (_walletModel.Data.Count <= 0) yield break;
-
-            _walletData = _walletModel.Data;
-            _uiCharacterListWallet.SetWalletData(_walletData, _walletData.Count <= 0 ? true : false);
+            ActionDispatcher.Unbind(_getGameDataSucceedEvent);
+            ActionDispatcher.Unbind(_getWalletDataSucceedEvent);
         }
 
         private void SendItemsRequested()
