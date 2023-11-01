@@ -182,7 +182,11 @@ namespace CryptoQuest.Menus.Home.UI
             PutToNormalLayer(_selectedCardButtonHolder.transform, CurrentIndex);
 
             // Must delay a bit (0.2s) to avoid bug caused by exiting SortState and entering PreSortState immediately
-            Invoke(nameof(OnConfirmSortOrder), .2f);
+            // Invoke(nameof(OnConfirmSortOrder), .2f);
+
+            ConfirmedEvent?.Invoke();
+            // Server will listen to this event and validate sort
+            _confirmSortEvent.RaiseEvent();
             _selectedCardButtonHolder.BackToNormalState();
         }
 
@@ -209,13 +213,6 @@ namespace CryptoQuest.Menus.Home.UI
         {
             targetTransform.SetParent(_partySlots[targetIndex].transform);
             targetTransform.localPosition = new Vector3(0, 0, 0);
-        }
-
-        private void OnConfirmSortOrder()
-        {
-            ConfirmedEvent?.Invoke();
-            // Server will listen to this event and validate sort
-            _confirmSortEvent.RaiseEvent();
         }
 
         private void ResetSortOrder()

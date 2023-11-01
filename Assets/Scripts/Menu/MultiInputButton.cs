@@ -30,6 +30,7 @@ namespace CryptoQuest.Menu
             }
         }
 
+#if USE_MOUSE
         public override void OnPointerEnter(PointerEventData eventData)
         {
             Handler.HandleMouseEnter(gameObject);
@@ -39,6 +40,7 @@ namespace CryptoQuest.Menu
         {
             Handler.HandleMouseExit(gameObject);
         }
+#endif
 
         public override void OnSelect(BaseEventData eventData)
         {
