@@ -5,7 +5,7 @@ using CryptoQuest.UI.Menu.Character;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace CryptoQuest.UI.Menu.Panels.Skill
+namespace CryptoQuest.Menus.Skill.UI
 {
     public class UITagetSingleCharacter : MonoBehaviour
     {

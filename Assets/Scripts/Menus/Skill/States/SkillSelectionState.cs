@@ -1,7 +1,6 @@
-﻿using CryptoQuest.UI.Menu.Panels.Item;
-using CryptoQuest.UI.Menu.Panels.Skill;
+﻿using CryptoQuest.Menus.Skill.UI;
 
-namespace CryptoQuest.UI.Menu.MenuStates.SkillStates
+namespace CryptoQuest.Menus.Skill.States
 {
     public class SkillSelectionState : SkillStateBase
     {

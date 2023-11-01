@@ -5,7 +5,7 @@ using CryptoQuest.Gameplay.PlayerParty;
 using CryptoQuest.System;
 using UnityEngine;
 
-namespace CryptoQuest.UI.Menu.Panels.Skill
+namespace CryptoQuest.Menus.Skill.UI
 {
     public class UsingSkillPresenter : MonoBehaviour
     {

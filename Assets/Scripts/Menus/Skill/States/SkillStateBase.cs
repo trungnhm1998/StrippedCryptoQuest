@@ -1,6 +1,7 @@
-﻿using CryptoQuest.UI.Menu.Panels.Skill;
+﻿using CryptoQuest.Menus.Skill.UI;
+using CryptoQuest.UI.Menu.MenuStates;
 
-namespace CryptoQuest.UI.Menu.MenuStates.SkillStates
+namespace CryptoQuest.Menus.Skill.States
 {
     /// <summary>
     /// Every state in the status menu inherits from this class.

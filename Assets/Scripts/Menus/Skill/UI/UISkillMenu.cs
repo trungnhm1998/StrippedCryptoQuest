@@ -1,8 +1,10 @@
-﻿using CryptoQuest.UI.Menu.MenuStates.SkillStates;
+﻿using CryptoQuest.Menus.Skill.States;
+using CryptoQuest.UI.Menu;
+using CryptoQuest.UI.Menu.Panels;
 using FSM;
 using UnityEngine;
 
-namespace CryptoQuest.UI.Menu.Panels.Skill
+namespace CryptoQuest.Menus.Skill.UI
 {
     /// <summary>
     /// The context that hopefully holds all the UI information for the Skill Menu. This is a mono behaviour class that

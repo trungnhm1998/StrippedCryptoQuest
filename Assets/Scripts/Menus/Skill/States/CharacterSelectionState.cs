@@ -1,8 +1,6 @@
-﻿using CryptoQuest.UI.Menu.Panels.Skill;
-using UnityEngine;
-using NotImplementedException = System.NotImplementedException;
+﻿using CryptoQuest.Menus.Skill.UI;
 
-namespace CryptoQuest.UI.Menu.MenuStates.SkillStates
+namespace CryptoQuest.Menus.Skill.States
 {
     public class CharacterSelectionState : SkillStateBase
     {
