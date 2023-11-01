@@ -15,8 +15,7 @@ namespace CryptoQuest.AbilitySystem
             _skillInfo = skillInfo;
         }
         [SerializeField] private SkillInfo _skillInfo;
-        [SerializeField] private int _turns = 3;
-        public int Turns => _turns;
+        public int Turns => _skillInfo.SkillParameters.ContinuesTurn;
         public CastSkillAbility Skill { get; set; }
         public SkillInfo SkillInfo => _skillInfo;
         public SkillParameters Parameters => _skillInfo.SkillParameters;

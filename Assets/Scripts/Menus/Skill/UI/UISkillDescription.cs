@@ -20,7 +20,7 @@ namespace CryptoQuest.Menus.Skill.UI
 
         private void Configure(CastSkillAbility skill)
         {
-            _description.StringReference = skill.Parameters.SkillDescription;
+            _description.StringReference = skill.SkillInfo.SkillDescription;
         }
     }
 }

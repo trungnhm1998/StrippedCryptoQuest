@@ -48,11 +48,11 @@ MonoBehaviour:
         m_WaitForCompletion: 0
         m_LocalVariables: []
       SkillIcon: {fileID: 0}
-      Element: {fileID: 11400000, guid: 45b43c65777683f40ac77dac46dbe86c, type: 2}
-      SkillType: {fileID: 0}
+      SkillType: 1
       Category: {fileID: 0}
       Cost: 10
       UsageScenarioSO: 0
+      VfxId: 5
       SkillParameters:
         Element: {fileID: 11400000, guid: 45b43c65777683f40ac77dac46dbe86c, type: 2}
         BasePower: 20
@@ -62,57 +62,12 @@ MonoBehaviour:
         PowerValueAdded: 0.2
         PowerValueReduced: 0.2
         IsFixed: 1
-        ContinuesTurn: 0
+        ContinuesTurn: 3
         EffectType: 1
         targetAttribute:
           Attribute: {fileID: 11400000, guid: 77c53593fd92c904aa7689c5a7449df3, type: 2}
           CaptureFrom: 1
-        VfxId: 
-    _turns: 0
-  _vfxId: 5
-  <Parameters>k__BackingField:
-    Id: 1001
-    SkillName:
-      m_TableReference:
-        m_TableCollectionName: GUID:a04f9e0f3e0ba4b4fb5275c51c13428a
-      m_TableEntryReference:
-        m_KeyId: 1117529673224192
-        m_Key: 
-      m_FallbackState: 0
-      m_WaitForCompletion: 0
-      m_LocalVariables: []
-    SkillDescription:
-      m_TableReference:
-        m_TableCollectionName: GUID:b88215143270bb84b83f66e186b52c23
-      m_TableEntryReference:
-        m_KeyId: 232829145088
-        m_Key: 
-      m_FallbackState: 0
-      m_WaitForCompletion: 0
-      m_LocalVariables: []
-    SkillIcon: {fileID: 0}
-    Element: {fileID: 11400000, guid: 45b43c65777683f40ac77dac46dbe86c, type: 2}
-    SkillType: {fileID: 0}
-    Category: {fileID: 0}
-    Cost: 10
-    UsageScenarioSO: 0
-    SkillParameters:
-      Element: {fileID: 11400000, guid: 45b43c65777683f40ac77dac46dbe86c, type: 2}
-      BasePower: 20
-      PowerUpperLimit: 40
-      PowerLowerLimit: 10
-      SkillPowerThreshold: 100
-      PowerValueAdded: 0.2
-      PowerValueReduced: 0.2
-      IsFixed: 1
-      ContinuesTurn: 0
-      EffectType: 1
-      targetAttribute:
-        Attribute: {fileID: 11400000, guid: 77c53593fd92c904aa7689c5a7449df3, type: 2}
-        CaptureFrom: 1
-      VfxId: 
   <SuccessRate>k__BackingField: 100
-  _mpToCast: 3
   <TargetType>k__BackingField: {fileID: 11400000, guid: 6cd304533bdab184cb6240d08cf35473, type: 2}
   _effects:
   - {fileID: 11400000, guid: f4945dcd5cb8dbb428edb20917f51754, type: 2}

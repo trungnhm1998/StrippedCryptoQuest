@@ -36,6 +36,7 @@ namespace CryptoQuest.AbilitySystem.EffectActions
     public class TurnBasePolicyActiveEffect : ActiveGameplayEffect
     {
         [SerializeField] private int _turnsLeft;
+        private const int DEFAULT_TURNS = 3;
 
         private TurnBasePolicy _policyDef;
         private Battle.Components.Character _character;
@@ -47,7 +48,7 @@ namespace CryptoQuest.AbilitySystem.EffectActions
         {
             var context = GameplayEffectContext.ExtractEffectContext(spec.Context);
             _policyDef = policyDef;
-            _turnsLeft = context == null || context.Turns == 0 ? 3 : context.Turns;
+            _turnsLeft = (context == null || context.Turns == 0) ? DEFAULT_TURNS : context.Turns;
             _character = Spec.Target.GetComponent<Battle.Components.Character>();
             if (_character.TryGetComponent(out _damageOverTimeFlagsFlags) == false)
                 _damageOverTimeFlagsFlags = _character.gameObject.AddComponent<DamageOverTimeFlags>();
