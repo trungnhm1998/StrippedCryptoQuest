@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using CryptoQuest.Audio.Settings;
+using CryptoQuest.Core;
 using CryptoQuest.Language.Settings;
+using CryptoQuest.System.SaveSystem.Actions;
 using UnityEngine;
 using UnityEngine.Localization;
 using UnityEngine.Localization.Settings;
@@ -15,31 +18,27 @@ namespace CryptoQuest.Language
         public int Index = 0;
     }
 
-    public class LanguageManager : SaveObject
+    public class LanguageManager : MonoBehaviour
     {
         [SerializeField] private LanguageSettingSO _languageSetting;
 
-        [SerializeField, HideInInspector] private LanguageSave _saveData;
+        [HideInInspector]
+        public LanguageSave SaveData;
+        private TinyMessenger.TinyMessageSubscriptionToken _listenToLoadCompletedEventToken;
 
         private AsyncOperationHandle _initializeOperation;
         private int _currentSelectedOption = 0;
 
-        protected override void OnEnable()
+        protected void OnEnable()
         {
-            base.OnEnable();
-
             _initializeOperation = LocalizationSettings.SelectedLocaleAsync;
             _initializeOperation.Completed += InitializeCompleted;
-
             _languageSetting.CurrentLanguageIndexChanged += OnChangeLanguage;
         }
 
-        protected override void OnDisable()
+        protected void OnDisable()
         {
-            base.OnDisable();
-
             LocalizationSettings.SelectedLocaleChanged -= SelectedLocaleChanged;
-
             _languageSetting.CurrentLanguageIndexChanged -= OnChangeLanguage;
         }
 
@@ -64,8 +63,19 @@ namespace CryptoQuest.Language
             _languageSetting.LanguageList = languagesList;
 
             LocalizationSettings.SelectedLocaleChanged += SelectedLocaleChanged;
+
+            _listenToLoadCompletedEventToken = ActionDispatcher.Bind<LoadLanguageCompletedAction>(action => InitLanguage(action.IsSuccess));
+            ActionDispatcher.Dispatch(new LoadLanguageAction(this));
         }
 
+        private void InitLanguage(bool loaded)
+        {
+            ActionDispatcher.Unbind(_listenToLoadCompletedEventToken);
+            if (loaded)
+            {
+                OnChangeLanguage(SaveData.Index);
+            }
+        }
 
         private void OnSelectionChanged()
         {
@@ -82,8 +92,8 @@ namespace CryptoQuest.Language
             var index = LocalizationSettings.AvailableLocales.Locales.IndexOf(locale);
             _currentSelectedOption = index;
 
-            _saveData.Index = index;
-            SaveSystem?.SaveObject(this);
+            SaveData.Index = index;
+            ActionDispatcher.Dispatch(new SaveLanguageAction(this));
         }
 
         private void OnChangeLanguage(int index)
@@ -91,27 +101,5 @@ namespace CryptoQuest.Language
             _currentSelectedOption = index;
             OnSelectionChanged();
         }
-
-        #region SaveSystem
-
-        public override string Key => "Language";
-
-        public override string ToJson()
-        {
-            return JsonUtility.ToJson(_saveData);
-        }
-
-        public override IEnumerator CoFromJson(string json)
-        {
-            if (!string.IsNullOrEmpty(json))
-            {
-                JsonUtility.FromJsonOverwrite(json, _saveData);
-                OnChangeLanguage(_saveData.Index);
-            }
-
-            yield return null;
-        }
-
-        #endregion
     }
 }

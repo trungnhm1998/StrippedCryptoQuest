@@ -7,10 +7,6 @@ using IndiGames.Core.SceneManagementSystem.ScriptableObjects;
 using IndiGames.Core.UI;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using System;
-using System.Collections;
-using UnityEngine.AddressableAssets;
-using UnityEngine.ResourceManagement.AsyncOperations;
 #if UNITY_EDITOR
 using IndiGames.Core.EditorTools;
 #endif
@@ -27,17 +23,7 @@ namespace CryptoQuest.Map.CheckPoint
         void FinishBackToCheckPoint();
     }
 
-    [Serializable]
-    class CheckPointData
-    {
-        public string LastSceneGuid;
-        public string LastSceneName;
-        public Vector3 LastPosition;
-        public int LastDirection;
-        public string CurrentSceneGuid;
-    }
-
-    public class CheckPointController : SaveObject, ICheckPointController
+    public class CheckPointController : MonoBehaviour, ICheckPointController
     {
         public bool IsBackToCheckPoint => _isBackToCheckPoint;
         public Vector3 CheckPointPosition => _lastCheckPointPosition;
@@ -64,15 +50,13 @@ namespace CryptoQuest.Map.CheckPoint
             _lastCheckPointFacingDirection = 1;
         }
 
-        protected override void OnEnable()
+        protected void OnEnable()
         {
-            base.OnEnable();
             _loadSceneEvent.LoadingRequested += SaveNewLoadedSceneForCheckpoint;
         }
 
-        protected override void OnDisable()
+        protected void OnDisable()
         {
-            base.OnDisable();
             _loadSceneEvent.LoadingRequested -= SaveNewLoadedSceneForCheckpoint;
         }
 
@@ -90,7 +74,6 @@ namespace CryptoQuest.Map.CheckPoint
         private void SaveNewLoadedSceneForCheckpoint(SceneScriptableObject nextScene)
         {
             _currentScene = nextScene;
-            SaveSystem?.SaveObject(this);
             Debug.Log("Checkpoint: Set current scene " + nextScene.name);
         }
 
@@ -101,7 +84,6 @@ namespace CryptoQuest.Map.CheckPoint
             _lastCheckPointScene = _currentScene;
             _lastCheckPointPosition = position;
             _lastCheckPointFacingDirection = facingDirection;
-            SaveSystem?.SaveObject(this);
             Debug.Log($"Checkpoint: Save checkpoint at {_lastSceneCheckPointName} at {position.ToString()}");
         }
 
@@ -136,50 +118,5 @@ namespace CryptoQuest.Map.CheckPoint
                 _loadSceneEvent.RequestLoad(_lastCheckPointScene);
             }
         }
-
-        #region SaveLoad
-        public override string Key => "CheckPoint";
-
-        public override string ToJson()
-        {
-            var checkPointData = new CheckPointData()
-            {
-                LastSceneGuid = _lastCheckPointScene.Guid,
-                LastSceneName = _lastSceneCheckPointName,
-                LastPosition = _lastCheckPointPosition,
-                LastDirection = _lastCheckPointFacingDirection,
-                CurrentSceneGuid = _currentScene.Guid
-            };
-            return JsonUtility.ToJson(checkPointData);
-        }
-
-        public override IEnumerator CoFromJson(string json)
-        {
-            if (!string.IsNullOrEmpty(json))
-            {
-                var checkPointData = new CheckPointData();
-                JsonUtility.FromJsonOverwrite(json, checkPointData);
-                var lastSoHandle = Addressables.LoadAssetAsync<SceneScriptableObject>(checkPointData.LastSceneGuid);
-                yield return lastSoHandle;
-                if (lastSoHandle.Status == AsyncOperationStatus.Succeeded)
-                {
-                   _lastCheckPointScene = lastSoHandle.Result;
-                }
-                var currentSoHandle = Addressables.LoadAssetAsync<SceneScriptableObject>(checkPointData.CurrentSceneGuid);
-                yield return currentSoHandle;
-                if (currentSoHandle.Status == AsyncOperationStatus.Succeeded)
-                {
-                    _currentScene = currentSoHandle.Result;
-                }
-                _lastSceneCheckPointName = checkPointData.LastSceneName;
-                _lastCheckPointPosition = checkPointData.LastPosition;
-                _lastCheckPointFacingDirection = checkPointData.LastDirection;
-                if(_lastCheckPointScene != _defaultCheckpoint) 
-                {
-                    BackToCheckPoint();
-                }
-            }
-        }
-        #endregion
     }
 }

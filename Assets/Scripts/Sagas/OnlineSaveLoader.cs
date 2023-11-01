@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Net;
+using CryptoQuest.Core;
 using CryptoQuest.Networking;
 using CryptoQuest.Networking.Actions;
 using CryptoQuest.Networking.API;
@@ -51,11 +52,7 @@ namespace CryptoQuest.Sagas
         {
             var restClient = ServiceProvider.GetService<IRestClient>();
             restClient
-                .Get(Accounts.USER_SAVE_DATA)
-                .Subscribe(LoadSave, OnError, OnCompleted);
-            
-            restClient
-                .Get(Accounts.CHARACTERS)
+                .Get<UserSaveDataResponse>(Accounts.USER_SAVE_DATA)
                 .Subscribe(LoadSave, OnError, OnCompleted);
         }
 
@@ -68,18 +65,24 @@ namespace CryptoQuest.Sagas
             Debug.Log(obj.Message);
         }
 
-        private void LoadSave(string s)
+        private void LoadSave(UserSaveDataResponse res)
         {
-            // if (res.code != (int)HttpStatusCode.OK) return;
-            // var restClient = ServiceProvider.GetService<IRestClient>();
-            // restClient
-            //     .Get<SaveDataResponse>(Accounts.USER_SAVE_DATA + "/" + res.data.ids[0])
-            //     .Subscribe(LoadIntoSaveSystem);
+            if (res.code != (int)HttpStatusCode.OK) return;
+            var restClient = ServiceProvider.GetService<IRestClient>();
+            restClient
+                .Get<SaveDataResponse>(Accounts.USER_SAVE_DATA + "/" + res.data.ids[0])
+                .Subscribe(LoadIntoSaveSystem);
         }
 
         private void LoadIntoSaveSystem(SaveDataResponse res)
         {
-            if (res.GameData == null) return;
+            var saveSystem = ServiceProvider.GetService<ISaveSystem>();
+            if (res.GameData != null)
+            {
+                // TODO: check save file then restore
+            }
+            saveSystem?.LoadGame();
+            ActionDispatcher.Dispatch(new GetProfileSucceed());
         }
     }
 }
