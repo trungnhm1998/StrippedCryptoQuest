@@ -1,10 +1,6 @@
-using CryptoQuest.Gameplay.Inventory.Currency;
-using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
 using CryptoQuest.Item;
 using CryptoQuest.Shop.UI.Panels.PreviewCharacter;
-using CryptoQuest.UI.Menu.Panels.Status;
-using System.Collections;
-using System.Collections.Generic;
+using CryptoQuest.UI.Menu;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.Localization;

@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
+namespace CryptoQuest.Menus.Status.UI.Equipment
 {
     public class UIEquipmentSlotButton : MultiInputButton
     {

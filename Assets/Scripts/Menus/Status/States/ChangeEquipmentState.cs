@@ -1,6 +1,6 @@
-﻿using CryptoQuest.UI.Menu.Panels.Status;
+﻿using CryptoQuest.Menus.Status.UI;
 
-namespace CryptoQuest.UI.Menu.MenuStates.StatusStates
+namespace CryptoQuest.Menus.Status.States
 {
     public class ChangeEquipmentState : StatusStateBase
     {
@@ -13,15 +13,13 @@ namespace CryptoQuest.UI.Menu.MenuStates.StatusStates
             StatusPanel.EquipmentsInventoryPanel.Show();
         }
 
-        public override void HandleCancel()
+        private void HandleCancel()
         {
-            base.HandleCancel();
-            MenuStateMachine.RequestStateChange(StatusMenuStateMachine.Equipment);
+            fsm.RequestStateChange(StatusMenuStateMachine.Equipment);
         }
 
         public override void OnExit()
         {
-            base.OnExit();
             StatusPanel.CharacterEquipmentsPanel.Show();
             StatusPanel.EquipmentsInventoryPanel.Hide();
         }

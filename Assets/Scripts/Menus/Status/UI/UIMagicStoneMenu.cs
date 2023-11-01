@@ -1,7 +1,7 @@
 ﻿using CryptoQuest.Input;
 using UnityEngine;
 
-namespace CryptoQuest.UI.Menu.Panels.Status
+namespace CryptoQuest.Menus.Status.UI
 {
     public class UIMagicStoneMenu : MonoBehaviour
     {

@@ -1,10 +1,11 @@
 ﻿using CryptoQuest.Item.Equipment;
+using CryptoQuest.UI.Menu;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Localization.Components;
 using UnityEngine.UI;
 
-namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
+namespace CryptoQuest.Menus.Status.UI.Equipment
 {
     public class UIEquipment : MonoBehaviour
     {

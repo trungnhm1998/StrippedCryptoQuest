@@ -1,14 +1,13 @@
 ﻿using System.Collections.Generic;
-using System.Threading;
 using CryptoQuest.Battle.Components;
 using CryptoQuest.Gameplay.Inventory;
 using CryptoQuest.Item.Equipment;
 using CryptoQuest.System;
-using CryptoQuest.UI.Menu.Panels.Status.Stats;
+using CryptoQuest.UI.Character;
 using IndiGames.GameplayAbilitySystem.AttributeSystem;
 using UnityEngine;
 
-namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
+namespace CryptoQuest.UI.Menu
 {
     public class UIEquipmentPreviewer : MonoBehaviour
     {

@@ -3,7 +3,7 @@ using CryptoQuest.Item.Equipment;
 using CryptoQuest.Menu;
 using UnityEngine;
 
-namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
+namespace CryptoQuest.Menus.Status.UI.Equipment
 {
     // wrapper for UIEquipment
     public class UIEquipmentItem : MonoBehaviour
