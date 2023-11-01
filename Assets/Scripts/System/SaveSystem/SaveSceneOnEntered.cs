@@ -1,4 +1,6 @@
-﻿using IndiGames.Core.SceneManagementSystem.Events.ScriptableObjects;
+﻿using CryptoQuest.Core;
+using CryptoQuest.System.SaveSystem.Actions;
+using IndiGames.Core.SceneManagementSystem.Events.ScriptableObjects;
 using IndiGames.Core.SceneManagementSystem.ScriptableObjects;
 using UnityEngine;
 
@@ -17,8 +19,7 @@ namespace CryptoQuest.System.SaveSystem
 
         private void SaveCurrentScene(SceneScriptableObject sceneToLoad)
         {
-            _saveSystem.SaveData.LastExploreScene = sceneToLoad.Guid;
-            _saveSystem.SaveGame();
+            ActionDispatcher.Dispatch(new SaveSceneAction(sceneToLoad));
         }
     }
 }

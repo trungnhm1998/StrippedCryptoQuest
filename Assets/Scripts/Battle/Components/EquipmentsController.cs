@@ -14,6 +14,8 @@ using ESlotType =
     CryptoQuest.Item.Equipment.EquipmentSlot.EType;
 using ECategory = CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Type.EEquipmentCategory;
 using CryptoQuest.Gameplay.PlayerParty;
+using CryptoQuest.Core;
+using CryptoQuest.System.SaveSystem.Actions;
 
 namespace CryptoQuest.Battle.Components
 {
@@ -171,10 +173,9 @@ namespace CryptoQuest.Battle.Components
             equipment.SetEquippedHeroUnitId(_hero.Spec.Id);
             ApplyEquipmentEffectToCharacter(equipment);
             var partyController = (PartyManager) ServiceProvider.GetService<IPartyController>();
-            var saveSystem = ServiceProvider.GetService<ISaveSystem>();
-            if(saveSystem != null && partyController != null)
+            if(partyController != null)
             {
-                saveSystem.SaveObject(partyController);
+                ActionDispatcher.Dispatch(new SavePartyAction(partyController));
             }
         }
 
@@ -239,10 +240,9 @@ namespace CryptoQuest.Battle.Components
             equipment.ResetEquippedHeroUnitId();
             Removed?.Invoke(equipment);
             var partyController = (PartyManager)ServiceProvider.GetService<IPartyController>();
-            var saveSystem = ServiceProvider.GetService<ISaveSystem>();
-            if (saveSystem != null && partyController != null)
+            if (partyController != null)
             {
-                saveSystem.SaveObject(partyController);
+                ActionDispatcher.Dispatch(new SavePartyAction(partyController));
             }
         }
 

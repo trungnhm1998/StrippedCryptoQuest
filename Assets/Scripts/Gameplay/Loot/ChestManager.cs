@@ -1,8 +1,11 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Codice.CM.Common;
+using CryptoQuest.Core;
 using CryptoQuest.Gameplay.NPC.Chest;
 using CryptoQuest.Gameplay.Reward;
+using CryptoQuest.System.SaveSystem.Actions;
 using UnityEngine;
 
 namespace CryptoQuest.Gameplay.Loot
@@ -13,10 +16,12 @@ namespace CryptoQuest.Gameplay.Loot
         public List<string> OpenedChests = new();
     }
 
-    public class ChestManager : SaveObject
+    public class ChestManager : MonoBehaviour
     {
         [SerializeField] private LootDatabase _lootDatabase;
-        [SerializeField] private ChestSave _saveData; // TODO: Move this to save manager
+
+        [HideInInspector] public ChestSave SaveData;
+        private TinyMessenger.TinyMessageSubscriptionToken _listenToLoadCompletedEventToken;
 
         private IRewardManager _rewardManager;
 
@@ -25,23 +30,33 @@ namespace CryptoQuest.Gameplay.Loot
             _rewardManager ??= GetComponent<IRewardManager>();
         }
 
-        protected override void OnEnable()
+        protected void OnEnable()
         {
-            base.OnEnable();
             ChestBehaviour.LoadingChest += LoadChest;
             ChestBehaviour.Opening += AddLoots;
         }
 
-        protected override void OnDisable()
+        protected void OnDisable()
         {
-            base.OnDisable();
             ChestBehaviour.LoadingChest -= LoadChest;
             ChestBehaviour.Opening -= AddLoots;
         }
 
+        private void Start()
+        {
+            _listenToLoadCompletedEventToken = ActionDispatcher.Bind<LoadChestCompletedAction>(_ => LoadChest());
+            ActionDispatcher.Dispatch(new LoadChestAction(this));
+        }
+
+        private void LoadChest()
+        {
+            ActionDispatcher.Unbind(_listenToLoadCompletedEventToken);
+            // TODO: save data has restored, not sure how to handle it
+        }
+
         private void LoadChest(ChestBehaviour chest)
         {
-            if (_saveData.OpenedChests.Contains(chest.GUID))
+            if (SaveData.OpenedChests.Contains(chest.GUID))
                 chest.Opened?.Invoke();
         }
 
@@ -67,26 +82,8 @@ namespace CryptoQuest.Gameplay.Loot
             // TODO: This method should be async wait for server to add the loot into inventory first
             _rewardManager.Reward(loots.LootInfos);
             chest.Opened?.Invoke();
-            _saveData.OpenedChests.Add(chest.GUID);
-            SaveSystem?.SaveObject(this);
+            SaveData.OpenedChests.Add(chest.GUID);
+            ActionDispatcher.Dispatch(new SaveChestAction(this));
         }
-
-        #region SaveSystem        
-        public override string Key { get { return "Chest"; } }
-
-        public override string ToJson()
-        {
-            return JsonUtility.ToJson(_saveData);
-        }
-
-        public override IEnumerator CoFromJson(string json)
-        {
-            if (!string.IsNullOrEmpty(json)) 
-            {
-                JsonUtility.FromJsonOverwrite(json, _saveData);                
-            }
-            yield return null;
-        }
-        #endregion
     }
 }
