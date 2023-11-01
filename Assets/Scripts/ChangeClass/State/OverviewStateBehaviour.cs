@@ -14,15 +14,15 @@ namespace CryptoQuest.ChangeClass.StateMachine
         {
             _animator = animator;
             _stateController = _animator.GetComponent<ChangeClassStateController>();
+            _stateController.Manager.OpenChangeClassEvent += ChangeState;
             _input = _stateController.Input;
-            _input.SubmitEvent += ChangeState;
             _input.CancelEvent += ExitState;
         }
 
         public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
-            _input.SubmitEvent -= ChangeState;
             _input.CancelEvent -= ExitState;
+            _stateController.Manager.OpenChangeClassEvent -= ChangeState;
         }
 
         private void ChangeState()

@@ -1,10 +1,13 @@
 using UnityEngine;
+using UnityEngine.Localization;
 
 
 namespace CryptoQuest.ChangeClass.StateMachine
 {
     public class ChangeClassStateBehaviour : StateMachineBehaviour
     {
+        [SerializeField] private LocalizedString _currentStateMessage;
+        [SerializeField] private LocalizedString _overviewMessage;
         private ChangeClassStateController _stateController;
         private ChangeClassInputManager _input;
         private Animator _animator;
@@ -18,6 +21,8 @@ namespace CryptoQuest.ChangeClass.StateMachine
             _input = _stateController.Input;
             _input.SubmitEvent += ChangeState;
             _input.CancelEvent += ExitState;
+            _stateController.DialogController.Dialogue
+                .SetMessage(_currentStateMessage).Show();
         }
 
         public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -33,6 +38,8 @@ namespace CryptoQuest.ChangeClass.StateMachine
 
         private void ExitState()
         {
+            _stateController.DialogController.Dialogue
+                .SetMessage(_overviewMessage).Show();
             _animator.SetTrigger(_exit);
         }
     }
