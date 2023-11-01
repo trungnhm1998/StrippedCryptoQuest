@@ -1,18 +1,16 @@
-using CryptoQuest.UI.Menu.Panels.Status;
+using CryptoQuest.Menus.Status.UI;
+using FSM;
 
-namespace CryptoQuest.UI.Menu.MenuStates.StatusStates
+namespace CryptoQuest.Menus.Status.States
 {
     /// <summary>
     /// Act as a context for all the sub states in the status menu.
     /// </summary>
-    public class StatusMenuStateMachine : MenuStateMachine
+    public class StatusMenuStateMachine : StateMachine
     {
-        public static readonly string NavStatus = "NavStatus";
         public static readonly string Status = "Status"; // Ghost state, not used.
         public static readonly string Equipment = "Equipment";
         public static readonly string EquipmentSelection = "EquipmentSelection";
-
-        private new readonly UIStatusMenu _panel;
 
         /// <summary>
         /// Setup the state machine for status menu.
@@ -21,7 +19,7 @@ namespace CryptoQuest.UI.Menu.MenuStates.StatusStates
         public StatusMenuStateMachine(UIStatusMenu panel) : base(panel)
         {
             // Could create a factory here if new keyword becomes a problem.
-            AddState(NavStatus, new GenericUnfocusState(Equipment));
+            // And problems I means GC problems.
             AddState(Status, new FocusStatusState(panel));
             AddState(Equipment, new InspectPartyMemberState(panel));
             AddState(EquipmentSelection, new ChangeEquipmentState(panel));

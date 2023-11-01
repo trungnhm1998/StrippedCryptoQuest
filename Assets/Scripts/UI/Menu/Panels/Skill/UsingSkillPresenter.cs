@@ -3,10 +3,9 @@ using CryptoQuest.AbilitySystem.Abilities;
 using CryptoQuest.Battle.Components;
 using CryptoQuest.Gameplay.PlayerParty;
 using CryptoQuest.System;
-using CryptoQuest.UI.Menu.Panels.Skill;
 using UnityEngine;
 
-namespace CryptoQuest.UI.Menu.Panels.Item
+namespace CryptoQuest.UI.Menu.Panels.Skill
 {
     public class UsingSkillPresenter : MonoBehaviour
     {

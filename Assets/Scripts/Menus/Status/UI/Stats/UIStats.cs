@@ -1,7 +1,7 @@
 ﻿using CryptoQuest.UI.Character;
 using UnityEngine;
 
-namespace CryptoQuest.UI.Menu.Panels.Status.Stats
+namespace CryptoQuest.Menus.Status.UI.Stats
 {
     public class UIStats : MonoBehaviour
     {

@@ -4,7 +4,7 @@ using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Type;
 using CryptoQuest.Item.Equipment;
 using UnityEngine;
 
-namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
+namespace CryptoQuest.Menus.Status.UI.Equipment
 {
     public class UICharacterEquipmentSlot : MonoBehaviour
     {

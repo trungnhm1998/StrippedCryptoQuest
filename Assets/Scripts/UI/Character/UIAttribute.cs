@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace CryptoQuest.UI.Menu.Panels.Status.Stats
+namespace CryptoQuest.UI.Character
 {
     public interface IAttributeUI
     {

@@ -1,5 +1,4 @@
 using CryptoQuest.UI.Menu.Panels.DimensionBox.Interfaces;
-using CryptoQuest.UI.Menu.Panels.Status;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;

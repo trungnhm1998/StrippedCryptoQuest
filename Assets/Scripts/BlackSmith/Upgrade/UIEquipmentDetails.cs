@@ -1,15 +1,9 @@
-using System.Collections;
 using System.Collections.Generic;
 using AssetReferenceSprite;
 using CryptoQuest.Item.Equipment;
-using CryptoQuest.UI.Menu.Panels.Status.Stats;
-using IndiGames.GameplayAbilitySystem.AttributeSystem;
-using IndiGames.GameplayAbilitySystem.AttributeSystem.Components;
-using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
-using IndiGames.GameplayAbilitySystem.EffectSystem;
+using CryptoQuest.UI.Character;
 using TMPro;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
 using UnityEngine.Localization.Components;
 using UnityEngine.UI;
 

@@ -1,9 +1,8 @@
 ﻿using CryptoQuest.Tavern.Interfaces;
-using CryptoQuest.UI.Menu.Panels.Status;
+using CryptoQuest.UI.Menu;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Localization.Components;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace CryptoQuest.Tavern.UI

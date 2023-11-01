@@ -1,8 +1,6 @@
-using CryptoQuest.Item.Equipment;
 using CryptoQuest.Item;
-using CryptoQuest.UI.Menu.Panels.Status;
-using System.Collections;
-using System.Collections.Generic;
+using CryptoQuest.Item.Equipment;
+using CryptoQuest.UI.Menu;
 using UnityEngine;
 
 namespace CryptoQuest.Shop.UI.Item
@@ -30,10 +28,10 @@ namespace CryptoQuest.Shop.UI.Item
         {
             SetupTooltip(ETooltipType.Equipment);
             _tooltip.WithLevel(equipment.Level)
-               .WithDescription(equipment.Data.DisplayName)
-               .WithDisplaySprite(equipment.Data.Image)
-               .WithRarity(equipment.Rarity)
-               .Show();
+                .WithDescription(equipment.Data.DisplayName)
+                .WithDisplaySprite(equipment.Data.Image)
+                .WithRarity(equipment.Rarity)
+                .Show();
         }
 
         public void Preview(ConsumableInfo consumable)
@@ -48,6 +46,6 @@ namespace CryptoQuest.Shop.UI.Item
         public void Hide()
         {
             _tooltip.Hide();
-        }    
+        }
     }
 }

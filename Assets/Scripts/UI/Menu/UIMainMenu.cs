@@ -18,6 +18,8 @@ namespace CryptoQuest.UI.Menu
             _tabNavigation.OpenTab(_defaultTabToOpen);
             _tabNavigation.OpeningTab += DisableTabNavigation;
             FocusTab += _tabNavigation.OpenTab;
+
+            foreach (var tab in _tabNavigation.Tabs) tab.GetComponent<UITabFocus>().Focus();
         }
 
         private void OnDisable()

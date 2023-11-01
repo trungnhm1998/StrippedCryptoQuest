@@ -1,9 +1,6 @@
-using CryptoQuest.Item;
-using CryptoQuest.UI.Menu.Panels.Status.Equipment;
-using DG.Tweening;
 using System.Collections;
-using System.Collections.Generic;
-using TMPro;
+using CryptoQuest.Item;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.Localization;
@@ -11,7 +8,7 @@ using UnityEngine.Localization.Components;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.UI;
 
-namespace CryptoQuest.UI.Menu.Panels.Status
+namespace CryptoQuest.UI.Menu
 {
     public interface ITooltip
     {

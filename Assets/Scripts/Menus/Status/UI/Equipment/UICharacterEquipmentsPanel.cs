@@ -3,11 +3,12 @@ using CryptoQuest.Battle.Components;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Type;
 using CryptoQuest.Item.Equipment;
 using CryptoQuest.Menu;
-using CryptoQuest.UI.Menu.MenuStates.StatusStates;
+using CryptoQuest.Menus.Status.States;
+using CryptoQuest.UI.Menu;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
+namespace CryptoQuest.Menus.Status.UI.Equipment
 {
     /// <summary>
     /// Show currently equipped equipments
@@ -26,6 +27,7 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
 
         // Tooltips
         private ITooltip _tooltip;
+        private ITooltip Tooltip => _tooltip ??= TooltipFactory.Instance.GetTooltip(ETooltipType.Equipment);
         [SerializeField] private RectTransform _tooltipSafeArea;
         [SerializeField] private Vector2 _minPivotTooltip = Vector2.zero;
         [SerializeField] private Vector2 _maxPivotTooltip = Vector2.one;
@@ -52,7 +54,6 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
         private void Awake()
         {
             ResetEquipmentsUI();
-            _tooltip = TooltipFactory.Instance.GetTooltip(ETooltipType.Equipment);
         }
 
 #if UNITY_EDITOR
@@ -61,7 +62,7 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
 
         private void OnEnable()
         {
-            _tooltip.WithBoderPointer(true)
+            Tooltip.WithBoderPointer(true)
                 .WithLocalPosition(Vector3.zero)
                 .WithScale(Vector3.one)
                 .WithRangePivot(_minPivotTooltip, _maxPivotTooltip);
@@ -83,14 +84,14 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
             // TODO: REFACTOR EQUIPMENTS
             SetEquipmentsUI(_characterPanel.InspectingHero);
 
-            _tooltip.SetSafeArea(_tooltipSafeArea);
+            Tooltip.SetSafeArea(_tooltipSafeArea);
             _equipmentSlotParent.SetActive(true);
             _defaultSelection.Select();
         }
 
         public void Hide()
         {
-            _tooltip.Hide();
+            Tooltip.Hide();
             _equipmentSlotParent.SetActive(false);
         }
 
@@ -117,7 +118,7 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
             HideToolTipAndDeselectCurrentSelectedButton();
             ModifyingEquipmentCategory = category;
             EquippingSlot = slotType;
-            _mainPanel.State.RequestStateChange(StatusMenuStateMachine.EquipmentSelection);
+            _mainPanel.RequestStateChange(StatusMenuStateMachine.EquipmentSelection);
         }
 
         private void SetEquipmentsUI(HeroBehaviour hero)
@@ -148,7 +149,7 @@ namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
 
         private MultiInputButton HideToolTipAndDeselectCurrentSelectedButton()
         {
-            _tooltip.Hide();
+            Tooltip.Hide();
             var currentSelected = EventSystem.current.currentSelectedGameObject;
             if (currentSelected == null) return null;
             var button = currentSelected.GetComponent<MultiInputButton>();

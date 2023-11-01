@@ -1,8 +1,6 @@
 using System.Collections;
 using CryptoQuest.Menu;
 using UnityEngine;
-using UnityEngine.UI;
-using CryptoQuest.UI.Menu.Panels.Status;
 
 namespace CryptoQuest.UI.Menu.Panels.DimensionBox.EquipmentTransferSection
 {

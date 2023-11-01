@@ -1,8 +1,7 @@
 ﻿using System.Collections;
 using CryptoQuest.Menu;
-using CryptoQuest.UI.Menu.Panels.Status;
+using CryptoQuest.UI.Menu;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace CryptoQuest.Tavern.UI.CharacterReplacement
 {

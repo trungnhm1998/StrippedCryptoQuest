@@ -1,12 +1,13 @@
+using System.Collections.Generic;
 using CryptoQuest.Battle.Components;
 using CryptoQuest.Item.Equipment;
-using CryptoQuest.UI.Menu.Panels.Status.Equipment;
-using CryptoQuest.UI.Menu.Panels.Status.Stats;
+using CryptoQuest.Menus.Status.UI.Equipment;
+using CryptoQuest.Menus.Status.UI.Stats;
+using CryptoQuest.UI.Character;
+using CryptoQuest.UI.Menu;
 using IndiGames.GameplayAbilitySystem.AttributeSystem;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.Components;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
-using System;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Localization;
 using UnityEngine.Localization.Components;

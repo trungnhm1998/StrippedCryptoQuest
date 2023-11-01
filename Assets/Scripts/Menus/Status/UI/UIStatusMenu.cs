@@ -1,34 +1,46 @@
 using CryptoQuest.Battle.Components;
+using CryptoQuest.Input;
+using CryptoQuest.Menus.Status.States;
+using CryptoQuest.Menus.Status.UI.Equipment;
 using CryptoQuest.UI.Character;
-using CryptoQuest.UI.Menu.MenuStates.StatusStates;
-using CryptoQuest.UI.Menu.Panels.Status.Equipment;
+using CryptoQuest.UI.Menu;
 using FSM;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.Components;
 using UnityEngine;
 
-namespace CryptoQuest.UI.Menu.Panels.Status
+namespace CryptoQuest.Menus.Status.UI
 {
     /// <summary>
     /// The context that hopefully holds all the UI information for the Status Menu. This is a mono behaviour class that
     /// can controls all the UI element or at least delegate back the reference to the correct state when needed.
     /// </summary>
-    public class UIStatusMenu : UIMenuPanel
+    public class UIStatusMenu : UIMenuPanelBase
     {
         [field: SerializeField, Header("State Context")]
         public UICharacterEquipmentsPanel CharacterEquipmentsPanel { get; private set; }
+        [field: SerializeField] public InputMediatorSO Input { get; private set; }
 
         [SerializeField] private UIEquipmentsInventory _equipmentsInventoryPanel;
         public UIEquipmentsInventory EquipmentsInventoryPanel => _equipmentsInventoryPanel;
         [field: SerializeField] public UIStatusCharacter CharacterPanel { get; private set; }
         [SerializeField] private AttributeChangeEvent _attributeChangeEvent;
 
+        private StateMachine _stateMachine;
+
         private void Awake()
         {
-            CharacterPanel.InspectingCharacter += InspectCharacter;
+            _stateMachine = new StatusMenuStateMachine(this);
         }
 
-        private void OnDestroy()
+        private void OnEnable()
         {
+            CharacterPanel.InspectingCharacter += InspectCharacter;
+            _stateMachine.Init();
+        }
+
+        private void OnDisable()
+        {
+            _stateMachine.OnExit();
             CharacterPanel.InspectingCharacter -= InspectCharacter;
         }
 
@@ -40,20 +52,6 @@ namespace CryptoQuest.UI.Menu.Panels.Status
             // CharacterEquipmentsPanel.SetEquipmentsUI(_inspectingHero.Equipments);
         }
 
-
-        private StatusMenuStateMachine _state;
-        public StatusMenuStateMachine State => _state;
-
-        /// <summary>
-        /// Return the specific state machine for this panel.
-        /// </summary>
-        /// <param name="menuManager"></param>
-        /// <returns>The <see cref="StatusMenuStateMachine"/> which derived
-        /// <see cref="CryptoQuest.UI.Menu.MenuStates.MenuStateMachine"/> derived
-        /// from <see cref="StateMachine"/> which also derived from <see cref="StateBase"/></returns>
-        public override StateBase<string> GetPanelState(MenuManager menuManager)
-        {
-            return _state ??= new StatusMenuStateMachine(this);
-        }
+        public void RequestStateChange(string state) => _stateMachine.RequestStateChange(state);
     }
 }

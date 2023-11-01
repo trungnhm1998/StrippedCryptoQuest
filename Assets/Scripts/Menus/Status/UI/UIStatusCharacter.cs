@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using CryptoQuest.Battle.Components;
 using CryptoQuest.Gameplay.PlayerParty;
+using CryptoQuest.Menus.Status.UI.Stats;
 using CryptoQuest.System;
 using CryptoQuest.UI.Character;
-using CryptoQuest.UI.Menu.Panels.Status.Stats;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.Components;
 using TMPro;
 using UnityEngine;
@@ -12,7 +12,7 @@ using UnityEngine.Localization;
 using UnityEngine.Localization.Components;
 using UnityEngine.UI;
 
-namespace CryptoQuest.UI.Menu.Panels.Status
+namespace CryptoQuest.Menus.Status.UI
 {
     public class UIStatusCharacter : MonoBehaviour
     {
@@ -37,12 +37,13 @@ namespace CryptoQuest.UI.Menu.Panels.Status
         {
             get
             {
-                return _inspectingHero ??= _party.Slots[CurrentIndex].HeroBehaviour;
+                return _inspectingHero ??= Party.Slots[CurrentIndex].HeroBehaviour;
             }
         }
         private AttributeSystemBehaviour _inspectingAttributeSystem;
         private int _currentIndex;
         private IPartyController _party;
+        private IPartyController Party => _party ??= ServiceProvider.GetService<IPartyController>();
 
         public int CurrentIndex
         {
@@ -50,17 +51,12 @@ namespace CryptoQuest.UI.Menu.Panels.Status
             private set
             {
                 if (value < 0)
-                    _currentIndex = _party.Size - 1;
-                else if (value >= _party.Size)
+                    _currentIndex = Party.Size - 1;
+                else if (value >= Party.Size)
                     _currentIndex = 0;
                 else
                     _currentIndex = value;
             }
-        }
-
-        private void Start()
-        {
-            _party = ServiceProvider.GetService<IPartyController>();
         }
 
         private void OnDisable()
@@ -85,13 +81,13 @@ namespace CryptoQuest.UI.Menu.Panels.Status
             do
             {
                 CurrentIndex += direction;
-                partySlot = _party.Slots[CurrentIndex];
+                partySlot = Party.Slots[CurrentIndex];
             } while (!partySlot.IsValid());
 
             return partySlot.HeroBehaviour;
         }
 
-        public void InspectCharacter(int index) => InspectCharacter(_party.Slots[index].HeroBehaviour);
+        public void InspectCharacter(int index) => InspectCharacter(Party.Slots[index].HeroBehaviour);
 
         private void InspectCharacter(HeroBehaviour hero)
         {

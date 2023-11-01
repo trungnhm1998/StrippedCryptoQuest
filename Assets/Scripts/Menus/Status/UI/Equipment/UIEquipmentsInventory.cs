@@ -6,11 +6,12 @@ using CryptoQuest.Gameplay.Inventory;
 using CryptoQuest.Item.Equipment;
 using CryptoQuest.Menu;
 using CryptoQuest.System;
+using CryptoQuest.UI.Menu;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-namespace CryptoQuest.UI.Menu.Panels.Status.Equipment
+namespace CryptoQuest.Menus.Status.UI.Equipment
 {
     /// <summary>
     /// Show all the equipments in the inventory

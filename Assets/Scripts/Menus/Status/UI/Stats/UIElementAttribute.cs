@@ -1,12 +1,11 @@
 ﻿using CryptoQuest.AbilitySystem.Attributes;
-using CryptoQuest.Gameplay;
 using IndiGames.GameplayAbilitySystem.AttributeSystem;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.Components;
 using TMPro;
 using UnityEngine;
 using AttributeScriptableObject = IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects.AttributeScriptableObject;
 
-namespace CryptoQuest.UI.Menu.Panels.Status.Stats
+namespace CryptoQuest.Menus.Status.UI.Stats
 {
     public class UIElementAttribute : MonoBehaviour
     {
