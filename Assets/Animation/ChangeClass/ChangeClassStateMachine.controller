@@ -87,6 +87,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e62d6122a135e674494e19368879befa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _message:
+    m_TableReference:
+      m_TableCollectionName: GUID:c227ea75769518e46bf78d6137f2e77c
+    m_TableEntryReference:
+      m_KeyId: 439927099392
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!1101 &-905552321746285202
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -236,6 +248,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe97c874eb6f72449b37f7fe969e3eec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _currentStateMessage:
+    m_TableReference:
+      m_TableCollectionName: GUID:c227ea75769518e46bf78d6137f2e77c
+    m_TableEntryReference:
+      m_KeyId: 153405804544
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  _overviewMessage:
+    m_TableReference:
+      m_TableCollectionName: GUID:c227ea75769518e46bf78d6137f2e77c
+    m_TableEntryReference:
+      m_KeyId: 10312929280
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!1102 &5860390468447278220
 AnimatorState:
   serializedVersion: 6
@@ -307,13 +340,13 @@ AnimatorStateMachine:
     m_Position: {x: 320, y: 120, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 5860390468447278220}
-    m_Position: {x: 610, y: 120, z: 0}
+    m_Position: {x: 320, y: 10, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 3066835632540249252}
-    m_Position: {x: 610, y: 280, z: 0}
+    m_Position: {x: 580, y: 10, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 6271290855956328397}
-    m_Position: {x: 890, y: 120, z: 0}
+    m_Position: {x: 580, y: 120, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []
@@ -389,3 +422,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6383860fbadb1144f9f6a8558e816b86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _message:
+    m_TableReference:
+      m_TableCollectionName: GUID:c227ea75769518e46bf78d6137f2e77c
+    m_TableEntryReference:
+      m_KeyId: 682634694656
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  references:
+    version: 2
+    RefIds: []
