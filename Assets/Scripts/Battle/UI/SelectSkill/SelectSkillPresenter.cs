@@ -82,6 +82,7 @@ namespace CryptoQuest.Battle.UI.SelectSkill
             _hero = hero;
             DestroyAllSkillButtons();
             hero.TryGetComponent(out HeroSkills skills);
+            //TODO: #2146 Filter not show field skill
             foreach (var skill in skills.Skills)
             {
                 var skillUI = Instantiate(_skillPrefab, _skillList.content);

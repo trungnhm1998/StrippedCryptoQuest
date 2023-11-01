@@ -16,6 +16,7 @@ using IndiGames.GameplayAbilitySystem.TagSystem.ScriptableObjects;
 using TinyMessenger;
 using UnityEngine;
 using Random = UnityEngine.Random;
+using CryptoQuest.Gameplay.Battle.Core.Helper;
 
 namespace CryptoQuest.AbilitySystem.Abilities
 {
@@ -102,6 +103,9 @@ namespace CryptoQuest.AbilitySystem.Abilities
 
         public void Execute(params AbilitySystemBehaviour[] characters)
         {
+            if (this.CheckSealedMagicSkill()) return;
+            if (this.CheckSealedPhysicSkill()) return;
+            
             BattleEventBus.RaiseEvent(new CastingSkillEvent()
             {
                 Character = _character,
