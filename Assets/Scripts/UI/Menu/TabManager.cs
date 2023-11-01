@@ -76,7 +76,12 @@ namespace CryptoQuest.UI.Menu
 
         private void OnOpenTab(UITabButton tab)
         {
-            if (_openingTab != null && tab != _openingTab) _openingTab.ManagedPanel.SetActive(false);
+            if (tab == _openingTab)
+            {
+                OpeningTab?.Invoke(tab);
+                return;
+            }
+            if (_openingTab != null) _openingTab.ManagedPanel.SetActive(false);
             if (tab.ManagedPanel.activeSelf == false) tab.ManagedPanel.SetActive(true);
             _openingTab = tab;
             OpeningTab?.Invoke(tab);

@@ -372,17 +372,6 @@ namespace CryptoQuest.Input
                 },
                 {
                     ""name"": """",
-                    ""id"": ""4543c461-12a1-4a8b-98cd-95aecfb52e16"",
-                    ""path"": ""<Mouse>/leftButton"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""MnK"",
-                    ""action"": ""Confirm"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""fbcaa16b-cdc6-4c80-8fb9-fb5128145eba"",
                     ""path"": ""<Gamepad>/buttonSouth"",
                     ""interactions"": """",

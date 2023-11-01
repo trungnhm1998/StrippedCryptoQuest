@@ -1,24 +1,19 @@
-using CryptoQuest.Menu;
 using UnityEngine;
-using UnityEngine.Events;
+using UnityEngine.UI;
 
 namespace CryptoQuest.Menus.Home.UI
 {
-    public class UICharacterCardButton : MultiInputButton
+    public class UICharacterCardButton : MonoBehaviour
     {
-        public static UnityAction<UICharacterCardButton> SelectedEvent;
-
+        [SerializeField] private Button _button;
         [SerializeField] private GameObject _selectedEffect;
 
-        public void CardButtonOnPressed()
+        public bool Interactable
         {
-            SelectedEvent?.Invoke(this);
-            _selectedEffect.SetActive(true);
+            get => _button.interactable;
+            set => _button.interactable = value;
         }
 
-        public void BackToNormalState()
-        {
-            _selectedEffect.SetActive(false);
-        }
+        public void EnableSelectingEffect(bool enable = true) => _selectedEffect.SetActive(enable);
     }
 }
