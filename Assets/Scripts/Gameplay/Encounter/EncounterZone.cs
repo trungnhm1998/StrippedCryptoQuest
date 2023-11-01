@@ -1,5 +1,8 @@
 using System;
+using CryptoQuest.Core;
+using CryptoQuest.System.SceneLoad;
 using IndiGames.Core.EditorTools.Attributes.ReadOnlyAttribute;
+using TinyMessenger;
 using UnityEngine;
 
 namespace CryptoQuest.Gameplay.Encounter
@@ -18,6 +21,7 @@ namespace CryptoQuest.Gameplay.Encounter
         [SerializeField] private string _encounterId;
         [SerializeField] private int _priority = 0;
         private EncounterInfo _encounterInfo;
+        private TinyMessageSubscriptionToken _token;
 
         /// <summary>
         /// When enter a map that contains encounter zone, we will try to load every encounter zone in that map
@@ -34,12 +38,15 @@ namespace CryptoQuest.Gameplay.Encounter
 
         private void OnEnable()
         {
-            SceneLoaderDispatch.SceneLoaded += LoadEncounterArea;
+            _token = ActionDispatcher.Bind<PostSceneLoadedAction>(HandleAction);
         }
+
+        private void HandleAction(PostSceneLoadedAction _)
+            => LoadEncounterArea();
 
         private void OnDisable()
         {
-            SceneLoaderDispatch.SceneLoaded -= LoadEncounterArea;
+            ActionDispatcher.Unbind(_token);
         }
 
         private void OnTriggerEnter2D(Collider2D other)

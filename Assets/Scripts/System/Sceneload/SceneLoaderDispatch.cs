@@ -1,14 +1,17 @@
-using System;
 using System.Collections;
+using CryptoQuest.Core;
 using IndiGames.Core.Events.ScriptableObjects;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
-namespace CryptoQuest
+namespace CryptoQuest.System.SceneLoad
 {
+    public class PostSceneLoadedAction : ActionBase
+    {
+    }
+
     public class SceneLoaderDispatch : MonoBehaviour
     {
-        public static Action SceneLoaded;
         [SerializeField] private AssetReferenceT<VoidEventChannelSO> _sceneLoadedEventAsset;
         private VoidEventChannelSO _sceneLoadedEvent;
 
@@ -27,7 +30,7 @@ namespace CryptoQuest
 
         private void OnSceneLoaded()
         {
-            SceneLoaded?.Invoke();
+            ActionDispatcher.Dispatch(new PostSceneLoadedAction());
         }
     }
 }
