@@ -1,27 +1,26 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using CryptoQuest.Core;
+using CryptoQuest.Sagas;
 using CryptoQuest.Tavern.Data;
 using CryptoQuest.Tavern.Interfaces;
 using UnityEngine;
 using UnityEngine.Localization;
 using Random = System.Random;
 
-namespace CryptoQuest.Tavern.Models
+namespace CryptoQuest.Tavern.Sagas
 {
-    public class MockGameCharacterModel : MonoBehaviour, IGameCharacterModel
+    public class GetWalletNftCharacters : SagaBase<NftCharacterAction>
     {
         [SerializeField] private int _dataLength;
         [SerializeField] private Sprite _classIcon;
         [SerializeField] private LocalizedString[] _localizedNames = new LocalizedString[4];
 
-        private List<IGameCharacterData> _gameData;
-        public List<IGameCharacterData> Data => _gameData;
+        private readonly List<IWalletCharacterData> _walletCharacters = new();
 
-        public IEnumerator CoGetData()
+        protected override void HandleAction(NftCharacterAction ctx)
         {
-            yield return new WaitForSeconds(1f);
-            _gameData = new List<IGameCharacterData>();
             InitMockData();
+            ActionDispatcher.Dispatch(new GetWalletNftCharactersSucceed(_walletCharacters));
         }
 
         private void InitMockData()
@@ -32,9 +31,9 @@ namespace CryptoQuest.Tavern.Models
                 LocalizedString name = _localizedNames[rand.Next(_localizedNames.Length - 1)];
                 int level = rand.Next(1, 99);
 
-                var obj = new GameCharacterData(_classIcon, name, level);
+                var obj = new WalletCharacterData(_classIcon, name, level);
 
-                _gameData.Add(obj);
+                _walletCharacters.Add(obj);
             }
         }
     }
