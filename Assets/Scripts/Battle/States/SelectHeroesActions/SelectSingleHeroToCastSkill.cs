@@ -22,7 +22,7 @@ namespace CryptoQuest.Battle.States.SelectHeroesActions
 
         public override void OnEnter()
         {
-            _selectHeroPresenter.Show(_selectedSkillUI.Skill.Parameters.SkillName);
+            _selectHeroPresenter.Show(_selectedSkillUI.Skill.SkillInfo.SkillName);
             _skillPresenter.Show(Hero, false);
             SelectHeroPresenter.ConfirmSelectCharacter += CastSkillOnHero;
         }

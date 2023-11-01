@@ -21,7 +21,6 @@ namespace CryptoQuest.Gameplay.Battle.Core
         public int ContinuesTurn = 1;
         public EEffectType EffectType;
         public CustomExecutionAttributeCaptureDef targetAttribute;
-        public string VfxId;
     }
 
     [Serializable]
@@ -31,14 +30,11 @@ namespace CryptoQuest.Gameplay.Battle.Core
         public LocalizedString SkillName;
         public LocalizedString SkillDescription;
         public Sprite SkillIcon;
-        public Elemental Element;
-        public SkillType SkillType;
+        public ESkillType SkillType;
         public SkillCategory Category;
         public float Cost;
-
         public EAbilityUsageScenario UsageScenarioSO;
-
-        // public BattleTargetTypeSO TargetType;
+        public int VfxId;
         public SkillParameters SkillParameters;
 
         public bool CheckUsageScenario(EAbilityUsageScenario usageScenario)

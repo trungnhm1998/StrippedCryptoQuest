@@ -20,7 +20,7 @@ namespace CryptoQuest.Battle.UI.SelectSkill
         {
             _skill = skill;
             _name.text = skill.name;
-            _nameStringEvent.StringReference = skill.Parameters.SkillName;
+            _nameStringEvent.StringReference = skill.SkillInfo.SkillName;
             _cost.text = skill.MpToCast.ToString();
         }
 
