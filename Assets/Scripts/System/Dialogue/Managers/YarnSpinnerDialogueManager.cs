@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using CryptoQuest.Events;
 using CryptoQuest.Gameplay;
 using CryptoQuest.Input;
+using CryptoQuest.System.CutsceneSystem;
 using CryptoQuest.System.CutsceneSystem.Events;
 using CryptoQuest.System.Dialogue.Events;
 using CryptoQuest.System.SaveSystem;
@@ -151,10 +152,28 @@ namespace CryptoQuest.System.Dialogue.Managers
             Instance.OnCompleteQuest(questName);
         }
 
+        [YarnCommand("choose")]
+        public static void Choose(string choiceId)
+        {
+            if (Instance == null)
+            {
+                Debug.LogWarning("YarnSpinnerDialogueManager::Choose: _instance is null");
+                return;
+            }
+
+            Instance.OnMadeChoice(choiceId);
+        }
+
         private void OnCompleteQuest(string questName)
         {
             Debug.Log($"YarnSpinnerDialogueManager::OnCompleteQuest: questName[{questName}]");
             _onCompleteQuestEventChannelSO.RaiseEvent(questName);
+        }
+
+        private void OnMadeChoice(string choiceId)
+        {
+            Debug.Log($"YarnSpinnerDialogueManager::OnMadeChoice: choiceId[{choiceId}]");
+            CutsceneChoiceController.MadeChoice?.Invoke(choiceId);
         }
 
         private void ShowReaction(string reactionName)
