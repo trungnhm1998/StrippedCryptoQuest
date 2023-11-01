@@ -10,28 +10,22 @@ namespace CryptoQuest.Gameplay.Encounter
     public class EncounterZone : MonoBehaviour
     {
         public static event Action<string> LoadingEncounterArea;
-        public static event Action EnterEncounterZone;
-        public static event Action ExitEncounterZone;
-        public static event Action<EncounterInfo> RegisterEncounterInfo;
-        public static event Action<EncounterInfo> UnregisterEncounterInfo;
+        public static event Action<string> EnterEncounterZone;
+        public static event Action<string> ExitEncounterZone;
+
 
         [Header("Area Configuration")] [SerializeField, ReadOnly]
-        private string _playerTag = "Player";
+        protected string _playerTag = "Player";
 
-        [SerializeField] private string _encounterId;
-        [SerializeField] private int _priority = 0;
+        [SerializeField] protected string _encounterId;
+
         private EncounterInfo _encounterInfo;
         private TinyMessageSubscriptionToken _token;
 
         /// <summary>
         /// When enter a map that contains encounter zone, we will try to load every encounter zone in that map
         /// </summary>
-        private void Awake()
-        {
-            _encounterInfo = new EncounterInfo(_encounterId, _priority);
-        }
-
-        private void LoadEncounterArea()
+        protected virtual void LoadEncounterArea()
         {
             LoadingEncounterArea?.Invoke(_encounterId);
         }
@@ -49,18 +43,16 @@ namespace CryptoQuest.Gameplay.Encounter
             ActionDispatcher.Unbind(_token);
         }
 
-        private void OnTriggerEnter2D(Collider2D other)
+        protected virtual void OnTriggerEnter2D(Collider2D other)
         {
             if (!other.gameObject.CompareTag(_playerTag)) return;
-            RegisterEncounterInfo?.Invoke(_encounterInfo);
-            EnterEncounterZone?.Invoke();
+            EnterEncounterZone?.Invoke(_encounterId);
         }
 
-        private void OnTriggerExit2D(Collider2D other)
+        protected virtual void OnTriggerExit2D(Collider2D other)
         {
             if (!other.gameObject.CompareTag(_playerTag)) return;
-            UnregisterEncounterInfo?.Invoke(_encounterInfo);
-            ExitEncounterZone?.Invoke();
+            ExitEncounterZone?.Invoke(_encounterId);
         }
 
         /// <summary>
@@ -70,24 +62,6 @@ namespace CryptoQuest.Gameplay.Encounter
         public void EncounterId(string encounterId)
         {
             _encounterId = encounterId;
-        }
-
-        public void Priority(int priority)
-        {
-            _priority = priority;
-        }
-    }
-
-    [Serializable]
-    public class EncounterInfo
-    {
-        public string EncounterId;
-        public int Priority;
-
-        public EncounterInfo(string encounterId, int priority)
-        {
-            EncounterId = encounterId;
-            Priority = priority;
         }
     }
 }
