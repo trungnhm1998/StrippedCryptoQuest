@@ -31,12 +31,14 @@ namespace CryptoQuest.Tavern.UI.CharacterReplacement
 
         private void GetInGameCharacters(GetInGameNftCharactersSucceed obj)
         {
-            _uiCharacterListGame.SetGameData(obj.InGameCharacters, true);
+            if (obj.InGameCharacters.Count <= 0) return;
+            _uiCharacterListGame.SetGameData(obj.InGameCharacters);
         }
 
         private void GetWalletCharacters(GetWalletNftCharactersSucceed obj)
         {
-            _uiCharacterListWallet.SetWalletData(obj.WalletCharacters, true);
+            if (obj.WalletCharacters.Count <= 0) return;
+            _uiCharacterListWallet.SetWalletData(obj.WalletCharacters);
         }
 
         private void OnDisable()

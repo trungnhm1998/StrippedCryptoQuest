@@ -9,14 +9,35 @@ namespace CryptoQuest.Tavern.UI.CharacterReplacement
         [SerializeField] private Transform _gameScrollContent;
         [SerializeField] private Transform _walletScrollContent;
 
-        public override void EnterTransferSection()
+        public void StateEntered()
         {
-            base.EnterTransferSection();
+            SetInteractableAllButtons(_walletScrollContent, false);
+
+            UITavernItem.Pressed += Transfer;
         }
 
-        public override void ExitTransferSection()
+        public void StateExited()
         {
-            base.ExitTransferSection();
+            SetInteractableAllButtons(_gameScrollContent, false);
+            SetInteractableAllButtons(_walletScrollContent, false);
+
+            UITavernItem.Pressed -= Transfer;
+        }
+
+        private void Transfer(UITavernItem currentItem)
+        {
+            Transform itemNewParent;
+            var isGameBoardAsCurrentParent = currentItem.Parent == _gameScrollContent;
+
+            if (isGameBoardAsCurrentParent)
+                itemNewParent = _walletScrollContent;
+            else
+                itemNewParent = _gameScrollContent;
+
+            currentItem.Transfer(itemNewParent);
+
+            SetInteractableAllButtons(_gameScrollContent, !isGameBoardAsCurrentParent);
+            SetInteractableAllButtons(_walletScrollContent, isGameBoardAsCurrentParent);
         }
 
         public override void ResetTransfer()
@@ -27,10 +48,6 @@ namespace CryptoQuest.Tavern.UI.CharacterReplacement
         {
             SetInteractableAllButtons(_gameScrollContent, false);
             SetInteractableAllButtons(_walletScrollContent, false);
-        }
-
-        public void OnInspectItem()
-        {
         }
 
         private void SetInteractableAllButtons(Transform boardList, bool isEnabled)

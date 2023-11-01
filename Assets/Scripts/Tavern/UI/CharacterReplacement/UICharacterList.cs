@@ -18,30 +18,17 @@ namespace CryptoQuest.Tavern.UI.CharacterReplacement
             _tooltip = TooltipFactory.Instance.GetTooltip(ETooltipType.Equipment);
         }
 
-        protected void AfterSaveData(bool isEquipmentListEmpty = false)
+        protected IEnumerator AfterSaveData()
         {
             CleanUpScrollView();
             RenderData();
+
+            yield return null;
+
+            yield return StartCoroutine(CoSetDefaultSelection());
             _tooltip.SetSafeArea(_tooltipSafeArea);
-            CheckEmptyGameEquipmentList(isEquipmentListEmpty);
         }
 
-        /// <summary>
-        /// If the equipment list of Game board is not empty then the Wallet board will not run the SetDefaultSelection() method.
-        /// </summary>
-        /// <param name="isGameEquipmentListEmpty"></param>
-        private void CheckEmptyGameEquipmentList(bool isGameEquipmentListEmpty = false)
-        {
-            if (!isGameEquipmentListEmpty) return;
-            SetDefaultSelection();
-        }
-
-        public void SetDefaultSelection(Transform targetScrollRect = null)
-        {
-            StartCoroutine(CoSetDefaultSelection(targetScrollRect));
-        }
-
-        // Must delay this method a bit to prevent bug of unity event system
         private IEnumerator CoSetDefaultSelection(Transform targetScrollRect = null)
         {
             var board = targetScrollRect ? targetScrollRect : _scrollRectContent;

@@ -10,7 +10,6 @@ namespace CryptoQuest.Tavern.States
 
         private static readonly int OverviewState = Animator.StringToHash("Overview");
 
-
         public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo,
             int layerIndex)
         {
@@ -18,6 +17,7 @@ namespace CryptoQuest.Tavern.States
 
             _controller = animator.GetComponent<TavernController>();
             _controller.UICharacterReplacement.gameObject.SetActive(true);
+            _controller.UICharacterReplacement.StateEntered();
 
             _controller.TavernInputManager.CancelEvent += CancelCharacterReplacement;
 
@@ -32,6 +32,7 @@ namespace CryptoQuest.Tavern.States
         public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo,
             int layerIndex)
         {
+            _controller.UICharacterReplacement.StateExited();
             _controller.TavernInputManager.CancelEvent -= CancelCharacterReplacement;
         }
     }
