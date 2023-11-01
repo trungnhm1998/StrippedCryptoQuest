@@ -8,12 +8,12 @@ using CryptoQuest.Gameplay.PlayerParty;
 using CryptoQuest.System;
 using IndiGames.Core.Events.ScriptableObjects;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace CryptoQuest.Menus.Home.UI
 {
     public class UIHomeMenuSortCharacter : MonoBehaviour
     {
-        public event Action SelectedEvent;
         public event Action ConfirmedEvent;
         [SerializeField] private VoidEventChannelSO _sortFailedEvent;
         [SerializeField] private VoidEventChannelSO _confirmSortEvent;
@@ -64,7 +64,6 @@ namespace CryptoQuest.Menus.Home.UI
 
         private void OnEnable()
         {
-            UICharacterCardButton.SelectedEvent += ConfirmSelect;
             _sortFailedEvent.EventRaised += ResetSortOrder;
 
             _sortKeysUi.SetActive(true);
@@ -73,7 +72,6 @@ namespace CryptoQuest.Menus.Home.UI
 
         private void OnDisable()
         {
-            UICharacterCardButton.SelectedEvent -= ConfirmSelect;
             _sortFailedEvent.EventRaised -= ResetSortOrder;
         }
 
@@ -99,30 +97,27 @@ namespace CryptoQuest.Menus.Home.UI
             characterUI.SetAvatar(hero.Avatar);
         }
 
-        private void EnableSortMode()
+        private void EnableSelectToSortMode()
         {
             _selectedCardButtonHolder =
                 _partySlots[CurrentIndex].transform.GetChild(0).GetComponent<UICharacterCardButton>();
-            _selectedCardButtonHolder.Select();
+            EventSystem.current.SetSelectedGameObject(_selectedCardButtonHolder.gameObject);
         }
 
         private void SetButtonsActive(bool isEnable)
         {
-            foreach (var button in _cardButtons)
-            {
-                button.enabled = isEnable;
-            }
+            foreach (var button in _cardButtons) button.Interactable = isEnable;
         }
 
         #region State involved methods
 
-        public void Init()
+        public void EnableSelectModeAndButtons()
         {
-            EnableSortMode();
+            EnableSelectToSortMode();
             SetButtonsActive(true);
         }
 
-        public void DeInit()
+        public void DisableButtonAndHideHints()
         {
             SetButtonsActive(false);
             _sortKeysUi.SetActive(false);
@@ -130,8 +125,6 @@ namespace CryptoQuest.Menus.Home.UI
 
         public void ConfirmSelect(UICharacterCardButton card)
         {
-            SelectedEvent?.Invoke();
-
             _topLine.SetActive(false);
             _sortKeysUi.SetActive(true);
 
@@ -179,21 +172,19 @@ namespace CryptoQuest.Menus.Home.UI
         {
             _topLine.SetActive(true);
 
+            _selectedCardButtonHolder.EnableSelectingEffect(false);
             PutToNormalLayer(_selectedCardButtonHolder.transform, CurrentIndex);
-
-            // Must delay a bit (0.2s) to avoid bug caused by exiting SortState and entering PreSortState immediately
-            // Invoke(nameof(OnConfirmSortOrder), .2f);
 
             ConfirmedEvent?.Invoke();
             // Server will listen to this event and validate sort
             _confirmSortEvent.RaiseEvent();
-            _selectedCardButtonHolder.BackToNormalState();
+            EnableSelectToSortMode();
         }
 
         public void CancelSort()
         {
             ResetSortOrder();
-            _selectedCardButtonHolder.BackToNormalState();
+            _selectedCardButtonHolder.EnableSelectingEffect(false);
         }
 
         public void SetDefaultSelection()
