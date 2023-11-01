@@ -226,7 +226,7 @@ namespace CryptoQuestEditor.System.YarnSpinner
         private void BindingData(YarnProjectConfigSO yarnProjectConfig)
         {
             GameObject currentGo = GameObject.Find(_currentGo.name);
-
+            
             PlayableDirector playableDirector = currentGo.GetComponentInChildren<PlayableDirector>();
 
             IEnumerable<PlayableBinding> assetOutputs = playableDirector.playableAsset.outputs;
