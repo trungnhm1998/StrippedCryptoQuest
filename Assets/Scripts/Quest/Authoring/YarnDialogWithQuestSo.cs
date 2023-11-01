@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using CryptoQuest.System.Dialogue.YarnManager;
 using UnityEngine;
 
 namespace CryptoQuest.Quest.Authoring
@@ -14,6 +15,7 @@ namespace CryptoQuest.Quest.Authoring
     public class YarnQuestDef
     {
         public string YarnNode;
+        public YarnProjectConfigSO YarnProjectConfig;
         public List<QuestSO> PossibleOutcomeQuests;
     }
 }

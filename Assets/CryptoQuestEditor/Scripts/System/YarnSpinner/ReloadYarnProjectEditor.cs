@@ -55,7 +55,7 @@ namespace CryptoQuestEditor.System.YarnSpinner
         private GameObject _currentGo;
         private readonly List<ObjectField> _objectFields = new();
 
-        [MenuItem("Crypto Quest/Reload Yarn Project")]
+        [MenuItem("Crypto Quest/Yarn Spinner Editor Tool %h")]
         public static ReloadYarnProjectEditor ShowWindow()
         {
             var windows = Resources.FindObjectsOfTypeAll<ReloadYarnProjectEditor>();
@@ -154,8 +154,6 @@ namespace CryptoQuestEditor.System.YarnSpinner
             AssetDatabase.CreateAsset(yarnProjectConfig, $"{folderPath}/{yarnProjectConfig.name}.asset");
             AssetDatabase.SaveAssets();
             AssetDatabase.Refresh();
-
-            YarnEditorUtility.CreateYarnProject();
         }
 
         private void Clear()
@@ -164,10 +162,7 @@ namespace CryptoQuestEditor.System.YarnSpinner
             _yarnProjectConfig.value = null;
         }
 
-        private void ReplaceAll()
-        {
-            Debug.Log("ReplaceAll");
-        }
+        private void ReplaceAll() => _replaceButton.text = "DON'T CLICK ME";
 
         private void Replace()
         {
