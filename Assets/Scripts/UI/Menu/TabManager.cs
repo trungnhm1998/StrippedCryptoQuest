@@ -1,4 +1,5 @@
 ﻿using System;
+using CryptoQuest.Input;
 using UnityEngine;
 
 namespace CryptoQuest.UI.Menu
@@ -10,74 +11,107 @@ namespace CryptoQuest.UI.Menu
     /// </summary>
     public class TabManager : MonoBehaviour
     {
-        public event Action<UITabButton> TabChanged;
-        [SerializeField] private bool _selectFirstTabOnStart = false;
+        public event Action<UITabButton> OpeningTab;
+        [SerializeField] private InputMediatorSO _inputMediator;
         private UITabButton[] _tabs;
-        public UITabButton[] Tabs => _tabs;
+        public UITabButton[] Tabs => _tabs ??= GetComponentsInChildren<UITabButton>(true);
+        private bool _interactable = true;
+
+        public bool Interactable
+        {
+            get => _interactable;
+            set
+            {
+                _interactable = value;
+                foreach (var tab in Tabs) tab.Interactable = value;
+                if (!value) return;
+                Tabs[CurrentSelectedIndex].Select();
+            }
+        }
+
         private UITabButton _currentSelectedTab;
 
         private void Awake()
         {
-            _tabs = GetComponentsInChildren<UITabButton>();
-            foreach (var tab in _tabs)
+            foreach (var tab in Tabs)
             {
+                tab.Pressed += OnOpenTab;
                 tab.Selected += CacheCurrentSelectedAndEnablePanel;
-                tab.Deselected += DisablePanelIfNotCurrentSelected;
-                tab.ManagedPanel.gameObject.SetActive(false);
             }
         }
 
         private void OnDestroy()
         {
-            foreach (var tab in _tabs)
+            foreach (var tab in Tabs)
             {
+                tab.Pressed -= OnOpenTab;
                 tab.Selected -= CacheCurrentSelectedAndEnablePanel;
-                tab.Deselected -= DisablePanelIfNotCurrentSelected;
             }
         }
 
-        private void Start()
+        private void OnEnable()
         {
-            if (_selectFirstTabOnStart) SelectFirstTab();
+            _inputMediator.TabChangeEvent += ChangeTab;
+            SelectTab(0);
         }
 
-        public void SelectFirstTab()
+        private void OnDisable()
         {
-            for (var index = 0; index < _tabs.Length; index++)
+            _inputMediator.TabChangeEvent -= ChangeTab;
+        }
+
+        private int _currentSelectedIndex;
+
+        private int CurrentSelectedIndex
+        {
+            get => _currentSelectedIndex;
+            set
             {
-                var tab = _tabs[index];
-                if (index == 0)
-                {
-                    tab.Select();
-                    continue;
-                }
-
-                tab.Deselect();
+                _currentSelectedIndex = value;
+                _currentSelectedIndex = Math.Clamp(_currentSelectedIndex, 0, Tabs.Length - 1);
             }
         }
 
-        private UITabButton _selectedTab;
+        private UITabButton _openingTab = default;
+
+        private void OnOpenTab(UITabButton tab)
+        {
+            if (_openingTab != null) _openingTab.ManagedPanel.SetActive(false);
+            tab.ManagedPanel.SetActive(true);
+            _openingTab = tab;
+            OpeningTab?.Invoke(tab);
+        }
+
+        public void OpenTab(int tabIndex)
+        {
+            CurrentSelectedIndex = tabIndex;
+            var uiTabButton = Tabs[CurrentSelectedIndex];
+            uiTabButton.Select();
+            OnOpenTab(uiTabButton);
+        }
+
+        private void ChangeTab(float direction)
+        {
+            if (!_interactable) return;
+            CurrentSelectedIndex += (int)direction;
+            Tabs[CurrentSelectedIndex].Select();
+        }
+
+        public void SelectTab(int tabIndex)
+        {
+            CurrentSelectedIndex = tabIndex;
+            Tabs[CurrentSelectedIndex].Select();
+        }
 
         private void CacheCurrentSelectedAndEnablePanel(UITabButton tabButton)
         {
-            if (tabButton == _selectedTab) return;
-            var previousSelectedTab = _selectedTab;
-            _selectedTab = tabButton;
-            DisablePanelIfNotCurrentSelected(previousSelectedTab);
-            _selectedTab.ManagedPanel.SetActive(true);
-            TabChanged?.Invoke(_selectedTab);
-        }
-
-        /// <summary>
-        /// Disable panel if not current selected.
-        /// Prevent deselect current selected tab.
-        /// </summary>
-        /// <param name="tabButton"></param>
-        private void DisablePanelIfNotCurrentSelected(UITabButton tabButton)
-        {
-            if (tabButton == null) return;
-            if (tabButton == _selectedTab) return;
-            tabButton.ManagedPanel.SetActive(false);
+            for (var index = 0; index < Tabs.Length; index++)
+            {
+                var tab = Tabs[index];
+                if (tab != tabButton) continue;
+                CurrentSelectedIndex = index;
+                return;
+            }
         }
     }
 }

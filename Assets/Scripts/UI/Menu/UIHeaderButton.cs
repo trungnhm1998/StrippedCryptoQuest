@@ -1,3 +1,4 @@
+using System;
 using CryptoQuest.Menu;
 using CryptoQuest.UI.Menu.ScriptableObjects;
 using TMPro;
@@ -8,6 +9,7 @@ using UnityEngine.UI;
 
 namespace CryptoQuest.UI.Menu
 {
+    [Obsolete]
     public class UIHeaderButton : MultiInputButton
     {
         public event UnityAction<MenuTypeSO> Pressed;

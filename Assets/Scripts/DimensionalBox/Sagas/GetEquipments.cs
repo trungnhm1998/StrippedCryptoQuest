@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net;
+using CryptoQuest.Core;
 using CryptoQuest.DimensionalBox.Events;
 using CryptoQuest.DimensionalBox.Objects;
 using CryptoQuest.Networking;
@@ -30,8 +31,7 @@ namespace CryptoQuest.DimensionalBox.Sagas
              */
             if (isCacheEmpty == false && ctx.ForceRefresh == false)
             {
-                _inGameEvent.RaiseEvent(_inGameEquipmentsCache);
-                _inBoxEvent.RaiseEvent(_inBoxEquipmentsCache);
+                ActionDispatcher.Dispatch(new GetNftEquipmentsSucceed());
                 return;
             }
 
@@ -48,6 +48,7 @@ namespace CryptoQuest.DimensionalBox.Sagas
         {
             LoadingController.OnDisableLoadingPanel?.Invoke();
             Debug.LogError(obj);
+            ActionDispatcher.Dispatch(new GetNftEquipmentsFailed());
         }
 
         private void OnGetEquipments(EquipmentsResponse response)
@@ -57,6 +58,7 @@ namespace CryptoQuest.DimensionalBox.Sagas
             UpdateInboxCache(response.data.equipments);
 
             LoadingController.OnDisableLoadingPanel?.Invoke();
+            ActionDispatcher.Dispatch(new GetNftEquipmentsSucceed());
         }
 
         private void UpdateInGameCache(Equipments[] equipments)

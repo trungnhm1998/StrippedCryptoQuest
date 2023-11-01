@@ -1,6 +1,6 @@
+using System;
 using FSM;
 using UnityEngine;
-using NotImplementedException = System.NotImplementedException;
 
 namespace CryptoQuest.UI.Menu.MenuStates
 {
@@ -8,6 +8,7 @@ namespace CryptoQuest.UI.Menu.MenuStates
     /// This is the state machine for the main menu. through this we will handle all sub states and
     /// sub state machines for each panels.
     /// </summary>
+    [Obsolete]
     public class MainMenuStateMachine : StateMachine
     {
         public MenuManager MenuManagerContext { get; }

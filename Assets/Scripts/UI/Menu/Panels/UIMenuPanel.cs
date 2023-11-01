@@ -1,10 +1,11 @@
-using CryptoQuest.Menu;
+using System;
 using CryptoQuest.UI.Menu.ScriptableObjects;
 using FSM;
 using UnityEngine;
 
 namespace CryptoQuest.UI.Menu.Panels
 {
+    [Obsolete]
     public abstract class UIMenuPanel : MonoBehaviour
     {
         [SerializeField] private MenuTypeSO _typeSO;

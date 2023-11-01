@@ -1,4 +1,5 @@
 ﻿using CryptoQuest.Core;
+using CryptoQuest.UI.Core;
 using TinyMessenger;
 
 namespace CryptoQuest.DimensionalBox.States
@@ -15,6 +16,7 @@ namespace CryptoQuest.DimensionalBox.States
 
             StateMachine.Input.MenuCancelEvent += BackToSelectEquipmentsToTransfer;
             _transferredEvent = ActionDispatcher.Bind<TransferSucceed>(_ => BackToSelectEquipmentsToTransfer());
+            LoadingController.OnEnableLoadingPanel?.Invoke();
             ActionDispatcher.Dispatch(new ConfirmTransferAction());
         }
 

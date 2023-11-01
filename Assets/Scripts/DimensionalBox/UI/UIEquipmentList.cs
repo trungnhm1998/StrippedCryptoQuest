@@ -35,6 +35,8 @@ namespace CryptoQuest.DimensionalBox.UI
         {
             _confirmTransferEvent = ActionDispatcher.Bind<ConfirmTransferAction>(OnTransferEquipment);
             _getEquipmentsEvent.EventRaised += Initialize;
+            
+            Initialized?.Invoke(this);
         }
 
         private void OnDisable()
@@ -43,14 +45,13 @@ namespace CryptoQuest.DimensionalBox.UI
             _getEquipmentsEvent.EventRaised -= Initialize;
         }
 
-        private readonly List<int> _responseIds = new();
-
+        private List<NftEquipment> _equipments;
         private void Initialize(List<NftEquipment> equipments)
         {
+            _equipments = equipments;
             ClearOldEquipments();
             foreach (var equipment in equipments)
             {
-                _responseIds.Add(equipment.Id);
                 var uiEquipment = _pool.Get();
                 uiEquipment.Pressed += OnTransferring;
                 uiEquipment.transform.SetParent(_scrollView.content);
@@ -62,7 +63,7 @@ namespace CryptoQuest.DimensionalBox.UI
 
         public void Transfer(UIEquipment uiEquipment)
         {
-            if (_responseIds.Contains(uiEquipment.Id) == false)
+            if (_equipments.Find(item => item.Id == uiEquipment.Id) == null)
             {
                 _equipmentsToTransfer.Add(uiEquipment);
                 uiEquipment.EnablePendingTag(true);
@@ -76,7 +77,7 @@ namespace CryptoQuest.DimensionalBox.UI
 
         private void ClearOldEquipments()
         {
-            _responseIds.Clear();
+            CurrentSelectedIndex = 0;
             _equipmentsToTransfer.Clear();
             var oldEquipments = _scrollView.content.GetComponentsInChildren<UIEquipment>();
             foreach (var equipment in oldEquipments)

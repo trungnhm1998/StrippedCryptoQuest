@@ -1,3 +1,4 @@
+using System;
 using CryptoQuest.Input;
 using CryptoQuest.UI.Menu.MenuStates;
 using CryptoQuest.UI.Menu.Panels;
@@ -8,6 +9,7 @@ using UnityEngine;
 
 namespace CryptoQuest.UI.Menu
 {
+    [Obsolete]
     public class MenuManager : MonoBehaviour
     {
         [SerializeField] private VoidEventChannelSO _onCloseMainMenuEventChannel;
