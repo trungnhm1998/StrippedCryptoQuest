@@ -6,6 +6,7 @@ using CryptoQuest.DimensionalBox.Objects;
 using CryptoQuest.Events;
 using CryptoQuest.Networking;
 using CryptoQuest.System;
+using CryptoQuest.UI.Core;
 using UniRx;
 using UnityEngine;
 
@@ -42,10 +43,14 @@ namespace CryptoQuest.DimensionalBox.Sagas
         {
             if (response.code != (int)HttpStatusCode.OK) return;
             ActionDispatcher.Dispatch(new TransferSucceed());
-            ActionDispatcher.Dispatch(new GetNftEquipments{ ForceRefresh = true });
+            ActionDispatcher.Dispatch(new GetNftEquipments { ForceRefresh = true });
         }
 
-        private void OnError(Exception obj) { }
+        private void OnError(Exception obj)
+        {
+            LoadingController.OnDisableLoadingPanel?.Invoke();
+        }
+
         private void OnCompleted() { }
     }
 }

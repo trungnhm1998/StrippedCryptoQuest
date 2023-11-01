@@ -7,6 +7,7 @@ using UnityEngine.EventSystems;
 
 namespace CryptoQuest.UI.Menu
 {
+    [Obsolete]
     public class UINavigationBar : MonoBehaviour
     {
         public event Action<MenuTypeSO> MenuChanged;

@@ -1,4 +1,5 @@
-﻿using FSM;
+﻿using System;
+using FSM;
 using UnityEngine;
 
 namespace CryptoQuest.UI.Menu.MenuStates
@@ -6,6 +7,7 @@ namespace CryptoQuest.UI.Menu.MenuStates
     /// <summary>
     /// Making this abstract might be better, but I need an empty state for fast prototyping.
     /// </summary>
+    [Obsolete]
     public class MenuStateBase : StateBase
     {
         protected MenuStateMachine MenuStateMachine => (MenuStateMachine)fsm; // TODO: code smell here

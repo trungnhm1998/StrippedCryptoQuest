@@ -1,8 +1,9 @@
-﻿using System.Numerics;
-using CryptoQuest.UI.Menu.MenuStates.SkillStates;
+﻿using System;
+using UnityEngine;
 
 namespace CryptoQuest.UI.Menu.MenuStates
 {
+    [Obsolete]
     public class GenericUnfocusState : MenuStateBase
     {
         private string _someState;
@@ -44,7 +45,7 @@ namespace CryptoQuest.UI.Menu.MenuStates
             NavigationBar.ChangeTab(direction);
         }
 
-        public override void HandleNavigate(UnityEngine.Vector2 direction)
+        public override void HandleNavigate(Vector2 direction)
         {
             base.HandleNavigate(direction);
             NavigationBar.ChangeTab(direction.x);

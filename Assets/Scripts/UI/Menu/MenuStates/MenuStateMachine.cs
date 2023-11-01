@@ -1,3 +1,4 @@
+using System;
 using CryptoQuest.UI.Menu.Panels;
 using FSM;
 using UnityEngine;
@@ -12,6 +13,7 @@ namespace CryptoQuest.UI.Menu.MenuStates
     /// For example, Status panel has 3 states: Status, Equipment, EquipmentSelection.
     /// The <see cref="OnEnter"/> will delegate to the active state, and call <see cref="MenuStateBase.OnEnter"/>
     /// </summary>
+    [Obsolete]
     public abstract class MenuStateMachine : StateMachine
     {
         private readonly UIMenuPanel _panel;
