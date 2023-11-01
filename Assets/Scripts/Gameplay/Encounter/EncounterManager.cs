@@ -21,8 +21,8 @@ namespace CryptoQuest.Gameplay.Encounter
         [SerializeField] protected float _maxEncounterSteps = 5f; // allow half a step?
         [SerializeField] private EncounterDatabase _database;
         [SerializeField] private GameStateSO _gameState;
-        [SerializeField] protected EncounterData _currentEncounterData;
-        [SerializeField] protected float _stepLeftBeforeTriggerBattle;
+        protected EncounterData _currentEncounterData;
+        protected float _stepLeftBeforeTriggerBattle;
 
         protected virtual void Awake()
         {

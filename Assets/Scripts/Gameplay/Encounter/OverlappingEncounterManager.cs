@@ -1,16 +1,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using CryptoQuest.Gameplay.Battle;
-using UnityEngine;
 
 namespace CryptoQuest.Gameplay.Encounter
 {
     public class OverlappingEncounterManager : EncounterManager
     {
-        [Header("Encounter Priority Infos")]
-        [SerializeField]
         private List<EncounterInfo> _currentEncounterInfos = new();
-
         private int _currentPriority = -1;
 
         protected override void Awake()
