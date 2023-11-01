@@ -39,4 +39,6 @@ namespace CryptoQuest.Battle.Events
     {
         public Components.Character Target { get; set; }
     }
+
+    public class SealedEvent : EffectEvent { }
 }
