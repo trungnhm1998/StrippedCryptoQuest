@@ -17,12 +17,14 @@ namespace CryptoQuest.Menus.Home.States
             UIMainMenu.OnBackToNavigation();
             _homePanel.Input.MenuCancelEvent += HandleCancel;
             _homePanel.Input.MenuInteractEvent += ToSorting;
+            _homePanel.Focusing += ToSorting;
         }
 
         public override void OnExit()
         {
             _homePanel.Input.MenuCancelEvent -= HandleCancel;
             _homePanel.Input.MenuInteractEvent -= ToSorting;
+            _homePanel.Focusing -= ToSorting;
         }
 
         private void HandleCancel()

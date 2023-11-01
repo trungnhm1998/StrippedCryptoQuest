@@ -38,6 +38,9 @@ namespace CryptoQuest.UI.Menu
             }
 
             uiTabButton.GetComponent<UITabFocus>().Focus();
+            var menuPanel = uiTabButton.ManagedPanel.GetComponent<UIMenuPanelBase>();
+            if (menuPanel)
+                menuPanel.OnFocusing();
             BackToNavigation += EnableTabNavigation;
         }
 

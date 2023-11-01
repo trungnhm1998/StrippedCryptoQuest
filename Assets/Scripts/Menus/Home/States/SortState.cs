@@ -1,5 +1,4 @@
 using CryptoQuest.Menus.Home.UI;
-using CryptoQuest.UI.Menu;
 using FSM;
 using UnityEngine;
 
@@ -16,7 +15,6 @@ namespace CryptoQuest.Menus.Home.States
 
         public override void OnEnter()
         {
-            UIMainMenu.OnFocusTab(0);
             _panel.SortMode.ConfirmedEvent += ExitSortState;
             _panel.Input.MenuCancelEvent += HandleCancel;
             _panel.Input.MenuConfirmedEvent += Confirm;

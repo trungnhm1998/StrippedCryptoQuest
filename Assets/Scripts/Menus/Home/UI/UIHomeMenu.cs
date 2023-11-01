@@ -1,11 +1,12 @@
 using CryptoQuest.Input;
 using CryptoQuest.Menus.Home.States;
+using CryptoQuest.UI.Menu;
 using FSM;
 using UnityEngine;
 
 namespace CryptoQuest.Menus.Home.UI
 {
-    public class UIHomeMenu : MonoBehaviour
+    public class UIHomeMenu : UIMenuPanelBase
     {
         [Header("State Context")]
         [SerializeField] private UIHomeMenuSortCharacter _sortMode;
