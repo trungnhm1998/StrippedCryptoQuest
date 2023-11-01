@@ -7,6 +7,8 @@ namespace CryptoQuest.UI.Menu
     {
         public static event Action BackToNavigation;
         public static void OnBackToNavigation() => BackToNavigation?.Invoke();
+        public static event Action<int> FocusTab;
+        public static void OnFocusTab(int tabIndex) => FocusTab?.Invoke(tabIndex);
         [SerializeField] private TabManager _tabNavigation;
         [SerializeField] private int _defaultTabToOpen;
 
@@ -15,6 +17,7 @@ namespace CryptoQuest.UI.Menu
             _tabNavigation.Interactable = true;
             _tabNavigation.OpenTab(_defaultTabToOpen);
             _tabNavigation.OpeningTab += DisableTabNavigation;
+            FocusTab += _tabNavigation.OpenTab;
         }
 
         private void OnDisable()
@@ -22,6 +25,7 @@ namespace CryptoQuest.UI.Menu
             _tabNavigation.Interactable = false;
             _tabNavigation.OpeningTab -= DisableTabNavigation;
             BackToNavigation -= EnableTabNavigation;
+            FocusTab -= _tabNavigation.OpenTab;
         }
 
         private void DisableTabNavigation(UITabButton uiTabButton)
