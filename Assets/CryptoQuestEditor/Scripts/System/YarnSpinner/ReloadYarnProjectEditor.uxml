@@ -3,8 +3,8 @@
     <ui:Label tabindex="-1" text="Tool Editor" display-tooltip-when-elided="true" style="font-size: 24px; -unity-font-style: bold; -unity-font: url(&apos;project://database/Assets/Fonts/Mplus1-Black.ttf?fileID=12800000&amp;guid=dd09ab6ed89294671a80ceee568a7f12&amp;type=3#Mplus1-Black&apos;); -unity-text-align: upper-center;" />
     <ui:Label tabindex="-1" text="Yarn Spinner - Timeline - Playable Director" display-tooltip-when-elided="true" style="font-size: 12px; -unity-font-style: bold; -unity-font: url(&apos;project://database/Assets/Fonts/Mplus1-Black.ttf?fileID=12800000&amp;guid=dd09ab6ed89294671a80ceee568a7f12&amp;type=3#Mplus1-Black&apos;); -unity-text-align: upper-center; margin-top: -3px; margin-bottom: 5px; color: rgb(152, 152, 152);" />
     <ui:VisualElement name="tabs" style="flex-grow: 0; flex-direction: row;">
-        <ui:Label name="singleTab" text="Single" class="tab currentlySelectedTab" style="flex-grow: 1; -unity-text-align: upper-center; font-size: 15px; -unity-font: url(&apos;project://database/Assets/UnityDefaultRuntimeTheme.tss?fileID=2230732570650464555&amp;guid=211ec1e22fc1bd34cac8aac1002bd7f7&amp;type=3#NotInter-Regular&apos;); -unity-font-style: bold; color: rgb(0, 0, 0); border-top-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px; border-bottom-left-radius: 5px;" />
-        <ui:Label name="multipleTab" text="Multiple" class="tab" style="flex-grow: 1; -unity-text-align: upper-center; font-size: 15px; color: rgb(0, 0, 0); -unity-font-style: bold; -unity-font: url(&apos;project://database/Assets/UnityDefaultRuntimeTheme.tss?fileID=2230732570650464555&amp;guid=211ec1e22fc1bd34cac8aac1002bd7f7&amp;type=3#NotInter-Regular&apos;); border-top-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px; border-bottom-left-radius: 5px;" />
+        <ui:Label name="singleTab" text="Replace Tool" class="tab currentlySelectedTab" style="flex-grow: 1; -unity-text-align: upper-center; font-size: 15px; -unity-font: url(&apos;project://database/Assets/UnityDefaultRuntimeTheme.tss?fileID=2230732570650464555&amp;guid=211ec1e22fc1bd34cac8aac1002bd7f7&amp;type=3#NotInter-Regular&apos;); -unity-font-style: bold; color: rgb(0, 0, 0); border-top-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px; border-bottom-left-radius: 5px;" />
+        <ui:Label name="multipleTab" text="Create Tool" class="tab" style="flex-grow: 1; -unity-text-align: upper-center; font-size: 15px; color: rgb(0, 0, 0); -unity-font-style: bold; -unity-font: url(&apos;project://database/Assets/UnityDefaultRuntimeTheme.tss?fileID=2230732570650464555&amp;guid=211ec1e22fc1bd34cac8aac1002bd7f7&amp;type=3#NotInter-Regular&apos;); border-top-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px; border-bottom-left-radius: 5px;" />
     </ui:VisualElement>
     <ui:VisualElement name="tabContent" style="flex-grow: 1; border-top-width: 18px;">
         <ui:VisualElement name="singleContent" style="flex-grow: 1;">
@@ -35,7 +35,7 @@
             </ui:VisualElement>
             <ui:VisualElement name="ButtonField" style="flex-grow: 1; flex-direction: row; justify-content: center; align-self: center; align-items: flex-start;">
                 <ui:Button text="Create Dialogue Data" parse-escape-sequences="true" display-tooltip-when-elided="true" name="initDialogueButton" style="min-height: 15px;" />
-                <ui:Button text="Replace All" parse-escape-sequences="true" display-tooltip-when-elided="true" name="replaceAllButton" style="min-height: 15px;" />
+                <ui:Button text="Nothing Here" parse-escape-sequences="true" display-tooltip-when-elided="true" name="replaceAllButton" style="min-height: 15px;" />
             </ui:VisualElement>
         </ui:VisualElement>
     </ui:VisualElement>
