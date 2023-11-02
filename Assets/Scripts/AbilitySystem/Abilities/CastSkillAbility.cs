@@ -95,9 +95,6 @@ namespace CryptoQuest.AbilitySystem.Abilities
             if (_costEffect == null) return true;
             if (Owner == null) return true;
             if (Owner.CanApplyAttributeModifiers(_costEffect)) return true;
-
-            Debug.Log($"Not enough {_costEffect.EffectDetails.Modifiers[0].Attribute.name} to cast this ability");
-            BattleEventBus.RaiseEvent(new MpNotEnoughEvent());
             return false;
         }
 
@@ -139,6 +136,13 @@ namespace CryptoQuest.AbilitySystem.Abilities
 
         private bool CanCast()
         {
+            if (!CheckCost())
+            {
+                Debug.Log($"Not enough {_costEffect.EffectDetails.Modifiers[0].Attribute.name} to cast this ability");
+                BattleEventBus.RaiseEvent(new MpNotEnoughEvent());
+                return false;
+            }
+
             var roll = Random.Range(0, 100);
             var result = roll < _def.SuccessRate;
             var resultMessage = result ? "Success" : "Failed";

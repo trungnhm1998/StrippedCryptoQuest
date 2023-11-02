@@ -119,6 +119,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 2231033302188387508, guid: 173cc793d5ca4a942904247dacd5b8fc, type: 3}
       insertIndex: -1
       addedObject: {fileID: 3966912095438748167}
+    - targetCorrespondingSourceObject: {fileID: 2231033302188387508, guid: 173cc793d5ca4a942904247dacd5b8fc, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6220833033934702047}
   m_SourcePrefab: {fileID: 100100000, guid: 173cc793d5ca4a942904247dacd5b8fc, type: 3}
 --- !u!114 &975540702620873090 stripped
 MonoBehaviour:
@@ -151,6 +154,24 @@ MonoBehaviour:
   _name: {fileID: 975540702620873090}
   _cost: {fileID: 2695788869812753460}
   _nameStringEvent: {fileID: 3393594058270645758}
+  _grayoutBehaviour: {fileID: 6220833033934702047}
+--- !u!114 &6220833033934702047
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2129442447549526190}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd711cdf9a985284d82955e96f6d0057, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _activeColor: {r: 1, g: 1, b: 1, a: 1}
+  _inactiveColor: {r: 0.3764706, g: 0.3764706, b: 0.3764706, a: 1}
+  _texts:
+  - {fileID: 975540702620873090}
+  - {fileID: 2695788869812753460}
 --- !u!114 &2695788869812753460 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2743301138671896622, guid: 173cc793d5ca4a942904247dacd5b8fc, type: 3}

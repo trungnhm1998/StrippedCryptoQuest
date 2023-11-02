@@ -6,6 +6,7 @@ using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data;
 using IndiGames.GameplayAbilitySystem.TagSystem.ScriptableObjects;
 using UnityEngine;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
+using System;
 
 namespace CryptoQuest.Gameplay.Battle.Core.Helper
 {
@@ -13,8 +14,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.Helper
     {
         public static bool CheckSealedMagicSkill(this CastSkillAbilitySpec skillSpec)
         {
-            if (skillSpec.Def.CheckPreventCastSkillWithTag(skillSpec.Owner,
-                TagsDef.SealMagic, ESkillType.Magic))
+            if (skillSpec.IsSealedMagicSkill())
             {
                 var character = skillSpec.Owner.GetComponent<CharacterBehaviour>();
                 BattleEventBus.RaiseEvent(new SealedEvent()
@@ -29,8 +29,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.Helper
 
         public static bool CheckSealedPhysicSkill(this CastSkillAbilitySpec skillSpec)
         {
-            if (skillSpec.Def.CheckPreventCastSkillWithTag(skillSpec.Owner,
-                TagsDef.SealPhysic, ESkillType.Physical))
+            if (skillSpec.IsSealedPhysicSkill())
             {
                 var character = skillSpec.Owner.GetComponent<CharacterBehaviour>();
                 BattleEventBus.RaiseEvent(new SealedEvent()
@@ -41,6 +40,27 @@ namespace CryptoQuest.Gameplay.Battle.Core.Helper
                 return true;
             }
             return false;
+        }
+
+        public static bool IsCastable(this CastSkillAbility skill, AbilitySystemBehaviour owner)
+        {
+            var spec = owner.GiveAbility<CastSkillAbilitySpec>(skill);
+            if (!spec.CheckCost() || spec.IsSealedMagicSkill() || spec.IsSealedPhysicSkill())
+                return false;
+
+            return true;
+        }
+
+        public static bool IsSealedMagicSkill(this CastSkillAbilitySpec skillSpec)
+        {
+            return skillSpec.Def.CheckPreventCastSkillWithTag(skillSpec.Owner,
+                TagsDef.SealMagic, ESkillType.Magic);
+        }
+
+        public static bool IsSealedPhysicSkill(this CastSkillAbilitySpec skillSpec)
+        {
+            return skillSpec.Def.CheckPreventCastSkillWithTag(skillSpec.Owner,
+                TagsDef.SealPhysic, ESkillType.Physical);
         }
 
         private static bool CheckPreventCastSkillWithTag(this CastSkillAbility skill, AbilitySystemBehaviour owner, 
