@@ -1,12 +1,13 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using CryptoQuest.Battle.Components;
 using CryptoQuest.Character.Hero;
 using CryptoQuest.Core;
+using CryptoQuest.SaveSystem.Actions;
 using CryptoQuest.System;
 using CryptoQuest.System.SaveSystem.Actions;
+using IndiGames.Core.Events.ScriptableObjects;
 using UnityEngine;
 
 namespace CryptoQuest.Gameplay.PlayerParty
@@ -34,6 +35,7 @@ namespace CryptoQuest.Gameplay.PlayerParty
 
     public class PartyManager : MonoBehaviour, IPartyController
     {
+        [SerializeField] private VoidEventChannelSO _sceneLoadedEvent;
         [SerializeField, Space] private PartySlot[] _partySlots = new PartySlot[PartyConstants.MAX_PARTY_SIZE];
         public PartySlot[] Slots => _partySlots;
 
@@ -41,8 +43,6 @@ namespace CryptoQuest.Gameplay.PlayerParty
         private int _size;
         private IPartyProvider _partyProvider;
         public IPartyProvider PartyProvider { get { return _partyProvider; } }
-
-        private TinyMessenger.TinyMessageSubscriptionToken _listenToLoadCompletedEventToken;
 
         public List<HeroBehaviour> OrderedAliveMembers =>
             (from slot in _partySlots where slot.HeroBehaviour.IsValidAndAlive() select slot.HeroBehaviour).ToList();
@@ -62,17 +62,9 @@ namespace CryptoQuest.Gameplay.PlayerParty
             _partyProvider = GetComponent<IPartyProvider>();
         }
 
-        private void Start()
-        {
-            _listenToLoadCompletedEventToken = ActionDispatcher.Bind<LoadPartyCompletedAction>(_ => LoadParty());
-            ActionDispatcher.Dispatch(new LoadPartyAction(this));
-        }
+        private void OnEnable() => _sceneLoadedEvent.EventRaised += InitParty;
 
-        private void LoadParty()
-        {
-            ActionDispatcher.Unbind(_listenToLoadCompletedEventToken);
-            InitParty();
-        }
+        private void OnDisable() => _sceneLoadedEvent.EventRaised -= InitParty;
 
         /// <summary>
         /// Init party members stats at run time
@@ -87,7 +79,7 @@ namespace CryptoQuest.Gameplay.PlayerParty
                 var hero = heroes[i];
                 _partySlots[i].Init(hero);
             }
-            ActionDispatcher.Dispatch(new SavePartyAction(this));
+            ActionDispatcher.Dispatch(new PartyInitialized());
         }
 
         /// <summary>
@@ -141,7 +133,6 @@ namespace CryptoQuest.Gameplay.PlayerParty
                     heroes.Add(slot.HeroBehaviour.Spec);
 
             _partyProvider.SetParty(heroes.ToArray());
-            ActionDispatcher.Dispatch(new SavePartyAction(this));
             return true;
         }
 

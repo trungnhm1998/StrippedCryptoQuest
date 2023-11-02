@@ -40,6 +40,9 @@ namespace CryptoQuest.Character.Hero
     [Serializable]
     public struct HeroSpec
     {
+        /// <summary>
+        /// Main should not have id always 0
+        /// </summary>
         [field: SerializeField] public int Id { get; set; }
         [field: SerializeField] public UnitSO Unit { get; set; }
         [field: SerializeField] public float Experience { get; set; }
