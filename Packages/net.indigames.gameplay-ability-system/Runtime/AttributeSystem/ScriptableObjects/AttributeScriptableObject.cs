@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.Components;
+using UnityEditor;
 using UnityEngine;
 
 namespace IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects
@@ -7,6 +8,17 @@ namespace IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects
     [CreateAssetMenu(menuName = "Indigames Ability System/Attributes/Attribute")]
     public class AttributeScriptableObject : ScriptableObject
     {
+        [SerializeField] private string _guid;
+        public string Guid => _guid;
+
+#if UNITY_EDITOR
+        protected virtual void OnValidate()
+        {
+            var assetPath = AssetDatabase.GetAssetPath(this);
+            _guid = AssetDatabase.AssetPathToGUID(assetPath);
+        }
+#endif
+
         /// <summary>
         /// Called by <see cref="AttributeSystemBehaviour.InitializeAttributeValues"/> to calculate the initial value of the attribute.
         /// There would be a hidden bug here when the current attribute value depends on other attributes.
