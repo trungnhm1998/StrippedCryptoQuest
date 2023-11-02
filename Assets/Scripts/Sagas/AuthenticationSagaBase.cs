@@ -8,14 +8,14 @@ namespace CryptoQuest.Sagas
 {
     public abstract class AuthenticationSagaBase<TAction> : SagaBase<TAction> where TAction : ActionBase
     {
-        protected virtual void OnUserSignedIn(string json)
+        protected void OnUserSignedIn(string json)
         {
             Debug.Log("FirebaseAuthScript: OnUserSignedIn " + json);
             var firebaseUser = JsonConvert.DeserializeObject<FirebaseUser>(json);
             ActionDispatcher.Dispatch(new AuthenticateWithBackendAction() { Token = firebaseUser.stsTokenManager.accessToken });
         }
 
-        protected virtual void OnUserSignedOut(string json)
+        protected void OnUserSignedOut(string json)
         {
             Debug.Log("FirebaseAuthScript: OnUserSignedOut " + json);
         }
