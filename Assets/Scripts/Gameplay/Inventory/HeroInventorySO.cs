@@ -5,15 +5,6 @@ using UnityEngine;
 
 namespace CryptoQuest.Gameplay.Inventory
 {
-    [Serializable]
-    public struct SaveAttributeValue
-    {
-        [JsonProperty("attribute")]
-        public string AttributeGuid;
-
-        [JsonProperty("value")]
-        public float Value;
-    }
 
     [Serializable]
     public struct Hero
@@ -29,9 +20,6 @@ namespace CryptoQuest.Gameplay.Inventory
 
         [JsonProperty("experience")]
         public float Experience;
-
-        [JsonProperty("stats")]
-        public List<SaveAttributeValue> Attributes;
     }
 
     public class HeroInventorySO : ScriptableObject
