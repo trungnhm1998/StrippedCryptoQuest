@@ -1,61 +1,81 @@
 ﻿using UnityEngine;
-using UnityEngine.Localization;
 using UnityEngine.UI;
 
 namespace CryptoQuest.Tavern.UI.CharacterReplacement
 {
     public class UICharacterReplacement : UIAbstractTavern
     {
+        [SerializeField] private UICharacterListGame _gameListUi;
+        [SerializeField] private UICharacterListWallet _walletListUi;
+
         [SerializeField] private Transform _gameScrollContent;
         [SerializeField] private Transform _walletScrollContent;
 
-        public void StateEntered()
+        public override void StateEntered()
         {
-            SetInteractableAllButtons(_walletScrollContent, false);
-
+            base.StateEntered();
             UITavernItem.Pressed += Transfer;
+            _gameListUi.SetInteractableAllButtons(true);
         }
 
-        public void StateExited()
+        public override void StateExited()
         {
-            SetInteractableAllButtons(_gameScrollContent, false);
-            SetInteractableAllButtons(_walletScrollContent, false);
-
+            base.StateExited();
             UITavernItem.Pressed -= Transfer;
         }
 
         private void Transfer(UITavernItem currentItem)
         {
-            Transform itemNewParent;
-            var isGameBoardAsCurrentParent = currentItem.Parent == _gameScrollContent;
+            var currentList = currentItem.Parent;
+            var otherList = currentList == _gameScrollContent ? _walletScrollContent : _gameScrollContent;
+            currentItem.Transfer(otherList);
 
-            if (isGameBoardAsCurrentParent)
-                itemNewParent = _walletScrollContent;
-            else
-                itemNewParent = _gameScrollContent;
+            _gameListUi.SetInteractableAllButtons(otherList == _gameScrollContent);
+            _walletListUi.SetInteractableAllButtons(otherList == _walletScrollContent);
+        }
 
-            currentItem.Transfer(itemNewParent);
+        public void SwitchList(Vector2 direction)
+        {
+            switch (direction.x)
+            {
+                case > 0:
+                    _gameListUi.SetInteractableAllButtons(false);
+                    FocusList(_walletListUi);
+                    break;
+                case < 0:
+                    _walletListUi.SetInteractableAllButtons(false);
+                    FocusList(_gameListUi);
+                    break;
+            }
+        }
 
-            SetInteractableAllButtons(_gameScrollContent, !isGameBoardAsCurrentParent);
-            SetInteractableAllButtons(_walletScrollContent, isGameBoardAsCurrentParent);
+        private void FocusList(UICharacterList targetList)
+        {
+            targetList.SetInteractableAllButtons(true);
+            StartCoroutine(targetList.CoSetDefaultSelection());
+        }
+
+        public void CheckEmptyList(UICharacterList target, bool isGameListEmpty)
+        {
+            if (!isGameListEmpty)
+                target.SetInteractableAllButtons(false);
         }
 
         public override void ResetTransfer()
         {
+            Debug.Log($"alo");
         }
 
         public override void SendItems()
         {
-            SetInteractableAllButtons(_gameScrollContent, false);
-            SetInteractableAllButtons(_walletScrollContent, false);
+            _gameListUi.SetInteractableAllButtons(false);
+            _walletListUi.SetInteractableAllButtons(false);
         }
 
-        private void SetInteractableAllButtons(Transform boardList, bool isEnabled)
+        public void ConfirmedTransmission()
         {
-            foreach (Transform item in boardList)
-            {
-                item.GetComponent<Button>().enabled = isEnabled;
-            }
+            _gameListUi.UpdateList();
+            _walletListUi.UpdateList();
         }
 
     }

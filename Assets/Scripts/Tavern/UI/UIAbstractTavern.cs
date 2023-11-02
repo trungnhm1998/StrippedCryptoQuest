@@ -6,22 +6,9 @@ namespace CryptoQuest.Tavern.UI
     {
         [SerializeField] private GameObject _contents;
 
-        public virtual void EnterTransferSection()
-        {
-            _contents.SetActive(true);
-        }
-
-        public virtual void ExitTransferSection()
-        {
-            _contents.SetActive(false);
-        }
-
+        public virtual void StateEntered() => _contents.SetActive(true);
+        public virtual void StateExited() => _contents.SetActive(false);
         public abstract void ResetTransfer();
-
         public abstract void SendItems();
-
-        protected virtual void YesButtonPressed() { }
-
-        protected virtual void NoButtonPressed() { }
     }
 }

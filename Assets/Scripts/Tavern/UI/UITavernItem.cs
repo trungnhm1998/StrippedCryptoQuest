@@ -44,6 +44,7 @@ namespace CryptoQuest.Tavern.UI
             _name.text = itemInfo.GetName();
             _level.text = $"Lv{itemInfo.GetLevel()}";
             _isInParty = itemInfo.IsInParty();
+            _localizedName.RefreshString();
         }
 
         public void SetItemInfo(IWalletCharacterData itemInfo)
@@ -52,6 +53,7 @@ namespace CryptoQuest.Tavern.UI
             _localizedName.StringReference = itemInfo.GetLocalizedName();
             _name.text = itemInfo.GetName();
             _level.text = $"Lv{itemInfo.GetLevel()}";
+            _localizedName.RefreshString();
         }
 
         public void OnSelectToTransfer()
@@ -60,8 +62,10 @@ namespace CryptoQuest.Tavern.UI
             Pressed?.Invoke(this);
 
             _isSelected = !_isSelected;
-            _pendingTag.SetActive(_isSelected);
+            EnablePendingTag(_isSelected);
         }
+
+        public void EnablePendingTag(bool enable) => _pendingTag.SetActive(enable);
 
         public void Transfer(Transform parent)
         {
