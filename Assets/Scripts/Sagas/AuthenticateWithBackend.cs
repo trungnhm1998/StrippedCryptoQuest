@@ -43,6 +43,7 @@ namespace CryptoQuest.Sagas
         private void OnError(Exception obj)
         {
             Debug.Log("Auth Failed with error: " + obj.Message);
+            ActionDispatcher.Dispatch(new AuthenticateFailed());
         }
 
         private void OnCompleted() { }
