@@ -9,8 +9,8 @@ namespace CryptoQuest.Character.Hero
     /// The equipments that the character is wearing
     /// </summary>
     [Serializable]
-    public struct Equipments
+    public class Equipments
     {
-        [field: SerializeField] public List<EquipmentSlot> Slots { get; set; }
+        [field: SerializeField] public List<EquipmentSlot> Slots { get; set; } = new();
     }
 }
