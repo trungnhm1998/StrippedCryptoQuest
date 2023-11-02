@@ -1,4 +1,6 @@
 ﻿using CryptoQuest.Menus.Skill.UI;
+using CryptoQuest.UI.Menu;
+using CryptoQuest.UI.Menu.Character;
 
 namespace CryptoQuest.Menus.Skill.States
 {
@@ -8,31 +10,56 @@ namespace CryptoQuest.Menus.Skill.States
 
         public override void OnEnter()
         {
-            base.OnEnter();
-            NavigationBar.SetActive(false);
-            NavigationBar.HighlightHeader(SkillPanel.TypeSO);
-            SkillPanel.CharactersPanel.Init();
-            SkillPanel.CharactersPanel.SelectedCharacterEvent += SelectedCharacter;
+            DeselectAllHeroes();
+            foreach (var heroButton in SkillPanel.HeroButtons) heroButton.Selected += CacheLastSelectedSlot;
+            SkillPanel.Input.MenuCancelEvent += HandleCancel;
+            SkillPanel.Focusing += SelectFirstHero;
+            SkillPanel.Input.MenuConfirmedEvent += ToSelectSkillState;
+
+            SelectFirstHero();
         }
 
-        public override void HandleCancel()
-        {
-            base.HandleCancel();
-            NavigationBar.SetActive(true);
-            NavigationBar.HighlightHeader(SkillPanel.TypeSO, true);
-            MenuStateMachine.RequestStateChange(SkillMenuStateMachine.NavSkill);
-        }
 
         public override void OnExit()
         {
-            base.OnExit();
-            SkillPanel.CharactersPanel.SelectedCharacterEvent -= SelectedCharacter;
+            foreach (var heroButton in SkillPanel.HeroButtons) heroButton.Selected -= CacheLastSelectedSlot;
+            SkillPanel.Input.MenuCancelEvent -= HandleCancel;
+            SkillPanel.Focusing -= SelectFirstHero;
+            SkillPanel.Input.MenuConfirmedEvent -= ToSelectSkillState;
+            SkillPanel.EnableAllHeroButtons(false);
         }
 
-        private void SelectedCharacter()
+        private void ToSelectSkillState()
         {
-            base.Interact();
-            MenuStateMachine.RequestStateChange(SkillMenuStateMachine.SkillSelection);
+            if (SkillPanel.SelectingHero == null) return;
+            SkillPanel.SelectingHero.IsSelected = true;
+            fsm.RequestStateChange(SkillMenuStateMachine.SkillSelection);
+        }
+
+        private void CacheLastSelectedSlot(UICharacterPartySlot hero) => SkillPanel.SelectingHero = hero;
+
+        private void DeselectAllHeroes()
+        {
+            foreach (var button in SkillPanel.HeroButtons) button.IsSelected = false;
+        }
+
+        private void HandleCancel()
+        {
+            SkillPanel.SelectingHero = null;
+            SkillPanel.EnableAllHeroButtons(false);
+            UIMainMenu.OnBackToNavigation();
+        }
+
+        private void SelectFirstHero()
+        {
+            SkillPanel.EnableAllHeroButtons();
+            if (SkillPanel.SelectingHero != null)
+            {
+                SkillPanel.SelectingHero.Select();
+                return;
+            }
+
+            SkillPanel.HeroButtons[0].Select();
         }
     }
 }

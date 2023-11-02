@@ -261,7 +261,7 @@ namespace CryptoQuest.Input
 
         public void OnMouseMove(InputAction.CallbackContext context)
         {
-            if (context.performed) MenuMouseMoveEvent?.Invoke();
+            // if (context.performed) MenuMouseMoveEvent?.Invoke();
         }
 
         public void OnChangeTab(InputAction.CallbackContext context)

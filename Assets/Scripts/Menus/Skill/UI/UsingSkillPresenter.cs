@@ -1,5 +1,4 @@
-﻿using System;
-using CryptoQuest.AbilitySystem.Abilities;
+﻿using CryptoQuest.AbilitySystem.Abilities;
 using CryptoQuest.Battle.Components;
 using CryptoQuest.Gameplay.PlayerParty;
 using CryptoQuest.System;
@@ -9,12 +8,10 @@ namespace CryptoQuest.Menus.Skill.UI
 {
     public class UsingSkillPresenter : MonoBehaviour
     {
-        public static event Action EnterTargetSingleCharacter;
-
         [SerializeField] private SkillTargetType _targetSelfChannel;
         [SerializeField] private SkillTargetType _targetOneAllyChannel;
         [SerializeField] private SkillTargetType _targetAllAllyChannel;
-        [SerializeField] private UITagetSingleCharacter _uiTargetCharacter;
+        [SerializeField] private UITargetSingleCharacter _uiTargetCharacter;
         [SerializeField] private UICharacterSelection _characterSelection;
 
         private IPartyController _partyController;
@@ -22,7 +19,6 @@ namespace CryptoQuest.Menus.Skill.UI
 
         private void Awake()
         {
-            UICharacterButton.InspectingCharacterEvent += SetInspectingCharacter;
             UISkill.InspectingSkillEvent += SaveLastInspecting;
         }
 
@@ -47,7 +43,6 @@ namespace CryptoQuest.Menus.Skill.UI
         private void OnDestroy()
         {
             UISkill.InspectingSkillEvent -= SaveLastInspecting;
-            UICharacterButton.InspectingCharacterEvent -= SetInspectingCharacter;
         }
 
         private CastSkillAbility _inspectingSkill;
@@ -57,14 +52,13 @@ namespace CryptoQuest.Menus.Skill.UI
             _inspectingHero = hero;
         }
 
-        private void SaveLastInspecting(CastSkillAbility skill)
+        private void SaveLastInspecting(UISkill skill)
         {
-            _inspectingSkill = skill;
+            _inspectingSkill = skill.Skill;
         }
 
         private void ShowSelectSingleHeroUI(CastSkillAbility skill)
         {
-            EnterTargetSingleCharacter?.Invoke();
         }
 
         private void SelectAllAliveHeroes(CastSkillAbility skill)

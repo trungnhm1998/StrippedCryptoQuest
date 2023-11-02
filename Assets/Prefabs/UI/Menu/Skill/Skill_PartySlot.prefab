@@ -31,7 +31,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6694571679417326535}
-  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -53,7 +52,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1533361377869907220}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
@@ -86,6 +85,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6694571679417326535}
   - component: {fileID: 5896469401146235005}
+  - component: {fileID: 5160668535546664272}
   m_Layer: 5
   m_Name: Skill_PartySlot
   m_TagString: Untagged
@@ -108,7 +108,6 @@ RectTransform:
   - {fileID: 307713571988920340}
   - {fileID: 8200139483867353276}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -127,9 +126,82 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 828fd94357f93ee4d8515cc94592603d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _selectBorder: {fileID: 6013373007198659649}
-  _button: {fileID: 465020882671679544}
+  _button: {fileID: 5160668535546664272}
+  _onCharacterSelected:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: CryptoQuest.Menus.Skill.UI.UISkillList, IndiGames.CryptoQuest.Menus.Skill
+        m_MethodName: ShowSkillForHero
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   _characterInSlot: {fileID: 1627606993212375556}
+  _selectBorder: {fileID: 1533361377869907220}
+  _selectBackground: {fileID: 575832888838175184}
+--- !u!114 &5160668535546664272
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4457907746618091616}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77b26c7a54d143a7b78bcba222262814, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Navigation:
+    m_Mode: 2
+    m_WrapAround: 0
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 0
+  m_Colors:
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 21300000, guid: 874fef09ec39f44239874f301259fbba, type: 3}
+    m_PressedSprite: {fileID: 21300000, guid: 874fef09ec39f44239874f301259fbba, type: 3}
+    m_SelectedSprite: {fileID: 21300000, guid: b618f6b96a58948e286da5e9f8f0b85c, type: 3}
+    m_DisabledSprite: {fileID: 21300000, guid: 874fef09ec39f44239874f301259fbba, type: 3}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_SelectedTrigger: Selected
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 2985022671081187000}
+  m_OnClick:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5896469401146235005}
+        m_TargetAssemblyTypeName: CryptoQuest.UI.Menu.Character.UICharacterPartySlot,
+          indi-games.crypto-quest
+        m_MethodName: OnPressed
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1001 &123357025847937053
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -270,6 +342,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2943857456540757669, guid: 6cc3a6b86a74d8141b1a01584d5dad13, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: b618f6b96a58948e286da5e9f8f0b85c, type: 3}
     - target: {fileID: 3729513643238990618, guid: 6cc3a6b86a74d8141b1a01584d5dad13, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -368,17 +444,11 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 428817586768072713, guid: 6cc3a6b86a74d8141b1a01584d5dad13, type: 3}
   m_PrefabInstance: {fileID: 123357025847937053}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &465020882671679544 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 559104449469984805, guid: 6cc3a6b86a74d8141b1a01584d5dad13, type: 3}
+--- !u!1 &575832888838175184 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 453601845375971789, guid: 6cc3a6b86a74d8141b1a01584d5dad13, type: 3}
   m_PrefabInstance: {fileID: 123357025847937053}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5b9774a5e9ee8c546b6b7e38ec4c43c4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1627606993212375556 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1666379555095087641, guid: 6cc3a6b86a74d8141b1a01584d5dad13, type: 3}
@@ -388,5 +458,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d730d081cef134449b1d057c18023cbf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2985022671081187000 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2943857456540757669, guid: 6cc3a6b86a74d8141b1a01584d5dad13, type: 3}
+  m_PrefabInstance: {fileID: 123357025847937053}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 575832888838175184}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

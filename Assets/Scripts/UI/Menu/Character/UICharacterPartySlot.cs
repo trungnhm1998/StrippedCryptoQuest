@@ -2,66 +2,63 @@ using System;
 using CryptoQuest.Battle.Components;
 using CryptoQuest.Menu;
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.Events;
+using UnityEngine.EventSystems;
 
 namespace CryptoQuest.UI.Menu.Character
 {
-    public class UICharacterPartySlot : MonoBehaviour
+    public class UICharacterPartySlot : MonoBehaviour, ISelectHandler, IDeselectHandler
     {
-        [SerializeField] private Image _selectBorder;
         [SerializeField] private MultiInputButton _button;
+        [SerializeField] private UnityEvent<HeroBehaviour> _onCharacterSelected;
         [SerializeField] private UICharacterInfoPanel _characterInSlot;
-
-        public Image SelectBorder => _selectBorder;
+        [SerializeField] private GameObject _selectBorder;
+        [SerializeField] private GameObject _selectBackground;
 
         public bool Interactable
         {
-            get => _button.enabled;
-            set
-            {
-                _button.enabled = value;
-                _selectBorder.enabled = false;
-            }
+            set => _button.interactable = value;
         }
 
-        private int _indexInParty;
+        public bool IsSelected
+        {
+            set => _selectBorder.SetActive(value);
+        }
+
         public HeroBehaviour Hero { get; private set; }
 
         public void Init(HeroBehaviour hero, int idxInParty)
         {
             Hero = hero;
-            _indexInParty = idxInParty;
             _characterInSlot.Init(hero);
-            _button.onClick.AddListener(OnPressed);
-            _button.Selected += Select;
-            _button.DeSelected += Deselect;
-        }
 
-        private void OnDisable()
-        {
-            _button.onClick.RemoveListener(OnPressed);
-            _button.Selected -= Select;
-            _button.DeSelected -= Deselect;
+            if (Hero.IsValid()) return;
+            gameObject.SetActive(false);
         }
-
-        private void OnPressed() => _onHeroSelected?.Invoke(_indexInParty);
 
         public void Select()
         {
-            if (_characterInSlot.gameObject.activeSelf == false) return;
-            _selectBorder.enabled = true;
+            if (Hero == null || !Hero.IsValid()) return;
+            EnableSelectBackground();
+            _button.Select();
         }
 
-        private void Deselect()
+        public event Action<UICharacterPartySlot> Selected;
+
+        public void OnSelect(BaseEventData eventData)
         {
-            _selectBorder.enabled = false;
+            if (Hero == null || !Hero.IsValid()) return;
+            _selectBackground.SetActive(true);
+            _onCharacterSelected?.Invoke(Hero);
+            Selected?.Invoke(this);
         }
 
-        private Action<int> _onHeroSelected;
-
-        public void SetSelectedCallback(Action<int> onHeroSelected)
+        public void OnDeselect(BaseEventData eventData)
         {
-            _onHeroSelected = onHeroSelected;
+            if (Hero == null || !Hero.IsValid()) return;
+            _selectBackground.SetActive(false);
         }
+
+        public void EnableSelectBackground(bool isEnabled = true) => _selectBackground.SetActive(isEnabled);
     }
 }

@@ -6,24 +6,13 @@ namespace CryptoQuest.Menus.Skill.States
     {
         public FocusSkillState(UISkillMenu skillPanel) : base(skillPanel) { }
 
-        public override void OnEnter()
-        {
-            base.OnEnter();
-            NavigationBar.SetActive(false);
-            NavigationBar.HighlightHeader(SkillPanel.TypeSO);
-        }
+        public override void OnEnter() { }
 
-        public override void HandleCancel()
-        {
-            base.HandleCancel();
-            NavigationBar.SetActive(true);
-            NavigationBar.HighlightHeader(SkillPanel.TypeSO, true);
-        }
+        private void HandleCancel() { }
 
-        public override void Interact()
+        private void Interact()
         {
-            base.Interact();
-            MenuStateMachine.RequestStateChange(SkillMenuStateMachine.CharacterSelection);
+            fsm.RequestStateChange(SkillMenuStateMachine.CharacterSelection);
         }
     }
 }
