@@ -1,5 +1,4 @@
 using System;
-using CryptoQuest.System.CutsceneSystem.CustomTimelineTracks.FadeTransitionTrack;
 using UnityEngine.Timeline;
 
 namespace CryptoQuest.System.CutsceneSystem.CustomTimelineTracks.ConditionCheckingTrack
