@@ -17,6 +17,8 @@ namespace CryptoQuest.UI.Title
     {
         [SerializeField] private InputMediatorSO _inputMediator;
         [SerializeField] private VoidEventChannelSO _sceneLoadedEvent;
+        [field: SerializeField] public GameObject LoginFailedPanel { get; private set; }
+        [field: SerializeField] public float AutoCloseLoginFailedPanelTime { get; private set; }
 
         private readonly Dictionary<Type, object> _cachedComponents = new();
         private IState _curState;

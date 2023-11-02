@@ -17,6 +17,12 @@ namespace CryptoQuest.UI.Title
         private void OnEnable()
         {
             _authFailed = ActionDispatcher.Bind<AuthenticateFailed>(_ => EnableAllButtonsAndSelectLastSelected());
+            // prevent immediate button pressed because LoginFailed state also using submit event
+            Invoke(nameof(DelaySelectButton), 0);
+        }
+
+        private void DelaySelectButton()
+        {
             EnableAllButtonsAndSelectLastSelected();
             GetComponentInChildren<SelectButtonOnEnable>().Select();
         }
@@ -44,6 +50,7 @@ namespace CryptoQuest.UI.Title
 
         private void PreventDoubleDispatch(Action callback)
         {
+            if (isActiveAndEnabled == false) return;
             EnableAllButtonsAndSelectLastSelected(false);
             callback();
         }
@@ -54,10 +61,10 @@ namespace CryptoQuest.UI.Title
             foreach (var button in _buttons) button.interactable = isEnabled;
             if (_lastSelectedButton is null || !enabled) return;
             _lastSelectedButton.Select();
-            _lastSelectedButton = null;
         }
 
         private Button _lastSelectedButton;
+
         private void CacheLastSelectedButton()
         {
             if (EventSystem.current is null) return;
