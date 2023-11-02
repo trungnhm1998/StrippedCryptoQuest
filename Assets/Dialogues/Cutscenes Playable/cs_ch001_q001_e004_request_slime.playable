@@ -192,13 +192,49 @@ MonoBehaviour:
     m_BlendOutDuration: 0.5
     m_MixInCurve:
       serializedVersion: 2
-      m_Curve: []
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
     m_MixOutCurve:
       serializedVersion: 2
-      m_Curve: []
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
@@ -258,13 +294,49 @@ MonoBehaviour:
     m_BlendOutDuration: 0.5833333333333333
     m_MixInCurve:
       serializedVersion: 2
-      m_Curve: []
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
     m_MixOutCurve:
       serializedVersion: 2
-      m_Curve: []
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
@@ -1079,8 +1151,10 @@ MonoBehaviour:
   m_Name: YarnSpinnerNodePlayableAsset(Clone)(Clone)(Clone)(Clone)
   m_EditorClassIdentifier: 
   YarnNodeName: ch001_q001_e004_request_slime
+  OnYarnProjectConfigEvent: {fileID: 11400000, guid: 0eb15d004718ea343a8a2d7792e813b8, type: 2}
   _template:
     YarnNodeName: ch001_q001_e004_request_slime
+    OnYarnProjectConfigEvent: {fileID: 11400000, guid: 0eb15d004718ea343a8a2d7792e813b8, type: 2}
     PauseTimelineOnClipEnds: 1
 --- !u!114 &-2247282657904595912
 MonoBehaviour:
@@ -1139,6 +1213,7 @@ MonoBehaviour:
   _yarnDialogWithQuest: {fileID: 11400000, guid: 67e9c8f51a0275d4493eac952c46cbac, type: 2}
   _template:
     YarnNodeName: Start
+    OnYarnProjectConfigEvent: {fileID: 0}
     PauseTimelineOnClipEnds: 0
 --- !u!114 &-405664367573677734
 MonoBehaviour:
@@ -1333,8 +1408,10 @@ MonoBehaviour:
   m_Name: YarnSpinnerNodePlayableAsset(Clone)(Clone)(Clone)(Clone)(Clone)
   m_EditorClassIdentifier: 
   YarnNodeName: ch001_q001_e004_request_slime2
+  OnYarnProjectConfigEvent: {fileID: 11400000, guid: 0eb15d004718ea343a8a2d7792e813b8, type: 2}
   _template:
     YarnNodeName: ch001_q001_e004_request_slime2
+    OnYarnProjectConfigEvent: {fileID: 11400000, guid: 0eb15d004718ea343a8a2d7792e813b8, type: 2}
     PauseTimelineOnClipEnds: 1
 --- !u!114 &4250102992542760166
 MonoBehaviour:
