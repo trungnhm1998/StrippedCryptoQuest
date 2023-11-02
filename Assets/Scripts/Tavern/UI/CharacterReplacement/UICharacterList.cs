@@ -2,6 +2,7 @@
 using CryptoQuest.Menu;
 using CryptoQuest.UI.Menu;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace CryptoQuest.Tavern.UI.CharacterReplacement
 {
@@ -29,7 +30,7 @@ namespace CryptoQuest.Tavern.UI.CharacterReplacement
             _tooltip.SetSafeArea(_tooltipSafeArea);
         }
 
-        private IEnumerator CoSetDefaultSelection(Transform targetScrollRect = null)
+        public IEnumerator CoSetDefaultSelection(Transform targetScrollRect = null)
         {
             var board = targetScrollRect ? targetScrollRect : _scrollRectContent;
             yield return new WaitForSeconds(.1f);
@@ -38,7 +39,7 @@ namespace CryptoQuest.Tavern.UI.CharacterReplacement
             firstButton.Select();
         }
 
-        protected virtual void CleanUpScrollView()
+        private void CleanUpScrollView()
         {
             foreach (Transform child in _scrollRectContent)
             {
@@ -46,11 +47,27 @@ namespace CryptoQuest.Tavern.UI.CharacterReplacement
             }
         }
 
-        protected virtual void SetParentIdentity(UITavernItem item)
+        protected void SetParentIdentity(UITavernItem item)
         {
             item.Parent = _scrollRectContent;
         }
 
         protected abstract void RenderData();
+
+        public void SetInteractableAllButtons(bool isEnabled)
+        {
+            foreach (Transform item in _scrollRectContent)
+            {
+                item.GetComponent<Button>().enabled = isEnabled;
+            }
+        }
+
+        public void UpdateList()
+        {
+            foreach (Transform item in _scrollRectContent)
+            {
+                item.GetComponent<UITavernItem>().EnablePendingTag(false);
+            }
+        }
     }
 }

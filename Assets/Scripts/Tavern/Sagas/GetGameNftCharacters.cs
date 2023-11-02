@@ -25,6 +25,7 @@ namespace CryptoQuest.Tavern.Sagas
 
         private void InitMockData()
         {
+            _inGameCharacters.Clear();
             for (var i = 0; i < _dataLength; i++)
             {
                 Random rand = new Random();

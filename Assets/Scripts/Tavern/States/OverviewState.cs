@@ -7,7 +7,7 @@ namespace CryptoQuest.Tavern.States
         private Animator _animator;
         private TavernController _controller;
 
-        private static readonly int CharacterReplacementState = Animator.StringToHash("Character Replacement Idle");
+        private static readonly int CharacterReplacementState = Animator.StringToHash("Select Character");
         private static readonly int PartyOrganizationState = Animator.StringToHash("Party Organization Idle");
 
         public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo,

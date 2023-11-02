@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Localization;
 using UnityEngine.Localization.Components;
+using UnityEngine.UI;
 
 namespace CryptoQuest.UI.Dialogs.ChoiceDialog
 {
@@ -9,9 +11,26 @@ namespace CryptoQuest.UI.Dialogs.ChoiceDialog
     {
         [Header("UI")]
         [SerializeField] private LocalizeStringEvent _messageUi;
+        [SerializeField] private Button _defaultSelectButton;
 
         private Action _yesPressed;
         private Action _noPressed;
+
+        private void Start()
+        {
+            StartCoroutine(CoSelectDefaultButton());
+        }
+
+        private void OnDestroy()
+        {
+            StopCoroutine(CoSelectDefaultButton());
+        }
+
+        private IEnumerator CoSelectDefaultButton()
+        {
+            yield return new WaitUntil(() => Content.activeSelf);
+            _defaultSelectButton.Select();
+        }
 
         public void OnYesButtonPressed()
         {

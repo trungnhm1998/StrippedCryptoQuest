@@ -10,10 +10,12 @@ namespace CryptoQuest.Tavern
     {
         public UnityAction ExitTavernEvent;
 
-        [field: SerializeField] public TavernInputManager TavernInputManager { get; private set; } 
-        [field: SerializeField] public TavernDialogsManager DialogsManager { get; private set; } 
+        [field: SerializeField] public TavernInputManager TavernInputManager { get; private set; }
+        [field: SerializeField] public TavernDialogsManager DialogsManager { get; private set; }
 
-        [field: SerializeField] public UIOverview TavernUiOverview { get; private set; } 
-        [field: SerializeField] public UICharacterReplacement UICharacterReplacement { get; private set; } 
+        [field: SerializeField] public UIOverview TavernUiOverview { get; private set; }
+        [field: SerializeField] public UICharacterReplacement UICharacterReplacement { get; private set; }
+        [field: SerializeField] public UICharacterListGame UIGameList { get; private set; }
+        [field: SerializeField] public UICharacterListWallet UIWalletList { get; private set; }
     }
 }
