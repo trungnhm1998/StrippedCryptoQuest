@@ -1,109 +1,76 @@
-//***カットシーン1
-
 title: AttackeErlothCastle1_1
 tags:
 ---
-//ひと休みが終わり野営地のテントから主人公たちとレオンハルトが出てくる
-レオンハルト: 私は現状を王様に報告せねばならん。残りの魔物は兵士達だけでなんとかなるだろう。君たちも共に城へ来てくれないか？  #line:AttackeErlothCastle_1
-エマ: ああ、確かにそうだね！(PlayerName)、私たちもお城に行くの大丈夫だよね？  #line:AttackeErlothCastle_2
-//主人公頷く
+Leonhardt:I need to update the King on our current situation. While the remaining demons are being handled by our soldiers, would you accompany me to the castle? #line:AttackeErlothCastle_1
+Emma:Oh, yes, of course! (PlayerName), we're okay to go to the castle too, right? #line:AttackeErlothCastle_2
 ===
-
 title: AttackeErlothCastle1_2
 tags:
 ---
-ブラボ: ん？城？あの大きいとこ行くのか？美味いものいっぱいあるよな？  #line:AttackeErlothCastle_3
-ブラボ: いっぱい動いていっぱいお腹も空いたからいっぱい食いたいな！  #line:AttackeErlothCastle_4
-レオンハルト: いや、先ほど食べたばかりなのだが…私は王様に状況の報告をだな……  #line:AttackeErlothCastle_5
-//画面外から城の使者が走ってくる。
+Bravo:Hmm? The castle? Are we going to that big place? Lots of good food there, right? #line:AttackeErlothCastle_3
+Bravo:I've moved a lot and I'm hungry, so I want to eat a lot! #line:AttackeErlothCastle_4
+Leonhardt:No, I ate not too long ago... I'm just going to relay the current state of affairs to the King. #line:AttackeErlothCastle_5
 ===
-
 title: AttackeErlothCastle1_3
 tags:
 ---
-使者: ハァハァ、騎士団長殿！レオンハルト騎士団長殿ォ！！  #line:AttackeErlothCastle_6
-レオンハルト: どうした！何事だ！？  #line:AttackeErlothCastle_7
-エマ: なになに！？大丈夫！？  #line:AttackeErlothCastle_8
-ブラボ: なんだ？かけっこしてきたのか？  #line:AttackeErlothCastle_9
-使者: フゥ、大変でございます！！城が…エルロート城が……ゴホゴホ！！  #line:AttackeErlothCastle_10
-レオンハルト: 城がどうしたというのだ？！  #line:AttackeErlothCastle_11
-使者: エルロート城が魔物に襲われております！！！  #line:AttackeErlothCastle_12
-//全員: ！でリアクション
+Messenger:*Huff*Puff*... Sir Knight Commander! Sir Knight Commander Leonhardt!! #line:AttackeErlothCastle_6
+Leonhardt:What's happened? Report immediately! #line:AttackeErlothCastle_7
+Emma:What, what, what! Are you okay!? #line:AttackeErlothCastle_8
+Bravo:Huh? Have you been playing fetch? #line:AttackeErlothCastle_9
+Messenger:This is grave news! The Elrod Castle... It's... *cough**cough! #line:AttackeErlothCastle_10
+Leonhardt:What's transpired at the castle? #line:AttackeErlothCastle_11
+Messenger:Demons have besieged Elrod Castle! #line:AttackeErlothCastle_12
 ===
-
 title: AttackeErlothCastle1_4
 tags:
 ---
-レオンハルト: なんだとーーーー！！？  #line:AttackeErlothCastle_13
-レオンハルト: 王様は無事なのか！？王妃様は！？守備している兵士たちは何をしているのだ！！？  #line:AttackeErlothCastle_14
-//レオンハルトが使者に近づく
+Leonhardt:Impossible!!!! #line:AttackeErlothCastle_13
+Leonhardt:Is the King unharmed? And the Queen? What of the guards? Have they responded? #line:AttackeErlothCastle_14
 ===
-
 title: AttackeErlothCastle1_5
 tags:
 ---
-エマ: レオンハルトさん落ち着いて！まずはしっかり状況を確認しないと！  #line:AttackeErlothCastle_15
-//レオンハルト冷静になって後ろに下がる
+Emma:Commander Leonhardt, compose yourself! We need to make sure we have a clear picture of the situation first! #line:AttackeErlothCastle_15
 ===
-
 title: AttackeErlothCastle1_6
 tags:
 ---
-レオンハルト: ……ああ、すまん。  #line:AttackeErlothCastle_16
-レオンハルト: こんな事は過去にもあったことが無いものでな。つい我を忘れてしまった。  #line:AttackeErlothCastle_17
+Leonhardt:...... My apologies. #line:AttackeErlothCastle_16
+Leonhardt:I've never been so flustered before. I momentarily lost my composure. #line:AttackeErlothCastle_17
 <<wait 1.5>>
-レオンハルト: ……よし、それで状況は？  #line:AttackeErlothCastle_18
-使者: はい、見張りの門番より多勢の魔物を確認したという報告を受け、城下町の民を城へ緊急的に避難をさせました。  #line:AttackeErlothCastle_19
-使者: 最初は守備している兵士でなんとか城下町にも侵入させず抑えておりましたが、魔物の中にとんでもない力を持っている者がおるらしく、兵士達は城まで後退せざるを得なくなってしまいました！  #line:AttackeErlothCastle_20
-レオンハルト: なんと……こうしてはおれん！急ぎ城へ戻らねば！  #line:AttackeErlothCastle_21
-//すぐにでも発てるよう準備をするレオンハルト。（馬に荷物を詰もうとする等、チョロチョロする）
-//エマ「！」
-//勇者たちがレオンハルトの方を向く
-
+Leonhardt:....Now, what's the current state of affairs? #line:AttackeErlothCastle_18
+Messenger:According to the report from the gatekeeper on duty, there's a significant presence of demons. The castle town's residents have been swiftly evacuated to the castle for safety. #line:AttackeErlothCastle_19
+Messenger:Initially, our defensive forces held the line and kept the demons from entering the castle town. However, it appears one of the demons possesses exceptional power, leading our forces to fall back to the castle! #line:AttackeErlothCastle_20
+Leonhardt: This is...I can't just stand here idly! I need to rush to the castle immediately! #line:AttackeErlothCastle_21
 ===
-
 title: AttackeErlothCastle1_7
 tags:
 ---
-エマ: 待ってレオンハルトさん！お城へはすぐに向かえるから！  #line:AttackeErlothCastle_22
-//レオンハルトが勇者たちの方を向く。勇者たちがレオンハルトの方を向く
-
+Emma:Wait, Lady Leonhardt! We have a way to get to the castle quickly! #line:AttackeErlothCastle_22
 ===
-
 title: AttackeErlothCastle1_7.5
 tags:
 ---
-レオンハルト: それはありがたい！……しかし兵士達にはここの残党を抑えてもらわねばならんから、城へ向かうのは私と君達だけだ。  #line:AttackeErlothCastle_23
-レオンハルト: ゆっくりはしていられないが、準備が整ったら声を掛けてくれ。  #line:AttackeErlothCastle_24
-//野営地内で自由に動ける。
-
+Leonhardt: I appreciate this! However, we'll need the troops here to contain the other demons. Thus, it'll be just be us making our way to the castle. #line:AttackeErlothCastle_23
+Leonhardt:We don't have the luxury of delay. Inform me as soon as you're prepared. #line:AttackeErlothCastle_24
 ===
-
-//***カットシーン2
-
 title: AttackeErlothCastle2_1
 tags:
 ---
-//立っているレオンハルトに話しかけると会話発生。
-レオンハルト: 城では何があるか分からん。準備に怠りはないか？  #line:AttackeErlothCastle_25
-->はい  #line:AttackeErlothCastle_26
-レオンハルト: よし、私も準備万端だ。では参ろう。  #line:AttackeErlothCastle_27
-->いいえ  #line:AttackeErlothCastle_28
-レオンハルト: エルロート城が心配だ。急ぎ準備を頼む。  #line:AttackeErlothCastle_29
-//: はいを選択してオカリナを使う
+Leonhardt: The castle's situation is unpredictable. Are you ready for all possible outcomes? #line:AttackeErlothCastle_25
+Yes #line:AttackeErlothCastle_26
+Leonhardt:Alright, I've made my preparations too. Let's proceed. #line:AttackeErlothCastle_27
+No #line:AttackeErlothCastle_28
+Leonhardt:I'm deeply concerned about the state of Elrod Castle. Please make haste with your preparations. #line:AttackeErlothCastle_29
 ===
-
-//***カットシーン3
-
 title: AttackeErlothCastle3_1
 tags:
 ---
-//エルロート城（城下町）へ到着。主人公一行は辺りを見回す。
-エマ: ……ひどい…みんな無事かな……  #line:AttackeErlothCastle_30
-ブラボ: 誰もいないのか？美味しいものは大丈夫か？おーい！誰かー！美味しいものー！返事しろー！！  #line:AttackeErlothCastle_31
-レオンハルト: くっ！！なんということだ……  #line:AttackeErlothCastle_32
+Emma:....This is terrible...I hope everyone is ok ...... #line:AttackeErlothCastle_30
+Bravo: Is anyone home? Is all the delicious food safe? Hey! Somebody..! Delicious food, where are you! Answer me! #line:AttackeErlothCastle_31
+Leonhardt:What a disaster... #line:AttackeErlothCastle_32
 <<wait 1.5>>
-レオンハルト: ……王様や王妃様は御無事なのか……？  #line:AttackeErlothCastle_33
-エマ: まずはお城へ行ってみよう！  #line:AttackeErlothCastle_34
-//自由行動
+Leonhardt:......Are the king and queen unharmed..........? #line:AttackeErlothCastle_33
+Emma:Let's go to the castle first! #line:AttackeErlothCastle_34
 ===
