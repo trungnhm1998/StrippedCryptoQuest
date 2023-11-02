@@ -28,14 +28,14 @@ namespace CryptoQuest.AbilitySystem.Abilities
     /// </summary>
     public abstract class CastSkillAbility : AbilityScriptableObject
     {
-        [SerializeField] private GameplayEffectContext _context;
+        [SerializeField] protected GameplayEffectContext _context;
         public GameplayEffectContext Context => _context;
         public SkillInfo SkillInfo => _context.SkillInfo;
         public int VfxId => SkillInfo.VfxId;
         public float MpToCast => SkillInfo.Cost;
         
-        [field: SerializeField] public float SuccessRate { get; private set; } = 100;
-        [field: SerializeField] public SkillTargetType TargetType { get; private set; }
+        [field: SerializeField] public float SuccessRate { get; protected set; } = 100;
+        [field: SerializeField] public SkillTargetType TargetType { get; protected set; }
     }
 
     public abstract class CastSkillAbilitySpec : GameplayAbilitySpec

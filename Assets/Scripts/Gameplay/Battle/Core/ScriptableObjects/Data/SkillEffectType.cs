@@ -11,6 +11,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data
         Reflect = 7,
         Nullify = 8,
         Restore = 9,
+        ReduceStat = 10,
         Special = 99,
     }
 }
