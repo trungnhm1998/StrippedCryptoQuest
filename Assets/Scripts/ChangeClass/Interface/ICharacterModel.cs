@@ -11,6 +11,7 @@ namespace CryptoQuest.ChangeClass.Interfaces
         public string Name { get; }
         public int Level { get; }
         public string Element { get; }
+        public string ClassId { get; }
         public float Hp { get; }
         public float MaxHp { get; }
         public float Mp { get; }
