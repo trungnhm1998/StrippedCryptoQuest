@@ -14,12 +14,14 @@ namespace CryptoQuest.System.CutsceneSystem
         {
             MadeChoice += OnChoiceMade;
             CutSceneChoiceInfo.ConfigureChoice += ConfigureChoiceInfo;
+            CutsceneManager.CutsceneCompleted += ClearCutsceneChoiceInfo;
         }
 
         private void OnDisable()
         {
             MadeChoice -= OnChoiceMade;
             CutSceneChoiceInfo.ConfigureChoice -= ConfigureChoiceInfo;
+            CutsceneManager.CutsceneCompleted -= ClearCutsceneChoiceInfo;
         }
 
         private void OnChoiceMade(string choiceId)
@@ -35,6 +37,11 @@ namespace CryptoQuest.System.CutsceneSystem
         private void ConfigureChoiceInfo(CutSceneChoiceInfo choiceInfo)
         {
             choiceInfo.HasMadeChoice = HasMadeChoice(choiceInfo.ChoiceId);
+        }
+
+        private void ClearCutsceneChoiceInfo()
+        {
+            _choiceMadeIds.Clear();
         }
     }
 
