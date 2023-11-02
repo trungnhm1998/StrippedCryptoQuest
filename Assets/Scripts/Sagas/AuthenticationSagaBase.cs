@@ -1,6 +1,7 @@
 ﻿using CryptoQuest.Core;
 using CryptoQuest.Networking.Actions;
 using CryptoQuest.Sagas.Objects;
+using CryptoQuest.UI.Actions;
 using Newtonsoft.Json;
 using UnityEngine;
 
@@ -24,6 +25,7 @@ namespace CryptoQuest.Sagas
 
         protected override void HandleAction(TAction ctx)
         {
+            ActionDispatcher.Dispatch(new ShowLoading());
 #if UNITY_EDITOR
             ActionDispatcher.Dispatch(new DebugLoginAction());
 #elif UNITY_WEBGL

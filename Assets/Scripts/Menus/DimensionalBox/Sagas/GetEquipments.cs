@@ -7,6 +7,7 @@ using CryptoQuest.Menus.DimensionalBox.Objects;
 using CryptoQuest.Networking;
 using CryptoQuest.Sagas;
 using CryptoQuest.System;
+using CryptoQuest.UI.Actions;
 using CryptoQuest.UI.Core;
 using UniRx;
 using UnityEngine;
@@ -35,7 +36,7 @@ namespace CryptoQuest.Menus.DimensionalBox.Sagas
                 return;
             }
 
-            LoadingController.OnEnableLoadingPanel?.Invoke();
+            ActionDispatcher.Dispatch(new ShowLoading());
             var restClient = ServiceProvider.GetService<IRestClient>();
             restClient
                 .WithParams(new Dictionary<string, string>() { { "source", $"{((int)ctx.Status).ToString()}" } })
@@ -46,7 +47,7 @@ namespace CryptoQuest.Menus.DimensionalBox.Sagas
 
         private void OnError(Exception obj)
         {
-            LoadingController.OnDisableLoadingPanel?.Invoke();
+            ActionDispatcher.Dispatch(new ShowLoading(false));
             Debug.LogError(obj);
             ActionDispatcher.Dispatch(new GetNftEquipmentsFailed());
         }
@@ -57,7 +58,7 @@ namespace CryptoQuest.Menus.DimensionalBox.Sagas
             UpdateInGameCache(response.data.equipments);
             UpdateInboxCache(response.data.equipments);
 
-            LoadingController.OnDisableLoadingPanel?.Invoke();
+            ActionDispatcher.Dispatch(new ShowLoading(false));
             ActionDispatcher.Dispatch(new GetNftEquipmentsSucceed());
         }
 
