@@ -10,6 +10,7 @@ namespace CryptoQuest.UI.Title.States
     {
         private UISignInPanel _uiSignIn;
         private TinyMessageSubscriptionToken _getProfileSucceed;
+        private TinyMessageSubscriptionToken _authFailedEvent;
 
         public override void OnEnter(TitleStateMachine stateMachine)
         {
@@ -18,6 +19,7 @@ namespace CryptoQuest.UI.Title.States
             _uiSignIn.gameObject.SetActive(true);
 
             _getProfileSucceed = ActionDispatcher.Bind<GetProfileSucceed>(Authorized);
+            _authFailedEvent = ActionDispatcher.Bind<AuthenticateFailed>(_ => stateMachine.ChangeState(new MailLoginFailed()));
         }
 
         public override void OnExit(TitleStateMachine stateMachine)
@@ -25,6 +27,7 @@ namespace CryptoQuest.UI.Title.States
             base.OnExit(stateMachine);
             _uiSignIn.gameObject.SetActive(false);
             
+            ActionDispatcher.Unbind(_authFailedEvent);
             ActionDispatcher.Unbind(_getProfileSucceed);
         }
         

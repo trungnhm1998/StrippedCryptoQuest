@@ -126,6 +126,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _inputMediator: {fileID: 11400000, guid: 1fb61cdb72f0a484f8e4db68e2011977, type: 2}
   _sceneLoadedEvent: {fileID: 11400000, guid: b8b96e43d21a7bf4c96df4cb83c2b764, type: 2}
+  <LoginFailedPanel>k__BackingField: {fileID: 6871181009220155183}
+  <AutoCloseLoginFailedPanelTime>k__BackingField: 3
 --- !u!114 &4125204084637897429
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1748,6 +1750,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2126657160377855260}
     m_Modifications:
+    - target: {fileID: 326085565404713753, guid: 260333c911feba7419182faf81603130, type: 3}
+      propertyPath: _button
+      value: 
+      objectReference: {fileID: 192679091103723902}
     - target: {fileID: 425200644706547991, guid: 260333c911feba7419182faf81603130, type: 3}
       propertyPath: m_SizeDelta.x
       value: 520
@@ -1764,6 +1770,26 @@ PrefabInstance:
       propertyPath: _defaultButtonSelect
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 524340468061886003, guid: 260333c911feba7419182faf81603130, type: 3}
+      propertyPath: _buttons.Array.data[0]
+      value: 
+      objectReference: {fileID: 192679091103723902}
+    - target: {fileID: 524340468061886003, guid: 260333c911feba7419182faf81603130, type: 3}
+      propertyPath: _buttons.Array.data[1]
+      value: 
+      objectReference: {fileID: 9022099603648324069}
+    - target: {fileID: 524340468061886003, guid: 260333c911feba7419182faf81603130, type: 3}
+      propertyPath: _buttons.Array.data[2]
+      value: 
+      objectReference: {fileID: 3830376790044526271}
+    - target: {fileID: 524340468061886003, guid: 260333c911feba7419182faf81603130, type: 3}
+      propertyPath: _buttons.Array.data[3]
+      value: 
+      objectReference: {fileID: 3175500637234172143}
+    - target: {fileID: 524340468061886003, guid: 260333c911feba7419182faf81603130, type: 3}
+      propertyPath: _buttons.Array.data[4]
+      value: 
+      objectReference: {fileID: 4492756049393181720}
     - target: {fileID: 524340468061886003, guid: 260333c911feba7419182faf81603130, type: 3}
       propertyPath: <MailLoginBtn>k__BackingField
       value: 
