@@ -1,8 +1,6 @@
 ﻿using System;
-using NPOI.SS.Formula.Functions;
 using UnityEngine;
 using UnityEngine.Playables;
-using UnityEngine.Serialization;
 
 namespace CryptoQuest.System.CutsceneSystem.CustomTimelineTracks.ConditionCheckingTrack
 {
