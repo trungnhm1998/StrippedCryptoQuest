@@ -1,5 +1,4 @@
-﻿using System;
-using CryptoQuest.Tavern.UI;
+﻿using CryptoQuest.Tavern.UI;
 using CryptoQuest.Tavern.UI.CharacterReplacement;
 using UnityEngine;
 using UnityEngine.Events;
@@ -15,7 +14,7 @@ namespace CryptoQuest.Tavern
 
         [field: SerializeField] public UIOverview TavernUiOverview { get; private set; }
         [field: SerializeField] public UICharacterReplacement UICharacterReplacement { get; private set; }
-        [field: SerializeField] public UICharacterListGame UIGameList { get; private set; }
-        [field: SerializeField] public UICharacterListWallet UIWalletList { get; private set; }
+        [field: SerializeField] public UICharacterList UIGameList { get; private set; }
+        [field: SerializeField] public UICharacterList UIWalletList { get; private set; }
     }
 }

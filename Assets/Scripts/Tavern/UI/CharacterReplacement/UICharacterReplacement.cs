@@ -5,8 +5,8 @@ namespace CryptoQuest.Tavern.UI.CharacterReplacement
 {
     public class UICharacterReplacement : UIAbstractTavern
     {
-        [SerializeField] private UICharacterListGame _gameListUi;
-        [SerializeField] private UICharacterListWallet _walletListUi;
+        [SerializeField] private UICharacterList _gameListUi;
+        [SerializeField] private UICharacterList _walletListUi;
 
         [SerializeField] private Transform _gameScrollContent;
         [SerializeField] private Transform _walletScrollContent;
