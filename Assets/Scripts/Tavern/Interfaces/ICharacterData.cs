@@ -9,12 +9,6 @@ namespace CryptoQuest.Tavern.Interfaces
         public LocalizedString GetLocalizedName();
         public string GetName();
         public int GetLevel();
-    }
-
-    public interface IWalletCharacterData : ICharacterData { }
-
-    public interface IGameCharacterData : ICharacterData
-    {
         public bool IsInParty();
     }
 }

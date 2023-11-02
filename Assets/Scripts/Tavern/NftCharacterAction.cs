@@ -6,11 +6,11 @@ namespace CryptoQuest.Tavern
 {
     public class NftCharacterAction : ActionBase { }
 
-    public class GetInGameNftCharactersSucceed : ActionBase
+    public class GetGameNftCharactersSucceed : ActionBase
     {
-        public List<IGameCharacterData> InGameCharacters { get; }
+        public List<ICharacterData> InGameCharacters { get; }
 
-        public GetInGameNftCharactersSucceed(List<IGameCharacterData> inGameCharacters)
+        public GetGameNftCharactersSucceed(List<ICharacterData> inGameCharacters)
         {
             InGameCharacters = inGameCharacters;
         }
@@ -18,9 +18,9 @@ namespace CryptoQuest.Tavern
 
     public class GetWalletNftCharactersSucceed : ActionBase
     {
-        public List<IWalletCharacterData> WalletCharacters { get; }
+        public List<ICharacterData> WalletCharacters { get; }
 
-        public GetWalletNftCharactersSucceed(List<IWalletCharacterData> walletCharacters)
+        public GetWalletNftCharactersSucceed(List<ICharacterData> walletCharacters)
         {
             WalletCharacters = walletCharacters;
         }

@@ -37,22 +37,13 @@ namespace CryptoQuest.Tavern.UI
                 .WithRangePivot(Vector2.zero, Vector2.one);
         }
 
-        public void SetItemInfo(IGameCharacterData itemInfo)
+        public void SetItemInfo(ICharacterData itemInfo)
         {
             _classIcon.sprite = itemInfo.GetClassIcon();
             _localizedName.StringReference = itemInfo.GetLocalizedName();
             _name.text = itemInfo.GetName();
             _level.text = $"Lv{itemInfo.GetLevel()}";
             _isInParty = itemInfo.IsInParty();
-            _localizedName.RefreshString();
-        }
-
-        public void SetItemInfo(IWalletCharacterData itemInfo)
-        {
-            _classIcon.sprite = itemInfo.GetClassIcon();
-            _localizedName.StringReference = itemInfo.GetLocalizedName();
-            _name.text = itemInfo.GetName();
-            _level.text = $"Lv{itemInfo.GetLevel()}";
             _localizedName.RefreshString();
         }
 

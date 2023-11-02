@@ -1,12 +1,14 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using CryptoQuest.Menu;
+using CryptoQuest.Tavern.Interfaces;
 using CryptoQuest.UI.Menu;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace CryptoQuest.Tavern.UI.CharacterReplacement
 {
-    public abstract class UICharacterList : MonoBehaviour
+    public class UICharacterList : MonoBehaviour
     {
         [SerializeField] protected Transform _scrollRectContent;
         [SerializeField] protected GameObject _singleItemPrefab;
@@ -14,9 +16,17 @@ namespace CryptoQuest.Tavern.UI.CharacterReplacement
 
         private ITooltip _tooltip;
 
+        private List<ICharacterData> _characterList = new List<ICharacterData>();
+
         private void Awake()
         {
             _tooltip = TooltipFactory.Instance.GetTooltip(ETooltipType.Equipment);
+        }
+
+        public void SetData(List<ICharacterData> data)
+        {
+            _characterList = data;
+            StartCoroutine(AfterSaveData());
         }
 
         protected IEnumerator AfterSaveData()
@@ -52,7 +62,15 @@ namespace CryptoQuest.Tavern.UI.CharacterReplacement
             item.Parent = _scrollRectContent;
         }
 
-        protected abstract void RenderData();
+        protected void RenderData()
+        {
+            foreach (var itemData in _characterList)
+            {
+                var item = Instantiate(_singleItemPrefab, _scrollRectContent).GetComponent<UITavernItem>();
+                item.SetItemInfo(itemData);
+                SetParentIdentity(item);
+            }
+        }
 
         public void SetInteractableAllButtons(bool isEnabled)
         {

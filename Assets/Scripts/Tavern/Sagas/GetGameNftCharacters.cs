@@ -15,24 +15,24 @@ namespace CryptoQuest.Tavern.Sagas
         [SerializeField] private Sprite _classIcon;
         [SerializeField] private LocalizedString[] _localizedNames = new LocalizedString[4];
 
-        private readonly List<IGameCharacterData> _inGameCharacters = new();
+        private readonly List<ICharacterData> _inGameCharacters = new();
 
         protected override void HandleAction(NftCharacterAction ctx)
         {
-            InitMockData();
-            ActionDispatcher.Dispatch(new GetInGameNftCharactersSucceed(_inGameCharacters));
+            InitMockGameData();
+            ActionDispatcher.Dispatch(new GetGameNftCharactersSucceed(_inGameCharacters));
         }
 
-        private void InitMockData()
+        private void InitMockGameData()
         {
             _inGameCharacters.Clear();
             for (var i = 0; i < _dataLength; i++)
             {
                 Random rand = new Random();
-                LocalizedString name = _localizedNames[rand.Next(_localizedNames.Length - 1)];
+                LocalizedString localizedName = _localizedNames[rand.Next(_localizedNames.Length - 1)];
                 int level = rand.Next(1, 99);
 
-                var obj = new GameCharacterData(_classIcon, name, level);
+                var obj = new CharacterData(_classIcon, localizedName, level, false);
 
                 _inGameCharacters.Add(obj);
             }

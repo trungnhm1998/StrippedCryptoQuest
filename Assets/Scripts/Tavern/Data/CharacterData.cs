@@ -5,7 +5,7 @@ using UnityEngine.Localization;
 
 namespace CryptoQuest.Tavern.Data
 {
-    public class GameCharacterData : IGameCharacterData
+    public class CharacterData : ICharacterData
     {
         private Sprite _classIcon;
         private LocalizedString _localizedName;
@@ -13,27 +13,19 @@ namespace CryptoQuest.Tavern.Data
         private int _level;
         private bool _isInParty;
 
-        public GameCharacterData(HeroBehaviour hero)
+        public CharacterData(HeroBehaviour hero)
         {
             _localizedName = hero.DetailsInfo.LocalizedName;
             _level = hero.Level;
             _isInParty = true;
         }
 
-        public GameCharacterData(Sprite classIcon, LocalizedString localizedName, int level)
+        public CharacterData(Sprite classIcon, LocalizedString localizedName, int level, bool isInParty)
         {
             _classIcon = classIcon;
             _localizedName = localizedName;
             _level = level;
-            _isInParty = false;
-        }
-
-        public GameCharacterData(Sprite classIcon, string name, int level)
-        {
-            _classIcon = classIcon;
-            _name = name;
-            _level = level;
-            _isInParty = false;
+            _isInParty = isInParty;
         }
 
         public Sprite GetClassIcon() => _classIcon;

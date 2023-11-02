@@ -14,8 +14,8 @@ namespace CryptoQuest.Tavern.States
         private TinyMessageSubscriptionToken _getGameDataSucceedEvent;
         private TinyMessageSubscriptionToken _getWalletDataSucceedEvent;
 
-        private List<IGameCharacterData> _cachedGameData = new List<IGameCharacterData>();
-        private List<IWalletCharacterData> _cachedWalletData = new List<IWalletCharacterData>();
+        private List<ICharacterData> _cachedGameData = new List<ICharacterData>();
+        private List<ICharacterData> _cachedWalletData = new List<ICharacterData>();
 
         private static readonly int OverviewState = Animator.StringToHash("Overview");
         private static readonly int ConfirmState = Animator.StringToHash("Confirm");
@@ -29,7 +29,7 @@ namespace CryptoQuest.Tavern.States
             _controller.UICharacterReplacement.gameObject.SetActive(true);
             _controller.UICharacterReplacement.StateEntered();
 
-            _getGameDataSucceedEvent = ActionDispatcher.Bind<GetInGameNftCharactersSucceed>(GetInGameCharacters);
+            _getGameDataSucceedEvent = ActionDispatcher.Bind<GetGameNftCharactersSucceed>(GetInGameCharacters);
             _getWalletDataSucceedEvent = ActionDispatcher.Bind<GetWalletNftCharactersSucceed>(GetWalletCharacters);
             ActionDispatcher.Dispatch(new NftCharacterAction());
 
@@ -38,19 +38,19 @@ namespace CryptoQuest.Tavern.States
             _controller.TavernInputManager.ExecuteEvent += SendItemsRequested;
         }
 
-        private void GetInGameCharacters(GetInGameNftCharactersSucceed obj)
+        private void GetInGameCharacters(GetGameNftCharactersSucceed obj)
         {
             _cachedGameData = obj.InGameCharacters;
             if (obj.InGameCharacters.Count <= 0) return;
             _controller.UICharacterReplacement.CheckEmptyList(_controller.UIGameList, false);
-            _controller.UIGameList.SetGameData(obj.InGameCharacters);
+            _controller.UIGameList.SetData(obj.InGameCharacters);
         }
 
         private void GetWalletCharacters(GetWalletNftCharactersSucceed obj)
         {
             _cachedWalletData = obj.WalletCharacters;
             if (obj.WalletCharacters.Count <= 0) return;
-            _controller.UIWalletList.SetWalletData(obj.WalletCharacters);
+            _controller.UIWalletList.SetData(obj.WalletCharacters);
         }
 
         private void CancelCharacterReplacement()
