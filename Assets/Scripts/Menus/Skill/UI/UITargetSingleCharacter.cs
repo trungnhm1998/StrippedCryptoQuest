@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 namespace CryptoQuest.Menus.Skill.UI
 {
-    public class UITagetSingleCharacter : MonoBehaviour
+    public class UITargetSingleCharacter : MonoBehaviour
     {
         public Action<HeroBehaviour> SelectedCharacterEvent;
 
@@ -22,12 +22,12 @@ namespace CryptoQuest.Menus.Skill.UI
             foreach (var slot in _partySlots)
             {
                 if (!slot.Hero.IsValid()) continue;
-                var selectButton = slot.SelectBorder.GetComponent<Button>();
-                _targetButtons.Add(selectButton);
-                slot.SelectBorder.enabled = true;
-                selectButton.interactable = false;
-                selectButton.onClick.RemoveAllListeners();
-                selectButton.onClick.AddListener(() => SelectCharacter(slot.Hero));
+                // var selectButton = slot.SelectBorder.GetComponent<Button>();
+                // _targetButtons.Add(selectButton);
+                // slot.SelectBorder.enabled = true;
+                // selectButton.interactable = false;
+                // selectButton.onClick.RemoveAllListeners();
+                // selectButton.onClick.AddListener(() => SelectCharacter(slot.Hero));
             }
         }
 
@@ -43,6 +43,7 @@ namespace CryptoQuest.Menus.Skill.UI
             {
                 button.interactable = value;
             }
+
             _targetButtons[0].Select();
         }
 

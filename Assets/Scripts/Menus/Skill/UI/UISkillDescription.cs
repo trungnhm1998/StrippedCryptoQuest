@@ -1,4 +1,3 @@
-using CryptoQuest.AbilitySystem.Abilities;
 using UnityEngine;
 using UnityEngine.Localization.Components;
 
@@ -8,19 +7,14 @@ namespace CryptoQuest.Menus.Skill.UI
     {
         [SerializeField] private LocalizeStringEvent _description;
 
-        private void Awake()
-        {
-            UISkill.InspectingSkillEvent += Configure;
-        }
+        private void Awake() => UISkill.InspectingSkillEvent += Configure;
 
-        private void OnDestroy()
-        {
-            UISkill.InspectingSkillEvent -= Configure;
-        }
+        private void OnDestroy() => UISkill.InspectingSkillEvent -= Configure;
 
-        private void Configure(CastSkillAbility skill)
+        private void Configure(UISkill skillUI)
         {
-            _description.StringReference = skill.SkillInfo.SkillDescription;
+            _description.StringReference = skillUI.Skill.SkillInfo.SkillDescription;
+            _description.RefreshString();
         }
     }
 }

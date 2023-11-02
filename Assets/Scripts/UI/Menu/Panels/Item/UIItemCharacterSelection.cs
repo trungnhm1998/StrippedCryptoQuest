@@ -28,7 +28,7 @@ namespace CryptoQuest.UI.Menu.Panels.Item
                 ui.gameObject.SetActive(slot.IsValid());
                 if (!slot.IsValid()) continue;
                 ui.Init(slot.HeroBehaviour, index);
-                ui.SetSelectedCallback(OnHeroSelected);
+                // ui.SetSelectedCallback(OnHeroSelected);
             }
         }
 
@@ -60,8 +60,8 @@ namespace CryptoQuest.UI.Menu.Panels.Item
         /// </summary>
         private void EnableAllButtons(bool enable = true)
         {
-            foreach (var slot in _partySlots)
-                slot.Interactable = enable;
+            // foreach (var slot in _partySlots)
+            //     slot.Interactable = enable;
         }
 
         public void SelectHero()
