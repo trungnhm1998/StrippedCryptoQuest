@@ -1,8 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using CryptoQuest.Battle.Components;
+using CryptoQuest.ChangeClass.API;
 using CryptoQuest.ChangeClass.Interfaces;
-using CryptoQuest.Networking.ChangeClass;
 using UnityEngine;
 using UnityEngine.Localization;
 
@@ -14,6 +14,7 @@ namespace CryptoQuest.ChangeClass.Models
         public string Name { get; private set; }
         public int Level { get; private set; }
         public string Element { get; private set; }
+        public string ClassId { get; private set; }
         public float Hp { get; private set; }
         public float MaxHp { get; private set; }
         public float Mp { get; private set; }

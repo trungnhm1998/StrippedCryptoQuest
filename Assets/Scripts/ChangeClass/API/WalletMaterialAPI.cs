@@ -23,25 +23,25 @@ namespace CryptoQuest.ChangeClass.API
             _restAPINetworkController = ServiceProvider.GetService<IRestClient>();
             _restAPINetworkController
                 .Get<MaterialResponseData>(ChangeClassAPI.LOAD_MATERIAL)
-                .Subscribe(Authenticated, DispatchLoadFailed, DispatchLoadFinished);
+                .Subscribe(OnGetMaterials, OnGetMaterialsFailed, OnGetMaterialsSuccess);
         }
 
-        private void Authenticated(MaterialResponseData response)
+        private void OnGetMaterials(MaterialResponseData response)
         {
             if (response.code != (int)HttpStatusCode.OK) return;
             IsFinishFetchData = true;
             Data = response.data.materials;
         }
 
-        private void DispatchLoadFailed(Exception obj)
+        private void OnGetMaterialsFailed(Exception obj)
         {
-            ActionDispatcher.Dispatch(new LoginFailedAction());
+            Debug.Log($"ChangeClass::Load failed : {obj.Message}");
             IsFinishFetchData = true;
         }
 
-        private void DispatchLoadFinished()
+        private void OnGetMaterialsSuccess()
         {
-            ActionDispatcher.Dispatch(new LoginFinishedAction());
+            Debug.Log($"ChangeClass::Load Success");
         }
     }
 }

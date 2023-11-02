@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using CryptoQuest.Character;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 

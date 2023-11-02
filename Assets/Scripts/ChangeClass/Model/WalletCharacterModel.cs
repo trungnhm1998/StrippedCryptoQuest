@@ -1,8 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using CryptoQuest.Battle.Components;
+using CryptoQuest.ChangeClass.API;
 using CryptoQuest.ChangeClass.Interfaces;
-using CryptoQuest.Networking.ChangeClass;
 using UnityEngine;
 
 namespace CryptoQuest.ChangeClass.Models
