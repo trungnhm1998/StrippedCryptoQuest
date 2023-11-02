@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using CryptoQuest.AbilitySystem.Abilities;
 using CryptoQuest.Battle.Components;
+using CryptoQuest.Gameplay.Battle.Core.Helper;
 using CryptoQuest.Input;
 using CryptoQuest.UI.Common;
 using UnityEngine;
@@ -86,8 +87,8 @@ namespace CryptoQuest.Battle.UI.SelectSkill
             foreach (var skill in skills.Skills)
             {
                 var skillUI = Instantiate(_skillPrefab, _skillList.content);
-                skillUI.Init(skill);
                 skillUI.Selected += SelectingTarget;
+                skillUI.Init(skill, skill.IsCastable(hero.AbilitySystem));
                 _skills.Add(skillUI);
             }
         }

@@ -68,7 +68,7 @@ namespace CryptoQuest.Battle.Components.EnemyComponents
                 CreateTakeDamagePresent);
         }
 
-        private void OnDestroy()
+        private void OnDisable()
         {
             DOTween.Kill(_sequence);
             BattleEventBus.UnsubscribeEvent(_logDealtDamageEvent);

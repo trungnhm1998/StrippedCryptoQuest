@@ -209,13 +209,14 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem.Components
             for (int i = 0; i < spec.Modifiers.Length; i++)
             {
                 var modDef = effectDef.EffectDetails.Modifiers[i];
-                var modSpec = spec.Modifiers[i];
 
                 // Only worry about additive.  Anything else passes.
                 if (modDef.OperationType != EAttributeModifierOperationType.Add) continue;
                 if (modDef.Attribute == null) continue;
 
                 if (!_attributeSystem.TryGetAttributeValue(modDef.Attribute, out var attributeValue)) continue;
+                spec.CalculateModifierMagnitudes();
+                var modSpec = spec.Modifiers[i];
                 var hasEnoughResource = attributeValue.CurrentValue + modSpec.GetEvaluatedMagnitude() < 0;
                 if (hasEnoughResource) return false;
             }
