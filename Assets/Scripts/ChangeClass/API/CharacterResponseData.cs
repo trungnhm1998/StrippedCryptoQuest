@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace CryptoQuest.Networking.ChangeClass
+namespace CryptoQuest.ChangeClass.API
 {
     [Serializable]
     public class CharacterResponseData
