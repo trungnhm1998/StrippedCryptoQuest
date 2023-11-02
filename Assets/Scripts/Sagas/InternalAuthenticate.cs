@@ -2,6 +2,7 @@
 using CryptoQuest.Core;
 using CryptoQuest.Networking;
 using CryptoQuest.Networking.Actions;
+using CryptoQuest.UI.Actions;
 using UnityEngine;
 
 namespace CryptoQuest.Sagas
@@ -63,7 +64,9 @@ namespace CryptoQuest.Sagas
                 ActionDispatcher.Dispatch(new AuthenticateFailed());
                 return;
             }
+
             ActionDispatcher.Dispatch(new AuthenticateSucceed());
+            ActionDispatcher.Dispatch(new ShowLoading(false));
         }
     }
 }

@@ -1,5 +1,8 @@
-﻿using CryptoQuest.Core;
+﻿using System.Collections;
+using CryptoQuest.Core;
 using CryptoQuest.Networking.Actions;
+using CryptoQuest.UI.Actions;
+using UnityEngine;
 
 namespace CryptoQuest.Sagas
 {
@@ -9,6 +12,19 @@ namespace CryptoQuest.Sagas
         protected override void HandleAuthenticate(LoginUsingTwitter ctx)
         {
             ActionDispatcher.Dispatch(new DebugLoginAction());
+        }
+
+        protected override void HandleAction(LoginUsingTwitter ctx)
+        {
+            ActionDispatcher.Dispatch(new ShowLoading());
+            StartCoroutine(DelayLoginFailedCo());
+        }
+
+        private IEnumerator DelayLoginFailedCo()
+        {
+            yield return new WaitForSeconds(2);
+            ActionDispatcher.Dispatch(new AuthenticateFailed());
+            ActionDispatcher.Dispatch(new ShowLoading(false));
         }
     }
 }

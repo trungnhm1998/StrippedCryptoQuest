@@ -4,48 +4,70 @@ using CryptoQuest.Networking.Actions;
 using CryptoQuest.UI.Common;
 using TinyMessenger;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace CryptoQuest.UI.Title
 {
     public class UISocialPanel : MonoBehaviour
     {
-        private Button[] _buttons;
+        [SerializeField] private Button[] _buttons;
         private TinyMessageSubscriptionToken _authFailed;
 
         private void OnEnable()
         {
-            _authFailed = ActionDispatcher.Bind<AuthenticateFailed>(_ => EnableAllButtons());
-            EnableAllButtons();
+            _authFailed = ActionDispatcher.Bind<AuthenticateFailed>(_ => EnableAllButtonsAndSelectLastSelected());
+            EnableAllButtonsAndSelectLastSelected();
             GetComponentInChildren<SelectButtonOnEnable>().Select();
         }
 
         private void OnDisable()
         {
-            EnableAllButtons(false);
+            EnableAllButtonsAndSelectLastSelected(false);
             ActionDispatcher.Unbind(_authFailed);
         }
 
-        public void RequestFacebookLogin() => PreventDoubleDispatch(() => ActionDispatcher.Dispatch(new LoginUsingFacebook()));
+        public void RequestFacebookLogin() =>
+            PreventDoubleDispatch(() => ActionDispatcher.Dispatch(new LoginUsingFacebook()));
 
-        public void RequestWalletLogin() => PreventDoubleDispatch(() => ActionDispatcher.Dispatch(new LoginUsingWallet()));
+        public void RequestWalletLogin() =>
+            PreventDoubleDispatch(() => ActionDispatcher.Dispatch(new LoginUsingWallet()));
 
-        public void RequestTwitterLogin() => PreventDoubleDispatch(() => ActionDispatcher.Dispatch(new LoginUsingTwitter()));
+        public void RequestTwitterLogin() =>
+            PreventDoubleDispatch(() => ActionDispatcher.Dispatch(new LoginUsingTwitter()));
 
-        public void RequestGmailLogin() => PreventDoubleDispatch(() => ActionDispatcher.Dispatch(new LoginUsingGoogle()));
+        public void RequestGmailLogin() =>
+            PreventDoubleDispatch(() => ActionDispatcher.Dispatch(new LoginUsingGoogle()));
 
-        public void RequestEmailAndPasswordLogin() => PreventDoubleDispatch(() => ActionDispatcher.Dispatch(new LoginUsingEmail()));
+        public void RequestEmailAndPasswordLogin() =>
+            PreventDoubleDispatch(() => ActionDispatcher.Dispatch(new LoginUsingEmail()));
 
         private void PreventDoubleDispatch(Action callback)
         {
-            EnableAllButtons(false);
+            EnableAllButtonsAndSelectLastSelected(false);
             callback();
         }
 
-        private void EnableAllButtons(bool isEnabled = true)
+        private void EnableAllButtonsAndSelectLastSelected(bool isEnabled = true)
         {
-            _buttons ??= GetComponentsInChildren<Button>();
+            if (!isEnabled) CacheLastSelectedButton();
             foreach (var button in _buttons) button.interactable = isEnabled;
+            if (_lastSelectedButton is null || !enabled) return;
+            _lastSelectedButton.Select();
+            _lastSelectedButton = null;
+        }
+
+        private Button _lastSelectedButton;
+        private void CacheLastSelectedButton()
+        {
+            if (EventSystem.current is null) return;
+            var selectedGameObject = EventSystem.current.currentSelectedGameObject;
+            if (selectedGameObject == null) return;
+            var lastSelectedButton = selectedGameObject.GetComponent<Button>();
+            if (lastSelectedButton == null) return;
+            var index = Array.IndexOf(_buttons, lastSelectedButton);
+            if (index < 0) return;
+            _lastSelectedButton = lastSelectedButton;
         }
     }
 }
