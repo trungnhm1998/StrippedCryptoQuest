@@ -1,19 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
-using CryptoQuest.Gameplay.Inventory;
 using CryptoQuest.Gameplay.PlayerParty;
+using CryptoQuest.SaveSystem.Sagas.ScriptableObjects;
 using CryptoQuest.System;
 using IndiGames.Core.SceneManagementSystem;
 using IndiGames.Core.SceneManagementSystem.ScriptableObjects;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.Components;
-using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
 using Newtonsoft.Json;
 using UnityEngine;
 
 namespace CryptoQuest.SaveSystem.Sagas
 {
     [Serializable]
-    internal struct CharacterStats
+    public class SaveAttributeValue
+    {
+        [JsonProperty("name")]
+        public string Name;
+
+        [JsonProperty("val")]
+        public float Value;
+    }
+
+    [Serializable]
+    public class CharacterStats
     {
         [JsonProperty("id")]
         public int Id;
@@ -24,8 +33,7 @@ namespace CryptoQuest.SaveSystem.Sagas
 
     public class SaveCharacterStats : MonoBehaviour
     {
-        [SerializeField]
-        private AttributeScriptableObject[] _attributeToSave = Array.Empty<AttributeScriptableObject>();
+        [SerializeField] private StatsSaveConfig _config;
 
         [SerializeField] private SceneScriptableObject _battleScene;
 
@@ -56,21 +64,20 @@ namespace CryptoQuest.SaveSystem.Sagas
                     Attributes = GetRuntimeStats(attributeSystem)
                 });
             }
-            
+
             PlayerPrefs.SetString("characters", JsonConvert.SerializeObject(characters));
-            
         }
 
         private List<SaveAttributeValue> GetRuntimeStats(AttributeSystemBehaviour attributeSystem)
         {
             var attributes = new List<SaveAttributeValue>();
 
-            foreach (var attribute in _attributeToSave)
+            foreach (var config in _config.AttributeToSave)
             {
-                attributeSystem.TryGetAttributeValue(attribute, out var attributeValue);
+                attributeSystem.TryGetAttributeValue(config.AttributeToSave, out var attributeValue);
                 attributes.Add(new SaveAttributeValue
                 {
-                    AttributeGuid = attribute.Guid, // use this to load the attribute
+                    Name = config.SerializedName, // use this to load the attribute
                     Value = attributeValue.CurrentValue // using current value because it's the runtime value
                 });
             }
