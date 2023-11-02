@@ -12,12 +12,14 @@ namespace CryptoQuest.Sagas
         {
             Debug.Log("FirebaseAuthScript: OnUserSignedIn " + json);
             var firebaseUser = JsonConvert.DeserializeObject<FirebaseUser>(json);
-            ActionDispatcher.Dispatch(new AuthenticateWithBackendAction() { Token = firebaseUser.stsTokenManager.accessToken });
+            ActionDispatcher.Dispatch(new AuthenticateWithBackendAction()
+                { Token = firebaseUser.stsTokenManager.accessToken });
         }
 
         protected void OnUserSignedOut(string json)
         {
             Debug.Log("FirebaseAuthScript: OnUserSignedOut " + json);
+            ActionDispatcher.Dispatch(new AuthenticateFailed());
         }
 
         protected override void HandleAction(TAction ctx)

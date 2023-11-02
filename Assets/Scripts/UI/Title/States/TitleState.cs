@@ -9,6 +9,7 @@ namespace CryptoQuest.UI.Title.States
         private UISocialPanel _socialPanel;
         private TinyMessageSubscriptionToken _loginUsingEmailEvent;
         private TitleStateMachine _stateMachine;
+        private TinyMessageSubscriptionToken _authSucceed;
 
         public void OnEnter(TitleStateMachine stateMachine)
         {
@@ -17,17 +18,18 @@ namespace CryptoQuest.UI.Title.States
             _socialPanel.gameObject.SetActive(true);
 
             _loginUsingEmailEvent = ActionDispatcher.Bind<LoginUsingEmail>(ChangeLoginUsingEmailState);
+            _authSucceed = ActionDispatcher.Bind<AuthenticateSucceed>(ToStartGameState);
         }
 
         public void OnExit(TitleStateMachine stateMachine)
         {
+            ActionDispatcher.Unbind(_authSucceed);
             ActionDispatcher.Unbind(_loginUsingEmailEvent);
             _socialPanel.gameObject.SetActive(false);
         }
 
-        private void ChangeLoginUsingEmailState(LoginUsingEmail _)
-        {
-            _stateMachine.ChangeState(new MailLoginState());
-        }
+        private void ChangeLoginUsingEmailState(LoginUsingEmail _) => _stateMachine.ChangeState(new MailLoginState());
+
+        private void ToStartGameState(AuthenticateSucceed _) => _stateMachine.ChangeState(new StartGameState());
     }
 }
