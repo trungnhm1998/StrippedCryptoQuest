@@ -9,7 +9,6 @@ namespace CryptoQuest.Battle.Components
     /// </summary>
     public class HeroStatsInitializer : CharacterComponentBase
     {
-        private HeroBehaviour _heroComponent;
         private readonly ILevelAttributeCalculator _levelAttributeCalculator = new DefaultLevelAttributeCalculator();
 
         private AttributeSystemBehaviour _attributeSystem;
@@ -17,7 +16,6 @@ namespace CryptoQuest.Battle.Components
         protected override void Awake()
         {
             base.Awake();
-            Character.TryGetComponent(out _heroComponent);
             Character.TryGetComponent(out _attributeSystem);
         }
 
@@ -39,10 +37,12 @@ namespace CryptoQuest.Battle.Components
         /// </summary>
         private void InitBaseStats()
         {
-            var attributeDefs = _heroComponent.Stats.Attributes;
+            var statsProvider = Character.GetComponent<IStatsConfigProvider>();
+            var stats = statsProvider.Stats;
+            var attributeDefs = stats.Attributes;
             Character.TryGetComponent(out LevelSystem levelSystem);
             var charLvl = levelSystem.Level;
-            var characterAllowedMaxLvl = _heroComponent.Stats.MaxLevel;
+            var characterAllowedMaxLvl = stats.MaxLevel;
             for (int i = 0; i < attributeDefs.Length; i++)
             {
                 var attributeDef = attributeDefs[i];

@@ -7,7 +7,6 @@ using CryptoQuest.Battle.UI.SelectCommand;
 using CryptoQuest.Gameplay.Battle.Core.Helper;
 using DG.Tweening;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 namespace CryptoQuest.Battle.States.SelectHeroesActions
 {
@@ -28,7 +27,7 @@ namespace CryptoQuest.Battle.States.SelectHeroesActions
         {
             BattleEventBus.RaiseEvent<HighlightHeroEvent>(_heroEventObject);
             
-            Fsm.SelectCommandUI.SetCharacterName(Hero.Spec.Unit.Origin.DetailInformation.LocalizedName);
+            Fsm.SelectCommandUI.SetCharacterName(Hero.Spec.Origin.DetailInformation.LocalizedName);
             Fsm.SelectCommandUI.RegisterCallback(this);
             
             DOVirtual.DelayedCall(SELECT_DELAY, SelectButton);

@@ -1,5 +1,4 @@
-﻿using CryptoQuest.AbilitySystem.Attributes;
-using CryptoQuest.Character;
+﻿using CryptoQuest.Character;
 using CryptoQuest.Character.Hero;
 using CryptoQuest.Gameplay;
 using CryptoQuest.Gameplay.PlayerParty;
@@ -10,8 +9,9 @@ namespace CryptoQuest.Battle.Components
 {
     public interface IStatsConfigProvider
     {
-        
+        public StatsDef Stats { get; }
     }
+
     public interface IExpProvider
     {
         public float Exp { get; }
@@ -21,14 +21,18 @@ namespace CryptoQuest.Battle.Components
     /// To interact with Gameplay Ability System
     /// </summary>
     [DisallowMultipleComponent]
-    public class HeroBehaviour : Character, IEquipmentsProvider, IExpProvider
+    public class HeroBehaviour :
+        Character,
+        IEquipmentsProvider, 
+        IExpProvider, 
+        IStatsConfigProvider
     {
-        public Origin.Information DetailsInfo => Spec.Unit.Origin.DetailInformation;
+        public Origin.Information DetailsInfo => Spec.Origin.DetailInformation;
         public StatsDef Stats => Spec.Stats;
         public override string DisplayName => DetailsInfo.LocalizedName.GetLocalizedString();
         public override LocalizedString LocalizedName => DetailsInfo.LocalizedName;
         public GameObject GameObject => gameObject;
-        public CharacterClass Class => Spec.Unit.Class;
+        public CharacterClass Class => Spec.Class;
         public Sprite Avatar { get; set; }
         public Sprite BattleAvatar { get; set; }
 
@@ -65,8 +69,7 @@ namespace CryptoQuest.Battle.Components
         {
             _partySlotSpec = slotSpec;
             Spec = _partySlotSpec.Hero;
-            // Need level before I can init the character
-            Init(Element);
+            Init(Spec.Elemental);
         }
 
         public override bool IsValid() => _spec.IsValid();

@@ -27,7 +27,7 @@ namespace CryptoQuest.Battle.Components
 
         #endregion
 
-        private readonly Dictionary<Type, Component> _cachedComponents = new();
+        private readonly Dictionary<Type, object> _cachedComponents = new();
         private ITargeting _targetComponent;
         public ITargeting Targeting => _targetComponent;
         private Elemental _element;
@@ -77,7 +77,7 @@ namespace CryptoQuest.Battle.Components
         /// <summary>
         /// Same as Unity's <see cref="GameObject.TryGetComponent{T}(out T)"/> but with a cache
         /// </summary>
-        public new bool TryGetComponent<T>(out T component) where T : Component
+        public new bool TryGetComponent<T>(out T component) where T : class
         {
             var type = typeof(T);
             if (!_cachedComponents.TryGetValue(type, out var value))

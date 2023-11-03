@@ -21,13 +21,15 @@ namespace CryptoQuest.Character.LevelSystem
         /// <param name="hero"></param>
         private void RecalculateStats(HeroBehaviour hero)
         {
+            if (!hero.TryGetComponent(out IStatsConfigProvider statsConfigProvider)) return;
             if (!hero.TryGetComponent(out Battle.Components.LevelSystem levelSystem)) return;
             var lastLevel = levelSystem.LastLevel;
             var level = levelSystem.Level;
             var attributeSystem = hero.AttributeSystem;
             if (attributeSystem == null) return;
-            var attributeDefs = hero.Stats.Attributes;
-            var allowedMaxLvl = hero.Stats.MaxLevel;
+            var stats = statsConfigProvider.Stats;
+            var attributeDefs = stats.Attributes;
+            var allowedMaxLvl = stats.MaxLevel;
 
             foreach (var attributeDef in attributeDefs)
             {

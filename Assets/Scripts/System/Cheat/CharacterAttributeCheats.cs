@@ -1,15 +1,11 @@
-using System;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 using System.Collections.Generic;
 using CommandTerminal;
 using CryptoQuest.Gameplay.PlayerParty;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.Components;
-
-#if UNITY_EDITOR
-using UnityEditor;
-#endif
 using UnityEngine;
-using UnityEngine.AddressableAssets;
-using UnityEngine.ResourceManagement.AsyncOperations;
 using CoreAttributeSO = IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects.AttributeScriptableObject;
 
 namespace CryptoQuest.System.Cheat
@@ -81,7 +77,7 @@ namespace CryptoQuest.System.Cheat
             if (!attributeSystem.TryGetAttributeValue(attribute, out var currentValue)) return;
 
             attributeSystem.SetAttributeBaseValue(attribute, newValue);
-            Debug.Log($"Updated base value of {hero.Spec.Unit}'s attribute {attribute} to {newValue}");
+            Debug.Log($"Updated base value of {hero.Spec.Id}'s attribute {attribute} to {newValue}");
         }
     }
 }

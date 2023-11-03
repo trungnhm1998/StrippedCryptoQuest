@@ -25,10 +25,12 @@ namespace CryptoQuest.Battle.Components
         [SerializeField, ReadOnly] private int _level = 1;
         [SerializeField] private AttributeScriptableObject _expBuffAttribute;
 
+        private IStatsConfigProvider _statsProvider;
+        private IStatsConfigProvider StatsProvider => _statsProvider ??= GetComponent<IStatsConfigProvider>();
         private ILevelCalculator _levelCalculator;
 
         // TODO: Possible optimization
-        private ILevelCalculator LevelCalculator => _levelCalculator ??= new LevelCalculator(Hero.Stats.MaxLevel);
+        private ILevelCalculator LevelCalculator => _levelCalculator ??= new LevelCalculator(StatsProvider.Stats.MaxLevel);
         private HeroBehaviour _character;
         private HeroBehaviour Hero => _character ??= GetComponent<HeroBehaviour>();
         private IExpProvider _expProvider;
@@ -71,7 +73,7 @@ namespace CryptoQuest.Battle.Components
         }
 
         private void OnCharacterLevelUp() => ActionDispatcher.Dispatch(new HeroLeveledUpAction(_character));
-        private bool IsMaxedLevel => Level == Hero.Stats.MaxLevel;
+        private bool IsMaxedLevel => Level == StatsProvider.Stats.MaxLevel;
 
         public int GetNextLevelRequireExp()
         {
