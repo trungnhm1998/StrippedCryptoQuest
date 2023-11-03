@@ -203,7 +203,7 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Abilities
             skillInfo.VfxId = int.Parse(data.VfxId);
             CustomExecutionAttributeCaptureDef attributeCaptureDef = new();
             attributeCaptureDef.Attribute = GetAttribute(data.MainEffectTargetParameterId);
-            skillInfo.SkillParameters.targetAttribute = attributeCaptureDef;
+            skillInfo.SkillParameters.TargetAttribute = attributeCaptureDef;
             GameplayEffectContext ctx = new GameplayEffectContext(skillInfo);
 
 
