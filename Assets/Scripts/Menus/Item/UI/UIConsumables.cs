@@ -7,7 +7,7 @@ using CryptoQuest.System;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace CryptoQuest.UI.Menu.Panels.Item
+namespace CryptoQuest.Menus.Item.UI
 {
     /// <summary>
     /// Render consumables in <see cref="InventorySO"/> filter using <see cref="Type"/>

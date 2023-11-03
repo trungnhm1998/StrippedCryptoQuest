@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.Localization;
 
-namespace CryptoQuest.Item.Ocarina
+namespace CryptoQuest.Ocarina
 {
     public class OcarinaEntrance : MapPathSO
     {

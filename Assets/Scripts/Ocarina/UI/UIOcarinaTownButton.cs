@@ -1,9 +1,8 @@
 ﻿using System;
-using CryptoQuest.Item.Ocarina;
 using UnityEngine;
 using UnityEngine.Localization.Components;
 
-namespace CryptoQuest.UI.Menu.Panels.Item.Ocarina
+namespace CryptoQuest.Ocarina.UI
 {
     public class UIOcarinaTownButton : MonoBehaviour
     {

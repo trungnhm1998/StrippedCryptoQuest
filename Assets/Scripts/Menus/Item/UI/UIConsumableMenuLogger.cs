@@ -1,17 +1,10 @@
 using System.Collections;
-using CryptoQuest.AbilitySystem.Attributes;
-using CryptoQuest.AbilitySystem.Attributes.Events;
-using CryptoQuest.Battle.Components;
 using DG.Tweening;
-using IndiGames.GameplayAbilitySystem.AttributeSystem;
-using IndiGames.GameplayAbilitySystem.AttributeSystem.Components;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Localization;
-using UnityEngine.Localization.SmartFormat.PersistentVariables;
-using UnityEngine.UI;
 
-namespace CryptoQuest.UI.Menu.Panels.Item
+namespace CryptoQuest.Menus.Item.UI
 {
     public class UIConsumableMenuLogger : MonoBehaviour
     {
