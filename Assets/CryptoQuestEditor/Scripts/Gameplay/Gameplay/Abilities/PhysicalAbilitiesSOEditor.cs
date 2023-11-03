@@ -199,7 +199,8 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Abilities
                 ? EAbilityUsageScenario.Field
                 : data.ScenarioId == "2"
                     ? EAbilityUsageScenario.Battle
-                    : EAbilityUsageScenario.FieldAndBatte;
+                    : EAbilityUsageScenario.Field | EAbilityUsageScenario.Battle;
+
             skillInfo.VfxId = int.Parse(data.VfxId);
             CustomExecutionAttributeCaptureDef attributeCaptureDef = new();
             attributeCaptureDef.Attribute = GetAttribute(data.MainEffectTargetParameterId);
