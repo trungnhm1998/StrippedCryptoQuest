@@ -9,9 +9,9 @@ namespace CryptoQuest.Character.LevelSystem
 
     public class LevelCalculator : ILevelCalculator
     {
-        private int _maxLevel;
-        public int[] AccumulatedExps { get; set; }
-        public int[] RequiredExps { get; set; }
+        private readonly int _maxLevel;
+        public int[] AccumulatedExps { get; private set; }
+        public int[] RequiredExps { get; private set; }
 
         public LevelCalculator(int maxLevel)
         {

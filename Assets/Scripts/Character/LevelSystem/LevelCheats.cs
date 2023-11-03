@@ -1,8 +1,10 @@
 using CommandTerminal;
 using CryptoQuest.Battle.Components;
+using CryptoQuest.Core;
 using CryptoQuest.Gameplay.PlayerParty;
 using CryptoQuest.System;
 using CryptoQuest.System.Cheat;
+using TinyMessenger;
 using UnityEngine;
 using LevelSystemBehavior = CryptoQuest.Battle.Components.LevelSystem;
 
@@ -10,25 +12,23 @@ namespace CryptoQuest.Character.LevelSystem
 {
     public class LevelCheats : MonoBehaviour, ICheatInitializer
     {
+        private TinyMessageSubscriptionToken _leveledUpEvent;
+
         public void InitCheats()
         {
             Debug.Log("LevelCheats::InitCheats()");
             Terminal.Shell.AddCommand("addexp", AddExpToCharacter, 2, 2, "Add exp to a character");
         }
 
-        private void OnEnable()
-        {
-            LevelSystemBehavior.HeroLeveledUp += CharacterLevelUp;
-        }
+        private void OnEnable() => _leveledUpEvent =
+            ActionDispatcher.Bind<HeroLeveledUpAction>(ctx => CharacterLevelUp(ctx.Hero));
 
-        private void OnDisable()
-        {
-            LevelSystemBehavior.HeroLeveledUp -= CharacterLevelUp;
-        }
+        private void OnDisable() => ActionDispatcher.Unbind(_leveledUpEvent);
 
         private void CharacterLevelUp(HeroBehaviour character)
         {
-            Debug.Log($"Character {character.DetailsInfo} leveled up to {character.Level}!");
+            character.TryGetComponent(out LevelSystemBehavior levelSystem);
+            Debug.Log($"Character {character.DetailsInfo} leveled up to {levelSystem.Level}!");
         }
 
         public void AddExpToCharacter(CommandArg[] args)
@@ -42,6 +42,7 @@ namespace CryptoQuest.Character.LevelSystem
                 Debug.LogWarning($"Member index not valid");
                 return;
             }
+
             if (!hero.GameObject.TryGetComponent<LevelSystemBehavior>(out var levelComponent)) return;
             levelComponent.AddExp(expToAdd);
         }

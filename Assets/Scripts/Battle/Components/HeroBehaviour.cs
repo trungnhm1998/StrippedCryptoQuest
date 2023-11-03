@@ -8,15 +8,23 @@ using UnityEngine.Localization;
 
 namespace CryptoQuest.Battle.Components
 {
+    public interface IStatsConfigProvider
+    {
+        
+    }
+    public interface IExpProvider
+    {
+        public float Exp { get; }
+    }
+
     /// <summary>
     /// To interact with Gameplay Ability System
     /// </summary>
     [DisallowMultipleComponent]
-    public class HeroBehaviour : Character, IEquipmentsProvider
+    public class HeroBehaviour : Character, IEquipmentsProvider, IExpProvider
     {
-        public int Level { get; set; } = 1;
         public Origin.Information DetailsInfo => Spec.Unit.Origin.DetailInformation;
-        public StatsDef Stats => Spec.Unit.Stats;
+        public StatsDef Stats => Spec.Stats;
         public Elemental Element => Spec.Unit.Element;
         public override string DisplayName => DetailsInfo.LocalizedName.GetLocalizedString();
         public override LocalizedString LocalizedName => DetailsInfo.LocalizedName;
@@ -24,6 +32,15 @@ namespace CryptoQuest.Battle.Components
         public CharacterClass Class => Spec.Unit.Class;
         public Sprite Avatar { get; set; }
         public Sprite BattleAvatar { get; set; }
+
+        public float Exp
+        {
+            get
+            {
+                if (_spec.IsValid() == false) return 0;
+                return _spec.Experience;
+            }
+        }
 
         [SerializeField] private HeroSpec _spec;
 
@@ -33,14 +50,7 @@ namespace CryptoQuest.Battle.Components
             set => _spec = value;
         }
 
-        private LevelSystem _levelSystem;
         private PartySlotSpec _partySlotSpec;
-
-        protected override void Awake()
-        {
-            base.Awake();
-            _levelSystem = GetComponent<LevelSystem>();
-        }
 
         /// <summary>
         /// 1. get lvl first
@@ -56,7 +66,6 @@ namespace CryptoQuest.Battle.Components
         {
             _partySlotSpec = slotSpec;
             Spec = _partySlotSpec.Hero;
-            _levelSystem.Init(this);
             // Need level before I can init the character
             Init(Element);
         }
