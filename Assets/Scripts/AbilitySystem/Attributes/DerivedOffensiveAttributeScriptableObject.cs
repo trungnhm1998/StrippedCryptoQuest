@@ -14,14 +14,14 @@ namespace CryptoQuest.AbilitySystem.Attributes
             // get value that is a result of calculation affected by other attributes
             AttributeValue derivedAttributeValue = base.CalculateCurrentAttributeValue(attributeValue, otherAttributeValuesInSystem);
 
-            float cappedCoreModifierMultiplicative = MathF.Max(0.2f, attributeValue.CoreModifier.Multiplicative + 1);
+            float cappedCoreModifierMultiplicative = MathF.Max(0.2f, derivedAttributeValue.CoreModifier.Multiplicative + 1);
 
-            float coreValue = (attributeValue.BaseValue + attributeValue.CoreModifier.Additive) *
+            float coreValue = (derivedAttributeValue.BaseValue + derivedAttributeValue.CoreModifier.Additive) *
                               cappedCoreModifierMultiplicative;
 
-            float cappedExternalModifierMultiplicative = MathF.Max(0.2f, attributeValue.ExternalModifier.Multiplicative + 1);
+            float cappedExternalModifierMultiplicative = MathF.Max(0.2f, derivedAttributeValue.ExternalModifier.Multiplicative + 1);
 
-            derivedAttributeValue.CurrentValue = (coreValue + attributeValue.ExternalModifier.Additive) * 
+            derivedAttributeValue.CurrentValue = (coreValue + derivedAttributeValue.ExternalModifier.Additive) * 
                                                  cappedExternalModifierMultiplicative;
 
             return derivedAttributeValue;
