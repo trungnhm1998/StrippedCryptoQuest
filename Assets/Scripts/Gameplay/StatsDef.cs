@@ -4,10 +4,12 @@ using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
 namespace CryptoQuest.Gameplay
 {
     [Serializable]
-    public struct StatsDef
+    public class StatsDef
     {
         public int MaxLevel;
-        public CappedAttributeDef[] Attributes;
+        public CappedAttributeDef[] Attributes = Array.Empty<CappedAttributeDef>();
+
+        public bool IsValid() => Attributes.Length > 0;
     }
 
     [Serializable]
