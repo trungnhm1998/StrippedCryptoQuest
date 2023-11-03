@@ -4,7 +4,6 @@ using CryptoQuest.Menu;
 using CryptoQuest.Tavern.Interfaces;
 using CryptoQuest.UI.Menu;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace CryptoQuest.Tavern.UI.CharacterReplacement
@@ -90,6 +89,11 @@ namespace CryptoQuest.Tavern.UI.CharacterReplacement
             {
                 item.EnablePendingTag(false);
             }
+        }
+
+        private void OnDisable()
+        {
+            CleanUpScrollView();
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 namespace CryptoQuest.Tavern.UI.CharacterReplacement
 {
@@ -9,6 +10,12 @@ namespace CryptoQuest.Tavern.UI.CharacterReplacement
 
         [SerializeField] private Transform _gameScrollContent;
         [SerializeField] private Transform _walletScrollContent;
+
+        private List<int> _selectedGameItemsIds = new();
+        public List<int> SelectedGameItemsIds { get => _selectedGameItemsIds; private set => _selectedGameItemsIds = value; }
+
+        private List<int> _selectedWalletItemsIds = new();
+        public List<int> SelectedWalletItemsIds { get => _selectedWalletItemsIds; private set => _selectedWalletItemsIds = value; }
 
         public override void StateEntered()
         {
@@ -25,16 +32,36 @@ namespace CryptoQuest.Tavern.UI.CharacterReplacement
 
         private void Transfer(UITavernItem currentItem)
         {
+            _selectedGameItemsIds.Clear();
+            _selectedWalletItemsIds.Clear();
+
             var currentList = currentItem.Parent;
-            var otherList = currentList == _gameScrollContent ? _walletScrollContent : _gameScrollContent;
+
+            Transform otherList;
+            if (currentList == _gameScrollContent)
+            {
+                otherList = _walletScrollContent;
+                _selectedGameItemsIds.Add(currentItem.Id);
+            }
+            else
+            {
+                otherList = _gameScrollContent;
+                _selectedWalletItemsIds.Add(currentItem.Id);
+            }
+
             currentItem.Transfer(otherList);
 
             _gameListUi.SetInteractableAllButtons(otherList == _gameScrollContent);
             _walletListUi.SetInteractableAllButtons(otherList == _walletScrollContent);
+
+            
         }
 
         public void SwitchList(Vector2 direction)
         {
+            if (_gameScrollContent.childCount <= 0) return;
+            if (_walletScrollContent.childCount <= 0) return; // code smells
+
             switch (direction.x)
             {
                 case > 0:

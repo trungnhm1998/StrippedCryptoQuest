@@ -1,4 +1,5 @@
-﻿using CryptoQuest.Tavern.Interfaces;
+﻿using CryptoQuest.Tavern.Data;
+using CryptoQuest.Tavern.Interfaces;
 using CryptoQuest.UI.Menu;
 using TMPro;
 using UnityEngine;
@@ -24,6 +25,8 @@ namespace CryptoQuest.Tavern.UI
         public Transform Parent { get; set; }
 
         private ITooltip _tooltip;
+        
+        public int Id { get; private set; }
 
         private bool _isSelected = false;
         private bool _isInParty = false;
@@ -39,6 +42,7 @@ namespace CryptoQuest.Tavern.UI
 
         public void SetItemInfo(ICharacterData itemInfo)
         {
+            Id = itemInfo.GetId();
             _classIcon.sprite = itemInfo.GetClassIcon();
             
             if (itemInfo.GetLocalizedName() != null)

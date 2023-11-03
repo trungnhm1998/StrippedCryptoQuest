@@ -31,7 +31,7 @@ namespace CryptoQuest.Tavern.States.CharacterReplacement
 
             _getGameDataSucceedEvent = ActionDispatcher.Bind<GetGameNftCharactersSucceed>(GetInGameCharacters);
             _getWalletDataSucceedEvent = ActionDispatcher.Bind<GetWalletNftCharactersSucceed>(GetWalletCharacters);
-            ActionDispatcher.Dispatch(new NftCharacterAction());
+            ActionDispatcher.Dispatch(new GetCharacters());
 
             _controller.TavernInputManager.CancelEvent += CancelCharacterReplacement;
             _controller.TavernInputManager.NavigateEvent += SwitchToOtherListRequested;
@@ -63,7 +63,6 @@ namespace CryptoQuest.Tavern.States.CharacterReplacement
 
         private void SwitchToOtherListRequested(Vector2 direction)
         {
-            if (_cachedGameData.Count <= 0 || _cachedWalletData.Count <= 0) return;
             _controller.UICharacterReplacement.SwitchList(direction);
         }
 

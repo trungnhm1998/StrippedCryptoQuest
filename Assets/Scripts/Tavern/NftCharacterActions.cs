@@ -5,7 +5,7 @@ using CryptoQuest.Tavern.Objects;
 
 namespace CryptoQuest.Tavern
 {
-    public class NftCharacterAction : ActionBase
+    public class GetCharacters : ActionBase
     {
         public ETavernStatus Status { get; set; } = ETavernStatus.All;
         public bool ForceRefresh { get; set; } = false;
@@ -32,4 +32,24 @@ namespace CryptoQuest.Tavern
     }
 
     public class GetNftCharactersFailed : ActionBase { }
+
+    public class SendCharactersToWallet : ActionBase
+    {
+        public int[] SelectedInGameCharacters { get; }
+        public SendCharactersToWallet(int[] selectedInGameCharacters)
+        {
+            SelectedInGameCharacters = selectedInGameCharacters;
+        }
+    }
+
+    public class SendCharactersToGame : ActionBase
+    {
+        public int[] SelectedInWalletCharacters { get; }
+        public SendCharactersToGame(int[] selectedInWalletCharacters)
+        {
+            SelectedInWalletCharacters = selectedInWalletCharacters;
+        }
+    }
+
+    public class TransferSucceed : ActionBase { }
 }
