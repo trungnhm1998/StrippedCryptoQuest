@@ -80,16 +80,32 @@ namespace CryptoQuest.Battle.Components
         public new bool TryGetComponent<T>(out T component) where T : class
         {
             var type = typeof(T);
-            if (!_cachedComponents.TryGetValue(type, out var value))
+            if (_cachedComponents.TryGetValue(type, out var cachedComponent))
             {
-                if (base.TryGetComponent(out component))
-                    _cachedComponents.Add(type, component);
-
-                return component != null;
+                component = (T)cachedComponent;
+                return true;
             }
 
-            component = (T)value;
-            return true;
+            var result = base.TryGetComponent(out component);
+            if (result)
+                _cachedComponents.Add(type, component);
+
+            return result;
+        }
+        
+        public new T GetComponent<T>() where T : class
+        {
+            var type = typeof(T);
+            if (_cachedComponents.TryGetValue(type, out var cachedComponent))
+            {
+                return (T)cachedComponent;
+            }
+
+            var result = base.GetComponent<T>();
+            if (result != null)
+                _cachedComponents.Add(type, result);
+
+            return result;
         }
 
         public virtual void OnTurnStarted()

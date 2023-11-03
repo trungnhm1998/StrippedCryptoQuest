@@ -10,20 +10,14 @@ namespace CryptoQuest.Battle.Components
     public class HeroStatsInitializer : CharacterComponentBase
     {
         private readonly ILevelAttributeCalculator _levelAttributeCalculator = new DefaultLevelAttributeCalculator();
-
         private AttributeSystemBehaviour _attributeSystem;
-
-        protected override void Awake()
-        {
-            base.Awake();
-            Character.TryGetComponent(out _attributeSystem);
-        }
-
+        
         /// <summary>
         /// Order matters
         /// </summary>
         public override void Init()
         {
+            _attributeSystem = Character.AttributeSystem;
             InitBaseStats();
             InitAllAttributes();
 
