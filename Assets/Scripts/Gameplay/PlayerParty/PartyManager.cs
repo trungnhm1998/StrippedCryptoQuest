@@ -57,9 +57,9 @@ namespace CryptoQuest.Gameplay.PlayerParty
         {
             ServiceProvider.Provide<IPartyController>(this);
             _partyProvider = GetComponent<IPartyProvider>();
+            InitParty();
         }
 
-        private void Start() => InitParty();
         /// <summary>
         /// Init party members stats at run time
         /// and bind the mono behaviour to the <see cref="CharacterSpec._characterComponent"/>
@@ -73,7 +73,6 @@ namespace CryptoQuest.Gameplay.PlayerParty
                 var hero = heroes[i];
                 _partySlots[i].Init(hero);
             }
-            ActionDispatcher.Dispatch(new PartyInitialized());
         }
 
         /// <summary>
@@ -121,10 +120,10 @@ namespace CryptoQuest.Gameplay.PlayerParty
 
             Debug.Log($"Sorted {sourceIndex} to {destinationIndex}");
 
-            List<HeroSpec> heroes = new List<HeroSpec>();
+            List<PartySlotSpec> heroes = new List<PartySlotSpec>();
             foreach (var slot in _partySlots)
                 if (slot.IsValid())
-                    heroes.Add(slot.HeroBehaviour.Spec);
+                    heroes.Add(slot.Spec);
 
             _partyProvider.SetParty(heroes.ToArray());
             return true;

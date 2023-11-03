@@ -1,13 +1,7 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using CryptoQuest.Item.Equipment;
-using IndiGames.Core.SaveSystem;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.Components;
-using Newtonsoft.Json;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
-using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace CryptoQuest.Character.Hero
 {
@@ -46,20 +40,7 @@ namespace CryptoQuest.Character.Hero
         [field: SerializeField] public int Id { get; set; }
         [field: SerializeField] public UnitSO Unit { get; set; }
         [field: SerializeField] public float Experience { get; set; }
-        [field: SerializeField] public Equipments Equipments { get; set; }
         public bool IsValid() => Unit != null;
 
-        /// <summary>
-        /// Use this to make sure equipped equipment has valid hero id 
-        /// </summary>
-        public void ValidateEquipments()
-        {
-            foreach (var slot in Equipments.Slots)
-            {
-                var equipment = slot.Equipment;
-                if (!equipment.IsValid() || equipment.IsEquipped) continue;
-                equipment.SetEquippedHeroUnitId(Id);
-            }
-        }
     }
 }
