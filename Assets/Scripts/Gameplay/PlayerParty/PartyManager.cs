@@ -2,9 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using CryptoQuest.Battle.Components;
-using CryptoQuest.Character.Hero;
-using CryptoQuest.Core;
-using CryptoQuest.SaveSystem.Actions;
 using CryptoQuest.System;
 using UnityEngine;
 
@@ -57,8 +54,9 @@ namespace CryptoQuest.Gameplay.PlayerParty
         {
             ServiceProvider.Provide<IPartyController>(this);
             _partyProvider = GetComponent<IPartyProvider>();
-            InitParty();
         }
+
+        private void Start() => InitParty();
 
         /// <summary>
         /// Init party members stats at run time
