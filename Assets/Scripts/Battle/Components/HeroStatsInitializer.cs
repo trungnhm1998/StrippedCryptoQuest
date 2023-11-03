@@ -1,5 +1,4 @@
-﻿using CryptoQuest.Core;
-using CryptoQuest.Gameplay;
+﻿using CryptoQuest.Gameplay;
 using CryptoQuest.Gameplay.Helper;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.Components;
 
@@ -18,8 +17,8 @@ namespace CryptoQuest.Battle.Components
         protected override void Awake()
         {
             base.Awake();
-            _heroComponent = GetComponent<HeroBehaviour>();
-            _attributeSystem = GetComponent<AttributeSystemBehaviour>();
+            Character.TryGetComponent(out _heroComponent);
+            Character.TryGetComponent(out _attributeSystem);
         }
 
         /// <summary>
@@ -41,7 +40,8 @@ namespace CryptoQuest.Battle.Components
         private void InitBaseStats()
         {
             var attributeDefs = _heroComponent.Stats.Attributes;
-            var charLvl = _heroComponent.Level; // TODO: Use level system might be better
+            Character.TryGetComponent(out LevelSystem levelSystem);
+            var charLvl = levelSystem.Level;
             var characterAllowedMaxLvl = _heroComponent.Stats.MaxLevel;
             for (int i = 0; i < attributeDefs.Length; i++)
             {

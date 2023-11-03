@@ -58,6 +58,7 @@ namespace CryptoQuest.Item.Equipment
         /// I saved the equipped hero unit Id just in case
         /// </summary>
         [NonSerialized] private int _equippedHeroUnitId = 0;
+
         public bool IsEquipped => _equippedHeroUnitId != 0;
 
         public EquipmentInfo()
@@ -92,12 +93,7 @@ namespace CryptoQuest.Item.Equipment
             return Equals(left, right);
         }
 
-        public bool Equals(EquipmentInfo other)
-        {
-            if (other == null) return false;
-            if (ReferenceEquals(this, other)) return true;
-            return this.DefinitionId == other.DefinitionId && Id == other.Id;
-        }
+        public bool Equals(EquipmentInfo other) => other != null && ReferenceEquals(this, other);
 
         public static bool operator !=(EquipmentInfo left, EquipmentInfo right) => !(left == right);
 
@@ -122,10 +118,11 @@ namespace CryptoQuest.Item.Equipment
         {
             if (!IsValid()) return false;
 
+            hero.TryGetComponent(out LevelSystem levelSystem);
             CharacterClass[] equipmentAllowedClasses = Prefab.EquipmentType.AllowedClasses;
             CharacterClass characterClass = hero.Class;
 
-            if (Def.RequiredCharacterLevel > hero.Level)
+            if (Def.RequiredCharacterLevel > levelSystem.Level)
             {
                 Debug.LogWarning("Character level is not enough");
                 return false;

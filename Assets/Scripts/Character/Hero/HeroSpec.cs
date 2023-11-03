@@ -1,4 +1,5 @@
 ﻿using System;
+using CryptoQuest.Gameplay;
 using CryptoQuest.Item.Equipment;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.Components;
 using UnityEngine;
@@ -40,6 +41,7 @@ namespace CryptoQuest.Character.Hero
         [field: SerializeField] public int Id { get; set; }
         [field: SerializeField] public UnitSO Unit { get; set; }
         [field: SerializeField] public float Experience { get; set; }
+        [field: SerializeField] public StatsDef Stats { get; set; }
         public bool IsValid() => Unit != null;
 
     }

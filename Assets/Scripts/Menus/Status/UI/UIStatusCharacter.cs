@@ -103,8 +103,9 @@ namespace CryptoQuest.Menus.Status.UI
         private void SetupUI(HeroBehaviour hero)
         {
             var spec = hero.Spec;
+            hero.TryGetComponent(out LevelSystem levelSystem);
             SetElement(hero.Element.Icon);
-            SetLevel(hero.Level);
+            SetLevel(levelSystem.Level);
             SetClass(hero.Class.Name);
             SetLocalizedName(hero.DetailsInfo.LocalizedName);
 

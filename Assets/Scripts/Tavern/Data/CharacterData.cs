@@ -17,8 +17,9 @@ namespace CryptoQuest.Tavern.Data
 
         public CharacterData(HeroBehaviour hero)
         {
+            hero.TryGetComponent(out LevelSystem levelSystem);
             _localizedName = hero.DetailsInfo.LocalizedName;
-            _level = hero.Level;
+            _level = levelSystem.Level;
             _isInParty = true;
         }
 
