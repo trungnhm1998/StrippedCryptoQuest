@@ -57,7 +57,7 @@ namespace CryptoQuest.AbilitySystem.Executions
             {
                 Attribute = targetAttribute.Attribute,
                 OpType = EAttributeModifierOperationType.Add,
-                Magnitude = damageValue * mod
+                Magnitude = Mathf.RoundToInt(damageValue) * mod
             };
             outModifiers.Add(modifier);
         }
