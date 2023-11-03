@@ -4,7 +4,7 @@ using CryptoQuest.Tavern.Interfaces;
 using TinyMessenger;
 using UnityEngine;
 
-namespace CryptoQuest.Tavern.States
+namespace CryptoQuest.Tavern.States.CharacterReplacement
 {
     public class SelectCharacterState : StateMachineBehaviour
     {
@@ -36,6 +36,7 @@ namespace CryptoQuest.Tavern.States
             _controller.TavernInputManager.CancelEvent += CancelCharacterReplacement;
             _controller.TavernInputManager.NavigateEvent += SwitchToOtherListRequested;
             _controller.TavernInputManager.ExecuteEvent += SendItemsRequested;
+            _controller.TavernInputManager.ResetEvent += ResetTransferRequested;
         }
 
         private void GetInGameCharacters(GetGameNftCharactersSucceed obj)
@@ -71,6 +72,12 @@ namespace CryptoQuest.Tavern.States
             _animator.Play(ConfirmState);
         }
 
+        private void ResetTransferRequested()
+        {
+            _controller.UIGameList.SetData(_cachedGameData);
+            _controller.UIWalletList.SetData(_cachedWalletData);
+        }
+
         public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo,
             int layerIndex)
         {
@@ -80,6 +87,7 @@ namespace CryptoQuest.Tavern.States
             _controller.TavernInputManager.CancelEvent -= CancelCharacterReplacement;
             _controller.TavernInputManager.NavigateEvent -= SwitchToOtherListRequested;
             _controller.TavernInputManager.ExecuteEvent -= SendItemsRequested;
+            _controller.TavernInputManager.ResetEvent -= ResetTransferRequested;
         }
     }
 }

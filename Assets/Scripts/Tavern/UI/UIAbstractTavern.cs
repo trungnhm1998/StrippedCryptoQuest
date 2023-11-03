@@ -8,7 +8,5 @@ namespace CryptoQuest.Tavern.UI
 
         public virtual void StateEntered() => _contents.SetActive(true);
         public virtual void StateExited() => _contents.SetActive(false);
-        public abstract void ResetTransfer();
-        public abstract void SendItems();
     }
 }
