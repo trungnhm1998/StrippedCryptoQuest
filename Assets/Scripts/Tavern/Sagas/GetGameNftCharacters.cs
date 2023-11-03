@@ -16,9 +16,11 @@ namespace CryptoQuest.Tavern.Sagas
         [SerializeField] private LocalizedString[] _localizedNames = new LocalizedString[4];
 
         private readonly List<ICharacterData> _inGameCharacters = new();
+        private bool _isUsingMock = false;
 
         protected override void HandleAction(NftCharacterAction ctx)
         {
+            if (_isUsingMock) return;
             InitMockGameData();
             ActionDispatcher.Dispatch(new GetGameNftCharactersSucceed(_inGameCharacters));
         }
@@ -36,6 +38,8 @@ namespace CryptoQuest.Tavern.Sagas
 
                 _inGameCharacters.Add(obj);
             }
+
+            _isUsingMock = true;
         }
     }
 }

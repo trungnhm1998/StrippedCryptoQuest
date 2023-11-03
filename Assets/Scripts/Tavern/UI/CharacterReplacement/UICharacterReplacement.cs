@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
 
 namespace CryptoQuest.Tavern.UI.CharacterReplacement
 {
@@ -59,17 +58,6 @@ namespace CryptoQuest.Tavern.UI.CharacterReplacement
         {
             if (!isGameListEmpty)
                 target.SetInteractableAllButtons(false);
-        }
-
-        public override void ResetTransfer()
-        {
-            Debug.Log($"alo");
-        }
-
-        public override void SendItems()
-        {
-            _gameListUi.SetInteractableAllButtons(false);
-            _walletListUi.SetInteractableAllButtons(false);
         }
 
         public void ConfirmedTransmission()

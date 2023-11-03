@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.Localization;
 
-namespace CryptoQuest.Tavern.States
+namespace CryptoQuest.Tavern.States.CharacterReplacement
 {
     public class ConfirmState : StateMachineBehaviour
     {
@@ -20,8 +20,10 @@ namespace CryptoQuest.Tavern.States
             _controller = animator.GetComponent<TavernController>();
 
             _controller.TavernInputManager.CancelEvent += CancelTransmission;
-            
-            _controller.UICharacterReplacement.SendItems();
+
+            _controller.UIGameList.SetInteractableAllButtons(false);
+            _controller.UIWalletList.SetInteractableAllButtons(false);
+
             _controller.DialogsManager.ChoiceDialog
                 .SetButtonsEvent(YesButtonPressed, NoButtonPressed)
                 .SetMessage(_confirmMessage)

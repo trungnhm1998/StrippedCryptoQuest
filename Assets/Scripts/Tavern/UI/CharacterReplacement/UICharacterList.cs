@@ -4,6 +4,7 @@ using CryptoQuest.Menu;
 using CryptoQuest.Tavern.Interfaces;
 using CryptoQuest.UI.Menu;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace CryptoQuest.Tavern.UI.CharacterReplacement
@@ -11,12 +12,13 @@ namespace CryptoQuest.Tavern.UI.CharacterReplacement
     public class UICharacterList : MonoBehaviour
     {
         [SerializeField] protected Transform _scrollRectContent;
-        [SerializeField] protected GameObject _singleItemPrefab;
+        [SerializeField] protected UITavernItem _itemPrefab;
         [SerializeField] protected RectTransform _tooltipSafeArea;
 
         private ITooltip _tooltip;
 
         private List<ICharacterData> _characterList = new List<ICharacterData>();
+        private List<UITavernItem> _cachedItems = new();
 
         private void Awake()
         {
@@ -26,10 +28,10 @@ namespace CryptoQuest.Tavern.UI.CharacterReplacement
         public void SetData(List<ICharacterData> data)
         {
             _characterList = data;
-            StartCoroutine(AfterSaveData());
+            StartCoroutine(AfterReceivedData());
         }
 
-        protected IEnumerator AfterSaveData()
+        private IEnumerator AfterReceivedData()
         {
             CleanUpScrollView();
             RenderData();
@@ -57,18 +59,20 @@ namespace CryptoQuest.Tavern.UI.CharacterReplacement
             }
         }
 
-        protected void SetParentIdentity(UITavernItem item)
+        private void IdentifyItemParentThenCacheItem(UITavernItem item)
         {
             item.Parent = _scrollRectContent;
+            _cachedItems.Add(item);
         }
 
-        protected void RenderData()
+        private void RenderData()
         {
+            _cachedItems.Clear();
             foreach (var itemData in _characterList)
             {
-                var item = Instantiate(_singleItemPrefab, _scrollRectContent).GetComponent<UITavernItem>();
+                var item = Instantiate(_itemPrefab, _scrollRectContent);
                 item.SetItemInfo(itemData);
-                SetParentIdentity(item);
+                IdentifyItemParentThenCacheItem(item);
             }
         }
 
@@ -82,9 +86,9 @@ namespace CryptoQuest.Tavern.UI.CharacterReplacement
 
         public void UpdateList()
         {
-            foreach (Transform item in _scrollRectContent)
+            foreach (var item in _cachedItems)
             {
-                item.GetComponent<UITavernItem>().EnablePendingTag(false);
+                item.EnablePendingTag(false);
             }
         }
     }

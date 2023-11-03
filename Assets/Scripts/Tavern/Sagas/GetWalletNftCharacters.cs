@@ -16,9 +16,11 @@ namespace CryptoQuest.Tavern.Sagas
         [SerializeField] private LocalizedString[] _localizedNames = new LocalizedString[4];
 
         private readonly List<ICharacterData> _walletCharacters = new();
+        private bool _isUsingMock = false;
 
         protected override void HandleAction(NftCharacterAction ctx)
         {
+            if (_isUsingMock) return;
             InitMockWalletData();
             ActionDispatcher.Dispatch(new GetWalletNftCharactersSucceed(_walletCharacters));
         }
@@ -35,6 +37,8 @@ namespace CryptoQuest.Tavern.Sagas
 
                 _walletCharacters.Add(obj);
             }
+
+            _isUsingMock = true;
         }
     }
 }
