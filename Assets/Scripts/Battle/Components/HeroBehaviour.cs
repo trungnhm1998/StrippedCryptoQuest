@@ -25,7 +25,6 @@ namespace CryptoQuest.Battle.Components
     {
         public Origin.Information DetailsInfo => Spec.Unit.Origin.DetailInformation;
         public StatsDef Stats => Spec.Stats;
-        public Elemental Element => Spec.Unit.Element;
         public override string DisplayName => DetailsInfo.LocalizedName.GetLocalizedString();
         public override LocalizedString LocalizedName => DetailsInfo.LocalizedName;
         public GameObject GameObject => gameObject;
