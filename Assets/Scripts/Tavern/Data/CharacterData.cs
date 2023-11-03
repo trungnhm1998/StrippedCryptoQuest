@@ -7,6 +7,8 @@ namespace CryptoQuest.Tavern.Data
 {
     public class CharacterData : ICharacterData
     {
+        public int Id { get; set; }
+
         private Sprite _classIcon;
         private LocalizedString _localizedName;
         private string _name;
@@ -24,6 +26,13 @@ namespace CryptoQuest.Tavern.Data
         {
             _classIcon = classIcon;
             _localizedName = localizedName;
+            _level = level;
+            _isInParty = isInParty;
+        }
+
+        public CharacterData(string name, int level, bool isInParty)
+        {
+            _name = name;
             _level = level;
             _isInParty = isInParty;
         }

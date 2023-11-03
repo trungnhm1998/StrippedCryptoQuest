@@ -40,7 +40,10 @@ namespace CryptoQuest.Tavern.UI
         public void SetItemInfo(ICharacterData itemInfo)
         {
             _classIcon.sprite = itemInfo.GetClassIcon();
-            _localizedName.StringReference = itemInfo.GetLocalizedName();
+            
+            if (itemInfo.GetLocalizedName() != null)
+                _localizedName.StringReference = itemInfo.GetLocalizedName();
+
             _name.text = itemInfo.GetName();
             _level.text = $"Lv{itemInfo.GetLevel()}";
             _isInParty = itemInfo.IsInParty();
