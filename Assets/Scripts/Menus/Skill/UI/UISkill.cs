@@ -44,7 +44,7 @@ namespace CryptoQuest.Menus.Skill.UI
         public void Init(CastSkillAbility skill)
         {
             Skill = skill;
-            _skillName.StringReference = skill.SkillInfo.SkillName;
+            _skillName.StringReference = skill.SkillName;
             _cost.text = skill.SkillInfo.Cost.ToString();
 
             SetDisable(!skill.SkillInfo.UsageScenarioSO.HasFlag(EAbilityUsageScenario.Field));

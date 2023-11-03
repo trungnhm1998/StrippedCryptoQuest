@@ -27,7 +27,7 @@ namespace CryptoQuest.Battle.UI.Logs
                 _nullifySkillLogMessage.TableEntryReference)
             {
                 {
-                    Constants.ABILITY_NAME, ctx.Skill.Def.Context.SkillInfo.SkillName
+                    Constants.ABILITY_NAME, ctx.Skill.Def.SkillName
                 },
                 {
                     Constants.CHARACTER_NAME, new StringVariable()

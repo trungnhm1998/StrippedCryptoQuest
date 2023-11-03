@@ -12,6 +12,7 @@ using IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects.EffectExecu
 using IndiGames.Tools.ScriptableObjectBrowser;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Localization;
 
 namespace CryptoQuestEditor.Gameplay.Gameplay.Abilities
 {
@@ -19,6 +20,8 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Abilities
     {
         private const string DEFAULT_NAME = "";
         private const int ROW_OFFSET = 14;
+        private const string NAME_LOCALIZE_TABLE = "AbilityNames";
+        private const string DESCRIPTION_LOCALIZE_TABLE = "AbilityDescriptions";
 
         #region Indexing
 
@@ -56,7 +59,7 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Abilities
         public PhysicalAbilitiesSOEditor()
         {
             CreateDataFolder = false;
-            DefaultStoragePath = "Assets/ScriptableObjects/AbilitySystem/Abilities/ImportedAbilities";
+            DefaultStoragePath = "Assets/ScriptableObjects/AbilitySystem/Abilities/ImportedAbilities/PhysicalAbilities";
         }
 
         public override void ImportBatchData(string directory, Action<ScriptableObject> callback)
@@ -74,7 +77,7 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Abilities
                 AbilityDataStruct dataModel = new();
 
                 dataModel.Id = splitedData[ID_INDEX];
-                // dataModel.LocalizedKey = splitedData[LOCALIZED_KEY_INDEX];
+                dataModel.LocalizedKey = splitedData[LOCALIZED_KEY_INDEX];
                 Debug.Log(splitedData[ID_INDEX]);
                 dataModel.ElementId = splitedData[ELEMENT_INDEX];
                 dataModel.Mp = int.Parse(splitedData[MP_INDEX]);
@@ -121,7 +124,10 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Abilities
                         BasePower = float.Parse(splitedData[SUB_EFFECT_BASE_POWER_INDEX]),
                     };
                     dataModel.SubEffectData = subData;
+                    if (subData.EffectTypeId == "99") continue;
                 }
+
+                if (dataModel.MainEffectTypeId == "99") continue;
 
 
                 CastEffectsOnTargetAbility instance = null;
@@ -132,6 +138,8 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Abilities
                 }
 
                 SetInstanceProperty(instance, dataModel);
+                SetEffects(instance, dataModel);
+                SetLocalized(instance, dataModel);
 
                 instance.name = name;
 
@@ -148,11 +156,34 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Abilities
             }
         }
 
+        private void SetEffects(CastEffectsOnTargetAbility instance, AbilityDataStruct data)
+        {
+            var serializedObject = new SerializedObject(instance);
+            var property = serializedObject.FindProperty("_effects");
+            var mainEffect = GetEffect(data.MainEffectTypeId, data.MainEffectTargetParameterId);
+            GameplayEffectDefinition[] effects = new GameplayEffectDefinition[2];
+            effects[0] = mainEffect;
+            property.InsertArrayElementAtIndex(0);
+            property.GetArrayElementAtIndex(0).objectReferenceValue = effects[0];
+            if (data.IsSubEffectValid())
+            {
+                effects[1] = GetEffect(data.SubEffectData.EffectTypeId, data.SubEffectData.EffectTargetParameterId);
+                property.arraySize = 1;
+                property.InsertArrayElementAtIndex(1);
+                property.GetArrayElementAtIndex(1).objectReferenceValue = effects[1];
+            }
+
+
+            serializedObject.ApplyModifiedProperties();
+            serializedObject.Update();
+        }
+
         private void SetInstanceProperty(CastEffectsOnTargetAbility instance, AbilityDataStruct data)
         {
             SkillInfo skillInfo = new SkillInfo();
             skillInfo.Id = int.Parse(data.Id);
             skillInfo.SkillParameters = new SkillParameters();
+            skillInfo.SkillType = ESkillType.Physical;
             skillInfo.SkillParameters.Element = GetElement(data.ElementId);
             skillInfo.SkillParameters.BasePower = data.BasePower;
             skillInfo.SkillParameters.PowerUpperLimit = data.PowerUpperLimit;
@@ -163,13 +194,37 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Abilities
             skillInfo.SkillParameters.ContinuesTurn = data.ContinuousTurns;
             skillInfo.SkillParameters.EffectType = GetEffectType(data.MainEffectTypeId);
             skillInfo.SkillParameters.IsFixed = data.ValueType == "1" ? true : false;
+            skillInfo.Cost = data.Mp;
+            skillInfo.UsageScenarioSO = data.ScenarioId == "1"
+                ? EAbilityUsageScenario.Field
+                : data.ScenarioId == "2"
+                    ? EAbilityUsageScenario.Battle
+                    : EAbilityUsageScenario.FieldAndBatte;
+            skillInfo.VfxId = int.Parse(data.VfxId);
             CustomExecutionAttributeCaptureDef attributeCaptureDef = new();
             attributeCaptureDef.Attribute = GetAttribute(data.MainEffectTargetParameterId);
             skillInfo.SkillParameters.targetAttribute = attributeCaptureDef;
             GameplayEffectContext ctx = new GameplayEffectContext(skillInfo);
-            instance.SetSuccessRate(data.SuccessRate);
-            instance.SetTargetType(GetSkillTargetType(data.TargetTypeId));
-            instance.SetContext(ctx);
+
+
+            var serializedObject = new SerializedObject(instance);
+            var property = serializedObject.FindProperty("_context");
+            var successRate = serializedObject.FindProperty("<SuccessRate>k__BackingField");
+            var targetType = serializedObject.FindProperty("<TargetType>k__BackingField");
+            property.boxedValue = ctx;
+            successRate.floatValue = data.SuccessRate;
+            targetType.objectReferenceValue = GetSkillTargetType(data.TargetTypeId);
+            serializedObject.ApplyModifiedProperties();
+            serializedObject.Update();
+        }
+
+        private void SetLocalized(CastEffectsOnTargetAbility instance, AbilityDataStruct data)
+        {
+            LocalizedString skillName = new(NAME_LOCALIZE_TABLE, data.LocalizedKey);
+            LocalizedString skillDescription = new(DESCRIPTION_LOCALIZE_TABLE, data.LocalizedKey);
+            Debug.Log(data.LocalizedKey);
+            instance.SetSkillName(skillName);
+            instance.SetSkillDescription(skillDescription);
         }
 
         private Elemental GetElement(string id)
@@ -179,6 +234,28 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Abilities
                 if (map.Id == id)
                 {
                     return map.Value;
+                }
+            }
+
+            return null;
+        }
+
+        private GameplayEffectDefinition GetEffect(string effectTypeId, string targetParam)
+        {
+            foreach (var map in _mappingEditor.PhysicalEffectMaps)
+            {
+                if (map.Id == effectTypeId)
+                {
+                    if (effectTypeId == "1")
+                        return map.GameEffectMaps[0].Value;
+                    else
+                    {
+                        foreach (var effectMap in map.GameEffectMaps)
+                        {
+                            if (effectMap.Id == targetParam)
+                                return effectMap.Value;
+                        }
+                    }
                 }
             }
 
@@ -245,7 +322,7 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Abilities
         }
 
 
-        public struct AbilityDataStruct
+        private struct AbilityDataStruct
         {
             public string Id;
             public string LocalizedKey;
@@ -276,7 +353,7 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Abilities
             }
         }
 
-        public struct SubEffectDataStruct
+        private struct SubEffectDataStruct
         {
             public string EffectTypeId;
             public string EffectTargetParameterId;

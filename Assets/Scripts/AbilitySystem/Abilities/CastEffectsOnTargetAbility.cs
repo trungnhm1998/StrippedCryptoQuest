@@ -17,12 +17,6 @@ namespace CryptoQuest.AbilitySystem.Abilities
 
         protected override GameplayAbilitySpec CreateAbility() =>
             new CastEffectsOnTargetAbilitySpec(this);
-
-#if UNITY_EDITOR
-        public void SetContext(GameplayEffectContext context) => _context = context;
-        public void SetSuccessRate(float successRate) => SuccessRate = successRate;
-        public void SetTargetType(SkillTargetType targetType) => TargetType = targetType;
-#endif
     }
 
     public class CastEffectsOnTargetAbilitySpec : CastSkillAbilitySpec

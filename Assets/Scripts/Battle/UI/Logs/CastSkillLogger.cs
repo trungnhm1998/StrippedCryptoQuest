@@ -33,7 +33,7 @@ namespace CryptoQuest.Battle.UI.Logs
                         }
                     }
                 };
-            var localizedSkillName = skillEvent.Skill.SkillInfo.SkillName;
+            var localizedSkillName = skillEvent.Skill.SkillName;
             if (localizedSkillName.IsEmpty)
                 castMessage.Add(Constants.SKILL_NAME, new StringVariable()
                 {
