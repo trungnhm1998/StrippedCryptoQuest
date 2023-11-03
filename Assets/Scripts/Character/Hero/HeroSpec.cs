@@ -34,7 +34,7 @@ namespace CryptoQuest.Character.Hero
     /// <see cref="Elemental"/> and <see cref="CharacterClass"/></para>
     /// </summary>
     [Serializable]
-    public struct HeroSpec
+    public class HeroSpec
     {
         /// <summary>
         /// Main should not have id always 0

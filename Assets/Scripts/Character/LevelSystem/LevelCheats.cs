@@ -43,7 +43,7 @@ namespace CryptoQuest.Character.LevelSystem
                 return;
             }
 
-            if (!hero.GameObject.TryGetComponent<LevelSystemBehavior>(out var levelComponent)) return;
+            if (!hero.TryGetComponent<LevelSystemBehavior>(out var levelComponent)) return;
             levelComponent.AddExp(expToAdd);
         }
     }
