@@ -226,7 +226,7 @@ namespace CryptoQuestEditor.System.YarnSpinner
         private void BindingData(YarnProjectConfigSO yarnProjectConfig)
         {
             GameObject currentGo = GameObject.Find(_currentGo.name);
-            
+
             PlayableDirector playableDirector = currentGo.GetComponentInChildren<PlayableDirector>();
 
             IEnumerable<PlayableBinding> assetOutputs = playableDirector.playableAsset.outputs;
@@ -236,19 +236,6 @@ namespace CryptoQuestEditor.System.YarnSpinner
                 if (playableBinding.sourceObject is not YarnSpinnerNodeTrackAsset currentTrack) continue;
 
                 playableDirector.SetGenericBinding(currentTrack, yarnProjectConfig);
-
-                if (currentTrack == null) continue;
-
-                IEnumerable<TimelineClip> clips = currentTrack.GetClips();
-                foreach (TimelineClip clip in clips)
-                {
-                    YarnSpinnerNodePlayableAsset clipAsset = clip.asset as YarnSpinnerNodePlayableAsset;
-
-                    if (clipAsset == null) continue;
-                    if (clipAsset.OnYarnProjectConfigEvent != null) continue;
-
-                    clipAsset.Editor_SetConfigEvent();
-                }
             }
 
             _currentGo = currentGo;

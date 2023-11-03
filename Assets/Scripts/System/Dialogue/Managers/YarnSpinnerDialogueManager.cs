@@ -6,6 +6,7 @@ using CryptoQuest.Input;
 using CryptoQuest.System.CutsceneSystem;
 using CryptoQuest.System.CutsceneSystem.Events;
 using CryptoQuest.System.Dialogue.Events;
+using CryptoQuest.System.Dialogue.YarnManager;
 using CryptoQuest.System.SaveSystem;
 using IndiGames.Core.Events.ScriptableObjects;
 using UnityEngine;
@@ -19,6 +20,7 @@ namespace CryptoQuest.System.Dialogue.Managers
         public static Action<string> DialogueCompletedEvent;
         public static Action<string> PlayDialogueRequested;
         public static Action<bool> PauseTimelineRequested;
+        public static Action<YarnProjectConfigSO> YarnProjectRequested;
 
         private static List<YarnSpinnerDialogueManager> _systems = new List<YarnSpinnerDialogueManager>();
 
@@ -59,6 +61,7 @@ namespace CryptoQuest.System.Dialogue.Managers
         [Header("Raise on")] [SerializeField] private VoidEventChannelSO _dialogueCompletedEventChannelSO;
 
         [SerializeField] private PauseCutsceneEvent _pauseCutsceneEvent;
+        [SerializeField] private YarnProjectConfigEvent _projectConfigEvent;
 
         [SerializeField] private UnityEvent<string> _onReactionShowed;
 
@@ -74,14 +77,21 @@ namespace CryptoQuest.System.Dialogue.Managers
         {
             _systems.Add(this);
             PlayDialogueRequested += ShowDialogue;
+            YarnProjectRequested += ConfigureYarnProject;
             _playDialogueEventEvent.PlayDialogueRequested += ShowDialogue;
         }
 
         private void OnDisable()
         {
             PlayDialogueRequested -= ShowDialogue;
+            YarnProjectRequested -= ConfigureYarnProject;
             _playDialogueEventEvent.PlayDialogueRequested -= ShowDialogue;
             _systems.Remove(this);
+        }
+
+        private void ConfigureYarnProject(YarnProjectConfigSO yarnProject)
+        {
+            _projectConfigEvent.ConfigureYarnProject(yarnProject);
         }
 
         private void ShowDialogue(string yarnNodeName)
