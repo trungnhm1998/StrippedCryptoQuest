@@ -1,13 +1,13 @@
 ﻿using System;
 using CryptoQuest.Gameplay.PlayerParty;
+using CryptoQuest.Menus.Item.States;
 using CryptoQuest.System;
 using CryptoQuest.UI.Menu.Character;
-using CryptoQuest.UI.Menu.MenuStates.ItemStates;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-namespace CryptoQuest.UI.Menu.Panels.Item
+namespace CryptoQuest.Menus.Item.UI
 {
     public class UIItemCharacterSelection : MonoBehaviour
     {

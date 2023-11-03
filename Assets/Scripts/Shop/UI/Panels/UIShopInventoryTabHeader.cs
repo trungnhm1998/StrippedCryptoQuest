@@ -1,9 +1,5 @@
-using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Type;
-using CryptoQuest.UI.Menu.Panels.Item;
 using CryptoQuest.Shop.UI.ScriptableObjects;
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace CryptoQuest.Shop.UI.Panels.Item

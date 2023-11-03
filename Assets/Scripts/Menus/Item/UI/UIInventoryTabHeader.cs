@@ -2,7 +2,7 @@
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Type;
 using UnityEngine;
 
-namespace CryptoQuest.UI.Menu.Panels.Item
+namespace CryptoQuest.Menus.Item.UI
 {
     public class UIInventoryTabHeader : MonoBehaviour
     {

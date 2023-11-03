@@ -1,14 +1,12 @@
 ﻿using System.Collections;
-using CryptoQuest.Events;
-using CryptoQuest.Item.Ocarina;
 using CryptoQuest.Map;
-using CryptoQuest.UI.Menu.MenuStates.ItemStates;
+using CryptoQuest.Menus.Item.States;
 using IndiGames.Core.Events.ScriptableObjects;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
-namespace CryptoQuest.UI.Menu.Panels.Item.Ocarina
+namespace CryptoQuest.Ocarina.UI
 {
     public class UIOcarinaPresenter : MonoBehaviour
     {

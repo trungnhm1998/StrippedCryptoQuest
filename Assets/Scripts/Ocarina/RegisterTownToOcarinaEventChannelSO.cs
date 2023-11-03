@@ -1,6 +1,6 @@
 ﻿using IndiGames.Core.Events.ScriptableObjects;
 
-namespace CryptoQuest.Item.Ocarina
+namespace CryptoQuest.Ocarina
 {
     public class RegisterTownToOcarinaEventChannelSO
         : GenericEventChannelSO<OcarinaEntrance> { }

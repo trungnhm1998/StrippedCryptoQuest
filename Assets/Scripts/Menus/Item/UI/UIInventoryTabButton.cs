@@ -3,7 +3,7 @@ using CryptoQuest.Menu;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace CryptoQuest.UI.Menu.Panels.Item
+namespace CryptoQuest.Menus.Item.UI
 {
     public class UIInventoryTabButton : MonoBehaviour
     {

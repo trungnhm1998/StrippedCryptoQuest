@@ -4,12 +4,10 @@ using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data;
 using CryptoQuest.Item;
 using CryptoQuest.Menu;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
 using UnityEngine.Localization.Components;
-using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.UI;
 
-namespace CryptoQuest.UI.Menu.Panels.Item
+namespace CryptoQuest.Menus.Item.UI
 {
     public class UIConsumableItem : MonoBehaviour
     {
@@ -88,7 +86,7 @@ namespace CryptoQuest.UI.Menu.Panels.Item
         {
             if (_consumable.Icon == null) yield break;
             if (!_consumable.Icon.RuntimeKeyIsValid()) yield break;
-
+            
             _consumable.Icon.LoadSpriteAndSet(_icon);
         }
 

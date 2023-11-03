@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace CryptoQuest.Item.Ocarina
+namespace CryptoQuest.Ocarina
 {
     public class OcarinaTownRegister : MonoBehaviour
     {

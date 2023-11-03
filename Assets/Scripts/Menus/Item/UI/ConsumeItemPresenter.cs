@@ -2,7 +2,7 @@
 using IndiGames.Core.Events.ScriptableObjects;
 using UnityEngine;
 
-namespace CryptoQuest.UI.Menu.Panels.Item
+namespace CryptoQuest.Menus.Item.UI
 {
     public class ConsumeItemPresenter : MonoBehaviour
     {

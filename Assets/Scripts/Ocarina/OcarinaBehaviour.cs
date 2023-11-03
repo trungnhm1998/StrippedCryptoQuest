@@ -1,11 +1,8 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using CryptoQuest.Gameplay;
-using CryptoQuest.Gameplay.Inventory;
 using CryptoQuest.Input;
 using CryptoQuest.Map;
-using CryptoQuest.UI.Menu.Panels.Item.Ocarina;
 using CryptoQuest.UI.SpiralFX;
 using IndiGames.Core.Events.ScriptableObjects;
 using IndiGames.Core.SceneManagementSystem.Events.ScriptableObjects;
@@ -13,7 +10,7 @@ using IndiGames.Core.SceneManagementSystem.ScriptableObjects;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace CryptoQuest.Item.Ocarina
+namespace CryptoQuest.Ocarina
 {
     public class OcarinaBehaviour : MonoBehaviour
     {
@@ -22,6 +19,7 @@ namespace CryptoQuest.Item.Ocarina
         [SerializeField] private PathStorageSO _pathStorage;
         [SerializeField] private InputMediatorSO _inputMediatorSO;
         [SerializeField] private OcarinaLocations _ocarinaData;
+
         [Header("Listen")]
         [SerializeField] private VoidEventChannelSO _onSceneLoadedEventChannel;
 
@@ -29,6 +27,7 @@ namespace CryptoQuest.Item.Ocarina
 
         [Header("Raise")]
         [SerializeField] private SpiralConfigSO _spiralConfig;
+
         [SerializeField] private LoadSceneEventChannelSO _requestLoadMapEvent;
 
         [Header("Ocarina UI")]
@@ -48,7 +47,10 @@ namespace CryptoQuest.Item.Ocarina
             _onSceneLoadedEventChannel.EventRaised -= HideSpiralAfterSceneLoaded;
         }
 
-        private void RegisterTown(OcarinaEntrance location) => _ocarinaData.Locations.Add(location);
+        private void RegisterTown(OcarinaEntrance location)
+        {
+            // _ocarinaData.Locations.Add(location);
+        }
 
         public void StartTeleportSequence(MapPathSO path)
         {

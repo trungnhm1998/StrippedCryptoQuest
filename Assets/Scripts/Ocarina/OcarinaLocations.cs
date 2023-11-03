@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
-using CryptoQuest.Item.Ocarina;
 using UnityEngine;
 
-namespace CryptoQuest.UI.Menu.Panels.Item.Ocarina
+namespace CryptoQuest.Ocarina
 {
     public class OcarinaLocations : ScriptableObject
     {
