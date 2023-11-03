@@ -6,8 +6,6 @@ using CryptoQuest.Character.Hero;
 using CryptoQuest.Core;
 using CryptoQuest.SaveSystem.Actions;
 using CryptoQuest.System;
-using CryptoQuest.System.SaveSystem.Actions;
-using IndiGames.Core.Events.ScriptableObjects;
 using UnityEngine;
 
 namespace CryptoQuest.Gameplay.PlayerParty
@@ -35,7 +33,6 @@ namespace CryptoQuest.Gameplay.PlayerParty
 
     public class PartyManager : MonoBehaviour, IPartyController
     {
-        [SerializeField] private VoidEventChannelSO _sceneLoadedEvent;
         [SerializeField, Space] private PartySlot[] _partySlots = new PartySlot[PartyConstants.MAX_PARTY_SIZE];
         public PartySlot[] Slots => _partySlots;
 
@@ -62,10 +59,7 @@ namespace CryptoQuest.Gameplay.PlayerParty
             _partyProvider = GetComponent<IPartyProvider>();
         }
 
-        private void OnEnable() => _sceneLoadedEvent.EventRaised += InitParty;
-
-        private void OnDisable() => _sceneLoadedEvent.EventRaised -= InitParty;
-
+        private void Start() => InitParty();
         /// <summary>
         /// Init party members stats at run time
         /// and bind the mono behaviour to the <see cref="CharacterSpec._characterComponent"/>
