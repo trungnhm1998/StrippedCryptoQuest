@@ -8,15 +8,17 @@ namespace CryptoQuest.Character.DialogueProviders
 {
     public class YarnDialogueProvider : DialogueProviderBehaviour
     {
-        [SerializeField] private YarnProjectConfigEvent _yarnProjectConfigEvent;
-
         [field: Header("Yarn Config"), SerializeField]
         public YarnProjectConfigSO YarnProjectConfig { get; private set; }
 
         [field: FormerlySerializedAs("_yarnNodeName"), SerializeField, HideInInspector]
         public string YarnNodeName { get; private set; } = "Start";
 
-        private void Start() => _yarnProjectConfigEvent.RaiseEvent(YarnProjectConfig);
+        private void Start()
+        {
+            if (YarnProjectConfig == null) return;
+            YarnSpinnerDialogueManager.YarnProjectRequested?.Invoke(YarnProjectConfig);
+        }
 
         public override void ShowDialogue()
         {

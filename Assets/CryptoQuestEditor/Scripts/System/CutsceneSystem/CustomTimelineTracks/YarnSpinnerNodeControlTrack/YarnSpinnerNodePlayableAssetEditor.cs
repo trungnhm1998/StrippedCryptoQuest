@@ -1,14 +1,10 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using CryptoQuest.System.CutsceneSystem.CustomTimelineTracks.YarnSpinnerNodeControlTrack;
+﻿using CryptoQuest.System.CutsceneSystem.CustomTimelineTracks.YarnSpinnerNodeControlTrack;
 using CryptoQuest.System.Dialogue.Events;
 using CryptoQuest.System.Dialogue.YarnManager;
 using UnityEditor;
 using UnityEditor.Experimental.GraphView;
 using UnityEditor.Timeline;
 using UnityEngine;
-using UnityEngine.Events;
-using Yarn.Unity;
 
 namespace CryptoQuestEditor.System.CutsceneSystem.CustomTimelineTracks.YarnSpinnerNodeControlTrack
 {
@@ -53,63 +49,7 @@ namespace CryptoQuestEditor.System.CutsceneSystem.CustomTimelineTracks.YarnSpinn
 
             EditorGUILayout.EndHorizontal();
 
-            if (Target.OnYarnProjectConfigEvent == null)
-            {
-                EditorGUILayout.BeginHorizontal();
-                EditorGUILayout.HelpBox(
-                    "OnYarnProjectConfigEvent is null. This will cause a NullReferenceException at runtime.",
-                    MessageType.Warning, true);
-
-                EditorGUILayout.BeginHorizontal();
-                if (GUILayout.Button("Auto Set"))
-                {
-                    Target.Editor_SetConfigEvent();
-                    serializedObject.ApplyModifiedProperties();
-                }
-
-                EditorGUILayout.EndHorizontal();
-                EditorGUILayout.EndHorizontal();
-            }
-
-
             serializedObject.ApplyModifiedProperties();
-        }
-    }
-
-    public class YarnNodeEntriesProvider : ScriptableObject, ISearchWindowProvider
-    {
-        public UnityAction<string> EntrySelected;
-        public YarnProject YarnProject;
-
-        public List<SearchTreeEntry> CreateSearchTree(SearchWindowContext context)
-        {
-            var searchTree = new List<SearchTreeEntry>
-            {
-                new SearchTreeGroupEntry(new GUIContent("Yarn Nodes")),
-            };
-
-            List<string> sortedNodeNames = YarnProject.NodeNames.ToList();
-            sortedNodeNames.Sort();
-
-            for (var index = 0; index < sortedNodeNames.Count; index++)
-            {
-                var node = sortedNodeNames[index];
-                Debug.Log(node);
-                searchTree.Add(new SearchTreeEntry(new GUIContent(node)) { level = 1, userData = node });
-            }
-
-            return searchTree;
-        }
-
-        public bool OnSelectEntry(SearchTreeEntry SearchTreeEntry, SearchWindowContext context)
-        {
-            if (YarnProject == null) return false;
-            if (SearchTreeEntry.userData == null) return false;
-
-            var node = SearchTreeEntry.userData as string;
-
-            EntrySelected.Invoke(node);
-            return true;
         }
     }
 }

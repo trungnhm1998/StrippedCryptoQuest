@@ -1,5 +1,4 @@
 ﻿using System;
-using CryptoQuest.System.Dialogue.Events;
 using CryptoQuest.System.Dialogue.Managers;
 using CryptoQuest.System.Dialogue.YarnManager;
 using UnityEngine;
@@ -12,9 +11,6 @@ namespace CryptoQuest.System.CutsceneSystem.CustomTimelineTracks.YarnSpinnerNode
     {
         [HideInInspector]
         public string YarnNodeName = "Start";
-
-        [HideInInspector]
-        public YarnProjectConfigEvent OnYarnProjectConfigEvent;
 
         /// <summary>
         /// We need to wait for the player to actually finish reading all the dialogues before we can continue the timeline.
@@ -39,7 +35,7 @@ namespace CryptoQuest.System.CutsceneSystem.CustomTimelineTracks.YarnSpinnerNode
                 if (!playable.GetGraph().IsPlaying()) return;
                 if (string.IsNullOrEmpty(YarnNodeName)) return;
                 
-                OnYarnProjectConfigEvent.RaiseEvent(playerData as YarnProjectConfigSO);
+                YarnSpinnerDialogueManager.YarnProjectRequested?.Invoke(playerData as YarnProjectConfigSO);
                 YarnSpinnerDialogueManager.DialogueCompletedEvent += OnDialogueCompleted;
                 YarnSpinnerDialogueManager.PlayDialogueRequested?.Invoke(YarnNodeName);
             }
