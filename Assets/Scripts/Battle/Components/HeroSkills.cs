@@ -20,7 +20,7 @@ namespace CryptoQuest.Battle.Components
         /// </summary>
         public override void Init()
         {
-            Provider.GetSkills(GetComponent<HeroBehaviour>(), AddSkillsToHero);
+            Provider.GetSkills(Character.GetComponent<HeroBehaviour>(), AddSkillsToHero);
         }
 
         private void AddSkillsToHero(List<CastSkillAbility> skills)
