@@ -23,7 +23,7 @@ namespace CryptoQuest.AbilitySystem.Executions
             for (var index = 0; index < outModifiers.Modifiers.Count; index++)
             {
                 var outMod = outModifiers.Modifiers[index];
-                if (outMod.Attribute != parameters.targetAttribute.Attribute) continue;
+                if (outMod.Attribute != parameters.TargetAttribute.Attribute) continue;
                 outMod.Magnitude /= 100f * (int)_statusType;
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
                 var sign = _statusType == StatusType.Buff ? "+" : "-";

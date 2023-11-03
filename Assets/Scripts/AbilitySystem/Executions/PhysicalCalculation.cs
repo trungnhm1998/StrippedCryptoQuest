@@ -25,7 +25,7 @@ namespace CryptoQuest.AbilitySystem.Executions
             }
 
             SkillParameters skillParameters = context.SkillInfo.SkillParameters;
-            var targetedAttributeSO = skillParameters.targetAttribute;
+            var targetedAttributeSO = skillParameters.TargetAttribute;
             var effectType = skillParameters.EffectType;
             var elementalRate = BattleCalculator.CalculateElementalRateFromParams(executionParams);
             executionParams.TryGetAttributeValue(_baseAttack, out var baseAttack);

@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 15e76b104968436b8b5b8d0cd9cf148e, type: 3}
+  m_Script: {fileID: 11500000, guid: 2e530b67ca4aeaa418aee1e7d6e4a174, type: 3}
   m_Name: 3034
   m_EditorClassIdentifier: 
   tags:
@@ -49,11 +49,11 @@ MonoBehaviour:
         m_WaitForCompletion: 0
         m_LocalVariables: []
       SkillIcon: {fileID: 0}
-      Element: {fileID: 0}
-      SkillType: {fileID: 0}
+      SkillType: 0
       Category: {fileID: 0}
       Cost: 0
       UsageScenarioSO: 0
+      VfxId: 0
       SkillParameters:
         Element: {fileID: 0}
         BasePower: 25
@@ -64,14 +64,13 @@ MonoBehaviour:
         PowerValueReduced: 0.2
         IsFixed: 0
         ContinuesTurn: 1
-        EffectType: 6
-        targetAttribute:
+        EffectType: 1
+        TargetAttribute:
           Attribute: {fileID: 11400000, guid: a7e3a44d36bf87d44afeb00b236e832e, type: 2}
           CaptureFrom: 0
-        VfxId: 
-    _turns: 0
   <SuccessRate>k__BackingField: 1
   <Effect>k__BackingField: {fileID: 11400000, guid: 0d6dc96cfad39a94a92e6471e4c8399f, type: 2}
+  <TargetSelfEffect>k__BackingField: {fileID: 0}
   references:
     version: 2
     RefIds: []

@@ -18,7 +18,7 @@ namespace CryptoQuest.AbilitySystem.Executions
             var parameters = context.SkillInfo.SkillParameters;
             executionParams.TryGetAttributeValue(_baseMagicAttack, out var baseMagicAttack);
             Debug.Log($"Calculation::Magic atk: {baseMagicAttack.CurrentValue}");
-            var targetedAttributeDef = parameters.targetAttribute;
+            var targetedAttributeDef = parameters.TargetAttribute;
             float baseMagicValue =
                 BattleCalculator.CalculateMagicSkillBasePower(parameters, baseMagicAttack.CurrentValue);
             baseMagicValue.Offset(Random.Range(_lowerRandomRange, _upperRandomRange));
