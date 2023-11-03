@@ -9,7 +9,7 @@ using Random = System.Random;
 
 namespace CryptoQuest.Tavern.Sagas
 {
-    public class GetGameNftCharacters : SagaBase<NftCharacterAction>
+    public class GetGameNftCharacters : SagaBase<GetCharacters>
     {
         [SerializeField] private int _dataLength;
         [SerializeField] private Sprite _classIcon;
@@ -18,7 +18,7 @@ namespace CryptoQuest.Tavern.Sagas
         private readonly List<ICharacterData> _inGameCharacters = new();
         private bool _isUsingMock = false;
 
-        protected override void HandleAction(NftCharacterAction ctx)
+        protected override void HandleAction(GetCharacters ctx)
         {
             if (_isUsingMock) return;
             InitMockGameData();

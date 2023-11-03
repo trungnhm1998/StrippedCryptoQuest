@@ -37,6 +37,7 @@ namespace CryptoQuest.Tavern.Data
             _isInParty = isInParty;
         }
 
+        public int GetId() => Id;
         public Sprite GetClassIcon() => _classIcon;
         public LocalizedString GetLocalizedName() => _localizedName;
         public string GetName() => _name;

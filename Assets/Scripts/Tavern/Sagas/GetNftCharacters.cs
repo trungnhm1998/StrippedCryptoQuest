@@ -14,18 +14,18 @@ using UnityEngine;
 
 namespace CryptoQuest.Tavern.Sagas
 {
-    public class GetNftCharacters : SagaBase<NftCharacterAction>
+    public class GetNftCharacters : SagaBase<GetCharacters>
     {
         private readonly List<ICharacterData> _inGameCharacters = new();
         private readonly List<ICharacterData> _walletCharacters = new();
 
-        protected override void HandleAction(NftCharacterAction ctx)
+        protected override void HandleAction(GetCharacters ctx)
         {
             ActionDispatcher.Dispatch(new ShowLoading());
             var restClient = ServiceProvider.GetService<IRestClient>();
             restClient
                 .WithParams(new Dictionary<string, string>() { { "source", $"{((int)ctx.Status).ToString()}" } })
-                .Get<CharactersResponse>(API.CHARACTERS)
+                .Get<CharactersResponse>(API.GET_CHARACTERS)
                 .Subscribe(OnGetCharacters, OnError);
         }
 

@@ -2,6 +2,8 @@
 {
     public static class API
     {
-        public const string CHARACTERS = "crypto/characters";
+        public const string GET_CHARACTERS = "crypto/characters";
+        public const string PUT_CHARACTERS_TO_WALLET = "crypto/characters/dimention/to";
+        public const string PUT_CHARACTERS_TO_GAME = "crypto/characters/dimention/from";
     }
 }

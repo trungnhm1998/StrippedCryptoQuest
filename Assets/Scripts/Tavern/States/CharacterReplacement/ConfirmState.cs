@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using CryptoQuest.Core;
+using CryptoQuest.UI.Actions;
+using UnityEngine;
 using UnityEngine.Localization;
 
 namespace CryptoQuest.Tavern.States.CharacterReplacement
@@ -37,6 +39,16 @@ namespace CryptoQuest.Tavern.States.CharacterReplacement
 
         private void YesButtonPressed()
         {
+            int[] listGameItemsToTransfer = _controller.UICharacterReplacement.SelectedGameItemsIds.ToArray();
+            int[] listWalletItemsToTransfer = _controller.UICharacterReplacement.SelectedWalletItemsIds.ToArray();
+
+            ActionDispatcher.Dispatch(new ShowLoading());
+            if (listGameItemsToTransfer.Length > 0)
+                ActionDispatcher.Dispatch(new SendCharactersToWallet(listGameItemsToTransfer));
+            
+            if (listWalletItemsToTransfer.Length > 0)
+                ActionDispatcher.Dispatch(new SendCharactersToGame(listWalletItemsToTransfer));
+
             _controller.UICharacterReplacement.ConfirmedTransmission();
             _animator.Play(CharacterReplacementState);
         }
