@@ -17,6 +17,8 @@ using TinyMessenger;
 using UnityEngine;
 using Random = UnityEngine.Random;
 using CryptoQuest.Gameplay.Battle.Core.Helper;
+using UnityEngine.Localization;
+using UnityEngine.Serialization;
 
 namespace CryptoQuest.AbilitySystem.Abilities
 {
@@ -28,14 +30,24 @@ namespace CryptoQuest.AbilitySystem.Abilities
     /// </summary>
     public abstract class CastSkillAbility : AbilityScriptableObject
     {
-        [SerializeField] protected GameplayEffectContext _context;
+        [SerializeField] private GameplayEffectContext _context;
+        [SerializeField] private LocalizedString _skillName;
+        [SerializeField] private LocalizedString _skillDescription;
+        public LocalizedString SkillName => _skillName;
+        public LocalizedString SkillDescription => _skillDescription;
+
         public GameplayEffectContext Context => _context;
         public SkillInfo SkillInfo => _context.SkillInfo;
         public int VfxId => SkillInfo.VfxId;
         public float MpToCast => SkillInfo.Cost;
-        
-        [field: SerializeField] public float SuccessRate { get; protected set; } = 100;
-        [field: SerializeField] public SkillTargetType TargetType { get; protected set; }
+
+        [field: SerializeField] public float SuccessRate { get; private set; } = 100;
+        [field: SerializeField] public SkillTargetType TargetType { get; private set; }
+#if UNITY_EDITOR
+        public void SetSkillName(LocalizedString localizedString) => _skillName = localizedString;
+        public void SetSkillDescription(LocalizedString localizedString) => _skillDescription = localizedString;
+
+#endif
     }
 
     public abstract class CastSkillAbilitySpec : GameplayAbilitySpec
@@ -102,7 +114,7 @@ namespace CryptoQuest.AbilitySystem.Abilities
         {
             if (this.CheckSealedMagicSkill()) return;
             if (this.CheckSealedPhysicSkill()) return;
-            
+
             BattleEventBus.RaiseEvent(new CastingSkillEvent()
             {
                 Character = _character,
@@ -177,6 +189,7 @@ namespace CryptoQuest.AbilitySystem.Abilities
             var evadeBehaviour = target.GetComponent<IEvadable>();
             return evadeBehaviour != null && evadeBehaviour.TryEvade();
         }
+
         protected abstract void InternalExecute(AbilitySystemBehaviour target);
 
         private void CleanupAbility(BattleEndedEvent ctx)
@@ -194,8 +207,6 @@ namespace CryptoQuest.AbilitySystem.Abilities
         /// </summary>
         /// <param name="target"></param>
         /// <returns></returns>
-
-
         private ActiveGameplayEffect GetActiveEffectWithTag(AbilitySystemBehaviour target, TagScriptableObject tag)
         {
             var appliedEffects = target.EffectSystem.AppliedEffects;

@@ -29,8 +29,6 @@ namespace CryptoQuest.Gameplay.Battle.Core
     public struct SkillInfo
     {
         public int Id;
-        public LocalizedString SkillName;
-        public LocalizedString SkillDescription;
         public Sprite SkillIcon;
         public ESkillType SkillType;
         public SkillCategory Category;
