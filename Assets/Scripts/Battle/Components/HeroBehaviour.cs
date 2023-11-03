@@ -2,6 +2,7 @@
 using CryptoQuest.Character;
 using CryptoQuest.Character.Hero;
 using CryptoQuest.Gameplay;
+using CryptoQuest.Gameplay.PlayerParty;
 using UnityEngine;
 using UnityEngine.Localization;
 
@@ -33,6 +34,7 @@ namespace CryptoQuest.Battle.Components
         }
 
         private LevelSystem _levelSystem;
+        private PartySlotSpec _partySlotSpec;
 
         protected override void Awake()
         {
@@ -49,10 +51,11 @@ namespace CryptoQuest.Battle.Components
         /// 6. equip gems to get stats
         /// 7. apply traits/personality to get stats
         /// </summary>
-        /// <param name="character"></param>
-        public void Init(HeroSpec character)
+        /// <param name="slotSpec"></param>
+        public void Init(PartySlotSpec slotSpec)
         {
-            Spec = character;
+            _partySlotSpec = slotSpec;
+            Spec = _partySlotSpec.Hero;
             _levelSystem.Init(this);
             // Need level before I can init the character
             Init(Element);
@@ -60,7 +63,7 @@ namespace CryptoQuest.Battle.Components
 
         public override bool IsValid() => _spec.IsValid();
 
-        public Equipments GetEquipments() => Spec.Equipments;
+        public Equipments GetEquipments() => _partySlotSpec.EquippingItems;
 
         public void RequestAddExp(float exp)
         {

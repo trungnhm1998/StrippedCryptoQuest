@@ -1,5 +1,4 @@
 ﻿using CryptoQuest.Battle.Components;
-using CryptoQuest.Character.Hero;
 using UnityEngine;
 
 namespace CryptoQuest.Gameplay.PlayerParty
@@ -12,6 +11,7 @@ namespace CryptoQuest.Gameplay.PlayerParty
     {
         private HeroBehaviour _hero;
         public HeroBehaviour HeroBehaviour => _hero;
+        public PartySlotSpec Spec { get; private set; }
 
         private void Awake()
         {
@@ -19,10 +19,11 @@ namespace CryptoQuest.Gameplay.PlayerParty
             _hero.gameObject.SetActive(false);
         }
 
-        public void Init(HeroSpec hero)
+        public void Init(PartySlotSpec slotSpec)
         {
+            Spec = slotSpec;
             _hero.gameObject.SetActive(true);
-            _hero.Init(hero);
+            _hero.Init(slotSpec);
         }
 
         public bool IsValid() => _hero != null && _hero.IsValid();
