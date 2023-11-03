@@ -11,6 +11,5 @@ namespace CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data
     {
         Field = 1, // 000001
         Battle = 2, // 000010
-        FieldAndBatte = 3, // 000011
     }
 }
