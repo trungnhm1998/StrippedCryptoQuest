@@ -22,7 +22,7 @@ namespace CryptoQuest.AbilitySystem.Executions
             }
 
             SkillParameters skillParameters = context.SkillInfo.SkillParameters;
-            CustomExecutionAttributeCaptureDef targetAttribute = skillParameters.targetAttribute;
+            CustomExecutionAttributeCaptureDef targetAttribute = skillParameters.TargetAttribute;
             executionParams.TryGetAttributeValue(_targetMaxHp, out var targetMaxHp);
             var damageValue = targetMaxHp.CurrentValue / 20;
             var modifier = new GameplayModifierEvaluatedData()

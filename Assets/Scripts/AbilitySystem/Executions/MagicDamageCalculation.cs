@@ -25,7 +25,7 @@ namespace CryptoQuest.AbilitySystem.Executions
             }
 
             SkillParameters skillParameters = context.SkillInfo.SkillParameters;
-            CustomExecutionAttributeCaptureDef targetAttribute = skillParameters.targetAttribute;
+            CustomExecutionAttributeCaptureDef targetAttribute = skillParameters.TargetAttribute;
             var elementalRate = BattleCalculator.CalculateElementalRateFromParams(executionParams);
             var effectType = skillParameters.EffectType;
             executionParams.TryGetAttributeValue(_baseMagicAttack, out var baseAttack);

@@ -1,10 +1,9 @@
-﻿using CryptoQuest.AbilitySystem.Abilities;
+﻿using CryptoQuest.AbilitySystem.Abilities.PostNormalAttackPassive;
 using CryptoQuest.AbilitySystem.Attributes;
 using CryptoQuest.Battle.Events;
 using IndiGames.GameplayAbilitySystem.EffectSystem;
 using IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects.EffectExecutionCalculation;
 using UnityEngine;
-using CoreEffectContext = IndiGames.GameplayAbilitySystem.EffectSystem.GameplayEffectContext;
 
 namespace CryptoQuest.AbilitySystem.Executions
 {
@@ -15,25 +14,24 @@ namespace CryptoQuest.AbilitySystem.Executions
         {
             var spec = executionParams.EffectSpec;
             var specContext = spec.Context.Get();
-            if (specContext is not PostNormalAttackContext context) return;
+            if (specContext is not PostDamageContext context) return;
 
             executionParams.SourceAbilitySystemComponent.AttributeSystem.TryGetAttributeValue(AttributeSets.MagicAttack,
                 out var magicPower);
             var skillParameters = context.SkillInfo.SkillParameters;
-            var skillPower =
-                BattleCalculator.CalculateMagicSkillBasePower(skillParameters, magicPower.CurrentValue);
-            var absorbDamage = context.AttackContext.Damage / skillPower;
-            Debug.Log($"Absorb [{absorbDamage}] damage dealt was [{context.AttackContext.Damage}] skill power [{skillPower}]");
+            var absorbDamage = skillParameters.IsFixed ? -context.DamageContext.Damage
+                : -context.DamageContext.Damage * skillParameters.BasePower/100f;
+            Debug.Log($"Absorb [{absorbDamage}] damage dealt was [{context.DamageContext.Damage}]");
             var modifier = new GameplayModifierEvaluatedData()
             {
-                Attribute = skillParameters.targetAttribute.Attribute,
+                Attribute = skillParameters.TargetAttribute.Attribute,
                 OpType = EAttributeModifierOperationType.Add,
                 Magnitude = absorbDamage
             };
             outModifiers.Add(modifier);
             BattleEventBus.RaiseEvent(new AbsorbingEvent()
             {
-                Character = context.AttackContext.Target,
+                Character = context.DamageContext.Target,
                 AbsorbingAttribute = modifier.Attribute,
                 Value = modifier.Magnitude,
             });

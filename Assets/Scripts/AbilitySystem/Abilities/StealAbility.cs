@@ -1,7 +1,5 @@
-﻿using System.Collections.Generic;
-using CryptoQuest.Battle.Components.SpecialSkillBehaviours;
+﻿using CryptoQuest.Battle.Components.SpecialSkillBehaviours;
 using CharacterBehaviour = CryptoQuest.Battle.Components.Character;
-using CryptoQuest.Gameplay.Loot;
 using IndiGames.GameplayAbilitySystem.AbilitySystem;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
 using UnityEngine;
@@ -17,17 +15,14 @@ namespace CryptoQuest.AbilitySystem.Abilities
 
     public class StealAbilitySpec : CastSkillAbilitySpec
     {
-        private IStealerBehaviour _stealerBehaviour;
-
         public StealAbilitySpec(CastSkillAbility def) : base(def) { }
 
         protected override void InternalExecute(AbilitySystemBehaviour target)
         {
-            var onwerCharacter = Owner.GetComponent<CharacterBehaviour>();
-            var targerCharacter = target.GetComponent<CharacterBehaviour>();
-            _stealerBehaviour = Owner.GetComponent<IStealerBehaviour>();
+            var targetCharacter = target.GetComponent<CharacterBehaviour>();
+            var stealerBehaviour = Owner.GetComponent<IStealerBehaviour>();
 
-            _stealerBehaviour.StealTarget(targerCharacter);
+            stealerBehaviour.StealTarget(targetCharacter);
         }
     }
 }

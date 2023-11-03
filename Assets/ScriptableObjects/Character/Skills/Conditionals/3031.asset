@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 15e76b104968436b8b5b8d0cd9cf148e, type: 3}
+  m_Script: {fileID: 11500000, guid: 2e530b67ca4aeaa418aee1e7d6e4a174, type: 3}
   m_Name: 3031
   m_EditorClassIdentifier: 
   tags:
@@ -49,11 +49,11 @@ MonoBehaviour:
         m_WaitForCompletion: 0
         m_LocalVariables: []
       SkillIcon: {fileID: 0}
-      Element: {fileID: 0}
-      SkillType: {fileID: 0}
+      SkillType: 3
       Category: {fileID: 0}
       Cost: 0
-      UsageScenarioSO: 0
+      UsageScenarioSO: 2
+      VfxId: 0
       SkillParameters:
         Element: {fileID: 0}
         BasePower: 25
@@ -62,16 +62,56 @@ MonoBehaviour:
         SkillPowerThreshold: 200
         PowerValueAdded: 0.2
         PowerValueReduced: 0.2
+        IsFixed: 1
+        ContinuesTurn: 0
+        EffectType: 1
+        TargetAttribute:
+          Attribute: {fileID: 11400000, guid: 77c53593fd92c904aa7689c5a7449df3, type: 2}
+          CaptureFrom: 1
+  <SuccessRate>k__BackingField: 1
+  <Effect>k__BackingField: {fileID: 11400000, guid: f4945dcd5cb8dbb428edb20917f51754, type: 2}
+  _absorbContext:
+    _skillInfo:
+      Id: 0
+      SkillName:
+        m_TableReference:
+          m_TableCollectionName: 
+        m_TableEntryReference:
+          m_KeyId: 0
+          m_Key: 
+        m_FallbackState: 0
+        m_WaitForCompletion: 0
+        m_LocalVariables: []
+      SkillDescription:
+        m_TableReference:
+          m_TableCollectionName: 
+        m_TableEntryReference:
+          m_KeyId: 0
+          m_Key: 
+        m_FallbackState: 0
+        m_WaitForCompletion: 0
+        m_LocalVariables: []
+      SkillIcon: {fileID: 0}
+      SkillType: 4
+      Category: {fileID: 0}
+      Cost: 0
+      UsageScenarioSO: 2
+      VfxId: 0
+      SkillParameters:
+        Element: {fileID: 0}
+        BasePower: 10
+        PowerUpperLimit: 0
+        PowerLowerLimit: 0
+        SkillPowerThreshold: 0
+        PowerValueAdded: 0
+        PowerValueReduced: 0
         IsFixed: 0
         ContinuesTurn: 1
         EffectType: 6
-        targetAttribute:
+        TargetAttribute:
           Attribute: {fileID: 11400000, guid: 77c53593fd92c904aa7689c5a7449df3, type: 2}
           CaptureFrom: 0
-        VfxId: 
-    _turns: 0
-  <SuccessRate>k__BackingField: 1
-  <Effect>k__BackingField: {fileID: 11400000, guid: 0d6dc96cfad39a94a92e6471e4c8399f, type: 2}
+  <AbsorbEffect>k__BackingField: {fileID: 11400000, guid: 0d6dc96cfad39a94a92e6471e4c8399f, type: 2}
   references:
     version: 2
     RefIds: []

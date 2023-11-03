@@ -26,7 +26,7 @@ namespace CryptoQuest.AbilitySystem.Executions
             }
 
             SkillParameters skillParameters = context.SkillInfo.SkillParameters;
-            CustomExecutionAttributeCaptureDef targetedAttribute = skillParameters.targetAttribute;
+            CustomExecutionAttributeCaptureDef targetedAttribute = skillParameters.TargetAttribute;
             AttributeScriptableObject attribute = targetedAttribute.Attribute;
             EAttributeModifierOperationType modifierOperationType = EAttributeModifierOperationType.Add;
 

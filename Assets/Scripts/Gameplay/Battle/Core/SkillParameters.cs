@@ -4,6 +4,7 @@ using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data;
 using IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects.EffectExecutionCalculation;
 using UnityEngine;
 using UnityEngine.Localization;
+using UnityEngine.Serialization;
 
 namespace CryptoQuest.Gameplay.Battle.Core
 {
@@ -20,7 +21,8 @@ namespace CryptoQuest.Gameplay.Battle.Core
         public bool IsFixed;
         public int ContinuesTurn = 1;
         public EEffectType EffectType;
-        public CustomExecutionAttributeCaptureDef targetAttribute;
+        [FormerlySerializedAs("targetAttribute")]
+        public CustomExecutionAttributeCaptureDef TargetAttribute;
     }
 
     [Serializable]
