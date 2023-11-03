@@ -1,6 +1,7 @@
 using CryptoQuest.Character.LevelSystem;
 using CryptoQuest.Core;
 using IndiGames.Core.EditorTools.Attributes.ReadOnlyAttribute;
+using IndiGames.GameplayAbilitySystem.AttributeSystem.Components;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
 using UnityEngine;
 
@@ -30,15 +31,19 @@ namespace CryptoQuest.Battle.Components
         private ILevelCalculator _levelCalculator;
 
         // TODO: Possible optimization
-        private ILevelCalculator LevelCalculator => _levelCalculator ??= new LevelCalculator(StatsProvider.Stats.MaxLevel);
+        private ILevelCalculator LevelCalculator =>
+            _levelCalculator ??= new LevelCalculator(StatsProvider.Stats.MaxLevel);
+
         private HeroBehaviour _character;
         private HeroBehaviour Hero => _character ??= GetComponent<HeroBehaviour>();
         private IExpProvider _expProvider;
         private IExpProvider ExpProvider => _expProvider ??= GetComponent<IExpProvider>();
-        private int _lastLevel;
+        private int _lastLevel = 1;
         public int LastLevel => _lastLevel;
 
         public int Level => CalculateCurrentLevel();
+
+        private bool _needToRecalculateLevel;
 
         public void AddExp(float expToAdd)
         {
@@ -48,7 +53,9 @@ namespace CryptoQuest.Battle.Components
                 return;
             }
 
-            var attributeSystem = Hero.AttributeSystem;
+            _needToRecalculateLevel = true;
+
+            var attributeSystem = Hero.GetComponent<AttributeSystemBehaviour>();
             attributeSystem.TryGetAttributeValue(_expBuffAttribute, out var expBuffValue);
 
             if (expBuffValue.CurrentValue == 0f)
@@ -57,18 +64,23 @@ namespace CryptoQuest.Battle.Components
             }
 
             var addedExp = expToAdd * expBuffValue.CurrentValue;
-
-            Hero.RequestAddExp(addedExp);
+            ExpProvider.Exp += addedExp;
 
             CalculateCurrentLevel();
         }
 
         private int CalculateCurrentLevel()
         {
+            if (_needToRecalculateLevel == false) return _level;
+            _needToRecalculateLevel = false;
             _level = LevelCalculator.CalculateCurrentLevel(ExpProvider.Exp);
-            _level = Mathf.Max(1, _level);
-            if (_lastLevel < _level) OnCharacterLevelUp();
+            if (_lastLevel < _level)
+            {
+                OnCharacterLevelUp();
+            }
+
             _lastLevel = _level;
+
             return _level;
         }
 

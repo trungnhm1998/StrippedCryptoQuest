@@ -14,7 +14,7 @@ namespace CryptoQuest.Battle.Components
 
     public interface IExpProvider
     {
-        public float Exp { get; }
+        public float Exp { get; set; }
     }
 
     /// <summary>
@@ -42,6 +42,11 @@ namespace CryptoQuest.Battle.Components
             {
                 if (_spec.IsValid() == false) return 0;
                 return _spec.Experience;
+            }
+            set
+            {
+                if (_spec.IsValid() == false) return;
+                _spec.Experience = value;
             }
         }
 
@@ -75,11 +80,5 @@ namespace CryptoQuest.Battle.Components
         public override bool IsValid() => _spec.IsValid();
 
         public Equipments GetEquipments() => _partySlotSpec.EquippingItems;
-
-        public void RequestAddExp(float exp)
-        {
-            // TODO: Request to server here
-            _spec.Experience += exp;
-        }
     }
 }
