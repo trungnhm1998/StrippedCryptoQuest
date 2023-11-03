@@ -13,7 +13,7 @@ namespace CryptoQuest.Menus.Skill.UI
 
         private void Configure(UISkill skillUI)
         {
-            _description.StringReference = skill.SkillDescription;
+            _description.StringReference = skillUI.Skill.SkillDescription;
             _description.RefreshString();
         }
     }
