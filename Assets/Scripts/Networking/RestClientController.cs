@@ -12,22 +12,19 @@ namespace CryptoQuest.Networking
 {
     public interface IRestClient
     {
-        public IObservable<TResponse> Post<TResponse>(string path, object body = null,
-            Dictionary<string, string> headers = null);
+        public IObservable<TResponse> Post<TResponse>(string path);
 
-        public IObservable<TResponse> Get<TResponse>(string path, object body = null,
-            Dictionary<string, string> headers = null);
+        public IObservable<TResponse> Get<TResponse>(string path);
 
-        public IObservable<string> Get(string path, object body = null,
-            Dictionary<string, string> headers = null);
+        public IObservable<string> Get(string path);
 
-        public IObservable<TResponse> Put<TResponse>(string path, object body = null,
-            Dictionary<string, string> headers = null);
+        public IObservable<TResponse> Put<TResponse>(string path);
 
-        public IObservable<string> Put(string path, object body = null,
-            Dictionary<string, string> headers = null);
+        public IObservable<string> Put(string path);
 
         public IRestClient WithParams(Dictionary<string, string> parameters);
+        public IRestClient WithBody(object body);
+        public IRestClient WithHeaders(Dictionary<string, string> headers);
     }
 
     /// <summary>
@@ -48,14 +45,13 @@ namespace CryptoQuest.Networking
             ServiceProvider.Provide<IRestClient>(this);
         }
 
-        public IObservable<TResponse> Post<TResponse>(string path, object body = null,
-            Dictionary<string, string> headers = null)
+        public IObservable<TResponse> Post<TResponse>(string path)
         {
             return Observable.Create<TResponse>(observer =>
             {
                 try
                 {
-                    var generateRequest = GenerateRequest(path, body, headers);
+                    var generateRequest = GenerateRequest(path);
                     PluginRestClient.Post<TResponse>(generateRequest)
                         .Then(observer.OnNext)
                         .Catch(observer.OnError)
@@ -70,14 +66,13 @@ namespace CryptoQuest.Networking
             });
         }
 
-        public IObservable<TResponse> Get<TResponse>(string path, object body = null,
-            Dictionary<string, string> headers = null)
+        public IObservable<TResponse> Get<TResponse>(string path)
         {
             return Observable.Create<TResponse>(observer =>
             {
                 try
                 {
-                    var generateRequest = GenerateRequest(path, body, headers);
+                    var generateRequest = GenerateRequest(path);
                     generateRequest.Method = "GET";
                     PluginRestClient.Get<TResponse>(generateRequest)
                         .Then(observer.OnNext)
@@ -93,13 +88,13 @@ namespace CryptoQuest.Networking
             });
         }
 
-        public IObservable<string> Get(string path, object body = null, Dictionary<string, string> headers = null)
+        public IObservable<string> Get(string path)
         {
             return Observable.Create<string>(observer =>
             {
                 try
                 {
-                    var generateRequest = GenerateRequest(path, body, headers);
+                    var generateRequest = GenerateRequest(path);
                     generateRequest.Method = "GET";
                     PluginRestClient.Get(generateRequest)
                         .Then(helper => observer.OnNext(helper.Text))
@@ -115,14 +110,13 @@ namespace CryptoQuest.Networking
             });
         }
 
-        public IObservable<TResponse> Put<TResponse>(string path, object body = null,
-            Dictionary<string, string> headers = null)
+        public IObservable<TResponse> Put<TResponse>(string path)
         {
             return Observable.Create<TResponse>(observer =>
             {
                 try
                 {
-                    var generateRequest = GenerateRequest(path, body, headers);
+                    var generateRequest = GenerateRequest(path);
                     PluginRestClient.Put<TResponse>(generateRequest)
                         .Then(observer.OnNext)
                         .Catch(observer.OnError)
@@ -137,13 +131,13 @@ namespace CryptoQuest.Networking
             });
         }
 
-        public IObservable<string> Put(string path, object body = null, Dictionary<string, string> headers = null)
+        public IObservable<string> Put(string path)
         {
             return Observable.Create<string>(observer =>
             {
                 try
                 {
-                    var generateRequest = GenerateRequest(path, body, headers);
+                    var generateRequest = GenerateRequest(path);
                     PluginRestClient.Put(generateRequest)
                         .Then(helper => observer.OnNext(helper.Text))
                         .Catch(observer.OnError)
@@ -166,15 +160,28 @@ namespace CryptoQuest.Networking
             return this;
         }
 
-        private RequestHelper GenerateRequest(string path, object body = null,
-            Dictionary<string, string> headers = null)
+        private object _body;
+        public IRestClient WithBody(object body)
         {
-            var mergeHeaders = MergeHeaders(headers);
+            _body = body;
+            return this;
+        }
+
+        private Dictionary<string, string> _headers;
+        public IRestClient WithHeaders(Dictionary<string, string> headers)
+        {
+            _headers = headers;
+            return this;
+        }
+
+        private RequestHelper GenerateRequest(string path)
+        {
+            var mergeHeaders = MergeHeaders(_headers);
             var accessToken = _credentials.Profile.token.access.token;
             if (!string.IsNullOrEmpty(accessToken)) mergeHeaders.TryAdd("Authorization", "Bearer " + accessToken);
 
-            var bodyString = "";
-            if (body != null) bodyString = JsonConvert.SerializeObject(body);
+            string bodyString = null;
+            if (_body != null) bodyString = JsonConvert.SerializeObject(_body);
             var request = new RequestHelper
             {
                 Uri = $"{Env.API}/{path}",
@@ -187,6 +194,8 @@ namespace CryptoQuest.Networking
             };
             
             _params = null;
+            _body = null;
+            _headers = null;
 
             return request;
         }
