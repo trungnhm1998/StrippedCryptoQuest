@@ -24,7 +24,8 @@ namespace CryptoQuest.Sagas
         {
             var restClient = ServiceProvider.GetService<IRestClient>();
             restClient
-                .Post<AuthResponse>(Accounts.LOGIN, new Body { Token = ctx.Token })
+                .WithBody(new Body { Token = ctx.Token })
+                .Post<AuthResponse>(Accounts.LOGIN)
                 .Subscribe(Authenticated, OnError, OnCompleted);
         }
 

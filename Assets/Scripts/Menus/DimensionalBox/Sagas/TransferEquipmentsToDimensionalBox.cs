@@ -7,7 +7,6 @@ using CryptoQuest.Menus.DimensionalBox.Objects;
 using CryptoQuest.Networking;
 using CryptoQuest.System;
 using CryptoQuest.UI.Actions;
-using CryptoQuest.UI.Core;
 using UniRx;
 using UnityEngine;
 
@@ -35,7 +34,8 @@ namespace CryptoQuest.Menus.DimensionalBox.Sagas
             };
             var restClient = ServiceProvider.GetService<IRestClient>();
             restClient
-                .Put<TransferResponse>(API.PUT_EQUIPMENTS_TO_DIMENSIONAL_BOX, body)
+                .WithBody(body)
+                .Put<TransferResponse>(API.PUT_EQUIPMENTS_TO_DIMENSIONAL_BOX)
                 // .Get<EquipmentsResponse>(API.EQUIPMENTS + "?source=0") // Listen to different action to get smaller data set for each type
                 .Subscribe(OnNext, OnError, OnCompleted);
         }
