@@ -23,5 +23,6 @@ namespace CryptoQuest.Character
         [field: SerializeField] public AssetLabelReference Label { get; private set; }
         [field: SerializeField] public List<ClassMaterial> ClassMaterials { get; private set; }
         [field: SerializeField] public int ItemMaterialId { get; private set; }
+        [field: SerializeField] public int MaterialQuantity { get; private set; } = 1;
     }
 }
