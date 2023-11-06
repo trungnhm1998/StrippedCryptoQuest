@@ -11,6 +11,7 @@ namespace CryptoQuest.Gameplay.PlayerParty
     public class PartySlotSpec
     {
         [field: SerializeField] public HeroSpec Hero { get; set; }
+
         [field: SerializeField] public Equipments EquippingItems { get; set; }
     }
 

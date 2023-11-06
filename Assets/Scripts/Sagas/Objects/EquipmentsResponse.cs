@@ -103,13 +103,10 @@ namespace CryptoQuest.Sagas.Objects
         public string imageURL;
         public int nft;
         public int star;
-        public AttachStones attachStones;
         public object[] passiveSkills;
         public object[] conditionSkills;
         public int slot;
         public string equipmentIdForeign;
+        public bool isEquipped { get; set; }
     }
-
-    [Serializable]
-    public class AttachStones { }
 }

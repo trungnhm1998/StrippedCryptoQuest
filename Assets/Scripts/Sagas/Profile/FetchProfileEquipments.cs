@@ -91,14 +91,14 @@ namespace CryptoQuest.Sagas.Profile
             ActionDispatcher.Dispatch(new InventoryFilled());
         }
 
-        private EquipmentInfo CreateNftEquipment(EquipmentResponse equipmentResponse)
+        private NftEquipment CreateNftEquipment(EquipmentResponse equipmentResponse)
         {
-            var nftEquipment = new EquipmentInfo(equipmentResponse.id);
+            var nftEquipment = new NftEquipment(equipmentResponse.id);
             FillEquipmentData(equipmentResponse, ref nftEquipment);
             return nftEquipment;
         }
 
-        private void FillEquipmentData(EquipmentResponse response, ref EquipmentInfo nftEquipment)
+        private void FillEquipmentData(EquipmentResponse response, ref NftEquipment nftEquipment)
         {
             nftEquipment.Data = new EquipmentData();
             FillEquipmentStats(response, ref nftEquipment);
@@ -110,9 +110,10 @@ namespace CryptoQuest.Sagas.Profile
             nftEquipment.Data.RequiredCharacterLevel = response.restrictedLv;
             nftEquipment.Data.MinLevel = 1; // TODO: IMPLEMENT
             nftEquipment.Data.MaxLevel = response.maxLv;
+            nftEquipment.TokenId = response.equipmentTokenId;
         }
 
-        private void FillEquipmentStats(EquipmentResponse equipmentResponse, ref EquipmentInfo nftEquipment)
+        private void FillEquipmentStats(EquipmentResponse equipmentResponse, ref NftEquipment nftEquipment)
         {
             var stats = new List<AttributeWithValue>();
             // using reflection here, might optimize if this hits performance

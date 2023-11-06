@@ -24,7 +24,7 @@ namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects
         public List<ConsumableInfo> Consumables => _consumables;
 
         [field: SerializeField] public List<EquipmentInfo> Equipments { get; set; } = new();
-        [field: SerializeField] public List<EquipmentInfo> NftEquipments { get; set; } = new();
+        [field: SerializeField] public List<NftEquipment> NftEquipments { get; set; } = new();
 
         public WalletControllerSO WalletController => _walletController;
         [SerializeField] private WalletControllerSO _walletController;
@@ -68,10 +68,7 @@ namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects
                 return false;
             }
 
-            if (equipment.IsNftItem)
-                NftEquipments.Add(equipment);
-            else
-                Equipments.Add(equipment);
+            Equipments.Add(equipment);
             return true;
         }
 
@@ -83,8 +80,10 @@ namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects
                 return false;
             }
 
-            return Equipments.Remove(equipment) || NftEquipments.Remove(equipment);
+            return Equipments.Remove(equipment);
         }
+
+        #endregion
 
         public bool Add(ConsumableInfo item, int quantity = 1)
         {
@@ -158,7 +157,5 @@ namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects
             if (currency.Amount < 0)
                 Add(currency);
         }
-
-        #endregion
     }
 }

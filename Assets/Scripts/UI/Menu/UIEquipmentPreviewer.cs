@@ -41,7 +41,7 @@ namespace CryptoQuest.UI.Menu
                 return;
 
             var attributeSystem = inspectingHero.AttributeSystem;
-            bool isPreviewItemFromInventory = _inventoryController.Contains(equipment);
+            bool isPreviewItemFromInventory = equipment.ContainedInInventory(_inventoryController);
             var equippingEquipment = equipmentController.GetEquipmentInSlot(equippingSlot);
 
             List<AttributeValue> currentValues = new(attributeSystem.AttributeValues);
@@ -55,7 +55,7 @@ namespace CryptoQuest.UI.Menu
 
             // If preview item that player don't have we need to remove it
             if (!isPreviewItemFromInventory)
-                _inventoryController.Remove(equipment);
+                equipment.RemoveFromInventory(_inventoryController);
         
             PreviewValue(inspectingHero, currentValues, afterValues);
         }
