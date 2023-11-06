@@ -8,15 +8,17 @@ namespace CryptoQuest.Menus.Item.States
     public class InventorySelectionState : ItemStateBase
     {
         private readonly InputMediatorSO _input;
+        private bool _onStateEnter;
 
         public InventorySelectionState(UIConsumableMenuPanel consumablePanel) : base(consumablePanel)
         {
-            _input = ConsumablePanel.Input;
+            _input = _consumablePanel.Input;
         }
 
         public override void OnEnter()
         {
-            ConsumablePanel.Focusing += SelectFirstTab;
+            _consumablePanel.EnableAllHeroButtons(false);
+            _consumablePanel.Focusing += SelectFirstTab;
 
             _input.MenuCancelEvent += HandleCancel;
             _input.TabChangeEvent += ChangeTab;
@@ -34,22 +36,25 @@ namespace CryptoQuest.Menus.Item.States
 
         private void SelectFirstTab()
         {
-            ConsumablePanel.Interactable = true;
+            _onStateEnter = true;
+            _consumablePanel.Interactable = true;
 
-            ConsumablePanel.ShowItemsWithType(0);
+            _consumablePanel.ShowItemsWithType(0);
             ChangeTab(0);
         }
 
         private void HandleCancel()
         {
-            ConsumablePanel.Interactable = false;
+            _onStateEnter = false;
+            _consumablePanel.Interactable = false;
 
             UIMainMenu.OnBackToNavigation();
         }
 
         private void ChangeTab(float direction)
         {
-            ConsumablePanel.ChangeTab(direction);
+            if (!_onStateEnter) return;
+            _consumablePanel.ChangeTab(direction);
         }
 
         private void UseItem(UIConsumableItem selectedConsumableItem)

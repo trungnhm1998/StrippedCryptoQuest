@@ -13,6 +13,7 @@ namespace CryptoQuest.Menus.Item.UI
     {
         public event Action<UICharacterPartySlot> Confirmed;
         [SerializeField] private UICharacterPartySlot[] _partySlots;
+        private IPartyController _party;
 
         /// <summary>
         /// Actively update data on reopening
@@ -20,21 +21,26 @@ namespace CryptoQuest.Menus.Item.UI
         private void OnEnable()
         {
             ItemConsumeState.Cancelled += Hide;
-            var party = ServiceProvider.GetService<IPartyController>();
-            for (var index = 0; index < party.Slots.Length; index++)
+            _party = ServiceProvider.GetService<IPartyController>();
+            for (var index = 0; index < _party.Slots.Length; index++)
             {
-                var slot = party.Slots[index];
+                var slot = _party.Slots[index];
                 var ui = _partySlots[index];
                 ui.gameObject.SetActive(slot.IsValid());
                 if (!slot.IsValid()) continue;
                 ui.Init(slot.HeroBehaviour, index);
-                // ui.SetSelectedCallback(OnHeroSelected);
+                ui.Selected += OnHeroSelected;
             }
         }
 
         private void OnDisable()
         {
             ItemConsumeState.Cancelled -= Hide;
+            for (var index = 0; index < _party.Slots.Length; index++)
+            {
+                var ui = _partySlots[index];
+                ui.Selected -= OnHeroSelected;
+            }
         }
 
         /// <summary>

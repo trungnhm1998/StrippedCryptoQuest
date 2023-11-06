@@ -49,7 +49,7 @@ namespace CryptoQuest.Ocarina
 
         private void RegisterTown(OcarinaEntrance location)
         {
-            // _ocarinaData.Locations.Add(location);
+            _ocarinaData.Locations.Add(location);
         }
 
         public void StartTeleportSequence(MapPathSO path)

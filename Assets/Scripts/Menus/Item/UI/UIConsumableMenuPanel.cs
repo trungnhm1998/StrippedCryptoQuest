@@ -25,6 +25,8 @@ namespace CryptoQuest.Menus.Item.UI
         public InputMediatorSO Input { get; private set; }
 
         [field: SerializeField] public UICharacterPartySlot[] HeroButtons { get; private set; }
+
+        public UICharacterPartySlot SelectingHero { get; set; }
         [field: SerializeField] public VoidEventChannelSO SingleAlliedTarget { get; private set; }
         [field: SerializeField] public VoidEventChannelSO AllAlliesTarget { get; private set; }
         [field: Header("State Context")] public event Action ItemConsumed;
