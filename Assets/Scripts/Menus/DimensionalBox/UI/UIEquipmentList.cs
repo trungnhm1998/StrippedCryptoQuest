@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using CryptoQuest.Core;
 using CryptoQuest.Events;
-using CryptoQuest.Menus.DimensionalBox.Objects;
 using CryptoQuest.Menus.DimensionalBox.States;
 using CryptoQuest.Sagas.Objects;
 using TinyMessenger;
@@ -27,7 +26,7 @@ namespace CryptoQuest.Menus.DimensionalBox.UI
         [Header("Raise on")]
         [SerializeField] private StringEventChannelSO _transferEquipmentEvent;
 
-        private List<UIEquipment> _equipmentsToTransfer = new();
+        private readonly List<UIEquipment> _equipmentsToTransfer = new();
         public bool PendingTransfer => _equipmentsToTransfer.Count > 0;
         private TinyMessageSubscriptionToken _confirmTransferEvent;
 

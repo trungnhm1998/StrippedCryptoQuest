@@ -1,5 +1,6 @@
 ﻿using System;
 using CryptoQuest.AbilitySystem.Abilities;
+using CryptoQuest.Gameplay.Inventory;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Type;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
 using UnityEngine;
@@ -71,5 +72,38 @@ namespace CryptoQuest.Item.Equipment
 
         public override bool IsValid()
             => Data != null && !string.IsNullOrEmpty(Data.ID) && !string.IsNullOrEmpty(Data.PrefabId);
+
+        public virtual bool ContainedInInventory(IInventoryController inventoryController) =>
+            inventoryController.Contains(this);
+
+        public virtual void AddToInventory(IInventoryController inventoryController)
+        {
+            inventoryController.Add(this);
+        }
+
+        public virtual void RemoveFromInventory(IInventoryController inventoryController)
+        {
+            inventoryController.Remove(this);
+        }
+    }
+
+    [Serializable]
+    public class NftEquipment : EquipmentInfo
+    {
+        [field: SerializeField] public string TokenId { get; set; }
+        public NftEquipment(uint equipmentResponseID) : base(equipmentResponseID) { }
+
+        public override void AddToInventory(IInventoryController inventoryController)
+        {
+            inventoryController.Add(this);
+        }
+
+        public override void RemoveFromInventory(IInventoryController inventoryController)
+        {
+            inventoryController.Remove(this);
+        }
+
+        public override bool ContainedInInventory(IInventoryController inventoryController) =>
+            inventoryController.Contains(this);
     }
 }

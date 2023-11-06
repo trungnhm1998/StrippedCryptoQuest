@@ -58,7 +58,6 @@ namespace CryptoQuest.Battle.Components
             Character.AbilitySystem.AttributeSystem.UpdateAttributeValues();
             _equipmentsEffect.Clear();
 
-
             ApplyEffectFromEquippingItems();
         }
 
@@ -134,7 +133,7 @@ namespace CryptoQuest.Battle.Components
                 if (equippingSlot != slot)
                     SetEquipmentInSlot(equipment, slot);
 
-            _inventoryController.Remove(equipment);
+            equipment.RemoveFromInventory(_inventoryController);
             CreateEffectFromEquipmentStatsAndApplyToHero(equipment);
             Equipped?.Invoke(equipment);
         }
@@ -220,7 +219,7 @@ namespace CryptoQuest.Battle.Components
         private void OnEquipmentRemoved(EquipmentInfo equipment)
         {
             RemoveEquipmentEffectFromCharacter(equipment);
-            _inventoryController.Add(equipment);
+            equipment.AddToInventory(_inventoryController);
             Removed?.Invoke(equipment);
         }
 

@@ -13,15 +13,14 @@ namespace CryptoQuest.Gameplay.Inventory
     public interface IInventoryController
     {
         InventorySO Inventory { get; }
-
         bool Add(EquipmentInfo equipment);
-
         bool Remove(EquipmentInfo equipment);
-
+        bool Add(NftEquipment equipment);
+        bool Remove(NftEquipment equipment);
         bool Add(ConsumableInfo consumable);
-
         bool Remove(ConsumableInfo consumable);
         bool Contains(EquipmentInfo equipment);
+        bool Contains (NftEquipment equipment);
     }
 
     public class InventoryController : MonoBehaviour, IInventoryController
@@ -67,6 +66,15 @@ namespace CryptoQuest.Gameplay.Inventory
             return true;
         }
 
+        public bool Add(NftEquipment equipment)
+        {
+            _inventory.NftEquipments.Add(equipment);
+            return true;
+        }
+
+        public bool Remove(NftEquipment equipment)
+            => _inventory.NftEquipments.Remove(equipment);
+
         public bool Add(ConsumableInfo consumable)
         {
             if (!_inventory.Add(consumable)) return false;
@@ -81,7 +89,8 @@ namespace CryptoQuest.Gameplay.Inventory
             return result;
         }
 
-        public bool Contains(EquipmentInfo equipment) => _inventory.Equipments.Contains(equipment) ||
-                                                         _inventory.NftEquipments.Contains(equipment);
+        public bool Contains(EquipmentInfo equipment) => _inventory.Equipments.Contains(equipment);
+
+        public bool Contains(NftEquipment equipment) => _inventory.NftEquipments.Contains(equipment);
     }
 }
