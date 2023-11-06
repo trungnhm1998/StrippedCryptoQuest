@@ -131,6 +131,13 @@ namespace CryptoQuest.AbilitySystem.Abilities
 
             RegisterBattleEndedEvents();
 
+            ExecuteAbility();
+
+            EndAbility();
+        }
+
+        protected virtual void ExecuteAbility()
+        {
             foreach (var target in Targets)
             {
                 if (IsTargetEvaded(target))
@@ -142,8 +149,6 @@ namespace CryptoQuest.AbilitySystem.Abilities
                 BattleEventBus.RaiseEvent(new CastSkillEvent(_def, target) { Character = _character });
                 InternalExecute(target);
             }
-
-            EndAbility();
         }
 
         private bool CanCast()

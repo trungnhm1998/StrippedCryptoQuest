@@ -30,24 +30,6 @@ MonoBehaviour:
   _context:
     _skillInfo:
       Id: 0
-      SkillName:
-        m_TableReference:
-          m_TableCollectionName: 
-        m_TableEntryReference:
-          m_KeyId: 0
-          m_Key: 
-        m_FallbackState: 0
-        m_WaitForCompletion: 0
-        m_LocalVariables: []
-      SkillDescription:
-        m_TableReference:
-          m_TableCollectionName: 
-        m_TableEntryReference:
-          m_KeyId: 0
-          m_Key: 
-        m_FallbackState: 0
-        m_WaitForCompletion: 0
-        m_LocalVariables: []
       SkillIcon: {fileID: 0}
       SkillType: 0
       Category: {fileID: 0}
@@ -70,7 +52,27 @@ MonoBehaviour:
           CaptureFrom: 0
   <SuccessRate>k__BackingField: 1
   <Effect>k__BackingField: {fileID: 11400000, guid: 0d6dc96cfad39a94a92e6471e4c8399f, type: 2}
-  <TargetSelfEffect>k__BackingField: {fileID: 0}
-  references:
-    version: 2
-    RefIds: []
+  _absorbContext:
+    _skillInfo:
+      Id: 0
+      SkillIcon: {fileID: 0}
+      SkillType: 0
+      Category: {fileID: 0}
+      Cost: 0
+      UsageScenarioSO: 0
+      VfxId: 0
+      SkillParameters:
+        Element: {fileID: 0}
+        BasePower: 10
+        PowerUpperLimit: 0
+        PowerLowerLimit: 0
+        SkillPowerThreshold: 0
+        PowerValueAdded: 0
+        PowerValueReduced: 0
+        IsFixed: 0
+        ContinuesTurn: 1
+        EffectType: 6
+        TargetAttribute:
+          Attribute: {fileID: 11400000, guid: a7e3a44d36bf87d44afeb00b236e832e, type: 2}
+          CaptureFrom: 0
+  <AbsorbEffect>k__BackingField: {fileID: 11400000, guid: 0d6dc96cfad39a94a92e6471e4c8399f, type: 2}

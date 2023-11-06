@@ -36,7 +36,7 @@ namespace CryptoQuest.AbilitySystem.EffectActions
     public class TurnBasePolicyActiveEffect : ActiveGameplayEffect
     {
         [SerializeField] private int _turnsLeft;
-        private const int DEFAULT_TURNS = 3;
+        private const int DEFAULT_TURNS = 1;
 
         private TurnBasePolicy _policyDef;
         private Battle.Components.Character _character;
