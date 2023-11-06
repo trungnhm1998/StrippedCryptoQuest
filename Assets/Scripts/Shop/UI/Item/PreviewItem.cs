@@ -28,8 +28,8 @@ namespace CryptoQuest.Shop.UI.Item
         {
             SetupTooltip(ETooltipType.Equipment);
             _tooltip.WithLevel(equipment.Level)
-                .WithDescription(equipment.Data.DisplayName)
-                .WithDisplaySprite(equipment.Data.Image)
+                // .WithDescription(equipment.Config.DisplayName)
+                // .WithDisplaySprite(equipment.Config.Image)
                 .WithRarity(equipment.Rarity)
                 .Show();
         }

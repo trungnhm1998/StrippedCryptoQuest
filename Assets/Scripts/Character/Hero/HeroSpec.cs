@@ -7,22 +7,6 @@ using UnityEngine;
 
 namespace CryptoQuest.Character.Hero
 {
-    [Serializable]
-    public struct EquipmentSlotData
-    {
-        public EquipmentSlot.EType Type;
-        public EquipmentData Equipment;
-    }
-
-    [Serializable]
-    public struct HeroSpecData
-    {
-        public int Id;
-        public string UnitSOGuid;
-        public float Experience;
-        public string EquipmentSlots;
-    }
-
     /// <summary>
     /// Runtime hero data, use this to save game
     ///

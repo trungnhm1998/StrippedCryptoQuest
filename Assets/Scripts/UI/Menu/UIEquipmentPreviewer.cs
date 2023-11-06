@@ -37,12 +37,11 @@ namespace CryptoQuest.UI.Menu
             ResetAttributesUI();
 
             if (!inspectingHero.IsValid() || !equipment.IsValid()) return;
-            if (!equipment.IsCompatibleWithHero(inspectingHero)) return;
             if (!inspectingHero.TryGetComponent<EquipmentsController>(out var equipmentController))
                 return;
 
             var attributeSystem = inspectingHero.AttributeSystem;
-            bool isPreviewItemFromInventory = _inventoryController.Inventory.Equipments.Contains(equipment);
+            bool isPreviewItemFromInventory = _inventoryController.Contains(equipment);
             var equippingEquipment = equipmentController.GetEquipmentInSlot(equippingSlot);
 
             List<AttributeValue> currentValues = new(attributeSystem.AttributeValues);
@@ -86,11 +85,11 @@ namespace CryptoQuest.UI.Menu
             List<AttributeValue> afterValues = new(attributeSystem.AttributeValues);
 
             equipmentController.Equip(equipment, equippingSlot);
-        
+
             PreviewValue(inspectingHero, currentValues, afterValues);
         }
 
-        private void PreviewValue(HeroBehaviour inspectingHero, 
+        private void PreviewValue(HeroBehaviour inspectingHero,
             List<AttributeValue> currentValues, List<AttributeValue> afterValues)
         {
             var attributeSystem = inspectingHero.AttributeSystem;

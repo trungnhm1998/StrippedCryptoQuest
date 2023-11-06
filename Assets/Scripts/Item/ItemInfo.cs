@@ -9,6 +9,11 @@ namespace CryptoQuest.Item
     {
         [SerializeField] private uint _id;
 
+
+        protected ItemInfo() => _id = 0;
+
+        protected ItemInfo(uint id) => _id = id;
+
         public uint Id
         {
             get => _id;

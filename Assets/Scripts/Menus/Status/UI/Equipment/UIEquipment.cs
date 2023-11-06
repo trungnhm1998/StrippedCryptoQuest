@@ -31,12 +31,12 @@ namespace CryptoQuest.Menus.Status.UI.Equipment
         {
             if (equipment.IsValid() == false) return;
             _equipment = equipment;
-            var def = equipment.Data;
-            _nameText.text = equipment.Def.name;
-            if (!def.DisplayName.IsEmpty) _nameLocalize.StringReference = def.DisplayName;
+            var data = _equipment.Data;
+            _nameText.text = $"{data.ID}-{data.PrefabId}";
+            if (!equipment.DisplayName.IsEmpty) _nameLocalize.StringReference = equipment.DisplayName;
             _nameText.color = _enabledColor;
-            _icon.sprite = def.EquipmentType.Icon;
-            _iconNFT.SetActive(equipment.IsNftItem);
+            _icon.sprite = equipment.EquipmentType.Icon;
+            _iconNFT.SetActive(_equipment.IsNftItem);
         }
 
         public void DisableButton()
@@ -62,16 +62,13 @@ namespace CryptoQuest.Menus.Status.UI.Equipment
             if (_equipment.IsValid() == false) return;
             _tooltip
                 .WithLevel(_equipment.Level)
-                .WithDescription(_equipment.Data.DisplayName)
-                .WithDisplaySprite(_equipment.Data.Image)
-                .WithContentAwareness(_tooltipPosition)
+                .WithDescription(_equipment.DisplayName)
+                // .WithDisplaySprite(_equipment.Image) // TODO: Add image to equipment
+                .WithContentAwareness(_tooltipPosition) 
                 .WithRarity(_equipment.Rarity)
                 .Show();
         }
 
-        public void Reset()
-        {
-            _equipment = new EquipmentInfo();
-        }
+        public void Reset() => _equipment = new EquipmentInfo();
     }
 }

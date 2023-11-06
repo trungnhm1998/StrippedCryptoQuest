@@ -1,8 +1,10 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using CryptoQuest.Battle.Components;
 using CryptoQuest.Gameplay.Inventory;
+using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Type;
 using CryptoQuest.Item.Equipment;
 using CryptoQuest.Menu;
 using CryptoQuest.System;
@@ -18,8 +20,7 @@ namespace CryptoQuest.Menus.Status.UI.Equipment
     /// </summary>
     public class UIEquipmentsInventory : MonoBehaviour
     {
-        [SerializeField] private UIStatusCharacter _characterPanel;
-        [SerializeField] private UICharacterEquipmentsPanel _equipmentsPanel;
+        [SerializeField] private EquipmentPrefabDatabase _prefabDatabase;
         [SerializeField] private ScrollRect _scrollRect;
         [SerializeField] private UIEquipmentItem _equipmentItemPrefab;
         [SerializeField] private UIEquipment _currentlyEquippingItem;
@@ -29,9 +30,10 @@ namespace CryptoQuest.Menus.Status.UI.Equipment
         [SerializeField] private UIEquipmentPreviewer _equipmentPreviewer;
 
         private List<UIEquipmentItem> _equipmentItems = new();
-        private HeroBehaviour InspectingHero => _characterPanel.InspectingHero;
         private EquipmentsController _equipmentsController;
         private ITooltip _tooltip;
+
+        private void Awake() => _tooltip = TooltipFactory.Instance.GetTooltip(ETooltipType.Equipment);
 
         private void OnEnable()
         {
@@ -46,33 +48,40 @@ namespace CryptoQuest.Menus.Status.UI.Equipment
             _unEquipButton.Selected -= PreviewUnselectEquipment;
         }
 
-        private void Awake()
+        public void RenderEquipmentsInInventory(HeroBehaviour hero, EquipmentSlot.EType slotType,
+            EEquipmentCategory categoryType)
         {
-            _tooltip = TooltipFactory.Instance.GetTooltip(ETooltipType.Equipment);
-        }
-
-        public void Show()
-        {
-            Reset();
-            _equipmentsController = InspectingHero.GetComponent<EquipmentsController>();
-            RegistEquippingEvents();
-            _scrollRect.content.anchoredPosition = Vector2.zero;
-            _tooltip.SetSafeArea(_tooltipSafeArea);
             _contents.SetActive(true);
+            _hero = hero;
+            _slotType = slotType;
+            _categoryType = categoryType;
+            _equipmentsController = hero.GetComponent<EquipmentsController>();
+            Reset();
+            RegisterEquippingEvents();
             InstantiateEquipments();
             RenderCurrentlyEquipItem();
-            _unEquipButton.Select();
-            PreviewUnselectEquipment();
+            Invoke(nameof(SelectUnequipButton), 0);
         }
 
-        private void RegistEquippingEvents()
+        private void SelectUnequipButton() => _unEquipButton.Select();
+
+        private void Reset()
+        {
+            _scrollRect.content.anchoredPosition = Vector2.zero;
+            _tooltip.SetSafeArea(_tooltipSafeArea);
+            UnregisterEquippingEvents();
+            foreach (var equipmentItem in _equipmentItems) DestroyEquipmentRow(equipmentItem);
+            _equipmentItems.Clear();
+        }
+
+        private void RegisterEquippingEvents()
         {
             if (_equipmentsController == null) return;
             _equipmentsController.Removed += RemoveCurrentlyEquipping;
             _equipmentsController.Equipped += UpdateInventoryAndEquippingUI;
         }
 
-        private void RemoveRegistEquippingEvents()
+        private void UnregisterEquippingEvents()
         {
             if (_equipmentsController == null) return;
             _equipmentsController.Removed -= RemoveCurrentlyEquipping;
@@ -82,7 +91,7 @@ namespace CryptoQuest.Menus.Status.UI.Equipment
         private void RenderCurrentlyEquipItem()
         {
             var equipmentController = _equipmentsController;
-            var equipment = equipmentController.GetEquipmentInSlot(_equipmentsPanel.EquippingSlot);
+            var equipment = equipmentController.GetEquipmentInSlot(_slotType);
             UpdateCurrentlyEquipping(equipment);
         }
 
@@ -104,19 +113,6 @@ namespace CryptoQuest.Menus.Status.UI.Equipment
             _tooltip.Hide();
             _contents.SetActive(false);
             _equipmentPreviewer.ResetAttributesUI();
-        }
-
-        private void Reset()
-        {
-            RemoveRegistEquippingEvents();
-
-            for (var index = 0; index < _equipmentItems.Count; index++)
-            {
-                var equipmentItem = _equipmentItems[index];
-                DestroyEquipmentRow(equipmentItem);
-            }
-
-            _equipmentItems.Clear();
         }
 
         private void DestroyEquipmentRow(UIEquipmentItem equipmentItem)
@@ -158,14 +154,13 @@ namespace CryptoQuest.Menus.Status.UI.Equipment
         /// Add UI to the inventory scroll view and hide the currently equipping UI if the same
         /// </summary>
         /// <param name="equipment"></param>
-        /// <exception cref="NotImplementedException"></exception>
         private void RemoveCurrentlyEquipping(EquipmentInfo equipment)
         {
             if (equipment.IsValid() && equipment != _currentlyEquippingItem.Equipment) return;
             _currentlyEquippingItem.gameObject.SetActive(false);
             _currentlyEquippingItem.Reset();
-
-            InstantiateNewEquipmentUI(equipment);
+            
+            StartCoroutine(InstantiateNewEquipmentUICo(equipment));
         }
 
         private void InstantiateEquipments()
@@ -173,19 +168,22 @@ namespace CryptoQuest.Menus.Status.UI.Equipment
             _equipmentItems.Clear();
             _equipmentItems = new();
             var inventory = ServiceProvider.GetService<IInventoryController>().Inventory;
-            for (int i = 0; i < inventory.Equipments.Count; i++)
-            {
-                var equipment = inventory.Equipments[i];
-                if (_equipmentsPanel.ModifyingEquipmentCategory == equipment.Data.EquipmentCategory)
-                    InstantiateNewEquipmentUI(equipment);
-            }
 
-            Debug.Log($"InstantiateEquipments {_equipmentItems.Count}");
+            foreach (var equipment in inventory.Equipments) StartCoroutine(InstantiateNewEquipmentUICo(equipment));
+            foreach (var equipment in inventory.NftEquipments) StartCoroutine(InstantiateNewEquipmentUICo(equipment));
         }
 
-        private void InstantiateNewEquipmentUI(EquipmentInfo equipment)
+        private IEnumerator InstantiateNewEquipmentUICo(EquipmentInfo equipment)
         {
-            if (equipment.AllowedSlots.Contains(_equipmentsPanel.EquippingSlot) == false) return;
+            if (equipment.Config == null)
+            {
+                yield return _prefabDatabase.LoadDataById(equipment.Data.PrefabId);
+                var prefab = _prefabDatabase.GetDataById(equipment.Data.PrefabId);
+                equipment.Config = prefab;
+            }
+
+            if (_categoryType != equipment.Config.EquipmentCategory) yield break;
+            if (equipment.Config.AllowedSlots.Contains(_slotType) == false) yield break;
             var equipmentItem = Instantiate(_equipmentItemPrefab, _scrollRect.content);
             equipmentItem.Init(equipment);
 
@@ -193,58 +191,65 @@ namespace CryptoQuest.Menus.Status.UI.Equipment
             equipmentItem.EquipItem += EquipEquipment;
             _equipmentItems.Add(equipmentItem);
 
-            ValidateEquipment(equipment, equipmentItem);
+            _hero.TryGetComponent(out LevelSystem levelSystem);
+            var equipmentAllowedClasses = equipment.Config.EquipmentType.AllowedClasses;
+            if (equipment.Data.RequiredCharacterLevel > levelSystem.Level)
+            {
+                Debug.LogWarning("Character level is not enough");
+                equipmentItem.DeactivateButton();
+                yield break;
+            }
+
+            if (!Array.Exists(equipmentAllowedClasses, allowedClass => allowedClass == _hero.Class))
+            {
+                Debug.LogWarning("Character class is not allowed");
+                equipmentItem.DeactivateButton();
+            }
         }
 
-        private void ValidateEquipment(EquipmentInfo equipment, UIEquipmentItem equipmentItem)
+        private void OnPreviewEquipmentStats(UIEquipmentItem equippingItemUI)
         {
-            if (equipment.IsCompatibleWithHero(InspectingHero)) return;
+            UnregisterEquippingEvents();
 
-            equipmentItem.DeactivateButton();
+            _tooltip.SetSafeArea(_tooltipSafeArea);
+            _equipmentPreviewer.PreviewEquipment(equippingItemUI.Equipment, _slotType, _hero);
+
+            RegisterEquippingEvents();
         }
 
         private UIEquipmentItem _equippingItemToBeRemoveFromInventory;
+        private EquipmentSlot.EType _slotType;
+        private EEquipmentCategory _categoryType;
+        private HeroBehaviour _hero;
 
         private void EquipEquipment(UIEquipmentItem equippingItemUI)
         {
             _equippingItemToBeRemoveFromInventory = equippingItemUI;
-            _equipmentsController.Equip(equippingItemUI.Equipment, _equipmentsPanel.EquippingSlot);
+            _equipmentsController.Equip(equippingItemUI.Equipment, _slotType);
         }
 
         private void PreviewUnselectEquipment()
         {
-            // Since previewer try to equip/unequip I have to remove event so that wont affect UI
-            RemoveRegistEquippingEvents();
-
-            if (!_currentlyEquippingItem.Equipment.IsValid())
+            if (_currentlyEquippingItem.Equipment == null || !_currentlyEquippingItem.Equipment.IsValid())
             {
                 _equipmentPreviewer.ResetAttributesUI();
                 return;
             }
 
-            _tooltip.SetSafeArea(_tooltipSafeArea);
-            _equipmentPreviewer.PreviewUnequipEquipment(_currentlyEquippingItem.Equipment,
-                _equipmentsPanel.EquippingSlot, InspectingHero);
-
-            RegistEquippingEvents();
-        }
-
-        private void OnPreviewEquipmentStats(UIEquipmentItem equippingItemUI)
-        {
-            RemoveRegistEquippingEvents();
+            // Since previewer try to equip/unequip I have to remove event so that wont affect UI
+            UnregisterEquippingEvents();
 
             _tooltip.SetSafeArea(_tooltipSafeArea);
-            _equipmentPreviewer.PreviewEquipment(equippingItemUI.Equipment, _equipmentsPanel.EquippingSlot,
-                InspectingHero);
+            _equipmentPreviewer.PreviewUnequipEquipment(_currentlyEquippingItem.Equipment, _slotType, _hero);
 
-            RegistEquippingEvents();
+            RegisterEquippingEvents();
         }
 
         private void Unequip()
         {
             var equipmentsController = _equipmentsController;
             _equipmentPreviewer.ResetAttributesUI();
-            equipmentsController.Unequip(_equipmentsPanel.EquippingSlot);
+            equipmentsController.Unequip(_slotType);
         }
     }
 }

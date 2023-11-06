@@ -4,7 +4,7 @@ using UnityEngine;
 namespace CryptoQuest.Item.Equipment
 {
     [Serializable]
-    public struct EquipmentSlot
+    public class EquipmentSlot
     {
         public enum EType
         {
@@ -21,9 +21,6 @@ namespace CryptoQuest.Item.Equipment
         [field: SerializeField] public EType Type { get; set; }
         [field: SerializeField] public EquipmentInfo Equipment { get; set; }
 
-        public bool IsValid()
-        {
-            return Equipment.IsValid();
-        }
+        public bool IsValid() => Equipment.IsValid();
     }
 }

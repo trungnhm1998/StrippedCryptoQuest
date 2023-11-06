@@ -2,10 +2,8 @@ using CryptoQuest.Battle.Components;
 using CryptoQuest.Input;
 using CryptoQuest.Menus.Status.States;
 using CryptoQuest.Menus.Status.UI.Equipment;
-using CryptoQuest.UI.Character;
 using CryptoQuest.UI.Menu;
 using FSM;
-using IndiGames.GameplayAbilitySystem.AttributeSystem.Components;
 using UnityEngine;
 
 namespace CryptoQuest.Menus.Status.UI
@@ -18,40 +16,19 @@ namespace CryptoQuest.Menus.Status.UI
     {
         [field: SerializeField, Header("State Context")]
         public UICharacterEquipmentsPanel CharacterEquipmentsPanel { get; private set; }
-        [field: SerializeField] public InputMediatorSO Input { get; private set; }
 
-        [SerializeField] private UIEquipmentsInventory _equipmentsInventoryPanel;
-        public UIEquipmentsInventory EquipmentsInventoryPanel => _equipmentsInventoryPanel;
-        [field: SerializeField] public UIStatusCharacter CharacterPanel { get; private set; }
-        [SerializeField] private AttributeChangeEvent _attributeChangeEvent;
+        [field: SerializeField] public InputMediatorSO Input { get; private set; }
+        [field: SerializeField] public UIEquipmentsInventory EquipmentsInventoryPanel { get; private set; }
+        [field: SerializeField] public UICharacterStatsPanel CharacterStatsPanelPanel { get; private set; }
 
         private StateMachine _stateMachine;
 
-        private void Awake()
-        {
-            _stateMachine = new StatusMenuStateMachine(this);
-        }
+        public HeroBehaviour InspectingHero { get; set; }
 
-        private void OnEnable()
-        {
-            CharacterPanel.InspectingCharacter += InspectCharacter;
-            _stateMachine.Init();
-        }
+        private void Awake() => _stateMachine = new StatusMenuStateMachine(this);
 
-        private void OnDisable()
-        {
-            _stateMachine.OnExit();
-            CharacterPanel.InspectingCharacter -= InspectCharacter;
-        }
+        private void OnEnable() => _stateMachine.Init();
 
-        private void InspectCharacter(HeroBehaviour hero)
-        {
-            if (hero.IsValid() == false) return;
-            _attributeChangeEvent.AttributeSystemReference = hero.GetComponent<AttributeSystemBehaviour>();
-            // TODO: REFACTOR HERO EQUIPMENTS
-            // CharacterEquipmentsPanel.SetEquipmentsUI(_inspectingHero.Equipments);
-        }
-
-        public void RequestStateChange(string state) => _stateMachine.RequestStateChange(state);
+        private void OnDisable() => _stateMachine.OnExit();
     }
 }

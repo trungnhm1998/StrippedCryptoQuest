@@ -14,10 +14,10 @@ namespace CryptoQuest.Menus.Status.UI.Equipment
 
         [SerializeField] private UIEquipment _equipment;
 
-        public void Init(EquipmentInfo equipmentSlotEquipment)
+        public void Init(EquipmentInfo equipment)
         {
-            if (!equipmentSlotEquipment.IsValid()) return;
-            _equipment.Init(equipmentSlotEquipment);
+            if (!equipment.IsValid()) return;
+            _equipment.Init(equipment);
             _equipment.gameObject.SetActive(true);
         }
 
@@ -34,8 +34,8 @@ namespace CryptoQuest.Menus.Status.UI.Equipment
 
         private void UpdateEquipmentUI(EquipmentInfo equipment, List<EquipmentSlot.EType> eTypes)
         {
-            if (eTypes.Contains(SlotType))
-                Init(equipment);
+            // if (eTypes.Contains(SlotType))
+            //     Init(equipment);
         }
     }
 }

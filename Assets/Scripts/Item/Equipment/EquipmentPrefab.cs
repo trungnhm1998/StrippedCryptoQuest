@@ -4,6 +4,8 @@ using UnityEngine;
 namespace CryptoQuest.Item.Equipment
 {
     /// <summary>
+    /// Config/Prefab of the equipment
+    /// 
     /// New equipment with different will create from this
     /// </summary>
     [CreateAssetMenu(fileName = "Equipment Item", menuName = "Crypto Quest/Inventory/Equipment Item")]

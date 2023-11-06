@@ -66,7 +66,7 @@ namespace CryptoQuestEditor
 
         private void AddEquipment()
         {
-            InventorySO.Add(new EquipmentInfo(Target.ID));
+            // InventorySO.Add(new EquipmentInfo(Target.ID));
         }
     }
 }

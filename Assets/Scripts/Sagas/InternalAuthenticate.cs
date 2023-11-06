@@ -66,7 +66,6 @@ namespace CryptoQuest.Sagas
             }
 
             ActionDispatcher.Dispatch(new AuthenticateSucceed());
-            ActionDispatcher.Dispatch(new ShowLoading(false));
         }
     }
 }

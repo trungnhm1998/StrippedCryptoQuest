@@ -2,13 +2,15 @@
 using System.Collections.Generic;
 using System.Net;
 using CryptoQuest.Core;
-using CryptoQuest.Menus.DimensionalBox.Events;
+using CryptoQuest.Events;
+using CryptoQuest.Item.Equipment;
 using CryptoQuest.Menus.DimensionalBox.Objects;
 using CryptoQuest.Networking;
+using CryptoQuest.Networking.API;
 using CryptoQuest.Sagas;
+using CryptoQuest.Sagas.Objects;
 using CryptoQuest.System;
 using CryptoQuest.UI.Actions;
-using CryptoQuest.UI.Core;
 using UniRx;
 using UnityEngine;
 
@@ -20,8 +22,8 @@ namespace CryptoQuest.Menus.DimensionalBox.Sagas
         [SerializeField] private GetEquipmentsEvent _inBoxEvent;
 
         // TODO: Not good practice to save data in saga
-        private readonly List<NftEquipment> _inGameEquipmentsCache = new();
-        private readonly List<NftEquipment> _inBoxEquipmentsCache = new();
+        private readonly List<EquipmentResponse> _inGameEquipmentsCache = new();
+        private readonly List<EquipmentResponse> _inBoxEquipmentsCache = new();
 
         protected override void HandleAction(GetNftEquipments ctx)
         {
@@ -40,7 +42,7 @@ namespace CryptoQuest.Menus.DimensionalBox.Sagas
             var restClient = ServiceProvider.GetService<IRestClient>();
             restClient
                 .WithParams(new Dictionary<string, string>() { { "source", $"{((int)ctx.Status).ToString()}" } })
-                .Get<EquipmentsResponse>(API.EQUIPMENTS)
+                .Get<EquipmentsResponse>(Profile.EQUIPMENTS)
                 // .Get<EquipmentsResponse>(API.EQUIPMENTS + "?source=0") // Listen to different action to get smaller data set for each type
                 .Subscribe(OnGetEquipments, OnError);
         }
@@ -62,33 +64,27 @@ namespace CryptoQuest.Menus.DimensionalBox.Sagas
             ActionDispatcher.Dispatch(new GetNftEquipmentsSucceed());
         }
 
-        private void UpdateInGameCache(Equipments[] equipments)
+        private void UpdateInGameCache(EquipmentResponse[] equipments)
         {
             if (equipments.Length == 0) return;
             _inGameEquipmentsCache.Clear();
             foreach (var equipment in equipments)
             {
-                if (equipment.inGameStatus != (int)EDimensionalBoxStatus.InGame) continue;
-                _inGameEquipmentsCache.Add(new NftEquipment
-                {
-                    Id = equipment.id
-                });
+                if (equipment.inGameStatus != (int)EEquipmentStatus.InGame) continue;
+                _inGameEquipmentsCache.Add(equipment);
             }
 
             _inGameEvent.RaiseEvent(_inGameEquipmentsCache);
         }
 
-        private void UpdateInboxCache(Equipments[] equipments)
+        private void UpdateInboxCache(EquipmentResponse[] equipments)
         {
             if (equipments.Length == 0) return;
             _inBoxEquipmentsCache.Clear();
             foreach (var equipment in equipments)
             {
-                if (equipment.inGameStatus != (int)EDimensionalBoxStatus.InBox) continue;
-                _inBoxEquipmentsCache.Add(new NftEquipment
-                {
-                    Id = equipment.id
-                });
+                if (equipment.inGameStatus != (int)EEquipmentStatus.InBox) continue;
+                _inBoxEquipmentsCache.Add(equipment);
             }
 
             _inBoxEvent.RaiseEvent(_inBoxEquipmentsCache);

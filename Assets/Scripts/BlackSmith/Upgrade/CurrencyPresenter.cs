@@ -1,5 +1,3 @@
-using CryptoQuest.BlackSmith.Interface;
-using CryptoQuest.Gameplay.Inventory;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
 using CryptoQuest.System;
 using UnityEngine;
@@ -35,7 +33,8 @@ namespace CryptoQuest.BlackSmith.Upgrade
         {
             _quantityGold = gold;
             _quantityDiamond = diamond;
-            if (!_wallet.Gold.CanUpdateAmount(-_quantityGold) || !_wallet.Diamond.CanUpdateAmount(-_quantityDiamond)) return;
+            if (!_wallet.Gold.CanUpdateAmount(-_quantityGold) ||
+                !_wallet.Diamond.CanUpdateAmount(-_quantityDiamond)) return;
             OnSendSuccess.Invoke();
         }
 

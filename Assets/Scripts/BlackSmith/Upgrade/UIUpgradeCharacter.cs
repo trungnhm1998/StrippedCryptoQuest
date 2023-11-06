@@ -45,7 +45,7 @@ namespace CryptoQuest.BlackSmith.Upgrade
 
         public void Preview(EquipmentInfo equipmentInfo)
         {
-            _previewer.PreviewEquipment(equipmentInfo, equipmentInfo.AllowedSlots[_previewSlotIndex], _hero);
+            // _previewer.PreviewEquipment(equipmentInfo, equipmentInfo.AllowedSlots[_previewSlotIndex], _hero);
             _equipment = equipmentInfo;
         }
 

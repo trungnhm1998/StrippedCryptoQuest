@@ -171,15 +171,15 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Reward
                     lootInfos.Add(usableLootInfo);
                 }
 
-                if (_equipmentItems.TryGetValue(rewardDef.Id, out var equipment))
-                {
-                    for (int i = 0; i < rewardDef.Amount; i++)
-                    {
-                        EquipmentInfo equipmentInfo = new EquipmentInfo(equipment.ID);
-                        EquipmentLootInfo equipmentLootInfo = new EquipmentLootInfo(equipmentInfo);
-                        lootInfos.Add(equipmentLootInfo);
-                    }
-                }
+                // if (_equipmentItems.TryGetValue(rewardDef.Id, out var equipment))
+                // {
+                //     for (int i = 0; i < rewardDef.Amount; i++)
+                //     {
+                //         EquipmentInfo equipmentInfo = new EquipmentInfo(equipment.ID);
+                //         EquipmentLootInfo equipmentLootInfo = new EquipmentLootInfo(equipmentInfo);
+                //         lootInfos.Add(equipmentLootInfo);
+                //     }
+                // }
             }
 
             return lootInfos;

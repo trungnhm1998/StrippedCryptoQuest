@@ -1,5 +1,6 @@
 ﻿using System;
 using CryptoQuest.Menus.DimensionalBox.Objects;
+using CryptoQuest.Sagas.Objects;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Localization.Components;
@@ -16,12 +17,12 @@ namespace CryptoQuest.Menus.DimensionalBox.UI
         [SerializeField] private GameObject _pendingTag;
         [SerializeField] private GameObject _equippedTag;
         
-        public int Id { get; private set; }
+        public uint Id { get; private set; }
 
-        public void Initialize(NftEquipment equipment)
+        public void Initialize(EquipmentResponse equipment)
         {
-            Id = equipment.Id;
-            _nameText.text = "Item " + equipment.Id;
+            Id = equipment.id;
+            _nameText.text = "Item " + equipment.id;
         }
 
         public void OnPressed()

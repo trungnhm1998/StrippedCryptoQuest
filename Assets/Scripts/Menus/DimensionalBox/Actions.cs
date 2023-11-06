@@ -1,11 +1,11 @@
 ﻿using CryptoQuest.Core;
-using CryptoQuest.Menus.DimensionalBox.Objects;
+using CryptoQuest.Sagas.Objects;
 
 namespace CryptoQuest.Menus.DimensionalBox
 {
     public class GetNftEquipments : ActionBase
     {
-        public EDimensionalBoxStatus Status { get; set; } = EDimensionalBoxStatus.All;
+        public EEquipmentStatus Status { get; set; } = EEquipmentStatus.All;
         public bool ForceRefresh { get; set; } = false;
     }
 

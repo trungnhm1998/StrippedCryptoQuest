@@ -11,14 +11,14 @@ namespace CryptoQuest.BlackSmith.Upgrade
         public List<IUpgradeEquipment> ListEquipment => _upgradeData;
         public void CoGetData(InventorySO inventory)
         {
-            _upgradeData = new();
-            var listEquipment = inventory.Equipments;
-            foreach (var equipment in listEquipment)
-            {
-                IUpgradeEquipment equipmentData = new MockUpgradeEquipment(equipment);
-                if (equipment.Level < equipment.Def.MaxLevel)
-                    _upgradeData.Add(equipmentData);
-            }
+            // _upgradeData = new();
+            // var listEquipment = inventory.Equipments;
+            // foreach (var equipment in listEquipment)
+            // {
+            //     IUpgradeEquipment equipmentData = new MockUpgradeEquipment(equipment);
+            //     if (equipment.Level < equipment.Data.MaxLevel)
+            //         _upgradeData.Add(equipmentData);
+            // }
         }
     }
 }

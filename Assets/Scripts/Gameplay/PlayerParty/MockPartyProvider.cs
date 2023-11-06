@@ -1,12 +1,13 @@
 ﻿using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace CryptoQuest.Gameplay.PlayerParty
 {
     public class MockPartyProvider : MonoBehaviour, IPartyProvider
     {
-        [SerializeField] private MockParty _mockParty;
+        [FormerlySerializedAs("_mockParty")] [SerializeField] private PartySO _partySO;
 
-        public PartySlotSpec[] GetParty() => _mockParty.GetParty();
-        public void SetParty(PartySlotSpec[] newSpecs) => _mockParty.SetParty(newSpecs);
+        public PartySlotSpec[] GetParty() => _partySO.GetParty();
+        public void SetParty(PartySlotSpec[] newSpecs) => _partySO.SetParty(newSpecs);
     }
 }

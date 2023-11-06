@@ -34,7 +34,7 @@ namespace CryptoQuest.BlackSmith.Upgrade
         public void SetValue(int level, IUpgradeEquipment item)
         {
             _currentLevel += level;
-            if (_currentLevel > item.Level && _currentLevel <= item.Equipment.Def.MaxLevel)
+            if (_currentLevel > item.Level && _currentLevel <= item.Equipment.Data.MaxLevel)
                 _selectLevelToUpgrade = _currentLevel;
 
             else
@@ -78,7 +78,7 @@ namespace CryptoQuest.BlackSmith.Upgrade
 
         public void SetLevel(IUpgradeEquipment item, UIEquipmentDetails details)
         {
-            item.Equipment.SetLevel(_currentLevel);
+            item.Equipment.Level = _currentLevel;
             details.RenderData(item.Equipment);
             ChangeLocation(_resultPanel);
         }
