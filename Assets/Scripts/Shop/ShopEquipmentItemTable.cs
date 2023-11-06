@@ -13,17 +13,18 @@ namespace CryptoQuest.Shop
     {
         public override IEnumerator LoadItem(Action<IShopItem> callback)
         {
-            var consumableProvider = ServiceProvider.GetService<IEquipmentDefProvider>();
-            for (int i = 0; i < Items.Count; i++)
-            {
-                var equip = new EquipmentInfo(Items[i]);
-
-                yield return consumableProvider.Load(equip);
-
-                IShopItem shopItemData = new EquipmentItem(equip);
-
-                callback.Invoke(shopItemData);
-            }
+            // var consumableProvider = ServiceProvider.GetService<IEquipmentDefProvider>();
+            // for (int i = 0; i < Items.Count; i++)
+            // {
+            //     var equip = new EquipmentInfo(Items[i]);
+            //
+            //     yield return consumableProvider.Load(equip);
+            //
+            //     IShopItem shopItemData = new EquipmentItem(equip);
+            //
+            //     callback.Invoke(shopItemData);
+            // }
+            yield break;
         }
     }
 }

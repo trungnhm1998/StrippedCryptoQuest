@@ -1,36 +1,23 @@
 ﻿using System;
 using CryptoQuest.Item.Equipment;
-using CryptoQuest.Menu;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace CryptoQuest.Menus.Status.UI.Equipment
 {
     // wrapper for UIEquipment
-    public class UIEquipmentItem : MonoBehaviour
+    public class UIEquipmentItem : MonoBehaviour, ISelectHandler
     {
         public event Action<UIEquipmentItem> Inspecting;
         public event Action<UIEquipmentItem> EquipItem;
-
         [SerializeField] private UIEquipment _equipmentUI;
-
-        [SerializeField] private MultiInputButton _button;
         public EquipmentInfo Equipment => _equipmentUI.Equipment;
         private bool _canClick;
 
-        private void OnEnable()
+        public void OnSelect(BaseEventData eventData)
         {
-            _button.Selected += OnSelected;
-        }
-
-        private void OnDisable()
-        {
-            _button.Selected -= OnSelected;
-        }
-
-        private void OnSelected()
-        {
-            if (_equipmentUI.Equipment.IsValid())
-                Inspecting?.Invoke(this);
+            if (!_equipmentUI.Equipment.IsValid() || !_canClick) return;
+            Inspecting?.Invoke(this);
         }
 
         public void Init(EquipmentInfo equipment)

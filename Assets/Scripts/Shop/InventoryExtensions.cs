@@ -12,14 +12,14 @@ public static class InventoryExtensions
     {
         var weaponList = new List<EquipmentInfo>();
 
-        foreach (var item in inventory.Equipments)
-        {
-            if (item.Data.EquipmentCategory == EEquipmentCategory.Weapon
-                && !item.IsNftItem)
-            {
-                weaponList.Add(item);
-            }
-        }
+        // foreach (var item in inventory.Equipments)
+        // {
+        //     if (item.Config.EquipmentCategory == EEquipmentCategory.Weapon
+        //         && !item.IsNftItem)
+        //     {
+        //         weaponList.Add(item);
+        //     }
+        // }
 
         return weaponList;
     }
@@ -28,14 +28,14 @@ public static class InventoryExtensions
     {
         var nonWeaponList = new List<EquipmentInfo>();
 
-        foreach (var item in inventory.Equipments)
-        {
-            if (item.Data.EquipmentCategory != EEquipmentCategory.Weapon
-                && !item.IsNftItem)
-            {
-                nonWeaponList.Add(item);
-            }
-        }
+        // foreach (var item in inventory.Equipments)
+        // {
+        //     if (item.Config.EquipmentCategory != EEquipmentCategory.Weapon
+        //         && !item.IsNftItem)
+        //     {
+        //         nonWeaponList.Add(item);
+        //     }
+        // }
 
         return nonWeaponList;
     }

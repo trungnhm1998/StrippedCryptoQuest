@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using CryptoQuest.Core;
 using CryptoQuest.Events;
-using CryptoQuest.Menus.DimensionalBox.Events;
 using CryptoQuest.Menus.DimensionalBox.Objects;
 using CryptoQuest.Menus.DimensionalBox.States;
+using CryptoQuest.Sagas.Objects;
 using TinyMessenger;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -45,8 +45,8 @@ namespace CryptoQuest.Menus.DimensionalBox.UI
             _getEquipmentsEvent.EventRaised -= Initialize;
         }
 
-        private List<NftEquipment> _equipments;
-        private void Initialize(List<NftEquipment> equipments)
+        private List<EquipmentResponse> _equipments;
+        private void Initialize(List<EquipmentResponse> equipments)
         {
             _equipments = equipments;
             ClearOldEquipments();
@@ -63,7 +63,7 @@ namespace CryptoQuest.Menus.DimensionalBox.UI
 
         public void Transfer(UIEquipment uiEquipment)
         {
-            if (_equipments.Find(item => item.Id == uiEquipment.Id) == null)
+            if (_equipments.Find(item => item.id == uiEquipment.Id) == null)
             {
                 _equipmentsToTransfer.Add(uiEquipment);
                 uiEquipment.EnablePendingTag(true);

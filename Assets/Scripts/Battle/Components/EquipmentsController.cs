@@ -13,13 +13,10 @@ using UnityEngine;
 using ESlotType =
     CryptoQuest.Item.Equipment.EquipmentSlot.EType;
 using ECategory = CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Type.EEquipmentCategory;
-using CryptoQuest.Gameplay.PlayerParty;
-using CryptoQuest.Core;
-using CryptoQuest.System.SaveSystem.Actions;
 
 namespace CryptoQuest.Battle.Components
 {
-    internal interface IEquipmentsProvider
+    public interface IEquipmentsProvider
     {
         Equipments GetEquipments();
     }
@@ -28,6 +25,9 @@ namespace CryptoQuest.Battle.Components
     {
         public event Action<EquipmentInfo> Equipped;
         public event Action<EquipmentInfo> Removed;
+
+        [SerializeField] private EquipmentPrefabDatabase _equipmentPrefabDatabase;
+
         private IEquipmentsProvider _equipmentsProvider;
         private HeroBehaviour _hero;
         private Equipments _equipments;
@@ -35,94 +35,60 @@ namespace CryptoQuest.Battle.Components
 
         public List<EquipmentSlot> Slots => _equipments.Slots;
 
-        private IInventoryController _inventoryController;
+        /// <summary>
+        /// Create an effect based on effect stats
+        /// </summary>
+        private readonly Dictionary<EquipmentInfo, ActiveGameplayEffect> _equipmentsEffect = new();
 
-        protected override void Awake()
-        {
-            base.Awake();
-            _equipmentsProvider = GetComponent<IEquipmentsProvider>();
-            _hero = GetComponent<HeroBehaviour>();
-        }
+        private IInventoryController _inventoryController;
 
         public override void Init()
         {
+            _equipmentsProvider = Character.GetComponent<IEquipmentsProvider>();
+            _hero = Character.GetComponent<HeroBehaviour>();
             _equipments = _equipmentsProvider.GetEquipments();
             _inventoryController ??= ServiceProvider.GetService<IInventoryController>();
 
-            StartCoroutine(InitEquipments());
+            foreach (var cache in _equipmentsEffect)
+            {
+                cache.Value.IsActive = false;
+                Character.RemoveEffect(cache.Value.Spec);
+            }
+
+            Character.AbilitySystem.AttributeSystem.UpdateAttributeValues();
+            _equipmentsEffect.Clear();
+
+
+            ApplyEffectFromEquippingItems();
         }
 
         /// <summary>
         /// Find all <see cref="EquipmentInfo"/> in <see cref="Equipments"/> then create and apply effect to character
         /// </summary>
-        private IEnumerator InitEquipments()
+        private void ApplyEffectFromEquippingItems()
         {
-            var equipmentDefProvider = ServiceProvider.GetService<IEquipmentDefProvider>();
-            foreach (var equipmentSlot in _equipments.Slots.ToList())
-            {
-                if (equipmentSlot.IsValid())
-                    yield return equipmentDefProvider.Load(equipmentSlot.Equipment);
-            }
-
             var equipmentSlots = new List<EquipmentSlot>(_equipments.Slots);
-            for (var index = 0; index < equipmentSlots.Count; index++)
+            foreach (var slot in equipmentSlots)
             {
-                var slot = equipmentSlots[index];
                 if (slot.IsValid() == false) continue;
-                ApplyEquipmentEffectToCharacter(slot.Equipment);
+                StartCoroutine(LoadAndApplyEffect(slot.Equipment));
             }
+        }
+
+        private IEnumerator LoadAndApplyEffect(EquipmentInfo equipment)
+        {
+            yield return _equipmentPrefabDatabase.LoadDataById(equipment.Data.PrefabId);
+            equipment.Config = _equipmentPrefabDatabase.GetDataById(equipment.Data.PrefabId);
+            CreateEffectFromEquipmentStatsAndApplyToHero(equipment);
         }
 
         private void RemoveEquipmentEffectFromCharacter(EquipmentInfo equipment)
         {
-            if (equipment.activeGameplayEffect == null) return;
-            Character.RemoveEffect(equipment.activeGameplayEffect.Spec); // TODO: REFACTOR
+            if (_equipmentsEffect.TryGetValue(equipment, out var activeEffect) == false) return;
+            _equipmentsEffect.Remove(equipment);
+            activeEffect.IsActive = false;
+            Character.RemoveEffect(activeEffect.Spec);
             Character.AbilitySystem.AttributeSystem.UpdateAttributeValues();
-        }
-
-        private void CreateAndSetEffectDefToEquipment(EquipmentInfo equipment)
-        {
-            var equipmentEffectDef = CreateEffectDefFormEquipment(equipment);
-            equipment.EffectDef = equipmentEffectDef;
-        }
-
-        private GameplayEffectDefinition CreateEffectDefFormEquipment(EquipmentInfo equipment)
-        {
-            var attributes = equipment.Stats;
-            var equipmentEffectDef = ScriptableObject.CreateInstance<GameplayEffectDefinition>();
-            equipmentEffectDef.Policy = new InfinitePolicy();
-
-            var modifiers = new EffectAttributeModifier[attributes.Length];
-            for (int i = 0; i < attributes.Length; i++)
-            {
-                var attribute = attributes[i];
-                var attributeValue = (equipment.Level - 1) * equipment.ValuePerLvl;
-
-                modifiers[i] = new EffectAttributeModifier
-                {
-                    Attribute = attribute.Attribute,
-                    OperationType = EAttributeModifierOperationType.Add,
-                    Value = attribute.Value + attributeValue
-                };
-            }
-
-            equipmentEffectDef.EffectDetails = new EffectDetails()
-            {
-                Modifiers = modifiers
-            };
-            return equipmentEffectDef;
-        }
-
-        /// <summary>
-        /// Create a <see cref="GameplayEffectSpec"/> using the character
-        /// </summary>
-        /// <param name="equipment"></param>
-        /// <returns>A gameplay spec that can be use to apply into the system</returns>
-        private GameplayEffectSpec CreateEffectSpecFromEquipment(EquipmentInfo equipment)
-        {
-            return equipment.IsValid() == false
-                ? new GameplayEffectSpec()
-                : Character.AbilitySystem.MakeOutgoingSpec(equipment.EffectDef);
         }
 
         public EquipmentInfo GetEquipmentInSlot(ESlotType slotType)
@@ -145,21 +111,20 @@ namespace CryptoQuest.Battle.Components
 
         /// <summary>
         /// <para>First check if this equipment allow to equip in this slot</para>
-        /// 
         /// <para>Then find all required slots for this equipment
         /// remove all equipment that in the required slots and put in back to inventory
         /// equip the equipment
         /// the required slots will now occupied by the same equipment (check GUID)
         /// apply the effect</para>
         /// </summary>
-        public void Equip(EquipmentInfo equipmentInfo, ESlotType equippingSlot)
+        public void Equip(EquipmentInfo equipment, ESlotType equippingSlot)
         {
-            if (equipmentInfo.IsValid() == false) return;
-            var allowedSlots = equipmentInfo.AllowedSlots;
+            if (equipment.IsValid() == false) return;
+            var allowedSlots = equipment.AllowedSlots;
             if (allowedSlots.Contains(equippingSlot) == false) return;
-            var requiredSlots = equipmentInfo.RequiredSlots;
+            var requiredSlots = equipment.RequiredSlots;
             Unequip(GetEquipmentInSlot(equippingSlot));
-            OnEquipmentAdded(equipmentInfo, equippingSlot, requiredSlots);
+            OnEquipmentAdded(equipment, equippingSlot, requiredSlots);
         }
 
         private void OnEquipmentAdded(EquipmentInfo equipment, ESlotType equippingSlot, ESlotType[] requiredSlots)
@@ -170,26 +135,58 @@ namespace CryptoQuest.Battle.Components
                     SetEquipmentInSlot(equipment, slot);
 
             _inventoryController.Remove(equipment);
-            equipment.SetEquippedHeroUnitId(_hero.Spec.Id);
-            ApplyEquipmentEffectToCharacter(equipment);
-            var partyController = (PartyManager) ServiceProvider.GetService<IPartyController>();
-            if(partyController != null)
-            {
-                ActionDispatcher.Dispatch(new SavePartyAction(partyController));
-            }
+            CreateEffectFromEquipmentStatsAndApplyToHero(equipment);
+            Equipped?.Invoke(equipment);
         }
 
-        private void ApplyEquipmentEffectToCharacter(EquipmentInfo equipment)
+
+        private void CreateEffectFromEquipmentStatsAndApplyToHero(EquipmentInfo equipment)
         {
             // TODO: Should I allow equip dead character?
-            if (_hero.IsValid() == false || equipment.IsValid() == false)
-                return;
+            if (_hero.IsValid() == false || equipment.IsValid() == false) return;
 
-            // Code smell here
-            CreateAndSetEffectDefToEquipment(equipment);
             var activeEffectSpec = Character.ApplyEffect(CreateEffectSpecFromEquipment(equipment));
-            equipment.SetActiveEffectSpec(activeEffectSpec);
-            Equipped?.Invoke(equipment);
+            _equipmentsEffect.Add(equipment, activeEffectSpec);
+        }
+
+        /// <summary>
+        /// Create a <see cref="GameplayEffectSpec"/> using the character
+        /// </summary>
+        /// <param name="equipment"></param>
+        /// <returns>A gameplay spec that can be use to apply into the system</returns>
+        private GameplayEffectSpec CreateEffectSpecFromEquipment(EquipmentInfo equipment) =>
+            Character.AbilitySystem.MakeOutgoingSpec(CreateEffectDefFormEquipment(equipment));
+
+        /// <summary>
+        /// Create an infinite effect from the stats, this effect will only expire when the equipment is removed
+        /// </summary>
+        /// <param name="equipment">The equipment to create effect from</param>
+        /// <returns><see cref="GameplayEffectDefinition"/> with <see cref="InfinitePolicy"/> created using Equipment <see cref="Equipment.Stats"/></returns>
+        private GameplayEffectDefinition CreateEffectDefFormEquipment(EquipmentInfo equipment)
+        {
+            var attributes = equipment.Stats;
+            var equipmentEffectDef = ScriptableObject.CreateInstance<GameplayEffectDefinition>();
+            equipmentEffectDef.Policy = new InfinitePolicy();
+
+            var modifiers = new EffectAttributeModifier[attributes.Length];
+            for (var i = 0; i < attributes.Length; i++)
+            {
+                var attribute = attributes[i];
+                var attributeValue = (equipment.Level - 1) * equipment.ValuePerLvl;
+
+                modifiers[i] = new EffectAttributeModifier
+                {
+                    Attribute = attribute.Attribute,
+                    OperationType = EAttributeModifierOperationType.Add,
+                    Value = attribute.Value + attributeValue
+                };
+            }
+
+            equipmentEffectDef.EffectDetails = new EffectDetails()
+            {
+                Modifiers = modifiers
+            };
+            return equipmentEffectDef;
         }
 
         public void Unequip(ESlotType slotToUnequip)
@@ -197,19 +194,6 @@ namespace CryptoQuest.Battle.Components
             var equipment = GetEquipmentInSlot(slotToUnequip);
             Unequip(equipment);
         }
-
-        public void UnequipAll()
-        {
-            for (var index = 0; index < _equipments.Slots.Count; index++)
-            {
-                var slot = _equipments.Slots[index];
-                if (slot.IsValid())
-                {
-                    OnEquipmentRemoved(slot.Equipment);
-                    SetEquipmentInSlot(new EquipmentInfo(), slot.Type);
-                }
-            }
-        }    
 
         /// <summary>
         /// Unequip the equipment in all required slots, and raise an event,
@@ -237,13 +221,7 @@ namespace CryptoQuest.Battle.Components
         {
             RemoveEquipmentEffectFromCharacter(equipment);
             _inventoryController.Add(equipment);
-            equipment.ResetEquippedHeroUnitId();
             Removed?.Invoke(equipment);
-            var partyController = (PartyManager)ServiceProvider.GetService<IPartyController>();
-            if (partyController != null)
-            {
-                ActionDispatcher.Dispatch(new SavePartyAction(partyController));
-            }
         }
 
         private void SetEquipmentInSlot(EquipmentInfo equipment, ESlotType slotType)

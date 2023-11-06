@@ -13,7 +13,7 @@ namespace CryptoQuest.Gameplay.Loot
         public override void AddItemToInventory(InventorySO inventory) => inventory.Add(Item);
 
         public override UI.Dialogs.RewardDialog.Reward CreateRewardUI()
-            => new GenericLocalizedReward(Item.Data.DisplayName);
+            => new GenericLocalizedReward(Item.DisplayName);
 
         public override LootInfo Clone() => new EquipmentLootInfo(Item.Clone());
 

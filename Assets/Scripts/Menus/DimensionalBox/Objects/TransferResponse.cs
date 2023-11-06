@@ -1,4 +1,5 @@
 ﻿using System;
+using CryptoQuest.Sagas.Objects;
 
 namespace CryptoQuest.Menus.DimensionalBox.Objects
 {

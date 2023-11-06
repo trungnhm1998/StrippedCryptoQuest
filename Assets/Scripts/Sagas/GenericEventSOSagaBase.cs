@@ -6,13 +6,13 @@ namespace CryptoQuest.Sagas
     public abstract class GenericEventSOSagaBase<TContext> : MonoBehaviour
     {
         [SerializeField] private GenericEventChannelSO<TContext> _action;
-        
-        private void OnEnable()
+
+        protected virtual void OnEnable()
         {
             _action.EventRaised += HandleAction;
         }
-        
-        private void OnDisable()
+
+        protected virtual void OnDisable()
         {
             _action.EventRaised -= HandleAction;
         }

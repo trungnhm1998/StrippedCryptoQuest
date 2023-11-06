@@ -1,4 +1,3 @@
-using System.Collections;
 using CryptoQuest.Core;
 using CryptoQuest.Events;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
@@ -22,6 +21,7 @@ namespace CryptoQuest.Gameplay.Inventory
         bool Add(ConsumableInfo consumable);
 
         bool Remove(ConsumableInfo consumable);
+        bool Contains(EquipmentInfo equipment);
     }
 
     public class InventoryController : MonoBehaviour, IInventoryController
@@ -32,14 +32,9 @@ namespace CryptoQuest.Gameplay.Inventory
         [Header("Listening to")]
         [SerializeField] private LootEventChannelSO _addLootRequestEventChannel;
 
-        private IEquipmentDefProvider _definitionDatabase;
-
-        private TinyMessenger.TinyMessageSubscriptionToken _listenToLoadCompletedEventToken;
-
         private void Awake()
         {
             ServiceProvider.Provide<IInventoryController>(this);
-            _definitionDatabase = GetComponent<IEquipmentDefProvider>();
         }
 
         protected void OnEnable()
@@ -50,29 +45,6 @@ namespace CryptoQuest.Gameplay.Inventory
         protected void OnDisable()
         {
             _addLootRequestEventChannel.EventRaised -= AddLoot;
-        }
-
-        private void Start()
-        {
-            _listenToLoadCompletedEventToken = ActionDispatcher.Bind<LoadInventoryCompletedAction>(_ => LoadInventory());            
-            ActionDispatcher.Dispatch(new LoadInventoryAction(this));
-        }
-
-        private void LoadInventory()
-        {
-            ActionDispatcher.Unbind(_listenToLoadCompletedEventToken);
-            StartCoroutine(LoadAllEquipment());
-        }
-
-        private IEnumerator LoadAllEquipment()
-        {
-            for (var index = 0; index < _inventory.Equipments.Count; index++)
-            {
-                var equipment = _inventory.Equipments[index];
-                yield return _definitionDatabase.Load(equipment);
-                _inventory.Equipments[index] = equipment;
-            }
-            _inventory.OnLoaded();
         }
 
         private void AddLoot(LootInfo loot)
@@ -108,5 +80,8 @@ namespace CryptoQuest.Gameplay.Inventory
             ActionDispatcher.Dispatch(new SaveInventoryAction(this));
             return result;
         }
+
+        public bool Contains(EquipmentInfo equipment) => _inventory.Equipments.Contains(equipment) ||
+                                                         _inventory.NftEquipments.Contains(equipment);
     }
 }

@@ -15,14 +15,14 @@ namespace CryptoQuest.Battle.Components
             base.Awake();
             _equipmentsController = GetComponent<EquipmentsController>();
 
-            _equipmentsController.Equipped += GrantPassive;
-            _equipmentsController.Removed += RemovePassive;
+            // _equipmentsController.Equipped += GrantPassive;
+            // _equipmentsController.Removed += RemovePassive;
         }
 
         private void OnDestroy()
         {
-            _equipmentsController.Equipped -= GrantPassive;
-            _equipmentsController.Removed -= RemovePassive;
+            // _equipmentsController.Equipped -= GrantPassive;
+            // _equipmentsController.Removed -= RemovePassive;
         }
 
         public override void Init() { }

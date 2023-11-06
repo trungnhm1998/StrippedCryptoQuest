@@ -63,7 +63,8 @@ namespace CryptoQuest.Shop.UI.Panels.PreviewCharacter
 
         public void Preview(EquipmentInfo equipmentInfo)
         {
-            _previewer.PreviewEquipment(equipmentInfo, equipmentInfo.AllowedSlots[_previewSlotIndex], _hero);
+            // TODO: REFACTOR
+            // _previewer.PreviewEquipment(equipmentInfo, equipmentInfo.AllowedSlots[_previewSlotIndex], _hero);
             _equipment = equipmentInfo;
         }    
     }

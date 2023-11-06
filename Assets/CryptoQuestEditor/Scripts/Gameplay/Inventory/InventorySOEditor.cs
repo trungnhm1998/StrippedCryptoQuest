@@ -109,15 +109,15 @@ namespace CryptoQuestEditor
 
         private void AddAllEquipment()
         {
-            var allEquipment = ToolsHelper.GetAssets<EquipmentDef>();
-
-            foreach (var equipment in allEquipment)
-            {
-                Target.Editor_Add(new EquipmentInfo(equipment.ID));
-            }
-
-            EditorUtility.SetDirty(Target);
-            AssetDatabase.SaveAssets();
+            // var allEquipment = ToolsHelper.GetAssets<EquipmentDef>();
+            //
+            // foreach (var equipment in allEquipment)
+            // {
+            //     Target.Editor_Add(new EquipmentInfo(equipment.ID));
+            // }
+            //
+            // EditorUtility.SetDirty(Target);
+            // AssetDatabase.SaveAssets();
         }
 
         private void AddAllUsableItem()
@@ -163,16 +163,16 @@ namespace CryptoQuestEditor
             Dictionary<string, EquipmentDef> lookupTable =
                 equipments.ToDictionary(equipment => equipment.ID, value => value);
 
-            for (int index = ROW_OFFSET; index < rows.Length; index++)
-            {
-                string[] cols = rows[index].Split('\t');
-                string id = cols[ROW_FOREIGN_KEY];
-                if (!lookupTable.TryGetValue(id, out var equipment)) continue;
-
-                var instance = new EquipmentInfo(equipment.ID);
-                FillEquipmentData(cols, instance, headerFields);
-                Target.Editor_Add(instance);
-            }
+            // for (int index = ROW_OFFSET; index < rows.Length; index++)
+            // {
+            //     string[] cols = rows[index].Split('\t');
+            //     string id = cols[ROW_FOREIGN_KEY];
+            //     if (!lookupTable.TryGetValue(id, out var equipment)) continue;
+            //
+            //     var instance = new EquipmentInfo(equipment.ID);
+            //     FillEquipmentData(cols, instance, headerFields);
+            //     Target.Editor_Add(instance);
+            // }
         }
 
         private void FillEquipmentData(string[] cols, EquipmentInfo instance, string[] headerFields)

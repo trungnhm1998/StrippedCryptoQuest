@@ -8,8 +8,7 @@ namespace CryptoQuest.Menus.Status.States
     /// </summary>
     public class StatusMenuStateMachine : StateMachine
     {
-        public static readonly string Status = "Status"; // Ghost state, not used.
-        public static readonly string Equipment = "Equipment";
+        public static readonly string Overview = "Overview";
         public static readonly string EquipmentSelection = "EquipmentSelection";
 
         /// <summary>
@@ -20,11 +19,10 @@ namespace CryptoQuest.Menus.Status.States
         {
             // Could create a factory here if new keyword becomes a problem.
             // And problems I means GC problems.
-            AddState(Status, new FocusStatusState(panel));
-            AddState(Equipment, new InspectPartyMemberState(panel));
-            AddState(EquipmentSelection, new ChangeEquipmentState(panel));
+            AddState(Overview, new OverviewHeroStatus(panel));
+            AddState(EquipmentSelection, new EquipmentSelection(panel));
 
-            SetStartState(Equipment);
+            SetStartState(Overview);
         }
     }
 }

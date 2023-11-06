@@ -11,8 +11,8 @@ namespace CryptoQuest.Shop.UI.Item
     public class EquipmentItem : IShopItem
     {
         public ItemInfo Item => _equipment;
-        public AssetReferenceT<Sprite> Icon => _equipment.Data.Image;
-        public LocalizedString DisplayName => _equipment.Data.DisplayName;
+        public AssetReferenceT<Sprite> Icon => new(""); // TODO: Refactor
+        public LocalizedString DisplayName => new(); // TODO: Refactor
         public int Price => _equipment.Price;
         public int SellPrice => _equipment.SellPrice;
         public bool HasGem => true;

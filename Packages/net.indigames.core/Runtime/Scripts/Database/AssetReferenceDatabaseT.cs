@@ -31,13 +31,15 @@ namespace IndiGames.Core.Database
         }
 
         public event Action<TSerializableObject> DataLoaded;
+
         [field: SerializeField]
 #if UNITY_EDITOR
-        protected 
-        #else
+        protected
+#else
         private
 #endif
-        Map[] _maps;
+            Map[] _maps;
+
         public Map[] Maps => _maps;
 
         [NonSerialized] private Dictionary<TKey, AssetReferenceT<TSerializableObject>> _map = new();
@@ -125,12 +127,12 @@ namespace IndiGames.Core.Database
                 return data.Result;
 
             Debug.LogWarning($"Database::GetDataById() - Cannot find/load data with id {id}");
-            return default(TSerializableObject);
+            return default;
         }
 
         public bool TryGetDataById(TKey id, out TSerializableObject asset)
         {
-            asset = default(TSerializableObject);
+            asset = default;
             if (_loadedData.TryGetValue(id, out var data))
             {
                 asset = data.Result;

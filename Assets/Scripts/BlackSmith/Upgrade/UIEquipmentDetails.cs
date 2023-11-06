@@ -23,13 +23,13 @@ namespace CryptoQuest.BlackSmith.Upgrade
 
         public void RenderData(EquipmentInfo equipment)
         {
-            _icon.sprite = equipment.Data.EquipmentType.Icon;
-            _displayName.StringReference = equipment.Data.DisplayName;
+            // _icon.sprite = equipment.Config.EquipmentType.Icon;
+            // _displayName.StringReference = equipment.Config.DisplayName;
             _rarity.sprite = equipment.Rarity.Icon;
             _level.text = equipment.Level.ToString();
-            LoadStar(equipment.Def.Stars);
+            LoadStar(equipment.Data.Stars);
             SetAttributes(equipment);
-            StartCoroutine(equipment.Data.Image.LoadSpriteAndSet(_illustration));
+            // StartCoroutine(equipment.Config.Image.LoadSpriteAndSet(_illustration));
         }
 
         private void SetAttributes(EquipmentInfo equipment)
