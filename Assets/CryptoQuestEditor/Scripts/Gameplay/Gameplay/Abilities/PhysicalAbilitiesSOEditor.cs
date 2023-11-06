@@ -3,7 +3,6 @@ using System.IO;
 using CryptoQuest.AbilitySystem;
 using CryptoQuest.AbilitySystem.Abilities;
 using CryptoQuest.AbilitySystem.Attributes;
-using CryptoQuest.Battle.Components;
 using CryptoQuest.Gameplay.Battle.Core;
 using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data;
 using CryptoQuest.Gameplay.Encounter;
@@ -59,7 +58,7 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Abilities
         public PhysicalAbilitiesSOEditor()
         {
             CreateDataFolder = false;
-            DefaultStoragePath = "Assets/ScriptableObjects/AbilitySystem/Abilities/ImportedAbilities/PhysicalAbilities";
+            DefaultStoragePath = "Assets/ScriptableObjects/Character/Skills/Castables/Physical";
         }
 
         public override void ImportBatchData(string directory, Action<ScriptableObject> callback)
