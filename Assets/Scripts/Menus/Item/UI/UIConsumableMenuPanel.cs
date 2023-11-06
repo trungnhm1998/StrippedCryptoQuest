@@ -6,8 +6,8 @@ using CryptoQuest.Input;
 using CryptoQuest.Item;
 using CryptoQuest.Menus.Item.States;
 using CryptoQuest.UI.Menu;
-using CryptoQuest.UI.Menu.Panels;
-using FSM;
+using CryptoQuest.UI.Menu.Character;
+using IndiGames.Core.Events.ScriptableObjects;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Localization.Components;
@@ -19,24 +19,28 @@ namespace CryptoQuest.Menus.Item.UI
     /// The context that hopefully holds all the UI information for the Item Menu. This is a mono behaviour class that
     /// can controls all the UI element or at least delegate back the reference to the correct state when needed.
     /// </summary>
-    public class UIConsumableMenuPanel : UIMenuPanel
+    public class UIConsumableMenuPanel : UIMenuPanelBase
     {
-        [field: Header("State Context"), SerializeField]
+        [field: SerializeField]
         public InputMediatorSO Input { get; private set; }
 
-        public ItemMenuStateMachine StateMachine { get; set; }
-        public event Action ItemConsumed;
+        [field: SerializeField] public UICharacterPartySlot[] HeroButtons { get; private set; }
+        [field: SerializeField] public VoidEventChannelSO SingleAlliedTarget { get; private set; }
+        [field: SerializeField] public VoidEventChannelSO AllAlliesTarget { get; private set; }
+        [field: Header("State Context")] public event Action ItemConsumed;
+
         [SerializeField] private ConsumableEventChannel _itemConsumedEvent;
         [SerializeField] private UIInventoryTabHeader _inventoryTabHeader;
         [SerializeField] private UIConsumables[] _itemLists;
         [SerializeField] private LocalizeStringEvent _localizeDescription;
+        [SerializeField] private UIConsumables _currentConsumables;
 
+        private ItemMenuStateMachine _itemMenuStateMachine;
         private readonly Dictionary<EConsumableType, int> _itemListCache = new();
-        private UIConsumables _currentConsumables;
         private Text _description;
 
-        private bool _previouslyHidden = true;
-        private bool _interactable = false;
+        private bool _interactable;
+        private int _currentTabIndex;
 
         public bool Interactable
         {
@@ -68,11 +72,10 @@ namespace CryptoQuest.Menus.Item.UI
             }
         }
 
-        private int _currentTabIndex;
 
         private void Awake()
         {
-            StateMachine ??= new ItemMenuStateMachine(this);
+            _itemMenuStateMachine ??= new ItemMenuStateMachine(this);
 
             _itemConsumedEvent.EventRaised += OnItemConsumed;
             _description = _localizeDescription.GetComponent<Text>();
@@ -86,33 +89,16 @@ namespace CryptoQuest.Menus.Item.UI
             UIConsumableItem.Inspecting += InspectingItem;
         }
 
-        /// <summary>
-        /// Return the specific state machine for this panel.
-        /// </summary>
-        /// <param name="menuManager"></param>
-        /// <returns>The <see cref="ItemMenuStateMachine"/> which derived
-        /// <see cref="CryptoQuest.UI.Menu.MenuStates.MenuStateMachine"/> derived
-        /// from <see cref="StateMachine"/> which also derived from <see cref="StateBase"/></returns>
-        public override StateBase<string> GetPanelState(MenuManager menuManager) =>
-            StateMachine ??= new ItemMenuStateMachine(this);
 
-        private void Start()
+        private void OnEnable()
         {
-            _currentConsumables = _itemLists[0];
-            StateMachine.Init();
+            _itemMenuStateMachine.Init();
         }
 
-        private void OnEnable() => _previouslyHidden = true;
-        private void OnDisable() => StateMachine.OnExit();
-
-        protected override void OnShow()
+        private void OnDisable()
         {
-            if (!_previouslyHidden) return;
-            _previouslyHidden = false;
-            ShowItemsWithType(0);
+            _itemMenuStateMachine.OnExit();
         }
-
-        protected override void OnHide() => _previouslyHidden = true;
 
         private void OnDestroy()
         {
@@ -129,9 +115,8 @@ namespace CryptoQuest.Menus.Item.UI
             _localizeDescription.StringReference = item.Consumable.Description;
         }
 
-        private void ShowItemsWithType(EConsumableType itemType)
+        public void ShowItemsWithType(EConsumableType itemType)
         {
-            Debug.Log($"adu");
             var index = _itemListCache[itemType];
             ShowItemsWithType(index);
         }
@@ -151,6 +136,11 @@ namespace CryptoQuest.Menus.Item.UI
             _description.text = null;
             CurrentTabIndex += (int)direction;
             ShowItemsWithType(CurrentTabIndex);
+        }
+
+        public void EnableAllHeroButtons(bool isEnabled = true)
+        {
+            foreach (var button in HeroButtons) button.Interactable = isEnabled;
         }
     }
 }

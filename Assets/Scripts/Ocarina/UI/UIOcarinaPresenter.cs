@@ -51,7 +51,7 @@ namespace CryptoQuest.Ocarina.UI
 
         private void Show()
         {
-            ConsumingItemState.Cancelled += CancelConsuming;
+            ItemConsumeState.Cancelled += CancelConsuming;
             _content.SetActive(true);
             StartCoroutine(CoSelectFirstButton());
         }
@@ -82,7 +82,7 @@ namespace CryptoQuest.Ocarina.UI
 
         private void CancelConsuming()
         {
-            ConsumingItemState.Cancelled -= CancelConsuming;
+            ItemConsumeState.Cancelled -= CancelConsuming;
             Hide();
         }
 

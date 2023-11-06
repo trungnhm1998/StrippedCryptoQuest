@@ -6,14 +6,12 @@ namespace CryptoQuest.Menus.Item.States
     public class ItemMenuStateMachine : StateMachine
     {
         public static readonly string InventorySelection = "InventorySelection";
-        public static readonly string ItemSelection = "ItemSelection";
-        public static readonly string ConsumingItem = "ConsumingItem";
+        public static readonly string ItemConsume = "ItemConsume";
 
         public ItemMenuStateMachine(UIConsumableMenuPanel panel) : base(false)
         {
             AddState(InventorySelection, new InventorySelectionState(panel));
-            AddState(ItemSelection, new ItemSelectionState(panel));
-            AddState(ConsumingItem, new ConsumingItemState(panel));
+            AddState(ItemConsume, new ItemConsumeState(panel));
 
             SetStartState(InventorySelection);
         }

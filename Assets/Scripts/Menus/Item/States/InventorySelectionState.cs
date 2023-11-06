@@ -1,7 +1,6 @@
 ﻿using CryptoQuest.Input;
 using CryptoQuest.Menus.Item.UI;
 using CryptoQuest.UI.Menu;
-using FSM;
 using UnityEngine;
 
 namespace CryptoQuest.Menus.Item.States
@@ -17,8 +16,7 @@ namespace CryptoQuest.Menus.Item.States
 
         public override void OnEnter()
         {
-            ConsumablePanel.Interactable = true;
-            ChangeTab(0);
+            ConsumablePanel.Focusing += SelectFirstTab;
 
             _input.MenuCancelEvent += HandleCancel;
             _input.TabChangeEvent += ChangeTab;
@@ -28,15 +26,24 @@ namespace CryptoQuest.Menus.Item.States
 
         public override void OnExit()
         {
-            ConsumablePanel.Interactable = false;
+            _input.MenuCancelEvent -= HandleCancel;
+            _input.TabChangeEvent -= ChangeTab;
 
             UIConsumableItem.Using -= UseItem;
-            _input.MenuCancelEvent -= HandleCancel;
-            UIConsumableItem.Using -= UseItem;
+        }
+
+        private void SelectFirstTab()
+        {
+            ConsumablePanel.Interactable = true;
+
+            ConsumablePanel.ShowItemsWithType(0);
+            ChangeTab(0);
         }
 
         private void HandleCancel()
         {
+            ConsumablePanel.Interactable = false;
+
             UIMainMenu.OnBackToNavigation();
         }
 
@@ -47,7 +54,7 @@ namespace CryptoQuest.Menus.Item.States
 
         private void UseItem(UIConsumableItem selectedConsumableItem)
         {
-            fsm.RequestStateChange(ItemMenuStateMachine.ItemSelection);
+            fsm.RequestStateChange(ItemMenuStateMachine.ItemConsume);
         }
     }
 }
