@@ -1,16 +1,17 @@
 ﻿using System.Collections.Generic;
+using CryptoQuest.Tavern.UI.CharacterReplacement;
 using UnityEngine;
 
-namespace CryptoQuest.Tavern.UI.CharacterReplacement
+namespace CryptoQuest.Tavern.UI
 {
-    public class UICharacterReplacement : UIAbstractTavern
+    public class UIPartyOrganization : UIAbstractTavern
     {
+        [SerializeField] private UICharacterList _partyUi;
         [SerializeField] private UICharacterList _gameListUi;
-        [SerializeField] private UICharacterList _walletListUi;
 
+        [SerializeField] private Transform _partyScrollContent;
         [SerializeField] private Transform _gameScrollContent;
-        [SerializeField] private Transform _walletScrollContent;
-
+        
         private List<int> _selectedGameItemsIds = new();
         public List<int> SelectedGameItemsIds { get => _selectedGameItemsIds; private set => _selectedGameItemsIds = value; }
 
@@ -36,35 +37,39 @@ namespace CryptoQuest.Tavern.UI.CharacterReplacement
             _selectedWalletItemsIds.Clear();
 
             var currentList = currentItem.Parent;
+
+            Transform otherList;
             if (currentList == _gameScrollContent)
             {
-                currentItem.Transfer(_walletScrollContent);
+                otherList = _partyScrollContent;
                 _selectedGameItemsIds.Add(currentItem.Id);
             }
             else
             {
-                currentItem.Transfer(_gameScrollContent);
+                otherList = _gameScrollContent;
                 _selectedWalletItemsIds.Add(currentItem.Id);
             }
 
-            _gameListUi.SetInteractableAllButtons(!(currentList == _gameScrollContent));
-            _walletListUi.SetInteractableAllButtons(currentList == _gameScrollContent);
+            currentItem.Transfer(otherList);
+
+            _partyUi.SetInteractableAllButtons(otherList == _partyScrollContent);
+            _gameListUi.SetInteractableAllButtons(otherList == _gameScrollContent);
         }
 
         public void SwitchList(Vector2 direction)
         {
-            if (_gameScrollContent.childCount <= 0) return;
-            if (_walletScrollContent.childCount <= 0) return; // code smells
+            if (_partyScrollContent.childCount <= 0) return;
+            if (_gameScrollContent.childCount <= 0) return; // code smells
 
             switch (direction.x)
             {
                 case > 0:
-                    _gameListUi.SetInteractableAllButtons(false);
-                    FocusList(_walletListUi);
+                    _partyUi.SetInteractableAllButtons(false);
+                    FocusList(_gameListUi);
                     break;
                 case < 0:
-                    _walletListUi.SetInteractableAllButtons(false);
-                    FocusList(_gameListUi);
+                    _gameListUi.SetInteractableAllButtons(false);
+                    FocusList(_partyUi);
                     break;
             }
         }
@@ -83,9 +88,8 @@ namespace CryptoQuest.Tavern.UI.CharacterReplacement
 
         public void ConfirmedTransmission()
         {
+            _partyUi.UpdateList();
             _gameListUi.UpdateList();
-            _walletListUi.UpdateList();
         }
-
     }
 }

@@ -15,12 +15,12 @@ namespace CryptoQuest.Tavern.Data
         private int _level;
         private bool _isInParty;
 
-        public CharacterData(HeroBehaviour hero)
+        public CharacterData(HeroBehaviour hero, bool isInParty)
         {
             hero.TryGetComponent(out LevelSystem levelSystem);
             _localizedName = hero.DetailsInfo.LocalizedName;
             _level = levelSystem.Level;
-            _isInParty = true;
+            _isInParty = isInParty;
         }
 
         public CharacterData(Sprite classIcon, LocalizedString localizedName, int level, bool isInParty)

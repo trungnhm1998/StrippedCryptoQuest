@@ -58,12 +58,6 @@ namespace CryptoQuest.Tavern.UI.CharacterReplacement
             }
         }
 
-        private void IdentifyItemParentThenCacheItem(UITavernItem item)
-        {
-            item.Parent = _scrollRectContent;
-            _cachedItems.Add(item);
-        }
-
         private void RenderData()
         {
             _cachedItems.Clear();
@@ -73,6 +67,12 @@ namespace CryptoQuest.Tavern.UI.CharacterReplacement
                 item.SetItemInfo(itemData);
                 IdentifyItemParentThenCacheItem(item);
             }
+        }
+
+        private void IdentifyItemParentThenCacheItem(UITavernItem item)
+        {
+            item.Parent = _scrollRectContent;
+            _cachedItems.Add(item);
         }
 
         public void SetInteractableAllButtons(bool isEnabled)
