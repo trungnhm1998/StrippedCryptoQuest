@@ -32,6 +32,7 @@ GameObject:
   - component: {fileID: 6353190227880703360}
   - component: {fileID: 6938198089508690721}
   - component: {fileID: 4510431391974548953}
+  - component: {fileID: 5560344826289356105}
   m_Layer: 0
   m_Name: HeroGAS
   m_TagString: Untagged
@@ -289,6 +290,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _skills:
+  - {fileID: 11400000, guid: d97fcb6a9e4225f4baaa3b35c338a8a5, type: 2}
+  - {fileID: 11400000, guid: ce3611e5d7b404549a69a912f11dddc5, type: 2}
+  - {fileID: 11400000, guid: 291c2bb4daa2d3a478b5ce06c864c74b, type: 2}
   - {fileID: 11400000, guid: 0d15e3ee2ffbfee4196dda30ee677d82, type: 2}
   - {fileID: 11400000, guid: db3fb1b81106c3b4084013dc5998a76b, type: 2}
   - {fileID: 11400000, guid: 0ed1758f38fb22c4e9339bcf8f46c3e3, type: 2}
@@ -439,3 +443,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _addLootRequestEventChannel: {fileID: 11400000, guid: 5b2a9f4e0c11e954bbd8d96c7b5d775e, type: 2}
+--- !u!114 &5560344826289356105
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4052912324221725559}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb806d7714146c141b059d5a1f2e87bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _dealtDamageEvent: {fileID: 11400000, guid: 5cfde0b58cab9d848a3cd31f4a20c1ee, type: 2}

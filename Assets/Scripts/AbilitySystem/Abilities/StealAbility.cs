@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace CryptoQuest.AbilitySystem.Abilities
 {
-    [CreateAssetMenu(menuName = "Crypto Quest/Ability System/Abilites/Steal Ability",
+    [CreateAssetMenu(menuName = "Crypto Quest/Ability System/Abilities/Steal Ability",
         fileName = "StealAbility")]
     public class StealAbility : CastSkillAbility
     {

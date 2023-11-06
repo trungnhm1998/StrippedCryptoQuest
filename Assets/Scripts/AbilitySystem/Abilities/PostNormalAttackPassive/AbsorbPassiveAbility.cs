@@ -43,17 +43,7 @@ namespace CryptoQuest.AbilitySystem.Abilities.PostNormalAttackPassive
 
             _damageEffect = ApplyEffect(SkillContext, _ability.Effect, target);
 
-            if (_damageEffect.ComputedModifiers.Count <= 0) return;
-
-            var postDamageContext = new PostDamageContext(_ability.AbsorbContext)
-            {
-                DamageContext = new DamageContext()
-                {
-                    Target = target,
-                    Damage = _damageEffect.ComputedModifiers[0].Magnitude
-                }
-            };
-            _absorbEffect = ApplyEffect(postDamageContext, _ability.AbsorbEffect, Character);
+            _absorbEffect = ApplyEffect(_ability.AbsorbContext, _ability.AbsorbEffect, Character);
         }
 
         private ActiveGameplayEffect ApplyEffect(GameplayEffectContext context, GameplayEffectDefinition effect,

@@ -1,5 +1,6 @@
 ﻿using CryptoQuest.AbilitySystem.Abilities.PostNormalAttackPassive;
 using CryptoQuest.AbilitySystem.Attributes;
+using CryptoQuest.Battle.Components.SpecialSkillBehaviours;
 using CryptoQuest.Battle.Events;
 using IndiGames.GameplayAbilitySystem.EffectSystem;
 using IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects.EffectExecutionCalculation;
@@ -12,16 +13,19 @@ namespace CryptoQuest.AbilitySystem.Executions
         public override void Execute(ref CustomExecutionParameters executionParams,
             ref GameplayEffectCustomExecutionOutput outModifiers)
         {
+            var sourceSystem = executionParams.SourceAbilitySystemComponent.AttributeSystem;
             var spec = executionParams.EffectSpec;
-            var specContext = spec.Context.Get();
-            if (specContext is not PostDamageContext context) return;
+            var context = GameplayEffectContext.ExtractEffectContext(spec.Context);
 
-            executionParams.SourceAbilitySystemComponent.AttributeSystem.TryGetAttributeValue(AttributeSets.MagicAttack,
+            var lastDamageDealt = sourceSystem.GetComponent<LastDamageDealtBehaviour>();
+            var damageDealt = lastDamageDealt.LastDamageDealt;
+
+            sourceSystem.TryGetAttributeValue(AttributeSets.MagicAttack,
                 out var magicPower);
             var skillParameters = context.SkillInfo.SkillParameters;
-            var absorbDamage = skillParameters.IsFixed ? -context.DamageContext.Damage
-                : -context.DamageContext.Damage * skillParameters.BasePower/100f;
-            Debug.Log($"Absorb [{absorbDamage}] damage dealt was [{context.DamageContext.Damage}]");
+            var absorbDamage = skillParameters.IsFixed ? -damageDealt
+                : -damageDealt * skillParameters.BasePower/100f;
+            Debug.Log($"Absorb [{absorbDamage}] damage dealt was [{damageDealt}]");
             var modifier = new GameplayModifierEvaluatedData()
             {
                 Attribute = skillParameters.TargetAttribute.Attribute,
@@ -31,7 +35,7 @@ namespace CryptoQuest.AbilitySystem.Executions
             outModifiers.Add(modifier);
             BattleEventBus.RaiseEvent(new AbsorbingEvent()
             {
-                Character = context.DamageContext.Target,
+                Character = lastDamageDealt.DamageReceiver,
                 AbsorbingAttribute = modifier.Attribute,
                 Value = modifier.Magnitude,
             });
