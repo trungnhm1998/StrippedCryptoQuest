@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
+using CryptoQuest.Battle.Components;
 using CryptoQuest.Input;
 using CryptoQuest.Menus.Item.UI;
+using CryptoQuest.UI.Menu.Character;
 
 namespace CryptoQuest.Menus.Item.States
 {
@@ -9,6 +12,8 @@ namespace CryptoQuest.Menus.Item.States
         public static event Action Cancelled;
         private readonly InputMediatorSO _input;
 
+        private List<HeroBehaviour> _targets;
+
         public ItemConsumeState(UIConsumableMenuPanel consumablePanel) : base(consumablePanel)
         {
             _input = consumablePanel.Input;
@@ -16,23 +21,28 @@ namespace CryptoQuest.Menus.Item.States
 
         public override void OnEnter()
         {
-            DeselectAllHeroes();
-            ConsumablePanel.Interactable = false;
+            foreach (var heroButton in _consumablePanel.HeroButtons) heroButton.Selecting += CacheLastSelectingSlot;
 
-            ConsumablePanel.SingleAlliedTarget.EventRaised += SelectSingleHero;
-            ConsumablePanel.AllAlliesTarget.EventRaised += SelectAllHeroes;
+            DeselectAllHeroes();
+            _consumablePanel.Interactable = false;
+
+            _consumablePanel.SingleAlliedTarget.EventRaised += SelectSingleHero;
+            _consumablePanel.AllAlliesTarget.EventRaised += SelectAllHeroes;
 
             _input.MenuCancelEvent += HandleCancel;
         }
 
+
         public override void OnExit()
         {
-            ConsumablePanel.SingleAlliedTarget.EventRaised -= SelectSingleHero;
-            ConsumablePanel.AllAlliesTarget.EventRaised -= SelectAllHeroes;
+            foreach (var heroButton in _consumablePanel.HeroButtons) heroButton.Selecting -= CacheLastSelectingSlot;
+
+            _consumablePanel.SingleAlliedTarget.EventRaised -= SelectSingleHero;
+            _consumablePanel.AllAlliesTarget.EventRaised -= SelectAllHeroes;
 
             _input.MenuCancelEvent -= HandleCancel;
 
-            ConsumablePanel.Interactable = true;
+            _consumablePanel.Interactable = true;
             DeselectAllHeroes();
         }
 
@@ -42,16 +52,26 @@ namespace CryptoQuest.Menus.Item.States
             fsm.RequestStateChange(ItemMenuStateMachine.InventorySelection);
         }
 
-        private void DeselectAllHeroes() => ConsumablePanel.EnableAllHeroButtons(false);
+        private void CacheLastSelectingSlot(UICharacterPartySlot hero) => _consumablePanel.SelectingHero = hero;
+
+        private void DeselectAllHeroes() => _consumablePanel.EnableAllHeroButtons(false);
 
         private void SelectAllHeroes() => fsm.RequestStateChange(ItemMenuStateMachine.InventorySelection);
 
-        private void SelectSingleHero() => SelectFirstHero();
-
-        private void SelectFirstHero()
+        private void SelectSingleHero()
         {
-            ConsumablePanel.EnableAllHeroButtons();
-            ConsumablePanel.HeroButtons[0].Select();
+            foreach (var heroButton in _consumablePanel.HeroButtons) heroButton.Selected -= UsingItem;
+
+            _consumablePanel.EnableAllHeroButtons();
+            _consumablePanel.HeroButtons[0].Select();
+            _consumablePanel.SelectingHero.EnableSelectBackground();
+        }
+
+        private void UsingItem(UICharacterPartySlot uiCharacterPartySlot)
+        {
+            foreach (var heroButton in _consumablePanel.HeroButtons) heroButton.Selected -= UsingItem;
+            
+            fsm.RequestStateChange(ItemMenuStateMachine.InventorySelection);
         }
     }
 }

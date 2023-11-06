@@ -11,7 +11,7 @@ namespace CryptoQuest.Menus.Skill.States
         public override void OnEnter()
         {
             DeselectAllHeroes();
-            foreach (var heroButton in SkillPanel.HeroButtons) heroButton.Selected += CacheLastSelectedSlot;
+            foreach (var heroButton in SkillPanel.HeroButtons) heroButton.Selecting += CacheLastSelectingSlot;
             SkillPanel.Input.MenuCancelEvent += HandleCancel;
             SkillPanel.Focusing += SelectFirstHero;
             SkillPanel.Input.MenuConfirmedEvent += ToSelectSkillState;
@@ -22,7 +22,7 @@ namespace CryptoQuest.Menus.Skill.States
 
         public override void OnExit()
         {
-            foreach (var heroButton in SkillPanel.HeroButtons) heroButton.Selected -= CacheLastSelectedSlot;
+            foreach (var heroButton in SkillPanel.HeroButtons) heroButton.Selecting -= CacheLastSelectingSlot;
             SkillPanel.Input.MenuCancelEvent -= HandleCancel;
             SkillPanel.Focusing -= SelectFirstHero;
             SkillPanel.Input.MenuConfirmedEvent -= ToSelectSkillState;
@@ -36,7 +36,7 @@ namespace CryptoQuest.Menus.Skill.States
             fsm.RequestStateChange(SkillMenuStateMachine.SkillSelection);
         }
 
-        private void CacheLastSelectedSlot(UICharacterPartySlot hero) => SkillPanel.SelectingHero = hero;
+        private void CacheLastSelectingSlot(UICharacterPartySlot hero) => SkillPanel.SelectingHero = hero;
 
         private void DeselectAllHeroes()
         {

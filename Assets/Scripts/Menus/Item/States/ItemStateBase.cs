@@ -5,11 +5,11 @@ namespace CryptoQuest.Menus.Item.States
 {
     public abstract class ItemStateBase : StateBase
     {
-        protected UIConsumableMenuPanel ConsumablePanel { get; }
+        protected UIConsumableMenuPanel _consumablePanel { get; }
 
         protected ItemStateBase(UIConsumableMenuPanel consumablePanel) : base(false)
         {
-            ConsumablePanel = consumablePanel;
+            _consumablePanel = consumablePanel;
         }
     }
 }
