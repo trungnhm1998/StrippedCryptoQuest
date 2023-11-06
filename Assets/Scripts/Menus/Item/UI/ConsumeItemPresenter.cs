@@ -1,4 +1,7 @@
 ﻿using CryptoQuest.Gameplay.Inventory;
+using CryptoQuest.Gameplay.PlayerParty;
+using CryptoQuest.System;
+using CryptoQuest.UI.Menu.Character;
 using IndiGames.Core.Events.ScriptableObjects;
 using UnityEngine;
 
@@ -10,8 +13,13 @@ namespace CryptoQuest.Menus.Item.UI
         [SerializeField] private VoidEventChannelSO _selectAllAliveHeroesEvent;
         [SerializeField] private UIItemCharacterSelection _uiItemCharacterSelection;
 
+        private IPartyController _party;
+        private UIConsumableItem _inspectingItem;
+
         private void OnEnable()
         {
+            _party = ServiceProvider.GetService<IPartyController>();
+
             _showHeroSelection.EventRaised += ShowSelectSingleHeroUI;
             _selectAllAliveHeroesEvent.EventRaised += ShowSelectAllAliveHeroes;
             UIConsumableItem.Inspecting += SaveLastInspectingItem;
@@ -27,8 +35,6 @@ namespace CryptoQuest.Menus.Item.UI
             UIConsumableItem.Inspecting -= SaveLastInspectingItem;
         }
 
-        private UIConsumableItem _inspectingItem;
-
         private void SaveLastInspectingItem(UIConsumableItem item)
         {
             _inspectingItem = item;
@@ -42,14 +48,17 @@ namespace CryptoQuest.Menus.Item.UI
 
         private void ShowSelectAllAliveHeroes()
         {
-            ConsumableController.OnConsumeItem(_inspectingItem.Consumable, new int[4] {0, 1, 2, 3});
+            foreach (PartySlot partySlot in _party.Slots)
+            {
+                ConsumableController.OnConsumeItem(_inspectingItem.Consumable, partySlot.HeroBehaviour);
+            }
         }
 
-        private void ConsumeOnCharacterIndex(int[] heroIndices)
+        private void ConsumeOnCharacterIndex(UICharacterPartySlot characterParty)
         {
             _uiItemCharacterSelection.Hide();
             _uiItemCharacterSelection.Confirmed -= ConsumeOnCharacterIndex;
-            ConsumableController.OnConsumeItem(_inspectingItem.Consumable, heroIndices);
+            ConsumableController.OnConsumeItem(_inspectingItem.Consumable, characterParty.Hero);
         }
     }
 }

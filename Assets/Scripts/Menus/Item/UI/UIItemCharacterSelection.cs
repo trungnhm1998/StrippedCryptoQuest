@@ -11,7 +11,7 @@ namespace CryptoQuest.Menus.Item.UI
 {
     public class UIItemCharacterSelection : MonoBehaviour
     {
-        public event Action<int[]> Confirmed;
+        public event Action<UICharacterPartySlot> Confirmed;
         [SerializeField] private UICharacterPartySlot[] _partySlots;
 
         /// <summary>
@@ -19,7 +19,7 @@ namespace CryptoQuest.Menus.Item.UI
         /// </summary>
         private void OnEnable()
         {
-            ConsumingItemState.Cancelled += Hide;
+            ItemConsumeState.Cancelled += Hide;
             var party = ServiceProvider.GetService<IPartyController>();
             for (var index = 0; index < party.Slots.Length; index++)
             {
@@ -34,7 +34,7 @@ namespace CryptoQuest.Menus.Item.UI
 
         private void OnDisable()
         {
-            ConsumingItemState.Cancelled -= Hide;
+            ItemConsumeState.Cancelled -= Hide;
         }
 
         /// <summary>
@@ -42,12 +42,11 @@ namespace CryptoQuest.Menus.Item.UI
         ///
         /// use the first button to select all heroes
         /// </summary>
-        /// <param name="index"></param>
-        private void OnHeroSelected(int index)
+        /// <param name="hero"></param>
+        private void OnHeroSelected(UICharacterPartySlot hero)
         {
-            var indices = _selectingAll ? new int[] { 0, 1, 2, 3 } : new int[] { index };
             _selectingAll = false;
-            Confirmed?.Invoke(indices);
+            Confirmed?.Invoke(hero);
         }
 
         public void Hide()
@@ -60,8 +59,8 @@ namespace CryptoQuest.Menus.Item.UI
         /// </summary>
         private void EnableAllButtons(bool enable = true)
         {
-            // foreach (var slot in _partySlots)
-            //     slot.Interactable = enable;
+            foreach (var slot in _partySlots)
+                slot.Interactable = enable;
         }
 
         public void SelectHero()

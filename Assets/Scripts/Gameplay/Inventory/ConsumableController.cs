@@ -1,8 +1,7 @@
 ﻿using System;
 using CryptoQuest.AbilitySystem.Abilities;
-using CryptoQuest.Gameplay.PlayerParty;
+using CryptoQuest.Battle.Components;
 using CryptoQuest.Item;
-using CryptoQuest.System;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
 using UnityEngine;
 
@@ -10,13 +9,13 @@ namespace CryptoQuest.Gameplay.Inventory
 {
     public class ConsumableController : MonoBehaviour
     {
-        public static event Action<ConsumableInfo, int[]> HeroConsumingItem;
+        public static event Action<ConsumableInfo, HeroBehaviour> HeroConsumingItem;
         public static event Action<ConsumableInfo> ConsumingItem;
         public static event Action<ConsumableInfo> ConsumedItem;
 
         public static void OnConsumeItem(ConsumableInfo consumable) => ConsumingItem?.Invoke(consumable);
 
-        public static void OnConsumeItem(ConsumableInfo consumable, params int[] heroIndices)
+        public static void OnConsumeItem(ConsumableInfo consumable, HeroBehaviour heroIndices)
             => HeroConsumingItem?.Invoke(consumable, heroIndices);
 
         [Header("Raise on")]
@@ -37,28 +36,24 @@ namespace CryptoQuest.Gameplay.Inventory
             ConsumingItem -= ConsumeItem;
         }
 
-        private void ConsumeItem(ConsumableInfo consumable, int[] heroIndices)
+        private void ConsumeItem(ConsumableInfo consumable, HeroBehaviour hero)
         {
+            if (!hero.IsValid()) return;
+
             bool ableToUseOnAtLeastOneHero = false;
 
-            var party = ServiceProvider.GetService<IPartyController>();
-            foreach (var index in heroIndices)
-            {
-                var hero = party.Slots[index].HeroBehaviour;
-                if (hero.IsValid() == false) continue;
-                var abilitySystem = hero.GetComponent<AbilitySystemBehaviour>();
-                var spec = abilitySystem.GiveAbility<ConsumableAbilitySpec>(consumable.Data.Ability);
-                spec.SetConsumable(consumable);
+            var abilitySystem = hero.GetComponent<AbilitySystemBehaviour>();
+            var spec = abilitySystem.GiveAbility<ConsumableAbilitySpec>(consumable.Data.Ability);
+            spec.SetConsumable(consumable);
 
-                if (spec.CanActiveAbility() && !ableToUseOnAtLeastOneHero)
-                    ableToUseOnAtLeastOneHero = true;
-                spec.TryActiveAbility();
-            }
+            if (spec.CanActiveAbility() && !ableToUseOnAtLeastOneHero)
+                ableToUseOnAtLeastOneHero = true;
+            spec.TryActiveAbility();
 
             if (ableToUseOnAtLeastOneHero)
             {
                 consumable.OnConsumed(_inventoryController);
-                Debug.Log($"Consuming {consumable.Data} on {heroIndices.Length} heroes");
+                Debug.Log($"Consuming {consumable.Data} on {hero.DisplayName}"); 
             }
 
             // TODO: Raise consumed failed?
