@@ -23,10 +23,9 @@ namespace CryptoQuest.Tavern.UI
         [SerializeField] private RectTransform _tooltipPosition;
 
         public Transform Parent { get; set; }
+        public int Id { get; private set; }
 
         private ITooltip _tooltip;
-        
-        public int Id { get; private set; }
 
         private bool _isSelected = false;
         private bool _isInParty = false;
@@ -44,7 +43,7 @@ namespace CryptoQuest.Tavern.UI
         {
             Id = itemInfo.GetId();
             _classIcon.sprite = itemInfo.GetClassIcon();
-            
+
             if (itemInfo.GetLocalizedName() != null)
                 _localizedName.StringReference = itemInfo.GetLocalizedName();
 

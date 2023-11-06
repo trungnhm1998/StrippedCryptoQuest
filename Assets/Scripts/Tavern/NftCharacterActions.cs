@@ -52,4 +52,14 @@ namespace CryptoQuest.Tavern
     }
 
     public class TransferSucceed : ActionBase { }
+
+    public class GetInPartyNftCharactersSucceed : ActionBase
+    {
+        public List<ICharacterData> InPartyCharacters { get; }
+
+        public GetInPartyNftCharactersSucceed(List<ICharacterData> inPartyCharacters)
+        {
+            InPartyCharacters = inPartyCharacters;
+        }
+    }
 }

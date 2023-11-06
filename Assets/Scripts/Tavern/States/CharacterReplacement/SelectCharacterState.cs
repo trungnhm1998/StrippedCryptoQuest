@@ -18,7 +18,7 @@ namespace CryptoQuest.Tavern.States.CharacterReplacement
         private List<ICharacterData> _cachedWalletData = new List<ICharacterData>();
 
         private static readonly int OverviewState = Animator.StringToHash("Overview");
-        private static readonly int ConfirmState = Animator.StringToHash("Confirm");
+        private static readonly int ConfirmState = Animator.StringToHash("Confirm Character Replacement");
 
         public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo,
             int layerIndex)
