@@ -32,6 +32,12 @@ namespace CryptoQuest.System.Dialogue.YarnManager
         private List<AsyncOperationHandle<Object>> pendingLoadOperations = new List<AsyncOperationHandle<Object>>();
         private Dictionary<string, Object> loadedAssets = new Dictionary<string, Object>();
 
+        public void SetStringTable(LocalizedStringTable newTable)
+        {
+            StringsTable = newTable;
+            currentStringsTable = newTable.GetTable();
+        }
+
         public override string LocaleCode => LocalizationSettings.SelectedLocale.Identifier.Code;
 
         public override bool LinesAvailable
@@ -112,37 +118,6 @@ namespace CryptoQuest.System.Dialogue.YarnManager
             }
 
             return localizedLine;
-        }
-
-        public override void Start()
-        {
-            // doing an initial load of the strings
-            if (StringsTable != null)
-            {
-                // Adding an event handler to TableChanged will trigger an
-                // initial async load of the string table, which will call the
-                // handler on completion. So, we don't set currentStringsTable
-                // here, but instead we only ever do it in OnStringTableChanged.
-                StringsTable.TableChanged += OnStringTableChanged;
-            }
-
-            if (AssetTable != null)
-            {
-                // Same logic for asset table as for strings table, above.
-                AssetTable.TableChanged += OnAssetTableChanged;
-            }
-        }
-
-        // We've been notified that a new strings table has been loaded.
-        private void OnStringTableChanged(StringTable newTable)
-        {
-            currentStringsTable = newTable;
-        }
-
-        // We've been notified that a new asset table has been loaded.
-        private void OnAssetTableChanged(AssetTable value)
-        {
-            currentAssetTable = value;
         }
 
         public override void PrepareForLines(IEnumerable<string> lineIDs)

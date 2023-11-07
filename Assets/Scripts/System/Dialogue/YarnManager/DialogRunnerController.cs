@@ -26,7 +26,7 @@ namespace CryptoQuest.System.Dialogue.YarnManager
         {
             _dialogueRunner.yarnProject = currentConfig.YarnProject;
             _dialogueRunner.SetProject(currentConfig.YarnProject);
-            _localisedLineProvider.StringsTable = currentConfig.StringTable;
+            _localisedLineProvider.SetStringTable(currentConfig.StringTable);
         }
     }
 }
