@@ -13,6 +13,7 @@ namespace CryptoQuest.AbilitySystem.Attributes
         public static AttributeScriptableObject Strength;
         public static AttributeScriptableObject Defense;
         public static AttributeScriptableObject Agility;
+        public static AttributeScriptableObject CriticalRate;
 
         [SerializeField] private AttributeScriptableObject _maxHealth;
         [SerializeField] private AttributeScriptableObject _health;
@@ -23,6 +24,7 @@ namespace CryptoQuest.AbilitySystem.Attributes
         [SerializeField] private AttributeScriptableObject _strength;
         [SerializeField] private AttributeScriptableObject _defense;
         [SerializeField] private AttributeScriptableObject _agility;
+        [SerializeField] private AttributeScriptableObject _criticalRate;
 
         private void OnEnable()
         {
@@ -35,6 +37,7 @@ namespace CryptoQuest.AbilitySystem.Attributes
             Strength = _strength;
             Defense = _defense;
             Agility = _agility;
+            CriticalRate = _criticalRate;
         }
     }
 }
