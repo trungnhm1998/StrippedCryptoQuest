@@ -55,6 +55,7 @@ namespace CryptoQuest.ChangeClass.API
         public float addDeffence;
         public float criticalRate;
         public float evasionRate;
+        public float minAgility;
         public int level;
         public float exp;
         public int partyId;
