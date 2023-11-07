@@ -12,6 +12,7 @@ using CryptoQuest.Networking;
 using CryptoQuest.Networking.Actions;
 using CryptoQuest.Sagas.Objects;
 using CryptoQuest.System;
+using CryptoQuest.UI.Actions;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
 using UniRx;
 using UnityEngine;
@@ -88,6 +89,7 @@ namespace CryptoQuest.Sagas.Profile
             var nftEquipments = responseEquipments.Select(CreateNftEquipment).ToList();
             _inventory.NftEquipments.Clear();
             _inventory.NftEquipments = nftEquipments;
+            ActionDispatcher.Dispatch(new ShowLoading(false));
             ActionDispatcher.Dispatch(new InventoryFilled());
         }
 
