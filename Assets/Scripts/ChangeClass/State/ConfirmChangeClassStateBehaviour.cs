@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.Localization;
 
@@ -18,15 +19,17 @@ namespace CryptoQuest.ChangeClass.StateMachine
             _animator = animator;
             _stateController = _animator.GetComponent<ChangeClassStateController>();
             _input = _stateController.Input;
-            _input.SubmitEvent += ChangeState;
             _input.CancelEvent += ExitState;
-            _stateController.DialogController.Dialogue
-                .SetMessage(_message).Show();
+            _stateController.DialogController
+                .ShowConfirmDialog(_message);
+            _stateController.DialogController.ConfirmYesEvent += ChangeState;
+            _stateController.DialogController.ConfirmNoEvent += ExitState;
         }
 
         public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
-            _input.SubmitEvent -= ChangeState;
+            _stateController.DialogController.ConfirmYesEvent -= ChangeState;
+            _stateController.DialogController.ConfirmNoEvent += ExitState;
             _input.CancelEvent -= ExitState;
         }
 

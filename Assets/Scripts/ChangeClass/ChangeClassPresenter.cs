@@ -1,10 +1,11 @@
+using UnityEngine;
+using CryptoQuest.ChangeClass.Interfaces;
 using System.Collections;
 using System.Collections.Generic;
-using CryptoQuest.ChangeClass.API;
-using CryptoQuest.ChangeClass.Interfaces;
-using CryptoQuest.ChangeClass.View;
 using CryptoQuest.Character;
-using UnityEngine;
+using CryptoQuest.ChangeClass.View;
+using CryptoQuest.Networking.Menu.DimensionBox;
+using CryptoQuest.ChangeClass.API;
 
 namespace CryptoQuest.ChangeClass
 {

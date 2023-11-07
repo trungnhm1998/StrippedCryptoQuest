@@ -16,7 +16,6 @@ namespace CryptoQuest
         [SerializeField] private GameObject _selectedBackground;
         [SerializeField] private GameObject _defaultBackground;
         [SerializeField] private MultiInputButton _button;
-        private bool _isSelected = false;
 
         public CharacterClass Class { get; private set; }
 
@@ -40,19 +39,22 @@ namespace CryptoQuest
 
         private void OnSelected()
         {
-            if (_isSelected) return;
             OnItemSelected?.Invoke(this);
         }
 
         private void OnDeselected()
         {
-            _selectedBackground.SetActive(false);
             _defaultBackground.SetActive(false);
         }
 
         public void EnableDefaultBackground(bool isEnable)
         {
             _defaultBackground.SetActive(isEnable);
+        }
+
+        public void EnableSelectedBackground(bool isEnable)
+        {
+            _selectedBackground.SetActive(isEnable);
         }
     }
 }

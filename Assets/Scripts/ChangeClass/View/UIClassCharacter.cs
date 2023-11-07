@@ -8,12 +8,12 @@ using UnityEngine.UI;
 
 namespace CryptoQuest.ChangeClass.View
 {
-    public class UIClassToChange : MonoBehaviour
+    public class UIClassCharacter : MonoBehaviour
     {
         public Action<UIOccupation> OnSelected;
-        public Action<UIOccupation> OnSubmit;
         [SerializeField] private ScrollRect _scrollRect;
-        [SerializeField] private GameObject _characterClassObject;
+        [SerializeField] private UIOccupation _characterClassObject;
+        private List<Button> _listButton = new();
 
         private void OnItemSelected(UIOccupation item)
         {
@@ -25,7 +25,7 @@ namespace CryptoQuest.ChangeClass.View
             CleanUpScrollView();
             foreach (var character in characterClasses)
             {
-                var newClass = Instantiate(_characterClassObject, _scrollRect.content).GetComponent<UIOccupation>();
+                UIOccupation newClass = Instantiate(_characterClassObject, _scrollRect.content);
                 newClass.OnItemSelected += OnItemSelected;
                 newClass.ConfigureCell(character);
             }
@@ -36,10 +36,17 @@ namespace CryptoQuest.ChangeClass.View
         {
             yield return null;
             if (_scrollRect.content.childCount == 0) yield break;
-            var firstItemGO = _scrollRect.content.GetChild(0).gameObject.GetComponent<UIOccupation>();
-            EventSystem.current.SetSelectedGameObject(firstItemGO.gameObject);
-            OnSelected?.Invoke(firstItemGO);
-            OnSubmit?.Invoke(firstItemGO);
+            EventSystem.current.SetSelectedGameObject(_listButton[0].gameObject);
+            OnSelected?.Invoke(_listButton[0].GetComponent<UIOccupation>());
+            GetListButton();
+        }
+
+        private void GetListButton()
+        {
+            foreach (Transform child in _scrollRect.content)
+            {
+                _listButton.Add(child.GetComponent<Button>());
+            }
         }
 
         private void CleanUpScrollView()
@@ -50,5 +57,12 @@ namespace CryptoQuest.ChangeClass.View
             }
         }
 
+        public void EnableInteractable(bool isEnable)
+        {
+            foreach (var button in _listButton)
+            {
+                button.interactable = isEnable;
+            }
+        }
     }
 }

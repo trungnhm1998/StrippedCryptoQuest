@@ -33,8 +33,9 @@ namespace CryptoQuest.ChangeClass.StateMachine
 
         private void ChangeState()
         {
-            if (_stateController.Presenter.IsValid)
-                _animator.SetTrigger(_submit);
+            if (!_stateController.Presenter.IsValid) return;
+            _animator.SetTrigger(_submit);
+            _stateController.Presenter.SetSelectedClass(true);
         }
 
         private void ExitState()
