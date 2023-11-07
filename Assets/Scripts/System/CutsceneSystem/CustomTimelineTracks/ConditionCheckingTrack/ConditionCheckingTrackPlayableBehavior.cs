@@ -10,7 +10,7 @@ namespace CryptoQuest.System.CutsceneSystem.CustomTimelineTracks.ConditionChecki
         public string ConditionToCheck = "";
         public EConditions PlayNodeWhileConditionIs = EConditions.False;
         private bool _played = false;
-
+        private PlayableDirector _playableDirector;
 
         public enum EConditions
         {
@@ -18,25 +18,24 @@ namespace CryptoQuest.System.CutsceneSystem.CustomTimelineTracks.ConditionChecki
             True = 1
         }
 
-        public override void ProcessFrame(Playable playable, FrameData info, object playerData)
+        public override void PrepareFrame(Playable playable, FrameData info)
         {
             if (_played)
                 return;
             _played = true;
 
-            if (Application.isPlaying)
+            CutSceneChoiceInfo choiceInfo = new CutSceneChoiceInfo(ConditionToCheck);
+            choiceInfo.ConfigureChoiceStatus();
+            bool condition = PlayNodeWhileConditionIs == EConditions.True;
+            if (choiceInfo.HasMadeChoice != condition)
             {
-                if (!playable.GetGraph().IsPlaying()) return;
-                PlayableDirector director = playable.GetGraph().GetResolver() as PlayableDirector;
-                if (director == null) return;
-                CutSceneChoiceInfo choiceInfo = new CutSceneChoiceInfo(ConditionToCheck);
-                choiceInfo.ConfigureChoiceStatus();
-                bool condition = PlayNodeWhileConditionIs == EConditions.True;
-                if (choiceInfo.HasMadeChoice != condition)
-                {
-                    director.time += playable.GetDuration();
-                }
+                _playableDirector.time += playable.GetDuration();
             }
+        }
+
+        public void SetDirector(PlayableDirector playableDirector)
+        {
+            _playableDirector = playableDirector;
         }
     }
 }
