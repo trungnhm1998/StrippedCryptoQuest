@@ -40,6 +40,7 @@ namespace CryptoQuest.Gameplay.Battle.Core.Helper
             var highestValue = 0f;
             foreach (var character in characters)
             {
+                if (!character.IsValidAndAlive()) continue;
                 var attributeSystem = character.AttributeSystem;
                 if (!attributeSystem.TryGetAttributeValue(attribute, out var attributeValue)) continue;
                 if (attributeValue.CurrentValue >= highestValue)
