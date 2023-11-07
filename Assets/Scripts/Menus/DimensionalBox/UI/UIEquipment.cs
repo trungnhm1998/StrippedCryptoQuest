@@ -23,10 +23,12 @@ namespace CryptoQuest.Menus.DimensionalBox.UI
         {
             Id = equipment.id;
             _nameText.text = "Item " + equipment.id;
+            _equippedTag.SetActive(equipment.isEquipped);
         }
 
         public void OnPressed()
         {
+            if (_equippedTag.activeSelf) return;
             Pressed?.Invoke(this);
         }
 
