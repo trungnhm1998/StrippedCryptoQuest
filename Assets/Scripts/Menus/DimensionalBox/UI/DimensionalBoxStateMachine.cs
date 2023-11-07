@@ -1,10 +1,13 @@
 ﻿using CryptoQuest.Input;
 using CryptoQuest.Menus.DimensionalBox.States;
+using CryptoQuest.UI.Menu;
+using DG.Tweening;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace CryptoQuest.Menus.DimensionalBox.UI
 {
-    internal class DimensionalBoxStateMachine : MonoBehaviour
+    internal class DimensionalBoxStateMachine : UIMenuPanelBase
     {
         [SerializeField] private GameObject _equipmentsTransferPanel;
         public GameObject EquipmentsTransferPanel => _equipmentsTransferPanel;
@@ -29,21 +32,23 @@ namespace CryptoQuest.Menus.DimensionalBox.UI
             ConfirmTransfer = new ConfirmTransfer();
         }
 
-        private void OnEnable()
-        {
-            ChangeState(Landing);
-        }
+        private void OnEnable() => ChangeState(Landing);
 
-        private void OnDisable()
-        {
-            _currentState?.Exit();
-        }
+        private void OnDisable() => _currentState?.Exit();
 
         public void ChangeState(StateBase newState)
         {
             _currentState?.Exit();
             _currentState = newState;
             _currentState.Enter(this);
+        }
+
+        public void SelectDefault()
+        {
+            DOVirtual.DelayedCall(0, () =>
+            {
+                EventSystem.current.SetSelectedGameObject(_landingPage.DefaultSelectedButton);
+            });
         }
     }
 }

@@ -1,6 +1,5 @@
 using CryptoQuest.Menus.DimensionalBox.UI;
 using CryptoQuest.UI.Menu;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace CryptoQuest.Menus.DimensionalBox.States
@@ -17,15 +16,15 @@ namespace CryptoQuest.Menus.DimensionalBox.States
 
         protected override void OnEnter()
         {
-            EnableButtons(true);
             StateMachine.EquipmentsTransferPanel.SetActive(false);
             StateMachine.MetaDTransferPanel.SetActive(false);
             _landingPage.gameObject.SetActive(true);
             StateMachine.Input.MenuCancelEvent += OnBackToNavigation;
             _landingPage.TransferringEquipments += ChangeToTransferEquipmentState;
             _landingPage.TransferringMetaD += ChangeToTransferMetaDState;
+            StateMachine.Focusing += SelectDefaultButton;
 
-            EventSystem.current.SetSelectedGameObject(_landingPage.DefaultSelectedButton);
+            SelectDefaultButton();
         }
 
         protected override void OnExit()
@@ -33,7 +32,15 @@ namespace CryptoQuest.Menus.DimensionalBox.States
             StateMachine.Input.MenuCancelEvent -= OnBackToNavigation;
             _landingPage.TransferringEquipments -= ChangeToTransferEquipmentState;
             _landingPage.TransferringMetaD -= ChangeToTransferMetaDState;
+            StateMachine.Focusing -= SelectDefaultButton;
             _landingPage.gameObject.SetActive(false);
+        }
+
+
+        private void SelectDefaultButton()
+        {
+            EnableButtons(true);
+            StateMachine.SelectDefault();
         }
 
         private void OnBackToNavigation()
