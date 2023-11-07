@@ -27,6 +27,7 @@ namespace CryptoQuest.Menus.DimensionalBox.States
             _getDataFailed = ActionDispatcher.Bind<GetNftEquipmentsFailed>(RegisterEscapeKey);
             StateMachine.Input.MenuExecuteEvent += ConfirmTransfer;
             StateMachine.Input.MenuNavigateEvent += MoveBetweenList;
+            StateMachine.Input.MenuResetEvent += ResetToOriginals;
             foreach (var equipmentList in _equipmentLists)
             {
                 equipmentList.Initialized += FocusOnFirstInitializedList;
@@ -44,11 +45,18 @@ namespace CryptoQuest.Menus.DimensionalBox.States
             StateMachine.Input.MenuCancelEvent -= ToSelectTransferTypeState;
             StateMachine.Input.MenuExecuteEvent -= ConfirmTransfer;
             StateMachine.Input.MenuNavigateEvent -= MoveBetweenList;
+            StateMachine.Input.MenuResetEvent -= ResetToOriginals;
             foreach (var equipmentList in _equipmentLists)
             {
                 equipmentList.Initialized -= FocusOnFirstInitializedList;
                 equipmentList.Transferring -= TransferEquipmentToOtherListAndFocus;
             }
+        }
+
+        private void ResetToOriginals()
+        {
+            _hasFocusOnFirstInitializedList = false;
+            foreach (var equipmentList in _equipmentLists) equipmentList.Reset();
         }
 
         private void RegisterEscapeKey(ActionBase _) => StateMachine.Input.MenuCancelEvent += ToSelectTransferTypeState;

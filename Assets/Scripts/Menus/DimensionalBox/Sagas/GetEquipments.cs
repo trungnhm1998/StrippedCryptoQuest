@@ -5,7 +5,6 @@ using System.Net;
 using CryptoQuest.Battle.Components;
 using CryptoQuest.Core;
 using CryptoQuest.Events;
-using CryptoQuest.Gameplay.Inventory;
 using CryptoQuest.Gameplay.PlayerParty;
 using CryptoQuest.Networking;
 using CryptoQuest.Networking.API;
