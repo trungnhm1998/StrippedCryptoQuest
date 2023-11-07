@@ -21,7 +21,6 @@ namespace CryptoQuest.Tavern.UI.CharacterReplacement
         {
             base.StateEntered();
             UITavernItem.Pressed += Transfer;
-            _gameListUi.SetInteractableAllButtons(true);
         }
 
         public override void StateExited()
@@ -73,12 +72,6 @@ namespace CryptoQuest.Tavern.UI.CharacterReplacement
         {
             targetList.SetInteractableAllButtons(true);
             StartCoroutine(targetList.CoSetDefaultSelection());
-        }
-
-        public void CheckEmptyList(UICharacterList target, bool isGameListEmpty)
-        {
-            if (!isGameListEmpty)
-                target.SetInteractableAllButtons(false);
         }
 
         public void ConfirmedTransmission()

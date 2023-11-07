@@ -26,7 +26,7 @@ namespace CryptoQuest.UI.Menu
         ITooltip WithLevel(int equipmentLevel);
         ITooltip WithRarity(RaritySO rarity);
         ITooltip WithDelayTimeToDisplay(float second);
-        ITooltip WithBoderPointer(bool hasPointer);
+        ITooltip WithBorderPointer(bool hasPointer);
         ITooltip WithRangePivot(Vector2 minPivot, Vector2 maxPivot);
         ITooltip WithPivot(Vector2 pivot);
     }
@@ -49,7 +49,7 @@ namespace CryptoQuest.UI.Menu
         private RectTransform _safeArea;
         private AsyncOperationHandle<Sprite> _handle;
         private bool HasSafeArea => _safeArea != null;
-        private bool _hasPointerBoder = true;
+        private bool _hasPointerBorder = true;
         private Vector2 _minPivot;
         private Vector2 _maxPivot;
 
@@ -129,7 +129,7 @@ namespace CryptoQuest.UI.Menu
         {
             _content.transform.localScale = tooltipScale;
             return this;
-        }    
+        }
 
         public virtual ITooltip WithRarity(RaritySO rarity)
         {
@@ -142,15 +142,15 @@ namespace CryptoQuest.UI.Menu
             return this;
         }
 
-        public ITooltip WithBoderPointer(bool hasPointer)
+        public ITooltip WithBorderPointer(bool hasPointer)
         {
-            _hasPointerBoder = hasPointer;
+            _hasPointerBorder = hasPointer;
             _nonPointerFrame.SetActive(!hasPointer);
             _pointerFrame.SetActive(hasPointer);
             _pointerReverseFrame.SetActive(hasPointer);
             ToggleFrame(true);
             return this;
-        }    
+        }
 
         public ITooltip WithRangePivot(Vector2 minPivot, Vector2 maxPivot)
         {
@@ -203,11 +203,9 @@ namespace CryptoQuest.UI.Menu
 
         private void ToggleFrame(bool isUp)
         {
-            if(_hasPointerBoder)
-            {
-                _pointerFrame.SetActive(isUp);
-                _pointerReverseFrame.SetActive(!isUp);
-            }    
+            if (!_hasPointerBorder) return;
+            _pointerFrame.SetActive(isUp);
+            _pointerReverseFrame.SetActive(!isUp);
         }
 
         private IEnumerator LoadSpriteAndSet(AssetReferenceT<Sprite> itemIcon)

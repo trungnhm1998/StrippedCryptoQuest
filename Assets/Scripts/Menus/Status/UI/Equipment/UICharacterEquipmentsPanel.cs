@@ -49,7 +49,7 @@ namespace CryptoQuest.Menus.Status.UI.Equipment
 
         private void OnEnable()
         {
-            Tooltip.WithBoderPointer(true)
+            Tooltip.WithBorderPointer(true)
                 .WithLocalPosition(Vector3.zero)
                 .WithScale(Vector3.one)
                 .WithRangePivot(_minPivotTooltip, _maxPivotTooltip);

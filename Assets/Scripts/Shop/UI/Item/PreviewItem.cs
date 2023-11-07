@@ -20,7 +20,7 @@ namespace CryptoQuest.Shop.UI.Item
                 .WithPivot(_tooltipPivot)
                 .WithLocalPosition(_tooltipPosition.localPosition)
                 .WithScale(_tooltipPosition.localScale)
-                .WithBoderPointer(_hasPointerBoder)
+                .WithBorderPointer(_hasPointerBoder)
                 .WithDelayTimeToDisplay(_delayTime);
         }
 

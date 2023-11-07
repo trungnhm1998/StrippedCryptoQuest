@@ -12,7 +12,7 @@ namespace CryptoQuest.Tavern.States.CharacterReplacement
         private Animator _animator;
         private TavernController _controller;
 
-        private static readonly int CharacterReplacementState = Animator.StringToHash("Select Character");
+        private static readonly int CharacterReplacementState = Animator.StringToHash("Character Replacement Idle");
 
         public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo,
             int layerIndex)
@@ -45,7 +45,7 @@ namespace CryptoQuest.Tavern.States.CharacterReplacement
             ActionDispatcher.Dispatch(new ShowLoading());
             if (listGameItemsToTransfer.Length > 0)
                 ActionDispatcher.Dispatch(new SendCharactersToWallet(listGameItemsToTransfer));
-            
+
             if (listWalletItemsToTransfer.Length > 0)
                 ActionDispatcher.Dispatch(new SendCharactersToGame(listWalletItemsToTransfer));
 
