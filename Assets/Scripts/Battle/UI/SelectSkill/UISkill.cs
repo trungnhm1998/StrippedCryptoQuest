@@ -28,7 +28,7 @@ namespace CryptoQuest.Battle.UI.SelectSkill
             SetSelectable(isCastable);
         }
 
-        private void SetSelectable(bool selectable)
+        public void SetSelectable(bool selectable)
         {
             _grayoutBehaviour.SetGrayoutTexts(selectable);
             if (!selectable) Selected = null;
