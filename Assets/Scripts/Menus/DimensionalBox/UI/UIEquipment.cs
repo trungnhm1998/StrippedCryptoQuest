@@ -1,5 +1,4 @@
 ﻿using System;
-using CryptoQuest.Menus.DimensionalBox.Objects;
 using CryptoQuest.Sagas.Objects;
 using TMPro;
 using UnityEngine;
@@ -16,14 +15,16 @@ namespace CryptoQuest.Menus.DimensionalBox.UI
         [SerializeField] private LocalizeStringEvent _name;
         [SerializeField] private GameObject _pendingTag;
         [SerializeField] private GameObject _equippedTag;
+        public EquipmentResponse Equipment { get; private set; }
+        public GameObject EquippedTag => _equippedTag;
         
         public uint Id { get; private set; }
 
         public void Initialize(EquipmentResponse equipment)
         {
+            Equipment = equipment;
             Id = equipment.id;
             _nameText.text = "Item " + equipment.id;
-            _equippedTag.SetActive(equipment.isEquipped);
         }
 
         public void OnPressed()

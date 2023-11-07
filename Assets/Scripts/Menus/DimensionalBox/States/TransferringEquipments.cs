@@ -1,5 +1,10 @@
+using System.Linq;
+using CryptoQuest.Battle.Components;
 using CryptoQuest.Core;
+using CryptoQuest.Gameplay.PlayerParty;
 using CryptoQuest.Menus.DimensionalBox.UI;
+using CryptoQuest.Sagas.Objects;
+using CryptoQuest.System;
 using TinyMessenger;
 using UnityEngine;
 
@@ -32,6 +37,8 @@ namespace CryptoQuest.Menus.DimensionalBox.States
             {
                 equipmentList.Initialized += FocusOnFirstInitializedList;
                 equipmentList.Transferring += TransferEquipmentToOtherListAndFocus;
+                if (_hasFocusOnFirstInitializedList || !equipmentList.Focus()) continue;
+                _hasFocusOnFirstInitializedList = true;
             }
 
             ActionDispatcher.Dispatch(new GetNftEquipments());
@@ -59,7 +66,45 @@ namespace CryptoQuest.Menus.DimensionalBox.States
             foreach (var equipmentList in _equipmentLists) equipmentList.Reset();
         }
 
-        private void RegisterEscapeKey(ActionBase _) => StateMachine.Input.MenuCancelEvent += ToSelectTransferTypeState;
+        private void RegisterEscapeKey(ActionBase _)
+        {
+            StateMachine.Input.MenuCancelEvent += ToSelectTransferTypeState;
+            UpdateEquipmentsEquippingState();
+        }
+
+        private void UpdateEquipmentsEquippingState()
+        {
+            var inGameEquipments = _equipmentLists[0].ScrollView.content.GetComponentsInChildren<UIEquipment>();
+            foreach (var equipmentUI in inGameEquipments)
+                equipmentUI.EquippedTag.SetActive(IsEquipping(equipmentUI.Equipment));
+
+            inGameEquipments = _equipmentLists[1].ScrollView.content.GetComponentsInChildren<UIEquipment>();
+            foreach (var equipmentUI in inGameEquipments)
+            {
+                equipmentUI.EquippedTag.SetActive(IsEquipping(equipmentUI.Equipment));
+                if (equipmentUI.EquippedTag.activeSelf == false) continue;
+                _equipmentLists[1].OnTransferring(equipmentUI);
+            }
+        }
+
+        private IPartyController _partyManager;
+
+        private bool IsEquipping(EquipmentResponse equipmentResponse)
+        {
+            _partyManager ??= ServiceProvider.GetService<IPartyController>();
+            foreach (var slot in _partyManager.Slots)
+            {
+                if (slot.IsValid() == false) continue;
+                slot.HeroBehaviour.TryGetComponent(out EquipmentsController equipmentsController);
+                var equipmentsSlots = equipmentsController.Equipments.Slots;
+                if (equipmentsSlots.Any(equipmentSlot => equipmentSlot.Equipment.Id == equipmentResponse.id))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
 
         private void ToSelectTransferTypeState()
         {

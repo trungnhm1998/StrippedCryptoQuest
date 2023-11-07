@@ -18,6 +18,7 @@ namespace CryptoQuest.Menus.DimensionalBox.UI
 
         [SerializeField] private bool _wrapAround = true;
         [SerializeField] private ScrollRect _scrollView;
+        public ScrollRect ScrollView => _scrollView;
         [SerializeField] private EquipmentUIPool _pool;
 
         [Header("Listen to")]
@@ -86,7 +87,7 @@ namespace CryptoQuest.Menus.DimensionalBox.UI
             }
         }
 
-        private void OnTransferring(UIEquipment ui)
+        public void OnTransferring(UIEquipment ui)
         {
             if (_equipmentsToTransfer.Remove(ui)) ui.EnablePendingTag(false);
             CurrentSelectedIndex -= 1;
