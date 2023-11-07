@@ -11,6 +11,7 @@ namespace CryptoQuest.Menus.Status.UI
         [SerializeField] private TMP_Text _effectDescription;
         [SerializeField] private Image _rarity;
         [SerializeField] private TMP_Text _level;
+
         public override ITooltip WithLevel(int equipmentLevel)
         {
             _level.text = $"Lv. { equipmentLevel}";

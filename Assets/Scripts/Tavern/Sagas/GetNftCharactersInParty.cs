@@ -5,6 +5,7 @@ using CryptoQuest.Sagas;
 using CryptoQuest.System;
 using CryptoQuest.Tavern.Data;
 using CryptoQuest.Tavern.Interfaces;
+using UnityEngine;
 
 namespace CryptoQuest.Tavern.Sagas
 {
@@ -29,7 +30,8 @@ namespace CryptoQuest.Tavern.Sagas
 
             foreach (var character in _partyController.Slots)
             {
-                if (character.HeroBehaviour.DisplayName == "Abel") continue; // temporary cheat
+                if (character.IsValid() == false) continue;
+                if (character.HeroBehaviour.Spec.Id == 0) continue; // if the hero is Abel then pass
                 var obj = new CharacterData(character.HeroBehaviour, false);
                 _inPartyCharacters.Add(obj);
             }

@@ -1,12 +1,14 @@
 ﻿using System.Collections.Generic;
 using CryptoQuest.Core;
 using CryptoQuest.Tavern.Interfaces;
+using CryptoQuest.Tavern.UI;
 using TinyMessenger;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace CryptoQuest.Tavern.States.CharacterReplacement
 {
-    public class SelectCharacterState : StateMachineBehaviour
+    public class CharacterReplacementState : StateMachineBehaviour
     {
         private Animator _animator;
         private TavernController _controller;
@@ -37,13 +39,13 @@ namespace CryptoQuest.Tavern.States.CharacterReplacement
             _controller.TavernInputManager.NavigateEvent += SwitchToOtherListRequested;
             _controller.TavernInputManager.ExecuteEvent += SendItemsRequested;
             _controller.TavernInputManager.ResetEvent += ResetTransferRequested;
+            _controller.TavernInputManager.InteractEvent += ViewCharacterDetails;
         }
 
         private void GetInGameCharacters(GetGameNftCharactersSucceed obj)
         {
             _cachedGameData = obj.InGameCharacters;
             if (obj.InGameCharacters.Count <= 0) return;
-            _controller.UICharacterReplacement.CheckEmptyList(_controller.UIGameList, false);
             _controller.UIGameList.SetData(obj.InGameCharacters);
         }
 
@@ -77,6 +79,11 @@ namespace CryptoQuest.Tavern.States.CharacterReplacement
             _controller.UIWalletList.SetData(_cachedWalletData);
         }
 
+        private void ViewCharacterDetails()
+        {
+            EventSystem.current.currentSelectedGameObject.GetComponent<UITavernItem>().InpectDetails();
+        }
+
         public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo,
             int layerIndex)
         {
@@ -87,6 +94,7 @@ namespace CryptoQuest.Tavern.States.CharacterReplacement
             _controller.TavernInputManager.NavigateEvent -= SwitchToOtherListRequested;
             _controller.TavernInputManager.ExecuteEvent -= SendItemsRequested;
             _controller.TavernInputManager.ResetEvent -= ResetTransferRequested;
+            _controller.TavernInputManager.InteractEvent -= ViewCharacterDetails;
         }
     }
 }

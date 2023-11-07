@@ -6,7 +6,8 @@ namespace CryptoQuest.UI.Menu
     public enum ETooltipType
     {
         Consumable = 0,
-        Equipment = 1
+        Equipment = 1,
+        Character = 2
     }
 
     public class TooltipFactory : MonoBehaviour

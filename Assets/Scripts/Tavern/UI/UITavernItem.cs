@@ -30,13 +30,14 @@ namespace CryptoQuest.Tavern.UI
         private bool _isSelected = false;
         private bool _isInParty = false;
 
+        private ICharacterData _cachedInfo;
+
         private void Awake()
         {
-            _tooltip = TooltipFactory.Instance.GetTooltip(ETooltipType.Equipment);
-            _tooltip.WithBoderPointer(true)
+            _tooltip = TooltipFactory.Instance.GetTooltip(ETooltipType.Character);
+            _tooltip.WithBorderPointer(true)
                 .WithLocalPosition(Vector3.zero)
-                .WithScale(new Vector3(.7f, .7f, 0))
-                .WithRangePivot(Vector2.zero, Vector2.one);
+                .WithScale(new Vector3(.8f, .8f, 0));
         }
 
         public void SetItemInfo(ICharacterData itemInfo)
@@ -51,6 +52,8 @@ namespace CryptoQuest.Tavern.UI
             _level.text = $"Lv{itemInfo.GetLevel()}";
             _isInParty = itemInfo.IsInParty();
             _localizedName.RefreshString();
+
+            _cachedInfo = itemInfo;
         }
 
         public void OnSelectToTransfer()
@@ -79,8 +82,14 @@ namespace CryptoQuest.Tavern.UI
             }
 
             _tooltip
-                .WithLevel(1)
+                .WithHeader(_cachedInfo.GetLocalizedName())
+                .WithLevel(_cachedInfo.GetLevel())
                 .WithContentAwareness(_tooltipPosition);
+        }
+
+        public void InpectDetails()
+        {
+            _tooltip.Show();
         }
     }
 }
