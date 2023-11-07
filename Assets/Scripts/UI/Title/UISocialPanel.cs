@@ -36,9 +36,6 @@ namespace CryptoQuest.UI.Title
         public void RequestFacebookLogin() =>
             PreventDoubleDispatch(() => ActionDispatcher.Dispatch(new LoginUsingFacebook()));
 
-        public void RequestWalletLogin() =>
-            PreventDoubleDispatch(() => ActionDispatcher.Dispatch(new LoginUsingWallet()));
-
         public void RequestTwitterLogin() =>
             PreventDoubleDispatch(() => ActionDispatcher.Dispatch(new LoginUsingTwitter()));
 

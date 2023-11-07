@@ -6,7 +6,7 @@ mergeInto(LibraryManager.library, {
         var parsedFallback = UTF8ToString(fallback);
 
         try {
-            firebase.auth().signInAnonymously().then(function (result) {
+            window.firebaseAuth.signInAnonymously().then(function (result) {
                 console.log("Success: signed in anonymously");
                 window.unityInstance.SendMessage(parsedObjectName, parsedCallback, "Success: signed up for " + JSON.stringify(result));
             }).catch(function (error) {
@@ -27,7 +27,7 @@ mergeInto(LibraryManager.library, {
 
         try {
 
-            firebase.auth().createUserWithEmailAndPassword(parsedEmail, parsedPassword).then(function (result) {
+            window.firebaseAuth.createUserWithEmailAndPassword(parsedEmail, parsedPassword).then(function (result) {
                 console.log("Success: signed up for " + JSON.stringify(result));
                 window.unityInstance.SendMessage(parsedObjectName, parsedCallback, JSON.stringify(result.user));
             }).catch(function (error) {
@@ -48,7 +48,7 @@ mergeInto(LibraryManager.library, {
 
         try {
 
-            firebase.auth().signInWithEmailAndPassword(parsedEmail, parsedPassword).then(function (result) {
+            window.firebaseAuth.signInWithEmailAndPassword(parsedEmail, parsedPassword).then(function (result) {
                 console.log("Success: signed in for " + JSON.stringify(result));
                 window.unityInstance.SendMessage(parsedObjectName, parsedCallback, JSON.stringify(result.user));
             }).catch(function (error) {
@@ -67,7 +67,7 @@ mergeInto(LibraryManager.library, {
 
         try {
             var provider = new firebase.auth.GoogleAuthProvider();
-            firebase.auth().signInWithPopup(provider).then(function (result) {
+            window.firebaseAuth.signInWithPopup(provider).then(function (result) {
                 console.log("Success: signed in with Google for " + JSON.stringify(result));
                 window.unityInstance.SendMessage(parsedObjectName, parsedCallback, JSON.stringify(result.user));
             }).catch(function (error) {
@@ -86,7 +86,7 @@ mergeInto(LibraryManager.library, {
 
         try {
             var provider = new firebase.auth.TwitterAuthProvider();
-            firebase.auth().signInWithPopup(provider).then(function (result) {
+            window.firebaseAuth.signInWithPopup(provider).then(function (result) {
                 console.log("Success: signed in with Twitter for " + JSON.stringify(result));
                 window.unityInstance.SendMessage(parsedObjectName, parsedCallback, JSON.stringify(result.user));
             }).catch(function (error) {
@@ -105,7 +105,7 @@ mergeInto(LibraryManager.library, {
 
         try {
             var provider = new firebase.auth.FacebookAuthProvider();
-            firebase.auth().signInWithPopup(provider).then(function (result) {
+            window.firebaseAuth.signInWithPopup(provider).then(function (result) {
                 console.log("Success: signed in with Facebook for " + JSON.stringify(result));
                 window.unityInstance.SendMessage(parsedObjectName, parsedCallback, JSON.stringify(result.user));
             }).catch(function (error) {
@@ -122,7 +122,7 @@ mergeInto(LibraryManager.library, {
         var parsedOnUserSignedIn = UTF8ToString(onUserSignedIn);
         var parsedOnUserSignedOut = UTF8ToString(onUserSignedOut);
 
-        firebase.auth().onAuthStateChanged(function (user) {
+        window.firebaseAuth.onAuthStateChanged(function (user) {
             console.log("OnAuthStateChanged: " + JSON.stringify(user));
             if (user) {
                 window.unityInstance.SendMessage(parsedObjectName, parsedOnUserSignedIn, JSON.stringify(user));
