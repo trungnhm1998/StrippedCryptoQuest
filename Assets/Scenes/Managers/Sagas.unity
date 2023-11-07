@@ -224,6 +224,8 @@ GameObject:
   - component: {fileID: 732717040}
   - component: {fileID: 732717042}
   - component: {fileID: 732717041}
+  - component: {fileID: 732717043}
+  - component: {fileID: 732717044}
   m_Layer: 0
   m_Name: NftEquipment
   m_TagString: Untagged
@@ -286,6 +288,60 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _transferEquipmentsToGameChannel: {fileID: 11400000, guid: d087896c13bdf054383302bb70d5e545, type: 2}
+--- !u!114 &732717043
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 732717038}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f90534d88a4a3c446bc4ce7b52046087, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _inGameEquipmentsUpdate: {fileID: 11400000, guid: e8600002b7fc64b42969287a176cc7a2, type: 2}
+  _inventory: {fileID: 11400000, guid: 4b4903dbe1c434d418a3afff1b12a3ba, type: 2}
+  _attributeMap:
+  - Name: HP
+    Attribute: {fileID: 11400000, guid: 77c53593fd92c904aa7689c5a7449df3, type: 2}
+  - Name: MP
+    Attribute: {fileID: 11400000, guid: a7e3a44d36bf87d44afeb00b236e832e, type: 2}
+  - Name: strength
+    Attribute: {fileID: 11400000, guid: 0d7a5bc26b58515459d9e824964fd7f8, type: 2}
+  - Name: vitality
+    Attribute: {fileID: 11400000, guid: 6762f359f1a736c45b2df614e80aef45, type: 2}
+  - Name: agility
+    Attribute: {fileID: 11400000, guid: 2b6352f953a4cb54d806baed1b804397, type: 2}
+  - Name: intelligence
+    Attribute: {fileID: 11400000, guid: 33fa33f7e21108b4280d1749ac4886e0, type: 2}
+  - Name: luck
+    Attribute: {fileID: 11400000, guid: 9ea7ef66c3bae0d47832b0244c8e6ff6, type: 2}
+  - Name: MATK
+    Attribute: {fileID: 11400000, guid: bb2bcb5d0bb8bef4cab1655aac0ad7fd, type: 2}
+  - Name: deffence
+    Attribute: {fileID: 11400000, guid: be99df9b1a6f2804abf9dd03f042eb2e, type: 2}
+  - Name: attack
+    Attribute: {fileID: 11400000, guid: cff0791781b73cf4ca80877936aedaad, type: 2}
+  _rarities:
+  - {fileID: 11400000, guid: e8beacf8f81a8b344bf6874eacf5e198, type: 2}
+  - {fileID: 11400000, guid: f6ad2ece3296c9444b62f0bb7ccb6890, type: 2}
+  - {fileID: 11400000, guid: bf044d2447613d9439958535fbc7018d, type: 2}
+  - {fileID: 11400000, guid: b66e82bbb5a22a74bbb810a2129f183f, type: 2}
+  - {fileID: 11400000, guid: 27fc384740cea074c96cbb52e2553b0d, type: 2}
+--- !u!114 &732717044
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 732717038}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf0d1d8332b40d649b785f21fc98139e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _inventory: {fileID: 11400000, guid: 4b4903dbe1c434d418a3afff1b12a3ba, type: 2}
 --- !u!1 &878156015
 GameObject:
   m_ObjectHideFlags: 0
