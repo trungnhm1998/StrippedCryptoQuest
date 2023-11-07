@@ -79,7 +79,12 @@ namespace CryptoQuest.Battle.UI.SelectSkill
 
         private void CreateSkillButtonsDifferentHero(HeroBehaviour hero)
         {
-            if (hero == _hero) return;
+            if (hero == _hero)
+            {
+                SetSelectableCurrentHero();
+                return;
+            } 
+
             _hero = hero;
             DestroyAllSkillButtons();
             hero.TryGetComponent(out HeroSkills skills);
@@ -90,6 +95,15 @@ namespace CryptoQuest.Battle.UI.SelectSkill
                 skillUI.Selected += SelectingTarget;
                 skillUI.Init(skill, skill.IsCastable(hero.AbilitySystem));
                 _skills.Add(skillUI);
+            }
+        }
+
+        private void SetSelectableCurrentHero()
+        {
+            foreach (var skillUI in _skills)
+            {
+                var isSelectable = skillUI.Skill.IsCastable(_hero.AbilitySystem);
+                skillUI.SetSelectable(isSelectable);
             }
         }
 
