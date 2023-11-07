@@ -1,9 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
-using CryptoQuest.Input;
-using CryptoQuest.System.Dialogue.Builder;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
