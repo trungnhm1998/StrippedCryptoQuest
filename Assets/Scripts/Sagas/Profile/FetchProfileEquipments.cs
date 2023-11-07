@@ -77,10 +77,10 @@ namespace CryptoQuest.Sagas.Profile
 
         private void ProcessResponseEquipments(EquipmentsResponse response)
         {
+            ActionDispatcher.Dispatch(new ShowLoading(false));
             if (response.code != (int)HttpStatusCode.OK) return;
             var responseEquipments = response.data.equipments;
             if (responseEquipments.Length == 0) return;
-
             OnInventoryFilled(responseEquipments);
         }
 
@@ -89,7 +89,6 @@ namespace CryptoQuest.Sagas.Profile
             var nftEquipments = responseEquipments.Select(CreateNftEquipment).ToList();
             _inventory.NftEquipments.Clear();
             _inventory.NftEquipments = nftEquipments;
-            ActionDispatcher.Dispatch(new ShowLoading(false));
             ActionDispatcher.Dispatch(new InventoryFilled());
         }
 

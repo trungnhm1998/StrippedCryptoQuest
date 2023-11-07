@@ -66,6 +66,11 @@ namespace CryptoQuest.Sagas
             }
 
             ActionDispatcher.Dispatch(new AuthenticateSucceed());
+
+            if(!string.IsNullOrEmpty(_credentials.Profile.user.walletAddress))
+            {
+                ActionDispatcher.Dispatch(new ShowWalletButton(false));
+            }
         }
     }
 }

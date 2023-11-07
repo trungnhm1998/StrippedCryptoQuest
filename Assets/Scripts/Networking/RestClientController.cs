@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using CryptoQuest.Environment;
+using CryptoQuest.Networking.API;
 using CryptoQuest.System;
 using Newtonsoft.Json;
 using Proyecto26;
@@ -177,11 +178,20 @@ namespace CryptoQuest.Networking
         private RequestHelper GenerateRequest(string path)
         {
             var mergeHeaders = MergeHeaders(_headers);
-            var accessToken = _credentials.Profile.token.access.token;
-            if (!string.IsNullOrEmpty(accessToken)) mergeHeaders.TryAdd("Authorization", "Bearer " + accessToken);
+            var accessToken = _credentials ? _credentials.Profile.token.access.token : null;
+
+            // Add authorization only when this is not login requests
+            if (!path.Contains(Accounts.LOGIN) && !path.Contains(Accounts.DEBUG_LOGIN) && !string.IsNullOrEmpty(accessToken)) 
+            { 
+                mergeHeaders.TryAdd("Authorization", "Bearer " + accessToken); 
+            }
 
             string bodyString = null;
-            if (_body != null) bodyString = JsonConvert.SerializeObject(_body);
+            if (_body != null)
+            {
+                bodyString = JsonConvert.SerializeObject(_body);
+            }
+
             var request = new RequestHelper
             {
                 Uri = $"{Env.API}/{path}",
