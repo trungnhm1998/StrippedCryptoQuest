@@ -1,35 +1,34 @@
-using System.Collections.Generic;
+using System.Collections;
 using CryptoQuest.Events.UI.Dialogs;
-using CryptoQuest.Gameplay.Quest;
 using UnityEngine;
+
 
 namespace CryptoQuest.UI.Dialogs.RewardDialog
 {
-    public class RewardDialogController : AbstractDialogController<UIRewardDialog>
+    public class RewardDialogController : MonoBehaviour
     {
         [SerializeField] private RewardDialogEventChannelSO _rewardDialogEvent;
-        private RewardDialogData _rewardDialogData;
+        private UIRewardDialog _dialog;
 
-        protected override void RegisterEvents()
-        {
-            _rewardDialogEvent.ShowEvent += ShowDialog;
-        }
+        public void OnEnable() => _rewardDialogEvent.ShowEvent += ShowDialog;
 
-        protected override void UnregisterEvents()
-        {
-            _rewardDialogEvent.ShowEvent -= ShowDialog;
-        }
+        public void OnDisable() => _rewardDialogEvent.ShowEvent -= ShowDialog;
 
-        private void ShowDialog(RewardDialogData rewardDialogData)
-        {
-            _rewardDialogData = rewardDialogData;
-            LoadAssetDialog();
-        }
+        private void OnDestroy() => GenericRewardButtonDialogController.Instance.Release(_dialog);
 
-        protected override void SetupDialog(UIRewardDialog dialog)
+        private void ShowDialog(RewardDialogData rewardDialogData) =>
+            StartCoroutine(CoLoadDialogAndShowReward(rewardDialogData));
+
+        private IEnumerator CoLoadDialogAndShowReward(RewardDialogData rewardDialogData)
         {
-            dialog
-                .SetDialogue(_rewardDialogData)
+            if (_dialog == null)
+            {
+                yield return
+                    GenericRewardButtonDialogController.Instance.CoInstantiate(dialog => _dialog = dialog, false);
+            }
+
+            _dialog
+                .SetReward(rewardDialogData)
                 .Show();
         }
     }

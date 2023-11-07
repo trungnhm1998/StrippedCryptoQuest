@@ -1,82 +1,94 @@
-using System.Collections;
-using CryptoQuest.Gameplay;
+﻿using CryptoQuest.Gameplay;
 using CryptoQuest.Input;
 using UnityEngine;
-using UnityEngine.Events;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 namespace CryptoQuest.UI.Dialogs.RewardDialog
 {
-    public class UIRewardDialog : ModalWindow<UIRewardDialog>
+    public class UIRewardDialog : AbstractDialog
     {
-        [Header("Child Components")] [SerializeField]
+        [Header("Child Components"), SerializeField]
         private InputMediatorSO _inputMediator;
 
         [SerializeField] private GameStateSO _gameStateSo;
-        [SerializeField] private float _autoCloseDelay = 1.5f;
-        [SerializeField] private Button _defaultSelectButton;
-        [SerializeField] private GameObject _topNone;
-        [SerializeField] private GameObject _bottomNone;
-        [field: SerializeField] public UIRewardItem RewardItemPrefab { get; private set; }
-        [field: SerializeField] public Transform TopContainer { get; private set; }
-        [field: SerializeField] public Transform BottomContainer { get; private set; }
-        [SerializeField] private RewardScroll _scroll;
 
-        public UnityAction CloseButtonPressed;
+        [field: Header("Transform"), SerializeField]
+        public Transform TopContainer { get; private set; }
+
+        [field: SerializeField] public Transform BottomContainer { get; private set; }
+
+        [Header("UI"), SerializeField] private GameObject _topNone;
+
+        [SerializeField] private GameObject _bottomNone;
+
+        [field: Header("Components"), SerializeField]
+        private Button _defaultSelectButton;
+
+        [field: SerializeField] public UIRewardItem RewardItemPrefab { get; private set; }
+        [field: SerializeField] private RewardScroll _scroll;
+        [field: SerializeField] private InputAction _inputAction;
+
         private RewardDialogData _rewardDialogData;
 
-        protected override void OnBeforeShow()
+        private void OnEnable()
         {
-            if (_rewardDialogData.IsValid() == false) return;
+            _inputAction.Enable();
+            _inputAction.performed += OnCloseImmediately;
+
+            _inputMediator.MenuConfirmedEvent += OnCloseButtonPressed;
+        }
+
+        private void OnDisable()
+        {
+            _inputAction.Disable();
+            _inputAction.performed -= OnCloseImmediately;
+
+            _inputMediator.MenuConfirmedEvent -= OnCloseButtonPressed;
+        }
+
+        public void OnCloseButtonPressed() => Hide();
+
+        private void OnCloseImmediately(InputAction.CallbackContext action)
+        {
+            if (!action.performed) return;
+            Hide();
+        }
+
+        public override void Show()
+        {
+            base.Show();
+
+            _defaultSelectButton.Select();
+
+            if (!_rewardDialogData.IsValid()) return;
             _inputMediator.DisableAllInput();
+
             DisplayItemsReward();
         }
 
-        protected override void CheckIgnorableForClose()
+        public override void Hide()
         {
-        }
+            base.Hide();
 
-        private IEnumerator Start()
-        {
-            yield return null;
-            _defaultSelectButton.Select();
-        }
-
-        public void OnCloseButtonPressed()
-        {
-            CloseButtonPressed?.Invoke();
-            Close();
-        }
-
-        public override UIRewardDialog Close()
-        {
-            gameObject.SetActive(false);
-            if (_gameStateSo.CurrentGameState == EGameState.Field)
-                _inputMediator.EnableMapGameplayInput();
-            return base.Close();
-        }
-
-        public UIRewardDialog SetDialogue(RewardDialogData rewardDialogData)
-        {
-            _rewardDialogData = rewardDialogData;
-            return this;
+            if (_gameStateSo.CurrentGameState != EGameState.Field) return;
+            _inputMediator.EnableMapGameplayInput();
         }
 
         private void DisplayItemsReward()
         {
-            foreach (var reward in _rewardDialogData.RewardsInfos)
-                reward.CreateUI(this);
+            _rewardDialogData.RewardsInfos.ForEach(reward => reward.CreateUI(this));
 
             _topNone.SetActive(!(TopContainer.childCount > 0));
             _bottomNone.SetActive(!(BottomContainer.childCount > 0));
-            if (_topNone.activeSelf && _bottomNone.activeSelf) StartCoroutine(CoAutoClose());
+
             _scroll.UpdateStep();
         }
 
-        private IEnumerator CoAutoClose()
+        public UIRewardDialog SetReward(RewardDialogData rewardDialogData)
         {
-            yield return new WaitForSeconds(_autoCloseDelay);
-            Close();
+            _rewardDialogData = rewardDialogData;
+            return this;
         }
 
         public UIRewardItem InstantiateReward(Transform parent) => Instantiate(RewardItemPrefab, parent);
