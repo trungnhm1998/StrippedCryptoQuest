@@ -38,7 +38,9 @@ namespace CryptoQuest.UI.Dialogs
             if (_handler.IsDone && _handler.IsValid())
             {
                 var dialog = Instantiate(_handler.Result, gameObject.transform);
-                instantiatedCallback?.Invoke(dialog.GetComponent<T>());
+                var abstractDialog = dialog.GetComponent<T>();
+                CacheDialog(autoRelease, releaseTimeout, abstractDialog);
+                instantiatedCallback?.Invoke(abstractDialog);
                 yield break;
             }
 
@@ -82,10 +84,15 @@ namespace CryptoQuest.UI.Dialogs
 
             var dialogGameObject = Instantiate(_handler.Result, gameObject.transform);
             var dialog = dialogGameObject.GetComponent<T>();
+            CacheDialog(autoRelease, releaseTimeout, dialog);
+            createdCallback?.Invoke(dialog);
+        }
+
+        private void CacheDialog(bool autoRelease, float releaseTimeout, T dialog)
+        {
             _dialogs.Add(dialog);
             _cachedDialogs[dialog] = _dialogs.Count - 1;
             _releaseCoroutines[dialog] = autoRelease ? StartCoroutine(CoAutoRelease(dialog, releaseTimeout)) : null;
-            createdCallback?.Invoke(dialog);
         }
 
         private IEnumerator CoAutoRelease(T dialog, float releaseTimeout)
