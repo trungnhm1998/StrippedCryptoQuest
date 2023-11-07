@@ -35,7 +35,8 @@ namespace CryptoQuest.Tavern.Sagas
 
             var restClient = ServiceProvider.GetService<IRestClient>();
             restClient
-                .Put<TransferResponse>(API.PUT_CHARACTERS_TO_GAME, body)
+                .WithBody(body)
+                .Put<TransferResponse>(API.PUT_CHARACTERS_TO_GAME)
                 .Subscribe(OnNext, OnError, OnCompleted);
         }
 
