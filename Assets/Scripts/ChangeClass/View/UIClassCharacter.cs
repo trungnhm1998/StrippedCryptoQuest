@@ -12,7 +12,7 @@ namespace CryptoQuest.ChangeClass.View
     {
         public Action<UIOccupation> OnSelected;
         [SerializeField] private ScrollRect _scrollRect;
-        [SerializeField] private UIOccupation _characterClassObject;
+        [SerializeField] private GameObject _characterClassObject;
         private List<Button> _listButton = new();
 
         private void OnItemSelected(UIOccupation item)
@@ -25,7 +25,7 @@ namespace CryptoQuest.ChangeClass.View
             CleanUpScrollView();
             foreach (var character in characterClasses)
             {
-                UIOccupation newClass = Instantiate(_characterClassObject, _scrollRect.content);
+                var newClass = Instantiate(_characterClassObject, _scrollRect.content).GetComponent<UIOccupation>();
                 newClass.OnItemSelected += OnItemSelected;
                 newClass.ConfigureCell(character);
             }
@@ -36,8 +36,9 @@ namespace CryptoQuest.ChangeClass.View
         {
             yield return null;
             if (_scrollRect.content.childCount == 0) yield break;
-            EventSystem.current.SetSelectedGameObject(_listButton[0].gameObject);
-            OnSelected?.Invoke(_listButton[0].GetComponent<UIOccupation>());
+            var firstItemGO = _scrollRect.content.GetChild(0).gameObject.GetComponent<UIOccupation>();
+            EventSystem.current.SetSelectedGameObject(firstItemGO.gameObject);
+            OnSelected?.Invoke(firstItemGO);
             GetListButton();
         }
 

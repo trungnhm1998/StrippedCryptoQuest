@@ -4,7 +4,6 @@ using System.Collections;
 using System.Collections.Generic;
 using CryptoQuest.Character;
 using CryptoQuest.ChangeClass.View;
-using CryptoQuest.Networking.Menu.DimensionBox;
 using CryptoQuest.ChangeClass.API;
 
 namespace CryptoQuest.ChangeClass
@@ -13,7 +12,7 @@ namespace CryptoQuest.ChangeClass
     {
         [field: SerializeField] public List<UIClassMaterial> ListClassMaterial { get; private set; }
         [SerializeField] private List<CharacterClass> _listCharacterClass;
-        [SerializeField] private UIClassToChange _uiClassToChange;
+        [SerializeField] private UIClassCharacter _uiClassToChange;
         [SerializeField] private UIItemMaterial _uiMaterial;
         [SerializeField] private WalletMaterialAPI _materialApi;
         private IWalletCharacterModel _characterModel;
@@ -38,6 +37,7 @@ namespace CryptoQuest.ChangeClass
             _isEmptyClassMaterial = false;
             _characterModel = GetComponent<IWalletCharacterModel>();
             StartCoroutine(LoadDataToChangeClass());
+            EnableClassInteractable(true);
         }
 
         private IEnumerator LoadDataToChangeClass()
@@ -109,9 +109,20 @@ namespace CryptoQuest.ChangeClass
                     break;
                 }
             }
+
             if (_isEmptyClassMaterial || !_uiMaterial.IsValid) yield break;
             IsValid = true;
             _occupation.EnableDefaultBackground(IsValid);
+        }
+
+        public void EnableClassInteractable(bool isEnable)
+        {
+            _uiClassToChange.EnableInteractable(isEnable);
+        }
+
+        public void SetSelectedClass(bool isEnable)
+        {
+            _occupation.EnableSelectedBackground(isEnable);
         }
     }
 }

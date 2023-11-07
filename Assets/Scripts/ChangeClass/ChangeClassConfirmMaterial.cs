@@ -4,6 +4,7 @@ using CryptoQuest.ChangeClass.View;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 namespace CryptoQuest.ChangeClass
 {
@@ -33,7 +34,7 @@ namespace CryptoQuest.ChangeClass
         }
 
         private void GetLastClassMaterial(UICharacter character)
-        {   
+        {
             _lastClassMaterial = character;
         }
 
@@ -51,15 +52,13 @@ namespace CryptoQuest.ChangeClass
 
         public void EnableButtonInteractable(bool isEnable, int index)
         {
-            foreach (var button in _listClassMaterial[index].ListButton)
+            foreach (var button in _listClassMaterial[index].ListClassCharacter)
             {
-                button.interactable = isEnable;
+                button.GetComponent<Button>().interactable = isEnable;
             }
 
-            var firstItemGO = _listClassMaterial[index].ListButton[0].gameObject;
+            var firstItemGO = _listClassMaterial[index].ListClassCharacter[0].gameObject;
             EventSystem.current.SetSelectedGameObject(firstItemGO);
         }
-
-
     }
 }

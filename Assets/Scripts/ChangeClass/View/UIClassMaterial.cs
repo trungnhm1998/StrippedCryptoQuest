@@ -11,9 +11,9 @@ namespace CryptoQuest.ChangeClass.View
     public class UIClassMaterial : MonoBehaviour
     {
         [SerializeField] private ScrollRect _scrollRect;
-        [SerializeField] private UICharacter _characterClassObject;
+        [SerializeField] private GameObject _characterClassObject;
         private List<ICharacterModel> _listClassMaterial = new();
-        public List<Button> ListButton { get; private set; }
+        public List<UICharacter> ListClassCharacter { get; private set; } = new();
         public UIOccupation _occupation { get; private set; } = new();
         public bool IsEmptyMaterial { get; private set; }
         public bool IsFilterClassMaterial { get; private set; }
@@ -33,9 +33,9 @@ namespace CryptoQuest.ChangeClass.View
             {
                 if (ClassID.ToString() == _listClassMaterial[i].ClassId)
                 {
-                    UICharacter newMaterial = Instantiate(_characterClassObject, _scrollRect.content);
+                    var newMaterial = Instantiate(_characterClassObject, _scrollRect.content).GetComponent<UICharacter>();
                     newMaterial.ConfigureCell(_listClassMaterial[i]);
-                    ListButton.Add(newMaterial.GetComponent<Button>());
+                    ListClassCharacter.Add(newMaterial);
                 }
             }
             IsFinishInstantiateData = true;
@@ -51,9 +51,9 @@ namespace CryptoQuest.ChangeClass.View
             {
                 if (ClassID.ToString() == _listClassMaterial[i].ClassId && _listClassMaterial[i].Name == character.Class.Name)
                 {
-                    UICharacter newMaterial = Instantiate(_characterClassObject, _scrollRect.content);
+                    var newMaterial = Instantiate(_characterClassObject, _scrollRect.content).GetComponent<UICharacter>();
                     newMaterial.ConfigureCell(_listClassMaterial[i]);
-                    ListButton.Add(newMaterial.GetComponent<Button>());
+                    ListClassCharacter.Add(newMaterial);
                 }
             }
             IsFilterClassMaterial = true;
@@ -61,7 +61,7 @@ namespace CryptoQuest.ChangeClass.View
 
         private void CleanUpScrollView()
         {
-            ListButton.Clear();
+            ListClassCharacter.Clear();
             foreach (Transform child in _scrollRect.content)
             {
                 Destroy(child.gameObject);
