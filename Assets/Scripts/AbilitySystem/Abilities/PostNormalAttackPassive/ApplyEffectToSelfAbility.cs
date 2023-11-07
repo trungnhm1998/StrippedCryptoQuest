@@ -1,19 +1,24 @@
-﻿using IndiGames.GameplayAbilitySystem.AbilitySystem;
-using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
-using IndiGames.GameplayAbilitySystem.AbilitySystem.ScriptableObjects;
+﻿using System;
+using IndiGames.GameplayAbilitySystem.AbilitySystem;
 using IndiGames.GameplayAbilitySystem.EffectSystem;
 using IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects;
-using IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects.EffectExecutionCalculation;
 using UnityEngine;
 
 namespace CryptoQuest.AbilitySystem.Abilities.PostNormalAttackPassive
 {
-    [CreateAssetMenu(menuName = "Crypto Quest/Ability System/Passive/Condition Skill/Target Self", fileName = "ConditionSkill")]
+    [CreateAssetMenu(menuName = "Crypto Quest/Ability System/Passive/Condition Skill/Target Self",
+        fileName = "ConditionSkill")]
     public class ApplyEffectToSelfAbility : PostNormalAttackPassiveBase
     {
         [field: SerializeField] public GameplayEffectDefinition Effect { get; private set; }
         protected override GameplayAbilitySpec CreateAbility()
             => new ApplyEffectToSelfSpec(this);
+#if UNITY_EDITOR
+        public override PostNormalAttackPassiveBase CreateInstance()
+        {
+            return (ApplyEffectToSelfAbility)Activator.CreateInstance(this.GetType());
+        }
+#endif
     }
 
     public class ApplyEffectToSelfSpec : PostNormalAttackPassiveSpecBase

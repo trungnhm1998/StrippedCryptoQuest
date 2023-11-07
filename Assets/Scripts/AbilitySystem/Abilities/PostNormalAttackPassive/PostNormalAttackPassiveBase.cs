@@ -1,10 +1,9 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using CryptoQuest.Battle.Components;
-using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
-using IndiGames.GameplayAbilitySystem.AbilitySystem.ScriptableObjects;
 using IndiGames.GameplayAbilitySystem.EffectSystem;
-using IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace CryptoQuest.AbilitySystem.Abilities.PostNormalAttackPassive
 {
@@ -20,10 +19,14 @@ namespace CryptoQuest.AbilitySystem.Abilities.PostNormalAttackPassive
         public PostDamageContext(GameplayEffectContext ctx) : base(ctx.SkillInfo) { }
         public DamageContext DamageContext { get; set; }
     }
-    
+
     public abstract class PostNormalAttackPassiveBase : PassiveAbility
     {
         [field: SerializeField, Range(0, 1f)] public float SuccessRate { get; private set; } = 1f;
+#if UNITY_EDITOR
+        public abstract PostNormalAttackPassiveBase CreateInstance();
+
+#endif
     }
 
     public abstract class PostNormalAttackPassiveSpecBase : PassiveAbilitySpec
@@ -58,7 +61,7 @@ namespace CryptoQuest.AbilitySystem.Abilities.PostNormalAttackPassive
             var failedToActive = rnd > ability.SuccessRate;
             Debug.Log(
                 $"Failed to active {ability.name} with rate {ability.SuccessRate}, rolled {rnd}: {failedToActive}");
-                
+
             return failedToActive;
         }
 
@@ -69,6 +72,7 @@ namespace CryptoQuest.AbilitySystem.Abilities.PostNormalAttackPassive
                 Debug.Log($"Active {AbilitySO.name} fail because target is invalid or dead");
                 return false;
             }
+
             return true;
         }
 

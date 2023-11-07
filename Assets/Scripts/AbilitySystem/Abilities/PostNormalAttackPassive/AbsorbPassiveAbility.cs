@@ -1,26 +1,31 @@
-﻿using CryptoQuest.AbilitySystem.Attributes;
+﻿using System;
 using IndiGames.GameplayAbilitySystem.AbilitySystem;
-using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
-using IndiGames.GameplayAbilitySystem.AbilitySystem.ScriptableObjects;
 using IndiGames.GameplayAbilitySystem.EffectSystem;
 using IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects;
-using IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects.EffectExecutionCalculation;
 using UnityEngine;
 
 namespace CryptoQuest.AbilitySystem.Abilities.PostNormalAttackPassive
 {
-    [CreateAssetMenu(menuName = "Crypto Quest/Ability System/Passive/Condition Skill/Target Both", fileName = "ConditionSkill")]
+    [CreateAssetMenu(menuName = "Crypto Quest/Ability System/Passive/Condition Skill/Target Both",
+        fileName = "ConditionSkill")]
     public class AbsorbPassiveAbility : PostNormalAttackPassiveBase
     {
         [field: SerializeField] public GameplayEffectDefinition Effect { get; private set; }
 
         [Header("Absorb Info")]
         [SerializeField] private GameplayEffectContext _absorbContext;
+
         public GameplayEffectContext AbsorbContext => _absorbContext;
         [field: SerializeField] public GameplayEffectDefinition AbsorbEffect { get; private set; }
 
         protected override GameplayAbilitySpec CreateAbility()
             => new AbsorbPassiveSpec(this);
+#if UNITY_EDITOR
+        public override PostNormalAttackPassiveBase CreateInstance()
+        {
+            return (AbsorbPassiveAbility)Activator.CreateInstance(this.GetType());
+        }
+#endif
     }
 
     public class AbsorbPassiveSpec : PostNormalAttackPassiveSpecBase
