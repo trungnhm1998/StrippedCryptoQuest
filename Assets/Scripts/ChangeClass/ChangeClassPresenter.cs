@@ -10,24 +10,31 @@ namespace CryptoQuest.ChangeClass
 {
     public class ChangeClassPresenter : MonoBehaviour
     {
+        [field: SerializeField] public List<UIClassMaterial> ListClassMaterial { get; private set; }
         [SerializeField] private List<CharacterClass> _listCharacterClass;
         [SerializeField] private UIClassToChange _uiClassToChange;
-        [SerializeField] private UIClassMaterial _firstClassMaterialPanel;
-        [SerializeField] private UIClassMaterial _secondClassMaterialPanel;
         [SerializeField] private UIItemMaterial _uiMaterial;
         [SerializeField] private WalletMaterialAPI _materialApi;
         private IWalletCharacterModel _characterModel;
         private List<ICharacterModel> _characterData = new();
-        private UIOccupation _material;
+        private UIOccupation _occupation;
+        private bool _isEmptyClassMaterial;
+        public bool IsValid { get; private set; }
 
         private void OnEnable()
         {
             Init();
-            _uiClassToChange.OnSelected += RenderCharacterMaterial;
+            _uiClassToChange.OnSelected += HandleSelectedOccupation;
         }
 
-        private void Init()
+        private void OnDisable()
         {
+            _uiClassToChange.OnSelected -= HandleSelectedOccupation;
+        }
+
+        public void Init()
+        {
+            _isEmptyClassMaterial = false;
             _characterModel = GetComponent<IWalletCharacterModel>();
             StartCoroutine(LoadDataToChangeClass());
         }
@@ -37,6 +44,7 @@ namespace CryptoQuest.ChangeClass
             yield return null;
             _uiClassToChange.RenderClassToChange(_listCharacterClass);
             StartCoroutine(GetWalletItemMaterial());
+            StartCoroutine(GetWalletCharacterMaterial());
         }
 
         private IEnumerator GetWalletItemMaterial()
@@ -44,8 +52,7 @@ namespace CryptoQuest.ChangeClass
             _materialApi.LoadMaterialsFromWallet();
             yield return new WaitUntil(() => _materialApi.IsFinishFetchData);
             if (_materialApi.Data.Count <= 0) yield break;
-            RenderItemMaterial();
-            //TODO: Use Material to validate change class
+            StartCoroutine(RenderItemMaterial());
         }
 
         private IEnumerator GetWalletCharacterMaterial()
@@ -54,27 +61,56 @@ namespace CryptoQuest.ChangeClass
             yield return new WaitUntil(() => _characterModel.IsLoaded);
             if (_characterModel.Data.Count <= 0) yield break;
             _characterData = _characterModel.Data;
-            _firstClassMaterialPanel.InstantiateData(_characterData);
-            _secondClassMaterialPanel.InstantiateData(_characterData);
-        }
-        private void RenderCharacterMaterial(UIOccupation material)
-        {
-            _material = material;
-            StartCoroutine(GetWalletCharacterMaterial());
-            RenderItemMaterial();
+            RenderClassMaterial();
+            StartCoroutine(ValidateChangeClassMaterial());
         }
 
-        private void RenderItemMaterial()
+        private void HandleSelectedOccupation(UIOccupation occupation)
         {
+            _occupation = occupation;
+            RenderClassMaterial();
+            StartCoroutine(RenderItemMaterial());
+            StartCoroutine(ValidateChangeClassMaterial());
+        }
+
+        private void RenderClassMaterial()
+        {
+            for (int i = 0; i < ListClassMaterial.Count; i++)
+            {
+                StartCoroutine(ListClassMaterial[i].InstantiateData(_characterData, _occupation, i));
+            }
+        }
+
+        private IEnumerator RenderItemMaterial()
+        {
+            yield return new WaitUntil(() => _materialApi.IsFinishFetchData);
             for (int index = 0; index < _materialApi.Data.Count; index++)
             {
-                if (_materialApi.Data[index].materialId == _material.Class.ItemMaterialId.ToString())
+                if (_materialApi.Data[index].materialId == _occupation.Class.ItemMaterialId.ToString())
                 {
-                    int quantity = _material.Class.MaterialQuantity;
+                    int quantity = _occupation.Class.MaterialQuantity;
                     _uiMaterial.ConfigureCell(_materialApi, quantity, index);
-                    return;
+                    yield break;
                 }
             }
+        }
+
+        private IEnumerator ValidateChangeClassMaterial()
+        {
+            IsValid = false;
+            _isEmptyClassMaterial = false;
+            foreach (var classMaterial in ListClassMaterial)
+            {
+                yield return new WaitUntil(() => classMaterial.IsFinishInstantiateData == true);
+                if (classMaterial.IsEmptyMaterial)
+                {
+                    _isEmptyClassMaterial = classMaterial.IsEmptyMaterial;
+                    break;
+                }
+            }
+            if (_isEmptyClassMaterial || !_uiMaterial.IsValid) yield break;
+            IsValid = true;
+            _occupation.EnableDefaultBackground(IsValid);
         }
     }
 }

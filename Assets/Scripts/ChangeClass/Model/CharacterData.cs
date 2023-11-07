@@ -34,6 +34,7 @@ namespace CryptoQuest.ChangeClass.Models
             Id = hero.classId;
             Name = hero.name;
             Element = hero.element;
+            ClassId = hero.classId;
         }
     }
 }

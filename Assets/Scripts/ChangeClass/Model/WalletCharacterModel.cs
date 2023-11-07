@@ -11,7 +11,6 @@ namespace CryptoQuest.ChangeClass.Models
     public class WalletCharacterModel : MonoBehaviour, IWalletCharacterModel
     {
         private WalletCharacterAPI _walletCharacterAPI;
-
         public List<ICharacterModel> Data { get; private set; }
         public bool IsLoaded { get; private set; }
 
@@ -34,7 +33,7 @@ namespace CryptoQuest.ChangeClass.Models
 
         private IEnumerator ImportCharacter(List<CharacterAPI> characters)
         {
-            yield return new WaitForSeconds(1f);
+            yield return null;
             foreach (var character in characters)
             {
                 var obj = new CharacterData(character);

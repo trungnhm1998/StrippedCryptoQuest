@@ -2,9 +2,8 @@ using CryptoQuest.ChangeClass.Interfaces;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
-using CryptoQuest.Menu;
-using System;
-using CryptoQuest.Character;
+using UnityEngine.Events;
+using System.Collections;
 
 
 namespace CryptoQuest.ChangeClass.View
@@ -13,15 +12,25 @@ namespace CryptoQuest.ChangeClass.View
     {
         [SerializeField] private ScrollRect _scrollRect;
         [SerializeField] private GameObject _characterClassObject;
+        public bool IsEmptyMaterial { get; private set; }
+        public bool IsFinishInstantiateData { get; private set; }
 
-        public void InstantiateData(List<ICharacterModel> classMaterials)
+        public IEnumerator InstantiateData(List<ICharacterModel> classMaterials, UIOccupation occupation, int index)
         {
             CleanUpScrollView();
-            foreach (var material in classMaterials)
+            IsFinishInstantiateData = false;
+            yield return new WaitUntil(() => _scrollRect.content.childCount == 0);
+            if (occupation.Class.ClassMaterials.Count == 0) yield break;
+            for (int i = 0; i < classMaterials.Count; i++)
             {
-                var newMaterial = Instantiate(_characterClassObject, _scrollRect.content).GetComponent<UICharacter>();
-                newMaterial.ConfigureCell(material);
+                if (occupation.Class.ClassMaterials[index].Id.ToString() == classMaterials[i].ClassId)
+                {
+                    var newMaterial = Instantiate(_characterClassObject, _scrollRect.content).GetComponent<UICharacter>();
+                    newMaterial.ConfigureCell(classMaterials[i]);
+                }
             }
+            IsFinishInstantiateData = true;
+            IsEmptyMaterial = _scrollRect.content.childCount <= 0;
         }
 
         private void CleanUpScrollView()

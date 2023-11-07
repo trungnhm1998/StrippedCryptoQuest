@@ -3,9 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using CryptoQuest.Menu;
-using CryptoQuest.ChangeClass.Interfaces;
 using CryptoQuest.Character;
-using UnityEngine.Localization.Components;
 
 namespace CryptoQuest
 {
@@ -16,6 +14,7 @@ namespace CryptoQuest
         [SerializeField] private TextMeshProUGUI _displayName;
         [SerializeField] private Image _icon;
         [SerializeField] private GameObject _selectedBackground;
+        [SerializeField] private GameObject _defaultBackground;
         [SerializeField] private MultiInputButton _button;
         private bool _isSelected = false;
 
@@ -31,7 +30,6 @@ namespace CryptoQuest
         {
             _button.Selected += OnSelected;
             _button.DeSelected += OnDeselected;
-            _button.onClick.AddListener(CharacterClassPressed);
         }
 
         private void OnDisable()
@@ -49,14 +47,12 @@ namespace CryptoQuest
         private void OnDeselected()
         {
             _selectedBackground.SetActive(false);
+            _defaultBackground.SetActive(false);
         }
 
-        private void CharacterClassPressed()
+        public void EnableDefaultBackground(bool isEnable)
         {
-            OnSubmit?.Invoke(this);
-            _selectedBackground.SetActive(true);
-            _button.interactable = false;
-            _isSelected = true;
+            _defaultBackground.SetActive(isEnable);
         }
     }
 }
