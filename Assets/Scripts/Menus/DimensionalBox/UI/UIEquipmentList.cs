@@ -152,5 +152,7 @@ namespace CryptoQuest.Menus.DimensionalBox.UI
 
             _transferEquipmentEvent.RaiseEvent(equipments);
         }
+
+        public void Reset() => Initialize(_equipments);
     }
 }
