@@ -14,7 +14,7 @@ namespace CryptoQuest.ChangeClass.View
         [SerializeField] private GameObject _characterClassObject;
         private List<ICharacterModel> _listClassMaterial = new();
         public List<UICharacter> ListClassCharacter { get; private set; } = new();
-        public UIOccupation _occupation { get; private set; } = new();
+        public UIOccupation _occupation { get; private set; }
         public bool IsEmptyMaterial { get; private set; }
         public bool IsFilterClassMaterial { get; private set; }
         public bool IsFinishInstantiateData { get; private set; }
