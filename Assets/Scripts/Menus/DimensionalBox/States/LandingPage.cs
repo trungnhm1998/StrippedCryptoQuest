@@ -18,6 +18,8 @@ namespace CryptoQuest.Menus.DimensionalBox.States
         protected override void OnEnter()
         {
             EnableButtons(true);
+            StateMachine.EquipmentsTransferPanel.SetActive(false);
+            StateMachine.MetaDTransferPanel.SetActive(false);
             _landingPage.gameObject.SetActive(true);
             StateMachine.Input.MenuCancelEvent += OnBackToNavigation;
             _landingPage.TransferringEquipments += ChangeToTransferEquipmentState;
