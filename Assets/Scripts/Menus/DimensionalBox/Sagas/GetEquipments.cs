@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
+using CryptoQuest.Battle.Components;
 using CryptoQuest.Core;
 using CryptoQuest.Events;
-using CryptoQuest.Item.Equipment;
-using CryptoQuest.Menus.DimensionalBox.Objects;
+using CryptoQuest.Gameplay.Inventory;
+using CryptoQuest.Gameplay.PlayerParty;
 using CryptoQuest.Networking;
 using CryptoQuest.Networking.API;
 using CryptoQuest.Sagas;
@@ -24,16 +26,18 @@ namespace CryptoQuest.Menus.DimensionalBox.Sagas
         // TODO: Not good practice to save data in saga
         private readonly List<EquipmentResponse> _inGameEquipmentsCache = new();
         private readonly List<EquipmentResponse> _inBoxEquipmentsCache = new();
+        private IPartyController _partyManager;
 
         protected override void HandleAction(GetNftEquipments ctx)
         {
             var isCacheEmpty = _inGameEquipmentsCache.Count == 0 && _inBoxEquipmentsCache.Count == 0;
             /*
              * TODO: Only update cache if dirty or needed
-             * Cache would be dirty after a transfer, or when the user enters the dimensional box
+             * Cache would be dirty after a transfer, or when the user first enters the dimensional box
              */
             if (isCacheEmpty == false && ctx.ForceRefresh == false)
             {
+                UpdateInGameCache(_inGameEquipmentsCache.ToArray());
                 ActionDispatcher.Dispatch(new GetNftEquipmentsSucceed());
                 return;
             }
@@ -49,8 +53,8 @@ namespace CryptoQuest.Menus.DimensionalBox.Sagas
 
         private void OnError(Exception obj)
         {
-            ActionDispatcher.Dispatch(new ShowLoading(false));
             Debug.LogError(obj);
+            ActionDispatcher.Dispatch(new ShowLoading(false));
             ActionDispatcher.Dispatch(new GetNftEquipmentsFailed());
         }
 
@@ -67,14 +71,32 @@ namespace CryptoQuest.Menus.DimensionalBox.Sagas
         private void UpdateInGameCache(EquipmentResponse[] equipments)
         {
             if (equipments.Length == 0) return;
+            _partyManager ??= ServiceProvider.GetService<IPartyController>();
             _inGameEquipmentsCache.Clear();
             foreach (var equipment in equipments)
             {
                 if (equipment.inGameStatus != (int)EEquipmentStatus.InGame) continue;
+                equipment.isEquipped = IsEquipping(equipment);
                 _inGameEquipmentsCache.Add(equipment);
             }
 
             _inGameEvent.RaiseEvent(_inGameEquipmentsCache);
+        }
+
+        private bool IsEquipping(EquipmentResponse equipmentResponse)
+        {
+            foreach (var slot in _partyManager.Slots)
+            {
+                if (slot.IsValid() == false) continue;
+                slot.HeroBehaviour.TryGetComponent(out EquipmentsController equipmentsController);
+                var equipmentsSlots = equipmentsController.Equipments.Slots;
+                if (equipmentsSlots.Any(equipmentSlot => equipmentSlot.Equipment.Id == equipmentResponse.id))
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         private void UpdateInboxCache(EquipmentResponse[] equipments)

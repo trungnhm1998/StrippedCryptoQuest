@@ -21,6 +21,7 @@ namespace CryptoQuest.Menus.DimensionalBox.States
 
         protected override void OnEnter()
         {
+            _equipmentsTransferPanel.SetActive(true);
             _hasFocusOnFirstInitializedList = false;
             _getDataSucceed = ActionDispatcher.Bind<GetNftEquipmentsSucceed>(RegisterEscapeKey);
             _getDataFailed = ActionDispatcher.Bind<GetNftEquipmentsFailed>(RegisterEscapeKey);
@@ -33,7 +34,6 @@ namespace CryptoQuest.Menus.DimensionalBox.States
             }
 
             ActionDispatcher.Dispatch(new GetNftEquipments());
-            _equipmentsTransferPanel.SetActive(true);
         }
 
         protected override void OnExit()
