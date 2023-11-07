@@ -11,8 +11,8 @@ namespace CryptoQuest.ChangeClass
         public event UnityAction ConfirmYesEvent;
         public event UnityAction ConfirmNoEvent;
         [SerializeField] private YesNoDialogEventChannelSO _yesNoDialogEventSO;
-        public UIDialogueForGenericMerchant Dialogue { get; private set; }
         [SerializeField] private LocalizedString _defaultMessage;
+        public UIDialogueForGenericMerchant Dialogue { get; private set; }
 
         public void ShowChangeClassDialog()
         {

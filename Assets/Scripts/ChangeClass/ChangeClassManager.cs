@@ -1,6 +1,5 @@
 using UnityEngine;
 using CryptoQuest.ChangeClass.ScriptableObjects;
-using CryptoQuest.UI.Dialogs.Dialogue;
 using UnityEngine.UI;
 using UnityEngine.Events;
 
