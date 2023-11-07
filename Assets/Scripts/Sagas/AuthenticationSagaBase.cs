@@ -20,6 +20,7 @@ namespace CryptoQuest.Sagas
         protected void OnUserSignedOut(string json)
         {
             Debug.Log("FirebaseAuthScript: OnUserSignedOut " + json);
+            ActionDispatcher.Dispatch(new ShowLoading(false));
             ActionDispatcher.Dispatch(new AuthenticateFailed());
         }
 
