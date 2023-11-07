@@ -48,7 +48,11 @@ namespace CryptoQuest.Menus.DimensionalBox.Sagas
             ActionDispatcher.Dispatch(new GetNftEquipments { ForceRefresh = true });
         }
 
-        private void OnError(Exception obj) => ActionDispatcher.Dispatch(new ShowLoading(false));
+        private void OnError(Exception obj)
+        {
+            ActionDispatcher.Dispatch(new ShowLoading(false));
+            ActionDispatcher.Dispatch(new TransferFailed());
+        }
 
         private void OnCompleted() { }
     }

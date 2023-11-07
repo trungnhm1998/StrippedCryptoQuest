@@ -14,4 +14,5 @@ namespace CryptoQuest.Menus.DimensionalBox
     public class GetNftEquipmentsFailed : ActionBase { }
 
     public class TransferSucceed : ActionBase { }
+    public class TransferFailed : ActionBase { }
 }

@@ -7,7 +7,9 @@ namespace CryptoQuest.Menus.DimensionalBox.UI
     internal class DimensionalBoxStateMachine : MonoBehaviour
     {
         [SerializeField] private GameObject _equipmentsTransferPanel;
+        public GameObject EquipmentsTransferPanel => _equipmentsTransferPanel;
         [SerializeField] private GameObject _metaDTransferPanel;
+        public GameObject MetaDTransferPanel => _metaDTransferPanel;
         [SerializeField] private UILandingPage _landingPage;
         [SerializeField] private InputMediatorSO _input;
         public InputMediatorSO Input => _input;
