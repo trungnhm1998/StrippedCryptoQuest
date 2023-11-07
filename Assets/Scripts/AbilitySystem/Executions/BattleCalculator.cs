@@ -143,5 +143,6 @@ namespace CryptoQuest.AbilitySystem.Executions
         public const float CORRECTION_MAGIC_ATTACK_VALUE = 0.2f;
         public const float CORRECTION_ATTRIBUTE_VALUE = 1;
         public const float CORRECTION_PROBABILITY_VALUE = 100;
+        public const float CRITICAL_FACTOR = 1.5f;
     }
 }

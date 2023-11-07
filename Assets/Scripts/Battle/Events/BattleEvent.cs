@@ -232,5 +232,8 @@ namespace CryptoQuest.Battle.Events
         public float Value { get; set; }
     }
 
+    public class CriticalHitEvent : LogEvent { }
+
+
     #endregion
 }
