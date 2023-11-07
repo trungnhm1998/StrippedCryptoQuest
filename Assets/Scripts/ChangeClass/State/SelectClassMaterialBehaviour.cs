@@ -1,32 +1,31 @@
-using CryptoQuest.Menu;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.UI;
+using UnityEngine.Localization;
 
 
 namespace CryptoQuest.ChangeClass.StateMachine
 {
-    public class OverviewStateBehaviour : StateMachineBehaviour
+    public class SelectClassMaterialBehaviour : StateMachineBehaviour
     {
+        [SerializeField] private LocalizedString _message;
         private ChangeClassStateController _stateController;
         private ChangeClassInputManager _input;
         private Animator _animator;
-        private static readonly int _submit = Animator.StringToHash("isChangeClass");
+        private static readonly int _submit = Animator.StringToHash("isSelectMaterial");
+        private static readonly int _exit = Animator.StringToHash("isChangeClass");
 
         public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
             _animator = animator;
             _stateController = _animator.GetComponent<ChangeClassStateController>();
-            _stateController.Manager.OpenChangeClassEvent += ChangeState;
             _input = _stateController.Input;
             _input.CancelEvent += ExitState;
-            _stateController.DefaultButton.Select();
+            _stateController.DialogController.Dialogue
+                .SetMessage(_message).Show();
         }
 
         public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
             _input.CancelEvent -= ExitState;
-            _stateController.Manager.OpenChangeClassEvent -= ChangeState;
         }
 
         private void ChangeState()
@@ -36,7 +35,7 @@ namespace CryptoQuest.ChangeClass.StateMachine
 
         private void ExitState()
         {
-            _stateController.ExitStateEvent?.Invoke();
+            _animator.SetTrigger(_exit);
         }
     }
 }

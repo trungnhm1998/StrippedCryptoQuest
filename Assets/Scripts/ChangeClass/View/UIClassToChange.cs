@@ -15,11 +15,6 @@ namespace CryptoQuest.ChangeClass.View
         [SerializeField] private ScrollRect _scrollRect;
         [SerializeField] private GameObject _characterClassObject;
 
-        private void OnItemPressed(UIOccupation item)
-        {
-            OnSubmit?.Invoke(item);
-        }
-
         private void OnItemSelected(UIOccupation item)
         {
             OnSelected?.Invoke(item);
@@ -31,7 +26,6 @@ namespace CryptoQuest.ChangeClass.View
             foreach (var character in characterClasses)
             {
                 var newClass = Instantiate(_characterClassObject, _scrollRect.content).GetComponent<UIOccupation>();
-                newClass.OnSubmit += OnItemPressed;
                 newClass.OnItemSelected += OnItemSelected;
                 newClass.ConfigureCell(character);
             }

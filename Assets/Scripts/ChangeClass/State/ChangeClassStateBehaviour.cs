@@ -11,7 +11,7 @@ namespace CryptoQuest.ChangeClass.StateMachine
         private ChangeClassStateController _stateController;
         private ChangeClassInputManager _input;
         private Animator _animator;
-        private static readonly int _submit = Animator.StringToHash("isConfirm");
+        private static readonly int _submit = Animator.StringToHash("isSelectMaterial");
         private static readonly int _exit = Animator.StringToHash("isOverview");
 
         public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -33,7 +33,8 @@ namespace CryptoQuest.ChangeClass.StateMachine
 
         private void ChangeState()
         {
-            _animator.SetTrigger(_submit);
+            if (_stateController.Presenter.IsValid)
+                _animator.SetTrigger(_submit);
         }
 
         private void ExitState()
