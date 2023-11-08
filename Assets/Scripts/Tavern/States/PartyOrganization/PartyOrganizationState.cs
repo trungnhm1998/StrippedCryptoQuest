@@ -43,7 +43,6 @@ namespace CryptoQuest.Tavern.States.PartyOrganization
         {
             _cachedInPartyCharactersData = obj.InPartyCharacters;
             if (obj.InPartyCharacters.Count <= 0) return;
-            _controller.UIPartyOrganization.CheckEmptyList(_controller.UIParty, false);
             _controller.UIParty.SetData(obj.InPartyCharacters);
         }
 
