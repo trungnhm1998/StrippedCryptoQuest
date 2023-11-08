@@ -1,8 +1,11 @@
 using CryptoQuest.Core;
+using CryptoQuest.Menu;
 using CryptoQuest.Networking;
 using CryptoQuest.Networking.Actions;
 using CryptoQuest.System;
 using CryptoQuest.UI.Actions;
+using CryptoQuest.UI.Title;
+using CryptoQuest.UI.Title.States;
 using TinyMessenger;
 using UnityEngine;
 using UnityEngine.UI;
@@ -14,13 +17,13 @@ namespace CryptoQuest
         private TinyMessageSubscriptionToken _connectWalletToken;
         private TinyMessageSubscriptionToken _disconnectWalletToken;
 
-        private void OnEnable() 
+        private void Awake() 
         {
             _connectWalletToken = ActionDispatcher.Bind<ConnectWalletCompleted>(OnConnectWalletCompleted);
             _disconnectWalletToken = ActionDispatcher.Bind<DisconnectWalletWalletCompleted>(OnDisconnectWalletCompleted); 
         }
 
-        private void OnDisable()
+        private void OnDestroy()
         {
             ActionDispatcher.Unbind(_connectWalletToken);
             ActionDispatcher.Unbind(_disconnectWalletToken);
@@ -38,6 +41,13 @@ namespace CryptoQuest
         private void OnConnectWalletCompleted(ConnectWalletCompleted ctx)
         {
             gameObject.SetActive(!ctx.IsSuccess);
+
+            // Need reload StartGame state
+            if(ctx.IsSuccess)
+            {
+                var stateMachine = transform.root.gameObject.GetComponentInChildren<TitleStateMachine>();
+                stateMachine.ChangeState(new StartGameState());
+            }
         }
 
         private void OnDisconnectWalletCompleted(DisconnectWalletWalletCompleted ctx)
