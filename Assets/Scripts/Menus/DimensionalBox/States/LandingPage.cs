@@ -33,6 +33,8 @@ namespace CryptoQuest.Menus.DimensionalBox.States
             _landingPage.TransferringEquipments -= ChangeToTransferEquipmentState;
             _landingPage.TransferringMetaD -= ChangeToTransferMetaDState;
             StateMachine.Focusing -= SelectDefaultButton;
+            StateMachine.EquipmentsTransferPanel.SetActive(false);
+            StateMachine.MetaDTransferPanel.SetActive(false);
             _landingPage.gameObject.SetActive(false);
         }
 
