@@ -9,6 +9,7 @@ using UniRx;
 using CryptoQuest.Networking;
 using CryptoQuest.ChangeClass.View;
 using Newtonsoft.Json;
+using CryptoQuest.UI.Actions;
 
 namespace CryptoQuest.ChangeClass.API
 {
@@ -30,10 +31,11 @@ namespace CryptoQuest.ChangeClass.API
 
         public void LoadDataToPreviewCharacter(UICharacter firstClassMaterial, UICharacter lastClassMaterial)
         {
+            ActionDispatcher.Dispatch(new ShowLoading());
             IsFinishFetchData = false;
             _restAPINetworkController = ServiceProvider.GetService<IRestClient>();
             _restAPINetworkController
-                .WithBody(new Body { BaseUnitId1 = firstClassMaterial.Class.Id, BaseUnitId2 = lastClassMaterial.Class.Id })
+                .WithBody(new Body { BaseUnitId1 = firstClassMaterial.Class.id.ToString(), BaseUnitId2 = lastClassMaterial.Class.id.ToString() })
                 .Post<PreviewCharacterData>(ChangeClassAPI.PREVIEW_NEW_CHARACTER)
                 .Subscribe(PreviewNewCharacter, OnGetNewClassFailed, OnGetNewClassSuccess);
         }
@@ -43,12 +45,14 @@ namespace CryptoQuest.ChangeClass.API
             if (response.code != (int)HttpStatusCode.OK) return;
             Data = response.data;
             IsFinishFetchData = true;
+            ActionDispatcher.Dispatch(new ShowLoading(false));
         }
 
         private void OnGetNewClassFailed(Exception obj)
         {
             Debug.Log($"Preview New Character::Load failed : {obj.Message}");
             IsFinishFetchData = true;
+            ActionDispatcher.Dispatch(new ShowLoading(false));
         }
 
         private void OnGetNewClassSuccess()

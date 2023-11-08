@@ -20,6 +20,7 @@ namespace CryptoQuest.ChangeClass.StateMachine
             _input.SubmitEvent += ChangeState;
             _stateController.DialogController.Dialogue
                 .SetMessage(_message).Show();
+            _stateController.ConfirmMaterial.ChangeClass();
         }
 
         public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -30,6 +31,7 @@ namespace CryptoQuest.ChangeClass.StateMachine
         private void ChangeState()
         {
             _animator.SetTrigger(_submit);
+            _stateController.Presenter.Init();
         }
     }
 }

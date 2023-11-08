@@ -12,8 +12,8 @@ namespace CryptoQuest.ChangeClass.View
     {
         public Action<UIOccupation> OnSelected;
         [SerializeField] private ScrollRect _scrollRect;
-        [SerializeField] private GameObject _characterClassObject;
-        private List<Button> _listButton = new();
+        [SerializeField] private UIOccupation _characterClassObject;
+        public List<Button> _listButton = new();
 
         private void OnItemSelected(UIOccupation item)
         {
@@ -25,7 +25,7 @@ namespace CryptoQuest.ChangeClass.View
             CleanUpScrollView();
             foreach (var character in characterClasses)
             {
-                var newClass = Instantiate(_characterClassObject, _scrollRect.content).GetComponent<UIOccupation>();
+                var newClass = Instantiate(_characterClassObject, _scrollRect.content);
                 newClass.OnItemSelected += OnItemSelected;
                 newClass.ConfigureCell(character);
             }
@@ -44,6 +44,7 @@ namespace CryptoQuest.ChangeClass.View
 
         private void GetListButton()
         {
+            _listButton.Clear();
             foreach (Transform child in _scrollRect.content)
             {
                 _listButton.Add(child.GetComponent<Button>());

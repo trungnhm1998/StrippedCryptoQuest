@@ -1,23 +1,22 @@
 using UnityEngine;
-using CryptoQuest.ChangeClass.Interfaces;
 using System.Collections;
 using System.Collections.Generic;
 using CryptoQuest.Character;
 using CryptoQuest.ChangeClass.View;
 using CryptoQuest.ChangeClass.API;
+using System.Threading.Tasks;
 
 namespace CryptoQuest.ChangeClass
 {
     public class ChangeClassPresenter : MonoBehaviour
     {
         [field: SerializeField] public List<UIClassMaterial> ListClassMaterial { get; private set; }
+        [SerializeField] private List<UIItemMaterial> _listItemMaterial;
         [SerializeField] private List<CharacterClass> _listCharacterClass;
         [SerializeField] private UIClassCharacter _uiClassToChange;
-        [SerializeField] private UIItemMaterial _uiMaterial;
         [SerializeField] private WalletMaterialAPI _materialApi;
-        private IWalletCharacterModel _characterModel;
-        private List<ICharacterModel> _characterData = new();
-        private UIOccupation _occupation;
+        [SerializeField] private WalletCharacterAPI _characterAPI;
+        public UIOccupation Occupation { get; private set; }
         private bool _isEmptyClassMaterial;
         public bool IsValid { get; private set; }
 
@@ -35,7 +34,6 @@ namespace CryptoQuest.ChangeClass
         public void Init()
         {
             _isEmptyClassMaterial = false;
-            _characterModel = GetComponent<IWalletCharacterModel>();
             StartCoroutine(LoadDataToChangeClass());
             EnableClassInteractable(true);
         }
@@ -58,17 +56,16 @@ namespace CryptoQuest.ChangeClass
 
         private IEnumerator GetWalletCharacterMaterial()
         {
-            yield return _characterModel.CoGetData();
-            yield return new WaitUntil(() => _characterModel.IsLoaded);
-            if (_characterModel.Data.Count <= 0) yield break;
-            _characterData = _characterModel.Data;
+            _characterAPI.LoadCharacterFromWallet();
+            yield return new WaitUntil(() => _characterAPI.IsFinishFetchData);
+            if (_characterAPI.Data.Count <= 0) yield break;
             RenderClassMaterial();
             StartCoroutine(ValidateChangeClassMaterial());
         }
 
         private void HandleSelectedOccupation(UIOccupation occupation)
         {
-            _occupation = occupation;
+            Occupation = occupation;
             RenderClassMaterial();
             StartCoroutine(RenderItemMaterial());
             StartCoroutine(ValidateChangeClassMaterial());
@@ -76,9 +73,10 @@ namespace CryptoQuest.ChangeClass
 
         private void RenderClassMaterial()
         {
+            if (Occupation == null) return;
             for (int i = 0; i < ListClassMaterial.Count; i++)
             {
-                StartCoroutine(ListClassMaterial[i].InstantiateData(_characterData, _occupation, i));
+                StartCoroutine(ListClassMaterial[i].InstantiateData(_characterAPI.Data, Occupation, i));
             }
         }
 
@@ -87,10 +85,13 @@ namespace CryptoQuest.ChangeClass
             yield return new WaitUntil(() => _materialApi.IsFinishFetchData);
             for (int index = 0; index < _materialApi.Data.Count; index++)
             {
-                if (_materialApi.Data[index].materialId == _occupation.Class.ItemMaterialId.ToString())
+                if (_materialApi.Data[index].materialId == Occupation.Class.ItemMaterialId.ToString())
                 {
-                    int quantity = _occupation.Class.MaterialQuantity;
-                    _uiMaterial.ConfigureCell(_materialApi, quantity, index);
+                    int quantity = Occupation.Class.MaterialQuantity;
+                    foreach (var itemMaterial in _listItemMaterial)
+                    {
+                        itemMaterial.ConfigureCell(_materialApi, quantity, index);
+                    }
                     yield break;
                 }
             }
@@ -102,7 +103,7 @@ namespace CryptoQuest.ChangeClass
             _isEmptyClassMaterial = false;
             foreach (var classMaterial in ListClassMaterial)
             {
-                yield return new WaitUntil(() => classMaterial.IsFinishInstantiateData == true);
+                yield return new WaitUntil(() => classMaterial.IsFinishInstantiateData);
                 if (classMaterial.IsEmptyMaterial)
                 {
                     _isEmptyClassMaterial = classMaterial.IsEmptyMaterial;
@@ -110,9 +111,14 @@ namespace CryptoQuest.ChangeClass
                 }
             }
 
-            if (_isEmptyClassMaterial || !_uiMaterial.IsValid) yield break;
+            bool isSameClass = ListClassMaterial[0].ClassID == ListClassMaterial[1].ClassID;
+            bool isMaterialValid = !_isEmptyClassMaterial && _listItemMaterial[0].IsValid;
+
+            if (isSameClass && ListClassMaterial[0].ListClassCharacter.Count <= 1 || !isMaterialValid)
+                yield break;
+
             IsValid = true;
-            _occupation.EnableDefaultBackground(IsValid);
+            Occupation.EnableDefaultBackground(IsValid);
         }
 
         public void EnableClassInteractable(bool isEnable)
@@ -122,7 +128,7 @@ namespace CryptoQuest.ChangeClass
 
         public void SetSelectedClass(bool isEnable)
         {
-            _occupation.EnableSelectedBackground(isEnable);
+            Occupation.EnableSelectedBackground(isEnable);
         }
     }
 }
