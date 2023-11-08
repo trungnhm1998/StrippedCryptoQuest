@@ -27,21 +27,21 @@ namespace CryptoQuest.ChangeClass.View
 
         public void PreviewCharacter(UICharacter character)
         {
-            _name.text = character.Class.Name;
-            _level.text = $"Lv{character.Class.Level}";
-            _minHP.text = character.Class.Hp.ToString();
-            _maxHP.text = character.Class.MaxHp.ToString();
-            _minMP.text = character.Class.Mp.ToString();
-            _maxMP.text = character.Class.MaxMp.ToString();
-            _str.text = character.Class.Str.ToString();
-            _vit.text = character.Class.Vit.ToString();
-            _exp.text = character.Class.Exp.ToString();
-            _agi.text = character.Class.Agi.ToString();
-            _int.text = character.Class.Int.ToString();
-            _luck.text = character.Class.Luck.ToString();
-            _atk.text = character.Class.Atk.ToString();
-            _mAtk.text = character.Class.MAtk.ToString();
-            _def.text = character.Class.Def.ToString();
+            _name.text = character.Class.name;
+            _level.text = $"Lv{character.Class.level}";
+            _minHP.text = character.Class.HP.ToString();
+            _maxHP.text = character.Class.maxHp.ToString();
+            _minMP.text = character.Class.MP.ToString();
+            _maxMP.text = character.Class.maxMp.ToString();
+            _str.text = character.Class.strength.ToString();
+            _vit.text = character.Class.vitality.ToString();
+            _exp.text = character.Class.exp.ToString();
+            _agi.text = character.Class.minAgility.ToString();
+            _int.text = character.Class.intelligence.ToString();
+            _luck.text = character.Class.luck.ToString();
+            _atk.text = character.Class.attack.ToString();
+            _mAtk.text = character.Class.MATK.ToString();
+            _def.text = character.Class.deffence.ToString();
         }
     }
 }

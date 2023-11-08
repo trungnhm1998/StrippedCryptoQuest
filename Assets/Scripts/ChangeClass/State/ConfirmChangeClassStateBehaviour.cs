@@ -24,6 +24,7 @@ namespace CryptoQuest.ChangeClass.StateMachine
                 .ShowConfirmDialog(_message);
             _stateController.DialogController.ConfirmYesEvent += ChangeState;
             _stateController.DialogController.ConfirmNoEvent += ExitState;
+            _stateController.ConfirmMaterial.PreviewData();
         }
 
         public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -41,6 +42,7 @@ namespace CryptoQuest.ChangeClass.StateMachine
         private void ExitState()
         {
             _animator.SetTrigger(_exit);
+            _stateController.Presenter.Init();
         }
     }
 }

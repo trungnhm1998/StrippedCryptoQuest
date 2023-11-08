@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using CryptoQuest.Menu;
-using CryptoQuest.ChangeClass.Interfaces;
+using CryptoQuest.ChangeClass.API;
 
 namespace CryptoQuest.ChangeClass.View
 {
@@ -16,12 +16,12 @@ namespace CryptoQuest.ChangeClass.View
         [SerializeField] private GameObject _selectedBackground;
         [SerializeField] private MultiInputButton _button;
 
-        public ICharacterModel Class { get; private set; }
+        public CharacterAPI Class { get; private set; }
 
-        public void ConfigureCell(ICharacterModel characterClass)
+        public void ConfigureCell(CharacterAPI characterClass)
         {
             Class = characterClass;
-            _displayName.text = characterClass.Name;
+            _displayName.text = characterClass.name;
         }
 
         private void OnEnable()

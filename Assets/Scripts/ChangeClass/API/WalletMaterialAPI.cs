@@ -7,6 +7,7 @@ using System.Net;
 using UnityEngine;
 using UniRx;
 using CryptoQuest.Networking;
+using CryptoQuest.UI.Actions;
 
 namespace CryptoQuest.ChangeClass.API
 {
@@ -14,11 +15,13 @@ namespace CryptoQuest.ChangeClass.API
     {
         private IRestClient _restAPINetworkController;
 
-        public List<MaterialAPI> Data { get; private set; }
+        public List<MaterialAPI> Data { get; private set; } = new();
         public bool IsFinishFetchData { get; private set; }
 
         public void LoadMaterialsFromWallet()
         {
+            Data.Clear();
+            ActionDispatcher.Dispatch(new ShowLoading());
             IsFinishFetchData = false;
             _restAPINetworkController = ServiceProvider.GetService<IRestClient>();
             _restAPINetworkController
@@ -31,12 +34,14 @@ namespace CryptoQuest.ChangeClass.API
             if (response.code != (int)HttpStatusCode.OK) return;
             IsFinishFetchData = true;
             Data = response.data.materials;
+            ActionDispatcher.Dispatch(new ShowLoading(false));
         }
 
         private void OnGetMaterialsFailed(Exception obj)
         {
             Debug.Log($"ChangeClass::Load failed : {obj.Message}");
             IsFinishFetchData = true;
+            ActionDispatcher.Dispatch(new ShowLoading(false));
         }
 
         private void OnGetMaterialsSuccess()

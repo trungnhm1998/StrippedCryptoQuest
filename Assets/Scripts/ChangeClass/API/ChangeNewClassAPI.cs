@@ -1,47 +1,93 @@
-using CryptoQuest.Core;
-using CryptoQuest.Networking.Actions;
 using CryptoQuest.System;
 using System;
-using System.Collections.Generic;
 using System.Net;
 using UnityEngine;
 using UniRx;
 using CryptoQuest.Networking;
+using CryptoQuest.ChangeClass.View;
+using Newtonsoft.Json;
+using CryptoQuest.UI.Actions;
+using CryptoQuest.Core;
+using CryptoQuest.Sagas;
 
 namespace CryptoQuest.ChangeClass.API
 {
-    public class ChangeNewClassAPI : MonoBehaviour
+    public class ChangeNewClassAPI : SagaBase<GetNewNftClass>
     {
-        private IRestClient _restAPINetworkController;
-
-        public List<MaterialAPI> Data { get; private set; }
-        public bool IsFinishFetchData { get; private set; }
-
-        public void LoadMaterialsFromWallet()
+        [Serializable]
+        public struct Body
         {
+            [JsonProperty("baseUnitId1")]
+            public string BaseUnitId1;
+            [JsonProperty("baseUnitId2")]
+            public string BaseUnitId2;
+            [JsonProperty("materials")]
+            public ChangeClassMaterials ChangeClassMaterials;
+        }
+
+        [Serializable]
+        public class ChangeClassMaterials
+        {
+            [JsonProperty("materialId")]
+            public string MaterialId;
+            [JsonProperty("materialNum")]
+            public int MaterialNum;
+            public ChangeClassMaterials(string id, int quantity)
+            {
+                MaterialId = id;
+                MaterialNum = quantity;
+            }
+        }
+
+
+        private IRestClient _restAPINetworkController;
+        public bool IsFinishFetchData { get; private set; }
+        private Body _requestBody;
+
+        public UserMaterials Data { get; private set; }
+
+        protected override void HandleAction(GetNewNftClass ctx)
+        {
+            ActionDispatcher.Dispatch(new ShowLoading());
             IsFinishFetchData = false;
             _restAPINetworkController = ServiceProvider.GetService<IRestClient>();
             _restAPINetworkController
-                .Get<MaterialResponseData>(ChangeClassAPI.LOAD_MATERIAL)
-                .Subscribe(OnGetMaterials, OnGetMaterialsFailed, OnGetMaterialsSuccess);
+                .WithBody(_requestBody)
+                .Post<ChangeClassResponseData>(ChangeClassAPI.CHANGE_NEW_CLASS)
+                .Subscribe(OnChangeClass, OnChangeClassFailed, OnChangeClassSuccess);
         }
 
-        private void OnGetMaterials(MaterialResponseData response)
+        public void ChangeNewClassData(UICharacter firstClassMaterial, UICharacter lastClassMaterial, UIOccupation occupation)
+        {
+            _requestBody = new Body
+            {
+                BaseUnitId1 = firstClassMaterial.Class.id.ToString(),
+                BaseUnitId2 = lastClassMaterial.Class.id.ToString(),
+                ChangeClassMaterials = new ChangeClassMaterials(occupation.Class.ItemMaterialId.ToString(), occupation.Class.MaterialQuantity)
+            };
+            ActionDispatcher.Dispatch(new GetNewNftClass { ForceRefresh = true });
+        }
+
+        private void OnChangeClass(ChangeClassResponseData response)
         {
             if (response.code != (int)HttpStatusCode.OK) return;
-            IsFinishFetchData = true;
-            Data = response.data.materials;
-        }
-
-        private void OnGetMaterialsFailed(Exception obj)
-        {
-            Debug.Log($"ChangeClass::Load failed : {obj.Message}");
+            Data = response.data;
             IsFinishFetchData = true;
         }
 
-        private void OnGetMaterialsSuccess()
+        private void OnChangeClassFailed(Exception obj)
         {
-            Debug.Log($"ChangeClass::Load Success");
+            Debug.Log($"ChangeClass:: Load Data Failed: {obj.Message}!");
+            ActionDispatcher.Dispatch(new ShowLoading(false));
+            ActionDispatcher.Dispatch(new GetNftClassesFailed());
+            IsFinishFetchData = true;
+        }
+
+        private void OnChangeClassSuccess()
+        {
+            Debug.Log($"ChangeClass:: Load Data Success!");
+            ActionDispatcher.Dispatch(new ShowLoading(false));
+            ActionDispatcher.Dispatch(new GetNftClassesSucceed());
         }
     }
 }
