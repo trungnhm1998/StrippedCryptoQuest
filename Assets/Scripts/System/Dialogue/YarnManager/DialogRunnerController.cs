@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using CryptoQuest.System.Dialogue.Events;
+using CryptoQuest.System.Dialogue.Managers;
 using UnityEngine;
 using UnityEngine.Localization.Tables;
 using UnityEngine.ResourceManagement.AsyncOperations;
@@ -37,6 +38,7 @@ namespace CryptoQuest.System.Dialogue.YarnManager
             _dialogueRunner.yarnProject = config.YarnProject;
             _dialogueRunner.SetProject(config.YarnProject);
             _localisedLineProvider.SetStringTable(config.StringTable);
+            YarnSpinnerDialogueManager.IsYarnTableLoaded = true;
         }
     }
 }

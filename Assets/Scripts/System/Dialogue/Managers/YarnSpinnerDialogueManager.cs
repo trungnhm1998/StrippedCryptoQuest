@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using CryptoQuest.Events;
 using CryptoQuest.Gameplay;
@@ -21,6 +22,7 @@ namespace CryptoQuest.System.Dialogue.Managers
         public static Action<string> PlayDialogueRequested;
         public static Action<bool> PauseTimelineRequested;
         public static Action<YarnProjectConfigSO> YarnProjectRequested;
+        public static bool IsYarnTableLoaded;
 
         private static List<YarnSpinnerDialogueManager> _systems = new List<YarnSpinnerDialogueManager>();
 
@@ -91,6 +93,7 @@ namespace CryptoQuest.System.Dialogue.Managers
 
         private void ConfigureYarnProject(YarnProjectConfigSO yarnProject)
         {
+            IsYarnTableLoaded = false;
             _projectConfigEvent.ConfigureYarnProject(yarnProject);
         }
 
@@ -108,6 +111,12 @@ namespace CryptoQuest.System.Dialogue.Managers
             Debug.Log($"YarnSpinnerDialogueManager::ShowDialogue: yarnNodeName[{yarnNodeName}]");
             _gameState.UpdateGameState(EGameState.Dialogue);
             _inputMediator.EnableDialogueInput();
+            StartCoroutine(CoRunDialogue(yarnNodeName));
+        }
+
+        private IEnumerator CoRunDialogue(string yarnNodeName)
+        {
+            yield return new WaitUntil(() => IsYarnTableLoaded);
             _dialogueRunner.StartDialogue(yarnNodeName);
         }
 
