@@ -144,6 +144,7 @@ namespace CryptoQuestEditor
         {
             var path = SPRITE_PATH + spriteName + ".sprite";
             var guid = AssetDatabase.AssetPathToGUID(path);
+            Debug.Log("Sprite: getting" + spriteName);
             return new AssetReferenceT<Sprite>(guid);
         }
 
@@ -191,57 +192,6 @@ namespace CryptoQuestEditor
             return displayName;
         }
 
-
-        private string GetNameBySlot(EquipmentSlot.EType slot)
-        {
-            switch (slot)
-            {
-                default:
-                case EquipmentSlot.EType.LeftHand:
-                    return "Weapon";
-                case EquipmentSlot.EType.RightHand:
-                    return "Shield";
-                case EquipmentSlot.EType.Body:
-                    return "Armor";
-                case EquipmentSlot.EType.Foot:
-                    return "Shoe";
-                case EquipmentSlot.EType.Head:
-                    return "Helmet";
-                case EquipmentSlot.EType.Leg:
-                    return "Trouser";
-                case EquipmentSlot.EType.Accessory1:
-                case EquipmentSlot.EType.Accessory2:
-                    return "Accessory";
-            }
-        }
-
-        private string GetPathBySlot(EquipmentSlot.EType slot)
-        {
-            switch (slot)
-            {
-                default:
-                case EquipmentSlot.EType.LeftHand:
-                case EquipmentSlot.EType.RightHand:
-                    return DEFAULT_STORAGE_PATH + "/Weapons";
-
-                case EquipmentSlot.EType.Head:
-                    return DEFAULT_STORAGE_PATH + "/Helmet";
-
-                case EquipmentSlot.EType.Body:
-                    return DEFAULT_STORAGE_PATH + "/Armor";
-
-                case EquipmentSlot.EType.Leg:
-                    return DEFAULT_STORAGE_PATH + "/Shoe";
-
-                case EquipmentSlot.EType.Foot:
-                    return DEFAULT_STORAGE_PATH + "/Trousers";
-
-                case EquipmentSlot.EType.Accessory1:
-                case EquipmentSlot.EType.Accessory2:
-                    return DEFAULT_STORAGE_PATH + "/Accessories";
-            }
-        }
-
         private EquipmentSlot.EType[] GetAllowedSlots(string[] datas)
         {
             string data = datas[ROW_EQUIPMENT_PART_ID];
@@ -286,22 +236,6 @@ namespace CryptoQuestEditor
         private int ParseData(string data) => string.IsNullOrEmpty(data) ? 0 : int.Parse(data);
         private EquipmentSlot.EType GetEquipmentSlot(int value) => (EquipmentSlot.EType)value;
 
-        private string GetTypeNameByEquipmentId(string id)
-        {
-            string idName = id.Split('_')[0];
-            switch (idName)
-            {
-                case "1":
-                    return "Weapon";
-                case "2":
-                    return "Armor";
-                case "3":
-                    return "Accessory";
-                default:
-                    return "Equipment";
-            }
-        }
-
         private string GetName(string[] data)
         {
             var normalizedName = data[5].Split(" ")[0] + "_" + data[0];
@@ -318,7 +252,6 @@ namespace CryptoQuestEditor
                 var path = AssetDatabase.GUIDToAssetPath(guid);
                 var asset = AssetDatabase.LoadAssetAtPath<EquipmentTypeSO>(path);
                 _equipmentTypeMap.TryAdd(asset.Id, asset);
-                Debug.Log("aaa" + asset.Id + asset.name);
             }
         }
     }
