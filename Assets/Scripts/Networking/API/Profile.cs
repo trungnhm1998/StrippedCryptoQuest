@@ -2,6 +2,8 @@
 {
     public static class Profile
     {
+        public const string GET_PROFILE = "crypto/user/profile";
+        
         public const string EQUIPMENTS = "crypto/equipments";
         public const string LOAD_EQUIPMENT_PATH = "crypto/equipments?source=1";
         public const string LOAD_INGAME_EQUIPMENT_PATH = "crypto/equipments?source=2";

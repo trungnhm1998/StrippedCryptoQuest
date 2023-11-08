@@ -19,7 +19,6 @@ namespace CryptoQuest.Shop.UI
     public class ShopManager : MonoBehaviour
     {
         [Header("Gold Info")]
-        [SerializeField] private WalletControllerSO _walletControllerSO;
         [SerializeField] private CurrencySO _goldSO;
         private CurrencyInfo _goldInfo;
         [SerializeField]private Text _goldAmount;
@@ -126,7 +125,8 @@ namespace CryptoQuest.Shop.UI
 
         private void UpdateGoldAmount()
         {
-            _goldAmount.text = _walletControllerSO.Wallet.Gold.Amount.ToString();
+            // REFACTOR: SHOP
+            // _goldAmount.text = _walletControllerSO.Wallet.Gold.Amount.ToString();
         }
 
         public void ShowDialog(LocalizedString message)

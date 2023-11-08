@@ -1,50 +1,32 @@
+using System;
 using System.Collections.Generic;
 using CryptoQuest.Gameplay.Inventory.Currency;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects
 {
     public class WalletSO : ScriptableObject
     {
-        public CurrencyInfo Gold = new();
-        public CurrencyInfo Soul = new();
-        public CurrencyInfo Diamond = new();
-        private readonly Dictionary<CurrencySO, CurrencyInfo> _currencyAmounts = new();
+        [field: SerializeField] public CurrencyInfo[] Currencies { get; private set; } = Array.Empty<CurrencyInfo>();
 
-#if UNITY_EDITOR
-        public void OnValidate()
+        private Dictionary<CurrencySO, CurrencyInfo> _currencies;
+
+        private Dictionary<CurrencySO, CurrencyInfo> CurrenciesDictionary
         {
-            if (Gold.Data == null || Soul.Data == null || Diamond.Data == null)
-                return;
-            ValidateAmount();
+            get
+            {
+                if (_currencies != null) return _currencies;
+
+                _currencies = new Dictionary<CurrencySO, CurrencyInfo>();
+                foreach (var currency in Currencies)
+                {
+                    CurrenciesDictionary.Add(currency.Data, currency);
+                }
+
+                return _currencies;
+            }
         }
 
-        public void Editor_Enable()
-        {
-            OnEnable();
-        }
-#endif
-
-        private void OnEnable()
-        {
-            if (Gold.Data)
-                _currencyAmounts[Gold.Data] = Gold;
-            if (Diamond.Data)
-                _currencyAmounts[Diamond.Data] = Diamond;
-            if (Soul.Data)
-                _currencyAmounts[Soul.Data] = Soul;
-            ValidateAmount();
-        }
-
-        public bool TryGetValue(CurrencySO currencySo, out CurrencyInfo currencyInfo)
-            => _currencyAmounts.TryGetValue(currencySo, out currencyInfo);
-
-        private void ValidateAmount()
-        {
-            Gold.ValidateAmount();
-            Soul.ValidateAmount();
-            Diamond.ValidateAmount();
-        }
+        public CurrencyInfo this[CurrencySO currency] => CurrenciesDictionary[currency];
     }
 }

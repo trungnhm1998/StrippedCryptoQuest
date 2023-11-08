@@ -1,7 +1,7 @@
 ﻿using CryptoQuest.Menus.DimensionalBox.UI.MetaDTransfer;
 using UnityEngine;
 
-namespace CryptoQuest.Menus.DimensionalBox.States
+namespace CryptoQuest.Menus.DimensionalBox.States.MetadTransfer
 {
     public class InputTransferAmount : StateBase
     {
@@ -15,8 +15,17 @@ namespace CryptoQuest.Menus.DimensionalBox.States
         protected override void OnEnter()
         {
             _metaDTransferPanel.TransferAmountInput.Select();
+            StateMachine.Input.MenuCancelEvent += ToSelectTransferTypeState;
         }
 
-        protected override void OnExit() { }
+        protected override void OnExit()
+        {
+            StateMachine.Input.MenuCancelEvent -= ToSelectTransferTypeState;
+        }
+
+        private void ToSelectTransferTypeState()
+        {
+            StateMachine.ChangeState(StateMachine.TransferringMetaDState);
+        }
     }
 }

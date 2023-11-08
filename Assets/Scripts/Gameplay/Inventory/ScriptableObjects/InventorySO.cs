@@ -26,8 +26,6 @@ namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects
         [field: SerializeField] public List<EquipmentInfo> Equipments { get; set; } = new();
         [field: SerializeField] public List<NftEquipment> NftEquipments { get; set; } = new();
 
-        public WalletControllerSO WalletController => _walletController;
-        [SerializeField] private WalletControllerSO _walletController;
 
         #region Inventory Editor
 
@@ -149,13 +147,8 @@ namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects
                 return;
             }
 
-            WalletController.UpdateCurrencyAmount(currency.Data, currency.Amount);
-        }
-
-        public void Remove(CurrencyInfo currency)
-        {
-            if (currency.Amount < 0)
-                Add(currency);
+            // TODO: REFACTOR GOLD
+            // WalletController.UpdateCurrencyAmount(currency.Data, currency.Amount);
         }
     }
 }

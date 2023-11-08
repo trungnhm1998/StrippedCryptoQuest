@@ -125,7 +125,7 @@ namespace CryptoQuest.BlackSmith.Upgrade
             _upgradeController.UpgradeEvent?.Invoke();
             _upgradeEquipment.SetLevel(_equipmentData, _equipmentDetail);
             _dialogManager.Dialogue.SetMessage(_resultMessage).Show();
-            _currencyController.UpdateCurrencyAmout();
+            _currencyController.UpdateCurrencyAmount();
         }
 
         public void CancelUpgrade()

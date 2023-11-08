@@ -2,13 +2,13 @@ using System.Linq;
 using CryptoQuest.Battle.Components;
 using CryptoQuest.Core;
 using CryptoQuest.Gameplay.PlayerParty;
-using CryptoQuest.Menus.DimensionalBox.UI;
+using CryptoQuest.Menus.DimensionalBox.UI.EquipmentsTransfer;
 using CryptoQuest.Sagas.Objects;
 using CryptoQuest.System;
 using TinyMessenger;
 using UnityEngine;
 
-namespace CryptoQuest.Menus.DimensionalBox.States
+namespace CryptoQuest.Menus.DimensionalBox.States.EquipmentsTransfer
 {
     internal class TransferringEquipments : StateBase
     {

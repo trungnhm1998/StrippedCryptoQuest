@@ -1,7 +1,7 @@
 using CryptoQuest.Menus.DimensionalBox.UI.MetaDTransfer;
 using UnityEngine;
 
-namespace CryptoQuest.Menus.DimensionalBox.States
+namespace CryptoQuest.Menus.DimensionalBox.States.MetadTransfer
 {
     public class SelectSourceToTransfer : StateBase
     {
@@ -16,15 +16,14 @@ namespace CryptoQuest.Menus.DimensionalBox.States
         {
             _metaDTransferPanel.gameObject.SetActive(true);
             StateMachine.Input.MenuCancelEvent += ToSelectTransferTypeState;
-            _metaDTransferPanel.GameButton.onClick.AddListener(FocusInputAmount);
-            _metaDTransferPanel.DimensionalBoxButton.onClick.AddListener(FocusInputAmount);
+            _metaDTransferPanel.TransferSourceChanged += FocusInputAmount;
+            _metaDTransferPanel.SelectDefaultButton();
         }
 
         protected override void OnExit()
         {
+            _metaDTransferPanel.TransferSourceChanged -= FocusInputAmount;
             StateMachine.Input.MenuCancelEvent -= ToSelectTransferTypeState;
-            _metaDTransferPanel.GameButton.onClick.RemoveListener(FocusInputAmount);
-            _metaDTransferPanel.DimensionalBoxButton.onClick.RemoveListener(FocusInputAmount);
         }
 
         private void FocusInputAmount()

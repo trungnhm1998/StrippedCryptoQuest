@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.Pool;
 
-namespace CryptoQuest.Menus.DimensionalBox.UI
+namespace CryptoQuest.Menus.DimensionalBox.UI.EquipmentsTransfer
 {
     /// <summary>
     /// In-game and inbox will use this pool

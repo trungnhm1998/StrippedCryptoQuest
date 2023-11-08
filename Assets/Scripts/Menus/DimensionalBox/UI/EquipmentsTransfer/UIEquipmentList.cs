@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using CryptoQuest.Core;
 using CryptoQuest.Events;
-using CryptoQuest.Menus.DimensionalBox.States;
+using CryptoQuest.Menus.DimensionalBox.States.EquipmentsTransfer;
 using CryptoQuest.Sagas.Objects;
 using TinyMessenger;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-namespace CryptoQuest.Menus.DimensionalBox.UI
+namespace CryptoQuest.Menus.DimensionalBox.UI.EquipmentsTransfer
 {
     public class UIEquipmentList : MonoBehaviour
     {

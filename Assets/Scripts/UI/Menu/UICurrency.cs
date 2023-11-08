@@ -1,12 +1,6 @@
-using System;
+using CryptoQuest.Gameplay.Inventory.Currency;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
-using CryptoQuest.Menu;
-using CryptoQuest.UI.Menu.ScriptableObjects;
-using IndiGames.Core.Events.ScriptableObjects;
-using TMPro;
 using UnityEngine;
-using UnityEngine.Events;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace CryptoQuest.UI.Menu
@@ -15,28 +9,23 @@ namespace CryptoQuest.UI.Menu
     {
         [Header("Configs")]
         [SerializeField] private WalletSO _wallet;
-        [SerializeField] private VoidEventChannelSO _menuOpenedEvent;
+
+        [SerializeField] private CurrencySO _currency;
 
         [Header("UI Components")]
-        [SerializeField] private Text _gold;
-        [SerializeField] private Text _soul;
-        [SerializeField] private Text _metaD;
+        [SerializeField] private Text _text;
 
-        private void Awake()
+        private void OnEnable()
         {
-            _menuOpenedEvent.EventRaised += UpdateCurrencyUI;
+            _wallet[_currency].AmountChanged += UpdateAmount;
+            UpdateAmount(_wallet[_currency]);
         }
 
-        private void OnDestroy()
+        private void OnDisable()
         {
-            _menuOpenedEvent.EventRaised -= UpdateCurrencyUI;
+            _wallet[_currency].AmountChanged -= UpdateAmount;
         }
 
-        private void UpdateCurrencyUI()
-        {
-            _gold.text = _wallet.Gold.Amount.ToString();
-            _soul.text = _wallet.Soul.Amount.ToString();
-            _metaD.text = _wallet.Diamond.Amount.ToString();
-        }
+        private void UpdateAmount(CurrencyInfo currency) => _text.text = currency.Amount.ToString();
     }
 }

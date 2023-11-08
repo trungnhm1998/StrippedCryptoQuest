@@ -7,6 +7,7 @@ namespace CryptoQuest.Gameplay.Inventory.Currency
     [Serializable]
     public class CurrencyInfo : ItemInfo<CurrencySO>
     {
+        public event Action<CurrencyInfo> AmountChanged;
         [field: SerializeField] public float Amount { get; private set; } = 0;
         public override int Price => 0;
         public override int SellPrice => 0;
@@ -18,9 +19,10 @@ namespace CryptoQuest.Gameplay.Inventory.Currency
             Amount = amount;
         }
 
-        public void SetCurrencyAmount(float amount)
+        public void SetAmount(float amount)
         {
             Amount = amount;
+            AmountChanged?.Invoke(this);
         }
 
         public bool CanUpdateAmount(float amount)
@@ -33,6 +35,7 @@ namespace CryptoQuest.Gameplay.Inventory.Currency
             if (CanUpdateAmount(amount))
             {
                 Amount += amount;
+                AmountChanged?.Invoke(this);
             }
             else
             {

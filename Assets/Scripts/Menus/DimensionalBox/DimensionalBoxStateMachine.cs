@@ -1,11 +1,14 @@
 ﻿using CryptoQuest.Input;
 using CryptoQuest.Menus.DimensionalBox.States;
+using CryptoQuest.Menus.DimensionalBox.States.EquipmentsTransfer;
+using CryptoQuest.Menus.DimensionalBox.States.MetadTransfer;
+using CryptoQuest.Menus.DimensionalBox.UI;
 using CryptoQuest.UI.Menu;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace CryptoQuest.Menus.DimensionalBox.UI
+namespace CryptoQuest.Menus.DimensionalBox
 {
     public class DimensionalBoxStateMachine : UIMenuPanelBase
     {
