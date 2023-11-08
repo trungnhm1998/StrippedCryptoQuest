@@ -10,6 +10,7 @@ namespace CryptoQuest.ChangeClass
         [SerializeField] private InputMediatorSO _inputMediatorSO;
         public event UnityAction CancelEvent;
         public event UnityAction SubmitEvent;
+        public event UnityAction DetailEvent;
         public event UnityAction<Vector2> NavigateEvent;
 
         private void OnEnable()
@@ -47,6 +48,11 @@ namespace CryptoQuest.ChangeClass
         public void OnCancel(InputAction.CallbackContext context)
         {
             if (context.performed) CancelEvent?.Invoke();
+        }
+
+        public void OnShowDetail(InputAction.CallbackContext context)
+        {
+            if (context.performed) DetailEvent?.Invoke();
         }
         #endregion
     }

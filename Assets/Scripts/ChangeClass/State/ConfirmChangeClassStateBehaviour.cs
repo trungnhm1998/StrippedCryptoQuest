@@ -9,7 +9,6 @@ namespace CryptoQuest.ChangeClass.StateMachine
     {
         [SerializeField] private LocalizedString _message;
         private ChangeClassStateController _stateController;
-        private ChangeClassInputManager _input;
         private Animator _animator;
         private static readonly int _submit = Animator.StringToHash("isResult");
         private static readonly int _exit = Animator.StringToHash("isChangeClass");
@@ -18,8 +17,6 @@ namespace CryptoQuest.ChangeClass.StateMachine
         {
             _animator = animator;
             _stateController = _animator.GetComponent<ChangeClassStateController>();
-            _input = _stateController.Input;
-            _input.CancelEvent += ExitState;
             _stateController.ConfirmMaterial.PreviewData();
             _stateController.DialogController.Dialogue.Hide();
             _stateController.DialogController.ChoiceDialog
@@ -37,12 +34,6 @@ namespace CryptoQuest.ChangeClass.StateMachine
         {
             _stateController.DialogController.ChoiceDialog.Hide();
             ExitState();
-        }
-
-
-        public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-        {
-            _input.CancelEvent -= ExitState;
         }
 
         private void ChangeState()

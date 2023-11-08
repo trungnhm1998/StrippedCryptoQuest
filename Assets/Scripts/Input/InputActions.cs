@@ -2941,6 +2941,15 @@ namespace CryptoQuest.Input
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ShowDetail"",
+                    ""type"": ""Button"",
+                    ""id"": ""0b6a9d9b-635f-4c01-94a8-2e95119cec51"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -3183,6 +3192,17 @@ namespace CryptoQuest.Input
                     ""processors"": """",
                     ""groups"": ""MnK"",
                     ""action"": ""Submit"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e219fcec-515f-4a0b-87e0-6c671fc3ec6a"",
+                    ""path"": ""<Keyboard>/#(X)"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""MnK"",
+                    ""action"": ""ShowDetail"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -3657,6 +3677,7 @@ namespace CryptoQuest.Input
             m_ChangeClass_Cancel = m_ChangeClass.FindAction("Cancel", throwIfNotFound: true);
             m_ChangeClass_Navigate = m_ChangeClass.FindAction("Navigate", throwIfNotFound: true);
             m_ChangeClass_Submit = m_ChangeClass.FindAction("Submit", throwIfNotFound: true);
+            m_ChangeClass_ShowDetail = m_ChangeClass.FindAction("ShowDetail", throwIfNotFound: true);
             // Tavern
             m_Tavern = asset.FindActionMap("Tavern", throwIfNotFound: true);
             m_Tavern_Cancel = m_Tavern.FindAction("Cancel", throwIfNotFound: true);
@@ -4431,6 +4452,7 @@ namespace CryptoQuest.Input
         private readonly InputAction m_ChangeClass_Cancel;
         private readonly InputAction m_ChangeClass_Navigate;
         private readonly InputAction m_ChangeClass_Submit;
+        private readonly InputAction m_ChangeClass_ShowDetail;
         public struct ChangeClassActions
         {
             private @InputActions m_Wrapper;
@@ -4438,6 +4460,7 @@ namespace CryptoQuest.Input
             public InputAction @Cancel => m_Wrapper.m_ChangeClass_Cancel;
             public InputAction @Navigate => m_Wrapper.m_ChangeClass_Navigate;
             public InputAction @Submit => m_Wrapper.m_ChangeClass_Submit;
+            public InputAction @ShowDetail => m_Wrapper.m_ChangeClass_ShowDetail;
             public InputActionMap Get() { return m_Wrapper.m_ChangeClass; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -4456,6 +4479,9 @@ namespace CryptoQuest.Input
                 @Submit.started += instance.OnSubmit;
                 @Submit.performed += instance.OnSubmit;
                 @Submit.canceled += instance.OnSubmit;
+                @ShowDetail.started += instance.OnShowDetail;
+                @ShowDetail.performed += instance.OnShowDetail;
+                @ShowDetail.canceled += instance.OnShowDetail;
             }
 
             private void UnregisterCallbacks(IChangeClassActions instance)
@@ -4469,6 +4495,9 @@ namespace CryptoQuest.Input
                 @Submit.started -= instance.OnSubmit;
                 @Submit.performed -= instance.OnSubmit;
                 @Submit.canceled -= instance.OnSubmit;
+                @ShowDetail.started -= instance.OnShowDetail;
+                @ShowDetail.performed -= instance.OnShowDetail;
+                @ShowDetail.canceled -= instance.OnShowDetail;
             }
 
             public void RemoveCallbacks(IChangeClassActions instance)
@@ -4667,6 +4696,7 @@ namespace CryptoQuest.Input
             void OnCancel(InputAction.CallbackContext context);
             void OnNavigate(InputAction.CallbackContext context);
             void OnSubmit(InputAction.CallbackContext context);
+            void OnShowDetail(InputAction.CallbackContext context);
         }
         public interface ITavernActions
         {
