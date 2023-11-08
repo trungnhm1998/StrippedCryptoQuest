@@ -42,9 +42,16 @@ namespace CryptoQuest.Networking.Actions
         }
     }
 
-    public class RegisterEmailAction : AuthenticateUsingEmail
+    public class RegisterEmailAction : ActionBase
     {
-        public RegisterEmailAction(string email, string password) : base(email, password) { }
+        public string Email { get; }
+        public string Password { get; }
+
+        public RegisterEmailAction(string email, string password)
+        {
+            Password = password;
+            Email = email;
+        }
     }
 
 
