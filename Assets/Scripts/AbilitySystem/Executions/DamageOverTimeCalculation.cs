@@ -8,6 +8,7 @@ namespace CryptoQuest.AbilitySystem.Executions
     public class DamageOverTimeCalculation : EffectExecutionCalculationBase
     {
         [SerializeField] private CustomExecutionAttributeCaptureDef _targetMaxHp;
+        [SerializeField] private float _damageToAttributeRatio = 0.05f;
 
         public override void Execute(ref CustomExecutionParameters executionParams,
             ref GameplayEffectCustomExecutionOutput outModifiers)
@@ -24,7 +25,8 @@ namespace CryptoQuest.AbilitySystem.Executions
             SkillParameters skillParameters = context.SkillInfo.SkillParameters;
             CustomExecutionAttributeCaptureDef targetAttribute = skillParameters.TargetAttribute;
             executionParams.TryGetAttributeValue(_targetMaxHp, out var targetMaxHp);
-            var damageValue = targetMaxHp.CurrentValue / 20;
+            var damageValue = targetMaxHp.CurrentValue * _damageToAttributeRatio;
+            // specs: https://docs.google.com/spreadsheets/d/1EDrXrT1if63TLam1km_dLx2VvHt2rks2OWXEUq5OEPg/edit#gid=395250385
             var modifier = new GameplayModifierEvaluatedData()
             {
                 Attribute = targetAttribute.Attribute,

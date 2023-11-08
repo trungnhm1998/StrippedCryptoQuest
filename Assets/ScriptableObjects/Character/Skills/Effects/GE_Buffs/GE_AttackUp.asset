@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbb6112b998064f4ebc8a44f4c80c446, type: 3}
+  m_Name: GE_AttackUp
+  m_EditorClassIdentifier: 
+  <Description>k__BackingField: 
+  _policy:
+    rid: 2855508847831547980
+  <EffectDetails>k__BackingField:
+    Modifiers: []
+    StackingType: 0
+  <IsStack>k__BackingField: 0
+  <GrantedTags>k__BackingField:
+  - {fileID: 11400000, guid: eca5a2e509a3b2141933a1ef52c206e7, type: 2}
+  <ApplicationTagRequirements>k__BackingField:
+    RequireTags: []
+    IgnoreTags: []
+  <RemoveGameplayEffectsWithTags>k__BackingField: []
+  <ExecutionCalculations>k__BackingField:
+  - {fileID: 11400000, guid: ac51f424a7fe1074a85f9933e641f876, type: 2}
+  - {fileID: 11400000, guid: 8ecc37607af8af7479848cd610da6fcf, type: 2}
+  <ChanceToApply>k__BackingField: 1
+  <CustomApplicationRequirements>k__BackingField: []
+  references:
+    version: 2
+    RefIds:
+    - rid: 2855508847831547980
+      type: {class: TurnBasePolicy, ns: CryptoQuest.AbilitySystem.EffectActions, asm: indi-games.crypto-quest}
+      data:
+        _triggerType: 0
+        <TriggerInstantlyAfterApplied>k__BackingField: 0
