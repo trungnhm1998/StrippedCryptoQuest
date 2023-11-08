@@ -49,7 +49,7 @@ namespace CryptoQuest.Tavern.States
             _controller.TavernInputManager.CancelEvent -= ExitTavern;
 
             _controller.TavernUiOverview.gameObject.SetActive(false);
-            _controller.DialogsManager.HideDialouge();
+            _controller.DialogsManager.HideDialogue();
         }
     }
 }

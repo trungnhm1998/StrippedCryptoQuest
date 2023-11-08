@@ -42,7 +42,7 @@ namespace CryptoQuest.Tavern
                 .Show();
         }
 
-        public void HideDialouge()
+        public void HideDialogue()
         {
             GenericMerchantDialogueController.Instance.Release(Dialogue);
         }
