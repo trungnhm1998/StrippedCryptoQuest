@@ -2,7 +2,6 @@
 using CryptoQuest.Networking;
 using CryptoQuest.Networking.Actions;
 using CryptoQuest.System;
-using CryptoQuest.UI.Actions;
 using IndiGames.Web3.Bridge;
 using Newtonsoft.Json;
 using System;
@@ -11,7 +10,7 @@ using UnityEngine;
 
 namespace CryptoQuest.Sagas
 {
-    public class AuthenticateUsingWallet : AuthenticationSagaBase<LoginUsingWallet>
+    public class WalletConnectSaga : SagaBase<ConnectWallet>
     {
         private const string WALLET_CONNECT_URL = "crypto/wallet/connect";
 
@@ -34,15 +33,6 @@ namespace CryptoQuest.Sagas
             [JsonProperty("message")]
             public string Message;
 
-            [JsonProperty("gold")]
-            public int Gold;
-
-            [JsonProperty("diamond")]
-            public int Diamond;
-
-            [JsonProperty("soul")]
-            public int Soul;
-
             [JsonProperty("time")]
             public long Time;
 
@@ -63,38 +53,34 @@ namespace CryptoQuest.Sagas
         protected void Web3SignedIn(string signature)
         {
             Debug.Log("Web3SignedIn: " + signature);
-
             var restClient = ServiceProvider.GetService<IRestClient>();
             restClient.WithBody(new RequestBody { Signature = signature })
                 .Post<WalletResponse>(WALLET_CONNECT_URL)
                 .Subscribe(WalletConnected, OnError, OnCompleted);
-
         }
 
         protected void Web3SignedError(string error)
         {
             Debug.Log("Web3SignedError: " + error);
+            ActionDispatcher.Dispatch(new ConnectWalletCompleted(false));
         }
 
-        // TODO: implement
-        protected override void HandleAuthenticate(LoginUsingWallet ctx) {
+        protected override void HandleAction(ConnectWallet ctx) {
             Web3.SignIn(gameObject.name, nameof(Web3SignedIn), nameof(Web3SignedError));
         }
 
         private void WalletConnected(WalletResponse response)
         {
             Debug.Log("WalletConnected: address = " + response.Data.Address + ", metad = " + response.Data.Metad);
-            ActionDispatcher.Dispatch(new ShowWalletButton(false));
+            ActionDispatcher.Dispatch(new ConnectWalletCompleted(true));
         }
 
         private void OnError(Exception obj)
         {
             Debug.Log("Auth Failed with error: " + obj.Message);
-            ActionDispatcher.Dispatch(new AuthenticateFailed());
+            ActionDispatcher.Dispatch(new ConnectWalletCompleted(false));
         }
 
-        private void OnCompleted() {
-            ActionDispatcher.Dispatch(new AuthenticateSucceed());
-        }
+        private void OnCompleted() { }
     }
 }
