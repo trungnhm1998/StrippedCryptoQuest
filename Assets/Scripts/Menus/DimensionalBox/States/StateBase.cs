@@ -1,5 +1,3 @@
-using CryptoQuest.Menus.DimensionalBox.UI;
-
 namespace CryptoQuest.Menus.DimensionalBox.States
 {
     public abstract class StateBase
