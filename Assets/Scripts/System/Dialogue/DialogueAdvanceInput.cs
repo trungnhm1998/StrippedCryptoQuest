@@ -1,4 +1,5 @@
 ﻿using CryptoQuest.Input;
+using CryptoQuest.System.Dialogue.YarnManager;
 using UnityEngine;
 
 namespace CryptoQuest.System.Dialogue
@@ -6,7 +7,7 @@ namespace CryptoQuest.System.Dialogue
     public class DialogueAdvanceInput : MonoBehaviour
     {
         [SerializeField] private InputMediatorSO _inputMediator;
-        [SerializeField] private Yarn.Unity.LineView _lineView;
+        [SerializeField] private LineView _lineView;
 
         private void OnEnable()
         {
