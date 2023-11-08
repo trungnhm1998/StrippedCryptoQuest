@@ -76,6 +76,11 @@ namespace CryptoQuest.AbilitySystem.EffectActions
 
         ~TurnBasePolicyActiveEffect()
         {
+            RemoveEvents();
+        }
+
+        private void RemoveEvents()
+        {
             UnregisterWhenEffectWillBeApply();
             Spec.Target.TagSystem.TagAdded -= ExpiredEffectWhenTargetDie;
             BattleEventBus.UnsubscribeEvent(_unloadingEvent);
@@ -97,15 +102,21 @@ namespace CryptoQuest.AbilitySystem.EffectActions
             }
         }
 
-        private void ExpiredEffect(UnloadingEvent ctx) => Spec.Target.EffectSystem.RemoveEffect(Spec);
+        private void ExpiredEffect(UnloadingEvent ctx) => RemoveEffect();
 
         private void ExpiredEffectWhenTargetDie(TagScriptableObject[] tag)
         {
             if (tag.Length == 0) return;
             if (tag[0] != TagsDef.Dead) return;
+            RemoveEffect();
+        }
+
+        private void RemoveEffect()
+        {
             _turnsLeft = 0;
             IsActive = false;
             Spec.Target.EffectSystem.RemoveEffect(Spec);
+            RemoveEvents();
         }
 
         private void ModifyTargetAttributeIfPeriodic()

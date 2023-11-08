@@ -55,20 +55,31 @@ namespace CryptoQuest.AbilitySystem.EffectActions
 
         ~PassiveProvideTurnBasePolicyActiveEffect()
         {
+            RemoveEvents();
+        }
+
+        private void RemoveEvents()
+        {
             _character.TurnEnded -= CheckTurn;
             Spec.Target.TagSystem.TagAdded -= ExpiredEffectWhenTargetDie;
             BattleEventBus.UnsubscribeEvent(_unloadingEvent);
         }
 
-        private void ExpiredEffect(UnloadingEvent ctx) => Spec.Target.EffectSystem.RemoveEffect(Spec);
+        private void ExpiredEffect(UnloadingEvent ctx) => RemoveEffect();
 
         private void ExpiredEffectWhenTargetDie(TagScriptableObject[] tag)
         {
             if (tag.Length == 0) return;
             if (tag[0] != TagsDef.Dead) return;
+            RemoveEffect();
+        }
+
+        private void RemoveEffect()
+        {
             _turnsLeft = 0;
             RemoveAbility();
             Spec.Target.EffectSystem.RemoveEffect(Spec);
+            RemoveEvents();
         }
 
         private void TryGiveAbility()
