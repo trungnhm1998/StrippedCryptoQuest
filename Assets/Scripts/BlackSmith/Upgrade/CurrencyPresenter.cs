@@ -1,5 +1,4 @@
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
-using CryptoQuest.System;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -9,7 +8,6 @@ namespace CryptoQuest.BlackSmith.Upgrade
     {
         [SerializeField] private UIBlackSmithCurrency _currencyUI;
         public event UnityAction OnSendSuccess;
-        private ICurrenciesController _currenciesController;
         public float Gold { get; private set; }
         public float Diamond { get; private set; }
         private WalletSO _wallet;
@@ -17,15 +15,15 @@ namespace CryptoQuest.BlackSmith.Upgrade
 
         private void OnEnable()
         {
-            _currenciesController = ServiceProvider.GetService<ICurrenciesController>();
-            _wallet = _currenciesController.Wallet;
+            // _currenciesController = ServiceProvider.GetService<ICurrenciesController>();
+            // _wallet = _currenciesController.Wallet;
             UpdateCurrenciesUI();
         }
 
         private void UpdateCurrenciesUI()
         {
-            Gold = _wallet.Gold.Amount;
-            Diamond = _wallet.Diamond.Amount;
+            // Gold = _wallet.Gold.Amount;
+            // Diamond = _wallet.Diamond.Amount;
             _currencyUI.UpdateCurrency(Gold, Diamond);
         }
 
@@ -33,15 +31,15 @@ namespace CryptoQuest.BlackSmith.Upgrade
         {
             _quantityGold = gold;
             _quantityDiamond = diamond;
-            if (!_wallet.Gold.CanUpdateAmount(-_quantityGold) ||
-                !_wallet.Diamond.CanUpdateAmount(-_quantityDiamond)) return;
+            // if (!_wallet.Gold.CanUpdateAmount(-_quantityGold) ||
+            //     !_wallet.Diamond.CanUpdateAmount(-_quantityDiamond)) return;
             OnSendSuccess.Invoke();
         }
 
-        public void UpdateCurrencyAmout()
+        public void UpdateCurrencyAmount()
         {
-            _currenciesController.UpdateCurrencyAmount(_wallet.Gold.Data, -_quantityGold);
-            _currenciesController.UpdateCurrencyAmount(_wallet.Diamond.Data, -_quantityDiamond);
+            // _currenciesController.Wallet.Gold.UpdateCurrencyAmount(-_quantityGold);
+            // _currenciesController.Wallet.Diamond.UpdateCurrencyAmount(-_quantityDiamond);
             UpdateCurrenciesUI();
         }
     }

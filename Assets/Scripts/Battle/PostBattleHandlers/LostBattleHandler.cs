@@ -55,11 +55,11 @@ namespace CryptoQuest.Battle
         
         private void DecreaseGold()
         {
-            var inventoryController = ServiceProvider.GetService<IInventoryController>();
-            var wallet = inventoryController.Inventory.WalletController.Wallet;
-
-            var newGold = Mathf.FloorToInt(wallet.Gold.Amount / _divideGold);
-            wallet.Gold.SetCurrencyAmount(newGold);
+            // TODO: REFACTOR GOLD
+            // var inventoryController = ServiceProvider.GetService<IInventoryController>();
+            // var wallet = inventoryController.Inventory.WalletController.Wallet;
+            // var newGold = Mathf.FloorToInt(wallet.Gold.Amount / _divideGold);
+            // wallet.Gold.SetCurrencyAmount(newGold);
         }
 
         private void RestoreCharacter()

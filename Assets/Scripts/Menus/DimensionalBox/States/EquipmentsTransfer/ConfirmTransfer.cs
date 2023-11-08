@@ -4,7 +4,7 @@ using CryptoQuest.UI.Dialogs.ChoiceDialog;
 using TinyMessenger;
 using UnityEngine.Localization;
 
-namespace CryptoQuest.Menus.DimensionalBox.States
+namespace CryptoQuest.Menus.DimensionalBox.States.EquipmentsTransfer
 {
     public class ConfirmTransferAction : ActionBase { }
 

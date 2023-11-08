@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.Localization.Components;
 using UnityEngine.UI;
 
-namespace CryptoQuest.Menus.DimensionalBox.UI
+namespace CryptoQuest.Menus.DimensionalBox.UI.EquipmentsTransfer
 {
     public class UIEquipment : MonoBehaviour
     {
