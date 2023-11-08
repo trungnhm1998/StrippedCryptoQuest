@@ -8,14 +8,14 @@ namespace CryptoQuest.Item.Equipment
     {
         public enum EType
         {
-            LeftHand = 0,
             RightHand = 1,
-            Head = 2,
-            Body = 3,
-            Leg = 4,
-            Foot = 5,
-            Accessory1 = 6,
-            Accessory2 = 7,
+            LeftHand = 2,
+            Head = 3,
+            Body = 4,
+            Leg = 5,
+            Foot = 6,
+            Accessory1 = 7,
+            Accessory2 = 8,
         }
 
         [field: SerializeField] public EType Type { get; set; }
