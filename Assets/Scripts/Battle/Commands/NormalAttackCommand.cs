@@ -9,11 +9,9 @@ namespace CryptoQuest.Battle.Commands
         private readonly NormalAttack _attacker;
         private readonly ITargeting _targetComponent;
         private readonly Components.Character _attackerCharacter;
-        private readonly Components.Character _targetCharacter;
 
         public NormalAttackCommand(Components.Character attacker, Components.Character targetCharacter)
         {
-            _targetCharacter = targetCharacter;
             _attackerCharacter = attacker;
             _attacker = attacker.GetComponent<NormalAttack>();
             _targetComponent = attacker.GetComponent<ITargeting>();
@@ -28,17 +26,23 @@ namespace CryptoQuest.Battle.Commands
                 return;
             }
 
+            if (!_targetComponent.Target.IsValidAndAlive())
+            {
+                Debug.LogWarning("Failed to execute NormalAttackCommand. Target is dead or invalid.");
+                return;
+            }
+
             BattleEventBus.RaiseEvent(new NormalAttackEvent()
             {
                 Character = _attackerCharacter,
-                Target = _targetCharacter
+                Target = _targetComponent.Target
             });
 
             if (IsTargetEvaded())
             {
                 BattleEventBus.RaiseEvent(new MissedEvent()
                 {
-                    Character = _targetCharacter
+                    Character = _targetComponent.Target
                 });
             }
 
