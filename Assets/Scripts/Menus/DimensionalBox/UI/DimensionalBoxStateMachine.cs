@@ -7,7 +7,7 @@ using UnityEngine.EventSystems;
 
 namespace CryptoQuest.Menus.DimensionalBox.UI
 {
-    internal class DimensionalBoxStateMachine : UIMenuPanelBase
+    public class DimensionalBoxStateMachine : UIMenuPanelBase
     {
         [SerializeField] private GameObject _equipmentsTransferPanel;
         public GameObject EquipmentsTransferPanel => _equipmentsTransferPanel;
@@ -21,6 +21,7 @@ namespace CryptoQuest.Menus.DimensionalBox.UI
         public StateBase TransferringMetaDState { get; private set; }
         public StateBase TransferringEquipmentsState { get; private set; }
         public StateBase ConfirmTransfer { get; set; }
+        public StateBase InputTransferAmount { get; set; }
 
         private StateBase _currentState;
 
@@ -28,7 +29,8 @@ namespace CryptoQuest.Menus.DimensionalBox.UI
         {
             Landing = new LandingPage(_landingPage);
             TransferringEquipmentsState = new TransferringEquipments(_equipmentsTransferPanel);
-            TransferringMetaDState = new TransferringMetaD(_metaDTransferPanel);
+            TransferringMetaDState = new SelectSourceToTransfer(_metaDTransferPanel);
+            InputTransferAmount = new InputTransferAmount(_metaDTransferPanel);
             ConfirmTransfer = new ConfirmTransfer();
         }
 
@@ -45,10 +47,8 @@ namespace CryptoQuest.Menus.DimensionalBox.UI
 
         public void SelectDefault()
         {
-            DOVirtual.DelayedCall(0, () =>
-            {
-                EventSystem.current.SetSelectedGameObject(_landingPage.DefaultSelectedButton);
-            });
+            DOVirtual.DelayedCall(0,
+                () => { EventSystem.current.SetSelectedGameObject(_landingPage.DefaultSelectedButton); });
         }
     }
 }

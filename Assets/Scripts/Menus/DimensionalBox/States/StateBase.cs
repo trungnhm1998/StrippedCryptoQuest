@@ -2,7 +2,7 @@ using CryptoQuest.Menus.DimensionalBox.UI;
 
 namespace CryptoQuest.Menus.DimensionalBox.States
 {
-    internal abstract class StateBase
+    public abstract class StateBase
     {
         protected DimensionalBoxStateMachine StateMachine { get; private set; }
 
