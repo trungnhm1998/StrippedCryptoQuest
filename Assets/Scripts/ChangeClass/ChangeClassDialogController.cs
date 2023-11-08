@@ -3,6 +3,7 @@ using CryptoQuest.Events.UI.Dialogs;
 using UnityEngine.Localization;
 using UnityEngine.Events;
 using UnityEngine;
+using CryptoQuest.UI.Dialogs.ChoiceDialog;
 
 namespace CryptoQuest.ChangeClass
 {
@@ -13,10 +14,12 @@ namespace CryptoQuest.ChangeClass
         [SerializeField] private YesNoDialogEventChannelSO _yesNoDialogEventSO;
         [SerializeField] private LocalizedString _defaultMessage;
         public UIDialogueForGenericMerchant Dialogue { get; private set; }
+        public UIChoiceDialog ChoiceDialog { get; private set; }
 
         public void ShowChangeClassDialog()
         {
             GenericMerchantDialogueController.Instance.Instantiate(DialogInstantiated);
+            ChoiceDialogController.Instance.Instantiate(dialog => ChoiceDialog = dialog, false);
         }
 
         public void HideChangeClassDialog()
@@ -30,29 +33,6 @@ namespace CryptoQuest.ChangeClass
             Dialogue
                 .SetMessage(_defaultMessage)
                 .Show();
-        }
-
-        public void ShowConfirmDialog(LocalizedString confirmMessage)
-        {
-            _yesNoDialogEventSO.SetMessage(confirmMessage);
-            _yesNoDialogEventSO.Show(YesButtonPressed, NoButtonPressed);
-        }
-
-        private void YesButtonPressed()
-        {
-            ConfirmYesEvent?.Invoke();
-            HideConfirmDialog();
-        }
-
-        private void NoButtonPressed()
-        {
-            ConfirmNoEvent?.Invoke();
-            HideConfirmDialog();
-        }
-
-        private void HideConfirmDialog()
-        {
-            _yesNoDialogEventSO.Hide();
         }
     }
 }

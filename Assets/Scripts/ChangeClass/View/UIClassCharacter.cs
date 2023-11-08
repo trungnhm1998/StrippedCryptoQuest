@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using CryptoQuest.ChangeClass.ScriptableObjects;
 using CryptoQuest.Character;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -20,7 +21,7 @@ namespace CryptoQuest.ChangeClass.View
             OnSelected?.Invoke(item);
         }
 
-        public void RenderClassToChange(List<CharacterClass> characterClasses)
+        public void RenderClassToChange(List<ChangeClassSO> characterClasses)
         {
             CleanUpScrollView();
             foreach (var character in characterClasses)

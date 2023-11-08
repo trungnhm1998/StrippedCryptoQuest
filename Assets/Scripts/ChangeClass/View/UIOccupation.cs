@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using CryptoQuest.Menu;
 using CryptoQuest.Character;
+using CryptoQuest.ChangeClass.ScriptableObjects;
+using UnityEngine.Localization.Components;
 
 namespace CryptoQuest
 {
@@ -11,18 +13,18 @@ namespace CryptoQuest
     {
         public event Action<UIOccupation> OnSubmit;
         public event Action<UIOccupation> OnItemSelected;
-        [SerializeField] private TextMeshProUGUI _displayName;
+        [SerializeField] private LocalizeStringEvent _displayName;
         [SerializeField] private Image _icon;
         [SerializeField] private GameObject _selectedBackground;
         [SerializeField] private GameObject _defaultBackground;
         [SerializeField] private MultiInputButton _button;
 
-        public CharacterClass Class { get; private set; }
+        public ChangeClassSO Class { get; private set; }
 
-        public void ConfigureCell(CharacterClass characterClass)
+        public void ConfigureCell(ChangeClassSO changeClass)
         {
-            Class = characterClass;
-            _displayName.text = characterClass.name;
+            Class = changeClass;
+            _displayName.StringReference = changeClass.CharacterClass.Name;
         }
 
         private void OnEnable()

@@ -44,8 +44,6 @@ namespace CryptoQuest.ChangeClass.API
         {
             if (response.code != (int)HttpStatusCode.OK) return;
             Data = response.data;
-            IsFinishFetchData = true;
-            ActionDispatcher.Dispatch(new ShowLoading(false));
         }
 
         private void OnGetNewClassFailed(Exception obj)
@@ -58,6 +56,8 @@ namespace CryptoQuest.ChangeClass.API
         private void OnGetNewClassSuccess()
         {
             Debug.Log($"Preview New Character::Load Success");
+            IsFinishFetchData = true;
+            ActionDispatcher.Dispatch(new ShowLoading(false));
         }
     }
 }

@@ -20,22 +20,34 @@ namespace CryptoQuest.ChangeClass.StateMachine
             _stateController = _animator.GetComponent<ChangeClassStateController>();
             _input = _stateController.Input;
             _input.CancelEvent += ExitState;
-            _stateController.DialogController
-                .ShowConfirmDialog(_message);
-            _stateController.DialogController.ConfirmYesEvent += ChangeState;
-            _stateController.DialogController.ConfirmNoEvent += ExitState;
             _stateController.ConfirmMaterial.PreviewData();
+            _stateController.DialogController.Dialogue.Hide();
+            _stateController.DialogController.ChoiceDialog
+                .SetButtonsEvent(YesButtonPressed, NoButtonPressed)
+                .SetMessage(_message)
+                .Show();
         }
+        private void YesButtonPressed()
+        {
+            _stateController.DialogController.ChoiceDialog.Hide();
+            ChangeState();
+        }
+
+        private void NoButtonPressed()
+        {
+            _stateController.DialogController.ChoiceDialog.Hide();
+            ExitState();
+        }
+
 
         public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
-            _stateController.DialogController.ConfirmYesEvent -= ChangeState;
-            _stateController.DialogController.ConfirmNoEvent += ExitState;
             _input.CancelEvent -= ExitState;
         }
 
         private void ChangeState()
         {
+            _stateController.DialogController.Dialogue.Show();
             _animator.SetTrigger(_submit);
         }
 
