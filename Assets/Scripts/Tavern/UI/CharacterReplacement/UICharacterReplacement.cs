@@ -1,5 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
+using CryptoQuest.Menu;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace CryptoQuest.Tavern.UI.CharacterReplacement
 {
@@ -21,12 +24,14 @@ namespace CryptoQuest.Tavern.UI.CharacterReplacement
         {
             base.StateEntered();
             UITavernItem.Pressed += Transfer;
+            UICharacterList.Rendered += HandleListInteractable;
         }
 
         public override void StateExited()
         {
             base.StateExited();
             UITavernItem.Pressed -= Transfer;
+            UICharacterList.Rendered -= HandleListInteractable;
         }
 
         private void Transfer(UITavernItem currentItem)
@@ -48,6 +53,26 @@ namespace CryptoQuest.Tavern.UI.CharacterReplacement
 
             _gameListUi.SetInteractableAllButtons(!(currentList == _gameScrollContent));
             _walletListUi.SetInteractableAllButtons(currentList == _gameScrollContent);
+        }
+
+        /// <summary>
+        /// This method will disable all the buttons of the right list if the left list has data,
+        /// then select first button of the left list.
+        /// <para/>
+        /// If there is no data in the left list,
+        /// the first button of the right list will be selected.
+        /// </summary>
+        private void HandleListInteractable()
+        {
+            if (_gameScrollContent.childCount > 0)
+            {
+                _walletListUi.SetInteractableAllButtons(false);
+                StartCoroutine(_gameListUi.CoSetDefaultSelection());
+            }
+            else
+            {
+                StartCoroutine(_walletListUi.CoSetDefaultSelection());
+            }
         }
 
         public void SwitchList(Vector2 direction)

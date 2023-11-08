@@ -22,13 +22,14 @@ namespace CryptoQuest.Tavern.UI
         {
             base.StateEntered();
             UITavernItem.Pressed += Transfer;
-            _gameListUi.SetInteractableAllButtons(true);
+            UICharacterList.Rendered += HandleListInteractable;
         }
 
         public override void StateExited()
         {
             base.StateExited();
             UITavernItem.Pressed -= Transfer;
+            UICharacterList.Rendered -= HandleListInteractable;
         }
 
         private void Transfer(UITavernItem currentItem)
@@ -54,6 +55,26 @@ namespace CryptoQuest.Tavern.UI
 
             _partyUi.SetInteractableAllButtons(otherList == _partyScrollContent);
             _gameListUi.SetInteractableAllButtons(otherList == _gameScrollContent);
+        }
+
+        /// <summary>
+        /// This method will disable all the buttons of the right list if the left list has data,
+        /// then select first button of the left list.
+        /// <para/>
+        /// If there is no data in the left list,
+        /// the first button of the right list will be selected.
+        /// </summary>
+        private void HandleListInteractable()
+        {
+            if (_partyScrollContent.childCount > 0)
+            {
+                _gameListUi.SetInteractableAllButtons(false);
+                StartCoroutine(_partyUi.CoSetDefaultSelection());
+            }
+            else
+            {
+                StartCoroutine(_gameListUi.CoSetDefaultSelection());
+            }
         }
 
         public void SwitchList(Vector2 direction)

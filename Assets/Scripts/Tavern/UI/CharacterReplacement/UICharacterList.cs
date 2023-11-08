@@ -4,12 +4,15 @@ using CryptoQuest.Menu;
 using CryptoQuest.Tavern.Interfaces;
 using CryptoQuest.UI.Menu;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 namespace CryptoQuest.Tavern.UI.CharacterReplacement
 {
     public class UICharacterList : MonoBehaviour
     {
+        public static event UnityAction Rendered;
+
         [SerializeField] protected Transform _scrollRectContent;
         [SerializeField] protected UITavernItem _itemPrefab;
         [SerializeField] protected RectTransform _tooltipSafeArea;
@@ -17,6 +20,8 @@ namespace CryptoQuest.Tavern.UI.CharacterReplacement
         private ITooltip _tooltip;
 
         private List<ICharacterData> _characterList = new List<ICharacterData>();
+        public List<ICharacterData> Data => _characterList;
+
         private List<UITavernItem> _cachedItems = new();
 
         private void Awake()
@@ -36,8 +41,6 @@ namespace CryptoQuest.Tavern.UI.CharacterReplacement
             RenderData();
 
             yield return null;
-
-            yield return StartCoroutine(CoSetDefaultSelection());
             _tooltip.SetSafeArea(_tooltipSafeArea);
         }
 
@@ -67,6 +70,7 @@ namespace CryptoQuest.Tavern.UI.CharacterReplacement
                 item.SetItemInfo(itemData);
                 IdentifyItemParentThenCacheItem(item);
             }
+            Rendered?.Invoke();
         }
 
         private void IdentifyItemParentThenCacheItem(UITavernItem item)
