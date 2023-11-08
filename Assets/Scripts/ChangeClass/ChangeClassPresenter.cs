@@ -1,10 +1,9 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-using CryptoQuest.Character;
 using CryptoQuest.ChangeClass.View;
 using CryptoQuest.ChangeClass.API;
-using System.Threading.Tasks;
+using CryptoQuest.ChangeClass.ScriptableObjects;
 
 namespace CryptoQuest.ChangeClass
 {
@@ -12,7 +11,7 @@ namespace CryptoQuest.ChangeClass
     {
         [field: SerializeField] public List<UIClassMaterial> ListClassMaterial { get; private set; }
         [SerializeField] private List<UIItemMaterial> _listItemMaterial;
-        [SerializeField] private List<CharacterClass> _listCharacterClass;
+        [SerializeField] private List<ChangeClassSO> _listCharacterClass;
         [SerializeField] private UIClassCharacter _uiClassToChange;
         [SerializeField] private WalletMaterialAPI _materialApi;
         [SerializeField] private WalletCharacterAPI _characterAPI;
@@ -117,7 +116,7 @@ namespace CryptoQuest.ChangeClass
             if (isSameClass && ListClassMaterial[0].ListClassCharacter.Count <= 1 || !isMaterialValid)
                 yield break;
 
-            IsValid = true;
+            IsValid = isMaterialValid;
             Occupation.EnableDefaultBackground(IsValid);
         }
 

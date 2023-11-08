@@ -66,9 +66,6 @@ namespace CryptoQuest.ChangeClass.API
                 itemAddedHP = 50,
                 userId = "1",
                 unitId = "10424123123",
-                receivedAt = "2023-11-07T05:26:25.555Z",
-                createdAt = "2023-11-07T05:26:25.555Z",
-                updatedAt = "2023-11-07T05:26:25.555Z",
             };
 
             IsFinishFetchData = true;

@@ -7,7 +7,8 @@ namespace CryptoQuest.ChangeClass
 {
     public class ChangeClassManager : MonoBehaviour
     {
-        public UnityAction OpenChangeClassEvent;
+        public UnityAction EnterChangeClassStateEvent;
+        public UnityAction<bool> IsOpenChangeClassState;
         [SerializeField] private ShowChangeClassEventChannelSO _showChangeClassEvent;
         [SerializeField] private ChangeClassDialogController _dialogController;
         [SerializeField] private ChangeClassStateController _stateController;
@@ -32,6 +33,7 @@ namespace CryptoQuest.ChangeClass
 
         private void ShowChangeClass()
         {
+            IsOpenChangeClassState?.Invoke(true);
             _dialogController.ShowChangeClassDialog();
             _defaultButton.Select();
             _input.EnableInput();
@@ -40,6 +42,7 @@ namespace CryptoQuest.ChangeClass
 
         private void HideChangeClass()
         {
+            IsOpenChangeClassState?.Invoke(false);
             _changeClassPanel.SetActive(false);
             _dialogController.HideChangeClassDialog();
             _input.DisableInput();
@@ -47,7 +50,7 @@ namespace CryptoQuest.ChangeClass
 
         private void OnButtonClicked()
         {
-            OpenChangeClassEvent?.Invoke();
+            EnterChangeClassStateEvent?.Invoke();
         }
     }
 }

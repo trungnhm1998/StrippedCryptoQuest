@@ -1,13 +1,12 @@
-using CryptoQuest.Menu;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.UI;
+using UnityEngine.Localization;
 
 
 namespace CryptoQuest.ChangeClass.StateMachine
 {
     public class OverviewStateBehaviour : StateMachineBehaviour
     {
+        [SerializeField] private LocalizedString _message;
         private ChangeClassStateController _stateController;
         private ChangeClassInputManager _input;
         private Animator _animator;
@@ -17,16 +16,18 @@ namespace CryptoQuest.ChangeClass.StateMachine
         {
             _animator = animator;
             _stateController = _animator.GetComponent<ChangeClassStateController>();
-            _stateController.Manager.OpenChangeClassEvent += ChangeState;
+            _stateController.Manager.EnterChangeClassStateEvent += ChangeState;
             _input = _stateController.Input;
             _input.CancelEvent += ExitState;
             _stateController.DefaultButton.Select();
+            _stateController.DialogController.Dialogue
+                .SetMessage(_message).Show();
         }
 
         public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
             _input.CancelEvent -= ExitState;
-            _stateController.Manager.OpenChangeClassEvent -= ChangeState;
+            _stateController.Manager.EnterChangeClassStateEvent -= ChangeState;
         }
 
         private void ChangeState()

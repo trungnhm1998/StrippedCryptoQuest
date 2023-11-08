@@ -37,6 +37,9 @@ namespace CryptoQuest.ChangeClass.API
         {
             public string id;
             public string unitTokenId;
+            public int inGameStatus;
+            public string userId;
+            public string unitId;
             public float HP;
             public float addHP;
             public float MP;
@@ -56,23 +59,60 @@ namespace CryptoQuest.ChangeClass.API
             public float attack;
             public float addAttack;
             public float deffence;
+            public float MATK;
+            public float addMATK;
             public float addDeffence;
             public float evasionRate;
             public float criticalRate;
-            public float MATK;
-            public float addMATK;
             public int level;
             public float exp;
             public int partyId;
             public int partyOrder;
-            public int inGameStatus;
             public int isHero;
             public float itemAddedHP;
-            public string userId;
-            public string unitId;
-            public string receivedAt;
-            public string createdAt;
-            public string updatedAt;
+            public float maxHpAtMaxLv;
+            public float maxMpAtMaxLv;
+            public string name;
+            [JsonProperty("class")]
+            public string Class;
+            public string element;
+            public string personality;
+            public string categoryId;
+            public string characterId;
+            public string classId;
+            public string elementId;
+            public string personalityId;
+            public float minHP;
+            public float minMP;
+            public float minStrength;
+            public float minVitality;
+            public float minAgility;
+            public float minIntelligence;
+            public float minLuck;
+            public float minAttack;
+            public float minMATK;
+            public float minDeffence;
+            public float minEvasionRate;
+            public float minCriticalRate;
+            public int maxLv;
+            public float maxStrength;
+            public float maxVitality;
+            public float maxAgility;
+            public float maxIntelligence;
+            public float maxLuck;
+            public float maxAttack;
+            public float maxMATK;
+            public float maxDeffence;
+            public float maxEvasionRate;
+            public float maxCriticalRate;
+            public float miningPower;
+            public float maxFuel;
+            public float consumeFuel;
+            public string imageFileName;
+            public string imageURL;
+            public int isNFT;
+            public object[] beasts;
+            public object[] equipments;
         }
     }
 }
