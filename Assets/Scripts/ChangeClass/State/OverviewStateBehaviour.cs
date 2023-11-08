@@ -6,7 +6,6 @@ namespace CryptoQuest.ChangeClass.StateMachine
 {
     public class OverviewStateBehaviour : StateMachineBehaviour
     {
-        [SerializeField] private LocalizedString _message;
         private ChangeClassStateController _stateController;
         private ChangeClassInputManager _input;
         private Animator _animator;
@@ -20,8 +19,6 @@ namespace CryptoQuest.ChangeClass.StateMachine
             _input = _stateController.Input;
             _input.CancelEvent += ExitState;
             _stateController.DefaultButton.Select();
-            _stateController.DialogController.Dialogue
-                .SetMessage(_message).Show();
         }
 
         public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)

@@ -11,6 +11,7 @@ namespace CryptoQuest.ChangeClass.StateMachine
     public class SelectClassMaterialBehaviour : StateMachineBehaviour
     {
         [SerializeField] private LocalizedString _message;
+        [SerializeField] private LocalizedString _overviewMessage;
         private ChangeClassStateController _stateController;
         private ChangeClassInputManager _input;
         private Animator _animator;
@@ -43,7 +44,7 @@ namespace CryptoQuest.ChangeClass.StateMachine
             var currentCharacter = EventSystem.current.currentSelectedGameObject.GetComponent<UICharacter>();
             _stateController.ConfirmMaterial.EnableButtonInteractable(false, _index);
             _index++;
-            
+
             if (_index < _stateController.Presenter.ListClassMaterial.Count)
             {
                 _stateController.ConfirmMaterial.FirstClassMaterialEvent?.Invoke(currentCharacter);
@@ -65,6 +66,8 @@ namespace CryptoQuest.ChangeClass.StateMachine
 
         private void ExitState()
         {
+            _stateController.DialogController.Dialogue
+                .SetMessage(_overviewMessage).Show();
             _animator.SetTrigger(_exit);
             _stateController.Presenter.Init();
         }
