@@ -17,10 +17,10 @@ namespace CryptoQuest
         private TinyMessageSubscriptionToken _connectWalletToken;
         private TinyMessageSubscriptionToken _disconnectWalletToken;
 
-        private void Awake() 
+        private void Awake()
         {
             _connectWalletToken = ActionDispatcher.Bind<ConnectWalletCompleted>(OnConnectWalletCompleted);
-            _disconnectWalletToken = ActionDispatcher.Bind<DisconnectWalletWalletCompleted>(OnDisconnectWalletCompleted); 
+            _disconnectWalletToken = ActionDispatcher.Bind<DisconnectWalletCompleted>(OnDisconnectWalletCompleted);
         }
 
         private void OnDestroy()
@@ -43,14 +43,14 @@ namespace CryptoQuest
             gameObject.SetActive(!ctx.IsSuccess);
 
             // Need reload StartGame state
-            if(ctx.IsSuccess)
+            if (ctx.IsSuccess)
             {
                 var stateMachine = transform.root.gameObject.GetComponentInChildren<TitleStateMachine>();
                 stateMachine.ChangeState(new StartGameState());
             }
         }
 
-        private void OnDisconnectWalletCompleted(DisconnectWalletWalletCompleted ctx)
+        private void OnDisconnectWalletCompleted(DisconnectWalletCompleted ctx)
         {
             gameObject.SetActive(ctx.IsSuccess);
         }

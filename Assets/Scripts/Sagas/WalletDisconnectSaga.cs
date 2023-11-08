@@ -36,13 +36,13 @@ namespace CryptoQuest.Sagas
 
         private void WalletDisconnected(WalletDisconnectResponse response)
         {
-            ActionDispatcher.Dispatch(new DisconnectWalletWalletCompleted(true));
+            ActionDispatcher.Dispatch(new DisconnectWalletCompleted(true));
         }
 
         private void OnError(Exception obj)
         {
             Debug.LogException(obj);
-            ActionDispatcher.Dispatch(new DisconnectWalletWalletCompleted(false));
+            ActionDispatcher.Dispatch(new DisconnectWalletCompleted(false));
         }
 
         private void OnCompleted() { }

@@ -13,11 +13,11 @@ namespace CryptoQuest.Networking.Actions
     }
 
     public class DisconnectWallet : ActionBase { }
-    public class DisconnectWalletWalletCompleted : ActionBase
+    public class DisconnectWalletCompleted : ActionBase
     {
         public bool IsSuccess { get; set; }
 
-        public DisconnectWalletWalletCompleted(bool result) { IsSuccess = result; }
+        public DisconnectWalletCompleted(bool result) { IsSuccess = result; }
     }
 
 }

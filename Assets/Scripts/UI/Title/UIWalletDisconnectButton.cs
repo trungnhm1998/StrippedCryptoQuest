@@ -17,7 +17,7 @@ namespace CryptoQuest
         private void Awake()
         {
             _connectWalletToken = ActionDispatcher.Bind<ConnectWalletCompleted>(OnConnectWalletCompleted);
-            _disconnectWalletToken = ActionDispatcher.Bind<DisconnectWalletWalletCompleted>(OnDisconnectWalletCompleted);
+            _disconnectWalletToken = ActionDispatcher.Bind<DisconnectWalletCompleted>(OnDisconnectWalletCompleted);
         }
 
         private void OnDestroy()
@@ -28,8 +28,8 @@ namespace CryptoQuest
 
         private void Start()
         {
-            var credentials =  ServiceProvider.GetService<Credentials>();
-            if(credentials != null && string.IsNullOrEmpty(credentials.Profile.user.walletAddress))
+            var credentials = ServiceProvider.GetService<Credentials>();
+            if (credentials != null && string.IsNullOrEmpty(credentials.Profile.user.walletAddress))
             {
                 gameObject.SetActive(false);
             }
@@ -40,7 +40,7 @@ namespace CryptoQuest
             gameObject.SetActive(ctx.IsSuccess);
         }
 
-        private void OnDisconnectWalletCompleted(DisconnectWalletWalletCompleted ctx)
+        private void OnDisconnectWalletCompleted(DisconnectWalletCompleted ctx)
         {
             gameObject.SetActive(!ctx.IsSuccess);
         }
