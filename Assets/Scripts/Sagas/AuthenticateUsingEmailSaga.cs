@@ -27,10 +27,12 @@ namespace CryptoQuest.Sagas
         private void RegisterThenLoginIfNew(string res)
         {
             var response = JsonConvert.DeserializeObject<FailedResponse>(res);
-            if (response.name != "FirebaseError") return;
-            if (response.code != "auth/user-not-found") return;
-
-            ActionDispatcher.Dispatch(new RegisterEmailAction(_ctx.Email, _ctx.Password));
+            if (response != null && response.name == "FirebaseError" && response.code == "auth/user-not-found")
+            {
+                ActionDispatcher.Dispatch(new RegisterEmailAction(_ctx.Email, _ctx.Password));
+                return;
+            }
+            OnUserSignedOut(res);
         }
     }
 }
