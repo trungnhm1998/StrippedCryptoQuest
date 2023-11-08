@@ -49,7 +49,6 @@ namespace CryptoQuest.AbilitySystem.Abilities
 
         private void RepeatCommand(RepeatableCommandExecutedEvent ctx)
         {
-            Debug.Log("@@@ RepeatCommand");
             BattleEventBus.UnsubscribeEvent(_eventToken);
             // just to make sure, even though we only listen to the event while the owner executing their command
             if (ctx.Character != Character) return;
