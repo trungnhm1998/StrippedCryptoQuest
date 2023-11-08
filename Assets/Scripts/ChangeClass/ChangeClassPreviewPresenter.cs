@@ -18,6 +18,7 @@ namespace CryptoQuest.ChangeClass
         [SerializeField] private ChangeClassPresenter _changeClassPresenter;
         [SerializeField] private UIPreviewClassMaterial _previewFirstClassMaterial;
         [SerializeField] private UIPreviewClassMaterial _previewLastClassMaterial;
+        [SerializeField] private UIPreviewClassMaterial _showDetailClassMaterial;
         [SerializeField] private UIPreviewCharacter _previewNewClass;
         [SerializeField] private UIPreviewCharacter _previewNewClassStatus;
         public UnityAction<UICharacter> FirstClassMaterialEvent;
@@ -56,7 +57,9 @@ namespace CryptoQuest.ChangeClass
         private IEnumerator SelectDefaultButton(int index)
         {
             yield return new WaitUntil(() => _listClassMaterial[index].IsFilterClassMaterial);
-            EnableButtonInteractable(true, index);
+            int materialNumber = _listClassMaterial[index].ListClassCharacter.Count;
+            if (materialNumber != 0)
+                EnableButtonInteractable(true, index);
         }
 
         public void EnableButtonInteractable(bool isEnable, int index)
@@ -95,6 +98,19 @@ namespace CryptoQuest.ChangeClass
 
             yield return new WaitForSeconds(1f);
             _previewNewClassStatus.PreviewNewCharacter(_changeNewClassAPI.Data, _firstClassMaterial);
+        }
+
+        public void ShowDetail(UICharacter character)
+        {
+            if (!_showDetailClassMaterial.gameObject.activeSelf)
+                _showDetailClassMaterial.gameObject.SetActive(true);
+            _showDetailClassMaterial.PreviewCharacter(character);
+        }
+
+        public void HideDetail()
+        {
+            if (!_showDetailClassMaterial.gameObject.activeSelf) return;
+            _showDetailClassMaterial.gameObject.SetActive(false);
         }
     }
 }
