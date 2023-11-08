@@ -87,13 +87,20 @@ namespace CryptoQuest.AbilitySystem.Abilities
 
         public override bool CanActiveAbility()
         {
+            return CheckInvalidCast() && base.CanActiveAbility();
+        }
+
+        private bool CheckInvalidCast()
+        {
+            if (_targets.Length <= 0) return true;
+
             if (!AbilitySystemHelper.SystemHasNoneTags(_targets[0], AbilitySO.Tags.TargetTags.IgnoreTags))
             {
                 BattleEventBus.RaiseEvent(new CastInvalidEvent(this, _character, _targets[0]));
                 return false;
             }
 
-            return base.CanActiveAbility();
+            return true;
         }
 
         /// <summary>

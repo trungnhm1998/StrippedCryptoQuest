@@ -33,6 +33,7 @@ GameObject:
   - component: {fileID: 6938198089508690721}
   - component: {fileID: 4510431391974548953}
   - component: {fileID: 5560344826289356105}
+  - component: {fileID: 6524516020704316591}
   m_Layer: 0
   m_Name: HeroGAS
   m_TagString: Untagged
@@ -290,6 +291,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _skills:
+  - {fileID: 11400000, guid: e812ecfe700c0cc4181b57704add823b, type: 2}
   - {fileID: 11400000, guid: 58374499eb1a56945af24296d48234d1, type: 2}
   - {fileID: 11400000, guid: 67e929589b42bfd408d2a5a61946cbb1, type: 2}
   - {fileID: 11400000, guid: 534998a153c09024ea581279296ea8ba, type: 2}
@@ -332,7 +334,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 86d9879b4c0c61644a41906a6e2a2b5a, type: 2}
   - {fileID: 11400000, guid: c2467ae656dfd464282f8e80003622c8, type: 2}
   - {fileID: 11400000, guid: 3bb82fa5e642a294da35dcecab21a0e6, type: 2}
-  - {fileID: 11400000, guid: e812ecfe700c0cc4181b57704add823b, type: 2}
   - {fileID: 11400000, guid: 74b001e3fc58fe3469be38ca70f4d51b, type: 2}
   - {fileID: 11400000, guid: 62a8b2ce07372384e98fe47b1f2aa3fe, type: 2}
   - {fileID: 11400000, guid: a27604c52b4c8d540b50de6d5e52a08d, type: 2}
@@ -463,3 +464,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _dealtDamageEvent: {fileID: 11400000, guid: 5cfde0b58cab9d848a3cd31f4a20c1ee, type: 2}
+--- !u!114 &6524516020704316591
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4052912324221725559}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a558369e1a2ed1f488b86aae97faabdb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _bus: {fileID: 11400000, guid: 2290057e7f48d1046b5e0a6c3f6dc910, type: 2}

@@ -36,8 +36,7 @@ namespace CryptoQuest.Battle.States.SelectHeroesActions
 
         private void CreateCommand(EnemyGroup enemyGroup)
         {
-            var castSkillCommand = new MultipleTargetCastSkillCommand(Hero, _selectedSkill,
-                enemyGroup.GetAliveEnemies().ToArray());
+            var castSkillCommand = new EnemyGroupCastSkillCommand(Hero, _selectedSkill, enemyGroup);
             Hero.TryGetComponent(out CommandExecutor commandExecutor);
             commandExecutor.SetCommand(castSkillCommand);
             Fsm.GoToNextState();
