@@ -27,10 +27,5 @@ namespace CryptoQuest.Item.Equipment
         [field: SerializeField] public EquipmentSlot.EType[] AllowedSlots { get; private set; }
 
         public EEquipmentCategory EquipmentCategory => EquipmentType.EquipmentCategory;
-
-#if UNITY_EDITOR
-        public void Editor_SetEquipmentType(EquipmentTypeSO type) => EquipmentType = type;
-        public void Editor_SetRequiredSlots(EquipmentSlot.EType[] requiredSlots) => RequiredSlots = requiredSlots;
-#endif
     }
 }
