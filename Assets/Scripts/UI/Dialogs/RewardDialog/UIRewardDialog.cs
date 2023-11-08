@@ -73,6 +73,9 @@ namespace CryptoQuest.UI.Dialogs.RewardDialog
 
             if (_gameStateSo.CurrentGameState != EGameState.Field) return;
             _inputMediator.EnableMapGameplayInput();
+
+            foreach (Transform child in TopContainer) Destroy(child.gameObject);
+            foreach (Transform child in BottomContainer) Destroy(child.gameObject);
         }
 
         private void DisplayItemsReward()
