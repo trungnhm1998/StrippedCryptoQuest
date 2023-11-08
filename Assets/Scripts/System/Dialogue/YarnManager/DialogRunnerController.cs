@@ -1,5 +1,8 @@
-﻿using CryptoQuest.System.Dialogue.Events;
+﻿using System.Collections;
+using CryptoQuest.System.Dialogue.Events;
 using UnityEngine;
+using UnityEngine.Localization.Tables;
+using UnityEngine.ResourceManagement.AsyncOperations;
 using Yarn.Unity;
 
 namespace CryptoQuest.System.Dialogue.YarnManager
@@ -24,9 +27,16 @@ namespace CryptoQuest.System.Dialogue.YarnManager
 
         private void OnConfigRequested(YarnProjectConfigSO currentConfig)
         {
-            _dialogueRunner.yarnProject = currentConfig.YarnProject;
-            _dialogueRunner.SetProject(currentConfig.YarnProject);
-            _localisedLineProvider.SetStringTable(currentConfig.StringTable);
+            StartCoroutine(CoLoadTable(currentConfig));
+        }
+
+        private IEnumerator CoLoadTable(YarnProjectConfigSO config)
+        {
+            AsyncOperationHandle<StringTable> handle = config.StringTable.GetTableAsync();
+            yield return handle;
+            _dialogueRunner.yarnProject = config.YarnProject;
+            _dialogueRunner.SetProject(config.YarnProject);
+            _localisedLineProvider.SetStringTable(config.StringTable);
         }
     }
 }
