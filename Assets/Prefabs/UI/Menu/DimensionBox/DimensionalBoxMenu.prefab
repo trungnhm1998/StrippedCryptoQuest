@@ -1912,7 +1912,6 @@ GameObject:
   - component: {fileID: 1558251683538702279}
   - component: {fileID: 1231428917582743024}
   - component: {fileID: 7760109760230350000}
-  - component: {fileID: 7706328854289493928}
   m_Layer: 5
   m_Name: Web3Wallet
   m_TagString: Untagged
@@ -2024,7 +2023,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 7706328854289493928}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: CryptoQuest.UI.Menu.Panels.DimensionBox.MetadTransferSection.UIWalletButtons,
           indi-games.crypto-quest
         m_MethodName: OnClicked
@@ -2037,34 +2036,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &7706328854289493928
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1202557764046138609}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a7c05cba00510a7458407e4e5fdd532d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _selectedBackground: {fileID: 4179413661458755256}
-  _arrowSelected: {fileID: 5592186946259427560}
-  _metadAPI: {fileID: 0}
-  <SendingMessage>k__BackingField:
-    m_TableReference:
-      m_TableCollectionName: GUID:eb6ce0c7cd5c2444c9d3345957efb3cb
-    m_TableEntryReference:
-      m_KeyId: 29744238375903232
-      m_Key: 
-    m_FallbackState: 0
-    m_WaitForCompletion: 0
-    m_LocalVariables: []
-  <Button>k__BackingField: {fileID: 7760109760230350000}
-  references:
-    version: 2
-    RefIds: []
 --- !u!1 &1213269192539575475
 GameObject:
   m_ObjectHideFlags: 0
@@ -4229,7 +4200,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4272343450362093199}
   - component: {fileID: 6786514415748902282}
-  - component: {fileID: 9018538760496814324}
   m_Layer: 5
   m_Name: WalletButton
   m_TagString: Untagged
@@ -4284,20 +4254,6 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
---- !u!114 &9018538760496814324
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2436802621207572086}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f7722a0dd514d1146aff1d878abf46a3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _ingameWalletMetad: {fileID: 6863728103501999178}
-  _web3WalletMetad: {fileID: 4894952958003921506}
 --- !u!1 &2452517518700284036
 GameObject:
   m_ObjectHideFlags: 0
@@ -8371,7 +8327,6 @@ GameObject:
   - component: {fileID: 7483912036837710815}
   - component: {fileID: 3414685208191648573}
   - component: {fileID: 6972666607405984050}
-  - component: {fileID: 1967661180530992020}
   m_Layer: 5
   m_Name: GameWallet
   m_TagString: Untagged
@@ -8483,7 +8438,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1967661180530992020}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: CryptoQuest.UI.Menu.Panels.DimensionBox.MetadTransferSection.UIWalletButtons,
           indi-games.crypto-quest
         m_MethodName: OnClicked
@@ -8496,34 +8451,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &1967661180530992020
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5067356834597425356}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c658b0a29ce73d54a8d639b62fd415d7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _selectedBackground: {fileID: 6360962208389840814}
-  _arrowSelected: {fileID: 2073058406161561485}
-  _metadAPI: {fileID: 0}
-  <SendingMessage>k__BackingField:
-    m_TableReference:
-      m_TableCollectionName: GUID:eb6ce0c7cd5c2444c9d3345957efb3cb
-    m_TableEntryReference:
-      m_KeyId: 29744238375903232
-      m_Key: 
-    m_FallbackState: 0
-    m_WaitForCompletion: 0
-    m_LocalVariables: []
-  <Button>k__BackingField: {fileID: 6972666607405984050}
-  references:
-    version: 2
-    RefIds: []
 --- !u!1 &5114307432049786931
 GameObject:
   m_ObjectHideFlags: 0
@@ -9349,7 +9276,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &4388960598924783731
 RectTransform:
   m_ObjectHideFlags: 0
@@ -14181,7 +14108,6 @@ GameObject:
   - component: {fileID: 6418159836412194263}
   - component: {fileID: 8190478309405403166}
   - component: {fileID: 5400857041384921025}
-  - component: {fileID: 1731620038777527814}
   m_Layer: 5
   m_Name: Frame
   m_TagString: Untagged
@@ -14246,22 +14172,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &1731620038777527814
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8104541554589842224}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4bc1ccceba5c72343b2b22c73f1e8a53, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _defaultSelection: {fileID: 0}
-  _transferTypeButtons: []
-  _metadSection: {fileID: 0}
-  _equipmentSection: {fileID: 0}
 --- !u!1 &8117736715346676816
 GameObject:
   m_ObjectHideFlags: 0
