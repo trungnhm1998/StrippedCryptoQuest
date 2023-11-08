@@ -54,7 +54,5 @@ namespace CryptoQuest.Networking.Actions
 
     public class LoginUsingTwitter : ActionBase { }
 
-    public class LoginUsingWallet : ActionBase { }
-
     public class LoginUsingGmail : ActionBase { }
 }

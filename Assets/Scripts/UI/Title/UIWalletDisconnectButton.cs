@@ -9,15 +9,15 @@ using UnityEngine.UI;
 
 namespace CryptoQuest
 {
-    public class UIWalletButton : MonoBehaviour
+    public class UIWalletDisconnectButton : MonoBehaviour
     {
         private TinyMessageSubscriptionToken _connectWalletToken;
         private TinyMessageSubscriptionToken _disconnectWalletToken;
 
-        private void OnEnable() 
+        private void OnEnable()
         {
             _connectWalletToken = ActionDispatcher.Bind<ConnectWalletCompleted>(OnConnectWalletCompleted);
-            _disconnectWalletToken = ActionDispatcher.Bind<DisconnectWalletWalletCompleted>(OnDisconnectWalletCompleted); 
+            _disconnectWalletToken = ActionDispatcher.Bind<DisconnectWalletWalletCompleted>(OnDisconnectWalletCompleted);
         }
 
         private void OnDisable()
@@ -28,8 +28,8 @@ namespace CryptoQuest
 
         private void Start()
         {
-            var credentials = ServiceProvider.GetService<Credentials>();
-            if (credentials != null && !string.IsNullOrEmpty(credentials.Profile.user.walletAddress))
+            var credentials =  ServiceProvider.GetService<Credentials>();
+            if(credentials != null && string.IsNullOrEmpty(credentials.Profile.user.walletAddress))
             {
                 gameObject.SetActive(false);
             }
@@ -37,14 +37,14 @@ namespace CryptoQuest
 
         private void OnConnectWalletCompleted(ConnectWalletCompleted ctx)
         {
-            gameObject.SetActive(!ctx.IsSuccess);
+            gameObject.SetActive(ctx.IsSuccess);
         }
 
         private void OnDisconnectWalletCompleted(DisconnectWalletWalletCompleted ctx)
         {
-            gameObject.SetActive(ctx.IsSuccess);
+            gameObject.SetActive(!ctx.IsSuccess);
         }
 
-        public void RequestConnectWallet() => ActionDispatcher.Dispatch(new ConnectWallet());
+        public void RequestWalletDisconnect() => ActionDispatcher.Dispatch(new DisconnectWallet());
     }
 }
