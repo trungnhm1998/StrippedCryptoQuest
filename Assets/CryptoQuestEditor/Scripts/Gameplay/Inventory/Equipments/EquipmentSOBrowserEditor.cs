@@ -9,6 +9,7 @@ using IndiGames.Tools.ScriptableObjectBrowser;
 using UnityEditor;
 using UnityEditor.Localization;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 using UnityEngine.Localization;
 using UnityEngine.Localization.Tables;
 
@@ -27,8 +28,10 @@ namespace CryptoQuestEditor
         private const int ROW_EQUIPMENT_SLOT_ID = 11;
 
         private const int ROW_EQUIPMENT_PART_ID = 8;
+        private const int ROW_EQUIPMENT_SPRITE_ID = 12;
         private readonly string[] _tableNames = { "Equipment", "Weapon", "Armor", "Accessory" };
         private Dictionary<int, EquipmentTypeSO> _equipmentTypeMap = new Dictionary<int, EquipmentTypeSO>();
+        private const string SPRITE_PATH = "Assets/Prefabs/Battle/Enemies/";
 
         public EquipmentSOBrowserEditor()
         {
@@ -92,6 +95,10 @@ namespace CryptoQuestEditor
                 {
                     EditorUtility.SetDirty(instance);
                 }
+
+                //
+                // var imageData = GetSpriteAssetRef(rows[ROW_EQUIPMENT_SPRITE_ID]);
+                // SetSprite(imageData, serializedObject);
             }
         }
 
@@ -123,6 +130,21 @@ namespace CryptoQuestEditor
             property.objectReferenceValue = equipmentTypeSo;
             serializedObject.ApplyModifiedProperties();
             serializedObject.Update();
+        }
+
+        private void SetSprite(AssetReferenceT<Sprite> image, SerializedObject serializedObject)
+        {
+            var property = serializedObject.FindProperty("<Image>k__BackingField");
+            property.boxedValue = image;
+            serializedObject.ApplyModifiedProperties();
+            serializedObject.Update();
+        }
+
+        private AssetReferenceT<Sprite> GetSpriteAssetRef(string spriteName)
+        {
+            var path = SPRITE_PATH + spriteName + ".sprite";
+            var guid = AssetDatabase.AssetPathToGUID(path);
+            return new AssetReferenceT<Sprite>(guid);
         }
 
         private void SetRequiredSlots(EquipmentSlot.EType[] types, SerializedObject serializedObject, string[] datas)
