@@ -363,6 +363,7 @@ GameObject:
   - component: {fileID: 4006025734832639284}
   - component: {fileID: 5285216729583922539}
   - component: {fileID: 1553094171493885043}
+  - component: {fileID: 1677332967076538044}
   m_Layer: 5
   m_Name: Txt
   m_TagString: Untagged
@@ -431,6 +432,46 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: CHANGE CLASS
+--- !u!114 &1677332967076538044
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 996144720710298285}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56eb0353ae6e5124bb35b17aff880f16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_StringReference:
+    m_TableReference:
+      m_TableCollectionName: GUID:c227ea75769518e46bf78d6137f2e77c
+    m_TableEntryReference:
+      m_KeyId: 10312929280
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  m_FormatArguments: []
+  m_UpdateString:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1553094171493885043}
+        m_TargetAssemblyTypeName: UnityEngine.UI.Text, UnityEngine.UI
+        m_MethodName: set_text
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  references:
+    version: 2
+    RefIds: []
 --- !u!1 &1074195512793695022
 GameObject:
   m_ObjectHideFlags: 0
@@ -663,6 +704,7 @@ GameObject:
   - component: {fileID: 5430064066200289328}
   - component: {fileID: 4419675434113263488}
   - component: {fileID: 13233083194194334}
+  - component: {fileID: 8254164924116694127}
   m_Layer: 5
   m_Name: API
   m_TagString: Untagged
@@ -735,6 +777,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 72faf4640c1d29f408e57615dcd846f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &8254164924116694127
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1299490133650843467}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c037745917d1fa848a14d8e91c49caf9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1328389726963166200
@@ -831,6 +885,7 @@ GameObject:
   - component: {fileID: 6035777678123696987}
   - component: {fileID: 2262863859500142285}
   - component: {fileID: 6327215740266891150}
+  - component: {fileID: 2673198583738522890}
   m_Layer: 5
   m_Name: UIRequiredMaterial
   m_TagString: Untagged
@@ -905,6 +960,22 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
 --- !u!114 &6327215740266891150
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1337604542852777742}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e68771b0594e0654eb461eeeef10c2d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _displayName: {fileID: 1181959039590806652}
+  _materialNumber: {fileID: 520151792185311852}
+  _icon: {fileID: 7954768114270289447}
+  _defaultBackground: {fileID: 7721573430224199080}
+--- !u!114 &2673198583738522890
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2087,8 +2158,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3516246293673056442}
-  - component: {fileID: 8215010939921353992}
-  - component: {fileID: 7527037792876228196}
   m_Layer: 5
   m_Name: UIChangeClass
   m_TagString: Untagged
@@ -2118,45 +2187,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 1024, y: 896}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!95 &8215010939921353992
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3814919858621217590}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: b6777c10fbd969b41884c1b91b2583e6, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
---- !u!114 &7527037792876228196
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3814919858621217590}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8d23a8f7e7f00394a82163c4fb178186, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <DialogController>k__BackingField: {fileID: 0}
-  <ConfirmMaterial>k__BackingField: {fileID: 5587978007039329808}
-  <Input>k__BackingField: {fileID: 0}
-  <Presenter>k__BackingField: {fileID: 5151207266218548813}
-  <Manager>k__BackingField: {fileID: 0}
-  <DefaultButton>k__BackingField: {fileID: 5777906031262282672}
 --- !u!1 &3945826954219573840
 GameObject:
   m_ObjectHideFlags: 0
@@ -2634,23 +2664,23 @@ MonoBehaviour:
   - {fileID: 5222289814906617406}
   _listItemMaterial:
   - {fileID: 3703655569626395665}
-  - {fileID: 6327215740266891150}
+  - {fileID: 2673198583738522890}
   _listCharacterClass:
-  - {fileID: 11400000, guid: 4a3f0ed925559fa48b6ba005ac4ff516, type: 2}
-  - {fileID: 11400000, guid: 31c6c36808a83f846bdaaadb3f0ce69b, type: 2}
-  - {fileID: 11400000, guid: ecb0c832ac962684b9c03c7a029ebf07, type: 2}
-  - {fileID: 11400000, guid: 59ddbded97fd38b49ac7386fbb964079, type: 2}
-  - {fileID: 11400000, guid: 8409a86d0df1a36469f5b2a181588817, type: 2}
-  - {fileID: 11400000, guid: 47cfc96d31bc3a94a97090a396f46a1a, type: 2}
-  - {fileID: 11400000, guid: 9fd65f84eff3f1a49821b1427ff2f28b, type: 2}
-  - {fileID: 11400000, guid: 7c9399adf01ac0545b6cd2761c735561, type: 2}
-  - {fileID: 11400000, guid: e80e5d64504ea1e47a4ff1e6f6f8574c, type: 2}
-  - {fileID: 11400000, guid: 8eb19171e8a6a0f4d813b6ac8681059d, type: 2}
-  - {fileID: 11400000, guid: 751876e22052ec04badd9a6a94d8dcbf, type: 2}
-  - {fileID: 11400000, guid: f2e9977b2166b3a4b92e6bb190e9cfc1, type: 2}
-  - {fileID: 11400000, guid: ebc3e7908ceb53841ad319394b7cf3eb, type: 2}
-  - {fileID: 11400000, guid: 2c10cad529112714884e7592a5c73913, type: 2}
-  - {fileID: 11400000, guid: 4ebc19f3e4500f448a632a08d0db23a3, type: 2}
+  - {fileID: 11400000, guid: 0f440b7ad071647438d9ac76c87d927e, type: 2}
+  - {fileID: 11400000, guid: e923bbf80f5769a4c9adffa140c9aa85, type: 2}
+  - {fileID: 11400000, guid: b9197307688823c43b9c8580e20f3d02, type: 2}
+  - {fileID: 11400000, guid: 9e63a62c242d6a14e8ca74b38fd2d71c, type: 2}
+  - {fileID: 11400000, guid: c63fd3e2247e1f64a9f9a69263b36bdf, type: 2}
+  - {fileID: 11400000, guid: 48008c8720ab88845ac79a4671064d58, type: 2}
+  - {fileID: 11400000, guid: 031bff705dfbde14dbb063a0533aec3d, type: 2}
+  - {fileID: 11400000, guid: dcc7c792c23cced498426df967d0ec6f, type: 2}
+  - {fileID: 11400000, guid: 10a1b5a0034f5a347970151a99808f18, type: 2}
+  - {fileID: 11400000, guid: 232bc4e0c007234488e57005dda9b89e, type: 2}
+  - {fileID: 11400000, guid: 368e717ffa2c89a4eaec4e2d14f328a2, type: 2}
+  - {fileID: 11400000, guid: 8067ed5c9a0047a4d8aaef25401827e5, type: 2}
+  - {fileID: 11400000, guid: 0f7fc21d598c87c4a816d1394c8c53f6, type: 2}
+  - {fileID: 11400000, guid: ca24ccdebdb6f3c4fb3f5ac41a7e162d, type: 2}
+  - {fileID: 11400000, guid: 6dbe079dfb7e3ce4dbff7000b1fa531f, type: 2}
   _uiClassToChange: {fileID: 4821380043878433584}
   _materialApi: {fileID: 13233083194194334}
   _characterAPI: {fileID: 4419675434113263488}
@@ -2670,7 +2700,7 @@ MonoBehaviour:
   - {fileID: 8019506285637721309}
   - {fileID: 5222289814906617406}
   _previewCharacterAPI: {fileID: 5430064066200289328}
-  _changeNewClassAPI: {fileID: 7825429800220993622}
+  _changeNewClassAPI: {fileID: 8254164924116694127}
   _changeClassPresenter: {fileID: 5151207266218548813}
   _previewFirstClassMaterial: {fileID: 3371318672139962496}
   _previewLastClassMaterial: {fileID: 2916822642487079363}
