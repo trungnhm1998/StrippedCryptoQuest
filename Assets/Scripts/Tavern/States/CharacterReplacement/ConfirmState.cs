@@ -1,5 +1,6 @@
 ﻿using CryptoQuest.Core;
 using CryptoQuest.UI.Actions;
+using TinyMessenger;
 using UnityEngine;
 using UnityEngine.Localization;
 
@@ -12,10 +13,15 @@ namespace CryptoQuest.Tavern.States.CharacterReplacement
         private TavernController _controller;
 
         private static readonly int CharacterReplacementState = Animator.StringToHash("Character Replacement Idle");
+        private TinyMessageSubscriptionToken _transferFailedEvent;
+        private TinyMessageSubscriptionToken _transferSucceedEvent;
+
         protected override void OnEnter()
         {
             _controller = StateMachine.GetComponent<TavernController>();
 
+            _transferSucceedEvent = ActionDispatcher.Bind<TransferSucceed>(BackToTransferState);
+            _transferFailedEvent = ActionDispatcher.Bind<TransferFailed>(BackToTransferState);
             _controller.TavernInputManager.CancelEvent += CancelTransmission;
 
             _controller.UIGameList.SetInteractableAllButtons(false);
@@ -30,6 +36,14 @@ namespace CryptoQuest.Tavern.States.CharacterReplacement
         protected override void OnExit()
         {
             _controller.DialogsManager.ChoiceDialog.Hide();
+            
+            ActionDispatcher.Unbind(_transferSucceedEvent);
+            ActionDispatcher.Unbind(_transferFailedEvent);
+        }
+
+        private void BackToTransferState(ActionBase _)
+        {
+            StateMachine.Play(CharacterReplacementState);
         }
 
         private void CancelTransmission()
@@ -50,7 +64,6 @@ namespace CryptoQuest.Tavern.States.CharacterReplacement
                 ActionDispatcher.Dispatch(new SendCharactersToGame(listWalletItemsToTransfer));
 
             _controller.UICharacterReplacement.ConfirmedTransmission();
-            StateMachine.Play(CharacterReplacementState);
         }
 
         private void NoButtonPressed()

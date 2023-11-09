@@ -11,7 +11,7 @@ namespace CryptoQuest.Tavern.UI.CharacterReplacement
 {
     public class UICharacterList : MonoBehaviour
     {
-        public static event UnityAction Rendered;
+        public static event UnityAction<UICharacterList> Rendered;
 
         [SerializeField] protected Transform _scrollRectContent;
         [SerializeField] protected UITavernItem _itemPrefab;
@@ -32,24 +32,20 @@ namespace CryptoQuest.Tavern.UI.CharacterReplacement
         public void SetData(List<ICharacterData> data)
         {
             _characterList = data;
-            StartCoroutine(AfterReceivedData());
-        }
-
-        private IEnumerator AfterReceivedData()
-        {
             CleanUpScrollView();
             RenderData();
-
-            yield return null;
             _tooltip.SetSafeArea(_tooltipSafeArea);
         }
 
-        public IEnumerator CoSetDefaultSelection(Transform targetScrollRect = null)
+        public void SelectDefault()
         {
-            var board = targetScrollRect ? targetScrollRect : _scrollRectContent;
-            yield return new WaitForSeconds(.1f);
+            StartCoroutine(CoSetDefaultSelection());
+        }
 
-            var firstButton = board.GetComponentInChildren<MultiInputButton>();
+        private IEnumerator CoSetDefaultSelection()
+        {
+            yield return null;
+            var firstButton = _scrollRectContent.GetComponentInChildren<MultiInputButton>();
             firstButton.Select();
         }
 
@@ -70,7 +66,7 @@ namespace CryptoQuest.Tavern.UI.CharacterReplacement
                 item.SetItemInfo(itemData);
                 IdentifyItemParentThenCacheItem(item);
             }
-            Rendered?.Invoke();
+            Rendered?.Invoke(this);
         }
 
         private void IdentifyItemParentThenCacheItem(UITavernItem item)
