@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net;
 using CryptoQuest.Core;
 using CryptoQuest.Networking;
@@ -13,33 +14,22 @@ using UnityEngine;
 namespace CryptoQuest.Sagas
 {
     [Serializable]
+    public class Data
+    {
+        public int[] ids;
+    }
+
+    [Serializable]
     public class UserSaveDataResponse
     {
-        [Serializable]
-        public class Data
-        {
-            public int[] ids { get; set; }
-        }
-
-        public int code { get; set; }
-        public bool success { get; set; }
-        public string message { get; set; }
-        public string uuid { get; set; }
-        public int gold { get; set; }
-        public int diamond { get; set; }
-        public int soul { get; set; }
-        public long time { get; set; }
-        public Data data { get; set; }
-        public int page_size { get; set; }
-        public int page { get; set; }
-        public int total_page { get; set; }
+        public int code;
+        public Data data;
     }
 
     [Serializable]
     public class SaveDataResponse
     {
-        [JsonProperty("game_data")]
-        public SaveData GameData { get; set; }
+        public SaveData game_data;
     }
 
     public class OnlineSaveLoader : SagaBase<AuthenticateSucceed>
@@ -62,24 +52,51 @@ namespace CryptoQuest.Sagas
 
         private void OnError(Exception obj)
         {
-            Debug.Log(obj.Message);
+            Debug.LogException(obj);
         }
 
-        private void LoadSave(UserSaveDataResponse res)
+        private void LoadSave(UserSaveDataResponse response)
         {
-            if (res.code != (int)HttpStatusCode.OK) return;
-            var restClient = ServiceProvider.GetService<IRestClient>();
-            restClient
-                .Get<SaveDataResponse>(Accounts.USER_SAVE_DATA + "/" + res.data.ids[0])
-                .Subscribe(LoadIntoSaveSystem);
+            Debug.Log("LoadSave: " + JsonConvert.SerializeObject(response));
+            if (response.code != (int)HttpStatusCode.OK) return;
+            if (response.data != null && response.data.ids.Length > 0)
+            {
+                var restClient = ServiceProvider.GetService<IRestClient>();
+                restClient
+                    .Get<SaveDataResponse>(Accounts.USER_SAVE_DATA + "/" + response.data.ids[0])
+                    .Subscribe(LoadIntoSaveSystem);
+            }
+            else
+            {
+                LoadIntoSaveSystem(null);
+            }
         }
 
         private void LoadIntoSaveSystem(SaveDataResponse res)
         {
-            var saveSystem = ServiceProvider.GetService<ISaveSystem>();
-            if (res.GameData != null)
+            Debug.Log("LoadIntoSaveSystem: " + JsonConvert.SerializeObject(res));
+            var credential = ServiceProvider.GetService<Credentials>();
+            var saveSystem = (SaveSystemSO)ServiceProvider.GetService<ISaveSystem>();
+            if (res == null || res.game_data == null)
             {
-                // TODO: check save file then restore
+                // This is new account, create new save file
+                saveSystem.SaveData.Uuid = credential.Profile.user.email;
+                saveSystem.SaveData.PlayerName = null;
+                saveSystem.SaveData.Objects = new();
+                saveSystem.SaveGame();
+            }
+            else
+            {
+                // If not same user, or server version is newer, use server version
+                if (string.IsNullOrEmpty(res.game_data.Uuid) 
+                    || res.game_data.Uuid != saveSystem.SaveData.Uuid
+                    || res.game_data.SavedTime.Millisecond >= saveSystem.SaveData.SavedTime.Millisecond)
+                {
+                    saveSystem.SaveData.Uuid = credential.Profile.user.email;
+                    saveSystem.SaveData.PlayerName = res.game_data.PlayerName;
+                    saveSystem.SaveData.Objects = res.game_data.Objects;
+                    saveSystem.SaveGame();
+                }
             }
             saveSystem?.LoadGame();
             ActionDispatcher.Dispatch(new GetProfileSucceed());
