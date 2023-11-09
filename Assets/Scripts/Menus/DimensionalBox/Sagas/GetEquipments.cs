@@ -25,17 +25,6 @@ namespace CryptoQuest.Menus.DimensionalBox.Sagas
 
         protected override void HandleAction(GetNftEquipments ctx)
         {
-            var isCacheEmpty = _inGameEquipmentsCache.Count == 0 && _inBoxEquipmentsCache.Count == 0;
-            /*
-             * TODO: Only update cache if dirty or needed
-             * Cache would be dirty after a transfer, or when the user first enters the dimensional box
-             */
-            if (isCacheEmpty == false && ctx.ForceRefresh == false)
-            {
-                ActionDispatcher.Dispatch(new GetNftEquipmentsSucceed());
-                return;
-            }
-
             ActionDispatcher.Dispatch(new ShowLoading());
             var restClient = ServiceProvider.GetService<IRestClient>();
             restClient
