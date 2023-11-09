@@ -1,14 +1,14 @@
 ﻿using System.Collections.Generic;
 using CryptoQuest.Core;
 using CryptoQuest.Tavern.Interfaces;
+using CryptoQuest.Tavern.States.CharacterReplacement;
 using TinyMessenger;
 using UnityEngine;
 
 namespace CryptoQuest.Tavern.States.PartyOrganization
 {
-    public class PartyOrganizationState : StateMachineBehaviour
+    public class PartyOrganizationState : StateMachineBehaviourBase
     {
-        private Animator _animator;
         private TavernController _controller;
 
         private TinyMessageSubscriptionToken _getInPartyNftCharacters;
@@ -20,12 +20,9 @@ namespace CryptoQuest.Tavern.States.PartyOrganization
         private static readonly int OverviewState = Animator.StringToHash("Overview");
         private static readonly int ConfirmState = Animator.StringToHash("Confirm Party Organization");
 
-        public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo,
-            int layerIndex)
+        protected override void OnEnter()
         {
-            _animator = animator;
-
-            _controller = animator.GetComponent<TavernController>();
+            _controller = StateMachine.GetComponent<TavernController>();
             _controller.UIPartyOrganization.gameObject.SetActive(true);
             _controller.UIPartyOrganization.StateEntered();
 
@@ -37,6 +34,17 @@ namespace CryptoQuest.Tavern.States.PartyOrganization
             _controller.TavernInputManager.NavigateEvent += SwitchToOtherListRequested;
             _controller.TavernInputManager.ExecuteEvent += SendItemsRequested;
             _controller.TavernInputManager.ResetEvent += ResetTransferRequested;
+        }
+
+        protected override void OnExit()
+        {
+            ActionDispatcher.Unbind(_getInPartyNftCharacters);
+            ActionDispatcher.Unbind(_getGameDataSucceedEvent);
+
+            _controller.TavernInputManager.CancelEvent -= CancelPartyOrganization;
+            _controller.TavernInputManager.NavigateEvent -= SwitchToOtherListRequested;
+            _controller.TavernInputManager.ExecuteEvent -= SendItemsRequested;
+            _controller.TavernInputManager.ResetEvent -= ResetTransferRequested;
         }
 
         private void GetInPartyCharacters(GetInPartyNftCharactersSucceed obj)
@@ -57,7 +65,7 @@ namespace CryptoQuest.Tavern.States.PartyOrganization
         {
             _controller.UIPartyOrganization.gameObject.SetActive(false);
             _controller.UIPartyOrganization.StateExited();
-            _animator.Play(OverviewState);
+            StateMachine.Play(OverviewState);
         }
 
         private void SwitchToOtherListRequested(Vector2 direction)
@@ -67,25 +75,13 @@ namespace CryptoQuest.Tavern.States.PartyOrganization
 
         private void SendItemsRequested()
         {
-            _animator.Play(ConfirmState);
+            StateMachine.Play(ConfirmState);
         }
 
         private void ResetTransferRequested()
         {
             _controller.UIParty.SetData(_cachedInPartyCharactersData);
             _controller.UINonParty.SetData(_cachedNonPartyCharactersData);
-        }
-
-        public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo,
-            int layerIndex)
-        {
-            ActionDispatcher.Unbind(_getInPartyNftCharacters);
-            ActionDispatcher.Unbind(_getGameDataSucceedEvent);
-
-            _controller.TavernInputManager.CancelEvent -= CancelPartyOrganization;
-            _controller.TavernInputManager.NavigateEvent -= SwitchToOtherListRequested;
-            _controller.TavernInputManager.ExecuteEvent -= SendItemsRequested;
-            _controller.TavernInputManager.ResetEvent -= ResetTransferRequested;
         }
     }
 }

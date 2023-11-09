@@ -1,25 +1,23 @@
-﻿using CryptoQuest.Core;
-using CryptoQuest.UI.Actions;
+﻿using CryptoQuest.Tavern.States.CharacterReplacement;
 using UnityEngine;
 using UnityEngine.Localization;
 
 namespace CryptoQuest.Tavern.States.PartyOrganization
 {
-    public class ConfirmState : StateMachineBehaviour
+    public class ConfirmState : StateMachineBehaviourBase
     {
         [SerializeField] private LocalizedString _confirmMessage;
 
-        private Animator _animator;
         private TavernController _controller;
 
         private static readonly int PartyOrganizationState = Animator.StringToHash("Party Organization Idle");
 
         public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo,
-            int layerIndex)
-        {
-            _animator = animator;
+            int layerIndex) { }
 
-            _controller = animator.GetComponent<TavernController>();
+        protected override void OnEnter()
+        {
+            _controller = StateMachine.GetComponent<TavernController>();
 
             _controller.TavernInputManager.CancelEvent += CancelTransmission;
 
@@ -32,27 +30,26 @@ namespace CryptoQuest.Tavern.States.PartyOrganization
                 .Show();
         }
 
+        protected override void OnExit()
+        {
+            _controller.DialogsManager.ChoiceDialog.Hide();
+        }
+
         private void CancelTransmission()
         {
-            _animator.Play(PartyOrganizationState);
+            StateMachine.Play(PartyOrganizationState);
         }
 
         private void YesButtonPressed()
         {
             _controller.UICharacterReplacement.ConfirmedTransmission();
-            _animator.Play(PartyOrganizationState);
+            StateMachine.Play(PartyOrganizationState);
         }
 
         private void NoButtonPressed()
         {
             _controller.DialogsManager.ChoiceDialog.Hide();
-            _animator.Play(PartyOrganizationState);
-        }
-
-        public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo,
-            int layerIndex)
-        {
-            _controller.DialogsManager.ChoiceDialog.Hide();
+            StateMachine.Play(PartyOrganizationState);
         }
     }
 }
