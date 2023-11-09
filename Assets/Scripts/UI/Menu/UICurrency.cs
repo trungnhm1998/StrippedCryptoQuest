@@ -11,6 +11,7 @@ namespace CryptoQuest.UI.Menu
         [SerializeField] private WalletSO _wallet;
 
         [SerializeField] private CurrencySO _currency;
+        public CurrencySO Currency => _currency;
 
         [Header("UI Components")]
         [SerializeField] private Text _text;
