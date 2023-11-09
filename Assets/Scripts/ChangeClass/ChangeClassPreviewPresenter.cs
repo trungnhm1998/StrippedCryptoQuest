@@ -13,8 +13,9 @@ namespace CryptoQuest.ChangeClass
     public class ChangeClassPreviewPresenter : MonoBehaviour
     {
         [SerializeField] private List<UIClassMaterial> _listClassMaterial;
+        [SerializeField] private ChangeClassInputManager _input;
         [SerializeField] private PreviewCharacterAPI _previewCharacterAPI;
-        [SerializeField] private MockDataToChangeClassAPI _changeNewClassAPI;
+        [SerializeField] private ChangeNewClassAPI _changeNewClassAPI;
         [SerializeField] private ChangeClassPresenter _changeClassPresenter;
         [SerializeField] private UIPreviewClassMaterial _previewFirstClassMaterial;
         [SerializeField] private UIPreviewClassMaterial _previewLastClassMaterial;
@@ -94,9 +95,12 @@ namespace CryptoQuest.ChangeClass
 
         private IEnumerator ChangeNewClassAPI()
         {
-            ActionDispatcher.Dispatch(new GetMockNftClassData { ForceRefresh = true });
-
-            yield return new WaitForSeconds(1f);
+            _input.DisableInput();
+            _changeNewClassAPI.ChangeNewClassData(_firstClassMaterial, _lastClassMaterial, _changeClassPresenter.Occupation);
+            yield return new WaitUntil(() => _changeNewClassAPI.IsFinishFetchData);
+            _input.EnableInput();
+            
+            if (_changeNewClassAPI.Data == null) yield break;
             _previewNewClassStatus.PreviewNewCharacter(_changeNewClassAPI.Data, _firstClassMaterial);
         }
 

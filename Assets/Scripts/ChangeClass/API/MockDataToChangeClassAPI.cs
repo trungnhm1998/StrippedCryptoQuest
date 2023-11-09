@@ -1,15 +1,8 @@
-using CryptoQuest.System;
-using System;
-using System.Net;
-using UnityEngine;
-using UniRx;
-using CryptoQuest.Networking;
-using CryptoQuest.ChangeClass.View;
-using Newtonsoft.Json;
 using CryptoQuest.UI.Actions;
 using CryptoQuest.Core;
 using CryptoQuest.Sagas;
 using System.Collections;
+using UnityEngine;
 
 namespace CryptoQuest.ChangeClass.API
 {
@@ -31,39 +24,38 @@ namespace CryptoQuest.ChangeClass.API
             yield return new WaitForSeconds(.5f);
             Data.newCharacter = new()
             {
-                id = "100",
-                unitTokenId = "",
-                HP = 2000,
-                addHP = 5,
-                MP = 300,
-                addMP = 3,
-                maxHP = 2500,
-                maxMP = 500,
-                strength = 50,
-                addStrength = 50,
-                vitality = 50,
-                addVitality = 50,
-                agility = 50,
-                addAgility = 50,
-                intelligence = 50,
-                addIntelligence = 50,
-                luck = 50,
-                addLuck = 50,
-                attack = 50,
-                addAttack = 50,
-                deffence = 50,
-                addDeffence = 50,
-                evasionRate = 50,
-                criticalRate = 50,
-                MATK = 50,
-                addMATK = 50,
-                level = 50,
-                exp = 50,
-                partyId = 50,
-                partyOrder = 50,
-                inGameStatus = 50,
-                isHero = 50,
-                itemAddedHP = 50,
+                id = 100,
+                unitTokenId = 10,
+                HP = Random.Range(300, 500),
+                addHp = Random.Range(30, 100),
+                MP = Random.Range(30, 100),
+                addMp = Random.Range(30, 100),
+                maxHP = Random.Range(500, 1000),
+                maxMP = Random.Range(100, 300),
+                strength = Random.Range(30, 100),
+                addStrength = Random.Range(1, 10),
+                vitality = Random.Range(30, 100),
+                addVitality = Random.Range(1, 10),
+                intelligence = Random.Range(30, 100),
+                addIntelligence = Random.Range(30, 100),
+                maxAgility = Random.Range(30, 100),
+                luck = Random.Range(5, 25),
+                addLuck = Random.Range(5, 8),
+                attack = Random.Range(30, 100),
+                addAttack = Random.Range(5, 10),
+                deffence = Random.Range(30, 100),
+                addDeffence = Random.Range(5, 10),
+                evasionRate = Random.Range(5, 10),
+                criticalRate = Random.Range(5, 10),
+                MATK = Random.Range(30, 100),
+                addMATK = Random.Range(5, 10),
+                level = 1,
+                exp = 0,
+                partyId = 0,
+                partyOrder = 0,
+                inGameStatus = 0,
+                isHero = 0,
+                itemAddedHP = 0,
                 userId = "1",
                 unitId = "10424123123",
             };
