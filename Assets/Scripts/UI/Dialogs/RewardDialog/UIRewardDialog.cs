@@ -31,22 +31,6 @@ namespace CryptoQuest.UI.Dialogs.RewardDialog
 
         private RewardDialogData _rewardDialogData;
 
-        private void OnEnable()
-        {
-            _inputAction.Enable();
-            _inputAction.performed += OnCloseImmediately;
-
-            _inputMediator.MenuConfirmedEvent += OnCloseButtonPressed;
-        }
-
-        private void OnDisable()
-        {
-            _inputAction.Disable();
-            _inputAction.performed -= OnCloseImmediately;
-
-            _inputMediator.MenuConfirmedEvent -= OnCloseButtonPressed;
-        }
-
         public void OnCloseButtonPressed() => Hide();
 
         private void OnCloseImmediately(InputAction.CallbackContext action)
@@ -59,6 +43,11 @@ namespace CryptoQuest.UI.Dialogs.RewardDialog
         {
             base.Show();
 
+            _inputAction.Enable();
+            _inputAction.performed += OnCloseImmediately;
+
+            _inputMediator.MenuConfirmedEvent += OnCloseButtonPressed;
+
             _defaultSelectButton.Select();
 
             if (!_rewardDialogData.IsValid()) return;
@@ -70,6 +59,11 @@ namespace CryptoQuest.UI.Dialogs.RewardDialog
         public override void Hide()
         {
             base.Hide();
+
+            _inputAction.Disable();
+            _inputAction.performed -= OnCloseImmediately;
+
+            _inputMediator.MenuConfirmedEvent -= OnCloseButtonPressed;
 
             if (_gameStateSo.CurrentGameState != EGameState.Field) return;
             _inputMediator.EnableMapGameplayInput();
