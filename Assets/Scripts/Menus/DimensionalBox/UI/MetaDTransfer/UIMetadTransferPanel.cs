@@ -27,13 +27,13 @@ namespace CryptoQuest.Menus.DimensionalBox.UI.MetaDTransfer
 
         public void SelectGameButton()
         {
-            SourceToTransfer = GameButton.Currency;
+            // SourceToTransfer = GameButton.Currency;
             TransferSourceChanged?.Invoke();
         }
 
         public void SelectDimensionalBoxButton()
         {
-            SourceToTransfer = DimensionalBoxButton.Currency;
+            // SourceToTransfer = DimensionalBoxButton.Currency;
             TransferSourceChanged?.Invoke();
         }
     }
