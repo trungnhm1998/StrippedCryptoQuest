@@ -1,3 +1,4 @@
+using System;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Type;
 using CryptoQuest.Gameplay.PlayerParty;
 using CryptoQuest.Item.Equipment;
@@ -5,6 +6,7 @@ using CryptoQuest.Menu;
 using CryptoQuest.Menus.Status.UI;
 using CryptoQuest.System;
 using CryptoQuest.UI.Menu;
+using UnityEngine;
 using UnityEngine.EventSystems;
 
 namespace CryptoQuest.Menus.Status.States
@@ -19,28 +21,42 @@ namespace CryptoQuest.Menus.Status.States
         private IPartyController Party => _party ??= ServiceProvider.GetService<IPartyController>();
         public OverviewHeroStatus(UIStatusMenu panel) : base(panel) { }
 
+        private int _currentPartySlot = 0;
+
+        private bool isBackToNavigation;
+
         public override void OnEnter()
         {
+            isBackToNavigation = false;
+
+            UIMainMenu.BackToNavigation += HandleBackToNavigation;
             StatusPanel.Focusing += FocusSelectEquipmentPanel;
             StatusPanel.Input.MenuCancelEvent += HandleCancel;
+            StatusPanel.Input.MenuNavigateEvent += HandleNavigate;
+            
             RegisterEquipmentButtonsEvent();
             FocusSelectEquipmentPanel();
 
-            // Render first hero infos in the party
-            StatusPanel.InspectingHero ??= Party.Slots[0].HeroBehaviour;
-            StatusPanel.CharacterEquipmentsPanel.Show(StatusPanel.InspectingHero);
-            StatusPanel.CharacterStatsPanelPanel.InspectCharacter(StatusPanel.InspectingHero);
+            RenderHero(_currentPartySlot);
+        }
+
+        private void HandleBackToNavigation()
+        {
+            isBackToNavigation = true;
         }
 
         public override void OnExit()
         {
+            UIMainMenu.BackToNavigation -= HandleBackToNavigation;
             StatusPanel.Focusing -= FocusSelectEquipmentPanel;
             StatusPanel.Input.MenuCancelEvent -= HandleCancel;
+            StatusPanel.Input.MenuNavigateEvent -= HandleNavigate;
             UnregisterEquipmentButtonsEvent();
         }
 
         private void FocusSelectEquipmentPanel()
         {
+            isBackToNavigation = false;
             StatusPanel.CharacterEquipmentsPanel.SelectDefault();
         }
 
@@ -65,6 +81,36 @@ namespace CryptoQuest.Menus.Status.States
             StatusPanel.EquipmentsInventoryPanel.RenderEquipmentsInInventory(StatusPanel.InspectingHero, slotType,
                 categoryType);
             fsm.RequestStateChange(StatusMenuStateMachine.EquipmentSelection);
+        }
+
+        private void RenderHero(int partySlot)
+        {
+            StatusPanel.InspectingHero = Party.Slots[partySlot].HeroBehaviour;
+            StatusPanel.CharacterEquipmentsPanel.Show(StatusPanel.InspectingHero);
+            StatusPanel.CharacterStatsPanelPanel.InspectCharacter(StatusPanel.InspectingHero);
+        }
+
+        private void HandleNavigate(Vector2 navigateAxis)
+        {
+            if (isBackToNavigation) return;
+
+            // render hero outside will causes re-rendering the hero when navigate y axis
+            if (navigateAxis.x > 0)
+            {
+                _currentPartySlot++;
+                if (_currentPartySlot >= Party.Slots.Length)
+                    _currentPartySlot = 0;
+
+                RenderHero(_currentPartySlot);
+            }
+            else if (navigateAxis.x < 0)
+            {
+                _currentPartySlot--;
+                if (_currentPartySlot < 0)
+                    _currentPartySlot = Party.Slots.Length - 1;
+
+                RenderHero(_currentPartySlot);
+            }
         }
 
         private void HandleCancel()
