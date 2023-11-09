@@ -6,8 +6,9 @@ using UnityEngine.EventSystems;
 namespace CryptoQuest.Menus.Status.UI.Equipment
 {
     // wrapper for UIEquipment
-    public class UIEquipmentItem : MonoBehaviour, ISelectHandler
+    public class UIEquipmentItem : MonoBehaviour, ISelectHandler, IDeselectHandler
     {
+        public event Action<UIEquipmentItem> Deselected;
         public event Action<UIEquipmentItem> Inspecting;
         public event Action<UIEquipmentItem> EquipItem;
         [SerializeField] private UIEquipment _equipmentUI;
@@ -36,6 +37,12 @@ namespace CryptoQuest.Menus.Status.UI.Equipment
         {
             if (!_canClick) return;
             EquipItem?.Invoke(this);
+        }
+
+        public void OnDeselect(BaseEventData eventData)
+        {
+            if (!_canClick) return;
+            Deselected?.Invoke(this);
         }
     }
 }

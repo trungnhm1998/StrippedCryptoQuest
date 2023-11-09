@@ -118,6 +118,7 @@ namespace CryptoQuest.Menus.Status.UI.Equipment
         private void DestroyEquipmentRow(UIEquipmentItem equipmentItem)
         {
             if (equipmentItem == null) return;
+            equipmentItem.Deselected -= ResetPreviewer;
             equipmentItem.EquipItem -= EquipEquipment;
             equipmentItem.Inspecting -= OnPreviewEquipmentStats;
             Destroy(equipmentItem.gameObject);
@@ -159,7 +160,7 @@ namespace CryptoQuest.Menus.Status.UI.Equipment
             if (equipment.IsValid() && equipment != _currentlyEquippingItem.Equipment) return;
             _currentlyEquippingItem.gameObject.SetActive(false);
             _currentlyEquippingItem.Reset();
-            
+
             StartCoroutine(InstantiateNewEquipmentUICo(equipment));
         }
 
@@ -175,6 +176,13 @@ namespace CryptoQuest.Menus.Status.UI.Equipment
 
         private IEnumerator InstantiateNewEquipmentUICo(EquipmentInfo equipment)
         {
+            if (equipment.IsValid() == false || _prefabDatabase.CacheMap.ContainsKey(equipment.Data.PrefabId) == false)
+            {
+                Debug.Log(
+                    $"UIEquipmentsInventory::InstantiateNewEquipmentUICo: Equipment [{equipment.Id}] is not valid");
+                yield break;
+            }
+
             if (equipment.Config == null)
             {
                 yield return _prefabDatabase.LoadDataById(equipment.Data.PrefabId);
@@ -187,6 +195,7 @@ namespace CryptoQuest.Menus.Status.UI.Equipment
             var equipmentItem = Instantiate(_equipmentItemPrefab, _scrollRect.content);
             equipmentItem.Init(equipment);
 
+            equipmentItem.Deselected += ResetPreviewer;
             equipmentItem.Inspecting += OnPreviewEquipmentStats;
             equipmentItem.EquipItem += EquipEquipment;
             _equipmentItems.Add(equipmentItem);
@@ -205,6 +214,11 @@ namespace CryptoQuest.Menus.Status.UI.Equipment
                 Debug.LogWarning("Character class is not allowed");
                 equipmentItem.DeactivateButton();
             }
+        }
+
+        private void ResetPreviewer(UIEquipmentItem _)
+        {
+            _equipmentPreviewer.ResetAttributesUI();
         }
 
         private void OnPreviewEquipmentStats(UIEquipmentItem equippingItemUI)
