@@ -8,9 +8,8 @@ using UnityEngine.EventSystems;
 
 namespace CryptoQuest.Tavern.States.CharacterReplacement
 {
-    public class CharacterReplacementState : StateMachineBehaviour
+    public class CharacterReplacementState : StateMachineBehaviourBase
     {
-        private Animator _animator;
         private TavernController _controller;
 
         private TinyMessageSubscriptionToken _getGameDataSucceedEvent;
@@ -22,12 +21,9 @@ namespace CryptoQuest.Tavern.States.CharacterReplacement
         private static readonly int OverviewState = Animator.StringToHash("Overview");
         private static readonly int ConfirmState = Animator.StringToHash("Confirm Character Replacement");
 
-        public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo,
-            int layerIndex)
+        protected override void OnEnter()
         {
-            _animator = animator;
-
-            _controller = animator.GetComponent<TavernController>();
+            _controller = StateMachine.GetComponent<TavernController>();
             _controller.UICharacterReplacement.gameObject.SetActive(true);
             _controller.UICharacterReplacement.StateEntered();
 
@@ -60,7 +56,7 @@ namespace CryptoQuest.Tavern.States.CharacterReplacement
         {
             _controller.UICharacterReplacement.gameObject.SetActive(false);
             _controller.UICharacterReplacement.StateExited();
-            _animator.Play(OverviewState);
+            StateMachine.Play(OverviewState);
         }
 
         private void SwitchToOtherListRequested(Vector2 direction)
@@ -70,7 +66,7 @@ namespace CryptoQuest.Tavern.States.CharacterReplacement
 
         private void SendItemsRequested()
         {
-            _animator.Play(ConfirmState);
+            StateMachine.Play(ConfirmState);
         }
 
         private void ResetTransferRequested()
@@ -84,8 +80,7 @@ namespace CryptoQuest.Tavern.States.CharacterReplacement
             EventSystem.current.currentSelectedGameObject.GetComponent<UITavernItem>().InpectDetails();
         }
 
-        public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo,
-            int layerIndex)
+        protected override void OnExit()
         {
             ActionDispatcher.Unbind(_getGameDataSucceedEvent);
             ActionDispatcher.Unbind(_getWalletDataSucceedEvent);
