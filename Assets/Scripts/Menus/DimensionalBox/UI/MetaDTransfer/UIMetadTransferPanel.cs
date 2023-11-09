@@ -2,6 +2,7 @@
 using CryptoQuest.Gameplay.Inventory.Currency;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
 using CryptoQuest.Input;
+using CryptoQuest.UI.Menu;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -12,7 +13,7 @@ namespace CryptoQuest.Menus.DimensionalBox.UI.MetaDTransfer
     {
         public event Action TransferSourceChanged;
         [SerializeField] private WalletSO _wallet;
-        public CurrencyInfo SourceToTransfer { get; private set; }
+        public CurrencySO SourceToTransfer { get; private set; }
         [field: SerializeField] public InputMediatorSO Input { get; private set; }
         [field: SerializeField] public UIMetadSourceButton GameButton { get; private set; }
         [field: SerializeField] public UIMetadSourceButton DimensionalBoxButton { get; private set; }
@@ -27,13 +28,13 @@ namespace CryptoQuest.Menus.DimensionalBox.UI.MetaDTransfer
 
         public void SelectGameButton()
         {
-            // SourceToTransfer = GameButton.Currency;
+            SourceToTransfer = GameButton.GetComponentInChildren<UICurrency>().Currency;
             TransferSourceChanged?.Invoke();
         }
 
         public void SelectDimensionalBoxButton()
         {
-            // SourceToTransfer = DimensionalBoxButton.Currency;
+            SourceToTransfer = DimensionalBoxButton.GetComponentInChildren<UICurrency>().Currency;
             TransferSourceChanged?.Invoke();
         }
     }

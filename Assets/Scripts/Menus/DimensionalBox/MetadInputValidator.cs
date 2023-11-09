@@ -1,4 +1,5 @@
 ﻿using System.Text.RegularExpressions;
+using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
 using CryptoQuest.Menus.DimensionalBox.UI.MetaDTransfer;
 using UnityEngine;
 using UnityEngine.UI;
@@ -7,6 +8,7 @@ namespace CryptoQuest.Menus.DimensionalBox
 {
     public class MetadInputValidator : MonoBehaviour
     {
+        [SerializeField] private WalletSO _wallet;
         [SerializeField] private UIMetadTransferPanel _transferPanel;
         [SerializeField] private InputField _inputField;
 
@@ -22,8 +24,9 @@ namespace CryptoQuest.Menus.DimensionalBox
             }
 
             float quantityInput = float.Parse(_inputField.text);
-            if (quantityInput > _transferPanel.SourceToTransfer.Amount)
-                _inputField.text = _transferPanel.SourceToTransfer.Amount.ToString();
+            var currencyAmount = _wallet[_transferPanel.SourceToTransfer].Amount;
+            if (quantityInput > currencyAmount)
+                _inputField.text = currencyAmount.ToString();
         }
     }
 }
