@@ -9,6 +9,8 @@ namespace CryptoQuest.Tavern.States.CharacterReplacement
     public class ConfirmState : StateMachineBehaviourBase
     {
         [SerializeField] private LocalizedString _confirmMessage;
+        [SerializeField] private LocalizedString _transferSucceededMsg;
+        [SerializeField] private LocalizedString _transferFailedMsg;
 
         private TavernController _controller;
 
@@ -20,8 +22,8 @@ namespace CryptoQuest.Tavern.States.CharacterReplacement
         {
             _controller = StateMachine.GetComponent<TavernController>();
 
-            _transferSucceedEvent = ActionDispatcher.Bind<TransferSucceed>(BackToTransferState);
-            _transferFailedEvent = ActionDispatcher.Bind<TransferFailed>(BackToTransferState);
+            _transferSucceedEvent = ActionDispatcher.Bind<TransferSucceed>(ShowTransferSucceededMessage);
+            _transferFailedEvent = ActionDispatcher.Bind<TransferFailed>(ShowTransferFailedMessage);
             _controller.TavernInputManager.CancelEvent += CancelTransmission;
 
             _controller.UIGameList.SetInteractableAllButtons(false);
@@ -36,13 +38,34 @@ namespace CryptoQuest.Tavern.States.CharacterReplacement
         protected override void OnExit()
         {
             _controller.DialogsManager.ChoiceDialog.Hide();
-            
+
             ActionDispatcher.Unbind(_transferSucceedEvent);
             ActionDispatcher.Unbind(_transferFailedEvent);
+            _controller.TavernInputManager.SubmitEvent -= BackToTransferState;
         }
 
-        private void BackToTransferState(ActionBase _)
+        private void ShowTransferSucceededMessage(ActionBase _)
         {
+            HandleTransferMessage(_transferSucceededMsg);
+        }
+
+        private void ShowTransferFailedMessage(ActionBase _)
+        {
+            HandleTransferMessage(_transferFailedMsg);
+        }
+
+        private void HandleTransferMessage(LocalizedString msg)
+        {
+            _controller.DialogsManager.Dialogue
+                .SetMessage(msg)
+                .Show();
+
+            _controller.TavernInputManager.SubmitEvent += BackToTransferState;
+        }
+
+        private void BackToTransferState()
+        {
+            _controller.DialogsManager.Dialogue.Hide();
             StateMachine.Play(CharacterReplacementState);
         }
 

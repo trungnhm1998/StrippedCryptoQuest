@@ -1,50 +1,62 @@
 ﻿using System;
+using System.Collections.Generic;
 using CryptoQuest.UI.Dialogs.ChoiceDialog;
 using CryptoQuest.UI.Dialogs.Dialogue;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.Localization;
 
 namespace CryptoQuest.Tavern
 {
     public class TavernDialogsManager : MonoBehaviour
     {
+        public event UnityAction EnableOverviewButtonsEvent;
+
         public UIDialogueForGenericMerchant Dialogue { get; private set; }
         public UIChoiceDialog ChoiceDialog { get; private set; }
 
-        [SerializeField] private LocalizedString _welcomeMessage;
+        [SerializeField] private TavernInputManager _inputManager;
+        [SerializeField] private List<LocalizedString> _welcomeMessage = new();
+
+        private int _msgIndex;
 
         public void TavernOpened()
         {
+            _msgIndex = 0;
+
             GenericMerchantDialogueController.Instance.Instantiate(DialogInstantiated);
             ChoiceDialogController.Instance.Instantiate(dialog => ChoiceDialog = dialog, false);
+
+            _inputManager.SubmitEvent += NextDialog;
         }
 
         private void DialogInstantiated(UIDialogueForGenericMerchant dialog)
         {
             Dialogue = dialog;
             Dialogue
-                .SetMessage(_welcomeMessage)
+                .SetMessage(_welcomeMessage[0])
                 .Show();
         }
 
-        public void ShowDialogue()
+        private void NextDialog()
         {
+            _msgIndex++;
+            if (_msgIndex >= _welcomeMessage.Count)
+            {
+                EnableOverviewButtonsEvent?.Invoke();
+                return;
+            }
+
             Dialogue
-                .SetMessage(_welcomeMessage)
+                .SetMessage(_welcomeMessage[_msgIndex])
                 .Show();
         }
 
-        public void ShowChoiceDialog(Action yes, Action no)
-        {
-            ChoiceDialog
-                .SetButtonsEvent(yes, no)
-                .SetMessage(_welcomeMessage)
-                .Show();
-        }
-
-        public void HideDialogue()
+        public void TavernExited()
         {
             GenericMerchantDialogueController.Instance.Release(Dialogue);
+            ChoiceDialogController.Instance.Release(ChoiceDialog);
+            _inputManager.SubmitEvent -= NextDialog;
         }
     }
 }
