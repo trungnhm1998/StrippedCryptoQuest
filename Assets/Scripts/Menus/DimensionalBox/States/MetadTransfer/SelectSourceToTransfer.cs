@@ -1,3 +1,5 @@
+using CryptoQuest.Core;
+using CryptoQuest.Menus.DimensionalBox.Actions;
 using CryptoQuest.Menus.DimensionalBox.UI.MetaDTransfer;
 using UnityEngine;
 
@@ -18,6 +20,8 @@ namespace CryptoQuest.Menus.DimensionalBox.States.MetadTransfer
             StateMachine.Input.MenuCancelEvent += ToSelectTransferTypeState;
             _metaDTransferPanel.TransferSourceChanged += FocusInputAmount;
             _metaDTransferPanel.SelectDefaultButton();
+            
+            ActionDispatcher.Dispatch(new GetToken());
         }
 
         protected override void OnExit()
