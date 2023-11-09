@@ -122,9 +122,21 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 5463112171094543385}
     - target: {fileID: 855496539777480150, guid: efad7a9a1c23aa04aa442ae047f064ea, type: 3}
+      propertyPath: _interacted.m_PersistentCalls.m_Calls.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 855496539777480150, guid: efad7a9a1c23aa04aa442ae047f064ea, type: 3}
       propertyPath: _interacted.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
       objectReference: {fileID: 7835769243085385028}
+    - target: {fileID: 855496539777480150, guid: efad7a9a1c23aa04aa442ae047f064ea, type: 3}
+      propertyPath: _interacted.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 855496539777480150, guid: efad7a9a1c23aa04aa442ae047f064ea, type: 3}
+      propertyPath: _interacted.m_PersistentCalls.m_Calls.Array.data[2].m_CallState
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 855496539777480150, guid: efad7a9a1c23aa04aa442ae047f064ea, type: 3}
       propertyPath: _interacted.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
       value: TriggerQuest
@@ -193,7 +205,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6310331648778874382, guid: efad7a9a1c23aa04aa442ae047f064ea, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
@@ -220,6 +233,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Quest>k__BackingField: {fileID: 0}
   _triggerQuestEventChannel: {fileID: 11400000, guid: fdefe5ff6c97c9946a9e874eb074f93f, type: 2}
+  _yarnProjectConfig: {fileID: 11400000, guid: 277ae02c72aa6b340b09c0f7e2ca2c30, type: 2}
 --- !u!4 &4289728840559094003 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8629883176367259376, guid: efad7a9a1c23aa04aa442ae047f064ea, type: 3}
