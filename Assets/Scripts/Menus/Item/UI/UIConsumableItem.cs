@@ -46,6 +46,7 @@ namespace CryptoQuest.Menus.Item.UI
             _button.Selected -= OnInspectingItem;
             _button.DeSelected -= OnDeselectItem;
             _button.onClick.RemoveListener(OnUse);
+            CancelInvoke(nameof(SelectButton));
         }
 
         public void OnUse()
@@ -100,16 +101,15 @@ namespace CryptoQuest.Menus.Item.UI
             _canClick = allowed;
         }
 
-
+        private const float ERROR_PRONE_DELAY = 0.01f;
         public void Inspect()
         {
-            StartCoroutine(CoSelectButton());
+            Invoke(nameof(SelectButton), ERROR_PRONE_DELAY);
             OnInspectingItem();
         }
 
-        IEnumerator CoSelectButton()
+        private void SelectButton()
         {
-            yield return null;
             _button.Select();
         }    
     }
