@@ -33,7 +33,7 @@ namespace CryptoQuest.Tavern
         private void ExitTavernRequested()
         {
             _tavernController.gameObject.SetActive(false);
-            _tavernDialogsManager.HideDialogue();
+            _tavernDialogsManager.TavernExited();
             _tavernInputManager.DisableInput();
         }
     }

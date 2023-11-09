@@ -19,6 +19,12 @@ namespace CryptoQuest.Tavern.States
             _controller.TavernUiOverview.PartyOrganizationButtonPressedEvent += EnterPartyOrganization;
 
             _controller.TavernInputManager.CancelEvent += ExitTavern;
+            _controller.DialogsManager.EnableOverviewButtonsEvent += EnableOverviewButtonsRequested;
+        }
+
+        private void EnableOverviewButtonsRequested()
+        {
+            _controller.TavernUiOverview.EnableOverviewButtons();
         }
 
         protected override void OnExit()
@@ -27,13 +33,15 @@ namespace CryptoQuest.Tavern.States
             _controller.TavernUiOverview.PartyOrganizationButtonPressedEvent -= EnterPartyOrganization;
 
             _controller.TavernInputManager.CancelEvent -= ExitTavern;
+            _controller.DialogsManager.EnableOverviewButtonsEvent -= EnableOverviewButtonsRequested;
 
             _controller.TavernUiOverview.gameObject.SetActive(false);
-            _controller.DialogsManager.HideDialogue();
+            _controller.DialogsManager.Dialogue.Hide();
         }
 
         private void ExitTavern()
         {
+            _controller.DialogsManager.TavernExited();
             _controller.TavernUiOverview.gameObject.SetActive(false);
             _controller.ExitTavernEvent?.Invoke();
         }

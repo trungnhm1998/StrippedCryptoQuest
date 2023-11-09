@@ -2418,11 +2418,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f66d23c9205e4aa2b1bb60d6f802fa02, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _inputManager: {fileID: 3871654355000680538}
   _welcomeMessage:
-    m_TableReference:
+  - m_TableReference:
       m_TableCollectionName: GUID:1b702bd02874f6349a9f27f039c75abe
     m_TableEntryReference:
       m_KeyId: 268687286272
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  - m_TableReference:
+      m_TableCollectionName: GUID:1b702bd02874f6349a9f27f039c75abe
+    m_TableEntryReference:
+      m_KeyId: 602037985280
       m_Key: 
     m_FallbackState: 0
     m_WaitForCompletion: 0
@@ -4335,6 +4344,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _defaultSelectButton: {fileID: 2074235962144829966}
+  _buttons:
+  - {fileID: 2074235962144829966}
+  - {fileID: 8104021554622047442}
 --- !u!1 &5920274145262945578
 GameObject:
   m_ObjectHideFlags: 0
