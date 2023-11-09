@@ -1,8 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using CryptoQuest.Menu;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace CryptoQuest.Tavern.UI.CharacterReplacement
 {
@@ -15,26 +12,22 @@ namespace CryptoQuest.Tavern.UI.CharacterReplacement
         [SerializeField] private Transform _walletScrollContent;
 
         private List<int> _selectedGameItemsIds = new();
-        public List<int> SelectedGameItemsIds { get => _selectedGameItemsIds; private set => _selectedGameItemsIds = value; }
+
+        public List<int> SelectedGameItemsIds
+        {
+            get => _selectedGameItemsIds;
+            private set => _selectedGameItemsIds = value;
+        }
 
         private List<int> _selectedWalletItemsIds = new();
-        public List<int> SelectedWalletItemsIds { get => _selectedWalletItemsIds; private set => _selectedWalletItemsIds = value; }
 
-        public override void StateEntered()
+        public List<int> SelectedWalletItemsIds
         {
-            base.StateEntered();
-            UITavernItem.Pressed += Transfer;
-            UICharacterList.Rendered += HandleListInteractable;
+            get => _selectedWalletItemsIds;
+            private set => _selectedWalletItemsIds = value;
         }
 
-        public override void StateExited()
-        {
-            base.StateExited();
-            UITavernItem.Pressed -= Transfer;
-            UICharacterList.Rendered -= HandleListInteractable;
-        }
-
-        private void Transfer(UITavernItem currentItem)
+        public void Transfer(UITavernItem currentItem)
         {
             _selectedGameItemsIds.Clear();
             _selectedWalletItemsIds.Clear();
@@ -62,17 +55,11 @@ namespace CryptoQuest.Tavern.UI.CharacterReplacement
         /// If there is no data in the left list,
         /// the first button of the right list will be selected.
         /// </summary>
-        private void HandleListInteractable()
+        public void HandleListInteractable(UICharacterList scrollList)
         {
-            if (_gameScrollContent.childCount > 0)
-            {
-                _walletListUi.SetInteractableAllButtons(false);
-                StartCoroutine(_gameListUi.CoSetDefaultSelection());
-            }
-            else
-            {
-                StartCoroutine(_walletListUi.CoSetDefaultSelection());
-            }
+            if (scrollList.Data.Count <= 0) return;
+            scrollList.SetInteractableAllButtons(true);
+            scrollList.SelectDefault();
         }
 
         public void SwitchList(Vector2 direction)
@@ -96,7 +83,7 @@ namespace CryptoQuest.Tavern.UI.CharacterReplacement
         private void FocusList(UICharacterList targetList)
         {
             targetList.SetInteractableAllButtons(true);
-            StartCoroutine(targetList.CoSetDefaultSelection());
+            targetList.SelectDefault();
         }
 
         public void ConfirmedTransmission()
@@ -104,6 +91,5 @@ namespace CryptoQuest.Tavern.UI.CharacterReplacement
             _gameListUi.UpdateList();
             _walletListUi.UpdateList();
         }
-
     }
 }

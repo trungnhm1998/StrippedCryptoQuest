@@ -2,6 +2,7 @@
 using CryptoQuest.Core;
 using CryptoQuest.Tavern.Interfaces;
 using CryptoQuest.Tavern.UI;
+using CryptoQuest.Tavern.UI.CharacterReplacement;
 using TinyMessenger;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -25,37 +26,39 @@ namespace CryptoQuest.Tavern.States.CharacterReplacement
         {
             _controller = StateMachine.GetComponent<TavernController>();
             _controller.UICharacterReplacement.gameObject.SetActive(true);
-            _controller.UICharacterReplacement.StateEntered();
+            _controller.UICharacterReplacement.Contents.SetActive(true);
+
+            UITavernItem.Pressed += _controller.UICharacterReplacement.Transfer;
+            UICharacterList.Rendered += _controller.UICharacterReplacement.HandleListInteractable;
 
             _getGameDataSucceedEvent = ActionDispatcher.Bind<GetGameNftCharactersSucceed>(GetInGameCharacters);
             _getWalletDataSucceedEvent = ActionDispatcher.Bind<GetWalletNftCharactersSucceed>(GetWalletCharacters);
-            ActionDispatcher.Dispatch(new GetCharacters());
 
             _controller.TavernInputManager.CancelEvent += CancelCharacterReplacement;
             _controller.TavernInputManager.NavigateEvent += SwitchToOtherListRequested;
             _controller.TavernInputManager.ExecuteEvent += SendItemsRequested;
             _controller.TavernInputManager.ResetEvent += ResetTransferRequested;
             _controller.TavernInputManager.InteractEvent += ViewCharacterDetails;
+
+            ActionDispatcher.Dispatch(new GetCharacters());
         }
 
         private void GetInGameCharacters(GetGameNftCharactersSucceed obj)
         {
             _cachedGameData = obj.InGameCharacters;
-            if (obj.InGameCharacters.Count <= 0) return;
             _controller.UIGameList.SetData(obj.InGameCharacters);
         }
 
         private void GetWalletCharacters(GetWalletNftCharactersSucceed obj)
         {
             _cachedWalletData = obj.WalletCharacters;
-            if (obj.WalletCharacters.Count <= 0) return;
             _controller.UIWalletList.SetData(obj.WalletCharacters);
         }
 
         private void CancelCharacterReplacement()
         {
             _controller.UICharacterReplacement.gameObject.SetActive(false);
-            _controller.UICharacterReplacement.StateExited();
+            _controller.UICharacterReplacement.Contents.SetActive(false);
             StateMachine.Play(OverviewState);
         }
 
@@ -66,6 +69,8 @@ namespace CryptoQuest.Tavern.States.CharacterReplacement
 
         private void SendItemsRequested()
         {
+            if (_controller.UICharacterReplacement.SelectedGameItemsIds.Count == 0 &&
+                _controller.UICharacterReplacement.SelectedWalletItemsIds.Count == 0) return;
             StateMachine.Play(ConfirmState);
         }
 
@@ -82,6 +87,9 @@ namespace CryptoQuest.Tavern.States.CharacterReplacement
 
         protected override void OnExit()
         {
+            UITavernItem.Pressed -= _controller.UICharacterReplacement.Transfer;
+            UICharacterList.Rendered -= _controller.UICharacterReplacement.HandleListInteractable;
+
             ActionDispatcher.Unbind(_getGameDataSucceedEvent);
             ActionDispatcher.Unbind(_getWalletDataSucceedEvent);
 

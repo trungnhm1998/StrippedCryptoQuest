@@ -44,10 +44,14 @@ namespace CryptoQuest.Tavern.Sagas
         {
             if (response.code != (int)HttpStatusCode.OK) return;
             ActionDispatcher.Dispatch(new TransferSucceed());
-            ActionDispatcher.Dispatch(new GetCharacters { ForceRefresh = true });
         }
 
-        private void OnError(Exception obj) => ActionDispatcher.Dispatch(new ShowLoading(false));
+        private void OnError(Exception obj)
+        {
+            Debug.Log("TransferCharactersToGameFailed::" + obj);
+            ActionDispatcher.Dispatch(new TransferFailed());
+            ActionDispatcher.Dispatch(new ShowLoading(false));
+        }
 
         private void OnCompleted() { }
     }

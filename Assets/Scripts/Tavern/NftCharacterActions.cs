@@ -8,7 +8,6 @@ namespace CryptoQuest.Tavern
     public class GetCharacters : ActionBase
     {
         public ETavernStatus Status { get; set; } = ETavernStatus.All;
-        public bool ForceRefresh { get; set; } = false;
     }
 
     public class GetGameNftCharactersSucceed : ActionBase
@@ -52,6 +51,7 @@ namespace CryptoQuest.Tavern
     }
 
     public class TransferSucceed : ActionBase { }
+    public class TransferFailed : ActionBase { }
 
     public class GetInPartyNftCharactersSucceed : ActionBase
     {
