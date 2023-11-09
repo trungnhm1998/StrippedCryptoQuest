@@ -1,11 +1,12 @@
 ﻿using CryptoQuest.Gameplay;
+using CryptoQuest.System.Dialogue.YarnManager;
 using UnityEngine;
 
 namespace CryptoQuest.EditorTool
 {
     public class DialogueEditorCheat : MonoBehaviour
     {
-        [SerializeField] private Yarn.Unity.LineView _lineView;
+        [SerializeField] private LineView _lineView;
         [SerializeField] private GameStateSO _gameState;
 
         [Header("Debug")]
@@ -34,7 +35,7 @@ namespace CryptoQuest.EditorTool
                 _showDebug = GUI.Toggle(_debugRect, _showDebug, _nameToggle, styleToggle);
 
                 if (!_showDebug) return;
-                _lineView.UserRequestedViewAdvancement();
+                _lineView.OnContinueClicked();
             }
         }
 #endif

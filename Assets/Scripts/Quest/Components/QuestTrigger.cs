@@ -1,5 +1,7 @@
 ﻿using CryptoQuest.Quest.Authoring;
 using CryptoQuest.Quest.Events;
+using CryptoQuest.System.Dialogue.Managers;
+using CryptoQuest.System.Dialogue.YarnManager;
 using UnityEngine;
 
 namespace CryptoQuest.Quest.Components
@@ -10,7 +12,14 @@ namespace CryptoQuest.Quest.Components
         public QuestSO Quest { get; private set; }
 
         [SerializeField] private QuestEventChannelSO _triggerQuestEventChannel;
+        [SerializeField] private YarnProjectConfigSO _yarnProjectConfig;
         private GiverActionCollider _actionCollider;
+
+        private void Awake()
+        {
+            if (_yarnProjectConfig)
+                YarnSpinnerDialogueManager.YarnProjectRequested?.Invoke(_yarnProjectConfig);
+        }
 
         public void Init(QuestSO dataQuest, GiverActionCollider actionCollider)
         {
