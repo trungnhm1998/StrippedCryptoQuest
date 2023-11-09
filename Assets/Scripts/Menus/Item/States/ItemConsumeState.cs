@@ -14,10 +14,13 @@ namespace CryptoQuest.Menus.Item.States
 
         private List<HeroBehaviour> _targets;
 
-        public ItemConsumeState(UIConsumableMenuPanel consumablePanel) : base(consumablePanel)
-        {
+        public ItemConsumeState(UIConsumableMenuPanel consumablePanel) : base(consumablePanel) =>
             _input = consumablePanel.Input;
-        }
+
+        private void CacheLastSelectingSlot(UICharacterPartySlot hero) => _consumablePanel.SelectingHero = hero;
+        private void DeselectAllHeroes() => _consumablePanel.EnableAllHeroButtons(false);
+        private void DeSelectSingleHero() => _consumablePanel.EnableAllHeroSelecting(false);
+        private void SelectAllHeroes() => fsm.RequestStateChange(ItemMenuStateMachine.InventorySelection);
 
         public override void OnEnter()
         {
@@ -52,15 +55,9 @@ namespace CryptoQuest.Menus.Item.States
             fsm.RequestStateChange(ItemMenuStateMachine.InventorySelection);
         }
 
-        private void CacheLastSelectingSlot(UICharacterPartySlot hero) => _consumablePanel.SelectingHero = hero;
-
-        private void DeselectAllHeroes() => _consumablePanel.EnableAllHeroButtons(false);
-
-        private void SelectAllHeroes() => fsm.RequestStateChange(ItemMenuStateMachine.InventorySelection);
-
         private void SelectSingleHero()
         {
-            foreach (var heroButton in _consumablePanel.HeroButtons) heroButton.Selected -= UsingItem;
+            foreach (var heroButton in _consumablePanel.HeroButtons) heroButton.Selected += UsingItem;
 
             _consumablePanel.EnableAllHeroButtons();
             _consumablePanel.HeroButtons[0].Select();
@@ -70,7 +67,10 @@ namespace CryptoQuest.Menus.Item.States
         private void UsingItem(UICharacterPartySlot uiCharacterPartySlot)
         {
             foreach (var heroButton in _consumablePanel.HeroButtons) heroButton.Selected -= UsingItem;
-            
+
+            DeSelectSingleHero();
+            uiCharacterPartySlot.EnableSelectBackground();
+
             fsm.RequestStateChange(ItemMenuStateMachine.InventorySelection);
         }
     }

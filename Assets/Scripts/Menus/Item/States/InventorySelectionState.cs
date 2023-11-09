@@ -47,6 +47,7 @@ namespace CryptoQuest.Menus.Item.States
         {
             _onStateEnter = false;
             _consumablePanel.Interactable = false;
+            _consumablePanel.EnableAllHeroSelecting(false);
 
             UIMainMenu.OnBackToNavigation();
         }

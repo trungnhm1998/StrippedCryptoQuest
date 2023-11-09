@@ -25,7 +25,7 @@ namespace CryptoQuest.UI.Menu.Character
 
         public bool IsSelected
         {
-            set => _selectBorder.SetActive(value);
+            set => _selectBackground.SetActive(value);
         }
 
         public HeroBehaviour Hero { get; private set; }
@@ -51,7 +51,7 @@ namespace CryptoQuest.UI.Menu.Character
         public void OnSelect(BaseEventData eventData)
         {
             if (Hero == null || !Hero.IsValid()) return;
-            _selectBackground.SetActive(true);
+            _selectBorder.SetActive(true);
             _onCharacterSelected?.Invoke(Hero);
             Selecting?.Invoke(this);
         }
@@ -59,7 +59,7 @@ namespace CryptoQuest.UI.Menu.Character
         public void OnDeselect(BaseEventData eventData)
         {
             if (Hero == null || !Hero.IsValid()) return;
-            _selectBackground.SetActive(false);
+            _selectBorder.SetActive(false);
         }
 
         public void EnableSelectBackground(bool isEnabled = true) => _selectBackground.SetActive(isEnabled);
