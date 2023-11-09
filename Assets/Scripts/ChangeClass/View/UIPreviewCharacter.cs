@@ -40,22 +40,22 @@ namespace CryptoQuest.ChangeClass.View
             _def.text = data.minDefence.ToString();
         }
 
-        public void PreviewNewCharacter(UserMaterials data, UICharacter character)
+        public void PreviewNewCharacter(NewCharacter data, UICharacter character)
         {
             _name.text = character.Class.name;
-            _hp.text = data.newCharacter.HP.ToString();
-            _maxHp.text = data.newCharacter.maxHP.ToString();
-            _mp.text = data.newCharacter.MP.ToString();
-            _maxMp.text = data.newCharacter.maxMP.ToString();
-            _exp.text = data.newCharacter.exp.ToString();
-            _str.text = data.newCharacter.strength.ToString();
-            _vit.text = data.newCharacter.vitality.ToString();
-            _agi.text = data.newCharacter.agility.ToString();
-            _int.text = data.newCharacter.intelligence.ToString();
-            _luck.text = data.newCharacter.luck.ToString();
-            _atk.text = data.newCharacter.attack.ToString();
-            _def.text = data.newCharacter.deffence.ToString();
-            _mAtk.text = data.newCharacter.MATK.ToString();
+            _hp.text = data.HP.ToString();
+            _maxHp.text = data.maxHP.ToString();
+            _mp.text = data.MP.ToString();
+            _maxMp.text = data.maxMP.ToString();
+            _exp.text = data.exp.ToString();
+            _str.text = data.strength.ToString();
+            _vit.text = data.vitality.ToString();
+            _agi.text = data.agility.ToString();
+            _int.text = data.intelligence.ToString();
+            _luck.text = data.luck.ToString();
+            _atk.text = data.attack.ToString();
+            _def.text = data.deffence.ToString();
+            _mAtk.text = data.MATK.ToString();
         }
     }
 }

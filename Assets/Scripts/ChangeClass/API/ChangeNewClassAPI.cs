@@ -9,6 +9,7 @@ using Newtonsoft.Json;
 using CryptoQuest.UI.Actions;
 using CryptoQuest.Core;
 using CryptoQuest.Sagas;
+using System.Collections;
 
 namespace CryptoQuest.ChangeClass.API
 {
@@ -39,12 +40,10 @@ namespace CryptoQuest.ChangeClass.API
             }
         }
 
-
-        private IRestClient _restAPINetworkController;
+        public NewCharacter Data { get; private set; }
         public bool IsFinishFetchData { get; private set; }
+        private IRestClient _restAPINetworkController;
         private Body _requestBody;
-
-        public UserMaterials Data { get; private set; }
 
         protected override void HandleAction(GetNewNftClass ctx)
         {
@@ -71,7 +70,7 @@ namespace CryptoQuest.ChangeClass.API
         private void OnChangeClass(ChangeClassResponseData response)
         {
             if (response.code != (int)HttpStatusCode.OK) return;
-            Data = response.data;
+            Data = response.data.newCharacter;
             IsFinishFetchData = true;
         }
 

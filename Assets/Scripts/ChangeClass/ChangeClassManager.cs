@@ -46,6 +46,7 @@ namespace CryptoQuest.ChangeClass
             _changeClassPanel.SetActive(false);
             _dialogController.HideChangeClassDialog();
             _input.DisableInput();
+            _input.EnableMapGameplayInput();
         }
 
         private void OnButtonClicked()
