@@ -13,6 +13,9 @@ namespace CryptoQuest.System.SaveSystem
         [SerializeField] private SaveData _saveData = new();
         public SaveData SaveData => _saveData;
 
+        public Action Saved;
+        public Action Loaded;
+
         public string PlayerName
         {
             get => _saveData.PlayerName;
@@ -23,7 +26,9 @@ namespace CryptoQuest.System.SaveSystem
         {
             _saveData.SavedTime = DateTime.Now;
             var json = JsonConvert.SerializeObject(_saveData); ;
-            return !string.IsNullOrEmpty(json) && _saveManagerSO.Save(json);
+            var result = !string.IsNullOrEmpty(json) && _saveManagerSO.Save(json);
+            if (result) { Saved?.Invoke(); }
+            return result;
         }
 
         public bool LoadGame()
@@ -33,7 +38,11 @@ namespace CryptoQuest.System.SaveSystem
             {
                 Debug.Log("Load Save: " + json);
                 _saveData = JsonConvert.DeserializeObject<SaveData>(json);
-                return true;
+                if(_saveData != null)
+                {
+                    Loaded?.Invoke();
+                    return true;
+                }
             }
             return false;
         }

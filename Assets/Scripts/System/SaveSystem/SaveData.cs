@@ -23,6 +23,7 @@ namespace CryptoQuest.System.SaveSystem
     {
         public DateTime SavedTime;
         public string PlayerName;
+        public string Uuid;
         public List<KeyValue> Objects = new();
     }
 }
