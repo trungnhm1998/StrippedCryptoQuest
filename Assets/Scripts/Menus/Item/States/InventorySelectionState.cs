@@ -24,6 +24,8 @@ namespace CryptoQuest.Menus.Item.States
             _input.TabChangeEvent += ChangeTab;
 
             UIConsumableItem.Using += UseItem;
+            
+            SelectFirstTab();
         }
 
         public override void OnExit()
@@ -47,7 +49,6 @@ namespace CryptoQuest.Menus.Item.States
         {
             _onStateEnter = false;
             _consumablePanel.Interactable = false;
-            _consumablePanel.EnableAllHeroSelecting(false);
 
             UIMainMenu.OnBackToNavigation();
         }

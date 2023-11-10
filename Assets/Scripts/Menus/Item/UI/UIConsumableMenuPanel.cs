@@ -144,10 +144,5 @@ namespace CryptoQuest.Menus.Item.UI
         {
             foreach (var button in HeroButtons) button.Interactable = isEnabled;
         }
-        
-        public void EnableAllHeroSelecting(bool isEnabled = true)
-        {
-            foreach (var button in HeroButtons) button.IsSelected = isEnabled;
-        }
     }
 }

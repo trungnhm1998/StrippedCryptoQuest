@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using CryptoQuest.AbilitySystem.Abilities;
 using CryptoQuest.Battle.Components;
 using CryptoQuest.Item;
@@ -9,14 +10,14 @@ namespace CryptoQuest.Gameplay.Inventory
 {
     public class ConsumableController : MonoBehaviour
     {
-        public static event Action<ConsumableInfo, HeroBehaviour> HeroConsumingItem;
+        public static event Action<ConsumableInfo, List<HeroBehaviour>> HeroConsumingItem;
         public static event Action<ConsumableInfo> ConsumingItem;
         public static event Action<ConsumableInfo> ConsumedItem;
 
         public static void OnConsumeItem(ConsumableInfo consumable) => ConsumingItem?.Invoke(consumable);
 
-        public static void OnConsumeItem(ConsumableInfo consumable, HeroBehaviour heroIndices)
-            => HeroConsumingItem?.Invoke(consumable, heroIndices);
+        public static void OnConsumeItem(ConsumableInfo consumable, List<HeroBehaviour> heroes)
+            => HeroConsumingItem?.Invoke(consumable, heroes);
 
         [Header("Raise on")]
         [SerializeField] private ConsumableEventChannel _itemConsumedEvent;
@@ -36,24 +37,24 @@ namespace CryptoQuest.Gameplay.Inventory
             ConsumingItem -= ConsumeItem;
         }
 
-        private void ConsumeItem(ConsumableInfo consumable, HeroBehaviour hero)
+        private void ConsumeItem(ConsumableInfo consumable, List<HeroBehaviour> heroes)
         {
-            if (!hero.IsValid()) return;
-
             bool ableToUseOnAtLeastOneHero = false;
+            foreach (var hero in heroes)
+            {
+                var abilitySystem = hero.GetComponent<AbilitySystemBehaviour>();
+                var spec = abilitySystem.GiveAbility<ConsumableAbilitySpec>(consumable.Data.Ability);
+                spec.SetConsumable(consumable);
 
-            var abilitySystem = hero.GetComponent<AbilitySystemBehaviour>();
-            var spec = abilitySystem.GiveAbility<ConsumableAbilitySpec>(consumable.Data.Ability);
-            spec.SetConsumable(consumable);
-
-            if (spec.CanActiveAbility() && !ableToUseOnAtLeastOneHero)
-                ableToUseOnAtLeastOneHero = true;
-            spec.TryActiveAbility();
+                if (spec.CanActiveAbility() && !ableToUseOnAtLeastOneHero)
+                    ableToUseOnAtLeastOneHero = true;
+                spec.TryActiveAbility();
+            }
 
             if (ableToUseOnAtLeastOneHero)
             {
                 consumable.OnConsumed(_inventoryController);
-                Debug.Log($"Consuming {consumable.Data} on {hero.DisplayName}"); 
+                Debug.Log($"Consuming {consumable.Data} on {heroes.Count} heroes");
             }
 
             // TODO: Raise consumed failed?
