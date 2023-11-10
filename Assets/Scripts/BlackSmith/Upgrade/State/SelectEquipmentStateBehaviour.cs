@@ -8,7 +8,7 @@ namespace CryptoQuest.BlackSmith.Upgrade.StateMachine
     {
         [SerializeField] private LocalizedString _selectTargetMessage;
         private Animator _animator;
-        private BlackSmithInputManager _input;
+        private MerchantsInputManager _input;
         private UpgradeStateController _stateController;
         private static readonly int _submit = Animator.StringToHash("isUpgrade");
         private static readonly int _exit = Animator.StringToHash("isBlackSmithState");

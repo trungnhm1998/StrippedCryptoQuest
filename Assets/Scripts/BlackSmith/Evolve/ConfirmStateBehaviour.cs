@@ -1,4 +1,5 @@
 ﻿using System;
+using CryptoQuest.Input;
 using UnityEngine;
 
 namespace CryptoQuest.BlackSmith.EvolveStates
@@ -7,7 +8,7 @@ namespace CryptoQuest.BlackSmith.EvolveStates
     {
         private EvolveStateController _stateController;
         private Animator _animator;
-        private BlackSmithInputManager _stateControllerInput;
+        private MerchantsInputManager _stateControllerInput;
         
         private static readonly int SelectEquipmentState = Animator.StringToHash("isSelectEquipment");
 

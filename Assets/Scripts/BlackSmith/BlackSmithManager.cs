@@ -14,7 +14,7 @@ namespace CryptoQuest.BlackSmith
 {
     public class BlackSmithManager : MonoBehaviour
     {
-        [SerializeField] private BlackSmithInputManager _blackSmithInput;
+        [SerializeField] private MerchantsInputManager _blackSmithInput;
         [SerializeField] private VoidEventChannelSO _sceneLoadedEvent;
         [SerializeField] private ShowBlackSmithEventChannelSO _openBlackSmithEvent;
         [SerializeField] private BlackSmithStateController _blacksmithController;

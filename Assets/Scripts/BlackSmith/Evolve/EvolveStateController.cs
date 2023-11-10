@@ -1,4 +1,5 @@
 using CryptoQuest.BlackSmith.Evolve.UI;
+using CryptoQuest.Input;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -7,7 +8,7 @@ namespace CryptoQuest.BlackSmith.EvolveStates
     public class EvolveStateController : MonoBehaviour
     {
         public UnityAction ExitConfirmPhaseEvent;
-        [field: SerializeField] public BlackSmithInputManager Input { get; private set; }
+        [field: SerializeField] public MerchantsInputManager Input { get; private set; }
         [field: SerializeField] public BlackSmithDialogsPresenter DialogsPresenter { get; private set; }
         [field: SerializeField] public EvolvePresenter EvolvePanel { get; private set; }
         [field: SerializeField] public UIEvolveEquipmentList EvolveEquipmentList { get; private set; }

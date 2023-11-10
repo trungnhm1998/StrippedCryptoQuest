@@ -6,7 +6,7 @@ namespace CryptoQuest.BlackSmith.Upgrade.StateMachine
     public class ResultUpgradeStateBehaviour : StateMachineBehaviour
     {
         private Animator _animator;
-        private BlackSmithInputManager _input;
+        private MerchantsInputManager _input;
         private UpgradeStateController _stateController;
         private static readonly int _submit = Animator.StringToHash("isSelect");
 
