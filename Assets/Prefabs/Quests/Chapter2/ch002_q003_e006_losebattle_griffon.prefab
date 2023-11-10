@@ -24,6 +24,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3605833896246935490}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -32,7 +33,6 @@ Transform:
   - {fileID: 2262238662871978596}
   - {fileID: 3327279709077980225}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6542303562614795744
 MonoBehaviour:
@@ -49,8 +49,8 @@ MonoBehaviour:
   _onSceneLoadedEventChannel: {fileID: 11400000, guid: b8b96e43d21a7bf4c96df4cb83c2b764, type: 2}
   _spawnPoint: {fileID: 2262238662871978596}
   _actorDef: {fileID: 11400000, guid: e0eb1393d0933414c8f9208038bf43d8, type: 2}
-  _actorSpawnSetting: {fileID: 11400000, guid: 194d7ebf068c9ff45b2b7f81f87373d1, type: 2}
-  _actorDeSpawnSetting: {fileID: 11400000, guid: d5ef1f7b57eace348ab9f86559012947, type: 2}
+  _actorSpawnSettingSO: {fileID: 11400000, guid: 194d7ebf068c9ff45b2b7f81f87373d1, type: 2}
+  _actorDeSpawnSettingSO: {fileID: 11400000, guid: d5ef1f7b57eace348ab9f86559012947, type: 2}
 --- !u!1 &6356063358342551245
 GameObject:
   m_ObjectHideFlags: 0
@@ -76,13 +76,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6356063358342551245}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 8.12, y: -11.58, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5696553424248231177}
-  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &4375336578941128767
 MonoBehaviour:
@@ -181,6 +181,42 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8239929161965676886, guid: c1ebc2433251e764eb56b05d510fe4ea, type: 3}
+      propertyPath: m_PlayableAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 3716e805f3b44f3499830a7802b89b0b, type: 2}
+    - target: {fileID: 8239929161965676886, guid: c1ebc2433251e764eb56b05d510fe4ea, type: 3}
+      propertyPath: m_SceneBindings.Array.size
+      value: 315
+      objectReference: {fileID: 0}
+    - target: {fileID: 8239929161965676886, guid: c1ebc2433251e764eb56b05d510fe4ea, type: 3}
+      propertyPath: m_SceneBindings.Array.data[309].key
+      value: 
+      objectReference: {fileID: -5736786151725474694, guid: 3716e805f3b44f3499830a7802b89b0b, type: 2}
+    - target: {fileID: 8239929161965676886, guid: c1ebc2433251e764eb56b05d510fe4ea, type: 3}
+      propertyPath: m_SceneBindings.Array.data[310].key
+      value: 
+      objectReference: {fileID: 5350100212779269929, guid: 3716e805f3b44f3499830a7802b89b0b, type: 2}
+    - target: {fileID: 8239929161965676886, guid: c1ebc2433251e764eb56b05d510fe4ea, type: 3}
+      propertyPath: m_SceneBindings.Array.data[311].key
+      value: 
+      objectReference: {fileID: -1669867962379275612, guid: 3716e805f3b44f3499830a7802b89b0b, type: 2}
+    - target: {fileID: 8239929161965676886, guid: c1ebc2433251e764eb56b05d510fe4ea, type: 3}
+      propertyPath: m_SceneBindings.Array.data[312].key
+      value: 
+      objectReference: {fileID: 8561009661076559332, guid: 3716e805f3b44f3499830a7802b89b0b, type: 2}
+    - target: {fileID: 8239929161965676886, guid: c1ebc2433251e764eb56b05d510fe4ea, type: 3}
+      propertyPath: m_SceneBindings.Array.data[313].key
+      value: 
+      objectReference: {fileID: 7126732773284114269, guid: 3716e805f3b44f3499830a7802b89b0b, type: 2}
+    - target: {fileID: 8239929161965676886, guid: c1ebc2433251e764eb56b05d510fe4ea, type: 3}
+      propertyPath: m_SceneBindings.Array.data[314].key
+      value: 
+      objectReference: {fileID: 3976617135188112091, guid: 3716e805f3b44f3499830a7802b89b0b, type: 2}
+    - target: {fileID: 8239929161965676886, guid: c1ebc2433251e764eb56b05d510fe4ea, type: 3}
+      propertyPath: m_SceneBindings.Array.data[310].value
+      value: 
+      objectReference: {fileID: 11400000, guid: d09d3b65b69911d4480f6a2ecd30b8e6, type: 2}
     - target: {fileID: 8239929161965676886, guid: c1ebc2433251e764eb56b05d510fe4ea, type: 3}
       propertyPath: m_ExposedReferences.m_References.Array.size
       value: 59

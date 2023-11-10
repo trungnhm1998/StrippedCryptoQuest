@@ -25,13 +25,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5038512464322541812}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 15.3, y: -28.68, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 596204535465367241}
-  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6343922902462385038
 MonoBehaviour:
@@ -82,6 +82,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8523599094452449984}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -91,7 +92,6 @@ Transform:
   - {fileID: 1785335575262573831}
   - {fileID: 6885533219997862437}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1687715198411206917
 MonoBehaviour:
@@ -108,8 +108,8 @@ MonoBehaviour:
   _onSceneLoadedEventChannel: {fileID: 11400000, guid: b8b96e43d21a7bf4c96df4cb83c2b764, type: 2}
   _spawnPoint: {fileID: 1785335575262573831}
   _actorDef: {fileID: 11400000, guid: d4f1f69734085144f9d9bd6a89dc27f6, type: 2}
-  _actorSpawnSetting: {fileID: 11400000, guid: cda9c4ded843d714096890807568cb7b, type: 2}
-  _actorDeSpawnSetting: {fileID: 11400000, guid: fdc0e3d15cc87824cbc28f127824465f, type: 2}
+  _actorSpawnSettingSO: {fileID: 11400000, guid: cda9c4ded843d714096890807568cb7b, type: 2}
+  _actorDeSpawnSettingSO: {fileID: 11400000, guid: fdc0e3d15cc87824cbc28f127824465f, type: 2}
 --- !u!1 &9119060261535172130
 GameObject:
   m_ObjectHideFlags: 0
@@ -135,13 +135,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9119060261535172130}
+  serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 14.7, y: -17.25, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 596204535465367241}
-  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &6528064494882089912
 SpriteRenderer:
@@ -278,7 +278,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8239929161965676886, guid: a9c6c59af0ba8624d8d03a46eeae538d, type: 3}
       propertyPath: m_SceneBindings.Array.size
-      value: 357
+      value: 356
       objectReference: {fileID: 0}
     - target: {fileID: 8239929161965676886, guid: a9c6c59af0ba8624d8d03a46eeae538d, type: 3}
       propertyPath: m_SceneBindings.Array.data[356].key
