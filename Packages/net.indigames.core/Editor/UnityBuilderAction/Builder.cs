@@ -70,6 +70,8 @@ namespace IndiGamesEditor.UnityBuilderAction
                 VersionApplicator.SetAndroidVersionCode(options["androidVersionCode"]);
                 AndroidSettings.Apply(options);
             }
+            
+            VersionApplicator.SetVersion(VersionGenerator.Generate());
 
             // Execute default AddressableAsset content build, if the package is installed.
             // Version defines would be the best solution here, but Unity 2018 doesn't support that,
