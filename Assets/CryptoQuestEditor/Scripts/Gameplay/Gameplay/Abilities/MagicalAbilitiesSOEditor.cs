@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using CryptoQuest.AbilitySystem;
 using CryptoQuest.AbilitySystem.Abilities;
 using CryptoQuest.AbilitySystem.Attributes;
@@ -21,7 +22,7 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Abilities
     public class MagicalAbilitiesSOEditor : ScriptableObjectBrowserEditor<MagicImport>
     {
         private const string DEFAULT_NAME = "";
-        private const int ROW_OFFSET = 14;
+        private const int ROW_OFFSET = 9;
         private const string NAME_LOCALIZE_TABLE = "AbilityNames";
         private const string DESCRIPTION_LOCALIZE_TABLE = "AbilityDescriptions";
 
@@ -57,7 +58,7 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Abilities
         #endregion
 
         private AbilityAssetMappingEditor _mappingEditor;
-        private Dictionary<string, TagScriptableObject> _tagDict = new();
+        private Dictionary<string, List<TagScriptableObject>> _tagDict = new();
 
         public MagicalAbilitiesSOEditor()
         {
@@ -132,7 +133,7 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Abilities
                 }
 
                 if (dataModel.MainEffectTypeId == "99") continue;
-
+                if (dataModel.IsSubEffectValid()) continue;
 
                 CastEffectsOnTargetAbility instance = null;
                 instance = (CastEffectsOnTargetAbility)AssetDatabase.LoadAssetAtPath(path,
@@ -165,7 +166,9 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Abilities
         {
             var serializedObject = new SerializedObject(instance);
             var property = serializedObject.FindProperty("_effects");
-
+            property.ClearArray();
+            serializedObject.ApplyModifiedProperties();
+            serializedObject.Update();
             if (data.MainEffectTypeId == "5")
                 SetRemoveAbnormalInstance(serializedObject, data);
 
@@ -174,14 +177,6 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Abilities
             effects[0] = mainEffect;
             property.InsertArrayElementAtIndex(0);
             property.GetArrayElementAtIndex(0).objectReferenceValue = effects[0];
-            if (data.IsSubEffectValid())
-            {
-                effects[1] = GetEffect(data.SubEffectData.EffectTypeId, data.SubEffectData.EffectTargetParameterId);
-                property.arraySize = 1;
-                property.InsertArrayElementAtIndex(1);
-                property.GetArrayElementAtIndex(1).objectReferenceValue = effects[1];
-            }
-
 
             serializedObject.ApplyModifiedProperties();
             serializedObject.Update();
@@ -210,10 +205,12 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Abilities
                     ? EAbilityUsageScenario.Battle
                     : EAbilityUsageScenario.Field | EAbilityUsageScenario.Battle;
 
-            skillInfo.VfxId = int.Parse(data.VfxId);
+            skillInfo.VfxId = string.IsNullOrEmpty(data.VfxId) ? 0 : int.Parse(data.VfxId);
             CustomExecutionAttributeCaptureDef attributeCaptureDef = new();
             attributeCaptureDef.Attribute = GetAttribute(data.MainEffectTargetParameterId);
+            attributeCaptureDef.CaptureFrom = EGameplayEffectCaptureSource.Target;
             skillInfo.SkillParameters.TargetAttribute = attributeCaptureDef;
+
             GameplayEffectContext ctx = new GameplayEffectContext(skillInfo);
 
 
@@ -242,16 +239,23 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Abilities
 
             foreach (var map in maps)
             {
-                _tagDict.TryAdd(map.Id, map.Value.GrantedTags[0]);
+                _tagDict.TryAdd(map.Id, new List<TagScriptableObject>(map.Value.GrantedTags.ToList()));
             }
         }
 
         private void SetRemoveAbnormalInstance(SerializedObject serializedObject, AbilityDataStruct data)
         {
             var property = serializedObject.FindProperty("tags.CancelAbilityWithTags");
-            var tag = _tagDict[data.MainEffectTargetParameterId];
-            property.InsertArrayElementAtIndex(0);
-            property.GetArrayElementAtIndex(0).objectReferenceValue = tag;
+            property.ClearArray();
+            serializedObject.ApplyModifiedProperties();
+            serializedObject.Update();
+            var tagList = _tagDict[data.MainEffectTargetParameterId];
+            for (int i = 0; i < tagList.Count; i++)
+            {
+                property.InsertArrayElementAtIndex(i);
+                property.GetArrayElementAtIndex(i).objectReferenceValue = tagList[i];
+            }
+
             serializedObject.ApplyModifiedProperties();
             serializedObject.Update();
         }
@@ -347,4 +351,6 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Abilities
                 AssetDatabase.LoadAssetAtPath<AbilityAssetMappingEditor>(AssetDatabase.GUIDToAssetPath(guid[0]));
         }
     }
+
+    internal class EAttributeCaptureFrom { }
 }

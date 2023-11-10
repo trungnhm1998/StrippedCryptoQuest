@@ -1,0 +1,80 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c79bbff4ab04690afc7539ba04e6a22, type: 3}
+  m_Name: 1082
+  m_EditorClassIdentifier: 
+  tags:
+    AbilityTag: {fileID: 0}
+    CancelAbilityWithTags:
+    - {fileID: 11400000, guid: c60a47c5f453a024d8657f7b3cafc7cc, type: 2}
+    - {fileID: 11400000, guid: c60a47c5f453a024d8657f7b3cafc7cc, type: 2}
+    - {fileID: 11400000, guid: c60a47c5f453a024d8657f7b3cafc7cc, type: 2}
+    - {fileID: 11400000, guid: c60a47c5f453a024d8657f7b3cafc7cc, type: 2}
+    BlockAbilityWithTags: []
+    ActivationTags: []
+    OwnerTags:
+      RequireTags: []
+      IgnoreTags: []
+    SourceTags:
+      RequireTags: []
+      IgnoreTags: []
+    TargetTags:
+      RequireTags: []
+      IgnoreTags: []
+  _context:
+    _skillInfo:
+      Id: 1082
+      SkillIcon: {fileID: 0}
+      SkillType: 1
+      Category: {fileID: 0}
+      Cost: 15
+      UsageScenarioSO: 3
+      VfxId: 94
+      SkillParameters:
+        Element: {fileID: 0}
+        BasePower: 50
+        PowerUpperLimit: 60
+        PowerLowerLimit: 25
+        SkillPowerThreshold: 200
+        PowerValueAdded: 0.2
+        PowerValueReduced: 0.2
+        IsFixed: 0
+        ContinuesTurn: 0
+        EffectType: 5
+        TargetAttribute:
+          Attribute: {fileID: 0}
+          CaptureFrom: 1
+  _skillName:
+    m_TableReference:
+      m_TableCollectionName: AbilityNames
+    m_TableEntryReference:
+      m_KeyId: 0
+      m_Key: REVIVAL
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  _skillDescription:
+    m_TableReference:
+      m_TableCollectionName: AbilityDescriptions
+    m_TableEntryReference:
+      m_KeyId: 0
+      m_Key: REVIVAL
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  <SuccessRate>k__BackingField: 50
+  <TargetType>k__BackingField: {fileID: 11400000, guid: 22b78d0c574a9b64984629f7aedc22ea, type: 2}
+  _effects:
+  - {fileID: 0}
+  references:
+    version: 2
+    RefIds: []
