@@ -18,7 +18,7 @@ namespace CryptoQuest.Tavern.States
             _controller.TavernUiOverview.CharacterReplacementButtonPressedEvent += EnterCharacterReplacement;
             _controller.TavernUiOverview.PartyOrganizationButtonPressedEvent += EnterPartyOrganization;
 
-            _controller.TavernInputManager.CancelEvent += ExitTavern;
+            _controller.MerchantInputManager.CancelEvent += ExitTavern;
             _controller.DialogsManager.EnableOverviewButtonsEvent += EnableOverviewButtonsRequested;
         }
 
@@ -32,7 +32,7 @@ namespace CryptoQuest.Tavern.States
             _controller.TavernUiOverview.CharacterReplacementButtonPressedEvent -= EnterCharacterReplacement;
             _controller.TavernUiOverview.PartyOrganizationButtonPressedEvent -= EnterPartyOrganization;
 
-            _controller.TavernInputManager.CancelEvent -= ExitTavern;
+            _controller.MerchantInputManager.CancelEvent -= ExitTavern;
             _controller.DialogsManager.EnableOverviewButtonsEvent -= EnableOverviewButtonsRequested;
 
             _controller.TavernUiOverview.gameObject.SetActive(false);

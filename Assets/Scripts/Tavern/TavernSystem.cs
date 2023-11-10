@@ -1,4 +1,5 @@
 ﻿using System;
+using CryptoQuest.Input;
 using CryptoQuest.Tavern.ScriptableObjects;
 using UnityEngine;
 
@@ -8,7 +9,7 @@ namespace CryptoQuest.Tavern
     {
         [SerializeField] private ShowTavernEventChannelSO _showTavern;
         [SerializeField] private TavernController _tavernController;
-        [SerializeField] private TavernInputManager _tavernInputManager;
+        [SerializeField] private MerchantsInputManager _merchantInputManager;
         [SerializeField] private TavernDialogsManager _tavernDialogsManager;
 
         private void OnEnable()
@@ -26,7 +27,7 @@ namespace CryptoQuest.Tavern
         private void ShowTavernRequested()
         {
             _tavernController.gameObject.SetActive(true);
-            _tavernInputManager.EnableInput();
+            _merchantInputManager.EnableInput();
             _tavernDialogsManager.TavernOpened();
         }
 
@@ -34,7 +35,7 @@ namespace CryptoQuest.Tavern
         {
             _tavernController.gameObject.SetActive(false);
             _tavernDialogsManager.TavernExited();
-            _tavernInputManager.DisableInput();
+            _merchantInputManager.DisableInput();
         }
     }
 }

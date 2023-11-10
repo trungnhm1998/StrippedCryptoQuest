@@ -34,10 +34,10 @@ namespace CryptoQuest.Tavern.States.PartyOrganization
             _getGameDataSucceedEvent = ActionDispatcher.Bind<GetGameNftCharactersSucceed>(GetInGameCharacters);
             ActionDispatcher.Dispatch(new GetCharacters());
 
-            _controller.TavernInputManager.CancelEvent += CancelPartyOrganization;
-            _controller.TavernInputManager.NavigateEvent += SwitchToOtherListRequested;
-            _controller.TavernInputManager.ExecuteEvent += SendItemsRequested;
-            _controller.TavernInputManager.ResetEvent += ResetTransferRequested;
+            _controller.MerchantInputManager.CancelEvent += CancelPartyOrganization;
+            _controller.MerchantInputManager.NavigateEvent += SwitchToOtherListRequested;
+            _controller.MerchantInputManager.ExecuteEvent += SendItemsRequested;
+            _controller.MerchantInputManager.ResetEvent += ResetTransferRequested;
         }
 
         protected override void OnExit()
@@ -48,10 +48,10 @@ namespace CryptoQuest.Tavern.States.PartyOrganization
             ActionDispatcher.Unbind(_getInPartyNftCharacters);
             ActionDispatcher.Unbind(_getGameDataSucceedEvent);
 
-            _controller.TavernInputManager.CancelEvent -= CancelPartyOrganization;
-            _controller.TavernInputManager.NavigateEvent -= SwitchToOtherListRequested;
-            _controller.TavernInputManager.ExecuteEvent -= SendItemsRequested;
-            _controller.TavernInputManager.ResetEvent -= ResetTransferRequested;
+            _controller.MerchantInputManager.CancelEvent -= CancelPartyOrganization;
+            _controller.MerchantInputManager.NavigateEvent -= SwitchToOtherListRequested;
+            _controller.MerchantInputManager.ExecuteEvent -= SendItemsRequested;
+            _controller.MerchantInputManager.ResetEvent -= ResetTransferRequested;
         }
 
         private void GetInPartyCharacters(GetInPartyNftCharactersSucceed obj)
