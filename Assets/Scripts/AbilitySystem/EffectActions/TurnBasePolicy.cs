@@ -73,9 +73,11 @@ namespace CryptoQuest.AbilitySystem.EffectActions
                     return;
             }
         }
-
-        ~TurnBasePolicyActiveEffect()
-        {
+        
+        public override void OnRemoved()
+        { 
+            _turnsLeft = 0;
+            IsActive = false;
             RemoveEvents();
         }
 
@@ -113,10 +115,8 @@ namespace CryptoQuest.AbilitySystem.EffectActions
 
         private void RemoveEffect()
         {
-            _turnsLeft = 0;
-            IsActive = false;
             Spec.Target.EffectSystem.RemoveEffect(Spec);
-            RemoveEvents();
+            OnRemoved();
         }
 
         private void ModifyTargetAttributeIfPeriodic()

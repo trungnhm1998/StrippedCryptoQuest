@@ -71,7 +71,9 @@ namespace CryptoQuest.Battle.UI.PlayerParty
         {
             foreach (var baseTag in baseTags)
             {
-                if (!_statusIcons.TryGetValue(baseTag, out var icon) || CharacterTagSystem.HasTag(baseTag)) continue;
+                // I remove check system HasTag here because this method is execute in present phase
+                // so if the tag is removed and added again in the same round UI not being updated
+                if (!_statusIcons.TryGetValue(baseTag, out var icon)) continue;
                 icon.ReleaseToPool();
                 _statusIcons.Remove(baseTag);
             }

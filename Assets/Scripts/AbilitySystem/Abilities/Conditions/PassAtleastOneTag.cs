@@ -1,3 +1,4 @@
+using IndiGames.GameplayAbilitySystem.Helper;
 using IndiGames.GameplayAbilitySystem.TagSystem.ScriptableObjects;
 using UnityEngine;
 
@@ -16,14 +17,16 @@ namespace CryptoQuest.AbilitySystem.Abilities.Conditions
 
         public bool IsPass(AbilityConditionContext ctx)
         {
+            var tagSystem = ctx.System.TagSystem;
+
             foreach (var tag in _acceptTags)
             {
-                if (ctx.System.TagSystem.HasTag(tag)) return true;
+                if (tagSystem.GrantedTags.CheckSystemHasTags(tag)) return true;
             }    
 
             foreach (var tag in _denyTags)
             {
-                if (!ctx.System.TagSystem.HasTag(tag)) return true;
+                if (!tagSystem.GrantedTags.CheckSystemHasTags(tag)) return true;
             }    
         
             return false;

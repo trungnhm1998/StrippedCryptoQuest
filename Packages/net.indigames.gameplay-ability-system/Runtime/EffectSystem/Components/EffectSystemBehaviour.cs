@@ -154,6 +154,15 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem.Components
             if (_useUpdate) UpdateAttributeModifiersUsingAppliedEffects();
         }
 
+        private void OnDestroy()
+        {
+            for (var i = _appliedEffects.Count - 1; i >= 0; i--)
+            {
+                var effect = _appliedEffects[i];
+                effect.OnRemoved();
+            }
+        }
+
         public virtual void UpdateAttributeModifiersUsingAppliedEffects()
         {
             UpdateAttributeSystemModifiers();
@@ -230,6 +239,7 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem.Components
             _appliedEffects.RemoveAt(index);
             if (effect?.Spec == null) return;
             Owner.TagSystem.RemoveTags(effect.GrantedTags);
+            effect.OnRemoved();
         }
 
         [SerializeField] private List<PreEffectExecuteEvent> _preEffectExecuteEvents = new();

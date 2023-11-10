@@ -52,12 +52,7 @@ namespace CryptoQuest.AbilitySystem.EffectActions
             spec.Target.TagSystem.TagAdded += ExpiredEffectWhenTargetDie;
             _unloadingEvent = BattleEventBus.SubscribeEvent<UnloadingEvent>(ExpiredEffect);
         }
-
-        ~PassiveProvideTurnBasePolicyActiveEffect()
-        {
-            RemoveEvents();
-        }
-
+        
         private void RemoveEvents()
         {
             _character.TurnEnded -= CheckTurn;
@@ -73,13 +68,19 @@ namespace CryptoQuest.AbilitySystem.EffectActions
             if (tag[0] != TagsDef.Dead) return;
             RemoveEffect();
         }
+        
+        public override void OnRemoved()
+        { 
+            _turnsLeft = 0;
+            IsActive = false;
+            RemoveEvents();
+        }
 
         private void RemoveEffect()
         {
-            _turnsLeft = 0;
             RemoveAbility();
             Spec.Target.EffectSystem.RemoveEffect(Spec);
-            RemoveEvents();
+            OnRemoved();
         }
 
         private void TryGiveAbility()

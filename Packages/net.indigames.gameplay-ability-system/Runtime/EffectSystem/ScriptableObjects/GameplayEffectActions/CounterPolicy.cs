@@ -63,7 +63,7 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects.Gamepla
             _policy.RemoveCounterEvent();
         }
 
-        ~CounterGameplayEffect()
+        public override void OnRemoved()
         {
             RemoveRegistEvent();
         }
