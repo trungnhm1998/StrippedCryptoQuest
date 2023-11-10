@@ -11,9 +11,10 @@ namespace CryptoQuest.AbilitySystem.EffectActions
         [SerializeField] private GameplayBus _gameplayBus;
 
         public StepCounterPolicy() : base() {}
-        
-        public StepCounterPolicy(int counter) : base(counter)
+
+        public override void RegistCounterEvent()
         {
+            base.RegistCounterEvent();
             _gameplayBus.Hero.Step += CounterGameplayEffect.ReduceCounterEvent;
         }
 
