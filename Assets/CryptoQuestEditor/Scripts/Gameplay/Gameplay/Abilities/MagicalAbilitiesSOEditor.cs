@@ -14,7 +14,7 @@ using UnityEngine.Localization;
 
 namespace CryptoQuestEditor.Gameplay.Gameplay.Abilities
 {
-    public class PhysicalAbilitiesSOEditor : ScriptableObjectBrowserEditor<CastEffectsOnTargetAbility>
+    public class MagicalAbilitiesSOEditor : ScriptableObjectBrowserEditor<CastEffectsOnTargetAbility>
     {
         private const string DEFAULT_NAME = "";
         private const int ROW_OFFSET = 14;
@@ -54,10 +54,10 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Abilities
 
         private AbilityAssetMappingEditor _mappingEditor;
 
-        public PhysicalAbilitiesSOEditor()
+        public MagicalAbilitiesSOEditor()
         {
             CreateDataFolder = false;
-            DefaultStoragePath = "Assets/ScriptableObjects/Character/Skills/Castables/Physical";
+            DefaultStoragePath = "Assets/ScriptableObjects/Character/Skills/Castables/Magical";
         }
 
         public override void ImportBatchData(string directory, Action<ScriptableObject> callback)
@@ -182,7 +182,7 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Abilities
             SkillInfo skillInfo = new SkillInfo();
             skillInfo.Id = int.Parse(data.Id);
             skillInfo.SkillParameters = new SkillParameters();
-            skillInfo.SkillType = ESkillType.Physical;
+            skillInfo.SkillType = ESkillType.Magic;
             skillInfo.SkillParameters.Element = GetElement(data.ElementId);
             skillInfo.SkillParameters.BasePower = data.BasePower;
             skillInfo.SkillParameters.PowerUpperLimit = data.PowerUpperLimit;
@@ -222,7 +222,6 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Abilities
         {
             LocalizedString skillName = new(NAME_LOCALIZE_TABLE, data.LocalizedKey);
             LocalizedString skillDescription = new(DESCRIPTION_LOCALIZE_TABLE, data.LocalizedKey);
-            Debug.Log(data.LocalizedKey);
             instance.SetSkillName(skillName);
             instance.SetSkillDescription(skillDescription);
         }
@@ -242,7 +241,7 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Abilities
 
         private GameplayEffectDefinition GetEffect(string effectTypeId, string targetParam)
         {
-            foreach (var map in _mappingEditor.PhysicalEffectMaps)
+            foreach (var map in _mappingEditor.MagicalEffectMaps)
             {
                 if (map.Id == effectTypeId)
                 {
