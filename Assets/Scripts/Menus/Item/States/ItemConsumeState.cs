@@ -19,7 +19,6 @@ namespace CryptoQuest.Menus.Item.States
 
         private void CacheLastSelectingSlot(UIItemCharacterPartySlot hero) => _consumablePanel.SelectingHero = hero;
         private void DeselectAllHeroes() => _consumablePanel.EnableAllHeroButtons(false);
-        private void DeSelectSingleHero() => _consumablePanel.EnableAllHeroSelecting(false);
         private void SelectAllHeroes() => fsm.RequestStateChange(ItemMenuStateMachine.InventorySelection);
 
         public override void OnEnter()
@@ -27,6 +26,7 @@ namespace CryptoQuest.Menus.Item.States
             foreach (var heroButton in _consumablePanel.HeroButtons) heroButton.Selecting += CacheLastSelectingSlot;
 
             DeselectAllHeroes();
+
             _consumablePanel.Interactable = false;
 
             _consumablePanel.SingleAlliedTarget.EventRaised += SelectSingleHero;
@@ -61,15 +61,11 @@ namespace CryptoQuest.Menus.Item.States
 
             _consumablePanel.EnableAllHeroButtons();
             _consumablePanel.HeroButtons[0].Select();
-            _consumablePanel.SelectingHero.EnableSelectBackground();
         }
 
         private void UsingItem(UIItemCharacterPartySlot uiItemCharacterPartySlot)
         {
             foreach (var heroButton in _consumablePanel.HeroButtons) heroButton.Selected -= UsingItem;
-
-            DeSelectSingleHero();
-            uiItemCharacterPartySlot.EnableSelectBackground();
 
             fsm.RequestStateChange(ItemMenuStateMachine.InventorySelection);
         }

@@ -43,7 +43,6 @@ namespace CryptoQuest.Menus.Item.UI
         public void Select()
         {
             if (Hero == null || !Hero.IsValid()) return;
-            EnableSelectBackground();
             _button.Select();
         }
 
@@ -62,7 +61,5 @@ namespace CryptoQuest.Menus.Item.UI
             if (Hero == null || !Hero.IsValid()) return;
             _selectBorder.SetActive(false);
         }
-
-        public void EnableSelectBackground(bool isEnabled = true) => _selectBackground.SetActive(isEnabled);
     }
 }
