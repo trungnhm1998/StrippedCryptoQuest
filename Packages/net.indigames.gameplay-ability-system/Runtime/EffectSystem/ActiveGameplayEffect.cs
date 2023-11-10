@@ -5,6 +5,7 @@ using IndiGames.GameplayAbilitySystem.AttributeSystem;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.Components;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
 using IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects.EffectExecutionCalculation;
+using IndiGames.GameplayAbilitySystem.Helper;
 using IndiGames.GameplayAbilitySystem.TagSystem.ScriptableObjects;
 using UnityEngine;
 
@@ -70,11 +71,16 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem
         }
 
         public virtual void Update(float deltaTime) { }
+        
+        /// <summary>
+        /// I added OnRemoved because destructor is not working
+        /// </summary>
+        public virtual void OnRemoved() { }
 
         public bool IsValid()
             => _spec != null && _spec.IsValid() && _spec.IsExpired == false && IsActive;
 
-        public bool HasTag(TagScriptableObject tag) => _spec.GrantedTags.Contains(tag);
+        public bool HasTag(TagScriptableObject tag) => _spec.GrantedTags.CheckSystemHasTags(tag);
 
         public void UpdateStackCount(GameplayEffectSpec inSpec)
         {

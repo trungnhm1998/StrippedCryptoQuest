@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
 using IndiGames.GameplayAbilitySystem.TagSystem.ScriptableObjects;
 
@@ -45,6 +47,18 @@ namespace IndiGames.GameplayAbilitySystem.Helper
             }
 
             return true;
+        }
+
+        
+        /// <summary>
+        /// Also check if there's child tag in system
+        /// </summary>
+        /// <param name="tagSystem"></param>
+        /// <param name="tag"></param>
+        /// <returns></returns>
+        public static bool CheckSystemHasTags(this IList<TagScriptableObject> tags, TagScriptableObject tag)
+        {
+            return tags.Where(t => (t == tag) || (t.IsChildOf(tag))).Count() > 0;
         }
     }
 }
