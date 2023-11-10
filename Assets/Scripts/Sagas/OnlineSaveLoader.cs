@@ -90,7 +90,7 @@ namespace CryptoQuest.Sagas
                 // If not same user, or server version is newer, use server version
                 if (string.IsNullOrEmpty(res.game_data.Uuid) 
                     || res.game_data.Uuid != saveSystem.SaveData.Uuid
-                    || res.game_data.SavedTime.Millisecond >= saveSystem.SaveData.SavedTime.Millisecond)
+                    || res.game_data.SavedTime.CompareTo(saveSystem.SaveData.SavedTime) > 0)
                 {
                     saveSystem.SaveData.Uuid = credential.Profile.user.email;
                     saveSystem.SaveData.PlayerName = res.game_data.PlayerName;

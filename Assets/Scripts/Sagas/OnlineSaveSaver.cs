@@ -47,8 +47,12 @@ namespace CryptoQuest.Sagas
                 {
                     _isSavingToBackend = true;
                     ActionDispatcher.Dispatch(new OnlineSaveAction());
+                    yield return new WaitForSeconds(1f + SAVE_INTERVAL_IN_SECOND);
                 }
-                yield return new WaitForSeconds(SAVE_INTERVAL_IN_SECOND);
+                else
+                {
+                    yield return new WaitForSeconds(1f);
+                }
             }
         }
 

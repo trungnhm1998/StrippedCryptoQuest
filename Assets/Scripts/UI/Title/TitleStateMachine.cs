@@ -23,11 +23,11 @@ namespace CryptoQuest.UI.Title
         private readonly Dictionary<Type, object> _cachedComponents = new();
         private IState _curState;
 
-        private void OnEnable() => _sceneLoadedEvent.EventRaised += ChangeToTitleState;
+        private void OnEnable() => _sceneLoadedEvent.EventRaised += ChangeToAutoLoginState;
 
-        private void OnDisable() => _sceneLoadedEvent.EventRaised -= ChangeToTitleState;
+        private void OnDisable() => _sceneLoadedEvent.EventRaised -= ChangeToAutoLoginState;
 
-        private void ChangeToTitleState() => ChangeState(new TitleState());
+        private void ChangeToAutoLoginState() => ChangeState(new AutoLoginState());
 
         public void ChangeState(IState state)
         {
