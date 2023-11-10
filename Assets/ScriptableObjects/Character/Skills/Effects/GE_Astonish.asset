@@ -23,7 +23,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 40eafefeb9f88df45af1a1e5d3f1855c, type: 2}
   <ApplicationTagRequirements>k__BackingField:
     RequireTags: []
-    IgnoreTags: []
+    IgnoreTags:
+    - {fileID: 11400000, guid: ebd0d9690d0548b4aa3c1a2ed8b9021e, type: 2}
   <RemoveGameplayEffectsWithTags>k__BackingField: []
   <ExecutionCalculations>k__BackingField: []
   <ChanceToApply>k__BackingField: 1
@@ -34,5 +35,5 @@ MonoBehaviour:
     - rid: 7132078137632358662
       type: {class: TurnBasePolicy, ns: CryptoQuest.AbilitySystem.EffectActions, asm: indi-games.crypto-quest}
       data:
-        _turn: 3
         _triggerType: 0
+        <TriggerInstantlyAfterApplied>k__BackingField: 0

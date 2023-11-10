@@ -10,21 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fbb6112b998064f4ebc8a44f4c80c446, type: 3}
-  m_Name: GE_Paralysis
+  m_Name: GE_ImmuneDead
   m_EditorClassIdentifier: 
   <Description>k__BackingField: 
   _policy:
-    rid: 7132078137632358632
+    rid: 2855508896284672018
   <EffectDetails>k__BackingField:
     Modifiers: []
     StackingType: 1
   <IsStack>k__BackingField: 0
   <GrantedTags>k__BackingField:
-  - {fileID: 11400000, guid: 8b1f390f94969d046969b7b610152371, type: 2}
+  - {fileID: 11400000, guid: 9acc90fdf7e200d4cad7185e6ae82206, type: 2}
   <ApplicationTagRequirements>k__BackingField:
     RequireTags: []
-    IgnoreTags:
-    - {fileID: 11400000, guid: 0cb563b13bd2d9645b523d90e5f32ce9, type: 2}
+    IgnoreTags: []
   <RemoveGameplayEffectsWithTags>k__BackingField: []
   <ExecutionCalculations>k__BackingField: []
   <ChanceToApply>k__BackingField: 1
@@ -32,7 +31,7 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: 7132078137632358632
+    - rid: 2855508896284672018
       type: {class: TurnBasePolicy, ns: CryptoQuest.AbilitySystem.EffectActions, asm: indi-games.crypto-quest}
       data:
         _triggerType: 0
