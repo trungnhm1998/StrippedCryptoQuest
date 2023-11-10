@@ -5,6 +5,7 @@ using CryptoQuest.Core;
 using CryptoQuest.Gameplay.Inventory.Currency;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
 using CryptoQuest.Menus.DimensionalBox.Objects;
+using CryptoQuest.Menus.DimensionalBox.UI.MetaDTransfer;
 using CryptoQuest.Networking;
 using CryptoQuest.Networking.API;
 using CryptoQuest.Sagas;
@@ -20,9 +21,11 @@ namespace CryptoQuest.Menus.DimensionalBox.Sagas
         [SerializeField] private CurrencySO _ingameCurrency;
         [SerializeField] private CurrencySO _inboxCurrency;
         [SerializeField] private WalletSO _wallet;
+        [SerializeField] private UIMetadTransferPanel _metaDTransferPanel;
 
         protected override void HandleAction(TransferringMetad ctx)
         {
+            _metaDTransferPanel.Transferring = true;
             var apiPath = ctx.SourceToTransfer == _ingameCurrency
                 ? Nft.TRANSFER_METAD_TO_WALLET
                 : Nft.TRANSFER_METAD_TO_GAME;
@@ -59,6 +62,7 @@ namespace CryptoQuest.Menus.DimensionalBox.Sagas
 
         private void HideLoading()
         {
+            _metaDTransferPanel.Transferring = false;
             ActionDispatcher.Dispatch(new ShowLoading(false));
         }
     }

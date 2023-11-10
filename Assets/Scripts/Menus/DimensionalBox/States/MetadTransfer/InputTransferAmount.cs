@@ -46,7 +46,6 @@ namespace CryptoQuest.Menus.DimensionalBox.States.MetadTransfer
         private void ConfirmTransfer()
         {
             if (string.IsNullOrEmpty(_metaDTransferPanel.TransferAmountInput.text)) return;
-            StateMachine.Input.MenuCancelEvent -= ToSelectTransferTypeState;
             StateMachine.Input.MenuExecuteEvent -= ConfirmTransfer; // prevent pressing confirm while transferring
             ChoiceDialogController.Instance.Instantiate(ShowConfirmDialog);
         }
