@@ -31,7 +31,9 @@ namespace CryptoQuestEditor
         private const int ROW_EQUIPMENT_SPRITE_ID = 12;
         private readonly string[] _tableNames = { "Equipment", "Weapon", "Armor", "Accessory" };
         private Dictionary<int, EquipmentTypeSO> _equipmentTypeMap = new Dictionary<int, EquipmentTypeSO>();
-        private const string SPRITE_PATH = "Assets/Prefabs/Battle/Enemies/";
+        private const string SPRITE_PATH = "Assets/Arts/";
+        private const string TXT_PATH_STORAGE = "Assets/";
+        private StreamWriter _writer;
 
         public EquipmentSOBrowserEditor()
         {
@@ -44,6 +46,10 @@ namespace CryptoQuestEditor
         {
             string[] rows = File.ReadAllLines(directory);
             LoadEquipmenTypeMap();
+            // string[] firstRow = rows[ROW_OFFSET].Split('\t');
+            // string typeIndex = firstRow[0][0].ToString();
+            // var txtPath = TXT_PATH_STORAGE + "missing_images_" + GetImageFolder(typeIndex) + ".txt";
+            // _writer = new StreamWriter(txtPath, true);
             for (int index = ROW_OFFSET; index < rows.Length; index++)
             {
                 // get data form tsv file
@@ -83,7 +89,10 @@ namespace CryptoQuestEditor
 
                 instance.Editor_SetDisplayName(displayName);
                 instance.Editor_SetDescription(description);
-
+                string imageFolder = GetImageFolder(cols[ROW_ID][0].ToString());
+                var imageAssetRef = GetSpriteAssetRef(cols[ROW_EQUIPMENT_SPRITE_ID], imageFolder);
+                Debug.Log(imageAssetRef);
+                SetSprite(imageAssetRef, serializedObject);
                 // Save data
                 if (!AssetDatabase.Contains(instance))
                 {
@@ -95,11 +104,9 @@ namespace CryptoQuestEditor
                 {
                     EditorUtility.SetDirty(instance);
                 }
-
-                //
-                // var imageData = GetSpriteAssetRef(rows[ROW_EQUIPMENT_SPRITE_ID]);
-                // SetSprite(imageData, serializedObject);
             }
+
+            // _writer.Close();
         }
 
         private void SetAllowedSlots(EquipmentSlot.EType[] types, SerializedObject serializedObject, string[] datas)
@@ -140,11 +147,14 @@ namespace CryptoQuestEditor
             serializedObject.Update();
         }
 
-        private AssetReferenceT<Sprite> GetSpriteAssetRef(string spriteName)
+        private AssetReferenceT<Sprite> GetSpriteAssetRef(string spriteName, string folderName)
         {
-            var path = SPRITE_PATH + spriteName + ".sprite";
+            var path = SPRITE_PATH + folderName + "/" + spriteName + ".png";
             var guid = AssetDatabase.AssetPathToGUID(path);
-            Debug.Log("Sprite: getting" + spriteName);
+            // if (string.IsNullOrEmpty(guid))
+            //     _writer.WriteLine(spriteName);
+
+            Debug.Log("Sprite: getting" + guid);
             return new AssetReferenceT<Sprite>(guid);
         }
 
@@ -253,6 +263,21 @@ namespace CryptoQuestEditor
                 var asset = AssetDatabase.LoadAssetAtPath<EquipmentTypeSO>(path);
                 _equipmentTypeMap.TryAdd(asset.Id, asset);
             }
+        }
+
+        private string GetImageFolder(string id)
+        {
+            int typeId = int.Parse(id);
+            var typeEnum = (EImageFolder)typeId;
+
+            return typeEnum.ToString();
+        }
+
+        private enum EImageFolder
+        {
+            Weapons = 1,
+            DefensiveEQs = 2,
+            Accessories = 3,
         }
     }
 }
