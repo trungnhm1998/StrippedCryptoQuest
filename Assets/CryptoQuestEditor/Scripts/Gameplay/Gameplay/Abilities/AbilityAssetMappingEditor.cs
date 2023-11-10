@@ -3,12 +3,9 @@ using System.Collections.Generic;
 using CryptoQuest.AbilitySystem.Abilities;
 using CryptoQuest.AbilitySystem.Abilities.PostNormalAttackPassive;
 using CryptoQuest.AbilitySystem.Attributes;
-using CryptoQuest.Battle.Components;
 using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data;
 using IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects;
-using NUnit.Framework;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace CryptoQuestEditor.Gameplay.Gameplay.Abilities
 {
