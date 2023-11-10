@@ -7,7 +7,7 @@ namespace CryptoQuest.Menus.Skill.UI
 {
     public class UICharacterSelection : MonoBehaviour
     {
-        [SerializeField] private UICharacterPartySlot[] _partySlots;
+        [SerializeField] private UISkillCharacterPartySlot[] _partySlots;
 
         private IPartyController _party;
         private GameObject _cachedGo;

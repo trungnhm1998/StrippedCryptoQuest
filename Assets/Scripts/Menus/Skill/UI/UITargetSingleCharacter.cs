@@ -11,7 +11,7 @@ namespace CryptoQuest.Menus.Skill.UI
     {
         public Action<HeroBehaviour> SelectedCharacterEvent;
 
-        [SerializeField] private UICharacterPartySlot[] _partySlots;
+        [SerializeField] private UISkillCharacterPartySlot[] _partySlots;
 
         private List<Button> _targetButtons = new();
 

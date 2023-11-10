@@ -9,11 +9,11 @@ namespace CryptoQuest.Menus.Skill.States
     /// </summary>
     public abstract class SkillStateBase : StateBase
     {
-        protected UISkillMenu SkillPanel { get; }
+        protected UISkillMenu _skillPanel { get; }
 
         protected SkillStateBase(UISkillMenu skillPanel) : base(false)
         {
-            SkillPanel = skillPanel;
+            _skillPanel = skillPanel;
         }
     }
 }

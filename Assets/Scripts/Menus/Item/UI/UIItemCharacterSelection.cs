@@ -11,8 +11,8 @@ namespace CryptoQuest.Menus.Item.UI
 {
     public class UIItemCharacterSelection : MonoBehaviour
     {
-        public event Action<UICharacterPartySlot> Confirmed;
-        [SerializeField] private UICharacterPartySlot[] _partySlots;
+        public event Action<UIItemCharacterPartySlot> Confirmed;
+        [SerializeField] private UIItemCharacterPartySlot[] _partySlots;
         private IPartyController _party;
 
         /// <summary>
@@ -49,7 +49,7 @@ namespace CryptoQuest.Menus.Item.UI
         /// use the first button to select all heroes
         /// </summary>
         /// <param name="hero"></param>
-        private void OnHeroSelected(UICharacterPartySlot hero)
+        private void OnHeroSelected(UIItemCharacterPartySlot hero)
         {
             _selectingAll = false;
             Confirmed?.Invoke(hero);

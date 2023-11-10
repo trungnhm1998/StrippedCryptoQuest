@@ -1,13 +1,14 @@
 using System;
 using CryptoQuest.Battle.Components;
 using CryptoQuest.Menu;
+using CryptoQuest.UI.Menu.Character;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
-namespace CryptoQuest.UI.Menu.Character
+namespace CryptoQuest.Menus.Item.UI
 {
-    public class UICharacterPartySlot : MonoBehaviour, ISelectHandler, IDeselectHandler
+    public class UIItemCharacterPartySlot : MonoBehaviour, ISelectHandler, IDeselectHandler
     {
         [SerializeField] private MultiInputButton _button;
         [SerializeField] private UnityEvent<HeroBehaviour> _onCharacterSelected;
@@ -15,8 +16,8 @@ namespace CryptoQuest.UI.Menu.Character
         [SerializeField] private GameObject _selectBorder;
         [SerializeField] private GameObject _selectBackground;
 
-        public event Action<UICharacterPartySlot> Selecting;
-        public event Action<UICharacterPartySlot> Selected;
+        public event Action<UIItemCharacterPartySlot> Selecting;
+        public event Action<UIItemCharacterPartySlot> Selected;
 
         public bool Interactable
         {

@@ -17,7 +17,7 @@ namespace CryptoQuest.Menus.Item.States
         public ItemConsumeState(UIConsumableMenuPanel consumablePanel) : base(consumablePanel) =>
             _input = consumablePanel.Input;
 
-        private void CacheLastSelectingSlot(UICharacterPartySlot hero) => _consumablePanel.SelectingHero = hero;
+        private void CacheLastSelectingSlot(UIItemCharacterPartySlot hero) => _consumablePanel.SelectingHero = hero;
         private void DeselectAllHeroes() => _consumablePanel.EnableAllHeroButtons(false);
         private void DeSelectSingleHero() => _consumablePanel.EnableAllHeroSelecting(false);
         private void SelectAllHeroes() => fsm.RequestStateChange(ItemMenuStateMachine.InventorySelection);
@@ -64,12 +64,12 @@ namespace CryptoQuest.Menus.Item.States
             _consumablePanel.SelectingHero.EnableSelectBackground();
         }
 
-        private void UsingItem(UICharacterPartySlot uiCharacterPartySlot)
+        private void UsingItem(UIItemCharacterPartySlot uiItemCharacterPartySlot)
         {
             foreach (var heroButton in _consumablePanel.HeroButtons) heroButton.Selected -= UsingItem;
 
             DeSelectSingleHero();
-            uiCharacterPartySlot.EnableSelectBackground();
+            uiItemCharacterPartySlot.EnableSelectBackground();
 
             fsm.RequestStateChange(ItemMenuStateMachine.InventorySelection);
         }
