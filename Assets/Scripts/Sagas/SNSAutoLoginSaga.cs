@@ -6,6 +6,7 @@ using CryptoQuest.System;
 using Newtonsoft.Json;
 using System;
 using System.Net;
+using CryptoQuest.Actions;
 using TinyMessenger;
 using UnityEngine;
 using UniRx;
