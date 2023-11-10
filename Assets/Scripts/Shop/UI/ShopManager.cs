@@ -1,10 +1,10 @@
 using CryptoQuest.Events;
 using CryptoQuest.Gameplay.Inventory.Currency;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
+using CryptoQuest.Input;
 using CryptoQuest.Menu;
 using CryptoQuest.Shop.UI.Item;
 using CryptoQuest.Shop.UI.Panels;
-using CryptoQuest.Shop.UI.Panels.Item;
 using CryptoQuest.Shop.UI.ScriptableObjects;
 using CryptoQuest.Shop.UI.ShopStates;
 using CryptoQuest.System;
@@ -24,7 +24,7 @@ namespace CryptoQuest.Shop.UI
         [SerializeField]private Text _goldAmount;
 
         [Header("Input Config")]
-        [SerializeField] private ShopInputManager _input;
+        [SerializeField] private MerchantsInputManager _input;
         [SerializeField] private MenuSelectionHandler _menuSelectionHandler;
 
         [Header("Shop Config")]
@@ -53,7 +53,7 @@ namespace CryptoQuest.Shop.UI
             _showShopEvent.EventRaised += ShowShop;
 
             _input.ExitEvent += HideShop;
-            _input.BackEvent += Back;
+            _input.CancelEvent += Back;
             _input.ChangeTabEvent += ChangeTab;
             _input.SubmitEvent += Submit;
         }
@@ -63,7 +63,7 @@ namespace CryptoQuest.Shop.UI
             _showShopEvent.EventRaised -= ShowShop;
 
             _input.ExitEvent -= HideShop;
-            _input.BackEvent -= Back;
+            _input.CancelEvent -= Back;
             _input.ChangeTabEvent -= ChangeTab;
             _input.SubmitEvent -= Submit;
         }
@@ -114,7 +114,7 @@ namespace CryptoQuest.Shop.UI
             _menuSelectionHandler.Unselect();
             _shopContent.SetActive(false);
             _showShopDialogEventChannel?.RaiseEvent(_exitMessage);
-            _input.EnableNextInput();
+            _input.EnableDialogueInput();
         }
 
         private void Initialize()

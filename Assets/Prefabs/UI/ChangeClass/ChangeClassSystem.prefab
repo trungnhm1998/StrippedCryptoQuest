@@ -9,11 +9,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2805191216619656802}
-  - component: {fileID: 2693704360372295307}
   - component: {fileID: 4567071523968104247}
   - component: {fileID: 504795634138198211}
   - component: {fileID: 5183881943254815332}
   - component: {fileID: 6256226084032638207}
+  - component: {fileID: 5176527356134381778}
   m_Layer: 0
   m_Name: ChangeClassSystem
   m_TagString: Untagged
@@ -37,19 +37,6 @@ Transform:
   - {fileID: 3711109189559730614}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2693704360372295307
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7187491312326441014}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f1177276ffc8cd4439fc5964b61e79a2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _inputMediatorSO: {fileID: 11400000, guid: 1fb61cdb72f0a484f8e4db68e2011977, type: 2}
 --- !u!114 &4567071523968104247
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -65,7 +52,7 @@ MonoBehaviour:
   _showChangeClassEvent: {fileID: 11400000, guid: 66e90540006ca7548b0da8ffeca3469d, type: 2}
   _dialogController: {fileID: 504795634138198211}
   _stateController: {fileID: 5183881943254815332}
-  _input: {fileID: 2693704360372295307}
+  _input: {fileID: 5176527356134381778}
   _changeClassPanel: {fileID: 6532880410619493013}
   _defaultButton: {fileID: 4501096679249801747}
 --- !u!114 &504795634138198211
@@ -107,7 +94,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <DialogController>k__BackingField: {fileID: 504795634138198211}
   <ConfirmMaterial>k__BackingField: {fileID: 2581786466856208307}
-  <Input>k__BackingField: {fileID: 2693704360372295307}
+  <Input>k__BackingField: {fileID: 5176527356134381778}
   <Presenter>k__BackingField: {fileID: 2964748234200211438}
   <Manager>k__BackingField: {fileID: 4567071523968104247}
   <DefaultButton>k__BackingField: {fileID: 4501096679249801747}
@@ -133,6 +120,19 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &5176527356134381778
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7187491312326441014}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6d77d25d8250574e93dc9afd83fa7ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _inputMediatorSO: {fileID: 11400000, guid: 1fb61cdb72f0a484f8e4db68e2011977, type: 2}
 --- !u!1 &8717427018555244953
 GameObject:
   m_ObjectHideFlags: 0
@@ -698,7 +698,7 @@ PrefabInstance:
     - target: {fileID: 5587978007039329808, guid: 5ed5d470509abca4e873378b4eaf04ec, type: 3}
       propertyPath: _input
       value: 
-      objectReference: {fileID: 2693704360372295307}
+      objectReference: {fileID: 5176527356134381778}
     - target: {fileID: 5587978007039329808, guid: 5ed5d470509abca4e873378b4eaf04ec, type: 3}
       propertyPath: _changeNewClassAPI
       value: 

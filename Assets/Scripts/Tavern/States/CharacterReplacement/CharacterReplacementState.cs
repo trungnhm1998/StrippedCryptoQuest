@@ -34,11 +34,11 @@ namespace CryptoQuest.Tavern.States.CharacterReplacement
             _getGameDataSucceedEvent = ActionDispatcher.Bind<GetGameNftCharactersSucceed>(GetInGameCharacters);
             _getWalletDataSucceedEvent = ActionDispatcher.Bind<GetWalletNftCharactersSucceed>(GetWalletCharacters);
 
-            _controller.TavernInputManager.CancelEvent += CancelCharacterReplacement;
-            _controller.TavernInputManager.NavigateEvent += SwitchToOtherListRequested;
-            _controller.TavernInputManager.ExecuteEvent += SendItemsRequested;
-            _controller.TavernInputManager.ResetEvent += ResetTransferRequested;
-            _controller.TavernInputManager.InteractEvent += ViewCharacterDetails;
+            _controller.MerchantInputManager.CancelEvent += CancelCharacterReplacement;
+            _controller.MerchantInputManager.NavigateEvent += SwitchToOtherListRequested;
+            _controller.MerchantInputManager.ExecuteEvent += SendItemsRequested;
+            _controller.MerchantInputManager.ResetEvent += ResetTransferRequested;
+            _controller.MerchantInputManager.InteractEvent += ViewCharacterDetails;
 
             ActionDispatcher.Dispatch(new GetCharacters());
         }
@@ -93,11 +93,11 @@ namespace CryptoQuest.Tavern.States.CharacterReplacement
             ActionDispatcher.Unbind(_getGameDataSucceedEvent);
             ActionDispatcher.Unbind(_getWalletDataSucceedEvent);
 
-            _controller.TavernInputManager.CancelEvent -= CancelCharacterReplacement;
-            _controller.TavernInputManager.NavigateEvent -= SwitchToOtherListRequested;
-            _controller.TavernInputManager.ExecuteEvent -= SendItemsRequested;
-            _controller.TavernInputManager.ResetEvent -= ResetTransferRequested;
-            _controller.TavernInputManager.InteractEvent -= ViewCharacterDetails;
+            _controller.MerchantInputManager.CancelEvent -= CancelCharacterReplacement;
+            _controller.MerchantInputManager.NavigateEvent -= SwitchToOtherListRequested;
+            _controller.MerchantInputManager.ExecuteEvent -= SendItemsRequested;
+            _controller.MerchantInputManager.ResetEvent -= ResetTransferRequested;
+            _controller.MerchantInputManager.InteractEvent -= ViewCharacterDetails;
         }
     }
 }

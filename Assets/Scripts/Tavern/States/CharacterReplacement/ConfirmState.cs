@@ -24,7 +24,7 @@ namespace CryptoQuest.Tavern.States.CharacterReplacement
 
             _transferSucceedEvent = ActionDispatcher.Bind<TransferSucceed>(ShowTransferSucceededMessage);
             _transferFailedEvent = ActionDispatcher.Bind<TransferFailed>(ShowTransferFailedMessage);
-            _controller.TavernInputManager.CancelEvent += CancelTransmission;
+            _controller.MerchantInputManager.CancelEvent += CancelTransmission;
 
             _controller.UIGameList.SetInteractableAllButtons(false);
             _controller.UIWalletList.SetInteractableAllButtons(false);
@@ -41,7 +41,7 @@ namespace CryptoQuest.Tavern.States.CharacterReplacement
 
             ActionDispatcher.Unbind(_transferSucceedEvent);
             ActionDispatcher.Unbind(_transferFailedEvent);
-            _controller.TavernInputManager.SubmitEvent -= BackToTransferState;
+            _controller.MerchantInputManager.SubmitEvent -= BackToTransferState;
         }
 
         private void ShowTransferSucceededMessage(ActionBase _)
@@ -60,7 +60,7 @@ namespace CryptoQuest.Tavern.States.CharacterReplacement
                 .SetMessage(msg)
                 .Show();
 
-            _controller.TavernInputManager.SubmitEvent += BackToTransferState;
+            _controller.MerchantInputManager.SubmitEvent += BackToTransferState;
         }
 
         private void BackToTransferState()

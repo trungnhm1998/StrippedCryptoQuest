@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using CryptoQuest.ChangeClass.View;
+using CryptoQuest.Input;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Localization;
@@ -14,7 +15,7 @@ namespace CryptoQuest.ChangeClass.StateMachine
         [SerializeField] private LocalizedString _message;
         [SerializeField] private LocalizedString _overviewMessage;
         private ChangeClassStateController _stateController;
-        private ChangeClassInputManager _input;
+        private MerchantsInputManager _input;
         private Animator _animator;
         private static readonly int _submit = Animator.StringToHash("isConfirm");
         private static readonly int _exit = Animator.StringToHash("isChangeClass");
@@ -28,7 +29,7 @@ namespace CryptoQuest.ChangeClass.StateMachine
             _input = _stateController.Input;
             _input.SubmitEvent += SelectedClassMaterial;
             _input.CancelEvent += ExitState;
-            _input.DetailEvent += ShowDetail;
+            _input.ShowDetailEvent += ShowDetail;
             _input.NavigateEvent += HideDetail;
             _stateController.Presenter.EnableClassInteractable(false);
             _stateController.ConfirmMaterial.EnableButtonInteractable(true, _index);
@@ -46,7 +47,7 @@ namespace CryptoQuest.ChangeClass.StateMachine
         {
             _input.SubmitEvent -= SelectedClassMaterial;
             _input.CancelEvent -= ExitState;
-            _input.DetailEvent -= ShowDetail;
+            _input.ShowDetailEvent -= ShowDetail;
             _input.NavigateEvent -= HideDetail;
         }
 

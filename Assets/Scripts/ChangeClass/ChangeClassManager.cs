@@ -2,6 +2,7 @@ using UnityEngine;
 using CryptoQuest.ChangeClass.ScriptableObjects;
 using UnityEngine.UI;
 using UnityEngine.Events;
+using CryptoQuest.Input;
 
 namespace CryptoQuest.ChangeClass
 {
@@ -12,7 +13,7 @@ namespace CryptoQuest.ChangeClass
         [SerializeField] private ShowChangeClassEventChannelSO _showChangeClassEvent;
         [SerializeField] private ChangeClassDialogController _dialogController;
         [SerializeField] private ChangeClassStateController _stateController;
-        [SerializeField] private ChangeClassInputManager _input;
+        [SerializeField] private MerchantsInputManager _input;
         [SerializeField] private GameObject _changeClassPanel;
         [SerializeField] private Button _defaultButton;
 
@@ -46,7 +47,6 @@ namespace CryptoQuest.ChangeClass
             _changeClassPanel.SetActive(false);
             _dialogController.HideChangeClassDialog();
             _input.DisableInput();
-            _input.EnableMapGameplayInput();
         }
 
         private void OnButtonClicked()

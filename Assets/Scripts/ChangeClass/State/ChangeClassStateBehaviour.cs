@@ -1,3 +1,4 @@
+using CryptoQuest.Input;
 using UnityEngine;
 using UnityEngine.Localization;
 
@@ -9,7 +10,7 @@ namespace CryptoQuest.ChangeClass.StateMachine
         [SerializeField] private LocalizedString _currentStateMessage;
         [SerializeField] private LocalizedString _overviewMessage;
         private ChangeClassStateController _stateController;
-        private ChangeClassInputManager _input;
+        private MerchantsInputManager _input;
         private Animator _animator;
         private static readonly int _submit = Animator.StringToHash("isSelectMaterial");
         private static readonly int _exit = Animator.StringToHash("isOverview");

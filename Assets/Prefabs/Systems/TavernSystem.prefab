@@ -2418,7 +2418,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f66d23c9205e4aa2b1bb60d6f802fa02, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _inputManager: {fileID: 3871654355000680538}
+  _inputManager: {fileID: 6192090516447078655}
   _welcomeMessage:
   - m_TableReference:
       m_TableCollectionName: GUID:1b702bd02874f6349a9f27f039c75abe
@@ -3522,7 +3522,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _showTavern: {fileID: 11400000, guid: 9351d1defd6ec864c92f416d6e972f91, type: 2}
   _tavernController: {fileID: 403203253898841688}
-  _tavernInputManager: {fileID: 3871654355000680538}
+  _merchantInputManager: {fileID: 6192090516447078655}
   _tavernDialogsManager: {fileID: 5609173416979889765}
 --- !u!1 &4831588268909402589
 GameObject:
@@ -5745,7 +5745,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7963682891128732098}
-  - component: {fileID: 3871654355000680538}
+  - component: {fileID: 6192090516447078655}
   m_Layer: 5
   m_Name: TavernInputManager
   m_TagString: Untagged
@@ -5772,7 +5772,7 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &3871654355000680538
+--- !u!114 &6192090516447078655
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -5781,7 +5781,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7220155812414748110}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d26987b2c5dd4cb69161a104224ccd22, type: 3}
+  m_Script: {fileID: 11500000, guid: f6d77d25d8250574e93dc9afd83fa7ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _inputMediatorSO: {fileID: 11400000, guid: 1fb61cdb72f0a484f8e4db68e2011977, type: 2}
@@ -6280,7 +6280,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _stateMachine: {fileID: 6505362723379937687}
-  <TavernInputManager>k__BackingField: {fileID: 3871654355000680538}
+  <MerchantInputManager>k__BackingField: {fileID: 6192090516447078655}
   <DialogsManager>k__BackingField: {fileID: 5609173416979889765}
   <TavernUiOverview>k__BackingField: {fileID: 954850525125600130}
   <UICharacterReplacement>k__BackingField: {fileID: 9103902860443043447}

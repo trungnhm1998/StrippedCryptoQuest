@@ -19,7 +19,7 @@ namespace CryptoQuest.Tavern.States.PartyOrganization
         {
             _controller = StateMachine.GetComponent<TavernController>();
 
-            _controller.TavernInputManager.CancelEvent += CancelTransmission;
+            _controller.MerchantInputManager.CancelEvent += CancelTransmission;
 
             _controller.UIGameList.SetInteractableAllButtons(false);
             _controller.UIWalletList.SetInteractableAllButtons(false);

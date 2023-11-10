@@ -1,4 +1,5 @@
-﻿using CryptoQuest.Tavern.States.CharacterReplacement;
+﻿using CryptoQuest.Input;
+using CryptoQuest.Tavern.States.CharacterReplacement;
 using CryptoQuest.Tavern.UI;
 using CryptoQuest.Tavern.UI.CharacterReplacement;
 using UnityEngine;
@@ -12,7 +13,7 @@ namespace CryptoQuest.Tavern
         [SerializeField] private Animator _stateMachine;
 
         [field: Header("Managers")]
-        [field: SerializeField] public TavernInputManager TavernInputManager { get; private set; }
+        [field: SerializeField] public MerchantsInputManager MerchantInputManager { get; private set; }
 
         [field: SerializeField] public TavernDialogsManager DialogsManager { get; private set; }
 

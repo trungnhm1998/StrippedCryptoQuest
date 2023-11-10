@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using CryptoQuest.Input;
 using CryptoQuest.UI.Dialogs.ChoiceDialog;
 using CryptoQuest.UI.Dialogs.Dialogue;
 using UnityEngine;
@@ -15,7 +16,7 @@ namespace CryptoQuest.Tavern
         public UIDialogueForGenericMerchant Dialogue { get; private set; }
         public UIChoiceDialog ChoiceDialog { get; private set; }
 
-        [SerializeField] private TavernInputManager _inputManager;
+        [SerializeField] private MerchantsInputManager _inputManager;
         [SerializeField] private List<LocalizedString> _welcomeMessage = new();
 
         private int _msgIndex;

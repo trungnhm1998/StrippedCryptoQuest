@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using CryptoQuest.ChangeClass.API;
 using CryptoQuest.ChangeClass.View;
-using CryptoQuest.Core;
+using CryptoQuest.Input;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
@@ -13,7 +13,7 @@ namespace CryptoQuest.ChangeClass
     public class ChangeClassPreviewPresenter : MonoBehaviour
     {
         [SerializeField] private List<UIClassMaterial> _listClassMaterial;
-        [SerializeField] private ChangeClassInputManager _input;
+        [SerializeField] private MerchantsInputManager _input;
         [SerializeField] private PreviewCharacterAPI _previewCharacterAPI;
         [SerializeField] private ChangeNewClassAPI _changeNewClassAPI;
         [SerializeField] private ChangeClassPresenter _changeClassPresenter;
