@@ -5,7 +5,7 @@ using UnityEngine.Serialization;
 
 namespace CryptoQuest.AbilitySystem.Abilities
 {
-    [CreateAssetMenu(menuName = "Create SkillTargetType", fileName = "SkillTargetType", order = 0)]
+    [CreateAssetMenu(menuName = "Crypto Quest/Ability System/Target Type/SkillTargetType", fileName = "SkillTargetType", order = 0)]
     public class SkillTargetType : GenericEventChannelSO<CastSkillAbility>
     {
         [Flags]

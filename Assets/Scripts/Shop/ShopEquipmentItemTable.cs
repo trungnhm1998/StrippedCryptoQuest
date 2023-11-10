@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace CryptoQuest.Shop
 {
-    [CreateAssetMenu(fileName = "New shop table", menuName = "Crypto Quest/Shop/New equipment Table")]
+    [CreateAssetMenu(fileName = "EquipmentTable", menuName = "Crypto Quest/Shop/Equipment Table")]
     public class ShopEquipmentItemTable : ShopItemTable
     {
         public override IEnumerator LoadItem(Action<IShopItem> callback)

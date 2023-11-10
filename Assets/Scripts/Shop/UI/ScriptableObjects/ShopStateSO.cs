@@ -4,6 +4,6 @@ using UnityEngine;
 
 namespace CryptoQuest.Shop.UI.ScriptableObjects
 {
-    [CreateAssetMenu(fileName = "Shop state", menuName = "Crypto Quest/Shop/New shop state")]
+    [CreateAssetMenu(fileName = "ShopState", menuName = "Crypto Quest/Shop/Shop State")]
     public class ShopStateSO : ScriptableObject { }
 }
