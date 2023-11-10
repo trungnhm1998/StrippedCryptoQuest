@@ -17,36 +17,40 @@ namespace CryptoQuest.Menus.Skill.States
 
         public SkillSelectionState(UISkillMenu skillPanel) : base(skillPanel)
         {
-            _skillListPanel = SkillPanel.SkillListPanel;
-            _input = SkillPanel.Input;
+            _skillListPanel = _skillPanel.SkillListPanel;
+            _input = _skillPanel.Input;
         }
 
         public override void OnEnter()
         {
-            SkillPanel.SingleAlliedTarget.EventRaised += SelectSingleAlly;
-            SkillPanel.AllAlliesTarget.EventRaised += SelectAllHeroes;
-            SkillPanel.SelfTarget.EventRaised += SelectSelf;
+            _skillPanel.SingleAlliedTarget.EventRaised += SelectSingleAlly;
+            _skillPanel.AllAlliesTarget.EventRaised += SelectAllHeroes;
+            _skillPanel.SelfTarget.EventRaised += SelectSelf;
 
-            SkillPanel.Input.MenuConfirmedEvent += OnCastSkill;
+            _skillPanel.SelectingHero.EnableSelectBackground();
+
+            _skillPanel.Input.MenuConfirmedEvent += OnCastSkill;
 
             _input.MenuCancelEvent += HandleCancel;
             _skillListPanel.Interactable = true;
             _skillListPanel.SelectLastSelectedOrFirstSkill();
+
+            ActiveSelectedHero();
         }
 
         private void OnCastSkill()
         {
-            SkillPanel.Input.MenuConfirmedEvent -= OnCastSkill;
+            _skillPanel.Input.MenuConfirmedEvent -= OnCastSkill;
             var castSkillAbility = _skillListPanel.InspectingSkillUI.Skill;
             castSkillAbility.TargetType.RaiseEvent(castSkillAbility);
         }
 
         public override void OnExit()
         {
-            SkillPanel.Input.MenuConfirmedEvent -= OnCastSkill;
-            SkillPanel.SingleAlliedTarget.EventRaised -= SelectSingleAlly;
-            SkillPanel.AllAlliesTarget.EventRaised -= SelectAllHeroes;
-            SkillPanel.SelfTarget.EventRaised -= SelectSelf;
+            _skillPanel.Input.MenuConfirmedEvent -= OnCastSkill;
+            _skillPanel.SingleAlliedTarget.EventRaised -= SelectSingleAlly;
+            _skillPanel.AllAlliesTarget.EventRaised -= SelectAllHeroes;
+            _skillPanel.SelfTarget.EventRaised -= SelectSelf;
 
             _input.MenuConfirmedEvent -= SetTargetAsCurrentSelectGameObjectAndCast;
             _input.MenuConfirmedEvent -= CastSkill;
@@ -60,8 +64,8 @@ namespace CryptoQuest.Menus.Skill.States
         private void SelectSelf(CastSkillAbility skill)
         {
             DisableSkillButtonsAndCacheSelectingSkill(skill);
-            _targets = new List<HeroBehaviour> { SkillPanel.SelectingHero.Hero };
-            SkillPanel.SelectingHero.EnableSelectBackground();
+            _targets = new List<HeroBehaviour> { _skillPanel.SelectingHero.Hero };
+            _skillPanel.SelectingHero.EnableSelectBackground();
         }
 
         // TODO: Move to separate state
@@ -69,7 +73,7 @@ namespace CryptoQuest.Menus.Skill.States
         {
             DisableSkillButtonsAndCacheSelectingSkill(skill);
             _targets = new List<HeroBehaviour>();
-            foreach (var hero in SkillPanel.HeroButtons)
+            foreach (var hero in _skillPanel.HeroButtons)
             {
                 if (hero.Hero.IsValidAndAlive() == false) continue;
                 _targets.Add(hero.Hero);
@@ -83,8 +87,8 @@ namespace CryptoQuest.Menus.Skill.States
             DisableSkillButtonsAndCacheSelectingSkill(skill);
             _input.MenuConfirmedEvent -= CastSkill;
             _input.MenuConfirmedEvent += SetTargetAsCurrentSelectGameObjectAndCast;
-            SkillPanel.EnableAllHeroButtons();
-            SkillPanel.HeroButtons[0].Select();
+            _skillPanel.EnableAllHeroButtons();
+            _skillPanel.HeroButtons[0].Select();
         }
 
         // TODO: Move to separate state
@@ -93,7 +97,8 @@ namespace CryptoQuest.Menus.Skill.States
             _input.MenuConfirmedEvent -= SetTargetAsCurrentSelectGameObjectAndCast;
             var eventSystem = EventSystem.current;
             if (eventSystem is null || eventSystem.currentSelectedGameObject == null) return;
-            if (eventSystem.currentSelectedGameObject.TryGetComponent(out UICharacterPartySlot slot) == false) return;
+            if (eventSystem.currentSelectedGameObject.TryGetComponent(out UISkillCharacterPartySlot slot) ==
+                false) return;
 
             _targets = new List<HeroBehaviour> { slot.Hero };
             CastSkill();
@@ -110,6 +115,8 @@ namespace CryptoQuest.Menus.Skill.States
         }
 
         private void DisableAllSkillButtons(bool disabled = true) => _skillListPanel.Interactable = !disabled;
+
+        private void ActiveSelectedHero(bool active = true) => _skillPanel.EnableHeroSelectedMode(active);
 
         private void CastSkill()
         {
@@ -132,7 +139,7 @@ namespace CryptoQuest.Menus.Skill.States
             }
 
             var skillSpec =
-                SkillPanel.SelectingHero.Hero.AbilitySystem.GiveAbility<CastSkillAbilitySpec>(_selectingSkill);
+                _skillPanel.SelectingHero.Hero.AbilitySystem.GiveAbility<CastSkillAbilitySpec>(_selectingSkill);
             skillSpec.Execute(abilitySystemBehaviours);
             ClearTargetSelectionAndSelectingSkill();
         }
@@ -151,9 +158,8 @@ namespace CryptoQuest.Menus.Skill.States
         private void ClearTargetSelectionAndSelectingSkill()
         {
             _selectingSkill = null;
-            SkillPanel.Input.MenuConfirmedEvent += OnCastSkill;
+            _skillPanel.Input.MenuConfirmedEvent += OnCastSkill;
             _input.MenuConfirmedEvent -= CastSkill;
-            foreach (var hero in SkillPanel.HeroButtons) hero.EnableSelectBackground(false);
             DisableAllSkillButtons(false);
             _skillListPanel.SelectLastSelectedOrFirstSkill();
         }

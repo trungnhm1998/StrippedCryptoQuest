@@ -15,19 +15,20 @@ namespace CryptoQuest.Menus.Skill.UI
     {
         [Header("State Context")]
         [SerializeField] private UICharacterSelection _charactersPanel;
+
         [field: SerializeField] public InputMediatorSO Input { get; private set; }
         public UICharacterSelection CharactersPanel => _charactersPanel;
 
         [SerializeField] private UISkillList _skillListPanel;
         public UISkillList SkillListPanel => _skillListPanel;
 
-        [field: SerializeField] public UICharacterPartySlot[] HeroButtons { get; private set; }
+        [field: SerializeField] public UISkillCharacterPartySlot[] HeroButtons { get; private set; }
 
         [field: SerializeField] public SkillTargetType SingleAlliedTarget { get; private set; }
         [field: SerializeField] public SkillTargetType AllAlliesTarget { get; private set; }
         [field: SerializeField] public SkillTargetType SelfTarget { get; private set; }
 
-        public UICharacterPartySlot SelectingHero { get; set; }
+        public UISkillCharacterPartySlot SelectingHero { get; set; }
 
         private SkillMenuStateMachine _skillMenuStateMachine;
 
@@ -50,6 +51,16 @@ namespace CryptoQuest.Menus.Skill.UI
         public void EnableAllHeroButtons(bool isEnabled = true)
         {
             foreach (var button in HeroButtons) button.Interactable = isEnabled;
+        }
+
+        public void EnableAllHeroSelecting(bool isEnabled = true)
+        {
+            foreach (var button in HeroButtons) button.IsSelected = isEnabled;
+        }
+        
+        public void EnableHeroSelectedMode(bool isEnabled = true)
+        {
+            foreach (var button in HeroButtons) button.IsCharacterSelected = isEnabled;
         }
     }
 }

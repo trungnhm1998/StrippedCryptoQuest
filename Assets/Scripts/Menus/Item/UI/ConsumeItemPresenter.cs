@@ -54,11 +54,11 @@ namespace CryptoQuest.Menus.Item.UI
             }
         }
 
-        private void ConsumeOnCharacterIndex(UICharacterPartySlot characterParty)
+        private void ConsumeOnCharacterIndex(UIItemCharacterPartySlot itemCharacterParty)
         {
             _uiItemCharacterSelection.Hide();
             _uiItemCharacterSelection.Confirmed -= ConsumeOnCharacterIndex;
-            ConsumableController.OnConsumeItem(_inspectingItem.Consumable, characterParty.Hero);
+            ConsumableController.OnConsumeItem(_inspectingItem.Consumable, itemCharacterParty.Hero);
         }
     }
 }

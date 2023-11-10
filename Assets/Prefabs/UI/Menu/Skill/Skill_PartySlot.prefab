@@ -84,8 +84,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6694571679417326535}
-  - component: {fileID: 5896469401146235005}
   - component: {fileID: 5160668535546664272}
+  - component: {fileID: 1638256187364992479}
   m_Layer: 5
   m_Name: Skill_PartySlot
   m_TagString: Untagged
@@ -114,37 +114,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &5896469401146235005
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4457907746618091616}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 828fd94357f93ee4d8515cc94592603d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _button: {fileID: 5160668535546664272}
-  _onCharacterSelected:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: CryptoQuest.Menus.Skill.UI.UISkillList, IndiGames.CryptoQuest.Menus.Skill
-        m_MethodName: ShowSkillForHero
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  _characterInSlot: {fileID: 1627606993212375556}
-  _selectBorder: {fileID: 1533361377869907220}
-  _selectBackground: {fileID: 575832888838175184}
 --- !u!114 &5160668535546664272
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -159,7 +128,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Navigation:
     m_Mode: 2
-    m_WrapAround: 0
+    m_WrapAround: 1
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
@@ -189,7 +158,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 5896469401146235005}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: CryptoQuest.UI.Menu.Character.UICharacterPartySlot,
           indi-games.crypto-quest
         m_MethodName: OnSelected
@@ -202,6 +171,38 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &1638256187364992479
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4457907746618091616}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9cf8e933355846db982540a3b47ffe8b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _button: {fileID: 5160668535546664272}
+  _onCharacterSelected:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1638256187364992479}
+        m_TargetAssemblyTypeName: CryptoQuest.Menus.Skill.UI.UISkillCharacterPartySlot,
+          IndiGames.CryptoQuest.Menus.Skill
+        m_MethodName: OnSelected
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  _characterInSlot: {fileID: 1627606993212375556}
+  _selectBorder: {fileID: 1533361377869907220}
+  _selectBackground: {fileID: 575832888838175184}
 --- !u!1001 &123357025847937053
 PrefabInstance:
   m_ObjectHideFlags: 0
