@@ -4,7 +4,6 @@ using System.Reflection;
 using IndiGamesEditor.UnityBuilderAction.Input;
 using IndiGamesEditor.UnityBuilderAction.Reporting;
 using IndiGamesEditor.UnityBuilderAction.Versioning;
-
 using UnityEditor;
 using UnityEditor.AddressableAssets;
 using UnityEditor.AddressableAssets.Build;
@@ -55,8 +54,10 @@ namespace CryptoQuest.Editor
             buildPlayerOptions = new BuildPlayerOptions
             {
 #if UNITY_2021_2_OR_NEWER
-                 // If standalone server, build battle scene only
-                scenes = (buildSubtarget == StandaloneBuildSubtarget.Server) ? new string[]{"Assets/Scenes/Battle/BattleScene.unity"} : scenes,
+                // If standalone server, build battle scene only
+                scenes = (buildSubtarget == StandaloneBuildSubtarget.Server)
+                    ? new string[] { "Assets/Scenes/Battle/BattleScene.unity" }
+                    : scenes,
 #else
                 scenes = scenes,
 #endif
@@ -83,25 +84,30 @@ namespace CryptoQuest.Editor
             }
 
             // https://docs.unity3d.com/ScriptReference/EditorUserBuildSettings.SwitchActiveBuildTarget.html
-            bool switchResult = EditorUserBuildSettings.SwitchActiveBuildTarget(buildPlayerOptions.targetGroup, buildPlayerOptions.target);
+            bool switchResult =
+                EditorUserBuildSettings.SwitchActiveBuildTarget(buildPlayerOptions.targetGroup,
+                    buildPlayerOptions.target);
             if (switchResult)
             {
                 Debug.Log("Successfully changed Build Target to: " + buildPlayerOptions.target.ToString());
             }
             else
             {
-                Debug.LogError("Unable to change Build Target to: " + buildPlayerOptions.target.ToString() + " Exiting...");
+                Debug.LogError("Unable to change Build Target to: " + buildPlayerOptions.target.ToString() +
+                               " Exiting...");
                 return false;
             }
+
             return true;
         }
 
         public static bool BuildAdressableData()
         {
-            if(!ParseBuildPlayerOptions()) return false;
+            if (!ParseBuildPlayerOptions()) return false;
 
             settingsAsset = AssetDatabase.LoadAssetAtPath<ScriptableObject>(settings_asset) as AddressableAssetSettings;
-            if (settingsAsset == null) {
+            if (settingsAsset == null)
+            {
                 Debug.LogError($"{settingsAsset} couldn't be found or isn't " +
                                $"a settingsAsset object.");
                 return false;
@@ -141,9 +147,9 @@ namespace CryptoQuest.Editor
             return success;
         }
 
-        public static bool  BuildProject()
+        public static bool BuildProject()
         {
-            if(!ParseBuildPlayerOptions()) return false;
+            if (!ParseBuildPlayerOptions()) return false;
 
             // Perform build
             BuildReport buildReport = BuildPipeline.BuildPlayer(buildPlayerOptions);
