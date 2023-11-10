@@ -21,15 +21,13 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Abilities
         public List<EffectTypeMap> EffectTypeMaps = new();
         public List<TargetTypeMap> TargetTypeMaps = new();
         public List<GameEffectMap> GameEffectMaps = new();
-        public List<PhysicalEffectMap> PhysicalEffectMaps = new();
-        public List<MagicalEffectMap> MagicalEffectMaps = new();
+        public List<IdToEffectMap> PhysicalEffectMaps = new();
+        public List<IdToEffectMap> MagicalEffectMaps = new();
         public List<ConditionalTargetMap> ConditionalTargetMaps = new();
         public List<ConditionalTargetEffectMap> ConditionalTargetEffectMaps = new();
         public List<GameEffectPairMap> EffectPairMaps = new();
         public List<GameEffectMap> BuffEffects = new();
         public List<GameEffectMap> DebuffEffects = new();
-
-       
     }
 
     public abstract class BaseMap
@@ -59,14 +57,7 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Abilities
     public class GameEffectMap : BaseMap<GameplayEffectDefinition> { }
 
     [Serializable]
-    public class PhysicalEffectMap
-    {
-        public string Id;
-        public List<GameEffectMap> GameEffectMaps = new();
-    }
-
-    [Serializable]
-    public class MagicalEffectMap
+    public class IdToEffectMap
     {
         public string Id;
         public List<GameEffectMap> GameEffectMaps = new();
