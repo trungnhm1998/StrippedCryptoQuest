@@ -178,10 +178,13 @@ namespace CryptoQuest.Networking
         private RequestHelper GenerateRequest(string path)
         {
             var mergeHeaders = MergeHeaders(_headers);
-            var accessToken = _credentials ? _credentials.Profile.token.access.token : null;
+            var accessToken = _credentials?.Profile?.token?.access?.token;
 
-            // Add authorization only when this is not login requests
-            if (!path.Contains(Accounts.LOGIN) && !path.Contains(Accounts.DEBUG_LOGIN) && !string.IsNullOrEmpty(accessToken)) 
+            // Add authorization only when this is not login/refresh requests
+            if (!path.Contains(Accounts.LOGIN)
+                && !path.Contains(Accounts.DEBUG_LOGIN) 
+                && !path.Contains(Accounts.REFRESH_TOKENS) 
+                && !string.IsNullOrEmpty(accessToken)) 
             { 
                 mergeHeaders.TryAdd("Authorization", "Bearer " + accessToken); 
             }

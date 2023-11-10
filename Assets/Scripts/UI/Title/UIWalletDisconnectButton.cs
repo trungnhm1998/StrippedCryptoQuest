@@ -22,8 +22,8 @@ namespace CryptoQuest
 
         private void OnDestroy()
         {
-            ActionDispatcher.Unbind(_connectWalletToken);
-            ActionDispatcher.Unbind(_disconnectWalletToken);
+            if (_connectWalletToken != null) ActionDispatcher.Unbind(_connectWalletToken);
+            if (_disconnectWalletToken != null) ActionDispatcher.Unbind(_disconnectWalletToken);
         }
 
         private void Start()
