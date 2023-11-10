@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using CryptoQuest.AbilitySystem;
 using CryptoQuest.AbilitySystem.Abilities;
@@ -7,6 +8,7 @@ using CryptoQuest.Gameplay.Battle.Core;
 using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data;
 using IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects;
 using IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects.EffectExecutionCalculation;
+using IndiGames.GameplayAbilitySystem.TagSystem.ScriptableObjects;
 using IndiGames.Tools.ScriptableObjectBrowser;
 using UnityEditor;
 using UnityEngine;
@@ -14,7 +16,9 @@ using UnityEngine.Localization;
 
 namespace CryptoQuestEditor.Gameplay.Gameplay.Abilities
 {
-    public class MagicalAbilitiesSOEditor : ScriptableObjectBrowserEditor<CastEffectsOnTargetAbility>
+    public class MagicImport : ScriptableObject { }
+
+    public class MagicalAbilitiesSOEditor : ScriptableObjectBrowserEditor<MagicImport>
     {
         private const string DEFAULT_NAME = "";
         private const int ROW_OFFSET = 14;
@@ -53,6 +57,7 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Abilities
         #endregion
 
         private AbilityAssetMappingEditor _mappingEditor;
+        private Dictionary<string, TagScriptableObject> _tagDict = new();
 
         public MagicalAbilitiesSOEditor()
         {
@@ -64,6 +69,7 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Abilities
         {
             string[] allLines = File.ReadAllLines(directory);
             LoadMappings();
+            LoadAbnormalTags();
             for (int index = ROW_OFFSET; index < allLines.Length; index++)
             {
                 // get data form tsv file
@@ -159,6 +165,10 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Abilities
         {
             var serializedObject = new SerializedObject(instance);
             var property = serializedObject.FindProperty("_effects");
+
+            if (data.MainEffectTypeId == "5")
+                SetRemoveAbnormalInstance(serializedObject, data);
+
             var mainEffect = GetEffect(data.MainEffectTypeId, data.MainEffectTargetParameterId);
             GameplayEffectDefinition[] effects = new GameplayEffectDefinition[2];
             effects[0] = mainEffect;
@@ -226,6 +236,26 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Abilities
             instance.SetSkillDescription(skillDescription);
         }
 
+        private void LoadAbnormalTags()
+        {
+            var maps = _mappingEditor.MagicalEffectMaps[3].GameEffectMaps;
+
+            foreach (var map in maps)
+            {
+                _tagDict.TryAdd(map.Id, map.Value.GrantedTags[0]);
+            }
+        }
+
+        private void SetRemoveAbnormalInstance(SerializedObject serializedObject, AbilityDataStruct data)
+        {
+            var property = serializedObject.FindProperty("tags.CancelAbilityWithTags");
+            var tag = _tagDict[data.MainEffectTargetParameterId];
+            property.InsertArrayElementAtIndex(0);
+            property.GetArrayElementAtIndex(0).objectReferenceValue = tag;
+            serializedObject.ApplyModifiedProperties();
+            serializedObject.Update();
+        }
+
         private Elemental GetElement(string id)
         {
             foreach (var map in _mappingEditor.ElementMaps)
@@ -247,13 +277,10 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Abilities
                 {
                     if (effectTypeId == "1")
                         return map.GameEffectMaps[0].Value;
-                    else
+                    foreach (var effectMap in map.GameEffectMaps)
                     {
-                        foreach (var effectMap in map.GameEffectMaps)
-                        {
-                            if (effectMap.Id == targetParam)
-                                return effectMap.Value;
-                        }
+                        if (effectMap.Id == targetParam)
+                            return effectMap.Value;
                     }
                 }
             }
