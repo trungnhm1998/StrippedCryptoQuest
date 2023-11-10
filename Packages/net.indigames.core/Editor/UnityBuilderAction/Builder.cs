@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using IndiGamesEditor.UnityBuilderAction.Input;
@@ -10,7 +11,7 @@ using UnityEngine;
 
 namespace IndiGamesEditor.UnityBuilderAction
 {
-    static class Builder
+    public static class Builder
     {
         public static void BuildProject()
         {
@@ -45,8 +46,10 @@ namespace IndiGamesEditor.UnityBuilderAction
             var buildPlayerOptions = new BuildPlayerOptions
             {
 #if UNITY_2021_2_OR_NEWER
-				 // If standalone server, build battle scene only
-				scenes = (buildSubtarget == StandaloneBuildSubtarget.Server) ? new string[]{"Assets/Scenes/Battle/BattleScene.unity"} : scenes,
+                // If standalone server, build battle scene only
+                scenes = (buildSubtarget == StandaloneBuildSubtarget.Server)
+                    ? new string[] { "Assets/Scenes/Battle/BattleScene.unity" }
+                    : scenes,
 #else
                 scenes = scenes,
 #endif
@@ -58,6 +61,24 @@ namespace IndiGamesEditor.UnityBuilderAction
 #endif
             };
 
+            BuildVersion(options, buildPlayerOptions);
+
+            BuildAddressable();
+
+            // Perform build
+            BuildReport buildReport = BuildPipeline.BuildPlayer(buildPlayerOptions);
+
+            // Summary
+            BuildSummary summary = buildReport.summary;
+            StdOutReporter.ReportSummary(summary);
+
+            // Result
+            BuildResult result = summary.result;
+            StdOutReporter.ExitWithResult(result);
+        }
+
+        private static void BuildVersion(Dictionary<string, string> options, BuildPlayerOptions buildPlayerOptions)
+        {
             // Set version for this build
             VersionApplicator.SetVersion(options.TryGetValue("buildVersion", out var buildVersion)
                 ? buildVersion
@@ -70,9 +91,14 @@ namespace IndiGamesEditor.UnityBuilderAction
                 VersionApplicator.SetAndroidVersionCode(options["androidVersionCode"]);
                 AndroidSettings.Apply(options);
             }
-            
-            VersionApplicator.SetVersion(VersionGenerator.Generate());
 
+            VersionApplicator.SetVersion(VersionGenerator.Generate());
+        }
+
+        public static void BuildAddressable()
+        {
+            Debug.Log($"VERSION: {VersionGenerator.Generate()}");
+            
             // Execute default AddressableAsset content build, if the package is installed.
             // Version defines would be the best solution here, but Unity 2018 doesn't support that,
             // so we fall back to using reflection instead.
@@ -94,17 +120,6 @@ namespace IndiGamesEditor.UnityBuilderAction
                     Debug.LogError($"Failed to run default addressables build:\n{e}");
                 }
             }
-
-            // Perform build
-            BuildReport buildReport = BuildPipeline.BuildPlayer(buildPlayerOptions);
-
-            // Summary
-            BuildSummary summary = buildReport.summary;
-            StdOutReporter.ReportSummary(summary);
-
-            // Result
-            BuildResult result = summary.result;
-            StdOutReporter.ExitWithResult(result);
         }
     }
 }

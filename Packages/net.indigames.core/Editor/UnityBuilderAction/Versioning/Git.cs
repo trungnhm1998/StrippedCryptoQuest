@@ -19,8 +19,7 @@ namespace IndiGamesEditor.UnityBuilderAction.Versioning
         /// </summary>
         public static string GenerateSemanticCommitVersion()
         {
-            if (IsShallowClone())
-                Fetch();
+            Fetch();
 
             // https://stackoverflow.com/a/17537385/10479236
             try
@@ -29,22 +28,22 @@ namespace IndiGamesEditor.UnityBuilderAction.Versioning
             }
             catch (Exception e)
             {
-                Console.WriteLine("Branch properly not clean, this is safe to skip. \n" + e);
+                Console.WriteLine("Git::Branch properly not clean, this is safe to skip. \n" + e);
             }
 
             string version;
             if (HasAnyVersionTags())
             {
                 version = GetSemanticCommitVersion();
-                Console.WriteLine("Repository has a valid version tag.");
+                Console.WriteLine("Git::Repository has a valid version tag.");
             }
             else
             {
                 version = $"0.0.{GetTotalNumberOfCommits()}_{GetVersionString()}";
-                Console.WriteLine("Repository does not have tags to base the version on.");
+                Console.WriteLine("Git::Repository does not have tags to base the version on.");
             }
 
-            Console.WriteLine($"Version is {version}");
+            Console.WriteLine($"Git::Version is {version}");
 
             return version;
         }
@@ -53,11 +52,11 @@ namespace IndiGamesEditor.UnityBuilderAction.Versioning
         {
             try
             {
-                Run(@"fetch --unshallow");
+                Run(@"fetch --all --tags --depth=1000");
             }
             catch (Exception e)
             {
-                Console.WriteLine($"Failed to fetch the repository. \ne: {e} ");
+                Console.WriteLine($"Git::Failed to fetch the repository. \ne: {e} ");
                 throw;
             }
         }
@@ -115,15 +114,20 @@ namespace IndiGamesEditor.UnityBuilderAction.Versioning
             // (where 2 is the amount of commits, g stands for git
             // , 12345678 is the commit hash and dirty means there are uncommitted changes)
             string version = GetVersionString();
+            Console.WriteLine("Git::GetSemanticCommitVersion::version: " + version);
+            
             // 0.1-2-g12345678-dirty
             version = version.Substring(1);
+            Console.WriteLine($"Git::GetSemanticCommitVersion::version.Substring(1): {version}");
 
             var regex = new Regex(Regex.Escape("-"));
             // 0.1.2-g12345678-dirty
             version = regex.Replace(version, ".", 1);
+            Console.WriteLine($"Git::GetSemanticCommitVersion::version.Replace(.): {version}");
             
             // 0.1.2_g12345678-dirty
             version = regex.Replace(version, "_", 1);
+            Console.WriteLine($"Git::GetSemanticCommitVersion::version.Replace(_): {version}");
 
             return version;
         }

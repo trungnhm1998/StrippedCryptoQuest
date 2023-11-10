@@ -7,6 +7,7 @@ namespace IndiGamesEditor.UnityBuilderAction.Versioning
     {
         public static void SetVersion(string version)
         {
+            Console.WriteLine($"Setting version to {version}");
             if (version == "none")
             {
                 return;
