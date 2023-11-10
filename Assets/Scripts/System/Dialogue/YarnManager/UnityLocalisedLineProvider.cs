@@ -36,6 +36,13 @@ namespace CryptoQuest.System.Dialogue.YarnManager
         {
             StringsTable = newTable;
             currentStringsTable = newTable.GetTable();
+
+            StringsTable.TableChanged += OnAssetTableChanged;
+        }
+
+        private void OnAssetTableChanged(StringTable value)
+        {
+            currentStringsTable = value;
         }
 
         public override string LocaleCode => LocalizationSettings.SelectedLocale.Identifier.Code;
