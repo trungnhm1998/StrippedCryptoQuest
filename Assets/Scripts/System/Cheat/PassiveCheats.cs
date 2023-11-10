@@ -47,7 +47,7 @@ namespace CryptoQuest.System.Cheat
         {
             foreach (var passive in _passives)
             {
-                _passiveDict.Add(passive.PassiveId, passive.Passive);
+                _passiveDict.TryAdd(passive.PassiveId, passive.Passive);
             }
         }
 
