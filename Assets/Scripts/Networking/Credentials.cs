@@ -7,7 +7,7 @@ namespace CryptoQuest.Networking
     /// <summary>
     /// This act as in memory data only "reducer" for authentication
     /// </summary>
-    [CreateAssetMenu(menuName = "Create Credentials", fileName = "Credentials", order = 0)]
+    [CreateAssetMenu(menuName = "Crypto Quest/Networking/Credentials", fileName = "Credentials", order = 0)]
     public class Credentials : ScriptableObject
     {
         /// <summary>

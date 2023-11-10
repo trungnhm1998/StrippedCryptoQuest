@@ -11,7 +11,7 @@ using UnityEngine;
 namespace IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects
 {
     [CreateAssetMenu(fileName = "GameplayEffectDefinition",
-        menuName = "IndiGames/GameplayAbilitySystem/EffectSystem/GameplayEffectDefinition")]
+        menuName = "Indigames Ability System/EffectSystem/GameplayEffectDefinition")]
     [Serializable]
     public class GameplayEffectDefinition : ScriptableObject
     {

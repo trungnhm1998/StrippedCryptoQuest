@@ -21,7 +21,7 @@ namespace CryptoQuest.Item.Equipment
         [field: SerializeField] public PassiveAbility[] Passives { get; set; } = Array.Empty<PassiveAbility>();
     }
 
-    [CreateAssetMenu(menuName = "Create EquipmentDefDatabase", fileName = "EquipmentDefDatabase", order = 0)]
+    [CreateAssetMenu(menuName = "Gameplay/Equipment Database", fileName = "EquipmentDefDatabase", order = 0)]
     public class EquipmentDatabase : ScriptableObject
     {
         [Serializable]

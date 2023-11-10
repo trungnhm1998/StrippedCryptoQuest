@@ -5,7 +5,6 @@ using UnityEngine;
 
 namespace CryptoQuest.AbilitySystem.Executions
 {
-    [CreateAssetMenu(menuName = "A")]
     public class SetFixedValueCalculation : EffectExecutionCalculationBase
     {
         [SerializeField] private float _fixedValue = 1f;
