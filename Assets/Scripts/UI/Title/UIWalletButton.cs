@@ -1,7 +1,7 @@
+using CryptoQuest.Actions;
 using CryptoQuest.Core;
 using CryptoQuest.Menu;
 using CryptoQuest.Networking;
-using CryptoQuest.Networking.Actions;
 using CryptoQuest.System;
 using CryptoQuest.UI.Actions;
 using CryptoQuest.UI.Title;

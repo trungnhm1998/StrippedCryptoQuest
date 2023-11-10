@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Net;
+using CryptoQuest.Actions;
 using CryptoQuest.Core;
 using CryptoQuest.Networking;
-using CryptoQuest.Networking.Actions;
 using CryptoQuest.Networking.API;
 using CryptoQuest.System;
 using Newtonsoft.Json;

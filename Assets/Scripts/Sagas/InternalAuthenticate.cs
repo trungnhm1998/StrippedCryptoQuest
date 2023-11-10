@@ -1,7 +1,7 @@
 ﻿using System;
+using CryptoQuest.Actions;
 using CryptoQuest.Core;
 using CryptoQuest.Networking;
-using CryptoQuest.Networking.Actions;
 using CryptoQuest.UI.Actions;
 using UnityEngine;
 

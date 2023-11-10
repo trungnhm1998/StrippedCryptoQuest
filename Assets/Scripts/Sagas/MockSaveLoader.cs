@@ -1,5 +1,5 @@
-﻿using CryptoQuest.Core;
-using CryptoQuest.Networking.Actions;
+﻿using CryptoQuest.Actions;
+using CryptoQuest.Core;
 using CryptoQuest.System;
 
 namespace CryptoQuest.Sagas

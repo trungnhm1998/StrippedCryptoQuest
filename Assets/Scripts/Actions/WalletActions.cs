@@ -1,7 +1,6 @@
 using CryptoQuest.Core;
-using CryptoQuest.Sagas;
 
-namespace CryptoQuest.Networking.Actions
+namespace CryptoQuest.Actions
 {
     public class ConnectWallet : ActionBase { }
 

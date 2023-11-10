@@ -40,7 +40,7 @@ namespace CryptoQuest.Menus.DimensionalBox.States.EquipmentsTransfer
                     ActionDispatcher.Dispatch(new ShowLoading());
                     ActionDispatcher.Dispatch(new ConfirmTransferAction());
                 })
-                .SetMessage(new LocalizedString())
+                .SetMessage(new LocalizedString(Constants.DIMENSIONAL_BOX_TABLE_REFERENCE, Constants.CONFIRM_MESSAGE))
                 .Show();
         }
 

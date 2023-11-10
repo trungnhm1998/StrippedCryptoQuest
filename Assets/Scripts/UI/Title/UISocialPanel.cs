@@ -1,6 +1,6 @@
 using System;
+using CryptoQuest.Actions;
 using CryptoQuest.Core;
-using CryptoQuest.Networking.Actions;
 using CryptoQuest.UI.Common;
 using TinyMessenger;
 using UnityEngine;

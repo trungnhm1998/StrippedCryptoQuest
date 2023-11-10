@@ -47,9 +47,10 @@ namespace CryptoQuest.UI.Dialogs.OneButtonDialog
         {
             Debug.Log($"UIOneButtonDialog::Pressed");
             _buttonPressed?.Invoke();
+            Hide();
         }
 
-        public UIOneButtonDialog WithButtonsEvent(Action action)
+        public UIOneButtonDialog WithButtonCallback(Action action)
         {
             _buttonPressed = action;
             return this;

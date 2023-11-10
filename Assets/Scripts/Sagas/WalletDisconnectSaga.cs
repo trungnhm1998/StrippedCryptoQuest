@@ -1,11 +1,11 @@
 ﻿using CryptoQuest.Core;
 using CryptoQuest.Networking;
-using CryptoQuest.Networking.Actions;
 using CryptoQuest.System;
 using CryptoQuest.UI.Actions;
 using IndiGames.Web3.Bridge;
 using Newtonsoft.Json;
 using System;
+using CryptoQuest.Actions;
 using UniRx;
 using UnityEngine;
 
