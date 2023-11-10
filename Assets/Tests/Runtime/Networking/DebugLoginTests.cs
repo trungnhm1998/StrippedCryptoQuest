@@ -1,8 +1,8 @@
 ﻿using System.Collections;
+using CryptoQuest.Actions;
 using CryptoQuest.Core;
 using CryptoQuest.Environment;
 using CryptoQuest.Networking;
-using CryptoQuest.Networking.Actions;
 using CryptoQuest.Sagas;
 using CryptoQuest.System;
 using NUnit.Framework;

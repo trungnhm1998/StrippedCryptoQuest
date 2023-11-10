@@ -1,0 +1,33 @@
+﻿using System;
+using System.Net;
+using CryptoQuest.Actions;
+using CryptoQuest.Core;
+using CryptoQuest.Networking;
+using CryptoQuest.Sagas.Objects;
+using CryptoQuest.System;
+using UniRx;
+using UnityEngine;
+
+namespace CryptoQuest.Sagas.Profile
+{
+    public class GetOnlineProfileWallet : SagaBase<GetProfileSucceed>
+    {
+        protected override void HandleAction(GetProfileSucceed ctx)
+        {
+            var restClient = ServiceProvider.GetService<IRestClient>();
+            restClient.Get<ProfileResponse>(Networking.API.Profile.GET_PROFILE)
+                .Subscribe(UpdateProfileInfo, OnError);
+        }
+
+        private void UpdateProfileInfo(ProfileResponse response)
+        {
+            if (response.code != (int)HttpStatusCode.OK) return;
+            ActionDispatcher.Dispatch(new UpdateWallet(response.gold, response.soul, response.diamond, response.data.walletAddress));
+        }
+
+        private void OnError(Exception response)
+        {
+            Debug.LogError($"UpdateWalletOnGetProfile::OnError [{response}]");
+        }
+    }
+}

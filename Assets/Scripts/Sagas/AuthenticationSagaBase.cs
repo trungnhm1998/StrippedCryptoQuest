@@ -1,5 +1,5 @@
-﻿using CryptoQuest.Core;
-using CryptoQuest.Networking.Actions;
+﻿using CryptoQuest.Actions;
+using CryptoQuest.Core;
 using CryptoQuest.Sagas.Objects;
 using CryptoQuest.UI.Actions;
 using Newtonsoft.Json;

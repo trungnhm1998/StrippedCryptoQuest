@@ -2,7 +2,6 @@
 using System.Net;
 using CryptoQuest.Gameplay.Inventory.Currency;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
-using CryptoQuest.Menus.DimensionalBox.Actions;
 using CryptoQuest.Menus.DimensionalBox.Objects;
 using CryptoQuest.Networking;
 using CryptoQuest.Networking.API;

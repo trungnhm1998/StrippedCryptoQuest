@@ -1,4 +1,4 @@
-﻿using CryptoQuest.Networking.Actions;
+﻿using CryptoQuest.Actions;
 using IndiGames.Firebase.Bridge;
 
 namespace CryptoQuest.Sagas

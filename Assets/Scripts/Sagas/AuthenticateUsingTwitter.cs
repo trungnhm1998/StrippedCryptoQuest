@@ -1,6 +1,6 @@
 ﻿using System.Collections;
+using CryptoQuest.Actions;
 using CryptoQuest.Core;
-using CryptoQuest.Networking.Actions;
 using CryptoQuest.UI.Actions;
 using UnityEngine;
 
