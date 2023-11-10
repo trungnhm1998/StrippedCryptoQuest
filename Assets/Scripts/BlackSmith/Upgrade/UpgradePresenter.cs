@@ -3,6 +3,7 @@ using CryptoQuest.BlackSmith.Upgrade.StateMachine;
 using CryptoQuest.Gameplay.Inventory;
 using CryptoQuest.System;
 using UnityEngine;
+using CryptoQuest.Input;
 using UnityEngine.Localization;
 
 namespace CryptoQuest.BlackSmith.Upgrade
@@ -12,7 +13,7 @@ namespace CryptoQuest.BlackSmith.Upgrade
         [SerializeField] private BlackSmithDialogsPresenter _dialogManager;
         [SerializeField] private UIUpgradeEquipment _upgradeEquipment;
         [SerializeField] private UIEquipmentDetails _equipmentDetail;
-        [SerializeField] private BlackSmithInputManager _input;
+        [SerializeField] private MerchantsInputManager _input;
         [SerializeField] private CurrencyPresenter _currencyController;
         [SerializeField] private UpgradeStateController _upgradeController;
         private IUpgradeEquipment _equipmentData;
