@@ -18,6 +18,7 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects.Gamepla
             _counter = counter;
         }
 
+        public virtual void RegistCounterEvent() { }
         /// <summary>
         /// Event should be removed when effect expired or the spec is destroyed
         /// </summary>
@@ -41,6 +42,7 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects.Gamepla
         {
             _counter = counter;
             _policy = counterPolicy;
+            _policy.RegistCounterEvent();
             ReduceCounter += ReduceStep;
         }
 
@@ -50,6 +52,7 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects.Gamepla
             if (_counter <= 0)
             {
                 Spec.IsExpired = true;
+                Spec.Target.EffectSystem.RemoveEffect(Spec);
                 RemoveRegistEvent();
             }
         }

@@ -55,10 +55,7 @@ namespace CryptoQuest.Battle.UI.Logs
                 StatsChangedWithSameValue?.Invoke(character, attributeName);
                 return;
             }
-
-            var isJustInit = oldValue.CurrentValue == 0;
-            if (isJustInit) return;
-
+            
             var isIncrease = oldValue.CurrentValue < newValue.CurrentValue;
             var localizedLog = isIncrease ? _increasedLog : _decreasedLog;
             var log = new LocalizedString(localizedLog.TableReference, localizedLog.TableEntryReference)
