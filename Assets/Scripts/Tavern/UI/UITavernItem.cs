@@ -1,5 +1,4 @@
-﻿using CryptoQuest.UI.Menu;
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Localization.Components;
@@ -24,20 +23,10 @@ namespace CryptoQuest.Tavern.UI
         public Transform Parent { get; set; }
         public int Id { get; private set; }
 
-        private ITooltip _tooltip;
-
         private bool _isSelected = false;
         private bool _isInParty = false;
 
         private Obj.Character _cachedInfo;
-
-        private void Awake()
-        {
-            _tooltip = TooltipFactory.Instance.GetTooltip(ETooltipType.Character);
-            _tooltip.WithBorderPointer(true)
-                .WithLocalPosition(Vector3.zero)
-                .WithScale(new Vector3(.8f, .8f, 0));
-        }
 
         public void SetItemInfo(Obj.Character itemInfo)
         {
@@ -70,19 +59,13 @@ namespace CryptoQuest.Tavern.UI
         {
             if (isInspecting == false)
             {
-                _tooltip.Hide();
                 return;
             }
-
-            _tooltip
-                .WithLevel(_cachedInfo.level)
-                .WithContentAwareness(_tooltipPosition);
         }
 
         public void InspectDetails()
         {
             return; // disable waiting for the new tooltip
-            _tooltip.Show();
         }
     }
 }

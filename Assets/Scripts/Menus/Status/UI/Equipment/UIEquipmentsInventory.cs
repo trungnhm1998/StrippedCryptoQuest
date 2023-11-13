@@ -31,9 +31,6 @@ namespace CryptoQuest.Menus.Status.UI.Equipment
 
         private List<UIEquipmentItem> _equipmentItems = new();
         private EquipmentsController _equipmentsController;
-        private ITooltip _tooltip;
-
-        private void Awake() => _tooltip = TooltipFactory.Instance.GetTooltip(ETooltipType.Equipment);
 
         private void OnEnable()
         {
@@ -68,7 +65,8 @@ namespace CryptoQuest.Menus.Status.UI.Equipment
         private void Reset()
         {
             _scrollRect.content.anchoredPosition = Vector2.zero;
-            _tooltip.SetSafeArea(_tooltipSafeArea);
+            // TODO: REFACTOR TOOLTIP
+            // _tooltip.SetSafeArea(_tooltipSafeArea);
             UnregisterEquippingEvents();
             foreach (var equipmentItem in _equipmentItems) DestroyEquipmentRow(equipmentItem);
             _equipmentItems.Clear();
@@ -110,7 +108,8 @@ namespace CryptoQuest.Menus.Status.UI.Equipment
         public void Hide()
         {
             Reset();
-            _tooltip.Hide();
+            // TODO: REFACTOR TOOLTIP
+            // _tooltip.Hide();
             _contents.SetActive(false);
             _equipmentPreviewer.ResetAttributesUI();
         }
@@ -140,7 +139,8 @@ namespace CryptoQuest.Menus.Status.UI.Equipment
                 return;
             }
 
-            _tooltip.Hide();
+            // TODO: REFACTOR TOOLTIP
+            // _tooltip.Hide();
 
             EventSystem.current.SetSelectedGameObject(null);
             DestroyEquipmentRow(_equippingItemToBeRemoveFromInventory);
@@ -225,7 +225,8 @@ namespace CryptoQuest.Menus.Status.UI.Equipment
         {
             UnregisterEquippingEvents();
 
-            _tooltip.SetSafeArea(_tooltipSafeArea);
+            // TODO: REFACTOR TOOLTIP
+            // _tooltip.SetSafeArea(_tooltipSafeArea);
             _equipmentPreviewer.PreviewEquipment(equippingItemUI.Equipment, _slotType, _hero);
 
             RegisterEquippingEvents();
@@ -253,7 +254,8 @@ namespace CryptoQuest.Menus.Status.UI.Equipment
             // Since previewer try to equip/unequip I have to remove event so that wont affect UI
             UnregisterEquippingEvents();
 
-            _tooltip.SetSafeArea(_tooltipSafeArea);
+            // TODO: REFACTOR TOOLTIP
+            // _tooltip.SetSafeArea(_tooltipSafeArea);
             _equipmentPreviewer.PreviewUnequipEquipment(_currentlyEquippingItem.Equipment, _slotType, _hero);
 
             RegisterEquippingEvents();

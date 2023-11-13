@@ -19,13 +19,7 @@ namespace CryptoQuest.Menus.Status.UI.Equipment
         [SerializeField] private Color _enabledColor;
 
         private EquipmentInfo _equipment = new();
-        private ITooltip _tooltip;
         public EquipmentInfo Equipment => _equipment;
-
-        private void Awake()
-        {
-            _tooltip = TooltipFactory.Instance.GetTooltip(ETooltipType.Equipment);
-        }
 
         public void Init(EquipmentInfo equipment)
         {
@@ -51,22 +45,23 @@ namespace CryptoQuest.Menus.Status.UI.Equipment
         /// <param name="isInspecting"></param>
         public void OnInspecting(bool isInspecting)
         {
-            if (_tooltip == null) return;
-
-            if (isInspecting == false)
-            {
-                _tooltip.Hide();
-                return;
-            }
-
-            if (_equipment.IsValid() == false) return;
-            _tooltip
-                .WithLevel(_equipment.Level)
-                .WithDescription(_equipment.DisplayName)
-                // .WithDisplaySprite(_equipment.Image) // TODO: Add image to equipment
-                .WithContentAwareness(_tooltipPosition) 
-                .WithRarity(_equipment.Rarity)
-                .Show();
+            // TODO: REFACTOR TOOLTIP
+            // if (_tooltip == null) return;
+            //
+            // if (isInspecting == false)
+            // {
+            //     _tooltip.Hide();
+            //     return;
+            // }
+            //
+            // if (_equipment.IsValid() == false) return;
+            // _tooltip
+            //     .WithLevel(_equipment.Level)
+            //     .WithDescription(_equipment.DisplayName)
+            //     // .WithDisplaySprite(_equipment.Image) // TODO: Add image to equipment
+            //     .WithContentAwareness(_tooltipPosition) 
+            //     .WithRarity(_equipment.Rarity)
+            //     .Show();
         }
 
         public void Reset() => _equipment = new EquipmentInfo();
