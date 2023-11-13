@@ -25,7 +25,7 @@ namespace CryptoQuest.AbilitySystem.EffectActions
         [field: SerializeField] public bool TriggerInstantlyAfterApplied { get; private set; }
         public ETriggerType TriggerType => _triggerType;
 
-        public ActiveGameplayEffect CreateActiveEffect(GameplayEffectSpec inSpec) =>
+        public virtual ActiveGameplayEffect CreateActiveEffect(GameplayEffectSpec inSpec) =>
             new TurnBasePolicyActiveEffect(this, inSpec);
     }
 
@@ -39,7 +39,7 @@ namespace CryptoQuest.AbilitySystem.EffectActions
         private const int DEFAULT_TURNS = 1;
 
         private TurnBasePolicy _policyDef;
-        private Battle.Components.Character _character;
+        protected Battle.Components.Character _character;
         private DamageOverTimeFlags _damageOverTimeFlagsFlags;
         private readonly TinyMessageSubscriptionToken _unloadingEvent;
 
@@ -73,7 +73,7 @@ namespace CryptoQuest.AbilitySystem.EffectActions
                     return;
             }
         }
-        
+
         public override void OnRemoved()
         { 
             _turnsLeft = 0;
