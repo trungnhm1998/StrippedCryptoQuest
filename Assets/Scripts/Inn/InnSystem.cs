@@ -22,6 +22,12 @@ namespace CryptoQuest.Inn
         [SerializeField] private WalletSO _wallet;
         [SerializeField] private CurrencySO _currency;
 
+        [Header("Fade config")]
+        [SerializeField] private TransitionEventChannelSO _requestTransition;
+
+        [SerializeField] private AbstractTransition _fadeInTransition;
+        [SerializeField] private AbstractTransition _fadeOutTransition;
+
         private UIChoiceDialog _choiceDialog;
         private UIDialogueForGenericMerchant _genericDialog;
 
@@ -29,14 +35,14 @@ namespace CryptoQuest.Inn
 
         private void OnEnable() => _showInn.EventRaised += ShowInnRequested;
         private void OnDisable() => _showInn.EventRaised -= ShowInnRequested;
-        private void ShowInnRequested() => ChoiceDialogController.Instance.Instantiate(ShowConfirmDialog);
+        private void ShowInnRequested() => ChoiceDialogController.Instance.Instantiate(ShowWelcomeDialog);
 
-        private void ShowConfirmDialog(UIChoiceDialog dialog)
+        private void ShowWelcomeDialog(UIChoiceDialog dialog)
         {
             _choiceDialog = dialog;
 
             _inputMediator.EnableDialogueInput();
-            LocalizedString message = GetMessage(InnLocalizationTable.INN_CONFIRM);
+            LocalizedString message = GetMessage(InnLocalizationTable.INN_WELCOME);
 
             message.Arguments = new object[] { _innCost };
 
@@ -52,8 +58,8 @@ namespace CryptoQuest.Inn
             _currentGold = _wallet[_currency].Amount;
 
             GenericMerchantDialogueController.Instance.Instantiate(_currentGold < _innCost
-                ? ShowFailMessage
-                : ShowConfirmMessage);
+                ? ShowFailDialog
+                : ShowAgreeDialog);
         }
 
         private void Cancel()
@@ -62,7 +68,7 @@ namespace CryptoQuest.Inn
             _inputMediator.EnableMapGameplayInput();
         }
 
-        private void ShowFailMessage(UIDialogueForGenericMerchant dialog)
+        private void ShowFailDialog(UIDialogueForGenericMerchant dialog)
         {
             _genericDialog = dialog;
 
@@ -76,7 +82,7 @@ namespace CryptoQuest.Inn
             _inputMediator.MenuConfirmedEvent += HideDialog;
         }
 
-        private void ShowConfirmMessage(UIDialogueForGenericMerchant dialog)
+        private void ShowAgreeDialog(UIDialogueForGenericMerchant dialog)
         {
             _genericDialog = dialog;
 
@@ -87,8 +93,43 @@ namespace CryptoQuest.Inn
                 .Show();
 
             _wallet[_currency].UpdateCurrencyAmount(_currentGold - _innCost);
+            
+            //TODO: Restore HP and MP all team members
+            // except for the dead ones
 
             _inputMediator.EnableMenuInput();
+            _inputMediator.MenuConfirmedEvent += HideConfirmDialog;
+        }
+
+        private void HideConfirmDialog()
+        {
+            _inputMediator.MenuConfirmedEvent -= HideConfirmDialog;
+
+            _requestTransition.RaiseEvent(_fadeInTransition);
+
+            GenericMerchantDialogueController.Instance.Release(_genericDialog);
+            ChoiceDialogController.Instance.Release(_choiceDialog);
+
+            Invoke(nameof(FadeOut), 1);
+        }
+
+        private void FadeOut()
+        {
+            _requestTransition.RaiseEvent(_fadeOutTransition);
+
+            GenericMerchantDialogueController.Instance.Instantiate(ShowConfirmDialog);
+        }
+
+        private void ShowConfirmDialog(UIDialogueForGenericMerchant dialog)
+        {
+            _genericDialog = dialog;
+
+            LocalizedString message = GetMessage(InnLocalizationTable.INN_CONFIRM);
+
+            _genericDialog
+                .SetMessage(message)
+                .Show();
+
             _inputMediator.MenuConfirmedEvent += HideDialog;
         }
 
