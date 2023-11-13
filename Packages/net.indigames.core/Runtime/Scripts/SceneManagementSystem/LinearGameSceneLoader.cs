@@ -76,10 +76,16 @@ namespace IndiGames.Core.SceneManagementSystem
             yield return CoLoadNextScene(gameplayScene);
         }
 
-        private void LoadTitleScene(SceneScriptableObject mainMenu)
+        private void LoadTitleScene(SceneScriptableObject titleScene)
+        {
+            StartCoroutine(CoLoadTitleScene(titleScene));
+        }
+
+        private IEnumerator CoLoadTitleScene(SceneScriptableObject titleScene)
         {
             UnloadGameplayManagerIfLoaded();
-            StartCoroutine(CoLoadNextScene(mainMenu));
+            yield return CoUnloadPreviousScene();
+            yield return CoLoadNextScene(titleScene);
         }
 
         /// <summary>
