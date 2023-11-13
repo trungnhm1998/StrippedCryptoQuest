@@ -174,7 +174,7 @@ namespace IndiGames.GameplayAbilitySystem.AbilitySystem.Components
             if (effectDef == null)
                 return new GameplayEffectSpec();
 
-            if (context == null || context.IsValid())
+            if (context == null || !context.IsValid())
                 context = MakeEffectContext();
 
             return effectDef.CreateEffectSpec(this, context);

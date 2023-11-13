@@ -4,6 +4,7 @@ using CryptoQuest.AbilitySystem.Abilities.Conditions;
 using CryptoQuest.Item;
 using IndiGames.GameplayAbilitySystem.AbilitySystem;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.ScriptableObjects;
+using IndiGames.GameplayAbilitySystem.EffectSystem;
 using IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects;
 using IndiGames.GameplayAbilitySystem.TagSystem.ScriptableObjects;
 using UnityEngine;
@@ -64,10 +65,15 @@ namespace CryptoQuest.AbilitySystem.Abilities
             }
 
             var effect = _consumable.Data.Effect;
-            var effectSpec = Owner.MakeOutgoingSpec(effect);
+            var effectSpec = CreateEffectSpec(effect);
             Owner.ApplyEffectSpecToSelf(effectSpec);
             EndAbility();
             yield break;
+        }
+
+        protected virtual GameplayEffectSpec CreateEffectSpec(GameplayEffectDefinition effectDef)
+        {
+            return Owner.MakeOutgoingSpec(effectDef);
         }
 
         private bool CanPassAllCondition()
