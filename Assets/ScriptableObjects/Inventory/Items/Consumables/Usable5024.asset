@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ae8a1c5f40eaf534e8b2a294dfc60297, type: 3}
+  m_Script: {fileID: 11500000, guid: 0f4ab4b448f487b45b7f16cc2c22842f, type: 3}
   m_Name: Usable5024Ability
   m_EditorClassIdentifier: 
   tags:
@@ -29,48 +29,32 @@ MonoBehaviour:
       IgnoreTags: []
   <CancelEffectWithTags>k__BackingField: []
   <Conditions>k__BackingField: []
+  _context:
+    _skillInfo:
+      Id: 0
+      SkillIcon: {fileID: 0}
+      SkillType: 0
+      Category: {fileID: 0}
+      Cost: 0
+      UsageScenarioSO: 0
+      VfxId: 0
+      SkillParameters:
+        Element: {fileID: 0}
+        BasePower: 100
+        PowerUpperLimit: 100
+        PowerLowerLimit: 100
+        SkillPowerThreshold: 0
+        PowerValueAdded: 0
+        PowerValueReduced: 0
+        IsFixed: 0
+        ContinuesTurn: 3
+        EffectType: 2
+        TargetAttribute:
+          Attribute: {fileID: 11400000, guid: cff0791781b73cf4ca80877936aedaad, type: 2}
+          CaptureFrom: 0
   references:
     version: 2
     RefIds: []
---- !u!114 &-3706414558351059878
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fbb6112b998064f4ebc8a44f4c80c446, type: 3}
-  m_Name: Usable5024Effect
-  m_EditorClassIdentifier: 
-  <Description>k__BackingField: 
-  _policy:
-    rid: 4476345301540798520
-  <EffectDetails>k__BackingField:
-    Modifiers:
-    - Attribute: {fileID: 11400000, guid: cff0791781b73cf4ca80877936aedaad, type: 2}
-      OperationType: 1
-      ModifierMagnitude: {fileID: 0}
-      Value: 1
-    StackingType: 1
-  <IsStack>k__BackingField: 0
-  <GrantedTags>k__BackingField: []
-  <ApplicationTagRequirements>k__BackingField:
-    RequireTags: []
-    IgnoreTags: []
-  <RemoveGameplayEffectsWithTags>k__BackingField: []
-  <ExecutionCalculations>k__BackingField: []
-  <ChanceToApply>k__BackingField: 1
-  <CustomApplicationRequirements>k__BackingField: []
-  references:
-    version: 2
-    RefIds:
-    - rid: 4476345301540798520
-      type: {class: TurnBasePolicy, ns: CryptoQuest.AbilitySystem.EffectActions, asm: indi-games.crypto-quest}
-      data:
-        _turn: 3
-        _triggerType: 0
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -111,7 +95,7 @@ MonoBehaviour:
   <ConsumableType>k__BackingField: 0
   <Price>k__BackingField: 1000
   <SellPrice>k__BackingField: 500
-  <Effect>k__BackingField: {fileID: -3706414558351059878}
+  <Effect>k__BackingField: {fileID: 11400000, guid: 22b8ae5b6902c7c47887372d1af74d0d, type: 2}
   <Ability>k__BackingField: {fileID: -5713310685421380889}
   <UsageScenario>k__BackingField: 2
   <TargetSelectionEvent>k__BackingField: {fileID: 11400000, guid: 2237ed65df15d4b45ad05eb7f701ea64, type: 2}
