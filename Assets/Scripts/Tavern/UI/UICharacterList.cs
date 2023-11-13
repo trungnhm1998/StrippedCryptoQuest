@@ -13,24 +13,16 @@ namespace CryptoQuest.Tavern.UI
         [SerializeField] protected UITavernItem _itemPrefab;
         [SerializeField] protected RectTransform _tooltipSafeArea;
 
-        private ITooltip _tooltip;
-
         private List<Obj.Character> _characterList = new List<Obj.Character>();
         public List<Obj.Character> Data => _characterList;
 
         private List<UITavernItem> _cachedItems = new();
-
-        private void Awake()
-        {
-            _tooltip = TooltipFactory.Instance.GetTooltip(ETooltipType.Equipment);
-        }
 
         public void SetData(List<Obj.Character> data)
         {
             CleanUpScrollView();
             _characterList = data;
             RenderData();
-            _tooltip.SetSafeArea(_tooltipSafeArea);
         }
 
         public void SelectDefault() => StartCoroutine(CoSetDefaultSelection());

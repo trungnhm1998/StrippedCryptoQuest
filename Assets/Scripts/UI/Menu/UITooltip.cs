@@ -10,34 +10,8 @@ using UnityEngine.UI;
 
 namespace CryptoQuest.UI.Menu
 {
-    public interface ITooltip
+    public class UITooltip : MonoBehaviour
     {
-        void Show();
-        void Hide();
-        ITooltip WithHeader(LocalizedString dataDisplayName);
-        ITooltip WithDescription(LocalizedString dataDescription);
-        ITooltip WithDisplaySprite(Sprite equipmentTypeIcon);
-        ITooltip WithDisplaySprite(AssetReferenceT<Sprite> equipmentTypeIcon);
-        ITooltip WithPosition(Vector3 tooltipPosition);
-        ITooltip WithLocalPosition(Vector3 tooltipPosition);
-        ITooltip WithScale(Vector3 tooltipScale);
-        ITooltip WithContentAwareness(RectTransform tooltipPosition);
-        ITooltip SetSafeArea(RectTransform tooltipSafeArea);
-        ITooltip WithLevel(int equipmentLevel);
-        ITooltip WithRarity(RaritySO rarity);
-        ITooltip WithDelayTimeToDisplay(float second);
-        ITooltip WithBorderPointer(bool hasPointer);
-        ITooltip WithRangePivot(Vector2 minPivot, Vector2 maxPivot);
-        ITooltip WithPivot(Vector2 pivot);
-    }
-    public class UITooltip : MonoBehaviour, ITooltip
-    {
-        [field:SerializeField] public ETooltipType Type { get; private set; } 
-        [SerializeField] private GameObject _content;
-
-        [SerializeField] private GameObject _nonPointerFrame;
-        [SerializeField] private GameObject _pointerFrame;
-        [SerializeField] private GameObject _pointerReverseFrame;
         [SerializeField] private LocalizeStringEvent _descriptionString;
         [SerializeField] private Image _illustration;
         [SerializeField] private float _waitBeforePopupTooltip;
@@ -53,20 +27,15 @@ namespace CryptoQuest.UI.Menu
         private Vector2 _minPivot;
         private Vector2 _maxPivot;
 
-        private void Awake()
-        {
-            _contentRect = _content.GetComponent<RectTransform>();
-        }
-
         public void Hide()
         {
             if (_handle.IsValid()) Addressables.Release(_handle);
             _handle = default;
             _tween?.Kill();
-            _content.SetActive(false);
+            gameObject.SetActive(false);
         }
 
-        public virtual ITooltip SetSafeArea(RectTransform tooltipSafeArea)
+        public virtual UITooltip SetSafeArea(RectTransform tooltipSafeArea)
         {
             _safeArea = tooltipSafeArea;
             return this;
@@ -77,89 +46,89 @@ namespace CryptoQuest.UI.Menu
             _tween = DOVirtual.DelayedCall(_waitBeforePopupTooltip, SetupAndShow);
         }
 
-        public virtual ITooltip WithContentAwareness(RectTransform tooltipPosition)
+        public virtual UITooltip WithContentAwareness(RectTransform tooltipPosition)
         {
             _tooltipTarget = tooltipPosition;
             return this;
         }
 
-        public virtual ITooltip WithDescription(LocalizedString dataDescription)
+        public virtual UITooltip WithDescription(LocalizedString dataDescription)
         {
             _descriptionString.StringReference = dataDescription;
             return this;
         }
 
-        public virtual ITooltip WithDisplaySprite(Sprite itemIcon)
+        public virtual UITooltip WithDisplaySprite(Sprite itemIcon)
         {
             if (itemIcon == null) return this;
             _illustration.sprite = itemIcon;
             return this;
         }
 
-        public virtual ITooltip WithDisplaySprite(AssetReferenceT<Sprite> itemIcon)
+        public virtual UITooltip WithDisplaySprite(AssetReferenceT<Sprite> itemIcon)
         {
             if (itemIcon == null) return this;
             StartCoroutine(LoadSpriteAndSet(itemIcon));
             return this;
         }
 
-        public virtual ITooltip WithHeader(LocalizedString dataDisplayName)
+        public virtual UITooltip WithHeader(LocalizedString dataDisplayName)
         {
             return this;
         }
 
-        public virtual ITooltip WithLevel(int equipmentLevel)
+        public virtual UITooltip WithLevel(int equipmentLevel)
         {
             return this;
         }
 
-        public virtual ITooltip WithPosition(Vector3 tooltipPosition)
+        public virtual UITooltip WithPosition(Vector3 tooltipPosition)
         {
-            _content.transform.position = tooltipPosition;
+            // _content.transform.position = tooltipPosition;
             return this;
         }
 
-        public virtual ITooltip WithLocalPosition(Vector3 tooltipPosition)
+        public virtual UITooltip WithLocalPosition(Vector3 tooltipPosition)
         {
-            _content.transform.localPosition = tooltipPosition;
+            // _content.transform.localPosition = tooltipPosition;
             return this;
         }
 
-        public virtual ITooltip WithScale(Vector3 tooltipScale)
+        public virtual UITooltip WithScale(Vector3 tooltipScale)
         {
-            _content.transform.localScale = tooltipScale;
+            // _content.transform.localScale = tooltipScale;
             return this;
         }
 
-        public virtual ITooltip WithRarity(RaritySO rarity)
+        public virtual UITooltip WithRarity(RaritySO rarity)
         {
             return this;
         }
 
-        public ITooltip WithDelayTimeToDisplay(float second)
+        public UITooltip WithDelayTimeToDisplay(float second)
         {
             _waitBeforePopupTooltip = second;
             return this;
         }
 
-        public ITooltip WithBorderPointer(bool hasPointer)
+        public UITooltip WithBorderPointer(bool hasPointer)
         {
             _hasPointerBorder = hasPointer;
-            _nonPointerFrame.SetActive(!hasPointer);
-            _pointerFrame.SetActive(hasPointer);
-            _pointerReverseFrame.SetActive(hasPointer);
+            // _nonPointerFrame.SetActive(!hasPointer);
+            // _pointerFrame.SetActive(hasPointer);
+            // _pointerReverseFrame.SetActive(hasPointer);
             ToggleFrame(true);
             return this;
         }
 
-        public ITooltip WithRangePivot(Vector2 minPivot, Vector2 maxPivot)
+        public UITooltip WithRangePivot(Vector2 minPivot, Vector2 maxPivot)
         {
             _minPivot = minPivot;
             _maxPivot = maxPivot;
             return this;
         }
 
-        public ITooltip WithPivot(Vector2 pivot)
+        public UITooltip WithPivot(Vector2 pivot)
         {
             _contentRect.pivot = pivot;
             return this;
@@ -168,44 +137,44 @@ namespace CryptoQuest.UI.Menu
         private void SetupAndShow()
         {
             SetupPositionBaseOnSafeAreaAndTarget();
-            _content.SetActive(true);
+            gameObject.SetActive(true);
         }
 
         private void SetupPositionBaseOnSafeAreaAndTarget()
         {
-            var contentSize = _contentRect.rect.size;
-
-            if (_tooltipTarget != null)
-            {
-                var targetPosition = _tooltipTarget.position;
-
-                _content.transform.position = targetPosition; // center by default
-
-                if (HasSafeArea == false) return;
-
-                var tooltipPosition = _content.transform.position;
-                if (tooltipPosition.y + contentSize.y > _safeArea.position.y + _safeArea.rect.yMax)
-                {
-                    _contentRect.pivot = new Vector2(_minPivot.x, _maxPivot.y);
-                    ToggleFrame(true);
-                    targetPosition = new Vector2(targetPosition.x, targetPosition.y + _tooltipTarget.rect.yMin);
-                }
-                else if (tooltipPosition.y - contentSize.y < _safeArea.position.y + _safeArea.rect.yMin)
-                {
-                    _contentRect.pivot = new Vector2(_minPivot.x, _minPivot.y);
-                    ToggleFrame(false);
-                    targetPosition = new Vector2(targetPosition.x, targetPosition.y + _tooltipTarget.rect.yMax);
-                }
-
-                _content.transform.position = targetPosition;
-            }
+            // var contentSize = _contentRect.rect.size;
+            //
+            // if (_tooltipTarget != null)
+            // {
+            //     var targetPosition = _tooltipTarget.position;
+            //
+            //     _content.transform.position = targetPosition; // center by default
+            //
+            //     if (HasSafeArea == false) return;
+            //
+            //     var tooltipPosition = _content.transform.position;
+            //     if (tooltipPosition.y + contentSize.y > _safeArea.position.y + _safeArea.rect.yMax)
+            //     {
+            //         _contentRect.pivot = new Vector2(_minPivot.x, _maxPivot.y);
+            //         ToggleFrame(true);
+            //         targetPosition = new Vector2(targetPosition.x, targetPosition.y + _tooltipTarget.rect.yMin);
+            //     }
+            //     else if (tooltipPosition.y - contentSize.y < _safeArea.position.y + _safeArea.rect.yMin)
+            //     {
+            //         _contentRect.pivot = new Vector2(_minPivot.x, _minPivot.y);
+            //         ToggleFrame(false);
+            //         targetPosition = new Vector2(targetPosition.x, targetPosition.y + _tooltipTarget.rect.yMax);
+            //     }
+            //
+            //     _content.transform.position = targetPosition;
+            // }
         }
 
         private void ToggleFrame(bool isUp)
         {
-            if (!_hasPointerBorder) return;
-            _pointerFrame.SetActive(isUp);
-            _pointerReverseFrame.SetActive(!isUp);
+            // if (!_hasPointerBorder) return;
+            // _pointerFrame.SetActive(isUp);
+            // _pointerReverseFrame.SetActive(!isUp);
         }
 
         private IEnumerator LoadSpriteAndSet(AssetReferenceT<Sprite> itemIcon)

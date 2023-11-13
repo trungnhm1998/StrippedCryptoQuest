@@ -11,14 +11,14 @@ namespace CryptoQuest.Tooltips
         [SerializeField] private LocalizeStringEvent _localizedName;
         [SerializeField] private TMP_Text _level;
 
-        public override ITooltip WithHeader(LocalizedString localizedName)
+        public override UITooltip WithHeader(LocalizedString localizedName)
         {
             if (localizedName == null) return this;
             _localizedName.StringReference = localizedName;
             return this;
         }
 
-        public override ITooltip WithLevel(int charLevel)
+        public override UITooltip WithLevel(int charLevel)
         {
             _level.text = $"Lv. {charLevel}";
             return this;

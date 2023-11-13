@@ -25,11 +25,7 @@ namespace CryptoQuest.Menus.Status.UI.Equipment
         [SerializeField] private Vector2 _minPivotTooltip = Vector2.zero;
         [SerializeField] private Vector2 _maxPivotTooltip = Vector2.one;
 
-        // Tooltips
-        private ITooltip _tooltip;
-        private ITooltip Tooltip => _tooltip ??= TooltipFactory.Instance.GetTooltip(ETooltipType.Equipment);
         private Dictionary<EquipmentSlot.EType, UICharacterEquipmentSlot> _equipmentSlotsCache = new();
-
         public Dictionary<EquipmentSlot.EType, UICharacterEquipmentSlot> EquipmentSlots
         {
             get
@@ -49,16 +45,18 @@ namespace CryptoQuest.Menus.Status.UI.Equipment
 
         private void OnEnable()
         {
-            Tooltip.WithBorderPointer(true)
-                .WithLocalPosition(Vector3.zero)
-                .WithScale(Vector3.one)
-                .WithRangePivot(_minPivotTooltip, _maxPivotTooltip);
+            // TODO: REFACTOR TOOLTIP
+            // Tooltip.WithBorderPointer(true)
+            //     .WithLocalPosition(Vector3.zero)
+            //     .WithScale(Vector3.one)
+            //     .WithRangePivot(_minPivotTooltip, _maxPivotTooltip);
         }
 
         public void Show(HeroBehaviour hero)
         {
             RenderEquippingItems(hero);
-            Tooltip.SetSafeArea(_tooltipSafeArea);
+            // TODO: REFACTOR TOOLTIP
+            // Tooltip.SetSafeArea(_tooltipSafeArea);
             _equipmentSlotParent.SetActive(true);
             Invoke(nameof(SelectDefault), 0);
         }
@@ -67,7 +65,8 @@ namespace CryptoQuest.Menus.Status.UI.Equipment
 
         public void Hide()
         {
-            Tooltip.Hide();
+            // TODO: REFACTOR TOOLTIP
+            // Tooltip.Hide();
             _equipmentSlotParent.SetActive(false);
         }
 
@@ -84,7 +83,8 @@ namespace CryptoQuest.Menus.Status.UI.Equipment
                 uiEquipmentSlot.Init(equipmentSlot.Equipment);
             }
 
-            Tooltip.Hide();
+            // TODO: REFACTOR TOOLTIP
+            // Tooltip.Hide();
         }
 
         private void ResetEquipmentsUI()
