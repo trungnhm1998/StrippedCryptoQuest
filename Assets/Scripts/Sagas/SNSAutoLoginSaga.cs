@@ -15,7 +15,7 @@ namespace CryptoQuest.Sagas
 {
     public class SNSAutoLoginSaga : SagaBase<SNSAutoLogin>
     {
-        private const string SNS_SAVE_KEY = "sns_tokens";
+        public const string SNS_SAVE_KEY = "sns_tokens";
         private const double EXPIRE_DT_IN_SECOND = 3.0;
 
         private TinyMessageSubscriptionToken _loginFinishedToken;

@@ -138,6 +138,7 @@ namespace IndiGames.Core.SceneManagementSystem
         private IEnumerator CoLoadNextScene(SceneScriptableObject sceneToLoad)
         {
             _sceneToLoad = sceneToLoad;
+            _sceneToLoad.SceneReference.ReleaseAsset();
             _sceneLoadingOperationHandle =
                 _sceneToLoad.SceneReference.LoadSceneAsync(LoadSceneMode.Additive, true, 0);
             yield return _sceneLoadingOperationHandle;
