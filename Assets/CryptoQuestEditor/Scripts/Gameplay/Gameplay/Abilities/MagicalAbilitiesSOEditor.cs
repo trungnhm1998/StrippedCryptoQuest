@@ -136,13 +136,7 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Abilities
                 if (dataModel.IsSubEffectValid()) continue;
 
                 CastEffectsOnTargetAbility instance = null;
-                instance = (CastEffectsOnTargetAbility)AssetDatabase.LoadAssetAtPath(path,
-                    typeof(CastEffectsOnTargetAbility));
-                if (instance == null || !AssetDatabase.Contains(instance))
-                {
-                    instance = ScriptableObject.CreateInstance<CastEffectsOnTargetAbility>();
-                }
-
+                instance = CreateInstance(instance, dataModel, path);
                 SetInstanceProperty(instance, dataModel);
                 SetEffects(instance, dataModel);
                 SetLocalized(instance, dataModel);
@@ -175,11 +169,37 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Abilities
             var mainEffect = GetEffect(data.MainEffectTypeId, data.MainEffectTargetParameterId);
             GameplayEffectDefinition[] effects = new GameplayEffectDefinition[2];
             effects[0] = mainEffect;
+            if (effects[0] == null) return;
             property.InsertArrayElementAtIndex(0);
             property.GetArrayElementAtIndex(0).objectReferenceValue = effects[0];
 
             serializedObject.ApplyModifiedProperties();
             serializedObject.Update();
+        }
+
+        private CastEffectsOnTargetAbility CreateInstance(CastEffectsOnTargetAbility instance,
+            AbilityDataStruct data, string path)
+        {
+            if (data.MainEffectTypeId != "5")
+            {
+                instance = (CastEffectsOnTargetAbility)AssetDatabase.LoadAssetAtPath(path,
+                    typeof(CastEffectsOnTargetAbility));
+                if (instance == null || !AssetDatabase.Contains(instance))
+                {
+                    instance = ScriptableObject.CreateInstance<CastEffectsOnTargetAbility>();
+                }
+            }
+            else
+            {
+                instance = (CastRemoveAbnormalAbility)AssetDatabase.LoadAssetAtPath(path,
+                    typeof(CastRemoveAbnormalAbility));
+                if (instance == null || !AssetDatabase.Contains(instance))
+                {
+                    instance = ScriptableObject.CreateInstance<CastRemoveAbnormalAbility>();
+                }
+            }
+
+            return instance;
         }
 
         private void SetInstanceProperty(CastEffectsOnTargetAbility instance, AbilityDataStruct data)
@@ -245,7 +265,9 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Abilities
 
         private void SetRemoveAbnormalInstance(SerializedObject serializedObject, AbilityDataStruct data)
         {
-            var property = serializedObject.FindProperty("tags.CancelAbilityWithTags");
+            var property = serializedObject.FindProperty("<CancelEffectWithTags>k__BackingField");
+            if (property == null) return;
+
             property.ClearArray();
             serializedObject.ApplyModifiedProperties();
             serializedObject.Update();
@@ -351,6 +373,4 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Abilities
                 AssetDatabase.LoadAssetAtPath<AbilityAssetMappingEditor>(AssetDatabase.GUIDToAssetPath(guid[0]));
         }
     }
-
-    internal class EAttributeCaptureFrom { }
 }
