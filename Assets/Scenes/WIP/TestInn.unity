@@ -260,6 +260,8 @@ Transform:
   m_Children:
   - {fileID: 22619241}
   - {fileID: 1397621022}
+  - {fileID: 513826061}
+  - {fileID: 1120668854}
   - {fileID: 793408597}
   - {fileID: 1029322874}
   - {fileID: 167686934}
@@ -857,6 +859,68 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1001 &513826060
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 48601174}
+    m_Modifications:
+    - target: {fileID: 3036391540655307661, guid: 41e46d1b61b6c5941ab319e187c96231, type: 3}
+      propertyPath: m_Name
+      value: PartyManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 6751529336063773711, guid: 41e46d1b61b6c5941ab319e187c96231, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6751529336063773711, guid: 41e46d1b61b6c5941ab319e187c96231, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6751529336063773711, guid: 41e46d1b61b6c5941ab319e187c96231, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6751529336063773711, guid: 41e46d1b61b6c5941ab319e187c96231, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6751529336063773711, guid: 41e46d1b61b6c5941ab319e187c96231, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6751529336063773711, guid: 41e46d1b61b6c5941ab319e187c96231, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6751529336063773711, guid: 41e46d1b61b6c5941ab319e187c96231, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6751529336063773711, guid: 41e46d1b61b6c5941ab319e187c96231, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6751529336063773711, guid: 41e46d1b61b6c5941ab319e187c96231, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6751529336063773711, guid: 41e46d1b61b6c5941ab319e187c96231, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 41e46d1b61b6c5941ab319e187c96231, type: 3}
+--- !u!4 &513826061 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6751529336063773711, guid: 41e46d1b61b6c5941ab319e187c96231, type: 3}
+  m_PrefabInstance: {fileID: 513826060}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &594486871
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1272,7 +1336,12 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 5995426348492338737, guid: cc5492cfe1b484740b12e878a70900c2, type: 3}
   m_PrefabInstance: {fileID: 1123288850}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1043046885
+--- !u!4 &1068902942 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4049244649310523923, guid: 0809f42e7be1ab2499ff468f84295de8, type: 3}
+  m_PrefabInstance: {fileID: 201931293}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1120668853
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1280,55 +1349,908 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1043046887}
-  - component: {fileID: 1043046886}
+  - component: {fileID: 1120668854}
+  - component: {fileID: 1120668855}
   m_Layer: 0
-  m_Name: InnSystem
+  m_Name: SkillsProvider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1043046886
+--- !u!4 &1120668854
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1120668853}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 48601174}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1120668855
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1043046885}
+  m_GameObject: {fileID: 1120668853}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 01d2a811e3534f1d8fa80b424da54d1a, type: 3}
+  m_Script: {fileID: 11500000, guid: 0d1d7b28186d40cbb617bd58f47666df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _innCost: 0
-  _showInn: {fileID: 11400000, guid: 6bf7fa2d3deafea44b3924cc4ea2520b, type: 2}
-  _inputMediator: {fileID: 11400000, guid: 1fb61cdb72f0a484f8e4db68e2011977, type: 2}
-  _wallet: {fileID: 11400000, guid: e349636f15671994ba195728c42a551b, type: 2}
-  _currency: {fileID: 11400000, guid: 16b3f6e09fc22d240be1b324116eeb79, type: 2}
-  _requestTransition: {fileID: 11400000, guid: 88d96a754c9f3d34c864be8e29ba710a, type: 2}
-  _fadeInTransition: {fileID: 11400000, guid: 16e4bf15674176a4382d7129c6d7d671, type: 2}
-  _fadeOutTransition: {fileID: 11400000, guid: 0c066e3708d6c6a4d8386c19ff76afb4, type: 2}
---- !u!4 &1043046887
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1043046885}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &1068902942 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4049244649310523923, guid: 0809f42e7be1ab2499ff468f84295de8, type: 3}
-  m_PrefabInstance: {fileID: 201931293}
-  m_PrefabAsset: {fileID: 0}
+  _database: {fileID: 11400000, guid: 338fd88f08d84f04fa27cc24b322579f, type: 2}
+  _skillMappings:
+  - <Skill>k__BackingField: 2001
+    <Level>k__BackingField: 3
+    <Class>k__BackingField: 1010
+    <Element>k__BackingField: 1
+  - <Skill>k__BackingField: 2002
+    <Level>k__BackingField: 10
+    <Class>k__BackingField: 1010
+    <Element>k__BackingField: 1
+  - <Skill>k__BackingField: 2004
+    <Level>k__BackingField: 20
+    <Class>k__BackingField: 1010
+    <Element>k__BackingField: 1
+  - <Skill>k__BackingField: 2003
+    <Level>k__BackingField: 25
+    <Class>k__BackingField: 1010
+    <Element>k__BackingField: 1
+  - <Skill>k__BackingField: 2001
+    <Level>k__BackingField: 3
+    <Class>k__BackingField: 1010
+    <Element>k__BackingField: 2
+  - <Skill>k__BackingField: 2002
+    <Level>k__BackingField: 10
+    <Class>k__BackingField: 1010
+    <Element>k__BackingField: 2
+  - <Skill>k__BackingField: 2004
+    <Level>k__BackingField: 20
+    <Class>k__BackingField: 1010
+    <Element>k__BackingField: 2
+  - <Skill>k__BackingField: 2003
+    <Level>k__BackingField: 25
+    <Class>k__BackingField: 1010
+    <Element>k__BackingField: 2
+  - <Skill>k__BackingField: 2001
+    <Level>k__BackingField: 3
+    <Class>k__BackingField: 1010
+    <Element>k__BackingField: 3
+  - <Skill>k__BackingField: 2002
+    <Level>k__BackingField: 10
+    <Class>k__BackingField: 1010
+    <Element>k__BackingField: 3
+  - <Skill>k__BackingField: 2004
+    <Level>k__BackingField: 20
+    <Class>k__BackingField: 1010
+    <Element>k__BackingField: 3
+  - <Skill>k__BackingField: 2003
+    <Level>k__BackingField: 25
+    <Class>k__BackingField: 1010
+    <Element>k__BackingField: 3
+  - <Skill>k__BackingField: 2001
+    <Level>k__BackingField: 3
+    <Class>k__BackingField: 1010
+    <Element>k__BackingField: 4
+  - <Skill>k__BackingField: 2002
+    <Level>k__BackingField: 10
+    <Class>k__BackingField: 1010
+    <Element>k__BackingField: 4
+  - <Skill>k__BackingField: 2004
+    <Level>k__BackingField: 20
+    <Class>k__BackingField: 1010
+    <Element>k__BackingField: 4
+  - <Skill>k__BackingField: 2003
+    <Level>k__BackingField: 25
+    <Class>k__BackingField: 1010
+    <Element>k__BackingField: 4
+  - <Skill>k__BackingField: 2001
+    <Level>k__BackingField: 3
+    <Class>k__BackingField: 1010
+    <Element>k__BackingField: 5
+  - <Skill>k__BackingField: 2002
+    <Level>k__BackingField: 10
+    <Class>k__BackingField: 1010
+    <Element>k__BackingField: 5
+  - <Skill>k__BackingField: 2004
+    <Level>k__BackingField: 20
+    <Class>k__BackingField: 1010
+    <Element>k__BackingField: 5
+  - <Skill>k__BackingField: 2003
+    <Level>k__BackingField: 25
+    <Class>k__BackingField: 1010
+    <Element>k__BackingField: 5
+  - <Skill>k__BackingField: 2001
+    <Level>k__BackingField: 3
+    <Class>k__BackingField: 1010
+    <Element>k__BackingField: 6
+  - <Skill>k__BackingField: 2002
+    <Level>k__BackingField: 10
+    <Class>k__BackingField: 1010
+    <Element>k__BackingField: 6
+  - <Skill>k__BackingField: 2004
+    <Level>k__BackingField: 20
+    <Class>k__BackingField: 1010
+    <Element>k__BackingField: 6
+  - <Skill>k__BackingField: 2003
+    <Level>k__BackingField: 25
+    <Class>k__BackingField: 1010
+    <Element>k__BackingField: 6
+  - <Skill>k__BackingField: 2001
+    <Level>k__BackingField: 3
+    <Class>k__BackingField: 1010
+    <Element>k__BackingField: 7
+  - <Skill>k__BackingField: 2002
+    <Level>k__BackingField: 10
+    <Class>k__BackingField: 1010
+    <Element>k__BackingField: 7
+  - <Skill>k__BackingField: 2004
+    <Level>k__BackingField: 20
+    <Class>k__BackingField: 1010
+    <Element>k__BackingField: 7
+  - <Skill>k__BackingField: 2003
+    <Level>k__BackingField: 25
+    <Class>k__BackingField: 1010
+    <Element>k__BackingField: 7
+  - <Skill>k__BackingField: 1001
+    <Level>k__BackingField: 1
+    <Class>k__BackingField: 1020
+    <Element>k__BackingField: 1
+  - <Skill>k__BackingField: 1004
+    <Level>k__BackingField: 8
+    <Class>k__BackingField: 1020
+    <Element>k__BackingField: 1
+  - <Skill>k__BackingField: 1002
+    <Level>k__BackingField: 10
+    <Class>k__BackingField: 1020
+    <Element>k__BackingField: 1
+  - <Skill>k__BackingField: 1079
+    <Level>k__BackingField: 11
+    <Class>k__BackingField: 1020
+    <Element>k__BackingField: 1
+  - <Skill>k__BackingField: 1007
+    <Level>k__BackingField: 14
+    <Class>k__BackingField: 1020
+    <Element>k__BackingField: 1
+  - <Skill>k__BackingField: 1064
+    <Level>k__BackingField: 15
+    <Class>k__BackingField: 1020
+    <Element>k__BackingField: 1
+  - <Skill>k__BackingField: 1003
+    <Level>k__BackingField: 40
+    <Class>k__BackingField: 1020
+    <Element>k__BackingField: 1
+  - <Skill>k__BackingField: 1010
+    <Level>k__BackingField: 1
+    <Class>k__BackingField: 1020
+    <Element>k__BackingField: 2
+  - <Skill>k__BackingField: 1004
+    <Level>k__BackingField: 8
+    <Class>k__BackingField: 1020
+    <Element>k__BackingField: 2
+  - <Skill>k__BackingField: 1011
+    <Level>k__BackingField: 10
+    <Class>k__BackingField: 1020
+    <Element>k__BackingField: 2
+  - <Skill>k__BackingField: 1079
+    <Level>k__BackingField: 11
+    <Class>k__BackingField: 1020
+    <Element>k__BackingField: 2
+  - <Skill>k__BackingField: 1013
+    <Level>k__BackingField: 14
+    <Class>k__BackingField: 1020
+    <Element>k__BackingField: 2
+  - <Skill>k__BackingField: 1064
+    <Level>k__BackingField: 15
+    <Class>k__BackingField: 1020
+    <Element>k__BackingField: 2
+  - <Skill>k__BackingField: 1012
+    <Level>k__BackingField: 40
+    <Class>k__BackingField: 1020
+    <Element>k__BackingField: 2
+  - <Skill>k__BackingField: 1019
+    <Level>k__BackingField: 1
+    <Class>k__BackingField: 1020
+    <Element>k__BackingField: 3
+  - <Skill>k__BackingField: 1004
+    <Level>k__BackingField: 8
+    <Class>k__BackingField: 1020
+    <Element>k__BackingField: 3
+  - <Skill>k__BackingField: 1020
+    <Level>k__BackingField: 10
+    <Class>k__BackingField: 1020
+    <Element>k__BackingField: 3
+  - <Skill>k__BackingField: 1079
+    <Level>k__BackingField: 11
+    <Class>k__BackingField: 1020
+    <Element>k__BackingField: 3
+  - <Skill>k__BackingField: 1022
+    <Level>k__BackingField: 14
+    <Class>k__BackingField: 1020
+    <Element>k__BackingField: 3
+  - <Skill>k__BackingField: 1064
+    <Level>k__BackingField: 15
+    <Class>k__BackingField: 1020
+    <Element>k__BackingField: 3
+  - <Skill>k__BackingField: 1021
+    <Level>k__BackingField: 40
+    <Class>k__BackingField: 1020
+    <Element>k__BackingField: 3
+  - <Skill>k__BackingField: 1028
+    <Level>k__BackingField: 1
+    <Class>k__BackingField: 1020
+    <Element>k__BackingField: 4
+  - <Skill>k__BackingField: 1004
+    <Level>k__BackingField: 8
+    <Class>k__BackingField: 1020
+    <Element>k__BackingField: 4
+  - <Skill>k__BackingField: 1029
+    <Level>k__BackingField: 10
+    <Class>k__BackingField: 1020
+    <Element>k__BackingField: 4
+  - <Skill>k__BackingField: 1079
+    <Level>k__BackingField: 11
+    <Class>k__BackingField: 1020
+    <Element>k__BackingField: 4
+  - <Skill>k__BackingField: 1031
+    <Level>k__BackingField: 14
+    <Class>k__BackingField: 1020
+    <Element>k__BackingField: 4
+  - <Skill>k__BackingField: 1064
+    <Level>k__BackingField: 15
+    <Class>k__BackingField: 1020
+    <Element>k__BackingField: 4
+  - <Skill>k__BackingField: 1030
+    <Level>k__BackingField: 40
+    <Class>k__BackingField: 1020
+    <Element>k__BackingField: 4
+  - <Skill>k__BackingField: 1037
+    <Level>k__BackingField: 1
+    <Class>k__BackingField: 1020
+    <Element>k__BackingField: 5
+  - <Skill>k__BackingField: 1004
+    <Level>k__BackingField: 8
+    <Class>k__BackingField: 1020
+    <Element>k__BackingField: 5
+  - <Skill>k__BackingField: 1038
+    <Level>k__BackingField: 10
+    <Class>k__BackingField: 1020
+    <Element>k__BackingField: 5
+  - <Skill>k__BackingField: 1079
+    <Level>k__BackingField: 11
+    <Class>k__BackingField: 1020
+    <Element>k__BackingField: 5
+  - <Skill>k__BackingField: 1040
+    <Level>k__BackingField: 14
+    <Class>k__BackingField: 1020
+    <Element>k__BackingField: 5
+  - <Skill>k__BackingField: 1064
+    <Level>k__BackingField: 15
+    <Class>k__BackingField: 1020
+    <Element>k__BackingField: 5
+  - <Skill>k__BackingField: 1039
+    <Level>k__BackingField: 40
+    <Class>k__BackingField: 1020
+    <Element>k__BackingField: 5
+  - <Skill>k__BackingField: 1046
+    <Level>k__BackingField: 1
+    <Class>k__BackingField: 1020
+    <Element>k__BackingField: 6
+  - <Skill>k__BackingField: 1004
+    <Level>k__BackingField: 8
+    <Class>k__BackingField: 1020
+    <Element>k__BackingField: 6
+  - <Skill>k__BackingField: 1047
+    <Level>k__BackingField: 10
+    <Class>k__BackingField: 1020
+    <Element>k__BackingField: 6
+  - <Skill>k__BackingField: 1079
+    <Level>k__BackingField: 11
+    <Class>k__BackingField: 1020
+    <Element>k__BackingField: 6
+  - <Skill>k__BackingField: 1049
+    <Level>k__BackingField: 14
+    <Class>k__BackingField: 1020
+    <Element>k__BackingField: 6
+  - <Skill>k__BackingField: 1064
+    <Level>k__BackingField: 15
+    <Class>k__BackingField: 1020
+    <Element>k__BackingField: 6
+  - <Skill>k__BackingField: 1048
+    <Level>k__BackingField: 40
+    <Class>k__BackingField: 1020
+    <Element>k__BackingField: 6
+  - <Skill>k__BackingField: 1055
+    <Level>k__BackingField: 1
+    <Class>k__BackingField: 1020
+    <Element>k__BackingField: 7
+  - <Skill>k__BackingField: 1004
+    <Level>k__BackingField: 8
+    <Class>k__BackingField: 1020
+    <Element>k__BackingField: 7
+  - <Skill>k__BackingField: 1056
+    <Level>k__BackingField: 10
+    <Class>k__BackingField: 1020
+    <Element>k__BackingField: 7
+  - <Skill>k__BackingField: 1079
+    <Level>k__BackingField: 11
+    <Class>k__BackingField: 1020
+    <Element>k__BackingField: 7
+  - <Skill>k__BackingField: 1058
+    <Level>k__BackingField: 14
+    <Class>k__BackingField: 1020
+    <Element>k__BackingField: 7
+  - <Skill>k__BackingField: 1064
+    <Level>k__BackingField: 15
+    <Class>k__BackingField: 1020
+    <Element>k__BackingField: 7
+  - <Skill>k__BackingField: 1057
+    <Level>k__BackingField: 40
+    <Class>k__BackingField: 1020
+    <Element>k__BackingField: 7
+  - <Skill>k__BackingField: 1076
+    <Level>k__BackingField: 1
+    <Class>k__BackingField: 1030
+    <Element>k__BackingField: 1
+  - <Skill>k__BackingField: 1065
+    <Level>k__BackingField: 5
+    <Class>k__BackingField: 1030
+    <Element>k__BackingField: 1
+  - <Skill>k__BackingField: 1081
+    <Level>k__BackingField: 12
+    <Class>k__BackingField: 1030
+    <Element>k__BackingField: 1
+  - <Skill>k__BackingField: 1066
+    <Level>k__BackingField: 15
+    <Class>k__BackingField: 1030
+    <Element>k__BackingField: 1
+  - <Skill>k__BackingField: 1077
+    <Level>k__BackingField: 20
+    <Class>k__BackingField: 1030
+    <Element>k__BackingField: 1
+  - <Skill>k__BackingField: 1082
+    <Level>k__BackingField: 30
+    <Class>k__BackingField: 1030
+    <Element>k__BackingField: 1
+  - <Skill>k__BackingField: 1076
+    <Level>k__BackingField: 1
+    <Class>k__BackingField: 1030
+    <Element>k__BackingField: 2
+  - <Skill>k__BackingField: 1065
+    <Level>k__BackingField: 5
+    <Class>k__BackingField: 1030
+    <Element>k__BackingField: 2
+  - <Skill>k__BackingField: 1081
+    <Level>k__BackingField: 12
+    <Class>k__BackingField: 1030
+    <Element>k__BackingField: 2
+  - <Skill>k__BackingField: 1066
+    <Level>k__BackingField: 15
+    <Class>k__BackingField: 1030
+    <Element>k__BackingField: 2
+  - <Skill>k__BackingField: 1077
+    <Level>k__BackingField: 20
+    <Class>k__BackingField: 1030
+    <Element>k__BackingField: 2
+  - <Skill>k__BackingField: 1082
+    <Level>k__BackingField: 30
+    <Class>k__BackingField: 1030
+    <Element>k__BackingField: 2
+  - <Skill>k__BackingField: 1076
+    <Level>k__BackingField: 1
+    <Class>k__BackingField: 1030
+    <Element>k__BackingField: 3
+  - <Skill>k__BackingField: 1065
+    <Level>k__BackingField: 5
+    <Class>k__BackingField: 1030
+    <Element>k__BackingField: 3
+  - <Skill>k__BackingField: 1081
+    <Level>k__BackingField: 12
+    <Class>k__BackingField: 1030
+    <Element>k__BackingField: 3
+  - <Skill>k__BackingField: 1066
+    <Level>k__BackingField: 15
+    <Class>k__BackingField: 1030
+    <Element>k__BackingField: 3
+  - <Skill>k__BackingField: 1077
+    <Level>k__BackingField: 20
+    <Class>k__BackingField: 1030
+    <Element>k__BackingField: 3
+  - <Skill>k__BackingField: 1082
+    <Level>k__BackingField: 30
+    <Class>k__BackingField: 1030
+    <Element>k__BackingField: 3
+  - <Skill>k__BackingField: 1076
+    <Level>k__BackingField: 1
+    <Class>k__BackingField: 1030
+    <Element>k__BackingField: 4
+  - <Skill>k__BackingField: 1065
+    <Level>k__BackingField: 5
+    <Class>k__BackingField: 1030
+    <Element>k__BackingField: 4
+  - <Skill>k__BackingField: 1081
+    <Level>k__BackingField: 12
+    <Class>k__BackingField: 1030
+    <Element>k__BackingField: 4
+  - <Skill>k__BackingField: 1066
+    <Level>k__BackingField: 15
+    <Class>k__BackingField: 1030
+    <Element>k__BackingField: 4
+  - <Skill>k__BackingField: 1077
+    <Level>k__BackingField: 20
+    <Class>k__BackingField: 1030
+    <Element>k__BackingField: 4
+  - <Skill>k__BackingField: 1082
+    <Level>k__BackingField: 30
+    <Class>k__BackingField: 1030
+    <Element>k__BackingField: 4
+  - <Skill>k__BackingField: 1076
+    <Level>k__BackingField: 1
+    <Class>k__BackingField: 1030
+    <Element>k__BackingField: 5
+  - <Skill>k__BackingField: 1065
+    <Level>k__BackingField: 5
+    <Class>k__BackingField: 1030
+    <Element>k__BackingField: 5
+  - <Skill>k__BackingField: 1081
+    <Level>k__BackingField: 12
+    <Class>k__BackingField: 1030
+    <Element>k__BackingField: 5
+  - <Skill>k__BackingField: 1066
+    <Level>k__BackingField: 15
+    <Class>k__BackingField: 1030
+    <Element>k__BackingField: 5
+  - <Skill>k__BackingField: 1077
+    <Level>k__BackingField: 20
+    <Class>k__BackingField: 1030
+    <Element>k__BackingField: 5
+  - <Skill>k__BackingField: 1082
+    <Level>k__BackingField: 30
+    <Class>k__BackingField: 1030
+    <Element>k__BackingField: 5
+  - <Skill>k__BackingField: 1076
+    <Level>k__BackingField: 1
+    <Class>k__BackingField: 1030
+    <Element>k__BackingField: 6
+  - <Skill>k__BackingField: 1065
+    <Level>k__BackingField: 5
+    <Class>k__BackingField: 1030
+    <Element>k__BackingField: 6
+  - <Skill>k__BackingField: 1081
+    <Level>k__BackingField: 12
+    <Class>k__BackingField: 1030
+    <Element>k__BackingField: 6
+  - <Skill>k__BackingField: 1066
+    <Level>k__BackingField: 15
+    <Class>k__BackingField: 1030
+    <Element>k__BackingField: 6
+  - <Skill>k__BackingField: 1077
+    <Level>k__BackingField: 20
+    <Class>k__BackingField: 1030
+    <Element>k__BackingField: 6
+  - <Skill>k__BackingField: 1082
+    <Level>k__BackingField: 30
+    <Class>k__BackingField: 1030
+    <Element>k__BackingField: 6
+  - <Skill>k__BackingField: 1076
+    <Level>k__BackingField: 1
+    <Class>k__BackingField: 1030
+    <Element>k__BackingField: 7
+  - <Skill>k__BackingField: 1065
+    <Level>k__BackingField: 5
+    <Class>k__BackingField: 1030
+    <Element>k__BackingField: 7
+  - <Skill>k__BackingField: 1081
+    <Level>k__BackingField: 12
+    <Class>k__BackingField: 1030
+    <Element>k__BackingField: 7
+  - <Skill>k__BackingField: 1066
+    <Level>k__BackingField: 15
+    <Class>k__BackingField: 1030
+    <Element>k__BackingField: 7
+  - <Skill>k__BackingField: 1077
+    <Level>k__BackingField: 20
+    <Class>k__BackingField: 1030
+    <Element>k__BackingField: 7
+  - <Skill>k__BackingField: 1082
+    <Level>k__BackingField: 30
+    <Class>k__BackingField: 1030
+    <Element>k__BackingField: 7
+  - <Skill>k__BackingField: 1055
+    <Level>k__BackingField: 3
+    <Class>k__BackingField: 1040
+    <Element>k__BackingField: 1
+  - <Skill>k__BackingField: 2012
+    <Level>k__BackingField: 5
+    <Class>k__BackingField: 1040
+    <Element>k__BackingField: 1
+  - <Skill>k__BackingField: 1074
+    <Level>k__BackingField: 12
+    <Class>k__BackingField: 1040
+    <Element>k__BackingField: 1
+  - <Skill>k__BackingField: 2013
+    <Level>k__BackingField: 15
+    <Class>k__BackingField: 1040
+    <Element>k__BackingField: 1
+  - <Skill>k__BackingField: 1055
+    <Level>k__BackingField: 3
+    <Class>k__BackingField: 1040
+    <Element>k__BackingField: 2
+  - <Skill>k__BackingField: 2012
+    <Level>k__BackingField: 5
+    <Class>k__BackingField: 1040
+    <Element>k__BackingField: 2
+  - <Skill>k__BackingField: 1074
+    <Level>k__BackingField: 12
+    <Class>k__BackingField: 1040
+    <Element>k__BackingField: 2
+  - <Skill>k__BackingField: 2013
+    <Level>k__BackingField: 15
+    <Class>k__BackingField: 1040
+    <Element>k__BackingField: 2
+  - <Skill>k__BackingField: 1055
+    <Level>k__BackingField: 3
+    <Class>k__BackingField: 1040
+    <Element>k__BackingField: 3
+  - <Skill>k__BackingField: 2012
+    <Level>k__BackingField: 5
+    <Class>k__BackingField: 1040
+    <Element>k__BackingField: 3
+  - <Skill>k__BackingField: 1074
+    <Level>k__BackingField: 12
+    <Class>k__BackingField: 1040
+    <Element>k__BackingField: 3
+  - <Skill>k__BackingField: 2013
+    <Level>k__BackingField: 15
+    <Class>k__BackingField: 1040
+    <Element>k__BackingField: 3
+  - <Skill>k__BackingField: 1055
+    <Level>k__BackingField: 3
+    <Class>k__BackingField: 1040
+    <Element>k__BackingField: 4
+  - <Skill>k__BackingField: 2012
+    <Level>k__BackingField: 5
+    <Class>k__BackingField: 1040
+    <Element>k__BackingField: 4
+  - <Skill>k__BackingField: 1074
+    <Level>k__BackingField: 12
+    <Class>k__BackingField: 1040
+    <Element>k__BackingField: 4
+  - <Skill>k__BackingField: 2013
+    <Level>k__BackingField: 15
+    <Class>k__BackingField: 1040
+    <Element>k__BackingField: 4
+  - <Skill>k__BackingField: 1055
+    <Level>k__BackingField: 3
+    <Class>k__BackingField: 1040
+    <Element>k__BackingField: 5
+  - <Skill>k__BackingField: 2012
+    <Level>k__BackingField: 5
+    <Class>k__BackingField: 1040
+    <Element>k__BackingField: 5
+  - <Skill>k__BackingField: 1074
+    <Level>k__BackingField: 12
+    <Class>k__BackingField: 1040
+    <Element>k__BackingField: 5
+  - <Skill>k__BackingField: 2013
+    <Level>k__BackingField: 15
+    <Class>k__BackingField: 1040
+    <Element>k__BackingField: 5
+  - <Skill>k__BackingField: 1055
+    <Level>k__BackingField: 3
+    <Class>k__BackingField: 1040
+    <Element>k__BackingField: 6
+  - <Skill>k__BackingField: 2012
+    <Level>k__BackingField: 5
+    <Class>k__BackingField: 1040
+    <Element>k__BackingField: 6
+  - <Skill>k__BackingField: 1074
+    <Level>k__BackingField: 12
+    <Class>k__BackingField: 1040
+    <Element>k__BackingField: 6
+  - <Skill>k__BackingField: 2013
+    <Level>k__BackingField: 15
+    <Class>k__BackingField: 1040
+    <Element>k__BackingField: 6
+  - <Skill>k__BackingField: 1055
+    <Level>k__BackingField: 3
+    <Class>k__BackingField: 1040
+    <Element>k__BackingField: 7
+  - <Skill>k__BackingField: 2012
+    <Level>k__BackingField: 5
+    <Class>k__BackingField: 1040
+    <Element>k__BackingField: 7
+  - <Skill>k__BackingField: 1074
+    <Level>k__BackingField: 12
+    <Class>k__BackingField: 1040
+    <Element>k__BackingField: 7
+  - <Skill>k__BackingField: 2013
+    <Level>k__BackingField: 15
+    <Class>k__BackingField: 1040
+    <Element>k__BackingField: 7
+  - <Skill>k__BackingField: 2014
+    <Level>k__BackingField: 3
+    <Class>k__BackingField: 1050
+    <Element>k__BackingField: 1
+  - <Skill>k__BackingField: 2015
+    <Level>k__BackingField: 5
+    <Class>k__BackingField: 1050
+    <Element>k__BackingField: 1
+  - <Skill>k__BackingField: 2016
+    <Level>k__BackingField: 12
+    <Class>k__BackingField: 1050
+    <Element>k__BackingField: 1
+  - <Skill>k__BackingField: 2017
+    <Level>k__BackingField: 15
+    <Class>k__BackingField: 1050
+    <Element>k__BackingField: 1
+  - <Skill>k__BackingField: 2014
+    <Level>k__BackingField: 3
+    <Class>k__BackingField: 1050
+    <Element>k__BackingField: 2
+  - <Skill>k__BackingField: 2015
+    <Level>k__BackingField: 5
+    <Class>k__BackingField: 1050
+    <Element>k__BackingField: 2
+  - <Skill>k__BackingField: 2016
+    <Level>k__BackingField: 12
+    <Class>k__BackingField: 1050
+    <Element>k__BackingField: 2
+  - <Skill>k__BackingField: 2017
+    <Level>k__BackingField: 15
+    <Class>k__BackingField: 1050
+    <Element>k__BackingField: 2
+  - <Skill>k__BackingField: 2014
+    <Level>k__BackingField: 3
+    <Class>k__BackingField: 1050
+    <Element>k__BackingField: 3
+  - <Skill>k__BackingField: 2015
+    <Level>k__BackingField: 5
+    <Class>k__BackingField: 1050
+    <Element>k__BackingField: 3
+  - <Skill>k__BackingField: 2016
+    <Level>k__BackingField: 12
+    <Class>k__BackingField: 1050
+    <Element>k__BackingField: 3
+  - <Skill>k__BackingField: 2017
+    <Level>k__BackingField: 15
+    <Class>k__BackingField: 1050
+    <Element>k__BackingField: 3
+  - <Skill>k__BackingField: 2014
+    <Level>k__BackingField: 3
+    <Class>k__BackingField: 1050
+    <Element>k__BackingField: 4
+  - <Skill>k__BackingField: 2015
+    <Level>k__BackingField: 5
+    <Class>k__BackingField: 1050
+    <Element>k__BackingField: 4
+  - <Skill>k__BackingField: 2016
+    <Level>k__BackingField: 12
+    <Class>k__BackingField: 1050
+    <Element>k__BackingField: 4
+  - <Skill>k__BackingField: 2017
+    <Level>k__BackingField: 15
+    <Class>k__BackingField: 1050
+    <Element>k__BackingField: 4
+  - <Skill>k__BackingField: 2014
+    <Level>k__BackingField: 3
+    <Class>k__BackingField: 1050
+    <Element>k__BackingField: 5
+  - <Skill>k__BackingField: 2015
+    <Level>k__BackingField: 5
+    <Class>k__BackingField: 1050
+    <Element>k__BackingField: 5
+  - <Skill>k__BackingField: 2016
+    <Level>k__BackingField: 12
+    <Class>k__BackingField: 1050
+    <Element>k__BackingField: 5
+  - <Skill>k__BackingField: 2017
+    <Level>k__BackingField: 15
+    <Class>k__BackingField: 1050
+    <Element>k__BackingField: 5
+  - <Skill>k__BackingField: 2014
+    <Level>k__BackingField: 3
+    <Class>k__BackingField: 1050
+    <Element>k__BackingField: 6
+  - <Skill>k__BackingField: 2015
+    <Level>k__BackingField: 5
+    <Class>k__BackingField: 1050
+    <Element>k__BackingField: 6
+  - <Skill>k__BackingField: 2016
+    <Level>k__BackingField: 12
+    <Class>k__BackingField: 1050
+    <Element>k__BackingField: 6
+  - <Skill>k__BackingField: 2017
+    <Level>k__BackingField: 15
+    <Class>k__BackingField: 1050
+    <Element>k__BackingField: 6
+  - <Skill>k__BackingField: 2014
+    <Level>k__BackingField: 3
+    <Class>k__BackingField: 1050
+    <Element>k__BackingField: 7
+  - <Skill>k__BackingField: 2015
+    <Level>k__BackingField: 5
+    <Class>k__BackingField: 1050
+    <Element>k__BackingField: 7
+  - <Skill>k__BackingField: 2016
+    <Level>k__BackingField: 12
+    <Class>k__BackingField: 1050
+    <Element>k__BackingField: 7
+  - <Skill>k__BackingField: 2017
+    <Level>k__BackingField: 15
+    <Class>k__BackingField: 1050
+    <Element>k__BackingField: 7
+  - <Skill>k__BackingField: 2018
+    <Level>k__BackingField: 3
+    <Class>k__BackingField: 1060
+    <Element>k__BackingField: 1
+  - <Skill>k__BackingField: 2019
+    <Level>k__BackingField: 10
+    <Class>k__BackingField: 1060
+    <Element>k__BackingField: 1
+  - <Skill>k__BackingField: 2020
+    <Level>k__BackingField: 12
+    <Class>k__BackingField: 1060
+    <Element>k__BackingField: 1
+  - <Skill>k__BackingField: 2021
+    <Level>k__BackingField: 20
+    <Class>k__BackingField: 1060
+    <Element>k__BackingField: 1
+  - <Skill>k__BackingField: 1063
+    <Level>k__BackingField: 99
+    <Class>k__BackingField: 1060
+    <Element>k__BackingField: 1
+  - <Skill>k__BackingField: 2018
+    <Level>k__BackingField: 3
+    <Class>k__BackingField: 1060
+    <Element>k__BackingField: 2
+  - <Skill>k__BackingField: 2019
+    <Level>k__BackingField: 10
+    <Class>k__BackingField: 1060
+    <Element>k__BackingField: 2
+  - <Skill>k__BackingField: 2020
+    <Level>k__BackingField: 12
+    <Class>k__BackingField: 1060
+    <Element>k__BackingField: 2
+  - <Skill>k__BackingField: 2021
+    <Level>k__BackingField: 20
+    <Class>k__BackingField: 1060
+    <Element>k__BackingField: 2
+  - <Skill>k__BackingField: 1063
+    <Level>k__BackingField: 99
+    <Class>k__BackingField: 1060
+    <Element>k__BackingField: 2
+  - <Skill>k__BackingField: 2018
+    <Level>k__BackingField: 3
+    <Class>k__BackingField: 1060
+    <Element>k__BackingField: 3
+  - <Skill>k__BackingField: 2019
+    <Level>k__BackingField: 10
+    <Class>k__BackingField: 1060
+    <Element>k__BackingField: 3
+  - <Skill>k__BackingField: 2020
+    <Level>k__BackingField: 12
+    <Class>k__BackingField: 1060
+    <Element>k__BackingField: 3
+  - <Skill>k__BackingField: 2021
+    <Level>k__BackingField: 20
+    <Class>k__BackingField: 1060
+    <Element>k__BackingField: 3
+  - <Skill>k__BackingField: 1063
+    <Level>k__BackingField: 99
+    <Class>k__BackingField: 1060
+    <Element>k__BackingField: 3
+  - <Skill>k__BackingField: 2018
+    <Level>k__BackingField: 3
+    <Class>k__BackingField: 1060
+    <Element>k__BackingField: 4
+  - <Skill>k__BackingField: 2019
+    <Level>k__BackingField: 10
+    <Class>k__BackingField: 1060
+    <Element>k__BackingField: 4
+  - <Skill>k__BackingField: 2020
+    <Level>k__BackingField: 12
+    <Class>k__BackingField: 1060
+    <Element>k__BackingField: 4
+  - <Skill>k__BackingField: 2021
+    <Level>k__BackingField: 20
+    <Class>k__BackingField: 1060
+    <Element>k__BackingField: 4
+  - <Skill>k__BackingField: 1063
+    <Level>k__BackingField: 99
+    <Class>k__BackingField: 1060
+    <Element>k__BackingField: 4
+  - <Skill>k__BackingField: 2018
+    <Level>k__BackingField: 3
+    <Class>k__BackingField: 1060
+    <Element>k__BackingField: 5
+  - <Skill>k__BackingField: 2019
+    <Level>k__BackingField: 10
+    <Class>k__BackingField: 1060
+    <Element>k__BackingField: 5
+  - <Skill>k__BackingField: 2020
+    <Level>k__BackingField: 12
+    <Class>k__BackingField: 1060
+    <Element>k__BackingField: 5
+  - <Skill>k__BackingField: 2021
+    <Level>k__BackingField: 20
+    <Class>k__BackingField: 1060
+    <Element>k__BackingField: 5
+  - <Skill>k__BackingField: 1063
+    <Level>k__BackingField: 99
+    <Class>k__BackingField: 1060
+    <Element>k__BackingField: 5
+  - <Skill>k__BackingField: 2018
+    <Level>k__BackingField: 3
+    <Class>k__BackingField: 1060
+    <Element>k__BackingField: 6
+  - <Skill>k__BackingField: 2019
+    <Level>k__BackingField: 10
+    <Class>k__BackingField: 1060
+    <Element>k__BackingField: 6
+  - <Skill>k__BackingField: 2020
+    <Level>k__BackingField: 12
+    <Class>k__BackingField: 1060
+    <Element>k__BackingField: 6
+  - <Skill>k__BackingField: 2021
+    <Level>k__BackingField: 20
+    <Class>k__BackingField: 1060
+    <Element>k__BackingField: 6
+  - <Skill>k__BackingField: 1063
+    <Level>k__BackingField: 99
+    <Class>k__BackingField: 1060
+    <Element>k__BackingField: 6
+  - <Skill>k__BackingField: 2018
+    <Level>k__BackingField: 3
+    <Class>k__BackingField: 1060
+    <Element>k__BackingField: 7
+  - <Skill>k__BackingField: 2019
+    <Level>k__BackingField: 10
+    <Class>k__BackingField: 1060
+    <Element>k__BackingField: 7
+  - <Skill>k__BackingField: 2020
+    <Level>k__BackingField: 12
+    <Class>k__BackingField: 1060
+    <Element>k__BackingField: 7
+  - <Skill>k__BackingField: 2021
+    <Level>k__BackingField: 20
+    <Class>k__BackingField: 1060
+    <Element>k__BackingField: 7
+  - <Skill>k__BackingField: 1063
+    <Level>k__BackingField: 99
+    <Class>k__BackingField: 1060
+    <Element>k__BackingField: 7
+  - <Skill>k__BackingField: 1076
+    <Level>k__BackingField: 3
+    <Class>k__BackingField: 2010
+    <Element>k__BackingField: 6
+  - <Skill>k__BackingField: 1046
+    <Level>k__BackingField: 5
+    <Class>k__BackingField: 2010
+    <Element>k__BackingField: 6
+  - <Skill>k__BackingField: 2003
+    <Level>k__BackingField: 10
+    <Class>k__BackingField: 2010
+    <Element>k__BackingField: 6
+  - <Skill>k__BackingField: 1049
+    <Level>k__BackingField: 12
+    <Class>k__BackingField: 2010
+    <Element>k__BackingField: 6
+  - <Skill>k__BackingField: 2009
+    <Level>k__BackingField: 15
+    <Class>k__BackingField: 2010
+    <Element>k__BackingField: 6
+  - <Skill>k__BackingField: 2011
+    <Level>k__BackingField: 25
+    <Class>k__BackingField: 2010
+    <Element>k__BackingField: 6
 --- !u!1001 &1123288850
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1495,8 +2417,7 @@ PrefabInstance:
       propertyPath: m_Name
       value: ChildGirl
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 8734834533354208379, guid: accc2b19005c99f4cb2c802fd63b9ad3, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -2118,6 +3039,63 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 370f605584da8574786ee66a5e3257c9, type: 3}
+--- !u!1001 &3291061733496879099
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 5756961185419770394, guid: ec15d88466c37194385b1bfee2ed4bd0, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5756961185419770394, guid: ec15d88466c37194385b1bfee2ed4bd0, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5756961185419770394, guid: ec15d88466c37194385b1bfee2ed4bd0, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5756961185419770394, guid: ec15d88466c37194385b1bfee2ed4bd0, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5756961185419770394, guid: ec15d88466c37194385b1bfee2ed4bd0, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5756961185419770394, guid: ec15d88466c37194385b1bfee2ed4bd0, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5756961185419770394, guid: ec15d88466c37194385b1bfee2ed4bd0, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5756961185419770394, guid: ec15d88466c37194385b1bfee2ed4bd0, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5756961185419770394, guid: ec15d88466c37194385b1bfee2ed4bd0, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5756961185419770394, guid: ec15d88466c37194385b1bfee2ed4bd0, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8469099400178527103, guid: ec15d88466c37194385b1bfee2ed4bd0, type: 3}
+      propertyPath: m_Name
+      value: InnSystem
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: ec15d88466c37194385b1bfee2ed4bd0, type: 3}
 --- !u!1001 &4269902786785981533
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2337,4 +3315,4 @@ SceneRoots:
   - {fileID: 99494246}
   - {fileID: 48601174}
   - {fileID: 1358850829}
-  - {fileID: 1043046887}
+  - {fileID: 3291061733496879099}
