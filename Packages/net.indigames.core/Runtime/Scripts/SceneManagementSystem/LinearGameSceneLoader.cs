@@ -4,6 +4,7 @@ using IndiGames.Core.SceneManagementSystem.Events.ScriptableObjects;
 using IndiGames.Core.SceneManagementSystem.ScriptableObjects;
 using IndiGames.Core.UI;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.ResourceManagement.ResourceProviders;
 using UnityEngine.SceneManagement;
@@ -18,6 +19,7 @@ namespace IndiGames.Core.SceneManagementSystem
 
         [Header("Listening on")]
         [SerializeField] private LoadSceneEventChannelSO _loadMap;
+
         [SerializeField] private LoadSceneEventChannelSO _loadTitle;
 #if UNITY_EDITOR
         [SerializeField] private LoadSceneEventChannelSO _editorColdBoot;
@@ -25,6 +27,7 @@ namespace IndiGames.Core.SceneManagementSystem
 
         [Header("Raise on")]
         [SerializeField] private VoidEventChannelSO _sceneLoaded;
+
         [SerializeField] private VoidEventChannelSO _sceneUnloading;
 
         private AsyncOperationHandle<SceneInstance> _sceneLoadingOperationHandle;
@@ -74,7 +77,19 @@ namespace IndiGames.Core.SceneManagementSystem
         }
 
         private void LoadTitleScene(SceneScriptableObject mainMenu)
-            => StartCoroutine(CoLoadNextScene(mainMenu));
+        {
+            UnloadGameplayManagerIfLoaded();
+            StartCoroutine(CoLoadNextScene(mainMenu));
+        }
+
+        /// <summary>
+        /// When logging out from gameplay scene, we need to unload gameplay manager scene
+        /// </summary>
+        private void UnloadGameplayManagerIfLoaded()
+        {
+            if (_gameplayManagerSceneInstance.Scene.isLoaded == false) return;
+            Addressables.UnloadSceneAsync(_gameplayManagerLoadingOperationHandle, true);
+        }
 
 #if UNITY_EDITOR
         /// <summary>
@@ -89,7 +104,7 @@ namespace IndiGames.Core.SceneManagementSystem
             _sceneToLoad = sceneOpenedDirectlyFromEditor;
             if (_sceneToLoad.SceneType == SceneScriptableObject.Type.Location)
                 yield return CoLoadGameplayManagerSceneIfNotLoaded();
-            
+
             // The currently scene already loaded when open directly through EditorColdBoot
             // Skip loading and just raised the event
             OnSceneLoaded(sceneOpenedFromEditor);
