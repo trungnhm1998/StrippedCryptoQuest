@@ -1,4 +1,6 @@
-﻿using CryptoQuest.Core;
+﻿using System.Collections.Generic;
+using CryptoQuest.Core;
+using Obj = CryptoQuest.Sagas.Objects;
 
 namespace CryptoQuest.Actions
 {
@@ -31,4 +33,13 @@ namespace CryptoQuest.Actions
     }
 
     public class FetchProfileCharactersAction : ActionBase { }
+    public class GetGameNftCharactersSucceed : ActionBase
+    {
+        public List<Obj.Character> InGameCharacters { get; }
+
+        public GetGameNftCharactersSucceed(List<Obj.Character> inGameCharacters)
+        {
+            InGameCharacters = inGameCharacters;
+        }
+    }
 }

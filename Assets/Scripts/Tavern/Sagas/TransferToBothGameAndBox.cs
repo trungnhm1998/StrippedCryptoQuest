@@ -14,33 +14,34 @@ using UnityEngine;
 
 namespace CryptoQuest.Tavern.Sagas
 {
-    public class TransferCharactersToGame : MonoBehaviour
+    public class TransferToBothGameAndBox : MonoBehaviour
     {
-        private TinyMessageSubscriptionToken _sendCharactersGameEvent;
+        private TinyMessageSubscriptionToken _sendCharactersToBothSideEvent;
 
         private void OnEnable()
         {
-            _sendCharactersGameEvent = ActionDispatcher.Bind<SendCharactersToGame>(CallAPI);
+            _sendCharactersToBothSideEvent = ActionDispatcher.Bind<SendCharactersToBothSide>(CallAPI);
         }
 
         private void OnDisable()
         {
-            ActionDispatcher.Unbind(_sendCharactersGameEvent);
+            ActionDispatcher.Unbind(_sendCharactersToBothSideEvent);
         }
 
-        private void CallAPI(SendCharactersToGame obj)
+        private void CallAPI(SendCharactersToBothSide obj)
         {
             var body = new Dictionary<string, int[]>()
             {
-                { "ids", obj.SelectedInWalletCharacters }
+                { "game", obj.SelectedInWalletCharacters },
+                { "wallet", obj.SelectedInGameCharacters }
             };
 
-            Debug.Log($"SendCharactersToGame::Body={JsonConvert.SerializeObject( body )}");
+            Debug.Log($"SendCharactersToBothSide::Body={JsonConvert.SerializeObject( body )}");
 
             var restClient = ServiceProvider.GetService<IRestClient>();
             restClient
                 .WithBody(body)
-                .Put<TransferResponse>(Profile.PUT_CHARACTERS_TO_GAME)
+                .Put<TransferResponse>(Profile.PUT_CHARACTERS_TO_BOX_AND_GAME)
                 .Subscribe(OnNext, OnError, OnCompleted);
         }
 
@@ -52,7 +53,7 @@ namespace CryptoQuest.Tavern.Sagas
 
         private void OnError(Exception obj)
         {
-            Debug.LogError("TransferCharactersToGameFailed::" + obj);
+            Debug.LogError("TransferCharactersToBothSideFailed::" + obj);
             ActionDispatcher.Dispatch(new TransferFailed());
             ActionDispatcher.Dispatch(new ShowLoading(false));
         }

@@ -1,13 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using CryptoQuest.Menu;
-using CryptoQuest.Tavern.Interfaces;
 using CryptoQuest.UI.Menu;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
+using Obj = CryptoQuest.Sagas.Objects;
 
-namespace CryptoQuest.Tavern.UI.CharacterReplacement
+namespace CryptoQuest.Tavern.UI
 {
     public class UICharacterList : MonoBehaviour
     {
@@ -19,8 +19,8 @@ namespace CryptoQuest.Tavern.UI.CharacterReplacement
 
         private ITooltip _tooltip;
 
-        private List<ICharacterData> _characterList = new List<ICharacterData>();
-        public List<ICharacterData> Data => _characterList;
+        private List<Obj.Character> _characterList = new List<Obj.Character>();
+        public List<Obj.Character> Data => _characterList;
 
         private List<UITavernItem> _cachedItems = new();
 
@@ -29,7 +29,7 @@ namespace CryptoQuest.Tavern.UI.CharacterReplacement
             _tooltip = TooltipFactory.Instance.GetTooltip(ETooltipType.Equipment);
         }
 
-        public void SetData(List<ICharacterData> data)
+        public void SetData(List<Obj.Character> data)
         {
             _characterList = data;
             CleanUpScrollView();

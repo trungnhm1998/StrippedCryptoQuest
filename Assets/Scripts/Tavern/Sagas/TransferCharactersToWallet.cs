@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Net;
 using CryptoQuest.Core;
 using CryptoQuest.Networking;
+using CryptoQuest.Networking.API;
 using CryptoQuest.System;
 using CryptoQuest.Tavern.Objects;
 using CryptoQuest.UI.Actions;
@@ -36,7 +37,7 @@ namespace CryptoQuest.Tavern.Sagas
             var restClient = ServiceProvider.GetService<IRestClient>();
             restClient
                 .WithBody(body)
-                .Put<TransferResponse>(API.PUT_CHARACTERS_TO_WALLET)
+                .Put<TransferResponse>(Profile.PUT_CHARACTERS_TO_DIMENSIONAL_BOX)
                 .Subscribe(OnNext, OnError, OnCompleted);
         }
 
@@ -48,7 +49,7 @@ namespace CryptoQuest.Tavern.Sagas
 
         private void OnError(Exception obj)
         {
-            Debug.Log("TransferCharactersToWalletFailed::" + obj);
+            Debug.LogError("TransferCharactersToWalletFailed::" + obj);
             ActionDispatcher.Dispatch(new TransferFailed());
             ActionDispatcher.Dispatch(new ShowLoading(false));
         }
