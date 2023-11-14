@@ -13,7 +13,24 @@ namespace CryptoQuest.AbilitySystem.Attributes
         public static AttributeScriptableObject Strength;
         public static AttributeScriptableObject Defense;
         public static AttributeScriptableObject Agility;
+        public static AttributeScriptableObject Vitality;
+        public static AttributeScriptableObject Intelligence;
         public static AttributeScriptableObject CriticalRate;
+        public static AttributeScriptableObject FireAttack;
+        public static AttributeScriptableObject WaterAttack;
+        public static AttributeScriptableObject EarthAttack;
+        public static AttributeScriptableObject WindAttack;
+        public static AttributeScriptableObject WoodAttack;
+        public static AttributeScriptableObject LightAttack;
+        public static AttributeScriptableObject DarkAttack;
+        public static AttributeScriptableObject FireResist;
+        public static AttributeScriptableObject WaterResist;
+        public static AttributeScriptableObject EarthResist;
+        public static AttributeScriptableObject WindResist;
+        public static AttributeScriptableObject WoodResist;
+        public static AttributeScriptableObject LightResist;
+        public static AttributeScriptableObject DarkResist;
+
 
         [SerializeField] private AttributeScriptableObject _maxHealth;
         [SerializeField] private AttributeScriptableObject _health;
@@ -25,6 +42,28 @@ namespace CryptoQuest.AbilitySystem.Attributes
         [SerializeField] private AttributeScriptableObject _defense;
         [SerializeField] private AttributeScriptableObject _agility;
         [SerializeField] private AttributeScriptableObject _criticalRate;
+        [SerializeField] private AttributeScriptableObject _vitality;
+        [SerializeField] private AttributeScriptableObject _intelligence;
+
+        [Header("Elemental attack Attribute")]
+        [SerializeField] private AttributeScriptableObject _fireAttack;
+
+        [SerializeField] private AttributeScriptableObject _waterAttack;
+        [SerializeField] private AttributeScriptableObject _earthAttack;
+        [SerializeField] private AttributeScriptableObject _windAttack;
+        [SerializeField] private AttributeScriptableObject _woodAttack;
+        [SerializeField] private AttributeScriptableObject _lightAttack;
+        [SerializeField] private AttributeScriptableObject _darkAttack;
+
+        [Header("Elemental resist Attribute")]
+        [SerializeField] private AttributeScriptableObject _fireResist;
+
+        [SerializeField] private AttributeScriptableObject _waterResist;
+        [SerializeField] private AttributeScriptableObject _earthResist;
+        [SerializeField] private AttributeScriptableObject _windResist;
+        [SerializeField] private AttributeScriptableObject _woodResist;
+        [SerializeField] private AttributeScriptableObject _lightResist;
+        [SerializeField] private AttributeScriptableObject _darkResist;
 
         private void OnEnable()
         {
@@ -37,7 +76,23 @@ namespace CryptoQuest.AbilitySystem.Attributes
             Strength = _strength;
             Defense = _defense;
             Agility = _agility;
+            Vitality = _vitality;
+            Intelligence = _intelligence;
             CriticalRate = _criticalRate;
+            FireAttack = _fireAttack;
+            WaterAttack = _waterAttack;
+            EarthAttack = _earthAttack;
+            WindAttack = _windAttack;
+            WoodAttack = _woodAttack;
+            LightAttack = _lightAttack;
+            DarkAttack = _darkAttack;
+            FireResist = _fireResist;
+            WaterResist = _waterResist;
+            EarthResist = _earthResist;
+            WindResist = _windResist;
+            WoodResist = _woodResist;
+            LightResist = _lightResist;
+            DarkResist = _darkResist;
         }
     }
 }
