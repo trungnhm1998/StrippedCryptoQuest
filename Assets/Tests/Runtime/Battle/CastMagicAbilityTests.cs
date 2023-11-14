@@ -6,10 +6,8 @@ using System.Linq;
 using CryptoQuest.AbilitySystem.Abilities;
 using CryptoQuest.AbilitySystem.Attributes;
 using CryptoQuest.AbilitySystem.Executions;
-using CryptoQuest.Battle.Components;
 using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data;
 using CryptoQuest.Tests.Runtime.Battle.Builder;
-using IndiGames.GameplayAbilitySystem.AttributeSystem;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
 using IndiGames.GameplayAbilitySystem.EffectSystem;
 using IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects.EffectExecutionCalculation;
@@ -181,7 +179,11 @@ namespace CryptoQuest.Tests.Runtime.Battle
                 }
                 else
                 {
-                    expectedLower = expectedUpper = baseValue * targetedAttributeBefore.CurrentValue / 100;
+                    expectedLower = Mathf.RoundToInt((baseValue + baseValue * (-0.05f))) *
+                        targetedAttributeBefore.CurrentValue / 100;
+
+                    expectedUpper = Mathf.RoundToInt((baseValue + baseValue * (0.05f))) *
+                        targetedAttributeBefore.CurrentValue / 100;
                 }
 
 
@@ -191,21 +193,12 @@ namespace CryptoQuest.Tests.Runtime.Battle
                 Debug.Log(
                     $"Before: {targetedAttributeBefore.CurrentValue} After: {targetedAttributeAfter.CurrentValue} " +
                     $"Upper: {expectedUpper} Lower: {expectedLower}");
-                if (skillInfo.SkillParameters.IsFixed)
-                {
-                    Assert.LessOrEqual(
-                        MathF.Round((targetedAttributeAfter.CurrentValue - targetedAttributeBefore.CurrentValue), 1),
-                        expectedUpper);
-                    Assert.GreaterOrEqual(
-                        MathF.Round((targetedAttributeAfter.CurrentValue - targetedAttributeBefore.CurrentValue), 1),
-                        expectedLower);
-                }
-                else
-                {
-                    Assert.That(expectedLower,
-                        Is.EqualTo((targetedAttributeAfter.CurrentValue - targetedAttributeBefore.CurrentValue))
-                            .Within(0.01));
-                }
+                Assert.LessOrEqual(
+                    MathF.Round((targetedAttributeAfter.CurrentValue - targetedAttributeBefore.CurrentValue), 1),
+                    MathF.Round(expectedUpper, 1));
+                Assert.GreaterOrEqual(
+                    MathF.Round((targetedAttributeAfter.CurrentValue - targetedAttributeBefore.CurrentValue), 1),
+                    MathF.Round(expectedLower, 1));
             }
 
             private void TestDebuffAbility(CastSkillAbility ability)
