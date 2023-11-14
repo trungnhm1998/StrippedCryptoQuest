@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Localization;
 using UnityEngine.Localization.Components;
 
-namespace CryptoQuest.Tooltips
+namespace CryptoQuest.UI.Tooltips
 {
     public class UICharacterTooltip : UITooltip
     {

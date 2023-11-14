@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.Localization;
 using UnityEngine.Localization.Components;
 
-namespace CryptoQuest.Menus.Status.UI
+namespace CryptoQuest.UI.Tooltips
 {
     public class ConsumableTooltip : UITooltip
     {
