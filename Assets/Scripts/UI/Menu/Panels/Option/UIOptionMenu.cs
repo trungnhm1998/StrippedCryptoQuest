@@ -7,7 +7,7 @@ namespace CryptoQuest.UI.Menu.Panels.Option
 {
     public class UIOptionMenu : UIMenuPanel
     {
-        [field: SerializeField] public LanguageSettingController LanguageSettingController { get; private set; }
+        [field: SerializeField] public UILanguageOptions LanguageOptions { get; private set; }
 
         public override StateBase<string> GetPanelState(MenuManager menuManager)
         {

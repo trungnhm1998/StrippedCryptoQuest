@@ -6,11 +6,11 @@ namespace CryptoQuest.UI.Menu.MenuStates.OptionStates
 {
     public class LanguageState : OptionStateBase
     {
-        private LanguageSettingController _uiLanguageSettingOverviewPanel;
+        private UILanguageOptions _uiLanguageSettingOverviewPanel;
 
         public LanguageState(UIOptionMenu optionPanel) : base(optionPanel)
         {
-            _uiLanguageSettingOverviewPanel = optionPanel.LanguageSettingController;
+            _uiLanguageSettingOverviewPanel = optionPanel.LanguageOptions;
         }
 
         public override void OnEnter()

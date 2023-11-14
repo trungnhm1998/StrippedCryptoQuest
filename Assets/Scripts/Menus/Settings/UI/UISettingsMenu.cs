@@ -1,5 +1,6 @@
 using CryptoQuest.Input;
 using CryptoQuest.Menus.Settings.States;
+using CryptoQuest.System.Settings;
 using CryptoQuest.UI.Menu;
 using FSM;
 using UnityEngine;
