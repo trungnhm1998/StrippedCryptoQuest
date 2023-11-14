@@ -66,9 +66,12 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem.Components
         /// <returns></returns>
         public ActiveGameplayEffect ApplyEffectToSelf(GameplayEffectSpec inSpec)
         {
-            if (inSpec == null || !inSpec.CanApply()) return new ActiveGameplayEffect();
+            if (inSpec == null) return new ActiveGameplayEffect();
 
             inSpec.Target = Owner;
+
+            if (!inSpec.CanApply()) return new ActiveGameplayEffect();
+
             inSpec.CalculateModifierMagnitudes();
             var activeEffectSpecification = inSpec.CreateActiveEffectSpec();
             if (activeEffectSpecification is InstantActiveEffectPolicy)
@@ -142,7 +145,7 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem.Components
                 if (effect.IsValid() == false || effectSpec.CompareTo(effect.Spec) == 1)
                 {
                     RemoveEffectAtIndex(i);
-                } 
+                }
             }
 
             // after remove the effect from system we need to update the attribute modifiers

@@ -34,6 +34,7 @@ namespace CryptoQuest.AbilitySystem.Abilities
             foreach (var effectDef in _def.Effects)
             {
                 var gameplayEffectSpec = CreateEffectSpec(effectDef);
+                NotifyCastByTagCondition(target, effectDef.ApplicationTagRequirements.IgnoreTags);
                 _effectSpecs.Add(gameplayEffectSpec);
                 target.ApplyEffectSpecToSelf(gameplayEffectSpec);
             }
