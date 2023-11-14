@@ -5,18 +5,14 @@ using CryptoQuest.System.CutsceneSystem.CustomTimelineTracks.YarnSpinnerNodeCont
 using CryptoQuest.System.Dialogue.Managers;
 using UnityEngine;
 using UnityEngine.Playables;
+using UnityEngine.Serialization;
 
 namespace CryptoQuest.Quest.Components.YarnQuestNode
 {
     [Serializable]
     public class YarnQuestNodePlayableBehaviour : YarnSpinnerNodePlayableBehaviour
     {
-        private YarnDialogWithQuestSo _yarnDialogWithQuestSo;
-
-        public void SetYarnQuestSo(YarnDialogWithQuestSo yarnDialogWithQuestSo)
-        {
-            _yarnDialogWithQuestSo = yarnDialogWithQuestSo;
-        }
+        [field: SerializeField] public YarnDialogWithQuestSo YarnDialog { get; set; }
 
         public override void ProcessFrame(Playable playable, FrameData info, object playerData)
         {
@@ -27,9 +23,9 @@ namespace CryptoQuest.Quest.Components.YarnQuestNode
             if (Application.isPlaying)
             {
                 if (!playable.GetGraph().IsPlaying()) return;
-                if (string.IsNullOrEmpty(YarnNodeName)) return;
-                QuestCutsceneController.RegisterYarnQuestDef?.Invoke(_yarnDialogWithQuestSo.YarnQuestDef);
-                string yarnNode = _yarnDialogWithQuestSo.YarnQuestDef.YarnNode;
+                string yarnNode = YarnDialog.YarnQuestDef.YarnNode;
+
+                QuestCutsceneController.RegisterYarnQuestDef?.Invoke(YarnDialog.YarnQuestDef);
                 YarnSpinnerDialogueManager.PlayDialogueRequested?.Invoke(yarnNode);
             }
 #if UNITY_EDITOR
