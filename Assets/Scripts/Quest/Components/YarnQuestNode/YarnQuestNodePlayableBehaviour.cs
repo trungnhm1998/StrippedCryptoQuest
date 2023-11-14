@@ -26,6 +26,7 @@ namespace CryptoQuest.Quest.Components.YarnQuestNode
                 string yarnNode = YarnDialog.YarnQuestDef.YarnNode;
 
                 QuestCutsceneController.RegisterYarnQuestDef?.Invoke(YarnDialog.YarnQuestDef);
+                YarnSpinnerDialogueManager.YarnProjectRequested?.Invoke(YarnDialog.YarnQuestDef.YarnProjectConfig);
                 YarnSpinnerDialogueManager.PlayDialogueRequested?.Invoke(yarnNode);
             }
 #if UNITY_EDITOR
