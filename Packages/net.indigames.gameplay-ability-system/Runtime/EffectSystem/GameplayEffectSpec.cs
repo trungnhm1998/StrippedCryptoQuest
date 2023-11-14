@@ -116,7 +116,7 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem
         {
             var tagConditionDetail = Def.ApplicationTagRequirements;
             return AbilitySystemHelper.SystemHasAllTags(Source, tagConditionDetail.RequireTags)
-                   && AbilitySystemHelper.SystemHasNoneTags(Source, tagConditionDetail.IgnoreTags);
+                   && AbilitySystemHelper.SystemHasNoneTags(Target, tagConditionDetail.IgnoreTags);
         }
 
         public void CalculateModifierMagnitudes()
