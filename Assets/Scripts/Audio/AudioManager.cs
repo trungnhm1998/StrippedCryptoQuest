@@ -14,6 +14,15 @@ namespace CryptoQuest.Audio
         public float Volume = 1f;
     }
 
+    /// <summary>
+    /// TODO: This class must be wait to Sage scene loaded
+    /// Because it will be load language from save data
+    /// 
+    /// <remarks>
+    /// @Author: thai-phi
+    /// </remarks>
+    /// 
+    /// </summary>
     [RequireComponent((typeof(AudioEmitterPool)))]
     public class AudioManager : MonoBehaviour
     {
@@ -29,15 +38,14 @@ namespace CryptoQuest.Audio
 
         [SerializeField] private AudioCueEventChannelSO _backgroundMusicEventChannel;
 
-        [Header("Audio control")]
-        [SerializeField]
+        [Header("Audio control"), SerializeField]
         private AudioSettingSO audioSettings;
 
         private AudioEmitter _playingMusicAudioEmitter;
         private AudioCueSO _currentSfxCue;
         private AudioCueSO _currentBgmCue;
 
-        public AudioSave SaveData;
+        [HideInInspector] public AudioSave SaveData;
         private TinyMessenger.TinyMessageSubscriptionToken _listenToLoadCompletedEventToken;
 
         private void Awake()
@@ -48,7 +56,8 @@ namespace CryptoQuest.Audio
 
         private void Start()
         {
-            _listenToLoadCompletedEventToken = ActionDispatcher.Bind<LoadAudioCompletedAction>(action => InitVolume(action.IsSuccess) );
+            _listenToLoadCompletedEventToken =
+                ActionDispatcher.Bind<LoadAudioCompletedAction>(action => InitVolume(action.IsSuccess));
             ActionDispatcher.Dispatch(new LoadAudioAction(this));
         }
 
