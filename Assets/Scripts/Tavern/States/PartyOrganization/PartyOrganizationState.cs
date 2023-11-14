@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
+using CryptoQuest.Actions;
 using CryptoQuest.Core;
-using CryptoQuest.Tavern.Interfaces;
 using CryptoQuest.Tavern.States.CharacterReplacement;
 using CryptoQuest.Tavern.UI;
-using CryptoQuest.Tavern.UI.CharacterReplacement;
 using TinyMessenger;
 using UnityEngine;
+using Obj = CryptoQuest.Sagas.Objects;
 
 namespace CryptoQuest.Tavern.States.PartyOrganization
 {
@@ -16,8 +16,8 @@ namespace CryptoQuest.Tavern.States.PartyOrganization
         private TinyMessageSubscriptionToken _getInPartyNftCharacters;
         private TinyMessageSubscriptionToken _getGameDataSucceedEvent;
 
-        private List<ICharacterData> _cachedInPartyCharactersData = new List<ICharacterData>();
-        private List<ICharacterData> _cachedNonPartyCharactersData = new List<ICharacterData>();
+        private List<Obj.Character> _cachedInPartyCharactersData = new List<Obj.Character>();
+        private List<Obj.Character> _cachedNonPartyCharactersData = new List<Obj.Character>();
 
         private static readonly int OverviewState = Animator.StringToHash("Overview");
         private static readonly int ConfirmState = Animator.StringToHash("Confirm Party Organization");

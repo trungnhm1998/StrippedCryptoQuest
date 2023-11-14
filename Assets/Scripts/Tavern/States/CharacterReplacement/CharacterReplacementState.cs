@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
+using CryptoQuest.Actions;
 using CryptoQuest.Core;
-using CryptoQuest.Tavern.Interfaces;
 using CryptoQuest.Tavern.UI;
-using CryptoQuest.Tavern.UI.CharacterReplacement;
 using TinyMessenger;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using Obj = CryptoQuest.Sagas.Objects;
 
 namespace CryptoQuest.Tavern.States.CharacterReplacement
 {
@@ -16,8 +16,8 @@ namespace CryptoQuest.Tavern.States.CharacterReplacement
         private TinyMessageSubscriptionToken _getGameDataSucceedEvent;
         private TinyMessageSubscriptionToken _getWalletDataSucceedEvent;
 
-        private List<ICharacterData> _cachedGameData = new List<ICharacterData>();
-        private List<ICharacterData> _cachedWalletData = new List<ICharacterData>();
+        private List<Obj.Character> _cachedGameData = new List<Obj.Character>();
+        private List<Obj.Character> _cachedWalletData = new List<Obj.Character>();
 
         private static readonly int OverviewState = Animator.StringToHash("Overview");
         private static readonly int ConfirmState = Animator.StringToHash("Confirm Character Replacement");
@@ -27,6 +27,8 @@ namespace CryptoQuest.Tavern.States.CharacterReplacement
             _controller = StateMachine.GetComponent<TavernController>();
             _controller.UICharacterReplacement.gameObject.SetActive(true);
             _controller.UICharacterReplacement.Contents.SetActive(true);
+            _controller.UICharacterReplacement.SelectedGameItemsIds.Clear();
+            _controller.UICharacterReplacement.SelectedWalletItemsIds.Clear();
 
             UITavernItem.Pressed += _controller.UICharacterReplacement.Transfer;
             UICharacterList.Rendered += _controller.UICharacterReplacement.HandleListInteractable;

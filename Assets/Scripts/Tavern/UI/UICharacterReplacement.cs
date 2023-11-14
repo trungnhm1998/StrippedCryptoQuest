@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace CryptoQuest.Tavern.UI.CharacterReplacement
+namespace CryptoQuest.Tavern.UI
 {
     public class UICharacterReplacement : UIAbstractTavern
     {
@@ -29,8 +29,8 @@ namespace CryptoQuest.Tavern.UI.CharacterReplacement
 
         public void Transfer(UITavernItem currentItem)
         {
-            _selectedGameItemsIds.Clear();
-            _selectedWalletItemsIds.Clear();
+            // _selectedGameItemsIds.Clear();
+            // _selectedWalletItemsIds.Clear();
 
             var currentList = currentItem.Parent;
             if (currentList == _gameScrollContent)
@@ -46,6 +46,8 @@ namespace CryptoQuest.Tavern.UI.CharacterReplacement
 
             _gameListUi.SetInteractableAllButtons(!(currentList == _gameScrollContent));
             _walletListUi.SetInteractableAllButtons(currentList == _gameScrollContent);
+
+            Debug.Log($"game={_selectedGameItemsIds.Count} -- wallet={_selectedWalletItemsIds.Count}");
         }
 
         /// <summary>

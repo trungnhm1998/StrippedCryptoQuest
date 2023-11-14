@@ -1,11 +1,10 @@
-﻿using CryptoQuest.Tavern.Data;
-using CryptoQuest.Tavern.Interfaces;
-using CryptoQuest.UI.Menu;
+﻿using CryptoQuest.UI.Menu;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Localization.Components;
 using UnityEngine.UI;
+using Obj = CryptoQuest.Sagas.Objects;
 
 namespace CryptoQuest.Tavern.UI
 {
@@ -30,7 +29,7 @@ namespace CryptoQuest.Tavern.UI
         private bool _isSelected = false;
         private bool _isInParty = false;
 
-        private ICharacterData _cachedInfo;
+        private Obj.Character _cachedInfo;
 
         private void Awake()
         {
@@ -40,17 +39,11 @@ namespace CryptoQuest.Tavern.UI
                 .WithScale(new Vector3(.8f, .8f, 0));
         }
 
-        public void SetItemInfo(ICharacterData itemInfo)
+        public void SetItemInfo(Obj.Character itemInfo)
         {
-            Id = itemInfo.GetId();
-            _classIcon.sprite = itemInfo.GetClassIcon();
-
-            if (itemInfo.GetLocalizedName() != null)
-                _localizedName.StringReference = itemInfo.GetLocalizedName();
-
-            _name.text = itemInfo.GetName();
-            _level.text = $"Lv{itemInfo.GetLevel()}";
-            _isInParty = itemInfo.IsInParty();
+            Id = itemInfo.id;
+            _name.text = itemInfo.name;
+            _level.text = $"Lv{itemInfo.level}";
             _localizedName.RefreshString();
 
             _cachedInfo = itemInfo;
@@ -82,8 +75,7 @@ namespace CryptoQuest.Tavern.UI
             }
 
             _tooltip
-                .WithHeader(_cachedInfo.GetLocalizedName())
-                .WithLevel(_cachedInfo.GetLevel())
+                .WithLevel(_cachedInfo.level)
                 .WithContentAwareness(_tooltipPosition);
         }
 

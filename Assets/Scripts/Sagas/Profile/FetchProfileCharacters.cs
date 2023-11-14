@@ -14,6 +14,7 @@ using CryptoQuest.Networking;
 using CryptoQuest.Sagas.Objects;
 using CryptoQuest.System;
 using CryptoQuest.UI.Actions;
+using TinyMessenger;
 using UniRx;
 using UnityEngine;
 using AttributeScriptableObject = IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects.AttributeScriptableObject;
@@ -37,9 +38,23 @@ namespace CryptoQuest.Sagas.Profile
         private Dictionary<string, AttributeScriptableObject> _lookupAttribute = new();
         private FieldInfo[] _fields;
 
+        private TinyMessageSubscriptionToken _heroInventoryUpdateEvent;
+
         private void Awake()
         {
             _lookupAttribute = _attributeMap.ToDictionary(map => map.Name, map => map.Attribute);
+            _heroInventoryUpdateEvent = ActionDispatcher.Bind<GetGameNftCharactersSucceed>(RefreshHeroInventory);
+        }
+
+        protected override void OnEnable()
+        {
+            base.OnEnable();
+            ActionDispatcher.Unbind(_heroInventoryUpdateEvent);
+        }
+
+        private void RefreshHeroInventory(GetGameNftCharactersSucceed obj)
+        {
+            OnInventoryFilled(obj.InGameCharacters.ToArray());
         }
 
         protected override void HandleAction(FetchProfileCharactersAction _)

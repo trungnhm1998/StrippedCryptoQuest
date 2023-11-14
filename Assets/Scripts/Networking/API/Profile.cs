@@ -15,5 +15,8 @@
         public const string TRANSFER_TO_DIAMOND_PATH = "/crypto/dimention/token/from";
 
         public const string GET_CHARACTERS = "crypto/characters";
+        public const string PUT_CHARACTERS_TO_DIMENSIONAL_BOX = "crypto/characters/dimention/to";
+        public const string PUT_CHARACTERS_TO_GAME = "crypto/characters/dimention/from";
+        public const string PUT_CHARACTERS_TO_BOX_AND_GAME = "crypto/characters/dimension/transfer";
     }
 }

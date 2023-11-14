@@ -1,6 +1,8 @@
-﻿using CryptoQuest.Core;
+﻿using System.Collections.Generic;
+using CryptoQuest.Core;
 using CryptoQuest.UI.Actions;
 using TinyMessenger;
+using UniRx;
 using UnityEngine;
 using UnityEngine.Localization;
 
@@ -46,11 +48,14 @@ namespace CryptoQuest.Tavern.States.CharacterReplacement
 
         private void ShowTransferSucceededMessage(ActionBase _)
         {
+            ActionDispatcher.Dispatch(new ShowLoading(false));
             HandleTransferMessage(_transferSucceededMsg);
         }
 
         private void ShowTransferFailedMessage(ActionBase _)
         {
+            Debug.LogError(_);
+            ActionDispatcher.Dispatch(new ShowLoading(false));
             HandleTransferMessage(_transferFailedMsg);
         }
 
@@ -76,16 +81,7 @@ namespace CryptoQuest.Tavern.States.CharacterReplacement
 
         private void YesButtonPressed()
         {
-            int[] listGameItemsToTransfer = _controller.UICharacterReplacement.SelectedGameItemsIds.ToArray();
-            int[] listWalletItemsToTransfer = _controller.UICharacterReplacement.SelectedWalletItemsIds.ToArray();
-
-            ActionDispatcher.Dispatch(new ShowLoading());
-            if (listGameItemsToTransfer.Length > 0)
-                ActionDispatcher.Dispatch(new SendCharactersToWallet(listGameItemsToTransfer));
-
-            if (listWalletItemsToTransfer.Length > 0)
-                ActionDispatcher.Dispatch(new SendCharactersToGame(listWalletItemsToTransfer));
-
+            ProceedToSendCharacters();
             _controller.UICharacterReplacement.ConfirmedTransmission();
         }
 
@@ -93,6 +89,27 @@ namespace CryptoQuest.Tavern.States.CharacterReplacement
         {
             _controller.DialogsManager.ChoiceDialog.Hide();
             StateMachine.Play(CharacterReplacementState);
+        }
+
+        private void ProceedToSendCharacters()
+        {
+            List<int> listGameItemsToTransfer = _controller.UICharacterReplacement.SelectedGameItemsIds;
+            List<int> listWalletItemsToTransfer = _controller.UICharacterReplacement.SelectedWalletItemsIds;
+
+            ActionDispatcher.Dispatch(new ShowLoading());
+
+            if (listGameItemsToTransfer.Count > 0 && listWalletItemsToTransfer.Count > 0)
+            {
+                ActionDispatcher.Dispatch(new SendCharactersToBothSide(listGameItemsToTransfer.ToArray(),
+                    listWalletItemsToTransfer.ToArray()));
+                return;
+            }
+
+            if (listGameItemsToTransfer.Count > 0)
+                ActionDispatcher.Dispatch(new SendCharactersToWallet(listGameItemsToTransfer.ToArray()));
+
+            if (listWalletItemsToTransfer.Count > 0)
+                ActionDispatcher.Dispatch(new SendCharactersToGame(listWalletItemsToTransfer.ToArray()));
         }
     }
 }

@@ -5,7 +5,7 @@ using CryptoQuest.Sagas;
 using CryptoQuest.System;
 using CryptoQuest.Tavern.Data;
 using CryptoQuest.Tavern.Interfaces;
-using UnityEngine;
+using Obj = CryptoQuest.Sagas.Objects;
 
 namespace CryptoQuest.Tavern.Sagas
 {
@@ -14,13 +14,14 @@ namespace CryptoQuest.Tavern.Sagas
         private IPartyController _partyController;
 
         private readonly List<ICharacterData> _inPartyCharacters = new();
+        private readonly List<Obj.Character> _charactersInParty = new();
         private bool _isUsingMock = false;
 
         protected override void HandleAction(GetCharacters ctx)
         {
             if (_isUsingMock) return;
             InitMockData();
-            ActionDispatcher.Dispatch(new GetInPartyNftCharactersSucceed(_inPartyCharacters));
+            ActionDispatcher.Dispatch(new GetInPartyNftCharactersSucceed(_charactersInParty));
         }
 
         private void InitMockData()

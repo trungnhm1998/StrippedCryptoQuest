@@ -1,24 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net;
+using CryptoQuest.Actions;
 using CryptoQuest.Core;
 using CryptoQuest.Networking;
+using CryptoQuest.Networking.API;
 using CryptoQuest.Sagas;
-using CryptoQuest.Sagas.Objects;
 using CryptoQuest.System;
-using CryptoQuest.Tavern.Data;
-using CryptoQuest.Tavern.Interfaces;
-using CryptoQuest.Tavern.Objects;
 using CryptoQuest.UI.Actions;
 using UniRx;
 using UnityEngine;
+using Obj = CryptoQuest.Sagas.Objects;
 
 namespace CryptoQuest.Tavern.Sagas
 {
     public class GetNftCharacters : SagaBase<GetCharacters>
     {
-        private readonly List<ICharacterData> _inGameCharacters = new();
-        private readonly List<ICharacterData> _walletCharacters = new();
+        private readonly List<Obj.Character> _inGameCharacters = new();
+        private readonly List<Obj.Character> _walletCharacters = new();
 
         protected override void HandleAction(GetCharacters ctx)
         {
@@ -26,7 +25,7 @@ namespace CryptoQuest.Tavern.Sagas
             var restClient = ServiceProvider.GetService<IRestClient>();
             restClient
                 .WithParams(new Dictionary<string, string>() { { "source", $"{((int)ctx.Status).ToString()}" } })
-                .Get<CharactersResponse>(API.GET_CHARACTERS)
+                .Get<Obj.CharactersResponse>(Profile.GET_CHARACTERS)
                 .Subscribe(OnGetCharacters, OnError);
         }
 
@@ -37,7 +36,7 @@ namespace CryptoQuest.Tavern.Sagas
             ActionDispatcher.Dispatch(new GetNftCharactersFailed());
         }
 
-        private void OnGetCharacters(CharactersResponse response)
+        private void OnGetCharacters(Obj.CharactersResponse response)
         {
             if (response.code != (int)HttpStatusCode.OK) return;
             UpdateInGameCache(response.data.characters);
@@ -46,33 +45,27 @@ namespace CryptoQuest.Tavern.Sagas
             ActionDispatcher.Dispatch(new ShowLoading(false));
         }
 
-        private void UpdateInGameCache(CryptoQuest.Sagas.Objects.Character[] characters)
+        private void UpdateInGameCache(Obj.Character[] characters)
         {
             if (characters.Length == 0) return;
             _inGameCharacters.Clear();
             foreach (var character in characters)
             {
-                if (character.inGameStatus != (int)ECharacterStatus.InGame) continue;
-                _inGameCharacters.Add(new CharacterData(character.name, character.level, false)
-                {
-                    Id = character.id
-                });
+                if (character.inGameStatus != (int)Obj.ECharacterStatus.InGame) continue;
+                _inGameCharacters.Add(character);
             }
 
             ActionDispatcher.Dispatch(new GetGameNftCharactersSucceed(_inGameCharacters));
         }
 
-        private void UpdateInboxCache(CryptoQuest.Sagas.Objects.Character[] characters)
+        private void UpdateInboxCache(Obj.Character[] characters)
         {
             if (characters.Length == 0) return;
             _walletCharacters.Clear();
             foreach (var character in characters)
             {
-                if (character.inGameStatus != (int)ECharacterStatus.InBox) continue;
-                _walletCharacters.Add(new CharacterData(character.name, character.level, false)
-                {
-                    Id = character.id
-                });
+                if (character.inGameStatus != (int)Obj.ECharacterStatus.InBox) continue;
+                _walletCharacters.Add(character);
             }
 
             ActionDispatcher.Dispatch(new GetWalletNftCharactersSucceed(_walletCharacters));

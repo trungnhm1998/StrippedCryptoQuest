@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
 using CryptoQuest.Core;
 using CryptoQuest.Sagas.Objects;
-using CryptoQuest.Tavern.Interfaces;
-using CryptoQuest.Tavern.Objects;
+using Obj = CryptoQuest.Sagas.Objects;
 
 namespace CryptoQuest.Tavern
 {
@@ -11,21 +10,11 @@ namespace CryptoQuest.Tavern
         public ECharacterStatus Status { get; set; } = ECharacterStatus.All;
     }
 
-    public class GetGameNftCharactersSucceed : ActionBase
-    {
-        public List<ICharacterData> InGameCharacters { get; }
-
-        public GetGameNftCharactersSucceed(List<ICharacterData> inGameCharacters)
-        {
-            InGameCharacters = inGameCharacters;
-        }
-    }
-
     public class GetWalletNftCharactersSucceed : ActionBase
     {
-        public List<ICharacterData> WalletCharacters { get; }
+        public List<Obj.Character> WalletCharacters { get; }
 
-        public GetWalletNftCharactersSucceed(List<ICharacterData> walletCharacters)
+        public GetWalletNftCharactersSucceed(List<Obj.Character> walletCharacters)
         {
             WalletCharacters = walletCharacters;
         }
@@ -51,14 +40,25 @@ namespace CryptoQuest.Tavern
         }
     }
 
+    public class SendCharactersToBothSide : ActionBase
+    {
+        public int[] SelectedInWalletCharacters { get; }
+        public int[] SelectedInGameCharacters { get; }
+        public SendCharactersToBothSide(int[] selectedInGameCharacters, int[] selectedInWalletCharacters)
+        {
+            SelectedInGameCharacters = selectedInGameCharacters;
+            SelectedInWalletCharacters = selectedInWalletCharacters;
+        }
+    }
+
     public class TransferSucceed : ActionBase { }
     public class TransferFailed : ActionBase { }
 
     public class GetInPartyNftCharactersSucceed : ActionBase
     {
-        public List<ICharacterData> InPartyCharacters { get; }
+        public List<Obj.Character> InPartyCharacters { get; }
 
-        public GetInPartyNftCharactersSucceed(List<ICharacterData> inPartyCharacters)
+        public GetInPartyNftCharactersSucceed(List<Obj.Character> inPartyCharacters)
         {
             InPartyCharacters = inPartyCharacters;
         }

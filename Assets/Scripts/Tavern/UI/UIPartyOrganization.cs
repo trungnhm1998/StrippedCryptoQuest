@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using CryptoQuest.Tavern.UI.CharacterReplacement;
 using UnityEngine;
 
 namespace CryptoQuest.Tavern.UI
