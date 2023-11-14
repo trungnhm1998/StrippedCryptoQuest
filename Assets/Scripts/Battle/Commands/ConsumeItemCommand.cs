@@ -31,6 +31,7 @@ namespace CryptoQuest.Battle.Commands
             bool ableToUseOnAtLeastOneHero = false;
             foreach (var target in _targets)
             {
+                if (!target.IsValidAndAlive()) continue;
                 BattleEventBus.RaiseEvent(new ConsumeItemEvent()
                 {
                     Character = _owner,
