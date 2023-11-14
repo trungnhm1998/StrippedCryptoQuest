@@ -1,6 +1,9 @@
+using System.Collections.Generic;
+using CryptoQuest.Language;
 using CryptoQuest.Language.Settings;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Localization.Settings;
 
 namespace CryptoQuest.System.Settings
 {
@@ -12,17 +15,19 @@ namespace CryptoQuest.System.Settings
         [SerializeField] TMP_Dropdown _dropdown;
 
         private void Start() => InitializeLanguage();
-
-        public void OnChangeLanguage(int index) => _languageSetting.CurrentLanguageIndex = index;
-
+        public void OnChangeLanguage(int index) => _languageSetting.CurrentLanguageIndex = LocalizationSettings.AvailableLocales.Locales[index];
         public void Initialize() => _dropdown.Select();
         public void DeInitialize() => _dropdown.Hide();
 
         private void InitializeLanguage()
         {
             _dropdown.ClearOptions();
-            _dropdown.AddOptions(_languageSetting.LanguageList);
-            _dropdown.value = _languageSetting.CurrentLanguageIndex;
+            
+            List<string> localeNames = LanguageHelper.GetLocaleNames();
+            int localeIndex = LanguageHelper.GetLocaleIndex(_languageSetting.CurrentLanguageIndex);
+            
+            _dropdown.AddOptions(localeNames);
+            _dropdown.value = localeIndex;
         }
     }
 }
