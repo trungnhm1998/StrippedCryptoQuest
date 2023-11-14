@@ -115,7 +115,7 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem
         protected virtual bool CheckTagRequirementsMet()
         {
             var tagConditionDetail = Def.ApplicationTagRequirements;
-            return AbilitySystemHelper.SystemHasAllTags(Source, tagConditionDetail.RequireTags)
+            return AbilitySystemHelper.SystemHasAllTags(Target, tagConditionDetail.RequireTags)
                    && AbilitySystemHelper.SystemHasNoneTags(Target, tagConditionDetail.IgnoreTags);
         }
 
