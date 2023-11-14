@@ -3,7 +3,7 @@ using CryptoQuest.Core;
 
 namespace CryptoQuest.Sagas.Profile
 {
-    public class FetchEquipmentsOnAuthenticated : SagaBase<GetProfileSucceed>
+    public class FetchInventoriesOnAuthenticated : SagaBase<GetProfileSucceed>
     {
         protected override void HandleAction(GetProfileSucceed _)
         {

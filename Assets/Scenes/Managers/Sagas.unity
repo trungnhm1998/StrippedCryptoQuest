@@ -445,8 +445,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 983880951}
-  - component: {fileID: 983880953}
-  - component: {fileID: 983880952}
   - component: {fileID: 983880954}
   - component: {fileID: 983880955}
   - component: {fileID: 983880956}
@@ -474,106 +472,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 950282263}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &983880952
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 983880950}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe720b9728224a08a92ea1043c4cdfaa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _dataLength: 10
-  _classIcon: {fileID: 21300000, guid: ce5cd80f10e324daa97de711617d905f, type: 3}
-  _localizedNames:
-  - m_TableReference:
-      m_TableCollectionName: GUID:c595a35d5853c61488c828b448142288
-    m_TableEntryReference:
-      m_KeyId: 20266142442774528
-      m_Key: 
-    m_FallbackState: 0
-    m_WaitForCompletion: 0
-    m_LocalVariables: []
-  - m_TableReference:
-      m_TableCollectionName: GUID:c595a35d5853c61488c828b448142288
-    m_TableEntryReference:
-      m_KeyId: 15229462864232448
-      m_Key: 
-    m_FallbackState: 0
-    m_WaitForCompletion: 0
-    m_LocalVariables: []
-  - m_TableReference:
-      m_TableCollectionName: GUID:c595a35d5853c61488c828b448142288
-    m_TableEntryReference:
-      m_KeyId: 15229282391719936
-      m_Key: 
-    m_FallbackState: 0
-    m_WaitForCompletion: 0
-    m_LocalVariables: []
-  - m_TableReference:
-      m_TableCollectionName: GUID:c595a35d5853c61488c828b448142288
-    m_TableEntryReference:
-      m_KeyId: 15229556325908480
-      m_Key: 
-    m_FallbackState: 0
-    m_WaitForCompletion: 0
-    m_LocalVariables: []
-  references:
-    version: 2
-    RefIds: []
---- !u!114 &983880953
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 983880950}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7fa0000884ee4b7db1ed7bcdf5935f05, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _dataLength: 5
-  _classIcon: {fileID: 21300000, guid: ce5cd80f10e324daa97de711617d905f, type: 3}
-  _localizedNames:
-  - m_TableReference:
-      m_TableCollectionName: GUID:c595a35d5853c61488c828b448142288
-    m_TableEntryReference:
-      m_KeyId: 20266142442774528
-      m_Key: 
-    m_FallbackState: 0
-    m_WaitForCompletion: 0
-    m_LocalVariables: []
-  - m_TableReference:
-      m_TableCollectionName: GUID:c595a35d5853c61488c828b448142288
-    m_TableEntryReference:
-      m_KeyId: 15229462864232448
-      m_Key: 
-    m_FallbackState: 0
-    m_WaitForCompletion: 0
-    m_LocalVariables: []
-  - m_TableReference:
-      m_TableCollectionName: GUID:c595a35d5853c61488c828b448142288
-    m_TableEntryReference:
-      m_KeyId: 15229282391719936
-      m_Key: 
-    m_FallbackState: 0
-    m_WaitForCompletion: 0
-    m_LocalVariables: []
-  - m_TableReference:
-      m_TableCollectionName: GUID:c595a35d5853c61488c828b448142288
-    m_TableEntryReference:
-      m_KeyId: 15229556325908480
-      m_Key: 
-    m_FallbackState: 0
-    m_WaitForCompletion: 0
-    m_LocalVariables: []
-  references:
-    version: 2
-    RefIds: []
 --- !u!114 &983880954
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -666,6 +564,16 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 751876e22052ec04badd9a6a94d8dcbf, type: 2}
   - {fileID: 11400000, guid: f2e9977b2166b3a4b92e6bb190e9cfc1, type: 2}
   - {fileID: 11400000, guid: 2c10cad529112714884e7592a5c73913, type: 2}
+  _charNames:
+  - Clein-Steinzelg
+  - Eric-Kruger
+  - Miranda-Cursbelt
+  - Misia
+  _charOrigins:
+  - {fileID: 11400000, guid: e4ce0e107c09b55418a7e7bd00470229, type: 2}
+  - {fileID: 11400000, guid: f142b74e1adbf9741adecf25cc79ae42, type: 2}
+  - {fileID: 11400000, guid: 8462ed99360926944a2b4dacf233c1e3, type: 2}
+  - {fileID: 11400000, guid: 2549938ffe1eb614ba1376ee561f61cc, type: 2}
   _attributeMap:
   - Name: maxHP
     Attribute: {fileID: 11400000, guid: 692557e6fee799243868270d0b093d7e, type: 2}
