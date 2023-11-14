@@ -14,7 +14,7 @@ namespace CryptoQuest.Church
         [field: SerializeField] public ChurchPresenter Presenter { get; private set; }
         [field: SerializeField] public ChurchDialogConroller DialogController { get; private set; }
         public Action ExitStateEvent;
-        public bool IsExitState;
+        public bool IsExitState { get; set;}
 
         private void OnDisable()
         {

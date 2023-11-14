@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using CryptoQuest.Character.Hero.AvatarProvider;
 using CryptoQuest.Church.UI;
+using CryptoQuest.Gameplay.Inventory.Currency;
+using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
 using CryptoQuest.Gameplay.PlayerParty;
 using CryptoQuest.Input;
 using CryptoQuest.System;
@@ -14,13 +16,17 @@ namespace CryptoQuest.Church
 {
     public class ChurchPresenter : MonoBehaviour
     {
-        public event Action<bool> IsReviveSuccessEvent;
         [SerializeField] private GameplayEffectDefinition _reviveEffectDefinition;
         [SerializeField] private List<UICharacter> _uiListCharacter;
-        [SerializeField] private UICharacter _characterToRevive;
         [SerializeField] private MerchantsInputManager _input;
+        [SerializeField] private WalletSO _wallet;
+        [SerializeField] private CurrencySO _gold;
         private IPartyController _partyController;
         private IHeroAvatarProvider _heroAvatarProvider;
+        public UICharacter CharacterToRevive { get; private set; }
+        public bool IsEnoughGold { get; private set; }
+        public bool IsAlive { get; private set; }
+        private float _currentGold;
 
         private void OnEnable()
         {
@@ -47,7 +53,7 @@ namespace CryptoQuest.Church
 
         public void GetCharacter(UICharacter character)
         {
-            _characterToRevive = character;
+            CharacterToRevive = character;
         }
 
         public void SelectDefaultButton()
@@ -58,14 +64,23 @@ namespace CryptoQuest.Church
             }
         }
 
-        public void ReviveCharacter()
+        public void ValidateGoldToRevive(float cost)
         {
-            AbilitySystemBehaviour abilitySystem = _characterToRevive.HeroBehaviour.GetComponent<AbilitySystemBehaviour>();
-            bool isAlive = _characterToRevive.HeroBehaviour.IsValidAndAlive();
-            IsReviveSuccessEvent?.Invoke(isAlive);
-            if (!isAlive)
-                abilitySystem.ApplyEffectSpecToSelf(abilitySystem.MakeOutgoingSpec(_reviveEffectDefinition));
+            _currentGold = _wallet[_gold].Amount;
+            IsEnoughGold = _currentGold >= cost;
+            if (IsEnoughGold)
+                ReviveCharacter(cost);
+        }
 
+        private void ReviveCharacter(float cost)
+        {
+            AbilitySystemBehaviour abilitySystem = CharacterToRevive.HeroBehaviour.GetComponent<AbilitySystemBehaviour>();
+            IsAlive = CharacterToRevive.HeroBehaviour.IsValidAndAlive();
+            if (!IsAlive)
+            {
+                abilitySystem.ApplyEffectSpecToSelf(abilitySystem.MakeOutgoingSpec(_reviveEffectDefinition));
+                _wallet[_gold].SetAmount(_currentGold - cost);
+            }
         }
     }
 }

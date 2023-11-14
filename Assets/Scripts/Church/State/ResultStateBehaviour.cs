@@ -7,31 +7,51 @@ namespace CryptoQuest.Church.State
     {
         [SerializeField] private LocalizedString _reviveSuccessMessage;
         [SerializeField] private LocalizedString _reviveFailMessage;
+        [SerializeField] private LocalizedString _notEnoughGoldMessage;
         private ChurchStateController _stateController;
         private static readonly int SelectCharacter = Animator.StringToHash("SelectCharacterState");
+        private static readonly int ContinueToRevive = Animator.StringToHash("ContinueReviveState");
+        private bool _isEnoughGold;
+        private bool _reviveSuccess;
 
         protected override void OnEnter()
         {
             _stateController = StateMachine.GetComponent<ChurchStateController>();
             _stateController.Input.SubmitEvent += ChangeState;
-            _stateController.Presenter.IsReviveSuccessEvent += SetMessage;
+            ValidateToRevive();
         }
 
         protected override void OnExit()
         {
             _stateController.Input.SubmitEvent -= ChangeState;
-            _stateController.Presenter.IsReviveSuccessEvent -= SetMessage;
         }
 
         private void ChangeState()
         {
-            StateMachine.Play(SelectCharacter);
+            StateMachine.Play(_reviveSuccess ? SelectCharacter : ContinueToRevive);
         }
 
-        private void SetMessage(bool isSuccess)
+        private void ValidateToRevive()
         {
-            LocalizedString message = isSuccess ? _reviveSuccessMessage : _reviveFailMessage;
+            UpdateStatus();
+            SetMessage();
+        }
+
+        private void UpdateStatus()
+        {
+            _isEnoughGold = _stateController.Presenter.IsEnoughGold;
+            _reviveSuccess = !_stateController.Presenter.IsAlive;
+        }
+
+        private void SetMessage()
+        {
+            LocalizedString message = _isEnoughGold ? GetMessageForEnoughGold() : _notEnoughGoldMessage;
             _stateController.DialogController.Dialogue.SetMessage(message).Show();
+        }
+
+        private LocalizedString GetMessageForEnoughGold()
+        {
+            return _reviveSuccess ? _reviveFailMessage : _reviveSuccessMessage;
         }
     }
 }
