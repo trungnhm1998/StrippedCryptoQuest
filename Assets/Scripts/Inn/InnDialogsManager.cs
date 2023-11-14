@@ -11,9 +11,9 @@ namespace CryptoQuest.Inn
 {
     public class InnDialogsManager : MonoBehaviour
     {
-        public Action<bool> RequestFadeEvent;
-        public Action RequestHealEvent;
-        public Action RequestHide;
+        public event Action<bool> RequestFadeEvent;
+        public event Action RequestHealEvent;
+        public event Action RequestHide;
 
         [SerializeField] private InnPresenter _innPresenter;
         [SerializeField] private InputMediatorSO _inputMediator;

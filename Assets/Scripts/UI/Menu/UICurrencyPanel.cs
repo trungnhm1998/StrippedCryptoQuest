@@ -37,6 +37,11 @@ namespace CryptoQuest.UI.Menu
         [SerializeField] private Text _diamondText;
         [SerializeField] private Text _soulText;
 
+        [Header("Animation Settings")]
+        [SerializeField] private float _duration = 0.5f;
+
+        [SerializeField] private Ease _showEase = Ease.OutBack;
+        [SerializeField] private Ease _hideEase = Ease.InBack;
         [SerializeField] private float _startPosX;
         [SerializeField] private float _endPosX;
 
@@ -54,6 +59,13 @@ namespace CryptoQuest.UI.Menu
 
         private void ShowCurrency(bool showGolds, bool showDiamonds, bool showSouls)
         {
+#if UNITY_EDITOR
+            if (_currencyContainer.gameObject.activeSelf)
+            {
+                _currencyContainer.anchoredPosition = new Vector2(_endPosX, _currencyContainer.anchoredPosition.y);
+            }
+#endif
+
             _currencyContainer.gameObject.SetActive(true);
 
             if (showGolds)
@@ -71,13 +83,12 @@ namespace CryptoQuest.UI.Menu
                 UpdateCurrency(_wallet[_soul].Amount, ECurrencyType.Soul);
             }
 
-            _currencyContainer.DOLocalMoveX(_startPosX, 0.5f).SetEase(Ease.OutBack);
+            _currencyContainer.DOLocalMoveX(_startPosX, _duration).SetEase(_showEase);
         }
 
         private void HideCurrency()
         {
-            _currencyContainer.DOLocalMoveX(_endPosX, 0.5f).SetEase(Ease.InBack)
-                .OnComplete((Hide));
+            _currencyContainer.DOLocalMoveX(_endPosX, _duration).SetEase(_hideEase).OnComplete((Hide));
         }
 
         private void UpdateCurrency(float value = 0, ECurrencyType type = ECurrencyType.Gold)
