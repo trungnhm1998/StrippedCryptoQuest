@@ -18,23 +18,23 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects.Gamepla
             _counter = counter;
         }
 
-        public virtual void RegistCounterEvent() { }
+        public virtual void RegistCounterEvent(CounterGameplayEffect effect) { }
         /// <summary>
         /// Event should be removed when effect expired or the spec is destroyed
         /// </summary>
-        public virtual void RemoveCounterEvent() { }
+        public virtual void RemoveCounterEvent(CounterGameplayEffect effect) { }
 
-        public ActiveGameplayEffect CreateActiveEffect(GameplayEffectSpec inSpec)
+        public virtual ActiveGameplayEffect CreateActiveEffect(GameplayEffectSpec inSpec)
             => new CounterGameplayEffect(this, _counter, inSpec);
     }
 
     [Serializable]
     public class CounterGameplayEffect : ActiveGameplayEffect
     {
-        public static event Action ReduceCounter;
-        public static void ReduceCounterEvent() => ReduceCounter?.Invoke();
+        private event Action ReduceCounter;
+        public void ReduceCounterEvent() => ReduceCounter?.Invoke();
 
-        private int _counter = 0;
+        protected float _counter = 0;
         private CounterPolicy _policy;
 
         public CounterGameplayEffect(CounterPolicy counterPolicy, int counter,
@@ -42,7 +42,7 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects.Gamepla
         {
             _counter = counter;
             _policy = counterPolicy;
-            _policy.RegistCounterEvent();
+            _policy.RegistCounterEvent(this);
             ReduceCounter += ReduceStep;
         }
 
@@ -60,7 +60,7 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects.Gamepla
         private void RemoveRegistEvent()
         {
             ReduceCounter -= ReduceStep;
-            _policy.RemoveCounterEvent();
+            _policy.RemoveCounterEvent(this);
         }
 
         public override void OnRemoved()
