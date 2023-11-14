@@ -25,6 +25,13 @@ namespace CryptoQuest.Sagas.Profile
         [SerializeField] private HeroInventorySO _heroInventory;
         [SerializeField] private List<Elemental> _elements = new();
         [SerializeField] private List<CharacterClass> _classes = new();
+
+        [Tooltip("The order of character's name must match with the order of character's origin")]
+        [SerializeField] private List<String> _charNames = new();
+
+        [Tooltip("The order of character's name must match with the order of character's origin")]
+        [SerializeField] private List<Origin> _charOrigins = new();
+
         [SerializeField] private List<ResponseAttributeMap> _attributeMap = new();
 
         private Dictionary<string, AttributeScriptableObject> _lookupAttribute = new();
@@ -76,6 +83,7 @@ namespace CryptoQuest.Sagas.Profile
             nftCharacter.Elemental = _elements.FirstOrDefault(element => element.Id == Int32.Parse(response.elementId));
             nftCharacter.Class = _classes.FirstOrDefault(@class => @class.Id == Int32.Parse(response.classId));
             FillCharacterStats(response, ref nftCharacter);
+            nftCharacter.Origin = _charOrigins[_charNames.IndexOf(_charNames.FirstOrDefault(origin => origin == response.name))];
         }
 
         private void FillCharacterStats(Objects.Character response, ref HeroSpec nftCharacter)
