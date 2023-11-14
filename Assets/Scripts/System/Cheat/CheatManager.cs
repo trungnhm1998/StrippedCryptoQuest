@@ -1,5 +1,6 @@
 ﻿using System;
 using CommandTerminal;
+using CryptoQuest.Gameplay;
 using CryptoQuest.Input;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -17,6 +18,12 @@ namespace CryptoQuest.System.Cheat
         public Terminal Terminal => _terminal;
         [SerializeField] private InputMediatorSO _inputMediatorSO;
         public InputMediatorSO Input => _inputMediatorSO;
+
+        [SerializeField] private GameStateSO _gameStateSO;
+        public GameStateSO GameState => _gameStateSO;
+        
+        [SerializeField] public BattleInput _battleInput;
+        public BattleInput BattleInput => _battleInput;
 
         private void OnEnable()
         {

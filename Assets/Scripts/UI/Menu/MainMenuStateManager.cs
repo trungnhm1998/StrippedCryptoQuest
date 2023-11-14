@@ -1,4 +1,5 @@
-﻿using CryptoQuest.Input;
+﻿using CryptoQuest.Gameplay;
+using CryptoQuest.Input;
 using IndiGames.Core.Events.ScriptableObjects;
 using UnityEngine;
 
@@ -11,6 +12,7 @@ namespace CryptoQuest.UI.Menu
     {
         [SerializeField] private VoidEventChannelSO _forceCloseMainMenuEvent;
         [SerializeField] private InputMediatorSO _input;
+        [SerializeField] private GameStateSO _gameStateSO;
         [SerializeField] private UIMainMenu _uiMainMenuPanel;
         [SerializeField] private TabManager _tabManager;
 
@@ -49,6 +51,7 @@ namespace CryptoQuest.UI.Menu
             _forceCloseMainMenuEvent.EventRaised += CloseMainMenu;
             _uiMainMenuPanel.gameObject.SetActive(true);
             _input.EnableInputMap("Menus");
+            _gameStateSO.UpdateGameState(EGameState.Menu);
         }
 
         private void CloseMainMenu()
@@ -57,6 +60,7 @@ namespace CryptoQuest.UI.Menu
             _forceCloseMainMenuEvent.EventRaised -= CloseMainMenu;
             _uiMainMenuPanel.gameObject.SetActive(false);
             _input.EnableInputMap("MapGameplay");
+            _gameStateSO.UpdateGameState(EGameState.Field);
         }
     }
 }

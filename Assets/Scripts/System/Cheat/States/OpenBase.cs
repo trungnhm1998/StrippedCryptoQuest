@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using CryptoQuest.Gameplay;
+using UnityEngine;
 using UnityEngine.InputSystem;
 
 namespace CryptoQuest.System.Cheat.States
@@ -13,7 +14,7 @@ namespace CryptoQuest.System.Cheat.States
             // so user can't operate while terminal opening
             
             Manager.OnCommandNavigatePressed = NavigateCommand;
-            Manager.OnCloseTerminalPressed = () => animator.Play("Close");
+            Manager.OnCloseTerminalPressed = () => CloseTerminal(animator);
             Manager.OnEnterPressed = () => Manager.Terminal.EnterPressed();
             Manager.OnTabPressed = () => Manager.Terminal.TabPressed();
         }
@@ -30,6 +31,19 @@ namespace CryptoQuest.System.Cheat.States
             {
                 Manager.Terminal.PreviousCommand();
             }
+        }
+
+        private void CloseTerminal(Animator animator)
+        {
+            animator.Play("Close");
+
+            if (Manager.GameState.CurrentGameState == EGameState.Battle)
+            {
+                Manager.BattleInput.EnableBattleInput();
+                return;
+            }
+
+            Manager.Input.EnableMapGameplayInput();
         }
     }
 }
