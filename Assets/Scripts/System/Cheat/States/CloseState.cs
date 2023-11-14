@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using CryptoQuest.Gameplay;
+using UnityEngine;
 
 namespace CryptoQuest.System.Cheat.States
 {
@@ -20,6 +21,9 @@ namespace CryptoQuest.System.Cheat.States
 
         private void OpenTerminal()
         {
+            if (Manager.GameState.CurrentGameState != EGameState.Field) return;
+
+            Manager.Input.DisableAllInput();
             var openFull = Anim.GetBool(CheatManager.FullSize);
             Anim.Play(openFull ? "OpenFull" : "OpenSmall");
         }
