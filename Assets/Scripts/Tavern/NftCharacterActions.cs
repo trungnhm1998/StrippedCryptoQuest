@@ -1,13 +1,12 @@
 ﻿using System.Collections.Generic;
 using CryptoQuest.Core;
-using CryptoQuest.Sagas.Objects;
 using Obj = CryptoQuest.Sagas.Objects;
 
 namespace CryptoQuest.Tavern
 {
     public class GetCharacters : ActionBase
     {
-        public ECharacterStatus Status { get; set; } = ECharacterStatus.All;
+        public Obj.ECharacterStatus Status { get; set; } = Obj.ECharacterStatus.All;
     }
 
     public class GetWalletNftCharactersSucceed : ActionBase
@@ -25,6 +24,7 @@ namespace CryptoQuest.Tavern
     public class SendCharactersToWallet : ActionBase
     {
         public int[] SelectedInGameCharacters { get; }
+
         public SendCharactersToWallet(int[] selectedInGameCharacters)
         {
             SelectedInGameCharacters = selectedInGameCharacters;
@@ -34,6 +34,7 @@ namespace CryptoQuest.Tavern
     public class SendCharactersToGame : ActionBase
     {
         public int[] SelectedInWalletCharacters { get; }
+
         public SendCharactersToGame(int[] selectedInWalletCharacters)
         {
             SelectedInWalletCharacters = selectedInWalletCharacters;
@@ -44,6 +45,7 @@ namespace CryptoQuest.Tavern
     {
         public int[] SelectedInWalletCharacters { get; }
         public int[] SelectedInGameCharacters { get; }
+
         public SendCharactersToBothSide(int[] selectedInGameCharacters, int[] selectedInWalletCharacters)
         {
             SelectedInGameCharacters = selectedInGameCharacters;
@@ -51,7 +53,16 @@ namespace CryptoQuest.Tavern
         }
     }
 
-    public class TransferSucceed : ActionBase { }
+    public class TransferSucceed : ActionBase
+    {
+        public Obj.Character[] ResponseCharacters { get; }
+
+        public TransferSucceed(Obj.Character[] responseCharacters)
+        {
+            ResponseCharacters = responseCharacters;
+        }
+    }
+
     public class TransferFailed : ActionBase { }
 
     public class GetInPartyNftCharactersSucceed : ActionBase

@@ -11,17 +11,19 @@ using CryptoQuest.Core;
 using CryptoQuest.Gameplay;
 using CryptoQuest.Gameplay.Inventory;
 using CryptoQuest.Networking;
+using CryptoQuest.Networking.API;
 using CryptoQuest.Sagas.Objects;
 using CryptoQuest.System;
 using CryptoQuest.UI.Actions;
 using TinyMessenger;
 using UniRx;
 using UnityEngine;
-using AttributeScriptableObject = IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects.AttributeScriptableObject;
+using AttributeScriptableObject =
+    IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects.AttributeScriptableObject;
 
-namespace CryptoQuest.Sagas.Profile
+namespace CryptoQuest.Tavern.Sagas
 {
-    public class FetchProfileCharacters : SagaBase<FetchProfileCharactersAction>
+    public class FetchProfileCharacters : MonoBehaviour
     {
         [SerializeField] private HeroInventorySO _heroInventory;
         [SerializeField] private List<Elemental> _elements = new();
@@ -39,32 +41,47 @@ namespace CryptoQuest.Sagas.Profile
         private FieldInfo[] _fields;
 
         private TinyMessageSubscriptionToken _heroInventoryUpdateEvent;
+        private TinyMessageSubscriptionToken _fetchEvent;
+        private TinyMessageSubscriptionToken _transferSuccessEvent;
 
         private void Awake()
         {
             _lookupAttribute = _attributeMap.ToDictionary(map => map.Name, map => map.Attribute);
+        }
+
+        private void OnEnable()
+        {
+            _fetchEvent = ActionDispatcher.Bind<FetchProfileCharactersAction>(HandleAction);
             _heroInventoryUpdateEvent = ActionDispatcher.Bind<GetGameNftCharactersSucceed>(RefreshHeroInventory);
+            _transferSuccessEvent = ActionDispatcher.Bind<TransferSucceed>(FilterAndRefreshInventory);
         }
 
-        protected override void OnEnable()
+        private void OnDisable()
         {
-            base.OnEnable();
+            ActionDispatcher.Unbind(_fetchEvent);
             ActionDispatcher.Unbind(_heroInventoryUpdateEvent);
+            ActionDispatcher.Unbind(_transferSuccessEvent);
         }
 
-        private void RefreshHeroInventory(GetGameNftCharactersSucceed obj)
+        private void FilterAndRefreshInventory(TransferSucceed ctx)
         {
-            OnInventoryFilled(obj.InGameCharacters.ToArray());
+            var ingameCharacters = ctx.ResponseCharacters.Where(character => character.inGameStatus == (int)ECharacterStatus.InGame);
+            OnInventoryFilled(ingameCharacters.ToArray());
         }
 
-        protected override void HandleAction(FetchProfileCharactersAction _)
+        private void RefreshHeroInventory(GetGameNftCharactersSucceed ctx)
+        {
+            OnInventoryFilled(ctx.InGameCharacters.ToArray());
+        }
+
+        private void HandleAction(FetchProfileCharactersAction _)
         {
             ActionDispatcher.Dispatch(new ShowLoading());
             var restClient = ServiceProvider.GetService<IRestClient>();
             restClient
                 .WithParams(new Dictionary<string, string>()
                     { { "source", $"{((int)ECharacterStatus.InGame).ToString()}" } })
-                .Get<CharactersResponse>(Networking.API.Profile.GET_CHARACTERS)
+                .Get<CharactersResponse>(Profile.GET_CHARACTERS)
                 .Subscribe(ProcessResponseCharacters, OnError);
         }
 
@@ -77,34 +94,35 @@ namespace CryptoQuest.Sagas.Profile
             OnInventoryFilled(responseCharacters);
         }
 
-        private void OnInventoryFilled(Objects.Character[] characters)
+        private void OnInventoryFilled(CryptoQuest.Sagas.Objects.Character[] characters)
         {
             var nftCharacters = characters.Select(CreateNftCharacter).ToList();
             _heroInventory.OwnedHeroes.Clear();
             _heroInventory.OwnedHeroes = nftCharacters;
         }
 
-        private HeroSpec CreateNftCharacter(Objects.Character characterResponse)
+        private HeroSpec CreateNftCharacter(CryptoQuest.Sagas.Objects.Character characterResponse)
         {
             var nftCharacter = new HeroSpec();
             FillCharacterData(characterResponse, ref nftCharacter);
             return nftCharacter;
         }
 
-        private void FillCharacterData(Objects.Character response, ref HeroSpec nftCharacter)
+        private void FillCharacterData(CryptoQuest.Sagas.Objects.Character response, ref HeroSpec nftCharacter)
         {
             nftCharacter.Id = response.id;
             nftCharacter.Experience = (float)(response.exp);
             nftCharacter.Elemental = _elements.FirstOrDefault(element => element.Id == Int32.Parse(response.elementId));
             nftCharacter.Class = _classes.FirstOrDefault(@class => @class.Id == Int32.Parse(response.classId));
             FillCharacterStats(response, ref nftCharacter);
-            nftCharacter.Origin = _charOrigins[_charNames.IndexOf(_charNames.FirstOrDefault(origin => origin == response.name))];
+            nftCharacter.Origin =
+                _charOrigins[_charNames.IndexOf(_charNames.FirstOrDefault(origin => origin == response.name))];
         }
 
-        private void FillCharacterStats(Objects.Character response, ref HeroSpec nftCharacter)
+        private void FillCharacterStats(CryptoQuest.Sagas.Objects.Character response, ref HeroSpec nftCharacter)
         {
             var initialAttributes = new Dictionary<AttributeScriptableObject, CappedAttributeDef>();
-            _fields ??= typeof(Objects.Character).GetFields();
+            _fields ??= typeof(CryptoQuest.Sagas.Objects.Character).GetFields();
             foreach (var fieldInfo in _fields)
             {
                 if (_lookupAttribute.TryGetValue(fieldInfo.Name, out var attributeSO) == false) continue;

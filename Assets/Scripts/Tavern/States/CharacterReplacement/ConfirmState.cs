@@ -48,7 +48,6 @@ namespace CryptoQuest.Tavern.States.CharacterReplacement
 
         private void ShowTransferSucceededMessage(ActionBase _)
         {
-            ActionDispatcher.Dispatch(new ShowLoading(false));
             HandleTransferMessage(_transferSucceededMsg);
         }
 
