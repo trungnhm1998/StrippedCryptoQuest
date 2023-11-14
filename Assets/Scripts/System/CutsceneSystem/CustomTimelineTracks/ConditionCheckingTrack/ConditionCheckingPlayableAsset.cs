@@ -13,8 +13,10 @@ namespace CryptoQuest.System.CutsceneSystem.CustomTimelineTracks.ConditionChecki
 
         public override Playable CreatePlayable(PlayableGraph graph, GameObject owner)
         {
-            var playable = ScriptPlayable<ConditionCheckingTrackPlayableBehavior>.Create(graph, _template);
-            var director = graph.GetResolver() as PlayableDirector;
+            ScriptPlayable<ConditionCheckingTrackPlayableBehavior> playable =
+                ScriptPlayable<ConditionCheckingTrackPlayableBehavior>.Create(graph, _template);
+            PlayableDirector director = graph.GetResolver() as PlayableDirector;
+
             _template.SetDirector(director);
             return playable;
         }

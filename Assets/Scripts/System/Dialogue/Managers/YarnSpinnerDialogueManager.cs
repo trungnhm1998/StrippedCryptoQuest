@@ -117,7 +117,15 @@ namespace CryptoQuest.System.Dialogue.Managers
         private IEnumerator CoRunDialogue(string yarnNodeName)
         {
             yield return new WaitUntil(() => IsYarnTableLoaded);
+
+            if (string.IsNullOrEmpty(yarnNodeName))
+            {
+                Debug.LogWarning("YarnSpinnerDialogueManager::ShowDialogue: yarnNodeName is null or empty");
+                yield break;
+            }
+
             _dialogueRunner.StartDialogue(yarnNodeName);
+            IsYarnTableLoaded = false;
         }
 
         public void DialogueCompleted()
