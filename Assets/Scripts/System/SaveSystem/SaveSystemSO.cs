@@ -1,20 +1,20 @@
 using System;
-using System.Collections;
-using IndiGames.Core.SceneManagementSystem.ScriptableObjects;
 using Newtonsoft.Json;
 using UnityEngine;
 
-namespace CryptoQuest.System.SaveSystem
+namespace CryptoQuest.SaveSystem
 {
     [CreateAssetMenu(menuName = "Crypto Quest/SaveSystem/SaveSystemSO")]
     public class SaveSystemSO : ScriptableObject, ISaveSystem
     {
         [SerializeField] private SaveManagerSO _saveManagerSO;
         [SerializeField] private SaveData _saveData = new();
-        public SaveData SaveData => _saveData;
 
-        public Action Saved;
-        public Action Loaded;
+        public SaveData SaveData
+        {
+            get => _saveData;
+            set => _saveData = value;
+        }
 
         public string PlayerName
         {
@@ -22,88 +22,36 @@ namespace CryptoQuest.System.SaveSystem
             set => _saveData.PlayerName = value;
         }
 
-        public bool SaveGame()
+        /// <summary>
+        /// Make sure the safe file are latest with current date
+        /// </summary>
+        /// <returns>true if save file exists</returns>
+        public bool Save()
         {
             _saveData.SavedTime = DateTime.Now;
-            var json = JsonConvert.SerializeObject(_saveData); ;
-            var result = !string.IsNullOrEmpty(json) && _saveManagerSO.Save(json);
-            if (result) { Saved?.Invoke(); }
-            return result;
+            var json = JsonConvert.SerializeObject(_saveData);
+            return !string.IsNullOrEmpty(json) && _saveManagerSO.Save(json);
         }
 
-        public bool LoadGame()
+        public bool Load()
         {
-            var json = _saveManagerSO.Load();
-            if (!string.IsNullOrEmpty(json))
-            {
-                Debug.Log("Load Save: " + json);
-                _saveData = JsonConvert.DeserializeObject<SaveData>(json);
-                if(_saveData != null)
-                {
-                    Loaded?.Invoke();
-                    return true;
-                }
-            }
-            return false;
+            if (!_saveManagerSO.Load(out var json)) return false;
+            _saveData = JsonConvert.DeserializeObject<SaveData>(json);
+            return true;
         }
 
-        public IEnumerator CoLoadObject(ISaveObject jObject, Action<bool> callback = null)
+        public bool LoadObject(ISaveObject jObject)
         {
-            if (jObject != null)
-            {
-                foreach (var data in _saveData.Objects)
-                {
-                    if (data != null && data.Value != null && data.Key == jObject.Key)
-                    {
-                        yield return jObject.CoFromJson(data.Value, callback);
-                        yield break;
-                    }
-                }
-            }
-            if (callback != null) { callback(false); }
-            yield break;
+            if (jObject == null) return false;
+            return _saveData.TryGetValue(jObject.Key, out var json) && jObject.FromJson(json);
         }
 
         public bool SaveObject(ISaveObject jObject)
         {
-            try
-            {
-                if (jObject != null)
-                {
-                    foreach (var data in _saveData.Objects)
-                    {
-                        if (data.Key == jObject.Key)
-                        {
-                            _saveData.Objects.Remove(data);
-                            break;
-                        }
-                    }
-                    _saveData.Objects.Add(new KeyValue(jObject.Key, jObject.ToJson()));
-                    return SaveGame();
-                }
-            }
-            catch (Exception ex)
-            {
-                Debug.LogException(ex);
-            }
-            return false;
+            if (jObject == null) return false;
+            _saveData[jObject.Key] = jObject.ToJson();
+            Save(); 
+            return true;
         }
-
-        #region Editor Tools
-
-#if UNITY_EDITOR
-        public void Editor_ClearSave()
-        {
-            _saveData = new SaveData();
-            SaveGame();
-        }
-
-        public void Editor_OpenSaveFolder()
-        {
-            Application.OpenURL(Application.persistentDataPath);
-        }
-#endif
-
-        #endregion
     }
 }

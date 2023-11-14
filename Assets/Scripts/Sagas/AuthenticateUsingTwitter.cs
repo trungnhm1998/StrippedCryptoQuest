@@ -16,8 +16,7 @@ namespace CryptoQuest.Sagas
 
         protected override void HandleAction(LoginUsingTwitter ctx)
         {
-            ActionDispatcher.Dispatch(new ShowLoading());
-            StartCoroutine(DelayLoginFailedCo());
+            ActionDispatcher.Dispatch(new AuthenticateSucceed());
         }
 
         private IEnumerator DelayLoginFailedCo()

@@ -1,16 +1,14 @@
-using IndiGames.Core.SaveSystem;
-using IndiGames.Core.SceneManagementSystem.ScriptableObjects;
-using System;
-using System.Collections;
-using System.Threading.Tasks;
-
-public interface ISaveSystem
+namespace CryptoQuest.SaveSystem
 {
-    string PlayerName { get; set; }
+    public interface ISaveSystem
+    {
+        SaveData SaveData { get; set; }
+        string PlayerName { get; set; }
 
-    bool SaveObject(ISaveObject jObject);
-    IEnumerator CoLoadObject(ISaveObject jObject, Action<bool> callback = null);
+        bool SaveObject(ISaveObject jObject);
+        bool LoadObject(ISaveObject jObject);
 
-    bool SaveGame();
-    bool LoadGame();
+        bool Save();
+        bool Load();
+    }
 }

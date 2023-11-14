@@ -2,27 +2,12 @@
 using CryptoQuest.Audio.AudioEmitters;
 using CryptoQuest.Audio.Settings;
 using CryptoQuest.Core;
-using CryptoQuest.System.SaveSystem.Actions;
 using System;
+using CryptoQuest.SaveSystem.Sagas;
 using UnityEngine;
 
 namespace CryptoQuest.Audio
 {
-    [Serializable]
-    public class AudioSave
-    {
-        public float Volume = 1f;
-    }
-
-    /// <summary>
-    /// TODO: This class must be wait to Sage scene loaded
-    /// Because it will be load language from save data
-    /// 
-    /// <remarks>
-    /// @Author: thai-phi
-    /// </remarks>
-    /// 
-    /// </summary>
     [RequireComponent((typeof(AudioEmitterPool)))]
     public class AudioManager : MonoBehaviour
     {
@@ -45,20 +30,10 @@ namespace CryptoQuest.Audio
         private AudioCueSO _currentSfxCue;
         private AudioCueSO _currentBgmCue;
 
-        [HideInInspector] public AudioSave SaveData;
-        private TinyMessenger.TinyMessageSubscriptionToken _listenToLoadCompletedEventToken;
-
         private void Awake()
         {
             _pool.Create(_audioEmitterPoolSize);
             _pool.SetParent(this.transform);
-        }
-
-        private void Start()
-        {
-            _listenToLoadCompletedEventToken =
-                ActionDispatcher.Bind<LoadAudioCompletedAction>(action => InitVolume(action.IsSuccess));
-            ActionDispatcher.Dispatch(new LoadAudioAction(this));
         }
 
         protected void OnEnable()
@@ -81,12 +56,6 @@ namespace CryptoQuest.Audio
             _backgroundMusicEventChannel.AudioStopRequested -= StopBackgroundMusic;
 
             audioSettings.VolumeChanged -= ChangeMasterVolume;
-        }
-
-        private void InitVolume(bool loaded)
-        {
-            ActionDispatcher.Unbind(_listenToLoadCompletedEventToken);
-            ChangeMasterVolume(loaded ? SaveData.Volume : audioSettings.Volume);
         }
 
         public void PlaySfx(AudioCueSO audioCue)
@@ -177,11 +146,7 @@ namespace CryptoQuest.Audio
         private void ChangeMasterVolume(float value)
         {
             if (!IsAudioPlaying()) return;
-
             _playingMusicAudioEmitter.SetVolume(value);
-
-            SaveData.Volume = value;
-            ActionDispatcher.Dispatch(new SaveAudioAction(this));
         }
 
         private void AudioFinishedPlaying(AudioEmitterValue audioEmitterValue)

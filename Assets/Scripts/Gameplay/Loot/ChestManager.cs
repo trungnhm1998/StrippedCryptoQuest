@@ -1,26 +1,14 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using CryptoQuest.Core;
 using CryptoQuest.Gameplay.NPC.Chest;
 using CryptoQuest.Gameplay.Reward;
-using CryptoQuest.System.SaveSystem.Actions;
 using UnityEngine;
 
 namespace CryptoQuest.Gameplay.Loot
 {
-    [Serializable]
-    public class ChestSave
-    {
-        public List<string> OpenedChests = new();
-    }
-
     public class ChestManager : MonoBehaviour
     {
         [SerializeField] private LootDatabase _lootDatabase;
-
-        [HideInInspector] public ChestSave SaveData;
-        private TinyMessenger.TinyMessageSubscriptionToken _listenToLoadCompletedEventToken;
+        [SerializeField] private OpenedChestsSO _openedChests;
 
         private IRewardManager _rewardManager;
 
@@ -41,21 +29,9 @@ namespace CryptoQuest.Gameplay.Loot
             ChestBehaviour.Opening -= AddLoots;
         }
 
-        private void Start()
-        {
-            _listenToLoadCompletedEventToken = ActionDispatcher.Bind<LoadChestCompletedAction>(_ => LoadChest());
-            ActionDispatcher.Dispatch(new LoadChestAction(this));
-        }
-
-        private void LoadChest()
-        {
-            ActionDispatcher.Unbind(_listenToLoadCompletedEventToken);
-            // TODO: save data has restored, not sure how to handle it
-        }
-
         private void LoadChest(ChestBehaviour chest)
         {
-            if (SaveData.OpenedChests.Contains(chest.GUID))
+            if (_openedChests.Contains(chest.GUID))
                 chest.Opened?.Invoke();
         }
 
@@ -81,8 +57,7 @@ namespace CryptoQuest.Gameplay.Loot
             // TODO: This method should be async wait for server to add the loot into inventory first
             _rewardManager.Reward(loots.LootInfos);
             chest.Opened?.Invoke();
-            SaveData.OpenedChests.Add(chest.GUID);
-            ActionDispatcher.Dispatch(new SaveChestAction(this));
+            _openedChests.AddChest(chest.GUID);
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿using CryptoQuest.System.SaveSystem;
+﻿using CryptoQuest.SaveSystem;
 using CryptoQuest.System.Settings;
 using TMPro;
 using UnityEngine;

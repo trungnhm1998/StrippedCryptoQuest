@@ -1,9 +1,11 @@
-﻿using CryptoQuest.Events;
+﻿using System;
+using CryptoQuest.Events;
 using UnityEngine;
 using UnityEngine.Events;
 
 namespace CryptoQuest.Audio.Settings
 {
+    [Serializable]
     public class AudioSettingSO : ScriptableObject
     {
         /// <summary>
@@ -20,7 +22,7 @@ namespace CryptoQuest.Audio.Settings
             set
             {
                 _volume = value;
-                this.CallEventSafely(VolumeChanged, _volume);
+                VolumeChanged.SafeInvoke(_volume);
             }
         }
     }

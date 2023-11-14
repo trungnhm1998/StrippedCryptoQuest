@@ -1,45 +1,35 @@
-using CryptoQuest.Language;
-using Newtonsoft.Json;
 using System;
-using System.Collections;
+using CryptoQuest.Language.Settings;
 using UnityEngine;
 
-namespace CryptoQuest.System.SaveSystem.SaveObjects
+namespace CryptoQuest.SaveSystem.SaveObjects
 {
-    public class LanguageSaveObject : SaveObjectBase<LanguageManager>
+    public class LanguageSaveObject : SaveObjectBase<LanguageSettingSO>
     {
-        public LanguageSaveObject(LanguageManager obj): base(obj)
-        {
-        }
+        public LanguageSaveObject(LanguageSettingSO obj) : base(obj) { }
 
-        public override string Key => "Language";
+        public override string Key => RefObject.Guid;
 
         public override string ToJson()
         {
-            return JsonConvert.SerializeObject(RefObject.SaveData);
+            return JsonUtility.ToJson(RefObject);
         }
 
-        public override IEnumerator CoFromJson(string json, Action<bool> callback = null)
+        public override bool FromJson(string json)
         {
             if (!string.IsNullOrEmpty(json))
             {
                 try
                 {
-                    var saveData = (LanguageSave)JsonConvert.DeserializeObject(json);
-                    if(saveData != null)
-                    {
-                        RefObject.SaveData = saveData;
-                        if (callback != null) { callback(true); }
-                        yield break;
-                    }
+                    JsonUtility.FromJsonOverwrite(json, RefObject);
+                    return true;
                 }
                 catch (Exception e)
                 {
                     Debug.LogException(e);
                 }
             }
-            if (callback != null) { callback(false); }
-            yield break;
+            return false;
         }
     }
 }

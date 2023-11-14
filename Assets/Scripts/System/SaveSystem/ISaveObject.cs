@@ -1,25 +1,23 @@
-using IndiGames.Core.SaveSystem;
-using System;
-using System.Collections;
-
-public interface ISaveObject
+namespace CryptoQuest.SaveSystem
 {
-    /// <summary>
-    /// Serialize key for json
-    /// </summary>
-    string Key { get; }
+    public interface ISaveObject
+    {
+        /// <summary>
+        /// Serialize key for json
+        /// </summary>
+        string Key { get; }
 
-    /// <summary>
-    /// Save data to json string
-    /// </summary>
-    /// <returns> json string represent the data </returns>
-    string ToJson();
+        /// <summary>
+        /// Save data to json string
+        /// </summary>
+        /// <returns> json string represent the data </returns>
+        string ToJson();
 
-    /// <summary>
-    /// Load data from json string
-    /// </summary>
-    /// <param name="json"> The json data </param>
-    /// <param name="callback"> The callback function </param>
-    /// <returns> true if data loaded sucessfully, else false. </returns>
-    IEnumerator CoFromJson(string json, Action<bool> callback = null);
+        /// <summary>
+        /// Load data from json string
+        /// </summary>
+        /// <param name="json"> The json data </param>
+        /// <returns> true if data loaded successfully, else false. </returns>
+        bool FromJson(string json);
+    }
 }

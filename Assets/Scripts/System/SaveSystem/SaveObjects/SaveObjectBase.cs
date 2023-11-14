@@ -1,11 +1,4 @@
-using CryptoQuest.Quest.Components;
-using IndiGames.Core.SceneManagementSystem.ScriptableObjects;
-using Newtonsoft.Json;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-
-namespace CryptoQuest.System.SaveSystem.SaveObjects
+namespace CryptoQuest.SaveSystem.SaveObjects
 {
     public abstract class SaveObjectBase<TRef> : ISaveObject
     {
@@ -20,6 +13,6 @@ namespace CryptoQuest.System.SaveSystem.SaveObjects
 
         public abstract string ToJson();
 
-        public abstract IEnumerator CoFromJson(string json, Action<bool> callback = null);
+        public abstract bool FromJson(string json);
     }
 }

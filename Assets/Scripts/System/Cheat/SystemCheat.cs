@@ -1,6 +1,4 @@
 ﻿using CommandTerminal;
-using CryptoQuest.Core;
-using CryptoQuest.Sagas;
 using DG.Tweening;
 using UnityEngine;
 
@@ -10,8 +8,8 @@ namespace CryptoQuest.System.Cheat
     {
         public void InitCheats()
         {
-            Terminal.Shell.AddCommand("speed", TriggerModifySpeedValue, 1, 1, "speed <new_value>, to modify current speed value of game");
-            Terminal.Shell.AddCommand("profile.clear", ClearSavedProfile, 0, -1, "clear the user saved profile in save system");
+            Terminal.Shell.AddCommand("speed", TriggerModifySpeedValue, 1, 1,
+                "speed <new_value>, to modify current speed value of game");
         }
 
         private void TriggerModifySpeedValue(CommandArg[] obj)
@@ -21,11 +19,6 @@ namespace CryptoQuest.System.Cheat
             DOTween.timeScale = newSpeed;
 
             Debug.Log($"Updated game speed to {newSpeed}");
-        }
-
-        private void ClearSavedProfile(CommandArg[] obj)
-        {
-            ActionDispatcher.Dispatch(new ClearProfileAction());
         }
     }
 }

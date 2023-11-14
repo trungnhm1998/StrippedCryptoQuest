@@ -15,19 +15,15 @@ namespace CryptoQuest.System.Settings
         [SerializeField] TMP_Dropdown _dropdown;
 
         private void Start() => InitializeLanguage();
-        public void OnChangeLanguage(int index) => _languageSetting.CurrentLanguageIndex = LocalizationSettings.AvailableLocales.Locales[index];
+        public void OnChangeLanguage(int index) => _languageSetting.CurrentLanguageIndex = index;
         public void Initialize() => _dropdown.Select();
         public void DeInitialize() => _dropdown.Hide();
 
         private void InitializeLanguage()
         {
             _dropdown.ClearOptions();
-            
-            List<string> localeNames = LanguageHelper.GetLocaleNames();
-            int localeIndex = LanguageHelper.GetLocaleIndex(_languageSetting.CurrentLanguageIndex);
-            
-            _dropdown.AddOptions(localeNames);
-            _dropdown.value = localeIndex;
+            _dropdown.AddOptions(_languageSetting.LanguageList);
+            _dropdown.value = _languageSetting.CurrentLanguageIndex;
         }
     }
 }

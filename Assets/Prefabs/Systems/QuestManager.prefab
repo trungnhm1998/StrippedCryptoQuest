@@ -29,13 +29,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5292255704015140054}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2610851588546578189
 MonoBehaviour:
@@ -50,15 +50,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _triggerQuestEventChannel: {fileID: 11400000, guid: fdefe5ff6c97c9946a9e874eb074f93f, type: 2}
+  _saveData: {fileID: 11400000, guid: 03445ebfc72acfc499a1e02a30488822, type: 2}
   _giveQuestEventChannel: {fileID: 11400000, guid: da57ae63ba992064e8d3ec26238fc35a, type: 2}
   _removeQuestEventChannel: {fileID: 11400000, guid: 9630816056270324eae1f8df62eb3c61, type: 2}
   _rewardEventChannel: {fileID: 11400000, guid: ccc993e9c220b754ba79858ef25648d4, type: 2}
-  <InProgressQuest>k__BackingField: []
-  <CompletedQuests>k__BackingField: []
   _currentQuestData: {fileID: 0}
-  references:
-    version: 2
-    RefIds: []
 --- !u!114 &800690595273299539
 MonoBehaviour:
   m_ObjectHideFlags: 0

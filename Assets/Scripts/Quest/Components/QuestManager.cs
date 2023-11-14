@@ -1,20 +1,12 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using CryptoQuest.Core;
 using CryptoQuest.Gameplay.Loot;
 using CryptoQuest.Gameplay.Reward.Events;
-using CryptoQuest.Quest.Actions;
 using CryptoQuest.Quest.Authoring;
-using CryptoQuest.Quest.Categories;
 using CryptoQuest.Quest.Events;
 using CryptoQuest.System;
-using CryptoQuest.System.SaveSystem.Actions;
-using IndiGames.Core.SaveSystem;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
-using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace CryptoQuest.Quest.Components
 {
@@ -36,20 +28,16 @@ namespace CryptoQuest.Quest.Components
         [SerializeField]
         private QuestEventChannelSO _triggerQuestEventChannel;
 
+        [Header("Quest Save Data")]
+        [SerializeField]
+        private QuestSaveSO _saveData;
+        public QuestSaveSO SaveData => _saveData;
+
         [SerializeField] private QuestEventChannelSO _giveQuestEventChannel;
         [SerializeField] private QuestEventChannelSO _removeQuestEventChannel;
         [SerializeField] private RewardLootEvent _rewardEventChannel;
-
-        [field: SerializeReference, HideInInspector]
-        public List<QuestInfo> InProgressQuest { get; private set; } = new();
-
-        [field: SerializeReference, HideInInspector]
-        public List<QuestInfo> CompletedQuests { get; private set; } = new();
-
         [SerializeField, HideInInspector] private QuestSO _currentQuestData;
-
-        private bool _questLoaded = false;
-        private TinyMessenger.TinyMessageSubscriptionToken _listenToLoadCompletedEventToken;
+        [SerializeField, HideInInspector] private QuestInfo _currentQuestInfo;
 
         private void Awake()
         {
@@ -78,19 +66,6 @@ namespace CryptoQuest.Quest.Components
             _removeQuestEventChannel.EventRaised -= RemoveProgressingQuest;
         }
 
-        private void Start()
-        {
-            _questLoaded = false;
-            _listenToLoadCompletedEventToken = ActionDispatcher.Bind<LoadQuestCompletedAction>(_ => LoadQuest());
-            ActionDispatcher.Dispatch(new LoadQuestAction(this));
-        }
-
-        private void LoadQuest()
-        {
-            ActionDispatcher.Unbind(_listenToLoadCompletedEventToken);
-            _questLoaded = true;
-        }    
-
         public override void TriggerQuest(QuestSO questData)
         {
             if (IsQuestTriggered(questData))
@@ -99,21 +74,22 @@ namespace CryptoQuest.Quest.Components
                 return;
             }
 
-            foreach (var progressQuestInfo in InProgressQuest)
+            if (_currentQuestInfo.Guid == questData.Guid)
             {
-                if (progressQuestInfo.Guid != questData.Guid) continue;
-
                 Debug.Log($"<color=green>QuestManager::TriggerQuest::Triggered: {questData.QuestName}</color>");
-                progressQuestInfo.TriggerQuest();
-                break;
+                _currentQuestInfo.TriggerQuest();
+            }
+            else
+            {
+                Debug.Log($"<color=red>QuestManager::TriggerQuest::Triggered:QuestInfoIsNotCurrentQuest {questData.QuestName}</color>");
             }
         }
 
         private bool IsQuestCompleted(QuestSO questData)
         {
-            if (questData != null && CompletedQuests.Count() > 0)
+            if (questData != null && _saveData.CompletedQuests.Count() > 0)
             {
-                return CompletedQuests.Any(questInfo => questData.Guid == questInfo.Guid);
+                return _saveData.CompletedQuests.Any(questInfo => questData.Guid == questInfo);
             }
 
             return false;
@@ -127,19 +103,20 @@ namespace CryptoQuest.Quest.Components
                 return;
             }
 
-            if (InProgressQuest.Any(questInfo => questInfo.Guid == questData.Guid))
+            if (_saveData.InProgressQuest.Any(questInfo => questInfo == questData.Guid))
             {
                 Debug.Log($"<color=green>QuestManager::GiveQuest::Already inprogress: {questData.QuestName}</color>");
+                _currentQuestInfo = questData.CreateQuest();
+                _currentQuestInfo.GiveQuest();
                 return;
             }
-
-            QuestInfo currentQuestInfo = questData.CreateQuest();
 
             if (!IsQuestCompleted(questData))
             {
                 Debug.Log($"<color=green>QuestManager::GiveQuest::Give: {questData.QuestName}</color>");
-                InProgressQuest.Add(currentQuestInfo);
-                currentQuestInfo.GiveQuest();
+                _currentQuestInfo = questData.CreateQuest();
+                _currentQuestInfo.GiveQuest();
+                _saveData.AddInProgressQuest(_currentQuestInfo.Guid);
             }
             else
             {
@@ -148,57 +125,46 @@ namespace CryptoQuest.Quest.Components
 
             _currentQuestData = questData;
             questData.OnRewardReceived += RewardReceived;
-            ActionDispatcher.Dispatch(new SaveQuestAction(this));
         }
 
         private void RewardReceived(List<LootInfo> loots)
         {
             _rewardEventChannel.EventRaised(loots);
             _currentQuestData.OnRewardReceived -= RewardReceived;
-            ActionDispatcher.Dispatch(new SaveQuestAction(this));
         }
 
-        private void UpdateQuestProgress(QuestInfo questInfo)
+        private void UpdateQuestProgress(string questInfo)
         {
-            InProgressQuest.Remove(questInfo);
-            CompletedQuests.Add(questInfo);
+            _saveData.AddCompleteQuest(questInfo);
         }
 
         private void QuestCompleted(QuestSO questSo)
         {
-            foreach (var progressQuestInfo in InProgressQuest)
+            foreach (var progressQuestInfo in _saveData.InProgressQuest)
             {
-                if (progressQuestInfo.Guid != questSo.Guid) continue;
+                if (progressQuestInfo != questSo.Guid) continue;
                 UpdateQuestProgress(progressQuestInfo);
                 break;
             }
-            ActionDispatcher.Dispatch(new SaveQuestAction(this));
         }
 
         private bool IsQuestTriggered(QuestSO questSo)
         {
-            return CompletedQuests.Any(quest => quest.Guid == questSo.Guid);
+            return _saveData.CompletedQuests.Any(quest => quest == questSo.Guid);
         }
 
         private void ConfigureQuestHolder(IQuestConfigure questConfigure)
         {
-            StartCoroutine(CoConfigureQuestHolder(questConfigure));
-        }
-
-        private IEnumerator CoConfigureQuestHolder(IQuestConfigure questConfigure)
-        {
-            yield return new WaitUntil(() => _questLoaded);
             questConfigure.QuestsToTrack.ForEach(questData => questConfigure.Configure(IsQuestTriggered(questData)));
         }
 
         private void RemoveProgressingQuest(QuestSO quest)
         {
-            foreach (var inProgressQuest in InProgressQuest.ToList())
+            foreach (var inProgressQuest in _saveData.InProgressQuest.ToList())
             {
-                if (inProgressQuest.Guid != quest.Guid) continue;
-                InProgressQuest.Remove(inProgressQuest);
+                if (inProgressQuest != quest.Guid) continue;
+                _saveData.RemoveInProgressQuest(inProgressQuest);
             }
-            ActionDispatcher.Dispatch(new SaveQuestAction(this));
         }
     }
 }

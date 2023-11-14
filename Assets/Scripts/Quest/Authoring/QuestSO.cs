@@ -4,6 +4,7 @@ using CryptoQuest.Gameplay.Loot;
 using CryptoQuest.Quest.Actions;
 using IndiGames.Core.SaveSystem.ScriptableObjects;
 using UnityEngine;
+using System.Text.Json.Serialization;
 
 #if UNITY_EDITOR
 using UnityEditor;

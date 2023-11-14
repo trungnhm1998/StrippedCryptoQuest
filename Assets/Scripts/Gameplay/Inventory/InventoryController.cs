@@ -1,11 +1,9 @@
-using CryptoQuest.Core;
 using CryptoQuest.Events;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
 using CryptoQuest.Gameplay.Loot;
 using CryptoQuest.Item;
 using CryptoQuest.Item.Equipment;
 using CryptoQuest.System;
-using CryptoQuest.System.SaveSystem.Actions;
 using UnityEngine;
 
 namespace CryptoQuest.Gameplay.Inventory
@@ -20,7 +18,7 @@ namespace CryptoQuest.Gameplay.Inventory
         bool Add(ConsumableInfo consumable);
         bool Remove(ConsumableInfo consumable);
         bool Contains(EquipmentInfo equipment);
-        bool Contains (NftEquipment equipment);
+        bool Contains(NftEquipment equipment);
     }
 
     public class InventoryController : MonoBehaviour, IInventoryController
@@ -49,20 +47,17 @@ namespace CryptoQuest.Gameplay.Inventory
         private void AddLoot(LootInfo loot)
         {
             loot.AddItemToInventory(_inventory);
-            ActionDispatcher.Dispatch(new SaveInventoryAction(this));
         }
 
         public bool Add(EquipmentInfo equipment)
         {
             if (!_inventory.Add(equipment)) return false;
-            ActionDispatcher.Dispatch(new SaveInventoryAction(this));
             return true;
         }
 
         public bool Remove(EquipmentInfo equipment)
         {
             if (!_inventory.Remove(equipment)) return false;
-            ActionDispatcher.Dispatch(new SaveInventoryAction(this));
             return true;
         }
 
@@ -78,14 +73,12 @@ namespace CryptoQuest.Gameplay.Inventory
         public bool Add(ConsumableInfo consumable)
         {
             if (!_inventory.Add(consumable)) return false;
-            ActionDispatcher.Dispatch(new SaveInventoryAction(this));
             return true;
         }
 
         public bool Remove(ConsumableInfo consumable)
         {
             var result = _inventory.Remove(consumable);
-            ActionDispatcher.Dispatch(new SaveInventoryAction(this));
             return result;
         }
 
