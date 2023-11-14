@@ -44,16 +44,15 @@ namespace CryptoQuest.Tavern.Sagas
         private void OnNext(TransferResponse response)
         {
             if (response.code != (int)HttpStatusCode.OK) return;
-            ActionDispatcher.Dispatch(new TransferSucceed());
+            ActionDispatcher.Dispatch(new TransferSucceed(response.data.characters));
         }
 
         private void OnError(Exception obj)
         {
             Debug.LogError("TransferCharactersToWalletFailed::" + obj);
             ActionDispatcher.Dispatch(new TransferFailed());
-            ActionDispatcher.Dispatch(new ShowLoading(false));
         }
 
-        private void OnCompleted() { }
+        private void OnCompleted() => ActionDispatcher.Dispatch(new ShowLoading(false));
     }
 }

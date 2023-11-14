@@ -4,7 +4,5 @@ using IndiGames.Core.Events.ScriptableObjects;
 
 namespace CryptoQuest.Events
 {
-    public class GetEquipmentsEvent : GenericEventChannelSO<List<EquipmentResponse>> {
-        
-    }
+    public class GetEquipmentsEvent : GenericEventChannelSO<List<EquipmentResponse>> { }
 }
