@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using CryptoQuest.Character.Hero.AvatarProvider;
 using CryptoQuest.Church.UI;
@@ -7,15 +8,16 @@ using CryptoQuest.System;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
 using IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
 namespace CryptoQuest.Church
 {
     public class ChurchPresenter : MonoBehaviour
     {
-        [SerializeField] private GameplayEffectDefinition gameplayEffectDefinition;
+        public event Action<bool> IsReviveSuccessEvent;
+        [SerializeField] private GameplayEffectDefinition _reviveEffectDefinition;
         [SerializeField] private List<UICharacter> _uiListCharacter;
+        [SerializeField] private UICharacter _characterToRevive;
         [SerializeField] private MerchantsInputManager _input;
         private IPartyController _partyController;
         private IHeroAvatarProvider _heroAvatarProvider;
@@ -43,13 +45,9 @@ namespace CryptoQuest.Church
             }
         }
 
-        public void ReviveCharacter(UICharacter character)
+        public void GetCharacter(UICharacter character)
         {
-            AbilitySystemBehaviour abilitySystem = character.HeroBehaviour.GetComponent<AbilitySystemBehaviour>();
-            if (!character.HeroBehaviour.IsValidAndAlive())
-            {
-                abilitySystem.ApplyEffectSpecToSelf(abilitySystem.MakeOutgoingSpec(gameplayEffectDefinition));
-            }
+            _characterToRevive = character;
         }
 
         public void SelectDefaultButton()
@@ -58,6 +56,16 @@ namespace CryptoQuest.Church
             {
                 _uiListCharacter[0].CharacterButton.Select();
             }
+        }
+
+        public void ReviveCharacter()
+        {
+            AbilitySystemBehaviour abilitySystem = _characterToRevive.HeroBehaviour.GetComponent<AbilitySystemBehaviour>();
+            bool isAlive = _characterToRevive.HeroBehaviour.IsValidAndAlive();
+            IsReviveSuccessEvent?.Invoke(isAlive);
+            if (!isAlive)
+                abilitySystem.ApplyEffectSpecToSelf(abilitySystem.MakeOutgoingSpec(_reviveEffectDefinition));
+
         }
     }
 }

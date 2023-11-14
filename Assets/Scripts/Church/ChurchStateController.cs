@@ -1,6 +1,9 @@
+using System;
 using CryptoQuest.Church.State;
 using CryptoQuest.Input;
 using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.Localization;
 
 namespace CryptoQuest.Church
 {
@@ -9,6 +12,9 @@ namespace CryptoQuest.Church
         [SerializeField] private Animator _stateMachine;
         [field: SerializeField] public MerchantsInputManager Input { get; private set; }
         [field: SerializeField] public ChurchPresenter Presenter { get; private set; }
+        [field: SerializeField] public ChurchDialogConroller DialogController { get; private set; }
+        public Action ExitStateEvent;
+        public bool IsExitState;
 
         private void OnDisable()
         {
