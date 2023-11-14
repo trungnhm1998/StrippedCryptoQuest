@@ -4,6 +4,7 @@ using System.Linq;
 using CryptoQuest.Gameplay.Loot;
 using CryptoQuest.Quest.Components;
 using CryptoQuest.System;
+using Newtonsoft.Json;
 using UnityEngine;
 
 namespace CryptoQuest.Quest.Authoring

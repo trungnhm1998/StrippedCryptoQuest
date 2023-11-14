@@ -3,133 +3,56 @@
 #endif
 
 using UnityEngine;
-using System;
-using System.Threading.Tasks;
-
 #if USE_FILE_SYSTEM
-using System.IO;
-using System.Threading;
 #endif
 
-namespace CryptoQuest.System.SaveSystem
+namespace CryptoQuest.SaveSystem
 {
     public class StorageSaveManagerSO : SaveManagerSO
     {
         [Header("Save Config")]
-        [SerializeField] protected string fileName;
-        [SerializeField] protected bool useEncryption;
-        [SerializeField] protected string encryptionCode;
+        [SerializeField] private string _fileName = "game.sav";
+
+        [SerializeField] private string _backupFileName = "game.sav.bak";
+        [SerializeField] private bool _useEncryption;
+        [SerializeField] private string _encryptionCode = "CryptoQuestIndiGames";
 
         public override bool Save(string saveData)
         {
             // serialize the save data into json
             var jsonData = saveData;
-            Debug.Log("Save() jsonData: " + jsonData);
 
             // optionally encrypt the data
-            if (useEncryption)
+            if (_useEncryption)
             {
                 jsonData = EncryptDecrypt(jsonData);
             }
-            Debug.Log("Save() jsonData length: " + jsonData.Length);
 
 #if USE_FILE_SYSTEM
-            // use Path.Combine to account for different OS's having different path separators
-            var filePath = Path.Combine(Application.persistentDataPath, fileName);
-            Debug.Log("Save() filePath: " + filePath);
-
-            const int RETRY_MAX_COUNT = 3;
-            try
-            {
-                var saved = false;
-                var retryCount = 0;
-                while (!saved && retryCount < RETRY_MAX_COUNT)
-                {
-                    try
-                    {
-                        // write the serialized data to the file
-                        using (var stream = new FileStream(filePath, FileMode.Create))
-                        {
-                            using (var writer = new StreamWriter(stream))
-                            {
-                                writer.Write(jsonData);
-                            }
-                        }
-                        saved = true;
-                    }
-                    catch (Exception e)
-                    {
-                        Debug.LogError("Error occured when trying to save, retry = " + (retryCount + 1) + "\n" + e);
-                        // Retry after 1 seconds
-                        Thread.Sleep(1000);
-                    }
-                    retryCount++;
-                }
-                Debug.Log("Save() return = " + saved);
-                return saved;
-            }
-            catch (Exception e)
-            {
-                Debug.LogError("Error occured when trying to save data to file: " + filePath + "\n" + e);
-            }
-            Debug.Log("Save() return = " + false);
-            return false;
+            FileManager.MoveFile(_fileName, _backupFileName);
+            return FileManager.WriteToFile(_fileName, jsonData);
 #else
-            PlayerPrefs.SetString(fileName, jsonData);
+            PlayerPrefs.SetString(_fileName, jsonData);
             return true;
 #endif
         }
 
-        public override string Load()
+        public override bool Load(out string json)
         {
-            // load the serialized data from the file
-            string jsonData = null;
-
 #if USE_FILE_SYSTEM
-            // use Path.Combine to account for different OS's having different path separators
-            var filePath = Path.Combine(Application.persistentDataPath, fileName);
-            Debug.Log("LoadSave() filePath: " + filePath);
-            try
-            {
-                if (File.Exists(filePath))
-                {
-                    using (FileStream stream = new FileStream(filePath, FileMode.Open))
-                    {
-                        using (StreamReader reader = new StreamReader(stream))
-                        {
-                            jsonData = reader.ReadToEnd();
-                        }
-                    }
-
-                    // optionally decrypt the data
-                    if (useEncryption)
-                    {
-                        jsonData = EncryptDecrypt(jsonData);
-                    }
-                }
-            }
-            catch (Exception e)
-            {
-                Debug.LogError("Error occured when trying to load data from file: " + filePath + "\n" + e);
-            }
+            if (FileManager.LoadFromFile(_fileName, out json))
+                return true;
 #else
-            jsonData = PlayerPrefs.GetString(fileName, null);
+            json = PlayerPrefs.GetString(_fileName, null);
 #endif
-            if (string.IsNullOrEmpty(jsonData))
-            {
-                return null;
-            }
-
-            Debug.Log("LoadSave() jsonData: " + jsonData);
-            Debug.Log("LoadSave() jsonData length: " + jsonData.Length);
-            return jsonData;
+            return string.IsNullOrEmpty(json);
         }
 
         //Simple XOR encryption/decryption
         protected string EncryptDecrypt(string data)
         {
             // if encryption code is not set, return non-encrypted data
-            if (!useEncryption || encryptionCode.Length == 0)
+            if (!_useEncryption || _encryptionCode.Length == 0)
             {
                 return data;
             }
@@ -138,19 +61,10 @@ namespace CryptoQuest.System.SaveSystem
             var modifiedData = "";
             for (var i = 0; i < data.Length; i++)
             {
-                modifiedData += (char)(data[i] ^ encryptionCode[i % encryptionCode.Length]);
+                modifiedData += (char)(data[i] ^ _encryptionCode[i % _encryptionCode.Length]);
             }
+
             return modifiedData;
-        }
-
-        public override async Task<bool> SaveAsync(string saveData)
-        {
-            return await Task.Run(() => Save(saveData));
-        }
-
-        public override async Task<string> LoadAsync()
-        {
-            return await Task.Run(() => Load());
         }
     }
 }

@@ -1,45 +1,33 @@
-using CryptoQuest.Gameplay.Loot;
-using Newtonsoft.Json;
 using System;
-using System.Collections;
+using CryptoQuest.Gameplay.Loot;
 using UnityEngine;
 
-namespace CryptoQuest.System.SaveSystem.SaveObjects
+namespace CryptoQuest.SaveSystem.SaveObjects
 {
-    public class ChestSaveObject : SaveObjectBase<ChestManager>
+    public class ChestSaveObject : SaveObjectBase<OpenedChestsSO>
     {
-        public ChestSaveObject(ChestManager obj) : base(obj)
-        {
-        }
+        public ChestSaveObject(OpenedChestsSO obj) : base(obj) { }
 
-        public override string Key => "Chest";
+        public override string Key => "Chests";
 
-        public override string ToJson()
-        {
-            return JsonConvert.SerializeObject(RefObject.SaveData);
-        }
+        public override string ToJson() => JsonUtility.ToJson(RefObject.Chests);
 
-        public override IEnumerator CoFromJson(string json, Action<bool> callback = null)
+        public override bool FromJson(string json)
         {
             if (!string.IsNullOrEmpty(json))
             {
                 try
                 {
-                    var saveData = (ChestSave)JsonConvert.DeserializeObject(json);
-                    if(saveData != null)
-                    {
-                        RefObject.SaveData = saveData;
-                        if (callback != null) { callback(true); }
-                        yield break;
-                    }
+                    JsonUtility.FromJsonOverwrite(json, RefObject.Chests);
+                    return true;
                 }
                 catch (Exception e)
                 {
                     Debug.LogException(e);
                 }
             }
-            if (callback != null) { callback(false); }
-            yield break;
+
+            return false;
         }
     }
 }

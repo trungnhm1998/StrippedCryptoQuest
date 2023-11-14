@@ -1,5 +1,6 @@
 ﻿using CryptoQuest.Actions;
 using CryptoQuest.Core;
+using CryptoQuest.SaveSystem;
 using CryptoQuest.System;
 using TinyMessenger;
 

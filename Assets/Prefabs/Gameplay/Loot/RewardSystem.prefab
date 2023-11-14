@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 945723615823538876}
   - component: {fileID: 1728740042780277220}
   - component: {fileID: -7092969450105637204}
+  - component: {fileID: 7318647142234997059}
   m_Layer: 0
   m_Name: RewardSystem
   m_TagString: Untagged
@@ -25,13 +26,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3903980966337446675}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1407.6389, y: 826.3252, z: -5.4402165}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1728740042780277220
 MonoBehaviour:
@@ -46,8 +47,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _lootDatabase: {fileID: 11400000, guid: 974e33f7c8e29bd439bd2d9457eb2440, type: 2}
-  _saveData:
-    OpenedChests: []
+  _openedChests: {fileID: 11400000, guid: 238c3366bb1b1644b9434764feeb7e1d, type: 2}
 --- !u!114 &-7092969450105637204
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -63,3 +63,17 @@ MonoBehaviour:
   _rewardLootEvent: {fileID: 11400000, guid: ccc993e9c220b754ba79858ef25648d4, type: 2}
   _addLootRequestEventChannel: {fileID: 11400000, guid: 5b2a9f4e0c11e954bbd8d96c7b5d775e, type: 2}
   _showRewardDialogEventChannel: {fileID: 11400000, guid: c3d73e80318395a4d9a8876443d7db67, type: 2}
+--- !u!114 &7318647142234997059
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3903980966337446675}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2cb54481df217f84ca7c11f1a9966167, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _openedChests: {fileID: 11400000, guid: 238c3366bb1b1644b9434764feeb7e1d, type: 2}
+  _saveSystem: {fileID: 11400000, guid: 660bab7c7e2db6946b3a03dc73ffe40f, type: 2}

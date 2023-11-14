@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 6751529336063773711}
   - component: {fileID: 3853394542293097960}
   - component: {fileID: 7549771107079509493}
+  - component: {fileID: 4495449131211117440}
   m_Layer: 0
   m_Name: PartyManager
   m_TagString: Untagged
@@ -49,7 +50,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b7d20a2f7493a743b7f587db74d070d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _sceneLoadedEvent: {fileID: 11400000, guid: b8b96e43d21a7bf4c96df4cb83c2b764, type: 2}
   _partySlots:
   - {fileID: 152983511657674341}
   - {fileID: 6879353791456953516}
@@ -67,7 +67,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 395019af7ceee7f449cde7425748ab58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _mockParty: {fileID: 11400000, guid: 197a08cf381438a48875f05c90e104fb, type: 2}
+  _partySO: {fileID: 11400000, guid: 197a08cf381438a48875f05c90e104fb, type: 2}
+--- !u!114 &4495449131211117440
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3036391540655307661}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7692f35cac1840d3a7fb6e9df77012ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _attributesToResetWhenLeveledUp:
+  - {fileID: 11400000, guid: 77c53593fd92c904aa7689c5a7449df3, type: 2}
+  - {fileID: 11400000, guid: a7e3a44d36bf87d44afeb00b236e832e, type: 2}
 --- !u!1001 &2799623590454960836
 PrefabInstance:
   m_ObjectHideFlags: 0
