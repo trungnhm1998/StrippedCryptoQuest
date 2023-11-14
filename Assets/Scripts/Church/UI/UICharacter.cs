@@ -20,10 +20,13 @@ namespace CryptoQuest.Church.UI
         [SerializeField] private AttributeChangeEvent _attributeChangeEvent;
         [field: SerializeField] public Button CharacterButton { get; private set; }
         public HeroBehaviour HeroBehaviour { get; private set; }
+        public int Level { get; private set; }
 
         public void ConfigureCharacter(HeroBehaviour hero, IHeroAvatarProvider avatar)
         {
             HeroBehaviour = hero;
+            HeroBehaviour.TryGetComponent(out LevelSystem levelSystem);
+            Level = levelSystem.Level;
             _displayName.StringReference = hero.LocalizedName;
             _avatar.sprite = hero.Avatar;
             _attributeChangeEvent.AttributeSystemReference = hero.GetComponent<AttributeSystemBehaviour>();
