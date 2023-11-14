@@ -18,8 +18,8 @@ namespace CryptoQuest.Church.UI
         [SerializeField] private UIAttributeBar _hpBar;
         [SerializeField] private UIAttributeBar _mpBar;
         [SerializeField] private AttributeChangeEvent _attributeChangeEvent;
+        [field: SerializeField] public Button CharacterButton { get; private set; }
         public HeroBehaviour HeroBehaviour { get; private set; }
-        public Button CharacterButton { get; private set; }
 
         public void ConfigureCharacter(HeroBehaviour hero, IHeroAvatarProvider avatar)
         {
