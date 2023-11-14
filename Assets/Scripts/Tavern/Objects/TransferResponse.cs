@@ -1,4 +1,5 @@
 ﻿using System;
+using CryptoQuest.Sagas.Objects;
 
 namespace CryptoQuest.Tavern.Objects
 {
@@ -13,6 +14,6 @@ namespace CryptoQuest.Tavern.Objects
         public int diamond;
         public int soul;
         public long time;
-        public Data data;
+        public CharactersResponse.Data data;
     }
 }

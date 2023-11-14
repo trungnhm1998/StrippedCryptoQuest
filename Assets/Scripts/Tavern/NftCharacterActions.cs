@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using CryptoQuest.Core;
+using CryptoQuest.Sagas.Objects;
 using CryptoQuest.Tavern.Interfaces;
 using CryptoQuest.Tavern.Objects;
 
@@ -7,7 +8,7 @@ namespace CryptoQuest.Tavern
 {
     public class GetCharacters : ActionBase
     {
-        public ETavernStatus Status { get; set; } = ETavernStatus.All;
+        public ECharacterStatus Status { get; set; } = ECharacterStatus.All;
     }
 
     public class GetGameNftCharactersSucceed : ActionBase

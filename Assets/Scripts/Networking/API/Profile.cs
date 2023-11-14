@@ -13,5 +13,7 @@
         public const string LOAD_METAD_PATH = "/crypto/dimention/token";
         public const string TRANSFER_TO_METAD_PATH = "/crypto/dimention/token/to";
         public const string TRANSFER_TO_DIAMOND_PATH = "/crypto/dimention/token/from";
+
+        public const string GET_CHARACTERS = "crypto/characters";
     }
 }
