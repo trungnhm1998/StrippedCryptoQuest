@@ -21,17 +21,6 @@ namespace CryptoQuest.Sagas.Profile
 {
     public class FetchProfileEquipments : SagaBase<FetchProfileEquipmentsAction>
     {
-        /// <summary>
-        /// Provides config mapping between response and attribute, so we can map the response to the correct attribute
-        /// such as response has attribute name "strength" and we have Strength attribute then we can map them together
-        /// </summary>
-        [Serializable]
-        public struct ResponseAttributeMap
-        {
-            public string Name;
-            public AttributeScriptableObject Attribute;
-        }
-
         [SerializeField] private GetEquipmentsEvent _inGameEquipmentsUpdate;
         [SerializeField] private InventorySO _inventory; // only load inventory when needed
 

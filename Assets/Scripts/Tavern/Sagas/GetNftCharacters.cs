@@ -4,6 +4,7 @@ using System.Net;
 using CryptoQuest.Core;
 using CryptoQuest.Networking;
 using CryptoQuest.Sagas;
+using CryptoQuest.Sagas.Objects;
 using CryptoQuest.System;
 using CryptoQuest.Tavern.Data;
 using CryptoQuest.Tavern.Interfaces;
@@ -45,13 +46,13 @@ namespace CryptoQuest.Tavern.Sagas
             ActionDispatcher.Dispatch(new ShowLoading(false));
         }
 
-        private void UpdateInGameCache(Objects.Character[] characters)
+        private void UpdateInGameCache(CryptoQuest.Sagas.Objects.Character[] characters)
         {
             if (characters.Length == 0) return;
             _inGameCharacters.Clear();
             foreach (var character in characters)
             {
-                if (character.inGameStatus != (int)ETavernStatus.InGame) continue;
+                if (character.inGameStatus != (int)ECharacterStatus.InGame) continue;
                 _inGameCharacters.Add(new CharacterData(character.name, character.level, false)
                 {
                     Id = character.id
@@ -61,13 +62,13 @@ namespace CryptoQuest.Tavern.Sagas
             ActionDispatcher.Dispatch(new GetGameNftCharactersSucceed(_inGameCharacters));
         }
 
-        private void UpdateInboxCache(Objects.Character[] characters)
+        private void UpdateInboxCache(CryptoQuest.Sagas.Objects.Character[] characters)
         {
             if (characters.Length == 0) return;
             _walletCharacters.Clear();
             foreach (var character in characters)
             {
-                if (character.inGameStatus != (int)ETavernStatus.InBox) continue;
+                if (character.inGameStatus != (int)ECharacterStatus.InBox) continue;
                 _walletCharacters.Add(new CharacterData(character.name, character.level, false)
                 {
                     Id = character.id

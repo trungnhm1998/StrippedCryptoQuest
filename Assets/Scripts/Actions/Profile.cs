@@ -29,4 +29,6 @@ namespace CryptoQuest.Actions
             WalletAddress = walletAddress;
         }
     }
+
+    public class FetchProfileCharactersAction : ActionBase { }
 }
