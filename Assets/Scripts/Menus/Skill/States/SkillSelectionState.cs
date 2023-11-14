@@ -65,7 +65,7 @@ namespace CryptoQuest.Menus.Skill.States
         {
             DisableSkillButtonsAndCacheSelectingSkill(skill);
             _targets = new List<HeroBehaviour> { _skillPanel.SelectingHero.Hero };
-            _skillPanel.SelectingHero.EnableSelectBackground();
+            CastSkill();
         }
 
         // TODO: Move to separate state
@@ -77,8 +77,8 @@ namespace CryptoQuest.Menus.Skill.States
             {
                 if (hero.Hero.IsValidAndAlive() == false) continue;
                 _targets.Add(hero.Hero);
-                hero.EnableSelectBackground();
             }
+            CastSkill();
         }
 
         // TODO: Move to separate state
