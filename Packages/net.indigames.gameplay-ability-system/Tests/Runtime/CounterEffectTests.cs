@@ -10,14 +10,34 @@ namespace IndiGames.GameplayAbilitySystemTests
 {
     public class CounterEffectTests : FixtureBase
     {
+        public class TestCounterPolicy : CounterPolicy
+        {
+            public Action CounterEvent { get; set; }
+
+            public TestCounterPolicy() : base() {}
+            public TestCounterPolicy(int counter) : base(counter) {}
+
+            public override void RegistCounterEvent(CounterGameplayEffect effect)
+            {
+                base.RegistCounterEvent(effect);
+                CounterEvent += effect.ReduceCounterEvent;
+            }
+
+            public override void RemoveCounterEvent(CounterGameplayEffect effect)
+            {
+                base.RemoveCounterEvent(effect);
+                CounterEvent -= effect.ReduceCounterEvent;
+            }
+        }
+
         [UnityTest]
         public IEnumerator AfterCounter_ShouldRemoveFromSystem()
         {
             var (_, _, effectSystem, _) = CreateAbilitySystem();
             var def = ScriptableObject.CreateInstance<GameplayEffectDefinition>();
             var counter = 5;
-            var counterAction = new CounterPolicy(counter);
-            CounterEvent += CounterGameplayEffect.ReduceCounterEvent;
+            var counterAction = new TestCounterPolicy(counter);
+            CounterEvent = counterAction.CounterEvent;
             def.Policy = counterAction;
             var spec = effectSystem.GetEffect(def);
             var activeSpec = effectSystem.ApplyEffectToSelf(spec);
@@ -25,7 +45,7 @@ namespace IndiGames.GameplayAbilitySystemTests
             Assert.AreEqual(1, effectSystem.AppliedEffects.Count);
             yield return ReduceCounter(counter);
             Assert.AreEqual(0, effectSystem.AppliedEffects.Count);
-            CounterEvent -= CounterGameplayEffect.ReduceCounterEvent;
+            CounterEvent = null;
         }
 
         private Action CounterEvent;

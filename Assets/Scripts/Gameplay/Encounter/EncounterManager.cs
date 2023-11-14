@@ -24,6 +24,17 @@ namespace CryptoQuest.Gameplay.Encounter
         protected EncounterData _currentEncounterData;
         protected float _stepLeftBeforeTriggerBattle;
 
+        private float _encounterBuff = 1;
+        public float EncounterBuff 
+        { 
+            get => _encounterBuff;
+            set
+            {
+                _encounterBuff = value;
+                GenerateRandomStepTilNextTrigger();
+            } 
+        }
+
         protected virtual void Awake()
         {
             _triggerBattleEncounterEvent.EventRaised += TriggerBattle;
@@ -91,7 +102,9 @@ namespace CryptoQuest.Gameplay.Encounter
         }
 
         protected void GenerateRandomStepTilNextTrigger()
-            => _stepLeftBeforeTriggerBattle = Random.Range(_minEncounterSteps, _maxEncounterSteps);
+        {
+            _stepLeftBeforeTriggerBattle = Random.Range(_minEncounterSteps, _maxEncounterSteps) * _encounterBuff;
+        }
 
         private void TriggerBattle(string encounterId) => StartCoroutine(GetEncounter(encounterId, TriggerBattle));
 

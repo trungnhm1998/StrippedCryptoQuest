@@ -19,7 +19,6 @@ namespace CryptoQuest.Gameplay.Encounter
 
         [SerializeField] protected string _encounterId;
 
-        private EncounterInfo _encounterInfo;
         private TinyMessageSubscriptionToken _token;
 
         /// <summary>
