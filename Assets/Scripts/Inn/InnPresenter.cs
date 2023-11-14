@@ -35,8 +35,8 @@ namespace CryptoQuest.Inn
         {
             _innDialogsManager.gameObject.SetActive(true);
             _innDialogsManager.ShowDialog();
-
-            _innController.ShowCurrency();
+            
+            _innController.ShowWallet();
         }
 
         private void OnFadeRequested(bool isFadeIn)
@@ -54,7 +54,7 @@ namespace CryptoQuest.Inn
         {
             _innDialogsManager.gameObject.SetActive(false);
             
-            _innController.HideCurrency();
+            _innController.HideWallet();
         }
 
         private void OnRestoreRequested()
