@@ -8,10 +8,10 @@ using CryptoQuest.Gameplay.Battle.Core;
 using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data;
 using IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects;
 using IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects.EffectExecutionCalculation;
+using IndiGames.GameplayAbilitySystem.TagSystem.ScriptableObjects;
 using IndiGames.Tools.ScriptableObjectBrowser;
 using UnityEditor;
 using UnityEngine;
-using UnityEngine.Localization;
 
 namespace CryptoQuestEditor.Gameplay.Gameplay.Abilities
 {
@@ -19,8 +19,6 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Abilities
     {
         private const string DEFAULT_NAME = "";
         private const int ROW_OFFSET = 1;
-        private const string NAME_LOCALIZE_TABLE = "AbilityNames";
-        private const string DESCRIPTION_LOCALIZE_TABLE = "AbilityDescriptions";
 
         #region Indexing
 
@@ -127,8 +125,7 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Abilities
                     if (subData.EffectTypeId == "99") continue;
                 }
 
-                if (dataModel.MainEffectTypeId == "99" || dataModel.MainEffectTypeId == "4" ||
-                    dataModel.MainEffectTypeId == "8") continue;
+                if (dataModel.MainEffectTypeId == "99" || dataModel.MainEffectTypeId == "4") continue;
 
 
                 PassiveAbility instance = null;
@@ -141,9 +138,6 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Abilities
 
                 if (instance == null) continue;
                 SetInstanceProperty(instance, dataModel);
-                // SetEffects(instance, dataModel);
-                // SetLocalized(instance, dataModel);
-
                 instance.name = name;
 
                 if (!AssetDatabase.Contains(instance))
@@ -225,17 +219,30 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Abilities
             var serializedObject = new SerializedObject(instance);
             var property = serializedObject.FindProperty("_context");
             property.boxedValue = ctx;
+            SetImmuneTags(serializedObject, data);
             serializedObject.ApplyModifiedProperties();
             serializedObject.Update();
         }
 
-        private void SetLocalized(CastEffectsOnTargetAbility instance, AbilityDataStruct data)
+        private void SetImmuneTags(SerializedObject serializedObject, AbilityDataStruct data)
         {
-            LocalizedString skillName = new(NAME_LOCALIZE_TABLE, data.LocalizedKey);
-            LocalizedString skillDescription = new(DESCRIPTION_LOCALIZE_TABLE, data.LocalizedKey);
-            Debug.Log(data.LocalizedKey);
-            instance.SetSkillName(skillName);
-            instance.SetSkillDescription(skillDescription);
+            var property = serializedObject.FindProperty("tags.ActivationTags");
+            var immuneTags = GetImmuneTags(data);
+            property.ClearArray();
+            serializedObject.ApplyModifiedProperties();
+            serializedObject.Update();
+            for (var i = 0; i < immuneTags.Length; i++)
+            {
+                property.InsertArrayElementAtIndex(i);
+                property.GetArrayElementAtIndex(i).objectReferenceValue = immuneTags[i];
+            }
+        }
+
+        private TagScriptableObject[] GetImmuneTags(AbilityDataStruct dataStruct)
+        {
+            var gameEffect = _mappingEditor.GameEffectMaps.Find(x => x.Id == dataStruct.MainEffectTargetParameterId);
+            if (gameEffect == null) return Array.Empty<TagScriptableObject>();
+            return gameEffect.Value.ApplicationTagRequirements.IgnoreTags;
         }
 
         private Elemental GetElement(string id)
@@ -286,32 +293,6 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Abilities
             }
 
             return default;
-        }
-
-        private SkillTargetType GetSkillTargetType(string id)
-        {
-            foreach (var map in _mappingEditor.TargetTypeMaps)
-            {
-                if (map.Id == id)
-                {
-                    return map.Value;
-                }
-            }
-
-            return null;
-        }
-
-        public GameplayEffectDefinition GetGameplayEffectDefinition(string id)
-        {
-            foreach (var map in _mappingEditor.GameEffectMaps)
-            {
-                if (map.Id == id)
-                {
-                    return map.Value;
-                }
-            }
-
-            return null;
         }
 
         private void LoadMappings()
