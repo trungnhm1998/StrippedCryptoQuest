@@ -11,12 +11,18 @@ namespace CryptoQuest.Sagas
         // TODO: implement
         protected override void HandleAuthenticate(LoginUsingTwitter ctx)
         {
+#if UNITY_EDITOR
             ActionDispatcher.Dispatch(new DebugLoginAction());
+#endif
         }
 
         protected override void HandleAction(LoginUsingTwitter ctx)
         {
+#if UNITY_EDITOR
             ActionDispatcher.Dispatch(new AuthenticateSucceed());
+#else
+            StartCoroutine(DelayLoginFailedCo());
+#endif
         }
 
         private IEnumerator DelayLoginFailedCo()
