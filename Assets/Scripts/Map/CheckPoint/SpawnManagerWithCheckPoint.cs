@@ -23,8 +23,8 @@ namespace CryptoQuest.Map.CheckPoint
 
         private void OnDestroy()
         {
-            GenericDialogController.Instance.Release(_dialog);
             _showCheckPointMessageSO.EventRaised -= ShowCheckPointMessage;
+            GenericDialogController.Instance.Release(_dialog);
         }
 
         protected override void SpawnPlayer()
@@ -36,10 +36,10 @@ namespace CryptoQuest.Map.CheckPoint
 
                 var position = _checkPointController.CheckPointPosition;
 
-                if(position == Vector3.zero)
+                if (position == Vector3.zero)
                 {
                     position = transform.GetChild(1).transform.position; // Set default position
-                }    
+                }
 
                 var heroInstance = Instantiate(_heroPrefab, position, Quaternion.identity);
                 heroInstance.SetFacingDirection(_checkPointController.FacingDirection);
@@ -51,26 +51,27 @@ namespace CryptoQuest.Map.CheckPoint
             else
             {
                 base.SpawnPlayer();
-            }    
+            }
         }
 
         private IEnumerator CoLoadDialogAndShowMessage()
         {
-            if(_dialog == null)
+            if (_dialog == null)
             {
                 yield return GenericDialogController.Instance.CoInstantiate(dialog => _dialog = dialog, false);
             }
+
             _dialog.WithMessage(_revivalMessage).RequireInput().WithHideCallback(EnableMapInput).Show();
-        }    
+        }
 
         private void EnableMapInput()
         {
             _inputMediator.EnableMapGameplayInput();
-        } 
-        
+        }
+
         private void ShowCheckPointMessage()
         {
             StartCoroutine(CoLoadDialogAndShowMessage());
-        }    
+        }
     }
 }
