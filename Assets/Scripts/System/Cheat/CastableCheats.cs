@@ -136,6 +136,20 @@ namespace CryptoQuest.System.Cheat
             if (characterAbilityDict.TryGetValue(abilityId, out var spec) == false) return;
 
             var character = CharacterCheats.Instance.GetCharacter(characterId);
+            var characterSkillHolder = character.GetComponent<HeroSkills>();
+
+            List<CastSkillAbility> currentSkills = new(characterSkillHolder.Skills);
+            foreach (var currentSkill in currentSkills)
+            {
+                if (currentSkill.Context.SkillInfo.Id != abilityId) continue;
+                currentSkills.Remove(currentSkill);
+                break;
+            }
+
+            PropertyInfo property = characterSkillHolder.GetType().GetProperty("_skills",
+                BindingFlags.NonPublic | BindingFlags.Instance);
+            property.SetValue(characterSkillHolder, currentSkills);
+
             character.AbilitySystem.RemoveAbility(spec);
 
             Debug.Log(
