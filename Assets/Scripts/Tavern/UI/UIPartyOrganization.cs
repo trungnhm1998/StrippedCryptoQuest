@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace CryptoQuest.Tavern.UI
@@ -59,11 +60,23 @@ namespace CryptoQuest.Tavern.UI
         /// If there is no data in the left list,
         /// the first button of the right list will be selected.
         /// </summary>
-        public void HandleListInteractable(UICharacterList scrollList)
+        public void HandleListInteractable() => StartCoroutine(CoHandleListInteractable());
+        private IEnumerator CoHandleListInteractable()
         {
-            if (scrollList.Data.Count <= 0) return;
-            scrollList.SetInteractableAllButtons(true);
-            scrollList.SelectDefault();
+            yield return new WaitUntil(() =>
+                (_partyScrollContent != null && _gameScrollContent != null)
+                && (_partyScrollContent.childCount > 0 || _gameScrollContent.childCount > 0));
+
+            switch (_partyScrollContent.childCount)
+            {
+                case > 0:
+                    _gameListUi.SetInteractableAllButtons(false);
+                    _partyUi.SelectDefault();
+                    break;
+                case <= 0:
+                    _gameListUi.SelectDefault();
+                    break;
+            }
         }
 
         public void SwitchList(Vector2 direction)
@@ -90,16 +103,12 @@ namespace CryptoQuest.Tavern.UI
             targetList.SelectDefault();
         }
 
-        public void CheckEmptyList(UICharacterList target, bool isGameListEmpty)
-        {
-            if (!isGameListEmpty)
-                target.SetInteractableAllButtons(false);
-        }
-
         public void ConfirmedTransmission()
         {
             _partyUi.UpdateList();
             _gameListUi.UpdateList();
         }
+
+        private void OnDestroy() => StopCoroutine(CoHandleListInteractable());
     }
 }

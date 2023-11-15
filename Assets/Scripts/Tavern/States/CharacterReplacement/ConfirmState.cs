@@ -2,7 +2,6 @@
 using CryptoQuest.Core;
 using CryptoQuest.UI.Actions;
 using TinyMessenger;
-using UniRx;
 using UnityEngine;
 using UnityEngine.Localization;
 
@@ -39,17 +38,15 @@ namespace CryptoQuest.Tavern.States.CharacterReplacement
 
         protected override void OnExit()
         {
-            _controller.DialogsManager.ChoiceDialog.Hide();
-
             ActionDispatcher.Unbind(_transferSucceedEvent);
             ActionDispatcher.Unbind(_transferFailedEvent);
             _controller.MerchantInputManager.SubmitEvent -= BackToTransferState;
+
+            if (_controller.DialogsManager.ChoiceDialog == null) return;
+            _controller.DialogsManager.ChoiceDialog.Hide();
         }
 
-        private void ShowTransferSucceededMessage(ActionBase _)
-        {
-            HandleTransferMessage(_transferSucceededMsg);
-        }
+        private void ShowTransferSucceededMessage(ActionBase _) => HandleTransferMessage(_transferSucceededMsg);
 
         private void ShowTransferFailedMessage(ActionBase _)
         {
@@ -97,18 +94,19 @@ namespace CryptoQuest.Tavern.States.CharacterReplacement
 
             ActionDispatcher.Dispatch(new ShowLoading());
 
-            if (listGameItemsToTransfer.Count > 0 && listWalletItemsToTransfer.Count > 0)
+            switch (listGameItemsToTransfer.Count)
             {
-                ActionDispatcher.Dispatch(new SendCharactersToBothSide(listGameItemsToTransfer.ToArray(),
-                    listWalletItemsToTransfer.ToArray()));
-                return;
+                case > 0 when listWalletItemsToTransfer.Count > 0:
+                    ActionDispatcher.Dispatch(new SendCharactersToBothSide(listGameItemsToTransfer.ToArray(),
+                        listWalletItemsToTransfer.ToArray()));
+                    break;
+                case > 0:
+                    ActionDispatcher.Dispatch(new SendCharactersToWallet(listGameItemsToTransfer.ToArray()));
+                    break;
+                case <= 0 when listWalletItemsToTransfer.Count > 0:
+                    ActionDispatcher.Dispatch(new SendCharactersToGame(listWalletItemsToTransfer.ToArray()));
+                    break;
             }
-
-            if (listGameItemsToTransfer.Count > 0)
-                ActionDispatcher.Dispatch(new SendCharactersToWallet(listGameItemsToTransfer.ToArray()));
-
-            if (listWalletItemsToTransfer.Count > 0)
-                ActionDispatcher.Dispatch(new SendCharactersToGame(listWalletItemsToTransfer.ToArray()));
         }
     }
 }

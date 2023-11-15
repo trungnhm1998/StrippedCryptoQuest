@@ -1,8 +1,7 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Animations;
 
-namespace CryptoQuest.Tavern.States.CharacterReplacement
+namespace CryptoQuest.Tavern.States
 {
     public abstract class StateMachineBehaviourBase : StateMachineBehaviour
     {

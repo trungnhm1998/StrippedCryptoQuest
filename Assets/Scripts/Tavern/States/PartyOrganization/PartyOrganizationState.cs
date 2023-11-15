@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using CryptoQuest.Actions;
 using CryptoQuest.Core;
-using CryptoQuest.Tavern.States.CharacterReplacement;
 using CryptoQuest.Tavern.UI;
 using TinyMessenger;
 using UnityEngine;
@@ -25,11 +24,10 @@ namespace CryptoQuest.Tavern.States.PartyOrganization
         protected override void OnEnter()
         {
             _controller = StateMachine.GetComponent<TavernController>();
-            _controller.UIPartyOrganization.gameObject.SetActive(true);
             _controller.UIPartyOrganization.Contents.SetActive(true);
+            _controller.UIPartyOrganization.HandleListInteractable();
             UITavernItem.Pressed += _controller.UIPartyOrganization.Transfer;
-            UICharacterList.Rendered += _controller.UIPartyOrganization.HandleListInteractable;
-            
+
             _getInPartyNftCharacters = ActionDispatcher.Bind<GetInPartyNftCharactersSucceed>(GetInPartyCharacters);
             _getGameDataSucceedEvent = ActionDispatcher.Bind<GetGameNftCharactersSucceed>(GetInGameCharacters);
             ActionDispatcher.Dispatch(new GetCharacters());
@@ -43,8 +41,7 @@ namespace CryptoQuest.Tavern.States.PartyOrganization
         protected override void OnExit()
         {
             UITavernItem.Pressed -= _controller.UIPartyOrganization.Transfer;
-            UICharacterList.Rendered -= _controller.UIPartyOrganization.HandleListInteractable;
-            
+
             ActionDispatcher.Unbind(_getInPartyNftCharacters);
             ActionDispatcher.Unbind(_getGameDataSucceedEvent);
 
@@ -70,7 +67,6 @@ namespace CryptoQuest.Tavern.States.PartyOrganization
 
         private void CancelPartyOrganization()
         {
-            _controller.UIPartyOrganization.gameObject.SetActive(false);
             _controller.UIPartyOrganization.Contents.SetActive(false);
             StateMachine.Play(OverviewState);
         }

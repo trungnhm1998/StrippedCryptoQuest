@@ -1,9 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using CryptoQuest.Menu;
 using CryptoQuest.UI.Menu;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.UI;
 using Obj = CryptoQuest.Sagas.Objects;
 
@@ -11,8 +9,6 @@ namespace CryptoQuest.Tavern.UI
 {
     public class UICharacterList : MonoBehaviour
     {
-        public static event UnityAction<UICharacterList> Rendered;
-
         [SerializeField] protected Transform _scrollRectContent;
         [SerializeField] protected UITavernItem _itemPrefab;
         [SerializeField] protected RectTransform _tooltipSafeArea;
@@ -31,21 +27,17 @@ namespace CryptoQuest.Tavern.UI
 
         public void SetData(List<Obj.Character> data)
         {
-            _characterList = data;
             CleanUpScrollView();
+            _characterList = data;
             RenderData();
             _tooltip.SetSafeArea(_tooltipSafeArea);
         }
 
-        public void SelectDefault()
-        {
-            StartCoroutine(CoSetDefaultSelection());
-        }
-
+        public void SelectDefault() => StartCoroutine(CoSetDefaultSelection());
         private IEnumerator CoSetDefaultSelection()
         {
-            yield return null;
-            var firstButton = _scrollRectContent.GetComponentInChildren<MultiInputButton>();
+            yield return new WaitForSeconds(.5f);
+            var firstButton = _scrollRectContent.GetComponentInChildren<Button>();
             firstButton.Select();
         }
 
@@ -66,7 +58,6 @@ namespace CryptoQuest.Tavern.UI
                 item.SetItemInfo(itemData);
                 IdentifyItemParentThenCacheItem(item);
             }
-            Rendered?.Invoke(this);
         }
 
         private void IdentifyItemParentThenCacheItem(UITavernItem item)
@@ -94,6 +85,7 @@ namespace CryptoQuest.Tavern.UI
         private void OnDisable()
         {
             CleanUpScrollView();
+            StopCoroutine(CoSetDefaultSelection());
         }
     }
 }
