@@ -20,7 +20,7 @@ namespace CryptoQuest.Menus.Settings
             set
             {
                 _value = value;
-                this.CallEventSafely(ValueChanged, _value);
+                ValueChanged.SafeInvoke(_value);
             }
         }
     }
