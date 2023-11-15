@@ -1,5 +1,4 @@
-﻿using System;
-using CryptoQuest.Input;
+﻿using CryptoQuest.Input;
 using CryptoQuest.Tavern.ScriptableObjects;
 using UnityEngine;
 

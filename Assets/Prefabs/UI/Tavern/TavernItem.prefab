@@ -432,9 +432,8 @@ GameObject:
   - component: {fileID: 3659491134987460824}
   - component: {fileID: 6008523105001526087}
   - component: {fileID: 925248088096775997}
-  - component: {fileID: 4063772278032992611}
-  - component: {fileID: 7580833117744222594}
   - component: {fileID: 796513755204774528}
+  - component: {fileID: 2256122282708497312}
   m_Layer: 5
   m_Name: TavernItem
   m_TagString: Untagged
@@ -490,7 +489,7 @@ MonoBehaviour:
   _pendingTag: {fileID: 3027263456310314235}
   _inPartyTag: {fileID: 4707030993955387049}
   _tooltipPosition: {fileID: 5705020328553040213}
---- !u!114 &4063772278032992611
+--- !u!114 &796513755204774528
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -499,26 +498,28 @@ MonoBehaviour:
   m_GameObject: {fileID: 5359383526300462474}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 69829015e3a24dc449c4c18a0fbd4599, type: 3}
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _onTooltipShow:
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 0
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 925248088096775997}
-        m_TargetAssemblyTypeName: CryptoQuest.Tavern.UI.UITavernItem, indi-games.crypto-quest
-        m_MethodName: OnInspecting
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  _button: {fileID: 7580833117744222594}
---- !u!114 &7580833117744222594
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 874fef09ec39f44239874f301259fbba, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!114 &2256122282708497312
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -527,7 +528,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5359383526300462474}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 77b26c7a54d143a7b78bcba222262814, type: 3}
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
@@ -563,7 +564,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 925248088096775997}
-        m_TargetAssemblyTypeName: CryptoQuest.Tavern.UI.UITavernItem, indi-games.crypto-quest
+        m_TargetAssemblyTypeName: CryptoQuest.Tavern.UI.UITavernItem, IndiGames.CryptoQuest.Tavern
         m_MethodName: OnSelectToTransfer
         m_Mode: 1
         m_Arguments:
@@ -574,36 +575,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &796513755204774528
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5359383526300462474}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 0
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 874fef09ec39f44239874f301259fbba, type: 3}
-  m_Type: 0
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
 --- !u!1 &5623258385234347189
 GameObject:
   m_ObjectHideFlags: 0

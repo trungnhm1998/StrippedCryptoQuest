@@ -1,5 +1,5 @@
 ﻿using CryptoQuest.Input;
-using CryptoQuest.Tavern.States.CharacterReplacement;
+using CryptoQuest.Tavern.States;
 using CryptoQuest.Tavern.UI;
 using UnityEngine;
 using UnityEngine.Events;

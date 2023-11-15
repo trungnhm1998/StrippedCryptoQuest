@@ -1,5 +1,4 @@
-﻿using CryptoQuest.Tavern.States.CharacterReplacement;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace CryptoQuest.Tavern.States
 {
@@ -36,6 +35,8 @@ namespace CryptoQuest.Tavern.States
             _controller.DialogsManager.EnableOverviewButtonsEvent -= EnableOverviewButtonsRequested;
 
             _controller.TavernUiOverview.gameObject.SetActive(false);
+
+            if (_controller.DialogsManager.Dialogue == null) return;
             _controller.DialogsManager.Dialogue.Hide();
         }
 

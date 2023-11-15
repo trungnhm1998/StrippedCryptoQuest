@@ -25,13 +25,11 @@ namespace CryptoQuest.Tavern.States.CharacterReplacement
         protected override void OnEnter()
         {
             _controller = StateMachine.GetComponent<TavernController>();
-            _controller.UICharacterReplacement.gameObject.SetActive(true);
             _controller.UICharacterReplacement.Contents.SetActive(true);
             _controller.UICharacterReplacement.SelectedGameItemsIds.Clear();
             _controller.UICharacterReplacement.SelectedWalletItemsIds.Clear();
-
+            _controller.UICharacterReplacement.HandleListInteractable();
             UITavernItem.Pressed += _controller.UICharacterReplacement.Transfer;
-            UICharacterList.Rendered += _controller.UICharacterReplacement.HandleListInteractable;
 
             _getGameDataSucceedEvent = ActionDispatcher.Bind<GetGameNftCharactersSucceed>(GetInGameCharacters);
             _getWalletDataSucceedEvent = ActionDispatcher.Bind<GetWalletNftCharactersSucceed>(GetWalletCharacters);
@@ -59,7 +57,6 @@ namespace CryptoQuest.Tavern.States.CharacterReplacement
 
         private void CancelCharacterReplacement()
         {
-            _controller.UICharacterReplacement.gameObject.SetActive(false);
             _controller.UICharacterReplacement.Contents.SetActive(false);
             StateMachine.Play(OverviewState);
         }
@@ -84,13 +81,13 @@ namespace CryptoQuest.Tavern.States.CharacterReplacement
 
         private void ViewCharacterDetails()
         {
-            EventSystem.current.currentSelectedGameObject.GetComponent<UITavernItem>().InpectDetails();
+            EventSystem.current.currentSelectedGameObject.GetComponent<UITavernItem>().InspectDetails();
         }
 
         protected override void OnExit()
         {
+            _controller.UICharacterReplacement.StopHandleListInteractable();
             UITavernItem.Pressed -= _controller.UICharacterReplacement.Transfer;
-            UICharacterList.Rendered -= _controller.UICharacterReplacement.HandleListInteractable;
 
             ActionDispatcher.Unbind(_getGameDataSucceedEvent);
             ActionDispatcher.Unbind(_getWalletDataSucceedEvent);

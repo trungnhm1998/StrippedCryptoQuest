@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using CryptoQuest.Input;
 using CryptoQuest.UI.Dialogs.ChoiceDialog;
 using CryptoQuest.UI.Dialogs.Dialogue;

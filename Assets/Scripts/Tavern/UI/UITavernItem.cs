@@ -79,8 +79,9 @@ namespace CryptoQuest.Tavern.UI
                 .WithContentAwareness(_tooltipPosition);
         }
 
-        public void InpectDetails()
+        public void InspectDetails()
         {
+            return; // disable waiting for the new tooltip
             _tooltip.Show();
         }
     }
