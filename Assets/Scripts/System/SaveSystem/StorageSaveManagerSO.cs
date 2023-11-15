@@ -29,6 +29,7 @@ namespace CryptoQuest.SaveSystem
             }
 
 #if USE_FILE_SYSTEM
+            // TODO: PREVENT WRITE FREQUENTLY OR USE BUFFER/THREAD
             FileManager.MoveFile(_fileName, _backupFileName);
             return FileManager.WriteToFile(_fileName, jsonData);
 #else

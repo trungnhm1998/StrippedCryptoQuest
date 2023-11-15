@@ -1,4 +1,8 @@
+using CryptoQuest.Networking;
+using CryptoQuest.Networking.API;
 using CryptoQuest.SaveSystem;
+using CryptoQuest.System;
+using CryptoQuest.System.SaveSystem.Savers;
 using UnityEditor;
 using UnityEditor.UIElements;
 using UnityEngine;
@@ -19,6 +23,12 @@ namespace CryptoQuestEditor.SaveSystem
             InspectorElement.FillDefaultInspector(root, serializedObject, this);
 
             _uxml.CloneTree(root);
+            var saveButton = new Button(SaveToServer)
+            {
+                text = "Save"
+            };
+            root.Add(saveButton);
+
 
             var clearAllSaveButton = root.Q<Button>("clear-all-save-button");
             var openSaveFolderButton = root.Q<Button>("open-save-folder-button");
@@ -26,7 +36,18 @@ namespace CryptoQuestEditor.SaveSystem
             clearAllSaveButton.clicked += OnClearAllSaveButtonOnclicked;
             openSaveFolderButton.clicked += OnOpenSaveFolderButtonOnclicked;
 
+
             return root;
+        }
+
+        private void SaveToServer()
+        {
+            Target.Save();
+            var restClient = ServiceProvider.GetService<IRestClient>();
+            restClient?.WithBody(new IntervalOnlineProgressionSaver.SaveDataBody() { GameData = Target.SaveData })
+                .Post<IntervalOnlineProgressionSaver.SaveDataResult>(Accounts.USER_SAVE_DATA);
+            EditorUtility.SetDirty(Target);
+            AssetDatabase.SaveAssets();
         }
 
         private void OnOpenSaveFolderButtonOnclicked()
