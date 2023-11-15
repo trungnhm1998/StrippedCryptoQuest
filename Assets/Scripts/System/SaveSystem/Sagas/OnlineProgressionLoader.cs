@@ -75,8 +75,8 @@ namespace CryptoQuest.SaveSystem.Sagas
 
         private void LoadIntoSaveSystem(SaveDataResponse res)
         {
-            Debug.Log("LoadIntoSaveSystem: " + JsonConvert.SerializeObject(res));
             _saveSystem.SaveData = LoadSaveFromResponse(res);
+            Debug.Log("LoadIntoSaveSystem: " + JsonConvert.SerializeObject(_saveSystem.SaveData));
             _saveSystem.Save();
         }
 
@@ -99,7 +99,7 @@ namespace CryptoQuest.SaveSystem.Sagas
             {
                 return new SaveData()
                 {
-                    UUID = credential.Profile.user.email,
+                    UUID = res.game_data.UUID,
                     PlayerName = res.game_data.PlayerName,
                     Objects = res.game_data.Objects
                 };
@@ -119,7 +119,12 @@ namespace CryptoQuest.SaveSystem.Sagas
         private IEnumerator CoLoadProgression()
         {
             var loaders = GetComponents<ILoader>();
-            foreach (var loader in loaders) yield return loader.Load(_saveSystem); // adjust loader order on inspector
+            foreach (var loader in loaders)
+            {
+                Debug.Log(loader + " loading...");
+                yield return loader.Load(_saveSystem); // adjust loader order on inspector
+            }
+
             ActionDispatcher.Dispatch(new GetProfileSucceed());
         }
     }
