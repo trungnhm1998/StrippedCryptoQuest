@@ -1,4 +1,5 @@
-﻿using CryptoQuest.Battle.Commands;
+﻿using CryptoQuest.AbilitySystem.Abilities;
+using CryptoQuest.Battle.Commands;
 using CryptoQuest.Battle.Components;
 using CryptoQuest.Battle.UI.CommandDetail;
 using CryptoQuest.Battle.UI.SelectSkill;
@@ -8,11 +9,11 @@ namespace CryptoQuest.Battle.States.SelectHeroesActions
 {
     public class SelectSingleEnemyToCastSkill : StateBase
     {
-        private readonly UISkill _selectedSkill;
+        private readonly CastSkillAbility _selectedSkill;
         private readonly SelectSkillPresenter _skillPresenter;
         private readonly SelectEnemyPresenter _selectEnemyPresenter;
 
-        public SelectSingleEnemyToCastSkill(UISkill selectedSkill, HeroBehaviour hero, SelectHeroesActions fsm) :
+        public SelectSingleEnemyToCastSkill(CastSkillAbility selectedSkill, HeroBehaviour hero, SelectHeroesActions fsm) :
             base(hero, fsm)
         {
             Fsm.TryGetComponent(out _skillPresenter);
@@ -37,7 +38,7 @@ namespace CryptoQuest.Battle.States.SelectHeroesActions
         private void CreateCommandToCastSkillOnEnemy(EnemyBehaviour enemy)
         {
             var castSkillCommand =
-                new CastSkillCommand(Hero, _selectedSkill.Skill, enemy);
+                new CastSkillCommand(Hero, _selectedSkill, enemy);
             Hero.TryGetComponent(out CommandExecutor commandExecutor);
             commandExecutor.SetCommand(castSkillCommand);
             Fsm.GoToNextState();

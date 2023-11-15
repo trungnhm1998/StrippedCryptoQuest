@@ -1,4 +1,5 @@
-﻿using CryptoQuest.Battle.Commands;
+﻿using CryptoQuest.AbilitySystem.Abilities;
+using CryptoQuest.Battle.Commands;
 using CryptoQuest.Battle.Components;
 using CryptoQuest.Battle.UI.SelectHero;
 using CryptoQuest.Battle.UI.SelectSkill;
@@ -8,21 +9,21 @@ namespace CryptoQuest.Battle.States.SelectHeroesActions
 {
     internal class SelectSingleHeroToCastSkill : StateBase
     {
-        private readonly UISkill _selectedSkillUI;
+        private readonly CastSkillAbility _selectedSkill;
         private readonly SelectHeroPresenter _selectHeroPresenter;
         private readonly SelectSkillPresenter _skillPresenter;
 
-        public SelectSingleHeroToCastSkill(UISkill selectedSkillUI, HeroBehaviour hero, SelectHeroesActions fsm) :
+        public SelectSingleHeroToCastSkill(CastSkillAbility selectedSkill, HeroBehaviour hero, SelectHeroesActions fsm) :
             base(hero, fsm)
         {
-            _selectedSkillUI = selectedSkillUI;
+            _selectedSkill = selectedSkill;
             _selectHeroPresenter = Fsm.BattleStateMachine.SelectHeroPresenter;
             Fsm.TryGetComponent(out _skillPresenter);
         }
 
         public override void OnEnter()
         {
-            _selectHeroPresenter.Show(_selectedSkillUI.Skill.SkillName);
+            _selectHeroPresenter.Show(_selectedSkill.SkillName);
             _skillPresenter.Show(Hero, false);
             SelectHeroPresenter.ConfirmSelectCharacter += CastSkillOnHero;
         }
@@ -38,7 +39,7 @@ namespace CryptoQuest.Battle.States.SelectHeroesActions
 
         private void CastSkillOnHero(HeroBehaviour selectedHero)
         {
-            var castSkillCommand = new CastSkillCommand(Hero, _selectedSkillUI.Skill, selectedHero);
+            var castSkillCommand = new CastSkillCommand(Hero, _selectedSkill, selectedHero);
             Hero.TryGetComponent(out CommandExecutor commandExecutor);
             commandExecutor.SetCommand(castSkillCommand);
             Fsm.GoToNextState();
