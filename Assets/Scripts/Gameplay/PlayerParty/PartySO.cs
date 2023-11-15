@@ -13,6 +13,8 @@ namespace CryptoQuest.Gameplay.PlayerParty
         [field: SerializeField] public HeroSpec Hero { get; set; }
 
         [field: SerializeField] public Equipments EquippingItems { get; set; }
+        
+        public bool IsValid() => Hero != null;
     }
 
     public class PartySO : ScriptableObject

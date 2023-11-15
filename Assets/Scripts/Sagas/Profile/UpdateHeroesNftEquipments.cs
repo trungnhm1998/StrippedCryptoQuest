@@ -1,35 +1,61 @@
-﻿using CryptoQuest.Actions;
+﻿using System.Collections;
+using CryptoQuest.Actions;
 using CryptoQuest.Battle.Components;
+using CryptoQuest.Character.Hero;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
 using CryptoQuest.Gameplay.PlayerParty;
 using CryptoQuest.Item;
 using CryptoQuest.Item.Equipment;
 using CryptoQuest.System;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 
 namespace CryptoQuest.Sagas.Profile
 {
     public class UpdateHeroesNftEquipments : SagaBase<InventoryFilled>
     {
-        [SerializeField] private InventorySO _inventory;
+        [SerializeField] private AssetReferenceT<InventorySO> _inventoryAsset;
+        [SerializeField] private AssetReferenceT<PartySO> _partyAsset;
+        private InventorySO _inventory;
+        private PartySO _partySO;
+        private IPartyController _partyController;
 
-        protected override void HandleAction(InventoryFilled ctx)
+        protected override void HandleAction(InventoryFilled _) => StartCoroutine(CoUpdateInventory());
+
+        private IEnumerator CoUpdateInventory()
         {
-            var partyController = ServiceProvider.GetService<IPartyController>();
-            foreach (var slot in partyController.Slots)
+            yield return CoLoad();
+
+            foreach (var slot in _partySO.GetParty())
             {
                 if (!slot.IsValid()) continue;
-                if (!RemoveNftEquipmentsInInventoryIfHeroEquipping(slot.HeroBehaviour)) continue;
-                slot.HeroBehaviour.GetComponent<EquipmentsController>().Init();
+                RemoveNftEquipmentsInInventoryIfHeroEquipping(slot.EquippingItems);
+            }
+
+            _partyController ??= ServiceProvider.GetService<IPartyController>();
+            if (_partyController == null) yield break;
+            foreach (var partySlot in _partyController.Slots)
+            {
+                if (!partySlot.IsValid()) continue;
+                partySlot.HeroBehaviour.GetComponent<EquipmentsController>().Init();
             }
         }
 
-        private bool RemoveNftEquipmentsInInventoryIfHeroEquipping(HeroBehaviour hero)
+        private IEnumerator CoLoad()
+        {
+            var inventoryHandle = _inventoryAsset.LoadAssetAsync();
+            yield return inventoryHandle;
+            _inventory = inventoryHandle.Result;
+
+            var partyHandle = _partyAsset.LoadAssetAsync();
+            yield return partyHandle;
+            _partySO = partyHandle.Result;
+        }
+
+        private bool RemoveNftEquipmentsInInventoryIfHeroEquipping(Equipments equippingItems)
         {
             bool needUpdate = false;
-            hero.TryGetComponent(out EquipmentsController equipmentsController);
-            var equipments = equipmentsController.Equipments;
-            foreach (var equipmentSlot in equipments.Slots)
+            foreach (var equipmentSlot in equippingItems.Slots)
             {
                 var equippingItem = equipmentSlot.Equipment;
                 if (!equippingItem.IsValid() || equippingItem.Id == 0) continue;
@@ -44,7 +70,8 @@ namespace CryptoQuest.Sagas.Profile
         /// </summary>
         /// <param name="equippingItem"></param>
         /// <param name="equipmentSlot"></param>
-        private bool RemoveNftEquipmentFromInventoryIfHeroEquippingTheSame(EquipmentInfo equippingItem, EquipmentSlot equipmentSlot)
+        private bool RemoveNftEquipmentFromInventoryIfHeroEquippingTheSame(EquipmentInfo equippingItem,
+            EquipmentSlot equipmentSlot)
         {
             bool needUpdate = false;
             for (var index = 0; index < _inventory.NftEquipments.Count; index++)
