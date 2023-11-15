@@ -3,6 +3,7 @@ using CryptoQuest.Item;
 using CryptoQuest.Item.Equipment;
 using CryptoQuest.System;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace CryptoQuest.Shop
 {
@@ -16,8 +17,6 @@ namespace CryptoQuest.Shop
   
     public class ShopInventoryController : MonoBehaviour, IShopInventoryController
     {
-        [SerializeField] private InventoryController _inventoryController;
-
         private void Awake()
         {
             ServiceProvider.Provide<IShopInventoryController>(this);
@@ -30,7 +29,7 @@ namespace CryptoQuest.Shop
         public bool TryToBuy(EquipmentInfo equipmentItem)
         {
             if (!HasEnoughGold(equipmentItem)) return false;
-            if (!_inventoryController.Add(equipmentItem)) return false;
+            // if (!_lootController.Add(equipmentItem)) return false;
 
             // _inventoryController.Inventory.WalletController.Wallet.Gold.UpdateCurrencyAmount(-equipmentItem.Price);
             // TODO: REFACTOR SHOP
@@ -41,7 +40,7 @@ namespace CryptoQuest.Shop
         public bool TryToBuy(ConsumableInfo consumable)
         {
             if (!HasEnoughGold(consumable)) return false;
-            if (!_inventoryController.Add(consumable)) return false;
+            // if (!_lootController.Add(consumable)) return false;
 
             // _inventoryController.Inventory.WalletController.Wallet.Gold.UpdateCurrencyAmount(-consumable.Price);
             // TODO: REFACTOR SHOP
@@ -51,7 +50,7 @@ namespace CryptoQuest.Shop
 
         public bool TryToSell(EquipmentInfo equipmentItem)
         {
-            if (!_inventoryController.Remove(equipmentItem)) return false;
+            // if (!_lootController.Remove(equipmentItem)) return false;
 
             // _inventoryController.Inventory.WalletController.Wallet.Gold.UpdateCurrencyAmount(equipmentItem.SellPrice);
             // TODO: REFACTOR SHOP
@@ -61,7 +60,7 @@ namespace CryptoQuest.Shop
 
         public bool TryToSell(ConsumableInfo consumable)
         {
-            if (!_inventoryController.Inventory.Remove(consumable)) return false;
+            // if (!_lootController.Inventory.Remove(consumable)) return false;
 
             // _inventoryController.Inventory.WalletController.Wallet.Gold.UpdateCurrencyAmount(consumable.SellPrice);
             // TODO: REFACTOR SHOP

@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using CryptoQuest.Actions;
+﻿using System;
+using System.Collections.Generic;
 using CryptoQuest.Core;
 using CryptoQuest.Tavern.UI;
 using TinyMessenger;
@@ -21,6 +21,7 @@ namespace CryptoQuest.Tavern.States.PartyOrganization
         private static readonly int OverviewState = Animator.StringToHash("Overview");
         private static readonly int ConfirmState = Animator.StringToHash("Confirm Party Organization");
 
+        private bool _flag = false;
         protected override void OnEnter()
         {
             _controller = StateMachine.GetComponent<TavernController>();
@@ -29,8 +30,13 @@ namespace CryptoQuest.Tavern.States.PartyOrganization
             UITavernItem.Pressed += _controller.UIPartyOrganization.Transfer;
 
             _getInPartyNftCharacters = ActionDispatcher.Bind<GetInPartyNftCharactersSucceed>(GetInPartyCharacters);
-            _getGameDataSucceedEvent = ActionDispatcher.Bind<GetGameNftCharactersSucceed>(GetInGameCharacters);
-            ActionDispatcher.Dispatch(new GetCharacters());
+            _getGameDataSucceedEvent = ActionDispatcher.Bind<GetFilteredInGameNftCharactersSucceed>(GetInGameCharacters);
+
+            if (!_flag)
+            {
+                _flag = true;
+                ActionDispatcher.Dispatch(new GetCharacters());
+            }
 
             _controller.MerchantInputManager.CancelEvent += CancelPartyOrganization;
             _controller.MerchantInputManager.NavigateEvent += SwitchToOtherListRequested;
@@ -58,11 +64,11 @@ namespace CryptoQuest.Tavern.States.PartyOrganization
             _controller.UIParty.SetData(obj.InPartyCharacters);
         }
 
-        private void GetInGameCharacters(GetGameNftCharactersSucceed obj)
+        private void GetInGameCharacters(GetFilteredInGameNftCharactersSucceed obj)
         {
-            _cachedNonPartyCharactersData = obj.InGameCharacters;
-            if (obj.InGameCharacters.Count <= 0) return;
-            _controller.UINonParty.SetData(obj.InGameCharacters);
+            _cachedNonPartyCharactersData = obj.FilteredInGameCharacters;
+            if (obj.FilteredInGameCharacters.Count <= 0) return;
+            _controller.UINonParty.SetData(obj.FilteredInGameCharacters);
         }
 
         private void CancelPartyOrganization()
@@ -78,6 +84,9 @@ namespace CryptoQuest.Tavern.States.PartyOrganization
 
         private void SendItemsRequested()
         {
+            if (_controller.UIPartyOrganization.SelectedNonPartyCharacterIds.Count == 0 &&
+                _controller.UIPartyOrganization.SelectedPartyCharacterIds.Count == 0) return;
+
             StateMachine.Play(ConfirmState);
         }
 

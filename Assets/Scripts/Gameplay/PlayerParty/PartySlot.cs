@@ -1,4 +1,5 @@
 ﻿using CryptoQuest.Battle.Components;
+using CryptoQuest.Character.Hero;
 using UnityEngine;
 
 namespace CryptoQuest.Gameplay.PlayerParty
@@ -16,6 +17,12 @@ namespace CryptoQuest.Gameplay.PlayerParty
         private void Awake()
         {
             _hero = GetComponentInChildren<HeroBehaviour>();
+            Reset();
+        }
+
+        public void Reset()
+        {
+            _hero.Spec = new HeroSpec();
             _hero.gameObject.SetActive(false);
         }
 

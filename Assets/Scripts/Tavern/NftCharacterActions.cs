@@ -9,6 +9,16 @@ namespace CryptoQuest.Tavern
         public Obj.ECharacterStatus Status { get; set; } = Obj.ECharacterStatus.All;
     }
 
+    public class GetFilteredInGameNftCharactersSucceed : ActionBase
+    {
+        public List<Obj.Character> FilteredInGameCharacters { get; }
+
+        public GetFilteredInGameNftCharactersSucceed(List<Obj.Character> filteredFilteredInGameCharacters)
+        {
+            FilteredInGameCharacters = filteredFilteredInGameCharacters;
+        }
+    }
+
     public class GetWalletNftCharactersSucceed : ActionBase
     {
         public List<Obj.Character> WalletCharacters { get; }

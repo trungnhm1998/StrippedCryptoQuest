@@ -12,39 +12,23 @@ namespace CryptoQuest.Tavern.UI
         [SerializeField] private Transform _partyScrollContent;
         [SerializeField] private Transform _gameScrollContent;
 
-        private List<int> _selectedGameItemsIds = new();
-
-        public List<int> SelectedGameItemsIds
-        {
-            get => _selectedGameItemsIds;
-            private set => _selectedGameItemsIds = value;
-        }
-
-        private List<int> _selectedWalletItemsIds = new();
-
-        public List<int> SelectedWalletItemsIds
-        {
-            get => _selectedWalletItemsIds;
-            private set => _selectedWalletItemsIds = value;
-        }
+        public List<int> SelectedNonPartyCharacterIds { get; private set; } = new();
+        public List<int> SelectedPartyCharacterIds { get; private set; } = new();
 
         public void Transfer(UITavernItem currentItem)
         {
-            _selectedGameItemsIds.Clear();
-            _selectedWalletItemsIds.Clear();
-
             var currentList = currentItem.Parent;
 
             Transform otherList;
             if (currentList == _gameScrollContent)
             {
                 otherList = _partyScrollContent;
-                _selectedGameItemsIds.Add(currentItem.Id);
+                SelectedNonPartyCharacterIds.Add(currentItem.Id);
             }
             else
             {
                 otherList = _gameScrollContent;
-                _selectedWalletItemsIds.Add(currentItem.Id);
+                SelectedPartyCharacterIds.Add(currentItem.Id);
             }
 
             currentItem.Transfer(otherList);

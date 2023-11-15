@@ -143,6 +143,7 @@ namespace CryptoQuest.Battle.Components
         {
             // TODO: Should I allow equip dead character?
             if (_hero.IsValid() == false || equipment.IsValid() == false) return;
+            if (_equipmentsEffect.ContainsKey(equipment)) return;
 
             var activeEffectSpec = Character.ApplyEffect(CreateEffectSpecFromEquipment(equipment));
             _equipmentsEffect.Add(equipment, activeEffectSpec);
