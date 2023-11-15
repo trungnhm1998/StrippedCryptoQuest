@@ -9,7 +9,7 @@ namespace CryptoQuest.Battle.Components
 {
     public class HeroSkills : CharacterComponentBase
     {
-        [SerializeField] private List<CastSkillAbility> _skills;
+        [field: SerializeField] private List<CastSkillAbility> _skills { get;  set; } = new();
         public IReadOnlyList<CastSkillAbility> Skills => _skills;
 
         private ISkillsProvider _skillsProvider;
