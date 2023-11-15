@@ -65,6 +65,7 @@ namespace CryptoQuest.SaveSystem.Sagas
             else
             {
                 LoadIntoSaveSystem(null);
+                OnComplete();
             }
         }
 
