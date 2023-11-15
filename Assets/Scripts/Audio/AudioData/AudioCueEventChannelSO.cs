@@ -14,19 +14,13 @@ namespace CryptoQuest.Audio.AudioData
         /// </summary>
         /// <param name="cueSO">The AudioCueSO representing the audio cue to play.</param>
         /// <returns>The AudioCueKey associated with the played audio cue.</returns>
-        public void PlayAudio(AudioCueSO cueSO)
-        {
-            this.CallEventSafely(AudioPlayRequested, cueSO);
-        }
+        public void PlayAudio(AudioCueSO cueSO) => AudioPlayRequested.SafeInvoke(cueSO);
 
         /// <summary>
         /// Raises the stop event for the audio cue associated with the provided AudioCueKey.
         /// </summary>
         /// <param name="cueSO">The AudioCueKey representing the audio cue to stop.</param>
         /// <returns>True if the stop event was handled successfully; otherwise, false.</returns>
-        public void StopAudio(AudioCueSO cueSO)
-        {
-            this.CallEventSafely(AudioStopRequested, cueSO);
-        }
+        public void StopAudio(AudioCueSO cueSO) => AudioStopRequested.SafeInvoke(cueSO);
     }
 }

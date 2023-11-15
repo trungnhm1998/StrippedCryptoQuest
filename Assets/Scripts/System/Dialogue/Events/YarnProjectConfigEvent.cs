@@ -13,9 +13,6 @@ namespace CryptoQuest.System.Dialogue.Events
         /// Raises the configure yarn project event for <see cref="DialogRunnerController"/>
         /// </summary>
         /// <param name="yarnProject">The <see cref="YarnProjectConfigSO"/> holding config needed for yarn project</param>
-        public void ConfigureYarnProject(YarnProjectConfigSO yarnProject)
-        {
-            this.CallEventSafely(ConfigRequested, yarnProject);
-        }
+        public void ConfigureYarnProject(YarnProjectConfigSO yarnProject) => ConfigRequested.SafeInvoke(yarnProject);
     }
 }
