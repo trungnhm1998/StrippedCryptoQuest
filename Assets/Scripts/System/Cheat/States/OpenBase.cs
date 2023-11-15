@@ -37,13 +37,21 @@ namespace CryptoQuest.System.Cheat.States
         {
             animator.Play("Close");
 
-            if (Manager.GameState.CurrentGameState == EGameState.Battle)
+            switch (Manager.GameState.CurrentGameState)
             {
-                Manager.BattleInput.EnableBattleInput();
-                return;
+                case EGameState.Battle:
+                    Manager.BattleInput.EnableBattleInput();
+                    break;
+                case EGameState.Dialogue:
+                    Manager.Input.EnableDialogueInput();
+                    break;
+                case EGameState.Menu:
+                    Manager.Input.EnableMenuInput();
+                    break;
+                default:
+                    Manager.Input.EnableMapGameplayInput();
+                    break;
             }
-
-            Manager.Input.EnableMapGameplayInput();
         }
     }
 }
