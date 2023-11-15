@@ -146,8 +146,8 @@ namespace CryptoQuest.System.Cheat
                 break;
             }
 
-            PropertyInfo property = characterSkillHolder.GetType().GetProperty("_skills",
-                BindingFlags.NonPublic | BindingFlags.Instance);
+            var property = typeof(HeroSkills).GetProperty("_skills", BindingFlags.NonPublic | BindingFlags.Instance);
+            if (property == null) return;
             property.SetValue(characterSkillHolder, currentSkills);
 
             character.AbilitySystem.RemoveAbility(spec);
