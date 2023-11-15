@@ -41,15 +41,17 @@ namespace CryptoQuest.Tavern
         private void NextDialog()
         {
             _msgIndex++;
-            if (_msgIndex >= _welcomeMessage.Count)
-            {
-                EnableOverviewButtonsEvent?.Invoke();
-                return;
-            }
 
             Dialogue
                 .SetMessage(_welcomeMessage[_msgIndex])
+                .SetArrow(true)
                 .Show();
+
+            if (_msgIndex >= _welcomeMessage.Count - 1)
+            {
+                Dialogue.SetArrow(false);
+                EnableOverviewButtonsEvent?.Invoke();
+            }
         }
 
         public void TavernExited()
