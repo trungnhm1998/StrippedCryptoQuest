@@ -48,7 +48,11 @@ namespace CryptoQuest.SaveSystem.Sagas
             var restClient = ServiceProvider.GetService<IRestClient>();
             restClient
                 .Get<UserSaveDataResponse>(Accounts.USER_SAVE_DATA)
-                .Subscribe(LoadSave, OnError);
+                .Subscribe(LoadSave, delegate(Exception exception)
+                {
+                    Debug.LogWarning($"OnlineProgressionLoader::HandleAction {exception}");
+                    OnComplete();
+                });
         }
 
         private void LoadSave(UserSaveDataResponse response)
