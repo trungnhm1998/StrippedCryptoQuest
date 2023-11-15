@@ -1,4 +1,5 @@
 ﻿using System;
+using UnityEngine;
 using UnityEngine.Playables;
 
 namespace CryptoQuest.System.CutsceneSystem.CustomTimelineTracks.ConditionCheckingTrack
@@ -18,7 +19,16 @@ namespace CryptoQuest.System.CutsceneSystem.CustomTimelineTracks.ConditionChecki
             True = 1
         }
 
-        public void SetDirector(PlayableDirector playableDirector) => _playableDirector = playableDirector;
+        public override void OnGraphStart(Playable playable)
+        {
+            if (_playableDirector != null) return;
+            _playableDirector = playable.GetGraph().GetResolver() as PlayableDirector;
+        }
+
+        public void SetDirector(PlayableDirector playableDirector)
+        {
+            _playableDirector = playableDirector;
+        }
 
         public override void PrepareFrame(Playable playable, FrameData info)
         {
