@@ -1,41 +1,28 @@
-﻿using System.Collections.Generic;
-using CryptoQuest.Events;
-using IndiGames.Core.SaveSystem.ScriptableObjects;
+﻿using CryptoQuest.Events;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Localization;
 
 namespace CryptoQuest.Language.Settings
 {
-    public class LanguageSettingSO : SerializableScriptableObject
+    public class LanguageSettingSO : ScriptableObject
     {
         /// <summary>
         /// Hide in inspector because I don't want any one edit here
         /// ƪ(˘⌣˘)ʃ
         /// </summary>
-        [SerializeField, HideInInspector] private List<string> _languageList = new();
-        [SerializeField, HideInInspector] private int _currentLanguageIndex = 0;
+        [SerializeField, HideInInspector] private Locale _currentLanguage;
 
-        public event UnityAction<List<string>> LanguageListChanged;
-        public event UnityAction<int> CurrentLanguageIndexChanged;
+        public event UnityAction<Locale> CurrentLanguageIndexChanged;
 
-        public List<string> LanguageList
+        public Locale CurrentLanguage
         {
-            get => _languageList;
-            set
-            {
-                _languageList = value;
-                this.CallEventSafely(LanguageListChanged, _languageList);
-            }
-        }
-
-        public int CurrentLanguageIndex
-        {
-            get => _currentLanguageIndex;
+            get => _currentLanguage;
 
             set
             {
-                _currentLanguageIndex = value;
-                this.CallEventSafely(CurrentLanguageIndexChanged, _currentLanguageIndex);
+                _currentLanguage = value;
+                this.CallEventSafely(CurrentLanguageIndexChanged, _currentLanguage);
             }
         }
     }
