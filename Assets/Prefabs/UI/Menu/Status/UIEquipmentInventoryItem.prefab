@@ -31,7 +31,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3295748454580335884}
-  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -88,7 +87,7 @@ GameObject:
   - component: {fileID: 3700246351620262283}
   - component: {fileID: 2961018193659744562}
   - component: {fileID: 6570579471191893982}
-  - component: {fileID: 367542706109548103}
+  - component: {fileID: 1383577595882636739}
   m_Layer: 5
   m_Name: UIEquipmentInventoryItem
   m_TagString: Untagged
@@ -111,7 +110,6 @@ RectTransform:
   - {fileID: 286456768089794167}
   - {fileID: 2878004109397156178}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -196,8 +194,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _equipmentUI: {fileID: 671866294015914085}
-  _button: {fileID: 3700246351620262283}
---- !u!114 &367542706109548103
+--- !u!114 &1383577595882636739
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -209,23 +206,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69829015e3a24dc449c4c18a0fbd4599, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _onTooltipShow:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 671866294015914085}
-        m_TargetAssemblyTypeName: CryptoQuest.UI.Menu.Panels.Status.Equipment.UIEquipment,
-          indi-games.crypto-quest
-        m_MethodName: OnInspecting
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  _button: {fileID: 3700246351620262283}
+  _equipmentUI: {fileID: 671866294015914085}
 --- !u!1001 &3932354016177620953
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -1,5 +1,4 @@
 ﻿using CryptoQuest.Item.Equipment;
-using CryptoQuest.UI.Menu;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Localization.Components;
@@ -36,32 +35,6 @@ namespace CryptoQuest.Menus.Status.UI.Equipment
         public void DisableButton()
         {
             _nameText.color = _disabledColor;
-        }
-
-        /// <summary>
-        /// Open tooltip when inspecting
-        /// Also called when deselecting a button but hide tooltip instead
-        /// </summary>
-        /// <param name="isInspecting"></param>
-        public void OnInspecting(bool isInspecting)
-        {
-            // TODO: REFACTOR TOOLTIP
-            // if (_tooltip == null) return;
-            //
-            // if (isInspecting == false)
-            // {
-            //     _tooltip.Hide();
-            //     return;
-            // }
-            //
-            // if (_equipment.IsValid() == false) return;
-            // _tooltip
-            //     .WithLevel(_equipment.Level)
-            //     .WithDescription(_equipment.DisplayName)
-            //     // .WithDisplaySprite(_equipment.Image) // TODO: Add image to equipment
-            //     .WithContentAwareness(_tooltipPosition) 
-            //     .WithRarity(_equipment.Rarity)
-            //     .Show();
         }
 
         public void Reset() => _equipment = new EquipmentInfo();

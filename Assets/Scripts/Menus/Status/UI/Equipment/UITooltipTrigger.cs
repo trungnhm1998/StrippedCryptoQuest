@@ -1,34 +1,23 @@
-﻿using CryptoQuest.Menu;
+﻿using CryptoQuest.Core;
+using CryptoQuest.UI.Tooltips;
 using UnityEngine;
-using UnityEngine.Events;
+using UnityEngine.EventSystems;
 
 namespace CryptoQuest.Menus.Status.UI.Equipment
 {
-    public class UITooltipTrigger : MonoBehaviour
+    public class UITooltipTrigger : MonoBehaviour, ISelectHandler, IDeselectHandler
     {
-        [SerializeField] private UnityEvent<bool> _onTooltipShow;
-        [SerializeField] private MultiInputButton _button;
+        [SerializeField] private UIEquipment _equipmentUI;
 
-        private void OnEnable()
+        public void OnSelect(BaseEventData eventData)
         {
-            _button.Selected += ShowTooltip;
-            _button.DeSelected += HideTooltip;
+            if (_equipmentUI.Equipment.IsValid() == false) return;
+            ActionDispatcher.Dispatch(new ShowEquipmentTooltip() { Equipment = _equipmentUI.Equipment });
         }
 
-        private void OnDisable()
+        public void OnDeselect(BaseEventData eventData)
         {
-            _button.Selected -= ShowTooltip;
-            _button.DeSelected -= HideTooltip;
-        }
-
-        private void ShowTooltip()
-        {
-            _onTooltipShow?.Invoke(true);
-        }
-
-        private void HideTooltip()
-        {
-            _onTooltipShow?.Invoke(false);
+            // ActionDispatcher.Dispatch(new HideEquipmentTooltip());
         }
     }
 }
