@@ -1,4 +1,5 @@
-﻿using CryptoQuest.Events;
+﻿using System.Collections.Generic;
+using CryptoQuest.Events;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Localization;
@@ -7,22 +8,30 @@ namespace CryptoQuest.Language.Settings
 {
     public class LanguageSettingSO : ScriptableObject
     {
-        /// <summary>
-        /// Hide in inspector because I don't want any one edit here
-        /// ƪ(˘⌣˘)ʃ
-        /// </summary>
-        [SerializeField] private Locale _currentLanguage;
+        [SerializeField] private SerializeLocale _currentLanguage;
+        public SerializeLocale CurrentLocale => _currentLanguage;
+        [SerializeField] private SerializeLocale[] _availableLanguages;
 
-        public event UnityAction<Locale> CurrentLanguageIndexChanged;
+        private Dictionary<Locale, SerializeLocale> _availableLanguagesDictionary;
+
+        private void OnEnable()
+        {
+            _availableLanguagesDictionary = new Dictionary<Locale, SerializeLocale>();
+            foreach (SerializeLocale language in _availableLanguages)
+            {
+                _availableLanguagesDictionary.Add(language.Locale, language);
+            }
+        }
+
+        public event UnityAction<Locale> Changed;
 
         public Locale CurrentLanguage
         {
-            get => _currentLanguage;
-
+            get => _currentLanguage.Locale;
             set
             {
-                _currentLanguage = value;
-                CurrentLanguageIndexChanged.SafeInvoke(_currentLanguage);
+                _currentLanguage = _availableLanguagesDictionary[value];
+                Changed.SafeInvoke(_currentLanguage.Locale);
             }
         }
     }
