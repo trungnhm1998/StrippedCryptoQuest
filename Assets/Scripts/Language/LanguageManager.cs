@@ -15,7 +15,7 @@ namespace CryptoQuest.Language
         protected void OnEnable()
         {
             _initializeOperation = LocalizationSettings.SelectedLocaleAsync;
-            _languageSetting.CurrentLanguageChanged += OnChangeLanguage;
+            _languageSetting.Changed += OnChangeLanguage;
 
             if (!_initializeOperation.IsDone)
             {
@@ -29,7 +29,7 @@ namespace CryptoQuest.Language
         protected void OnDisable()
         {
             LocalizationSettings.SelectedLocaleChanged -= SelectedLocaleChanged;
-            _languageSetting.CurrentLanguageChanged -= OnChangeLanguage;
+            _languageSetting.Changed -= OnChangeLanguage;
         }
 
         private void InitializeCompleted(AsyncOperationHandle obj)
