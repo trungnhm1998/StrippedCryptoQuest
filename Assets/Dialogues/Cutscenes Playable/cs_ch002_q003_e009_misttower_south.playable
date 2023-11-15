@@ -109,6 +109,22 @@ MonoBehaviour:
   _template:
     YarnNodeName: ch002_q003_e009_misttower_south2
     PauseTimelineOnClipEnds: 1
+--- !u!114 &-7493878555756929549
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 826ceb9ed908420c89db4316f386df6e, type: 3}
+  m_Name: YarnQuestNodePlayableAsset
+  m_EditorClassIdentifier: 
+  _yarnDialogWithQuest: {fileID: 11400000, guid: 2f78db9bf6502094f88b2b7061b7c1a2, type: 2}
+  _template:
+    YarnNodeName: Start
+    PauseTimelineOnClipEnds: 0
 --- !u!114 &-7488680376815744723
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1762,10 +1778,10 @@ MonoBehaviour:
   m_Children: []
   m_Clips:
   - m_Version: 1
-    m_Start: 1.3833333333333333
+    m_Start: 15.750000000000005
     m_ClipIn: 0
-    m_Asset: {fileID: 3323749537275306179}
-    m_Duration: 2.7833333333333337
+    m_Asset: {fileID: -7493878555756929549}
+    m_Duration: 0.2666666666666604
     m_TimeScale: 1
     m_ParentTrack: {fileID: 2643719256695361643}
     m_EaseInDuration: 0
@@ -1844,22 +1860,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fde0d25a170598d46a0b9dc16b4527a5, type: 3}
   m_Name: ActivationPlayableAsset
   m_EditorClassIdentifier: 
---- !u!114 &3323749537275306179
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 826ceb9ed908420c89db4316f386df6e, type: 3}
-  m_Name: YarnQuestNodePlayableAsset
-  m_EditorClassIdentifier: 
-  _yarnDialogWithQuest: {fileID: 11400000, guid: 2f78db9bf6502094f88b2b7061b7c1a2, type: 2}
-  _template:
-    YarnNodeName: Start
-    PauseTimelineOnClipEnds: 0
 --- !u!114 &3410076923203535617
 MonoBehaviour:
   m_ObjectHideFlags: 1
