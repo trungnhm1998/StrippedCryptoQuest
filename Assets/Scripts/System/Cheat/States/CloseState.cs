@@ -21,11 +21,12 @@ namespace CryptoQuest.System.Cheat.States
 
         private void OpenTerminal()
         {
-            if (Manager.GameState.CurrentGameState != EGameState.Field) return;
-
-            Manager.Input.DisableAllInput();
-            var openFull = Anim.GetBool(CheatManager.FullSize);
-            Anim.Play(openFull ? "OpenFull" : "OpenSmall");
+            if (Manager.GameState.CurrentGameState is EGameState.Field or EGameState.Battle)
+            {
+                Manager.Input.DisableAllInput();
+                var openFull = Anim.GetBool(CheatManager.FullSize);
+                Anim.Play(openFull ? "OpenFull" : "OpenSmall");
+            }
         }
     }
 }
