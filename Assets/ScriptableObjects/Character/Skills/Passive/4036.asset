@@ -9,8 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0c79bbff4ab04690afc7539ba04e6a22, type: 3}
-  m_Name: 1163
+  m_Script: {fileID: 11500000, guid: dcd68d684c1a4e4e970fceced9d28af5, type: 3}
+  m_Name: 4036
   m_EditorClassIdentifier: 
   tags:
     AbilityTag: {fileID: 0}
@@ -26,15 +26,16 @@ MonoBehaviour:
     TargetTags:
       RequireTags: []
       IgnoreTags: []
+  <Id>k__BackingField: 4036
   _context:
     _skillInfo:
-      Id: 1163
+      Id: 4036
       SkillIcon: {fileID: 0}
-      SkillType: 1
+      SkillType: 4
       Category: {fileID: 0}
-      Cost: 3
+      Cost: 0
       UsageScenarioSO: 2
-      VfxId: -1
+      VfxId: 0
       SkillParameters:
         Element: {fileID: 0}
         BasePower: 10
@@ -44,33 +45,9 @@ MonoBehaviour:
         PowerValueAdded: 0.2
         PowerValueReduced: 0.2
         IsFixed: 1
-        ContinuesTurn: 999
+        ContinuesTurn: 99
         EffectType: 2
         TargetAttribute:
           Attribute: {fileID: 11400000, guid: af2fad99e1b4fb245a724fae899aafa1, type: 2}
-          CaptureFrom: 1
-  _skillName:
-    m_TableReference:
-      m_TableCollectionName: AbilityNames
-    m_TableEntryReference:
-      m_KeyId: 0
-      m_Key: DROPRATEUP
-    m_FallbackState: 0
-    m_WaitForCompletion: 0
-    m_LocalVariables: []
-  _skillDescription:
-    m_TableReference:
-      m_TableCollectionName: AbilityDescriptions
-    m_TableEntryReference:
-      m_KeyId: 0
-      m_Key: DROPRATEUP
-    m_FallbackState: 0
-    m_WaitForCompletion: 0
-    m_LocalVariables: []
-  <SuccessRate>k__BackingField: 100
-  <TargetType>k__BackingField: {fileID: 11400000, guid: 22b78d0c574a9b64984629f7aedc22ea, type: 2}
-  _effects:
-  - {fileID: 11400000, guid: 5bb7d4797bcd84044b465e1f8fe3e5a3, type: 2}
-  references:
-    version: 2
-    RefIds: []
+          CaptureFrom: 0
+  _effect: {fileID: 11400000, guid: 045d65b165e7a80408735b3b5947096a, type: 2}

@@ -70,22 +70,6 @@ namespace CryptoQuest.Character.Enemy
             character.Init(this);
             return character;
         }
-
-        /// <summary>
-        /// Get dropped loots with drop chance based on their <see cref="Drop"/> configs
-        /// </summary>
-        /// <returns>Cloned loots</returns>
-        public List<LootInfo> GetDroppedLoots()
-        {
-            var loots = new List<LootInfo>();
-            foreach (var drop in Drops)
-            {
-                var randomChance = UnityEngine.Random.Range(0f, 1f);
-                if (randomChance > drop.Chance) continue;
-                loots.Add(drop.CreateLoot());
-            }
-            return loots;
-        }
         
 #if UNITY_EDITOR
         [SerializeReference, SubclassSelector] private IDropToAdd _dropToAdd = new ConsumeDrop();

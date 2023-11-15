@@ -15,6 +15,8 @@ namespace CryptoQuest.Battle
         [SerializeField] private UnityEvent _onWon;
         [SerializeField] private BattleUnloader _unloader;
         [SerializeField] private BattleContext _context;
+        [SerializeField] private BattleLootManager _battleLootManager;
+
         private TinyMessageSubscriptionToken _wonEvent;
         private TinyMessageSubscriptionToken _finishedPresentingEvent;
 
@@ -46,14 +48,8 @@ namespace CryptoQuest.Battle
 
         private IEnumerator CoOnPresentWon()
         {
+            var loots = _battleLootManager.GetDropLoots(); 
             yield return _unloader.FadeInAndUnloadBattle();
-            var loots = new List<LootInfo>();
-            foreach (var enemy in _context.Enemies.Where(enemy => enemy.Spec.IsValid()))
-            {
-                loots.AddRange(enemy.GetDroppedLoots());
-            }
-
-            loots = RewardManager.CloneAndMergeLoots(loots);
             BattleEventBus.RaiseEvent(new BattleWonEvent()
             {
                 Battlefield = _context.CurrentBattlefield,
