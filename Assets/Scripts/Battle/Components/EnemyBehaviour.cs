@@ -115,8 +115,6 @@ namespace CryptoQuest.Battle.Components
 
         public void ProvideStats(AttributeWithValue[] attributeWithValues) { }
 
-        public IEnumerable<LootInfo> GetDroppedLoots() => _enemyDef.GetDroppedLoots();
-
         public override void OnTurnStarted()
         {
             // I need PreTurnStarted event to setup enemy action because
