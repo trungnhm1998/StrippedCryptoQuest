@@ -1,26 +1,26 @@
-using System;
 using System.Collections.Generic;
 using CryptoQuest.Character.Hero.AvatarProvider;
+using CryptoQuest.Church.Interface;
 using CryptoQuest.Church.UI;
 using CryptoQuest.Gameplay.Inventory.Currency;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
 using CryptoQuest.Gameplay.PlayerParty;
 using CryptoQuest.Input;
 using CryptoQuest.System;
-using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
-using IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
 namespace CryptoQuest.Church
 {
+    [RequireComponent(typeof(IPartyProvider))]
     public class ChurchPresenter : MonoBehaviour
     {
-        [SerializeField] private GameplayEffectDefinition _reviveEffectDefinition;
         [SerializeField] private List<UICharacter> _uiListCharacter;
         [SerializeField] private MerchantsInputManager _input;
+        [SerializeField] private UICurrency _currency;
         [SerializeField] private WalletSO _wallet;
         [SerializeField] private CurrencySO _gold;
+        private IPartyReviver _partyReviver;
         private IPartyController _partyController;
         private IHeroAvatarProvider _heroAvatarProvider;
         public UICharacter CharacterToRevive { get; private set; }
@@ -33,10 +33,17 @@ namespace CryptoQuest.Church
             Init();
         }
 
+        public void UpdateCurrency()
+        {
+            _currentGold = _wallet[_gold].Amount;
+            _currency.UpdateCurrency(_currentGold);
+        }
+
         private void Init()
         {
             _input.EnableInput();
             _partyController = ServiceProvider.GetService<IPartyController>();
+            _partyReviver = GetComponent<IPartyReviver>();
             _heroAvatarProvider = GetComponent<IHeroAvatarProvider>();
             GetPartyCharacter();
             EventSystem.current.SetSelectedGameObject(_uiListCharacter[0].gameObject);
@@ -66,7 +73,6 @@ namespace CryptoQuest.Church
 
         public void ValidateGoldToRevive(float cost)
         {
-            _currentGold = _wallet[_gold].Amount;
             IsEnoughGold = _currentGold >= cost;
             if (IsEnoughGold)
                 ReviveCharacter(cost);
@@ -74,12 +80,12 @@ namespace CryptoQuest.Church
 
         private void ReviveCharacter(float cost)
         {
-            AbilitySystemBehaviour abilitySystem = CharacterToRevive.HeroBehaviour.GetComponent<AbilitySystemBehaviour>();
             IsAlive = CharacterToRevive.HeroBehaviour.IsValidAndAlive();
             if (!IsAlive)
             {
-                abilitySystem.ApplyEffectSpecToSelf(abilitySystem.MakeOutgoingSpec(_reviveEffectDefinition));
+                _partyReviver.ReviveCharacter(CharacterToRevive);
                 _wallet[_gold].SetAmount(_currentGold - cost);
+                UpdateCurrency();
             }
         }
     }

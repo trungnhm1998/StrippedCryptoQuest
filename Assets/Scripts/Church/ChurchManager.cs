@@ -1,12 +1,12 @@
-using CryptoQuest.Church.ScriptableObjects;
 using CryptoQuest.Input;
+using IndiGames.Core.Events.ScriptableObjects;
 using UnityEngine;
 
 namespace CryptoQuest.Church
 {
     public class ChurchManager : MonoBehaviour
     {
-        [SerializeField] private ShowChurchEventChannelSO _showChurchEvent;
+        [SerializeField] private VoidEventChannelSO _showChurchEvent;
         [SerializeField] private ChurchStateController _stateController;
         [SerializeField] private ChurchDialogConroller _dialogController;
         [SerializeField] private MerchantsInputManager _input;

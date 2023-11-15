@@ -14,10 +14,7 @@ namespace CryptoQuest.Church.State
         {
             _stateController = StateMachine.GetComponent<ChurchStateController>();
             _stateController.DialogController.Dialogue.SetMessage(_message).Hide();
-            _stateController.DialogController.ShowChoiceDialog(_message);
-            _stateController.DialogController.YesPressedEvent += YesButtonPressed;
-            _stateController.DialogController.NoPressedEvent += NoButtonPressed;
-            _stateController.IsExitState = false;
+            SetupDialog();
         }
 
         protected override void OnExit() { }
@@ -31,8 +28,16 @@ namespace CryptoQuest.Church.State
         private void NoButtonPressed()
         {
             _stateController.DialogController.ChoiceDialog.Hide();
-            _stateController.IsExitState = true;
             StateMachine.Play(ExitChurch);
+            _stateController.IsExitState = true;
+        }
+
+        private void SetupDialog()
+        {
+            _stateController.DialogController.ChoiceDialog
+                .SetButtonsEvent(YesButtonPressed, NoButtonPressed)
+                .SetMessage(_message)
+                .Show();
         }
     }
 }

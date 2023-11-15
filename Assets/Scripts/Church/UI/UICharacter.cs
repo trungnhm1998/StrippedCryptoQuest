@@ -12,7 +12,6 @@ namespace CryptoQuest.Church.UI
 {
     public class UICharacter : MonoBehaviour
     {
-        public event Action<UICharacter> OnSubmit;
         [SerializeField] private LocalizeStringEvent _displayName;
         [SerializeField] private Image _avatar;
         [SerializeField] private UIAttributeBar _hpBar;

@@ -2,8 +2,6 @@ using System;
 using CryptoQuest.Church.State;
 using CryptoQuest.Input;
 using UnityEngine;
-using UnityEngine.Events;
-using UnityEngine.Localization;
 
 namespace CryptoQuest.Church
 {
