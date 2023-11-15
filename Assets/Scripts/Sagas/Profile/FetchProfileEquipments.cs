@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -16,13 +17,15 @@ using CryptoQuest.UI.Actions;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
 using UniRx;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 
 namespace CryptoQuest.Sagas.Profile
 {
     public class FetchProfileEquipments : SagaBase<FetchProfileEquipmentsAction>
     {
         [SerializeField] private GetEquipmentsEvent _inGameEquipmentsUpdate;
-        [SerializeField] private InventorySO _inventory; // only load inventory when needed
+        [SerializeField] private AssetReferenceT<InventorySO> _inventoryAsset;
+        private InventorySO _inventory;
 
         /// <summary>
         /// Map the response attribute name to the attribute scriptable object
@@ -74,7 +77,17 @@ namespace CryptoQuest.Sagas.Profile
         }
 
         private void OnInventoryFilled(EquipmentResponse[] responseEquipments)
+            => StartCoroutine(CoLoadAndUpdateInventory(responseEquipments));
+
+        private IEnumerator CoLoadAndUpdateInventory(EquipmentResponse[] responseEquipments)
         {
+            if (_inventory == null)
+            {
+                var handle = _inventoryAsset.LoadAssetAsync();
+                yield return handle;
+                _inventory = handle.Result;
+            }
+
             var nftEquipments = responseEquipments.Select(CreateNftEquipment).ToList();
             _inventory.NftEquipments.Clear();
             _inventory.NftEquipments = nftEquipments;

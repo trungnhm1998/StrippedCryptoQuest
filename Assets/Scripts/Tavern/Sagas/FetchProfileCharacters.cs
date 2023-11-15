@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -18,6 +19,7 @@ using CryptoQuest.UI.Actions;
 using TinyMessenger;
 using UniRx;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 using AttributeScriptableObject =
     IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects.AttributeScriptableObject;
 
@@ -25,7 +27,8 @@ namespace CryptoQuest.Tavern.Sagas
 {
     public class FetchProfileCharacters : MonoBehaviour
     {
-        [SerializeField] private HeroInventorySO _heroInventory;
+        [SerializeField] private AssetReferenceT<HeroInventorySO> _heroInventoryAsset;
+        private HeroInventorySO _heroInventory;
         [SerializeField] private List<Elemental> _elements = new();
         [SerializeField] private List<CharacterClass> _classes = new();
 
@@ -65,7 +68,8 @@ namespace CryptoQuest.Tavern.Sagas
 
         private void FilterAndRefreshInventory(TransferSucceed ctx)
         {
-            var ingameCharacters = ctx.ResponseCharacters.Where(character => character.inGameStatus == (int)ECharacterStatus.InGame);
+            var ingameCharacters =
+                ctx.ResponseCharacters.Where(character => character.inGameStatus == (int)ECharacterStatus.InGame);
             OnInventoryFilled(ingameCharacters.ToArray());
         }
 
@@ -95,7 +99,17 @@ namespace CryptoQuest.Tavern.Sagas
         }
 
         private void OnInventoryFilled(CryptoQuest.Sagas.Objects.Character[] characters)
+            => StartCoroutine(CoLoadAndUpdateInventory(characters));
+
+        private IEnumerator CoLoadAndUpdateInventory(CryptoQuest.Sagas.Objects.Character[] characters)
         {
+            if (_heroInventory == null)
+            {
+                var handle = _heroInventoryAsset.LoadAssetAsync();
+                yield return handle;
+                _heroInventory = handle.Result;
+            }
+
             var nftCharacters = characters.Select(CreateNftCharacter).ToList();
             _heroInventory.OwnedHeroes.Clear();
             _heroInventory.OwnedHeroes = nftCharacters;
