@@ -20,7 +20,7 @@ namespace CryptoQuest.System.Settings
         private void OnEnable() => InitializeLanguage();
         private void OnDisable() => LocalizationSettings.SelectedLocaleChanged -= OnChangeLocale;
 
-        public void OnChangeLanguage(int index) => _languageSetting.CurrentLanguageIndex =
+        public void OnChangeLanguage(int index) => _languageSetting.CurrentLanguage =
             LocalizationSettings.AvailableLocales.Locales[index];
 
         public void Initialize() => _dropdown.Select();
@@ -32,7 +32,7 @@ namespace CryptoQuest.System.Settings
             LocalizationSettings.SelectedLocaleChanged += OnChangeLocale;
 
             List<string> localeNames = LanguageHelper.GetLocaleNames();
-            _localeIndex = LanguageHelper.GetLocaleIndex(_languageSetting.CurrentLanguageIndex);
+            _localeIndex = LanguageHelper.GetLocaleIndex(_languageSetting.CurrentLanguage);
 
 
             _dropdown.AddOptions(localeNames);
