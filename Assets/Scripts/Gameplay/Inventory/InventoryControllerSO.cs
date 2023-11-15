@@ -1,6 +1,4 @@
-using CryptoQuest.Events;
-using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
-using CryptoQuest.Gameplay.Loot;
+﻿using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
 using CryptoQuest.Item;
 using CryptoQuest.Item.Equipment;
 using CryptoQuest.System;
@@ -8,45 +6,14 @@ using UnityEngine;
 
 namespace CryptoQuest.Gameplay.Inventory
 {
-    public interface IInventoryController
-    {
-        InventorySO Inventory { get; }
-        bool Add(EquipmentInfo equipment);
-        bool Remove(EquipmentInfo equipment);
-        bool Add(NftEquipment equipment);
-        bool Remove(NftEquipment equipment);
-        bool Add(ConsumableInfo consumable);
-        bool Remove(ConsumableInfo consumable);
-        bool Contains(EquipmentInfo equipment);
-        bool Contains(NftEquipment equipment);
-    }
-
-    public class InventoryController : MonoBehaviour, IInventoryController
+    public class InventoryControllerSO : ScriptableObject, IInventoryController
     {
         [SerializeField] private InventorySO _inventory;
         public InventorySO Inventory => _inventory;
 
-        [Header("Listening to")]
-        [SerializeField] private LootEventChannelSO _addLootRequestEventChannel;
-
-        private void Awake()
+        private void OnEnable()
         {
             ServiceProvider.Provide<IInventoryController>(this);
-        }
-
-        protected void OnEnable()
-        {
-            _addLootRequestEventChannel.EventRaised += AddLoot;
-        }
-
-        protected void OnDisable()
-        {
-            _addLootRequestEventChannel.EventRaised -= AddLoot;
-        }
-
-        private void AddLoot(LootInfo loot)
-        {
-            loot.AddItemToInventory(_inventory);
         }
 
         public bool Add(EquipmentInfo equipment)

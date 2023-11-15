@@ -47,6 +47,11 @@ namespace CryptoQuest.Tavern.States.CharacterReplacement
         {
             _cachedGameData = obj.InGameCharacters;
             _controller.UIGameList.SetData(obj.InGameCharacters);
+
+            /*
+             * TODO
+             * check if any characters has the same id with the characters in party then enable lock tag
+             */
         }
 
         private void GetWalletCharacters(GetWalletNftCharactersSucceed obj)
