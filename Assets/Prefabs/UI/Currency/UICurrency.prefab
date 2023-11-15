@@ -239,7 +239,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3024318093927003923}
-  - component: {fileID: 4577326752404199827}
+  - component: {fileID: 2638258733190088606}
   m_Layer: 5
   m_Name: UICurrency
   m_TagString: Untagged
@@ -267,7 +267,7 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 1024, y: 896}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &4577326752404199827
+--- !u!114 &2638258733190088606
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -276,7 +276,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4556961932902851212}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 10c3ce6772564fcd8ff47fa2057520c2, type: 3}
+  m_Script: {fileID: 11500000, guid: 13987872b5de0374ab46f6e82b981088, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _wallet: {fileID: 11400000, guid: e349636f15671994ba195728c42a551b, type: 2}
@@ -291,6 +291,9 @@ MonoBehaviour:
   _goldText: {fileID: 1479574013388428253}
   _diamondText: {fileID: 9012338946421281318}
   _soulText: {fileID: 5746588896564822121}
+  _duration: 0.5
+  _showEase: 27
+  _hideEase: 26
   _startPosX: 0
   _endPosX: 300
 --- !u!1 &5281045070007832060
@@ -327,9 +330,9 @@ RectTransform:
   - {fileID: 2015031073651743052}
   m_Father: {fileID: 4137895552526106258}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 52.5, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 52.5, y: -20}
   m_SizeDelta: {x: 0, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &8410393388595380669
