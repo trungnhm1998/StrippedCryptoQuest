@@ -6,7 +6,7 @@ using UnityEngine.Localization;
 
 namespace CryptoQuest.Menus.Item.UI
 {
-    public class UIConsumableMenuLogger : MonoBehaviour
+    public class UIMenuLogger : MonoBehaviour
     {
         [SerializeField] private TMP_Text _text;
         [SerializeField] private GameObject _panel;
