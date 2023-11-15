@@ -12,7 +12,7 @@ namespace CryptoQuest.Church.State
         private static readonly int SelectCharacter = Animator.StringToHash("SelectCharacterState");
         private static readonly int ContinueToRevive = Animator.StringToHash("ContinueReviveState");
         private bool _isEnoughGold;
-        private bool _reviveSuccess;
+        private bool _isAlive;
 
         protected override void OnEnter()
         {
@@ -28,7 +28,7 @@ namespace CryptoQuest.Church.State
 
         private void ChangeState()
         {
-            StateMachine.Play(_reviveSuccess ? SelectCharacter : ContinueToRevive);
+            StateMachine.Play(_isAlive || !_isEnoughGold ? SelectCharacter : ContinueToRevive);
         }
 
         private void ValidateToRevive()
@@ -40,7 +40,7 @@ namespace CryptoQuest.Church.State
         private void UpdateStatus()
         {
             _isEnoughGold = _stateController.Presenter.IsEnoughGold;
-            _reviveSuccess = !_stateController.Presenter.IsAlive;
+            _isAlive = _stateController.Presenter.IsAlive;
         }
 
         private void SetMessage()
@@ -51,7 +51,7 @@ namespace CryptoQuest.Church.State
 
         private LocalizedString GetMessageForEnoughGold()
         {
-            return _reviveSuccess ? _reviveFailMessage : _reviveSuccessMessage;
+            return _isAlive ? _reviveFailMessage : _reviveSuccessMessage;
         }
     }
 }

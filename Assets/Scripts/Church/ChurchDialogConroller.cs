@@ -1,5 +1,4 @@
 using System;
-using CryptoQuest.Events.UI.Dialogs;
 using CryptoQuest.UI.Dialogs.ChoiceDialog;
 using CryptoQuest.UI.Dialogs.Dialogue;
 using UnityEngine;

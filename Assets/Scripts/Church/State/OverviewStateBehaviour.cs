@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.Localization;
 
 namespace CryptoQuest.Church.State
 {
@@ -15,6 +14,7 @@ namespace CryptoQuest.Church.State
             _stateController.DialogController.YesPressedEvent += ChangeState;
             _stateController.DialogController.NoPressedEvent += ExitState;
             _stateController.IsExitState = false;
+            _stateController.Presenter.UpdateCurrency();
         }
 
         protected override void OnExit()

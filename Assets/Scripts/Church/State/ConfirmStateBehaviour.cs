@@ -16,9 +16,7 @@ namespace CryptoQuest.Church.State
         {
             _stateController = StateMachine.GetComponent<ChurchStateController>();
             _stateController.DialogController.Dialogue.SetMessage(_message).Hide();
-            _stateController.DialogController.YesPressedEvent += YesButtonPressed;
-            _stateController.DialogController.NoPressedEvent += NoButtonPressed;
-            SetMessage();
+            SetupDialog();
         }
 
         protected override void OnExit() { }
@@ -36,11 +34,15 @@ namespace CryptoQuest.Church.State
             StateMachine.Play(SelectCharacter);
         }
 
-        private void SetMessage()
+        private void SetupDialog()
         {
             _costToRevive = _stateController.Presenter.CharacterToRevive.Level * _pricePerLevel;
             _message.Arguments = new object[] { _costToRevive };
-            _stateController.DialogController.ShowChoiceDialog(_message);
+            _stateController.DialogController.
+            ChoiceDialog
+                .SetButtonsEvent(YesButtonPressed, NoButtonPressed)
+                .SetMessage(_message)
+                .Show();
         }
     }
 }
