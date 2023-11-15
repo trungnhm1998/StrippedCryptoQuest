@@ -720,6 +720,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _vfxPresenter: {fileID: 1399460825}
   _vfxId: 0
+--- !u!114 &1058661807 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8683441727393840089, guid: d0eacd5a881766b4ca08ec4b770526a2, type: 3}
+  m_PrefabInstance: {fileID: 1415878836909279776}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb1951c97ae243b41b0a852eccf6459a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1169412494
 GameObject:
   m_ObjectHideFlags: 0
@@ -1300,33 +1311,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d0eacd5a881766b4ca08ec4b770526a2, type: 3}
---- !u!114 &1415878836909279778 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 9045301341810418917, guid: d0eacd5a881766b4ca08ec4b770526a2, type: 3}
-  m_PrefabInstance: {fileID: 1415878836909279776}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1aa08ab6e0800fa44ae55d278d1423e3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!224 &1415878836909279779 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3110689978637270772, guid: d0eacd5a881766b4ca08ec4b770526a2, type: 3}
   m_PrefabInstance: {fileID: 1415878836909279776}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1415878836909279780 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3123909044851048322, guid: d0eacd5a881766b4ca08ec4b770526a2, type: 3}
-  m_PrefabInstance: {fileID: 1415878836909279776}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2ae938ca0e9d1ab4f8408e897cd2828c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1415878836909279781 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3630775010483080431, guid: d0eacd5a881766b4ca08ec4b770526a2, type: 3}
@@ -1616,9 +1605,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6f8a64bcc1a29847827cd3d652d76db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _buttonSelector: {fileID: 1415878836909279780}
-  _skillList: {fileID: 1415878836909279778}
-  _skillPrefab: {fileID: 3966912095438748167, guid: 07fa0527d5a895c4a9eab8a40f261290, type: 3}
+  _skillListUI: {fileID: 1058661807}
   _singleHeroChannel: {fileID: 11400000, guid: 22b78d0c574a9b64984629f7aedc22ea, type: 2}
   _singleEnemyChannel: {fileID: 11400000, guid: 6cd304533bdab184cb6240d08cf35473, type: 2}
   _allHeroChannel: {fileID: 11400000, guid: 46a0f0c64b7c6eb4584f5549f7e03dbc, type: 2}

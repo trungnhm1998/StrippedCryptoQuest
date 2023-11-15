@@ -1,17 +1,17 @@
+using System;
 using System.Collections.Generic;
 using CryptoQuest.AbilitySystem.Abilities;
 using CryptoQuest.Battle.Components;
+using CryptoQuest.Battle.UI.CommandDetail;
 using CryptoQuest.Gameplay.Battle.Core.Helper;
-using CryptoQuest.Input;
-using CryptoQuest.UI.Common;
+using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace CryptoQuest.Battle.UI.SelectSkill
 {
     public class SelectSkillPresenter : MonoBehaviour
     {
-        public delegate void SkillTargetTypeDelegate(UISkill skill);
+        public delegate void SkillTargetTypeDelegate(CastSkillAbility skill);
 
         public SkillTargetTypeDelegate SelectSelfCallback { get; set; }
         private void OnTargetSelf (CastSkillAbility skill) => SelectSelfCallback?.Invoke(_selectedSkill);
@@ -31,13 +31,10 @@ namespace CryptoQuest.Battle.UI.SelectSkill
         public SkillTargetTypeDelegate SelectEnemyGroupCallback { get; set; }
         private void OnSelectEnemyGroup(CastSkillAbility skill) => SelectEnemyGroupCallback?.Invoke(_selectedSkill);
 
-        [SerializeField] private VerticalButtonSelector _buttonSelector;
-        [SerializeField] private ScrollRect _skillList;
-        [SerializeField] private UISkill _skillPrefab;
+        [SerializeField] private UICommandDetailPanel _skillListUI;
 
         [SerializeField, Header("State event context")]
         private SkillTargetType _singleHeroChannel;
-
         [SerializeField] private SkillTargetType _singleEnemyChannel;
         [SerializeField] private SkillTargetType _allHeroChannel;
         [SerializeField] private SkillTargetType _allEnemyChannel;
@@ -45,16 +42,26 @@ namespace CryptoQuest.Battle.UI.SelectSkill
         [SerializeField] private SkillTargetType _targetSelfChannel;
 
         private HeroBehaviour _hero;
-        private readonly List<UISkill> _skills = new List<UISkill>();
+        private readonly List<SkillButtonInfo> _skillInfos = new List<SkillButtonInfo>();
+        private CastSkillAbility _selectedSkill;
+        public CastSkillAbility SelectedSkill => _selectedSkill;
 
         public void Show(HeroBehaviour hero, bool interactable = true)
         {
-            CreateSkillButtonsDifferentHero(hero);
-            _skillList.gameObject.SetActive(true);
+            SetInteractive(interactable);
+            ShowSkillListUI(hero);
+            SetActiveScroll(true);
             RegisterEvents();
-            if (interactable)
-                _buttonSelector.SelectFirstButton();
-            _buttonSelector.Interactable = interactable;
+        }
+        
+        public void SetInteractive(bool value)
+        {
+            _skillListUI.Interactable = value;
+        }
+
+        public void SetActiveScroll(bool value)
+        {
+            _skillListUI.SetActiveContent(value);
         }
 
         private void RegisterEvents()
@@ -77,7 +84,7 @@ namespace CryptoQuest.Battle.UI.SelectSkill
             _targetSelfChannel.EventRaised -= OnTargetSelf;
         }
 
-        private void CreateSkillButtonsDifferentHero(HeroBehaviour hero)
+        private void ShowSkillListUI(HeroBehaviour hero)
         {
             if (hero == _hero)
             {
@@ -86,58 +93,49 @@ namespace CryptoQuest.Battle.UI.SelectSkill
             } 
 
             _hero = hero;
-            DestroyAllSkillButtons();
             hero.TryGetComponent(out HeroSkills skills);
-            //TODO: #2146 Filter not show field skill
+            var model = new CommandDetailModel();
+            _skillInfos.Clear();
+
             foreach (var skill in skills.Skills)
             {
-                var skillUI = Instantiate(_skillPrefab, _skillList.content);
-                skillUI.Selected += SelectingTarget;
-                skillUI.Init(skill, skill.IsCastable(hero.AbilitySystem));
-                _skills.Add(skillUI);
+                if (!skill.SkillInfo.UsageScenarioSO.HasFlag(EAbilityUsageScenario.Battle))
+                    continue;
+                var skillButtonInfo = new SkillButtonInfo(skill, ConfirmSelectSkill);
+                model.AddInfo(skillButtonInfo);
+                _skillInfos.Add(skillButtonInfo);
             }
+
+            _skillListUI.ShowCommandDetail(model);
+
+            SetSelectableCurrentHero();
         }
 
         private void SetSelectableCurrentHero()
         {
-            foreach (var skillUI in _skills)
+            foreach (var info in _skillInfos)
             {
-                var isSelectable = skillUI.Skill.IsCastable(_hero.AbilitySystem);
-                skillUI.SetSelectable(isSelectable);
+                var isSelectable = info.Skill.IsCastable(_hero.AbilitySystem);
+                info.SetSelectable(isSelectable);
             }
         }
 
         public void Hide()
         {
-            _buttonSelector.Interactable = false;
-            _skillList.gameObject.SetActive(false);
+            SetInteractive(false);
+            SetActiveScroll(false);
             UnregisterEvents();
-        }
-
-        private void DestroyAllSkillButtons()
-        {
-            foreach (var skill in _skills)
-            {
-                if (skill == null) continue; // TODO: WHY SKILL == NULL?
-                skill.Selected -= SelectingTarget;
-                Destroy(skill.gameObject);
-            }
-
-            _skills.Clear();
         }
 
         private void OnDisable()
         {
-            DestroyAllSkillButtons();
             UnregisterEvents();
         }
 
-        private UISkill _selectedSkill;
-
-        private void SelectingTarget(UISkill skillUI)
+        private void ConfirmSelectSkill(CastSkillAbility skill)
         {
-            _selectedSkill = skillUI;
-            skillUI.Skill.TargetType.RaiseEvent(skillUI.Skill);
+            _selectedSkill = skill;
+            skill.TargetType.RaiseEvent(skill);
         }
     }
 }

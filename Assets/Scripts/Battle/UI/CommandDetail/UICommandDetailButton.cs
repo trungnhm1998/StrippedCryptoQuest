@@ -31,12 +31,13 @@ namespace CryptoQuest.Battle.UI.CommandDetail
                 _label.text = info.Label;
             }
 
-            if (info.LocalizedLabel != null)
+            if (!info.LocalizedLabel.IsEmpty)
             {
                 _labelStringEvent.StringReference = info.LocalizedLabel;
             }
             _value.text = info.Value;
             _buttonInfo = info;
+            info.Button = _button;
             SetupButtonInfo();
         }
 

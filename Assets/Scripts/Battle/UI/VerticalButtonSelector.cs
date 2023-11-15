@@ -54,13 +54,15 @@ namespace CryptoQuest.Battle.UI
                 SelectFirstButton();
                 return false;
             }
-            DOVirtual.DelayedCall(SELECT_DELAY, () =>
-            {
-                EventSystem.current.SetSelectedGameObject(_lastSelectedButton);
-                CurrentIndex = _lastSelectedButton.transform.GetSiblingIndex();
-                _lastSelectedButton = null;
-            });
+            DOVirtual.DelayedCall(SELECT_DELAY, SelectLastButton);
             return true;
+        }
+
+        private void SelectLastButton()
+        {
+            EventSystem.current.SetSelectedGameObject(_lastSelectedButton);
+            CurrentIndex = _lastSelectedButton.transform.GetSiblingIndex();
+            _lastSelectedButton = null;
         }
 
         private int _currentIndex;
@@ -108,6 +110,7 @@ namespace CryptoQuest.Battle.UI
 
         protected virtual void NavigateSelectCommand(Vector2 dir)
         {
+            if (_buttonsContainer.childCount <= 0) return;
             if (!Interactable || dir.y == 0) return;
             CurrentIndex += (int)dir.y * -1;
             EventSystem.current.SetSelectedGameObject(_buttonsContainer.GetChild(CurrentIndex).gameObject);
