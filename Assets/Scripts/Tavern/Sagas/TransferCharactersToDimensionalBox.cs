@@ -7,13 +7,14 @@ using CryptoQuest.Networking.API;
 using CryptoQuest.System;
 using CryptoQuest.Tavern.Objects;
 using CryptoQuest.UI.Actions;
+using Newtonsoft.Json;
 using TinyMessenger;
 using UniRx;
 using UnityEngine;
 
 namespace CryptoQuest.Tavern.Sagas
 {
-    public class TransferCharactersToWallet : MonoBehaviour
+    public class TransferCharactersToDimensionalBox : MonoBehaviour
     {
         private TinyMessageSubscriptionToken _sendCharactersToWalletEvent;
 
@@ -34,6 +35,8 @@ namespace CryptoQuest.Tavern.Sagas
                 { "ids", obj.SelectedInGameCharacters }
             };
 
+            Debug.Log($"SendCharactersToDBox::Body={JsonConvert.SerializeObject( body )}");
+
             var restClient = ServiceProvider.GetService<IRestClient>();
             restClient
                 .WithBody(body)
@@ -49,7 +52,7 @@ namespace CryptoQuest.Tavern.Sagas
 
         private void OnError(Exception obj)
         {
-            Debug.LogError("TransferCharactersToWalletFailed::" + obj);
+            Debug.LogError("TransferCharactersToDBoxFailed::" + obj);
             ActionDispatcher.Dispatch(new TransferFailed());
         }
 
