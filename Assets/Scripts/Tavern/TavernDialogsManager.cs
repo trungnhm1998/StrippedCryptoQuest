@@ -10,20 +10,16 @@ namespace CryptoQuest.Tavern
 {
     public class TavernDialogsManager : MonoBehaviour
     {
-        public event UnityAction EnableOverviewButtonsEvent;
+        public event UnityAction TurnOnTavernOptionsEvent;
 
         public UIDialogueForGenericMerchant Dialogue { get; private set; }
         public UIChoiceDialog ChoiceDialog { get; private set; }
 
         [SerializeField] private MerchantsInputManager _inputManager;
-        [SerializeField] private List<LocalizedString> _welcomeMessage = new();
-
-        private int _msgIndex;
+        [SerializeField] private LocalizedString _didYouKnowMsg;
 
         public void TavernOpened()
         {
-            _msgIndex = 0;
-
             GenericMerchantDialogueController.Instance.Instantiate(DialogInstantiated);
             ChoiceDialogController.Instance.Instantiate(dialog => ChoiceDialog = dialog, false);
 
@@ -34,25 +30,11 @@ namespace CryptoQuest.Tavern
         {
             Dialogue = dialog;
             Dialogue
-                .SetMessage(_welcomeMessage[0])
+                .SetMessage(_didYouKnowMsg)
                 .Show();
         }
 
-        private void NextDialog()
-        {
-            _msgIndex++;
-
-            Dialogue
-                .SetMessage(_welcomeMessage[_msgIndex])
-                .SetArrow(true)
-                .Show();
-
-            if (_msgIndex >= _welcomeMessage.Count - 1)
-            {
-                Dialogue.SetArrow(false);
-                EnableOverviewButtonsEvent?.Invoke();
-            }
-        }
+        private void NextDialog() => TurnOnTavernOptionsEvent?.Invoke();
 
         public void TavernExited()
         {

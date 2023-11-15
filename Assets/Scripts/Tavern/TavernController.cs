@@ -9,6 +9,7 @@ namespace CryptoQuest.Tavern
     public class TavernController : MonoBehaviour
     {
         public UnityAction ExitTavernEvent;
+
         [SerializeField] private Animator _stateMachine;
 
         [field: Header("Managers")]

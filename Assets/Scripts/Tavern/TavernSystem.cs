@@ -15,17 +15,18 @@ namespace CryptoQuest.Tavern
         {
             _showTavern.EventRaised += ShowTavernRequested;
             _tavernController.ExitTavernEvent += ExitTavernRequested;
+            _tavernDialogsManager.TurnOnTavernOptionsEvent += TurnOnTavernOptions;
         }
 
         private void OnDisable()
         {
             _showTavern.EventRaised -= ShowTavernRequested;
             _tavernController.ExitTavernEvent -= ExitTavernRequested;
+            _tavernDialogsManager.TurnOnTavernOptionsEvent -= TurnOnTavernOptions;
         }
 
         private void ShowTavernRequested()
         {
-            _tavernController.gameObject.SetActive(true);
             _merchantInputManager.EnableInput();
             _tavernDialogsManager.TavernOpened();
         }
@@ -36,5 +37,7 @@ namespace CryptoQuest.Tavern
             _tavernDialogsManager.TavernExited();
             _merchantInputManager.DisableInput();
         }
+
+        private void TurnOnTavernOptions() => _tavernController.gameObject.SetActive(true);
     }
 }

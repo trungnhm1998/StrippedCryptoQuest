@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Localization;
 
 namespace CryptoQuest.Tavern.States
 {
@@ -9,6 +10,8 @@ namespace CryptoQuest.Tavern.States
         private static readonly int CharacterReplacementState = Animator.StringToHash("Character Replacement Idle");
         private static readonly int PartyOrganizationState = Animator.StringToHash("Party Organization Idle");
 
+        [SerializeField] private LocalizedString _welcomeMsg;
+
         protected override void OnEnter()
         {
             _controller = StateMachine.GetComponent<TavernController>();
@@ -16,23 +19,24 @@ namespace CryptoQuest.Tavern.States
 
             _controller.TavernUiOverview.CharacterReplacementButtonPressedEvent += EnterCharacterReplacement;
             _controller.TavernUiOverview.PartyOrganizationButtonPressedEvent += EnterPartyOrganization;
-
             _controller.MerchantInputManager.CancelEvent += ExitTavern;
-            _controller.DialogsManager.EnableOverviewButtonsEvent += EnableOverviewButtonsRequested;
+
+            ShowDialogue();
         }
 
-        private void EnableOverviewButtonsRequested()
+        private void ShowDialogue()
         {
-            _controller.TavernUiOverview.EnableOverviewButtons();
+            _controller.DialogsManager.Dialogue
+                .SetMessage(_welcomeMsg)
+                .SetArrow(false)
+                .Show();
         }
 
         protected override void OnExit()
         {
             _controller.TavernUiOverview.CharacterReplacementButtonPressedEvent -= EnterCharacterReplacement;
             _controller.TavernUiOverview.PartyOrganizationButtonPressedEvent -= EnterPartyOrganization;
-
             _controller.MerchantInputManager.CancelEvent -= ExitTavern;
-            _controller.DialogsManager.EnableOverviewButtonsEvent -= EnableOverviewButtonsRequested;
 
             _controller.TavernUiOverview.gameObject.SetActive(false);
 
