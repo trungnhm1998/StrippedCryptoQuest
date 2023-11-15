@@ -299,7 +299,7 @@ GameObject:
   - component: {fileID: 7922745920403385066}
   - component: {fileID: 9089729528290754423}
   - component: {fileID: 8575258915249462629}
-  - component: {fileID: 6551579837362101921}
+  - component: {fileID: 8583016256240226252}
   m_Layer: 5
   m_Name: EquipmentSlot
   m_TagString: Untagged
@@ -439,7 +439,7 @@ MonoBehaviour:
   <SlotType>k__BackingField: 0
   <EquipmentCategory>k__BackingField: 0
   _equipment: {fileID: 4777636308793188708}
---- !u!114 &6551579837362101921
+--- !u!114 &8583016256240226252
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -451,23 +451,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69829015e3a24dc449c4c18a0fbd4599, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _onTooltipShow:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 4777636308793188708}
-        m_TargetAssemblyTypeName: CryptoQuest.UI.Menu.Panels.Status.Equipment.UIEquipment,
-          indi-games.crypto-quest
-        m_MethodName: OnInspecting
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  _button: {fileID: 9089729528290754423}
+  _equipmentUI: {fileID: 4777636308793188708}
 --- !u!1001 &9047141325003626200
 PrefabInstance:
   m_ObjectHideFlags: 0
