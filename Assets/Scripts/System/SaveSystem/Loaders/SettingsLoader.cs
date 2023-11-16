@@ -14,7 +14,7 @@ namespace CryptoQuest.System.SaveSystem.Loaders
         [SerializeField] private AudioSettingSO _audioSetting;
         [SerializeField] private LanguageSettingSO _languageSetting;
 
-        public IEnumerator Load(ISaveSystem progressionSystem)
+        public IEnumerator Load(SaveSystemSO progressionSystem)
         {
             if (progressionSystem.SaveData.TryGetValue(SerializeKeys.SETTINGS, out var json))
             {

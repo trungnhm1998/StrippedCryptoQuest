@@ -51,7 +51,7 @@ namespace CryptoQuest.UI.Title.States
 
         private bool IsPlayerNameExist()
         {
-            var saveSystem = ServiceProvider.GetService<ISaveSystem>();
+            var saveSystem = ServiceProvider.GetService<SaveSystemSO>();
             return !string.IsNullOrEmpty(saveSystem.PlayerName);
         }
 

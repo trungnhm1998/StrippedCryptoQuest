@@ -14,8 +14,6 @@ namespace CryptoQuest.System.Dialogue
         [SerializeField] private StringEventChannelSO _onTriggerStartDialogue;
         [SerializeField] private InputMediatorSO _inputMediator;
 
-        private ISaveSystem _saveSystem;
-
         private void Awake()
         {
             _dialogueRunner = FindObjectOfType<DialogueRunner>();
@@ -23,24 +21,11 @@ namespace CryptoQuest.System.Dialogue
             _dialogueRunner.AddCommandHandler<string>("EndDialogue", OnDialogueEnd);
         }
 
-        private void OnEnable()
-        {
-            _onTriggerStartDialogue.EventRaised += StartDiaglog;
-        }
+        private void OnEnable() => _onTriggerStartDialogue.EventRaised += StartDialog;
 
-        private void OnDisable()
-        {
-            _onTriggerStartDialogue.EventRaised -= StartDiaglog;
-        }
+        private void OnDisable() => _onTriggerStartDialogue.EventRaised -= StartDialog;
 
-        private void Start()
-        {
-            _saveSystem = ServiceProvider.GetService<ISaveSystem>();
-            if (_saveSystem != null)
-            {
-                _yarnVariableStorage.SetValue("$playerName", _saveSystem.PlayerName);
-            }
-        }
+        private void Start() => _yarnVariableStorage.SetValue("$playerName", ServiceProvider.GetService<SaveSystemSO>().PlayerName);
 
         private void OnDialogueEnd(string str)
         {
@@ -48,7 +33,7 @@ namespace CryptoQuest.System.Dialogue
             _inputMediator.EnableMapGameplayInput();
         }
 
-        private void StartDiaglog(string nodeName)
+        private void StartDialog(string nodeName)
         {
             _dialogueRunner.StartDialogue(nodeName);
             _inputMediator.EnableMenuInput();

@@ -52,6 +52,7 @@ namespace CryptoQuest.System.SaveSystem.Savers
         private void SaveGameToServer()
         {
             var restClient = ServiceProvider.GetService<IRestClient>();
+            _saveSystem.SaveData.SavedTime = DateTime.Now.ToString();
             restClient.WithBody(new SaveDataBody() { GameData = _saveSystem.SaveData })
                 .Post<SaveDataResult>(Accounts.USER_SAVE_DATA)
                 .Subscribe(Saved, OnError, OnCompleted);

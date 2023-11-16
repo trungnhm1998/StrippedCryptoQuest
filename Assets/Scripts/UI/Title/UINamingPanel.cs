@@ -49,6 +49,7 @@ namespace CryptoQuest.UI.Title
             }
 
             _saveSystem.PlayerName = NameInput.text;
+            _saveSystem.Save();
         }
 
         public void ValidateInput(string input) => _isInputValid = IsNameValid(input);

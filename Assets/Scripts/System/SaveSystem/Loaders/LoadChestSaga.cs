@@ -11,7 +11,7 @@ namespace CryptoQuest.System.SaveSystem.Loaders
     {
         [SerializeField] private OpenedChestsSO _openedChests;
 
-        public IEnumerator Load(ISaveSystem progressionSystem)
+        public IEnumerator Load(SaveSystemSO progressionSystem)
         {
             if (progressionSystem.SaveData.TryGetValue(_openedChests.name, out var json))
                 _openedChests.Chests = JsonConvert.DeserializeObject<List<string>>(json);

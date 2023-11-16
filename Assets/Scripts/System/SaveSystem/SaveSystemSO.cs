@@ -1,14 +1,23 @@
 using System;
+using CryptoQuest.System;
 using Newtonsoft.Json;
 using UnityEngine;
 
 namespace CryptoQuest.SaveSystem
 {
     [CreateAssetMenu(menuName = "Crypto Quest/SaveSystem/SaveSystemSO")]
-    public class SaveSystemSO : ScriptableObject, ISaveSystem
+    public class SaveSystemSO : ScriptableObject
     {
+        [SerializeField] private string _version = "0.0.1";
+        public string Version => _version;
+
         [SerializeField] private SaveManagerSO _saveManagerSO;
         [SerializeField] private SaveData _saveData = new();
+
+        private void OnEnable()
+        {
+            ServiceProvider.Provide(this);
+        }
 
         public SaveData SaveData
         {
@@ -28,30 +37,19 @@ namespace CryptoQuest.SaveSystem
         /// <returns>true if save file exists</returns>
         public bool Save()
         {
-            _saveData.SavedTime = DateTime.Now;
+            _saveData.SavedTime = DateTime.Now.ToString();
+            _saveData.Version = _version;
             var json = JsonConvert.SerializeObject(_saveData);
-            return !string.IsNullOrEmpty(json) && _saveManagerSO.Save(json);
+            var result = !string.IsNullOrEmpty(json) && _saveManagerSO.Save(json);
+            Debug.Log($"Saving[{result}]: {json}");
+            return result;
         }
 
         public bool Load()
         {
             if (!_saveManagerSO.Load(out var json)) return false;
             _saveData = JsonConvert.DeserializeObject<SaveData>(json);
-            return true;
-        }
-
-        public bool LoadObject(ISaveObject jObject)
-        {
-            if (jObject == null) return false;
-            return _saveData.TryGetValue(jObject.Key, out var json) && jObject.FromJson(json);
-        }
-
-        public bool SaveObject(ISaveObject jObject)
-        {
-            if (jObject == null) return false;
-            _saveData[jObject.Key] = jObject.ToJson();
-            Save(); 
-            return true;
+            return _saveData != null && _version == _saveData.Version;
         }
     }
 }

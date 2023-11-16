@@ -10,7 +10,7 @@ namespace CryptoQuest.System.SaveSystem.Loaders
     {
         [SerializeField] private QuestSaveSO _questSave;
 
-        public IEnumerator Load(ISaveSystem progressionSystem)
+        public IEnumerator Load(SaveSystemSO progressionSystem)
         {
 #if UNITY_EDITOR
             _questSave.InProgressQuest.Clear();
