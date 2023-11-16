@@ -15,7 +15,7 @@ namespace CryptoQuest.Battle.UI.Logs
 
         private void Awake()
         {
-            _fledEvent = BattleEventBus.SubscribeEvent<FledEvent>(OnFled);
+            _fledEvent = BattleEventBus.SubscribeEvent<LogFledEvent>(OnFled);
         }
 
         private void OnDestroy()
@@ -23,7 +23,7 @@ namespace CryptoQuest.Battle.UI.Logs
             BattleEventBus.UnsubscribeEvent(_fledEvent);
         }
 
-        private void OnFled(FledEvent ctx)
+        private void OnFled(LogFledEvent ctx)
         {
             LogFled(ctx.Character, ctx.IsSuccess);
         }
