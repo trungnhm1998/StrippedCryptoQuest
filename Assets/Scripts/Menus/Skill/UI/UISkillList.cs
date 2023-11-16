@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using CryptoQuest.AbilitySystem.Abilities;
 using CryptoQuest.Battle.Components;
 using CryptoQuest.Gameplay.PlayerParty;
@@ -39,8 +40,7 @@ namespace CryptoQuest.Menus.Skill.UI
 
         private void OnEnable()
         {
-            CleanUpScrollView();
-            ShowSkillForHero(ServiceProvider.GetService<IPartyController>().Slots[0]
+            TryShowSkillForHero(ServiceProvider.GetService<IPartyController>().Slots[0]
                 .HeroBehaviour); // First slot should never be null/empty
             UISkill.InspectingSkillEvent += CacheInspectingSkill;
         }
@@ -56,14 +56,15 @@ namespace CryptoQuest.Menus.Skill.UI
             _lastSelectedSkill = skill.gameObject;
         }
 
-        public void ShowSkillForHero(HeroBehaviour hero)
+        public bool TryShowSkillForHero(HeroBehaviour hero)
         {
             _lastSelectedSkill = null;
-            if (!hero.TryGetComponent(out HeroSkills skillsComponent)) return;
+            if (!hero.TryGetComponent(out HeroSkills skillsComponent)) return false;
             var skills = skillsComponent.Skills;
 
             CleanUpScrollView();
             InitSkillList(skills);
+            return skills.Count > 0;
         }
 
         private void InitSkillList(IReadOnlyList<CastSkillAbility> skills)

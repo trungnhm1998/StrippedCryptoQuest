@@ -8,7 +8,6 @@ namespace CryptoQuest.Menus.Skill.States
     {
         public CharacterSelectionState(UISkillMenu skillPanel) : base(skillPanel) { }
 
-        private void DeSelectSingleHero() => _skillPanel.EnableAllHeroSelecting(false);
         private void DeSelectAllHeroes() => _skillPanel.EnableAllHeroButtons(false);
         private void DeActiveSelectedHero(bool active = false) => _skillPanel.EnableHeroSelectedMode(active);
 
@@ -39,7 +38,7 @@ namespace CryptoQuest.Menus.Skill.States
         private void ToSelectSkillState()
         {
             if (_skillPanel.SelectingHero == null) return;
-            DeSelectSingleHero();
+            _skillPanel.EnableAllHeroSelecting(false);
             fsm.RequestStateChange(SkillMenuStateMachine.SkillSelection);
         }
 
