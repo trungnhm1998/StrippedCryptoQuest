@@ -1,17 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using CryptoQuest.Quest.Authoring;
 using CryptoQuest.Quest.Components;
 using UnityEditor;
 using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace CryptoQuestEditor.System.QuestSystem
+namespace CryptoQuest.Quest.Editor
 {
     [CustomEditor(typeof(QuestManager))]
-    public class QuestManagerEditor : Editor
+    public class QuestManagerEditor : UnityEditor.Editor
     {
         [SerializeField] private VisualTreeAsset _uxml;
         private QuestManager Target => target as QuestManager;
