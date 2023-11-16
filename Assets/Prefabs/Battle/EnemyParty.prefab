@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4310536529224012912}
   - component: {fileID: 4666074599004791690}
+  - component: {fileID: 8401770259293439460}
   m_Layer: 0
   m_Name: EnemyParty
   m_TagString: Untagged
@@ -24,7 +25,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 457216939546822766}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -34,7 +36,6 @@ Transform:
   - {fileID: 1136745176797003992}
   - {fileID: 7493990321765517189}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &4666074599004791690
 MonoBehaviour:
@@ -53,6 +54,19 @@ MonoBehaviour:
   - {fileID: 6215829614147627847}
   - {fileID: 6151140389408436873}
   - {fileID: 3646713180780770772}
+--- !u!114 &8401770259293439460
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 457216939546822766}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 916d2d823cc839f46894a6a8bf452448, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _enemyPartyBehaviour: {fileID: 4666074599004791690}
 --- !u!1001 &850715297597154554
 PrefabInstance:
   m_ObjectHideFlags: 0
