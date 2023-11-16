@@ -14,10 +14,13 @@ namespace CryptoQuest.Battle.States.SelectHeroesActions
     {
         private const float SELECT_DELAY = 0.05f;
         private EnemyGroupPresenter _enemyGroupPresenter;
+        private SelectCommandPresenter _selectCommandPresenter;
 
         public SelectCommand(HeroBehaviour hero, SelectHeroesActions fsm) : base(hero, fsm)
         {
             Fsm.TryGetComponent(out _enemyGroupPresenter);
+            // TODO: Refactor presenter #1646
+            Fsm.TryGetComponent(out _selectCommandPresenter);
             _heroEventObject = new HighlightHeroEvent() { Hero = hero };
         }
 
@@ -34,6 +37,8 @@ namespace CryptoQuest.Battle.States.SelectHeroesActions
 
             _enemyGroupPresenter.Show();
             EnableCommandMenu();
+
+            _selectCommandPresenter.CheckActiveButtons(Hero);
         }
 
         public override void OnExit()
