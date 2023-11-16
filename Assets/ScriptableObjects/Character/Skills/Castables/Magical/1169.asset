@@ -28,49 +28,49 @@ MonoBehaviour:
       IgnoreTags: []
   _context:
     _skillInfo:
-      Id: 1169
+      Id: 1166
       SkillIcon: {fileID: 0}
       SkillType: 1
       Category: {fileID: 0}
       Cost: 3
       UsageScenarioSO: 2
-      VfxId: 0
+      VfxId: -1
       SkillParameters:
         Element: {fileID: 0}
-        BasePower: 1
-        PowerUpperLimit: 1
-        PowerLowerLimit: 1
-        SkillPowerThreshold: 1
-        PowerValueAdded: 0
-        PowerValueReduced: 0
+        BasePower: 30
+        PowerUpperLimit: 36
+        PowerLowerLimit: 15
+        SkillPowerThreshold: 200
+        PowerValueAdded: 0.2
+        PowerValueReduced: 0.2
         IsFixed: 1
         ContinuesTurn: 3
-        EffectType: 4
+        EffectType: 99
         TargetAttribute:
           Attribute: {fileID: 0}
-          CaptureFrom: 1
+          CaptureFrom: 0
   _skillName:
     m_TableReference:
-      m_TableCollectionName: AbilityNames
+      m_TableCollectionName: GUID:24f0f0f2f6b89e241abd3732a43599cd
     m_TableEntryReference:
-      m_KeyId: 0
-      m_Key: EXTRANORMALATTACK
+      m_KeyId: 622806949924
+      m_Key: 
     m_FallbackState: 0
     m_WaitForCompletion: 0
     m_LocalVariables: []
   _skillDescription:
     m_TableReference:
-      m_TableCollectionName: AbilityDescriptions
+      m_TableCollectionName: GUID:3faae693f8722b342841d98f37586c80
     m_TableEntryReference:
-      m_KeyId: 0
-      m_Key: EXTRANORMALATTACK
+      m_KeyId: 152797437961
+      m_Key: 
     m_FallbackState: 0
     m_WaitForCompletion: 0
     m_LocalVariables: []
   <SuccessRate>k__BackingField: 100
   <TargetType>k__BackingField: {fileID: 11400000, guid: 22b78d0c574a9b64984629f7aedc22ea, type: 2}
   _effects:
-  - {fileID: 11400000, guid: 657ae6b21b471ad44b42be3bc3d4ad17, type: 2}
+  - {fileID: 11400000, guid: d91693455a9d33849b921c74e1ffd38f, type: 2}
   references:
     version: 2
     RefIds: []

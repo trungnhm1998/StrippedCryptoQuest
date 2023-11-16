@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0c79bbff4ab04690afc7539ba04e6a22, type: 3}
-  m_Name: 1090
+  m_Name: Ally_Poison
   m_EditorClassIdentifier: 
   tags:
     AbilityTag: {fileID: 0}
@@ -25,15 +25,16 @@ MonoBehaviour:
       IgnoreTags: []
     TargetTags:
       RequireTags: []
-      IgnoreTags: []
+      IgnoreTags:
+      - {fileID: 11400000, guid: 4d4cdc671e3dda44bb45c2c392e2302d, type: 2}
   _context:
     _skillInfo:
-      Id: 1090
+      Id: 1083
       SkillName:
         m_TableReference:
           m_TableCollectionName: GUID:a04f9e0f3e0ba4b4fb5275c51c13428a
         m_TableEntryReference:
-          m_KeyId: 30420668369752064
+          m_KeyId: 28283991045369856
           m_Key: 
         m_FallbackState: 0
         m_WaitForCompletion: 0
@@ -42,7 +43,7 @@ MonoBehaviour:
         m_TableReference:
           m_TableCollectionName: 
         m_TableEntryReference:
-          m_KeyId: 28402607592759296
+          m_KeyId: 28284653787344896
           m_Key: 
         m_FallbackState: 0
         m_WaitForCompletion: 0
@@ -68,9 +69,9 @@ MonoBehaviour:
           Attribute: {fileID: 11400000, guid: 77c53593fd92c904aa7689c5a7449df3, type: 2}
           CaptureFrom: 1
   <SuccessRate>k__BackingField: 100
-  <TargetType>k__BackingField: {fileID: 11400000, guid: 6cd304533bdab184cb6240d08cf35473, type: 2}
+  <TargetType>k__BackingField: {fileID: 11400000, guid: 22b78d0c574a9b64984629f7aedc22ea, type: 2}
   _effects:
-  - {fileID: 11400000, guid: d58894a7cb7373649929cd367fcb4946, type: 2}
+  - {fileID: 11400000, guid: 6ff4c9920503e6e4b8411c7e99199325, type: 2}
   references:
     version: 2
     RefIds: []

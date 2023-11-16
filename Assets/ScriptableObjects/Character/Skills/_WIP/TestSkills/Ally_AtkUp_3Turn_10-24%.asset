@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0c79bbff4ab04690afc7539ba04e6a22, type: 3}
-  m_Name: 1089_Ally
+  m_Name: Ally_AtkUp_3Turn_10-24%
   m_EditorClassIdentifier: 
   tags:
     AbilityTag: {fileID: 0}
@@ -28,25 +28,7 @@ MonoBehaviour:
       IgnoreTags: []
   _context:
     _skillInfo:
-      Id: 1089
-      SkillName:
-        m_TableReference:
-          m_TableCollectionName: GUID:a04f9e0f3e0ba4b4fb5275c51c13428a
-        m_TableEntryReference:
-          m_KeyId: 28402515620061184
-          m_Key: 
-        m_FallbackState: 0
-        m_WaitForCompletion: 0
-        m_LocalVariables: []
-      SkillDescription:
-        m_TableReference:
-          m_TableCollectionName: 
-        m_TableEntryReference:
-          m_KeyId: 28402607592759296
-          m_Key: 
-        m_FallbackState: 0
-        m_WaitForCompletion: 0
-        m_LocalVariables: []
+      Id: 0
       SkillIcon: {fileID: 0}
       SkillType: 1
       Category: {fileID: 0}
@@ -55,22 +37,40 @@ MonoBehaviour:
       VfxId: -1
       SkillParameters:
         Element: {fileID: 0}
-        BasePower: 1
-        PowerUpperLimit: 1
-        PowerLowerLimit: 1
-        SkillPowerThreshold: 1
-        PowerValueAdded: 1
-        PowerValueReduced: 1
-        IsFixed: 1
+        BasePower: 20
+        PowerUpperLimit: 24
+        PowerLowerLimit: 10
+        SkillPowerThreshold: 200
+        PowerValueAdded: 0.2
+        PowerValueReduced: 0.2
+        IsFixed: 0
         ContinuesTurn: 3
-        EffectType: 1
-        targetAttribute:
-          Attribute: {fileID: 11400000, guid: 77c53593fd92c904aa7689c5a7449df3, type: 2}
+        EffectType: 0
+        TargetAttribute:
+          Attribute: {fileID: 11400000, guid: cff0791781b73cf4ca80877936aedaad, type: 2}
           CaptureFrom: 1
+  _skillName:
+    m_TableReference:
+      m_TableCollectionName: 
+    m_TableEntryReference:
+      m_KeyId: 0
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  _skillDescription:
+    m_TableReference:
+      m_TableCollectionName: 
+    m_TableEntryReference:
+      m_KeyId: 0
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
   <SuccessRate>k__BackingField: 100
   <TargetType>k__BackingField: {fileID: 11400000, guid: 22b78d0c574a9b64984629f7aedc22ea, type: 2}
   _effects:
-  - {fileID: 11400000, guid: d9bd8855a25c0e1458ee033748e16067, type: 2}
+  - {fileID: 11400000, guid: eb52789fc55e5bd4d857bca14027078a, type: 2}
   references:
     version: 2
     RefIds: []
