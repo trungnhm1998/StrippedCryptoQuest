@@ -32,10 +32,21 @@ namespace CryptoQuest.Menus.Skill.States
             _skillPanel.Input.MenuConfirmedEvent += OnCastSkill;
 
             _input.MenuCancelEvent += HandleCancel;
+
+            ShowSkillList();
+        }
+
+        private void ShowSkillList()
+        {
+            var showSuccess = _skillListPanel.TryShowSkillForHero(_skillPanel.SelectingHero.Hero);
+            if (!showSuccess) 
+            {
+                // If this character dont have any skill then back to select character
+                HandleCancel();
+                return;
+            }
             _skillListPanel.Interactable = true;
             _skillListPanel.SelectLastSelectedOrFirstSkill();
-
-            ActiveSelectedHero();
         }
 
         private void OnCastSkill()
@@ -115,8 +126,6 @@ namespace CryptoQuest.Menus.Skill.States
         }
 
         private void DisableAllSkillButtons(bool disabled = true) => _skillListPanel.Interactable = !disabled;
-
-        private void ActiveSelectedHero(bool active = true) => _skillPanel.EnableHeroSelectedMode(active);
 
         private void CastSkill()
         {
