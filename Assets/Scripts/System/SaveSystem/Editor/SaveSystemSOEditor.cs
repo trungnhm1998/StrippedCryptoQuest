@@ -23,16 +23,12 @@ namespace CryptoQuestEditor.SaveSystem
             InspectorElement.FillDefaultInspector(root, serializedObject, this);
 
             _uxml.CloneTree(root);
-            var saveButton = new Button(SaveToServer)
-            {
-                text = "Save"
-            };
-            root.Add(saveButton);
-
-
+            
+            var saveToServerButton = root.Q<Button>("save-to-server-button");
             var clearAllSaveButton = root.Q<Button>("clear-all-save-button");
             var openSaveFolderButton = root.Q<Button>("open-save-folder-button");
 
+            saveToServerButton.clicked += SaveToServer;
             clearAllSaveButton.clicked += OnClearAllSaveButtonOnclicked;
             openSaveFolderButton.clicked += OnOpenSaveFolderButtonOnclicked;
 
