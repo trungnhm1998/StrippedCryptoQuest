@@ -16,6 +16,6 @@ namespace CryptoQuest.Quest.Authoring
     {
         public string YarnNode;
         public YarnProjectConfigSO YarnProjectConfig;
-        public List<QuestSO> PossibleOutcomeQuests;
+        public List<QuestSO> PossibleOutcomeQuests = new();
     }
 }

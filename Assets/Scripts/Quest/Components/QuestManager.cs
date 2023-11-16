@@ -31,17 +31,41 @@ namespace CryptoQuest.Quest.Components
         [Header("Quest Save Data")]
         [SerializeField]
         private QuestSaveSO _saveData;
+
         public QuestSaveSO SaveData => _saveData;
 
         [SerializeField] private QuestEventChannelSO _giveQuestEventChannel;
         [SerializeField] private QuestEventChannelSO _removeQuestEventChannel;
         [SerializeField] private RewardLootEvent _rewardEventChannel;
         [SerializeField, HideInInspector] private QuestSO _currentQuestData;
-        [SerializeField, HideInInspector] private QuestInfo _currentQuestInfo;
+        [SerializeField, HideInInspector] private List<QuestInfo> _currentQuestInfos = new();
+        [NonSerialized] private Dictionary<string, QuestInfo> _questInfoDict = new();
+        private bool _isCacheDirty;
+
+        private Dictionary<string, QuestInfo> QuestInfoLookup
+        {
+            get
+            {
+                if (!_isCacheDirty) return _questInfoDict;
+                _isCacheDirty = false;
+                _questInfoDict.Clear();
+                foreach (var data in _currentQuestInfos)
+                {
+                    _questInfoDict.Add(data.Guid, data);
+                }
+
+                return _questInfoDict;
+            }
+        }
 
         private void Awake()
         {
             ServiceProvider.Provide<IQuestManager>(this);
+        }
+
+        private void MarkCacheDirty()
+        {
+            _isCacheDirty = true;
         }
 
         protected void OnEnable()
@@ -74,14 +98,17 @@ namespace CryptoQuest.Quest.Components
                 return;
             }
 
-            if (_currentQuestInfo.Guid == questData.Guid)
+            if (QuestInfoLookup.TryGetValue(questData.Guid, out var questInfo))
             {
                 Debug.Log($"<color=green>QuestManager::TriggerQuest::Triggered: {questData.QuestName}</color>");
-                _currentQuestInfo.TriggerQuest();
+                questInfo.TriggerQuest();
+                _currentQuestInfos.Remove(questInfo);
+                MarkCacheDirty();
             }
             else
             {
-                Debug.Log($"<color=red>QuestManager::TriggerQuest::Triggered:QuestInfoIsNotCurrentQuest {questData.QuestName}</color>");
+                Debug.Log(
+                    $"<color=red>QuestManager::TriggerQuest::Triggered:QuestInfoIsNotCurrentQuest {questData.QuestName}</color>");
             }
         }
 
@@ -106,17 +133,22 @@ namespace CryptoQuest.Quest.Components
             if (_saveData.InProgressQuest.Any(questInfo => questInfo == questData.Guid))
             {
                 Debug.Log($"<color=green>QuestManager::GiveQuest::Already inprogress: {questData.QuestName}</color>");
-                _currentQuestInfo = questData.CreateQuest();
-                _currentQuestInfo.GiveQuest();
+
+                var info = questData.CreateQuest();
+                _currentQuestInfos.Add(info);
+                MarkCacheDirty();
+                info.GiveQuest();
                 return;
             }
 
             if (!IsQuestCompleted(questData))
             {
                 Debug.Log($"<color=green>QuestManager::GiveQuest::Give: {questData.QuestName}</color>");
-                _currentQuestInfo = questData.CreateQuest();
-                _currentQuestInfo.GiveQuest();
-                _saveData.AddInProgressQuest(_currentQuestInfo.Guid);
+                var info = questData.CreateQuest();
+                _currentQuestInfos.Add(info);
+                MarkCacheDirty();
+                info.GiveQuest();
+                _saveData.AddInProgressQuest(info.Guid);
             }
             else
             {
