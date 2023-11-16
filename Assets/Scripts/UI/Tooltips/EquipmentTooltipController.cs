@@ -51,7 +51,7 @@ namespace CryptoQuest.UI.Tooltips
         private void HideTooltip(HideEquipmentTooltip _)
         {
             _tooltip.gameObject.SetActive(false);
-            _releaseCo = StartCoroutine(CoAutoRelease());
+            _releaseCo ??= StartCoroutine(CoAutoRelease());
         }
 
         private IEnumerator CoAutoRelease()
@@ -60,6 +60,7 @@ namespace CryptoQuest.UI.Tooltips
             if (_handle.IsValid()) Addressables.Release(_handle);
             _handle = new AsyncOperationHandle<GameObject>();
             _tooltip = null;
+            _releaseCo = null;
         }
 
         private IEnumerator LoadAndShowTooltipCo(EquipmentInfo equipment)

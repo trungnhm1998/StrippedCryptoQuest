@@ -1,8 +1,10 @@
 using CryptoQuest.Battle.Components;
+using CryptoQuest.Core;
 using CryptoQuest.Input;
 using CryptoQuest.Menus.Status.States;
 using CryptoQuest.Menus.Status.UI.Equipment;
 using CryptoQuest.UI.Menu;
+using CryptoQuest.UI.Tooltips;
 using FSM;
 using UnityEngine;
 
@@ -29,6 +31,10 @@ namespace CryptoQuest.Menus.Status.UI
 
         private void OnEnable() => _stateMachine.Init();
 
-        private void OnDisable() => _stateMachine.OnExit();
+        private void OnDisable()
+        {
+            ActionDispatcher.Dispatch(new HideEquipmentTooltip());
+            _stateMachine.OnExit();
+        }
     }
 }
