@@ -56,7 +56,7 @@ namespace CryptoQuest.Quest.Components
         public void GiveQuest(DialogueQuestInfo questInfo)
         {
             if (_currentlyProcessQuestsID.Contains(questInfo.Data.Guid)) return;
-            
+
             _currentlyProcessQuestsID.Add(questInfo.Data.Guid);
             _currentlyProcessDialogueQuests.Add(questInfo);
         }
@@ -66,10 +66,21 @@ namespace CryptoQuest.Quest.Components
             foreach (var possibleOutComeQuest in _currentlyProcessDialogueQuests)
             {
                 if (possibleOutComeQuest.Data.QuestName != questName) continue;
-                
+
                 _questEventChannelSo.RaiseEvent(possibleOutComeQuest.Data);
+                CleanUpInProgressOutComes();
                 break;
             }
+        }
+
+        private void CleanUpInProgressOutComes()
+        {
+            foreach (var quest in _currentlyProcessDialogueQuests)
+            {
+                IQuestManager.OnRemoveProgressingQuest?.Invoke(quest.Data);
+            }
+
+            _currentlyProcessDialogueQuests.Clear();
         }
     }
 }

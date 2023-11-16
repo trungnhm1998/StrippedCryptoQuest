@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using CryptoQuest.Events;
 using CryptoQuest.Quest.Actions;
 using CryptoQuest.Quest.Authoring;
+using CryptoQuest.Quest.Components;
 using CryptoQuest.Quest.Events;
 using CryptoQuest.System.CutsceneSystem;
 using UnityEngine;
@@ -82,6 +83,11 @@ namespace CryptoQuest.Quest.Controllers
             foreach (var quest in _pendingBranchingQuests)
             {
                 _triggerQuestEventChannelSo.RaiseEvent(quest.BaseData);
+            }
+
+            foreach (var quest in _pendingBranchingQuests)
+            {
+                IQuestManager.OnRemoveProgressingQuest?.Invoke(quest.BaseData);
             }
 
             _pendingBranchingQuests.Clear();
