@@ -43,7 +43,9 @@ namespace CryptoQuest.Battle.Components
 
         public int Level => CalculateCurrentLevel();
 
-        private bool _needToRecalculateLevel;
+        /// I set this to true because If character already have exp      
+        /// the hero level is not being updated and UI will not correct
+        private bool _needToRecalculateLevel = true;
 
         public void AddExp(float expToAdd)
         {
