@@ -3,9 +3,9 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
-namespace CryptoQuest.Farm
+namespace CryptoQuest.Ranch
 {
-    public class FarmInputManager : MonoBehaviour, InputActions.IFarmActions
+    public class RanchInputManager : MonoBehaviour, InputActions.IFarmActions
     {
         [SerializeField] private InputMediatorSO _inputMediatorSO;
 
