@@ -7,7 +7,8 @@ namespace CryptoQuest.UI.Menu
     {
         Consumable = 0,
         Equipment = 1,
-        Character = 2
+        Character = 2,
+        Beast = 3,
     }
 
     public class TooltipFactory : MonoBehaviour
