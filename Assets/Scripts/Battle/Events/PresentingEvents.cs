@@ -3,7 +3,8 @@
 namespace CryptoQuest.Battle.Events
 {
     public class StartPresentingEvent : BattleEvent { }
-    public class EnqueuePresentCommandEvent : BattleEvent 
+
+    public class EnqueuePresentCommandEvent : BattleEvent
     {
         public IPresentCommand PresentCommand { get; private set; }
 
@@ -22,9 +23,9 @@ namespace CryptoQuest.Battle.Events
     /// raise this to handle change to the next state or end the battle accordingly
     /// </summary>
     public class FinishedPresentingEvent : BattleEvent { }
-    
+
     public class ShakeUIEvent : BattleEvent { }
-    
+
     public class LogDealtDamageEvent : BattleEvent
     {
         public Components.Character Character { get; private set; }
@@ -41,4 +42,16 @@ namespace CryptoQuest.Battle.Events
     }
 
     public class SealedEvent : EffectEvent { }
+
+    public class FledEvent : BattleEvent
+    {
+        public Components.Character Character { get; private set; }
+        public bool IsSuccess { get; private set; }
+
+        public FledEvent(Components.Character character, bool isSuccess)
+        {
+            Character = character;
+            IsSuccess = isSuccess;
+        }
+    }
 }

@@ -175,7 +175,7 @@ namespace CryptoQuest.AbilitySystem.Abilities
             ApplyGameplayEffectToOwner(_costEffect);
         }
 
-        private void RegisterBattleEndedEvents()
+        protected void RegisterBattleEndedEvents()
         {
             _wonEvent = BattleEventBus.SubscribeEvent<BattleWonEvent>(CleanupAbility);
             _lostEvent = BattleEventBus.SubscribeEvent<BattleLostEvent>(CleanupAbility);
