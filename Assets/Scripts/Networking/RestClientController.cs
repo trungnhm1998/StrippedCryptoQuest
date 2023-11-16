@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using CryptoQuest.Environment;
-using CryptoQuest.Networking.API;
+using CryptoQuest.API;
 using CryptoQuest.System;
 using Newtonsoft.Json;
 using Proyecto26;

@@ -5,7 +5,7 @@ using CryptoQuest.Core;
 using CryptoQuest.Events;
 using CryptoQuest.Menus.DimensionalBox.Objects;
 using CryptoQuest.Networking;
-using CryptoQuest.Networking.API;
+using CryptoQuest.API;
 using CryptoQuest.System;
 using CryptoQuest.UI.Actions;
 using UniRx;

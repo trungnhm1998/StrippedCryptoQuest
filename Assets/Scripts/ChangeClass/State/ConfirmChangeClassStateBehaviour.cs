@@ -38,7 +38,6 @@ namespace CryptoQuest.ChangeClass.StateMachine
 
         private void ChangeState()
         {
-            _stateController.DialogController.Dialogue.Show();
             _animator.SetTrigger(_submit);
         }
 

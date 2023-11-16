@@ -10,6 +10,7 @@ using CryptoQuest.UI.Actions;
 using CryptoQuest.Core;
 using CryptoQuest.Sagas;
 using System.Collections;
+using APIChangeClass = CryptoQuest.API.ChangeClass;
 
 namespace CryptoQuest.ChangeClass.API
 {
@@ -52,7 +53,7 @@ namespace CryptoQuest.ChangeClass.API
             _restAPINetworkController = ServiceProvider.GetService<IRestClient>();
             _restAPINetworkController
                 .WithBody(_requestBody)
-                .Post<ChangeClassResponseData>(ChangeClassAPI.CHANGE_NEW_CLASS)
+                .Post<ChangeClassResponseData>(APIChangeClass.CHANGE_NEW_CLASS)
                 .Subscribe(OnChangeClass, OnChangeClassFailed, OnChangeClassSuccess);
         }
 

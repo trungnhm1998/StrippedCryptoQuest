@@ -7,6 +7,7 @@ using CryptoQuest.Sagas.Objects;
 using CryptoQuest.System;
 using UniRx;
 using UnityEngine;
+using APIProfile = CryptoQuest.API.Profile;
 
 namespace CryptoQuest.Sagas.Profile
 {
@@ -15,7 +16,7 @@ namespace CryptoQuest.Sagas.Profile
         protected override void HandleAction(GetProfileSucceed ctx)
         {
             var restClient = ServiceProvider.GetService<IRestClient>();
-            restClient.Get<ProfileResponse>(Networking.API.Profile.GET_PROFILE)
+            restClient.Get<ProfileResponse>(APIProfile.GET_PROFILE)
                 .Subscribe(UpdateProfileInfo, OnError);
         }
 

@@ -4,7 +4,7 @@ using System.Net;
 using CryptoQuest.Actions;
 using CryptoQuest.Core;
 using CryptoQuest.Networking;
-using CryptoQuest.Networking.API;
+using CryptoQuest.API;
 using CryptoQuest.Sagas;
 using CryptoQuest.System;
 using CryptoQuest.System.SaveSystem.Loaders;

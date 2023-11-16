@@ -18,6 +18,7 @@ using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
 using UniRx;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using APIProfile = CryptoQuest.API.Profile;
 
 namespace CryptoQuest.Sagas.Profile
 {
@@ -63,7 +64,7 @@ namespace CryptoQuest.Sagas.Profile
             restClient
                 .WithParams(new Dictionary<string, string>
                     { { "source", $"{((int)EEquipmentStatus.InGame).ToString()}" } })
-                .Get<EquipmentsResponse>(Networking.API.Profile.EQUIPMENTS)
+                .Get<EquipmentsResponse>(APIProfile.EQUIPMENTS)
                 .Subscribe(ProcessResponseEquipments, OnError, OnCompleted);
         }
 

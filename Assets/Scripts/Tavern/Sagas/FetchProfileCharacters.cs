@@ -12,7 +12,7 @@ using CryptoQuest.Core;
 using CryptoQuest.Gameplay;
 using CryptoQuest.Gameplay.Inventory;
 using CryptoQuest.Networking;
-using CryptoQuest.Networking.API;
+using CryptoQuest.API;
 using CryptoQuest.Sagas.Objects;
 using CryptoQuest.System;
 using CryptoQuest.UI.Actions;
