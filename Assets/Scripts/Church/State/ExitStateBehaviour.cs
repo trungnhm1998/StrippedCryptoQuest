@@ -13,11 +13,13 @@ namespace CryptoQuest.Church.State
             _stateController = StateMachine.GetComponent<ChurchStateController>();
             _stateController.DialogController.Dialogue.SetMessage(_message).Show();
             _stateController.Input.SubmitEvent += ExitState;
+            _stateController.Input.CancelEvent += ExitState;
         }
 
         protected override void OnExit()
         {
             _stateController.Input.SubmitEvent -= ExitState;
+            _stateController.Input.CancelEvent -= ExitState;
         }
 
         private void ExitState()
