@@ -7,6 +7,7 @@ using UnityEngine;
 using UniRx;
 using CryptoQuest.Networking;
 using CryptoQuest.UI.Actions;
+using APIChangeClass = CryptoQuest.API.ChangeClass;
 
 namespace CryptoQuest.ChangeClass.API
 {
@@ -24,7 +25,7 @@ namespace CryptoQuest.ChangeClass.API
             IsFinishFetchData = false;
             _restAPINetworkController = ServiceProvider.GetService<IRestClient>();
             _restAPINetworkController
-                .Get<CharacterResponseData>(ChangeClassAPI.LOAD_ALL_CHARACTER)
+                .Get<CharacterResponseData>(APIChangeClass.LOAD_ALL_CHARACTER)
                 .Subscribe(Authenticated, DispatchLoadFailed, DispatchLoadFinished);
         }
 

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections;
 using CryptoQuest.Networking;
-using CryptoQuest.Networking.API;
+using CryptoQuest.API;
 using CryptoQuest.SaveSystem;
 using Newtonsoft.Json;
 using UniRx;

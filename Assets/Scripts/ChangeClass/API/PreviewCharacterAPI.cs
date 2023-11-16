@@ -9,6 +9,7 @@ using CryptoQuest.Networking;
 using CryptoQuest.ChangeClass.View;
 using Newtonsoft.Json;
 using CryptoQuest.UI.Actions;
+using APIChangeClass = CryptoQuest.API.ChangeClass;
 
 namespace CryptoQuest.ChangeClass.API
 {
@@ -35,7 +36,7 @@ namespace CryptoQuest.ChangeClass.API
             _restAPINetworkController = ServiceProvider.GetService<IRestClient>();
             _restAPINetworkController
                 .WithBody(new Body { BaseUnitId1 = firstClassMaterial.Class.id.ToString(), BaseUnitId2 = lastClassMaterial.Class.id.ToString() })
-                .Post<PreviewCharacterData>(ChangeClassAPI.PREVIEW_NEW_CHARACTER)
+                .Post<PreviewCharacterData>(APIChangeClass.PREVIEW_NEW_CHARACTER)
                 .Subscribe(PreviewNewCharacter, OnGetNewClassFailed, OnGetNewClassSuccess);
         }
 

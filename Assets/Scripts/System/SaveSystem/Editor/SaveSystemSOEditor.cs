@@ -1,5 +1,5 @@
 using CryptoQuest.Networking;
-using CryptoQuest.Networking.API;
+using CryptoQuest.API;
 using CryptoQuest.SaveSystem;
 using CryptoQuest.System;
 using CryptoQuest.System.SaveSystem.Savers;

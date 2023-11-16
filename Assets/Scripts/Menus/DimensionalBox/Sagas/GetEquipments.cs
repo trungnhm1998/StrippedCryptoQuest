@@ -4,7 +4,7 @@ using System.Net;
 using CryptoQuest.Core;
 using CryptoQuest.Events;
 using CryptoQuest.Networking;
-using CryptoQuest.Networking.API;
+using CryptoQuest.API;
 using CryptoQuest.Sagas;
 using CryptoQuest.Sagas.Objects;
 using CryptoQuest.System;

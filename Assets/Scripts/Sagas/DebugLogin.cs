@@ -4,12 +4,13 @@ using System.Net;
 using CryptoQuest.Actions;
 using CryptoQuest.Core;
 using CryptoQuest.Networking;
-using CryptoQuest.Networking.API;
 using CryptoQuest.System;
 using Newtonsoft.Json;
 using TinyMessenger;
 using UniRx;
 using UnityEngine;
+using CryptoQuest.API;
+using APIProfile = CryptoQuest.API.Profile;
 
 namespace CryptoQuest.Sagas
 {
@@ -25,7 +26,6 @@ namespace CryptoQuest.Sagas
         [SerializeField] private string _debugToken =
             "c1CRi-qi8jfOJHJ5rjH2tO9xjSA_UUORQ1eRBt59BY8.sc6AO3PQnOrQV0hG4SoQ6mTeU8r1n4-WKuCuzrpnmw1";
 
-        [SerializeField] private string _debugKey = "GQwuFb5HYRrbodgHmlyeJPXYDfRUpxkOZrFlWarb";
 
         private TinyMessageSubscriptionToken _loginAction;
 
@@ -34,7 +34,7 @@ namespace CryptoQuest.Sagas
             var restClient = ServiceProvider.GetService<IRestClient>();
             restClient
                 .WithBody(new DebugBody { Token = _debugToken })
-                .WithHeaders(new Dictionary<string, string> { { "DEBUG_KEY", _debugKey } })
+                .WithHeaders(new Dictionary<string, string> { { "DEBUG_KEY", APIProfile.DEBUG_KEY } })
                 .Post<AuthResponse>(Accounts.DEBUG_LOGIN)
                 .Subscribe(SaveCredentials, DispatchLoginFailed, DispatchLoginFinished);
         }

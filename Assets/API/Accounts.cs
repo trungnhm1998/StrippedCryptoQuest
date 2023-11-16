@@ -1,4 +1,4 @@
-﻿namespace CryptoQuest.Networking.API
+﻿namespace CryptoQuest.API
 {
     public static class Accounts
     {
