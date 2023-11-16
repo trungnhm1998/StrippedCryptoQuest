@@ -26,7 +26,7 @@ namespace CryptoQuest.AbilitySystem.Abilities
 
         protected override void InternalExecute(AbilitySystemBehaviour target)
         {
-            BattleEventBus.RaiseEvent(new EnemyFledEvent(target));
+            BattleEventBus.RaiseEvent(new EnemyFledEvent(Owner));
         }
 
         protected override IEnumerator OnAbilityActive()
