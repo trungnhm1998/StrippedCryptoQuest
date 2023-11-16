@@ -99,6 +99,7 @@ namespace CryptoQuest.AbilitySystem.Abilities
         /// <returns>Return true if after subtracted attribute that the cost needs greater than 0</returns>
         public bool CheckCost()
         {
+            if (Owner.gameObject.CompareTag(EnemyBehaviour.Tag)) return true;
             if (_costEffect == null) return true;
             if (Owner == null) return true;
             if (Owner.CanApplyAttributeModifiers(_costEffect)) return true;
@@ -170,7 +171,7 @@ namespace CryptoQuest.AbilitySystem.Abilities
 
         private void ApplyCost()
         {
-            if (_costEffect == null) return;
+            if (_costEffect == null || Owner.gameObject.CompareTag(EnemyBehaviour.Tag)) return;
 
             ApplyGameplayEffectToOwner(_costEffect);
         }
