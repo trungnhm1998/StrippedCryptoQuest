@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0c79bbff4ab04690afc7539ba04e6a22, type: 3}
-  m_Name: 1169
+  m_Name: Enemy_AtkDown_3Turn_10-24%
   m_EditorClassIdentifier: 
   tags:
     AbilityTag: {fileID: 0}
@@ -28,49 +28,49 @@ MonoBehaviour:
       IgnoreTags: []
   _context:
     _skillInfo:
-      Id: 1166
+      Id: 0
       SkillIcon: {fileID: 0}
       SkillType: 1
       Category: {fileID: 0}
       Cost: 3
-      UsageScenarioSO: 2
+      UsageScenarioSO: 0
       VfxId: -1
       SkillParameters:
         Element: {fileID: 0}
-        BasePower: 30
-        PowerUpperLimit: 36
-        PowerLowerLimit: 15
+        BasePower: 20
+        PowerUpperLimit: 24
+        PowerLowerLimit: 10
         SkillPowerThreshold: 200
         PowerValueAdded: 0.2
         PowerValueReduced: 0.2
-        IsFixed: 1
+        IsFixed: 0
         ContinuesTurn: 3
-        EffectType: 99
+        EffectType: 0
         TargetAttribute:
-          Attribute: {fileID: 0}
-          CaptureFrom: 0
+          Attribute: {fileID: 11400000, guid: cff0791781b73cf4ca80877936aedaad, type: 2}
+          CaptureFrom: 1
   _skillName:
     m_TableReference:
-      m_TableCollectionName: GUID:24f0f0f2f6b89e241abd3732a43599cd
+      m_TableCollectionName: 
     m_TableEntryReference:
-      m_KeyId: 622806949924
+      m_KeyId: 0
       m_Key: 
     m_FallbackState: 0
     m_WaitForCompletion: 0
     m_LocalVariables: []
   _skillDescription:
     m_TableReference:
-      m_TableCollectionName: GUID:3faae693f8722b342841d98f37586c80
+      m_TableCollectionName: 
     m_TableEntryReference:
-      m_KeyId: 152797437961
+      m_KeyId: 0
       m_Key: 
     m_FallbackState: 0
     m_WaitForCompletion: 0
     m_LocalVariables: []
   <SuccessRate>k__BackingField: 100
-  <TargetType>k__BackingField: {fileID: 11400000, guid: 22b78d0c574a9b64984629f7aedc22ea, type: 2}
+  <TargetType>k__BackingField: {fileID: 11400000, guid: 6cd304533bdab184cb6240d08cf35473, type: 2}
   _effects:
-  - {fileID: 11400000, guid: d91693455a9d33849b921c74e1ffd38f, type: 2}
+  - {fileID: 11400000, guid: db77ab62790a5b14694133c3f2bbe5b3, type: 2}
   references:
     version: 2
     RefIds: []

@@ -18,34 +18,65 @@ namespace CryptoQuest.System.Cheat
     public class CastableCheats : MonoBehaviour, ICheatInitializer
     {
         [SerializeField] private List<Castables> _castables;
-        private readonly Dictionary<int, AssetReferenceT<CastSkillAbility>> _castAbilityDict = new();
-        private readonly Dictionary<int, Dictionary<int, GameplayAbilitySpec>> _castAbilitySpecDict = new();
+        private readonly Dictionary<string, AssetReferenceT<CastSkillAbility>> _castAbilityDict = new();
+        private readonly Dictionary<int, Dictionary<string, GameplayAbilitySpec>> _castAbilitySpecDict = new();
 
         [Serializable]
         private struct Castables
         {
-            public int CastableId;
+            public string CastableName;
             public AssetReferenceT<CastSkillAbility> Ability;
         }
+
 #if UNITY_EDITOR
+        private const string CAST_SKILL_FOLDER = "Assets/ScriptableObjects/Character/Skills/Castables";
+        private const string TEST_CAST_SKILL_FOLDER = "Assets/ScriptableObjects/Character/Skills/_WIP/TestSkills";
+
         private void OnValidate()
         {
+            ValidateCastable();
+            ValidateTestCastable();
+        }
+
+        private void ValidateTestCastable()
+        {
+            foreach (var (guid, cast) in LoadSkillAssetAtFolder(TEST_CAST_SKILL_FOLDER))
+            {
+                int id = cast.Context.SkillInfo.Id;
+                Castables castables = new Castables()
+                {
+                    CastableName = cast.name,
+                    Ability = new AssetReferenceT<CastSkillAbility>(guid)
+                };
+                _castables.Add(castables);
+            }
+        }
+
+
+        private void ValidateCastable()
+        {
             if (_castables.Count != 0) return;
-            var abilityGuids = AssetDatabase.FindAssets("t:CastSkillAbility");
+            foreach (var (guid, cast) in LoadSkillAssetAtFolder(CAST_SKILL_FOLDER))
+            {
+                int id = cast.Context.SkillInfo.Id;
+                Castables castables = new Castables()
+                {
+                    CastableName = cast.name,
+                    Ability = new AssetReferenceT<CastSkillAbility>(guid)
+                };
+                _castables.Add(castables);
+            }
+        }
+
+        private IEnumerable<(string, CastSkillAbility)> LoadSkillAssetAtFolder(string folderPath)
+        {
+            var abilityGuids = AssetDatabase.FindAssets("t:CastSkillAbility", new[] {folderPath});
             foreach (var guid in abilityGuids)
             {
                 var path = AssetDatabase.GUIDToAssetPath(guid);
                 var cast = AssetDatabase.LoadAssetAtPath<CastSkillAbility>(path);
                 if (cast == null) continue;
-                int id = cast.Context.SkillInfo.Id;
-                if (id is >= 3000 or < 0) continue;
-
-                Castables castables = new Castables()
-                {
-                    CastableId = id,
-                    Ability = new AssetReferenceT<CastSkillAbility>(guid)
-                };
-                _castables.Add(castables);
+                yield return (guid, cast);
             }
         }
 #endif
@@ -53,7 +84,7 @@ namespace CryptoQuest.System.Cheat
         {
             foreach (var item in _castables)
             {
-                _castAbilityDict.TryAdd(item.CastableId, item.Ability);
+                _castAbilityDict.TryAdd(item.CastableName.ToLower(), item.Ability);
             }
         }
 
@@ -63,6 +94,11 @@ namespace CryptoQuest.System.Cheat
                 "add.cast <cast-able_id> <character_index>, add cast-able ability with id to character in party index");
             Terminal.Shell.AddCommand("remove.cast", RemoveCastAbilityFromCharacter, 2, 2,
                 "remove.cast <cast-able_id> <character_index>, remove cast-able with id from character in party index");
+
+            foreach (var ability in _castAbilityDict)
+            {
+                Terminal.Autocomplete.Register(ability.Key);
+            }
         }
 
         private void AddAbilityToCharacter(CommandArg[] args)
@@ -73,20 +109,12 @@ namespace CryptoQuest.System.Cheat
                 StartCoroutine(LoadThenAddAbilityToCharacterCo(characterId, abilityId));
         }
 
-        private static int[] ExtractAbilityIds(CommandArg[] args)
+        private static string[] ExtractAbilityIds(CommandArg[] args)
         {
-            var strAbilityIds = args[0].String.Split(',');
-            var abilityIds = new int[strAbilityIds.Length];
-            for (var index = 0; index < strAbilityIds.Length; index++)
-            {
-                var strId = strAbilityIds[index];
-                abilityIds[index] = int.Parse(strId);
-            }
-
-            return abilityIds;
+            return args[0].String.Split(',');
         }
 
-        private IEnumerator LoadThenAddAbilityToCharacterCo(int characterId, int abilityId)
+        private IEnumerator LoadThenAddAbilityToCharacterCo(int characterId, string abilityId)
         {
             var character = CharacterCheats.Instance.GetCharacter(characterId);
             var characterSkillHolder = character.GetComponent<HeroSkills>();
@@ -118,7 +146,7 @@ namespace CryptoQuest.System.Cheat
                 BindingFlags.NonPublic | BindingFlags.Instance);
 
             dynMethod.Invoke(characterSkillHolder, new object[] { methodParams });
-            _castAbilitySpecDict.TryAdd(characterId, new Dictionary<int, GameplayAbilitySpec>());
+            _castAbilitySpecDict.TryAdd(characterId, new());
             _castAbilitySpecDict[characterId].TryAdd(abilityId, character.AbilitySystem.GiveAbility(ability));
             Debug.Log($"Add ability [{abilityId}] to character [{character.DisplayName}] with id [{characterId}].");
         }
@@ -130,7 +158,7 @@ namespace CryptoQuest.System.Cheat
             foreach (var abilityId in abilityIds) RemoveCastAbilityFromCharacter(characterId, abilityId);
         }
 
-        private void RemoveCastAbilityFromCharacter(int characterId, int abilityId)
+        private void RemoveCastAbilityFromCharacter(int characterId, string abilityId)
         {
             if (_castAbilitySpecDict.TryGetValue(characterId, out var characterAbilityDict) == false) return;
             if (characterAbilityDict.TryGetValue(abilityId, out var spec) == false) return;
@@ -141,12 +169,12 @@ namespace CryptoQuest.System.Cheat
             List<CastSkillAbility> currentSkills = new(characterSkillHolder.Skills);
             foreach (var currentSkill in currentSkills)
             {
-                if (currentSkill.Context.SkillInfo.Id != abilityId) continue;
+                if (currentSkill.Context.SkillInfo.Id.ToString() != abilityId) continue;
                 currentSkills.Remove(currentSkill);
                 break;
             }
 
-            var property = typeof(HeroSkills).GetProperty("_skills", BindingFlags.NonPublic | BindingFlags.Instance);
+            var property = typeof(HeroSkills).GetProperty("Skills", BindingFlags.NonPublic | BindingFlags.Instance);
             if (property == null) return;
             property.SetValue(characterSkillHolder, currentSkills);
 

@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0c79bbff4ab04690afc7539ba04e6a22, type: 3}
-  m_Name: 1088_Ally
+  m_Name: Ally_Freeze
   m_EditorClassIdentifier: 
   tags:
     AbilityTag: {fileID: 0}
@@ -28,12 +28,12 @@ MonoBehaviour:
       IgnoreTags: []
   _context:
     _skillInfo:
-      Id: 1088
+      Id: 1090
       SkillName:
         m_TableReference:
           m_TableCollectionName: GUID:a04f9e0f3e0ba4b4fb5275c51c13428a
         m_TableEntryReference:
-          m_KeyId: 30421097325416448
+          m_KeyId: 30420668369752064
           m_Key: 
         m_FallbackState: 0
         m_WaitForCompletion: 0
@@ -42,7 +42,7 @@ MonoBehaviour:
         m_TableReference:
           m_TableCollectionName: 
         m_TableEntryReference:
-          m_KeyId: 0
+          m_KeyId: 28402607592759296
           m_Key: 
         m_FallbackState: 0
         m_WaitForCompletion: 0
@@ -55,12 +55,12 @@ MonoBehaviour:
       VfxId: -1
       SkillParameters:
         Element: {fileID: 0}
-        BasePower: 0
-        PowerUpperLimit: 0
-        PowerLowerLimit: 0
-        SkillPowerThreshold: 0
-        PowerValueAdded: 0
-        PowerValueReduced: 0
+        BasePower: 1
+        PowerUpperLimit: 1
+        PowerLowerLimit: 1
+        SkillPowerThreshold: 1
+        PowerValueAdded: 1
+        PowerValueReduced: 1
         IsFixed: 1
         ContinuesTurn: 3
         EffectType: 1
@@ -70,7 +70,7 @@ MonoBehaviour:
   <SuccessRate>k__BackingField: 100
   <TargetType>k__BackingField: {fileID: 11400000, guid: 22b78d0c574a9b64984629f7aedc22ea, type: 2}
   _effects:
-  - {fileID: 11400000, guid: 7157de669a2a1bd4fb3d0f61878053c2, type: 2}
+  - {fileID: 11400000, guid: d58894a7cb7373649929cd367fcb4946, type: 2}
   references:
     version: 2
     RefIds: []

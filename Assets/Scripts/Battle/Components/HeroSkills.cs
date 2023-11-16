@@ -9,8 +9,7 @@ namespace CryptoQuest.Battle.Components
 {
     public class HeroSkills : CharacterComponentBase
     {
-        [field: SerializeField] private List<CastSkillAbility> _skills { get;  set; } = new();
-        public IReadOnlyList<CastSkillAbility> Skills => _skills;
+        [field: SerializeField] public List<CastSkillAbility> Skills { get; private set; } = new();
 
         private ISkillsProvider _skillsProvider;
         private ISkillsProvider Provider => _skillsProvider ??= ServiceProvider.GetService<ISkillsProvider>();
@@ -25,8 +24,8 @@ namespace CryptoQuest.Battle.Components
 
         private void AddSkillsToHero(List<CastSkillAbility> skills)
         {
-            _skills.AddRange(skills);
-            _skills = _skills.Distinct().ToList();
+            Skills.AddRange(skills);
+            Skills = Skills.Distinct().ToList();
         }
     }
 }
