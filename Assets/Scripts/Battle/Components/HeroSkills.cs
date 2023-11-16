@@ -36,19 +36,14 @@ namespace CryptoQuest.Battle.Components
 
         private void OnEnable()
         {
-            _levelUpToken = ActionDispatcher.Bind<HeroLeveledUpAction>(HeroLevelUp);
+            _levelUpToken = ActionDispatcher.Bind<HeroLeveledUpAction>(action => GetSkills());
         }
 
         private void OnDisable()
         {
             ActionDispatcher.Unbind(_levelUpToken);
         }
-
-        private void HeroLevelUp(HeroLeveledUpAction action)
-        {
-            GetSkills();
-        }
-
+        
         private void AddSkillsToHero(List<CastSkillAbility> skills)
         {
             Skills.AddRange(skills);
