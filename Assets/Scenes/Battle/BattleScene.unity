@@ -1016,6 +1016,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1399460826}
   - component: {fileID: 1399460825}
+  - component: {fileID: 1399460827}
   m_Layer: 0
   m_Name: VFXPresenter
   m_TagString: Untagged
@@ -1052,6 +1053,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 891665763}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1399460827
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1399460824}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea6a4c5f5ddffeb4da5450c750868817, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _vfxPresenter: {fileID: 1399460825}
 --- !u!114 &78955201203678911 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1319386074649500744, guid: d0eacd5a881766b4ca08ec4b770526a2, type: 3}

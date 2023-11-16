@@ -28,6 +28,7 @@ namespace CryptoQuest.Battle.Components
     public class EnemyBehaviour : Character, IStatsProvider
     {
         public event Action PreTurnStarted;
+        public static readonly string Tag = "Enemy";
 
         public AttributeWithValue[] Stats => _enemyDef.Stats;
 
