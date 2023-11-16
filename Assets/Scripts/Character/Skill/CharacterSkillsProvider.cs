@@ -12,7 +12,7 @@ namespace CryptoQuest.Character
     public class CharacterSkillsProvider : MonoBehaviour, ISkillsProvider
     {
         [SerializeField] private SkillDatabase _database;
-        [SerializeField] private List<HeroSkillsSet> _skillMappings = new();
+        [SerializeField] private HeroSkillSetSO _heroSkillSetSO;
 
         private void Awake()
         {
@@ -24,7 +24,7 @@ namespace CryptoQuest.Character
             hero.TryGetComponent(out Battle.Components.LevelSystem levelSystem);
             hero.TryGetComponent(out Element elementComp);
 
-            var selectedSkills = (from skillMapping in _skillMappings
+            var selectedSkills = (from skillMapping in _heroSkillSetSO.SkillMappings
                 where skillMapping.Class == hero.Class.Id
                       && skillMapping.Element == elementComp.ElementValue.Id
                       && skillMapping.Level <= levelSystem.Level
