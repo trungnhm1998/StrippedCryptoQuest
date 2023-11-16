@@ -2,7 +2,9 @@
 using System.Linq;
 using CryptoQuest.AbilitySystem.Abilities;
 using CryptoQuest.Character;
+using CryptoQuest.Core;
 using CryptoQuest.System;
+using TinyMessenger;
 using UnityEngine;
 
 namespace CryptoQuest.Battle.Components
@@ -14,12 +16,37 @@ namespace CryptoQuest.Battle.Components
         private ISkillsProvider _skillsProvider;
         private ISkillsProvider Provider => _skillsProvider ??= ServiceProvider.GetService<ISkillsProvider>();
 
+        private TinyMessageSubscriptionToken _levelUpToken; 
+        private HeroBehaviour _hero;
+
         /// <summary>
         /// Based on character level and class, get all skills that character can use
         /// </summary>
         public override void Init()
         {
-            Provider.GetSkills(Character.GetComponent<HeroBehaviour>(), AddSkillsToHero);
+            _hero = Character.GetComponent<HeroBehaviour>();
+            GetSkills();
+        }
+
+        private void GetSkills()
+        {
+            Skills.Clear();
+            Provider.GetSkills(_hero, AddSkillsToHero);
+        }
+
+        private void OnEnable()
+        {
+            _levelUpToken = ActionDispatcher.Bind<HeroLeveledUpAction>(HeroLevelUp);
+        }
+
+        private void OnDisable()
+        {
+            ActionDispatcher.Unbind(_levelUpToken);
+        }
+
+        private void HeroLevelUp(HeroLeveledUpAction action)
+        {
+            GetSkills();
         }
 
         private void AddSkillsToHero(List<CastSkillAbility> skills)
