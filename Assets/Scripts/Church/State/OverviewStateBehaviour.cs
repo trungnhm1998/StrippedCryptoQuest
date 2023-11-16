@@ -13,6 +13,7 @@ namespace CryptoQuest.Church.State
             _stateController = StateMachine.GetComponent<ChurchStateController>();
             _stateController.DialogController.YesPressedEvent += ChangeState;
             _stateController.DialogController.NoPressedEvent += ExitState;
+            _stateController.Input.CancelEvent += ExitState;
             _stateController.IsExitState = false;
             _stateController.Presenter.UpdateCurrency();
         }
@@ -21,6 +22,7 @@ namespace CryptoQuest.Church.State
         {
             _stateController.DialogController.YesPressedEvent -= ChangeState;
             _stateController.DialogController.NoPressedEvent -= ExitState;
+            _stateController.Input.CancelEvent -= ExitState;
         }
 
         private void ChangeState()
@@ -32,6 +34,7 @@ namespace CryptoQuest.Church.State
         {
             StateMachine.Play(ExitChurch);
             _stateController.IsExitState = true;
+            _stateController.DialogController.ChoiceDialog.Hide();
         }
     }
 }

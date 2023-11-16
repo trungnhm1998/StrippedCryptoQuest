@@ -18,12 +18,14 @@ namespace CryptoQuest.Church.State
         {
             _stateController = StateMachine.GetComponent<ChurchStateController>();
             _stateController.Input.SubmitEvent += ChangeState;
+            _stateController.Input.CancelEvent += ChangeState;
             ValidateToRevive();
         }
 
         protected override void OnExit()
         {
             _stateController.Input.SubmitEvent -= ChangeState;
+            _stateController.Input.CancelEvent -= ChangeState;
         }
 
         private void ChangeState()
