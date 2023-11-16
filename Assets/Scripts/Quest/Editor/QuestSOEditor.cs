@@ -1,17 +1,17 @@
 ﻿using CryptoQuest.Gameplay.Inventory.Currency;
 using CryptoQuest.Gameplay.Loot;
-using CryptoQuest.Quest.Authoring;
 using CryptoQuest.Item;
 using CryptoQuest.Item.Equipment;
+using CryptoQuest.Quest.Authoring;
 using UnityEditor;
-using UnityEngine;
 using UnityEditor.UIElements;
+using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace CryptoQuestEditor.System.QuestSystem
+namespace CryptoQuest.Quest.Editor
 {
     [CustomEditor(typeof(QuestSO),true)]
-    public class QuestSOEditor : Editor
+    public class QuestSOEditor : UnityEditor.Editor
     {
         [SerializeField] private VisualTreeAsset _uxml;
         private QuestSO Target => target as QuestSO;
