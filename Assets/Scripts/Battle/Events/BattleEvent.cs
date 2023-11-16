@@ -155,6 +155,16 @@ namespace CryptoQuest.Battle.Events
         public ConsumableInfo ItemInfo { get; set; }
     }
 
+    public class EnemyFledEvent : BattleEvent
+    {
+        public AbilitySystemBehaviour enemySystemBehaviour { get; private set; }
+
+        public EnemyFledEvent(AbilitySystemBehaviour enemySystemBehaviour)
+        {
+            this.enemySystemBehaviour = enemySystemBehaviour;
+        }
+    }
+
     public class SelectedItemEvent : ItemEvent { }
 
     public class CancelSelectedItemEvent : ItemEvent { }
@@ -225,7 +235,7 @@ namespace CryptoQuest.Battle.Events
             Target = target;
         }
     }
-    
+
     public class AbsorbingEvent : LogEvent
     {
         public AttributeScriptableObject AbsorbingAttribute { get; set; }
@@ -233,7 +243,6 @@ namespace CryptoQuest.Battle.Events
     }
 
     public class CriticalHitEvent : LogEvent { }
-
 
     #endregion
 }

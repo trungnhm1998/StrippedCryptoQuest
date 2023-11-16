@@ -43,12 +43,12 @@ namespace CryptoQuest.Battle.Events
 
     public class SealedEvent : EffectEvent { }
 
-    public class FledEvent : BattleEvent
+    public class LogFledEvent : BattleEvent
     {
         public Components.Character Character { get; private set; }
         public bool IsSuccess { get; private set; }
 
-        public FledEvent(Components.Character character, bool isSuccess)
+        public LogFledEvent(Components.Character character, bool isSuccess)
         {
             Character = character;
             IsSuccess = isSuccess;
