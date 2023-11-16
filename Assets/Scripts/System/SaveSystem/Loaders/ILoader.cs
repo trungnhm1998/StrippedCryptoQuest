@@ -5,6 +5,6 @@ namespace CryptoQuest.System.SaveSystem.Loaders
 {
     public interface ILoader
     {
-        public IEnumerator Load(ISaveSystem progressionSystem);
+        public IEnumerator Load(SaveSystemSO progressionSystem);
     }
 }

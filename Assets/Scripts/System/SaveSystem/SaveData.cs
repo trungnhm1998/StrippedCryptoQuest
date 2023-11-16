@@ -22,7 +22,8 @@ namespace CryptoQuest.SaveSystem
     [Serializable]
     public class SaveData
     {
-        public DateTime SavedTime;
+        public string Version = "";
+        public string SavedTime = "";
         public string PlayerName = "";
         public string UUID = "";
         public List<KeyValue> Objects = new();

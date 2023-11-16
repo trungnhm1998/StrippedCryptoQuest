@@ -9,7 +9,7 @@ namespace CryptoQuest.System.SaveSystem.Loaders
     {
         [SerializeField] private LanguageSettingSO _languageSetting;
 
-        public IEnumerator Load(ISaveSystem progressionSystem)
+        public IEnumerator Load(SaveSystemSO progressionSystem)
         {
             yield break;
         }
