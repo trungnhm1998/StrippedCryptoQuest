@@ -7,7 +7,6 @@ using CryptoQuest.Item;
 using CryptoQuest.Menus.Item.States;
 using CryptoQuest.UI.Menu;
 using IndiGames.Core.Events.ScriptableObjects;
-using Input;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Localization.Components;

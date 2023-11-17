@@ -1,7 +1,6 @@
 ﻿using CryptoQuest.Gameplay;
 using CryptoQuest.Input;
 using IndiGames.Core.Events.ScriptableObjects;
-using Input;
 using UnityEngine;
 
 namespace CryptoQuest.UI.Menu

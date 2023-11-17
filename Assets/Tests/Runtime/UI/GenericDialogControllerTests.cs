@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using CryptoQuest.Input;
 using CryptoQuest.UI.Dialogs.BattleDialog;
-using Input;
 using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.AddressableAssets;

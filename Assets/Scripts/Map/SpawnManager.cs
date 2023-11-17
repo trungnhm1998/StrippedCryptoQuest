@@ -2,7 +2,6 @@
 using CryptoQuest.Gameplay;
 using CryptoQuest.Input;
 using IndiGames.Core.Events.ScriptableObjects;
-using Input;
 using UnityEngine;
 using CharacterBehaviour = CryptoQuest.Character.MonoBehaviours.CharacterBehaviour;
 

@@ -1,7 +1,6 @@
 using CryptoQuest.Input;
 using CryptoQuest.Menus.Beast.States;
 using FSM;
-using Input;
 using UnityEngine;
 
 namespace CryptoQuest.Menus.Beast.UI

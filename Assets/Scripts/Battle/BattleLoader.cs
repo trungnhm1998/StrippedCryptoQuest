@@ -10,7 +10,6 @@ using IndiGames.Core.Events.ScriptableObjects;
 using IndiGames.Core.SceneManagementSystem;
 using IndiGames.Core.SceneManagementSystem.Events.ScriptableObjects;
 using IndiGames.Core.SceneManagementSystem.ScriptableObjects;
-using Input;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 

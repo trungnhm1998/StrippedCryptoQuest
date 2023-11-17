@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using CryptoQuest.Battle.Components;
 using CryptoQuest.Input;
 using CryptoQuest.Menus.Item.UI;
-using Input;
 
 namespace CryptoQuest.Menus.Item.States
 {

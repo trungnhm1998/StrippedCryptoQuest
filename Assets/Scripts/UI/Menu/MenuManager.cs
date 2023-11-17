@@ -4,7 +4,6 @@ using CryptoQuest.UI.Menu.MenuStates;
 using CryptoQuest.UI.Menu.Panels;
 using CryptoQuest.UI.Menu.ScriptableObjects;
 using IndiGames.Core.Events.ScriptableObjects;
-using Input;
 using UnityEngine;
 
 namespace CryptoQuest.UI.Menu

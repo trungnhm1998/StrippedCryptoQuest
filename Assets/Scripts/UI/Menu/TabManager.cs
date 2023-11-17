@@ -1,6 +1,5 @@
 ﻿using System;
 using CryptoQuest.Input;
-using Input;
 using UnityEngine;
 
 namespace CryptoQuest.UI.Menu

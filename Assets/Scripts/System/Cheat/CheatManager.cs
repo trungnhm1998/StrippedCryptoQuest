@@ -2,7 +2,6 @@
 using CommandTerminal;
 using CryptoQuest.Gameplay;
 using CryptoQuest.Input;
-using Input;
 using UnityEngine;
 using UnityEngine.InputSystem;
 

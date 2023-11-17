@@ -8,7 +8,6 @@ using CryptoQuest.Shop.UI.ScriptableObjects;
 using CryptoQuest.Shop.UI.ShopStates;
 using CryptoQuest.System;
 using IndiGames.Core.Events.ScriptableObjects;
-using Input;
 using UnityEngine;
 using UnityEngine.Localization;
 using UnityEngine.UI;
