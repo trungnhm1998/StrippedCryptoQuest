@@ -1132,7 +1132,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2728737786322636824
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2147,8 +2147,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 516.38, y: -18}
-  m_SizeDelta: {x: 162.62, y: 0}
+  m_AnchoredPosition: {x: 492.64, y: -18}
+  m_SizeDelta: {x: 115.14, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &9077801357631124701
 MonoBehaviour:
@@ -4149,7 +4149,7 @@ RectTransform:
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
   m_AnchoredPosition: {x: -33, y: 22.5}
-  m_SizeDelta: {x: 725.58, y: 36}
+  m_SizeDelta: {x: 678.10004, y: 36}
   m_Pivot: {x: 1, y: 0.5}
 --- !u!222 &6100902028831678188
 CanvasRenderer:
@@ -4364,7 +4364,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &4598354566772360901
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4607,7 +4607,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 674.135, y: -18}
+  m_AnchoredPosition: {x: 626.655, y: -18}
   m_SizeDelta: {x: 102.89, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &5009996115413274394
@@ -4660,8 +4660,8 @@ GameObject:
   m_Component:
   - component: {fileID: 401652621650367386}
   - component: {fileID: 6283052889238824517}
-  - component: {fileID: 4714802853278895777}
   - component: {fileID: 4770962568679135538}
+  - component: {fileID: 4714802853278895777}
   - component: {fileID: 7979613108570043396}
   m_Layer: 0
   m_Name: RanchController
@@ -4702,6 +4702,23 @@ MonoBehaviour:
   <RanchDialogsManager>k__BackingField: {fileID: 4714802853278895777}
   <DialogManager>k__BackingField: {fileID: 4714802853278895777}
   <Input>k__BackingField: {fileID: 9196207747612298542}
+--- !u!114 &4770962568679135538
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6574134762971757512}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d56d2e7b7d54d04ba9a4ff5ad69e90b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <StateMachine>k__BackingField: {fileID: 7979613108570043396}
+  <RanchController>k__BackingField: {fileID: 6283052889238824517}
+  <UIBeastOrganization>k__BackingField: {fileID: 9131456806300077883}
+  <UIGameList>k__BackingField: {fileID: 6152318841704017330}
+  <UIWalletList>k__BackingField: {fileID: 8019545259978651386}
 --- !u!114 &4714802853278895777
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4726,20 +4743,6 @@ MonoBehaviour:
   references:
     version: 2
     RefIds: []
---- !u!114 &4770962568679135538
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6574134762971757512}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3d56d2e7b7d54d04ba9a4ff5ad69e90b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <StateMachine>k__BackingField: {fileID: 7979613108570043396}
-  <RanchController>k__BackingField: {fileID: 6283052889238824517}
 --- !u!95 &7979613108570043396
 Animator:
   serializedVersion: 5
@@ -6137,8 +6140,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 113.31, y: 0}
-  m_SizeDelta: {x: 98.62, y: 23.17}
+  m_AnchoredPosition: {x: 89.57, y: 0}
+  m_SizeDelta: {x: 51.14, y: 23.17}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2457748645819222389
 CanvasRenderer:

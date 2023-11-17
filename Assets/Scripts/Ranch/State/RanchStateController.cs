@@ -1,4 +1,5 @@
 using System;
+using CryptoQuest.Ranch.UI;
 using UnityEngine;
 
 namespace CryptoQuest.Ranch.State
@@ -12,7 +13,11 @@ namespace CryptoQuest.Ranch.State
 
         [field: SerializeField] private Animator StateMachine { get; set; }
         [field: SerializeField] public RanchController RanchController { get; private set; }
-
+        
+        [field: SerializeField] public UIBeastOrganization UIBeastOrganization { get; private set; }
+      
+        [field: SerializeField] public UIBeastList UIGameList { get; private set; }
+        [field: SerializeField] public UIBeastList UIWalletList { get; private set; }
         private void OnDisable()
         {
             BaseStateBehaviour[] behaviours = StateMachine.GetBehaviours<BaseStateBehaviour>();

@@ -7,8 +7,11 @@ namespace CryptoQuest.Ranch.UI
 {
     public class UIBeastOrganization : UIAbstractFarm
     {
-        [FormerlySerializedAs("_walletBeatList")] [SerializeField] private UIBeastList walletBeastList;
-        [FormerlySerializedAs("_inGameBeatList")] [SerializeField] private UIBeastList inGameBeastList;
+        [FormerlySerializedAs("_walletBeatList")] [SerializeField]
+        private UIBeastList walletBeastList;
+
+        [FormerlySerializedAs("_inGameBeatList")] [SerializeField]
+        private UIBeastList inGameBeastList;
 
         [SerializeField] private Transform _walletBeatListContent;
         [SerializeField] private Transform _inGameBeatListContent;
@@ -16,13 +19,20 @@ namespace CryptoQuest.Ranch.UI
         private List<int> _selectedWalletBeatIds = new();
         private List<int> _selectedInGameBeatIds = new();
 
-        private void OnDestroy() => StopAllCoroutines();
+        public List<int> SelectedWalletBeatIds
+        {
+            get => _selectedWalletBeatIds;
+            private set => _selectedWalletBeatIds = value;
+        }
+
+        public List<int> SelectedInGameBeatIds
+        {
+            get => _selectedInGameBeatIds;
+            private set => _selectedInGameBeatIds = value;
+        }
 
         public void Transfer(UIBeastItem item)
         {
-            _selectedWalletBeatIds.Clear();
-            _selectedInGameBeatIds.Clear();
-
             Transform currentList = item.Parent;
             Transform otherList;
 
@@ -61,7 +71,8 @@ namespace CryptoQuest.Ranch.UI
             }
         }
 
-        public void HandleListEnable() => StartCoroutine(nameof(CoHandleListEnable));
+        public void HandleListEnable() => StartCoroutine(CoHandleListEnable());
+        public void StopHandleListEnable() => StopCoroutine(CoHandleListEnable());
 
         private void FocusList(UIBeastList list)
         {
@@ -69,12 +80,11 @@ namespace CryptoQuest.Ranch.UI
             list.SelectDefault();
         }
 
-
         private IEnumerator CoHandleListEnable()
         {
             yield return new WaitUntil(() =>
-                (_walletBeatListContent != null && _inGameBeatListContent != null) &&
-                (_walletBeatListContent.childCount > 0 || _inGameBeatListContent.childCount > 0));
+                (_walletBeatListContent != null && _inGameBeatListContent != null)
+                && (_walletBeatListContent.childCount > 0 || _inGameBeatListContent.childCount > 0));
 
             switch (_walletBeatListContent.childCount)
             {
