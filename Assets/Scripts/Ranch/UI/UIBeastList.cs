@@ -1,41 +1,35 @@
 using System.Collections.Generic;
-using CryptoQuest.UI.Menu;
 using UnityEngine;
 using UnityEngine.UI;
+using CryptoQuest.Sagas.Objects;
 
 namespace CryptoQuest.Ranch.UI
 {
     public class UIBeastList : MonoBehaviour
     {
+        private const float DEFAULT_TIME_TO_SELECT = 1f;
+
         [SerializeField] private Transform _scrollContent;
         [SerializeField] private UIBeastItem _beastItemPrefab;
         [SerializeField] private RectTransform _tooltipSafeArea;
 
+        private List<Beast> _beastList = new();
+        public List<Beast> Data => _beastList;
         private List<UIBeastItem> _cachedItems = new();
-
-        private void Awake()
-        {
-            // TODO: Wait for tooltip implementation
-            // _tooltip = TooltipFactory.Instance.GetTooltip(ETooltipType.Beat);
-        }
 
         private void OnDisable()
         {
             CleanUpScrollView();
         }
 
-        public void SetData()
+        public void SetData(List<Beast> data)
         {
+            _beastList = data;
             CleanUpScrollView();
             RenderData();
-            // TODO: Wait for tooltip implementation
-            // _tooltip.SetSafeArea(_tooltipSafeArea);
         }
 
-        public void SelectDefault()
-        {
-            Invoke(nameof(DefaultSelection), 0.1f);
-        }
+        public void SelectDefault() => Invoke(nameof(DefaultSelection), DEFAULT_TIME_TO_SELECT);
 
         public void SetEnableButtons(bool isEnable)
         {
@@ -55,8 +49,8 @@ namespace CryptoQuest.Ranch.UI
 
         private void DefaultSelection()
         {
-            var firstButton = _scrollContent.GetComponentInChildren<Button>();
-            firstButton.Select();
+            Button firstButton = _scrollContent.GetComponentInChildren<Button>();
+            if (firstButton) firstButton.Select();
         }
 
         private void CleanUpScrollView()
@@ -70,7 +64,12 @@ namespace CryptoQuest.Ranch.UI
         private void RenderData()
         {
             _cachedItems.Clear();
-            // TODO: Render data here
+            foreach (var itemData in _beastList)
+            {
+                var item = Instantiate(_beastItemPrefab, _scrollContent);
+                item.SetItemInfo(itemData);
+                IdentifyItemParentThenCacheItem(item);
+            }
         }
 
         private void IdentifyItemParentThenCacheItem(UIBeastItem item)

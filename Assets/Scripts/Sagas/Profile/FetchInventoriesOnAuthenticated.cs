@@ -9,6 +9,8 @@ namespace CryptoQuest.Sagas.Profile
         {
             ActionDispatcher.Dispatch(new FetchProfileEquipmentsAction());
             ActionDispatcher.Dispatch(new FetchProfileCharactersAction());
+            ActionDispatcher.Dispatch(new FetchProfileBeastAction());
         }
     }
+
 }

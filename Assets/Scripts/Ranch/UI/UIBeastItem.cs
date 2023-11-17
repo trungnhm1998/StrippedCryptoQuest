@@ -1,3 +1,4 @@
+using CryptoQuest.Sagas.Objects;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -24,6 +25,8 @@ namespace CryptoQuest.Ranch.UI
 
         private bool _isSelected = false;
         private bool _isInGame = false;
+        
+        private Beast _cacheInfo;
 
         public void OnSelectToTransfer()
         {
@@ -45,6 +48,16 @@ namespace CryptoQuest.Ranch.UI
         public void OnInspecting(bool isInspecting)
         {
 
+        }
+
+        public void SetItemInfo(Beast itemData)
+        {
+            Id = itemData.id;
+            _name.text = itemData.name;
+            _level.text = $"Lv{itemData.level}";
+            _localizeName.RefreshString();
+            
+            _cacheInfo = itemData;
         }
     }
 }

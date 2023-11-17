@@ -19,5 +19,7 @@
         public const string PUT_CHARACTERS_TO_DIMENSIONAL_BOX = "crypto/characters/dimention/to";
         public const string PUT_CHARACTERS_TO_GAME = "crypto/characters/dimention/from";
         public const string PUT_CHARACTERS_TO_BOX_AND_GAME = "crypto/characters/dimension/transfer";
+        
+        public const string GET_BEASTS = "crypto/beasts";
     }
 }
