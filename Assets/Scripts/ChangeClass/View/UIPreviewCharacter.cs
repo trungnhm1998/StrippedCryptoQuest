@@ -1,14 +1,19 @@
 using CryptoQuest.ChangeClass.API;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Localization.Components;
 using UnityEngine.UI;
+using AssetReferenceSprite;
+using UnityEngine.Localization;
+using UnityEngine.AddressableAssets;
 
 namespace CryptoQuest.ChangeClass.View
 {
     public class UIPreviewCharacter : MonoBehaviour
     {
-        [SerializeField] private TextMeshProUGUI _name;
+        [SerializeField] private LocalizeStringEvent _name;
         [SerializeField] private Image _element;
+        [SerializeField] private Image _avatar;
         [SerializeField] private TextMeshProUGUI _hp;
         [SerializeField] private TextMeshProUGUI _maxHp;
         [SerializeField] private TextMeshProUGUI _mp;
@@ -25,11 +30,14 @@ namespace CryptoQuest.ChangeClass.View
         [SerializeField] private TextMeshProUGUI _def;
         [SerializeField] private Sprite _randomElement;
 
-        public void PreviewCharacter(PreviewCharacter data, UICharacter character)
+        public void PreviewCharacter(PreviewCharacter data, UICharacter character, AssetReferenceT<Sprite> avatar, bool isSameElement)
         {
-            _name.text = character.Class.name;
+            _name.StringReference = character.LocalizedName;
+            _element.sprite = isSameElement ? character.ElementImage : _randomElement;
             _hp.text = data.minHP.ToString();
+            _maxHp.text = data.minHP.ToString();
             _mp.text = data.minMP.ToString();
+            _maxMp.text = data.minMP.ToString();
             _str.text = data.minStrength.ToString();
             _vit.text = data.minVitality.ToString();
             _agi.text = data.minAgility.ToString();
@@ -38,15 +46,17 @@ namespace CryptoQuest.ChangeClass.View
             _atk.text = data.minAttack.ToString();
             _mAtk.text = data.minMATK.ToString();
             _def.text = data.minDefence.ToString();
+            LoadAssetReference(avatar);
         }
 
-        public void PreviewNewCharacter(NewCharacter data, UICharacter character)
+        public void PreviewNewCharacter(NewCharacter data, LocalizedString localized, Sprite element, AssetReferenceT<Sprite> avatar)
         {
-            _name.text = character.Class.name;
+            _name.StringReference = localized;
+            _element.sprite = element;
             _hp.text = data.HP.ToString();
-            _maxHp.text = data.maxHP.ToString();
+            _maxHp.text = data.HP.ToString();
             _mp.text = data.MP.ToString();
-            _maxMp.text = data.maxMP.ToString();
+            _maxMp.text = data.MP.ToString();
             _exp.text = data.exp.ToString();
             _str.text = data.strength.ToString();
             _vit.text = data.vitality.ToString();
@@ -56,6 +66,17 @@ namespace CryptoQuest.ChangeClass.View
             _atk.text = data.attack.ToString();
             _def.text = data.deffence.ToString();
             _mAtk.text = data.MATK.ToString();
+            LoadAssetReference(avatar);
+        }
+
+        private void LoadAssetReference(AssetReferenceT<Sprite> avatar)
+        {
+            if (avatar == null)
+            {
+                _avatar.enabled = false;
+                return;
+            }
+            StartCoroutine(avatar.LoadSpriteAndSet(_avatar));
         }
     }
 }

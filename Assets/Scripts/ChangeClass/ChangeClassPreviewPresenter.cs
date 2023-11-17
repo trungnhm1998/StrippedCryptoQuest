@@ -13,6 +13,7 @@ namespace CryptoQuest.ChangeClass
     public class ChangeClassPreviewPresenter : MonoBehaviour
     {
         [SerializeField] private List<UIClassMaterial> _listClassMaterial;
+        [SerializeField] private ChangeClassSyncData _syncData;
         [SerializeField] private MerchantsInputManager _input;
         [SerializeField] private PreviewCharacterAPI _previewCharacterAPI;
         [SerializeField] private ChangeNewClassAPI _changeNewClassAPI;
@@ -81,9 +82,11 @@ namespace CryptoQuest.ChangeClass
 
         private IEnumerator PreviewNewClassData()
         {
+            var avatar = _syncData.Avatar(_firstClassMaterial, _changeClassPresenter.Occupation);
             _previewCharacterAPI.LoadDataToPreviewCharacter(_firstClassMaterial, _lastClassMaterial);
+            CheckElementImage();
             yield return new WaitUntil(() => _previewCharacterAPI.IsFinishFetchData);
-            _previewNewClass.PreviewCharacter(_previewCharacterAPI.Data, _firstClassMaterial);
+            _previewNewClass.PreviewCharacter(_previewCharacterAPI.Data, _firstClassMaterial, avatar, CheckElementImage());
             _previewFirstClassMaterial.PreviewCharacter(_firstClassMaterial);
             _previewLastClassMaterial.PreviewCharacter(_lastClassMaterial);
         }
@@ -99,9 +102,9 @@ namespace CryptoQuest.ChangeClass
             _changeNewClassAPI.ChangeNewClassData(_firstClassMaterial, _lastClassMaterial, _changeClassPresenter.Occupation);
             yield return new WaitUntil(() => _changeNewClassAPI.IsFinishFetchData);
             _input.EnableInput();
-            
+
             if (_changeNewClassAPI.Data == null) yield break;
-            _previewNewClassStatus.PreviewNewCharacter(_changeNewClassAPI.Data, _firstClassMaterial);
+            _syncData.SetNewClassData(_changeNewClassAPI.Data, _previewNewClassStatus);
         }
 
         public void ShowDetail(UICharacter character)
@@ -115,6 +118,11 @@ namespace CryptoQuest.ChangeClass
         {
             if (!_showDetailClassMaterial.gameObject.activeSelf) return;
             _showDetailClassMaterial.gameObject.SetActive(false);
+        }
+
+        private bool CheckElementImage()
+        {
+            return _firstClassMaterial.ElementImage == _lastClassMaterial.ElementImage;
         }
     }
 }
