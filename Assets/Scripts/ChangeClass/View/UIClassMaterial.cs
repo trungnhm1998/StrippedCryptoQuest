@@ -11,6 +11,7 @@ namespace CryptoQuest.ChangeClass.View
     {
         [SerializeField] private ScrollRect _scrollRect;
         [SerializeField] private UICharacter _characterClassObject;
+        [SerializeField] private ChangeClassSyncData _syncData;
         private List<CharacterAPI> _listClassMaterial = new();
         public List<UICharacter> ListClassCharacter { get; private set; } = new();
         public UIOccupation _occupation { get; private set; }
@@ -26,7 +27,7 @@ namespace CryptoQuest.ChangeClass.View
             _listClassMaterial = classMaterials;
             CleanUpScrollView();
             IsFinishInstantiateData = false;
-            
+
             yield return new WaitUntil(() => _scrollRect.content.childCount == 0);
             if (occupation.Class.ClassMaterials.Count == 0) yield break;
             for (int i = 0; i < _listClassMaterial.Count; i++)
@@ -35,6 +36,7 @@ namespace CryptoQuest.ChangeClass.View
                 {
                     UICharacter newMaterial = Instantiate(_characterClassObject, _scrollRect.content);
                     newMaterial.ConfigureCell(_listClassMaterial[i]);
+                    _syncData.SetClassMaterialData(_listClassMaterial[i], newMaterial);
                     ListClassCharacter.Add(newMaterial);
                 }
             }
@@ -53,6 +55,7 @@ namespace CryptoQuest.ChangeClass.View
                 {
                     UICharacter newMaterial = Instantiate(_characterClassObject, _scrollRect.content);
                     newMaterial.ConfigureCell(_listClassMaterial[i]);
+                    _syncData.SetClassMaterialData(_listClassMaterial[i], newMaterial);
                     ListClassCharacter.Add(newMaterial);
                 }
             }

@@ -13,6 +13,7 @@ namespace CryptoQuest.ChangeClass
         [SerializeField] private List<UIItemMaterial> _listItemMaterial;
         [SerializeField] private List<ChangeClassSO> _listCharacterClass;
         [SerializeField] private UIClassCharacter _uiClassToChange;
+        [SerializeField] private ChangeClassSyncData _syncData;
         [SerializeField] private WalletMaterialAPI _materialApi;
         [SerializeField] private WalletCharacterAPI _characterAPI;
         public UIOccupation Occupation { get; private set; }
@@ -65,6 +66,7 @@ namespace CryptoQuest.ChangeClass
         private void HandleSelectedOccupation(UIOccupation occupation)
         {
             Occupation = occupation;
+            _syncData.ReleaseAllAssetReference();
             RenderClassMaterial();
             StartCoroutine(RenderItemMaterial());
             StartCoroutine(ValidateChangeClassMaterial());

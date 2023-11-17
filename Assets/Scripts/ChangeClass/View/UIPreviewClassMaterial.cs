@@ -1,13 +1,14 @@
-using CryptoQuest.ChangeClass.API;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Localization.Components;
+using AssetReferenceSprite;
 using UnityEngine.UI;
 
 namespace CryptoQuest.ChangeClass.View
 {
     public class UIPreviewClassMaterial : MonoBehaviour
     {
-        [SerializeField] private TextMeshProUGUI _name;
+        [SerializeField] private LocalizeStringEvent _name;
         [SerializeField] private Image _element;
         [SerializeField] private Image _avatar;
         [SerializeField] private TextMeshProUGUI _minHP;
@@ -27,12 +28,13 @@ namespace CryptoQuest.ChangeClass.View
 
         public void PreviewCharacter(UICharacter character)
         {
-            _name.text = character.Class.name;
+            _name.StringReference = character.LocalizedName;
+            _element.sprite = character.ElementImage;
             _level.text = $"Lv{character.Class.level}";
             _minHP.text = character.Class.HP.ToString();
-            _maxHP.text = character.Class.maxHp.ToString();
+            _maxHP.text = character.Class.HP.ToString();
             _minMP.text = character.Class.MP.ToString();
-            _maxMP.text = character.Class.maxMp.ToString();
+            _maxMP.text = character.Class.MP.ToString();
             _str.text = character.Class.strength.ToString();
             _vit.text = character.Class.vitality.ToString();
             _exp.text = character.Class.exp.ToString();
@@ -42,6 +44,7 @@ namespace CryptoQuest.ChangeClass.View
             _atk.text = character.Class.attack.ToString();
             _mAtk.text = character.Class.MATK.ToString();
             _def.text = character.Class.deffence.ToString();
+            StartCoroutine(character.Avatar.LoadSpriteAndSet(_avatar));
         }
     }
 }
