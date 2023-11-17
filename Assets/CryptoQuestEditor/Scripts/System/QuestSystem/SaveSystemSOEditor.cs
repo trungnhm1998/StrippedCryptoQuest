@@ -1,5 +1,5 @@
-using CryptoQuest.Networking;
 using CryptoQuest.API;
+using CryptoQuest.Networking;
 using CryptoQuest.SaveSystem;
 using CryptoQuest.System;
 using CryptoQuest.System.SaveSystem.Savers;
@@ -8,7 +8,7 @@ using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace CryptoQuestEditor.SaveSystem
+namespace CryptoQuestEditor.System.QuestSystem
 {
     [CustomEditor(typeof(SaveSystemSO))]
     public class SaveSystemSOEditor : Editor

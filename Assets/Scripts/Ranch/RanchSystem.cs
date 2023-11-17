@@ -1,3 +1,4 @@
+using CryptoQuest.Input;
 using CryptoQuest.Ranch.ScriptableObject;
 using CryptoQuest.Ranch.State;
 using UnityEngine;
@@ -10,8 +11,8 @@ namespace CryptoQuest.Ranch
         public event UnityAction RanchOpenedEvent;
         public event UnityAction RanchClosedEvent;
 
-        [SerializeField] private RanchController ranchController;
-        [SerializeField] private RanchInputManager ranchInputManager;
+        [SerializeField] private RanchController _ranchController;
+        [SerializeField] private MerchantsInputManager _ranchInputManager;
         [SerializeField] private RanchStateController _ranchStateController;
 
         [Header("Listening on Channels")]
@@ -31,7 +32,7 @@ namespace CryptoQuest.Ranch
 
         private void ShowFarmRequested()
         {
-            ranchController.gameObject.SetActive(true);
+            _ranchController.gameObject.SetActive(true);
             RanchOpenedEvent?.Invoke();
             EnableFarmInput();
         }
@@ -40,17 +41,17 @@ namespace CryptoQuest.Ranch
         {
             DisableFarmInput();
             RanchClosedEvent?.Invoke();
-            ranchController.gameObject.SetActive(false);
+            _ranchController.gameObject.SetActive(false);
         }
 
         private void EnableFarmInput()
         {
-            ranchInputManager.EnableInput();
+            _ranchInputManager.EnableInput();
         }
 
         private void DisableFarmInput()
         {
-            ranchInputManager.DisableInput();
+            _ranchInputManager.DisableInput();
         }
     }
 }
