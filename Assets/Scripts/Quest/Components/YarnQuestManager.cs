@@ -79,7 +79,7 @@ namespace CryptoQuest.Quest.Components
             {
                 IQuestManager.OnRemoveProgressingQuest?.Invoke(quest.Data);
             }
-
+            _currentlyProcessQuestsID.Clear();
             _currentlyProcessDialogueQuests.Clear();
         }
     }
