@@ -1,6 +1,7 @@
 using CryptoQuest.Events;
 using CryptoQuest.Input;
 using CryptoQuest.SaveSystem;
+using Input;
 using UnityEngine;
 using Yarn.Unity;
 

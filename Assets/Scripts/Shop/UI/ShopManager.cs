@@ -1,6 +1,5 @@
 using CryptoQuest.Events;
 using CryptoQuest.Gameplay.Inventory.Currency;
-using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
 using CryptoQuest.Input;
 using CryptoQuest.Menu;
 using CryptoQuest.Shop.UI.Item;
@@ -9,10 +8,10 @@ using CryptoQuest.Shop.UI.ScriptableObjects;
 using CryptoQuest.Shop.UI.ShopStates;
 using CryptoQuest.System;
 using IndiGames.Core.Events.ScriptableObjects;
+using Input;
 using UnityEngine;
 using UnityEngine.Localization;
 using UnityEngine.UI;
-using Yarn;
 
 namespace CryptoQuest.Shop.UI
 {

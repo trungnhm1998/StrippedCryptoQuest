@@ -2,6 +2,7 @@
 using CryptoQuest.Battle.Events;
 using CryptoQuest.Input;
 using IndiGames.Core.UI;
+using Input;
 using UnityEngine;
 
 namespace CryptoQuest.Battle

@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace CryptoQuest.BlackSmith.StateMachine
+namespace CryptoQuest.BlackSmith
 {
     public class BlackSmithStateController : MonoBehaviour
     {

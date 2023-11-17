@@ -1,7 +1,6 @@
 using IndiGames.Core.Events.ScriptableObjects;
-using UnityEngine;
 
-namespace CryptoQuest.ChangeClass.ScriptableObjects
+namespace CryptoQuest.ChangeClass.Event
 {
     public class ShowChangeClassEventChannelSO : VoidEventChannelSO { }
 }

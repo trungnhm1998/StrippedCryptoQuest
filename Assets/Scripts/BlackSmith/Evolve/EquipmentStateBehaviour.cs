@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.Localization;
 
-namespace CryptoQuest.BlackSmith.EvolveStates
+namespace CryptoQuest.BlackSmith.Evolve
 {
     public class EquipmentStateBehaviour : StateMachineBehaviour
     {

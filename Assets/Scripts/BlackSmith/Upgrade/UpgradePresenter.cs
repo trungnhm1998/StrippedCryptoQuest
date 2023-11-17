@@ -1,9 +1,10 @@
 using CryptoQuest.BlackSmith.Interface;
-using CryptoQuest.BlackSmith.Upgrade.StateMachine;
+using CryptoQuest.BlackSmith.Upgrade.State;
 using CryptoQuest.Gameplay.Inventory;
+using CryptoQuest.Input;
 using CryptoQuest.System;
 using UnityEngine;
-using CryptoQuest.Input;
+using Input;
 using UnityEngine.Localization;
 
 namespace CryptoQuest.BlackSmith.Upgrade

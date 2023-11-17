@@ -1,12 +1,11 @@
 using System;
-using TMPro;
-using UnityEngine;
-using UnityEngine.UI;
-using CryptoQuest.Menu;
 using CryptoQuest.ChangeClass.API;
-using UnityEngine.Localization.Components;
-using UnityEngine.Localization;
+using CryptoQuest.Menu;
+using UnityEngine;
 using UnityEngine.AddressableAssets;
+using UnityEngine.Localization;
+using UnityEngine.Localization.Components;
+using UnityEngine.UI;
 
 namespace CryptoQuest.ChangeClass.View
 {

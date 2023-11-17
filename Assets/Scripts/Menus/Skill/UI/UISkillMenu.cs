@@ -2,7 +2,7 @@
 using CryptoQuest.Input;
 using CryptoQuest.Menus.Skill.States;
 using CryptoQuest.UI.Menu;
-using CryptoQuest.UI.Menu.Character;
+using Input;
 using UnityEngine;
 
 namespace CryptoQuest.Menus.Skill.UI

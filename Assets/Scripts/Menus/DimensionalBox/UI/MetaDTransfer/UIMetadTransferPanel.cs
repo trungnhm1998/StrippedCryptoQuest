@@ -5,6 +5,7 @@ using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
 using CryptoQuest.Input;
 using CryptoQuest.UI.Actions;
 using CryptoQuest.UI.Menu;
+using Input;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;

@@ -15,7 +15,7 @@ using System.Collections.Generic;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Utilities;
 
-namespace CryptoQuest.Input
+namespace Input
 {
     public partial class @InputActions: IInputActionCollection2, IDisposable
     {

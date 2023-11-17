@@ -1,13 +1,11 @@
 using System;
-using TMPro;
-using UnityEngine;
-using UnityEngine.UI;
-using CryptoQuest.Menu;
-using CryptoQuest.Character;
 using CryptoQuest.ChangeClass.ScriptableObjects;
+using CryptoQuest.Menu;
+using UnityEngine;
 using UnityEngine.Localization.Components;
+using UnityEngine.UI;
 
-namespace CryptoQuest
+namespace CryptoQuest.ChangeClass.View
 {
     public class UIOccupation : MonoBehaviour
     {

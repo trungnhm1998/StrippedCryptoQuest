@@ -1,8 +1,8 @@
-﻿using System;
-using CryptoQuest.Input;
+﻿using CryptoQuest.Input;
+using Input;
 using UnityEngine;
 
-namespace CryptoQuest.BlackSmith.EvolveStates
+namespace CryptoQuest.BlackSmith.Evolve
 {
     public class ConfirmStateBehaviour : StateMachineBehaviour
     {

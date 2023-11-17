@@ -1,5 +1,6 @@
 ﻿using CryptoQuest.Input;
 using CryptoQuest.Tavern.ScriptableObjects;
+using Input;
 using UnityEngine;
 
 namespace CryptoQuest.Tavern

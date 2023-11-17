@@ -1,7 +1,7 @@
-using CryptoQuest.UI.Actions;
+using System.Collections;
 using CryptoQuest.Core;
 using CryptoQuest.Sagas;
-using System.Collections;
+using CryptoQuest.UI.Actions;
 using UnityEngine;
 
 namespace CryptoQuest.ChangeClass.API

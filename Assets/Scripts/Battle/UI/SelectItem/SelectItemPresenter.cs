@@ -1,19 +1,11 @@
 using System;
-using System.Collections.Generic;
-using CryptoQuest.Battle.Events;
 using CryptoQuest.Battle.UI.CommandDetail;
 using CryptoQuest.Gameplay.Inventory;
 using CryptoQuest.Gameplay.Inventory.Helper;
-using CryptoQuest.Input;
 using CryptoQuest.Item;
 using CryptoQuest.System;
-using CryptoQuest.UI.Common;
-using DG.Tweening;
 using IndiGames.Core.Events.ScriptableObjects;
 using UnityEngine;
-using UnityEngine.Events;
-using UnityEngine.EventSystems;
-using UnityEngine.UI;
 
 namespace CryptoQuest.Battle.UI.SelectItem
 {

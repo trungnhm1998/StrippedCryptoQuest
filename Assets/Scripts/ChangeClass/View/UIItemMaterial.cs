@@ -1,9 +1,9 @@
+using CryptoQuest.ChangeClass.API;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using CryptoQuest.ChangeClass.API;
 
-namespace CryptoQuest
+namespace CryptoQuest.ChangeClass.View
 {
     public class UIItemMaterial : MonoBehaviour
     {

@@ -1,4 +1,4 @@
-using Inn.ScriptableObject;
+using CryptoQuest.Inn.ScriptableObject;
 using UnityEngine;
 
 namespace CryptoQuest.Inn

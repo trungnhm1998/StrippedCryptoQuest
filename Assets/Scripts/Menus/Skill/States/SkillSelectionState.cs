@@ -4,8 +4,8 @@ using CryptoQuest.AbilitySystem.Abilities;
 using CryptoQuest.Battle.Components;
 using CryptoQuest.Input;
 using CryptoQuest.Menus.Skill.UI;
-using CryptoQuest.UI.Menu.Character;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
+using Input;
 using UnityEngine.EventSystems;
 
 namespace CryptoQuest.Menus.Skill.States

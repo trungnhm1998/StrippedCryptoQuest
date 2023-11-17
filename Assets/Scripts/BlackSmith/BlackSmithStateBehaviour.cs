@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace CryptoQuest.BlackSmith.StateMachine
+namespace CryptoQuest.BlackSmith
 {
     public class BlackSmithStateBehaviour : StateMachineBehaviour
     {

@@ -1,9 +1,7 @@
-using System;
 using UnityEngine;
 using UnityEngine.Localization;
 
-
-namespace CryptoQuest.ChangeClass.StateMachine
+namespace CryptoQuest.ChangeClass.State
 {
     public class ConfirmChangeClassStateBehaviour : StateMachineBehaviour
     {

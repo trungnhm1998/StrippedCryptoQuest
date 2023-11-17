@@ -1,7 +1,7 @@
 ﻿using CryptoQuest.Input;
 using CryptoQuest.Menus.Item.UI;
 using CryptoQuest.UI.Menu;
-using UnityEngine;
+using Input;
 
 namespace CryptoQuest.Menus.Item.States
 {

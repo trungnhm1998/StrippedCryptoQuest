@@ -10,6 +10,7 @@ using CryptoQuest.System.CutsceneSystem.Events;
 using CryptoQuest.System.Dialogue.Events;
 using CryptoQuest.System.Dialogue.YarnManager;
 using IndiGames.Core.Events.ScriptableObjects;
+using Input;
 using UnityEngine;
 using UnityEngine.Events;
 using Yarn.Unity;

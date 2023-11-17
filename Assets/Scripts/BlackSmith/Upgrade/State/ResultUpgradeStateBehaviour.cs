@@ -1,7 +1,8 @@
 using CryptoQuest.Input;
+using Input;
 using UnityEngine;
 
-namespace CryptoQuest.BlackSmith.Upgrade.StateMachine
+namespace CryptoQuest.BlackSmith.Upgrade.State
 {
     public class ResultUpgradeStateBehaviour : StateMachineBehaviour
     {

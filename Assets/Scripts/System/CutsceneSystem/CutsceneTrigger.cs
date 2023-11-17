@@ -1,6 +1,7 @@
 ﻿using System;
 using CryptoQuest.Input;
 using CryptoQuest.System.CutsceneSystem.Events;
+using Input;
 using UnityEngine;
 using UnityEngine.Playables;
 

@@ -1,6 +1,7 @@
 using CryptoQuest.Input;
 using DG.Tweening;
 using IndiGames.Core.Events.ScriptableObjects;
+using Input;
 using UnityEngine;
 using UnityEngine.UI;
 
