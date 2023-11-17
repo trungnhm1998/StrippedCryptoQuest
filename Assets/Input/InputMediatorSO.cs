@@ -1,7 +1,5 @@
-using System;
 using System.Collections.Generic;
 using CryptoQuest.System;
-using CryptoQuest.System.Cheat;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
@@ -84,19 +82,6 @@ namespace CryptoQuest.Input
             _inputActions.Menus.Disable();
             _inputActions.MapGameplay.Disable();
             _inputActions.Dialogues.Disable();
-        }
-
-        /// <summary>
-        /// Disable all inputs in input action so use it with caution
-        /// </summary>
-        public void DisableAllInputs()
-        {
-            foreach (var actionMap in _inputActions.asset.actionMaps)
-            {
-                if (string.Compare(CheatManager.ACTION_MAP_NAME, actionMap.name,
-                        StringComparison.InvariantCultureIgnoreCase) == 0) continue;
-                actionMap.Disable();
-            }
         }
 
         private void CreateInputInstanceIfNeeded()
