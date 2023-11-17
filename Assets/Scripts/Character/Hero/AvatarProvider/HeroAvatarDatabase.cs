@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using IndiGames.Core.Database;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 namespace CryptoQuest.Character.Hero.AvatarProvider
 {
