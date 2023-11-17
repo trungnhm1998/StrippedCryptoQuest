@@ -17,22 +17,22 @@ namespace CryptoQuest.Battle.States.SelectHeroesActions
             base(hero, fsm)
         {
             _selectedSkill = selectedSkill;
-            _selectHeroPresenter = Fsm.BattleStateMachine.SelectHeroPresenter;
-            Fsm.TryGetComponent(out _skillPresenter);
+            Fsm.TryGetPresenterComponent(out _skillPresenter);
+            Fsm.TryGetPresenterComponent(out _selectHeroPresenter);
         }
 
         public override void OnEnter()
         {
             _selectHeroPresenter.Show(_selectedSkill.SkillName);
             _skillPresenter.Show(Hero, false);
-            SelectHeroPresenter.ConfirmSelectCharacter += CastSkillOnHero;
+            _selectHeroPresenter.ConfirmSelectCharacter += CastSkillOnHero;
         }
 
         public override void OnExit()
         {
             _selectHeroPresenter.Hide();
             _skillPresenter.Hide();
-            SelectHeroPresenter.ConfirmSelectCharacter -= CastSkillOnHero;
+            _selectHeroPresenter.ConfirmSelectCharacter -= CastSkillOnHero;
         }
 
         public override void OnCancel() { }

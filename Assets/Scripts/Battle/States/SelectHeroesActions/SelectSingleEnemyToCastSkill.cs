@@ -16,9 +16,9 @@ namespace CryptoQuest.Battle.States.SelectHeroesActions
         public SelectSingleEnemyToCastSkill(CastSkillAbility selectedSkill, HeroBehaviour hero, SelectHeroesActions fsm) :
             base(hero, fsm)
         {
-            Fsm.TryGetComponent(out _skillPresenter);
+            Fsm.TryGetPresenterComponent(out _skillPresenter);
             _selectedSkill = selectedSkill;
-            _selectEnemyPresenter = fsm.BattleStateMachine.gameObject.GetComponentInChildren<SelectEnemyPresenter>();
+            fsm.TryGetPresenterComponent<SelectEnemyPresenter>(out _selectEnemyPresenter);
         }
 
         public override void OnEnter()

@@ -33,7 +33,6 @@ RectTransform:
   - {fileID: 8880051444313822793}
   - {fileID: 7421854773270248269}
   m_Father: {fileID: 7132280367784626043}
-  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
@@ -109,7 +108,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8472864659290466945}
-  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
@@ -165,7 +163,6 @@ GameObject:
   - component: {fileID: 7132280367784626043}
   - component: {fileID: 5855849242523269088}
   - component: {fileID: 8015589859997275211}
-  - component: {fileID: 758701746248577820}
   m_Layer: 0
   m_Name: SelectCharacterUI
   m_TagString: Untagged
@@ -187,7 +184,6 @@ RectTransform:
   m_Children:
   - {fileID: 8472864659290466945}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -253,21 +249,6 @@ MonoBehaviour:
   _button: {fileID: 5855849242523269088}
   _content: {fileID: 745729123286642247}
   _label: {fileID: 8658193028731575981}
---- !u!114 &758701746248577820
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6396991735078038493}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: af7d13da29b6deb4c8263f9f7d95a7f8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _battleInput: {fileID: 11400000, guid: d0c44063c591fb8489bc8e1087c0999e, type: 2}
-  _playerPartyPresenter: {fileID: 0}
-  _selectHeroButton: {fileID: 8015589859997275211}
 --- !u!1 &8675792210168027472
 GameObject:
   m_ObjectHideFlags: 0
@@ -300,7 +281,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8472864659290466945}
-  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}

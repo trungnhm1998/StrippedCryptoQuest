@@ -14,7 +14,7 @@ namespace CryptoQuest.Battle.States.SelectHeroesActions
             base(hero, fsm)
         {
             _selectedItem = selectedItem;
-            _selectEnemyPresenter = fsm.BattleStateMachine.gameObject.GetComponentInChildren<SelectEnemyPresenter>();
+            fsm.TryGetPresenterComponent<SelectEnemyPresenter>(out _selectEnemyPresenter);
         }
 
         public override void OnEnter()

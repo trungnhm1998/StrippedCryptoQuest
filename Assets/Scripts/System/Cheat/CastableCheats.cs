@@ -133,9 +133,13 @@ namespace CryptoQuest.System.Cheat
                 yield break;
             }
 
-            var handle = abilityAssetRef.LoadAssetAsync();
-            yield return handle;
-            var ability = handle.Result;
+            CastSkillAbility ability = abilityAssetRef.Asset as CastSkillAbility;
+            if (abilityAssetRef.Asset == null)
+            {
+                var handle = abilityAssetRef.LoadAssetAsync();
+                yield return handle;
+                ability = handle.Result;
+            }
 
             foreach (var skill in characterSkillHolder.Skills)
             {

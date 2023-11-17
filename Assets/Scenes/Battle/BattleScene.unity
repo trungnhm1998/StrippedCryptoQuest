@@ -123,55 +123,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &37686711
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 37686712}
-  - component: {fileID: 37686713}
-  m_Layer: 0
-  m_Name: SelectItemPresenter
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &37686712
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 37686711}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 7116505576077580195}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &37686713
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 37686711}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7f2380373fdd3bb4d80817d4a11e737d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _itemListUI: {fileID: 657291626}
-  _singleHeroChannel: {fileID: 11400000, guid: cf816191ca3034c4d80534b6369b5834, type: 2}
-  _singleEnemyChannel: {fileID: 11400000, guid: a5c9d024c1c00a7448a6f2974d1521d4, type: 2}
-  _allEnemyChannel: {fileID: 11400000, guid: afe68c25b6454c249b43ac0f18296a58, type: 2}
-  _allHeroChannel: {fileID: 11400000, guid: 2237ed65df15d4b45ad05eb7f701ea64, type: 2}
 --- !u!1 &104468362
 GameObject:
   m_ObjectHideFlags: 0
@@ -948,62 +899,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _battleStateMachine: {fileID: 7116505576077580197}
---- !u!1 &1253872319
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1253872320}
-  - component: {fileID: 1253872321}
-  m_Layer: 0
-  m_Name: SelectEnemyPresenter
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1253872320
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1253872319}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 1
-  m_Children: []
-  m_Father: {fileID: 7116505576077580195}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1253872321
+--- !u!114 &1343290373 stripped
 MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1253872319}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 698f29464c7d38c45bf7a801e9f46568, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _content: {fileID: 1415878836909279779}
-  _enemyPartyManager: {fileID: 7116505576077580196}
-  _enemyPrefab: {fileID: 1676715279052400272, guid: 5f76a999e6416bd4ca834dceb2a0863b, type: 3}
---- !u!114 &1343290371 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3975206951188476836, guid: d0eacd5a881766b4ca08ec4b770526a2, type: 3}
+  m_CorrespondingSourceObject: {fileID: 5949446545983247603, guid: d0eacd5a881766b4ca08ec4b770526a2, type: 3}
   m_PrefabInstance: {fileID: 1415878836909279776}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: af7d13da29b6deb4c8263f9f7d95a7f8, type: 3}
+  m_Script: {fileID: 11500000, guid: 6bb2ae5f71894c143be35ebe363791fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1399460824
@@ -1066,6 +970,171 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _vfxPresenter: {fileID: 1399460825}
+--- !u!1 &2080584870
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2080584871}
+  - component: {fileID: 2080584872}
+  - component: {fileID: 2080584877}
+  - component: {fileID: 2080584876}
+  - component: {fileID: 2080584875}
+  - component: {fileID: 2080584874}
+  - component: {fileID: 2080584873}
+  - component: {fileID: 2080584878}
+  - component: {fileID: 2080584879}
+  m_Layer: 0
+  m_Name: BattlePresenter
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2080584871
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2080584870}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 7116505576077580195}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2080584872
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2080584870}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79691d0ed9c327544aa968e61ddc0b0e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <CommandPanel>k__BackingField: {fileID: 3148632503289432661}
+  <BattleUI>k__BackingField: {fileID: 4750489533933643525}
+  <IntroUI>k__BackingField: {fileID: 6217317452887572703}
+  <CommandUI>k__BackingField: {fileID: 78955201203678911}
+--- !u!114 &2080584873
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2080584870}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f2380373fdd3bb4d80817d4a11e737d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _itemListUI: {fileID: 657291626}
+  _singleHeroChannel: {fileID: 11400000, guid: cf816191ca3034c4d80534b6369b5834, type: 2}
+  _singleEnemyChannel: {fileID: 11400000, guid: a5c9d024c1c00a7448a6f2974d1521d4, type: 2}
+  _allEnemyChannel: {fileID: 11400000, guid: afe68c25b6454c249b43ac0f18296a58, type: 2}
+  _allHeroChannel: {fileID: 11400000, guid: 2237ed65df15d4b45ad05eb7f701ea64, type: 2}
+--- !u!114 &2080584874
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2080584870}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 698f29464c7d38c45bf7a801e9f46568, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _content: {fileID: 1415878836909279779}
+  _enemyPartyManager: {fileID: 7116505576077580196}
+  _enemyPrefab: {fileID: 1676715279052400272, guid: 5f76a999e6416bd4ca834dceb2a0863b, type: 3}
+--- !u!114 &2080584875
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2080584870}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1717796094884e94b8e4c9396b4b81e0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _uiSelectCommand: {fileID: 78955201203678911}
+  _skillButton: {fileID: 1415878836909279777}
+  _itemButton: {fileID: 1415878836909279778}
+--- !u!114 &2080584876
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2080584870}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5944cff694a424409456d963e2d1a74, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _enemyPartyManager: {fileID: 7116505576077580196}
+  _enemyGroupUI: {fileID: 403977525}
+--- !u!114 &2080584877
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2080584870}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c6f8a64bcc1a29847827cd3d652d76db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _skillListUI: {fileID: 1058661807}
+  _singleHeroChannel: {fileID: 11400000, guid: 22b78d0c574a9b64984629f7aedc22ea, type: 2}
+  _singleEnemyChannel: {fileID: 11400000, guid: 6cd304533bdab184cb6240d08cf35473, type: 2}
+  _allHeroChannel: {fileID: 11400000, guid: 46a0f0c64b7c6eb4584f5549f7e03dbc, type: 2}
+  _allEnemyChannel: {fileID: 11400000, guid: 19c9657f2e131e64284f1680adb801c6, type: 2}
+  _enemyGroupChannel: {fileID: 11400000, guid: 624a3a7057f6ef548a8bf1ae04a98d35, type: 2}
+  _targetSelfChannel: {fileID: 11400000, guid: 7cf97ee08fc14f84dadcd663e966f593, type: 2}
+--- !u!114 &2080584878
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2080584870}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c08040123ae1e594f86e93a3cc556190, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _spiral: {fileID: 11400000, guid: 2708a2e85420add4493974ea482cd235, type: 2}
+  _transitionEventChannelSo: {fileID: 11400000, guid: 88d96a754c9f3d34c864be8e29ba710a, type: 2}
+  _transitionOut: {fileID: 11400000, guid: 7e41b50754b02c540ab14998d34aa9d8, type: 2}
+--- !u!114 &2080584879
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2080584870}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af7d13da29b6deb4c8263f9f7d95a7f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _battleInput: {fileID: 11400000, guid: d0c44063c591fb8489bc8e1087c0999e, type: 2}
+  _playerPartyPresenter: {fileID: 1169412496}
+  _selectHeroButton: {fileID: 1343290373}
 --- !u!114 &78955201203678911 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1319386074649500744, guid: d0eacd5a881766b4ca08ec4b770526a2, type: 3}
@@ -1091,7 +1160,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _bus: {fileID: 11400000, guid: 2290057e7f48d1046b5e0a6c3f6dc910, type: 2}
   _enemyPartyBehaviour: {fileID: 8909492559710276275}
-  _selectEnemyPresenter: {fileID: 1253872321}
+  _selectEnemyPresenter: {fileID: 2080584874}
   _enemyDatabase: {fileID: 11400000, guid: 0213cf2cacc9b66489f313240a923fdf, type: 2}
 --- !u!1001 &877836326799761690
 PrefabInstance:
@@ -1409,12 +1478,8 @@ GameObject:
   - component: {fileID: 615438965784563282}
   - component: {fileID: 7116505576077580197}
   - component: {fileID: 7116505576077580196}
-  - component: {fileID: 7116505576077580198}
   - component: {fileID: 7116505576077580199}
-  - component: {fileID: 7116505576077580201}
-  - component: {fileID: 7116505576077580202}
   - component: {fileID: 7116505576077580203}
-  - component: {fileID: 7116505576077580204}
   m_Layer: 0
   m_Name: BattleManager
   m_TagString: Untagged
@@ -1556,9 +1621,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1253872320}
+  - {fileID: 2080584871}
   - {fileID: 1169412495}
-  - {fileID: 37686712}
   - {fileID: 1180603472}
   - {fileID: 104468363}
   - {fileID: 1134020123141456307}
@@ -1590,27 +1654,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <BattleInput>k__BackingField: {fileID: 11400000, guid: d0c44063c591fb8489bc8e1087c0999e, type: 2}
-  <BattleUI>k__BackingField: {fileID: 4750489533933643525}
-  <IntroUI>k__BackingField: {fileID: 6217317452887572703}
-  <CommandUI>k__BackingField: {fileID: 78955201203678911}
-  <Spiral>k__BackingField: {fileID: 11400000, guid: 2708a2e85420add4493974ea482cd235, type: 2}
-  <TransitionEventChannelSo>k__BackingField: {fileID: 11400000, guid: 88d96a754c9f3d34c864be8e29ba710a, type: 2}
-  <TransitionOut>k__BackingField: {fileID: 11400000, guid: 7e41b50754b02c540ab14998d34aa9d8, type: 2}
+  <BattlePresenter>k__BackingField: {fileID: 2080584872}
   <SceneLoadedEvent>k__BackingField: {fileID: 11400000, guid: d463f98507ffd95459feb67b21dd1ecc, type: 2}
-  <SelectHeroPresenter>k__BackingField: {fileID: 1343290371}
---- !u!114 &7116505576077580198
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3846955041373722987}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 79691d0ed9c327544aa968e61ddc0b0e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <CommandPanel>k__BackingField: {fileID: 3148632503289432661}
 --- !u!114 &7116505576077580199
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1626,39 +1671,6 @@ MonoBehaviour:
   _battleBus: {fileID: 11400000, guid: 2290057e7f48d1046b5e0a6c3f6dc910, type: 2}
   _enemyPartyManager: {fileID: 7116505576077580196}
   _sceneLoadedEvent: {fileID: 11400000, guid: d463f98507ffd95459feb67b21dd1ecc, type: 2}
---- !u!114 &7116505576077580201
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3846955041373722987}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c6f8a64bcc1a29847827cd3d652d76db, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _skillListUI: {fileID: 1058661807}
-  _singleHeroChannel: {fileID: 11400000, guid: 22b78d0c574a9b64984629f7aedc22ea, type: 2}
-  _singleEnemyChannel: {fileID: 11400000, guid: 6cd304533bdab184cb6240d08cf35473, type: 2}
-  _allHeroChannel: {fileID: 11400000, guid: 46a0f0c64b7c6eb4584f5549f7e03dbc, type: 2}
-  _allEnemyChannel: {fileID: 11400000, guid: 19c9657f2e131e64284f1680adb801c6, type: 2}
-  _enemyGroupChannel: {fileID: 11400000, guid: 624a3a7057f6ef548a8bf1ae04a98d35, type: 2}
-  _targetSelfChannel: {fileID: 11400000, guid: 7cf97ee08fc14f84dadcd663e966f593, type: 2}
---- !u!114 &7116505576077580202
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3846955041373722987}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b5944cff694a424409456d963e2d1a74, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _enemyPartyManager: {fileID: 7116505576077580196}
-  _enemyGroupUI: {fileID: 403977525}
 --- !u!114 &7116505576077580203
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1671,21 +1683,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 966802992c9c4fa387ef5b5c1252dfd4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &7116505576077580204
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3846955041373722987}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1717796094884e94b8e4c9396b4b81e0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _uiSelectCommand: {fileID: 78955201203678911}
-  _skillButton: {fileID: 1415878836909279777}
-  _itemButton: {fileID: 1415878836909279778}
 --- !u!114 &8909492559710276275 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4666074599004791690, guid: f5fa023033362a04f99acf1098ae54bc, type: 3}

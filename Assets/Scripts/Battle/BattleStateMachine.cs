@@ -21,18 +21,10 @@ namespace CryptoQuest.Battle
     {
         [field: SerializeField] public BattleInput BattleInput { get; private set; }
 
-        private readonly Dictionary<Type, Component> _cachedComponents = new();
-
         #region State Context
 
-        [field: SerializeField] public GameObject BattleUI { get; private set; }
-        [field: SerializeField] public UIIntroBattle IntroUI { get; private set; }
-        [field: SerializeField] public UISelectCommand CommandUI { get; private set; }
-        [field: SerializeField] public SpiralConfigSO Spiral { get; private set; }
-        [field: SerializeField] public TransitionEventChannelSO TransitionEventChannelSo { get; private set; }
-        [field: SerializeField] public AbstractTransition TransitionOut { get; private set; }
+        [field: SerializeField] public BattlePresenter BattlePresenter { get; private set; }
         [field: SerializeField] public VoidEventChannelSO SceneLoadedEvent { get; private set; }
-        [field: SerializeField] public SelectHeroPresenter SelectHeroPresenter { get; private set; }
 
         #endregion
 
@@ -58,7 +50,6 @@ namespace CryptoQuest.Battle
             SceneLoadedEvent.EventRaised -= GotoLoadingState;
             _currentState?.OnExit(this);
             _currentState = null;
-            _cachedComponents.Clear();
         }
 
         private void GotoLoadingState()
@@ -74,23 +65,8 @@ namespace CryptoQuest.Battle
             _currentState.OnEnter(this);
         }
 
-        /// <summary>
-        /// Same as Unity's <see cref="GameObject.TryGetComponent{T}(out T)"/> but with a cache
-        /// </summary>
-        public new bool TryGetComponent<T>(out T component) where T : Component
-        {
-            var type = typeof(T);
-            if (!_cachedComponents.TryGetValue(type, out var value))
-            {
-                if (base.TryGetComponent(out component))
-                    _cachedComponents.Add(type, component);
-
-                return component != null;
-            }
-
-            component = (T)value;
-            return true;
-        }
+        public bool TryGetPresenterComponent<T>(out T component) where T : Component
+            => BattlePresenter.TryGetComponent(out component);
 
         #endregion
     }

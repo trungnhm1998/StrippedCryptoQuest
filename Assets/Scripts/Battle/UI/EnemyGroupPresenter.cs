@@ -18,8 +18,11 @@ namespace CryptoQuest.Battle.UI
         private TinyMessageSubscriptionToken _deSelectedEventToken;
         private Action<EnemyGroup> _confirmedEnemyGroupCallback;
 
+        private bool _interactable;
+
         public void Show(bool interactable = false)
         {
+            _interactable = interactable;
             _selectedEventToken = BattleEventBus.SubscribeEvent<SelectedDetailButtonEvent>(OnSelectedGroup);
             _deSelectedEventToken = BattleEventBus.SubscribeEvent<DeSelectedDetailButtonEvent>(OnDeSelectedGroup);
 
@@ -77,6 +80,7 @@ namespace CryptoQuest.Battle.UI
 
         private void OnDeSelectedGroup(DeSelectedDetailButtonEvent eventObject)
         {
+            if (!_interactable) return;
             var groups = _enemyPartyManager.EnemyParty.EnemyGroups;
             var selectedGroup = groups[eventObject.Index];
             SetEnemyGroupAlpha(selectedGroup, DESELECTED_ALPHA);

@@ -20,7 +20,7 @@ namespace CryptoQuest.Battle.States.SelectHeroesActions
         {
             _itemPresenter = itemPresenter;
             _selectedItem = itemPresenter.SelectedItem;
-            _selectHeroPresenter = Fsm.BattleStateMachine.SelectHeroPresenter;
+            Fsm.TryGetPresenterComponent(out _selectHeroPresenter);
         }
 
         public override void OnEnter()
@@ -28,14 +28,14 @@ namespace CryptoQuest.Battle.States.SelectHeroesActions
             _selectHeroPresenter.Show(_selectedItem.Data.DisplayName);
             _itemPresenter.SetActiveScroll(true);
             _itemPresenter.SetInteractive(false);
-            SelectHeroPresenter.ConfirmSelectCharacter += UseItemOnHero;
+            _selectHeroPresenter.ConfirmSelectCharacter += UseItemOnHero;
         }
 
         public override void OnExit()
         {
             _selectHeroPresenter.Hide();
             _itemPresenter.SetActiveScroll(false);
-            SelectHeroPresenter.ConfirmSelectCharacter -= UseItemOnHero;
+            _selectHeroPresenter.ConfirmSelectCharacter -= UseItemOnHero;
         }
 
         public override void OnCancel() { }

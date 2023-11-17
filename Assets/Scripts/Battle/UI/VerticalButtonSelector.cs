@@ -43,11 +43,13 @@ namespace CryptoQuest.Battle.UI
             _lastSelectedButton = currentSelectedGameObject;
         }
 
+        private bool IsLastButtonInvalid() => _lastSelectedButton == null
+            || !_lastSelectedButton.transform.IsChildOf(_buttonsContainer) || !_lastSelectedButton.activeSelf;
+
         private bool SelectLastManagedSelectedButton()
         {
             if (!_isSelectLastManagedButtonOnEnable || !_interactable) return false;
-            if (_lastSelectedButton == null || !_lastSelectedButton.transform.IsChildOf(_buttonsContainer)
-                || !_lastSelectedButton.activeSelf)
+            if (IsLastButtonInvalid())
             {
                 SelectFirstButton();
                 return false;
@@ -58,6 +60,7 @@ namespace CryptoQuest.Battle.UI
 
         private void SelectLastButton()
         {
+            if (IsLastButtonInvalid()) return;
             EventSystem.current.SetSelectedGameObject(_lastSelectedButton);
             CurrentIndex = _lastSelectedButton.transform.GetSiblingIndex();
             _lastSelectedButton = null;

@@ -18,9 +18,8 @@ namespace CryptoQuest.Battle.States.SelectHeroesActions
 
         public SelectCommand(HeroBehaviour hero, SelectHeroesActions fsm) : base(hero, fsm)
         {
-            Fsm.TryGetComponent(out _enemyGroupPresenter);
-            // TODO: Refactor presenter #1646
-            Fsm.TryGetComponent(out _selectCommandPresenter);
+            Fsm.TryGetPresenterComponent(out _enemyGroupPresenter);
+            Fsm.TryGetPresenterComponent(out _selectCommandPresenter);
             _heroEventObject = new HighlightHeroEvent() { Hero = hero };
         }
 

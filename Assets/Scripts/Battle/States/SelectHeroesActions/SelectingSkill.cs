@@ -12,7 +12,7 @@ namespace CryptoQuest.Battle.States.SelectHeroesActions
 
         public SelectingSkill(HeroBehaviour hero, SelectHeroesActions fsm) : base(hero, fsm)
         {
-            Fsm.TryGetComponent(out _skillPresenter);
+            Fsm.TryGetPresenterComponent(out _skillPresenter);
         }
 
         public override void OnEnter()
