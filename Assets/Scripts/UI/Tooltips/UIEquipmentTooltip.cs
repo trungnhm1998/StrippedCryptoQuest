@@ -1,5 +1,5 @@
-﻿using System.Collections;
-using CryptoQuest.Item.Equipment;
+﻿using CryptoQuest.Item.Equipment;
+using CryptoQuest.UI.Extensions;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.EventSystems;
@@ -16,10 +16,9 @@ namespace CryptoQuest.UI.Tooltips
         [SerializeField] private GameObject _nftTag;
         [SerializeField] private Image _illustration;
         [SerializeField] private LocalizeStringEvent _nameLocalize;
-        private Coroutine _loadCo;
-        private AsyncOperationHandle<Sprite> _handle;
 
         private RectTransform _rectTransform;
+        private AsyncOperationHandle<Sprite> _handle;
 
         private void Awake()
         {
@@ -35,7 +34,7 @@ namespace CryptoQuest.UI.Tooltips
             _nameLocalize.StringReference = equipment.DisplayName;
 
             SetPosition();
-            LoadImage(equipment);
+            _handle = _illustration.LoadSpriteAndSet(equipment.Config.Image);
         }
         private void SetPosition()
         {
@@ -50,30 +49,10 @@ namespace CryptoQuest.UI.Tooltips
             _rectTransform.pivot = new Vector2(pivotX, pivotY);
         }
 
-        private void LoadImage(EquipmentInfo equipment)
-        {
-            if (_loadCo != null)
-            {
-                StopCoroutine(_loadCo);
-                if (_handle.IsValid()) Addressables.Release(_handle);
-            }
-
-            if (equipment.Config.Image.RuntimeKeyIsValid() == false) return;
-            _loadCo = StartCoroutine(CoLoadIllustration(equipment.Config.Image));
-        }
-
-        private IEnumerator CoLoadIllustration(AssetReferenceT<Sprite> spriteAsset)
-        {
-            _handle = spriteAsset.LoadAssetAsync();
-            yield return _handle;
-            _illustration.sprite = _handle.Result;
-            _illustration.enabled = true;
-        }
-
         private void OnDisable()
         {
             if (_handle.IsValid()) Addressables.Release(_handle);
-            if (_loadCo != null) StopCoroutine(_loadCo);
+            _handle = default;
         }
     }
 }
