@@ -16,6 +16,7 @@ namespace CryptoQuest.Menus.Status.UI.Equipment
 
         [SerializeField] private Color _disabledColor;
         [SerializeField] private Color _enabledColor;
+        [SerializeField] private bool _loadImageOnEnable;
 
         private EquipmentInfo _equipment = new();
         public EquipmentInfo Equipment => _equipment;
@@ -30,6 +31,13 @@ namespace CryptoQuest.Menus.Status.UI.Equipment
             _nameText.color = _enabledColor;
             _icon.sprite = equipment.EquipmentType.Icon;
             _iconNFT.SetActive(_equipment.IsNftItem);
+            LoadIllustration(equipment);
+        }
+
+        private void LoadIllustration(EquipmentInfo equipment)
+        {
+            if (_loadImageOnEnable == false) return;
+            if (equipment.Config.Image.RuntimeKeyIsValid()) equipment.Config.Image.LoadAssetAsync();
         }
 
         public void DisableButton()
@@ -38,5 +46,14 @@ namespace CryptoQuest.Menus.Status.UI.Equipment
         }
 
         public void Reset() => _equipment = new EquipmentInfo();
+
+        private void OnDisable()
+        {
+            if (_equipment == null || !_equipment.IsValid() == false) return;
+            if (_equipment.Config == null) return;
+            if (_equipment.Config.Image.IsValid() == false ||
+                _equipment.Config.Image.RuntimeKeyIsValid() == false) return;
+            _equipment.Config.Image.ReleaseAsset();
+        }
     }
 }

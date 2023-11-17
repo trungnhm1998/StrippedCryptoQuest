@@ -8,9 +8,20 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace CryptoQuest.UI.Tooltips
 {
-    public class ShowEquipmentTooltip : ActionBase
+    public class EquipmentTooltipContext
     {
         public EquipmentInfo Equipment { get; set; }
+        public Vector3 Position { get; set; }
+    }
+
+    public class ShowEquipmentTooltip : ActionBase
+    {
+        public EquipmentTooltipContext Context { get; }
+
+        public ShowEquipmentTooltip(EquipmentTooltipContext context)
+        {
+            Context = context;
+        }
     }
 
     public class HideEquipmentTooltip : ActionBase { }
@@ -37,7 +48,7 @@ namespace CryptoQuest.UI.Tooltips
             ActionDispatcher.Unbind(_hideTooltip);
         }
 
-        private void ShowTooltip(ShowEquipmentTooltip ctx)
+        private void ShowTooltip(ShowEquipmentTooltip eventContext)
         {
             if (_releaseCo != null)
             {
@@ -45,7 +56,7 @@ namespace CryptoQuest.UI.Tooltips
                 _releaseCo = null;
             }
 
-            StartCoroutine(LoadAndShowTooltipCo(ctx.Equipment));
+            StartCoroutine(LoadAndShowTooltipCo(eventContext.Context));
         }
 
         private void HideTooltip(HideEquipmentTooltip _)
@@ -63,11 +74,11 @@ namespace CryptoQuest.UI.Tooltips
             _releaseCo = null;
         }
 
-        private IEnumerator LoadAndShowTooltipCo(EquipmentInfo equipment)
+        private IEnumerator LoadAndShowTooltipCo(EquipmentTooltipContext context)
         {
             yield return LoadTooltipCo();
             _tooltip.gameObject.SetActive(true);
-            _tooltip.Init(equipment);
+            _tooltip.Init(context);
         }
 
         private IEnumerator LoadTooltipCo()
