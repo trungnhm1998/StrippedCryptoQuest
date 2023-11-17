@@ -1,6 +1,5 @@
 ﻿using CryptoQuest.Input;
 using DG.Tweening;
-using Input;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;

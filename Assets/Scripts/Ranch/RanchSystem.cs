@@ -1,7 +1,6 @@
 using CryptoQuest.Input;
 using CryptoQuest.Ranch.ScriptableObject;
 using CryptoQuest.Ranch.State;
-using Input;
 using UnityEngine;
 using UnityEngine.Events;
 

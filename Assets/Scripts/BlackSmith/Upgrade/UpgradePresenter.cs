@@ -4,7 +4,6 @@ using CryptoQuest.Gameplay.Inventory;
 using CryptoQuest.Input;
 using CryptoQuest.System;
 using UnityEngine;
-using Input;
 using UnityEngine.Localization;
 
 namespace CryptoQuest.BlackSmith.Upgrade

@@ -1,6 +1,5 @@
 ﻿using CryptoQuest.Input;
 using CryptoQuest.System.Dialogue.YarnManager;
-using Input;
 using UnityEngine;
 
 namespace CryptoQuest.System.Dialogue

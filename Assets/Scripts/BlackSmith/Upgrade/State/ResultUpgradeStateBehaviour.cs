@@ -1,5 +1,4 @@
 using CryptoQuest.Input;
-using Input;
 using UnityEngine;
 
 namespace CryptoQuest.BlackSmith.Upgrade.State

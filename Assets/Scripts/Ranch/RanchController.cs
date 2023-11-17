@@ -1,6 +1,5 @@
 using CryptoQuest.Input;
 using CryptoQuest.Ranch.UI;
-using Input;
 using UnityEngine;
 
 namespace CryptoQuest.Ranch

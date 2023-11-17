@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using CryptoQuest.Input;
 using IndiGames.Core.EditorTools.Attributes.ReadOnlyAttribute;
-using Input;
 using UnityEngine;
 using UnityEngine.EventSystems;
 

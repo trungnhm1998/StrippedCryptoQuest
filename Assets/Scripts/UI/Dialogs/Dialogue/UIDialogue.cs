@@ -1,6 +1,5 @@
 using CryptoQuest.Gameplay.Quest.Dialogue;
 using CryptoQuest.Input;
-using Input;
 using UnityEngine;
 using UnityEngine.Localization.Components;
 

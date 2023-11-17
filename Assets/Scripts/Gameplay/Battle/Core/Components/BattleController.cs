@@ -2,7 +2,6 @@ using System;
 using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects;
 using CryptoQuest.Input;
 using IndiGames.Core.Events.ScriptableObjects;
-using Input;
 using UnityEngine;
 
 namespace CryptoQuest.Gameplay.Battle.Core.Components

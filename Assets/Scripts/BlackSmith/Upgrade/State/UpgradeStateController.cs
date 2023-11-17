@@ -1,5 +1,4 @@
 using CryptoQuest.Input;
-using Input;
 using UnityEngine;
 using UnityEngine.Events;
 
