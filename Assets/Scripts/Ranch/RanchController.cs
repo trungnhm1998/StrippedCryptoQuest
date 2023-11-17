@@ -1,3 +1,4 @@
+using CryptoQuest.Input;
 using CryptoQuest.Ranch.UI;
 using UnityEngine;
 
@@ -9,7 +10,7 @@ namespace CryptoQuest.Ranch
         [field: SerializeField] public UIRanch UIRanch { get; private set; }
         [field: SerializeField] public RanchDialogsManager RanchDialogsManager { get; private set; }
         [field: SerializeField] public RanchDialogsManager DialogManager { get; private set; }
-        [field: SerializeField] public RanchInputManager Input { get; private set; }
+        [field: SerializeField] public MerchantsInputManager Input { get; private set; }
 
         private void OnEnable()
         {
