@@ -1,6 +1,7 @@
 ﻿using System;
 using CryptoQuest.Character.Movement;
 using CryptoQuest.Input;
+using Input;
 using UnityEngine;
 
 namespace CryptoQuest.Character.MonoBehaviours

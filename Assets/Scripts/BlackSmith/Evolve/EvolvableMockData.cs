@@ -1,7 +1,8 @@
+using CryptoQuest.BlackSmith.Interface;
 using UnityEngine;
 using UnityEngine.Localization;
 
-namespace CryptoQuest.BlackSmith.Interface
+namespace CryptoQuest.BlackSmith.Evolve
 {
     public class EvolvableMockData : IEvolvableData
     {

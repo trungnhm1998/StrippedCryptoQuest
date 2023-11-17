@@ -1,8 +1,8 @@
 using CryptoQuest.Input;
+using Input;
 using UnityEngine;
 using UnityEngine.Localization;
 using UnityEngine.Localization.Components;
-using UnityEngine.UI;
 
 namespace CryptoQuest.Shop.UI.Dialogs
 {

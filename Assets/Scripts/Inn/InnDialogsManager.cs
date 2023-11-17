@@ -4,6 +4,7 @@ using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
 using CryptoQuest.Input;
 using CryptoQuest.UI.Dialogs.ChoiceDialog;
 using CryptoQuest.UI.Dialogs.Dialogue;
+using Input;
 using UnityEngine;
 using UnityEngine.Localization;
 

@@ -1,14 +1,9 @@
-using System;
-using System.Collections;
 using CryptoQuest.BlackSmith.ScriptableObjects;
-using CryptoQuest.BlackSmith.StateMachine;
 using CryptoQuest.Input;
-using CryptoQuest.Menu;
 using IndiGames.Core.Events.ScriptableObjects;
+using Input;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.EventSystems;
-using UnityEngine.Localization;
 
 namespace CryptoQuest.BlackSmith
 {

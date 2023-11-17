@@ -7,6 +7,7 @@ using CryptoQuest.Battle.UI.StartBattle;
 using CryptoQuest.Input;
 using CryptoQuest.UI.SpiralFX;
 using IndiGames.Core.Events.ScriptableObjects;
+using Input;
 using UnityEngine;
 
 namespace CryptoQuest.Battle

@@ -1,9 +1,6 @@
-using System.Collections.Generic;
-using CryptoQuest.BlackSmith.Interface;
-using CryptoQuest.Input;
 using UnityEngine;
 
-namespace CryptoQuest.BlackSmith.EvolveStates
+namespace CryptoQuest.BlackSmith.Evolve
 {
     public class WaitForAvailableDataStateBehaviour : StateMachineBehaviour
     {

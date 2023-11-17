@@ -4,6 +4,7 @@ using CryptoQuest.Menus.Status.States;
 using CryptoQuest.Menus.Status.UI.Equipment;
 using CryptoQuest.UI.Menu;
 using FSM;
+using Input;
 using UnityEngine;
 
 namespace CryptoQuest.Menus.Status.UI

@@ -1,6 +1,7 @@
 ﻿using CryptoQuest.Input;
 using CryptoQuest.Tavern.States;
 using CryptoQuest.Tavern.UI;
+using Input;
 using UnityEngine;
 using UnityEngine.Events;
 

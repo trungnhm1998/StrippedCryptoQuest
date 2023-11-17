@@ -1,6 +1,7 @@
-using CryptoQuest.Input;
 using System;
 using System.Collections;
+using CryptoQuest.Input;
+using Input;
 using UnityEngine;
 using UnityEngine.Localization;
 using UnityEngine.Localization.Components;

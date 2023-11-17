@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using CryptoQuest.Input;
 using CryptoQuest.UI.Title.States;
 using IndiGames.Core.Events.ScriptableObjects;
+using Input;
 using UnityEngine;
 
 namespace CryptoQuest.UI.Title

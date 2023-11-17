@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using CryptoQuest.Battle.Components;
 using CryptoQuest.Character.Hero.AvatarProvider;

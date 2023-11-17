@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using CryptoQuest.System;
+using Input;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;

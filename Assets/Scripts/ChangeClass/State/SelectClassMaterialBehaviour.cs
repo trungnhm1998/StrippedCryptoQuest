@@ -1,14 +1,10 @@
-using System;
-using System.Collections.Generic;
 using CryptoQuest.ChangeClass.View;
 using CryptoQuest.Input;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Localization;
-using UnityEngine.UI;
 
-
-namespace CryptoQuest.ChangeClass.StateMachine
+namespace CryptoQuest.ChangeClass.State
 {
     public class SelectClassMaterialBehaviour : StateMachineBehaviour
     {

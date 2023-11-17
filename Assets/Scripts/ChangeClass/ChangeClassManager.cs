@@ -1,8 +1,8 @@
-using UnityEngine;
-using CryptoQuest.ChangeClass.ScriptableObjects;
-using UnityEngine.UI;
-using UnityEngine.Events;
+using CryptoQuest.ChangeClass.Event;
 using CryptoQuest.Input;
+using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.UI;
 
 namespace CryptoQuest.ChangeClass
 {

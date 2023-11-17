@@ -3,6 +3,7 @@ using CryptoQuest.Menus.Settings.States;
 using CryptoQuest.System.Settings;
 using CryptoQuest.UI.Menu;
 using FSM;
+using Input;
 using UnityEngine;
 
 namespace CryptoQuest.Menus.Settings.UI

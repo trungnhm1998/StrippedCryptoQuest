@@ -2,8 +2,7 @@ using CryptoQuest.Input;
 using UnityEngine;
 using UnityEngine.Localization;
 
-
-namespace CryptoQuest.ChangeClass.StateMachine
+namespace CryptoQuest.ChangeClass.State
 {
     public class ResultStateBehaviour : StateMachineBehaviour
     {

@@ -1,7 +1,7 @@
-using UnityEngine.Events;
-using UnityEngine;
-using UnityEngine.UI;
 using CryptoQuest.Input;
+using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.UI;
 
 namespace CryptoQuest.ChangeClass
 {

@@ -4,6 +4,7 @@ using CryptoQuest.Input;
 using IndiGames.Core.SceneManagementSystem.Events.ScriptableObjects;
 using IndiGames.Core.SceneManagementSystem.ScriptableObjects;
 using IndiGames.Core.UI;
+using Input;
 using UnityEngine;
 
 namespace CryptoQuest.Battle

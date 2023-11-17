@@ -1,9 +1,8 @@
+using System.Collections;
+using System.Collections.Generic;
+using CryptoQuest.ChangeClass.API;
 using UnityEngine;
 using UnityEngine.UI;
-using System.Collections.Generic;
-using System.Collections;
-using CryptoQuest.ChangeClass.API;
-
 
 namespace CryptoQuest.ChangeClass.View
 {

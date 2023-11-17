@@ -1,9 +1,9 @@
-using CryptoQuest.UI.Dialogs.Dialogue;
 using CryptoQuest.Events.UI.Dialogs;
-using UnityEngine.Localization;
-using UnityEngine.Events;
-using UnityEngine;
 using CryptoQuest.UI.Dialogs.ChoiceDialog;
+using CryptoQuest.UI.Dialogs.Dialogue;
+using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.Localization;
 
 namespace CryptoQuest.ChangeClass
 {

@@ -1,8 +1,9 @@
 using CryptoQuest.Input;
+using Input;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace CryptoQuest.BlackSmith.Upgrade.StateMachine
+namespace CryptoQuest.BlackSmith.Upgrade.State
 {
     public class UpgradeStateController : MonoBehaviour
     {

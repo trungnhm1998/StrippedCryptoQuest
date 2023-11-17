@@ -1,11 +1,11 @@
+using AssetReferenceSprite;
 using CryptoQuest.ChangeClass.API;
 using TMPro;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
+using UnityEngine.Localization;
 using UnityEngine.Localization.Components;
 using UnityEngine.UI;
-using AssetReferenceSprite;
-using UnityEngine.Localization;
-using UnityEngine.AddressableAssets;
 
 namespace CryptoQuest.ChangeClass.View
 {

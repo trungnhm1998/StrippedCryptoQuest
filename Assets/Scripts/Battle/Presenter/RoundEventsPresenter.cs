@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using CryptoQuest.Battle.Events;
 using CryptoQuest.Battle.Presenter.Commands;
 using CryptoQuest.Input;
+using Input;
 using TinyMessenger;
 using UnityEngine;
 

@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-using CryptoQuest.Input;
+﻿using CryptoQuest.Input;
 using CryptoQuest.UI.Dialogs.ChoiceDialog;
 using CryptoQuest.UI.Dialogs.Dialogue;
+using Input;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Localization;

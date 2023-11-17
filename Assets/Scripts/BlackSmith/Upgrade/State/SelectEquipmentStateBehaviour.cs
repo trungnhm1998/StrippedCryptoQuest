@@ -1,8 +1,9 @@
 using CryptoQuest.Input;
+using Input;
 using UnityEngine;
 using UnityEngine.Localization;
 
-namespace CryptoQuest.BlackSmith.Upgrade.StateMachine
+namespace CryptoQuest.BlackSmith.Upgrade.State
 {
     public class SelectEquipmentStateBehaviour : StateMachineBehaviour
     {

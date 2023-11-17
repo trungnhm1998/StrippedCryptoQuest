@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using CryptoQuest.ChangeClass.ScriptableObjects;
-using CryptoQuest.Character;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;

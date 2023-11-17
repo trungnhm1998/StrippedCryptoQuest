@@ -1,11 +1,10 @@
 using System.Collections;
-using System.Collections.Generic;
 using CryptoQuest.Gameplay.Quest;
 using CryptoQuest.Input;
+using Input;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Localization;
-using UnityEngine.Localization.Components;
 using UnityEngine.UI;
 
 namespace CryptoQuest.UI.Dialogs.LevelStatusDialog

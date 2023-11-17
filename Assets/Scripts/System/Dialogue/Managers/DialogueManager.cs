@@ -4,6 +4,7 @@ using CryptoQuest.Input;
 using CryptoQuest.System.Dialogue.Builder;
 using CryptoQuest.System.Dialogue.Events;
 using CryptoQuest.UI.Dialogs.Dialogue;
+using Input;
 using UnityEngine;
 using UnityEngine.Localization;
 
