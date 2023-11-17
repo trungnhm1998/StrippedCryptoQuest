@@ -130,14 +130,17 @@ namespace CryptoQuest.Quest.Components
                 return;
             }
 
+
             if (_saveData.InProgressQuest.Any(questInfo => questInfo == questData.Guid))
             {
                 Debug.Log($"<color=green>QuestManager::GiveQuest::Already inprogress: {questData.QuestName}</color>");
+                if (_currentQuestInfos.Any(questInfo => questInfo.Guid == questData.Guid)) return;
 
                 var info = questData.CreateQuest();
                 _currentQuestInfos.Add(info);
                 MarkCacheDirty();
                 info.GiveQuest();
+
                 return;
             }
 
@@ -180,6 +183,11 @@ namespace CryptoQuest.Quest.Components
             }
         }
 
+        private bool IsCurrentlyPlayingQuest(QuestSO quest)
+        {
+            return _currentQuestInfos.Any(questInfo => questInfo.Guid == quest.Guid);
+        }
+
         private bool IsQuestTriggered(QuestSO questSo)
         {
             return _saveData.CompletedQuests.Any(quest => quest == questSo.Guid);
@@ -192,6 +200,14 @@ namespace CryptoQuest.Quest.Components
 
         private void RemoveProgressingQuest(QuestSO quest)
         {
+            foreach (var questInfo in _currentQuestInfos.ToList())
+            {
+                if (questInfo.Guid != quest.Guid) continue;
+                _currentQuestInfos.Remove(questInfo);
+            }
+
+            MarkCacheDirty();
+
             foreach (var inProgressQuest in _saveData.InProgressQuest.ToList())
             {
                 if (inProgressQuest != quest.Guid) continue;
