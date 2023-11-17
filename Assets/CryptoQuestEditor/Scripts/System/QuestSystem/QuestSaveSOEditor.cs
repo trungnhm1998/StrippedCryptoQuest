@@ -1,38 +1,38 @@
 using CryptoQuest.Quest;
-using CryptoQuest.SaveSystem;
 using UnityEditor;
+using UnityEditor.UIElements;
+using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace CryptoQuestEditor.System.QuestSystem
 {
-    public class QuestSaveSOEditor : EditorWindow
+    [CustomEditor(typeof(QuestSaveSO))]
+    public class QuestSaveSOEditor : Editor
     {
-        // ctrl + q
-        [MenuItem("Crypto Quest/Delete Quest Save %q")]
-        public static void ClearSaveQuestData()
+        [SerializeField] private VisualTreeAsset _visualTreeAsset = default;
+        private QuestSaveSO Target => target as QuestSaveSO;
+
+        public override VisualElement CreateInspectorGUI()
         {
-            var window = GetWindow<QuestSaveSOEditor>();
-            window.Close();
+            var root = new VisualElement();
+
+            InspectorElement.FillDefaultInspector(root, serializedObject, this);
+
+            _visualTreeAsset.CloneTree(root);
+
+            var clearSaveButton = root.Q<Button>("clear-save-button");
+            clearSaveButton.clicked += ClearSave;
+
+            return root;
         }
 
-        private void OnEnable()
+        private void ClearSave()
         {
-            QuestSaveSO target = GetFileQuestSave();
-            if (target == null) return;
+            Target.InProgressQuest.Clear();
+            Target.CompletedQuests.Clear();
 
-            target.InProgressQuest.Clear();
-            target.CompletedQuests.Clear();
-
-            EditorUtility.SetDirty(target);
+            EditorUtility.SetDirty(Target);
             AssetDatabase.SaveAssets();
-        }
-
-        private QuestSaveSO GetFileQuestSave()
-        {
-            string[] guid = AssetDatabase.FindAssets("t:QuestSaveSO");
-            if (guid.Length == 0) return null;
-
-            string path = AssetDatabase.GUIDToAssetPath(guid[0]);
-            return AssetDatabase.LoadAssetAtPath<QuestSaveSO>(path);
         }
     }
 }
