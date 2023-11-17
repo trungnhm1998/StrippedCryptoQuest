@@ -12,6 +12,12 @@ namespace CryptoQuest.UI.Extensions
         {
             image.enabled = false;
             if (spriteAsset.RuntimeKeyIsValid() == false) return default;
+            if (spriteAsset.IsValid() && spriteAsset.Asset != null)
+            {
+                image.sprite = (Sprite) spriteAsset.Asset;
+                image.enabled = true;
+                return default;
+            }
             var handle = spriteAsset.LoadAssetAsync();
             handle.Completed += handle1 =>
             {
