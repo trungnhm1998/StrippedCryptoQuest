@@ -1,4 +1,6 @@
-﻿using CryptoQuest.SaveSystem;
+﻿using CryptoQuest.Core;
+using CryptoQuest.SaveSystem;
+using CryptoQuest.SaveSystem.Sagas;
 using IndiGames.Core.SceneManagementSystem.Events.ScriptableObjects;
 using IndiGames.Core.SceneManagementSystem.ScriptableObjects;
 using UnityEngine;
@@ -21,6 +23,7 @@ namespace CryptoQuest.System.SaveSystem.Savers
         {
             _saveSystem.SaveData[Key] = sceneToLoad.Guid;
             _saveSystem.Save();
+            ActionDispatcher.Dispatch(new UploadProfileAction());
         }
     }
 }
