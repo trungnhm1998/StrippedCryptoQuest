@@ -18,7 +18,7 @@ namespace CryptoQuest.Battle.States
         public void OnEnter(BattleStateMachine battleStateMachine)
         {
             _battleStateMachine = battleStateMachine;
-            var introUI = _battleStateMachine.IntroUI;
+            var introUI = _battleStateMachine.BattlePresenter.IntroUI;
             _dialog
                 .WithAutoHide(introUI.Duration)
                 .WithHideCallback(() => _battleStateMachine.ChangeState(new SelectHeroesActions.SelectHeroesActions()))

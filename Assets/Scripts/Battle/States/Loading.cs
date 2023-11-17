@@ -9,10 +9,12 @@ namespace CryptoQuest.Battle.States
     {
         private IBattleInitializer _initializer;
         private BattleStateMachine _battleStateMachine;
+        private BattleTransitionPresenter _transitionPresenter;
 
         public void OnEnter(BattleStateMachine battleStateMachine)
         {
             _battleStateMachine = battleStateMachine;
+            battleStateMachine.TryGetPresenterComponent<BattleTransitionPresenter>(out _transitionPresenter);
             _initializer = battleStateMachine.GetComponent<IBattleInitializer>();
             InitBattle();
         }
@@ -27,9 +29,8 @@ namespace CryptoQuest.Battle.States
         {
             yield return _initializer.LoadEnemies();
             yield return GenericDialogController.Instance.CoInstantiate(ChangeToIntroState);
-            yield return new WaitForSeconds(_battleStateMachine.Spiral.Duration);
-            var transition = _battleStateMachine.TransitionOut;
-            _battleStateMachine.TransitionEventChannelSo.RaiseEvent(transition);
+            yield return new WaitForSeconds(_transitionPresenter.TransitDuration);
+            _transitionPresenter.TransitOut();
         }
 
         private void ChangeToIntroState(UIGenericDialog dialog)

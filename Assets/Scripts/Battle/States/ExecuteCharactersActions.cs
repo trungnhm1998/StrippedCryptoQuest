@@ -26,7 +26,7 @@ namespace CryptoQuest.Battle.States
         {
             _stateMachine = stateMachine;
             _battleContext = stateMachine.GetComponent<BattleContext>();
-            _presenter = stateMachine.GetComponent<BattlePresenter>();
+            _presenter = stateMachine.BattlePresenter;
             _presenter.CommandPanel.SetActive(false);
 
             _retreatSucceedEvent = BattleEventBus.SubscribeEvent<RetreatSucceedEvent>(OnRetreatSuccess);

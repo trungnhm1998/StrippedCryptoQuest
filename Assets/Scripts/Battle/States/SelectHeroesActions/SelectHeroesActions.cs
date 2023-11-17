@@ -72,14 +72,14 @@ namespace CryptoQuest.Battle.States.SelectHeroesActions
         {
             _battleStateMachine = battleStateMachine;
             _enemyPartyManager = battleStateMachine.GetComponent<EnemyPartyManager>();
-            _selectCommandUI = battleStateMachine.CommandUI;
             _party = ServiceProvider.GetService<IPartyController>();
-            _presenter = battleStateMachine.GetComponent<BattlePresenter>();
+            _presenter = battleStateMachine.BattlePresenter;
+            _selectCommandUI = _presenter.CommandUI;
             _presenter.CommandPanel.SetActive(true);
+            _presenter.BattleUI.SetActive(true);
 
             battleStateMachine.BattleInput.CancelEvent += CancelPressed;
 
-            battleStateMachine.BattleUI.SetActive(true);
             PushState(new SelectCommand(GetFirstAliveHeroInParty(), this));
         }
 
@@ -136,8 +136,8 @@ namespace CryptoQuest.Battle.States.SelectHeroesActions
             }
         }
 
-        public bool TryGetComponent<T>(out T component) where T : Component
-            => _battleStateMachine.TryGetComponent(out component);
+        public bool TryGetPresenterComponent<T>(out T component) where T : Component
+            => _battleStateMachine.TryGetPresenterComponent(out component);
 
         public bool GetNextAliveHero(out HeroBehaviour nextHero)
         {
