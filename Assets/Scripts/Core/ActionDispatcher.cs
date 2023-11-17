@@ -1,8 +1,16 @@
 ﻿using System;
 using TinyMessenger;
+using UnityEngine;
 
 namespace CryptoQuest.Core
 {
+    public class LogErrorHandler : ISubscriberErrorHandler
+    {
+        public void Handle(ITinyMessage message, Exception exception)
+        {
+            Debug.LogError($"{message} {exception}");
+        }
+    }
     public abstract class ActionBase : ITinyMessage
     {
         public object Sender { get; } = null;
@@ -11,7 +19,7 @@ namespace CryptoQuest.Core
     public static class ActionDispatcher
     {
         private static readonly ITinyMessengerHub MessengerHub =
-            new TinyMessengerHub(new DefaultSubscriberErrorHandler());
+            new TinyMessengerHub(new LogErrorHandler());
 
         public static void Dispatch<T>(T action) where T : ActionBase => MessengerHub.Publish(action);
 

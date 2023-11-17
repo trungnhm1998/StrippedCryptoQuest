@@ -1,12 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using CryptoQuest.Character.Hero;
-using CryptoQuest.Core;
 using CryptoQuest.Gameplay.Inventory;
 using CryptoQuest.Gameplay.PlayerParty;
 using CryptoQuest.Item.Equipment;
 using CryptoQuest.System;
-using CryptoQuest.UI.Actions;
 using UnityEngine;
 using UnityEngine.Localization;
 
@@ -40,6 +38,7 @@ namespace CryptoQuest.Tavern.States.PartyOrganization
 
         protected override void OnExit()
         {
+            if (_controller.DialogsManager.ChoiceDialog == null) return;
             _controller.DialogsManager.ChoiceDialog.Hide();
         }
 
@@ -66,20 +65,17 @@ namespace CryptoQuest.Tavern.States.PartyOrganization
             List<int> selectedNonPartyCharacters = _controller.UIPartyOrganization.SelectedNonPartyCharacterIds;
             List<int> selectedInPartyCharacters = _controller.UIPartyOrganization.SelectedPartyCharacterIds;
 
-            ActionDispatcher.Dispatch(new ShowLoading());
-
             switch (selectedNonPartyCharacters.Count)
             {
                 case > 0 when selectedInPartyCharacters.Count > 0:
-                    Debug.Log($"@@@@@@@@@@@@@ case 1");
+                    AddHeroesToParty(selectedNonPartyCharacters);
+                    RemoveHeroesFromParty(selectedInPartyCharacters);
                     break;
                 case > 0:
                     AddHeroesToParty(selectedNonPartyCharacters);
-                    Debug.Log($"@@@@@@@@@@@@@ case 2");
                     break;
                 case <= 0 when selectedInPartyCharacters.Count > 0:
                     RemoveHeroesFromParty(selectedInPartyCharacters);
-                    Debug.Log($"@@@@@@@@@@@@@ case 3");
                     break;
             }
         }
@@ -90,28 +86,30 @@ namespace CryptoQuest.Tavern.States.PartyOrganization
             var partySlotSpecs = new List<PartySlotSpec>();
 
             foreach (var selectedHeroId in selectedHeroesToTransfer)
-            {
-                for (var index = _heroInventorySO.OwnedHeroes.Count - 1; index >= 0; index--)
-                {
-                    var hero = _heroInventorySO.OwnedHeroes[index];
-                    if (selectedHeroId != hero.Id) continue;
-                    partySlotSpecs.Add(new PartySlotSpec()
-                    {
-                        Hero = hero
-                    });
-                    _heroInventorySO.OwnedHeroes.Remove(hero);
-                    Debug.Log($"############## partySlotSpecs={partySlotSpecs.Count}, removedHero={hero.Id}");
-                }
-            }
+                FindSelectedHeroesThenCacheInAnotherListAndRemoveFromInventory(selectedHeroId, partySlotSpecs);
 
             finalParty.AddRange(partySlotSpecs);
             _partySO.SetParty(finalParty.ToArray());
             ReinitializeParty();
         }
 
+        private void FindSelectedHeroesThenCacheInAnotherListAndRemoveFromInventory(int selectedHeroId,
+            List<PartySlotSpec> partySlotSpecs)
+        {
+            for (var index = _heroInventorySO.OwnedHeroes.Count - 1; index >= 0; index--)
+            {
+                var hero = _heroInventorySO.OwnedHeroes[index];
+                if (selectedHeroId != hero.Id) continue;
+                partySlotSpecs.Add(new PartySlotSpec()
+                {
+                    Hero = hero
+                });
+                _heroInventorySO.OwnedHeroes.Remove(hero);
+            }
+        }
+
         private void RemoveHeroesFromParty(List<int> selectedHeroesToTransfer)
         {
-            var finalParty = GetHeroesInParty();
             var partySlotSpecs = new List<PartySlotSpec>();
 
             foreach (var selectedHeroId in selectedHeroesToTransfer)
@@ -128,12 +126,11 @@ namespace CryptoQuest.Tavern.States.PartyOrganization
                 if (selectedHeroId != hero.Id) continue;
                 RemoveHeroFromPartyAndAddToHeroesInventory(partySlotSpecs, hero, index);
                 RemoveEquipmentsFromHeroAndAddBackToInventory(partySlotSpec);
-
-                Debug.Log($"############## partySlotSpecs={partySlotSpecs.Count}, removedHero={hero.Id}");
             }
         }
 
-        private void RemoveHeroFromPartyAndAddToHeroesInventory(List<PartySlotSpec> partySlotSpecs, HeroSpec hero, int index)
+        private void RemoveHeroFromPartyAndAddToHeroesInventory(List<PartySlotSpec> partySlotSpecs, HeroSpec hero,
+            int index)
         {
             partySlotSpecs.Add(new PartySlotSpec()
             {

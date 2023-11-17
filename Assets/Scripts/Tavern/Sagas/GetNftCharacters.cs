@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using CryptoQuest.Actions;
 using CryptoQuest.Core;
@@ -11,7 +10,6 @@ using CryptoQuest.Sagas;
 using CryptoQuest.System;
 using CryptoQuest.UI.Actions;
 using UniRx;
-using Unity.Plastic.Newtonsoft.Json;
 using UnityEngine;
 using Obj = CryptoQuest.Sagas.Objects;
 
@@ -43,7 +41,6 @@ namespace CryptoQuest.Tavern.Sagas
         private void OnGetCharacters(Obj.CharactersResponse response)
         {
             if (response.code != (int)HttpStatusCode.OK) return;
-            Debug.Log($"GetNftCharacters::response={JsonConvert.SerializeObject(response.data.characters)}");
             UpdateInGameCache(response.data.characters);
             UpdateInboxCache(response.data.characters);
 
@@ -61,7 +58,6 @@ namespace CryptoQuest.Tavern.Sagas
             }
 
             ActionDispatcher.Dispatch(new GetGameNftCharactersSucceed(_inGameCharacters));
-            Debug.Log($"GetNftCharacters::{_inGameCharacters.Count}");
         }
 
         private void UpdateInboxCache(Obj.Character[] characters)
@@ -75,7 +71,6 @@ namespace CryptoQuest.Tavern.Sagas
             }
 
             ActionDispatcher.Dispatch(new GetWalletNftCharactersSucceed(_walletCharacters));
-
         }
     }
 }

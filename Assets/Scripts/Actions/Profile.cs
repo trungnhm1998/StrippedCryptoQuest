@@ -33,6 +33,7 @@ namespace CryptoQuest.Actions
     }
 
     public class FetchProfileCharactersAction : ActionBase { }
+
     public class GetGameNftCharactersSucceed : ActionBase
     {
         public List<Obj.Character> InGameCharacters { get; }
