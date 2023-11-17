@@ -1,18 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using CryptoQuest.Core;
+using CryptoQuest.Gameplay.PlayerParty;
 using CryptoQuest.Tavern.UI;
 using TinyMessenger;
 using UnityEngine;
 using Obj = CryptoQuest.Sagas.Objects;
+using Random = UnityEngine.Random;
 
 namespace CryptoQuest.Tavern.States.PartyOrganization
 {
     public class PartyOrganizationState : StateMachineBehaviourBase
     {
+        [SerializeField] private PartySO _party;
         private TavernController _controller;
 
-        private TinyMessageSubscriptionToken _getInPartyNftCharacters;
         private TinyMessageSubscriptionToken _getGameDataSucceedEvent;
 
         private List<Obj.Character> _cachedInPartyCharactersData = new List<Obj.Character>();
@@ -29,15 +30,13 @@ namespace CryptoQuest.Tavern.States.PartyOrganization
             _controller.UIPartyOrganization.HandleListInteractable();
             UITavernItem.Pressed += _controller.UIPartyOrganization.Transfer;
 
-            _getInPartyNftCharacters = ActionDispatcher.Bind<GetInPartyNftCharactersSucceed>(GetInPartyCharacters);
             _getGameDataSucceedEvent = ActionDispatcher.Bind<GetFilteredInGameNftCharactersSucceed>(GetInGameCharacters);
 
             if (!_flag)
             {
                 _flag = true;
-                ActionDispatcher.Dispatch(new GetCharacters());
+                ActionDispatcher.Dispatch(new GetInGameHeroes());
             }
-
             _controller.MerchantInputManager.CancelEvent += CancelPartyOrganization;
             _controller.MerchantInputManager.NavigateEvent += SwitchToOtherListRequested;
             _controller.MerchantInputManager.ExecuteEvent += SendItemsRequested;
@@ -48,7 +47,6 @@ namespace CryptoQuest.Tavern.States.PartyOrganization
         {
             UITavernItem.Pressed -= _controller.UIPartyOrganization.Transfer;
 
-            ActionDispatcher.Unbind(_getInPartyNftCharacters);
             ActionDispatcher.Unbind(_getGameDataSucceedEvent);
 
             _controller.MerchantInputManager.CancelEvent -= CancelPartyOrganization;
@@ -57,15 +55,26 @@ namespace CryptoQuest.Tavern.States.PartyOrganization
             _controller.MerchantInputManager.ResetEvent -= ResetTransferRequested;
         }
 
-        private void GetInPartyCharacters(GetInPartyNftCharactersSucceed obj)
+        private void GetInPartyCharacters()
         {
-            _cachedInPartyCharactersData = obj.InPartyCharacters;
-            if (obj.InPartyCharacters.Count <= 0) return;
-            _controller.UIParty.SetData(obj.InPartyCharacters);
+            foreach (var partySlot in _party.GetParty())
+            {
+                if (partySlot.IsValid() == false) continue;
+                var isMain = partySlot.Hero.Id == 0;
+                if (isMain) continue;
+                _cachedInPartyCharactersData.Add(new Obj.Character()
+                {
+                    id = partySlot.Hero.Id,
+                    name = partySlot.Hero.Origin.DetailInformation.LocalizedName.GetLocalizedString(),
+                    level = Random.Range(0, 100)
+                });
+            }
+            _controller.UIParty.SetData(_cachedInPartyCharactersData);
         }
 
         private void GetInGameCharacters(GetFilteredInGameNftCharactersSucceed obj)
         {
+            GetInPartyCharacters();
             _cachedNonPartyCharactersData = obj.FilteredInGameCharacters;
             if (obj.FilteredInGameCharacters.Count <= 0) return;
             _controller.UINonParty.SetData(obj.FilteredInGameCharacters);

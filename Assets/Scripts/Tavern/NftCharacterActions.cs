@@ -9,6 +9,11 @@ namespace CryptoQuest.Tavern
         public Obj.ECharacterStatus Status { get; set; } = Obj.ECharacterStatus.All;
     }
 
+    public class GetInGameHeroes : ActionBase
+    {
+        public Obj.ECharacterStatus Status { get; set; } = Obj.ECharacterStatus.All;
+    }
+
     public class GetFilteredInGameNftCharactersSucceed : ActionBase
     {
         public List<Obj.Character> FilteredInGameCharacters { get; }
@@ -75,13 +80,13 @@ namespace CryptoQuest.Tavern
 
     public class TransferFailed : ActionBase { }
 
-    public class GetInPartyNftCharactersSucceed : ActionBase
+    public class FetchInGameHeroesSucceeded : ActionBase
     {
-        public List<Obj.Character> InPartyCharacters { get; }
+        public List<Obj.Character> InGameHeroes { get; }
 
-        public GetInPartyNftCharactersSucceed(List<Obj.Character> inPartyCharacters)
+        public FetchInGameHeroesSucceeded(List<Obj.Character> inGameHeroes)
         {
-            InPartyCharacters = inPartyCharacters;
+            InGameHeroes = inGameHeroes;
         }
     }
 }

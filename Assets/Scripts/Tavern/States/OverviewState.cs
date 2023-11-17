@@ -26,6 +26,7 @@ namespace CryptoQuest.Tavern.States
 
         private void ShowDialogue()
         {
+            if (_controller.DialogsManager.Dialogue == null) return;
             _controller.DialogsManager.Dialogue
                 .SetMessage(_welcomeMsg)
                 .SetArrow(false)
