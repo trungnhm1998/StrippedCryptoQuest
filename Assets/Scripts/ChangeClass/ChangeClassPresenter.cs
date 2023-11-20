@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using CryptoQuest.ChangeClass.API;
 using CryptoQuest.ChangeClass.ScriptableObjects;
 using CryptoQuest.ChangeClass.View;
+using CryptoQuest.Item;
 using UnityEngine;
 
 namespace CryptoQuest.ChangeClass
@@ -10,7 +11,8 @@ namespace CryptoQuest.ChangeClass
     public class ChangeClassPresenter : MonoBehaviour
     {
         [field: SerializeField] public List<UIClassMaterial> ListClassMaterial { get; private set; }
-        [SerializeField] private List<UIItemMaterial> _listItemMaterial;
+        [SerializeField] private List<ConsumableSO> _itemMaterials;
+        [SerializeField] private List<UIItemMaterial> _uiMaterials;
         [SerializeField] private List<ChangeClassSO> _listCharacterClass;
         [SerializeField] private UIClassCharacter _uiClassToChange;
         [SerializeField] private ChangeClassSyncData _syncData;
@@ -84,12 +86,21 @@ namespace CryptoQuest.ChangeClass
         private IEnumerator RenderItemMaterial()
         {
             yield return new WaitUntil(() => _materialApi.IsFinishFetchData);
+
+            foreach (var item in _itemMaterials)
+            {
+                if (item.ID == Occupation.Class.ItemMaterialId.ToString())
+                {
+                    _uiMaterials[0].SetLocalization(item.DisplayName);
+                }
+            }
+
             for (int index = 0; index < _materialApi.Data.Count; index++)
             {
                 if (_materialApi.Data[index].materialId == Occupation.Class.ItemMaterialId.ToString())
                 {
                     int quantity = Occupation.Class.MaterialQuantity;
-                    foreach (var itemMaterial in _listItemMaterial)
+                    foreach (var itemMaterial in _uiMaterials)
                     {
                         itemMaterial.ConfigureCell(_materialApi, quantity, index);
                     }
@@ -113,7 +124,7 @@ namespace CryptoQuest.ChangeClass
             }
 
             bool isSameClass = ListClassMaterial[0].ClassID == ListClassMaterial[1].ClassID;
-            bool isMaterialValid = !_isEmptyClassMaterial && _listItemMaterial[0].IsValid;
+            bool isMaterialValid = !_isEmptyClassMaterial && _uiMaterials[0].IsValid;
 
             if (isSameClass && ListClassMaterial[0].ListClassCharacter.Count <= 1 || !isMaterialValid)
                 yield break;
