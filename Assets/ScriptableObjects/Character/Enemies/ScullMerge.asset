@@ -58,44 +58,56 @@ MonoBehaviour:
   _drops:
   - Chance: 1
     LootItem:
-      rid: 3959803444188677534
+      rid: 2855509051182154655
   - Chance: 1
     LootItem:
-      rid: 3959803444188677535
+      rid: 2855509051182154656
   - Chance: 0.05
     LootItem:
-      rid: 3959803444188677536
+      rid: 2855509051182154657
   _stealableInfos:
-  - rid: 5791750092521472117
+  - rid: 2855509054430904480
   _normalAttackProbability: 1
-  _skills: []
+  _skills:
+  - Probability: 0.2
+    SkillDef: {fileID: 11400000, guid: 0b33b15e72824594b8ffe435489d4241, type: 2}
+  _dropToAdd:
+    rid: 2855509051182153857
   references:
     version: 2
     RefIds:
-    - rid: 3959803444188677534
+    - rid: 2855509051182153857
+      type: {class: ConsumeDrop, ns: CryptoQuest.Character.Enemy, asm: indi-games.crypto-quest}
+      data:
+        _loot:
+          _item:
+            _id: 0
+            Data: {fileID: 0}
+            _quantity: 1
+    - rid: 2855509051182154655
       type: {class: CurrencyLootInfo, ns: CryptoQuest.Gameplay.Loot, asm: indi-games.crypto-quest}
       data:
         _item:
-          _id: 2
+          _id: 0
           Data: {fileID: 11400000, guid: 16b3f6e09fc22d240be1b324116eeb79, type: 2}
           <Amount>k__BackingField: 45
-    - rid: 3959803444188677535
+    - rid: 2855509051182154656
       type: {class: ExpLoot, ns: CryptoQuest.Gameplay.Loot, asm: indi-games.crypto-quest}
       data:
         <Exp>k__BackingField: 57
-    - rid: 3959803444188677536
+    - rid: 2855509051182154657
       type: {class: UsableLootInfo, ns: CryptoQuest.Gameplay.Loot, asm: indi-games.crypto-quest}
       data:
         _item:
-          _id: 90
+          _id: 0
           Data: {fileID: 11400000, guid: a4ae179df4167764cb0567587323c36f, type: 2}
           _quantity: 1
-    - rid: 5791750092521472117
+    - rid: 2855509054430904480
       type: {class: ConsumableStealable, ns: CryptoQuest.Gameplay.Loot, asm: indi-games.crypto-quest}
       data:
         _chanceToSteal: 0.05
         _loot:
           _item:
-            _id: 90
+            _id: 0
             Data: {fileID: 11400000, guid: a4ae179df4167764cb0567587323c36f, type: 2}
             _quantity: 1

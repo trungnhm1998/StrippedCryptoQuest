@@ -58,44 +58,54 @@ MonoBehaviour:
   _drops:
   - Chance: 1
     LootItem:
-      rid: 3959803444188677471
+      rid: 2855509051182154548
   - Chance: 1
     LootItem:
-      rid: 3959803444188677472
+      rid: 2855509051182154549
   - Chance: 0.05
     LootItem:
-      rid: 3959803444188677473
+      rid: 2855509051182154550
   _stealableInfos:
-  - rid: 5791750092521472119
+  - rid: 2855509054430904403
   _normalAttackProbability: 1
   _skills: []
+  _dropToAdd:
+    rid: 2855509051182153817
   references:
     version: 2
     RefIds:
-    - rid: 3959803444188677471
+    - rid: 2855509051182153817
+      type: {class: ConsumeDrop, ns: CryptoQuest.Character.Enemy, asm: indi-games.crypto-quest}
+      data:
+        _loot:
+          _item:
+            _id: 0
+            Data: {fileID: 0}
+            _quantity: 1
+    - rid: 2855509051182154548
       type: {class: CurrencyLootInfo, ns: CryptoQuest.Gameplay.Loot, asm: indi-games.crypto-quest}
       data:
         _item:
-          _id: 9
+          _id: 0
           Data: {fileID: 11400000, guid: 16b3f6e09fc22d240be1b324116eeb79, type: 2}
           <Amount>k__BackingField: 40
-    - rid: 3959803444188677472
+    - rid: 2855509051182154549
       type: {class: ExpLoot, ns: CryptoQuest.Gameplay.Loot, asm: indi-games.crypto-quest}
       data:
         <Exp>k__BackingField: 45
-    - rid: 3959803444188677473
+    - rid: 2855509051182154550
       type: {class: UsableLootInfo, ns: CryptoQuest.Gameplay.Loot, asm: indi-games.crypto-quest}
       data:
         _item:
-          _id: 72754
+          _id: 0
           Data: {fileID: 11400000, guid: b45a0424f18bd1946a52be454faa2f4d, type: 2}
           _quantity: 1
-    - rid: 5791750092521472119
+    - rid: 2855509054430904403
       type: {class: ConsumableStealable, ns: CryptoQuest.Gameplay.Loot, asm: indi-games.crypto-quest}
       data:
         _chanceToSteal: 0.05
         _loot:
           _item:
-            _id: 72754
+            _id: 0
             Data: {fileID: 11400000, guid: b45a0424f18bd1946a52be454faa2f4d, type: 2}
             _quantity: 1

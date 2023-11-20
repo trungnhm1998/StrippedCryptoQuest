@@ -58,44 +58,34 @@ MonoBehaviour:
   _drops:
   - Chance: 1
     LootItem:
-      rid: 3959803444188677453
+      rid: 2855509051182154583
   - Chance: 1
     LootItem:
-      rid: 3959803444188677454
-  - Chance: 0.05
-    LootItem:
-      rid: 3959803444188677455
-  _stealableInfos:
-  - rid: 5791750092521472087
+      rid: 2855509051182154584
+  _stealableInfos: []
   _normalAttackProbability: 1
   _skills: []
+  _dropToAdd:
+    rid: 2855509051182153806
   references:
     version: 2
     RefIds:
-    - rid: 3959803444188677453
-      type: {class: CurrencyLootInfo, ns: CryptoQuest.Gameplay.Loot, asm: indi-games.crypto-quest}
+    - rid: 2855509051182153806
+      type: {class: ConsumeDrop, ns: CryptoQuest.Character.Enemy, asm: indi-games.crypto-quest}
       data:
-        _item:
-          _id: 594
-          Data: {fileID: 11400000, guid: 16b3f6e09fc22d240be1b324116eeb79, type: 2}
-          <Amount>k__BackingField: 55
-    - rid: 3959803444188677454
-      type: {class: ExpLoot, ns: CryptoQuest.Gameplay.Loot, asm: indi-games.crypto-quest}
-      data:
-        <Exp>k__BackingField: 10
-    - rid: 3959803444188677455
-      type: {class: UsableLootInfo, ns: CryptoQuest.Gameplay.Loot, asm: indi-games.crypto-quest}
-      data:
-        _item:
-          _id: 0
-          Data: {fileID: 11400000, guid: 94fb93885a5334742bc55a0e7b90010d, type: 2}
-          _quantity: 1
-    - rid: 5791750092521472087
-      type: {class: ConsumableStealable, ns: CryptoQuest.Gameplay.Loot, asm: indi-games.crypto-quest}
-      data:
-        _chanceToSteal: 0.05
         _loot:
           _item:
             _id: 0
-            Data: {fileID: 11400000, guid: 94fb93885a5334742bc55a0e7b90010d, type: 2}
+            Data: {fileID: 0}
             _quantity: 1
+    - rid: 2855509051182154583
+      type: {class: CurrencyLootInfo, ns: CryptoQuest.Gameplay.Loot, asm: indi-games.crypto-quest}
+      data:
+        _item:
+          _id: 0
+          Data: {fileID: 11400000, guid: 16b3f6e09fc22d240be1b324116eeb79, type: 2}
+          <Amount>k__BackingField: 55
+    - rid: 2855509051182154584
+      type: {class: ExpLoot, ns: CryptoQuest.Gameplay.Loot, asm: indi-games.crypto-quest}
+      data:
+        <Exp>k__BackingField: 10

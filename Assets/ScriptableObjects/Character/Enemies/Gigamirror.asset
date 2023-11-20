@@ -58,44 +58,36 @@ MonoBehaviour:
   _drops:
   - Chance: 1
     LootItem:
-      rid: 3959803444188677519
+      rid: 2855509051182154503
   - Chance: 1
     LootItem:
-      rid: 3959803444188677520
-  - Chance: 0.05
-    LootItem:
-      rid: 3959803444188677521
-  _stealableInfos:
-  - rid: 5791750092521472104
+      rid: 2855509051182154504
+  _stealableInfos: []
   _normalAttackProbability: 1
-  _skills: []
+  _skills:
+  - Probability: 0.2
+    SkillDef: {fileID: 11400000, guid: c75bfba12230a4f47a2aeb0b8d558561, type: 2}
+  _dropToAdd:
+    rid: 2855509051182153847
   references:
     version: 2
     RefIds:
-    - rid: 3959803444188677519
+    - rid: 2855509051182153847
+      type: {class: ConsumeDrop, ns: CryptoQuest.Character.Enemy, asm: indi-games.crypto-quest}
+      data:
+        _loot:
+          _item:
+            _id: 0
+            Data: {fileID: 0}
+            _quantity: 1
+    - rid: 2855509051182154503
       type: {class: CurrencyLootInfo, ns: CryptoQuest.Gameplay.Loot, asm: indi-games.crypto-quest}
       data:
         _item:
-          _id: 5
+          _id: 0
           Data: {fileID: 11400000, guid: 16b3f6e09fc22d240be1b324116eeb79, type: 2}
           <Amount>k__BackingField: 31
-    - rid: 3959803444188677520
+    - rid: 2855509051182154504
       type: {class: ExpLoot, ns: CryptoQuest.Gameplay.Loot, asm: indi-games.crypto-quest}
       data:
         <Exp>k__BackingField: 135
-    - rid: 3959803444188677521
-      type: {class: UsableLootInfo, ns: CryptoQuest.Gameplay.Loot, asm: indi-games.crypto-quest}
-      data:
-        _item:
-          _id: 71
-          Data: {fileID: 11400000, guid: a961e85997144724099730212570833c, type: 2}
-          _quantity: 1
-    - rid: 5791750092521472104
-      type: {class: ConsumableStealable, ns: CryptoQuest.Gameplay.Loot, asm: indi-games.crypto-quest}
-      data:
-        _chanceToSteal: 0.05
-        _loot:
-          _item:
-            _id: 71
-            Data: {fileID: 11400000, guid: a961e85997144724099730212570833c, type: 2}
-            _quantity: 1
