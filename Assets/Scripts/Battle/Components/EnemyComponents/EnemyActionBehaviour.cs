@@ -1,11 +1,13 @@
 ﻿using CryptoQuest.AbilitySystem.Abilities;
 using CryptoQuest.Battle.Commands;
-using CryptoQuest.Battle.Components.EnemyCommandSelector;
+using CryptoQuest.Battle.Events;
+using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects;
 using CryptoQuest.Gameplay.PlayerParty;
 using CryptoQuest.System;
+using TinyMessenger;
 using UnityEngine;
 
-namespace CryptoQuest.Battle.Components
+namespace CryptoQuest.Battle.Components.EnemyComponents
 {
     /// <summary>
     /// Behaviour of enemy in action phase (select whether using normal attack or cast skill)
@@ -14,16 +16,17 @@ namespace CryptoQuest.Battle.Components
     [RequireComponent(typeof(CommandExecutor))]
     public class EnemyActionBehaviour : CharacterComponentBase
     {
+        [SerializeField] private BattleBus _battleBus;
         [SerializeField] private EnemyBehaviour _enemyBehaviour;
 
         [Tooltip("Since this is enemy behaviour you should drag AllEnemies/OneEnemy here because enemy of enemy is hero")]
         [SerializeField] private SkillTargetType _singleHeroChannel;
         [SerializeField] private SkillTargetType _allHeroChannel;
+        [SerializeField] private SkillTargetType _allAllyChannel;
         private CommandExecutor _commandExecutor;
         private IPartyController _heroParty;
-
-        private IEnemyCommandSelector _commandSelector
-            = new EnemyCommandSelector.EnemyCommandSelector();
+        private TinyMessageSubscriptionToken _roundStartedEvent;
+        private TinyMessageSubscriptionToken _roundEndedEvent;
 
         private void OnValidate()
         {
@@ -33,37 +36,39 @@ namespace CryptoQuest.Battle.Components
         public override void Init()
         {
             _enemyBehaviour.TryGetComponent<CommandExecutor>(out _commandExecutor);
-            _enemyBehaviour.PreTurnStarted += SelectCommand;
             _heroParty ??= ServiceProvider.GetService<IPartyController>();
+            
+            _roundStartedEvent = BattleEventBus.SubscribeEvent<RoundStartedEvent>(_ => RegistSkillEvents());
+            _roundEndedEvent = BattleEventBus.SubscribeEvent<RoundEndedEvent>(_ => UnRegistSkillEvents());
         }
 
         protected override void OnReset()
         {
-            _enemyBehaviour.PreTurnStarted -= SelectCommand;
-            UnRegistSkillEvent();
+            UnRegistSkillEvents();
+            BattleEventBus.UnsubscribeEvent(_roundStartedEvent);
+            BattleEventBus.UnsubscribeEvent(_roundEndedEvent);
         }
 
-        private void SelectCommand()
+        private void RegistSkillEvents()
         {
-            // I have to setup event here to prevent listening to hero select skill event
-            // Because it use the same event SO
-            RegistSkillEvent();
-            _commandSelector?.SelectCommand(_enemyBehaviour);
-            UnRegistSkillEvent();
-        }
-
-        private void RegistSkillEvent()
-        {
-            // TODO: listening to target all enemy event if there's needed case
-            // but I have to get enemy party behaviour somehow and the enemy target enemy case is really complicated 
             _allHeroChannel.EventRaised += TargetAllHero;
             _singleHeroChannel.EventRaised += TargetSingleHero;
+            _allAllyChannel.EventRaised += TargetAllEnemy;
         }
 
-        private void UnRegistSkillEvent()
+        private void UnRegistSkillEvents()
         {
             _allHeroChannel.EventRaised -= TargetAllHero;
             _singleHeroChannel.EventRaised -= TargetSingleHero;
+            _allAllyChannel.EventRaised -= TargetAllEnemy;
+        }
+
+        private void TargetAllEnemy(CastSkillAbility skill)
+        {
+            var battleContext = _battleBus.CurrentBattleContext;
+            var enemies = battleContext.Enemies.ToArray();
+            var castSkillCommand = new MultipleTargetCastSkillCommand(_enemyBehaviour, skill, enemies);
+            _commandExecutor.SetCommand(castSkillCommand);
         }
 
         private void TargetAllHero(CastSkillAbility skill)

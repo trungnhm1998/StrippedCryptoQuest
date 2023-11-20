@@ -33,6 +33,7 @@ GameObject:
   - component: {fileID: -2585436403184803848}
   - component: {fileID: -7316683604689173604}
   - component: {fileID: 925254727826276240}
+  - component: {fileID: 4240929742950632779}
   m_Layer: 0
   m_Name: EnemyGAS
   m_TagString: Enemy
@@ -323,9 +324,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1cfbc849accb87849a1213ddf7383ae7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _battleBus: {fileID: 11400000, guid: 2290057e7f48d1046b5e0a6c3f6dc910, type: 2}
   _enemyBehaviour: {fileID: 2313801004738519680}
   _singleHeroChannel: {fileID: 11400000, guid: 6cd304533bdab184cb6240d08cf35473, type: 2}
   _allHeroChannel: {fileID: 11400000, guid: 19c9657f2e131e64284f1680adb801c6, type: 2}
+  _allAllyChannel: {fileID: 11400000, guid: 46a0f0c64b7c6eb4584f5549f7e03dbc, type: 2}
 --- !u!114 &-5078105745087706702
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -404,3 +407,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _dealtDamageEvent: {fileID: 11400000, guid: 5cfde0b58cab9d848a3cd31f4a20c1ee, type: 2}
+--- !u!114 &4240929742950632779
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3644504107888459060}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d75b38ebba52f0c4c9d40eb85eddf8f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _enemyBehaviour: {fileID: 2313801004738519680}
+  _skills: []

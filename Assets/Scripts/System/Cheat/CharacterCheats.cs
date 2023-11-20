@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 using CommandTerminal;
 using UnityEngine;
 
@@ -30,14 +32,19 @@ namespace CryptoQuest.System.Cheat
 
         private void GetCharacters(CommandArg[] obj)
         {
-            _cache.Clear();
             var characters =
                 FindObjectsByType<Battle.Components.Character>(FindObjectsInactive.Exclude,
                     FindObjectsSortMode.InstanceID);
-            foreach (var character in characters)
+            foreach (var character in characters.Reverse())
             {
-                _cache[character.GetInstanceID()] = character;
+                if (!_cache.TryAdd(character.GetInstanceID(), character)) return;
                 Debug.Log($"Character [{character.DisplayName}] id: [{character.GetInstanceID()}]");
+
+#if UNITY_EDITOR
+                // Very handy in editor but since I can't remove from autocomplete when character not valid 
+                // it's not pratical in build since tester will test many battle
+                Terminal.Autocomplete.Register(character.GetInstanceID().ToString());
+#endif
             }
         }
 
