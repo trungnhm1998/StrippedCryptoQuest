@@ -59,6 +59,16 @@ MonoBehaviour:
   _stealableInfos: []
   _normalAttackProbability: 1
   _skills: []
+  _dropToAdd:
+    rid: 2855509051182154100
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: 2855509051182154100
+      type: {class: ConsumeDrop, ns: CryptoQuest.Character.Enemy, asm: indi-games.crypto-quest}
+      data:
+        _loot:
+          _item:
+            _id: 0
+            Data: {fileID: 0}
+            _quantity: 1

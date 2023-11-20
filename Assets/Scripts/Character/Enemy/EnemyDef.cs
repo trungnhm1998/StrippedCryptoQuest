@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using CryptoQuest.AbilitySystem.Abilities;
 using CryptoQuest.AbilitySystem.Attributes;
 using CryptoQuest.Gameplay.Loot;
@@ -9,7 +8,7 @@ using UnityEngine.AddressableAssets;
 using UnityEngine.Localization;
 
 #if UNITY_EDITOR
-    using UnityEditor;
+using UnityEditor;
 #endif
 
 namespace CryptoQuest.Character.Enemy
@@ -51,6 +50,7 @@ namespace CryptoQuest.Character.Enemy
 
         [SerializeReference] private StealableInfo[] _stealableInfos
             = Array.Empty<StealableInfo>();
+
         public StealableInfo[] StealableInfos => _stealableInfos;
 
         [SerializeField] private float _normalAttackProbability = 1f;
@@ -70,7 +70,7 @@ namespace CryptoQuest.Character.Enemy
             character.Init(this);
             return character;
         }
-        
+
 #if UNITY_EDITOR
         [SerializeReference, SubclassSelector] private IDropToAdd _dropToAdd = new ConsumeDrop();
         public IDropToAdd DropToAdd => _dropToAdd;
@@ -84,6 +84,7 @@ namespace CryptoQuest.Character.Enemy
                 ArrayUtility.Add(ref _stealableInfos,
                     new ConsumableStealable(usableLoot, drop.Chance));
             }
+
             EditorUtility.SetDirty(this);
         }
 
