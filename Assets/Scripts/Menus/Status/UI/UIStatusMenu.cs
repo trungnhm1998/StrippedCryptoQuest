@@ -1,10 +1,9 @@
 using CryptoQuest.Battle.Components;
-using CryptoQuest.Core;
 using CryptoQuest.Input;
 using CryptoQuest.Menus.Status.States;
 using CryptoQuest.Menus.Status.UI.Equipment;
 using CryptoQuest.UI.Menu;
-using CryptoQuest.UI.Tooltips;
+using CryptoQuest.UI.Tooltips.Events;
 using FSM;
 using UnityEngine;
 
@@ -22,6 +21,7 @@ namespace CryptoQuest.Menus.Status.UI
         [field: SerializeField] public InputMediatorSO Input { get; private set; }
         [field: SerializeField] public UIEquipmentsInventory EquipmentsInventoryPanel { get; private set; }
         [field: SerializeField] public UICharacterStatsPanel CharacterStatsPanelPanel { get; private set; }
+        [field: SerializeField] public ShowTooltipEvent ShowTooltipEvent { get; private set; }
 
         private StateMachine _stateMachine;
 
@@ -33,7 +33,7 @@ namespace CryptoQuest.Menus.Status.UI
 
         private void OnDisable()
         {
-            ActionDispatcher.Dispatch(new HideEquipmentTooltip());
+            ShowTooltipEvent.RaiseEvent(false);
             _stateMachine.OnExit();
         }
     }

@@ -1,6 +1,4 @@
-﻿using CryptoQuest.Core;
-using CryptoQuest.Menus.Status.UI;
-using CryptoQuest.UI.Tooltips;
+﻿using CryptoQuest.Menus.Status.UI;
 
 namespace CryptoQuest.Menus.Status.States
 {
@@ -17,7 +15,7 @@ namespace CryptoQuest.Menus.Status.States
         {
             StatusPanel.Input.MenuCancelEvent -= BackToOverview;
 
-            ActionDispatcher.Dispatch(new HideEquipmentTooltip());
+            StatusPanel.ShowTooltipEvent.RaiseEvent(false);
             StatusPanel.EquipmentsInventoryPanel.Hide();
         }
 

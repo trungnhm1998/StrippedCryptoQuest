@@ -87,7 +87,9 @@ GameObject:
   - component: {fileID: 3700246351620262283}
   - component: {fileID: 2961018193659744562}
   - component: {fileID: 6570579471191893982}
-  - component: {fileID: 1383577595882636739}
+  - component: {fileID: 4200199662442440856}
+  - component: {fileID: -1830973040809668808}
+  - component: {fileID: 1544994893637406555}
   m_Layer: 5
   m_Name: UIEquipmentInventoryItem
   m_TagString: Untagged
@@ -194,7 +196,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _equipmentUI: {fileID: 671866294015914085}
---- !u!114 &1383577595882636739
+--- !u!114 &4200199662442440856
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -203,12 +205,40 @@ MonoBehaviour:
   m_GameObject: {fileID: 7651690642401977796}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 69829015e3a24dc449c4c18a0fbd4599, type: 3}
+  m_Script: {fileID: 11500000, guid: 014c39372fa94953a5627d3726f6336f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Default>k__BackingField:
+    Pivot: {x: 0, y: 1}
+    Offset: {x: 0, y: 0}
+    _positionTransform: {fileID: 6491353314845542623}
+--- !u!114 &-1830973040809668808
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7651690642401977796}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e83b9c57b47249319125e537873bd88c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _delayShowTooltip: 0.5
-  _equipmentUI: {fileID: 671866294015914085}
-  _toolTipPosition: {fileID: 6491353314845542623}
+  _tooltipEnabledEventChannel: {fileID: 11400000, guid: 99b9a7cc9e18bdf47b47bf266cbcf5ee, type: 2}
+--- !u!114 &1544994893637406555
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7651690642401977796}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 281f55f98f304cd1b4fdcb8ee80b9d39, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _uiEquipment: {fileID: 671866294015914085}
 --- !u!1001 &3932354016177620953
 PrefabInstance:
   m_ObjectHideFlags: 0
