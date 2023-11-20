@@ -1,5 +1,4 @@
-﻿using UnityEngine;
-using UnityEngine.EventSystems;
+﻿using UnityEngine.EventSystems;
 
 namespace CryptoQuest.UI.Tooltips.Behaviours
 {

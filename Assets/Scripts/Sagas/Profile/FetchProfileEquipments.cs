@@ -115,6 +115,7 @@ namespace CryptoQuest.Sagas.Profile
             nftEquipment.Data.MinLevel = 1; // TODO: IMPLEMENT
             nftEquipment.Data.MaxLevel = response.maxLv;
             nftEquipment.TokenId = response.equipmentTokenId;
+            nftEquipment.Data.ValuePerLvl = response.valuePerLv;
         }
 
         private void FillEquipmentStats(EquipmentResponse equipmentResponse, ref NftEquipment nftEquipment)

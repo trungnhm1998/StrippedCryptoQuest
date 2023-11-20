@@ -14,6 +14,6 @@ namespace CryptoQuest.Menus.DimensionalBox.Objects
         public int diamond;
         public int soul;
         public long time;
-        public Data data;
+        public EquipmentsResponse.Data data;
     }
 }
