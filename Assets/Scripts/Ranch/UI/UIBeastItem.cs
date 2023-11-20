@@ -1,4 +1,3 @@
-using CryptoQuest.UI.Menu;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -23,18 +22,8 @@ namespace CryptoQuest.Ranch.UI
         public Transform Parent { get; set; }
         public int Id { get; private set; }
 
-        private ITooltip _tooltip;
-
         private bool _isSelected = false;
         private bool _isInGame = false;
-
-        private void Awake()
-        {
-            _tooltip = TooltipFactory.Instance.GetTooltip(ETooltipType.Beast);
-            _tooltip.WithBorderPointer(true)
-                .WithLocalPosition(Vector3.zero)
-                .WithScale(new Vector3(.8f, .8f, 0));
-        }
 
         public void OnSelectToTransfer()
         {
@@ -55,21 +44,7 @@ namespace CryptoQuest.Ranch.UI
 
         public void OnInspecting(bool isInspecting)
         {
-            if (!isInspecting)
-            {
-                _tooltip.Hide();
-                return;
-            }
 
-            _tooltip
-                // .WithSomethingHereForBeat
-                .WithContentAwareness(_tooltipPosition);
-        }
-
-        public void InspectDetail()
-        {
-            return;
-            _tooltip.Show();
         }
     }
 }

@@ -11,8 +11,6 @@ namespace CryptoQuest.Ranch.UI
         [SerializeField] private UIBeastItem _beastItemPrefab;
         [SerializeField] private RectTransform _tooltipSafeArea;
 
-        private ITooltip _tooltip;
-
         private List<UIBeastItem> _cachedItems = new();
 
         private void Awake()
