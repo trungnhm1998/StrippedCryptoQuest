@@ -44,6 +44,7 @@ namespace CryptoQuest.Battle.Commands
                 {
                     Character = _targetComponent.Target
                 });
+                return;
             }
 
             _attacker.Attack();
