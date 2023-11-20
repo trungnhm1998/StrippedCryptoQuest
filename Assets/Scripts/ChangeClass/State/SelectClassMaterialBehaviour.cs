@@ -77,6 +77,7 @@ namespace CryptoQuest.ChangeClass.State
         private void ChangeState()
         {
             _animator.SetTrigger(_submit);
+            _stateController.ConfirmMaterial.HideDetail();
         }
 
         private void ExitState()

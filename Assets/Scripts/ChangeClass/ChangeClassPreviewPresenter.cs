@@ -23,6 +23,7 @@ namespace CryptoQuest.ChangeClass
         [SerializeField] private UIPreviewClassMaterial _showDetailClassMaterial;
         [SerializeField] private UIPreviewCharacter _previewNewClass;
         [SerializeField] private UIPreviewCharacter _previewNewClassStatus;
+        [SerializeField] private UIChangeClassTooltip _preview;
         public UnityAction<UICharacter> FirstClassMaterialEvent;
         public UnityAction<UICharacter> LastClassMaterialEvent;
         private UICharacter _firstClassMaterial;
@@ -110,7 +111,10 @@ namespace CryptoQuest.ChangeClass
         public void ShowDetail(UICharacter character)
         {
             if (!_showDetailClassMaterial.gameObject.activeSelf)
+            {
                 _showDetailClassMaterial.gameObject.SetActive(true);
+                _preview.ShowTooltip(character);
+            }
             _showDetailClassMaterial.PreviewCharacter(character);
         }
 
