@@ -1,6 +1,7 @@
 using System;
 using CryptoQuest.ChangeClass.API;
 using CryptoQuest.Menu;
+using CryptoQuest.UI.Menu;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.Localization;
@@ -17,6 +18,7 @@ namespace CryptoQuest.ChangeClass.View
         [SerializeField] private Image _icon;
         [SerializeField] private GameObject _selectedBackground;
         [SerializeField] private MultiInputButton _button;
+        [field: SerializeField] public RectTransform Content { get; private set; }
         public CharacterAPI Class { get; private set; }
         public AssetReferenceT<Sprite> Avatar { get; private set; }
         public LocalizedString LocalizedName { get; private set; }

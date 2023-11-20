@@ -1,6 +1,7 @@
 using AssetReferenceSprite;
 using TMPro;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 using UnityEngine.Localization.Components;
 using UnityEngine.UI;
 
@@ -44,7 +45,17 @@ namespace CryptoQuest.ChangeClass.View
             _atk.text = character.Class.attack.ToString();
             _mAtk.text = character.Class.MATK.ToString();
             _def.text = character.Class.deffence.ToString();
-            StartCoroutine(character.Avatar.LoadSpriteAndSet(_avatar));
+            LoadAssetReference(character.Avatar);
+        }
+
+        private void LoadAssetReference(AssetReferenceT<Sprite> avatar)
+        {
+            if (avatar == null)
+            {
+                _avatar.enabled = false;
+                return;
+            }
+            StartCoroutine(avatar.LoadSpriteAndSet(_avatar));
         }
     }
 }
