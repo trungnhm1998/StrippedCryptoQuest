@@ -18,7 +18,7 @@ namespace CryptoQuest.Ranch.State
             _stateController.OpenUpgradeEvent += OpenUpgradeState;
             _stateController.OpenEvolveEvent += OpenEvolveState;
 
-            _stateController.RanchController.Input.CancelEvent += ExitState;
+            _stateController.Controller.Input.CancelEvent += ExitState;
         }
 
         protected override void OnExit()
@@ -27,30 +27,30 @@ namespace CryptoQuest.Ranch.State
             _stateController.OpenUpgradeEvent -= OpenUpgradeState;
             _stateController.OpenEvolveEvent -= OpenEvolveState;
 
-            _stateController.RanchController.Input.CancelEvent -= ExitState;
+            _stateController.Controller.Input.CancelEvent -= ExitState;
         }
 
         private void OpenSwapState()
         {
             StateMachine.Play(SwapState);
-            _stateController.RanchController.HideDialogs();
+            _stateController.Controller.HideDialogs();
         }
 
         private void OpenUpgradeState()
         {
             StateMachine.Play(UpgradeState);
-            _stateController.RanchController.HideDialogs();
+            _stateController.Controller.HideDialogs();
         }
 
         private void OpenEvolveState()
         {
             StateMachine.Play(EvolveState);
-            _stateController.RanchController.HideDialogs();
+            _stateController.Controller.HideDialogs();
         }
 
         private void ExitState()
         {
-            _stateController.RanchController.HideDialogs();
+            _stateController.Controller.HideDialogs();
             _stateController.ExitStateEvent?.Invoke();
         }
     }

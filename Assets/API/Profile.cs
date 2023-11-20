@@ -21,5 +21,8 @@
         public const string PUT_CHARACTERS_TO_BOX_AND_GAME = "crypto/characters/dimension/transfer";
         
         public const string GET_BEASTS = "crypto/beasts";
+        public const string PUT_BEASTS_TO_DIMENSIONAL_BOX = "crypto/beasts/dimention/to";
+        public const string PUT_BEASTS_TO_GAME = "crypto/beasts/dimention/from";
+        public const string PUT_BEASTS_TO_BOX_AND_GAME = "crypto/beasts/dimension/transfer";
     }
 }

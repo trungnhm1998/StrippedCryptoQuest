@@ -15,8 +15,8 @@ namespace CryptoQuest.Ranch.Sagas
 {
     public class GetNftBeast : SagaBase<GetBeasts>
     {
-        private readonly List<Obj.Beast> _inGameBeasts = new();
-        private readonly List<Obj.Beast> _walletBeasts = new();
+        private readonly List<Obj.Beast> _inGameBeastsCache = new();
+        private readonly List<Obj.Beast> _inBoxBeastsCache = new();
 
         protected override void HandleAction(GetBeasts ctx)
         {
@@ -31,8 +31,8 @@ namespace CryptoQuest.Ranch.Sagas
 
         private void OnError(Exception ex)
         {
-            ActionDispatcher.Dispatch(new ShowLoading(false));
             Debug.Log($"GetNftBeast::OnError: {ex}");
+            ActionDispatcher.Dispatch(new ShowLoading(false));
             ActionDispatcher.Dispatch(new GetNftBeastsFailed());
         }
 
@@ -43,34 +43,35 @@ namespace CryptoQuest.Ranch.Sagas
             UpdateInboxCache(response.data.beasts);
 
             ActionDispatcher.Dispatch(new ShowLoading(false));
+            ActionDispatcher.Dispatch(new GetNftBeastsSucceed());
         }
 
         private void UpdateInGameCache(Obj.Beast[] dataBeasts)
         {
             if (dataBeasts.Length == 0) return;
-            _inGameBeasts.Clear();
+            _inGameBeastsCache.Clear();
 
             foreach (var beast in dataBeasts)
             {
                 if (beast.inGameStatus != (int)Obj.EBeastStatus.InGame) continue;
-                _inGameBeasts.Add(beast);
+                _inGameBeastsCache.Add(beast);
             }
 
-            ActionDispatcher.Dispatch(new GetGameNftBeastsSucceed(_inGameBeasts));
+            ActionDispatcher.Dispatch(new GetInGameBeastsSucceed(_inGameBeastsCache));
         }
 
         private void UpdateInboxCache(Obj.Beast[] dataBeasts)
         {
             if (dataBeasts.Length == 0) return;
-            _walletBeasts.Clear();
+            _inBoxBeastsCache.Clear();
 
             foreach (var beast in dataBeasts)
             {
                 if (beast.inGameStatus != (int)Obj.EBeastStatus.InBox) continue;
-                _walletBeasts.Add(beast);
+                _inBoxBeastsCache.Add(beast);
             }
 
-            ActionDispatcher.Dispatch(new GetWalletNftBeastsSucceed(_walletBeasts));
+            ActionDispatcher.Dispatch(new GetInBoxBeastsSucceed(_inBoxBeastsCache));
         }
     }
 }

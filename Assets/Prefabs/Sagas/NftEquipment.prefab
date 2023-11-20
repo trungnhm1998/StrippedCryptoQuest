@@ -1,0 +1,145 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &8094368716094714156
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2931382245536832589}
+  - component: {fileID: 5896560676163536118}
+  - component: {fileID: 5283629069949971382}
+  - component: {fileID: 6358358835858794025}
+  - component: {fileID: 365611970704369449}
+  - component: {fileID: 4906025722256455651}
+  m_Layer: 0
+  m_Name: NftEquipment
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2931382245536832589
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8094368716094714156}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5896560676163536118
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8094368716094714156}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6fa4f4d64bda4049a01b2e7bfd03ad35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _inGameEvent: {fileID: 11400000, guid: e8600002b7fc64b42969287a176cc7a2, type: 2}
+  _inBoxEvent: {fileID: 11400000, guid: 046a55858ee3e114ab4c10e752e5ca19, type: 2}
+--- !u!114 &5283629069949971382
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8094368716094714156}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a353c1e0932334b4c8e4c4ea3c827a1e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _transferEquipmentsToGameChannel: {fileID: 11400000, guid: d087896c13bdf054383302bb70d5e545, type: 2}
+--- !u!114 &6358358835858794025
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8094368716094714156}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f47d8c00e7ce154ba2b78bdcbde979e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _transferEquipmentsToDimensionalBoxChannel: {fileID: 11400000, guid: 0aedd0780e09ade4cbf7d7bad4684121, type: 2}
+--- !u!114 &365611970704369449
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8094368716094714156}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f90534d88a4a3c446bc4ce7b52046087, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _inGameEquipmentsUpdate: {fileID: 11400000, guid: e8600002b7fc64b42969287a176cc7a2, type: 2}
+  _inventoryAsset:
+    m_AssetGUID: 4b4903dbe1c434d418a3afff1b12a3ba
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0
+  _attributeMap:
+  - Name: HP
+    Attribute: {fileID: 11400000, guid: 77c53593fd92c904aa7689c5a7449df3, type: 2}
+  - Name: MP
+    Attribute: {fileID: 11400000, guid: a7e3a44d36bf87d44afeb00b236e832e, type: 2}
+  - Name: strength
+    Attribute: {fileID: 11400000, guid: 0d7a5bc26b58515459d9e824964fd7f8, type: 2}
+  - Name: vitality
+    Attribute: {fileID: 11400000, guid: 6762f359f1a736c45b2df614e80aef45, type: 2}
+  - Name: agility
+    Attribute: {fileID: 11400000, guid: 2b6352f953a4cb54d806baed1b804397, type: 2}
+  - Name: intelligence
+    Attribute: {fileID: 11400000, guid: 33fa33f7e21108b4280d1749ac4886e0, type: 2}
+  - Name: luck
+    Attribute: {fileID: 11400000, guid: 9ea7ef66c3bae0d47832b0244c8e6ff6, type: 2}
+  - Name: MATK
+    Attribute: {fileID: 11400000, guid: bb2bcb5d0bb8bef4cab1655aac0ad7fd, type: 2}
+  - Name: deffence
+    Attribute: {fileID: 11400000, guid: be99df9b1a6f2804abf9dd03f042eb2e, type: 2}
+  - Name: attack
+    Attribute: {fileID: 11400000, guid: cff0791781b73cf4ca80877936aedaad, type: 2}
+  _rarities:
+  - {fileID: 11400000, guid: e8beacf8f81a8b344bf6874eacf5e198, type: 2}
+  - {fileID: 11400000, guid: f6ad2ece3296c9444b62f0bb7ccb6890, type: 2}
+  - {fileID: 11400000, guid: bf044d2447613d9439958535fbc7018d, type: 2}
+  - {fileID: 11400000, guid: b66e82bbb5a22a74bbb810a2129f183f, type: 2}
+  - {fileID: 11400000, guid: 27fc384740cea074c96cbb52e2553b0d, type: 2}
+--- !u!114 &4906025722256455651
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8094368716094714156}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf0d1d8332b40d649b785f21fc98139e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _inventoryAsset:
+    m_AssetGUID: 4b4903dbe1c434d418a3afff1b12a3ba
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0
+  _partyAsset:
+    m_AssetGUID: 197a08cf381438a48875f05c90e104fb
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0

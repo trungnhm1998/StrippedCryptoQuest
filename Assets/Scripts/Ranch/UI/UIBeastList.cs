@@ -31,7 +31,7 @@ namespace CryptoQuest.Ranch.UI
 
         public void SelectDefault() => Invoke(nameof(DefaultSelection), DEFAULT_TIME_TO_SELECT);
 
-        public void SetEnableButtons(bool isEnable)
+        public void SetEnableButtons(bool isEnable = true)
         {
             foreach (Transform item in _scrollContent)
             {
