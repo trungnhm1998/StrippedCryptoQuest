@@ -91,7 +91,9 @@ GameObject:
   - component: {fileID: 4901515607939941749}
   - component: {fileID: 3613060748665304196}
   - component: {fileID: 5802020684233611657}
-  - component: {fileID: 6137405033108748965}
+  - component: {fileID: 631373859301439289}
+  - component: {fileID: 6901476803135713084}
+  - component: {fileID: 501814826423319190}
   m_Layer: 5
   m_Name: Unequip
   m_TagString: Untagged
@@ -201,7 +203,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &6137405033108748965
+--- !u!114 &631373859301439289
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -210,12 +212,40 @@ MonoBehaviour:
   m_GameObject: {fileID: 638727686545684021}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 69829015e3a24dc449c4c18a0fbd4599, type: 3}
+  m_Script: {fileID: 11500000, guid: e83b9c57b47249319125e537873bd88c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _delayShowTooltip: 0.5
-  _equipmentUI: {fileID: 8460828963472873129}
-  _toolTipPosition: {fileID: 2751135025376210451}
+  _tooltipEnabledEventChannel: {fileID: 11400000, guid: 99b9a7cc9e18bdf47b47bf266cbcf5ee, type: 2}
+--- !u!114 &6901476803135713084
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 638727686545684021}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 014c39372fa94953a5627d3726f6336f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Default>k__BackingField:
+    Pivot: {x: 0, y: 1}
+    Offset: {x: 0, y: 0}
+    _positionTransform: {fileID: 2751135025376210451}
+--- !u!114 &501814826423319190
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 638727686545684021}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 281f55f98f304cd1b4fdcb8ee80b9d39, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _uiEquipment: {fileID: 8460828963472873129}
 --- !u!1 &1922324097561441763
 GameObject:
   m_ObjectHideFlags: 0
