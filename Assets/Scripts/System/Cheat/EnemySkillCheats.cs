@@ -1,20 +1,14 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
 using CommandTerminal;
 using CryptoQuest.AbilitySystem.Abilities;
-using CryptoQuest.Battle.Components;
 using CryptoQuest.Battle.Components.EnemyComponents;
-using CryptoQuest.Battle.UI.SelectSkill;
 using CryptoQuest.Character.Enemy;
-using IndiGames.GameplayAbilitySystem.AbilitySystem;
-#if UNITY_EDITOR
-using UnityEditor;
-#endif
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+#if UNITY_EDITOR
+#endif
 
 namespace CryptoQuest.System.Cheat
 {
@@ -57,15 +51,16 @@ namespace CryptoQuest.System.Cheat
                 return;
             }
 
-            StartCoroutine(LoadSkillCo(abilityId, skill => 
+            StartCoroutine(LoadSkillCo(abilityId, skill =>
             {
                 var existSkill = enemySkillHolder.Skills.Find(s => s.SkillDef == skill);
                 if (existSkill.SkillDef != null)
                 {
                     Debug.LogWarning($"Enemy {character.DisplayName} already has skill {skill.name}\n" +
-                        $"Skill will be remove and overrided");
+                                     $"Skill will be remove and overrided");
                     enemySkillHolder.Skills.Remove(existSkill);
                 }
+
                 Debug.Log($"Added skill {skill.name} to enemy with probability {probability}");
                 enemySkillHolder.Skills.Insert(0, new Skills()
                 {
@@ -78,10 +73,10 @@ namespace CryptoQuest.System.Cheat
         private void GetSkillFromEnemy(CommandArg[] args)
         {
             var characterId = args[0].Int;
-            
+
             if (!TryGetCharacter(characterId, out var character)) return;
 
-         
+
             var enemySkillHolder = character.GetComponent<IEnemySkillHolder>();
             if (enemySkillHolder == null)
             {
@@ -126,10 +121,11 @@ namespace CryptoQuest.System.Cheat
             {
                 Debug.LogWarning($"{character.DisplayName} is not enemy");
                 return;
-
             }
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
             enemyCommandSelector.Editor_SetNormalAttackProbability(probability);
             Debug.Log($"Set normal attack probability of {character.DisplayName} to {probability}");
+#endif
         }
 
         private bool TryGetCharacter(int characterId, out Battle.Components.Character character)
@@ -140,6 +136,7 @@ namespace CryptoQuest.System.Cheat
                 Debug.LogWarning($"Cannot find character with instance id [{characterId}].");
                 return false;
             }
+
             return true;
         }
     }

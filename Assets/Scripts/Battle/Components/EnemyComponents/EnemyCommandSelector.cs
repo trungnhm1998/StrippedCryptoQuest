@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using CryptoQuest.Battle.Commands;
 using CryptoQuest.Character.Enemy;
@@ -47,7 +46,7 @@ namespace CryptoQuest.Battle.Components.EnemyComponents
         {
             if (!_enemyBehaviour.IsValid()) return;
 
-            var randomedValue = UnityEngine.Random.value;
+            var randomedValue = Random.value;
             
             if (TryNormalAttack(ref randomedValue)) return;
 
@@ -83,7 +82,7 @@ namespace CryptoQuest.Battle.Components.EnemyComponents
             return false;
         }
 
-#if UNITY_EDITOR
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
         public void Editor_SetNormalAttackProbability(float value)
         {
             _normalAttackProbability = value;
