@@ -101,6 +101,9 @@ namespace CryptoQuest.Tavern.States.PartyOrganization
 
         private void ResetTransferRequested()
         {
+            if (_controller.UIPartyOrganization.SelectedNonPartyCharacterIds.Count == 0 &&
+                _controller.UIPartyOrganization.SelectedPartyCharacterIds.Count == 0) return;
+
             _controller.UIParty.SetData(_cachedInPartyCharactersData);
             _controller.UINonParty.SetData(_cachedNonPartyCharactersData);
         }

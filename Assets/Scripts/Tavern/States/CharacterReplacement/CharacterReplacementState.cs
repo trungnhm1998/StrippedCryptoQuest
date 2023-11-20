@@ -80,6 +80,9 @@ namespace CryptoQuest.Tavern.States.CharacterReplacement
 
         private void ResetTransferRequested()
         {
+            if (_controller.UICharacterReplacement.SelectedGameItemsIds.Count == 0 &&
+                _controller.UICharacterReplacement.SelectedWalletItemsIds.Count == 0) return;
+
             _controller.UIGameList.SetData(_cachedGameData);
             _controller.UIWalletList.SetData(_cachedWalletData);
         }
