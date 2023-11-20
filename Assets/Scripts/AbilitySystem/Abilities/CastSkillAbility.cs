@@ -19,6 +19,7 @@ using Random = UnityEngine.Random;
 using CryptoQuest.Gameplay.Battle.Core.Helper;
 using UnityEngine.Localization;
 using UnityEngine.Serialization;
+using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data;
 
 namespace CryptoQuest.AbilitySystem.Abilities
 {
@@ -138,7 +139,11 @@ namespace CryptoQuest.AbilitySystem.Abilities
             {
                 if (IsTargetEvaded(target))
                 {
-                    BattleEventBus.RaiseEvent(new MissedEvent());
+                    var isDamage = _def.Context.Parameters.EffectType == EEffectType.Damage;
+                    BattleEventBus.RaiseEvent(new MissedEvent(isDamage)
+                    {
+                        Character = target.GetComponent<Battle.Components.Character>()
+                    });
                     continue;
                 }
 
