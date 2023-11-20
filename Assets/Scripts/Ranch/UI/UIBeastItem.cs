@@ -56,7 +56,7 @@ namespace CryptoQuest.Ranch.UI
             _name.text = itemData.name;
             _level.text = $"Lv{itemData.level}";
             _localizeName.RefreshString();
-            
+
             _cacheInfo = itemData;
         }
     }

@@ -7,10 +7,9 @@ namespace CryptoQuest.Ranch
     public class RanchController : MonoBehaviour
     {
         [field: SerializeField] public RanchSystem RanchSystem { get; private set; }
-        [field: SerializeField] public UIRanch UIRanch { get; private set; }
-        [field: SerializeField] public RanchDialogsManager RanchDialogsManager { get; private set; }
         [field: SerializeField] public RanchDialogsManager DialogManager { get; private set; }
         [field: SerializeField] public MerchantsInputManager Input { get; private set; }
+        [field: SerializeField] public UIRanch UIRanch { get; private set; }
 
         private void OnEnable()
         {
@@ -26,7 +25,7 @@ namespace CryptoQuest.Ranch
 
         public void Initialize()
         {
-            UIRanch.Init();
+            UIRanch.Initialize();
             DialogManager.ShowWelcomeDialog();
         }
         
@@ -38,13 +37,12 @@ namespace CryptoQuest.Ranch
         private void RanchOpened()
         {
             UIRanch.FarmOpened();
-            RanchDialogsManager.RanchOpened();
+            DialogManager.RanchOpened();
         }
 
         private void RanchClosed()
         {
             UIRanch.FarmClosed();
-            RanchDialogsManager.RanchClosed();
         }
     }
 }

@@ -17,11 +17,7 @@ namespace CryptoQuest.Ranch.UI
 
         private void SelectDefault() => _defaultSelection.Select();
 
-        public void FarmOpened()
-        {
-            Invoke(nameof(SelectDefault), DEFAULT_SELECTION_DELAY);
-            Init();
-        }
+        public void FarmOpened() => Initialize();
 
         public void FarmClosed()
         {
@@ -47,10 +43,11 @@ namespace CryptoQuest.Ranch.UI
             _stateController.OpenSwapEvent?.Invoke();
         }
 
-        public void Init()
+        public void Initialize()
         {
             _selectActionPanel.SetActive(true);
             _farmOverview.SetActive(true);
+            Invoke(nameof(SelectDefault), DEFAULT_SELECTION_DELAY);
         }
     }
 }
