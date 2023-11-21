@@ -30,6 +30,7 @@ namespace CryptoQuest.Menus.Skill.UI
         public UISkillCharacterPartySlot SelectingHero { get; set; }
 
         private SkillMenuStateMachine _skillMenuStateMachine;
+        public SkillMenuStateMachine SkillMenuStateMachine => _skillMenuStateMachine;
 
         private void Awake()
         {
@@ -56,7 +57,7 @@ namespace CryptoQuest.Menus.Skill.UI
         {
             foreach (var button in HeroButtons) button.IsSelected = isEnabled;
         }
-        
+
         public void EnableHeroSelectedMode(bool isEnabled = true)
         {
             foreach (var button in HeroButtons) button.IsCharacterSelected = isEnabled;

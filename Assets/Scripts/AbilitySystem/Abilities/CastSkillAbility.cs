@@ -152,7 +152,7 @@ namespace CryptoQuest.AbilitySystem.Abilities
             }
         }
 
-        private bool CanCast()
+        protected bool CanCast()
         {
             if (!CheckCost())
             {
@@ -174,7 +174,7 @@ namespace CryptoQuest.AbilitySystem.Abilities
             return result;
         }
 
-        private void ApplyCost()
+        protected void ApplyCost()
         {
             if (_costEffect == null || Owner.gameObject.CompareTag(EnemyBehaviour.Tag)) return;
 
