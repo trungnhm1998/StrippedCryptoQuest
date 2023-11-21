@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Description>k__BackingField: 
   _policy:
-    rid: 4476345301540798506
+    rid: 2855509141858287871
   <EffectDetails>k__BackingField:
     Modifiers:
     - Attribute: {fileID: 11400000, guid: 77c53593fd92c904aa7689c5a7449df3, type: 2}
@@ -38,8 +38,9 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: 4476345301540798506
+    - rid: 2855509141858287871
       type: {class: InstantPolicy, ns: IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects.GameplayEffectActions, asm: IndiGames.GameplayAbilitySystem}
+      data: 
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -105,14 +106,14 @@ MonoBehaviour:
     BlockAbilityWithTags: []
     ActivationTags: []
     OwnerTags:
-      RequireTags:
-      - {fileID: 11400000, guid: c60a47c5f453a024d8657f7b3cafc7cc, type: 2}
+      RequireTags: []
       IgnoreTags: []
     SourceTags:
       RequireTags: []
       IgnoreTags: []
     TargetTags:
-      RequireTags: []
+      RequireTags:
+      - {fileID: 11400000, guid: c60a47c5f453a024d8657f7b3cafc7cc, type: 2}
       IgnoreTags: []
   <CancelEffectWithTags>k__BackingField: []
   <Conditions>k__BackingField: []

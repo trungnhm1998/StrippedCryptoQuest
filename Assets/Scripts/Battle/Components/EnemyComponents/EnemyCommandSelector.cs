@@ -52,7 +52,7 @@ namespace CryptoQuest.Battle.Components.EnemyComponents
 
             foreach (var skill in Skills)
             {
-                if (randomedValue < skill.Probability)
+                if (randomedValue <= skill.Probability)
                 {
                     // Since enemy can multiple target I have to raise event here to create command
                     skill.SkillDef.TargetType.RaiseEvent(skill.SkillDef);
@@ -71,7 +71,7 @@ namespace CryptoQuest.Battle.Components.EnemyComponents
             if (!_enemyBehaviour.TryGetComponent<CommandExecutor>(out var commandExecutor))
                 return false;
 
-            if (randomedValue < _normalAttackProbability)
+            if (randomedValue <= _normalAttackProbability)
             {
                 commandExecutor.SetCommand(
                     new NormalAttackCommand(_enemyBehaviour, _enemyBehaviour.Targeting.Target));
