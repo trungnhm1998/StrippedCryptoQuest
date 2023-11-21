@@ -32,12 +32,7 @@
         var orgW = {{{ WIDTH }}};
         var orgH = {{{ HEIGHT }}};
 
-        var scaleToFit;
-        try {
-          scaleToFit = !!JSON.parse("{{{ SCALE_TO_FIT }}}");
-        } catch (e) {
-          scaleToFit = true;
-        }
+        var scaleToFit = true;
 
         function onResize() {
           var container = canvas.parentElement;
