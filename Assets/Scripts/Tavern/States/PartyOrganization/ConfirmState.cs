@@ -15,11 +15,13 @@ namespace CryptoQuest.Tavern.States.PartyOrganization
         [SerializeField] private HeroInventorySO _heroInventorySO;
         [SerializeField] private PartySO _partySO;
         [SerializeField] private LocalizedString _confirmMessage;
+        [SerializeField] private LocalizedString _moreThan3Msg;
 
         private TavernController _controller;
 
         private static readonly int PartyOrganizationState = Animator.StringToHash("Party Organization Idle");
         private IInventoryController _inventoryController;
+        private const int MAX_NFT_HEROES_IN_PARTY = 3;
 
         protected override void OnEnter()
         {
@@ -39,6 +41,7 @@ namespace CryptoQuest.Tavern.States.PartyOrganization
         protected override void OnExit()
         {
             _controller.MerchantInputManager.CancelEvent -= CancelTransmission;
+            _controller.MerchantInputManager.SubmitEvent -= TurnOffDialogueIfThereAreMoreThan3Heroes;
 
             if (_controller.DialogsManager.ChoiceDialog == null) return;
             _controller.DialogsManager.ChoiceDialog.Hide();
@@ -51,10 +54,41 @@ namespace CryptoQuest.Tavern.States.PartyOrganization
 
         private void YesButtonPressed()
         {
+            if (ValidateCurrentNumberOfHeroesAddingToParty()) return;
             ProceedToSendCharacters();
             _controller.UIPartyOrganization.ConfirmedTransmission();
             StateMachine.Play(PartyOrganizationState);
         }
+
+        private bool ValidateCurrentNumberOfHeroesAddingToParty()
+        {
+            var selectedNonPartyCharacters = _controller.UIPartyOrganization.SelectedNonPartyCharacterIds;
+            var count = 0;
+            foreach (var partySlot in _partySO.GetParty())
+            {
+                var isMain = partySlot.Hero.Id == 0;
+                if (isMain) continue;
+                if (partySlot.IsValid()) count++;
+            }
+
+            var numberOfHeroesInParty = count + selectedNonPartyCharacters.Count;
+            if (numberOfHeroesInParty <= MAX_NFT_HEROES_IN_PARTY) return false;
+
+            _controller.MerchantInputManager.SubmitEvent += TurnOffDialogueIfThereAreMoreThan3Heroes;
+            _controller.DialogsManager.ChoiceDialog.Hide();
+            _controller.DialogsManager.Dialogue
+                .SetMessage(_moreThan3Msg)
+                .Show();
+
+            return true;
+        }
+
+        private void TurnOffDialogueIfThereAreMoreThan3Heroes()
+        {
+            _controller.DialogsManager.Dialogue.Hide();
+            StateMachine.Play(PartyOrganizationState);
+        }
+
 
         private void NoButtonPressed()
         {
