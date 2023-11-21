@@ -1,39 +1,60 @@
+using CryptoQuest.Core;
 using CryptoQuest.Map;
+using CryptoQuest.System;
 using CryptoQuest.UI.SpiralFX;
 using IndiGames.Core.Events.ScriptableObjects;
 using IndiGames.Core.SceneManagementSystem.Events.ScriptableObjects;
 using IndiGames.Core.SceneManagementSystem.ScriptableObjects;
+using TinyMessenger;
 using UnityEngine;
 
 namespace CryptoQuest.Gameplay.Manager
 {
+    public class EscapeAction : ActionBase { }
+
     public class EscapeAbilityHandler : MonoBehaviour
     {
-        // TODO: Refactor ability
-        // [SerializeField] private EscapeAbilitySO _escapeAbilitySo;
         [SerializeField] private SceneScriptableObject _destinationScene;
         [SerializeField] private PathStorageSO _pathStorageSo;
         [SerializeField] private LoadSceneEventChannelSO _loadMapEventChannel;
         [SerializeField] private VoidEventChannelSO _onSceneLoadedEventChannel;
         [SerializeField] private SpiralConfigSO _spiralConfig;
-
+        [SerializeField] private EscapeRouteMappingSO _escapeRouteMapping;
+        [SerializeField] private VoidEventChannelSO _closeMainMenuEventChannel;
+        private TinyMessageSubscriptionToken _token;
+        private ICurrentSceneProvider _currentSceneProvider;
 
         private void OnEnable()
         {
-            // _escapeAbilitySo.EscapeSucceeded += OnEscapeSucceded;
+            _token = ActionDispatcher.Bind<EscapeAction>(HandleEscape);
         }
 
         private void OnDisable()
         {
-            // _escapeAbilitySo.EscapeSucceeded -= OnEscapeSucceded;
+            ActionDispatcher.Unbind(_token);
         }
 
-        private void OnEscapeSucceded(MapPathSO escapePath)
+        private void HandleEscape(EscapeAction _)
         {
-            _spiralConfig.Color = Color.green;
+            _currentSceneProvider = ServiceProvider.GetService<ICurrentSceneProvider>();
+            SceneScriptableObject currentScene = _currentSceneProvider.CurrentScene;
+
+            if (_escapeRouteMapping.MapToEscapePathDictionary.TryGetValue(currentScene, out MapPathSO escapePath))
+            {
+                OnEscapeSucceeded(escapePath);
+            }
+            else
+            {
+                Debug.LogError($"No escape route found for scene {currentScene.name}");
+            }
+        }
+
+        private void OnEscapeSucceeded(MapPathSO escapePath)
+        {
+            _closeMainMenuEventChannel.RaiseEvent();
             _pathStorageSo.LastTakenPath = escapePath;
             _spiralConfig.DoneSpiralIn += TriggerEscape;
-            _spiralConfig.DoneSpiralOut += FinishTrasition;
+            _spiralConfig.DoneSpiralOut += FinishTransition;
             _onSceneLoadedEventChannel.EventRaised += _spiralConfig.HideSpiral;
             _spiralConfig.ShowSpiral();
         }
@@ -43,11 +64,12 @@ namespace CryptoQuest.Gameplay.Manager
             _loadMapEventChannel.RequestLoad(_destinationScene);
         }
 
-        private void FinishTrasition()
+        private void FinishTransition()
         {
             _spiralConfig.DoneSpiralIn -= TriggerEscape;
-            _spiralConfig.DoneSpiralOut -= FinishTrasition;
+            _spiralConfig.DoneSpiralOut -= FinishTransition;
             _onSceneLoadedEventChannel.EventRaised -= _spiralConfig.HideSpiral;
+            _spiralConfig.Color = Color.black;
         }
     }
 }
