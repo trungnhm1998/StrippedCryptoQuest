@@ -16,6 +16,7 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Monster
         private const string DEFAULT_NAME = "Monster";
         private const int ROW_OFFSET = 2;
         private const int MONSTER_ID_COLUMN_INDEX = 0;
+        private const int MONSTER_NORMAL_ATTACK_PROP_INDEX = 27;
         private const int MONSTER_FIRST_ABILITY_COLUMN_INDEX = 28;
         private const int MONSTER_FIRST_PROBABILITY_COLUMN_INDEX = 29;
         private const string TARGET_TYPE_GROUP = "GroupOfEnemies";
@@ -62,6 +63,7 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Monster
                 List<MonsterAbilitySpec> abilitySpecs = ConfigureMonsterAbilitySpec(splittedData);
                 List<Skills> skillList = CreateSkillOnSpecs(abilitySpecs);
                 SetEnemySkills(instance, skillList);
+                SetEnemyNormalAttackProb(instance, splittedData);
                 EditorUtility.SetDirty(instance);
             }
         }
@@ -175,6 +177,20 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Monster
                 element.FindPropertyRelative("SkillDef").objectReferenceValue = skill.SkillDef;
             }
 
+            serializedObject.ApplyModifiedProperties();
+            serializedObject.Update();
+        }
+
+        private void SetEnemyNormalAttackProb(EnemyDef enemyDef, string[] datas)
+        {
+            SerializedObject serializedObject = new SerializedObject(enemyDef);
+            SerializedProperty probabilityProperty = serializedObject.FindProperty("_normalAttackProbability");
+            string probabilityString = string.IsNullOrEmpty(datas[MONSTER_NORMAL_ATTACK_PROP_INDEX])
+                ? "0"
+                : datas[MONSTER_NORMAL_ATTACK_PROP_INDEX];
+            float probability = float.Parse(probabilityString) / 100;
+
+            probabilityProperty.floatValue = probability;
             serializedObject.ApplyModifiedProperties();
             serializedObject.Update();
         }
