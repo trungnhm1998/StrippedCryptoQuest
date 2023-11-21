@@ -1,8 +1,10 @@
 using System;
 using System.Collections;
+using System.Linq;
 using CryptoQuest.Battle.Events;
 using CryptoQuest.Battle.Presenter;
 using CryptoQuest.Battle.Presenter.Commands;
+using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
 using TinyMessenger;
 using UnityEngine;
 
@@ -47,13 +49,24 @@ namespace CryptoQuest.Battle.VFX
         private void QueueVfxCommand(CastSkillEvent ctx, int skillVfxId)
         {
             StartCoroutine(_vfxDatabase.LoadDataById(skillVfxId));
-            QueueUpVfx(skillVfxId, ctx.Target.transform.position);
+            QueueUpVfx(skillVfxId, ctx.Targets);
         }
 
         public void QueueUpVfx(int vfxId, Vector3 position = default)
         {
             var presentCommand = new VfxCommand(vfxId, position, this);
             _roundEventsPresenter.EnqueueCommand(presentCommand);
+        }
+
+        public void QueueUpVfx(int vfxId, params AbilitySystemBehaviour[] targets)
+        {
+            var presentCommand = new VfxTargetsCommand(vfxId, this, targets);
+            _roundEventsPresenter.EnqueueCommand(presentCommand);
+        }
+
+        public GameObject GetVfxPrefab(int vfxId)
+        {
+            return _vfxDatabase.GetDataById(vfxId);
         }
 
         public IEnumerator PresentVfx(int vfxId, Vector3 transformPosition)

@@ -134,6 +134,8 @@ namespace CryptoQuest.AbilitySystem.Abilities
 
         protected virtual void ExecuteAbility()
         {
+            bool isRaisedEvent = false;
+
             foreach (var target in Targets)
             {
                 if (IsTargetEvaded(target))
@@ -146,8 +148,6 @@ namespace CryptoQuest.AbilitySystem.Abilities
                     continue;
                 }
 
-                BattleEventBus.RaiseEvent(new CastSkillEvent(_def, target) { Character = _character });
-
                 if (!AbilitySystemHelper.SystemHasNoneTags(target, AbilitySO.Tags.TargetTags.IgnoreTags))
                 {
                     BattleEventBus.RaiseEvent(new CastSkillFailedEvent());
@@ -155,6 +155,11 @@ namespace CryptoQuest.AbilitySystem.Abilities
                     continue;
                 }
 
+                if (!isRaisedEvent)
+                {
+                    BattleEventBus.RaiseEvent(new CastSkillEvent(_def, Targets) { Character = _character });
+                    isRaisedEvent = true;
+                }
                 InternalExecute(target);
             }
         }
