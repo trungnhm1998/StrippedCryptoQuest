@@ -38,7 +38,7 @@ namespace CryptoQuest.ChangeClass
             var matchingElement = Elements.FirstOrDefault(element => elementId == element.Id.ToString());
             _element = matchingElement?.Icon;
 
-            string mapId = $"{characterId}-{character.Class.characterId}";
+            string mapId = $"{characterId}-{character.Class.classId}";
             var matchingAvatar = HeroAvatar.Maps.FirstOrDefault(avatar => avatar.Id == mapId);
             _avatar = matchingAvatar.Data;
 
