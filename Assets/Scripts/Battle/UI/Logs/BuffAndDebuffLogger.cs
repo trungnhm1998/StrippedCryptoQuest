@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using CryptoQuest.AbilitySystem;
 using CryptoQuest.AbilitySystem.Attributes;
 using CryptoQuest.Battle.Events;
-using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
 using IndiGames.GameplayAbilitySystem.AttributeSystem;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.Components;
-using IndiGames.GameplayAbilitySystem.EffectSystem;
+using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
 using IndiGames.GameplayAbilitySystem.TagSystem.ScriptableObjects;
 using TinyMessenger;
 using UnityEngine;
@@ -35,6 +34,7 @@ namespace CryptoQuest.Battle.UI.Logs
         [SerializeField] private LocalizedString _buffWearOffMessage;
         [SerializeField] private LocalizedString _debuffWearOffMessage;
         [SerializeField] private TagAttributeMapping[] _tagAttributeMappings;
+        [SerializeField] private AttributeConfigMapping _attributeConfigMapping;
 
         private TinyMessageSubscriptionToken _effectAdded;
         private TinyMessageSubscriptionToken _effectRemoved;
@@ -133,12 +133,12 @@ namespace CryptoQuest.Battle.UI.Logs
 
         private IVariable GetAttributeName(TagScriptableObject tag)
         {
-            if (!_tagAttributeMap.TryGetValue(tag, out var attribute) || attribute.DisplayName.IsEmpty)
+            if (!_tagAttributeMap.TryGetValue(tag, out var attribute) || !_attributeConfigMapping.TryGetMap(attribute, out var config))
                 return new StringVariable()
                 {
                     Value = ATTRIBUTE_NAME_INVALID
                 };
-            return attribute.DisplayName;
+            return config.Name;
         }
 
         private static bool IsBuffOrDebuff(EffectEvent ctx, out TagScriptableObject tag, out bool isBuff)

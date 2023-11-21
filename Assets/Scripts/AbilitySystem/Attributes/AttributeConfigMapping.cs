@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
 using UnityEngine;
+using UnityEngine.Localization;
 
-namespace CryptoQuest.UI.Tooltips.ScriptableObjects
+namespace CryptoQuest.AbilitySystem.Attributes
 {
     public class AttributeConfigMapping : ScriptableObject
     {
@@ -11,7 +12,7 @@ namespace CryptoQuest.UI.Tooltips.ScriptableObjects
         public struct Map
         {
             public AttributeScriptableObject Attribute;
-            public string ShortName;
+            public LocalizedString Name;
         }
 
         [SerializeField] private Map[] _maps;

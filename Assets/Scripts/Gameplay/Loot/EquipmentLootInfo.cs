@@ -1,5 +1,5 @@
 ﻿using System;
-using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
+using CryptoQuest.Gameplay.Inventory;
 using CryptoQuest.Gameplay.Reward;
 using CryptoQuest.Item.Equipment;
 using CryptoQuest.UI.Dialogs.RewardDialog;
@@ -10,7 +10,7 @@ namespace CryptoQuest.Gameplay.Loot
     public class EquipmentLootInfo : LootInfo<EquipmentInfo>
     {
         public EquipmentLootInfo(EquipmentInfo item) : base(item) { }
-        public override void AddItemToInventory(InventorySO inventory) => inventory.Add(Item);
+        public override void AddItemToInventory(IInventoryController inventory) => Item.AddToInventory(inventory);
 
         public override UI.Dialogs.RewardDialog.Reward CreateRewardUI()
             => new GenericLocalizedReward(Item.DisplayName);

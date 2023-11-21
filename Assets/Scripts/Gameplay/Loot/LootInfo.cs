@@ -1,4 +1,5 @@
 ﻿using System;
+using CryptoQuest.Gameplay.Inventory;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
 using CryptoQuest.Gameplay.Reward;
 using CryptoQuest.Item;
@@ -12,7 +13,7 @@ namespace CryptoQuest.Gameplay.Loot
     [Serializable]
     public abstract class LootInfo
     {
-        public abstract void AddItemToInventory(InventorySO inventory);
+        public abstract void AddItemToInventory(IInventoryController inventory);
 
         public abstract UI.Dialogs.RewardDialog.Reward CreateRewardUI();
         public abstract LootInfo Clone();

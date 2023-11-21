@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using CryptoQuest.AbilitySystem.Abilities;
 using CryptoQuest.Battle.Components;
 using CryptoQuest.Item;
+using CryptoQuest.System;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
 using UnityEngine;
 
@@ -24,9 +25,11 @@ namespace CryptoQuest.Gameplay.Inventory
 
         private IInventoryController _inventoryController;
 
+        private IInventoryController InventoryController =>
+            _inventoryController ??= ServiceProvider.GetService<IInventoryController>();
+
         private void Awake()
         {
-            _inventoryController = GetComponent<IInventoryController>();
             HeroConsumingItem += ConsumeItem;
             ConsumingItem += ConsumeItem;
         }
@@ -53,7 +56,7 @@ namespace CryptoQuest.Gameplay.Inventory
 
             if (ableToUseOnAtLeastOneHero)
             {
-                consumable.OnConsumed(_inventoryController);
+                consumable.OnConsumed(InventoryController);
                 Debug.Log($"Consuming {consumable.Data} on {heroes.Count} heroes");
             }
 
@@ -63,7 +66,7 @@ namespace CryptoQuest.Gameplay.Inventory
 
         private void ConsumeItem(ConsumableInfo consumable)
         {
-            if (_inventoryController.Remove(consumable))
+            if (InventoryController.Remove(consumable))
                 _itemConsumedEvent.RaiseEvent(consumable);
         }
     }

@@ -1,4 +1,4 @@
-﻿using CryptoQuest.AbilitySystem.Attributes;
+﻿using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
 using UnityEngine;
 
 namespace CryptoQuest.Battle.Components
@@ -12,7 +12,7 @@ namespace CryptoQuest.Battle.Components
     public class EvadeBehaviour : CharacterComponentBase, IEvadable
     {
         [SerializeField] private AttributeScriptableObject _evasionAttribute;
-        
+
         public override void Init() { }
 
         public bool TryEvade()
@@ -21,8 +21,8 @@ namespace CryptoQuest.Battle.Components
             var random = Random.value;
             var isEvaded = random <= evasionValue.CurrentValue / 100f;
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
-            Debug.Log($"EvadeBehaviour::TryEvade: Evasion: {evasionValue.CurrentValue / 100f}; random {random}" 
-                + $"evaded {isEvaded}");
+            Debug.Log($"EvadeBehaviour::TryEvade: Evasion: {evasionValue.CurrentValue / 100f}; random {random}"
+                      + $"evaded {isEvaded}");
 #endif
             return isEvaded;
         }

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using IndiGames.GameplayAbilitySystem.AttributeSystem;
+using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
 using UnityEngine;
 
 namespace CryptoQuest.AbilitySystem.Attributes

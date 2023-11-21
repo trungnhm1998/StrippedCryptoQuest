@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Localization;
 using UnityEngine.UI;
 
 namespace CryptoQuest.UI.Tooltips
@@ -15,9 +16,9 @@ namespace CryptoQuest.UI.Tooltips
             _attributeValueText = _attributeValue.text;
         }
 
-        public void SetAttribute(string shortName, float value)
+        public void SetAttribute(LocalizedString attributeName, float value)
         {
-            _attributeShortName.text = shortName;
+            attributeName.GetLocalizedStringAsync().Completed += (handle) => _attributeShortName.text = handle.Result;
             _attributeValue.text = string.Format(_attributeValueText, value);
         }
     }

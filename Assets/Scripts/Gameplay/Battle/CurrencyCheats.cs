@@ -23,7 +23,7 @@ namespace CryptoQuest.Gameplay.Battle
             float amount = args[0].Float;
             CurrencyInfo goldInfo = new(_goldSo, amount);
             CurrencyLootInfo goldLootInfo = new(goldInfo);
-            goldLootInfo.AddItemToInventory(ServiceProvider.GetService<IInventoryController>().Inventory);
+            goldLootInfo.AddItemToInventory(ServiceProvider.GetService<IInventoryController>());
         }
     }
 }
