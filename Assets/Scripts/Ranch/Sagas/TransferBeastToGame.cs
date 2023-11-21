@@ -7,9 +7,9 @@ using CryptoQuest.Networking;
 using CryptoQuest.Ranch.Object;
 using CryptoQuest.System;
 using CryptoQuest.UI.Actions;
+using Newtonsoft.Json;
 using TinyMessenger;
 using UniRx;
-using Unity.Plastic.Newtonsoft.Json;
 using UnityEngine;
 
 namespace CryptoQuest.Ranch.Sagas
