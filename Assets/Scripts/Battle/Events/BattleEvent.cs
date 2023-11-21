@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using CryptoQuest.AbilitySystem.Abilities;
 using CryptoQuest.Battle.Commands;
 using CryptoQuest.Battle.Components;
@@ -208,12 +209,12 @@ namespace CryptoQuest.Battle.Events
     public class CastSkillEvent : LogEvent
     {
         public CastSkillAbility Skill { get; private set; }
-        public Components.Character Target { get; private set; }
+        public AbilitySystemBehaviour[] Targets { get; private set; }
 
-        public CastSkillEvent(CastSkillAbility skill, AbilitySystemBehaviour target)
+        public CastSkillEvent(CastSkillAbility skill, params AbilitySystemBehaviour[] targets)
         {
             Skill = skill;
-            Target = target.GetComponent<Components.Character>();
+            Targets = targets;
         }
     }
 
