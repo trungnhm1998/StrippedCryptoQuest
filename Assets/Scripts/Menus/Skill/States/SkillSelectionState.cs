@@ -51,6 +51,9 @@ namespace CryptoQuest.Menus.Skill.States
         private void OnCastSkill()
         {
             _skillPanel.Input.MenuConfirmedEvent -= OnCastSkill;
+
+            _skillPanel.EnableHeroSelectedMode();
+
             var castSkillAbility = _skillListPanel.InspectingSkillUI.Skill;
             castSkillAbility.TargetType.RaiseEvent(castSkillAbility);
         }
@@ -125,6 +128,7 @@ namespace CryptoQuest.Menus.Skill.States
         }
 
         private void DisableAllSkillButtons(bool disabled = true) => _skillListPanel.Interactable = !disabled;
+        private void DeSelectAllHeroes() => _skillPanel.EnableAllHeroButtons(false);
 
         private void CastSkill()
         {
@@ -154,6 +158,8 @@ namespace CryptoQuest.Menus.Skill.States
 
         private void HandleCancel()
         {
+            DeSelectAllHeroes();
+            
             if (_selectingSkill is not null)
             {
                 ClearTargetSelectionAndSelectingSkill();
