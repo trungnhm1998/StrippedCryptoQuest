@@ -19,6 +19,35 @@ namespace CryptoQuest.System.Cheat.States
             Manager.OnTabPressed = () => Manager.Terminal.TabPressed();
         }
 
+        public override void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+        {
+            base.OnStateUpdate(animator, stateInfo, layerIndex);
+
+            Manager.BattleInput.DisableAllInput();
+            Manager.Input.DisableAllInput();
+        }
+
+        public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+        {
+            base.OnStateExit(animator, stateInfo, layerIndex);
+
+            switch (Manager.GameState.CurrentGameState)
+            {
+                case EGameState.Battle:
+                    Manager.BattleInput.EnableBattleInput();
+                    break;
+                case EGameState.Dialogue:
+                    Manager.Input.EnableDialogueInput();
+                    break;
+                case EGameState.Menu:
+                    Manager.Input.EnableMenuInput();
+                    break;
+                default:
+                    Manager.Input.EnableMapGameplayInput();
+                    break;
+            }
+        }
+
         private void NavigateCommand(InputAction.CallbackContext context)
         {
             if (!context.performed) return;
@@ -36,22 +65,6 @@ namespace CryptoQuest.System.Cheat.States
         private void CloseTerminal(Animator animator)
         {
             animator.Play("Close");
-
-            switch (Manager.GameState.CurrentGameState)
-            {
-                case EGameState.Battle:
-                    Manager.BattleInput.EnableBattleInput();
-                    break;
-                case EGameState.Dialogue:
-                    Manager.Input.EnableDialogueInput();
-                    break;
-                case EGameState.Menu:
-                    Manager.Input.EnableMenuInput();
-                    break;
-                default:
-                    Manager.Input.EnableMapGameplayInput();
-                    break;
-            }
         }
     }
 }
