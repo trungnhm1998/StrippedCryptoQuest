@@ -6,6 +6,7 @@ namespace CryptoQuest.Menus.Home.States
     public class HomeMenuStateMachine : StateMachine
     {
         public static readonly string Overview = "Overview";
+        public static readonly string CharacterList = "CharacterList";
         public static readonly string PreSort = "PreSort";
         public static readonly string Sort = "Sort";
 
@@ -16,6 +17,7 @@ namespace CryptoQuest.Menus.Home.States
             _panel = homeMenuPanel;
 
             AddState(Overview, new OverviewState(homeMenuPanel));
+            AddState(CharacterList, new CharacterListState(homeMenuPanel));
             AddState(PreSort, new PreSortState(homeMenuPanel));
             AddState(Sort, new SortState(homeMenuPanel));
 
