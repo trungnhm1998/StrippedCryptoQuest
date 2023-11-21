@@ -148,6 +148,14 @@ namespace CryptoQuest.AbilitySystem.Abilities
                 }
 
                 BattleEventBus.RaiseEvent(new CastSkillEvent(_def, target) { Character = _character });
+
+                if (!AbilitySystemHelper.SystemHasNoneTags(target, AbilitySO.Tags.TargetTags.IgnoreTags))
+                {
+                    BattleEventBus.RaiseEvent(new CastSkillFailedEvent());
+                    //TODO: implement failed log
+                    continue;
+                }
+
                 InternalExecute(target);
             }
         }
@@ -165,6 +173,7 @@ namespace CryptoQuest.AbilitySystem.Abilities
             var result = roll < _def.SuccessRate;
             var resultMessage = result ? "Success" : "Failed";
             Debug.Log($"Casting {_def.name} with success rate {_def.SuccessRate} and roll {roll}: {resultMessage}");
+
             if (!result)
             {
                 Debug.Log($"Failed to cast {_def.name}");

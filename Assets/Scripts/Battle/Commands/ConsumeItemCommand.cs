@@ -24,14 +24,14 @@ namespace CryptoQuest.Battle.Commands
             _owner = owner;
             BattleEventBus.RaiseEvent<SelectedItemEvent>(new SelectedItemEvent() { ItemInfo = selectedItem });
         }
-        
+
         public void Execute()
         {
             var inventoryController = ServiceProvider.GetService<IInventoryController>();
             bool ableToUseOnAtLeastOneHero = false;
             foreach (var target in _targets)
             {
-                if (!target.IsValidAndAlive()) continue;
+                if (!target.IsValid()) continue;
                 BattleEventBus.RaiseEvent(new ConsumeItemEvent()
                 {
                     Character = _owner,
@@ -45,9 +45,10 @@ namespace CryptoQuest.Battle.Commands
                 {
                     ableToUseOnAtLeastOneHero = true;
                 }
+
                 spec.TryActiveAbility();
             }
-            
+
             if (ableToUseOnAtLeastOneHero)
             {
                 _selectedItem.OnConsumed(inventoryController);
