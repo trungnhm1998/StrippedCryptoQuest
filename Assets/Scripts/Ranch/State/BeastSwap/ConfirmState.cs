@@ -69,14 +69,13 @@ namespace CryptoQuest.Ranch.State.BeastSwap
 
         private void ShowTransferFailedMessage(ActionBase _)
         {
-            HandleTransferMessage(_transferSucceededMsg);
+            HandleTransferMessage(_transferFailedMsg);
         }
 
         private void ShowTransferSucceededMessage(ActionBase _)
         {
-            Debug.LogError($"ShowTransferSucceededMessage::{_}");
             ActionDispatcher.Dispatch(new ShowLoading(false));
-            HandleTransferMessage(_transferFailedMsg);
+            HandleTransferMessage(_transferSucceededMsg);
         }
 
         private void HandleTransferMessage(LocalizedString msg)
