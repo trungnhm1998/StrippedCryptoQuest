@@ -38,6 +38,8 @@ namespace CryptoQuest.Tavern.States.PartyOrganization
 
         protected override void OnExit()
         {
+            _controller.MerchantInputManager.CancelEvent -= CancelTransmission;
+
             if (_controller.DialogsManager.ChoiceDialog == null) return;
             _controller.DialogsManager.ChoiceDialog.Hide();
         }
