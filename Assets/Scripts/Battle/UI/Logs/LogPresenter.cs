@@ -74,9 +74,7 @@ namespace CryptoQuest.Battle.UI.Logs
             }
 
             Debug.Log($"LogPresenter::AppendLog {message.GetLocalizedString()}");
-            var command = new PresentLogCommand(this, message);
-            StartCoroutine(command.Load());
-            _roundEventsPresenter.EnqueueCommand(command);
+            _roundEventsPresenter.EnqueueCommand(new PresentLogCommand(this, message));
         }
 
         private int _lineCount;

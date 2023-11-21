@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
+using UnityEngine;
 
 namespace CryptoQuest.AbilitySystem.Attributes
 {

@@ -1,4 +1,5 @@
 ﻿using System;
+using CryptoQuest.Gameplay.Inventory;
 using CryptoQuest.Gameplay.Inventory.Currency;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
 using CryptoQuest.Gameplay.Reward;
@@ -10,7 +11,7 @@ namespace CryptoQuest.Gameplay.Loot
     public class CurrencyLootInfo : LootInfo<CurrencyInfo>
     {
         public CurrencyLootInfo(CurrencyInfo item) : base(item) { }
-        public override void AddItemToInventory(InventorySO inventory) => inventory.Add(Item);
+        public override void AddItemToInventory(IInventoryController inventory) => Item.AddToInventory(inventory);
 
         public override UI.Dialogs.RewardDialog.Reward CreateRewardUI() =>
             new AmountReward(Item.Amount, Item.Data.DisplayName);

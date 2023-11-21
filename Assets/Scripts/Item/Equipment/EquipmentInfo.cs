@@ -76,15 +76,10 @@ namespace CryptoQuest.Item.Equipment
         public virtual bool ContainedInInventory(IInventoryController inventoryController) =>
             inventoryController.Contains(this);
 
-        public virtual void AddToInventory(IInventoryController inventoryController)
-        {
-            inventoryController.Add(this);
-        }
+        public override bool AddToInventory(IInventoryController inventoryController) => inventoryController.Add(this);
 
-        public virtual void RemoveFromInventory(IInventoryController inventoryController)
-        {
+        public override bool RemoveFromInventory(IInventoryController inventoryController) =>
             inventoryController.Remove(this);
-        }
     }
 
     [Serializable]
@@ -93,15 +88,10 @@ namespace CryptoQuest.Item.Equipment
         [field: SerializeField] public string TokenId { get; set; }
         public NftEquipment(uint equipmentResponseID) : base(equipmentResponseID) { }
 
-        public override void AddToInventory(IInventoryController inventoryController)
-        {
-            inventoryController.Add(this);
-        }
+        public override bool AddToInventory(IInventoryController inventoryController) => inventoryController.Add(this);
 
-        public override void RemoveFromInventory(IInventoryController inventoryController)
-        {
+        public override bool RemoveFromInventory(IInventoryController inventoryController) =>
             inventoryController.Remove(this);
-        }
 
         public override bool ContainedInInventory(IInventoryController inventoryController) =>
             inventoryController.Contains(this);

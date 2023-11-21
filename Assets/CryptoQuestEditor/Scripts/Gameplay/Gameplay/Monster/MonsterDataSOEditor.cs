@@ -9,6 +9,7 @@ using CryptoQuest.Gameplay.Encounter;
 using CryptoQuest.Gameplay.Inventory.Currency;
 using CryptoQuest.Gameplay.Loot;
 using CryptoQuest.Item;
+using IndiGames.Core.Database;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.ScriptableObjects;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
 using IndiGames.Tools.ScriptableObjectBrowser;
@@ -16,7 +17,6 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.Localization;
-using AttributeScriptableObject = CryptoQuest.AbilitySystem.Attributes.AttributeScriptableObject;
 
 namespace CryptoQuestEditor.Gameplay.Gameplay.Monster
 {
@@ -73,7 +73,7 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Monster
             string[] allLines = File.ReadAllLines(directory);
             _enemyDatabase = GetEnemyDatabase();
             _allConsumableDatasDictionary = GetAllConsumableSos();
-            List<EnemyDatabase.Map> enemyMap = new();
+            List<AssetReferenceDatabaseT<int, EnemyDef>.Map> enemyMap = new();
             for (int index = ROW_OFFSET; index < allLines.Length; index++)
             {
                 // get data form tsv file
@@ -167,7 +167,7 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Monster
 
                 var assetGuid = AssetDatabase.AssetPathToGUID(path);
                 instance.SetObjectToAddressableGroup("Enemy");
-                EnemyDatabase.Map enemyMapData = new EnemyDatabase.Map()
+                AssetReferenceDatabaseT<int, EnemyDef>.Map enemyMapData = new AssetReferenceDatabaseT<int, EnemyDef>.Map()
                 {
                     Id = dataModel.MonsterId,
                     Data = new AssetReferenceT<EnemyDef>(assetGuid)

@@ -1,6 +1,6 @@
-﻿using CryptoQuest.AbilitySystem.Attributes;
-using CryptoQuest.Gameplay;
+﻿using CryptoQuest.Gameplay;
 using CryptoQuest.Gameplay.Helper;
+using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
 using NUnit.Framework;
 using UnityEngine;
 

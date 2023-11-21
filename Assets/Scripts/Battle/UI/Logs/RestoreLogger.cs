@@ -1,9 +1,8 @@
-using System.Collections.Generic;
-using System.Linq;
 using CryptoQuest.AbilitySystem.Attributes;
 using CryptoQuest.Battle.Events;
 using IndiGames.GameplayAbilitySystem.AttributeSystem;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.Components;
+using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Localization;
@@ -17,14 +16,7 @@ namespace CryptoQuest.Battle.UI.Logs
         [SerializeField] private LocalizedString _localizedLog;
         [SerializeField] private AttributeChangeEvent _attributeChangeEvent;
         [SerializeField] private AttributeScriptableObject[] _affectedAttributes;
-
-        private Dictionary<int, LocalizedString> _attributesNameDict = new();
-
-        private void Awake()
-        {
-            _attributesNameDict = _affectedAttributes.ToDictionary(keySelector: attr => attr.GetInstanceID(),
-                attr => attr.DisplayName);
-        }
+        [SerializeField] private AttributeConfigMapping _attributeConfigMapping;
 
         private void OnEnable()
         {
@@ -40,8 +32,7 @@ namespace CryptoQuest.Battle.UI.Logs
             AttributeValue newValue)
         {
             var changedAttribute = oldValue.Attribute;
-            if (!_attributesNameDict.TryGetValue(changedAttribute.GetInstanceID(), out var attributeName))
-                return;
+            if (!_attributeConfigMapping.TryGetMap(changedAttribute, out var map)) return;
 
             var isRestored = oldValue.CurrentValue < newValue.CurrentValue;
             var isRevived = oldValue.CurrentValue == 0 && changedAttribute == AttributeSets.Health;
@@ -53,7 +44,7 @@ namespace CryptoQuest.Battle.UI.Logs
             var msg = new LocalizedString(_localizedLog.TableReference, _localizedLog.TableEntryReference)
             {
                 { Constants.CHARACTER_NAME, characterName },
-                { Constants.ATTRIBUTE_NAME, attributeName }
+                { Constants.ATTRIBUTE_NAME, map.Name }
             };
 
             _presentLoggerEvent.Invoke(msg);

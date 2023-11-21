@@ -1,9 +1,8 @@
 using System.Collections.Generic;
 using System.Linq;
-using CryptoQuest.AbilitySystem.Attributes;
-using CharacterComponent = CryptoQuest.Battle.Components.Character;
+using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
 using UnityEngine;
-using CryptoQuest.Battle.Components;
+using CharacterComponent = CryptoQuest.Battle.Components.Character;
 
 namespace CryptoQuest.Gameplay.Battle.Core.Helper
 {

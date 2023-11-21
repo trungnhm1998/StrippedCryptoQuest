@@ -1,6 +1,6 @@
-﻿using CryptoQuest.Item.Equipment;
+﻿using CryptoQuest.AbilitySystem.Attributes;
+using CryptoQuest.Item.Equipment;
 using CryptoQuest.UI.Extensions;
-using CryptoQuest.UI.Tooltips.ScriptableObjects;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -73,7 +73,7 @@ namespace CryptoQuest.UI.Tooltips.Equipment
                 var attributeValue = Instantiate(_attributeValuePrefab, _statsContainer);
                 var value = attribute.Value;
                 value += (_equipment.Level - 1) * _equipment.Data.ValuePerLvl;
-                attributeValue.SetAttribute(config.ShortName, value);
+                attributeValue.SetAttribute(config.Name, value);
             }
         }
 

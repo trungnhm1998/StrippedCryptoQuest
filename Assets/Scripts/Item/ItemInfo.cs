@@ -1,4 +1,5 @@
 ﻿using System;
+using CryptoQuest.Gameplay.Inventory;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -24,6 +25,8 @@ namespace CryptoQuest.Item
         public abstract int SellPrice { get; }
 
         public abstract bool IsValid();
+        public abstract bool AddToInventory(IInventoryController inventory);
+        public abstract bool RemoveFromInventory(IInventoryController inventory);
     }
 
     [Serializable]

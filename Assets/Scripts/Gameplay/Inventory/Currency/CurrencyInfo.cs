@@ -55,5 +55,9 @@ namespace CryptoQuest.Gameplay.Inventory.Currency
         {
             return new CurrencyInfo(Data, Amount);
         }
+
+        public override bool AddToInventory(IInventoryController inventory) => inventory.Add(this);
+
+        public override bool RemoveFromInventory(IInventoryController inventory) => false;
     }
 }
