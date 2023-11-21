@@ -68,18 +68,7 @@ namespace CryptoQuest.UI.Dialogs.RewardDialog
             if (_gameStateSo.CurrentGameState != EGameState.Field) return;
             _inputMediator.EnableMapGameplayInput();
 
-            foreach (Transform child in TopContainer) Destroy(child.gameObject);
-            foreach (Transform child in BottomContainer) Destroy(child.gameObject);
-        }
-
-        private void DisplayItemsReward()
-        {
-            _rewardDialogData.RewardsInfos.ForEach(reward => reward.CreateUI(this));
-
-            _topNone.SetActive(!(TopContainer.childCount > 0));
-            _bottomNone.SetActive(!(BottomContainer.childCount > 0));
-
-            _scroll.UpdateStep();
+            CleanUpRewardView();
         }
 
         public UIRewardDialog SetReward(RewardDialogData rewardDialogData)
@@ -89,5 +78,23 @@ namespace CryptoQuest.UI.Dialogs.RewardDialog
         }
 
         public UIRewardItem InstantiateReward(Transform parent) => Instantiate(RewardItemPrefab, parent);
+
+
+        private void DisplayItemsReward()
+        {
+            CleanUpRewardView();
+            _rewardDialogData.RewardsInfos.ForEach(reward => reward.CreateUI(this));
+
+            _topNone.SetActive(!(TopContainer.childCount > 0));
+            _bottomNone.SetActive(!(BottomContainer.childCount > 0));
+
+            _scroll.UpdateStep();
+        }
+
+        private void CleanUpRewardView()
+        {
+            foreach (Transform child in TopContainer) Destroy(child.gameObject);
+            foreach (Transform child in BottomContainer) Destroy(child.gameObject);
+        }
     }
 }
