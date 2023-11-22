@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Reflection;
 using CryptoQuest.AbilitySystem;
 using CryptoQuest.AbilitySystem.Abilities;
 using CryptoQuest.AbilitySystem.Abilities.PostNormalAttackPassive;
@@ -12,7 +13,9 @@ using IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects.EffectExecu
 using IndiGames.GameplayAbilitySystem.TagSystem.ScriptableObjects;
 using IndiGames.Tools.ScriptableObjectBrowser;
 using UnityEditor;
+using UnityEditor.Localization.Plugins.XLIFF.V20;
 using UnityEngine;
+using UnityEngine.Localization;
 
 namespace CryptoQuestEditor.Gameplay.Gameplay.Abilities
 {
@@ -20,6 +23,7 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Abilities
     {
         private const string DEFAULT_NAME = "";
         private const int ROW_OFFSET = 1;
+        private const string DESCRIPTION_LOCALIZE_TABLE = "AbilityDescriptions";
 
         #region Indexing
 
@@ -123,10 +127,7 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Abilities
                         BasePower = float.Parse(splitedData[SUB_EFFECT_BASE_POWER_INDEX]),
                     };
                     dataModel.SubEffectData = subData;
-                    if (subData.EffectTypeId == "99") continue;
                 }
-
-                if (dataModel.MainEffectTypeId == "99" || dataModel.MainEffectTypeId == "4") continue;
 
 
                 PassiveAbility instance = null;
@@ -138,7 +139,14 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Abilities
                 }
 
                 if (instance == null) continue;
+                SetDefaultID(instance, dataModel);
+                SetDescription(instance, splitedData);
+                SetDefaultVFX(instance);
+                if (dataModel.MainEffectTypeId == "99" || dataModel.MainEffectTypeId == "4") continue;
+                if (dataModel.IsSubEffectValid() && (dataModel.SubEffectData.EffectTypeId == "99")) continue;
                 SetInstanceProperty(instance, dataModel);
+
+
                 instance.name = name;
 
                 if (!AssetDatabase.Contains(instance))
@@ -161,6 +169,37 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Abilities
             var mainEffect = GetEffect(data.MainEffectTargetParameterId);
             if (property == null || mainEffect == null) return;
             property.objectReferenceValue = mainEffect;
+            serializedObject.ApplyModifiedProperties();
+            serializedObject.Update();
+        }
+
+        private void SetDescription(PassiveAbility instance, string[] data)
+        {
+            string key = data[LOCALIZED_KEY_INDEX];
+            LocalizedString skillDescription = new(DESCRIPTION_LOCALIZE_TABLE, key);
+            PropertyInfo propertyInfo = typeof(PassiveAbility).GetProperty("Description");
+            propertyInfo.SetValue(instance, skillDescription);
+        }
+
+        private void SetDefaultID(PassiveAbility instance, AbilityDataStruct dataStruct)
+        {
+            var serializedObject = new SerializedObject(instance);
+            var propertyCtxId = serializedObject.FindProperty("_context._skillInfo.Id");
+            var propertyInstanceId = serializedObject.FindProperty("<Id>k__BackingField");
+            if (propertyCtxId == null || propertyInstanceId == null)
+                return;
+            propertyInstanceId.intValue = int.Parse(dataStruct.Id);
+            propertyCtxId.intValue = int.Parse(dataStruct.Id);
+            serializedObject.ApplyModifiedProperties();
+            serializedObject.Update();
+        }
+
+        private void SetDefaultVFX(PassiveAbility instance)
+        {
+            var serializedObject = new SerializedObject(instance);
+            var property = serializedObject.FindProperty("_context._skillInfo.VfxId");
+            if (property == null) return;
+            property.intValue = -1;
             serializedObject.ApplyModifiedProperties();
             serializedObject.Update();
         }

@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Reflection;
 using CryptoQuest.AbilitySystem;
 using CryptoQuest.AbilitySystem.Abilities;
 using CryptoQuest.AbilitySystem.Abilities.PostNormalAttackPassive;
@@ -125,10 +126,12 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Abilities
                         BasePower = float.Parse(splitedData[SUB_EFFECT_BASE_POWER_INDEX]),
                     };
                     dataModel.SubEffectData = subData;
-                    if (subData.EffectTypeId == "99") continue;
                 }
 
                 if (dataModel.MainEffectTypeId == "99") continue;
+                if (dataModel.IsSubEffectValid())
+                    if (dataModel.SubEffectData.EffectTypeId == "99")
+                        continue;
 
 
                 PostNormalAttackPassiveBase instance = null;
@@ -142,9 +145,10 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Abilities
                 }
 
                 if (instance == null) continue;
+                SetDescription(instance, splitedData);
+                SetDefaultVFX(instance);
+
                 SetInstanceProperty(instance, dataModel);
-                // SetEffects(instance, dataModel);
-                // SetLocalized(instance, dataModel);
 
                 instance.name = name;
 
@@ -159,6 +163,31 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Abilities
                     EditorUtility.SetDirty(instance);
                 }
             }
+        }
+
+        private void SetDescription(PostNormalAttackPassiveBase instance, string[] data)
+        {
+            string key = data[LOCALIZED_KEY_INDEX];
+            LocalizedString skillDescription = new(DESCRIPTION_LOCALIZE_TABLE, key);
+            PropertyInfo propertyInfo = typeof(PassiveAbility).GetProperty("Description");
+
+            var p = typeof(PassiveAbility).GetProperties();
+            foreach (var propertyInf in p)
+            {
+                Debug.Log(propertyInf.Name);
+            }
+
+            propertyInfo.SetValue(instance, skillDescription);
+        }
+
+        private void SetDefaultVFX(PostNormalAttackPassiveBase instance)
+        {
+            var serializedObject = new SerializedObject(instance);
+            var property = serializedObject.FindProperty("_context._skillInfo.VfxId");
+            if (property == null) return;
+            property.intValue = -1;
+            serializedObject.ApplyModifiedProperties();
+            serializedObject.Update();
         }
 
         private void SetEffects(PostNormalAttackPassiveBase instance, AbilityDataStruct data)
