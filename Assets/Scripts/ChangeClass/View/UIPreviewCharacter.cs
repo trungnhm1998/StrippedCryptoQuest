@@ -1,5 +1,6 @@
 using AssetReferenceSprite;
 using CryptoQuest.ChangeClass.API;
+using CryptoQuest.UI.Character;
 using TMPro;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -14,6 +15,7 @@ namespace CryptoQuest.ChangeClass.View
         [SerializeField] private LocalizeStringEvent _name;
         [SerializeField] private Image _element;
         [SerializeField] private Image _avatar;
+        [SerializeField] private UIAttributeBar _expBar;
         [SerializeField] private TextMeshProUGUI _hp;
         [SerializeField] private TextMeshProUGUI _maxHp;
         [SerializeField] private TextMeshProUGUI _mp;
@@ -32,7 +34,6 @@ namespace CryptoQuest.ChangeClass.View
 
         public void PreviewCharacter(PreviewCharacter data, UICharacter character, AssetReferenceT<Sprite> avatar, bool isSameElement)
         {
-            _name.StringReference = character.LocalizedName;
             _element.sprite = isSameElement ? character.ElementImage : _randomElement;
             _hp.text = data.minHP.ToString();
             _maxHp.text = data.minHP.ToString();
@@ -67,6 +68,12 @@ namespace CryptoQuest.ChangeClass.View
             _def.text = data.deffence.ToString();
             _mAtk.text = data.MATK.ToString();
             LoadAssetReference(avatar);
+        }
+
+        public void UpdateExpBar(float currentExp, float requireExp)
+        {
+            _expBar.SetValue(currentExp);
+            _expBar.SetMaxValue(requireExp);
         }
 
         private void LoadAssetReference(AssetReferenceT<Sprite> avatar)

@@ -15,7 +15,7 @@ namespace CryptoQuest.ChangeClass.State
         private Animator _animator;
         private static readonly int _submit = Animator.StringToHash("isConfirm");
         private static readonly int _exit = Animator.StringToHash("isChangeClass");
-        private int _index;
+        [SerializeField] private int _index;
 
         public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {

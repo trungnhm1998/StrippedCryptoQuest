@@ -60,8 +60,8 @@ namespace CryptoQuest.ChangeClass.API
         {
             _requestBody = new Body
             {
-                BaseUnitId1 = firstClassMaterial.Class.id.ToString(),
-                BaseUnitId2 = lastClassMaterial.Class.id.ToString(),
+                BaseUnitId1 = firstClassMaterial.Class.Id.ToString(),
+                BaseUnitId2 = lastClassMaterial.Class.Id.ToString(),
                 ChangeClassMaterials = new ChangeClassMaterials(occupation.Class.ItemMaterialId.ToString(), occupation.Class.MaterialQuantity)
             };
             ActionDispatcher.Dispatch(new GetNewNftClass { ForceRefresh = true });

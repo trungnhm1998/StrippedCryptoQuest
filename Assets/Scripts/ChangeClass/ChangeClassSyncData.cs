@@ -20,9 +20,9 @@ namespace CryptoQuest.ChangeClass
         private Sprite _element;
         private AssetReferenceT<Sprite> _avatar;
 
-        public void SetClassMaterialData(CharacterAPI data, UICharacter character)
+        public void SetClassMaterialData(UICharacter character)
         {
-            SetCharacterData(data.characterId, data.elementId, character);
+            SetCharacterData(character);
         }
 
         public void SetNewClassData(NewCharacter data, UIPreviewCharacter newCharacter)
@@ -30,19 +30,16 @@ namespace CryptoQuest.ChangeClass
             SetCharacterData(data.characterId, data.elementId, newCharacter, data);
         }
 
-        private void SetCharacterData(string characterId, string elementId, UICharacter character)
+        private void SetCharacterData(UICharacter character)
         {
-            var matchingOrigin = Origins.FirstOrDefault(origin => origin.DetailInformation.Id.ToString() == characterId);
-            _localizedName = matchingOrigin?.DetailInformation.LocalizedName;
-
-            var matchingElement = Elements.FirstOrDefault(element => elementId == element.Id.ToString());
-            _element = matchingElement?.Icon;
-
-            string mapId = $"{characterId}-{character.Class.classId}";
+            var characterId = character.Class.Origin.DetailInformation.Id;
+            var classId = character.Class.Class.Id;
+            
+            string mapId = $"{characterId}-{classId}";
             var matchingAvatar = HeroAvatar.Maps.FirstOrDefault(avatar => avatar.Id == mapId);
             _avatar = matchingAvatar.Data;
 
-            character.SyncData(_localizedName, _element, _avatar);
+            character.SyncAvatar(_avatar);
         }
 
         private void SetCharacterData(string characterId, string elementId, UIPreviewCharacter newCharacter, NewCharacter data)
@@ -62,7 +59,7 @@ namespace CryptoQuest.ChangeClass
 
         public AssetReferenceT<Sprite> Avatar(UICharacter character, UIOccupation occupation)
         {
-            string mapId = $"{character.Class.characterId}-{occupation.Class.CharacterClass.Id}";
+            string mapId = $"{character.Class.Origin.DetailInformation.Id}-{occupation.Class.CharacterClass.Id}";
             var matchingAvatar = HeroAvatar.Maps.FirstOrDefault(avatar => avatar.Id == mapId);
             return matchingAvatar.Data;
         }

@@ -1,4 +1,9 @@
+using System.Collections.Generic;
 using AssetReferenceSprite;
+using CryptoQuest.Character.Hero;
+using CryptoQuest.UI.Character;
+using IndiGames.GameplayAbilitySystem.AttributeSystem;
+using Palmmedia.ReportGenerator.Core.Parser.Analysis;
 using TMPro;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -12,42 +17,21 @@ namespace CryptoQuest.ChangeClass.View
         [SerializeField] private LocalizeStringEvent _name;
         [SerializeField] private Image _element;
         [SerializeField] private Image _avatar;
-        [SerializeField] private TextMeshProUGUI _minHP;
-        [SerializeField] private TextMeshProUGUI _maxHP;
         [SerializeField] private TextMeshProUGUI _level;
-        [SerializeField] private TextMeshProUGUI _minMP;
-        [SerializeField] private TextMeshProUGUI _maxMP;
-        [SerializeField] private TextMeshProUGUI _exp;
-        [SerializeField] private TextMeshProUGUI _str;
-        [SerializeField] private TextMeshProUGUI _vit;
-        [SerializeField] private TextMeshProUGUI _agi;
-        [SerializeField] private TextMeshProUGUI _int;
-        [SerializeField] private TextMeshProUGUI _luck;
-        [SerializeField] private TextMeshProUGUI _atk;
-        [SerializeField] private TextMeshProUGUI _mAtk;
-        [SerializeField] private TextMeshProUGUI _def;
+        [SerializeField] private UIAttributeBar _expBar;
+        [SerializeField] private List<UIAttribute> _attributeBar;
 
-        public void PreviewCharacter(UICharacter character)
+        public void PreviewCharacter(List<AttributeValue> value, UICharacter character)
         {
-            _name.StringReference = character.LocalizedName;
-            _element.sprite = character.ElementImage;
-            _level.text = $"Lv{character.Class.level}";
-            _minHP.text = character.Class.HP.ToString();
-            _maxHP.text = character.Class.HP.ToString();
-            _minMP.text = character.Class.MP.ToString();
-            _maxMP.text = character.Class.MP.ToString();
-            _str.text = character.Class.strength.ToString();
-            _vit.text = character.Class.vitality.ToString();
-            _exp.text = character.Class.exp.ToString();
-            _agi.text = character.Class.minAgility.ToString();
-            _int.text = character.Class.intelligence.ToString();
-            _luck.text = character.Class.luck.ToString();
-            _atk.text = character.Class.attack.ToString();
-            _mAtk.text = character.Class.MATK.ToString();
-            _def.text = character.Class.deffence.ToString();
+            _name.StringReference = character.Class.Origin.DetailInformation.LocalizedName;
+            _element.sprite = character.Class.Elemental.Icon;
+            _expBar.SetValue(character.CurrentExp);
+            _expBar.SetMaxValue(character.RequireExp);
+            _level.text = $"Lv{character.Level}";
             LoadAssetReference(character.Avatar);
+            UpdateCharacterStats(value);
         }
-
+        
         private void LoadAssetReference(AssetReferenceT<Sprite> avatar)
         {
             if (avatar == null)
@@ -56,6 +40,20 @@ namespace CryptoQuest.ChangeClass.View
                 return;
             }
             StartCoroutine(avatar.LoadSpriteAndSet(_avatar));
+        }
+
+        private void UpdateCharacterStats(List<AttributeValue> attributeValues)
+        {
+            foreach (var attribute in attributeValues)
+            {
+                foreach (var attributeValue in _attributeBar)
+                {
+                    if (attribute.Attribute == attributeValue.Attribute)
+                    {
+                        attributeValue.SetValue(attribute.BaseValue);
+                    }
+                }
+            }
         }
     }
 }

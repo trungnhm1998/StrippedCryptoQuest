@@ -18,9 +18,9 @@ namespace CryptoQuest.ChangeClass
         [SerializeField] private PreviewCharacterAPI _previewCharacterAPI;
         [SerializeField] private ChangeNewClassAPI _changeNewClassAPI;
         [SerializeField] private ChangeClassPresenter _changeClassPresenter;
-        [SerializeField] private UIPreviewClassMaterial _previewFirstClassMaterial;
-        [SerializeField] private UIPreviewClassMaterial _previewLastClassMaterial;
-        [SerializeField] private UIPreviewClassMaterial _showDetailClassMaterial;
+        [SerializeField] private CalculatorCharacterStats _calculatorFirstCharacterStats;
+        [SerializeField] private CalculatorCharacterStats _calculatorSecondCharacterStats;
+        [SerializeField] private CalculatorCharacterStats _calculatorTooltipCharacter;
         [SerializeField] private UIPreviewCharacter _previewNewClass;
         [SerializeField] private UIPreviewCharacter _previewNewClassStatus;
         [SerializeField] private UIChangeClassTooltip _preview;
@@ -60,7 +60,7 @@ namespace CryptoQuest.ChangeClass
         private IEnumerator SelectDefaultButton(int index)
         {
             yield return new WaitUntil(() => _listClassMaterial[index].IsFilterClassMaterial);
-            int materialNumber = _listClassMaterial[index].ListClassCharacter.Count;
+            var materialNumber = _listClassMaterial[index].ListClassCharacter.Count;
             if (materialNumber != 0)
                 EnableButtonInteractable(true, index);
         }
@@ -88,8 +88,16 @@ namespace CryptoQuest.ChangeClass
             CheckElementImage();
             yield return new WaitUntil(() => _previewCharacterAPI.IsFinishFetchData);
             _previewNewClass.PreviewCharacter(_previewCharacterAPI.Data, _firstClassMaterial, avatar, CheckElementImage());
-            _previewFirstClassMaterial.PreviewCharacter(_firstClassMaterial);
-            _previewLastClassMaterial.PreviewCharacter(_lastClassMaterial);
+            _calculatorFirstCharacterStats.CalculatorStats(_firstClassMaterial);
+            _calculatorSecondCharacterStats.CalculatorStats(_lastClassMaterial);
+            GetDefaultExp(_previewNewClass);
+        }
+
+        private void GetDefaultExp(UIPreviewCharacter character)
+        {
+            var requiredExp = _calculatorFirstCharacterStats.GetRequiredExp(0);
+            var currentExp = _calculatorFirstCharacterStats.GetCurrentExp(0);
+            character.UpdateExpBar(currentExp, requiredExp);
         }
 
         public void ChangeClass()
@@ -106,27 +114,28 @@ namespace CryptoQuest.ChangeClass
 
             if (_changeNewClassAPI.Data == null) yield break;
             _syncData.SetNewClassData(_changeNewClassAPI.Data, _previewNewClassStatus);
+            GetDefaultExp(_previewNewClassStatus);
         }
 
         public void ShowDetail(UICharacter character)
         {
-            if (!_showDetailClassMaterial.gameObject.activeSelf)
+            if (!_calculatorTooltipCharacter.gameObject.activeSelf)
             {
-                _showDetailClassMaterial.gameObject.SetActive(true);
+                _calculatorTooltipCharacter.gameObject.SetActive(true);
                 _preview.ShowTooltip(character);
             }
-            _showDetailClassMaterial.PreviewCharacter(character);
+            _calculatorTooltipCharacter.CalculatorStats(character);
         }
 
         public void HideDetail()
         {
-            if (!_showDetailClassMaterial.gameObject.activeSelf) return;
-            _showDetailClassMaterial.gameObject.SetActive(false);
+            if (!_calculatorTooltipCharacter.gameObject.activeSelf) return;
+            _calculatorTooltipCharacter.gameObject.SetActive(false);
         }
 
         private bool CheckElementImage()
         {
-            return _firstClassMaterial.ElementImage == _lastClassMaterial.ElementImage;
+            return _firstClassMaterial.Class.Elemental == _lastClassMaterial.Class.Elemental;
         }
     }
 }

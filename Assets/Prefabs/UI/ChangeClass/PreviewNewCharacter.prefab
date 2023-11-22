@@ -1159,6 +1159,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9170814670803596104}
+  - component: {fileID: 780191738173373251}
   m_Layer: 5
   m_Name: EXP
   m_TagString: Untagged
@@ -1187,6 +1188,21 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 225, y: 25}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &780191738173373251
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1180549459712022039}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43efb78b437b4ce28daea0c3d37f59ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _currentValue: {fileID: 2543600594969995460}
+  _maxValue: {fileID: 2189841053919737521}
+  _bar: {fileID: 537262428998404546}
 --- !u!1 &1222208900548302872
 GameObject:
   m_ObjectHideFlags: 0
@@ -1373,6 +1389,7 @@ MonoBehaviour:
   _name: {fileID: 4672727069614087207}
   _element: {fileID: 4343255174353535847}
   _avatar: {fileID: 6167738771224093851}
+  _expBar: {fileID: 780191738173373251}
   _hp: {fileID: 2830747631937482177}
   _maxHp: {fileID: 1902659158494294964}
   _mp: {fileID: 844294434381447145}

@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using CryptoQuest.ChangeClass.API;
+using CryptoQuest.Character.Hero;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,7 +11,7 @@ namespace CryptoQuest.ChangeClass.View
         [SerializeField] private ScrollRect _scrollRect;
         [SerializeField] private UICharacter _characterClassObject;
         [SerializeField] private ChangeClassSyncData _syncData;
-        private List<CharacterAPI> _listClassMaterial = new();
+        private List<HeroSpec> _listClassMaterial = new();
         public List<UICharacter> ListClassCharacter { get; private set; } = new();
         public UIOccupation _occupation { get; private set; }
         public bool IsEmptyMaterial { get; private set; }
@@ -19,7 +19,7 @@ namespace CryptoQuest.ChangeClass.View
         public bool IsFinishInstantiateData { get; private set; }
         public int ClassID { get; private set; }
 
-        public IEnumerator InstantiateData(List<CharacterAPI> classMaterials, UIOccupation occupation, int index)
+        public IEnumerator InstantiateData(List<HeroSpec> classMaterials, UIOccupation occupation, int index)
         {
             ClassID = occupation.Class.ClassMaterials[index].Id;
             _occupation = occupation;
@@ -31,11 +31,11 @@ namespace CryptoQuest.ChangeClass.View
             if (occupation.Class.ClassMaterials.Count == 0) yield break;
             for (int i = 0; i < _listClassMaterial.Count; i++)
             {
-                if (ClassID.ToString() == _listClassMaterial[i].classId && _listClassMaterial[i].inGameStatus == 2)
+                if (ClassID.ToString() == _listClassMaterial[i].Class.Id.ToString())
                 {
                     UICharacter newMaterial = Instantiate(_characterClassObject, _scrollRect.content);
                     newMaterial.ConfigureCell(_listClassMaterial[i]);
-                    _syncData.SetClassMaterialData(_listClassMaterial[i], newMaterial);
+                    _syncData.SetClassMaterialData(newMaterial);
                     ListClassCharacter.Add(newMaterial);
                 }
             }
@@ -50,12 +50,10 @@ namespace CryptoQuest.ChangeClass.View
             yield return new WaitUntil(() => _scrollRect.content.childCount == 0);
             for (int i = 0; i < _listClassMaterial.Count; i++)
             {
-                if (ClassID.ToString() == _listClassMaterial[i].classId && _listClassMaterial[i].name == character.Class.name
-                && character.Class.id != _listClassMaterial[i].id && _listClassMaterial[i].inGameStatus == 2)
+                if (ClassID == _listClassMaterial[i].Class.Id && _listClassMaterial[i].Origin == character.Class.Origin)
                 {
                     UICharacter newMaterial = Instantiate(_characterClassObject, _scrollRect.content);
                     newMaterial.ConfigureCell(_listClassMaterial[i]);
-                    _syncData.SetClassMaterialData(_listClassMaterial[i], newMaterial);
                     ListClassCharacter.Add(newMaterial);
                 }
             }
