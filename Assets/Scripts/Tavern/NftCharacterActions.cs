@@ -36,35 +36,15 @@ namespace CryptoQuest.Tavern
 
     public class GetNftCharactersFailed : ActionBase { }
 
-    public class SendCharactersToWallet : ActionBase
-    {
-        public int[] SelectedInGameCharacters { get; }
-
-        public SendCharactersToWallet(int[] selectedInGameCharacters)
-        {
-            SelectedInGameCharacters = selectedInGameCharacters;
-        }
-    }
-
-    public class SendCharactersToGame : ActionBase
-    {
-        public int[] SelectedInWalletCharacters { get; }
-
-        public SendCharactersToGame(int[] selectedInWalletCharacters)
-        {
-            SelectedInWalletCharacters = selectedInWalletCharacters;
-        }
-    }
-
     public class SendCharactersToBothSide : ActionBase
     {
-        public int[] SelectedInWalletCharacters { get; }
+        public int[] SelectedInDboxCharacters { get; }
         public int[] SelectedInGameCharacters { get; }
 
-        public SendCharactersToBothSide(int[] selectedInGameCharacters, int[] selectedInWalletCharacters)
+        public SendCharactersToBothSide(int[] selectedInGameCharacters, int[] selectedInDboxCharacters)
         {
             SelectedInGameCharacters = selectedInGameCharacters;
-            SelectedInWalletCharacters = selectedInWalletCharacters;
+            SelectedInDboxCharacters = selectedInDboxCharacters;
         }
     }
 
