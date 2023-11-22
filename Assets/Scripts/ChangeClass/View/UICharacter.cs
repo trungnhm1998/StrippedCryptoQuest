@@ -1,5 +1,6 @@
 using System;
 using CryptoQuest.ChangeClass.API;
+using CryptoQuest.Character.Hero;
 using CryptoQuest.Menu;
 using CryptoQuest.UI.Menu;
 using UnityEngine;
@@ -14,27 +15,34 @@ namespace CryptoQuest.ChangeClass.View
     {
         public event Action<UICharacter> OnSubmit;
         public event Action<UICharacter> OnItemSelected;
-        [SerializeField] private LocalizeStringEvent _displayName;
         [SerializeField] private Image _icon;
         [SerializeField] private GameObject _selectedBackground;
         [SerializeField] private MultiInputButton _button;
+        [SerializeField] private LocalizeStringEvent _localizedName;
         [field: SerializeField] public RectTransform Content { get; private set; }
-        public CharacterAPI Class { get; private set; }
+        public HeroSpec Class { get; private set; }
         public AssetReferenceT<Sprite> Avatar { get; private set; }
-        public LocalizedString LocalizedName { get; private set; }
         public Sprite ElementImage { get; private set; }
+        public float CurrentExp { get; private set; }
+        public float RequireExp { get; private set; }
+        public int Level { get; private set; }
 
-        public void ConfigureCell(CharacterAPI characterClass)
+        public void ConfigureCell(HeroSpec characterClass)
         {
             Class = characterClass;
+            _localizedName.StringReference = Class.Origin.DetailInformation.LocalizedName;
         }
 
-        public void SyncData(LocalizedString localized, Sprite element, AssetReferenceT<Sprite> avatar)
+        public void SyncAvatar(AssetReferenceT<Sprite> avatar)
         {
             Avatar = avatar;
-            LocalizedName = localized;
-            ElementImage = element;
-            _displayName.StringReference = LocalizedName;
+        }
+
+        public void CalculatorExp(float currentExp, float requireExp, int level)
+        {
+            RequireExp = requireExp;
+            Level = level;
+            CurrentExp = currentExp;
         }
 
         private void OnEnable()

@@ -1,9 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using CryptoQuest.ChangeClass.API;
 using CryptoQuest.ChangeClass.ScriptableObjects;
 using CryptoQuest.ChangeClass.View;
+using CryptoQuest.Gameplay.Inventory;
+using CryptoQuest.Gameplay.PlayerParty;
 using CryptoQuest.Item;
+using CryptoQuest.System;
 using UnityEngine;
 
 namespace CryptoQuest.ChangeClass
@@ -18,6 +22,9 @@ namespace CryptoQuest.ChangeClass
         [SerializeField] private ChangeClassSyncData _syncData;
         [SerializeField] private WalletMaterialAPI _materialApi;
         [SerializeField] private WalletCharacterAPI _characterAPI;
+        [SerializeField] private HeroInventorySO _heroInventorySO;
+        private HeroInventorySO _changeClassHeroData;
+        private IPartyController _partyController;
         public UIOccupation Occupation { get; private set; }
         private bool _isEmptyClassMaterial;
         public bool IsValid { get; private set; }
@@ -35,9 +42,32 @@ namespace CryptoQuest.ChangeClass
 
         public void Init()
         {
+            GetAllHerosData();
+            _syncData.ReleaseAllAssetReference();
             _isEmptyClassMaterial = false;
             StartCoroutine(LoadDataToChangeClass());
             EnableClassInteractable(true);
+        }
+
+        private void GetAllHerosData()
+        {
+            _changeClassHeroData = new();
+            _partyController = ServiceProvider.GetService<IPartyController>();
+            HeroInventorySO partyHeros = new();
+
+            foreach (var data in _partyController.Slots)
+            {
+                if (data.IsValid() == false) break;
+                partyHeros.OwnedHeroes.Add(data.Spec.Hero);
+            }
+
+            var listHeroInventory = _heroInventorySO.OwnedHeroes;
+            var listHeroParty = partyHeros.OwnedHeroes;
+
+            var combinedList = listHeroInventory.Concat(listHeroParty);
+
+            var distinctList = combinedList.GroupBy(x => x.Id).Select(g => g.First()).ToList();
+            _changeClassHeroData.OwnedHeroes = distinctList;
         }
 
         private IEnumerator LoadDataToChangeClass()
@@ -68,7 +98,6 @@ namespace CryptoQuest.ChangeClass
         private void HandleSelectedOccupation(UIOccupation occupation)
         {
             Occupation = occupation;
-            _syncData.ReleaseAllAssetReference();
             RenderClassMaterial();
             StartCoroutine(RenderItemMaterial());
             StartCoroutine(ValidateChangeClassMaterial());
@@ -79,7 +108,7 @@ namespace CryptoQuest.ChangeClass
             if (Occupation == null) return;
             for (int i = 0; i < ListClassMaterial.Count; i++)
             {
-                StartCoroutine(ListClassMaterial[i].InstantiateData(_characterAPI.Data, Occupation, i));
+                StartCoroutine(ListClassMaterial[i].InstantiateData(_changeClassHeroData.OwnedHeroes, Occupation, i));
             }
         }
 

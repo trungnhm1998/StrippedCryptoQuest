@@ -34,7 +34,7 @@ namespace CryptoQuest.ChangeClass.API
             IsFinishFetchData = false;
             _restAPINetworkController = ServiceProvider.GetService<IRestClient>();
             _restAPINetworkController
-                .WithBody(new Body { BaseUnitId1 = firstClassMaterial.Class.id.ToString(), BaseUnitId2 = lastClassMaterial.Class.id.ToString() })
+                .WithBody(new Body { BaseUnitId1 = firstClassMaterial.Class.Id.ToString(), BaseUnitId2 = lastClassMaterial.Class.Id.ToString() })
                 .Post<PreviewCharacterData>(APIChangeClass.PREVIEW_NEW_CHARACTER)
                 .Subscribe(PreviewNewCharacter, OnGetNewClassFailed, OnGetNewClassSuccess);
         }
