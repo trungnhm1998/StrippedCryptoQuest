@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
@@ -42,18 +41,15 @@ namespace IndiGames.Core.Database
 
         public Map[] Maps => _maps;
 
-        [NonSerialized] private Dictionary<TKey, AssetReferenceT<TSerializableObject>> _map = new();
+        [NonSerialized] private readonly Dictionary<TKey, AssetReferenceT<TSerializableObject>> _lookupTable = new();
 
-        public Dictionary<TKey, AssetReferenceT<TSerializableObject>> CacheMap
+        private void OnEnable()
         {
-            get
-            {
-                if (_map.Count == 0)
-                    _map = Maps.ToDictionary(x => x.Id, x => x.Data);
-                return _map;
-            }
+            _lookupTable.Clear();
+            foreach (var map in _maps) _lookupTable.Add(map.Id, map.Data);
         }
 
+        public Dictionary<TKey, AssetReferenceT<TSerializableObject>> CacheLookupTable => _lookupTable;
         private readonly Dictionary<TKey, AsyncOperationHandle<TSerializableObject>> _loadedData = new();
 
         public void ReleaseDataById(TKey id)
@@ -89,7 +85,7 @@ namespace IndiGames.Core.Database
             }
 
             Debug.Log($"Loading {name}: {id}");
-            if (!CacheMap.TryGetValue(id, out var assetRef))
+            if (!CacheLookupTable.TryGetValue(id, out var assetRef))
             {
                 Debug.LogWarning($"Cannot find asset with id {id} in database");
                 yield break;

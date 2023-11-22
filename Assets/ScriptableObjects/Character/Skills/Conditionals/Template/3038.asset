@@ -9,8 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 12038f40d2622c943aa3a8ff34f75592, type: 3}
-  m_Name: 3009
+  m_Script: {fileID: 11500000, guid: a22048f72aad4424bba38805963c3166, type: 3}
+  m_Name: 3038
   m_EditorClassIdentifier: 
   tags:
     AbilityTag: {fileID: 0}
@@ -26,34 +26,25 @@ MonoBehaviour:
     TargetTags:
       RequireTags: []
       IgnoreTags: []
-  <Id>k__BackingField: 3009
+  <Id>k__BackingField: 38
+  <Description>k__BackingField:
+    m_TableReference:
+      m_TableCollectionName: 
+    m_TableEntryReference:
+      m_KeyId: 0
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
   _context:
     _skillInfo:
       Id: 0
-      SkillName:
-        m_TableReference:
-          m_TableCollectionName: 
-        m_TableEntryReference:
-          m_KeyId: 0
-          m_Key: 
-        m_FallbackState: 0
-        m_WaitForCompletion: 0
-        m_LocalVariables: []
-      SkillDescription:
-        m_TableReference:
-          m_TableCollectionName: 
-        m_TableEntryReference:
-          m_KeyId: 0
-          m_Key: 
-        m_FallbackState: 0
-        m_WaitForCompletion: 0
-        m_LocalVariables: []
       SkillIcon: {fileID: 0}
-      Element: {fileID: 0}
-      SkillType: {fileID: 0}
+      SkillType: 0
       Category: {fileID: 0}
       Cost: 0
       UsageScenarioSO: 0
+      VfxId: 0
       SkillParameters:
         Element: {fileID: 0}
         BasePower: 0
@@ -65,13 +56,11 @@ MonoBehaviour:
         IsFixed: 0
         ContinuesTurn: 1
         EffectType: 0
-        targetAttribute:
+        TargetAttribute:
           Attribute: {fileID: 0}
-          CaptureFrom: 1
-        VfxId: 
-    _turns: 0
+          CaptureFrom: 0
   <SuccessRate>k__BackingField: 1
-  <Effect>k__BackingField: {fileID: 11400000, guid: 70d994a4968f0f84fa243d1d36749ee0, type: 2}
+  <AdditionalAttacks>k__BackingField: 1
   references:
     version: 2
     RefIds: []

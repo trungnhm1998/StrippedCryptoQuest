@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Reflection;
+using CryptoQuest.AbilitySystem.Abilities;
 using CryptoQuest.Actions;
 using CryptoQuest.Core;
 using CryptoQuest.Events;
@@ -25,6 +26,7 @@ namespace CryptoQuest.Sagas.Profile
     public class FetchProfileEquipments : SagaBase<FetchProfileEquipmentsAction>
     {
         [SerializeField] private GetEquipmentsEvent _inGameEquipmentsUpdate;
+        [SerializeField] private PassiveAbilityDatabase _passiveAbilityDatabase;
         [SerializeField] private AssetReferenceT<InventorySO> _inventoryAsset;
         private InventorySO _inventory;
 
@@ -116,6 +118,22 @@ namespace CryptoQuest.Sagas.Profile
             nftEquipment.Data.MaxLevel = response.maxLv;
             nftEquipment.TokenId = response.equipmentTokenId;
             nftEquipment.Data.ValuePerLvl = response.valuePerLv;
+            StartCoroutine(FillEquipmentSkills(response, nftEquipment));
+        }
+
+        private IEnumerator FillEquipmentSkills(EquipmentResponse response, NftEquipment nftEquipment)
+        {
+            var skills = new List<int>(response.conditionSkills);
+            skills.AddRange(response.passiveSkills);
+
+            var passiveList = new List<PassiveAbility>();
+            foreach (var skillId in skills)
+            {
+                yield return _passiveAbilityDatabase.LoadDataById(skillId);
+                passiveList.Add(_passiveAbilityDatabase.GetDataById(skillId));
+            }
+            
+            nftEquipment.Data.Passives = passiveList.ToArray();
         }
 
         private void FillEquipmentStats(EquipmentResponse equipmentResponse, ref NftEquipment nftEquipment)
