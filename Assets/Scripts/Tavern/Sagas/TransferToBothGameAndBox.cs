@@ -32,7 +32,7 @@ namespace CryptoQuest.Tavern.Sagas
         {
             var body = new Dictionary<string, int[]>()
             {
-                { "game", obj.SelectedInWalletCharacters },
+                { "game", obj.SelectedInDboxCharacters },
                 { "wallet", obj.SelectedInGameCharacters }
             };
 

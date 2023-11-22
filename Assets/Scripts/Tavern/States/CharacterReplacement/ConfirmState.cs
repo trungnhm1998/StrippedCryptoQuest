@@ -93,20 +93,8 @@ namespace CryptoQuest.Tavern.States.CharacterReplacement
             List<int> listWalletItemsToTransfer = _controller.UICharacterReplacement.SelectedWalletItemsIds;
 
             ActionDispatcher.Dispatch(new ShowLoading());
-
-            switch (listGameItemsToTransfer.Count)
-            {
-                case > 0 when listWalletItemsToTransfer.Count > 0:
-                    ActionDispatcher.Dispatch(new SendCharactersToBothSide(listGameItemsToTransfer.ToArray(),
-                        listWalletItemsToTransfer.ToArray()));
-                    break;
-                case > 0:
-                    ActionDispatcher.Dispatch(new SendCharactersToWallet(listGameItemsToTransfer.ToArray()));
-                    break;
-                case <= 0 when listWalletItemsToTransfer.Count > 0:
-                    ActionDispatcher.Dispatch(new SendCharactersToGame(listWalletItemsToTransfer.ToArray()));
-                    break;
-            }
+            ActionDispatcher.Dispatch(new SendCharactersToBothSide(listGameItemsToTransfer.ToArray(),
+                listWalletItemsToTransfer.ToArray()));
         }
     }
 }
