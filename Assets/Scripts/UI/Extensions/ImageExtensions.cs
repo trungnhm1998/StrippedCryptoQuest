@@ -7,16 +7,16 @@ namespace CryptoQuest.UI.Extensions
 {
     public static class ImageExtensions
     {
-        public static AsyncOperationHandle<Sprite> LoadSpriteAndSet(this Image image,
+        public static AsyncOperationHandle LoadSpriteAndSet(this Image image,
             AssetReferenceT<Sprite> spriteAsset)
         {
             image.enabled = false;
             if (spriteAsset.RuntimeKeyIsValid() == false) return default;
-            if (spriteAsset.IsValid() && spriteAsset.Asset != null)
+            if (spriteAsset.OperationHandle.IsValid() && spriteAsset.OperationHandle.IsDone)
             {
-                image.sprite = (Sprite) spriteAsset.Asset;
+                image.sprite = (Sprite)spriteAsset.OperationHandle.Result;
                 image.enabled = true;
-                return default;
+                return spriteAsset.OperationHandle;
             }
             var handle = spriteAsset.LoadAssetAsync();
             handle.Completed += handle1 =>

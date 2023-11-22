@@ -1,6 +1,7 @@
 ﻿using System;
 using CryptoQuest.AbilitySystem.Abilities;
 using CryptoQuest.Gameplay.Battle.Core;
+using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data;
 using IndiGames.GameplayAbilitySystem.EffectSystem;
 using UnityEngine;
 using CoreEffectContext = IndiGames.GameplayAbilitySystem.EffectSystem.GameplayEffectContext;
@@ -19,6 +20,12 @@ namespace CryptoQuest.AbilitySystem
         public CastSkillAbility Skill { get; set; }
         public SkillInfo SkillInfo => _skillInfo;
         public SkillParameters Parameters => _skillInfo.SkillParameters;
+
+        public ESkillType SkillType
+        {
+            get => _skillInfo.SkillType;
+            set => _skillInfo.SkillType = value;
+        }
 
         public static GameplayEffectContext ExtractEffectContext(GameplayEffectContextHandle handle)
         {

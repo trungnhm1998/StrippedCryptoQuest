@@ -69,12 +69,13 @@ namespace CryptoQuest.UI.Tooltips.Equipment
 
         private IEnumerator LoadTooltipCo()
         {
+            if (_tooltip != null) yield break;
             if (_handle.IsValid() && _handle.Result != null) yield break;
             _handle = _tooltipPrefabAsset.InstantiateAsync(transform);
             yield return _handle;
+            _handle.Result.SetActive(false);
             _tooltip = _handle.Result.GetComponent<TTooltip>();
             _tooltip.Hide += HideTooltip;
-            _tooltip.gameObject.SetActive(false);
         }
     }
 }

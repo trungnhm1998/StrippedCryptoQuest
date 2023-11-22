@@ -1,9 +1,12 @@
-﻿using CryptoQuest.AbilitySystem.Attributes;
+﻿using System.Collections;
+using CryptoQuest.AbilitySystem.Attributes;
+using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data;
 using CryptoQuest.Item.Equipment;
 using CryptoQuest.UI.Extensions;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.Localization;
 using UnityEngine.Localization.Components;
 using UnityEngine.UI;
 
@@ -26,6 +29,10 @@ namespace CryptoQuest.UI.Tooltips.Equipment
         [SerializeField] private UIStars _uiStars;
         [SerializeField] private RectTransform _statsContainer;
         [SerializeField] private UIAttribute _attributeValuePrefab;
+        [SerializeField] private GameObject _passiveSkillPrefab;
+        [SerializeField] private RectTransform _passiveSkillsContainer;
+        [SerializeField] private GameObject _conditionalSkillPrefab;
+        [SerializeField] private RectTransform _conditionalSkillsContainer;
 
         private EquipmentInfo _equipment;
 
@@ -49,6 +56,8 @@ namespace CryptoQuest.UI.Tooltips.Equipment
             foreach (var behaviour in behaviours) behaviour.Setup();
             SetupInfo();
             SetupStats();
+            SetupSkills(_passiveSkillsContainer, ESkillType.Passive, _passiveSkillPrefab);
+            SetupSkills(_conditionalSkillsContainer, ESkillType.Conditional, _conditionalSkillPrefab);
             _illustration.LoadSpriteAndSet(_equipment.Config.Image);
         }
 
@@ -75,6 +84,30 @@ namespace CryptoQuest.UI.Tooltips.Equipment
                 value += (_equipment.Level - 1) * _equipment.Data.ValuePerLvl;
                 attributeValue.SetAttribute(config.Name, value);
             }
+        }
+
+
+        private void SetupSkills(RectTransform skillsContainer, ESkillType skillType, GameObject skillPrefab)
+        {
+            skillsContainer.gameObject.SetActive(false);
+            foreach (Transform skill in skillsContainer) Destroy(skill.gameObject);
+            var skills = _equipment.Data.Passives;
+            foreach (var skill in skills)
+            {
+                if (skill.Context.SkillInfo.SkillType != skillType) continue;
+                skillsContainer.gameObject.SetActive(true);
+                var skillText = Instantiate(skillPrefab, skillsContainer).GetComponent<Text>();
+                skillText.text = skill.name;
+                if (skill.Description.IsEmpty) continue;
+                StartCoroutine(CoLoadAndSetText(skillText, skill.Description));
+            }
+        }
+
+        private IEnumerator CoLoadAndSetText(Text skillText, LocalizedString skillDescription)
+        {
+            var handle = skillDescription.GetLocalizedStringAsync();
+            yield return handle;
+            skillText.text = handle.Result;
         }
 
         private void OnDisable()

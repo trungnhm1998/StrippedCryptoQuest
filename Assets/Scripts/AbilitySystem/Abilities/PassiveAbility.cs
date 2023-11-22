@@ -4,6 +4,7 @@ using IndiGames.GameplayAbilitySystem.AbilitySystem;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.ScriptableObjects;
 using UnityEngine;
+using UnityEngine.Localization;
 
 namespace CryptoQuest.AbilitySystem.Abilities
 {
@@ -16,14 +17,10 @@ namespace CryptoQuest.AbilitySystem.Abilities
     public class PassiveAbility : AbilityScriptableObject<PassiveAbilitySpec>
     {
         [field: SerializeField] public int Id { get; private set; }
+        [field: SerializeField] public LocalizedString Description { get; private set; }
 
         [SerializeField] private GameplayEffectContext _context;
         public GameplayEffectContext Context => _context;
-        
-        private void OnValidate()
-        {
-            Id = int.Parse(name);
-        }
     }
 
     public class PassiveAbilitySpec : GameplayAbilitySpec
