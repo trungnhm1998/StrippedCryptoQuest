@@ -1,3 +1,4 @@
+using System.Linq;
 using CryptoQuest.AbilitySystem.Attributes;
 using CryptoQuest.Battle.Events;
 using IndiGames.GameplayAbilitySystem.AttributeSystem;
@@ -12,7 +13,6 @@ namespace CryptoQuest.Battle.UI.Logs
     public class RestoreLogger : MonoBehaviour
     {
         [SerializeField] private UnityEvent<LocalizedString> _presentLoggerEvent;
-
         [SerializeField] private LocalizedString _localizedLog;
         [SerializeField] private AttributeChangeEvent _attributeChangeEvent;
         [SerializeField] private AttributeScriptableObject[] _affectedAttributes;
@@ -32,6 +32,7 @@ namespace CryptoQuest.Battle.UI.Logs
             AttributeValue newValue)
         {
             var changedAttribute = oldValue.Attribute;
+            if (_affectedAttributes.Contains(changedAttribute) == false) return;
             if (!_attributeConfigMapping.TryGetMap(changedAttribute, out var map)) return;
 
             var isRestored = oldValue.CurrentValue < newValue.CurrentValue;

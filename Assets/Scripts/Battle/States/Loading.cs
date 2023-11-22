@@ -27,7 +27,9 @@ namespace CryptoQuest.Battle.States
 
         private IEnumerator CoInitBattle()
         {
+            Debug.Log("Loading battle...");
             yield return _initializer.LoadEnemies();
+            Debug.Log("Loading loading dialog");
             yield return GenericDialogController.Instance.CoInstantiate(ChangeToIntroState);
             yield return new WaitForSeconds(_transitionPresenter.TransitDuration);
             _transitionPresenter.TransitOut();

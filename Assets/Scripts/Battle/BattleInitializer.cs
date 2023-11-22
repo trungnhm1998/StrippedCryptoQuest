@@ -25,8 +25,11 @@ namespace CryptoQuest.Battle
 
         public IEnumerator LoadEnemies()
         {
+            Debug.Log("BattleInitializer::LoadEnemies");
             yield return LoadEnemiesAssets();
+            Debug.Log("BattleInitializer::_enemyPartyBehaviour.Init");
             _enemyPartyBehaviour.Init(_loadedEnemies);
+            Debug.Log("BattleInitializer::_selectEnemyPresenter.Init");
             _selectEnemyPresenter.Init(_enemyPartyBehaviour.Enemies);
         }
 
@@ -37,6 +40,7 @@ namespace CryptoQuest.Battle
             for (var index = 0; index < enemyGroups.Length; index++)
             {
                 var enemyGroupIds = enemyGroups[index];
+                Debug.Log("BattleInitializer::LoadEnemiesAssets");
                 yield return LoadEnemyGroupsAssets(enemyGroupIds.EnemyIds);
             }
         }
@@ -49,6 +53,7 @@ namespace CryptoQuest.Battle
             for (var index = 0; index < enemyIds.Count; index++)
             {
                 var enemyId = enemyIds[index];
+                Debug.Log($"BattleInitializer::LoadEnemyGroupsAssets::enemyId: {enemyId}");
                 yield return _enemyDatabase.LoadDataById(enemyId);
                 var def = _enemyDatabase.GetDataById(enemyId);
                 if (def == null)
