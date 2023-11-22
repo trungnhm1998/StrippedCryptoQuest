@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using CryptoQuest.AbilitySystem.Attributes;
 using CryptoQuest.Battle.Events;
 using IndiGames.GameplayAbilitySystem.AttributeSystem;
@@ -37,6 +38,7 @@ namespace CryptoQuest.Battle.UI.Logs
             AttributeValue newValue)
         {
             var changedAttribute = oldValue.Attribute;
+            if (_affectedAttributes.Contains(changedAttribute) == false) return;
             if (!_attributeConfigMapping.TryGetMap(changedAttribute, out var map))
                 return;
 

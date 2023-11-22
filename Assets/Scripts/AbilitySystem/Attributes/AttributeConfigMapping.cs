@@ -9,7 +9,7 @@ namespace CryptoQuest.AbilitySystem.Attributes
     public class AttributeConfigMapping : ScriptableObject
     {
         [Serializable]
-        public struct Map
+        public class Map
         {
             public AttributeScriptableObject Attribute;
             public LocalizedString Name;
