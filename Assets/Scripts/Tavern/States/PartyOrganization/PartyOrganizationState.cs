@@ -62,6 +62,7 @@ namespace CryptoQuest.Tavern.States.PartyOrganization
 
         private void GetInPartyCharacters()
         {
+            _cachedInPartyCharactersData.Clear();
             foreach (var partySlot in _party.GetParty())
             {
                 if (partySlot.IsValid() == false) continue;
@@ -88,6 +89,7 @@ namespace CryptoQuest.Tavern.States.PartyOrganization
 
         private void CancelPartyOrganization()
         {
+            _hasGotHeroesFromServer = false;
             _controller.UIPartyOrganization.Contents.SetActive(false);
             StateMachine.Play(OverviewState);
         }
