@@ -11,7 +11,7 @@ namespace CryptoQuest.UI.Tooltips.Equipment
     {
         [SerializeField] private ShowTooltipEvent _showTooltipEvent;
         [SerializeField] private float _autoReleaseTime = 5f;
-        [SerializeField] private AssetReferenceT<GameObject> _equipmentTooltipAsset;
+        [SerializeField] private AssetReferenceT<GameObject> _tooltipPrefabAsset;
 
         private TTooltip _tooltip;
         private AsyncOperationHandle<GameObject> _handle;
@@ -70,7 +70,7 @@ namespace CryptoQuest.UI.Tooltips.Equipment
         private IEnumerator LoadTooltipCo()
         {
             if (_handle.IsValid() && _handle.Result != null) yield break;
-            _handle = _equipmentTooltipAsset.InstantiateAsync(transform);
+            _handle = _tooltipPrefabAsset.InstantiateAsync(transform);
             yield return _handle;
             _tooltip = _handle.Result.GetComponent<TTooltip>();
             _tooltip.Hide += HideTooltip;
