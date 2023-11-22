@@ -25,6 +25,7 @@ namespace CryptoQuest.Ranch
 
         public void Initialize()
         {
+            RanchOpened();
             UIRanch.Initialize();
             DialogManager.ShowWelcomeDialog();
         }
