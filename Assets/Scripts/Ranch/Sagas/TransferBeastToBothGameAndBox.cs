@@ -32,8 +32,8 @@ namespace CryptoQuest.Ranch.Sagas
         {
             var body = new Dictionary<string, int[]>()
             {
-                { "game", obj.SelectedInGameBeasts },
-                { "wallet", obj.SelectedInWalletBeasts }
+                { "game", obj.SelectedInDimensionBoxBeasts },
+                { "wallet", obj.SelectedInGameBeasts }
             };
 
             Debug.Log($"SendCharactersToBothSide::Body={JsonConvert.SerializeObject(body)}");

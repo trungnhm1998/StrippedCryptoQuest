@@ -21,35 +21,15 @@ namespace CryptoQuest.Ranch
 
     public class GetNftBeastsFailed : ActionBase { }
 
-    public class SendBeastsToWallet : ActionBase
-    {
-        public int[] SelectedInGameBeasts { get; }
-
-        public SendBeastsToWallet(int[] selectedInGameBeasts)
-        {
-            SelectedInGameBeasts = selectedInGameBeasts;
-        }
-    }
-
-    public class SendBeastsToGame : ActionBase
-    {
-        public int[] SelectedInWalletBeasts { get; }
-
-        public SendBeastsToGame(int[] selectedInWalletBeasts)
-        {
-            SelectedInWalletBeasts = selectedInWalletBeasts;
-        }
-    }
-
     public class SendBeastsToBothSide : ActionBase
     {
-        public int[] SelectedInWalletBeasts { get; }
+        public int[] SelectedInDimensionBoxBeasts { get; }
         public int[] SelectedInGameBeasts { get; }
 
-        public SendBeastsToBothSide(int[] selectedInGameBeasts, int[] selectedInWalletBeasts)
+        public SendBeastsToBothSide(int[] selectedInGameBeasts, int[] selectedInDimensionBoxBeasts)
         {
             SelectedInGameBeasts = selectedInGameBeasts;
-            SelectedInWalletBeasts = selectedInWalletBeasts;
+            SelectedInDimensionBoxBeasts = selectedInDimensionBoxBeasts;
         }
     }
 

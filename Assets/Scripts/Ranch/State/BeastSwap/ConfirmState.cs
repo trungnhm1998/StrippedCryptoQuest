@@ -99,20 +99,7 @@ namespace CryptoQuest.Ranch.State.BeastSwap
             List<int> listBeastWalletToTransfer = _controllerState.UIBeastSwap.SelectedWalletBeatIds;
 
             ActionDispatcher.Dispatch(new ShowLoading());
-
-            switch (listBeastInGameToTransfer.Count)
-            {
-                case > 0 when listBeastWalletToTransfer.Count > 0:
-                    ActionDispatcher.Dispatch(new SendBeastsToBothSide(listBeastInGameToTransfer.ToArray(),
-                        listBeastWalletToTransfer.ToArray()));
-                    break;
-                case > 0:
-                    ActionDispatcher.Dispatch(new SendBeastsToWallet(listBeastInGameToTransfer.ToArray()));
-                    break;
-                case <= 0 when listBeastWalletToTransfer.Count > 0:
-                    ActionDispatcher.Dispatch(new SendBeastsToGame(listBeastWalletToTransfer.ToArray()));
-                    break;
-            }
+            ActionDispatcher.Dispatch(new SendBeastsToBothSide(listBeastInGameToTransfer.ToArray(), listBeastWalletToTransfer.ToArray()));
         }
     }
 }
