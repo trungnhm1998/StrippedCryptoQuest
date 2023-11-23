@@ -4,7 +4,9 @@ namespace CryptoQuest.UI.Tooltips.Behaviours
 {
     public class ConfigTooltipPivot : TooltipBehaviourBase
     {
-        public override void Setup()
+        private void OnEnable() => Setup();
+
+        private void Setup()
         {
             var selectedGameObject = EventSystem.current.currentSelectedGameObject;
             if (selectedGameObject == null) return;
@@ -12,5 +14,7 @@ namespace CryptoQuest.UI.Tooltips.Behaviours
             if (config == null) return;
             RectTransform.pivot = config.Default.Pivot;
         }
+
+        private void Update() => Setup();
     }
 }

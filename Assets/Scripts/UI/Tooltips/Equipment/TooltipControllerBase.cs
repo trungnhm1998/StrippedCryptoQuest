@@ -18,6 +18,7 @@ namespace CryptoQuest.UI.Tooltips.Equipment
         private TinyMessageSubscriptionToken _showTooltip;
         private TinyMessageSubscriptionToken _hideTooltip;
         private Coroutine _releaseCo;
+        private Coroutine _loadAndShowCo;
 
         private void OnEnable() => _showTooltipEvent.EventRaised += ShowTooltip;
 
@@ -31,7 +32,16 @@ namespace CryptoQuest.UI.Tooltips.Equipment
                 return;
             }
 
-            StartCoroutine(LoadAndShowTooltipCo());
+            InternalShowTooltipAsync();
+        }
+
+
+        private void Update()
+        {
+            if (_tooltip == null) return;
+            if (_tooltip.gameObject.activeSelf) return;
+            if (_releaseCo != null) return;
+            _releaseCo = StartCoroutine(CoAutoRelease());
         }
 
         private void HideTooltip()
@@ -45,7 +55,6 @@ namespace CryptoQuest.UI.Tooltips.Equipment
             yield return new WaitForSeconds(_autoReleaseTime);
             if (_tooltip != null)
             {
-                _tooltip.Hide -= HideTooltip;
                 DestroyImmediate(_tooltip.gameObject);
                 Addressables.Release(_handle);
             }
@@ -55,11 +64,23 @@ namespace CryptoQuest.UI.Tooltips.Equipment
             _releaseCo = null;
         }
 
+        private void InternalShowTooltipAsync()
+        {
+            if (_loadAndShowCo != null)
+            {
+                StopCoroutine(_loadAndShowCo);
+                _loadAndShowCo = null;
+            }
+
+            _loadAndShowCo = StartCoroutine(LoadAndShowTooltipCo());
+        }
+
         private IEnumerator LoadAndShowTooltipCo()
         {
-            StopReleasingTooltip();
             yield return LoadTooltipCo();
+            StopReleasingTooltip();
             _tooltip.gameObject.SetActive(true);
+            _loadAndShowCo = null;
         }
 
         private void StopReleasingTooltip()
@@ -72,12 +93,10 @@ namespace CryptoQuest.UI.Tooltips.Equipment
         private IEnumerator LoadTooltipCo()
         {
             if (_tooltip != null) yield break;
-            if (_handle.IsValid() && _handle.Result != null) yield break;
-            _handle = _tooltipPrefabAsset.LoadAssetAsync<GameObject>();
+            if (!_handle.IsValid()) _handle = _tooltipPrefabAsset.LoadAssetAsync<GameObject>();
             yield return _handle;
             _handle.Result.SetActive(false);
             _tooltip = Instantiate(_handle.Result, transform).GetComponent<TTooltip>();
-            _tooltip.Hide += HideTooltip;
         }
     }
 }
