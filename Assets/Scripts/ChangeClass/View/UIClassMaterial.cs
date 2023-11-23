@@ -31,7 +31,7 @@ namespace CryptoQuest.ChangeClass.View
             if (occupation.Class.ClassMaterials.Count == 0) yield break;
             for (int i = 0; i < _listClassMaterial.Count; i++)
             {
-                if (ClassID.ToString() == _listClassMaterial[i].classId)
+                if (ClassID.ToString() == _listClassMaterial[i].classId && _listClassMaterial[i].inGameStatus == 2)
                 {
                     UICharacter newMaterial = Instantiate(_characterClassObject, _scrollRect.content);
                     newMaterial.ConfigureCell(_listClassMaterial[i]);
@@ -50,7 +50,8 @@ namespace CryptoQuest.ChangeClass.View
             yield return new WaitUntil(() => _scrollRect.content.childCount == 0);
             for (int i = 0; i < _listClassMaterial.Count; i++)
             {
-                if (ClassID.ToString() == _listClassMaterial[i].classId && _listClassMaterial[i].name == character.Class.name && character.Class.id != _listClassMaterial[i].id)
+                if (ClassID.ToString() == _listClassMaterial[i].classId && _listClassMaterial[i].name == character.Class.name
+                && character.Class.id != _listClassMaterial[i].id && _listClassMaterial[i].inGameStatus == 2)
                 {
                     UICharacter newMaterial = Instantiate(_characterClassObject, _scrollRect.content);
                     newMaterial.ConfigureCell(_listClassMaterial[i]);
