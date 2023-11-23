@@ -53,6 +53,7 @@ namespace CryptoQuest.Church
         {
             for (int i = 0; i < _partyController.Slots.Length; i++)
             {
+                if (!_partyController.Slots[i].IsValid()) return;
                 _uiListCharacter[i].gameObject.SetActive(true);
                 _uiListCharacter[i].ConfigureCharacter(_partyController.Slots[i].HeroBehaviour, _heroAvatarProvider);
             }
