@@ -27,6 +27,7 @@ namespace CryptoQuest.Item
         public abstract bool IsValid();
         public abstract bool AddToInventory(IInventoryController inventory);
         public abstract bool RemoveFromInventory(IInventoryController inventory);
+        public abstract ItemInfo Clone();
     }
 
     [Serializable]

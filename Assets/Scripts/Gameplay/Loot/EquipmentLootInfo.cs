@@ -15,7 +15,7 @@ namespace CryptoQuest.Gameplay.Loot
         public override UI.Dialogs.RewardDialog.Reward CreateRewardUI()
             => new GenericLocalizedReward(Item.DisplayName);
 
-        public override LootInfo Clone() => new EquipmentLootInfo(Item.Clone());
+        public override LootInfo Clone() => new EquipmentLootInfo(Item.Clone() as EquipmentInfo);
 
         /// <summary>
         ///  equipment loot can't be merged

@@ -51,10 +51,7 @@ namespace CryptoQuest.Gameplay.Inventory.Currency
             }
         }
 
-        public CurrencyInfo Clone()
-        {
-            return new CurrencyInfo(Data, Amount);
-        }
+        public override ItemInfo Clone() => new CurrencyInfo(Data, Amount);
 
         public override bool AddToInventory(IInventoryController inventory) => inventory.Add(this);
 
