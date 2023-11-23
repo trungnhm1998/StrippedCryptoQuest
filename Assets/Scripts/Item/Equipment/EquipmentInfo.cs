@@ -58,15 +58,13 @@ namespace CryptoQuest.Item.Equipment
 
         public override int GetHashCode() => (Id, Data.ID, Data.PrefabId).GetHashCode();
 
-        public EquipmentInfo Clone()
-        {
-            return new EquipmentInfo()
+        public override ItemInfo Clone() =>
+            new EquipmentInfo()
             {
                 Id = Id,
                 Level = Level,
                 Data = Data,
             };
-        }
 
         #endregion
 

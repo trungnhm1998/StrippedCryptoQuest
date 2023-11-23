@@ -61,10 +61,7 @@ namespace CryptoQuest.Item
             }
         }
 
-        public ConsumableInfo Clone()
-        {
-            return new ConsumableInfo(Data, Quantity);
-        }
+        public override ItemInfo Clone() => new ConsumableInfo(Data, Quantity);
 
         public override bool IsValid()
         {

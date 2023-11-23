@@ -2,7 +2,6 @@
 using CryptoQuest.Battle.UI.CommandDetail;
 using CryptoQuest.Item;
 using TinyMessenger;
-using UnityEngine;
 
 namespace CryptoQuest.Battle.UI.SelectItem
 {
@@ -35,7 +34,7 @@ namespace CryptoQuest.Battle.UI.SelectItem
         public void Visit(ItemButtonInfo info)
         {
             _originItem = info.Item;
-            _cloneItem = _originItem.Clone();
+            _cloneItem = _originItem.Clone() as ConsumableInfo;
         }
 
         private void SetQuantityText(ConsumableInfo item)
@@ -70,7 +69,7 @@ namespace CryptoQuest.Battle.UI.SelectItem
 
         private void ResetToOriginal(RoundEndedEvent eventObject)
         {
-            _cloneItem = _originItem.Clone();
+            _cloneItem = _originItem.Clone() as ConsumableInfo;
             UpdateCloneItem(_cloneItem, 0);
         }
 
