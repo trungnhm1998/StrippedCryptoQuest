@@ -1,12 +1,10 @@
-﻿using System.Collections;
-using CryptoQuest.AbilitySystem.Attributes;
+﻿using CryptoQuest.AbilitySystem.Attributes;
 using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data;
 using CryptoQuest.Item.Equipment;
 using CryptoQuest.UI.Extensions;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.Localization;
 using UnityEngine.Localization.Components;
 using UnityEngine.UI;
 
@@ -52,8 +50,6 @@ namespace CryptoQuest.UI.Tooltips.Equipment
 
         protected override void Init()
         {
-            var behaviours = GetComponents<TooltipBehaviourBase>();
-            foreach (var behaviour in behaviours) behaviour.Setup();
             SetupInfo();
             SetupStats();
             SetupSkills(_passiveSkillsContainer, ESkillType.Passive, _passiveSkillPrefab);
@@ -86,7 +82,6 @@ namespace CryptoQuest.UI.Tooltips.Equipment
             }
         }
 
-
         private void SetupSkills(RectTransform skillsContainer, ESkillType skillType, GameObject skillPrefab)
         {
             skillsContainer.gameObject.SetActive(false);
@@ -99,15 +94,8 @@ namespace CryptoQuest.UI.Tooltips.Equipment
                 var skillText = Instantiate(skillPrefab, skillsContainer).GetComponent<Text>();
                 skillText.text = skill.name;
                 if (skill.Description.IsEmpty) continue;
-                StartCoroutine(CoLoadAndSetText(skillText, skill.Description));
+                skill.Description.GetLocalizedStringAsync().Completed += handle => skillText.text = handle.Result;
             }
-        }
-
-        private IEnumerator CoLoadAndSetText(Text skillText, LocalizedString skillDescription)
-        {
-            var handle = skillDescription.GetLocalizedStringAsync();
-            yield return handle;
-            skillText.text = handle.Result;
         }
 
         private void OnDisable()

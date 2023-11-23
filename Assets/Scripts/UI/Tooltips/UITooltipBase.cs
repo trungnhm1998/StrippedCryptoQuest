@@ -17,6 +17,9 @@ namespace CryptoQuest.UI.Tooltips
             }
 
             Init();
+            LayoutRebuilder.ForceRebuildLayoutImmediate(GetComponent<RectTransform>());
+            var behaviours = GetComponents<TooltipBehaviourBase>();
+            foreach (var behaviour in behaviours) behaviour.Setup();
 
             // rebuild layout to get the correct size
             LayoutRebuilder.ForceRebuildLayoutImmediate(GetComponent<RectTransform>());
