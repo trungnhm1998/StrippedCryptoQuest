@@ -4,7 +4,9 @@ namespace CryptoQuest.UI.Tooltips.Behaviours
 {
     public class SafeAreaConstraint : TooltipBehaviourBase
     {
-        public override void Setup()
+        private void OnEnable() => Setup();
+
+        private void Setup()
         {
             var pivotX = RectTransform.pivot.x;
             RectTransform.pivot = new Vector2(pivotX, CalculatePivotYBasedOnSafeArea());
@@ -19,5 +21,7 @@ namespace CryptoQuest.UI.Tooltips.Behaviours
             if (bottomY < safeAreaBottomLeftCorner.y) return 0;
             return RectTransform.pivot.y;
         }
+
+        private void Update() => Setup();
     }
 }

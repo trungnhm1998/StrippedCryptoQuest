@@ -8,7 +8,9 @@ namespace CryptoQuest.UI.Tooltips.Behaviours
         [SerializeField] private GameObject _upArrow;
         [SerializeField] private GameObject _downArrow;
 
-        public override void Setup()
+        private void OnEnable() => Setup();
+
+        private void Setup()
         {
             var selectedGameObject = EventSystem.current.currentSelectedGameObject;
             if (selectedGameObject == null) return;
@@ -24,5 +26,7 @@ namespace CryptoQuest.UI.Tooltips.Behaviours
             position.y += offsetY;
             RectTransform.position = position;
         }
+
+        private void Update() => Setup();
     }
 }
