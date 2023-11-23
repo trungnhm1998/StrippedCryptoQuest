@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using CryptoQuest.Gameplay.Inventory.Currency;
 using CryptoQuest.Gameplay.Loot;
 using CryptoQuest.Gameplay.Reward;
@@ -33,7 +34,7 @@ namespace CryptoQuest.Tests.Editor.Gameplay
         [TestCase(new[] { 1f, 1f, 1f }, 3f)]
         public void MergeLoots_CurrenciesLoots_OneCurrencyLootWithCorrectAmount(float[] amount, float expected)
         {
-            var loots = new List<LootInfo>(amount.Length);
+            var loots = new LootInfo[amount.Length];
             var currencySO = ScriptableObject.CreateInstance<CurrencySO>();
             for (var index = 0; index < amount.Length; index++)
             {
@@ -42,7 +43,7 @@ namespace CryptoQuest.Tests.Editor.Gameplay
                 loots[index] = new CurrencyLootInfo(currency);
             }
 
-            var mergedLoots = RewardManager.CloneAndMergeLoots(loots);
+            var mergedLoots = RewardManager.CloneAndMergeLoots(loots.ToList());
 
             Assert.AreEqual(1, mergedLoots.Count);
             Assert.AreEqual(expected, ((CurrencyLootInfo)mergedLoots[0]).Item.Amount);
