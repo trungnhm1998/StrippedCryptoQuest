@@ -123,8 +123,11 @@ namespace CryptoQuest.AbilitySystem.Abilities
 
         protected override IEnumerator OnAbilityActive()
         {
+            if (CheckCostRequirement() == false) yield break;
+
             ApplyCost();
-            if (CanCast() == false) yield break;
+
+            if (CheckCastSkillSuccess() == false) yield break;
 
             RegisterBattleEndedEvents();
 
@@ -160,15 +163,8 @@ namespace CryptoQuest.AbilitySystem.Abilities
             }
         }
 
-        protected bool CanCast()
+        protected bool CheckCastSkillSuccess()
         {
-            if (!CheckCost())
-            {
-                Debug.Log($"Not enough {_costEffect.EffectDetails.Modifiers[0].Attribute.name} to cast this ability");
-                BattleEventBus.RaiseEvent(new MpNotEnoughEvent());
-                return false;
-            }
-
             var roll = Random.Range(0, 100);
             var result = roll < _def.SuccessRate;
             var resultMessage = result ? "Success" : "Failed";
@@ -181,6 +177,15 @@ namespace CryptoQuest.AbilitySystem.Abilities
             }
 
             return result;
+        }
+
+        private bool CheckCostRequirement()
+        {
+            if (CheckCost()) return true;
+
+            Debug.Log($"Not enough {_costEffect.EffectDetails.Modifiers[0].Attribute.name} to cast this ability");
+            BattleEventBus.RaiseEvent(new MpNotEnoughEvent());
+            return false;
         }
 
         protected void ApplyCost()

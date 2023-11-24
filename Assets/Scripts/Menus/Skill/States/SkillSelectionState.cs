@@ -2,6 +2,8 @@
 using System.Linq;
 using CryptoQuest.AbilitySystem.Abilities;
 using CryptoQuest.Battle.Components;
+using CryptoQuest.Battle.UI.Logs;
+using CryptoQuest.Core;
 using CryptoQuest.Input;
 using CryptoQuest.Menus.Skill.UI;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
@@ -157,8 +159,17 @@ namespace CryptoQuest.Menus.Skill.States
 
             var skillSpec =
                 _skillPanel.SelectingHero.Hero.AbilitySystem.GiveAbility<CastSkillAbilitySpec>(_selectingSkill);
+            if (!CheckCostRequirement(skillSpec)) return;
+
             skillSpec.Execute(abilitySystemBehaviours);
             ClearTargetSelectionAndSelectingSkill();
+        }
+
+        private bool CheckCostRequirement(CastSkillAbilitySpec skillSpec)
+        {
+            if (skillSpec.CheckCost()) return true;
+            ActionDispatcher.Dispatch(new NotEnoughMpMenuLog());
+            return false;
         }
 
         private void HandleCancel()
