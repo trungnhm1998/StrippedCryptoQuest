@@ -9,13 +9,15 @@ namespace CryptoQuest.Gameplay.Loot
     [Serializable]
     public class CurrencyLootInfo : LootInfo<CurrencyInfo>
     {
+        public CurrencyLootInfo() { }
         public CurrencyLootInfo(CurrencyInfo item) : base(item) { }
         public override void AddItemToInventory(IInventoryController inventory) => Item.AddToInventory(inventory);
 
         public override UI.Dialogs.RewardDialog.Reward CreateRewardUI() =>
             new AmountReward(Item.Amount, Item.Data.DisplayName);
 
-        public override LootInfo Clone() => new CurrencyLootInfo(Item.Clone() as CurrencyInfo);
+        public override LootInfo Clone() => new CurrencyLootInfo(new CurrencyInfo(Item.Data, Item.Amount));
+
         public override bool AcceptMerger(IRewardMerger merger) => merger.Visit(this);
         public override bool Merge(IRewardMerger merger) => merger.Merge(this);
         public void Merge(CurrencyLootInfo loot) => Item.UpdateCurrencyAmount(loot.Item.Amount);

@@ -138,21 +138,21 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Monster
                 serializedObject.ApplyModifiedProperties();
                 serializedObject.Update();
                 
-                instance.Editor_SetNameKey(GetLocalizedStringRef(dataModel.LocalizedKey));
-                instance.Editor_SetMonsterModelAssetRef(GetMonsterModelAssetRef(dataModel.MonsterPrefabName));
-                instance.Editor_SetElement(GetElementalSO(dataModel.ElementId));
-                instance.Editor_ClearDrop();
+                // instance.Editor_SetNameKey(GetLocalizedStringRef(dataModel.LocalizedKey));
+                // instance.Editor_SetMonsterModelAssetRef(GetMonsterModelAssetRef(dataModel.MonsterPrefabName));
+                // instance.Editor_SetElement(GetElementalSO(dataModel.ElementId));
+                // instance.Editor_ClearDrop();
 
-                if (dataModel.Gold > 0)
-                    instance.Editor_AddDrop(GetGoldCurrencyRewardInfo(dataModel.Gold));
+                // if (dataModel.Gold > 0)
+                //     instance.Editor_AddDrop(GetGoldCurrencyRewardInfo(dataModel.Gold));
+                //
+                // instance.Editor_AddDrop(GetExpLoot(dataModel.Exp));
 
-                instance.Editor_AddDrop(GetExpLoot(dataModel.Exp));
-
-                UsableLootInfo usableLootInfo = GetUsableLootInfo(dataModel.DropItemID);
-                if (usableLootInfo != null)
-                    instance.Editor_AddDrop(usableLootInfo, dataModel.DropItemRate);
-                instance.Editor_SetStats(attributeInitValues);
-                instance.name = replacedName;
+                // ConsumableLootInfo consumableLootInfo = GetUsableLootInfo(dataModel.DropItemID);
+                // if (consumableLootInfo != null)
+                //     instance.Editor_AddDrop(consumableLootInfo, dataModel.DropItemRate);
+                // instance.Editor_SetStats(attributeInitValues);
+                // instance.name = replacedName;
 
                 if (!AssetDatabase.Contains(instance))
                 {
@@ -253,12 +253,12 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Monster
             return consumableSos;
         }
 
-        private UsableLootInfo GetUsableLootInfo(string itemId)
+        private ConsumableLootInfo GetUsableLootInfo(string itemId)
         {
             bool isExist = _allConsumableDatasDictionary.TryGetValue(itemId, out ConsumableSO consumableSo);
             if (!isExist) return null;
             ConsumableInfo consumableInfo = new ConsumableInfo(consumableSo);
-            return new UsableLootInfo(consumableInfo);
+            return new ConsumableLootInfo(consumableInfo);
         }
 
 

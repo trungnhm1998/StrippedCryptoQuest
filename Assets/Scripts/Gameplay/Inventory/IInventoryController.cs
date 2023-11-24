@@ -8,13 +8,13 @@ namespace CryptoQuest.Gameplay.Inventory
     public interface IInventoryController
     {
         InventorySO Inventory { get; }
-        bool Add(EquipmentInfo equipment);
-        bool Remove(EquipmentInfo equipment);
+        bool Add(Equipment equipment);
+        bool Remove(Equipment equipment);
         bool Add(NftEquipment equipment);
         bool Remove(NftEquipment equipment);
         bool Add(ConsumableInfo consumable, int quantity = 1);
         bool Remove(ConsumableInfo consumable, int quantity = 1);
-        bool Contains(EquipmentInfo equipment);
+        bool Contains(Equipment equipment);
         bool Contains(NftEquipment equipment);
         bool Add(CurrencyInfo currency);
         bool Remove(CurrencyInfo currency);

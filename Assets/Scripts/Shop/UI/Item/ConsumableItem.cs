@@ -12,8 +12,8 @@ namespace CryptoQuest.Shop.UI.Item
         public ItemInfo Item => _consumable;
         public AssetReferenceT<Sprite> Icon => _consumable.Data.Image;
         public LocalizedString DisplayName => _consumable.Data.DisplayName;
-        public int Price => _consumable.Price;
-        public int SellPrice => _consumable.SellPrice;
+        public int Price => 0;
+        public int SellPrice => 0;
         public bool HasGem => false;
 
         private ConsumableInfo _consumable;

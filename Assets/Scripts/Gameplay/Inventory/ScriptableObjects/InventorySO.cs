@@ -15,7 +15,7 @@ namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects
         [SerializeField] private List<ConsumableInfo> _consumables = new();
         public List<ConsumableInfo> Consumables => _consumables;
 
-        [field: SerializeField] public List<EquipmentInfo> Equipments { get; set; } = new();
+        [field: SerializeField] public List<Equipment> Equipments { get; set; } = new();
         [field: SerializeField] public List<NftEquipment> NftEquipments { get; set; } = new();
     }
 }

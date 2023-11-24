@@ -10,12 +10,6 @@ namespace CryptoQuest.Gameplay.Loot
     public class LootTable : ScriptableObject
     {
         [field: SerializeField] public int ID { get; private set; }
-        [SerializeReference] public List<LootInfo> LootInfos = new();
-#if UNITY_EDITOR
-        public void Editor_SetUp(int id)
-        {
-            ID = id;
-        }
-#endif
+        [SerializeReference, SubclassSelector] public List<LootInfo> LootInfos = new();
     }
 }

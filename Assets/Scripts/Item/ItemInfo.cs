@@ -1,6 +1,5 @@
 ﻿using System;
 using CryptoQuest.Gameplay.Inventory;
-using UnityEngine;
 using UnityEngine.Serialization;
 
 namespace CryptoQuest.Item
@@ -8,26 +7,9 @@ namespace CryptoQuest.Item
     [Serializable]
     public abstract class ItemInfo
     {
-        [SerializeField] private uint _id;
-
-
-        protected ItemInfo() => _id = 0;
-
-        protected ItemInfo(uint id) => _id = id;
-
-        public uint Id
-        {
-            get => _id;
-            set => _id = value;
-        }
-
-        public abstract int Price { get; }
-        public abstract int SellPrice { get; }
-
         public abstract bool IsValid();
         public abstract bool AddToInventory(IInventoryController inventory);
         public abstract bool RemoveFromInventory(IInventoryController inventory);
-        public abstract ItemInfo Clone();
     }
 
     [Serializable]

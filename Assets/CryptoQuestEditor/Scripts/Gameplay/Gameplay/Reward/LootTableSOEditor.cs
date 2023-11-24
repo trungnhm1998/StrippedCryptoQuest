@@ -1,19 +1,16 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using CryptoQuest.Gameplay.Battle;
 using CryptoQuest.Gameplay.Encounter;
 using CryptoQuest.Gameplay.Inventory.Currency;
-using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item;
 using CryptoQuest.Gameplay.Loot;
 using CryptoQuest.Item;
 using CryptoQuest.Item.Equipment;
+using IndiGames.Core.Database;
 using IndiGames.Tools.ScriptableObjectBrowser;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
-using IndiGames.Core.Database;
 
 namespace CryptoQuestEditor.Gameplay.Gameplay.Reward
 {
@@ -64,12 +61,15 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Reward
                     instance = ScriptableObject.CreateInstance<LootTable>();
                 }
 
-                instance.Editor_SetUp(dataModel.Id);
+                var instanceSO = new SerializedObject(instance);
+                instanceSO.FindProperty("<ID>k__BackingField").boxedValue = dataModel.Id;
                 instance.LootInfos = SetUpLootInfos(dataModel.RewardDefs);
                 LootInfo goldLoot = AddGold(dataModel.GoldAmount);
                 if(goldLoot != null)
                     instance.LootInfos.Add(goldLoot);
                 instance.name = name;
+                instanceSO.ApplyModifiedProperties();
+                instanceSO.Update();
 
                 if (!AssetDatabase.Contains(instance))
                 {
@@ -167,8 +167,7 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Reward
                 if (_usableItems.TryGetValue(rewardDef.Id, out var item))
                 {
                     ConsumableInfo consumableInfo = new ConsumableInfo(item, rewardDef.Amount);
-                    UsableLootInfo usableLootInfo = new UsableLootInfo(consumableInfo);
-                    lootInfos.Add(usableLootInfo);
+                    lootInfos.Add(new ConsumableLootInfo(consumableInfo));
                 }
 
                 // if (_equipmentItems.TryGetValue(rewardDef.Id, out var equipment))

@@ -21,10 +21,11 @@ namespace CryptoQuest
 
         public IEnumerator Load(ConsumableInfo consumable)
         {
-            yield return _consumableDatabase.LoadDataById(consumable.DataId);
-            var consumableSO = _consumableDatabase.GetDataById(consumable.DataId);
-
-            consumable.Data = consumableSO;
+            yield break; // TODO: REFACTOR
+            // yield return _consumableDatabase.LoadDataById(consumable.DataId);
+            // var consumableSO = _consumableDatabase.GetDataById(consumable.DataId);
+            //
+            // consumable.Data = consumableSO;
         }
     }
 }

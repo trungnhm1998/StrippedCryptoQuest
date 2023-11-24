@@ -1,7 +1,6 @@
 using CommandTerminal;
 using CryptoQuest.Gameplay.Inventory;
 using CryptoQuest.Gameplay.Inventory.Currency;
-using CryptoQuest.Gameplay.Loot;
 using CryptoQuest.System;
 using CryptoQuest.System.Cheat;
 using UnityEngine;
@@ -21,9 +20,7 @@ namespace CryptoQuest.Gameplay.Battle
         private void AddGold(CommandArg[] args)
         {
             float amount = args[0].Float;
-            CurrencyInfo goldInfo = new(_goldSo, amount);
-            CurrencyLootInfo goldLootInfo = new(goldInfo);
-            goldLootInfo.AddItemToInventory(ServiceProvider.GetService<IInventoryController>());
+            new CurrencyInfo(_goldSo, amount).AddToInventory(ServiceProvider.GetService<IInventoryController>());
         }
     }
 }

@@ -18,7 +18,7 @@ namespace CryptoQuest.Gameplay.Inventory
             ServiceProvider.Provide<IInventoryController>(this);
         }
 
-        public bool Add(EquipmentInfo equipment)
+        public bool Add(Equipment equipment)
         {
             if (equipment == null || equipment.IsValid() == false)
             {
@@ -30,7 +30,7 @@ namespace CryptoQuest.Gameplay.Inventory
             return true;
         }
 
-        public bool Remove(EquipmentInfo equipment)
+        public bool Remove(Equipment equipment)
         {
             if (equipment != null && equipment.IsValid()) return _inventory.Equipments.Remove(equipment);
             Debug.LogWarning($"Equipment is null or invalid");
@@ -100,9 +100,10 @@ namespace CryptoQuest.Gameplay.Inventory
             return false;
         }
 
-        public bool Contains(EquipmentInfo equipment) => _inventory.Equipments.Contains(equipment);
+        public bool Contains(Equipment equipment) => _inventory.Equipments.Contains(equipment);
 
         public bool Contains(NftEquipment equipment) => _inventory.NftEquipments.Contains(equipment);
+
         public bool Add(CurrencyInfo currency)
         {
             if (currency == null || !currency.IsValid())
@@ -130,7 +131,7 @@ namespace CryptoQuest.Gameplay.Inventory
                 Debug.LogWarning($"Insufficient funds!");
                 return false;
             }
-            
+
             _wallet[currency.Data].SetAmount(newAmount);
             return true;
         }

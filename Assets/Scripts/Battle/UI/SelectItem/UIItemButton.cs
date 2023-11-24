@@ -34,7 +34,7 @@ namespace CryptoQuest.Battle.UI.SelectItem
         public void Visit(ItemButtonInfo info)
         {
             _originItem = info.Item;
-            _cloneItem = _originItem.Clone() as ConsumableInfo;
+            _cloneItem = new ConsumableInfo(_originItem.Data, _originItem.Quantity);
         }
 
         private void SetQuantityText(ConsumableInfo item)
@@ -69,7 +69,7 @@ namespace CryptoQuest.Battle.UI.SelectItem
 
         private void ResetToOriginal(RoundEndedEvent eventObject)
         {
-            _cloneItem = _originItem.Clone() as ConsumableInfo;
+            _cloneItem = new ConsumableInfo(_originItem.Data, _originItem.Quantity);
             UpdateCloneItem(_cloneItem, 0);
         }
 

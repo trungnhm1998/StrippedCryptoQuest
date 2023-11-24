@@ -10,6 +10,7 @@ namespace CryptoQuest.Gameplay.Loot
     public class ExpLoot : LootInfo
     {
         [field: SerializeField] public float Exp { get; private set; }
+        public ExpLoot() { }
         public ExpLoot(float experiencePoints) => Exp = experiencePoints;
 
         public override void AddItemToInventory(IInventoryController _) => RewardManager.RewardPlayerExp(Exp);

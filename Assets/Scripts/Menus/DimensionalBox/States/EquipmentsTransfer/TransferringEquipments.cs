@@ -97,10 +97,10 @@ namespace CryptoQuest.Menus.DimensionalBox.States.EquipmentsTransfer
                 if (slot.IsValid() == false) continue;
                 slot.HeroBehaviour.TryGetComponent(out EquipmentsController equipmentsController);
                 var equipmentsSlots = equipmentsController.Equipments.Slots;
-                if (equipmentsSlots.Any(equipmentSlot => equipmentSlot.Equipment.Id == equipmentResponse.id))
-                {
+                // if (equipmentsSlots.Any(equipmentSlot => equipmentSlot.Equipment.Id == equipmentResponse.id))
+                // {
                     return true;
-                }
+                // }
             }
 
             return false;

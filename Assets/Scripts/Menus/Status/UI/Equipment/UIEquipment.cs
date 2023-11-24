@@ -18,7 +18,7 @@ namespace CryptoQuest.Menus.Status.UI.Equipment
         [SerializeField] private Color _enabledColor;
         [SerializeField] private bool _loadImageOnEnable;
 
-        private EquipmentInfo _equipment = new();
+        private EquipmentInfo _equipment;
         public EquipmentInfo Equipment => _equipment;
 
         public void Init(EquipmentInfo equipment)
@@ -45,7 +45,7 @@ namespace CryptoQuest.Menus.Status.UI.Equipment
             _nameText.color = _disabledColor;
         }
 
-        public void Reset() => _equipment = new EquipmentInfo();
+        public void Reset() => _equipment = default;
 
         private void OnDisable()
         {

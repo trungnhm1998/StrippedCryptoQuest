@@ -1,9 +1,4 @@
 ﻿using CryptoQuest.Character.Enemy;
-using CryptoQuest.Gameplay.Enemy;
-using CryptoQuest.Gameplay.Inventory.Currency;
-using CryptoQuest.Gameplay.Loot;
-using CryptoQuest.Item;
-using CryptoQuest.Item.Equipment;
 using UnityEditor;
 using UnityEditor.UIElements;
 using UnityEngine;
@@ -34,7 +29,7 @@ namespace CryptoQuestEditor.Gameplay.Character
 
         private void AddLoot()
         {
-            Target.Editor_AddDrop(Target.DropToAdd.Loot);
+            // Target.Editor_AddDrop(Target.DropToAdd.Loot);
             EditorUtility.SetDirty(Target);
         }
     }

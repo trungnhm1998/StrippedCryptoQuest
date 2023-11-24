@@ -13,8 +13,8 @@ namespace CryptoQuest.Shop.UI.Item
         public ItemInfo Item => _equipment;
         public AssetReferenceT<Sprite> Icon => new(""); // TODO: Refactor
         public LocalizedString DisplayName => new(); // TODO: Refactor
-        public int Price => _equipment.Price;
-        public int SellPrice => _equipment.SellPrice;
+        public int Price => 0;
+        public int SellPrice => 0;
         public bool HasGem => true;
 
         private EquipmentInfo _equipment;

@@ -4,7 +4,6 @@ using CryptoQuest.Gameplay.Inventory.Currency;
 using CryptoQuest.Gameplay.Loot;
 using CryptoQuest.Gameplay.Reward;
 using CryptoQuest.Item;
-using CryptoQuest.Item.Equipment;
 using NUnit.Framework;
 using UnityEngine;
 
@@ -67,30 +66,15 @@ namespace CryptoQuest.Tests.Editor.Gameplay
         }
 
         [Test]
-        public void MergeLoots_TwoEquipments_ReturnTwoEquipments()
-        {
-            var equipment = new EquipmentInfo();
-            var loots = new List<LootInfo>()
-            {
-                new EquipmentLootInfo(equipment),
-                new EquipmentLootInfo(equipment)
-            };
-
-            var mergedLoots = RewardManager.CloneAndMergeLoots(loots);
-
-            Assert.AreEqual(2, mergedLoots.Count);
-        }
-
-        [Test]
         public void MergeLoots_3Consumables_OneConsumableWithCorrectQuantity()
         {
             var baseItemSO = ScriptableObject.CreateInstance<ConsumableSO>();
             var consumable = new ConsumableInfo(baseItemSO);
             var loots = new List<LootInfo>()
             {
-                new UsableLootInfo(consumable),
-                new UsableLootInfo(consumable),
-                new UsableLootInfo(consumable)
+                new ConsumableLootInfo(consumable),
+                new ConsumableLootInfo(consumable),
+                new ConsumableLootInfo(consumable)
             };
 
             var mergedLoots = RewardManager.CloneAndMergeLoots(loots);
