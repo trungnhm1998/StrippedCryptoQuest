@@ -59,6 +59,7 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Abilities
         #endregion
 
         private AbilityAssetMappingEditor _mappingEditor;
+        private TagsDef _tagsDef;
         private Dictionary<string, List<TagScriptableObject>> _tagDict = new();
 
         public MagicalAbilitiesSOEditor()
@@ -72,6 +73,7 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Abilities
             string[] allLines = File.ReadAllLines(directory);
             LoadMappings();
             LoadAbnormalTags();
+            LoadTagsDef();
             for (int index = ROW_OFFSET; index < allLines.Length; index++)
             {
                 // get data form tsv file
@@ -141,6 +143,7 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Abilities
                 SetInstanceProperty(instance, dataModel);
                 SetEffects(instance, dataModel);
                 SetLocalized(instance, dataModel);
+                SetIgnoreTag(instance, dataModel);
 
                 instance.name = name;
 
@@ -252,6 +255,26 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Abilities
             LocalizedString skillDescription = new(DESCRIPTION_LOCALIZE_TABLE, data.LocalizedKey);
             instance.SetSkillName(skillName);
             instance.SetSkillDescription(skillDescription);
+        }
+
+        private void SetIgnoreTag(CastEffectsOnTargetAbility instance, AbilityDataStruct data)
+        {
+            string targetType = data.TargetTypeId;
+            string[] allyTargetTypeIds = new[] { "1", "2", "3" };
+            var serializedObject = new SerializedObject(instance);
+            var property = serializedObject.FindProperty("tags.TargetTags.IgnoreTags");
+            if (property == null) return;
+            property.ClearArray();
+            serializedObject.ApplyModifiedProperties();
+            serializedObject.Update();
+
+            if (!allyTargetTypeIds.Contains(targetType)) return;
+
+            property.InsertArrayElementAtIndex(0);
+            property.GetArrayElementAtIndex(0).objectReferenceValue = _tagsDef.DeadTag;
+
+            serializedObject.ApplyModifiedProperties();
+            serializedObject.Update();
         }
 
         private void LoadAbnormalTags()
@@ -372,6 +395,13 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Abilities
             var guid = AssetDatabase.FindAssets("t:AbilityAssetMappingEditor");
             _mappingEditor =
                 AssetDatabase.LoadAssetAtPath<AbilityAssetMappingEditor>(AssetDatabase.GUIDToAssetPath(guid[0]));
+        }
+
+        private void LoadTagsDef()
+        {
+            var guid = AssetDatabase.FindAssets("t:TagsDef");
+            _tagsDef =
+                AssetDatabase.LoadAssetAtPath<TagsDef>(AssetDatabase.GUIDToAssetPath(guid[0]));
         }
     }
 }
