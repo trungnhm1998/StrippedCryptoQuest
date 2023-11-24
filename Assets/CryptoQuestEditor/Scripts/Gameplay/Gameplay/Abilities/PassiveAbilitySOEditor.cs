@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using CryptoQuest.AbilitySystem;
 using CryptoQuest.AbilitySystem.Abilities;
@@ -57,6 +58,7 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Abilities
         #endregion
 
         private AbilityAssetMappingEditor _mappingEditor;
+        private TagsDef _tagsDef;
 
         public PassiveAbilitySOEditor()
         {
@@ -68,6 +70,7 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Abilities
         {
             string[] allLines = File.ReadAllLines(directory);
             LoadMappings();
+            LoadTagsDef();
             for (int index = ROW_OFFSET; index < allLines.Length; index++)
             {
                 // get data form tsv file
@@ -114,7 +117,7 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Abilities
                     ? 0
                     : float.Parse(splitedData[SUCCESS_RATE_INDEX]);
                 dataModel.ScenarioId = splitedData[SCENARIO_INDEX];
-                dataModel.VfxId = splitedData[VFX_INDEX];
+                dataModel.VfxId = "-1";
 
                 if (!string.IsNullOrEmpty(splitedData[SUB_EFFECT_MAIN_EFFECT_TYPE_INDEX]))
                 {
@@ -141,6 +144,7 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Abilities
                 if (instance == null) continue;
                 SetDefaultID(instance, dataModel);
                 SetDescription(instance, splitedData);
+                SetIgnoreTag(instance, dataModel);
                 SetDefaultVFX(instance);
                 if (dataModel.MainEffectTypeId == "99" || dataModel.MainEffectTypeId == "4") continue;
                 if (dataModel.IsSubEffectValid() && (dataModel.SubEffectData.EffectTypeId == "99")) continue;
@@ -204,6 +208,26 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Abilities
             serializedObject.Update();
         }
 
+        private void SetIgnoreTag(PassiveAbility instance, AbilityDataStruct data)
+        {
+            string targetType = data.TargetTypeId;
+            string[] allyTargetTypeIds = new[] { "1", "2", "3" };
+            var serializedObject = new SerializedObject(instance);
+            var property = serializedObject.FindProperty("tags.TargetTags.IgnoreTags");
+            if (property == null) return;
+            property.ClearArray();
+            serializedObject.ApplyModifiedProperties();
+            serializedObject.Update();
+
+            if (!allyTargetTypeIds.Contains(targetType)) return;
+
+            property.InsertArrayElementAtIndex(0);
+            property.GetArrayElementAtIndex(0).objectReferenceValue = _tagsDef.DeadTag;
+
+            serializedObject.ApplyModifiedProperties();
+            serializedObject.Update();
+        }
+
         private PassiveAbility CreateInstance(string effectTypeId)
         {
             return effectTypeId == "2"
@@ -232,7 +256,7 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Abilities
             SkillInfo skillInfo = new SkillInfo();
             skillInfo.Id = int.Parse(data.Id);
             skillInfo.SkillParameters = new SkillParameters();
-            skillInfo.SkillType = ESkillType.Conditional;
+            skillInfo.SkillType = ESkillType.Passive;
             skillInfo.SkillParameters.Element = GetElement(data.ElementId);
             skillInfo.SkillParameters.BasePower = data.BasePower;
             skillInfo.SkillParameters.PowerUpperLimit = data.PowerUpperLimit;
@@ -244,6 +268,7 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Abilities
             skillInfo.SkillParameters.EffectType = GetEffectType(data.MainEffectTypeId);
             skillInfo.SkillParameters.IsFixed = data.ValueType == "1" ? true : false;
             skillInfo.Cost = data.Mp;
+            skillInfo.VfxId = -1;
             skillInfo.UsageScenarioSO = data.ScenarioId == "1"
                 ? EAbilityUsageScenario.Field
                 : data.ScenarioId == "2"
@@ -340,6 +365,13 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Abilities
             var guid = AssetDatabase.FindAssets("t:AbilityAssetMappingEditor");
             _mappingEditor =
                 AssetDatabase.LoadAssetAtPath<AbilityAssetMappingEditor>(AssetDatabase.GUIDToAssetPath(guid[0]));
+        }
+
+        private void LoadTagsDef()
+        {
+            var guid = AssetDatabase.FindAssets("t:TagsDef");
+            _tagsDef =
+                AssetDatabase.LoadAssetAtPath<TagsDef>(AssetDatabase.GUIDToAssetPath(guid[0]));
         }
     }
 }
