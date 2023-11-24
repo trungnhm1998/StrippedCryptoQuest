@@ -179,7 +179,7 @@ namespace CryptoQuest.Menus.Status.UI.Equipment
             if (equipment.IsValid() == false || _prefabDatabase.CacheLookupTable.ContainsKey(equipment.Data.PrefabId) == false)
             {
                 Debug.Log(
-                    $"UIEquipmentsInventory::InstantiateNewEquipmentUICo: Equipment [{equipment.Id}] is not valid");
+                    $"UIEquipmentsInventory::InstantiateNewEquipmentUICo: Equipment [{equipment}] is not valid");
                 yield break;
             }
 

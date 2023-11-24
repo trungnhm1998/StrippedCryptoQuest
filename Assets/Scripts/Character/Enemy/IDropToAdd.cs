@@ -1,4 +1,3 @@
-
 using System;
 using CryptoQuest.Gameplay.Loot;
 using UnityEngine;
@@ -13,14 +12,7 @@ namespace CryptoQuest.Character.Enemy
     [Serializable]
     public class ConsumeDrop : IDropToAdd
     {
-        [SerializeField] private UsableLootInfo _loot;
-        public LootInfo Loot => _loot;
-    }
-
-    [Serializable]
-    public class EquipmentDrop : IDropToAdd
-    {
-        [SerializeField] private EquipmentLootInfo _loot;
+        [SerializeField] private ConsumableLootInfo _loot;
         public LootInfo Loot => _loot;
     }
 

@@ -6,10 +6,7 @@ using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.Localization;
-
-#if UNITY_EDITOR
-using UnityEditor;
-#endif
+using UnityEngine.Serialization;
 
 namespace CryptoQuest.Character.Enemy
 {
@@ -17,7 +14,9 @@ namespace CryptoQuest.Character.Enemy
     public struct Drop
     {
         public float Chance;
-        [SerializeReference] public LootInfo LootItem;
+
+        [field: SerializeReference, SubclassSelector, FormerlySerializedAs("LootItem")]
+        public LootInfo LootItem { get; set; }
 
         /// <returns>a cloned of loot config</returns>
         public LootInfo CreateLoot() => LootItem.Clone();
@@ -46,9 +45,14 @@ namespace CryptoQuest.Character.Enemy
             Array.Empty<AttributeWithValue>();
 
         [SerializeField] private Drop[] _drops = Array.Empty<Drop>();
-        public Drop[] Drops => _drops;
 
-        [SerializeReference] private StealableInfo[] _stealableInfos
+        public Drop[] Drops
+        {
+            get => _drops;
+            set => _drops = value;
+        }
+
+        [SerializeReference, SubclassSelector] private StealableInfo[] _stealableInfos
             = Array.Empty<StealableInfo>();
 
         public StealableInfo[] StealableInfos => _stealableInfos;
@@ -70,66 +74,5 @@ namespace CryptoQuest.Character.Enemy
             character.Init(this);
             return character;
         }
-
-#if UNITY_EDITOR
-        [SerializeReference, SubclassSelector] private IDropToAdd _dropToAdd = new ConsumeDrop();
-        public IDropToAdd DropToAdd => _dropToAdd;
-
-        private void OnValidate()
-        {
-            _stealableInfos = Array.Empty<StealableInfo>();
-            foreach (var drop in Drops)
-            {
-                if (drop.LootItem is not UsableLootInfo usableLoot) continue;
-                ArrayUtility.Add(ref _stealableInfos,
-                    new ConsumableStealable(usableLoot, drop.Chance));
-            }
-
-            EditorUtility.SetDirty(this);
-        }
-
-        public void Editor_AddDrop(LootInfo loot)
-        {
-            ArrayUtility.Add(ref _drops, new Drop()
-            {
-                LootItem = loot,
-                Chance = 1
-            });
-        }
-
-        public void Editor_AddDrop(LootInfo loot, float chance)
-        {
-            ArrayUtility.Add(ref _drops, new Drop()
-            {
-                LootItem = loot,
-                Chance = chance
-            });
-        }
-
-        public void Editor_SetStats(AttributeWithValue[] stats)
-        {
-            Stats = stats;
-        }
-
-        public void Editor_SetNameKey(LocalizedString name)
-        {
-            Name = name;
-        }
-
-        public void Editor_ClearDrop()
-        {
-            _drops = Array.Empty<Drop>();
-        }
-
-        public void Editor_SetMonsterModelAssetRef(AssetReferenceT<GameObject> assetReference)
-        {
-            Model = assetReference;
-        }
-
-        public void Editor_SetElement(Elemental element)
-        {
-            Element = element;
-        }
-#endif
     }
 }

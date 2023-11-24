@@ -106,7 +106,7 @@ namespace CryptoQuest.Sagas.Profile
 
         private void FillEquipmentData(EquipmentResponse response, ref NftEquipment nftEquipment)
         {
-            nftEquipment.Data = new EquipmentData();
+            nftEquipment.Def = new EquipmentData();
             FillEquipmentStats(response, ref nftEquipment);
             nftEquipment.Data.PrefabId = response.equipmentIdForeign;
             nftEquipment.Level = response.lv;
@@ -132,7 +132,7 @@ namespace CryptoQuest.Sagas.Profile
                 yield return _passiveAbilityDatabase.LoadDataById(skillId);
                 passiveList.Add(_passiveAbilityDatabase.GetDataById(skillId));
             }
-            
+
             nftEquipment.Data.Passives = passiveList.ToArray();
         }
 

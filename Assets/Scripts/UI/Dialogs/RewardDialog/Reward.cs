@@ -59,9 +59,9 @@ namespace CryptoQuest.UI.Dialogs.RewardDialog
 
     public class ConsumableReward : Reward
     {
-        private readonly UsableLootInfo _consumableLootInfo;
+        private readonly ConsumableLootInfo _consumableLootInfo;
 
-        public ConsumableReward(UsableLootInfo consumableLootInfo)
+        public ConsumableReward(ConsumableLootInfo consumableLootInfo)
         {
             _consumableLootInfo = consumableLootInfo;
         }

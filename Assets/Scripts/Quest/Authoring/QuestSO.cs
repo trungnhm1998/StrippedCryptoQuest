@@ -4,10 +4,7 @@ using CryptoQuest.Gameplay.Loot;
 using CryptoQuest.Quest.Actions;
 using IndiGames.Core.SaveSystem.ScriptableObjects;
 using UnityEngine;
-using System.Text.Json.Serialization;
-
 #if UNITY_EDITOR
-using UnityEditor;
 #endif
 
 namespace CryptoQuest.Quest.Authoring
@@ -15,7 +12,7 @@ namespace CryptoQuest.Quest.Authoring
     [Serializable]
     public struct QuestReward
     {
-        [SerializeReference] public LootInfo RewardItem;
+        [SerializeReference, SubclassSelector] public LootInfo RewardItem;
 
         /// <returns> a cloned of loot config</returns>
         public LootInfo CreateReward() => RewardItem.Clone();
@@ -38,21 +35,6 @@ namespace CryptoQuest.Quest.Authoring
         [SerializeField] private QuestReward[] _rewards = Array.Empty<QuestReward>();
         public QuestReward[] Rewards => _rewards;
         public abstract QuestInfo CreateQuest();
-
-#if UNITY_EDITOR
-        public void Editor_AddReward(LootInfo loot)
-        {
-            ArrayUtility.Add(ref _rewards, new QuestReward()
-            {
-                RewardItem = loot
-            });
-        }
-
-        public void Editor_ClearReward()
-        {
-            _rewards = Array.Empty<QuestReward>();
-        }
-#endif
     }
 
     public abstract class QuestSO<T> : QuestSO where T : QuestInfo, new()

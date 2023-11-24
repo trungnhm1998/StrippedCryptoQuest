@@ -1,6 +1,5 @@
 ﻿using System;
 using CryptoQuest.Gameplay.Inventory;
-using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
 using CryptoQuest.Gameplay.Reward;
 using CryptoQuest.Item;
 using UnityEngine;
@@ -28,13 +27,9 @@ namespace CryptoQuest.Gameplay.Loot
     public abstract class LootInfo<TItemInfo> : LootInfo where TItemInfo : ItemInfo
     {
         [SerializeField] private TItemInfo _item;
-
-        public TItemInfo Item
-        {
-            get => _item;
-            set => _item = value;
-        }
-        public LootInfo(TItemInfo item) => _item = item;
+        public TItemInfo Item => _item;
+        protected LootInfo() { }
+        protected LootInfo(TItemInfo item) => _item = item;
 
         public override bool IsValid() => _item != null && _item.IsValid();
     }

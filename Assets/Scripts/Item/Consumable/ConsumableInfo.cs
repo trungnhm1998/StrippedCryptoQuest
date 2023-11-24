@@ -19,21 +19,11 @@ namespace CryptoQuest.Item
         public LocalizedString DisplayName => Data.DisplayName;
         public LocalizedString Description => Data.Description;
 
-        public override int Price => Data.Price;
-        public override int SellPrice => Data.SellPrice;
-
-        public string DataId { get; private set; }
-
         public ConsumableInfo(ConsumableSO baseItemSO, int quantity = 1) : base(baseItemSO)
         {
             _quantity = quantity;
         }
-
-        public ConsumableInfo(string dataId)
-        {
-            DataId = dataId;
-        }
-
+        
         public ConsumableInfo() { }
 
         public void SetQuantity(int quantity)
@@ -60,8 +50,6 @@ namespace CryptoQuest.Item
                 QuantityReduced?.Invoke(this);
             }
         }
-
-        public override ItemInfo Clone() => new ConsumableInfo(Data, Quantity);
 
         public override bool IsValid()
         {

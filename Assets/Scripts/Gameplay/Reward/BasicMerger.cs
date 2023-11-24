@@ -7,10 +7,10 @@ namespace CryptoQuest.Gameplay.Reward
     {
         bool Visit(ExpLoot loot);
         bool Visit(CurrencyLootInfo loot);
-        bool Visit(UsableLootInfo loot);
+        bool Visit(ConsumableLootInfo loot);
         bool Merge(ExpLoot loot);
         bool Merge(CurrencyLootInfo loot);
-        bool Merge(UsableLootInfo loot);
+        bool Merge(ConsumableLootInfo loot);
     }
 
     /// <summary>
@@ -69,16 +69,16 @@ namespace CryptoQuest.Gameplay.Reward
 
         #region Consumable
 
-        private UsableLootInfo _mergingConsumable;
+        private ConsumableLootInfo _mergingConsumable;
 
-        public bool Visit(UsableLootInfo loot)
+        public bool Visit(ConsumableLootInfo loot)
         {
             if (loot == null || loot.IsValid() == false) return false;
             _mergingConsumable = loot;
             return TryMergeWithOtherLoots(loot);
         }
 
-        public bool Merge(UsableLootInfo loot)
+        public bool Merge(ConsumableLootInfo loot)
         {
             if (_mergingConsumable == null || _mergingConsumable.IsValid() == false) return false;
             if (loot == null || loot.IsValid() == false || _mergingConsumable.Item.Data != loot.Item.Data) return false;

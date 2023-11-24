@@ -102,7 +102,7 @@ namespace CryptoQuest.Battle.Components
             var slot = new EquipmentSlot()
             {
                 Type = slotType,
-                Equipment = new EquipmentInfo()
+                Equipment = default
             };
             _equipments.Slots.Add(slot);
             return slot.Equipment;
@@ -210,7 +210,7 @@ namespace CryptoQuest.Battle.Components
                     // This handle the case when the equipment is in multiple slots
                     && slot.Equipment == equipment)
                 {
-                    SetEquipmentInSlot(new EquipmentInfo(), slot.Type);
+                    SetEquipmentInSlot(default, slot.Type);
                 }
             }
 

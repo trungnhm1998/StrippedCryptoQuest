@@ -58,7 +58,7 @@ namespace CryptoQuest.Sagas.Profile
             foreach (var equipmentSlot in equippingItems.Slots)
             {
                 var equippingItem = equipmentSlot.Equipment;
-                if (!equippingItem.IsValid() || equippingItem.Id == 0) continue;
+                if (!equippingItem.IsValid()) continue;
                 needUpdate = RemoveNftEquipmentFromInventoryIfHeroEquippingTheSame(equippingItem, equipmentSlot);
             }
 
@@ -77,7 +77,7 @@ namespace CryptoQuest.Sagas.Profile
             for (var index = 0; index < _inventory.NftEquipments.Count; index++)
             {
                 var nftEquipment = _inventory.NftEquipments[index];
-                if (nftEquipment.Id != equippingItem.Id) continue;
+                if (nftEquipment != equippingItem) continue;
                 _inventory.NftEquipments.RemoveAt(index);
                 equipmentSlot.Equipment = nftEquipment;
                 needUpdate = true;

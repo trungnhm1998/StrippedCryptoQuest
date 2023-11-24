@@ -1,15 +1,15 @@
 ﻿using System;
-using CryptoQuest.Battle.Components.SpecialSkillBehaviours;
 using UnityEngine.Localization;
 
 namespace CryptoQuest.Gameplay.Loot
 {
     [Serializable]
-    public class ConsumableStealable : StealableInfo<UsableLootInfo>
+    public class ConsumableStealable : StealableInfo<ConsumableLootInfo>
     {
         public override LocalizedString DisplayName => Loot.Item.DisplayName;
+        public ConsumableStealable() : base(null) { }
 
-        public ConsumableStealable(UsableLootInfo loot, float chanceToSteal = 1)
+        public ConsumableStealable(ConsumableLootInfo loot, float chanceToSteal = 1)
             : base(loot, chanceToSteal) { }
     }
 }

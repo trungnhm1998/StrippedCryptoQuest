@@ -78,7 +78,7 @@ namespace CryptoQuest.Gameplay.Reward
         /// Except equipments, merge all loots with same item data
         /// e.g. 2x <see cref="CurrencyInfo"/> with same <see cref="CurrencySO"/> will be merged into 1x <see cref="CurrencyInfo"/> with amount 2
         /// </summary>
-        /// <param name="loots">Contains <see cref="CurrencyLootInfo"/>, <see cref="ExpLoot"/>, <see cref="UsableLootInfo"/>, <see cref="EquipmentLootInfo"/></param>
+        /// <param name="loots">Contains <see cref="CurrencyLootInfo"/>, <see cref="ExpLoot"/>, <see cref="ConsumableLootInfo"/>, <see cref="EquipmentLootInfo"/></param>
         /// <returns>Loots that merged and cloned to be add into inventory</returns>
         public static List<LootInfo> CloneAndMergeLoots(List<LootInfo> loots)
         {

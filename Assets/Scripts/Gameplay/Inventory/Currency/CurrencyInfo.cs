@@ -9,8 +9,6 @@ namespace CryptoQuest.Gameplay.Inventory.Currency
     {
         public event Action<CurrencyInfo> AmountChanged;
         [field: SerializeField] public float Amount { get; private set; } = 0;
-        public override int Price => 0;
-        public override int SellPrice => 0;
 
         public CurrencyInfo() { }
 
@@ -50,8 +48,6 @@ namespace CryptoQuest.Gameplay.Inventory.Currency
                 Amount = 0;
             }
         }
-
-        public override ItemInfo Clone() => new CurrencyInfo(Data, Amount);
 
         public override bool AddToInventory(IInventoryController inventory) => inventory.Add(this);
 
