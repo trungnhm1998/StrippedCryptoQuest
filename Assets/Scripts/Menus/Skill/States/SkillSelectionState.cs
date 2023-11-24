@@ -38,12 +38,13 @@ namespace CryptoQuest.Menus.Skill.States
         private void ShowSkillList()
         {
             var showSuccess = _skillListPanel.TryShowSkillForHero(_skillPanel.SelectingHero.Hero);
-            if (!showSuccess) 
+            if (!showSuccess)
             {
                 // If this character dont have any skill then back to select character
                 HandleCancel();
                 return;
             }
+
             _skillListPanel.Interactable = true;
             _skillListPanel.SelectLastSelectedOrFirstSkill();
         }
@@ -76,6 +77,7 @@ namespace CryptoQuest.Menus.Skill.States
 
         private void SelectSelf(CastSkillAbility skill)
         {
+            if (!_skillPanel.SelectingHero.Hero.IsValidAndAlive()) return;
             DisableSkillButtonsAndCacheSelectingSkill(skill);
             _targets = new List<HeroBehaviour> { _skillPanel.SelectingHero.Hero };
             CastSkill();
@@ -84,6 +86,7 @@ namespace CryptoQuest.Menus.Skill.States
         // TODO: Move to separate state
         private void SelectAllHeroes(CastSkillAbility skill)
         {
+            if (!_skillPanel.SelectingHero.Hero.IsValidAndAlive()) return;
             DisableSkillButtonsAndCacheSelectingSkill(skill);
             _targets = new List<HeroBehaviour>();
             foreach (var hero in _skillPanel.HeroButtons)
@@ -91,12 +94,14 @@ namespace CryptoQuest.Menus.Skill.States
                 if (hero.Hero.IsValidAndAlive() == false) continue;
                 _targets.Add(hero.Hero);
             }
+
             CastSkill();
         }
 
         // TODO: Move to separate state
         private void SelectSingleAlly(CastSkillAbility skill)
         {
+            if (!_skillPanel.SelectingHero.Hero.IsValidAndAlive()) return;
             DisableSkillButtonsAndCacheSelectingSkill(skill);
             _input.MenuConfirmedEvent -= CastSkill;
             _input.MenuConfirmedEvent += SetTargetAsCurrentSelectGameObjectAndCast;
@@ -159,7 +164,7 @@ namespace CryptoQuest.Menus.Skill.States
         private void HandleCancel()
         {
             DeSelectAllHeroes();
-            
+
             if (_selectingSkill is not null)
             {
                 ClearTargetSelectionAndSelectingSkill();
