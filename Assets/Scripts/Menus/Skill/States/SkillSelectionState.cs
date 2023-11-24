@@ -145,7 +145,7 @@ namespace CryptoQuest.Menus.Skill.States
             }
 
             var systems = from hero in _targets
-                where hero.IsValidAndAlive()
+                where hero.IsValid()
                 select hero.AbilitySystem;
 
             var abilitySystemBehaviours = systems as AbilitySystemBehaviour[] ?? systems.ToArray();
