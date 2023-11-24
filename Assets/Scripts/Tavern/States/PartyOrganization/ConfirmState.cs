@@ -62,7 +62,9 @@ namespace CryptoQuest.Tavern.States.PartyOrganization
 
         private bool ValidateCurrentNumberOfHeroesAddingToParty()
         {
-            var selectedNonPartyCharacters = _controller.UIPartyOrganization.SelectedNonPartyCharacterIds;
+            var selectedNonPartyCharacters = _controller.UIPartyOrganization.SelectedNonPartyCharacterIds.Count;
+            var selectedInPartyCharacters = _controller.UIPartyOrganization.SelectedPartyCharacterIds.Count;
+
             var count = 0;
             foreach (var partySlot in _partySO.GetParty())
             {
@@ -71,7 +73,7 @@ namespace CryptoQuest.Tavern.States.PartyOrganization
                 if (partySlot.IsValid()) count++;
             }
 
-            var numberOfHeroesInParty = count + selectedNonPartyCharacters.Count;
+            var numberOfHeroesInParty = count + selectedNonPartyCharacters - selectedInPartyCharacters;
             if (numberOfHeroesInParty <= MAX_NFT_HEROES_IN_PARTY) return false;
 
             _controller.MerchantInputManager.SubmitEvent += TurnOffDialogueIfThereAreMoreThan3Heroes;
@@ -104,8 +106,8 @@ namespace CryptoQuest.Tavern.States.PartyOrganization
             switch (selectedNonPartyCharacters.Count)
             {
                 case > 0 when selectedInPartyCharacters.Count > 0:
-                    AddHeroesToParty(selectedNonPartyCharacters);
                     RemoveHeroesFromParty(selectedInPartyCharacters);
+                    AddHeroesToParty(selectedNonPartyCharacters);
                     break;
                 case > 0:
                     AddHeroesToParty(selectedNonPartyCharacters);
@@ -119,6 +121,11 @@ namespace CryptoQuest.Tavern.States.PartyOrganization
         private void AddHeroesToParty(List<int> selectedHeroesToTransfer)
         {
             var finalParty = GetHeroesInParty();
+            for (var index = finalParty.Count - 1; index >= 0; index--)
+            {
+                if (!finalParty[index].Hero.IsValid()) finalParty.RemoveAt(index);
+            }
+
             var partySlotSpecs = new List<PartySlotSpec>();
 
             foreach (var selectedHeroId in selectedHeroesToTransfer)
