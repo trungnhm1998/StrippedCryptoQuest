@@ -55,6 +55,11 @@ tags:
 ---
 Emma:Yeah, Let's go to the plaza on Main Street and see what that Fake Hero is up to. #line:prisontown_fakehero_36
 ===
+title: Complete_ch004_forgery_hero1
+tags:
+---
+<<quest ch004_forgery_hero1>>
+===
 title: ch004_forgery_hero2_1
 tags:
 ---
@@ -201,16 +206,37 @@ tags:
 Emma:But you shouldn't be using that power to cheat people out of their money instead of helping them! #line:prisontown_fakehero_104
 Emma:I mean, it's a common crime to use magic in this manner! #line:prisontown_fakehero_105
 ===
-title: ch004_forgery_hero3_1
+
+title: ch004_forgery_hero2_20
 tags:
 ---
 Emma:“If we don't do something about it, people will get more and more fooled... we need to stop this as soon as possible! #line:prisontown_fakehero_106
 -> Yes #line:prisontown_fakehero_107
 	Emma:“Yeah! Let's go stop them! #line:prisontown_fakehero_108
+	<<quest Flag_ch004_forgery_hero4>>
 -> No #line:prisontown_fakehero_109
 	Emma:“You’re not going to stop them?! Oh, you mean you're only going to prepare because it'll be a pain? #line:prisontown_fakehero_110
 	Emma:That would certainly be preferable... Then let's get our errands done quickly and put an end to those fake heroes! #line:prisontown_fakehero_111
+	<<quest Flag_ch004_forgery_hero3>>
+
 ===
+title: Complete_ch004_forgery_hero2
+tag:
+---
+<<quest ch004_forgery_hero2>>
+===
+title: ch004_forgery_hero3_1
+tags:
+---
+Emma:“If we don't do something about it, people will get more and more fooled... we need to stop this as soon as possible! #line:prisontown_fakehero_confirm_1
+-> Yes #line:prisontown_fakehero_confirm_2
+	Emma:“Yeah! Let's go stop them! #line:prisontown_fakehero_confirm_3
+	<<quest Flag_ch004_forgery_hero4>>
+-> No #line:prisontown_fakehero_confirm_4
+	Emma:“You’re not going to stop them?! Oh, you mean you're only going to prepare because it'll be a pain? #line:prisontown_fakehero_confirm_5
+	Emma:That would certainly be preferable... Then let's get our errands done quickly and put an end to those fake heroes! #line:prisontown_fakehero_confirm_6
+===
+
 title: ch004_forgery_hero4_1
 tags:
 ---
@@ -370,4 +396,9 @@ Knight of the Order A:If you apply now, it will be tomorrow at the earliest, so 
 Knight of the Order B:Then you guys are going to spend the night in jail. Come on, let's go. #line:prisontown_fakehero_221
 Emma:What? #line:prisontown_fakehero_222
 Victory:What? #line:prisontown_fakehero_223
+===
+title: Complete_ch004_forgery_hero4
+tags:
+---
+<<quest ch004_forgery_hero4>>
 ===
