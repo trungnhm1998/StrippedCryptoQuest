@@ -1,7 +1,9 @@
 using CryptoQuest.Battle.Components;
 using CryptoQuest.Input;
+using CryptoQuest.Menus.Status.Events;
 using CryptoQuest.Menus.Status.States;
 using CryptoQuest.Menus.Status.UI.Equipment;
+using CryptoQuest.Menus.Status.UI.MagicStone;
 using CryptoQuest.UI.Menu;
 using CryptoQuest.UI.Tooltips.Events;
 using FSM;
@@ -20,8 +22,10 @@ namespace CryptoQuest.Menus.Status.UI
 
         [field: SerializeField] public InputMediatorSO Input { get; private set; }
         [field: SerializeField] public UIEquipmentsInventory EquipmentsInventoryPanel { get; private set; }
-        [field: SerializeField] public UICharacterStatsPanel CharacterStatsPanelPanel { get; private set; }
+        [field: SerializeField] public UICharacterStatsPanel CharacterStatsPanel { get; private set; }
+        [field: SerializeField] public UIMagicStoneMenu MagicStonePanel { get; private set; }
         [field: SerializeField] public ShowTooltipEvent ShowTooltipEvent { get; private set; }
+        [field: SerializeField] public ShowMagicStoneEvent ShowMagicStone { get; private set; }
 
         private StateMachine _stateMachine;
 

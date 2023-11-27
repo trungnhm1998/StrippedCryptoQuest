@@ -10,6 +10,7 @@ namespace CryptoQuest.Menus.Status.States
     {
         public static readonly string Overview = "Overview";
         public static readonly string EquipmentSelection = "EquipmentSelection";
+        public static readonly string MagicStone = "MagicStone";
 
         /// <summary>
         /// Setup the state machine for status menu.
@@ -21,6 +22,7 @@ namespace CryptoQuest.Menus.Status.States
             // And problems I means GC problems.
             AddState(Overview, new OverviewHeroStatus(panel));
             AddState(EquipmentSelection, new EquipmentSelection(panel));
+            AddState(MagicStone, new MagicStone(panel));
 
             SetStartState(Overview);
         }
