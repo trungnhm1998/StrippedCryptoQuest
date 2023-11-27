@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
-using CryptoQuest.Battle.Commands;
 using CryptoQuest.Character.Enemy;
-using CryptoQuest.Gameplay.Loot;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
 using Spine.Unity;
 using UnityEngine;
@@ -24,8 +21,13 @@ namespace CryptoQuest.Battle.Components
         void ProvideStats(AttributeWithValue[] attributeWithValues);
     }
 
+    public interface IDropsProvider
+    {
+        public Drop[] GetDrops();
+    }
+
     [DisallowMultipleComponent]
-    public class EnemyBehaviour : Character, IStatsProvider
+    public class EnemyBehaviour : Character, IStatsProvider, IDropsProvider
     {
         public event Action PreTurnStarted;
         public static readonly string Tag = "Enemy";
@@ -123,5 +125,7 @@ namespace CryptoQuest.Battle.Components
             PreTurnStarted?.Invoke();
             base.OnTurnStarted();
         }
+
+        public Drop[] GetDrops() => _enemyDef.Drops;
     }
 }

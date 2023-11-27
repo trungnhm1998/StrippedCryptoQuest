@@ -9,6 +9,11 @@ namespace CryptoQuest.Item.Equipment
     {
         [SerializeField] private EquipmentSO _equipmentSO;
 
+        public Equipment(EquipmentSO equipmentSO)
+        {
+            _equipmentSO = equipmentSO;
+        }
+
         public override EquipmentData Data => _equipmentSO.Data;
 
         public override bool IsNftItem => false;

@@ -1,5 +1,4 @@
-﻿using CryptoQuest.Battle.Presenter.Commands;
-using CryptoQuest.Gameplay.Loot;
+﻿using CryptoQuest.Item;
 
 namespace CryptoQuest.Battle.Events
 {
@@ -18,18 +17,18 @@ namespace CryptoQuest.Battle.Events
 
     public class StealFailedEvent : CharacterTargetEvent
     {
-        public StealFailedEvent(Components.Character stealer, 
+        public StealFailedEvent(Components.Character stealer,
             Components.Character target) : base(stealer, target) { }
     }
 
     public class StealSuccessEvent : CharacterTargetEvent
     {
-        public StealableInfo StealableItem { get; private set;}
+        public ItemInfo StolenItem { get; private set; }
 
-        public StealSuccessEvent(Components.Character stealer, 
-            Components.Character target, StealableInfo stealableInfo) : base(stealer, target)
+        public StealSuccessEvent(Components.Character stealer,
+            Components.Character target, ItemInfo stolenItem) : base(stealer, target)
         {
-            StealableItem = stealableInfo;
+            StolenItem = stolenItem;
         }
-}
+    }
 }

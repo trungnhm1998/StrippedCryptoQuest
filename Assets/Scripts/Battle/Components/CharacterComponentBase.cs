@@ -16,7 +16,7 @@ namespace CryptoQuest.Battle.Components
         /// <summary>
         /// Called after <see cref="HeroSpec"/> provided
         /// </summary>
-        public abstract void Init();
+        public virtual void Init() { }
 
         public void Reset() => OnReset();
 

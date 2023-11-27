@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using CryptoQuest.Battle.Components;
-using CryptoQuest.Gameplay.Loot;
 using UnityEngine;
 
 namespace CryptoQuest.Character.Enemy

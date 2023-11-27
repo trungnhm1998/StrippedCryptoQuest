@@ -1,9 +1,9 @@
 ﻿using System;
+using CryptoQuest.Battle.Components;
 using IndiGames.GameplayAbilitySystem.AbilitySystem;
 using IndiGames.GameplayAbilitySystem.EffectSystem;
-using CharacterBehaviour = CryptoQuest.Battle.Components.Character;
 using UnityEngine;
-using CryptoQuest.Battle.Components.SpecialSkillBehaviours;
+using CharacterBehaviour = CryptoQuest.Battle.Components.Character;
 
 namespace CryptoQuest.AbilitySystem.Abilities.PostNormalAttackPassive
 {
@@ -29,10 +29,8 @@ namespace CryptoQuest.AbilitySystem.Abilities.PostNormalAttackPassive
         {
             var target = postAttackContext.Target;
             if (!IsTargetValid(target)) return;
-
             var stealerBehaviour = Owner.GetComponent<IStealerBehaviour>();
-
-            stealerBehaviour.StealTarget(target);
+            stealerBehaviour.Steal(target);
         }
     }
 }

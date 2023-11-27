@@ -13,8 +13,6 @@ namespace CryptoQuest.Battle.Components
     {
         [SerializeField] private AttributeScriptableObject _evasionAttribute;
 
-        public override void Init() { }
-
         public bool TryEvade()
         {
             Character.AttributeSystem.TryGetAttributeValue(_evasionAttribute, out var evasionValue);

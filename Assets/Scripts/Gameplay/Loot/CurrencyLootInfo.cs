@@ -1,7 +1,7 @@
 ﻿using System;
+using CryptoQuest.Battle;
 using CryptoQuest.Gameplay.Inventory;
 using CryptoQuest.Gameplay.Inventory.Currency;
-using CryptoQuest.Gameplay.Reward;
 using CryptoQuest.UI.Dialogs.RewardDialog;
 
 namespace CryptoQuest.Gameplay.Loot
@@ -11,15 +11,12 @@ namespace CryptoQuest.Gameplay.Loot
     {
         public CurrencyLootInfo() { }
         public CurrencyLootInfo(CurrencyInfo item) : base(item) { }
-        public override void AddItemToInventory(IInventoryController inventory) => Item.AddToInventory(inventory);
-
         public override UI.Dialogs.RewardDialog.Reward CreateRewardUI() =>
             new AmountReward(Item.Amount, Item.Data.DisplayName);
 
         public override LootInfo Clone() => new CurrencyLootInfo(new CurrencyInfo(Item.Data, Item.Amount));
 
-        public override bool AcceptMerger(IRewardMerger merger) => merger.Visit(this);
-        public override bool Merge(IRewardMerger merger) => merger.Merge(this);
-        public void Merge(CurrencyLootInfo loot) => Item.UpdateCurrencyAmount(loot.Item.Amount);
+        public override void Accept(ILootVisitor lootController) => lootController.Visit(this);
+        public override bool TryMerge(ILootMerger lootMerger) => lootMerger.Merge(this);
     }
 }

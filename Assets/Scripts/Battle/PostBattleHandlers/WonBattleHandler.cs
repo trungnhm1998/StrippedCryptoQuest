@@ -36,7 +36,6 @@ namespace CryptoQuest.Battle
             UnloadBattleScene();
         }
 
-
         private void RewardAfterSceneUnloaded(SceneScriptableObject scene)
         {
             AdditiveGameSceneLoader.SceneUnloaded -= RewardAfterSceneUnloaded;

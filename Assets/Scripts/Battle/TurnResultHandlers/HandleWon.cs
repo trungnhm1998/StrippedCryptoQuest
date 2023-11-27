@@ -1,9 +1,5 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using CryptoQuest.Battle.Events;
-using CryptoQuest.Gameplay.Loot;
-using CryptoQuest.Gameplay.Reward;
 using TinyMessenger;
 using UnityEngine;
 using UnityEngine.Events;
@@ -48,7 +44,7 @@ namespace CryptoQuest.Battle
 
         private IEnumerator CoOnPresentWon()
         {
-            var loots = _battleLootManager.GetDropLoots(); 
+            var loots = _battleLootManager.GetDroppedLoots();
             yield return _unloader.FadeInAndUnloadBattle();
             BattleEventBus.RaiseEvent(new BattleWonEvent()
             {

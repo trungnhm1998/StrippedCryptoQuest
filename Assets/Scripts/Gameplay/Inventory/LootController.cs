@@ -1,12 +1,19 @@
+using CryptoQuest.Battle.Components;
 using CryptoQuest.Events;
+using CryptoQuest.Gameplay.Inventory.Currency;
 using CryptoQuest.Gameplay.Loot;
+using CryptoQuest.Gameplay.PlayerParty;
+using CryptoQuest.Item;
+using CryptoQuest.Item.Equipment;
 using CryptoQuest.System;
 using UnityEngine;
 
 namespace CryptoQuest.Gameplay.Inventory
 {
-    public class LootController : MonoBehaviour
+    public class LootController : MonoBehaviour, ILootVisitor
     {
+        [SerializeField] private PartyManager _partyManager;
+
         [Header("Listening to")]
         [SerializeField] private LootEventChannelSO _addLootRequestEventChannel;
 
@@ -18,6 +25,34 @@ namespace CryptoQuest.Gameplay.Inventory
 
         protected void OnDisable() => _addLootRequestEventChannel.EventRaised -= AddLoot;
 
-        private void AddLoot(LootInfo loot) => loot.AddItemToInventory(_inventory);
+        private void AddLoot(LootInfo loot) => loot.Accept(this);
+
+        public void Visit(ConsumableLootInfo loot)
+        {
+            var consumable = new ConsumableInfo(loot.Item.Data, loot.Item.Quantity);
+            _inventory.Add(consumable);
+        }
+
+        public void Visit(CurrencyLootInfo loot)
+        {
+            var currency = new CurrencyInfo(loot.Item.Data, loot.Item.Amount);
+            _inventory.Add(currency);
+        }
+
+        public void Visit(EquipmentLoot loot)
+        {
+            var equipment = new Equipment(loot.EquipmentSO);
+            _inventory.Add(equipment);
+        }
+
+        public void Visit(ExpLoot loot)
+        {
+            foreach (var slot in _partyManager.Slots)
+            {
+                if (!slot.HeroBehaviour.IsValidAndAlive()) continue;
+                var levelSystem = slot.HeroBehaviour.GetComponent<LevelSystem>();
+                levelSystem.AddExp(loot.Exp);
+            }
+        }
     }
 }

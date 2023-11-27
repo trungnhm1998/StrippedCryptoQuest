@@ -1,27 +1,13 @@
 ﻿using System;
 using CryptoQuest.AbilitySystem.Abilities;
 using CryptoQuest.AbilitySystem.Attributes;
-using CryptoQuest.Gameplay.Loot;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.Localization;
-using UnityEngine.Serialization;
 
 namespace CryptoQuest.Character.Enemy
 {
-    [Serializable]
-    public struct Drop
-    {
-        public float Chance;
-
-        [field: SerializeReference, SubclassSelector, FormerlySerializedAs("LootItem")]
-        public LootInfo LootItem { get; set; }
-
-        /// <returns>a cloned of loot config</returns>
-        public LootInfo CreateLoot() => LootItem.Clone();
-    }
-
     [Serializable]
     public struct Skills
     {
@@ -46,16 +32,7 @@ namespace CryptoQuest.Character.Enemy
 
         [SerializeField] private Drop[] _drops = Array.Empty<Drop>();
 
-        public Drop[] Drops
-        {
-            get => _drops;
-            set => _drops = value;
-        }
-
-        [SerializeReference, SubclassSelector] private StealableInfo[] _stealableInfos
-            = Array.Empty<StealableInfo>();
-
-        public StealableInfo[] StealableInfos => _stealableInfos;
+        public Drop[] Drops => _drops;
 
         [SerializeField] private float _normalAttackProbability = 1f;
         public float NormalAttackProbability => _normalAttackProbability;

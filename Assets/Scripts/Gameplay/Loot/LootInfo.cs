@@ -1,6 +1,6 @@
 ﻿using System;
+using CryptoQuest.Battle;
 using CryptoQuest.Gameplay.Inventory;
-using CryptoQuest.Gameplay.Reward;
 using CryptoQuest.Item;
 using UnityEngine;
 
@@ -12,15 +12,11 @@ namespace CryptoQuest.Gameplay.Loot
     [Serializable]
     public abstract class LootInfo
     {
-        public abstract void AddItemToInventory(IInventoryController inventory);
-
         public abstract UI.Dialogs.RewardDialog.Reward CreateRewardUI();
         public abstract LootInfo Clone();
-
-        public abstract bool AcceptMerger(IRewardMerger merger);
-
-        public abstract bool Merge(IRewardMerger merger);
         public abstract bool IsValid();
+        public abstract void Accept(ILootVisitor lootController);
+        public abstract bool TryMerge(ILootMerger lootMerger);
     }
 
     [Serializable]
