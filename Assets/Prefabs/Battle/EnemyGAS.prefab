@@ -31,10 +31,10 @@ GameObject:
   - component: {fileID: -3086815644479326015}
   - component: {fileID: 4175891157180651943}
   - component: {fileID: -2585436403184803848}
-  - component: {fileID: -7316683604689173604}
   - component: {fileID: 925254727826276240}
   - component: {fileID: -6728283087111888079}
   - component: {fileID: 4240929742950632779}
+  - component: {fileID: 4324528383428869052}
   m_Layer: 0
   m_Name: EnemyGAS
   m_TagString: Enemy
@@ -354,8 +354,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aac0b7346a794b20869b58833e93e56c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _normalAttackAbility: {fileID: 11400000, guid: a229e7fcb8576454fb8de96a2778aaec,
-    type: 2}
+  _normalAttackAbility: {fileID: 11400000, guid: a229e7fcb8576454fb8de96a2778aaec, type: 2}
 --- !u!114 &4175891157180651943
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -384,18 +383,6 @@ MonoBehaviour:
   _blinkDelay: 0
   _blinkLoopTimes: 2
   _fadeEase: 8
---- !u!114 &-7316683604689173604
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3644504107888459060}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7f4de2949f7312442be1a547f38f34b9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &925254727826276240
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -435,4 +422,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enemyBehaviour: {fileID: 2313801004738519680}
-  _skills: []
+--- !u!114 &4324528383428869052
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3644504107888459060}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 961c0a5375ae40388f6f99a3f8d4d161, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

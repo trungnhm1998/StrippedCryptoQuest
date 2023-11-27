@@ -1,5 +1,3 @@
-using CryptoQuest.Gameplay.Quest;
-using CryptoQuest.Gameplay.Quest.Dialogue.ScriptableObject;
 using CryptoQuest.UI.Dialogs.RewardDialog;
 using UnityEngine;
 using UnityEngine.Events;
@@ -34,7 +32,7 @@ namespace CryptoQuest.Events.UI.Dialogs
 
         private void OnShow(RewardDialogData rewardDialogData)
         {
-            if (rewardDialogData.RewardsInfos == null)
+            if (rewardDialogData.Loots == null)
             {
                 Debug.LogWarning("A request for showing dialog has been made, but not dialogue were provided.");
                 return;

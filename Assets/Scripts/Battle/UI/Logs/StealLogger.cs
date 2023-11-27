@@ -12,6 +12,7 @@ namespace CryptoQuest.Battle.UI.Logs
         [SerializeField] private LocalizedString _stealFailedMessage;
         private TinyMessageSubscriptionToken _stealSuccessEvent;
         private TinyMessageSubscriptionToken _stealFailedEvent;
+        private LocalizedString _log;
 
         private void Awake()
         {
@@ -24,16 +25,12 @@ namespace CryptoQuest.Battle.UI.Logs
             BattleEventBus.UnsubscribeEvent(_stealSuccessEvent);
             BattleEventBus.UnsubscribeEvent(_stealFailedEvent);
         }
-        
+
         private void LogStealSuccess(StealSuccessEvent ctx)
         {
             var log = CreateLogWithCharacterName(_stealSuccessMessage,
                 ctx.Source.LocalizedName, ctx.Target.LocalizedName);
-            log.Add(Constants.ITEM_NAME, new StringVariable()
-            {
-                Value = "TEST" // TODO: REFACTOR
-            });
-
+            log.Add(Constants.ITEM_NAME, new StringVariable { Value = ctx.StolenItem.Name });
             Logger.QueueLog(log);
         }
 

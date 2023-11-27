@@ -77,13 +77,16 @@ namespace CryptoQuest.UI.Dialogs.RewardDialog
             return this;
         }
 
-        public UIRewardItem InstantiateReward(Transform parent) => Instantiate(RewardItemPrefab, parent);
-
-
         private void DisplayItemsReward()
         {
             CleanUpRewardView();
-            _rewardDialogData.RewardsInfos.ForEach(reward => reward.CreateUI(this));
+            // _rewardDialogData.RewardsInfos.ForEach(reward => reward.CreateUI(this));
+
+            foreach (var loot in _rewardDialogData.Loots)
+            {
+                var uiReward = Instantiate(RewardItemPrefab, loot.IsGeneric ? TopContainer : BottomContainer);
+                uiReward.SetLoot(loot);
+            }
 
             _topNone.SetActive(!(TopContainer.childCount > 0));
             _bottomNone.SetActive(!(BottomContainer.childCount > 0));

@@ -6,7 +6,7 @@ namespace CryptoQuest.Battle.Components
     public abstract class CharacterComponentBase : MonoBehaviour
     {
         private Character _character;
-        public Character Character => _character;
+        protected Character Character => _character;
 
         protected virtual void Awake()
         {

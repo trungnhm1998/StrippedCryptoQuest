@@ -7,6 +7,13 @@ namespace CryptoQuest.Character.Enemy
     [Serializable]
     public class Drop
     {
+        public Drop(LootInfo loot, bool stealable = false, float chance = 1f)
+        {
+            Stealable = stealable;
+            Chance = chance;
+            Loot = loot;
+        }
+
         [field: SerializeField]
         public bool Stealable { get; private set; }
 

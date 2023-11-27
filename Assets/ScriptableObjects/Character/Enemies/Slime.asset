@@ -64,12 +64,12 @@ MonoBehaviour:
     <Chance>k__BackingField: 1
     <Loot>k__BackingField:
       rid: 3705814395246346307
-  - <Stealable>k__BackingField: 0
-    <Chance>k__BackingField: 0.05
+  - <Stealable>k__BackingField: 1
+    <Chance>k__BackingField: 1
     <Loot>k__BackingField:
       rid: 3705814395246346308
   - <Stealable>k__BackingField: 1
-    <Chance>k__BackingField: 0.05
+    <Chance>k__BackingField: 1
     <Loot>k__BackingField:
       rid: 3705814395246346309
   _normalAttackProbability: 1
@@ -80,24 +80,24 @@ MonoBehaviour:
     - rid: 3705814395246346306
       type: {class: ExpLoot, ns: CryptoQuest.Gameplay.Loot, asm: indi-games.crypto-quest}
       data:
-        <Mergeable>k__BackingField: 1
+        IsGeneric: 1
         <Exp>k__BackingField: 1
     - rid: 3705814395246346307
       type: {class: CurrencyLootInfo, ns: CryptoQuest.Gameplay.Loot, asm: indi-games.crypto-quest}
       data:
-        <Mergeable>k__BackingField: 1
+        IsGeneric: 1
         _item:
           Data: {fileID: 11400000, guid: 16b3f6e09fc22d240be1b324116eeb79, type: 2}
           <Amount>k__BackingField: 1
     - rid: 3705814395246346308
       type: {class: ConsumableLootInfo, ns: CryptoQuest.Gameplay.Loot, asm: indi-games.crypto-quest}
       data:
-        <Mergeable>k__BackingField: 1
+        IsGeneric: 1
         _item:
           Data: {fileID: 11400000, guid: 332cc0df41750b84999f821d3a1dcceb, type: 2}
           _quantity: 1
     - rid: 3705814395246346309
       type: {class: EquipmentLoot, ns: CryptoQuest.Gameplay.Loot, asm: indi-games.crypto-quest}
       data:
-        <Mergeable>k__BackingField: 0
+        IsGeneric: 0
         _equipmentSO: {fileID: 11400000, guid: 1c4e21e4e6c5c0740a3b436d69b90371, type: 2}
