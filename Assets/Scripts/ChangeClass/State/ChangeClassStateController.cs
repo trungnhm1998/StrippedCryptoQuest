@@ -11,7 +11,9 @@ namespace CryptoQuest.ChangeClass
         [field: SerializeField] public ChangeClassPreviewPresenter ConfirmMaterial { get; private set; }
         [field: SerializeField] public MerchantsInputManager Input { get; private set; }
         [field: SerializeField] public ChangeClassPresenter Presenter { get; private set; }
+        [field: SerializeField] public InitializeNewCharacter Character { get; private set; }
         [field: SerializeField] public ChangeClassManager Manager { get; private set; }
+        [field: SerializeField] public TransferCharacter Party { get; private set; }
         [field: SerializeField] public Button DefaultButton { get; private set; }
         public UnityAction ExitStateEvent;
         [SerializeField] private Animator _animator;
