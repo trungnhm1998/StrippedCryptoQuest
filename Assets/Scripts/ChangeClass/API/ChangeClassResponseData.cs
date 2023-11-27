@@ -38,9 +38,8 @@ namespace CryptoQuest.ChangeClass.API
     [Serializable]
     public class NewCharacter
     {
+        public int transferring;
         public int id;
-        public string userId;
-        public string unitId;
         public int unitTokenId;
         public float HP;
         public float MP;
@@ -73,6 +72,9 @@ namespace CryptoQuest.ChangeClass.API
         public int inGameStatus;
         public int isHero;
         public int itemAddedHP;
+        public int mintStatus;
+        public string userId;
+        public string unitId;
         public string receivedAt;
         public string createdAt;
         public string updatedAt;
