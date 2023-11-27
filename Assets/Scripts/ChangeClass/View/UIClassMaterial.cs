@@ -50,10 +50,13 @@ namespace CryptoQuest.ChangeClass.View
             yield return new WaitUntil(() => _scrollRect.content.childCount == 0);
             for (int i = 0; i < _listClassMaterial.Count; i++)
             {
-                if (ClassID == _listClassMaterial[i].Class.Id && _listClassMaterial[i].Origin == character.Class.Origin)
+                if (ClassID == _listClassMaterial[i].Class.Id && 
+                _listClassMaterial[i].Origin == character.Class.Origin && 
+                character.Class.Id != _listClassMaterial[i].Id)
                 {
                     UICharacter newMaterial = Instantiate(_characterClassObject, _scrollRect.content);
                     newMaterial.ConfigureCell(_listClassMaterial[i]);
+                    _syncData.SetClassMaterialData(newMaterial);
                     ListClassCharacter.Add(newMaterial);
                 }
             }
