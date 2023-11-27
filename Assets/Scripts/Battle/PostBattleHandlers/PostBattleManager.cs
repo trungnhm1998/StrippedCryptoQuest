@@ -42,8 +42,6 @@ namespace CryptoQuest.Battle
             _inputMediator.EnableMapGameplayInput();
         }
 
-        protected virtual void OnFadeOut()
-        {
-        }
+        protected virtual void OnFadeOut() { }
     }
 }

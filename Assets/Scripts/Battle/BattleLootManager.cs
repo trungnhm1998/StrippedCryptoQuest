@@ -3,7 +3,6 @@ using System.Linq;
 using CryptoQuest.Battle.Components;
 using CryptoQuest.Gameplay.Loot;
 using CryptoQuest.Gameplay.PlayerParty;
-using CryptoQuest.Gameplay.Reward;
 using CryptoQuest.System;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
 using UnityEngine;
@@ -16,13 +15,26 @@ namespace CryptoQuest.Battle
         [SerializeField] private AttributeScriptableObject _dropRateAttribute;
 
         private IPartyController _partyController;
+        private ILootMerger _lootMerger;
+
+        public List<LootInfo> GetDroppedLoots()
+        {
+            var currentBuff = GetDropRateBuffFromParty();
+            Debug.Log($"BattleLootManager:: Buff drop rate {currentBuff}");
+
+            var loots = new List<LootInfo>();
+            foreach (var enemy in _context.Enemies.Where(enemy => enemy.Spec.IsValid()))
+                loots.AddRange(GetDropFromEnemy(enemy, currentBuff));
+
+            return _lootMerger.Merge(loots);
+        }
 
         private float GetDropRateBuffFromParty()
         {
-            var party = ServiceProvider.GetService<IPartyController>();
+            _partyController ??= ServiceProvider.GetService<IPartyController>();
             float buff = 0f;
 
-            foreach (var member in party.OrderedAliveMembers)
+            foreach (var member in _partyController.OrderedAliveMembers)
             {
                 if (!member.AttributeSystem.TryGetAttributeValue(_dropRateAttribute, out var buffValue))
                     continue;
@@ -32,29 +44,16 @@ namespace CryptoQuest.Battle
             return buff;
         }
 
-        public List<LootInfo> GetDropLoots()
-        {
-            var currentBuff = GetDropRateBuffFromParty();
-            Debug.Log($"BattleLootManager:: Buff drop rate {currentBuff}");
-
-            var loots = new List<LootInfo>();
-            foreach (var enemy in _context.Enemies.Where(enemy => enemy.Spec.IsValid()))
-            {
-                loots.AddRange(GetDropFromEnemy(enemy, currentBuff));
-            }
-
-            loots = RewardManager.CloneAndMergeLoots(loots);
-            return loots;
-        }
-
         private IEnumerable<LootInfo> GetDropFromEnemy(EnemyBehaviour enemy, float dropBuff = 0)
         {
-            foreach (var drop in enemy.Def.Drops)
+            var drops = enemy.GetComponent<IDropsProvider>().GetDrops();
+            foreach (var drop in drops)
             {
-                var randomChance = UnityEngine.Random.Range(0f, 1f);
+                var randomChance = Random.Range(0f, 1f);
                 var dropChance = drop.Chance + dropBuff;
+                Debug.Log($"BattleLootManager:: Drop chance {dropChance} random {randomChance}");
                 if (randomChance > dropChance) continue;
-                yield return drop.CreateLoot();
+                yield return drop.GetLoot();
             }
         }
     }

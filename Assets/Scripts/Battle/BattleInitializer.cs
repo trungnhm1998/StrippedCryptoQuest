@@ -1,12 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using CryptoQuest.Battle.UI.CommandDetail;
 using CryptoQuest.Character.Enemy;
 using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects;
 using CryptoQuest.Gameplay.Battle.ScriptableObjects;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace CryptoQuest.Battle
 {
@@ -62,12 +60,13 @@ namespace CryptoQuest.Battle
                     Debug.LogError($"failed to load enemy data with id {enemyId}, skipping...");
                     continue;
                 }
+
                 enemyGroup.Def = def;
                 var spec = def.CreateCharacterSpec();
                 enemyGroup.EnemySpecs.Add(spec);
                 _loadedEnemies.Add(spec); // TODO: UNLOAD ENEMY DATA
             }
-            
+
             _enemyPartyBehaviour.EnemyGroups.Add(enemyGroup);
         }
     }

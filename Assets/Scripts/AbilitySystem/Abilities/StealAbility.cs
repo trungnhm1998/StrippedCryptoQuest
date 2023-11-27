@@ -1,8 +1,8 @@
-﻿using CryptoQuest.Battle.Components.SpecialSkillBehaviours;
-using CharacterBehaviour = CryptoQuest.Battle.Components.Character;
+﻿using CryptoQuest.Battle.Components;
 using IndiGames.GameplayAbilitySystem.AbilitySystem;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
 using UnityEngine;
+using CharacterBehaviour = CryptoQuest.Battle.Components.Character;
 
 namespace CryptoQuest.AbilitySystem.Abilities
 {
@@ -19,10 +19,8 @@ namespace CryptoQuest.AbilitySystem.Abilities
 
         protected override void InternalExecute(AbilitySystemBehaviour target)
         {
-            var targetCharacter = target.GetComponent<CharacterBehaviour>();
             var stealerBehaviour = Owner.GetComponent<IStealerBehaviour>();
-
-            stealerBehaviour.StealTarget(targetCharacter);
+            stealerBehaviour.Steal(target.GetComponent<CharacterBehaviour>());
         }
     }
 }

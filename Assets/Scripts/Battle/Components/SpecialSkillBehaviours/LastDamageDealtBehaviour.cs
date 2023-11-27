@@ -1,9 +1,5 @@
-﻿using System.Collections.Generic;
-using CryptoQuest.Events;
-using CryptoQuest.Gameplay.Loot;
+﻿using CryptoQuest.AbilitySystem.Executions;
 using UnityEngine;
-using CryptoQuest.Battle.Events;
-using CryptoQuest.AbilitySystem.Executions;
 
 namespace CryptoQuest.Battle.Components.SpecialSkillBehaviours
 {
@@ -16,7 +12,7 @@ namespace CryptoQuest.Battle.Components.SpecialSkillBehaviours
         [SerializeField] private DealingDamageEvent _dealtDamageEvent;
 
         public float LastDamageDealt { get; private set; }
-        public Components.Character DamageReceiver { get; private set; }
+        public Character DamageReceiver { get; private set; }
 
         protected override void Awake()
         {
@@ -29,13 +25,11 @@ namespace CryptoQuest.Battle.Components.SpecialSkillBehaviours
             _dealtDamageEvent.DamageDealt -= SetLastDamageDealt;
         }
 
-        private void SetLastDamageDealt(Components.Character dealer, Components.Character receiver, float damage) 
+        private void SetLastDamageDealt(Character dealer, Character receiver, float damage)
         {
             if (dealer != Character) return;
             LastDamageDealt = damage;
             DamageReceiver = receiver;
         }
-
-        public override void Init() { }
     }
 }

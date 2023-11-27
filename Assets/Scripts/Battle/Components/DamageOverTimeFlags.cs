@@ -13,8 +13,6 @@ namespace CryptoQuest.Battle.Components
         private readonly Dictionary<TagScriptableObject, bool> _damageOverTimeTags = new();
         private TinyMessageSubscriptionToken _roundEndedEvent;
 
-        public override void Init() { } // This component got added at runtime so Init will not called
-
         protected override void Awake()
         {
             base.Awake();

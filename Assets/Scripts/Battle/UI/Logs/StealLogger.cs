@@ -1,5 +1,4 @@
 ﻿using CryptoQuest.Battle.Events;
-using CryptoQuest.Gameplay.Loot;
 using TinyMessenger;
 using UnityEngine;
 using UnityEngine.Localization;
@@ -32,7 +31,7 @@ namespace CryptoQuest.Battle.UI.Logs
                 ctx.Source.LocalizedName, ctx.Target.LocalizedName);
             log.Add(Constants.ITEM_NAME, new StringVariable()
             {
-                Value = ctx.StealableItem.DisplayName.GetLocalizedString(),
+                Value = "TEST" // TODO: REFACTOR
             });
 
             Logger.QueueLog(log);
