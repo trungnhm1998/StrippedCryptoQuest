@@ -1,3 +1,4 @@
+using System.Collections;
 using CryptoQuest.Core;
 using CryptoQuest.Gameplay.Manager;
 using IndiGames.GameplayAbilitySystem.AbilitySystem;
@@ -13,11 +14,42 @@ namespace CryptoQuest.AbilitySystem.Abilities
 
     public class EscapeAbilitySpec : CastSkillAbilitySpec
     {
-        public EscapeAbilitySpec(EscapeAbility def) : base(def) { }
+        private EscapeAction _escapeAction;
+
+        public EscapeAbilitySpec(EscapeAbility def) : base(def)
+        {
+            _escapeAction = new EscapeAction();
+        }
 
         protected override void InternalExecute(AbilitySystemBehaviour target)
         {
-            ActionDispatcher.Dispatch(new EscapeAction());
+            _escapeAction.OnEscapeSucceeded += EscapeSucceeded;
+            _escapeAction.OnEscapeFailed += EscapeFailed;
+            ActionDispatcher.Dispatch(_escapeAction);
+        }
+
+        protected override IEnumerator OnAbilityActive()
+        {
+            if (CanCast() == false) yield break;
+
+            RegisterBattleEndedEvents();
+
+            ExecuteAbility();
+
+            EndAbility();
+        }
+
+        private void EscapeSucceeded()
+        {
+            ApplyCost();
+            _escapeAction.OnEscapeSucceeded -= EscapeSucceeded;
+            _escapeAction.OnEscapeFailed -= EscapeFailed;
+        }
+
+        private void EscapeFailed()
+        {
+            _escapeAction.OnEscapeSucceeded -= EscapeSucceeded;
+            _escapeAction.OnEscapeFailed -= EscapeFailed;
         }
     }
 }
