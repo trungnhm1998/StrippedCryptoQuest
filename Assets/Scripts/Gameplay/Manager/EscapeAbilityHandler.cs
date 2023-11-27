@@ -7,10 +7,15 @@ using IndiGames.Core.SceneManagementSystem.Events.ScriptableObjects;
 using IndiGames.Core.SceneManagementSystem.ScriptableObjects;
 using TinyMessenger;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace CryptoQuest.Gameplay.Manager
 {
-    public class EscapeAction : ActionBase { }
+    public class EscapeAction : ActionBase
+    {
+        public UnityAction OnEscapeSucceeded;
+        public UnityAction OnEscapeFailed;
+    }
 
     public class EscapeAbilityHandler : MonoBehaviour
     {
@@ -34,7 +39,7 @@ namespace CryptoQuest.Gameplay.Manager
             ActionDispatcher.Unbind(_token);
         }
 
-        private void HandleEscape(EscapeAction _)
+        private void HandleEscape(EscapeAction escapeAction)
         {
             _currentSceneProvider = ServiceProvider.GetService<ICurrentSceneProvider>();
             SceneScriptableObject currentScene = _currentSceneProvider.CurrentScene;
@@ -42,10 +47,12 @@ namespace CryptoQuest.Gameplay.Manager
             if (_escapeRouteMapping.MapToEscapePathDictionary.TryGetValue(currentScene, out MapPathSO escapePath))
             {
                 OnEscapeSucceeded(escapePath);
+                escapeAction.OnEscapeSucceeded?.Invoke();
             }
             else
             {
-                Debug.LogError($"No escape route found for scene {currentScene.name}");
+                Debug.LogWarning($"No escape route found for scene {currentScene.name}");
+                escapeAction.OnEscapeFailed?.Invoke();
             }
         }
 
