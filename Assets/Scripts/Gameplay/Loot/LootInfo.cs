@@ -2,6 +2,7 @@
 using CryptoQuest.Battle;
 using CryptoQuest.Gameplay.Inventory;
 using CryptoQuest.Item;
+using CryptoQuest.UI.Dialogs.RewardDialog;
 using UnityEngine;
 
 namespace CryptoQuest.Gameplay.Loot
@@ -12,11 +13,14 @@ namespace CryptoQuest.Gameplay.Loot
     [Serializable]
     public abstract class LootInfo
     {
-        public abstract UI.Dialogs.RewardDialog.Reward CreateRewardUI();
+        public bool IsGeneric = true;
+        public virtual string Name { get; } = "Loot";
+
         public abstract LootInfo Clone();
         public abstract bool IsValid();
         public abstract void Accept(ILootVisitor lootController);
         public abstract bool TryMerge(ILootMerger lootMerger);
+        public abstract void Accept(UIRewardItem rewardUI);
     }
 
     [Serializable]

@@ -12,13 +12,10 @@ namespace CryptoQuest.Gameplay.Loot
         [field: SerializeField] public float Exp { get; set; } = 1f;
         public ExpLoot() { }
         public ExpLoot(float experiencePoints) => Exp = experiencePoints;
-
-        public override UI.Dialogs.RewardDialog.Reward CreateRewardUI()
-            => new GenericReward($"{Exp} EXP");
-
         public override LootInfo Clone() => new ExpLoot(Exp);
         public override bool IsValid() => Exp > 0;
         public override void Accept(ILootVisitor lootController) => lootController.Visit(this);
         public override bool TryMerge(ILootMerger lootMerger) => lootMerger.Merge(this);
+        public override void Accept(UIRewardItem rewardUI) => rewardUI.Visit(this);
     }
 }

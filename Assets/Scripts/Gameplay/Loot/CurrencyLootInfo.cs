@@ -10,13 +10,18 @@ namespace CryptoQuest.Gameplay.Loot
     public class CurrencyLootInfo : LootInfo<CurrencyInfo>
     {
         public CurrencyLootInfo() { }
+
         public CurrencyLootInfo(CurrencyInfo item) : base(item) { }
-        public override UI.Dialogs.RewardDialog.Reward CreateRewardUI() =>
-            new AmountReward(Item.Amount, Item.Data.DisplayName);
+        // public override UI.Dialogs.RewardDialog.Reward CreateRewardUI() =>
+        //     new AmountReward(Item.Amount, Item.Data.DisplayName);
 
         public override LootInfo Clone() => new CurrencyLootInfo(new CurrencyInfo(Item.Data, Item.Amount));
 
         public override void Accept(ILootVisitor lootController) => lootController.Visit(this);
         public override bool TryMerge(ILootMerger lootMerger) => lootMerger.Merge(this);
+        public override void Accept(UIRewardItem rewardUI)
+        {
+            rewardUI.Visit(this);
+        }
     }
 }

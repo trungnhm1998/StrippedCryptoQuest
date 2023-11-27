@@ -17,6 +17,11 @@ namespace CryptoQuest.Battle
         private IPartyController _partyController;
         private ILootMerger _lootMerger;
 
+        private void Awake()
+        {
+            _lootMerger = new LootMerger(); // TODO: Inject instead
+        }
+
         public List<LootInfo> GetDroppedLoots()
         {
             var currentBuff = GetDropRateBuffFromParty();

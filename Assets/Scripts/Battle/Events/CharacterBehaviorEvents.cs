@@ -1,4 +1,4 @@
-﻿using CryptoQuest.Item;
+﻿using CryptoQuest.Gameplay.Loot;
 
 namespace CryptoQuest.Battle.Events
 {
@@ -23,10 +23,10 @@ namespace CryptoQuest.Battle.Events
 
     public class StealSuccessEvent : CharacterTargetEvent
     {
-        public ItemInfo StolenItem { get; private set; }
+        public LootInfo StolenItem { get; private set; }
 
         public StealSuccessEvent(Components.Character stealer,
-            Components.Character target, ItemInfo stolenItem) : base(stealer, target)
+            Components.Character target, LootInfo stolenItem) : base(stealer, target)
         {
             StolenItem = stolenItem;
         }

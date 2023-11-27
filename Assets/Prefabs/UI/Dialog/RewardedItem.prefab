@@ -33,7 +33,6 @@ RectTransform:
   m_Children:
   - {fileID: 3839908712808728255}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -60,8 +59,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc2101d541ada3d4da0c2cc92e47a5f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rewardText: {fileID: 7660634905705937040}
-  _rewardContent: {fileID: 3508616961663504639}
+  _prefabDatabase: {fileID: 11400000, guid: 04f20c327b50e5f44946cca153d90357, type: 2}
+  _itemWithQuantity:
+    m_TableReference:
+      m_TableCollectionName: GUID:976d86f1e9218f0449781535f27d296e
+    m_TableEntryReference:
+      m_KeyId: 49955574558412800
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  _content: {fileID: 3508616961663504639}
+  _text: {fileID: 7660634905705937040}
+  references:
+    version: 2
+    RefIds: []
 --- !u!114 &3508616961663504639
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -133,7 +145,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 384322352476933200}
-  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}

@@ -1,11 +1,6 @@
-using System;
-using System.Collections.Generic;
 using CryptoQuest.Battle.States;
-using CryptoQuest.Battle.UI.SelectCommand;
-using CryptoQuest.Battle.UI.SelectHero;
-using CryptoQuest.Battle.UI.StartBattle;
+using CryptoQuest.Gameplay;
 using CryptoQuest.Input;
-using CryptoQuest.UI.SpiralFX;
 using IndiGames.Core.Events.ScriptableObjects;
 using UnityEngine;
 
@@ -19,6 +14,7 @@ namespace CryptoQuest.Battle
 
     public class BattleStateMachine : MonoBehaviour
     {
+        [SerializeField] private GameStateSO _gameState;
         [field: SerializeField] public BattleInput BattleInput { get; private set; }
 
         #region State Context
@@ -54,6 +50,7 @@ namespace CryptoQuest.Battle
 
         private void GotoLoadingState()
         {
+            _gameState.UpdateGameState(EGameState.Battle);
             ChangeState(new Loading());
         }
 

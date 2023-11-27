@@ -60,7 +60,7 @@ namespace CryptoQuest.Tests.Editor.Gameplay
         [TestCase(1f, 1f, 2f)]
         public void Merge_TwoExpLoot_OneExpLootWithSumOfTwo(float first, float second, float expected)
         {
-            var firstExpLoot = new ExpLoot(first); // after the merged loots, this should not be modified
+            var firstExpLoot = new ExpLoot(); // after the merged loots, this should not be modified
             var loots = new List<LootInfo>()
             {
                 firstExpLoot,
