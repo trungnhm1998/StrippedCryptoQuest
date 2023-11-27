@@ -26,8 +26,8 @@ namespace CryptoQuest.BlackSmith.Upgrade
         public void ConfigureCell(IUpgradeEquipment equipment)
         {
             UpgradeEquipment = equipment;
-            _displayName.StringReference = UpgradeEquipment.DisplayName;
-            _cost.text = UpgradeEquipment.Cost.ToString();
+            _displayName.StringReference = equipment.DisplayName;
+            _cost.text = equipment.Cost.ToString();
             _icon.sprite = equipment.Icon;
         }
 

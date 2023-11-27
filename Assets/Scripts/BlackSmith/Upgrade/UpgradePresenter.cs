@@ -1,3 +1,4 @@
+using System.Collections;
 using CryptoQuest.BlackSmith.Interface;
 using CryptoQuest.BlackSmith.Upgrade.State;
 using CryptoQuest.Gameplay.Inventory;
@@ -76,9 +77,14 @@ namespace CryptoQuest.BlackSmith.Upgrade
 
         public void Init()
         {
+            StartCoroutine(CoInitData());
+        }
+
+        private IEnumerator CoInitData()
+        {
             _dialogManager.Dialogue.SetMessage(_selectEquipmentMessage).Show();
             var inventory = ServiceProvider.GetService<IInventoryController>().Inventory;
-            _upgradeModel.CoGetData(inventory);
+            yield return _upgradeModel.CoGetData(inventory);
             _upgradeEquipment.InstantiateData(_upgradeModel);
             _isSelectedEquipment = false;
         }
