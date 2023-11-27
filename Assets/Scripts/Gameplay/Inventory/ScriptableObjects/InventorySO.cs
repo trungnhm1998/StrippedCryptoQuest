@@ -1,6 +1,8 @@
+using System;
 using System.Collections.Generic;
 using CryptoQuest.Item;
 using CryptoQuest.Item.Equipment;
+using CryptoQuest.Item.MagicStone;
 using UnityEngine;
 using ESlotType =
     CryptoQuest.Item.Equipment.EquipmentSlot.EType;
@@ -17,5 +19,6 @@ namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects
 
         [field: SerializeField] public List<Equipment> Equipments { get; set; } = new();
         [field: SerializeField] public List<NftEquipment> NftEquipments { get; set; } = new();
+        [field: SerializeField] public List<MagicStoneInfo> MagicStones { get; set; } = new();
     }
 }

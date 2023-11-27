@@ -2,6 +2,7 @@
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
 using CryptoQuest.Item;
 using CryptoQuest.Item.Equipment;
+using CryptoQuest.Item.MagicStone;
 
 namespace CryptoQuest.Gameplay.Inventory
 {
@@ -14,6 +15,8 @@ namespace CryptoQuest.Gameplay.Inventory
         bool Remove(NftEquipment equipment);
         bool Add(ConsumableInfo consumable, int quantity = 1);
         bool Remove(ConsumableInfo consumable, int quantity = 1);
+        bool Add(MagicStoneInfo magicStone);
+        bool Remove(MagicStoneInfo magicStone);
         bool Contains(Equipment equipment);
         bool Contains(NftEquipment equipment);
         bool Add(CurrencyInfo currency);

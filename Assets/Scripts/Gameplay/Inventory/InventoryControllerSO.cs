@@ -2,6 +2,7 @@
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
 using CryptoQuest.Item;
 using CryptoQuest.Item.Equipment;
+using CryptoQuest.Item.MagicStone;
 using CryptoQuest.System;
 using UnityEngine;
 
@@ -99,6 +100,16 @@ namespace CryptoQuest.Gameplay.Inventory
             Debug.Log($"Try to remove consumable {item.Data.name} that wasn't found in the {name}");
             return false;
         }
+
+        public bool Add(MagicStoneInfo info)
+        {
+            _inventory.MagicStones.Add(info);
+            return true;
+        }
+
+        public bool Remove(MagicStoneInfo info)
+            => _inventory.MagicStones.Remove(info);
+
 
         public bool Contains(Equipment equipment) => _inventory.Equipments.Contains(equipment);
 
