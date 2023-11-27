@@ -1,4 +1,3 @@
-using System;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Type;
 using CryptoQuest.Gameplay.PlayerParty;
 using CryptoQuest.Item.Equipment;
@@ -22,27 +21,34 @@ namespace CryptoQuest.Menus.Status.States
         public OverviewHeroStatus(UIStatusMenu panel) : base(panel) { }
 
         private int _currentPartySlot = 0;
-
-        private bool isBackToNavigation;
+        private bool _isBackToNavigation;
 
         public override void OnEnter()
         {
-            isBackToNavigation = false;
+            _isBackToNavigation = false;
 
             UIMainMenu.BackToNavigation += HandleBackToNavigation;
             StatusPanel.Focusing += FocusSelectEquipmentPanel;
             StatusPanel.Input.MenuCancelEvent += HandleCancel;
             StatusPanel.Input.MenuNavigateEvent += HandleNavigate;
-            
+            StatusPanel.ShowMagicStone.EventRaised += ShowMagicStoneMenuRequested;
+
             RegisterEquipmentButtonsEvent();
             FocusSelectEquipmentPanel();
 
             RenderHero(_currentPartySlot);
         }
 
+        private void ShowMagicStoneMenuRequested(bool isShow)
+        {
+            if (!isShow) return;
+            StatusPanel.ShowTooltipEvent.RaiseEvent(false);
+            fsm.RequestStateChange(StatusMenuStateMachine.MagicStone);
+        }
+
         private void HandleBackToNavigation()
         {
-            isBackToNavigation = true;
+            _isBackToNavigation = true;
         }
 
         public override void OnExit()
@@ -56,7 +62,7 @@ namespace CryptoQuest.Menus.Status.States
 
         private void FocusSelectEquipmentPanel()
         {
-            isBackToNavigation = false;
+            _isBackToNavigation = false;
             StatusPanel.CharacterEquipmentsPanel.SelectDefault();
         }
 
@@ -87,12 +93,12 @@ namespace CryptoQuest.Menus.Status.States
         {
             StatusPanel.InspectingHero = Party.Slots[partySlot].HeroBehaviour;
             StatusPanel.CharacterEquipmentsPanel.Show(StatusPanel.InspectingHero);
-            StatusPanel.CharacterStatsPanelPanel.InspectCharacter(StatusPanel.InspectingHero);
+            StatusPanel.CharacterStatsPanel.InspectCharacter(StatusPanel.InspectingHero);
         }
 
         private void HandleNavigate(Vector2 navigateAxis)
         {
-            if (isBackToNavigation) return;
+            if (_isBackToNavigation) return;
 
             // render hero outside will causes re-rendering the hero when navigate y axis
             if (navigateAxis.x > 0)
