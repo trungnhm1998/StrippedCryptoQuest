@@ -1764,7 +1764,7 @@ namespace CryptoQuest.Input
                 {
                     ""name"": """",
                     ""id"": ""64b7acfd-2a1f-4287-89fc-fdd8d7dbdcec"",
-                    ""path"": ""<Keyboard>/backquote"",
+                    ""path"": ""<Keyboard>/f2"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""MnK"",
@@ -1819,7 +1819,7 @@ namespace CryptoQuest.Input
                 {
                     ""name"": """",
                     ""id"": ""32324820-295e-4bb0-bb45-fc1f9c89492d"",
-                    ""path"": ""<Keyboard>/backquote"",
+                    ""path"": ""<Keyboard>/f2"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""MnK"",
