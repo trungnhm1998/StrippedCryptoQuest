@@ -2,7 +2,6 @@
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
 using CryptoQuest.Item;
 using CryptoQuest.Item.Equipment;
-using CryptoQuest.Item.MagicStone;
 
 namespace CryptoQuest.Gameplay.Inventory
 {

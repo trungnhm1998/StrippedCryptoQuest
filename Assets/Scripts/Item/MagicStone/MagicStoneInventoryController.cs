@@ -12,23 +12,23 @@ namespace CryptoQuest.Item.MagicStone
             ServiceProvider.Provide<IStoneInventoryController>(this);
         }
 
-        public bool Add(MagicStoneInfo stoneInfo)
+        public bool Add(MagicStone stone)
         {
-            if (stoneInfo == null || !stoneInfo.IsValid())
+            if (stone != null && stone.IsValid())
             {
                 Debug.LogWarning($"Stone is null or invalid");
                 return false;
             }
 
-            _stoneInventory.MagicStones.Add(stoneInfo);
+            _stoneInventory.MagicStones.Add(stone);
             return true;
         }
 
-        public bool Remove(MagicStoneInfo stoneInfo)
+        public bool Remove(MagicStone stone)
         {
-            if (stoneInfo != null && stoneInfo.IsValid())
+            if (stone != null && stone.IsValid())
             {
-                return _stoneInventory.MagicStones.Remove(stoneInfo);
+                return _stoneInventory.MagicStones.Remove(stone);
             }
 
             Debug.LogWarning($"Stone is null or invalid");
