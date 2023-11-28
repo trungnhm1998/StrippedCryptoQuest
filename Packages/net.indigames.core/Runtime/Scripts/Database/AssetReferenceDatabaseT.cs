@@ -37,7 +37,7 @@ namespace IndiGames.Core.Database
 #else
         private
 #endif
-            Map[] _maps;
+            Map[] _maps = Array.Empty<Map>();
 
         public Map[] Maps => _maps;
 
@@ -73,12 +73,17 @@ namespace IndiGames.Core.Database
 
         public IEnumerator LoadDataById(TKey id)
         {
+            yield return LoadDataByIdAsync(id);;
+            DataLoaded?.Invoke(GetDataById(id));
+        }
+        
+        public AsyncOperationHandle<TSerializableObject> LoadDataByIdAsync(TKey id)
+        {
             if (_loadedData.TryGetValue(id, out var loadingHandle))
             {
                 if (loadingHandle.IsValid())
                 {
-                    yield return loadingHandle;
-                    yield break;
+                    return loadingHandle;
                 }
 
                 _loadedData.Remove(id);
@@ -88,20 +93,23 @@ namespace IndiGames.Core.Database
             if (!CacheLookupTable.TryGetValue(id, out var assetRef))
             {
                 Debug.LogWarning($"Cannot find asset with id {id} in database");
-                yield break;
+                return default;
             }
 
             var handle = assetRef.LoadAssetAsync();
-            _loadedData.TryAdd(id, handle); // means we loading it
-            yield return handle;
-            if (handle.Status != AsyncOperationStatus.Succeeded || handle.Result == null)
+            handle.Completed += operation =>
             {
-                Debug.LogWarning($"Failed to load asset {assetRef} at id {id}");
-                yield break;
-            }
+                if (operation.Status != AsyncOperationStatus.Succeeded || operation.Result == null)
+                {
+                    Debug.LogWarning($"Failed to load asset {assetRef} at id {id}");
+                    return;
+                }
 
-            _loadedData[id] = handle;
-            DataLoaded?.Invoke(handle.Result);
+                _loadedData[id] = handle;
+                DataLoaded?.Invoke(handle.Result);
+            };
+            _loadedData.TryAdd(id, handle); // means we loading it
+            return handle;
         }
 
         /// <summary>

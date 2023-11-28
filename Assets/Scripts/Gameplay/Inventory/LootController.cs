@@ -4,7 +4,6 @@ using CryptoQuest.Gameplay.Inventory.Currency;
 using CryptoQuest.Gameplay.Loot;
 using CryptoQuest.Gameplay.PlayerParty;
 using CryptoQuest.Item;
-using CryptoQuest.Item.Equipment;
 using CryptoQuest.System;
 using UnityEngine;
 
@@ -41,8 +40,10 @@ namespace CryptoQuest.Gameplay.Inventory
 
         public void Visit(EquipmentLoot loot)
         {
-            var equipment = new Equipment(loot.EquipmentSO);
-            _inventory.Add(equipment);
+            Debug.LogWarning($"Try to loot equipment {loot.EquipmentId} but haven't implemented yet");
+            // TODO: Implement this
+            // var equipment = new Equipment(loot.EquipmentSO);
+            // _inventory.Add(equipment);
         }
 
         public void Visit(ExpLoot loot)

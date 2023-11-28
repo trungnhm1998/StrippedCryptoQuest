@@ -1,4 +1,5 @@
-﻿using CryptoQuest.Item.Equipment;
+﻿using System.Collections;
+using CryptoQuest.Item.Equipment;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Localization.Components;
@@ -8,6 +9,7 @@ namespace CryptoQuest.Menus.Status.UI.Equipment
 {
     public class UIEquipment : MonoBehaviour
     {
+        [SerializeField] private EquipmentPrefabDatabase _database;
         [SerializeField] private Image _icon;
         [SerializeField] private GameObject _iconNFT;
         [SerializeField] private LocalizeStringEvent _nameLocalize;
@@ -20,24 +22,25 @@ namespace CryptoQuest.Menus.Status.UI.Equipment
 
         private EquipmentInfo _equipment;
         public EquipmentInfo Equipment => _equipment;
+        private EquipmentPrefab _prefab;
 
         public void Init(EquipmentInfo equipment)
         {
             if (equipment.IsValid() == false) return;
             _equipment = equipment;
             var data = _equipment.Data;
+            _iconNFT.SetActive(_equipment.IsNft);
             _nameText.text = $"{data.ID}-{data.PrefabId}";
-            if (!equipment.DisplayName.IsEmpty) _nameLocalize.StringReference = equipment.DisplayName;
             _nameText.color = _enabledColor;
-            _icon.sprite = equipment.EquipmentType.Icon;
-            _iconNFT.SetActive(_equipment.IsNftItem);
-            LoadIllustration(equipment);
+            StartCoroutine(CoLoadAndInitEquipment());
         }
 
-        private void LoadIllustration(EquipmentInfo equipment)
+        private IEnumerator CoLoadAndInitEquipment()
         {
-            if (_loadImageOnEnable == false) return;
-            if (equipment.Config.Image.RuntimeKeyIsValid()) equipment.Config.Image.LoadAssetAsync();
+            yield return _database.LoadDataById(_equipment.Data.PrefabId);
+            _prefab = _database.GetDataById(_equipment.Data.PrefabId);
+            if (!_prefab.DisplayName.IsEmpty) _nameLocalize.StringReference = _prefab.DisplayName;
+            _icon.sprite = _prefab.EquipmentType.Icon;
         }
 
         public void DisableButton()
@@ -49,11 +52,8 @@ namespace CryptoQuest.Menus.Status.UI.Equipment
 
         private void OnDisable()
         {
-            if (_equipment == null || !_equipment.IsValid() == false) return;
-            if (_equipment.Config == null) return;
-            if (_equipment.Config.Image.IsValid() == false ||
-                _equipment.Config.Image.RuntimeKeyIsValid() == false) return;
-            _equipment.Config.Image.ReleaseAsset();
+            if (_equipment == null || _equipment.IsValid() == false) return;
+            _database.ReleaseDataById(_equipment.Data.PrefabId);
         }
     }
 }

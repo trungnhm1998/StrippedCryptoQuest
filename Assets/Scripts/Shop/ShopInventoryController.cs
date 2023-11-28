@@ -1,9 +1,7 @@
-using CryptoQuest.Gameplay.Inventory;
 using CryptoQuest.Item;
 using CryptoQuest.Item.Equipment;
 using CryptoQuest.System;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace CryptoQuest.Shop
 {
@@ -14,7 +12,7 @@ namespace CryptoQuest.Shop
         public bool TryToSell(EquipmentInfo equipmentItem);
         public bool TryToSell(ConsumableInfo equipmentItem);
     }
-  
+
     public class ShopInventoryController : MonoBehaviour, IShopInventoryController
     {
         private void Awake()
@@ -26,13 +24,13 @@ namespace CryptoQuest.Shop
             // => _inventoryController.Inventory.WalletController.Wallet.Gold.Amount >= shopItem.Price;
             => false; // REFACTOR: SHOP
 
+        // TODO: REFACTOR SHOP
         public bool TryToBuy(EquipmentInfo equipmentItem)
         {
-            if (!HasEnoughGold(equipmentItem)) return false;
+            // if (!HasEnoughGold(equipmentItem)) return false;
             // if (!_lootController.Add(equipmentItem)) return false;
 
             // _inventoryController.Inventory.WalletController.Wallet.Gold.UpdateCurrencyAmount(-equipmentItem.Price);
-            // TODO: REFACTOR SHOP
 
             return true;
         }
