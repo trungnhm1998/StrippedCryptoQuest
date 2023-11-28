@@ -19,6 +19,5 @@ namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects
 
         [field: SerializeField] public List<Equipment> Equipments { get; set; } = new();
         [field: SerializeField] public List<NftEquipment> NftEquipments { get; set; } = new();
-        [field: SerializeField] public List<MagicStoneInfo> MagicStones { get; set; } = new();
     }
 }

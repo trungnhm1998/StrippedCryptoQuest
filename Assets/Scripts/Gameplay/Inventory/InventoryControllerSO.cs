@@ -101,16 +101,6 @@ namespace CryptoQuest.Gameplay.Inventory
             return false;
         }
 
-        public bool Add(MagicStoneInfo info)
-        {
-            _inventory.MagicStones.Add(info);
-            return true;
-        }
-
-        public bool Remove(MagicStoneInfo info)
-            => _inventory.MagicStones.Remove(info);
-
-
         public bool Contains(Equipment equipment) => _inventory.Equipments.Contains(equipment);
 
         public bool Contains(NftEquipment equipment) => _inventory.NftEquipments.Contains(equipment);
