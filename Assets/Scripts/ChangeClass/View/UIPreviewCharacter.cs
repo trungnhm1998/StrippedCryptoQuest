@@ -34,8 +34,7 @@ namespace CryptoQuest.ChangeClass.View
 
         public void PreviewCharacter(PreviewCharacter data, UICharacter character, AssetReferenceT<Sprite> avatar, bool isSameElement)
         {
-            _name.StringReference = character.Class.Origin.DetailInformation.LocalizedName;
-            _element.sprite = isSameElement ? character.Class.Elemental.Icon : _randomElement;
+            _element.sprite = isSameElement ? character.ElementImage : _randomElement;
             _hp.text = data.minHP.ToString();
             _maxHp.text = data.minHP.ToString();
             _mp.text = data.minMP.ToString();

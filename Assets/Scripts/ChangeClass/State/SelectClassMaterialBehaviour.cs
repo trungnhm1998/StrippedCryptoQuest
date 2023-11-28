@@ -9,6 +9,7 @@ namespace CryptoQuest.ChangeClass.State
     public class SelectClassMaterialBehaviour : StateMachineBehaviour
     {
         [SerializeField] private LocalizedString _message;
+        [SerializeField] private LocalizedString _overviewMessage;
         private ChangeClassStateController _stateController;
         private MerchantsInputManager _input;
         private Animator _animator;
@@ -81,6 +82,8 @@ namespace CryptoQuest.ChangeClass.State
 
         private void ExitState()
         {
+            _stateController.DialogController.Dialogue
+                .SetMessage(_overviewMessage).Show();
             _stateController.ConfirmMaterial.HideDetail();
             _animator.SetTrigger(_exit);
             _stateController.Presenter.Init();

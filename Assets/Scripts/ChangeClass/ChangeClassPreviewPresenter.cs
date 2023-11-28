@@ -24,12 +24,10 @@ namespace CryptoQuest.ChangeClass
         [SerializeField] private UIPreviewCharacter _previewNewClass;
         [SerializeField] private UIPreviewCharacter _previewNewClassStatus;
         [SerializeField] private UIChangeClassTooltip _preview;
-        [SerializeField] private InitializeNewCharacter _initializeCharacter;
         public UnityAction<UICharacter> FirstClassMaterialEvent;
         public UnityAction<UICharacter> LastClassMaterialEvent;
         private UICharacter _firstClassMaterial;
         private UICharacter _lastClassMaterial;
-        public List<int> _materialsId { get; private set; } = new();
 
         private void OnEnable()
         {
@@ -81,14 +79,6 @@ namespace CryptoQuest.ChangeClass
         public void PreviewData()
         {
             StartCoroutine(PreviewNewClassData());
-            GetClassMaterialId();
-        }
-
-        private void GetClassMaterialId()
-        {
-            _materialsId.Clear();
-            _materialsId.Add(_firstClassMaterial.Class.Id);
-            _materialsId.Add(_lastClassMaterial.Class.Id);
         }
 
         private IEnumerator PreviewNewClassData()
@@ -124,7 +114,6 @@ namespace CryptoQuest.ChangeClass
 
             if (_changeNewClassAPI.Data == null) yield break;
             _syncData.SetNewClassData(_changeNewClassAPI.Data, _previewNewClassStatus);
-            _initializeCharacter.GetStats(_changeNewClassAPI.Data);
             GetDefaultExp(_previewNewClassStatus);
         }
 
