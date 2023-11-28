@@ -11,8 +11,6 @@ namespace CryptoQuest.Menus.Home.UI
         [Header("State Context")]
         [SerializeField] private UIHomeMenuSortCharacter _sortMode;
         [field: SerializeField] public InputMediatorSO Input { get; private set; }
-        [field: SerializeField] public UIOverview UIOverview { get; private set; }
-        [field: SerializeField] public UICharacterList UICharacterList { get; private set; }
 
         public UIHomeMenuSortCharacter SortMode => _sortMode;
 

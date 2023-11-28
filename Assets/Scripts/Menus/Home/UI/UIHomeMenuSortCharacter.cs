@@ -18,7 +18,9 @@ namespace CryptoQuest.Menus.Home.UI
         [SerializeField] private VoidEventChannelSO _sortFailedEvent;
         [SerializeField] private VoidEventChannelSO _confirmSortEvent;
 
-        [Space]
+        [Header("Game Components")]
+        [SerializeField] private GameObject _topLine;
+
         [SerializeField] private UIPartySlot[] _partySlots;
         [SerializeField] private GameObject[] _sortLayers;
         [SerializeField] private List<UICharacterCardButton> _cardButtons;
@@ -123,6 +125,7 @@ namespace CryptoQuest.Menus.Home.UI
 
         public void ConfirmSelect(UICharacterCardButton card)
         {
+            _topLine.SetActive(false);
             _sortKeysUi.SetActive(true);
 
             CurrentIndex = _partySlots.ToList().IndexOf(card.transform.parent.GetComponent<UIPartySlot>());
@@ -167,6 +170,8 @@ namespace CryptoQuest.Menus.Home.UI
 
         public void ConfirmSortOrder()
         {
+            _topLine.SetActive(true);
+
             _selectedCardButtonHolder.EnableSelectingEffect(false);
             PutToNormalLayer(_selectedCardButtonHolder.transform, CurrentIndex);
 
