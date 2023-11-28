@@ -67,13 +67,5 @@ namespace CryptoQuest.Item
 
             return base.IsValid();
         }
-
-        public override bool AddToInventory(IInventoryController inventoryController) =>
-            inventoryController.Add(this, Quantity);
-
-        public override bool RemoveFromInventory(IInventoryController inventory)
-        {
-            return false;
-        }
     }
 }

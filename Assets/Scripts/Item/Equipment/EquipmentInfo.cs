@@ -49,5 +49,7 @@ namespace CryptoQuest.Item.Equipment
             => Data != null && !string.IsNullOrEmpty(Data.ID) && !string.IsNullOrEmpty(Data.PrefabId);
 
         public abstract bool ContainedInInventory(IInventoryController inventoryController);
+        public abstract bool AddToInventory(IInventoryController inventory);
+        public abstract bool RemoveFromInventory(IInventoryController inventory);
     }
 }

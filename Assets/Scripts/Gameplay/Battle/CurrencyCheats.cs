@@ -1,7 +1,6 @@
 using CommandTerminal;
-using CryptoQuest.Gameplay.Inventory;
 using CryptoQuest.Gameplay.Inventory.Currency;
-using CryptoQuest.System;
+using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
 using CryptoQuest.System.Cheat;
 using UnityEngine;
 
@@ -9,6 +8,7 @@ namespace CryptoQuest.Gameplay.Battle
 {
     public class CurrencyCheats : MonoBehaviour, ICheatInitializer
     {
+        [SerializeField] private WalletSO _wallet;
         [SerializeField] private CurrencySO _goldSo;
 
         public void InitCheats()
@@ -20,7 +20,7 @@ namespace CryptoQuest.Gameplay.Battle
         private void AddGold(CommandArg[] args)
         {
             float amount = args[0].Float;
-            new CurrencyInfo(_goldSo, amount).AddToInventory(ServiceProvider.GetService<IInventoryController>());
+            _wallet[_goldSo].SetAmount(_wallet[_goldSo].Amount + amount);
         }
     }
 }
