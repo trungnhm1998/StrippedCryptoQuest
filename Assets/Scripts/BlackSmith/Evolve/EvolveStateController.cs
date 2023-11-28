@@ -13,6 +13,5 @@ namespace CryptoQuest.BlackSmith.Evolve
         [field: SerializeField] public EvolvePresenter EvolvePanel { get; private set; }
         [field: SerializeField] public UIEvolveEquipmentList EvolveEquipmentList { get; private set; }
         [field: SerializeField] public UIConfirmPanel ConfirmPanel { get; private set; }
-        [field: SerializeField] public UIBlackSmith UIBlackSmith { get; private set; }
     }
 }

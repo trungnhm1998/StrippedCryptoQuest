@@ -1,3 +1,4 @@
+using System;
 using CryptoQuest.BlackSmith.ScriptableObjects;
 using CryptoQuest.Input;
 using IndiGames.Core.Events.ScriptableObjects;
@@ -8,58 +9,34 @@ namespace CryptoQuest.BlackSmith
 {
     public class BlackSmithManager : MonoBehaviour
     {
-        [SerializeField] private MerchantsInputManager _blackSmithInput;
-        [SerializeField] private VoidEventChannelSO _sceneLoadedEvent;
-        [SerializeField] private ShowBlackSmithEventChannelSO _openBlackSmithEvent;
-        [SerializeField] private BlackSmithStateController _blacksmithController;
+        [field: SerializeField] public MerchantsInputManager BlackSmithInput { get; private set; }
 
-        [Header("Unity Events")]
-        [SerializeField] private UnityEvent _blackSmithOpenedEvent;
-        [SerializeField] private UnityEvent _blackSmithClosedEvent;
-        private bool isExitState;
+        [field: SerializeField] public UIBlackSmithOverview OverviewUI { get; private set; }
+        [field: SerializeField] public BlackSmithDialogsPresenter DialogPresenter { get; private set; }
+
+        [Header("Listening to")]
+        [SerializeField] private ShowBlackSmithEventChannelSO _openBlackSmithEvent;
+
+        private BlackSmithStateMachine _stateMachine;
 
         private void OnEnable()
         {
-            _openBlackSmithEvent.EventRaised += OpenBlackSmith;
-            _blackSmithInput.CancelEvent += CloseBlackSmith;
-            _blacksmithController.ExitStateEvent += CanExitBlackSmith;
+            _openBlackSmithEvent.EventRaised += InitStateMachine;
         }
 
         private void OnDisable()
         {
-            _openBlackSmithEvent.EventRaised -= OpenBlackSmith;
-            _blackSmithInput.CancelEvent -= CloseBlackSmith;
-            _blacksmithController.ExitStateEvent -= CanExitBlackSmith;
+            _openBlackSmithEvent.EventRaised -= InitStateMachine;
         }
 
-        private void OpenBlackSmith()
+        private void OnDestroy()
         {
-            EnableBlackSmithInput();
-            _blacksmithController.gameObject.SetActive(true);
-            _blackSmithOpenedEvent.Invoke();
+            _stateMachine?.CurrentState?.OnDestroy();
         }
 
-        private void CloseBlackSmith()
+        private void InitStateMachine()
         {
-            if (!isExitState) return;
-            DisableBlackSmithInput();
-            _blacksmithController.gameObject.SetActive(false);
-            _blackSmithClosedEvent.Invoke();
-        }
-
-        private void EnableBlackSmithInput()
-        {
-            _blackSmithInput.EnableInput();
-        }
-
-        private void DisableBlackSmithInput()
-        {
-            _blackSmithInput.DisableInput();
-        }
-
-        private void CanExitBlackSmith(bool isExit)
-        {
-            isExitState = isExit;
+            _stateMachine = new(this);
         }
     }
 }
