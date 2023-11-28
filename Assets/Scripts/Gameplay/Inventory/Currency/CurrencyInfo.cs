@@ -48,9 +48,5 @@ namespace CryptoQuest.Gameplay.Inventory.Currency
                 Amount = 0;
             }
         }
-
-        public override bool AddToInventory(IInventoryController inventory) => inventory.Add(this);
-
-        public override bool RemoveFromInventory(IInventoryController inventory) => false;
     }
 }

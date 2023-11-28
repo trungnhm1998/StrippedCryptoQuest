@@ -1,5 +1,4 @@
 ﻿using System;
-using CryptoQuest.Gameplay.Inventory;
 using UnityEngine.Serialization;
 
 namespace CryptoQuest.Item
@@ -8,8 +7,6 @@ namespace CryptoQuest.Item
     public abstract class ItemInfo
     {
         public abstract bool IsValid();
-        public abstract bool AddToInventory(IInventoryController inventory);
-        public abstract bool RemoveFromInventory(IInventoryController inventory);
     }
 
     [Serializable]
