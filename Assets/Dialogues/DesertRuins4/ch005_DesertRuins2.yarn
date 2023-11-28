@@ -3,10 +3,27 @@ tags:
 ---
 Bravo:What a strange door! #line:DesertRuins_2
 Emma:Right? It feels like there's a mystery behind it. We should be cautious before entering. Ready to check it out? #line:DesertRuins_3
-YES #line:DesertRuins_4
-Emma:All right, let's go inside! #line:DesertRuins_5
-NO #line:DesertRuins_6
-Emma:All right, let's prepare then head inside. #line:DesertRuins_7
+-> YES #line:DesertRuins_4
+    Emma:All right, let's go inside! #line:DesertRuins_5
+    <<quest Flag_despawn_ch005_desert_ruins_confirm>>
+-> NO #line:DesertRuins_6
+    Emma:All right, let's prepare then head inside. #line:DesertRuins_7
+    <<quest Flag_ch005_desert_ruins_confirm>>
+===
+title: Complete_ch005_DsertRuins_2
+tags:
+---
+<<quest ch005_desert_ruins_2>>
+===
+title: ch005_DesertRuins_confirm
+tags:
+---
+Emma:Ready to check it out? #line:DesertRuins_confrim_1
+-> YES #line:DesertRuins_confrim_2
+    Emma:All right, let's go inside! #line:DesertRuins_confrim_3
+    <<quest ch005_desert_ruins_confirm>>
+-> NO #line:DesertRuins_confrim_4
+    Emma:All right, let's prepare then head inside. #line:DesertRuins_confrim_5
 ===
 title: ch005_DesertRuins_3
 tags:
@@ -19,6 +36,11 @@ tags:
 ---
 Emma:Great, we found it! Let's grab it quickly! #line:DesertRuins_10
 ===
+title: Complete_ch005_DsertRuins_3
+tags:
+---
+<<quest ch005_desert_ruins_3>>
+===
 title: ch005_DesertRuins_5
 tags:
 ---
@@ -29,6 +51,11 @@ Emma:It might be a guardian of this place. Maybe it'll understand if I try talki
 Thunderbird:✖✖✖✖…!✖✖✖，✖✖✖✖…!✖✖✖✖✖!! #line:DesertRuins_15
 Bravo:I can't understand it, but I think that monster cat wants to attack us! #line:DesertRuins_16
 Emma:I shouldn't have trusted it by how it looked! Let's take it down! #line:DesertRuins_17
+===
+title: Complete_ch005_DsertRuins_4
+tags:
+---
+<<quest ch005_desert_ruins_4>>
 ===
 title: ch005_DesertRuins_6
 tags:
@@ -84,4 +111,9 @@ tags:
 Emma:You really believe this is the legendary sword? #line:DesertRuins_33
 Emma:Maybe we can get it sharpened? #line:DesertRuins_34
 Emma:I'm not sure how to fix and take care of a dark and battered sword like this, but i guess we should find a blacksmith in town and ask. #line:DesertRuins_35
+===
+title: Complete_ch005_DsertRuins_5
+tags:
+---
+<<quest ch005_desert_ruins_5>>
 ===
