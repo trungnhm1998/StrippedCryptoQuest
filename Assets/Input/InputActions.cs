@@ -1774,6 +1774,17 @@ namespace CryptoQuest.Input
                 },
                 {
                     ""name"": """",
+                    ""id"": ""ddb55ee7-0154-4952-a340-46a9f7f275ec"",
+                    ""path"": ""<Keyboard>/backquote"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""OpenTerminal"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""a37f5ec3-2832-437e-aba7-613b1b823c6a"",
                     ""path"": ""<Keyboard>/shift"",
                     ""interactions"": """",
@@ -1823,6 +1834,17 @@ namespace CryptoQuest.Input
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""MnK"",
+                    ""action"": ""Close"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b85b9504-c8ff-4de3-a27d-1fd5eeeb70cd"",
+                    ""path"": ""<Keyboard>/backquote"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
                     ""action"": ""Close"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
