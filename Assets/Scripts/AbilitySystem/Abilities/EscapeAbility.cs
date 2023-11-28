@@ -30,7 +30,7 @@ namespace CryptoQuest.AbilitySystem.Abilities
 
         protected override IEnumerator OnAbilityActive()
         {
-            if (CanCast() == false) yield break;
+            if (CheckCastSkillSuccess() == false) yield break;
 
             RegisterBattleEndedEvents();
 
