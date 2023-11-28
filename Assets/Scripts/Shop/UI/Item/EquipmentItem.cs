@@ -10,7 +10,7 @@ namespace CryptoQuest.Shop.UI.Item
 {
     public class EquipmentItem : IShopItem
     {
-        public ItemInfo Item => _equipment;
+        public ItemInfo Item => null; // TODO: REFACTOR
         public AssetReferenceT<Sprite> Icon => new(""); // TODO: Refactor
         public LocalizedString DisplayName => new(); // TODO: Refactor
         public int Price => 0;

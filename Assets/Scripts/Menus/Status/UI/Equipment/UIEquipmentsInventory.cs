@@ -43,6 +43,8 @@ namespace CryptoQuest.Menus.Status.UI.Equipment
             Reset();
             _unEquipButton.onClick.RemoveListener(Unequip);
             _unEquipButton.Selected -= PreviewUnselectEquipment;
+
+            _prefabDatabase.ReleaseAllData();
         }
 
         public void RenderEquipmentsInInventory(HeroBehaviour hero, EquipmentSlot.EType slotType,
@@ -95,8 +97,9 @@ namespace CryptoQuest.Menus.Status.UI.Equipment
 
         private void UpdateCurrentlyEquipping(EquipmentInfo equipment)
         {
-            _currentlyEquippingItem.gameObject.SetActive(equipment.IsValid());
-            if (!equipment.IsValid())
+            var isValid = equipment != null && equipment.IsValid();
+            _currentlyEquippingItem.gameObject.SetActive(isValid);
+            if (isValid == false)
             {
                 _currentlyEquippingItem.Reset();
                 return;
@@ -176,32 +179,28 @@ namespace CryptoQuest.Menus.Status.UI.Equipment
 
         private IEnumerator InstantiateNewEquipmentUICo(EquipmentInfo equipment)
         {
-            if (equipment.IsValid() == false || _prefabDatabase.CacheLookupTable.ContainsKey(equipment.Data.PrefabId) == false)
+            if (equipment.IsValid() == false ||
+                _prefabDatabase.CacheLookupTable.ContainsKey(equipment.Data.PrefabId) == false)
             {
                 Debug.Log(
                     $"UIEquipmentsInventory::InstantiateNewEquipmentUICo: Equipment [{equipment}] is not valid");
                 yield break;
             }
 
-            if (equipment.Config == null)
-            {
-                yield return _prefabDatabase.LoadDataById(equipment.Data.PrefabId);
-                var prefab = _prefabDatabase.GetDataById(equipment.Data.PrefabId);
-                equipment.Config = prefab;
-            }
+            yield return _prefabDatabase.LoadDataById(equipment.Data.PrefabId);
+            var prefab = _prefabDatabase.GetDataById(equipment.Data.PrefabId);
 
-            if (_categoryType != equipment.Config.EquipmentCategory) yield break;
-            if (equipment.Config.AllowedSlots.Contains(_slotType) == false) yield break;
+            if (_categoryType != prefab.EquipmentCategory) yield break;
+            if (prefab.AllowedSlots.Contains(_slotType) == false) yield break;
             var equipmentItem = Instantiate(_equipmentItemPrefab, _scrollRect.content);
             equipmentItem.Init(equipment);
-
             equipmentItem.Deselected += ResetPreviewer;
             equipmentItem.Inspecting += OnPreviewEquipmentStats;
             equipmentItem.EquipItem += EquipEquipment;
             _equipmentItems.Add(equipmentItem);
 
             _hero.TryGetComponent(out LevelSystem levelSystem);
-            var equipmentAllowedClasses = equipment.Config.EquipmentType.AllowedClasses;
+            var equipmentAllowedClasses = prefab.EquipmentType.AllowedClasses;
             if (equipment.Data.RequiredCharacterLevel > levelSystem.Level)
             {
                 Debug.LogWarning("Character level is not enough");

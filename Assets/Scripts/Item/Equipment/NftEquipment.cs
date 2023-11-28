@@ -12,14 +12,13 @@ namespace CryptoQuest.Item.Equipment
         [field: SerializeField] public EquipmentData Def { get; set; }
         public override EquipmentData Data => Def;
 
-        public NftEquipment(uint id) => Id = id;
-
-        public override bool AddToInventory(IInventoryController inventoryController) => inventoryController.Add(this);
+        public override bool AddToInventory(IInventoryController inventoryController) =>
+            inventoryController.Add(this);
 
         public override bool RemoveFromInventory(IInventoryController inventoryController) =>
             inventoryController.Remove(this);
 
-        public override bool IsNftItem => true;
+        public override bool IsNft => true;
 
         public override bool ContainedInInventory(IInventoryController inventoryController) =>
             inventoryController.Contains(this);

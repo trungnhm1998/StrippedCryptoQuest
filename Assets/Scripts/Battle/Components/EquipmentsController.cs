@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using CryptoQuest.Character.Hero;
@@ -70,15 +69,8 @@ namespace CryptoQuest.Battle.Components
             foreach (var slot in equipmentSlots)
             {
                 if (slot.IsValid() == false) continue;
-                StartCoroutine(LoadAndApplyEffect(slot.Equipment));
+                CreateEffectFromEquipmentStatsAndApplyToHero(slot.Equipment);
             }
-        }
-
-        private IEnumerator LoadAndApplyEffect(EquipmentInfo equipment)
-        {
-            yield return _equipmentPrefabDatabase.LoadDataById(equipment.Data.PrefabId);
-            equipment.Config = _equipmentPrefabDatabase.GetDataById(equipment.Data.PrefabId);
-            CreateEffectFromEquipmentStatsAndApplyToHero(equipment);
         }
 
         private void RemoveEquipmentEffectFromCharacter(EquipmentInfo equipment)
@@ -119,11 +111,16 @@ namespace CryptoQuest.Battle.Components
         public void Equip(EquipmentInfo equipment, ESlotType equippingSlot)
         {
             if (equipment.IsValid() == false) return;
-            var allowedSlots = equipment.AllowedSlots;
-            if (allowedSlots.Contains(equippingSlot) == false) return;
-            var requiredSlots = equipment.RequiredSlots;
-            Unequip(GetEquipmentInSlot(equippingSlot));
-            OnEquipmentAdded(equipment, equippingSlot, requiredSlots);
+            _equipmentPrefabDatabase.LoadDataByIdAsync(equipment.PrefabId).Completed += handle =>
+            {
+                var prefab = handle.Result;
+                var allowedSlots = prefab.AllowedSlots;
+                if (allowedSlots.Contains(equippingSlot) == false) return;
+                var requiredSlots = prefab.RequiredSlots;
+                Unequip(GetEquipmentInSlot(equippingSlot));
+                OnEquipmentAdded(equipment, equippingSlot, requiredSlots);
+                _equipmentPrefabDatabase.ReleaseDataById(equipment.PrefabId);
+            };
         }
 
         private void OnEquipmentAdded(EquipmentInfo equipment, ESlotType equippingSlot, ESlotType[] requiredSlots)
@@ -202,7 +199,7 @@ namespace CryptoQuest.Battle.Components
         /// <param name="equipment">This equipment should already in <see cref="Slots"/></param>
         public void Unequip(EquipmentInfo equipment)
         {
-            if (equipment.IsValid() == false) return;
+            if (equipment == null || equipment.IsValid() == false) return;
             for (var index = 0; index < _equipments.Slots.Count; index++)
             {
                 var slot = _equipments.Slots[index];

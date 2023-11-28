@@ -29,7 +29,7 @@ namespace CryptoQuest.Sagas.Profile
             foreach (var slot in _partySO.GetParty())
             {
                 if (!slot.IsValid()) continue;
-                RemoveNftEquipmentsInInventoryIfHeroEquipping(slot.EquippingItems);
+                // RemoveNftEquipmentsInInventoryIfHeroEquipping(slot.EquippingItems);
             }
 
             _partyController ??= ServiceProvider.GetService<IPartyController>();

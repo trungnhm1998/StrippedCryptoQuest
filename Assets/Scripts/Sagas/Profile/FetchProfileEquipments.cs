@@ -91,33 +91,38 @@ namespace CryptoQuest.Sagas.Profile
                 _inventory = handle.Result;
             }
 
-            var nftEquipments = responseEquipments.Select(CreateNftEquipment).ToList();
+            var equipments = responseEquipments.Select(CreateNftEquipment).ToList();
             _inventory.NftEquipments.Clear();
-            _inventory.NftEquipments = nftEquipments;
+            _inventory.NftEquipments.AddRange(equipments);
             ActionDispatcher.Dispatch(new InventoryFilled());
         }
 
         private NftEquipment CreateNftEquipment(EquipmentResponse equipmentResponse)
         {
-            var nftEquipment = new NftEquipment(equipmentResponse.id);
+            var nftEquipment = new NftEquipment
+            {
+                Id = equipmentResponse.id,
+                TokenId = equipmentResponse.equipmentTokenId,
+                Level = equipmentResponse.lv
+            };
             FillEquipmentData(equipmentResponse, ref nftEquipment);
             return nftEquipment;
         }
 
         private void FillEquipmentData(EquipmentResponse response, ref NftEquipment nftEquipment)
         {
-            nftEquipment.Def = new EquipmentData();
+            nftEquipment.Def = new EquipmentData()
+            {
+                ID = response.equipmentId,
+                PrefabId = response.equipmentIdForeign,
+                Rarity = _rarities.FirstOrDefault(rarity => rarity.ID == response.rarityId),
+                Stars = response.star,
+                RequiredCharacterLevel = response.restrictedLv,
+                MinLevel = response.minLv,
+                MaxLevel = response.maxLv,
+                ValuePerLvl = response.valuePerLv
+            };
             FillEquipmentStats(response, ref nftEquipment);
-            nftEquipment.Data.PrefabId = response.equipmentIdForeign;
-            nftEquipment.Level = response.lv;
-            nftEquipment.Data.Rarity = _rarities.FirstOrDefault(rarity => rarity.ID == response.rarityId);
-            nftEquipment.Data.ID = response.equipmentId;
-            nftEquipment.Data.Stars = response.star;
-            nftEquipment.Data.RequiredCharacterLevel = response.restrictedLv;
-            nftEquipment.Data.MinLevel = 1; // TODO: IMPLEMENT
-            nftEquipment.Data.MaxLevel = response.maxLv;
-            nftEquipment.TokenId = response.equipmentTokenId;
-            nftEquipment.Data.ValuePerLvl = response.valuePerLv;
             StartCoroutine(FillEquipmentSkills(response, nftEquipment));
         }
 

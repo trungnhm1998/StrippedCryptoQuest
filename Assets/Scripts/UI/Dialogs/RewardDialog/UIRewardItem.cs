@@ -1,6 +1,4 @@
-using System.Collections;
 using CryptoQuest.Gameplay.Loot;
-using CryptoQuest.Item.Equipment;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Localization;
@@ -11,7 +9,6 @@ namespace CryptoQuest.UI.Dialogs.RewardDialog
 {
     public class UIRewardItem : MonoBehaviour
     {
-        [SerializeField] private EquipmentPrefabDatabase _prefabDatabase;
         [SerializeField] private LocalizedString _itemWithQuantity;
         [SerializeField] private LocalizeStringEvent _content;
         [SerializeField] private TMP_Text _text;
@@ -42,18 +39,13 @@ namespace CryptoQuest.UI.Dialogs.RewardDialog
 
         public void Visit(EquipmentLoot loot)
         {
-            _text.text = loot.EquipmentSO.name;
-            StartCoroutine(CoLoadName(loot.EquipmentSO.Data.PrefabId));
-        }
-        
-        private IEnumerator CoLoadName(string prefabId)
-        {
-            yield return _prefabDatabase.LoadDataById(prefabId);
-            _content.StringReference = _prefabDatabase.GetDataById(prefabId).DisplayName;
+            Debug.LogWarning($"Try to loot equipment loot {loot.EquipmentId} but haven't implemented yet");
+            _text.text = $"Equipment {loot.EquipmentId}";
+            // TODO: Implement this
+            // _text.text = loot.EquipmentSO.name;
+            // StartCoroutine(CoLoadName(loot.EquipmentSO.Data.PrefabId));
         }
 
         public void Visit(ExpLoot loot) => _text.text = $"{loot.Exp} EXP";
-
-        private void OnDisable() => _prefabDatabase.ReleaseAllData();
     }
 }

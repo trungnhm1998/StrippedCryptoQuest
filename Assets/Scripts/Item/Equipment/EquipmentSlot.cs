@@ -23,6 +23,6 @@ namespace CryptoQuest.Item.Equipment
         [field: SerializeField, SerializeReference]
         public EquipmentInfo Equipment { get; set; }
 
-        public bool IsValid() => Equipment.IsValid();
+        public bool IsValid() => Equipment != null && Equipment.IsValid();
     }
 }

@@ -1,31 +1,25 @@
 ﻿using System;
 using CryptoQuest.AbilitySystem.Abilities;
 using CryptoQuest.Gameplay.Inventory;
-using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Type;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
 using UnityEngine;
-using UnityEngine.Localization;
 
 namespace CryptoQuest.Item.Equipment
 {
     [Serializable]
-    public abstract class EquipmentInfo : ItemInfo, IEquatable<EquipmentInfo>
+    public abstract class EquipmentInfo : IEquatable<EquipmentInfo>
     {
         [field: SerializeField] public int Level { get; set; } = 1;
 
         public abstract EquipmentData Data { get; }
+
         public AttributeWithValue[] Stats => Data.Stats;
         public RaritySO Rarity => Data.Rarity;
         public float ValuePerLvl => Data.ValuePerLvl;
-        public PassiveAbility[] Passives => Data.Passives;
-        public EquipmentPrefab Config { get; set; }
-        public LocalizedString DisplayName => Config.DisplayName;
-        public EquipmentTypeSO EquipmentType => Config.EquipmentType;
-        public EquipmentSlot.EType[] AllowedSlots => Config.AllowedSlots;
-        public EquipmentSlot.EType[] RequiredSlots => Config.RequiredSlots;
-        public abstract bool IsNftItem { get; }
 
-        public EquipmentInfo() => Level = 1;
+        public PassiveAbility[] Passives => Data.Passives;
+        public string PrefabId => Data.PrefabId;
+        public abstract bool IsNft { get; }
 
         #region Utils
 
@@ -45,7 +39,7 @@ namespace CryptoQuest.Item.Equipment
 
         #endregion
 
-        public override bool IsValid()
+        public bool IsValid()
             => Data != null && !string.IsNullOrEmpty(Data.ID) && !string.IsNullOrEmpty(Data.PrefabId);
 
         public abstract bool ContainedInInventory(IInventoryController inventoryController);
