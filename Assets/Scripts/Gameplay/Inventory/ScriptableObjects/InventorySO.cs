@@ -1,8 +1,6 @@
-using System;
 using System.Collections.Generic;
 using CryptoQuest.Item;
 using CryptoQuest.Item.Equipment;
-using CryptoQuest.Item.MagicStone;
 using UnityEngine;
 using ESlotType =
     CryptoQuest.Item.Equipment.EquipmentSlot.EType;

@@ -5,6 +5,6 @@ namespace CryptoQuest.Item.MagicStone
 {
     public class MagicStoneInventorySo : ScriptableObject
     {
-        [field: SerializeField] public List<MagicStoneInfo> MagicStones { get; set; } = new();
+        [field: SerializeField] public List<MagicStone> MagicStones { get; set; } = new();
     }
 }
