@@ -22,6 +22,7 @@ namespace CryptoQuest.Menus.DimensionalBox.States
             StateMachine.Input.MenuCancelEvent += OnBackToNavigation;
             _landingPage.TransferringEquipments += ChangeToTransferEquipmentState;
             _landingPage.TransferringMetaD += ChangeToTransferMetaDState;
+            _landingPage.TransferringMagicStone += ChangeToTransferMagicStoneState;
             StateMachine.Focusing += SelectDefaultButton;
 
             SelectDefaultButton();
@@ -32,6 +33,7 @@ namespace CryptoQuest.Menus.DimensionalBox.States
             StateMachine.Input.MenuCancelEvent -= OnBackToNavigation;
             _landingPage.TransferringEquipments -= ChangeToTransferEquipmentState;
             _landingPage.TransferringMetaD -= ChangeToTransferMetaDState;
+            _landingPage.TransferringMagicStone -= ChangeToTransferMagicStoneState;
             StateMachine.Focusing -= SelectDefaultButton;
             StateMachine.EquipmentsTransferPanel.SetActive(false);
             StateMachine.MetaDTransferPanel.SetActive(false);
@@ -58,6 +60,8 @@ namespace CryptoQuest.Menus.DimensionalBox.States
         }
 
         private void ChangeToTransferMetaDState() => StateMachine.ChangeState(StateMachine.TransferringMetaDState);
+        
+        private void ChangeToTransferMagicStoneState() => StateMachine.ChangeState(StateMachine.TransferringMagicStoneState);
 
         private void ChangeToTransferEquipmentState() =>
             StateMachine.ChangeState(StateMachine.TransferringEquipmentsState);

@@ -15,8 +15,9 @@ namespace CryptoQuest.Menus.DimensionalBox
     public class GetNftEquipmentsFailed : ActionBase { }
 
     public class TransferSucceed : ActionBase { }
+
     public class TransferFailed : ActionBase { }
-    
+
     public class GetToken : ActionBase { }
 
     public class GetTokenSuccess : ActionBase { }
@@ -34,7 +35,42 @@ namespace CryptoQuest.Menus.DimensionalBox
             Amount = amount;
         }
     }
-    
+
     public class TransferringMetadSuccess : ActionBase { }
+
     public class TransferringMetadFailed : ActionBase { }
+
+    public class GetNftMagicStoneSucceed : ActionBase { }
+
+    public class GetNftMagicStoneFailed : ActionBase { }
+
+    public class GetNftMagicStone : ActionBase
+    {
+        public EMagicStoneStatus Status { get; set; } = EMagicStoneStatus.All;
+        public bool ForceRefresh { get; set; } = false;
+    }
+
+    public class SendMagicStoneToBothSide : ActionBase
+    {
+        public int[] SelectedInDboxMagicStones { get; }
+        public int[] SelectedInGameMagicStones { get; }
+
+        public SendMagicStoneToBothSide(int[] selectedInGameMagicStones, int[] selectedInDboxMagicStones)
+        {
+            SelectedInGameMagicStones = selectedInGameMagicStones;
+            SelectedInDboxMagicStones = selectedInDboxMagicStones;
+        }
+    }
+
+    public class TransferMagicStoneFailed : ActionBase { }
+
+    public class TransferMagicStoneSucceed : ActionBase
+    {
+        public MagicStone[] ResponseMagicStone { get; }
+
+        public TransferMagicStoneSucceed(MagicStone[] responseMagicStone)
+        {
+            ResponseMagicStone = responseMagicStone;
+        }
+    }
 }
