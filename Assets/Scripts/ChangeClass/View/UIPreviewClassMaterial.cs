@@ -1,9 +1,7 @@
 using System.Collections.Generic;
 using AssetReferenceSprite;
-using CryptoQuest.Character.Hero;
 using CryptoQuest.UI.Character;
 using IndiGames.GameplayAbilitySystem.AttributeSystem;
-using Palmmedia.ReportGenerator.Core.Parser.Analysis;
 using TMPro;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -31,7 +29,7 @@ namespace CryptoQuest.ChangeClass.View
             LoadAssetReference(character.Avatar);
             UpdateCharacterStats(value);
         }
-        
+
         private void LoadAssetReference(AssetReferenceT<Sprite> avatar)
         {
             if (avatar == null)
@@ -39,6 +37,7 @@ namespace CryptoQuest.ChangeClass.View
                 _avatar.enabled = false;
                 return;
             }
+
             StartCoroutine(avatar.LoadSpriteAndSet(_avatar));
         }
 
