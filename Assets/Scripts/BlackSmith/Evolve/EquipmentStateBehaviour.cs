@@ -52,7 +52,6 @@ namespace CryptoQuest.BlackSmith.Evolve
 
         private void BackToBlackSmithState()
         {
-            _stateController.UIBlackSmith.BlackSmithOpened();
             _animator.SetTrigger(ExitState);
             _stateController.DialogsPresenter.Dialogue
                 .SetMessage(_defaultBlackSmithMessage)

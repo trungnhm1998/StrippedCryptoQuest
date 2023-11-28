@@ -1,7 +1,9 @@
+using System;
 using UnityEngine;
 
 namespace CryptoQuest.BlackSmith
 {
+    [Obsolete]
     public class BlackSmithStateBehaviour : StateMachineBehaviour
     {
         private Animator _animator;
@@ -16,7 +18,6 @@ namespace CryptoQuest.BlackSmith
             _stateController.OpenUpgradeEvent += OpenUpgradeState;
             _stateController.OpenEvolveEvent += OpenEvolveState;
             _stateController.ExitStateEvent?.Invoke(true);
-            _stateController.UIBlackSmith.Init();
         }
 
         public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)

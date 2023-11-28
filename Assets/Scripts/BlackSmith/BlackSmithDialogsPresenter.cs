@@ -16,14 +16,20 @@ namespace CryptoQuest.BlackSmith
         private UIDialogueForGenericMerchant _dialogue;
         public UIDialogueForGenericMerchant Dialogue { get => _dialogue; }
 
-        public void BlackSmithOpened()
+        public void ShowOverviewDialog()
         {
+            if (_dialogue != null)
+            {
+                DialogInstantiated(_dialogue);
+                return;
+            }
+
             GenericMerchantDialogueController.Instance.Instantiate(DialogInstantiated);
         }
 
-        public void BlackSmithClosed()
+        public void HideOverviewDialog()
         {
-            Destroy(_dialogue.gameObject); // TODO: code smell here
+            _dialogue.Hide();
         }
 
         private void DialogInstantiated(UIDialogueForGenericMerchant dialog)

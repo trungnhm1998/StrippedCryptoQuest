@@ -39,7 +39,6 @@ namespace CryptoQuest.BlackSmith.Upgrade.State
 
         private void ExitState()
         {
-            _stateController.UIBlackSmith.BlackSmithOpened();
             _animator.SetTrigger(_exit);
             _stateController.DialogsPresenter.Dialogue.SetMessage(_selectTargetMessage).Show();
         }
