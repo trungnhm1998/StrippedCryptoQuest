@@ -20,6 +20,8 @@ namespace CryptoQuest.BlackSmith.Upgrade
         private bool _isValid;
         private float _currentGold;
 
+        public int LevelToUpgrade => _selectLevelToUpgrade;
+
         public void SetupUI(IUpgradeEquipment item, float currentGold)
         {
             _currentGold = currentGold;
