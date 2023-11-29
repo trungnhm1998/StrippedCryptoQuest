@@ -121,7 +121,7 @@ namespace CryptoQuest.Sagas.Profile
         private void FillEquipmentData(EquipmentResponse response, ref NftEquipment nftEquipment,
             EquipmentPrefab prefab)
         {
-            nftEquipment.Def = new EquipmentData()
+            nftEquipment.Data = new EquipmentData()
             {
                 ID = response.equipmentId,
                 Prefab = prefab,

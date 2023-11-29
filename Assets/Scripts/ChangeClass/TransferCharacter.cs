@@ -66,9 +66,9 @@ namespace CryptoQuest.ChangeClass
             partySlotSpec.EquippingItems.Slots = new();
         }
 
-        private static HashSet<EquipmentInfo> FilterUniqueEquippingItems(PartySlotSpec partySlotSpec)
+        private static HashSet<IEquipment> FilterUniqueEquippingItems(PartySlotSpec partySlotSpec)
         {
-            var equippingItems = new HashSet<EquipmentInfo>();
+            var equippingItems = new HashSet<IEquipment>();
             foreach (var equipmentSlot in partySlotSpec.EquippingItems.Slots)
             {
                 if (equipmentSlot.IsValid() == false) continue;

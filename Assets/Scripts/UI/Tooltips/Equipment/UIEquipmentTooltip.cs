@@ -12,7 +12,7 @@ namespace CryptoQuest.UI.Tooltips.Equipment
 {
     public interface ITooltipEquipmentProvider
     {
-        public EquipmentInfo Equipment { get; }
+        public IEquipment Equipment { get; }
     }
 
     public class UIEquipmentTooltip : UITooltipBase
@@ -32,7 +32,7 @@ namespace CryptoQuest.UI.Tooltips.Equipment
         [SerializeField] private GameObject _conditionalSkillPrefab;
         [SerializeField] private RectTransform _conditionalSkillsContainer;
 
-        private EquipmentInfo _equipment;
+        private IEquipment _equipment;
 
         private string _lvlText;
         private string LvlText => _lvlText ??= _lvl.text;

@@ -24,8 +24,8 @@ namespace CryptoQuest.Battle.Components
             _equipmentsController.Removed += AddToInventory;
         }
 
-        private void RemoveFromInventory(EquipmentInfo equipment) => equipment.RemoveFromInventory(_inventoryController);
+        private void RemoveFromInventory(IEquipment equipment) => equipment.RemoveFromInventory(_inventoryController);
 
-        private void AddToInventory(EquipmentInfo equipment) => equipment.AddToInventory(_inventoryController);
+        private void AddToInventory(IEquipment equipment) => equipment.AddToInventory(_inventoryController);
     }
 }

@@ -12,7 +12,7 @@ namespace CryptoQuest.Menus.Status.UI.Equipment
         public event Action<UIEquipmentItem> Inspecting;
         public event Action<UIEquipmentItem> EquipItem;
         [SerializeField] private UIEquipment _equipmentUI;
-        public EquipmentInfo Equipment => _equipmentUI.Equipment;
+        public IEquipment Equipment => _equipmentUI.Equipment;
         private bool _canClick;
 
         public void OnSelect(BaseEventData eventData)
@@ -21,7 +21,7 @@ namespace CryptoQuest.Menus.Status.UI.Equipment
             Inspecting?.Invoke(this);
         }
 
-        public void Init(EquipmentInfo equipment)
+        public void Init(IEquipment equipment)
         {
             _canClick = true;
             _equipmentUI.Init(equipment);

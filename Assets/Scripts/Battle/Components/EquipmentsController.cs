@@ -17,14 +17,13 @@ namespace CryptoQuest.Battle.Components
 
     public class EquipmentsController : CharacterComponentBase
     {
-        public event Action<EquipmentInfo> Equipped;
-        public event Action<EquipmentInfo> Removed;
+        public event Action<IEquipment> Equipped;
+        public event Action<IEquipment> Removed;
 
         private Equipments _equipments;
         public Equipments Equipments => _equipments;
 
-        public List<EquipmentSlot> Slots => _equipments.Slots;
-
+        private List<EquipmentSlot> Slots => _equipments.Slots;
 
         public override void Init()
         {
@@ -32,7 +31,7 @@ namespace CryptoQuest.Battle.Components
             _equipments = provider.GetEquipments();
         }
 
-        public EquipmentInfo GetEquipmentInSlot(ESlotType slotType)
+        public IEquipment GetEquipmentInSlot(ESlotType slotType)
         {
             foreach (var equipmentSlot in _equipments.Slots)
             {
@@ -58,7 +57,7 @@ namespace CryptoQuest.Battle.Components
         /// the required slots will now occupied by the same equipment (check GUID)
         /// apply the effect</para>
         /// </summary>
-        public void Equip(EquipmentInfo equipment, ESlotType equippingSlot)
+        public void Equip(IEquipment equipment, ESlotType equippingSlot)
         {
             if (equipment.IsValid() == false) return;
 
@@ -69,7 +68,7 @@ namespace CryptoQuest.Battle.Components
             OnEquipmentAdded(equipment, equippingSlot, requiredSlots);
         }
 
-        private void OnEquipmentAdded(EquipmentInfo equipment, ESlotType equippingSlot, ESlotType[] requiredSlots)
+        private void OnEquipmentAdded(IEquipment equipment, ESlotType equippingSlot, ESlotType[] requiredSlots)
         {
             SetEquipmentInSlot(equipment, equippingSlot);
             foreach (var slot in requiredSlots)
@@ -79,8 +78,7 @@ namespace CryptoQuest.Battle.Components
             Equipped?.Invoke(equipment);
         }
 
-
-        private void SetEquipmentInSlot(EquipmentInfo equipment, ESlotType slotType)
+        private void SetEquipmentInSlot(IEquipment equipment, ESlotType slotType)
         {
             for (var index = 0; index < Slots.Count; index++)
             {
@@ -106,14 +104,16 @@ namespace CryptoQuest.Battle.Components
         /// InventoryController, or some manager should listen to this event and add the equipment back to inventory
         /// </summary>
         /// <param name="equipment">This equipment should already in <see cref="Slots"/></param>
-        public void Unequip(EquipmentInfo equipment)
+        public void Unequip(IEquipment equipment)
         {
             if (equipment == null || equipment.IsValid() == false) return;
-            foreach (var slot in _equipments.Slots)
+            // DO NOT USE FOR EACH due to SetEquipmentInSlot will modify the list cause IEnumerable exception
+            for (var index = 0; index < _equipments.Slots.Count; index++)
             {
+                var slot = _equipments.Slots[index];
                 if (slot.IsValid()
                     // This handle the case when the equipment is in multiple slots
-                    && slot.Equipment == equipment)
+                    && ReferenceEquals(slot.Equipment, equipment))
                 {
                     SetEquipmentInSlot(null, slot.Type);
                 }
@@ -122,6 +122,6 @@ namespace CryptoQuest.Battle.Components
             OnEquipmentRemoved(equipment);
         }
 
-        private void OnEquipmentRemoved(EquipmentInfo equipment) => Removed?.Invoke(equipment);
+        private void OnEquipmentRemoved(IEquipment equipment) => Removed?.Invoke(equipment);
     }
 }

@@ -13,7 +13,7 @@ namespace CryptoQuest.Battle.Components
         /// <summary>
         /// Create an effect based on effect stats
         /// </summary>
-        private readonly Dictionary<EquipmentInfo, ActiveGameplayEffect> _equipmentsEffect = new();
+        private readonly Dictionary<IEquipment, ActiveGameplayEffect> _equipmentsEffect = new();
 
         public override void Init()
         {
@@ -44,7 +44,7 @@ namespace CryptoQuest.Battle.Components
             Character.AbilitySystem.AttributeSystem.UpdateAttributeValues();
         }
 
-        public void ApplyEffect(EquipmentInfo equipment)
+        public void ApplyEffect(IEquipment equipment)
         {
             // TODO: Should I allow equip dead character?
             if (equipment.IsValid() == false) return;
@@ -59,7 +59,7 @@ namespace CryptoQuest.Battle.Components
         /// </summary>
         /// <param name="equipment"></param>
         /// <returns>A gameplay spec that can be use to apply into the system</returns>
-        private GameplayEffectSpec CreateEffectSpecFromEquipment(EquipmentInfo equipment) =>
+        private GameplayEffectSpec CreateEffectSpecFromEquipment(IEquipment equipment) =>
             Character.AbilitySystem.MakeOutgoingSpec(CreateEffectDefFormEquipment(equipment));
 
         /// <summary>
@@ -67,7 +67,7 @@ namespace CryptoQuest.Battle.Components
         /// </summary>
         /// <param name="equipment">The equipment to create effect from</param>
         /// <returns><see cref="GameplayEffectDefinition"/> with <see cref="InfinitePolicy"/> created using Equipment <see cref="Equipment.Stats"/></returns>
-        private GameplayEffectDefinition CreateEffectDefFormEquipment(EquipmentInfo equipment)
+        private GameplayEffectDefinition CreateEffectDefFormEquipment(IEquipment equipment)
         {
             var attributes = equipment.Stats;
             var equipmentEffectDef = ScriptableObject.CreateInstance<GameplayEffectDefinition>();
@@ -94,7 +94,7 @@ namespace CryptoQuest.Battle.Components
             return equipmentEffectDef;
         }
 
-        public void RemoveEffect(EquipmentInfo equipment)
+        public void RemoveEffect(IEquipment equipment)
         {
             if (_equipmentsEffect.TryGetValue(equipment, out var activeEffect) == false) return;
             _equipmentsEffect.Remove(equipment);

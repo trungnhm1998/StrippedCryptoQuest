@@ -70,7 +70,7 @@ namespace CryptoQuest.Sagas.Profile
         /// </summary>
         /// <param name="equippingItem"></param>
         /// <param name="equipmentSlot"></param>
-        private bool RemoveNftEquipmentFromInventoryIfHeroEquippingTheSame(EquipmentInfo equippingItem,
+        private bool RemoveNftEquipmentFromInventoryIfHeroEquippingTheSame(IEquipment equippingItem,
             EquipmentSlot equipmentSlot)
         {
             bool needUpdate = false;

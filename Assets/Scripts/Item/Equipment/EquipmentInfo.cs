@@ -7,13 +7,36 @@ using UnityEngine;
 
 namespace CryptoQuest.Item.Equipment
 {
-    [Serializable]
-    public abstract class EquipmentInfo : IEquatable<EquipmentInfo>
+    public interface IEquipment
     {
+        public uint Id { get; set; }
+        public int Level { get; set; }
+        public EquipmentData Data { get; set; }
+        public AttributeWithValue[] Stats { get; }
+        public RaritySO Rarity { get; }
+        public float ValuePerLvl { get; }
+        public EquipmentPrefab Prefab { get; }
+        public EquipmentTypeSO Type { get; }
+        public EquipmentSlot.EType[] RequiredSlots { get; }
+        public EquipmentSlot.EType[] AllowedSlots { get; }
+
+        public PassiveAbility[] Passives { get; }
+
+        public bool IsNft { get; }
+
+        public bool IsValid();
+
+        public bool ContainedInInventory(IInventoryController inventoryController);
+        public bool AddToInventory(IInventoryController inventory);
+        public bool RemoveFromInventory(IInventoryController inventory);
+    }
+
+    [Serializable]
+    public abstract class EquipmentInfo : IEquipment, IEquatable<EquipmentInfo>
+    {
+        [field: SerializeField] public uint Id { get; set; }
         [field: SerializeField] public int Level { get; set; } = 1;
-
-        public abstract EquipmentData Data { get; }
-
+        [field: SerializeField] public EquipmentData Data { get; set; }
         public AttributeWithValue[] Stats => Data.Stats;
         public RaritySO Rarity => Data.Rarity;
         public float ValuePerLvl => Data.ValuePerLvl;
@@ -23,7 +46,7 @@ namespace CryptoQuest.Item.Equipment
         public EquipmentSlot.EType[] AllowedSlots => Data.Prefab.AllowedSlots;
 
         public PassiveAbility[] Passives => Data.Passives;
-        
+
         public abstract bool IsNft { get; }
 
         #region Utils
@@ -36,15 +59,23 @@ namespace CryptoQuest.Item.Equipment
 
         public bool Equals(EquipmentInfo other) => other != null && ReferenceEquals(this, other);
 
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != GetType()) return false;
+            return Equals((EquipmentInfo)obj);
+        }
+
         public static bool operator !=(EquipmentInfo left, EquipmentInfo right) => !(left == right);
 
-        public override bool Equals(object obj) => Equals(obj as EquipmentInfo);
+        public virtual bool Equals(IEquipment other) => other is not null && ReferenceEquals(this, other);
 
-        public override int GetHashCode() => (Data.ID, Data.Prefab).GetHashCode();
+        public override int GetHashCode() => HashCode.Combine(Id, Level, Data, IsNft);
 
         #endregion
 
-        public bool IsValid()
+        public virtual bool IsValid()
             => Data != null && !string.IsNullOrEmpty(Data.ID) && Data.Prefab != null;
 
         public abstract bool ContainedInInventory(IInventoryController inventoryController);
