@@ -11,6 +11,7 @@ namespace CryptoQuest.BlackSmith.Upgrade
 {
     public class UIEquipmentDetails : MonoBehaviour
     {
+        [SerializeField] private EquipmentPrefabDatabase _prefabDatabase;
         [SerializeField] private Image _icon;
         [SerializeField] private LocalizeStringEvent _displayName;
         [SerializeField] private Image _rarity;
@@ -21,15 +22,22 @@ namespace CryptoQuest.BlackSmith.Upgrade
         [SerializeField] private Sprite _defaultStar;
         [SerializeField] private List<UIAttribute> _attributes;
 
+        private EquipmentPrefab _prefab;
+
         public void RenderData(EquipmentInfo equipment)
         {
-            _icon.sprite = equipment.Config.EquipmentType.Icon;
-            _displayName.StringReference = equipment.DisplayName;
-            _rarity.sprite = equipment.Rarity.Icon;
-            _level.text = equipment.Level.ToString();
-            LoadStar(equipment.Data.Stars);
-            SetAttributes(equipment);
-            SetEquipmentImage(equipment);
+            if (equipment == null || equipment.IsValid() == false) return;
+            _prefabDatabase.LoadDataByIdAsync(equipment.PrefabId).Completed += op =>
+            {
+                _prefab = op.Result;
+                _icon.sprite = _prefab.EquipmentType.Icon;
+                _displayName.StringReference = _prefab.DisplayName;
+                _rarity.sprite = equipment.Rarity.Icon;
+                _level.text = equipment.Level.ToString();
+                LoadStar(equipment.Data.Stars);
+                SetAttributes(equipment);
+                SetEquipmentImage();
+            };
         }
 
         private void SetAttributes(EquipmentInfo equipment)
@@ -40,12 +48,13 @@ namespace CryptoQuest.BlackSmith.Upgrade
             }
         }
 
-        private void SetEquipmentImage(EquipmentInfo equipment)
+        private void SetEquipmentImage()
         {
-            var isImageValid = equipment.Config.Image.RuntimeKeyIsValid();
+            if (_prefab == null) return;
+            var isImageValid = _prefab.Image.RuntimeKeyIsValid();
             _illustration.enabled = isImageValid;
             if (isImageValid)
-                StartCoroutine(equipment.Config.Image.LoadSpriteAndSet(_illustration));
+                StartCoroutine(_prefab.Image.LoadSpriteAndSet(_illustration));
         }
 
         private void SetStat(UIAttribute attribute, EquipmentInfo equipment)
@@ -64,6 +73,12 @@ namespace CryptoQuest.BlackSmith.Upgrade
                 currentStar++;
                 image.sprite = currentStar < stars ? _star : _defaultStar;
             }
+        }
+
+        private void OnDisable()
+        {
+            if (_prefab == null) return;
+            _prefabDatabase.ReleaseDataById(_prefab.ID);
         }
     }
 }
