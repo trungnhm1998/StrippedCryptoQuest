@@ -14,9 +14,8 @@ namespace CryptoQuest.Battle.Components.SpecialSkillBehaviours
         public float LastDamageDealt { get; private set; }
         public Character DamageReceiver { get; private set; }
 
-        protected override void Awake()
+        private void Awake()
         {
-            base.Awake();
             _dealtDamageEvent.DamageDealt += SetLastDamageDealt;
         }
 
