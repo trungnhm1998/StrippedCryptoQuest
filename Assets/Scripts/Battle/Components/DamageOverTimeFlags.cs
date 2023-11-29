@@ -13,9 +13,8 @@ namespace CryptoQuest.Battle.Components
         private readonly Dictionary<TagScriptableObject, bool> _damageOverTimeTags = new();
         private TinyMessageSubscriptionToken _roundEndedEvent;
 
-        protected override void Awake()
+        private void Awake()
         {
-            base.Awake();
             Character.TurnEnded += ClearFlags;
         }
 

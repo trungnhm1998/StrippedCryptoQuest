@@ -98,9 +98,9 @@ namespace CryptoQuest.Sagas.Profile
                 yield return _prefabDatabase.LoadDataByIdAsync(equipmentResponse.equipmentIdForeign);
                 var equipment = CreateNftEquipment(equipmentResponse,
                     _prefabDatabase.GetDataById(equipmentResponse.equipmentIdForeign));
+                equipments.Add(equipment);
             }
             
-            // var equipments = responseEquipments.Select(CreateNftEquipment).ToList();
             _inventory.NftEquipments.Clear();
             _inventory.NftEquipments.AddRange(equipments);
             ActionDispatcher.Dispatch(new InventoryFilled());
