@@ -3,6 +3,7 @@ using System.Linq;
 using CryptoQuest.AbilitySystem.Attributes;
 using CryptoQuest.ChangeClass.API;
 using CryptoQuest.ChangeClass.View;
+using CryptoQuest.Character;
 using CryptoQuest.Character.Hero;
 using CryptoQuest.Character.Hero.AvatarProvider;
 using UnityEngine;
@@ -13,8 +14,9 @@ namespace CryptoQuest.ChangeClass
 {
     public class ChangeClassSyncData : MonoBehaviour
     {
-        [SerializeField] private List<Origin> Origins = new List<Origin>();
-        [SerializeField] private List<Elemental> Elements = new List<Elemental>();
+        [field: SerializeField] public List<Origin> Origins { get; private set; }
+        [field: SerializeField] public List<Elemental> Elements { get; private set; }
+        [field: SerializeField] public List<CharacterClass> Class { get; private set; }
         [SerializeField] private HeroAvatarDatabase HeroAvatar;
         private LocalizedString _localizedName;
         private Sprite _element;
@@ -34,7 +36,6 @@ namespace CryptoQuest.ChangeClass
         {
             var characterId = character.Class.Origin.DetailInformation.Id;
             var classId = character.Class.Class.Id;
-            
             string mapId = $"{characterId}-{classId}";
             var matchingAvatar = HeroAvatar.Maps.FirstOrDefault(avatar => avatar.Id == mapId);
             _avatar = matchingAvatar.Data;

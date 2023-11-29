@@ -5,6 +5,8 @@ using CryptoQuest.Gameplay.PlayerParty;
 using IndiGames.Core.EditorTools.Attributes.ReadOnlyAttribute;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Localization;
+using UnityEngine.Serialization;
 
 namespace CryptoQuest.Gameplay.Encounter
 {
@@ -19,6 +21,7 @@ namespace CryptoQuest.Gameplay.Encounter
         public EnemyGroupId[] EnemyGroups => _enemyGroups;
 
         [SerializeField, ReadOnly] private int[] _enemyIds = Array.Empty<int>();
+
         public int[] EnemyIds
         {
             get
@@ -29,13 +32,15 @@ namespace CryptoQuest.Gameplay.Encounter
             }
         }
 
+        public BattlefieldPrompt BattlefieldPrompts;
+
 #if UNITY_EDITOR
         private void OnValidate()
         {
             if (EnemyIds.Length > PartyConstants.MAX_PARTY_SIZE)
             {
                 Debug.LogWarning($"Enemies lenght {EnemyIds.Length}"
-                    + $"is higher that max party size {PartyConstants.MAX_PARTY_SIZE}");
+                                 + $"is higher that max party size {PartyConstants.MAX_PARTY_SIZE}");
             }
         }
 
@@ -68,5 +73,13 @@ namespace CryptoQuest.Gameplay.Encounter
     public struct EnemyGroupId
     {
         public int[] EnemyIds;
+    }
+
+    [Serializable]
+    public class BattlefieldPrompt
+    {
+        public LocalizedString IntroPrompt;
+        public LocalizedString WinPrompt;
+        public LocalizedString LosePrompt;
     }
 }
