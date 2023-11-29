@@ -5,17 +5,13 @@ namespace CryptoQuest.Menus.Beast.States
 {
     public class BeastMenuStateMachine : StateMachine
     {
-        public static readonly string BeastOverview = "BeastOverview";
+        public static readonly string BeastSelection = "BeastSelection";
 
-        private readonly UIBeastMenu _beastMenuPanel;
-
-        public BeastMenuStateMachine(UIBeastMenu beastMenuPanel) : base(false)
+        public BeastMenuStateMachine(UIBeastMenu panel) : base(panel)
         {
-            _beastMenuPanel = beastMenuPanel;
+            AddState(BeastSelection, new BeastOverviewState(panel));
 
-            AddState(BeastOverview, new BeastOverviewState(beastMenuPanel));
-
-            SetStartState(BeastOverview);
+            SetStartState(BeastSelection);
         }
     }
 }

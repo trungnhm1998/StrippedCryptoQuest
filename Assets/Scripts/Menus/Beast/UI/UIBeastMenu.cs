@@ -1,13 +1,17 @@
 using CryptoQuest.Input;
 using CryptoQuest.Menus.Beast.States;
+using CryptoQuest.UI.Menu;
 using FSM;
 using UnityEngine;
 
 namespace CryptoQuest.Menus.Beast.UI
 {
-    public class UIBeastMenu : MonoBehaviour
+    public class UIBeastMenu : UIMenuPanelBase
     {
-        [field: SerializeField, Header("State Context")] public InputMediatorSO Input { get; private set; }
+        [field: SerializeField, Header("State Context")]
+        public InputMediatorSO Input { get; private set; }
+
+        [field: SerializeField] public UIBeastList ListBeastUI { get; private set; }
         private StateMachine _stateMachine;
 
         private void Awake()
