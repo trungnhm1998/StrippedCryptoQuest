@@ -1,6 +1,7 @@
 ﻿using CryptoQuest.Input;
 using CryptoQuest.Menus.DimensionalBox.States;
 using CryptoQuest.Menus.DimensionalBox.States.EquipmentsTransfer;
+using CryptoQuest.Menus.DimensionalBox.States.MagicStoneTransfer;
 using CryptoQuest.Menus.DimensionalBox.States.MetadTransfer;
 using CryptoQuest.Menus.DimensionalBox.UI;
 using CryptoQuest.UI.Menu;
@@ -12,6 +13,9 @@ namespace CryptoQuest.Menus.DimensionalBox
 {
     public class DimensionalBoxStateMachine : UIMenuPanelBase
     {
+        [SerializeField] private GameObject _magicStoneTransferPanel;
+        public GameObject MagicStoneTransferPanel => _magicStoneTransferPanel;
+
         [SerializeField] private GameObject _equipmentsTransferPanel;
         public GameObject EquipmentsTransferPanel => _equipmentsTransferPanel;
         [SerializeField] private GameObject _metaDTransferPanel;
@@ -21,8 +25,10 @@ namespace CryptoQuest.Menus.DimensionalBox
         public InputMediatorSO Input => _input;
 
         public StateBase Landing { get; private set; }
+        public StateBase TransferringMagicStoneState { get; private set; }
         public StateBase TransferringMetaDState { get; private set; }
         public StateBase TransferringEquipmentsState { get; private set; }
+        public StateBase ConfirmMagicStoneTransfer { get; set; }
         public StateBase ConfirmTransfer { get; set; }
         public StateBase InputTransferAmount { get; set; }
 
@@ -33,7 +39,9 @@ namespace CryptoQuest.Menus.DimensionalBox
             Landing = new LandingPage(_landingPage);
             TransferringEquipmentsState = new TransferringEquipments(_equipmentsTransferPanel);
             TransferringMetaDState = new SelectSourceToTransfer(_metaDTransferPanel);
+            TransferringMagicStoneState = new TransferringMagicStone(_magicStoneTransferPanel);
             InputTransferAmount = new InputTransferAmount(_metaDTransferPanel);
+            ConfirmMagicStoneTransfer = new ConfirmMagicStoneTransfer();
             ConfirmTransfer = new ConfirmTransfer();
         }
 
