@@ -68,7 +68,7 @@ namespace CryptoQuest.Ranch.Sagas
 
         private void OnInventoryFilled(Obj.Beast[] beasts) => StartCoroutine(CoLoadAndUpdateInventory(beasts));
 
-        private IEnumerator CoLoadAndUpdateInventory(Beast[] beasts)
+        private IEnumerator CoLoadAndUpdateInventory(Obj.Beast[] beasts)
         {
             yield return null;
             
