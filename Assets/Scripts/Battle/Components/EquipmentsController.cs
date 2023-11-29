@@ -115,7 +115,7 @@ namespace CryptoQuest.Battle.Components
                     // This handle the case when the equipment is in multiple slots
                     && slot.Equipment == equipment)
                 {
-                    SetEquipmentInSlot(default, slot.Type);
+                    SetEquipmentInSlot(null, slot.Type);
                 }
             }
 

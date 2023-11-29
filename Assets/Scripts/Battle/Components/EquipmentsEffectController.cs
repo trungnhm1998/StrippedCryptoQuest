@@ -48,7 +48,7 @@ namespace CryptoQuest.Battle.Components
         {
             // TODO: Should I allow equip dead character?
             if (equipment.IsValid() == false) return;
-            if (_equipmentsEffect.ContainsKey(equipment)) return;
+            if (_equipmentsEffect.ContainsKey(equipment)) return; // two handed weapon will apply effect twice
 
             var activeEffectSpec = Character.ApplyEffect(CreateEffectSpecFromEquipment(equipment));
             _equipmentsEffect.Add(equipment, activeEffectSpec);

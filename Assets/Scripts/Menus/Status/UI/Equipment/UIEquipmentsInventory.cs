@@ -6,11 +6,8 @@ using CryptoQuest.Battle.Components;
 using CryptoQuest.Gameplay.Inventory;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Type;
 using CryptoQuest.Item.Equipment;
-using CryptoQuest.Menu;
 using CryptoQuest.System;
-using CryptoQuest.UI.Menu;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace CryptoQuest.Menus.Status.UI.Equipment
@@ -24,23 +21,40 @@ namespace CryptoQuest.Menus.Status.UI.Equipment
         [SerializeField] private UIEquipmentItem _equipmentItemPrefab;
         [SerializeField] private UIEquipment _currentlyEquippingItem;
         [SerializeField] private GameObject _contents;
-        [SerializeField] private MultiInputButton _unEquipButton;
-        [SerializeField] private UIEquipmentPreviewer _equipmentPreviewer;
 
         private List<UIEquipmentItem> _equipmentItems = new();
         private EquipmentsController _equipmentsController;
 
-        private void OnEnable()
+        private void RegisterEquippingEvents()
         {
-            _unEquipButton.onClick.AddListener(Unequip);
-            _unEquipButton.Selected += PreviewUnselectEquipment;
+            _equipmentsController.Removed += RemoveCurrentlyEquipping;
+            _equipmentsController.Equipped += RefreshInventoryListAndEquippingUI;
         }
 
-        private void OnDisable()
+        private void UnregisterEquippingEvents()
         {
-            Reset();
-            _unEquipButton.onClick.RemoveListener(Unequip);
-            _unEquipButton.Selected -= PreviewUnselectEquipment;
+            _equipmentsController.Removed -= RemoveCurrentlyEquipping;
+            _equipmentsController.Equipped -= RefreshInventoryListAndEquippingUI;
+        }
+
+        private void RefreshInventoryListAndEquippingUI(EquipmentInfo equipment)
+        {
+            if (_equippingItemToBeRemoveFromInventory == null)
+            {
+                Debug.LogWarning($"Equipped item into character were raised but last interacted UI is null" +
+                                 $"\nThis likely because the UIEquipmentItem::EquipItem event raised twice");
+                return;
+            }
+
+            if (equipment != _equippingItemToBeRemoveFromInventory.Equipment)
+            {
+                Debug.LogWarning("Equipped item into character were raised but last interacted UI is not the same");
+                return;
+            }
+
+            DestroyEquipmentRow(_equippingItemToBeRemoveFromInventory);
+            _equippingItemToBeRemoveFromInventory = null;
+            UpdateCurrentlyEquipping(equipment);
         }
 
         public void RenderEquipmentsInInventory(HeroBehaviour hero, EquipmentSlot.EType slotType,
@@ -55,10 +69,7 @@ namespace CryptoQuest.Menus.Status.UI.Equipment
             RegisterEquippingEvents();
             InstantiateEquipments();
             RenderCurrentlyEquipItem();
-            Invoke(nameof(SelectUnequipButton), 0);
         }
-
-        private void SelectUnequipButton() => _unEquipButton.Select();
 
         private void Reset()
         {
@@ -66,20 +77,6 @@ namespace CryptoQuest.Menus.Status.UI.Equipment
             UnregisterEquippingEvents();
             foreach (var equipmentItem in _equipmentItems) DestroyEquipmentRow(equipmentItem);
             _equipmentItems.Clear();
-        }
-
-        private void RegisterEquippingEvents()
-        {
-            if (_equipmentsController == null) return;
-            _equipmentsController.Removed += RemoveCurrentlyEquipping;
-            _equipmentsController.Equipped += UpdateInventoryAndEquippingUI;
-        }
-
-        private void UnregisterEquippingEvents()
-        {
-            if (_equipmentsController == null) return;
-            _equipmentsController.Removed -= RemoveCurrentlyEquipping;
-            _equipmentsController.Equipped -= UpdateInventoryAndEquippingUI;
         }
 
         private void RenderCurrentlyEquipItem()
@@ -106,40 +103,13 @@ namespace CryptoQuest.Menus.Status.UI.Equipment
         {
             Reset();
             _contents.SetActive(false);
-            _equipmentPreviewer.ResetAttributesUI();
         }
 
         private void DestroyEquipmentRow(UIEquipmentItem equipmentItem)
         {
             if (equipmentItem == null) return;
-            equipmentItem.Deselected -= ResetPreviewer;
             equipmentItem.EquipItem -= EquipEquipment;
-            equipmentItem.Inspecting -= OnPreviewEquipmentStats;
             Destroy(equipmentItem.gameObject);
-        }
-
-        private void UpdateInventoryAndEquippingUI(EquipmentInfo equipment)
-        {
-            if (equipment == null || equipment.IsValid() == false) return;
-            if (_equippingItemToBeRemoveFromInventory == null)
-            {
-                Debug.LogWarning($"Equipped item into character were raised but last interacted UI is null" +
-                                 $"\nThis likely because the UIEquipmentItem::EquipItem event raised twice");
-                return;
-            }
-
-            if (equipment != _equippingItemToBeRemoveFromInventory.Equipment)
-            {
-                Debug.LogWarning("Equipped item into character were raised but last interacted UI is not the same");
-                return;
-            }
-
-            EventSystem.current.SetSelectedGameObject(null);
-            DestroyEquipmentRow(_equippingItemToBeRemoveFromInventory);
-            _equippingItemToBeRemoveFromInventory = null;
-            EventSystem.current.SetSelectedGameObject(_unEquipButton.gameObject);
-            UpdateCurrentlyEquipping(equipment);
-            PreviewUnselectEquipment();
         }
 
         /// <summary>
@@ -174,8 +144,6 @@ namespace CryptoQuest.Menus.Status.UI.Equipment
             if (prefab.AllowedSlots.Contains(_slotType) == false) yield break;
             var equipmentItem = Instantiate(_equipmentItemPrefab, _scrollRect.content);
             equipmentItem.Init(equipment);
-            equipmentItem.Deselected += ResetPreviewer;
-            equipmentItem.Inspecting += OnPreviewEquipmentStats;
             equipmentItem.EquipItem += EquipEquipment;
             _equipmentItems.Add(equipmentItem);
 
@@ -195,21 +163,6 @@ namespace CryptoQuest.Menus.Status.UI.Equipment
             }
         }
 
-        private void ResetPreviewer(UIEquipmentItem _)
-        {
-            _equipmentPreviewer.ResetAttributesUI();
-        }
-
-        private void OnPreviewEquipmentStats(UIEquipmentItem equippingItemUI)
-        {
-            return;
-            UnregisterEquippingEvents();
-
-            _equipmentPreviewer.PreviewEquipment(equippingItemUI.Equipment, _slotType, _hero);
-
-            RegisterEquippingEvents();
-        }
-
         private UIEquipmentItem _equippingItemToBeRemoveFromInventory;
         private EquipmentSlot.EType _slotType;
         private EEquipmentCategory _categoryType;
@@ -221,27 +174,6 @@ namespace CryptoQuest.Menus.Status.UI.Equipment
             _equipmentsController.Equip(equippingItemUI.Equipment, _slotType);
         }
 
-        private void PreviewUnselectEquipment()
-        {
-            if (_currentlyEquippingItem.Equipment == null || !_currentlyEquippingItem.Equipment.IsValid())
-            {
-                _equipmentPreviewer.ResetAttributesUI();
-                return;
-            }
-
-            // Since previewer try to equip/unequip I have to remove event so that wont affect UI
-            UnregisterEquippingEvents();
-
-            _equipmentPreviewer.PreviewUnequipEquipment(_currentlyEquippingItem.Equipment, _slotType, _hero);
-
-            RegisterEquippingEvents();
-        }
-
-        private void Unequip()
-        {
-            var equipmentsController = _equipmentsController;
-            _equipmentPreviewer.ResetAttributesUI();
-            equipmentsController.Unequip(_slotType);
-        }
+        public void UnequipPressed() => _equipmentsController.Unequip(_slotType);
     }
 }

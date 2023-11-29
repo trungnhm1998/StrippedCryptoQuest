@@ -1,8 +1,6 @@
 ﻿using System.Collections.Generic;
 using CryptoQuest.Battle.Components;
-using CryptoQuest.Gameplay.Inventory;
 using CryptoQuest.Item.Equipment;
-using CryptoQuest.System;
 using CryptoQuest.UI.Character;
 using IndiGames.GameplayAbilitySystem.AttributeSystem;
 using UnityEngine;
@@ -15,13 +13,6 @@ namespace CryptoQuest.UI.Menu
         /// Change the UI when inspecting the equipment
         /// </summary>
         [SerializeField] private UIAttribute[] _uiAttributes;
-
-        private IInventoryController _inventoryController;
-
-        private void OnEnable()
-        {
-            _inventoryController ??= ServiceProvider.GetService<IInventoryController>();
-        }
 
         /// <summary>
         /// Try equip the equipment and unequip after preview
@@ -41,7 +32,6 @@ namespace CryptoQuest.UI.Menu
                 return;
 
             var attributeSystem = inspectingHero.AttributeSystem;
-            bool isPreviewItemFromInventory = equipment.ContainedInInventory(_inventoryController);
             var equippingEquipment = equipmentController.GetEquipmentInSlot(equippingSlot);
 
             List<AttributeValue> currentValues = new(attributeSystem.AttributeValues);
@@ -53,10 +43,6 @@ namespace CryptoQuest.UI.Menu
             equipmentController.Unequip(equipment);
             if (equippingEquipment != null && equippingEquipment.IsValid())
                 equipmentController.Equip(equippingEquipment, equippingSlot);
-
-            // If preview item that player don't have we need to remove it
-            if (!isPreviewItemFromInventory)
-                equipment.RemoveFromInventory(_inventoryController);
 
             PreviewValue(inspectingHero, currentValues, afterValues);
         }
