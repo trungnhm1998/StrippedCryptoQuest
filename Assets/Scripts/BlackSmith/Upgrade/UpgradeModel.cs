@@ -35,8 +35,10 @@ namespace CryptoQuest.BlackSmith.Upgrade
         public IEnumerator CoGetData(InventorySO inventory)
         {
             _equipmentData = new();
-            var listEquipment = inventory.Equipments;
-            foreach (var equipment in listEquipment)
+            var equipments = new List<EquipmentInfo>();
+            equipments.AddRange(inventory.NftEquipments);
+            equipments.AddRange(inventory.Equipments);
+            foreach (var equipment in equipments)
             {
                 IUpgradeEquipment equipmentData = new UpgradeEquipmentData
                 {

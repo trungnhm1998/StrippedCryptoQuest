@@ -16,7 +16,7 @@ namespace CryptoQuest.BlackSmith.Upgrade
         [SerializeField] private UIEquipmentList _equipmentListUI;
         [SerializeField] private GameObject _equipmentUIObject;
         [SerializeField] private GameObject _equipmentDetailsObject;
-        [SerializeField] private UIEquipmentDetails _equipmentDetailsUI;
+        [SerializeField] private EquipmentDetailsPresenter _equipmentDetailsUI;
 
         [SerializeField] private LocalizedString _selectEquipmentMessage;
 
@@ -85,7 +85,7 @@ namespace CryptoQuest.BlackSmith.Upgrade
         private void SelectedUpgradeItem(UIUpgradeEquipment item)
         {
             SelectedEquipment = item.UpgradeEquipment;
-            _equipmentDetailsUI.RenderData(item.UpgradeEquipment.Equipment);
+            _equipmentDetailsUI.SetData(item.UpgradeEquipment.Equipment);
         }
 
         private void OnItemSubmit(UIUpgradeEquipment item)

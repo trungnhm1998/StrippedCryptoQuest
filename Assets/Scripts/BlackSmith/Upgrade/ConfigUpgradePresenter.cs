@@ -15,6 +15,7 @@ namespace CryptoQuest.BlackSmith.Upgrade
         [SerializeField] private WalletSO _wallet;
         [SerializeField] private CurrencySO _currencySO;
         [SerializeField] private EquipmentListPresenter _equipmentListPresenter;
+        [SerializeField] private EquipmentDetailsPresenter _equipmentDetailsPresenter;
         [SerializeField] private MerchantsInputManager _input;
         [SerializeField] private BlackSmithDialogsPresenter _dialogManager;
         [SerializeField] private GameObject _configUIObject;
@@ -22,7 +23,6 @@ namespace CryptoQuest.BlackSmith.Upgrade
 
         [SerializeField] private LocalizedString _upgradeMessage;
 
-        private int _levelToUpdate;
         private IUpgradeEquipment _selectedEquipment;
 
         private void OnDisable()
@@ -49,6 +49,7 @@ namespace CryptoQuest.BlackSmith.Upgrade
             SetActiveUI(true);
             InitUpgradeDetailUI();
             RegistEvents();
+            UpdateUIs();
 
             _dialogManager.Dialogue.SetMessage(_upgradeMessage).Show();
         }
@@ -57,6 +58,7 @@ namespace CryptoQuest.BlackSmith.Upgrade
         {
             SetActiveUI(false);
             UnRegistEvent();
+            _equipmentDetailsPresenter.ResetPreviews();
         }
 
         private void InitUpgradeDetailUI()
@@ -73,12 +75,19 @@ namespace CryptoQuest.BlackSmith.Upgrade
         {
             var dir = (int)direction.y;
             if (_selectedEquipment == null || dir == 0) return;
-            _upgradeDetailsUI.UpdateValue(dir, _selectedEquipment);
+
+            UpdateUIs(dir);
+        }
+
+        private void UpdateUIs(int modifyValue = 0)
+        {
+            _upgradeDetailsUI.UpdateValue(modifyValue, _selectedEquipment);
+            _equipmentDetailsPresenter.PreviewEquipmentAtLevel(_upgradeDetailsUI.LevelToUpgrade);
         }
 
         private void OnConfiguratedUpgrade()
         {
-            ConfiguratedUpgrade?.Invoke(_selectedEquipment, _levelToUpdate);
+            ConfiguratedUpgrade?.Invoke(_selectedEquipment, _upgradeDetailsUI.LevelToUpgrade);
         }
     }
 }

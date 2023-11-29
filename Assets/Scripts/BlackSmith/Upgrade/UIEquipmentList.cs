@@ -82,7 +82,6 @@ namespace CryptoQuest.BlackSmith.Upgrade
             yield return null;
             if (_items.Count == 0) yield break;
             EventSystem.current.SetSelectedGameObject(_items[0].gameObject);
-            OnItemSelected(_items[0]);
         }
 
         private UIUpgradeEquipment OnCreateItem() => Instantiate(_prefab, _scrollRect.content);

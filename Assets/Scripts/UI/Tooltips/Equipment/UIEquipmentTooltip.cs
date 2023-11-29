@@ -32,10 +32,9 @@ namespace CryptoQuest.UI.Tooltips.Equipment
         [SerializeField] private GameObject _conditionalSkillPrefab;
         [SerializeField] private RectTransform _conditionalSkillsContainer;
 
-        private IEquipment _equipment;
+        protected IEquipment _equipment;
 
-        private string _lvlText;
-        private string LvlText => _lvlText ??= _lvl.text;
+        [SerializeField] private string _levelTextFormat = "Lv. {0}/<color=\"grey\">{1}"; 
 
         protected override bool CanShow()
         {
@@ -65,13 +64,13 @@ namespace CryptoQuest.UI.Tooltips.Equipment
             _nftTag.SetActive(_equipment.IsNft);
             _nameLocalize.StringReference = _equipment.Prefab.DisplayName;
 
-            _lvl.text = string.Format(LvlText, _equipment.Level, _equipment.Data.MaxLevel);
+            _lvl.text = string.Format(_levelTextFormat, _equipment.Level, _equipment.Data.MaxLevel);
             _uiStars.SetStars(_equipment.Data.Stars);
         }
 
         private void SetupStats()
         {
-            foreach (Transform attribute in _statsContainer) Destroy(attribute.gameObject);
+            foreach (Transform attribute in _statsContainer) DestroyImmediate(attribute.gameObject);
             foreach (var attribute in _equipment.Data.Stats)
             {
                 if (_attributeConfigMapping.TryGetMap(attribute.Attribute, out var config) == false) continue;
@@ -85,7 +84,7 @@ namespace CryptoQuest.UI.Tooltips.Equipment
         private void SetupSkills(RectTransform skillsContainer, ESkillType skillType, GameObject skillPrefab)
         {
             skillsContainer.gameObject.SetActive(false);
-            foreach (Transform skill in skillsContainer) Destroy(skill.gameObject);
+            foreach (Transform skill in skillsContainer) DestroyImmediate(skill.gameObject);
             var skills = _equipment.Data.Passives;
             foreach (var skill in skills)
             {
