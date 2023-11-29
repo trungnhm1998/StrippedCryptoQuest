@@ -20,7 +20,7 @@ namespace CryptoQuestEditor.Item
             public EquipmentDataMap()
             {
                 Map(m => m.ID).Name("equipment_id");
-                Map(m => m.PrefabId).Name("equipment_id_foreign");
+                // Map(m => m.PrefabId).Name("equipment_id_foreign");
                 Map(m => m.Stars).Name("star");
                 Map(m => m.RequiredCharacterLevel).Name("required_lv");
                 Map(m => m.MinLevel).Name("min_lv");
@@ -103,7 +103,7 @@ namespace CryptoQuestEditor.Item
                     var equipmentData = csv.GetRecord<EquipmentData>();
                     equipmentData.Rarity = LookupRarity[csv.GetField<int>("rarity_id")];
                     
-                    EquipmentSO equipment;
+                    EquipmentDefSO equipmentDef;
                     var equipmentType = LookupEquipmentType[csv.GetField<int>("equip_type_id")];
                     var categoryName = equipmentType.EquipmentCategory.ToString();
                     var categoryPath = $"{_exportPath}/{categoryName}";
@@ -111,16 +111,16 @@ namespace CryptoQuestEditor.Item
                     // check path exist
                     if (!AssetDatabase.IsValidFolder(categoryPath))
                         AssetDatabase.CreateFolder(_exportPath, categoryName);
-                    equipment = AssetDatabase.LoadAssetAtPath<EquipmentSO>(equipmentPath);
-                    if (equipment == null)
+                    equipmentDef = AssetDatabase.LoadAssetAtPath<EquipmentDefSO>(equipmentPath);
+                    if (equipmentDef == null)
                     {
-                        equipment = CreateInstance<EquipmentSO>();
-                        AssetDatabase.CreateAsset(equipment, equipmentPath);
+                        equipmentDef = CreateInstance<EquipmentDefSO>();
+                        AssetDatabase.CreateAsset(equipmentDef, equipmentPath);
                         AssetDatabase.SaveAssets();
                         AssetDatabase.ImportAsset(equipmentPath);
                     }
 
-                    var equipmentSO = new SerializedObject(equipment);
+                    var equipmentSO = new SerializedObject(equipmentDef);
                     equipmentSO.FindProperty("<Data>k__BackingField").boxedValue = equipmentData;
                     equipmentSO.ApplyModifiedProperties();
                     equipmentSO.Update();

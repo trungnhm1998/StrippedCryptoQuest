@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using CryptoQuest.AbilitySystem.Attributes;
+﻿using CryptoQuest.AbilitySystem.Attributes;
 using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data;
 using CryptoQuest.Item.Equipment;
 using CryptoQuest.UI.Extensions;
@@ -18,7 +17,6 @@ namespace CryptoQuest.UI.Tooltips.Equipment
 
     public class UIEquipmentTooltip : UITooltipBase
     {
-        [SerializeField] private EquipmentPrefabDatabase _equipmentPrefabDatabase;
         [SerializeField] private AttributeConfigMapping _attributeConfigMapping;
         [SerializeField] private Image _headerBackground;
         [SerializeField] private Image _rarity;
@@ -50,22 +48,13 @@ namespace CryptoQuest.UI.Tooltips.Equipment
             return true;
         }
         
-        private EquipmentPrefab _equipmentPrefab;
-
         protected override void Init()
         {
-            StartCoroutine(CoLoadEquipment());
-        }
-
-        private IEnumerator CoLoadEquipment()
-        {
-            yield return _equipmentPrefabDatabase.LoadDataById(_equipment.PrefabId);
-            _equipmentPrefab = _equipmentPrefabDatabase.GetDataById(_equipment.PrefabId);
             SetupInfo();
             SetupStats();
             SetupSkills(_passiveSkillsContainer, ESkillType.Passive, _passiveSkillPrefab);
             SetupSkills(_conditionalSkillsContainer, ESkillType.Conditional, _conditionalSkillPrefab);
-            _illustration.LoadSpriteAndSet(_equipmentPrefab.Image);
+            _illustration.LoadSpriteAndSet(_equipment.Prefab.Image);
         }
 
         private void SetupInfo()
@@ -74,7 +63,7 @@ namespace CryptoQuest.UI.Tooltips.Equipment
             _headerBackground.color = _equipment.Rarity.Color;
             _rarity.sprite = _equipment.Rarity.Icon;
             _nftTag.SetActive(_equipment.IsNft);
-            _nameLocalize.StringReference = _equipmentPrefab.DisplayName;
+            _nameLocalize.StringReference = _equipment.Prefab.DisplayName;
 
             _lvl.text = string.Format(LvlText, _equipment.Level, _equipment.Data.MaxLevel);
             _uiStars.SetStars(_equipment.Data.Stars);
@@ -112,11 +101,10 @@ namespace CryptoQuest.UI.Tooltips.Equipment
         private void OnDisable()
         {
             if (_equipment == null ||
-                _equipmentPrefab == null ||
-                _equipmentPrefab.Image.RuntimeKeyIsValid() == false)
+                _equipment.Prefab == null ||
+                _equipment.Prefab.Image.RuntimeKeyIsValid() == false)
                 return;
-            _equipmentPrefabDatabase.ReleaseDataById(_equipment.PrefabId);
-            _equipmentPrefab.Image.ReleaseAsset();
+            _equipment.Prefab.Image.ReleaseAsset();
             _equipment = null;
         }
     }

@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using CryptoQuest.Item.Equipment;
+﻿using CryptoQuest.Item.Equipment;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Localization.Components;
@@ -9,7 +8,6 @@ namespace CryptoQuest.Menus.Status.UI.Equipment
 {
     public class UIEquipment : MonoBehaviour
     {
-        [SerializeField] private EquipmentPrefabDatabase _database;
         [SerializeField] private Image _icon;
         [SerializeField] private GameObject _iconNFT;
         [SerializeField] private LocalizeStringEvent _nameLocalize;
@@ -22,7 +20,6 @@ namespace CryptoQuest.Menus.Status.UI.Equipment
 
         private EquipmentInfo _equipment;
         public EquipmentInfo Equipment => _equipment;
-        private EquipmentPrefab _prefab;
 
         public void Init(EquipmentInfo equipment)
         {
@@ -30,17 +27,10 @@ namespace CryptoQuest.Menus.Status.UI.Equipment
             _equipment = equipment;
             var data = _equipment.Data;
             _iconNFT.SetActive(_equipment.IsNft);
-            _nameText.text = $"{data.ID}-{data.PrefabId}";
+            _nameText.text = $"{data.ID}-{_equipment.Prefab.ID}";
             _nameText.color = _enabledColor;
-            StartCoroutine(CoLoadAndInitEquipment());
-        }
-
-        private IEnumerator CoLoadAndInitEquipment()
-        {
-            yield return _database.LoadDataById(_equipment.Data.PrefabId);
-            _prefab = _database.GetDataById(_equipment.Data.PrefabId);
-            if (!_prefab.DisplayName.IsEmpty) _nameLocalize.StringReference = _prefab.DisplayName;
-            _icon.sprite = _prefab.EquipmentType.Icon;
+            if (!equipment.Prefab.DisplayName.IsEmpty) _nameLocalize.StringReference = equipment.Prefab.DisplayName;
+            _icon.sprite = equipment.Type.Icon;
         }
 
         public void DisableButton()
@@ -49,11 +39,5 @@ namespace CryptoQuest.Menus.Status.UI.Equipment
         }
 
         public void Reset() => _equipment = default;
-
-        private void OnDisable()
-        {
-            if (_equipment == null || _equipment.IsValid() == false) return;
-            _database.ReleaseDataById(_equipment.Data.PrefabId);
-        }
     }
 }

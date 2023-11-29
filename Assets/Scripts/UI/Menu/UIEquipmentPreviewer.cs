@@ -49,14 +49,15 @@ namespace CryptoQuest.UI.Menu
             equipmentController.Equip(equipment, equippingSlot);
             List<AttributeValue> afterValues = new(attributeSystem.AttributeValues);
 
+            // re-equipping the equipment
             equipmentController.Unequip(equipment);
-            if (equippingEquipment.IsValid())
+            if (equippingEquipment != null && equippingEquipment.IsValid())
                 equipmentController.Equip(equippingEquipment, equippingSlot);
 
             // If preview item that player don't have we need to remove it
             if (!isPreviewItemFromInventory)
                 equipment.RemoveFromInventory(_inventoryController);
-        
+
             PreviewValue(inspectingHero, currentValues, afterValues);
         }
 
