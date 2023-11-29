@@ -2,7 +2,7 @@
 using IndiGames.Core.Events;
 using Obj = CryptoQuest.Sagas.Objects;
 
-namespace CryptoQuest.Character.Sagas
+namespace CryptoQuest.Sagas.Character
 {
     public class GetInGameHeroes : ActionBase
     {
