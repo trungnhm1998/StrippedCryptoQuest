@@ -28,12 +28,12 @@ namespace CryptoQuest.Sagas.Objects
         [Serializable]
         public class Data
         {
-            public Beast[] beasts;
+            public BeastData[] beasts;
         }
     }
 
     [Serializable]
-    public class Beast
+    public class BeastData
     {
         public int id;
         public string beastTokenId;

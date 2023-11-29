@@ -15,8 +15,8 @@ namespace CryptoQuest.Ranch.State.BeastSwap
         private TinyMessageSubscriptionToken _getDataInBoxSucceed;
         private TinyMessageSubscriptionToken _getDataSucceed;
 
-        private List<Beast> _cachedGameData = new();
-        private List<Beast> _cachedWalletData = new();
+        private List<BeastData> _cachedGameData = new();
+        private List<BeastData> _cachedWalletData = new();
 
         private static readonly int OverViewState = Animator.StringToHash("OverviewState");
         private static readonly int ConfirmState = Animator.StringToHash("ConfirmState");

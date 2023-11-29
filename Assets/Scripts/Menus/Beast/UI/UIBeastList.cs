@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using CryptoQuest.Character.Beast;
+using CryptoQuest.Gameplay.Inventory;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Pool;
@@ -8,6 +10,8 @@ namespace CryptoQuest.Menus.Beast.UI
 {
     public class UIBeastList : MonoBehaviour
     {
+        [SerializeField] private BeastInventorySO beastInventory;
+
         [Header("Scroll View Configs")]
         [SerializeField] private ScrollRect _scrollRect;
 
@@ -20,7 +24,7 @@ namespace CryptoQuest.Menus.Beast.UI
             _beastUIPool ??= new ObjectPool<UIBeast>(OnCreate, OnGet, OnRelease, OnDestroyBeast);
 
         private List<UIBeast> _beastUIs = new();
-        private List<Sagas.Objects.Beast> _beasts = new();
+        private List<BeastDef> _beasts = new();
 
         private UIBeast _beast;
         private GameObject _lastSelectedBeast;
@@ -40,9 +44,7 @@ namespace CryptoQuest.Menus.Beast.UI
         {
             UIBeast.InspectingBeastEvent += CacheInspectingBeast;
 
-            var beastDummy = GetComponentInParent<MockDataUIBeast>();
-            if (beastDummy == null) return;
-            _beasts = beastDummy.Beasts;
+            _beasts = beastInventory.OwnedBeasts;
         }
 
         private void OnDisable()

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using CryptoQuest.Core;
+using CryptoQuest.Sagas.Objects;
 using Obj = CryptoQuest.Sagas.Objects;
 
 namespace CryptoQuest.Actions
@@ -48,9 +49,9 @@ namespace CryptoQuest.Actions
 
     public class GetGameNftBeastsSucceed : ActionBase
     {
-        public List<Obj.Beast> InGameBeasts { get; }
+        public List<BeastData> InGameBeasts { get; }
         
-        public GetGameNftBeastsSucceed(List<Obj.Beast> inGameBeasts)
+        public GetGameNftBeastsSucceed(List<BeastData> inGameBeasts)
         {
             InGameBeasts = inGameBeasts;
         }

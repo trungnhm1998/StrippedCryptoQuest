@@ -1,18 +1,17 @@
-using System;
-using TMPro;
+using CryptoQuest.Character.Beast;
 using UnityEngine;
-using UnityEngine.Serialization;
+using UnityEngine.Localization;
+using UnityEngine.Localization.Components;
 using UnityEngine.UI;
 
 namespace CryptoQuest.Menus.Beast.UI
 {
     public class UIBeastDetail : MonoBehaviour
     {
-        [SerializeField] private TMP_Text _beastName;
-        [SerializeField] private TMP_Text _beastLevel;
-        [SerializeField] private TMP_Text _beastPassiveSkill;
-        [SerializeField] private TMP_Text _beastStatus;
+        [SerializeField] private LocalizeStringEvent _beastName;
+        [SerializeField] private LocalizeStringEvent _beastPassiveSkill;
         [SerializeField] private Image _beastImage;
+        [SerializeField] private Image _beastElement;
 
         private void OnEnable()
         {
@@ -24,10 +23,14 @@ namespace CryptoQuest.Menus.Beast.UI
             UIBeast.Inspecting -= OnInspectingBeast;
         }
 
-        private void OnInspectingBeast(Sagas.Objects.Beast beast)
+        private void OnInspectingBeast(BeastDef beastDef)
         {
-            _beastName.text = beast.name;
-            _beastLevel.text = beast.level.ToString();
+            _beastName.StringReference = beastDef.Data.BeastTypeSo.BeastInformation.LocalizedName;
+
+            _beastPassiveSkill.StringReference =
+                beastDef.Data.Passives != null ? beastDef.Data.Passives.Description : new LocalizedString();
+
+            _beastElement.sprite = beastDef.Data.Elemental.Icon;
         }
     }
 }
