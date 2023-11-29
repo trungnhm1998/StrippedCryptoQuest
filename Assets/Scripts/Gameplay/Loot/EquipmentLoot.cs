@@ -10,13 +10,10 @@ namespace CryptoQuest.Gameplay.Loot
     [Serializable]
     public class EquipmentLoot : LootInfo
     {
-        public EquipmentLoot()
-        {
-            IsGeneric = false;
-        }
-
         [SerializeField] private EquipmentSO _equipmentSO;
         public EquipmentSO EquipmentSO => _equipmentSO;
+
+        public override bool IsItem => true;
 
         public override LootInfo Clone()
         {

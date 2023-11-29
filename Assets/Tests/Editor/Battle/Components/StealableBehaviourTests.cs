@@ -19,7 +19,7 @@ namespace CryptoQuest.Tests.Editor.Battle.Components
         [Test]
         public void StealableBehaviour_WithStealableDrops_TryStealReturnsTrue()
         {
-            var stealableBehaviour = CreateStealableBehaviour(new[] { new Drop(new EquipmentLoot(), true) });
+            var stealableBehaviour = CreateStealableBehaviour(new[] { new Drop(new EquipmentLoot()) });
 
             var result = stealableBehaviour.TrySteal(out var loot);
 
