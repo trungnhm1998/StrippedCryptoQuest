@@ -10,7 +10,7 @@ namespace CryptoQuest.Battle.Components
     {
         private EquipmentsController _equipmentsController;
 
-        private readonly Dictionary<EquipmentInfo, PassiveAbilitySpec[]> _passives = new();
+        private readonly Dictionary<IEquipment, PassiveAbilitySpec[]> _passives = new();
         private AbilitySystemBehaviour _abilitySystem;
 
         protected void Awake()
@@ -28,7 +28,7 @@ namespace CryptoQuest.Battle.Components
             _equipmentsController.Removed -= RemovePassive;
         }
 
-        private void GrantPassive(EquipmentInfo equipment)
+        private void GrantPassive(IEquipment equipment)
         {
             var passiveSpecs = new PassiveAbilitySpec[equipment.Passives.Length];
             for (var index = 0; index < equipment.Passives.Length; index++)
@@ -42,7 +42,7 @@ namespace CryptoQuest.Battle.Components
             if (passiveSpecs.Length > 0) _passives.Add(equipment, passiveSpecs);
         }
 
-        private void RemovePassive(EquipmentInfo equipment)
+        private void RemovePassive(IEquipment equipment)
         {
             if (_passives.TryGetValue(equipment, out var passives) == false) return;
             foreach (var passive in passives) _abilitySystem.RemoveAbility(passive);

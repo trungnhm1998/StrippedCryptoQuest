@@ -58,7 +58,7 @@ namespace CryptoQuest.Battle.Components
             set => _spec = value;
         }
 
-        private PartySlotSpec _partySlotSpec;
+        private PartySlotSpec _partySlotSpec = new();
 
         /// <summary>
         /// 1. get lvl first

@@ -18,10 +18,10 @@ namespace CryptoQuest.Menus.Status.UI.Equipment
         [SerializeField] private Color _enabledColor;
         [SerializeField] private bool _loadImageOnEnable;
 
-        private EquipmentInfo _equipment;
-        public EquipmentInfo Equipment => _equipment;
+        private IEquipment _equipment;
+        public IEquipment Equipment => _equipment;
 
-        public void Init(EquipmentInfo equipment)
+        public void Init(IEquipment equipment)
         {
             if (equipment.IsValid() == false) return;
             _equipment = equipment;

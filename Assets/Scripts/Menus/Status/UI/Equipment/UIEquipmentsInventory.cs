@@ -37,7 +37,7 @@ namespace CryptoQuest.Menus.Status.UI.Equipment
             _equipmentsController.Equipped -= RefreshInventoryListAndEquippingUI;
         }
 
-        private void RefreshInventoryListAndEquippingUI(EquipmentInfo equipment)
+        private void RefreshInventoryListAndEquippingUI(IEquipment equipment)
         {
             if (_equippingItemToBeRemoveFromInventory == null)
             {
@@ -86,7 +86,7 @@ namespace CryptoQuest.Menus.Status.UI.Equipment
             UpdateCurrentlyEquipping(equipment);
         }
 
-        private void UpdateCurrentlyEquipping(EquipmentInfo equipment)
+        private void UpdateCurrentlyEquipping(IEquipment equipment)
         {
             var isValid = equipment != null && equipment.IsValid();
             _currentlyEquippingItem.gameObject.SetActive(isValid);
@@ -117,7 +117,7 @@ namespace CryptoQuest.Menus.Status.UI.Equipment
         /// Add UI to the inventory scroll view and hide the currently equipping UI if the same
         /// </summary>
         /// <param name="equipment"></param>
-        private void RemoveCurrentlyEquipping(EquipmentInfo equipment)
+        private void RemoveCurrentlyEquipping(IEquipment equipment)
         {
             if (equipment.IsValid() && equipment != _currentlyEquippingItem.Equipment) return;
             _currentlyEquippingItem.gameObject.SetActive(false);
@@ -136,7 +136,7 @@ namespace CryptoQuest.Menus.Status.UI.Equipment
             foreach (var equipment in inventory.NftEquipments) StartCoroutine(InstantiateNewEquipmentUICo(equipment));
         }
 
-        private IEnumerator InstantiateNewEquipmentUICo(EquipmentInfo equipment)
+        private IEnumerator InstantiateNewEquipmentUICo(IEquipment equipment)
         {
             if (equipment == null || equipment.IsValid() == false) yield break;
             var prefab = equipment.Prefab;

@@ -21,7 +21,7 @@ namespace CryptoQuest.Item.Equipment
         [field: SerializeField] public EType Type { get; set; }
 
         [field: SerializeField, SerializeReference]
-        public EquipmentInfo Equipment { get; set; }
+        public IEquipment Equipment { get; set; }
 
         public bool IsValid() => Equipment != null && Equipment.IsValid();
     }

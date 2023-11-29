@@ -14,7 +14,7 @@ namespace CryptoQuest.Menus.Status.UI.Equipment
 
         [SerializeField] private UIEquipment _equipment;
 
-        public void Init(EquipmentInfo equipment)
+        public void Init(IEquipment equipment)
         {
             if (!equipment.IsValid()) return;
             _equipment.Init(equipment);
