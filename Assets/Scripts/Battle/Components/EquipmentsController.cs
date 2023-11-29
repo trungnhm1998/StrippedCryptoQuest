@@ -25,10 +25,7 @@ namespace CryptoQuest.Battle.Components
         public event Action<EquipmentInfo> Equipped;
         public event Action<EquipmentInfo> Removed;
 
-        [SerializeField] private EquipmentPrefabDatabase _equipmentPrefabDatabase;
-
         private IEquipmentsProvider _equipmentsProvider;
-        private HeroBehaviour _hero;
         private Equipments _equipments;
         public Equipments Equipments => _equipments;
 
@@ -44,7 +41,6 @@ namespace CryptoQuest.Battle.Components
         public override void Init()
         {
             _equipmentsProvider = Character.GetComponent<IEquipmentsProvider>();
-            _hero = Character.GetComponent<HeroBehaviour>();
             _equipments = _equipmentsProvider.GetEquipments();
             _inventoryController ??= ServiceProvider.GetService<IInventoryController>();
 
@@ -111,16 +107,12 @@ namespace CryptoQuest.Battle.Components
         public void Equip(EquipmentInfo equipment, ESlotType equippingSlot)
         {
             if (equipment.IsValid() == false) return;
-            _equipmentPrefabDatabase.LoadDataByIdAsync(equipment.PrefabId).Completed += handle =>
-            {
-                var prefab = handle.Result;
-                var allowedSlots = prefab.AllowedSlots;
-                if (allowedSlots.Contains(equippingSlot) == false) return;
-                var requiredSlots = prefab.RequiredSlots;
-                Unequip(GetEquipmentInSlot(equippingSlot));
-                OnEquipmentAdded(equipment, equippingSlot, requiredSlots);
-                _equipmentPrefabDatabase.ReleaseDataById(equipment.PrefabId);
-            };
+
+            var allowedSlots = equipment.AllowedSlots;
+            if (allowedSlots.Contains(equippingSlot) == false) return;
+            var requiredSlots = equipment.RequiredSlots;
+            Unequip(GetEquipmentInSlot(equippingSlot));
+            OnEquipmentAdded(equipment, equippingSlot, requiredSlots);
         }
 
         private void OnEquipmentAdded(EquipmentInfo equipment, ESlotType equippingSlot, ESlotType[] requiredSlots)
@@ -139,7 +131,7 @@ namespace CryptoQuest.Battle.Components
         private void CreateEffectFromEquipmentStatsAndApplyToHero(EquipmentInfo equipment)
         {
             // TODO: Should I allow equip dead character?
-            if (_hero.IsValid() == false || equipment.IsValid() == false) return;
+            if (equipment.IsValid() == false) return;
             if (_equipmentsEffect.ContainsKey(equipment)) return;
 
             var activeEffectSpec = Character.ApplyEffect(CreateEffectSpecFromEquipment(equipment));

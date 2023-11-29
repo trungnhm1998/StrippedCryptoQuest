@@ -25,6 +25,7 @@ namespace CryptoQuest.Sagas.Profile
 {
     public class FetchProfileEquipments : SagaBase<FetchProfileEquipmentsAction>
     {
+        [SerializeField] private EquipmentPrefabDatabase _prefabDatabase;
         [SerializeField] private GetEquipmentsEvent _inGameEquipmentsUpdate;
         [SerializeField] private PassiveAbilityDatabase _passiveAbilityDatabase;
         [SerializeField] private AssetReferenceT<InventorySO> _inventoryAsset;
@@ -91,13 +92,21 @@ namespace CryptoQuest.Sagas.Profile
                 _inventory = handle.Result;
             }
 
-            var equipments = responseEquipments.Select(CreateNftEquipment).ToList();
+            var equipments = new List<NftEquipment>();
+            foreach (var equipmentResponse in responseEquipments)
+            {
+                yield return _prefabDatabase.LoadDataByIdAsync(equipmentResponse.equipmentIdForeign);
+                var equipment = CreateNftEquipment(equipmentResponse,
+                    _prefabDatabase.GetDataById(equipmentResponse.equipmentIdForeign));
+            }
+            
+            // var equipments = responseEquipments.Select(CreateNftEquipment).ToList();
             _inventory.NftEquipments.Clear();
             _inventory.NftEquipments.AddRange(equipments);
             ActionDispatcher.Dispatch(new InventoryFilled());
         }
 
-        private NftEquipment CreateNftEquipment(EquipmentResponse equipmentResponse)
+        private NftEquipment CreateNftEquipment(EquipmentResponse equipmentResponse, EquipmentPrefab prefab)
         {
             var nftEquipment = new NftEquipment
             {
@@ -105,16 +114,17 @@ namespace CryptoQuest.Sagas.Profile
                 TokenId = equipmentResponse.equipmentTokenId,
                 Level = equipmentResponse.lv
             };
-            FillEquipmentData(equipmentResponse, ref nftEquipment);
+            FillEquipmentData(equipmentResponse, ref nftEquipment, prefab);
             return nftEquipment;
         }
 
-        private void FillEquipmentData(EquipmentResponse response, ref NftEquipment nftEquipment)
+        private void FillEquipmentData(EquipmentResponse response, ref NftEquipment nftEquipment,
+            EquipmentPrefab prefab)
         {
             nftEquipment.Def = new EquipmentData()
             {
                 ID = response.equipmentId,
-                PrefabId = response.equipmentIdForeign,
+                Prefab = prefab,
                 Rarity = _rarities.FirstOrDefault(rarity => rarity.ID == response.rarityId),
                 Stars = response.star,
                 RequiredCharacterLevel = response.restrictedLv,
