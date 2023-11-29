@@ -13,7 +13,7 @@ namespace CryptoQuest.Gameplay.Loot
     [Serializable]
     public abstract class LootInfo
     {
-        public bool IsGeneric = true;
+        public abstract bool IsItem { get; }
         public virtual string Name { get; } = "Loot";
 
         public abstract LootInfo Clone();

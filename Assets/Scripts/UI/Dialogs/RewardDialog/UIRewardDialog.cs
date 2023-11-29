@@ -84,7 +84,7 @@ namespace CryptoQuest.UI.Dialogs.RewardDialog
 
             foreach (var loot in _rewardDialogData.Loots)
             {
-                var uiReward = Instantiate(RewardItemPrefab, loot.IsGeneric ? TopContainer : BottomContainer);
+                var uiReward = Instantiate(RewardItemPrefab, loot.IsItem ? TopContainer : BottomContainer);
                 uiReward.SetLoot(loot);
             }
 

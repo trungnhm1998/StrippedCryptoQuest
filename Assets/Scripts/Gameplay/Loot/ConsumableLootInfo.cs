@@ -17,6 +17,7 @@ namespace CryptoQuest.Gameplay.Loot
 
         public override void Accept(ILootVisitor lootController) => lootController.Visit(this);
         public override bool TryMerge(ILootMerger lootMerger) => lootMerger.Merge(this);
+        public override bool IsItem => true;
         public override string Name => Item.DisplayName.GetLocalizedString();
         public override void Accept(UIRewardItem rewardUI) => rewardUI.Visit(this);
     }

@@ -15,6 +15,7 @@ namespace CryptoQuest.Gameplay.Loot
         // public override UI.Dialogs.RewardDialog.Reward CreateRewardUI() =>
         //     new AmountReward(Item.Amount, Item.Data.DisplayName);
 
+        public override bool IsItem => false;
         public override LootInfo Clone() => new CurrencyLootInfo(new CurrencyInfo(Item.Data, Item.Amount));
 
         public override void Accept(ILootVisitor lootController) => lootController.Visit(this);
