@@ -1,19 +1,19 @@
 using System.Collections.Generic;
 using CryptoQuest.Core;
-using Obj = CryptoQuest.Sagas.Objects;
+using CryptoQuest.Sagas.Objects;
 
 namespace CryptoQuest.Ranch
 {
     public class GetBeasts : ActionBase
     {
-        public Obj.EBeastStatus Status { get; set; } = Obj.EBeastStatus.All;
+        public EBeastStatus Status { get; set; } = EBeastStatus.All;
     }
 
     public class GetInBoxBeastsSucceed : ActionBase
     {
-        public List<Obj.Beast> WalletBeasts { get; }
+        public List<BeastData> WalletBeasts { get; }
 
-        public GetInBoxBeastsSucceed(List<Obj.Beast> walletBeasts)
+        public GetInBoxBeastsSucceed(List<BeastData> walletBeasts)
         {
             WalletBeasts = walletBeasts;
         }
@@ -35,9 +35,9 @@ namespace CryptoQuest.Ranch
 
     public class TransferSucceed : ActionBase
     {
-        public Obj.Beast[] ResponseBeasts { get; }
+        public BeastData[] ResponseBeasts { get; }
 
-        public TransferSucceed(Obj.Beast[] responseBeasts)
+        public TransferSucceed(BeastData[] responseBeasts)
         {
             ResponseBeasts = responseBeasts;
         }
@@ -47,9 +47,9 @@ namespace CryptoQuest.Ranch
 
     public class GetInGameBeastsSucceed : ActionBase
     {
-        public List<Obj.Beast> InGameBeasts { get; }
+        public List<BeastData> InGameBeasts { get; }
 
-        public GetInGameBeastsSucceed(List<Obj.Beast> inGameBeasts)
+        public GetInGameBeastsSucceed(List<BeastData> inGameBeasts)
         {
             InGameBeasts = inGameBeasts;
         }

@@ -1,8 +1,8 @@
 using System;
+using CryptoQuest.Character.Beast;
 using CryptoQuest.Menu;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Localization;
 using UnityEngine.Localization.Components;
 using UnityEngine.UI;
 
@@ -10,7 +10,7 @@ namespace CryptoQuest.Menus.Beast.UI
 {
     public class UIBeast : MonoBehaviour
     {
-        public delegate void UIBeastEvent(Sagas.Objects.Beast beast);
+        public delegate void UIBeastEvent(BeastDef beastDef);
 
         public static event UIBeastEvent Inspecting;
         public static event Action<UIBeast> InspectingBeastEvent;
@@ -22,7 +22,7 @@ namespace CryptoQuest.Menus.Beast.UI
         [SerializeField] private Color _disableColor;
 
         private Color _normalColor;
-        private Sagas.Objects.Beast _beast;
+        private BeastDef _beastDef;
 
         public bool Interactable
         {
@@ -44,17 +44,17 @@ namespace CryptoQuest.Menus.Beast.UI
             _beastButton.Selected -= OnSelected;
         }
 
-        public void Init(Sagas.Objects.Beast beast)
+        public void Init(BeastDef beastDef)
         {
-            _beast = beast;
-            _beastNameText.text = _beast.name;
+            _beastDef = beastDef;
+            _beastNameText.text = _beastDef.Data.BeastTypeSo.BeastInformation.LocalizedName.GetLocalizedString();
         }
 
         public void OnPressButton() { }
 
         private void OnSelected()
         {
-            Inspecting?.Invoke(_beast);
+            Inspecting?.Invoke(_beastDef);
             InspectingBeastEvent?.Invoke(this);
         }
 

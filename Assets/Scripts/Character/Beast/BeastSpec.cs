@@ -8,7 +8,7 @@ using UnityEngine;
 namespace CryptoQuest.Character.Beast
 {
     [Serializable]
-    public class BeastSpec
+    public class BeastDataSpec
     {
         [field: SerializeField] public Elemental Elemental { get; set; }
         [field: SerializeField] public CharacterClass Class { get; set; }

@@ -26,7 +26,7 @@ namespace CryptoQuest.Ranch.UI
         private bool _isSelected = false;
         private bool _isInGame = false;
         
-        private Beast _cacheInfo;
+        private BeastData _cacheInfo;
 
         public void OnSelectToTransfer()
         {
@@ -50,7 +50,7 @@ namespace CryptoQuest.Ranch.UI
 
         }
 
-        public void SetItemInfo(Beast itemData)
+        public void SetItemInfo(BeastData itemData)
         {
             Id = itemData.id;
             _name.text = itemData.name;

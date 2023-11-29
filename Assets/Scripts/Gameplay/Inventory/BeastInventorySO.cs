@@ -6,6 +6,6 @@ namespace CryptoQuest.Gameplay.Inventory
 {
     public class BeastInventorySO : ScriptableObject
     {
-        [field: SerializeField] public List<Beast> OwnedBeasts { get; set; } = new();
+        [field: SerializeField] public List<BeastDef> OwnedBeasts { get; set; } = new();
     }
 }

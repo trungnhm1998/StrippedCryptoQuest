@@ -13,8 +13,8 @@ namespace CryptoQuest.Ranch.UI
         [SerializeField] private UIBeastItem _beastItemPrefab;
         [SerializeField] private RectTransform _tooltipSafeArea;
 
-        private List<Beast> _beastList = new();
-        public List<Beast> Data => _beastList;
+        private List<BeastData> _beastList = new();
+        public List<BeastData> Data => _beastList;
         private List<UIBeastItem> _cachedItems = new();
 
         private void OnDisable()
@@ -22,7 +22,7 @@ namespace CryptoQuest.Ranch.UI
             CleanUpScrollView();
         }
 
-        public void SetData(List<Beast> data)
+        public void SetData(List<BeastData> data)
         {
             _beastList = data;
             CleanUpScrollView();
