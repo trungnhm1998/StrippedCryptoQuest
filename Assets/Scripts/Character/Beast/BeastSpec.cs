@@ -12,7 +12,7 @@ namespace CryptoQuest.Character.Beast
     {
         [field: SerializeField] public Elemental Elemental { get; set; }
         [field: SerializeField] public CharacterClass Class { get; set; }
-        [field: SerializeField] public PassiveAbility[] Passives { get; set; } = Array.Empty<PassiveAbility>();
+        [field: SerializeField] public PassiveAbility Passives { get; set; }
         [field: SerializeField] public BeastTypeSO BeastTypeSo { get; set; }
     }
 }
