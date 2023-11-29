@@ -10,9 +10,9 @@ using UnityEngine;
 using UnityEngine.Localization.Components;
 using UnityEngine.UI;
 
-namespace CryptoQuest.BlackSmith.Upgrade
+namespace CryptoQuest.BlackSmith.Evolve.UI
 {
-    public class UIUpgradeCharacter : MonoBehaviour
+    public class UICharacterInfo : MonoBehaviour
     {
         [SerializeField] private Image _avatar;
         [SerializeField] private LocalizeStringEvent _displayName;

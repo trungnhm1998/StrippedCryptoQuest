@@ -1,4 +1,5 @@
 using CryptoQuest.Events.UI.Dialogs;
+using CryptoQuest.UI.Dialogs.ChoiceDialog;
 using CryptoQuest.UI.Dialogs.Dialogue;
 using UnityEngine;
 using UnityEngine.Events;
@@ -11,10 +12,11 @@ namespace CryptoQuest.BlackSmith
         public event UnityAction ConfirmYesEvent;
         public event UnityAction ConfirmNoEvent;
 
-        [SerializeField] private YesNoDialogEventChannelSO _yesNoDialogEventSO;
         [SerializeField] private LocalizedString _message;
         private UIDialogueForGenericMerchant _dialogue;
         public UIDialogueForGenericMerchant Dialogue { get => _dialogue; }
+        public UIChoiceDialog ChoiceDialog { get; private set; }
+        private LocalizedString _confirmMessage;
 
         public void ShowOverviewDialog()
         {
@@ -42,8 +44,24 @@ namespace CryptoQuest.BlackSmith
 
         public void ShowConfirmDialog(LocalizedString confirmMessage)
         {
-            _yesNoDialogEventSO.SetMessage(confirmMessage);
-            _yesNoDialogEventSO.Show(YesButtonPressed, NoButtonPressed);
+            _confirmMessage = confirmMessage;
+            if (ChoiceDialog != null)
+            {
+                ChoiceDialogInstantiated(ChoiceDialog);
+                return;
+            }
+
+            ChoiceDialogController.Instance.Instantiate(ChoiceDialogInstantiated, false);
+        }
+
+        private void ChoiceDialogInstantiated(UIChoiceDialog dialog)
+        {
+            ChoiceDialog = dialog;
+            ChoiceDialog
+                .WithNoCallback(NoButtonPressed)
+                .WithYesCallback(YesButtonPressed)
+                .SetMessage(_confirmMessage)
+                .Show();
         }
 
         private void YesButtonPressed()
@@ -60,7 +78,7 @@ namespace CryptoQuest.BlackSmith
 
         public void HideConfirmDialog()
         {
-            _yesNoDialogEventSO.Hide();
+            ChoiceDialog.Hide();
         }
     }
 }

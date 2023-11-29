@@ -48,7 +48,7 @@ namespace CryptoQuest.BlackSmith.State.Overview
 
         private void ChangeToUpgradeState()
         {
-            fsm.RequestStateChange(Contants.UPGRADE_STATE);
+            fsm.RequestStateChange(Contants.UPGRADING_STATE_MACHINE);
         }
 
         private void ChangeToEvolveState()

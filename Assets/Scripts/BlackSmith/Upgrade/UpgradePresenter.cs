@@ -1,144 +1,26 @@
-using System.Collections;
-using CryptoQuest.BlackSmith.Interface;
-using CryptoQuest.BlackSmith.Upgrade.State;
-using CryptoQuest.Gameplay.Inventory;
-using CryptoQuest.Input;
-using CryptoQuest.System;
+using System;
+using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Localization;
 
 namespace CryptoQuest.BlackSmith.Upgrade
 {
     public class UpgradePresenter : MonoBehaviour
     {
-        [SerializeField] private BlackSmithDialogsPresenter _dialogManager;
-        [SerializeField] private UIUpgradeEquipment _upgradeEquipment;
-        [SerializeField] private UIEquipmentDetails _equipmentDetail;
-        [SerializeField] private MerchantsInputManager _input;
-        [SerializeField] private CurrencyPresenter _currencyController;
-        [SerializeField] private UpgradeStateController _upgradeController;
-        private IUpgradeEquipment _equipmentData;
-        private IUpgradeModel _upgradeModel;
-        private UIUpgradeItem _item;
-        private bool _isSelectedEquipment;
-        private int _level;
+        private readonly Dictionary<Type, Component> _cachedComponents = new();
         
-        [Header("Localization")]
-        [SerializeField] private LocalizedString _selectEquipmentMessage;
-        [SerializeField] private LocalizedString _upgradeMessage;
-        [SerializeField] private LocalizedString _confirmUpgradeMessage;
-        [SerializeField] private LocalizedString _resultMessage;
-
-        private void OnEnable()
+        public new bool TryGetComponent<T>(out T component) where T : Component
         {
-            Init();
-            _upgradeEquipment.OnSelected += OnItemSelected;
-            _upgradeEquipment.OnSubmit += OnItemSubmit;
-            _upgradeEquipment.GotLevelEvent += GetLevelToUpgrade;
-            _input.NavigateEvent += HandleNavigation;
-            _input.SubmitEvent += UpgradeEquipment;
-            _input.CancelEvent += ExitUpgrade;
-            _currencyController.OnSendSuccess += NotifySuccess;
-            _dialogManager.ConfirmYesEvent += ProceedUpgrade;
-            _dialogManager.ConfirmNoEvent += CancelUpgrade;
-        }
+            var type = typeof(T);
+            if (!_cachedComponents.TryGetValue(type, out var value))
+            {
+                if (base.TryGetComponent(out component))
+                    _cachedComponents.Add(type, component);
 
-        private void ExitUpgrade()
-        {
-            if (!_isSelectedEquipment) return;
-            _upgradeController.ExitUpgradeEvent?.Invoke();
-        }
+                return component != null;
+            }
 
-        private void OnDisable()
-        {
-            _upgradeEquipment.OnSelected -= OnItemSelected;
-            _upgradeEquipment.OnSubmit -= OnItemSubmit;
-            _upgradeEquipment.GotLevelEvent -= GetLevelToUpgrade;
-            _input.SubmitEvent -= UpgradeEquipment;
-            _input.NavigateEvent -= HandleNavigation;
-            _input.CancelEvent -= ExitUpgrade;
-            _currencyController.OnSendSuccess -= NotifySuccess;
-            _dialogManager.ConfirmYesEvent -= ProceedUpgrade;
-            _dialogManager.ConfirmNoEvent -= CancelUpgrade;
-        }
-
-        private void GetLevelToUpgrade(int level) => _level = level;
-
-        private void Awake()
-        {
-            _upgradeModel = GetComponent<IUpgradeModel>();
-        }
-
-        private void OnItemSelected(UIUpgradeItem item)
-        {
-            _item = item;
-            LoadEquipmentDetail();
-        }
-
-        public void Init()
-        {
-            StartCoroutine(CoInitData());
-        }
-
-        private IEnumerator CoInitData()
-        {
-            _dialogManager.Dialogue.SetMessage(_selectEquipmentMessage).Show();
-            var inventory = ServiceProvider.GetService<IInventoryController>().Inventory;
-            yield return _upgradeModel.CoGetData(inventory);
-            _upgradeEquipment.InstantiateData(_upgradeModel);
-            _isSelectedEquipment = false;
-        }
-
-        private void OnItemSubmit(UIUpgradeItem item)
-        {
-            float currentGold = _currencyController.Gold;
-            _dialogManager.Dialogue.SetMessage(_upgradeMessage).Show();
-            _upgradeEquipment.SelectedEquipment(item, currentGold);
-            _equipmentData = item.UpgradeEquipment;
-            _isSelectedEquipment = true;
-        }
-
-        private void UpgradeEquipment()
-        {
-            if (!_isSelectedEquipment) return;
-            //TODO: Import Master data to calculate cost to upgrade multi level
-            _currencyController.CurrencyNeeded(_equipmentData.Cost * _level, 0); // (0 is metad to upgrade but this function don't use metad)
-        }
-
-        private void HandleNavigation(Vector2 direction)
-        {
-            if(!_isSelectedEquipment) return;
-            if (_equipmentData == null || (int)direction.y == 0) return;
-            _upgradeEquipment.SetValue((int)direction.y, _equipmentData);
-        }
-
-        private void LoadEquipmentDetail()
-        {
-            if (_item == null) return;
-            _equipmentDetail.RenderData(_item.UpgradeEquipment.Equipment);
-        }
-
-        private void NotifySuccess()
-        {
-            _isSelectedEquipment = false;
-            _dialogManager.Dialogue.Hide();
-            _dialogManager.ShowConfirmDialog(_confirmUpgradeMessage);
-            _upgradeEquipment.ShowConfirmPanel(true);
-        }
-
-        public void ProceedUpgrade()
-        {
-            _upgradeEquipment.ShowConfirmPanel(false);
-            _upgradeController.UpgradeEvent?.Invoke();
-            _upgradeEquipment.SetLevel(_equipmentData, _equipmentDetail);
-            _dialogManager.Dialogue.SetMessage(_resultMessage).Show();
-            _currencyController.UpdateCurrencyAmount();
-        }
-
-        public void CancelUpgrade()
-        {
-            _upgradeEquipment.ShowConfirmPanel(false);
-            _isSelectedEquipment = true;
+            component = (T)value;
+            return true;
         }
     }
 }

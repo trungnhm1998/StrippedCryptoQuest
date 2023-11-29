@@ -6,7 +6,7 @@ namespace CryptoQuest.BlackSmith.Interface
 {
     public interface IUpgradeModel
     {
-        public List<IUpgradeEquipment> ListEquipment { get; }
+        public List<IUpgradeEquipment> Equipments { get; }
         public IEnumerator CoGetData(InventorySO inventory);
     }
 }
