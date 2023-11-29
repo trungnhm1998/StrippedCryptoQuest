@@ -1,125 +1,82 @@
 using System;
-using System.Collections;
 using CryptoQuest.BlackSmith.Interface;
+using CryptoQuest.Menu;
 using TMPro;
 using UnityEngine;
-using UnityEngine.EventSystems;
+using UnityEngine.Localization.Components;
 using UnityEngine.UI;
 
 namespace CryptoQuest.BlackSmith.Upgrade
 {
     public class UIUpgradeEquipment : MonoBehaviour
     {
-        public Action<UIUpgradeItem> OnSelected;
-        public Action<UIUpgradeItem> OnSubmit;
-        public Action<int> GotLevelEvent;
-        [SerializeField] private ScrollRect _scrollRect;
-        [SerializeField] private GameObject _equipmentPrefab;
-        [SerializeField] private GameObject _previewObject;
-        [SerializeField] private GameObject _confirmPanel;
-        [SerializeField] private RectTransform _upgradeEquipmentPanel;
-        [SerializeField] private Transform _selectedEquipmentPanel;
-        [SerializeField] private Transform _defaultPanel;
-        [SerializeField] private Transform _resultPanel;
-        [SerializeField] private TextMeshProUGUI _level;
+        public event Action<UIUpgradeEquipment> OnSubmit;
+        public event Action<UIUpgradeEquipment> OnItemSelected;
+
+        [SerializeField] private LocalizeStringEvent _displayName;
+        [SerializeField] private Image _icon;
         [SerializeField] private TextMeshProUGUI _cost;
-        [SerializeField] private Color _validColor;
-        [SerializeField] private Color _inValidColor;
-        private int _selectLevelToUpgrade;
-        private int _currentLevel;
-        private int _levelToUpgrade;
-        private bool _isValid;
-        private float _gold;
+        [SerializeField] private Image _selectedBackground;
+        [SerializeField] private GameObject _confirmSelectedMark;
+        [SerializeField] private GameObject _costObject;
+        [SerializeField] private MultiInputButton _button;
+        [SerializeField] private Color _selectedColor;
 
-        public void SetValue(int level, IUpgradeEquipment item)
+        private Color _originColor;
+        public MultiInputButton Button => _button;
+        public IUpgradeEquipment UpgradeEquipment { get; private set; }
+
+        private void Awake()
         {
-            _currentLevel += level;
-            if (_currentLevel > item.Level && _currentLevel <= item.Equipment.Data.MaxLevel)
-                _selectLevelToUpgrade = _currentLevel;
-
-            else
-                _currentLevel = _selectLevelToUpgrade;
-            _level.text = _selectLevelToUpgrade.ToString();
-            CostToUpgrade(item);
+            _originColor = _selectedBackground.color;
         }
 
-        private void CostToUpgrade(IUpgradeEquipment item)
+        public void SetupUI(IUpgradeEquipment equipment)
         {
-            _levelToUpgrade = _currentLevel - item.Level;
-            _isValid = _gold >= _levelToUpgrade * item.Cost;
-            _cost.color = _isValid ? _validColor : _inValidColor;
-            _cost.text = $"{_levelToUpgrade * item.Cost} G";
-            GotLevelEvent?.Invoke(_levelToUpgrade);
+            UpgradeEquipment = equipment;
+            _displayName.StringReference = equipment.DisplayName;
+            _cost.text = equipment.Cost.ToString();
+            _icon.sprite = equipment.Icon;
+
+            SetConfirmSelected(false);
         }
 
-        private void OnItemPressed(UIUpgradeItem item)
+        public void SetConfirmSelected(bool value)
         {
-            OnSubmit?.Invoke(item);
+            _confirmSelectedMark.SetActive(value);
+            _selectedBackground.color = value ? _selectedColor : _originColor;
         }
 
-        private void OnItemSelected(UIUpgradeItem item)
+        private void OnEnable()
         {
-            OnSelected?.Invoke(item);
+            _button.Selected += OnSelected;
+            _button.DeSelected += OnDeselected;
+            _button.onClick.AddListener(SelectedEquipment);
         }
 
-        public void InstantiateData(IUpgradeModel model)
+        private void OnDisable()
         {
-            ChangeLocation(_defaultPanel);
-            CleanUpScrollView();
-            for (int i = 0; i < model.ListEquipment.Count; i++)
-            {
-                var obj = Instantiate(_equipmentPrefab, _scrollRect.content).GetComponent<UIUpgradeItem>();
-                obj.ConfigureCell(model.ListEquipment[i]);
-                obj.OnItemSelected += OnItemSelected;
-                obj.OnSubmit += OnItemPressed;
-            }
-            StartCoroutine(SelectDefaultButton());
+            _button.Selected -= OnSelected;
+            _button.DeSelected -= OnDeselected;
         }
 
-        public void SetLevel(IUpgradeEquipment item, UIEquipmentDetails details)
+        private void OnSelected()
         {
-            item.Equipment.Level = _currentLevel;
-            details.RenderData(item.Equipment);
-            ChangeLocation(_resultPanel);
+            OnItemSelected?.Invoke(this);
+            _selectedBackground.gameObject.SetActive(true);
         }
 
-        private void CleanUpScrollView()
+        private void OnDeselected()
         {
-            foreach (Transform child in _scrollRect.content)
-            {
-                Destroy(child.gameObject);
-            }
-            foreach (Transform child in _selectedEquipmentPanel)
-            {
-                Destroy(child.gameObject);
-            }
+            var isSelecting = _confirmSelectedMark.activeSelf;
+            if (isSelecting) return;
+            _selectedBackground.gameObject.SetActive(false);
         }
 
-        private IEnumerator SelectDefaultButton()
+        private void SelectedEquipment()
         {
-            yield return null;
-            if (_scrollRect.content.childCount == 0) yield break;
-            var firstItemGO = _scrollRect.content.GetChild(0).gameObject.GetComponent<UIUpgradeItem>();
-            EventSystem.current.SetSelectedGameObject(firstItemGO.gameObject);
-            OnSelected?.Invoke(firstItemGO);
+            OnSubmit?.Invoke(this);
+            SetConfirmSelected(true);
         }
-
-        public void SelectedEquipment(UIUpgradeItem item, float gold)
-        {
-            _gold = gold;
-            item.transform.SetParent(_upgradeEquipmentPanel);
-            _selectLevelToUpgrade = item.UpgradeEquipment.Level + 1;
-            _currentLevel = _selectLevelToUpgrade;
-            _level.text = _currentLevel.ToString();
-            CostToUpgrade(item.UpgradeEquipment);
-        }
-
-        private void ChangeLocation(Transform transform)
-        {
-            _previewObject.transform.SetParent(transform);
-            _previewObject.transform.localPosition = new Vector3(0, 0, 0);
-        }
-
-        public void ShowConfirmPanel(bool isShowPanel) => _confirmPanel.SetActive(isShowPanel);
     }
 }

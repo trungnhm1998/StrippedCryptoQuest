@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using CryptoQuest.Battle.Components;
-using CryptoQuest.BlackSmith.Upgrade;
 using CryptoQuest.Character.Hero.AvatarProvider;
 using CryptoQuest.Gameplay.PlayerParty;
 using CryptoQuest.Item.Equipment;
@@ -12,7 +11,7 @@ namespace CryptoQuest.BlackSmith.Evolve.UI
 {
     public class CharacterPartyPresenter : MonoBehaviour
     {
-        [SerializeField] private List<UIUpgradeCharacter> _listCharacter;
+        [SerializeField] private List<UICharacterInfo> _listCharacter;
         private IPartyController _partyController;
         private IHeroAvatarProvider _heroAvatarProvider;
 
@@ -48,7 +47,7 @@ namespace CryptoQuest.BlackSmith.Evolve.UI
             }
         }
 
-        private IEnumerator CoLoadAvatar(HeroBehaviour hero, UIUpgradeCharacter characterUI)
+        private IEnumerator CoLoadAvatar(HeroBehaviour hero, UICharacterInfo characterUI)
         {
             yield return _heroAvatarProvider.LoadAvatarAsync(hero);
             characterUI.SetAvatar(hero.Avatar);

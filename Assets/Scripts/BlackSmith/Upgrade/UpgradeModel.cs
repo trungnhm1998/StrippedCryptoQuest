@@ -36,7 +36,7 @@ namespace CryptoQuest.BlackSmith.Upgrade
     {
         [SerializeField] private EquipmentPrefabDatabase _equipmentPrefabDatabase;
         private List<IUpgradeEquipment> _equipmentData;
-        public List<IUpgradeEquipment> ListEquipment => _equipmentData;
+        public List<IUpgradeEquipment> Equipments => _equipmentData;
 
         public IEnumerator CoGetData(InventorySO inventory)
         {
