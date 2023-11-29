@@ -1,26 +1,35 @@
-﻿using TMPro;
+﻿using CryptoQuest.Character.Hero;
+using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.EventSystems;
 using UnityEngine.Localization.Components;
 using UnityEngine.UI;
 using Obj = CryptoQuest.Sagas.Objects;
 
 namespace CryptoQuest.Menus.Home.UI
 {
-    public class UIListItem : MonoBehaviour
+    public class UIListItem : MonoBehaviour, ISelectHandler
     {
+        public static event UnityAction<HeroSpec> InspectCharacterEvent;
+
         [SerializeField] private Image _classIcon;
         [SerializeField] private LocalizeStringEvent _localizedName;
-        [SerializeField] private TMP_Text _name;
         [SerializeField] private TMP_Text _level;
 
-        public int Id { get; private set; }
+        private HeroSpec _cachedInfo;
 
-        public void SetInfo(Obj.Character info)
+        public void SetInfo(HeroSpec info)
         {
-            Id = info.id;
-            _name.text = info.name;
-            _level.text = $"Lv{info.level}";
+            _cachedInfo = info;
+            _localizedName.StringReference = info.Origin.DetailInformation.LocalizedName;
+            _level.text = $"Lv1";
             _localizedName.RefreshString();
+        }
+
+        public void OnSelect(BaseEventData _)
+        {
+            InspectCharacterEvent?.Invoke(_cachedInfo);
         }
     }
 }

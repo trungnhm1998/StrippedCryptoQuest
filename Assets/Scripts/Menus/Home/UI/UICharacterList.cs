@@ -1,6 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
+using CryptoQuest.Character.Hero;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.Pool;
+using UnityEngine.UI;
 using Obj = CryptoQuest.Sagas.Objects;
 
 namespace CryptoQuest.Menus.Home.UI
@@ -10,15 +14,18 @@ namespace CryptoQuest.Menus.Home.UI
         [SerializeField] private Transform _scrollRectContent;
         [SerializeField] private UIListItem _itemPrefab;
 
+        [Header("Events")]
+        [SerializeField] private UnityEvent _initialized;
+
         private IObjectPool<UIListItem> _pool;
         private List<UIListItem> _items = new();
 
-        private void Awake()
+        private void Start()
         {
             _pool ??= new ObjectPool<UIListItem>(OnCreate, OnGet, OnRelease, OnDestroyPool);
         }
 
-        public void SetData(List<Obj.Character> data)
+        public void SetData(List<HeroSpec> data)
         {
             ReleaseAllItemInPool();
             foreach (var heroData in data)
@@ -26,7 +33,19 @@ namespace CryptoQuest.Menus.Home.UI
                 UIListItem item = _pool.Get();
                 item.SetInfo(heroData);
             }
+
+            StartCoroutine(CoSelectDefault());
+            _initialized.Invoke();
         }
+
+        private IEnumerator CoSelectDefault()
+        {
+            yield return null;
+            var firstItem = _scrollRectContent.GetComponentInChildren<Button>();
+            firstItem.Select();
+        }
+
+        #region Pool
 
         private UIListItem OnCreate()
         {
@@ -52,5 +71,7 @@ namespace CryptoQuest.Menus.Home.UI
 
             _items = new();
         }
+
+        #endregion
     }
 }

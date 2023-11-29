@@ -15,6 +15,7 @@ namespace CryptoQuest.Menus.Home.States
         public override void OnEnter()
         {
             UIMainMenu.OnBackToNavigation();
+            _homePanel.SortMode.DisableButtonAndHideHints();
             _homePanel.Input.MenuCancelEvent += HandleCancel;
             _homePanel.Focusing += ToSelectActions;
         }

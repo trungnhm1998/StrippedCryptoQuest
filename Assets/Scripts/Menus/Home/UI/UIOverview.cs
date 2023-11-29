@@ -13,10 +13,28 @@ namespace CryptoQuest.Menus.Home.UI
 
         public void EnableSelectActions()
         {
+            SetButtonsActive(true);
             _overviewTabs[0].Select();
         }
 
-        public void ChangOrderButtonPressed() => ChangeOrderEvent?.Invoke();
-        public void CharacterListButtonPressed() => ViewCharacterListEvent?.Invoke();
+        public void ChangOrderButtonPressed()
+        {
+            SetButtonsActive(false);
+            ChangeOrderEvent?.Invoke();
+        }
+
+        public void CharacterListButtonPressed()
+        {
+            SetButtonsActive(false);
+            ViewCharacterListEvent?.Invoke();
+        }
+
+        private void SetButtonsActive(bool active)
+        {
+            foreach (var button in _overviewTabs)
+            {
+                button.enabled = active;
+            }
+        }
     }
 }

@@ -12,6 +12,7 @@ using CryptoQuest.Gameplay;
 using CryptoQuest.Gameplay.Inventory;
 using CryptoQuest.Networking;
 using CryptoQuest.API;
+using CryptoQuest.Events.UI.Menu;
 using CryptoQuest.Sagas.Objects;
 using CryptoQuest.System;
 using CryptoQuest.UI.Actions;
@@ -40,6 +41,7 @@ namespace CryptoQuest.Tavern.Sagas
         [SerializeField] private List<Origin> _charOrigins = new();
 
         [SerializeField] private List<ResponseAttributeMap> _attributeMap = new();
+        [SerializeField] private HeroInventoryFilledEvent _inventoryFilled;
 
         private Dictionary<string, AttributeScriptableObject> _lookupAttribute = new();
         private FieldInfo[] _fields;
@@ -114,6 +116,8 @@ namespace CryptoQuest.Tavern.Sagas
             var nftCharacters = characters.Select(CreateNftCharacter).ToList();
             _heroInventory.OwnedHeroes.Clear();
             _heroInventory.OwnedHeroes = nftCharacters;
+
+            _inventoryFilled.RaiseEvent(_heroInventory.OwnedHeroes);
         }
 
         private HeroSpec CreateNftCharacter(CryptoQuest.Sagas.Objects.Character characterResponse)

@@ -2,10 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using CryptoQuest.API;
 using CryptoQuest.Networking;
-using CryptoQuest.Sagas;
-using CryptoQuest.System;
 using CryptoQuest.UI.Actions;
 using IndiGames.Core.Common;
 using IndiGames.Core.Events;
@@ -13,7 +10,7 @@ using UniRx;
 using UnityEngine;
 using Obj = CryptoQuest.Sagas.Objects;
 
-namespace CryptoQuest.Character.Sagas
+namespace CryptoQuest.Sagas.Character
 {
     public class FetchInGameNftHeroes : SagaBase<GetInGameHeroes>
     {
@@ -24,7 +21,7 @@ namespace CryptoQuest.Character.Sagas
             restClient
                 .WithParams(new Dictionary<string, string>()
                     { { "source", $"{((int)Obj.ECharacterStatus.InGame).ToString()}" } })
-                .Get<Obj.CharactersResponse>(Profile.GET_CHARACTERS)
+                .Get<Obj.CharactersResponse>(API.Profile.GET_CHARACTERS)
                 .Subscribe(ProcessResponseCharacters, OnError);
         }
 
