@@ -58,6 +58,10 @@ namespace CryptoQuest.BlackSmith.Upgrade
         {
             SetActiveUI(false);
             UnRegistEvent();
+        }
+        
+        public void CancelUI()
+        {
             _equipmentDetailsPresenter.ResetPreviews();
         }
 

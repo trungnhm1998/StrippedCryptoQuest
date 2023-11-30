@@ -35,6 +35,7 @@ namespace CryptoQuest.BlackSmith.Upgrade.State
 
         protected override void OnCancel()
         {
+            _configUpgradePresenter.CancelUI();
             fsm.RequestStateChange(Contants.SELECT_UPGRADE_STATE);
         }
 
