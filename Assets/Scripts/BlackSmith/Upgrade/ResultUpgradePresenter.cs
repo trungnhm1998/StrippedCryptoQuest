@@ -11,6 +11,7 @@ namespace CryptoQuest.BlackSmith.Upgrade
 
         [SerializeField] private BlackSmithDialogsPresenter _dialogManager;
         [SerializeField] private MerchantsInputManager _input;
+        [SerializeField] private GameObject _resultUI;
 
         [SerializeField] private LocalizedString _resultMessage;
 
@@ -33,11 +34,13 @@ namespace CryptoQuest.BlackSmith.Upgrade
         {
             _dialogManager.Dialogue.Hide();
             _dialogManager.Dialogue.SetMessage(_resultMessage).Show();
+            _resultUI.SetActive(true);
             RegistEvents();
         }
 
         public void Hide()
         {
+            _resultUI.SetActive(false);
             UnRegistEvent();
         }
 
