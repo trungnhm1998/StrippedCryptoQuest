@@ -20,9 +20,7 @@ namespace CryptoQuest.Quest.Categories
 
     public class BattleQuestInfo : QuestInfo<BattleQuestSO>
     {
-        public BattleQuestInfo(BattleQuestSO questDef) : base(questDef)
-        {            
-        }
+        public BattleQuestInfo(BattleQuestSO questDef) : base(questDef) { }
 
         public override void TriggerQuest()
         {
