@@ -16,9 +16,14 @@ namespace CryptoQuest.BlackSmith.Upgrade
         private float _currentLevel;
         private float _currentMaxLevel;
 
-        private void Start()
+        private void Awake()
         {
             _originColor = _levelText.color;
+        }
+
+        private void OnEnable()
+        {
+            _levelText.color = _originColor;
         }
 
         public void SetCurrentLevel(int level, int maxLevel)
