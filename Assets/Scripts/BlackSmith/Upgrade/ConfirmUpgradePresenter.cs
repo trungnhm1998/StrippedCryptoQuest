@@ -9,8 +9,10 @@ namespace CryptoQuest.BlackSmith.Upgrade
         public event Action ComfirmedUpgrade;
         public event Action CancelUpgrade;
 
+        [SerializeField] private ConfigUpgradePresenter _configPresenter;
+        [SerializeField] private UIConfirmDetails _confirmUI;
         [SerializeField] private BlackSmithDialogsPresenter _dialogManager;
-        [SerializeField] private GameObject _confirmUI;
+        [SerializeField] private GameObject _confirmUIObject;
 
         [SerializeField] private LocalizedString _confirmUpgradeMessage;
 
@@ -35,14 +37,15 @@ namespace CryptoQuest.BlackSmith.Upgrade
         {
             _dialogManager.Dialogue.Hide();
             _dialogManager.ShowConfirmDialog(_confirmUpgradeMessage);
-            _confirmUI.SetActive(true);
+            _confirmUIObject.SetActive(true);
+            _confirmUI.SetupUI(_configPresenter.LevelToUpgrade, _configPresenter.GoldNeeded);
             RegistEvents();
         }
 
         public void Hide()
         {
             _dialogManager.HideConfirmDialog();
-            _confirmUI.SetActive(false);
+            _confirmUIObject.SetActive(false);
             UnRegistEvent();
         }
 
