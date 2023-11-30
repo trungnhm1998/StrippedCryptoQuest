@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-namespace CryptoQuest.Character
+namespace CryptoQuest.Character.Skill
 {
     [Serializable]
     public struct HeroSkillsSet

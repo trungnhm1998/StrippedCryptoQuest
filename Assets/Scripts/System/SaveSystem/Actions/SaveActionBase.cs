@@ -1,6 +1,6 @@
 using CryptoQuest.Core;
 
-namespace CryptoQuest.SaveSystem.Actions
+namespace CryptoQuest.System.SaveSystem.Actions
 {
 	public abstract class SaveActionBase<TRef> : ActionBase
 	{

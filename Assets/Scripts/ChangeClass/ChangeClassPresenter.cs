@@ -7,6 +7,7 @@ using CryptoQuest.ChangeClass.View;
 using CryptoQuest.Gameplay.Inventory;
 using CryptoQuest.Gameplay.PlayerParty;
 using CryptoQuest.Item;
+using CryptoQuest.Item.Consumable;
 using CryptoQuest.System;
 using UnityEngine;
 

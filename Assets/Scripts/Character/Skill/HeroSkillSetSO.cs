@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using UnityEngine;
 
-namespace CryptoQuest.Character
+namespace CryptoQuest.Character.Skill
 {
     [CreateAssetMenu(fileName = "HeroSkillSetSO", menuName = "Gameplay/Character/Hero Skill Set")]
     public class HeroSkillSetSO : ScriptableObject

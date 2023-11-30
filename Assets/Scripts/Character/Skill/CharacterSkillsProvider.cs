@@ -7,7 +7,7 @@ using CryptoQuest.Battle.Components;
 using CryptoQuest.System;
 using UnityEngine;
 
-namespace CryptoQuest.Character
+namespace CryptoQuest.Character.Skill
 {
     public class CharacterSkillsProvider : MonoBehaviour, ISkillsProvider
     {

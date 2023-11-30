@@ -1,10 +1,11 @@
 using System;
 using CryptoQuest.Quest.Actions;
 using CryptoQuest.Quest.Controllers;
+using CryptoQuest.System.CutsceneSystem;
 using UnityEngine;
 using UnityEngine.Playables;
 
-namespace CryptoQuest.System.CutsceneSystem.CustomTimelineTracks.PostCutsceneActionTrack
+namespace CryptoQuest.Quest.Components.PostCutsceneActionTrack
 {
     [Serializable]
     public class PostCutsceneActionPlayableBehaviour : PlayableBehaviour

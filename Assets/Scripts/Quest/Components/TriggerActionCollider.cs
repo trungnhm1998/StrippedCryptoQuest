@@ -1,4 +1,5 @@
-﻿using CryptoQuest.Quest.Actions;
+﻿using CryptoQuest.Gameplay.SafeZone;
+using CryptoQuest.Quest.Actions;
 using UnityEngine;
 
 namespace CryptoQuest.Quest.Components

@@ -5,6 +5,7 @@ using System.Linq;
 using CryptoQuest.Gameplay;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
 using CryptoQuest.Item;
+using CryptoQuest.Item.Consumable;
 using CryptoQuest.Item.Equipment;
 using CryptoQuestEditor.Helper;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;

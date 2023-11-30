@@ -1,6 +1,6 @@
 using System;
 using CryptoQuest.Core;
-using CryptoQuest.System.SceneLoad;
+using CryptoQuest.System.Sceneload;
 using IndiGames.Core.EditorTools.Attributes.ReadOnlyAttribute;
 using TinyMessenger;
 using UnityEngine;

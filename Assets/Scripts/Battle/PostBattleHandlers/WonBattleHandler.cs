@@ -1,5 +1,4 @@
 ﻿using CryptoQuest.Battle.Events;
-using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects;
 using CryptoQuest.Gameplay.Reward.Events;
 using IndiGames.Core.SceneManagementSystem;
 using IndiGames.Core.SceneManagementSystem.ScriptableObjects;
@@ -7,7 +6,7 @@ using TinyMessenger;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace CryptoQuest.Battle
+namespace CryptoQuest.Battle.PostBattleHandlers
 {
     public class WonBattleHandler : PostBattleManager
     {

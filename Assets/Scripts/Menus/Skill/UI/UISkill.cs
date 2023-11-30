@@ -1,6 +1,6 @@
 using System;
 using CryptoQuest.AbilitySystem.Abilities;
-using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data;
+using CryptoQuest.Battle.ScriptableObjects;
 using CryptoQuest.Menu;
 using TMPro;
 using UnityEngine;

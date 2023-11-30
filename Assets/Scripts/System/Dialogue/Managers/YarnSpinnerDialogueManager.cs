@@ -9,6 +9,7 @@ using CryptoQuest.System.CutsceneSystem;
 using CryptoQuest.System.CutsceneSystem.Events;
 using CryptoQuest.System.Dialogue.Events;
 using CryptoQuest.System.Dialogue.YarnManager;
+using CryptoQuest.System.SaveSystem;
 using IndiGames.Core.Events.ScriptableObjects;
 using UnityEngine;
 using UnityEngine.Events;

@@ -1,5 +1,5 @@
 using System;
-using TownTransfer;
+using CryptoQuest.Menus.TownTransfer;
 using UnityEngine;
 using UnityEngine.Localization.Components;
 

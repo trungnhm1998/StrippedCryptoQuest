@@ -1,6 +1,7 @@
 ﻿using CryptoQuest.Battle.Events;
 using CryptoQuest.Battle.UI.CommandDetail;
 using CryptoQuest.Item;
+using CryptoQuest.Item.Consumable;
 using TinyMessenger;
 
 namespace CryptoQuest.Battle.UI.SelectItem

@@ -1,6 +1,7 @@
 ﻿using CryptoQuest.Core;
 using CryptoQuest.SaveSystem;
 using CryptoQuest.SaveSystem.Sagas;
+using CryptoQuest.System.SaveSystem.Sagas;
 using IndiGames.Core.SceneManagementSystem.Events.ScriptableObjects;
 using IndiGames.Core.SceneManagementSystem.ScriptableObjects;
 using UnityEngine;

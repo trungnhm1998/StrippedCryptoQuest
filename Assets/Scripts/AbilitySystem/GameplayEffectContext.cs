@@ -1,6 +1,5 @@
 ﻿using System;
 using CryptoQuest.AbilitySystem.Abilities;
-using CryptoQuest.Gameplay.Battle.Core;
 using IndiGames.GameplayAbilitySystem.EffectSystem;
 using UnityEngine;
 using CoreEffectContext = IndiGames.GameplayAbilitySystem.EffectSystem.GameplayEffectContext;

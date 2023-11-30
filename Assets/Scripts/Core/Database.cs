@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using CryptoQuest.Character;
+using CryptoQuest.Character.Skill;
 using CryptoQuest.System;
 using SQLite;
 using UnityEngine;

@@ -4,7 +4,7 @@ using TinyMessenger;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace CryptoQuest.Battle
+namespace CryptoQuest.Battle.TurnResultHandlers
 {
     public class HandleWon : MonoBehaviour
     {

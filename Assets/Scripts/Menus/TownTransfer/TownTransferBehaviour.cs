@@ -7,7 +7,6 @@ using CryptoQuest.UI.SpiralFX;
 using IndiGames.Core.Events.ScriptableObjects;
 using IndiGames.Core.SceneManagementSystem.Events.ScriptableObjects;
 using IndiGames.Core.SceneManagementSystem.ScriptableObjects;
-using TownTransfer;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 

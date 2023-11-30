@@ -2,12 +2,10 @@ using CryptoQuest.Actions;
 using CryptoQuest.Core;
 using CryptoQuest.Networking;
 using CryptoQuest.System;
-using CryptoQuest.UI.Actions;
 using TinyMessenger;
 using UnityEngine;
-using UnityEngine.UI;
 
-namespace CryptoQuest
+namespace CryptoQuest.UI.Title
 {
     public class UIWalletDisconnectButton : MonoBehaviour
     {

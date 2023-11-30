@@ -1,9 +1,6 @@
 ﻿using CryptoQuest.AbilitySystem.Attributes;
 using CryptoQuest.Battle.Components;
 using CryptoQuest.Battle.Events;
-using CryptoQuest.Gameplay;
-using CryptoQuest.Gameplay.Encounter;
-using CryptoQuest.Gameplay.Inventory;
 using CryptoQuest.Gameplay.PlayerParty;
 using CryptoQuest.Map.CheckPoint;
 using CryptoQuest.System;
@@ -12,7 +9,7 @@ using IndiGames.Core.SceneManagementSystem.ScriptableObjects;
 using TinyMessenger;
 using UnityEngine;
 
-namespace CryptoQuest.Battle
+namespace CryptoQuest.Battle.PostBattleHandlers
 {
     public class LostBattleHandler : PostBattleManager
     {

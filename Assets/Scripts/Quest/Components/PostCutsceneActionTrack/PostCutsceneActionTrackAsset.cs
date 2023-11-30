@@ -1,11 +1,10 @@
 using System;
 using System.Linq;
-using CryptoQuest.Quest.Actions;
 using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.Timeline;
 
-namespace CryptoQuest.System.CutsceneSystem.CustomTimelineTracks.PostCutsceneActionTrack
+namespace CryptoQuest.Quest.Components.PostCutsceneActionTrack
 {
     [Serializable]
     [TrackClipType(typeof(PostCutsceneActionPlayableAsset))]

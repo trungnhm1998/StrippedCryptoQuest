@@ -4,7 +4,7 @@ using IndiGames.Core.Events.ScriptableObjects;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
-namespace CryptoQuest.System.SceneLoad
+namespace CryptoQuest.System.Sceneload
 {
     public class PostSceneLoadedAction : ActionBase
     {

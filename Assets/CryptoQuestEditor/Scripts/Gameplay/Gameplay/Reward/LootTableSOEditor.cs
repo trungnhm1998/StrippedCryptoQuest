@@ -5,6 +5,7 @@ using CryptoQuest.Gameplay.Encounter;
 using CryptoQuest.Gameplay.Inventory.Currency;
 using CryptoQuest.Gameplay.Loot;
 using CryptoQuest.Item;
+using CryptoQuest.Item.Consumable;
 using CryptoQuest.Item.Equipment;
 using IndiGames.Core.Database;
 using IndiGames.Tools.ScriptableObjectBrowser;

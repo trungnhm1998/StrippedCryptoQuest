@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.UI;
 
-namespace AssetReferenceSprite
+namespace CryptoQuest.UI.Extensions
 {
     public static class AssetReferenceExtensions
     {

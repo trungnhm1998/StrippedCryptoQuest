@@ -1,8 +1,9 @@
 ﻿using System.Collections;
-using AssetReferenceSprite;
-using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data;
+using CryptoQuest.Battle.ScriptableObjects;
 using CryptoQuest.Item;
+using CryptoQuest.Item.Consumable;
 using CryptoQuest.Menu;
+using CryptoQuest.UI.Extensions;
 using UnityEngine;
 using UnityEngine.Localization.Components;
 using UnityEngine.UI;

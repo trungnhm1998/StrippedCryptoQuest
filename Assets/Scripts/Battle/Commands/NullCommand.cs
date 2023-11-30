@@ -1,8 +1,6 @@
-﻿using System.Collections;
-using CryptoQuest.Battle.Commands;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace CryptoQuest.Battle.Components
+namespace CryptoQuest.Battle.Commands
 {
     public class NullCommand : ICommand
     {

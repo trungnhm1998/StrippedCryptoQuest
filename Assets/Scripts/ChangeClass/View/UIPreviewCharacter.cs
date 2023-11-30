@@ -1,6 +1,6 @@
-using AssetReferenceSprite;
 using CryptoQuest.ChangeClass.API;
 using CryptoQuest.UI.Character;
+using CryptoQuest.UI.Extensions;
 using TMPro;
 using UnityEngine;
 using UnityEngine.AddressableAssets;

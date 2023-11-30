@@ -1,7 +1,7 @@
 using IndiGames.Core.Events.ScriptableObjects;
 using UnityEngine;
 
-namespace CryptoQuest
+namespace CryptoQuest.System.TransitionSystem
 {
     [CreateAssetMenu(menuName = "Transition/Transition Event Channel")]
     public class TransitionEventChannelSO : GenericEventChannelSO<AbstractTransition>

@@ -4,6 +4,7 @@ using CryptoQuest.Gameplay.Inventory;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Type;
 using CryptoQuest.Input;
 using CryptoQuest.Item;
+using CryptoQuest.Item.Consumable;
 using CryptoQuest.Menus.Item.States;
 using CryptoQuest.UI.Menu;
 using IndiGames.Core.Events.ScriptableObjects;

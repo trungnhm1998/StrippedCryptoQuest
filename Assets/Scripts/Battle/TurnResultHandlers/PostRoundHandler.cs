@@ -3,7 +3,7 @@ using CryptoQuest.Battle.States.SelectHeroesActions;
 using TinyMessenger;
 using UnityEngine;
 
-namespace CryptoQuest.Battle
+namespace CryptoQuest.Battle.TurnResultHandlers
 {
     /// <summary>
     /// Change <see cref="BattleStateMachine"/> to the next state after all the actions has been presented

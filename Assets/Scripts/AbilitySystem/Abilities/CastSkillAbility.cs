@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Linq;
 using CryptoQuest.AbilitySystem.Attributes;
 using CryptoQuest.Battle.Components;
 using CryptoQuest.Battle.Events;
-using CryptoQuest.Gameplay.Battle.Core;
+using CryptoQuest.Battle.Extensions;
+using CryptoQuest.Battle.ScriptableObjects;
 using IndiGames.GameplayAbilitySystem.AbilitySystem;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.ScriptableObjects;
@@ -15,11 +15,7 @@ using IndiGames.GameplayAbilitySystem.Helper;
 using IndiGames.GameplayAbilitySystem.TagSystem.ScriptableObjects;
 using TinyMessenger;
 using UnityEngine;
-using Random = UnityEngine.Random;
-using CryptoQuest.Gameplay.Battle.Core.Helper;
 using UnityEngine.Localization;
-using UnityEngine.Serialization;
-using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data;
 
 namespace CryptoQuest.AbilitySystem.Abilities
 {

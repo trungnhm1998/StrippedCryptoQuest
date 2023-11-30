@@ -8,6 +8,7 @@ using CryptoQuest.Battle.UI.SelectItem;
 using CryptoQuest.Gameplay.Inventory;
 using CryptoQuest.Gameplay.Inventory.Helper;
 using CryptoQuest.Item;
+using CryptoQuest.Item.Consumable;
 using CryptoQuest.System;
 using UnityEngine;
 using UnityEngine.InputSystem;

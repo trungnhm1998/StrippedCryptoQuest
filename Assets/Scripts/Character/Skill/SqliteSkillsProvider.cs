@@ -7,7 +7,7 @@ using UnityEngine;
 #if UNITY_EDITOR || !UNITY_WEBGL || !PLATFORM_WEBGL
 #endif
 
-namespace CryptoQuest.Character
+namespace CryptoQuest.Character.Skill
 {
     public class SqliteSkillsProvider : MonoBehaviour, ISkillsProvider
     {

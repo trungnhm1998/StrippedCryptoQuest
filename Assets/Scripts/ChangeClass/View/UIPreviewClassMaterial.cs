@@ -1,6 +1,6 @@
 using System.Collections.Generic;
-using AssetReferenceSprite;
 using CryptoQuest.UI.Character;
+using CryptoQuest.UI.Extensions;
 using IndiGames.GameplayAbilitySystem.AttributeSystem;
 using TMPro;
 using UnityEngine;

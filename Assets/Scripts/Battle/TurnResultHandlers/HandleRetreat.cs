@@ -1,11 +1,10 @@
 ﻿using System.Collections;
 using CryptoQuest.Battle.Events;
-using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects;
 using TinyMessenger;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace CryptoQuest.Battle
+namespace CryptoQuest.Battle.TurnResultHandlers
 {
     public class HandleRetreat : MonoBehaviour
     {

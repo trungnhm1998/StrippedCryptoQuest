@@ -2,9 +2,9 @@ using System;
 using System.Collections.Generic;
 using CryptoQuest.AbilitySystem.Abilities;
 using CryptoQuest.Battle.Components;
+using CryptoQuest.Battle.Extensions;
+using CryptoQuest.Battle.ScriptableObjects;
 using CryptoQuest.Battle.UI.CommandDetail;
-using CryptoQuest.Gameplay.Battle.Core.Helper;
-using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data;
 using UnityEngine;
 
 namespace CryptoQuest.Battle.UI.SelectSkill

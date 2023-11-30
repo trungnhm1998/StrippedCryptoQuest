@@ -5,6 +5,7 @@ using CryptoQuest.Gameplay.Inventory.Currency;
 using CryptoQuest.Gameplay.Loot;
 using CryptoQuest.Gameplay.Reward.Events;
 using CryptoQuest.Item;
+using CryptoQuest.Item.Consumable;
 using CryptoQuest.Item.Equipment;
 using CryptoQuest.UI.Dialogs.RewardDialog;
 using UnityEngine;

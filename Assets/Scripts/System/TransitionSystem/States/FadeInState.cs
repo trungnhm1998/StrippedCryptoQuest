@@ -1,7 +1,4 @@
-using CryptoQuest.System.TransitionSystem;
-using CryptoQuest.System.TransitionSystem.States;
-
-namespace CryptoQuest.States
+namespace CryptoQuest.System.TransitionSystem.States
 {
     public class FadeInState : ITransitionState
     {

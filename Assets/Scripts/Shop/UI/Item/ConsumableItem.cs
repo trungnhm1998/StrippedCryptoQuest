@@ -1,4 +1,5 @@
 using CryptoQuest.Item;
+using CryptoQuest.Item.Consumable;
 using CryptoQuest.Shop.UI.Panels.PreviewCharacter;
 using CryptoQuest.UI.Menu;
 using UnityEngine;

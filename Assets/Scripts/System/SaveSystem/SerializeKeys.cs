@@ -1,4 +1,4 @@
-﻿namespace CryptoQuest.SaveSystem
+﻿namespace CryptoQuest.System.SaveSystem
 {
     public static class SerializeKeys
     {

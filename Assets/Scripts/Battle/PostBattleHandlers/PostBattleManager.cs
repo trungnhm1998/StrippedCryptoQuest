@@ -6,7 +6,7 @@ using IndiGames.Core.SceneManagementSystem.ScriptableObjects;
 using IndiGames.Core.UI;
 using UnityEngine;
 
-namespace CryptoQuest.Battle
+namespace CryptoQuest.Battle.PostBattleHandlers
 {
     /// <summary>
     /// This should live on gameplay manager and wait until battle scene finished clean up

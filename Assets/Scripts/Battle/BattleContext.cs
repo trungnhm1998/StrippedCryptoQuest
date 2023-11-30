@@ -3,7 +3,6 @@ using System.Linq;
 using CryptoQuest.AbilitySystem;
 using CryptoQuest.AbilitySystem.Attributes;
 using CryptoQuest.Battle.Components;
-using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects;
 using CryptoQuest.Gameplay.Encounter;
 using CryptoQuest.Gameplay.PlayerParty;
 using CryptoQuest.System;

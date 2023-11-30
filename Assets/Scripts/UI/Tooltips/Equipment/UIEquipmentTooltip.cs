@@ -1,5 +1,5 @@
 ﻿using CryptoQuest.AbilitySystem.Attributes;
-using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data;
+using CryptoQuest.Battle.ScriptableObjects;
 using CryptoQuest.Item.Equipment;
 using CryptoQuest.UI.Extensions;
 using TMPro;
@@ -34,7 +34,7 @@ namespace CryptoQuest.UI.Tooltips.Equipment
 
         protected IEquipment _equipment;
 
-        [SerializeField] protected string _levelTextFormat = "Lv. {0}/<color=\"grey\">{1}"; 
+        [SerializeField] protected string _levelTextFormat = "Lv. {0}/<color=\"grey\">{1}";
 
         protected override bool CanShow()
         {
@@ -46,7 +46,7 @@ namespace CryptoQuest.UI.Tooltips.Equipment
             _equipment = provider.Equipment;
             return true;
         }
-        
+
         protected override void Init()
         {
             SetupInfo();

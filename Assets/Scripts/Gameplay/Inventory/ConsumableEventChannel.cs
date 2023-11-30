@@ -1,4 +1,5 @@
 ﻿using CryptoQuest.Item;
+using CryptoQuest.Item.Consumable;
 using IndiGames.Core.Events.ScriptableObjects;
 using UnityEngine;
 

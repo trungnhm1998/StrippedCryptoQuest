@@ -1,11 +1,6 @@
-using CryptoQuest.Item;
-using CryptoQuest.Item.Equipment;
 using IndiGames.Core.Database;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 
-namespace CryptoQuest.Item
+namespace CryptoQuest.Item.Consumable
 {
     public class ConsumableDatabase : AssetReferenceDatabaseT<string, ConsumableSO>
     {

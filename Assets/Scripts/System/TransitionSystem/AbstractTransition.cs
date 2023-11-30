@@ -1,7 +1,6 @@
-using CryptoQuest.System.TransitionSystem;
 using UnityEngine;
 
-namespace CryptoQuest
+namespace CryptoQuest.System.TransitionSystem
 {
     public abstract class AbstractTransition : ScriptableObject
     {

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using CryptoQuest.AbilitySystem.Abilities;
 using CryptoQuest.Battle.Components;
 using CryptoQuest.Item;
+using CryptoQuest.Item.Consumable;
 using CryptoQuest.System;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
 using UnityEngine;

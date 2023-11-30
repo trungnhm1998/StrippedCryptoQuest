@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace TownTransfer
+namespace CryptoQuest.Menus.TownTransfer
 {
     public class TownTransferLocations : ScriptableObject
     {

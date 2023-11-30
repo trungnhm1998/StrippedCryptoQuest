@@ -1,4 +1,5 @@
 using CryptoQuest.SaveSystem;
+using CryptoQuest.System.SaveSystem;
 using UnityEditor;
 
 namespace CryptoQuestEditor.System.QuestSystem
