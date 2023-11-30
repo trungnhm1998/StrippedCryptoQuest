@@ -1,7 +1,7 @@
 using System.Collections.Generic;
-using CryptoQuest.Core;
 using CryptoQuest.Ranch.UI;
 using CryptoQuest.Sagas.Objects;
+using IndiGames.Core.Events;
 using TinyMessenger;
 using UnityEngine;
 

@@ -1,7 +1,7 @@
 using System;
-using CryptoQuest.Core;
 using CryptoQuest.System.Sceneload;
 using IndiGames.Core.EditorTools.Attributes.ReadOnlyAttribute;
+using IndiGames.Core.Events;
 using TinyMessenger;
 using UnityEngine;
 

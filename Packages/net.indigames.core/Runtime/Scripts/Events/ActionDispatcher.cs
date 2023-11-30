@@ -2,7 +2,7 @@
 using TinyMessenger;
 using UnityEngine;
 
-namespace CryptoQuest.Core
+namespace IndiGames.Core.Events
 {
     public class LogErrorHandler : ISubscriberErrorHandler
     {

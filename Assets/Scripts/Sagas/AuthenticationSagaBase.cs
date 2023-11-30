@@ -1,7 +1,7 @@
 ﻿using CryptoQuest.Actions;
-using CryptoQuest.Core;
 using CryptoQuest.Sagas.Objects;
 using CryptoQuest.UI.Actions;
+using IndiGames.Core.Events;
 using Newtonsoft.Json;
 using UnityEngine;
 

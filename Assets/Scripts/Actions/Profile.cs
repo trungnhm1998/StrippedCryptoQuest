@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
-using CryptoQuest.Core;
 using CryptoQuest.Sagas.Objects;
+using IndiGames.Core.Events;
 using Obj = CryptoQuest.Sagas.Objects;
 
 namespace CryptoQuest.Actions

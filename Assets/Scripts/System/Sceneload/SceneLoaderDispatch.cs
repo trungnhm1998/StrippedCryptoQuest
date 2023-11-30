@@ -1,5 +1,5 @@
 using System.Collections;
-using CryptoQuest.Core;
+using IndiGames.Core.Events;
 using IndiGames.Core.Events.ScriptableObjects;
 using UnityEngine;
 using UnityEngine.AddressableAssets;

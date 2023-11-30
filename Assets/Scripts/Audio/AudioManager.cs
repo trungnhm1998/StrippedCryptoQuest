@@ -1,7 +1,6 @@
 ﻿using CryptoQuest.Audio.AudioData;
 using CryptoQuest.Audio.AudioEmitters;
 using CryptoQuest.Audio.Settings;
-using CryptoQuest.Core;
 using System;
 using CryptoQuest.SaveSystem.Sagas;
 using UnityEngine;

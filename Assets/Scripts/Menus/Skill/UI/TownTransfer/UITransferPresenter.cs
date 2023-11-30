@@ -1,11 +1,11 @@
 using System.Collections;
 using CryptoQuest.Actions;
-using CryptoQuest.Core;
 using CryptoQuest.Input;
 using CryptoQuest.Map;
 using CryptoQuest.Menus.Item.States;
 using CryptoQuest.Menus.TownTransfer;
 using CryptoQuest.TownTransfer.UI;
+using IndiGames.Core.Events;
 using IndiGames.Core.Events.ScriptableObjects;
 using TinyMessenger;
 using UnityEngine;

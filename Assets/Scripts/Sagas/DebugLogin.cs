@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Net;
 using CryptoQuest.Actions;
-using CryptoQuest.Core;
 using CryptoQuest.Networking;
 using CryptoQuest.System;
 using Newtonsoft.Json;
@@ -10,6 +9,7 @@ using TinyMessenger;
 using UniRx;
 using UnityEngine;
 using CryptoQuest.API;
+using IndiGames.Core.Events;
 using APIProfile = CryptoQuest.API.Profile;
 
 namespace CryptoQuest.Sagas

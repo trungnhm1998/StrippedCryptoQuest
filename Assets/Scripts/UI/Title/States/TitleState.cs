@@ -1,5 +1,5 @@
 using CryptoQuest.Actions;
-using CryptoQuest.Core;
+using IndiGames.Core.Events;
 using TinyMessenger;
 
 namespace CryptoQuest.UI.Title.States

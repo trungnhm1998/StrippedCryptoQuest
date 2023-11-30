@@ -1,5 +1,4 @@
-﻿using CryptoQuest.Core;
-using CryptoQuest.Networking;
+﻿using CryptoQuest.Networking;
 using CryptoQuest.Networking.Actions;
 using CryptoQuest.API;
 using CryptoQuest.System;
@@ -7,6 +6,7 @@ using Newtonsoft.Json;
 using System;
 using System.Net;
 using CryptoQuest.Actions;
+using IndiGames.Core.Events;
 using TinyMessenger;
 using UnityEngine;
 using UniRx;

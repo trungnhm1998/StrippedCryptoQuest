@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using CryptoQuest.Core;
 using CryptoQuest.Gameplay.PlayerParty;
 using CryptoQuest.Tavern.UI;
+using IndiGames.Core.Events;
 using TinyMessenger;
 using UnityEngine;
 using Obj = CryptoQuest.Sagas.Objects;

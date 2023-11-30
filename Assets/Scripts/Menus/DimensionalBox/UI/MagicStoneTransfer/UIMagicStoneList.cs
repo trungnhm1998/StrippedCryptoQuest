@@ -1,10 +1,10 @@
 using System;
 using System.Collections.Generic;
-using CryptoQuest.Core;
 using CryptoQuest.Events;
 using CryptoQuest.Menus.DimensionalBox.States.EquipmentsTransfer;
 using CryptoQuest.Menus.DimensionalBox.States.MagicStoneTransfer;
 using CryptoQuest.Sagas.Objects;
+using IndiGames.Core.Events;
 using TinyMessenger;
 using UnityEngine;
 using UnityEngine.EventSystems;

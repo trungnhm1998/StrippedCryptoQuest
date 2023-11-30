@@ -1,10 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Net;
-using CryptoQuest.Core;
 using CryptoQuest.Networking;
 using CryptoQuest.System;
 using CryptoQuest.UI.Actions;
+using IndiGames.Core.Events;
 using UniRx;
 using UnityEngine;
 using APIChangeClass = CryptoQuest.API.ChangeClass;

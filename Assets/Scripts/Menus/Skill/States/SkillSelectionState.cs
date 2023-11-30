@@ -3,9 +3,9 @@ using System.Linq;
 using CryptoQuest.AbilitySystem.Abilities;
 using CryptoQuest.Battle.Components;
 using CryptoQuest.Battle.UI.Logs;
-using CryptoQuest.Core;
 using CryptoQuest.Input;
 using CryptoQuest.Menus.Skill.UI;
+using IndiGames.Core.Events;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
 using UnityEngine.EventSystems;
 

@@ -1,7 +1,6 @@
 using System;
 using System.Net;
 using CommandTerminal;
-using CryptoQuest.Core;
 using CryptoQuest.Networking;
 using CryptoQuest.System;
 using CryptoQuest.System.Cheat;
@@ -12,6 +11,7 @@ using Newtonsoft.Json;
 using System.Collections.Generic;
 using CryptoQuest.Sagas.Objects;
 using CryptoQuest.API;
+using IndiGames.Core.Events;
 
 namespace CryptoQuest.Item.Equipment.Cheat
 {

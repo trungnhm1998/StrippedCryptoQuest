@@ -2,11 +2,11 @@ using System.Collections.Generic;
 using System.Linq;
 using CryptoQuest.Actions;
 using CryptoQuest.Character.Hero;
-using CryptoQuest.Core;
 using CryptoQuest.Gameplay.Inventory;
 using CryptoQuest.Gameplay.PlayerParty;
 using CryptoQuest.Item.Equipment;
 using CryptoQuest.System;
+using IndiGames.Core.Events;
 using UnityEngine;
 
 namespace CryptoQuest.ChangeClass

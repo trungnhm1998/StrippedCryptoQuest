@@ -1,4 +1,4 @@
-﻿using CryptoQuest.Core;
+﻿using IndiGames.Core.Events;
 using IndiGames.Core.Events.ScriptableObjects;
 using IndiGames.Core.SceneManagementSystem;
 using IndiGames.Core.SceneManagementSystem.Events.ScriptableObjects;

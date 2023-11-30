@@ -1,8 +1,8 @@
 ﻿using CryptoQuest.Actions;
-using CryptoQuest.Core;
 using CryptoQuest.SaveSystem;
 using CryptoQuest.System;
 using CryptoQuest.System.SaveSystem;
+using IndiGames.Core.Events;
 using TinyMessenger;
 
 namespace CryptoQuest.UI.Title.States

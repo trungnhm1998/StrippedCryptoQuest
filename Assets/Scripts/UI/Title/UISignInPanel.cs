@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using CryptoQuest.Actions;
-using CryptoQuest.Core;
 using CryptoQuest.Networking;
+using IndiGames.Core.Events;
 using TinyMessenger;
 using TMPro;
 using UnityEngine;
