@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using CryptoQuest.Gameplay.Inventory;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Pool;
@@ -42,7 +43,8 @@ namespace CryptoQuest.Menus.Beast.UI
             InitBeastList();
 
             if (_scrollRect.content.childCount == 0) return;
-            EventSystem.current.SetSelectedGameObject(_scrollRect.content.GetChild(0).gameObject);
+            DOVirtual.DelayedCall(0,
+                () => { EventSystem.current.SetSelectedGameObject(_scrollRect.content.GetChild(0).gameObject); });
         }
 
         private void InitBeastList()

@@ -6,7 +6,7 @@ using TMPro;
 using UnityEditor;
 using UnityEngine;
 
-namespace CryptoQuest.Tests.Editor.Beast
+namespace CryptoQuest.Tests.Runtime.Beast
 {
     [TestFixture]
     public class UIBeastTests
@@ -15,7 +15,7 @@ namespace CryptoQuest.Tests.Editor.Beast
         [TestCase("Dragon")]
         public void Init_WithBeast_NameCorrect(string name)
         {
-            var prefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/UI/Menu/Beast/Beast.prefab");
+            var prefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/UI/Menu/Beast/UIBeast.prefab");
 
             Assert.IsNotNull(prefab);
 

@@ -1,7 +1,7 @@
 ﻿using CryptoQuest.AbilitySystem.Abilities;
 using CryptoQuest.AbilitySystem.Attributes;
 using CryptoQuest.Menus.Beast.UI;
-using CryptoQuest.Tests.Editor.Beast.Builder;
+using CryptoQuest.Tests.Runtime.Beast.Builder;
 using NUnit.Framework;
 using UnityEditor;
 using UnityEngine;
@@ -9,7 +9,7 @@ using UnityEngine.Localization;
 using UnityEngine.Localization.Components;
 using UnityEngine.UI;
 
-namespace CryptoQuest.Tests.Editor.Beast
+namespace CryptoQuest.Tests.Runtime.Beast
 {
     [TestFixture]
     public class UIBeastDetailsTests
@@ -46,22 +46,44 @@ namespace CryptoQuest.Tests.Editor.Beast
             _uiBeastDetails.FillUI(A.Beast.Build());
 
             var panelSO = new SerializedObject(_uiBeastDetails);
-            var beastPassiveSkill = panelSO.FindProperty("_beastPassiveSkill").objectReferenceValue as LocalizeStringEvent;
+            var beastPassiveSkill =
+                panelSO.FindProperty("_beastPassiveSkill").objectReferenceValue as LocalizeStringEvent;
 
             Assert.AreEqual(new LocalizedString(), beastPassiveSkill.StringReference);
         }
-        
+
         [Test]
         public void FillUI_WithPassive_ShouldShowsPassive()
         {
-            var passive = AssetDatabase.LoadAssetAtPath<PassiveAbility>("Assets/ScriptableObjects/Character/Skills/Conditionals/3001.asset");
+            var passive =
+                AssetDatabase.LoadAssetAtPath<PassiveAbility>(
+                    "Assets/ScriptableObjects/Character/Skills/Conditionals/3001.asset");
             _uiBeastDetails.FillUI(A.Beast.WithPassive(passive).Build());
 
             var panelSO = new SerializedObject(_uiBeastDetails);
-            var beastPassiveSkill = panelSO.FindProperty("_beastPassiveSkill").objectReferenceValue as LocalizeStringEvent;
+            var beastPassiveSkill =
+                panelSO.FindProperty("_beastPassiveSkill").objectReferenceValue as LocalizeStringEvent;
 
             Assert.AreEqual(passive.Description, beastPassiveSkill.StringReference);
         }
+
+        [Test]
+        public void FillUI_WithAnotherBeast_ShouldUpdateBeastUI()
+        {
+            var passive =
+                AssetDatabase.LoadAssetAtPath<PassiveAbility>(
+                    "Assets/ScriptableObjects/Character/Skills/Conditionals/3001.asset");
+            _uiBeastDetails.FillUI(A.Beast.WithPassive(passive).Build());
+
+            var passiveName = _uiBeastDetails.transform.Find("Detail/Panel/Passives/Panel/Text (Legacy)")
+                .GetComponent<LocalizeStringEvent>();
+            Assert.AreEqual(passive.Description, passiveName.StringReference);
+
+            passive = AssetDatabase.LoadAssetAtPath<PassiveAbility>(
+                "Assets/ScriptableObjects/Character/Skills/Conditionals/3005.asset");
+            _uiBeastDetails.FillUI(A.Beast.WithPassive(passive).Build());
+
+            Assert.AreEqual(passive.Description, passiveName.StringReference);
+        }
     }
-    
 }

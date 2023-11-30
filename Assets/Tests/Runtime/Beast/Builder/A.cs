@@ -1,4 +1,4 @@
-﻿namespace CryptoQuest.Tests.Editor.Beast.Builder
+﻿namespace CryptoQuest.Tests.Runtime.Beast.Builder
 {
     public static class A
     {
