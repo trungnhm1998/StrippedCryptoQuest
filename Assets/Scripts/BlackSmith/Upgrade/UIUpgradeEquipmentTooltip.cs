@@ -7,6 +7,8 @@ namespace CryptoQuest.BlackSmith.Upgrade
     {
         [SerializeField] private EquipmentDetailsPresenter _equipmentProvider;
 
+        public string LevelText => _levelTextFormat;
+
         protected override bool CanShow()
         {
             if (_equipmentProvider == null) return false;
