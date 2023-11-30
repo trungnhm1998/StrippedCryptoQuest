@@ -94,8 +94,7 @@ namespace CryptoQuest.Quest.Components
         {
             foreach (var info in _currentQuestInfos)
             {
-                if (info is not IDisposable disposable) continue;
-                disposable.Dispose();
+                info.Release();
             }
         }
 
@@ -111,6 +110,7 @@ namespace CryptoQuest.Quest.Components
             {
                 Debug.Log($"<color=green>QuestManager::TriggerQuest::Triggered: {questData.QuestName}</color>");
                 questInfo.TriggerQuest();
+                questInfo.Release();
                 _currentQuestInfos.Remove(questInfo);
                 MarkCacheDirty();
             }
