@@ -39,7 +39,7 @@ namespace CryptoQuest.BlackSmith.Upgrade.State
             fsm.RequestStateChange(Contants.SELECT_UPGRADE_STATE);
         }
 
-        private void ConfiguratedUpgrade(IUpgradeEquipment equipment, int level)
+        private void ConfiguratedUpgrade(IUpgradeEquipment equipment)
         {
             fsm.RequestStateChange(Contants.CONFIRM_UPGRADE_STATE);
         }

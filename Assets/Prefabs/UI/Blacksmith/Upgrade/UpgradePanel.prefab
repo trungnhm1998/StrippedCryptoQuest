@@ -1196,6 +1196,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c79bb87a6a808da45b9b24bc087a57eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _costDatabase: {fileID: 11400000, guid: d76ef102b0d3f314e9e7e88f5d9e069f, type: 2}
 --- !u!114 &4106762205832301498
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1269,8 +1270,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ed8270337fbec140ac135d9c0f3b18b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _configPresenter: {fileID: 1347424007694750477}
+  _confirmUI: {fileID: 3587290834517370707}
   _dialogManager: {fileID: 0}
-  _confirmUI: {fileID: 6118874024736596016}
+  _confirmUIObject: {fileID: 6118874024736596016}
   _confirmUpgradeMessage:
     m_TableReference:
       m_TableCollectionName: GUID:0b0d3f62f53cf574db976df270f91498
@@ -4017,6 +4020,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 724a0f3e93cea624b80bcfb55fd67d49, type: 3}
+--- !u!114 &3587290834517370707 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3816538975276873619, guid: 724a0f3e93cea624b80bcfb55fd67d49, type: 3}
+  m_PrefabInstance: {fileID: 378179205640458432}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 281bfa4b6680763448eca472d8e90bc1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &9182079809303670765 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8814321876109590317, guid: 724a0f3e93cea624b80bcfb55fd67d49, type: 3}

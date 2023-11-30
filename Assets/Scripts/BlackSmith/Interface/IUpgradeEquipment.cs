@@ -1,4 +1,5 @@
 
+using CryptoQuest.BlackSmith.ScriptableObjects;
 using CryptoQuest.Item;
 using CryptoQuest.Item.Equipment;
 using TMPro;
@@ -15,7 +16,8 @@ namespace CryptoQuest.BlackSmith.Interface
         Sprite Icon { get; }
         Sprite Rarity { get; }
         AssetReferenceT<Sprite> Illustration { get; }
-        float Cost { get; }
         int Level { get;}
+        
+        float GetCost(int currentLevel, int levelToUpgrade);
     }
 }

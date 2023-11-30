@@ -10,7 +10,7 @@ namespace CryptoQuest.BlackSmith.Upgrade
 {
     public class ConfigUpgradePresenter : MonoBehaviour
     {
-        public event Action<IUpgradeEquipment, int> ConfiguratedUpgrade;
+        public event Action<IUpgradeEquipment> ConfiguratedUpgrade;
 
         [SerializeField] private WalletSO _wallet;
         [SerializeField] private CurrencySO _currencySO;
@@ -24,6 +24,13 @@ namespace CryptoQuest.BlackSmith.Upgrade
         [SerializeField] private LocalizedString _upgradeMessage;
 
         private IUpgradeEquipment _selectedEquipment;
+        public IUpgradeEquipmentValidator _upgradeValidator = new UpgradeEquipmentValidator();
+
+        public int LevelToUpgrade { get; private set; }
+        public float GoldNeeded { get; private set; }
+
+        private bool IsUpgradeValid => _upgradeValidator.IsEnoughGoldToUpgrade(_selectedEquipment,
+            _wallet[_currencySO].Amount, LevelToUpgrade);
 
         private void OnDisable()
         {
@@ -45,10 +52,11 @@ namespace CryptoQuest.BlackSmith.Upgrade
         public void Show()
         {
             _selectedEquipment = _equipmentListPresenter.SelectedEquipment;
+            LevelToUpgrade = _selectedEquipment.Level;
 
             SetActiveUI(true);
-            InitUpgradeDetailUI();
             RegistEvents();
+            SetLevelToUpgrade(1);
             UpdateUIs();
 
             _dialogManager.Dialogue.SetMessage(_upgradeMessage).Show();
@@ -65,11 +73,6 @@ namespace CryptoQuest.BlackSmith.Upgrade
             _equipmentDetailsPresenter.ResetPreviews();
         }
 
-        private void InitUpgradeDetailUI()
-        {
-            _upgradeDetailsUI.SetupUI(_selectedEquipment, _wallet[_currencySO].Amount);
-        }
-
         private void SetActiveUI(bool value)
         {
             _configUIObject.SetActive(value);
@@ -80,18 +83,33 @@ namespace CryptoQuest.BlackSmith.Upgrade
             var dir = (int)direction.y;
             if (_selectedEquipment == null || dir == 0) return;
 
-            UpdateUIs(dir);
+            SetLevelToUpgrade(dir);
+            UpdateUIs();
         }
 
-        private void UpdateUIs(int modifyValue = 0)
+        private void SetLevelToUpgrade(int modifyValue = 0)
         {
-            _upgradeDetailsUI.UpdateValue(modifyValue, _selectedEquipment);
-            _equipmentDetailsPresenter.PreviewEquipmentAtLevel(_upgradeDetailsUI.LevelToUpgrade);
+            if (!_upgradeValidator.CanUpgrade(_selectedEquipment.Equipment, LevelToUpgrade + modifyValue))
+                return;
+
+            LevelToUpgrade += modifyValue;
+            GoldNeeded = _selectedEquipment.GetCost(_selectedEquipment.Level, LevelToUpgrade);
+        }
+
+        private void UpdateUIs()
+        {
+            _upgradeDetailsUI.SetupUI(LevelToUpgrade, GoldNeeded, IsUpgradeValid);
+            _equipmentDetailsPresenter.PreviewEquipmentAtLevel(LevelToUpgrade);
         }
 
         private void OnConfiguratedUpgrade()
         {
-            ConfiguratedUpgrade?.Invoke(_selectedEquipment, _upgradeDetailsUI.LevelToUpgrade);
+            if (!IsUpgradeValid)
+            {
+                Debug.LogWarning($"Not enough gold!");
+                return;
+            }
+            ConfiguratedUpgrade?.Invoke(_selectedEquipment);
         }
     }
 }

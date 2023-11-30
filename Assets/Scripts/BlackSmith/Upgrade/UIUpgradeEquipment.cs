@@ -15,7 +15,6 @@ namespace CryptoQuest.BlackSmith.Upgrade
 
         [SerializeField] private LocalizeStringEvent _displayName;
         [SerializeField] private Image _icon;
-        [SerializeField] private TextMeshProUGUI _cost;
         [SerializeField] private Image _selectedBackground;
         [SerializeField] private GameObject _confirmSelectedMark;
         [SerializeField] private GameObject _costObject;
@@ -35,7 +34,6 @@ namespace CryptoQuest.BlackSmith.Upgrade
         {
             UpgradeEquipment = equipment;
             _displayName.StringReference = equipment.DisplayName;
-            _cost.text = equipment.Cost.ToString();
             _icon.sprite = equipment.Icon;
 
             SetConfirmSelected(false);
