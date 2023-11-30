@@ -28,7 +28,7 @@ namespace CryptoQuest.Tests.Runtime.Networking
             envSo.FindProperty("_apiVersion").stringValue = "/v1";
             envSo.ApplyModifiedProperties();
             ServiceProvider.Provide(env);
-            
+
             _credentials = ScriptableObject.CreateInstance<Credentials>();
             var internalAuth = new GameObject().AddComponent<InternalAuthenticate>();
             var so = new SerializedObject(internalAuth);
@@ -43,7 +43,7 @@ namespace CryptoQuest.Tests.Runtime.Networking
             _debugLogin = new GameObject().AddComponent<DebugLogin>();
             yield return null;
         }
-        
+
         [UnityTest]
         public IEnumerator DebugLoginTest()
         {
