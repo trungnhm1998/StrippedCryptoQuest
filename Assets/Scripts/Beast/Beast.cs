@@ -15,7 +15,7 @@ namespace CryptoQuest.Beast
         CharacterClass Class { get; }
         int Id { get; }
         string Name { get; }
-        Sprite Image { get; set; }
+        BeastTypeSO Type { get; }
     }
 
     [Serializable]
