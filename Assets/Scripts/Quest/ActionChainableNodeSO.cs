@@ -1,24 +1,25 @@
 using System;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace CryptoQuest.Quest
 {
     public abstract class ActionChainableNodeSO : ScriptableObject
     {
-        public ActionChainableNodeSO nextActionChainableNode;
+        [field: SerializeField] public ActionChainableNodeSO NextActionChainableNode { get; protected set; }
 
         public abstract void Execute();
-        public static event Action Finished;
+        public static event Action<ActionChainableNodeSO> Finished;
 
         protected virtual void ExecuteNextNode()
         {
-            if (nextActionChainableNode == null)
+            if (NextActionChainableNode == null)
             {
-                Finished?.Invoke();
+                Finished?.Invoke(this);
                 return;
             }
 
-            nextActionChainableNode.Execute();
+            NextActionChainableNode.Execute();
         }
     }
 }

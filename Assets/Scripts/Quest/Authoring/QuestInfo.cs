@@ -18,6 +18,13 @@ namespace CryptoQuest.Quest.Authoring
         public abstract void FinishQuest();
         public abstract bool IsValid();
         public abstract void GiveQuest();
+
+        public void Release()
+        {
+            OnRelease();
+        }
+
+        protected virtual void OnRelease() { }
     }
 
     [Serializable]
@@ -28,6 +35,7 @@ namespace CryptoQuest.Quest.Authoring
         protected QuestInfo(TDef questDef) => _data = questDef;
         public override QuestSO BaseData => Data;
         protected QuestInfo() => _data = default(TDef);
+
         public override void TriggerQuest()
         {
             Debug.Log($"QuestSystem::Start Quest: <color=green>[{Data.QuestName}] - [{Data.EventName}]</color>");

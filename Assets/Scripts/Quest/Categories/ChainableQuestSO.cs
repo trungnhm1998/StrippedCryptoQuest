@@ -1,6 +1,6 @@
-using System;
 using CryptoQuest.Quest.Authoring;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 
 namespace CryptoQuest.Quest.Categories
@@ -8,14 +8,14 @@ namespace CryptoQuest.Quest.Categories
     [CreateAssetMenu(menuName = "QuestSystem/Quests/Chainable QuestSO", fileName = "ChainableQuest")]
     public class ChainableQuestSO : QuestSO
     {
-        public ActionChainableNodeSO actionChainableNode;
+        [field: SerializeField] public ActionChainableNodeSO NodeToComplete { get; private set; }
         private ChainableQuest _quest;
 
         public override QuestInfo CreateQuest()
             => new ChainableQuest(this);
     }
 
-    public class ChainableQuest : QuestInfo<ChainableQuestSO>, IDisposable
+    public class ChainableQuest : QuestInfo<ChainableQuestSO>
     {
         public ChainableQuest(ChainableQuestSO questDef) : base(questDef) { }
 
@@ -25,14 +25,16 @@ namespace CryptoQuest.Quest.Categories
             ActionChainableNodeSO.Finished += InternalFinishedQuest;
         }
 
-        private void InternalFinishedQuest()
+        private void InternalFinishedQuest(ActionChainableNodeSO actionChainableNodeSo)
         {
+            if (actionChainableNodeSo != Data.NodeToComplete) return;
             ActionChainableNodeSO.Finished -= InternalFinishedQuest;
             FinishQuest();
         }
 
-        public void Dispose()
+        protected override void OnRelease()
         {
+            base.OnRelease();
             ActionChainableNodeSO.Finished -= InternalFinishedQuest;
         }
     }
