@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.Localization;
 
-namespace CryptoQuest.Item
+namespace CryptoQuest.Item.Consumable
 {
     [Serializable]
     public class ConsumableInfo : ItemInfo<ConsumableSO>

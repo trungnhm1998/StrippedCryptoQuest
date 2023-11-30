@@ -1,7 +1,6 @@
 ﻿using CryptoQuest.AbilitySystem.Abilities;
 using CryptoQuest.Battle.Commands;
 using CryptoQuest.Battle.Events;
-using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects;
 using CryptoQuest.Gameplay.PlayerParty;
 using CryptoQuest.System;
 using TinyMessenger;

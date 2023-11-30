@@ -1,4 +1,5 @@
 using CryptoQuest.Events;
+using CryptoQuest.System.TransitionSystem;
 using UnityEditor;
 using UnityEngine;
 

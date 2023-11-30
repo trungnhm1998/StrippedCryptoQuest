@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace CryptoQuest
+namespace CryptoQuest.Gameplay.SafeZone
 {
     public class SafeZoneController : MonoBehaviour
     {

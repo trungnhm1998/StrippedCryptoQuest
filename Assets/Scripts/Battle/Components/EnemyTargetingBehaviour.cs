@@ -1,6 +1,5 @@
-﻿using CryptoQuest.Gameplay.Battle.Core.Helper;
-using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects;
-using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects.Data;
+﻿using CryptoQuest.Battle.Extensions;
+using CryptoQuest.Battle.ScriptableObjects;
 using UnityEngine;
 
 namespace CryptoQuest.Battle.Components

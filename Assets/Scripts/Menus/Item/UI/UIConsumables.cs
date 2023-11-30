@@ -3,6 +3,7 @@ using CryptoQuest.Gameplay.Inventory;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Type;
 using CryptoQuest.Item;
+using CryptoQuest.Item.Consumable;
 using CryptoQuest.System;
 using UnityEngine;
 using UnityEngine.UI;

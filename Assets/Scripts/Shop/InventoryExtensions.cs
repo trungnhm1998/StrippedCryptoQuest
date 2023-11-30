@@ -4,6 +4,7 @@ using CryptoQuest.Item;
 using CryptoQuest.Item.Equipment;
 using CryptoQuest.Shop.UI.Item;
 using System.Collections.Generic;
+using CryptoQuest.Item.Consumable;
 
 public static class InventoryExtensions
 {

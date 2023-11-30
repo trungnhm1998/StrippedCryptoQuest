@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace CryptoQuest.SaveSystem
+namespace CryptoQuest.System.SaveSystem
 {
     [Serializable]
     public class KeyValue

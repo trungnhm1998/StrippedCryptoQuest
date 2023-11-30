@@ -2,7 +2,7 @@
 using System.IO;
 using UnityEngine;
 
-namespace CryptoQuest.SaveSystem
+namespace CryptoQuest.System.SaveSystem
 {
     public static class FileManager
     {

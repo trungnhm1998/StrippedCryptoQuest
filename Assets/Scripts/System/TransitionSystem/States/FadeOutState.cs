@@ -1,5 +1,3 @@
-using CryptoQuest.States;
-
 namespace CryptoQuest.System.TransitionSystem.States
 {
     public class FadeOutState : ITransitionState

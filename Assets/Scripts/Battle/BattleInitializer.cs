@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using CryptoQuest.Battle.UI.CommandDetail;
 using CryptoQuest.Character.Enemy;
-using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects;
 using CryptoQuest.Gameplay.Battle.ScriptableObjects;
 using UnityEngine;
 

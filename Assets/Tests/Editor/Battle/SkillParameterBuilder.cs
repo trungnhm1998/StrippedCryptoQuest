@@ -1,4 +1,4 @@
-using CryptoQuest.Gameplay.Battle.Core;
+using CryptoQuest.AbilitySystem;
 
 namespace CryptoQuest.Tests.Editor.Battle
 {

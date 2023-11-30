@@ -1,6 +1,4 @@
-using CryptoQuest.System.TransitionSystem;
-
-namespace CryptoQuest.States
+namespace CryptoQuest.System.TransitionSystem.States
 {
     public class SpiralOutState : ITransitionState
     {

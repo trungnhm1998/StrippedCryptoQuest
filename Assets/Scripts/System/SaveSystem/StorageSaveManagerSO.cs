@@ -6,7 +6,7 @@ using UnityEngine;
 #if USE_FILE_SYSTEM
 #endif
 
-namespace CryptoQuest.SaveSystem
+namespace CryptoQuest.System.SaveSystem
 {
     public class StorageSaveManagerSO : SaveManagerSO
     {

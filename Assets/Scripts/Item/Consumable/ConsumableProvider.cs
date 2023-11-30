@@ -1,10 +1,8 @@
-using CryptoQuest.Item;
-using CryptoQuest.System;
 using System.Collections;
-using System.Collections.Generic;
+using CryptoQuest.System;
 using UnityEngine;
 
-namespace CryptoQuest
+namespace CryptoQuest.Item.Consumable
 {
     public interface IConsumableProvider
     {

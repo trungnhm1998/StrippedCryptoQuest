@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using CryptoQuest.AbilitySystem.Abilities;
 using CryptoQuest.Battle.Components;
 
-namespace CryptoQuest.Character
+namespace CryptoQuest.Character.Skill
 {
     public interface ISkillsProvider
     {

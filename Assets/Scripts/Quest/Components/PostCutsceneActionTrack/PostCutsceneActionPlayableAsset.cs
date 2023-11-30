@@ -1,12 +1,9 @@
 using System;
-using CryptoQuest.Quest.Actions;
-using CryptoQuest.System.CutsceneSystem.CustomTimelineTracks.PostCutsceneActionTrack;
 using UnityEngine;
 using UnityEngine.Playables;
-using UnityEngine.Serialization;
 using UnityEngine.Timeline;
 
-namespace CryptoQuest.System.CutsceneSystem.CustomTimelineTracks
+namespace CryptoQuest.Quest.Components.PostCutsceneActionTrack
 {
     [Serializable]
     public class PostCutsceneActionPlayableAsset : PlayableAsset, ITimelineClipAsset

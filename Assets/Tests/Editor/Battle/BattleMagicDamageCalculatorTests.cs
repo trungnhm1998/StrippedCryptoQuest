@@ -1,6 +1,5 @@
-using System;
+using CryptoQuest.AbilitySystem;
 using CryptoQuest.AbilitySystem.Executions;
-using CryptoQuest.Gameplay.Battle.Core;
 using NUnit.Framework;
 
 namespace CryptoQuest.Tests.Editor.Battle

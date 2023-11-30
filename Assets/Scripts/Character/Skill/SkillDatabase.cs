@@ -1,12 +1,10 @@
 ﻿using System;
 using CryptoQuest.AbilitySystem.Abilities;
 using IndiGames.Core.Database;
-#if UNITY_EDITOR
-    using UnityEditor;
+using UnityEditor;
 using UnityEngine.AddressableAssets;
-#endif
 
-namespace CryptoQuest.Character
+namespace CryptoQuest.Character.Skill
 {
     public class SkillDatabase : AssetReferenceDatabaseT<int, CastSkillAbility>
     {

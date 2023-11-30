@@ -2,6 +2,7 @@
 using System.Collections;
 using CryptoQuest.AbilitySystem.Abilities.Conditions;
 using CryptoQuest.Item;
+using CryptoQuest.Item.Consumable;
 using IndiGames.GameplayAbilitySystem.AbilitySystem;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.ScriptableObjects;
 using IndiGames.GameplayAbilitySystem.EffectSystem;

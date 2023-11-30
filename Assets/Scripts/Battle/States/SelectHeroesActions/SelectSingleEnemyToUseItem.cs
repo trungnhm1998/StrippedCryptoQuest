@@ -2,6 +2,7 @@
 using CryptoQuest.Battle.Components;
 using CryptoQuest.Battle.UI.CommandDetail;
 using CryptoQuest.Item;
+using CryptoQuest.Item.Consumable;
 
 namespace CryptoQuest.Battle.States.SelectHeroesActions
 {

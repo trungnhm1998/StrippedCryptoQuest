@@ -2,7 +2,7 @@ using CryptoQuest.Map;
 using UnityEngine;
 using UnityEngine.Localization;
 
-namespace TownTransfer
+namespace CryptoQuest.Menus.TownTransfer
 {
     public class TownTransferPath : MapPathSO
     {

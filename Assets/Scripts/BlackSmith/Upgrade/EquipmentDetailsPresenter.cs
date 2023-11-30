@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using AssetReferenceSprite;
 using CryptoQuest.Item.Equipment;
 using CryptoQuest.UI.Character;
 using CryptoQuest.UI.Tooltips.Equipment;

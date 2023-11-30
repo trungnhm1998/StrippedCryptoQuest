@@ -1,16 +1,12 @@
 using CryptoQuest.Actions;
 using CryptoQuest.Core;
-using CryptoQuest.Menu;
 using CryptoQuest.Networking;
 using CryptoQuest.System;
-using CryptoQuest.UI.Actions;
-using CryptoQuest.UI.Title;
 using CryptoQuest.UI.Title.States;
 using TinyMessenger;
 using UnityEngine;
-using UnityEngine.UI;
 
-namespace CryptoQuest
+namespace CryptoQuest.UI.Title
 {
     public class UIWalletButton : MonoBehaviour
     {

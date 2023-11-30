@@ -1,8 +1,7 @@
-using CryptoQuest.States;
-using CryptoQuest.System.TransitionSystem;
+using CryptoQuest.System.TransitionSystem.States;
 using UnityEngine;
 
-namespace CryptoQuest.TransitionTypes
+namespace CryptoQuest.System.TransitionSystem.TransitionTypes
 {
     [CreateAssetMenu(menuName = "Transition/Fade In")]
     public class FadeInSo : AbstractTransition

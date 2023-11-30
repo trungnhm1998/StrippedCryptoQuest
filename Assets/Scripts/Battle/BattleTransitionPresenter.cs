@@ -1,4 +1,5 @@
-﻿using CryptoQuest.UI.SpiralFX;
+﻿using CryptoQuest.System.TransitionSystem;
+using CryptoQuest.UI.SpiralFX;
 using UnityEngine;
 
 namespace CryptoQuest.Battle

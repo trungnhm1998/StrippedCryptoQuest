@@ -1,10 +1,10 @@
 using System;
 using CryptoQuest.Battle.Events;
 using CryptoQuest.Gameplay;
-using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects;
 using CryptoQuest.Gameplay.Encounter;
 using CryptoQuest.Gameplay.Reward.ScriptableObjects;
 using CryptoQuest.Input;
+using CryptoQuest.System.TransitionSystem;
 using CryptoQuest.UI.SpiralFX;
 using IndiGames.Core.Events.ScriptableObjects;
 using IndiGames.Core.SceneManagementSystem;

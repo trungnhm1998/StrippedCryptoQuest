@@ -1,11 +1,9 @@
 ﻿using CryptoQuest.Battle.Events;
-using CryptoQuest.Gameplay.Reward.Events;
 using IndiGames.Core.SceneManagementSystem;
 using IndiGames.Core.SceneManagementSystem.ScriptableObjects;
 using TinyMessenger;
-using UnityEngine;
 
-namespace CryptoQuest.Battle
+namespace CryptoQuest.Battle.PostBattleHandlers
 {
     public class EndBattleHandler : PostBattleManager
     {

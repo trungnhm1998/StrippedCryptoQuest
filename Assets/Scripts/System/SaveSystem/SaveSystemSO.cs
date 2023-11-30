@@ -1,9 +1,8 @@
 using System;
-using CryptoQuest.System;
 using Newtonsoft.Json;
 using UnityEngine;
 
-namespace CryptoQuest.SaveSystem
+namespace CryptoQuest.System.SaveSystem
 {
     [CreateAssetMenu(menuName = "Crypto Quest/SaveSystem/SaveSystemSO")]
     public class SaveSystemSO : ScriptableObject

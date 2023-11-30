@@ -1,4 +1,5 @@
 ﻿using System;
+using CryptoQuest.System.TransitionSystem;
 using UnityEngine;
 using UnityEngine.Playables;
 

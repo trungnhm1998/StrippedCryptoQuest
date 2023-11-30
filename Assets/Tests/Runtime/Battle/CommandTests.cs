@@ -6,7 +6,7 @@ using CryptoQuest.AbilitySystem.Executions;
 using CryptoQuest.Battle.Commands;
 using CryptoQuest.Battle.Components;
 using CryptoQuest.Battle.Events;
-using CryptoQuest.Gameplay.Battle.Core.Helper;
+using CryptoQuest.Battle.Extensions;
 using CryptoQuest.Tests.Runtime.Battle.Builder;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;

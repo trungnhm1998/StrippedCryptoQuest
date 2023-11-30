@@ -3,6 +3,7 @@ using System.Collections;
 using CryptoQuest.Battle;
 using CryptoQuest.Events;
 using CryptoQuest.Gameplay.Battle;
+using CryptoQuest.Gameplay.SafeZone;
 using UnityEngine;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using Random = UnityEngine.Random;

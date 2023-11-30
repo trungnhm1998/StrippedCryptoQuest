@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using CryptoQuest.Character;
+using CryptoQuest.Character.Skill;
 using CsvHelper;
 using CsvHelper.Configuration.Attributes;
 using UnityEditor;

@@ -1,4 +1,4 @@
-using CryptoQuest.States;
+using CryptoQuest.System.TransitionSystem.States;
 using IndiGames.Core.Events.ScriptableObjects;
 using UnityEngine;
 

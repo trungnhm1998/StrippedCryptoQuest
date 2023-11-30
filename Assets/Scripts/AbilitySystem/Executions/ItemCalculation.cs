@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using CryptoQuest.Gameplay.Battle.Core;
-using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
+﻿using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
 using IndiGames.GameplayAbilitySystem.EffectSystem;
 using IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects.EffectExecutionCalculation;
 using UnityEngine;

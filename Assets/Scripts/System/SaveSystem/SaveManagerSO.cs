@@ -1,6 +1,6 @@
 ﻿using IndiGames.Core.SaveSystem.ScriptableObjects;
 
-namespace CryptoQuest.SaveSystem
+namespace CryptoQuest.System.SaveSystem
 {
     public abstract class SaveManagerSO : SerializableScriptableObject
     {

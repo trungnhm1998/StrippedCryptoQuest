@@ -4,6 +4,7 @@ using CryptoQuest.Battle.UI.SelectHero;
 using CryptoQuest.Battle.UI.SelectItem;
 using CryptoQuest.Battle.UI.SelectSkill;
 using CryptoQuest.Item;
+using CryptoQuest.Item.Consumable;
 using UnityEngine;
 using UnityEngine.InputSystem;
 

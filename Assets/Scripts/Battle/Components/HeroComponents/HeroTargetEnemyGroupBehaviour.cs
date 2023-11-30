@@ -1,6 +1,4 @@
-﻿using CryptoQuest.AbilitySystem.Attributes;
-using CryptoQuest.Gameplay.Battle.Core.ScriptableObjects;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace CryptoQuest.Battle.Components.HeroComponents
 {

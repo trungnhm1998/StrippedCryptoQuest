@@ -2,6 +2,7 @@
 using System.Linq;
 using CryptoQuest.AbilitySystem.Abilities;
 using CryptoQuest.Character;
+using CryptoQuest.Character.Skill;
 using CryptoQuest.Core;
 using CryptoQuest.System;
 using TinyMessenger;

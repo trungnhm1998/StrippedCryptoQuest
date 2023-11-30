@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using CryptoQuest.Item;
+using CryptoQuest.Item.Consumable;
 using CryptoQuest.Item.Equipment;
 using UnityEngine;
 using ESlotType =

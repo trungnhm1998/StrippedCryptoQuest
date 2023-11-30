@@ -7,6 +7,7 @@ using CryptoQuest.AbilitySystem.Abilities;
 using CryptoQuest.System;
 using CryptoQuest.Gameplay.Inventory;
 using CryptoQuest.Battle.Events;
+using CryptoQuest.Item.Consumable;
 
 namespace CryptoQuest.Battle.Commands
 {

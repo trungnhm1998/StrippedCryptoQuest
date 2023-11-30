@@ -6,6 +6,7 @@ using CryptoQuest.Character.Enemy;
 using CryptoQuest.Gameplay.Inventory.Currency;
 using CryptoQuest.Gameplay.Loot;
 using CryptoQuest.Item;
+using CryptoQuest.Item.Consumable;
 using CsvHelper;
 using CsvHelper.Configuration;
 using UnityEditor;
