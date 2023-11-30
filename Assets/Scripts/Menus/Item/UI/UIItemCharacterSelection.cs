@@ -3,6 +3,7 @@ using CryptoQuest.Gameplay.PlayerParty;
 using CryptoQuest.Menus.Item.States;
 using CryptoQuest.System;
 using CryptoQuest.UI.Menu.Character;
+using IndiGames.Core.Common;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;

@@ -6,6 +6,7 @@ using CryptoQuest.Battle.Components;
 using CryptoQuest.Character.Hero.AvatarProvider;
 using CryptoQuest.Gameplay.PlayerParty;
 using CryptoQuest.System;
+using IndiGames.Core.Common;
 using IndiGames.Core.Events.ScriptableObjects;
 using UnityEngine;
 using UnityEngine.EventSystems;

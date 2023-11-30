@@ -8,6 +8,7 @@ using CryptoQuest.System;
 using CryptoQuest.Gameplay.Inventory;
 using CryptoQuest.Battle.Events;
 using CryptoQuest.Item.Consumable;
+using IndiGames.Core.Common;
 
 namespace CryptoQuest.Battle.Commands
 {

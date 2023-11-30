@@ -4,6 +4,7 @@ using IndiGames.Web3.Bridge;
 using Newtonsoft.Json;
 using System;
 using CryptoQuest.Actions;
+using IndiGames.Core.Common;
 using IndiGames.Core.Events;
 using UniRx;
 using UnityEngine;

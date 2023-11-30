@@ -7,6 +7,7 @@ using CryptoQuest.Shop.UI.Panels;
 using CryptoQuest.Shop.UI.ScriptableObjects;
 using CryptoQuest.Shop.UI.ShopStates;
 using CryptoQuest.System;
+using IndiGames.Core.Common;
 using IndiGames.Core.Events.ScriptableObjects;
 using UnityEngine;
 using UnityEngine.Localization;

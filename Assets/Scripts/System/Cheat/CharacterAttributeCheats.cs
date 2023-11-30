@@ -4,6 +4,7 @@ using UnityEditor;
 using System.Collections.Generic;
 using CommandTerminal;
 using CryptoQuest.Gameplay.PlayerParty;
+using IndiGames.Core.Common;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.Components;
 using UnityEngine;
 using CoreAttributeSO = IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects.AttributeScriptableObject;

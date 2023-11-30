@@ -2,6 +2,7 @@
 using CryptoQuest.Battle.Components;
 using CryptoQuest.Gameplay.Helper;
 using CryptoQuest.Sagas;
+using IndiGames.Core.Events;
 using UnityEngine;
 
 namespace CryptoQuest.Character.LevelSystem

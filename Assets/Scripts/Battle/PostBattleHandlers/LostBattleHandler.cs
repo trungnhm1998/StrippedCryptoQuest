@@ -4,6 +4,7 @@ using CryptoQuest.Battle.Events;
 using CryptoQuest.Gameplay.PlayerParty;
 using CryptoQuest.Map.CheckPoint;
 using CryptoQuest.System;
+using IndiGames.Core.Common;
 using IndiGames.Core.SceneManagementSystem;
 using IndiGames.Core.SceneManagementSystem.ScriptableObjects;
 using TinyMessenger;

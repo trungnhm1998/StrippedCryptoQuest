@@ -6,6 +6,7 @@ using CryptoQuest.API;
 using Newtonsoft.Json;
 using System;
 using CryptoQuest.System.SaveSystem;
+using IndiGames.Core.Common;
 using UniRx;
 using UnityEngine;
 

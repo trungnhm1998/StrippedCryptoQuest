@@ -9,6 +9,7 @@ using UnityEngine;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
 using CryptoQuest.Gameplay.Inventory;
 using CryptoQuest.Shop.UI.Item;
+using IndiGames.Core.Common;
 
 namespace CryptoQuest.Shop.UI.Panels.Item
 {

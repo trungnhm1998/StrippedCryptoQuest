@@ -1,6 +1,7 @@
 using CryptoQuest.System;
 using IndiGames.Core.Events.ScriptableObjects;
 using System.Linq;
+using IndiGames.Core.Common;
 using UnityEngine;
 
 namespace CryptoQuest.Map.CheckPoint

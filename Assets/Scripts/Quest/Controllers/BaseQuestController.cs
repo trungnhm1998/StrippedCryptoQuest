@@ -1,6 +1,6 @@
 ﻿using CryptoQuest.Quest.Components;
 using UnityEngine;
-using static CryptoQuest.System.ServiceProvider;
+using static IndiGames.Core.Common.ServiceProvider;
 
 namespace CryptoQuest.Quest.Controllers
 {

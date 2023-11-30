@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using CryptoQuest.AbilitySystem;
 using CryptoQuest.System;
+using IndiGames.Core.Common;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
 using IndiGames.GameplayAbilitySystem.TagSystem.ScriptableObjects;
 using UnityEngine;

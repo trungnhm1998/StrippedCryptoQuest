@@ -1,8 +1,7 @@
-﻿using IndiGames.Core.Events;
-using TinyMessenger;
+﻿using TinyMessenger;
 using UnityEngine;
 
-namespace CryptoQuest.Sagas
+namespace IndiGames.Core.Events
 {
     public abstract class SagaBase<TAction> : MonoBehaviour where TAction : ActionBase
     {

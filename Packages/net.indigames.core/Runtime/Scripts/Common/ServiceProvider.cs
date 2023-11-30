@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace CryptoQuest.System
+namespace IndiGames.Core.Common
 {
     /// <summary>
     /// Instead of using Event that could raise on multiple instances, I only want 1 instance 

@@ -7,6 +7,7 @@ using CryptoQuest.Gameplay.Inventory;
 using CryptoQuest.Gameplay.Inventory.Helper;
 using CryptoQuest.System;
 using CryptoQuest.UI.Common;
+using IndiGames.Core.Common;
 using UnityEngine;
 using UnityEngine.Localization;
 using UnityEngine.Localization.Components;

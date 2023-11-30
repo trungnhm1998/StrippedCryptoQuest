@@ -1,4 +1,5 @@
 using CryptoQuest.System;
+using IndiGames.Core.Common;
 using UnityEngine;
 
 namespace CryptoQuest.Item.MagicStone

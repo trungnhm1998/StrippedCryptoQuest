@@ -2,6 +2,7 @@ using System;
 using CryptoQuest.API;
 using CryptoQuest.Networking;
 using CryptoQuest.Sagas;
+using IndiGames.Core.Common;
 using IndiGames.Core.Events;
 using Newtonsoft.Json;
 using UniRx;

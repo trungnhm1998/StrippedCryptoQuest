@@ -7,6 +7,7 @@ using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
 using CryptoQuest.Gameplay.PlayerParty;
 using CryptoQuest.Input;
 using CryptoQuest.System;
+using IndiGames.Core.Common;
 using UnityEngine;
 using UnityEngine.EventSystems;
 

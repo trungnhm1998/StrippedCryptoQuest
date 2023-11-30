@@ -2,6 +2,7 @@
 using CryptoQuest.Gameplay.Inventory.Currency;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
 using CryptoQuest.Networking;
+using IndiGames.Core.Events;
 using UnityEngine;
 
 namespace CryptoQuest.Sagas.Profile
