@@ -17,6 +17,7 @@ namespace CryptoQuest.AbilitySystem.Attributes
         public static AttributeScriptableObject Vitality;
         public static AttributeScriptableObject Intelligence;
         public static AttributeScriptableObject CriticalRate;
+        public static AttributeScriptableObject Luck;
         public static AttributeScriptableObject FireAttack;
         public static AttributeScriptableObject WaterAttack;
         public static AttributeScriptableObject EarthAttack;
@@ -32,7 +33,6 @@ namespace CryptoQuest.AbilitySystem.Attributes
         public static AttributeScriptableObject LightResist;
         public static AttributeScriptableObject DarkResist;
 
-
         [SerializeField] private AttributeScriptableObject _maxHealth;
         [SerializeField] private AttributeScriptableObject _health;
         [SerializeField] private AttributeScriptableObject _mana;
@@ -45,6 +45,7 @@ namespace CryptoQuest.AbilitySystem.Attributes
         [SerializeField] private AttributeScriptableObject _criticalRate;
         [SerializeField] private AttributeScriptableObject _vitality;
         [SerializeField] private AttributeScriptableObject _intelligence;
+        [SerializeField] private AttributeScriptableObject _luck;
 
         [Header("Elemental attack Attribute")]
         [SerializeField] private AttributeScriptableObject _fireAttack;
@@ -94,6 +95,7 @@ namespace CryptoQuest.AbilitySystem.Attributes
             WoodResist = _woodResist;
             LightResist = _lightResist;
             DarkResist = _darkResist;
+            Luck = _luck;
         }
     }
 }
