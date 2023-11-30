@@ -4,8 +4,9 @@ using CryptoQuest.Character;
 using CryptoQuest.Character.Beast;
 using NSubstitute;
 using UnityEngine;
+using UnityEngine.Localization;
 
-namespace CryptoQuest.Tests.Editor.Beast.Builder
+namespace CryptoQuest.Tests.Runtime.Beast.Builder
 {
     public class BeastBuilder
     {
@@ -21,6 +22,7 @@ namespace CryptoQuest.Tests.Editor.Beast.Builder
         private BeastTypeSO _type;
         private PassiveAbility _passiveAbility;
         private int _level;
+        private LocalizedString _name = new();
 
         public BeastBuilder WithClass(CharacterClass characterClass)
         {
@@ -45,6 +47,12 @@ namespace CryptoQuest.Tests.Editor.Beast.Builder
             _level = level;
             return this;
         }
+        
+        public BeastBuilder WithName(LocalizedString name)
+        {
+            _name = name;
+            return this;
+        }
 
         public IBeast Build()
         {
@@ -54,6 +62,7 @@ namespace CryptoQuest.Tests.Editor.Beast.Builder
             // beast.Type.Returns(_type);
             beast.Passive.Returns(_passiveAbility);
             // beast.Level.Returns(_level);
+            beast.LocalizedName.Returns(_name);
             return beast;
         }
     }
