@@ -1,6 +1,4 @@
-﻿using CryptoQuest.Character.Beast;
-
-namespace CryptoQuest.Menus.Beast.UI
+﻿namespace CryptoQuest.Beast
 {
     public interface IBeastProvider
     {

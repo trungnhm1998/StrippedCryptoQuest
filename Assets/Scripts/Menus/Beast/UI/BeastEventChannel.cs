@@ -1,4 +1,4 @@
-﻿using CryptoQuest.Character.Beast;
+﻿using CryptoQuest.Beast;
 using IndiGames.Core.Events.ScriptableObjects;
 using UnityEngine;
 

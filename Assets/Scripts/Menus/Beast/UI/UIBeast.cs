@@ -1,4 +1,4 @@
-using CryptoQuest.Character.Beast;
+using CryptoQuest.Beast;
 using CryptoQuest.Menu;
 using TMPro;
 using UnityEngine;

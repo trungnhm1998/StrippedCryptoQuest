@@ -49,6 +49,8 @@ namespace IndiGames.Core.Database
             foreach (var map in _maps) _lookupTable.Add(map.Id, map.Data);
         }
 
+        private void OnValidate() => OnEnable();
+
         public Dictionary<TKey, AssetReferenceT<TSerializableObject>> CacheLookupTable => _lookupTable;
         private readonly Dictionary<TKey, AsyncOperationHandle<TSerializableObject>> _loadedData = new();
 

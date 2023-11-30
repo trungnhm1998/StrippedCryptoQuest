@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using CryptoQuest.Beast;
+using UnityEngine;
 using UnityEngine.EventSystems;
 
 namespace CryptoQuest.Menus.Beast.UI

@@ -1,7 +1,7 @@
 ﻿using CryptoQuest.AbilitySystem.Abilities;
 using CryptoQuest.AbilitySystem.Attributes;
+using CryptoQuest.Beast;
 using CryptoQuest.Character;
-using CryptoQuest.Character.Beast;
 using NSubstitute;
 using UnityEngine;
 using UnityEngine.Localization;

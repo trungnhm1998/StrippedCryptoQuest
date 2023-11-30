@@ -13,7 +13,7 @@ using Newtonsoft.Json;
 using UniRx;
 using UnityEngine;
 
-namespace CryptoQuest.Character.Beast.Cheat
+namespace CryptoQuest.Beast.Cheat
 {
     public class CreateDebugBeastCheat : MonoBehaviour, ICheatInitializer
     {

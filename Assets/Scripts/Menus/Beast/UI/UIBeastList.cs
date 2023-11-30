@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using CryptoQuest.Gameplay.Inventory;
+using CryptoQuest.Beast;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -24,7 +24,6 @@ namespace CryptoQuest.Menus.Beast.UI
             _beastUIPool ??= new ObjectPool<UIBeast>(OnCreate, OnGet, OnRelease, OnDestroyBeast);
 
         private List<UIBeast> _beastUIs = new();
-        private List<Character.Beast.Beast> _beasts = new();
 
         private float _verticalOffset;
 
@@ -38,7 +37,6 @@ namespace CryptoQuest.Menus.Beast.UI
 
         private void OnEnable()
         {
-            _beasts = beastInventory.OwnedBeasts;
             CleanUpScrollView();
             InitBeastList();
 
@@ -49,7 +47,7 @@ namespace CryptoQuest.Menus.Beast.UI
 
         private void InitBeastList()
         {
-            foreach (var beast in _beasts)
+            foreach (var beast in beastInventory.OwnedBeasts)
             {
                 var beastUI = BeastUIPool.Get();
                 beastUI.Init(beast);
