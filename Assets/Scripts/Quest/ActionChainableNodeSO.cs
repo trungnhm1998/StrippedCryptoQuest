@@ -9,7 +9,6 @@ namespace CryptoQuest.Quest
 
         public abstract void Execute();
         public static event Action Finished;
-        public static event Action Failed;
 
         protected virtual void ExecuteNextNode()
         {
@@ -20,11 +19,6 @@ namespace CryptoQuest.Quest
             }
 
             nextActionChainableNode.Execute();
-        }
-
-        protected void OnQuestFailed()
-        {
-            Failed?.Invoke();
         }
     }
 }
