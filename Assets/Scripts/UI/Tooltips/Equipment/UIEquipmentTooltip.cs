@@ -34,7 +34,7 @@ namespace CryptoQuest.UI.Tooltips.Equipment
 
         protected IEquipment _equipment;
 
-        [SerializeField] private string _levelTextFormat = "Lv. {0}/<color=\"grey\">{1}"; 
+        [SerializeField] protected string _levelTextFormat = "Lv. {0}/<color=\"grey\">{1}"; 
 
         protected override bool CanShow()
         {

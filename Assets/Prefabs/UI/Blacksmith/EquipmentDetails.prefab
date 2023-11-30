@@ -44,6 +44,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 272189123157795501, guid: 68fa9834a37c90148aac63c770e8519a, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 717830783245761502, guid: 68fa9834a37c90148aac63c770e8519a, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -560,12 +564,16 @@ PrefabInstance:
     - {fileID: 5838068854252406577, guid: 68fa9834a37c90148aac63c770e8519a, type: 3}
     - {fileID: 6800441837625412672, guid: 68fa9834a37c90148aac63c770e8519a, type: 3}
     - {fileID: 3158770084019517833, guid: 68fa9834a37c90148aac63c770e8519a, type: 3}
+    - {fileID: 272189123157795501, guid: 68fa9834a37c90148aac63c770e8519a, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 5012052557537027967, guid: 68fa9834a37c90148aac63c770e8519a, type: 3}
       insertIndex: -1
       addedObject: {fileID: 7727696134845904435}
+    - targetCorrespondingSourceObject: {fileID: 5012052557537027967, guid: 68fa9834a37c90148aac63c770e8519a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4549688552139566898}
   m_SourcePrefab: {fileID: 100100000, guid: 68fa9834a37c90148aac63c770e8519a, type: 3}
 --- !u!1 &1674550605588601638 stripped
 GameObject:
@@ -598,7 +606,23 @@ MonoBehaviour:
   _passiveSkillsContainer: {fileID: 6341927884170707532}
   _conditionalSkillPrefab: {fileID: 1453190205383352797, guid: 7c71ddfe5aa78074a89dd4752998b27c, type: 3}
   _conditionalSkillsContainer: {fileID: 8757444411277211210}
+  _levelTextFormat: Lv. {0}/<color="grey">{1}
   _equipmentProvider: {fileID: 0}
+--- !u!114 &4549688552139566898
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1674550605588601638}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 66515588138129f489d58271950f4c55, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _increaseColor: {r: 0.19215687, g: 1, b: 0.78039217, a: 1}
+  _upgradeUI: {fileID: 7727696134845904435}
+  _levelText: {fileID: 2994048157711035332}
 --- !u!114 &2309174913955472924 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8266506100629314117, guid: 68fa9834a37c90148aac63c770e8519a, type: 3}

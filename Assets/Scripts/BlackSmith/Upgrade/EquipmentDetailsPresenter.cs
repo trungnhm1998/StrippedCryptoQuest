@@ -16,6 +16,7 @@ namespace CryptoQuest.BlackSmith.Upgrade
     public class EquipmentDetailsPresenter : MonoBehaviour, ITooltipEquipmentProvider
     {
         [SerializeField] private UIUpgradeEquipmentTooltip _equipmentTooltip;
+        [SerializeField] private UIPreviewUpgradeLevel _previewLevelUI;
         [SerializeField] private AttributeConfigMapping _attributeConfigMapping;
 
         private Dictionary<AttributeWithValue, UIPreviewableAttribute> _attributePreviewUIs = new();
@@ -29,6 +30,7 @@ namespace CryptoQuest.BlackSmith.Upgrade
             SetActiveTooltip(false);
             SetActiveTooltip(true);
             SetupPreviewerUIs();
+            _previewLevelUI.SetCurrentLevel(Equipment.Level, Equipment.Data.MaxLevel);
         }
 
         private void SetActiveTooltip(bool value)
@@ -45,6 +47,8 @@ namespace CryptoQuest.BlackSmith.Upgrade
                 _attributePreviewUIs.TryGetValue(attribute, out var previewUI);
                 previewUI.SetPreviewValue(newValue);
             }
+
+            _previewLevelUI.SetPreviewLevel(level, Equipment.Data.MaxLevel);
         }
 
         public void ResetPreviews()
@@ -53,6 +57,8 @@ namespace CryptoQuest.BlackSmith.Upgrade
             {
                 ui.ResetPreviewUI();
             }
+
+            _previewLevelUI.ResetPreviewUI();
         }
 
         private void SetupPreviewerUIs()
