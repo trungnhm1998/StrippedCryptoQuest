@@ -21,25 +21,19 @@ namespace CryptoQuest.Battle.Components
         #region GAS
 
         private AbilitySystemBehaviour _gas;
-        public AttributeSystemBehaviour AttributeSystem => _gas.AttributeSystem;
-        public EffectSystemBehaviour GameplayEffectSystem => _gas.EffectSystem;
-        public AbilitySystemBehaviour AbilitySystem => _gas;
+        public AttributeSystemBehaviour AttributeSystem => AbilitySystem.AttributeSystem;
+        public EffectSystemBehaviour GameplayEffectSystem => AbilitySystem.EffectSystem;
+        public AbilitySystemBehaviour AbilitySystem => _gas ??= GetComponent<AbilitySystemBehaviour>();
 
         #endregion
 
         private readonly Dictionary<Type, object> _cachedComponents = new();
         private ITargeting _targetComponent;
-        public ITargeting Targeting => _targetComponent;
+        public ITargeting Targeting => _targetComponent ??= GetComponent<ITargeting>();
         private Elemental _element;
         public Elemental Element => _element;
         public abstract string DisplayName { get; }
         public abstract LocalizedString LocalizedName { get; }
-
-        protected virtual void Awake()
-        {
-            _targetComponent = GetComponent<ITargeting>();
-            _gas = GetComponent<AbilitySystemBehaviour>();
-        }
 
         public void Init(Elemental element)
         {
@@ -92,7 +86,7 @@ namespace CryptoQuest.Battle.Components
 
             return result;
         }
-        
+
         public new T GetComponent<T>() where T : class
         {
             var type = typeof(T);
