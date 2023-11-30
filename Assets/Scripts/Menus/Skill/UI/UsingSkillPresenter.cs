@@ -2,6 +2,7 @@
 using CryptoQuest.Battle.Components;
 using CryptoQuest.Gameplay.PlayerParty;
 using CryptoQuest.System;
+using IndiGames.Core.Common;
 using UnityEngine;
 
 namespace CryptoQuest.Menus.Skill.UI

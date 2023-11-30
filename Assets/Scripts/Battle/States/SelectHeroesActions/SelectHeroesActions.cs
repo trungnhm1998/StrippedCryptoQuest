@@ -6,6 +6,7 @@ using CryptoQuest.Battle.Components;
 using CryptoQuest.Battle.UI.SelectCommand;
 using CryptoQuest.Gameplay.PlayerParty;
 using CryptoQuest.System;
+using IndiGames.Core.Common;
 using UnityEngine;
 
 namespace CryptoQuest.Battle.States.SelectHeroesActions

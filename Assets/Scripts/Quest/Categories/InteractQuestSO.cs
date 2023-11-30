@@ -5,6 +5,7 @@ using CryptoQuest.Quest.Components;
 using CryptoQuest.Quest.Controllers;
 using CryptoQuest.Quest.Events;
 using CryptoQuest.System.Dialogue.Managers;
+using IndiGames.Core.Common;
 using UnityEngine;
 
 namespace CryptoQuest.Quest.Categories

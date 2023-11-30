@@ -11,6 +11,7 @@ using Newtonsoft.Json;
 using System.Collections.Generic;
 using CryptoQuest.Sagas.Objects;
 using CryptoQuest.API;
+using IndiGames.Core.Common;
 using IndiGames.Core.Events;
 
 namespace CryptoQuest.Item.Equipment.Cheat

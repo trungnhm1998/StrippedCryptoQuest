@@ -5,6 +5,7 @@ using System.Linq;
 using CryptoQuest.AbilitySystem.Abilities;
 using CryptoQuest.Battle.Components;
 using CryptoQuest.System;
+using IndiGames.Core.Common;
 using UnityEngine;
 
 namespace CryptoQuest.Character.Skill

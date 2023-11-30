@@ -1,5 +1,6 @@
 using System.Collections;
 using CryptoQuest.System;
+using IndiGames.Core.Common;
 using UnityEngine;
 
 namespace CryptoQuest.Item.Consumable

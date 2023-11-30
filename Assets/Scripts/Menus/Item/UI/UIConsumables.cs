@@ -5,6 +5,7 @@ using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Type;
 using CryptoQuest.Item;
 using CryptoQuest.Item.Consumable;
 using CryptoQuest.System;
+using IndiGames.Core.Common;
 using UnityEngine;
 using UnityEngine.UI;
 

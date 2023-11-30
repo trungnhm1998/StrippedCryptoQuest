@@ -4,6 +4,7 @@ using CryptoQuest.UI.Dialogs.BattleDialog;
 using IndiGames.Core.Events.ScriptableObjects;
 using System.Collections;
 using System.Collections.Generic;
+using IndiGames.Core.Common;
 using UnityEngine;
 using UnityEngine.Localization;
 

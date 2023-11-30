@@ -4,6 +4,7 @@ using CryptoQuest.Battle.Components;
 using CryptoQuest.Gameplay.Loot;
 using CryptoQuest.Gameplay.PlayerParty;
 using CryptoQuest.System;
+using IndiGames.Core.Common;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
 using UnityEngine;
 

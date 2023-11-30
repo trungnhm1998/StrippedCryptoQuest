@@ -3,6 +3,7 @@ using CryptoQuest.System;
 using CryptoQuest.Quest.Authoring;
 using CryptoQuest.Quest.Components;
 using CryptoQuest.Quest.Controllers;
+using IndiGames.Core.Common;
 using UnityEngine;
 
 namespace CryptoQuest.Quest.Categories

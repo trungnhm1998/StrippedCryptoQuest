@@ -4,6 +4,7 @@ using CryptoQuest.AbilitySystem.Abilities;
 using CryptoQuest.Character;
 using CryptoQuest.Character.Skill;
 using CryptoQuest.System;
+using IndiGames.Core.Common;
 using IndiGames.Core.Events;
 using TinyMessenger;
 using UnityEngine;

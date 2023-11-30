@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using CryptoQuest.Gameplay.PlayerParty;
 using CryptoQuest.SaveSystem.Sagas.ScriptableObjects;
 using CryptoQuest.System;
+using IndiGames.Core.Common;
 using IndiGames.Core.SceneManagementSystem;
 using IndiGames.Core.SceneManagementSystem.ScriptableObjects;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.Components;

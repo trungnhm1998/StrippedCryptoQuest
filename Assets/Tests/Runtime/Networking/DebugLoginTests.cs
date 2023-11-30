@@ -4,6 +4,7 @@ using CryptoQuest.Environment;
 using CryptoQuest.Networking;
 using CryptoQuest.Sagas;
 using CryptoQuest.System;
+using IndiGames.Core.Common;
 using IndiGames.Core.Events;
 using NUnit.Framework;
 using UnityEditor;

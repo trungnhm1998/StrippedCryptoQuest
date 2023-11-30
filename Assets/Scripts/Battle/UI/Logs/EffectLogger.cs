@@ -1,6 +1,7 @@
 using CryptoQuest.AbilitySystem;
 using CryptoQuest.Battle.Events;
 using CryptoQuest.System;
+using IndiGames.Core.Common;
 using TinyMessenger;
 using UnityEngine;
 using UnityEngine.Localization;

@@ -6,6 +6,7 @@ using Newtonsoft.Json;
 using System;
 using System.Net;
 using CryptoQuest.Actions;
+using IndiGames.Core.Common;
 using IndiGames.Core.Events;
 using TinyMessenger;
 using UnityEngine;

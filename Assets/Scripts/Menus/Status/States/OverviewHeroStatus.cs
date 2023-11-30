@@ -5,6 +5,7 @@ using CryptoQuest.Menu;
 using CryptoQuest.Menus.Status.UI;
 using CryptoQuest.System;
 using CryptoQuest.UI.Menu;
+using IndiGames.Core.Common;
 using UnityEngine;
 using UnityEngine.EventSystems;
 

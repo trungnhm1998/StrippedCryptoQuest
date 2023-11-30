@@ -2,6 +2,7 @@
 using CryptoQuest.Quest.Authoring;
 using CryptoQuest.Quest.Components;
 using CryptoQuest.Quest.Controllers;
+using IndiGames.Core.Common;
 using IndiGames.Core.SceneManagementSystem.ScriptableObjects;
 using UnityEngine;
 

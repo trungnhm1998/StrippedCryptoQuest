@@ -7,6 +7,7 @@ using CryptoQuest.Gameplay.Inventory;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Type;
 using CryptoQuest.Item.Equipment;
 using CryptoQuest.System;
+using IndiGames.Core.Common;
 using UnityEngine;
 using UnityEngine.UI;
 

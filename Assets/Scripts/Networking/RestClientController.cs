@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using CryptoQuest.Environment;
 using CryptoQuest.API;
 using CryptoQuest.System;
+using IndiGames.Core.Common;
 using Newtonsoft.Json;
 using Proyecto26;
 using UniRx;

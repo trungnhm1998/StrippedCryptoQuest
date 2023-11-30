@@ -5,6 +5,8 @@ using CryptoQuest.Sagas;
 using CryptoQuest.SaveSystem.Actions;
 using CryptoQuest.SaveSystem.Sagas.ScriptableObjects;
 using CryptoQuest.System;
+using IndiGames.Core.Common;
+using IndiGames.Core.Events;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.Components;
 using Newtonsoft.Json;
 using UnityEngine;

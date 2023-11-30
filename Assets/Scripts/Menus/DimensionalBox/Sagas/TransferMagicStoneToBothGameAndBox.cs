@@ -6,6 +6,7 @@ using CryptoQuest.Networking;
 using CryptoQuest.Sagas.Objects;
 using CryptoQuest.System;
 using CryptoQuest.UI.Actions;
+using IndiGames.Core.Common;
 using IndiGames.Core.Events;
 using TinyMessenger;
 using UniRx;

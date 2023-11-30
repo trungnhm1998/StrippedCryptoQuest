@@ -1,6 +1,7 @@
 using CryptoQuest.Gameplay.PlayerParty;
 using CryptoQuest.System;
 using CryptoQuest.UI.Menu.Character;
+using IndiGames.Core.Common;
 using UnityEngine;
 
 namespace CryptoQuest.Menus.Skill.UI

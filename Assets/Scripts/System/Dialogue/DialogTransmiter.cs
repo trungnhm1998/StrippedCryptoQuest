@@ -2,6 +2,7 @@ using CryptoQuest.Events;
 using CryptoQuest.Input;
 using CryptoQuest.SaveSystem;
 using CryptoQuest.System.SaveSystem;
+using IndiGames.Core.Common;
 using UnityEngine;
 using Yarn.Unity;
 

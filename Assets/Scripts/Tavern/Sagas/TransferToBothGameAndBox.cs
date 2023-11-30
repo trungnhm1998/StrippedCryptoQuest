@@ -6,6 +6,7 @@ using CryptoQuest.API;
 using CryptoQuest.System;
 using CryptoQuest.Tavern.Objects;
 using CryptoQuest.UI.Actions;
+using IndiGames.Core.Common;
 using IndiGames.Core.Events;
 using Newtonsoft.Json;
 using TinyMessenger;

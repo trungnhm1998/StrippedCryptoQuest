@@ -1,6 +1,7 @@
 ﻿using CryptoQuest.Gameplay.Inventory;
 using CryptoQuest.Item.Equipment;
 using CryptoQuest.System;
+using IndiGames.Core.Common;
 
 namespace CryptoQuest.Battle.Components
 {

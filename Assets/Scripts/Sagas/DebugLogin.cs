@@ -9,6 +9,7 @@ using TinyMessenger;
 using UniRx;
 using UnityEngine;
 using CryptoQuest.API;
+using IndiGames.Core.Common;
 using IndiGames.Core.Events;
 using APIProfile = CryptoQuest.API.Profile;
 

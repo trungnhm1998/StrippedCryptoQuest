@@ -4,6 +4,7 @@ using CryptoQuest.Item;
 using CryptoQuest.Item.Consumable;
 using CryptoQuest.Item.Equipment;
 using CryptoQuest.System;
+using IndiGames.Core.Common;
 using UnityEngine;
 
 namespace CryptoQuest.Gameplay.Inventory

@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using CryptoQuest.System;
+using IndiGames.Core.Common;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;

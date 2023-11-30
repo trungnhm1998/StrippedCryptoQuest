@@ -5,6 +5,7 @@ using CryptoQuest.Battle.Components;
 using CryptoQuest.Item;
 using CryptoQuest.Item.Consumable;
 using CryptoQuest.System;
+using IndiGames.Core.Common;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
 using UnityEngine;
 

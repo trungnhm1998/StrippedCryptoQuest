@@ -1,5 +1,6 @@
 ﻿using CryptoQuest.Input;
 using CryptoQuest.System;
+using IndiGames.Core.Common;
 using UnityEngine.InputSystem;
 
 namespace CryptoQuest.UI.Title.States

@@ -1,6 +1,7 @@
 using CryptoQuest.Character.MonoBehaviours;
 using CryptoQuest.Gameplay;
 using CryptoQuest.System;
+using IndiGames.Core.Common;
 using IndiGames.Core.Events.ScriptableObjects;
 using IndiGames.Core.SceneManagementSystem.Events.ScriptableObjects;
 using IndiGames.Core.SceneManagementSystem.ScriptableObjects;
