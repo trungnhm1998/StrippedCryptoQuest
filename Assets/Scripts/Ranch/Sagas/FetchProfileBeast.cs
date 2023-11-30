@@ -3,26 +3,20 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Reflection;
 using CryptoQuest.AbilitySystem.Abilities;
 using CryptoQuest.AbilitySystem.Attributes;
 using CryptoQuest.Actions;
 using CryptoQuest.API;
 using CryptoQuest.Character;
-using CryptoQuest.Character.Beast;
 using CryptoQuest.Core;
-using CryptoQuest.Gameplay;
 using CryptoQuest.Gameplay.Inventory;
 using CryptoQuest.Networking;
-using CryptoQuest.Sagas.Objects;
 using CryptoQuest.System;
 using CryptoQuest.UI.Actions;
-using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
 using TinyMessenger;
 using UniRx;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
-using static CryptoQuest.Character.Beast.BeastDataSpec;
 using Obj = CryptoQuest.Sagas.Objects;
 using Spec = CryptoQuest.Character.Beast;
 
@@ -34,7 +28,7 @@ namespace CryptoQuest.Ranch.Sagas
         [SerializeField] private AssetReferenceT<BeastInventorySO> _beastInventoryAsset;
         [SerializeField] private List<Elemental> _elements = new();
         [SerializeField] private List<CharacterClass> _classes = new();
-        [SerializeField] private List<BeastTypeSO> _type = new();
+        [SerializeField] private List<Spec.BeastTypeSO> _type = new();
         [SerializeField] private List<PassiveAbility> _passive = new();
         private BeastInventorySO _beastInventory;
         private TinyMessageSubscriptionToken _fetchEvent;
@@ -48,7 +42,7 @@ namespace CryptoQuest.Ranch.Sagas
 
         private void FilterAndRefreshInventory(TransferSucceed ctx)
         {
-            var ingameBeasts = ctx.ResponseBeasts.Where(beast => beast.inGameStatus == (int)EBeastStatus.InGame)
+            var ingameBeasts = ctx.ResponseBeasts.Where(beast => beast.inGameStatus == (int)Obj.EBeastStatus.InGame)
                 .ToList();
             OnInventoryFilled(ingameBeasts.ToArray());
         }
@@ -66,12 +60,12 @@ namespace CryptoQuest.Ranch.Sagas
 
             restClient
                 .WithParams(new Dictionary<string, string>
-                    { { "source", $"{((int)EBeastStatus.InGame).ToString()}" } })
-                .Get<BeastsResponse>(Profile.GET_BEASTS)
+                    { { "source", $"{((int)Obj.EBeastStatus.InGame).ToString()}" } })
+                .Get<Obj.BeastsResponse>(Profile.GET_BEASTS)
                 .Subscribe(ProcessResponseBeasts, OnError);
         }
 
-        private void ProcessResponseBeasts(BeastsResponse obj)
+        private void ProcessResponseBeasts(Obj.BeastsResponse obj)
         {
             ActionDispatcher.Dispatch(new ShowLoading(false));
             if (obj.code != (int)HttpStatusCode.OK) return;
@@ -82,9 +76,9 @@ namespace CryptoQuest.Ranch.Sagas
             OnInventoryFilled(responseBeasts);
         }
 
-        private void OnInventoryFilled(BeastData[] beasts) => StartCoroutine(CoLoadAndUpdateInventory(beasts));
+        private void OnInventoryFilled(Obj.BeastData[] beasts) => StartCoroutine(CoLoadAndUpdateInventory(beasts));
 
-        private IEnumerator CoLoadAndUpdateInventory(BeastData[] beasts)
+        private IEnumerator CoLoadAndUpdateInventory(Obj.BeastData[] beasts)
         {
             if (_beastInventory == null)
             {
@@ -99,12 +93,10 @@ namespace CryptoQuest.Ranch.Sagas
             Debug.Log($"CoLoadAndUpdateInventory: {nftBeast}");
         }
 
-        private BeastDef CreateNftBeast(BeastData beastData)
+        private Spec.Beast CreateNftBeast(Obj.BeastData beastResponse)
         {
-            var nftBeast = new BeastDef();
-            FillBeastData(beastData, ref nftBeast);
-            Debug.Log($"CreateNftBeast: {beastData}");
-            return nftBeast;
+            Debug.Log($"CreateNftBeast: {beastResponse}");
+            return FillBeastData(beastResponse);
         }
 
         private void OnError(Exception error)
@@ -112,16 +104,17 @@ namespace CryptoQuest.Ranch.Sagas
             Debug.LogError($"FetchProfileBeast::OnError: {error}");
         }
 
-        private void FillBeastData(BeastData response, ref BeastDef beastDef)
+        private Spec.Beast FillBeastData(Obj.BeastData response)
         {
-            var spec = new BeastDataSpec();
-            beastDef.Id = response.id;
-            spec.Elemental = _elements.FirstOrDefault(element => element.Id == Int32.Parse(response.elementId));
-            spec.Class = _classes.FirstOrDefault(classes => classes.Id == Int32.Parse(response.classId));
-            spec.BeastTypeSo =
-                _type.FirstOrDefault(type => type.BeastInformation.Id == Int32.Parse(response.characterId));
-            spec.Passives = _passive.FirstOrDefault(passive => passive.Id == response.passiveSkillId);
-            beastDef.Data = spec;
+            return new Spec.Beast
+            {
+                Id = response.id,
+                Elemental = _elements.FirstOrDefault(element => element.Id == Int32.Parse(response.elementId)),
+                Class = _classes.FirstOrDefault(classes => classes.Id == Int32.Parse(response.classId)),
+                Type =
+                _type.FirstOrDefault(type => type.BeastInformation.Id == Int32.Parse(response.characterId)),
+                Passive = _passive.FirstOrDefault(passive => passive.Id == response.passiveSkillId)
+            };
         }
     }
 }

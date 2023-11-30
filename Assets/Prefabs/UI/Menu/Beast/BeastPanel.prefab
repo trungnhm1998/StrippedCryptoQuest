@@ -1172,6 +1172,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1378122652473591509}
   - component: {fileID: 7363559571589975328}
+  - component: {fileID: 8987673012071864895}
   m_Layer: 5
   m_Name: BeastDetailBox
   m_TagString: Untagged
@@ -1219,6 +1220,34 @@ MonoBehaviour:
   _beastPassiveSkill: {fileID: 2032216736767211925}
   _beastImage: {fileID: 7742865061140428747}
   _beastElement: {fileID: 6001307944520741319}
+--- !u!114 &8987673012071864895
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3257438629708327499}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38f270f9b44d40dba715ee8fdb77223b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _event: {fileID: 11400000, guid: 7e31732f0b345c24ea8b9fb66b011294, type: 2}
+  OnEventRaised:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7363559571589975328}
+        m_TargetAssemblyTypeName: CryptoQuest.Menus.Beast.UI.UIBeastDetail, IndiGames.CryptoQuest.Menus.Beast
+        m_MethodName: FillUI
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &3325366313606175877
 GameObject:
   m_ObjectHideFlags: 0
@@ -2196,7 +2225,6 @@ GameObject:
   - component: {fileID: 7593972749117971698}
   - component: {fileID: 7579022219687867225}
   - component: {fileID: 4858731067378284960}
-  - component: {fileID: 6424247875155389322}
   m_Layer: 5
   m_Name: BeastListScrollView
   m_TagString: Untagged
@@ -2294,105 +2322,6 @@ MonoBehaviour:
   _scrollRect: {fileID: 7579022219687867225}
   _singleItemRect: {fileID: 2171444157869238816, guid: 2c92b1a7bf643054dbeb28382d01a8a7, type: 3}
   _useUpdate: 1
---- !u!114 &6424247875155389322
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5296272161283714945}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c604b531c0734e3a90f8ed4225e347a3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _beasts:
-  - id: 0
-    beastTokenId: 
-    userId: 
-    level: 0
-    beastId: 
-    HP: 0
-    addHp: 0
-    maxHp: 0
-    MP: 0
-    addMp: 0
-    maxMp: 0
-    strength: 0
-    addStrength: 0
-    vitality: 0
-    addVitality: 0
-    agility: 0
-    addAgility: 0
-    intelligence: 0
-    addIntelligence: 0
-    luck: 0
-    addLuck: 0
-    attack: 0
-    addAttack: 0
-    deffence: 0
-    addDeffence: 0
-    MATK: 0
-    addMATK: 0
-    evasionRate: 0
-    criticalRate: 0
-    attachUnitTokenId: 
-    inGameStatus: 0
-    mintStatus: 0
-    transferring: 0
-    createdAt: 
-    updatedAt: 
-    star: 0
-    class: 
-    name: 
-    elementName: 
-    beastType: 
-    classId: 
-    categoryId: 
-    characterId: 
-    elementId: 
-    beastTypeId: 0
-    minHP: 0
-    minMP: 0
-    minStrength: 0
-    minVitality: 0
-    minAgility: 0
-    minIntelligence: 0
-    minLuck: 0
-    minAttack: 0
-    minMATK: 0
-    minDeffence: 0
-    minEvasionRate: 0
-    minCriticalRate: 0
-    maxLv: 0
-    minLv: 0
-    randomNumberBonus: 0
-    hpPerLv: 0
-    mpPerLv: 0
-    strengthPerLv: 0
-    vitalityPerLv: 0
-    agilityPerLv: 0
-    intelligencePerLv: 0
-    luckPerLv: 0
-    maxStrength: 0
-    maxVitality: 0
-    maxAgility: 0
-    maxIntelligence: 0
-    maxLuck: 0
-    maxAttack: 0
-    maxMATK: 0
-    maxDeffence: 0
-    maxEvasionRate: 0
-    maxCriticalRate: 0
-    passiveSkillId: 0
-    miningPower: 0
-    maxFuel: 0
-    consumeFuel: 0
-    imageFileName: 
-    imageURL: 
-    nft: 0
-    maxHpAtMaxLv: 0
-    maxMpAtMaxLv: 0
 --- !u!1 &5457553798192342857
 GameObject:
   m_ObjectHideFlags: 0

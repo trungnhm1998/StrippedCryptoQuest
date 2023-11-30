@@ -28,9 +28,8 @@ namespace CryptoQuest.Menus.Beast.States
 
         private void ShowBeastList()
         {
-            _beastPanel.ListBeastUI.ShowBeast();
+            _beastPanel.ListBeastUI.gameObject.SetActive(true);
             _beastPanel.ListBeastUI.Interactable = true;
-            _beastPanel.ListBeastUI.SelectLastedOrFirstBeast();
         }
 
         private void HandleCancel()

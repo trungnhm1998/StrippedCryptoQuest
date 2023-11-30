@@ -1,4 +1,3 @@
-using System;
 using CryptoQuest.Character.Beast;
 using CryptoQuest.Menu;
 using TMPro;
@@ -8,21 +7,19 @@ using UnityEngine.UI;
 
 namespace CryptoQuest.Menus.Beast.UI
 {
-    public class UIBeast : MonoBehaviour
+    public class UIBeast : MonoBehaviour, IBeastProvider
     {
-        public delegate void UIBeastEvent(BeastDef beastDef);
-
-        public static event UIBeastEvent Inspecting;
-        public static event Action<UIBeast> InspectingBeastEvent;
-
         [SerializeField] private Image _beastIcon;
         [SerializeField] private MultiInputButton _beastButton;
         [SerializeField] private LocalizeStringEvent _beastName;
         [SerializeField] private TMP_Text _beastNameText;
         [SerializeField] private Color _disableColor;
+        [SerializeField] private ShowBeastDetailsTrigger _showBeastDetailsTrigger;
 
         private Color _normalColor;
-        private BeastDef _beastDef;
+        private IBeast _beast;
+
+        public IBeast Beast => _beast;
 
         public bool Interactable
         {
@@ -34,29 +31,14 @@ namespace CryptoQuest.Menus.Beast.UI
             _normalColor = _beastNameText.color;
         }
 
-        private void OnEnable()
+        public void Init(IBeast beast)
         {
-            _beastButton.Selected += OnSelected;
-        }
-
-        private void OnDisable()
-        {
-            _beastButton.Selected -= OnSelected;
-        }
-
-        public void Init(BeastDef beastDef)
-        {
-            _beastDef = beastDef;
-            _beastNameText.text = _beastDef.Data.BeastTypeSo.BeastInformation.LocalizedName.GetLocalizedString();
+            _beast = beast;
+            _beastNameText.text = _beast.Name;
+            _showBeastDetailsTrigger.Initialize(this);
         }
 
         public void OnPressButton() { }
-
-        private void OnSelected()
-        {
-            Inspecting?.Invoke(_beastDef);
-            InspectingBeastEvent?.Invoke(this);
-        }
 
         private void SetDisable(bool value)
         {

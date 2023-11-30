@@ -13,24 +13,14 @@ namespace CryptoQuest.Menus.Beast.UI
         [SerializeField] private Image _beastImage;
         [SerializeField] private Image _beastElement;
 
-        private void OnEnable()
+        public void FillUI(IBeast beast)
         {
-            UIBeast.Inspecting += OnInspectingBeast;
-        }
-
-        private void OnDisable()
-        {
-            UIBeast.Inspecting -= OnInspectingBeast;
-        }
-
-        private void OnInspectingBeast(BeastDef beastDef)
-        {
-            _beastName.StringReference = beastDef.Data.BeastTypeSo.BeastInformation.LocalizedName;
+            _beastName.StringReference = beast.LocalizedName;
 
             _beastPassiveSkill.StringReference =
-                beastDef.Data.Passives != null ? beastDef.Data.Passives.Description : new LocalizedString();
+                beast.Passive != null ? beast.Passive.Description : new LocalizedString();
 
-            _beastElement.sprite = beastDef.Data.Elemental.Icon;
+            _beastElement.sprite = beast.Elemental.Icon;
         }
     }
 }
