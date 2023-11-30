@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
-using CryptoQuest.Core;
 using CryptoQuest.UI.Actions;
+using IndiGames.Core.Events;
 using TinyMessenger;
 using UnityEngine;
 using UnityEngine.Localization;

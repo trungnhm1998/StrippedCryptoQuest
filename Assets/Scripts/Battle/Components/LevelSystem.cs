@@ -1,6 +1,6 @@
 using CryptoQuest.Character.LevelSystem;
-using CryptoQuest.Core;
 using IndiGames.Core.EditorTools.Attributes.ReadOnlyAttribute;
+using IndiGames.Core.Events;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.Components;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
 using UnityEngine;

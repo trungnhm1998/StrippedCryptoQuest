@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using CryptoQuest.Actions;
-using CryptoQuest.Core;
 using CryptoQuest.UI.Actions;
+using IndiGames.Core.Events;
 using UnityEngine;
 
 namespace CryptoQuest.Sagas

@@ -1,6 +1,6 @@
 ﻿using System;
 using CryptoQuest.Actions;
-using CryptoQuest.Core;
+using IndiGames.Core.Events;
 using IndiGames.Firebase.Bridge;
 using Newtonsoft.Json;
 

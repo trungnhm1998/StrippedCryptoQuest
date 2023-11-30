@@ -1,7 +1,7 @@
-using CryptoQuest.Core;
 using CryptoQuest.Menus.DimensionalBox.UI.MagicStoneTransfer;
 using CryptoQuest.UI.Actions;
 using CryptoQuest.UI.Dialogs.ChoiceDialog;
+using IndiGames.Core.Events;
 using TinyMessenger;
 using UnityEngine;
 using UnityEngine.Localization;

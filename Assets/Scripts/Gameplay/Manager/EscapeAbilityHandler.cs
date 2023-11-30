@@ -1,7 +1,7 @@
-using CryptoQuest.Core;
 using CryptoQuest.Map;
 using CryptoQuest.System;
 using CryptoQuest.UI.SpiralFX;
+using IndiGames.Core.Events;
 using IndiGames.Core.Events.ScriptableObjects;
 using IndiGames.Core.SceneManagementSystem.Events.ScriptableObjects;
 using IndiGames.Core.SceneManagementSystem.ScriptableObjects;

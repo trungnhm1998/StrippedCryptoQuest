@@ -1,6 +1,6 @@
 using System.Collections.Generic;
-using CryptoQuest.Core;
 using CryptoQuest.Sagas.Objects;
+using IndiGames.Core.Events;
 
 namespace CryptoQuest.Ranch
 {

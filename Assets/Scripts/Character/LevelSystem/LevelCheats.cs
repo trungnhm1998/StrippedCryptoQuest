@@ -1,9 +1,9 @@
 using CommandTerminal;
 using CryptoQuest.Battle.Components;
-using CryptoQuest.Core;
 using CryptoQuest.Gameplay.PlayerParty;
 using CryptoQuest.System;
 using CryptoQuest.System.Cheat;
+using IndiGames.Core.Events;
 using TinyMessenger;
 using UnityEngine;
 using LevelSystemBehavior = CryptoQuest.Battle.Components.LevelSystem;

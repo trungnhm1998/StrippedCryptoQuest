@@ -1,7 +1,7 @@
 ﻿using CryptoQuest.Character.Sagas;
-using CryptoQuest.Core;
 using FSM;
 using CryptoQuest.Menus.Home.UI;
+using IndiGames.Core.Events;
 using TinyMessenger;
 
 namespace CryptoQuest.Menus.Home.States

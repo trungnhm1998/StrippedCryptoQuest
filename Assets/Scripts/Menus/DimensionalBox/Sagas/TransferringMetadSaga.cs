@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net;
-using CryptoQuest.Core;
 using CryptoQuest.Gameplay.Inventory.Currency;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
 using CryptoQuest.Menus.DimensionalBox.Objects;
@@ -11,6 +10,7 @@ using CryptoQuest.API;
 using CryptoQuest.Sagas;
 using CryptoQuest.System;
 using CryptoQuest.UI.Actions;
+using IndiGames.Core.Events;
 using UniRx;
 using UnityEngine;
 

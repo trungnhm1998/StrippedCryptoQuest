@@ -1,4 +1,4 @@
-﻿using CryptoQuest.Core;
+﻿using IndiGames.Core.Events;
 using UnityEngine;
 
 namespace CryptoQuest.Sagas

@@ -1,4 +1,4 @@
-﻿using CryptoQuest.Core;
+﻿using IndiGames.Core.Events;
 using TinyMessenger;
 using UnityEngine;
 

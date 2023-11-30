@@ -1,6 +1,6 @@
-﻿using CryptoQuest.Core;
-using CryptoQuest.UI.Actions;
+﻿using CryptoQuest.UI.Actions;
 using CryptoQuest.UI.Dialogs.ChoiceDialog;
+using IndiGames.Core.Events;
 using TinyMessenger;
 using UnityEngine.Localization;
 

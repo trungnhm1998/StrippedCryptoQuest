@@ -1,8 +1,8 @@
 using CryptoQuest.Actions;
-using CryptoQuest.Core;
 using CryptoQuest.Networking;
 using CryptoQuest.System;
 using CryptoQuest.UI.Title.States;
+using IndiGames.Core.Events;
 using TinyMessenger;
 using UnityEngine;
 

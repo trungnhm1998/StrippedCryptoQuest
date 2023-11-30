@@ -1,8 +1,8 @@
 using System;
 using CryptoQuest.API;
-using CryptoQuest.Core;
 using CryptoQuest.Networking;
 using CryptoQuest.Sagas;
+using IndiGames.Core.Events;
 using Newtonsoft.Json;
 using UniRx;
 using UnityEngine;

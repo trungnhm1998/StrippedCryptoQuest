@@ -1,6 +1,6 @@
 using System.Collections;
-using CryptoQuest.Core;
 using CryptoQuest.Gameplay.Manager;
+using IndiGames.Core.Events;
 using IndiGames.GameplayAbilitySystem.AbilitySystem;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
 

@@ -1,5 +1,5 @@
-using CryptoQuest.Core;
 using CryptoQuest.Sagas;
+using IndiGames.Core.Events;
 
 namespace CryptoQuest.Networking.Actions
 {

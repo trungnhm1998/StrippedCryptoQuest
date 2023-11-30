@@ -1,10 +1,10 @@
 ﻿using System;
-using CryptoQuest.Core;
 using CryptoQuest.Gameplay.Inventory.Currency;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
 using CryptoQuest.Input;
 using CryptoQuest.UI.Actions;
 using CryptoQuest.UI.Menu;
+using IndiGames.Core.Events;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;

@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net;
-using CryptoQuest.Core;
 using CryptoQuest.Events;
 using CryptoQuest.Menus.DimensionalBox.Objects;
 using CryptoQuest.Networking;
 using CryptoQuest.API;
 using CryptoQuest.System;
 using CryptoQuest.UI.Actions;
+using IndiGames.Core.Events;
 using UniRx;
 using UnityEngine;
 

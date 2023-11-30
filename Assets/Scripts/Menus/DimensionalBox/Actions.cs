@@ -1,6 +1,6 @@
-﻿using CryptoQuest.Core;
-using CryptoQuest.Gameplay.Inventory.Currency;
+﻿using CryptoQuest.Gameplay.Inventory.Currency;
 using CryptoQuest.Sagas.Objects;
+using IndiGames.Core.Events;
 
 namespace CryptoQuest.Menus.DimensionalBox
 {

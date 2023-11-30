@@ -3,8 +3,8 @@ using System.Linq;
 using CryptoQuest.AbilitySystem.Abilities;
 using CryptoQuest.Character;
 using CryptoQuest.Character.Skill;
-using CryptoQuest.Core;
 using CryptoQuest.System;
+using IndiGames.Core.Events;
 using TinyMessenger;
 using UnityEngine;
 

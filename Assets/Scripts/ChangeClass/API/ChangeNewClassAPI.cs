@@ -1,11 +1,11 @@
 using System;
 using System.Net;
 using CryptoQuest.ChangeClass.View;
-using CryptoQuest.Core;
 using CryptoQuest.Networking;
 using CryptoQuest.Sagas;
 using CryptoQuest.System;
 using CryptoQuest.UI.Actions;
+using IndiGames.Core.Events;
 using Newtonsoft.Json;
 using UniRx;
 using UnityEngine;

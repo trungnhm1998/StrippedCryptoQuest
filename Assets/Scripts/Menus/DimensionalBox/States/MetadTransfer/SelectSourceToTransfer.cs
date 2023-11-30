@@ -1,5 +1,5 @@
-using CryptoQuest.Core;
 using CryptoQuest.Menus.DimensionalBox.UI.MetaDTransfer;
+using IndiGames.Core.Events;
 using UnityEngine;
 
 namespace CryptoQuest.Menus.DimensionalBox.States.MetadTransfer
