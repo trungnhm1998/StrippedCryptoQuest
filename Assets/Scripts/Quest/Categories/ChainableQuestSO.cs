@@ -1,3 +1,4 @@
+using System;
 using CryptoQuest.Quest.Authoring;
 using UnityEngine;
 
@@ -8,21 +9,20 @@ namespace CryptoQuest.Quest.Categories
     public class ChainableQuestSO : QuestSO
     {
         public ActionChainableNodeSO actionChainableNode;
+        private ChainableQuest _quest;
 
         public override QuestInfo CreateQuest()
             => new ChainableQuest(this);
     }
 
-    public class ChainableQuest : QuestInfo<ChainableQuestSO>
+    public class ChainableQuest : QuestInfo<ChainableQuestSO>, IDisposable
     {
         public ChainableQuest(ChainableQuestSO questDef) : base(questDef) { }
 
         public override void GiveQuest()
         {
             base.GiveQuest();
-            Data.actionChainableNode.Execute();
             ActionChainableNodeSO.Finished += InternalFinishedQuest;
-            ActionChainableNodeSO.Failed += InternalFailedQuest;
         }
 
         private void InternalFinishedQuest()
@@ -31,9 +31,9 @@ namespace CryptoQuest.Quest.Categories
             FinishQuest();
         }
 
-        private void InternalFailedQuest()
+        public void Dispose()
         {
-            ActionChainableNodeSO.Failed -= InternalFailedQuest;
+            ActionChainableNodeSO.Finished -= InternalFinishedQuest;
         }
     }
 }

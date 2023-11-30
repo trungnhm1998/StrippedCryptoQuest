@@ -90,6 +90,15 @@ namespace CryptoQuest.Quest.Components
             _removeQuestEventChannel.EventRaised -= RemoveProgressingQuest;
         }
 
+        private void OnDestroy()
+        {
+            foreach (var info in _currentQuestInfos)
+            {
+                if (info is not IDisposable disposable) continue;
+                disposable.Dispose();
+            }
+        }
+
         public override void TriggerQuest(QuestSO questData)
         {
             if (IsQuestTriggered(questData))
