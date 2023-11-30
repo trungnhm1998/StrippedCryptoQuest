@@ -16,11 +16,12 @@ namespace CryptoQuest.BlackSmith.Upgrade
         [SerializeField] private Color _inValidColor;
         private int _selectLevelToUpgrade;
         private int _currentLevel;
-        private int _levelToUpgrade;
         private bool _isValid;
         private float _currentGold;
 
         public int LevelToUpgrade => _selectLevelToUpgrade;
+
+        public float GoldNeeded { get ; private set; }
 
         public void SetupUI(IUpgradeEquipment item, float currentGold)
         {
@@ -55,10 +56,13 @@ namespace CryptoQuest.BlackSmith.Upgrade
 
         private void SetupCostUI(IUpgradeEquipment item)
         {
-            _levelToUpgrade = _currentLevel - item.Level;
-            _isValid = _currentGold >= _levelToUpgrade * item.Cost;
+            var levelToUpgrade = _currentLevel - item.Level;
+            GoldNeeded = levelToUpgrade * item.Cost;
+
+            _isValid = _currentGold >= GoldNeeded;
             _costText.color = _isValid ? _validColor : _inValidColor;
-            _costText.text = $"{_levelToUpgrade * item.Cost} G";
+
+            _costText.text = $"{GoldNeeded} G";
         }
     }
 }
