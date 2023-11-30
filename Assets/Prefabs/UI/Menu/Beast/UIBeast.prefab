@@ -190,8 +190,9 @@ GameObject:
   - component: {fileID: 4723887359237689444}
   - component: {fileID: 3863590462818103620}
   - component: {fileID: 5175712150794676372}
+  - component: {fileID: 3322219571490738016}
   m_Layer: 5
-  m_Name: Beast
+  m_Name: UIBeast
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -356,6 +357,20 @@ MonoBehaviour:
   _beastName: {fileID: 7247716651306167123}
   _beastNameText: {fileID: 3692223523168569404}
   _disableColor: {r: 0.40392157, g: 0.40392157, b: 0.40392157, a: 0.6039216}
+  _showBeastDetailsTrigger: {fileID: 3322219571490738016}
+--- !u!114 &3322219571490738016
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6544690099334993259}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e169d55f539c4bab8ee1292d3855d458, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _showBeastDetailsEventChannel: {fileID: 11400000, guid: 7e31732f0b345c24ea8b9fb66b011294, type: 2}
 --- !u!1 &7038924252698966816
 GameObject:
   m_ObjectHideFlags: 0

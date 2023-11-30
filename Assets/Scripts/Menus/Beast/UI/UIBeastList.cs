@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using CryptoQuest.Character.Beast;
 using CryptoQuest.Gameplay.Inventory;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -20,15 +19,11 @@ namespace CryptoQuest.Menus.Beast.UI
         [SerializeField] private UIBeast _prefab;
         private IObjectPool<UIBeast> _beastUIPool;
 
-        public IObjectPool<UIBeast> BeastUIPool =>
+        private IObjectPool<UIBeast> BeastUIPool =>
             _beastUIPool ??= new ObjectPool<UIBeast>(OnCreate, OnGet, OnRelease, OnDestroyBeast);
 
         private List<UIBeast> _beastUIs = new();
-        private List<BeastDef> _beasts = new();
-
-        private UIBeast _beast;
-        private GameObject _lastSelectedBeast;
-        private UIBeast InspectingBeastUI => _beast;
+        private List<Character.Beast.Beast> _beasts = new();
 
         private float _verticalOffset;
 
@@ -42,31 +37,16 @@ namespace CryptoQuest.Menus.Beast.UI
 
         private void OnEnable()
         {
-            UIBeast.InspectingBeastEvent += CacheInspectingBeast;
-
             _beasts = beastInventory.OwnedBeasts;
-        }
-
-        private void OnDisable()
-        {
-            UIBeast.InspectingBeastEvent -= CacheInspectingBeast;
-        }
-
-        private void CacheInspectingBeast(UIBeast beast)
-        {
-            _beast = beast;
-            _lastSelectedBeast = beast.gameObject;
-        }
-
-        public void ShowBeast()
-        {
             CleanUpScrollView();
             InitBeastList();
+
+            if (_scrollRect.content.childCount == 0) return;
+            EventSystem.current.SetSelectedGameObject(_scrollRect.content.GetChild(0).gameObject);
         }
 
         private void InitBeastList()
         {
-            _lastSelectedBeast = null;
             foreach (var beast in _beasts)
             {
                 var beastUI = BeastUIPool.Get();
@@ -82,20 +62,6 @@ namespace CryptoQuest.Menus.Beast.UI
             }
 
             _beastUIs.Clear();
-        }
-
-        public void SelectLastedOrFirstBeast()
-        {
-            if (_beastUIs.Count == 0) return;
-            GameObject beastToSelect = _beastUIs[0].gameObject;
-
-            if (_lastSelectedBeast != null)
-            {
-                beastToSelect = _lastSelectedBeast;
-                _lastSelectedBeast = null;
-            }
-
-            EventSystem.current.SetSelectedGameObject(beastToSelect);
         }
 
         private bool ShouldMoveUp => _scrollRect.content.anchoredPosition.y > _verticalOffset;
