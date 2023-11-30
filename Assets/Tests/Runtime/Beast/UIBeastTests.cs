@@ -1,4 +1,4 @@
-﻿using CryptoQuest.Character.Beast;
+﻿using CryptoQuest.Beast;
 using CryptoQuest.Menus.Beast.UI;
 using NSubstitute;
 using NUnit.Framework;

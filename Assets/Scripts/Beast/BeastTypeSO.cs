@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.Localization;
 
-namespace CryptoQuest.Character.Beast
+namespace CryptoQuest.Beast
 {
     public class BeastTypeSO : ScriptableObject
     {

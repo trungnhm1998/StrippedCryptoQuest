@@ -1,8 +1,7 @@
 using System.Collections.Generic;
-using CryptoQuest.Character.Beast;
 using UnityEngine;
 
-namespace CryptoQuest.Gameplay.Inventory
+namespace CryptoQuest.Beast
 {
     public class BeastInventorySO : ScriptableObject
     {

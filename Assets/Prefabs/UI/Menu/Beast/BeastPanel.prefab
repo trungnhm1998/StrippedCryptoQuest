@@ -711,7 +711,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 37.65}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1100565429692125685
 MonoBehaviour:
@@ -1172,7 +1172,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1378122652473591509}
   - component: {fileID: 7363559571589975328}
-  - component: {fileID: 8987673012071864895}
   m_Layer: 5
   m_Name: BeastDetailBox
   m_TagString: Untagged
@@ -1216,39 +1215,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7c51da2997e489ca4045cf5b33ceb58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _database: {fileID: 11400000, guid: 13be0b487e479fc489c9611f00a46278, type: 2}
   _beastName: {fileID: 3285545399587767155}
   _localizedPassiveSkill: {fileID: 2032216736767211925}
   _txtPassiveSkill: {fileID: 4803606169475754590}
   _beastImage: {fileID: 7742865061140428747}
   _beastElement: {fileID: 6001307944520741319}
---- !u!114 &8987673012071864895
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3257438629708327499}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 38f270f9b44d40dba715ee8fdb77223b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _event: {fileID: 11400000, guid: 7e31732f0b345c24ea8b9fb66b011294, type: 2}
-  OnEventRaised:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 7363559571589975328}
-        m_TargetAssemblyTypeName: CryptoQuest.Menus.Beast.UI.UIBeastDetail, IndiGames.CryptoQuest.Menus.Beast
-        m_MethodName: FillUI
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+  _showBeastDetailsEventChannel: {fileID: 11400000, guid: 7e31732f0b345c24ea8b9fb66b011294, type: 2}
 --- !u!1 &3325366313606175877
 GameObject:
   m_ObjectHideFlags: 0
@@ -1536,7 +1509,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
   m_AnchoredPosition: {x: 0, y: -50}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &431859984808559216
 MonoBehaviour:
@@ -2641,8 +2614,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 88, y: -10}
-  m_SizeDelta: {x: 146, y: 20}
+  m_AnchoredPosition: {x: 205.768, y: -18.825}
+  m_SizeDelta: {x: 381.536, y: 37.65}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8209698982643333023
 CanvasRenderer:

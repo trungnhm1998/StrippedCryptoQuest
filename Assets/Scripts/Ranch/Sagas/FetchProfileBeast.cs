@@ -7,9 +7,9 @@ using CryptoQuest.AbilitySystem.Abilities;
 using CryptoQuest.AbilitySystem.Attributes;
 using CryptoQuest.Actions;
 using CryptoQuest.API;
+using CryptoQuest.Beast;
 using CryptoQuest.Character;
 using CryptoQuest.Core;
-using CryptoQuest.Gameplay.Inventory;
 using CryptoQuest.Networking;
 using CryptoQuest.System;
 using CryptoQuest.UI.Actions;
@@ -18,7 +18,6 @@ using UniRx;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using Obj = CryptoQuest.Sagas.Objects;
-using Spec = CryptoQuest.Character.Beast;
 
 
 namespace CryptoQuest.Ranch.Sagas
@@ -28,7 +27,7 @@ namespace CryptoQuest.Ranch.Sagas
         [SerializeField] private AssetReferenceT<BeastInventorySO> _beastInventoryAsset;
         [SerializeField] private List<Elemental> _elements = new();
         [SerializeField] private List<CharacterClass> _classes = new();
-        [SerializeField] private List<Spec.BeastTypeSO> _type = new();
+        [SerializeField] private List<BeastTypeSO> _type = new();
         [SerializeField] private List<PassiveAbility> _passive = new();
         private BeastInventorySO _beastInventory;
         private TinyMessageSubscriptionToken _fetchEvent;
@@ -93,7 +92,7 @@ namespace CryptoQuest.Ranch.Sagas
             Debug.Log($"CoLoadAndUpdateInventory: {nftBeast}");
         }
 
-        private Spec.Beast CreateNftBeast(Obj.BeastData beastResponse)
+        private Beast.Beast CreateNftBeast(Obj.BeastData beastResponse)
         {
             Debug.Log($"CreateNftBeast: {beastResponse}");
             return FillBeastData(beastResponse);
@@ -104,15 +103,15 @@ namespace CryptoQuest.Ranch.Sagas
             Debug.LogError($"FetchProfileBeast::OnError: {error}");
         }
 
-        private Spec.Beast FillBeastData(Obj.BeastData response)
+        private Beast.Beast FillBeastData(Obj.BeastData response)
         {
-            return new Spec.Beast
+            return new Beast.Beast
             {
                 Id = response.id,
                 Elemental = _elements.FirstOrDefault(element => element.Id == Int32.Parse(response.elementId)),
                 Class = _classes.FirstOrDefault(classes => classes.Id == Int32.Parse(response.classId)),
                 Type =
-                _type.FirstOrDefault(type => type.BeastInformation.Id == Int32.Parse(response.characterId)),
+                    _type.FirstOrDefault(type => type.BeastInformation.Id == Int32.Parse(response.characterId)),
                 Passive = _passive.FirstOrDefault(passive => passive.Id == response.passiveSkillId)
             };
         }

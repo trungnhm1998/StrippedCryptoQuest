@@ -30,6 +30,7 @@ namespace IndiGamesEditor.Core.Database
                 Target.Editor_FetchDataInProject();
                 EditorUtility.SetDirty(target);
                 AssetDatabase.SaveAssets();
+                AssetDatabase.ImportAsset(AssetDatabase.GetAssetPath(target));
             })
             {
                 text = "Load all data",
