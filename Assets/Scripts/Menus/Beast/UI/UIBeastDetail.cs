@@ -3,6 +3,7 @@ using CryptoQuest.Beast.Avatar;
 using CryptoQuest.UI.Extensions;
 using TMPro;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 using UnityEngine.Localization;
 using UnityEngine.Localization.Components;
 using UnityEngine.UI;
@@ -46,15 +47,24 @@ namespace CryptoQuest.Menus.Beast.UI
 
         private void SetAvatar(IBeast beast)
         {
-            // var id = $"{beast.Id}-{beast.Elemental.Id}-{beast.Class.Id}";
-            // var assetRefAvatar = _database.CacheLookupTable[id];
-            // if (assetRefAvatar == null || !assetRefAvatar.RuntimeKeyIsValid())
-            // {
-            //     _beastImage.enabled = false;
-            //     return;
-            // }
-            //
-            // _beastImage.LoadSpriteAndSet(assetRefAvatar);
+            AssetReferenceT<Sprite> assetRefAvatar = null;
+            foreach (var avatar in _database.AvatarMappings)
+            {
+                if (avatar.BeastId != beast.Type.BeastInformation.Id ||
+                    avatar.ElementId != beast.Elemental.Id ||
+                    avatar.ClassId != beast.Class.Id) continue;
+
+                assetRefAvatar = avatar.Image;
+                break;
+            }
+
+            if (assetRefAvatar == null || !assetRefAvatar.RuntimeKeyIsValid())
+            {
+                _beastImage.enabled = false;
+                return;
+            }
+
+            _beastImage.LoadSpriteAndSet(assetRefAvatar);
         }
     }
 }

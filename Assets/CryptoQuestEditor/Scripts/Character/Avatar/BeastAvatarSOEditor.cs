@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using CryptoQuest.Beast.Avatar;
 using CsvHelper;
 using CsvHelper.Configuration.Attributes;
@@ -24,10 +25,9 @@ namespace CryptoQuestEditor.CryptoQuestEditor.Scripts.Character.Avatar
     [CustomEditor(typeof(BeastAvatarSO), true)]
     public class BeastAvatarSOEditor : Editor
     {
+        private const string BEAST_AVATAR_PATH = "Assets/Arts/Beasts/";
         private BeastAvatarSO Target => (BeastAvatarSO)target;
         private SerializedProperty _avatarMappings;
-
-        private const string BEAST_AVATAR_PATH = "Assets/Arts/Beasts/";
 
         protected virtual void OnEnable()
         {
@@ -62,11 +62,9 @@ namespace CryptoQuestEditor.CryptoQuestEditor.Scripts.Character.Avatar
 
             try
             {
-                using (var fs = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
-                {
-                    var stream = new StreamReader(fs);
-                    ReadStream(stream);
-                }
+                using FileStream fs = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+                StreamReader stream = new StreamReader(fs);
+                ReadStream(stream);
             }
             catch (Exception e)
             {
@@ -81,65 +79,72 @@ namespace CryptoQuestEditor.CryptoQuestEditor.Scripts.Character.Avatar
 
         private void ReadStream(StreamReader stream)
         {
-            using (var csvReader = new CsvReader(stream, CultureInfo.InvariantCulture))
+            using CsvReader csvReader = new CsvReader(stream, CultureInfo.InvariantCulture);
+            csvReader.Read();
+            csvReader.ReadHeader();
+
+            List<AvatarBeastSetData> rows = new List<AvatarBeastSetData>();
+
+            while (csvReader.Read())
             {
-                csvReader.Read();
-                csvReader.ReadHeader();
-                var rows = new List<AvatarBeastSetData>();
-                while (csvReader.Read())
-                {
-                    EditorUtility.DisplayProgressBar("Reading CSV", "Reading each row",
-                        csvReader.Context.Row / (float)csvReader.Context.Record.Length);
-                    if (IgnoreRow(csvReader.Context)) continue;
-                    var message = csvReader.GetRecord<AvatarBeastSetData>();
+                EditorUtility.DisplayProgressBar("Reading CSV", "Reading each row",
+                    csvReader.Context.Row / (float)csvReader.Context.Record.Length);
 
-                    if (message.BeastId == 0 || message.ClassId == 0 || message.ElementId == 0) continue;
+                if (IgnoreRow(csvReader.Context)) continue;
+                AvatarBeastSetData message = csvReader.GetRecord<AvatarBeastSetData>();
 
-                    if (rows.Exists(x =>
-                            x.BeastId == message.BeastId &&
-                            x.ClassId == message.ClassId &&
-                            x.ElementId == message.ElementId)) continue;
+                if (message.BeastId == 0 || message.ClassId == 0 || message.ElementId == 0) continue;
 
-                    rows.Add(message);
-                }
+                if (rows.Exists(x =>
+                        x.BeastId == message.BeastId &&
+                        x.ClassId == message.ClassId &&
+                        x.ElementId == message.ElementId)) continue;
 
-                if (rows.Count == 0) return;
-                _avatarMappings.ClearArray(); // only clear after validated
-                for (int i = 0; i < rows.Count; i++)
-                {
-                    _avatarMappings.InsertArrayElementAtIndex(i);
-                    var element = _avatarMappings.GetArrayElementAtIndex(i);
-                    var avatarSet = rows[i];
-
-                    var guids = AssetDatabase.FindAssets("t:sprite", new[] { BEAST_AVATAR_PATH });
-
-                    foreach (var guid in guids)
-                    {
-                        var path = AssetDatabase.GUIDToAssetPath(guid);
-                        var asset = AssetDatabase.LoadAssetAtPath<Sprite>(path);
-                        var assetRef = new AssetReferenceT<Sprite>(guid);
-                        assetRef.SetEditorAsset(asset);
-
-                        GetAvatarId(asset, rows);
-                    }
-
-                    // TODO: Check and set image here
-
-                    // element.boxedValue = new BeastAvatarData()
-                    // {
-                    //     BeastId = avatarSet.BeastId,
-                    //     ClassId = avatarSet.ClassId,
-                    //     ElementId = avatarSet.ElementId,
-                    //     Image = assetRef,
-                    // };
-                }
-
-                _avatarMappings.serializedObject.ApplyModifiedProperties();
-                EditorUtility.ClearProgressBar();
+                rows.Add(message);
             }
+
+            if (rows.Count == 0) return;
+            _avatarMappings.ClearArray();
+
+            FillData(rows);
+
+            _avatarMappings.serializedObject.ApplyModifiedProperties();
+            EditorUtility.ClearProgressBar();
         }
 
-        private void GetAvatarId(Sprite asset, List<AvatarBeastSetData> element) { }
+        private void FillData(List<AvatarBeastSetData> rows)
+        {
+            for (int i = 0; i < rows.Count; i++)
+            {
+                _avatarMappings.InsertArrayElementAtIndex(i);
+                SerializedProperty element = _avatarMappings.GetArrayElementAtIndex(i);
+
+                string[] guids = AssetDatabase.FindAssets("t:sprite", new[] { BEAST_AVATAR_PATH });
+
+                foreach (var guid in guids)
+                {
+                    var path = AssetDatabase.GUIDToAssetPath(guid);
+                    var asset = AssetDatabase.LoadAssetAtPath<Sprite>(path);
+                    var assetRef = new AssetReferenceT<Sprite>(guid);
+                    assetRef.SetEditorAsset(asset);
+                    assetRef.SubObjectName = asset.name;
+
+                    if (rows[i].ImageName == asset.name)
+                    {
+                        var beastData = new BeastAvatarData()
+                        {
+                            BeastId = rows[i].BeastId,
+                            ClassId = rows[i].ClassId,
+                            ElementId = rows[i].ElementId,
+                            Image = assetRef,
+                        };
+
+                        element.boxedValue = beastData;
+                        break;
+                    }
+                }
+            }
+        }
 
         protected virtual bool IgnoreRow(ReadingContext contextRawRecord)
         {
