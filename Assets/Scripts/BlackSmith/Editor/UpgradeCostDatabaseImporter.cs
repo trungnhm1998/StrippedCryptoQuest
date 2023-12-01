@@ -10,7 +10,7 @@ using CsvHelper.Configuration.Attributes;
 using UnityEditor;
 using UnityEngine;
 
-namespace CryptoQuestEditor.Item
+namespace CryptoQuestEditor.BlackSmith
 {
     public class UpgradeCostDatabaseImporter : ScriptableObject
     {
