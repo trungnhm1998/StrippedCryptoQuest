@@ -22,7 +22,7 @@ namespace CryptoQuest.UI.Menu
         /// <param name="equipment">to preview stats</param>
         /// <param name="equippingSlot"></param>
         /// <param name="inspectingHero">on which character</param>
-        public void PreviewEquipment(EquipmentInfo equipment, EquipmentSlot.EType equippingSlot,
+        public void PreviewEquipment(EquipmentInfo equipment, ESlot equippingSlot,
             HeroBehaviour inspectingHero)
         {
             ResetAttributesUI();
@@ -55,7 +55,7 @@ namespace CryptoQuest.UI.Menu
         /// <param name="equipment">to preview stats</param>
         /// <param name="equippingSlot"></param>
         /// <param name="inspectingHero">on which character</param>
-        public void PreviewUnequipEquipment(EquipmentInfo equipment, EquipmentSlot.EType equippingSlot,
+        public void PreviewUnequipEquipment(EquipmentInfo equipment, ESlot equippingSlot,
             HeroBehaviour inspectingHero)
         {
             ResetAttributesUI();

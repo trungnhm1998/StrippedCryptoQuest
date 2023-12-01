@@ -28,8 +28,6 @@ namespace CryptoQuest.Menus.Status.UI
 
         private string _lvlTxtFormat = string.Empty; // could made this into static
         private AttributeSystemBehaviour _inspectingAttributeSystem;
-
-
         public void InspectCharacter(HeroBehaviour hero)
         {
             if (hero.IsValid() == false) return;

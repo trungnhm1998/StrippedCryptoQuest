@@ -5,7 +5,6 @@ using CryptoQuest.Gameplay.Loot;
 using CryptoQuest.Gameplay.Reward.Events;
 using CryptoQuest.Quest.Authoring;
 using CryptoQuest.Quest.Events;
-using CryptoQuest.System;
 using IndiGames.Core.Common;
 using UnityEngine;
 
@@ -174,7 +173,7 @@ namespace CryptoQuest.Quest.Components
 
         private void RewardReceived(List<LootInfo> loots)
         {
-            _rewardEventChannel.EventRaised(loots);
+            _rewardEventChannel.RaiseEvent(loots);
             _currentQuestData.OnRewardReceived -= RewardReceived;
         }
 

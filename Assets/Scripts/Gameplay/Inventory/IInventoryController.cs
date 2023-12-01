@@ -15,8 +15,6 @@ namespace CryptoQuest.Gameplay.Inventory
         bool Remove(NftEquipment equipment);
         bool Add(ConsumableInfo consumable, int quantity = 1);
         bool Remove(ConsumableInfo consumable, int quantity = 1);
-        bool Contains(Equipment equipment);
-        bool Contains(NftEquipment equipment);
         bool Add(CurrencyInfo currency);
         bool Remove(CurrencyInfo currency);
     }

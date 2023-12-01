@@ -19,12 +19,12 @@ namespace CryptoQuest.Item.Equipment
         ///
         /// Leave this empty for Accessories
         /// </summary>
-        [field: SerializeField] public EquipmentSlot.EType[] RequiredSlots { get; private set; }
+        [field: SerializeField] public ESlot[] RequiredSlots { get; private set; }
 
         /// <summary>
         /// Allowed slots for this equipment
         /// </summary>
-        [field: SerializeField] public EquipmentSlot.EType[] AllowedSlots { get; private set; }
+        [field: SerializeField] public ESlot[] AllowedSlots { get; private set; }
 
         public EEquipmentCategory EquipmentCategory => EquipmentType.EquipmentCategory;
     }

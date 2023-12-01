@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using CryptoQuest.Battle.Components;
 using CryptoQuest.Item.Equipment;
 using CryptoQuest.Menu;
-using CryptoQuest.UI.Menu;
 using UnityEngine;
 
 namespace CryptoQuest.Menus.Status.UI.Equipment
@@ -21,17 +20,14 @@ namespace CryptoQuest.Menus.Status.UI.Equipment
         [SerializeField] private GameObject _equipmentSlotParent;
         [SerializeField] private MultiInputButton _defaultSelection;
 
-        [SerializeField] private RectTransform _tooltipSafeArea;
-        [SerializeField] private Vector2 _minPivotTooltip = Vector2.zero;
-        [SerializeField] private Vector2 _maxPivotTooltip = Vector2.one;
+        private Dictionary<ESlot, UICharacterEquipmentSlot> _equipmentSlotsCache = new();
 
-        private Dictionary<EquipmentSlot.EType, UICharacterEquipmentSlot> _equipmentSlotsCache = new();
-        public Dictionary<EquipmentSlot.EType, UICharacterEquipmentSlot> EquipmentSlots
+        private Dictionary<ESlot, UICharacterEquipmentSlot> EquipmentSlots
         {
             get
             {
                 if (_equipmentSlotsCache != null && _equipmentSlotsCache.Count != 0) return _equipmentSlotsCache;
-                _equipmentSlotsCache = new Dictionary<EquipmentSlot.EType, UICharacterEquipmentSlot>();
+                _equipmentSlotsCache = new Dictionary<ESlot, UICharacterEquipmentSlot>();
                 foreach (var equipmentSlot in _equipmentSlots)
                     _equipmentSlotsCache.Add(equipmentSlot.SlotType, equipmentSlot);
 
@@ -43,37 +39,21 @@ namespace CryptoQuest.Menus.Status.UI.Equipment
         private void OnValidate() => _equipmentSlots = GetComponentsInChildren<UICharacterEquipmentSlot>();
 #endif
 
-        private void OnEnable()
-        {
-            // TODO: REFACTOR TOOLTIP
-            // Tooltip.WithBorderPointer(true)
-            //     .WithLocalPosition(Vector3.zero)
-            //     .WithScale(Vector3.one)
-            //     .WithRangePivot(_minPivotTooltip, _maxPivotTooltip);
-        }
-
         public void Show(HeroBehaviour hero)
         {
-            RenderEquippingItems(hero);
-            // TODO: REFACTOR TOOLTIP
-            // Tooltip.SetSafeArea(_tooltipSafeArea);
+            if (hero == null || hero.IsValid() == false) return;
             _equipmentSlotParent.SetActive(true);
-            Invoke(nameof(SelectDefault), 0);
+
+            RenderEquippingItems(hero);
+            Invoke(nameof(Focus), 0);
         }
 
-        public void SelectDefault() => _defaultSelection.Select();
+        public void Focus() => _defaultSelection.Select();
 
-        public void Hide()
-        {
-            // TODO: REFACTOR TOOLTIP
-            // Tooltip.Hide();
-            _equipmentSlotParent.SetActive(false);
-        }
+        public void Hide() => _equipmentSlotParent.SetActive(false);
 
         private void RenderEquippingItems(HeroBehaviour hero)
-
         {
-            if (hero.IsValid() == false) return;
             var equipments = hero.GetComponent<EquipmentsController>().Equipments;
             ResetEquipmentsUI();
             foreach (var equipmentSlot in equipments.Slots)
@@ -82,9 +62,6 @@ namespace CryptoQuest.Menus.Status.UI.Equipment
                 var uiEquipmentSlot = EquipmentSlots[equipmentSlot.Type];
                 uiEquipmentSlot.Init(equipmentSlot.Equipment);
             }
-
-            // TODO: REFACTOR TOOLTIP
-            // Tooltip.Hide();
         }
 
         private void ResetEquipmentsUI()

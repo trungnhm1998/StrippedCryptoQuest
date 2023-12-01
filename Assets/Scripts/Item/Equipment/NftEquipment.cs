@@ -15,8 +15,5 @@ namespace CryptoQuest.Item.Equipment
 
         public override bool RemoveFromInventory(IInventoryController inventoryController) =>
             inventoryController.Remove(this);
-
-        public override bool ContainedInInventory(IInventoryController inventoryController) =>
-            inventoryController.Contains(this);
     }
 }

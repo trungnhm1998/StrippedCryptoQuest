@@ -2,13 +2,18 @@
 
 namespace CryptoQuest.Menus.Status.States
 {
-    public class EquipmentSelection : StatusStateBase
+    public class ModifyEquipments : StatusStateBase
     {
-        public EquipmentSelection(UIStatusMenu statusPanel) : base(statusPanel) { }
+        public ModifyEquipments(UIStatusMenu statusPanel) : base(statusPanel) { }
 
         public override void OnEnter()
         {
+            StatusPanel.ShowTooltipEvent.RaiseEvent(false);
             StatusPanel.Input.MenuCancelEvent += BackToOverview;
+
+            StatusPanel.CharacterEquipmentsPanel.Hide();
+            StatusPanel.EquipmentsInventoryPanel.RenderEquipmentsInInventory(StatusPanel.InspectingHero,
+                StatusPanel.ModifyingSlot, StatusPanel.ModifyingCategory);
         }
 
         public override void OnExit()
@@ -21,7 +26,7 @@ namespace CryptoQuest.Menus.Status.States
 
         private void BackToOverview()
         {
-            fsm.RequestStateChange(StatusMenuStateMachine.Overview);
+            fsm.RequestStateChange(State.OVERVIEW);
         }
     }
 }

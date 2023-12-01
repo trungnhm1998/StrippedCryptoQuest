@@ -14,20 +14,15 @@ namespace CryptoQuest.UI.Menu
         [SerializeField] private InputMediatorSO _input;
         [SerializeField] private GameStateSO _gameStateSO;
         [SerializeField] private UIMainMenu _uiMainMenuPanel;
-        [SerializeField] private TabManager _tabManager;
 
         private void OnEnable()
         {
             _input.ShowMainMenuEvent += OpenMainMenu;
-            UIMainMenu.BackToNavigation += EnableBackToCloseMenu;
-            _tabManager.OpeningTab += DisableBackToCloseMenu;
             _input.MenuCancelEvent += CloseMainMenuUsingBack;
         }
 
         private void OnDisable()
         {
-            UIMainMenu.BackToNavigation -= EnableBackToCloseMenu;
-            _tabManager.OpeningTab -= DisableBackToCloseMenu;
             _input.MenuCancelEvent -= CloseMainMenuUsingBack;
             _input.ShowMainMenuEvent -= OpenMainMenu;
             _input.CloseMainMenuEvent -= CloseMainMenu;
@@ -36,14 +31,9 @@ namespace CryptoQuest.UI.Menu
 
         private void CloseMainMenuUsingBack()
         {
-            if (!_enableBackToCloseMenu) return;
+            if (!_uiMainMenuPanel.IsNavigating) return; // only allow back to close menu when in navigating state
             CloseMainMenu();
         }
-
-        private bool _enableBackToCloseMenu = false;
-        private void EnableBackToCloseMenu() => _enableBackToCloseMenu = true;
-
-        private void DisableBackToCloseMenu(UITabButton _) => _enableBackToCloseMenu = false;
 
         private void OpenMainMenu()
         {

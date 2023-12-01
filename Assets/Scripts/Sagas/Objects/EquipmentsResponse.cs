@@ -38,6 +38,7 @@ namespace CryptoQuest.Sagas.Objects
         public uint id;
         public string equipmentTokenId;
         public string userId;
+        public string walletAddress;
         public int lv;
         public string equipmentId;
         public int equipTypeId;
@@ -61,8 +62,8 @@ namespace CryptoQuest.Sagas.Objects
         public float addAttack;
         public float MATK;
         public float addMATK;
-        public float deffence;
-        public float addDeffence;
+        public float defence;
+        public float addDefence;
         public float criticalRate;
         public float evasionRate;
         public string attachUnitTokenId;
@@ -101,7 +102,7 @@ namespace CryptoQuest.Sagas.Objects
         public float minLuck;
         public float minAttack;
         public float minMATK;
-        public float minDeffence;
+        public float minDefence;
         public float minEvasionRate;
         public float minCriticalRate;
         public float maxHP;
@@ -113,11 +114,11 @@ namespace CryptoQuest.Sagas.Objects
         public float maxLuck;
         public float maxAttack;
         public float maxMATK;
-        public float maxDeffence;
+        public float maxDefence;
         public float maxEvasionRate;
         public float maxCriticalRate;
-        public int miningPower;
-        public int consumeFuel;
+        public float miningPower;
+        public float consumeFuel;
         public string imageFileName;
         public int passiveSkillId1;
         public int passiveSkillId2;

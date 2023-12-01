@@ -6,12 +6,9 @@ namespace IndiGames.Core.Events.ScriptableObjects
 {
     public abstract class GenericEventChannelSO<T> : SerializableScriptableObject
     {
-        public UnityAction<T> EventRaised;
+        public event UnityAction<T> EventRaised;
 
-        public virtual void RaiseEvent(T obj)
-        {
-            OnRaiseEvent(obj);
-        }
+        public virtual void RaiseEvent(T obj) => OnRaiseEvent(obj);
 
         protected virtual void OnRaiseEvent(T obj)
         {

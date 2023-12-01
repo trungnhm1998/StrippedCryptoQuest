@@ -5,7 +5,6 @@ using NSubstitute;
 using NUnit.Framework;
 using UnityEditor;
 using UnityEngine;
-using ESlotType = CryptoQuest.Item.Equipment.EquipmentSlot.EType;
 using Object = UnityEngine.Object;
 
 namespace CryptoQuest.Tests.Editor.Battle.Components
@@ -28,14 +27,14 @@ namespace CryptoQuest.Tests.Editor.Battle.Components
         }
 
 
-        [TestCase(new[] { ESlotType.LeftHand }, new[] { ESlotType.LeftHand }, ESlotType.LeftHand)]
-        [TestCase(null, new[] { ESlotType.Accessory1, ESlotType.Accessory2 }, ESlotType.Accessory1)]
-        [TestCase(null, new[] { ESlotType.Accessory1, ESlotType.Accessory2 }, ESlotType.Accessory2)]
+        [TestCase(new[] { ESlot.LeftHand }, new[] { ESlot.LeftHand }, ESlot.LeftHand)]
+        [TestCase(null, new[] { ESlot.Accessory1, ESlot.Accessory2 }, ESlot.Accessory1)]
+        [TestCase(null, new[] { ESlot.Accessory1, ESlot.Accessory2 }, ESlot.Accessory2)]
         public void Equip_ValidEquipment_EquipmentIsEquipped(
-            ESlotType[] requiredSlots, ESlotType[] allowedSlots, ESlotType equippingSlot)
+            ESlot[] requiredSlots, ESlot[] allowedSlots, ESlot equippingSlot)
         {
             _equipment.IsValid().Returns(true);
-            _equipment.RequiredSlots.Returns(requiredSlots ?? Array.Empty<ESlotType>());
+            _equipment.RequiredSlots.Returns(requiredSlots ?? Array.Empty<ESlot>());
             _equipment.AllowedSlots.Returns(allowedSlots);
 
             _equipmentsController.Equip(_equipment, equippingSlot);
@@ -47,78 +46,106 @@ namespace CryptoQuest.Tests.Editor.Battle.Components
         public void Equip_InvalidEquipment_EquipmentIsNotEquipped()
         {
             _equipment.IsValid().Returns(false);
-            _equipment.RequiredSlots.Returns(new[] { ESlotType.LeftHand });
-            _equipment.AllowedSlots.Returns(new[] { ESlotType.LeftHand });
+            _equipment.RequiredSlots.Returns(new[] { ESlot.LeftHand });
+            _equipment.AllowedSlots.Returns(new[] { ESlot.LeftHand });
 
-            _equipmentsController.Equip(_equipment, ESlotType.LeftHand);
+            _equipmentsController.Equip(_equipment, ESlot.LeftHand);
 
-            Assert.IsNull(_equipmentsController.GetEquipmentInSlot(ESlotType.LeftHand));
+            Assert.IsNull(_equipmentsController.GetEquipmentInSlot(ESlot.LeftHand));
         }
 
         [Test]
         public void Equip_EquipmentNotAllowedInSlot_EquipmentIsNotEquipped()
         {
             _equipment.IsValid().Returns(true);
-            _equipment.RequiredSlots.Returns(new[] { ESlotType.RightHand });
-            _equipment.AllowedSlots.Returns(new[] { ESlotType.RightHand });
+            _equipment.RequiredSlots.Returns(new[] { ESlot.RightHand });
+            _equipment.AllowedSlots.Returns(new[] { ESlot.RightHand });
 
-            _equipmentsController.Equip(_equipment, ESlotType.LeftHand);
+            _equipmentsController.Equip(_equipment, ESlot.LeftHand);
 
-            Assert.IsNull(_equipmentsController.GetEquipmentInSlot(ESlotType.LeftHand));
+            Assert.IsNull(_equipmentsController.GetEquipmentInSlot(ESlot.LeftHand));
         }
-        
+
         [Test]
         public void Equip_EquipmentRequiredSlots_SlotsAreOccupied()
         {
             _equipment.IsValid().Returns(true);
-            _equipment.RequiredSlots.Returns(new[] { ESlotType.RightHand, ESlotType.LeftHand });
-            _equipment.AllowedSlots.Returns(new[] { ESlotType.RightHand });
+            _equipment.RequiredSlots.Returns(new[] { ESlot.RightHand, ESlot.LeftHand });
+            _equipment.AllowedSlots.Returns(new[] { ESlot.RightHand });
 
-            _equipmentsController.Equip(_equipment, ESlotType.RightHand);
+            _equipmentsController.Equip(_equipment, ESlot.RightHand);
 
-            Assert.AreEqual(_equipment, _equipmentsController.GetEquipmentInSlot(ESlotType.RightHand));
-            Assert.AreEqual(_equipment, _equipmentsController.GetEquipmentInSlot(ESlotType.LeftHand));
+            Assert.AreEqual(_equipment, _equipmentsController.GetEquipmentInSlot(ESlot.RightHand));
+            Assert.AreEqual(_equipment, _equipmentsController.GetEquipmentInSlot(ESlot.LeftHand));
         }
-        
+
         [Test]
         public void Unequip_EquipmentIsEquipped_EquipmentIsUnequipped()
         {
             _equipment.IsValid().Returns(true);
-            _equipment.RequiredSlots.Returns(new[] { ESlotType.RightHand, ESlotType.LeftHand });
-            _equipment.AllowedSlots.Returns(new[] { ESlotType.RightHand });
+            _equipment.RequiredSlots.Returns(new[] { ESlot.RightHand, ESlot.LeftHand });
+            _equipment.AllowedSlots.Returns(new[] { ESlot.RightHand });
 
-            _equipmentsController.Equip(_equipment, ESlotType.RightHand);
+            _equipmentsController.Equip(_equipment, ESlot.RightHand);
             _equipmentsController.Unequip(_equipment);
 
-            Assert.IsNull(_equipmentsController.GetEquipmentInSlot(ESlotType.RightHand));
-            Assert.IsNull(_equipmentsController.GetEquipmentInSlot(ESlotType.LeftHand));
+            Assert.IsNull(_equipmentsController.GetEquipmentInSlot(ESlot.RightHand));
+            Assert.IsNull(_equipmentsController.GetEquipmentInSlot(ESlot.LeftHand));
         }
-        
+
         [Test]
         public void Unequip_EquipmentIsNotEquipped_EquipmentIsNotUnequipped()
         {
             _equipment.IsValid().Returns(true);
-            _equipment.RequiredSlots.Returns(new[] { ESlotType.RightHand, ESlotType.LeftHand });
-            _equipment.AllowedSlots.Returns(new[] { ESlotType.RightHand });
+            _equipment.RequiredSlots.Returns(new[] { ESlot.RightHand, ESlot.LeftHand });
+            _equipment.AllowedSlots.Returns(new[] { ESlot.RightHand });
 
             _equipmentsController.Unequip(_equipment);
 
-            Assert.IsNull(_equipmentsController.GetEquipmentInSlot(ESlotType.RightHand));
-            Assert.IsNull(_equipmentsController.GetEquipmentInSlot(ESlotType.LeftHand));
+            Assert.IsNull(_equipmentsController.GetEquipmentInSlot(ESlot.RightHand));
+            Assert.IsNull(_equipmentsController.GetEquipmentInSlot(ESlot.LeftHand));
         }
-        
+
         [Test]
         public void Unequip_EquipmentRequiredSlots_SlotsAreOccupied()
         {
             _equipment.IsValid().Returns(true);
-            _equipment.RequiredSlots.Returns(new[] { ESlotType.RightHand, ESlotType.LeftHand });
-            _equipment.AllowedSlots.Returns(new[] { ESlotType.RightHand });
+            _equipment.RequiredSlots.Returns(new[] { ESlot.RightHand, ESlot.LeftHand });
+            _equipment.AllowedSlots.Returns(new[] { ESlot.RightHand });
 
-            _equipmentsController.Equip(_equipment, ESlotType.RightHand);
+            _equipmentsController.Equip(_equipment, ESlot.RightHand);
             _equipmentsController.Unequip(_equipment);
 
-            Assert.IsNull(_equipmentsController.GetEquipmentInSlot(ESlotType.RightHand));
-            Assert.IsNull(_equipmentsController.GetEquipmentInSlot(ESlotType.LeftHand));
+            Assert.IsNull(_equipmentsController.GetEquipmentInSlot(ESlot.RightHand));
+            Assert.IsNull(_equipmentsController.GetEquipmentInSlot(ESlot.LeftHand));
+        }
+
+        [Test]
+        public void Equip_WithOccupiedLeftHand_ShouldUnequipLeftHandFirst()
+        {
+            var leftHandEquipment = Substitute.For<IEquipment>();
+            leftHandEquipment.IsValid().Returns(true);
+            leftHandEquipment.RequiredSlots.Returns(new[] { ESlot.LeftHand });
+            leftHandEquipment.AllowedSlots.Returns(new[] { ESlot.LeftHand });
+
+            _equipmentsController.Equip(leftHandEquipment, ESlot.LeftHand);
+            Assert.AreEqual(leftHandEquipment, _equipmentsController.GetEquipmentInSlot(ESlot.LeftHand));
+
+            var dualWieldingEquipment = Substitute.For<IEquipment>();
+            dualWieldingEquipment.IsValid().Returns(true);
+            dualWieldingEquipment.RequiredSlots.Returns(new[] { ESlot.LeftHand, ESlot.RightHand });
+            dualWieldingEquipment.AllowedSlots.Returns(new[] { ESlot.RightHand });
+
+            var hasRemovedLeftHand = false;
+            _equipmentsController.Removed += (equipment) =>
+            {
+                if (equipment == leftHandEquipment) hasRemovedLeftHand = true;
+            };
+
+            _equipmentsController.Equip(dualWieldingEquipment, ESlot.RightHand);
+
+            Assert.AreEqual(dualWieldingEquipment, _equipmentsController.GetEquipmentInSlot(ESlot.LeftHand));
+            Assert.True(hasRemovedLeftHand);
         }
     }
 }

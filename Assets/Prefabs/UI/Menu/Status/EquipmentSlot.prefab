@@ -415,9 +415,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 8575258915249462629}
-        m_TargetAssemblyTypeName: CryptoQuest.UI.Menu.Panels.Status.Equipment.UICharacterEquipmentSlot,
-          indi-games.crypto-quest
-        m_MethodName: OnChangingEquipment
+        m_TargetAssemblyTypeName: CryptoQuest.Menus.Status.UI.Equipment.UICharacterEquipmentSlot,
+          IndiGames.CryptoQuest.Menus.Status
+        m_MethodName: OnPressed
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -426,7 +426,7 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
-        m_CallState: 1
+        m_CallState: 2
 --- !u!114 &8575258915249462629
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -440,7 +440,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <SlotType>k__BackingField: 0
-  <EquipmentCategory>k__BackingField: 0
+  <Category>k__BackingField: 0
   _equipment: {fileID: 4777636308793188708}
 --- !u!114 &1981449016718410373
 MonoBehaviour:
@@ -499,7 +499,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _input: {fileID: 11400000, guid: 1fb61cdb72f0a484f8e4db68e2011977, type: 2}
   _showMagicStone: {fileID: 11400000, guid: 5afbcb8c853b4e4489e1b72058b9a37e, type: 2}
-  _showTooltip: {fileID: 11400000, guid: 99b9a7cc9e18bdf47b47bf266cbcf5ee, type: 2}
   _equipSlot: {fileID: 6941356930478696514}
 --- !u!1001 &9047141325003626200
 PrefabInstance:
