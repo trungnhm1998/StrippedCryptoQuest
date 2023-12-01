@@ -33,10 +33,16 @@ namespace CryptoQuest.BlackSmith.Upgrade.Presenters
         {
             _equipmentListUI.OnSelectedUpgradeItem += SelectedUpgradeItem;
             _equipmentListUI.OnSubmitUpgradeItem += OnItemSubmit;
-
-            _equipmentListUI.ResetSelected();
+            
             SetActiveDetailUI(true);
             InitEquipmentsUI();
+        }
+
+        public void CancelUI()
+        {
+            SetInteractable(true);
+            _equipmentListUI.ResetSelected();
+            _equipmentDetailsUI.ResetPreviews();
         }
 
         private void OnDisable()

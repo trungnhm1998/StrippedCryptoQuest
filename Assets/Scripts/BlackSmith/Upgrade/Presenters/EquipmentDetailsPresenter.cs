@@ -19,6 +19,11 @@ namespace CryptoQuest.BlackSmith.Upgrade.Presenters
 
         public IEquipment Equipment { get; private set; }
 
+        private void OnDisable()
+        {
+            Equipment = null;
+        }
+
         public void SetData(IEquipment equipment)
         {
             if (Equipment != null && equipment == Equipment) return;

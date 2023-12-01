@@ -1181,6 +1181,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5338290623673761665}
   - component: {fileID: 4952556907290803518}
+  - component: {fileID: 4645190555392927657}
   m_Layer: 5
   m_Name: UpgradePanel
   m_TagString: Untagged
@@ -1201,6 +1202,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4545049671489482734}
+  - {fileID: 1412804209385584099}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -1225,6 +1227,7 @@ MonoBehaviour:
   <ConfigUpgradePresenter>k__BackingField: {fileID: 320572266332866298}
   <UIConfirmDetails>k__BackingField: {fileID: 708256564556299073}
   <ResultUI>k__BackingField: {fileID: 5173699640605424051}
+  <CurrencyPresenter>k__BackingField: {fileID: 4645190555392927657}
   <SelectEquipmentToUpgradeText>k__BackingField:
     m_TableReference:
       m_TableCollectionName: GUID:0b0d3f62f53cf574db976df270f91498
@@ -1264,6 +1267,19 @@ MonoBehaviour:
   references:
     version: 2
     RefIds: []
+--- !u!114 &4645190555392927657
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2494902465980156063}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3f625973cd937141a8cf7326e2d2014, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _showWalletEventChannelSO: {fileID: 11400000, guid: f0c8bdab7ee1cb44abedecd018a44de4, type: 2}
 --- !u!1 &2558848237846958603
 GameObject:
   m_ObjectHideFlags: 0
@@ -2973,6 +2989,112 @@ RectTransform:
   m_AnchoredPosition: {x: -200, y: 5}
   m_SizeDelta: {x: 392, y: 50}
   m_Pivot: {x: 0.5, y: 0}
+--- !u!1 &6710752062287239514
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1412804209385584099}
+  - component: {fileID: 456802870831085953}
+  - component: {fileID: 3698506228837158823}
+  - component: {fileID: 8485674316922203740}
+  - component: {fileID: 6309619958358639160}
+  - component: {fileID: 1170512842343081460}
+  m_Layer: 5
+  m_Name: Sagas
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1412804209385584099
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6710752062287239514}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5338290623673761665}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &456802870831085953
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6710752062287239514}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 53984350b036f0f43802ce560d055a44, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _walletSO: {fileID: 11400000, guid: e349636f15671994ba195728c42a551b, type: 2}
+  _currencySO: {fileID: 11400000, guid: 16b3f6e09fc22d240be1b324116eeb79, type: 2}
+  _configPresenter: {fileID: 320572266332866298}
+  _delay: 1
+--- !u!114 &3698506228837158823
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6710752062287239514}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8cb2b290f3282044b8b3454e90bdfbf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &8485674316922203740
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6710752062287239514}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 859611031f86482489bd27200403b5f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &6309619958358639160
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6710752062287239514}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fa846dbb54f9ce458ee6d6c29fbe8fa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1170512842343081460
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6710752062287239514}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0ce4d9c088d9c04ca0ad05ecb8ea825, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _walletSO: {fileID: 11400000, guid: e349636f15671994ba195728c42a551b, type: 2}
+  _currencySO: {fileID: 11400000, guid: 16b3f6e09fc22d240be1b324116eeb79, type: 2}
 --- !u!1 &6890567527547630856
 GameObject:
   m_ObjectHideFlags: 0

@@ -7,6 +7,7 @@ namespace CryptoQuest.BlackSmith.Upgrade.States
         public override void OnEnter()
         {
             base.OnEnter();
+            CurrencyPresenter.Show();
             ResultUI.SetActive(true);
             EquipmentsPresenter.gameObject.SetActive(false);
             DialogsPresenter.Dialogue.SetMessage(UpgradeSystem.UpgradeResultText).Show();

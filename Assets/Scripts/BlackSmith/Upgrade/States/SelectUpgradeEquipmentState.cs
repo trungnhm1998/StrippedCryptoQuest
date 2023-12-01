@@ -11,6 +11,7 @@ namespace CryptoQuest.BlackSmith.Upgrade.States
         {
             base.OnEnter();
 
+            CurrencyPresenter.Show();
             EquipmentsPresenter.gameObject.SetActive(true);
             DialogsPresenter.Dialogue.SetMessage(UpgradeSystem.SelectEquipmentToUpgradeText).Show();
             EquipmentsPresenter.OnSubmitItem += SubmitItem;
@@ -32,6 +33,7 @@ namespace CryptoQuest.BlackSmith.Upgrade.States
 
         public override void OnCancel()
         {
+            CurrencyPresenter.Hide();
             StateMachine.BackToOverview();
         }
     }

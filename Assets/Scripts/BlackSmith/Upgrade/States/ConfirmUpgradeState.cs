@@ -1,9 +1,14 @@
-using CryptoQuest.BlackSmith.States;
+using CryptoQuest.BlackSmith.Upgrade.Actions;
+using IndiGames.Core.Events;
+using TinyMessenger;
 
 namespace CryptoQuest.BlackSmith.Upgrade.States
 {
     public class ConfirmUpgradeState : UpgradeStateBase
     {
+        private TinyMessageSubscriptionToken _upgradeSuccessToken;
+        private TinyMessageSubscriptionToken _upgradeFailToken;
+        
         public ConfirmUpgradeState(UpgradeStateMachine machine) : base(machine) { }
 
         public override void OnEnter()
@@ -17,6 +22,8 @@ namespace CryptoQuest.BlackSmith.Upgrade.States
 
             DialogsPresenter.ConfirmYesEvent += ConfirmedUpgrade;
             DialogsPresenter.ConfirmNoEvent += OnCancel;
+            _upgradeSuccessToken = ActionDispatcher.Bind<UpgradeSucceed>(UpgradeSucceed);
+            _upgradeFailToken = ActionDispatcher.Bind<UpgradeFailed>(UpgradeFailed);
         }
 
         public override void OnExit()
@@ -26,11 +33,27 @@ namespace CryptoQuest.BlackSmith.Upgrade.States
             DialogsPresenter.HideConfirmDialog();
 
             DialogsPresenter.ConfirmYesEvent -= ConfirmedUpgrade;
-            DialogsPresenter.ConfirmNoEvent -= OnCancel;
+            DialogsPresenter.ConfirmNoEvent -= OnCancel;            
+            ActionDispatcher.Unbind(_upgradeSuccessToken);
+            ActionDispatcher.Unbind(_upgradeFailToken);
         }
 
         public override void OnCancel() => fsm.RequestStateChange(EStates.ConfigUpgrade);
 
-        private void ConfirmedUpgrade() => fsm.RequestStateChange(EStates.UpgradeResult);
+        private void ConfirmedUpgrade()
+        {
+            ActionDispatcher.Dispatch(new RequestUpgrade(StateMachine.EquipmentToUpgrade,
+                StateMachine.LevelToUpgrade));
+        }
+
+        private void UpgradeSucceed(UpgradeSucceed ctx)
+        {
+            fsm.RequestStateChange(EStates.UpgradeResult);
+        }
+
+        private void UpgradeFailed(UpgradeFailed ctx)
+        {
+            fsm.RequestStateChange(EStates.SelectEquipment);
+        }
     }
 }

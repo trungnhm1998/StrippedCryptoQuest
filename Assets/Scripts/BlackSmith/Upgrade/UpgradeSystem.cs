@@ -12,6 +12,7 @@ namespace CryptoQuest.BlackSmith.Upgrade
         [field: SerializeField] public ConfigUpgradePresenter ConfigUpgradePresenter { get; private set; }
         [field: SerializeField] public UIConfirmDetails UIConfirmDetails { get; private set; }
         [field: SerializeField] public GameObject ResultUI { get; private set; }
+        [field: SerializeField] public CurrencyPresenter CurrencyPresenter { get; private set; }
 
         [field: SerializeField, Header("Localization")]
         public LocalizedString SelectEquipmentToUpgradeText { get; private set; }

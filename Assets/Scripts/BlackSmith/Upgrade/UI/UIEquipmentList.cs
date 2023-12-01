@@ -27,6 +27,11 @@ namespace CryptoQuest.BlackSmith.Upgrade.UI
             _pool = new ObjectPool<UIUpgradeEquipment>(OnCreateItem, OnGetItem, OnReleaseItem, OnDestroyItem);
         }
 
+        private void OnDisable()
+        {
+            _selectedUI = null;
+        }
+
         private void OnItemPressed(UIUpgradeEquipment item)
         {
             OnSubmitUpgradeItem?.Invoke(item);
@@ -96,6 +101,8 @@ namespace CryptoQuest.BlackSmith.Upgrade.UI
         private void OnReleaseItem(UIUpgradeEquipment item)
         {
             _items.Remove(item);
+            item.OnItemSelected -= OnItemSelected;
+            item.OnSubmit -= OnItemPressed;
             item.gameObject.SetActive(false);
         }
 

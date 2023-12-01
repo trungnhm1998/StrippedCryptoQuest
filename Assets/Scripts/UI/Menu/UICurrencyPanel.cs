@@ -84,11 +84,13 @@ namespace CryptoQuest.UI.Menu
                 UpdateCurrency(_wallet[_soul].Amount, ECurrencyType.Soul);
             }
 
+            DOTween.Kill(_currencyContainer);
             _currencyContainer.DOLocalMoveX(_startPosX, _duration).SetEase(_showEase);
         }
 
         private void HideCurrency()
         {
+            DOTween.Kill(_currencyContainer);
             _currencyContainer.DOLocalMoveX(_endPosX, _duration).SetEase(_hideEase).OnComplete((Hide));
         }
 
