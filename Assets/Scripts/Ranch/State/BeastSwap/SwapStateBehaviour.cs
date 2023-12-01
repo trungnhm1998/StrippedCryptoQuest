@@ -67,6 +67,7 @@ namespace CryptoQuest.Ranch.State.BeastSwap
 
         private void SendItemsRequested()
         {
+            if (!_controller.UIBeastSwap.IsValid()) return;
             StateMachine.Play(ConfirmState);
         }
 
