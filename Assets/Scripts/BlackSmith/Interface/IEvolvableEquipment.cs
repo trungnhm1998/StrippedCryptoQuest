@@ -1,13 +1,12 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
+using CryptoQuest.Item.Equipment;
 using UnityEngine;
 using UnityEngine.Localization;
 
 namespace CryptoQuest.BlackSmith.Interface
 {
-    public interface IEvolvableData
+    public interface IEvolvableEquipment
     {
+        EquipmentInfo Equipment { get; }
         Sprite Icon { get; }
         LocalizedString LocalizedName { get; }
         int Level { get; }

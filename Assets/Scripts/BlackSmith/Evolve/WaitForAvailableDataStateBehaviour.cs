@@ -14,7 +14,6 @@ namespace CryptoQuest.BlackSmith.Evolve
 
             _stateController = animator.GetComponent<EvolveStateController>();
             _stateController.EvolvePanel.gameObject.SetActive(true);
-            _stateController.EvolvePanel.WaitForDataAvailableEvent += DataAvailable;
         }
 
         private void DataAvailable()
@@ -24,7 +23,6 @@ namespace CryptoQuest.BlackSmith.Evolve
 
         public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
-            _stateController.EvolvePanel.WaitForDataAvailableEvent -= DataAvailable;
         }
     }
 }

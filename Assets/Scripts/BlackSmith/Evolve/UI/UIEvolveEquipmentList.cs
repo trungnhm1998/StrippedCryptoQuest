@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using CryptoQuest.BlackSmith.Interface;
 using CryptoQuest.Menu;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.Pool;
 using UnityEngine.UI;
 
@@ -14,8 +13,9 @@ namespace CryptoQuest.BlackSmith.Evolve.UI
         [SerializeField] private ScrollRect _scrollRect;
         [SerializeField] private UIEquipmentItem _itemPrefab;
 
-        [Header("Unity Events")]
-        [SerializeField] private UnityEvent _finishedRenderEvent;
+        public event Action OnEquipmentRendered;
+        public event Action<UIEquipmentItem> OnItemSelected;
+        public event Action<UIEquipmentItem> OnItemSubmitted;
 
         private List<UIEquipmentItem> _equipmentList = new();
         public List<UIEquipmentItem> EquipmentList { get => _equipmentList; }
@@ -30,28 +30,40 @@ namespace CryptoQuest.BlackSmith.Evolve.UI
                 OnReturnToPool, OnDestroyPool);
         }
 
-        public void RenderEquipments(List<IEvolvableData> data)
+        public void RenderEquipments(List<IEvolvableEquipment> data)
         {
             ReturnAllItemsToPool();
 
             for (int i = 0; i < data.Count; i++)
             {
-                InstantiateNewEquipmentUI(data[i]);
+                UIEquipmentItem uIEquipmentItem = InstantiateNewEquipmentUI(data[i]);
+                uIEquipmentItem.InspectingEquipmentEvent += HandleInspectingEquipment;
+                uIEquipmentItem.SelectedEquipmentEvent += HandleSelectedEquipment;
             }
 
-            SelectDefaultButton();
-            _finishedRenderEvent.Invoke();
+            OnEquipmentRendered?.Invoke();
         }
 
-        private void InstantiateNewEquipmentUI(IEvolvableData equipmentData)
+        private void HandleInspectingEquipment(UIEquipmentItem equipmentUi)
+        {
+            OnItemSelected?.Invoke(equipmentUi);
+        }
+
+        private void HandleSelectedEquipment(UIEquipmentItem equipmentUi)
+        {
+            OnItemSubmitted?.Invoke(equipmentUi);
+        }
+
+        private UIEquipmentItem InstantiateNewEquipmentUI(IEvolvableEquipment equipmentData)
         {
             UIEquipmentItem equipmentUi = _itemPool.Get();
             equipmentUi.SetItemData(equipmentData);
 
             _equipmentList.Add(equipmentUi);
+            return equipmentUi;
         }
 
-        private void SelectDefaultButton()
+        public void SelectDefaultButton()
         {
             var firstButton = _scrollRect.content.GetComponentInChildren<MultiInputButton>();
             firstButton.Select();
@@ -59,13 +71,15 @@ namespace CryptoQuest.BlackSmith.Evolve.UI
 
         #region Pool-handler
 
-        private void ReturnAllItemsToPool()
+        public void ReturnAllItemsToPool()
         {
             foreach (var item in _items)
             {
+                item.InspectingEquipmentEvent -= HandleInspectingEquipment;
+                item.SelectedEquipmentEvent -= HandleSelectedEquipment;
                 _itemPool.Release(item);
             }
-            _items = new();
+            _items.Clear();
             _firstButton = null;
         }
 

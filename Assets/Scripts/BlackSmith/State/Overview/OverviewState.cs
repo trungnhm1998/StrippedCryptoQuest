@@ -53,7 +53,7 @@ namespace CryptoQuest.BlackSmith.State.Overview
 
         private void ChangeToEvolveState()
         {
-            fsm.RequestStateChange(Contants.EVOLVE_STATE);
+            fsm.RequestStateChange(Contants.EVOLVE_STATE_MACHINE);
         }
     }
 }

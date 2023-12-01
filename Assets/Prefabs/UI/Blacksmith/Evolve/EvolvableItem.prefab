@@ -32,7 +32,6 @@ RectTransform:
   m_Children:
   - {fileID: 4063627916807787948}
   m_Father: {fileID: 4208480605201211122}
-  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 18.924}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -108,7 +107,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4208480605201211122}
-  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
@@ -187,7 +185,6 @@ RectTransform:
   m_Children:
   - {fileID: 6436740612545106347}
   m_Father: {fileID: 4208480605201211122}
-  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
@@ -376,7 +373,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2987147284315803205}
-  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
@@ -453,7 +449,6 @@ RectTransform:
   - {fileID: 2987147284315803205}
   - {fileID: 3700080985323400496}
   m_Father: {fileID: 4493974615691473294}
-  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -494,7 +489,6 @@ RectTransform:
   m_Children:
   - {fileID: 4208480605201211122}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
@@ -547,21 +541,8 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 3789530811202345516}
         m_TargetAssemblyTypeName: CryptoQuest.BlackSmith.Evolve.UI.UIEquipmentItem,
-          indi-games.crypto-quest
-        m_MethodName: SelectMaterial
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 3789530811202345516}
-        m_TargetAssemblyTypeName: CryptoQuest.BlackSmith.Evolve.UI.UIEquipmentItem,
-          indi-games.crypto-quest
-        m_MethodName: SelectToEvolve
+          IndiGames.CryptoQuest.BlackSmith
+        m_MethodName: SubmitEquipment
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -655,7 +636,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3700080985323400496}
-  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}

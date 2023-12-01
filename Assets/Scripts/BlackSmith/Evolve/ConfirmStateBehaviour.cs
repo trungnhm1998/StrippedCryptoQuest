@@ -22,7 +22,6 @@ namespace CryptoQuest.BlackSmith.Evolve
             _stateController.ConfirmPanel.gameObject.SetActive(true);
 
             _stateControllerInput.CancelEvent += ExitConfirmState;
-            _stateController.EvolvePanel.ExitConfirmPhaseEvent += ExitConfirmState;
         }
 
         private void ExitConfirmState()
@@ -33,8 +32,6 @@ namespace CryptoQuest.BlackSmith.Evolve
         public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
             _stateControllerInput.CancelEvent -= ExitConfirmState;
-            _stateController.EvolvePanel.ExitConfirmPhaseEvent -= ExitConfirmState;
-
 
             _stateController.ConfirmPanel.gameObject.SetActive(false);
             _stateController.DialogsPresenter.HideConfirmDialog();

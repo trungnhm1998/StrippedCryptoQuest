@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using CryptoQuest.Battle.Components;
 using CryptoQuest.Character.Hero.AvatarProvider;
 using CryptoQuest.Gameplay.PlayerParty;
-using CryptoQuest.Item.Equipment;
-using CryptoQuest.System;
 using IndiGames.Core.Common;
 using UnityEngine;
 
@@ -54,14 +52,13 @@ namespace CryptoQuest.BlackSmith.Evolve.UI
             characterUI.SetAvatar(hero.Avatar);
         }
 
-        private void PreviewCharacterStats(UIEquipmentItem item)
+        public void PreviewCharacterStats(UIEquipmentItem item)
         {
             if (item == null) return;
             for (int i = 0; i < _partyController.Slots.Length; i++)
             {
-                _listCharacter[i].Preview((EquipmentInfo)item.EquipmentData);
+                _listCharacter[i].Preview(item.EquipmentData.Equipment);
             }
         }
-
     }
 }

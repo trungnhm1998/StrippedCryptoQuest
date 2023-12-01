@@ -18,8 +18,6 @@ namespace CryptoQuest.BlackSmith.Evolve
             _animator = animator;
 
             _stateController = animator.GetComponent<EvolveStateController>();
-            _stateController.EvolvePanel.EnterConfirmPhaseEvent += GoToConfirmState;
-            _stateController.EvolvePanel.HadMethodRunned = false; // Code smell
             _stateController.Input.CancelEvent += BackToBlackSmithState;
             GetDataFromPresenterAndPassToScrollView();
             SetUpDialogs();
@@ -39,14 +37,11 @@ namespace CryptoQuest.BlackSmith.Evolve
 
         private void GetDataFromPresenterAndPassToScrollView()
         {
-            var data = _stateController.EvolvePanel.GameData;
             _stateController.ExitConfirmPhaseEvent?.Invoke();
-            _stateController.EvolveEquipmentList.RenderEquipments(data);
         }
 
         public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
-            _stateController.EvolvePanel.EnterConfirmPhaseEvent -= GoToConfirmState;
             _stateController.Input.CancelEvent -= BackToBlackSmithState;
         }
 
