@@ -1,7 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using CryptoQuest.UI.Menu;
+﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Pool;
 using UnityEngine.UI;
 using Obj = CryptoQuest.Sagas.Objects;
 
@@ -11,73 +10,72 @@ namespace CryptoQuest.Tavern.UI
     {
         [SerializeField] protected Transform _scrollRectContent;
         [SerializeField] protected UITavernItem _itemPrefab;
-        [SerializeField] protected RectTransform _tooltipSafeArea;
 
-        private List<Obj.Character> _characterList = new List<Obj.Character>();
-        public List<Obj.Character> Data => _characterList;
+        private IObjectPool<UITavernItem> _pool;
+        private List<UITavernItem> _items = new();
 
-        private List<UITavernItem> _cachedItems = new();
+        private void Start()
+        {
+            _pool ??= new ObjectPool<UITavernItem>(OnCreate, OnGet, OnRelease, OnDestroyPool);
+        }
 
         public void SetData(List<Obj.Character> data)
         {
-            CleanUpScrollView();
-            _characterList = data;
-            RenderData();
+            ReleaseAllItemInPool();
+            foreach (var heroData in data)
+            {
+                UITavernItem item = _pool.Get();
+                item.SetItemInfo(heroData);
+                IdentifyItemParent(item);
+            }
         }
 
-        public void SelectDefault() => StartCoroutine(CoSetDefaultSelection());
-        private IEnumerator CoSetDefaultSelection()
+        public void SelectDefault()
         {
-            yield return new WaitForSeconds(.5f);
             var firstButton = _scrollRectContent.GetComponentInChildren<Button>();
             firstButton.Select();
         }
 
-        private void CleanUpScrollView()
-        {
-            foreach (Transform child in _scrollRectContent)
-            {
-                Destroy(child.gameObject);
-            }
-        }
-
-        private void RenderData()
-        {
-            _cachedItems.Clear();
-            foreach (var itemData in _characterList)
-            {
-                var item = Instantiate(_itemPrefab, _scrollRectContent);
-                item.SetItemInfo(itemData);
-                IdentifyItemParentThenCacheItem(item);
-            }
-        }
-
-        private void IdentifyItemParentThenCacheItem(UITavernItem item)
-        {
-            item.Parent = _scrollRectContent;
-            _cachedItems.Add(item);
-        }
+        private void IdentifyItemParent(UITavernItem item) => item.Parent = _scrollRectContent;
 
         public void SetInteractableAllButtons(bool isEnabled)
         {
             foreach (Transform item in _scrollRectContent)
-            {
                 item.GetComponent<Button>().enabled = isEnabled;
-            }
         }
 
         public void UpdateList()
         {
-            foreach (var item in _cachedItems)
-            {
+            foreach (var item in _items)
                 item.EnablePendingTag(false);
-            }
         }
 
-        private void OnDisable()
+        #region Pool
+
+        private UITavernItem OnCreate()
         {
-            CleanUpScrollView();
-            StopCoroutine(CoSetDefaultSelection());
+            var item = Instantiate(_itemPrefab, _scrollRectContent);
+            return item;
         }
+
+        private void OnGet(UITavernItem item)
+        {
+            item.gameObject.SetActive(true);
+            _items.Add(item);
+        }
+
+        private void OnRelease(UITavernItem item) => item.gameObject.SetActive(false);
+
+        private void OnDestroyPool(UITavernItem item) => Destroy(item.gameObject);
+
+        private void ReleaseAllItemInPool()
+        {
+            foreach (var item in _items)
+                _pool.Release(item);
+
+            _items = new();
+        }
+
+        #endregion
     }
 }
