@@ -67,10 +67,10 @@ namespace CryptoQuest.Tavern.UI
             {
                 case > 0:
                     _walletListUi.SetInteractableAllButtons(false);
-                    _gameListUi.SelectDefault();
+                    FocusList(_gameListUi);
                     break;
                 case <= 0:
-                    _walletListUi.SelectDefault();
+                    FocusList(_walletListUi);
                     break;
             }
         }

@@ -60,6 +60,7 @@ namespace CryptoQuest.Tavern.UI
 
         private void OnGet(UITavernItem item)
         {
+            item.transform.SetAsLastSibling();
             item.gameObject.SetActive(true);
             _items.Add(item);
         }
