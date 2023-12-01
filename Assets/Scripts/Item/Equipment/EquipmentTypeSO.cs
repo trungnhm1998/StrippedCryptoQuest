@@ -1,9 +1,9 @@
 ﻿using System;
 using CryptoQuest.Character;
+using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Type;
 using UnityEngine;
-using SlotType = CryptoQuest.Item.Equipment.EquipmentSlot.EType;
 
-namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Type
+namespace CryptoQuest.Item.Equipment
 {
     [CreateAssetMenu(fileName = "Equipment Type", menuName = "Crypto Quest/Inventory/Equipment Type")]
     public class EquipmentTypeSO : GenericItemTypeSO

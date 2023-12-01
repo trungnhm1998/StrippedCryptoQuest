@@ -29,7 +29,7 @@ namespace CryptoQuest.Sagas
             ActionDispatcher.Dispatch(new ShowLoading());
 #if UNITY_EDITOR
             ActionDispatcher.Dispatch(new DebugLoginAction());
-#elif UNITY_WEBGL
+#else
             HandleAuthenticate(ctx);
 #endif
         }

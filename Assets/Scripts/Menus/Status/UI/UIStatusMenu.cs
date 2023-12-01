@@ -1,5 +1,7 @@
+using System;
 using CryptoQuest.Battle.Components;
 using CryptoQuest.Input;
+using CryptoQuest.Item.Equipment;
 using CryptoQuest.Menus.Status.Events;
 using CryptoQuest.Menus.Status.States;
 using CryptoQuest.Menus.Status.UI.Equipment;
@@ -26,10 +28,24 @@ namespace CryptoQuest.Menus.Status.UI
         [field: SerializeField] public UIMagicStoneMenu MagicStonePanel { get; private set; }
         [field: SerializeField] public ShowTooltipEvent ShowTooltipEvent { get; private set; }
         [field: SerializeField] public ShowMagicStoneEvent ShowMagicStone { get; private set; }
+        public ESlot ModifyingSlot { get; set; }
+        public EEquipmentCategory ModifyingCategory { get; set; }
 
         private StateMachine _stateMachine;
 
-        public HeroBehaviour InspectingHero { get; set; }
+        private HeroBehaviour _inspectingHero;
+
+        public HeroBehaviour InspectingHero
+        {
+            get => _inspectingHero;
+            set
+            {
+                _inspectingHero = value;
+                InspectingHeroChanged?.Invoke(_inspectingHero);
+            }
+        }
+
+        public event Action<HeroBehaviour> InspectingHeroChanged;
 
         private void Awake() => _stateMachine = new StatusMenuStateMachine(this);
 

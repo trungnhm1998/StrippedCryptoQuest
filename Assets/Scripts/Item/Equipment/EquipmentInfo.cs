@@ -17,16 +17,11 @@ namespace CryptoQuest.Item.Equipment
         public float ValuePerLvl { get; }
         public EquipmentPrefab Prefab { get; }
         public EquipmentTypeSO Type { get; }
-        public EquipmentSlot.EType[] RequiredSlots { get; }
-        public EquipmentSlot.EType[] AllowedSlots { get; }
-
+        public ESlot[] RequiredSlots { get; }
+        public ESlot[] AllowedSlots { get; }
         public PassiveAbility[] Passives { get; }
-
         public bool IsNft { get; }
-
         public bool IsValid();
-
-        public bool ContainedInInventory(IInventoryController inventoryController);
         public bool AddToInventory(IInventoryController inventory);
         public bool RemoveFromInventory(IInventoryController inventory);
     }
@@ -42,8 +37,8 @@ namespace CryptoQuest.Item.Equipment
         public float ValuePerLvl => Data.ValuePerLvl;
         public EquipmentPrefab Prefab => Data.Prefab;
         public EquipmentTypeSO Type => Data.Prefab.EquipmentType;
-        public EquipmentSlot.EType[] RequiredSlots => Data.Prefab.RequiredSlots;
-        public EquipmentSlot.EType[] AllowedSlots => Data.Prefab.AllowedSlots;
+        public ESlot[] RequiredSlots => Data.Prefab.RequiredSlots;
+        public ESlot[] AllowedSlots => Data.Prefab.AllowedSlots;
 
         public PassiveAbility[] Passives => Data.Passives;
 
@@ -78,7 +73,6 @@ namespace CryptoQuest.Item.Equipment
         public virtual bool IsValid()
             => Data != null && !string.IsNullOrEmpty(Data.ID) && Data.Prefab != null;
 
-        public abstract bool ContainedInInventory(IInventoryController inventoryController);
         public abstract bool AddToInventory(IInventoryController inventory);
         public abstract bool RemoveFromInventory(IInventoryController inventory);
     }

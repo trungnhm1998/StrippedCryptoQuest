@@ -20,7 +20,7 @@ namespace CryptoQuest.Menus.Status.States
         private void BackToEquipmentSelection()
         {
             StatusPanel.ShowMagicStone.RaiseEvent(false);
-            fsm.RequestStateChange(StatusMenuStateMachine.EquipmentSelection);
+            fsm.RequestStateChange(State.EQUIPMENT_SELECTION);
         }
     }
 }

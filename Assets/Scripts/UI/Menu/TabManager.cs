@@ -31,32 +31,26 @@ namespace CryptoQuest.UI.Menu
 
         private UITabButton _currentSelectedTab;
 
-        private void Awake()
+        private void OnEnable()
         {
             foreach (var tab in Tabs)
             {
                 tab.Pressed += OnOpenTab;
                 tab.Selected += CacheCurrentSelectedAndEnablePanel;
             }
-        }
 
-        private void OnDestroy()
-        {
-            foreach (var tab in Tabs)
-            {
-                tab.Pressed -= OnOpenTab;
-                tab.Selected -= CacheCurrentSelectedAndEnablePanel;
-            }
-        }
-
-        private void OnEnable()
-        {
             _inputMediator.TabChangeEvent += ChangeTab;
             SelectTab(0);
         }
 
         private void OnDisable()
         {
+            foreach (var tab in Tabs)
+            {
+                tab.Pressed -= OnOpenTab;
+                tab.Selected -= CacheCurrentSelectedAndEnablePanel;
+            }
+
             _inputMediator.TabChangeEvent -= ChangeTab;
         }
 
@@ -81,10 +75,12 @@ namespace CryptoQuest.UI.Menu
                 OpeningTab?.Invoke(tab);
                 return;
             }
+
+            OpeningTab?.Invoke(tab);
+
             if (_openingTab != null) _openingTab.ManagedPanel.SetActive(false);
             if (tab.ManagedPanel.activeSelf == false) tab.ManagedPanel.SetActive(true);
             _openingTab = tab;
-            OpeningTab?.Invoke(tab);
         }
 
         public void OpenTab(int tabIndex)

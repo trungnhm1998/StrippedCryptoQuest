@@ -4,9 +4,7 @@ using System.Linq;
 using CryptoQuest.Character.Hero;
 using CryptoQuest.Item.Equipment;
 using UnityEngine;
-using ESlotType =
-    CryptoQuest.Item.Equipment.EquipmentSlot.EType;
-using ECategory = CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Type.EEquipmentCategory;
+using ECategory = CryptoQuest.Item.Equipment.EEquipmentCategory;
 
 namespace CryptoQuest.Battle.Components
 {
@@ -31,18 +29,18 @@ namespace CryptoQuest.Battle.Components
             _equipments = provider.GetEquipments();
         }
 
-        public IEquipment GetEquipmentInSlot(ESlotType slotType)
+        public IEquipment GetEquipmentInSlot(ESlot slotToGet)
         {
             foreach (var equipmentSlot in _equipments.Slots)
             {
-                if (equipmentSlot.Type == slotType)
+                if (equipmentSlot.Type == slotToGet)
                     return equipmentSlot.Equipment;
             }
 
-            Debug.Log($"No slot {slotType} found, create new slot");
+            Debug.Log($"No slot {slotToGet} found, create new slot");
             var slot = new EquipmentSlot()
             {
-                Type = slotType,
+                Type = slotToGet,
                 Equipment = default
             };
             _equipments.Slots.Add(slot);
@@ -57,18 +55,18 @@ namespace CryptoQuest.Battle.Components
         /// the required slots will now occupied by the same equipment (check GUID)
         /// apply the effect</para>
         /// </summary>
-        public void Equip(IEquipment equipment, ESlotType equippingSlot)
+        public void Equip(IEquipment equipment, ESlot equippingSlot)
         {
             if (equipment.IsValid() == false) return;
 
             var allowedSlots = equipment.AllowedSlots;
             if (allowedSlots.Contains(equippingSlot) == false) return;
             var requiredSlots = equipment.RequiredSlots;
-            Unequip(GetEquipmentInSlot(equippingSlot));
+            foreach (var slot in requiredSlots) Unequip(GetEquipmentInSlot(slot));
             OnEquipmentAdded(equipment, equippingSlot, requiredSlots);
         }
 
-        private void OnEquipmentAdded(IEquipment equipment, ESlotType equippingSlot, ESlotType[] requiredSlots)
+        private void OnEquipmentAdded(IEquipment equipment, ESlot equippingSlot, ESlot[] requiredSlots)
         {
             SetEquipmentInSlot(equipment, equippingSlot);
             foreach (var slot in requiredSlots)
@@ -78,12 +76,12 @@ namespace CryptoQuest.Battle.Components
             Equipped?.Invoke(equipment);
         }
 
-        private void SetEquipmentInSlot(IEquipment equipment, ESlotType slotType)
+        private void SetEquipmentInSlot(IEquipment equipment, ESlot slotToEquip)
         {
             for (var index = 0; index < Slots.Count; index++)
             {
                 var slot = Slots[index];
-                if (slot.Type != slotType) continue;
+                if (slot.Type != slotToEquip) continue;
                 slot.Equipment = equipment;
                 Slots[index] = slot;
                 return;
@@ -92,12 +90,12 @@ namespace CryptoQuest.Battle.Components
             var equipmentSlot = new EquipmentSlot()
             {
                 Equipment = equipment,
-                Type = slotType
+                Type = slotToEquip
             };
             Slots.Add(equipmentSlot);
         }
 
-        public void Unequip(ESlotType slotToUnequip) => Unequip(GetEquipmentInSlot(slotToUnequip));
+        public void Unequip(ESlot slotToUnequip) => Unequip(GetEquipmentInSlot(slotToUnequip));
 
         /// <summary>
         /// Unequip the equipment in all required slots, and raise an event,

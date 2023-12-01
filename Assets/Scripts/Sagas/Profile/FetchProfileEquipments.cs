@@ -12,7 +12,6 @@ using CryptoQuest.Item;
 using CryptoQuest.Item.Equipment;
 using CryptoQuest.Networking;
 using CryptoQuest.Sagas.Objects;
-using CryptoQuest.System;
 using CryptoQuest.UI.Actions;
 using IndiGames.Core.Common;
 using IndiGames.Core.Events;
@@ -101,7 +100,7 @@ namespace CryptoQuest.Sagas.Profile
                     _prefabDatabase.GetDataById(equipmentResponse.equipmentIdForeign));
                 equipments.Add(equipment);
             }
-            
+
             _inventory.NftEquipments.Clear();
             _inventory.NftEquipments.AddRange(equipments);
             ActionDispatcher.Dispatch(new InventoryFilled());
@@ -131,9 +130,9 @@ namespace CryptoQuest.Sagas.Profile
                 RequiredCharacterLevel = response.restrictedLv,
                 MinLevel = response.minLv,
                 MaxLevel = response.maxLv,
-                ValuePerLvl = response.valuePerLv
+                ValuePerLvl = response.valuePerLv,
+                Stats = GetStats(response)
             };
-            FillEquipmentStats(response, ref nftEquipment);
             StartCoroutine(FillEquipmentSkills(response, nftEquipment));
         }
 
@@ -152,7 +151,7 @@ namespace CryptoQuest.Sagas.Profile
             nftEquipment.Data.Passives = passiveList.ToArray();
         }
 
-        private void FillEquipmentStats(EquipmentResponse equipmentResponse, ref NftEquipment nftEquipment)
+        private AttributeWithValue[] GetStats(EquipmentResponse equipmentResponse)
         {
             var stats = new List<AttributeWithValue>();
             // using reflection here, might optimize if this hits performance
@@ -165,8 +164,7 @@ namespace CryptoQuest.Sagas.Profile
                 stats.Add(new AttributeWithValue(attributeSO, value));
             }
 
-            if (stats.Count == 0) return;
-            nftEquipment.Data.Stats = stats.ToArray();
+            return stats.ToArray();
         }
 
         private void OnError(Exception error)

@@ -217,7 +217,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _mainPanel: {fileID: 0}
-  _characterPanel: {fileID: 0}
   _equipmentsInventoryPanel: {fileID: 0}
   _equipmentSlots:
   - {fileID: 7432460331480403834}
@@ -230,9 +229,6 @@ MonoBehaviour:
   - {fileID: 6492609729231534850}
   _equipmentSlotParent: {fileID: 4012635815201686841}
   _defaultSelection: {fileID: 7926655434717818216}
-  _tooltipSafeArea: {fileID: 3100554589543707979}
-  _minPivotTooltip: {x: 0, y: 0}
-  _maxPivotTooltip: {x: 1, y: 1}
 --- !u!1 &2832204480631142784
 GameObject:
   m_ObjectHideFlags: 0
@@ -662,7 +658,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 456548008958991572, guid: 3c82a0ed70b02f54ba487afcff878954, type: 3}
       propertyPath: m_text
-      value: "\u623B\u308A"
+      value: Back
       objectReference: {fileID: 0}
     - target: {fileID: 2024945243489220335, guid: 3c82a0ed70b02f54ba487afcff878954, type: 3}
       propertyPath: m_Name
@@ -1587,6 +1583,10 @@ PrefabInstance:
       propertyPath: <SlotType>k__BackingField
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8575258915249462629, guid: 99c3953c2aa78c4439fd92745e385a5b, type: 3}
+      propertyPath: <SlotEquipmentType>k__BackingField
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 9138144668929453499, guid: 99c3953c2aa78c4439fd92745e385a5b, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -1836,12 +1836,20 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8575258915249462629, guid: 99c3953c2aa78c4439fd92745e385a5b, type: 3}
-      propertyPath: <SlotType>k__BackingField
+      propertyPath: <Category>k__BackingField
       value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 8575258915249462629, guid: 99c3953c2aa78c4439fd92745e385a5b, type: 3}
+      propertyPath: <SlotType>k__BackingField
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 8575258915249462629, guid: 99c3953c2aa78c4439fd92745e385a5b, type: 3}
       propertyPath: <EquipmentCategory>k__BackingField
       value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 8575258915249462629, guid: 99c3953c2aa78c4439fd92745e385a5b, type: 3}
+      propertyPath: <SlotEquipmentType>k__BackingField
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 9138144668929453499, guid: 99c3953c2aa78c4439fd92745e385a5b, type: 3}
       propertyPath: m_AnchorMax.y
@@ -2101,12 +2109,20 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8575258915249462629, guid: 99c3953c2aa78c4439fd92745e385a5b, type: 3}
-      propertyPath: <SlotType>k__BackingField
+      propertyPath: <Category>k__BackingField
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8575258915249462629, guid: 99c3953c2aa78c4439fd92745e385a5b, type: 3}
+      propertyPath: <SlotType>k__BackingField
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 8575258915249462629, guid: 99c3953c2aa78c4439fd92745e385a5b, type: 3}
       propertyPath: <EquipmentCategory>k__BackingField
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8575258915249462629, guid: 99c3953c2aa78c4439fd92745e385a5b, type: 3}
+      propertyPath: <SlotEquipmentType>k__BackingField
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 9138144668929453499, guid: 99c3953c2aa78c4439fd92745e385a5b, type: 3}
       propertyPath: m_AnchorMax.y
@@ -2595,12 +2611,20 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8575258915249462629, guid: 99c3953c2aa78c4439fd92745e385a5b, type: 3}
-      propertyPath: <SlotType>k__BackingField
+      propertyPath: <Category>k__BackingField
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8575258915249462629, guid: 99c3953c2aa78c4439fd92745e385a5b, type: 3}
+      propertyPath: <SlotType>k__BackingField
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 8575258915249462629, guid: 99c3953c2aa78c4439fd92745e385a5b, type: 3}
       propertyPath: <EquipmentCategory>k__BackingField
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8575258915249462629, guid: 99c3953c2aa78c4439fd92745e385a5b, type: 3}
+      propertyPath: <SlotEquipmentType>k__BackingField
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 9138144668929453499, guid: 99c3953c2aa78c4439fd92745e385a5b, type: 3}
       propertyPath: m_AnchorMax.y
@@ -2860,12 +2884,20 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8575258915249462629, guid: 99c3953c2aa78c4439fd92745e385a5b, type: 3}
+      propertyPath: <Category>k__BackingField
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 8575258915249462629, guid: 99c3953c2aa78c4439fd92745e385a5b, type: 3}
       propertyPath: <SlotType>k__BackingField
-      value: 7
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 8575258915249462629, guid: 99c3953c2aa78c4439fd92745e385a5b, type: 3}
       propertyPath: <EquipmentCategory>k__BackingField
       value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 8575258915249462629, guid: 99c3953c2aa78c4439fd92745e385a5b, type: 3}
+      propertyPath: <SlotEquipmentType>k__BackingField
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 9138144668929453499, guid: 99c3953c2aa78c4439fd92745e385a5b, type: 3}
       propertyPath: m_AnchorMax.y
@@ -3655,8 +3687,20 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8575258915249462629, guid: 99c3953c2aa78c4439fd92745e385a5b, type: 3}
+      propertyPath: <Category>k__BackingField
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8575258915249462629, guid: 99c3953c2aa78c4439fd92745e385a5b, type: 3}
+      propertyPath: <SlotType>k__BackingField
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8575258915249462629, guid: 99c3953c2aa78c4439fd92745e385a5b, type: 3}
       propertyPath: <EquipmentCategory>k__BackingField
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8575258915249462629, guid: 99c3953c2aa78c4439fd92745e385a5b, type: 3}
+      propertyPath: <SlotEquipmentType>k__BackingField
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 9138144668929453499, guid: 99c3953c2aa78c4439fd92745e385a5b, type: 3}
       propertyPath: m_AnchorMax.y
@@ -3916,12 +3960,20 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8575258915249462629, guid: 99c3953c2aa78c4439fd92745e385a5b, type: 3}
-      propertyPath: <SlotType>k__BackingField
+      propertyPath: <Category>k__BackingField
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8575258915249462629, guid: 99c3953c2aa78c4439fd92745e385a5b, type: 3}
+      propertyPath: <SlotType>k__BackingField
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 8575258915249462629, guid: 99c3953c2aa78c4439fd92745e385a5b, type: 3}
       propertyPath: <EquipmentCategory>k__BackingField
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8575258915249462629, guid: 99c3953c2aa78c4439fd92745e385a5b, type: 3}
+      propertyPath: <SlotEquipmentType>k__BackingField
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 9138144668929453499, guid: 99c3953c2aa78c4439fd92745e385a5b, type: 3}
       propertyPath: m_AnchorMax.y
@@ -4161,12 +4213,20 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8575258915249462629, guid: 99c3953c2aa78c4439fd92745e385a5b, type: 3}
-      propertyPath: <SlotType>k__BackingField
+      propertyPath: <Category>k__BackingField
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8575258915249462629, guid: 99c3953c2aa78c4439fd92745e385a5b, type: 3}
+      propertyPath: <SlotType>k__BackingField
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8575258915249462629, guid: 99c3953c2aa78c4439fd92745e385a5b, type: 3}
       propertyPath: <EquipmentCategory>k__BackingField
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8575258915249462629, guid: 99c3953c2aa78c4439fd92745e385a5b, type: 3}
+      propertyPath: <SlotEquipmentType>k__BackingField
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 9138144668929453499, guid: 99c3953c2aa78c4439fd92745e385a5b, type: 3}
       propertyPath: m_AnchorMax.y

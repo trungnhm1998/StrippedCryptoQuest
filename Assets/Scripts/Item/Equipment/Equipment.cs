@@ -8,9 +8,6 @@ namespace CryptoQuest.Item.Equipment
     {
         public override bool IsNft => false;
 
-        public override bool ContainedInInventory(IInventoryController inventoryController) =>
-            inventoryController.Contains(this);
-
         public override bool AddToInventory(IInventoryController inventoryController) =>
             inventoryController.Add(this);
 

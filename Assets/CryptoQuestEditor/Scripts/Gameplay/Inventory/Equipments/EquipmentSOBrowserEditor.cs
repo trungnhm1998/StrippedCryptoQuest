@@ -109,7 +109,7 @@ namespace CryptoQuestEditor
             // _writer.Close();
         }
 
-        private void SetAllowedSlots(EquipmentSlot.EType[] types, SerializedObject serializedObject, string[] datas)
+        private void SetAllowedSlots(ESlot[] types, SerializedObject serializedObject, string[] datas)
         {
             var property = serializedObject.FindProperty("<AllowedSlots>k__BackingField");
             property.ClearArray();
@@ -158,7 +158,7 @@ namespace CryptoQuestEditor
             return new AssetReferenceT<Sprite>(guid);
         }
 
-        private void SetRequiredSlots(EquipmentSlot.EType[] types, SerializedObject serializedObject, string[] datas)
+        private void SetRequiredSlots(ESlot[] types, SerializedObject serializedObject, string[] datas)
         {
             var property = serializedObject.FindProperty("<RequiredSlots>k__BackingField");
             property.ClearArray();
@@ -202,17 +202,17 @@ namespace CryptoQuestEditor
             return displayName;
         }
 
-        private EquipmentSlot.EType[] GetAllowedSlots(string[] datas)
+        private ESlot[] GetAllowedSlots(string[] datas)
         {
             string data = datas[ROW_EQUIPMENT_PART_ID];
             string[] rows = data.Split(',');
-            EquipmentSlot.EType[] slots = new EquipmentSlot.EType[rows.Length];
+            ESlot[] slots = new ESlot[rows.Length];
             if (data == "7")
             {
                 int newSize = 2;
                 Array.Resize(ref slots, newSize);
-                slots[0] = EquipmentSlot.EType.Accessory1;
-                slots[1] = EquipmentSlot.EType.Accessory2;
+                slots[0] = ESlot.Accessory1;
+                slots[1] = ESlot.Accessory2;
                 return slots;
             }
 
@@ -224,11 +224,11 @@ namespace CryptoQuestEditor
             return slots;
         }
 
-        private EquipmentSlot.EType[] GetRequiredSlots(string[] datas)
+        private ESlot[] GetRequiredSlots(string[] datas)
         {
             string data = datas[ROW_EQUIPMENT_PART_ID];
             string[] rows = data.Split(',');
-            EquipmentSlot.EType[] slots = new EquipmentSlot.EType[rows.Length];
+            ESlot[] slots = new ESlot[rows.Length];
 
             for (int i = 0; i < rows.Length; i++)
             {
@@ -244,7 +244,7 @@ namespace CryptoQuestEditor
         }
 
         private int ParseData(string data) => string.IsNullOrEmpty(data) ? 0 : int.Parse(data);
-        private EquipmentSlot.EType GetEquipmentSlot(int value) => (EquipmentSlot.EType)value;
+        private ESlot GetEquipmentSlot(int value) => (ESlot)value;
 
         private string GetName(string[] data)
         {

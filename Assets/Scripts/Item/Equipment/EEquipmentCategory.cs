@@ -1,7 +1,11 @@
-﻿namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Type
+﻿using System;
+
+namespace CryptoQuest.Item.Equipment
 {
+    [Serializable]
     public enum EEquipmentCategory
     {
+        None = -1,
         Weapon = 0,
         Shield = 1,
         Helmet = 2,

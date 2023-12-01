@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Type;
 using CryptoQuest.Item.Equipment;
 using UnityEngine;
 
@@ -8,9 +6,8 @@ namespace CryptoQuest.Menus.Status.UI.Equipment
 {
     public class UICharacterEquipmentSlot : MonoBehaviour
     {
-        public event Action<EquipmentSlot.EType, EEquipmentCategory> ShowEquipmentsInventoryWithType;
-        [field: SerializeField] public EquipmentSlot.EType SlotType { get; private set; }
-        [field: SerializeField] public EEquipmentCategory EquipmentCategory { get; private set; }
+        [field: SerializeField] public ESlot SlotType { get; private set; }
+        [field: SerializeField] public EEquipmentCategory Category { get; private set; }
 
         [SerializeField] private UIEquipment _equipment;
 
@@ -27,15 +24,11 @@ namespace CryptoQuest.Menus.Status.UI.Equipment
             _equipment.gameObject.SetActive(false);
         }
 
-        public void OnChangingEquipment()
+        public void OnPressed()
         {
-            ShowEquipmentsInventoryWithType?.Invoke(SlotType, EquipmentCategory);
+            Pressed?.Invoke(this);
         }
 
-        private void UpdateEquipmentUI(EquipmentInfo equipment, List<EquipmentSlot.EType> eTypes)
-        {
-            // if (eTypes.Contains(SlotType))
-            //     Init(equipment);
-        }
+        public static event Action<UICharacterEquipmentSlot> Pressed;
     }
 }

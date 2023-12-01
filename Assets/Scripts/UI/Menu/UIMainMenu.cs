@@ -7,14 +7,21 @@ namespace CryptoQuest.UI.Menu
     {
         public static event Action BackToNavigation;
         public static void OnBackToNavigation() => BackToNavigation?.Invoke();
+        public bool IsNavigating { get; private set; }
         public static event Action<int> FocusTab;
         public static void OnFocusTab(int tabIndex) => FocusTab?.Invoke(tabIndex);
         [SerializeField] private TabManager _tabNavigation;
         [SerializeField] private int _defaultTabToOpen;
 
+        private bool Interactable
+        {
+            get => _tabNavigation.Interactable;
+            set => IsNavigating = _tabNavigation.Interactable = value;
+        }
+
         private void OnEnable()
         {
-            _tabNavigation.Interactable = true;
+            Interactable = true;
             _tabNavigation.OpenTab(_defaultTabToOpen);
             _tabNavigation.OpeningTab += DisableTabNavigation;
             FocusTab += _tabNavigation.OpenTab;
@@ -24,7 +31,7 @@ namespace CryptoQuest.UI.Menu
 
         private void OnDisable()
         {
-            _tabNavigation.Interactable = false;
+            Interactable = false;
             _tabNavigation.OpeningTab -= DisableTabNavigation;
             BackToNavigation -= EnableTabNavigation;
             FocusTab -= _tabNavigation.OpenTab;
@@ -32,7 +39,7 @@ namespace CryptoQuest.UI.Menu
 
         private void DisableTabNavigation(UITabButton uiTabButton)
         {
-            _tabNavigation.Interactable = false;
+            Interactable = false;
             foreach (var tab in _tabNavigation.Tabs)
             {
                 tab.Interactable = false;
@@ -50,7 +57,7 @@ namespace CryptoQuest.UI.Menu
         {
             BackToNavigation -= EnableTabNavigation;
             foreach (var tab in _tabNavigation.Tabs) tab.GetComponent<UITabFocus>().Focus();
-            _tabNavigation.Interactable = true;
+            Interactable = true;
         }
     }
 }
