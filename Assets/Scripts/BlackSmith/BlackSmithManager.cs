@@ -1,11 +1,8 @@
-using System;
-using System.Collections.Generic;
+using CryptoQuest.BlackSmith.Evolve.UI;
 using CryptoQuest.BlackSmith.ScriptableObjects;
 using CryptoQuest.BlackSmith.Upgrade;
 using CryptoQuest.Input;
-using IndiGames.Core.Events.ScriptableObjects;
 using UnityEngine;
-using UnityEngine.Events;
 
 namespace CryptoQuest.BlackSmith
 {
@@ -16,6 +13,7 @@ namespace CryptoQuest.BlackSmith
         [field: SerializeField] public UIBlackSmithOverview OverviewUI { get; private set; }
         [field: SerializeField] public BlackSmithDialogsPresenter DialogPresenter { get; private set; }
         [field: SerializeField] public UpgradePresenter UpgradePresenter { get; private set; }
+        [field: SerializeField] public EvolvePresenter EvolvePresenter { get; private set; }
 
         [Header("Listening to")]
         [SerializeField] private ShowBlackSmithEventChannelSO _openBlackSmithEvent;

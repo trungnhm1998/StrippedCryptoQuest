@@ -266,9 +266,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1464654027684857052}
-  - component: {fileID: 5433168599293694789}
+  - component: {fileID: 7609565981648021589}
   m_Layer: 5
-  m_Name: EquipmentList
+  m_Name: EvolveableEquipmentsPresenter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -294,7 +294,7 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 462, y: 450}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &5433168599293694789
+--- !u!114 &7609565981648021589
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -303,14 +303,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 3934113162934939369}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: af208f0c51fdb984fac4970c853ac042, type: 3}
+  m_Script: {fileID: 11500000, guid: 8ac4f143f8d2f8844be03327d4e44685, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _scrollRect: {fileID: 1331044391706340834}
-  _itemPrefab: {fileID: 3789530811202345516, guid: 11f7e08f6118aed4696c670a457e95ab, type: 3}
-  _finishedRenderEvent:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1 &4115968723519823376
 GameObject:
   m_ObjectHideFlags: 0
@@ -796,7 +791,6 @@ GameObject:
   m_Component:
   - component: {fileID: 9026399539578083950}
   - component: {fileID: 2182307579191917743}
-  - component: {fileID: 2670729003087342785}
   m_Layer: 5
   m_Name: Content
   m_TagString: Untagged
@@ -818,10 +812,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 8195461009354782566}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 1}
-  m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: -222.5, y: 0}
-  m_SizeDelta: {x: 445, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 300}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &2182307579191917743
 MonoBehaviour:
@@ -843,26 +837,12 @@ MonoBehaviour:
   m_ChildAlignment: 0
   m_Spacing: 0
   m_ChildForceExpandWidth: 0
-  m_ChildForceExpandHeight: 1
+  m_ChildForceExpandHeight: 0
   m_ChildControlWidth: 0
   m_ChildControlHeight: 0
   m_ChildScaleWidth: 0
-  m_ChildScaleHeight: 1
+  m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
---- !u!114 &2670729003087342785
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6064853603416781677}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3245ec927659c4140ac4f8d17403cc18, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_HorizontalFit: 0
-  m_VerticalFit: 2
 --- !u!1 &8119798613777874658
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,18 +1,15 @@
-using System;
 using CryptoQuest.BlackSmith.Interface;
-using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.Localization.Components;
-using UnityEngine.Pool;
 using UnityEngine.UI;
 
 namespace CryptoQuest.BlackSmith.Evolve.UI
 {
     public class UIEquipmentItem : MonoBehaviour, ISelectHandler
     {
-        public event UnityAction<IEvolvableData> InspectingEquipmentEvent;
+        public event UnityAction<UIEquipmentItem> InspectingEquipmentEvent;
         public event UnityAction<UIEquipmentItem> SelectedEquipmentEvent;
         public event UnityAction<UIEquipmentItem> SelectedEquipmentAsMaterialEvent;
 
@@ -20,16 +17,10 @@ namespace CryptoQuest.BlackSmith.Evolve.UI
         [SerializeField] private LocalizeStringEvent _nameLocalize;
         [SerializeField] private GameObject _selectedTag;
 
-        private bool _isTargetSelected = false;
-        public bool IsTargetSelected { get => _isTargetSelected; set => _isTargetSelected = value; }
+        private IEvolvableEquipment _equipmentData;
+        public IEvolvableEquipment EquipmentData { get => _equipmentData; }
 
-        private bool _isTarget = false;
-        private bool _isMaterialSelected = false;
-
-        private IEvolvableData _equipmentData;
-        public IEvolvableData EquipmentData { get => _equipmentData; }
-
-        public void SetItemData(IEvolvableData equipment)
+        public void SetItemData(IEvolvableEquipment equipment)
         {
             ResetItemStates();
 
@@ -39,11 +30,8 @@ namespace CryptoQuest.BlackSmith.Evolve.UI
             _equipmentData = equipment;
         }
 
-        private void ResetItemStates()
+        public void ResetItemStates()
         {
-            _isTarget = false;
-            _isMaterialSelected = false;
-            _isTargetSelected = false;
             _selectedTag.SetActive(false);
         }
 
@@ -55,29 +43,17 @@ namespace CryptoQuest.BlackSmith.Evolve.UI
 
         private void InspectEquipment()
         {
-            InspectingEquipmentEvent?.Invoke(_equipmentData);
+            InspectingEquipmentEvent?.Invoke(this);
         }
 
-        public void SelectToEvolve()
+        public void SubmitEquipment()
         {
-            if (IsTargetSelected) return;
-            Debug.Log($"Item Selected");
-            _isTarget = true;
-            _selectedTag.SetActive(true);
             SelectedEquipmentEvent?.Invoke(this);
         }
 
-        public void SelectMaterial()
+        public void SetAsBase()
         {
-            if (!_isMaterialSelected && !_isTarget)
-            {
-                if (IsTargetSelected)
-                {
-                    _isMaterialSelected = true;
-                    SelectedEquipmentAsMaterialEvent?.Invoke(this);
-                    Debug.Log($"Material Selected");
-                }
-            }
+            _selectedTag.SetActive(true);
         }
     }
 }

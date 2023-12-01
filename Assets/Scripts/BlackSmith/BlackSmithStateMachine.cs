@@ -1,8 +1,8 @@
 using FSM;
 using CryptoQuest.BlackSmith.State.Overview;
-using CryptoQuest.BlackSmith.State.Upgrade;
 using CryptoQuest.BlackSmith.State;
 using CryptoQuest.BlackSmith.Upgrade.State;
+using CryptoQuest.BlackSmith.Evolve.States;
 
 namespace CryptoQuest.BlackSmith
 {
@@ -14,7 +14,9 @@ namespace CryptoQuest.BlackSmith
         public const string CONFIG_UPGRADE_STATE = "ConfigUpgrade";
         public const string CONFIRM_UPGRADE_STATE = "ConfirmUpgrade";
         public const string UPGRADE_RESULT_STATE = "UpgradeResult";
-        public const string EVOLVE_STATE = "Evolve";
+
+        // Evolve's states
+        public const string EVOLVE_STATE_MACHINE = "Evolve";
     }
 
     public class BlackSmithStateMachine : StateMachine
@@ -29,7 +31,7 @@ namespace CryptoQuest.BlackSmith
             AddState(Contants.OVERVIEW_STATE, new OverviewState(this));
             AddState(Contants.UPGRADING_STATE_MACHINE, new UpgradingStateMachine(this));
             AddState(Contants.UPGRADE_RESULT_STATE, new UpgradeResultState(this));
-            AddState(Contants.EVOLVE_STATE, new EvolveState(this));
+            AddState(Contants.EVOLVE_STATE_MACHINE, new EvolveStateMachine(this));
 
             SetStartState(Contants.OVERVIEW_STATE);
             Init();

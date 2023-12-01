@@ -17,7 +17,7 @@ namespace CryptoQuest.BlackSmith.Evolve.UI
         [SerializeField] private GameObject[] _stars = new GameObject[5];
         [SerializeField] private Image _rarity;
 
-        public void SetEquipmentDetail(IEvolvableData equipment)
+        public void SetEquipmentDetail(IEvolvableEquipment equipment)
         {
             BeforeSetData();
 

@@ -15,7 +15,7 @@ namespace CryptoQuest.BlackSmith.Evolve.UI
         [SerializeField] private TMP_Text _gold;
         [SerializeField] private TMP_Text _metad;
 
-        public void SetConfirmInfo(IEvolvableData equipmentData)
+        public void SetConfirmInfo(IEvolvableEquipment equipmentData)
         {
             SetStarBeforeEvolve(equipmentData.Stars);
             SetStarAfterEvolve(equipmentData.Stars + 1);
