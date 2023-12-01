@@ -26,7 +26,7 @@ namespace CryptoQuest.BlackSmith.Upgrade.States
 
         public override void OnCancel()
         {
-            EquipmentDetailsPresenter.ResetPreviews();
+            EquipmentsPresenter.CancelUI();
             fsm.RequestStateChange(EStates.SelectEquipment);
         }
 

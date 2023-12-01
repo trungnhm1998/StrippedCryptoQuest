@@ -15,6 +15,7 @@ namespace CryptoQuest.BlackSmith.Upgrade.States
         protected ConfigUpgradePresenter ConfigUpgradePresenter => UpgradeSystem.ConfigUpgradePresenter;
         protected UIConfirmDetails UIConfirmDetails => UpgradeSystem.UIConfirmDetails;
         protected GameObject ResultUI => UpgradeSystem.ResultUI;
+        protected CurrencyPresenter CurrencyPresenter => UpgradeSystem.CurrencyPresenter;
         protected MerchantsInputManager Input => StateMachine.Input;
         protected BlackSmithDialogsPresenter DialogsPresenter => StateMachine.DialogsPresenter;
 
