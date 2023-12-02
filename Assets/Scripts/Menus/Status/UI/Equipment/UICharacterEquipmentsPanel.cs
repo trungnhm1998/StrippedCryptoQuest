@@ -12,13 +12,10 @@ namespace CryptoQuest.Menus.Status.UI.Equipment
     public class UICharacterEquipmentsPanel : MonoBehaviour
     {
         // refs
-        [SerializeField] private UIStatusMenu _mainPanel;
-        [SerializeField] private UIEquipmentsInventory _equipmentsInventoryPanel;
         [SerializeField] private UICharacterEquipmentSlot[] _equipmentSlots;
 
         // config
         [SerializeField] private GameObject _equipmentSlotParent;
-        [SerializeField] private MultiInputButton _defaultSelection;
 
         private Dictionary<ESlot, UICharacterEquipmentSlot> _equipmentSlotsCache = new();
 
@@ -45,10 +42,7 @@ namespace CryptoQuest.Menus.Status.UI.Equipment
             _equipmentSlotParent.SetActive(true);
 
             RenderEquippingItems(hero);
-            Invoke(nameof(Focus), 0);
         }
-
-        public void Focus() => _defaultSelection.Select();
 
         public void Hide() => _equipmentSlotParent.SetActive(false);
 

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net;
 using CryptoQuest.AbilitySystem.Abilities;
 using CryptoQuest.Actions;
+using CryptoQuest.Events.UI;
 using CryptoQuest.Item.MagicStone;
 using CryptoQuest.Networking;
 using CryptoQuest.Sagas.Objects;
@@ -14,7 +15,6 @@ using IndiGames.Core.Events;
 using TinyMessenger;
 using UniRx;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
 
 namespace CryptoQuest.Sagas.MagicStone
 {
@@ -25,7 +25,6 @@ namespace CryptoQuest.Sagas.MagicStone
         [SerializeField] private MagicStoneInventorySo _stoneInventory;
 
         private TinyMessageSubscriptionToken _fetchEvent;
-        private TinyMessageSubscriptionToken _heroInventoryUpdateEvent;
         private TinyMessageSubscriptionToken _transferSuccessEvent;
 
         private MagicStoneResponseConverter _converter;
@@ -37,9 +36,7 @@ namespace CryptoQuest.Sagas.MagicStone
 
         private void OnEnable()
         {
-            _fetchEvent = ActionDispatcher.Bind<FetchProfileCharactersAction>(HandleAction);
-            // _heroInventoryUpdateEvent = ActionDispatcher.Bind<GetGameNftCharactersSucceed>(RefreshHeroInventory);
-            // _transferSuccessEvent = ActionDispatcher.Bind<TransferSucceed>(FilterAndRefreshInventory);
+            _fetchEvent = ActionDispatcher.Bind<FetchProfileMagicStonesAction>(HandleAction);
         }
 
         private void OnDisable()
@@ -47,13 +44,11 @@ namespace CryptoQuest.Sagas.MagicStone
             ActionDispatcher.Unbind(_fetchEvent);
         }
 
-        private void HandleAction(FetchProfileCharactersAction _)
+        private void HandleAction(FetchProfileMagicStonesAction _)
         {
             ActionDispatcher.Dispatch(new ShowLoading());
             var restClient = ServiceProvider.GetService<IRestClient>();
             restClient
-                .WithParams(new Dictionary<string, string>()
-                    { { "source", $"{((int)ECharacterStatus.InGame).ToString()}" } })
                 .Get<MagicStonesResponse>(API.Profile.MAGIC_STONE)
                 .Subscribe(ProcessResponseCharacters, OnError);
         }
@@ -65,37 +60,36 @@ namespace CryptoQuest.Sagas.MagicStone
             var responseStones = obj.data.stones;
             if (responseStones.Length == 0) return;
             OnInventoryFilled(responseStones);
+            FilterDboxStones(responseStones);
         }
 
-        private void OnInventoryFilled(Objects.MagicStone[] characters)
-            => StartCoroutine(CoLoadAndUpdateInventory(characters));
-
-        private IEnumerator CoLoadAndUpdateInventory(Objects.MagicStone[] stonesData)
+        private void FilterDboxStones(Objects.MagicStone[] stonesResponse)
         {
-            // var stones = stonesData.Select(CreateNftCharacter).ToList();
-            // _stoneInventory.MagicStones.Clear();
-            // _stoneInventory.MagicStones = stones;
+            if (stonesResponse.Length == 0) return;
+            var dboxStones = stonesResponse.Where(stone => stone.inGameStatus == (int)Objects.EMagicStoneStatus.InBox).ToList();
+            ActionDispatcher.Dispatch(new FetchDBoxMagicStonesSucceeded(dboxStones));
+        }
 
-            // _inventoryFilled.RaiseEvent(_heroInventory.OwnedHeroes);
+        private void OnInventoryFilled(Objects.MagicStone[] stonesResponse)
+            => StartCoroutine(CoLoadAndUpdateInventory(stonesResponse));
+
+        private IEnumerator CoLoadAndUpdateInventory(Objects.MagicStone[] stonesResponse)
+        {
             _stoneInventory.MagicStones.Clear();
-            foreach (var stoneResponse in stonesData)
+            foreach (var stoneResponse in stonesResponse)
             {
                 yield return _passiveAbilityDatabase.LoadDataById(stoneResponse.passiveSkillId1);
                 yield return _passiveAbilityDatabase.LoadDataById(stoneResponse.passiveSkillId2);
                 _stoneInventory.MagicStones.Add(_converter.Convert(stoneResponse));
             }
-        }
-
-        private Item.MagicStone.MagicStone CreateNftCharacter(Objects.MagicStone characterResponse)
-        {
-            var nftCharacter = new Item.MagicStone.MagicStone();
-            // FillCharacterData(characterResponse, ref nftCharacter);
-            return nftCharacter;
+            ActionDispatcher.Dispatch(new StoneInventoryFilled());
         }
 
         private void OnError(Exception error)
         {
             Debug.LogError("FetchProfileCharacters::OnError " + error);
+            ActionDispatcher.Dispatch(new ShowLoading(false));
+            ActionDispatcher.Dispatch(new FetchMagicStonesFailed());
         }
     }
 }

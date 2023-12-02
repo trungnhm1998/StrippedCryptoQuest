@@ -1231,7 +1231,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &9064012098168022264
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1266,7 +1266,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d53205f067ae4169bacb09169c88680b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _equipmentPrefabDatabase: {fileID: 11400000, guid: 04f20c327b50e5f44946cca153d90357, type: 2}
   _attributeConfigMapping: {fileID: 11400000, guid: bbbb07ca878ba794db30359afe0e06f4, type: 2}
   _headerBackground: {fileID: 8266506100629314117}
   _rarity: {fileID: 4409123920305747010}
@@ -1281,6 +1280,7 @@ MonoBehaviour:
   _passiveSkillsContainer: {fileID: 770216789802024469}
   _conditionalSkillPrefab: {fileID: 1453190205383352797, guid: 7c71ddfe5aa78074a89dd4752998b27c, type: 3}
   _conditionalSkillsContainer: {fileID: 3115330487635888659}
+  _levelTextFormat: Lv. {0}/<color="grey">{1}
 --- !u!222 &3761067756141399912
 CanvasRenderer:
   m_ObjectHideFlags: 0

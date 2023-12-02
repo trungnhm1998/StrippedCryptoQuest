@@ -1,4 +1,5 @@
 ﻿using CryptoQuest.Actions;
+using CryptoQuest.Sagas.MagicStone;
 using IndiGames.Core.Events;
 
 namespace CryptoQuest.Sagas.Profile
@@ -10,6 +11,7 @@ namespace CryptoQuest.Sagas.Profile
             ActionDispatcher.Dispatch(new FetchProfileEquipmentsAction());
             ActionDispatcher.Dispatch(new FetchProfileCharactersAction());
             ActionDispatcher.Dispatch(new FetchProfileBeastAction());
+            ActionDispatcher.Dispatch(new FetchProfileMagicStonesAction());
         }
     }
 

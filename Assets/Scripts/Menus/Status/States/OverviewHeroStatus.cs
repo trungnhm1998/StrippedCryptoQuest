@@ -50,7 +50,6 @@ namespace CryptoQuest.Menus.Status.States
             StatusPanel.InspectingHeroChanged += RenderHero;
 
             SelectInspectingHero();
-            StatusPanel.CharacterEquipmentsPanel.Focus();
         }
 
         private void SelectInspectingHero()
