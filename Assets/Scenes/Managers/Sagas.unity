@@ -286,6 +286,7 @@ GameObject:
   - component: {fileID: 869823238}
   - component: {fileID: 869823239}
   - component: {fileID: 869823240}
+  - component: {fileID: 869823241}
   m_Layer: 0
   m_Name: NftMagicStone
   m_TagString: Untagged
@@ -334,6 +335,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e1b8ce3d60a40479079e2f99cde7dd9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &869823241
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 869823237}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8388d7db5be4f1babb5b58358961d98, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _magicStoneDefinitionDatabase: {fileID: 11400000, guid: 0b617ab93d2989d4da48a5b72118039a, type: 2}
+  _passiveAbilityDatabase: {fileID: 11400000, guid: 159d7e3bfc477b14eb71bdfbbdea52cd, type: 2}
+  _stoneInventory: {fileID: 11400000, guid: dac3b863c8895c7408d0d03a95d1d969, type: 2}
 --- !u!1 &878156015
 GameObject:
   m_ObjectHideFlags: 0
