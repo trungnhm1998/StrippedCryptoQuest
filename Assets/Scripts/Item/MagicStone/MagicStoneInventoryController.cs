@@ -15,7 +15,7 @@ namespace CryptoQuest.Item.MagicStone
 
         public bool Add(MagicStone stone)
         {
-            if (stone != null && stone.IsValid())
+            if (stone == null || !stone.IsValid())
             {
                 Debug.LogWarning($"Stone is null or invalid");
                 return false;
@@ -27,7 +27,7 @@ namespace CryptoQuest.Item.MagicStone
 
         public bool Remove(MagicStone stone)
         {
-            if (stone != null && stone.IsValid())
+            if (stone == null || !stone.IsValid())
             {
                 return _stoneInventory.MagicStones.Remove(stone);
             }
