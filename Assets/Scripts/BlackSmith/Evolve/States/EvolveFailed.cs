@@ -1,14 +1,14 @@
 namespace CryptoQuest.BlackSmith.Evolve.States
 {
-    public class EvolveSuccess : EvolveStateBase
+    public class EvolveFailed : EvolveStateBase
     {
-        public EvolveSuccess(EvolveStateMachine stateMachine) : base(stateMachine) { }
+        public EvolveFailed(EvolveStateMachine stateMachine) : base(stateMachine) { }
 
         public override void OnEnter()
         {
             base.OnEnter();
             // _evolveResultPresenter.gameObject.SetActive(true);
-            // _evolveResultPresenter.SetResultSuccess(null);
+            // _evolveResultPresenter.SetResultFail(null);
         }
 
         public override void OnExit()

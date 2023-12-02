@@ -1,10 +1,10 @@
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
+using System.Linq;
 using CryptoQuest.BlackSmith.Interface;
-using CryptoQuest.Item.Equipment;
-using UnityEngine.Localization;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
+using CryptoQuest.Item.Equipment;
+using UnityEngine;
+using UnityEngine.Localization;
 
 namespace CryptoQuest.BlackSmith.Evolve
 {
@@ -34,27 +34,28 @@ namespace CryptoQuest.BlackSmith.Evolve
         public int Rate { get; set; }
     }
 
+    public interface IEvolvableModel
+    {
+        public List<IEquipment> GetEvolableEquipments();
+    }
+
     public class EvolvableModel : MonoBehaviour, IEvolvableModel
     {
-        [SerializeField] private EquipmentPrefabDatabase _equipmentPrefabDatabase;
-        private List<IEvolvableEquipment> _evolvableEquipments;
-        public List<IEvolvableEquipment> EvolvableEquipments => _evolvableEquipments;
+        [SerializeField] private InventorySO _inventory;
 
-        public IEnumerator CoGetData(InventorySO inventory)
+        /// <summary>
+        /// Only nft equipments can be evolved
+        /// </summary>
+        /// <returns>equipments that can be evolve</returns>
+        public List<IEquipment> GetEvolableEquipments() =>
+            _inventory.NftEquipments.Where(CanEvolve).Cast<IEquipment>().ToList();
+
+        private static bool CanEvolve(IEquipment equipment)
         {
-            _evolvableEquipments = new();
-            var equipments = new List<EquipmentInfo>();
-            equipments.AddRange(inventory.NftEquipments);
-            equipments.AddRange(inventory.Equipments);
-            foreach (var equipment in equipments)
-            {
-                IEvolvableEquipment equipmentData = new EvolveableEquipmentData(equipment);
-                // TODO: check which equipments are evolvable
-                // if (equipment.Level < equipment.Data.MaxLevel)
-                _evolvableEquipments.Add(equipmentData);
-            }
-
-            yield break;
+            // return equipment.Level == equipment.Data.MaxLevel;
+            // this equipment should have at least 1 "material" same equipment also max lvl
+            // using equipment.Data.Id
+            return true;
         }
     }
 }

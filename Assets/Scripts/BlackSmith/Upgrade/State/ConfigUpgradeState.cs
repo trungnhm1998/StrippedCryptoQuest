@@ -1,14 +1,15 @@
 using CryptoQuest.BlackSmith.Interface;
+using CryptoQuest.BlackSmith.States;
 
 namespace CryptoQuest.BlackSmith.Upgrade.State
 {
-    public class ConfigUpgradeState : UpgradingStateBase
+    public class ConfigUpgradeState : BlackSmithStateBase
     {
-        private ConfigUpgradePresenter _configUpgradePresenter;
+        private readonly ConfigUpgradePresenter _configUpgradePresenter;
 
-        public ConfigUpgradeState(BlackSmithStateMachine stateMachine) : base(stateMachine)
+        public ConfigUpgradeState(BlackSmithSystem context) : base(context)
         {
-            _upgradePresenter.TryGetComponent(out _configUpgradePresenter);
+            context.UpgradePresenter.TryGetComponent(out _configUpgradePresenter);
         }
 
         public override void OnEnter()
@@ -16,32 +17,25 @@ namespace CryptoQuest.BlackSmith.Upgrade.State
             base.OnEnter();
             _configUpgradePresenter.Show();
 
-            _configUpgradePresenter.ConfiguratedUpgrade += ConfiguratedUpgrade;
+            _configUpgradePresenter.ConfiguratedUpgrade += ToConfirmUpgrade;
         }
 
         public override void OnExit()
         {
             base.OnExit();
             _configUpgradePresenter.Hide();
-
-            RemoveEvents();
-        }
-
-        protected override void RemoveEvents()
-        {
-            base.RemoveEvents();
-            _configUpgradePresenter.ConfiguratedUpgrade -= ConfiguratedUpgrade;
+            _configUpgradePresenter.ConfiguratedUpgrade -= ToConfirmUpgrade;
         }
 
         protected override void OnCancel()
         {
             _configUpgradePresenter.CancelUI();
-            fsm.RequestStateChange(Contants.SELECT_UPGRADE_STATE);
+            fsm.RequestStateChange(BlackSmith.State.SELECT_UPGRADE);
         }
 
-        private void ConfiguratedUpgrade(IUpgradeEquipment equipment)
+        private void ToConfirmUpgrade(IUpgradeEquipment equipment)
         {
-            fsm.RequestStateChange(Contants.CONFIRM_UPGRADE_STATE);
+            fsm.RequestStateChange(BlackSmith.State.CONFIRM_UPGRADE);
         }
     }
 }

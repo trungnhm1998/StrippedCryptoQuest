@@ -1,40 +1,36 @@
-using FSM;
-using CryptoQuest.BlackSmith.State.Overview;
-using CryptoQuest.BlackSmith.State;
-using CryptoQuest.BlackSmith.Upgrade.State;
+using System;
 using CryptoQuest.BlackSmith.Evolve.States;
+using CryptoQuest.BlackSmith.States.Overview;
+using CryptoQuest.BlackSmith.Upgrade.State;
+using FSM;
 
 namespace CryptoQuest.BlackSmith
 {
-    public static class Contants
+    public static class State
     {
-        public const string OVERVIEW_STATE = "Overview";
-        public const string UPGRADING_STATE_MACHINE = "Upgrading";
-        public const string SELECT_UPGRADE_STATE = "SelectUpgrade";
-        public const string CONFIG_UPGRADE_STATE = "ConfigUpgrade";
-        public const string CONFIRM_UPGRADE_STATE = "ConfirmUpgrade";
-        public const string UPGRADE_RESULT_STATE = "UpgradeResult";
+        public const string OVERVIEW = "Overview";
+        public const string UPGRADING = "Upgrading";
+        public const string SELECT_UPGRADE = "SelectUpgrade";
+        public const string CONFIG_UPGRADE = "ConfigUpgrade";
+        public const string CONFIRM_UPGRADE = "ConfirmUpgrade";
+        public const string UPGRADE_RESULT = "UpgradeResult";
 
         // Evolve's states
-        public const string EVOLVE_STATE_MACHINE = "Evolve";
+        public const string EVOLVING = "Evolve";
     }
 
-    public class BlackSmithStateMachine : StateMachine
+    public class BlackSmithStateMachine : StateMachine<string, string, string>
     {
-        public BlackSmithManager BlackSmithManager { get; private set; }
-        public BlackSmithStateBase CurrentState { get; set; }
+        public event Action Exiting;
 
-        public BlackSmithStateMachine(BlackSmithManager manager) : base()
+        public BlackSmithStateMachine(BlackSmithSystem context)
         {
-            BlackSmithManager = manager;
+            AddState(State.OVERVIEW, new OverviewState(context));
+            AddState(State.UPGRADING, new UpgradingStateMachine(context));
+            AddState(State.UPGRADE_RESULT, new UpgradeResultState(context));
+            AddState(State.EVOLVING, new EvolveStateMachine(context));
 
-            AddState(Contants.OVERVIEW_STATE, new OverviewState(this));
-            AddState(Contants.UPGRADING_STATE_MACHINE, new UpgradingStateMachine(this));
-            AddState(Contants.UPGRADE_RESULT_STATE, new UpgradeResultState(this));
-            AddState(Contants.EVOLVE_STATE_MACHINE, new EvolveStateMachine(this));
-
-            SetStartState(Contants.OVERVIEW_STATE);
-            Init();
+            SetStartState(State.OVERVIEW);
         }
     }
 }

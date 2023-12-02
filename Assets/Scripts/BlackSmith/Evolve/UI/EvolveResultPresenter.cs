@@ -1,10 +1,9 @@
-using CryptoQuest.BlackSmith.Common;
 using CryptoQuest.BlackSmith.Interface;
 using UnityEngine;
 
 namespace CryptoQuest.BlackSmith.Evolve.UI
 {
-    public class EvolveResultPresenter : Presenter
+    public class EvolveResultPresenter : MonoBehaviour
     {
         [field: SerializeField] public UIResultPanel EvolveResultUI { get; private set; }
 

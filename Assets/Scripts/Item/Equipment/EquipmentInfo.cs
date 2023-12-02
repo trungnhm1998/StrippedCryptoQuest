@@ -1,31 +1,12 @@
 ﻿using System;
 using CryptoQuest.AbilitySystem.Abilities;
 using CryptoQuest.Gameplay.Inventory;
-using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Type;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
 using UnityEngine;
+using UnityEngine.Localization;
 
 namespace CryptoQuest.Item.Equipment
 {
-    public interface IEquipment
-    {
-        public uint Id { get; set; }
-        public int Level { get; set; }
-        public EquipmentData Data { get; set; }
-        public AttributeWithValue[] Stats { get; }
-        public RaritySO Rarity { get; }
-        public float ValuePerLvl { get; }
-        public EquipmentPrefab Prefab { get; }
-        public EquipmentTypeSO Type { get; }
-        public ESlot[] RequiredSlots { get; }
-        public ESlot[] AllowedSlots { get; }
-        public PassiveAbility[] Passives { get; }
-        public bool IsNft { get; }
-        public bool IsValid();
-        public bool AddToInventory(IInventoryController inventory);
-        public bool RemoveFromInventory(IInventoryController inventory);
-    }
-
     [Serializable]
     public abstract class EquipmentInfo : IEquipment, IEquatable<EquipmentInfo>
     {
@@ -43,6 +24,7 @@ namespace CryptoQuest.Item.Equipment
         public PassiveAbility[] Passives => Data.Passives;
 
         public abstract bool IsNft { get; }
+        public LocalizedString DisplayName => Data.Prefab.DisplayName;
 
         #region Utils
 

@@ -51,14 +51,5 @@ namespace CryptoQuest.BlackSmith.Evolve.UI
             yield return _heroAvatarProvider.LoadAvatarAsync(hero);
             characterUI.SetAvatar(hero.Avatar);
         }
-
-        public void PreviewCharacterStats(UIEquipmentItem item)
-        {
-            if (item == null) return;
-            for (int i = 0; i < _partyController.Slots.Length; i++)
-            {
-                _listCharacter[i].Preview(item.EquipmentData.Equipment);
-            }
-        }
     }
 }

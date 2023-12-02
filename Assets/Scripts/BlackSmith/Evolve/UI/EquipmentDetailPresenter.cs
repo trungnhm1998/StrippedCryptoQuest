@@ -6,21 +6,20 @@ namespace CryptoQuest.BlackSmith.Evolve.UI
     {
         [field: SerializeField] public UIEquipmentDetail EquipmentDetailUI { get; private set; }
 
-        [SerializeField] private EvolveableEquipmentsPresenter _evolveableEquipmentsPresenter;
+        [SerializeField] private EquipmentsPresenter _equipmentsPresenter;
 
         private void OnEnable()
         {
-            _evolveableEquipmentsPresenter.OnInspectingEquipmentItemChange += HandleInspectingEquipmentItemChange;
+            // _equipmentsPresenter.OnInspectingEquipmentItemChange += HandleInspectingEquipmentCacheableItemChange;
         }
 
         private void OnDisable()
         {
-            _evolveableEquipmentsPresenter.OnInspectingEquipmentItemChange -= HandleInspectingEquipmentItemChange;
+            // _equipmentsPresenter.OnInspectingEquipmentItemChange -= HandleInspectingEquipmentCacheableItemChange;
         }
 
-        private void HandleInspectingEquipmentItemChange(UIEquipmentItem item)
+        private void HandleInspectingEquipmentCacheableItemChange(UIEquipmentItem item)
         {
-            EquipmentDetailUI.SetEquipmentDetail(item.EquipmentData);
         }
     }
 }

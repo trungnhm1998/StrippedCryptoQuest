@@ -1,14 +1,15 @@
 using CryptoQuest.BlackSmith.Interface;
+using CryptoQuest.BlackSmith.States;
 
 namespace CryptoQuest.BlackSmith.Upgrade.State
 {
-    public class SelectUpgradeEquipmentState : UpgradingStateBase
+    public class SelectUpgradeEquipmentState : BlackSmithStateBase
     {
-        private EquipmentListPresenter _equipmentsPresenter;
+        private readonly EquipmentListPresenter _equipmentsPresenter;
 
-        public SelectUpgradeEquipmentState(BlackSmithStateMachine stateMachine) : base(stateMachine)
+        public SelectUpgradeEquipmentState(BlackSmithSystem context) : base(context)
         {
-            _upgradePresenter.TryGetComponent(out _equipmentsPresenter);
+            context.UpgradePresenter.TryGetComponent(out _equipmentsPresenter);
         }
 
         public override void OnEnter()
@@ -18,31 +19,25 @@ namespace CryptoQuest.BlackSmith.Upgrade.State
             _equipmentsPresenter.EquipmentListUI.SetInteractable(true);
             _equipmentsPresenter.EquipmentListUI.ResetSelected();
             _equipmentsPresenter.ShowMessage();
-            _equipmentsPresenter.OnSubmitItem += SummitedItem;
+            _equipmentsPresenter.OnSubmitItem += SubmitItem;
         }
 
         public override void OnExit()
         {
             base.OnExit();
 
-            RemoveEvents();
-        }
-
-        protected override void RemoveEvents()
-        {
-            base.RemoveEvents();
             _equipmentsPresenter.SetInteractable(false);
-            _equipmentsPresenter.OnSubmitItem -= SummitedItem;
+            _equipmentsPresenter.OnSubmitItem -= SubmitItem;
         }
 
-        private void SummitedItem(IUpgradeEquipment upgradeEquipment)
+        private void SubmitItem(IUpgradeEquipment upgradeEquipment)
         {
-            fsm.RequestStateChange(Contants.CONFIG_UPGRADE_STATE);
+            fsm.RequestStateChange(BlackSmith.State.CONFIG_UPGRADE);
         }
 
         protected override void OnCancel()
         {
-            _baseFSM.RequestStateChange(Contants.OVERVIEW_STATE);
+            fsm.RequestStateChange(BlackSmith.State.OVERVIEW);
         }
     }
 }
