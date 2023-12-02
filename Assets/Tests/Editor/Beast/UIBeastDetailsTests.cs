@@ -1,7 +1,7 @@
 ﻿using CryptoQuest.AbilitySystem.Abilities;
 using CryptoQuest.AbilitySystem.Attributes;
 using CryptoQuest.Menus.Beast.UI;
-using CryptoQuest.Tests.Runtime.Beast.Builder;
+using CryptoQuest.Tests.Editor.Beast.Builder;
 using NUnit.Framework;
 using UnityEditor;
 using UnityEngine;
@@ -9,7 +9,7 @@ using UnityEngine.Localization;
 using UnityEngine.Localization.Components;
 using UnityEngine.UI;
 
-namespace CryptoQuest.Tests.Runtime.Beast
+namespace CryptoQuest.Tests.Editor.Beast
 {
     [TestFixture]
     public class UIBeastDetailsTests
