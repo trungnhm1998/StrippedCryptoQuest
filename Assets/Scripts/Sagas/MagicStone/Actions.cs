@@ -4,20 +4,29 @@ using IndiGames.Core.Events;
 
 namespace CryptoQuest.Sagas.MagicStone
 {
-    public class FetchMagicStones : ActionBase
-    {
-        public EMagicStoneStatus Status { get; set; } = EMagicStoneStatus.All;
-    }
+    public class FetchProfileMagicStonesAction : ActionBase { }
 
     public class FetchMagicStonesSucceeded : ActionBase
     {
-        public List<Objects.MagicStone> InGameHeroes { get; }
+        public List<Objects.MagicStone> InGameStones { get; }
 
-        public FetchMagicStonesSucceeded(List<Objects.MagicStone> inGameHeroes)
+        public FetchMagicStonesSucceeded(List<Objects.MagicStone> inGameStones)
         {
-            InGameHeroes = inGameHeroes;
+            InGameStones = inGameStones;
         }
     }
 
     public class FetchMagicStonesFailed : ActionBase { }
+
+    public class StoneInventoryFilled : ActionBase { }
+
+    public class FetchDBoxMagicStonesSucceeded : ActionBase
+    {
+        public List<Objects.MagicStone> InGameStones { get; }
+
+        public FetchDBoxMagicStonesSucceeded(List<Objects.MagicStone> inGameStones)
+        {
+            InGameStones = inGameStones;
+        }
+    }
 }

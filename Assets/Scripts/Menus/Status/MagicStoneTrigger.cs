@@ -1,6 +1,7 @@
 ﻿using CryptoQuest.Input;
 using CryptoQuest.Menus.Status.Events;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
 namespace CryptoQuest.Menus.Status
