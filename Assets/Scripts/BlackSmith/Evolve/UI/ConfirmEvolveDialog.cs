@@ -1,11 +1,10 @@
 using System;
-using CryptoQuest.BlackSmith.Common;
 using UnityEngine;
 using UnityEngine.Localization;
 
 namespace CryptoQuest.BlackSmith.Evolve.UI
 {
-    public class ConfirmEvolvePresenter : Presenter
+    public class ConfirmEvolveDialog : MonoBehaviour
     {
         [field: SerializeField] public UIConfirmPanel ConfirmEvolveUI { get; private set; }
 
@@ -13,8 +12,8 @@ namespace CryptoQuest.BlackSmith.Evolve.UI
 
         [SerializeField] private LocalizedString _confirmMessage;
 
-        public event Action OnConfirmEvolving;
-        public event Action OnCancelEvolving;
+        public event Action Confirmed;
+        public event Action Canceling;
 
         private void OnEnable()
         {
@@ -32,15 +31,9 @@ namespace CryptoQuest.BlackSmith.Evolve.UI
             DialogPresenter.ConfirmNoEvent -= HandleCancelEvolving;
         }
 
-        private void HandleCancelEvolving()
-        {
-            OnCancelEvolving?.Invoke();
-        }
+        private void HandleCancelEvolving() => Canceling?.Invoke();
 
-        private void HandleConfirmEvolving()
-        {
-            OnConfirmEvolving?.Invoke();
-        }
+        private void HandleConfirmEvolving() => Confirmed?.Invoke();
 
         private void OnDestroy()
         {

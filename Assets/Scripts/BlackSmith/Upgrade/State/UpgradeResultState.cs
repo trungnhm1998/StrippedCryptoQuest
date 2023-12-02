@@ -1,14 +1,14 @@
-using CryptoQuest.BlackSmith.State;
+using CryptoQuest.BlackSmith.States;
 
 namespace CryptoQuest.BlackSmith.Upgrade.State
 {
     public class UpgradeResultState : BlackSmithStateBase
     {
-        private ResultUpgradePresenter _resultUpgradePresenter;
+        private readonly ResultUpgradePresenter _resultUpgradePresenter;
 
-        public UpgradeResultState(BlackSmithStateMachine stateMachine) : base(stateMachine)
+        public UpgradeResultState(BlackSmithSystem context) : base(context)
         {
-            _upgradePresenter.TryGetComponent(out _resultUpgradePresenter);
+            context.UpgradePresenter.TryGetComponent(out _resultUpgradePresenter);
         }
 
         public override void OnEnter()
@@ -24,20 +24,16 @@ namespace CryptoQuest.BlackSmith.Upgrade.State
             base.OnExit();
             _resultUpgradePresenter.Hide();
 
-            RemoveEvents();
-        }
-
-        protected override void RemoveEvents()
-        {
-            base.RemoveEvents();
             _resultUpgradePresenter.OnConfirmedResult -= ConfirmedResult;
         }
 
-        protected override void OnCancel() { }
+        protected override void OnCancel() => BackToUpgrade();
 
-        private void ConfirmedResult()
+        private void ConfirmedResult() => BackToUpgrade();
+
+        private void BackToUpgrade()
         {
-            fsm.RequestStateChange(Contants.UPGRADING_STATE_MACHINE);
+            fsm.RequestStateChange(BlackSmith.State.UPGRADING);
         }
     }
 }

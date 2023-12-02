@@ -1,12 +1,14 @@
+using CryptoQuest.BlackSmith.States;
+
 namespace CryptoQuest.BlackSmith.Upgrade.State
 {
-    public class ConfirmUpgradeState : UpgradingStateBase
+    public class ConfirmUpgradeState : BlackSmithStateBase
     {
-        private ConfirmUpgradePresenter _confirmUpgradePresenter;
+        private readonly ConfirmUpgradePresenter _confirmUpgradePresenter;
 
-        public ConfirmUpgradeState(BlackSmithStateMachine stateMachine) : base(stateMachine)
+        public ConfirmUpgradeState(BlackSmithSystem context) : base(context)
         {
-            _upgradePresenter.TryGetComponent(out _confirmUpgradePresenter);
+            context.UpgradePresenter.TryGetComponent(out _confirmUpgradePresenter);
         }
 
         public override void OnEnter()
@@ -23,24 +25,12 @@ namespace CryptoQuest.BlackSmith.Upgrade.State
             base.OnExit();
             _confirmUpgradePresenter.Hide();
 
-            RemoveEvents();
-        }
-
-        protected override void RemoveEvents()
-        {
-            base.RemoveEvents();
             _confirmUpgradePresenter.ComfirmedUpgrade -= ConfirmedUpgrade;
             _confirmUpgradePresenter.CancelUpgrade -= OnCancel;
         }
 
-        protected override void OnCancel()
-        {
-            fsm.RequestStateChange(Contants.CONFIG_UPGRADE_STATE);
-        }
+        protected override void OnCancel() => fsm.RequestStateChange(BlackSmith.State.CONFIG_UPGRADE);
 
-        private void ConfirmedUpgrade()
-        {
-            _baseFSM.RequestStateChange(Contants.UPGRADE_RESULT_STATE);
-        }
+        private void ConfirmedUpgrade() => fsm.RequestStateChange(BlackSmith.State.UPGRADE_RESULT);
     }
 }

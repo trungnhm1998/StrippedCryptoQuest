@@ -10,8 +10,8 @@ namespace CryptoQuest.BlackSmith.Evolve
         public UnityAction ExitConfirmPhaseEvent;
         [field: SerializeField] public MerchantsInputManager Input { get; private set; }
         [field: SerializeField] public BlackSmithDialogsPresenter DialogsPresenter { get; private set; }
-        [field: SerializeField] public EvolvePresenter EvolvePanel { get; private set; }
-        [field: SerializeField] public UIEvolveEquipmentList EvolveEquipmentList { get; private set; }
+        [field: SerializeField] public EvolveSystem EvolvePanel { get; private set; }
+        [field: SerializeField] public UIEvolvableEquipmentList EvolvableEquipmentList { get; private set; }
         [field: SerializeField] public UIConfirmPanel ConfirmPanel { get; private set; }
     }
 }
