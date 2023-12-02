@@ -6,7 +6,7 @@ using TMPro;
 using UnityEditor;
 using UnityEngine;
 
-namespace CryptoQuest.Tests.Runtime.Beast
+namespace CryptoQuest.Tests.Editor.Beast
 {
     [TestFixture]
     public class UIBeastTests

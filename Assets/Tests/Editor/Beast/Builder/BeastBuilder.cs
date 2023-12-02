@@ -6,7 +6,7 @@ using NSubstitute;
 using UnityEngine;
 using UnityEngine.Localization;
 
-namespace CryptoQuest.Tests.Runtime.Beast.Builder
+namespace CryptoQuest.Tests.Editor.Beast.Builder
 {
     public class BeastBuilder
     {
@@ -58,8 +58,8 @@ namespace CryptoQuest.Tests.Runtime.Beast.Builder
         {
             var beast = Substitute.For<IBeast>();
             beast.Elemental.Returns(_element);
-            // beast.Class.Returns(_characterClass);
-            // beast.Type.Returns(_type);
+            beast.Class.Returns(_characterClass);
+            beast.Type.Returns(_type);
             beast.Passive.Returns(_passiveAbility);
             // beast.Level.Returns(_level);
             beast.LocalizedName.Returns(_name);

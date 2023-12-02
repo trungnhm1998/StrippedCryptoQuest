@@ -47,6 +47,13 @@ namespace CryptoQuest.Menus.Beast.UI
 
         private void SetAvatar(IBeast beast)
         {
+            if (beast.Type == null ||
+                beast.Elemental == null ||
+                beast.Class == null)
+            {
+                Debug.LogWarning("UIBeastDetail::SetAvatar::Invalid Beast");
+                return;
+            }
             AssetReferenceT<Sprite> assetRefAvatar = null;
             foreach (var avatar in _database.AvatarMappings)
             {
