@@ -9,6 +9,8 @@ namespace CryptoQuest.BlackSmith.Evolve.States
         public override void OnEnter()
         {
             base.OnEnter();
+            DialogsPresenter.Dialogue.SetMessage(EvolveSystem.SelectEquipmentToEvolveText).Show();
+            
             StateMachine.MaterialItem = null;
             StateMachine.ItemToEvolve = null;
             EquipmentsPresenter.gameObject.SetActive(true);

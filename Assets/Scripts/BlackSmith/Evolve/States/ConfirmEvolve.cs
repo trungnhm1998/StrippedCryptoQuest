@@ -10,6 +10,7 @@ namespace CryptoQuest.BlackSmith.Evolve.States
         {
             base.OnEnter();
 
+            DialogsPresenter.Dialogue.SetMessage(EvolveSystem.ConfirmEvolveText).Show();
             ConfirmEvolveDialog.gameObject.SetActive(true);
             ConfirmEvolveDialog.Confirmed += HandleConfirmEvolving;
             ConfirmEvolveDialog.Canceling += OnCancel;

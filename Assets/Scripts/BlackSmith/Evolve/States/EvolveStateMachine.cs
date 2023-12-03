@@ -19,6 +19,7 @@ namespace CryptoQuest.BlackSmith.Evolve.States
         public EvolveSystem EvolveSystem { get; }
         public UIEquipmentItem ItemToEvolve { get; set; }
         public UIEquipmentItem MaterialItem { get; set; }
+        public BlackSmithDialogsPresenter DialogsPresenter => _context.DialogPresenter;
 
         public EvolveStateMachine(BlackSmithSystem context)
         {
