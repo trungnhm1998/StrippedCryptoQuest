@@ -50,8 +50,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ac4f143f8d2f8844be03327d4e44685, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _inventory: {fileID: 0}
-  <EvolveEquipmentListUI>k__BackingField: {fileID: 7488196749638395689}
+  _evolvableEquipmentsUI: {fileID: 0}
   <DialogPresenter>k__BackingField: {fileID: 0}
   <SelectBaseMessage>k__BackingField:
     m_TableReference:
@@ -86,7 +85,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6394cf46b44f314d859dc24221a8bc4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _equipmentPrefabDatabase: {fileID: 11400000, guid: 04f20c327b50e5f44946cca153d90357, type: 2}
+  _inventory: {fileID: 0}
 --- !u!1 &3730934135682828777
 GameObject:
   m_ObjectHideFlags: 0
@@ -395,6 +394,37 @@ MonoBehaviour:
   <EquipmentsPresenter>k__BackingField: {fileID: 1850029633756506135}
   <EquipmentDetailPresenter>k__BackingField: {fileID: 5523841167316689823}
   <ConfirmEvolveDialog>k__BackingField: {fileID: 6230702386464011262}
+  <EvolvableEquipmentListUI>k__BackingField: {fileID: 0}
+  <SelectEquipmentToEvolveText>k__BackingField:
+    m_TableReference:
+      m_TableCollectionName: GUID:0b0d3f62f53cf574db976df270f91498
+    m_TableEntryReference:
+      m_KeyId: 1623879491584
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  <SelectMaterialText>k__BackingField:
+    m_TableReference:
+      m_TableCollectionName: GUID:0b0d3f62f53cf574db976df270f91498
+    m_TableEntryReference:
+      m_KeyId: 1930906738688
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  <ConfirmEvolveText>k__BackingField:
+    m_TableReference:
+      m_TableCollectionName: GUID:0b0d3f62f53cf574db976df270f91498
+    m_TableEntryReference:
+      m_KeyId: 2232657551360
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!1001 &1270692618208142317
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1200,17 +1230,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 1464654027684857052, guid: b67a12770b3122a4abb021d6d0e00dc4, type: 3}
   m_PrefabInstance: {fileID: 3210245521450693740}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &7488196749638395689 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5433168599293694789, guid: b67a12770b3122a4abb021d6d0e00dc4, type: 3}
-  m_PrefabInstance: {fileID: 3210245521450693740}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: af208f0c51fdb984fac4970c853ac042, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &5531866916856725081
 PrefabInstance:
   m_ObjectHideFlags: 0

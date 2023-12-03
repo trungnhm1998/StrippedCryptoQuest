@@ -6,9 +6,11 @@ namespace CryptoQuest.BlackSmith.Evolve.States
     public abstract class EvolveStateBase : StateBase<EStates>
     {
         protected EvolveStateMachine StateMachine { get; }
-        protected UIEvolvableEquipmentList EvolvableEquipmentList => StateMachine.EvolveSystem.EvolvableEquipmentListUI;
-        protected EquipmentsPresenter EquipmentsPresenter => StateMachine.EvolveSystem.EquipmentsPresenter;
-        protected ConfirmEvolveDialog ConfirmEvolveDialog => StateMachine.EvolveSystem.ConfirmEvolveDialog;
+        protected EvolveSystem EvolveSystem => StateMachine.EvolveSystem;
+        protected UIEvolvableEquipmentList EvolvableEquipmentList => EvolveSystem.EvolvableEquipmentListUI;
+        protected EquipmentsPresenter EquipmentsPresenter => EvolveSystem.EquipmentsPresenter;
+        protected ConfirmEvolveDialog ConfirmEvolveDialog => EvolveSystem.ConfirmEvolveDialog;
+        protected BlackSmithDialogsPresenter DialogsPresenter => StateMachine.DialogsPresenter;
 
         protected EvolveStateBase(EvolveStateMachine stateMachine) : base(false) => StateMachine = stateMachine;
 
