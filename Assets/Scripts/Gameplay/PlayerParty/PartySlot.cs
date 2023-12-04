@@ -11,28 +11,28 @@ namespace CryptoQuest.Gameplay.PlayerParty
     public class PartySlot : MonoBehaviour
     {
         private HeroBehaviour _hero;
-        public HeroBehaviour HeroBehaviour => _hero;
+        public HeroBehaviour HeroBehaviour => _hero ??= GetComponentInChildren<HeroBehaviour>();
         public PartySlotSpec Spec { get; private set; }
 
         private void Awake()
         {
-            _hero = GetComponentInChildren<HeroBehaviour>();
             Reset();
         }
 
         public void Reset()
         {
-            _hero.Spec = new HeroSpec();
-            _hero.gameObject.SetActive(false);
+            HeroBehaviour.Spec = new HeroSpec();
+            HeroBehaviour.gameObject.SetActive(false);
         }
 
         public void Init(PartySlotSpec slotSpec)
         {
+            Reset();
             Spec = slotSpec;
-            _hero.gameObject.SetActive(true);
-            _hero.Init(slotSpec);
+            HeroBehaviour.gameObject.SetActive(true);
+            HeroBehaviour.Init(slotSpec);
         }
 
-        public bool IsValid() => _hero != null && _hero.IsValid();
+        public bool IsValid() => HeroBehaviour != null && HeroBehaviour.IsValid();
     }
 }
