@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-namespace CryptoQuest.BlackSmith.Upgrade
+namespace CryptoQuest.BlackSmith.Upgrade.UI
 {
     public class UIConfirmDetails : MonoBehaviour
     {

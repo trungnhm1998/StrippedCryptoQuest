@@ -12,7 +12,7 @@ namespace CryptoQuest.BlackSmith
         [field: SerializeField] public MerchantsInputManager Input { get; private set; }
         [field: SerializeField] public UIBlackSmithOverview OverviewUI { get; private set; }
         [field: SerializeField] public BlackSmithDialogsPresenter DialogPresenter { get; private set; }
-        [field: SerializeField] public UpgradePresenter UpgradePresenter { get; private set; }
+        [field: SerializeField] public UpgradeSystem UpgradeSystem { get; private set; }
         [field: SerializeField] public EvolveSystem EvolveSystem { get; private set; }
 
         private BlackSmithStateMachine _stateMachine;

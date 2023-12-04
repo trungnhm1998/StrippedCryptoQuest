@@ -1,12 +1,11 @@
 using System;
-using CryptoQuest.BlackSmith.Interface;
+using CryptoQuest.Item.Equipment;
 using CryptoQuest.Menu;
-using TMPro;
 using UnityEngine;
 using UnityEngine.Localization.Components;
 using UnityEngine.UI;
 
-namespace CryptoQuest.BlackSmith.Upgrade
+namespace CryptoQuest.BlackSmith.Upgrade.UI
 {
     public class UIUpgradeEquipment : MonoBehaviour
     {
@@ -23,18 +22,18 @@ namespace CryptoQuest.BlackSmith.Upgrade
 
         private Color _originColor;
         public MultiInputButton Button => _button;
-        public IUpgradeEquipment UpgradeEquipment { get; private set; }
+        public IEquipment UpgradeEquipment { get; private set; }
 
         private void Awake()
         {
             _originColor = _selectedBackground.color;
         }
 
-        public void SetupUI(IUpgradeEquipment equipment)
+        public void SetupUI(IEquipment equipment)
         {
             UpgradeEquipment = equipment;
             _displayName.StringReference = equipment.DisplayName;
-            _icon.sprite = equipment.Icon;
+            _icon.sprite = equipment.Type.Icon;
 
             SetConfirmSelected(false);
         }

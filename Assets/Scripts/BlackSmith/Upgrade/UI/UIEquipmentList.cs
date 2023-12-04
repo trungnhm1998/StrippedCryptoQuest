@@ -7,7 +7,7 @@ using UnityEngine.UI;
 using UnityEngine.Pool;
 using System.Collections.Generic;
 
-namespace CryptoQuest.BlackSmith.Upgrade
+namespace CryptoQuest.BlackSmith.Upgrade.UI
 {
     public class UIEquipmentList : MonoBehaviour
     {
