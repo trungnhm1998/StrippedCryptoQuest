@@ -71,8 +71,7 @@ namespace CryptoQuest.BlackSmith.Upgrade.Presenters
             {
                 if (!_attributeConfigMapping.TryGetMap(attribute.Attribute, out var config))
                     continue;
-                var attributeName = config.Name.GetLocalizedString();
-                var previewUI = previewUIs.Where(u => u.AttributeName == attributeName).First();
+                var previewUI = previewUIs.Where(u => u.LocalizeAttributeName == config.Name).First();
                 _attributePreviewUIs.Add(attribute, previewUI);
             }
         }
