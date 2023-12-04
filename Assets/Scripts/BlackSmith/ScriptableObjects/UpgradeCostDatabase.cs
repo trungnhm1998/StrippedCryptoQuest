@@ -6,11 +6,16 @@ namespace CryptoQuest.BlackSmith.ScriptableObjects
 {
     public class UpgradeCostDatabase : ScriptableObject
     {
-        [field: SerializeField] public CostByRarity[] CostData { get;
-        #if UNITY_EDITOR 
-            set; 
-        #endif
+        [field: SerializeField] public CostByRarity[] CostData { get; private set; }
+        
+    #if UNITY_EDITOR 
+
+        public void Editor_SetCostData(CostByRarity[] data)
+        {
+            CostData = data;
         }
+        
+    #endif
     }
 
     [Serializable]

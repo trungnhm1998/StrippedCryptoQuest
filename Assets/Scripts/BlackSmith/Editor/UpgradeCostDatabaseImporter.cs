@@ -64,7 +64,7 @@ namespace CryptoQuestEditor.BlackSmith
                 Costs = costs.ToArray()
             });
 
-            _database.CostData = costDatas.ToArray();
+            _database.Editor_SetCostData(costDatas.ToArray());
 
             EditorUtility.SetDirty(_database);
             AssetDatabase.SaveAssets();

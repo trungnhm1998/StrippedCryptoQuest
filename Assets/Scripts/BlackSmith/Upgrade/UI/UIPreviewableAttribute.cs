@@ -13,6 +13,7 @@ namespace CryptoQuest.BlackSmith.Upgrade.UI
         [SerializeField] private GameObject _decreaseMark;
 
         public string AttributeName => _attributeShortName.text;
+        public LocalizedString LocalizeAttributeName { get; private set; }
 
         private Color _originColor;
         private float _currentValue;
@@ -25,6 +26,7 @@ namespace CryptoQuest.BlackSmith.Upgrade.UI
         public override void SetAttribute(LocalizedString attributeName, float value)
         {
             base.SetAttribute(attributeName, value);
+            LocalizeAttributeName = attributeName;
             _currentValue = value;
         }
 
