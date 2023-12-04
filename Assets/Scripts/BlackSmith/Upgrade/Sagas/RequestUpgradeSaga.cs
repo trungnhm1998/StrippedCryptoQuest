@@ -37,7 +37,7 @@ namespace CryptoQuest.BlackSmith.Upgrade.Sagas
             public int Lv;
         }
 
-        public const string UPGRADE_API = "crypto/equipments/upgrade"; 
+        private const string UPGRADE_API = "crypto/equipments/upgrade"; 
 
         private UpgradeResponse _response;
         private IRestClient _restClient;

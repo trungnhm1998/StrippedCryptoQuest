@@ -31,6 +31,7 @@ namespace CryptoQuest.Merchant
 
         private void InitSystem()
         {
+            _hasClosed = false;
             _canvas.SetActive(true);
             OnInit();
         }
