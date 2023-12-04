@@ -4,7 +4,7 @@ using UnityEngine.Localization;
 using UnityEngine.UI;
 using TMPro;
 
-namespace CryptoQuest.BlackSmith.Upgrade
+namespace CryptoQuest.BlackSmith.Upgrade.UI
 {
     public class UIPreviewUpgradeLevel : MonoBehaviour
     {

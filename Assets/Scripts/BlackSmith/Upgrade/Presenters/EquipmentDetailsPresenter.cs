@@ -1,16 +1,13 @@
 using System.Collections.Generic;
 using CryptoQuest.Item.Equipment;
-using CryptoQuest.UI.Character;
 using CryptoQuest.UI.Tooltips.Equipment;
-using TMPro;
 using UnityEngine;
-using UnityEngine.Localization.Components;
-using UnityEngine.UI;
 using System.Linq;
 using CryptoQuest.AbilitySystem.Attributes;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
+using CryptoQuest.BlackSmith.Upgrade.UI;
 
-namespace CryptoQuest.BlackSmith.Upgrade
+namespace CryptoQuest.BlackSmith.Upgrade.Presenters
 {
     public class EquipmentDetailsPresenter : MonoBehaviour, ITooltipEquipmentProvider
     {

@@ -1,7 +1,7 @@
 using TMPro;
 using UnityEngine;
 
-namespace CryptoQuest.BlackSmith.Upgrade
+namespace CryptoQuest.BlackSmith.Upgrade.UI
 {
     public class UIUpgradeDetails : MonoBehaviour
     {

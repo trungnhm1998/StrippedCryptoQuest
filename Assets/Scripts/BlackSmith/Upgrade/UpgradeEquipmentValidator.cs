@@ -12,7 +12,7 @@ namespace CryptoQuest.BlackSmith.Upgrade
     public interface IUpgradeEquipmentValidator
     {
         bool CanUpgrade(IEquipment equipment, int toLevel);
-        bool IsEnoughGoldToUpgrade(IUpgradeEquipment equipment, float goldOwned, int toLevel);
+        bool IsEnoughGoldToUpgrade(float goldOwned, float cost);
     }
 
     public class UpgradeEquipmentValidator : IUpgradeEquipmentValidator
@@ -20,9 +20,8 @@ namespace CryptoQuest.BlackSmith.Upgrade
         public bool CanUpgrade(IEquipment equipment, int toLevel)
             => toLevel > equipment.Level && toLevel <= equipment.Data.MaxLevel;
 
-        public bool IsEnoughGoldToUpgrade(IUpgradeEquipment equipment, float goldOwned, int toLevel)
+        public bool IsEnoughGoldToUpgrade(float goldOwned, float cost)
         {
-            var cost = equipment.GetCost(equipment.Level, toLevel);
             return goldOwned >= cost;
         }
     }

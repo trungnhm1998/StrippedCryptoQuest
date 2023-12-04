@@ -20,5 +20,19 @@ namespace CryptoQuest.BlackSmith.ScriptableObjects
 
         [Tooltip("Index i is cost from level i+1 to level i+2")]
         public int[] Costs;
+
+        public float GetCost(int currentLevel, int toLevel)
+        {
+            // Index is imported base on master data in this format
+            var currentIndex = currentLevel - 1;
+            var toIndex = toLevel - 1;
+            int totalCost = 0;
+
+            for (int i = currentIndex; i < toIndex; i++)
+            {
+                totalCost += Costs[i];
+            }
+            return totalCost;
+        }
     }
 }

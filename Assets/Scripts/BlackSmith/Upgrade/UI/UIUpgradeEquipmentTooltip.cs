@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using CryptoQuest.UI.Tooltips.Equipment;
+using CryptoQuest.BlackSmith.Upgrade.Presenters;
 
-namespace CryptoQuest.BlackSmith.Upgrade
+namespace CryptoQuest.BlackSmith.Upgrade.UI
 {
     public class UIUpgradeEquipmentTooltip : UIEquipmentTooltip
     {

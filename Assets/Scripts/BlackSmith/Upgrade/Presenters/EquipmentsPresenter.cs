@@ -1,21 +1,20 @@
 using System;
 using System.Collections;
 using CryptoQuest.BlackSmith.Interface;
+using CryptoQuest.BlackSmith.Upgrade.UI;
 using CryptoQuest.Gameplay.Inventory;
-using CryptoQuest.System;
+using CryptoQuest.Item.Equipment;
 using IndiGames.Core.Common;
 using UnityEngine;
 using UnityEngine.Localization;
 
-namespace CryptoQuest.BlackSmith.Upgrade
+namespace CryptoQuest.BlackSmith.Upgrade.Presenters
 {
-    public class EquipmentListPresenter : MonoBehaviour
+    public class EquipmentsPresenter : MonoBehaviour
     {
-        public event Action<IUpgradeEquipment> OnSubmitItem;
+        public event Action<IEquipment> OnSubmitItem;
 
-        [SerializeField] private BlackSmithDialogsPresenter _dialogManager;
         [SerializeField] private UIEquipmentList _equipmentListUI;
-        [SerializeField] private GameObject _equipmentUIObject;
         [SerializeField] private GameObject _equipmentDetailsObject;
         [SerializeField] private EquipmentDetailsPresenter _equipmentDetailsUI;
 
@@ -23,8 +22,7 @@ namespace CryptoQuest.BlackSmith.Upgrade
 
         private IUpgradeModel _upgradeModel;
 
-        public UIEquipmentList EquipmentListUI => _equipmentListUI;
-        public IUpgradeEquipment SelectedEquipment { get; set; }
+        public IEquipment SelectedEquipment { get; set; }
 
         private void Awake()
         {
@@ -35,24 +33,17 @@ namespace CryptoQuest.BlackSmith.Upgrade
         {
             _equipmentListUI.OnSelectedUpgradeItem += SelectedUpgradeItem;
             _equipmentListUI.OnSubmitUpgradeItem += OnItemSubmit;
+
+            _equipmentListUI.ResetSelected();
+            SetActiveDetailUI(true);
+            InitEquipmentsUI();
         }
 
         private void OnDisable()
         {
             _equipmentListUI.OnSelectedUpgradeItem -= SelectedUpgradeItem;
             _equipmentListUI.OnSubmitUpgradeItem -= OnItemSubmit;
-        }
-
-        public void Show()
-        {
-            SetActiveUI(true);
-            InitEquipmentsUI();
-            ShowMessage();
-        }
-
-        public void Hide()
-        {
-            SetActiveUI(false);
+            SetActiveDetailUI(false);
         }
 
         public void SetInteractable(bool value)
@@ -60,33 +51,31 @@ namespace CryptoQuest.BlackSmith.Upgrade
             _equipmentListUI.SetInteractable(value);
         }
 
-        public void ShowMessage()
-        {
-            _dialogManager.Dialogue.SetMessage(_selectEquipmentMessage).Show();
-        }
-
         private void InitEquipmentsUI()
         {
             StartCoroutine(CoInitUI());
         }
 
+        private const float ERROR_PRONE_DELAY = 0.05f;
         private IEnumerator CoInitUI()
         {
             var inventory = ServiceProvider.GetService<IInventoryController>().Inventory;
             yield return _upgradeModel.CoGetData(inventory);
             _equipmentListUI.InitUI(_upgradeModel);
+
+            yield return new WaitForSeconds(ERROR_PRONE_DELAY);
+            SetInteractable(true);
         }
 
-        private void SetActiveUI(bool value)
+        private void SetActiveDetailUI(bool value)
         {
-            _equipmentUIObject.SetActive(value);
             _equipmentDetailsObject.SetActive(value);
         }
 
         private void SelectedUpgradeItem(UIUpgradeEquipment item)
         {
             SelectedEquipment = item.UpgradeEquipment;
-            _equipmentDetailsUI.SetData(item.UpgradeEquipment.Equipment);
+            _equipmentDetailsUI.SetData(item.UpgradeEquipment);
         }
 
         private void OnItemSubmit(UIUpgradeEquipment item)

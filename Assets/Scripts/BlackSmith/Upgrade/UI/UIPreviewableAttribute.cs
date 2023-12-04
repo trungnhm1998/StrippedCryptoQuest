@@ -3,7 +3,7 @@ using CryptoQuest.UI.Tooltips;
 using UnityEngine.Localization;
 using UnityEngine.UI;
 
-namespace CryptoQuest.BlackSmith.Upgrade
+namespace CryptoQuest.BlackSmith.Upgrade.UI
 {
     public class UIPreviewableAttribute : UIAttribute
     {
