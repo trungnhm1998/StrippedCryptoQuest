@@ -36,6 +36,7 @@ namespace CryptoQuest.Menus.Home.UI
 
         private void OnGet(UIListItem item)
         {
+            item.transform.SetAsLastSibling();
             item.gameObject.SetActive(true);
             _items.Add(item);
         }
