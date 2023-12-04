@@ -1,10 +1,9 @@
 ﻿using CryptoQuest.Input;
 using CryptoQuest.Menus.Status.Events;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
-namespace CryptoQuest.Menus.Status
+namespace CryptoQuest.Menus.Status.UI.MagicStone
 {
     public class MagicStoneTrigger : MonoBehaviour, ISelectHandler
     {
@@ -31,7 +30,7 @@ namespace CryptoQuest.Menus.Status
 
         private void RequestShowMagicStoneMenu()
         {
-            if (_isEquipmentAvailable) _showMagicStone.RaiseEvent(true);
+            _showMagicStone.RaiseEvent(_isEquipmentAvailable);
         }
     }
 }

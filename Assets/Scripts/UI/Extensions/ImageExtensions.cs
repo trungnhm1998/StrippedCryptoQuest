@@ -18,10 +18,13 @@ namespace CryptoQuest.UI.Extensions
                 image.enabled = true;
                 return spriteAsset.OperationHandle;
             }
-            var handle = spriteAsset.LoadAssetAsync();
-            handle.Completed += handle1 =>
+
+            var handle = spriteAsset.OperationHandle.IsValid() == false
+                ? spriteAsset.LoadAssetAsync()
+                : spriteAsset.OperationHandle;
+            handle.Completed += _ =>
             {
-                image.sprite = handle1.Result;
+                image.sprite = (Sprite)spriteAsset.OperationHandle.Result;
                 image.enabled = true;
             };
             return handle;
