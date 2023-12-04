@@ -17,6 +17,7 @@ namespace CryptoQuest.Ranch.UI
         [SerializeField] private TMP_Text _level;
         [SerializeField] private GameObject _pendingTag;
         [SerializeField] private GameObject _inGameTag;
+        [SerializeField] private Button _button;
 
         [SerializeField] private RectTransform _tooltipPosition;
 
@@ -38,6 +39,7 @@ namespace CryptoQuest.Ranch.UI
         }
 
         public void EnablePendingTag(bool isSelected) => _pendingTag.SetActive(isSelected);
+        public void EnableButton(bool isEnable) => _button.enabled = isEnable;
 
         public void Transfer(Transform parent)
         {

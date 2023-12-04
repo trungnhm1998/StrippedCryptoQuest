@@ -1,21 +1,27 @@
 using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
 using CryptoQuest.Sagas.Objects;
+using UnityEngine;
+using UnityEngine.Pool;
+using UnityEngine.UI;
 
 namespace CryptoQuest.Ranch.UI
 {
     public class UIBeastList : MonoBehaviour
     {
-        private const float DEFAULT_TIME_TO_SELECT = 1f;
-
-        [SerializeField] private Transform _scrollContent;
+        public Transform Child => _scrollRect.content;
+        [SerializeField] private ScrollRect _scrollRect;
         [SerializeField] private UIBeastItem _beastItemPrefab;
         [SerializeField] private RectTransform _tooltipSafeArea;
 
         private List<BeastData> _beastList = new();
         public List<BeastData> Data => _beastList;
-        private List<UIBeastItem> _cachedItems = new();
+        private List<UIBeastItem> _beastUI = new();
+
+        private IObjectPool<UIBeastItem> _beastUIPool;
+
+        private IObjectPool<UIBeastItem> BeastUIPool =>
+            _beastUIPool ??= new ObjectPool<UIBeastItem>(OnCreate, OnGet, OnRelease, OnDestroyBeast);
+
 
         private void OnDisable()
         {
@@ -29,53 +35,50 @@ namespace CryptoQuest.Ranch.UI
             RenderData();
         }
 
-        public void SelectDefault() => Invoke(nameof(DefaultSelection), DEFAULT_TIME_TO_SELECT);
-
         public void SetEnableButtons(bool isEnable = true)
         {
-            foreach (Transform item in _scrollContent)
-            {
-                item.GetComponent<Button>().enabled = isEnable;
-            }
+            foreach (var item in _beastUI) item.EnableButton(isEnable);
         }
 
         public void UpdateList()
         {
-            foreach (var item in _cachedItems)
-            {
-                item.EnablePendingTag(false);
-            }
-        }
-
-        private void DefaultSelection()
-        {
-            Button firstButton = _scrollContent.GetComponentInChildren<Button>();
-            if (firstButton) firstButton.Select();
+            foreach (var item in _beastUI) item.EnablePendingTag(false);
         }
 
         private void CleanUpScrollView()
         {
-            foreach (Transform child in _scrollContent)
+            foreach (var ui in _beastUI)
             {
-                Destroy(child.gameObject);
+                BeastUIPool.Release(ui);
             }
+
+            _beastUI.Clear();
         }
 
         private void RenderData()
         {
-            _cachedItems.Clear();
             foreach (var itemData in _beastList)
             {
-                var item = Instantiate(_beastItemPrefab, _scrollContent);
+                var item = BeastUIPool.Get();
                 item.SetItemInfo(itemData);
-                IdentifyItemParentThenCacheItem(item);
             }
         }
 
-        private void IdentifyItemParentThenCacheItem(UIBeastItem item)
+        #region Pool
+
+        private void OnDestroyBeast(UIBeastItem beast) => Destroy(beast.gameObject);
+
+        private void OnRelease(UIBeastItem beast) => beast.gameObject.SetActive(false);
+
+        private void OnGet(UIBeastItem beast)
         {
-            item.Parent = _scrollContent;
-            _cachedItems.Add(item);
+            _beastUI.Add(beast);
+            beast.transform.SetAsLastSibling();
+            beast.gameObject.SetActive(true);
         }
+
+        private UIBeastItem OnCreate() => Instantiate(_beastItemPrefab, _scrollRect.content);
+
+        #endregion
     }
 }
