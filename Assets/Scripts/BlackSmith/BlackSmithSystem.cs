@@ -25,7 +25,7 @@ namespace CryptoQuest.BlackSmith
 
         protected override void OnExit()
         {
-            _stateMachine.OnExit();
+            _stateMachine?.OnExit();
         }
     }
 }
