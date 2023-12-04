@@ -53,6 +53,7 @@ namespace CryptoQuest.BlackSmith.Upgrade.States
 
         private void UpgradeFailed(UpgradeFailed ctx)
         {
+            EquipmentsPresenter.CancelUI();
             fsm.RequestStateChange(EStates.SelectEquipment);
         }
     }
