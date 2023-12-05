@@ -1,4 +1,5 @@
 using CryptoQuest.ChangeClass.Event;
+using CryptoQuest.ChangeClass.State;
 using CryptoQuest.Input;
 using UnityEngine;
 using UnityEngine.Events;

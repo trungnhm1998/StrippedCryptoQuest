@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
-namespace CryptoQuest.ChangeClass
+namespace CryptoQuest.ChangeClass.State
 {
     public class ChangeClassStateController : MonoBehaviour
     {
