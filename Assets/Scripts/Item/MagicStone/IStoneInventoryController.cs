@@ -2,7 +2,7 @@ namespace CryptoQuest.Item.MagicStone
 {
     public interface IStoneInventoryController
     {
-        bool Add(MagicStone stone);
-        bool Remove(MagicStone stone);
+        bool Add(IMagicStone stone);
+        bool Remove(IMagicStone stone);
     }
 }
