@@ -5,7 +5,7 @@ namespace CryptoQuest.Item.MagicStone
 {
     public class MagicStoneInventoryController : MonoBehaviour, IStoneInventoryController
     {
-        [SerializeField] private MagicStoneInventorySo _stoneInventory;
+        [SerializeField] private MagicStoneInventory _stoneInventory;
 
         private void Awake()
         {

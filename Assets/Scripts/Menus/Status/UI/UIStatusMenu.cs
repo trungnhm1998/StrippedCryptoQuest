@@ -30,7 +30,7 @@ namespace CryptoQuest.Menus.Status.UI
         [field: SerializeField] public ShowMagicStoneEvent ShowMagicStone { get; private set; }
         [field: SerializeField] public UIMagicStoneMenu MagicStoneMenu { get; private set; }
         [field: SerializeField] public UIStoneList StoneList { get; private set; }
-        [field: SerializeField] public MagicStoneInventorySo StoneInventory { get; private set; }
+        [field: SerializeField] public MagicStoneInventory StoneInventory { get; private set; }
 
 
         public ESlot ModifyingSlot { get; set; }
