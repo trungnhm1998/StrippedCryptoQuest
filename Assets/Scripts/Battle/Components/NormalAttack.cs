@@ -13,7 +13,7 @@ namespace CryptoQuest.Battle.Components
         [SerializeField] private NormalAttackAbility _normalAttackAbility;
         private NormalAttackAbilitySpec _spec;
 
-        public override void Init() =>
+        protected override void OnInit() =>
             _spec = Character.AbilitySystem.GiveAbility<NormalAttackAbilitySpec>(_normalAttackAbility);
 
         public void Attack()

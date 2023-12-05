@@ -9,7 +9,7 @@ namespace CryptoQuest.Battle.Components
     /// </summary>
     public class AbnormalBehaviour : CharacterComponentBase
     {
-        public override void Init()
+        protected override void OnInit()
         {
             Character.TurnStarted += PreventCommandWhenCCed;
         }

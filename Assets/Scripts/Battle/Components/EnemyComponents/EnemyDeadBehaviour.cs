@@ -33,7 +33,7 @@ namespace CryptoQuest.Battle.Components.EnemyComponents
         private EnemyBehaviour _enemyBehaviour;
         private readonly string _tweenId = "EnemyDeadFadeOut";
 
-        public override void Init()
+        protected override void OnInit()
         {
             _enemyBehaviour = GetComponent<EnemyBehaviour>();
             _enemyBehaviour.AbilitySystem.TagSystem.TagAdded += CheckIfDeadTagAdded;

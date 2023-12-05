@@ -11,7 +11,7 @@ namespace CryptoQuest.Battle.Components
     {
         private TagSystemBehaviour _tagSystem;
 
-        public override void Init()
+        protected override void OnInit()
         {
             Character.TryGetComponent(out _tagSystem);
             _tagSystem.TagAdded += DieWhenDeadTagAdded;

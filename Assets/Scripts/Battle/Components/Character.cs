@@ -1,7 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using CryptoQuest.AbilitySystem;
 using CryptoQuest.AbilitySystem.Attributes;
+using CryptoQuest.UI.Utilities;
+using IndiGames.Core.Common;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.Components;
 using IndiGames.GameplayAbilitySystem.EffectSystem;
@@ -27,7 +28,11 @@ namespace CryptoQuest.Battle.Components
 
         #endregion
 
-        private readonly Dictionary<Type, object> _cachedComponents = new();
+        private CacheableComponentGetter _componentGetter;
+
+        private CacheableComponentGetter ComponentGetter =>
+            _componentGetter ??= this.GetOrAddComponent<CacheableComponentGetter>();
+
         private ITargeting _targetComponent;
         public ITargeting Targeting => _targetComponent ??= GetComponent<ITargeting>();
         private Elemental _element;
@@ -71,36 +76,11 @@ namespace CryptoQuest.Battle.Components
         /// <summary>
         /// Same as Unity's <see cref="GameObject.TryGetComponent{T}(out T)"/> but with a cache
         /// </summary>
-        public new bool TryGetComponent<T>(out T component) where T : class
-        {
-            var type = typeof(T);
-            if (_cachedComponents.TryGetValue(type, out var cachedComponent))
-            {
-                component = (T)cachedComponent;
-                return true;
-            }
+        public new bool TryGetComponent<T>(out T component)
+            => ComponentGetter.TryGetComponent(out component);
 
-            var result = base.TryGetComponent(out component);
-            if (result)
-                _cachedComponents.Add(type, component);
-
-            return result;
-        }
-
-        public new T GetComponent<T>() where T : class
-        {
-            var type = typeof(T);
-            if (_cachedComponents.TryGetValue(type, out var cachedComponent))
-            {
-                return (T)cachedComponent;
-            }
-
-            var result = base.GetComponent<T>();
-            if (result != null)
-                _cachedComponents.Add(type, result);
-
-            return result;
-        }
+        public new T GetComponent<T>()
+            => ComponentGetter.GetComponent<T>();
 
         public virtual void OnTurnStarted()
         {

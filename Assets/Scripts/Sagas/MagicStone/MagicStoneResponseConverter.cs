@@ -20,7 +20,7 @@ namespace CryptoQuest.Sagas.MagicStone
         {
             var magicStone = new Item.MagicStone.MagicStone()
             {
-                StoneData = new MagicStoneData()
+                Data = new MagicStoneData()
                 {
                     ID = responseObject.id,
                     Level = responseObject.stoneLv,

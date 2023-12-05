@@ -24,7 +24,7 @@ namespace CryptoQuest.Battle.Components
         /// <summary>
         /// Based on character level and class, get all skills that character can use
         /// </summary>
-        public override void Init()
+        protected override void OnInit()
         {
             _hero = Character.GetComponent<HeroBehaviour>();
             GetSkills();

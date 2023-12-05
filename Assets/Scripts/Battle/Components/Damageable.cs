@@ -12,7 +12,7 @@ namespace CryptoQuest.Battle.Components
     {
         private AbilitySystemBehaviour _abilitySystem;
 
-        public override void Init() => _abilitySystem = Character.AbilitySystem;
+        protected override void OnInit() => _abilitySystem = Character.AbilitySystem;
 
         public ActiveGameplayEffect ReceiveDamage(GameplayEffectSpec damageSpec) => _abilitySystem.ApplyEffectSpecToSelf(damageSpec);
     }

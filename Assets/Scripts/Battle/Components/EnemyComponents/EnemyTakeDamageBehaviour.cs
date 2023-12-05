@@ -55,7 +55,7 @@ namespace CryptoQuest.Battle.Components.EnemyComponents
                 toAlpha, _fadeDuration).SetEase(_fadeEase);
         }
 
-        public override void Init()
+        protected override void OnInit()
         {
             _enemyBehaviour = GetComponent<EnemyBehaviour>();
         }

@@ -17,7 +17,7 @@ namespace CryptoQuest.Battle.Components
 
         private void OnDisable() => BattleEventBus.UnsubscribeEvent(_roundEndedEventToken);
 
-        public override void Init() => _spec = Character.AbilitySystem.GiveAbility<GuardAbilitySpec>(_guardAbility);
+        protected override void OnInit() => _spec = Character.AbilitySystem.GiveAbility<GuardAbilitySpec>(_guardAbility);
 
         public void GuardUntilEndOfTurn()
         {

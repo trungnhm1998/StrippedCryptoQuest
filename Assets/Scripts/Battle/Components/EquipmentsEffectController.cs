@@ -15,7 +15,7 @@ namespace CryptoQuest.Battle.Components
         /// </summary>
         private readonly Dictionary<IEquipment, ActiveGameplayEffect> _equipmentsEffect = new();
 
-        public override void Init()
+        protected override void OnInit()
         {
             _equipmentsController = GetComponent<EquipmentsController>();
             _equipmentsController.Equipped += ApplyEffect;
