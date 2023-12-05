@@ -55,15 +55,12 @@ namespace CryptoQuest.Menus.Skill.States
             _skillPanel.EnableAllHeroButtons();
             DeActiveSelectedHero();
 
-            if (_skillPanel.SelectingHero != null)
-            {
-                _skillPanel.SelectingHero.Select();
-                _skillPanel.SelectingHero.EnableSelectBackground();
-                return;
-            }
+            var selectButton = (_skillPanel.SelectingHero != null) ?
+                _skillPanel.SelectingHero : _skillPanel.HeroButtons[0];
 
-            _skillPanel.HeroButtons[0].Select();
-            _skillPanel.HeroButtons[0].EnableSelectBackground();
+            selectButton.Select();
+            selectButton.EnableSelectBackground();
+            _skillPanel.SelectingHero = selectButton;
         }
     }
 }

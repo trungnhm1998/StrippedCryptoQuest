@@ -49,14 +49,7 @@ namespace CryptoQuest.Menus.Skill.UI
 
             SetDisable(!skill.SkillInfo.UsageScenarioSO.HasFlag(EAbilityUsageScenario.Field));
         }
-
-        // Using this cause bug to delay 1 frame
-        // Where SelectSkill state press enter on next from immediately this called by Unity EventSystem
-        public void OnPressButton()
-        {
-            // Skill.TargetType.RaiseEvent(Skill);
-        }
-
+        
         private void OnSelected()
         {
             InspectingSkillEvent?.Invoke(this);
