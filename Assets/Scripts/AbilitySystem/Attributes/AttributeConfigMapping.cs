@@ -28,7 +28,12 @@ namespace CryptoQuest.AbilitySystem.Attributes
             }
         }
 
-        public bool TryGetMap(AttributeScriptableObject attribute, out Map map) =>
-            _mapDictionary.TryGetValue(attribute, out map);
+        public bool TryGetMap(AttributeScriptableObject attribute, out Map map)
+        {
+            var isSuccess = _mapDictionary.TryGetValue(attribute, out map);
+            // preload to prevent bug attribute name not display first time
+            map.Name.GetLocalizedStringAsync();
+            return isSuccess;
+        } 
     }
 }
