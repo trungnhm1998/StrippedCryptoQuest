@@ -5,7 +5,7 @@ using UnityEngine.UIElements;
 
 namespace CryptoQuestEditor.Item.MagicStone
 {
-    [CustomEditor(typeof(MagicStoneInventorySo))]
+    [CustomEditor(typeof(MagicStoneInventory))]
     public class MagicStoneInventorySOEditor : Editor
     {
         public override VisualElement CreateInspectorGUI()

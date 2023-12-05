@@ -25,7 +25,7 @@ namespace CryptoQuest.Tests.Runtime.Item.MagicStone
             yield return new WaitForSeconds(5f);
             ActionDispatcher.Dispatch(new FetchProfileCharactersAction());
             yield return new WaitForSeconds(5f);
-            var stoneInventory = AssetDatabase.LoadAssetAtPath<MagicStoneInventorySo>(
+            var stoneInventory = AssetDatabase.LoadAssetAtPath<MagicStoneInventory>(
                 "Assets/ScriptableObjects/Inventories/StoneInventory.asset");
             Assert.AreEqual(6, stoneInventory.MagicStones.Count);
         }

@@ -22,7 +22,7 @@ namespace CryptoQuest.Sagas.MagicStone
     {
         [SerializeField] private MagicStoneDefinitionDatabase _magicStoneDefinitionDatabase;
         [SerializeField] private PassiveAbilityDatabase _passiveAbilityDatabase;
-        [SerializeField] private MagicStoneInventorySo _stoneInventory;
+        [SerializeField] private MagicStoneInventory _stoneInventory;
 
         private TinyMessageSubscriptionToken _fetchEvent;
         private TinyMessageSubscriptionToken _transferSuccessEvent;
