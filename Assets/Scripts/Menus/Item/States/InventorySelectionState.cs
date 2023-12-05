@@ -1,4 +1,5 @@
-﻿using CryptoQuest.Input;
+﻿using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Type;
+using CryptoQuest.Input;
 using CryptoQuest.Menus.Item.UI;
 using CryptoQuest.UI.Menu;
 
@@ -29,6 +30,8 @@ namespace CryptoQuest.Menus.Item.States
 
         public override void OnExit()
         {
+            _consumablePanel.Focusing -= SelectFirstTab;
+
             _input.MenuCancelEvent -= HandleCancel;
             _input.TabChangeEvent -= ChangeTab;
 
@@ -40,8 +43,7 @@ namespace CryptoQuest.Menus.Item.States
             _onStateEnter = true;
             _consumablePanel.Interactable = true;
 
-            _consumablePanel.ShowItemsWithType(0);
-            ChangeTab(0);
+            _consumablePanel.ShowItemsWithType(EConsumableType.Consumable);
         }
 
         private void HandleCancel()
