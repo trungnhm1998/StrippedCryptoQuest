@@ -348,6 +348,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6463419379983346784}
   - component: {fileID: 2122567761047976450}
+  - component: {fileID: 8002645317368950120}
   m_Layer: 5
   m_Name: EvolvePanel
   m_TagString: Untagged
@@ -394,7 +395,8 @@ MonoBehaviour:
   <EquipmentsPresenter>k__BackingField: {fileID: 1850029633756506135}
   <EquipmentDetailPresenter>k__BackingField: {fileID: 5523841167316689823}
   <ConfirmEvolveDialog>k__BackingField: {fileID: 6230702386464011262}
-  <EvolvableEquipmentListUI>k__BackingField: {fileID: 0}
+  <EvolvableEquipmentListUI>k__BackingField: {fileID: 7488196749638395689}
+  <EvolveResultPresenter>k__BackingField: {fileID: 2282957324344271706}
   <SelectEquipmentToEvolveText>k__BackingField:
     m_TableReference:
       m_TableCollectionName: GUID:0b0d3f62f53cf574db976df270f91498
@@ -425,6 +427,18 @@ MonoBehaviour:
   references:
     version: 2
     RefIds: []
+--- !u!114 &8002645317368950120
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9127332478317329931}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ea82094e557d0646b53673dff854216, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1270692618208142317
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -475,7 +489,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6320747358420644603, guid: 3c82a0ed70b02f54ba487afcff878954, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 89.57
       objectReference: {fileID: 0}
     - target: {fileID: 6507475693016442779, guid: 3c82a0ed70b02f54ba487afcff878954, type: 3}
       propertyPath: m_SizeDelta.x
@@ -547,7 +561,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6774039884867353058, guid: 3c82a0ed70b02f54ba487afcff878954, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 82.57
       objectReference: {fileID: 0}
     - target: {fileID: 6774039884867353058, guid: 3c82a0ed70b02f54ba487afcff878954, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -1230,6 +1244,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 1464654027684857052, guid: b67a12770b3122a4abb021d6d0e00dc4, type: 3}
   m_PrefabInstance: {fileID: 3210245521450693740}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &7488196749638395689 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5433168599293694789, guid: b67a12770b3122a4abb021d6d0e00dc4, type: 3}
+  m_PrefabInstance: {fileID: 3210245521450693740}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af208f0c51fdb984fac4970c853ac042, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &5531866916856725081
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1280,7 +1305,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6320747358420644603, guid: 3c82a0ed70b02f54ba487afcff878954, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 83.445
       objectReference: {fileID: 0}
     - target: {fileID: 6507475693016442779, guid: 3c82a0ed70b02f54ba487afcff878954, type: 3}
       propertyPath: m_SizeDelta.x
@@ -1352,7 +1377,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6774039884867353058, guid: 3c82a0ed70b02f54ba487afcff878954, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 216.58499
       objectReference: {fileID: 0}
     - target: {fileID: 6774039884867353058, guid: 3c82a0ed70b02f54ba487afcff878954, type: 3}
       propertyPath: m_AnchoredPosition.y
