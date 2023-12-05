@@ -142,6 +142,20 @@ namespace IndiGames.GameplayAbilitySystem.AbilitySystem.Components
             return false;
         }
 
+        public bool RemoveAbility(AbilityScriptableObject abilityScriptableObject)
+        {
+            for (int i = _grantedAbilities.Count - 1; i >= 0; i--)
+            {
+                var grantedSpec = _grantedAbilities[i];
+                if (grantedSpec.AbilitySO != abilityScriptableObject) continue;
+                OnRemoveAbility(grantedSpec);
+                _grantedAbilities.RemoveAt(i);
+                return true;
+            }
+
+            return false;
+        }
+
         private void OnRemoveAbility(GameplayAbilitySpec gameplayAbilitySpecSpec)
         {
             if (!gameplayAbilitySpecSpec.AbilitySO) return;

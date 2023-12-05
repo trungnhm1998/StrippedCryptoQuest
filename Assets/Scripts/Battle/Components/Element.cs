@@ -10,7 +10,7 @@ namespace CryptoQuest.Battle.Components
         private Elemental _element;
         public Elemental ElementValue => _element;
 
-        public override void Init()
+        protected override void OnInit()
         {
             _element = Character.Element;
             var attributeSystem = Character.AttributeSystem;

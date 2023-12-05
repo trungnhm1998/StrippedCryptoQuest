@@ -15,7 +15,7 @@ namespace CryptoQuest.Battle.Components
         /// <summary>
         /// Order matters
         /// </summary>
-        public override void Init()
+        protected override void OnInit()
         {
             _attributeSystem = Character.AttributeSystem;
             InitBaseStats();

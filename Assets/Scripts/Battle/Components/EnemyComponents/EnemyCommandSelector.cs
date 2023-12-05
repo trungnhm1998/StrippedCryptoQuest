@@ -23,7 +23,7 @@ namespace CryptoQuest.Battle.Components.EnemyComponents
             _enemyBehaviour = GetComponent<EnemyBehaviour>();
         }
 
-        public override void Init()
+        protected override void OnInit()
         {
             _enemyBehaviour.PreTurnStarted += SelectCommand;
             _enemyDef = _enemyBehaviour.Def;

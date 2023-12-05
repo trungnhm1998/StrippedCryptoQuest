@@ -8,7 +8,7 @@ namespace CryptoQuest.Battle.Components
     {
         private EquipmentsEffectController _equipmentsEffectController;
 
-        public override void Init()
+        protected override void OnInit()
         {
             _equipmentsEffectController = Character.GetComponent<EquipmentsEffectController>();
             ApplyEffectFromEquippingItems();

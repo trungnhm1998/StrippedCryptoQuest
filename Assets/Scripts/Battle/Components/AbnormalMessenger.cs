@@ -7,7 +7,7 @@ namespace CryptoQuest.Battle.Components
 {
     public class AbnormalMessenger : CharacterComponentBase
     {
-        public override void Init()
+        protected override void OnInit()
         {
             Character.AbilitySystem.TagSystem.TagAdded += LogEffectAdded;
             Character.AbilitySystem.TagSystem.TagRemoved += LogEffectRemoved;

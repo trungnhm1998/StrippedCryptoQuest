@@ -16,19 +16,19 @@ namespace CryptoQuest.Item.MagicStone
     [Serializable]
     public class MagicStone : IMagicStone
     {
-        [field: SerializeField] public MagicStoneData StoneData { get; set; }
-        public int ID => StoneData.ID;
-        public MagicStoneDef Definition => StoneData.StoneDef;
-        public int Level => StoneData.Level;
+        [field: SerializeField] public MagicStoneData Data { get; set; }
+        public int ID => Data.ID;
+        public MagicStoneDef Definition => Data.StoneDef;
+        public int Level => Data.Level;
         public PassiveAbility[] Passives
         {
-            get => StoneData.Passives;
-            set => StoneData.Passives = value;
+            get => Data.Passives;
+            set => Data.Passives = value;
         }
 
         public bool IsValid()
         {
-            return StoneData != null && StoneData.StoneDef != null;
+            return Data != null && Data.StoneDef != null;
         }
     }
 }

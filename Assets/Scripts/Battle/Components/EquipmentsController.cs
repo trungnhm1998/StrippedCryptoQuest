@@ -23,7 +23,7 @@ namespace CryptoQuest.Battle.Components
 
         private List<EquipmentSlot> Slots => _equipments.Slots;
 
-        public override void Init()
+        protected override void OnInit()
         {
             var provider = Character.GetComponent<IEquipmentsProvider>();
             _equipments = provider.GetEquipments();

@@ -10,7 +10,7 @@ namespace CryptoQuest.Battle.Components
         private EquipmentsController _equipmentsController;
         private IInventoryController _inventoryController;
 
-        public override void Init()
+        protected override void OnInit()
         {
             _inventoryController ??= ServiceProvider.GetService<IInventoryController>();
             _equipmentsController = Character.GetComponent<EquipmentsController>();

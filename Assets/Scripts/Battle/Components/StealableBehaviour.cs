@@ -11,7 +11,7 @@ namespace CryptoQuest.Battle.Components
     {
         private List<Drop> _stealableDrops = new();
 
-        public override void Init()
+        protected override void OnInit()
         {
             var provider = GetComponent<IDropsProvider>();
             _stealableDrops = provider.GetDrops().Where(d => d.Loot.IsItem).ToList();

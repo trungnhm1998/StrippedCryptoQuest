@@ -24,7 +24,7 @@ namespace CryptoQuest.Battle.Components
             Command = NullCommand.Instance;
         }
 
-        public override void Init()
+        protected override void OnInit()
         {
             Command = NullCommand.Instance;
         }

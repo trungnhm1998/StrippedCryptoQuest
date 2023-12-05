@@ -33,7 +33,7 @@ namespace CryptoQuest.Battle.Components.EnemyComponents
             _enemyBehaviour = GetComponent<EnemyBehaviour>();
         }
 
-        public override void Init()
+        protected override void OnInit()
         {
             _enemyBehaviour.TryGetComponent<CommandExecutor>(out _commandExecutor);
             _heroParty ??= ServiceProvider.GetService<IPartyController>();

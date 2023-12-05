@@ -12,7 +12,7 @@ namespace CryptoQuest.Battle.Components
     {
         private AttributeWithValue[] _stats = Array.Empty<AttributeWithValue>();
 
-        public override void Init()
+        protected override void OnInit()
         {
             _stats = GetComponent<IStatsProvider>().Stats;
             var attributeSystem = Character.AttributeSystem;

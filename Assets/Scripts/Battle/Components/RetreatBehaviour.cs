@@ -10,7 +10,7 @@ namespace CryptoQuest.Battle.Components
 
         private RetreatAbilitySpec _spec;
 
-        public override void Init()
+        protected override void OnInit()
         {
             _spec = Character.AbilitySystem.GiveAbility<RetreatAbilitySpec>(_retreatAbility);
         }
