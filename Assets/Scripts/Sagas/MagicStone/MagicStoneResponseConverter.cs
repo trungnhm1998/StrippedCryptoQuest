@@ -24,7 +24,8 @@ namespace CryptoQuest.Sagas.MagicStone
                 {
                     ID = responseObject.id,
                     Level = responseObject.stoneLv,
-                    StoneDef = _database[responseObject.elementId]
+                    Def = _database[responseObject.elementId],
+                    AttachEquipmentId = responseObject.attachEquipment
                 }
             };
             var passiveList = magicStone.Passives.ToList();

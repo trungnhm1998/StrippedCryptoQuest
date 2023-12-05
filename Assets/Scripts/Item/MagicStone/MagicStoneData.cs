@@ -8,8 +8,9 @@ namespace CryptoQuest.Item.MagicStone
     public class MagicStoneData
     {
         [field: SerializeField] public int ID { get; set; }
-        [field: SerializeField] public MagicStoneDef StoneDef { get; set; }
+        [field: SerializeField] public MagicStoneDef Def { get; set; }
         [field: SerializeField] public int Level { get; set; }
+        [field: SerializeField] public int AttachEquipmentId { get; set; }
         [field: SerializeField] public PassiveAbility[] Passives { get; set; } = Array.Empty<PassiveAbility>();
     }
 }
