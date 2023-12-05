@@ -81,16 +81,8 @@ namespace CryptoQuest.Ranch.UI
         {
             InGameBeastList.SetEnableButtons();
             WalletBeastList.SetEnableButtons();
-
-            switch (_walletBeatListContent.childCount)
-            {
-                case > 0:
-                    InGameBeastList.Child.GetOrAddComponent<SelectFirstChildInList>().Select();
-                    break;
-                case <= 0:
-                    WalletBeastList.Child.GetOrAddComponent<SelectFirstChildInList>().Select();
-                    break;
-            }
+            UIBeastList beastList = _inGameBeatListContent.childCount > 0 ? InGameBeastList : WalletBeastList;
+            beastList.Child.GetOrAddComponent<SelectFirstChildInList>().Select();
         }
 
         public void ConfirmedTransmission()
