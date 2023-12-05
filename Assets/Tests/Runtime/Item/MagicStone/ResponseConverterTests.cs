@@ -53,7 +53,7 @@ namespace CryptoQuest.Tests.Runtime.Item.MagicStone
             var responseObject = JsonConvert.DeserializeObject<Sagas.Objects.MagicStone>(response);
 
             var converter = new MagicStoneResponseConverter(_database, _passiveDatabase);
-            CryptoQuest.Item.MagicStone.MagicStone magicStone = converter.Convert(responseObject);
+            CryptoQuest.Item.MagicStone.IMagicStone magicStone = converter.Convert(responseObject);
 
             Assert.AreEqual(responseObject.id, magicStone.ID, "Id");
             Assert.AreEqual(responseObject.stoneLv, magicStone.Level, "level");

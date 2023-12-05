@@ -16,7 +16,7 @@ namespace CryptoQuest.Sagas.MagicStone
             _database = database;
         }
 
-        public Item.MagicStone.MagicStone Convert(Objects.MagicStone responseObject)
+        public IMagicStone Convert(Objects.MagicStone responseObject)
         {
             var magicStone = new Item.MagicStone.MagicStone()
             {
