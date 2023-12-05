@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 2805191216619656802}
   - component: {fileID: 4567071523968104247}
   - component: {fileID: 504795634138198211}
-  - component: {fileID: 5183881943254815332}
   - component: {fileID: 6256226084032638207}
   - component: {fileID: 5176527356134381778}
+  - component: {fileID: 5202501776076571246}
   m_Layer: 0
   m_Name: ChangeClassSystem
   m_TagString: Untagged
@@ -51,7 +51,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _showChangeClassEvent: {fileID: 11400000, guid: 66e90540006ca7548b0da8ffeca3469d, type: 2}
   _dialogController: {fileID: 504795634138198211}
-  _stateController: {fileID: 5183881943254815332}
+  _stateController: {fileID: 5202501776076571246}
   _input: {fileID: 5176527356134381778}
   _changeClassPanel: {fileID: 6532880410619493013}
   _defaultButton: {fileID: 4501096679249801747}
@@ -80,27 +80,6 @@ MonoBehaviour:
   references:
     version: 2
     RefIds: []
---- !u!114 &5183881943254815332
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7187491312326441014}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8d23a8f7e7f00394a82163c4fb178186, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <DialogController>k__BackingField: {fileID: 504795634138198211}
-  <ConfirmMaterial>k__BackingField: {fileID: 2581786466856208307}
-  <Input>k__BackingField: {fileID: 5176527356134381778}
-  <Presenter>k__BackingField: {fileID: 2964748234200211438}
-  <Character>k__BackingField: {fileID: 8266594560586611731}
-  <Manager>k__BackingField: {fileID: 4567071523968104247}
-  <Party>k__BackingField: {fileID: 4630527611295152006}
-  <DefaultButton>k__BackingField: {fileID: 4501096679249801747}
-  _animator: {fileID: 6256226084032638207}
 --- !u!95 &6256226084032638207
 Animator:
   serializedVersion: 5
@@ -135,6 +114,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _inputMediatorSO: {fileID: 11400000, guid: 1fb61cdb72f0a484f8e4db68e2011977, type: 2}
+--- !u!114 &5202501776076571246
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7187491312326441014}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d23a8f7e7f00394a82163c4fb178186, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <DialogController>k__BackingField: {fileID: 504795634138198211}
+  <ConfirmMaterial>k__BackingField: {fileID: 2581786466856208307}
+  <Input>k__BackingField: {fileID: 5176527356134381778}
+  <Presenter>k__BackingField: {fileID: 2964748234200211438}
+  <Character>k__BackingField: {fileID: 8266594560586611731}
+  <Manager>k__BackingField: {fileID: 4567071523968104247}
+  <Party>k__BackingField: {fileID: 4630527611295152006}
+  <DefaultButton>k__BackingField: {fileID: 4501096679249801747}
+  _animator: {fileID: 6256226084032638207}
 --- !u!1 &8717427018555244953
 GameObject:
   m_ObjectHideFlags: 0
