@@ -33,6 +33,7 @@ namespace CryptoQuest.BlackSmith.Evolve.UI
                 equipmentUI.Init(equipment);
             }
 
+            if (_scrollRect.content.childCount <= 0) return;
             EventSystem.current.SetSelectedGameObject(_scrollRect.content.GetChild(0).gameObject);
         }
 
