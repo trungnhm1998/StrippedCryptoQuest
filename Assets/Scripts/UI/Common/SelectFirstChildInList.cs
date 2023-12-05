@@ -10,14 +10,13 @@ namespace UI.Common
 
         public void Select()
         {
-            if (GetChild(out var firstChild)) return;
+            if (TryGetChild(out var firstChild)) return;
             StartCoroutine(CoSelect(firstChild));
         }
 
-        private bool GetChild(out Transform firstChild)
+        private bool TryGetChild(out Transform firstChild)
         {
-            firstChild = transform.GetChild(0);
-            return firstChild == null;
+            return firstChild = transform.childCount > 0 ? transform.GetChild(0) : firstChild = null;
         }
 
         private IEnumerator CoSelect(Transform firstChild)
