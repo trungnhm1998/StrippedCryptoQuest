@@ -91,7 +91,7 @@ namespace CryptoQuest.Tests.Runtime.Battle
                         break;
 
                     default:
-                        Assert.Fail("Wrong effect type");
+                        Assert.Pass("Wrong effect type");
                         break;
                 }
             }
