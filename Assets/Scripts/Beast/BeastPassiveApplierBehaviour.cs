@@ -1,7 +1,7 @@
-using UnityEngine;
-using CryptoQuest.Gameplay.PlayerParty;
-using CryptoQuest.Beast.ScriptableObjects;
 using CryptoQuest.Beast.Interface;
+using CryptoQuest.Beast.ScriptableObjects;
+using CryptoQuest.Gameplay.PlayerParty;
+using UnityEngine;
 
 namespace CryptoQuest.Beast
 {
@@ -10,7 +10,7 @@ namespace CryptoQuest.Beast
         public IBeast EquippingBeast { get; set; }
     }
 
-    public class BeastPassiveControllerBehaviour : MonoBehaviour, IBeastEquippingBehaviour
+    public class BeastPassiveApplierBehaviour : MonoBehaviour, IBeastEquippingBehaviour
     {
         [SerializeReference] private IBeast _equippingBeast;
         [SerializeField] private PartyManager _party;
@@ -20,12 +20,11 @@ namespace CryptoQuest.Beast
             set => _equippingBeast = value;
         }
         [SerializeField] private BeastProvider _beastProvider;
-        private IBeastPassiveController _controller;
+        private IBeastPassiveApplier _applier;
 
         private void Awake()
         {
-            BeastPassiveController controller = new(this, _party);
-            _controller = controller;
+            _applier = new BeastPassiveApplier(this, _party);
         }
 
         private void OnEnable()
@@ -40,7 +39,7 @@ namespace CryptoQuest.Beast
 
         private void ApplyPassive(IBeast beast)
         {
-            _controller.ApplyPassive(beast);
+            _applier.ApplyPassive(beast);
         }
     }
 }
