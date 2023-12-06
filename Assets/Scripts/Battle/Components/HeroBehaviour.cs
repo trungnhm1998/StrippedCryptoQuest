@@ -77,7 +77,7 @@ namespace CryptoQuest.Battle.Components
             Init(Spec.Elemental);
         }
 
-        public override bool IsValid() => _spec.IsValid();
+        public override bool IsValid() => _spec != null && _spec.IsValid();
 
         public Equipments GetEquipments() => _partySlotSpec.EquippingItems;
     }

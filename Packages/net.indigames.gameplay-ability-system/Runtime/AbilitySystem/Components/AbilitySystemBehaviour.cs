@@ -9,6 +9,7 @@ using IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects;
 using IndiGames.GameplayAbilitySystem.TagSystem.ScriptableObjects;
 using UnityEngine;
 using UnityEngine.Assertions;
+using Object = UnityEngine.Object;
 
 namespace IndiGames.GameplayAbilitySystem.AbilitySystem.Components
 {
@@ -211,5 +212,10 @@ namespace IndiGames.GameplayAbilitySystem.AbilitySystem.Components
 
         public GameplayAbilitySpec FindAbilitySpecFromDef(AbilityScriptableObject abilityDef)
             => _grantedAbilities.FirstOrDefault(spec => spec.AbilitySO == abilityDef);
+
+        public void DestroyObject(Object obj)
+        {
+            Destroy(obj);
+        }
     }
 }

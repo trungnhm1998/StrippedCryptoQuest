@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using CryptoQuest.Battle.ScriptableObjects;
 using IndiGames.GameplayAbilitySystem.EffectSystem;
 using IndiGames.GameplayAbilitySystem.EffectSystem.Components;
 using IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects;
@@ -18,6 +19,12 @@ namespace CryptoQuest.AbilitySystem
             foreach (var effect in AppliedEffects.Where(effect => !effect.Expired))
             {
                 effect.Spec.CalculateModifierMagnitudes();
+                var context = GameplayEffectContext.ExtractEffectContext(effect.Spec.Context);
+                if (context == null || context.SkillInfo.SkillType == ESkillType.Passive)
+                {
+                    effect.ExecuteActiveEffect();
+                    continue;
+                }
                 if (_effectWithLargestMagnitude.Contains(effect.Spec.Def)) continue;
                 var largestMagnitudeEffect = GetLargestGameplayEffectMagnitude(effect.Spec);
                 _effectWithLargestMagnitude.Add(largestMagnitudeEffect.Spec.Def);

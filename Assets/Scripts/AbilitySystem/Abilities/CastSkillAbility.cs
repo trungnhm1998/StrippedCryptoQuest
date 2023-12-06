@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Linq;
+using Cinemachine;
 using CryptoQuest.AbilitySystem.Attributes;
 using CryptoQuest.Battle.Components;
 using CryptoQuest.Battle.Events;
@@ -160,6 +161,7 @@ namespace CryptoQuest.AbilitySystem.Abilities
                     BattleEventBus.RaiseEvent(new CastSkillEvent(_def, Targets) { Character = _character });
                     isRaisedEvent = true;
                 }
+
                 InternalExecute(target);
             }
         }
@@ -232,6 +234,12 @@ namespace CryptoQuest.AbilitySystem.Abilities
         {
             var appliedEffects = target.EffectSystem.AppliedEffects;
             return appliedEffects.FirstOrDefault(x => x.GrantedTags.Contains(tag));
+        }
+
+        public override void OnAbilityRemoved(GameplayAbilitySpec gameplayAbilitySpec)
+        {
+            base.OnAbilityRemoved(gameplayAbilitySpec);
+            Owner.DestroyObject(_costEffect);
         }
     }
 }

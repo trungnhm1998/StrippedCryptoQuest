@@ -10,11 +10,16 @@ namespace IndiGames.GameplayAbilitySystem.AbilitySystem
 {
     public abstract class GameplayAbilitySpec
     {
-        protected bool _isActive;
+        private bool _isActive;
         public bool IsActive => _isActive;
 
-        protected AbilityScriptableObject _abilitySO;
-        public AbilityScriptableObject AbilitySO => _abilitySO;
+        private AbilityScriptableObject _abilitySO;
+
+        public AbilityScriptableObject AbilitySO
+        {
+            get => _abilitySO;
+            set => _abilitySO = value;
+        }
 
         private AbilitySystemBehaviour _owner;
 

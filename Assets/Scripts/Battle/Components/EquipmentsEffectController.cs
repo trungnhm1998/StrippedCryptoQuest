@@ -101,6 +101,7 @@ namespace CryptoQuest.Battle.Components
             activeEffect.IsActive = false;
             Character.RemoveEffect(activeEffect.Spec);
             Character.AbilitySystem.AttributeSystem.UpdateAttributeValues();
+            Destroy(activeEffect.Spec.Def);
         }
     }
 }
