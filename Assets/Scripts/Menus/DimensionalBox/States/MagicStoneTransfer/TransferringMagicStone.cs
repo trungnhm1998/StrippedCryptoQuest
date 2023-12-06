@@ -123,6 +123,8 @@ namespace CryptoQuest.Menus.DimensionalBox.States.MagicStoneTransfer
 
         private void ResetToOriginals()
         {
+            if (_magicStoneLists[0].PendingTransfer == false && _magicStoneLists[1].PendingTransfer == false) return;
+
             _hasFocusOnFirstInitializedList = false;
             foreach (var magicStoneList in _magicStoneLists) magicStoneList.Reset();
         }
