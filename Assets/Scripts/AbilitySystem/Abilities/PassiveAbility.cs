@@ -25,7 +25,7 @@ namespace CryptoQuest.AbilitySystem.Abilities
 
     public class PassiveAbilitySpec : GameplayAbilitySpec
     {
-        protected GameplayEffectContext SkillContext { get; private set; }
+        public GameplayEffectContext SkillContext { get; private set; }
         protected Battle.Components.Character Character { get; private set; }
 
         public override void InitAbility(AbilitySystemBehaviour owner, AbilityScriptableObject abilitySO)

@@ -50,7 +50,7 @@ namespace CryptoQuest.Battle.Components
                 comp.Init();
         }
 
-        private void OnDestroy()
+        private void OnDisable()
         {
             if (IsValid() == false) return;
             var components = GetComponents<CharacterComponentBase>();
