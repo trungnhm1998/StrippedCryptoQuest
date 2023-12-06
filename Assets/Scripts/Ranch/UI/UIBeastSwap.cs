@@ -29,7 +29,7 @@ namespace CryptoQuest.Ranch.UI
             private set => _selectedWalletBeatIds = value;
         }
 
-        public bool IsValid() => _selectedInGameBeatIds.Count > 0 && _selectedWalletBeatIds.Count > 0;
+        public bool IsValid() => _selectedInGameBeatIds.Count > 0 || _selectedWalletBeatIds.Count > 0;
 
         public void Transfer(UIBeastItem item)
         {

@@ -8,6 +8,9 @@ namespace CryptoQuest.Ranch.UI
 {
     public class UIBeastList : MonoBehaviour
     {
+        private const bool COLLECTION_CHECK = true;
+        private const int DEFAULT_POOL_SIZE = 10;
+        [SerializeField] private int _poolSize = 10;
         public Transform Child => _scrollRect.content;
         [SerializeField] private ScrollRect _scrollRect;
         [SerializeField] private UIBeastItem _beastItemPrefab;
@@ -20,8 +23,8 @@ namespace CryptoQuest.Ranch.UI
         private IObjectPool<UIBeastItem> _beastUIPool;
 
         private IObjectPool<UIBeastItem> BeastUIPool =>
-            _beastUIPool ??= new ObjectPool<UIBeastItem>(OnCreate, OnGet, OnRelease, OnDestroyBeast);
-
+            _beastUIPool ??= new ObjectPool<UIBeastItem>(OnCreate, OnGet, OnRelease, OnDestroyBeast,
+                COLLECTION_CHECK, DEFAULT_POOL_SIZE, _poolSize);
 
         private void OnDisable()
         {
