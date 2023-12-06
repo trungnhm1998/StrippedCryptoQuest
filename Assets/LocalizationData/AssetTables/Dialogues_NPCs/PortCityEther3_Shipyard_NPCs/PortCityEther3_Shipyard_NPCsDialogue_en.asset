@@ -17,7 +17,28 @@ MonoBehaviour:
   m_SharedData: {fileID: 11400000, guid: 7c10bf59e56dfd64c8c504a75b24ca13, type: 2}
   m_Metadata:
     m_Items: []
-  m_TableData: []
+  m_TableData:
+  - m_Id: 451490908381184
+    m_Localized: Be careful when you go out to sea!
+    m_Metadata:
+      m_Items:
+      - rid: 4650116287644303381
+  - m_Id: 451490950324224
+    m_Localized: The guy who went to fetch his dad hasn't returned. His father must
+      be having a few extra drinks today...
+    m_Metadata:
+      m_Items:
+      - rid: 4650116287644303382
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: 4650116287644303381
+      type: {class: LineMetadata, ns: Yarn.Unity.UnityLocalization, asm: YarnSpinner.Unity}
+      data:
+        nodeName: portcity-dock-mob1
+        tags: []
+    - rid: 4650116287644303382
+      type: {class: LineMetadata, ns: Yarn.Unity.UnityLocalization, asm: YarnSpinner.Unity}
+      data:
+        nodeName: portcity-dock-mob2
+        tags: []
