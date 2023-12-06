@@ -10,7 +10,6 @@ using CryptoQuest.API;
 using CryptoQuest.Beast;
 using CryptoQuest.Character;
 using CryptoQuest.Networking;
-using CryptoQuest.System;
 using CryptoQuest.UI.Actions;
 using IndiGames.Core.Common;
 using IndiGames.Core.Events;
@@ -30,14 +29,22 @@ namespace CryptoQuest.Ranch.Sagas
         [SerializeField] private List<CharacterClass> _classes = new();
         [SerializeField] private List<BeastTypeSO> _type = new();
         [SerializeField] private List<PassiveAbility> _passive = new();
+
         private BeastInventorySO _beastInventory;
         private TinyMessageSubscriptionToken _fetchEvent;
         private TinyMessageSubscriptionToken _transferSuccessEvent;
+        private TinyMessageSubscriptionToken _beastInventoryUpdate;
 
         private void OnEnable()
         {
             _fetchEvent = ActionDispatcher.Bind<FetchProfileBeastAction>(HandleAction);
+            _beastInventoryUpdate = ActionDispatcher.Bind<GetInGameBeastsSucceed>(RefreshBeastInventory);
             _transferSuccessEvent = ActionDispatcher.Bind<TransferSucceed>(FilterAndRefreshInventory);
+        }
+
+        private void RefreshBeastInventory(GetInGameBeastsSucceed ctx)
+        {
+            OnInventoryFilled(ctx.InGameBeasts.ToArray());
         }
 
         private void FilterAndRefreshInventory(TransferSucceed ctx)
@@ -50,6 +57,7 @@ namespace CryptoQuest.Ranch.Sagas
         private void OnDisable()
         {
             ActionDispatcher.Unbind(_fetchEvent);
+            ActionDispatcher.Unbind(_beastInventoryUpdate);
             ActionDispatcher.Unbind(_transferSuccessEvent);
         }
 
@@ -90,12 +98,10 @@ namespace CryptoQuest.Ranch.Sagas
             var nftBeast = beasts.Select(CreateNftBeast).ToList();
             _beastInventory.OwnedBeasts.Clear();
             _beastInventory.OwnedBeasts = nftBeast;
-            Debug.Log($"CoLoadAndUpdateInventory: {nftBeast}");
         }
 
         private Beast.Beast CreateNftBeast(Obj.BeastData beastResponse)
         {
-            Debug.Log($"CreateNftBeast: {beastResponse}");
             return FillBeastData(beastResponse);
         }
 
