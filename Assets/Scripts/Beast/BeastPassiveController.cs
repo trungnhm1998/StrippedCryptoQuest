@@ -24,8 +24,10 @@ namespace CryptoQuest.Beast
         {
             if (beast == null) return;
             var beastPassive = beast.Passive;
-            if (beast.Passive == null) return;
+            
             if (_equippedBeast != null) RemovePassive(_equippedBeast);
+            if (beast.Passive == null) return;
+            
             foreach (var partySlot in _partyController.Slots)
             {
                 if (partySlot.IsValid() == false) continue;
