@@ -11,7 +11,6 @@ namespace CryptoQuest.Menus.Skill.UI
         [SerializeField] private UISkillCharacterPartySlot[] _partySlots;
 
         private IPartyController _party;
-        private GameObject _cachedGo;
 
         private void Awake()
         {
@@ -35,22 +34,8 @@ namespace CryptoQuest.Menus.Skill.UI
                 ui.gameObject.SetActive(member.IsValid());
                 if (!member.IsValid()) continue;
                 ui.Init(member.HeroBehaviour, index);
-            }
 
-            _cachedGo = _partySlots[0].gameObject; // Bad code
-        }
-
-        private void InspectSelectedCharacter(GameObject selectedCharGo)
-        {
-            // Really bad codes here, might fix later
-            if (_cachedGo == selectedCharGo.transform.parent.gameObject) return;
-            for (var index = 0; index < _partySlots.Length; index++)
-            {
-                if (selectedCharGo.transform.parent.gameObject == _partySlots[index].gameObject)
-                {
-                    _cachedGo = _partySlots[index].gameObject;
-                    return;
-                }
+                if (index == 0) ui.Select();
             }
         }
     }
