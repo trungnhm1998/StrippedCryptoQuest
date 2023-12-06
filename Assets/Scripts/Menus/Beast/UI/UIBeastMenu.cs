@@ -1,3 +1,4 @@
+using CryptoQuest.Beast.ScriptableObjects;
 using CryptoQuest.Input;
 using CryptoQuest.Menus.Beast.States;
 using CryptoQuest.UI.Menu;
@@ -11,7 +12,10 @@ namespace CryptoQuest.Menus.Beast.UI
         [field: SerializeField, Header("State Context")]
         public InputMediatorSO Input { get; private set; }
 
+        [field: SerializeField] public BeastProvider BeastProvider { get; private set; }
         [field: SerializeField] public UIBeastList ListBeastUI { get; private set; }
+        
+        [field: SerializeField] public ShowBeastUIEventChannel ShowBeastEventChannel { get; private set; }
         private StateMachine _stateMachine;
 
         private void Awake()

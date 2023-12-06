@@ -1,8 +1,10 @@
+using System;
 using System.Collections.Generic;
 using CryptoQuest.Beast;
-using DG.Tweening;
+using CryptoQuest.Beast.ScriptableObjects;
+using CryptoQuest.UI.Utilities;
+using UI.Common;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.Pool;
 using UnityEngine.UI;
 
@@ -10,7 +12,9 @@ namespace CryptoQuest.Menus.Beast.UI
 {
     public class UIBeastList : MonoBehaviour
     {
-        [SerializeField] private BeastInventorySO beastInventory;
+        [SerializeField] private BeastInventorySO _beastInventory;
+
+        [SerializeField] private BeastProvider _beastProvider;
 
         [Header("Scroll View Configs")]
         [SerializeField] private ScrollRect _scrollRect;
@@ -23,34 +27,59 @@ namespace CryptoQuest.Menus.Beast.UI
         private IObjectPool<UIBeast> BeastUIPool =>
             _beastUIPool ??= new ObjectPool<UIBeast>(OnCreate, OnGet, OnRelease, OnDestroyBeast);
 
-        private List<UIBeast> _beastUIs = new();
+        private readonly List<UIBeast> _beastUIs = new();
 
         private float _verticalOffset;
 
+        private bool _interactable;
+
         public bool Interactable
         {
+            get => _interactable;
             set
             {
+                _interactable = value;
                 foreach (var beastUi in _beastUIs) beastUi.Interactable = value;
             }
         }
 
-        private void OnEnable()
+        public void Init()
         {
             CleanUpScrollView();
             InitBeastList();
+            Refresh();
+        }
 
-            if (_scrollRect.content.childCount == 0) return;
-            DOVirtual.DelayedCall(0,
-                () => { EventSystem.current.SetSelectedGameObject(_scrollRect.content.GetChild(0).gameObject); });
+        public void EquipBeast(UIBeast ui)
+        {
+            _beastProvider.EquippingBeast =
+                _beastProvider.EquippingBeast.Id != ui.Beast.Id
+                    ? ui.Beast
+                    : NullBeast.Instance;
+
+            Refresh();
+        }
+
+        private void Refresh()
+        {
+            foreach (var beastUi in _beastUIs)
+                beastUi.EnableEquippedTag(beastUi.Beast.Id == _beastProvider.EquippingBeast.Id);
+        }
+
+
+        public void SelectFirstBeast()
+        {
+            _scrollRect.content.GetOrAddComponent<SelectFirstChildInList>().Select();
         }
 
         private void InitBeastList()
         {
-            foreach (var beast in beastInventory.OwnedBeasts)
+            foreach (var beast in _beastInventory.OwnedBeasts)
             {
                 var beastUI = BeastUIPool.Get();
                 beastUI.Init(beast);
+
+                beastUI.EnableEquippedTag(beastUI.Beast.Id == _beastProvider.EquippingBeast.Id);
             }
         }
 

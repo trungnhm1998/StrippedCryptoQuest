@@ -784,6 +784,7 @@ GameObject:
   - component: {fileID: 2686974657665898978}
   - component: {fileID: 9009085239234167919}
   - component: {fileID: 5716852765931568852}
+  - component: {fileID: 8127308090755553863}
   m_Layer: 5
   m_Name: Content
   m_TagString: Untagged
@@ -848,6 +849,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_HorizontalFit: 0
   m_VerticalFit: 2
+--- !u!114 &8127308090755553863
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2405898065499081204}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07381110a99640d88942c136c03932ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _delay: 0
 --- !u!1 &2530845920483344540
 GameObject:
   m_ObjectHideFlags: 0
@@ -1085,7 +1099,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <Input>k__BackingField: {fileID: 11400000, guid: 1fb61cdb72f0a484f8e4db68e2011977, type: 2}
+  <BeastProvider>k__BackingField: {fileID: 11400000, guid: 6d207265724dc70429b1cf33de482979, type: 2}
   <ListBeastUI>k__BackingField: {fileID: 7593972749117971698}
+  <ShowBeastEventChannel>k__BackingField: {fileID: 11400000, guid: bc314a768f31be04ead9bcea61d59eef, type: 2}
 --- !u!1 &3245530858014821125
 GameObject:
   m_ObjectHideFlags: 0
@@ -2246,7 +2262,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 999909b009e64b5080e9f2b1dfc34a00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  beastInventory: {fileID: 11400000, guid: c6b9ed361960def4eb1812770eb77a7b, type: 2}
+  _beastInventory: {fileID: 11400000, guid: c6b9ed361960def4eb1812770eb77a7b, type: 2}
+  _beastProvider: {fileID: 11400000, guid: 6d207265724dc70429b1cf33de482979, type: 2}
   _scrollRect: {fileID: 7579022219687867225}
   _upArrow: {fileID: 661807968197224982}
   _downArrow: {fileID: 4643731526528281461}
@@ -2294,7 +2311,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _scrollRect: {fileID: 7579022219687867225}
-  _singleItemRect: {fileID: 2171444157869238816, guid: 2c92b1a7bf643054dbeb28382d01a8a7, type: 3}
+  _singleItemRect: {fileID: 2171444157869238816, guid: 26e9d39fb282acf44b2e0038faca7dd2, type: 3}
   _useUpdate: 1
 --- !u!1 &5457553798192342857
 GameObject:
