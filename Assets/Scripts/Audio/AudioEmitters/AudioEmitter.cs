@@ -1,12 +1,23 @@
 using CryptoQuest.Audio.Settings;
 using DG.Tweening;
 using IndiGames.Core.EditorTools.Attributes.ReadOnlyAttribute;
+using IndiGames.Core.Events;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Pool;
 
 namespace CryptoQuest.Audio.AudioEmitters
 {
+
+    public class AudioPlayed : ActionBase
+    {
+        public AudioEmitter Emitter { get; private set; }
+        public AudioPlayed(AudioEmitter emitter)
+        {
+            Emitter = emitter;
+        }
+    }
+
     [RequireComponent((typeof(AudioSource)))]
     public class AudioEmitter : MonoBehaviour
     {
@@ -35,6 +46,8 @@ namespace CryptoQuest.Audio.AudioEmitters
             _audioSource.loop = hasLoop;
             _audioSource.time = 0f;
             _audioSource.Play();
+
+            ActionDispatcher.Dispatch(new AudioPlayed(this));
 
             if (hasLoop) return;
             Invoke(nameof(OnFinishedPlay), clip.length);

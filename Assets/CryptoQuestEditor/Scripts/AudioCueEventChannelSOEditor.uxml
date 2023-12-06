@@ -1,7 +1,7 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="True">
-    <ui:VisualElement style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); margin-top: 15px;">
+    <ui:VisualElement focusable="true" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); margin-top: 15px;">
         <ui:Label tabindex="-1" text="Editor sections" display-tooltip-when-elided="true" />
-        <uie:ObjectField label="Cue to play" type="CryptoQuest.Audio.AudioData.AudioCueSO, indi-games.crypto-quest" name="cue-object" />
+        <uie:ObjectField label="Cue to play" type="CryptoQuest.Audio.AudioData.AudioCueSO, IndiGames.CryptoQuest" name="cue-object" allow-scene-objects="false" />
         <ui:Button text="Play Cue" display-tooltip-when-elided="true" name="play-button" />
     </ui:VisualElement>
 </ui:UXML>
