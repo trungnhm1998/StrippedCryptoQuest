@@ -2,6 +2,7 @@ using System.Linq;
 using CryptoQuest.AbilitySystem.Abilities;
 using CryptoQuest.Battle.Components;
 using CryptoQuest.Beast;
+using CryptoQuest.Beast.ScriptableObjects;
 using CryptoQuest.Gameplay.PlayerParty;
 using CryptoQuest.Tests.Editor.Beast.Builder;
 using IndiGames.Core.Common;
@@ -20,7 +21,7 @@ namespace CryptoQuest.Tests.Editor.Beast
     public class BeastPassiveControllerTests
     {
         private PartyManager _partyManager;
-        private BeastPassiveController _beastController;
+        private BeastPassiveApplier _beastApplier;
 
         [SetUp]
         public void Setup()
@@ -31,7 +32,7 @@ namespace CryptoQuest.Tests.Editor.Beast
 
             ServiceProvider.Provide<IPartyController>(_partyManager);
             var behaviour = Substitute.For<IBeastEquippingBehaviour>();
-            _beastController = new BeastPassiveController(behaviour, _partyManager);
+            _beastApplier = new BeastPassiveApplier(behaviour, _partyManager);
 
             var heroes = _partyManager.GetComponentsInChildren<HeroBehaviour>();
             foreach (var hero in heroes)
@@ -49,9 +50,11 @@ namespace CryptoQuest.Tests.Editor.Beast
                 hero.Spec = new();
             }
 
-            var passive = AssetDatabase.LoadAssetAtPath<PassiveAbility>("Assets/ScriptableObjects/Character/Skills/Passive/4001.asset");
+            var passive =
+                AssetDatabase.LoadAssetAtPath<PassiveAbility>(
+                    "Assets/ScriptableObjects/Character/Skills/Passive/4001.asset");
             IBeast beast = A.Beast.WithPassive(passive).Build();
-            _beastController.ApplyPassive(beast);
+            _beastApplier.ApplyPassive(beast);
 
             var abilitySystems = _partyManager.GetComponentsInChildren<AbilitySystemBehaviour>();
             foreach (var system in abilitySystems)
@@ -70,9 +73,11 @@ namespace CryptoQuest.Tests.Editor.Beast
                 heroes[i].Spec = new();
             }
 
-            var passive = AssetDatabase.LoadAssetAtPath<PassiveAbility>("Assets/ScriptableObjects/Character/Skills/Passive/4001.asset");
+            var passive =
+                AssetDatabase.LoadAssetAtPath<PassiveAbility>(
+                    "Assets/ScriptableObjects/Character/Skills/Passive/4001.asset");
             IBeast beast = A.Beast.WithPassive(passive).Build();
-            _beastController.ApplyPassive(beast);
+            _beastApplier.ApplyPassive(beast);
 
             var abilitySystems = _partyManager.GetComponentsInChildren<AbilitySystemBehaviour>();
             var j = 0;
@@ -85,12 +90,70 @@ namespace CryptoQuest.Tests.Editor.Beast
                 j++;
             }
         }
+
+        [Test]
+        public void ApplyPassive_WithNewBeastHaveNullPassive_OldPassiveShouldBeRemoved()
+        {
+            var originalPassive = ScriptableObject.CreateInstance<PassiveAbility>();
+            IBeast beast = A.Beast.WithPassive(originalPassive).Build();
+            _beastApplier.ApplyPassive(beast);
+
+            var abilitySystems = _partyManager.GetComponentsInChildren<AbilitySystemBehaviour>();
+
+            beast = A.Beast.WithPassive(null).Build();
+            _beastApplier.ApplyPassive(beast);
+            
+            foreach (var system in abilitySystems)
+            {
+                var oldPassiveToRemove = system.GrantedAbilities.FirstOrDefault(a => a.AbilitySO == originalPassive);
+                Assert.IsNull(oldPassiveToRemove);
+            }
+        }
+        
+        [Test]
+        public void ApplyPassive_WithNewNullBeast_OldPassiveShouldBeRemoved()
+        {
+            var originalPassive = ScriptableObject.CreateInstance<PassiveAbility>();
+            IBeast beast = A.Beast.WithPassive(originalPassive).Build();
+            _beastApplier.ApplyPassive(beast);
+
+            var abilitySystems = _partyManager.GetComponentsInChildren<AbilitySystemBehaviour>();
+
+            _beastApplier.ApplyPassive(null);
+            
+            foreach (var system in abilitySystems)
+            {
+                var oldPassiveToRemove = system.GrantedAbilities.FirstOrDefault(a => a.AbilitySO == originalPassive);
+                Assert.IsNull(oldPassiveToRemove);
+            }
+        }
+        
+        [Test]
+        public void ApplyPassive_WithNewNullBeastObject_OldPassiveShouldBeRemoved()
+        {
+            var originalPassive = ScriptableObject.CreateInstance<PassiveAbility>();
+            IBeast beast = A.Beast.WithPassive(originalPassive).Build();
+            _beastApplier.ApplyPassive(beast);
+
+            var abilitySystems = _partyManager.GetComponentsInChildren<AbilitySystemBehaviour>();
+
+            _beastApplier.ApplyPassive(NullBeast.Instance);
+            
+            foreach (var system in abilitySystems)
+            {
+                var oldPassiveToRemove = system.GrantedAbilities.FirstOrDefault(a => a.AbilitySO == originalPassive);
+                Assert.IsNull(oldPassiveToRemove);
+            }
+        }
+
         [Test]
         public void ApplyPassive_BeastWithPassive4001_AllMemberInPartyShouldHavePassive()
         {
-            var passive = AssetDatabase.LoadAssetAtPath<PassiveAbility>("Assets/ScriptableObjects/Character/Skills/Passive/4001.asset");
+            var passive =
+                AssetDatabase.LoadAssetAtPath<PassiveAbility>(
+                    "Assets/ScriptableObjects/Character/Skills/Passive/4001.asset");
             IBeast beast = A.Beast.WithPassive(passive).Build();
-            _beastController.ApplyPassive(beast);
+            _beastApplier.ApplyPassive(beast);
 
             var abilitySystems = _partyManager.GetComponentsInChildren<AbilitySystemBehaviour>();
             foreach (var system in abilitySystems)
@@ -104,7 +167,7 @@ namespace CryptoQuest.Tests.Editor.Beast
         public void ApplyPassive_BeastWithNullPassive_AllMemberInPartyWillNotApplyBeastPassive()
         {
             IBeast beast = A.Beast.WithPassive(null).Build();
-            _beastController.ApplyPassive(beast);
+            _beastApplier.ApplyPassive(beast);
 
             var abilitySystems = _partyManager.GetComponentsInChildren<AbilitySystemBehaviour>();
             foreach (var system in abilitySystems)
@@ -113,64 +176,20 @@ namespace CryptoQuest.Tests.Editor.Beast
                 Assert.IsNull(grantedPassive);
             }
         }
-
+        
         [Test]
-        public void RemovePassive_BeastWithPassive4001_AllMemberInPartyAlreadyHavePassive4001_AllMemberInPartyShouldRemovePassive4001()
+        public void
+            ApplyPassive_WithNewBeastHavePassive_OldPassiveShouldBeChangedToNewPassive()
         {
-            var passive = AssetDatabase.LoadAssetAtPath<PassiveAbility>("Assets/ScriptableObjects/Character/Skills/Passive/4001.asset");
-            IBeast beast = A.Beast.WithPassive(passive).Build();
-            _beastController.ApplyPassive(beast);
-
-            var abilitySystems = _partyManager.GetComponentsInChildren<AbilitySystemBehaviour>();
-            GameplayAbilitySpec grantedPassive;
-            foreach (var system in abilitySystems)
-            {
-                var effectSystem = system.GetComponent<EffectSystemBehaviour>();
-                effectSystem.AttributeSystem = system.GetComponent<AttributeSystemBehaviour>();
-                grantedPassive = system.GrantedAbilities.FirstOrDefault(a => a.AbilitySO == beast.Passive);
-                Assert.AreEqual(passive, grantedPassive.AbilitySO);
-            }
-
-            _beastController.RemovePassive(beast);
-
-            foreach (var system in abilitySystems)
-            {
-                grantedPassive = system.GrantedAbilities.FirstOrDefault(a => a.AbilitySO == beast.Passive);
-                Assert.IsNull(grantedPassive);
-            }
-        }
-
-        [Test]
-        public void RemovePassive_BeastWithNullPassive_AllMemberInPartyWillNotRemoveBeastPassive()
-        {
-            IBeast beast = A.Beast.WithPassive(null).Build();
-            _beastController.ApplyPassive(beast);
-
-            var abilitySystems = _partyManager.GetComponentsInChildren<AbilitySystemBehaviour>();
-            foreach (var system in abilitySystems)
-            {
-                var effectSystem = system.GetComponent<EffectSystemBehaviour>();
-                effectSystem.AttributeSystem = system.GetComponent<AttributeSystemBehaviour>();
-                var grantedPassive = system.GrantedAbilities.FirstOrDefault(a => a.AbilitySO == beast.Passive);
-                Assert.IsNull(grantedPassive);
-            }
-
-            _beastController.RemovePassive(beast);
-            foreach (var system in abilitySystems)
-            {
-                var grantedPassive = system.GrantedAbilities.FirstOrDefault(a => a.AbilitySO == beast.Passive);
-                Assert.IsNull(grantedPassive);
-            }
-        }
-
-        [Test]
-        public void ChangePassive_AllMemberInPartyAlreadyHavePassiveOldFromBeast_ShouldChangeOldPassiveToNewPassiveFromBeast()
-        {
-            var passive4001 = AssetDatabase.LoadAssetAtPath<PassiveAbility>("Assets/ScriptableObjects/Character/Skills/Passive/4001.asset");
-            var passive4002 = AssetDatabase.LoadAssetAtPath<PassiveAbility>("Assets/ScriptableObjects/Character/Skills/Passive/4002.asset");
+            var passive4001 =
+                AssetDatabase.LoadAssetAtPath<PassiveAbility>(
+                    "Assets/ScriptableObjects/Character/Skills/Passive/4001.asset");
+            var passive4002 =
+                AssetDatabase.LoadAssetAtPath<PassiveAbility>(
+                    "Assets/ScriptableObjects/Character/Skills/Passive/4002.asset");
 
             IBeast beast = A.Beast.WithPassive(passive4001).Build();
-            _beastController.ApplyPassive(beast);
+            _beastApplier.ApplyPassive(beast);
 
             var abilitySystems = _partyManager.GetComponentsInChildren<AbilitySystemBehaviour>();
 
@@ -182,12 +201,11 @@ namespace CryptoQuest.Tests.Editor.Beast
                 Assert.AreEqual(passive4001, grantedPassive.AbilitySO);
             }
 
-
             var oldPassive = beast.Passive;
             beast = A.Beast.WithPassive(passive4002).Build();
             var newPassive = beast.Passive;
 
-            _beastController.ApplyPassive(beast);
+            _beastApplier.ApplyPassive(beast);
             foreach (var system in abilitySystems)
             {
                 var oldPassiveToRemove = system.GrantedAbilities.FirstOrDefault(a => a.AbilitySO == oldPassive);
@@ -198,31 +216,9 @@ namespace CryptoQuest.Tests.Editor.Beast
         }
 
         [Test]
-        public void RemovePassive_BesatWithNullPassive_ShouldNotRemovePassive()
-        {
-            IBeast beast = A.Beast.WithPassive(null).Build();
-            _beastController.RemovePassive(beast);
-
-            var abilitySystems = _partyManager.GetComponentsInChildren<AbilitySystemBehaviour>();
-            foreach (var system in abilitySystems)
-            {
-                var effectSystem = system.GetComponent<EffectSystemBehaviour>();
-                effectSystem.AttributeSystem = system.GetComponent<AttributeSystemBehaviour>();
-                var grantedPassive = system.GrantedAbilities.FirstOrDefault(a => a.AbilitySO == beast.Passive);
-                Assert.IsNull(grantedPassive);
-            }
-        }
-
-        [Test]
         public void ApplyPassive_WithNullBeast_ShouldReturn()
         {
-            Assert.DoesNotThrow(() => _beastController.ApplyPassive(null));
-        }
-
-        [Test]
-        public void RemovePassive_WithNullBeast_ShouldReturn()
-        {
-            Assert.DoesNotThrow(() => _beastController.RemovePassive(null));
+            Assert.DoesNotThrow(() => _beastApplier.ApplyPassive(null));
         }
     }
 }

@@ -1,8 +1,7 @@
 namespace CryptoQuest.Beast.Interface
 {
-    public interface IBeastPassiveController
+    public interface IBeastPassiveApplier
     {
         public void ApplyPassive(IBeast beast);
-        public void RemovePassive(IBeast beast);
     }
 }

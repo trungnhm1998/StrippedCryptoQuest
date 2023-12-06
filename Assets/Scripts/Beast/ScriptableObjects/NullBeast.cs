@@ -1,6 +1,7 @@
 ﻿using CryptoQuest.AbilitySystem.Abilities;
 using CryptoQuest.AbilitySystem.Attributes;
 using CryptoQuest.Character;
+using UnityEngine;
 using UnityEngine.Localization;
 
 namespace CryptoQuest.Beast.ScriptableObjects
@@ -9,12 +10,12 @@ namespace CryptoQuest.Beast.ScriptableObjects
     {
         private static NullBeast _instance;
         public static NullBeast Instance => _instance ??= new NullBeast();
-        public PassiveAbility Passive { get; }
-        public LocalizedString LocalizedName { get; }
-        public Elemental Elemental { get; }
-        public CharacterClass Class { get; }
-        public int Id { get; } = -1;
-        public string Name { get; } = "NullBeast";
-        public BeastTypeSO Type { get; }
+        public PassiveAbility Passive => ScriptableObject.CreateInstance<PassiveAbility>();
+        public LocalizedString LocalizedName => new();
+        public Elemental Elemental => ScriptableObject.CreateInstance<Elemental>();
+        public CharacterClass Class => ScriptableObject.CreateInstance<CharacterClass>();
+        public int Id => -1;
+        public string Name => "NullBeast";
+        public BeastTypeSO Type => ScriptableObject.CreateInstance<BeastTypeSO>();
     }
 }
