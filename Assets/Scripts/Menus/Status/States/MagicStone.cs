@@ -5,14 +5,12 @@ using CryptoQuest.Sagas.MagicStone;
 using CryptoQuest.UI.Actions;
 using IndiGames.Core.Events;
 using TinyMessenger;
-using UnityEngine;
 
 namespace CryptoQuest.Menus.Status.States
 {
     public class MagicStone : StatusStateBase
     {
         private TinyMessageSubscriptionToken _inventoryFilledEvent;
-        private List<IMagicStone> _stoneList = new();
 
         public MagicStone(UIStatusMenu statusPanel) : base(statusPanel) { }
 
@@ -24,7 +22,7 @@ namespace CryptoQuest.Menus.Status.States
             ActionDispatcher.Dispatch(new ShowLoading());
             ActionDispatcher.Dispatch(new FetchProfileMagicStonesAction());
 
-            StatusPanel.MagicStoneMenu.gameObject.SetActive(true);
+            StatusPanel.MagicStoneMenu.SetActive(true);
         }
 
         private void GetStonesFromInventory(StoneInventoryFilled _)
@@ -42,8 +40,8 @@ namespace CryptoQuest.Menus.Status.States
 
         private void BackToEquipmentSelection()
         {
-            StatusPanel.MagicStoneMenu.gameObject.SetActive(false);
-            fsm.RequestStateChange(State.EQUIPMENT_SELECTION);
+            StatusPanel.MagicStoneMenu.SetActive(false);
+            fsm.RequestStateChange(State.OVERVIEW);
         }
     }
 }

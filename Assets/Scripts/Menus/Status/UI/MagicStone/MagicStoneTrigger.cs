@@ -1,15 +1,20 @@
 ﻿using CryptoQuest.Input;
+using CryptoQuest.Item.Equipment;
 using CryptoQuest.Menus.Status.Events;
+using CryptoQuest.Menus.Status.UI.Equipment;
+using CryptoQuest.UI.Tooltips.Equipment;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
 namespace CryptoQuest.Menus.Status.UI.MagicStone
 {
-    public class MagicStoneTrigger : MonoBehaviour, ISelectHandler, IDeselectHandler
+    public class MagicStoneTrigger : MonoBehaviour, ISelectHandler, IDeselectHandler, ITooltipEquipmentProvider
     {
         [SerializeField] private InputMediatorSO _input;
         [SerializeField] private ShowMagicStoneEvent _showMagicStone;
         [SerializeField] private Transform _equipSlot;
+        [SerializeField] private UIEquipment _uiEquipment;
+        public IEquipment Equipment => _uiEquipment.Equipment;
 
         private bool _isEquipmentAvailable = false;
 

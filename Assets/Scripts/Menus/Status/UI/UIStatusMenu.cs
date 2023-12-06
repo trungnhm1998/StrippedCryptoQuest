@@ -28,7 +28,7 @@ namespace CryptoQuest.Menus.Status.UI
         [field: SerializeField] public UICharacterStatsPanel CharacterStatsPanel { get; private set; }
         [field: SerializeField] public ShowTooltipEvent ShowTooltipEvent { get; private set; }
         [field: SerializeField] public ShowMagicStoneEvent ShowMagicStone { get; private set; }
-        [field: SerializeField] public UIMagicStoneMenu MagicStoneMenu { get; private set; }
+        [field: SerializeField] public GameObject MagicStoneMenu { get; private set; }
         [field: SerializeField] public UIStoneList StoneList { get; private set; }
         [field: SerializeField] public MagicStoneInventory StoneInventory { get; private set; }
 
