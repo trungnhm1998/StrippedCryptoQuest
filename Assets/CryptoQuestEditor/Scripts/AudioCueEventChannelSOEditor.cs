@@ -40,6 +40,7 @@ namespace CryptoQuestEditor
 
         private void OnDisable()
         {
+            if (_playButton == null) return;
             _playButton.clicked -= PlayClicked;
         }
 

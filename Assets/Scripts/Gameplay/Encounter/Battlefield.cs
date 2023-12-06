@@ -1,12 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using CryptoQuest.Battle.ScriptableObjects;
 using CryptoQuest.Gameplay.PlayerParty;
 using IndiGames.Core.EditorTools.Attributes.ReadOnlyAttribute;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.Localization;
-using UnityEngine.Serialization;
 
 namespace CryptoQuest.Gameplay.Encounter
 {
@@ -32,7 +31,8 @@ namespace CryptoQuest.Gameplay.Encounter
             }
         }
 
-        public BattlefieldPrompt BattlefieldPrompts;
+        [field: SerializeField] public BattlefieldPrompt BattlefieldPrompts { get; private set; }
+        [field: SerializeField] public BattleAudioConfig AudioConfig { get; private set; }
 
 #if UNITY_EDITOR
         private void OnValidate()
