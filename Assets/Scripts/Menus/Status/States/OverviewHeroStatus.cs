@@ -45,7 +45,6 @@ namespace CryptoQuest.Menus.Status.States
             
             StatusPanel.Input.MenuCancelEvent += BackToMainMenuNavigation;
             StatusPanel.Input.MenuNavigateEvent += HandleNavigate;
-            StatusPanel.ShowMagicStone.EventRaised += ShowMagicStoneMenuRequested;
             UICharacterEquipmentSlot.Pressed += ToEquipmentSelection;
             StatusPanel.InspectingHeroChanged += RenderHero;
 
@@ -62,21 +61,14 @@ namespace CryptoQuest.Menus.Status.States
 
         public override void OnExit()
         {
+            StatusPanel.ShowTooltipEvent.RaiseEvent(false);
             StatusPanel.Input.MenuCancelEvent -= BackToMainMenuNavigation;
             StatusPanel.Input.MenuNavigateEvent -= HandleNavigate;
-            StatusPanel.ShowMagicStone.EventRaised -= ShowMagicStoneMenuRequested;
             UICharacterEquipmentSlot.Pressed -= ToEquipmentSelection;
             StatusPanel.InspectingHeroChanged -= RenderHero;
         }
 
         private void BackToMainMenuNavigation() => fsm.RequestStateChange(State.UNFOCUS);
-
-        private void ShowMagicStoneMenuRequested(bool isShow)
-        {
-            if (!isShow) return;
-            StatusPanel.ShowTooltipEvent.RaiseEvent(false);
-            fsm.RequestStateChange(State.MAGIC_STONE);
-        }
 
         private void ToEquipmentSelection(UICharacterEquipmentSlot slot)
         {

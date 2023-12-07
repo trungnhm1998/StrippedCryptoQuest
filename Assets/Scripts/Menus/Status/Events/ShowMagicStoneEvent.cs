@@ -1,6 +1,7 @@
-﻿using IndiGames.Core.Events.ScriptableObjects;
+﻿using CryptoQuest.Item.Equipment;
+using IndiGames.Core.Events.ScriptableObjects;
 
 namespace CryptoQuest.Menus.Status.Events
 {
-    public class ShowMagicStoneEvent : BoolEventChannelSO { }
+    public class ShowMagicStoneEvent : GenericEventChannelSO<IEquipment> { }
 }
