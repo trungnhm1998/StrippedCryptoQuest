@@ -11,12 +11,12 @@ namespace CryptoQuest.Battle.Components
         private EquipmentsController _equipmentsController;
 
         private readonly Dictionary<IEquipment, PassiveAbilitySpec[]> _passives = new();
-        private AbilitySystemBehaviour _abilitySystem;
+        private PassivesController _passiveController;
 
         protected void Awake()
         {
             _equipmentsController = GetComponent<EquipmentsController>();
-            _abilitySystem = GetComponent<AbilitySystemBehaviour>();
+            _passiveController = GetComponent<PassivesController>();
 
             _equipmentsController.Equipped += GrantPassive;
             _equipmentsController.Removed += RemovePassive;
@@ -35,7 +35,7 @@ namespace CryptoQuest.Battle.Components
             {
                 var passive = equipment.Passives[index];
                 if (passive == null) continue;
-                var spec = _abilitySystem.GiveAbility<PassiveAbilitySpec>(passive);
+                var spec = _passiveController.ApplyPassive(passive);
                 passiveSpecs[index] = spec;
             }
 
@@ -45,7 +45,7 @@ namespace CryptoQuest.Battle.Components
         private void RemovePassive(IEquipment equipment)
         {
             if (_passives.TryGetValue(equipment, out var passives) == false) return;
-            foreach (var passive in passives) _abilitySystem.RemoveAbility(passive);
+            foreach (var passive in passives) _passiveController.RemovePassive(passive);
             _passives.Remove(equipment);
         }
     }
