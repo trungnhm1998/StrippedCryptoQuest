@@ -102,7 +102,7 @@ namespace CryptoQuest.Sagas
 
         private void OnError(Exception obj)
         {
-            Debug.LogException(obj);
+            Debug.LogWarning($"Auto login failed. Message: {obj.Message}");
             ActionDispatcher.Dispatch(new SNSAutoLoginFailed());
         }
 
