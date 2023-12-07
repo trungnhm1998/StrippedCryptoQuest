@@ -1,38 +1,49 @@
-using System;
-using CryptoQuest.Sagas.Objects;
+using CryptoQuest.Item.MagicStone;
+using CryptoQuest.Sagas.MagicStone;
+using IndiGames.Core.Common;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Localization.Components;
 using UnityEngine.UI;
+using MagicStone = CryptoQuest.Sagas.Objects.MagicStone;
 
 namespace CryptoQuest.Menus.DimensionalBox.UI.MagicStoneTransfer
 {
     public class UIMagicStone : MonoBehaviour
     {
-        public event Action<UIMagicStone> Pressed;
         [SerializeField] private Image _icon;
         [SerializeField] private TMP_Text _nameText;
         [SerializeField] private LocalizeStringEvent _name;
+        [SerializeField] private Button _button;
         [SerializeField] private GameObject _pendingTag;
         [SerializeField] private GameObject _equippedTag;
-        public MagicStone MagicStone { get; private set; }
-        public GameObject EquippedTag => _equippedTag;
+        private IMagicStone _magicStone;
+        public IMagicStone MagicStone => _magicStone;
+        public MagicStone Respone { get; private set; }
+        public int Id => Respone.id;
 
-        public int Id { get; private set; }
+        private void OnDisable() => _magicStone = NullMagicStone.Instance;
+
+        public bool MarkedForTransfer
+        {
+            get => _pendingTag.activeSelf;
+            set => _pendingTag.SetActive(value);
+        }
 
         public void Initialize(MagicStone magicStone)
         {
-            MagicStone = magicStone;
-            Id = magicStone.id;
-            _nameText.text = "Item " + magicStone.id;
+            _magicStone = NullMagicStone.Instance;
+            MarkedForTransfer = false;
+            Respone = magicStone;
+            _nameText.text = $"{Id}.Stone";
+
+            _magicStone = ServiceProvider.GetService<IMagicStoneResponseConverter>().Convert(magicStone);
         }
 
-        public void OnPressed()
+        public void OnSelectToTransfer()
         {
             if (_equippedTag.activeSelf) return;
-            Pressed?.Invoke(this);
+            MarkedForTransfer = !MarkedForTransfer;
         }
-
-        public void EnablePendingTag(bool enabling) => _pendingTag.SetActive(enabling);
     }
 }

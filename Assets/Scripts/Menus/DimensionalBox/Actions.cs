@@ -1,4 +1,5 @@
 ﻿using CryptoQuest.Gameplay.Inventory.Currency;
+using CryptoQuest.Sagas.MagicStone;
 using CryptoQuest.Sagas.Objects;
 using IndiGames.Core.Events;
 
@@ -31,6 +32,11 @@ namespace CryptoQuest.Menus.DimensionalBox
         public FetchInboxEquipmentsSuccess(EquipmentResponse[] equipments) : base(equipments) { }
     }
 
+    public class FetchNftMagicStonesSucceed : FetchMagicStonesSuccess
+    {
+        public FetchNftMagicStonesSucceed(MagicStone[] stones) : base(stones) { }
+    }
+
     public class TransferSucceed : ActionBase { }
 
     public class TransferFailed : ActionBase { }
@@ -56,38 +62,4 @@ namespace CryptoQuest.Menus.DimensionalBox
     public class TransferringMetadSuccess : ActionBase { }
 
     public class TransferringMetadFailed : ActionBase { }
-
-    public class GetNftMagicStoneSucceed : ActionBase { }
-
-    public class GetNftMagicStoneFailed : ActionBase { }
-
-    public class GetNftMagicStone : ActionBase
-    {
-        public EMagicStoneStatus Status { get; set; } = EMagicStoneStatus.All;
-        public bool ForceRefresh { get; set; } = false;
-    }
-
-    public class SendMagicStoneToBothSide : ActionBase
-    {
-        public int[] SelectedInDboxMagicStones { get; }
-        public int[] SelectedInGameMagicStones { get; }
-
-        public SendMagicStoneToBothSide(int[] selectedInGameMagicStones, int[] selectedInDboxMagicStones)
-        {
-            SelectedInGameMagicStones = selectedInGameMagicStones;
-            SelectedInDboxMagicStones = selectedInDboxMagicStones;
-        }
-    }
-
-    public class TransferMagicStoneFailed : ActionBase { }
-
-    public class TransferMagicStoneSucceed : ActionBase
-    {
-        public MagicStone[] ResponseMagicStone { get; }
-
-        public TransferMagicStoneSucceed(MagicStone[] responseMagicStone)
-        {
-            ResponseMagicStone = responseMagicStone;
-        }
-    }
 }

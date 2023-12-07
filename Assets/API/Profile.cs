@@ -26,6 +26,6 @@
         public const string PUT_BEASTS_TO_BOX_AND_GAME = "crypto/beasts/dimension/transfer";
 
         public const string MAGIC_STONE = "crypto/magicstone";
-        public const string PUT_MAGIC_STONE_TO_BOX_AND_GAME = "crypto/magicstone/dimension/transfer";
+        public const string MAGIC_STONE_TRANSFER = "crypto/magicstone/dimension/transfer";
     }
 }

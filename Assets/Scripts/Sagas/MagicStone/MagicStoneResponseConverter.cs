@@ -1,19 +1,24 @@
 ﻿using System.Linq;
 using CryptoQuest.AbilitySystem.Abilities;
 using CryptoQuest.Item.MagicStone;
+using IndiGames.Core.Common;
+using UnityEngine;
 
 namespace CryptoQuest.Sagas.MagicStone
 {
-    public class MagicStoneResponseConverter
+    public interface IMagicStoneResponseConverter
     {
-        private IMagicStoneDefDatabase _database;
-        private PassiveAbilityDatabase _passiveAbilityDatabase;
+        IMagicStone Convert(Objects.MagicStone responseObject);
+    }
 
-        public MagicStoneResponseConverter(IMagicStoneDefDatabase database,
-            PassiveAbilityDatabase passiveAbilityDatabase)
+    public class MagicStoneResponseConverter : MonoBehaviour, IMagicStoneResponseConverter
+    {
+        [SerializeField] private MagicStoneDefinitionDatabase _database;
+        [SerializeField] private PassiveAbilityDatabase _passiveAbilityDatabase;
+
+        private void Awake()
         {
-            _passiveAbilityDatabase = passiveAbilityDatabase;
-            _database = database;
+            ServiceProvider.Provide<IMagicStoneResponseConverter>(this);
         }
 
         public IMagicStone Convert(Objects.MagicStone responseObject)

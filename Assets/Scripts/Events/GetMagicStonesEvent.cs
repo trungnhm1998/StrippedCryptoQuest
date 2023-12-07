@@ -1,8 +1,8 @@
 using System.Collections.Generic;
-using CryptoQuest.Sagas.Objects;
+using CryptoQuest.Item.MagicStone;
 using IndiGames.Core.Events.ScriptableObjects;
 
 namespace CryptoQuest.Events
 {
-    public class GetMagicStonesEvent : GenericEventChannelSO<List<MagicStone>> { }
+    public class GetMagicStonesEvent : GenericEventChannelSO<List<IMagicStone>> { }
 }

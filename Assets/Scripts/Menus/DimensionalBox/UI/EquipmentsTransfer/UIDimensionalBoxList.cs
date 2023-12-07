@@ -4,6 +4,7 @@ using UI.Common;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Pool;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace CryptoQuest.Menus.DimensionalBox.UI.EquipmentsTransfer
@@ -14,7 +15,7 @@ namespace CryptoQuest.Menus.DimensionalBox.UI.EquipmentsTransfer
         protected ScrollRect ScrollView => _scrollView;
         protected RectTransform ScrollViewContent => _scrollView.content;
 
-        [SerializeField] private TItem _equipmentPrefab;
+        [FormerlySerializedAs("_equipmentPrefab")] [SerializeField] private TItem _instantiatePrefab;
 
         private IObjectPool<TItem> _pool;
 
@@ -30,7 +31,7 @@ namespace CryptoQuest.Menus.DimensionalBox.UI.EquipmentsTransfer
 
         protected virtual TItem OnCreate()
         {
-            var uiEquipment = Instantiate(_equipmentPrefab, ScrollViewContent);
+            var uiEquipment = Instantiate(_instantiatePrefab, ScrollViewContent);
             uiEquipment.gameObject.SetActive(false);
             return uiEquipment;
         }
@@ -72,7 +73,7 @@ namespace CryptoQuest.Menus.DimensionalBox.UI.EquipmentsTransfer
         public bool TryFocus()
         {
             Interactable = false;
-            var firstChild = GetComponentInChildren<UIEquipment>();
+            var firstChild = GetComponentInChildren<TItem>();
             if (!firstChild) return false;
             Interactable = true;
             EventSystem.current.SetSelectedGameObject(firstChild.gameObject);

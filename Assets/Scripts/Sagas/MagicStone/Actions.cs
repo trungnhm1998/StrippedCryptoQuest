@@ -1,32 +1,40 @@
-﻿using System.Collections.Generic;
-using CryptoQuest.Sagas.Objects;
-using IndiGames.Core.Events;
+﻿using IndiGames.Core.Events;
 
 namespace CryptoQuest.Sagas.MagicStone
 {
     public class FetchProfileMagicStonesAction : ActionBase { }
 
-    public class FetchMagicStonesSucceeded : ActionBase
-    {
-        public List<Objects.MagicStone> InGameStones { get; }
 
-        public FetchMagicStonesSucceeded(List<Objects.MagicStone> inGameStones)
+    public abstract class FetchMagicStonesSuccess : ActionBase
+    {
+        public Objects.MagicStone[] Stones { get; }
+
+        protected FetchMagicStonesSuccess(Objects.MagicStone[] stones)
         {
-            InGameStones = inGameStones;
+            Stones = stones;
         }
     }
+    public class FetchIngameMagicStonesSuccess : FetchMagicStonesSuccess
+    {
+        public FetchIngameMagicStonesSuccess(Objects.MagicStone[] stones) : base(stones) { }
+    }
 
-    public class FetchMagicStonesFailed : ActionBase { }
+    public class FetchInboxMagicStonesSuccess : FetchMagicStonesSuccess
+    {
+        public FetchInboxMagicStonesSuccess(Objects.MagicStone[] stones) : base(stones) { }
+    }
 
     public class StoneInventoryFilled : ActionBase { }
 
-    public class FetchDBoxMagicStonesSucceeded : ActionBase
-    {
-        public List<Objects.MagicStone> InGameStones { get; }
+    public class TransferMagicStoneFailed : ActionBase { }
 
-        public FetchDBoxMagicStonesSucceeded(List<Objects.MagicStone> inGameStones)
+    public class TransferMagicStoneSucceed : ActionBase
+    {
+        public Objects.MagicStone[] ResponseMagicStone { get; }
+
+        public TransferMagicStoneSucceed(Objects.MagicStone[] responseMagicStone)
         {
-            InGameStones = inGameStones;
+            ResponseMagicStone = responseMagicStone;
         }
     }
 }

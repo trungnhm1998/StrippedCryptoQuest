@@ -4,8 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using CryptoQuest.AbilitySystem.Abilities;
-using CryptoQuest.Actions;
-using CryptoQuest.Events.UI;
 using CryptoQuest.Item.MagicStone;
 using CryptoQuest.Networking;
 using CryptoQuest.Sagas.Objects;
@@ -25,13 +23,12 @@ namespace CryptoQuest.Sagas.MagicStone
         [SerializeField] private MagicStoneInventory _stoneInventory;
 
         private TinyMessageSubscriptionToken _fetchEvent;
-        private TinyMessageSubscriptionToken _transferSuccessEvent;
 
-        private MagicStoneResponseConverter _converter;
+        private IMagicStoneResponseConverter _converter;
 
         private void Awake()
         {
-            _converter = new MagicStoneResponseConverter(_magicStoneDefinitionDatabase, _passiveAbilityDatabase);
+            _converter = ServiceProvider.GetService<IMagicStoneResponseConverter>();
         }
 
         private void OnEnable()
@@ -50,24 +47,43 @@ namespace CryptoQuest.Sagas.MagicStone
             var restClient = ServiceProvider.GetService<IRestClient>();
             restClient
                 .Get<MagicStonesResponse>(API.Profile.MAGIC_STONE)
-                .Subscribe(ProcessResponseCharacters, OnError);
+                .Subscribe(ProcessResponseMagicStone, OnError);
         }
 
-        private void ProcessResponseCharacters(MagicStonesResponse obj)
+        private void ProcessResponseMagicStone(MagicStonesResponse obj)
         {
             ActionDispatcher.Dispatch(new ShowLoading(false));
             if (obj.code != (int)HttpStatusCode.OK) return;
+
             var responseStones = obj.data.stones;
             if (responseStones.Length == 0) return;
-            OnInventoryFilled(responseStones);
-            FilterDboxStones(responseStones);
+
+            FilterStones(responseStones, EMagicStoneStatus.InBox);
+            FilterStones(responseStones, EMagicStoneStatus.InGame);
         }
 
-        private void FilterDboxStones(Objects.MagicStone[] stonesResponse)
+        private void FilterStones(Objects.MagicStone[] stonesResponse, EMagicStoneStatus status)
         {
             if (stonesResponse.Length == 0) return;
-            var dboxStones = stonesResponse.Where(stone => stone.inGameStatus == (int)Objects.EMagicStoneStatus.InBox).ToList();
-            ActionDispatcher.Dispatch(new FetchDBoxMagicStonesSucceeded(dboxStones));
+
+            var filteredStones = stonesResponse
+                .Where(stone => stone.inGameStatus.Equals((int)status))
+                .ToList();
+
+            var filteredStonesList = new List<IMagicStone>() { NullMagicStone.Instance };
+            filteredStones.ForEach(stone => filteredStonesList.Add(_converter.Convert(stone)));
+
+            switch (status)
+            {
+                case EMagicStoneStatus.InBox:
+                    ActionDispatcher.Dispatch(new FetchInboxMagicStonesSuccess(filteredStones.ToArray()));
+                    break;
+                case EMagicStoneStatus.InGame:
+                default:
+                    OnInventoryFilled(filteredStones.ToArray());
+                    ActionDispatcher.Dispatch(new FetchIngameMagicStonesSuccess(filteredStones.ToArray()));
+                    break;
+            }
         }
 
         private void OnInventoryFilled(Objects.MagicStone[] stonesResponse)
@@ -78,10 +94,12 @@ namespace CryptoQuest.Sagas.MagicStone
             _stoneInventory.MagicStones.Clear();
             foreach (var stoneResponse in stonesResponse)
             {
+                if (stoneResponse.id == -1) continue;
                 yield return _passiveAbilityDatabase.LoadDataById(stoneResponse.passiveSkillId1);
                 yield return _passiveAbilityDatabase.LoadDataById(stoneResponse.passiveSkillId2);
                 _stoneInventory.MagicStones.Add(_converter.Convert(stoneResponse));
             }
+
             ActionDispatcher.Dispatch(new StoneInventoryFilled());
         }
 
@@ -89,7 +107,6 @@ namespace CryptoQuest.Sagas.MagicStone
         {
             Debug.LogError("FetchProfileCharacters::OnError " + error);
             ActionDispatcher.Dispatch(new ShowLoading(false));
-            ActionDispatcher.Dispatch(new FetchMagicStonesFailed());
         }
     }
 }
