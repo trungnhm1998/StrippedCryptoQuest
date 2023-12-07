@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using CommandTerminal;
 using CryptoQuest.AbilitySystem.Abilities;
+using CryptoQuest.Battle.Components;
 using IndiGames.GameplayAbilitySystem.AbilitySystem;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -59,7 +61,7 @@ namespace CryptoQuest.System.Cheat
                 "remove.passive <passive_id> <character_id>, remove passive with id from character id from get.characters");
         }
 
-        private readonly Dictionary<int, Dictionary<int, GameplayAbilitySpec>> _passiveSpecDict = new();
+        private readonly Dictionary<int, List<PassiveAbilitySpec>> _passiveSpecDict = new();
 
         private void AddPassiveToCharacter(CommandArg[] args)
         {
@@ -97,28 +99,39 @@ namespace CryptoQuest.System.Cheat
                 yield break;
             }
 
-            var handle = passiveAssetRef.LoadAssetAsync();
+            var handle =
+                !passiveAssetRef.OperationHandle.IsValid()
+                    ? passiveAssetRef.LoadAssetAsync()
+                    : passiveAssetRef.OperationHandle;
             yield return handle;
-            var passiveAbility = handle.Result;
-            _passiveSpecDict.TryAdd(characterId, new Dictionary<int, GameplayAbilitySpec>());
-            _passiveSpecDict[characterId].TryAdd(passiveId, character.AbilitySystem.GiveAbility(passiveAbility));
+            var passiveAbility = (PassiveAbility)handle.Result;
+            PassivesController passivesController = character.GetComponent<PassivesController>();
+
+            _passiveSpecDict.TryAdd(characterId, new List<PassiveAbilitySpec>());
+            _passiveSpecDict[characterId].Add(passivesController.ApplyPassive(passiveAbility));
             Debug.Log($"Add passive [{passiveId}] to character [{character.DisplayName}] with id [{characterId}].");
         }
 
         private void RemovePassiveFromCharacter(CommandArg[] args)
         {
-            var passiveIds = ExtractPassiveIds(args);
+            var passiveId = args[0].Int;
             var characterId = args[1].Int;
-            foreach (var passiveId in passiveIds) RemovePassiveFromCharacter(characterId, passiveId);
+            RemovePassiveFromCharacter(characterId, passiveId);
         }
 
         private void RemovePassiveFromCharacter(int characterId, int passiveId)
         {
-            if (_passiveSpecDict.TryGetValue(characterId, out var characterPassivesDict) == false) return;
-            if (characterPassivesDict.TryGetValue(passiveId, out var spec) == false) return;
+            if (_passiveSpecDict.TryGetValue(characterId, out var characterPassiveSpecs) == false) return;
+
+            PassiveAbilitySpec spec =
+                characterPassiveSpecs.FirstOrDefault(passiveSpec => passiveSpec.SkillContext.SkillInfo.Id == passiveId);
+
+            if (spec == null) return;
 
             var character = CharacterCheats.Instance.GetCharacter(characterId);
-            character.AbilitySystem.RemoveAbility(spec);
+            PassivesController passivesController = character.GetComponent<PassivesController>();
+            passivesController.RemovePassive(spec);
+            characterPassiveSpecs.Remove(spec);
 
             Debug.Log(
                 $"remove passive [{passiveId}] from character [{character.DisplayName}] with id [{characterId}].");
