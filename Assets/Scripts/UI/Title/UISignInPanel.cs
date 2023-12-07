@@ -39,6 +39,7 @@ namespace CryptoQuest.UI.Title
 
         private void OnDisable()
         {
+            if (_authFailed == null) return;
             ActionDispatcher.Unbind(_authFailed);
         }
 
