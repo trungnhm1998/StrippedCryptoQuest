@@ -149,7 +149,7 @@ namespace IndiGames.GameplayAbilitySystem.EffectSystem
         }
 
         public bool IsValid() => Def != null;
-        public int CompareTo(GameplayEffectSpec other) => Def != other.Def ? 0 : 1;
+        public virtual int CompareTo(GameplayEffectSpec other) => Def != other.Def ? 0 : 1;
 
         public ActiveGameplayEffect CreateActiveEffectSpec()
             => Def.Policy.CreateActiveEffect(this);
