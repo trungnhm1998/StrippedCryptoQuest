@@ -96,7 +96,7 @@ namespace CryptoQuest.System.Cheat
             Terminal.Shell.AddCommand("add.cast", AddAbilityToCharacter, 2, 2,
                 "add.cast <cast-able_id> <character_id>, add cast-able ability with id to hero with character_id");
             Terminal.Shell.AddCommand("remove.cast", RemoveCastAbilityFromCharacter, 2, 2,
-                "remove.cast <cast-able_id> <character_index>, remove cast-able with id from hero with character_id");
+                "remove.cast <cast-able_id> <character_id>, remove cast-able with id from hero with character_id");
 
             foreach (var ability in _castAbilityDict)
             {

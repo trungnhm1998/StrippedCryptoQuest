@@ -54,9 +54,9 @@ namespace CryptoQuest.System.Cheat
         public void InitCheats()
         {
             Terminal.Shell.AddCommand("add.passive", AddPassiveToCharacter, 2, 2,
-                "add.passive <passive_id> <character_index>, add passive with id to character in party index");
+                "add.passive <passive_id> <character_id>, add passive with id to character id from get.characters");
             Terminal.Shell.AddCommand("remove.passive", RemovePassiveFromCharacter, 2, 2,
-                "remove.passive <passive_id> <character_index>, remove passive with id from character in party index");
+                "remove.passive <passive_id> <character_id>, remove passive with id from character id from get.characters");
         }
 
         private readonly Dictionary<int, Dictionary<int, GameplayAbilitySpec>> _passiveSpecDict = new();
