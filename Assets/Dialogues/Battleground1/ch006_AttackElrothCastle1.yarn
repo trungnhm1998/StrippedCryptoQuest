@@ -55,12 +55,23 @@ tags:
 Leonhardt: I appreciate this! However, we'll need the troops here to contain the other demons. Thus, it'll be just be us making our way to the castle. #line:AttackeErlothCastle_23
 Leonhardt:We don't have the luxury of delay. Inform me as soon as you're prepared. #line:AttackeErlothCastle_24
 ===
+title: Complete_ch006_attack_elroth_castle_1
+tags:
+---
+<<quest ch006_attack_elroth_castle_1>>
+===
 title: AttackeErlothCastle2_1
 tags:
 ---
 Leonhardt: The castle's situation is unpredictable. Are you ready for all possible outcomes? #line:AttackeErlothCastle_25
-Yes #line:AttackeErlothCastle_26
-Leonhardt:Alright, I've made my preparations too. Let's proceed. #line:AttackeErlothCastle_27
-No #line:AttackeErlothCastle_28
-Leonhardt:I'm deeply concerned about the state of Elrod Castle. Please make haste with your preparations. #line:AttackeErlothCastle_29
+-> Yes #line:AttackeErlothCastle_26
+    Leonhardt:Alright, I've made my preparations too. Let's proceed. #line:AttackeErlothCastle_27
+    <<quest ch006_attack_elroth_castle_2>>
+-> No #line:AttackeErlothCastle_28
+    Leonhardt:I'm deeply concerned about the state of Elrod Castle. Please make haste with your preparations. #line:AttackeErlothCastle_29
+===
+title: Complete_ch006_attack_elroth_castle_2
+tags:
+---
+<<quest ch006_attack_elroth_castle_ocarina>>
 ===
