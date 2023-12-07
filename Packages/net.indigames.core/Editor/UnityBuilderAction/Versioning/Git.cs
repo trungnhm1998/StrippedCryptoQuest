@@ -57,7 +57,6 @@ namespace IndiGamesEditor.UnityBuilderAction.Versioning
             catch (Exception e)
             {
                 Console.WriteLine($"Git::Failed to fetch the repository. \ne: {e} ");
-                throw;
             }
         }
 
