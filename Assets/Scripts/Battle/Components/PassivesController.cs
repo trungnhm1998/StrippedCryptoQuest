@@ -13,13 +13,12 @@ namespace CryptoQuest.Battle.Components
 
         public void RemovePassive(PassiveAbilitySpec passive)
         {
+            Character.AbilitySystem.RemoveAbility(passive);
             if (passive.SkillContext.SkillInfo.SkillType == ESkillType.Passive)
             {
                 Destroy(passive.AbilitySO);
                 passive.AbilitySO = null;
             }
-
-            Character.AbilitySystem.RemoveAbility(passive);
         }
     }
 }
