@@ -10,11 +10,14 @@ namespace CryptoQuest.BlackSmith.Evolve.UI
     {
         public event UnityAction<UIEquipmentItem> Selected;
 
+        [field: SerializeField] public Button ButtonUI { get; private set; }
+        [field: SerializeField] public GameObject BaseTag { get; private set; }
+
         [SerializeField] private Image _icon;
         [SerializeField] private LocalizeStringEvent _nameLocalize;
-        [SerializeField] private GameObject _selectedTag;
 
         public IEquipment Equipment { get; private set; }
+
 
         public void Init(IEquipment equipment)
         {
@@ -27,12 +30,12 @@ namespace CryptoQuest.BlackSmith.Evolve.UI
 
         public void ResetItemStates()
         {
-            _selectedTag.SetActive(false);
+            BaseTag.SetActive(false);
+            ButtonUI.interactable = true;
         }
 
         public void SubmitEquipment()
         {
-            _selectedTag.SetActive(true);
             Selected?.Invoke(this);
         }
     }

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using CryptoQuest.Item.Equipment;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -26,15 +27,20 @@ namespace CryptoQuest.BlackSmith.Evolve.UI
 
         public void RenderEquipments(List<IEquipment> items)
         {
-            ReturnAllItemsToPool();
             foreach (var equipment in items)
             {
                 var equipmentUI = _itemPool.Get();
                 equipmentUI.Init(equipment);
             }
+        }
 
-            if (_scrollRect.content.childCount <= 0) return;
-            EventSystem.current.SetSelectedGameObject(_scrollRect.content.GetChild(0).gameObject);
+        public void ClearEquipmentsWithException(UIEquipmentItem exceptionUI = null)
+        {
+            foreach (var item in _scrollRect.content.GetComponentsInChildren<UIEquipmentItem>())
+            {
+                if (exceptionUI != null && item == exceptionUI) continue;
+                _itemPool.Release(item);
+            }
         }
 
         private void OnSelectItem(UIEquipmentItem ui)
@@ -42,26 +48,7 @@ namespace CryptoQuest.BlackSmith.Evolve.UI
             EquipmentSelected?.Invoke(ui);
         }
 
-        public void Filter(UIEquipmentItem baseItem)
-        {
-            foreach (var equipmentUI in _scrollRect.content.GetComponentsInChildren<UIEquipmentItem>())
-            {
-                if (equipmentUI == baseItem) continue;
-                equipmentUI.ResetItemStates();
-                if (equipmentUI.Equipment.Data.ID == baseItem.Equipment.Data.ID) continue;
-                _itemPool.Release(equipmentUI);
-            }
-            
-            baseItem.transform.SetAsFirstSibling();
-        }
-
         #region Pool-handler
-
-        private void ReturnAllItemsToPool()
-        {
-            foreach (var item in _scrollRect.content.GetComponentsInChildren<UIEquipmentItem>())
-                _itemPool.Release(item);
-        }
 
         private UIEquipmentItem OnCreate()
         {

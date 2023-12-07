@@ -1,4 +1,5 @@
 using CryptoQuest.BlackSmith.Evolve.UI;
+using UnityEngine.EventSystems;
 
 namespace CryptoQuest.BlackSmith.Evolve.States
 {
@@ -10,13 +11,18 @@ namespace CryptoQuest.BlackSmith.Evolve.States
         {
             base.OnEnter();
             DialogsPresenter.Dialogue.SetMessage(EvolveSystem.SelectEquipmentToEvolveText).Show();
-            
             StateMachine.MaterialItem = null;
             StateMachine.ItemToEvolve = null;
             EquipmentsPresenter.gameObject.SetActive(true);
             EvolvableEquipmentList.EquipmentSelected += OnSelectBaseItem;
 
-            EquipmentsPresenter.Init();
+            EquipmentsPresenter.EvolvableModel.Init();
+            EquipmentsPresenter.EvolvableModel.FilterByInfos(StateMachine.EvolvableInfos);
+            EvolvableEquipmentList.ClearEquipmentsWithException();
+            EvolvableEquipmentList.RenderEquipments(EquipmentsPresenter.EvolvableModel.GetEvolableEquipments());
+
+            if (EvolvableEquipmentList.Content.childCount > 0)
+                EventSystem.current.SetSelectedGameObject(EvolvableEquipmentList.Content.GetChild(0).gameObject);
         }
 
         public override void OnExit()
