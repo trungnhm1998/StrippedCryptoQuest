@@ -1,10 +1,10 @@
 ﻿using System.Collections;
 using CryptoQuest.AbilitySystem.Abilities;
-using CryptoQuest.Item.MagicStone;
 using CryptoQuest.Sagas.MagicStone;
 using Newtonsoft.Json;
 using NUnit.Framework;
 using UnityEditor;
+using UnityEngine;
 using UnityEngine.TestTools;
 
 namespace CryptoQuest.Tests.Runtime.Item.MagicStone
@@ -12,7 +12,8 @@ namespace CryptoQuest.Tests.Runtime.Item.MagicStone
     [TestFixture]
     public class ResponseConverterTests
     {
-        private MagicStoneDefinitionDatabase _database;
+        private IMagicStoneResponseConverter _provider;
+        private GameObject _prefab;
         private PassiveAbilityDatabase _passiveDatabase;
 
         private bool _hasSetup = false;
@@ -20,10 +21,9 @@ namespace CryptoQuest.Tests.Runtime.Item.MagicStone
         [OneTimeSetUp]
         public void OnetimeSetup()
         {
-            _database = AssetDatabase.LoadAssetAtPath<MagicStoneDefinitionDatabase>(
-                "Assets/ScriptableObjects/MagicStones/MagicStoneDefinitionDatabase.asset");
             _passiveDatabase = AssetDatabase.LoadAssetAtPath<PassiveAbilityDatabase>(
                 "Assets/ScriptableObjects/Character/Skills/PassiveAbilityDatabase.asset");
+            _prefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Providers/MagicStoneProvider.prefab");
         }
 
         [UnitySetUp]
@@ -33,6 +33,9 @@ namespace CryptoQuest.Tests.Runtime.Item.MagicStone
             _hasSetup = true;
 
             // preload
+            var instance = PrefabUtility.InstantiatePrefab(_prefab) as GameObject;
+            Assert.NotNull(instance, "Prefab instance");
+            _provider = instance.GetComponent<IMagicStoneResponseConverter>();
             foreach (var skill in _passiveDatabase.CacheLookupTable)
             {
                 yield return _passiveDatabase.LoadDataById(skill.Key);
@@ -52,8 +55,7 @@ namespace CryptoQuest.Tests.Runtime.Item.MagicStone
         {
             var responseObject = JsonConvert.DeserializeObject<Sagas.Objects.MagicStone>(response);
 
-            var converter = new MagicStoneResponseConverter(_database, _passiveDatabase);
-            CryptoQuest.Item.MagicStone.IMagicStone magicStone = converter.Convert(responseObject);
+            var magicStone = _provider.Convert(responseObject);
 
             Assert.AreEqual(responseObject.id, magicStone.ID, "Id");
             Assert.AreEqual(responseObject.stoneLv, magicStone.Level, "level");

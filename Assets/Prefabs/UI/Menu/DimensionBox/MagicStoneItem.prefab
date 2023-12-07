@@ -485,6 +485,7 @@ MonoBehaviour:
   _icon: {fileID: 5015609419719623106}
   _nameText: {fileID: 4310176288730746623}
   _name: {fileID: 8830715520460154512}
+  _button: {fileID: 7580833117744222594}
   _pendingTag: {fileID: 3027263456310314235}
   _equippedTag: {fileID: 4707030993955387049}
 --- !u!114 &7580833117744222594
@@ -500,8 +501,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 0
-    m_WrapAround: 1
+    m_Mode: 2
+    m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
@@ -534,7 +535,7 @@ MonoBehaviour:
       - m_Target: {fileID: 1035897209836634518}
         m_TargetAssemblyTypeName: CryptoQuest.Menus.DimensionalBox.UI.MagicStoneTransfer.UIMagicStone,
           IndiGames.CryptoQuest.DimensionalBox
-        m_MethodName: OnPressed
+        m_MethodName: OnSelectToTransfer
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

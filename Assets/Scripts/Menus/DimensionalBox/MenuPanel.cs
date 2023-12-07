@@ -9,6 +9,7 @@ namespace CryptoQuest.Menus.DimensionalBox
     public class MenuPanel : UIMenuPanelBase
     {
         [field: SerializeField] public GameObject MagicStoneTransferPanel { get; private set; }
+        [field: SerializeField] public TransferMagicStonesPanel TransferMagicStonesPanel { get; set; }
         [field: SerializeField] public TransferEquipmentsPanel EquipmentsTransferPanel { get; private set; }
         [field: SerializeField] public GameObject MetaDTransferPanel { get; private set; }
         [field: SerializeField] public GameObject OverviewPanel { get; private set; }
