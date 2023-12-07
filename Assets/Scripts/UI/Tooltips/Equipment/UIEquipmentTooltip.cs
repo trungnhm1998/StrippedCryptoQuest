@@ -25,7 +25,7 @@ namespace CryptoQuest.UI.Tooltips.Equipment
         [SerializeField] private TMP_Text _lvl;
         [SerializeField] private LocalizeStringEvent _nameLocalize;
         [SerializeField] private UIStars _uiStars;
-        [SerializeField] private RectTransform _statsContainer;
+        [SerializeField] protected RectTransform _statsContainer;
         [SerializeField] private UIAttribute _attributeValuePrefab;
         [SerializeField] private GameObject _passiveSkillPrefab;
         [SerializeField] private RectTransform _passiveSkillsContainer;
@@ -68,9 +68,9 @@ namespace CryptoQuest.UI.Tooltips.Equipment
             _uiStars.SetStars(_equipment.Data.Stars);
         }
 
-        private void SetupStats()
+        protected virtual void SetupStats()
         {
-            foreach (Transform attribute in _statsContainer) DestroyImmediate(attribute.gameObject);
+            foreach (Transform attribute in _statsContainer) Destroy(attribute.gameObject);
             foreach (var attribute in _equipment.Data.Stats)
             {
                 if (_attributeConfigMapping.TryGetMap(attribute.Attribute, out var config) == false) continue;
@@ -81,10 +81,10 @@ namespace CryptoQuest.UI.Tooltips.Equipment
             }
         }
 
-        private void SetupSkills(RectTransform skillsContainer, ESkillType skillType, GameObject skillPrefab)
+        protected virtual void SetupSkills(RectTransform skillsContainer, ESkillType skillType, GameObject skillPrefab)
         {
             skillsContainer.gameObject.SetActive(false);
-            foreach (Transform skill in skillsContainer) DestroyImmediate(skill.gameObject);
+            foreach (Transform skill in skillsContainer) Destroy(skill.gameObject);
             var skills = _equipment.Data.Passives;
             foreach (var skill in skills)
             {
