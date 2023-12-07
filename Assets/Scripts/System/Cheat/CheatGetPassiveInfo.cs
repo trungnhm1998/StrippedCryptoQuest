@@ -12,13 +12,13 @@ namespace CryptoQuest.System.Cheat
         public void InitCheats()
         {
             Terminal.Shell.AddCommand("get.passives", GetCharacterPassives, 1, 1,
-                "get.passive <character_index>, get character's all passive with character id ");
+                "get.passive <character_id>, get character's all passive with character id from get.characters");
 
             Terminal.Shell.AddCommand("get.effects", GetCharacterAppliedEffects, 1, 1,
-                "get.effects <character_index>, get character's all applied effects with character id ");
+                "get.effects <character_id>, get character's all applied effects with character id from get.characters");
 
             Terminal.Shell.AddCommand("get.states", GetCharacterCurrentStates, 1, 1,
-                "get.states <character_index>, get character's all state tags with character id ");
+                "get.states <character_id>, get character's all state tags with character id from get.characters");
         }
 
         private void GetCharacterPassives(CommandArg[] args)

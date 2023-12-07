@@ -18,7 +18,8 @@ namespace CryptoQuest.Character.LevelSystem
         public void InitCheats()
         {
             Debug.Log("LevelCheats::InitCheats()");
-            Terminal.Shell.AddCommand("addexp", AddExpToCharacter, 2, 2, "Add exp to a character");
+            Terminal.Shell.AddCommand("addexp", AddExpToCharacter, 2, 2,
+                "addexp <character_index> <exp_to_add>, add exp to a character with index in party");
         }
 
         private void OnEnable() => _leveledUpEvent =
