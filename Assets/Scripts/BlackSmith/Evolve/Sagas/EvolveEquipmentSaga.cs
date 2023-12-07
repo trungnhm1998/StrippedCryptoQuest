@@ -40,18 +40,22 @@ namespace CryptoQuest.BlackSmith.Evolve.Sagas
         public string MaterialId;
     }
 
-    public class EvolveEquipmentSaga : SagaBase<EvolveEquipmentAction>
+    public class EvolveEquipmentSaga : SagaBase<RequestEvolveEquipment>
     {
         public static readonly string EvolveEquipmentApi = "crypto/equipments/evolve";
 
-        protected override void HandleAction(EvolveEquipmentAction ctx)
+        private RequestEvolveEquipment _requestContext;
+
+        protected override void HandleAction(RequestEvolveEquipment ctx)
         {
             ActionDispatcher.Dispatch(new ShowLoading());
 
+            _requestContext = ctx;
+
             var body = new EvolveEquipmentRequest
             {
-                EquipmentId = ctx.EquipmentId,
-                MaterialId = ctx.MaterialId
+                EquipmentId = ctx.Equipment.Id.ToString(),
+                MaterialId = ctx.Material.Id.ToString()
             };
 
             var restClient = ServiceProvider.GetService<IRestClient>();
@@ -64,26 +68,16 @@ namespace CryptoQuest.BlackSmith.Evolve.Sagas
         private void HandleRequestSuccess(EvolveResponse response)
         {
             ActionDispatcher.Dispatch(new ShowLoading(false));
-            int evolveStatus = response.data.success;
 
-            switch (evolveStatus)
-            {
-                case 0:
-                    ActionDispatcher.Dispatch(new EvolveEquipmentFailedAction());
-                    break;
-                case 1:
-                    ActionDispatcher.Dispatch(new EvolveEquipmentSuccessAction());
-                    break;
-                default:
-                    Debug.LogError("[EvolveEquipment]:: unknown success status: " + evolveStatus);
-                    break;
-            }
+            ActionDispatcher.Dispatch(new EvolveResponsed(response, _requestContext));
         }
 
         private void HandleRequestFailed(Exception exception)
         {
             Debug.LogError("[EvolveEquipment]:: Error: " + exception.Message);
             ActionDispatcher.Dispatch(new ShowLoading(false));
+            
+            ActionDispatcher.Dispatch(new EvolveRequestFailed());
         }
     }
 }
