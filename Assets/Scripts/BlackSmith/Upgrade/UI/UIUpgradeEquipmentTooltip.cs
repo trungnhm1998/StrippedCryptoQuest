@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using CryptoQuest.UI.Tooltips.Equipment;
 using CryptoQuest.BlackSmith.Upgrade.Presenters;
+using CryptoQuest.Battle.ScriptableObjects;
 
 namespace CryptoQuest.BlackSmith.Upgrade.UI
 {
@@ -17,6 +18,29 @@ namespace CryptoQuest.BlackSmith.Upgrade.UI
                 return false;
             _equipment = _equipmentProvider.Equipment;
             return true;
+        }
+
+        protected override void SetupStats()
+        {
+            DestroyImmediatelyChilds(_statsContainer);
+            base.SetupStats();
+        }
+
+        protected override void SetupSkills(RectTransform skillsContainer, ESkillType skillType, GameObject skillPrefab)
+        {
+            DestroyImmediatelyChilds(skillsContainer);
+            base.SetupSkills(skillsContainer, skillType, skillPrefab);
+        }
+
+        // Because this is UI and the data update immediatetly so I have to DestroyImmediate
+        // TODO: might refactor using object pool late for better performance
+        private void DestroyImmediatelyChilds(Transform parent)
+        {
+            while (parent.childCount > 0)
+            {
+                var child = parent.GetChild(0);
+                DestroyImmediate(child.gameObject);
+            }            
         }
     }
 }
