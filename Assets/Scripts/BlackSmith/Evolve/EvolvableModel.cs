@@ -2,7 +2,10 @@ using System.Collections.Generic;
 using System.Linq;
 using CryptoQuest.BlackSmith.Interface;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
+using CryptoQuest.Gameplay.PlayerParty;
+using CryptoQuest.Gameplay.PlayerParty.Helper;
 using CryptoQuest.Item.Equipment;
+using IndiGames.Core.Common;
 using UnityEngine;
 using UnityEngine.Localization;
 
@@ -43,12 +46,24 @@ namespace CryptoQuest.BlackSmith.Evolve
     {
         [SerializeField] private InventorySO _inventory;
 
+        private IPartyController _partyController;
+
         /// <summary>
         /// Only nft equipments can be evolved
         /// </summary>
         /// <returns>equipments that can be evolve</returns>
         public List<IEquipment> GetEvolableEquipments() =>
-            _inventory.NftEquipments.Where(CanEvolve).Cast<IEquipment>().ToList();
+            GetAvailableEquipments().Where(CanEvolve).Cast<IEquipment>().ToList();
+
+        private List<IEquipment> GetAvailableEquipments()
+        {
+            var equipments = new List<IEquipment>();
+            equipments.AddRange(_inventory.NftEquipments);
+            _partyController ??= ServiceProvider.GetService<IPartyController>();
+            equipments.AddRange(_partyController.GetEquippingEquipments()
+                .Where(e => e.IsNft));
+            return equipments;
+        }
 
         private static bool CanEvolve(IEquipment equipment)
         {

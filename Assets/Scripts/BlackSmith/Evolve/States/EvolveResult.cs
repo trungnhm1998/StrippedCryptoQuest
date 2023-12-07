@@ -19,7 +19,13 @@ namespace CryptoQuest.BlackSmith.Evolve.States
         public override void OnCancel()
         {
             base.OnCancel();
-            // TODO: reload equipments
+            fsm.RequestStateChange(EStates.SelectEquipment);
+        }
+
+        public override void OnSubmit()
+        {
+            base.OnCancel();
+            fsm.RequestStateChange(EStates.SelectEquipment);
         }
     }
 }

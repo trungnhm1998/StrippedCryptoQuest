@@ -9,6 +9,7 @@ namespace CryptoQuest.BlackSmith.Evolve.States
     {
         private TinyMessageSubscriptionToken _evolveSuccessToken;
         private TinyMessageSubscriptionToken _evolveFailedToken;
+        private TinyMessageSubscriptionToken _evolveRequestFailedToken;
 
         public ConfirmEvolve(EvolveStateMachine stateMachine) : base(stateMachine) { }
 
@@ -23,6 +24,7 @@ namespace CryptoQuest.BlackSmith.Evolve.States
 
             _evolveSuccessToken = ActionDispatcher.Bind<EvolveEquipmentSuccessAction>(HandleEvolveSuccess);
             _evolveFailedToken = ActionDispatcher.Bind<EvolveEquipmentFailedAction>(HandleEvolveFailed);
+            _evolveRequestFailedToken = ActionDispatcher.Bind<EvolveRequestFailed>(HandleRequestFailed);
         }
 
         public override void OnExit()
@@ -34,6 +36,7 @@ namespace CryptoQuest.BlackSmith.Evolve.States
 
             ActionDispatcher.Unbind(_evolveSuccessToken);
             ActionDispatcher.Unbind(_evolveFailedToken);
+            ActionDispatcher.Unbind(_evolveRequestFailedToken);
         }
 
         public override void OnCancel()
@@ -43,10 +46,10 @@ namespace CryptoQuest.BlackSmith.Evolve.States
 
         private void HandleConfirmEvolving()
         {
-            ActionDispatcher.Dispatch(new EvolveEquipmentAction()
+            ActionDispatcher.Dispatch(new RequestEvolveEquipment()
             {
-                EquipmentId = StateMachine.ItemToEvolve.Equipment.Id.ToString(),
-                MaterialId = StateMachine.MaterialItem.Equipment.Id.ToString()
+                Equipment = StateMachine.ItemToEvolve.Equipment,
+                Material = StateMachine.MaterialItem.Equipment
             });
         }
 
@@ -58,6 +61,11 @@ namespace CryptoQuest.BlackSmith.Evolve.States
         private void HandleEvolveSuccess(EvolveEquipmentSuccessAction action)
         {
             fsm.RequestStateChange(EStates.EvolveSuccess);
+        }
+
+        private void HandleRequestFailed(EvolveRequestFailed ctx)
+        {
+            fsm.RequestStateChange(EStates.SelectEquipment);
         }
     }
 }

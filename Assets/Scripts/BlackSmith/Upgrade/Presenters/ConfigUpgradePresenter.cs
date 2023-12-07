@@ -33,7 +33,7 @@ namespace CryptoQuest.BlackSmith.Upgrade.Presenters
         private Dictionary<int, CostByRarity> _costDataDict = new();
 
         public bool IsUpgradeValid => _upgradeValidator.IsEnoughGoldToUpgrade(_wallet[_currencySO].Amount,
-            LevelToUpgrade);
+            GoldNeeded);
 
 
         private void Awake()
