@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using CryptoQuest.Item.MagicStone;
 using CryptoQuest.Menus.Status.UI;
+using CryptoQuest.Menus.Status.UI.MagicStone;
 using CryptoQuest.Sagas.MagicStone;
 using CryptoQuest.UI.Actions;
 using IndiGames.Core.Events;
@@ -23,6 +24,8 @@ namespace CryptoQuest.Menus.Status.States
             ActionDispatcher.Dispatch(new FetchProfileMagicStonesAction());
 
             StatusPanel.MagicStoneMenu.SetActive(true);
+            var equipmentDetails = StatusPanel.MagicStoneMenu.GetComponentInChildren<UIEquipmentDetails>(true);
+            equipmentDetails.Init(StatusPanel.InspectingEquipment);
         }
 
         private void GetStonesFromInventory(StoneInventoryFilled _)
@@ -41,7 +44,7 @@ namespace CryptoQuest.Menus.Status.States
         private void BackToEquipmentSelection()
         {
             StatusPanel.MagicStoneMenu.SetActive(false);
-            fsm.RequestStateChange(State.OVERVIEW);
+            StatusPanel.BackToPreviousState();
         }
     }
 }

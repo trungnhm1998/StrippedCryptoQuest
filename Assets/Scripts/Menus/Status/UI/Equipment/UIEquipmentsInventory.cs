@@ -1,11 +1,12 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
 using CryptoQuest.Battle.Components;
 using CryptoQuest.Gameplay.Inventory;
 using CryptoQuest.Item.Equipment;
+using CryptoQuest.UI.Utilities;
 using IndiGames.Core.Common;
+using UI.Common;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -61,12 +62,13 @@ namespace CryptoQuest.Menus.Status.UI.Equipment
             EventSystem.current.SetSelectedGameObject(_scrollRect.content.GetChild(Math.Max(0, nextElement)).gameObject);
         }
 
-        public void RenderEquipmentsInInventory(HeroBehaviour hero, ESlot slotSlot,
+        public void RenderEquipmentsInInventory(HeroBehaviour hero, ESlot modifySlot,
             EEquipmentCategory categoryType)
         {
             _contents.SetActive(true);
+            if (_hero == hero && _slotSlot == modifySlot && _categoryType == categoryType) return;
             _hero = hero;
-            _slotSlot = slotSlot;
+            _slotSlot = modifySlot;
             _categoryType = categoryType;
             _equipmentsController = hero.GetComponent<EquipmentsController>();
             Reset();

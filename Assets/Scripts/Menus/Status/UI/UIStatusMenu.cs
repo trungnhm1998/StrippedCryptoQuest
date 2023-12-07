@@ -11,6 +11,7 @@ using CryptoQuest.UI.Menu;
 using CryptoQuest.UI.Tooltips.Events;
 using FSM;
 using UnityEngine;
+using State = CryptoQuest.Menus.Status.States.State;
 
 namespace CryptoQuest.Menus.Status.UI
 {
@@ -39,6 +40,7 @@ namespace CryptoQuest.Menus.Status.UI
         private StateMachine _stateMachine;
 
         private HeroBehaviour _inspectingHero;
+        private string _previousState;
 
         public HeroBehaviour InspectingHero
         {
@@ -50,16 +52,38 @@ namespace CryptoQuest.Menus.Status.UI
             }
         }
 
+        public IEquipment InspectingEquipment { get; set; }
+
         public event Action<HeroBehaviour> InspectingHeroChanged;
 
         private void Awake() => _stateMachine = new StatusMenuStateMachine(this);
 
-        private void OnEnable() => _stateMachine.Init();
+        private void OnEnable()
+        {
+            ShowMagicStone.EventRaised += ShowMagicStoneMenuRequested;
+            _stateMachine.Init();
+        }
 
         private void OnDisable()
         {
+            ShowMagicStone.EventRaised -= ShowMagicStoneMenuRequested;
             ShowTooltipEvent.RaiseEvent(false);
             _stateMachine.OnExit();
+        }
+
+        private void ShowMagicStoneMenuRequested(IEquipment equipment)
+        {
+            InspectingEquipment = equipment;
+            ShowTooltipEvent.RaiseEvent(false);
+            _previousState = _stateMachine.ActiveStateName;
+            _stateMachine.RequestStateChange(State.MAGIC_STONE);
+        }
+
+        public void BackToPreviousState()
+        {
+            if (string.IsNullOrEmpty(_previousState)) return;
+            _stateMachine.RequestStateChange(_previousState);
+            _previousState = "";
         }
     }
 }

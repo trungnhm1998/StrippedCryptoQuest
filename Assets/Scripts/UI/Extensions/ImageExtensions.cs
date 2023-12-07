@@ -22,9 +22,9 @@ namespace CryptoQuest.UI.Extensions
             var handle = spriteAsset.OperationHandle.IsValid() == false
                 ? spriteAsset.LoadAssetAsync()
                 : spriteAsset.OperationHandle;
-            handle.Completed += _ =>
+            handle.Completed += op =>
             {
-                image.sprite = (Sprite)spriteAsset.OperationHandle.Result;
+                image.sprite = (Sprite)op.Result;
                 image.enabled = true;
             };
             return handle;

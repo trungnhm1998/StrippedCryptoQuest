@@ -6,6 +6,7 @@ namespace CryptoQuest.Menus.Status.States
     {
         public ModifyEquipments(UIStatusMenu statusPanel) : base(statusPanel) { }
 
+
         public override void OnEnter()
         {
             StatusPanel.ShowTooltipEvent.RaiseEvent(false);
@@ -19,13 +20,12 @@ namespace CryptoQuest.Menus.Status.States
         public override void OnExit()
         {
             StatusPanel.Input.MenuCancelEvent -= BackToOverview;
-
             StatusPanel.ShowTooltipEvent.RaiseEvent(false);
-            StatusPanel.EquipmentsInventoryPanel.Hide();
         }
 
         private void BackToOverview()
         {
+            StatusPanel.EquipmentsInventoryPanel.Hide();
             fsm.RequestStateChange(State.OVERVIEW);
         }
     }

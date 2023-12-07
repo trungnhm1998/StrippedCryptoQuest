@@ -1,27 +1,20 @@
 ﻿using CryptoQuest.Input;
-using CryptoQuest.Item.Equipment;
 using CryptoQuest.Menus.Status.Events;
 using CryptoQuest.Menus.Status.UI.Equipment;
-using CryptoQuest.UI.Tooltips.Equipment;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
 namespace CryptoQuest.Menus.Status.UI.MagicStone
 {
-    public class MagicStoneTrigger : MonoBehaviour, ISelectHandler, IDeselectHandler, ITooltipEquipmentProvider
+    public class MagicStoneTrigger : MonoBehaviour, ISelectHandler, IDeselectHandler
     {
         [SerializeField] private InputMediatorSO _input;
         [SerializeField] private ShowMagicStoneEvent _showMagicStone;
-        [SerializeField] private Transform _equipSlot;
         [SerializeField] private UIEquipment _uiEquipment;
-        public IEquipment Equipment => _uiEquipment.Equipment;
-
-        private bool _isEquipmentAvailable = false;
 
         public void OnSelect(BaseEventData _)
         {
             _input.MenuInteractEvent += RequestShowMagicStoneMenu;
-            _isEquipmentAvailable = _equipSlot.GetChild(0).gameObject.activeSelf;
             Debug.Log($"<color=green>MagicStoneTrigger::OnSelect</color>");
         }
 
@@ -31,10 +24,16 @@ namespace CryptoQuest.Menus.Status.UI.MagicStone
             Debug.Log($"<color=green>MagicStoneTrigger::OnDeselect</color>");
         }
 
+        private void OnDisable()
+        {
+            _input.MenuInteractEvent -= RequestShowMagicStoneMenu;
+        }
+
         private void RequestShowMagicStoneMenu()
         {
+            if (_uiEquipment.Equipment == null || _uiEquipment.Equipment.IsValid() == false) return;
             Debug.Log($"<color=green>MagicStoneTrigger::RequestShowMagicStoneMenu</color>");
-            _showMagicStone.RaiseEvent(_isEquipmentAvailable);
+            _showMagicStone.RaiseEvent(_uiEquipment.Equipment);
         }
     }
 }
