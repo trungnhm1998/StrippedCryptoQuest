@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using CryptoQuest.BlackSmith.Evolve.UI;
 using FSM;
 
@@ -20,11 +21,13 @@ namespace CryptoQuest.BlackSmith.Evolve.States
         public UIEquipmentItem ItemToEvolve { get; set; }
         public UIEquipmentItem MaterialItem { get; set; }
         public BlackSmithDialogsPresenter DialogsPresenter => _context.DialogPresenter;
+        public IEvolvableInfo[] EvolvableInfos { get; private set; }
 
         public EvolveStateMachine(BlackSmithSystem context)
         {
             _context = context;
             EvolveSystem = _context.EvolveSystem;
+            InitInfos();
 
             AddState(EStates.SelectEquipment, new SelectEquipmentToEvolve(this));
             AddState(EStates.SelectMaterial, new SelectEvolveMaterial(this));
@@ -33,6 +36,24 @@ namespace CryptoQuest.BlackSmith.Evolve.States
             AddState(EStates.EvolveFailed, new EvolveFailed(this));
 
             SetStartState(EStates.SelectEquipment);
+        }
+
+        private void InitInfos()
+        {
+            var infosDB = EvolveSystem.EvolvableInfoDatabaseSO.EvolableInfos;
+            EvolvableInfos = new IEvolvableInfo[infosDB.Length];
+            for (int i = 0; i < infosDB.Length; i++)
+            {
+                EvolvableInfos[i] = new EvolvableInfo()
+                {
+                    Rarity = infosDB[i].Rarity,
+                    BeforeStars = infosDB[i].BeforeStars,
+                    AfterStars = infosDB[i].AfterStars,
+                    Gold = infosDB[i].Gold,
+                    Metad = infosDB[i].Metad,
+                    Rate = infosDB[i].Rate
+                };
+            }
         }
 
         public void SetCurrentState(EvolveStateBase state) => _state = state;

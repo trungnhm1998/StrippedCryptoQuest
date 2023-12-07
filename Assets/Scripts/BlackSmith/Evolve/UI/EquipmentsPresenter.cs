@@ -1,3 +1,4 @@
+using CryptoQuest.Item.Equipment;
 using UnityEngine;
 using UnityEngine.Localization;
 
@@ -16,15 +17,8 @@ namespace CryptoQuest.BlackSmith.Evolve.UI
 
         private IEvolvableModel _model;
 
-        private void Awake()
-        {
-            _model = GetComponent<IEvolvableModel>();
-        }
+        public IEvolvableModel EvolvableModel => _model;
 
-        public void Init()
-        {
-            var evolvableEquipments = _model.GetEvolableEquipments();
-            _evolvableEquipmentsUI.RenderEquipments(evolvableEquipments);
-        }
+        private void Awake() => _model = GetComponent<IEvolvableModel>();
     }
 }

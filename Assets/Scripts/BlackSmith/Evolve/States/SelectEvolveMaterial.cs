@@ -1,6 +1,5 @@
 using CryptoQuest.BlackSmith.Evolve.UI;
 using UnityEngine.EventSystems;
-using UnityEngine.UI;
 
 namespace CryptoQuest.BlackSmith.Evolve.States
 {
@@ -14,16 +13,22 @@ namespace CryptoQuest.BlackSmith.Evolve.States
             DialogsPresenter.Dialogue.SetMessage(EvolveSystem.SelectMaterialText).Show();
             StateMachine.MaterialItem = null;
             EvolvableEquipmentList.EquipmentSelected += OnSelectMaterial;
-            EvolvableEquipmentList.Filter(StateMachine.ItemToEvolve);
-            StateMachine.ItemToEvolve.GetComponent<Button>().interactable = false;
 
-            EventSystem.current.SetSelectedGameObject(EvolvableEquipmentList.Content.GetChild(1).gameObject);
+            EquipmentsPresenter.EvolvableModel.FilterByEquipment(StateMachine.ItemToEvolve.Equipment);
+            EvolvableEquipmentList.ClearEquipmentsWithException(StateMachine.ItemToEvolve);
+            EvolvableEquipmentList.RenderEquipments(EquipmentsPresenter.EvolvableModel.GetEvolableEquipments());
+
+            StateMachine.ItemToEvolve.ButtonUI.interactable = false;
+            StateMachine.ItemToEvolve.BaseTag.SetActive(true);
+
+            if (EvolvableEquipmentList.Content.childCount > 1)
+                EventSystem.current.SetSelectedGameObject(EvolvableEquipmentList.Content.GetChild(1).gameObject);
         }
 
         public override void OnExit()
         {
             base.OnExit();
-            StateMachine.ItemToEvolve.GetComponent<Button>().interactable = true;
+            StateMachine.ItemToEvolve.ResetItemStates();
             EvolvableEquipmentList.EquipmentSelected -= OnSelectMaterial;
         }
 
