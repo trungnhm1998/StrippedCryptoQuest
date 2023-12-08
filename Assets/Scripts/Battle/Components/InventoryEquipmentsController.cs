@@ -1,6 +1,5 @@
 ﻿using CryptoQuest.Gameplay.Inventory;
 using CryptoQuest.Item.Equipment;
-using CryptoQuest.System;
 using IndiGames.Core.Common;
 
 namespace CryptoQuest.Battle.Components
@@ -21,12 +20,12 @@ namespace CryptoQuest.Battle.Components
 
         protected override void OnReset()
         {
-            _equipmentsController.Equipped += RemoveFromInventory;
-            _equipmentsController.Removed += AddToInventory;
+            _equipmentsController.Equipped -= RemoveFromInventory;
+            _equipmentsController.Removed -= AddToInventory;
         }
 
-        private void RemoveFromInventory(IEquipment equipment) => equipment.RemoveFromInventory(_inventoryController);
+        private void RemoveFromInventory(IEquipment equipment) => _inventoryController.Remove(equipment);
 
-        private void AddToInventory(IEquipment equipment) => equipment.AddToInventory(_inventoryController);
+        private void AddToInventory(IEquipment equipment) => _inventoryController.Add(equipment);
     }
 }

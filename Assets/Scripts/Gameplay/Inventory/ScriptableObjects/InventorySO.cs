@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using CryptoQuest.Item;
 using CryptoQuest.Item.Consumable;
 using CryptoQuest.Item.Equipment;
 using UnityEngine;
@@ -14,7 +13,6 @@ namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects
         [SerializeField] private List<ConsumableInfo> _consumables = new();
         public List<ConsumableInfo> Consumables => _consumables;
 
-        [field: SerializeField] public List<Equipment> Equipments { get; private set; } = new();
-        [field: SerializeField] public List<NftEquipment> NftEquipments { get; private set; } = new();
+        [field: SerializeReference, SubclassSelector] public List<IEquipment> Equipments { get; private set; } = new();
     }
 }

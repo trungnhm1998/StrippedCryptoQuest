@@ -5,7 +5,6 @@ using CryptoQuest.Character.Hero;
 using CryptoQuest.Gameplay.Inventory;
 using CryptoQuest.Gameplay.PlayerParty;
 using CryptoQuest.Item.Equipment;
-using CryptoQuest.System;
 using IndiGames.Core.Common;
 using IndiGames.Core.Events;
 using UnityEngine;
@@ -63,7 +62,7 @@ namespace CryptoQuest.ChangeClass
         {
             _inventoryController ??= ServiceProvider.GetService<IInventoryController>();
             var equippingItems = FilterUniqueEquippingItems(partySlotSpec);
-            foreach (var item in equippingItems) item.AddToInventory(_inventoryController);
+            foreach (var item in equippingItems) _inventoryController.Add(item);
             partySlotSpec.EquippingItems.Slots = new();
         }
 

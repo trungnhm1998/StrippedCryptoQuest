@@ -49,9 +49,6 @@ namespace CryptoQuest.BlackSmith.Upgrade.Sagas
             var equipment = _inventoryController.Inventory.Equipments.Find(e => e.Id == id);
             if (equipment != null) return equipment;
 
-            var nftEquipment = _inventoryController.Inventory.NftEquipments.Find(e => e.Id == id);
-            if (nftEquipment != null) return nftEquipment;
-
             var equippingEquipment = TryFindEquipping(id);
             if (equippingEquipment != null) return equippingEquipment;
 

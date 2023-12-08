@@ -6,7 +6,7 @@ namespace CryptoQuest.UI.Menu
 {
     public interface IPreviewItem
     {
-        void Preview(EquipmentInfo equipment);
+        void Preview(Equipment equipment);
         void Preview(ConsumableInfo consumable);
         void Hide();
     }

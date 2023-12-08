@@ -4,7 +4,6 @@ using CryptoQuest.Character.Hero;
 using CryptoQuest.Gameplay.Inventory;
 using CryptoQuest.Gameplay.PlayerParty;
 using CryptoQuest.Item.Equipment;
-using CryptoQuest.System;
 using IndiGames.Core.Common;
 using UnityEngine;
 using UnityEngine.Localization;
@@ -188,7 +187,7 @@ namespace CryptoQuest.Tavern.States.PartyOrganization
         {
             _inventoryController ??= ServiceProvider.GetService<IInventoryController>();
             var equippingItems = FilterUniqueEquippingItems(partySlotSpec);
-            foreach (var item in equippingItems) item.AddToInventory(_inventoryController);
+            foreach (var item in equippingItems) _inventoryController.Add(item);
             partySlotSpec.EquippingItems.Slots = new();
         }
 

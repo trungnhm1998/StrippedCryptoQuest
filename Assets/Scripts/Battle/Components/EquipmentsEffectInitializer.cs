@@ -15,7 +15,7 @@ namespace CryptoQuest.Battle.Components
         }
 
         /// <summary>
-        /// Find all <see cref="EquipmentInfo"/> in <see cref="Equipments"/> then create and apply effect to character
+        /// Find all <see cref="Equipment"/> in <see cref="Equipments"/> then create and apply effect to character
         /// </summary>
         private void ApplyEffectFromEquippingItems()
         {

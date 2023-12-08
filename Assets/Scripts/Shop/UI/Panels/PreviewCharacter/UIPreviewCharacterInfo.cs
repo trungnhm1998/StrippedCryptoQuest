@@ -26,7 +26,7 @@ namespace CryptoQuest.Shop.UI.Panels.PreviewCharacter
 
         private HeroBehaviour _hero;
         private AttributeSystemBehaviour _attributeSystemBehaviour;
-        private EquipmentInfo _equipment = null;
+        private Equipment _equipment = null;
         private int _previewSlotIndex = 0;
         public void Init(HeroBehaviour hero)
         {
@@ -61,11 +61,11 @@ namespace CryptoQuest.Shop.UI.Panels.PreviewCharacter
             _localizedName.StringReference = displayName;
         }    
 
-        public void Preview(EquipmentInfo equipmentInfo)
+        public void Preview(Equipment equipment)
         {
             // TODO: REFACTOR
             // _previewer.PreviewEquipment(equipmentInfo, equipmentInfo.AllowedSlots[_previewSlotIndex], _hero);
-            _equipment = equipmentInfo;
+            _equipment = equipment;
         }    
     }
 }

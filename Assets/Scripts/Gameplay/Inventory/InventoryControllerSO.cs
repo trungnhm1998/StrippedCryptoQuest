@@ -1,9 +1,7 @@
 ﻿using CryptoQuest.Gameplay.Inventory.Currency;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
-using CryptoQuest.Item;
 using CryptoQuest.Item.Consumable;
 using CryptoQuest.Item.Equipment;
-using CryptoQuest.System;
 using IndiGames.Core.Common;
 using UnityEngine;
 
@@ -20,9 +18,9 @@ namespace CryptoQuest.Gameplay.Inventory
             ServiceProvider.Provide<IInventoryController>(this);
         }
 
-        public bool Add(Equipment equipment)
+        public bool Add(IEquipment equipment)
         {
-            if (equipment == null || equipment.IsValid() == false)
+            if (equipment == null || string.IsNullOrEmpty(equipment.Data.ID))
             {
                 Debug.LogWarning($"Equipment is null or invalid");
                 return false;
@@ -32,21 +30,19 @@ namespace CryptoQuest.Gameplay.Inventory
             return true;
         }
 
-        public bool Remove(Equipment equipment)
+        public bool Remove(IEquipment equipment)
         {
-            if (equipment != null && equipment.IsValid()) return _inventory.Equipments.Remove(equipment);
-            Debug.LogWarning($"Equipment is null or invalid");
+            if (equipment == null) return false;
+            for (var index = 0; index < _inventory.Equipments.Count; index++)
+            {
+                var item = _inventory.Equipments[index];
+                if (item.Id != equipment.Id) continue;
+                _inventory.Equipments.RemoveAt(index);
+                return true;
+            }
+
             return false;
         }
-
-        public bool Add(NftEquipment equipment)
-        {
-            _inventory.NftEquipments.Add(equipment);
-            return true;
-        }
-
-        public bool Remove(NftEquipment equipment)
-            => _inventory.NftEquipments.Remove(equipment);
 
         public bool Add(ConsumableInfo item, int quantity = 1)
         {
@@ -101,10 +97,6 @@ namespace CryptoQuest.Gameplay.Inventory
             Debug.Log($"Try to remove consumable {item.Data.name} that wasn't found in the {name}");
             return false;
         }
-
-        public bool Contains(Equipment equipment) => _inventory.Equipments.Contains(equipment);
-
-        public bool Contains(NftEquipment equipment) => _inventory.NftEquipments.Contains(equipment);
 
         public bool Add(CurrencyInfo currency)
         {

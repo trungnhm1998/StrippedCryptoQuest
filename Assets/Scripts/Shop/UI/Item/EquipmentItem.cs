@@ -17,11 +17,11 @@ namespace CryptoQuest.Shop.UI.Item
         public int SellPrice => 0;
         public bool HasGem => true;
 
-        private EquipmentInfo _equipment;
+        private Equipment _equipment;
 
-        public EquipmentItem(EquipmentInfo equipmentInfo)
+        public EquipmentItem(Equipment equipment)
         {
-            _equipment = equipmentInfo;
+            _equipment = equipment;
         }
 
         public bool TryToBuy(IShopInventoryController controller) => controller.TryToBuy(_equipment);

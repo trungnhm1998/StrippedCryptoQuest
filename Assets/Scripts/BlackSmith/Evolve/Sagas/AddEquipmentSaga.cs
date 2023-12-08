@@ -18,7 +18,7 @@ namespace CryptoQuest.BlackSmith.Evolve.Sagas
             _responseConverter ??= ServiceProvider.GetService<IEquipmentResponseConverter>();
 
             var equipment = _responseConverter.Convert(ctx.EquipmentData);
-            equipment.AddToInventory(_inventoryController);
+            _inventoryController.Add(equipment);
         }
     }
 }

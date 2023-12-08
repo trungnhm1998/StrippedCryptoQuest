@@ -19,7 +19,7 @@ namespace CryptoQuest.BlackSmith.Evolve.UI
         [SerializeField] private List<UIAttribute> _attribute;
         [SerializeField] private UIEquipmentPreviewer _previewer;
         private AttributeSystemBehaviour _attributeSystemBehaviour;
-        private EquipmentInfo _equipment = null;
+        private Equipment _equipment = null;
         private HeroBehaviour _hero;
         private int _previewSlotIndex = 0;
 
@@ -43,10 +43,10 @@ namespace CryptoQuest.BlackSmith.Evolve.UI
             }
         }
 
-        public void Preview(EquipmentInfo equipmentInfo)
+        public void Preview(Equipment equipment)
         {
             // _previewer.PreviewEquipment(equipmentInfo, equipmentInfo.AllowedSlots[_previewSlotIndex], _hero);
-            _equipment = equipmentInfo;
+            _equipment = equipment;
         }
 
         public void SetAvatar(Sprite avatar)
