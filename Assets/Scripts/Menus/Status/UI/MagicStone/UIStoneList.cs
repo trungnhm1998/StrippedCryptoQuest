@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using CryptoQuest.Item.MagicStone;
 using UnityEngine;
 using UnityEngine.Pool;
@@ -7,6 +8,7 @@ namespace CryptoQuest.Menus.Status.UI.MagicStone
 {
     public class UIStoneList : MonoBehaviour
     {
+        [SerializeField] private MagicStoneInventory _inventory;
         [SerializeField] private Transform _scrollRectContent;
         [SerializeField] private UISingleStone _singleStonePrefab;
 
@@ -18,13 +20,37 @@ namespace CryptoQuest.Menus.Status.UI.MagicStone
             _pool ??= new ObjectPool<UISingleStone>(OnCreate, OnGet, OnRelease, OnDestroyPool);
         }
 
-        public void SetData(List<IMagicStone> stoneDataList)
+        private void OnEnable()
+        {
+            RenderAll();
+        }
+
+        public void Filter(MagicStoneDef stoneDef)
+        {
+            if (stoneDef == null) return;
+            var filteredStone = new List<IMagicStone>();
+            foreach (var magicStone in _inventory.MagicStones)
+            {
+                if (magicStone.Definition != stoneDef) continue;
+                filteredStone.Add(magicStone);
+            }
+
+            RenderWithData(filteredStone);
+        }
+
+        public void RenderAll()
+        {
+            RenderWithData(_inventory.MagicStones);
+        }
+
+        private void RenderWithData(List<IMagicStone> stoneDataList)
         {
             ReleaseAllItemInPool();
             foreach (var stoneData in stoneDataList)
             {
                 UISingleStone item = _pool.Get();
                 item.SetInfo(stoneData);
+                _items.Add(item);
             }
         }
 
@@ -38,7 +64,6 @@ namespace CryptoQuest.Menus.Status.UI.MagicStone
         {
             item.transform.SetAsLastSibling();
             item.gameObject.SetActive(true);
-            _items.Add(item);
         }
 
         private void OnRelease(UISingleStone item) => item.gameObject.SetActive(false);

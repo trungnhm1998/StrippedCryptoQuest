@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using CryptoQuest.Item.MagicStone;
-using CryptoQuest.Menus.Status.UI;
+﻿using CryptoQuest.Menus.Status.UI;
 using CryptoQuest.Menus.Status.UI.MagicStone;
 using CryptoQuest.Sagas.MagicStone;
 using CryptoQuest.UI.Actions;
@@ -31,8 +29,6 @@ namespace CryptoQuest.Menus.Status.States
         private void GetStonesFromInventory(StoneInventoryFilled _)
         {
             ActionDispatcher.Dispatch(new ShowLoading(false));
-            List<IMagicStone> stoneList = StatusPanel.StoneInventory.MagicStones;
-            StatusPanel.StoneList.SetData(stoneList);
         }
 
         public override void OnExit()

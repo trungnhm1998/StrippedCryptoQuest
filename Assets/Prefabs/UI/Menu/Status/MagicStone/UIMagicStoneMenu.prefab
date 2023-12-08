@@ -152,7 +152,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5283767653607555721}
-  - component: {fileID: 3310949149223592047}
   - component: {fileID: 8578965776978602091}
   - component: {fileID: 7538560848762874579}
   m_Layer: 5
@@ -184,27 +183,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 870, y: 300}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &3310949149223592047
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3196950598542874684}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0b59806242ba4b2e81b5f16f216e4b7f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _navButtons:
-  - {fileID: 713215303839856766}
-  - {fileID: 7094814561548122973}
-  - {fileID: 6385605868733849757}
-  - {fileID: 8110827277260733655}
-  - {fileID: 2150990736683821323}
-  - {fileID: 3276440909498413689}
-  - {fileID: 5536286060133533918}
-  - {fileID: 2499191112994608655}
 --- !u!222 &8578965776978602091
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -668,7 +646,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
+  m_SizeDelta: {x: 270, y: 270}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &498054297156114014
 CanvasRenderer:
@@ -692,13 +670,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 94009b3482e0ffa44821a0575112048a, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -792,7 +770,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7339259047875815630}
-  - component: {fileID: 4525886302189300040}
+  - component: {fileID: 1796102543727000587}
   m_Layer: 5
   m_Name: EquipedMagicStone
   m_TagString: Untagged
@@ -820,7 +798,7 @@ RectTransform:
   m_AnchoredPosition: {x: 289, y: 140}
   m_SizeDelta: {x: 560, y: 260}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &4525886302189300040
+--- !u!114 &1796102543727000587
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -829,21 +807,23 @@ MonoBehaviour:
   m_GameObject: {fileID: 5261996202895159436}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8a8695521f0d02e499659fee002a26c2, type: 3}
+  m_Script: {fileID: 11500000, guid: 59f8146938fff824cb5fd77236b75775, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Padding:
-    m_Left: 25
+    m_Left: 0
     m_Right: 0
     m_Top: 0
     m_Bottom: 0
   m_ChildAlignment: 0
-  m_StartCorner: 0
-  m_StartAxis: 1
-  m_CellSize: {x: 450, y: 52}
-  m_Spacing: {x: 0, y: 0}
-  m_Constraint: 1
-  m_ConstraintCount: 1
+  m_Spacing: 0
+  m_ChildForceExpandWidth: 0
+  m_ChildForceExpandHeight: 0
+  m_ChildControlWidth: 0
+  m_ChildControlHeight: 0
+  m_ChildScaleWidth: 0
+  m_ChildScaleHeight: 0
+  m_ReverseArrangement: 0
 --- !u!1 &5620735129693003897
 GameObject:
   m_ObjectHideFlags: 0
@@ -1115,6 +1095,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5fb23835f98249929d458ee9ebc04ac7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _inventory: {fileID: 11400000, guid: dac3b863c8895c7408d0d03a95d1d969, type: 2}
   _scrollRectContent: {fileID: 3571058353626242338}
   _singleStonePrefab: {fileID: 4537128135974291570, guid: fe96315b0885f1a469e50d3d03cb4c5e, type: 3}
 --- !u!114 &8523926036750095355
@@ -1373,7 +1354,7 @@ MonoBehaviour:
     m_Right: 0
     m_Top: 0
     m_Bottom: 0
-  m_ChildAlignment: 1
+  m_ChildAlignment: 0
   m_StartCorner: 0
   m_StartAxis: 0
   m_CellSize: {x: 430, y: 55}
@@ -1800,6 +1781,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 4768079795026743673}
     m_Modifications:
+    - target: {fileID: 771361089708422594, guid: 753a12729646a9745bfeaaf8c47f7ae9, type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 5133605925434873322}
+    - target: {fileID: 771361089708422594, guid: 753a12729646a9745bfeaaf8c47f7ae9, type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
+      value: 
+      objectReference: {fileID: 11400000, guid: 26ac5df53ab10b8428d7ca8c4ef23abc, type: 2}
     - target: {fileID: 3253634451677794925, guid: 753a12729646a9745bfeaaf8c47f7ae9, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -1896,11 +1885,65 @@ PrefabInstance:
       propertyPath: m_Navigation.m_SelectOnRight
       value: 
       objectReference: {fileID: 8110827277260733655}
+    - target: {fileID: 6186012528327677484, guid: 753a12729646a9745bfeaaf8c47f7ae9, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6186012528327677484, guid: 753a12729646a9745bfeaaf8c47f7ae9, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6186012528327677484, guid: 753a12729646a9745bfeaaf8c47f7ae9, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 5133605925434873322}
+    - target: {fileID: 6186012528327677484, guid: 753a12729646a9745bfeaaf8c47f7ae9, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6186012528327677484, guid: 753a12729646a9745bfeaaf8c47f7ae9, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Filter
+      objectReference: {fileID: 0}
+    - target: {fileID: 6186012528327677484, guid: 753a12729646a9745bfeaaf8c47f7ae9, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: CryptoQuest.Menus.Status.UI.MagicStone.UIStoneList, IndiGames.CryptoQuest.Menus.Status
+      objectReference: {fileID: 0}
+    - target: {fileID: 6186012528327677484, guid: 753a12729646a9745bfeaaf8c47f7ae9, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
+      value: 
+      objectReference: {fileID: 11400000, guid: 26ac5df53ab10b8428d7ca8c4ef23abc, type: 2}
+    - target: {fileID: 6186012528327677484, guid: 753a12729646a9745bfeaaf8c47f7ae9, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: CryptoQuest.Item.MagicStone.MagicStoneDef, IndiGames.CryptoQuest
+      objectReference: {fileID: 0}
     - target: {fileID: 6991948503524525796, guid: 753a12729646a9745bfeaaf8c47f7ae9, type: 3}
       propertyPath: m_text
       value: Water
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 8238885227283505584, guid: 753a12729646a9745bfeaaf8c47f7ae9, type: 3}
+      propertyPath: m_Delegates.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8238885227283505584, guid: 753a12729646a9745bfeaaf8c47f7ae9, type: 3}
+      propertyPath: m_Delegates.Array.data[1].eventID
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 8238885227283505584, guid: 753a12729646a9745bfeaaf8c47f7ae9, type: 3}
+      propertyPath: m_Delegates.Array.data[1].callback.m_PersistentCalls.m_Calls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8238885227283505584, guid: 753a12729646a9745bfeaaf8c47f7ae9, type: 3}
+      propertyPath: m_Delegates.Array.data[1].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8238885227283505584, guid: 753a12729646a9745bfeaaf8c47f7ae9, type: 3}
+      propertyPath: m_Delegates.Array.data[1].callback.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 0}
+    - {fileID: 0}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -1929,6 +1972,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 4768079795026743673}
     m_Modifications:
+    - target: {fileID: 771361089708422594, guid: 753a12729646a9745bfeaaf8c47f7ae9, type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 5133605925434873322}
+    - target: {fileID: 771361089708422594, guid: 753a12729646a9745bfeaaf8c47f7ae9, type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
+      value: 
+      objectReference: {fileID: 11400000, guid: 160146fefe4f2f845bb6875a79a98e08, type: 2}
     - target: {fileID: 3253634451677794925, guid: 753a12729646a9745bfeaaf8c47f7ae9, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -2025,11 +2076,41 @@ PrefabInstance:
       propertyPath: m_Navigation.m_SelectOnRight
       value: 
       objectReference: {fileID: 2499191112994608655}
+    - target: {fileID: 6186012528327677484, guid: 753a12729646a9745bfeaaf8c47f7ae9, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6186012528327677484, guid: 753a12729646a9745bfeaaf8c47f7ae9, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6186012528327677484, guid: 753a12729646a9745bfeaaf8c47f7ae9, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 5133605925434873322}
+    - target: {fileID: 6186012528327677484, guid: 753a12729646a9745bfeaaf8c47f7ae9, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6186012528327677484, guid: 753a12729646a9745bfeaaf8c47f7ae9, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Filter
+      objectReference: {fileID: 0}
+    - target: {fileID: 6186012528327677484, guid: 753a12729646a9745bfeaaf8c47f7ae9, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: CryptoQuest.Menus.Status.UI.MagicStone.UIStoneList, IndiGames.CryptoQuest.Menus.Status
+      objectReference: {fileID: 0}
+    - target: {fileID: 6186012528327677484, guid: 753a12729646a9745bfeaaf8c47f7ae9, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: CryptoQuest.Item.MagicStone.MagicStoneDef, IndiGames.CryptoQuest
+      objectReference: {fileID: 0}
     - target: {fileID: 6991948503524525796, guid: 753a12729646a9745bfeaaf8c47f7ae9, type: 3}
       propertyPath: m_text
       value: Light
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 0}
+    - {fileID: 0}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -2160,7 +2241,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1450250804654106933, guid: fe96315b0885f1a469e50d3d03cb4c5e, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 25
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1450250804654106933, guid: fe96315b0885f1a469e50d3d03cb4c5e, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -2248,6 +2329,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 4768079795026743673}
     m_Modifications:
+    - target: {fileID: 771361089708422594, guid: 753a12729646a9745bfeaaf8c47f7ae9, type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 5133605925434873322}
+    - target: {fileID: 771361089708422594, guid: 753a12729646a9745bfeaaf8c47f7ae9, type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
+      value: 
+      objectReference: {fileID: 11400000, guid: b04699a35fda8604eafa01d6a1603adc, type: 2}
     - target: {fileID: 3253634451677794925, guid: 753a12729646a9745bfeaaf8c47f7ae9, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -2344,11 +2433,41 @@ PrefabInstance:
       propertyPath: m_Navigation.m_SelectOnRight
       value: 
       objectReference: {fileID: 2150990736683821323}
+    - target: {fileID: 6186012528327677484, guid: 753a12729646a9745bfeaaf8c47f7ae9, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6186012528327677484, guid: 753a12729646a9745bfeaaf8c47f7ae9, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6186012528327677484, guid: 753a12729646a9745bfeaaf8c47f7ae9, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 5133605925434873322}
+    - target: {fileID: 6186012528327677484, guid: 753a12729646a9745bfeaaf8c47f7ae9, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6186012528327677484, guid: 753a12729646a9745bfeaaf8c47f7ae9, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Filter
+      objectReference: {fileID: 0}
+    - target: {fileID: 6186012528327677484, guid: 753a12729646a9745bfeaaf8c47f7ae9, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: CryptoQuest.Menus.Status.UI.MagicStone.UIStoneList, IndiGames.CryptoQuest.Menus.Status
+      objectReference: {fileID: 0}
+    - target: {fileID: 6186012528327677484, guid: 753a12729646a9745bfeaaf8c47f7ae9, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: CryptoQuest.Item.MagicStone.MagicStoneDef, IndiGames.CryptoQuest
+      objectReference: {fileID: 0}
     - target: {fileID: 6991948503524525796, guid: 753a12729646a9745bfeaaf8c47f7ae9, type: 3}
       propertyPath: m_text
       value: Wood
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 0}
+    - {fileID: 0}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -2583,6 +2702,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 4768079795026743673}
     m_Modifications:
+    - target: {fileID: 771361089708422594, guid: 753a12729646a9745bfeaaf8c47f7ae9, type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 5133605925434873322}
+    - target: {fileID: 771361089708422594, guid: 753a12729646a9745bfeaaf8c47f7ae9, type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
+      value: 
+      objectReference: {fileID: 11400000, guid: 7b6265489e23f3545bdb6767eaa76d67, type: 2}
     - target: {fileID: 3253634451677794925, guid: 753a12729646a9745bfeaaf8c47f7ae9, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -2679,11 +2806,68 @@ PrefabInstance:
       propertyPath: m_Navigation.m_SelectOnRight
       value: 
       objectReference: {fileID: 6385605868733849757}
+    - target: {fileID: 6186012528327677484, guid: 753a12729646a9745bfeaaf8c47f7ae9, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6186012528327677484, guid: 753a12729646a9745bfeaaf8c47f7ae9, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6186012528327677484, guid: 753a12729646a9745bfeaaf8c47f7ae9, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 5133605925434873322}
+    - target: {fileID: 6186012528327677484, guid: 753a12729646a9745bfeaaf8c47f7ae9, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6186012528327677484, guid: 753a12729646a9745bfeaaf8c47f7ae9, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Filter
+      objectReference: {fileID: 0}
+    - target: {fileID: 6186012528327677484, guid: 753a12729646a9745bfeaaf8c47f7ae9, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: CryptoQuest.Menus.Status.UI.MagicStone.UIStoneList, IndiGames.CryptoQuest.Menus.Status
+      objectReference: {fileID: 0}
+    - target: {fileID: 6186012528327677484, guid: 753a12729646a9745bfeaaf8c47f7ae9, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
+      value: 
+      objectReference: {fileID: 11400000, guid: 7b6265489e23f3545bdb6767eaa76d67, type: 2}
+    - target: {fileID: 6186012528327677484, guid: 753a12729646a9745bfeaaf8c47f7ae9, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: CryptoQuest.Item.MagicStone.MagicStoneDef, IndiGames.CryptoQuest
+      objectReference: {fileID: 0}
     - target: {fileID: 6991948503524525796, guid: 753a12729646a9745bfeaaf8c47f7ae9, type: 3}
       propertyPath: m_text
       value: Fire
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 8238885227283505584, guid: 753a12729646a9745bfeaaf8c47f7ae9, type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8238885227283505584, guid: 753a12729646a9745bfeaaf8c47f7ae9, type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 5133605925434873322}
+    - target: {fileID: 8238885227283505584, guid: 753a12729646a9745bfeaaf8c47f7ae9, type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Filter
+      objectReference: {fileID: 0}
+    - target: {fileID: 8238885227283505584, guid: 753a12729646a9745bfeaaf8c47f7ae9, type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: CryptoQuest.Menus.Status.UI.MagicStone.UIStoneList, IndiGames.CryptoQuest.Menus.Status
+      objectReference: {fileID: 0}
+    - target: {fileID: 8238885227283505584, guid: 753a12729646a9745bfeaaf8c47f7ae9, type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
+      value: 
+      objectReference: {fileID: 11400000, guid: 7b6265489e23f3545bdb6767eaa76d67, type: 2}
+    - target: {fileID: 8238885227283505584, guid: 753a12729646a9745bfeaaf8c47f7ae9, type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: CryptoQuest.Item.MagicStone.MagicStoneDef, IndiGames.CryptoQuest
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 0}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -2918,6 +3102,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 4768079795026743673}
     m_Modifications:
+    - target: {fileID: 771361089708422594, guid: 753a12729646a9745bfeaaf8c47f7ae9, type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 5133605925434873322}
+    - target: {fileID: 771361089708422594, guid: 753a12729646a9745bfeaaf8c47f7ae9, type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
+      value: 
+      objectReference: {fileID: 11400000, guid: 68590b6b14a18a74e99dc563f7d1ae30, type: 2}
     - target: {fileID: 3253634451677794925, guid: 753a12729646a9745bfeaaf8c47f7ae9, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -3014,11 +3206,41 @@ PrefabInstance:
       propertyPath: m_Navigation.m_SelectOnRight
       value: 
       objectReference: {fileID: 3276440909498413689}
+    - target: {fileID: 6186012528327677484, guid: 753a12729646a9745bfeaaf8c47f7ae9, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6186012528327677484, guid: 753a12729646a9745bfeaaf8c47f7ae9, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6186012528327677484, guid: 753a12729646a9745bfeaaf8c47f7ae9, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 5133605925434873322}
+    - target: {fileID: 6186012528327677484, guid: 753a12729646a9745bfeaaf8c47f7ae9, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6186012528327677484, guid: 753a12729646a9745bfeaaf8c47f7ae9, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Filter
+      objectReference: {fileID: 0}
+    - target: {fileID: 6186012528327677484, guid: 753a12729646a9745bfeaaf8c47f7ae9, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: CryptoQuest.Menus.Status.UI.MagicStone.UIStoneList, IndiGames.CryptoQuest.Menus.Status
+      objectReference: {fileID: 0}
+    - target: {fileID: 6186012528327677484, guid: 753a12729646a9745bfeaaf8c47f7ae9, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: CryptoQuest.Item.MagicStone.MagicStoneDef, IndiGames.CryptoQuest
+      objectReference: {fileID: 0}
     - target: {fileID: 6991948503524525796, guid: 753a12729646a9745bfeaaf8c47f7ae9, type: 3}
       propertyPath: m_text
       value: Earth
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 0}
+    - {fileID: 0}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -3871,6 +4093,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 4768079795026743673}
     m_Modifications:
+    - target: {fileID: 771361089708422594, guid: 753a12729646a9745bfeaaf8c47f7ae9, type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 771361089708422594, guid: 753a12729646a9745bfeaaf8c47f7ae9, type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 5133605925434873322}
+    - target: {fileID: 771361089708422594, guid: 753a12729646a9745bfeaaf8c47f7ae9, type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: RenderAll
+      objectReference: {fileID: 0}
+    - target: {fileID: 771361089708422594, guid: 753a12729646a9745bfeaaf8c47f7ae9, type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 3253634451677794925, guid: 753a12729646a9745bfeaaf8c47f7ae9, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -3967,21 +4205,104 @@ PrefabInstance:
       propertyPath: m_Navigation.m_SelectOnRight
       value: 
       objectReference: {fileID: 7094814561548122973}
+    - target: {fileID: 6186012528327677484, guid: 753a12729646a9745bfeaaf8c47f7ae9, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6186012528327677484, guid: 753a12729646a9745bfeaaf8c47f7ae9, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6186012528327677484, guid: 753a12729646a9745bfeaaf8c47f7ae9, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 5133605925434873322}
+    - target: {fileID: 6186012528327677484, guid: 753a12729646a9745bfeaaf8c47f7ae9, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6186012528327677484, guid: 753a12729646a9745bfeaaf8c47f7ae9, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Filter
+      objectReference: {fileID: 0}
+    - target: {fileID: 6186012528327677484, guid: 753a12729646a9745bfeaaf8c47f7ae9, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: CryptoQuest.Menus.Status.UI.MagicStone.UIStoneList, IndiGames.CryptoQuest.Menus.Status
+      objectReference: {fileID: 0}
+    - target: {fileID: 6186012528327677484, guid: 753a12729646a9745bfeaaf8c47f7ae9, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: CryptoQuest.Item.MagicStone.MagicStoneDef, IndiGames.CryptoQuest
+      objectReference: {fileID: 0}
+    - target: {fileID: 6469239430127310372, guid: 753a12729646a9745bfeaaf8c47f7ae9, type: 3}
+      propertyPath: m_Delegates.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6469239430127310372, guid: 753a12729646a9745bfeaaf8c47f7ae9, type: 3}
+      propertyPath: m_Delegates.Array.data[0].eventID
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 6469239430127310372, guid: 753a12729646a9745bfeaaf8c47f7ae9, type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6469239430127310372, guid: 753a12729646a9745bfeaaf8c47f7ae9, type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 5133605925434873322}
+    - target: {fileID: 6469239430127310372, guid: 753a12729646a9745bfeaaf8c47f7ae9, type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: RenderAll
+      objectReference: {fileID: 0}
+    - target: {fileID: 6469239430127310372, guid: 753a12729646a9745bfeaaf8c47f7ae9, type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: CryptoQuest.Menus.Status.UI.MagicStone.UIStoneList, IndiGames.CryptoQuest.Menus.Status
+      objectReference: {fileID: 0}
+    - target: {fileID: 6469239430127310372, guid: 753a12729646a9745bfeaaf8c47f7ae9, type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 6991948503524525796, guid: 753a12729646a9745bfeaaf8c47f7ae9, type: 3}
       propertyPath: m_text
       value: ALL
       objectReference: {fileID: 0}
+    - target: {fileID: 8238885227283505584, guid: 753a12729646a9745bfeaaf8c47f7ae9, type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8238885227283505584, guid: 753a12729646a9745bfeaaf8c47f7ae9, type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8238885227283505584, guid: 753a12729646a9745bfeaaf8c47f7ae9, type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 5133605925434873322}
+    - target: {fileID: 8238885227283505584, guid: 753a12729646a9745bfeaaf8c47f7ae9, type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: RenderAll
+      objectReference: {fileID: 0}
+    - target: {fileID: 8238885227283505584, guid: 753a12729646a9745bfeaaf8c47f7ae9, type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: CryptoQuest.Menus.Status.UI.MagicStone.UIStoneList, IndiGames.CryptoQuest.Menus.Status
+      objectReference: {fileID: 0}
+    - target: {fileID: 8238885227283505584, guid: 753a12729646a9745bfeaaf8c47f7ae9, type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3273761591677330657, guid: 753a12729646a9745bfeaaf8c47f7ae9, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7713766832330555392}
   m_SourcePrefab: {fileID: 100100000, guid: 753a12729646a9745bfeaaf8c47f7ae9, type: 3}
 --- !u!114 &713215303839856766 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6186012528327677484, guid: 753a12729646a9745bfeaaf8c47f7ae9, type: 3}
   m_PrefabInstance: {fileID: 6646459918610689618}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 8165664692939246259}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
@@ -3992,6 +4313,25 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 3253634451677794925, guid: 753a12729646a9745bfeaaf8c47f7ae9, type: 3}
   m_PrefabInstance: {fileID: 6646459918610689618}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &8165664692939246259 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3273761591677330657, guid: 753a12729646a9745bfeaaf8c47f7ae9, type: 3}
+  m_PrefabInstance: {fileID: 6646459918610689618}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &7713766832330555392
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8165664692939246259}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2dfeb3ae815436f40b9cd0aef1659e8e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _delay: 0
+  _button: {fileID: 0}
 --- !u!1001 &7476638946135822814
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4386,6 +4726,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 4768079795026743673}
     m_Modifications:
+    - target: {fileID: 771361089708422594, guid: 753a12729646a9745bfeaaf8c47f7ae9, type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 5133605925434873322}
+    - target: {fileID: 771361089708422594, guid: 753a12729646a9745bfeaaf8c47f7ae9, type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
+      value: 
+      objectReference: {fileID: 11400000, guid: e9aa604d4015547458f38c38f2e34748, type: 2}
     - target: {fileID: 3253634451677794925, guid: 753a12729646a9745bfeaaf8c47f7ae9, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -4482,11 +4830,41 @@ PrefabInstance:
       propertyPath: m_Navigation.m_SelectOnRight
       value: 
       objectReference: {fileID: 713215303839856766}
+    - target: {fileID: 6186012528327677484, guid: 753a12729646a9745bfeaaf8c47f7ae9, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6186012528327677484, guid: 753a12729646a9745bfeaaf8c47f7ae9, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6186012528327677484, guid: 753a12729646a9745bfeaaf8c47f7ae9, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 5133605925434873322}
+    - target: {fileID: 6186012528327677484, guid: 753a12729646a9745bfeaaf8c47f7ae9, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6186012528327677484, guid: 753a12729646a9745bfeaaf8c47f7ae9, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Filter
+      objectReference: {fileID: 0}
+    - target: {fileID: 6186012528327677484, guid: 753a12729646a9745bfeaaf8c47f7ae9, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: CryptoQuest.Menus.Status.UI.MagicStone.UIStoneList, IndiGames.CryptoQuest.Menus.Status
+      objectReference: {fileID: 0}
+    - target: {fileID: 6186012528327677484, guid: 753a12729646a9745bfeaaf8c47f7ae9, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: CryptoQuest.Item.MagicStone.MagicStoneDef, IndiGames.CryptoQuest
+      objectReference: {fileID: 0}
     - target: {fileID: 6991948503524525796, guid: 753a12729646a9745bfeaaf8c47f7ae9, type: 3}
       propertyPath: m_text
       value: Dark
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 0}
+    - {fileID: 0}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -4515,6 +4893,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 4768079795026743673}
     m_Modifications:
+    - target: {fileID: 771361089708422594, guid: 753a12729646a9745bfeaaf8c47f7ae9, type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 5133605925434873322}
+    - target: {fileID: 771361089708422594, guid: 753a12729646a9745bfeaaf8c47f7ae9, type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
+      value: 
+      objectReference: {fileID: 11400000, guid: be288c996339d5b4491f435386362229, type: 2}
     - target: {fileID: 3253634451677794925, guid: 753a12729646a9745bfeaaf8c47f7ae9, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -4611,11 +4997,41 @@ PrefabInstance:
       propertyPath: m_Navigation.m_SelectOnRight
       value: 
       objectReference: {fileID: 5536286060133533918}
+    - target: {fileID: 6186012528327677484, guid: 753a12729646a9745bfeaaf8c47f7ae9, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6186012528327677484, guid: 753a12729646a9745bfeaaf8c47f7ae9, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6186012528327677484, guid: 753a12729646a9745bfeaaf8c47f7ae9, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 5133605925434873322}
+    - target: {fileID: 6186012528327677484, guid: 753a12729646a9745bfeaaf8c47f7ae9, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6186012528327677484, guid: 753a12729646a9745bfeaaf8c47f7ae9, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Filter
+      objectReference: {fileID: 0}
+    - target: {fileID: 6186012528327677484, guid: 753a12729646a9745bfeaaf8c47f7ae9, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: CryptoQuest.Menus.Status.UI.MagicStone.UIStoneList, IndiGames.CryptoQuest.Menus.Status
+      objectReference: {fileID: 0}
+    - target: {fileID: 6186012528327677484, guid: 753a12729646a9745bfeaaf8c47f7ae9, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: CryptoQuest.Item.MagicStone.MagicStoneDef, IndiGames.CryptoQuest
+      objectReference: {fileID: 0}
     - target: {fileID: 6991948503524525796, guid: 753a12729646a9745bfeaaf8c47f7ae9, type: 3}
       propertyPath: m_text
       value: Wind
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 0}
+    - {fileID: 0}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
