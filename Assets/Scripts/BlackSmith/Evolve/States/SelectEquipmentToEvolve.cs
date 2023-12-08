@@ -23,8 +23,6 @@ namespace CryptoQuest.BlackSmith.Evolve.States
             EvolvableEquipmentList.ClearEquipmentsWithException();
             EvolvableEquipmentList.RenderEquipments(EquipmentsPresenter.EvolvableModel.GetEvolableEquipments());
 
-            if (EvolvableEquipmentList.Content.childCount > 0)
-                EventSystem.current.SetSelectedGameObject(EvolvableEquipmentList.Content.GetChild(0).gameObject);
         }
 
         public override void OnExit()

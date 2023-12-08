@@ -28,7 +28,6 @@ namespace CryptoQuest.BlackSmith.Evolve.States
         public override void OnExit()
         {
             base.OnExit();
-            StateMachine.ItemToEvolve.ResetItemStates();
             EvolvableEquipmentList.EquipmentSelected -= OnSelectMaterial;
         }
 
@@ -40,6 +39,7 @@ namespace CryptoQuest.BlackSmith.Evolve.States
 
         public override void OnCancel()
         {
+            StateMachine.ItemToEvolve.ResetItemStates();
             fsm.RequestStateChange(EStates.SelectEquipment);
         }
     }
