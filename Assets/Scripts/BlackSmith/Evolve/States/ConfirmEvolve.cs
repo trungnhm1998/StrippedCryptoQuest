@@ -21,6 +21,8 @@ namespace CryptoQuest.BlackSmith.Evolve.States
             ConfirmEvolveDialog.Confirmed += HandleConfirmEvolving;
             ConfirmEvolveDialog.Canceling += OnCancel;
 
+            ConfirmEvolveDialog.ConfirmEvolveUI.SetConfirmInfo(StateMachine.EvolveEquipmentData);
+
             _evolveSuccessToken = ActionDispatcher.Bind<EvolveEquipmentSuccessAction>(HandleEvolveSuccess);
             _evolveFailedToken = ActionDispatcher.Bind<EvolveEquipmentFailedAction>(HandleEvolveFailed);
             _evolveRequestFailedToken = ActionDispatcher.Bind<EvolveRequestFailed>(HandleRequestFailed);
