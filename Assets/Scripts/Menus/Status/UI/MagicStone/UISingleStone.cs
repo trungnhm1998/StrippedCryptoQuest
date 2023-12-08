@@ -13,8 +13,12 @@ namespace CryptoQuest.Menus.Status.UI.MagicStone
         [SerializeField] private LocalizeStringEvent _localizedName;
         [SerializeField] private TMP_Text _level;
 
+        private IMagicStone _stoneData;
+        public IMagicStone Data => _stoneData;
+
         public void SetInfo(IMagicStone stoneData)
         {
+            _stoneData = stoneData;
             _icon.LoadSpriteAndSet(stoneData.Definition.Image);
             _localizedName.StringReference = stoneData.Definition.DisplayName;
             _localizedName.RefreshString();
