@@ -9,9 +9,9 @@ using CryptoQuest.Item.Consumable;
 public static class InventoryExtensions
 {
 
-    public static List<EquipmentInfo> GetWeapons(this InventorySO inventory)
+    public static List<Equipment> GetWeapons(this InventorySO inventory)
     {
-        var weaponList = new List<EquipmentInfo>();
+        var weaponList = new List<Equipment>();
 
         // foreach (var item in inventory.Equipments)
         // {
@@ -25,9 +25,9 @@ public static class InventoryExtensions
         return weaponList;
     }
 
-    public static List<EquipmentInfo> GetNonWeapons(this InventorySO inventory)
+    public static List<Equipment> GetNonWeapons(this InventorySO inventory)
     {
-        var nonWeaponList = new List<EquipmentInfo>();
+        var nonWeaponList = new List<Equipment>();
 
         // foreach (var item in inventory.Equipments)
         // {

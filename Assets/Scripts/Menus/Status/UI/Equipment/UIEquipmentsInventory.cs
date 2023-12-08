@@ -4,9 +4,7 @@ using System.Linq;
 using CryptoQuest.Battle.Components;
 using CryptoQuest.Gameplay.Inventory;
 using CryptoQuest.Item.Equipment;
-using CryptoQuest.UI.Utilities;
 using IndiGames.Core.Common;
-using UI.Common;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -137,7 +135,6 @@ namespace CryptoQuest.Menus.Status.UI.Equipment
             var inventory = ServiceProvider.GetService<IInventoryController>().Inventory;
 
             foreach (var equipment in inventory.Equipments) StartCoroutine(InstantiateNewEquipmentUICo(equipment));
-            foreach (var equipment in inventory.NftEquipments) StartCoroutine(InstantiateNewEquipmentUICo(equipment));
         }
 
         private IEnumerator InstantiateNewEquipmentUICo(IEquipment equipment)

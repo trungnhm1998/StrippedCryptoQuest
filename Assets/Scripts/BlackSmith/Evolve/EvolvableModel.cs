@@ -13,12 +13,12 @@ namespace CryptoQuest.BlackSmith.Evolve
 {
     public class EvolveableEquipmentData : IEvolvableEquipment
     {
-        public EvolveableEquipmentData(EquipmentInfo equipment)
+        public EvolveableEquipmentData(Equipment equipment)
         {
             Equipment = equipment;
         }
 
-        public EquipmentInfo Equipment { get; private set; }
+        public Equipment Equipment { get; private set; }
 
         public Sprite Icon => Equipment.Type.Icon;
 
@@ -57,12 +57,10 @@ namespace CryptoQuest.BlackSmith.Evolve
 
         private List<IEquipment> GetAvailableEquipments()
         {
-            var equipments = new List<IEquipment>();
-            equipments.AddRange(_inventory.NftEquipments);
             _partyController ??= ServiceProvider.GetService<IPartyController>();
-            equipments.AddRange(_partyController.GetEquippingEquipments()
-                .Where(e => e.IsNft));
-            return equipments;
+            var equipments = new List<IEquipment>(_inventory.Equipments);
+            equipments.AddRange(_partyController.GetEquippingEquipments());
+            return equipments.Where(e => e.IsNft).ToList();
         }
 
         private static bool CanEvolve(IEquipment equipment)

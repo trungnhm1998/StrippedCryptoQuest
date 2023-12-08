@@ -23,7 +23,6 @@ namespace CryptoQuest.BlackSmith.Upgrade
             var equipments = new List<IEquipment>();
             _partyController ??= ServiceProvider.GetService<IPartyController>();
             equipments.AddRange(_partyController.GetEquippingEquipments());
-            equipments.AddRange(inventory.NftEquipments);
             equipments.AddRange(inventory.Equipments);
             
             foreach (var equipment in equipments)

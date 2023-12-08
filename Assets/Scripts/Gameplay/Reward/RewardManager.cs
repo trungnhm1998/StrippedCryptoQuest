@@ -15,7 +15,7 @@ namespace CryptoQuest.Gameplay.Reward
     public interface IRewardManager
     {
         /// <summary>
-        /// Reward player with item. could be <see cref="EquipmentInfo"/> or <see cref="ConsumableInfo"/> or <see cref="CurrencyInfo"/>
+        /// Reward player with item. could be <see cref="Equipment"/> or <see cref="ConsumableInfo"/> or <see cref="CurrencyInfo"/>
         /// </summary>
         public void Reward(List<LootInfo> loots);
     }

@@ -28,7 +28,7 @@ namespace CryptoQuest.BlackSmith.Evolve.Sagas
         private bool TryUpdateInventory(IEquipment equipment)
         {
             _inventoryController ??= ServiceProvider.GetService<IInventoryController>();
-            return equipment.RemoveFromInventory(_inventoryController);
+            return _inventoryController.Add(equipment);
         }
 
         private void UpdateEquipping(IEquipment equipment)
@@ -48,7 +48,7 @@ namespace CryptoQuest.BlackSmith.Evolve.Sagas
                     
                     var equipmentController = hero.GetComponent<EquipmentsController>();
                     equipmentController.Unequip(equipSlot.Type);
-                    equipping.RemoveFromInventory(_inventoryController);
+                    _inventoryController.Remove(equipment);
                     return;
                 }
             }

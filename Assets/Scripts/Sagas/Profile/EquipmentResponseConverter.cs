@@ -14,17 +14,19 @@ namespace CryptoQuest.Sagas.Profile
 {
     public interface IEquipmentResponseConverter
     {
-        IEquipment Convert(EquipmentResponse equipmentResponse);
+        IEquipment Convert(EquipmentResponse response);
     }
 
     public class EquipmentResponseConverter : MonoBehaviour, IEquipmentResponseConverter
     {
         [SerializeField] private EquipmentPrefabDatabase _prefabDatabase;
         [SerializeField] private PassiveAbilityDatabase _passiveAbilityDatabase;
+
         /// <summary>
         /// Map the response attribute name to the attribute scriptable object
         /// </summary>
         [SerializeField] private List<ResponseAttributeMap> _attributeMap = new();
+
         [SerializeField] private List<RaritySO> _rarities = new();
 
         private Dictionary<string, AttributeScriptableObject> _lookupAttribute = new();
@@ -37,25 +39,16 @@ namespace CryptoQuest.Sagas.Profile
             ServiceProvider.Provide<IEquipmentResponseConverter>(this);
         }
 
-        public IEquipment Convert(EquipmentResponse equipmentResponse)
+        public IEquipment Convert(EquipmentResponse response)
         {
-            IEquipment equipment;
-
-            if (equipmentResponse.nft == 0)
+            IEquipment equipment = new Equipment()
             {
-                equipment = new Equipment();
-            }
-            else
-            {
-                equipment = new NftEquipment()
-                {
-                    TokenId = equipmentResponse.equipmentTokenId
-                };
-            }
-
-            equipment.Id = equipmentResponse.id;
-            equipment.Level = equipmentResponse.lv;
-            equipment.Data = ConvertData(equipmentResponse);
+                // TokenId = equipmentResponse.equipmentTokenId,
+                Id = response.id,
+                Level = response.lv,
+                Data = ConvertData(response),
+                IsNft = response.nft == 1
+            };
 
             return equipment;
         }

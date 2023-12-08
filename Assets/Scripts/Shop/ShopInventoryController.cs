@@ -9,9 +9,9 @@ namespace CryptoQuest.Shop
 {
     public interface IShopInventoryController
     {
-        public bool TryToBuy(EquipmentInfo equipmentItem);
+        public bool TryToBuy(Equipment equipmentItem);
         public bool TryToBuy(ConsumableInfo equipmentItem);
-        public bool TryToSell(EquipmentInfo equipmentItem);
+        public bool TryToSell(Equipment equipmentItem);
         public bool TryToSell(ConsumableInfo equipmentItem);
     }
 
@@ -27,7 +27,7 @@ namespace CryptoQuest.Shop
             => false; // REFACTOR: SHOP
 
         // TODO: REFACTOR SHOP
-        public bool TryToBuy(EquipmentInfo equipmentItem)
+        public bool TryToBuy(Equipment equipmentItem)
         {
             // if (!HasEnoughGold(equipmentItem)) return false;
             // if (!_lootController.Add(equipmentItem)) return false;
@@ -48,7 +48,7 @@ namespace CryptoQuest.Shop
             return true;
         }
 
-        public bool TryToSell(EquipmentInfo equipmentItem)
+        public bool TryToSell(Equipment equipmentItem)
         {
             // if (!_lootController.Remove(equipmentItem)) return false;
 

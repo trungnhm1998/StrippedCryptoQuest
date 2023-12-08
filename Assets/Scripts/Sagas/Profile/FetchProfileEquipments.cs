@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Net;
 using CryptoQuest.Actions;
-using CryptoQuest.Gameplay.Inventory;
+using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
 using CryptoQuest.Networking;
 using CryptoQuest.Sagas.Objects;
 using CryptoQuest.UI.Actions;
@@ -16,7 +16,7 @@ namespace CryptoQuest.Sagas.Profile
 {
     public class FetchProfileEquipments : SagaBase<FetchProfileEquipmentsAction>
     {
-        [SerializeField] private InventoryControllerSO _inventoryController;
+        [SerializeField] private InventorySO _inventory;
 
         protected override void HandleAction(FetchProfileEquipmentsAction _)
         {
@@ -40,12 +40,11 @@ namespace CryptoQuest.Sagas.Profile
         private void OnInventoryFilled(EquipmentResponse[] responseEquipments)
         {
             var converter = ServiceProvider.GetService<IEquipmentResponseConverter>();
-            _inventoryController.Inventory.NftEquipments.Clear();
-            _inventoryController.Inventory.Equipments.Clear();
+            _inventory.Equipments.Clear();
             foreach (var equipmentResponse in responseEquipments)
             {
                 var equipment = converter.Convert(equipmentResponse);
-                equipment.AddToInventory(_inventoryController);
+                _inventory.Equipments.Add(equipment);
             }
             ActionDispatcher.Dispatch(new InventoryFilled());
         }

@@ -134,16 +134,10 @@ namespace CryptoQuestEditor
         private void RemoveAll()
         {
             ConsumableInfo[] usableItems = Target.Consumables.ToArray();
-            EquipmentInfo[] equipmentItems = Target.Equipments.ToArray();
 
             foreach (var item in usableItems)
             {
                 Target.Consumables.RemoveAll(info => info == item);
-            }
-
-            foreach (var item in equipmentItems)
-            {
-                Target.Equipments.RemoveAll(info => info == item);
             }
         }
 
@@ -176,7 +170,7 @@ namespace CryptoQuestEditor
             // }
         }
 
-        private void FillEquipmentData(string[] cols, EquipmentInfo instance, string[] headerFields)
+        private void FillEquipmentData(string[] cols, Equipment instance, string[] headerFields)
         {
             int maxLevelEquipment = Convert.ToInt32(cols[ROW_MAX_LEVEL]);
 
@@ -186,7 +180,7 @@ namespace CryptoQuestEditor
             SetEquipmentStats(cols, headerFields, instance, maxLevelEquipment);
         }
 
-        private void SetEquipmentStats(string[] cols, string[] headerFields, EquipmentInfo instance,
+        private void SetEquipmentStats(string[] cols, string[] headerFields, Equipment instance,
             int maxLevelEquipment)
         {
             Dictionary<AttributeScriptableObject, CappedAttributeDef> attributes = new();

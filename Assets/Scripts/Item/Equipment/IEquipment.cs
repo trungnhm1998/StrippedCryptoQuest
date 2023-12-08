@@ -1,5 +1,4 @@
 ﻿using CryptoQuest.AbilitySystem.Abilities;
-using CryptoQuest.Gameplay.Inventory;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
 using UnityEngine.Localization;
 
@@ -24,7 +23,5 @@ namespace CryptoQuest.Item.Equipment
         LocalizedString DisplayName { get; }
 
         public bool IsValid();
-        public bool AddToInventory(IInventoryController inventory);
-        public bool RemoveFromInventory(IInventoryController inventory);
     }
 }

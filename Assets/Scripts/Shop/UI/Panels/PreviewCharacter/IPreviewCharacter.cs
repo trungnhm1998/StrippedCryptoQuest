@@ -7,6 +7,6 @@ namespace CryptoQuest.Shop.UI.Panels.PreviewCharacter
 {
     public interface IPreviewCharacter 
     {
-        void Preview(EquipmentInfo equipment);
+        void Preview(Equipment equipment);
     }
 }

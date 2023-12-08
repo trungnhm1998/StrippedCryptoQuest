@@ -76,14 +76,14 @@ namespace CryptoQuest.Sagas.Profile
             EquipmentSlot equipmentSlot)
         {
             bool needUpdate = false;
-            for (var index = 0; index < _inventory.NftEquipments.Count; index++)
-            {
-                var nftEquipment = _inventory.NftEquipments[index];
-                if (nftEquipment != equippingItem) continue;
-                _inventory.NftEquipments.RemoveAt(index);
-                equipmentSlot.Equipment = nftEquipment;
-                needUpdate = true;
-            }
+            // for (var index = 0; index < _inventory.NftEquipments.Count; index++)
+            // {
+            //     var nftEquipment = _inventory.NftEquipments[index];
+            //     if (nftEquipment != equippingItem) continue;
+            //     _inventory.NftEquipments.RemoveAt(index);
+            //     equipmentSlot.Equipment = nftEquipment;
+            //     needUpdate = true;
+            // }
 
             return needUpdate;
         }

@@ -49,11 +49,11 @@ namespace CryptoQuest.Shop.UI.Panels.PreviewCharacter
             }
         }    
 
-        public void Preview(EquipmentInfo equipmentInfo)
+        public void Preview(Equipment equipment)
         {
             foreach (var character in _characters)
             {
-                character.Preview(equipmentInfo);
+                character.Preview(equipment);
             }
         }
 

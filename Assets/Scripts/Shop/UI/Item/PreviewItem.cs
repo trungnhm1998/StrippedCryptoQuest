@@ -25,7 +25,7 @@ namespace CryptoQuest.Shop.UI.Item
             //     .WithDelayTimeToDisplay(_delayTime);
         }
 
-        public void Preview(EquipmentInfo equipment)
+        public void Preview(Equipment equipment)
         {
             // SetupTooltip(ETooltipType.Equipment);
             // _tooltip.WithLevel(equipment.Level)
