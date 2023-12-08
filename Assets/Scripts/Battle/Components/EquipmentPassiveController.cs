@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using CryptoQuest.AbilitySystem.Abilities;
 using CryptoQuest.Item.Equipment;
-using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
 using UnityEngine;
 
 namespace CryptoQuest.Battle.Components
@@ -10,7 +9,7 @@ namespace CryptoQuest.Battle.Components
     {
         private EquipmentsController _equipmentsController;
 
-        private readonly Dictionary<IEquipment, PassiveAbilitySpec[]> _passives = new();
+        private readonly Dictionary<uint, PassiveAbilitySpec[]> _passives = new();
         private PassivesController _passiveController;
 
         protected void Awake()
@@ -28,7 +27,7 @@ namespace CryptoQuest.Battle.Components
             _equipmentsController.Removed -= RemovePassive;
         }
 
-        private void GrantPassive(IEquipment equipment)
+        public void GrantPassive(IEquipment equipment)
         {
             var passiveSpecs = new PassiveAbilitySpec[equipment.Passives.Length];
             for (var index = 0; index < equipment.Passives.Length; index++)
@@ -39,14 +38,14 @@ namespace CryptoQuest.Battle.Components
                 passiveSpecs[index] = spec;
             }
 
-            if (passiveSpecs.Length > 0) _passives.Add(equipment, passiveSpecs);
+            if (passiveSpecs.Length > 0) _passives.Add(equipment.Id, passiveSpecs);
         }
 
         private void RemovePassive(IEquipment equipment)
         {
-            if (_passives.TryGetValue(equipment, out var passives) == false) return;
+            if (_passives.TryGetValue(equipment.Id, out var passives) == false) return;
             foreach (var passive in passives) _passiveController.RemovePassive(passive);
-            _passives.Remove(equipment);
+            _passives.Remove(equipment.Id);
         }
     }
 }
