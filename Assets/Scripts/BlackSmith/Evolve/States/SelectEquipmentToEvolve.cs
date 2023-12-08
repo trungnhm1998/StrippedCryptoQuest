@@ -1,4 +1,6 @@
+using System.Linq;
 using CryptoQuest.BlackSmith.Evolve.UI;
+using FSM;
 using UnityEngine.EventSystems;
 
 namespace CryptoQuest.BlackSmith.Evolve.States
@@ -40,6 +42,16 @@ namespace CryptoQuest.BlackSmith.Evolve.States
         private void OnSelectBaseItem(UIEquipmentItem item)
         {
             StateMachine.ItemToEvolve = item;
+            var info = StateMachine.EvolvableInfos.First(f => f.BeforeStars == item.Equipment.Data.Stars && f.Rarity == item.Equipment.Rarity.ID);
+            StateMachine.EvolveEquipmentData = new EvolvableEquipmentData()
+            {
+                Equipment = item.Equipment,
+                Level = item.Equipment.Level,
+                Stars = item.Equipment.Data.Stars,
+                Gold = info.Gold,
+                Metad = info.Metad,
+                Rate = info.Rate
+            };
             StateMachine.RequestStateChange(EStates.SelectMaterial);
         }
     }

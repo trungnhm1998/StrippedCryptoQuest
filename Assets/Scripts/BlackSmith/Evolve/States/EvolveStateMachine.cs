@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using CryptoQuest.BlackSmith.Evolve.UI;
+using CryptoQuest.BlackSmith.Interface;
 using FSM;
 
 namespace CryptoQuest.BlackSmith.Evolve.States
@@ -22,6 +23,7 @@ namespace CryptoQuest.BlackSmith.Evolve.States
         public UIEquipmentItem MaterialItem { get; set; }
         public BlackSmithDialogsPresenter DialogsPresenter => _context.DialogPresenter;
         public IEvolvableInfo[] EvolvableInfos { get; private set; }
+        public IEvolvableEquipment EvolveEquipmentData { get; set; }
 
         public EvolveStateMachine(BlackSmithSystem context)
         {
