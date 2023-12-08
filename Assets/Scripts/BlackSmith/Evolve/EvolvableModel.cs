@@ -59,7 +59,7 @@ namespace CryptoQuest.BlackSmith.Evolve
 
         protected virtual List<IEquipment> ProcessFilterByEquipment(IEquipment equipment)
         {
-            _equipments = _equipments.Where(e => e.Data.ID == equipment.Data.ID).ToList();
+            _equipments = _equipments.Where(e => e.Data.ID == equipment.Data.ID && e != equipment).ToList();
             return _equipments;
         }
     }

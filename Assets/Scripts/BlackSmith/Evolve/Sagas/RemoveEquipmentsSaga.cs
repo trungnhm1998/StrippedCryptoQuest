@@ -28,7 +28,7 @@ namespace CryptoQuest.BlackSmith.Evolve.Sagas
         private bool TryUpdateInventory(IEquipment equipment)
         {
             _inventoryController ??= ServiceProvider.GetService<IInventoryController>();
-            return _inventoryController.Add(equipment);
+            return _inventoryController.Remove(equipment);
         }
 
         private void UpdateEquipping(IEquipment equipment)

@@ -44,6 +44,7 @@ namespace CryptoQuest.BlackSmith
 
         public void ShowConfirmDialog(LocalizedString confirmMessage)
         {
+            Dialogue.Hide();
             _confirmMessage = confirmMessage;
             if (ChoiceDialog != null)
             {

@@ -17,7 +17,6 @@ namespace CryptoQuest.BlackSmith.Upgrade.States
             UIConfirmDetails.gameObject.SetActive(true);
             UIConfirmDetails.SetupUI(StateMachine.LevelToUpgrade, StateMachine.GoldNeeded);
 
-            DialogsPresenter.Dialogue.Hide();
             DialogsPresenter.ShowConfirmDialog(UpgradeSystem.ConfirmUpgradeText);
 
             DialogsPresenter.ConfirmYesEvent += ConfirmedUpgrade;
