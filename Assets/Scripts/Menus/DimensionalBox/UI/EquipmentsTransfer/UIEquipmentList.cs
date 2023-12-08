@@ -1,159 +1,48 @@
-﻿using System;
-using System.Collections.Generic;
-using CryptoQuest.Events;
-using CryptoQuest.Menus.DimensionalBox.States.EquipmentsTransfer;
+﻿using System.Collections.Generic;
+using System.Linq;
 using CryptoQuest.Sagas.Objects;
-using IndiGames.Core.Events;
-using TinyMessenger;
-using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.UI;
 
 namespace CryptoQuest.Menus.DimensionalBox.UI.EquipmentsTransfer
 {
-    public class UIEquipmentList : MonoBehaviour
+    public class UIEquipmentList : UIDimensionalBoxList<UIEquipment>
     {
-        public event Action<UIEquipment> Transferring;
-        public event Action<UIEquipmentList> Initialized;
-
-        [SerializeField] private bool _wrapAround = true;
-        [SerializeField] private ScrollRect _scrollView;
-        public ScrollRect ScrollView => _scrollView;
-        [SerializeField] private EquipmentUIPool _pool;
-
-        [Header("Listen to")]
-        [SerializeField] private GetEquipmentsEvent _getEquipmentsEvent;
-
-        [Header("Raise on")]
-        [SerializeField] private StringEventChannelSO _transferEquipmentEvent;
-
-        private readonly List<UIEquipment> _equipmentsToTransfer = new();
-        public bool PendingTransfer => _equipmentsToTransfer.Count > 0;
-        private TinyMessageSubscriptionToken _confirmTransferEvent;
-
-        private void OnEnable()
+        public List<uint> SelectedItems
         {
-            _confirmTransferEvent = ActionDispatcher.Bind<ConfirmTransferAction>(OnTransferEquipment);
-            _getEquipmentsEvent.EventRaised += Initialize;
-            
-            Initialized?.Invoke(this);
+            get
+            {
+                return GetComponentsInChildren<UIEquipment>().Where(item => item.MarkedForTransfer)
+                    .Select(item => item.Id).ToList();
+            }
         }
 
-        private void OnDisable()
+        public void Initialize(EquipmentResponse[] equipments)
         {
-            ActionDispatcher.Unbind(_confirmTransferEvent);
-            _getEquipmentsEvent.EventRaised -= Initialize;
-        }
-
-        private List<EquipmentResponse> _equipments;
-        private void Initialize(List<EquipmentResponse> equipments)
-        {
-            _equipments = equipments;
-            ClearOldEquipments();
+            Clear();
             foreach (var equipment in equipments)
             {
-                var uiEquipment = _pool.Get();
-                uiEquipment.Pressed += OnTransferring;
-                uiEquipment.transform.SetParent(_scrollView.content);
+                var uiEquipment = GetItem();
                 uiEquipment.Initialize(equipment);
             }
-
-            if (equipments.Count > 0) Initialized?.Invoke(this);
         }
 
-        public void Transfer(UIEquipment uiEquipment)
+        public void Reset()
         {
-            if (_equipments.Find(item => item.id == uiEquipment.Id) == null)
+            foreach (var uiEquipment in GetComponentsInChildren<UIEquipment>())
             {
-                _equipmentsToTransfer.Add(uiEquipment);
-                uiEquipment.EnablePendingTag(true);
-            }
-
-            uiEquipment.Pressed += OnTransferring;
-            uiEquipment.transform.SetParent(_scrollView.content);
-            uiEquipment.transform.SetAsLastSibling();
-            CurrentSelectedIndex = _scrollView.content.transform.childCount - 1;
-        }
-
-        private void ClearOldEquipments()
-        {
-            CurrentSelectedIndex = 0;
-            _equipmentsToTransfer.Clear();
-            var oldEquipments = _scrollView.content.GetComponentsInChildren<UIEquipment>();
-            foreach (var equipment in oldEquipments)
-            {
-                equipment.Pressed -= OnTransferring;
-                _pool.Release(equipment);
+                uiEquipment.MarkedForTransfer = false;
             }
         }
 
-        public void OnTransferring(UIEquipment ui)
+        protected override void OnRelease(UIEquipment item)
         {
-            if (_equipmentsToTransfer.Remove(ui)) ui.EnablePendingTag(false);
-            CurrentSelectedIndex -= 1;
-            ui.Pressed -= OnTransferring;
-            Transferring?.Invoke(ui);
+            base.OnRelease(item);
+            item.MarkedForTransfer = false;
         }
 
-        public bool Focus(bool resetToTop = false)
+        protected override void OnGet(UIEquipment uiItem)
         {
-            if (_scrollView.content.transform.childCount == 0) return false;
-            CurrentSelectedIndex = resetToTop ? 0 : CurrentSelectedIndex;
-            SelectChild(CurrentSelectedIndex);
-            return true;
+            base.OnGet(uiItem);
+            uiItem.MarkedForTransfer = false;
         }
-
-        private int _currentSelectedIndex;
-
-        private int CurrentSelectedIndex
-        {
-            get => _currentSelectedIndex;
-            set
-            {
-                _currentSelectedIndex = value;
-                var childCount = _scrollView.content.transform.childCount;
-                if (childCount == 0)
-                {
-                    _currentSelectedIndex = 0;
-                    return;
-                }
-
-                if (_currentSelectedIndex >= 0 &&
-                    _currentSelectedIndex < childCount) return;
-                _currentSelectedIndex = _wrapAround
-                    ? (_currentSelectedIndex + childCount) % childCount
-                    : Mathf.Clamp(_currentSelectedIndex, 0, childCount - 1);
-            }
-        }
-
-        public void Navigate(float dirY)
-        {
-            if (dirY == 0) return;
-            CurrentSelectedIndex += (int)dirY;
-            SelectChild(CurrentSelectedIndex);
-        }
-
-        private void SelectChild(int selectedIndex)
-        {
-            var childToSelect = _scrollView.content.transform.GetChild(selectedIndex);
-            if (childToSelect == null) childToSelect = _scrollView.content.transform.GetChild(0);
-            EventSystem.current.SetSelectedGameObject(childToSelect.gameObject);
-        }
-
-        private void OnTransferEquipment(ConfirmTransferAction confirmTransferAction)
-        {
-            if (_equipmentsToTransfer.Count == 0) return;
-            string equipments = "";
-            for (var index = 0; index < _equipmentsToTransfer.Count; index++)
-            {
-                var equipment = _equipmentsToTransfer[index];
-                var comma = index == _equipmentsToTransfer.Count - 1 ? "" : ",";
-                equipments += $"{equipment.Id.ToString()}{comma}";
-            }
-
-            _transferEquipmentEvent.RaiseEvent(equipments);
-        }
-
-        public void Reset() => Initialize(_equipments);
     }
 }
