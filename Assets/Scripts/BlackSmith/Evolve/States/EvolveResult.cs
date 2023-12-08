@@ -7,6 +7,7 @@ namespace CryptoQuest.BlackSmith.Evolve.States
         public override void OnEnter()
         {
             base.OnEnter();
+            EquipmentsPresenter.gameObject.SetActive(false);
             EvolveResultPresenter.gameObject.SetActive(true);
         }
 

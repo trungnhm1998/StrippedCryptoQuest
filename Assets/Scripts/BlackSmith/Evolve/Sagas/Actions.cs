@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using CryptoQuest.BlackSmith.Interface;
 using CryptoQuest.Item.Equipment;
 using CryptoQuest.Sagas.Objects;
 using IndiGames.Core.Events;
@@ -43,7 +44,23 @@ namespace CryptoQuest.BlackSmith.Evolve.Sagas
 
     public class EvolveRequestFailed : ActionBase { }
 
-    public class EvolveEquipmentFailedAction : ActionBase { }
+    public class EvolveEquipmentFailedAction : ActionBase
+    {
+        public IEvolvableEquipment Equipment { get; }
 
-    public class EvolveEquipmentSuccessAction : ActionBase { }
+        public EvolveEquipmentFailedAction(IEvolvableEquipment equipment)
+        {
+            Equipment = equipment;
+        }
+    }
+
+    public class EvolveEquipmentSuccessAction : ActionBase
+    {
+        public IEvolvableEquipment Equipment { get; }
+
+        public EvolveEquipmentSuccessAction(IEvolvableEquipment equipment)
+        {
+            Equipment = equipment;
+        }
+    }
 }

@@ -7,6 +7,8 @@ namespace CryptoQuest.BlackSmith.Evolve.UI
     {
         [field: SerializeField] public UIResultPanel EvolveResultUI { get; private set; }
 
+        [field: SerializeField] public UIEvolveEquipmentTooltip EquipmentDetailUI { get; private set; }
+
         private void OnEnable()
         {
             EvolveResultUI.gameObject.SetActive(true);
@@ -15,16 +17,21 @@ namespace CryptoQuest.BlackSmith.Evolve.UI
         private void OnDisable()
         {
             EvolveResultUI.gameObject.SetActive(false);
+            EquipmentDetailUI.gameObject.SetActive(false);
         }
 
-        public void SetResultFail(IEvolvableEquipment equipment)
+        public void SetResultFail(IEvolvableEquipment item)
         {
-            EvolveResultUI.SetFailInfo(equipment);
+            EvolveResultUI.UpdateUIFail();
+            EquipmentDetailUI.SetEquipment(item.Equipment);
+            EquipmentDetailUI.gameObject.SetActive(true);
         }
 
-        public void SetResultSuccess(IEvolvableEquipment equipment)
+        public void SetResultSuccess(IEvolvableEquipment item)
         {
-            EvolveResultUI.SetSuccessInfo(equipment);
+            EvolveResultUI.UpdateUISuccess();
+            EquipmentDetailUI.SetEquipment(item.Equipment);
+            EquipmentDetailUI.gameObject.SetActive(true);
         }
     }
 }

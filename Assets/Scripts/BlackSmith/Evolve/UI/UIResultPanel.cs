@@ -1,4 +1,3 @@
-using CryptoQuest.BlackSmith.Interface;
 using CryptoQuest.Menu;
 using TMPro;
 using UnityEngine;
@@ -8,7 +7,6 @@ namespace CryptoQuest.BlackSmith.Evolve.UI
 {
     public class UIResultPanel : MonoBehaviour
     {
-        [SerializeField] private UIEquipmentDetail _uiEquipmentDetail;
         [SerializeField] private TMP_Text _resultText;
         [SerializeField] private MultiInputButton _defaultButton;
         [SerializeField] private LocalizedString _successMessage;
@@ -19,18 +17,14 @@ namespace CryptoQuest.BlackSmith.Evolve.UI
             _defaultButton.Select();
         }
 
-        public void SetSuccessInfo(IEvolvableEquipment evolvedEquipmentData)
-        {
-            _resultText.text = _successMessage.GetLocalizedString();
-            if (evolvedEquipmentData != null)
-                _uiEquipmentDetail.SetEquipmentDetail(evolvedEquipmentData);
-        }
-
-        public void SetFailInfo(IEvolvableEquipment equipmentData)
+        public void UpdateUIFail()
         {
             _resultText.text = _failMessage.GetLocalizedString();
-            if (equipmentData != null)
-                _uiEquipmentDetail.SetEquipmentDetail(equipmentData);
+        }
+
+        public void UpdateUISuccess()
+        {
+            _resultText.text = _successMessage.GetLocalizedString();
         }
     }
 }

@@ -1,26 +1,12 @@
-using CryptoQuest.BlackSmith.Evolve.UI;
-using CryptoQuest.Gameplay.Inventory;
-using CryptoQuest.Gameplay.PlayerParty;
 using CryptoQuest.Item.Equipment;
-using CryptoQuest.Networking;
-using CryptoQuest.Sagas.Objects;
-using CryptoQuest.UI.Actions;
-using IndiGames.Core.Common;
 using IndiGames.Core.Events;
-using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
-using UniRx;
 using UnityEngine;
-using UnityEngine.PlayerLoop;
 
 namespace CryptoQuest.BlackSmith.Evolve.Sagas
 {
     public class EvolveResponseHandler : SagaBase<EvolveResponsed>
     {
-        private IInventoryController _inventoryController;
-        private IPartyController _partyController;
-
         protected override void HandleAction(EvolveResponsed ctx)
         {
             var response = ctx.Response;
@@ -34,10 +20,25 @@ namespace CryptoQuest.BlackSmith.Evolve.Sagas
             switch (evolveStatus)
             {
                 case 0:
-                    ActionDispatcher.Dispatch(new EvolveEquipmentFailedAction());
+                    // TODO: need a way to parse data from server, so we can get the new equipment stats
+                    var failedEquipment = new EvolvableEquipmentData()
+                    {
+                        Equipment = ctx.RequestContext.Equipment,
+                        Level = ctx.RequestContext.Equipment.Level,
+                        Stars = ctx.RequestContext.Equipment.Data.Stars,
+                    };
+
+                    ActionDispatcher.Dispatch(new EvolveEquipmentFailedAction(failedEquipment));
                     break;
                 case 1:
-                    ActionDispatcher.Dispatch(new EvolveEquipmentSuccessAction());
+                    var successEquipment = new EvolvableEquipmentData()
+                    {
+                        Equipment = ctx.RequestContext.Equipment,
+                        Level = ctx.Response.data.newEquipment.lv,
+                        Stars = ctx.Response.data.newEquipment.star,
+                    };
+
+                    ActionDispatcher.Dispatch(new EvolveEquipmentSuccessAction(successEquipment));
                     break;
                 default:
                     Debug.LogError("[EvolveEquipment]:: unknown success status: " + evolveStatus);
@@ -52,12 +53,12 @@ namespace CryptoQuest.BlackSmith.Evolve.Sagas
             {
                 ctx.RequestContext.Material
             };
-            
+
             if (evolveStatus == 1)
             {
                 updateEquipments.Add(ctx.RequestContext.Equipment);
             }
-            
+
             return updateEquipments;
         }
     }

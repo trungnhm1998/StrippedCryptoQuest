@@ -7,7 +7,7 @@ namespace CryptoQuest.BlackSmith.Evolve.States
         public override void OnEnter()
         {
             base.OnEnter();
-            EvolveResultPresenter.SetResultSuccess(null);
+            DialogsPresenter.Dialogue.SetMessage(EvolveSystem.EvolveSuccessText).Show();
         }
     }
 }
