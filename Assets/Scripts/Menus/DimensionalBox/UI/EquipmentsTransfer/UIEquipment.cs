@@ -1,5 +1,4 @@
-﻿using System;
-using CryptoQuest.Sagas.Objects;
+﻿using CryptoQuest.Sagas.Objects;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Localization.Components;
@@ -9,30 +8,31 @@ namespace CryptoQuest.Menus.DimensionalBox.UI.EquipmentsTransfer
 {
     public class UIEquipment : MonoBehaviour
     {
-        public event Action<UIEquipment> Pressed;
         [SerializeField] private Image _icon;
         [SerializeField] private TMP_Text _nameText;
         [SerializeField] private LocalizeStringEvent _name;
         [SerializeField] private GameObject _pendingTag;
         [SerializeField] private GameObject _equippedTag;
         public EquipmentResponse Equipment { get; private set; }
-        public GameObject EquippedTag => _equippedTag;
-        
-        public uint Id { get; private set; }
+        public bool MarkedForTransfer
+        {
+            get => _pendingTag.activeSelf;
+            set => _pendingTag.SetActive(value);
+        }
+
+        public uint Id => Equipment.id;
 
         public void Initialize(EquipmentResponse equipment)
         {
+            MarkedForTransfer = false;
             Equipment = equipment;
-            Id = equipment.id;
-            _nameText.text = "Item " + equipment.id;
+            _nameText.text = "Item " + Id;
         }
 
         public void OnPressed()
         {
             if (_equippedTag.activeSelf) return;
-            Pressed?.Invoke(this);
+            MarkedForTransfer = !MarkedForTransfer;
         }
-
-        public void EnablePendingTag(bool enabling) => _pendingTag.SetActive(enabling);
     }
 }

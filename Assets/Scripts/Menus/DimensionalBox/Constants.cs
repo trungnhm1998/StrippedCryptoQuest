@@ -6,4 +6,9 @@
         public const string CONFIRM_MESSAGE = "CONFIRM";
         public const string ERROR = "ERROR";
     }
+
+    public static class API
+    {
+        public const string TRANSFER = "cryptogequipments/dimension/transfer";
+    }
 }

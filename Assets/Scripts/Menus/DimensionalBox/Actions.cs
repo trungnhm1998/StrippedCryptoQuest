@@ -4,15 +4,32 @@ using IndiGames.Core.Events;
 
 namespace CryptoQuest.Menus.DimensionalBox
 {
-    public class GetNftEquipments : ActionBase
+    public class FetchNftEquipments : ActionBase { }
+
+    public abstract class FetchEquipmentsSuccess : ActionBase
     {
-        public EEquipmentStatus Status { get; set; } = EEquipmentStatus.All;
-        public bool ForceRefresh { get; set; } = false;
+        public EquipmentResponse[] Equipments { get; }
+
+        protected FetchEquipmentsSuccess(EquipmentResponse[] equipments)
+        {
+            Equipments = equipments;
+        }
     }
 
-    public class GetNftEquipmentsSucceed : ActionBase { }
+    public class FetchNftEquipmentSucceed : FetchEquipmentsSuccess
+    {
+        public FetchNftEquipmentSucceed(EquipmentResponse[] equipments) : base(equipments) { }
+    }
 
-    public class GetNftEquipmentsFailed : ActionBase { }
+    public class FetchIngameEquipmentsSuccess : FetchEquipmentsSuccess
+    {
+        public FetchIngameEquipmentsSuccess(EquipmentResponse[] equipments) : base(equipments) { }
+    }
+
+    public class FetchInboxEquipmentsSuccess : FetchEquipmentsSuccess
+    {
+        public FetchInboxEquipmentsSuccess(EquipmentResponse[] equipments) : base(equipments) { }
+    }
 
     public class TransferSucceed : ActionBase { }
 

@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
-using CryptoQuest.Environment;
 using CryptoQuest.API;
-using CryptoQuest.System;
+using CryptoQuest.Environment;
 using IndiGames.Core.Common;
+using IndiGames.Core.Events;
 using Newtonsoft.Json;
 using Proyecto26;
 using UniRx;
@@ -24,9 +24,21 @@ namespace CryptoQuest.Networking
 
         public IObservable<string> Put(string path);
 
+        public IRestClient WithoutGenericError();
+        public IRestClient WithParam(string key, string value);
         public IRestClient WithParams(Dictionary<string, string> parameters);
         public IRestClient WithBody(object body);
         public IRestClient WithHeaders(Dictionary<string, string> headers);
+    }
+
+    public class ResponseWithError : ActionBase
+    {
+        public Exception Exception { get; }
+
+        public ResponseWithError(Exception exception)
+        {
+            Exception = exception;
+        }
     }
 
     /// <summary>
@@ -56,12 +68,12 @@ namespace CryptoQuest.Networking
                     var generateRequest = GenerateRequest(path);
                     PluginRestClient.Post<TResponse>(generateRequest)
                         .Then(observer.OnNext)
-                        .Catch(observer.OnError)
+                        .Catch(e => ErrorWrapper(e, observer))
                         .Finally(observer.OnCompleted);
                 }
                 catch (Exception e)
                 {
-                    observer.OnError(e);
+                    ErrorWrapper(e, observer);
                 }
 
                 return Disposable.Empty;
@@ -78,12 +90,12 @@ namespace CryptoQuest.Networking
                     generateRequest.Method = "GET";
                     PluginRestClient.Get<TResponse>(generateRequest)
                         .Then(observer.OnNext)
-                        .Catch(observer.OnError)
+                        .Catch(e => ErrorWrapper(e, observer))
                         .Finally(observer.OnCompleted);
                 }
                 catch (Exception e)
                 {
-                    observer.OnError(e);
+                    ErrorWrapper(e, observer);
                 }
 
                 return Disposable.Empty;
@@ -100,12 +112,12 @@ namespace CryptoQuest.Networking
                     generateRequest.Method = "GET";
                     PluginRestClient.Get(generateRequest)
                         .Then(helper => observer.OnNext(helper.Text))
-                        .Catch(observer.OnError)
+                        .Catch(e => ErrorWrapper(e, observer))
                         .Finally(observer.OnCompleted);
                 }
                 catch (Exception e)
                 {
-                    observer.OnError(e);
+                    ErrorWrapper(e, observer);
                 }
 
                 return Disposable.Empty;
@@ -121,12 +133,12 @@ namespace CryptoQuest.Networking
                     var generateRequest = GenerateRequest(path);
                     PluginRestClient.Put<TResponse>(generateRequest)
                         .Then(observer.OnNext)
-                        .Catch(observer.OnError)
+                        .Catch(e => ErrorWrapper(e, observer))
                         .Finally(observer.OnCompleted);
                 }
                 catch (Exception e)
                 {
-                    observer.OnError(e);
+                    ErrorWrapper(e, observer);
                 }
 
                 return Disposable.Empty;
@@ -142,16 +154,39 @@ namespace CryptoQuest.Networking
                     var generateRequest = GenerateRequest(path);
                     PluginRestClient.Put(generateRequest)
                         .Then(helper => observer.OnNext(helper.Text))
-                        .Catch(observer.OnError)
+                        .Catch(e => ErrorWrapper(e, observer))
                         .Finally(observer.OnCompleted);
                 }
                 catch (Exception e)
                 {
-                    observer.OnError(e);
+                    ErrorWrapper(e, observer);
                 }
 
                 return Disposable.Empty;
             });
+        }
+
+        private bool _dispatchGenericError = true;
+        public IRestClient WithoutGenericError()
+        {
+            _dispatchGenericError = false;
+            return this;
+        }
+
+        private void ErrorWrapper<TResponse>(Exception exception, IObserver<TResponse> observer)
+        {
+            if (_dispatchGenericError) ActionDispatcher.Dispatch(new ResponseWithError(exception));
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
+            Debug.LogWarning(exception);
+#endif
+            observer.OnError(exception);
+        }
+
+        public IRestClient WithParam(string key, string value)
+        {
+            _params ??= new Dictionary<string, string>();
+            _params.TryAdd(key, value);
+            return this;
         }
 
         private Dictionary<string, string> _params;
@@ -163,6 +198,7 @@ namespace CryptoQuest.Networking
         }
 
         private object _body;
+
         public IRestClient WithBody(object body)
         {
             _body = body;
@@ -170,6 +206,7 @@ namespace CryptoQuest.Networking
         }
 
         private Dictionary<string, string> _headers;
+
         public IRestClient WithHeaders(Dictionary<string, string> headers)
         {
             _headers = headers;
@@ -183,11 +220,11 @@ namespace CryptoQuest.Networking
 
             // Add authorization only when this is not login/refresh requests
             if (!path.Contains(Accounts.LOGIN)
-                && !path.Contains(Accounts.DEBUG_LOGIN) 
-                && !path.Contains(Accounts.REFRESH_TOKENS) 
-                && !string.IsNullOrEmpty(accessToken)) 
-            { 
-                mergeHeaders.TryAdd("Authorization", "Bearer " + accessToken); 
+                && !path.Contains(Accounts.DEBUG_LOGIN)
+                && !path.Contains(Accounts.REFRESH_TOKENS)
+                && !string.IsNullOrEmpty(accessToken))
+            {
+                mergeHeaders.TryAdd("Authorization", "Bearer " + accessToken);
             }
 
             string bodyString = null;
@@ -206,10 +243,11 @@ namespace CryptoQuest.Networking
                 EnableDebug = true,
 #endif
             };
-            
+
             _params = null;
             _body = null;
             _headers = null;
+            _dispatchGenericError = true;
 
             return request;
         }
