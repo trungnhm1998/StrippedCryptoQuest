@@ -1,24 +1,24 @@
-using CryptoQuest.BlackSmith.Evolve.UI;
 using CryptoQuest.Gameplay.Inventory;
-using CryptoQuest.Gameplay.PlayerParty;
-using CryptoQuest.Item.Equipment;
-using CryptoQuest.Networking;
-using CryptoQuest.Sagas.Objects;
-using CryptoQuest.UI.Actions;
+using CryptoQuest.Sagas.Profile;
 using IndiGames.Core.Common;
 using IndiGames.Core.Events;
-using Newtonsoft.Json;
-using System;
-using UniRx;
-using UnityEngine;
 
 namespace CryptoQuest.BlackSmith.Evolve.Sagas
 {
     public class AddEquipmentSaga : SagaBase<AddEquipment>
     {
+        private IInventoryController _inventoryController;
+        private IEquipmentResponseConverter _responseConverter;
+        
         protected override void HandleAction(AddEquipment ctx)
         {
-            // TODO: convert new equipment ctx.EquipmentData to item in inventory
+            if (ctx.EquipmentData == null) return;
+            
+            _inventoryController ??= ServiceProvider.GetService<IInventoryController>();
+            _responseConverter ??= ServiceProvider.GetService<IEquipmentResponseConverter>();
+
+            var equipment = _responseConverter.Convert(ctx.EquipmentData);
+            equipment.AddToInventory(_inventoryController);
         }
     }
 }
