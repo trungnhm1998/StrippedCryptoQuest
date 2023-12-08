@@ -153,11 +153,6 @@ namespace CryptoQuestEditor
             string[] rows = File.ReadAllLines(path);
             string[] headerFields = rows[ROW_HEADER].Split('\t');
 
-            var equipments = ToolsHelper.GetAssets<EquipmentDef>();
-
-            Dictionary<string, EquipmentDef> lookupTable =
-                equipments.ToDictionary(equipment => equipment.ID, value => value);
-
             // for (int index = ROW_OFFSET; index < rows.Length; index++)
             // {
             //     string[] cols = rows[index].Split('\t');
