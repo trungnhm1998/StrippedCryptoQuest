@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using CryptoQuest.Item.Equipment;
 using IndiGames.GameplayAbilitySystem.EffectSystem;
 using IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects;
@@ -10,10 +11,11 @@ namespace CryptoQuest.Battle.Components
     public class EquipmentsEffectController : CharacterComponentBase
     {
         private EquipmentsController _equipmentsController;
+
         /// <summary>
         /// Create an effect based on effect stats
         /// </summary>
-        private readonly Dictionary<IEquipment, ActiveGameplayEffect> _equipmentsEffect = new();
+        private readonly Dictionary<uint, ActiveGameplayEffect> _equipmentsEffect = new();
 
         protected override void OnInit()
         {
@@ -28,7 +30,7 @@ namespace CryptoQuest.Battle.Components
         {
             _equipmentsController.Equipped -= ApplyEffect;
             _equipmentsController.Removed -= RemoveEffect;
-            
+
             ClearEffects();
         }
 
@@ -48,11 +50,12 @@ namespace CryptoQuest.Battle.Components
         {
             // TODO: Should I allow equip dead character?
             if (equipment.IsValid() == false) return;
-            if (_equipmentsEffect.ContainsKey(equipment)) return; // two handed weapon will apply effect twice
+            if (_equipmentsEffect.ContainsKey(equipment.Id)) return; // two handed weapon will apply effect twice
 
             var activeEffectSpec = Character.ApplyEffect(CreateEffectSpecFromEquipment(equipment));
-            _equipmentsEffect.Add(equipment, activeEffectSpec);
+            _equipmentsEffect.Add(equipment.Id, activeEffectSpec);
         }
+
 
         /// <summary>
         /// Create a <see cref="GameplayEffectSpec"/> using the character
@@ -94,10 +97,10 @@ namespace CryptoQuest.Battle.Components
             return equipmentEffectDef;
         }
 
-        public void RemoveEffect(IEquipment equipment)
+        private void RemoveEffect(IEquipment equipment)
         {
-            if (_equipmentsEffect.TryGetValue(equipment, out var activeEffect) == false) return;
-            _equipmentsEffect.Remove(equipment);
+            if (_equipmentsEffect.TryGetValue(equipment.Id, out var activeEffect) == false) return;
+            _equipmentsEffect.Remove(equipment.Id);
             activeEffect.IsActive = false;
             Character.RemoveEffect(activeEffect.Spec);
             Character.AbilitySystem.AttributeSystem.UpdateAttributeValues();
