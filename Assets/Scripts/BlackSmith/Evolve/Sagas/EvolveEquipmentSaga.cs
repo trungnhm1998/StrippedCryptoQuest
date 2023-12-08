@@ -1,3 +1,4 @@
+using CryptoQuest.BlackSmith.Interface;
 using CryptoQuest.Networking;
 using CryptoQuest.Sagas.Objects;
 using CryptoQuest.UI.Actions;

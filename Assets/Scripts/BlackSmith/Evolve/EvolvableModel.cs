@@ -1,42 +1,14 @@
 using System.Collections.Generic;
 using System.Linq;
-using CryptoQuest.BlackSmith.Interface;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
 using CryptoQuest.Gameplay.PlayerParty;
 using CryptoQuest.Gameplay.PlayerParty.Helper;
 using CryptoQuest.Item.Equipment;
 using IndiGames.Core.Common;
 using UnityEngine;
-using UnityEngine.Localization;
 
 namespace CryptoQuest.BlackSmith.Evolve
 {
-    public class EvolveableEquipmentData : IEvolvableEquipment
-    {
-        public EvolveableEquipmentData(Equipment equipment)
-        {
-            Equipment = equipment;
-        }
-
-        public Equipment Equipment { get; private set; }
-
-        public Sprite Icon => Equipment.Type.Icon;
-
-        public LocalizedString LocalizedName => Equipment.Prefab.DisplayName;
-
-        public int Level => Equipment.Level;
-
-        public int Stars { get; set; }
-
-        public int Gold { get; set; }
-
-        public float Metad { get; set; }
-
-        public Sprite Rarity => Equipment.Rarity.Icon;
-
-        public int Rate { get; set; }
-    }
-
     public interface IEvolvableModel
     {
         void Init();
@@ -80,7 +52,8 @@ namespace CryptoQuest.BlackSmith.Evolve
 
         protected virtual List<IEquipment> ProcessFilterByInfos(IEvolvableInfo[] info)
         {
-            _equipments = _equipments.Where(e => info.Any(i => i.Rarity == e.Data.Rarity.ID && i.BeforeStars == e.Data.Stars)).ToList();
+            _equipments = _equipments
+                .Where(e => info.Any(i => i.Rarity == e.Data.Rarity.ID && i.BeforeStars == e.Data.Stars)).ToList();
             return _equipments;
         }
 

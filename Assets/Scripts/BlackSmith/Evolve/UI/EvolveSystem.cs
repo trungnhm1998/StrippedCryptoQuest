@@ -15,5 +15,7 @@ namespace CryptoQuest.BlackSmith.Evolve.UI
         [field: SerializeField] public LocalizedString SelectEquipmentToEvolveText { get; private set; }
         [field: SerializeField] public LocalizedString SelectMaterialText { get; private set; }
         [field: SerializeField] public LocalizedString ConfirmEvolveText { get; private set; }
+        [field: SerializeField] public LocalizedString EvolveSuccessText { get; private set; }
+        [field: SerializeField] public LocalizedString EvolveFailText { get; private set; }
     }
 }

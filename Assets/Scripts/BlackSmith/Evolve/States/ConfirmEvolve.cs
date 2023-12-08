@@ -1,7 +1,6 @@
 using CryptoQuest.BlackSmith.Evolve.Sagas;
 using IndiGames.Core.Events;
 using TinyMessenger;
-using UnityEngine;
 
 namespace CryptoQuest.BlackSmith.Evolve.States
 {
@@ -53,13 +52,15 @@ namespace CryptoQuest.BlackSmith.Evolve.States
             });
         }
 
-        private void HandleEvolveFailed(EvolveEquipmentFailedAction action)
+        private void HandleEvolveFailed(EvolveEquipmentFailedAction ctx)
         {
+            EvolveSystem.EvolveResultPresenter.SetResultFail(ctx.Equipment);
             fsm.RequestStateChange(EStates.EvolveFailed);
         }
 
-        private void HandleEvolveSuccess(EvolveEquipmentSuccessAction action)
+        private void HandleEvolveSuccess(EvolveEquipmentSuccessAction ctx)
         {
+            EvolveSystem.EvolveResultPresenter.SetResultSuccess(ctx.Equipment);
             fsm.RequestStateChange(EStates.EvolveSuccess);
         }
 

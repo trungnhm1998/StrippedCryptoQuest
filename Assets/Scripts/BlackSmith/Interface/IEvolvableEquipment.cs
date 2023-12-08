@@ -6,7 +6,7 @@ namespace CryptoQuest.BlackSmith.Interface
 {
     public interface IEvolvableEquipment
     {
-        Equipment Equipment { get; }
+        IEquipment Equipment { get; }
         Sprite Icon { get; }
         LocalizedString LocalizedName { get; }
         int Level { get; }
