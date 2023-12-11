@@ -25,6 +25,7 @@ namespace CryptoQuest.Beast
         private void Awake()
         {
             _applier = new BeastPassiveApplier(this, _party);
+            _equippingBeast = NullBeast.Instance;
         }
 
         private void OnEnable()
