@@ -11,6 +11,7 @@ namespace CryptoQuest.BlackSmith
         public const string OVERVIEW = "Overview";
         public const string UPGRADING = "Upgrading";
         public const string EVOLVING = "Evolve";
+        public const string STONE_UPGRADE = "STONE_UPGRADE";
     }
 
     public class BlackSmithStateMachine : StateMachine<string, string, string>
@@ -22,6 +23,7 @@ namespace CryptoQuest.BlackSmith
             AddState(State.OVERVIEW, new OverviewState(context));
             AddState(State.UPGRADING, new UpgradeStateMachine(context));
             AddState(State.EVOLVING, new EvolveStateMachine(context));
+            AddState(State.STONE_UPGRADE, new EvolveStateMachine(context));
 
             SetStartState(State.OVERVIEW);
         }
