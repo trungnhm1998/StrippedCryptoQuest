@@ -18,6 +18,7 @@ namespace CryptoQuest.BlackSmith.States.Overview
 
             _ui.OpenUpgrading += ChangeToUpgradeState;
             _ui.OpenEvolving += ChangeToEvolveState;
+            _ui.OpenStoneUpgrading += ChangeToStoneUpgradeState;
 
             _ui.gameObject.SetActive(true);
             _dialogPresenter.ShowOverviewDialog();
@@ -32,6 +33,7 @@ namespace CryptoQuest.BlackSmith.States.Overview
 
             _ui.OpenUpgrading -= ChangeToUpgradeState;
             _ui.OpenEvolving -= ChangeToEvolveState;
+            _ui.OpenStoneUpgrading -= ChangeToStoneUpgradeState;
         }
 
         protected override void OnCancel()
@@ -43,5 +45,7 @@ namespace CryptoQuest.BlackSmith.States.Overview
         private void ChangeToUpgradeState() => fsm.RequestStateChange(State.UPGRADING);
 
         private void ChangeToEvolveState() => fsm.RequestStateChange(State.EVOLVING);
+
+        private void ChangeToStoneUpgradeState() => fsm.RequestStateChange(State.STONE_UPGRADE);
     }
 }
