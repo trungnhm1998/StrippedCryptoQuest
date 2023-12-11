@@ -1,13 +1,16 @@
 ﻿using CryptoQuest.Events;
-using CryptoQuest.Input;
+using IndiGames.Core.Events;
+using TinyMessenger;
 using UnityEngine;
 using UnityEngine.Localization;
 
 namespace CryptoQuest.UI.Popups
 {
+
     public class ErrorPopupController : BasePopupController<UIPopup>
     {
         [SerializeField] private StringEventChannelSO _errorPopupEventSO;
+        [SerializeField] private LocalizedStringEventChannelSO _localizedErrorPopupEventSO;
         [SerializeField] private LocalizedString _header;
         [SerializeField] private Color _headerColor;
         [SerializeField] private GameObject _background;
@@ -15,6 +18,7 @@ namespace CryptoQuest.UI.Popups
         private void OnEnable()
         {
             _errorPopupEventSO.EventRaised += ShowPopup;
+            _localizedErrorPopupEventSO.EventRaised += ShowPopup;
 
             _inputManager.ClosePopupEvent += HideLastPopup;
         }
@@ -22,18 +26,31 @@ namespace CryptoQuest.UI.Popups
         private void OnDisable()
         {
             _errorPopupEventSO.EventRaised -= ShowPopup;
-
+            _localizedErrorPopupEventSO.EventRaised -= ShowPopup;
+            
             _inputManager.ClosePopupEvent -= HideLastPopup;
         }
 
         private void ShowPopup(string body)
         {
             ShowPopup((UIPopup popup) => {
-                popup.WithHeader(_header).SetHeaderColor(_headerColor)
-                    .WithBody(body);
-                    
-                _background.SetActive(true);
+                SetupErrorPopup(popup).WithBody(body);
             });
+        }
+
+        private void ShowPopup(LocalizedString body)
+        {
+            ShowPopup((UIPopup popup) => {
+                SetupErrorPopup(popup).WithBody(body);
+            });
+        }
+
+        private UIPopup SetupErrorPopup(UIPopup popup)
+        {
+            popup.WithHeader(_header).SetHeaderColor(_headerColor);
+                
+            _background.SetActive(true);
+            return popup;
         }
 
         private void HideLastPopup()

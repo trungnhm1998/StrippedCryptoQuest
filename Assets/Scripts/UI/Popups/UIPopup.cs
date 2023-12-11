@@ -20,7 +20,8 @@ namespace CryptoQuest.UI.Popups
 
         public UIPopup WithBody(LocalizedString body)
         {
-            _bodyString.StringReference = body;
+            // Prevent change to same message when multiple show up
+            _bodyString.StringReference = new LocalizedString(body.TableReference, body.TableEntryReference);
             return this;
         }
 

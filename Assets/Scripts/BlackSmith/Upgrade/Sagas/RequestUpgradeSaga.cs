@@ -9,6 +9,7 @@ using IndiGames.Core.Events;
 using Newtonsoft.Json;
 using UnityEngine;
 using UniRx;
+using CryptoQuest.UI.Popups;
 
 namespace CryptoQuest.BlackSmith.Upgrade.Sagas
 {
@@ -72,8 +73,8 @@ namespace CryptoQuest.BlackSmith.Upgrade.Sagas
         
         private void DispatchUpgradeFailed(Exception obj)
         {
-            Debug.LogWarning($"Upgrade failed!\n{obj}");
             ActionDispatcher.Dispatch(new ShowLoading(false));
+            ActionDispatcher.Dispatch(new ServerErrorPopup());
             ActionDispatcher.Dispatch(new UpgradeFailed());
         }
 
