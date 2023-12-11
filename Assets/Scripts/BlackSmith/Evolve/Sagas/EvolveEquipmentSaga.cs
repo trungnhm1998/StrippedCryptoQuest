@@ -2,6 +2,7 @@ using CryptoQuest.BlackSmith.Interface;
 using CryptoQuest.Networking;
 using CryptoQuest.Sagas.Objects;
 using CryptoQuest.UI.Actions;
+using CryptoQuest.UI.Popups;
 using IndiGames.Core.Common;
 using IndiGames.Core.Events;
 using Newtonsoft.Json;
@@ -75,8 +76,8 @@ namespace CryptoQuest.BlackSmith.Evolve.Sagas
 
         private void HandleRequestFailed(Exception exception)
         {
-            Debug.LogError("[EvolveEquipment]:: Error: " + exception.Message);
             ActionDispatcher.Dispatch(new ShowLoading(false));
+            ActionDispatcher.Dispatch(new ServerErrorPopup());
             
             ActionDispatcher.Dispatch(new EvolveRequestFailed());
         }
