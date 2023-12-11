@@ -2760,6 +2760,109 @@ namespace CryptoQuest.Input
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Popup"",
+            ""id"": ""e79cd39c-9154-4827-b069-dae46d2902e7"",
+            ""actions"": [
+                {
+                    ""name"": ""Cancel"",
+                    ""type"": ""Button"",
+                    ""id"": ""e9f2cb81-5724-4972-b0a0-e6ab02fe454c"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Confirm"",
+                    ""type"": ""Button"",
+                    ""id"": ""b6418999-5fb6-47e7-bf00-5bc813cc01e6"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""65c4c9e2-ab3b-41dd-9e84-69454373765c"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""MnK"",
+                    ""action"": ""Cancel"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c7ab3573-a436-4c86-af8e-383c3d5f3b82"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Cancel"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""155c4b65-e371-44c2-92cf-57014b980f21"",
+                    ""path"": ""*/{Cancel}"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad;MnK"",
+                    ""action"": ""Cancel"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0fef5bfd-cc03-4e1c-bc48-452e7d531dab"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""MnK"",
+                    ""action"": ""Confirm"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4b5ff0dd-5702-4103-a42f-091859f9b3e2"",
+                    ""path"": ""<Keyboard>/enter"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""MnK"",
+                    ""action"": ""Confirm"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0ed21266-1af7-4c90-9274-2854f54c0e78"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Confirm"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f2a083ef-7aca-42a5-98d4-7998cdc88118"",
+                    ""path"": ""<Keyboard>/numpadEnter"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""MnK"",
+                    ""action"": ""Confirm"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": [
@@ -2852,6 +2955,10 @@ namespace CryptoQuest.Input
             m_Merchants_Reset = m_Merchants.FindAction("Reset", throwIfNotFound: true);
             m_Merchants_Execute = m_Merchants.FindAction("Execute", throwIfNotFound: true);
             m_Merchants_Interact = m_Merchants.FindAction("Interact", throwIfNotFound: true);
+            // Popup
+            m_Popup = asset.FindActionMap("Popup", throwIfNotFound: true);
+            m_Popup_Cancel = m_Popup.FindAction("Cancel", throwIfNotFound: true);
+            m_Popup_Confirm = m_Popup.FindAction("Confirm", throwIfNotFound: true);
         }
 
         public void Dispose()
@@ -3543,6 +3650,60 @@ namespace CryptoQuest.Input
             }
         }
         public MerchantsActions @Merchants => new MerchantsActions(this);
+
+        // Popup
+        private readonly InputActionMap m_Popup;
+        private List<IPopupActions> m_PopupActionsCallbackInterfaces = new List<IPopupActions>();
+        private readonly InputAction m_Popup_Cancel;
+        private readonly InputAction m_Popup_Confirm;
+        public struct PopupActions
+        {
+            private @InputActions m_Wrapper;
+            public PopupActions(@InputActions wrapper) { m_Wrapper = wrapper; }
+            public InputAction @Cancel => m_Wrapper.m_Popup_Cancel;
+            public InputAction @Confirm => m_Wrapper.m_Popup_Confirm;
+            public InputActionMap Get() { return m_Wrapper.m_Popup; }
+            public void Enable() { Get().Enable(); }
+            public void Disable() { Get().Disable(); }
+            public bool enabled => Get().enabled;
+            public static implicit operator InputActionMap(PopupActions set) { return set.Get(); }
+            public void AddCallbacks(IPopupActions instance)
+            {
+                if (instance == null || m_Wrapper.m_PopupActionsCallbackInterfaces.Contains(instance)) return;
+                m_Wrapper.m_PopupActionsCallbackInterfaces.Add(instance);
+                @Cancel.started += instance.OnCancel;
+                @Cancel.performed += instance.OnCancel;
+                @Cancel.canceled += instance.OnCancel;
+                @Confirm.started += instance.OnConfirm;
+                @Confirm.performed += instance.OnConfirm;
+                @Confirm.canceled += instance.OnConfirm;
+            }
+
+            private void UnregisterCallbacks(IPopupActions instance)
+            {
+                @Cancel.started -= instance.OnCancel;
+                @Cancel.performed -= instance.OnCancel;
+                @Cancel.canceled -= instance.OnCancel;
+                @Confirm.started -= instance.OnConfirm;
+                @Confirm.performed -= instance.OnConfirm;
+                @Confirm.canceled -= instance.OnConfirm;
+            }
+
+            public void RemoveCallbacks(IPopupActions instance)
+            {
+                if (m_Wrapper.m_PopupActionsCallbackInterfaces.Remove(instance))
+                    UnregisterCallbacks(instance);
+            }
+
+            public void SetCallbacks(IPopupActions instance)
+            {
+                foreach (var item in m_Wrapper.m_PopupActionsCallbackInterfaces)
+                    UnregisterCallbacks(item);
+                m_Wrapper.m_PopupActionsCallbackInterfaces.Clear();
+                AddCallbacks(instance);
+            }
+        }
+        public PopupActions @Popup => new PopupActions(this);
         private int m_GamepadSchemeIndex = -1;
         public InputControlScheme GamepadScheme
         {
@@ -3627,6 +3788,11 @@ namespace CryptoQuest.Input
             void OnReset(InputAction.CallbackContext context);
             void OnExecute(InputAction.CallbackContext context);
             void OnInteract(InputAction.CallbackContext context);
+        }
+        public interface IPopupActions
+        {
+            void OnCancel(InputAction.CallbackContext context);
+            void OnConfirm(InputAction.CallbackContext context);
         }
     }
 }
