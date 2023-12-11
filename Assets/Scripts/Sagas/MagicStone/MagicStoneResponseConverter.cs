@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections;
+using System.Linq;
 using CryptoQuest.AbilitySystem.Abilities;
 using CryptoQuest.Item.MagicStone;
 using IndiGames.Core.Common;
@@ -33,11 +34,20 @@ namespace CryptoQuest.Sagas.MagicStone
                     AttachEquipmentId = responseObject.attachEquipment
                 }
             };
-            var passiveList = magicStone.Passives.ToList();
-            passiveList.Add(_passiveAbilityDatabase.GetDataById(responseObject.passiveSkillId1));
-            passiveList.Add(_passiveAbilityDatabase.GetDataById(responseObject.passiveSkillId2));
-            magicStone.Passives = passiveList.ToArray();
+
+            StartCoroutine(CoLoadPassiveAsync(magicStone, responseObject));
             return magicStone;
+        }
+
+        private IEnumerator CoLoadPassiveAsync(Item.MagicStone.MagicStone magicStone, Objects.MagicStone response)
+        {
+            yield return _passiveAbilityDatabase.LoadDataById(response.passiveSkillId1);
+            yield return _passiveAbilityDatabase.LoadDataById(response.passiveSkillId2);
+
+            var passiveList = magicStone.Passives.ToList();
+            passiveList.Add(_passiveAbilityDatabase.GetDataById(response.passiveSkillId1));
+            passiveList.Add(_passiveAbilityDatabase.GetDataById(response.passiveSkillId2));
+            magicStone.Passives = passiveList.ToArray();
         }
     }
 }

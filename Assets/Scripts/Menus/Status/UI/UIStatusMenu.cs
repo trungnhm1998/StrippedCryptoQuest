@@ -5,6 +5,7 @@ using CryptoQuest.Item.Equipment;
 using CryptoQuest.Menus.Status.Events;
 using CryptoQuest.Menus.Status.States;
 using CryptoQuest.Menus.Status.UI.Equipment;
+using CryptoQuest.Menus.Status.UI.MagicStone;
 using CryptoQuest.UI.Menu;
 using CryptoQuest.UI.Tooltips.Events;
 using FSM;
@@ -28,6 +29,8 @@ namespace CryptoQuest.Menus.Status.UI
         [field: SerializeField] public ShowTooltipEvent ShowTooltipEvent { get; private set; }
         [field: SerializeField] public ShowMagicStoneEvent ShowMagicStone { get; private set; }
         [field: SerializeField] public GameObject MagicStoneMenu { get; private set; }
+        [field: SerializeField] public UIAttachList UIAttachList { get; private set; }
+        [field: SerializeField] public MagicStoneSelection MagicStoneSelection { get; private set; }
 
         public ESlot ModifyingSlot { get; set; }
         public EEquipmentCategory ModifyingCategory { get; set; }
@@ -71,7 +74,7 @@ namespace CryptoQuest.Menus.Status.UI
             InspectingEquipment = equipment;
             ShowTooltipEvent.RaiseEvent(false);
             _previousState = _stateMachine.ActiveStateName;
-            _stateMachine.RequestStateChange(State.MAGIC_STONE);
+            _stateMachine.RequestStateChange(State.MAGIC_STONE_ENTRY);
         }
 
         public void BackToPreviousState()

@@ -5,23 +5,21 @@ using CryptoQuest.UI.Actions;
 using IndiGames.Core.Events;
 using TinyMessenger;
 
-namespace CryptoQuest.Menus.Status.States
+namespace CryptoQuest.Menus.Status.States.MagicStone
 {
-    public class MagicStone : StatusStateBase
+    public class Entry : StatusStateBase
     {
         private TinyMessageSubscriptionToken _inventoryFilledEvent;
 
-        public MagicStone(UIStatusMenu statusPanel) : base(statusPanel) { }
+        public Entry(UIStatusMenu statusPanel) : base(statusPanel) { }
 
         public override void OnEnter()
         {
-            StatusPanel.Input.MenuCancelEvent += BackToEquipmentSelection;
             _inventoryFilledEvent = ActionDispatcher.Bind<StoneInventoryFilled>(GetStonesFromInventory);
 
             ActionDispatcher.Dispatch(new ShowLoading());
             ActionDispatcher.Dispatch(new FetchProfileMagicStonesAction());
 
-            StatusPanel.MagicStoneMenu.SetActive(true);
             var equipmentDetails = StatusPanel.MagicStoneMenu.GetComponentInChildren<UIEquipmentDetails>(true);
             equipmentDetails.Init(StatusPanel.InspectingEquipment);
         }
@@ -29,18 +27,13 @@ namespace CryptoQuest.Menus.Status.States
         private void GetStonesFromInventory(StoneInventoryFilled _)
         {
             ActionDispatcher.Dispatch(new ShowLoading(false));
+            StatusPanel.MagicStoneMenu.SetActive(true);
+            fsm.RequestStateChange(State.MAGIC_STONE_SLOT_SELECTION);
         }
 
         public override void OnExit()
         {
-            StatusPanel.Input.MenuCancelEvent -= BackToEquipmentSelection;
             ActionDispatcher.Unbind(_inventoryFilledEvent);
-        }
-
-        private void BackToEquipmentSelection()
-        {
-            StatusPanel.MagicStoneMenu.SetActive(false);
-            StatusPanel.BackToPreviousState();
         }
     }
 }

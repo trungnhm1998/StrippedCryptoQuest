@@ -11,6 +11,7 @@ namespace CryptoQuest.Menus.Status.UI.MagicStone
         [SerializeField] private Image _icon;
         [SerializeField] private LocalizeStringEvent _localizedName;
         [SerializeField] private Image _illustration;
+        [SerializeField] private UIAttachList _attachList;
 
         private IEquipment _equipment;
 
@@ -25,6 +26,7 @@ namespace CryptoQuest.Menus.Status.UI.MagicStone
             _icon.sprite = _equipment.Type.Icon;
             _localizedName.StringReference = _equipment.Prefab.DisplayName;
             _illustration.LoadSpriteAndSet(_equipment.Prefab.Image);
+            _attachList.Init(_equipment.Data.StoneSlots);
         }
     }
 }

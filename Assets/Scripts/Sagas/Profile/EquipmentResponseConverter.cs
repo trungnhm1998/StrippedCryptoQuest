@@ -64,7 +64,8 @@ namespace CryptoQuest.Sagas.Profile
                 MinLevel = response.minLv,
                 MaxLevel = response.maxLv,
                 ValuePerLvl = response.valuePerLv,
-                Stats = GetStats(response)
+                Stats = GetStats(response),
+                StoneSlots = response.slot
             };
 
             _prefabDatabase.LoadDataByIdAsync(response.equipmentIdForeign).Completed += op =>

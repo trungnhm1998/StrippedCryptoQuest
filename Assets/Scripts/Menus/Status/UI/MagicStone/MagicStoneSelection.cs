@@ -1,0 +1,34 @@
+﻿using UnityEngine;
+using UnityEngine.UI;
+
+namespace CryptoQuest.Menus.Status.UI.MagicStone
+{
+    public class MagicStoneSelection : MonoBehaviour
+    {
+        [field: SerializeField] public UIStoneList UIStoneList { get; private set; }
+        [SerializeField] private Button[] _stoneTypes;
+
+        public void EnterElementNavigation()
+        {
+            SetActiveAllElementButtons(true);
+            _stoneTypes[0].Select();
+        }
+
+        public void EnterStoneSelection()
+        {
+            SetActiveAllElementButtons(false);
+            UIStoneList.SetActiveAllStoneButtons(true);
+        }
+
+        public void ExitStoneSelection()
+        {
+            UIStoneList.SetActiveAllStoneButtons(false);
+        }
+
+        private void SetActiveAllElementButtons(bool enable)
+        {
+            foreach (var type in _stoneTypes)
+                type.enabled = enable;
+        }
+    }
+}

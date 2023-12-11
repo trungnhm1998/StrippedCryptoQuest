@@ -1,4 +1,5 @@
 ﻿using CryptoQuest.Menus.Status.UI;
+using UnityEngine;
 
 namespace CryptoQuest.Menus.Status.States
 {
@@ -6,13 +7,13 @@ namespace CryptoQuest.Menus.Status.States
     {
         public ModifyEquipments(UIStatusMenu statusPanel) : base(statusPanel) { }
 
-
         public override void OnEnter()
         {
             StatusPanel.ShowTooltipEvent.RaiseEvent(false);
             StatusPanel.Input.MenuCancelEvent += BackToOverview;
 
             StatusPanel.CharacterEquipmentsPanel.Hide();
+            StatusPanel.EquipmentsInventoryPanel.SetActiveAllEquipmentButtons(true);
             StatusPanel.EquipmentsInventoryPanel.RenderEquipmentsInInventory(StatusPanel.InspectingHero,
                 StatusPanel.ModifyingSlot, StatusPanel.ModifyingCategory);
         }
@@ -21,6 +22,7 @@ namespace CryptoQuest.Menus.Status.States
         {
             StatusPanel.Input.MenuCancelEvent -= BackToOverview;
             StatusPanel.ShowTooltipEvent.RaiseEvent(false);
+            StatusPanel.EquipmentsInventoryPanel.SetActiveAllEquipmentButtons(false);
         }
 
         private void BackToOverview()

@@ -2,12 +2,15 @@
 using System.Collections.Generic;
 using CryptoQuest.Item.MagicStone;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.Pool;
+using UnityEngine.UI;
 
 namespace CryptoQuest.Menus.Status.UI.MagicStone
 {
     public class UIStoneList : MonoBehaviour
     {
+        public event UnityAction ElementSelectedEvent;
         [SerializeField] private MagicStoneInventory _inventory;
         [SerializeField] private Transform _scrollRectContent;
         [SerializeField] private UISingleStone _singleStonePrefab;
@@ -38,10 +41,7 @@ namespace CryptoQuest.Menus.Status.UI.MagicStone
             RenderWithData(filteredStone);
         }
 
-        public void RenderAll()
-        {
-            RenderWithData(_inventory.MagicStones);
-        }
+        public void RenderAll() => RenderWithData(_inventory.MagicStones);
 
         private void RenderWithData(List<IMagicStone> stoneDataList)
         {
@@ -52,6 +52,20 @@ namespace CryptoQuest.Menus.Status.UI.MagicStone
                 item.SetInfo(stoneData);
                 _items.Add(item);
             }
+        }
+
+        public void ElementButtonPressed_SelectFirstStoneInList()
+        {
+            var stoneButton = _scrollRectContent.GetComponentInChildren<Button>();
+            stoneButton.Select();
+            ElementSelectedEvent?.Invoke();
+        }
+
+        public void SetActiveAllStoneButtons(bool enable)
+        {
+            var stoneButtons = _scrollRectContent.GetComponentsInChildren<Button>();
+            foreach (var button in stoneButtons)
+                button.enabled = enable;
         }
 
         private UISingleStone OnCreate()

@@ -12,6 +12,7 @@ namespace CryptoQuest.Menus.Status.UI.MagicStone
         [SerializeField] private Image _icon;
         [SerializeField] private LocalizeStringEvent _localizedName;
         [SerializeField] private TMP_Text _level;
+        [SerializeField] private GameObject _selectedEffect;
 
         private IMagicStone _stoneData;
         public IMagicStone Data => _stoneData;
