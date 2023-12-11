@@ -1,11 +1,12 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using CryptoQuest.Item.MagicStone;
 using UnityEngine;
 using UnityEngine.Pool;
 using UnityEngine.UI;
 
-namespace CryptoQuest.BlackSmith.UpgradeStoneUI.UI
+namespace CryptoQuest.BlackSmith.UpgradeStone.UI
 {
     public class UIUpgradableStoneList : MonoBehaviour
     {
@@ -13,8 +14,10 @@ namespace CryptoQuest.BlackSmith.UpgradeStoneUI.UI
 
         [SerializeField] private ScrollRect _scrollRect;
         [SerializeField] private UIUpgradableStone _stonePrefab;
-
+        public Transform Content => _scrollRect.content;
         private IObjectPool<UIUpgradableStone> _itemPool;
+        private const float ERROR_PRONE_DELAY = 0.05f;
+        private List<UIUpgradableStone> _cachedItems = new();
 
         private void Awake()
         {
@@ -22,18 +25,32 @@ namespace CryptoQuest.BlackSmith.UpgradeStoneUI.UI
                 OnReturnToPool, OnDestroyPool);
         }
 
-        public void RenderEquipments(List<IMagicStone> items)
+        public void RenderStones(List<IMagicStone> items)
         {
             foreach (var stone in items)
             {
                 var equipmentUI = _itemPool.Get();
                 equipmentUI.Initialize(stone);
             }
+
+            Invoke(nameof(SelectFirstButton), ERROR_PRONE_DELAY);
         }
 
-        public void ClearEquipmentsWithException(UIUpgradableStone exceptionUI = null)
+        private void SelectFirstButton()
         {
-            foreach (var item in _scrollRect.content.GetComponentsInChildren<UIUpgradableStone>())
+            foreach (var item in _cachedItems)
+            {
+                if (item.Button.interactable)
+                {
+                    item.Button.Select();
+                    return;
+                }
+            }
+        }
+
+        public void ClearStonesWithException(UIUpgradableStone exceptionUI = null)
+        {
+            foreach (var item in _cachedItems.ToList())
             {
                 if (exceptionUI != null && item == exceptionUI) continue;
                 _itemPool.Release(item);
@@ -58,12 +75,14 @@ namespace CryptoQuest.BlackSmith.UpgradeStoneUI.UI
             item.transform.SetAsLastSibling();
             item.gameObject.SetActive(true);
             item.Pressed += OnSelectItem;
+            _cachedItems.Add(item);
         }
 
         private void OnReturnToPool(UIUpgradableStone item)
         {
             item.gameObject.SetActive(false);
             item.Pressed -= OnSelectItem;
+            _cachedItems.Remove(item);
         }
 
         private void OnDestroyPool(UIUpgradableStone item)
