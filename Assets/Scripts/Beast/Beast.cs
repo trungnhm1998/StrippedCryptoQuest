@@ -2,6 +2,7 @@ using System;
 using CryptoQuest.AbilitySystem.Abilities;
 using CryptoQuest.AbilitySystem.Attributes;
 using CryptoQuest.Character;
+using CryptoQuest.Gameplay;
 using UnityEngine;
 using UnityEngine.Localization;
 
@@ -16,8 +17,11 @@ namespace CryptoQuest.Beast
         int Id { get; }
         string Name { get; }
         BeastTypeSO Type { get; }
-        int Stars { get; }
+        StatsDef Stats { get; }
         int Level { get; }
+        int MaxLevel { get; }
+        int Stars { get; }
+        bool IsValid();
     }
 
     [Serializable]
@@ -25,14 +29,17 @@ namespace CryptoQuest.Beast
     {
         [field: SerializeField] public int Id { get; set; }
         [field: SerializeField] public int Level { get; set; }
+        [field: SerializeField] public int MaxLevel { get; set; }
+        [field: SerializeField] public int Stars { get; set; }
         [field: SerializeField] public int TokenId { get; set; }
         [field: SerializeField] public Elemental Elemental { get; set; }
         [field: SerializeField] public CharacterClass Class { get; set; }
         [field: SerializeField] public BeastTypeSO Type { get; set; }
-        [field: SerializeField] public int Stars { get; set; }
+        [field: SerializeField] public StatsDef Stats { get; set; }
         [field: SerializeField] public PassiveAbility Passive { get; set; }
         public Sprite Image { get; set; }
         public string Name => Type.BeastInformation.LocalizedName.GetLocalizedString();
         public LocalizedString LocalizedName => Type.BeastInformation.LocalizedName;
+        public bool IsValid() => Elemental != null && Class != null && Type != null ;
     }
 }

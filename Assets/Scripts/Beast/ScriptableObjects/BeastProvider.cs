@@ -6,7 +6,7 @@ namespace CryptoQuest.Beast.ScriptableObjects
     public class BeastProvider : ScriptableObject
     {
         public UnityAction<IBeast> EquippingBeastChanged;
-        [SerializeReference, SubclassSelector] private IBeast _beast = NullBeast.Instance;
+        [SerializeReference, SubclassSelector] private IBeast _beast;
 
         public IBeast EquippingBeast
         {
