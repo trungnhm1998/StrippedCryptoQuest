@@ -4,6 +4,7 @@ using System.Linq;
 using CryptoQuest.Battle.Components;
 using CryptoQuest.Gameplay.Inventory;
 using CryptoQuest.Item.Equipment;
+using CryptoQuest.Menu;
 using IndiGames.Core.Common;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -174,5 +175,12 @@ namespace CryptoQuest.Menus.Status.UI.Equipment
         }
 
         public void UnequipPressed() => _equipmentsController.Unequip(_slotSlot);
+
+        public void SetActiveAllEquipmentButtons(bool enable)
+        {
+            var equipmentButtons = _scrollRect.content.GetComponentsInChildren<MultiInputButton>();
+            foreach (var button in equipmentButtons)
+                button.enabled = enable;
+        }
     }
 }

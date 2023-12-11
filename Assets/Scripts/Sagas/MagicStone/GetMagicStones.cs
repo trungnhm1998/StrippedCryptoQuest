@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using CryptoQuest.AbilitySystem.Abilities;
 using CryptoQuest.Item.MagicStone;
 using CryptoQuest.Networking;
 using CryptoQuest.Sagas.Objects;
@@ -16,13 +13,23 @@ using UnityEngine;
 
 namespace CryptoQuest.Sagas.MagicStone
 {
-    public class GetMagicStones : SagaBase<FetchProfileMagicStonesAction>
+    public class GetMagicStones : MonoBehaviour
     {
-        [SerializeField] private MagicStoneDefinitionDatabase _magicStoneDefinitionDatabase;
-        [SerializeField] private PassiveAbilityDatabase _passiveAbilityDatabase;
         [SerializeField] private MagicStoneInventory _stoneInventory;
 
-        protected override void HandleAction(FetchProfileMagicStonesAction _)
+        private TinyMessageSubscriptionToken _fetchEvent;
+
+        private void OnEnable()
+        {
+            _fetchEvent = ActionDispatcher.Bind<FetchProfileMagicStonesAction>(HandleAction);
+        }
+
+        private void OnDisable()
+        {
+            ActionDispatcher.Unbind(_fetchEvent);
+        }
+
+        private void HandleAction(FetchProfileMagicStonesAction _)
         {
             ActionDispatcher.Dispatch(new ShowLoading());
             var restClient = ServiceProvider.GetService<IRestClient>();
@@ -39,50 +46,32 @@ namespace CryptoQuest.Sagas.MagicStone
             var responseStones = obj.data.stones;
             if (responseStones.Length == 0) return;
 
-            FilterStones(responseStones, EMagicStoneStatus.InBox);
-            FilterStones(responseStones, EMagicStoneStatus.InGame);
+            FilterStonesByStatus(responseStones);
 
             ActionDispatcher.Dispatch<GetStonesResponsed>(new GetStonesResponsed(obj));
         }
 
-        private void FilterStones(Objects.MagicStone[] stonesResponse, EMagicStoneStatus status)
+        private void FilterStonesByStatus(Objects.MagicStone[] stonesResponse)
         {
             if (stonesResponse.Length == 0) return;
 
-            var filteredStones = stonesResponse
-                .Where(stone => stone.inGameStatus.Equals((int)status))
-                .ToList();
+            var dboxStones = stonesResponse.Where(stone => stone.inGameStatus == (int)Objects.EMagicStoneStatus.InBox).ToArray();
+            ActionDispatcher.Dispatch(new FetchInboxMagicStonesSuccess(dboxStones));
 
-            var filteredStonesList = new List<IMagicStone>() { NullMagicStone.Instance };
-            var converter = ServiceProvider.GetService<IMagicStoneResponseConverter>();
-            filteredStones.ForEach(stone => filteredStonesList.Add(converter.Convert(stone)));
-
-            switch (status)
-            {
-                case EMagicStoneStatus.InBox:
-                    ActionDispatcher.Dispatch(new FetchInboxMagicStonesSuccess(filteredStones.ToArray()));
-                    break;
-                case EMagicStoneStatus.InGame:
-                default:
-                    OnInventoryFilled(filteredStones.ToArray());
-                    ActionDispatcher.Dispatch(new FetchIngameMagicStonesSuccess(filteredStones.ToArray()));
-                    break;
-            }
+            var inGameStones = stonesResponse.Where(stone => stone.inGameStatus == (int)Objects.EMagicStoneStatus.InGame).ToArray();
+            ActionDispatcher.Dispatch(new FetchIngameMagicStonesSuccess(inGameStones));
+            FillInventory(inGameStones);
         }
 
-        private void OnInventoryFilled(Objects.MagicStone[] stonesResponse)
-            => StartCoroutine(CoLoadAndUpdateInventory(stonesResponse));
-
-        private IEnumerator CoLoadAndUpdateInventory(Objects.MagicStone[] stonesResponse)
+        private void FillInventory(Objects.MagicStone[] stonesResponse)
         {
+            _converter ??= ServiceProvider.GetService<IMagicStoneResponseConverter>();
             _stoneInventory.MagicStones.Clear();
             var converter = ServiceProvider.GetService<IMagicStoneResponseConverter>();
             foreach (var stoneResponse in stonesResponse)
             {
                 if (stoneResponse.id == -1) continue;
-                yield return _passiveAbilityDatabase.LoadDataById(stoneResponse.passiveSkillId1);
-                yield return _passiveAbilityDatabase.LoadDataById(stoneResponse.passiveSkillId2);
-                _stoneInventory.MagicStones.Add(converter.Convert(stoneResponse));
+                _stoneInventory.MagicStones.Add(_converter.Convert(stoneResponse));
             }
 
             ActionDispatcher.Dispatch(new StoneInventoryFilled());
@@ -90,7 +79,7 @@ namespace CryptoQuest.Sagas.MagicStone
 
         private void OnError(Exception error)
         {
-            Debug.LogWarning("FetchProfileCharacters::OnError " + error);
+            Debug.Log($"<color=white>Saga::GetMagicStones::Error</color>:: {error}");
             ActionDispatcher.Dispatch(new ShowLoading(false));
             ActionDispatcher.Dispatch(new ServerErrorPopup());
             ActionDispatcher.Dispatch(new GetStonesFailed());

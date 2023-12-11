@@ -1,4 +1,5 @@
-﻿using CryptoQuest.Item.Equipment;
+﻿using System;
+using CryptoQuest.Item.Equipment;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Localization.Components;
@@ -13,6 +14,7 @@ namespace CryptoQuest.Menus.Status.UI.Equipment
         [SerializeField] private LocalizeStringEvent _nameLocalize;
         [SerializeField] private TMP_Text _nameText;
         [SerializeField] private RectTransform _tooltipPosition;
+        [SerializeField] private GameObject[] _stoneSlots;
 
         [SerializeField] private Color _disabledColor;
         [SerializeField] private Color _enabledColor;
@@ -31,6 +33,9 @@ namespace CryptoQuest.Menus.Status.UI.Equipment
             _nameText.color = _enabledColor;
             if (!equipment.Prefab.DisplayName.IsEmpty) _nameLocalize.StringReference = equipment.Prefab.DisplayName;
             _icon.sprite = equipment.Type.Icon;
+
+            for (int i = 0; i < equipment.Data.StoneSlots; i++)
+                _stoneSlots[i].SetActive(true);
         }
 
         public void DisableButton()
@@ -39,5 +44,11 @@ namespace CryptoQuest.Menus.Status.UI.Equipment
         }
 
         public void Reset() => _equipment = default;
+
+        private void OnDisable()
+        {
+            foreach (var slot in _stoneSlots)
+                slot.SetActive(false);
+        }
     }
 }

@@ -15,13 +15,11 @@ namespace CryptoQuest.Menus.Status.UI.MagicStone
         public void OnSelect(BaseEventData _)
         {
             _input.MenuInteractEvent += RequestShowMagicStoneMenu;
-            Debug.Log($"<color=green>MagicStoneTrigger::OnSelect</color>");
         }
 
         public void OnDeselect(BaseEventData eventData)
         {
             _input.MenuInteractEvent -= RequestShowMagicStoneMenu;
-            Debug.Log($"<color=green>MagicStoneTrigger::OnDeselect</color>");
         }
 
         private void OnDisable()
@@ -32,7 +30,6 @@ namespace CryptoQuest.Menus.Status.UI.MagicStone
         private void RequestShowMagicStoneMenu()
         {
             if (_uiEquipment.Equipment == null || _uiEquipment.Equipment.IsValid() == false) return;
-            Debug.Log($"<color=green>MagicStoneTrigger::RequestShowMagicStoneMenu</color>");
             _showMagicStone.RaiseEvent(_uiEquipment.Equipment);
         }
     }
