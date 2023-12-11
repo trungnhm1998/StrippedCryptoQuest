@@ -2,6 +2,7 @@ using System;
 using CryptoQuest.BlackSmith.Evolve.States;
 using CryptoQuest.BlackSmith.States.Overview;
 using CryptoQuest.BlackSmith.Upgrade.States;
+using CryptoQuest.BlackSmith.UpgradeStone.States;
 using FSM;
 
 namespace CryptoQuest.BlackSmith
@@ -23,7 +24,7 @@ namespace CryptoQuest.BlackSmith
             AddState(State.OVERVIEW, new OverviewState(context));
             AddState(State.UPGRADING, new UpgradeStateMachine(context));
             AddState(State.EVOLVING, new EvolveStateMachine(context));
-            AddState(State.STONE_UPGRADE, new EvolveStateMachine(context));
+            AddState(State.STONE_UPGRADE, new UpgradeMagicStoneStateMachine(context));
 
             SetStartState(State.OVERVIEW);
         }

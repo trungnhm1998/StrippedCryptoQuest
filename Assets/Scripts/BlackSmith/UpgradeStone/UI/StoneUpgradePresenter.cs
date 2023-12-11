@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.Localization;
 
-namespace CryptoQuest.BlackSmith.UpgradeStoneUI.UI
+namespace CryptoQuest.BlackSmith.UpgradeStone.UI
 {
     public class StoneUpgradePresenter : MonoBehaviour
     {
