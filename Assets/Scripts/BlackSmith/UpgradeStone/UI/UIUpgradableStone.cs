@@ -1,5 +1,6 @@
 using System;
 using CryptoQuest.Item.MagicStone;
+using CryptoQuest.Menu;
 using CryptoQuest.UI.Extensions;
 using TMPro;
 using UnityEngine;
@@ -10,8 +11,10 @@ namespace CryptoQuest.BlackSmith.UpgradeStone.UI
 {
     public class UIUpgradableStone : MonoBehaviour
     {
+        public event Action<UIUpgradableStone> Selected;
+        public event Action DeSelected;
         public event Action<UIUpgradableStone> Pressed;
-        [field: SerializeField] public Button Button { get; private set; }
+        [field: SerializeField] public MultiInputButton Button { get; private set; }
         [SerializeField] private Image _icon;
         [SerializeField] private LocalizeStringEvent _name;
         [SerializeField] private TMP_Text _lvlText;
@@ -30,13 +33,34 @@ namespace CryptoQuest.BlackSmith.UpgradeStone.UI
             _lvlText.text = $"Lv.{magicStone.Level}";
         }
 
+        private void OnEnable()
+        {
+            Button.Selected += OnSelected;
+            Button.DeSelected += OnDeselected;
+        }
+
+        private void OnDisable()
+        {
+            Button.Selected -= OnSelected;
+            Button.DeSelected -= OnDeselected;
+        }
+
+        private void OnDeselected()
+        {
+            DeSelected?.Invoke();
+        }
+
         public void OnPressed()
         {
-            if (_materialTag.activeSelf) return;
             Pressed?.Invoke(this);
         }
 
-        public void ResetItemStates()
+        private void OnSelected()
+        {
+            Selected?.Invoke(this);
+        }
+
+        private void ResetItemStates()
         {
             _materialTag.SetActive(false);
             Button.interactable = true;
