@@ -1,4 +1,8 @@
-﻿using CryptoQuest.Sagas.Objects;
+﻿using System.Collections;
+using CryptoQuest.Item.Equipment;
+using CryptoQuest.Sagas.Objects;
+using CryptoQuest.Sagas.Profile;
+using IndiGames.Core.Common;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Localization.Components;
@@ -13,7 +17,12 @@ namespace CryptoQuest.Menus.DimensionalBox.UI.EquipmentsTransfer
         [SerializeField] private LocalizeStringEvent _name;
         [SerializeField] private GameObject _pendingTag;
         [SerializeField] private GameObject _equippedTag;
+        [SerializeField] private GameObject _transferringTag;
+        [SerializeField] private RectTransform _contentRectTransform;
+
+        private IEquipment _equipment;
         public EquipmentResponse Equipment { get; private set; }
+
         public bool MarkedForTransfer
         {
             get => _pendingTag.activeSelf;
@@ -24,14 +33,35 @@ namespace CryptoQuest.Menus.DimensionalBox.UI.EquipmentsTransfer
 
         public void Initialize(EquipmentResponse equipment)
         {
+            _equipment = null;
             MarkedForTransfer = false;
             Equipment = equipment;
             _nameText.text = "Item " + Id;
+            _equippedTag.SetActive(Equipment.IsEquipped);
+            _transferringTag.SetActive(Equipment.IsTransferring);
+
+            _equipment = ServiceProvider.GetService<IEquipmentResponseConverter>().Convert(equipment);
+
+            StartCoroutine(UpdateUIWhenEquipmentLoaded()); // TODO: Potential unload
+        }
+
+        private IEnumerator UpdateUIWhenEquipmentLoaded()
+        {
+            yield return new WaitUntil(() => _equipment.IsValid());
+            if (!_equipment.DisplayName.IsEmpty) _name.StringReference = _equipment.DisplayName;
+            _icon.sprite = _equipment.Type.Icon;
+            yield return new WaitForSeconds(0.5f);
+            LayoutRebuilder.MarkLayoutForRebuild(_contentRectTransform);
+        }
+
+        private void OnDisable()
+        {
+            _equipment = null;
         }
 
         public void OnPressed()
         {
-            if (_equippedTag.activeSelf) return;
+            if (_equippedTag.activeSelf || _transferringTag.activeSelf) return;
             MarkedForTransfer = !MarkedForTransfer;
         }
     }
