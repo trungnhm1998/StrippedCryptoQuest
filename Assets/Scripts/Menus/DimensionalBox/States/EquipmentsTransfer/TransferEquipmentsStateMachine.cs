@@ -64,7 +64,11 @@ namespace CryptoQuest.Menus.DimensionalBox.States.EquipmentsTransfer
         {
             uiList.Initialize(equipments);
             uiList.Interactable = false;
-            if (_hasFocus) return;
+            if (_hasFocus)
+            {
+                _hasFocus = false;
+                return;
+            }
             _hasFocus = uiList.TryFocus();
         }
 
