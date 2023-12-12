@@ -3,8 +3,11 @@ using CryptoQuest.Gameplay.PlayerParty;
 using CryptoQuest.Item.Equipment;
 using CryptoQuest.Menus.Status.UI;
 using CryptoQuest.Menus.Status.UI.Equipment;
+using CryptoQuest.UI.Utilities;
 using IndiGames.Core.Common;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 namespace CryptoQuest.Menus.Status.States
 {
@@ -49,6 +52,8 @@ namespace CryptoQuest.Menus.Status.States
             StatusPanel.InspectingHeroChanged += RenderHero;
 
             SelectInspectingHero();
+            var selectable = StatusPanel.CharacterEquipmentsPanel.GetComponentInChildren<Selectable>();
+            EventSystem.current.SetSelectedGameObject(selectable.gameObject);
         }
 
         private void SelectInspectingHero()
