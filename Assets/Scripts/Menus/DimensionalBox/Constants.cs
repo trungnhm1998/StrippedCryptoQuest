@@ -9,6 +9,6 @@
 
     public static class API
     {
-        public const string TRANSFER = "cryptogequipments/dimension/transfer";
+        public const string TRANSFER = "crypto/equipments/dimension/transfer";
     }
 }
