@@ -17,7 +17,7 @@ namespace CryptoQuest.Tests.Runtime.UI
     public class GenericDialogControllerTests
     {
         private GenericDialogController _controller;
-        UIGenericDialog _dialog;
+        private UIGenericDialog _dialog;
 
         [UnitySetUp]
         public virtual IEnumerator Setup()
@@ -67,7 +67,7 @@ namespace CryptoQuest.Tests.Runtime.UI
     public class UIGenericDialogTest : InputTestFixture
     {
         private GenericDialogController _controller;
-        UIGenericDialog _dialog;
+        private UIGenericDialog _dialog;
 
         [UnitySetUp]
         public virtual IEnumerator Setup()
