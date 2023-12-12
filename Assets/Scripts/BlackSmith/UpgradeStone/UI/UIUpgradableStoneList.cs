@@ -10,7 +10,8 @@ namespace CryptoQuest.BlackSmith.UpgradeStone.UI
 {
     public class UIUpgradableStoneList : MonoBehaviour
     {
-        public event Action<UIUpgradableStone> EquipmentSelected;
+        public event Action<IMagicStone> StoneSelected;
+        public event Action StoneDeselected;
 
         [SerializeField] private ScrollRect _scrollRect;
         [SerializeField] private UIUpgradableStone _stonePrefab;
@@ -59,7 +60,12 @@ namespace CryptoQuest.BlackSmith.UpgradeStone.UI
 
         private void OnSelectItem(UIUpgradableStone ui)
         {
-            EquipmentSelected?.Invoke(ui);
+            StoneSelected?.Invoke(ui.MagicStone);
+        }
+
+        private void OnDeselectItem()
+        {
+            StoneDeselected?.Invoke();
         }
 
         #region Pool-handler
@@ -74,14 +80,16 @@ namespace CryptoQuest.BlackSmith.UpgradeStone.UI
         {
             item.transform.SetAsLastSibling();
             item.gameObject.SetActive(true);
-            item.Pressed += OnSelectItem;
+            item.Selected += OnSelectItem;
+            item.DeSelected += OnDeselectItem;
             _cachedItems.Add(item);
         }
 
         private void OnReturnToPool(UIUpgradableStone item)
         {
             item.gameObject.SetActive(false);
-            item.Pressed -= OnSelectItem;
+            item.Selected -= OnSelectItem;
+            item.DeSelected -= OnDeselectItem;
             _cachedItems.Remove(item);
         }
 
