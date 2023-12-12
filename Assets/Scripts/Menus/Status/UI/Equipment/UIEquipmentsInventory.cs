@@ -64,7 +64,6 @@ namespace CryptoQuest.Menus.Status.UI.Equipment
             EEquipmentCategory categoryType)
         {
             _contents.SetActive(true);
-            if (_hero == hero && _slotSlot == modifySlot && _categoryType == categoryType) return;
             _hero = hero;
             _slotSlot = modifySlot;
             _categoryType = categoryType;
