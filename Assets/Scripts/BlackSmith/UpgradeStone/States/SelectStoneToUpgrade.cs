@@ -1,5 +1,5 @@
+using CryptoQuest.BlackSmith.UpgradeStone.UI;
 using CryptoQuest.Item.MagicStone;
-using UnityEngine.EventSystems;
 
 namespace CryptoQuest.BlackSmith.UpgradeStone.States
 {
@@ -13,14 +13,26 @@ namespace CryptoQuest.BlackSmith.UpgradeStone.States
             base.OnEnter();
             _upgradableStoneListUI.ClearStonesWithException();
             _upgradableStoneListUI.RenderStones(_magicStoneInventory.MagicStones);
-            if (_upgradableStoneListUI.Content.childCount > 0)
-                EventSystem.current.SetSelectedGameObject(_upgradableStoneListUI.Content.GetChild(0).gameObject);
+            _upgradableStoneListUI.StoneSelected += OnSelectBaseItem;
+        }
+
+        public override void OnExit()
+        {
+            base.OnExit();
+            _upgradableStoneListUI.StoneSelected -= OnSelectBaseItem;
+            _upgradableStoneListUI.ClearStonesWithException();
         }
 
 
         public override void OnCancel()
         {
             _stateMachine.BackToOverview();
+        }
+
+        private void OnSelectBaseItem(UIUpgradableStone stone)
+        {
+            _stateMachine.StoneToUpgrade = stone;
+            _stateMachine.RequestStateChange(EUpgradeMagicStoneStates.SelectMaterialStone);
         }
     }
 }

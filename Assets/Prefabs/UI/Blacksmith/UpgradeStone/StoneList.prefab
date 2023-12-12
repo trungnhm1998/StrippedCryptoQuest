@@ -11,7 +11,8 @@ GameObject:
   - component: {fileID: 4525545791716857462}
   - component: {fileID: 1132668680182414165}
   - component: {fileID: 1331044391706340834}
-  - component: {fileID: 9151655017253807974}
+  - component: {fileID: 6107837248127046881}
+  - component: {fileID: 582619368100728223}
   m_Layer: 5
   m_Name: ScrollView
   m_TagString: Untagged
@@ -77,7 +78,7 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &9151655017253807974
+--- !u!114 &6107837248127046881
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -86,12 +87,23 @@ MonoBehaviour:
   m_GameObject: {fileID: 1884817645162010867}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: db680cf6b1e7353428c6159ae1ee1dec, type: 3}
+  m_Script: {fileID: 11500000, guid: 96887592a0334ea2879075e4d3a2a417, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _scrollRect: {fileID: 1331044391706340834}
-  _singleItemRect: {fileID: 4493974615691473294, guid: 11f7e08f6118aed4696c670a457e95ab, type: 3}
-  _useUpdate: 1
+--- !u!114 &582619368100728223
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1884817645162010867}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86522a7bd44e429e9884d6e05ea420cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _upArrow: {fileID: 5452768078559713436}
+  _downArrow: {fileID: 4767970879934539745}
 --- !u!1 &2716696091172634077
 GameObject:
   m_ObjectHideFlags: 0
@@ -267,6 +279,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1464654027684857052}
   - component: {fileID: 7195808194330255763}
+  - component: {fileID: 4243363208133583144}
   m_Layer: 5
   m_Name: StoneList
   m_TagString: Untagged
@@ -304,6 +317,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 097967e25c724d9eaaa573155f807dbd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _scrollRect: {fileID: 1331044391706340834}
+  _stonePrefab: {fileID: 1008948443688143577, guid: 3da7ebdd63904e34ab826176abf6422a, type: 3}
+--- !u!114 &4243363208133583144
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3934113162934939369}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b560c2e122834ffd85d9e297dc121799, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _scrollRect: {fileID: 1331044391706340834}
@@ -818,7 +845,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 445, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &2182307579191917743
 MonoBehaviour:
@@ -837,7 +864,7 @@ MonoBehaviour:
     m_Right: 0
     m_Top: 0
     m_Bottom: 0
-  m_ChildAlignment: 4
+  m_ChildAlignment: 3
   m_Spacing: 0
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 1

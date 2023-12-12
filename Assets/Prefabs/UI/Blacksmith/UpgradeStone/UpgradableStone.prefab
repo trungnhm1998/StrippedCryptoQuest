@@ -200,6 +200,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1547385317360150886}
   - component: {fileID: 1279230161935445024}
+  - component: {fileID: 4357569921471806345}
+  - component: {fileID: 5459613363517803610}
   m_Layer: 5
   m_Name: Content
   m_TagString: Untagged
@@ -242,6 +244,44 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_HorizontalFit: 2
   m_VerticalFit: 0
+--- !u!222 &4357569921471806345
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3599191256854526753}
+  m_CullTransparentMesh: 1
+--- !u!114 &5459613363517803610
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3599191256854526753}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: b618f6b96a58948e286da5e9f8f0b85c, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
 --- !u!1 &4137927615846525680
 GameObject:
   m_ObjectHideFlags: 0
@@ -583,10 +623,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <Button>k__BackingField: {fileID: 7580833117744222594}
+  <MaterialTag>k__BackingField: {fileID: 4450639922624070599}
+  _highlight: {fileID: 5459613363517803610}
   _icon: {fileID: 5015609419719623106}
   _name: {fileID: 719013998406803801}
   _lvlText: {fileID: 775119220941800599}
-  _materialTag: {fileID: 4450639922624070599}
 --- !u!222 &6008523105001526087
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -638,7 +679,20 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 796513755204774528}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1008948443688143577}
+        m_TargetAssemblyTypeName: CryptoQuest.BlackSmith.UpgradeStone.UI.UIUpgradableStone,
+          IndiGames.CryptoQuest.BlackSmith
+        m_MethodName: OnPressed
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &796513755204774528
 MonoBehaviour:
   m_ObjectHideFlags: 0

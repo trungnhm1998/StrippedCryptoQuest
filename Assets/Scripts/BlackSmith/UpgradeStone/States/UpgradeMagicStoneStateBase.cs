@@ -7,6 +7,7 @@ namespace CryptoQuest.BlackSmith.UpgradeStone.States
     {
         protected UpgradeMagicStoneStateMachine _stateMachine { get; }
         protected UIUpgradableStoneList _upgradableStoneListUI => _stateMachine.UpgradableStoneListUI;
+        protected UIMaterialStoneList _materialStoneList => _stateMachine.MaterialStoneListUI;
 
         protected UpgradeMagicStoneStateBase(UpgradeMagicStoneStateMachine stateMachine) : base(false) =>
             _stateMachine = stateMachine;
