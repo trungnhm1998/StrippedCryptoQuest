@@ -337,6 +337,8 @@ GameObject:
   - component: {fileID: 589526427693769606}
   - component: {fileID: 2125598761504152024}
   - component: {fileID: 5147017006556618537}
+  - component: {fileID: 4359909006449236987}
+  - component: {fileID: 5512962072481784858}
   m_Layer: 0
   m_Name: BattleBGMController
   m_TagString: Untagged
@@ -371,8 +373,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d9101d2f1ed5aa42bf2a5be0b375f96, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _musicEventChannel: {fileID: 11400000, guid: 3b145a5bdef529242b1938ff468cd3f1, type: 2}
-  _sfxEventChannel: {fileID: 11400000, guid: d94d8af02e524214383b1f54ee255f34, type: 2}
+  _audioHandler: {fileID: 5512962072481784858}
 --- !u!114 &5147017006556618537
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -385,5 +386,38 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17cdca639f96acc46b70746f70ee7d10, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _battleBus: {fileID: 11400000, guid: 2290057e7f48d1046b5e0a6c3f6dc910, type: 2}
+  _ignoredCues:
+  - {fileID: 11400000, guid: 0f01bfaea2aecbd40aff831ad3dcae76, type: 2}
+  _gameState: {fileID: 11400000, guid: 189395e2c5502c14ca5eed5a3c189d8d, type: 2}
   _musicEventChannel: {fileID: 11400000, guid: 3b145a5bdef529242b1938ff468cd3f1, type: 2}
+--- !u!114 &4359909006449236987
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5019762564768956137}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9794e5ab39380a468215211d45d2da6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _winSfx: {fileID: 11400000, guid: 721aa847425ab7740987d621b40d86e7, type: 2}
+  _winBgm: {fileID: 11400000, guid: 0f01bfaea2aecbd40aff831ad3dcae76, type: 2}
+  _retreatSfx: {fileID: 11400000, guid: 5be6b19b369f2664e84057fc527bfbe3, type: 2}
+  _audioHandler: {fileID: 5512962072481784858}
+  _sfxEventChannel: {fileID: 11400000, guid: d94d8af02e524214383b1f54ee255f34, type: 2}
+--- !u!114 &5512962072481784858
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5019762564768956137}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f7c597f56d5cce42916af7f109d8878, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _musicEventChannel: {fileID: 11400000, guid: 3b145a5bdef529242b1938ff468cd3f1, type: 2}
+  _sfxEventChannel: {fileID: 11400000, guid: d94d8af02e524214383b1f54ee255f34, type: 2}

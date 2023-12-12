@@ -1,5 +1,7 @@
-﻿using CryptoQuest.Gameplay;
+﻿using CryptoQuest.Battle.Audio;
+using CryptoQuest.Gameplay;
 using CryptoQuest.Input;
+using IndiGames.Core.Events;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -59,6 +61,8 @@ namespace CryptoQuest.UI.Dialogs.RewardDialog
         public override void Hide()
         {
             base.Hide();
+
+            ActionDispatcher.Dispatch(new PlayCachedBgmAction());
 
             _inputAction.Disable();
             _inputAction.performed -= OnCloseImmediately;

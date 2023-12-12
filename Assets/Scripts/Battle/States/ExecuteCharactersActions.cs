@@ -110,7 +110,7 @@ namespace CryptoQuest.Battle.States
         /// </summary>
         public void OnEndBattle()
         {
-            BattleEventBus.RaiseEvent(new BattleRetreatedEvent());
+            BattleEventBus.RaiseEvent(new RetreatedEvent());
         }
 
         private void OnRetreatSuccess(RetreatSucceedEvent retreatSucceedEvent)
