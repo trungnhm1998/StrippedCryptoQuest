@@ -21,7 +21,8 @@ namespace CryptoQuest.Menus.DimensionalBox.UI.EquipmentsTransfer
         [SerializeField] private RectTransform _contentRectTransform;
 
         private IEquipment _equipment;
-        public EquipmentResponse Equipment { get; private set; }
+        public IEquipment Equipment => _equipment;
+        public EquipmentResponse Response { get; private set; }
 
         public bool MarkedForTransfer
         {
@@ -29,16 +30,16 @@ namespace CryptoQuest.Menus.DimensionalBox.UI.EquipmentsTransfer
             set => _pendingTag.SetActive(value);
         }
 
-        public uint Id => Equipment.id;
+        public uint Id => Response.id;
 
         public void Initialize(EquipmentResponse equipment)
         {
             _equipment = null;
             MarkedForTransfer = false;
-            Equipment = equipment;
+            Response = equipment;
             _nameText.text = "Item " + Id;
-            _equippedTag.SetActive(Equipment.IsEquipped);
-            _transferringTag.SetActive(Equipment.IsTransferring || Equipment.mintStatus != 2);
+            _equippedTag.SetActive(Response.IsEquipped);
+            _transferringTag.SetActive(Response.IsTransferring || Response.mintStatus != 2);
 
             _equipment = ServiceProvider.GetService<IEquipmentResponseConverter>().Convert(equipment);
 

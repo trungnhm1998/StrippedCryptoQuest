@@ -29,6 +29,8 @@ namespace CryptoQuest.Tests.Runtime.Profile
             var equipmentResponse = JsonUtility.FromJson<EquipmentResponse>(json);
             var equipment = _responseConverter.Convert(equipmentResponse);
 
+            Assert.NotNull(equipment.Stats);
+            Assert.AreNotEqual(0, equipment.Stats.Length);
             Assert.AreEqual(equipmentResponse.id, equipment.Id);
             Assert.AreEqual(equipmentResponse.equipmentId, equipment.Data.ID);
             Assert.AreEqual(equipmentResponse.star, equipment.Data.Stars);

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using CryptoQuest.Menus.DimensionalBox.States.EquipmentsTransfer;
 using CryptoQuest.Networking;
@@ -21,8 +22,8 @@ namespace CryptoQuest.Menus.DimensionalBox.Sagas
                 .WithParam("nft", "1")
                 .WithBody(new Dictionary<string, List<uint>>()
                 {
-                    { "game", ctx.ToGame },
-                    { "wallet", ctx.ToWallet }
+                    { "game", ctx.ToGame.Select(item => item.Id).ToList() },
+                    { "wallet", ctx.ToWallet.Select(item => item.Id).ToList() }
                 })
                 .Put<EquipmentsResponse>(API.TRANSFER)
                 .Subscribe(ProcessResponseEquipments, OnError, OnCompleted);
