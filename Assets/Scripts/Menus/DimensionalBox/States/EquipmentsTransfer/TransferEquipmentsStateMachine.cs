@@ -22,8 +22,8 @@ namespace CryptoQuest.Menus.DimensionalBox.States.EquipmentsTransfer
         public TransferEquipmentsPanel Panel => _rootFsm.Panel.EquipmentsTransferPanel;
         public UIEquipmentList IngameList => Panel.IngameList;
         public UIEquipmentList InboxList => Panel.InboxList;
-        public List<uint> ToWallet { get; set; }
-        public List<uint> ToGame { get; set; }
+        public List<UIEquipment> ToWallet { get; set; }
+        public List<UIEquipment> ToGame { get; set; }
 
         public TransferEquipmentsStateMachine(DBoxStateMachine rootFsm) : base(false)
         {

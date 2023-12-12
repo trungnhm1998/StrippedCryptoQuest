@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using CryptoQuest.Menus.DimensionalBox.UI.EquipmentsTransfer;
 using CryptoQuest.UI.Dialogs.ChoiceDialog;
 using FSM;
 using IndiGames.Core.Events;
@@ -60,7 +61,7 @@ namespace CryptoQuest.Menus.DimensionalBox.States.EquipmentsTransfer
 
     public class TransferringEquipments : ActionBase
     {
-        public List<uint> ToWallet { get; set; }
-        public List<uint> ToGame { get; set; }
+        public List<UIEquipment> ToWallet { get; set; }
+        public List<UIEquipment> ToGame { get; set; }
     }
 }

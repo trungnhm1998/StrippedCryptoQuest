@@ -1,17 +1,23 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using CryptoQuest.Sagas.Objects;
 
 namespace CryptoQuest.Menus.DimensionalBox.UI.EquipmentsTransfer
 {
     public class UIEquipmentList : UIDimensionalBoxList<UIEquipment>
     {
-        public List<uint> SelectedItems
+        public List<UIEquipment> SelectedItems
         {
             get
             {
-                return GetComponentsInChildren<UIEquipment>().Where(item => item.MarkedForTransfer)
-                    .Select(item => item.Id).ToList();
+                var equipments = GetComponentsInChildren<UIEquipment>();
+                var equipmentsToTransfer = new List<UIEquipment>();
+                foreach (var equipment in equipments)
+                {
+                    if (!equipment.MarkedForTransfer) continue;
+                    equipmentsToTransfer.Add(equipment);
+                }
+
+                return equipmentsToTransfer;
             }
         }
 
