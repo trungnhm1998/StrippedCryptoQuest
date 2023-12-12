@@ -12,13 +12,14 @@ namespace CryptoQuest.BlackSmith.UpgradeStone.UI
     public class UIUpgradableStone : MonoBehaviour
     {
         public event Action<UIUpgradableStone> Selected;
+        public event Action<UIUpgradableStone> Inspected;
         public event Action DeSelected;
-        public event Action<UIUpgradableStone> Pressed;
         [field: SerializeField] public MultiInputButton Button { get; private set; }
+        [field: SerializeField] public GameObject MaterialTag { get; private set; }
+        [SerializeField] private Image _highlight;
         [SerializeField] private Image _icon;
         [SerializeField] private LocalizeStringEvent _name;
         [SerializeField] private TMP_Text _lvlText;
-        [SerializeField] private GameObject _materialTag;
         public IMagicStone MagicStone { get; private set; }
 
         public int Id { get; private set; }
@@ -43,6 +44,7 @@ namespace CryptoQuest.BlackSmith.UpgradeStone.UI
         {
             Button.Selected -= OnSelected;
             Button.DeSelected -= OnDeselected;
+            ResetItemStates();
         }
 
         private void OnDeselected()
@@ -52,18 +54,24 @@ namespace CryptoQuest.BlackSmith.UpgradeStone.UI
 
         public void OnPressed()
         {
-            Pressed?.Invoke(this);
+            Selected?.Invoke(this);
         }
 
-        private void OnSelected()
+        public void OnSelected()
         {
-            Selected?.Invoke(this);
+            Inspected?.Invoke(this);
         }
 
         private void ResetItemStates()
         {
-            _materialTag.SetActive(false);
+            MaterialTag.SetActive(false);
             Button.interactable = true;
+            Highlight(false);
+        }
+
+        public void Highlight(bool value)
+        {
+            _highlight.enabled = value;
         }
     }
 }
