@@ -1,4 +1,5 @@
 ﻿using FSM;
+using IndiGames.Core.Events;
 using UnityEngine;
 
 namespace CryptoQuest.Menus.DimensionalBox.States.EquipmentsTransfer
@@ -37,15 +38,24 @@ namespace CryptoQuest.Menus.DimensionalBox.States.EquipmentsTransfer
 
         private void NavigateList(Vector2 axis)
         {
-            if (axis.x == 0) return;
-            _fsm.InboxList.Interactable = axis.x > 0;
-            _fsm.IngameList.Interactable = axis.x < 0;
+            switch (axis.x)
+            {
+                case 0:
+                    return;
+                case > 0:
+                    _fsm.InboxList.TryFocus();
+                    break;
+                case < 0:
+                    _fsm.IngameList.TryFocus();
+                    break;
+            }
         }
 
         private void ResetSelected()
         {
             _fsm.InboxList.Reset();
             _fsm.IngameList.Reset();
+            ActionDispatcher.Dispatch(new FetchNftEquipments());
         }
 
         public override void OnEnter()
