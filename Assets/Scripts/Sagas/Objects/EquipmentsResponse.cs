@@ -42,22 +42,6 @@ namespace CryptoQuest.Sagas.Objects
         public int lv;
         public string equipmentId;
         public int equipTypeId;
-        public float HP;
-        public float addHp;
-        public float maxHp;
-        public float MP;
-        public float addMp;
-        public float maxMp;
-        public float strength;
-        public float addStrength;
-        public float vitality;
-        public float addVitality;
-        public float agility;
-        public float addAgility;
-        public float intelligence;
-        public float addIntelligence;
-        public float luck;
-        public float addLuck;
         public float attack;
         public float addAttack;
         public float MATK;
@@ -72,6 +56,7 @@ namespace CryptoQuest.Sagas.Objects
         public int transferring;
         public string createdAt;
         public string updatedAt;
+        public int attachId;
         public string equipmentIdForeign;
         public string localizeKey;
         public string equipNameJp;
@@ -93,25 +78,11 @@ namespace CryptoQuest.Sagas.Objects
         public int sellingPrice;
         public int minLv;
         public int maxLv;
-        public float minHP;
-        public float minMP;
-        public float minStrength;
-        public float minVitality;
-        public float minAgility;
-        public float minIntelligence;
-        public float minLuck;
         public float minAttack;
         public float minMATK;
         public float minDefence;
         public float minEvasionRate;
         public float minCriticalRate;
-        public float maxHP;
-        public float maxMP;
-        public float maxStrength;
-        public float maxVitality;
-        public float maxAgility;
-        public float maxIntelligence;
-        public float maxLuck;
         public float maxAttack;
         public float maxMATK;
         public float maxDefence;
@@ -131,6 +102,8 @@ namespace CryptoQuest.Sagas.Objects
         public AttachStones attachStones;
         public int[] passiveSkills;
         public int[] conditionSkills;
+        public bool IsEquipped => !string.IsNullOrEmpty(attachUnitTokenId);
+        public bool IsTransferring => transferring == 1;
     }
 
     public class AttachStones { }
