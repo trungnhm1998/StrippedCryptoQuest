@@ -37,6 +37,7 @@ namespace CryptoQuest.Menus.DimensionalBox.Sagas
 
         private void OnError(Exception obj)
         {
+            ActionDispatcher.Dispatch(new ShowLoading(false));
             ActionDispatcher.Dispatch(new TransferFailed());
         }
 
