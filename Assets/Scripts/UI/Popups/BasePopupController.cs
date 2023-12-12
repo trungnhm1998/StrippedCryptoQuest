@@ -28,6 +28,12 @@ namespace CryptoQuest.UI.Popups
             _popupPool = new ObjectPool<T>(OnCreate, OnGet, OnRelease, OnDestroyPopup);
         }
 
+        private void OnDisable()
+        {
+            _popups.Clear();
+            ReleaseAssets();
+        }
+
         protected void ShowPopup(Action<T> popupCallback)
         {
             StartCoroutine(CoShowPopup(popupCallback));
