@@ -1,44 +1,67 @@
+using IndiGames.Core.Events;
 using UnityEngine;
 using UnityEngine.Events;
 
 namespace CryptoQuest.Events.UI
 {
-    [CreateAssetMenu(menuName = "Crypto Quest/Events/ShowWalletEventChannelSO", fileName = "ShowWalletEventChannelSO")]
     public class ShowWalletEventChannelSO : ScriptableObject
     {
-        public event UnityAction<bool, bool, bool> ShowEvent;
+        public struct Context
+        {
+            public bool ShowGolds;
+            public bool ShowDiamonds;
+            public bool ShowSouls;
+        }
+
+        public event UnityAction<Context> ShowEvent;
         public event UnityAction HideEvent;
 
-        public void Show(bool showGolds = true, bool showDiamonds = false, bool showSouls = false)
+        private bool _showGolds = true;
+
+        public ShowWalletEventChannelSO EnableAll(bool enabled = true)
         {
-            OnShow(showGolds, showDiamonds, showSouls);
+            _showDiamonds = _showGolds = _showSouls = enabled;
+            return this;
         }
 
-        public void Hide()
+        public ShowWalletEventChannelSO EnableGold(bool enabled = true)
         {
-            OnHide();
+            _showGolds = enabled;
+            return this;
         }
 
-        private void OnShow(bool showGolds, bool showDiamonds, bool showSouls)
+        private bool _showDiamonds = true;
+
+        public ShowWalletEventChannelSO EnableDiamond(bool enabled = true)
         {
-            if (ShowEvent == null)
+            _showDiamonds = enabled;
+            return this;
+        }
+
+        private bool _showSouls = true;
+
+        public ShowWalletEventChannelSO EnableSouls(bool enabled = true)
+        {
+            _showSouls = enabled;
+            return this;
+        }
+
+        public void Show() => OnShow();
+
+        private void OnShow()
+        {
+            ShowEvent.SafeInvoke(new Context()
             {
-                Debug.LogWarning($"Event was raised on {name} but no one was listening.");
-                return;
-            }
+                ShowGolds = _showGolds,
+                ShowDiamonds = _showDiamonds,
+                ShowSouls = _showSouls
+            }, $"Event was raised on {name} but no one was listening.");
 
-            ShowEvent.Invoke(showGolds, showDiamonds, showSouls);
+            _showGolds = true;
+            _showDiamonds = true;
+            _showSouls = true;
         }
 
-        private void OnHide()
-        {
-            if (HideEvent == null)
-            {
-                Debug.LogWarning($"Event was raised on {name} but no one was listening.");
-                return;
-            }
-
-            HideEvent.Invoke();
-        }
+        public void Hide() => HideEvent.SafeInvoke($"Event was raised on {name} but no one was listening.");
     }
 }

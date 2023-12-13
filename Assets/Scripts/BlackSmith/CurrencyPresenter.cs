@@ -9,7 +9,7 @@ namespace CryptoQuest.BlackSmith
 
         public void Show()
         {
-            _showWalletEventChannelSO.Show(true);
+            _showWalletEventChannelSO.EnableGold().Show();
         }
 
         public void Hide()
