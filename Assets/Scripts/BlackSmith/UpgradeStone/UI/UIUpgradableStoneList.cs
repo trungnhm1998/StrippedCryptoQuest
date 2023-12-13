@@ -57,8 +57,7 @@ namespace CryptoQuest.BlackSmith.UpgradeStone.UI
         {
             foreach (var item in _cachedItems.ToList())
             {
-                if (exceptionUI != null && item.MagicStone != exceptionUI.MagicStone &&
-                    item.MagicStone.ID == exceptionUI.MagicStone.ID) continue;
+                if (exceptionUI != null && item.MagicStone.ID == exceptionUI.MagicStone.ID) continue;
                 _itemPool.Release(item);
             }
         }

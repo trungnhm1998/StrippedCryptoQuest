@@ -10,7 +10,8 @@ namespace CryptoQuest.BlackSmith.UpgradeStone.States
         public override void OnEnter()
         {
             base.OnEnter();
-            _materialStoneList.RenderStones(_magicStoneInventory.MagicStones);
+            var upgradableStones = _stateMachine.UpgradeMagicStoneSystem.GetUpgradableStones();
+            _materialStoneList.RenderStones(upgradableStones);
             _materialStoneList.ClearStonesWithException(_stateMachine.StoneToUpgrade);
         }
 

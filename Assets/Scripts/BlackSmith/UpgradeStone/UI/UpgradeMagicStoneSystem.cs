@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using CryptoQuest.Item.MagicStone;
 using UnityEngine;
 using UnityEngine.Localization;
@@ -19,6 +21,15 @@ namespace CryptoQuest.BlackSmith.UpgradeStone.UI
         {
             //TODO: implement mapping logic here 
             return stoneToUpgrade;
+        }
+
+        public List<IMagicStone> GetUpgradableStones()
+        {
+            return MagicStoneInventory.MagicStones
+                .GroupBy(item => item.ID)
+                .Where(group => group.Count() >= 3)
+                .SelectMany(group => group.ToList())
+                .ToList();
         }
     }
 }

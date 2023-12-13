@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using CryptoQuest.BlackSmith.UpgradeStone.UI;
 using CryptoQuest.Item.MagicStone;
 
@@ -6,13 +8,14 @@ namespace CryptoQuest.BlackSmith.UpgradeStone.States
     public class SelectStoneToUpgrade : UpgradeMagicStoneStateBase
     {
         public SelectStoneToUpgrade(UpgradeMagicStoneStateMachine stateMachine) : base(stateMachine) { }
-        private MagicStoneInventory _magicStoneInventory => _stateMachine.UpgradeMagicStoneSystem.MagicStoneInventory;
 
         public override void OnEnter()
         {
             base.OnEnter();
+            var upgradableStones = _stateMachine.UpgradeMagicStoneSystem.GetUpgradableStones();
+            var distinctStoneType = GetDistinctStoneType(upgradableStones);
             _upgradableStoneListUI.ClearStonesWithException();
-            _upgradableStoneListUI.RenderStones(_magicStoneInventory.MagicStones);
+            _upgradableStoneListUI.RenderStones(distinctStoneType);
             _upgradableStoneListUI.StoneSelected += OnSelectBaseItem;
         }
 
@@ -21,6 +24,18 @@ namespace CryptoQuest.BlackSmith.UpgradeStone.States
             base.OnExit();
             _upgradableStoneListUI.StoneSelected -= OnSelectBaseItem;
             _upgradableStoneListUI.ClearStonesWithException();
+        }
+
+        private List<IMagicStone> GetDistinctStoneType(List<IMagicStone> stones)
+        {
+            var distinctStoneType = new List<IMagicStone>();
+            foreach (var stone in stones)
+            {
+                if (distinctStoneType.Any(x => x.ID == stone.ID)) continue;
+                distinctStoneType.Add(stone);
+            }
+
+            return distinctStoneType;
         }
 
 
