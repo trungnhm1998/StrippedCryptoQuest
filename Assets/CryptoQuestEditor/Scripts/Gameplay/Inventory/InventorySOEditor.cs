@@ -38,9 +38,17 @@ namespace CryptoQuestEditor
             return root;
         }
 
-        private void SyncEquipments()
+        [MenuItem("Crypto Quest/Sync Equipments Inventory")]
+        public static void SyncEquipments()
         {
+            if (Application.isPlaying == false) return;
             ActionDispatcher.Dispatch(new FetchProfileEquipmentsAction());
+        }
+        
+        [MenuItem("Crypto Quest/Sync Equipments Inventory", true)]
+        public static bool ValidateSyncEquipments()
+        {
+            return Application.isPlaying;
         }
 
         private void AddAllUsableItem()
