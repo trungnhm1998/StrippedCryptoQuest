@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 5276658975124613192}
   - component: {fileID: 1452079691479674896}
   - component: {fileID: 8427849791668091320}
+  - component: {fileID: 5760943211453886860}
   m_Layer: 0
   m_Name: QuestManager
   m_TagString: Untagged
@@ -50,11 +51,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _triggerQuestEventChannel: {fileID: 11400000, guid: fdefe5ff6c97c9946a9e874eb074f93f, type: 2}
-  _saveData: {fileID: 11400000, guid: 03445ebfc72acfc499a1e02a30488822, type: 2}
   _giveQuestEventChannel: {fileID: 11400000, guid: da57ae63ba992064e8d3ec26238fc35a, type: 2}
   _removeQuestEventChannel: {fileID: 11400000, guid: 9630816056270324eae1f8df62eb3c61, type: 2}
   _rewardEventChannel: {fileID: 11400000, guid: ccc993e9c220b754ba79858ef25648d4, type: 2}
+  _saveData: {fileID: 11400000, guid: 03445ebfc72acfc499a1e02a30488822, type: 2}
   _currentQuestData: {fileID: 0}
+  _currentQuestInfos: []
+  _questCompletionHandler: {fileID: 5760943211453886860}
+  references:
+    version: 2
+    RefIds: []
 --- !u!114 &800690595273299539
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -98,6 +104,31 @@ MonoBehaviour:
   _battleLostEvent: {fileID: 11400000, guid: bb7a81f4387c7f04fb566fc033533c3c, type: 2}
   _triggerQuestEventChannel: {fileID: 11400000, guid: fdefe5ff6c97c9946a9e874eb074f93f, type: 2}
   _giveQuestEventChannel: {fileID: 11400000, guid: da57ae63ba992064e8d3ec26238fc35a, type: 2}
+  _inputAction:
+    m_Name: Input
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 4e80bcde-c6ae-4f51-9089-5943b47e6010
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: 6c678a12-c94a-4c43-9d5d-874b4db3caee
+      m_Path: '*/{Submit}'
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Input
+      m_Flags: 0
+    - m_Name: 
+      m_Id: 003ae6b0-45b7-49af-8e70-37470dae2cc3
+      m_Path: <Keyboard>/space
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Input
+      m_Flags: 0
+    m_Flags: 0
 --- !u!114 &1452079691479674896
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -128,3 +159,15 @@ MonoBehaviour:
   _questEventChannelSo: {fileID: 11400000, guid: fdefe5ff6c97c9946a9e874eb074f93f, type: 2}
   _dialogCompletedEventChannelSo: {fileID: 11400000, guid: 3443d2dcf941d6f4fb30303a52302ab5, type: 2}
   _questCompletedEventChannelSo: {fileID: 11400000, guid: d1320590a1ab68e4389435932acb3474, type: 2}
+--- !u!114 &5760943211453886860
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5292255704015140054}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f09428be46eb4049b38b15fa23e87a92, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

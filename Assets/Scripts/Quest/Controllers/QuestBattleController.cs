@@ -1,10 +1,12 @@
 ﻿using System.Collections.Generic;
 using CryptoQuest.Battle.Events;
 using CryptoQuest.Gameplay.Encounter;
+using CryptoQuest.Quest.Authoring;
 using CryptoQuest.Quest.Categories;
 using CryptoQuest.Quest.Components;
 using CryptoQuest.Quest.Events;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace CryptoQuest.Quest.Controllers
 {
@@ -15,6 +17,9 @@ namespace CryptoQuest.Quest.Controllers
         [SerializeField] private BattleResultEventSO _battleLostEvent;
         [SerializeField] private QuestEventChannelSO _triggerQuestEventChannel;
         [SerializeField] private QuestEventChannelSO _giveQuestEventChannel;
+
+        private BattleQuestInfo _battleQuest;
+        [field: SerializeField] private InputAction _inputAction;
 
         private void OnEnable()
         {
@@ -27,7 +32,6 @@ namespace CryptoQuest.Quest.Controllers
             _battleWonEvent.EventRaised -= OnBattleWon;
             _battleLostEvent.EventRaised -= OnBattleLost;
         }
-
 
         public void GiveQuest(BattleQuestInfo questInfo)
         {
@@ -70,11 +74,31 @@ namespace CryptoQuest.Quest.Controllers
 
         private void HandleBattleWon(BattleQuestInfo info)
         {
-            var loseQuest = info.Data.FirstTimeLoseQuest;
-            _triggerQuestEventChannel.RaiseEvent(info.Data);
-            if (info.Data.FirstTimeLoseQuest != null)
-                QuestManager.OnRemoveProgressingQuest?.Invoke(loseQuest);
-            _currentlyProcessQuests.Remove(info);
+            _battleQuest = info;
+            _inputAction.Enable();
+            _inputAction.performed += OnBattleRewardConfirmed;
+        }
+
+        private void OnBattleRewardConfirmed(InputAction.CallbackContext action)
+        {
+            if (!action.performed) return;
+            HandleRewardBattleConfirmed();
+        }
+
+        private void HandleRewardBattleConfirmed()
+        {
+            _inputAction.Disable();
+            _inputAction.performed -= OnBattleRewardConfirmed;
+
+            QuestSO loseQuest = _battleQuest.Data.FirstTimeLoseQuest;
+            _triggerQuestEventChannel.RaiseEvent(_battleQuest.Data);
+
+            if (_battleQuest.Data.FirstTimeLoseQuest != null)
+            {
+                IQuestManager.OnRemoveProgressingQuest?.Invoke(loseQuest);
+            }
+
+            _currentlyProcessQuests.Remove(_battleQuest);
         }
     }
 }
