@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using CryptoQuest.Beast;
+using CryptoQuest.Beast.Avatar;
 using CryptoQuest.Beast.ScriptableObjects;
 using CryptoQuest.UI.Character;
 using IndiGames.GameplayAbilitySystem.AttributeSystem;
