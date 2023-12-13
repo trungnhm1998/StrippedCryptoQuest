@@ -122,7 +122,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4582319381189173141}
-  m_Father: {fileID: 3059780786535352709}
+  m_Father: {fileID: 401652621650367386}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -1010,6 +1010,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07381110a99640d88942c136c03932ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _selectOnEnable: 0
   _delay: 0
 --- !u!1 &1091261306047095510
 GameObject:
@@ -4434,7 +4435,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 7788540458534528429}
   m_Father: {fileID: 3059780786535352709}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6283052889238824517
@@ -4470,6 +4472,7 @@ MonoBehaviour:
   <UIBeastSwap>k__BackingField: {fileID: 9131456806300077883}
   <UIBeastUpgrade>k__BackingField: {fileID: 6201928986501797986}
   <UIBeastEvolve>k__BackingField: {fileID: 5398821037508170025}
+  <EvolvePresenter>k__BackingField: {fileID: 0}
 --- !u!114 &4714802853278895777
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5091,6 +5094,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07381110a99640d88942c136c03932ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _selectOnEnable: 0
   _delay: 0
 --- !u!1 &7755905164699926139
 GameObject:
@@ -6077,7 +6081,6 @@ Transform:
   m_Children:
   - {fileID: 401652621650367386}
   - {fileID: 8307579346441506050}
-  - {fileID: 7788540458534528429}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2415800126447876534
@@ -6620,9 +6623,21 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3924806149649875387}
     m_Modifications:
+    - target: {fileID: 209200273876128521, guid: 3af31ded1e4be524caba68a06193cdc2, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4683386810040924574, guid: 3af31ded1e4be524caba68a06193cdc2, type: 3}
       propertyPath: m_Name
       value: EnvolvePanel
+      objectReference: {fileID: 0}
+    - target: {fileID: 7216488277125220710, guid: 3af31ded1e4be524caba68a06193cdc2, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9042825839209503615, guid: 3af31ded1e4be524caba68a06193cdc2, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9141101897438769191, guid: 3af31ded1e4be524caba68a06193cdc2, type: 3}
       propertyPath: m_Pivot.x
