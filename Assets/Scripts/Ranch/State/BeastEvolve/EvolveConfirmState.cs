@@ -1,14 +1,17 @@
-﻿using CryptoQuest.Beast.ScriptableObjects;
+﻿using System.Linq;
+using CryptoQuest.Beast;
 using CryptoQuest.Ranch.Sagas;
 using IndiGames.Core.Events;
+using TinyMessenger;
 using UnityEngine;
+using UnityEngine.Localization;
 
 namespace CryptoQuest.Ranch.State.BeastEvolve
 {
     public class EvolveConfirmState : BaseStateBehaviour
     {
+        [SerializeField] private LocalizedString _message;
         private RanchStateController _controller;
-
         private static readonly int EvolveState = Animator.StringToHash("EvolveState");
         private static readonly int ResultState = Animator.StringToHash("EvolveResultState");
 
@@ -17,17 +20,36 @@ namespace CryptoQuest.Ranch.State.BeastEvolve
             _controller = StateMachine.GetComponent<RanchStateController>();
 
             _controller.UIBeastEvolve.Contents.SetActive(true);
+            _controller.Controller.Input.CancelEvent += NoButtonPressed;
+            UpdateEvolvableInfo(_controller.EvolvePresenter.BeastToEvolve);
+            SetupDialog();
+        }
 
-            _controller.Controller.Input.CancelEvent += CancelBeastEvolveState;
-            _controller.Controller.Input.SubmitEvent += ChangeConfirmState;
+        private void SetupDialog()
+        {
+            _controller.DialogManager.ChoiceDialog
+                .SetButtonsEvent(YesButtonPressed, NoButtonPressed)
+                .SetMessage(_message)
+                .Show();
+        }
+
+        private void YesButtonPressed()
+        {
+            _controller.DialogManager.ChoiceDialog.Hide();
+            ChangeConfirmState();
+        }
+
+        private void NoButtonPressed()
+        {
+            _controller.DialogManager.ChoiceDialog.Hide();
+            StateMachine.Play(EvolveState);
         }
 
         protected override void OnExit()
         {
-            _controller.Controller.Input.SubmitEvent -= ChangeConfirmState;
-            _controller.Controller.Input.CancelEvent -= CancelBeastEvolveState;
+            _controller.Controller.Input.CancelEvent -= NoButtonPressed;
         }
-        
+
         private void HandleConfirmEvolving()
         {
             ActionDispatcher.Dispatch(new RequestEvolveBeast()
@@ -42,10 +64,11 @@ namespace CryptoQuest.Ranch.State.BeastEvolve
             StateMachine.Play(ResultState);
             HandleConfirmEvolving();
         }
-
-        private void CancelBeastEvolveState()
+        
+        private void UpdateEvolvableInfo(IBeast beast)
         {
-            StateMachine.Play(EvolveState);
+            var info = _controller.EvolvePresenter.BeastEvolvableInfos.First(f => f.BeforeStars == beast.Stars);
+            _controller.EvolvePresenter.UpdateEvolvableInfo(info);
         }
     }
 }

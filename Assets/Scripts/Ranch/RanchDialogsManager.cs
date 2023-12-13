@@ -14,7 +14,7 @@ namespace CryptoQuest.Ranch
         public void RanchOpened()
         {
             GenericMerchantDialogueController.Instance.Instantiate(DialogInstantiated);
-            ChoiceDialogController.Instance.Instantiate(ChoiceDialogInstantiated);
+            ChoiceDialogController.Instance.Instantiate(dialog => ChoiceDialog = dialog, false);
         }
         private void OnDisable()
         {
@@ -22,19 +22,17 @@ namespace CryptoQuest.Ranch
             ChoiceDialogController.Instance.Release(ChoiceDialog);
         }
 
-        private void ChoiceDialogInstantiated(UIChoiceDialog dialog) => ChoiceDialog = dialog;
-
-        public void ShowWelcomeDialog()
+        public void ShowWelcomeDialog(LocalizedString message)
         {
             NormalDialogue
-                .SetMessage(_message)
+                .SetMessage(message)
                 .Show();
         }
 
         private void DialogInstantiated(UIDialogueForGenericMerchant dialog)
         {
             NormalDialogue = dialog;
-            ShowWelcomeDialog();
+            ShowWelcomeDialog(_message);
         }
     }
 }

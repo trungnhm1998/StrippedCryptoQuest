@@ -21,6 +21,7 @@ namespace CryptoQuest.Ranch.State
         [field: SerializeField] public UIBeastUpgrade UIBeastUpgrade { get; private set; }
         [field: SerializeField] public UIBeastEvolve UIBeastEvolve { get; private set; }
         [field: SerializeField] public EvolvePresenter EvolvePresenter { get; private set; }
+        [field: SerializeField] public RanchDialogsManager DialogManager { get; private set; }
 
         private void OnDisable()
         {

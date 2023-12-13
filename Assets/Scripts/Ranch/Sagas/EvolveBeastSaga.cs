@@ -1,0 +1,89 @@
+﻿using System;
+using System.Net;
+using CryptoQuest.Networking;
+using CryptoQuest.Sagas.Objects;
+using CryptoQuest.UI.Actions;
+using IndiGames.Core.Common;
+using IndiGames.Core.Events;
+using Newtonsoft.Json;
+using UniRx;
+using UnityEngine;
+using UnityEngine.Serialization;
+
+namespace CryptoQuest.Ranch.Sagas
+{
+    [Serializable]
+    public class EvolveResponse
+    {
+        public int code;
+        public bool success;
+        public string message;
+        public string uuid;
+        public int gold;
+        public int diamond;
+        public int soul;
+        public long time;
+        public BeastResponseData data;
+
+        [Serializable]
+        public class BeastResponseData
+        {
+            public int success;
+            public BeastResponeEvolveData newBesat;
+        }
+    }
+
+    [Serializable]
+    public class EvolveBeastRequest
+    {
+        [JsonProperty("baseBeastId1")]
+        public string BaseBeast;
+
+        [JsonProperty("baseBeastId2")]
+        public string MaterialBeast;
+    }
+
+    public class EvolveBeastSaga : SagaBase<RequestEvolveBeast>
+    {
+        public static readonly string EvolveBeastApi = "crypto/beasts/evolve";
+
+        private RequestEvolveBeast _requestContext;
+
+        protected override void HandleAction(RequestEvolveBeast ctx)
+        {
+            ActionDispatcher.Dispatch(new ShowLoading());
+
+            _requestContext = ctx;
+
+            var body = new EvolveBeastRequest
+            {
+                BaseBeast = ctx.Base.Id.ToString(),
+                MaterialBeast = ctx.Material.Id.ToString()
+            };
+
+            var restClient = ServiceProvider.GetService<IRestClient>();
+            restClient
+                .WithBody(body)
+                .Post<EvolveResponse>(EvolveBeastApi)
+                .Subscribe(HandleRequestSuccess, HandleRequestFailed);
+        }
+
+        private void HandleRequestSuccess(EvolveResponse response)
+        {
+            if (response.code != (int)HttpStatusCode.OK) return;
+            Debug.Log($"EvolveBeast:: Load Data Success!");
+            ActionDispatcher.Dispatch(new ShowLoading(false));
+            ActionDispatcher.Dispatch(new EvolveSucceed());
+            ActionDispatcher.Dispatch(new EvolveResponsed(response, _requestContext));
+            ActionDispatcher.Dispatch(new GetBeasts());
+        }
+        
+        private void HandleRequestFailed(Exception exception)
+        {
+            Debug.Log($"EvolveBeast:: Load Data Failed: {exception.Message}!");
+            ActionDispatcher.Dispatch(new ShowLoading(false));
+            ActionDispatcher.Dispatch(new ServerErrorPopup());
+            ActionDispatcher.Dispatch(new EvolveRequestFailed());
+        }
+    }
+}
