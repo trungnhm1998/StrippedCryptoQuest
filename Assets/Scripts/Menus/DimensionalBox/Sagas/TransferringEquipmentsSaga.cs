@@ -20,7 +20,7 @@ namespace CryptoQuest.Menus.DimensionalBox.Sagas
             var restClient = ServiceProvider.GetService<IRestClient>();
             restClient
                 .WithParam("nft", "1")
-                .WithBody(new Dictionary<string, List<uint>>()
+                .WithBody(new Dictionary<string, List<int>>()
                 {
                     { "game", ctx.ToGame.Select(item => item.Id).ToList() },
                     { "wallet", ctx.ToWallet.Select(item => item.Id).ToList() }

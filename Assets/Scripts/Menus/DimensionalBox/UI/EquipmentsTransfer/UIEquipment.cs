@@ -30,7 +30,7 @@ namespace CryptoQuest.Menus.DimensionalBox.UI.EquipmentsTransfer
             set => _pendingTag.SetActive(value);
         }
 
-        public uint Id => Response.id;
+        public int Id => Response.id;
 
         public void Initialize(EquipmentResponse equipment)
         {

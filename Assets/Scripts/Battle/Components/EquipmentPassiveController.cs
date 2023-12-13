@@ -9,7 +9,7 @@ namespace CryptoQuest.Battle.Components
     {
         private EquipmentsController _equipmentsController;
 
-        private readonly Dictionary<uint, PassiveAbilitySpec[]> _passives = new();
+        private readonly Dictionary<int, PassiveAbilitySpec[]> _passives = new();
         private PassivesController _passiveController;
 
         protected void Awake()

@@ -29,7 +29,7 @@ namespace CryptoQuest.BlackSmith.Upgrade.Sagas
         public struct EquipmentRequestData
         {
             [JsonProperty("id")]
-            public uint Id;
+            public int Id;
 
             [JsonProperty("equipmentId")]
             public string EquipmentId;
