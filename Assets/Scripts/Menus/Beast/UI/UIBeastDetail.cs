@@ -1,14 +1,17 @@
+using System.Collections.Generic;
 using CryptoQuest.AbilitySystem.Abilities;
+using CryptoQuest.AbilitySystem.Attributes;
 using CryptoQuest.Beast;
 using CryptoQuest.Beast.Avatar;
-using CryptoQuest.UI.Extensions;
+using CryptoQuest.Beast.ScriptableObjects;
 using CryptoQuest.UI.Tooltips;
+using IndiGames.GameplayAbilitySystem.AttributeSystem.Components;
 using TMPro;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
 using UnityEngine.Localization;
 using UnityEngine.Localization.Components;
 using UnityEngine.UI;
+using UIAttribute = CryptoQuest.UI.Character.UIAttribute;
 
 namespace CryptoQuest.Menus.Beast.UI
 {
@@ -17,73 +20,75 @@ namespace CryptoQuest.Menus.Beast.UI
         [SerializeField] private GameObject _content;
 
         [Header("Configs")]
-        [SerializeField] private BeastAvatarSO _database;
-
         [SerializeField] private LocalizeStringEvent _beastName;
+
         [SerializeField] private LocalizeStringEvent _localizedPassiveSkill;
         [SerializeField] private TMP_Text _txtPassiveSkill;
         [SerializeField] private TMP_Text _txtLevel;
         [SerializeField] private Image _beastImage;
         [SerializeField] private Image _beastElement;
+
+        [Header("Components")]
         [SerializeField] private UIStars _stars;
+
+        [SerializeField] private List<UIAttribute> _attributeBar;
 
         [Header("Events")]
         [SerializeField] private BeastEventChannel _showBeastDetailsEventChannel;
+
+        [SerializeField] private BeastAttributeSystemSO _beastAttributeSystemSo;
 
         private string _lvlFormat = string.Empty;
 
         private void OnEnable()
         {
             _showBeastDetailsEventChannel.EventRaised += FillUI;
+            _beastAttributeSystemSo.EventRaised += UpdateBeastStats;
         }
 
         private void OnDisable()
         {
             _showBeastDetailsEventChannel.EventRaised -= FillUI;
+            _beastAttributeSystemSo.EventRaised -= UpdateBeastStats;
         }
 
         public void FillUI(IBeast beast)
         {
             SetPassiveSkill(beast.Passive);
             SetBeastName(beast.LocalizedName);
-            SetBeastName(beast.LocalizedName);
-            SetElement(beast.Elemental.Icon);
+            SetElement(beast.Elemental);
             SetStars(beast.Stars);
             SetLevel(beast.Level);
             SetAvatar(beast);
         }
 
-
         #region Setup
+
+        private void UpdateBeastStats(AttributeSystemBehaviour attributeValues)
+        {
+            Debug.Log("UIBeastDetail::UpdateBeastStats");
+            foreach (var attribute in attributeValues.AttributeValues)
+            {
+                foreach (var attributeValue in _attributeBar)
+                {
+                    if (attribute.Attribute == attributeValue.Attribute)
+                    {
+                        attributeValue.SetValue(attribute.BaseValue);
+                    }
+                }
+            }
+        }
 
         private void SetAvatar(IBeast beast)
         {
-            if (beast.Type == null ||
-                beast.Elemental == null ||
-                beast.Class == null)
+            bool hasAvatarProvider = TryGetComponent<IBeastAvatarProvider>(out var converter);
+            if (!hasAvatarProvider)
             {
-                Debug.LogWarning("UIBeastDetail::SetAvatar::Invalid Beast");
+                Debug.LogWarning("UIBeastDetail::SetAvatar::Missing IBeastAvatarProvider");
                 return;
             }
 
-            AssetReferenceT<Sprite> assetRefAvatar = null;
-            foreach (var avatar in _database.AvatarMappings)
-            {
-                if (avatar.BeastId != beast.Type.BeastInformation.Id ||
-                    avatar.ElementId != beast.Elemental.Id ||
-                    avatar.ClassId != beast.Class.Id) continue;
-
-                assetRefAvatar = avatar.Image;
-                break;
-            }
-
-            if (assetRefAvatar == null || !assetRefAvatar.RuntimeKeyIsValid())
-            {
-                _beastImage.enabled = false;
-                return;
-            }
-
-            _beastImage.LoadSpriteAndSet(assetRefAvatar);
+            StartCoroutine(converter.LoadAvatarAsync(_beastImage, beast));
         }
 
         private void SetPassiveSkill(PassiveAbility beastPassive)
@@ -108,7 +113,7 @@ namespace CryptoQuest.Menus.Beast.UI
 
         private void SetStars(int value) => _stars.SetStars(value);
 
-        private void SetElement(Sprite element) => _beastElement.sprite = element;
+        private void SetElement(Elemental element) => _beastElement.sprite = element.Icon;
 
         public void SetEnabled(bool isActive = true) => _content.SetActive(isActive);
 

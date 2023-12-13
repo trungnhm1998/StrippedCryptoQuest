@@ -1,15 +1,14 @@
 using System.Collections;
-using CryptoQuest.Beast.Avatar;
+using CryptoQuest.UI.Extensions;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.UI;
-using CryptoQuest.UI.Extensions;
 
-namespace CryptoQuest.Beast
+namespace CryptoQuest.Beast.Avatar
 {
     public interface IBeastAvatarProvider
     {
-        public IEnumerator LoadAvatarAsync(Image avatar, IBeast beast);
+        IEnumerator LoadAvatarAsync(Image avatar, IBeast beast);
     }
 
     public class BeastAvatarProvider : MonoBehaviour, IBeastAvatarProvider
@@ -31,6 +30,7 @@ namespace CryptoQuest.Beast
                 avatar.enabled = false;
                 yield break;
             }
+
             yield return null;
             avatar.LoadSpriteAndSet(assetRefAvatar);
         }
@@ -44,12 +44,13 @@ namespace CryptoQuest.Beast
                     return avatar.Image;
                 }
             }
+
             return null;
         }
 
         private bool IsMatchingAvatar(BeastAvatarData avatar, IBeast beast)
         {
-            return avatar.BeastId == beast.Type.BeastInformation.Id &&
+            return avatar.BeastId == beast.Type.Id &&
                    avatar.ElementId == beast.Elemental.Id &&
                    avatar.ClassId == beast.Class.Id;
         }

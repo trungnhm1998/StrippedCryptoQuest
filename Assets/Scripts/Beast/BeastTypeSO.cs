@@ -15,5 +15,6 @@ namespace CryptoQuest.Beast
         }
 
         [field: SerializeField] public Information BeastInformation { get; private set; }
+        public int Id => BeastInformation.Id;
     }
 }

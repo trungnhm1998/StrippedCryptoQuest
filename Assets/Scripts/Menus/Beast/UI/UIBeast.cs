@@ -3,13 +3,15 @@ using CryptoQuest.Beast;
 using CryptoQuest.Beast.ScriptableObjects;
 using CryptoQuest.Menu;
 using TMPro;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.Localization.Components;
 using UnityEngine.UI;
 
 namespace CryptoQuest.Menus.Beast.UI
 {
-    public class UIBeast : MonoBehaviour, IBeastProvider
+    public class UIBeast : MonoBehaviour, IBeastProvider, ISelectHandler
     {
         public static Action<UIBeast> OnBeastSelected;
 
@@ -21,7 +23,11 @@ namespace CryptoQuest.Menus.Beast.UI
         [SerializeField] private TMP_Text _beastNameText;
         [SerializeField] private GameObject _equippedTag;
         [SerializeField] private Color _disableColor;
+
+        [Header("Events")]
         [SerializeField] private ShowBeastDetailsTrigger _showBeastDetailsTrigger;
+
+        [SerializeField] private CalculatorBeastStatsSO _calculatorBeastStatsSo;
 
         private Color _normalColor;
         private IBeast _beast;
@@ -55,6 +61,11 @@ namespace CryptoQuest.Menus.Beast.UI
         private void SetDisable(bool value)
         {
             _beastNameText.color = value ? _disableColor : _normalColor;
+        }
+
+        public void OnSelect(BaseEventData eventData)
+        {
+            _calculatorBeastStatsSo.RaiseEvent(_beast);
         }
     }
 }
