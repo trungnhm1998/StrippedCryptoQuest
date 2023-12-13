@@ -6,7 +6,7 @@ namespace CryptoQuest.Item.Equipment
 {
     public interface IEquipment
     {
-        public uint Id { get; set; }
+        public int Id { get; set; }
         public int Level { get; set; }
         public EquipmentData Data { get; set; }
         public AttributeWithValue[] Stats { get; }

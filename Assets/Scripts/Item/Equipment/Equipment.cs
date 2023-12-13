@@ -9,7 +9,7 @@ namespace CryptoQuest.Item.Equipment
     [Serializable]
     public class Equipment : IEquipment, IEquatable<Equipment>
     {
-        [field: SerializeField] public uint Id { get; set; }
+        [field: SerializeField] public int Id { get; set; }
         [field: SerializeField] public int Level { get; set; } = 1;
         [field: SerializeField] public bool IsNft { get; set; }
         [field: SerializeField] public EquipmentData Data { get; set; }

@@ -42,7 +42,7 @@ namespace CryptoQuest.BlackSmith.Upgrade.Sagas
             ActionDispatcher.Dispatch(new UpgradeSucceed(equipmentInfo, level, gold));
         }
 
-        private IEquipment TryFindEquipment(uint id)
+        private IEquipment TryFindEquipment(int id)
         {
             _inventoryController ??= ServiceProvider.GetService<IInventoryController>();
 
@@ -55,7 +55,7 @@ namespace CryptoQuest.BlackSmith.Upgrade.Sagas
             return new Equipment();
         }
 
-        private IEquipment TryFindEquipping(uint id)
+        private IEquipment TryFindEquipping(int id)
         {
             _partyController ??= ServiceProvider.GetService<IPartyController>();
 

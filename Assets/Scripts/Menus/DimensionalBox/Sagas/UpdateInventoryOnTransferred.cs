@@ -36,7 +36,7 @@ namespace CryptoQuest.Menus.DimensionalBox.Sagas
 
         private void UpdateInventory(TransferSucceed ctx)
         {
-            Dictionary<uint, int> idToIndexCache = new();
+            Dictionary<int, int> idToIndexCache = new();
             for (int i = 0; i < _inventory.Equipments.Count; i++) idToIndexCache.Add(_inventory.Equipments[i].Id, i);
 
             foreach (var ui in _equipmentsToRemove) _inventory.Equipments.RemoveAt(idToIndexCache[ui.Id]);

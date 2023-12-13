@@ -35,7 +35,7 @@ namespace CryptoQuest.Sagas.Objects
     [Serializable]
     public class EquipmentResponse
     {
-        public uint id;
+        public int id;
         public string equipmentTokenId;
         public string userId;
         public string walletAddress;

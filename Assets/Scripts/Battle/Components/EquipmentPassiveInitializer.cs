@@ -40,7 +40,7 @@ namespace CryptoQuest.Battle.Components
             }
         }
 
-        private bool IsEquippingDuplicateItems(uint equipmentId)
+        private bool IsEquippingDuplicateItems(int equipmentId)
         {
             return _equippingItems.Any(item => item.Id == equipmentId);
         }

@@ -3,6 +3,7 @@ using UnityEngine.UI;
 
 namespace CryptoQuest.UI.Common
 {
+    [AddComponentMenu("CryptoQuest/UI/Common/VerticalScrollRectArrows")]
     public class VerticalScrollRectArrows : MonoBehaviour
     {
         [SerializeField] private GameObject _upArrow;

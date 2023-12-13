@@ -5,6 +5,7 @@ using UnityEngine.UI;
 namespace CryptoQuest.UI.Common
 {
     [RequireComponent(typeof(ScrollRect))]
+    [AddComponentMenu("CryptoQuest/UI/Common/CenteredAutoScroll")]
     public class CenteredAutoScroll : MonoBehaviour
     {
         ScrollRect _scrollRect;

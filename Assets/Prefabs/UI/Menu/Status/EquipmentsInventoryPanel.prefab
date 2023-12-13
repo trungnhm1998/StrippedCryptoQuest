@@ -1887,7 +1887,8 @@ GameObject:
   - component: {fileID: 7534904704170974647}
   - component: {fileID: 1330416871281181697}
   - component: {fileID: 2977454249708160314}
-  - component: {fileID: 436194312004771120}
+  - component: {fileID: 3621647898671056382}
+  - component: {fileID: 952920193551839545}
   m_Layer: 5
   m_Name: EquipmentsScrollView
   m_TagString: Untagged
@@ -1954,7 +1955,7 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &436194312004771120
+--- !u!114 &3621647898671056382
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1963,12 +1964,23 @@ MonoBehaviour:
   m_GameObject: {fileID: 7424810393615351027}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: db680cf6b1e7353428c6159ae1ee1dec, type: 3}
+  m_Script: {fileID: 11500000, guid: 96887592a0334ea2879075e4d3a2a417, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _scrollRect: {fileID: 2977454249708160314}
-  _singleItemRect: {fileID: 1252632200816518795, guid: ecfa62a89a4fe574ca5451e62de6e33b, type: 3}
-  _useUpdate: 1
+--- !u!114 &952920193551839545
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7424810393615351027}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86522a7bd44e429e9884d6e05ea420cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _upArrow: {fileID: 3429391248123739319}
+  _downArrow: {fileID: 9066986274176678651}
 --- !u!1 &7535300889290229042
 GameObject:
   m_ObjectHideFlags: 0

@@ -15,7 +15,7 @@ namespace CryptoQuest.Battle.Components
         /// <summary>
         /// Create an effect based on effect stats
         /// </summary>
-        private readonly Dictionary<uint, ActiveGameplayEffect> _equipmentsEffect = new();
+        private readonly Dictionary<int, ActiveGameplayEffect> _equipmentsEffect = new();
 
         protected override void OnInit()
         {
