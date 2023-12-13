@@ -60,7 +60,7 @@ namespace CryptoQuest.Ranch.Evolve.UI
         }
         
         
-        public void UpdateBeastStats(AttributeSystemBehaviour attributeValues)
+        private void UpdateBeastStats(AttributeSystemBehaviour attributeValues)
         {
             foreach (var attribute in attributeValues.AttributeValues)
             {

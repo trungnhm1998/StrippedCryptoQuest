@@ -1,9 +1,11 @@
 using UnityEngine;
+using UnityEngine.Localization;
 
 namespace CryptoQuest.Ranch.State.BeastUpgrade
 {
     public class UpgradeStateBehaviour : BaseStateBehaviour
     {
+        [SerializeField] private LocalizedString _overviewMessage;
         private RanchStateController _controller;
 
         private static readonly int OverviewState = Animator.StringToHash("OverviewState");
@@ -19,6 +21,7 @@ namespace CryptoQuest.Ranch.State.BeastUpgrade
 
         private void CancelBeastEvolveState()
         {
+            _controller.DialogManager.NormalDialogue.SetMessage(_overviewMessage).Show();
             _controller.UIBeastEvolve.Contents.SetActive(false);
             _controller.Controller.Initialize();
             StateMachine.Play(OverviewState);

@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Localization;
 
 namespace CryptoQuest.Ranch.State
 {
@@ -17,7 +18,6 @@ namespace CryptoQuest.Ranch.State
             _stateController.OpenSwapEvent += OpenSwapState;
             _stateController.OpenUpgradeEvent += OpenUpgradeState;
             _stateController.OpenEvolveEvent += OpenEvolveState;
-
             _stateController.Controller.Input.CancelEvent += ExitState;
         }
 

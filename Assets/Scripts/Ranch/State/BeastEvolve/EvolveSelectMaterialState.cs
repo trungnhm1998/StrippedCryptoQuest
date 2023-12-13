@@ -1,12 +1,11 @@
-﻿using CryptoQuest.Ranch.Evolve.UI;
-using UnityEngine;
-using UnityEngine.EventSystems;
-using NotImplementedException = System.NotImplementedException;
+﻿using UnityEngine;
+using UnityEngine.Localization;
 
 namespace CryptoQuest.Ranch.State.BeastEvolve
 {
     public class EvolveSelectMaterialState : BaseStateBehaviour
     {
+        [SerializeField] private LocalizedString _message;
         private RanchStateController _controller;
 
         private static readonly int EvolveState = Animator.StringToHash("EvolveState");
@@ -20,12 +19,14 @@ namespace CryptoQuest.Ranch.State.BeastEvolve
 
             _controller.Controller.Input.CancelEvent += CancelBeastEvolveState;
             _controller.Controller.Input.SubmitEvent += SelectBeastMaterial;
+            _controller.DialogManager.NormalDialogue.SetMessage(_message).Show();
         }
 
         protected override void OnExit()
         {
             _controller.Controller.Input.SubmitEvent -= SelectBeastMaterial;
             _controller.Controller.Input.CancelEvent -= CancelBeastEvolveState;
+            _controller.DialogManager.NormalDialogue.Hide();
         }
 
         private void SelectBeastMaterial()

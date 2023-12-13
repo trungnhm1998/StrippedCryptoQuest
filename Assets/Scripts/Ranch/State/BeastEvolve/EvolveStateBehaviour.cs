@@ -1,12 +1,13 @@
-using CryptoQuest.Beast;
-using CryptoQuest.Ranch.Evolve.UI;
+using IndiGames.Core.Events;
 using UnityEngine;
-using UnityEngine.EventSystems;
+using UnityEngine.Localization;
 
 namespace CryptoQuest.Ranch.State.BeastEvolve
 {
     public class EvolveStateBehaviour : BaseStateBehaviour
-    {
+    {        
+        [SerializeField] private LocalizedString _message;
+        [SerializeField] private LocalizedString _overviewMessage;
         private RanchStateController _controller;
         private static readonly int OverviewState = Animator.StringToHash("OverviewState");
         private static readonly int SelectMaterialState = Animator.StringToHash("EvolveSelectMaterialState");
@@ -16,12 +17,15 @@ namespace CryptoQuest.Ranch.State.BeastEvolve
             _controller = StateMachine.GetComponent<RanchStateController>();
             _controller.Controller.Input.CancelEvent += CancelBeastEvolveState;
             _controller.Controller.Input.SubmitEvent += ChangeSelectMaterialState;
+            _controller.DialogManager.NormalDialogue.SetMessage(_message).Show();
             _controller.EvolvePresenter.Init();
+            ActionDispatcher.Dispatch(new GetBeasts());
         }
 
         private void ChangeSelectMaterialState()
         {
             SelectBaseMaterial();
+            _controller.DialogManager.NormalDialogue.Hide();
             StateMachine.Play(SelectMaterialState);
         }
 
@@ -36,6 +40,7 @@ namespace CryptoQuest.Ranch.State.BeastEvolve
         {
             _controller.UIBeastEvolve.Contents.SetActive(false);
             _controller.Controller.Initialize();
+            _controller.DialogManager.NormalDialogue.SetMessage(_overviewMessage).Show();
             StateMachine.Play(OverviewState);
         }
 
