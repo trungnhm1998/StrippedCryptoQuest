@@ -8,6 +8,7 @@ namespace CryptoQuest.BlackSmith.Evolve.States
         {
             base.OnEnter();
             EquipmentsPresenter.gameObject.SetActive(false);
+            EvolveSystem.EquipmentDetailPresenter.gameObject.SetActive(false);
             EvolveResultPresenter.gameObject.SetActive(true);
         }
 

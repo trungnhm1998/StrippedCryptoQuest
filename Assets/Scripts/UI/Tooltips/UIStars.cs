@@ -1,13 +1,12 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace CryptoQuest.UI.Tooltips
 {
     public class UIStars : MonoBehaviour
     {
-        [SerializeField] private GameObject[] _stars;
+        [SerializeField] protected GameObject[] _stars;
 
-        public void SetStars(int dataStars)
+        public virtual void SetStars(int dataStars)
         {
             Reset();
             for (var i = 0; i < _stars.Length; i++)
@@ -16,7 +15,7 @@ namespace CryptoQuest.UI.Tooltips
             }
         }
 
-        private void Reset()
+        protected virtual void Reset()
         {
             foreach (var star in _stars)
             {

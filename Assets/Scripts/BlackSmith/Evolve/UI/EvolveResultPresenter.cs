@@ -31,6 +31,7 @@ namespace CryptoQuest.BlackSmith.Evolve.UI
         {
             EvolveResultUI.UpdateUISuccess();
             EquipmentDetailUI.SetEquipment(item.Equipment);
+            EquipmentDetailUI.SetPreviewLevel(item.MinLevel, item.MaxLevel);
             EquipmentDetailUI.gameObject.SetActive(true);
         }
     }

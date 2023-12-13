@@ -1,5 +1,7 @@
+using System;
 using CryptoQuest.BlackSmith.Evolve.UI;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 namespace CryptoQuest.BlackSmith.Evolve.States
 {
@@ -13,6 +15,7 @@ namespace CryptoQuest.BlackSmith.Evolve.States
             DialogsPresenter.Dialogue.SetMessage(EvolveSystem.SelectMaterialText).Show();
             StateMachine.MaterialItem = null;
             EvolvableEquipmentList.EquipmentSelected += OnSelectMaterial;
+            EvolvableEquipmentList.EquipmentHighlighted += OnHighlightItem;
 
             EquipmentsPresenter.EvolvableModel.FilterByEquipment(StateMachine.ItemToEvolve.Equipment);
             EvolvableEquipmentList.ClearEquipmentsWithException(StateMachine.ItemToEvolve);
@@ -21,14 +24,23 @@ namespace CryptoQuest.BlackSmith.Evolve.States
             StateMachine.ItemToEvolve.ButtonUI.interactable = false;
             StateMachine.ItemToEvolve.BaseTag.SetActive(true);
 
-            if (EvolvableEquipmentList.Content.childCount > 1)
-                EventSystem.current.SetSelectedGameObject(EvolvableEquipmentList.Content.GetChild(1).gameObject);
+            var buttons = EvolvableEquipmentList.Content.GetComponentsInChildren<Button>();
+            EventSystem.current.SetSelectedGameObject(buttons[0].gameObject);
+            if (buttons.Length > 1)
+            {
+                var item = buttons[1].GetComponent<Button>();
+                item.OnSelect(null); // trigger highlight button
+                return;
+            }
+
+            EventSystem.current.SetSelectedGameObject(buttons[0].gameObject);
         }
 
         public override void OnExit()
         {
             base.OnExit();
             EvolvableEquipmentList.EquipmentSelected -= OnSelectMaterial;
+            EvolvableEquipmentList.EquipmentHighlighted -= OnHighlightItem;
         }
 
         private void OnSelectMaterial(UIEquipmentItem equipment)
@@ -41,6 +53,13 @@ namespace CryptoQuest.BlackSmith.Evolve.States
         {
             StateMachine.ItemToEvolve.ResetItemStates();
             fsm.RequestStateChange(EStates.SelectEquipment);
+        }
+
+        private void OnHighlightItem(UIEquipmentItem item)
+        {
+            if (item == StateMachine.ItemToEvolve) return;
+            EvolveSystem.EquipmentDetailPresenter.ShowEquipment(item.Equipment);
+            EvolveSystem.EquipmentDetailPresenter.ShowPreview(StateMachine.EvolveEquipmentData);
         }
     }
 }

@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using CryptoQuest.Item.Equipment;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.Pool;
 using UnityEngine.UI;
 
@@ -13,6 +12,7 @@ namespace CryptoQuest.BlackSmith.Evolve.UI
     public class UIEvolvableEquipmentList : MonoBehaviour
     {
         public event Action<UIEquipmentItem> EquipmentSelected;
+        public event Action<UIEquipmentItem> EquipmentHighlighted;
 
         [SerializeField] private ScrollRect _scrollRect;
         public Transform Content => _scrollRect.content;
@@ -64,6 +64,11 @@ namespace CryptoQuest.BlackSmith.Evolve.UI
         private void OnSelectItem(UIEquipmentItem ui)
         {
             EquipmentSelected?.Invoke(ui);
+        }
+
+        private void OnHighlightItem(UIEquipmentItem item)
+        {
+            EquipmentHighlighted?.Invoke(item);
         }
 
         #region Pool-handler
