@@ -10,36 +10,30 @@ using UnityEngine;
 
 namespace CryptoQuest.Quest.Components
 {
-    public abstract class IQuestManager : MonoBehaviour
-    {
-        public static Action<IQuestConfigure> OnConfigureQuest;
-        public static Action<QuestSO> OnRemoveProgressingQuest;
-        public Action<QuestSO> OnQuestCompleted;
-
-        public abstract void TriggerQuest(QuestSO questData);
-        public abstract void GiveQuest(QuestSO questData);
-    }
-
     [AddComponentMenu("Quest System/Quest Manager")]
     [DisallowMultipleComponent]
     public class QuestManager : IQuestManager
     {
-        [Header("Quest Events")]
-        [SerializeField]
+        [Header("Quest Events"), SerializeField]
         private QuestEventChannelSO _triggerQuestEventChannel;
-
-        [Header("Quest Save Data")]
-        [SerializeField]
-        private QuestSaveSO _saveData;
-
-        public QuestSaveSO SaveData => _saveData;
 
         [SerializeField] private QuestEventChannelSO _giveQuestEventChannel;
         [SerializeField] private QuestEventChannelSO _removeQuestEventChannel;
         [SerializeField] private RewardLootEvent _rewardEventChannel;
-        [SerializeField, HideInInspector] private QuestSO _currentQuestData;
-        [SerializeField, HideInInspector] private List<QuestInfo> _currentQuestInfos = new();
+
+        [Header("Quest Save Data"), SerializeField]
+        private QuestSaveSO _saveData;
+
+        public QuestSaveSO SaveData => _saveData;
+
+        [Header("Quests"), SerializeField, HideInInspector]
+        private QuestSO _currentQuestData;
+
+        [SerializeReference, HideInInspector] private List<QuestInfo> _currentQuestInfos = new();
         [NonSerialized] private Dictionary<string, QuestInfo> _questInfoDict = new();
+
+        [SerializeField] private QuestCompletionHandler _questCompletionHandler;
+
         private bool _isCacheDirty;
 
         private Dictionary<string, QuestInfo> QuestInfoLookup
@@ -92,10 +86,7 @@ namespace CryptoQuest.Quest.Components
 
         private void OnDestroy()
         {
-            foreach (var info in _currentQuestInfos)
-            {
-                info.Release();
-            }
+            foreach (var info in _currentQuestInfos) info.Release();
         }
 
         public override void TriggerQuest(QuestSO questData)
@@ -182,19 +173,17 @@ namespace CryptoQuest.Quest.Components
             _saveData.AddCompleteQuest(questInfo);
         }
 
-        private void QuestCompleted(QuestSO questSo)
+        private void QuestCompleted(QuestSO data)
         {
             foreach (var progressQuestInfo in _saveData.InProgressQuest)
             {
-                if (progressQuestInfo != questSo.Guid) continue;
+                if (progressQuestInfo != data.Guid) continue;
                 UpdateQuestProgress(progressQuestInfo);
                 break;
             }
-        }
 
-        private bool IsCurrentlyPlayingQuest(QuestSO quest)
-        {
-            return _currentQuestInfos.Any(questInfo => questInfo.Guid == quest.Guid);
+            _questCompletionHandler.GrantCompletionRewards(data);
+            _questCompletionHandler.HandleNextAction(data);
         }
 
         private bool IsQuestTriggered(QuestSO questSo)

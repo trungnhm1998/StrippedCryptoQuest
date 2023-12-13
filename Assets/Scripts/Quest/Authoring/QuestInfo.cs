@@ -49,25 +49,11 @@ namespace CryptoQuest.Quest.Authoring
 
             Data.OnQuestCompleted?.Invoke();
             questManager?.OnQuestCompleted?.Invoke(Data);
-
-            if (Data.Rewards.Length > 0)
-            {
-                Data.OnRewardReceived?.Invoke(GetRewards());
-            }
-
-            if (Data.NextAction == null) return;
-            questManager?.StartCoroutine(Data.NextAction.Execute());
         }
 
         public override void GiveQuest()
         {
             Debug.Log($"QuestSystem::Give Quest: <color=green>[{Data.QuestName}] - [{Data.EventName}]</color>");
-        }
-
-        private List<LootInfo> GetRewards()
-        {
-            QuestReward[] rewards = Data.Rewards;
-            return rewards.Select(reward => reward.CreateReward()).ToList();
         }
 
         public override bool IsValid() => Data != null;
