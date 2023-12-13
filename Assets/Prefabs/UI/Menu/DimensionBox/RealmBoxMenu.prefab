@@ -2058,7 +2058,7 @@ GameObject:
   - component: {fileID: 7106704186619530668}
   - component: {fileID: 1558251683538702279}
   - component: {fileID: 1231428917582743024}
-  - component: {fileID: 7760109760230350000}
+  - component: {fileID: 4965171748818597108}
   - component: {fileID: 8393183623960140034}
   m_Layer: 5
   m_Name: DimensionalWallet
@@ -2128,7 +2128,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &7760109760230350000
+--- !u!114 &4965171748818597108
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2137,7 +2137,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1202557764046138609}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Script: {fileID: 11500000, guid: 77b26c7a54d143a7b78bcba222262814, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
@@ -2171,20 +2171,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1231428917582743024}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 4422854240309156628}
-        m_TargetAssemblyTypeName: CryptoQuest.Menus.DimensionalBox.UI.MetaDTransfer.UIMetadTransferPanel,
-          IndiGames.CryptoQuest.DimensionalBox
-        m_MethodName: SelectDimensionalBoxButton
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &8393183623960140034
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2198,6 +2185,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _arrow: {fileID: 7522163606927653758}
+  <CurrencyUI>k__BackingField: {fileID: 5193068451505655455}
+  <Button>k__BackingField: {fileID: 4965171748818597108}
 --- !u!1 &1227971660364982473
 GameObject:
   m_ObjectHideFlags: 0
@@ -2398,7 +2387,7 @@ GameObject:
   - component: {fileID: 7411807304226148374}
   - component: {fileID: 1674214889209819439}
   - component: {fileID: 4892124401953927795}
-  - component: {fileID: 8164074588350264856}
+  - component: {fileID: 2806196079889285958}
   m_Layer: 5
   m_Name: InputField (Legacy)
   m_TagString: Untagged
@@ -2525,7 +2514,7 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 8164074588350264856}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: CryptoQuest.Menus.DimensionalBox.MetadInputValidator,
           IndiGames.CryptoQuest.DimensionalBox
         m_MethodName: ValidateInputMetad
@@ -2572,7 +2561,7 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
---- !u!114 &8164074588350264856
+--- !u!114 &2806196079889285958
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2581,12 +2570,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1321922694844232911}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f3a4acae81504f0aa42f1d925b5e18a1, type: 3}
+  m_Script: {fileID: 11500000, guid: 04e0994afb8d9e849905c90a9b4cac76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _wallet: {fileID: 11400000, guid: e349636f15671994ba195728c42a551b, type: 2}
-  _transferPanel: {fileID: 4422854240309156628}
-  _inputField: {fileID: 1674214889209819439}
+  <_inputFieldText>k__BackingField: {fileID: 871287625802474393}
+  <_inputField>k__BackingField: {fileID: 1674214889209819439}
+  _invalidColor: {r: 1, g: 0.18396229, b: 0.18396229, a: 1}
 --- !u!1 &1369102021396335234
 GameObject:
   m_ObjectHideFlags: 0
@@ -5127,7 +5116,7 @@ MonoBehaviour:
   <MagicStoneTransferPanel>k__BackingField: {fileID: 5536517545348621571}
   <TransferMagicStonesPanel>k__BackingField: {fileID: 6803522302676310196}
   <EquipmentsTransferPanel>k__BackingField: {fileID: 2352183675398972442}
-  <MetaDTransferPanel>k__BackingField: {fileID: 5534128334308055421}
+  <MetadTransferPanel>k__BackingField: {fileID: 4422854240309156628}
   <OverviewPanel>k__BackingField: {fileID: 2481351480167608539}
   _input: {fileID: 11400000, guid: 1fb61cdb72f0a484f8e4db68e2011977, type: 2}
 --- !u!114 &1727994627849364949
@@ -10331,7 +10320,7 @@ GameObject:
   - component: {fileID: 5984498815744328154}
   - component: {fileID: 7483912036837710815}
   - component: {fileID: 3414685208191648573}
-  - component: {fileID: 6972666607405984050}
+  - component: {fileID: 9212295367726815655}
   - component: {fileID: 1738118341520845222}
   m_Layer: 5
   m_Name: GameWallet
@@ -10401,7 +10390,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &6972666607405984050
+--- !u!114 &9212295367726815655
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -10410,7 +10399,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5067356834597425356}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Script: {fileID: 11500000, guid: 77b26c7a54d143a7b78bcba222262814, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
@@ -10444,20 +10433,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 3414685208191648573}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 4422854240309156628}
-        m_TargetAssemblyTypeName: CryptoQuest.Menus.DimensionalBox.UI.MetaDTransfer.UIMetadTransferPanel,
-          IndiGames.CryptoQuest.DimensionalBox
-        m_MethodName: SelectGameButton
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1738118341520845222
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10471,6 +10447,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _arrow: {fileID: 2168130971553516626}
+  <CurrencyUI>k__BackingField: {fileID: 6892827511944183533}
+  <Button>k__BackingField: {fileID: 9212295367726815655}
 --- !u!1 &5114307432049786931
 GameObject:
   m_ObjectHideFlags: 0
@@ -11512,6 +11490,7 @@ GameObject:
   - component: {fileID: 4388960598924783731}
   - component: {fileID: 4422854240309156628}
   - component: {fileID: 8995925014396707433}
+  - component: {fileID: 4967879414435113614}
   m_Layer: 5
   m_Name: MetaDTransfer
   m_TagString: Untagged
@@ -11553,10 +11532,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _wallet: {fileID: 11400000, guid: e349636f15671994ba195728c42a551b, type: 2}
-  <Input>k__BackingField: {fileID: 11400000, guid: 1fb61cdb72f0a484f8e4db68e2011977, type: 2}
-  <GameButton>k__BackingField: {fileID: 1738118341520845222}
-  <DimensionalBoxButton>k__BackingField: {fileID: 8393183623960140034}
-  <TransferAmountInput>k__BackingField: {fileID: 1674214889209819439}
+  <ConfirmDialog>k__BackingField: {fileID: 4967879414435113614}
+  <DiamondButton>k__BackingField: {fileID: 1738118341520845222}
+  <MetadButton>k__BackingField: {fileID: 8393183623960140034}
+  <InputTransferUI>k__BackingField: {fileID: 2806196079889285958}
 --- !u!114 &8995925014396707433
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11573,6 +11552,30 @@ MonoBehaviour:
   _inboxCurrency: {fileID: 11400000, guid: ecd695079ceff4d429ded9ad5579437f, type: 2}
   _wallet: {fileID: 11400000, guid: e349636f15671994ba195728c42a551b, type: 2}
   _metaDTransferPanel: {fileID: 4422854240309156628}
+--- !u!114 &4967879414435113614
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5534128334308055421}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0506d54e4e8e3e49bb268bb0b9e5792, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _confirmMessage:
+    m_TableReference:
+      m_TableCollectionName: GUID:2a160eca317e91d46ab34a42932341e0
+    m_TableEntryReference:
+      m_KeyId: 21381211033600
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!1 &5536517545348621571
 GameObject:
   m_ObjectHideFlags: 0
