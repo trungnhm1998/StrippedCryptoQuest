@@ -12,6 +12,7 @@ namespace CryptoQuest.BlackSmith.Evolve.States
         protected ConfirmEvolveDialog ConfirmEvolveDialog => EvolveSystem.ConfirmEvolveDialog;
         protected EvolveResultPresenter EvolveResultPresenter => EvolveSystem.EvolveResultPresenter;
         protected BlackSmithDialogsPresenter DialogsPresenter => StateMachine.DialogsPresenter;
+        protected CurrencyPresenter CurrencyPresenter => EvolveSystem.CurrencyPresenter;
 
         protected EvolveStateBase(EvolveStateMachine stateMachine) : base(false) => StateMachine = stateMachine;
 

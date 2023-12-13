@@ -22,7 +22,7 @@ namespace CryptoQuest.UI.Tooltips.Equipment
         [SerializeField] private Image _rarity;
         [SerializeField] private GameObject _nftTag;
         [SerializeField] private Image _illustration;
-        [SerializeField] private TMP_Text _lvl;
+        [SerializeField] protected TMP_Text _lvl;
         [SerializeField] private LocalizeStringEvent _nameLocalize;
         [SerializeField] private UIStars _uiStars;
         [SerializeField] protected RectTransform _statsContainer;

@@ -18,6 +18,8 @@ namespace CryptoQuestEditor.BlackSmith
             [Name("rarity_id")] public int RarityId { get; set; }
             [Name("before_evol_star")] public int BeforeStars { get; set; }
             [Name("after_evol_star")] public int AfterStars { get; set; }
+            [Name("preview_minlv")] public int MinLevel { get; set; }
+            [Name("preview_maxlv")] public int MaxLevel { get; set; }
             [Name("probability")] public int Rate { get; set; }
             [Name("gold")] public int Gold { get; set; }
             [Name("metaD")] public float Metad { get; set; }
@@ -49,6 +51,8 @@ namespace CryptoQuestEditor.BlackSmith
                     RarityId = data.RarityId,
                     BeforeStars = data.BeforeStars,
                     AfterStars = data.AfterStars,
+                    MinLevel = data.MinLevel,
+                    MaxLevel = data.MaxLevel,
                     Rate = data.Rate,
                     Gold = data.Gold,
                     Metad = data.Metad
@@ -65,6 +69,8 @@ namespace CryptoQuestEditor.BlackSmith
                     Rarity = info.RarityId,
                     BeforeStars = info.BeforeStars,
                     AfterStars = info.AfterStars,
+                    MinLevel = info.MinLevel,
+                    MaxLevel = info.MaxLevel,
                     Rate = info.Rate,
                     Gold = info.Gold,
                     Metad = info.Metad

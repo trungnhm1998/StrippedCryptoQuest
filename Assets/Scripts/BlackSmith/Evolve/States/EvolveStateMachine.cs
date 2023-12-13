@@ -50,6 +50,8 @@ namespace CryptoQuest.BlackSmith.Evolve.States
                     Rarity = infosDB[i].Rarity,
                     BeforeStars = infosDB[i].BeforeStars,
                     AfterStars = infosDB[i].AfterStars,
+                    MinLevel = infosDB[i].MinLevel,
+                    MaxLevel = infosDB[i].MaxLevel,
                     Gold = infosDB[i].Gold,
                     Metad = infosDB[i].Metad,
                     Rate = infosDB[i].Rate

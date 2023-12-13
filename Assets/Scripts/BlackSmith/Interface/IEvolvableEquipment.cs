@@ -11,6 +11,9 @@ namespace CryptoQuest.BlackSmith.Interface
         LocalizedString LocalizedName { get; }
         int Level { get; }
         int Stars { get; }
+        int AfterStars { get; }
+        int MinLevel { get; }
+        int MaxLevel { get; }
         int Gold { get; }
         float Metad { get; }
         Sprite Rarity { get; }

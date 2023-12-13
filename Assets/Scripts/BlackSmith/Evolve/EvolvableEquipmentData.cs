@@ -24,5 +24,11 @@ namespace CryptoQuest.BlackSmith.Evolve
         public Sprite Rarity => Equipment.Rarity.Icon;
 
         public int Rate { get; set; }
+
+        public int AfterStars { get; set; }
+
+        public int MinLevel { get; set; }
+
+        public int MaxLevel { get; set; }
     }
 }

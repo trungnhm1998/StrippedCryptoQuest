@@ -1,7 +1,9 @@
+using System;
 using System.Linq;
 using CryptoQuest.BlackSmith.Evolve.UI;
 using FSM;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 namespace CryptoQuest.BlackSmith.Evolve.States
 {
@@ -16,7 +18,10 @@ namespace CryptoQuest.BlackSmith.Evolve.States
             StateMachine.MaterialItem = null;
             StateMachine.ItemToEvolve = null;
             EquipmentsPresenter.gameObject.SetActive(true);
+            CurrencyPresenter.Show();
+
             EvolvableEquipmentList.EquipmentSelected += OnSelectBaseItem;
+            EvolvableEquipmentList.EquipmentHighlighted += OnHighlightItem;
 
             EquipmentsPresenter.EvolvableModel.Init();
             EquipmentsPresenter.EvolvableModel.FilterByInfos(StateMachine.EvolvableInfos);
@@ -29,10 +34,12 @@ namespace CryptoQuest.BlackSmith.Evolve.States
         {
             base.OnExit();
             EvolvableEquipmentList.EquipmentSelected -= OnSelectBaseItem;
+            EvolvableEquipmentList.EquipmentHighlighted -= OnHighlightItem;
         }
 
         public override void OnCancel()
         {
+            CurrencyPresenter.Hide();
             EquipmentsPresenter.gameObject.SetActive(false);
             StateMachine.BackToOverview();
         }
@@ -46,11 +53,19 @@ namespace CryptoQuest.BlackSmith.Evolve.States
                 Equipment = item.Equipment,
                 Level = item.Equipment.Level,
                 Stars = item.Equipment.Data.Stars,
+                AfterStars = info.AfterStars,
+                MinLevel = info.MinLevel,
+                MaxLevel = info.MaxLevel,
                 Gold = info.Gold,
                 Metad = info.Metad,
                 Rate = info.Rate
             };
             StateMachine.RequestStateChange(EStates.SelectMaterial);
+        }
+
+        private void OnHighlightItem(UIEquipmentItem item)
+        {
+            EvolveSystem.EquipmentDetailPresenter.ShowEquipment(item.Equipment);
         }
     }
 }
