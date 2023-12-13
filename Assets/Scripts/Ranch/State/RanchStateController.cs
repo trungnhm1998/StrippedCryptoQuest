@@ -1,4 +1,5 @@
 using System;
+using CryptoQuest.Ranch.Evolve.Presenters;
 using CryptoQuest.Ranch.UI;
 using UnityEngine;
 
@@ -19,6 +20,7 @@ namespace CryptoQuest.Ranch.State
 
         [field: SerializeField] public UIBeastUpgrade UIBeastUpgrade { get; private set; }
         [field: SerializeField] public UIBeastEvolve UIBeastEvolve { get; private set; }
+        [field: SerializeField] public EvolvePresenter EvolvePresenter { get; private set; }
 
         private void OnDisable()
         {

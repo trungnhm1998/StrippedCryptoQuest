@@ -45,6 +45,7 @@ namespace CryptoQuest.Ranch.State
         private void OpenEvolveState()
         {
             StateMachine.Play(EvolveState);
+            _stateController.UIBeastEvolve.Contents.SetActive(true);
             _stateController.Controller.HideDialogs();
         }
 

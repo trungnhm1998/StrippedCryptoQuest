@@ -34,15 +34,18 @@ namespace CryptoQuest.Ranch.Evolve.UI
             _icon.sprite = beast.Elemental.Icon;
         }
 
-        public void SetBaseObjectSelected(bool value)
+        private void SetBaseObjectSelected(bool value)
         {
             _baseObject.SetActive(value);
+            _background.gameObject.SetActive(value);
             _background.sprite = value ? _selectedBackground : _defaultBackground;
+            _button.interactable = false;
         }
 
         public void SetMaterialObjectSelected(bool value)
         {
             _materialObject.SetActive(value);
+            _background.gameObject.SetActive(value);
             _background.sprite = value ? _selectedBackground : _defaultBackground;
         }
 
@@ -75,19 +78,11 @@ namespace CryptoQuest.Ranch.Evolve.UI
         private void SelectedBeast()
         {
             OnBeastSelected?.Invoke(this);
+        }
+
+        public void SetBaseMaterial()
+        {
             SetBaseObjectSelected(true);
-        }
-
-        private void SelectedMaterialBeast()
-        {
-            OnSubmit?.Invoke(this);
-            SetMaterialObjectSelected(true);
-        }
-
-        public void SetDefaultBeast()
-        {
-            SetBaseObjectSelected(false);
-            SetMaterialObjectSelected(false);
         }
     }
 }
