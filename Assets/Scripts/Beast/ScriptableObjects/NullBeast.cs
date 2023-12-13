@@ -17,5 +17,7 @@ namespace CryptoQuest.Beast.ScriptableObjects
         public int Id => -1;
         public string Name => "NullBeast";
         public BeastTypeSO Type => ScriptableObject.CreateInstance<BeastTypeSO>();
+        public int Stars => 1;
+        public int Level => 1;
     }
 }

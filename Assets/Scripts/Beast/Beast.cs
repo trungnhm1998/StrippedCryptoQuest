@@ -16,6 +16,8 @@ namespace CryptoQuest.Beast
         int Id { get; }
         string Name { get; }
         BeastTypeSO Type { get; }
+        int Stars { get; }
+        int Level { get; }
     }
 
     [Serializable]
@@ -27,6 +29,7 @@ namespace CryptoQuest.Beast
         [field: SerializeField] public Elemental Elemental { get; set; }
         [field: SerializeField] public CharacterClass Class { get; set; }
         [field: SerializeField] public BeastTypeSO Type { get; set; }
+        [field: SerializeField] public int Stars { get; set; }
         [field: SerializeField] public PassiveAbility Passive { get; set; }
         public Sprite Image { get; set; }
         public string Name => Type.BeastInformation.LocalizedName.GetLocalizedString();

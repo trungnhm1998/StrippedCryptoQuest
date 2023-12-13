@@ -11,7 +11,7 @@ namespace CryptoQuest.Menus.Beast.UI
 {
     public class UIBeast : MonoBehaviour, IBeastProvider
     {
-        [SerializeField] private ShowBeastUIEventChannel _showBeastUIEventChannel;
+        public static Action<UIBeast> OnBeastSelected;
 
         [Header("UI")]
         [SerializeField] private Image _beastIcon;
@@ -49,7 +49,7 @@ namespace CryptoQuest.Menus.Beast.UI
 
         public void OnPressButton()
         {
-            _showBeastUIEventChannel.RaiseEvent(this);
+            OnBeastSelected?.Invoke(this);
         }
 
         private void SetDisable(bool value)

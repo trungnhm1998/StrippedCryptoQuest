@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using CryptoQuest.Beast;
 using CryptoQuest.Beast.ScriptableObjects;
@@ -42,6 +41,8 @@ namespace CryptoQuest.Menus.Beast.UI
                 foreach (var beastUi in _beastUIs) beastUi.Interactable = value;
             }
         }
+
+        public bool IsValid => _beastInventory.OwnedBeasts.Count > 0;
 
         public void Init()
         {
