@@ -119,7 +119,9 @@ namespace CryptoQuest.Ranch.Sagas
                 Class = _classes.FirstOrDefault(classes => classes.Id == Int32.Parse(response.classId)),
                 Type =
                     _type.FirstOrDefault(type => type.BeastInformation.Id == Int32.Parse(response.characterId)),
-                Passive = _passive.FirstOrDefault(passive => passive.Id == response.passiveSkillId)
+                Passive = _passive.FirstOrDefault(passive => passive.Id == response.passiveSkillId),
+                Stars = response.star,
+                Level = response.level,
             };
         }
     }

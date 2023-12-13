@@ -1,4 +1,3 @@
-using CryptoQuest.Beast;
 using CryptoQuest.Menus.Beast.UI;
 using CryptoQuest.UI.Menu;
 using UnityEngine;
@@ -15,7 +14,7 @@ namespace CryptoQuest.Menus.Beast.States
             _beastPanel.Input.MenuNavigateEvent += NavigateSelector;
             _beastPanel.Focusing += ShowBeastList;
 
-            _beastPanel.ShowBeastEventChannel.EventRaised += EquipBeast;
+            UIBeast.OnBeastSelected += EquipBeast;
 
             ShowBeastList();
             _beastPanel.ListBeastUI.Interactable = true;
@@ -23,12 +22,13 @@ namespace CryptoQuest.Menus.Beast.States
 
         public override void OnExit()
         {
+            _beastPanel.ListBeastUI.Interactable = false;
+            _beastPanel.DetailBeastUI.SetEnabled(false);
+
             _beastPanel.Input.MenuCancelEvent -= HandleCancel;
             _beastPanel.Input.MenuNavigateEvent -= NavigateSelector;
+            UIBeast.OnBeastSelected -= EquipBeast;
             _beastPanel.Focusing -= ShowBeastList;
-
-            _beastPanel.ShowBeastEventChannel.EventRaised -= EquipBeast;
-            _beastPanel.ListBeastUI.Interactable = false;
         }
 
         private void EquipBeast(UIBeast ui)
@@ -40,7 +40,7 @@ namespace CryptoQuest.Menus.Beast.States
 
         private void ShowBeastList()
         {
-            _beastPanel.ListBeastUI.gameObject.SetActive(true);
+            _beastPanel.DetailBeastUI.SetEnabled(_beastPanel.ListBeastUI.IsValid);
             _beastPanel.ListBeastUI.Init();
             _beastPanel.ListBeastUI.SelectFirstBeast();
         }
