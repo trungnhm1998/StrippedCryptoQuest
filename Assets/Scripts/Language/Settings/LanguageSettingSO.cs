@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using CryptoQuest.Events;
+using IndiGames.Core.Events;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Localization;

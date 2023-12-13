@@ -1,4 +1,5 @@
 using CryptoQuest.Events;
+using IndiGames.Core.Events;
 using UnityEngine;
 using UnityEngine.Events;
 

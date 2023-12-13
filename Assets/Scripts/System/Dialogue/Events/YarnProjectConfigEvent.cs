@@ -1,5 +1,6 @@
 ﻿using CryptoQuest.Events;
 using CryptoQuest.System.Dialogue.YarnManager;
+using IndiGames.Core.Events;
 using UnityEngine;
 using UnityEngine.Events;
 
