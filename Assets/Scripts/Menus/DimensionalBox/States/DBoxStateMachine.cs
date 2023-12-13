@@ -1,6 +1,7 @@
 ﻿using System;
 using CryptoQuest.Menus.DimensionalBox.States.EquipmentsTransfer;
 using CryptoQuest.Menus.DimensionalBox.States.MagicStoneTransfer;
+using CryptoQuest.Menus.DimensionalBox.States.MetadTransfer;
 using FSM;
 using UnityEngine;
 
@@ -31,7 +32,7 @@ namespace CryptoQuest.Menus.DimensionalBox.States
             Panel = menuPanel;
             AddState(EState.Overview, new Overview(menuPanel));
             AddState(EState.Equipment, new TransferEquipmentsStateMachine(this));
-            AddState(EState.Metad, new Metad(menuPanel));
+            AddState(EState.Metad, new TransferMetadStateMachine(this));
             AddState(EState.MagicStone, new TransferringMagicStoneStateMachine(this));
 
             SetStartState(EState.Overview);
@@ -54,10 +55,5 @@ namespace CryptoQuest.Menus.DimensionalBox.States
         }
 
         public void Reset() => OnAction(EStateAction.OnReset);
-    }
-
-    public class Metad : DBoxStateBase
-    {
-        public Metad(MenuPanel menuPanel) : base(menuPanel) { }
     }
 }

@@ -11,6 +11,7 @@ using IndiGames.Core.Common;
 using IndiGames.Core.Events;
 using UniRx;
 using UnityEngine;
+using CryptoQuest.UI.Actions;
 
 namespace CryptoQuest.Menus.DimensionalBox.Sagas
 {
@@ -23,6 +24,7 @@ namespace CryptoQuest.Menus.DimensionalBox.Sagas
         
         protected override void HandleAction(GetToken ctx)
         {
+            ActionDispatcher.Dispatch(new ShowLoading());
             var restClient = ServiceProvider.GetService<IRestClient>();
             restClient.Get<GetTokenResponse>(Nft.GET_TOKEN)
                 .Subscribe(OnGetToken, OnError);
@@ -31,13 +33,18 @@ namespace CryptoQuest.Menus.DimensionalBox.Sagas
         private void OnGetToken(GetTokenResponse response)
         {
             if (response.code != (int)HttpStatusCode.OK) return;
+
+            ActionDispatcher.Dispatch(new ShowLoading(false));
             _wallet[_ingameMetad].SetAmount(response.data.diamond);
             _wallet[_inboxMetad].SetAmount(response.data.metad);
+            ActionDispatcher.Dispatch(new GetTokenSuccess());
         }
 
         private void OnError(Exception response)
         {
-            Debug.LogError($"GetTokenSaga: {response.Message}");
+            ActionDispatcher.Dispatch(new ShowLoading(false));
+            ActionDispatcher.Dispatch(new ServerErrorPopup());
+            ActionDispatcher.Dispatch(new GetTokenFailed());
         }
     }
 }

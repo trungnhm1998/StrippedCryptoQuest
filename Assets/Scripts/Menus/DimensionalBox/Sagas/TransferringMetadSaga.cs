@@ -22,11 +22,10 @@ namespace CryptoQuest.Menus.DimensionalBox.Sagas
         [SerializeField] private CurrencySO _ingameCurrency;
         [SerializeField] private CurrencySO _inboxCurrency;
         [SerializeField] private WalletSO _wallet;
-        [SerializeField] private UIMetadTransferPanel _metaDTransferPanel;
+        [SerializeField] private MetadTransferPanel _metaDTransferPanel;
 
         protected override void HandleAction(TransferringMetad ctx)
         {
-            _metaDTransferPanel.Transferring = true;
             var apiPath = ctx.SourceToTransfer == _ingameCurrency
                 ? Nft.TRANSFER_METAD_TO_WALLET
                 : Nft.TRANSFER_METAD_TO_GAME;
@@ -35,6 +34,7 @@ namespace CryptoQuest.Menus.DimensionalBox.Sagas
 
         private void TransferToWallet(string apiPath, float amount)
         {
+            ActionDispatcher.Dispatch(new ShowLoading());
             ServiceProvider.GetService<IRestClient>()
                 .WithBody(new Dictionary<string, float> { { "amount", amount } })
                 .Post<GetTokenResponse>(apiPath)
@@ -63,7 +63,6 @@ namespace CryptoQuest.Menus.DimensionalBox.Sagas
 
         private void HideLoading()
         {
-            _metaDTransferPanel.Transferring = false;
             ActionDispatcher.Dispatch(new ShowLoading(false));
         }
     }

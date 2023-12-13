@@ -16,7 +16,7 @@ namespace CryptoQuest.Menus.DimensionalBox.States
         public override void OnEnter()
         {
             MenuPanel.EquipmentsTransferPanel.gameObject.SetActive(false);
-            MenuPanel.MetaDTransferPanel.SetActive(false);
+            MenuPanel.MetadTransferPanel.gameObject.SetActive(false);
             MenuPanel.MagicStoneTransferPanel.SetActive(false);
 
             MenuPanel.OverviewPanel.gameObject.SetActive(true);

@@ -1,6 +1,7 @@
 ﻿using CryptoQuest.Input;
 using CryptoQuest.Menus.DimensionalBox.States;
 using CryptoQuest.Menus.DimensionalBox.UI.EquipmentsTransfer;
+using CryptoQuest.Menus.DimensionalBox.UI.MetaDTransfer;
 using CryptoQuest.UI.Menu;
 using UnityEngine;
 
@@ -11,7 +12,7 @@ namespace CryptoQuest.Menus.DimensionalBox
         [field: SerializeField] public GameObject MagicStoneTransferPanel { get; private set; }
         [field: SerializeField] public TransferMagicStonesPanel TransferMagicStonesPanel { get; set; }
         [field: SerializeField] public TransferEquipmentsPanel EquipmentsTransferPanel { get; private set; }
-        [field: SerializeField] public GameObject MetaDTransferPanel { get; private set; }
+        [field: SerializeField] public MetadTransferPanel MetadTransferPanel { get; private set; }
         [field: SerializeField] public GameObject OverviewPanel { get; private set; }
         [SerializeField] private InputMediatorSO _input;
         public InputMediatorSO Input => _input;
