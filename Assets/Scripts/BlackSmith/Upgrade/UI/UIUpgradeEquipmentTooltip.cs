@@ -26,10 +26,11 @@ namespace CryptoQuest.BlackSmith.Upgrade.UI
             base.SetupStats();
         }
 
-        protected override void SetupSkills(RectTransform skillsContainer, ESkillType skillType, GameObject skillPrefab)
+        protected override void SetupSkills(RectTransform skillsContainer, ESkillType skillType, GameObject skillPrefab,
+            GameObject label = null)
         {
             DestroyImmediatelyChilds(skillsContainer);
-            base.SetupSkills(skillsContainer, skillType, skillPrefab);
+            base.SetupSkills(skillsContainer, skillType, skillPrefab, label);
         }
 
         // Because this is UI and the data update immediatetly so I have to DestroyImmediate
@@ -40,7 +41,7 @@ namespace CryptoQuest.BlackSmith.Upgrade.UI
             {
                 var child = parent.GetChild(0);
                 DestroyImmediate(child.gameObject);
-            }            
+            }
         }
     }
 }
