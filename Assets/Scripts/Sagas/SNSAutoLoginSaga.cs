@@ -19,6 +19,13 @@ namespace CryptoQuest.Sagas
         public const string SNS_SAVE_KEY = "sns_tokens";
         private const double EXPIRE_DT_IN_SECOND = 3.0;
 
+#if UNITY_EDITOR
+        [SerializeField] private string _refreshTokenStr;
+#else
+        private string _refreshTokenStr = string.Empty;
+#endif
+
+
         private TinyMessageSubscriptionToken _loginFinishedToken;
         private TinyMessageSubscriptionToken _loginFailedToken;
 
@@ -51,24 +58,31 @@ namespace CryptoQuest.Sagas
 
         protected override void HandleAction(SNSAutoLogin ctx)
         {
-            // Get refresh token from PlayerPrefs
-            var tokenString = PlayerPrefs.GetString(SNS_SAVE_KEY, string.Empty);
-            if (!string.IsNullOrEmpty(tokenString))
+            if (string.IsNullOrEmpty(_refreshTokenStr))
             {
-                var refreshToken = JsonConvert.DeserializeObject<Access>(tokenString);
-                if (refreshToken != null)
+                // Get refresh token from PlayerPrefs
+                var tokenString = PlayerPrefs.GetString(SNS_SAVE_KEY, string.Empty);
+                if (!string.IsNullOrEmpty(tokenString))
                 {
-                    var nowPlusDt = DateTime.Now.AddSeconds(EXPIRE_DT_IN_SECOND);
-                    if (refreshToken.expires.CompareTo(nowPlusDt) > 0)
+                    var refreshToken = JsonConvert.DeserializeObject<Access>(tokenString);
+                    if (refreshToken != null)
                     {
-                        var restClient = ServiceProvider.GetService<IRestClient>();
-                        restClient
-                            .WithBody(new Body { refreshToken = refreshToken.token })
-                            .Post<AuthResponse>(Accounts.REFRESH_TOKENS)
-                            .Subscribe(Authenticated, OnError, OnCompleted);
-                        return;
+                        var nowPlusDt = DateTime.Now.AddSeconds(EXPIRE_DT_IN_SECOND);
+                        if (refreshToken.expires.CompareTo(nowPlusDt) > 0)
+                        {
+                            _refreshTokenStr = refreshToken.token;
+                        }
                     }
                 }
+            }
+            if (!string.IsNullOrEmpty(_refreshTokenStr))
+            {
+                var restClient = ServiceProvider.GetService<IRestClient>();
+                restClient
+                    .WithBody(new Body { refreshToken = _refreshTokenStr })
+                    .Post<AuthResponse>(Accounts.REFRESH_TOKENS)
+                    .Subscribe(Authenticated, OnError, OnCompleted);
+                return;
             }
             ActionDispatcher.Dispatch(new SNSAutoLoginFailed());
         }
