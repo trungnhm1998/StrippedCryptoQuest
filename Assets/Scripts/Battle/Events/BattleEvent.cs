@@ -45,6 +45,11 @@ namespace CryptoQuest.Battle.Events
         public int Round { get; set; }
     }
 
+    public class StartAcceptCommand : BattleEvent
+    {
+        public RoundStartedEvent RoundStartedContext { get; set; }
+    }
+
     public class RoundEndedEvent : BattleEvent { }
 
     public class BattleEndedEvent : BattleEvent
