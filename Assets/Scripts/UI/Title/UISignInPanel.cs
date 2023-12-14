@@ -22,7 +22,7 @@ namespace CryptoQuest.UI.Title
 
         private void OnEnable()
         {
-            SelectFirstSelectable();
+            Invoke(nameof(SelectFirstSelectable), 0);
             if (!string.IsNullOrEmpty(_credentials.Email))
             {
                 _emailInputField.text = _credentials.Email;
@@ -66,7 +66,7 @@ namespace CryptoQuest.UI.Title
         {
             if (_hasResult == false) return;
             _hasResult = false;
-            SelectFirstSelectable();
+            Invoke(nameof(SelectFirstSelectable), 0);
             ActionDispatcher.Dispatch(new AuthenticateUsingEmail(_emailInputField.text, _passwordInputField.text));
         }
     }
