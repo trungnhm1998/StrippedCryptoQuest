@@ -11,7 +11,6 @@ namespace CryptoQuest.UI.Title
 {
     public class UISignInPanel : MonoBehaviour
     {
-        private const int SIGN_IN_BUTTON_INDEX = 2;
         [SerializeField] private Credentials _credentials;
         [field: SerializeField] public List<Selectable> Selectables { get; private set; }
         [SerializeField] private TMP_InputField _emailInputField;
@@ -23,35 +22,39 @@ namespace CryptoQuest.UI.Title
 
         private void OnEnable()
         {
-            Invoke(nameof(SelectFirstSelectable), 0);
-            if (string.IsNullOrEmpty(_credentials.Email) ||
-                string.IsNullOrEmpty(_credentials.Password))
+            SelectFirstSelectable();
+            if (!string.IsNullOrEmpty(_credentials.Email))
             {
-                return;
+                _emailInputField.text = _credentials.Email;
             }
+            if (!string.IsNullOrEmpty(_credentials.Password))
+            {
+                _passwordInputField.text = _credentials.Password;
+            }
+        }
 
-            _currenSelectIndex = SIGN_IN_BUTTON_INDEX;
-            _emailInputField.text = _credentials.Email;
-            _passwordInputField.text = _credentials.Password;
-
+        private void Awake()
+        {
             _authFailed = ActionDispatcher.Bind<AuthenticateFailed>(UpdateResult);
         }
 
-        private void OnDisable()
+        private void OnDestroy()
         {
-            if (_authFailed == null) return;
-            ActionDispatcher.Unbind(_authFailed);
+            if (_authFailed != null) ActionDispatcher.Unbind(_authFailed);
         }
 
-        private void SelectFirstSelectable() => Selectables[_currenSelectIndex].Select();
+        private void SelectFirstSelectable()
+        {
+            _currenSelectIndex = 0;
+            Selectables[_currenSelectIndex].Select();
+        }
 
         public void HandleDirection(float value)
         {
             _currenSelectIndex -= (int)value;
             _currenSelectIndex = _currenSelectIndex < 0 ? Selectables.Count - 1 : _currenSelectIndex;
             _currenSelectIndex = _currenSelectIndex >= Selectables.Count ? 0 : _currenSelectIndex;
-            var selectable = Selectables[_currenSelectIndex];
-            selectable.Select();
+            Selectables[_currenSelectIndex].Select();
         }
 
         private void UpdateResult(ActionBase _)
@@ -63,6 +66,7 @@ namespace CryptoQuest.UI.Title
         {
             if (_hasResult == false) return;
             _hasResult = false;
+            SelectFirstSelectable();
             ActionDispatcher.Dispatch(new AuthenticateUsingEmail(_emailInputField.text, _passwordInputField.text));
         }
     }
