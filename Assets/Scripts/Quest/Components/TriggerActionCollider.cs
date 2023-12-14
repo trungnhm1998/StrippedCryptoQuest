@@ -1,4 +1,5 @@
-﻿using CryptoQuest.Gameplay.SafeZone;
+﻿using System;
+using CryptoQuest.Gameplay.SafeZone;
 using CryptoQuest.Quest.Actions;
 using UnityEngine;
 
@@ -7,6 +8,7 @@ namespace CryptoQuest.Quest.Components
     [RequireComponent(typeof(BoxCollider2D))]
     public class TriggerActionCollider : MonoBehaviour
     {
+        public event Action<Vector2> OnSizeChanged;
         [field: SerializeField] public BoxCollider2D BoxCollider2D { get; set; }
 
         private NextAction _nextAction;
@@ -19,7 +21,12 @@ namespace CryptoQuest.Quest.Components
             BoxCollider2D.enabled = true;
         }
 
-        public void SetBoxSize(Vector2 componentSizeBox) => BoxCollider2D.size = componentSizeBox;
+        public void SetBoxSize(Vector2 componentSizeBox)
+        {
+            BoxCollider2D.size = componentSizeBox;
+            OnSizeChanged?.Invoke(componentSizeBox);
+        }
+
         public void SetRepeatType(bool isRepeatable) => _isRepeatable = isRepeatable;
 
         public void SetCollideActionType(ECollideActionType collideActionType) =>
@@ -28,14 +35,12 @@ namespace CryptoQuest.Quest.Components
         private void OnTriggerEnter2D(Collider2D other)
         {
             if (!other.gameObject.CompareTag("Player")) return;
-            SafeZoneController.OnSafeZoneEntered?.Invoke();
             Execute(other, ECollideActionType.OnEnter);
         }
 
         private void OnTriggerExit2D(Collider2D other)
         {
             if (!other.gameObject.CompareTag("Player")) return;
-            SafeZoneController.OnSafeZoneExited?.Invoke();
             Execute(other, ECollideActionType.OnExit);
         }
 
