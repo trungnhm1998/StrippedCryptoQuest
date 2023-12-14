@@ -129,13 +129,14 @@ namespace CryptoQuest.Tavern.Sagas
 
         private void FillCharacterData(CryptoQuest.Sagas.Objects.Character response, ref HeroSpec nftCharacter)
         {
+            var heroName = !string.IsNullOrEmpty(response.name) ? response.name : _charNames[0];
             nftCharacter.Id = response.id;
             nftCharacter.Experience = (float)(response.exp);
             nftCharacter.Elemental = _elements.FirstOrDefault(element => element.Id == Int32.Parse(response.elementId));
             nftCharacter.Class = _classes.FirstOrDefault(@class => @class.Id == Int32.Parse(response.classId));
             FillCharacterStats(response, ref nftCharacter);
             nftCharacter.Origin =
-                _charOrigins[_charNames.IndexOf(_charNames.FirstOrDefault(origin => origin == response.name))];
+                _charOrigins[_charNames.IndexOf(_charNames.FirstOrDefault(origin => origin == heroName))];
         }
 
         private void FillCharacterStats(CryptoQuest.Sagas.Objects.Character response, ref HeroSpec nftCharacter)
