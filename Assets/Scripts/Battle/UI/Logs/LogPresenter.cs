@@ -26,12 +26,12 @@ namespace CryptoQuest.Battle.UI.Logs
         [SerializeField] private float _hideDelay = 1f;
         private UIGenericDialog _dialog;
         private TinyMessageSubscriptionToken _turnStartingEvent;
-        private TinyMessageSubscriptionToken _roundStartedEvent;
+        private TinyMessageSubscriptionToken _acceptCommandEvent;
         private TinyMessageSubscriptionToken _roundEndedEvent;
 
         private void Awake()
         {
-            _roundStartedEvent = BattleEventBus.SubscribeEvent<RoundStartedEvent>(QueueShowDialog);
+            _acceptCommandEvent = BattleEventBus.SubscribeEvent<StartAcceptCommand>(QueueShowDialog);
             _roundEndedEvent = BattleEventBus.SubscribeEvent<RoundEndedEvent>(QueueHideDialog);
             _turnStartingEvent = BattleEventBus.SubscribeEvent<TurnStartedEvent>(QueueClearDialog);
             _sceneLoadedEvent.EventRaised += OnSceneLoaded; // Only start from editor need this
@@ -44,7 +44,7 @@ namespace CryptoQuest.Battle.UI.Logs
 
         private void OnDestroy()
         {
-            BattleEventBus.UnsubscribeEvent(_roundStartedEvent);
+            BattleEventBus.UnsubscribeEvent(_acceptCommandEvent);
             BattleEventBus.UnsubscribeEvent(_roundEndedEvent);
             BattleEventBus.UnsubscribeEvent(_turnStartingEvent);
             _sceneLoadedEvent.EventRaised -= OnSceneLoaded;
@@ -53,8 +53,8 @@ namespace CryptoQuest.Battle.UI.Logs
 
         private void QueueHideDialog(RoundEndedEvent _) => _roundEventsPresenter.EnqueueCommand(new HideDialog(this));
 
-        private void QueueShowDialog(RoundStartedEvent ctx) =>
-            _roundEventsPresenter.EnqueueCommand(new ShowDialog(this, ctx.Round));
+        private void QueueShowDialog(StartAcceptCommand ctx) =>
+            _roundEventsPresenter.EnqueueCommand(new ShowDialog(this, ctx.RoundStartedContext.Round));
 
         private void QueueClearDialog(TurnStartedEvent ctx) => _roundEventsPresenter.EnqueueCommand(new ClearLog(this));
 

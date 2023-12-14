@@ -17,6 +17,7 @@ namespace CryptoQuest.Battle.Presenter
         private readonly Queue<IPresentCommand> _eventCommands = new();
         private TinyMessageSubscriptionToken _startPresentingEvent;
         private TinyMessageSubscriptionToken _enqueueCommandEvent;
+        private TinyMessageSubscriptionToken _roundStartedEvent;
 
         private bool _presented;
         private Coroutine _presentingCoroutine;
@@ -25,16 +26,30 @@ namespace CryptoQuest.Battle.Presenter
         {
             _startPresentingEvent = BattleEventBus.SubscribeEvent<StartPresentingEvent>(StartPresenting);
             _enqueueCommandEvent = BattleEventBus.SubscribeEvent<EnqueuePresentCommandEvent>(EnqueueCommand);
+            _roundStartedEvent = BattleEventBus.SubscribeEvent<RoundStartedEvent>(ClearAndAcceptCommand);
         }
 
         private void OnDestroy()
         {
             BattleEventBus.UnsubscribeEvent(_startPresentingEvent);
             BattleEventBus.UnsubscribeEvent(_enqueueCommandEvent);
+            BattleEventBus.UnsubscribeEvent(_roundStartedEvent);
             _input.ConfirmedEvent -= InputOnConfirmedEvent;
         }
 
         public void EnqueueCommand(IPresentCommand command) => _eventCommands.Enqueue(command);
+
+        private void ClearAndAcceptCommand(RoundStartedEvent ctx)
+        {
+            // To prevent queue command before the round started
+            // anything want to be presented in round should be queue after RoundStartedEvent
+            // by listening to StartAcceptCommand
+            _eventCommands.Clear();
+            BattleEventBus.RaiseEvent(new StartAcceptCommand()
+            {
+                RoundStartedContext = ctx
+            });
+        }
 
         private void EnqueueCommand(EnqueuePresentCommandEvent eventObject)
         {
