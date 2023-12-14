@@ -276,6 +276,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: EvolveEquipmentDetails
       objectReference: {fileID: 0}
+    - target: {fileID: 5012052557537027967, guid: 68fa9834a37c90148aac63c770e8519a, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5022320857552928249, guid: 68fa9834a37c90148aac63c770e8519a, type: 3}
       propertyPath: m_Pivot.y
       value: 1
@@ -647,12 +651,19 @@ MonoBehaviour:
   _uiStars: {fileID: 3122901864047085750}
   _statsContainer: {fileID: 8754144235328504388}
   _attributeValuePrefab: {fileID: 2920396997864631478, guid: 788772bcc8a04304faddf522d4a55b1c, type: 3}
+  _passiveSkillsLabel: {fileID: 7214346007303393695}
   _passiveSkillPrefab: {fileID: 300267422943339973, guid: 41da6de06076d2f4b8b48b699dd16a94, type: 3}
   _passiveSkillsContainer: {fileID: 6341927884170707532}
+  _conditionalSkillsLabel: {fileID: 2014034831148893973}
   _conditionalSkillPrefab: {fileID: 1453190205383352797, guid: 7c71ddfe5aa78074a89dd4752998b27c, type: 3}
   _conditionalSkillsContainer: {fileID: 8757444411277211210}
   _levelTextFormat: Lv. {0}/<color="grey">{1}
   _levelPreviewTextFormat: Lv. {0}/<color=#44dfb2>{1}
+--- !u!1 &2014034831148893973 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5278249393793268556, guid: 68fa9834a37c90148aac63c770e8519a, type: 3}
+  m_PrefabInstance: {fileID: 5959196727261215833}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &2309174913955472924 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8266506100629314117, guid: 68fa9834a37c90148aac63c770e8519a, type: 3}
@@ -700,6 +711,11 @@ MonoBehaviour:
 --- !u!224 &6341927884170707532 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 770216789802024469, guid: 68fa9834a37c90148aac63c770e8519a, type: 3}
+  m_PrefabInstance: {fileID: 5959196727261215833}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &7214346007303393695 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3940034642266074566, guid: 68fa9834a37c90148aac63c770e8519a, type: 3}
   m_PrefabInstance: {fileID: 5959196727261215833}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &7609213320109361637 stripped

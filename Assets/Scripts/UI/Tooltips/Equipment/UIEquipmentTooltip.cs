@@ -27,8 +27,10 @@ namespace CryptoQuest.UI.Tooltips.Equipment
         [SerializeField] private UIStars _uiStars;
         [SerializeField] protected RectTransform _statsContainer;
         [SerializeField] private UIAttribute _attributeValuePrefab;
+        [SerializeField] private GameObject _passiveSkillsLabel;
         [SerializeField] private GameObject _passiveSkillPrefab;
         [SerializeField] private RectTransform _passiveSkillsContainer;
+        [SerializeField] private GameObject _conditionalSkillsLabel;
         [SerializeField] private GameObject _conditionalSkillPrefab;
         [SerializeField] private RectTransform _conditionalSkillsContainer;
 
@@ -51,8 +53,9 @@ namespace CryptoQuest.UI.Tooltips.Equipment
         {
             SetupInfo();
             SetupStats();
-            SetupSkills(_passiveSkillsContainer, ESkillType.Passive, _passiveSkillPrefab);
-            SetupSkills(_conditionalSkillsContainer, ESkillType.Conditional, _conditionalSkillPrefab);
+            SetupSkills(_passiveSkillsContainer, ESkillType.Passive, _passiveSkillPrefab, _passiveSkillsLabel);
+            SetupSkills(_conditionalSkillsContainer, ESkillType.Conditional, _conditionalSkillPrefab,
+                _conditionalSkillsLabel);
             _illustration.LoadSpriteAndSet(_equipment.Prefab.Image);
         }
 
@@ -81,8 +84,11 @@ namespace CryptoQuest.UI.Tooltips.Equipment
             }
         }
 
-        protected virtual void SetupSkills(RectTransform skillsContainer, ESkillType skillType, GameObject skillPrefab)
+        protected virtual void SetupSkills(RectTransform skillsContainer, ESkillType skillType, GameObject skillPrefab,
+            GameObject label = null)
         {
+            if (label != null)
+                label.SetActive(false);
             skillsContainer.gameObject.SetActive(false);
             foreach (Transform skill in skillsContainer) Destroy(skill.gameObject);
             var skills = _equipment.Data.Passives;
@@ -90,6 +96,8 @@ namespace CryptoQuest.UI.Tooltips.Equipment
             {
                 if (skill.Context.SkillInfo.SkillType != skillType) continue;
                 skillsContainer.gameObject.SetActive(true);
+                if (label != null)
+                    label.SetActive(true);
                 var skillText = Instantiate(skillPrefab, skillsContainer).GetComponent<Text>();
                 skillText.text = skill.name;
                 if (skill.Description.IsEmpty) continue;
