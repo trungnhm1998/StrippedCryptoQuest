@@ -1,10 +1,11 @@
-﻿using CryptoQuest.Gameplay;
+﻿using CryptoQuest.Quest.Controllers;
 using CryptoQuest.System.CutsceneSystem.Events;
 using CryptoQuest.System.Dialogue.Managers;
+using IndiGames.Core.Events;
+using TinyMessenger;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Playables;
-using UnityEngine.Serialization;
 #if UNITY_EDITOR
 using UnityEditor.Timeline;
 #endif
@@ -23,6 +24,9 @@ namespace CryptoQuest.System.CutsceneSystem
 
         [Header("Raise on")] [SerializeField] private UnityEvent _onCutsceneCompleted;
 
+        private TinyMessageSubscriptionToken _pauseCutscene;
+        private TinyMessageSubscriptionToken _resumeCutscene;
+
         /// <summary>
         /// There are multiple directors/cutscenes on a scene, we will try to inject to correct playing director
         /// to this variable at runtime when a cutscene is playing.
@@ -31,14 +35,24 @@ namespace CryptoQuest.System.CutsceneSystem
 
         private void OnEnable()
         {
+            _pauseCutscene = ActionDispatcher.Bind<PauseCutsceneAction>(PauseCutsceneAction);
+            _resumeCutscene = ActionDispatcher.Bind<ResumeCutsceneAction>(ResumeCutsceneAction);
+
             _playCutsceneEvent.PlayCutsceneRequested += PlayCutscene;
             _pauseCutsceneEvent.PauseCutsceneRequested += PauseCutscene;
 
             YarnSpinnerDialogueManager.PauseTimelineRequested += PauseCutscene;
         }
 
+        private void PauseCutsceneAction(ActionBase _) => PauseCutscene(true);
+
+        private void ResumeCutsceneAction(ActionBase _) => ResumeCutscene();
+
         private void OnDisable()
         {
+            ActionDispatcher.Unbind(_pauseCutscene);
+            ActionDispatcher.Unbind(_resumeCutscene);
+
             _playCutsceneEvent.PlayCutsceneRequested -= PlayCutscene;
             _pauseCutsceneEvent.PauseCutsceneRequested -= PauseCutscene;
 

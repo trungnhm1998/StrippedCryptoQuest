@@ -5,6 +5,7 @@ using CryptoQuest.Quest.Authoring;
 using CryptoQuest.Quest.Categories;
 using CryptoQuest.Quest.Components;
 using CryptoQuest.Quest.Events;
+using IndiGames.Core.Events;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -18,8 +19,6 @@ namespace CryptoQuest.Quest.Controllers
         [SerializeField] private QuestEventChannelSO _triggerQuestEventChannel;
         [SerializeField] private QuestEventChannelSO _giveQuestEventChannel;
 
-        private BattleQuestInfo _battleQuest;
-        [field: SerializeField] private InputAction _inputAction;
 
         private void OnEnable()
         {
@@ -72,33 +71,20 @@ namespace CryptoQuest.Quest.Controllers
                 _giveQuestEventChannel.RaiseEvent(info.Data.GiveRepeatBattleQuest);
         }
 
-        private void HandleBattleWon(BattleQuestInfo info)
+        private void HandleBattleWon(BattleQuestInfo battleQuest)
         {
-            _battleQuest = info;
-            _inputAction.Enable();
-            _inputAction.performed += OnBattleRewardConfirmed;
-        }
+            QuestSO loseQuest = battleQuest.Data.FirstTimeLoseQuest;
+            _triggerQuestEventChannel.RaiseEvent(battleQuest.Data);
 
-        private void OnBattleRewardConfirmed(InputAction.CallbackContext action)
-        {
-            if (!action.performed) return;
-            HandleRewardBattleConfirmed();
-        }
-
-        private void HandleRewardBattleConfirmed()
-        {
-            _inputAction.Disable();
-            _inputAction.performed -= OnBattleRewardConfirmed;
-
-            QuestSO loseQuest = _battleQuest.Data.FirstTimeLoseQuest;
-            _triggerQuestEventChannel.RaiseEvent(_battleQuest.Data);
-
-            if (_battleQuest.Data.FirstTimeLoseQuest != null)
+            if (battleQuest.Data.FirstTimeLoseQuest != null)
             {
                 IQuestManager.OnRemoveProgressingQuest?.Invoke(loseQuest);
             }
 
-            _currentlyProcessQuests.Remove(_battleQuest);
+            _currentlyProcessQuests.Remove(battleQuest);
         }
     }
+
+    public class PauseCutsceneAction : ActionBase { }
+    public class ResumeCutsceneAction : ActionBase { }
 }
