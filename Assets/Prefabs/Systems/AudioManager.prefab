@@ -31,7 +31,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 4189499582837952087}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!81 &3943840929089067559
@@ -59,8 +60,6 @@ MonoBehaviour:
   _sfxEventChannel: {fileID: 11400000, guid: d94d8af02e524214383b1f54ee255f34, type: 2}
   _backgroundMusicEventChannel: {fileID: 11400000, guid: 3b145a5bdef529242b1938ff468cd3f1, type: 2}
   audioSettings: {fileID: 11400000, guid: d52bbf0b92f08de4b8bc3cd5b8270cb8, type: 2}
-  _saveData:
-    Volume: 1
 --- !u!114 &490393739381098845
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -74,3 +73,323 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _prefab: {fileID: 6340597422452755816, guid: 250fe6f6bb9f95948a3527fdcc9b93d9, type: 3}
+--- !u!1 &6543479709229039630
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4189499582837952087}
+  - component: {fileID: 4341371621423049121}
+  - component: {fileID: 2142384159262654236}
+  m_Layer: 0
+  m_Name: PlaySfxOnInput
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4189499582837952087
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6543479709229039630}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 9219600415506606683}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4341371621423049121
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6543479709229039630}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: -944628639613478452, guid: 650dc670339d4e146b716556f119c587, type: 3}
+  m_NotificationBehavior: 2
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents:
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2142384159262654236}
+        m_TargetAssemblyTypeName: CryptoQuest.Audio.InputSfxController, IndiGames.CryptoQuest
+        m_MethodName: PlayOnInput
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 11400000, guid: 7742051f44dedc045afa2a166cce7b8b, type: 2}
+          m_ObjectArgumentAssemblyTypeName: CryptoQuest.Audio.AudioData.AudioCueSO,
+            IndiGames.CryptoQuest
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 7ef12941-53a4-4cdc-82a3-b73a0685f64a
+    m_ActionName: Menus/Navigate[/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2142384159262654236}
+        m_TargetAssemblyTypeName: CryptoQuest.Audio.InputSfxController, IndiGames.CryptoQuest
+        m_MethodName: PlayOnInput
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 11400000, guid: 520413ed8ce94444eaaff9f3ff2882ca, type: 2}
+          m_ObjectArgumentAssemblyTypeName: CryptoQuest.Audio.AudioData.AudioCueSO,
+            IndiGames.CryptoQuest
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 785fbd20-debe-478b-a33f-569ac83592a4
+    m_ActionName: Menus/Submit[/Keyboard/enter,/Keyboard/numpadEnter,/Keyboard/space]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2142384159262654236}
+        m_TargetAssemblyTypeName: CryptoQuest.Audio.InputSfxController, IndiGames.CryptoQuest
+        m_MethodName: PlayOnInput
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 11400000, guid: 520413ed8ce94444eaaff9f3ff2882ca, type: 2}
+          m_ObjectArgumentAssemblyTypeName: CryptoQuest.Audio.AudioData.AudioCueSO,
+            IndiGames.CryptoQuest
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 396ad79a-8fa5-40e1-90d4-9ebc4defbaf9
+    m_ActionName: Menus/Confirm[/Keyboard/space,/Keyboard/enter,/Keyboard/numpadEnter]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2142384159262654236}
+        m_TargetAssemblyTypeName: CryptoQuest.Audio.InputSfxController, IndiGames.CryptoQuest
+        m_MethodName: PlayOnInput
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 11400000, guid: e237978debb15804a997fb25a5dca883, type: 2}
+          m_ObjectArgumentAssemblyTypeName: CryptoQuest.Audio.AudioData.AudioCueSO,
+            IndiGames.CryptoQuest
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 8dc0e198-f259-4e61-ac02-b1587e4cbb9c
+    m_ActionName: Menus/Cancel[/Keyboard/escape]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 40edc3d5-947c-4d8b-b1ee-fa128086e501
+    m_ActionName: Menus/Click[/Mouse/leftButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: f569fdf5-fc4b-4631-98e8-c0397f35421c
+    m_ActionName: Menus/Point[/Mouse/position]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 4d548808-973e-4510-ac5a-40f98bfa227e
+    m_ActionName: Menus/MouseMove[/Mouse/position]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 15b7662f-664c-40b1-b0f8-333c62818e7b
+    m_ActionName: Menus/ChangeTab[/Keyboard/q,/Keyboard/e]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: e583447f-1053-420b-bb2e-feb696073404
+    m_ActionName: Menus/MenuInteract[/Keyboard/f]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 3d07c32e-75b4-4e16-9df5-b16f87a41bf4
+    m_ActionName: Menus/MenuReset[/Keyboard/r]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: d51b5f68-7872-4b26-bd14-4afb123d24e9
+    m_ActionName: Menus/MenuExecute[/Keyboard/c]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 4296c108-861c-4b0a-a83b-a74975226ba6
+    m_ActionName: Menus/CloseMainMenu[/Keyboard/tab]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 53f812ea-12a2-41fe-88bf-a092eef4fc41
+    m_ActionName: MapGameplay/MoveUp[/Keyboard/w,/Keyboard/upArrow]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: ee17c010-a6c0-4a22-90c2-66ed89821bf0
+    m_ActionName: MapGameplay/MoveDown[/Keyboard/s,/Keyboard/downArrow]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 0b5833ca-5b05-4eea-a4dd-6188a9ace53b
+    m_ActionName: MapGameplay/MoveLeft[/Keyboard/a,/Keyboard/leftArrow]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: e5c5124f-d646-465b-9b66-9830b7f7c334
+    m_ActionName: MapGameplay/MoveRight[/Keyboard/d,/Keyboard/rightArrow]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: aa5b2793-0b11-424d-bba7-80214c6a4407
+    m_ActionName: MapGameplay/Interact[/Keyboard/e,/Keyboard/space,/Keyboard/enter,/Keyboard/numpadEnter]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 772cec36-898a-474f-882a-b76e6d11c41d
+    m_ActionName: MapGameplay/MainMenu[/Keyboard/tab,/Keyboard/escape]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: ef29c5fa-c65a-4893-925e-d25645b1b6c3
+    m_ActionName: Dialogues/NextDialogue[/Keyboard/enter,/Keyboard/space,/Keyboard/numpadEnter]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 054997f7-5c78-4b59-8f7a-002479bc96f5
+    m_ActionName: Dialogues/Escape[/Keyboard/escape]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 930f4fe2-ab9b-4c51-baab-f222c2164cff
+    m_ActionName: Dialogues/Navigate[/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 0488747e-ecd7-4ac1-bb48-4f674e8ade97
+    m_ActionName: BattleMenu/Navigate[/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 3b5f6bba-ae4b-45d6-b2f6-f1ea9422128a
+    m_ActionName: BattleMenu/Confirm[/Keyboard/space,/Keyboard/enter,/Mouse/leftButton,/Keyboard/numpadEnter]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 7cda6bfb-9245-4be6-9030-6ce167f7fb77
+    m_ActionName: BattleMenu/Cancel[/Keyboard/escape]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 269a5825-6671-41a0-a8c4-67d1e18a5cd6
+    m_ActionName: BattleMenu/Submit[/Keyboard/enter,/Keyboard/numpadEnter]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: be6fc03a-1e8a-44c8-a675-9e6b7f8aac45
+    m_ActionName: Terminal/OpenTerminal[/Keyboard/f2,/Keyboard/backquote]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: b9d3ef3b-f284-421f-80bf-8da9a87df91d
+    m_ActionName: Terminal/FullSizeModifier[/Keyboard/shift]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 88a84f46-e910-4f0e-8d05-7816b401be78
+    m_ActionName: Terminal/CommandNavigate[/Keyboard/upArrow,/Keyboard/downArrow]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 288f3dea-9baa-4605-8664-947375798ad2
+    m_ActionName: Terminal/Close[/Keyboard/f2,/Keyboard/backquote]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 8ea261f3-2ca1-4518-8816-fb11319711a2
+    m_ActionName: Terminal/Execute[/Keyboard/enter]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 50e5da96-c412-404c-818e-8f42fb3c1420
+    m_ActionName: Terminal/Complete[/Keyboard/tab]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: a6bdfaf9-55e7-4daa-b40f-eba34b7a3c41
+    m_ActionName: Title/Navigate[/Keyboard/upArrow,/Keyboard/downArrow,/Keyboard/leftArrow,/Keyboard/rightArrow]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 497ac124-0569-48be-bbf9-4ac0346f2cda
+    m_ActionName: Title/Click[/Mouse/leftButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 45cd8df6-a47c-4087-bcd4-c3fb6ffa0da3
+    m_ActionName: Title/Cancel[/Keyboard/escape]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: e56e4f7a-9866-479f-ba55-d758dd8e7501
+    m_ActionName: Title/Confirm[/Keyboard/space,/Keyboard/enter,/Mouse/leftButton,/Keyboard/numpadEnter]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 7724fba8-d917-41cc-b41c-ab33d22f989b
+    m_ActionName: Title/Tab[/Keyboard/tab]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 79e5d9b9-8e4d-4683-b4e4-e6e3c0bf2e5e
+    m_ActionName: Title/Shift[/Keyboard/shift]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: f02391ec-4518-4b7a-a862-5f893ae23764
+    m_ActionName: Merchants/Cancel[/Keyboard/escape]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: aa8e3c51-aaba-43ec-a0e7-4c6f1f79ce64
+    m_ActionName: Merchants/Exit[/Keyboard/b]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: b92e2824-704e-45a5-a058-250cd3b97908
+    m_ActionName: Merchants/ChangeTab[/Keyboard/q,/Keyboard/e]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 91603a1f-32b1-493b-b9b5-5ee3fcfc0563
+    m_ActionName: Merchants/ShowDetail[/Keyboard/x]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 6d1e36b2-6bb2-49e0-8bbf-61c665e64b2b
+    m_ActionName: Merchants/Navigate[/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: ef13e1a7-ad47-4a6a-ac8b-d5fb8b346766
+    m_ActionName: Merchants/Submit[/Keyboard/enter,/Keyboard/numpadEnter,/Keyboard/space]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 1a81794d-5318-449a-af55-7838348a25ef
+    m_ActionName: Merchants/Reset[/Keyboard/r]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 5a18f9bd-a885-47f7-aaf2-12134db16756
+    m_ActionName: Merchants/Execute[/Keyboard/c]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: dcba4059-7b52-43d5-b84d-dd8b45644555
+    m_ActionName: Merchants/Interact[/Keyboard/f]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: e9f2cb81-5724-4972-b0a0-e6ab02fe454c
+    m_ActionName: Popup/Cancel[/Keyboard/escape]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: b6418999-5fb6-47e7-bf00-5bc813cc01e6
+    m_ActionName: Popup/Confirm[/Keyboard/space,/Keyboard/enter,/Keyboard/numpadEnter]
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: MapGameplay
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
+--- !u!114 &2142384159262654236
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6543479709229039630}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba7541150066053428bbccd88ac007e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _playSfxEventSO: {fileID: 11400000, guid: d94d8af02e524214383b1f54ee255f34, type: 2}
