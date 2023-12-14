@@ -21,10 +21,10 @@ namespace CryptoQuest.Actions
     {
         public int Gold { get; }
         public int Soul { get; }
-        public int Diamond { get; }
+        public float Diamond { get; }
         public string WalletAddress { get; }
 
-        public UpdateWallet(int gold, int soul, int diamond, string walletAddress)
+        public UpdateWallet(int gold, int soul, float diamond, string walletAddress)
         {
             Gold = gold;
             Soul = soul;

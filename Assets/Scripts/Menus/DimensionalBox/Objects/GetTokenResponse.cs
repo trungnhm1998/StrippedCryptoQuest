@@ -10,7 +10,7 @@ namespace CryptoQuest.Menus.DimensionalBox.Objects
         public string message;
         public string uuid;
         public int gold;
-        public int diamond;
+        public float diamond;
         public int soul;
         public long time;
         public Data data;
@@ -19,8 +19,8 @@ namespace CryptoQuest.Menus.DimensionalBox.Objects
         public class Data
         {
             public string address;
-            public int metad;
-            public int diamond;
+            public float metad;
+            public float diamond;
         }
     }
 }
