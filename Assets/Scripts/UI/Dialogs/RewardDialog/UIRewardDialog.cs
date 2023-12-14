@@ -1,6 +1,7 @@
 ﻿using CryptoQuest.Battle.Audio;
 using CryptoQuest.Gameplay;
 using CryptoQuest.Input;
+using CryptoQuest.Quest.Controllers;
 using IndiGames.Core.Events;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -45,6 +46,7 @@ namespace CryptoQuest.UI.Dialogs.RewardDialog
         {
             base.Show();
 
+            ActionDispatcher.Dispatch(new PauseCutsceneAction());
             _inputAction.Enable();
             _inputAction.performed += OnCloseImmediately;
 
@@ -63,6 +65,7 @@ namespace CryptoQuest.UI.Dialogs.RewardDialog
             base.Hide();
 
             ActionDispatcher.Dispatch(new PlayCachedBgmAction());
+            ActionDispatcher.Dispatch(new ResumeCutsceneAction());
 
             _inputAction.Disable();
             _inputAction.performed -= OnCloseImmediately;
