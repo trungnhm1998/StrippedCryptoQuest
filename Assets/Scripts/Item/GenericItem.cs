@@ -1,3 +1,4 @@
+using CryptoQuest.Item.Consumable;
 using IndiGames.Core.SaveSystem.ScriptableObjects;
 using UnityEngine;
 using UnityEngine.AddressableAssets;

@@ -24,7 +24,10 @@ namespace CryptoQuest.UI.Common
 
         private bool TryGetFirstActiveChild(out GameObject firstChild)
         {
-            firstChild = GetComponentInChildren<Selectable>().gameObject;
+            firstChild = null;
+            var firstSelectable = GetComponentInChildren<Selectable>();
+            if (firstSelectable == null) return false;
+            firstChild = firstSelectable.gameObject;
             return firstChild != null;
         }
 
