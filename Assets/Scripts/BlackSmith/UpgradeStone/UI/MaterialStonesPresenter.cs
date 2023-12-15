@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace CryptoQuest.BlackSmith.UpgradeStone.UI
 {
-    public class UIMaterialStoneList : UIUpgradableStoneList
+    public class MaterialStonesPresenter : UpgradableStonesPresenter
     {
         public event Action<UIUpgradableStone> MaterialSelected;
 

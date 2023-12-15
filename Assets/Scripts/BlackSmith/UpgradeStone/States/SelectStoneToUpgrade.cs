@@ -17,18 +17,19 @@ namespace CryptoQuest.BlackSmith.UpgradeStone.States
             _dialogsPresenter.Dialogue.SetMessage(_stateMachine.UpgradeMagicStoneSystem.SelectStoneToUpdateText).Show();
 
             _stoneUpgradePresenter.gameObject.SetActive(true);
-            _materialStoneList.ClearStonesWithException();
-            _upgradableStoneListUI.ClearStonesWithException();
-            _upgradableStoneListUI.RenderStones(distinctStoneType);
-            _upgradableStoneListUI.StoneSelected += OnSelectBaseItem;
+            _currencyPresenter.Show();
+            _materialStonesPresenter.ClearStones();
+            _upgradableStonePresenter.ClearStones();
+            _upgradableStonePresenter.RenderStones(distinctStoneType);
+            _upgradableStonePresenter.StoneSelected += OnSelectBaseItem;
         }
 
         public override void OnExit()
         {
             base.OnExit();
             _dialogsPresenter.Dialogue.Hide();
-            _upgradableStoneListUI.StoneSelected -= OnSelectBaseItem;
-            _upgradableStoneListUI.ClearStonesWithException();
+            _upgradableStonePresenter.StoneSelected -= OnSelectBaseItem;
+            _upgradableStonePresenter.ClearStones();
         }
 
         private List<IMagicStone> GetDistinctStoneType(List<IMagicStone> stones)

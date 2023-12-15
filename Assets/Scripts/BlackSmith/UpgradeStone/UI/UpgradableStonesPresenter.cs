@@ -1,22 +1,33 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using CryptoQuest.BlackSmith.Commons.UI;
+using CryptoQuest.Gameplay.Inventory.Currency;
+using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
 using CryptoQuest.Item.MagicStone;
+using CryptoQuest.UI.Actions;
+using IndiGames.Core.Events;
 using UnityEngine;
 using UnityEngine.Pool;
 using UnityEngine.UI;
 
 namespace CryptoQuest.BlackSmith.UpgradeStone.UI
 {
-    public class UIUpgradableStoneList : MonoBehaviour
+    public class UpgradableStonesPresenter : MonoBehaviour
     {
         public event Action<UIUpgradableStone> StoneSelected;
         public event Action<IMagicStone> StoneInspected;
         public event Action StoneDeselected;
 
 
+        [SerializeField] private WalletSO _walletSO;
+        [SerializeField] private CurrencySO _gold;
+        [SerializeField] private CurrencySO _metad;
+        [SerializeField] private UpgradableStoneDataMapping _stoneMappings;
+        
         [SerializeField] private ScrollRect _scrollRect;
         [SerializeField] private UIUpgradableStone _stonePrefab;
+        [SerializeField] private int _maxLevel = 9;
         public Transform Content => _scrollRect.content;
         protected IObjectPool<UIUpgradableStone> _itemPool;
         protected const float ERROR_PRONE_DELAY = 0.05f;
@@ -28,16 +39,40 @@ namespace CryptoQuest.BlackSmith.UpgradeStone.UI
                 OnReturnToPool, OnDestroyPool);
         }
 
-        public virtual void RenderStones(List<IMagicStone> items)
+        public void RenderStones(List<IMagicStone> items)
         {
             foreach (var stone in items)
             {
-                var equipmentUI = _itemPool.Get();
-                equipmentUI.Initialize(stone);
-                equipmentUI.MaterialTag.SetActive(false);
+                if (stone.Level >= _maxLevel) continue;
+                var stoneUI = _itemPool.Get();
+                stoneUI.Initialize(stone);
+                stoneUI.MaterialTag.SetActive(false);
+                stoneUI.Button.interactable = true;
+                SetupStonePrice(stoneUI);
             }
 
             Invoke(nameof(SelectFirstButton), ERROR_PRONE_DELAY);
+        }
+
+        public void SetupStonePrice(UIUpgradableStone itemUI)
+        {
+            var currentGold = _walletSO[_gold].Amount;
+            var currentMetad = _walletSO[_metad].Amount;
+
+            var stoneMapping = _stoneMappings.Datas.FirstOrDefault(x => x.ID == itemUI.MagicStone.Level);
+
+            var goldInfo = new CurrencyValueEnough()
+            {
+                Value = stoneMapping.Gold,
+                IsEnough = currentGold >= stoneMapping.Gold
+            };
+            var metadInfo = new CurrencyValueEnough()
+            {
+                Value = stoneMapping.Metad,
+                IsEnough = currentMetad >= stoneMapping.Metad
+            };
+
+            itemUI.InitPrice(goldInfo, metadInfo, stoneMapping);
         }
 
         protected void SelectFirstButton()
@@ -53,7 +88,7 @@ namespace CryptoQuest.BlackSmith.UpgradeStone.UI
             }
         }
 
-        public void ClearStonesWithException(UIUpgradableStone exceptionUI = null)
+        public void ClearStones(UIUpgradableStone exceptionUI = null)
         {
             foreach (var item in _cachedItems.ToList())
             {

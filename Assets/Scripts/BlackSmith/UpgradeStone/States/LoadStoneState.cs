@@ -14,8 +14,12 @@ namespace CryptoQuest.BlackSmith.UpgradeStone.States
         {
             base.OnEnter();
             _stateMachine.UpgradeMagicStoneSystem.StoneList.Clear();
-            _stoneUpgradePresenter.gameObject.SetActive(false);
+            _materialStonesPresenter.ClearStones();
+            _upgradableStonePresenter.ClearStones();
+            _stoneUpgradePresenter.gameObject.SetActive(true);
+            _dialogsPresenter.Dialogue.SetMessage(_stateMachine.UpgradeMagicStoneSystem.SelectMaterialText).Show();
             _magicStoneTooltip.gameObject.SetActive(false);
+            _currencyPresenter.Hide();
 
             ActionDispatcher.Dispatch(new FetchProfileMagicStonesAction());
             _fetchStoneSuccessToken = ActionDispatcher.Bind<ResponseGetMagicStonesSucceeded>(HandleFetchStoneSuccess);

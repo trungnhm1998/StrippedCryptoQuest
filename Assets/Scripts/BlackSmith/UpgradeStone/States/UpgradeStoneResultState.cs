@@ -18,6 +18,12 @@ namespace CryptoQuest.BlackSmith.UpgradeStone.States
             _upgradeStoneResultPresenter.gameObject.SetActive(false);
         }
 
+        public override void OnSubmit()
+        {
+            base.OnSubmit();
+            fsm.RequestStateChange(EUpgradeMagicStoneStates.LoadStone);
+        }
+
         public override void OnCancel()
         {
             base.OnCancel();

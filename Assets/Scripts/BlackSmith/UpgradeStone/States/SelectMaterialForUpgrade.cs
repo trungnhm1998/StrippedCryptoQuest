@@ -20,12 +20,12 @@ namespace CryptoQuest.BlackSmith.UpgradeStone.States
 
             _magicStoneTooltip.SetData(_stateMachine.StoneToUpgrade.MagicStone, true);
             _magicStoneTooltip.SetupInfo();
-            _materialStoneList.gameObject.SetActive(true);
+            _materialStonesPresenter.gameObject.SetActive(true);
 
-            _materialStoneList.ClearStonesWithException();
-            _materialStoneList.RenderStones(upgradableStones);
-            _materialStoneList.ClearStonesWithException(_stateMachine.StoneToUpgrade);
-            _materialStoneList.MaterialSelected += OnSelectMaterialStone;
+            _materialStonesPresenter.ClearStones();
+            _materialStonesPresenter.RenderStones(upgradableStones);
+            _materialStonesPresenter.ClearStones(_stateMachine.StoneToUpgrade);
+            _materialStonesPresenter.MaterialSelected += OnSelectMaterialStone;
         }
 
         private void OnSelectMaterialStone(UIUpgradableStone stoneUI)
@@ -62,7 +62,7 @@ namespace CryptoQuest.BlackSmith.UpgradeStone.States
         {
             base.OnExit();
             _cachedItems.Clear();
-            _materialStoneList.MaterialSelected -= OnSelectMaterialStone;
+            _materialStonesPresenter.MaterialSelected -= OnSelectMaterialStone;
         }
 
         private IMagicStone GetUpgradedStone(IMagicStone stone)
@@ -74,8 +74,8 @@ namespace CryptoQuest.BlackSmith.UpgradeStone.States
         public override void OnCancel()
         {
             _stateMachine.StoneToUpgrade = null;
-            _materialStoneList.ClearStonesWithException();
-            _materialStoneList.MaterialSelected -= OnSelectMaterialStone;
+            _materialStonesPresenter.ClearStones();
+            _materialStonesPresenter.MaterialSelected -= OnSelectMaterialStone;
             fsm.RequestStateChange(EUpgradeMagicStoneStates.SelectStone);
             ResetMaterials();
         }

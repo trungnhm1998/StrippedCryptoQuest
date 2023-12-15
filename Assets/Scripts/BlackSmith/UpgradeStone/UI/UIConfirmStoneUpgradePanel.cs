@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 
@@ -17,16 +18,17 @@ namespace CryptoQuest.BlackSmith.UpgradeStone.UI
         }
 
         private void SetRate(int rate) => _rate.text = $"{rate}%";
-        private void SetGold(int gold) => _gold.text = $"{gold}G";
-        private void SetMetad(int metad) => _metad.text = $"{metad}METAD";
+        private void SetGold(float gold) => _gold.text = $"{gold}G";
+        private void SetMetad(float metad) => _metad.text = $"{metad}METAD";
     }
 
+    [Serializable]
     public struct UpgradableStoneData
     {
         public int ID;
-        public int Level;
-        public int Gold;
-        public float Metad;
+        public int AfterUpgradeLevel;
         public int Probability;
+        public float Gold;
+        public float Metad;
     }
 }
