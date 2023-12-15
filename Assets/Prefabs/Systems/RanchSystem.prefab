@@ -4472,7 +4472,8 @@ MonoBehaviour:
   <UIBeastSwap>k__BackingField: {fileID: 9131456806300077883}
   <UIBeastUpgrade>k__BackingField: {fileID: 6201928986501797986}
   <UIBeastEvolve>k__BackingField: {fileID: 5398821037508170025}
-  <EvolvePresenter>k__BackingField: {fileID: 0}
+  <EvolvePresenter>k__BackingField: {fileID: 365084161835351644}
+  <DialogManager>k__BackingField: {fileID: 4714802853278895777}
 --- !u!114 &4714802853278895777
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6722,8 +6723,22 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 58232667348696350, guid: 3af31ded1e4be524caba68a06193cdc2, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3787516799592518472}
   m_SourcePrefab: {fileID: 100100000, guid: 3af31ded1e4be524caba68a06193cdc2, type: 3}
+--- !u!114 &365084161835351644 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6836584703369652999, guid: 3af31ded1e4be524caba68a06193cdc2, type: 3}
+  m_PrefabInstance: {fileID: 6625190380019553627}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51f658d7247699949aa5cd3512cd5df6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &2678181845855249788 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 9141101897438769191, guid: 3af31ded1e4be524caba68a06193cdc2, type: 3}
@@ -6740,6 +6755,39 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b63229fe39f4f779df5845bc39ab1c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &6575121048881260613 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 58232667348696350, guid: 3af31ded1e4be524caba68a06193cdc2, type: 3}
+  m_PrefabInstance: {fileID: 6625190380019553627}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &3787516799592518472
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6575121048881260613}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56eb0353ae6e5124bb35b17aff880f16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_StringReference:
+    m_TableReference:
+      m_TableCollectionName: GUID:effbfeca51889e845a501c4d8053b3e1
+    m_TableEntryReference:
+      m_KeyId: 8659986437742592
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  m_FormatArguments: []
+  m_UpdateString:
+    m_PersistentCalls:
+      m_Calls: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!1001 &8744995270629715756
 PrefabInstance:
   m_ObjectHideFlags: 0
