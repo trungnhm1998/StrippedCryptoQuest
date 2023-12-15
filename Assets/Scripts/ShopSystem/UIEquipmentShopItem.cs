@@ -1,12 +1,16 @@
-﻿using CryptoQuest.Menus.Status.UI.Equipment;
+﻿using CryptoQuest.Item.Equipment;
+using CryptoQuest.Menus.Status.UI.Equipment;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace CryptoQuest.ShopSystem
 {
-    public class UIEquipmentShopItem : MonoBehaviour
+    public class UIEquipmentShopItem : UIShopItem
     {
         [SerializeField] private UIEquipment _uiEquipment;
-        [SerializeField] private Text _txtPrice;
+        
+        public void Render(IEquipment item)
+        {
+            _uiEquipment.Init(item);
+        }
     }
 }

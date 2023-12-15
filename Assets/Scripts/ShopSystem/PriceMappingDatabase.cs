@@ -1,5 +1,7 @@
 ﻿using System;
+using CryptoQuest.Item.Consumable;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace CryptoQuest.ShopSystem
 {
@@ -14,5 +16,15 @@ namespace CryptoQuest.ShopSystem
         }
 
         [SerializeField] private PriceConfig[] _itemPrices;
+
+        public float GetPrice(ConsumableInfo consumable)
+        {
+            return Random.Range(10, 150);
+        }
+
+        public float GetPrice(string equipmentPrefabId)
+        {
+            return Random.Range(100, 1000);
+        }
     }
 }
