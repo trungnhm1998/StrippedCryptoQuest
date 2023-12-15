@@ -16,13 +16,11 @@ using UnityEngine;
 
 namespace CryptoQuest.Sagas.MagicStone
 {
-    public class GetMagicStones : MonoBehaviour
+    public class GetMagicStones : SagaBase<FetchProfileMagicStonesAction>
     {
         [SerializeField] private MagicStoneDefinitionDatabase _magicStoneDefinitionDatabase;
         [SerializeField] private PassiveAbilityDatabase _passiveAbilityDatabase;
         [SerializeField] private MagicStoneInventory _stoneInventory;
-
-        private TinyMessageSubscriptionToken _fetchEvent;
 
         private IMagicStoneResponseConverter _converter;
 
@@ -31,17 +29,7 @@ namespace CryptoQuest.Sagas.MagicStone
             _converter = ServiceProvider.GetService<IMagicStoneResponseConverter>();
         }
 
-        private void OnEnable()
-        {
-            _fetchEvent = ActionDispatcher.Bind<FetchProfileMagicStonesAction>(HandleAction);
-        }
-
-        private void OnDisable()
-        {
-            ActionDispatcher.Unbind(_fetchEvent);
-        }
-
-        private void HandleAction(FetchProfileMagicStonesAction _)
+        protected override void HandleAction(FetchProfileMagicStonesAction _)
         {
             ActionDispatcher.Dispatch(new ShowLoading());
             var restClient = ServiceProvider.GetService<IRestClient>();
@@ -60,6 +48,8 @@ namespace CryptoQuest.Sagas.MagicStone
 
             FilterStones(responseStones, EMagicStoneStatus.InBox);
             FilterStones(responseStones, EMagicStoneStatus.InGame);
+
+            ActionDispatcher.Dispatch<GetStonesResponsed>(new GetStonesResponsed(obj));
         }
 
         private void FilterStones(Objects.MagicStone[] stonesResponse, EMagicStoneStatus status)
@@ -105,8 +95,10 @@ namespace CryptoQuest.Sagas.MagicStone
 
         private void OnError(Exception error)
         {
-            Debug.LogError("FetchProfileCharacters::OnError " + error);
+            Debug.LogWarning("FetchProfileCharacters::OnError " + error);
             ActionDispatcher.Dispatch(new ShowLoading(false));
+            ActionDispatcher.Dispatch(new ServerErrorPopup());
+            ActionDispatcher.Dispatch(new GetStonesFailed());
         }
     }
 }

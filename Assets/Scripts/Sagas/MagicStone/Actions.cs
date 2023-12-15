@@ -1,5 +1,6 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using CryptoQuest.Item.MagicStone;
+using CryptoQuest.Sagas.Objects;
 using IndiGames.Core.Events;
 
 namespace CryptoQuest.Sagas.MagicStone
@@ -37,6 +38,18 @@ namespace CryptoQuest.Sagas.MagicStone
     {
         public FetchInboxMagicStonesSuccess(Objects.MagicStone[] stones) : base(stones) { }
     }
+
+    public class GetStonesResponsed : ActionBase
+    {
+        public MagicStonesResponse Response { get; }
+
+        public GetStonesResponsed(MagicStonesResponse response)
+        {
+            Response = response;
+        }
+    }
+
+    public class GetStonesFailed : ActionBase { }
 
     public class StoneInventoryFilled : ActionBase { }
 
