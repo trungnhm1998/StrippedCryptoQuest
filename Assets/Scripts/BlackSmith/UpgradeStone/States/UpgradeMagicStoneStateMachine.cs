@@ -1,16 +1,18 @@
 using System.Collections.Generic;
 using CryptoQuest.BlackSmith.UpgradeStone.UI;
+using CryptoQuest.Item.MagicStone;
 using FSM;
 
 namespace CryptoQuest.BlackSmith.UpgradeStone.States
 {
     public enum EUpgradeMagicStoneStates
     {
-        SelectStone = 0,
-        SelectMaterialStone = 1,
-        ConfirmUpgrade = 2,
-        UpgradeSucceed = 3,
-        UpgradeFailed = 4
+        LoadStone = 0,
+        SelectStone = 1,
+        SelectMaterialStone = 2,
+        ConfirmUpgrade = 3,
+        UpgradeSucceed = 4,
+        UpgradeFailed = 5
     }
 
     public class UpgradeMagicStoneStateMachine : StateMachine<string, EUpgradeMagicStoneStates, string>
@@ -32,6 +34,7 @@ namespace CryptoQuest.BlackSmith.UpgradeStone.States
         private readonly BlackSmithSystem _context;
         public UpgradeMagicStoneSystem UpgradeMagicStoneSystem { get; }
         private UpgradeMagicStoneStateBase _state;
+        public List<IMagicStone> StoneList => UpgradeMagicStoneSystem.StoneList;
         public UIUpgradableStone StoneToUpgrade { get; set; }
         public List<UIUpgradableStone> SelectedMaterials { get; set; } = new();
 
@@ -39,13 +42,14 @@ namespace CryptoQuest.BlackSmith.UpgradeStone.States
         {
             _context = context;
             UpgradeMagicStoneSystem = context.UpgradeMagicStoneSystem;
+            AddState(EUpgradeMagicStoneStates.LoadStone, new LoadStoneState(this));
             AddState(EUpgradeMagicStoneStates.SelectStone, new SelectStoneToUpgrade(this));
             AddState(EUpgradeMagicStoneStates.SelectMaterialStone, new SelectMaterialForUpgrade(this));
             AddState(EUpgradeMagicStoneStates.ConfirmUpgrade, new ConfirmUpgradeStone(this));
             AddState(EUpgradeMagicStoneStates.UpgradeSucceed, new UpgradeSucceedState(this));
             AddState(EUpgradeMagicStoneStates.UpgradeFailed, new UpgradeFailedState(this));
 
-            SetStartState(EUpgradeMagicStoneStates.SelectStone);
+            SetStartState(EUpgradeMagicStoneStates.LoadStone);
         }
 
         public override void OnEnter()

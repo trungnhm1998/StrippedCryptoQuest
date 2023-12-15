@@ -8,7 +8,7 @@ namespace CryptoQuest.BlackSmith.UpgradeStone.UI
 {
     public class UpgradeMagicStoneSystem : MonoBehaviour
     {
-        [field: SerializeField] public MagicStoneInventory MagicStoneInventory { get; private set; }
+        public List<IMagicStone> StoneList { get; set; } = new();
         [field: SerializeField] public StoneUpgradePresenter StoneUpgradePresenter { get; private set; }
         [field: SerializeField] public UIUpgradableStoneList UpgradableStoneListUI { get; private set; }
         [field: SerializeField] public UIMaterialStoneList MaterialStoneListUI { get; private set; }
@@ -25,14 +25,14 @@ namespace CryptoQuest.BlackSmith.UpgradeStone.UI
 
         public IMagicStone GetUpgradedStone(IMagicStone stoneToUpgrade)
         {
-            //TODO: implement mapping logic here 
+            //TODO: implement mapping logic here (API preview) 
             return stoneToUpgrade;
         }
 
         public List<IMagicStone> GetUpgradableStones()
         {
-            return MagicStoneInventory.MagicStones
-                .GroupBy(item => item.ID)
+            return StoneList
+                .GroupBy(item => new { item.Definition, item.Level })
                 .Where(group => group.Count() >= 3)
                 .SelectMany(group => group.ToList())
                 .ToList();
