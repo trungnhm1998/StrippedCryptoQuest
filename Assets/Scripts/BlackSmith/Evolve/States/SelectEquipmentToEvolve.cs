@@ -26,7 +26,7 @@ namespace CryptoQuest.BlackSmith.Evolve.States
             EquipmentsPresenter.EvolvableModel.Init();
             EquipmentsPresenter.EvolvableModel.FilterByInfos(StateMachine.EvolvableInfos);
             EvolvableEquipmentList.ClearEquipmentsWithException();
-            EvolvableEquipmentList.RenderEquipments(EquipmentsPresenter.EvolvableModel.GetEvolableEquipments());
+            EvolvableEquipmentList.RenderEquipmentsWithException(EquipmentsPresenter.EvolvableModel.GetEvolableEquipments());
 
         }
 
