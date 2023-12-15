@@ -23,6 +23,9 @@ namespace CryptoQuest.BlackSmith.Evolve.States
 
             ConfirmEvolveDialog.ConfirmEvolveUI.SetConfirmInfo(StateMachine.EvolveEquipmentData);
 
+            StateMachine.MaterialItem.MaterialTag.SetActive(true);
+            StateMachine.MaterialItem.SetSelected(true);
+            
             _evolveSuccessToken = ActionDispatcher.Bind<EvolveEquipmentSuccessAction>(HandleEvolveSuccess);
             _evolveFailedToken = ActionDispatcher.Bind<EvolveEquipmentFailedAction>(HandleEvolveFailed);
             _evolveRequestFailedToken = ActionDispatcher.Bind<EvolveRequestFailed>(HandleRequestFailed);
@@ -31,6 +34,8 @@ namespace CryptoQuest.BlackSmith.Evolve.States
         public override void OnExit()
         {
             base.OnExit();
+            StateMachine.MaterialItem.ResetItemStates();
+
             ConfirmEvolveDialog.Confirmed -= HandleConfirmEvolving;
             ConfirmEvolveDialog.Canceling -= OnCancel;
             ConfirmEvolveDialog.gameObject.SetActive(false);
