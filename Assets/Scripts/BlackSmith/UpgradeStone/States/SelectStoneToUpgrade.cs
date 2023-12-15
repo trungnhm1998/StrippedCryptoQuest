@@ -14,6 +14,10 @@ namespace CryptoQuest.BlackSmith.UpgradeStone.States
             base.OnEnter();
             var upgradableStones = _stateMachine.UpgradeMagicStoneSystem.GetUpgradableStones();
             var distinctStoneType = GetDistinctStoneType(upgradableStones);
+            _dialogsPresenter.Dialogue.SetMessage(_stateMachine.UpgradeMagicStoneSystem.SelectStoneToUpdateText).Show();
+
+            _stoneUpgradePresenter.gameObject.SetActive(true);
+            _materialStoneList.ClearStonesWithException();
             _upgradableStoneListUI.ClearStonesWithException();
             _upgradableStoneListUI.RenderStones(distinctStoneType);
             _upgradableStoneListUI.StoneSelected += OnSelectBaseItem;
@@ -22,6 +26,7 @@ namespace CryptoQuest.BlackSmith.UpgradeStone.States
         public override void OnExit()
         {
             base.OnExit();
+            _dialogsPresenter.Dialogue.Hide();
             _upgradableStoneListUI.StoneSelected -= OnSelectBaseItem;
             _upgradableStoneListUI.ClearStonesWithException();
         }

@@ -42,14 +42,22 @@ namespace CryptoQuest.BlackSmith.UpgradeStone.States
             ActionDispatcher.Unbind(_upgradeFailedToken);
         }
 
-        private void HandleUpdateFailed(ResponseUpgradeStoneFailed ctx) { }
-        private void HandleUpdateSucceed(ResponseUpgradeStoneSuccess ctx) { }
+        private void HandleUpdateFailed(ResponseUpgradeStoneFailed ctx)
+        {
+            fsm.RequestStateChange(EUpgradeMagicStoneStates.UpgradeFailed);
+        }
+
+        private void HandleUpdateSucceed(ResponseUpgradeStoneSuccess ctx)
+        {
+            _upgradeStoneResultPresenter.UpgradedStone = ctx.Stone;
+            fsm.RequestStateChange(EUpgradeMagicStoneStates.UpgradeSucceed);
+        }
 
         private void OnConfirmUpgrade()
         {
             var materialStones = _stateMachine.SelectedMaterials;
 
-            ActionDispatcher.Dispatch(new RequestUpgradeStone(materialStones.Select(s => s.MagicStone.ID).ToArray()));
+            ActionDispatcher.Dispatch(new RequestUpgradeStone(materialStones.Select(s => s.MagicStone).ToArray()));
 
             Debug.Log("UpgradeStonePresenter: Upgrade Stone request sent with ids" + materialStones[0].MagicStone.ID +
                       ", " +

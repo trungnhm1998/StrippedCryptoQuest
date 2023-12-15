@@ -8,7 +8,9 @@ namespace CryptoQuest.BlackSmith.UpgradeStone.States
     {
         SelectStone = 0,
         SelectMaterialStone = 1,
-        ConfirmUpgrade = 2
+        ConfirmUpgrade = 2,
+        UpgradeSucceed = 3,
+        UpgradeFailed = 4
     }
 
     public class UpgradeMagicStoneStateMachine : StateMachine<string, EUpgradeMagicStoneStates, string>
@@ -17,6 +19,10 @@ namespace CryptoQuest.BlackSmith.UpgradeStone.States
         public UIMaterialStoneList MaterialStoneListUI => UpgradeMagicStoneSystem.MaterialStoneListUI;
         public BlackSmithDialogsPresenter DialogsPresenter => _context.DialogPresenter;
         public UIUpgradeMagicStoneToolTip MagicStoneTooltip => UpgradeMagicStoneSystem.MagicStoneTooltip;
+        public StoneUpgradePresenter StoneUpgradePresenter => UpgradeMagicStoneSystem.StoneUpgradePresenter;
+
+        public UpgradeStoneResultPresenter UpgradeStoneResultPresenter =>
+            UpgradeMagicStoneSystem.UpgradeStoneResultPresenter;
 
         public ConfirmStoneUpgradePresenter ConfirmUpgradePresenter =>
             UpgradeMagicStoneSystem.ConfirmUpgradePresenter;
@@ -36,6 +42,9 @@ namespace CryptoQuest.BlackSmith.UpgradeStone.States
             AddState(EUpgradeMagicStoneStates.SelectStone, new SelectStoneToUpgrade(this));
             AddState(EUpgradeMagicStoneStates.SelectMaterialStone, new SelectMaterialForUpgrade(this));
             AddState(EUpgradeMagicStoneStates.ConfirmUpgrade, new ConfirmUpgradeStone(this));
+            AddState(EUpgradeMagicStoneStates.UpgradeSucceed, new UpgradeSucceedState(this));
+            AddState(EUpgradeMagicStoneStates.UpgradeFailed, new UpgradeFailedState(this));
+
             SetStartState(EUpgradeMagicStoneStates.SelectStone);
         }
 

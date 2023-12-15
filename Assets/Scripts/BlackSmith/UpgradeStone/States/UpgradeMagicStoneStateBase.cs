@@ -11,6 +11,10 @@ namespace CryptoQuest.BlackSmith.UpgradeStone.States
         protected BlackSmithDialogsPresenter _dialogsPresenter => _stateMachine.DialogsPresenter;
         protected UIUpgradeMagicStoneToolTip _magicStoneTooltip => _stateMachine.MagicStoneTooltip;
         protected StoneListPresenter _listPresenter => _stateMachine.ListPresenter;
+        protected StoneUpgradePresenter _stoneUpgradePresenter => _stateMachine.StoneUpgradePresenter;
+
+        protected UpgradeStoneResultPresenter _upgradeStoneResultPresenter =>
+            _stateMachine.UpgradeStoneResultPresenter;
 
         protected ConfirmStoneUpgradePresenter _confirmUpgradePresenter =>
             _stateMachine.ConfirmUpgradePresenter;
