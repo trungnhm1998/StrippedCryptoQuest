@@ -4,7 +4,6 @@ using CryptoQuest.Ranch.Evolve.Interface;
 using CryptoQuest.Ranch.Evolve.UI;
 using CryptoQuest.Ranch.ScriptableObjects;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace CryptoQuest.Ranch.Evolve.Presenters
 {
@@ -12,7 +11,7 @@ namespace CryptoQuest.Ranch.Evolve.Presenters
     {
         [SerializeField] private BeastInventorySO _inventorySo;
         [SerializeField] private UIBeastListEvolve _beastList;
-        [SerializeField] private UIBeastDetail _uiBeastDetail;
+        [SerializeField] private UIBeastEvolveDetail _uiBeastEvolveDetail;
         [SerializeField] private EvolvableBeastInfoDatabaseSO _beastInfoDatabaseSo;
         [SerializeField] private UIBeastEvolveInfoDetail _uiBeastEvolveInfoDetail;
         public IBeastEvolvableInfo[] BeastEvolvableInfos { get; private set; }
@@ -59,13 +58,13 @@ namespace CryptoQuest.Ranch.Evolve.Presenters
 
         private void ShowBeastDetails(UIBeastEvolve uiBeast)
         {
-            _uiBeastDetail.SetupUI(uiBeast.Beast);
+            _uiBeastEvolveDetail.SetupUI(uiBeast.Beast);
             UIBeastEvolve = uiBeast;
         }
 
         private void EnableBeastDetailEvent(bool active)
         {
-            _uiBeastDetail.gameObject.SetActive(active);
+            _uiBeastEvolveDetail.gameObject.SetActive(active);
         }
 
         public void Init()

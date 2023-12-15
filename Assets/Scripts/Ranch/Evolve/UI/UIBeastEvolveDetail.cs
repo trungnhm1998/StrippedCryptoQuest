@@ -1,21 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using CryptoQuest.Beast;
 using CryptoQuest.Beast.Avatar;
 using CryptoQuest.Beast.ScriptableObjects;
 using CryptoQuest.UI.Character;
-using IndiGames.GameplayAbilitySystem.AttributeSystem;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.Components;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Localization.Components;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace CryptoQuest.Ranch.Evolve.UI
 {
-    public class UIBeastDetail : MonoBehaviour
+    public class UIBeastEvolveDetail : MonoBehaviour
     {
         private const int MAX_STAR = 5;
         [SerializeField] private Image _icon;
@@ -27,18 +23,18 @@ namespace CryptoQuest.Ranch.Evolve.UI
         [SerializeField] private Sprite _evolveStar;
         [SerializeField] private Sprite _currentStar;
         [SerializeField] private Sprite _defaultStar;
-        [SerializeField] private BeastAttributeSystemSO beastAttributeSystemSo;
+        [SerializeField] private BeastAttributeSystemSO _beastAttributeSystemSo;
 
         private IBeastAvatarProvider _beastAvatarProvider;
 
         private void OnEnable()
         {
-            beastAttributeSystemSo.EventRaised += UpdateBeastStats;
+            _beastAttributeSystemSo.EventRaised += UpdateBeastStats;
         }
 
         private void OnDisable()
         {
-            beastAttributeSystemSo.EventRaised -= UpdateBeastStats;
+            _beastAttributeSystemSo.EventRaised -= UpdateBeastStats;
         }
 
         public void SetupUI(IBeast beast)
@@ -57,10 +53,11 @@ namespace CryptoQuest.Ranch.Evolve.UI
             {
                 _listStar[i].sprite = i < beast.Stars ? _currentStar : _defaultStar;
             }
+
             _listStar[beast.Stars].sprite = _evolveStar;
         }
-        
-        
+
+
         private void UpdateBeastStats(AttributeSystemBehaviour attributeValues)
         {
             foreach (var attribute in attributeValues.AttributeValues)

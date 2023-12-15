@@ -23,7 +23,7 @@ namespace CryptoQuest.Menus.Beast.States
         public override void OnExit()
         {
             _beastPanel.ListBeastUI.Interactable = false;
-            _beastPanel.DetailBeastUI.SetEnabled(false);
+            _beastPanel.DetailMenuBeastUIMenu.SetEnabled(false);
 
             _beastPanel.Input.MenuCancelEvent -= HandleCancel;
             _beastPanel.Input.MenuNavigateEvent -= NavigateSelector;
@@ -40,7 +40,7 @@ namespace CryptoQuest.Menus.Beast.States
 
         private void ShowBeastList()
         {
-            _beastPanel.DetailBeastUI.SetEnabled(_beastPanel.ListBeastUI.IsValid);
+            _beastPanel.DetailMenuBeastUIMenu.SetEnabled(_beastPanel.ListBeastUI.IsValid);
             _beastPanel.ListBeastUI.Init();
             _beastPanel.ListBeastUI.SelectFirstBeast();
         }
