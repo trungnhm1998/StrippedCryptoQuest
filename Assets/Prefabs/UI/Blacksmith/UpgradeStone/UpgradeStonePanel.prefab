@@ -12,13 +12,14 @@ GameObject:
   - component: {fileID: 5695030283411892402}
   - component: {fileID: 5790000017546805554}
   - component: {fileID: 2540240649532900101}
+  - component: {fileID: 5969066985427215584}
   m_Layer: 5
   m_Name: UpgradeStonePanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &6463419379983346784
 RectTransform:
   m_ObjectHideFlags: 0
@@ -52,9 +53,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7234bb122cd411cb185555e01d260f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <CurrencyPresenter>k__BackingField: {fileID: 5969066985427215584}
   <StoneUpgradePresenter>k__BackingField: {fileID: 761338288214514069}
-  <UpgradableStoneListUI>k__BackingField: {fileID: 4624986075241660129}
-  <MaterialStoneListUI>k__BackingField: {fileID: 1806103303735344730}
+  <UpgradableStonesPresenter>k__BackingField: {fileID: 4624986075241660129}
+  <MaterialStonesPresenter>k__BackingField: {fileID: 1806103303735344730}
   <ListPresenter>k__BackingField: {fileID: 3209654231375548079}
   <ConfirmUpgradePresenter>k__BackingField: {fileID: 6352829792620985257}
   <MagicStoneTooltip>k__BackingField: {fileID: 869471673527673945}
@@ -136,6 +138,19 @@ MonoBehaviour:
   _debugInventory: {fileID: 11400000, guid: dac3b863c8895c7408d0d03a95d1d969, type: 2}
   _delay: 1
   _isStimulateSuccess: 1
+--- !u!114 &5969066985427215584
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9127332478317329931}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3f625973cd937141a8cf7326e2d2014, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _showWalletEventChannelSO: {fileID: 11400000, guid: f0c8bdab7ee1cb44abedecd018a44de4, type: 2}
 --- !u!1001 &2855474289232026149
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -214,7 +229,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8965280596882861438, guid: db680cd7b28ebee4ca34a4df9ee1565c, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 120
+      value: 88
       objectReference: {fileID: 0}
     - target: {fileID: 8965280596882861438, guid: db680cd7b28ebee4ca34a4df9ee1565c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -299,7 +314,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1041166887465241518, guid: d6347f473560694498c550f6bec4dbf4, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -25
+      value: -30.866367
+      objectReference: {fileID: 0}
+    - target: {fileID: 1320721339752676051, guid: d6347f473560694498c550f6bec4dbf4, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 492.782
+      objectReference: {fileID: 0}
+    - target: {fileID: 1320721339752676051, guid: d6347f473560694498c550f6bec4dbf4, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 215.5002
+      objectReference: {fileID: 0}
+    - target: {fileID: 1320721339752676051, guid: d6347f473560694498c550f6bec4dbf4, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 28.5
       objectReference: {fileID: 0}
     - target: {fileID: 1397883446998667638, guid: d6347f473560694498c550f6bec4dbf4, type: 3}
       propertyPath: m_AnchorMax.y
@@ -351,7 +378,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1464654027684857052, guid: d6347f473560694498c550f6bec4dbf4, type: 3}
       propertyPath: m_SizeDelta.y
-      value: -594
+      value: -626
       objectReference: {fileID: 0}
     - target: {fileID: 1464654027684857052, guid: d6347f473560694498c550f6bec4dbf4, type: 3}
       propertyPath: m_LocalPosition.x
@@ -387,7 +414,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1464654027684857052, guid: d6347f473560694498c550f6bec4dbf4, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 249
+      value: 233
       objectReference: {fileID: 0}
     - target: {fileID: 1464654027684857052, guid: d6347f473560694498c550f6bec4dbf4, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -425,6 +452,26 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2675042667437180859, guid: d6347f473560694498c550f6bec4dbf4, type: 3}
+      propertyPath: m_Spacing
+      value: -28.02
+      objectReference: {fileID: 0}
+    - target: {fileID: 2886707784063213009, guid: d6347f473560694498c550f6bec4dbf4, type: 3}
+      propertyPath: _gold
+      value: 
+      objectReference: {fileID: 11400000, guid: 16b3f6e09fc22d240be1b324116eeb79, type: 2}
+    - target: {fileID: 2886707784063213009, guid: d6347f473560694498c550f6bec4dbf4, type: 3}
+      propertyPath: _metad
+      value: 
+      objectReference: {fileID: 11400000, guid: 2869f59bdcbd4de4090ae28b6ca6b435, type: 2}
+    - target: {fileID: 2886707784063213009, guid: d6347f473560694498c550f6bec4dbf4, type: 3}
+      propertyPath: _walletSO
+      value: 
+      objectReference: {fileID: 11400000, guid: e349636f15671994ba195728c42a551b, type: 2}
+    - target: {fileID: 2886707784063213009, guid: d6347f473560694498c550f6bec4dbf4, type: 3}
+      propertyPath: _stoneMappings
+      value: 
+      objectReference: {fileID: 11400000, guid: e3587c1d2e92fec498f02d1d717da9bb, type: 2}
     - target: {fileID: 3415735816296941749, guid: d6347f473560694498c550f6bec4dbf4, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -471,7 +518,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3843507163139799813, guid: d6347f473560694498c550f6bec4dbf4, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -75
+      value: -64.5791
       objectReference: {fileID: 0}
     - target: {fileID: 3933672777488934444, guid: d6347f473560694498c550f6bec4dbf4, type: 3}
       propertyPath: m_SizeDelta.x
@@ -485,13 +532,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: UpgradableStonePresenter
       objectReference: {fileID: 0}
+    - target: {fileID: 3934113162934939369, guid: d6347f473560694498c550f6bec4dbf4, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4023067251714105285, guid: d6347f473560694498c550f6bec4dbf4, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -125
+      value: -98.29184
       objectReference: {fileID: 0}
     - target: {fileID: 4440565850615065991, guid: d6347f473560694498c550f6bec4dbf4, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 24
+      value: 56
+      objectReference: {fileID: 0}
+    - target: {fileID: 5945085745428739783, guid: d6347f473560694498c550f6bec4dbf4, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 482.04
       objectReference: {fileID: 0}
     - target: {fileID: 6417802652556680614, guid: d6347f473560694498c550f6bec4dbf4, type: 3}
       propertyPath: m_SizeDelta.x
@@ -508,6 +563,10 @@ PrefabInstance:
     - target: {fileID: 6578263383031914697, guid: d6347f473560694498c550f6bec4dbf4, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6738838806301158181, guid: d6347f473560694498c550f6bec4dbf4, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6764960238894856972, guid: d6347f473560694498c550f6bec4dbf4, type: 3}
       propertyPath: m_AnchorMax.y
@@ -588,6 +647,14 @@ PrefabInstance:
     - target: {fileID: 9153621417458577960, guid: d6347f473560694498c550f6bec4dbf4, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9173430229377351952, guid: d6347f473560694498c550f6bec4dbf4, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 51.1526
+      objectReference: {fileID: 0}
+    - target: {fileID: 9173430229377351952, guid: d6347f473560694498c550f6bec4dbf4, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -292
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -1,4 +1,5 @@
 using System;
+using CryptoQuest.BlackSmith.Commons.UI;
 using CryptoQuest.Item.MagicStone;
 using CryptoQuest.Menu;
 using CryptoQuest.UI.Extensions;
@@ -20,18 +21,29 @@ namespace CryptoQuest.BlackSmith.UpgradeStone.UI
         [SerializeField] private Image _icon;
         [SerializeField] private LocalizeStringEvent _name;
         [SerializeField] private TMP_Text _lvlText;
+        [SerializeField] private UICurrencyValueEnoughText _goldText;
+        [SerializeField] private UICurrencyValueEnoughText _metadText;
         public IMagicStone MagicStone { get; private set; }
+        public UpgradableStoneData MagicStoneData { get; private set; }
 
-        public int Id { get; private set; }
+        private bool _isEnoughCurrency;
 
         public void Initialize(IMagicStone magicStone)
         {
             ResetItemStates();
             MagicStone = magicStone;
-            Id = magicStone.ID;
             _icon.LoadSpriteAndSet(magicStone.Definition.Image);
             _name.StringReference = magicStone.Definition.DisplayName;
             _lvlText.text = $"Lv.{magicStone.Level}";
+        }
+
+        public void InitPrice(ICurrencyValueEnough goldInfo, ICurrencyValueEnough metadInfo,
+            UpgradableStoneData data)
+        {
+            _isEnoughCurrency = goldInfo.IsEnough && metadInfo.IsEnough;
+            _goldText.SetValueAndCheckIsEnough(goldInfo);
+            _metadText.SetValueAndCheckIsEnough(metadInfo);
+            MagicStoneData = data;
         }
 
         private void OnEnable()
@@ -54,6 +66,7 @@ namespace CryptoQuest.BlackSmith.UpgradeStone.UI
 
         public void OnPressed()
         {
+            if (!_isEnoughCurrency) return;
             Selected?.Invoke(this);
         }
 

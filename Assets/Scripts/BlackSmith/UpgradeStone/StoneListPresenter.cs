@@ -7,23 +7,23 @@ namespace CryptoQuest.BlackSmith.UpgradeStone
 {
     public class StoneListPresenter : MonoBehaviour
     {
-        [SerializeField] private UIUpgradableStoneList _upgradableStoneListUI;
+        [SerializeField] private UpgradableStonesPresenter _upgradableStonePresenter;
         [SerializeField] private UIUpgradeMagicStoneToolTip _magicStoneTooltip;
 
         private void OnEnable()
         {
-            _upgradableStoneListUI.StoneSelected += OnSelectStone;
-            _upgradableStoneListUI.StoneInspected += PreviewBaseData;
-            _upgradableStoneListUI.StoneDeselected += OnDeselect;
+            _upgradableStonePresenter.StoneSelected += OnSelectStone;
+            _upgradableStonePresenter.StoneInspected += PreviewBaseData;
+            _upgradableStonePresenter.StoneDeselected += OnDeselect;
         }
 
         private void OnSelectStone(UIUpgradableStone stoneUI) { }
 
         private void OnDisable()
         {
-            _upgradableStoneListUI.StoneSelected -= OnSelectStone;
-            _upgradableStoneListUI.StoneInspected -= PreviewBaseData;
-            _upgradableStoneListUI.StoneDeselected -= OnDeselect;
+            _upgradableStonePresenter.StoneSelected -= OnSelectStone;
+            _upgradableStonePresenter.StoneInspected -= PreviewBaseData;
+            _upgradableStonePresenter.StoneDeselected -= OnDeselect;
         }
 
         private void OnDeselect()

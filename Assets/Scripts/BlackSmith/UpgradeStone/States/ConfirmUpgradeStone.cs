@@ -19,11 +19,11 @@ namespace CryptoQuest.BlackSmith.UpgradeStone.States
             var confirmText = _stateMachine.UpgradeMagicStoneSystem.ConfirmUpgradeText;
             _dialogsPresenter.Dialogue.SetMessage(confirmText).Show();
 
-            UpgradableStoneData stoneData =
-                _stateMachine.UpgradeMagicStoneSystem.GetUpgradableStoneData(_stateMachine.StoneToUpgrade.MagicStone);
             _confirmUpgradePresenter.gameObject.SetActive(true);
             _confirmUpgradePresenter.Confirmed += OnConfirmUpgrade;
             _confirmUpgradePresenter.Canceled += OnCancel;
+            
+            UpgradableStoneData stoneData = _stateMachine.StoneToUpgrade.MagicStoneData;
             _confirmUpgradePresenter.ConfirmStoneUpgradePanel.SetConfirmInfo(stoneData);
             _stateMachine.DialogsPresenter.ShowConfirmDialog(confirmText);
 

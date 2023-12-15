@@ -17,11 +17,12 @@ namespace CryptoQuest.BlackSmith.UpgradeStone.States
 
     public class UpgradeMagicStoneStateMachine : StateMachine<string, EUpgradeMagicStoneStates, string>
     {
-        public UIUpgradableStoneList UpgradableStoneListUI => UpgradeMagicStoneSystem.UpgradableStoneListUI;
-        public UIMaterialStoneList MaterialStoneListUI => UpgradeMagicStoneSystem.MaterialStoneListUI;
+        public UpgradableStonesPresenter UpgradableStonesPresenter => UpgradeMagicStoneSystem.UpgradableStonesPresenter;
+        public MaterialStonesPresenter MaterialStonesPresenter => UpgradeMagicStoneSystem.MaterialStonesPresenter;
         public BlackSmithDialogsPresenter DialogsPresenter => _context.DialogPresenter;
         public UIUpgradeMagicStoneToolTip MagicStoneTooltip => UpgradeMagicStoneSystem.MagicStoneTooltip;
         public StoneUpgradePresenter StoneUpgradePresenter => UpgradeMagicStoneSystem.StoneUpgradePresenter;
+        public CurrencyPresenter CurrencyPresenter => UpgradeMagicStoneSystem.CurrencyPresenter;
 
         public UpgradeStoneResultPresenter UpgradeStoneResultPresenter =>
             UpgradeMagicStoneSystem.UpgradeStoneResultPresenter;
@@ -56,6 +57,7 @@ namespace CryptoQuest.BlackSmith.UpgradeStone.States
         {
             UpgradeMagicStoneSystem.gameObject.SetActive(true);
             _context.Input.CancelEvent += OnCancel;
+            _context.Input.SubmitEvent += OnSubmit;
             base.OnEnter();
         }
 
@@ -65,10 +67,12 @@ namespace CryptoQuest.BlackSmith.UpgradeStone.States
         {
             UpgradeMagicStoneSystem.gameObject.SetActive(false);
             _context.Input.CancelEvent -= OnCancel;
+            _context.Input.SubmitEvent -= OnSubmit;
             base.OnExit();
         }
 
         private void OnCancel() => _state?.OnCancel();
+        private void OnSubmit() => _state?.OnSubmit();
 
         public void BackToOverview() => fsm.RequestStateChange(State.OVERVIEW);
     }
