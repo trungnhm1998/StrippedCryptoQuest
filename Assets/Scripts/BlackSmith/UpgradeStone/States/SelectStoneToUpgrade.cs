@@ -33,14 +33,9 @@ namespace CryptoQuest.BlackSmith.UpgradeStone.States
 
         private List<IMagicStone> GetDistinctStoneType(List<IMagicStone> stones)
         {
-            var distinctStoneType = new List<IMagicStone>();
-            foreach (var stone in stones)
-            {
-                if (distinctStoneType.Any(x => x.ID == stone.ID)) continue;
-                distinctStoneType.Add(stone);
-            }
-
-            return distinctStoneType;
+            return stones.GroupBy(stone => new { stone.Definition, stone.Level })
+                .Select(group => group.First())
+                .ToList();
         }
 
 

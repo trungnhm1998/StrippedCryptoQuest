@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace CryptoQuest.BlackSmith.UpgradeStone.Sagas
 {
-    public class DebugUpgradeStoneSag : SagaBase<RequestUpgradeStone>
+    public class DebugUpgradeStoneSaga : SagaBase<RequestUpgradeStone>
     {
         [SerializeField] private float _delay = 1f;
         [SerializeField] private bool _isStimulateSuccess = true;
