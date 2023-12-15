@@ -72,6 +72,7 @@ namespace CryptoQuest.BlackSmith.UpgradeStone.UI
         public void Highlight(bool value)
         {
             _highlight.enabled = value;
+            MaterialTag.SetActive(value);
         }
     }
 }

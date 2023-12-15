@@ -45,7 +45,7 @@ namespace CryptoQuest.BlackSmith.UpgradeStone.UI
             _isBaseStone = isBaseStone;
         }
 
-        private void SetupInfo()
+        public void SetupInfo()
         {
             CleanUpPool();
             var color = GetColor();
