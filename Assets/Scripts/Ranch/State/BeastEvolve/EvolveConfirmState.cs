@@ -32,7 +32,7 @@ namespace CryptoQuest.Ranch.State.BeastEvolve
         {
             ActionDispatcher.Dispatch(new RequestEvolveBeast()
             {
-                Base =  _controller.EvolvePresenter.BeastToEvolve,
+                Base = _controller.EvolvePresenter.BeastToEvolve,
                 Material = _controller.EvolvePresenter.BeastMaterial
             });
         }
