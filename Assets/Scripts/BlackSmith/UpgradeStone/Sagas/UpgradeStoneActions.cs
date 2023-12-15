@@ -13,6 +13,16 @@ namespace CryptoQuest.BlackSmith.UpgradeStone.Sagas
         }
     }
 
+    public class UpgradeStoneResponsed : ActionBase
+    {
+        public StoneUpgradeResponse Response;
+
+        public UpgradeStoneResponsed(StoneUpgradeResponse response)
+        {
+            Response = response;
+        }
+    }
+
     public class ResponseUpgradeStoneFailed : ActionBase { }
 
     public class ResponseUpgradeStoneSuccess : ActionBase

@@ -57,13 +57,8 @@ namespace CryptoQuest.BlackSmith.UpgradeStone.States
         {
             var materialStones = _stateMachine.SelectedMaterials;
 
-            ActionDispatcher.Dispatch(new RequestUpgradeStone(materialStones.Select(s => s.MagicStone).ToArray()));
-
-            Debug.Log("UpgradeStonePresenter: Upgrade Stone request sent with ids" + materialStones[0].MagicStone.ID +
-                      ", " +
-                      materialStones[1].MagicStone.ID +
-                      " " +
-                      materialStones[2].MagicStone.ID);
+            ActionDispatcher.Dispatch(new RequestUpgradeStone(materialStones
+                .Select(s => s.MagicStone).ToArray()));
         }
 
         public override void OnCancel()
