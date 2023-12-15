@@ -1,8 +1,9 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
-namespace UI.Common
+namespace CryptoQuest.UI.Common
 {
     [AddComponentMenu("CryptoQuest/UI/Common/SelectFirstChildInList")]
     public class SelectFirstChildInList : MonoBehaviour
@@ -18,22 +19,13 @@ namespace UI.Common
         public void Select()
         {
             if (!TryGetFirstActiveChild(out var firstChild)) return;
-            StartCoroutine(CoSelect(firstChild.gameObject));
+            StartCoroutine(CoSelect(firstChild));
         }
 
-        private bool TryGetFirstActiveChild(out Transform firstChild)
+        private bool TryGetFirstActiveChild(out GameObject firstChild)
         {
-            firstChild = null;
-            if (transform.childCount == 0) return false;
-            for (var i = 0; i < transform.childCount; i++)
-            {
-                var child = transform.GetChild(i);
-                if (!child.gameObject.activeSelf) continue;
-                firstChild = child;
-                return true;
-            }
-
-            return false;
+            firstChild = GetComponentInChildren<Selectable>().gameObject;
+            return firstChild != null;
         }
 
         private IEnumerator CoSelect(GameObject firstChild)
