@@ -26,10 +26,10 @@ namespace CryptoQuest.BlackSmith.Evolve.UI
         }
 
         protected override void SetupSkills(RectTransform skillsContainer, ESkillType skillType, GameObject skillPrefab,
-            GameObject label = null)
+            GameObject holder)
         {
             DestroyImmediatelyChilds(skillsContainer);
-            base.SetupSkills(skillsContainer, skillType, skillPrefab, label);
+            base.SetupSkills(skillsContainer, skillType, skillPrefab, holder);
         }
 
         // TODO: link to `UIUpgradeEquipmentTooltip`
