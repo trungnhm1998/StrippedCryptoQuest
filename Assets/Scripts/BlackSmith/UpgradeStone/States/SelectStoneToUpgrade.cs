@@ -47,7 +47,7 @@ namespace CryptoQuest.BlackSmith.UpgradeStone.States
         private void OnSelectBaseItem(UIUpgradableStone stone)
         {
             _stateMachine.StoneToUpgrade = stone;
-            _stateMachine.RequestStateChange(EUpgradeMagicStoneStates.SelectMaterialStone);
+            fsm.RequestStateChange(EUpgradeMagicStoneStates.SelectMaterialStone);
         }
     }
 }

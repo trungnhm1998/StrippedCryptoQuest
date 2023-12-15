@@ -1,24 +1,33 @@
+using System.Collections.Generic;
 using CryptoQuest.BlackSmith.UpgradeStone.UI;
-using CryptoQuest.Item.MagicStone;
 using FSM;
 
 namespace CryptoQuest.BlackSmith.UpgradeStone.States
 {
     public enum EUpgradeMagicStoneStates
     {
-        SelectStone,
-        SelectMaterialStone,
-        ConfirmUpgrade
+        SelectStone = 0,
+        SelectMaterialStone = 1,
+        ConfirmUpgrade = 2
     }
 
     public class UpgradeMagicStoneStateMachine : StateMachine<string, EUpgradeMagicStoneStates, string>
     {
         public UIUpgradableStoneList UpgradableStoneListUI => UpgradeMagicStoneSystem.UpgradableStoneListUI;
         public UIMaterialStoneList MaterialStoneListUI => UpgradeMagicStoneSystem.MaterialStoneListUI;
+        public BlackSmithDialogsPresenter DialogsPresenter => _context.DialogPresenter;
+        public UIUpgradeMagicStoneToolTip MagicStoneTooltip => UpgradeMagicStoneSystem.MagicStoneTooltip;
+
+        public ConfirmStoneUpgradePresenter ConfirmUpgradePresenter =>
+            UpgradeMagicStoneSystem.ConfirmUpgradePresenter;
+
+        public StoneListPresenter ListPresenter => UpgradeMagicStoneSystem.ListPresenter;
+
         private readonly BlackSmithSystem _context;
         public UpgradeMagicStoneSystem UpgradeMagicStoneSystem { get; }
         private UpgradeMagicStoneStateBase _state;
         public UIUpgradableStone StoneToUpgrade { get; set; }
+        public List<UIUpgradableStone> SelectedMaterials { get; set; } = new();
 
         public UpgradeMagicStoneStateMachine(BlackSmithSystem context)
         {
@@ -26,6 +35,7 @@ namespace CryptoQuest.BlackSmith.UpgradeStone.States
             UpgradeMagicStoneSystem = context.UpgradeMagicStoneSystem;
             AddState(EUpgradeMagicStoneStates.SelectStone, new SelectStoneToUpgrade(this));
             AddState(EUpgradeMagicStoneStates.SelectMaterialStone, new SelectMaterialForUpgrade(this));
+            AddState(EUpgradeMagicStoneStates.ConfirmUpgrade, new ConfirmUpgradeStone(this));
             SetStartState(EUpgradeMagicStoneStates.SelectStone);
         }
 

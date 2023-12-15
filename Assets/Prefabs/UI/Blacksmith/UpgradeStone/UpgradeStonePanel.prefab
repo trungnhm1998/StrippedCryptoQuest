@@ -52,7 +52,9 @@ MonoBehaviour:
   <MagicStoneInventory>k__BackingField: {fileID: 11400000, guid: dac3b863c8895c7408d0d03a95d1d969, type: 2}
   <StoneUpgradePresenter>k__BackingField: {fileID: 761338288214514069}
   <UpgradableStoneListUI>k__BackingField: {fileID: 4624986075241660129}
-  <MaterialStoneListUI>k__BackingField: {fileID: 0}
+  <MaterialStoneListUI>k__BackingField: {fileID: 1806103303735344730}
+  <ListPresenter>k__BackingField: {fileID: 3209654231375548079}
+  <ConfirmUpgradePresenter>k__BackingField: {fileID: 6352829792620985257}
   <SelectStoneToUpdateText>k__BackingField:
     m_TableReference:
       m_TableCollectionName: 
@@ -71,7 +73,7 @@ MonoBehaviour:
     m_FallbackState: 0
     m_WaitForCompletion: 0
     m_LocalVariables: []
-  <ConfirmEvolveText>k__BackingField:
+  <ConfirmUpgradeText>k__BackingField:
     m_TableReference:
       m_TableCollectionName: 
     m_TableEntryReference:
@@ -131,14 +133,6 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 344386204291146561, guid: d6347f473560694498c550f6bec4dbf4, type: 3}
-      propertyPath: _materialStoneList
-      value: 
-      objectReference: {fileID: 1806103303735344730}
-    - target: {fileID: 344386204291146561, guid: d6347f473560694498c550f6bec4dbf4, type: 3}
-      propertyPath: _upgradeMagicStoneSystem
-      value: 
-      objectReference: {fileID: 5695030283411892402}
     - target: {fileID: 1397883446998667638, guid: d6347f473560694498c550f6bec4dbf4, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -410,6 +404,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b560c2e122834ffd85d9e297dc121799, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &3209654231375548079 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4947800947219852703, guid: d6347f473560694498c550f6bec4dbf4, type: 3}
+  m_PrefabInstance: {fileID: 7503249023694365488}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6dc7eb5bcb3d4517a0fade7655b42af1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &4624986075241660129 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2886707784063213009, guid: d6347f473560694498c550f6bec4dbf4, type: 3}
@@ -419,6 +424,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 097967e25c724d9eaaa573155f807dbd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &6352829792620985257 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3461346382091671705, guid: d6347f473560694498c550f6bec4dbf4, type: 3}
+  m_PrefabInstance: {fileID: 7503249023694365488}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc856945aeda493f99cd35bd969f37c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!224 &8967680780983150572 stripped
