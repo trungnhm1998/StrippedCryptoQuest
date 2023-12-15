@@ -1,4 +1,6 @@
 using CryptoQuest.Item.Equipment;
+using CryptoQuest.Sagas.Profile;
+using IndiGames.Core.Common;
 using IndiGames.Core.Events;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,39 +8,25 @@ using UnityEngine;
 namespace CryptoQuest.BlackSmith.Evolve.Sagas
 {
     public class EvolveResponseHandler : SagaBase<EvolveResponsed>
-    {
+    {   
+        private IEquipmentResponseConverter _responseConverter;
+
         protected override void HandleAction(EvolveResponsed ctx)
         {
+            _responseConverter ??= ServiceProvider.GetService<IEquipmentResponseConverter>();
             var response = ctx.Response;
 
             int evolveStatus = response.data.success;
 
             ActionDispatcher.Dispatch(new RemoveEquipments(GetRemoveEquipments(ctx, evolveStatus)));
 
-            ActionDispatcher.Dispatch(new AddEquipment(ctx.Response.data.newEquipment));
-
             switch (evolveStatus)
             {
                 case 0:
-                    // TODO: need a way to parse data from server, so we can get the new equipment stats
-                    var failedEquipment = new EvolvableEquipmentData()
-                    {
-                        Equipment = ctx.RequestContext.Equipment,
-                        Level = ctx.RequestContext.Equipment.Level,
-                        Stars = ctx.RequestContext.Equipment.Data.Stars,
-                    };
-
-                    ActionDispatcher.Dispatch(new EvolveEquipmentFailedAction(failedEquipment));
+                    ActionDispatcher.Dispatch(new EvolveEquipmentFailedAction(ctx.RequestContext.Equipment));
                     break;
                 case 1:
-                    var successEquipment = new EvolvableEquipmentData()
-                    {
-                        Equipment = ctx.RequestContext.Equipment,
-                        Level = ctx.Response.data.newEquipment.lv,
-                        Stars = ctx.Response.data.newEquipment.star,
-                    };
-
-                    ActionDispatcher.Dispatch(new EvolveEquipmentSuccessAction(successEquipment));
+                    ActionDispatcher.Dispatch(new ResolveResponseSuccessAction(ctx.Response.data.newEquipment));
                     break;
                 default:
                     Debug.LogError("[EvolveEquipment]:: unknown success status: " + evolveStatus);

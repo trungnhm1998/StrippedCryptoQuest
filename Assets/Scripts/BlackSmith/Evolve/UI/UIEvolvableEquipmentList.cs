@@ -27,10 +27,11 @@ namespace CryptoQuest.BlackSmith.Evolve.UI
                 OnReturnToPool, OnDestroyPool);
         }
 
-        public void RenderEquipments(List<IEquipment> items)
+        public void RenderEquipmentsWithException(List<IEquipment> items, UIEquipmentItem exceptionUI = null)
         {
             foreach (var equipment in items)
             {
+                if (exceptionUI != null && equipment.Id == exceptionUI.Equipment.Id) continue;
                 var equipmentUI = _itemPool.Get();
                 equipmentUI.Init(equipment);
             }
@@ -56,7 +57,7 @@ namespace CryptoQuest.BlackSmith.Evolve.UI
         {
             foreach (var item in _cachedItems.ToList())
             {
-                if (exceptionUI != null && item == exceptionUI) continue;
+                if (exceptionUI != null && item.Equipment.Id == exceptionUI.Equipment.Id) continue;
                 _itemPool.Release(item);
             }
         }
@@ -84,6 +85,7 @@ namespace CryptoQuest.BlackSmith.Evolve.UI
             item.transform.SetAsLastSibling();
             item.gameObject.SetActive(true);
             item.Selected += OnSelectItem;
+            item.Highlighted += OnHighlightItem;
             _cachedItems.Add(item);
         }
 
@@ -92,6 +94,7 @@ namespace CryptoQuest.BlackSmith.Evolve.UI
             item.ResetItemStates();
             item.gameObject.SetActive(false);
             item.Selected -= OnSelectItem;
+            item.Highlighted -= OnHighlightItem;
             _cachedItems.Remove(item);
         }
 

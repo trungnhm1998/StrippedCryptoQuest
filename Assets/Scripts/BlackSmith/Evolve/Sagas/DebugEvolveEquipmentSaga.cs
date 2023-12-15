@@ -1,6 +1,9 @@
-using CryptoQuest.BlackSmith.Interface;
+using CryptoQuest.Item.Equipment;
+using CryptoQuest.Sagas.Profile;
 using CryptoQuest.UI.Actions;
+using IndiGames.Core.Common;
 using IndiGames.Core.Events;
+using Newtonsoft.Json;
 using UnityEngine;
 
 namespace CryptoQuest.BlackSmith.Evolve.Sagas
@@ -9,12 +12,15 @@ namespace CryptoQuest.BlackSmith.Evolve.Sagas
     {
         [SerializeField] private float _delay = 1f;
         [SerializeField] private bool _shouldSuccess = true;
-
+        [SerializeField] private string _fakeResponse;
         private RequestEvolveEquipment _context;
+        
+        private IEquipmentResponseConverter _responseConverter;
 
         protected override void HandleAction(RequestEvolveEquipment ctx)
         {
             _context = ctx;
+            _responseConverter ??= ServiceProvider.GetService<IEquipmentResponseConverter>();
 
             ActionDispatcher.Dispatch(new ShowLoading());
             Invoke(nameof(SimulateDispatch), _delay);
@@ -26,23 +32,13 @@ namespace CryptoQuest.BlackSmith.Evolve.Sagas
 
             if (_shouldSuccess)
             {
-                IEvolvableEquipment successEquipment = new EvolvableEquipmentData()
-                {
-                    Equipment = _context.Equipment,
-                    Level = _context.Equipment.Level,
-                    Stars = _context.Equipment.Data.Stars + 1,
-                };
+                EvolveResponse response = JsonConvert.DeserializeObject<EvolveResponse>(_fakeResponse);
+                IEquipment successEquipment = _responseConverter.Convert(response.data.newEquipment);
                 ActionDispatcher.Dispatch(new EvolveEquipmentSuccessAction(successEquipment));
                 return;
             }
 
-            IEvolvableEquipment failedEquipment = new EvolvableEquipmentData()
-            {
-                Equipment = _context.Equipment,
-                Level = _context.Equipment.Level,
-                Stars = _context.Equipment.Data.Stars,
-            };
-            ActionDispatcher.Dispatch(new EvolveEquipmentFailedAction(failedEquipment));
+            ActionDispatcher.Dispatch(new EvolveEquipmentFailedAction(_context.Equipment));
         }
     }
 }

@@ -1,4 +1,5 @@
 using CryptoQuest.BlackSmith.Interface;
+using CryptoQuest.Item.Equipment;
 using UnityEngine;
 
 namespace CryptoQuest.BlackSmith.Evolve.UI
@@ -20,18 +21,18 @@ namespace CryptoQuest.BlackSmith.Evolve.UI
             EquipmentDetailUI.gameObject.SetActive(false);
         }
 
-        public void SetResultFail(IEvolvableEquipment item)
+        public void SetResultFail(IEquipment item)
         {
             EvolveResultUI.UpdateUIFail();
-            EquipmentDetailUI.SetEquipment(item.Equipment);
+            EquipmentDetailUI.SetEquipment(item);
             EquipmentDetailUI.gameObject.SetActive(true);
         }
 
-        public void SetResultSuccess(IEvolvableEquipment item)
+        public void SetResultSuccess(IEquipment item)
         {
             EvolveResultUI.UpdateUISuccess();
-            EquipmentDetailUI.SetEquipment(item.Equipment);
-            EquipmentDetailUI.SetPreviewLevel(item.MinLevel, item.MaxLevel);
+            EquipmentDetailUI.SetEquipment(item);
+            EquipmentDetailUI.SetPreviewLevel(item.Data.MinLevel, item.Data.MaxLevel);
             EquipmentDetailUI.gameObject.SetActive(true);
         }
     }

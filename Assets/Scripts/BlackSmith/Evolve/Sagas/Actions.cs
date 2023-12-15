@@ -33,10 +33,10 @@ namespace CryptoQuest.BlackSmith.Evolve.Sagas
         }
     }
 
-    public class AddEquipment : ActionBase
+    public class ResolveResponseSuccessAction : ActionBase
     {
         public EquipmentResponse EquipmentData { get; private set; }
-        public AddEquipment(EquipmentResponse equipmentData)
+        public ResolveResponseSuccessAction(EquipmentResponse equipmentData)
         {
             EquipmentData = equipmentData;
         }
@@ -46,9 +46,9 @@ namespace CryptoQuest.BlackSmith.Evolve.Sagas
 
     public class EvolveEquipmentFailedAction : ActionBase
     {
-        public IEvolvableEquipment Equipment { get; }
+        public IEquipment Equipment { get; }
 
-        public EvolveEquipmentFailedAction(IEvolvableEquipment equipment)
+        public EvolveEquipmentFailedAction(IEquipment equipment)
         {
             Equipment = equipment;
         }
@@ -56,9 +56,9 @@ namespace CryptoQuest.BlackSmith.Evolve.Sagas
 
     public class EvolveEquipmentSuccessAction : ActionBase
     {
-        public IEvolvableEquipment Equipment { get; }
+        public IEquipment Equipment { get; }
 
-        public EvolveEquipmentSuccessAction(IEvolvableEquipment equipment)
+        public EvolveEquipmentSuccessAction(IEquipment equipment)
         {
             Equipment = equipment;
         }
