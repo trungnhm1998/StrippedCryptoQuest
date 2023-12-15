@@ -42,6 +42,7 @@ namespace CryptoQuest.Ranch.Sagas
 
             ActionDispatcher.Dispatch(new ShowLoading(false));
             ActionDispatcher.Dispatch(new GetNftBeastsSucceed());
+            ActionDispatcher.Dispatch(new EvolveRequestSuccess());
         }
 
         private void UpdateInGameCache(BeastData[] dataBeasts)

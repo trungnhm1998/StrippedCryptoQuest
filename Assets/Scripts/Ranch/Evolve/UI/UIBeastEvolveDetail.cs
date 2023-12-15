@@ -7,6 +7,7 @@ using IndiGames.GameplayAbilitySystem.AttributeSystem.Components;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Localization.Components;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace CryptoQuest.Ranch.Evolve.UI
@@ -24,6 +25,8 @@ namespace CryptoQuest.Ranch.Evolve.UI
         [SerializeField] private Sprite _currentStar;
         [SerializeField] private Sprite _defaultStar;
         [SerializeField] private BeastAttributeSystemSO _beastAttributeSystemSo;
+        [SerializeField] private CalculatorBeastStatsSO _calculatorBeastStatsSo;
+        private bool _isResultScreen;
 
         private IBeastAvatarProvider _beastAvatarProvider;
 
@@ -37,17 +40,22 @@ namespace CryptoQuest.Ranch.Evolve.UI
             _beastAttributeSystemSo.EventRaised -= UpdateBeastStats;
         }
 
-        public void SetupUI(IBeast beast)
+        public void SetupUI(IBeast beast, bool isResultScreen)
         {
+            _calculatorBeastStatsSo.RaiseEvent(beast);
+            _isResultScreen = isResultScreen;
             _beastAvatarProvider = GetComponent<IBeastAvatarProvider>();
             _icon.sprite = beast.Elemental.Icon;
             _displayName.StringReference = beast.LocalizedName;
             _level.text = $"Lv{beast.Level.ToString()}";
+
             StartCoroutine(_beastAvatarProvider.LoadAvatarAsync(_illustration, beast));
-            SetBeastStar(beast);
+            
+            if (!_isResultScreen) SetBeastStarBeforeEvolve(beast);
+            else SetBeastStarAfterEvolve(beast);
         }
 
-        private void SetBeastStar(IBeast beast)
+        private void SetBeastStarBeforeEvolve(IBeast beast)
         {
             for (int i = 0; i < MAX_STAR; i++)
             {
@@ -55,6 +63,14 @@ namespace CryptoQuest.Ranch.Evolve.UI
             }
 
             _listStar[beast.Stars].sprite = _evolveStar;
+        }
+
+        private void SetBeastStarAfterEvolve(IBeast beast)
+        {
+            for (int i = 0; i < beast.Stars; i++)
+            {
+                _listStar[i].sprite = _currentStar;
+            }
         }
 
 

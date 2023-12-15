@@ -12,17 +12,71 @@ namespace CryptoQuest.Ranch.State.BeastEvolve
     {
         [SerializeField] private LocalizedString _message;
         private RanchStateController _controller;
+        private TinyMessageSubscriptionToken _evolveSuccessToken;
+        private TinyMessageSubscriptionToken _evolveRequestFailedToken;
+        private TinyMessageSubscriptionToken _evolveRequestSuccess;
         private static readonly int EvolveState = Animator.StringToHash("EvolveState");
         private static readonly int ResultState = Animator.StringToHash("EvolveResultState");
 
         protected override void OnEnter()
         {
             _controller = StateMachine.GetComponent<RanchStateController>();
-
             _controller.UIBeastEvolve.Contents.SetActive(true);
             _controller.Controller.Input.CancelEvent += NoButtonPressed;
+
+            _evolveSuccessToken = ActionDispatcher.Bind<BeastEvolveRespond>(HandleEvolveSuccess);
+            _evolveRequestFailedToken = ActionDispatcher.Bind<EvolveRequestFailed>(HandleRequestFailed);
+            _evolveRequestSuccess = ActionDispatcher.Bind<EvolveRequestSuccess>(UpdateBeastResult);
+
             UpdateEvolvableInfo(_controller.EvolvePresenter.BeastToEvolve);
             SetupDialog();
+        }
+
+        private void UpdateBeastResult(EvolveRequestSuccess obj)
+        {
+            _controller.DialogController.ChoiceDialog.Hide();
+            StateMachine.Play(ResultState);
+        }
+
+        private void HandleEvolveSuccess(BeastEvolveRespond ctx)
+        {
+            SetBeastID(ctx);
+        }
+
+        private void SetBeastID(BeastEvolveRespond ctx)
+        {
+            var response = ctx.Response;
+
+            int evolveStatus = response.data.success;
+
+            switch (evolveStatus)
+            {
+                case 0:
+                    _controller.BeastEvolveId = ctx.RequestContext.Base.Id;
+                    _controller.EvolveStatus = false;
+                    break;
+                case 1:
+                    _controller.BeastEvolveId = response.data.newBeast.id;
+                    _controller.EvolveStatus = true;
+                    break;
+                default:
+                    Debug.LogError("[EvolveBeast]:: unknown success status: ");
+                    break;
+            }
+        }
+
+        private void HandleRequestFailed(EvolveRequestFailed obj)
+        {
+            _controller.DialogController.ChoiceDialog.Hide();
+            StateMachine.Play(EvolveState);
+        }
+
+        protected override void OnExit()
+        {
+            _controller.Controller.Input.CancelEvent -= NoButtonPressed;
+            ActionDispatcher.Unbind(_evolveSuccessToken);
+            ActionDispatcher.Unbind(_evolveRequestSuccess);
+            ActionDispatcher.Unbind(_evolveRequestFailedToken);
         }
 
         private void SetupDialog()
@@ -35,19 +89,14 @@ namespace CryptoQuest.Ranch.State.BeastEvolve
 
         private void YesButtonPressed()
         {
+            HandleConfirmEvolving();
             _controller.DialogController.ChoiceDialog.Hide();
-            ChangeConfirmState();
         }
 
         private void NoButtonPressed()
         {
             _controller.DialogController.ChoiceDialog.Hide();
             StateMachine.Play(EvolveState);
-        }
-
-        protected override void OnExit()
-        {
-            _controller.Controller.Input.CancelEvent -= NoButtonPressed;
         }
 
         private void HandleConfirmEvolving()
@@ -59,12 +108,6 @@ namespace CryptoQuest.Ranch.State.BeastEvolve
             });
         }
 
-        private void ChangeConfirmState()
-        {
-            StateMachine.Play(ResultState);
-            HandleConfirmEvolving();
-        }
-        
         private void UpdateEvolvableInfo(IBeast beast)
         {
             var info = _controller.EvolvePresenter.BeastEvolvableInfos.First(f => f.BeforeStars == beast.Stars);

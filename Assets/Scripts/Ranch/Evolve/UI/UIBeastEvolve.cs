@@ -1,11 +1,9 @@
 ﻿using System;
-using CryptoQuest.Beast;
 using CryptoQuest.Beast.ScriptableObjects;
 using CryptoQuest.Menu;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Localization.Components;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace CryptoQuest.Ranch.Evolve.UI
@@ -66,7 +64,6 @@ namespace CryptoQuest.Ranch.Evolve.UI
         private void OnInspecting()
         {
             OnBeastSelected?.Invoke(this);
-            _calculatorBeastStatsSo.RaiseEvent(Beast);
             _background.gameObject.SetActive(true);
         }
 

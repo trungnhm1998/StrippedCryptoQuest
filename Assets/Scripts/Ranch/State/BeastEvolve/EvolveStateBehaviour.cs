@@ -1,4 +1,3 @@
-using IndiGames.Core.Events;
 using UnityEngine;
 using UnityEngine.Localization;
 
@@ -19,7 +18,6 @@ namespace CryptoQuest.Ranch.State.BeastEvolve
             _controller.Controller.Input.SubmitEvent += ChangeSelectMaterialState;
             _controller.DialogController.NormalDialogue.SetMessage(_message).Show();
             _controller.EvolvePresenter.Init();
-            ActionDispatcher.Dispatch(new GetBeasts());
         }
 
         private void ChangeSelectMaterialState()
