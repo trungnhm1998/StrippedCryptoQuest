@@ -49,7 +49,7 @@ namespace CryptoQuest.Quest.Actor
         {
             ActorSettingInfo actorSetting = _actorDeSpawnSetting ?? _actorSpawnSetting;
 
-            QuestManager.OnConfigureQuest?.Invoke(actorSetting);
+            IQuestManager.OnConfigureQuest?.Invoke(actorSetting);
         }
 
         private void InitSpawnSetting()
@@ -57,7 +57,7 @@ namespace CryptoQuest.Quest.Actor
             if (_actorSpawnSetting != null)
             {
                 _actorDeSpawnSetting.OnQuestCompleted -= ActivateDeSpawnActor;
-                QuestManager.OnConfigureQuest?.Invoke(_actorSpawnSetting);
+                IQuestManager.OnConfigureQuest?.Invoke(_actorSpawnSetting);
                 return;
             }
 

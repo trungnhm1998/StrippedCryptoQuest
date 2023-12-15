@@ -5,7 +5,8 @@ namespace CryptoQuest.Quest
 {
     public interface IQuestConfigure
     {
+        EConditionType QuestCondition { get; set; }
         List<QuestSO> QuestsToTrack { get; set; }
-        void Configure(bool isQuestCompleted);
+        void Configure(bool isQuestCompleted, int questCompletedCount);
     }
 }

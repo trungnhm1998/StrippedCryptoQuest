@@ -193,11 +193,17 @@ namespace CryptoQuest.Quest.Components
 
         private void ConfigureQuestHolder(IQuestConfigure questConfigure)
         {
-            questConfigure.QuestsToTrack.ForEach(questData => questConfigure.Configure(IsQuestTriggered(questData)));
+            foreach (var questSo in questConfigure.QuestsToTrack)
+            {
+                var completedCount = _saveData.CompletedQuests.Count(quest => quest == questSo.Guid);
+                questConfigure.Configure(IsQuestTriggered(questSo), completedCount);
+            }
         }
 
         private void RemoveProgressingQuest(QuestSO quest)
         {
+            Debug.Log($"<color=green>QuestManager::RemoveProgressingQuest:: {quest.QuestName}</color>");
+
             foreach (var questInfo in _currentQuestInfos.ToList())
             {
                 if (questInfo.Guid != quest.Guid) continue;
