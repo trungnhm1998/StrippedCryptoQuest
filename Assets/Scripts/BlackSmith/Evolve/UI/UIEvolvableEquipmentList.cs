@@ -1,8 +1,6 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using CryptoQuest.Item.Equipment;
 using UnityEngine;
 using UnityEngine.Pool;
 using UnityEngine.UI;
@@ -16,6 +14,7 @@ namespace CryptoQuest.BlackSmith.Evolve.UI
 
         [SerializeField] private ScrollRect _scrollRect;
         public Transform Content => _scrollRect.content;
+        public Transform Viewport => _scrollRect.viewport;
         [SerializeField] private UIEquipmentItem _itemPrefab;
 
         private IObjectPool<UIEquipmentItem> _itemPool;
@@ -27,13 +26,13 @@ namespace CryptoQuest.BlackSmith.Evolve.UI
                 OnReturnToPool, OnDestroyPool);
         }
 
-        public void RenderEquipmentsWithException(List<IEquipment> items, UIEquipmentItem exceptionUI = null)
+        public void RenderEquipmentsWithException(List<IEvolvableEquipmentItem> items, UIEquipmentItem exceptionUI = null)
         {
-            foreach (var equipment in items)
+            foreach (var item in items)
             {
-                if (exceptionUI != null && equipment.Id == exceptionUI.Equipment.Id) continue;
+                if (exceptionUI != null && item.Equipment.Id == exceptionUI.Equipment.Id) continue;
                 var equipmentUI = _itemPool.Get();
-                equipmentUI.Init(equipment);
+                equipmentUI.Init(item);
             }
 
             Invoke(nameof(SelectFirstButton), ERROR_PRONE_DELAY);
@@ -101,6 +100,7 @@ namespace CryptoQuest.BlackSmith.Evolve.UI
         private void OnDestroyPool(UIEquipmentItem item)
         {
             item.Selected -= OnSelectItem; // Just in case
+            item.Highlighted -= OnHighlightItem;
             Destroy(item.gameObject);
         }
 

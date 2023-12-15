@@ -1,7 +1,4 @@
-using System;
 using CryptoQuest.BlackSmith.Evolve.UI;
-using UnityEngine.EventSystems;
-using UnityEngine.UI;
 
 namespace CryptoQuest.BlackSmith.Evolve.States
 {
@@ -17,23 +14,7 @@ namespace CryptoQuest.BlackSmith.Evolve.States
             EvolvableEquipmentList.EquipmentSelected += OnSelectMaterial;
             EvolvableEquipmentList.EquipmentHighlighted += OnHighlightItem;
 
-            EquipmentsPresenter.EvolvableModel.FilterByEquipment(StateMachine.ItemToEvolve.Equipment);
-            EvolvableEquipmentList.ClearEquipmentsWithException(StateMachine.ItemToEvolve);
-            EvolvableEquipmentList.RenderEquipmentsWithException(EquipmentsPresenter.EvolvableModel.GetEvolableEquipments(), StateMachine.ItemToEvolve);
-
-            StateMachine.ItemToEvolve.ButtonUI.interactable = false;
-            StateMachine.ItemToEvolve.BaseTag.SetActive(true);
-
-            var buttons = EvolvableEquipmentList.Content.GetComponentsInChildren<Button>();
-            EventSystem.current.SetSelectedGameObject(buttons[0].gameObject);
-            if (buttons.Length > 1)
-            {
-                var item = buttons[1].GetComponent<Button>();
-                item.OnSelect(null); // trigger highlight button
-                return;
-            }
-
-            EventSystem.current.SetSelectedGameObject(buttons[0].gameObject);
+            EquipmentsPresenter.RenderEquipmentsForMaterialItemSelection(StateMachine.ItemToEvolve);
         }
 
         public override void OnExit()
@@ -51,6 +32,7 @@ namespace CryptoQuest.BlackSmith.Evolve.States
 
         public override void OnCancel()
         {
+            EquipmentsPresenter.ResetAnchorIfExist(StateMachine.ItemToEvolve);
             StateMachine.ItemToEvolve.ResetItemStates();
             fsm.RequestStateChange(EStates.SelectEquipment);
         }
