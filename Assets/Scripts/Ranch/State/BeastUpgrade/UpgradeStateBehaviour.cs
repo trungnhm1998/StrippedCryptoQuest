@@ -14,7 +14,7 @@ namespace CryptoQuest.Ranch.State.BeastUpgrade
         {
             _controller = StateMachine.GetComponent<RanchStateController>();
 
-            _controller.UIBeastEvolve.Contents.SetActive(true);
+            _controller.UIBeastUpgrade.Contents.SetActive(true);
 
             _controller.Controller.Input.CancelEvent += CancelBeastEvolveState;
         }
@@ -22,7 +22,7 @@ namespace CryptoQuest.Ranch.State.BeastUpgrade
         private void CancelBeastEvolveState()
         {
             _controller.DialogManager.NormalDialogue.SetMessage(_overviewMessage).Show();
-            _controller.UIBeastEvolve.Contents.SetActive(false);
+            _controller.UIBeastUpgrade.Contents.SetActive(false);
             _controller.Controller.Initialize();
             StateMachine.Play(OverviewState);
         }
