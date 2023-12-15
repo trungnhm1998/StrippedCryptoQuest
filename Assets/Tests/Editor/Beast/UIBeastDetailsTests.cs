@@ -14,7 +14,7 @@ namespace CryptoQuest.Tests.Editor.Beast
     [TestFixture]
     public class UIBeastDetailsTests
     {
-        private UIBeastDetail _uiBeastDetails;
+        private UIMenuBeastDetail _uiMenuBeastDetails;
 
         [SetUp]
         public void Setup()
@@ -22,7 +22,7 @@ namespace CryptoQuest.Tests.Editor.Beast
             var panelPrefab =
                 AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/UI/Menu/Beast/BeastPanel.prefab");
             var panel = Object.Instantiate(panelPrefab);
-            _uiBeastDetails = panel.GetComponentInChildren<UIBeastDetail>();
+            _uiMenuBeastDetails = panel.GetComponentInChildren<UIMenuBeastDetail>();
         }
 
         [Test]
@@ -32,9 +32,9 @@ namespace CryptoQuest.Tests.Editor.Beast
                 AssetDatabase.LoadAssetAtPath<Elemental>(
                     "Assets/ScriptableObjects/Character/Attributes/Elemental/Dark/Dark.asset");
 
-            _uiBeastDetails.FillUI(A.Beast.WithElement(darkElement).Build());
+            _uiMenuBeastDetails.FillUI(A.Beast.WithElement(darkElement).Build());
 
-            var panelSO = new SerializedObject(_uiBeastDetails);
+            var panelSO = new SerializedObject(_uiMenuBeastDetails);
             var beastElementImage = panelSO.FindProperty("_beastElement").objectReferenceValue as Image;
 
             Assert.AreEqual(darkElement.Icon, beastElementImage.sprite);
@@ -43,9 +43,9 @@ namespace CryptoQuest.Tests.Editor.Beast
         [Test]
         public void FillUI_WithNullPassive_ShouldShowsEmptyPassive()
         {
-            _uiBeastDetails.FillUI(A.Beast.Build());
+            _uiMenuBeastDetails.FillUI(A.Beast.Build());
 
-            var panelSO = new SerializedObject(_uiBeastDetails);
+            var panelSO = new SerializedObject(_uiMenuBeastDetails);
             var beastPassiveSkill =
                 panelSO.FindProperty("_beastPassiveSkill").objectReferenceValue as LocalizeStringEvent;
 
@@ -58,9 +58,9 @@ namespace CryptoQuest.Tests.Editor.Beast
             var passive =
                 AssetDatabase.LoadAssetAtPath<PassiveAbility>(
                     "Assets/ScriptableObjects/Character/Skills/Conditionals/3001.asset");
-            _uiBeastDetails.FillUI(A.Beast.WithPassive(passive).Build());
+            _uiMenuBeastDetails.FillUI(A.Beast.WithPassive(passive).Build());
 
-            var panelSO = new SerializedObject(_uiBeastDetails);
+            var panelSO = new SerializedObject(_uiMenuBeastDetails);
             var beastPassiveSkill =
                 panelSO.FindProperty("_beastPassiveSkill").objectReferenceValue as LocalizeStringEvent;
 
@@ -73,15 +73,15 @@ namespace CryptoQuest.Tests.Editor.Beast
             var passive =
                 AssetDatabase.LoadAssetAtPath<PassiveAbility>(
                     "Assets/ScriptableObjects/Character/Skills/Conditionals/3001.asset");
-            _uiBeastDetails.FillUI(A.Beast.WithPassive(passive).Build());
+            _uiMenuBeastDetails.FillUI(A.Beast.WithPassive(passive).Build());
 
-            var passiveName = _uiBeastDetails.transform.Find("Detail/Panel/Passives/Panel/Text (Legacy)")
+            var passiveName = _uiMenuBeastDetails.transform.Find("Detail/Panel/Passives/Panel/Text (Legacy)")
                 .GetComponent<LocalizeStringEvent>();
             Assert.AreEqual(passive.Description, passiveName.StringReference);
 
             passive = AssetDatabase.LoadAssetAtPath<PassiveAbility>(
                 "Assets/ScriptableObjects/Character/Skills/Conditionals/3005.asset");
-            _uiBeastDetails.FillUI(A.Beast.WithPassive(passive).Build());
+            _uiMenuBeastDetails.FillUI(A.Beast.WithPassive(passive).Build());
 
             Assert.AreEqual(passive.Description, passiveName.StringReference);
         }

@@ -1,3 +1,4 @@
+using IndiGames.Core.Events;
 using UnityEngine;
 using UnityEngine.Localization;
 
@@ -5,6 +6,7 @@ namespace CryptoQuest.Ranch.State.BeastUpgrade
 {
     public class UpgradeStateBehaviour : BaseStateBehaviour
     {
+        [SerializeField] private LocalizedString _welcomeMessage;
         [SerializeField] private LocalizedString _overviewMessage;
         private RanchStateController _controller;
 
@@ -17,6 +19,9 @@ namespace CryptoQuest.Ranch.State.BeastUpgrade
             _controller.UIBeastUpgrade.Contents.SetActive(true);
 
             _controller.Controller.Input.CancelEvent += CancelBeastEvolveState;
+            _controller.DialogManager.NormalDialogue.SetMessage(_welcomeMessage).Show();
+
+            _controller.Controller.ShowWalletEventChannel.EnableAll().Show();
         }
 
         private void CancelBeastEvolveState()
@@ -30,6 +35,7 @@ namespace CryptoQuest.Ranch.State.BeastUpgrade
         protected override void OnExit()
         {
             _controller.Controller.Input.CancelEvent -= CancelBeastEvolveState;
+            _controller.Controller.ShowWalletEventChannel.Hide();
         }
     }
 }

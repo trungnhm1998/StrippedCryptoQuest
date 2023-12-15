@@ -15,7 +15,7 @@ using UIAttribute = CryptoQuest.UI.Character.UIAttribute;
 
 namespace CryptoQuest.Menus.Beast.UI
 {
-    public class UIBeastDetail : MonoBehaviour
+    public class UIMenuBeastDetail : MonoBehaviour
     {
         [SerializeField] private GameObject _content;
 

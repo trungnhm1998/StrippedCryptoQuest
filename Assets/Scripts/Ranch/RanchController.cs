@@ -1,3 +1,4 @@
+using CryptoQuest.Events.UI;
 using CryptoQuest.Input;
 using CryptoQuest.Ranch.UI;
 using UnityEngine;
@@ -10,6 +11,9 @@ namespace CryptoQuest.Ranch
         [field: SerializeField] public RanchDialogsManager DialogManager { get; private set; }
         [field: SerializeField] public MerchantsInputManager Input { get; private set; }
         [field: SerializeField] public UIRanch UIRanch { get; private set; }
+
+        [field: Header("Events")]
+        [field: SerializeField] public ShowWalletEventChannelSO ShowWalletEventChannel { get; private set; }
 
         private void OnEnable()
         {
@@ -27,7 +31,7 @@ namespace CryptoQuest.Ranch
         {
             UIRanch.Initialize();
         }
-        
+
         public void HideDialogs()
         {
             DialogManager.NormalDialogue.Hide();

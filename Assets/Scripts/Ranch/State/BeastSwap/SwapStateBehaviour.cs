@@ -40,6 +40,7 @@ namespace CryptoQuest.Ranch.State.BeastSwap
             _controller.Controller.Input.ResetEvent += ResetTransferRequested;
             _controller.Controller.Input.CancelEvent += CancelBeastSwapState;
 
+            _controller.Controller.ShowWalletEventChannel.EnableAll().Show();
             ActionDispatcher.Dispatch(new GetBeasts());
         }
 
@@ -51,6 +52,8 @@ namespace CryptoQuest.Ranch.State.BeastSwap
             _controller.Controller.Input.ExecuteEvent -= SendItemsRequested;
             _controller.Controller.Input.ResetEvent -= ResetTransferRequested;
             _controller.Controller.Input.CancelEvent -= CancelBeastSwapState;
+
+            _controller.Controller.ShowWalletEventChannel.Hide();
 
             ActionDispatcher.Unbind(_getDataInGameSucceed);
             ActionDispatcher.Unbind(_getDataInBoxSucceed);

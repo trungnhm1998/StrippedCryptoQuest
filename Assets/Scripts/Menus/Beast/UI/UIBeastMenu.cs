@@ -14,7 +14,7 @@ namespace CryptoQuest.Menus.Beast.UI
 
         [field: SerializeField] public BeastProvider BeastProvider { get; private set; }
         [field: SerializeField] public UIBeastList ListBeastUI { get; private set; }
-        [field: SerializeField] public UIBeastDetail DetailBeastUI { get; private set; }
+        [field: SerializeField] public UIMenuBeastDetail DetailMenuBeastUIMenu { get; private set; }
 
         private StateMachine _stateMachine;
 
