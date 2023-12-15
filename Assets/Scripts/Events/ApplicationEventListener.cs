@@ -40,10 +40,10 @@ namespace CryptoQuest.Events
 
         private void OnFocusChanged(int hasFocus)
         {
-            if(hasFocus == 0)
+            if (hasFocus == 0)
             {
                 UploadGameSave();
-            }            
+            }
         }
 
         #region Upload Game Save
@@ -63,19 +63,25 @@ namespace CryptoQuest.Events
         private DateTime _lastUploadTime = DateTime.Now;
         private bool _isUploading = false;
 
+        private bool IsLoggedIn()
+        {
+            var credential = ServiceProvider.GetService<Credentials>();
+            return credential != null && credential.IsLoggedIn();
+        }
+
         private void UploadGameSave()
         {
-            if (_isUploading) return;
-            _isUploading = true;
+            if (!IsLoggedIn() || _isUploading) return;
             Debug.Log("ApplicationEventListener::UploadGameSave() - Uploading profile...");
 
-            var timeToCheck = _lastUploadTime.AddSeconds(_saveInterval);            
+            var timeToCheck = _lastUploadTime.AddSeconds(_saveInterval);
             if (DateTime.Compare(timeToCheck, DateTime.Now) > 0)
             {
                 Debug.Log("ApplicationEventListener::UploadGameSave() - Uploading aborted!");
                 return;
             }
 
+            _isUploading = true;
             var restClient = ServiceProvider.GetService<IRestClient>();
             if (restClient != null)
             {

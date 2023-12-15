@@ -1,4 +1,5 @@
-﻿using CryptoQuest.Sagas;
+﻿using System;
+using CryptoQuest.Sagas;
 using CryptoQuest.System;
 using UnityEngine;
 
@@ -18,5 +19,21 @@ namespace CryptoQuest.Networking
 
         [field: SerializeField] public string Password { get; set; }
         [field: SerializeField] public CredentialResponse Profile { get; set; }
+
+        /// <summary>
+        /// Check access token to validate if user has logged in
+        /// </summary>
+        public bool IsLoggedIn()
+        {
+            if (Profile != null && Profile.token != null && Profile.token.access != null)
+            {
+                var accessToken = Profile.token.access;
+                if (!string.IsNullOrEmpty(accessToken.token))
+                {
+                    return DateTime.Parse(accessToken.expires).CompareTo(DateTime.Now) > 0;
+                }
+            }
+            return false;
+        }
     }
 }
