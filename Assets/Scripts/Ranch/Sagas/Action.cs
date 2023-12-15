@@ -22,6 +22,8 @@ namespace CryptoQuest.Ranch.Sagas
         }
     }
 
+    public class EvolveRequestSuccess : ActionBase { }
+
     public class EvolveRequestFailed : ActionBase { }
 
     public class EvolveSucceed : ActionBase { }

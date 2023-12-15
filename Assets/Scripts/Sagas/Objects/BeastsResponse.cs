@@ -123,6 +123,8 @@ namespace CryptoQuest.Sagas.Objects
         public float maxMpAtMaxLv;
     }
 
+    
+    [Serializable]
     public class BeastResponeEvolveData
     {
         public int transferring;

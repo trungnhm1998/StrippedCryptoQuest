@@ -1,6 +1,4 @@
-﻿using IndiGames.Core.Events;
-using TinyMessenger;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Localization;
 
 namespace CryptoQuest.Ranch.State.BeastEvolve
@@ -9,7 +7,8 @@ namespace CryptoQuest.Ranch.State.BeastEvolve
     {
         [SerializeField] private LocalizedString _evolveSucceededMessage;
         [SerializeField] private LocalizedString _evolveFailedMessage;
-        private TinyMessageSubscriptionToken _evolveResponseData;
+        [SerializeField] private LocalizedString _evolveSuccessTitle;
+        [SerializeField] private LocalizedString _evolveFailTitle;
         private RanchStateController _controller;
         private bool _isSucceeded;
 
@@ -18,7 +17,6 @@ namespace CryptoQuest.Ranch.State.BeastEvolve
         protected override void OnEnter()
         {
             _controller = StateMachine.GetComponent<RanchStateController>();
-            _controller.UIBeastEvolve.Contents.SetActive(true);
             _controller.Controller.Input.CancelEvent += CancelBeastEvolveState;
             _controller.Controller.Input.SubmitEvent += ChangeConfirmState;
             SetMessage();
@@ -28,6 +26,7 @@ namespace CryptoQuest.Ranch.State.BeastEvolve
         {
             LocalizedString message = _isSucceeded ? _evolveSucceededMessage : _evolveFailedMessage;
             _controller.DialogController.NormalDialogue.SetMessage(message).Show();
+            UpdateResultStats();
         }
 
         protected override void OnExit()
@@ -37,6 +36,17 @@ namespace CryptoQuest.Ranch.State.BeastEvolve
             _controller.DialogController.NormalDialogue.Hide();
         }
 
+        private void UpdateResultStats()
+        {
+            var isSuccess = _controller.EvolveStatus;
+            var message = isSuccess ? _evolveSucceededMessage : _evolveFailedMessage;
+            _controller.DialogController.NormalDialogue.SetMessage(message).Show();
+            
+            var title = isSuccess ? _evolveSuccessTitle : _evolveFailTitle;
+            int beastId = _controller.BeastEvolveId;
+            _controller.EvolvePresenter.ShowBeastResult(title, beastId);
+        }
+        
         private void ChangeConfirmState()
         {
             StateMachine.Play(EvolveState);

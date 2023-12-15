@@ -35,6 +35,10 @@ namespace CryptoQuest.Ranch.State
         [field: SerializeField] public UpgradePresenter UpgradePresenter { get; private set; }
 
 
+        [field: Header("Evolve")]
+        public int BeastEvolveId { get; set; }
+        public bool EvolveStatus { get; set; }
+
         private void OnDisable()
         {
             BaseStateBehaviour[] behaviours = StateMachine.GetBehaviours<BaseStateBehaviour>();

@@ -9,7 +9,6 @@ using IndiGames.Core.Events;
 using Newtonsoft.Json;
 using UniRx;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace CryptoQuest.Ranch.Sagas
 {
@@ -30,7 +29,7 @@ namespace CryptoQuest.Ranch.Sagas
         public class BeastResponseData
         {
             public int success;
-            public BeastResponeEvolveData newBesat;
+            public BeastResponeEvolveData newBeast;
         }
     }
 

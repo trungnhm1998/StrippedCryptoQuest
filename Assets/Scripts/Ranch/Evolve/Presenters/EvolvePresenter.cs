@@ -4,16 +4,19 @@ using CryptoQuest.Ranch.Evolve.Interface;
 using CryptoQuest.Ranch.Evolve.UI;
 using CryptoQuest.Ranch.ScriptableObjects;
 using UnityEngine;
+using UnityEngine.Localization;
 
 namespace CryptoQuest.Ranch.Evolve.Presenters
 {
     public class EvolvePresenter : MonoBehaviour
     {
         [SerializeField] private BeastInventorySO _inventorySo;
-        [SerializeField] private UIBeastListEvolve _beastList;
-        [SerializeField] private UIBeastEvolveDetail _uiBeastEvolveDetail;
         [SerializeField] private EvolvableBeastInfoDatabaseSO _beastInfoDatabaseSo;
+        [SerializeField] private UIBeastListEvolve _beastList;
+        [SerializeField] private UIBeastEvolveDetail _uiBeastDetail;
+        [SerializeField] private UIBeastEvolveDetail _uiBeastResultStats;
         [SerializeField] private UIBeastEvolveInfoDetail _uiBeastEvolveInfoDetail;
+        [SerializeField] private UIBeastEvolveResultTitle _uiResultTitle;
         public IBeastEvolvableInfo[] BeastEvolvableInfos { get; private set; }
         public UIBeastEvolve UIBeastEvolve { get; private set; }
         public IBeast BeastToEvolve { get; set; }
@@ -58,13 +61,13 @@ namespace CryptoQuest.Ranch.Evolve.Presenters
 
         private void ShowBeastDetails(UIBeastEvolve uiBeast)
         {
-            _uiBeastEvolveDetail.SetupUI(uiBeast.Beast);
+            _uiBeastDetail.SetupUI(uiBeast.Beast, false);
             UIBeastEvolve = uiBeast;
         }
 
         private void EnableBeastDetailEvent(bool active)
         {
-            _uiBeastEvolveDetail.gameObject.SetActive(active);
+            _uiBeastDetail.gameObject.SetActive(active);
         }
 
         public void Init()
@@ -86,6 +89,25 @@ namespace CryptoQuest.Ranch.Evolve.Presenters
         public void UpdateEvolvableInfo(IBeastEvolvableInfo info)
         {
             _uiBeastEvolveInfoDetail.SetConfirmInfo(info);
+        }
+
+        public void ShowBeastResult(LocalizedString localized, int beastId)
+        {
+            StartCoroutine(UpdateResultStats(beastId));
+            _uiResultTitle.ShowResultTitle(localized);
+        }
+
+        private IEnumerator UpdateResultStats(int beastId)
+        {
+            yield return new WaitUntil(() => _uiBeastResultStats.gameObject.activeInHierarchy);
+            foreach (var beast in _inventorySo.OwnedBeasts)
+            {
+                if (beast.Id == beastId)
+                {
+                    _uiBeastResultStats.SetupUI(beast, true);
+                    break;
+                }
+            }
         }
     }
 }
