@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using CryptoQuest.Beast;
 using CryptoQuest.Beast.ScriptableObjects;
+using CryptoQuest.UI.Common;
 using CryptoQuest.UI.Utilities;
-using UI.Common;
 using UnityEngine;
 using UnityEngine.Pool;
 using UnityEngine.UI;

@@ -1,5 +1,5 @@
+using CryptoQuest.UI.Common;
 using CryptoQuest.UI.Menu;
-using UI.Common;
 using UnityEngine.UI;
 
 namespace CryptoQuest.Menus.DimensionalBox.States

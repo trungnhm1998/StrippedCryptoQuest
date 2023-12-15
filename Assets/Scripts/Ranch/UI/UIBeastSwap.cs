@@ -1,6 +1,6 @@
 using System.Collections.Generic;
+using CryptoQuest.UI.Common;
 using CryptoQuest.UI.Utilities;
-using UI.Common;
 using UnityEngine;
 
 namespace CryptoQuest.Ranch.UI

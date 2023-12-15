@@ -8,6 +8,8 @@ namespace CryptoQuest.UI.Common
         [SerializeField] private float _delay = 0.1f;
         [SerializeField] private Button _button;
 
+        private void OnValidate() => Awake();
+
         private void Awake() => _button ??= GetComponent<Button>();
         private void OnEnable() => Select();
 

@@ -1,7 +1,9 @@
 using System;
 using IndiGames.Core.EditorTools.Attributes.ReadOnlyAttribute;
+using IndiGames.Core.Events;
 using IndiGames.Core.Events.ScriptableObjects;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace CryptoQuest.Gameplay
 {
@@ -12,10 +14,12 @@ namespace CryptoQuest.Gameplay
         Battle = 2,
         Dialogue = 3,
         Cutscene = 4,
+        Merchant = 5,
     }
 
     public class GameStateSO : ScriptableObject
     {
+        public event UnityAction<EGameState> Changed;
         [field: SerializeField, ReadOnly] public EGameState CurrentGameState { get; private set; }
 
         [field: SerializeField, ReadOnly] public EGameState PreviousGameState { get; private set; }
@@ -38,6 +42,7 @@ namespace CryptoQuest.Gameplay
 
             PreviousGameState = CurrentGameState;
             CurrentGameState = newGameState;
+            Changed.SafeInvoke(CurrentGameState);
         }
 
         /// <summary>
