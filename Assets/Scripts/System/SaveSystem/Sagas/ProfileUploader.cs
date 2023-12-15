@@ -31,9 +31,15 @@ namespace CryptoQuest.System.SaveSystem.Sagas
             public int code;
         }
 
+        private bool IsLoggedIn()
+        {
+            var credential = ServiceProvider.GetService<Credentials>();
+            return credential != null && credential.IsLoggedIn();
+        }
+
         protected override void HandleAction(UploadProfileAction ctx)
         {
-            if (_isUploading) return;
+            if (!IsLoggedIn() || _isUploading) return;
             _isUploading = true;
 
             var restClient = ServiceProvider.GetService<IRestClient>();
