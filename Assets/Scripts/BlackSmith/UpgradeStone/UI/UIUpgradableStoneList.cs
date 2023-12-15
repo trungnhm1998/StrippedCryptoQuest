@@ -18,9 +18,9 @@ namespace CryptoQuest.BlackSmith.UpgradeStone.UI
         [SerializeField] private ScrollRect _scrollRect;
         [SerializeField] private UIUpgradableStone _stonePrefab;
         public Transform Content => _scrollRect.content;
-        private IObjectPool<UIUpgradableStone> _itemPool;
-        private const float ERROR_PRONE_DELAY = 0.05f;
-        protected List<UIUpgradableStone> _cachedItems = new();
+        protected IObjectPool<UIUpgradableStone> _itemPool;
+        protected const float ERROR_PRONE_DELAY = 0.05f;
+        private List<UIUpgradableStone> _cachedItems = new();
 
         private void Awake()
         {
@@ -40,7 +40,7 @@ namespace CryptoQuest.BlackSmith.UpgradeStone.UI
             Invoke(nameof(SelectFirstButton), ERROR_PRONE_DELAY);
         }
 
-        private void SelectFirstButton()
+        protected void SelectFirstButton()
         {
             foreach (var item in _cachedItems)
             {

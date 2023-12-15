@@ -8,7 +8,6 @@ namespace CryptoQuest.BlackSmith.UpgradeStone.States
     public class SelectMaterialForUpgrade : UpgradeMagicStoneStateBase
     {
         public SelectMaterialForUpgrade(UpgradeMagicStoneStateMachine stateMachine) : base(stateMachine) { }
-        private MagicStoneInventory _magicStoneInventory => _stateMachine.UpgradeMagicStoneSystem.MagicStoneInventory;
         private List<UIUpgradableStone> _cachedItems = new();
         private readonly int _requiredMaterialAmount = 3;
 
@@ -17,11 +16,11 @@ namespace CryptoQuest.BlackSmith.UpgradeStone.States
             base.OnEnter();
             ResetMaterials();
             var upgradableStones = _stateMachine.UpgradeMagicStoneSystem.GetUpgradableStones();
+            _dialogsPresenter.Dialogue.SetMessage(_stateMachine.UpgradeMagicStoneSystem.SelectMaterialText).Show();
 
             _magicStoneTooltip.SetData(_stateMachine.StoneToUpgrade.MagicStone, true);
             _magicStoneTooltip.SetupInfo();
             _materialStoneList.gameObject.SetActive(true);
-
 
             _materialStoneList.ClearStonesWithException();
             _materialStoneList.RenderStones(upgradableStones);

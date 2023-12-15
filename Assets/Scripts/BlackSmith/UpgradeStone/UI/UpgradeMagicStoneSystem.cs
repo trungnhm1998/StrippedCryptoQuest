@@ -15,10 +15,13 @@ namespace CryptoQuest.BlackSmith.UpgradeStone.UI
         [field: SerializeField] public StoneListPresenter ListPresenter { get; private set; }
         [field: SerializeField] public ConfirmStoneUpgradePresenter ConfirmUpgradePresenter { get; private set; }
         [field: SerializeField] public UIUpgradeMagicStoneToolTip MagicStoneTooltip { get; private set; }
+        [field: SerializeField] public UpgradeStoneResultPresenter UpgradeStoneResultPresenter { get; private set; }
 
         [field: SerializeField] public LocalizedString SelectStoneToUpdateText { get; private set; }
-        [field: SerializeField] public LocalizedString SelectStoneText { get; private set; }
+        [field: SerializeField] public LocalizedString SelectMaterialText { get; private set; }
         [field: SerializeField] public LocalizedString ConfirmUpgradeText { get; private set; }
+        [field: SerializeField] public LocalizedString UpgradeSuccessText { get; private set; }
+        [field: SerializeField] public LocalizedString UpgradeFailedText { get; private set; }
 
         public IMagicStone GetUpgradedStone(IMagicStone stoneToUpgrade)
         {
