@@ -27,5 +27,7 @@
 
         public const string MAGIC_STONE = "crypto/magicstone";
         public const string MAGIC_STONE_TRANSFER = "crypto/magicstone/dimension/transfer";
+        public const string MAGIC_STONE_ATTACH = "crypto/equipments/stone/attach";
+        public const string MAGIC_STONE_DETACH = "crypto/equipments/stone/detach";
     }
 }

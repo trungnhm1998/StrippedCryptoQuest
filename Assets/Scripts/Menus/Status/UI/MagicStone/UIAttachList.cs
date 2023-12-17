@@ -13,8 +13,6 @@ namespace CryptoQuest.Menus.Status.UI.MagicStone
 
         [SerializeField] private InputMediatorSO _input;
         [SerializeField] private UIAttachSlot[] _attachSlots; // Max slots = 7
-        [SerializeField] private RectTransform _slotsContainer;
-        [SerializeField] private RectTransform _singleSlot;
 
         private int _currentIndex = 0;
         private int CurrentIndex

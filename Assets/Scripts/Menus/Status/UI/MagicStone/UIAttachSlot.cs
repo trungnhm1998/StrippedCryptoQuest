@@ -7,7 +7,6 @@ namespace CryptoQuest.Menus.Status.UI.MagicStone
     {
         public event UnityAction Pressed;
         [SerializeField] private GameObject _selectedEffect;
-        [SerializeField] private Transform _stoneContainer;
 
         public void OnPressed() => Pressed?.Invoke();
         public void Cache() => _selectedEffect.SetActive(true);

@@ -20,10 +20,10 @@ namespace CryptoQuest.Menus.Status.States.MagicStone
 
         private void BackToEntry() => fsm.RequestStateChange(State.MAGIC_STONE_SLOT_SELECTION);
 
-
         public override void OnExit()
         {
             StatusPanel.Input.MenuCancelEvent -= BackToEntry;
+            StatusPanel.MagicStoneSelection.UIStoneList.ElementSelectedEvent -= ToStoneSelection;
         }
     }
 }

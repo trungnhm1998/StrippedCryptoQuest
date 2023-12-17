@@ -2,6 +2,7 @@
 using CryptoQuest.UI.Extensions;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.Localization.Components;
 using UnityEngine.UI;
 
@@ -9,10 +10,10 @@ namespace CryptoQuest.Menus.Status.UI.MagicStone
 {
     public class UISingleStone : MonoBehaviour
     {
+        public event UnityAction Pressed;
         [SerializeField] private Image _icon;
         [SerializeField] private LocalizeStringEvent _localizedName;
         [SerializeField] private TMP_Text _level;
-        [SerializeField] private GameObject _selectedEffect;
 
         private IMagicStone _stoneData;
         public IMagicStone Data => _stoneData;
@@ -25,5 +26,7 @@ namespace CryptoQuest.Menus.Status.UI.MagicStone
             _localizedName.RefreshString();
             _level.text = $"Lv{stoneData.Level.ToString()}";
         }
+
+        public void OnPressed() => Pressed?.Invoke();
     }
 }

@@ -129,12 +129,10 @@ namespace CryptoQuest.Sagas.Objects
         public string imageURL;
         public int randomNumberBonus;
         public float valuePerLv;
-        public AttachStones attachStones;
+        public MagicStone[] attachStones;
         public int[] passiveSkills;
         public int[] conditionSkills;
         public bool IsEquipped => !string.IsNullOrEmpty(attachUnitTokenId);
         public bool IsTransferring => transferring == 1;
     }
-
-    public class AttachStones { }
 }
