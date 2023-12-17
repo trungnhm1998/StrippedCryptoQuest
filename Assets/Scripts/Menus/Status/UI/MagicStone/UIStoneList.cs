@@ -11,6 +11,7 @@ namespace CryptoQuest.Menus.Status.UI.MagicStone
     public class UIStoneList : MonoBehaviour
     {
         public event UnityAction ElementSelectedEvent;
+        public event UnityAction StoneSelectedEvent;
         [SerializeField] private MagicStoneInventory _inventory;
         [SerializeField] private Transform _scrollRectContent;
         [SerializeField] private UISingleStone _singleStonePrefab;
@@ -50,8 +51,14 @@ namespace CryptoQuest.Menus.Status.UI.MagicStone
             {
                 UISingleStone item = _pool.Get();
                 item.SetInfo(stoneData);
+                item.Pressed += OnSelectedStoneToAttach;
                 _items.Add(item);
             }
+        }
+
+        private void OnSelectedStoneToAttach()
+        {
+            StoneSelectedEvent?.Invoke();
         }
 
         public void ElementButtonPressed_SelectFirstStoneInList()
@@ -87,7 +94,10 @@ namespace CryptoQuest.Menus.Status.UI.MagicStone
         private void ReleaseAllItemInPool()
         {
             foreach (var item in _items)
+            {
+                item.Pressed -= OnSelectedStoneToAttach;
                 _pool.Release(item);
+            }
 
             _items = new();
         }

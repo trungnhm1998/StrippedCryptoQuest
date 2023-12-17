@@ -65,13 +65,12 @@ namespace CryptoQuest.Sagas.MagicStone
 
         private void FillInventory(Objects.MagicStone[] stonesResponse)
         {
-            _converter ??= ServiceProvider.GetService<IMagicStoneResponseConverter>();
             _stoneInventory.MagicStones.Clear();
             var converter = ServiceProvider.GetService<IMagicStoneResponseConverter>();
             foreach (var stoneResponse in stonesResponse)
             {
                 if (stoneResponse.id == -1) continue;
-                _stoneInventory.MagicStones.Add(_converter.Convert(stoneResponse));
+                _stoneInventory.MagicStones.Add(converter.Convert(stoneResponse));
             }
 
             ActionDispatcher.Dispatch(new StoneInventoryFilled());
