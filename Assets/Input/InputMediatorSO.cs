@@ -273,12 +273,14 @@ namespace CryptoQuest.Input
         #region Dialogue
 
         public event UnityAction NextDialoguePressed;
+
         public void OnNextDialogue(InputAction.CallbackContext context)
         {
             if (context.performed) NextDialoguePressed?.Invoke();
         }
 
         public event UnityAction EscapeDialoguePressed;
+
         public void OnEscape(InputAction.CallbackContext context)
         {
             if (context.performed) EscapeDialoguePressed?.Invoke();

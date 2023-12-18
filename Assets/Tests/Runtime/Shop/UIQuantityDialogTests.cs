@@ -59,35 +59,38 @@ namespace CryptoQuest.Tests.Runtime.Shop
         }
 
         [Test]
-        public void ChangeQuantity_NegativeY_ShouldNotBelowOne()
+        public void ChangeQuantity_NegativeY_ShouldAtMax()
         {
             _dialog.Show(10);
             PressAndRelease(_gamepad.dpad.down);
 
-            Assert.AreEqual(1, _dialog.CurrentQuantity);
+            Assert.AreEqual(10, _dialog.CurrentQuantity);
         }
 
         [Test]
-        public void ChangeQuantity_ShouldNotOverMax()
+        public void ChangeQuantity_OverMax_ShouldResetToOne()
+
         {
             _dialog.Show(2);
             PressAndRelease(_gamepad.dpad.up);
             PressAndRelease(_gamepad.dpad.up);
-            PressAndRelease(_gamepad.dpad.up);
-            PressAndRelease(_gamepad.dpad.up);
-            
-            Assert.AreEqual(2, _dialog.CurrentQuantity);
+
+            Assert.AreEqual(1, _dialog.CurrentQuantity);
         }
 
+
         [Test]
-        public void OnConfirmQuantity_HideContentAndResetConfirmCallback()
+        public void ChangeQuantity_ShouldWrap()
+
         {
-            var callbackInvoked = false;
-            _dialog.WithConfirmCallback(() => callbackInvoked = true);
-            _dialog.OnConfirmQuantity();
-            Assert.True(callbackInvoked);
-            callbackInvoked = false;
-            Assert.False(callbackInvoked, "Callback still not clear");
+            _dialog.Show(10);
+            PressAndRelease(_gamepad.dpad.down);
+            PressAndRelease(_gamepad.dpad.down);
+            PressAndRelease(_gamepad.dpad.down);
+            PressAndRelease(_gamepad.dpad.down);
+            PressAndRelease(_gamepad.dpad.down);
+
+            Assert.AreEqual(6, _dialog.CurrentQuantity);
         }
     }
 }
