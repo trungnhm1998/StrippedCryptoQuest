@@ -15,6 +15,7 @@ namespace CryptoQuest.Menus.Status.UI.Equipment
         {
             if (!equipment.IsValid()) return;
             _equipment.Init(equipment);
+            _equipment.InitStone(equipment.Data.AttachStones);
             _equipment.gameObject.SetActive(true);
         }
 
