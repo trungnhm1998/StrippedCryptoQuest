@@ -1,10 +1,12 @@
-﻿using CryptoQuest.Gameplay.Inventory.Currency;
+﻿using System;
+using CryptoQuest.Gameplay.Inventory.Currency;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
 using CryptoQuest.Item.Consumable;
 using CryptoQuest.Item.Equipment;
 
 namespace CryptoQuest.Gameplay.Inventory
 {
+    [Obsolete]
     public interface IInventoryController
     {
         InventorySO Inventory { get; }

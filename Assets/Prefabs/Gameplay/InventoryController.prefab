@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 8056220876450940900}
   - component: {fileID: 315550253647990775}
   - component: {fileID: 7081929896749357127}
-  - component: {fileID: 1846888232069350517}
-  - component: {fileID: 8031394533538416021}
+  - component: {fileID: 5021779411414981281}
+  - component: {fileID: 7474130843464822787}
   m_Layer: 0
   m_Name: InventoryController
   m_TagString: Untagged
@@ -47,7 +47,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 640f7c093fd4d394aa0c4eb029ff802a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _inventory: {fileID: 11400000, guid: 4b4903dbe1c434d418a3afff1b12a3ba, type: 2}
+  _partyManager: {fileID: 0}
   _addLootRequestEventChannel: {fileID: 11400000, guid: 5b2a9f4e0c11e954bbd8d96c7b5d775e, type: 2}
 --- !u!114 &7081929896749357127
 MonoBehaviour:
@@ -62,7 +62,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _itemConsumedEvent: {fileID: 11400000, guid: 7f9f171c27956064183e0fd0db7439ca, type: 2}
---- !u!114 &1846888232069350517
+--- !u!114 &5021779411414981281
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -71,11 +71,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 4521516978612748679}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d3e946523b065444aaa41647eda73bf0, type: 3}
+  m_Script: {fileID: 11500000, guid: 105ece95b5f23f742978365dd125269a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _consumableDatabase: {fileID: 11400000, guid: ca20a1e6324ba944383b4dbafb613471, type: 2}
---- !u!114 &8031394533538416021
+  _wallet: {fileID: 11400000, guid: e349636f15671994ba195728c42a551b, type: 2}
+  _gold: {fileID: 11400000, guid: 16b3f6e09fc22d240be1b324116eeb79, type: 2}
+  _diamonds: {fileID: 11400000, guid: 2869f59bdcbd4de4090ae28b6ca6b435, type: 2}
+--- !u!114 &7474130843464822787
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -84,7 +86,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4521516978612748679}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 952399340222c2f4da12d785ba5a61dd, type: 3}
+  m_Script: {fileID: 11500000, guid: 7e9a15f04005c0d488fd4e791734606d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _inventoryController: {fileID: 315550253647990775}
+  _inventory: {fileID: 11400000, guid: 91c03abe9611adc418b808c8d96bb5a5, type: 2}

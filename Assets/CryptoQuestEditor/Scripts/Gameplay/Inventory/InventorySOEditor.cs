@@ -1,7 +1,5 @@
 using CryptoQuest.Actions;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
-using CryptoQuest.Item.Consumable;
-using CryptoQuestEditor.Helper;
 using IndiGames.Core.Events;
 using UnityEditor;
 using UnityEditor.UIElements;
@@ -14,7 +12,6 @@ namespace CryptoQuestEditor
     public class InventorySOEditor : Editor
     {
         [SerializeField] private VisualTreeAsset _uxml;
-        private Button _usableItemButton;
         private Button _removeButton;
         private InventorySO Target => target as InventorySO;
 
@@ -26,13 +23,11 @@ namespace CryptoQuestEditor
 
             _uxml.CloneTree(root);
 
-            _usableItemButton = root.Q<Button>("add-consumable-button");
             _removeButton = root.Q<Button>("remove-all-button");
             var syncButton = root.Q<Button>("sync-button");
 
             syncButton.SetEnabled(Application.isPlaying);
             syncButton.clicked += SyncEquipments;
-            _usableItemButton.clicked += AddAllUsableItem;
             _removeButton.clicked += RemoveAll;
 
             return root;
@@ -49,16 +44,6 @@ namespace CryptoQuestEditor
         public static bool ValidateSyncEquipments()
         {
             return Application.isPlaying;
-        }
-
-        private void AddAllUsableItem()
-        {
-            ConsumableSO[] allUsableItem = ToolsHelper.GetAssets<ConsumableSO>();
-
-            foreach (ConsumableSO usableItem in allUsableItem)
-            {
-                Target.Consumables.Add(new ConsumableInfo(usableItem, 99));
-            }
         }
 
         private void RemoveAll()
