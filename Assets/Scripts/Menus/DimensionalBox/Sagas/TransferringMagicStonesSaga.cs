@@ -25,7 +25,7 @@ namespace CryptoQuest.Menus.DimensionalBox.Sagas
                     { "game", ctx.ToGame.Select(item => item.Id).ToList() },
                     { "wallet", ctx.ToWallet.Select(item => item.Id).ToList() }
                 })
-                .Put<MagicStonesResponse>(Profile.MAGIC_STONE_TRANSFER)
+                .Put<MagicStonesResponse>(MagicStoneAPI.TRANSFER)
                 .Subscribe(ProcessResponseMagicStones, OnError, OnCompleted);
         }
 

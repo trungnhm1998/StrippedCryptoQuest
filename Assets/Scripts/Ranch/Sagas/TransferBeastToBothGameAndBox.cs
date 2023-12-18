@@ -42,7 +42,7 @@ namespace CryptoQuest.Ranch.Sagas
             var restClient = ServiceProvider.GetService<IRestClient>();
             restClient
                 .WithBody(body)
-                .Put<TransferResponse>(Profile.PUT_BEASTS_TO_BOX_AND_GAME)
+                .Put<TransferResponse>(BeastAPI.TRANSFER)
                 .Subscribe(OnNext, OnError, OnCompleted);
         }
 

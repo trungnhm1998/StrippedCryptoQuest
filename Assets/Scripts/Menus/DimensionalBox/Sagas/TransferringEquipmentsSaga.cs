@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using CryptoQuest.API;
 using CryptoQuest.Menus.DimensionalBox.States.EquipmentsTransfer;
 using CryptoQuest.Networking;
 using CryptoQuest.Sagas.Objects;
@@ -25,7 +26,7 @@ namespace CryptoQuest.Menus.DimensionalBox.Sagas
                     { "game", ctx.ToGame.Select(item => item.Id).ToList() },
                     { "wallet", ctx.ToWallet.Select(item => item.Id).ToList() }
                 })
-                .Put<EquipmentsResponse>(API.TRANSFER)
+                .Put<EquipmentsResponse>(EquipmentAPI.TRANSFER)
                 .Subscribe(ProcessResponseEquipments, OnError, OnCompleted);
         }
 

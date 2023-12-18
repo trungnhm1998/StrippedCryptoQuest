@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using CryptoQuest.API;
 using CryptoQuest.Networking;
 using CryptoQuest.UI.Actions;
 using IndiGames.Core.Common;
@@ -21,7 +22,7 @@ namespace CryptoQuest.Sagas.Character
             restClient
                 .WithParams(new Dictionary<string, string>()
                     { { "source", $"{((int)Obj.ECharacterStatus.InGame).ToString()}" } })
-                .Get<Obj.CharactersResponse>(API.Profile.GET_CHARACTERS)
+                .Get<Obj.CharactersResponse>(CharacterAPI.GET_CHARACTERS)
                 .Subscribe(ProcessResponseCharacters, OnError);
         }
 
