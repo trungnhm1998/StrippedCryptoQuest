@@ -19,12 +19,7 @@ namespace CryptoQuest.Sagas
         public const string SNS_SAVE_KEY = "sns_tokens";
         private const double EXPIRE_DT_IN_SECOND = 3.0;
 
-#if UNITY_EDITOR
-        [SerializeField] private string _refreshTokenStr;
-#else
-        private string _refreshTokenStr = string.Empty;
-#endif
-
+        [SerializeField] private Credentials _credentials;
 
         private TinyMessageSubscriptionToken _loginFinishedToken;
         private TinyMessageSubscriptionToken _loginFailedToken;
@@ -33,13 +28,6 @@ namespace CryptoQuest.Sagas
         public struct Body
         {
             public string refreshToken;
-        }
-
-        [Serializable]
-        public class Access
-        {
-            public string token;
-            public DateTime expires;
         }
 
         protected override void OnEnable()
@@ -58,28 +46,36 @@ namespace CryptoQuest.Sagas
 
         protected override void HandleAction(SNSAutoLogin ctx)
         {
-            if (string.IsNullOrEmpty(_refreshTokenStr))
+            var refreshTokenStr = string.Empty;
+
+            // Try refresh token from Credential, ignore expires check for debugging purpose
+            var refreshToken = _credentials?.Profile?.token?.refresh;
+            if (!string.IsNullOrEmpty(refreshToken.token))
             {
-                // Get refresh token from PlayerPrefs
+                refreshTokenStr = refreshToken.token;
+            }
+            else
+            {
+                // Try refresh token from PlayerPrefs
                 var tokenString = PlayerPrefs.GetString(SNS_SAVE_KEY, string.Empty);
                 if (!string.IsNullOrEmpty(tokenString))
                 {
-                    var refreshToken = JsonConvert.DeserializeObject<Access>(tokenString);
+                    refreshToken = JsonConvert.DeserializeObject<Access>(tokenString);
                     if (refreshToken != null)
                     {
                         var nowPlusDt = DateTime.Now.AddSeconds(EXPIRE_DT_IN_SECOND);
-                        if (refreshToken.expires.CompareTo(nowPlusDt) > 0)
+                        if (DateTime.Parse(refreshToken.expires).CompareTo(nowPlusDt) > 0)
                         {
-                            _refreshTokenStr = refreshToken.token;
+                            refreshTokenStr = refreshToken.token;
                         }
                     }
                 }
             }
-            if (!string.IsNullOrEmpty(_refreshTokenStr))
+            if (!string.IsNullOrEmpty(refreshTokenStr))
             {
                 var restClient = ServiceProvider.GetService<IRestClient>();
                 restClient
-                    .WithBody(new Body { refreshToken = _refreshTokenStr })
+                    .WithBody(new Body { refreshToken = refreshTokenStr })
                     .Post<AuthResponse>(Accounts.REFRESH_TOKENS)
                     .Subscribe(Authenticated, OnError, OnCompleted);
                 return;
