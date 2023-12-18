@@ -3,49 +3,74 @@ using CryptoQuest.Input;
 using CryptoQuest.UI.Dialogs;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Events;
+using UnityEngine.InputSystem;
 
 namespace CryptoQuest.ShopSystem
 {
     public class UIQuantityDialog : AbstractDialog
     {
-        public event UnityAction<int> QuantityChanged;
         [SerializeField] private InputMediatorSO _input;
         [SerializeField] private TMP_Text _quantityText;
+        [SerializeField] private float _waitThresholds = 0.3f;
+
+        [SerializeField] private float _increaseStepThresholds = 2f;
+        [SerializeField] private int _jumpStep = 10;
 
         private void OnEnable()
         {
-            _input.MenuNavigateEvent += ChangeQuantity;
-            _input.MenuConfirmedEvent += OnConfirmQuantity;
-            _input.MenuCancelEvent += OnCancel;
+            _input.MenuNavigationContextEvent += ChangeQuantity;
         }
 
         private void OnDisable()
         {
-            _input.MenuNavigateEvent -= ChangeQuantity;
-            _input.MenuConfirmedEvent -= OnConfirmQuantity;
-            _input.MenuCancelEvent -= OnCancel;
+            _input.MenuNavigationContextEvent -= ChangeQuantity;
         }
 
-        private void ChangeQuantity(Vector2 axis)
+        private int _yAxis;
+
+        private void ChangeQuantity(InputAction.CallbackContext ctx)
         {
             if (_maxQuantity == 0) return;
-            if (axis.y == 0) return;
-            CurrentQuantity += (int)axis.y;
+            _yAxis = (int)ctx.ReadValue<Vector2>().y;
+            if (_yAxis == 0) return;
+            CurrentQuantity += _yAxis;
         }
 
-        public void OnConfirmQuantity()
+        private float _stepInterval;
+
+        private void Update()
         {
-            _confirmCallback?.Invoke();
-            _confirmCallback = null;
-            Hide();
+            if (_yAxis == 0)
+            {
+                _multiplier = 0;
+                _stepInterval = _increaseStepInterval = 0;
+                return;
+            }
+
+            UpdateMultiplier();
+
+            if (_stepInterval <= _waitThresholds)
+            {
+                _stepInterval += Time.deltaTime;
+                return;
+            }
+
+            _stepInterval = 0;
+            CurrentQuantity += _multiplier != 0 ? _multiplier : _yAxis;
         }
 
-        public void OnCancel()
+        private float _increaseStepInterval;
+        private int _multiplier;
+        private void UpdateMultiplier()
         {
-            _cancelCallback?.Invoke();
-            _cancelCallback = null;
-            Hide();
+            if (_increaseStepInterval <= _increaseStepThresholds)
+            {
+                _increaseStepInterval += Time.deltaTime;
+                return;
+            }
+
+            _increaseStepInterval = 0;
+            _multiplier += _jumpStep;
         }
 
         private int _maxQuantity;
@@ -55,13 +80,12 @@ namespace CryptoQuest.ShopSystem
         public int CurrentQuantity
         {
             get => _currentQuantity;
-            set
+            private set
             {
-                var newQuantity = Math.Clamp(value, 1, _maxQuantity);
-
-                if (newQuantity == _currentQuantity) return;
-                _currentQuantity = newQuantity;
-                QuantityChanged?.Invoke(_currentQuantity);
+                _currentQuantity = value;
+                if (_currentQuantity <= 0) _currentQuantity = _maxQuantity;
+                if (_currentQuantity > _maxQuantity) _currentQuantity = 1;
+                _quantityChanged?.Invoke(_currentQuantity);
                 _quantityText.text = _currentQuantity.ToString();
             }
         }
@@ -78,32 +102,14 @@ namespace CryptoQuest.ShopSystem
         public override void Hide()
         {
             _input.DisableAllInput();
-            _hideCallback?.Invoke();
-            _hideCallback = null;
             base.Hide();
         }
 
-        private Action _confirmCallback;
+        private Action<int> _quantityChanged;
 
-        public UIQuantityDialog WithConfirmCallback(Action confirmCallback)
+        public UIQuantityDialog WithQuantityChangedCallback(Action<int> action)
         {
-            _confirmCallback = confirmCallback;
-            return this;
-        }
-
-        private Action _cancelCallback;
-
-        public UIQuantityDialog WithCancelCallback(Action cancelCallback)
-        {
-            _cancelCallback = cancelCallback;
-            return this;
-        }
-
-        private Action _hideCallback;
-
-        public UIQuantityDialog WithHideCallback(Action action)
-        {
-            _hideCallback = action;
+            _quantityChanged = action;
             return this;
         }
     }

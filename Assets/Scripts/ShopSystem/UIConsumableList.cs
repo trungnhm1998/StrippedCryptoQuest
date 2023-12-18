@@ -8,7 +8,7 @@ namespace CryptoQuest.ShopSystem
         {
             foreach (var consumable in Inventory.Consumables)
             {
-                if (consumable.Data.ConsumableType != EConsumableType.Consumable) continue;
+                if (consumable.Data.ConsumableType != EConsumableType.Consumable || consumable.Quantity <= 0) continue;
                 var uiItem = GetItem(PriceMappingDatabase.GetPrice(consumable));
                 uiItem.Render(consumable);
             }

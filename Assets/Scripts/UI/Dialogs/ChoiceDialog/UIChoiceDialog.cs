@@ -72,11 +72,9 @@ namespace CryptoQuest.UI.Dialogs.ChoiceDialog
             return this;
         }
 
-        private LocalizedString _message;
-
         public UIChoiceDialog SetMessage(LocalizedString message)
         {
-            _message = message;
+            _messageUi.StringReference = message;
             return this;
         }
 
@@ -85,9 +83,6 @@ namespace CryptoQuest.UI.Dialogs.ChoiceDialog
             base.Show();
             _input.EnableMenuInput();
             _input.MenuCancelEvent += OnNoButtonPressed;
-
-            _messageUi.StringReference = _message;
-            _message = null;
 
             Invoke(nameof(SelectDefaultButton), 0);
         }

@@ -2513,6 +2513,7 @@ GameObject:
   - component: {fileID: 4275855572756978383}
   - component: {fileID: 6071385149343035603}
   - component: {fileID: 4461154084760672976}
+  - component: {fileID: 6757781502249738429}
   m_Layer: 0
   m_Name: ConsumableList
   m_TagString: Untagged
@@ -2666,6 +2667,33 @@ MonoBehaviour:
   <PriceMappingDatabase>k__BackingField: {fileID: 11400000, guid: 34a64784bdc64a449992d5dfb0125058, type: 2}
   _inventory: {fileID: 11400000, guid: 4b4903dbe1c434d418a3afff1b12a3ba, type: 2}
   <ScrollRect>k__BackingField: {fileID: 6052361646218947371}
+--- !u!114 &6757781502249738429
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7257083975211750353}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c374d599a9714e7b94c1ddf68980e41c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _dialog: {fileID: 0}
+  _pool: {fileID: 7691181494770390962}
+  _confirmString:
+    m_TableReference:
+      m_TableCollectionName: ShopUI
+    m_TableEntryReference:
+      m_KeyId: 0
+      m_Key: DIALOG_SELL_CONFIRM
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  _sellPanel: {fileID: 8352609606338350721}
+  references:
+    version: 2
+    RefIds: []
 --- !u!1 &7263667184358265662
 GameObject:
   m_ObjectHideFlags: 0
@@ -2868,7 +2896,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60cb6125b365410bb26b60c3ff565923, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _consumablePool: {fileID: 7691181494770390962}
   _equipmentPool: {fileID: 8571537141117794533}
   _confirmString:
     m_TableReference:

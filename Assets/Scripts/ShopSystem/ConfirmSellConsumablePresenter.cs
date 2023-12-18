@@ -1,6 +1,4 @@
-﻿using CryptoQuest.ShopSystem.Sagas;
-using CryptoQuest.UI.Dialogs.ChoiceDialog;
-using IndiGames.Core.Events;
+﻿using CryptoQuest.UI.Dialogs.ChoiceDialog;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Localization;
@@ -9,10 +7,10 @@ using UnityEngine.UI;
 
 namespace CryptoQuest.ShopSystem
 {
-    public class ConfirmSellPresenter : MonoBehaviour
+    public class ConfirmSellConsumablePresenter : MonoBehaviour
     {
-        [SerializeField] private UIShopItemPool<UIConsumableShopItem> _consumablePool;
-        [SerializeField] private UIShopItemPool<UIEquipmentShopItem> _equipmentPool;
+        [SerializeField] private UIQuantityDialog _quantityConfigDialog;
+        [SerializeField] private UIShopItemPool<UIConsumableShopItem> _pool;
         [SerializeField] private LocalizedString _confirmString = new("ShopUI", "DIALOG_SELL_CONFIRM");
         [SerializeField] private SellPanel _sellPanel;
 
@@ -25,34 +23,42 @@ namespace CryptoQuest.ShopSystem
 
         private void OnEnable()
         {
-            UIEquipmentShopItem.Pressed += ConfirmSellEquipment;
-            UIConsumableShopItem.Pressed += ConfirmSellConsumable;
+            UIConsumableShopItem.Pressed += ConfigQuantity;
         }
 
         private void OnDisable()
         {
-            UIEquipmentShopItem.Pressed -= ConfirmSellEquipment;
-            UIConsumableShopItem.Pressed -= ConfirmSellConsumable;
+            UIConsumableShopItem.Pressed -= ConfigQuantity;
         }
 
-        private void ConfirmSellEquipment(UIEquipmentShopItem item)
+        private void ConfigQuantity(UIConsumableShopItem item)
         {
             _sellPanel.DisableInput();
             var currentScrollRect = GetComponentInChildren<ScrollRect>();
             var selectables = currentScrollRect.GetComponentsInChildren<Selectable>();
             foreach (var selectable in selectables) selectable.interactable = false;
-            _confirmString["PRICE"] = new StringVariable { Value = item.PriceText };
+
+            _quantityConfigDialog
+                .WithQuantityChangedCallback(quantity =>
+                {
+                    _confirmString["PRICE"] = new StringVariable { Value = $"{item.Price * quantity}G" };
+                    _confirmDialog.SetMessage(_confirmString);
+                })
+                .Show(item.Info.Quantity);
+
             _confirmDialog
-                .WithNoCallback(() => { EventSystem.current.SetSelectedGameObject(item.gameObject); })
+                .WithNoCallback(() => EventSystem.current.SetSelectedGameObject(item.gameObject))
                 .WithYesCallback(() =>
                 {
-                    ActionDispatcher.Dispatch(new SellEquipmentAction(item.Info, item.Price));
                     var transformParent = item.transform.parent;
                     var childCount = transformParent.childCount;
                     var itemIndex = item.transform.GetSiblingIndex();
 
-                    EventSystem.current.SetSelectedGameObject(null);
-                    _equipmentPool.Release(item);
+                    var selectedQuantity = _quantityConfigDialog.CurrentQuantity;
+                    item.Info.SetQuantity(item.Info.Quantity - selectedQuantity);
+                    item.Render(item.Info);
+                    if (item.Info.Quantity <= 0) _pool.Release(item);
+
                     if (childCount == 1) return;
                     var childToSelect = itemIndex == childCount - 1
                         ? transformParent.GetChild(itemIndex - 1).gameObject
@@ -62,20 +68,15 @@ namespace CryptoQuest.ShopSystem
                 })
                 .WithHideCallback(() =>
                 {
+                    _quantityConfigDialog.Hide();
                     _sellPanel.EnableInput();
                     foreach (var selectable in selectables) selectable.interactable = true;
                 })
                 .SetMessage(_confirmString)
                 .Show();
+
             var button = item.GetComponent<Button>();
             button.image.overrideSprite = button.spriteState.pressedSprite;
         }
-
-        private void ConfirmSellConsumable(UIConsumableShopItem item)
-        {
-            // ShowConfirmDialog(item, new SellConsumableAction(item.Info, item.Price));
-        }
-
-        private void ShowConfirmDialog(UIShopItem item, ActionBase sellAction) { }
     }
 }
