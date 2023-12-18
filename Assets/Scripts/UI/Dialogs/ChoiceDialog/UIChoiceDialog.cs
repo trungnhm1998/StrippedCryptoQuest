@@ -1,4 +1,5 @@
 ﻿using System;
+using CryptoQuest.Input;
 using UnityEngine;
 using UnityEngine.Localization;
 using UnityEngine.Localization.Components;
@@ -8,6 +9,8 @@ namespace CryptoQuest.UI.Dialogs.ChoiceDialog
 {
     public class UIChoiceDialog : AbstractDialog
     {
+        [SerializeField] private InputMediatorSO _input;
+
         [Header("UI")]
         [SerializeField] private LocalizeStringEvent _messageUi;
 
@@ -80,10 +83,30 @@ namespace CryptoQuest.UI.Dialogs.ChoiceDialog
         public override void Show()
         {
             base.Show();
+            _input.EnableMenuInput();
+            _input.MenuCancelEvent += OnNoButtonPressed;
+
             _messageUi.StringReference = _message;
             _message = null;
 
             Invoke(nameof(SelectDefaultButton), 0);
+        }
+
+        private Action _hideCallback;
+
+        public UIChoiceDialog WithHideCallback(Action callback)
+        {
+            _hideCallback = callback;
+            return this;
+        }
+
+        public override void Hide()
+        {
+            _input.MenuCancelEvent -= OnNoButtonPressed;
+            _hideCallback?.Invoke();
+            _hideCallback = null;
+
+            base.Hide();
         }
 
         private void SelectDefaultButton() => _defaultSelectedButton.Select();

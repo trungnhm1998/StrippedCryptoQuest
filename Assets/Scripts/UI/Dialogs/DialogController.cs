@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
@@ -15,96 +14,38 @@ namespace CryptoQuest.UI.Dialogs
         public static DialogController<T> Instance { get; private set; }
         [SerializeField] private Transform _canvasParent;
         [SerializeField] private AssetReference _prefab;
-        [SerializeField] private float _autoReleaseTimeout = 120f;
         private AsyncOperationHandle<GameObject> _handler;
+        private T _dialog;
+        public T GetDialog() => _dialog;
         public AsyncOperationHandle<GameObject> Handler => _handler;
-        private readonly List<T> _dialogs = new();
-        private readonly Dictionary<T, Coroutine> _releaseCoroutines = new();
-        private readonly Dictionary<T, int> _cachedDialogs = new();
 
         private void Awake()
         {
             Instance = this;
             if (_canvasParent == null) _canvasParent = transform;
         }
+        
+        public void InstantiateAsync(Action<T> instantiatedCallback = null) => StartCoroutine(CoInstantiate(instantiatedCallback));
 
-        public void Instantiate(Action<T> instantiatedCallback = null, bool autoRelease = true,
-            float releaseTimeout = 0)
-            => StartCoroutine(CoInstantiate(instantiatedCallback, autoRelease, releaseTimeout));
-
-        public IEnumerator CoInstantiate(Action<T> instantiatedCallback = null, bool autoRelease = true,
-            float releaseTimeout = 0)
+        public IEnumerator CoInstantiate(Action<T> instantiatedCallback = null)
         {
-            if (_handler.IsDone && _handler.IsValid())
+            if (_dialog != null)
             {
-                var dialog = Instantiate(_handler.Result, gameObject.transform);
-                var abstractDialog = dialog.GetComponent<T>();
-                CacheDialog(autoRelease, releaseTimeout, abstractDialog);
-                instantiatedCallback?.Invoke(abstractDialog);
+                instantiatedCallback?.Invoke(_dialog);
                 yield break;
             }
-
-            yield return LoadDialogPrefab(instantiatedCallback, autoRelease, releaseTimeout);
+            
+            if (!_handler.IsValid())
+                _handler = _prefab.InstantiateAsync(_canvasParent);
+            yield return _handler;
+            _dialog = _handler.Result.GetComponent<T>();
+            instantiatedCallback?.Invoke(_dialog);
         }
 
         public void Release(T dialogToRelease)
         {
             if (dialogToRelease == null) return;
-            if (!_cachedDialogs.ContainsKey(dialogToRelease)) return;
-            var index = _cachedDialogs[dialogToRelease];
-            _dialogs.RemoveAt(index);
-            _cachedDialogs.Remove(dialogToRelease);
-            if (_releaseCoroutines.TryGetValue(dialogToRelease, out var coroutine))
-            {
-                if (coroutine != null) StopCoroutine(coroutine);
-            }
-
-            _releaseCoroutines.Remove(dialogToRelease);
-            Destroy(dialogToRelease.gameObject);
-        }
-
-        private void ReleaseAssets()
-        {
-            if (_dialogs.Count > 0) return;
-            if (_handler.IsValid()) 
-            {
-                Addressables.Release(_handler);
-                _prefab.ReleaseAsset();
-            }
-        }
-
-        private IEnumerator LoadDialogPrefab(Action<T> createdCallback, bool autoRelease, float releaseTimeout)
-        {
-            if (!_handler.IsValid())
-            {
-                _handler = _prefab.LoadAssetAsync<GameObject>();
-            }
-            yield return _handler;
-            if (!_handler.IsDone) yield break;
-
-            var dialogGameObject = Instantiate(_handler.Result, gameObject.transform);
-            var dialog = dialogGameObject.GetComponent<T>();
-            CacheDialog(autoRelease, releaseTimeout, dialog);
-            createdCallback?.Invoke(dialog);
-        }
-
-        private void CacheDialog(bool autoRelease, float releaseTimeout, T dialog)
-        {
-            _dialogs.Add(dialog);
-            _cachedDialogs[dialog] = _dialogs.Count - 1;
-            _releaseCoroutines[dialog] = autoRelease ? StartCoroutine(CoAutoRelease(dialog, releaseTimeout)) : null;
-        }
-
-        private IEnumerator CoAutoRelease(T dialog, float releaseTimeout)
-        {
-            yield return new WaitForSeconds(releaseTimeout > 0 ? releaseTimeout : _autoReleaseTimeout);
-            if (dialog.Content.activeSelf)
-            {
-                _releaseCoroutines[dialog] = StartCoroutine(CoAutoRelease(dialog, releaseTimeout));
-                yield break;
-            }
-
-            Release(dialog);
+            dialogToRelease.Hide();
         }
     }
 }

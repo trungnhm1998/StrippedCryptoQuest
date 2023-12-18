@@ -24,7 +24,7 @@ namespace CryptoQuest.Menus.DimensionalBox.States.EquipmentsTransfer
         public override void OnEnter()
         {
             base.OnEnter();
-            ChoiceDialogController.Instance.Instantiate(ShowConfirmDialog);
+            ChoiceDialogController.Instance.InstantiateAsync(ShowConfirmDialog);
             _fsm.InboxList.Interactable = _fsm.IngameList.Interactable = false;
         }
 

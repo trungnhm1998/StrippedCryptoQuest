@@ -16,8 +16,8 @@ namespace CryptoQuest.Church
 
         public void ShowDialog()
         {
-            GenericMerchantDialogueController.Instance.Instantiate(dialog => Dialogue = dialog, false);
-            ChoiceDialogController.Instance.Instantiate(ChoiceDialogInstantiated);
+            GenericMerchantDialogueController.Instance.InstantiateAsync(dialog => Dialogue = dialog);
+            ChoiceDialogController.Instance.InstantiateAsync(ChoiceDialogInstantiated);
         }
 
         public void HideDialog()

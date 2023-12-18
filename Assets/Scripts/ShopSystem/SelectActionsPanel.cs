@@ -35,7 +35,7 @@ namespace CryptoQuest.ShopSystem
                 return;
             }
 
-            GenericDialogController.Instance.Instantiate(ShowWelcome, false);
+            GenericDialogController.Instance.InstantiateAsync(ShowWelcome);
         }
 
         private void ShowWelcome(UIGenericDialog dialog)
@@ -60,7 +60,6 @@ namespace CryptoQuest.ShopSystem
                 .RequireInput()
                 .WithHideCallback(() =>
                 {
-                    GenericDialogController.Instance.Release(_dialog);
                     _gameState.UpdateGameState(EGameState.Field);
                     _closeSystemEvent.RaiseEvent();
                 })

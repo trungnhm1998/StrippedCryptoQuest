@@ -16,7 +16,8 @@ MonoBehaviour:
     m_Code: en
   m_SharedData: {fileID: 11400000, guid: 797efb245e165b7468b295e62cb3c0b5, type: 2}
   m_Metadata:
-    m_Items: []
+    m_Items:
+    - rid: 7794262417117282316
   m_TableData:
   - m_Id: 18345021440
     m_Localized: 'Welcome!
@@ -45,17 +46,19 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 842618032128
-    m_Localized: 'It costs {0}G.
+    m_Localized: 'It costs {PRICE}.
 
       Would you like to buy it?'
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 7794262417117282316
   - m_Id: 1171300470784
-    m_Localized: 'It costs {0}G.
+    m_Localized: 'It costs {PRICE}.
 
       Would you like to sell it?'
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 7794262417117282316
   - m_Id: 1246785359872
     m_Localized: Thank you!
     m_Metadata:
@@ -106,4 +109,8 @@ MonoBehaviour:
       m_Items: []
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: 7794262417117282316
+      type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_Entries: 00d0f22fc400000000d0f2b610010000

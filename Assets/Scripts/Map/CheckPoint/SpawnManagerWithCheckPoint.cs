@@ -1,10 +1,7 @@
-using CryptoQuest.Gameplay;
-using CryptoQuest.System;
-using CryptoQuest.UI.Dialogs.BattleDialog;
-using IndiGames.Core.Events.ScriptableObjects;
 using System.Collections;
-using System.Collections.Generic;
+using CryptoQuest.UI.Dialogs.BattleDialog;
 using IndiGames.Core.Common;
+using IndiGames.Core.Events.ScriptableObjects;
 using UnityEngine;
 using UnityEngine.Localization;
 
@@ -59,7 +56,7 @@ namespace CryptoQuest.Map.CheckPoint
         {
             if (_dialog == null)
             {
-                yield return GenericDialogController.Instance.CoInstantiate(dialog => _dialog = dialog, false);
+                yield return GenericDialogController.Instance.CoInstantiate(dialog => _dialog = dialog);
             }
 
             _dialog.WithMessage(_revivalMessage).RequireInput().WithHideCallback(EnableMapInput).Show();

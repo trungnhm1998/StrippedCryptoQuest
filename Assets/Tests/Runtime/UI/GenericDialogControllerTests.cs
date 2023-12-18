@@ -34,7 +34,7 @@ namespace CryptoQuest.Tests.Runtime.UI
         [UnityTest]
         public IEnumerator CoInstantiate_ShouldReleaseAfterOneSecond()
         {
-            yield return _controller.CoInstantiate((prefab) => prefab.Hide(), true, 1f);
+            yield return _controller.CoInstantiate((prefab) => prefab.Hide());
             yield return new WaitForSeconds(1f);
             yield return null;
 
@@ -51,7 +51,7 @@ namespace CryptoQuest.Tests.Runtime.UI
                 _dialog.Show();
             }
 
-            yield return _controller.CoInstantiate(InstantiatedCallback, true, 1f);
+            yield return _controller.CoInstantiate(InstantiatedCallback);
             yield return new WaitForSeconds(1f);
             yield return null;
             Assert.AreEqual(1, _controller.transform.childCount);
@@ -96,7 +96,7 @@ namespace CryptoQuest.Tests.Runtime.UI
                     .Show();
             }
 
-            yield return _controller.CoInstantiate(InstantiatedCallback, true, 1f);
+            yield return _controller.CoInstantiate(InstantiatedCallback);
             // simulate press enter using the new input system
             Press(keyboard.enterKey);
             yield return null;

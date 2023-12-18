@@ -22,6 +22,8 @@ namespace CryptoQuest.UI.Dialogs.BattleDialog
         public UIGenericDialog RequireInput()
         {
             _requireInput = true;
+            _inputMediator.NextDialoguePressed += Hide;
+            _inputMediator.EscapeDialoguePressed += Hide;
             return this;
         }
 
@@ -46,7 +48,7 @@ namespace CryptoQuest.UI.Dialogs.BattleDialog
             StartCoroutine(CoAppendMessage(message));
             return this;
         }
-        
+
         public UIGenericDialog AppendMessage(string message)
         {
             var newLine = string.IsNullOrEmpty(_dialogText.text) ? "" : "\n";
@@ -98,12 +100,7 @@ namespace CryptoQuest.UI.Dialogs.BattleDialog
         {
             _nextMark.SetActive(false);
             _dialogText.text = _message;
-            if (_requireInput)
-            {
-                _inputMediator.NextDialoguePressed += Hide;
-                _inputMediator.DisableAllInput();
-                _inputMediator.EnableInputMap("Dialogues");
-            }
+            if (_requireInput) _inputMediator.EnableInputMap("Dialogues");
 
             base.Show();
 
@@ -113,14 +110,14 @@ namespace CryptoQuest.UI.Dialogs.BattleDialog
 
         public override void Hide()
         {
-            if (_requireInput)
-            {
-                _inputMediator.NextDialoguePressed -= Hide;
-            }
-
             base.Hide();
+            _inputMediator.NextDialoguePressed -= Hide;
+            _inputMediator.EscapeDialoguePressed -= Hide;
             _dialogText.text = "";
             _hideCallback?.Invoke();
+            _hideCallback = null;
+
+            _requireInput = false;
         }
 
         private float _autoHideDuration;
