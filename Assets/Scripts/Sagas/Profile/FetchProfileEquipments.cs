@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Net;
 using CryptoQuest.Actions;
+using CryptoQuest.API;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
 using CryptoQuest.Networking;
 using CryptoQuest.Sagas.Objects;
@@ -10,7 +11,6 @@ using IndiGames.Core.Common;
 using IndiGames.Core.Events;
 using UniRx;
 using UnityEngine;
-using APIProfile = CryptoQuest.API.Profile;
 
 namespace CryptoQuest.Sagas.Profile
 {
@@ -25,7 +25,7 @@ namespace CryptoQuest.Sagas.Profile
             restClient
                 .WithParams(new Dictionary<string, string>
                     { { "source", $"{((int)EEquipmentStatus.InGame).ToString()}" } })
-                .Get<EquipmentsResponse>(APIProfile.EQUIPMENTS)
+                .Get<EquipmentsResponse>(EquipmentAPI.EQUIPMENTS)
                 .Subscribe(ProcessResponseEquipments, OnError, OnCompleted);
         }
 

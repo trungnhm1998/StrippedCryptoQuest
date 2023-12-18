@@ -88,7 +88,7 @@ namespace CryptoQuest.Tavern.Sagas
             restClient
                 .WithParams(new Dictionary<string, string>()
                     { { "source", $"{((int)ECharacterStatus.InGame).ToString()}" } })
-                .Get<CharactersResponse>(Profile.GET_CHARACTERS)
+                .Get<CharactersResponse>(CharacterAPI.GET_CHARACTERS)
                 .Subscribe(ProcessResponseCharacters, OnError);
         }
 

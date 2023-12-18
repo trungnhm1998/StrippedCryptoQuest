@@ -31,7 +31,7 @@ namespace CryptoQuest.Item.Equipment
             var restClient = ServiceProvider.GetService<IRestClient>();
             restClient
                 .WithBody(new Body { Id = ctx.Id, Quantity = ctx.Quantity })
-                .Post<MagicStonesResponse>(Profile.MAGIC_STONE)
+                .Post<MagicStonesResponse>(MagicStoneAPI.GET_MAGIC_STONE)
                 .Subscribe(OnAddMagicStones, OnError);
         }
 

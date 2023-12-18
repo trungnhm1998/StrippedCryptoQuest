@@ -65,7 +65,7 @@ namespace CryptoQuest.Battle.Components
                     EquipmentId = item.Id,
                     CharacterId = _hero.Spec.Id
                 })
-                .Put<ModifyResponse>(Profile.EQUIPMENTS)
+                .Put<ModifyResponse>(EquipmentAPI.EQUIPMENTS)
                 .Subscribe();
         }
 
@@ -77,7 +77,7 @@ namespace CryptoQuest.Battle.Components
                     EquipmentId = item.Id,
                     CharacterId = 0
                 })
-                .Put<ModifyResponse>(Profile.EQUIPMENTS)
+                .Put<ModifyResponse>(EquipmentAPI.EQUIPMENTS)
                 .Subscribe();
         }
     }

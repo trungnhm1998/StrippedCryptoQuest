@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Net;
+using CryptoQuest.API;
 using CryptoQuest.Item.MagicStone;
 using CryptoQuest.Networking;
 using CryptoQuest.Sagas.Objects;
@@ -34,7 +35,7 @@ namespace CryptoQuest.Sagas.MagicStone
             ActionDispatcher.Dispatch(new ShowLoading());
             var restClient = ServiceProvider.GetService<IRestClient>();
             restClient
-                .Get<MagicStonesResponse>(API.Profile.MAGIC_STONE)
+                .Get<MagicStonesResponse>(MagicStoneAPI.GET_MAGIC_STONE)
                 .Subscribe(ProcessResponseMagicStone, OnError);
         }
 

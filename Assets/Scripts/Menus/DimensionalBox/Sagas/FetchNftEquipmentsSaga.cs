@@ -18,7 +18,7 @@ namespace CryptoQuest.Menus.DimensionalBox.Sagas
             var restClient = ServiceProvider.GetService<IRestClient>();
             restClient
                 .WithParam("nft", "1")
-                .Get<EquipmentsResponse>(Profile.EQUIPMENTS)
+                .Get<EquipmentsResponse>(EquipmentAPI.EQUIPMENTS)
                 .Subscribe(ProcessResponseEquipments, OnError, OnCompleted);
         }
 

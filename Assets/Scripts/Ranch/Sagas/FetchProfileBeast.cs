@@ -80,7 +80,7 @@ namespace CryptoQuest.Ranch.Sagas
             restClient
                 .WithParams(new Dictionary<string, string>
                     { { "source", $"{((int)Obj.EBeastStatus.InGame).ToString()}" } })
-                .Get<Obj.BeastsResponse>(Profile.GET_BEASTS)
+                .Get<Obj.BeastsResponse>(BeastAPI.GET_BEASTS)
                 .Subscribe(ProcessResponseBeasts, OnError);
         }
 

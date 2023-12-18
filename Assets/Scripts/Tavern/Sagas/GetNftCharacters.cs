@@ -28,7 +28,7 @@ namespace CryptoQuest.Tavern.Sagas
             ActionDispatcher.Dispatch(new ShowLoading());
             var restClient = ServiceProvider.GetService<IRestClient>();
             restClient
-                .Get<Obj.CharactersResponse>(Profile.GET_CHARACTERS)
+                .Get<Obj.CharactersResponse>(CharacterAPI.GET_CHARACTERS)
                 .Subscribe(OnGetCharacters, OnError);
         }
 

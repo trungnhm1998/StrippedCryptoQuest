@@ -23,7 +23,7 @@ namespace CryptoQuest.Ranch.Sagas
 
             var restClient = ServiceProvider.GetService<IRestClient>();
             restClient
-                .Get<BeastsResponse>(Profile.GET_BEASTS)
+                .Get<BeastsResponse>(BeastAPI.GET_BEASTS)
                 .Subscribe(OnGetBeasts, OnError);
         }
 
