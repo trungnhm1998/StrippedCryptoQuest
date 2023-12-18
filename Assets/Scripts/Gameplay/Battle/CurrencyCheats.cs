@@ -33,7 +33,7 @@ namespace CryptoQuest.Gameplay.Battle
         {
             Terminal.Shell.AddCommand("add.gold", AddGold, 1, 1, 
                 "add.gold <amount_to_add> add gold to server");
-            Terminal.Shell.AddCommand("add.diamond", AddGold, 1, 1, 
+            Terminal.Shell.AddCommand("add.diamond", AddDiamond, 1, 1, 
                 "add.diamond <amount_to_add> add diamond to server");
         }
 
@@ -47,6 +47,23 @@ namespace CryptoQuest.Gameplay.Battle
                 .WithBody(new GoldBody { Gold = args[0].Int })
                 .WithHeaders(new Dictionary<string, string> { { "DEBUG_KEY", Profile.DEBUG_KEY } })
                 .Post<ProfileResponse>(Cheats.ADD_GOLD)
+                .Subscribe(OnAddSucceed, OnAddFailed);
+        }
+
+        private void AddDiamond(CommandArg[] args)
+        {
+            float amount = args[0].Float;
+            _wallet[_diamondSo].SetAmount(_wallet[_diamondSo].Amount + amount);
+
+            ActionDispatcher.Dispatch(new ShowLoading());
+            _restClient
+                .WithBody(new DiamondBody { Diamond = args[0].Int })
+                .WithHeaders(new Dictionary<string, string> { { "DEBUG_KEY", Profile.DEBUG_KEY },
+                    {
+                        "Content-Type",
+                        "application/json"
+                    } })
+                .Post<ProfileResponse>(Cheats.ADD_DIAMOND)
                 .Subscribe(OnAddSucceed, OnAddFailed);
         }
 

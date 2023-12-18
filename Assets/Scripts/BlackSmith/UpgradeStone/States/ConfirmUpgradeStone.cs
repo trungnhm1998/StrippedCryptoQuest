@@ -11,6 +11,7 @@ namespace CryptoQuest.BlackSmith.UpgradeStone.States
     {
         private TinyMessageSubscriptionToken _upgradeSuccessToken;
         private TinyMessageSubscriptionToken _upgradeFailedToken;
+        private TinyMessageSubscriptionToken _requestUpgradeFailedToken;
         public ConfirmUpgradeStone(UpgradeMagicStoneStateMachine stateMachine) : base(stateMachine) { }
 
         public override void OnEnter()
@@ -29,6 +30,7 @@ namespace CryptoQuest.BlackSmith.UpgradeStone.States
 
             _upgradeSuccessToken = ActionDispatcher.Bind<ResponseUpgradeStoneSuccess>(HandleUpdateSucceed);
             _upgradeFailedToken = ActionDispatcher.Bind<ResponseUpgradeStoneFailed>(HandleUpdateFailed);
+            _requestUpgradeFailedToken = ActionDispatcher.Bind<RequestUpgradeStoneFailed>(HandleRequestFailed);
         }
 
         public override void OnExit()
@@ -40,11 +42,17 @@ namespace CryptoQuest.BlackSmith.UpgradeStone.States
             _stateMachine.DialogsPresenter.HideConfirmDialog();
             ActionDispatcher.Unbind(_upgradeSuccessToken);
             ActionDispatcher.Unbind(_upgradeFailedToken);
+            ActionDispatcher.Unbind(_requestUpgradeFailedToken);
         }
 
         private void HandleUpdateFailed(ResponseUpgradeStoneFailed ctx)
         {
             fsm.RequestStateChange(EUpgradeMagicStoneStates.UpgradeFailed);
+        }
+
+        private void HandleRequestFailed(RequestUpgradeStoneFailed ctx)
+        {
+            fsm.RequestStateChange(EUpgradeMagicStoneStates.SelectMaterialStone);
         }
 
         private void HandleUpdateSucceed(ResponseUpgradeStoneSuccess ctx)

@@ -41,6 +41,7 @@ namespace CryptoQuest.BlackSmith.UpgradeStone.Sagas
         {
             ActionDispatcher.Dispatch(new ShowLoading(false));
             ActionDispatcher.Dispatch(new ServerErrorPopup());
+            ActionDispatcher.Dispatch(new RequestUpgradeStoneFailed());
         }
 
         [Serializable]

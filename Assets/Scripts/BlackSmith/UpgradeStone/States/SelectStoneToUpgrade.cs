@@ -17,7 +17,6 @@ namespace CryptoQuest.BlackSmith.UpgradeStone.States
             _dialogsPresenter.Dialogue.SetMessage(_stateMachine.UpgradeMagicStoneSystem.SelectStoneToUpdateText).Show();
 
             _stoneUpgradePresenter.gameObject.SetActive(true);
-            _currencyPresenter.Show();
             _materialStonesPresenter.ClearStones();
             _upgradableStonePresenter.ClearStones();
             _upgradableStonePresenter.RenderStones(distinctStoneType);

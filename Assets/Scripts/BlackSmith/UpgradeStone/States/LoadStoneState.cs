@@ -19,11 +19,11 @@ namespace CryptoQuest.BlackSmith.UpgradeStone.States
             _stoneUpgradePresenter.gameObject.SetActive(true);
             _dialogsPresenter.Dialogue.SetMessage(_stateMachine.UpgradeMagicStoneSystem.SelectMaterialText).Show();
             _magicStoneTooltip.gameObject.SetActive(false);
-            _currencyPresenter.Hide();
+            _currencyPresenter.Show();
 
             ActionDispatcher.Dispatch(new FetchProfileMagicStonesAction());
             _fetchStoneSuccessToken = ActionDispatcher.Bind<ResponseGetMagicStonesSucceeded>(HandleFetchStoneSuccess);
-            _fetchStoneFailedToken = ActionDispatcher.Bind<ResponseGetMagicStonesFailed>(HandleFetchStoneFailed);
+            _fetchStoneFailedToken = ActionDispatcher.Bind<GetStonesFailed>(HandleFetchStoneFailed);
         }
 
         public override void OnExit()
@@ -33,7 +33,7 @@ namespace CryptoQuest.BlackSmith.UpgradeStone.States
             ActionDispatcher.Unbind(_fetchStoneFailedToken);
         }
 
-        private void HandleFetchStoneFailed(ResponseGetMagicStonesFailed obj)
+        private void HandleFetchStoneFailed(GetStonesFailed obj)
         {
             _stateMachine.BackToOverview();
         }
