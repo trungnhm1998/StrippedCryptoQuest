@@ -19,7 +19,7 @@ namespace CryptoQuest.Gameplay.Inventory
     {
         public int Quantity { get; }
 
-        protected ConsumableQuantityChangedAction(ConsumableSO item, int quantity) : base(item)
+        protected ConsumableQuantityChangedAction(ConsumableSO item, int quantity = 1) : base(item)
         {
             Quantity = quantity;
         }
@@ -27,12 +27,12 @@ namespace CryptoQuest.Gameplay.Inventory
 
     public class AddConsumableAction : ConsumableQuantityChangedAction
     {
-        public AddConsumableAction(ConsumableSO item, int quantity) : base(item, quantity) { }
+        public AddConsumableAction(ConsumableSO item, int quantity = 1) : base(item, quantity) { }
     }
 
     public class RemoveConsumableAction : ConsumableQuantityChangedAction
     {
-        public RemoveConsumableAction(ConsumableSO item, int quantity) : base(item, quantity) { }
+        public RemoveConsumableAction(ConsumableSO item, int quantity = 1) : base(item, quantity) { }
     }
 
     public class ConsumableManager : MonoBehaviour
@@ -53,7 +53,13 @@ namespace CryptoQuest.Gameplay.Inventory
             ActionDispatcher.Unbind(_removeConsumable);
         }
 
-        private void AddConsumable(AddConsumableAction ctx) { }
+        private void AddConsumable(AddConsumableAction ctx)
+        {
+            var item = ctx.Item;
+            var quantity = ctx.Quantity;
+
+            _inventory.Add(item, quantity);
+        }
 
         private void RemoveConsumable(RemoveConsumableAction ctx)
         {
