@@ -101,6 +101,7 @@ namespace CryptoQuest.Menus.Status.UI.Equipment
             }
 
             _currentlyEquippingItem.Init(equipment);
+            _currentlyEquippingItem.InitStone(equipment.Data.AttachStones);
         }
 
         public void Hide()

@@ -16,6 +16,7 @@ namespace CryptoQuest.Menus.Status.UI.Equipment
         {
             _canClick = true;
             _equipmentUI.Init(equipment);
+            _equipmentUI.InitStone(equipment.Data.AttachStones);
         }
 
         public void DeactivateButton()
