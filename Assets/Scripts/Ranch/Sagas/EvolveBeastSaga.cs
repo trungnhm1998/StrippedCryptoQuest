@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Net;
+using CryptoQuest.API;
 using CryptoQuest.Networking;
 using CryptoQuest.Sagas.Objects;
 using CryptoQuest.UI.Actions;
@@ -45,8 +46,6 @@ namespace CryptoQuest.Ranch.Sagas
 
     public class EvolveBeastSaga : SagaBase<RequestEvolveBeast>
     {
-        public static readonly string EvolveBeastApi = "crypto/beasts/evolve";
-
         private RequestEvolveBeast _requestContext;
 
         protected override void HandleAction(RequestEvolveBeast ctx)
@@ -64,7 +63,7 @@ namespace CryptoQuest.Ranch.Sagas
             var restClient = ServiceProvider.GetService<IRestClient>();
             restClient
                 .WithBody(body)
-                .Post<EvolveResponse>(EvolveBeastApi)
+                .Post<EvolveResponse>(BeastAPI.EVOLVE)
                 .Subscribe(HandleRequestSuccess, HandleRequestFailed);
         }
 
@@ -77,7 +76,7 @@ namespace CryptoQuest.Ranch.Sagas
             ActionDispatcher.Dispatch(new EvolveResponsed(response, _requestContext));
             ActionDispatcher.Dispatch(new GetBeasts());
         }
-        
+
         private void HandleRequestFailed(Exception exception)
         {
             Debug.Log($"EvolveBeast:: Load Data Failed: {exception.Message}!");

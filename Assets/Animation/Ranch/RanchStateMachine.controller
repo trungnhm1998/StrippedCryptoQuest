@@ -186,6 +186,9 @@ AnimatorStateMachine:
   - serializedVersion: 1
     m_State: {fileID: -7060794892094429523}
     m_Position: {x: 250, y: -450, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: 7309866928481947226}
+    m_Position: {x: 30, y: -310, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []
@@ -287,6 +290,30 @@ AnimatorController:
     m_IKPass: 0
     m_SyncedLayerAffectsTiming: 0
     m_Controller: {fileID: 9100000}
+--- !u!114 &162269440918700290
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b90e2be1e483437495e0b5e433416b81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _warningMessage:
+    m_TableReference:
+      m_TableCollectionName: GUID:a81f41ff4e866dd489125dc16e853aab
+    m_TableEntryReference:
+      m_KeyId: 10572739521376256
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!1102 &364353647440860551
 AnimatorState:
   serializedVersion: 6
@@ -563,6 +590,7 @@ MonoBehaviour:
     m_FallbackState: 0
     m_WaitForCompletion: 0
     m_LocalVariables: []
+  _inventorySo: {fileID: 11400000, guid: c6b9ed361960def4eb1812770eb77a7b, type: 2}
   references:
     version: 2
     RefIds: []
@@ -638,6 +666,7 @@ MonoBehaviour:
     m_FallbackState: 0
     m_WaitForCompletion: 0
     m_LocalVariables: []
+  _inventorySo: {fileID: 0}
   references:
     version: 2
     RefIds: []
@@ -653,3 +682,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 755c15c1f22747999a6831ec5046ca28, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1102 &7309866928481947226
+AnimatorState:
+  serializedVersion: 6
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: SelectLevelState
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_Transitions: []
+  m_StateMachineBehaviours:
+  - {fileID: 162269440918700290}
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_WriteDefaultValues: 1
+  m_Mirror: 0
+  m_SpeedParameterActive: 0
+  m_MirrorParameterActive: 0
+  m_CycleOffsetParameterActive: 0
+  m_TimeParameterActive: 0
+  m_Motion: {fileID: 0}
+  m_Tag: 
+  m_SpeedParameter: 
+  m_MirrorParameter: 
+  m_CycleOffsetParameter: 
+  m_TimeParameter: 

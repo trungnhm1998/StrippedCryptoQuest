@@ -1,14 +1,11 @@
 using System;
 using System.Collections.Generic;
-using CryptoQuest.BlackSmith.Interface;
 using CryptoQuest.BlackSmith.ScriptableObjects;
 using CryptoQuest.BlackSmith.Upgrade.UI;
 using CryptoQuest.Gameplay.Inventory.Currency;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
-using CryptoQuest.Input;
 using CryptoQuest.Item.Equipment;
 using UnityEngine;
-using UnityEngine.Localization;
 
 namespace CryptoQuest.BlackSmith.Upgrade.Presenters
 {
@@ -25,7 +22,7 @@ namespace CryptoQuest.BlackSmith.Upgrade.Presenters
         [SerializeField] private UpgradeCostDatabase _costDatabase;
 
         private IEquipment _selectedEquipment;
-        public IUpgradeEquipmentValidator _upgradeValidator = new UpgradeEquipmentValidator();
+        private IUpgradeEquipmentValidator _upgradeValidator = new UpgradeEquipmentValidator();
 
         public int LevelToUpgrade { get; private set; }
         public float GoldNeeded { get; private set; }

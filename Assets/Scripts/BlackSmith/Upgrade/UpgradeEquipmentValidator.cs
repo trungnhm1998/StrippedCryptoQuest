@@ -1,11 +1,4 @@
-using System;
-using CryptoQuest.BlackSmith.Interface;
-using CryptoQuest.Gameplay.Inventory.Currency;
-using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
-using CryptoQuest.Input;
 using CryptoQuest.Item.Equipment;
-using UnityEngine;
-using UnityEngine.Localization;
 
 namespace CryptoQuest.BlackSmith.Upgrade
 {

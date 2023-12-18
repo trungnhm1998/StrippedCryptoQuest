@@ -122,7 +122,7 @@ namespace CryptoQuest.Sagas.Objects
         public float maxHpAtMaxLv;
         public float maxMpAtMaxLv;
     }
-    
+
     public class BeastResponeEvolveData
     {
         public int transferring;
@@ -155,6 +155,47 @@ namespace CryptoQuest.Sagas.Objects
         public float addMATK;
         public float evasionRate;
         public float criticalRate;
+        public string createdAt;
+        public string updatedAt;
+    }
+
+    public class BeastResponseUpgradeData
+    {
+        public int id;
+        public string beastTokenId;
+        public string userId;
+        public string walletAddress;
+        public int level;
+        public string beastId;
+        public int HP;
+        public int addHp;
+        public int maxHp;
+        public int MP;
+        public int addMp;
+        public int maxMp;
+        public int strength;
+        public int addStrength;
+        public int vitality;
+        public int addVitality;
+        public int agility;
+        public int addAgility;
+        public int intelligence;
+        public int addIntelligence;
+        public int luck;
+        public int addLuck;
+        public int attack;
+        public int addAttack;
+        public int defence;
+        public int addDefence;
+        public int MATK;
+        public int addMATK;
+        public double evasionRate;
+        public double criticalRate;
+        public string attachUnitTokenId;
+        public int inGameStatus;
+        public int mintStatus;
+        public int transferring;
+        public int equip;
         public string createdAt;
         public string updatedAt;
     }
