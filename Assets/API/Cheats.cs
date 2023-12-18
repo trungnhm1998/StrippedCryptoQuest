@@ -8,6 +8,6 @@ namespace CryptoQuest.API
         public const string CREATE_DEBUG_BEAST = "crypto/debug/beasts/add-nft";
         public const string CREATE_CLASS_MATERIAL = "crypto/materials";
         public const string ADD_GOLD = "crypto/user/add-gold";
-        public const string ADD_DIAMOND = "crypto/user/add-diamond";
+        public const string ADD_DIAMOND = "crypto/debug/add-diamond";
     }
 }

@@ -22,13 +22,6 @@ namespace CryptoQuest.Sagas.MagicStone
         [SerializeField] private PassiveAbilityDatabase _passiveAbilityDatabase;
         [SerializeField] private MagicStoneInventory _stoneInventory;
 
-        private IMagicStoneResponseConverter _converter;
-
-        private void Awake()
-        {
-            _converter = ServiceProvider.GetService<IMagicStoneResponseConverter>();
-        }
-
         protected override void HandleAction(FetchProfileMagicStonesAction _)
         {
             ActionDispatcher.Dispatch(new ShowLoading());
@@ -61,7 +54,8 @@ namespace CryptoQuest.Sagas.MagicStone
                 .ToList();
 
             var filteredStonesList = new List<IMagicStone>() { NullMagicStone.Instance };
-            filteredStones.ForEach(stone => filteredStonesList.Add(_converter.Convert(stone)));
+            var converter = ServiceProvider.GetService<IMagicStoneResponseConverter>();
+            filteredStones.ForEach(stone => filteredStonesList.Add(converter.Convert(stone)));
 
             switch (status)
             {
@@ -82,12 +76,13 @@ namespace CryptoQuest.Sagas.MagicStone
         private IEnumerator CoLoadAndUpdateInventory(Objects.MagicStone[] stonesResponse)
         {
             _stoneInventory.MagicStones.Clear();
+            var converter = ServiceProvider.GetService<IMagicStoneResponseConverter>();
             foreach (var stoneResponse in stonesResponse)
             {
                 if (stoneResponse.id == -1) continue;
                 yield return _passiveAbilityDatabase.LoadDataById(stoneResponse.passiveSkillId1);
                 yield return _passiveAbilityDatabase.LoadDataById(stoneResponse.passiveSkillId2);
-                _stoneInventory.MagicStones.Add(_converter.Convert(stoneResponse));
+                _stoneInventory.MagicStones.Add(converter.Convert(stoneResponse));
             }
 
             ActionDispatcher.Dispatch(new StoneInventoryFilled());
