@@ -1,6 +1,8 @@
 using System;
 using CryptoQuest.Ranch.Evolve.Presenters;
 using CryptoQuest.Ranch.UI;
+using CryptoQuest.Ranch.Upgrade.Presenters;
+using CryptoQuest.Ranch.Upgrade.UI;
 using UnityEngine;
 
 namespace CryptoQuest.Ranch.State
@@ -21,7 +23,9 @@ namespace CryptoQuest.Ranch.State
         [field: SerializeField] public UIBeastUpgrade UIBeastUpgrade { get; private set; }
         [field: SerializeField] public UIBeastEvolve UIBeastEvolve { get; private set; }
         [field: SerializeField] public EvolvePresenter EvolvePresenter { get; private set; }
+        [field: SerializeField] public UpgradePresenter UpgradePresenter { get; private set; }
         [field: SerializeField] public RanchDialogsManager DialogManager { get; private set; }
+
 
         private void OnDisable()
         {

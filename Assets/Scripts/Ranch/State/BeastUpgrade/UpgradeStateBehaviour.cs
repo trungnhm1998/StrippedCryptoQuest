@@ -1,4 +1,6 @@
-using IndiGames.Core.Events;
+using CryptoQuest.Beast;
+using CryptoQuest.Input;
+using CryptoQuest.UI.Dialogs.Dialogue;
 using UnityEngine;
 using UnityEngine.Localization;
 
@@ -8,34 +10,52 @@ namespace CryptoQuest.Ranch.State.BeastUpgrade
     {
         [SerializeField] private LocalizedString _welcomeMessage;
         [SerializeField] private LocalizedString _overviewMessage;
-        private RanchStateController _controller;
+        [SerializeField] private BeastInventorySO _inventorySo;
+
+        private RanchStateController _stateController;
+        private MerchantsInputManager _input;
+        private UIDialogueForGenericMerchant _dialogue;
 
         private static readonly int OverviewState = Animator.StringToHash("OverviewState");
+        private static readonly int SelectLevelState = Animator.StringToHash("SelectLevelState");
 
         protected override void OnEnter()
         {
-            _controller = StateMachine.GetComponent<RanchStateController>();
+            _stateController = StateMachine.GetComponent<RanchStateController>();
+            _input = _stateController.Controller.Input;
+            _dialogue = _stateController.DialogManager.NormalDialogue;
+            _stateController.UIBeastUpgrade.Contents.SetActive(true);
 
-            _controller.UIBeastUpgrade.Contents.SetActive(true);
+            _input.CancelEvent += CancelBeastUpgradeState;
+            _input.SubmitEvent += SelectBeastLevel;
+            _dialogue.SetMessage(_welcomeMessage).Show();
 
-            _controller.Controller.Input.CancelEvent += CancelBeastEvolveState;
-            _controller.DialogManager.NormalDialogue.SetMessage(_welcomeMessage).Show();
-
-            _controller.Controller.ShowWalletEventChannel.EnableAll().Show();
+            _stateController.UpgradePresenter.InitBeast(_inventorySo.OwnedBeasts);
         }
 
-        private void CancelBeastEvolveState()
+        private void SelectBeastLevel()
         {
-            _controller.DialogManager.NormalDialogue.SetMessage(_overviewMessage).Show();
-            _controller.UIBeastUpgrade.Contents.SetActive(false);
-            _controller.Controller.Initialize();
+            StateMachine.Play(SelectLevelState);
+        }
+
+        private void CancelBeastUpgradeState()
+        {
+            _dialogue.SetMessage(_overviewMessage).Show();
+            _stateController.Controller.ShowWalletEventChannel.Hide();
+            _stateController.Controller.Initialize();
+
+            _stateController.UIBeastUpgrade.Contents.SetActive(false);
             StateMachine.Play(OverviewState);
         }
 
         protected override void OnExit()
         {
-            _controller.Controller.Input.CancelEvent -= CancelBeastEvolveState;
-            _controller.Controller.ShowWalletEventChannel.Hide();
+            _input.CancelEvent -= CancelBeastUpgradeState;
+            _input.SubmitEvent -= SelectBeastLevel;
+
+            _dialogue.Hide();
+
+            _stateController.UpgradePresenter.Interactable = false;
         }
     }
 }

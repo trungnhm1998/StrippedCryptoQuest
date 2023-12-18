@@ -18,15 +18,15 @@ namespace CryptoQuest.Ranch.Upgrade.UI
         [SerializeField] private Image _icon;
         [SerializeField] private Image _background;
         [SerializeField] private LocalizeStringEvent _displayName;
-        [SerializeField] private Sprite _selectedBackground;
-        [SerializeField] private Sprite _defaultBackground;
         [SerializeField] private CalculatorBeastStatsSO _calculatorBeastStatsSo;
+        [SerializeField] private GameObject _selectedTag;
 
         public IBeast Beast = NullBeast.Instance;
 
         public void Init(IBeast beast)
         {
             Beast = beast;
+            _selectedTag.SetActive(false);
             SetName(beast.LocalizedName);
             SetIcon(beast.Elemental);
         }
@@ -45,6 +45,7 @@ namespace CryptoQuest.Ranch.Upgrade.UI
 
         public void SelectedBeast()
         {
+            _selectedTag.SetActive(true);
             OnSubmit?.Invoke(this);
         }
 

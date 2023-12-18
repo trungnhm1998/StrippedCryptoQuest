@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using CryptoQuest.Beast;
 using CryptoQuest.UI.Common;
 using CryptoQuest.UI.Utilities;
 using UnityEngine;
@@ -11,8 +12,7 @@ namespace CryptoQuest.Ranch.Upgrade.UI
     public class UIBeastUpgradeList : MonoBehaviour
     {
         public event Action<UIBeastUpgradeListDetail> OnInspectingEvent;
-
-        public event Action<bool> IsOpenDetailsEvent;
+        public event Action<IBeast> OnBeastSelected;
 
         [SerializeField] private UIBeastUpgradeListDetail _beast;
         [SerializeField] private ScrollRect _scrollRect;
@@ -23,11 +23,11 @@ namespace CryptoQuest.Ranch.Upgrade.UI
         private void Awake()
         {
             _pool = new ObjectPool<UIBeastUpgradeListDetail>(OnCreate, OnGet, OnRelease, OnDestroyBeastUI);
+            CleanUpScrollView();
         }
 
         public void FillBeasts(List<Beast.Beast> beasts)
         {
-            CleanUpScrollView();
             InstantiateBeast(beasts);
         }
 
@@ -49,11 +49,12 @@ namespace CryptoQuest.Ranch.Upgrade.UI
             }
 
             _hasFocus = TryFocus();
-
-            IsOpenDetailsEvent?.Invoke(_scrollRect.content.childCount > 0);
         }
 
-        private void OnItemSelected(UIBeastUpgradeListDetail obj) { }
+        private void OnItemSelected(UIBeastUpgradeListDetail ui)
+        {
+            OnBeastSelected?.Invoke(ui.Beast);
+        }
 
         private void OnInspectingItem(UIBeastUpgradeListDetail listDetail)
         {

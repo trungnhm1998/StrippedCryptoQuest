@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using CryptoQuest.Beast;
 using CryptoQuest.Ranch.Upgrade.UI;
 using UnityEngine;
@@ -6,18 +7,34 @@ namespace CryptoQuest.Ranch.Upgrade.Presenters
 {
     public class UpgradePresenter : MonoBehaviour
     {
-        [SerializeField] private BeastInventorySO _inventorySo;
+        [field: SerializeField] public UIConfigBeastUpgradePresenter UIConfigBeastUpgradePresenter { get; private set; }
+
         [SerializeField] private UIBeastUpgradeList _beastList;
         [SerializeField] private UIBeastUpgradeDetail _uiBeastEvolveDetail;
 
-        private void Start()
+        public IBeast BeastToUpgrade { get; set; }
+
+        public bool Interactable
         {
-            Initialization();
+            get => _beastList.Interactable;
+            set => _beastList.Interactable = value;
         }
 
         private void OnEnable()
         {
             _beastList.OnInspectingEvent += ShowBeastDetails;
+            _beastList.OnBeastSelected += OnBeastSelected;
+        }
+
+        private void OnDisable()
+        {
+            _beastList.OnInspectingEvent -= ShowBeastDetails;
+            _beastList.OnBeastSelected -= OnBeastSelected;
+        }
+
+        private void OnBeastSelected(IBeast beast)
+        {
+            BeastToUpgrade = beast;
         }
 
         private void ShowBeastDetails(UIBeastUpgradeListDetail ui)
@@ -25,10 +42,10 @@ namespace CryptoQuest.Ranch.Upgrade.Presenters
             _uiBeastEvolveDetail.SetupUI(ui.Beast);
         }
 
-        private void Initialization()
+        public void InitBeast(List<Beast.Beast> beasts)
         {
-            var beasts = _inventorySo.OwnedBeasts;
             _beastList.FillBeasts(beasts);
+            Interactable = true;
         }
     }
 }

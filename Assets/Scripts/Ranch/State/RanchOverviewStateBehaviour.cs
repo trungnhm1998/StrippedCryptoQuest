@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.Localization;
 
 namespace CryptoQuest.Ranch.State
 {
@@ -39,6 +38,10 @@ namespace CryptoQuest.Ranch.State
         private void OpenUpgradeState()
         {
             StateMachine.Play(UpgradeState);
+            _stateController.Controller.ShowWalletEventChannel
+                .EnableGold()
+                .EnableDiamond()
+                .Show();
             _stateController.Controller.HideDialogs();
         }
 
