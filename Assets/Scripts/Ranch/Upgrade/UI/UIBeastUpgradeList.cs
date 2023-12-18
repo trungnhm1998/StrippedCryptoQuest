@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
+using CryptoQuest.UI.Common;
 using CryptoQuest.UI.Utilities;
-using UI.Common;
 using UnityEngine;
 using UnityEngine.Pool;
 using UnityEngine.UI;
