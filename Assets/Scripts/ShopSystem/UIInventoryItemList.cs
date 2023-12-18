@@ -1,5 +1,4 @@
-﻿using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 namespace CryptoQuest.ShopSystem
@@ -8,8 +7,6 @@ namespace CryptoQuest.ShopSystem
     {
         [SerializeField] private UIShopItemPool<TItem> _pool;
         [field: SerializeField] protected PriceMappingDatabase PriceMappingDatabase { get; private set; }
-        [SerializeField] private InventorySO _inventory;
-        protected InventorySO Inventory => _inventory;
         [field: SerializeField] protected ScrollRect ScrollRect { get; private set; }
 
 

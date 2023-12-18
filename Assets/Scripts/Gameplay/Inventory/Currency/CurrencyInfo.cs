@@ -8,7 +8,17 @@ namespace CryptoQuest.Gameplay.Inventory.Currency
     public class CurrencyInfo : ItemInfo<CurrencySO>
     {
         public event Action<CurrencyInfo> AmountChanged;
-        [field: SerializeField] public float Amount { get; private set; } = 0;
+        [SerializeField] private float _amount;
+
+        public float Amount
+        {
+            get => _amount;
+            set
+            {
+                _amount = Mathf.Max(0, value);
+                AmountChanged?.Invoke(this);
+            }
+        }
 
         public CurrencyInfo() { }
 

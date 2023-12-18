@@ -102,7 +102,7 @@ namespace CryptoQuest.Menus.Item.UI
             var inventory = ServiceProvider.GetService<IInventoryController>().Inventory;
             foreach (var item in inventory.Consumables)
             {
-                if (item.Data.ConsumableType == Type)
+                if (item.Data.Type == Type)
                     CreateItem(item);
             }
         }

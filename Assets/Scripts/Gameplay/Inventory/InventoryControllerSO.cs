@@ -1,4 +1,5 @@
-﻿using CryptoQuest.Gameplay.Inventory.Currency;
+﻿using System;
+using CryptoQuest.Gameplay.Inventory.Currency;
 using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
 using CryptoQuest.Item.Consumable;
 using CryptoQuest.Item.Equipment;
@@ -7,6 +8,7 @@ using UnityEngine;
 
 namespace CryptoQuest.Gameplay.Inventory
 {
+    [Obsolete]
     public class InventoryControllerSO : ScriptableObject, IInventoryController
     {
         [SerializeField] private InventorySO _inventory;

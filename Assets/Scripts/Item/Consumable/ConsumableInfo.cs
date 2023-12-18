@@ -13,7 +13,11 @@ namespace CryptoQuest.Item.Consumable
         public static event Action<ConsumableInfo> QuantityReduced;
 
         [SerializeField] private int _quantity = 1;
-        public int Quantity => _quantity;
+        public int Quantity
+        {
+            get => _quantity;
+            set => _quantity = value;
+        }
 
         public AssetReferenceT<Sprite> Icon => Data.Image;
         public LocalizedString DisplayName => Data.DisplayName;
@@ -26,6 +30,7 @@ namespace CryptoQuest.Item.Consumable
         
         public ConsumableInfo() { }
 
+        [Obsolete]
         public void SetQuantity(int quantity)
         {
             _quantity = quantity;
@@ -44,7 +49,7 @@ namespace CryptoQuest.Item.Consumable
 
         private void ReduceQuantityOnUsed(IInventoryController inventoryController)
         {
-            if (Data.ConsumableType == EConsumableType.Key) return;
+            if (Data.Type == EConsumableType.Key) return;
             if (inventoryController.Remove(this))
             {
                 QuantityReduced?.Invoke(this);

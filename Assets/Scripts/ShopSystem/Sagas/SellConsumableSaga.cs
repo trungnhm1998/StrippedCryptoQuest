@@ -1,26 +1,34 @@
-﻿using CryptoQuest.Item.Consumable;
+﻿using CryptoQuest.Gameplay.Inventory;
+using CryptoQuest.Item.Consumable;
 using IndiGames.Core.Events;
 
 namespace CryptoQuest.ShopSystem.Sagas
 {
     public class SellConsumableAction : ActionBase
     {
-        private readonly ConsumableInfo _itemInfo;
-        private readonly float _itemPrice;
+        public ConsumableSO Item { get; }
+        public int Quantity { get; }
 
-        public SellConsumableAction(ConsumableInfo itemInfo, float itemPrice)
+        public SellConsumableAction(ConsumableSO item, int quantity)
         {
-            _itemInfo = itemInfo;
-            _itemPrice = itemPrice;
+            Item = item;
+            Quantity = quantity;
         }
-
-        public ConsumableInfo ItemInfo => _itemInfo;
-
-        public float ItemPrice => _itemPrice;
     }
 
     public class SellConsumableSaga : SagaBase<SellConsumableAction>
     {
-        protected override void HandleAction(SellConsumableAction ctx) { }
+        /// <summary>
+        /// Add gold and remove item from inventory
+        /// </summary>
+        /// <param name="ctx"></param>
+        protected override void HandleAction(SellConsumableAction ctx)
+        {
+            var item = ctx.Item;
+            var quantity = ctx.Quantity;
+
+            ActionDispatcher.Dispatch(new AddGoldAction(item.Price * quantity));
+            ActionDispatcher.Dispatch(new RemoveConsumableAction(item, quantity));
+        }
     }
 }

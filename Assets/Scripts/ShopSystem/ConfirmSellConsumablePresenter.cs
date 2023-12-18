@@ -1,4 +1,6 @@
-﻿using CryptoQuest.UI.Dialogs.ChoiceDialog;
+﻿using CryptoQuest.ShopSystem.Sagas;
+using CryptoQuest.UI.Dialogs.ChoiceDialog;
+using IndiGames.Core.Events;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Localization;
@@ -55,7 +57,7 @@ namespace CryptoQuest.ShopSystem
                     var itemIndex = item.transform.GetSiblingIndex();
 
                     var selectedQuantity = _quantityConfigDialog.CurrentQuantity;
-                    item.Info.SetQuantity(item.Info.Quantity - selectedQuantity);
+                    ActionDispatcher.Dispatch(new SellConsumableAction(item.Info.Data, selectedQuantity));
                     item.Render(item.Info);
                     if (item.Info.Quantity <= 0) _pool.Release(item);
 

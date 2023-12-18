@@ -11,7 +11,7 @@ namespace CryptoQuest.Item.Consumable
     public class ConsumableSO : GenericItem
     {
         [field: SerializeField, Header("Usable Item")]
-        public EConsumableType ConsumableType { get; private set; }
+        public EConsumableType Type { get; private set; }
 
         [field: SerializeField] public int Price { get; private set; }
         [field: SerializeField] public int SellPrice { get; private set; }
@@ -33,7 +33,7 @@ namespace CryptoQuest.Item.Consumable
 #if UNITY_EDITOR
         public void Editor_SetUsableType(EConsumableType type)
         {
-            ConsumableType = type;
+            Type = type;
         }
 
         public void Editor_SetEffect(GameplayEffectDefinition effect)

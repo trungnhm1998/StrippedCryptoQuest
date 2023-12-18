@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using CryptoQuest.Item.Consumable;
 using CryptoQuest.Item.Equipment;
@@ -10,8 +11,8 @@ namespace CryptoQuest.Gameplay.Inventory.ScriptableObjects
     /// </summary>
     public class InventorySO : ScriptableObject
     {
-        [SerializeField] private List<ConsumableInfo> _consumables = new();
-        public List<ConsumableInfo> Consumables => _consumables;
+        [SerializeField, Obsolete] private List<ConsumableInfo> _consumables = new();
+        [Obsolete] public List<ConsumableInfo> Consumables => _consumables;
 
         [field: SerializeReference, SubclassSelector] public List<IEquipment> Equipments { get; private set; } = new();
     }
