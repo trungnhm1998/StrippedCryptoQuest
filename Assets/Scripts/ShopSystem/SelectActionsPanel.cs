@@ -50,6 +50,11 @@ namespace CryptoQuest.ShopSystem
         private void OnDisable()
         {
             _input.CancelEvent -= OnCloseSystem;
+        }
+
+        private void OnCloseSystem()
+        {
+            gameObject.SetActive(false);
             _dialog
                 .WithMessage(_goodByeString)
                 .RequireInput()
@@ -57,13 +62,9 @@ namespace CryptoQuest.ShopSystem
                 {
                     GenericDialogController.Instance.Release(_dialog);
                     _gameState.UpdateGameState(EGameState.Field);
+                    _closeSystemEvent.RaiseEvent();
                 })
                 .Show();
-        }
-
-        private void OnCloseSystem()
-        {
-            _closeSystemEvent.RaiseEvent();
         }
     }
 }
