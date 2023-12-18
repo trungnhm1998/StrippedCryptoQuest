@@ -14,7 +14,12 @@ namespace CryptoQuest.BlackSmith
 
         [SerializeField] private LocalizedString _message;
         private UIDialogueForGenericMerchant _dialogue;
-        public UIDialogueForGenericMerchant Dialogue { get => _dialogue; }
+
+        public UIDialogueForGenericMerchant Dialogue
+        {
+            get => _dialogue;
+        }
+
         public UIChoiceDialog ChoiceDialog { get; private set; }
         private LocalizedString _confirmMessage;
 
@@ -26,7 +31,7 @@ namespace CryptoQuest.BlackSmith
                 return;
             }
 
-            GenericMerchantDialogueController.Instance.Instantiate(DialogInstantiated);
+            GenericMerchantDialogueController.Instance.InstantiateAsync(DialogInstantiated);
         }
 
         public void HideOverviewDialog()
@@ -52,7 +57,7 @@ namespace CryptoQuest.BlackSmith
                 return;
             }
 
-            ChoiceDialogController.Instance.Instantiate(ChoiceDialogInstantiated, false);
+            ChoiceDialogController.Instance.InstantiateAsync(ChoiceDialogInstantiated);
         }
 
         private void ChoiceDialogInstantiated(UIChoiceDialog dialog)

@@ -19,8 +19,8 @@ namespace CryptoQuest.Tavern
 
         public void TavernOpened()
         {
-            GenericMerchantDialogueController.Instance.Instantiate(DialogInstantiated);
-            ChoiceDialogController.Instance.Instantiate(dialog => ChoiceDialog = dialog, false);
+            GenericMerchantDialogueController.Instance.InstantiateAsync(DialogInstantiated);
+            ChoiceDialogController.Instance.InstantiateAsync(dialog => ChoiceDialog = dialog);
 
             _inputManager.SubmitEvent += NextDialog;
         }

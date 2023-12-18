@@ -42,8 +42,8 @@ namespace CryptoQuest.Inn
 
         public void ShowDialog()
         {
-            ChoiceDialogController.Instance.Instantiate(InitChoiceDialog);
-            GenericMerchantDialogueController.Instance.Instantiate(InitNormalDialog);
+            ChoiceDialogController.Instance.InstantiateAsync(InitChoiceDialog);
+            GenericMerchantDialogueController.Instance.InstantiateAsync(InitNormalDialog);
         }
 
         private void InitNormalDialog(UIDialogueForGenericMerchant dialog)

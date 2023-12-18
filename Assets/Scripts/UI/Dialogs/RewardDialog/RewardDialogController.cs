@@ -2,7 +2,6 @@ using System.Collections;
 using CryptoQuest.Events.UI.Dialogs;
 using UnityEngine;
 
-
 namespace CryptoQuest.UI.Dialogs.RewardDialog
 {
     public class RewardDialogController : MonoBehaviour
@@ -24,7 +23,7 @@ namespace CryptoQuest.UI.Dialogs.RewardDialog
             if (_dialog == null)
             {
                 yield return
-                    GenericRewardButtonDialogController.Instance.CoInstantiate(dialog => _dialog = dialog, false);
+                    GenericRewardButtonDialogController.Instance.CoInstantiate(dialog => _dialog = dialog);
             }
 
             _dialog

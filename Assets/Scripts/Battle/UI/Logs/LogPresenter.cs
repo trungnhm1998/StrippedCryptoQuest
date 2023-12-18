@@ -58,7 +58,7 @@ namespace CryptoQuest.Battle.UI.Logs
 
         private void QueueClearDialog(TurnStartedEvent ctx) => _roundEventsPresenter.EnqueueCommand(new ClearLog(this));
 
-        private void OnSceneLoaded() => GenericDialogController.Instance.Instantiate(dialog => _dialog = dialog, false);
+        private void OnSceneLoaded() => GenericDialogController.Instance.InstantiateAsync(dialog => _dialog = dialog);
 
         public void Show()
         {

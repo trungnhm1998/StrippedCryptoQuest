@@ -16,7 +16,7 @@ namespace CryptoQuest.Menus.DimensionalBox.UI.MetaDTransfer
 
         public void ShowConfirmDialog()
         {
-            ChoiceDialogController.Instance.Instantiate(ChoiceDialogInstantiated, false);
+            ChoiceDialogController.Instance.InstantiateAsync(ChoiceDialogInstantiated);
         }
 
         private void ChoiceDialogInstantiated(UIChoiceDialog dialog)

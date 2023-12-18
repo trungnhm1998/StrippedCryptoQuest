@@ -18,8 +18,14 @@ namespace CryptoQuest.UI.Common
 
         public void Select()
         {
-            if (!TryGetFirstActiveChild(out var firstChild)) return;
-            StartCoroutine(CoSelect(firstChild));
+            StartCoroutine(CoSelect());
+        }
+
+        private IEnumerator CoSelect()
+        {
+            yield return new WaitForSeconds(_delay);
+            if (!TryGetFirstActiveChild(out var firstChild)) yield break;
+            EventSystem.current.SetSelectedGameObject(firstChild);
         }
 
         private bool TryGetFirstActiveChild(out GameObject firstChild)
@@ -29,12 +35,6 @@ namespace CryptoQuest.UI.Common
             if (firstSelectable == null) return false;
             firstChild = firstSelectable.gameObject;
             return firstChild != null;
-        }
-
-        private IEnumerator CoSelect(GameObject firstChild)
-        {
-            yield return new WaitForSeconds(_delay);
-            EventSystem.current.SetSelectedGameObject(firstChild);
         }
     }
 }

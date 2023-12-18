@@ -31,7 +31,7 @@ namespace CryptoQuest.Menus.DimensionalBox.States.MagicStoneTransfer
         public override void OnEnter()
         {
             base.OnEnter();
-            ChoiceDialogController.Instance.Instantiate(ShowConfirmDialog);
+            ChoiceDialogController.Instance.InstantiateAsync(ShowConfirmDialog);
             _fsm.DBoxList.Interactable = _fsm.IngameList.Interactable = false;
         }
 

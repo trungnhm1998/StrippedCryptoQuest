@@ -18,8 +18,8 @@ namespace CryptoQuest.ChangeClass
 
         public void ShowChangeClassDialog()
         {
-            GenericMerchantDialogueController.Instance.Instantiate(DialogInstantiated);
-            ChoiceDialogController.Instance.Instantiate(dialog => ChoiceDialog = dialog, false);
+            GenericMerchantDialogueController.Instance.InstantiateAsync(DialogInstantiated);
+            ChoiceDialogController.Instance.InstantiateAsync(dialog => ChoiceDialog = dialog);
         }
 
         public void HideChangeClassDialog()

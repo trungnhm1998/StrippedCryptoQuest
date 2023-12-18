@@ -13,8 +13,8 @@ namespace CryptoQuest.Ranch
 
         public void RanchOpened()
         {
-            GenericMerchantDialogueController.Instance.Instantiate(DialogInstantiated);
-            ChoiceDialogController.Instance.Instantiate(dialog => ChoiceDialog = dialog, false);
+            GenericMerchantDialogueController.Instance.InstantiateAsync(DialogInstantiated);
+            ChoiceDialogController.Instance.InstantiateAsync(dialog => ChoiceDialog = dialog);
         }
         private void OnDisable()
         {
