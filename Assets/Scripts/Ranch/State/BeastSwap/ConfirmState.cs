@@ -33,7 +33,7 @@ namespace CryptoQuest.Ranch.State.BeastSwap
             _controllerState.UIBeastSwap.InGameBeastList.SetEnableButtons(false);
             _controllerState.UIBeastSwap.WalletBeastList.SetEnableButtons(false);
 
-            _controllerState.Controller.DialogManager.ChoiceDialog
+            _controllerState.Controller.DialogController.ChoiceDialog
                 .SetButtonsEvent(OnConfirm, OnCancel)
                 .SetMessage(_confirmMessage)
                 .Show();
@@ -51,7 +51,7 @@ namespace CryptoQuest.Ranch.State.BeastSwap
             ActionDispatcher.Unbind(_transferSucceedEvent);
             ActionDispatcher.Unbind(_transferFailedEvent);
 
-            _controllerState.Controller.DialogManager.ChoiceDialog.Hide();
+            _controllerState.Controller.DialogController.ChoiceDialog.Hide();
         }
 
         private void OnConfirm()
@@ -62,7 +62,7 @@ namespace CryptoQuest.Ranch.State.BeastSwap
 
         private void OnCancel()
         {
-            _controllerState.Controller.DialogManager.ChoiceDialog.Hide();
+            _controllerState.Controller.DialogController.ChoiceDialog.Hide();
             StateMachine.Play(SwapState);
         }
 
@@ -80,7 +80,7 @@ namespace CryptoQuest.Ranch.State.BeastSwap
 
         private void HandleTransferMessage(LocalizedString msg)
         {
-            _controllerState.Controller.DialogManager.NormalDialogue
+            _controllerState.Controller.DialogController.NormalDialogue
                 .SetMessage(msg)
                 .Show();
 
@@ -89,7 +89,7 @@ namespace CryptoQuest.Ranch.State.BeastSwap
 
         private void BackToSwapState()
         {
-            _controllerState.Controller.DialogManager.NormalDialogue.Hide();
+            _controllerState.Controller.DialogController.NormalDialogue.Hide();
             StateMachine.Play(SwapState);
         }
 

@@ -17,7 +17,7 @@ namespace CryptoQuest.Ranch.State.BeastEvolve
             _controller = StateMachine.GetComponent<RanchStateController>();
             _controller.Controller.Input.CancelEvent += CancelBeastEvolveState;
             _controller.Controller.Input.SubmitEvent += ChangeSelectMaterialState;
-            _controller.DialogManager.NormalDialogue.SetMessage(_message).Show();
+            _controller.DialogController.NormalDialogue.SetMessage(_message).Show();
             _controller.EvolvePresenter.Init();
             ActionDispatcher.Dispatch(new GetBeasts());
         }
@@ -25,7 +25,7 @@ namespace CryptoQuest.Ranch.State.BeastEvolve
         private void ChangeSelectMaterialState()
         {
             SelectBaseMaterial();
-            _controller.DialogManager.NormalDialogue.Hide();
+            _controller.DialogController.NormalDialogue.Hide();
             StateMachine.Play(SelectMaterialState);
         }
 
@@ -40,7 +40,7 @@ namespace CryptoQuest.Ranch.State.BeastEvolve
         {
             _controller.UIBeastEvolve.Contents.SetActive(false);
             _controller.Controller.Initialize();
-            _controller.DialogManager.NormalDialogue.SetMessage(_overviewMessage).Show();
+            _controller.DialogController.NormalDialogue.SetMessage(_overviewMessage).Show();
             StateMachine.Play(OverviewState);
         }
 

@@ -73,7 +73,7 @@ namespace CryptoQuest.Ranch.Sagas
             Debug.Log($"EvolveBeast:: Load Data Success!");
             ActionDispatcher.Dispatch(new ShowLoading(false));
             ActionDispatcher.Dispatch(new EvolveSucceed());
-            ActionDispatcher.Dispatch(new EvolveResponsed(response, _requestContext));
+            ActionDispatcher.Dispatch(new BeastEvolveRespond(response, _requestContext));
             ActionDispatcher.Dispatch(new GetBeasts());
         }
 

@@ -5,7 +5,7 @@ using UnityEngine.Localization;
 
 namespace CryptoQuest.Ranch
 {
-    public class RanchDialogsManager : MonoBehaviour
+    public class RanchDialogsController : MonoBehaviour
     {
         [SerializeField] private LocalizedString _message;
         public UIDialogueForGenericMerchant NormalDialogue { get; private set; }

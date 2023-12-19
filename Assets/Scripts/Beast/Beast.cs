@@ -14,6 +14,7 @@ namespace CryptoQuest.Beast
         LocalizedString LocalizedName { get; }
         Elemental Elemental { get; }
         CharacterClass Class { get; }
+        string BeastId { get; }
         int Id { get; }
         string Name { get; }
         BeastTypeSO Type { get; }
@@ -28,6 +29,7 @@ namespace CryptoQuest.Beast
     public class Beast : IBeast
     {
         [field: SerializeField] public int Id { get; set; }
+        [field: SerializeField] public string BeastId { get; set; }
         [field: SerializeField] public int Level { get; set; }
         [field: SerializeField] public int MaxLevel { get; set; }
         [field: SerializeField] public int Stars { get; set; }
@@ -40,6 +42,6 @@ namespace CryptoQuest.Beast
         public Sprite Image { get; set; }
         public string Name => Type.BeastInformation.LocalizedName.GetLocalizedString();
         public LocalizedString LocalizedName => Type.BeastInformation.LocalizedName;
-        public bool IsValid() => Elemental != null && Class != null && Type != null ;
+        public bool IsValid() => Elemental != null && Class != null && Type != null;
     }
 }

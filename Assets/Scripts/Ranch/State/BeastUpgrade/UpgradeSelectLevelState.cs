@@ -1,7 +1,9 @@
 using CryptoQuest.Input;
 using CryptoQuest.Ranch.Sagas;
 using CryptoQuest.Ranch.Upgrade.UI;
+using CryptoQuest.UI.Actions;
 using IndiGames.Core.Events;
+using TinyMessenger;
 using UnityEngine;
 using UnityEngine.Localization;
 
@@ -16,53 +18,61 @@ namespace CryptoQuest.Ranch.State.BeastUpgrade
         private MerchantsInputManager _input;
 
         private static readonly int UpgradeState = Animator.StringToHash("UpgradeState");
+        private static readonly int ResultState = Animator.StringToHash("UpgradeResultState");
 
+        private TinyMessageSubscriptionToken _upgradeSucceed;
+        private TinyMessageSubscriptionToken _upgradeFailed;
 
         protected override void OnEnter()
         {
             _stateController = StateMachine.GetComponent<RanchStateController>();
-            _config = _stateController.UpgradePresenter.UIConfigBeastUpgradePresenter;
+            _config = _stateController.UpgradePresenter.ConfigBeast;
             _input = _stateController.Controller.Input;
 
-            _stateController.DialogManager.ChoiceDialog
-                .SetMessage(_warningMessage)
-                .WithYesCallback(OnYesButtonClicked)
-                .WithNoCallback(CancelUpgradeSelectLevelState)
-                .Show();
+            _upgradeSucceed = ActionDispatcher.Bind<BeastUpgradeSucceed>(OnUpgradeSucceed);
+            _upgradeFailed = ActionDispatcher.Bind<BeastUpgradeFailed>(OnUpgradeFailed);
 
             _config.InitUI();
 
             _input.NavigateEvent += InputOnNavigateEvent;
-            _input.CancelEvent += CancelUpgradeSelectLevelState;
+            _input.CancelEvent += BackToUpgradeState;
+
+            _stateController.DialogController.ChoiceDialog
+                .SetMessage(_warningMessage)
+                .WithYesCallback(OnYesButtonClicked)
+                .WithNoCallback(BackToUpgradeState)
+                .Show();
         }
 
-        private void InputOnNavigateEvent(Vector2 handleNavigation)
-        {
-            _config.HandleNavigation(handleNavigation);
-        }
+        private void OnUpgradeFailed(ActionBase _) => _input.SubmitEvent += BackToUpgradeState;
 
-        private void CancelUpgradeSelectLevelState()
-        {
-            StateMachine.Play(UpgradeState);
-        }
+        private void OnUpgradeSucceed(ActionBase _) => StateMachine.Play(ResultState);
+
+        private void InputOnNavigateEvent(Vector2 handleNavigation) => _config.HandleNavigation(handleNavigation);
+
+        private void BackToUpgradeState() => StateMachine.Play(UpgradeState);
 
         private void OnYesButtonClicked()
         {
+            ActionDispatcher.Dispatch(new ShowLoading());
             ActionDispatcher.Dispatch(new RequestUpgradeBeast()
             {
-                BeforeLevel = _config.LevelToUpgrade,
+                LevelToUpgrade = _config.LevelToUpgrade,
                 Beast = _stateController.UpgradePresenter.BeastToUpgrade
             });
-
-            StateMachine.Play(UpgradeState);
         }
 
         protected override void OnExit()
         {
-            _input.CancelEvent -= CancelUpgradeSelectLevelState;
-            _config.DeInitUI();
+            ActionDispatcher.Unbind(_upgradeSucceed);
+            ActionDispatcher.Unbind(_upgradeFailed);
 
-            _stateController.DialogManager.ChoiceDialog.Hide();
+            _config.DeInitUI();
+            _stateController.DialogController.ChoiceDialog.Hide();
+
+            _input.CancelEvent -= BackToUpgradeState;
+            _input.SubmitEvent -= BackToUpgradeState;
+            _input.NavigateEvent -= InputOnNavigateEvent;
         }
     }
 }

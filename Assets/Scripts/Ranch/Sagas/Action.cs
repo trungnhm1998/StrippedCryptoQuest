@@ -1,4 +1,5 @@
 ﻿using CryptoQuest.Beast;
+using CryptoQuest.Ranch.Object;
 using IndiGames.Core.Events;
 
 namespace CryptoQuest.Ranch.Sagas
@@ -9,12 +10,12 @@ namespace CryptoQuest.Ranch.Sagas
         public IBeast Material;
     }
 
-    public class EvolveResponsed : ActionBase
+    public class BeastEvolveRespond : ActionBase
     {
         public EvolveResponse Response { get; private set; }
         public RequestEvolveBeast RequestContext { get; private set; }
 
-        public EvolveResponsed(EvolveResponse response, RequestEvolveBeast requestCtx)
+        public BeastEvolveRespond(EvolveResponse response, RequestEvolveBeast requestCtx)
         {
             Response = response;
             RequestContext = requestCtx;
@@ -29,25 +30,11 @@ namespace CryptoQuest.Ranch.Sagas
 
     public class RequestUpgradeBeast : ActionBase
     {
-        public int BeforeLevel;
+        public int LevelToUpgrade;
         public IBeast Beast;
     }
 
-    public class UpgradeResponsed : ActionBase
-    {
-        public UpgradeResponse Response { get; private set; }
-        public RequestUpgradeBeast RequestContext { get; private set; }
+    public class BeastUpgradeSucceed : ActionBase { }
 
-        public UpgradeResponsed(UpgradeResponse response, RequestUpgradeBeast requestCtx)
-        {
-            Response = response;
-            RequestContext = requestCtx;
-        }
-    }
-
-    public class UpgradeRequestFailed : ActionBase { }
-
-    public class UpgradeSucceed : ActionBase { }
-
-    public class UpgradeFailed : ActionBase { }
+    public class BeastUpgradeFailed : ActionBase { }
 }

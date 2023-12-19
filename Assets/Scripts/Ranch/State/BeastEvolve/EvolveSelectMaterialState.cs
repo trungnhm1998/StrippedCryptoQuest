@@ -19,14 +19,14 @@ namespace CryptoQuest.Ranch.State.BeastEvolve
 
             _controller.Controller.Input.CancelEvent += CancelBeastEvolveState;
             _controller.Controller.Input.SubmitEvent += SelectBeastMaterial;
-            _controller.DialogManager.NormalDialogue.SetMessage(_message).Show();
+            _controller.DialogController.NormalDialogue.SetMessage(_message).Show();
         }
 
         protected override void OnExit()
         {
             _controller.Controller.Input.SubmitEvent -= SelectBeastMaterial;
             _controller.Controller.Input.CancelEvent -= CancelBeastEvolveState;
-            _controller.DialogManager.NormalDialogue.Hide();
+            _controller.DialogController.NormalDialogue.Hide();
         }
 
         private void SelectBeastMaterial()

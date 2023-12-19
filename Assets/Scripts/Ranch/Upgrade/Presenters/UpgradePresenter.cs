@@ -7,7 +7,8 @@ namespace CryptoQuest.Ranch.Upgrade.Presenters
 {
     public class UpgradePresenter : MonoBehaviour
     {
-        [field: SerializeField] public UIConfigBeastUpgradePresenter UIConfigBeastUpgradePresenter { get; private set; }
+        [field: SerializeField] public UIConfigBeastUpgradePresenter ConfigBeast { get; private set; }
+        [field: SerializeField] public UIResultUpgradeBeastList ResultBeast { get; private set; }
 
         [SerializeField] private UIBeastUpgradeList _beastList;
         [SerializeField] private UIBeastUpgradeDetail _uiBeastEvolveDetail;

@@ -10,7 +10,6 @@ namespace CryptoQuest.Ranch.State.BeastUpgrade
     {
         [SerializeField] private LocalizedString _welcomeMessage;
         [SerializeField] private LocalizedString _overviewMessage;
-        [SerializeField] private BeastInventorySO _inventorySo;
 
         private RanchStateController _stateController;
         private MerchantsInputManager _input;
@@ -19,18 +18,19 @@ namespace CryptoQuest.Ranch.State.BeastUpgrade
         private static readonly int OverviewState = Animator.StringToHash("OverviewState");
         private static readonly int SelectLevelState = Animator.StringToHash("SelectLevelState");
 
+
         protected override void OnEnter()
         {
             _stateController = StateMachine.GetComponent<RanchStateController>();
             _input = _stateController.Controller.Input;
-            _dialogue = _stateController.DialogManager.NormalDialogue;
+            _dialogue = _stateController.DialogController.NormalDialogue;
             _stateController.UIBeastUpgrade.Contents.SetActive(true);
 
             _input.CancelEvent += CancelBeastUpgradeState;
             _input.SubmitEvent += SelectBeastLevel;
             _dialogue.SetMessage(_welcomeMessage).Show();
 
-            _stateController.UpgradePresenter.InitBeast(_inventorySo.OwnedBeasts);
+            _stateController.UpgradePresenter.InitBeast(_stateController.BeastInventory.OwnedBeasts);
         }
 
         private void SelectBeastLevel()

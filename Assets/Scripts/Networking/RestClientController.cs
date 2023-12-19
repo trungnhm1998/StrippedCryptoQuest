@@ -167,6 +167,7 @@ namespace CryptoQuest.Networking
         }
 
         private bool _dispatchGenericError = true;
+
         public IRestClient WithoutGenericError()
         {
             _dispatchGenericError = false;
