@@ -2,7 +2,6 @@
 using CryptoQuest.AbilitySystem.Attributes;
 using CryptoQuest.Character;
 using CryptoQuest.Gameplay;
-using UnityEngine;
 using UnityEngine.Localization;
 
 namespace CryptoQuest.Beast.ScriptableObjects
@@ -15,10 +14,11 @@ namespace CryptoQuest.Beast.ScriptableObjects
         public LocalizedString LocalizedName => new();
         public Elemental Elemental => null;
         public CharacterClass Class => null;
+        public string BeastId => string.Empty;
         public int Id => -1;
         public string Name => "NullBeast";
         public BeastTypeSO Type => null;
-        public StatsDef Stats { get; }
+        public StatsDef Stats => null;
         public int Level => 1;
         public int MaxLevel => 99;
         public int Stars => 1;

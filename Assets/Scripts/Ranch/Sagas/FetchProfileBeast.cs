@@ -126,6 +126,7 @@ namespace CryptoQuest.Ranch.Sagas
             return new Beast.Beast
             {
                 Id = response.id,
+                BeastId = response.beastId,
                 Level = response.level,
                 MaxLevel = response.maxLv,
                 Stars = response.star,

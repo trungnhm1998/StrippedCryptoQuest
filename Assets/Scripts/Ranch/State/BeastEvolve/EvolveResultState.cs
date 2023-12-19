@@ -27,14 +27,14 @@ namespace CryptoQuest.Ranch.State.BeastEvolve
         private void SetMessage()
         {
             LocalizedString message = _isSucceeded ? _evolveSucceededMessage : _evolveFailedMessage;
-            _controller.DialogManager.NormalDialogue.SetMessage(message).Show();
+            _controller.DialogController.NormalDialogue.SetMessage(message).Show();
         }
 
         protected override void OnExit()
         {
             _controller.Controller.Input.SubmitEvent -= ChangeConfirmState;
             _controller.Controller.Input.CancelEvent -= CancelBeastEvolveState;
-            _controller.DialogManager.NormalDialogue.Hide();
+            _controller.DialogController.NormalDialogue.Hide();
         }
 
         private void ChangeConfirmState()

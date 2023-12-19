@@ -2,7 +2,7 @@
 using System.Net;
 using CommandTerminal;
 using CryptoQuest.Networking;
-using CryptoQuest.Ranch.Sagas;
+using CryptoQuest.Ranch.Object;
 using CryptoQuest.System.Cheat;
 using CryptoQuest.UI.Actions;
 using IndiGames.Core.Common;

@@ -27,7 +27,7 @@ namespace CryptoQuest.Ranch.State.BeastEvolve
 
         private void SetupDialog()
         {
-            _controller.DialogManager.ChoiceDialog
+            _controller.DialogController.ChoiceDialog
                 .SetButtonsEvent(YesButtonPressed, NoButtonPressed)
                 .SetMessage(_message)
                 .Show();
@@ -35,13 +35,13 @@ namespace CryptoQuest.Ranch.State.BeastEvolve
 
         private void YesButtonPressed()
         {
-            _controller.DialogManager.ChoiceDialog.Hide();
+            _controller.DialogController.ChoiceDialog.Hide();
             ChangeConfirmState();
         }
 
         private void NoButtonPressed()
         {
-            _controller.DialogManager.ChoiceDialog.Hide();
+            _controller.DialogController.ChoiceDialog.Hide();
             StateMachine.Play(EvolveState);
         }
 

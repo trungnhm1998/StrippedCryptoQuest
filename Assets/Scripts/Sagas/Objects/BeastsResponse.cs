@@ -159,6 +159,7 @@ namespace CryptoQuest.Sagas.Objects
         public string updatedAt;
     }
 
+    [Serializable]
     public class BeastResponseUpgradeData
     {
         public int id;
