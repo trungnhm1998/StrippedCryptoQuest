@@ -27,17 +27,6 @@ namespace CryptoQuest.Battle.States
             _battleStateMachine.BattleInput.EnableBattleInput();
         }
 
-        public void OnExit(BattleStateMachine battleStateMachine)
-        {
-            try
-            {
-                GenericDialogController.Instance.Release(_dialog);
-            }
-            catch (Exception e)
-            {
-                Debug.LogWarning(e);
-                throw;
-            }
-        }
+        public void OnExit(BattleStateMachine battleStateMachine) { }
     }
 }

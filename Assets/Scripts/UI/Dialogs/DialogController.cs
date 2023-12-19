@@ -42,6 +42,10 @@ namespace CryptoQuest.UI.Dialogs
             instantiatedCallback?.Invoke(_dialog);
         }
 
+        /// <summary>
+        /// Beware of calling this inside of dialogToRelease.Hides
+        /// </summary>
+        /// <param name="dialogToRelease"></param>
         public void Release(T dialogToRelease)
         {
             if (dialogToRelease == null) return;
