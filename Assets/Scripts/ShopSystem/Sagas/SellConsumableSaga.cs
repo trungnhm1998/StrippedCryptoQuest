@@ -1,4 +1,4 @@
-﻿using CryptoQuest.Gameplay.Inventory;
+﻿using CryptoQuest.Inventory.Actions;
 using CryptoQuest.Item.Consumable;
 using IndiGames.Core.Events;
 

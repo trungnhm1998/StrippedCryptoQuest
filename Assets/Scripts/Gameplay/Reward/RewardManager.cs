@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using CryptoQuest.Events;
 using CryptoQuest.Events.UI.Dialogs;
-using CryptoQuest.Gameplay.Inventory.Currency;
 using CryptoQuest.Gameplay.Loot;
 using CryptoQuest.Gameplay.Reward.Events;
+using CryptoQuest.Inventory.Currency;
 using CryptoQuest.Item;
 using CryptoQuest.Item.Consumable;
 using CryptoQuest.Item.Equipment;

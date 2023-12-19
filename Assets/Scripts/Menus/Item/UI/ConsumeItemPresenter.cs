@@ -1,10 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using CryptoQuest.Battle.Components;
-using CryptoQuest.Gameplay.Inventory;
-using CryptoQuest.Gameplay.PlayerParty;
-using CryptoQuest.System;
+﻿using CryptoQuest.Gameplay.PlayerParty;
+using CryptoQuest.Inventory.Actions;
 using IndiGames.Core.Common;
+using IndiGames.Core.Events;
 using IndiGames.Core.Events.ScriptableObjects;
 using UnityEngine;
 
@@ -51,19 +48,16 @@ namespace CryptoQuest.Menus.Item.UI
 
         private void ShowSelectAllAliveHeroes()
         {
-            ConsumableController.OnConsumeItem(_inspectingItem.Consumable, _party.Slots
-                .Where(slot => slot.IsValid())
-                .Select(slot => slot.HeroBehaviour)
-                .ToList());
+            ActionDispatcher.Dispatch(new ConsumeItemOnParty(_inspectingItem.Consumable.Data));
         }
 
         private void ConsumeOnCharacterIndex(UIItemCharacterPartySlot itemCharacterParty)
         {
             _uiItemCharacterSelection.Hide();
             _uiItemCharacterSelection.Confirmed -= ConsumeOnCharacterIndex;
-            
-            ConsumableController.OnConsumeItem(_inspectingItem.Consumable,
-                new List<HeroBehaviour> { itemCharacterParty.Hero });
+
+            ActionDispatcher.Dispatch(new ConsumeItemOnCharacter(_inspectingItem.Consumable.Data,
+                itemCharacterParty.Hero));
         }
     }
 }

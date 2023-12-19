@@ -1,8 +1,8 @@
 using CryptoQuest.BlackSmith.Upgrade.Actions;
 using CryptoQuest.BlackSmith.Upgrade.Presenters;
 using CryptoQuest.BlackSmith.Upgrade.States;
-using CryptoQuest.Gameplay.Inventory.Currency;
-using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
+using CryptoQuest.Inventory.Currency;
+using CryptoQuest.Inventory.ScriptableObjects;
 using CryptoQuest.Sagas.Objects;
 using CryptoQuest.UI.Actions;
 using IndiGames.Core.Events;

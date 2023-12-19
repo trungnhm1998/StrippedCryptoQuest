@@ -1,6 +1,6 @@
 ﻿using System;
 using CryptoQuest.Battle;
-using CryptoQuest.Gameplay.Inventory;
+using CryptoQuest.Inventory;
 using CryptoQuest.Item;
 using CryptoQuest.Item.Consumable;
 using CryptoQuest.UI.Dialogs.RewardDialog;

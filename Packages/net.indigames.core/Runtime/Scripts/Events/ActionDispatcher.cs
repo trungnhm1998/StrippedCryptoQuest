@@ -6,9 +6,19 @@ namespace IndiGames.Core.Events
 {
     public class LogErrorHandler : ISubscriberErrorHandler
     {
+        public class ErrorAction : ActionBase
+        {
+            public Exception Exception { get; }
+
+            public ErrorAction(Exception exception)
+            {
+                Exception = exception;
+            }
+        }
         public void Handle(ITinyMessage message, Exception exception)
         {
-            Debug.LogError($"{message} {exception}");
+            Debug.LogWarning($"{message} {exception}");
+            ActionDispatcher.Dispatch(new ErrorAction(exception));
         }
     }
     public abstract class ActionBase : ITinyMessage

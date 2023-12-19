@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Net;
-using CryptoQuest.Gameplay.Inventory.Currency;
-using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
 using CryptoQuest.Menus.DimensionalBox.Objects;
 using CryptoQuest.Networking;
 using CryptoQuest.API;
+using CryptoQuest.Inventory.Currency;
+using CryptoQuest.Inventory.ScriptableObjects;
 using CryptoQuest.Sagas;
 using CryptoQuest.System;
 using IndiGames.Core.Common;

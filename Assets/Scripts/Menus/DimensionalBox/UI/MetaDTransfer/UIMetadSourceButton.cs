@@ -2,7 +2,7 @@
 using CryptoQuest.UI.Menu;
 using UnityEngine;
 using System;
-using CryptoQuest.Gameplay.Inventory.Currency;
+using CryptoQuest.Inventory.Currency;
 
 namespace CryptoQuest.Menus.DimensionalBox.UI.MetaDTransfer
 {

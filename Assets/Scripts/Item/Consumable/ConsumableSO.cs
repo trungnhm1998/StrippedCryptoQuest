@@ -1,6 +1,6 @@
 using CryptoQuest.AbilitySystem.Abilities;
 using CryptoQuest.Battle.ScriptableObjects;
-using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Type;
+using CryptoQuest.Inventory.ScriptableObjects.Item.Type;
 using IndiGames.Core.Events.ScriptableObjects;
 using IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects;
 using UnityEngine;

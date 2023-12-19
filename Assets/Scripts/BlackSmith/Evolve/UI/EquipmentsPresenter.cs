@@ -1,11 +1,11 @@
 using System.Collections.Generic;
 using System.Linq;
-using CryptoQuest.Gameplay.Inventory.Currency;
-using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
 using CryptoQuest.BlackSmith.Commons.UI;
 using UnityEngine;
 using UnityEngine.Localization;
 using System;
+using CryptoQuest.Inventory.Currency;
+using CryptoQuest.Inventory.ScriptableObjects;
 
 namespace CryptoQuest.BlackSmith.Evolve.UI
 {

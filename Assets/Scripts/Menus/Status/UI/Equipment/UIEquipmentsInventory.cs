@@ -2,10 +2,9 @@ using System;
 using System.Collections;
 using System.Linq;
 using CryptoQuest.Battle.Components;
-using CryptoQuest.Gameplay.Inventory;
+using CryptoQuest.Inventory.ScriptableObjects;
 using CryptoQuest.Item.Equipment;
 using CryptoQuest.Menu;
-using IndiGames.Core.Common;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -17,6 +16,7 @@ namespace CryptoQuest.Menus.Status.UI.Equipment
     /// </summary>
     public class UIEquipmentsInventory : MonoBehaviour
     {
+        [SerializeField] private EquipmentInventory _inventory;
         [SerializeField] private ScrollRect _scrollRect;
         [SerializeField] private UIEquipmentItem _equipmentItemPrefab;
         [SerializeField] private UIEquipment _currentlyEquippingItem;
@@ -133,9 +133,7 @@ namespace CryptoQuest.Menus.Status.UI.Equipment
 
         private void InstantiateEquipments()
         {
-            var inventory = ServiceProvider.GetService<IInventoryController>().Inventory;
-
-            foreach (var equipment in inventory.Equipments) StartCoroutine(InstantiateNewEquipmentUICo(equipment));
+            foreach (var equipment in _inventory.Equipments) StartCoroutine(InstantiateNewEquipmentUICo(equipment));
         }
 
         private IEnumerator InstantiateNewEquipmentUICo(IEquipment equipment)

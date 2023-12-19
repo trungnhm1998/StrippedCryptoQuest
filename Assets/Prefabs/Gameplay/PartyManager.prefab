@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 3853394542293097960}
   - component: {fileID: 7549771107079509493}
   - component: {fileID: 4495449131211117440}
+  - component: {fileID: 3502674332355542002}
+  - component: {fileID: 5885726982680854158}
   m_Layer: 0
   m_Name: PartyManager
   m_TagString: Untagged
@@ -83,6 +85,31 @@ MonoBehaviour:
   _attributesToResetWhenLeveledUp:
   - {fileID: 11400000, guid: 77c53593fd92c904aa7689c5a7449df3, type: 2}
   - {fileID: 11400000, guid: a7e3a44d36bf87d44afeb00b236e832e, type: 2}
+--- !u!114 &3502674332355542002
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3036391540655307661}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b7188e6152ce4023bf6276ff59f1f098, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _party: {fileID: 3853394542293097960}
+--- !u!114 &5885726982680854158
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3036391540655307661}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 592f699661e447c9b79706e80302d8e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2799623590454960836
 PrefabInstance:
   m_ObjectHideFlags: 0

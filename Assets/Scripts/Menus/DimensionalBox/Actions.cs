@@ -1,4 +1,4 @@
-﻿using CryptoQuest.Gameplay.Inventory.Currency;
+﻿using CryptoQuest.Inventory.Currency;
 using CryptoQuest.Sagas.MagicStone;
 using CryptoQuest.Sagas.Objects;
 using IndiGames.Core.Events;

@@ -1,21 +1,19 @@
 using System.Collections.Generic;
-using CryptoQuest.Gameplay.Inventory;
-using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
-using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Type;
-using CryptoQuest.Item;
+using CryptoQuest.Inventory;
+using CryptoQuest.Inventory.ScriptableObjects;
+using CryptoQuest.Inventory.ScriptableObjects.Item.Type;
 using CryptoQuest.Item.Consumable;
-using CryptoQuest.System;
-using IndiGames.Core.Common;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace CryptoQuest.Menus.Item.UI
 {
     /// <summary>
-    /// Render consumables in <see cref="InventorySO"/> filter using <see cref="Type"/>
+    /// Render consumables in <see cref="EquipmentInventory"/> filter using <see cref="Type"/>
     /// </summary>
     public class UIConsumables : MonoBehaviour
     {
+        [SerializeField] private ConsumableInventory _inventory;
         [SerializeField] private UIConsumableItem _prefab;
         [SerializeField] private ScrollRect _scrollRect;
         [SerializeField] private GameObject _content;
@@ -45,19 +43,19 @@ namespace CryptoQuest.Menus.Item.UI
         private void OnEnable()
         {
             _currentInspectingItem = null;
-            ConsumableInfo.QuantityReduced += UpdateUI;
+            if (_currentInspectingItem != null) _currentInspectingItem.Consumable.QuantityChanged += UpdateUI;
         }
 
         private void OnDisable()
         {
-            ConsumableInfo.QuantityReduced -= UpdateUI;
+            if (_currentInspectingItem != null) _currentInspectingItem.Consumable.QuantityChanged -= UpdateUI;
             UIConsumableItem.Inspecting -= SaveInspectingItemToSelectLater;
         }
 
         private void UpdateUI(ConsumableInfo consumable)
         {
             if (consumable.Data == null || _currentInspectingItem == null
-                || _currentInspectingItem.Consumable.Data == null) return;
+                                        || _currentInspectingItem.Consumable.Data == null) return;
 
             if (consumable.Quantity <= 0)
             {
@@ -71,7 +69,11 @@ namespace CryptoQuest.Menus.Item.UI
         }
 
         private void SaveInspectingItemToSelectLater(UIConsumableItem item)
-            => _currentInspectingItem = item;
+        {
+            if (_currentInspectingItem != null) _currentInspectingItem.Consumable.QuantityChanged -= UpdateUI;
+            _currentInspectingItem = item;
+            _currentInspectingItem.Consumable.QuantityChanged += UpdateUI;
+        }
 
         public void Hide()
         {
@@ -99,8 +101,7 @@ namespace CryptoQuest.Menus.Item.UI
 
         private void RenderConsumables()
         {
-            var inventory = ServiceProvider.GetService<IInventoryController>().Inventory;
-            foreach (var item in inventory.Consumables)
+            foreach (var item in _inventory.Items)
             {
                 if (item.Data.Type == Type)
                     CreateItem(item);

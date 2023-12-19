@@ -1,29 +1,24 @@
-using System;
 using System.Linq;
 using CryptoQuest.AbilitySystem.Abilities;
 using CryptoQuest.Battle.Components;
 using CryptoQuest.Battle.ScriptableObjects;
-using CryptoQuest.Gameplay.Inventory;
-using CryptoQuest.Gameplay.Inventory.Helper;
-using CryptoQuest.System;
+using CryptoQuest.Inventory;
+using CryptoQuest.Inventory.Helper;
 using CryptoQuest.UI.Common;
-using IndiGames.Core.Common;
 using UnityEngine;
-using UnityEngine.Localization;
-using UnityEngine.Localization.Components;
 using UnityEngine.UI;
 
 namespace CryptoQuest.Battle.UI.SelectCommand
 {
     public class SelectCommandPresenter : MonoBehaviour
     {
+        [SerializeField] private ConsumableInventory _inventory;
         [SerializeField] private UISelectCommand _uiSelectCommand;
         [SerializeField] private Button _skillButton;
         [SerializeField] private Button _itemButton;
 
         private UIGrayoutTextsBehaviour _skillGrayBehaviour;
         private UIGrayoutTextsBehaviour _itemGrayBehaviour;
-        private IInventoryController _inventoryController;
 
         private void Awake()
         {
@@ -65,10 +60,7 @@ namespace CryptoQuest.Battle.UI.SelectCommand
 
         private void SetItemButtonActive()
         {
-            _inventoryController ??= ServiceProvider.GetService<IInventoryController>();
-            var inventory = _inventoryController.Inventory;
-
-            var isButtonSelectable = inventory.GetItemsInBattle().Count() > 0;
+            var isButtonSelectable = _inventory.GetItemsInBattle().Count() > 0;
             _itemGrayBehaviour.SetGrayoutTexts(isButtonSelectable);
             _itemButton.onClick = new Button.ButtonClickedEvent();
             if (isButtonSelectable)

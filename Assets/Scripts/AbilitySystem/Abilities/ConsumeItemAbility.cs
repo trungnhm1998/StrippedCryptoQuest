@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using CryptoQuest.AbilitySystem.Abilities.Conditions;
-using CryptoQuest.Item;
 using CryptoQuest.Item.Consumable;
 using IndiGames.GameplayAbilitySystem.AbilitySystem;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.ScriptableObjects;
@@ -23,7 +22,7 @@ namespace CryptoQuest.AbilitySystem.Abilities
         [field: SerializeField] public TagScriptableObject[] CancelEffectWithTags { get; private set; } =
             Array.Empty<TagScriptableObject>();
 
-        [field: SerializeReference, ReferenceEnum] 
+        [field: SerializeReference, SubclassSelector] 
         public IAbilityCondition[] Conditions { get; private set; } = Array.Empty<IAbilityCondition>();
 
         private void OnValidate()
@@ -46,15 +45,14 @@ namespace CryptoQuest.AbilitySystem.Abilities
     public class ConsumableAbilitySpec : GameplayAbilitySpec
     {
         private readonly ConsumeItemAbility _def;
-        private ConsumableInfo _consumable;
+        private ConsumableSO _item;
         public ConsumableAbilitySpec(ConsumeItemAbility def) => _def = def;
-        public void SetConsumable(ConsumableInfo consumable) => _consumable = consumable;
 
         public override bool CanActiveAbility()
         {
             var canActiveAbility = base.CanActiveAbility() && CanPassAllCondition();
             if (!canActiveAbility)
-                Debug.Log($"Consume {_consumable.Data} failed on {Owner.name}");
+                Debug.Log($"Consume {_item} failed on {Owner.name}");
             return canActiveAbility;
         }
 
@@ -65,7 +63,7 @@ namespace CryptoQuest.AbilitySystem.Abilities
                 Owner.EffectSystem.ExpireEffectWithTagImmediately(tag);
             }
 
-            var effect = _consumable.Data.Effect;
+            var effect = _item.Effect;
             var effectSpec = CreateEffectSpec(effect);
             Owner.ApplyEffectSpecToSelf(effectSpec);
             EndAbility();
@@ -81,11 +79,17 @@ namespace CryptoQuest.AbilitySystem.Abilities
         {
             foreach (var condition in _def.Conditions)
             {
-                var isConditionPass = condition.IsPass(new AbilityConditionContext(Owner, _consumable.Data.Effect)); 
+                var isConditionPass = condition.IsPass(new AbilityConditionContext(Owner, _item.Effect)); 
                 if (!isConditionPass) return false;
             }
 
             return true;
+        }
+
+        public bool TryActiveAbility(ConsumableSO item)
+        {
+            _item = item;
+            return base.TryActiveAbility();
         }
     }
 }

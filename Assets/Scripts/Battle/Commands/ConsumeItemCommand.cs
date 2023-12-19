@@ -1,14 +1,9 @@
-﻿using CryptoQuest.Battle.Components;
-using CryptoQuest.Item;
-using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
-using UnityEngine;
-using System.Collections;
-using CryptoQuest.AbilitySystem.Abilities;
-using CryptoQuest.System;
-using CryptoQuest.Gameplay.Inventory;
+﻿using CryptoQuest.AbilitySystem.Abilities;
 using CryptoQuest.Battle.Events;
+using CryptoQuest.Inventory.Actions;
 using CryptoQuest.Item.Consumable;
-using IndiGames.Core.Common;
+using IndiGames.Core.Events;
+using UnityEngine;
 
 namespace CryptoQuest.Battle.Commands
 {
@@ -24,12 +19,11 @@ namespace CryptoQuest.Battle.Commands
             _targets = targets;
             _selectedItem = selectedItem;
             _owner = owner;
-            BattleEventBus.RaiseEvent<SelectedItemEvent>(new SelectedItemEvent() { ItemInfo = selectedItem });
+            BattleEventBus.RaiseEvent(new SelectedItemEvent() { ItemInfo = selectedItem });
         }
 
         public void Execute()
         {
-            var inventoryController = ServiceProvider.GetService<IInventoryController>();
             bool ableToUseOnAtLeastOneHero = false;
             foreach (var target in _targets)
             {
@@ -42,18 +36,13 @@ namespace CryptoQuest.Battle.Commands
                 });
                 Debug.Log($"{_owner.DisplayName} using {_selectedItem.Data.name} on {target.DisplayName}");
                 var spec = target.AbilitySystem.GiveAbility<ConsumableAbilitySpec>(_selectedItem.Data.Ability);
-                spec.SetConsumable(_selectedItem);
-                if (spec.CanActiveAbility() && !ableToUseOnAtLeastOneHero)
-                {
-                    ableToUseOnAtLeastOneHero = true;
-                }
-
-                spec.TryActiveAbility();
+                if (spec.CanActiveAbility() && ableToUseOnAtLeastOneHero == false) ableToUseOnAtLeastOneHero = true;
+                spec.TryActiveAbility(_selectedItem.Data);
             }
 
             if (ableToUseOnAtLeastOneHero)
             {
-                _selectedItem.OnConsumed(inventoryController);
+                ActionDispatcher.Dispatch(new RemoveConsumableAction(_selectedItem.Data));
                 return;
             }
 

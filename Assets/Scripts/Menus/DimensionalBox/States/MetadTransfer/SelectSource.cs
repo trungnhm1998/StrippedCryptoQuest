@@ -1,4 +1,4 @@
-using CryptoQuest.Gameplay.Inventory.Currency;
+using CryptoQuest.Inventory.Currency;
 
 namespace CryptoQuest.Menus.DimensionalBox.States.MetadTransfer
 {

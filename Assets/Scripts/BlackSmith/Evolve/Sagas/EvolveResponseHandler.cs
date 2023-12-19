@@ -21,7 +21,7 @@ namespace CryptoQuest.BlackSmith.Evolve.Sagas
             int evolveStatus = response.data.success;
 
             ActionDispatcher.Dispatch(new RemoveEquipments(GetRemoveEquipments(ctx, evolveStatus)));
-            ActionDispatcher.Dispatch(new UpdateWalletAction(response));
+            ActionDispatcher.Dispatch(new FetchProfileAction());
 
             switch (evolveStatus)
             {
