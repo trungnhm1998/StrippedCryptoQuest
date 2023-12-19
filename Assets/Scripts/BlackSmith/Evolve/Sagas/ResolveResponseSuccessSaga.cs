@@ -1,5 +1,6 @@
 using System.Collections;
 using CryptoQuest.Gameplay.Inventory;
+using CryptoQuest.Sagas.Equipment;
 using CryptoQuest.Sagas.Profile;
 using IndiGames.Core.Common;
 using IndiGames.Core.Events;

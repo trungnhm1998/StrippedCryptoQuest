@@ -152,7 +152,6 @@ MonoBehaviour:
   _icon: {fileID: 2879297205340587377}
   _localizedName: {fileID: 4684627157347641080}
   _level: {fileID: 919942110222314997}
-  _selectedEffect: {fileID: 3741873122965498558}
 --- !u!114 &6404343371060808627
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -196,7 +195,20 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 9199050178691060760}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 4537128135974291570}
+        m_TargetAssemblyTypeName: CryptoQuest.Menus.Status.UI.MagicStone.UISingleStone,
+          IndiGames.CryptoQuest.Menus.Status
+        m_MethodName: OnPressed
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!222 &7996979345468942177
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -616,7 +628,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 216.31, y: 0}
+  m_AnchoredPosition: {x: 202.75, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!222 &2765188410870994023

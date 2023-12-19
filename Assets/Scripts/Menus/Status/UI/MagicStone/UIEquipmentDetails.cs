@@ -1,32 +1,30 @@
 ﻿using CryptoQuest.Item.Equipment;
-using CryptoQuest.UI.Extensions;
+using CryptoQuest.Menus.Status.UI.Equipment;
 using UnityEngine;
-using UnityEngine.Localization.Components;
-using UnityEngine.UI;
 
 namespace CryptoQuest.Menus.Status.UI.MagicStone
 {
     public class UIEquipmentDetails : MonoBehaviour
     {
-        [SerializeField] private Image _icon;
-        [SerializeField] private LocalizeStringEvent _localizedName;
-        [SerializeField] private Image _illustration;
         [SerializeField] private UIAttachList _attachList;
+        [SerializeField] private UIEquipment _uiEquipment;
 
         private IEquipment _equipment;
+        public IEquipment Equipment => _equipment;
 
         public void Init(IEquipment equipment)
         {
             _equipment = equipment;
             SetEquipmentInfo();
+            SetAttachingStones();
         }
 
         private void SetEquipmentInfo()
         {
-            _icon.sprite = _equipment.Type.Icon;
-            _localizedName.StringReference = _equipment.Prefab.DisplayName;
-            _illustration.LoadSpriteAndSet(_equipment.Prefab.Image);
+            _uiEquipment.Init(_equipment);
             _attachList.Init(_equipment.Data.StoneSlots);
         }
+
+        private void SetAttachingStones() => _uiEquipment.InitStone(_equipment);
     }
 }

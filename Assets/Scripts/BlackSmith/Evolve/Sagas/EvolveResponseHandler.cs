@@ -4,6 +4,7 @@ using CryptoQuest.Sagas.Profile;
 using IndiGames.Core.Common;
 using IndiGames.Core.Events;
 using System.Collections.Generic;
+using CryptoQuest.Sagas.Equipment;
 using UnityEngine;
 
 namespace CryptoQuest.BlackSmith.Evolve.Sagas

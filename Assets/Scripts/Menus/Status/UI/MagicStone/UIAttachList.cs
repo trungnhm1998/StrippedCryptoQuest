@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Linq;
 using CryptoQuest.Input;
+using CryptoQuest.Item.Equipment;
+using CryptoQuest.Item.MagicStone;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -9,9 +11,10 @@ namespace CryptoQuest.Menus.Status.UI.MagicStone
 {
     public class UIAttachList : MonoBehaviour
     {
-        public event UnityAction SelectStoneToAttachEvent;
+        public event UnityAction<IMagicStone> AttachSlotSelectedEvent;
 
         [SerializeField] private InputMediatorSO _input;
+        [SerializeField] private MagicStoneInventory _inventory;
         [SerializeField] private UIAttachSlot[] _attachSlots; // Max slots = 7
 
         private int _currentIndex = 0;
@@ -33,11 +36,16 @@ namespace CryptoQuest.Menus.Status.UI.MagicStone
             for (var i = 0; i < slots; i++)
             {
                 _attachSlots[i].gameObject.SetActive(true);
-                _attachSlots[i].Pressed += OnSelectStoneToAttach;
+                _attachSlots[i].Pressed += OnAttachSlotSelected;
             }
         }
 
-        private void OnSelectStoneToAttach() => SelectStoneToAttachEvent?.Invoke();
+        private void OnAttachSlotSelected()
+        {
+            _attachSlots[CurrentIndex].Detach();
+            var currentAttachedStone = _attachSlots[CurrentIndex].SingleStoneUI.Data;
+            AttachSlotSelectedEvent?.Invoke(currentAttachedStone);
+        }
 
         private void Navigate(Vector2 dir)
         {
@@ -77,7 +85,7 @@ namespace CryptoQuest.Menus.Status.UI.MagicStone
             {
                 if (slot == null) return;
                 slot.gameObject.SetActive(false);
-                slot.Pressed -= OnSelectStoneToAttach;
+                slot.Pressed -= OnAttachSlotSelected;
             }
         }
 
@@ -96,6 +104,20 @@ namespace CryptoQuest.Menus.Status.UI.MagicStone
             SetActiveAllSlotButtons(false);
         }
 
+        public void RenderCurrentAttachedStones(IEquipment equipment)
+        {
+            var currentAttachedStoneIDs = equipment.Data.AttachStones;
+            for (var i = 0; i < currentAttachedStoneIDs.Length; i++)
+            {
+                foreach (var magicStone in _inventory.MagicStones)
+                {
+                    if (currentAttachedStoneIDs[i] != magicStone.ID) continue;
+                    _attachSlots[i].SingleStoneUI.gameObject.SetActive(true);
+                    _attachSlots[i].SingleStoneUI.SetInfo(magicStone);
+                }
+            }
+        }
+
         private void SetActiveAllSlotButtons(bool isActive)
         {
             var slotButtons = gameObject.GetComponentsInChildren<Button>();
@@ -103,6 +125,7 @@ namespace CryptoQuest.Menus.Status.UI.MagicStone
                 button.enabled = isActive;
         }
 
+        public void AttachStoneToCurrentSlot(IMagicStone stoneData) => _attachSlots[CurrentIndex].Attach(stoneData);
         private void OnDisable() => ResetUI();
         private void OnDestroy() => ResetUI();
     }
