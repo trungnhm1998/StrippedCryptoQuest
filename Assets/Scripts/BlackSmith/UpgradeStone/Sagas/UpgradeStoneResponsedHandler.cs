@@ -1,4 +1,5 @@
 using CryptoQuest.Item.MagicStone;
+using CryptoQuest.Sagas;
 using CryptoQuest.Sagas.MagicStone;
 using CryptoQuest.UI.Actions;
 using IndiGames.Core.Common;
@@ -14,6 +15,7 @@ namespace CryptoQuest.BlackSmith.UpgradeStone.Sagas
         protected override void HandleAction(UpgradeStoneResponsed ctx)
         {
             var responseData = ctx.Response.data;
+            ActionDispatcher.Dispatch(new UpdateWalletAction(ctx.Response));
 
             if (responseData.success == 1)
             {

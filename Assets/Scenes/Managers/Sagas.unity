@@ -378,8 +378,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8388d7db5be4f1babb5b58358961d98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _magicStoneDefinitionDatabase: {fileID: 11400000, guid: 0b617ab93d2989d4da48a5b72118039a, type: 2}
-  _passiveAbilityDatabase: {fileID: 11400000, guid: 159d7e3bfc477b14eb71bdfbbdea52cd, type: 2}
   _stoneInventory: {fileID: 11400000, guid: dac3b863c8895c7408d0d03a95d1d969, type: 2}
 --- !u!114 &869823242
 MonoBehaviour:
@@ -747,6 +745,7 @@ GameObject:
   - component: {fileID: 1696120353}
   - component: {fileID: 1696120354}
   - component: {fileID: 1696120355}
+  - component: {fileID: 1696120356}
   m_Layer: 0
   m_Name: Profile
   m_TagString: Untagged
@@ -799,6 +798,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _saveSystem: {fileID: 11400000, guid: 660bab7c7e2db6946b3a03dc73ffe40f, type: 2}
+--- !u!114 &1696120356
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1696120352}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 895bdf65ca7b6964a995dead427c5d9d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _walletSO: {fileID: 11400000, guid: e349636f15671994ba195728c42a551b, type: 2}
+  _goldSO: {fileID: 11400000, guid: 16b3f6e09fc22d240be1b324116eeb79, type: 2}
+  _diamondSO: {fileID: 11400000, guid: 2869f59bdcbd4de4090ae28b6ca6b435, type: 2}
+  _soulSO: {fileID: 11400000, guid: 8ae25139aad32164a8355c28a591f9e0, type: 2}
 --- !u!1 &1795433845
 GameObject:
   m_ObjectHideFlags: 0
