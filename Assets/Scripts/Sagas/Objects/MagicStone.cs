@@ -10,16 +10,8 @@ namespace CryptoQuest.Sagas.Objects
     }
 
     [Serializable]
-    public class MagicStonesResponse
+    public class MagicStonesResponse : CommonResponse
     {
-        public int code;
-        public bool success;
-        public string message;
-        public string uuid;
-        public int gold;
-        public float diamond;
-        public int soul;
-        public long time;
         public Data data;
         public int page_size;
         public int page;

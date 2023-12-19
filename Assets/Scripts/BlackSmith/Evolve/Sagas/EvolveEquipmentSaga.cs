@@ -1,5 +1,6 @@
 using CryptoQuest.BlackSmith.Interface;
 using CryptoQuest.Networking;
+using CryptoQuest.Sagas;
 using CryptoQuest.Sagas.Objects;
 using CryptoQuest.UI.Actions;
 using CryptoQuest.UI.Popups;
@@ -13,16 +14,8 @@ using UnityEngine;
 namespace CryptoQuest.BlackSmith.Evolve.Sagas
 {
     [Serializable]
-    public class EvolveResponse
+    public class EvolveResponse : CommonResponse
     {
-        public int code;
-        public bool success;
-        public string message;
-        public string uuid;
-        public int gold;
-        public int diamond;
-        public int soul;
-        public long time;
         public EquipmentResponseData data;
 
         [Serializable]

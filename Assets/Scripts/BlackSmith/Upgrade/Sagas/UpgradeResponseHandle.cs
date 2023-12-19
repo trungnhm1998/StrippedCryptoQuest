@@ -3,6 +3,7 @@ using CryptoQuest.BlackSmith.Upgrade.Actions;
 using CryptoQuest.Gameplay.Inventory;
 using CryptoQuest.Gameplay.PlayerParty;
 using CryptoQuest.Item.Equipment;
+using CryptoQuest.Sagas;
 using IndiGames.Core.Common;
 using IndiGames.Core.Events;
 
@@ -40,6 +41,7 @@ namespace CryptoQuest.BlackSmith.Upgrade.Sagas
             };
 
             ActionDispatcher.Dispatch(new UpgradeSucceed(equipmentInfo, level, gold));
+            ActionDispatcher.Dispatch(new UpdateWalletAction(ctx.Response));
         }
 
         private IEquipment TryFindEquipment(int id)

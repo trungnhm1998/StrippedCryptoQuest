@@ -1,4 +1,5 @@
 using CryptoQuest.Item.Equipment;
+using CryptoQuest.Sagas;
 using CryptoQuest.Sagas.Profile;
 using IndiGames.Core.Common;
 using IndiGames.Core.Events;
@@ -19,6 +20,7 @@ namespace CryptoQuest.BlackSmith.Evolve.Sagas
             int evolveStatus = response.data.success;
 
             ActionDispatcher.Dispatch(new RemoveEquipments(GetRemoveEquipments(ctx, evolveStatus)));
+            ActionDispatcher.Dispatch(new UpdateWalletAction(response));
 
             switch (evolveStatus)
             {
