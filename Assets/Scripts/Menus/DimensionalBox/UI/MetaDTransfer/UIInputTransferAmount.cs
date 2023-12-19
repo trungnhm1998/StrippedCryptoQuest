@@ -14,8 +14,16 @@ namespace CryptoQuest.Menus.DimensionalBox.UI.MetaDTransfer
 
         private Color _validColor;
 
-        // This should be configurated in UI so we dont need to TryParse
-        public float InputedValue => float.Parse(_inputField.text);
+        // This should be configurated in UI, but Unity still accept char in OnValueChanged
+        public float InputedValue
+        {
+            get
+            {
+                if (float.TryParse(_inputField.text, out var value))
+                    return value;
+                return 0;
+            }
+        }
         
         public bool Interactable 
         {

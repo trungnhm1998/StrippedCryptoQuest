@@ -1,12 +1,13 @@
 ﻿using CryptoQuest.Gameplay;
+using CryptoQuest.Input;
 using UnityEngine;
 
-namespace CryptoQuest.Merchant
+namespace CryptoQuest.Map
 {
-    public class GameStateMerchantInputManager : MonoBehaviour
+    public class GameStateMapInputManager : MonoBehaviour
     {
         [SerializeField] private GameStateSO _gameState;
-        [SerializeField] private MerchantInput _input;
+        [SerializeField] private InputMediatorSO _input;
 
         private void OnEnable()
         {
@@ -20,9 +21,9 @@ namespace CryptoQuest.Merchant
 
         private void OnChanged(EGameState newState)
         {
-            if (newState == EGameState.Merchant)
+            if (newState == EGameState.Field)
             {
-                _input.EnableInput();
+                _input.EnableMapGameplayInput();
                 return;
             }
         }
