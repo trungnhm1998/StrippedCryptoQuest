@@ -8,29 +8,16 @@ using CryptoQuest.Sagas.Objects;
 using CryptoQuest.UI.Actions;
 using IndiGames.Core.Common;
 using IndiGames.Core.Events;
-using TinyMessenger;
 using UniRx;
 using UnityEngine;
 
 namespace CryptoQuest.Sagas.MagicStone
 {
-    public class GetMagicStones : MonoBehaviour
+    public class GetMagicStones : SagaBase<FetchProfileMagicStonesAction>
     {
         [SerializeField] private MagicStoneInventory _stoneInventory;
 
-        private TinyMessageSubscriptionToken _fetchEvent;
-
-        private void OnEnable()
-        {
-            _fetchEvent = ActionDispatcher.Bind<FetchProfileMagicStonesAction>(HandleAction);
-        }
-
-        private void OnDisable()
-        {
-            ActionDispatcher.Unbind(_fetchEvent);
-        }
-
-        private void HandleAction(FetchProfileMagicStonesAction _)
+        protected override void HandleAction(FetchProfileMagicStonesAction _)
         {
             ActionDispatcher.Dispatch(new ShowLoading());
             var restClient = ServiceProvider.GetService<IRestClient>();
