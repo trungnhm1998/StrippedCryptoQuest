@@ -12,7 +12,7 @@ using IndiGames.Core.Events;
 using UniRx;
 using UnityEngine;
 
-namespace CryptoQuest.Sagas.Profile
+namespace CryptoQuest.Sagas.Equipment
 {
     public class FetchProfileEquipments : SagaBase<FetchProfileEquipmentsAction>
     {

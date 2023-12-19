@@ -6,13 +6,12 @@ using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
 using CryptoQuest.Gameplay.PlayerParty;
 using CryptoQuest.Item;
 using CryptoQuest.Item.Equipment;
-using CryptoQuest.System;
 using IndiGames.Core.Common;
 using IndiGames.Core.Events;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
-namespace CryptoQuest.Sagas.Profile
+namespace CryptoQuest.Sagas.Equipment
 {
     public class UpdateHeroesNftEquipments : SagaBase<InventoryFilled>
     {

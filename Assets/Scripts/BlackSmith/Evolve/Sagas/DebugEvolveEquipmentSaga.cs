@@ -1,4 +1,5 @@
 using CryptoQuest.Item.Equipment;
+using CryptoQuest.Sagas.Equipment;
 using CryptoQuest.Sagas.Profile;
 using CryptoQuest.UI.Actions;
 using IndiGames.Core.Common;

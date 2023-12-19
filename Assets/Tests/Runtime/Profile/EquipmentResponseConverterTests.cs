@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using CryptoQuest.Sagas.Equipment;
 using CryptoQuest.Sagas.Objects;
 using CryptoQuest.Sagas.Profile;
 using NUnit.Framework;

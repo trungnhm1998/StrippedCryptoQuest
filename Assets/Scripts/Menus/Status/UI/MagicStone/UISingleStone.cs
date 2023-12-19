@@ -10,7 +10,7 @@ namespace CryptoQuest.Menus.Status.UI.MagicStone
 {
     public class UISingleStone : MonoBehaviour
     {
-        public event UnityAction Pressed;
+        public event UnityAction<IMagicStone> Pressed;
         [SerializeField] private Image _icon;
         [SerializeField] private LocalizeStringEvent _localizedName;
         [SerializeField] private TMP_Text _level;
@@ -27,6 +27,6 @@ namespace CryptoQuest.Menus.Status.UI.MagicStone
             _level.text = $"Lv{stoneData.Level.ToString()}";
         }
 
-        public void OnPressed() => Pressed?.Invoke();
+        public void OnPressed() => Pressed?.Invoke(_stoneData);
     }
 }

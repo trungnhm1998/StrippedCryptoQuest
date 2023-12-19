@@ -10,7 +10,7 @@ using IndiGames.Core.Common;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
 using UnityEngine;
 
-namespace CryptoQuest.Sagas.Profile
+namespace CryptoQuest.Sagas.Equipment
 {
     public interface IEquipmentResponseConverter
     {
@@ -41,7 +41,7 @@ namespace CryptoQuest.Sagas.Profile
 
         public IEquipment Convert(EquipmentResponse response)
         {
-            IEquipment equipment = new Equipment()
+            IEquipment equipment = new Item.Equipment.Equipment()
             {
                 // TokenId = equipmentResponse.equipmentTokenId,
                 Id = response.id,
