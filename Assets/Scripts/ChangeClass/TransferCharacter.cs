@@ -2,8 +2,9 @@ using System.Collections.Generic;
 using System.Linq;
 using CryptoQuest.Actions;
 using CryptoQuest.Character.Hero;
-using CryptoQuest.Gameplay.Inventory;
 using CryptoQuest.Gameplay.PlayerParty;
+using CryptoQuest.Inventory;
+using CryptoQuest.Inventory.Actions;
 using CryptoQuest.Item.Equipment;
 using IndiGames.Core.Common;
 using IndiGames.Core.Events;
@@ -16,7 +17,6 @@ namespace CryptoQuest.ChangeClass
         [SerializeField] private PartySO _partySO;
         [SerializeField] private HeroInventorySO _heroesInventorySO;
         private IPartyController _partyController;
-        private IInventoryController _inventoryController;
         private HeroSpec _heroSpec;
         private int _memberId;
 
@@ -60,9 +60,8 @@ namespace CryptoQuest.ChangeClass
 
         private void RemoveEquipmentsFromHeroAndAddBackToInventory(PartySlotSpec partySlotSpec)
         {
-            _inventoryController ??= ServiceProvider.GetService<IInventoryController>();
             var equippingItems = FilterUniqueEquippingItems(partySlotSpec);
-            foreach (var item in equippingItems) _inventoryController.Add(item);
+            foreach (var item in equippingItems) ActionDispatcher.Dispatch(new AddEquipmentAction(item));
             partySlotSpec.EquippingItems.Slots = new();
         }
 

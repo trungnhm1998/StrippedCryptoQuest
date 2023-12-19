@@ -1,4 +1,4 @@
-﻿using CryptoQuest.Gameplay.Inventory;
+﻿using CryptoQuest.Inventory;
 using CryptoQuest.Item.Consumable;
 using NUnit.Framework;
 using UnityEngine;

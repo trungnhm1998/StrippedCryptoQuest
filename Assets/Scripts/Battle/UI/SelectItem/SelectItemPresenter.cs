@@ -1,11 +1,8 @@
 using System;
 using CryptoQuest.Battle.UI.CommandDetail;
-using CryptoQuest.Gameplay.Inventory;
-using CryptoQuest.Gameplay.Inventory.Helper;
-using CryptoQuest.Item;
+using CryptoQuest.Inventory;
+using CryptoQuest.Inventory.Helper;
 using CryptoQuest.Item.Consumable;
-using CryptoQuest.System;
-using IndiGames.Core.Common;
 using IndiGames.Core.Events.ScriptableObjects;
 using UnityEngine;
 
@@ -28,6 +25,7 @@ namespace CryptoQuest.Battle.UI.SelectItem
         public ItemTargetTypeDelegate SelectAllHeroCallback { get; set; }
         private void OnTargetAllHero() => SelectAllHeroCallback?.Invoke(_selectedItem);
 
+        [SerializeField] private ConsumableInventory _inventory;
         [SerializeField] private UICommandDetailPanel _itemListUI;
 
         [Header("State event context")]
@@ -64,10 +62,9 @@ namespace CryptoQuest.Battle.UI.SelectItem
 
         private void ShowItemListUI()
         {
-            var inventory = ServiceProvider.GetService<IInventoryController>().Inventory;
             var model = new CommandDetailModel();
 
-            foreach (var item in inventory.GetItemsInBattle())
+            foreach (var item in _inventory.GetItemsInBattle())
             {
                 var itemButtonInfo = new ItemButtonInfo(item, ConfirmSelectItem);
                 model.AddInfo(itemButtonInfo);

@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
+using CryptoQuest.Inventory.ScriptableObjects;
 using IndiGames.Core.Events;
 using TinyMessenger;
 using UnityEngine;
@@ -8,7 +8,7 @@ namespace CryptoQuest.Sagas.Equipment
 {
     public class UpdateEquipmentStonesAfterAttached : SagaBase<AttachStones>
     {
-        [SerializeField] private InventorySO _inventory;
+        [SerializeField] private EquipmentInventory _inventory;
 
         private TinyMessageSubscriptionToken _attachSucceededToken;
         private int _equipmentID;

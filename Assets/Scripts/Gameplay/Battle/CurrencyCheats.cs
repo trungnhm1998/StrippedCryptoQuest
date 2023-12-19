@@ -9,10 +9,10 @@ using Newtonsoft.Json;
 using System.Collections.Generic;
 using CryptoQuest.Sagas.Objects;
 using CryptoQuest.API;
+using CryptoQuest.Inventory.Currency;
+using CryptoQuest.Inventory.ScriptableObjects;
 using IndiGames.Core.Common;
 using IndiGames.Core.Events;
-using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
-using CryptoQuest.Gameplay.Inventory.Currency;
 
 namespace CryptoQuest.Gameplay.Battle
 {

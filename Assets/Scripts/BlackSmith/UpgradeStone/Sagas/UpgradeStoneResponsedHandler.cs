@@ -1,10 +1,7 @@
-using CryptoQuest.Item.MagicStone;
-using CryptoQuest.Sagas;
 using CryptoQuest.Sagas.MagicStone;
-using CryptoQuest.UI.Actions;
+using CryptoQuest.Sagas.Profile;
 using IndiGames.Core.Common;
 using IndiGames.Core.Events;
-using UnityEngine;
 
 namespace CryptoQuest.BlackSmith.UpgradeStone.Sagas
 {
@@ -15,7 +12,7 @@ namespace CryptoQuest.BlackSmith.UpgradeStone.Sagas
         protected override void HandleAction(UpgradeStoneResponsed ctx)
         {
             var responseData = ctx.Response.data;
-            ActionDispatcher.Dispatch(new UpdateWalletAction(ctx.Response));
+            ActionDispatcher.Dispatch(new FetchProfileAction());
 
             if (responseData.success == 1)
             {

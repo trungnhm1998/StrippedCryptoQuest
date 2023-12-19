@@ -2,8 +2,8 @@
 using CryptoQuest.Actions;
 using CryptoQuest.Battle.Components;
 using CryptoQuest.Character.Hero;
-using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
 using CryptoQuest.Gameplay.PlayerParty;
+using CryptoQuest.Inventory.ScriptableObjects;
 using CryptoQuest.Item;
 using CryptoQuest.Item.Equipment;
 using IndiGames.Core.Common;
@@ -15,9 +15,9 @@ namespace CryptoQuest.Sagas.Equipment
 {
     public class UpdateHeroesNftEquipments : SagaBase<InventoryFilled>
     {
-        [SerializeField] private AssetReferenceT<InventorySO> _inventoryAsset;
+        [SerializeField] private AssetReferenceT<EquipmentInventory> _inventoryAsset;
         [SerializeField] private AssetReferenceT<PartySO> _partyAsset;
-        private InventorySO _inventory;
+        private EquipmentInventory _equipmentInventory;
         private PartySO _partySO;
         private IPartyController _partyController;
 
@@ -46,7 +46,7 @@ namespace CryptoQuest.Sagas.Equipment
         {
             var inventoryHandle = _inventoryAsset.LoadAssetAsync();
             yield return inventoryHandle;
-            _inventory = inventoryHandle.Result;
+            _equipmentInventory = inventoryHandle.Result;
 
             var partyHandle = _partyAsset.LoadAssetAsync();
             yield return partyHandle;

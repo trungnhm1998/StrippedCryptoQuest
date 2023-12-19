@@ -1,7 +1,5 @@
 using System.Collections.Generic;
 using System.Linq;
-using CryptoQuest.Gameplay.Inventory.Currency;
-using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
 using CryptoQuest.Item.MagicStone;
 using UnityEngine;
 using UnityEngine.Localization;

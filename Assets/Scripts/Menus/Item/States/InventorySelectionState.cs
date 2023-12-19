@@ -1,5 +1,5 @@
-﻿using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Type;
-using CryptoQuest.Input;
+﻿using CryptoQuest.Input;
+using CryptoQuest.Inventory.ScriptableObjects.Item.Type;
 using CryptoQuest.Menus.Item.UI;
 using CryptoQuest.UI.Menu;
 

@@ -2,7 +2,6 @@
 using CryptoQuest.Item.Equipment;
 using CryptoQuest.Sagas.Equipment;
 using CryptoQuest.Sagas.Objects;
-using CryptoQuest.Sagas.Profile;
 using IndiGames.Core.Common;
 using TMPro;
 using UnityEngine;

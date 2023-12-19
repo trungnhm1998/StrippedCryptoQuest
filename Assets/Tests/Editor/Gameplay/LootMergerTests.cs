@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using CryptoQuest.Battle;
-using CryptoQuest.Gameplay.Inventory.Currency;
 using CryptoQuest.Gameplay.Loot;
+using CryptoQuest.Inventory.Currency;
 using CryptoQuest.Item;
 using CryptoQuest.Item.Consumable;
 using NUnit.Framework;

@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net;
-using CryptoQuest.Gameplay.Inventory.Currency;
-using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
 using CryptoQuest.Menus.DimensionalBox.Objects;
 using CryptoQuest.Menus.DimensionalBox.UI.MetaDTransfer;
 using CryptoQuest.Networking;
 using CryptoQuest.API;
+using CryptoQuest.Inventory.Currency;
+using CryptoQuest.Inventory.ScriptableObjects;
 using CryptoQuest.Sagas;
 using CryptoQuest.System;
 using CryptoQuest.UI.Actions;

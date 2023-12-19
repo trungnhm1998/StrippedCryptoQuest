@@ -1,7 +1,7 @@
 ﻿using System;
 using CryptoQuest.Battle;
-using CryptoQuest.Gameplay.Inventory;
-using CryptoQuest.Gameplay.Inventory.Currency;
+using CryptoQuest.Inventory;
+using CryptoQuest.Inventory.Currency;
 using CryptoQuest.UI.Dialogs.RewardDialog;
 
 namespace CryptoQuest.Gameplay.Loot

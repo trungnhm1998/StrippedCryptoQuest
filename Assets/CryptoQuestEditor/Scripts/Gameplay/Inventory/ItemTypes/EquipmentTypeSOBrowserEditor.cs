@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO;
-using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Type;
 using CryptoQuest.Item.Equipment;
 using IndiGames.Tools.ScriptableObjectBrowser;
 using UnityEditor;

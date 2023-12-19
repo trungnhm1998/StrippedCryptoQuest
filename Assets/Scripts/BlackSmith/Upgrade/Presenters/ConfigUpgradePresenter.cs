@@ -2,8 +2,9 @@ using System;
 using System.Collections.Generic;
 using CryptoQuest.BlackSmith.ScriptableObjects;
 using CryptoQuest.BlackSmith.Upgrade.UI;
-using CryptoQuest.Gameplay.Inventory.Currency;
-using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
+using CryptoQuest.Input;
+using CryptoQuest.Inventory.Currency;
+using CryptoQuest.Inventory.ScriptableObjects;
 using CryptoQuest.Item.Equipment;
 using UnityEngine;
 

@@ -1,5 +1,5 @@
-﻿using CryptoQuest.Gameplay.Inventory;
-using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Type;
+﻿using CryptoQuest.Inventory;
+using CryptoQuest.Inventory.ScriptableObjects.Item.Type;
 using UnityEngine;
 
 namespace CryptoQuest.ShopSystem

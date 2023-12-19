@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using CryptoQuest.Beast;
 using CryptoQuest.Beast.ScriptableObjects;
-using CryptoQuest.Gameplay.Inventory.Currency;
-using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
+using CryptoQuest.Inventory.Currency;
+using CryptoQuest.Inventory.ScriptableObjects;
 using CryptoQuest.Ranch.ScriptableObject;
 using CryptoQuest.Ranch.Upgrade.Presenters;
 using UnityEngine;

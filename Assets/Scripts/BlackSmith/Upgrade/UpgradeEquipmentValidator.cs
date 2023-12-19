@@ -1,3 +1,6 @@
+using System;
+using CryptoQuest.BlackSmith.Interface;
+using CryptoQuest.Input;
 using CryptoQuest.Item.Equipment;
 
 namespace CryptoQuest.BlackSmith.Upgrade

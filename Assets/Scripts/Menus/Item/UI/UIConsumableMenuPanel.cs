@@ -1,10 +1,6 @@
-using System;
 using System.Collections.Generic;
-using CryptoQuest.Gameplay.Inventory;
-using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Type;
 using CryptoQuest.Input;
-using CryptoQuest.Item;
-using CryptoQuest.Item.Consumable;
+using CryptoQuest.Inventory.ScriptableObjects.Item.Type;
 using CryptoQuest.Menus.Item.States;
 using CryptoQuest.UI.Menu;
 using IndiGames.Core.Events.ScriptableObjects;
@@ -29,9 +25,7 @@ namespace CryptoQuest.Menus.Item.UI
         public UIItemCharacterPartySlot SelectingHero { get; set; }
         [field: SerializeField] public VoidEventChannelSO SingleAlliedTarget { get; private set; }
         [field: SerializeField] public VoidEventChannelSO AllAlliesTarget { get; private set; }
-        [field: Header("State Context")] public event Action ItemConsumed;
-
-        [SerializeField] private ConsumableEventChannel _itemConsumedEvent;
+        [field: Header("State Context")]
         [SerializeField] private UIInventoryTabHeader _inventoryTabHeader;
         [SerializeField] private UIConsumables[] _itemLists;
         [SerializeField] private LocalizeStringEvent _localizeDescription;
@@ -79,7 +73,6 @@ namespace CryptoQuest.Menus.Item.UI
         {
             _itemMenuStateMachine ??= new ItemMenuStateMachine(this);
 
-            _itemConsumedEvent.EventRaised += OnItemConsumed;
             _description = _localizeDescription.GetComponent<Text>();
             for (var index = 0; index < _itemLists.Length; index++)
             {
@@ -104,13 +97,9 @@ namespace CryptoQuest.Menus.Item.UI
 
         private void OnDestroy()
         {
-            _itemConsumedEvent.EventRaised -= OnItemConsumed;
             _inventoryTabHeader.OpeningTab -= ShowItemsWithType;
             UIConsumableItem.Inspecting -= InspectingItem;
         }
-
-        private void OnItemConsumed(ConsumableInfo consumable)
-            => ItemConsumed?.Invoke();
 
         private void InspectingItem(UIConsumableItem item)
         {

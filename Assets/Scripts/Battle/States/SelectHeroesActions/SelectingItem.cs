@@ -5,8 +5,6 @@ using CryptoQuest.Battle.Events;
 using CryptoQuest.Battle.UI.CommandDetail;
 using CryptoQuest.Battle.UI.SelectCommand;
 using CryptoQuest.Battle.UI.SelectItem;
-using CryptoQuest.Gameplay.Inventory;
-using CryptoQuest.Gameplay.Inventory.Helper;
 using CryptoQuest.Item;
 using CryptoQuest.Item.Consumable;
 using CryptoQuest.System;

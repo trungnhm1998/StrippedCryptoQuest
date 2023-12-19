@@ -1,19 +1,21 @@
 using CryptoQuest.Battle.Components;
 using CryptoQuest.BlackSmith.Upgrade.Actions;
-using CryptoQuest.Gameplay.Inventory;
 using CryptoQuest.Gameplay.PlayerParty;
+using CryptoQuest.Inventory.ScriptableObjects;
 using CryptoQuest.Item.Equipment;
-using CryptoQuest.Sagas;
+using CryptoQuest.Sagas.Profile;
 using IndiGames.Core.Common;
 using IndiGames.Core.Events;
+using UnityEngine;
 
 namespace CryptoQuest.BlackSmith.Upgrade.Sagas
 {
     public class UpgradeResponseHandle : SagaBase<UpgradeResponsed>
     {
-        private IInventoryController _inventoryController;
-        private IPartyController _partyController;
+        [SerializeField] private EquipmentInventory _inventory;
 
+
+        private IPartyController _partyController;
         private HeroBehaviour _hero;
         private ESlot _slotType;
 
@@ -23,7 +25,6 @@ namespace CryptoQuest.BlackSmith.Upgrade.Sagas
             var level = ctx.Response.data.equipment.lv;
             var equipmentId = ctx.Response.data.equipment.id;
 
-            _inventoryController ??= ServiceProvider.GetService<IInventoryController>();
 
             var equipment = TryFindEquipment(equipmentId);
 
@@ -32,7 +33,7 @@ namespace CryptoQuest.BlackSmith.Upgrade.Sagas
                 ActionDispatcher.Dispatch(new UpgradeFailed());
                 return;
             }
-            
+
             var equipmentInfo = new UpgradedEquipmentInfo()
             {
                 Equipment = equipment,
@@ -41,15 +42,13 @@ namespace CryptoQuest.BlackSmith.Upgrade.Sagas
             };
 
             ActionDispatcher.Dispatch(new UpgradeSucceed(equipmentInfo, level, gold));
-            ActionDispatcher.Dispatch(new UpdateWalletAction(ctx.Response));
+            ActionDispatcher.Dispatch(new FetchProfileAction());
         }
 
         private IEquipment TryFindEquipment(int id)
         {
-            _inventoryController ??= ServiceProvider.GetService<IInventoryController>();
-
-            var equipment = _inventoryController.Inventory.Equipments.Find(e => e.Id == id);
-            if (equipment != null) return equipment;
+            if (_inventory.TryFindEquipment(id, out var equipment) == false)
+                return equipment;
 
             var equippingEquipment = TryFindEquipping(id);
             if (equippingEquipment != null) return equippingEquipment;

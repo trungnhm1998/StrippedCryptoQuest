@@ -3,7 +3,7 @@ using CryptoQuest.Menus.TownTransfer;
 using UnityEngine;
 using UnityEngine.Localization.Components;
 
-namespace CryptoQuest.TownTransfer.UI
+namespace CryptoQuest.Menus.Skill.UI.TownTransfer
 {
     public class UITownTransferOptionButton : MonoBehaviour
     {

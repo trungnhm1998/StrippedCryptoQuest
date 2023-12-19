@@ -1,4 +1,4 @@
-using CryptoQuest.Gameplay.Inventory.Currency;
+using CryptoQuest.Inventory.Currency;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;

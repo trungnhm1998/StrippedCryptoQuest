@@ -1,4 +1,4 @@
-using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Type;
+using CryptoQuest.Inventory.ScriptableObjects.Item.Type;
 using CryptoQuest.Menu;
 using UnityEngine;
 using UnityEngine.Events;

@@ -2,9 +2,7 @@ using System;
 using System.Collections;
 using CryptoQuest.BlackSmith.Interface;
 using CryptoQuest.BlackSmith.Upgrade.UI;
-using CryptoQuest.Gameplay.Inventory;
 using CryptoQuest.Item.Equipment;
-using IndiGames.Core.Common;
 using UnityEngine;
 using UnityEngine.Localization;
 
@@ -65,8 +63,7 @@ namespace CryptoQuest.BlackSmith.Upgrade.Presenters
         private const float ERROR_PRONE_DELAY = 0.05f;
         private IEnumerator CoInitUI()
         {
-            var inventory = ServiceProvider.GetService<IInventoryController>().Inventory;
-            yield return _upgradeModel.CoGetData(inventory);
+            yield return _upgradeModel.CoGetData();
             _equipmentListUI.InitUI(_upgradeModel);
 
             yield return new WaitForSeconds(ERROR_PRONE_DELAY);

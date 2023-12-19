@@ -1,5 +1,5 @@
 using CryptoQuest.Actions;
-using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
+using CryptoQuest.Inventory.ScriptableObjects;
 using IndiGames.Core.Events;
 using UnityEditor;
 using UnityEditor.UIElements;
@@ -8,12 +8,12 @@ using UnityEngine.UIElements;
 
 namespace CryptoQuestEditor
 {
-    [CustomEditor(typeof(InventorySO))]
+    [CustomEditor(typeof(EquipmentInventory))]
     public class InventorySOEditor : Editor
     {
         [SerializeField] private VisualTreeAsset _uxml;
         private Button _removeButton;
-        private InventorySO Target => target as InventorySO;
+        private EquipmentInventory Target => target as EquipmentInventory;
 
         public override VisualElement CreateInspectorGUI()
         {

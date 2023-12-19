@@ -1,5 +1,5 @@
 ﻿using System;
-using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item.Type;
+using CryptoQuest.Inventory.ScriptableObjects.Item.Type;
 using UnityEngine;
 
 namespace CryptoQuest.Menus.Item.UI

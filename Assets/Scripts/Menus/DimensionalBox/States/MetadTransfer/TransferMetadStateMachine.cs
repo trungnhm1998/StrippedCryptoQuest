@@ -1,5 +1,5 @@
-﻿using CryptoQuest.Gameplay.Inventory.Currency;
-using CryptoQuest.Input;
+﻿using CryptoQuest.Input;
+using CryptoQuest.Inventory.Currency;
 using CryptoQuest.Menus.DimensionalBox.UI.MetaDTransfer;
 using FSM;
 

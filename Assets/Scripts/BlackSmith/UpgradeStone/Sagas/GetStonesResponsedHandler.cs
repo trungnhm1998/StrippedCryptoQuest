@@ -1,10 +1,9 @@
 using System.Collections.Generic;
 using CryptoQuest.Item.MagicStone;
-using CryptoQuest.Sagas;
 using CryptoQuest.Sagas.MagicStone;
+using CryptoQuest.Sagas.Profile;
 using IndiGames.Core.Common;
 using IndiGames.Core.Events;
-using UnityEngine;
 
 namespace CryptoQuest.BlackSmith.UpgradeStone.Sagas
 {
@@ -25,7 +24,7 @@ namespace CryptoQuest.BlackSmith.UpgradeStone.Sagas
             }
 
             ActionDispatcher.Dispatch(new ResponseGetMagicStonesSucceeded(stones));
-            ActionDispatcher.Dispatch(new UpdateWalletAction(ctx.Response));
+            ActionDispatcher.Dispatch(new FetchProfileAction());
         }
     }
 }

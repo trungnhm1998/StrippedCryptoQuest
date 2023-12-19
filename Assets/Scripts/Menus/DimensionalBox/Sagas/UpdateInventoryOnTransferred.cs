@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
+using CryptoQuest.Inventory.ScriptableObjects;
 using CryptoQuest.Menus.DimensionalBox.States.EquipmentsTransfer;
 using CryptoQuest.Menus.DimensionalBox.UI.EquipmentsTransfer;
 using IndiGames.Core.Events;
@@ -10,7 +10,7 @@ namespace CryptoQuest.Menus.DimensionalBox.Sagas
 {
     public class UpdateInventoryOnTransferred : SagaBase<TransferringEquipments>
     {
-        [SerializeField] private InventorySO _inventory;
+        [SerializeField] private EquipmentInventory _equipmentInventory;
 
         private List<UIEquipment> _equipmentsToRemove;
         private List<UIEquipment> _equipmentsToAdd;
@@ -37,10 +37,10 @@ namespace CryptoQuest.Menus.DimensionalBox.Sagas
         private void UpdateInventory(TransferSucceed ctx)
         {
             Dictionary<int, int> idToIndexCache = new();
-            for (int i = 0; i < _inventory.Equipments.Count; i++) idToIndexCache.Add(_inventory.Equipments[i].Id, i);
+            for (int i = 0; i < _equipmentInventory.Equipments.Count; i++) idToIndexCache.Add(_equipmentInventory.Equipments[i].Id, i);
 
-            foreach (var ui in _equipmentsToRemove) _inventory.Equipments.RemoveAt(idToIndexCache[ui.Id]);
-            foreach (var ui in _equipmentsToAdd) _inventory.Equipments.Add(ui.Equipment);
+            foreach (var ui in _equipmentsToRemove) _equipmentInventory.Equipments.RemoveAt(idToIndexCache[ui.Id]);
+            foreach (var ui in _equipmentsToAdd) _equipmentInventory.Equipments.Add(ui.Equipment);
         }
     }
 }

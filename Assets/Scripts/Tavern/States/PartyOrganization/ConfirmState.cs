@@ -1,10 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using CryptoQuest.Character.Hero;
-using CryptoQuest.Gameplay.Inventory;
 using CryptoQuest.Gameplay.PlayerParty;
+using CryptoQuest.Inventory;
+using CryptoQuest.Inventory.Actions;
 using CryptoQuest.Item.Equipment;
 using IndiGames.Core.Common;
+using IndiGames.Core.Events;
 using UnityEngine;
 using UnityEngine.Localization;
 
@@ -20,7 +22,6 @@ namespace CryptoQuest.Tavern.States.PartyOrganization
         private TavernController _controller;
 
         private static readonly int PartyOrganizationState = Animator.StringToHash("Party Organization Idle");
-        private IInventoryController _inventoryController;
         private const int MAX_NFT_HEROES_IN_PARTY = 3;
 
         protected override void OnEnter()
@@ -185,9 +186,8 @@ namespace CryptoQuest.Tavern.States.PartyOrganization
 
         private void RemoveEquipmentsFromHeroAndAddBackToInventory(PartySlotSpec partySlotSpec)
         {
-            _inventoryController ??= ServiceProvider.GetService<IInventoryController>();
             var equippingItems = FilterUniqueEquippingItems(partySlotSpec);
-            foreach (var item in equippingItems) _inventoryController.Add(item);
+            foreach (var item in equippingItems) ActionDispatcher.Dispatch(new AddEquipmentAction(item));
             partySlotSpec.EquippingItems.Slots = new();
         }
 

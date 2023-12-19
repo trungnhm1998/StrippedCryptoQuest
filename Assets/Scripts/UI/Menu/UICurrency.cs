@@ -1,5 +1,5 @@
-using CryptoQuest.Gameplay.Inventory.Currency;
-using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
+using CryptoQuest.Inventory.Currency;
+using CryptoQuest.Inventory.ScriptableObjects;
 using UnityEngine;
 using UnityEngine.UI;
 

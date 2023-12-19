@@ -1,6 +1,6 @@
 using CryptoQuest.Battle.Components;
-using CryptoQuest.Gameplay.Inventory;
 using CryptoQuest.Gameplay.PlayerParty;
+using CryptoQuest.Inventory.Actions;
 using CryptoQuest.Item.Equipment;
 using IndiGames.Core.Common;
 using IndiGames.Core.Events;
@@ -9,7 +9,6 @@ namespace CryptoQuest.BlackSmith.Evolve.Sagas
 {
     public class RemoveEquipmentsSaga : SagaBase<RemoveEquipments>
     {
-        private IInventoryController _inventoryController;
         private IPartyController _partyController;
 
         protected override void HandleAction(RemoveEquipments ctx)
@@ -17,18 +16,9 @@ namespace CryptoQuest.BlackSmith.Evolve.Sagas
             foreach (var equipment in ctx.Equipments)
             {
                 if (equipment == null || !equipment.IsValid()) return;
-
-                // Since equipment can only equipping or in inventory so
-                // if update in inventory success we dont need to update equipping
-                if (TryUpdateInventory(equipment)) continue;
+                ActionDispatcher.Dispatch(new RemoveEquipmentAction(equipment));
                 UpdateEquipping(equipment);
             }
-        }
-
-        private bool TryUpdateInventory(IEquipment equipment)
-        {
-            _inventoryController ??= ServiceProvider.GetService<IInventoryController>();
-            return _inventoryController.Remove(equipment);
         }
 
         private void UpdateEquipping(IEquipment equipment)
@@ -48,7 +38,7 @@ namespace CryptoQuest.BlackSmith.Evolve.Sagas
                     
                     var equipmentController = hero.GetComponent<EquipmentsController>();
                     equipmentController.Unequip(equipSlot.Type);
-                    _inventoryController.Remove(equipment);
+                    ActionDispatcher.Dispatch(new RemoveEquipmentAction(equipment));
                     return;
                 }
             }

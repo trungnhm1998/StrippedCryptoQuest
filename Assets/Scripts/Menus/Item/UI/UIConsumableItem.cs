@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using CryptoQuest.Battle.ScriptableObjects;
-using CryptoQuest.Item;
 using CryptoQuest.Item.Consumable;
 using CryptoQuest.Menu;
 using CryptoQuest.UI.Extensions;
@@ -41,13 +40,13 @@ namespace CryptoQuest.Menus.Item.UI
             _button.onClick.AddListener(OnUse);
         }
 
-
         private void OnDisable()
         {
             _button.Selected -= OnInspectingItem;
             _button.DeSelected -= OnDeselectItem;
             _button.onClick.RemoveListener(OnUse);
             CancelInvoke(nameof(SelectButton));
+            if (_consumable != null) _consumable.QuantityChanged -= SetQuantityText;
         }
 
         public void OnUse()
@@ -70,6 +69,8 @@ namespace CryptoQuest.Menus.Item.UI
 
         public void Init(ConsumableInfo item)
         {
+            if (_consumable != null) _consumable.QuantityChanged -= SetQuantityText;
+
             _consumable = item;
             StartCoroutine(CoLoadIcon());
             _name.StringReference = item.DisplayName;
@@ -77,6 +78,8 @@ namespace CryptoQuest.Menus.Item.UI
 
             var allowedInField = (_consumable.Data.UsageScenario & EAbilityUsageScenario.Field) > 0;
             SetColorText(allowedInField);
+
+            _consumable.QuantityChanged += SetQuantityText;
         }
 
         public void SetQuantityText(ConsumableInfo item)
@@ -88,8 +91,8 @@ namespace CryptoQuest.Menus.Item.UI
         {
             if (_consumable.Icon == null) yield break;
             if (!_consumable.Icon.RuntimeKeyIsValid()) yield break;
-            
-            _consumable.Icon.LoadSpriteAndSet(_icon);
+
+            _icon.LoadSpriteAndSet(_consumable.Icon);
         }
 
         private void SetColorText(bool allowed = false)
@@ -103,6 +106,7 @@ namespace CryptoQuest.Menus.Item.UI
         }
 
         private const float ERROR_PRONE_DELAY = 0.01f;
+
         public void Inspect()
         {
             Invoke(nameof(SelectButton), ERROR_PRONE_DELAY);
@@ -112,6 +116,6 @@ namespace CryptoQuest.Menus.Item.UI
         private void SelectButton()
         {
             _button.Select();
-        }    
+        }
     }
 }

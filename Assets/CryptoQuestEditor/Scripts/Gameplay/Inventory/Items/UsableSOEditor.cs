@@ -1,7 +1,5 @@
 using CryptoQuest.AbilitySystem.Abilities;
-using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
-using CryptoQuest.Gameplay.Inventory.ScriptableObjects.Item;
-using CryptoQuest.Item;
+using CryptoQuest.Inventory.ScriptableObjects;
 using CryptoQuest.Item.Consumable;
 using CryptoQuestEditor.Helper;
 using IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects;
@@ -10,7 +8,6 @@ using UnityEditor;
 using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
-using NotImplementedException = System.NotImplementedException;
 
 namespace CryptoQuestEditor
 {
@@ -19,10 +16,8 @@ namespace CryptoQuestEditor
     {
         private const string MAIN_INVENTORY = "MainInventory";
 
-        [SerializeField] private VisualTreeAsset _uxml;
-        public VisualTreeAsset _consumableUxml;
         private ConsumableSO Target => target as ConsumableSO;
-        private InventorySO InventorySO { get; set; }
+        private EquipmentInventory EquipmentInventory { get; set; }
 
         private HelpBox _helpBox;
         private ObjectField _inventoryField;
@@ -32,7 +27,7 @@ namespace CryptoQuestEditor
 
         private void OnEnable()
         {
-            InventorySO = ToolsHelper.GetAsset<InventorySO>(MAIN_INVENTORY);
+            EquipmentInventory = ToolsHelper.GetAsset<EquipmentInventory>(MAIN_INVENTORY);
         }
 
         public override VisualElement CreateInspectorGUI()
@@ -40,21 +35,12 @@ namespace CryptoQuestEditor
             var root = new VisualElement();
 
             InspectorElement.FillDefaultInspector(root, serializedObject, this);
+            
+            _addAbilityBtn = new Button();
+            root.Add(_addAbilityBtn);
+            _addEffectBtn = new Button();
+            root.Add(_addEffectBtn);
 
-            _uxml.CloneTree(root);
-            if (_consumableUxml != null) _consumableUxml.CloneTree(root);
-
-            _helpBox = root.Q<HelpBox>("help-box");
-            _inventoryField = root.Q<ObjectField>("inventory-field");
-            _inventoryField.value = InventorySO;
-            _addButton = root.Q<Button>("add-button");
-            _addAbilityBtn = root.Q<Button>("add-ability-button");
-            _addEffectBtn = root.Q<Button>("add-effect-button");
-
-            Notification();
-
-            _inventoryField.RegisterValueChangedCallback(Notification);
-            _addButton.clicked += AddEquipment;
             if (Target.Effect == null)
             {
                 _addEffectBtn.text = "Add Effect";
@@ -77,7 +63,6 @@ namespace CryptoQuestEditor
                 _addAbilityBtn.clicked += RemoveAbility;
             }
 
-
             return root;
         }
 
@@ -90,17 +75,12 @@ namespace CryptoQuestEditor
             }
             else
             {
-                InventorySO = (InventorySO)_inventoryField.value;
+                EquipmentInventory = (EquipmentInventory)_inventoryField.value;
 
                 _helpBox.messageType = HelpBoxMessageType.Info;
                 _helpBox.text =
-                    $"The current inventory is {InventorySO.name}, {Target.name} will be added into this inventory";
+                    $"The current inventory is {EquipmentInventory.name}, {Target.name} will be added into this inventory";
             }
-        }
-
-        private void AddEquipment()
-        {
-            InventorySO.Consumables.Add(new ConsumableInfo(Target));
         }
 
         private void AddAbility()

@@ -1,11 +1,12 @@
 using System.Collections.Generic;
 using System.Linq;
-using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
 using CryptoQuest.Gameplay.PlayerParty;
 using CryptoQuest.Gameplay.PlayerParty.Helper;
+using CryptoQuest.Inventory.ScriptableObjects;
 using CryptoQuest.Item.Equipment;
 using IndiGames.Core.Common;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace CryptoQuest.BlackSmith.Evolve
 {
@@ -22,7 +23,7 @@ namespace CryptoQuest.BlackSmith.Evolve
 
     public class EvolvableModel : MonoBehaviour, IEvolvableModel
     {
-        [SerializeField] private InventorySO _inventory;
+        [FormerlySerializedAs("_inventory")] [SerializeField] private EquipmentInventory _equipmentInventory;
 
         private IPartyController _partyController;
         private List<IEquipment> _equipments;
@@ -38,7 +39,7 @@ namespace CryptoQuest.BlackSmith.Evolve
         private List<IEquipment> GetAvailableEquipments()
         {
             _partyController ??= ServiceProvider.GetService<IPartyController>();
-            var equipments = new List<IEquipment>(_inventory.Equipments);
+            var equipments = new List<IEquipment>(_equipmentInventory.Equipments);
             equipments.AddRange(_partyController.GetEquippingEquipments());
             return equipments.Where(e => e.IsNft).ToList();
         }
