@@ -32,11 +32,10 @@ namespace CryptoQuest.Sagas.MagicStone
             if (obj.code != (int)HttpStatusCode.OK) return;
 
             var responseStones = obj.data.stones;
+            ActionDispatcher.Dispatch<GetStonesResponsed>(new GetStonesResponsed(obj));
             if (responseStones.Length == 0) return;
 
             FilterStonesByStatus(responseStones);
-
-            ActionDispatcher.Dispatch<GetStonesResponsed>(new GetStonesResponsed(obj));
         }
 
         private void FilterStonesByStatus(Objects.MagicStone[] stonesResponse)
