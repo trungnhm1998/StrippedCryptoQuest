@@ -23,7 +23,7 @@ namespace CryptoQuest.Sagas.Equipment
         protected override void HandleAction(DetachStones ctx)
         {
             ActionDispatcher.Dispatch(new ShowLoading());
-            Debug.Log($"<color=white>@@@@@@ id={ctx.EquipmentID} -- stones={ctx.StoneIDs[0]}</color>");
+            Debug.Log($"<color=white>Detach id={ctx.EquipmentID} -- stones={ctx.StoneIDs[0]}</color>");
             var restClient = ServiceProvider.GetService<IRestClient>();
             restClient
                 .WithBody(new DetachBody()

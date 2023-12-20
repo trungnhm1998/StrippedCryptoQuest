@@ -42,9 +42,11 @@ namespace CryptoQuest.Menus.Status.UI.MagicStone
 
         private void OnAttachSlotSelected()
         {
-            _attachSlots[CurrentIndex].Detach();
-            var currentAttachedStone = _attachSlots[CurrentIndex].SingleStoneUI.Data;
+            var singleStoneUi = _attachSlots[CurrentIndex].SingleStoneUI;
+            var currentAttachedStone = singleStoneUi.Data;
+            if (!singleStoneUi.gameObject.activeSelf) currentAttachedStone = null;
             AttachSlotSelectedEvent?.Invoke(currentAttachedStone);
+            _attachSlots[CurrentIndex].Detach();
         }
 
         private void Navigate(Vector2 dir)
@@ -107,7 +109,7 @@ namespace CryptoQuest.Menus.Status.UI.MagicStone
         public void RenderCurrentAttachedStones(IEquipment equipment)
         {
             var currentAttachedStoneIDs = equipment.Data.AttachStones;
-            for (var i = 0; i < currentAttachedStoneIDs.Length; i++)
+            for (var i = 0; i < currentAttachedStoneIDs.Count; i++)
             {
                 foreach (var magicStone in _inventory.MagicStones)
                 {
