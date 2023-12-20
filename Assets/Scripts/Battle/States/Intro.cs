@@ -1,6 +1,4 @@
-﻿using System;
-using CryptoQuest.UI.Dialogs.BattleDialog;
-using UnityEngine;
+﻿using CryptoQuest.UI.Dialogs.BattleDialog;
 
 namespace CryptoQuest.Battle.States
 {

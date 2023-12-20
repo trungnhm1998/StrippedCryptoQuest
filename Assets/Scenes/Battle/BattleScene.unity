@@ -243,6 +243,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BattleLogPresenter
       objectReference: {fileID: 0}
+    - target: {fileID: 128202177885790246, guid: 80573ccdc1f429c40878686468e1fcee, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2603140895196176383, guid: 80573ccdc1f429c40878686468e1fcee, type: 3}
       propertyPath: _roundEventsPresenter
       value: 
@@ -760,6 +764,8 @@ GameObject:
   - component: {fileID: 1180603474}
   - component: {fileID: 1180603473}
   - component: {fileID: 1180603476}
+  - component: {fileID: 1180603478}
+  - component: {fileID: 1180603477}
   m_Layer: 0
   m_Name: ResultManager
   m_TagString: Untagged
@@ -857,6 +863,8 @@ MonoBehaviour:
   _unloader: {fileID: 1180603471}
   _context: {fileID: 7116505576077580199}
   _battleLootManager: {fileID: 104468364}
+  _logDuration: 3
+  _battleBus: {fileID: 11400000, guid: 2290057e7f48d1046b5e0a6c3f6dc910, type: 2}
 --- !u!114 &1180603475
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -886,6 +894,7 @@ MonoBehaviour:
         m_CallState: 2
   _unloader: {fileID: 1180603471}
   _battleBus: {fileID: 11400000, guid: 2290057e7f48d1046b5e0a6c3f6dc910, type: 2}
+  _logDuration: 3
 --- !u!114 &1180603476
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -899,6 +908,36 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _battleStateMachine: {fileID: 7116505576077580197}
+--- !u!114 &1180603477
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1180603470}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0db2ea724a124764936bb3469cb89c56, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _battleBus: {fileID: 11400000, guid: 2290057e7f48d1046b5e0a6c3f6dc910, type: 2}
+  _roundEventsPresenter: {fileID: 891665762}
+  _duration: 3
+--- !u!114 &1180603478
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1180603470}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4001522a3b8477c939bb1ebcf612c93, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _battleBus: {fileID: 11400000, guid: 2290057e7f48d1046b5e0a6c3f6dc910, type: 2}
+  _roundEventsPresenter: {fileID: 891665762}
+  _duration: 3
 --- !u!114 &1343290373 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5949446545983247603, guid: d0eacd5a881766b4ca08ec4b770526a2, type: 3}
@@ -1295,10 +1334,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 3975206951188476836, guid: d0eacd5a881766b4ca08ec4b770526a2, type: 3}
-      propertyPath: _playerPartyPresenter
-      value: 
-      objectReference: {fileID: 1169412496}
     - target: {fileID: 4463206549349502206, guid: d0eacd5a881766b4ca08ec4b770526a2, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -1306,10 +1341,6 @@ PrefabInstance:
     - target: {fileID: 4463206549349502206, guid: d0eacd5a881766b4ca08ec4b770526a2, type: 3}
       propertyPath: m_Pivot.y
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4463206549349502206, guid: d0eacd5a881766b4ca08ec4b770526a2, type: 3}
-      propertyPath: m_RootOrder
-      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 4463206549349502206, guid: d0eacd5a881766b4ca08ec4b770526a2, type: 3}
       propertyPath: m_AnchorMax.x
@@ -1539,6 +1570,7 @@ GameObject:
   - component: {fileID: 7116505576077580196}
   - component: {fileID: 7116505576077580199}
   - component: {fileID: 7116505576077580203}
+  - component: {fileID: 7116505576077580204}
   m_Layer: 0
   m_Name: BattleManager
   m_TagString: Untagged
@@ -1743,6 +1775,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 966802992c9c4fa387ef5b5c1252dfd4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &7116505576077580204
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3846955041373722987}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ad81952372b4834b7ad6fba4d1133ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _battleBus: {fileID: 11400000, guid: 2290057e7f48d1046b5e0a6c3f6dc910, type: 2}
+  _uiIntroBattle: {fileID: 6217317452887572703}
 --- !u!114 &8909492559710276275 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4666074599004791690, guid: f5fa023033362a04f99acf1098ae54bc, type: 3}
