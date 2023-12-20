@@ -7,7 +7,7 @@ using CryptoQuest.UI.Actions;
 using IndiGames.Core.Common;
 using IndiGames.Core.Events;
 using UniRx;
-using Unity.Plastic.Newtonsoft.Json;
+using Newtonsoft.Json;
 using UnityEngine;
 
 namespace CryptoQuest.Ranch.Sagas
