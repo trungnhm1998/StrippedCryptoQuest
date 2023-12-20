@@ -4,7 +4,7 @@ using UnityEngine.Localization;
 namespace CryptoQuest.Ranch.State.BeastEvolve
 {
     public class EvolveStateBehaviour : BaseStateBehaviour
-    {        
+    {
         [SerializeField] private LocalizedString _message;
         [SerializeField] private LocalizedString _overviewMessage;
         private RanchStateController _controller;
@@ -18,10 +18,12 @@ namespace CryptoQuest.Ranch.State.BeastEvolve
             _controller.Controller.Input.SubmitEvent += ChangeSelectMaterialState;
             _controller.DialogController.NormalDialogue.SetMessage(_message).Show();
             _controller.EvolvePresenter.Init();
+            _controller.Controller.ShowWalletEventChannel.EnableAll().Show();
         }
 
         private void ChangeSelectMaterialState()
         {
+            if (!_controller.EvolvePresenter.UIBeastEvolve.IsEnoughCurrencies) return;
             SelectBaseMaterial();
             _controller.DialogController.NormalDialogue.Hide();
             StateMachine.Play(SelectMaterialState);
@@ -40,6 +42,7 @@ namespace CryptoQuest.Ranch.State.BeastEvolve
             _controller.Controller.Initialize();
             _controller.DialogController.NormalDialogue.SetMessage(_overviewMessage).Show();
             StateMachine.Play(OverviewState);
+            _controller.Controller.ShowWalletEventChannel.Hide();
         }
 
         protected override void OnExit()

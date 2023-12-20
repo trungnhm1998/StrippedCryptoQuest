@@ -874,7 +874,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: -25}
-  m_SizeDelta: {x: 0, y: -50}
+  m_SizeDelta: {x: 0, y: -70}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &129244907492569551
 MonoBehaviour:
@@ -1497,6 +1497,9 @@ MonoBehaviour:
   _uiBeastResultStats: {fileID: 6919754671862035965}
   _uiBeastEvolveInfoDetail: {fileID: 3647037432773266268}
   _uiResultTitle: {fileID: 6332859696895669836}
+  _wallet: {fileID: 11400000, guid: e349636f15671994ba195728c42a551b, type: 2}
+  _goldCurrencySO: {fileID: 11400000, guid: 16b3f6e09fc22d240be1b324116eeb79, type: 2}
+  _diamondCurrencySO: {fileID: 11400000, guid: 2869f59bdcbd4de4090ae28b6ca6b435, type: 2}
 --- !u!114 &8799957365495999144
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1545,8 +1548,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -20, y: 0}
+  m_AnchoredPosition: {x: 0.5, y: 0}
+  m_SizeDelta: {x: -1, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5290285987033527639
 CanvasRenderer:
@@ -1784,7 +1787,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8249260924618304079}
   - component: {fileID: 3170677467298937527}
-  - component: {fileID: 2770262257030970612}
+  - component: {fileID: 8649169841129503787}
   m_Layer: 5
   m_Name: ScrollView
   m_TagString: Untagged
@@ -1810,7 +1813,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 227.5, y: -175}
-  m_SizeDelta: {x: 445, y: 350}
+  m_SizeDelta: {x: 445, y: 360}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &3170677467298937527
 MonoBehaviour:
@@ -1842,7 +1845,7 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &2770262257030970612
+--- !u!114 &8649169841129503787
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1851,12 +1854,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 6636279782293972111}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: db680cf6b1e7353428c6159ae1ee1dec, type: 3}
+  m_Script: {fileID: 11500000, guid: 96887592a0334ea2879075e4d3a2a417, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _scrollRect: {fileID: 3170677467298937527}
-  _singleItemRect: {fileID: 4692324862800731734, guid: e33d5def612319e438587a320d9329dc, type: 3}
-  _useUpdate: 1
 --- !u!1 &6892736957419200224
 GameObject:
   m_ObjectHideFlags: 0
@@ -1972,7 +1972,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 50, y: -78}
-  m_SizeDelta: {x: 455, y: 400}
+  m_SizeDelta: {x: 455, y: 420}
   m_Pivot: {x: 0, y: 1}
 --- !u!222 &4795888906137713622
 CanvasRenderer:
@@ -2044,11 +2044,11 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 971298693587156476}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 1}
-  m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -172}
-  m_SizeDelta: {x: 424, y: 0}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0, y: 1}
 --- !u!114 &546112822173837356
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2522,7 +2522,7 @@ RectTransform:
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: -505, y: -78}
-  m_SizeDelta: {x: 455, y: 400}
+  m_SizeDelta: {x: 455, y: 420}
   m_Pivot: {x: 0, y: 1}
 --- !u!222 &9181287543279775429
 CanvasRenderer:

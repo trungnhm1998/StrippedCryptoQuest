@@ -31,6 +31,7 @@ namespace CryptoQuest.Ranch.State.BeastEvolve
 
         private void SelectBeastMaterial()
         {
+            if (!_controller.EvolvePresenter.UIBeastEvolve.IsEnoughCurrencies) return;
             var evolvePresenter = _controller.EvolvePresenter;
             var uiBeastEvolve = _controller.EvolvePresenter.UIBeastEvolve;
 

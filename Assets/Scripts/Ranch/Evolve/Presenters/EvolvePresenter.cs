@@ -1,5 +1,9 @@
 using System.Collections;
+using System.Collections.Generic;
 using CryptoQuest.Beast;
+using CryptoQuest.BlackSmith.Commons.UI;
+using CryptoQuest.Gameplay.Inventory.Currency;
+using CryptoQuest.Gameplay.Inventory.ScriptableObjects;
 using CryptoQuest.Ranch.Evolve.Interface;
 using CryptoQuest.Ranch.Evolve.UI;
 using CryptoQuest.Ranch.ScriptableObjects;
@@ -17,7 +21,11 @@ namespace CryptoQuest.Ranch.Evolve.Presenters
         [SerializeField] private UIBeastEvolveDetail _uiBeastResultStats;
         [SerializeField] private UIBeastEvolveInfoDetail _uiBeastEvolveInfoDetail;
         [SerializeField] private UIBeastEvolveResultTitle _uiResultTitle;
+        [SerializeField] private WalletSO _wallet;
+        [SerializeField] private CurrencySO _goldCurrencySO;
+        [SerializeField] private CurrencySO _diamondCurrencySO;
         public IBeastEvolvableInfo[] BeastEvolvableInfos { get; private set; }
+        private List<EvolvableBeast> _evolvableBeasts = new();
         public UIBeastEvolve UIBeastEvolve { get; private set; }
         public IBeast BeastToEvolve { get; set; }
         public IBeast BeastMaterial { get; set; }
@@ -31,7 +39,6 @@ namespace CryptoQuest.Ranch.Evolve.Presenters
 
         private void OnEnable()
         {
-            Init();
             _beastList.OnSelectedEvent += ShowBeastDetails;
             _beastList.IsOpenDetailsEvent += EnableBeastDetailEvent;
         }
@@ -72,13 +79,51 @@ namespace CryptoQuest.Ranch.Evolve.Presenters
 
         public void Init()
         {
+            _evolvableBeasts.Clear();
             StartCoroutine(CoInitUI());
         }
 
         private IEnumerator CoInitUI()
         {
             yield return _beastModel.CoGetData(_inventorySo);
-            _beastList.Init(_beastModel);
+
+            foreach (var beast in _beastModel.Beasts)
+            {
+                foreach (var evolvableInfo in BeastEvolvableInfos)
+                {
+                    if (evolvableInfo.BeforeStars == beast.Stars && beast.Level >= beast.MaxLevel)
+                    {
+                        var evolvableBeast = CreateEvolvableBeast(beast, evolvableInfo);
+                        _evolvableBeasts.Add(evolvableBeast);
+                    }
+                }
+            }
+            InitializeBeastList();
+            yield break;
+        }
+
+        private EvolvableBeast CreateEvolvableBeast(Beast.Beast beast, IBeastEvolvableInfo evolvableInfo)
+        {
+            return new EvolvableBeast
+            {
+                Beast = beast,
+                GoldCheck = CreateCurrencyValueEnough(_goldCurrencySO, evolvableInfo.Gold),
+                DiamondCheck = CreateCurrencyValueEnough(_diamondCurrencySO, evolvableInfo.Metad)
+            };
+        }
+
+        private CurrencyValueEnough CreateCurrencyValueEnough(CurrencySO currencySO, float value)
+        {
+            return new CurrencyValueEnough
+            {
+                Value = value,
+                IsEnough = _wallet[currencySO].Amount >= value
+            };
+        }
+
+        private void InitializeBeastList()
+        {
+            _beastList.Init(_evolvableBeasts);
         }
 
         public void FilterBeastMaterial(UIBeastEvolve beast)
