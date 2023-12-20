@@ -139,6 +139,7 @@ namespace CryptoQuest.Battle
             _gameState.UpdateGameState(_gameState.PreviousGameState);
             _battleInput.EnableMapGameplayInput();
             _rewardEventChannel.RewardRaiseEvent(_context.Loots);
+            _battleBus.CurrentBattlefield = null;
         }
     }
 }

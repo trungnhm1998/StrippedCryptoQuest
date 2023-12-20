@@ -196,7 +196,8 @@ namespace CryptoQuest.Battle.Events
 
     public class MissedEvent : LogEvent
     {
-        public bool IsDamage { get; private set;}
+        public bool IsDamage { get; private set; }
+
         public MissedEvent(bool isDamage = true)
         {
             IsDamage = isDamage;

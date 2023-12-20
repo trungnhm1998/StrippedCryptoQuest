@@ -106,6 +106,7 @@ namespace CryptoQuest.UI.Dialogs.BattleDialog
 
             if (_autoHideDuration > 0)
                 Invoke(nameof(Hide), _autoHideDuration);
+            _autoHideDuration = 0;
         }
 
         public override void Hide()
