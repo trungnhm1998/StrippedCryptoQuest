@@ -1,4 +1,5 @@
 ﻿using CommandTerminal;
+using CryptoQuest.Battle;
 using CryptoQuest.Battle.Events;
 using UnityEngine;
 
@@ -18,20 +19,20 @@ namespace CryptoQuest.System.Cheat
 
         private void TriggerLoseBattle(CommandArg[] obj)
         {
-            BattleEventBus.RaiseEvent(new TurnLostEvent());
-            BattleEventBus.RaiseEvent(new FinishedPresentingEvent());
+            BattleEventBus.RaiseEvent(new SetResultStateEvent(EBattleResult.Lost));
+            BattleEventBus.RaiseEvent(new ChangeToCurrentResultStateEvent());
         }
 
         private void TriggerWinBattle(CommandArg[] obj)
         {
-            BattleEventBus.RaiseEvent(new TurnWonEvent());
-            BattleEventBus.RaiseEvent(new FinishedPresentingEvent());
+            BattleEventBus.RaiseEvent(new SetResultStateEvent(EBattleResult.Retreated));
+            BattleEventBus.RaiseEvent(new ChangeToCurrentResultStateEvent());
         }
 
         private void InstantlyRetreat(CommandArg[] obj)
         {
-            BattleEventBus.RaiseEvent(new RetreatedEvent());
-            BattleEventBus.RaiseEvent(new FinishedPresentingEvent());
+            BattleEventBus.RaiseEvent(new SetResultStateEvent(EBattleResult.Retreated));
+            BattleEventBus.RaiseEvent(new ChangeToCurrentResultStateEvent());
         }
     }
 }

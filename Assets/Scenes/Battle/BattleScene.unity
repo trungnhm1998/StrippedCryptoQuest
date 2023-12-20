@@ -764,8 +764,9 @@ GameObject:
   - component: {fileID: 1180603474}
   - component: {fileID: 1180603473}
   - component: {fileID: 1180603476}
-  - component: {fileID: 1180603478}
-  - component: {fileID: 1180603477}
+  - component: {fileID: 1180603479}
+  - component: {fileID: 1180603481}
+  - component: {fileID: 1180603480}
   m_Layer: 0
   m_Name: ResultManager
   m_TagString: Untagged
@@ -816,21 +817,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27ad84ab795043c7adf85b31cec3b82d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _onRetreated:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1180603476}
-        m_TargetAssemblyTypeName: CryptoQuest.Battle.PostRoundHandler, indi-games.crypto-quest
-        m_MethodName: set_PreventNextState
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
   _unloader: {fileID: 1180603471}
   _bus: {fileID: 11400000, guid: 2290057e7f48d1046b5e0a6c3f6dc910, type: 2}
 --- !u!114 &1180603474
@@ -845,26 +831,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72a6b1c1554e4c57951451978360f34e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _onWon:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1180603476}
-        m_TargetAssemblyTypeName: CryptoQuest.Battle.PostRoundHandler, indi-games.crypto-quest
-        m_MethodName: set_PreventNextState
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
   _unloader: {fileID: 1180603471}
   _context: {fileID: 7116505576077580199}
   _battleLootManager: {fileID: 104468364}
-  _logDuration: 3
-  _battleBus: {fileID: 11400000, guid: 2290057e7f48d1046b5e0a6c3f6dc910, type: 2}
 --- !u!114 &1180603475
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -877,24 +846,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12445816df8f4432b73b870697baa470, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _onLost:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1180603476}
-        m_TargetAssemblyTypeName: CryptoQuest.Battle.PostRoundHandler, indi-games.crypto-quest
-        m_MethodName: set_PreventNextState
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
   _unloader: {fileID: 1180603471}
   _battleBus: {fileID: 11400000, guid: 2290057e7f48d1046b5e0a6c3f6dc910, type: 2}
-  _logDuration: 3
 --- !u!114 &1180603476
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -907,8 +860,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3170e07ba8e34e96a8e08f5831a8b0de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _battleStateMachine: {fileID: 7116505576077580197}
---- !u!114 &1180603477
+--- !u!114 &1180603479
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1180603470}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f91bd68380367c74386f5ec284c2223c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _stateMachine: {fileID: 7116505576077580197}
+--- !u!114 &1180603480
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -922,8 +887,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _battleBus: {fileID: 11400000, guid: 2290057e7f48d1046b5e0a6c3f6dc910, type: 2}
   _roundEventsPresenter: {fileID: 891665762}
-  _duration: 3
---- !u!114 &1180603478
+--- !u!114 &1180603481
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -937,7 +901,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _battleBus: {fileID: 11400000, guid: 2290057e7f48d1046b5e0a6c3f6dc910, type: 2}
   _roundEventsPresenter: {fileID: 891665762}
-  _duration: 3
 --- !u!114 &1343290373 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5949446545983247603, guid: d0eacd5a881766b4ca08ec4b770526a2, type: 3}
