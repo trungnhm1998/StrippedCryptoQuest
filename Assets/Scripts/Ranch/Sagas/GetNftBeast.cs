@@ -14,8 +14,8 @@ namespace CryptoQuest.Ranch.Sagas
 {
     public class GetNftBeast : SagaBase<GetBeasts>
     {
-        private readonly List<BeastData> _inGameBeastsCache = new();
-        private readonly List<BeastData> _inBoxBeastsCache = new();
+        private readonly List<BeastResponse> _inGameBeastsCache = new();
+        private readonly List<BeastResponse> _inBoxBeastsCache = new();
 
         protected override void HandleAction(GetBeasts ctx)
         {
@@ -45,7 +45,7 @@ namespace CryptoQuest.Ranch.Sagas
             ActionDispatcher.Dispatch(new EvolveRequestSuccess());
         }
 
-        private void UpdateInGameCache(BeastData[] dataBeasts)
+        private void UpdateInGameCache(BeastResponse[] dataBeasts)
         {
             if (dataBeasts.Length == 0) return;
             _inGameBeastsCache.Clear();
@@ -59,7 +59,7 @@ namespace CryptoQuest.Ranch.Sagas
             ActionDispatcher.Dispatch(new GetInGameBeastsSucceed(_inGameBeastsCache));
         }
 
-        private void UpdateInboxCache(BeastData[] dataBeasts)
+        private void UpdateInboxCache(BeastResponse[] dataBeasts)
         {
             if (dataBeasts.Length == 0) return;
             _inBoxBeastsCache.Clear();

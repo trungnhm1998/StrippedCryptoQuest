@@ -1,5 +1,8 @@
 using System.Collections.Generic;
+using CryptoQuest.Beast;
+using CryptoQuest.Ranch.Sagas;
 using CryptoQuest.Sagas.Objects;
+using IndiGames.Core.Common;
 using UnityEngine;
 using UnityEngine.Pool;
 using UnityEngine.UI;
@@ -16,8 +19,8 @@ namespace CryptoQuest.Ranch.UI
         [SerializeField] private UIBeastItem _beastItemPrefab;
         [SerializeField] private RectTransform _tooltipSafeArea;
 
-        private List<BeastData> _beastList = new();
-        public List<BeastData> Data => _beastList;
+        private List<IBeast> _beastData = new();
+        public List<IBeast> Data => _beastData;
         private List<UIBeastItem> _beastUI = new();
 
         private IObjectPool<UIBeastItem> _beastUIPool;
@@ -31,9 +34,9 @@ namespace CryptoQuest.Ranch.UI
             CleanUpScrollView();
         }
 
-        public void SetData(List<BeastData> data)
+        public void SetData(List<IBeast> data)
         {
-            _beastList = data;
+            _beastData = data;
             CleanUpScrollView();
             RenderData();
         }
@@ -60,10 +63,10 @@ namespace CryptoQuest.Ranch.UI
 
         private void RenderData()
         {
-            foreach (var itemData in _beastList)
+            foreach (var data in _beastData)
             {
                 var item = BeastUIPool.Get();
-                item.SetItemInfo(itemData);
+                item.SetItemInfo(data);
             }
         }
 

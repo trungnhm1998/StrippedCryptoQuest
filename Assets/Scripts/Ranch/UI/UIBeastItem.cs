@@ -1,4 +1,4 @@
-using CryptoQuest.Sagas.Objects;
+using CryptoQuest.Beast;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -18,16 +18,13 @@ namespace CryptoQuest.Ranch.UI
         [SerializeField] private GameObject _pendingTag;
         [SerializeField] private GameObject _inGameTag;
         [SerializeField] private Button _button;
-
         [SerializeField] private RectTransform _tooltipPosition;
-
+        public IBeast Beast { get; private set; }
         public Transform Parent { get; set; }
         public int Id { get; private set; }
 
         private bool _isSelected = false;
         private bool _isInGame = false;
-        
-        private BeastData _cacheInfo;
 
         public void OnSelectToTransfer()
         {
@@ -47,19 +44,14 @@ namespace CryptoQuest.Ranch.UI
             Parent = parent;
         }
 
-        public void OnInspecting(bool isInspecting)
-        {
+        public void OnInspecting(bool isInspecting) { }
 
-        }
-
-        public void SetItemInfo(BeastData itemData)
+        public void SetItemInfo(IBeast beast)
         {
-            Id = itemData.id;
-            _name.text = itemData.name;
-            _level.text = $"Lv{itemData.level}";
+            Id = beast.Id;
+            _localizeName.StringReference = beast.LocalizedName;
+            _level.text = $"Lv{beast.Level}";
             _localizeName.RefreshString();
-
-            _cacheInfo = itemData;
         }
     }
 }

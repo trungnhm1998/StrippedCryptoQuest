@@ -1,6 +1,8 @@
 using System.Collections.Generic;
+using CryptoQuest.Beast;
+using CryptoQuest.Ranch.Sagas;
 using CryptoQuest.Ranch.UI;
-using CryptoQuest.Sagas.Objects;
+using IndiGames.Core.Common;
 using IndiGames.Core.Events;
 using TinyMessenger;
 using UnityEngine;
@@ -15,8 +17,8 @@ namespace CryptoQuest.Ranch.State.BeastSwap
         private TinyMessageSubscriptionToken _getDataInBoxSucceed;
         private TinyMessageSubscriptionToken _getDataSucceed;
 
-        private List<BeastData> _cachedGameData = new();
-        private List<BeastData> _cachedWalletData = new();
+        private List<IBeast> _cachedGameData = new();
+        private List<IBeast> _cachedWalletData = new();
 
         private static readonly int OverViewState = Animator.StringToHash("OverviewState");
         private static readonly int ConfirmState = Animator.StringToHash("ConfirmState");
@@ -41,6 +43,7 @@ namespace CryptoQuest.Ranch.State.BeastSwap
             _controller.Controller.Input.CancelEvent += CancelBeastSwapState;
 
             _controller.Controller.ShowWalletEventChannel.EnableAll().Show();
+            ResetBeastData();
             ActionDispatcher.Dispatch(new GetBeasts());
         }
 
@@ -58,6 +61,12 @@ namespace CryptoQuest.Ranch.State.BeastSwap
             ActionDispatcher.Unbind(_getDataInGameSucceed);
             ActionDispatcher.Unbind(_getDataInBoxSucceed);
             ActionDispatcher.Unbind(_getDataSucceed);
+        }
+
+        private void ResetBeastData()
+        {
+            _cachedGameData = new List<IBeast>();
+            _cachedWalletData = new List<IBeast>();
         }
 
         private void ResetTransferRequested()
@@ -87,13 +96,21 @@ namespace CryptoQuest.Ranch.State.BeastSwap
 
         private void GetWalletBeasts(GetInBoxBeastsSucceed beast)
         {
-            _cachedWalletData = beast.WalletBeasts;
+            foreach (var data in beast.WalletBeasts)
+            {
+                var newBeast = ServiceProvider.GetService<IBeastResponseConverter>().Convert(data);
+                _cachedWalletData.Add(newBeast);
+            }
             _controller.UIBeastSwap.WalletBeastList.SetData(_cachedWalletData);
         }
 
         private void GetInGameBeasts(GetInGameBeastsSucceed beast)
         {
-            _cachedGameData = beast.InGameBeasts;
+            foreach (var data in beast.InGameBeasts)
+            {
+                var newBeast = ServiceProvider.GetService<IBeastResponseConverter>().Convert(data);
+                _cachedGameData.Add(newBeast);
+            }
             _controller.UIBeastSwap.InGameBeastList.SetData(_cachedGameData);
         }
 

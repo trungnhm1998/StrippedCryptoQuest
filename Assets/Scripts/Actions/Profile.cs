@@ -49,9 +49,9 @@ namespace CryptoQuest.Actions
 
     public class GetGameNftBeastsSucceed : ActionBase
     {
-        public List<BeastData> InGameBeasts { get; }
+        public List<BeastResponse> InGameBeasts { get; }
         
-        public GetGameNftBeastsSucceed(List<BeastData> inGameBeasts)
+        public GetGameNftBeastsSucceed(List<BeastResponse> inGameBeasts)
         {
             InGameBeasts = inGameBeasts;
         }
