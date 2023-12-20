@@ -71,9 +71,8 @@ namespace CryptoQuest.Ranch.Sagas
             if (response.code != (int)HttpStatusCode.OK) return;
             Debug.Log($"EvolveBeast:: Load Data Success!");
             ActionDispatcher.Dispatch(new ShowLoading(false));
-            ActionDispatcher.Dispatch(new EvolveSucceed());
-            ActionDispatcher.Dispatch(new BeastEvolveRespond(response, _requestContext));
             ActionDispatcher.Dispatch(new GetBeasts());
+            ActionDispatcher.Dispatch(new BeastEvolveRespond(response, _requestContext));
         }
 
         private void HandleRequestFailed(Exception exception)

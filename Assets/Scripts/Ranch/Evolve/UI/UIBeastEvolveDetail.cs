@@ -6,8 +6,8 @@ using CryptoQuest.UI.Character;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.Components;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Localization;
 using UnityEngine.Localization.Components;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace CryptoQuest.Ranch.Evolve.UI
@@ -18,8 +18,10 @@ namespace CryptoQuest.Ranch.Evolve.UI
         [SerializeField] private Image _icon;
         [SerializeField] private Image _illustration;
         [SerializeField] private LocalizeStringEvent _displayName;
+        [SerializeField] private LocalizeStringEvent _localizedPassiveSkill;
         [SerializeField] private List<Image> _listStar;
         [SerializeField] private TextMeshProUGUI _level;
+        [SerializeField] private TextMeshProUGUI _passiveSkillText;
         [SerializeField] private List<UIAttribute> _attributeBar;
         [SerializeField] private Sprite _evolveStar;
         [SerializeField] private Sprite _currentStar;
@@ -48,11 +50,18 @@ namespace CryptoQuest.Ranch.Evolve.UI
             _icon.sprite = beast.Elemental.Icon;
             _displayName.StringReference = beast.LocalizedName;
             _level.text = $"Lv{beast.Level.ToString()}";
-
+            SetLocalizedPassiveSkill(beast);
             StartCoroutine(_beastAvatarProvider.LoadAvatarAsync(_illustration, beast));
-            
+
             if (!_isResultScreen) SetBeastStarBeforeEvolve(beast);
             else SetBeastStarAfterEvolve(beast);
+        }
+        
+        private void SetLocalizedPassiveSkill(IBeast beast)
+        {
+            _passiveSkillText.text = "";
+            _localizedPassiveSkill.StringReference =
+                beast.Passive != null ? beast.Passive.Description : new LocalizedString();
         }
 
         private void SetBeastStarBeforeEvolve(IBeast beast)

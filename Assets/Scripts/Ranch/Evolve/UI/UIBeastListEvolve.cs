@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using CryptoQuest.Beast;
-using CryptoQuest.Ranch.Evolve.Interface;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -17,22 +16,23 @@ namespace CryptoQuest.Ranch.Evolve.UI
         [SerializeField] private UIBeastEvolve _beast;
         [SerializeField] private ScrollRect _scrollRect;
         private UIBeastEvolve _baseMaterial;
-        private IBeastModel _model;
+        private List<EvolvableBeast> _evolvableBeasts;
 
-        public void Init(IBeastModel model)
+        public void Init(List<EvolvableBeast> evolvableBeasts)
         {
-            _model = model;
+            _evolvableBeasts = evolvableBeasts;
             CleanUpScrollView();
-            InstantiateBeast(model);
+            InstantiateBeast();
         }
 
-        private void InstantiateBeast(IBeastModel model)
+        private void InstantiateBeast()
         {
-            foreach (var beast in model.Beasts.Where(b => b.Level >= b.MaxLevel))
+            foreach (var evolvable in _evolvableBeasts.Where(b => b.Beast.Level >= b.Beast.MaxLevel))
             {
                 var newBeast = Instantiate(_beast, _scrollRect.content);
                 newBeast.OnBeastSelected += OnItemSelected;
-                newBeast.ConfigureCell(beast);
+                newBeast.ConfigureCell(evolvable.Beast);
+                newBeast.SetupCurrencyValue(evolvable);
             }
 
             IsOpenDetailsEvent?.Invoke(_scrollRect.content.childCount > 0);
@@ -42,22 +42,28 @@ namespace CryptoQuest.Ranch.Evolve.UI
         public void FilterMaterial(UIBeastEvolve uiBeast)
         {
             CleanUpScrollView();
-            var baseMaterial = Instantiate(_beast, _scrollRect.content);
-            baseMaterial.ConfigureCell(uiBeast.Beast);
-            baseMaterial.SetBaseMaterial();
-            
-            foreach (var model in _model.Beasts)
+            var matchingEvolvable = _evolvableBeasts.FirstOrDefault(evolvable => evolvable.Beast == uiBeast.Beast);
+            if (matchingEvolvable != null)
             {
-                if (IsValidMaterial(uiBeast.Beast, model))
+                var baseMaterial = Instantiate(_beast, _scrollRect.content);
+                baseMaterial.ConfigureCell(uiBeast.Beast);
+                baseMaterial.SetBaseMaterial();
+                baseMaterial.SetupCurrencyValue(matchingEvolvable);
+                baseMaterial.SetBaseMaterial();
+            }
+
+            foreach (var evolvable in _evolvableBeasts)
+            {
+                if (IsValidMaterial(uiBeast.Beast, evolvable.Beast))
                 {
                     var newBeast = Instantiate(_beast, _scrollRect.content);
                     newBeast.OnBeastSelected += OnItemSelected;
-                    newBeast.ConfigureCell(model);
+                    newBeast.ConfigureCell(evolvable.Beast);
+                    newBeast.SetupCurrencyValue(evolvable);
                 }
             }
 
             StartCoroutine(SelectDefaultButton(1));
-            baseMaterial.SetBaseMaterial();
         }
 
         private bool IsValidMaterial(IBeast beast, IBeast material)

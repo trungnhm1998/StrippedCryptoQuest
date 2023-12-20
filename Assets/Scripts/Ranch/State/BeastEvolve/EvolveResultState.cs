@@ -10,7 +10,6 @@ namespace CryptoQuest.Ranch.State.BeastEvolve
         [SerializeField] private LocalizedString _evolveSuccessTitle;
         [SerializeField] private LocalizedString _evolveFailTitle;
         private RanchStateController _controller;
-        private bool _isSucceeded;
 
         private static readonly int EvolveState = Animator.StringToHash("EvolveState");
 
@@ -19,13 +18,6 @@ namespace CryptoQuest.Ranch.State.BeastEvolve
             _controller = StateMachine.GetComponent<RanchStateController>();
             _controller.Controller.Input.CancelEvent += CancelBeastEvolveState;
             _controller.Controller.Input.SubmitEvent += ChangeConfirmState;
-            SetMessage();
-        }
-
-        private void SetMessage()
-        {
-            LocalizedString message = _isSucceeded ? _evolveSucceededMessage : _evolveFailedMessage;
-            _controller.DialogController.NormalDialogue.SetMessage(message).Show();
             UpdateResultStats();
         }
 
