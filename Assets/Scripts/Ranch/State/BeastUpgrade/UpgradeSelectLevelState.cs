@@ -12,6 +12,7 @@ namespace CryptoQuest.Ranch.State.BeastUpgrade
     public class UpgradeSelectLevelState : BaseStateBehaviour
     {
         [SerializeField] private LocalizedString _warningMessage;
+        [SerializeField] private LocalizedString _failedMessage;
 
         private RanchStateController _stateController;
         private UIConfigBeastUpgradePresenter _config;
@@ -54,6 +55,19 @@ namespace CryptoQuest.Ranch.State.BeastUpgrade
 
         private void OnYesButtonClicked()
         {
+            if (!_config.IsUpgradeValid)
+            {
+                _config.DeInitUI();
+                
+                _stateController.DialogController.NormalDialogue
+                    .SetMessage(_failedMessage)
+                    .Show();
+                
+                _input.SubmitEvent += BackToUpgradeState;
+                
+                return;
+            }
+            
             ActionDispatcher.Dispatch(new ShowLoading());
             ActionDispatcher.Dispatch(new RequestUpgradeBeast()
             {

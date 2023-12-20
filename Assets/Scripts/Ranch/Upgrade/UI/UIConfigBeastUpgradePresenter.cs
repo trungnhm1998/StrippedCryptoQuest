@@ -6,19 +6,33 @@ using CryptoQuest.Inventory.ScriptableObjects;
 using CryptoQuest.Ranch.ScriptableObject;
 using CryptoQuest.Ranch.Upgrade.Presenters;
 using UnityEngine;
+using BeastData = CryptoQuest.Beast.Beast;
 
 namespace CryptoQuest.Ranch.Upgrade.UI
 {
     public class UIConfigBeastUpgradePresenter : MonoBehaviour
     {
+        [Header("Dependencies")]
         [SerializeField] private WalletSO _wallet;
+
         [SerializeField] private CurrencySO _currencySO;
-        [SerializeField] private UIConfigBeastUpgradeDetail _beastUpgradeDetail;
+
+        [Header("Event")]
         [SerializeField] private BeastUpgradeCostDatabase _costDatabase;
+
+        [SerializeField] private CalculatorBeastStatsSO _calculatorBeastStatsSo;
+
+        [Header("Components")]
+        [SerializeField] private UIConfigBeastUpgradeDetail _beastUpgradeDetail;
+
         [SerializeField] private UpgradePresenter _upgradePresenter;
+        [SerializeField] private UIBeastUpgradeDetail _uiBeastUpgradeDetail;
         public int LevelToUpgrade { get; private set; }
         public float GoldNeeded { get; private set; }
-        public bool IsUpgradeValid => _validator.IsEnoughGoldToUpgrade(_wallet[_currencySO].Amount, GoldNeeded);
+
+        public bool IsUpgradeValid =>
+            _validator.IsEnoughGoldToUpgrade(_wallet[_currencySO].Amount, GoldNeeded) &&
+            _validator.CanUpgrade(_selectedBeast, LevelToUpgrade);
 
         private Dictionary<int, BeastCost> _costDataDict = new();
         private IBeast _selectedBeast = NullBeast.Instance;
@@ -69,6 +83,28 @@ namespace CryptoQuest.Ranch.Upgrade.UI
         private void UpdateUIs()
         {
             _beastUpgradeDetail.SetupUI(LevelToUpgrade, GoldNeeded, IsUpgradeValid);
+
+            BeastData beast = CreateBeastFromSelectedBeast();
+
+            _calculatorBeastStatsSo.RaiseEvent(beast);
+            _uiBeastUpgradeDetail.PreviewBeastStats(true);
+        }
+
+        private BeastData CreateBeastFromSelectedBeast()
+        {
+            return new BeastData
+            {
+                Level = LevelToUpgrade,
+                Stats = _selectedBeast.Stats,
+                Elemental = _selectedBeast.Elemental,
+                Class = _selectedBeast.Class,
+                Stars = _selectedBeast.Stars,
+                MaxLevel = _selectedBeast.MaxLevel,
+                Passive = _selectedBeast.Passive,
+                Id = _selectedBeast.Id,
+                BeastId = _selectedBeast.BeastId,
+                Type = _selectedBeast.Type
+            };
         }
     }
 }

@@ -2,11 +2,14 @@ using CryptoQuest.Input;
 using IndiGames.Core.Events;
 using TinyMessenger;
 using UnityEngine;
+using UnityEngine.Localization;
 
 namespace CryptoQuest.Ranch.State.BeastUpgrade
 {
     public class UpgradeResultState : BaseStateBehaviour
     {
+        [SerializeField] private LocalizedString _resultMessage;
+
         private RanchStateController _stateController;
         private MerchantsInputManager _input;
 
@@ -23,6 +26,10 @@ namespace CryptoQuest.Ranch.State.BeastUpgrade
 
             _input.CancelEvent += BackToUpgradeState;
             _input.SubmitEvent += BackToUpgradeState;
+
+            _stateController.DialogController.NormalDialogue
+                .SetMessage(_resultMessage)
+                .Show();
 
             ActionDispatcher.Dispatch(new GetBeasts());
         }
