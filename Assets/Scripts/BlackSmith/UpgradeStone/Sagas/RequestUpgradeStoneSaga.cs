@@ -14,7 +14,7 @@ namespace CryptoQuest.BlackSmith.UpgradeStone.Sagas
     public class RequestUpgradeStoneSaga : SagaBase<RequestUpgradeStone>
     {
         private IRestClient _restClient;
-        private const string UPGRADE_STONE_API = "crypto/magicstone/evolve";
+        private const string UPGRADE_STONE_API = "crypto/magicstone/upgrade";
 
         protected override void HandleAction(RequestUpgradeStone ctx)
         {
