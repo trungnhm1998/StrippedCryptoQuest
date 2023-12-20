@@ -1,4 +1,5 @@
 ﻿using CryptoQuest.Menus.Status.UI;
+using NSubstitute.Core;
 using UnityEngine;
 
 namespace CryptoQuest.Menus.Status.States
@@ -16,6 +17,7 @@ namespace CryptoQuest.Menus.Status.States
             StatusPanel.EquipmentsInventoryPanel.SetActiveAllEquipmentButtons(true);
             StatusPanel.EquipmentsInventoryPanel.RenderEquipmentsInInventory(StatusPanel.InspectingHero,
                 StatusPanel.ModifyingSlot, StatusPanel.ModifyingCategory);
+            StatusPanel.EquipmentsInventoryPanel.SelectItem();
         }
 
         public override void OnExit()
