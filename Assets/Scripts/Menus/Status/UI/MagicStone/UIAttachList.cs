@@ -1,6 +1,4 @@
-﻿using System;
-using System.Linq;
-using CryptoQuest.Input;
+﻿using CryptoQuest.Input;
 using CryptoQuest.Item.Equipment;
 using CryptoQuest.Item.MagicStone;
 using UnityEngine;

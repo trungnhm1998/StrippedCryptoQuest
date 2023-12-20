@@ -5,6 +5,9 @@ using CryptoQuest.Battle.Components;
 using CryptoQuest.Inventory.ScriptableObjects;
 using CryptoQuest.Item.Equipment;
 using CryptoQuest.Menu;
+using CryptoQuest.UI.Common;
+using CryptoQuest.UI.Utilities;
+using IndiGames.Core.Common;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -64,6 +67,7 @@ namespace CryptoQuest.Menus.Status.UI.Equipment
         public void RenderEquipmentsInInventory(HeroBehaviour hero, ESlot modifySlot,
             EEquipmentCategory categoryType)
         {
+            if (_contents.activeSelf) return;
             _contents.SetActive(true);
             _hero = hero;
             _slotSlot = modifySlot;
@@ -180,6 +184,17 @@ namespace CryptoQuest.Menus.Status.UI.Equipment
             var equipmentButtons = _scrollRect.content.GetComponentsInChildren<MultiInputButton>();
             foreach (var button in equipmentButtons)
                 button.enabled = enable;
+        }
+
+        public void SelectItem() => Invoke(nameof(Focus), 0.1f);
+
+        private void Focus()
+        {
+            var lastSelected = _scrollRect.GetComponentInChildren<CacheButtonSelector>().LastSelected;
+            if (lastSelected == null)
+                _scrollRect.content.GetOrAddComponent<SelectFirstChildInList>().Select();
+            else
+                EventSystem.current.SetSelectedGameObject(lastSelected);
         }
     }
 }
