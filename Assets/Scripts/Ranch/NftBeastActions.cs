@@ -11,9 +11,9 @@ namespace CryptoQuest.Ranch
 
     public class GetInBoxBeastsSucceed : ActionBase
     {
-        public List<BeastData> WalletBeasts { get; }
+        public List<BeastResponse> WalletBeasts { get; }
 
-        public GetInBoxBeastsSucceed(List<BeastData> walletBeasts)
+        public GetInBoxBeastsSucceed(List<BeastResponse> walletBeasts)
         {
             WalletBeasts = walletBeasts;
         }
@@ -35,9 +35,9 @@ namespace CryptoQuest.Ranch
 
     public class TransferSucceed : ActionBase
     {
-        public BeastData[] ResponseBeasts { get; }
+        public BeastResponse[] ResponseBeasts { get; }
 
-        public TransferSucceed(BeastData[] responseBeasts)
+        public TransferSucceed(BeastResponse[] responseBeasts)
         {
             ResponseBeasts = responseBeasts;
         }
@@ -47,9 +47,9 @@ namespace CryptoQuest.Ranch
 
     public class GetInGameBeastsSucceed : ActionBase
     {
-        public List<BeastData> InGameBeasts { get; }
+        public List<BeastResponse> InGameBeasts { get; }
 
-        public GetInGameBeastsSucceed(List<BeastData> inGameBeasts)
+        public GetInGameBeastsSucceed(List<BeastResponse> inGameBeasts)
         {
             InGameBeasts = inGameBeasts;
         }

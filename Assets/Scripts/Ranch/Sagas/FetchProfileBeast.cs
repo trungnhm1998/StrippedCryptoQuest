@@ -95,9 +95,9 @@ namespace CryptoQuest.Ranch.Sagas
             OnInventoryFilled(responseBeasts);
         }
 
-        private void OnInventoryFilled(Obj.BeastData[] beasts) => StartCoroutine(CoLoadAndUpdateInventory(beasts));
+        private void OnInventoryFilled(Obj.BeastResponse[] beasts) => StartCoroutine(CoLoadAndUpdateInventory(beasts));
 
-        private IEnumerator CoLoadAndUpdateInventory(Obj.BeastData[] beasts)
+        private IEnumerator CoLoadAndUpdateInventory(Obj.BeastResponse[] beasts)
         {
             if (_beastInventory == null)
             {
@@ -111,7 +111,7 @@ namespace CryptoQuest.Ranch.Sagas
             _beastInventory.OwnedBeasts = nftBeast;
         }
 
-        private Beast.Beast CreateNftBeast(Obj.BeastData beastResponse)
+        private Beast.Beast CreateNftBeast(Obj.BeastResponse beastResponse)
         {
             return FillBeastData(beastResponse);
         }
@@ -121,7 +121,7 @@ namespace CryptoQuest.Ranch.Sagas
             Debug.LogError($"FetchProfileBeast::OnError: {error}");
         }
 
-        private Beast.Beast FillBeastData(Obj.BeastData response)
+        private Beast.Beast FillBeastData(Obj.BeastResponse response)
         {
             return new Beast.Beast
             {
@@ -139,10 +139,10 @@ namespace CryptoQuest.Ranch.Sagas
             };
         }
 
-        private StatsDef FillBeastStats(Obj.BeastData response)
+        private StatsDef FillBeastStats(Obj.BeastResponse response)
         {
             var initialAttributes = new Dictionary<AttributeScriptableObject, CappedAttributeDef>();
-            _fields ??= typeof(Obj.BeastData).GetFields();
+            _fields ??= typeof(Obj.BeastResponse).GetFields();
             foreach (var fieldInfo in _fields)
             {
                 if (_lookupAttribute.TryGetValue(fieldInfo.Name, out var attributeSO) == false) continue;
