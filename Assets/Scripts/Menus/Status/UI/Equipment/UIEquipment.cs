@@ -45,7 +45,7 @@ namespace CryptoQuest.Menus.Status.UI.Equipment
             var attachStones = equipment.Data.AttachStones;
             for (int inventoryIdx = 0; inventoryIdx < _stoneInventory.MagicStones.Count; inventoryIdx++)
             {
-                for (int attachIdx = 0; attachIdx < attachStones.Length; attachIdx++)
+                for (int attachIdx = 0; attachIdx < attachStones.Count; attachIdx++)
                 {
                     if (_stoneInventory.MagicStones[inventoryIdx].ID == attachStones[attachIdx])
                         _stoneSlots[attachIdx].LoadSpriteAndSet(_stoneInventory.MagicStones[inventoryIdx].Definition.Image);

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using CryptoQuest.AbilitySystem.Abilities;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
 using UnityEngine;
@@ -19,6 +20,6 @@ namespace CryptoQuest.Item.Equipment
         [field: SerializeField] public AttributeWithValue[] Stats { get; set; }
         [field: SerializeField] public PassiveAbility[] Passives { get; set; } = Array.Empty<PassiveAbility>();
         [field: SerializeField] public int StoneSlots { get; set; }
-        [field: SerializeField] public int[] AttachStones { get; set; }
+        [field: SerializeField] public List<int> AttachStones { get; set; }
     }
 }

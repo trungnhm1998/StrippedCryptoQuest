@@ -35,13 +35,10 @@ namespace CryptoQuest.Sagas.Equipment
 
         private void UpdateInventory(DetachSucceeded _)
         {
-            List<int> attachStones = new();
             foreach (var equipment in _inventory.Equipments)
             {
                 if (_equipmentID != equipment.Id) continue;
-                attachStones = equipment.Data.AttachStones.ToList();
-                attachStones.Remove(_equipmentID);
-                equipment.Data.AttachStones = attachStones.ToArray();
+                equipment.Data.AttachStones.Remove(_stoneIDs[0]);
             }
         }
     }

@@ -4,6 +4,7 @@ using CryptoQuest.Menus.Status.UI;
 using CryptoQuest.Menus.Status.UI.MagicStone;
 using CryptoQuest.Sagas.Equipment;
 using IndiGames.Core.Events;
+using UnityEngine;
 
 namespace CryptoQuest.Menus.Status.States.MagicStone
 {
@@ -33,14 +34,21 @@ namespace CryptoQuest.Menus.Status.States.MagicStone
 
         private void ToNavigatingBetweenElements(IMagicStone stoneData)
         {
+            CallDetachAPI(stoneData);
+            fsm.RequestStateChange(State.MAGIC_STONE_ELEMENT_NAVIGATION);
+        }
+
+        private void CallDetachAPI(IMagicStone stoneData)
+        {
+            if (stoneData == null) return;
             List<int> stoneIDs = new();
+            Debug.Log($"<color=white>CallDetachAPI::stoneIDs={stoneIDs}</color>");
             stoneIDs.Add(stoneData.ID);
             ActionDispatcher.Dispatch(new DetachStones()
             {
                 EquipmentID = _uiEquipmentDetails.Equipment.Id,
                 StoneIDs = stoneIDs
             });
-            fsm.RequestStateChange(State.MAGIC_STONE_ELEMENT_NAVIGATION);
         }
 
         private void BackToEquipmentSelection()

@@ -37,7 +37,7 @@ namespace CryptoQuest.Sagas.Equipment
             foreach (var equipment in _inventory.Equipments)
             {
                 if (_equipmentID == equipment.Id)
-                    equipment.Data.AttachStones = _stoneIDs.ToArray();
+                    equipment.Data.AttachStones = _stoneIDs;
             }
         }
     }
