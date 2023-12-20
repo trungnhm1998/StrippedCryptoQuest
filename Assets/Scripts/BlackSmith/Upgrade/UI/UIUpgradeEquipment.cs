@@ -31,6 +31,8 @@ namespace CryptoQuest.BlackSmith.Upgrade.UI
 
         public void SetupUI(IEquipment equipment)
         {
+            _selectedBackground.gameObject.SetActive(false);
+            
             UpgradeEquipment = equipment;
             _displayName.StringReference = equipment.DisplayName;
             _icon.sprite = equipment.Type.Icon;
