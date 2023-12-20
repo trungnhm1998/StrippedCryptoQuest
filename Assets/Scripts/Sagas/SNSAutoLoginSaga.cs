@@ -50,7 +50,7 @@ namespace CryptoQuest.Sagas
 
             // Try refresh token from Credential, ignore expires check for debugging purpose
             var refreshToken = _credentials?.Profile?.token?.refresh;
-            if (!string.IsNullOrEmpty(refreshToken.token))
+            if (refreshToken != null && !string.IsNullOrEmpty(refreshToken.token))
             {
                 refreshTokenStr = refreshToken.token;
             }
