@@ -1,5 +1,6 @@
 using CryptoQuest.Events.UI.Menu;
 using CryptoQuest.Input;
+using CryptoQuest.Inventory;
 using CryptoQuest.Menus.Home.States;
 using CryptoQuest.UI.Menu;
 using FSM;
