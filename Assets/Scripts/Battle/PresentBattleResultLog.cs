@@ -12,11 +12,6 @@ namespace CryptoQuest.Battle
         [SerializeField] protected RoundEventsPresenter _roundEventsPresenter;
         protected UIGenericDialog _dialog;
 
-        private void Awake()
-        {
-            GenericDialogController.Instance.InstantiateAsync((dialog) => { _dialog = dialog; });
-        }
-
         public IEnumerator CoShowLog(LocalizedString message)
         {
             _dialog

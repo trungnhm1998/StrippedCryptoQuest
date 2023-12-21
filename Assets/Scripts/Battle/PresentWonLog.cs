@@ -1,5 +1,6 @@
 using CryptoQuest.Battle.Events;
 using CryptoQuest.Battle.Presenter;
+using CryptoQuest.UI.Dialogs.BattleDialog;
 using TinyMessenger;
 using UnityEngine.Localization;
 
@@ -25,7 +26,11 @@ namespace CryptoQuest.Battle
 
             LocalizedString winPrompt = _battleBus.CurrentBattlefield.BattlefieldPrompts.WinPrompt;
             if (winPrompt.IsEmpty) return;
-            _roundEventsPresenter.EnqueueCommand(new ResultLogPresenter(this, winPrompt, _dialog));
+            GenericDialogController.Instance.InstantiateAsync((dialog) =>
+            {
+                _dialog = dialog;
+                _roundEventsPresenter.EnqueueCommand(new ResultLogPresenter(this, winPrompt, _dialog));
+            });
         }
     }
 }
