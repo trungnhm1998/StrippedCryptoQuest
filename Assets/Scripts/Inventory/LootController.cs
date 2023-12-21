@@ -3,6 +3,7 @@ using CryptoQuest.Events;
 using CryptoQuest.Gameplay.Loot;
 using CryptoQuest.Gameplay.PlayerParty;
 using CryptoQuest.Inventory.Actions;
+using CryptoQuest.Inventory.Currency;
 using IndiGames.Core.Events;
 using UnityEngine;
 
@@ -11,6 +12,9 @@ namespace CryptoQuest.Inventory
     public class LootController : MonoBehaviour, ILootVisitor
     {
         [SerializeField] private PartyManager _partyManager;
+        [SerializeField] private CurrencySO _gold;
+        [SerializeField] private CurrencySO _diamond;
+        [SerializeField] private CurrencySO _soul;
 
         [Header("Listening to")]
         [SerializeField] private LootEventChannelSO _addLootRequestEventChannel;
@@ -28,7 +32,15 @@ namespace CryptoQuest.Inventory
 
         public void Visit(CurrencyLootInfo loot)
         {
-            // TODO: Implement
+            var amount = (int)loot.Item.Amount;
+            if (loot.Item.Data == _gold)
+                ActionDispatcher.Dispatch(new AddGoldAction(amount));
+
+            if (loot.Item.Data == _diamond)
+                ActionDispatcher.Dispatch(new AddDiamonds(amount));
+
+            if (loot.Item.Data == _soul)
+                ActionDispatcher.Dispatch(new AddSouls(amount));
         }
 
         public void Visit(EquipmentLoot loot)
