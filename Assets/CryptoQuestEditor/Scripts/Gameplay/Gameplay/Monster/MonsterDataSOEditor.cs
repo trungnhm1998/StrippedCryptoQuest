@@ -2,13 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using CryptoQuest.AbilitySystem.Attributes;
 using CryptoQuest.Character.Enemy;
 using CryptoQuest.Gameplay.Battle.ScriptableObjects;
 using CryptoQuest.Gameplay.Encounter;
 using CryptoQuest.Gameplay.Loot;
 using CryptoQuest.Inventory.Currency;
-using CryptoQuest.Item;
 using CryptoQuest.Item.Consumable;
 using IndiGames.Core.Database;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.ScriptableObjects;
@@ -138,22 +138,15 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Monster
                 property.intValue = dataModel.MonsterId;
                 serializedObject.ApplyModifiedProperties();
                 serializedObject.Update();
-                
-                // instance.Editor_SetNameKey(GetLocalizedStringRef(dataModel.LocalizedKey));
-                // instance.Editor_SetMonsterModelAssetRef(GetMonsterModelAssetRef(dataModel.MonsterPrefabName));
-                // instance.Editor_SetElement(GetElementalSO(dataModel.ElementId));
-                // instance.Editor_ClearDrop();
 
-                // if (dataModel.Gold > 0)
-                //     instance.Editor_AddDrop(GetGoldCurrencyRewardInfo(dataModel.Gold));
-                //
-                // instance.Editor_AddDrop(GetExpLoot(dataModel.Exp));
+                SetNameKey(instance, dataModel);
+                SetMonsterModelAssetRef(serializedObject, dataModel);
+                SetMonsterModelAssetRef(serializedObject, dataModel);
+                SetElement(serializedObject, dataModel);
+                SetDrop(instance, dataModel);
 
-                // ConsumableLootInfo consumableLootInfo = GetUsableLootInfo(dataModel.DropItemID);
-                // if (consumableLootInfo != null)
-                //     instance.Editor_AddDrop(consumableLootInfo, dataModel.DropItemRate);
                 // instance.Editor_SetStats(attributeInitValues);
-                // instance.name = replacedName;
+                instance.name = replacedName;
 
                 if (!AssetDatabase.Contains(instance))
                 {
@@ -167,18 +160,71 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Monster
                 }
 
                 var assetGuid = AssetDatabase.AssetPathToGUID(path);
-                instance.SetObjectToAddressableGroup("Enemy");
-                AssetReferenceDatabaseT<int, EnemyDef>.Map enemyMapData = new AssetReferenceDatabaseT<int, EnemyDef>.Map()
-                {
-                    Id = dataModel.MonsterId,
-                    Data = new AssetReferenceT<EnemyDef>(assetGuid)
-                };
+                instance.SetObjectToAddressableGroup("EnemyScriptableObjects");
+                AssetReferenceDatabaseT<int, EnemyDef>.Map enemyMapData =
+                    new AssetReferenceDatabaseT<int, EnemyDef>.Map()
+                    {
+                        Id = dataModel.MonsterId,
+                        Data = new AssetReferenceT<EnemyDef>(assetGuid)
+                    };
 
                 enemyMap.Add(enemyMapData);
             }
 
             _enemyDatabase.Editor_SetMaps(enemyMap.ToArray());
             EditorUtility.SetDirty(_enemyDatabase);
+        }
+
+        private void SetNameKey(EnemyDef instance, MonsterUnitDataModel data)
+        {
+            PropertyInfo property = typeof(EnemyDef).GetProperty("Name");
+            var localizedString = GetLocalizedStringRef(data.LocalizedKey);
+            property.SetValue(instance, localizedString);
+        }
+
+        private void SetDrop(EnemyDef instance, MonsterUnitDataModel data)
+        {
+            PropertyInfo property =
+                typeof(EnemyDef).GetProperty("_drops", BindingFlags.NonPublic | BindingFlags.Instance);
+
+
+            List<Drop> drops = new();
+
+            if (data.Exp > 0)
+            {
+                drops.Add(new Drop(GetExpLoot(data.Exp)));
+            }
+
+            if (data.Gold > 0)
+            {
+                drops.Add(new Drop(GetGoldCurrencyRewardInfo(data.Gold)));
+            }
+
+            if (!string.IsNullOrEmpty(data.DropItemID))
+            {
+                ConsumableLootInfo consumableLootInfo = GetUsableLootInfo(data.DropItemID);
+                if (consumableLootInfo != null)
+                    drops.Add(new Drop(consumableLootInfo, data.DropItemRate));
+            }
+
+
+            property.SetValue(instance, drops.ToArray());
+        }
+
+        private void SetElement(SerializedObject instance, MonsterUnitDataModel data)
+        {
+            var property = instance.FindProperty("<Element>k__BackingField");
+            property.objectReferenceValue = GetElementalSO(data.ElementId);
+            instance.ApplyModifiedProperties();
+            instance.Update();
+        }
+
+        private void SetMonsterModelAssetRef(SerializedObject instance, MonsterUnitDataModel data)
+        {
+            var property = instance.FindProperty("<Model>k__BackingField");
+            property.boxedValue = GetMonsterModelAssetRef(data.MonsterPrefabName);
+            instance.ApplyModifiedProperties();
+            instance.Update();
         }
 
         private AbilityScriptableObject GetNormalAttackAbility()

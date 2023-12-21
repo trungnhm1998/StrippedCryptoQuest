@@ -30,7 +30,7 @@ namespace CryptoQuest.Character.Enemy
         public AttributeWithValue[] Stats { get; private set; } =
             Array.Empty<AttributeWithValue>();
 
-        [SerializeField] private Drop[] _drops = Array.Empty<Drop>();
+        [field: SerializeField] private Drop[] _drops { get; set; } = Array.Empty<Drop>();
 
         public Drop[] Drops => _drops;
 
