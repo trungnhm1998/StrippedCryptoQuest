@@ -20,6 +20,9 @@ namespace CryptoQuest.Sagas.Equipment
 
     public class DetachMagicStones : SagaBase<DetachStones>
     {
+        private int _equipmentID;
+        private List<int> _stoneIDs;
+
         protected override void HandleAction(DetachStones ctx)
         {
             ActionDispatcher.Dispatch(new ShowLoading());
@@ -33,12 +36,19 @@ namespace CryptoQuest.Sagas.Equipment
                 })
                 .Post<EquipmentsResponse>(EquipmentAPI.DETACH_MAGIC_STONE)
                 .Subscribe(ProcessResponse, OnError, OnCompleted);
+
+            _equipmentID = ctx.EquipmentID;
+            _stoneIDs = ctx.StoneIDs;
         }
 
         private void ProcessResponse(EquipmentsResponse response)
         {
             if (response.code != (int)HttpStatusCode.OK) return;
-            ActionDispatcher.Dispatch(new DetachSucceeded());
+            ActionDispatcher.Dispatch(new DetachSucceeded()
+            {
+                EquipmentID = _equipmentID,
+                StoneIDs = _stoneIDs
+            });
         }
 
         private void OnError(Exception error)
