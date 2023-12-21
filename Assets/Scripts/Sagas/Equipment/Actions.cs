@@ -3,17 +3,14 @@ using IndiGames.Core.Events;
 
 namespace CryptoQuest.Sagas.Equipment
 {
-    public class AttachStones : ActionBase
+    public class StoneBase : ActionBase
     {
         public int EquipmentID { get; set; }
         public List<int> StoneIDs { get; set; }
     }
-    public class AttachSucceeded : ActionBase { }
 
-    public class DetachStones : ActionBase
-    {
-        public int EquipmentID { get; set; }
-        public List<int> StoneIDs { get; set; }
-    }
-    public class DetachSucceeded : ActionBase { }
+    public class AttachStones : StoneBase { }
+    public class AttachSucceeded : StoneBase { }
+    public class DetachStones : StoneBase { }
+    public class DetachSucceeded : StoneBase { }
 }

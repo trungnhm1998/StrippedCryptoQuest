@@ -4,6 +4,7 @@ using CryptoQuest.AbilitySystem.Abilities;
 using CryptoQuest.Item.MagicStone;
 using IndiGames.Core.Common;
 using UnityEngine;
+using MagicStoneItem = CryptoQuest.Item.MagicStone.MagicStone;
 
 namespace CryptoQuest.Sagas.MagicStone
 {
@@ -24,7 +25,7 @@ namespace CryptoQuest.Sagas.MagicStone
 
         public IMagicStone Convert(Objects.MagicStone responseObject)
         {
-            var magicStone = new Item.MagicStone.MagicStone()
+            var magicStone = new MagicStoneItem()
             {
                 Data = new MagicStoneData()
                 {
@@ -39,7 +40,7 @@ namespace CryptoQuest.Sagas.MagicStone
             return magicStone;
         }
 
-        private IEnumerator CoLoadPassiveAsync(Item.MagicStone.MagicStone magicStone, Objects.MagicStone response)
+        private IEnumerator CoLoadPassiveAsync(MagicStoneItem magicStone, Objects.MagicStone response)
         {
             yield return _passiveAbilityDatabase.LoadDataById(response.passiveSkillId1);
             yield return _passiveAbilityDatabase.LoadDataById(response.passiveSkillId2);

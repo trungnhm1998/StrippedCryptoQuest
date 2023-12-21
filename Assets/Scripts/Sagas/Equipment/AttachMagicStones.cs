@@ -20,6 +20,9 @@ namespace CryptoQuest.Sagas.Equipment
 
     public class AttachMagicStones : SagaBase<AttachStones>
     {
+        private int _equipmentID;
+        private List<int> _stoneIDs;
+
         protected override void HandleAction(AttachStones ctx)
         {
             ActionDispatcher.Dispatch(new ShowLoading());
@@ -32,12 +35,19 @@ namespace CryptoQuest.Sagas.Equipment
                 })
                 .Post<EquipmentsResponse>(EquipmentAPI.ATTACH_MAGIC_STONE)
                 .Subscribe(ProcessResponse, OnError, OnCompleted);
+
+            _equipmentID = ctx.EquipmentID;
+            _stoneIDs = ctx.StoneIDs;
         }
 
         private void ProcessResponse(EquipmentsResponse response)
         {
             if (response.code != (int)HttpStatusCode.OK) return;
-            ActionDispatcher.Dispatch(new AttachSucceeded());
+            ActionDispatcher.Dispatch(new AttachSucceeded()
+            {
+                EquipmentID = _equipmentID,
+                StoneIDs = _stoneIDs
+            });
         }
 
         private void OnError(Exception error)
