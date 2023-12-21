@@ -18,6 +18,8 @@ namespace CryptoQuest.Inventory
         private TinyMessageSubscriptionToken _removeGoldEvent;
         private TinyMessageSubscriptionToken _addDiamondsEvent;
         private TinyMessageSubscriptionToken _removeDiamondsEvent;
+        private TinyMessageSubscriptionToken _addSoulEvent;
+        private TinyMessageSubscriptionToken _removeSoulEvent;
         private TinyMessageSubscriptionToken _setGoldEvent;
         private TinyMessageSubscriptionToken _setDiamondEvent;
         private TinyMessageSubscriptionToken _setSoulEvent;
@@ -29,6 +31,9 @@ namespace CryptoQuest.Inventory
 
             _addDiamondsEvent = ActionDispatcher.Bind<AddDiamonds>(AddDiamonds);
             _removeDiamondsEvent = ActionDispatcher.Bind<RemoveDiamonds>(RemoveDiamonds);
+
+            _addSoulEvent = ActionDispatcher.Bind<AddSouls>(AddSouls);
+            _removeSoulEvent = ActionDispatcher.Bind<RemoveSouls>(RemoveSouls);
 
             _setGoldEvent = ActionDispatcher.Bind<SetGoldAction>(SetGold);
             _setDiamondEvent = ActionDispatcher.Bind<SetDiamondAction>(SetDiamond);
@@ -42,6 +47,9 @@ namespace CryptoQuest.Inventory
 
             ActionDispatcher.Unbind(_addDiamondsEvent);
             ActionDispatcher.Unbind(_removeDiamondsEvent);
+
+            ActionDispatcher.Unbind(_addSoulEvent);
+            ActionDispatcher.Unbind(_removeSoulEvent);
 
             ActionDispatcher.Unbind(_setGoldEvent);
             ActionDispatcher.Unbind(_setDiamondEvent);
@@ -71,6 +79,19 @@ namespace CryptoQuest.Inventory
             var amount = ctx.Amount;
             _wallet[_diamonds].Amount -= amount;
         }
+
+        private void AddSouls(AddSouls ctx)
+        {
+            var amount = ctx.Amount;
+            _wallet[_soul].Amount += amount;
+        }
+
+        private void RemoveSouls(RemoveSouls ctx)
+        {
+            var amount = ctx.Amount;
+            _wallet[_soul].Amount -= amount;
+        }
+
 
         private void SetGold(SetGoldAction ctx)
         {

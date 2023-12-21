@@ -32,6 +32,16 @@ namespace CryptoQuest.Inventory.Actions
         public RemoveDiamonds(int amount) : base(amount) { }
     }
 
+    public class AddSouls : CurrencyAmountChangedAction
+    {
+        public AddSouls(int amount) : base(amount) { }
+    }
+
+    public class RemoveSouls : CurrencyAmountChangedAction
+    {
+        public RemoveSouls(int amount) : base(amount) { }
+    }
+
     public class SetGoldAction : CurrencyAmountChangedAction
     {
         public SetGoldAction(int amount) : base(amount) { }
