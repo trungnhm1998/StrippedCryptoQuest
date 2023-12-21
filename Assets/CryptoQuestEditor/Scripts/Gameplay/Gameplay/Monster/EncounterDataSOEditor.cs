@@ -85,7 +85,7 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Monster
                     Id = dataModel.Id,
                     Data = new AssetReferenceT<EncounterData>(guid)
                 });
-                instance.SetObjectToAddressableGroup("EncounterData");
+                instance.SetObjectToAddressableGroup("EncounterScriptableObject");
             }
 
             _encounterDatabase.Editor_SetMaps(maps.ToArray());
