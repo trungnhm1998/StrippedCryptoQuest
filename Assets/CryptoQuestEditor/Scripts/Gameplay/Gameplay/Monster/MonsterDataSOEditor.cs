@@ -15,6 +15,7 @@ using IndiGames.GameplayAbilitySystem.AbilitySystem.ScriptableObjects;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
 using IndiGames.Tools.ScriptableObjectBrowser;
 using UnityEditor;
+using UnityEditor.Localization;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.Localization;
@@ -139,14 +140,14 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Monster
                 serializedObject.ApplyModifiedProperties();
                 serializedObject.Update();
 
-                SetNameKey(instance, dataModel);
+
                 SetMonsterModelAssetRef(serializedObject, dataModel);
-                SetMonsterModelAssetRef(serializedObject, dataModel);
+                SetStats(serializedObject, attributeInitValues);
                 SetElement(serializedObject, dataModel);
                 SetDrop(instance, dataModel);
 
-                // instance.Editor_SetStats(attributeInitValues);
                 instance.name = replacedName;
+                SetNameKey(instance, dataModel);
 
                 if (!AssetDatabase.Contains(instance))
                 {
@@ -157,6 +158,7 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Monster
                 else
                 {
                     EditorUtility.SetDirty(instance);
+                    Debug.Log(instance.Name);
                 }
 
                 var assetGuid = AssetDatabase.AssetPathToGUID(path);
@@ -175,11 +177,34 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Monster
             EditorUtility.SetDirty(_enemyDatabase);
         }
 
+        private void SetStats(SerializedObject serializedObject, AttributeWithValue[] attributeInitValues)
+        {
+            var property = serializedObject.FindProperty("<Stats>k__BackingField");
+            property.ClearArray();
+            serializedObject.ApplyModifiedProperties();
+
+            for (int i = 0; i < attributeInitValues.Length; i++)
+            {
+                property.InsertArrayElementAtIndex(i);
+                var element = property.GetArrayElementAtIndex(i);
+                element.FindPropertyRelative("Attribute").objectReferenceValue = attributeInitValues[i].Attribute;
+                element.FindPropertyRelative("Value").floatValue = attributeInitValues[i].Value;
+            }
+
+            serializedObject.ApplyModifiedProperties();
+            serializedObject.Update();
+        }
+
         private void SetNameKey(EnemyDef instance, MonsterUnitDataModel data)
         {
-            PropertyInfo property = typeof(EnemyDef).GetProperty("Name");
             var localizedString = GetLocalizedStringRef(data.LocalizedKey);
-            property.SetValue(instance, localizedString);
+            var properties = typeof(EnemyDef).GetProperties();
+            foreach (var property in properties)
+            {
+                if (property.Name != "Name") continue;
+                property.SetValue(instance, localizedString);
+                break;
+            }
         }
 
         private void SetDrop(EnemyDef instance, MonsterUnitDataModel data)
@@ -238,8 +263,16 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Monster
         private LocalizedString GetLocalizedStringRef(string keyName)
         {
             LocalizedString key = new LocalizedString();
-            key.TableReference = "Enemies";
-            key.TableEntryReference = keyName;
+            var table = LocalizationEditorSettings.GetStringTableCollection("Enemies");
+            var tableEntry = table.SharedData.GetEntryFromReference(keyName);
+            if (tableEntry == null)
+            {
+                Debug.Log($"Key {keyName} is not exist");
+                return null;
+            }
+
+            key.TableReference = table.TableCollectionNameReference;
+            key.TableEntryReference = tableEntry.Id;
             return key;
         }
 
