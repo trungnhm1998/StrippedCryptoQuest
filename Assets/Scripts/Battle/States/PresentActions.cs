@@ -21,8 +21,17 @@ namespace CryptoQuest.Battle.States
 
         private void ToNextState(FinishedPresentingActionsEvent _)
         {
-            // We already cached the result of this round in BattleResultManager
-            BattleEventBus.RaiseEvent(new ChangeToCurrentResultStateEvent());
+            /*
+             * We already cached the result of this round in
+             * - HandleWon
+             * - HandleLost
+             * - HandleRetreat
+             *
+             * This will tell one of to end the battle if cached result is not null. When this happens, PostRoundHandler will
+             * prevent the state machine from changing state to SelectHeroesActions.
+             * PostRoundHandler will change the state to SelectHeroesActions if only cached result is null.
+             */
+            BattleEventBus.RaiseEvent(new FinishedPresentingEvent());
         }
     }
 }

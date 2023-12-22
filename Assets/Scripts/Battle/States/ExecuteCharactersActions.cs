@@ -89,13 +89,13 @@ namespace CryptoQuest.Battle.States
         {
             if (IsLost())
             {
-                BattleEventBus.RaiseEvent(new SetResultStateEvent(EBattleResult.Lost));
+                BattleEventBus.RaiseEvent(new TurnLostEvent());
                 return;
             }
 
             if (IsWon())
             {
-                BattleEventBus.RaiseEvent(new SetResultStateEvent(EBattleResult.Won));
+                BattleEventBus.RaiseEvent(new TurnWonEvent());
                 return;
             }
         }
@@ -110,7 +110,7 @@ namespace CryptoQuest.Battle.States
         /// </summary>
         public void OnEndBattle()
         {
-            BattleEventBus.RaiseEvent(new SetResultStateEvent(EBattleResult.Retreated));
+            BattleEventBus.RaiseEvent(new RetreatedEvent());
         }
 
         private void OnRetreatSuccess(RetreatSucceedEvent retreatSucceedEvent)
