@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using CryptoQuest.Beast;
 using CryptoQuest.Ranch.Sagas;
 using CryptoQuest.Ranch.UI;
+using CryptoQuest.UI.Tooltips.Events;
 using IndiGames.Core.Common;
 using IndiGames.Core.Events;
 using TinyMessenger;
@@ -11,6 +12,7 @@ namespace CryptoQuest.Ranch.State.BeastSwap
 {
     public class SwapStateBehaviour : BaseStateBehaviour
     {
+        [SerializeField] private ShowTooltipEvent _showTooltipEventChannelSO;
         private RanchStateController _controller;
 
         private TinyMessageSubscriptionToken _getDataInGameSucceed;
@@ -41,6 +43,7 @@ namespace CryptoQuest.Ranch.State.BeastSwap
             _controller.Controller.Input.ExecuteEvent += SendItemsRequested;
             _controller.Controller.Input.ResetEvent += ResetTransferRequested;
             _controller.Controller.Input.CancelEvent += CancelBeastSwapState;
+            _controller.Controller.Input.ShowDetailEvent += ShowBeastDetail;
 
             _controller.Controller.ShowWalletEventChannel.EnableAll().Show();
             ResetBeastData();
@@ -55,6 +58,7 @@ namespace CryptoQuest.Ranch.State.BeastSwap
             _controller.Controller.Input.ExecuteEvent -= SendItemsRequested;
             _controller.Controller.Input.ResetEvent -= ResetTransferRequested;
             _controller.Controller.Input.CancelEvent -= CancelBeastSwapState;
+            _controller.Controller.Input.ShowDetailEvent -= ShowBeastDetail;
 
             _controller.Controller.ShowWalletEventChannel.Hide();
 
@@ -69,8 +73,19 @@ namespace CryptoQuest.Ranch.State.BeastSwap
             _cachedWalletData = new List<IBeast>();
         }
 
+        private void ShowBeastDetail()
+        {
+            _showTooltipEventChannelSO.RaiseEvent(true);
+        }
+
+        private void HideBeastDetail()
+        {
+            _showTooltipEventChannelSO.RaiseEvent(false);
+        }
+
         private void ResetTransferRequested()
         {
+            HideBeastDetail();
             _controller.UIBeastSwap.InGameBeastList.SetData(_cachedGameData);
             _controller.UIBeastSwap.WalletBeastList.SetData(_cachedWalletData);
 
@@ -79,12 +94,14 @@ namespace CryptoQuest.Ranch.State.BeastSwap
 
         private void SendItemsRequested()
         {
+            HideBeastDetail();
             if (!_controller.UIBeastSwap.IsValid()) return;
             StateMachine.Play(ConfirmState);
         }
 
         private void CancelBeastSwapState()
         {
+            HideBeastDetail();
             _controller.UIBeastSwap.Contents.SetActive(false);
             _controller.Controller.Initialize();
             StateMachine.Play(OverViewState);
@@ -101,6 +118,7 @@ namespace CryptoQuest.Ranch.State.BeastSwap
                 var newBeast = ServiceProvider.GetService<IBeastResponseConverter>().Convert(data);
                 _cachedWalletData.Add(newBeast);
             }
+
             _controller.UIBeastSwap.WalletBeastList.SetData(_cachedWalletData);
         }
 
@@ -111,12 +129,14 @@ namespace CryptoQuest.Ranch.State.BeastSwap
                 var newBeast = ServiceProvider.GetService<IBeastResponseConverter>().Convert(data);
                 _cachedGameData.Add(newBeast);
             }
+
             _controller.UIBeastSwap.InGameBeastList.SetData(_cachedGameData);
         }
 
         private void SwitchToOtherListRequested(Vector2 direction)
         {
             _controller.UIBeastSwap.SwitchList(direction);
+            HideBeastDetail();
         }
     }
 }
