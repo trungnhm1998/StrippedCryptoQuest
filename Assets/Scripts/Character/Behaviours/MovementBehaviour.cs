@@ -42,5 +42,10 @@ namespace CryptoQuest.Character.Behaviours
         {
             _inputVector = inputVector;
         }
+
+        public void StopMovement()
+        {
+            _inputVector = Vector2.zero;
+        }
     }
 }

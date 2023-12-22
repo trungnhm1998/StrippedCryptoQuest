@@ -36,6 +36,7 @@ GameObject:
   - component: {fileID: 1827646360912147922}
   - component: {fileID: 4000847118887174206}
   - component: {fileID: 2611578758893999151}
+  - component: {fileID: 7042919380931171999}
   m_Layer: 0
   m_Name: CheatManager
   m_TagString: Untagged
@@ -4708,3 +4709,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb2ebb3ec5eb405baab0fdb8aaf6fbe9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &7042919380931171999
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 270790438277420143}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24e42d4afc5279348bda995b3bc18b11, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _gameplayBus: {fileID: 11400000, guid: a26ff341568973e46a1d4449052d5bb0, type: 2}
+  _setActiveShipEvent: {fileID: 11400000, guid: ed380240ae6f7444795d8d7ce01cb0a8, type: 2}
+  _spawnAllShipsEvent: {fileID: 11400000, guid: ae9198eba63144e42afdbcbcdad4f55d, type: 2}
