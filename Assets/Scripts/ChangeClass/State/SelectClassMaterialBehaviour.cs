@@ -10,6 +10,8 @@ namespace CryptoQuest.ChangeClass.State
     {
         [SerializeField] private LocalizedString _message;
         private ChangeClassStateController _stateController;
+        private UIClassMaterial _firstClassMaterial;
+        private UIClassMaterial _secondClassMaterial;
         private MerchantsInputManager _input;
         private Animator _animator;
         private static readonly int _submit = Animator.StringToHash("isConfirm");
@@ -26,8 +28,12 @@ namespace CryptoQuest.ChangeClass.State
             _input.CancelEvent += ExitState;
             _input.ShowDetailEvent += ShowDetail;
             _input.NavigateEvent += HideDetail;
+            
+            _firstClassMaterial = _stateController.Presenter.FirstClassMaterials;
+            _secondClassMaterial = _stateController.Presenter.SecondClassMaterials;
+            
             _stateController.Presenter.EnableClassInteractable(false);
-            _stateController.ConfirmMaterial.EnableButtonInteractable(true, _index);
+            _stateController.ConfirmMaterial.EnableButtonInteractable(true, _firstClassMaterial);
             _stateController.DialogController.Dialogue
                 .SetMessage(_message).Show();
         }
@@ -53,24 +59,25 @@ namespace CryptoQuest.ChangeClass.State
 
         private void SelectedClassMaterial()
         {
-            if (_stateController.Presenter.ListClassMaterial[_index].ListClassCharacter.Count == 0) return;
+            if (_firstClassMaterial.ListClassCharacter.Count == 0 || _secondClassMaterial.ListClassCharacter.Count == 0) return;
+            
             var currentCharacter = EventSystem.current.currentSelectedGameObject.GetComponent<UICharacter>();
-            _stateController.ConfirmMaterial.EnableButtonInteractable(false, _index);
-            _index++;
 
-            if (_index < _stateController.Presenter.ListClassMaterial.Count)
+            switch (_index)
             {
-                _stateController.ConfirmMaterial.FirstClassMaterialEvent?.Invoke(currentCharacter);
-                _stateController.ConfirmMaterial.FilterClassMaterial(currentCharacter, _index);
-                _stateController.ConfirmMaterial.HideDetail();
-                currentCharacter.EnableButtonBackground(true);
+                case 0:
+                    _stateController.ConfirmMaterial.SetFirstClassMaterial(_firstClassMaterial, currentCharacter);
+                    _stateController.ConfirmMaterial.FilterClassMaterial(currentCharacter, _secondClassMaterial);
+                    break;
+                case 1:
+                    _stateController.ConfirmMaterial.SetLastClassMaterial(_secondClassMaterial,currentCharacter);
+                    ChangeState();
+                    break;
+                default:
+                    Debug.LogError("[ChangeClass]:: unknown class material index");
+                    break;
             }
-            else
-            {
-                _stateController.ConfirmMaterial.LastClassMaterialEvent?.Invoke(currentCharacter);
-                currentCharacter.EnableButtonBackground(true);
-                ChangeState();
-            }
+            _index++;
         }
 
         private void ChangeState()
