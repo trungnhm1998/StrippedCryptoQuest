@@ -35,6 +35,7 @@ namespace CryptoQuest.Quest.Components
         [SerializeField] private QuestCompletionHandler _questCompletionHandler;
 
         private bool _isCacheDirty;
+        private IQuestConfigure _questConfigure;
 
         private Dictionary<string, QuestInfo> QuestInfoLookup
         {
@@ -179,6 +180,7 @@ namespace CryptoQuest.Quest.Components
             {
                 if (progressQuestInfo != data.Guid) continue;
                 UpdateQuestProgress(progressQuestInfo);
+                _questConfigure.CompleteQuest(progressQuestInfo);
                 break;
             }
 
@@ -193,10 +195,13 @@ namespace CryptoQuest.Quest.Components
 
         private void ConfigureQuestHolder(IQuestConfigure questConfigure)
         {
+            _questConfigure = questConfigure;
             foreach (var questSo in questConfigure.QuestsToTrack)
             {
-                var completedCount = _saveData.CompletedQuests.Count(quest => quest == questSo.Guid);
-                questConfigure.Configure(IsQuestTriggered(questSo), completedCount);
+                var matchingQuestCompleted = _saveData.CompletedQuests.Where(quest => quest == questSo.Guid).ToList();
+                var questCompleted = matchingQuestCompleted.FirstOrDefault();
+
+                questConfigure.Configure(IsQuestTriggered(questSo), questCompleted);
             }
         }
 

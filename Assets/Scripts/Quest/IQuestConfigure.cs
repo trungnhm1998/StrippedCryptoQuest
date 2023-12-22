@@ -7,6 +7,7 @@ namespace CryptoQuest.Quest
     {
         EConditionType QuestCondition { get; set; }
         List<QuestSO> QuestsToTrack { get; set; }
-        void Configure(bool isQuestCompleted, int questCompletedCount);
+        void Configure(bool isQuestCompleted, string questsCompleted);
+        void CompleteQuest(string questGuid);
     }
 }
