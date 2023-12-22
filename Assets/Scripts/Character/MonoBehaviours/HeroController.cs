@@ -1,5 +1,5 @@
-﻿﻿using System.Collections;
-using CryptoQuest.Character.Behaviours;
+﻿using System;
+using System.Collections;
 using CryptoQuest.Character.Movement;
 using CryptoQuest.Utils;
 using UnityEngine;

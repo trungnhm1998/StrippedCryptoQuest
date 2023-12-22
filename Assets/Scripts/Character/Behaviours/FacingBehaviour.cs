@@ -10,6 +10,8 @@ namespace CryptoQuest.Character.Behaviours
         [SerializeField] private InputMediatorSO _inputMediator;
         [SerializeField] private Rigidbody2D _rigidbody2D;
 
+        public EFacingDirection FacingDirection => _facingDirection;
+
         public event Action<EFacingDirection> OnFacingDirectionChanged;
         private Vector2 _inputVector;
 

@@ -9,6 +9,7 @@ using IndiGames.Core.Events.ScriptableObjects;
 using IndiGames.Core.SceneManagementSystem.Events.ScriptableObjects;
 using IndiGames.Core.SceneManagementSystem.ScriptableObjects;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
 namespace CryptoQuest.Ocarina
@@ -30,6 +31,8 @@ namespace CryptoQuest.Ocarina
         [SerializeField] private SpiralConfigSO _spiralConfig;
 
         [SerializeField] private LoadSceneEventChannelSO _requestLoadMapEvent;
+
+        [SerializeField] private UnityEvent _onOcarinaTriggered;
 
         [Header("Ocarina UI")]
         [SerializeField] private GameObject _ocarinaUI;
@@ -103,6 +106,8 @@ namespace CryptoQuest.Ocarina
                 _requestLoadMapEvent.RequestLoad(_worldMapScene);
                 _onSceneLoadedEventChannel.EventRaised += HideSpiralAfterSceneLoaded;
             }
+
+            _onOcarinaTriggered?.Invoke();
         }
 
         private void MoveHeroToLocationEntrance(MapPathSO path)

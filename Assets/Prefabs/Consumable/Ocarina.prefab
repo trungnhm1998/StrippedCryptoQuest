@@ -35,7 +35,6 @@ RectTransform:
   - {fileID: 7870421989194798893}
   - {fileID: 6188396237803797823}
   m_Father: {fileID: 5170078537366169359}
-  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -144,13 +143,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2915105683171981389}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5170078537366169359}
-  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8894603393239616001
 MonoBehaviour:
@@ -173,6 +172,21 @@ MonoBehaviour:
   _registerTownEvent: {fileID: 11400000, guid: 3ea2dceec7e7a764da0d5ccbd12c59be, type: 2}
   _spiralConfig: {fileID: 11400000, guid: 2708a2e85420add4493974ea482cd235, type: 2}
   _requestLoadMapEvent: {fileID: 11400000, guid: 932ea26428d5f4c4f8bdfd48ebc80873, type: 2}
+  _onOcarinaTriggered:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 11400000, guid: 312b6b19365a1864b9390012b99f669d, type: 2}
+        m_TargetAssemblyTypeName: CryptoQuest.Gameplay.Ship.ShipBus, IndiGames.CryptoQuest
+        m_MethodName: set_HasSailed
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 1
   _ocarinaUI: {fileID: 4583751640661796588}
 --- !u!1 &6000100546496711272
 GameObject:
@@ -197,6 +211,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6000100546496711272}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -205,7 +220,6 @@ Transform:
   - {fileID: 1982734889118401414}
   - {fileID: 8633054299452432712}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &2984783693253460359
 PrefabInstance:

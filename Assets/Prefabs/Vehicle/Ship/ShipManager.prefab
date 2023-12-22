@@ -1,0 +1,66 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &5475774293256501253
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5672734593827946196}
+  - component: {fileID: -492031326990229184}
+  - component: {fileID: 4169631085437515413}
+  m_Layer: 0
+  m_Name: ShipManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5672734593827946196
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5475774293256501253}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 22.837906, y: -37.891426, z: 0.13470949}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &-492031326990229184
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5475774293256501253}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59750451d4e8a364b8855f83943c13ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _shipSpawner: {fileID: 4169631085437515413}
+  _shipBus: {fileID: 11400000, guid: 312b6b19365a1864b9390012b99f669d, type: 2}
+  _sceneLoadedEvent: {fileID: 11400000, guid: b8b96e43d21a7bf4c96df4cb83c2b764, type: 2}
+  _spawnAllShipsEvent: {fileID: 11400000, guid: ae9198eba63144e42afdbcbcdad4f55d, type: 2}
+  _setActiveShipEvent: {fileID: 11400000, guid: ed380240ae6f7444795d8d7ce01cb0a8, type: 2}
+--- !u!114 &4169631085437515413
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5475774293256501253}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89136b5dfe8f8aa4eaf53c847c386d15, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _shipPrefab: {fileID: 7560750830605519576, guid: ad94315eff35e0a40b721f2f7c2f01a8, type: 3}
+  _spawnShipAtPositionEvent: {fileID: 11400000, guid: c1d0e0433dc7f094fa37c1283e68ac0d, type: 2}
