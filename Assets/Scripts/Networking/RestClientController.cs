@@ -24,7 +24,6 @@ namespace CryptoQuest.Networking
 
         public IObservable<string> Put(string path);
 
-        public IRestClient WithoutGenericError();
         public IRestClient WithParam(string key, string value);
         public IRestClient WithParams(Dictionary<string, string> parameters);
         public IRestClient WithBody(object body);
@@ -166,17 +165,9 @@ namespace CryptoQuest.Networking
             });
         }
 
-        private bool _dispatchGenericError = true;
-
-        public IRestClient WithoutGenericError()
-        {
-            _dispatchGenericError = false;
-            return this;
-        }
-
         private void ErrorWrapper<TResponse>(Exception exception, IObserver<TResponse> observer)
         {
-            if (_dispatchGenericError) ActionDispatcher.Dispatch(new ResponseWithError(exception));
+            ActionDispatcher.Dispatch(new ResponseWithError(exception));
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
             Debug.LogWarning(exception);
 #endif
@@ -248,7 +239,6 @@ namespace CryptoQuest.Networking
             _params = null;
             _body = null;
             _headers = null;
-            _dispatchGenericError = true;
 
             return request;
         }
