@@ -48,6 +48,7 @@ namespace CryptoQuest.Ranch.UI
 
         public void SetItemInfo(IBeast beast)
         {
+            Beast = beast;
             Id = beast.Id;
             _localizeName.StringReference = beast.LocalizedName;
             _level.text = $"Lv{beast.Level}";

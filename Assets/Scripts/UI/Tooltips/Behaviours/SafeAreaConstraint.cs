@@ -6,13 +6,13 @@ namespace CryptoQuest.UI.Tooltips.Behaviours
     {
         private void OnEnable() => Setup();
 
-        private void Setup()
+        public virtual void Setup()
         {
             var pivotX = RectTransform.pivot.x;
             RectTransform.pivot = new Vector2(pivotX, CalculatePivotYBasedOnSafeArea());
         }
 
-        private float CalculatePivotYBasedOnSafeArea()
+        protected float CalculatePivotYBasedOnSafeArea()
         {
             var corners = new Vector3[4];
             RectTransform.GetWorldCorners(corners);
