@@ -62,19 +62,12 @@ namespace CryptoQuest.Battle.Events
         public List<LootInfo> Loots { get; set; }
     }
 
-    public class SetResultStateEvent : BattleEvent
-    {
-        public EBattleResult Result { get;  private set; }
-        public SetResultStateEvent(EBattleResult result)
-        {
-            Result = result;
-        }
-    }
-    public class ChangeToCurrentResultStateEvent : BattleEvent { }
-
     public abstract class TurnResultEvent : BattleEvent { }
-    public class TurnLostEvent : TurnResultEvent { }
+
     public class TurnWonEvent : TurnResultEvent { }
+
+    public class TurnLostEvent : TurnResultEvent { }
+
     public class RetreatedEvent : TurnResultEvent { }
 
     public class BattleLostEvent : BattleEndedEvent { }
