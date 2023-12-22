@@ -6,9 +6,7 @@ using CryptoQuest.ChangeClass.ScriptableObjects;
 using CryptoQuest.ChangeClass.View;
 using CryptoQuest.Gameplay.PlayerParty;
 using CryptoQuest.Inventory;
-using CryptoQuest.Item;
 using CryptoQuest.Item.Consumable;
-using CryptoQuest.System;
 using IndiGames.Core.Common;
 using UnityEngine;
 
@@ -16,7 +14,8 @@ namespace CryptoQuest.ChangeClass
 {
     public class ChangeClassPresenter : MonoBehaviour
     {
-        [field: SerializeField] public List<UIClassMaterial> ListClassMaterial { get; private set; }
+        [field: SerializeField] public UIClassMaterial FirstClassMaterials { get; private set; }
+        [field: SerializeField] public UIClassMaterial SecondClassMaterials { get; private set; }
         [SerializeField] private List<ConsumableSO> _itemMaterials;
         [SerializeField] private List<UIItemMaterial> _uiMaterials;
         [SerializeField] private List<ChangeClassSO> _listCharacterClass;
@@ -108,10 +107,8 @@ namespace CryptoQuest.ChangeClass
         private void RenderClassMaterial()
         {
             if (Occupation == null) return;
-            for (int i = 0; i < ListClassMaterial.Count; i++)
-            {
-                StartCoroutine(ListClassMaterial[i].InstantiateData(_changeClassHeroData.OwnedHeroes, Occupation, i));
-            }
+            StartCoroutine(FirstClassMaterials.InstantiateData(_changeClassHeroData.OwnedHeroes, Occupation, 0));
+            StartCoroutine(SecondClassMaterials.InstantiateData(_changeClassHeroData.OwnedHeroes, Occupation, 1));
         }
 
         private IEnumerator RenderItemMaterial()
@@ -135,6 +132,7 @@ namespace CryptoQuest.ChangeClass
                     {
                         itemMaterial.ConfigureCell(_materialApi, quantity, index);
                     }
+
                     yield break;
                 }
             }
@@ -144,26 +142,37 @@ namespace CryptoQuest.ChangeClass
         {
             IsValid = false;
             _isEmptyClassMaterial = false;
-            foreach (var classMaterial in ListClassMaterial)
-            {
-                yield return new WaitUntil(() => classMaterial.IsFinishInstantiateData);
-                if (classMaterial.IsEmptyMaterial)
-                {
-                    _isEmptyClassMaterial = classMaterial.IsEmptyMaterial;
-                    break;
-                }
-            }
 
-            bool isSameClass = ListClassMaterial[0].ClassID == ListClassMaterial[1].ClassID;
-            bool isMaterialValid = !_isEmptyClassMaterial && _uiMaterials[0].IsValid;
+            yield return new WaitUntil(() => SecondClassMaterials.IsFinishInstantiateData);
 
-            if (isSameClass && ListClassMaterial[0].ListClassCharacter.Count <= 1 || !isMaterialValid)
+            _isEmptyClassMaterial = SecondClassMaterials.IsEmptyMaterial;
+
+
+            if (IsNotValidSpecialClassMaterial() || !IsValidItemMaterial())
                 yield break;
 
-            IsValid = isMaterialValid;
+            IsValid = IsValidClassMaterial();
             Occupation.EnableDefaultBackground(IsValid);
         }
 
+        private bool IsNotValidSpecialClassMaterial()
+        {
+            return FirstClassMaterials.ClassID == SecondClassMaterials.ClassID &&
+                   FirstClassMaterials.ListClassCharacter.Count <= 1;
+        }
+
+        private bool IsValidItemMaterial()
+        {
+            return !_isEmptyClassMaterial && _uiMaterials[0].IsValid;
+        }
+
+        private bool IsValidClassMaterial()
+        {
+            return FirstClassMaterials.ListClassCharacter
+                .Any(character1 => SecondClassMaterials.ListClassCharacter
+                    .Any(character2 => character1.Class.Origin == character2.Class.Origin));
+        }
+        
         public void EnableClassInteractable(bool isEnable)
         {
             _uiClassToChange.EnableInteractable(isEnable);

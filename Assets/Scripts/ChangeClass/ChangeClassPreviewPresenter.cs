@@ -12,7 +12,6 @@ namespace CryptoQuest.ChangeClass
 {
     public class ChangeClassPreviewPresenter : MonoBehaviour
     {
-        [SerializeField] private List<UIClassMaterial> _listClassMaterial;
         [SerializeField] private ChangeClassSyncData _syncData;
         [SerializeField] private MerchantsInputManager _input;
         [SerializeField] private PreviewCharacterAPI _previewCharacterAPI;
@@ -53,28 +52,43 @@ namespace CryptoQuest.ChangeClass
             _lastClassMaterial = character;
         }
 
-        public void FilterClassMaterial(UICharacter character, int index)
+        public void FilterClassMaterial(UICharacter character, UIClassMaterial classMaterial)
         {
-            StartCoroutine(_listClassMaterial[index].FilterClassMaterial(character));
-            StartCoroutine(SelectDefaultButton(index));
+            StartCoroutine(classMaterial.FilterClassMaterial(character));
+            StartCoroutine(SelectDefaultButton(classMaterial));
         }
 
-        private IEnumerator SelectDefaultButton(int index)
+        private IEnumerator SelectDefaultButton(UIClassMaterial classMaterial)
         {
-            yield return new WaitUntil(() => _listClassMaterial[index].IsFilterClassMaterial);
-            var materialNumber = _listClassMaterial[index].ListClassCharacter.Count;
+            yield return new WaitUntil(() => classMaterial.IsFilterClassMaterial);
+            var materialNumber = classMaterial.ListClassCharacter.Count;
             if (materialNumber != 0)
-                EnableButtonInteractable(true, index);
+                EnableButtonInteractable(true, classMaterial);
         }
 
-        public void EnableButtonInteractable(bool isEnable, int index)
+        public void SetFirstClassMaterial(UIClassMaterial classMaterial, UICharacter character)
         {
-            foreach (var button in _listClassMaterial[index].ListClassCharacter)
+            FirstClassMaterialEvent.Invoke(character);
+            EnableButtonInteractable(false, classMaterial);
+            HideDetail();
+            character.EnableButtonBackground(true);
+        }
+
+        public void SetLastClassMaterial(UIClassMaterial classMaterial, UICharacter character)
+        {
+            EnableButtonInteractable(false, classMaterial);
+            LastClassMaterialEvent?.Invoke(character);
+            character.EnableButtonBackground(true);
+        }
+
+        public void EnableButtonInteractable(bool isEnable, UIClassMaterial classMaterial)
+        {
+            foreach (var button in classMaterial.ListClassCharacter)
             {
                 button.GetComponent<Button>().interactable = isEnable;
             }
 
-            var firstItemGO = _listClassMaterial[index].ListClassCharacter[0].gameObject;
+            var firstItemGO = classMaterial.ListClassCharacter[0].gameObject;
             EventSystem.current.SetSelectedGameObject(firstItemGO);
         }
 
@@ -97,7 +111,8 @@ namespace CryptoQuest.ChangeClass
             _previewCharacterAPI.LoadDataToPreviewCharacter(_firstClassMaterial, _lastClassMaterial);
             CheckElementImage();
             yield return new WaitUntil(() => _previewCharacterAPI.IsFinishFetchData);
-            _previewNewClass.PreviewCharacter(_previewCharacterAPI.Data, _firstClassMaterial, avatar, CheckElementImage());
+            _previewNewClass.PreviewCharacter(_previewCharacterAPI.Data, _firstClassMaterial, avatar,
+                CheckElementImage());
             _calculatorFirstCharacterStats.CalculatorStats(_firstClassMaterial);
             _calculatorSecondCharacterStats.CalculatorStats(_lastClassMaterial);
             GetDefaultExp(_previewNewClass);
@@ -118,7 +133,8 @@ namespace CryptoQuest.ChangeClass
         private IEnumerator ChangeNewClassAPI()
         {
             _input.DisableInput();
-            _changeNewClassAPI.ChangeNewClassData(_firstClassMaterial, _lastClassMaterial, _changeClassPresenter.Occupation);
+            _changeNewClassAPI.ChangeNewClassData(_firstClassMaterial, _lastClassMaterial,
+                _changeClassPresenter.Occupation);
             yield return new WaitUntil(() => _changeNewClassAPI.IsFinishFetchData);
             _input.EnableInput();
 
@@ -135,6 +151,7 @@ namespace CryptoQuest.ChangeClass
                 _calculatorTooltipCharacter.gameObject.SetActive(true);
                 _preview.ShowTooltip(character);
             }
+
             _calculatorTooltipCharacter.CalculatorStats(character);
         }
 
