@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using CryptoQuest.Character.Behaviours;
 using CryptoQuest.Gameplay.Battle;
 
 namespace CryptoQuest.Gameplay.Encounter
@@ -39,7 +40,8 @@ namespace CryptoQuest.Gameplay.Encounter
             _maxEncounterSteps = _currentEncounterData.EncounterRate;
             if (_stepLeftBeforeTriggerBattle > 0) return;
             GenerateRandomStepTilNextTrigger();
-            _gameplayBus.Hero.Step += DecrementStepCountBeforeTriggerBattle;
+            if (_gameplayBus.Hero.TryGetComponent(out StepBehaviour stepBehaviourComponent))
+                stepBehaviourComponent.Step += DecrementStepCountBeforeTriggerBattle;
         }
 
         private void RemoveStepHandler()
@@ -65,7 +67,8 @@ namespace CryptoQuest.Gameplay.Encounter
             if (_currentEncounterInfos.Count == 0)
             {
                 _currentPriority = -1;
-                _gameplayBus.Hero.Step -= DecrementStepCountBeforeTriggerBattle;
+                if (_gameplayBus.Hero.TryGetComponent(out StepBehaviour stepBehaviourComponent))
+                    stepBehaviourComponent.Step -= DecrementStepCountBeforeTriggerBattle;
                 _stepLeftBeforeTriggerBattle = 0;
                 return;
             }

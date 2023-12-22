@@ -1,8 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
+using IndiGames.Core.Common;
 using IndiGames.Core.EditorTools.Attributes.ReadOnlyAttribute;
 using UnityEngine;
-using NotImplementedException = System.NotImplementedException;
 
 namespace CryptoQuest.Character.MonoBehaviours
 {

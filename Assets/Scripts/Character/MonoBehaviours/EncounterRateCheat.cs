@@ -1,4 +1,5 @@
 ﻿using CommandTerminal;
+using CryptoQuest.Character.Behaviours;
 using CryptoQuest.System.Cheat;
 using UnityEngine;
 
@@ -16,7 +17,8 @@ namespace CryptoQuest.Character.MonoBehaviours
         {
             var rate = obj[0].Float;
             var hero = FindObjectOfType<HeroController>(); // it is a cheat I don't care about performance
-            hero.SetDistanceTilNextStep(rate);
+            if (hero.TryGetComponent(out StepBehaviour stepBehaviourComponent))
+                stepBehaviourComponent.SetDistanceTilNextStep(rate);
         }
     }
 }

@@ -1,3 +1,4 @@
+using CryptoQuest.Character.Behaviours;
 using CryptoQuest.Character.MonoBehaviours;
 using CryptoQuest.Gameplay;
 using CryptoQuest.System;
@@ -108,7 +109,8 @@ namespace CryptoQuest.Map.CheckPoint
             if (SceneManager.GetSceneByName(_lastSceneCheckPointName).isLoaded)
             {
                 _gameplayBus.Hero.transform.position = _lastCheckPointPosition;
-                _gameplayBus.Hero.SetFacingDirection(FacingDirection);
+                 if (_gameplayBus.Hero.TryGetComponent(out FacingBehaviour facingBehaviourComponent))
+                    facingBehaviourComponent.SetFacingDirection(FacingDirection);
                 SceneManager.SetActiveScene(SceneManager.GetSceneByName(_lastSceneCheckPointName));
                 _showCheckPointMessageSO.RaiseEvent();
                 _fadeController.OnFadeOut();

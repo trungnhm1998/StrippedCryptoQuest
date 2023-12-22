@@ -1,4 +1,5 @@
 ﻿using System;
+using CryptoQuest.Character.Behaviours;
 using CryptoQuest.Gameplay;
 using IndiGames.GameplayAbilitySystem.EffectSystem;
 using IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects.GameplayEffectActions;
@@ -16,13 +17,15 @@ namespace CryptoQuest.AbilitySystem.EffectActions
         public override void RegistCounterEvent(CounterGameplayEffect effect)
         {
             base.RegistCounterEvent(effect);
-            _gameplayBus.Hero.Step += effect.ReduceCounterEvent;
+            if (_gameplayBus.Hero.TryGetComponent(out StepBehaviour stepBehaviourComponent))
+                stepBehaviourComponent.Step += effect.ReduceCounterEvent;
         }
 
         public override void RemoveCounterEvent(CounterGameplayEffect effect)
         {
             base.RemoveCounterEvent(effect);
-            _gameplayBus.Hero.Step -= effect.ReduceCounterEvent;
+            if (_gameplayBus.Hero.TryGetComponent(out StepBehaviour stepBehaviourComponent))
+                stepBehaviourComponent.Step -= effect.ReduceCounterEvent;
         }
 
         public override ActiveGameplayEffect CreateActiveEffect(GameplayEffectSpec inSpec) =>
