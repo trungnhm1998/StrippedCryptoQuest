@@ -179,7 +179,10 @@ GameObject:
   - component: {fileID: 7554478410091581299}
   - component: {fileID: 2666008443760541682}
   - component: {fileID: 5253543959420769929}
-  - component: {fileID: 9118026030946445046}
+  - component: {fileID: 1066248349066006005}
+  - component: {fileID: 1963734759497882669}
+  - component: {fileID: 629896764869967883}
+  - component: {fileID: 6868424121215045300}
   - component: {fileID: 2400260871458529821}
   - component: {fileID: 8011887746097824300}
   m_Layer: 9
@@ -334,11 +337,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f775420e950e40bf99c1551e9dfaed82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _inputMediator: {fileID: 11400000, guid: 1fb61cdb72f0a484f8e4db68e2011977, type: 2}
-  _distanceTilCountAsStep: 0.95
-  _speed: 4
-  _characterBehaviour: {fileID: 9118026030946445046}
---- !u!114 &9118026030946445046
+  _animator: {fileID: 8011887746097824300}
+--- !u!114 &1066248349066006005
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -347,21 +347,54 @@ MonoBehaviour:
   m_GameObject: {fileID: 3117586077093109585}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3573c485e40a4dd690d4837dcc88f09e, type: 3}
+  m_Script: {fileID: 11500000, guid: 61c6f28c49dd08a4e81d5032528b7fd7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _animator: {fileID: 8011887746097824300}
   _facingDirection: 0
-  _interactionCollider: {fileID: 4297895614093028720}
-  _facingOffsets:
-  - Direction: 0
-    Offset: {x: 0, y: -0.8}
-  - Direction: 1
-    Offset: {x: -0.5, y: 0}
-  - Direction: 2
-    Offset: {x: 0, y: 0.8}
-  - Direction: 3
-    Offset: {x: 0.5, y: 0}
+  _inputMediator: {fileID: 11400000, guid: 1fb61cdb72f0a484f8e4db68e2011977, type: 2}
+  _rigidbody2D: {fileID: 7554478410091581299}
+--- !u!114 &1963734759497882669
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3117586077093109585}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f0b17473eaf95e448dd1f8839028c12, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _inputMediator: {fileID: 11400000, guid: 1fb61cdb72f0a484f8e4db68e2011977, type: 2}
+  _interactionBoxTransform: {fileID: 7176735772284070797}
+--- !u!114 &629896764869967883
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3117586077093109585}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f05d632428d05d4ea99e368a9dc6475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _inputMediator: {fileID: 11400000, guid: 1fb61cdb72f0a484f8e4db68e2011977, type: 2}
+  _speed: 4
+--- !u!114 &6868424121215045300
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3117586077093109585}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5529f5150add2354bb1c08c59f90bacf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _distanceTilCountAsStep: 0.95
 --- !u!114 &2400260871458529821
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -407,6 +440,7 @@ GameObject:
   - component: {fileID: 7981925091371911208}
   - component: {fileID: 4297895614093028720}
   - component: {fileID: 7659927857737733092}
+  - component: {fileID: 5090699809435505780}
   m_Layer: 12
   m_Name: InteractionZone
   m_TagString: InteractionZone
@@ -532,6 +566,28 @@ MonoBehaviour:
   _layers:
     serializedVersion: 2
     m_Bits: 1
+--- !u!114 &5090699809435505780
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6964796200260798395}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c942deb11f060374da4af4767f48624e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _facingBehaviour: {fileID: 1066248349066006005}
+  _facingOffsets:
+  - Direction: 0
+    Offset: {x: 0, y: -0.8}
+  - Direction: 1
+    Offset: {x: -0.5, y: 0}
+  - Direction: 2
+    Offset: {x: 0, y: 0.8}
+  - Direction: 3
+    Offset: {x: 0.5, y: 0}
 --- !u!1001 &4617456561133790117
 PrefabInstance:
   m_ObjectHideFlags: 0

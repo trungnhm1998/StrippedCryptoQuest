@@ -1,4 +1,5 @@
-﻿using CryptoQuest.Character.MonoBehaviours;
+﻿using CryptoQuest.Character.Behaviours;
+using CryptoQuest.Character.MonoBehaviours;
 using CryptoQuest.Gameplay;
 using CryptoQuest.Input;
 using IndiGames.Core.Events.ScriptableObjects;
@@ -11,7 +12,7 @@ namespace CryptoQuest.Map
     {
         [SerializeField] protected InputMediatorSO _inputMediator;
         [SerializeField] protected GameplayBus _gameplayBus;
-        [SerializeField] protected HeroBehaviour _heroPrefab;
+        [SerializeField] protected GameObject _heroPrefab;
         [SerializeField] private PathStorageSO _pathStorage;
         [SerializeField] private CharacterBehaviour.EFacingDirection _defaultFacingDirection;
 
@@ -65,11 +66,17 @@ namespace CryptoQuest.Map
             var spawnPoint = GetSpawnPoint();
 
             var heroInstance = Instantiate(_heroPrefab, spawnPoint.position, Quaternion.identity);
-            heroInstance.SetFacingDirection(spawnPoint.gameObject.TryGetComponent<GoFrom>(out var goFrom)
-                ? goFrom.EntranceFacingDirection
-                : _defaultFacingDirection);
+            if (heroInstance.TryGetComponent(out FacingBehaviour facingBehaviourComponent))
+            {
+                CharacterBehaviour.EFacingDirection facingDirection = _defaultFacingDirection;
+                if (spawnPoint.TryGetComponent(out GoFrom goFromComponent))
+                {
+                    facingDirection = goFromComponent.EntranceFacingDirection;
+                }
+                facingBehaviourComponent.SetFacingDirection(facingDirection);
+            }
 
-            _gameplayBus.Hero = heroInstance;
+            _gameplayBus.Hero = heroInstance.GetComponent<HeroBehaviour>();
             _gameplayBus.RaiseHeroSpawnedEvent();
         }
 

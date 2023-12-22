@@ -1,9 +1,11 @@
 using System.Collections;
 using CryptoQuest.UI.Dialogs.BattleDialog;
+using CryptoQuest.Character.Behaviours;
 using IndiGames.Core.Common;
 using IndiGames.Core.Events.ScriptableObjects;
 using UnityEngine;
 using UnityEngine.Localization;
+using CryptoQuest.Character.MonoBehaviours;
 
 namespace CryptoQuest.Map.CheckPoint
 {
@@ -40,9 +42,10 @@ namespace CryptoQuest.Map.CheckPoint
                 }
 
                 var heroInstance = Instantiate(_heroPrefab, position, Quaternion.identity);
-                heroInstance.SetFacingDirection(_checkPointController.FacingDirection);
+                if (heroInstance.TryGetComponent(out FacingBehaviour facingBehaviourComponent))
+                    facingBehaviourComponent.SetFacingDirection(_checkPointController.FacingDirection);
 
-                _gameplayBus.Hero = heroInstance;
+                _gameplayBus.Hero = heroInstance.GetComponent<HeroBehaviour>();
                 _gameplayBus.RaiseHeroSpawnedEvent();
                 StartCoroutine(CoLoadDialogAndShowMessage());
             }

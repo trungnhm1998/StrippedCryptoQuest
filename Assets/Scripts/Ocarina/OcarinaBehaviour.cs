@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using CryptoQuest.Character.MonoBehaviours;
 using CryptoQuest.Gameplay;
 using CryptoQuest.Input;
 using CryptoQuest.Map;
@@ -61,7 +62,9 @@ namespace CryptoQuest.Ocarina
         {
             _inputMediatorSO.DisableAllInput();
             _ocarinaUI.SetActive(true);
-            yield return _gameplayBus.Hero.ActivateOcarina();
+            var heroController = _gameplayBus.Hero.GetComponent<HeroController>();
+            string animationClipName = "Hero_Ocarina";
+            yield return heroController.CoPlayAnimation(animationClipName);
             _ocarinaUI.SetActive(false);
             ShowSpiral();
             yield return new WaitForSeconds(_spiralConfig.Duration);

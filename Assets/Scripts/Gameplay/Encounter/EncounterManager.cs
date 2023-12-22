@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using CryptoQuest.Battle;
+using CryptoQuest.Character.Behaviours;
 using CryptoQuest.Events;
 using CryptoQuest.Gameplay.Battle;
 using CryptoQuest.Gameplay.SafeZone;
@@ -55,7 +56,8 @@ namespace CryptoQuest.Gameplay.Encounter
         private void RemoveStepHandler(string encounterId)
         {
             if (_currentEncounterData == null) return;
-            _gameplayBus.Hero.Step -= DecrementStepCountBeforeTriggerBattle;
+            if (_gameplayBus.Hero.TryGetComponent(out StepBehaviour stepBehaviourComponent))
+                stepBehaviourComponent.Step -= DecrementStepCountBeforeTriggerBattle;
             _currentEncounterData = null; // either null or new EncounterData()
         }
 
@@ -67,7 +69,8 @@ namespace CryptoQuest.Gameplay.Encounter
             _currentEncounterData = encounter;
             _maxEncounterSteps = _currentEncounterData.EncounterRate;
             GenerateRandomStepTilNextTrigger();
-            _gameplayBus.Hero.Step += DecrementStepCountBeforeTriggerBattle;
+            if (_gameplayBus.Hero.TryGetComponent(out StepBehaviour stepBehaviourComponent))
+                stepBehaviourComponent.Step += DecrementStepCountBeforeTriggerBattle;
         }
 
         protected void LoadEncounterZone(string encounterId)
