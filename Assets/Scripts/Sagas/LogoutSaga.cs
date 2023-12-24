@@ -13,8 +13,7 @@ namespace CryptoQuest.Sagas
 
         protected override void HandleAction(LogoutAction ctx)
         {
-            _credentials.Profile = new();
-            PlayerPrefs.SetString(SNSAutoLoginSaga.SNS_SAVE_KEY, string.Empty);
+            _credentials.Reset();
             ActionDispatcher.Dispatch(new LogoutFinishedAction());
         }
     }

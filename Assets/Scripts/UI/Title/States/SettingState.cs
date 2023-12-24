@@ -10,14 +10,14 @@ namespace CryptoQuest.UI.Title.States
         {
             base.OnEnter(stateMachine);
             stateMachine.TryGetComponentInChildren(out _optionPanel);
-            _optionPanel?.gameObject?.SetActive(true);
-            _optionPanel?.InitOptionPanel();
+            _optionPanel.gameObject.SetActive(true);
+            _optionPanel.InitOptionPanel();
         }
 
         public override void OnExit(TitleStateMachine stateMachine)
         {
             base.OnExit(stateMachine);
-            _optionPanel?.gameObject?.SetActive(false);
+            _optionPanel.gameObject.SetActive(false);
         }
 
         public override void OnCancel(InputAction.CallbackContext context)

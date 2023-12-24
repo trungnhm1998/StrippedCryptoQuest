@@ -10,6 +10,7 @@ namespace CryptoQuest.UI.Title
 {
     public class UIWalletDisconnectButton : MonoBehaviour
     {
+        [SerializeField] private Credentials _credentials;
         private TinyMessageSubscriptionToken _connectWalletToken;
         private TinyMessageSubscriptionToken _disconnectWalletToken;
 
@@ -27,8 +28,7 @@ namespace CryptoQuest.UI.Title
 
         private void Start()
         {
-            var credentials = ServiceProvider.GetService<Credentials>();
-            if (credentials != null && string.IsNullOrEmpty(credentials.Profile.user.walletAddress))
+            if (string.IsNullOrEmpty(_credentials.Wallet))
             {
                 gameObject.SetActive(false);
             }

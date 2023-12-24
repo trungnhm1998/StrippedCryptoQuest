@@ -58,13 +58,19 @@ namespace CryptoQuest.Sagas
 
         protected override void HandleAction(InternalAuthenticateAction ctx)
         {
-            _credentials.Profile = ctx.ResponseCredentialResponse;
-            if (_credentials.Profile == null)
+            var token = ctx.ResponseCredentialResponse.token;
+            _credentials.Wallet = ctx.ResponseCredentialResponse.user.walletAddress;
+            _credentials.UUID = ctx.ResponseCredentialResponse.user.id;
+            _credentials.Token = token.access.token;
+            _credentials.RefreshToken = token.refresh.token;
+            
+            if (_credentials.IsLoggedIn() == false)
             {
                 ActionDispatcher.Dispatch(new AuthenticateFailed());
                 return;
             }
 
+            _credentials.Save();
             ActionDispatcher.Dispatch(new AuthenticateSucceed());
         }
     }

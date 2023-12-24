@@ -23,14 +23,6 @@ namespace CryptoQuest.UI.Title
         private void OnEnable()
         {
             Invoke(nameof(SelectFirstSelectable), 0);
-            if (!string.IsNullOrEmpty(_credentials.Email))
-            {
-                _emailInputField.text = _credentials.Email;
-            }
-            if (!string.IsNullOrEmpty(_credentials.Password))
-            {
-                _passwordInputField.text = _credentials.Password;
-            }
         }
 
         private void Awake()
