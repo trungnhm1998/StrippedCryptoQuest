@@ -49,12 +49,9 @@ namespace CryptoQuest.Networking
     {
         [SerializeField] private Credentials _credentials;
         [SerializeField] private EnvironmentSO _environment;
-        private EnvironmentSO Env => ServiceProvider.GetService<EnvironmentSO>();
 
         private void Awake()
         {
-            ServiceProvider.Provide(_environment);
-            ServiceProvider.Provide(_credentials);
             ServiceProvider.Provide<IRestClient>(this);
         }
 
@@ -208,7 +205,7 @@ namespace CryptoQuest.Networking
         private RequestHelper GenerateRequest(string path)
         {
             var mergeHeaders = MergeHeaders(_headers);
-            var accessToken = _credentials?.Profile?.token?.access?.token;
+            var accessToken = _credentials.Token;
 
             // Add authorization only when this is not login/refresh requests
             if (!path.Contains(Accounts.LOGIN)
@@ -227,7 +224,7 @@ namespace CryptoQuest.Networking
 
             var request = new RequestHelper
             {
-                Uri = $"{Env.API}/{path}",
+                Uri = $"{_environment.API}/{path}",
                 BodyString = bodyString,
                 Headers = mergeHeaders,
                 Params = _params,

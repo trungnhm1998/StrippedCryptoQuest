@@ -1,7 +1,4 @@
-﻿using System;
-using CryptoQuest.Sagas;
-using CryptoQuest.System;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace CryptoQuest.Networking
 {
@@ -11,29 +8,36 @@ namespace CryptoQuest.Networking
     [CreateAssetMenu(menuName = "Crypto Quest/Networking/Credentials", fileName = "Credentials", order = 0)]
     public class Credentials : ScriptableObject
     {
-        /// <summary>
-        /// Only when login using email and password
-        /// any social using Google, Facebook, Twitter, Wallet will not have this
-        /// </summary>
-        [field: SerializeField] public string Email { get; set; }
-
-        [field: SerializeField] public string Password { get; set; }
-        [field: SerializeField] public CredentialResponse Profile { get; set; }
+        [field: SerializeField] public string UUID { get; set; }
+        [field: SerializeField] public string Wallet { get; set; }
+        [field: SerializeField] public string Token { get; set; }
+        [field: SerializeField] public string RefreshToken { get; set; }
+        
+        [SerializeField, Header("UserPrefs")] private string _tokenKey = "token";
+        [SerializeField] private string _refreshTokenKey = "refresh_token";
 
         /// <summary>
         /// Check access token to validate if user has logged in
         /// </summary>
-        public bool IsLoggedIn()
+        public bool IsLoggedIn() => string.IsNullOrEmpty(Token) == false && string.IsNullOrEmpty(RefreshToken) == false;
+        
+        public void Load()
         {
-            if (Profile != null && Profile.token != null && Profile.token.access != null)
-            {
-                var accessToken = Profile.token.access;
-                if (!string.IsNullOrEmpty(accessToken.token))
-                {
-                    return DateTime.Parse(accessToken.expires).CompareTo(DateTime.Now) > 0;
-                }
-            }
-            return false;
+            Token = PlayerPrefs.GetString(_tokenKey, Token);
+            RefreshToken = PlayerPrefs.GetString(_refreshTokenKey, RefreshToken);
+        }
+
+        public void Save()
+        {
+            PlayerPrefs.SetString(_tokenKey, Token);
+            PlayerPrefs.SetString(_refreshTokenKey, RefreshToken);
+        }
+
+        public void Reset()
+        {
+            Wallet = string.Empty;
+            Token = string.Empty;
+            RefreshToken = string.Empty;
         }
     }
 }

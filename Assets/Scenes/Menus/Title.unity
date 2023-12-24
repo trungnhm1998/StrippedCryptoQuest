@@ -344,6 +344,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &370479519 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 637110613254792650, guid: 7d6c35d654339cb489dfbf91416939fe, type: 3}
+  m_PrefabInstance: {fileID: 11645016425568079}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &370479526
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 370479519}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a66ba1a3832fd864f8b8b8492c5dd77e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _credentials: {fileID: 11400000, guid: 3bc0ee02274acb749913af55e08d1158, type: 2}
+--- !u!114 &370479533
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 370479519}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5ec7cee455c4c71aece0b303eb18a8e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _credentials: {fileID: 11400000, guid: 3bc0ee02274acb749913af55e08d1158, type: 2}
 --- !u!1 &401206607
 GameObject:
   m_ObjectHideFlags: 0
@@ -408,6 +439,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7fa435707379e8c47b801cd4f0cdc87c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _dev: https://games.indigames.link/crypto-quest/dev/
+  _qa: https://games.indigames.link/crypto-quest/qa/
+  _credentials: {fileID: 11400000, guid: 3bc0ee02274acb749913af55e08d1158, type: 2}
 --- !u!1001 &568567565
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -725,6 +759,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e2e17378b504f1bb0b4e0dba8aefc7a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _credentials: {fileID: 11400000, guid: 3bc0ee02274acb749913af55e08d1158, type: 2}
   _saveSystem: {fileID: 11400000, guid: 660bab7c7e2db6946b3a03dc73ffe40f, type: 2}
 --- !u!114 &1020480058
 MonoBehaviour:
@@ -1047,6 +1082,10 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 101.37
       objectReference: {fileID: 0}
+    - target: {fileID: 4841469214657485855, guid: 7d6c35d654339cb489dfbf91416939fe, type: 3}
+      propertyPath: _checkLoginCheckState
+      value: 
+      objectReference: {fileID: 370479526}
     - target: {fileID: 5359114909688182310, guid: 7d6c35d654339cb489dfbf91416939fe, type: 3}
       propertyPath: m_Camera
       value: 
@@ -1136,6 +1175,12 @@ PrefabInstance:
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 637110613254792650, guid: 7d6c35d654339cb489dfbf91416939fe, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 370479526}
+    - targetCorrespondingSourceObject: {fileID: 637110613254792650, guid: 7d6c35d654339cb489dfbf91416939fe, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 370479533}
     - targetCorrespondingSourceObject: {fileID: 1716080694741249034, guid: 7d6c35d654339cb489dfbf91416939fe, type: 3}
       insertIndex: -1
       addedObject: {fileID: 11645016425568085}
@@ -1163,6 +1208,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38a240702019cc642b208f2cbda96514, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _credentials: {fileID: 11400000, guid: 3bc0ee02274acb749913af55e08d1158, type: 2}
 --- !u!1001 &5494359071374038573
 PrefabInstance:
   m_ObjectHideFlags: 0

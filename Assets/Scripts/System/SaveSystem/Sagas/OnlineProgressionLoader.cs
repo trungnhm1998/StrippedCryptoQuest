@@ -35,6 +35,7 @@ namespace CryptoQuest.System.SaveSystem.Sagas
 
     public class OnlineProgressionLoader : SagaBase<AuthenticateSucceed>
     {
+        [SerializeField] private Credentials _credentials;
         [SerializeField] private SaveSystemSO _saveSystem;
 
         private void Awake()
@@ -73,13 +74,12 @@ namespace CryptoQuest.System.SaveSystem.Sagas
 
         private SaveData ValidateSaveDataFromResponse(SaveDataResponse res)
         {
-            var credential = ServiceProvider.GetService<Credentials>();
             var saveData = res.game_data; // priority online save first
 
             // TODO: Violate OCP implement CoR pattern for new type of check
             ClearSaveIfVersionIsDifferent(ref saveData);
             UsingLocalSaveIfNewer(ref saveData);
-            UsingOnlineSaveIfUserAreDifferent(res, ref saveData, credential);
+            UsingOnlineSaveIfUserAreDifferent(res, ref saveData);
             return saveData;
         }
 
@@ -103,13 +103,12 @@ namespace CryptoQuest.System.SaveSystem.Sagas
         }
 
 
-        private void UsingOnlineSaveIfUserAreDifferent(SaveDataResponse res, ref SaveData saveData,
-            Credentials credential)
+        private void UsingOnlineSaveIfUserAreDifferent(SaveDataResponse res, ref SaveData saveData)
         {
             if (!string.IsNullOrEmpty(saveData.UUID) && saveData.UUID == _saveSystem.SaveData.UUID) return;
             Debug.Log("User Diff");
             saveData = res.game_data;
-            saveData.UUID = credential.Profile.user.email; // overwrite using authenticated user
+            saveData.UUID = _credentials.UUID;
             // return saveData; // TODO: CoR should early exit while others should return next node to check
         }
 
@@ -118,7 +117,7 @@ namespace CryptoQuest.System.SaveSystem.Sagas
             Debug.LogWarning($"OnlineProgressionLoader::UseNewSaveOnError {obj.Message}");
             _saveSystem.SaveData = new SaveData
             {
-                UUID = ServiceProvider.GetService<Credentials>().Email
+                UUID = _credentials.UUID
             };
             _saveSystem.Save();
         }

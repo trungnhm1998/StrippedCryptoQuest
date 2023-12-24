@@ -1,12 +1,10 @@
+using System;
+using CryptoQuest.API;
 using CryptoQuest.Bridge;
 using CryptoQuest.Networking;
-using CryptoQuest.SaveSystem;
-using CryptoQuest.System;
-using CryptoQuest.API;
-using Newtonsoft.Json;
-using System;
 using CryptoQuest.System.SaveSystem;
 using IndiGames.Core.Common;
+using Newtonsoft.Json;
 using UniRx;
 using UnityEngine;
 
@@ -14,8 +12,9 @@ namespace CryptoQuest.Events
 {
     public class ApplicationEventListener : MonoBehaviour
     {
+        [SerializeField] private Credentials _credentials;
         [SerializeField] private SaveSystemSO _saveSystem;
-        [SerializeField] private float _saveInterval = 10f;
+        [SerializeField, Tooltip("Seconds")] private float _saveInterval = 10f;
 
         private void Start()
         {
@@ -47,6 +46,7 @@ namespace CryptoQuest.Events
         }
 
         #region Upload Game Save
+
         [Serializable]
         public class SaveDataBody
         {
@@ -63,15 +63,9 @@ namespace CryptoQuest.Events
         private DateTime _lastUploadTime = DateTime.Now;
         private bool _isUploading = false;
 
-        private bool IsLoggedIn()
-        {
-            var credential = ServiceProvider.GetService<Credentials>();
-            return credential != null && credential.IsLoggedIn();
-        }
-
         private void UploadGameSave()
         {
-            if (!IsLoggedIn() || _isUploading) return;
+            if (!_credentials.IsLoggedIn() || _isUploading) return;
             Debug.Log("ApplicationEventListener::UploadGameSave() - Uploading profile...");
 
             var timeToCheck = _lastUploadTime.AddSeconds(_saveInterval);
@@ -110,6 +104,7 @@ namespace CryptoQuest.Events
         }
 
         private void OnCompleted() { }
+
         #endregion
     }
 }

@@ -1,4 +1,5 @@
-﻿using CryptoQuest.Actions;
+﻿using System;
+using CryptoQuest.Actions;
 using IndiGames.Core.Events;
 using TinyMessenger;
 using UnityEngine;
@@ -6,6 +7,7 @@ using UnityEngine.InputSystem;
 
 namespace CryptoQuest.UI.Title.States
 {
+    [Obsolete]
     public class MailLoginState : InputStateBase
     {
         private UISignInPanel _uiSignIn;
