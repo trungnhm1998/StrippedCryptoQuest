@@ -86,10 +86,16 @@ namespace CryptoQuest.Ranch.State.BeastSwap
         private void ResetTransferRequested()
         {
             HideBeastDetail();
+            DisablePendingTag();
             _controller.UIBeastSwap.InGameBeastList.SetData(_cachedGameData);
             _controller.UIBeastSwap.WalletBeastList.SetData(_cachedWalletData);
-
             _controller.UIBeastSwap.Focus();
+        }
+
+        private void DisablePendingTag()
+        {
+            _controller.UIBeastSwap.InGameBeastList.UpdateList();
+            _controller.UIBeastSwap.WalletBeastList.UpdateList();
         }
 
         private void SendItemsRequested()
@@ -102,6 +108,7 @@ namespace CryptoQuest.Ranch.State.BeastSwap
         private void CancelBeastSwapState()
         {
             HideBeastDetail();
+            DisablePendingTag();
             _controller.UIBeastSwap.Contents.SetActive(false);
             _controller.Controller.Initialize();
             StateMachine.Play(OverViewState);
@@ -110,7 +117,6 @@ namespace CryptoQuest.Ranch.State.BeastSwap
         private void InitializeUI(GetNftBeastsSucceed _) => _controller.UIBeastSwap.Focus();
 
         private void UIBeastItemOnPressed(UIBeastItem item) => _controller.UIBeastSwap.Transfer(item);
-
         private void GetWalletBeasts(GetInBoxBeastsSucceed beast)
         {
             foreach (var data in beast.WalletBeasts)
