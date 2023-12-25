@@ -14,14 +14,14 @@ namespace CryptoQuest.Gameplay.Ship
         [SerializeField] private VoidEventChannelSO _setActiveShipEvent;
         
         private List<ShipBehaviour> _spawnedShips = new();
-        private ShipBehaviour _sailedShip = new();
+        private ShipBehaviour _sailedShip;
 
         private void OnEnable()
         {
             _shipSpawner.ShipSpawned += ShipSpawned;
             _setActiveShipEvent.EventRaised += SetShipActivated;
             _sceneLoadedEvent.EventRaised += RequestSpawnShip;
-            _spawnAllShipsEvent.EventRaised += DestroySailedShip;
+            _spawnAllShipsEvent.EventRaised += OnSpawnAllShip;
         }
 
         private void OnDisable()
@@ -29,7 +29,7 @@ namespace CryptoQuest.Gameplay.Ship
             _shipSpawner.ShipSpawned -= ShipSpawned;
             _setActiveShipEvent.EventRaised -= SetShipActivated;
             _sceneLoadedEvent.EventRaised -= RequestSpawnShip;
-            _spawnAllShipsEvent.EventRaised -= DestroySailedShip;
+            _spawnAllShipsEvent.EventRaised -= OnSpawnAllShip;
         }
 
         private void OnDestroy()
@@ -88,12 +88,18 @@ namespace CryptoQuest.Gameplay.Ship
         {
             foreach (var ship in _spawnedShips)
             {
-                if (ship == sailedShip) continue;
+                if (ship == null || ship == sailedShip) continue;
                 ship.SailedShip -= SailedShip;
                 Destroy(ship.gameObject);
             }
 
             _spawnedShips.Clear();
+        }
+
+        private void OnSpawnAllShip()
+        {
+            _shipBus.HasSailed = false;
+            DestroySailedShip();
         }
 
         private void DestroySailedShip()
