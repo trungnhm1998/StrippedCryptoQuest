@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using CryptoQuest.UI.Actions;
 using IndiGames.Core.Events;
@@ -97,7 +96,7 @@ namespace CryptoQuest.Ranch.State.BeastSwap
         {
             List<int> listBeastInGameToTransfer = _controllerState.UIBeastSwap.SelectedInGameBeatIds;
             List<int> listBeastWalletToTransfer = _controllerState.UIBeastSwap.SelectedWalletBeatIds;
-
+            _controllerState.UIBeastSwap.TransferBeast();
             ActionDispatcher.Dispatch(new ShowLoading());
             ActionDispatcher.Dispatch(new SendBeastsToBothSide(listBeastInGameToTransfer.ToArray(), listBeastWalletToTransfer.ToArray()));
         }

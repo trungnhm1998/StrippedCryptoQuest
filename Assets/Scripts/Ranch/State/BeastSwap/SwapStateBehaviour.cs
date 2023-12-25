@@ -116,7 +116,7 @@ namespace CryptoQuest.Ranch.State.BeastSwap
 
         private void InitializeUI(GetNftBeastsSucceed _) => _controller.UIBeastSwap.Focus();
 
-        private void UIBeastItemOnPressed(UIBeastItem item) => _controller.UIBeastSwap.Transfer(item);
+        private void UIBeastItemOnPressed(UIBeastItem item) => _controller.UIBeastSwap.OnBeastSelected(item);
         private void GetWalletBeasts(GetInBoxBeastsSucceed beast)
         {
             foreach (var data in beast.WalletBeasts)
