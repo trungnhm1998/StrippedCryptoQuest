@@ -40,7 +40,7 @@ namespace CryptoQuest.Menus.Status.UI
         private void SetupUI(HeroBehaviour hero)
         {
             hero.TryGetComponent(out LevelSystem levelSystem);
-            SetElement(hero.Element.Icon);
+            SetElement(hero.GetComponent<Element>().ElementValue.Icon);
             SetLevel(levelSystem.Level);
             SetClass(hero.Class.Name);
             SetLocalizedName(hero.DetailsInfo.LocalizedName);

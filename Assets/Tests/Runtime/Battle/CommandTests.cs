@@ -59,7 +59,8 @@ namespace CryptoQuest.Tests.Runtime.Battle
             [Test]
             public void Execute_FireHeroAttackFireEnemy_DamageGreaterThan22()
             {
-                _enemy.Init(An.Element.Fire);
+                _enemy.GetComponent<Element>().SetElement(An.Element.Fire);
+                _enemy.Init();
                 _enemy.AttributeSystem.TryGetAttributeValue(AttributeSets.Health, out var enemyHPBefore);
                 var command = new NormalAttackCommand(_hero, _enemy);
                 command.Execute();

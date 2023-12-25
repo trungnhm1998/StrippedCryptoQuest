@@ -1,17 +1,17 @@
 ﻿using CryptoQuest.Character.Hero;
+using CryptoQuest.Character.LevelSystem;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.Localization.Components;
 using UnityEngine.UI;
-using Obj = CryptoQuest.Sagas.Objects;
 
-namespace CryptoQuest.Menus.Home.UI
+namespace CryptoQuest.Menus.Home.UI.CharacterList
 {
     public class UIListItem : MonoBehaviour, ISelectHandler
     {
-        public static event UnityAction<HeroSpec> InspectCharacterEvent;
+        public event UnityAction<HeroSpec> InspectCharacterEvent;
 
         [SerializeField] private Image _classIcon;
         [SerializeField] private LocalizeStringEvent _localizedName;
@@ -23,7 +23,8 @@ namespace CryptoQuest.Menus.Home.UI
         {
             _cachedInfo = info;
             _localizedName.StringReference = info.Origin.DetailInformation.LocalizedName;
-            _level.text = $"Lv1";
+            var levelCalculator = new LevelCalculator(info.Stats.MaxLevel);
+            _level.text = $"Lv {levelCalculator.CalculateCurrentLevel(info.Experience)}";
             _localizedName.RefreshString();
         }
 

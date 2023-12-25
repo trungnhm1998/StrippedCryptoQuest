@@ -4,9 +4,8 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Localization.Components;
 using UnityEngine.UI;
-using Obj = CryptoQuest.Sagas.Objects;
 
-namespace CryptoQuest.Menus.Home.UI
+namespace CryptoQuest.Menus.Home.UI.CharacterList
 {
     /// <summary>
     /// This class will be removed after the new updates of the Characters System are ready.
@@ -28,17 +27,7 @@ namespace CryptoQuest.Menus.Home.UI
         [SerializeField] private UIAttribute _defence;
         [SerializeField] private UIAttribute _magicAttack;
 
-        public void ListInitialized()
-        {
-            UIListItem.InspectCharacterEvent += FillData;
-        }
-
-        private void OnDisable()
-        {
-            UIListItem.InspectCharacterEvent -= FillData;
-        }
-
-        private void FillData(HeroSpec spec)
+        public void FillData(HeroSpec spec)
         {
             _localizedName.StringReference = spec.Origin.DetailInformation.LocalizedName;
             _level.text = $"Lv 1";

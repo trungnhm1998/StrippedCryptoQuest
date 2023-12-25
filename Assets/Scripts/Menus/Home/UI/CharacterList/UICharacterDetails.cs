@@ -7,12 +7,13 @@ using UnityEngine.Localization;
 using UnityEngine.Localization.Components;
 using UnityEngine.UI;
 
-namespace CryptoQuest.Menus.Home.UI
+namespace CryptoQuest.Menus.Home.UI.CharacterList
 {
     public class UICharacterDetails : MonoBehaviour
     {
         [SerializeField] private AttributeChangeEvent _attributeChangeEvent;
 
+        [Header("UI References")]
         [SerializeField] private Image _avatar;
         [SerializeField] private LocalizeStringEvent _localizedName;
         [SerializeField] private TMP_Text _name;
@@ -21,7 +22,7 @@ namespace CryptoQuest.Menus.Home.UI
         [SerializeField] private UIAttributeBar _expBar;
 
         private AttributeSystemBehaviour _inspectingAttributeSystem;
-        private string _lvlTxtFormat = string.Empty;
+        [SerializeField] private string _lvlTxtFormat = "Lv. {0}";
 
         public void InspectCharacter(HeroBehaviour hero)
         {
@@ -34,11 +35,11 @@ namespace CryptoQuest.Menus.Home.UI
         private void SetupUI(HeroBehaviour hero)
         {
             hero.TryGetComponent(out LevelSystem levelSystem);
-            SetElement(hero.Element.Icon);
+            // SetElement(hero.Element.Icon);
             SetLevel(levelSystem.Level);
             SetLocalizedName(hero.DetailsInfo.LocalizedName);
 
-            SetAvatar(hero.Avatar);
+            // SetAvatar(hero.Avatar);
             SetupExpUI(hero);
         }
 
@@ -65,8 +66,6 @@ namespace CryptoQuest.Menus.Home.UI
 
         private void SetLevel(int lvl)
         {
-            if (string.IsNullOrEmpty(_lvlTxtFormat))
-                _lvlTxtFormat = _level.text;
             _level.text = string.Format(_lvlTxtFormat, lvl);
         }
 

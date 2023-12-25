@@ -35,14 +35,11 @@ namespace CryptoQuest.Battle.Components
 
         private ITargeting _targetComponent;
         public ITargeting Targeting => _targetComponent ??= GetComponent<ITargeting>();
-        private Elemental _element;
-        public Elemental Element => _element;
         public abstract string DisplayName { get; }
         public abstract LocalizedString LocalizedName { get; }
 
-        public void Init(Elemental element)
+        public void Init()
         {
-            _element = element;
             AttributeSystem.Init();
 
             var components = GetComponents<CharacterComponentBase>();

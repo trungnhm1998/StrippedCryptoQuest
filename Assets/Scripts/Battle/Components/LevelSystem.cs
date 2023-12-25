@@ -1,3 +1,4 @@
+using System;
 using CryptoQuest.Character.LevelSystem;
 using IndiGames.Core.EditorTools.Attributes.ReadOnlyAttribute;
 using IndiGames.Core.Events;
@@ -20,24 +21,13 @@ namespace CryptoQuest.Battle.Components
     /// <summary>
     /// Hero only have exp, lvl will be calculated from exp at runtime
     /// </summary>
-    [RequireComponent(typeof(HeroBehaviour))]
     public class LevelSystem : MonoBehaviour
     {
         [SerializeField, ReadOnly] private int _level = 1;
         [SerializeField] private AttributeScriptableObject _expBuffAttribute;
 
         private IStatsConfigProvider _statsProvider;
-        private IStatsConfigProvider StatsProvider => _statsProvider ??= GetComponent<IStatsConfigProvider>();
-        private ILevelCalculator _levelCalculator;
-
-        // TODO: Possible optimization
-        private ILevelCalculator LevelCalculator =>
-            _levelCalculator ??= new LevelCalculator(StatsProvider.Stats.MaxLevel);
-
-        private HeroBehaviour _character;
-        private HeroBehaviour Hero => _character ??= GetComponent<HeroBehaviour>();
         private IExpProvider _expProvider;
-        private IExpProvider ExpProvider => _expProvider ??= GetComponent<IExpProvider>();
         private int _lastLevel = 1;
         public int LastLevel => _lastLevel;
 
@@ -47,9 +37,19 @@ namespace CryptoQuest.Battle.Components
         /// the hero level is not being updated and UI will not correct
         private bool _needToRecalculateLevel = true;
 
+        private HeroBehaviour _character;
+        private AttributeSystemBehaviour _attributeSystem;
+        private void Awake()
+        {
+            _character = GetComponent<HeroBehaviour>();
+            _attributeSystem = GetComponent<AttributeSystemBehaviour>();
+            _expProvider = GetComponent<IExpProvider>();
+            _statsProvider = GetComponent<IStatsConfigProvider>();
+        }
+
         public void AddExp(float expToAdd)
         {
-            if (Hero.IsValidAndAlive() == false)
+            if (_character.IsValidAndAlive() == false)
             {
                 Debug.LogWarning($"CharacterLevelComponent::AddExp: Failed because this character is dead");
                 return;
@@ -57,8 +57,7 @@ namespace CryptoQuest.Battle.Components
 
             _needToRecalculateLevel = true;
 
-            var attributeSystem = Hero.GetComponent<AttributeSystemBehaviour>();
-            attributeSystem.TryGetAttributeValue(_expBuffAttribute, out var expBuffValue);
+            _attributeSystem.TryGetAttributeValue(_expBuffAttribute, out var expBuffValue);
 
             if (expBuffValue.CurrentValue == 0f)
             {
@@ -66,16 +65,19 @@ namespace CryptoQuest.Battle.Components
             }
 
             var addedExp = expToAdd * expBuffValue.CurrentValue;
-            ExpProvider.Exp += addedExp;
+            _expProvider.Exp += addedExp;
 
             CalculateCurrentLevel();
         }
 
+        private float _lastKnownExp;
         private int CalculateCurrentLevel()
         {
-            if (_needToRecalculateLevel == false) return _level;
+            if (_needToRecalculateLevel == false && Mathf.Approximately(_lastKnownExp, _expProvider.Exp)) return _level;
+            _lastKnownExp = _expProvider.Exp;
             _needToRecalculateLevel = false;
-            _level = LevelCalculator.CalculateCurrentLevel(ExpProvider.Exp);
+            var levelCalculator = new LevelCalculator(_statsProvider.Stats.MaxLevel);
+            _level = levelCalculator.CalculateCurrentLevel(_expProvider.Exp);
             if (_lastLevel < _level)
             {
                 OnCharacterLevelUp();
@@ -87,20 +89,20 @@ namespace CryptoQuest.Battle.Components
         }
 
         private void OnCharacterLevelUp() => ActionDispatcher.Dispatch(new HeroLeveledUpAction(_character));
-        private bool IsMaxedLevel => Level == StatsProvider.Stats.MaxLevel;
+        private bool IsMaxedLevel => Level == _statsProvider.Stats.MaxLevel;
 
         public int GetNextLevelRequireExp()
         {
             var currentLevel = Level;
-            return LevelCalculator.RequiredExps[IsMaxedLevel ? currentLevel - 1 : currentLevel];
+            return new LevelCalculator(_statsProvider.Stats.MaxLevel).RequiredExps[IsMaxedLevel ? currentLevel - 1 : currentLevel];
         }
 
         public int GetCurrentLevelExp()
         {
-            var currentLevelAccumulateExp = LevelCalculator.AccumulatedExps[Level - 1];
+            var currentLevelAccumulateExp = new LevelCalculator(_statsProvider.Stats.MaxLevel).AccumulatedExps[Level - 1];
             return IsMaxedLevel
                 ? GetNextLevelRequireExp()
-                : (int)(ExpProvider.Exp - currentLevelAccumulateExp);
+                : (int)(_expProvider.Exp - currentLevelAccumulateExp);
         }
     }
 }

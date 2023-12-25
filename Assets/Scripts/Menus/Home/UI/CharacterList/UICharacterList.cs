@@ -1,49 +1,46 @@
-﻿using System.Collections;
+﻿using System;
 using System.Collections.Generic;
 using CryptoQuest.Character.Hero;
+using CryptoQuest.Inventory;
+using CryptoQuest.UI.Common;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.Pool;
-using UnityEngine.UI;
-using Obj = CryptoQuest.Sagas.Objects;
 
-namespace CryptoQuest.Menus.Home.UI
+namespace CryptoQuest.Menus.Home.UI.CharacterList
 {
     public class UICharacterList : MonoBehaviour
     {
+        public event Action<HeroSpec> InspectingHero;
+        [SerializeField] private HeroInventorySO _heroes;
         [SerializeField] private Transform _scrollRectContent;
         [SerializeField] private UIListItem _itemPrefab;
-
-        [Header("Events")]
-        [SerializeField] private UnityEvent _initialized;
+        [SerializeField] private SelectFirstChildInList _selectFirstChildComp;
 
         private IObjectPool<UIListItem> _pool;
         private List<UIListItem> _items = new();
 
-        private void Start()
+        private void Awake()
         {
-            _pool ??= new ObjectPool<UIListItem>(OnCreate, OnGet, OnRelease, OnDestroyPool);
+            _pool = new ObjectPool<UIListItem>(OnCreate, OnGet, OnRelease, OnDestroyPool);
         }
 
-        public void SetData(List<HeroSpec> data)
+        private void OnEnable()
         {
             ReleaseAllItemInPool();
-            foreach (var heroData in data)
+            foreach (var heroData in _heroes.OwnedHeroes)
             {
                 UIListItem item = _pool.Get();
                 item.SetInfo(heroData);
             }
 
-            StartCoroutine(CoSelectDefault());
-            _initialized.Invoke();
+            _selectFirstChildComp.Select();
         }
 
-        private IEnumerator CoSelectDefault()
+        private void OnDisable()
         {
-            yield return null;
-            var firstItem = _scrollRectContent.GetComponentInChildren<Button>();
-            firstItem.Select();
         }
+        
+        private void OnInspectItem(HeroSpec spec) => InspectingHero?.Invoke(spec);
 
         #region Pool
 
@@ -57,10 +54,15 @@ namespace CryptoQuest.Menus.Home.UI
         {
             item.transform.SetAsLastSibling();
             item.gameObject.SetActive(true);
+            item.InspectCharacterEvent += OnInspectItem;
             _items.Add(item);
         }
 
-        private void OnRelease(UIListItem item) => item.gameObject.SetActive(false);
+        private void OnRelease(UIListItem item)
+        {
+            item.gameObject.SetActive(false);
+            item.InspectCharacterEvent -= OnInspectItem;
+        }
 
         private void OnDestroyPool(UIListItem item) => Destroy(item.gameObject);
 

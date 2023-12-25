@@ -74,7 +74,8 @@ namespace CryptoQuest.Battle.Components
         {
             _partySlotSpec = slotSpec;
             Spec = _partySlotSpec.Hero;
-            Init(Spec.Elemental);
+            GetComponent<Element>().SetElement(Spec.Elemental);
+            Init();
         }
 
         public override bool IsValid() => _spec != null && _spec.IsValid();
