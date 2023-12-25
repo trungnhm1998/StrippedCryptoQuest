@@ -23,7 +23,7 @@ namespace CryptoQuest.Ranch.UI
         public Transform Parent { get; set; }
         public int Id { get; private set; }
 
-        private bool _isSelected = false;
+        public bool IsSelected { get; private set; } = false;
         private bool _isInGame = false;
 
         public void OnSelectToTransfer()
@@ -31,8 +31,8 @@ namespace CryptoQuest.Ranch.UI
             if (_isInGame) return;
             Pressed?.Invoke(this);
 
-            _isSelected = !_isSelected;
-            EnablePendingTag(_isSelected);
+            IsSelected = !IsSelected;
+            EnablePendingTag(IsSelected);
         }
 
         public void EnablePendingTag(bool isSelected) => _pendingTag.SetActive(isSelected);

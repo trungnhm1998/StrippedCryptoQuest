@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using CryptoQuest.UI.Common;
 using CryptoQuest.UI.Utilities;
 using UnityEngine;
@@ -29,11 +30,24 @@ namespace CryptoQuest.Ranch.UI
             private set => _selectedWalletBeatIds = value;
         }
 
-        public bool IsValid() => _selectedInGameBeatIds.Count > 0 || _selectedWalletBeatIds.Count > 0;
+        private List<UIBeastItem> _beastItems = new();
+        public bool IsValid() => _beastItems.Count > 0;
 
-        public void Transfer(UIBeastItem item)
+        public void OnBeastSelected(UIBeastItem item)
         {
-            Transform currentList = item.Parent;
+            if (!item.IsSelected) _beastItems.Add(item);
+            else _beastItems.Remove(item);
+        }
+
+        public void TransferBeast()
+        {
+            _beastItems.ForEach(Transfer);
+            _beastItems = new();
+        }
+
+        private void Transfer(UIBeastItem item)
+        {
+            Transform currentList = item.transform.parent;
 
             if (currentList == _inGameBeatListContent)
             {
@@ -60,7 +74,7 @@ namespace CryptoQuest.Ranch.UI
 
             switch (direction.x)
             {
-                case > 0:
+                case > 0:   
                     InGameBeastList.SetEnableButtons(false);
                     FocusList(WalletBeastList);
                     break;

@@ -1,8 +1,5 @@
 using System.Collections.Generic;
 using CryptoQuest.Beast;
-using CryptoQuest.Ranch.Sagas;
-using CryptoQuest.Sagas.Objects;
-using IndiGames.Core.Common;
 using UnityEngine;
 using UnityEngine.Pool;
 using UnityEngine.UI;
@@ -53,9 +50,9 @@ namespace CryptoQuest.Ranch.UI
 
         private void CleanUpScrollView()
         {
-            foreach (var ui in _beastUI)
+            while (_beastUI.Count > 0)
             {
-                BeastUIPool.Release(ui);
+                BeastUIPool.Release(_beastUI[0]);
             }
 
             _beastUI.Clear();
