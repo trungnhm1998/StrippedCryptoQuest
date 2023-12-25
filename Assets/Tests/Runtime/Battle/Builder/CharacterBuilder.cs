@@ -46,10 +46,11 @@ namespace CryptoQuest.Tests.Runtime.Battle.Builder
             var statsProvider = _characterGameObject.AddComponent<InlineStatsProvider>();
             statsProvider.ProvideStats(_stats);
             _characterGameObject.AddComponent<SimpleStatsInitializer>();
-            _characterGameObject.AddComponent<Element>();
+            var elementComp = _characterGameObject.AddComponent<Element>();
             var character = _characterGameObject.GetComponent<T>();
 
-            character.Init(_elemental);
+            elementComp.SetElement(_elemental);
+            character.Init();
             return character;
         }
     }

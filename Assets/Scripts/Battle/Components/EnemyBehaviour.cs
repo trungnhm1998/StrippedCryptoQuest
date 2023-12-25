@@ -57,7 +57,8 @@ namespace CryptoQuest.Battle.Components
             _enemyDef = _spec.Data;
 
             // Stats
-            base.Init(_enemyDef.Element);
+            GetComponent<Element>().SetElement(_enemyDef.Element);
+            base.Init();
 
             // Visuals
             StartCoroutine(CoInstantiateModel());

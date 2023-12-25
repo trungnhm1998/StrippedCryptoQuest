@@ -35,7 +35,7 @@ namespace CryptoQuest.Menus.Home.UI
             _hero = hero;
             _hero.TryGetComponent(out LevelSystem levelSystem);
             SetLocalizedName(_hero.DetailsInfo.LocalizedName);
-            SetElement(_hero.Element.Icon);
+            SetElement(_hero.GetComponent<Element>().ElementValue.Icon);
             SetLevel(levelSystem.Level);
             SetClass(_hero.Class.Name);
             SetupExpUI(hero);

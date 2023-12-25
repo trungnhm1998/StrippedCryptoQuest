@@ -10,9 +10,10 @@ namespace CryptoQuest.Battle.Components
         private Elemental _element;
         public Elemental ElementValue => _element;
 
+        public void SetElement(Elemental element) => _element = element;
+
         protected override void OnInit()
         {
-            _element = Character.Element;
             var attributeSystem = Character.AttributeSystem;
             attributeSystem.AddAttribute(_element.AttackAttribute);
             attributeSystem.AddAttribute(_element.ResistanceAttribute);
