@@ -5,7 +5,9 @@ using CryptoQuest.Gameplay.Loot;
 using CryptoQuest.Gameplay.Reward.Events;
 using CryptoQuest.Quest.Authoring;
 using CryptoQuest.Quest.Events;
+using CryptoQuest.Quest.Sagas;
 using IndiGames.Core.Common;
+using IndiGames.Core.Events;
 using UnityEngine;
 
 namespace CryptoQuest.Quest.Components
@@ -186,6 +188,8 @@ namespace CryptoQuest.Quest.Components
 
             _questCompletionHandler.GrantCompletionRewards(data);
             _questCompletionHandler.HandleNextAction(data);
+
+            ActionDispatcher.Dispatch(new QuestTriggeredAction(data));
         }
 
         private bool IsQuestTriggered(QuestSO questSo)

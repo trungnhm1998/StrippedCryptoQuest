@@ -23,10 +23,9 @@ namespace CryptoQuest.Quest.Authoring
         public Action OnQuestCompleted;
         public Action<List<LootInfo>> OnRewardReceived;
 
-        [field: SerializeField] public string QuestID { get; private set; }
         [field: SerializeField] public string QuestName { get; private set; }
-        [field: SerializeField] public string EventID { get; private set; }
-        [field: SerializeField] public string EventName { get; private set; }
+
+        [field: SerializeField] public string EventName => QuestName;
         [field: SerializeField, TextArea] public string EventDescription { get; private set; }
 
         [field: Header("Optional")]
