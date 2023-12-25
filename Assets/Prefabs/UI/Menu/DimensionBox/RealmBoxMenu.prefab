@@ -2294,7 +2294,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd588d0952624693935c6516c3fccb0f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _inventory: {fileID: 11400000, guid: 4b4903dbe1c434d418a3afff1b12a3ba, type: 2}
+  _equipmentInventory: {fileID: 0}
 --- !u!1 &1314669427881828895
 GameObject:
   m_ObjectHideFlags: 0
@@ -2388,6 +2388,7 @@ GameObject:
   - component: {fileID: 1674214889209819439}
   - component: {fileID: 4892124401953927795}
   - component: {fileID: 2806196079889285958}
+  - component: {fileID: 545798289697369459}
   m_Layer: 5
   m_Name: InputField (Legacy)
   m_TagString: Untagged
@@ -2513,20 +2514,7 @@ MonoBehaviour:
       m_Calls: []
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: CryptoQuest.Menus.DimensionalBox.MetadInputValidator,
-          IndiGames.CryptoQuest.DimensionalBox
-        m_MethodName: ValidateInputMetad
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   m_CaretColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
   m_CustomCaretColor: 0
   m_SelectionColor: {r: 0.65882355, g: 0.80784315, b: 1, a: 0.7529412}
@@ -2573,9 +2561,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04e0994afb8d9e849905c90a9b4cac76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <_inputFieldText>k__BackingField: {fileID: 871287625802474393}
-  <_inputField>k__BackingField: {fileID: 1674214889209819439}
+  _inputField: {fileID: 1674214889209819439}
   _invalidColor: {r: 1, g: 0.18396229, b: 0.18396229, a: 1}
+--- !u!114 &545798289697369459
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1321922694844232911}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e41026f1da812a42b8e58334e0e9f10, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _inputUI: {fileID: 2806196079889285958}
+  _inputField: {fileID: 1674214889209819439}
 --- !u!1 &1369102021396335234
 GameObject:
   m_ObjectHideFlags: 0
@@ -5134,7 +5135,7 @@ MonoBehaviour:
   <MagicStoneTransferPanel>k__BackingField: {fileID: 0}
   <TransferMagicStonesPanel>k__BackingField: {fileID: 0}
   <EquipmentsTransferPanel>k__BackingField: {fileID: 0}
-  <MetaDTransferPanel>k__BackingField: {fileID: 0}
+  <MetadTransferPanel>k__BackingField: {fileID: 0}
   <OverviewPanel>k__BackingField: {fileID: 0}
   _input: {fileID: 11400000, guid: 1fb61cdb72f0a484f8e4db68e2011977, type: 2}
 --- !u!1 &2168130971553516626

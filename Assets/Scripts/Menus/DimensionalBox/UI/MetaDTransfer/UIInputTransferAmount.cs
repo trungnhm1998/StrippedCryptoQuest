@@ -8,8 +8,7 @@ namespace CryptoQuest.Menus.DimensionalBox.UI.MetaDTransfer
     {
         public event Action<string> ValueChanged;
 
-        [field: SerializeField] public Text _inputFieldText { get; private set; }
-        [field: SerializeField] public InputField _inputField { get; private set; }
+        [SerializeField] private InputField _inputField;
         [SerializeField] private Color _invalidColor;
 
         private Color _validColor;
@@ -36,7 +35,7 @@ namespace CryptoQuest.Menus.DimensionalBox.UI.MetaDTransfer
 
         private void Awake()
         {
-            _validColor = _inputFieldText.color;
+            _validColor = _inputField.textComponent.color;
             _inputField.onValueChanged.AddListener((value) => OnValueChanged(value));
         }
 
@@ -49,7 +48,7 @@ namespace CryptoQuest.Menus.DimensionalBox.UI.MetaDTransfer
 
         public void SetInputValid(bool isValid)
         {
-            _inputFieldText.color = isValid ? _validColor : _invalidColor;
+            _inputField.textComponent.color = isValid ? _validColor : _invalidColor;
         }
 
         public void Select()
