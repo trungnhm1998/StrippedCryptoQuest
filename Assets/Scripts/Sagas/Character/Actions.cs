@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using IndiGames.Core.Events;
+﻿using IndiGames.Core.Events;
 using Obj = CryptoQuest.Sagas.Objects;
 
 namespace CryptoQuest.Sagas.Character
