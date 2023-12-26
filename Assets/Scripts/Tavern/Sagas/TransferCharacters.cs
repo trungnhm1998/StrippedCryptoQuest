@@ -1,40 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using CryptoQuest.Networking;
 using CryptoQuest.API;
-using CryptoQuest.System;
+using CryptoQuest.Sagas.Character;
 using CryptoQuest.Tavern.Objects;
 using CryptoQuest.UI.Actions;
 using IndiGames.Core.Common;
 using IndiGames.Core.Events;
 using Newtonsoft.Json;
-using TinyMessenger;
 using UniRx;
 using UnityEngine;
 
 namespace CryptoQuest.Tavern.Sagas
 {
-    public class TransferToBothGameAndBox : MonoBehaviour
+    public class TransferCharacters : SagaBase<TransferCharactersAction>
     {
-        private TinyMessageSubscriptionToken _sendCharactersToBothSideEvent;
-
-        private void OnEnable()
-        {
-            _sendCharactersToBothSideEvent = ActionDispatcher.Bind<SendCharactersToBothSide>(CallAPI);
-        }
-
-        private void OnDisable()
-        {
-            ActionDispatcher.Unbind(_sendCharactersToBothSideEvent);
-        }
-
-        private void CallAPI(SendCharactersToBothSide obj)
+        protected override void HandleAction(TransferCharactersAction ctx)
         {
             var body = new Dictionary<string, int[]>()
             {
-                { "game", obj.SelectedInDboxCharacters },
-                { "wallet", obj.SelectedInGameCharacters }
+                { "game", ctx.SelectedInDboxCharacters },
+                { "wallet", ctx.SelectedInGameCharacters }
             };
 
             Debug.Log($"SendCharactersToBothSide::Body={JsonConvert.SerializeObject( body )}");
@@ -52,9 +40,9 @@ namespace CryptoQuest.Tavern.Sagas
             ActionDispatcher.Dispatch(new TransferSucceed(response.data.characters));
         }
 
-        private void OnError(Exception obj)
+        private void OnError(Exception error)
         {
-            Debug.LogError("TransferCharactersToBothSideFailed::" + obj);
+            Debug.Log($"<color=white>Tavern::Saga::TransferCharactersToBothSideFailed::Error</color>:: {error}");
             ActionDispatcher.Dispatch(new TransferFailed());
             ActionDispatcher.Dispatch(new ShowLoading(false));
         }

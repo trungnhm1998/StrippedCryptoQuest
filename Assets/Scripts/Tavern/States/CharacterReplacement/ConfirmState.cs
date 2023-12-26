@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using CryptoQuest.Sagas.Character;
 using CryptoQuest.UI.Actions;
 using IndiGames.Core.Events;
 using TinyMessenger;
@@ -90,11 +91,11 @@ namespace CryptoQuest.Tavern.States.CharacterReplacement
         private void ProceedToSendCharacters()
         {
             List<int> listGameItemsToTransfer = _controller.UICharacterReplacement.SelectedGameItemsIds;
-            List<int> listWalletItemsToTransfer = _controller.UICharacterReplacement.SelectedWalletItemsIds;
+            List<int> listDboxItemsToTransfer = _controller.UICharacterReplacement.SelectedDboxItemsIds;
 
             ActionDispatcher.Dispatch(new ShowLoading());
-            ActionDispatcher.Dispatch(new SendCharactersToBothSide(listGameItemsToTransfer.ToArray(),
-                listWalletItemsToTransfer.ToArray()));
+            ActionDispatcher.Dispatch(new TransferCharactersAction(listGameItemsToTransfer.ToArray(),
+                listDboxItemsToTransfer.ToArray()));
         }
     }
 }

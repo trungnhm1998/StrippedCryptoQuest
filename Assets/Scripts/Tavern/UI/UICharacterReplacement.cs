@@ -12,40 +12,19 @@ namespace CryptoQuest.Tavern.UI
         [SerializeField] private Transform _gameScrollContent;
         [SerializeField] private Transform _walletScrollContent;
 
-        private List<int> _selectedGameItemsIds = new();
-
-        public List<int> SelectedGameItemsIds
-        {
-            get => _selectedGameItemsIds;
-            private set => _selectedGameItemsIds = value;
-        }
-
-        private List<int> _selectedWalletItemsIds = new();
-
-        public List<int> SelectedWalletItemsIds
-        {
-            get => _selectedWalletItemsIds;
-            private set => _selectedWalletItemsIds = value;
-        }
+        public List<int> SelectedGameItemsIds { get; } = new();
+        public List<int> SelectedDboxItemsIds { get; } = new();
 
         public void Transfer(UITavernItem currentItem)
         {
             var currentList = currentItem.Parent;
-            if (currentList == _gameScrollContent)
-            {
-                currentItem.Transfer(_walletScrollContent);
-                _selectedGameItemsIds.Add(currentItem.Id);
-            }
-            else
-            {
-                currentItem.Transfer(_gameScrollContent);
-                _selectedWalletItemsIds.Add(currentItem.Id);
-            }
+            if (currentList == _gameScrollContent) SelectedGameItemsIds.Add(currentItem.Id);
+            else SelectedDboxItemsIds.Add(currentItem.Id);
 
-            _gameListUi.SetInteractableAllButtons(!(currentList == _gameScrollContent));
-            _walletListUi.SetInteractableAllButtons(currentList == _gameScrollContent);
+            _gameListUi.SetInteractableAllButtons(currentList == _gameScrollContent);
+            _walletListUi.SetInteractableAllButtons(!(currentList == _gameScrollContent));
 
-            Debug.Log($"game={_selectedGameItemsIds.Count} -- wallet={_selectedWalletItemsIds.Count}");
+            Debug.Log($"<color=white>game={SelectedGameItemsIds.Count} -- wallet={SelectedDboxItemsIds.Count}</color>");
         }
 
         /// <summary>

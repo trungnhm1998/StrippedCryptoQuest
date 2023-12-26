@@ -30,6 +30,8 @@ namespace CryptoQuest.Tavern.UI
 
         public void SetItemInfo(HeroSpec heroInfo)
         {
+            ResetItemStatus();
+
             Id = heroInfo.Id;
             var levelCalculator = new LevelCalculator(heroInfo.Stats.MaxLevel);
             _level.text = $"Lv{levelCalculator.CalculateCurrentLevel(heroInfo.Experience)}";
@@ -67,6 +69,12 @@ namespace CryptoQuest.Tavern.UI
         public void InspectDetails()
         {
             return; // disable waiting for the new tooltip
+        }
+
+        private void ResetItemStatus()
+        {
+            _isSelected = false;
+            _isInParty = false;
         }
     }
 }
