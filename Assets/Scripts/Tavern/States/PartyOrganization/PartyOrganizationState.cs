@@ -33,13 +33,12 @@ namespace CryptoQuest.Tavern.States.PartyOrganization
             _controller.UIPartyOrganization.HandleListInteractable();
             UITavernItem.Pressed += _controller.UIPartyOrganization.Transfer;
 
-            _getGameDataSucceedEvent =
-                ActionDispatcher.Bind<GetFilteredInGameNftCharactersSucceed>(GetInGameCharacters);
+            // _getGameDataSucceedEvent = ActionDispatcher.Bind<GetFilteredInGameNftCharactersSucceed>(GetInGameCharacters);
 
             if (!_hasGotHeroesFromServer)
             {
                 _hasGotHeroesFromServer = true;
-                ActionDispatcher.Dispatch(new GetInGameHeroes());
+                // ActionDispatcher.Dispatch(new GetInGameHeroes());
             }
 
             _controller.MerchantInputManager.CancelEvent += CancelPartyOrganization;
@@ -79,13 +78,13 @@ namespace CryptoQuest.Tavern.States.PartyOrganization
             // _controller.UIParty.SetData(_cachedInPartyCharactersData);
         }
 
-        private void GetInGameCharacters(GetFilteredInGameNftCharactersSucceed obj)
-        {
-            GetInPartyCharacters();
-            _cachedNonPartyCharactersData = obj.FilteredInGameCharacters;
-            if (obj.FilteredInGameCharacters.Count <= 0) return;
-            // _controller.UINonParty.SetData(obj.FilteredInGameCharacters);
-        }
+        // private void GetInGameCharacters(GetFilteredInGameNftCharactersSucceed obj)
+        // {
+        //     GetInPartyCharacters();
+        //     _cachedNonPartyCharactersData = obj.FilteredInGameCharacters;
+        //     if (obj.FilteredInGameCharacters.Count <= 0) return;
+        //     // _controller.UINonParty.SetData(obj.FilteredInGameCharacters);
+        // }
 
         private void CancelPartyOrganization()
         {

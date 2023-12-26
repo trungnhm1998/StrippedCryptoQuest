@@ -56,14 +56,14 @@ namespace CryptoQuest.Sagas.Character
             if (heroResponseList.Length == 0) return;
 
             var dboxHeroes = heroResponseList.Where(hero => hero.inGameStatus == (int)Objects.ECharacterStatus.InBox)
-            .ToList();
+            .ToArray();
             ActionDispatcher.Dispatch(new GetInDboxHeroesSucceeded(dboxHeroes));
 
             var inGameHeroes = heroResponseList.Where(hero => hero.inGameStatus == (int)Objects.ECharacterStatus
-            .InGame).ToList();
+            .InGame).ToArray();
             ActionDispatcher.Dispatch(new GetInGameHeroesSucceeded(inGameHeroes));
 
-            OnInventoryFilled(heroResponseList);
+            OnInventoryFilled(inGameHeroes);
         }
 
         private void OnInventoryFilled(CharacterObject[] heroResponseList)

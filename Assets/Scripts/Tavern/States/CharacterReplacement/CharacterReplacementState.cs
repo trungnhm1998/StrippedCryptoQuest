@@ -28,7 +28,7 @@ namespace CryptoQuest.Tavern.States.CharacterReplacement
             _controller = StateMachine.GetComponent<TavernController>();
             _controller.UICharacterReplacement.Contents.SetActive(true);
             _controller.UICharacterReplacement.SelectedGameItemsIds.Clear();
-            _controller.UICharacterReplacement.SelectedWalletItemsIds.Clear();
+            _controller.UICharacterReplacement.SelectedDboxItemsIds.Clear();
             _controller.UICharacterReplacement.HandleListInteractable();
             UITavernItem.Pressed += _controller.UICharacterReplacement.Transfer;
 
@@ -46,9 +46,7 @@ namespace CryptoQuest.Tavern.States.CharacterReplacement
 
         private void GetInGameCharacters(GetInGameHeroesSucceeded obj)
         {
-            // _cachedGameData = obj.Heroes;
-            // _controller.UIGameList.SetData(obj.Heroes);
-            
+            _cachedGameData.Clear();
             foreach (var hero in obj.Heroes)
             {
                 var newHero = ServiceProvider.GetService<IHeroResponseConverter>().Convert(hero);
@@ -64,6 +62,7 @@ namespace CryptoQuest.Tavern.States.CharacterReplacement
 
         private void GetWalletCharacters(GetInDboxHeroesSucceeded obj)
         {
+            _cachedDboxData.Clear();
             foreach (var hero in obj.Heroes)
             {
                 var newHero = ServiceProvider.GetService<IHeroResponseConverter>().Convert(hero);
@@ -86,14 +85,14 @@ namespace CryptoQuest.Tavern.States.CharacterReplacement
         private void SendItemsRequested()
         {
             if (_controller.UICharacterReplacement.SelectedGameItemsIds.Count == 0 &&
-                _controller.UICharacterReplacement.SelectedWalletItemsIds.Count == 0) return;
+                _controller.UICharacterReplacement.SelectedDboxItemsIds.Count == 0) return;
             StateMachine.Play(ConfirmState);
         }
 
         private void ResetTransferRequested()
         {
             if (_controller.UICharacterReplacement.SelectedGameItemsIds.Count == 0 &&
-                _controller.UICharacterReplacement.SelectedWalletItemsIds.Count == 0) return;
+                _controller.UICharacterReplacement.SelectedDboxItemsIds.Count == 0) return;
 
             _controller.UIGameList.SetData(_cachedGameData);
             _controller.UIWalletList.SetData(_cachedDboxData);
