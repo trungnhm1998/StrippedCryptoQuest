@@ -27,6 +27,7 @@ namespace CryptoQuest.Ranch.Upgrade.UI
         {
             Beast = beast;
             _selectedTag.SetActive(false);
+            _background.gameObject.SetActive(false);
             SetName(beast.LocalizedName);
             SetIcon(beast.Elemental);
         }
