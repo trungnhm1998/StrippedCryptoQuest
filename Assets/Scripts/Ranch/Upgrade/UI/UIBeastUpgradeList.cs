@@ -6,6 +6,7 @@ using CryptoQuest.UI.Utilities;
 using UnityEngine;
 using UnityEngine.Pool;
 using UnityEngine.UI;
+using BeastData = CryptoQuest.Beast.Beast;
 
 namespace CryptoQuest.Ranch.Upgrade.UI
 {
@@ -26,16 +27,17 @@ namespace CryptoQuest.Ranch.Upgrade.UI
             CleanUpScrollView();
         }
 
-        public void FillBeasts(List<Beast.Beast> beasts)
+        public void FillBeasts(List<BeastData> beasts)
         {
             InstantiateBeast(beasts);
         }
 
-        private void InstantiateBeast(List<Beast.Beast> beasts)
+        private void InstantiateBeast(List<BeastData> beasts)
         {
             Clear();
             foreach (var beast in beasts)
             {
+                if (beast.Level >= beast.MaxLevel) continue;
                 var uiBeast = GetItem();
                 uiBeast.Init(beast);
                 uiBeast.OnInspectingBeast += OnInspectingItem;
