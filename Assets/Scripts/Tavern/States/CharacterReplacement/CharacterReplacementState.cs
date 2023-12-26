@@ -95,7 +95,9 @@ namespace CryptoQuest.Tavern.States.CharacterReplacement
 
         private void ViewCharacterDetails()
         {
-            EventSystem.current.currentSelectedGameObject.GetComponent<UITavernItem>().InspectDetails();
+            var currentItem = EventSystem.current.currentSelectedGameObject.GetComponent<UITavernItem>();
+            currentItem.OnInspectDetails();
+            _controller.SpecInitializer.Init(currentItem.Hero);
         }
 
         protected override void OnExit()

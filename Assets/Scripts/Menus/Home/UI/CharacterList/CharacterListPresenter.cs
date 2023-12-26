@@ -1,7 +1,5 @@
-﻿using System;
-using CryptoQuest.Battle.Components;
+﻿using CryptoQuest.Battle.Components;
 using CryptoQuest.Character.Hero;
-using IndiGames.GameplayAbilitySystem.AttributeSystem.Components;
 using UnityEngine;
 
 namespace CryptoQuest.Menus.Home.UI.CharacterList
@@ -27,7 +25,7 @@ namespace CryptoQuest.Menus.Home.UI.CharacterList
             _heroBehaviour.Spec = spec;
             _heroBehaviour.GetComponent<Element>().SetElement(spec.Elemental);
             _heroBehaviour.Init();
-            
+
             _characterDetails.InspectCharacter(_heroBehaviour);
         }
     }

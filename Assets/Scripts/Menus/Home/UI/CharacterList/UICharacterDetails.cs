@@ -35,11 +35,10 @@ namespace CryptoQuest.Menus.Home.UI.CharacterList
         private void SetupUI(HeroBehaviour hero)
         {
             hero.TryGetComponent(out LevelSystem levelSystem);
-            // SetElement(hero.Element.Icon);
+            SetElement(hero.Spec.Elemental.Icon);
             SetLevel(levelSystem.Level);
             SetLocalizedName(hero.DetailsInfo.LocalizedName);
-
-            // SetAvatar(hero.Avatar);
+            if (hero.BattleAvatar != null) SetAvatar(hero.BattleAvatar);
             SetupExpUI(hero);
         }
 
