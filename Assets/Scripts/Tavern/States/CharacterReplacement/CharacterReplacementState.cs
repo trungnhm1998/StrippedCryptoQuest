@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
-using CryptoQuest.Actions;
+using CryptoQuest.Character.Hero;
+using CryptoQuest.Sagas.Character;
 using CryptoQuest.Tavern.UI;
+using IndiGames.Core.Common;
 using IndiGames.Core.Events;
 using TinyMessenger;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using Obj = CryptoQuest.Sagas.Objects;
 
 namespace CryptoQuest.Tavern.States.CharacterReplacement
 {
@@ -16,8 +17,8 @@ namespace CryptoQuest.Tavern.States.CharacterReplacement
         private TinyMessageSubscriptionToken _getGameDataSucceedEvent;
         private TinyMessageSubscriptionToken _getWalletDataSucceedEvent;
 
-        private List<Obj.Character> _cachedGameData = new List<Obj.Character>();
-        private List<Obj.Character> _cachedWalletData = new List<Obj.Character>();
+        private List<HeroSpec> _cachedGameData = new List<HeroSpec>();
+        private List<HeroSpec> _cachedDboxData = new List<HeroSpec>();
 
         private static readonly int OverviewState = Animator.StringToHash("Overview");
         private static readonly int ConfirmState = Animator.StringToHash("Confirm Character Replacement");
@@ -31,8 +32,8 @@ namespace CryptoQuest.Tavern.States.CharacterReplacement
             _controller.UICharacterReplacement.HandleListInteractable();
             UITavernItem.Pressed += _controller.UICharacterReplacement.Transfer;
 
-            _getGameDataSucceedEvent = ActionDispatcher.Bind<GetGameNftCharactersSucceed>(GetInGameCharacters);
-            _getWalletDataSucceedEvent = ActionDispatcher.Bind<GetWalletNftCharactersSucceed>(GetWalletCharacters);
+            _getGameDataSucceedEvent = ActionDispatcher.Bind<GetInGameHeroesSucceeded>(GetInGameCharacters);
+            _getWalletDataSucceedEvent = ActionDispatcher.Bind<GetInDboxHeroesSucceeded>(GetWalletCharacters);
 
             _controller.MerchantInputManager.CancelEvent += CancelCharacterReplacement;
             _controller.MerchantInputManager.NavigateEvent += SwitchToOtherListRequested;
@@ -40,13 +41,20 @@ namespace CryptoQuest.Tavern.States.CharacterReplacement
             _controller.MerchantInputManager.ResetEvent += ResetTransferRequested;
             _controller.MerchantInputManager.InteractEvent += ViewCharacterDetails;
 
-            ActionDispatcher.Dispatch(new GetCharacters());
+            ActionDispatcher.Dispatch(new FetchProfileCharactersAction());
         }
 
-        private void GetInGameCharacters(GetGameNftCharactersSucceed obj)
+        private void GetInGameCharacters(GetInGameHeroesSucceeded obj)
         {
-            _cachedGameData = obj.InGameCharacters;
-            _controller.UIGameList.SetData(obj.InGameCharacters);
+            // _cachedGameData = obj.Heroes;
+            // _controller.UIGameList.SetData(obj.Heroes);
+            
+            foreach (var hero in obj.Heroes)
+            {
+                var newHero = ServiceProvider.GetService<IHeroResponseConverter>().Convert(hero);
+                _cachedGameData.Add(newHero);
+            }
+            _controller.UIGameList.SetData(_cachedGameData);
 
             /*
              * TODO
@@ -54,10 +62,14 @@ namespace CryptoQuest.Tavern.States.CharacterReplacement
              */
         }
 
-        private void GetWalletCharacters(GetWalletNftCharactersSucceed obj)
+        private void GetWalletCharacters(GetInDboxHeroesSucceeded obj)
         {
-            _cachedWalletData = obj.WalletCharacters;
-            _controller.UIWalletList.SetData(obj.WalletCharacters);
+            foreach (var hero in obj.Heroes)
+            {
+                var newHero = ServiceProvider.GetService<IHeroResponseConverter>().Convert(hero);
+                _cachedDboxData.Add(newHero);
+            }
+            _controller.UIWalletList.SetData(_cachedDboxData);
         }
 
         private void CancelCharacterReplacement()
@@ -84,7 +96,7 @@ namespace CryptoQuest.Tavern.States.CharacterReplacement
                 _controller.UICharacterReplacement.SelectedWalletItemsIds.Count == 0) return;
 
             _controller.UIGameList.SetData(_cachedGameData);
-            _controller.UIWalletList.SetData(_cachedWalletData);
+            _controller.UIWalletList.SetData(_cachedDboxData);
         }
 
         private void ViewCharacterDetails()

@@ -1,9 +1,10 @@
-﻿using TMPro;
+﻿using CryptoQuest.Character.Hero;
+using CryptoQuest.Character.LevelSystem;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Localization.Components;
 using UnityEngine.UI;
-using Obj = CryptoQuest.Sagas.Objects;
 
 namespace CryptoQuest.Tavern.UI
 {
@@ -13,7 +14,6 @@ namespace CryptoQuest.Tavern.UI
 
         [SerializeField] private Image _classIcon;
         [SerializeField] private LocalizeStringEvent _localizedName;
-        [SerializeField] private TMP_Text _name;
         [SerializeField] private TMP_Text _level;
         [SerializeField] private GameObject _pendingTag;
         [SerializeField] private GameObject _inPartyTag;
@@ -26,16 +26,17 @@ namespace CryptoQuest.Tavern.UI
         private bool _isSelected = false;
         private bool _isInParty = false;
 
-        private Obj.Character _cachedInfo;
+        private HeroSpec _cachedInfo;
 
-        public void SetItemInfo(Obj.Character itemInfo)
+        public void SetItemInfo(HeroSpec heroInfo)
         {
-            Id = itemInfo.id;
-            _name.text = itemInfo.name;
-            _level.text = $"Lv{itemInfo.level}";
+            Id = heroInfo.Id;
+            var levelCalculator = new LevelCalculator(heroInfo.Stats.MaxLevel);
+            _level.text = $"Lv{levelCalculator.CalculateCurrentLevel(heroInfo.Experience)}";
+            _localizedName.StringReference = heroInfo.Origin.DetailInformation.LocalizedName;
             _localizedName.RefreshString();
 
-            _cachedInfo = itemInfo;
+            _cachedInfo = heroInfo;
         }
 
         public void OnSelectToTransfer()

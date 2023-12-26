@@ -3,13 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using CryptoQuest.Actions;
-using CryptoQuest.Character.Hero;
-using CryptoQuest.Networking;
 using CryptoQuest.API;
+using CryptoQuest.Character.Hero;
 using CryptoQuest.Events.UI.Menu;
 using CryptoQuest.Inventory;
-using CryptoQuest.Sagas.Character;
+using CryptoQuest.Networking;
 using CryptoQuest.Sagas.Objects;
 using CryptoQuest.UI.Actions;
 using IndiGames.Core.Common;
@@ -20,51 +18,24 @@ using UnityEngine;
 using UnityEngine.AddressableAssets;
 using CharacterObject = CryptoQuest.Sagas.Objects.Character;
 
-namespace CryptoQuest.Tavern.Sagas
+namespace CryptoQuest.Sagas.Character
 {
-    public class FetchProfileCharacters : MonoBehaviour
+    public class FetchProfileCharacters : SagaBase<FetchProfileCharactersAction>
     {
         [SerializeField] private AssetReferenceT<HeroInventorySO> _heroInventoryAsset;
-        private HeroInventorySO _heroInventory;
         [SerializeField] private HeroInventoryFilledEvent _inventoryFilled;
 
         private TinyMessageSubscriptionToken _heroInventoryUpdateEvent;
         private TinyMessageSubscriptionToken _fetchEvent;
         private TinyMessageSubscriptionToken _transferSuccessEvent;
 
-        private void OnEnable()
-        {
-            _fetchEvent = ActionDispatcher.Bind<FetchProfileCharactersAction>(HandleAction);
-            _heroInventoryUpdateEvent = ActionDispatcher.Bind<GetGameNftCharactersSucceed>(RefreshHeroInventory);
-            _transferSuccessEvent = ActionDispatcher.Bind<TransferSucceed>(FilterAndRefreshInventory);
-        }
+        private HeroInventorySO _heroInventory;
 
-        private void OnDisable()
-        {
-            ActionDispatcher.Unbind(_fetchEvent);
-            ActionDispatcher.Unbind(_heroInventoryUpdateEvent);
-            ActionDispatcher.Unbind(_transferSuccessEvent);
-        }
-
-        private void FilterAndRefreshInventory(TransferSucceed ctx)
-        {
-            var ingameCharacters =
-                ctx.ResponseCharacters.Where(character => character.inGameStatus == (int)ECharacterStatus.InGame);
-            OnInventoryFilled(ingameCharacters.ToArray());
-        }
-
-        private void RefreshHeroInventory(GetGameNftCharactersSucceed ctx)
-        {
-            OnInventoryFilled(ctx.InGameCharacters.ToArray());
-        }
-
-        private void HandleAction(FetchProfileCharactersAction _)
+        protected override void HandleAction(FetchProfileCharactersAction _)
         {
             ActionDispatcher.Dispatch(new ShowLoading());
             var restClient = ServiceProvider.GetService<IRestClient>();
             restClient
-                .WithParams(new Dictionary<string, string>()
-                    { { "source", $"{((int)ECharacterStatus.InGame).ToString()}" } })
                 .Get<CharactersResponse>(CharacterAPI.GET_CHARACTERS)
                 .Subscribe(ProcessResponseCharacters, OnError);
         }
@@ -73,9 +44,26 @@ namespace CryptoQuest.Tavern.Sagas
         {
             ActionDispatcher.Dispatch(new ShowLoading(false));
             if (obj.code != (int)HttpStatusCode.OK) return;
+
             var responseCharacters = obj.data.characters;
             if (responseCharacters.Length == 0) return;
-            OnInventoryFilled(responseCharacters);
+
+            FilterHeroesByStatus(responseCharacters);
+        }
+
+        private void FilterHeroesByStatus(CharacterObject[] heroResponseList)
+        {
+            if (heroResponseList.Length == 0) return;
+
+            var dboxHeroes = heroResponseList.Where(hero => hero.inGameStatus == (int)Objects.ECharacterStatus.InBox)
+            .ToList();
+            ActionDispatcher.Dispatch(new GetInDboxHeroesSucceeded(dboxHeroes));
+
+            var inGameHeroes = heroResponseList.Where(hero => hero.inGameStatus == (int)Objects.ECharacterStatus
+            .InGame).ToList();
+            ActionDispatcher.Dispatch(new GetInGameHeroesSucceeded(inGameHeroes));
+
+            OnInventoryFilled(heroResponseList);
         }
 
         private void OnInventoryFilled(CharacterObject[] heroResponseList)
@@ -86,7 +74,7 @@ namespace CryptoQuest.Tavern.Sagas
             if (_heroInventory == null)
             {
                 var handle = _heroInventoryAsset.LoadAssetAsync();
-                yield return handle;
+                yield return new WaitUntil(() => handle.Result != null);
                 _heroInventory = handle.Result;
             }
 
@@ -99,7 +87,6 @@ namespace CryptoQuest.Tavern.Sagas
                 nftHeroes.Add(converter.Convert(heroResponse));
             }
             _heroInventory.OwnedHeroes = nftHeroes;
-
             _inventoryFilled.RaiseEvent(_heroInventory.OwnedHeroes);
         }
 
