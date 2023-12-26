@@ -24,7 +24,7 @@ namespace CryptoQuest.Tavern.Sagas
 
         private void OnDisable()
         {
-            ActionDispatcher.Unbind(_getInGameNftCharactersSucceededEvent);
+            // ActionDispatcher.Unbind(_getInGameNftCharactersSucceededEvent);
         }
 
         // private void RemoveHeroesThatExistsInParty(FetchInGameHeroesSucceeded ctx)

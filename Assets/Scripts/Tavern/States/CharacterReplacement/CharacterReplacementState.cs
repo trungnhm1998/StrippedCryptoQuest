@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using CryptoQuest.Character.Hero;
 using CryptoQuest.Sagas.Character;
 using CryptoQuest.Tavern.UI;
@@ -7,6 +8,7 @@ using IndiGames.Core.Events;
 using TinyMessenger;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using HeroObject = CryptoQuest.Sagas.Objects.Character;
 
 namespace CryptoQuest.Tavern.States.CharacterReplacement
 {
@@ -29,11 +31,10 @@ namespace CryptoQuest.Tavern.States.CharacterReplacement
             _controller.UICharacterReplacement.Contents.SetActive(true);
             _controller.UICharacterReplacement.SelectedGameItemsIds.Clear();
             _controller.UICharacterReplacement.SelectedDboxItemsIds.Clear();
-            _controller.UICharacterReplacement.HandleListInteractable();
             UITavernItem.Pressed += _controller.UICharacterReplacement.Transfer;
 
             _getGameDataSucceedEvent = ActionDispatcher.Bind<GetInGameHeroesSucceeded>(GetInGameCharacters);
-            _getWalletDataSucceedEvent = ActionDispatcher.Bind<GetInDboxHeroesSucceeded>(GetWalletCharacters);
+            _getWalletDataSucceedEvent = ActionDispatcher.Bind<GetInDboxHeroesSucceeded>(GetInDboxCharacters);
 
             _controller.MerchantInputManager.CancelEvent += CancelCharacterReplacement;
             _controller.MerchantInputManager.NavigateEvent += SwitchToOtherListRequested;
@@ -44,31 +45,23 @@ namespace CryptoQuest.Tavern.States.CharacterReplacement
             ActionDispatcher.Dispatch(new FetchProfileCharactersAction());
         }
 
-        private void GetInGameCharacters(GetInGameHeroesSucceeded obj)
+        private void GetInGameCharacters(GetInGameHeroesSucceeded obj) =>
+            ConvertAndPassDataToUi(obj.Heroes, _cachedGameData, _controller.UIGameList);
+
+        private void GetInDboxCharacters(GetInDboxHeroesSucceeded obj) =>
+            ConvertAndPassDataToUi(obj.Heroes, _cachedDboxData, _controller.UIDboxList);
+
+        private void ConvertAndPassDataToUi(HeroObject[] heroes, List<HeroSpec> cacheList, UICharacterList listUI)
         {
-            _cachedGameData.Clear();
-            foreach (var hero in obj.Heroes)
+            cacheList.Clear();
+            foreach (var hero in heroes)
             {
                 var newHero = ServiceProvider.GetService<IHeroResponseConverter>().Convert(hero);
-                _cachedGameData.Add(newHero);
+                cacheList.Add(newHero);
             }
-            _controller.UIGameList.SetData(_cachedGameData);
 
-            /*
-             * TODO
-             * check if any characters has the same id with the characters in party then enable lock tag
-             */
-        }
-
-        private void GetWalletCharacters(GetInDboxHeroesSucceeded obj)
-        {
-            _cachedDboxData.Clear();
-            foreach (var hero in obj.Heroes)
-            {
-                var newHero = ServiceProvider.GetService<IHeroResponseConverter>().Convert(hero);
-                _cachedDboxData.Add(newHero);
-            }
-            _controller.UIWalletList.SetData(_cachedDboxData);
+            listUI.SetData(cacheList);
+            _controller.UICharacterReplacement.HandleListInteractable();
         }
 
         private void CancelCharacterReplacement()
@@ -95,7 +88,7 @@ namespace CryptoQuest.Tavern.States.CharacterReplacement
                 _controller.UICharacterReplacement.SelectedDboxItemsIds.Count == 0) return;
 
             _controller.UIGameList.SetData(_cachedGameData);
-            _controller.UIWalletList.SetData(_cachedDboxData);
+            _controller.UIDboxList.SetData(_cachedDboxData);
         }
 
         private void ViewCharacterDetails()

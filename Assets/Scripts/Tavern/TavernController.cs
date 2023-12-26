@@ -24,7 +24,7 @@ namespace CryptoQuest.Tavern
         [field: SerializeField] public UICharacterReplacement UICharacterReplacement { get; private set; }
 
         [field: SerializeField] public UICharacterList UIGameList { get; private set; }
-        [field: SerializeField] public UICharacterList UIWalletList { get; private set; }
+        [field: SerializeField] public UICharacterList UIDboxList { get; private set; }
 
         [field: Header("Party Organization State")]
         [field: SerializeField] public UIPartyOrganization UIPartyOrganization { get; private set; }

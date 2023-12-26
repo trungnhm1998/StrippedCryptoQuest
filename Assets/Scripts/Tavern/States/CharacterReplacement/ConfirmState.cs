@@ -29,7 +29,7 @@ namespace CryptoQuest.Tavern.States.CharacterReplacement
             _controller.MerchantInputManager.CancelEvent += CancelTransmission;
 
             _controller.UIGameList.SetInteractableAllButtons(false);
-            _controller.UIWalletList.SetInteractableAllButtons(false);
+            _controller.UIDboxList.SetInteractableAllButtons(false);
 
             _controller.DialogsManager.ChoiceDialog
                 .SetButtonsEvent(YesButtonPressed, NoButtonPressed)
