@@ -13,6 +13,8 @@ namespace CryptoQuest.Inventory
         {
             _hero.gameObject.SetActive(true);
             _hero.Spec = spec;
+            _hero.GetComponent<Element>().SetElement(spec.Elemental);
+            _hero.Init();
         }
 
         public void Reset()

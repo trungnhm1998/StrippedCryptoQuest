@@ -1,4 +1,7 @@
-﻿using CryptoQuest.Input;
+﻿using System;
+using CryptoQuest.Character.Hero;
+using CryptoQuest.Input;
+using CryptoQuest.Inventory;
 using CryptoQuest.Tavern.States;
 using CryptoQuest.Tavern.UI;
 using UnityEngine;
@@ -11,10 +14,10 @@ namespace CryptoQuest.Tavern
         public UnityAction ExitTavernEvent;
 
         [SerializeField] private Animator _stateMachine;
+        [field: SerializeField] public HeroSpecInitializer SpecInitializer { get; private set; }
 
         [field: Header("Managers")]
         [field: SerializeField] public MerchantsInputManager MerchantInputManager { get; private set; }
-
         [field: SerializeField] public TavernDialogsManager DialogsManager { get; private set; }
 
         [field: Header("Overview State")]

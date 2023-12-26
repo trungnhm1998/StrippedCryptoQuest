@@ -1,5 +1,7 @@
-﻿using CryptoQuest.Character.Hero;
+﻿using System;
+using CryptoQuest.Character.Hero;
 using CryptoQuest.Character.LevelSystem;
+using CryptoQuest.UI.Tooltips.Events;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -18,7 +20,8 @@ namespace CryptoQuest.Tavern.UI
         [SerializeField] private GameObject _pendingTag;
         [SerializeField] private GameObject _inPartyTag;
 
-        [SerializeField] private RectTransform _tooltipPosition;
+        [Header("Events")]
+        [SerializeField] private ShowTooltipEvent _tooltipEnabledEventChannel;
 
         public Transform Parent { get; set; }
         public int Id { get; private set; }
@@ -26,7 +29,7 @@ namespace CryptoQuest.Tavern.UI
         private bool _isSelected = false;
         private bool _isInParty = false;
 
-        private HeroSpec _cachedInfo;
+        public HeroSpec Hero { get; private set; }
 
         public void SetItemInfo(HeroSpec heroInfo)
         {
@@ -37,7 +40,7 @@ namespace CryptoQuest.Tavern.UI
             _level.text = $"Lv{levelCalculator.CalculateCurrentLevel(heroInfo.Experience)}";
             _localizedName.StringReference = heroInfo.Origin.DetailInformation.LocalizedName;
             _localizedName.RefreshString();
-            _cachedInfo = heroInfo;
+            Hero = heroInfo;
         }
 
         public void LockInPartyHeroes(bool isInParty)
@@ -57,24 +60,15 @@ namespace CryptoQuest.Tavern.UI
 
         public void EnablePendingTag(bool enable) => _pendingTag.SetActive(enable);
 
-        public void OnInspecting(bool isInspecting)
-        {
-            if (isInspecting == false)
-            {
-                return;
-            }
-        }
-
-        public void InspectDetails()
-        {
-            return; // disable waiting for the new tooltip
-        }
-
         private void ResetItemStatus()
         {
             _isSelected = false;
             _isInParty = false;
             LockInPartyHeroes(false);
         }
+
+        public void OnInspectDetails() => _tooltipEnabledEventChannel.RaiseEvent(true);
+        public void OnDeselect() => _tooltipEnabledEventChannel.RaiseEvent(false);
+        private void OnDisable() => _tooltipEnabledEventChannel.RaiseEvent(false);
     }
 }
