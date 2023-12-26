@@ -12,14 +12,11 @@ namespace CryptoQuest.Character.MonoBehaviours
         void Landing();
     }
 
-    [RequireComponent(typeof(Collider2D), typeof(Animator), typeof(AutoMoveToPosition))]
+    [RequireComponent(typeof(Animator), typeof(AutoMoveToPosition))]
     public class HeroShipBehaviour : MonoBehaviour, IShipController
     {
-        [SerializeField] private Collider2D _collider;
         [SerializeField] private Animator _animator;
         [SerializeField] private AutoMoveToPosition _autoMove;
-        [SerializeField] private FacingBehaviour _facingBehaviour;
-        [SerializeField] private Rigidbody2D _rigidBody;
         [SerializeField] private LayerMask _landLayer;
 
         private readonly int _idleClip = Animator.StringToHash("Idles");
@@ -32,11 +29,8 @@ namespace CryptoQuest.Character.MonoBehaviours
         
         private void OnValidate()
         {
-            _collider = GetComponent<Collider2D>();
             _animator = GetComponent<Animator>();
             _autoMove = GetComponent<AutoMoveToPosition>();
-            _rigidBody = GetComponent<Rigidbody2D>();
-            _facingBehaviour = GetComponent<FacingBehaviour>();
         }
 
         public void Sail(IShip ship)
