@@ -1,5 +1,14 @@
-﻿using CryptoQuest.Item.Equipment;
+﻿using System;
+using CryptoQuest.Inventory.Actions;
+using CryptoQuest.Item.Equipment;
+using CryptoQuest.Networking;
+using CryptoQuest.Sagas.Objects;
+using CryptoQuest.Sagas.Profile;
+using IndiGames.Core.Common;
 using IndiGames.Core.Events;
+using Newtonsoft.Json;
+using UniRx;
+using UnityEngine;
 
 namespace CryptoQuest.ShopSystem.Sagas
 {
@@ -21,6 +30,42 @@ namespace CryptoQuest.ShopSystem.Sagas
 
     public class SellEquipmentSaga : SagaBase<SellEquipmentAction>
     {
-        protected override void HandleAction(SellEquipmentAction ctx) { }
+        [Serializable]
+        struct Body
+        {
+            [JsonProperty("itemId")]
+            public string ItemId;
+            [JsonProperty("id")]
+            public int Id;
+        }
+
+        protected override void HandleAction(SellEquipmentAction ctx)
+        {
+            var body = new Body()
+            {
+                Id = ctx.ItemInfo.Id,
+                ItemId = ctx.ItemInfo.Data.ID
+            };
+
+            var sellingItem = ctx.ItemInfo;
+
+            ActionDispatcher.Dispatch(new RemoveEquipmentAction(ctx.ItemInfo));
+            var restClient = ServiceProvider.GetService<IRestClient>();
+            restClient
+                .WithBody(body)
+                .Post<CommonResponse>(API.Sell)
+                .Subscribe(_ => SellSuccess(sellingItem), (ex) => SellFailed(ex, sellingItem));
+        }
+
+        private void SellSuccess(IEquipment sellingItem)
+        {
+            ActionDispatcher.Dispatch(new FetchProfileAction());
+            Debug.Log($"Sell {sellingItem.Id} success");
+        }
+
+        private void SellFailed(Exception ex, IEquipment sellingItem)
+        {
+            // TODO: add item back to inventory
+        }
     }
 }

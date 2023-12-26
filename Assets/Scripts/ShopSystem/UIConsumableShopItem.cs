@@ -6,7 +6,6 @@ namespace CryptoQuest.ShopSystem
 {
     public class UIConsumableShopItem : UIShopItem
     {
-        public event UnityAction<UIConsumableShopItem> Releasing;
         public static event UnityAction<UIConsumableShopItem> Pressed;
         [SerializeField] private UIConsumable _uiConsumable;
         private ConsumableInfo _consumable;
@@ -20,6 +19,5 @@ namespace CryptoQuest.ShopSystem
         }
 
         public override void OnPressed() => Pressed?.Invoke(this);
-        public override void Release() => Releasing?.Invoke(this);
     }
 }

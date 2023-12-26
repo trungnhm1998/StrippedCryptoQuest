@@ -56,4 +56,6 @@ namespace CryptoQuest.Actions
             InGameBeasts = inGameBeasts;
         }
     }
+    
+    public class FetchProfileConsumablesAction : ActionBase { }
 }

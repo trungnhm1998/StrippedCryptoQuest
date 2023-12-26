@@ -12,7 +12,8 @@ namespace CryptoQuest.ShopSystem
             foreach (var consumable in _inventory.Items)
             {
                 if (consumable.Data.Type != EConsumableType.Consumable || consumable.Quantity <= 0) continue;
-                var uiItem = GetItem(PriceMappingDatabase.GetPrice(consumable));
+                if (PriceMappingDatabase.TryGetSellingPrice(consumable.Data.ID, out var price) == false) continue;
+                var uiItem = GetItem(price);
                 uiItem.Render(consumable);
             }
         }

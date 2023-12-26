@@ -17,7 +17,5 @@ namespace CryptoQuest.ShopSystem
         }
 
         public abstract void OnPressed();
-
-        public abstract void Release();
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using CryptoQuest.Item.Consumable;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -11,20 +12,44 @@ namespace CryptoQuest.ShopSystem
         public struct PriceConfig
         {
             public string ItemId;
-            public float SellingPrice;
             public float BuyingPrice;
+            public float SellingPrice;
         }
 
         [SerializeField] private PriceConfig[] _itemPrices;
+        
+        private readonly Dictionary<string, PriceConfig> _priceMapping = new();
 
-        public float GetPrice(ConsumableInfo consumable)
+        private void OnEnable()
         {
-            return Random.Range(10, 150);
+            foreach (var priceConfig in _itemPrices)
+            {
+                _priceMapping.Add(priceConfig.ItemId, priceConfig);
+            }
         }
 
-        public float GetPrice(string equipmentPrefabId)
+        public bool TryGetSellingPrice(string itemId, out float price)
         {
-            return Random.Range(100, 1000);
+            if (_priceMapping.TryGetValue(itemId, out var priceConfig))
+            {
+                price = priceConfig.SellingPrice;
+                return true;
+            }
+
+            price = 0;
+            return false;
+        }
+        
+        public bool TryGetBuyingPrice(string itemId, out float price)
+        {
+            if (_priceMapping.TryGetValue(itemId, out var priceConfig))
+            {
+                price = priceConfig.BuyingPrice;
+                return true;
+            }
+
+            price = 0;
+            return false;
         }
     }
 }

@@ -8,12 +8,16 @@ namespace CryptoQuest.ShopSystem
     {
         [SerializeField] private EquipmentInventory _equipmentInventory;
 
+        /// <summary>
+        /// Only render non nft equipment and already config price
+        /// </summary>
         protected override void Render()
         {
             foreach (var item in _equipmentInventory.Equipments)
             {
                 if (item.IsNft || IsIgnoreType(item)) continue;
-                var uiItem = GetItem(PriceMappingDatabase.GetPrice(item.Prefab.ID));
+                if (PriceMappingDatabase.TryGetSellingPrice(item.Data.ID, out var price) == false) continue;
+                var uiItem = GetItem(price);
                 uiItem.Render(item);
             }
         }
