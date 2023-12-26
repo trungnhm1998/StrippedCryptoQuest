@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Serialization;
 
 namespace IndiGames.Core.UI
 {
@@ -7,6 +8,8 @@ namespace IndiGames.Core.UI
     {
         [SerializeField] private float _duration = .3f;
         [SerializeField] private float _waitDuration = .7f;
+        [field: SerializeField] public Color FadeInColor;
+        [field: SerializeField] public Color FadeOutColor;
         public float Duration => _duration;
         public float WaitDuration => _waitDuration;
 
