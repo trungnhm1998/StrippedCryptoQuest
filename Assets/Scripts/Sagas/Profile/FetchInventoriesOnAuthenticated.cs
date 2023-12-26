@@ -1,4 +1,5 @@
 ﻿using CryptoQuest.Actions;
+using CryptoQuest.Sagas.Character;
 using CryptoQuest.Sagas.MagicStone;
 using IndiGames.Core.Events;
 

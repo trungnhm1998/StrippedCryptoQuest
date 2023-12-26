@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using CryptoQuest.Character.Hero;
 using UnityEngine;
 using UnityEngine.Pool;
 using UnityEngine.UI;
@@ -19,7 +20,7 @@ namespace CryptoQuest.Tavern.UI
             _pool ??= new ObjectPool<UITavernItem>(OnCreate, OnGet, OnRelease, OnDestroyPool);
         }
 
-        public void SetData(List<Obj.Character> data)
+        public void SetData(List<HeroSpec> data)
         {
             ReleaseAllItemInPool();
             foreach (var heroData in data)

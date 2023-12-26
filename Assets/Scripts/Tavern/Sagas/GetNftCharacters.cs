@@ -58,7 +58,7 @@ namespace CryptoQuest.Tavern.Sagas
                 _inGameCharacters.Add(character);
             }
 
-            ActionDispatcher.Dispatch(new GetGameNftCharactersSucceed(_inGameCharacters));
+            // ActionDispatcher.Dispatch(new GetGameNftCharactersSucceed(_inGameCharacters));
         }
 
         private void UpdateInboxCache(Obj.Character[] characters)

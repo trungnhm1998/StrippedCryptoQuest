@@ -76,7 +76,7 @@ namespace CryptoQuest.Tavern.States.PartyOrganization
                 });
             }
 
-            _controller.UIParty.SetData(_cachedInPartyCharactersData);
+            // _controller.UIParty.SetData(_cachedInPartyCharactersData);
         }
 
         private void GetInGameCharacters(GetFilteredInGameNftCharactersSucceed obj)
@@ -84,7 +84,7 @@ namespace CryptoQuest.Tavern.States.PartyOrganization
             GetInPartyCharacters();
             _cachedNonPartyCharactersData = obj.FilteredInGameCharacters;
             if (obj.FilteredInGameCharacters.Count <= 0) return;
-            _controller.UINonParty.SetData(obj.FilteredInGameCharacters);
+            // _controller.UINonParty.SetData(obj.FilteredInGameCharacters);
         }
 
         private void CancelPartyOrganization()
@@ -112,8 +112,8 @@ namespace CryptoQuest.Tavern.States.PartyOrganization
             if (_controller.UIPartyOrganization.SelectedNonPartyCharacterIds.Count == 0 &&
                 _controller.UIPartyOrganization.SelectedPartyCharacterIds.Count == 0) return;
 
-            _controller.UIParty.SetData(_cachedInPartyCharactersData);
-            _controller.UINonParty.SetData(_cachedNonPartyCharactersData);
+            // _controller.UIParty.SetData(_cachedInPartyCharactersData);
+            // _controller.UINonParty.SetData(_cachedNonPartyCharactersData);
         }
     }
 }
