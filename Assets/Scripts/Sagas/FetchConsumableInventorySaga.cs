@@ -9,7 +9,9 @@ using CryptoQuest.Sagas.Objects;
 using IndiGames.Core.Common;
 using IndiGames.Core.Events;
 using UniRx;
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 using UnityEngine;
 
 namespace CryptoQuest.Sagas
@@ -21,6 +23,7 @@ namespace CryptoQuest.Sagas
         
         private readonly Dictionary<string, ConsumableSO> _consumableMap = new();
 
+#if UNITY_EDITOR
         private void OnValidate()
         {
             var consumableAssetGuids = AssetDatabase.FindAssets("t:ConsumableSO");
@@ -31,6 +34,7 @@ namespace CryptoQuest.Sagas
                 _consumables[index] = AssetDatabase.LoadAssetAtPath<ConsumableSO>(assetPath);
             }
         }
+#endif
 
         private void Awake()
         {
