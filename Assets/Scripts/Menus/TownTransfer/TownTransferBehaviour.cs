@@ -1,9 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using CryptoQuest.Gameplay;
+using CryptoQuest.Gameplay.Manager;
 using CryptoQuest.Input;
 using CryptoQuest.Map;
 using CryptoQuest.UI.SpiralFX;
+using IndiGames.Core.Events;
 using IndiGames.Core.Events.ScriptableObjects;
 using IndiGames.Core.SceneManagementSystem.Events.ScriptableObjects;
 using IndiGames.Core.SceneManagementSystem.ScriptableObjects;
@@ -21,6 +23,7 @@ namespace CryptoQuest.Menus.TownTransfer
         [SerializeField] private InputMediatorSO _inputMediatorSO;
         [SerializeField] private TownTransferLocations _transferLocations;
         [SerializeField] private FadeConfigSO _fadeConfig;
+        [SerializeField] private Color _transitionColor = Color.black;
 
         [Header("Listen")]
         [SerializeField] private VoidEventChannelSO _onSceneLoadedEventChannel;
@@ -33,10 +36,6 @@ namespace CryptoQuest.Menus.TownTransfer
 
         private readonly List<GoFrom> _cachedDestinations = new();
 
-        private void OnDestroy()
-        {
-            _onSceneLoadedEventChannel.EventRaised -= HideSpiralAfterSceneLoaded;
-        }
 
         private void RegisterTown(TownTransferPath location)
         {
@@ -45,68 +44,14 @@ namespace CryptoQuest.Menus.TownTransfer
 
         public void StartTeleportSequence(MapPathSO path)
         {
-            StartCoroutine(CoActivateOcarinaAnim(path));
-        }
-
-        private IEnumerator CoActivateOcarinaAnim(MapPathSO location)
-        {
             _inputMediatorSO.DisableAllInput();
-            ShowSpiral();
-            yield return new WaitForSeconds(_spiralConfig.Duration);
-            TriggerOcarina(location);
+            TriggerOcarina(path);
         }
 
-        private void ShowSpiral()
-        {
-            _spiralConfig.Color = Color.blue;
-            _spiralConfig.ShowSpiral();
-        }
-
-        private void HideSpiralAfterSceneLoaded()
-        {
-            StartCoroutine(CoHideSpiralAndEnableMapInput());
-            _onSceneLoadedEventChannel.EventRaised -= HideSpiralAfterSceneLoaded;
-            _fadeConfig.FadeInColor = Color.black;
-            _fadeConfig.FadeOutColor = Color.black;
-            _fadeConfig.FadeOutColor.a = 0;
-            _spiralConfig.Color = Color.black;
-        }
-
-        private IEnumerator CoHideSpiralAndEnableMapInput()
-        {
-            _spiralConfig.HideSpiral();
-            yield return new WaitForSeconds(_spiralConfig.Duration);
-            _inputMediatorSO.EnableMapGameplayInput();
-        }
 
         private void TriggerOcarina(MapPathSO path)
         {
-            if (SceneManager.GetSceneByName("WorldMap").isLoaded)
-            {
-                MoveHeroToLocationEntrance(path);
-            }
-            else
-            {
-                _pathStorage.LastTakenPath = path;
-                _requestLoadMapEvent.RequestLoad(_worldMapScene);
-                _onSceneLoadedEventChannel.EventRaised += HideSpiralAfterSceneLoaded;
-                _fadeConfig.FadeInColor = Color.blue;
-                _fadeConfig.FadeOutColor = Color.blue;
-                _fadeConfig.FadeOutColor.a = 0;
-            }
-        }
-
-        private void MoveHeroToLocationEntrance(MapPathSO path)
-        {
-            if (_cachedDestinations.Count == 0)
-                _cachedDestinations.AddRange(FindObjectsOfType<GoFrom>());
-            foreach (GoFrom destination in _cachedDestinations)
-            {
-                if (path != destination.MapPath) continue;
-                _gameplayBus.Hero.transform.position = destination.transform.position;
-                StartCoroutine(CoHideSpiralAndEnableMapInput());
-                return;
-            }
+            ActionDispatcher.Dispatch(new TriggerTransitionAction(path));
         }
     }
 }

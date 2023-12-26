@@ -1603,6 +1603,60 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: eec6eae452306a149ab27ce892f3aab1, type: 3}
+--- !u!1 &1886942107
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1886942109}
+  - component: {fileID: 1886942108}
+  m_Layer: 0
+  m_Name: TransitionManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1886942108
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1886942107}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f2e3906d89f349cb9e92306430afd0af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _destinationScene: {fileID: 11400000, guid: ff69e97656501674fab4f675328a750b, type: 2}
+  _spiralConfig: {fileID: 11400000, guid: 2708a2e85420add4493974ea482cd235, type: 2}
+  _fadeConfig: {fileID: 11400000, guid: 37179aade8654f24db045354ca36f205, type: 2}
+  _pathStorageSo: {fileID: 11400000, guid: 2a4e24b3a44766f4d88fe843fa5fbd5a, type: 2}
+  _loadMapEventChannel: {fileID: 11400000, guid: 932ea26428d5f4c4f8bdfd48ebc80873, type: 2}
+  _onSceneLoadedEventChannel: {fileID: 11400000, guid: b8b96e43d21a7bf4c96df4cb83c2b764, type: 2}
+  _transitionColor: {r: 0, g: 0, b: 0, a: 1}
+  _resetColor: {r: 0, g: 0, b: 0, a: 1}
+  _gameplayBus: {fileID: 11400000, guid: a26ff341568973e46a1d4449052d5bb0, type: 2}
+  _inputMediatorSO: {fileID: 11400000, guid: 1fb61cdb72f0a484f8e4db68e2011977, type: 2}
+--- !u!4 &1886942109
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1886942107}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -6.464115, y: 3.0547042, z: -0.00900003}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &1918178543 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 9207544581874739671, guid: f9f3b110e001a0a47a4b043713057ed3, type: 3}
@@ -4046,3 +4100,4 @@ SceneRoots:
   - {fileID: 4692541524716964968}
   - {fileID: 941272566724431304}
   - {fileID: 1085037627}
+  - {fileID: 1886942109}
