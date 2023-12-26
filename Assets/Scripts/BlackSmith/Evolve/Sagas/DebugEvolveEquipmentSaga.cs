@@ -1,3 +1,4 @@
+using System.Collections;
 using CryptoQuest.Item.Equipment;
 using CryptoQuest.Sagas.Equipment;
 using CryptoQuest.Sagas.Profile;
@@ -30,16 +31,9 @@ namespace CryptoQuest.BlackSmith.Evolve.Sagas
         private void SimulateDispatch()
         {
             ActionDispatcher.Dispatch(new ShowLoading(false));
-
-            if (_shouldSuccess)
-            {
-                EvolveResponse response = JsonConvert.DeserializeObject<EvolveResponse>(_fakeResponse);
-                IEquipment successEquipment = _responseConverter.Convert(response.data.newEquipment);
-                ActionDispatcher.Dispatch(new EvolveEquipmentSuccessAction(successEquipment));
-                return;
-            }
-
-            ActionDispatcher.Dispatch(new EvolveEquipmentFailedAction(_context.Equipment));
+            var response = JsonConvert.DeserializeObject<EvolveResponse>(_fakeResponse);
+            response.data.success = _shouldSuccess ? 1 : 0; 
+            ActionDispatcher.Dispatch(new EvolveResponsed(response, _context));
         }
     }
 }

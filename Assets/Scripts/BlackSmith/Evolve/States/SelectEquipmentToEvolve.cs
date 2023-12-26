@@ -19,6 +19,7 @@ namespace CryptoQuest.BlackSmith.Evolve.States
             EvolvableEquipmentList.EquipmentSelected += OnSelectBaseItem;
             EvolvableEquipmentList.EquipmentHighlighted += OnHighlightItem;
 
+            EvolveSystem.EquipmentDetailPresenter.gameObject.SetActive(true);
             EquipmentsPresenter.InitEquipments(StateMachine.EvolvableInfos);
             EquipmentsPresenter.RenderEquipmentsForBaseItemSelection();
         }

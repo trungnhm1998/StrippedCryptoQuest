@@ -34,6 +34,7 @@ namespace CryptoQuest.BlackSmith.Evolve.States
         {
             EquipmentsPresenter.ResetAnchorIfExist(StateMachine.ItemToEvolve);
             StateMachine.ItemToEvolve.ResetItemStates();
+            EvolveSystem.EquipmentDetailPresenter.ShowEquipment(StateMachine.ItemToEvolve.Equipment);
             fsm.RequestStateChange(EStates.SelectEquipment);
         }
 
