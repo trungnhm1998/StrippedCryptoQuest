@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using CryptoQuest.Character.Hero;
+using CryptoQuest.Gameplay.PlayerParty;
 using UnityEngine;
 using UnityEngine.Pool;
 using UnityEngine.UI;
@@ -9,6 +10,8 @@ namespace CryptoQuest.Tavern.UI
 {
     public class UICharacterList : MonoBehaviour
     {
+        [SerializeField] private PartySO _party;
+
         [SerializeField] protected Transform _scrollRectContent;
         [SerializeField] protected UITavernItem _itemPrefab;
 
@@ -28,6 +31,21 @@ namespace CryptoQuest.Tavern.UI
                 UITavernItem item = _pool.Get();
                 item.SetItemInfo(heroData);
                 IdentifyItemParent(item);
+            }
+        }
+
+        public void HandleInPartyHeroes()
+        {
+            foreach (var partySlot in _party.GetParty())
+            {
+                if (partySlot.IsValid() == false) continue;
+                var isMain = partySlot.Hero.Id == 0;
+                if (isMain) continue;
+                foreach (var heroItem in _items)
+                {
+                    if (partySlot.Hero.Id != heroItem.Id) continue;
+                    heroItem.LockInPartyHeroes(true);
+                }
             }
         }
 

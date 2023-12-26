@@ -7,10 +7,10 @@ namespace CryptoQuest.Tavern.UI
     public class UICharacterReplacement : UIAbstractTavern
     {
         [SerializeField] private UICharacterList _gameListUi;
-        [SerializeField] private UICharacterList _walletListUi;
+        [SerializeField] private UICharacterList _dboxListUi;
 
         [SerializeField] private Transform _gameScrollContent;
-        [SerializeField] private Transform _walletScrollContent;
+        [SerializeField] private Transform _dboxScrollContent;
 
         public List<int> SelectedGameItemsIds { get; } = new();
         public List<int> SelectedDboxItemsIds { get; } = new();
@@ -36,17 +36,17 @@ namespace CryptoQuest.Tavern.UI
         private IEnumerator CoHandleListInteractable()
         {
             yield return new WaitUntil(() =>
-                (_gameScrollContent != null && _walletScrollContent != null)
-                && (_gameScrollContent.childCount > 0 || _walletScrollContent.childCount > 0));
+                (_gameScrollContent != null && _dboxScrollContent != null)
+                && (_gameScrollContent.childCount > 0 || _dboxScrollContent.childCount > 0));
 
             switch (_gameScrollContent.childCount)
             {
                 case > 0:
-                    _walletListUi.SetInteractableAllButtons(false);
+                    _dboxListUi.SetInteractableAllButtons(false);
                     FocusList(_gameListUi);
                     break;
                 case <= 0:
-                    FocusList(_walletListUi);
+                    FocusList(_dboxListUi);
                     break;
             }
         }
@@ -54,16 +54,16 @@ namespace CryptoQuest.Tavern.UI
         public void SwitchList(Vector2 direction)
         {
             if (_gameScrollContent.childCount <= 0) return;
-            if (_walletScrollContent.childCount <= 0) return; // code smells
+            if (_dboxScrollContent.childCount <= 0) return; // code smells
 
             switch (direction.x)
             {
                 case > 0:
                     _gameListUi.SetInteractableAllButtons(false);
-                    FocusList(_walletListUi);
+                    FocusList(_dboxListUi);
                     break;
                 case < 0:
-                    _walletListUi.SetInteractableAllButtons(false);
+                    _dboxListUi.SetInteractableAllButtons(false);
                     FocusList(_gameListUi);
                     break;
             }
@@ -78,7 +78,7 @@ namespace CryptoQuest.Tavern.UI
         public void ConfirmedTransmission()
         {
             _gameListUi.UpdateList();
-            _walletListUi.UpdateList();
+            _dboxListUi.UpdateList();
         }
     }
 }

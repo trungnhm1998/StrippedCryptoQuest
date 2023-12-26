@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using CryptoQuest.Character.Hero;
 using CryptoQuest.Sagas.Character;
 using CryptoQuest.Tavern.UI;
@@ -45,8 +44,11 @@ namespace CryptoQuest.Tavern.States.CharacterReplacement
             ActionDispatcher.Dispatch(new FetchProfileCharactersAction());
         }
 
-        private void GetInGameCharacters(GetInGameHeroesSucceeded obj) =>
+        private void GetInGameCharacters(GetInGameHeroesSucceeded obj)
+        {
             ConvertAndPassDataToUi(obj.Heroes, _cachedGameData, _controller.UIGameList);
+            _controller.UIGameList.HandleInPartyHeroes();
+        }
 
         private void GetInDboxCharacters(GetInDboxHeroesSucceeded obj) =>
             ConvertAndPassDataToUi(obj.Heroes, _cachedDboxData, _controller.UIDboxList);

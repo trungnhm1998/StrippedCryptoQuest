@@ -37,8 +37,13 @@ namespace CryptoQuest.Tavern.UI
             _level.text = $"Lv{levelCalculator.CalculateCurrentLevel(heroInfo.Experience)}";
             _localizedName.StringReference = heroInfo.Origin.DetailInformation.LocalizedName;
             _localizedName.RefreshString();
-
             _cachedInfo = heroInfo;
+        }
+
+        public void LockInPartyHeroes(bool isInParty)
+        {
+            _isInParty = isInParty;
+            _inPartyTag.SetActive(_isInParty);
         }
 
         public void OnSelectToTransfer()
@@ -51,12 +56,6 @@ namespace CryptoQuest.Tavern.UI
         }
 
         public void EnablePendingTag(bool enable) => _pendingTag.SetActive(enable);
-
-        public void Transfer(Transform parent)
-        {
-            gameObject.transform.SetParent(parent);
-            Parent = parent;
-        }
 
         public void OnInspecting(bool isInspecting)
         {
@@ -75,6 +74,7 @@ namespace CryptoQuest.Tavern.UI
         {
             _isSelected = false;
             _isInParty = false;
+            LockInPartyHeroes(false);
         }
     }
 }
