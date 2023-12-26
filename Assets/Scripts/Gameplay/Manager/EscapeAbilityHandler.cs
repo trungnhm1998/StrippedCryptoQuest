@@ -7,6 +7,7 @@ using IndiGames.Core.Events;
 using IndiGames.Core.Events.ScriptableObjects;
 using IndiGames.Core.SceneManagementSystem.Events.ScriptableObjects;
 using IndiGames.Core.SceneManagementSystem.ScriptableObjects;
+using IndiGames.Core.UI;
 using TinyMessenger;
 using UnityEngine;
 using UnityEngine.Events;
@@ -26,9 +27,11 @@ namespace CryptoQuest.Gameplay.Manager
         [SerializeField] private LoadSceneEventChannelSO _loadMapEventChannel;
         [SerializeField] private VoidEventChannelSO _onSceneLoadedEventChannel;
         [SerializeField] private SpiralConfigSO _spiralConfig;
+        [SerializeField] private FadeConfigSO _fadeConfig;
         [SerializeField] private EscapeRouteMappingSO _escapeRouteMapping;
         [SerializeField] private VoidEventChannelSO _closeMainMenuEventChannel;
         [SerializeField] private SceneManagerSO _sceneManagerSO;
+        [SerializeField] private Color _transitionColor = Color.black;
         private TinyMessageSubscriptionToken _token;
 
         private void OnEnable()
@@ -45,7 +48,9 @@ namespace CryptoQuest.Gameplay.Manager
         {
             SceneScriptableObject currentScene = _sceneManagerSO.CurrentScene;
 
-            if (_escapeRouteMapping.MapToEscapePathDictionary.TryGetValue(currentScene, out MapPathSO escapePath))
+            bool isEscapeRouteFound =
+                _escapeRouteMapping.MapToEscapePathDictionary.TryGetValue(currentScene, out MapPathSO escapePath);
+            if (isEscapeRouteFound)
             {
                 OnEscapeSucceeded(escapePath);
                 escapeAction.OnEscapeSucceeded?.Invoke();
@@ -61,24 +66,7 @@ namespace CryptoQuest.Gameplay.Manager
         private void OnEscapeSucceeded(MapPathSO escapePath)
         {
             _closeMainMenuEventChannel.RaiseEvent();
-            _pathStorageSo.LastTakenPath = escapePath;
-            _spiralConfig.DoneSpiralIn += TriggerEscape;
-            _spiralConfig.DoneSpiralOut += FinishTransition;
-            _onSceneLoadedEventChannel.EventRaised += _spiralConfig.HideSpiral;
-            _spiralConfig.ShowSpiral();
-        }
-
-        private void TriggerEscape()
-        {
-            _loadMapEventChannel.RequestLoad(_destinationScene);
-        }
-
-        private void FinishTransition()
-        {
-            _spiralConfig.DoneSpiralIn -= TriggerEscape;
-            _spiralConfig.DoneSpiralOut -= FinishTransition;
-            _onSceneLoadedEventChannel.EventRaised -= _spiralConfig.HideSpiral;
-            _spiralConfig.Color = Color.black;
+            ActionDispatcher.Dispatch(new TriggerTransitionAction(escapePath));
         }
     }
 }

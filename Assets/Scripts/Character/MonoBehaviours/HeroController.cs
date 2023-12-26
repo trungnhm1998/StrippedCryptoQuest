@@ -12,7 +12,7 @@ namespace CryptoQuest.Character.MonoBehaviours
     {
         [SerializeField] private Animator _animator;
 
-        public IEnumerable CoPlayAnimation(string animationName)
+        public IEnumerator CoPlayAnimation(string animationName)
         {
             AnimationClip clip = _animator.FindAnimation(animationName);
             if (clip == null)
