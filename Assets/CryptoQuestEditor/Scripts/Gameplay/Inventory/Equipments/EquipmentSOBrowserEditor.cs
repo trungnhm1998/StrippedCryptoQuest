@@ -85,13 +85,13 @@ namespace CryptoQuestEditor
                 SetRequiredSlots(GetRequiredSlots(cols), serializedObject, cols);
                 SetEquipmentType(GetEquipmentType(ParseData(cols[ROW_EQUIPMENT_TYPE_ID])), serializedObject, cols);
                 var displayName = LocalizedString(cols, out var description);
-
-                instance.Editor_SetDisplayName(displayName);
-                instance.Editor_SetDescription(description);
                 string imageFolder = GetImageFolder(cols[ROW_ID][0].ToString());
                 var imageAssetRef = GetSpriteAssetRef(cols[ROW_EQUIPMENT_SPRITE_ID], imageFolder);
                 Debug.Log(imageAssetRef);
                 SetSprite(imageAssetRef, serializedObject);
+
+                instance.Editor_SetDisplayName(displayName);
+                instance.Editor_SetDescription(description);
                 // Save data
                 if (!AssetDatabase.Contains(instance))
                 {
