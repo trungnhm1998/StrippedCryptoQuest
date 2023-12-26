@@ -66,9 +66,9 @@ namespace CryptoQuest.Menus.TownTransfer
         {
             StartCoroutine(CoHideSpiralAndEnableMapInput());
             _onSceneLoadedEventChannel.EventRaised -= HideSpiralAfterSceneLoaded;
-            // _fadeConfig.FadeInColor = Color.black;
-            // _fadeConfig.FadeOutColor = Color.black;
-            // _fadeConfig.FadeOutColor.a = 0;
+            _fadeConfig.FadeInColor = Color.black;
+            _fadeConfig.FadeOutColor = Color.black;
+            _fadeConfig.FadeOutColor.a = 0;
             _spiralConfig.Color = Color.black;
         }
 
@@ -90,9 +90,9 @@ namespace CryptoQuest.Menus.TownTransfer
                 _pathStorage.LastTakenPath = path;
                 _requestLoadMapEvent.RequestLoad(_worldMapScene);
                 _onSceneLoadedEventChannel.EventRaised += HideSpiralAfterSceneLoaded;
-                // _fadeConfig.FadeInColor = Color.blue;
-                // _fadeConfig.FadeOutColor = Color.blue;
-                // _fadeConfig.FadeOutColor.a = 0;
+                _fadeConfig.FadeInColor = Color.blue;
+                _fadeConfig.FadeOutColor = Color.blue;
+                _fadeConfig.FadeOutColor.a = 0;
             }
         }
 
