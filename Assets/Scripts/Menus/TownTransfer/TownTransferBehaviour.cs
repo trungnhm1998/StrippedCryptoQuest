@@ -7,6 +7,7 @@ using CryptoQuest.UI.SpiralFX;
 using IndiGames.Core.Events.ScriptableObjects;
 using IndiGames.Core.SceneManagementSystem.Events.ScriptableObjects;
 using IndiGames.Core.SceneManagementSystem.ScriptableObjects;
+using IndiGames.Core.UI;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -19,6 +20,7 @@ namespace CryptoQuest.Menus.TownTransfer
         [SerializeField] private PathStorageSO _pathStorage;
         [SerializeField] private InputMediatorSO _inputMediatorSO;
         [SerializeField] private TownTransferLocations _transferLocations;
+        [SerializeField] private FadeConfigSO _fadeConfig;
 
         [Header("Listen")]
         [SerializeField] private VoidEventChannelSO _onSceneLoadedEventChannel;
@@ -64,6 +66,10 @@ namespace CryptoQuest.Menus.TownTransfer
         {
             StartCoroutine(CoHideSpiralAndEnableMapInput());
             _onSceneLoadedEventChannel.EventRaised -= HideSpiralAfterSceneLoaded;
+            // _fadeConfig.FadeInColor = Color.black;
+            // _fadeConfig.FadeOutColor = Color.black;
+            // _fadeConfig.FadeOutColor.a = 0;
+            _spiralConfig.Color = Color.black;
         }
 
         private IEnumerator CoHideSpiralAndEnableMapInput()
@@ -84,6 +90,9 @@ namespace CryptoQuest.Menus.TownTransfer
                 _pathStorage.LastTakenPath = path;
                 _requestLoadMapEvent.RequestLoad(_worldMapScene);
                 _onSceneLoadedEventChannel.EventRaised += HideSpiralAfterSceneLoaded;
+                // _fadeConfig.FadeInColor = Color.blue;
+                // _fadeConfig.FadeOutColor = Color.blue;
+                // _fadeConfig.FadeOutColor.a = 0;
             }
         }
 

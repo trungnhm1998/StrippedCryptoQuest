@@ -12,8 +12,8 @@ namespace IndiGames.Core.UI
         private FadeConfigSO _config;
 
         [SerializeField] private Image _fadeImg;
-        [SerializeField] private Color _fadeInColor;
-        [SerializeField] private Color _fadeOutColor;
+        private Color _fadeInColor => _config.FadeInColor;
+        private Color _fadeOutColor => _config.FadeOutColor;
 
         private void OnEnable()
         {

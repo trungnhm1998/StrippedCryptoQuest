@@ -8,6 +8,7 @@ using CryptoQuest.UI.SpiralFX;
 using IndiGames.Core.Events.ScriptableObjects;
 using IndiGames.Core.SceneManagementSystem.Events.ScriptableObjects;
 using IndiGames.Core.SceneManagementSystem.ScriptableObjects;
+using IndiGames.Core.UI;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
@@ -21,6 +22,8 @@ namespace CryptoQuest.Ocarina
         [SerializeField] private PathStorageSO _pathStorage;
         [SerializeField] private InputMediatorSO _inputMediatorSO;
         [SerializeField] private OcarinaLocations _ocarinaData;
+        [SerializeField] private SpiralConfigSO _spiralConfig;
+        [SerializeField] private FadeConfigSO _fadeConfig;
 
         [Header("Listen")]
         [SerializeField] private VoidEventChannelSO _onSceneLoadedEventChannel;
@@ -28,8 +31,6 @@ namespace CryptoQuest.Ocarina
         [SerializeField] private RegisterTownToOcarinaEventChannelSO _registerTownEvent;
 
         [Header("Raise")]
-        [SerializeField] private SpiralConfigSO _spiralConfig;
-
         [SerializeField] private LoadSceneEventChannelSO _requestLoadMapEvent;
 
         [SerializeField] private UnityEvent _onOcarinaTriggered;
@@ -71,7 +72,7 @@ namespace CryptoQuest.Ocarina
             _ocarinaUI.SetActive(false);
             ShowSpiral();
             yield return new WaitForSeconds(_spiralConfig.Duration);
-            // screen should be all obscured by now
+            // screen should be all  by now
             TriggerOcarina(location);
         }
 
@@ -85,6 +86,10 @@ namespace CryptoQuest.Ocarina
         {
             StartCoroutine(CoHideSpiralAndEnableMapInput());
             _onSceneLoadedEventChannel.EventRaised -= HideSpiralAfterSceneLoaded;
+            _fadeConfig.FadeInColor = Color.black;
+            _fadeConfig.FadeOutColor = Color.black;
+            _fadeConfig.FadeOutColor.a = 0;
+            _spiralConfig.Color = Color.black;
         }
 
         private IEnumerator CoHideSpiralAndEnableMapInput()
@@ -105,6 +110,9 @@ namespace CryptoQuest.Ocarina
                 _pathStorage.LastTakenPath = path;
                 _requestLoadMapEvent.RequestLoad(_worldMapScene);
                 _onSceneLoadedEventChannel.EventRaised += HideSpiralAfterSceneLoaded;
+                _fadeConfig.FadeInColor = Color.blue;
+                _fadeConfig.FadeOutColor = Color.blue;
+                _fadeConfig.FadeOutColor.a = 0;
             }
 
             _onOcarinaTriggered?.Invoke();
