@@ -352,7 +352,8 @@ AnimatorState:
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
-  m_StateMachineBehaviours: []
+  m_StateMachineBehaviours:
+  - {fileID: 8448562304303951866}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
@@ -467,3 +468,17 @@ BlendTree:
   m_UseAutomaticThresholds: 1
   m_NormalizedBlendValues: 0
   m_BlendType: 1
+--- !u!114 &8448562304303951866
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03bd0dba58e17da418b5c575e2ca7ce0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _sailedShipEvent: {fileID: 11400000, guid: 37b6d3b5b4a31e844a5a98271522b85d, type: 2}
+  _landedEvent: {fileID: 11400000, guid: 88d2d71e18341a647888cb5f6139dd78, type: 2}
