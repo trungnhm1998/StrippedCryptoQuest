@@ -1,28 +1,27 @@
 ﻿using System.Collections.Generic;
+using CryptoQuest.Character.Hero;
 using CryptoQuest.Gameplay.PlayerParty;
+using CryptoQuest.Inventory;
 using CryptoQuest.Tavern.UI;
 using IndiGames.Core.Events;
 using TinyMessenger;
 using UnityEngine;
-using Obj = CryptoQuest.Sagas.Objects;
-using Random = UnityEngine.Random;
 
 namespace CryptoQuest.Tavern.States.PartyOrganization
 {
     public class PartyOrganizationState : StateMachineBehaviourBase
     {
         [SerializeField] private PartySO _party;
+        [SerializeField] private HeroInventorySO _heroInventory;
 
         private TavernController _controller;
         private TinyMessageSubscriptionToken _getGameDataSucceedEvent;
 
-        private List<Obj.Character> _cachedInPartyCharactersData = new List<Obj.Character>();
-        private List<Obj.Character> _cachedNonPartyCharactersData = new List<Obj.Character>();
+        private List<HeroSpec> _cachedInPartyHeroes = new List<HeroSpec>();
+        private List<HeroSpec> _cachedNonPartyHeroes = new List<HeroSpec>();
 
         private static readonly int OverviewState = Animator.StringToHash("Overview");
         private static readonly int ConfirmState = Animator.StringToHash("Confirm Party Organization");
-
-        private bool _hasGotHeroesFromServer = false;
 
         protected override void OnEnter()
         {
@@ -30,16 +29,11 @@ namespace CryptoQuest.Tavern.States.PartyOrganization
             _controller.UIPartyOrganization.Contents.SetActive(true);
             _controller.UIPartyOrganization.SelectedNonPartyCharacterIds.Clear();
             _controller.UIPartyOrganization.SelectedPartyCharacterIds.Clear();
+
+            GetInPartyHeroes();
+            GetNonPartyHeroes();
             _controller.UIPartyOrganization.HandleListInteractable();
             UITavernItem.Pressed += _controller.UIPartyOrganization.Transfer;
-
-            // _getGameDataSucceedEvent = ActionDispatcher.Bind<GetFilteredInGameNftCharactersSucceed>(GetInGameCharacters);
-
-            if (!_hasGotHeroesFromServer)
-            {
-                _hasGotHeroesFromServer = true;
-                // ActionDispatcher.Dispatch(new GetInGameHeroes());
-            }
 
             _controller.MerchantInputManager.CancelEvent += CancelPartyOrganization;
             _controller.MerchantInputManager.NavigateEvent += SwitchToOtherListRequested;
@@ -51,44 +45,46 @@ namespace CryptoQuest.Tavern.States.PartyOrganization
         {
             UITavernItem.Pressed -= _controller.UIPartyOrganization.Transfer;
 
-            ActionDispatcher.Unbind(_getGameDataSucceedEvent);
-
             _controller.MerchantInputManager.CancelEvent -= CancelPartyOrganization;
             _controller.MerchantInputManager.NavigateEvent -= SwitchToOtherListRequested;
             _controller.MerchantInputManager.ExecuteEvent -= SendItemsRequested;
             _controller.MerchantInputManager.ResetEvent -= ResetTransferRequested;            
         }
 
-        private void GetInPartyCharacters()
+        private void GetInPartyHeroes()
         {
-            _cachedInPartyCharactersData.Clear();
+            _cachedInPartyHeroes.Clear();
             foreach (var partySlot in _party.GetParty())
             {
                 if (partySlot.IsValid() == false) continue;
                 var isMain = partySlot.Hero.Id == 0;
                 if (isMain) continue;
-                _cachedInPartyCharactersData.Add(new Obj.Character()
-                {
-                    id = partySlot.Hero.Id,
-                    name = partySlot.Hero.Origin.DetailInformation.LocalizedName.GetLocalizedString(),
-                    level = Random.Range(0, 100)
-                });
+                _cachedInPartyHeroes.Add(partySlot.Hero);
             }
 
-            // _controller.UIParty.SetData(_cachedInPartyCharactersData);
+            if (_cachedInPartyHeroes.Count <= 0) return;
+            _controller.UIParty.SetData(_cachedInPartyHeroes);
         }
 
-        // private void GetInGameCharacters(GetFilteredInGameNftCharactersSucceed obj)
-        // {
-        //     GetInPartyCharacters();
-        //     _cachedNonPartyCharactersData = obj.FilteredInGameCharacters;
-        //     if (obj.FilteredInGameCharacters.Count <= 0) return;
-        //     // _controller.UINonParty.SetData(obj.FilteredInGameCharacters);
-        // }
+        private void GetNonPartyHeroes()
+        {
+            if (_heroInventory.OwnedHeroes.Count <= 0) return;
+            _cachedNonPartyHeroes = _heroInventory.OwnedHeroes;
+            for (var index = _heroInventory.OwnedHeroes.Count - 1; index >= 0; index--)
+            {
+                var nonPartyHero = _heroInventory.OwnedHeroes[index];
+                foreach (var inPartyHero in _cachedInPartyHeroes)
+                {
+                    if (nonPartyHero.Id != inPartyHero.Id) continue;
+                    _cachedNonPartyHeroes.Remove(nonPartyHero);
+                }
+            }
+
+            _controller.UINonParty.SetData(_cachedNonPartyHeroes);
+        }
 
         private void CancelPartyOrganization()
         {
-            _hasGotHeroesFromServer = false;
             _controller.UIPartyOrganization.Contents.SetActive(false);
             StateMachine.Play(OverviewState);
         }
@@ -111,8 +107,8 @@ namespace CryptoQuest.Tavern.States.PartyOrganization
             if (_controller.UIPartyOrganization.SelectedNonPartyCharacterIds.Count == 0 &&
                 _controller.UIPartyOrganization.SelectedPartyCharacterIds.Count == 0) return;
 
-            // _controller.UIParty.SetData(_cachedInPartyCharactersData);
-            // _controller.UINonParty.SetData(_cachedNonPartyCharactersData);
+            _controller.UIParty.SetData(_cachedInPartyHeroes);
+            _controller.UINonParty.SetData(_cachedNonPartyHeroes);
         }
     }
 }

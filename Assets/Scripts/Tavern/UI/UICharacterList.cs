@@ -15,7 +15,7 @@ namespace CryptoQuest.Tavern.UI
         private IObjectPool<UITavernItem> _pool;
         private List<UITavernItem> _items = new();
 
-        private void Start()
+        private void OnEnable()
         {
             _pool ??= new ObjectPool<UITavernItem>(OnCreate, OnGet, OnRelease, OnDestroyPool);
         }
