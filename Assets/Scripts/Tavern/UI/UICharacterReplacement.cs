@@ -21,9 +21,6 @@ namespace CryptoQuest.Tavern.UI
             if (currentList == _gameScrollContent) SelectedGameItemsIds.Add(currentItem.Id);
             else SelectedDboxItemsIds.Add(currentItem.Id);
 
-            _gameListUi.SetInteractableAllButtons(currentList == _gameScrollContent);
-            _walletListUi.SetInteractableAllButtons(!(currentList == _gameScrollContent));
-
             Debug.Log($"<color=white>game={SelectedGameItemsIds.Count} -- wallet={SelectedDboxItemsIds.Count}</color>");
         }
 

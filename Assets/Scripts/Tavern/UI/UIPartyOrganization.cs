@@ -18,23 +18,8 @@ namespace CryptoQuest.Tavern.UI
         public void Transfer(UITavernItem currentItem)
         {
             var currentList = currentItem.Parent;
-
-            Transform otherList;
-            if (currentList == _gameScrollContent)
-            {
-                otherList = _partyScrollContent;
-                SelectedNonPartyCharacterIds.Add(currentItem.Id);
-            }
-            else
-            {
-                otherList = _gameScrollContent;
-                SelectedPartyCharacterIds.Add(currentItem.Id);
-            }
-
-            currentItem.Transfer(otherList);
-
-            _partyUi.SetInteractableAllButtons(otherList == _partyScrollContent);
-            _gameListUi.SetInteractableAllButtons(otherList == _gameScrollContent);
+            if (currentList == _gameScrollContent) SelectedNonPartyCharacterIds.Add(currentItem.Id);
+            else SelectedPartyCharacterIds.Add(currentItem.Id);
         }
 
         /// <summary>
