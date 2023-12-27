@@ -7,6 +7,7 @@ using NUnit.Framework;
 using TMPro;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Localization;
 
 namespace CryptoQuest.Tests.Editor.Beast
 {
@@ -56,11 +57,15 @@ namespace CryptoQuest.Tests.Editor.Beast
             _beastProvider.EquippingBeast = _currentBeastProvider;
         }
 
-        [TestCase("キツネ")]
         [TestCase("Dragon")]
+        [TestCase("Tiger")]
+        [TestCase("Horse")]
+        [TestCase("Fox")]
+        [TestCase("Bird")]
         public void Init_WithBeast_NameCorrect(string name)
         {
-            _beast.Name.Returns(name);
+            _beast.LocalizedName.Returns(
+                new LocalizedString() { TableReference = "Beasts", TableEntryReference = name });
             _uiBeast.Init(_beast);
 
             TMP_Text txtName = _uiBeast.transform.Find("Name").GetComponent<TMP_Text>();
