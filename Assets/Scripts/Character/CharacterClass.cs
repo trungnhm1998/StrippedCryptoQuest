@@ -6,6 +6,6 @@ namespace CryptoQuest.Character
 {
     public class CharacterClass : GenericData
     {
-        [field: SerializeField] public AssetLabelReference Label { get; private set; }
+        [field: SerializeField] public AssetReferenceT<Sprite> Icon { get; private set; }
     }
 }
