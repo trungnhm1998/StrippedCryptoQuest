@@ -6,6 +6,7 @@ using System.Net;
 using CryptoQuest.API;
 using CryptoQuest.Character.Hero;
 using CryptoQuest.Events.UI.Menu;
+using CryptoQuest.Gameplay.PlayerParty;
 using CryptoQuest.Inventory;
 using CryptoQuest.Networking;
 using CryptoQuest.Sagas.Objects;
@@ -23,6 +24,7 @@ namespace CryptoQuest.Sagas.Character
     public class FetchProfileCharacters : SagaBase<FetchProfileCharactersAction>
     {
         [SerializeField] private AssetReferenceT<HeroInventorySO> _heroInventoryAsset;
+        [SerializeField] private PartySO _party;
         [SerializeField] private HeroInventoryFilledEvent _inventoryFilled;
 
         private TinyMessageSubscriptionToken _heroInventoryUpdateEvent;
@@ -60,9 +62,14 @@ namespace CryptoQuest.Sagas.Character
             ActionDispatcher.Dispatch(new GetInDboxHeroesSucceeded(dboxHeroes));
 
             List<CharacterObject> inGameHeroes = new();
+            List<PartySlotSpec> nonNft = new();
             foreach (var hero in heroResponseList)
             {
-                if (hero.isHero == 1) continue;
+                if (hero.isHero == 1)
+                {
+                    _party.GetParty()[0].Hero.Id = hero.id;
+                    continue;
+                }
                 if (hero.inGameStatus == (int)Objects.ECharacterStatus.InGame) inGameHeroes.Add(hero);
             }
             ActionDispatcher.Dispatch(new GetInGameHeroesSucceeded(inGameHeroes.ToArray()));
