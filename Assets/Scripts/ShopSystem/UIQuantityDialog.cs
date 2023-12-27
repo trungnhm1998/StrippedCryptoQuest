@@ -23,6 +23,7 @@ namespace CryptoQuest.ShopSystem
 
         private void OnDisable()
         {
+            _quantityChanged = null;
             _input.MenuNavigationContextEvent -= ChangeQuantity;
         }
 
@@ -101,6 +102,7 @@ namespace CryptoQuest.ShopSystem
 
         public override void Hide()
         {
+            _quantityChanged = null;
             _input.DisableAllInput();
             base.Hide();
         }
