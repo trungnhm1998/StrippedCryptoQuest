@@ -9,7 +9,7 @@ namespace CryptoQuest.BlackSmith.UpgradeStone.UI
     public class UpgradeMagicStoneSystem : MonoBehaviour
     {
         public List<IMagicStone> StoneList { get; set; } = new();
-      
+
         [field: SerializeField] public CurrencyPresenter CurrencyPresenter { get; private set; }
         [field: SerializeField] public StoneUpgradePresenter StoneUpgradePresenter { get; private set; }
         [field: SerializeField] public UpgradableStonesPresenter UpgradableStonesPresenter { get; private set; }
@@ -18,6 +18,7 @@ namespace CryptoQuest.BlackSmith.UpgradeStone.UI
         [field: SerializeField] public ConfirmStoneUpgradePresenter ConfirmUpgradePresenter { get; private set; }
         [field: SerializeField] public UIUpgradeMagicStoneToolTip MagicStoneTooltip { get; private set; }
         [field: SerializeField] public UpgradeStoneResultPresenter UpgradeStoneResultPresenter { get; private set; }
+        [field: SerializeField] public UpgradeStoneModel UpgradeStoneModel { get; private set; }
 
         [field: SerializeField] public LocalizedString SelectStoneToUpdateText { get; private set; }
         [field: SerializeField] public LocalizedString SelectMaterialText { get; private set; }
@@ -25,16 +26,17 @@ namespace CryptoQuest.BlackSmith.UpgradeStone.UI
         [field: SerializeField] public LocalizedString UpgradeSuccessText { get; private set; }
         [field: SerializeField] public LocalizedString UpgradeFailedText { get; private set; }
 
-        public IMagicStone GetUpgradedStone(IMagicStone stoneToUpgrade)
-        {
-            //TODO: implement mapping logic here (API preview) 
-            return stoneToUpgrade;
-        }
-
         public List<IMagicStone> GetUpgradableStones()
         {
             return StoneList
-                .GroupBy(item => new { item.Definition, item.Level })
+                .Where(item => item.AttachEquipmentId == 0)
+                .GroupBy(item => new
+                {
+                    item.Definition,
+                    item.Level,
+                    PassiveId1 = item.Passives[0].Context.SkillInfo.Id,
+                    PassiveId2 = item.Passives[1].Context.SkillInfo.Id
+                })
                 .Where(group => group.Count() >= 3)
                 .SelectMany(group => group.ToList())
                 .ToList();

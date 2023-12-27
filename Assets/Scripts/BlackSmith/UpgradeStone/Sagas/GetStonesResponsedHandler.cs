@@ -1,4 +1,6 @@
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using CryptoQuest.Item.MagicStone;
 using CryptoQuest.Sagas.MagicStone;
 using CryptoQuest.Sagas.Profile;
@@ -23,8 +25,18 @@ namespace CryptoQuest.BlackSmith.UpgradeStone.Sagas
                 stones.Add(magicStone);
             }
 
-            ActionDispatcher.Dispatch(new ResponseGetMagicStonesSucceeded(stones));
+            StartCoroutine(CoLoadResponseData(stones));
             ActionDispatcher.Dispatch(new FetchProfileAction());
+        }
+
+        private IEnumerator CoLoadResponseData(List<IMagicStone> stones)
+        {
+            while (stones.Any(stone => stone.Passives.Length < 2))
+            {
+                yield return null;
+            }
+
+            ActionDispatcher.Dispatch(new ResponseGetMagicStonesSucceeded(stones));
         }
     }
 }
