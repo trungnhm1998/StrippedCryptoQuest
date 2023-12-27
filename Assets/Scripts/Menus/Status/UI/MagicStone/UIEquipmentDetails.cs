@@ -1,6 +1,8 @@
 ﻿using CryptoQuest.Item.Equipment;
 using CryptoQuest.Menus.Status.UI.Equipment;
+using CryptoQuest.UI.Extensions;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace CryptoQuest.Menus.Status.UI.MagicStone
 {
@@ -8,6 +10,7 @@ namespace CryptoQuest.Menus.Status.UI.MagicStone
     {
         [SerializeField] private UIAttachList _attachList;
         [SerializeField] private UIEquipment _uiEquipment;
+        [SerializeField] private Image _equipmentImage;
 
         private IEquipment _equipment;
         public IEquipment Equipment => _equipment;
@@ -17,6 +20,7 @@ namespace CryptoQuest.Menus.Status.UI.MagicStone
             _equipment = equipment;
             SetEquipmentInfo();
             SetAttachingStones();
+            _equipmentImage.LoadSpriteAndSet(_equipment.Prefab.Image);
         }
 
         private void SetEquipmentInfo()

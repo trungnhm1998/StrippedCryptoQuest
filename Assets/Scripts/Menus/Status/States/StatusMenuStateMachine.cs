@@ -7,7 +7,6 @@ namespace CryptoQuest.Menus.Status.States
     {
         public const string OVERVIEW = "Overview";
         public const string EQUIPMENT_SELECTION = "EquipmentSelection";
-        public const string MAGIC_STONE_ENTRY = "MagicStoneEntry";
         public const string MAGIC_STONE_SLOT_SELECTION = "SlotSelection";
         public const string MAGIC_STONE_ELEMENT_NAVIGATION = "ElementNavigation";
         public const string MAGIC_STONE_SELECTION = "StoneSelection";
@@ -24,7 +23,6 @@ namespace CryptoQuest.Menus.Status.States
             AddState(State.UNFOCUS, new Unfocus(panel));
             AddState(State.OVERVIEW, new OverviewHeroStatus(panel));
             AddState(State.EQUIPMENT_SELECTION, new ModifyEquipments(panel));
-            AddState(State.MAGIC_STONE_ENTRY, new MagicStone.Entry(panel));
             AddState(State.MAGIC_STONE_SLOT_SELECTION, new MagicStone.SlotSelection(panel));
             AddState(State.MAGIC_STONE_ELEMENT_NAVIGATION, new MagicStone.ElementNavigation(panel));
             AddState(State.MAGIC_STONE_SELECTION, new MagicStone.StoneSelection(panel));

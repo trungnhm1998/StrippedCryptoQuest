@@ -6,12 +6,12 @@ namespace CryptoQuest.Item.MagicStone
 {
     public interface IMagicStone
     {
-        public int ID { get; }
-        public MagicStoneDef Definition { get; }
-        public int Level { get; }
-        public int AttachEquipmentId { get; }
-        public PassiveAbility[] Passives { get; }
-        public bool IsValid();
+        int ID { get; }
+        MagicStoneDef Definition { get; }
+        int Level { get; }
+        int AttachEquipmentId { get; set; }
+        PassiveAbility[] Passives { get; }
+        bool IsValid();
     }
 
     [Serializable]
@@ -21,7 +21,11 @@ namespace CryptoQuest.Item.MagicStone
         public int ID => Data.ID;
         public MagicStoneDef Definition => Data.Def;
         public int Level => Data.Level;
-        public int AttachEquipmentId => Data.AttachEquipmentId;
+        public int AttachEquipmentId 
+        {
+            get => Data.AttachEquipmentId;
+            set => Data.AttachEquipmentId = value;
+        }
 
         public PassiveAbility[] Passives
         {

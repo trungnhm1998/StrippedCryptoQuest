@@ -25,7 +25,7 @@ namespace CryptoQuest.Menus.Status.UI.MagicStone
             UIStoneList.SetActiveAllStoneButtons(false);
         }
 
-        private void SetActiveAllElementButtons(bool enable)
+        public void SetActiveAllElementButtons(bool enable)
         {
             foreach (var type in _stoneTypes)
                 type.enabled = enable;

@@ -18,7 +18,7 @@ namespace CryptoQuest.Menus.Status.States.MagicStone
         public override void OnEnter()
         {
             _attachSucceededToken = ActionDispatcher.Bind<AttachSucceeded>(AttachSucceeded);
-            StatusPanel.Input.MenuCancelEvent += BackToEntry;
+            StatusPanel.Input.MenuCancelEvent += BackToSelectSlot;
             StatusPanel.MagicStoneSelection.EnterStoneSelection();
             StatusPanel.MagicStoneSelection.UIStoneList.StoneSelectedEvent += AttachStone;
         }
@@ -26,7 +26,8 @@ namespace CryptoQuest.Menus.Status.States.MagicStone
         private void AttachSucceeded(AttachSucceeded _)
         {
             StatusPanel.UIAttachList.AttachStoneToCurrentSlot(_stoneData);
-            fsm.RequestStateChange(State.MAGIC_STONE_SLOT_SELECTION);
+            StatusPanel.MagicStoneSelection.UIStoneList.RenderAll();
+            BackToSelectSlot();
         }
 
         private void AttachStone(IMagicStone stoneData)
@@ -36,19 +37,18 @@ namespace CryptoQuest.Menus.Status.States.MagicStone
             List<int> stoneIDs = new();
             stoneIDs.Add(stoneData.ID);
 
-            var equipmentDetails = StatusPanel.MagicStoneMenu.GetComponentInChildren<UIEquipmentDetails>();
             ActionDispatcher.Dispatch(new AttachStones()
             {
-                EquipmentID = equipmentDetails.Equipment.Id,
+                EquipmentID = StatusPanel.EquipmentDetails.Equipment.Id,
                 StoneIDs = stoneIDs
             });
         }
 
-        private void BackToEntry() => fsm.RequestStateChange(State.MAGIC_STONE_SLOT_SELECTION);
+        private void BackToSelectSlot() => fsm.RequestStateChange(State.MAGIC_STONE_ELEMENT_NAVIGATION);
 
         public override void OnExit()
         {
-            StatusPanel.Input.MenuCancelEvent -= BackToEntry;
+            StatusPanel.Input.MenuCancelEvent -= BackToSelectSlot;
             StatusPanel.MagicStoneSelection.ExitStoneSelection();
             StatusPanel.MagicStoneSelection.UIStoneList.StoneSelectedEvent -= AttachStone;
             ActionDispatcher.Unbind(_attachSucceededToken);

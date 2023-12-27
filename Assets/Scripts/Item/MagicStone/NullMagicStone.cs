@@ -12,8 +12,9 @@ namespace CryptoQuest.Item.MagicStone
         public int ID => -1;
         public MagicStoneDef Definition { get; set; }
         public int Level => -1;
-        public int AttachEquipmentId => -1;
+        public int AttachEquipmentId { get; set; }
         public PassiveAbility[] Passives => Array.Empty<PassiveAbility>();
+
         public bool IsValid() => Definition != null;
     }
 }
