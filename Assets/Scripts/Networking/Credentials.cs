@@ -23,8 +23,20 @@ namespace CryptoQuest.Networking
         
         public void Load()
         {
-            Token = PlayerPrefs.GetString(_tokenKey, Token);
-            RefreshToken = PlayerPrefs.GetString(_refreshTokenKey, RefreshToken);
+            Token = PlayerPrefs.GetString(_tokenKey,
+#if UNITY_EDITOR
+                Token
+#else
+                string.Empty
+#endif
+                );
+            RefreshToken = PlayerPrefs.GetString(_refreshTokenKey,
+#if UNITY_EDITOR
+                RefreshToken
+#else
+                string.Empty
+#endif 
+                );
         }
 
         public void Save()
