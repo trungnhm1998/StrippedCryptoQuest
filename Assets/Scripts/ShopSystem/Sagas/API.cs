@@ -2,7 +2,7 @@
 {
     public static class API
     {
-        public const string Sell = "crypto/shops/sell";
-        public const string Buy = "crypto/shops/buy";
+        public const string SELL = "crypto/shops/sell";
+        public const string BUY = "crypto/shops/buy";
     }
 }

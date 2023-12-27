@@ -23,5 +23,7 @@ namespace CryptoQuest.ShopSystem
         }
 
         protected abstract bool IsIgnoreType(IEquipment equipment);
+        protected override void OnRegisterEvent(UIEquipmentShopItem uiShopItem) => uiShopItem.Pressed += OnSelected;
+        protected override void OnUnregisterEvent(UIEquipmentShopItem uiShopItem) => uiShopItem.Pressed -= OnSelected;
     }
 }

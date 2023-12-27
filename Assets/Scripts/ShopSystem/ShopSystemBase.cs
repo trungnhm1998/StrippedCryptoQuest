@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace CryptoQuest.ShopSystem
 {
-    public abstract class ShopSystemBase : MerchantSystemBase
+    public class ShopSystemBase : MerchantSystemBase
     {
         [SerializeField] private GameObject _selectActionPanel;
 

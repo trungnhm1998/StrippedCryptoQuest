@@ -15,6 +15,7 @@ namespace CryptoQuest.ShopSystem
         [SerializeField] private UIShopItemPool<UIConsumableShopItem> _pool;
         [SerializeField] private LocalizedString _confirmString = new("ShopUI", "DIALOG_SELL_CONFIRM");
         [SerializeField] private SellPanel _sellPanel;
+        [SerializeField] private UIInventoryItemList<UIConsumableShopItem> _sellingList;
 
         private UIChoiceDialog _confirmDialog;
 
@@ -25,12 +26,12 @@ namespace CryptoQuest.ShopSystem
 
         private void OnEnable()
         {
-            UIConsumableShopItem.Pressed += ConfigQuantity;
+            _sellingList.ItemSelected += ConfigQuantity;
         }
 
         private void OnDisable()
         {
-            UIConsumableShopItem.Pressed -= ConfigQuantity;
+            _sellingList.ItemSelected -= ConfigQuantity;
         }
 
         private void ConfigQuantity(UIConsumableShopItem item)
@@ -61,7 +62,6 @@ namespace CryptoQuest.ShopSystem
                     item.Render(item.Info);
                     if (item.Info.Quantity <= 0) _pool.Release(item);
 
-                    if (childCount == 1) return;
                     var childToSelect = itemIndex == childCount - 1
                         ? transformParent.GetChild(itemIndex - 1).gameObject
                         : transformParent.GetChild(itemIndex).gameObject;
