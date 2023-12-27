@@ -16,4 +16,30 @@ namespace CryptoQuest.BlackSmith.UpgradeStone.Sagas
             public MagicStone newStone;
         }
     }
+
+    [Serializable]
+    public class StoneUpgradePreviewResponse : CommonResponse
+    {
+        public StonePreviewResponseData data;
+
+        [Serializable]
+        public class StonePreviewResponseData
+        {
+            public int probability;
+            public int gold;
+            public int diamond;
+            public string stoneId;
+            public string stoneNameEn;
+            public string stoneNameJp;
+            public string element;
+            public string elementId;
+            public int stoneLv;
+            public string afterUpgradeStoneId;
+            public int skillType;
+            public int passiveSkillId1;
+            public int passiveSkillId2;
+            public int price;
+            public int sellingPrice;
+        }
+    }
 }

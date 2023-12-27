@@ -1,6 +1,8 @@
 using System.Collections.Generic;
+using CryptoQuest.BlackSmith.UpgradeStone.Sagas;
 using CryptoQuest.BlackSmith.UpgradeStone.UI;
 using CryptoQuest.Item.MagicStone;
+using IndiGames.Core.Events;
 using UnityEngine;
 
 namespace CryptoQuest.BlackSmith.UpgradeStone.States
@@ -17,7 +19,7 @@ namespace CryptoQuest.BlackSmith.UpgradeStone.States
             ResetMaterials();
             var upgradableStones = _stateMachine.UpgradeMagicStoneSystem.GetUpgradableStones();
             _dialogsPresenter.Dialogue.SetMessage(_stateMachine.UpgradeMagicStoneSystem.SelectMaterialText).Show();
-
+            RequestPreview(upgradableStones, _stateMachine.StoneToUpgrade.MagicStone);
             _magicStoneTooltip.SetData(_stateMachine.StoneToUpgrade.MagicStone, true);
             _magicStoneTooltip.SetupInfo();
             _materialStonesPresenter.gameObject.SetActive(true);
@@ -67,7 +69,7 @@ namespace CryptoQuest.BlackSmith.UpgradeStone.States
 
         private IMagicStone GetUpgradedStone(IMagicStone stone)
         {
-            return _stateMachine.UpgradeMagicStoneSystem.GetUpgradedStone(stone);
+            return _stateMachine.UpgradeMagicStoneSystem.UpgradeStoneModel.GetUpgradedStone(stone);
         }
 
 
@@ -78,6 +80,36 @@ namespace CryptoQuest.BlackSmith.UpgradeStone.States
             _materialStonesPresenter.MaterialSelected -= OnSelectMaterialStone;
             fsm.RequestStateChange(EUpgradeMagicStoneStates.SelectStone);
             ResetMaterials();
+        }
+
+        private void RequestPreview(List<IMagicStone> stoneLists, IMagicStone stoneToUpgrade)
+        {
+            if (_stateMachine.UpgradeMagicStoneSystem.UpgradeStoneModel.TryGetPreview(stoneToUpgrade,
+                    out var preview))
+                return;
+
+
+            List<IMagicStone> filteredStoneLists = new();
+            foreach (var stone in stoneLists)
+            {
+                if (stone.Level == stoneToUpgrade.Level) filteredStoneLists.Add(stone);
+            }
+
+
+            var ids = GetIdsForPreviews(filteredStoneLists);
+            ActionDispatcher.Dispatch(new UpgradeStonePreviewRequest(ids));
+        }
+
+        private List<int> GetIdsForPreviews(List<IMagicStone> stoneList)
+        {
+            if (stoneList.Count < 3) return new List<int>();
+            List<int> ids = new();
+            for (int i = 0; i < 3; i++)
+            {
+                ids.Add(stoneList[i].ID);
+            }
+
+            return ids;
         }
 
         private void ResetMaterials()

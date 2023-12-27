@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using CryptoQuest.Item.MagicStone;
 using IndiGames.Core.Events;
 
@@ -32,6 +33,36 @@ namespace CryptoQuest.BlackSmith.UpgradeStone.Sagas
         public IMagicStone Stone;
 
         public ResponseUpgradeStoneSuccess(IMagicStone stone)
+        {
+            Stone = stone;
+        }
+    }
+
+    public class UpgradeStonePreviewResponse : ActionBase
+    {
+        public StoneUpgradePreviewResponse Response;
+
+        public UpgradeStonePreviewResponse(StoneUpgradePreviewResponse response)
+        {
+            Response = response;
+        }
+    }
+
+    public class UpgradeStonePreviewRequest : ActionBase
+    {
+        public List<int> StoneIds;
+
+        public UpgradeStonePreviewRequest(List<int> ids)
+        {
+            StoneIds = ids;
+        }
+    }
+
+    public class UpgradePreviewSuccess : ActionBase
+    {
+        public IMagicStone Stone;
+
+        public UpgradePreviewSuccess(IMagicStone stone)
         {
             Stone = stone;
         }
