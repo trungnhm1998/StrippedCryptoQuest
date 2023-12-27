@@ -29,7 +29,7 @@ namespace CryptoQuest.Menus.Beast.UI
         [SerializeField] private CalculatorBeastStatsSO _calculatorBeastStatsSo;
 
         private Color _normalColor;
-        private IBeast _beast;
+        private IBeast _beast = NullBeast.Instance;
 
         public IBeast Beast => _beast;
 
@@ -48,7 +48,7 @@ namespace CryptoQuest.Menus.Beast.UI
         public void Init(IBeast beast)
         {
             _beast = beast;
-            _beastNameText.text = _beast.Name;
+            _beastName.StringReference = beast.LocalizedName;
             _showBeastDetailsTrigger.Initialize(this);
         }
 

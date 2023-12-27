@@ -20,11 +20,12 @@ namespace CryptoQuest.Menus.Beast.UI
         [SerializeField] private GameObject _content;
 
         [Header("Configs")]
-        [SerializeField] private LocalizeStringEvent _beastName;
-
         [SerializeField] private LocalizeStringEvent _localizedPassiveSkill;
-        [SerializeField] private TMP_Text _txtPassiveSkill;
+
+        [SerializeField] private LocalizeStringEvent _localizedBeastName;
         [SerializeField] private TMP_Text _txtLevel;
+        [SerializeField] private TMP_Text _txtPassiveSkill;
+        [SerializeField] private TMP_Text _txtBeastName;
         [SerializeField] private Image _beastImage;
         [SerializeField] private Image _beastElement;
 
@@ -54,8 +55,8 @@ namespace CryptoQuest.Menus.Beast.UI
 
         public void FillUI(IBeast beast)
         {
-            SetPassiveSkill(beast.Passive);
             SetBeastName(beast.LocalizedName);
+            SetPassiveSkill(beast.Passive);
             SetElement(beast.Elemental);
             SetStars(beast.Stars);
             SetLevel(beast.Level);
@@ -66,7 +67,6 @@ namespace CryptoQuest.Menus.Beast.UI
 
         private void UpdateBeastStats(AttributeSystemBehaviour attributeValues)
         {
-            Debug.Log("UIBeastDetail::UpdateBeastStats");
             foreach (var attribute in attributeValues.AttributeValues)
             {
                 foreach (var attributeValue in _attributeBar)
@@ -93,9 +93,10 @@ namespace CryptoQuest.Menus.Beast.UI
 
         private void SetPassiveSkill(PassiveAbility beastPassive)
         {
-            _txtPassiveSkill.text = "";
-            _localizedPassiveSkill.StringReference =
-                beastPassive != null ? beastPassive.Description : new LocalizedString();
+            _txtPassiveSkill.text = string.Empty;
+            if (beastPassive == null) return;
+
+            _localizedPassiveSkill.StringReference = beastPassive.Description ?? new LocalizedString();
             _localizedPassiveSkill.RefreshString();
         }
 
@@ -109,7 +110,12 @@ namespace CryptoQuest.Menus.Beast.UI
             _txtLevel.text = string.Format(_lvlFormat, value);
         }
 
-        private void SetBeastName(LocalizedString beastName) => _beastName.StringReference = beastName;
+        private void SetBeastName(LocalizedString beastName)
+        {
+            _txtBeastName.text = string.Empty;
+            _localizedBeastName.StringReference = beastName ?? new LocalizedString();
+            _localizedBeastName.RefreshString();
+        }
 
         private void SetStars(int value) => _stars.SetStars(value);
 
