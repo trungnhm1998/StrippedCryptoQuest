@@ -28,6 +28,7 @@ namespace CryptoQuest.Menus.Status.UI
         [field: SerializeField] public UICharacterStatsPanel CharacterStatsPanel { get; private set; }
         [field: SerializeField] public ShowTooltipEvent ShowTooltipEvent { get; private set; }
         [field: SerializeField] public ShowMagicStoneEvent ShowMagicStone { get; private set; }
+        [field: SerializeField] public UIEquipmentDetails EquipmentDetails { get; private set; }
         [field: SerializeField] public GameObject MagicStoneMenu { get; private set; }
         [field: SerializeField] public UIAttachList UIAttachList { get; private set; }
         [field: SerializeField] public MagicStoneSelection MagicStoneSelection { get; private set; }
@@ -74,7 +75,10 @@ namespace CryptoQuest.Menus.Status.UI
             InspectingEquipment = equipment;
             ShowTooltipEvent.RaiseEvent(false);
             _previousState = _stateMachine.ActiveStateName;
-            _stateMachine.RequestStateChange(State.MAGIC_STONE_ENTRY);
+            
+            MagicStoneMenu.SetActive(true);
+            EquipmentDetails.Init(InspectingEquipment);
+            _stateMachine.RequestStateChange(State.MAGIC_STONE_SLOT_SELECTION);
         }
 
         public void BackToPreviousState()

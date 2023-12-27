@@ -14,7 +14,7 @@ namespace CryptoQuest.Menus.Status.UI.Equipment
         [SerializeField] private GameObject _iconNFT;
         [SerializeField] private LocalizeStringEvent _nameLocalize;
         [SerializeField] private TMP_Text _nameText;
-        [SerializeField] private Image[] _stoneSlots;
+        [SerializeField] private UIEquipmentStone[] _stoneUIs;
 
         [SerializeField] private Color _disabledColor;
         [SerializeField] private Color _enabledColor;
@@ -32,7 +32,8 @@ namespace CryptoQuest.Menus.Status.UI.Equipment
             _iconNFT.SetActive(_equipment.IsNft);
             _nameText.text = $"{data.ID}-{_equipment.Prefab.ID}";
             _nameText.color = _enabledColor;
-            if (!equipment.Prefab.DisplayName.IsEmpty) _nameLocalize.StringReference = equipment.Prefab.DisplayName;
+            if (!equipment.Prefab.DisplayName.IsEmpty) 
+                _nameLocalize.StringReference = equipment.Prefab.DisplayName;
             _icon.sprite = equipment.Type.Icon;
         }
 
@@ -40,15 +41,19 @@ namespace CryptoQuest.Menus.Status.UI.Equipment
         {
             var maxSlots = equipment.Data.StoneSlots;
             for (int i = 0; i < maxSlots; i++)
-                _stoneSlots[i].gameObject.SetActive(true);
+            {
+                _stoneUIs[i].gameObject.SetActive(true);
+                _stoneUIs[i].ResetUI();
+            }
 
             var attachStones = equipment.Data.AttachStones;
             for (int inventoryIdx = 0; inventoryIdx < _stoneInventory.MagicStones.Count; inventoryIdx++)
             {
                 for (int attachIdx = 0; attachIdx < attachStones.Count; attachIdx++)
                 {
-                    if (_stoneInventory.MagicStones[inventoryIdx].ID == attachStones[attachIdx])
-                        _stoneSlots[attachIdx].LoadSpriteAndSet(_stoneInventory.MagicStones[inventoryIdx].Definition.Image);
+                    if (_stoneInventory.MagicStones[inventoryIdx].ID != attachStones[attachIdx]) continue;
+                    _stoneUIs[attachIdx].StoneIcon.LoadSpriteAndSet(
+                        _stoneInventory.MagicStones[inventoryIdx].Definition.Image);
                 }
             }
         }
@@ -62,7 +67,7 @@ namespace CryptoQuest.Menus.Status.UI.Equipment
 
         private void OnDisable()
         {
-            foreach (var slot in _stoneSlots)
+            foreach (var slot in _stoneUIs)
                 slot.gameObject.SetActive(false);
         }
     }

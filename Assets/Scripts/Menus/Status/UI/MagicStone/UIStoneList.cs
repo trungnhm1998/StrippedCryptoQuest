@@ -48,6 +48,8 @@ namespace CryptoQuest.Menus.Status.UI.MagicStone
             ReleaseAllItemInPool();
             foreach (var stoneData in stoneDataList)
             {
+                // Cant attach stone that already attached
+                if (stoneData.AttachEquipmentId != 0) continue;
                 UISingleStone item = _pool.Get();
                 item.SetInfo(stoneData);
                 item.Pressed += OnSelectedStoneToAttach;
@@ -95,7 +97,7 @@ namespace CryptoQuest.Menus.Status.UI.MagicStone
                 _pool.Release(item);
             }
 
-            _items = new();
+            _items.Clear();
         }
     }
 }
