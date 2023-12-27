@@ -1,5 +1,4 @@
-﻿using CryptoQuest.Input;
-using CryptoQuest.Merchant;
+﻿using CryptoQuest.Merchant;
 using UnityEngine;
 using UnityEngine.Events;
 

@@ -6,7 +6,7 @@ namespace CryptoQuest.ShopSystem
 {
     public class UIConsumableShopItem : UIShopItem
     {
-        public static event UnityAction<UIConsumableShopItem> Pressed;
+        public event UnityAction<UIConsumableShopItem> Pressed;
         [SerializeField] private UIConsumable _uiConsumable;
         private ConsumableInfo _consumable;
 

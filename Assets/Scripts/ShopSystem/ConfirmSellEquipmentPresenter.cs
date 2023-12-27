@@ -14,6 +14,8 @@ namespace CryptoQuest.ShopSystem
         [SerializeField] private UIShopItemPool<UIEquipmentShopItem> _equipmentPool;
         [SerializeField] private LocalizedString _confirmString = new("ShopUI", "DIALOG_SELL_CONFIRM");
         [SerializeField] private SellPanel _sellPanel;
+        [SerializeField] private UIEquipmentList _uiWeaponList;
+        [SerializeField] private UIEquipmentList _uiEquipmentList;
 
         private UIChoiceDialog _confirmDialog;
 
@@ -24,12 +26,14 @@ namespace CryptoQuest.ShopSystem
 
         private void OnEnable()
         {
-            UIEquipmentShopItem.Pressed += ConfirmSellEquipment;
+            _uiEquipmentList.ItemSelected += ConfirmSellEquipment;
+            _uiWeaponList.ItemSelected += ConfirmSellEquipment;
         }
 
         private void OnDisable()
         {
-            UIEquipmentShopItem.Pressed -= ConfirmSellEquipment;
+            _uiEquipmentList.ItemSelected -= ConfirmSellEquipment;
+            _uiWeaponList.ItemSelected -= ConfirmSellEquipment;
         }
 
         private void ConfirmSellEquipment(UIEquipmentShopItem item)

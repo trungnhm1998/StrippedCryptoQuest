@@ -50,7 +50,7 @@ namespace CryptoQuest.ShopSystem.Sagas
             var restClient = ServiceProvider.GetService<IRestClient>();
             restClient
                 .WithBody(body)
-                .Post<CommonResponse>(API.Sell)
+                .Post<CommonResponse>(API.SELL)
                 .Subscribe(_ => SellSuccess(ctx), (ex) => SellFailed(ex, ctx));
         }
 

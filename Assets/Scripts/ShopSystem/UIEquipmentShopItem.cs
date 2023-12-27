@@ -7,7 +7,7 @@ namespace CryptoQuest.ShopSystem
 {
     public class UIEquipmentShopItem : UIShopItem
     {
-        public static event UnityAction<UIEquipmentShopItem> Pressed;
+        public event UnityAction<UIEquipmentShopItem> Pressed;
         [SerializeField] private UIEquipment _uiEquipment;
         public IEquipment Info => _uiEquipment.Equipment;
         

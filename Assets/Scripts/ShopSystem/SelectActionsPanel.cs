@@ -3,6 +3,7 @@ using CryptoQuest.Merchant;
 using CryptoQuest.UI.Dialogs.BattleDialog;
 using IndiGames.Core.Events.ScriptableObjects;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.Localization;
 
 namespace CryptoQuest.ShopSystem
@@ -50,6 +51,7 @@ namespace CryptoQuest.ShopSystem
         private void OnDisable()
         {
             _input.CancelEvent -= OnCloseSystem;
+            EventSystem.current.SetSelectedGameObject(null);
         }
 
         private void OnCloseSystem()

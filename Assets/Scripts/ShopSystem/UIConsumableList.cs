@@ -7,6 +7,9 @@ namespace CryptoQuest.ShopSystem
     public class UIConsumableList : UIInventoryItemList<UIConsumableShopItem>
     {
         [SerializeField] private ConsumableInventory _inventory;
+        protected override void OnRegisterEvent(UIConsumableShopItem uiShopItem) => uiShopItem.Pressed += OnSelected;
+        protected override void OnUnregisterEvent(UIConsumableShopItem uiShopItem) => uiShopItem.Pressed -= OnSelected;
+
         protected override void Render()
         {
             foreach (var consumable in _inventory.Items)
