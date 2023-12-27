@@ -38,16 +38,33 @@ namespace CryptoQuest.ShopSystem.Sagas
                 {
                     ItemId = ctx.Item.Data.ID
                 })
-                .Post<CommonResponse>(API.BUY)
-                .Subscribe(_ => BuySuccess(ctx.Item), (ex) => BuyFailed(ex, ctx.Item));
+                .Post<BuyResponse>(API.BUY)
+                .Subscribe(response => BuySuccess(response, ctx.Item));
         }
 
-        private void BuySuccess(IEquipment item)
+        private void BuySuccess(BuyResponse response, IEquipment item)
         {
-            ActionDispatcher.Dispatch(new AddEquipmentAction(item));
+            var boughtEquipment = response.data.equipments[0];
+            var equipment = new Equipment()
+            {
+                Id = boughtEquipment.id,
+                Data = item.Data,
+                IsNft = false,
+            };
+            ActionDispatcher.Dispatch(new AddEquipmentAction(equipment));
             ActionDispatcher.Dispatch(new FetchProfileAction());
         }
+    }
 
-        private void BuyFailed(Exception exception, IEquipment item) { }
+    [Serializable]
+    public class BuyResponse : CommonResponse
+    {
+        public Data data;
+
+        [Serializable]
+        public class Data
+        {
+            public EquipmentResponse[] equipments;
+        }
     }
 }

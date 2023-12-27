@@ -36,11 +36,13 @@ namespace CryptoQuest.ShopSystem
 
         private void ConfigQuantity(UIConsumableShopItem item)
         {
+            EventSystem.current.SetSelectedGameObject(null);
             _sellPanel.DisableInput();
             var currentScrollRect = GetComponentInChildren<ScrollRect>();
             var selectables = currentScrollRect.GetComponentsInChildren<Selectable>();
             foreach (var selectable in selectables) selectable.interactable = false;
 
+            _quantityConfigDialog.gameObject.SetActive(true);
             _quantityConfigDialog
                 .WithQuantityChangedCallback(quantity =>
                 {
@@ -61,7 +63,14 @@ namespace CryptoQuest.ShopSystem
                     ActionDispatcher.Dispatch(new SellConsumableAction(item.Info.Data, selectedQuantity));
                     item.Render(item.Info);
                     if (item.Info.Quantity <= 0) _pool.Release(item);
+                    else
+                    {
+                        EventSystem.current.SetSelectedGameObject(item.gameObject);
+                        return;
+                    }
 
+                    if (transformParent.childCount == 0) return;
+                    
                     var childToSelect = itemIndex == childCount - 1
                         ? transformParent.GetChild(itemIndex - 1).gameObject
                         : transformParent.GetChild(itemIndex).gameObject;
@@ -70,6 +79,7 @@ namespace CryptoQuest.ShopSystem
                 })
                 .WithHideCallback(() =>
                 {
+                    _quantityConfigDialog.gameObject.SetActive(false);
                     _quantityConfigDialog.Hide();
                     _sellPanel.EnableInput();
                     foreach (var selectable in selectables) selectable.interactable = true;
