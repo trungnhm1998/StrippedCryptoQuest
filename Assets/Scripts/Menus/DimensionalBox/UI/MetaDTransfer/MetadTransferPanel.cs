@@ -15,10 +15,14 @@ namespace CryptoQuest.Menus.DimensionalBox.UI.MetaDTransfer
         [field: SerializeField] public UIMetadSourceButton DiamondButton { get; private set; }
         [field: SerializeField] public UIMetadSourceButton MetadButton { get; private set; }
         [field: SerializeField] public UIInputTransferAmount InputTransferUI { get; private set; }
+        [field: SerializeField] public ArrowIndicatorPresenter ArrowIndicatorPresenter { get; private set; }
+        [SerializeField] private float _maximumTransferable = 99999f;
 
         public CurrencySO SelectedCurrency { get; private set; }
-        public bool IsInputValid 
-            => InputTransferUI.InputedValue > 0 && InputTransferUI.InputedValue < _wallet[SelectedCurrency].Amount;
+
+        public float InputedValue => InputTransferUI.InputedValue;
+        public bool IsInputValid => InputedValue > 0 && InputedValue <= _maximumTransferable
+            && InputedValue <= _wallet[SelectedCurrency].Amount;
 
         private void OnEnable()
         {
