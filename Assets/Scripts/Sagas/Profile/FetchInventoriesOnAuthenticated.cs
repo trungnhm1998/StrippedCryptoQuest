@@ -13,6 +13,7 @@ namespace CryptoQuest.Sagas.Profile
             ActionDispatcher.Dispatch(new FetchProfileCharactersAction());
             ActionDispatcher.Dispatch(new FetchProfileBeastAction());
             ActionDispatcher.Dispatch(new FetchProfileMagicStonesAction());
+            ActionDispatcher.Dispatch(new FetchProfileConsumablesAction());
         }
     }
 
