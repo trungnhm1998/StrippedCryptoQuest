@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4585773205009505350}
+  - component: {fileID: 8733318865343356694}
   - component: {fileID: 6491027534715871057}
   - component: {fileID: 230471350056674584}
   m_Layer: 5
@@ -39,6 +40,22 @@ RectTransform:
   m_AnchoredPosition: {x: -290, y: 0}
   m_SizeDelta: {x: 370, y: 600}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &8733318865343356694
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1393317819588869914}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dbfe8c229796464f9d94f27aec16a84a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _inventory: {fileID: 11400000, guid: 8e54c04f1de81b14b9717fd394372769, type: 2}
+  _scrollRectContent: {fileID: 8017032560753755086}
+  _itemPrefab: {fileID: 5382705206267525817, guid: 1ab2e090f9abbbd45b67ee43b10ac0f1, type: 3}
+  _selectFirstChildComp: {fileID: 284175608067234322}
 --- !u!222 &6491027534715871057
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -629,7 +646,6 @@ GameObject:
   - component: {fileID: 8500922530084388852}
   - component: {fileID: 872716350405091406}
   - component: {fileID: 4858041881976226303}
-  - component: {fileID: 7265541306197834925}
   - component: {fileID: 2348206954239755589}
   m_Layer: 5
   m_Name: CharacterList
@@ -698,22 +714,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &7265541306197834925
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4735632575326593146}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dbfe8c229796464f9d94f27aec16a84a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _heroes: {fileID: 11400000, guid: 8e54c04f1de81b14b9717fd394372769, type: 2}
-  _scrollRectContent: {fileID: 8017032560753755086}
-  _itemPrefab: {fileID: 5382705206267525817, guid: 1ab2e090f9abbbd45b67ee43b10ac0f1, type: 3}
-  _selectFirstChildComp: {fileID: 284175608067234322}
 --- !u!114 &2348206954239755589
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -726,9 +726,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 793aad05dac943ecbc99e77e0866216d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _uiCharacterList: {fileID: 7265541306197834925}
+  _uiCharacterList: {fileID: 8733318865343356694}
   _characterDetails: {fileID: 7710021755210374081}
   _heroBehaviour: {fileID: 263576747195642063}
+  _inventory: {fileID: 11400000, guid: 8e54c04f1de81b14b9717fd394372769, type: 2}
 --- !u!1 &7216175418862924604
 GameObject:
   m_ObjectHideFlags: 0
@@ -1357,7 +1358,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5737887603870092717, guid: 2a952bc6c50f1eb40b57f1ff9cd50ef8, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 70
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5737887603870092717, guid: 2a952bc6c50f1eb40b57f1ff9cd50ef8, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -1445,7 +1446,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8174021642890914260, guid: 2a952bc6c50f1eb40b57f1ff9cd50ef8, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 158.23001
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8174021642890914260, guid: 2a952bc6c50f1eb40b57f1ff9cd50ef8, type: 3}
       propertyPath: m_AnchoredPosition.y
