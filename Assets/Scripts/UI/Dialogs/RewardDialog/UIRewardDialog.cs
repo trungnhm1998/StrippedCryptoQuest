@@ -87,7 +87,6 @@ namespace CryptoQuest.UI.Dialogs.RewardDialog
         private void DisplayItemsReward()
         {
             CleanUpRewardView();
-            // _rewardDialogData.RewardsInfos.ForEach(reward => reward.CreateUI(this));
 
             foreach (var loot in _rewardDialogData.Loots)
             {
@@ -95,8 +94,8 @@ namespace CryptoQuest.UI.Dialogs.RewardDialog
                 uiReward.SetLoot(loot);
             }
 
-            _topNone.SetActive(!(TopContainer.childCount > 0));
-            _bottomNone.SetActive(!(BottomContainer.childCount > 0));
+            _topNone.SetActive(TopContainer.childCount <= 0);
+            _bottomNone.SetActive(BottomContainer.childCount <= 0);
 
             _scroll.UpdateStep();
         }
