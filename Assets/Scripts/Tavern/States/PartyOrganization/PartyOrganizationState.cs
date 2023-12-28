@@ -6,6 +6,7 @@ using CryptoQuest.Tavern.UI;
 using IndiGames.Core.Events;
 using TinyMessenger;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace CryptoQuest.Tavern.States.PartyOrganization
 {
@@ -39,6 +40,7 @@ namespace CryptoQuest.Tavern.States.PartyOrganization
             _controller.MerchantInputManager.NavigateEvent += SwitchToOtherListRequested;
             _controller.MerchantInputManager.ExecuteEvent += SendItemsRequested;
             _controller.MerchantInputManager.ResetEvent += ResetTransferRequested;
+            _controller.MerchantInputManager.InteractEvent += ViewCharacterDetails;
         }
 
         protected override void OnExit()
@@ -48,7 +50,8 @@ namespace CryptoQuest.Tavern.States.PartyOrganization
             _controller.MerchantInputManager.CancelEvent -= CancelPartyOrganization;
             _controller.MerchantInputManager.NavigateEvent -= SwitchToOtherListRequested;
             _controller.MerchantInputManager.ExecuteEvent -= SendItemsRequested;
-            _controller.MerchantInputManager.ResetEvent -= ResetTransferRequested;            
+            _controller.MerchantInputManager.ResetEvent -= ResetTransferRequested;
+            _controller.MerchantInputManager.InteractEvent -= ViewCharacterDetails;
         }
 
         private void GetInPartyHeroes()
@@ -109,6 +112,13 @@ namespace CryptoQuest.Tavern.States.PartyOrganization
 
             _controller.UIParty.SetData(_cachedInPartyHeroes);
             _controller.UINonParty.SetData(_cachedNonPartyHeroes);
+        }
+
+        private void ViewCharacterDetails()
+        {
+            var currentItem = EventSystem.current.currentSelectedGameObject.GetComponent<UITavernItem>();
+            currentItem.OnInspectDetails();
+            _controller.SpecInitializer.Init(currentItem.Hero);
         }
     }
 }
