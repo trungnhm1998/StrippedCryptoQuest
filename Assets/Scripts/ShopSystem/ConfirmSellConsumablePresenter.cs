@@ -16,6 +16,7 @@ namespace CryptoQuest.ShopSystem
         [SerializeField] private LocalizedString _confirmString = new("ShopUI", "DIALOG_SELL_CONFIRM");
         [SerializeField] private SellPanel _sellPanel;
         [SerializeField] private UIInventoryItemList<UIConsumableShopItem> _sellingList;
+        [SerializeField] private TransactionResultPanel _resultPanel;
 
         private UIChoiceDialog _confirmDialog;
 
@@ -53,30 +54,7 @@ namespace CryptoQuest.ShopSystem
 
             _confirmDialog
                 .WithNoCallback(() => EventSystem.current.SetSelectedGameObject(item.gameObject))
-                .WithYesCallback(() =>
-                {
-                    var transformParent = item.transform.parent;
-                    var childCount = transformParent.childCount;
-                    var itemIndex = item.transform.GetSiblingIndex();
-
-                    var selectedQuantity = _quantityConfigDialog.CurrentQuantity;
-                    ActionDispatcher.Dispatch(new SellConsumableAction(item.Info.Data, selectedQuantity));
-                    item.Render(item.Info);
-                    if (item.Info.Quantity <= 0) _pool.Release(item);
-                    else
-                    {
-                        EventSystem.current.SetSelectedGameObject(item.gameObject);
-                        return;
-                    }
-
-                    if (transformParent.childCount == 0) return;
-                    
-                    var childToSelect = itemIndex == childCount - 1
-                        ? transformParent.GetChild(itemIndex - 1).gameObject
-                        : transformParent.GetChild(itemIndex).gameObject;
-
-                    EventSystem.current.SetSelectedGameObject(childToSelect);
-                })
+                .WithYesCallback(() => OnConfirmSell(item))
                 .WithHideCallback(() =>
                 {
                     _quantityConfigDialog.gameObject.SetActive(false);
@@ -89,6 +67,41 @@ namespace CryptoQuest.ShopSystem
 
             var button = item.GetComponent<Button>();
             button.image.overrideSprite = button.spriteState.pressedSprite;
+        }
+
+        private void OnConfirmSell(UIConsumableShopItem item)
+        {
+            var selectedQuantity = _quantityConfigDialog.CurrentQuantity;
+            ActionDispatcher.Dispatch(new SellConsumableAction(item.Info.Data, selectedQuantity));
+            item.Render(item.Info);
+            ShowSellSuccess(item);
+        }
+
+        private void ShowSellSuccess(UIConsumableShopItem item)
+        {
+            var transformParent = item.transform.parent;
+            var childCount = transformParent.childCount;
+            var itemIndex = item.transform.GetSiblingIndex();
+
+            _resultPanel
+                .AddHideCallback(() =>
+                {
+                    if (item.Info.Quantity <= 0) _pool.Release(item);
+                    else
+                    {
+                        EventSystem.current.SetSelectedGameObject(item.gameObject);
+                        return;
+                    }
+
+                    if (transformParent.childCount == 0) return;
+
+                    var childToSelect = itemIndex == childCount - 1
+                        ? transformParent.GetChild(itemIndex - 1).gameObject
+                        : transformParent.GetChild(itemIndex).gameObject;
+
+                    EventSystem.current.SetSelectedGameObject(childToSelect);
+                })
+                .ShowSuccess();
         }
     }
 }

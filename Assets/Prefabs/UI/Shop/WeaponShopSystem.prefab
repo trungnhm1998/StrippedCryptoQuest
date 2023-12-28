@@ -1,5 +1,195 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &597919601912613630
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1556944064657178987}
+  - component: {fileID: 6686555633280508662}
+  m_Layer: 0
+  m_Name: SellResultPanel
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1556944064657178987
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 597919601912613630}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 7.08, y: -26.92, z: -0.105784565}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 318788611909758262}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6686555633280508662
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 597919601912613630}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88d1a8c47962418c8bd91a1e044fdff1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _strSuccess:
+    m_TableReference:
+      m_TableCollectionName: GUID:797efb245e165b7468b295e62cb3c0b5
+    m_TableEntryReference:
+      m_KeyId: 1246785359872
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  _strFailed:
+    m_TableReference:
+      m_TableCollectionName: GUID:797efb245e165b7468b295e62cb3c0b5
+    m_TableEntryReference:
+      m_KeyId: 16301175743913984
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  _showing:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4844895877680651195}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  _hiding:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4844895877680651195}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+  references:
+    version: 2
+    RefIds: []
+--- !u!1 &2469247360575441502
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5381851250520908608}
+  - component: {fileID: 3725511713242163320}
+  m_Layer: 0
+  m_Name: BuyResultPanel
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5381851250520908608
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2469247360575441502}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 7.08, y: -26.92, z: -0.105784565}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 318788611909758262}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3725511713242163320
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2469247360575441502}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88d1a8c47962418c8bd91a1e044fdff1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _strSuccess:
+    m_TableReference:
+      m_TableCollectionName: GUID:797efb245e165b7468b295e62cb3c0b5
+    m_TableEntryReference:
+      m_KeyId: 1246785359872
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  _strFailed:
+    m_TableReference:
+      m_TableCollectionName: GUID:797efb245e165b7468b295e62cb3c0b5
+    m_TableEntryReference:
+      m_KeyId: 16301175743913984
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  _showing:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1512495357061991672}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  _hiding:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1512495357061991672}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+  references:
+    version: 2
+    RefIds: []
 --- !u!1 &4099720703106647029
 GameObject:
   m_ObjectHideFlags: 0
@@ -259,6 +449,8 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2347290195525006910}
+  - {fileID: 5381851250520908608}
+  - {fileID: 1556944064657178987}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &5810592097473879333
@@ -1712,6 +1904,11 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 1765568108973480838}
   m_SourcePrefab: {fileID: 100100000, guid: b4a8465f3fdf7e44badd9b95905100bd, type: 3}
+--- !u!1 &1512495357061991672 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3996728670799694206, guid: b4a8465f3fdf7e44badd9b95905100bd, type: 3}
+  m_PrefabInstance: {fileID: 2560944066757461382}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &3789870454772370866 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1662424293193910324, guid: b4a8465f3fdf7e44badd9b95905100bd, type: 3}
@@ -1741,6 +1938,7 @@ MonoBehaviour:
     m_WaitForCompletion: 0
     m_LocalVariables: []
   _buyPanel: {fileID: 8206041459475812473}
+  _resultPanel: {fileID: 3725511713242163320}
   references:
     version: 2
     RefIds: []
@@ -1949,6 +2147,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 7691181494770390962}
     - target: {fileID: 1542166630519531878, guid: 73148fdfb819d7147b6799d55ecf9694, type: 3}
+      propertyPath: _resultPanel
+      value: 
+      objectReference: {fileID: 6686555633280508662}
+    - target: {fileID: 1542166630519531878, guid: 73148fdfb819d7147b6799d55ecf9694, type: 3}
       propertyPath: _quantityConfigDialog
       value: 
       objectReference: {fileID: 5011768067499119524}
@@ -1956,6 +2158,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SellPanel
       objectReference: {fileID: 0}
+    - target: {fileID: 2902272361194957232, guid: 73148fdfb819d7147b6799d55ecf9694, type: 3}
+      propertyPath: _resultPanel
+      value: 
+      objectReference: {fileID: 6686555633280508662}
     - target: {fileID: 2902272361194957232, guid: 73148fdfb819d7147b6799d55ecf9694, type: 3}
       propertyPath: _equipmentPool
       value: 
@@ -2064,6 +2270,11 @@ PrefabInstance:
 --- !u!224 &3900701751253623124 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 9118810175718402191, guid: 73148fdfb819d7147b6799d55ecf9694, type: 3}
+  m_PrefabInstance: {fileID: 5237288454619843035}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &4844895877680651195 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 833747814326866528, guid: 73148fdfb819d7147b6799d55ecf9694, type: 3}
   m_PrefabInstance: {fileID: 5237288454619843035}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &7725015658286293408 stripped

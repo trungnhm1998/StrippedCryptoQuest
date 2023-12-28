@@ -1,6 +1,7 @@
 ﻿using System;
 using CryptoQuest.Input;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.Localization;
 using UnityEngine.Localization.Components;
 using UnityEngine.UI;

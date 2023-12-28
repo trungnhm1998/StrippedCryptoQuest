@@ -18,6 +18,7 @@ namespace CryptoQuest.ShopSystem.Buy.Consumable
         [SerializeField] private UIBuyConsumableList _uiBuyableList;
         [SerializeField] private LocalizedString _strConfirmBuy = new("ShopUI", "DIALOG_BUY_CONFIRM");
         [SerializeField] private BuyPanel _buyPanel;
+        [SerializeField] private TransactionResultPanel _resultPanel;
 
         private UIChoiceDialog _confirmDialog;
 
@@ -39,10 +40,11 @@ namespace CryptoQuest.ShopSystem.Buy.Consumable
 
         private void BuyConsumable(UIConsumableShopItem item)
         {
+            EventSystem.current.SetSelectedGameObject(null);
             _buyPanel.enabled = false;
             var selectables = _uiBuyableList.GetComponentsInChildren<Selectable>();
             foreach (var selectable in selectables) selectable.interactable = false;
-            
+
             _quantityConfigDialog.gameObject.SetActive(true);
             _quantityConfigDialog
                 .WithQuantityChangedCallback(quantity =>
@@ -54,24 +56,28 @@ namespace CryptoQuest.ShopSystem.Buy.Consumable
 
             _confirmDialog
                 .WithNoCallback(() => EventSystem.current.SetSelectedGameObject(item.gameObject))
-                .WithYesCallback(() =>
-                {
-                    var selectedQuantity = _quantityConfigDialog.CurrentQuantity;
-                    var consumableInfo = new ConsumableInfo(item.Info.Data, selectedQuantity);
-                    ActionDispatcher.Dispatch(new BuyConsumableAction(consumableInfo));
-                })
+                .WithYesCallback(() => OnConfirmBuy(item))
                 .WithHideCallback(() =>
                 {
                     _quantityConfigDialog.Hide();
                     _quantityConfigDialog.gameObject.SetActive(false);
                     foreach (var selectable in selectables) selectable.interactable = true;
-                    EventSystem.current.SetSelectedGameObject(item.gameObject);
                     _buyPanel.enabled = true;
                 })
                 .SetMessage(_strConfirmBuy)
                 .Show();
             var button = item.GetComponent<Button>();
             button.image.overrideSprite = button.spriteState.pressedSprite;
+        }
+
+        private void OnConfirmBuy(UIConsumableShopItem item)
+        {
+            var selectedQuantity = _quantityConfigDialog.CurrentQuantity;
+            var consumableInfo = new ConsumableInfo(item.Info.Data, selectedQuantity);
+            ActionDispatcher.Dispatch(new BuyConsumableAction(consumableInfo));
+            _resultPanel
+                .AddHideCallback(() => { EventSystem.current.SetSelectedGameObject(item.gameObject); })
+                .ShowSuccess();
         }
     }
 }

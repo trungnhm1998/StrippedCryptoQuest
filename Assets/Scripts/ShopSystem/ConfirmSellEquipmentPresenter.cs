@@ -16,6 +16,7 @@ namespace CryptoQuest.ShopSystem
         [SerializeField] private SellPanel _sellPanel;
         [SerializeField] private UIEquipmentList _uiWeaponList;
         [SerializeField] private UIEquipmentList _uiEquipmentList;
+        [SerializeField] private TransactionResultPanel _resultPanel;
 
         private UIChoiceDialog _confirmDialog;
 
@@ -45,22 +46,7 @@ namespace CryptoQuest.ShopSystem
             _confirmString["PRICE"] = new StringVariable { Value = item.PriceText };
             _confirmDialog
                 .WithNoCallback(() => { EventSystem.current.SetSelectedGameObject(item.gameObject); })
-                .WithYesCallback(() =>
-                {
-                    ActionDispatcher.Dispatch(new SellEquipmentAction(item.Info, item.Price));
-                    var transformParent = item.transform.parent;
-                    var childCount = transformParent.childCount;
-                    var itemIndex = item.transform.GetSiblingIndex();
-
-                    EventSystem.current.SetSelectedGameObject(null);
-                    _equipmentPool.Release(item);
-                    if (childCount == 1) return;
-                    var childToSelect = itemIndex == childCount - 1
-                        ? transformParent.GetChild(itemIndex - 1).gameObject
-                        : transformParent.GetChild(itemIndex).gameObject;
-
-                    EventSystem.current.SetSelectedGameObject(childToSelect);
-                })
+                .WithYesCallback(() => { OnConfirmSell(item); })
                 .WithHideCallback(() =>
                 {
                     _sellPanel.EnableInput();
@@ -70,6 +56,31 @@ namespace CryptoQuest.ShopSystem
                 .Show();
             var button = item.GetComponent<Button>();
             button.image.overrideSprite = button.spriteState.pressedSprite;
+        }
+
+        private void OnConfirmSell(UIEquipmentShopItem item)
+        {
+            ActionDispatcher.Dispatch(new SellEquipmentAction(item.Info, item.Price));
+            ShowSellSuccess(item);
+        }
+
+        private void ShowSellSuccess(UIEquipmentShopItem item)
+        {
+            _resultPanel.AddHideCallback(() =>
+                {
+                    var transformParent = item.transform.parent;
+                    var childCount = transformParent.childCount;
+                    var itemIndex = item.transform.GetSiblingIndex();
+                    EventSystem.current.SetSelectedGameObject(null);
+                    _equipmentPool.Release(item);
+                    if (childCount == 1) return;
+                    var childToSelect = itemIndex == childCount - 1
+                        ? transformParent.GetChild(itemIndex - 1).gameObject
+                        : transformParent.GetChild(itemIndex).gameObject;
+
+                    EventSystem.current.SetSelectedGameObject(childToSelect);
+                })
+                .ShowSuccess();
         }
     }
 }

@@ -15,6 +15,7 @@ namespace CryptoQuest.ShopSystem
         [SerializeField] private UIBuyEquipmentList _uiSellingList;
         [SerializeField] private LocalizedString _strConfirmBuy = new("ShopUI", "DIALOG_BUY_CONFIRM");
         [SerializeField] private BuyPanel _buyPanel;
+        [SerializeField] private TransactionResultPanel _resultPanel;
 
         private UIChoiceDialog _confirmDialog;
 
@@ -42,7 +43,7 @@ namespace CryptoQuest.ShopSystem
             _strConfirmBuy["PRICE"] = new StringVariable() { Value = item.PriceText };
             _confirmDialog
                 .WithNoCallback(() => EventSystem.current.SetSelectedGameObject(item.gameObject))
-                .WithYesCallback(() => { ActionDispatcher.Dispatch(new BuyEquipmentAction(item.Info)); })
+                .WithYesCallback(() => OnConfirmBuy(item))
                 .WithHideCallback(() =>
                 {
                     foreach (var selectable in selectables) selectable.interactable = true;
@@ -53,6 +54,18 @@ namespace CryptoQuest.ShopSystem
                 .Show();
             var button = item.GetComponent<Button>();
             button.image.overrideSprite = button.spriteState.pressedSprite;
+        }
+
+        private void OnConfirmBuy(UIEquipmentShopItem item)
+        {
+            ActionDispatcher.Dispatch(new BuyEquipmentAction(item.Info));
+
+            _resultPanel
+                .AddHideCallback(() =>
+                {
+                    EventSystem.current.SetSelectedGameObject(item.gameObject);
+                })
+                .ShowSuccess();
         }
     }
 }

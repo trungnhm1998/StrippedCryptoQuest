@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace CryptoQuest.UI.Dialogs
 {
@@ -8,6 +9,10 @@ namespace CryptoQuest.UI.Dialogs
         public GameObject Content => _content;
 
         public virtual void Show() => _content.SetActive(true);
-        public virtual void Hide() => _content.SetActive(false);
+        public virtual void Hide()
+        {
+            EventSystem.current.SetSelectedGameObject(null);
+            _content.SetActive(false);
+        }
     }
 }
