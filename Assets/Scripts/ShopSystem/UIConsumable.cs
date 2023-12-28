@@ -12,12 +12,32 @@ namespace CryptoQuest.ShopSystem
         [SerializeField] private LocalizeStringEvent _txtName;
         [SerializeField] private Text _txtQuantity;
         [SerializeField] private string _quantityFormant = "x{0}";
+        private ConsumableInfo _consumable;
 
         public void Init(ConsumableInfo consumable)
         {
+            UnRegisterEventIfNeeded();
+            _consumable = consumable;
             _imgIcon.LoadSpriteAndSet(consumable.Icon);
             _txtName.StringReference = consumable.DisplayName;
-            _txtQuantity.text = string.Format(_quantityFormant, consumable.Quantity);
+            consumable.QuantityChanged += UpdateQuantityText;
+            UpdateQuantityText(consumable);
+        }
+
+        private void UnRegisterEventIfNeeded()
+        {
+            if (_consumable != null)
+                _consumable.QuantityChanged -= UpdateQuantityText;
+        }
+
+        private void UpdateQuantityText(ConsumableInfo item)
+        {
+            _txtQuantity.text = string.Format(_quantityFormant, item.Quantity);
+        }
+
+        private void OnDisable()
+        {
+            UnRegisterEventIfNeeded();
         }
     }
 }
