@@ -7,7 +7,7 @@ namespace CryptoQuest.BlackSmith.UpgradeStone.States
 {
     public enum EUpgradeMagicStoneStates
     {
-        LoadStone = 0,
+        Entry = 0,
         SelectStone = 1,
         SelectMaterialStone = 2,
         ConfirmUpgrade = 3,
@@ -43,14 +43,14 @@ namespace CryptoQuest.BlackSmith.UpgradeStone.States
         {
             _context = context;
             UpgradeMagicStoneSystem = context.UpgradeMagicStoneSystem;
-            AddState(EUpgradeMagicStoneStates.LoadStone, new LoadStoneState(this));
+            AddState(EUpgradeMagicStoneStates.Entry, new EntryState(this));
             AddState(EUpgradeMagicStoneStates.SelectStone, new SelectStoneToUpgrade(this));
             AddState(EUpgradeMagicStoneStates.SelectMaterialStone, new SelectMaterialForUpgrade(this));
             AddState(EUpgradeMagicStoneStates.ConfirmUpgrade, new ConfirmUpgradeStone(this));
             AddState(EUpgradeMagicStoneStates.UpgradeSucceed, new UpgradeSucceedState(this));
             AddState(EUpgradeMagicStoneStates.UpgradeFailed, new UpgradeFailedState(this));
 
-            SetStartState(EUpgradeMagicStoneStates.LoadStone);
+            SetStartState(EUpgradeMagicStoneStates.Entry);
         }
 
         public override void OnEnter()

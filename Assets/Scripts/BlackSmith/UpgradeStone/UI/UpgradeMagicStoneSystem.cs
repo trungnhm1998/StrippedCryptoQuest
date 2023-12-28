@@ -8,8 +8,9 @@ namespace CryptoQuest.BlackSmith.UpgradeStone.UI
 {
     public class UpgradeMagicStoneSystem : MonoBehaviour
     {
-        public List<IMagicStone> StoneList { get; set; } = new();
-
+        public List<IMagicStone> StoneList => StoneInventory.MagicStones;
+      
+        [field: SerializeField] public MagicStoneInventory StoneInventory { get; private set; }
         [field: SerializeField] public CurrencyPresenter CurrencyPresenter { get; private set; }
         [field: SerializeField] public StoneUpgradePresenter StoneUpgradePresenter { get; private set; }
         [field: SerializeField] public UpgradableStonesPresenter UpgradableStonesPresenter { get; private set; }

@@ -21,13 +21,13 @@ namespace CryptoQuest.BlackSmith.UpgradeStone.States
         public override void OnSubmit()
         {
             base.OnSubmit();
-            fsm.RequestStateChange(EUpgradeMagicStoneStates.LoadStone);
+            fsm.RequestStateChange(EUpgradeMagicStoneStates.Entry);
         }
 
         public override void OnCancel()
         {
             base.OnCancel();
-            fsm.RequestStateChange(EUpgradeMagicStoneStates.LoadStone);
+            fsm.RequestStateChange(EUpgradeMagicStoneStates.Entry);
         }
     }
 }
