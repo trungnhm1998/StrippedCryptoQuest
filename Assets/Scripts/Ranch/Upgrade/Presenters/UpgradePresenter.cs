@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using CryptoQuest.Beast;
+using CryptoQuest.Beast.ScriptableObjects;
 using CryptoQuest.Ranch.Upgrade.UI;
 using UnityEngine;
 
@@ -9,29 +10,28 @@ namespace CryptoQuest.Ranch.Upgrade.Presenters
     {
         [field: SerializeField] public UIConfigBeastUpgradePresenter ConfigBeast { get; private set; }
         [field: SerializeField] public UIResultUpgradeBeastList ResultBeast { get; private set; }
+        [field: SerializeField] public UIBeastUpgradeDetail UiBeastUpgradeDetail { get; private set; }
+        [field: SerializeField] public UIBeastUpgradeList BeastList { get; private set; }
+        [field: SerializeField] public GameObject LeftPanel { get; private set; }
 
-        [SerializeField] private UIBeastUpgradeList _beastList;
-        [SerializeField] private UIBeastUpgradeDetail _uiBeastEvolveDetail;
-        [SerializeField] private GameObject _rightPanel;
-
-        public IBeast BeastToUpgrade { get; set; }
+        public IBeast BeastToUpgrade { get; private set; } = NullBeast.Instance;
 
         public bool Interactable
         {
-            get => _beastList.Interactable;
-            set => _beastList.Interactable = value;
+            get => BeastList.Interactable;
+            set => BeastList.Interactable = value;
         }
 
         private void OnEnable()
         {
-            _beastList.OnInspectingEvent += ShowBeastDetails;
-            _beastList.OnBeastSelected += OnBeastSelected;
+            BeastList.OnInspectingEvent += ShowBeastDetails;
+            BeastList.OnBeastSelected += OnBeastSelected;
         }
 
         private void OnDisable()
         {
-            _beastList.OnInspectingEvent -= ShowBeastDetails;
-            _beastList.OnBeastSelected -= OnBeastSelected;
+            BeastList.OnInspectingEvent -= ShowBeastDetails;
+            BeastList.OnBeastSelected -= OnBeastSelected;
         }
 
         private void OnBeastSelected(IBeast beast)
@@ -41,16 +41,17 @@ namespace CryptoQuest.Ranch.Upgrade.Presenters
 
         private void ShowBeastDetails(UIBeastUpgradeListDetail ui)
         {
-            _uiBeastEvolveDetail.SetupUI(ui.Beast);
+            UiBeastUpgradeDetail.SetupUI(ui.Beast);
         }
 
         public void InitBeast(List<Beast.Beast> beasts)
         {
-            if (beasts.Count == 0) return;
+            LeftPanel.SetActive(true);
+            if (beasts.Count <= 0) return;
 
-            _beastList.FillBeasts(beasts);
-            _rightPanel.SetActive(true);
+            BeastList.FillBeasts(beasts);
             Interactable = true;
+            UiBeastUpgradeDetail.gameObject.SetActive(true);
         }
     }
 }

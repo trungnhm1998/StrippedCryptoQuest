@@ -36,12 +36,15 @@ namespace CryptoQuest.Ranch.State.BeastUpgrade
 
         private void InitResult(ActionBase _)
         {
+
             var beast = _stateController.UpgradePresenter.BeastToUpgrade;
 
             var firstBeast = _stateController.BeastInventory.OwnedBeasts.Find(x => x.BeastId == beast.BeastId);
 
             _stateController.UpgradePresenter.InitBeast(_stateController.BeastInventory.OwnedBeasts);
             _stateController.UpgradePresenter.ResultBeast.Show(firstBeast);
+            _stateController.UpgradePresenter.LeftPanel.SetActive(false);
+            _stateController.UpgradePresenter.UiBeastUpgradeDetail.gameObject.SetActive(false);
         }
 
         private void BackToUpgradeState() => StateMachine.Play(UpgradeState);
