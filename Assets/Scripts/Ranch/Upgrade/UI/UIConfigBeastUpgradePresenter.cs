@@ -69,7 +69,6 @@ namespace CryptoQuest.Ranch.Upgrade.UI
             if (dir == 0) return;
 
             SetLevelToUpgrade(dir);
-            UpdateUIs();
         }
 
         private void SetLevelToUpgrade(int value = 0)
@@ -80,6 +79,7 @@ namespace CryptoQuest.Ranch.Upgrade.UI
 
             _costDataDict.TryGetValue(_selectedBeast.Level, out var data);
             GoldNeeded = data.GetCost(_selectedBeast.Level, LevelToUpgrade);
+            UpdateUIs();
         }
 
         private void UpdateUIs()
