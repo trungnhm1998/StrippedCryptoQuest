@@ -72,8 +72,9 @@ namespace CryptoQuest.Battle.UI.Logs
                 Debug.LogWarning("Try to append empty message");
                 return;
             }
-
+        #if UNITY_EDITOR
             Debug.Log($"LogPresenter::AppendLog {message.GetLocalizedString()}");
+        #endif
             _roundEventsPresenter.EnqueueCommand(new PresentLogCommand(this, message));
         }
 

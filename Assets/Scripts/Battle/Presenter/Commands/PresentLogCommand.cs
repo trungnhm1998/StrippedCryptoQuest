@@ -8,17 +8,19 @@ namespace CryptoQuest.Battle.Presenter.Commands
     public class PresentLogCommand : IPresentCommand
     {
         private readonly LogPresenter _presenter;
-        private string _loadedMessage;
+        private LocalizedString _localizedMessage;
 
         public PresentLogCommand(LogPresenter presenter, LocalizedString message)
         {
             _presenter = presenter;
-            message.GetLocalizedStringAsync().Completed += handle => _loadedMessage = handle.Result;
+            _localizedMessage = message;
         }
 
         public IEnumerator Present()
         {
-            _presenter.Append(_loadedMessage);
+            var handle = _localizedMessage.GetLocalizedStringAsync();
+            yield return handle;
+            _presenter.Append(handle.Result);
             yield return new WaitForSeconds(_presenter.DelayBetweenLines);
         }
     }
