@@ -9,8 +9,8 @@ namespace CryptoQuest.Menus.DimensionalBox.UI.MetaDTransfer
     public class UIMetadSourceButton : MonoBehaviour
     {
         public event Action<CurrencySO> SelectedCurrency;
+        public event Action<CurrencySO> Inpspected;
 
-        [SerializeField] private GameObject _arrow;
         [field: SerializeField] public UICurrency CurrencyUI { get; private set; }
         [field: SerializeField] public MultiInputButton Button { get; private set; }
         
@@ -25,26 +25,19 @@ namespace CryptoQuest.Menus.DimensionalBox.UI.MetaDTransfer
 
         private void OnEnable()
         {
-            Button.Selected += SetSelected;
-            Button.DeSelected += SetDeselected;
+            Button.Selected += OnSelected;
             Button.onClick.RemoveAllListeners();
             Button.onClick.AddListener(() => SelectedCurrency?.Invoke(CurrencyUI.Currency));
         }
 
         private void OnDisable()
         {
-            Button.Selected -= SetSelected;
-            Button.DeSelected -= SetDeselected;
+            Button.Selected -= OnSelected;
         }
 
-        public void SetSelected()
+        public void OnSelected()
         {
-            _arrow.SetActive(true);
-        }
-
-        public void SetDeselected()
-        {
-            _arrow.SetActive(false);
+            Inpspected?.Invoke(CurrencyUI.Currency);
         }
     }
 }

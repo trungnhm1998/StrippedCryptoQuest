@@ -25,7 +25,7 @@ namespace CryptoQuest.Menus.DimensionalBox.States.MetadTransfer
         {
             if (!_panel.IsInputValid) return;
 
-            _fsm.TransferAmount = _panel.InputTransferUI.InputedValue;
+            _fsm.TransferAmount = _panel.InputedValue;
             _fsm.RequestStateChange(EMetadState.ConfirmTransfer);
         }
     }
