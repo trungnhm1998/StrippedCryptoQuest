@@ -14,13 +14,13 @@ namespace CryptoQuest.Menus.Home.States
         public override void OnEnter()
         {
             _homePanel.Input.MenuCancelEvent += HandleCancel;
-            _homePanel.UICharacterList.gameObject.SetActive(true);
+            _homePanel.CharacterListPresenter.gameObject.SetActive(true);
         }
 
         public override void OnExit()
         {
             _homePanel.Input.MenuCancelEvent -= HandleCancel;
-            _homePanel.UICharacterList.gameObject.SetActive(false);
+            _homePanel.CharacterListPresenter.gameObject.SetActive(false);
         }
 
         private void HandleCancel()

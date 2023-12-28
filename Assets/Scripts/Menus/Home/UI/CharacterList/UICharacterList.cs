@@ -11,7 +11,7 @@ namespace CryptoQuest.Menus.Home.UI.CharacterList
     public class UICharacterList : MonoBehaviour
     {
         public event Action<HeroSpec> InspectingHero;
-        [SerializeField] private HeroInventorySO _heroes;
+        [SerializeField] private HeroInventorySO _inventory;
         [SerializeField] private Transform _scrollRectContent;
         [SerializeField] private UIListItem _itemPrefab;
         [SerializeField] private SelectFirstChildInList _selectFirstChildComp;
@@ -27,7 +27,7 @@ namespace CryptoQuest.Menus.Home.UI.CharacterList
         private void OnEnable()
         {
             ReleaseAllItemInPool();
-            foreach (var heroData in _heroes.OwnedHeroes)
+            foreach (var heroData in _inventory.OwnedHeroes)
             {
                 UIListItem item = _pool.Get();
                 item.SetInfo(heroData);
@@ -36,10 +36,6 @@ namespace CryptoQuest.Menus.Home.UI.CharacterList
             _selectFirstChildComp.Select();
         }
 
-        private void OnDisable()
-        {
-        }
-        
         private void OnInspectItem(HeroSpec spec) => InspectingHero?.Invoke(spec);
 
         #region Pool
