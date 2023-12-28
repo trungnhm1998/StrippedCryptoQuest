@@ -14,10 +14,12 @@ namespace CryptoQuest.BlackSmith.UpgradeStone.Sagas
     public class RequestUpgradeStoneSaga : SagaBase<RequestUpgradeStone>
     {
         private IRestClient _restClient;
+        private RequestUpgradeStone _requestContext;
         private const string UPGRADE_STONE_API = "crypto/magicstone/upgrade";
 
         protected override void HandleAction(RequestUpgradeStone ctx)
         {
+            _requestContext = ctx;
             ActionDispatcher.Dispatch(new ShowLoading());
             _restClient ??= ServiceProvider.GetService<IRestClient>();
 
@@ -35,6 +37,7 @@ namespace CryptoQuest.BlackSmith.UpgradeStone.Sagas
         {
             ActionDispatcher.Dispatch(new ShowLoading(false));
             ActionDispatcher.Dispatch(new UpgradeStoneResponsed(response));
+            ActionDispatcher.Dispatch(new RemoveAfterUpgradeStone(_requestContext.Stones));
         }
 
         private void OnUpgradeStoneFailed(Exception obj)

@@ -23,6 +23,15 @@ namespace CryptoQuest.BlackSmith.UpgradeStone.Sagas
             Response = response;
         }
     }
+    public class RemoveAfterUpgradeStone : ActionBase
+    {
+        public IMagicStone[] Stones;
+
+        public RemoveAfterUpgradeStone(IMagicStone[] stoneIds)
+        {
+            Stones = stoneIds;
+        }
+    }
 
     public class RequestUpgradeStoneFailed : ActionBase { }
 

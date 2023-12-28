@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using CryptoQuest.Inventory.Actions;
 using CryptoQuest.Item.MagicStone;
 using CryptoQuest.Sagas.MagicStone;
 using CryptoQuest.Sagas.Profile;
@@ -23,6 +24,7 @@ namespace CryptoQuest.BlackSmith.UpgradeStone.Sagas
                 if (data.inGameStatus != 2) continue;
                 var magicStone = _converter.Convert(data);
                 stones.Add(magicStone);
+                ActionDispatcher.Dispatch(new AddStoneAction(magicStone));
             }
 
             StartCoroutine(CoLoadResponseData(stones));
