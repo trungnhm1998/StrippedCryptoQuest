@@ -84,10 +84,13 @@ namespace CryptoQuest.Ranch.Upgrade.UI
         {
             _beastUpgradeDetail.SetupUI(LevelToUpgrade, GoldNeeded, IsUpgradeValid);
 
-            BeastData beast = CreateBeastFromSelectedBeast();
 
-            _calculatorBeastStatsSo.RaiseEvent(beast);
+            _uiBeastUpgradeDetail.ResetAttributesUI();
+            _calculatorBeastStatsSo.RaiseEvent(_selectedBeast);
+
+            BeastData beast = CreateBeastFromSelectedBeast();
             _uiBeastUpgradeDetail.PreviewBeastStats(true);
+            _calculatorBeastStatsSo.RaiseEvent(beast);
         }
 
         private BeastData CreateBeastFromSelectedBeast()
