@@ -1,6 +1,7 @@
 using System;
 using CryptoQuest.AbilitySystem.Abilities;
 using CryptoQuest.Battle.ScriptableObjects;
+using CryptoQuest.Gameplay;
 using CryptoQuest.Menu;
 using TMPro;
 using UnityEngine;
@@ -24,7 +25,11 @@ namespace CryptoQuest.Menus.Skill.UI
         private Color _normalColor;
 
         public CastSkillAbility Skill { get; private set; }
-        public bool Interactable { set => _skillButton.interactable = value; }
+
+        public bool Interactable
+        {
+            set => _skillButton.interactable = value;
+        }
 
         private void Awake()
         {
@@ -46,10 +51,10 @@ namespace CryptoQuest.Menus.Skill.UI
             Skill = skill;
             _skillName.StringReference = skill.SkillName;
             _cost.text = skill.SkillInfo.Cost.ToString();
-
-            SetDisable(!skill.SkillInfo.UsageScenarioSO.HasFlag(EAbilityUsageScenario.Field));
+            bool isAllowed = ScenarioProvider.IsCorrectScenario(skill.SkillInfo.UsageScenarioSO);
+            SetDisable(!isAllowed);
         }
-        
+
         private void OnSelected()
         {
             InspectingSkillEvent?.Invoke(this);

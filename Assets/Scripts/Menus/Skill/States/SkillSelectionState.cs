@@ -4,6 +4,7 @@ using CryptoQuest.AbilitySystem.Abilities;
 using CryptoQuest.Battle.Components;
 using CryptoQuest.Battle.ScriptableObjects;
 using CryptoQuest.Battle.UI.Logs;
+using CryptoQuest.Gameplay;
 using CryptoQuest.Input;
 using CryptoQuest.Menus.Skill.UI;
 using IndiGames.Core.Events;
@@ -55,9 +56,10 @@ namespace CryptoQuest.Menus.Skill.States
         private void OnCastSkill()
         {
             var castSkillAbility = _skillListPanel.InspectingSkillUI.Skill;
-            if (!castSkillAbility.SkillInfo.UsageScenarioSO.HasFlag(EAbilityUsageScenario.Field))
+            bool isAllowed = ScenarioProvider.IsCorrectScenario(castSkillAbility.SkillInfo.UsageScenarioSO);
+            if (!isAllowed)
                 return;
-                
+
             _skillPanel.Input.MenuConfirmedEvent -= OnCastSkill;
 
             _skillPanel.EnableHeroSelectedMode();
