@@ -8,6 +8,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Localization;
 using UnityEngine.Localization.Components;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 using UIAttribute = CryptoQuest.UI.Character.UIAttribute;
 
@@ -25,7 +26,8 @@ namespace CryptoQuest.Ranch.Tooltip
         [SerializeField] private Image _illustration;
         [SerializeField] private Image _element;
         [SerializeField] private TextMeshProUGUI _level;
-        [SerializeField] private TextMeshProUGUI _passiveSkill;
+        [SerializeField] private TextMeshProUGUI _passiveDescription;
+        [SerializeField] private TextMeshProUGUI _passiveValue;
         [SerializeField] private LocalizeStringEvent _nameLocalize;
         [SerializeField] private LocalizeStringEvent _passiveSkillLocalize;
         [SerializeField] private UIStars _uiStars;
@@ -64,9 +66,17 @@ namespace CryptoQuest.Ranch.Tooltip
 
         private void SetupSkills()
         {
-            _passiveSkill.text = "";
-            _passiveSkillLocalize.StringReference =
-                _beast.Passive != null ? _beast.Passive.Description : new LocalizedString();
+            _passiveDescription.text = "";
+            if (_beast.Passive != null)
+            {
+                _passiveSkillLocalize.StringReference = _beast.Passive.Description;
+                _passiveValue.text = $"{_beast.Passive.Context.SkillInfo.SkillParameters.BasePower}%";
+            }
+            else
+            {
+                _passiveSkillLocalize.StringReference = new LocalizedString();
+                _passiveValue.text = "";
+            }
             _passiveSkillLocalize.RefreshString();
         }
 
