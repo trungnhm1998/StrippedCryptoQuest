@@ -25,6 +25,7 @@ namespace CryptoQuest.Menus.Beast.UI
         [SerializeField] private LocalizeStringEvent _localizedBeastName;
         [SerializeField] private TMP_Text _txtLevel;
         [SerializeField] private TMP_Text _txtPassiveSkill;
+        [SerializeField] private TMP_Text _txtPassiveSkillPercent;
         [SerializeField] private TMP_Text _txtBeastName;
         [SerializeField] private Image _beastImage;
         [SerializeField] private Image _beastElement;
@@ -40,6 +41,7 @@ namespace CryptoQuest.Menus.Beast.UI
         [SerializeField] private BeastAttributeSystemSO _beastAttributeSystemSo;
 
         private string _lvlFormat = string.Empty;
+        private string _passiveFormat = string.Empty;
 
         private void OnEnable()
         {
@@ -55,6 +57,7 @@ namespace CryptoQuest.Menus.Beast.UI
 
         public void FillUI(IBeast beast)
         {
+            SetPassiveSkillPercent(0);
             SetBeastName(beast.LocalizedName);
             SetPassiveSkill(beast.Passive);
             SetElement(beast.Elemental);
@@ -94,10 +97,24 @@ namespace CryptoQuest.Menus.Beast.UI
         private void SetPassiveSkill(PassiveAbility beastPassive)
         {
             _txtPassiveSkill.text = string.Empty;
+            _txtPassiveSkillPercent.text = string.Empty;
+
             if (beastPassive == null) return;
+
+            SetPassiveSkillPercent(beastPassive.Context.SkillInfo.SkillParameters.BasePower);
 
             _localizedPassiveSkill.StringReference = beastPassive.Description ?? new LocalizedString();
             _localizedPassiveSkill.RefreshString();
+        }
+
+        private void SetPassiveSkillPercent(float value)
+        {
+            if (_passiveFormat == string.Empty)
+            {
+                _passiveFormat = _txtPassiveSkillPercent.text;
+            }
+
+            _txtPassiveSkillPercent.text = string.Format(_passiveFormat, value);
         }
 
         private void SetLevel(int value)
