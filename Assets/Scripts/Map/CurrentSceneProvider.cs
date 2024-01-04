@@ -8,20 +8,10 @@ using UnityEngine.AddressableAssets;
 
 namespace CryptoQuest.Map
 {
-    public interface ICurrentSceneProvider
+    public class CurrentSceneProvider : MonoBehaviour
     {
-        SceneScriptableObject CurrentScene { get; }
-    }
-
-    public class CurrentSceneProvider : MonoBehaviour, ICurrentSceneProvider
-    {
-        public SceneScriptableObject CurrentScene { get; private set; }
         [SerializeField] private LoadSceneEventChannelSO _loadSceneEvent;
-
-        private void Awake()
-        {
-            ServiceProvider.Provide<ICurrentSceneProvider>(this);
-        }
+        [SerializeField] private SceneManagerSO _sceneManagerSO;
 
         private void OnEnable()
         {
@@ -35,7 +25,7 @@ namespace CryptoQuest.Map
 
         private void OnLoadScene(SceneScriptableObject scene)
         {
-            CurrentScene = scene;
+            _sceneManagerSO.CurrentScene = scene;
         }
     }
 }

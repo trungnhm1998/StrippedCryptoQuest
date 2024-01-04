@@ -27,8 +27,8 @@ namespace CryptoQuest.Gameplay.Manager
         [SerializeField] private SpiralConfigSO _spiralConfig;
         [SerializeField] private EscapeRouteMappingSO _escapeRouteMapping;
         [SerializeField] private VoidEventChannelSO _closeMainMenuEventChannel;
+        [SerializeField] private SceneManagerSO _sceneManagerSO;
         private TinyMessageSubscriptionToken _token;
-        private ICurrentSceneProvider _currentSceneProvider;
 
         private void OnEnable()
         {
@@ -42,8 +42,7 @@ namespace CryptoQuest.Gameplay.Manager
 
         private void HandleEscape(EscapeAction escapeAction)
         {
-            _currentSceneProvider = ServiceProvider.GetService<ICurrentSceneProvider>();
-            SceneScriptableObject currentScene = _currentSceneProvider.CurrentScene;
+            SceneScriptableObject currentScene = _sceneManagerSO.CurrentScene;
 
             if (_escapeRouteMapping.MapToEscapePathDictionary.TryGetValue(currentScene, out MapPathSO escapePath))
             {
