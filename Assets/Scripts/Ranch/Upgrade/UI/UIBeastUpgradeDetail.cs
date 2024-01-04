@@ -2,6 +2,7 @@
 using CryptoQuest.AbilitySystem.Attributes;
 using CryptoQuest.Beast;
 using CryptoQuest.Beast.Avatar;
+using UIAttribute = CryptoQuest.UI.Character.UIAttribute;
 using CryptoQuest.UI.Tooltips;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.Components;
 using TMPro;
@@ -21,9 +22,15 @@ namespace CryptoQuest.Ranch.Upgrade.UI
         [SerializeField] private TMP_Text _level;
         [SerializeField] private TMP_Text _passiveSkill;
         [SerializeField] private UIStars _startsUi;
+        [SerializeField] private UIAttribute[] _attributeUIs;
 
         [SerializeField] private PreviewAttributeChangeEvent _previewAttributeChangeEvent;
         private IBeastAvatarProvider _beastAvatarProvider;
+
+        private void OnValidate()
+        {
+            _attributeUIs = GetComponentsInChildren<UIAttribute>();
+        }
 
         public void SetupUI(IBeast beast)
         {
@@ -35,6 +42,7 @@ namespace CryptoQuest.Ranch.Upgrade.UI
             SetBeastStar(beast.Stars);
             StartCoroutine(_beastAvatarProvider.LoadAvatarAsync(_illustration, beast));
             PreviewBeastStats();
+            ResetAttributesUI();
         }
 
         #region Setup
@@ -71,6 +79,15 @@ namespace CryptoQuest.Ranch.Upgrade.UI
         {
             _previewAttributeChangeEvent.enabled = isPreview;
         }
+
+        public void ResetAttributesUI()
+        {
+            foreach (var attributeUI in _attributeUIs)
+            {
+                attributeUI.ResetAttributeUI();
+            }
+        }
+
 
         #endregion
     }

@@ -42,12 +42,11 @@ namespace CryptoQuest.Ranch.Evolve
                 _attributeSystemBehaviour.SetAttributeValue(attributeDef.Attribute, attributeValue);
             }
 
-            StartCoroutine(CalculatorNewAttributeValue());
+            CalculatorNewAttributeValue();
         }
 
-        private IEnumerator CalculatorNewAttributeValue()
+        private void CalculatorNewAttributeValue()
         {
-            yield return null;
             for (int i = 0; i < _attributeSystemBehaviour.AttributeValues.Count; i++)
             {
                 var attributeValue = _attributeSystemBehaviour.AttributeValues[i];

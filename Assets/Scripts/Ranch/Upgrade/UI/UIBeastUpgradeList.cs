@@ -85,7 +85,11 @@ namespace CryptoQuest.Ranch.Upgrade.UI
             return uiBeast;
         }
 
-        private void OnGet(UIBeastUpgradeListDetail uiItem) => uiItem.gameObject.SetActive(true);
+        private void OnGet(UIBeastUpgradeListDetail uiItem)
+        {
+            uiItem.transform.SetAsFirstSibling();
+            uiItem.gameObject.SetActive(true);
+        }
 
         private void OnRelease(UIBeastUpgradeListDetail item)
         {
