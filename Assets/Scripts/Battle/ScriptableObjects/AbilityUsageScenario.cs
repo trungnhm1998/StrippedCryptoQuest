@@ -7,5 +7,6 @@ namespace CryptoQuest.Battle.ScriptableObjects
     {
         Field = 1, // 000001
         Battle = 2, // 000010
+        World = 4, 
     }
 }
