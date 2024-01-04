@@ -44,12 +44,6 @@ namespace CryptoQuest.Ranch.Upgrade.UI
                 uiBeast.OnSubmit += OnItemSelected;
             }
 
-            if (_hasFocus)
-            {
-                _hasFocus = false;
-                return;
-            }
-
             _hasFocus = TryFocus();
         }
 
