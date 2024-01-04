@@ -49,6 +49,7 @@ namespace CryptoQuest.Menus.Beast.UI
         {
             _beast = beast;
             _beastName.StringReference = beast.LocalizedName;
+            _beastIcon.sprite = beast.Elemental.Icon;
             _showBeastDetailsTrigger.Initialize(this);
         }
 
