@@ -7,6 +7,7 @@ using CryptoQuest.Battle.UI.Logs;
 using CryptoQuest.Gameplay;
 using CryptoQuest.Input;
 using CryptoQuest.Menus.Skill.UI;
+using IndiGames.Core.Common;
 using IndiGames.Core.Events;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
 using UnityEngine.EventSystems;
@@ -17,6 +18,7 @@ namespace CryptoQuest.Menus.Skill.States
     {
         private readonly UISkillList _skillListPanel;
         private readonly InputMediatorSO _input;
+        private IScenarioChecker _scenarioChecker;
 
         public SkillSelectionState(UISkillMenu skillPanel) : base(skillPanel)
         {
@@ -33,7 +35,7 @@ namespace CryptoQuest.Menus.Skill.States
             _skillPanel.SelectingHero.EnableSelectBackground();
 
             _skillPanel.Input.MenuConfirmedEvent += OnCastSkill;
-
+            _scenarioChecker = ServiceProvider.GetService<IScenarioChecker>();
             _input.MenuCancelEvent += HandleCancel;
 
             ShowSkillList();
@@ -56,7 +58,7 @@ namespace CryptoQuest.Menus.Skill.States
         private void OnCastSkill()
         {
             var castSkillAbility = _skillListPanel.InspectingSkillUI.Skill;
-            bool isAllowed = ScenarioProvider.IsCorrectScenario(castSkillAbility.SkillInfo.UsageScenarioSO);
+            bool isAllowed = _scenarioChecker.IsCorrectScenario(castSkillAbility.SkillInfo.UsageScenarioSO);
             if (!isAllowed)
                 return;
 

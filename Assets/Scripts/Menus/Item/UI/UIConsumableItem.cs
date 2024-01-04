@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using CryptoQuest.Battle.ScriptableObjects;
 using CryptoQuest.Gameplay;
 using CryptoQuest.Item.Consumable;
@@ -29,7 +30,7 @@ namespace CryptoQuest.Menus.Item.UI
         private ConsumableInfo _consumable;
         public ConsumableInfo Consumable => _consumable;
         private bool _canClick;
-        private ICurrentSceneProvider _currentSceneProvider;
+        private IScenarioChecker _scenarioChecker;
 
         public bool Interactable
         {
@@ -42,7 +43,7 @@ namespace CryptoQuest.Menus.Item.UI
             _button.Selected += OnInspectingItem;
             _button.DeSelected += OnDeselectItem;
             _button.onClick.AddListener(OnUse);
-            _currentSceneProvider = ServiceProvider.GetService<ICurrentSceneProvider>();
+            _scenarioChecker = ServiceProvider.GetService<IScenarioChecker>();
         }
 
         private void OnDisable()
@@ -125,7 +126,7 @@ namespace CryptoQuest.Menus.Item.UI
 
         private bool IsCorrectScenario(EAbilityUsageScenario scenario)
         {
-            return ScenarioProvider.IsCorrectScenario(scenario);
+            return _scenarioChecker.IsCorrectScenario(scenario);
         }
     }
 }

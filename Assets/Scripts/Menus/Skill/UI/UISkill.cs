@@ -3,6 +3,7 @@ using CryptoQuest.AbilitySystem.Abilities;
 using CryptoQuest.Battle.ScriptableObjects;
 using CryptoQuest.Gameplay;
 using CryptoQuest.Menu;
+using IndiGames.Core.Common;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -23,7 +24,7 @@ namespace CryptoQuest.Menus.Skill.UI
         [SerializeField] private Color _disableColor;
 
         private Color _normalColor;
-
+        private IScenarioChecker _scenarioChecker;
         public CastSkillAbility Skill { get; private set; }
 
         public bool Interactable
@@ -39,6 +40,7 @@ namespace CryptoQuest.Menus.Skill.UI
         private void OnEnable()
         {
             _skillButton.Selected += OnSelected;
+            _scenarioChecker = ServiceProvider.GetService<IScenarioChecker>();
         }
 
         private void OnDisable()
@@ -51,7 +53,7 @@ namespace CryptoQuest.Menus.Skill.UI
             Skill = skill;
             _skillName.StringReference = skill.SkillName;
             _cost.text = skill.SkillInfo.Cost.ToString();
-            bool isAllowed = ScenarioProvider.IsCorrectScenario(skill.SkillInfo.UsageScenarioSO);
+            bool isAllowed = _scenarioChecker.IsCorrectScenario(skill.SkillInfo.UsageScenarioSO);
             SetDisable(!isAllowed);
         }
 
