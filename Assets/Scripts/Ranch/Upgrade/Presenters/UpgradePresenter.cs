@@ -12,6 +12,7 @@ namespace CryptoQuest.Ranch.Upgrade.Presenters
 
         [SerializeField] private UIBeastUpgradeList _beastList;
         [SerializeField] private UIBeastUpgradeDetail _uiBeastEvolveDetail;
+        [SerializeField] private GameObject _rightPanel;
 
         public IBeast BeastToUpgrade { get; set; }
 
@@ -45,7 +46,10 @@ namespace CryptoQuest.Ranch.Upgrade.Presenters
 
         public void InitBeast(List<Beast.Beast> beasts)
         {
+            if (beasts.Count == 0) return;
+
             _beastList.FillBeasts(beasts);
+            _rightPanel.SetActive(true);
             Interactable = true;
         }
     }

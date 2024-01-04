@@ -58,6 +58,8 @@ namespace CryptoQuest.Ranch.Upgrade.UI
 
         public void DeInitUI()
         {
+            _uiBeastUpgradeDetail.ResetAttributesUI();
+            _calculatorBeastStatsSo.RaiseEvent(_selectedBeast);
             _beastUpgradeDetail.gameObject.SetActive(false);
         }
 
