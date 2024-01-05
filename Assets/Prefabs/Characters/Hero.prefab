@@ -82,6 +82,53 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _npcTag: NPC
   _playerSpriteRenderer: {fileID: 9091054247554435654}
+--- !u!1 &2026106014246824807
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3296698655947648042}
+  - component: {fileID: 8491384612111644904}
+  m_Layer: 9
+  m_Name: ChangeClass
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3296698655947648042
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2026106014246824807}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 249936104857289378}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8491384612111644904
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2026106014246824807}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fcd9e5b3b0f345a69474a3798fe9c4da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _defaultHeroClassParameter: {fileID: 11400000, guid: 4140056eb71d3264f8c326e5b83a2e32, type: 2}
+  _newHeroClassParameter: {fileID: 11400000, guid: a252f7dab7f5f314f84c2a24c1d86550, type: 2}
+  _changeClassEvent: {fileID: 11400000, guid: 6e658fa9c31d73542a727f637f799f5d, type: 2}
 --- !u!1 &2761408973493837256
 GameObject:
   m_ObjectHideFlags: 0
@@ -215,6 +262,7 @@ Transform:
   - {fileID: 6904191103586278880}
   - {fileID: 239026804991316891}
   - {fileID: 4890938042739826114}
+  - {fileID: 3296698655947648042}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &9091054247554435654
