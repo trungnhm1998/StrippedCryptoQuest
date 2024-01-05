@@ -79,7 +79,6 @@ namespace CryptoQuest.Ranch.Sagas
         {
             Debug.Log($"EvolveBeast:: Load Data Failed: {exception.Message}!");
             ActionDispatcher.Dispatch(new ShowLoading(false));
-            ActionDispatcher.Dispatch(new ServerErrorPopup());
             ActionDispatcher.Dispatch(new EvolveRequestFailed());
         }
     }

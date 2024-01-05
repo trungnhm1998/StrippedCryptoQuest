@@ -43,7 +43,6 @@ namespace CryptoQuest.Menus.DimensionalBox.Sagas
         private void OnError(Exception response)
         {
             ActionDispatcher.Dispatch(new ShowLoading(false));
-            ActionDispatcher.Dispatch(new ServerErrorPopup());
             ActionDispatcher.Dispatch(new GetTokenFailed());
         }
     }

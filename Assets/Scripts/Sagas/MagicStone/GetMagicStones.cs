@@ -67,7 +67,6 @@ namespace CryptoQuest.Sagas.MagicStone
         {
             Debug.Log($"<color=white>Saga::GetMagicStones::Error</color>:: {error}");
             ActionDispatcher.Dispatch(new ShowLoading(false));
-            ActionDispatcher.Dispatch(new ServerErrorPopup());
             ActionDispatcher.Dispatch(new GetStonesFailed());
         }
     }

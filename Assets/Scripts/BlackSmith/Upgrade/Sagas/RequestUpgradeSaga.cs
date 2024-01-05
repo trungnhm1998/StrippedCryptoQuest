@@ -74,7 +74,6 @@ namespace CryptoQuest.BlackSmith.Upgrade.Sagas
         private void DispatchUpgradeFailed(Exception obj)
         {
             ActionDispatcher.Dispatch(new ShowLoading(false));
-            ActionDispatcher.Dispatch(new ServerErrorPopup());
             ActionDispatcher.Dispatch(new UpgradeFailed());
         }
 

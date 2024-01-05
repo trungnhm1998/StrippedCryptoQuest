@@ -51,7 +51,6 @@ namespace CryptoQuest.Menus.DimensionalBox.States.MetadTransfer
     
         private void ShowErrorDialogAndBackToSelectSource(TransferringMetadFailed _)
         {
-            ActionDispatcher.Dispatch(new ServerErrorPopup());
             BackToSelectSource();
         }
     }

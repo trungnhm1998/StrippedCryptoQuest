@@ -40,7 +40,6 @@ namespace CryptoQuest.BlackSmith.UpgradeStone.Sagas
         private void OnUpgradeStoneFailed(Exception obj)
         {
             ActionDispatcher.Dispatch(new ShowLoading(false));
-            ActionDispatcher.Dispatch(new ServerErrorPopup());
             ActionDispatcher.Dispatch(new RequestUpgradeStoneFailed());
         }
 
