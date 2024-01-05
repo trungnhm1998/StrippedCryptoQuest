@@ -18,7 +18,6 @@ namespace CryptoQuest.Battle.PostBattleHandlers
     // Can refactor this to a separate component so other handler can Unload battle
     public abstract class PostBattleManager : MonoBehaviour
     {
-        [SerializeField] private InputMediatorSO _inputMediator;
         [SerializeField] private FadeConfigSO _fadeController;
         [SerializeField] private SceneScriptableObject _battleSceneSO;
         [SerializeField] private GameStateSO _gameState;
@@ -39,7 +38,6 @@ namespace CryptoQuest.Battle.PostBattleHandlers
             OnFadeOut();
             // TODO: After battle there could be a cutscene, so we should enable correct input
             _gameState.UpdateGameState(EGameState.Field);
-            _inputMediator.EnableMapGameplayInput();
         }
 
         protected virtual void OnFadeOut() { }
