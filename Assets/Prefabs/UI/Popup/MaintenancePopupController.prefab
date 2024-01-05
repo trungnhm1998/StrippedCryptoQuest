@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 2672996068429670175}
   - component: {fileID: 3961037545743311139}
   - component: {fileID: 5601405199961650976}
-  - component: {fileID: 96654167881399143}
   - component: {fileID: 2784729119723123992}
+  - component: {fileID: 5909740807682451191}
   m_Layer: 5
   m_Name: MaintenancePopupController
   m_TagString: Untagged
@@ -90,31 +90,6 @@ MonoBehaviour:
   references:
     version: 2
     RefIds: []
---- !u!114 &96654167881399143
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3113176336876976255}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: db6ba4c046fb4b8f94c0354eaf8ba18c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _maintenanceMessage:
-    m_TableReference:
-      m_TableCollectionName: GUID:bc1a965977c0f0542bb7d6ce9b2eafc2
-    m_TableEntryReference:
-      m_KeyId: 8726520931119104
-      m_Key: 
-    m_FallbackState: 0
-    m_WaitForCompletion: 0
-    m_LocalVariables: []
-  _localizedMaintenancePopupEventSO: {fileID: 11400000, guid: ef290610205a16541901d191af69e171, type: 2}
-  references:
-    version: 2
-    RefIds: []
 --- !u!114 &2784729119723123992
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -140,6 +115,18 @@ MonoBehaviour:
   references:
     version: 2
     RefIds: []
+--- !u!114 &5909740807682451191
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3113176336876976255}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14cf5fcac022440e84535c18d3eb5aa4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5207506354665276701
 GameObject:
   m_ObjectHideFlags: 0

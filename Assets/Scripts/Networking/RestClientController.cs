@@ -4,10 +4,10 @@ using CryptoQuest.API;
 using CryptoQuest.Environment;
 using IndiGames.Core.Common;
 using IndiGames.Core.Events;
-using Newtonsoft.Json;
 using Proyecto26;
 using UniRx;
 using UnityEngine;
+using static Newtonsoft.Json.JsonConvert;
 using PluginRestClient = Proyecto26.RestClient;
 
 namespace CryptoQuest.Networking
@@ -15,15 +15,8 @@ namespace CryptoQuest.Networking
     public interface IRestClient
     {
         public IObservable<TResponse> Post<TResponse>(string path);
-
         public IObservable<TResponse> Get<TResponse>(string path);
-
-        public IObservable<string> Get(string path);
-
         public IObservable<TResponse> Put<TResponse>(string path);
-
-        public IObservable<string> Put(string path);
-
         public IRestClient WithParam(string key, string value);
         public IRestClient WithParams(Dictionary<string, string> parameters);
         public IRestClient WithBody(object body);
@@ -32,11 +25,11 @@ namespace CryptoQuest.Networking
 
     public class ResponseWithError : ActionBase
     {
-        public Exception Exception { get; }
+        public RequestException RequestException { get; }
 
-        public ResponseWithError(Exception exception)
+        public ResponseWithError(RequestException requestException)
         {
-            Exception = exception;
+            RequestException = requestException;
         }
     }
 
@@ -50,10 +43,7 @@ namespace CryptoQuest.Networking
         [SerializeField] private Credentials _credentials;
         [SerializeField] private EnvironmentSO _environment;
 
-        private void Awake()
-        {
-            ServiceProvider.Provide<IRestClient>(this);
-        }
+        private void Awake() => ServiceProvider.Provide<IRestClient>(this);
 
         public IObservable<TResponse> Post<TResponse>(string path)
         {
@@ -98,28 +88,6 @@ namespace CryptoQuest.Networking
             });
         }
 
-        public IObservable<string> Get(string path)
-        {
-            return Observable.Create<string>(observer =>
-            {
-                try
-                {
-                    var generateRequest = GenerateRequest(path);
-                    generateRequest.Method = "GET";
-                    PluginRestClient.Get(generateRequest)
-                        .Then(helper => observer.OnNext(helper.Text))
-                        .Catch(e => ErrorWrapper(e, observer))
-                        .Finally(observer.OnCompleted);
-                }
-                catch (Exception e)
-                {
-                    ErrorWrapper(e, observer);
-                }
-
-                return Disposable.Empty;
-            });
-        }
-
         public IObservable<TResponse> Put<TResponse>(string path)
         {
             return Observable.Create<TResponse>(observer =>
@@ -141,30 +109,18 @@ namespace CryptoQuest.Networking
             });
         }
 
-        public IObservable<string> Put(string path)
-        {
-            return Observable.Create<string>(observer =>
-            {
-                try
-                {
-                    var generateRequest = GenerateRequest(path);
-                    PluginRestClient.Put(generateRequest)
-                        .Then(helper => observer.OnNext(helper.Text))
-                        .Catch(e => ErrorWrapper(e, observer))
-                        .Finally(observer.OnCompleted);
-                }
-                catch (Exception e)
-                {
-                    ErrorWrapper(e, observer);
-                }
-
-                return Disposable.Empty;
-            });
-        }
 
         private void ErrorWrapper<TResponse>(Exception exception, IObserver<TResponse> observer)
         {
-            ActionDispatcher.Dispatch(new ResponseWithError(exception));
+            RequestException requestException = exception as RequestException;
+
+            if (exception is AggregateException aggregateException)
+            {
+                requestException = aggregateException.InnerException as RequestException;
+            }
+
+            ActionDispatcher.Dispatch(new ResponseWithError(requestException));
+
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
             Debug.LogWarning(exception);
 #endif
@@ -219,7 +175,7 @@ namespace CryptoQuest.Networking
             string bodyString = null;
             if (_body != null)
             {
-                bodyString = JsonConvert.SerializeObject(_body);
+                bodyString = SerializeObject(_body);
             }
 
             var request = new RequestHelper
