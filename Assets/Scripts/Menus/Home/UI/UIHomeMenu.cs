@@ -12,19 +12,12 @@ namespace CryptoQuest.Menus.Home.UI
 {
     public class UIHomeMenu : UIMenuPanelBase
     {
-        [field: Header("Events")]
-        [field: SerializeField] public HeroInventoryFilledEvent InventoryFilled { get; private set; }
-
         [Header("State Context")]
         [SerializeField] private UIHomeMenuSortCharacter _sortMode;
         [field: SerializeField] public InputMediatorSO Input { get; private set; }
         [field: SerializeField] public UIOverview UIOverview { get; private set; }
         [field: SerializeField] public PartySO PartySO { get; private set; }
-
-        [field: Header("Character List")]
         [field: SerializeField] public UICharacterList UICharacterList { get; private set; }
-        [field: SerializeField] public UICharacterDetails UICharacterDetails { get; private set; }
-        [field: SerializeField] public HeroSpecInitializer HeroSpecInitializer { get; private set; }
 
         public UIHomeMenuSortCharacter SortMode => _sortMode;
 
