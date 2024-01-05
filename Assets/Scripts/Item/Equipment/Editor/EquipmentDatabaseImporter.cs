@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using System.Linq;
+using CryptoQuest.AbilitySystem.Abilities;
+using CryptoQuest.Gameplay;
+using CryptoQuest.Gameplay.Helper;
 using CryptoQuest.Item;
 using CryptoQuest.Item.Equipment;
 using CsvHelper;
@@ -107,6 +111,21 @@ namespace CryptoQuestEditor.Item
                     var categoryName = equipmentType.EquipmentCategory.ToString();
                     var categoryPath = $"{_exportPath}/{categoryName}";
                     var equipmentPath = $"{categoryPath}/{equipmentData.ID}.asset";
+
+                    var stats = new List<AttributeWithValue>();
+                    foreach (var attributeMap in _attributeMap)
+                    {
+                        var stat = ConvertAttribute(attributeMap, csv, equipmentData);
+                        if (stat.Attribute != null) stats.Add(stat);
+                    }
+                    equipmentData.Stats = stats.ToArray();
+                        
+                    var passives = new List<PassiveAbility>();
+                    passives.AddRange(FindAndSetSkill(csv, "condition_skill_id"));
+                    passives.AddRange(FindAndSetSkill(csv, "passive_skill_id_1"));
+                    passives.AddRange(FindAndSetSkill(csv, "passive_skill_id_2"));
+                    equipmentData.Passives = passives.ToArray();
+                    
                     // check path exist
                     CreateFolderIfNotExist(_exportPath);
                     CreateFolderIfNotExist(categoryPath);
@@ -132,7 +151,40 @@ namespace CryptoQuestEditor.Item
                         equipmentSO.ApplyModifiedProperties();
                         equipmentSO.Update();
                     };
+
+
+                    equipmentSO.ApplyModifiedProperties();
+                    equipmentSO.Update();
                 }
+            }
+        }
+
+        private ILevelAttributeCalculator _levelCalculator = new DefaultLevelAttributeCalculator();
+        private AttributeWithValue ConvertAttribute(NameAttributeMap attributeMap, CsvReader csv, EquipmentData equipment)
+        {
+            csv.TryGetField<int>($"min_{attributeMap.Name}", out var min);
+            csv.TryGetField<int>($"max_{attributeMap.Name}", out var max);
+            if (min <= 0 || max <= 0) return new AttributeWithValue();
+            var cappedAttribute = new CappedAttributeDef(attributeMap.Attribute);
+            cappedAttribute.MinValue = min;
+            cappedAttribute.MaxValue = max;
+            return new AttributeWithValue(attributeMap.Attribute,
+                _levelCalculator.GetValueAtLevel(equipment.MinLevel, cappedAttribute, equipment.MaxLevel));
+        }
+
+
+        private IEnumerable<PassiveAbility> FindAndSetSkill(CsvReader csv, string fieldName)
+        {
+            csv.TryGetField<int>(fieldName, out var skillId);
+            if (skillId <= 0) yield break;
+            // load all asset of type skillType
+            var guids = AssetDatabase.FindAssets($"t:{typeof(PassiveAbility).Name}");
+            foreach (var guid in guids)
+            {
+                var assetPath = AssetDatabase.GUIDToAssetPath(guid);
+                var asset = AssetDatabase.LoadAssetAtPath<PassiveAbility>(assetPath);
+                if (asset.Id == skillId)
+                    yield return asset;
             }
         }
 
