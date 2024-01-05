@@ -1,4 +1,6 @@
 using CryptoQuest.Events;
+using CryptoQuest.Sagas;
+using IndiGames.Core.Events;
 using UnityEngine;
 using UnityEngine.Localization;
 using UnityEngine.Serialization;
@@ -31,6 +33,7 @@ namespace CryptoQuest.UI.Popups
 
         private void ShowPopup(string body)
         {
+            if (_popups.Count >= 1) return;
             ShowPopup(popup =>
                 SetupMaintenancePopup(popup)
                     .WithBody(body));
@@ -38,6 +41,7 @@ namespace CryptoQuest.UI.Popups
 
         private void ShowPopup(LocalizedString body)
         {
+            if (_popups.Count >= 1) return;
             ShowPopup(popup =>
                 SetupMaintenancePopup(popup)
                     .WithBody(body));
@@ -55,9 +59,10 @@ namespace CryptoQuest.UI.Popups
         private void HideLastPopup()
         {
             if (_popups.Count <= 0) return;
-            var popup = _popups[^1];
-            Hide(popup);
+            Hide(_popups[0]);
             if (IsPopupsEmpty) _background.SetActive(false);
+
+            ActionDispatcher.Dispatch(new GoToTitleAction());
         }
     }
 }
