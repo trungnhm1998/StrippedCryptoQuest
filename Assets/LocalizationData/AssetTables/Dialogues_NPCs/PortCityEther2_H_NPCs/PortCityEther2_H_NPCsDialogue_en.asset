@@ -21,12 +21,24 @@ MonoBehaviour:
   - m_Id: 423191305953280
     m_Localized: Which place should I negotiate with next?
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4741071689483288840
   - m_Id: 423191326924800
     m_Localized: I take special care of this watering spot. That's why I'm responsible
       for keeping it clean...
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4741071689483288841
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: 4741071689483288840
+      type: {class: LineMetadata, ns: Yarn.Unity.UnityLocalization, asm: YarnSpinner.Unity}
+      data:
+        nodeName: portcity-s2h-mob1
+        tags: []
+    - rid: 4741071689483288841
+      type: {class: LineMetadata, ns: Yarn.Unity.UnityLocalization, asm: YarnSpinner.Unity}
+      data:
+        nodeName: portcity-s2h-mob2
+        tags: []

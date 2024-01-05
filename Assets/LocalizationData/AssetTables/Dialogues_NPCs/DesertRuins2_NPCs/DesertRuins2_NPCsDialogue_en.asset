@@ -17,7 +17,27 @@ MonoBehaviour:
   m_SharedData: {fileID: 11400000, guid: 73ad4f923d974564e9134bcedf2184fc, type: 2}
   m_Metadata:
     m_Items: []
-  m_TableData: []
+  m_TableData:
+  - m_Id: 8414727100301312
+    m_Localized: These ruins are too decayed! They're full of holes everywhere.
+    m_Metadata:
+      m_Items:
+      - rid: 4741071689483288734
+  - m_Id: 8414727150632960
+    m_Localized: Damn! I can't find anything valuable!
+    m_Metadata:
+      m_Items:
+      - rid: 4741071689483288735
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: 4741071689483288734
+      type: {class: LineMetadata, ns: Yarn.Unity.UnityLocalization, asm: YarnSpinner.Unity}
+      data:
+        nodeName: 33_map-2_NPC_1
+        tags: []
+    - rid: 4741071689483288735
+      type: {class: LineMetadata, ns: Yarn.Unity.UnityLocalization, asm: YarnSpinner.Unity}
+      data:
+        nodeName: 33_map-2_NPC_2
+        tags: []
