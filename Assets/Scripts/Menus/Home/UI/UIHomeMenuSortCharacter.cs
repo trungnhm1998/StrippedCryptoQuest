@@ -17,7 +17,6 @@ namespace CryptoQuest.Menus.Home.UI
     {
         public event Action ConfirmedEvent;
         [SerializeField] private VoidEventChannelSO _sortFailedEvent;
-        [SerializeField] private VoidEventChannelSO _confirmSortEvent;
 
         [Space]
         [SerializeField] private UIPartySlot[] _partySlots;
@@ -172,8 +171,6 @@ namespace CryptoQuest.Menus.Home.UI
             PutToNormalLayer(_selectedCardButtonHolder.transform, CurrentIndex);
 
             ConfirmedEvent?.Invoke();
-            // Server will listen to this event and validate sort
-            _confirmSortEvent.RaiseEvent();
             EnableSelectToSortMode();
         }
 
