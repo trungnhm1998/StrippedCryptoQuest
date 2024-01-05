@@ -10,6 +10,7 @@ using CryptoQuest.Gameplay.PlayerParty;
 using CryptoQuest.Inventory;
 using CryptoQuest.Networking;
 using CryptoQuest.Sagas.Objects;
+using CryptoQuest.Sagas.Party;
 using CryptoQuest.UI.Actions;
 using IndiGames.Core.Common;
 using IndiGames.Core.Events;
@@ -62,19 +63,22 @@ namespace CryptoQuest.Sagas.Character
             ActionDispatcher.Dispatch(new GetInDboxHeroesSucceeded(dboxHeroes));
 
             List<CharacterObject> inGameHeroes = new();
-            List<PartySlotSpec> nonNft = new();
             foreach (var hero in heroResponseList)
             {
-                if (hero.isHero == 1)
-                {
-                    _party.GetParty()[0].Hero.Id = hero.id;
-                    continue;
-                }
+                if (hero.isHero == 1) continue;
                 if (hero.inGameStatus == (int)Objects.ECharacterStatus.InGame) inGameHeroes.Add(hero);
             }
             ActionDispatcher.Dispatch(new GetInGameHeroesSucceeded(inGameHeroes.ToArray()));
 
             OnInventoryFilled(inGameHeroes.ToArray());
+
+            var inPartyHeroes = new List<CharacterObject>();
+            foreach (var hero in heroResponseList)
+            {
+                if (hero.partyId == 0) continue;
+                inPartyHeroes.Add(hero);
+            }
+            ActionDispatcher.Dispatch(new SavePartyAction(inPartyHeroes.ToArray()));
         }
 
         private void OnInventoryFilled(CharacterObject[] heroResponseList)
