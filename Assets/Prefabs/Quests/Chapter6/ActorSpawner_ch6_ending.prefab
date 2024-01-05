@@ -49,7 +49,7 @@ MonoBehaviour:
   _onSceneLoadedEventChannel: {fileID: 11400000, guid: b8b96e43d21a7bf4c96df4cb83c2b764, type: 2}
   _spawnPoint: {fileID: 3536424114592582133}
   _actorDef: {fileID: 11400000, guid: e1d52b426c152c041bb9061e66790438, type: 2}
-  _actorSpawnSettingSO: {fileID: 11400000, guid: 11815e252efdd274197e7cf036726035, type: 2}
+  _actorSpawnSettingSO: {fileID: 0}
   _actorDeSpawnSettingSO: {fileID: 11400000, guid: 3f8b1fdc42350a3468f83fd11a946db3, type: 2}
 --- !u!1 &7374077715416870216
 GameObject:
@@ -78,7 +78,7 @@ Transform:
   m_GameObject: {fileID: 7374077715416870216}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 19.78876, y: -20.491161, z: 0}
+  m_LocalPosition: {x: 19.78876, y: -23.72, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -108,7 +108,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7500d9ff073a48bc8797451014812df0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <SizeBox>k__BackingField: {x: 5.3486795, y: 1.1}
+  <SizeBox>k__BackingField: {x: 5.3486795, y: 3.55}
 --- !u!1001 &4194287374293542146
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -117,6 +117,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 948847599789150462}
     m_Modifications:
+    - target: {fileID: 1644230608099489272, guid: eb3ac81f4fe60e74b80460f205b7042f, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 19.63
+      objectReference: {fileID: 0}
+    - target: {fileID: 1644230608099489272, guid: eb3ac81f4fe60e74b80460f205b7042f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -10.446
+      objectReference: {fileID: 0}
+    - target: {fileID: 1644230608099489272, guid: eb3ac81f4fe60e74b80460f205b7042f, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -9.931629
+      objectReference: {fileID: 0}
     - target: {fileID: 1731360935000182590, guid: eb3ac81f4fe60e74b80460f205b7042f, type: 3}
       propertyPath: questCutsceneDef
       value: 
@@ -125,6 +137,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ch6_ending
       objectReference: {fileID: 0}
+    - target: {fileID: 5061087932743742912, guid: eb3ac81f4fe60e74b80460f205b7042f, type: 3}
+      propertyPath: questCutsceneDef
+      value: 
+      objectReference: {fileID: 11400000, guid: 69b4698ceca971044bf4aa9bfa223161, type: 2}
     - target: {fileID: 6232468918158837689, guid: eb3ac81f4fe60e74b80460f205b7042f, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.012098312

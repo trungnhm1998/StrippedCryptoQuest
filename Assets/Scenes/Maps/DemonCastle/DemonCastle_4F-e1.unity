@@ -155,6 +155,7 @@ Transform:
   - {fileID: 230135012}
   - {fileID: 5012429025267667058}
   - {fileID: 2338361761699012780}
+  - {fileID: 5012429025761753778}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &118866432
@@ -346,6 +347,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Battle2_Lose_Demonking
       objectReference: {fileID: 0}
+    - target: {fileID: 4414341839223721585, guid: 1e2858ada5d65cf4f8d51323a63b3f1e, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6232468918158837689, guid: 1e2858ada5d65cf4f8d51323a63b3f1e, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -411,6 +416,14 @@ PrefabInstance:
       propertyPath: _actorDef
       value: 
       objectReference: {fileID: 11400000, guid: 32e67bb9009b3cd43a3c9fb97bff7dc2, type: 2}
+    - target: {fileID: 1393988980161899929, guid: 759e2997b3203064e8bf228553c9a4db, type: 3}
+      propertyPath: _actorSpawnSettingSO
+      value: 
+      objectReference: {fileID: 11400000, guid: 29dd278d68e1ff64d96f0e94121377ac, type: 2}
+    - target: {fileID: 1393988980161899929, guid: 759e2997b3203064e8bf228553c9a4db, type: 3}
+      propertyPath: _actorDeSpawnSettingSO
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 1928043327092375812, guid: 759e2997b3203064e8bf228553c9a4db, type: 3}
       propertyPath: m_Name
       value: ActorSpawner_ch6_give_chain_quest
@@ -840,14 +853,34 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6746964905341171565, guid: 18416e846b9c2b64c899d641c16dde32, type: 3}
+      propertyPath: _trackNames.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6746964905341171565, guid: 18416e846b9c2b64c899d641c16dde32, type: 3}
+      propertyPath: _trackNames.Array.data[1]
+      value: HeroPos
+      objectReference: {fileID: 0}
+    - target: {fileID: 6746964905341171565, guid: 18416e846b9c2b64c899d641c16dde32, type: 3}
+      propertyPath: _objectsToBindTags.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6746964905341171565, guid: 18416e846b9c2b64c899d641c16dde32, type: 3}
+      propertyPath: _objectsToBindTags.Array.data[1]
+      value: Player
+      objectReference: {fileID: 0}
     - target: {fileID: 8239929161965676886, guid: 18416e846b9c2b64c899d641c16dde32, type: 3}
       propertyPath: m_SceneBindings.Array.size
-      value: 50
+      value: 51
       objectReference: {fileID: 0}
     - target: {fileID: 8239929161965676886, guid: 18416e846b9c2b64c899d641c16dde32, type: 3}
       propertyPath: m_SceneBindings.Array.data[49].key
       value: 
       objectReference: {fileID: 2900896799719146021, guid: 245e88f0f19b61c47aab5d6ed05d36b0, type: 2}
+    - target: {fileID: 8239929161965676886, guid: 18416e846b9c2b64c899d641c16dde32, type: 3}
+      propertyPath: m_SceneBindings.Array.data[50].key
+      value: 
+      objectReference: {fileID: -9099848470150648892, guid: 245e88f0f19b61c47aab5d6ed05d36b0, type: 2}
     - target: {fileID: 8239929161965676886, guid: 18416e846b9c2b64c899d641c16dde32, type: 3}
       propertyPath: m_SceneBindings.Array.data[35].value
       value: 
@@ -1206,6 +1239,14 @@ PrefabInstance:
       propertyPath: _actorDef
       value: 
       objectReference: {fileID: 11400000, guid: db7fc6c7c6f5d644b9ee5418bb8f0a49, type: 2}
+    - target: {fileID: 1393988980161899929, guid: 759e2997b3203064e8bf228553c9a4db, type: 3}
+      propertyPath: _actorSpawnSettingSO
+      value: 
+      objectReference: {fileID: 11400000, guid: 29dd278d68e1ff64d96f0e94121377ac, type: 2}
+    - target: {fileID: 1393988980161899929, guid: 759e2997b3203064e8bf228553c9a4db, type: 3}
+      propertyPath: _actorDeSpawnSettingSO
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 1928043327092375812, guid: 759e2997b3203064e8bf228553c9a4db, type: 3}
       propertyPath: m_Name
       value: ActorSpawner_ch6_facing_demon
@@ -1267,13 +1308,17 @@ PrefabInstance:
       propertyPath: m_LocalPosition.x
       value: 24.83
       objectReference: {fileID: 0}
+    - target: {fileID: 3721034598036927361, guid: 2d15ca47e89a3d54bb8457112d6da16d, type: 3}
+      propertyPath: _actorDeSpawnSettingSO
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 7790976935247886828, guid: 2d15ca47e89a3d54bb8457112d6da16d, type: 3}
       propertyPath: m_Name
       value: ActorSpawner_ch6_extermination_of_demon
       objectReference: {fileID: 0}
     - target: {fileID: 7790976935247886828, guid: 2d15ca47e89a3d54bb8457112d6da16d, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8581451370832974699, guid: 2d15ca47e89a3d54bb8457112d6da16d, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1325,6 +1370,63 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8581451370832974699, guid: 2d15ca47e89a3d54bb8457112d6da16d, type: 3}
   m_PrefabInstance: {fileID: 2188153199739208484}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &3597726224157704200
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 82355796}
+    m_Modifications:
+    - target: {fileID: 4922253634890503259, guid: 2d93621db1856364bafb87ba3bcae2af, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4922253634890503259, guid: 2d93621db1856364bafb87ba3bcae2af, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4922253634890503259, guid: 2d93621db1856364bafb87ba3bcae2af, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4922253634890503259, guid: 2d93621db1856364bafb87ba3bcae2af, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4922253634890503259, guid: 2d93621db1856364bafb87ba3bcae2af, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4922253634890503259, guid: 2d93621db1856364bafb87ba3bcae2af, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4922253634890503259, guid: 2d93621db1856364bafb87ba3bcae2af, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4922253634890503259, guid: 2d93621db1856364bafb87ba3bcae2af, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4922253634890503259, guid: 2d93621db1856364bafb87ba3bcae2af, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4922253634890503259, guid: 2d93621db1856364bafb87ba3bcae2af, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8387401505442431573, guid: 2d93621db1856364bafb87ba3bcae2af, type: 3}
+      propertyPath: m_Name
+      value: ActorSpawner_Tele_AfterDefeatedDemon
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 2d93621db1856364bafb87ba3bcae2af, type: 3}
 --- !u!1001 &3679905027687920168
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1390,6 +1492,11 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 6051736616014487574, guid: 759e2997b3203064e8bf228553c9a4db, type: 3}
   m_PrefabInstance: {fileID: 973080881657450698}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &5012429025761753778 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4922253634890503259, guid: 2d93621db1856364bafb87ba3bcae2af, type: 3}
+  m_PrefabInstance: {fileID: 3597726224157704200}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6781508543145278568
 PrefabInstance:
