@@ -70,7 +70,6 @@ namespace CryptoQuest.BlackSmith.Evolve.Sagas
         private void HandleRequestFailed(Exception exception)
         {
             ActionDispatcher.Dispatch(new ShowLoading(false));
-            ActionDispatcher.Dispatch(new ServerErrorPopup());
             
             ActionDispatcher.Dispatch(new EvolveRequestFailed());
         }

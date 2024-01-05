@@ -5,14 +5,12 @@ using UnityEngine.Localization;
 
 namespace CryptoQuest.UI.Popups.Sagas
 {
-    public class ServerMaintenancePopup : ActionBase { }
-
-    public class ServerMaintenancePopupSaga : SagaBase<ServerMaintenancePopup>
+    public class ShowMaintenancePopupSaga : SagaBase<ServerMaintaining>
     {
         [SerializeField] private LocalizedString _maintenanceMessage;
         [SerializeField] private LocalizedStringEventChannelSO _localizedMaintenancePopupEventSO;
 
-        protected override void HandleAction(ServerMaintenancePopup ctx)
+        protected override void HandleAction(ServerMaintaining ctx)
         {
             _localizedMaintenancePopupEventSO.RaiseEvent(_maintenanceMessage);
         }

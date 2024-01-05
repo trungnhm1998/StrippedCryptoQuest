@@ -54,7 +54,6 @@ namespace CryptoQuest.Sagas.Equipment
         private void OnError(Exception error)
         {
             Debug.Log($"<color=white>Saga::DetachMagicStones::Error</color>:: {error}");
-            ActionDispatcher.Dispatch(new ServerErrorPopup());
         }
 
         private void OnCompleted()

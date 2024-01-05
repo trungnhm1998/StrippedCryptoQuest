@@ -109,7 +109,6 @@ namespace CryptoQuest.Sagas.Character
         {
             Debug.Log($"<color=white>Saga::FetchProfileCharacters::Error</color>:: {error}");
             ActionDispatcher.Dispatch(new ShowLoading(false));
-            ActionDispatcher.Dispatch(new ServerErrorPopup());
         }
     }
 }

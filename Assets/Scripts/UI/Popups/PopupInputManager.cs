@@ -17,6 +17,11 @@ namespace CryptoQuest.UI.Popups
         [SerializeField] private InputMediatorSO _inputSO;
         private string _previouslyEnabledInputMap = "";
 
+        private void OnEnable()
+        {
+            if (_inputSystemModule == null) _inputSystemModule = FindObjectOfType<InputSystemUIInputModule>();
+        }
+
         private void EnableLastEnabledActionMap()
         {
             if (string.IsNullOrEmpty(_previouslyEnabledInputMap) == false)
