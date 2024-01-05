@@ -1,6 +1,8 @@
 using System;
+using System.Collections;
 using CryptoQuest.ChangeClass.ScriptableObjects;
 using CryptoQuest.Menu;
+using CryptoQuest.UI.Extensions;
 using UnityEngine;
 using UnityEngine.Localization.Components;
 using UnityEngine.UI;
@@ -22,6 +24,7 @@ namespace CryptoQuest.ChangeClass.View
         public void ConfigureCell(ChangeClassSO changeClass)
         {
             Class = changeClass;
+            _icon.LoadSpriteAndSet(Class.CharacterClass.Icon);
             _displayName.StringReference = changeClass.CharacterClass.Name;
         }
 

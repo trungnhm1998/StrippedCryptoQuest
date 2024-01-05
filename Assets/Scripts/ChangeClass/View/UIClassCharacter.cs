@@ -13,7 +13,7 @@ namespace CryptoQuest.ChangeClass.View
         public Action<UIOccupation> OnSelected;
         [SerializeField] private ScrollRect _scrollRect;
         [SerializeField] private UIOccupation _characterClassObject;
-        public List<Button> _listButton = new();
+        private List<Button> _listButton = new();
 
         private void OnItemSelected(UIOccupation item)
         {

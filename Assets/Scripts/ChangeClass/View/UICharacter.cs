@@ -1,7 +1,10 @@
 using System;
+using System.Collections;
 using CryptoQuest.ChangeClass.API;
+using CryptoQuest.Character;
 using CryptoQuest.Character.Hero;
 using CryptoQuest.Menu;
+using CryptoQuest.UI.Extensions;
 using CryptoQuest.UI.Menu;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -30,6 +33,7 @@ namespace CryptoQuest.ChangeClass.View
         public void ConfigureCell(HeroSpec characterClass)
         {
             Class = characterClass;
+            _icon.LoadSpriteAndSet(characterClass.Class.Icon);
             _localizedName.StringReference = Class.Origin.DetailInformation.LocalizedName;
         }
 
