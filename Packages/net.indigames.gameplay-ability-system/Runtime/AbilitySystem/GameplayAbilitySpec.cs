@@ -65,13 +65,13 @@ namespace IndiGames.GameplayAbilitySystem.AbilitySystem
         {
             if (!CanActiveAbility()) return;
             _owner.StartCoroutine(InternalActiveAbility());
+            _owner.TagSystem.AddTags(AbilitySO.Tags.ActivationTags);
         }
 
         private IEnumerator InternalActiveAbility()
         {
             _isActive = true;
             yield return OnAbilityActive();
-            _owner.TagSystem.AddTags(AbilitySO.Tags.ActivationTags);
         }
 
         /// <summary>
