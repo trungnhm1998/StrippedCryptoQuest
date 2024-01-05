@@ -19,9 +19,7 @@ namespace CryptoQuest.Battle.States
             InitBattle();
         }
 
-        public void OnExit(BattleStateMachine battleStateMachine)
-        {
-        }
+        public void OnExit(BattleStateMachine battleStateMachine) { }
 
         private void InitBattle() => _battleStateMachine.StartCoroutine(CoInitBattle());
 

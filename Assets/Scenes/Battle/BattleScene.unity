@@ -863,8 +863,6 @@ MonoBehaviour:
   _unloader: {fileID: 1180603471}
   _context: {fileID: 7116505576077580199}
   _battleLootManager: {fileID: 104468364}
-  _logDuration: 3
-  _battleBus: {fileID: 11400000, guid: 2290057e7f48d1046b5e0a6c3f6dc910, type: 2}
 --- !u!114 &1180603475
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -894,7 +892,6 @@ MonoBehaviour:
         m_CallState: 2
   _unloader: {fileID: 1180603471}
   _battleBus: {fileID: 11400000, guid: 2290057e7f48d1046b5e0a6c3f6dc910, type: 2}
-  _logDuration: 3
 --- !u!114 &1180603476
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -922,7 +919,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _battleBus: {fileID: 11400000, guid: 2290057e7f48d1046b5e0a6c3f6dc910, type: 2}
   _roundEventsPresenter: {fileID: 891665762}
-  _duration: 3
 --- !u!114 &1180603478
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -937,7 +933,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _battleBus: {fileID: 11400000, guid: 2290057e7f48d1046b5e0a6c3f6dc910, type: 2}
   _roundEventsPresenter: {fileID: 891665762}
-  _duration: 3
 --- !u!114 &1343290373 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5949446545983247603, guid: d0eacd5a881766b4ca08ec4b770526a2, type: 3}
@@ -1571,6 +1566,7 @@ GameObject:
   - component: {fileID: 7116505576077580199}
   - component: {fileID: 7116505576077580203}
   - component: {fileID: 7116505576077580204}
+  - component: {fileID: 7116505576077580205}
   m_Layer: 0
   m_Name: BattleManager
   m_TagString: Untagged
@@ -1688,6 +1684,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4c327de21deb06a48b820d72f4fb9072, type: 3}
+--- !u!114 &5720142150154493333 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5751631653701151251, guid: 4c327de21deb06a48b820d72f4fb9072, type: 3}
+  m_PrefabInstance: {fileID: 5720142150154493332}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &6217317452887572703 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8488669432326234745, guid: d0eacd5a881766b4ca08ec4b770526a2, type: 3}
@@ -1789,6 +1796,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _battleBus: {fileID: 11400000, guid: 2290057e7f48d1046b5e0a6c3f6dc910, type: 2}
   _uiIntroBattle: {fileID: 6217317452887572703}
+--- !u!114 &7116505576077580205
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3846955041373722987}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 101691cbf0a248beb5345ad82e5f8cbd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _bus: {fileID: 11400000, guid: 2290057e7f48d1046b5e0a6c3f6dc910, type: 2}
+  _backgroundImage: {fileID: 5720142150154493333}
 --- !u!114 &8909492559710276275 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4666074599004791690, guid: f5fa023033362a04f99acf1098ae54bc, type: 3}

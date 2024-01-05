@@ -5,6 +5,7 @@ using CryptoQuest.Battle.ScriptableObjects;
 using CryptoQuest.Gameplay.PlayerParty;
 using IndiGames.Core.EditorTools.Attributes.ReadOnlyAttribute;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 using UnityEngine.Localization;
 
 namespace CryptoQuest.Gameplay.Encounter
@@ -15,6 +16,7 @@ namespace CryptoQuest.Gameplay.Encounter
         [field: SerializeField] public int Id { get; private set; }
         [SerializeField] private bool _canRetreat = true;
         public bool CanRetreat => _canRetreat;
+        [field: SerializeField] public AssetReferenceT<Sprite> Background { get; private set; }
 
         [SerializeField] private EnemyGroupId[] _enemyGroups = Array.Empty<EnemyGroupId>();
         public EnemyGroupId[] EnemyGroups => _enemyGroups;
