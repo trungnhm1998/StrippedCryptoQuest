@@ -1,5 +1,8 @@
+using System.Collections.Generic;
 using CryptoQuest.Menus.Home.UI;
+using CryptoQuest.Sagas.Party;
 using FSM;
+using IndiGames.Core.Events;
 using UnityEngine;
 
 namespace CryptoQuest.Menus.Home.States
@@ -43,6 +46,13 @@ namespace CryptoQuest.Menus.Home.States
         private void Confirm()
         {
             _panel.SortMode.ConfirmSortOrder();
+            var orderIdList = new List<int>();
+            for (int i = 0; i < _panel.PartySO.GetParty().Length; i++)
+            {
+                if (!_panel.PartySO.GetParty()[i].Hero.IsValid()) continue;
+                orderIdList.Add(_panel.PartySO.GetParty()[i].Hero.Id);
+            }
+            ActionDispatcher.Dispatch(new SyncPartyAction(orderIdList.ToArray()));
         }
 
         /// <summary>
