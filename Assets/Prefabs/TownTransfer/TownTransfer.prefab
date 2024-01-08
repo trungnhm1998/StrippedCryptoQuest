@@ -323,8 +323,31 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8001809477183159768, guid: bf8998fd1a6fa6d4dbdc0d8cca9ed408, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8217636894176485853}
   m_SourcePrefab: {fileID: 100100000, guid: bf8998fd1a6fa6d4dbdc0d8cca9ed408, type: 3}
+--- !u!1 &1166305142583315362 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8001809477183159768, guid: bf8998fd1a6fa6d4dbdc0d8cca9ed408, type: 3}
+  m_PrefabInstance: {fileID: 9161358533021202042}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &8217636894176485853
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1166305142583315362}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3dab6a978ccb4b229e1c79f28164b0d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _showTownMenuEvent: {fileID: 11400000, guid: 26fa3a1cb1d15d646972331cb5e9e9ac, type: 2}
+  _teleportSuccessEvent: {fileID: 11400000, guid: 066233f72df952644ad37f1147fdcee5, type: 2}
+  _townTransferItem: {fileID: 11400000, guid: ea4cdd1ffc5577048b2b08c3fa61bf9c, type: 2}
 --- !u!224 &4203424327042807311 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5005257495709991029, guid: bf8998fd1a6fa6d4dbdc0d8cca9ed408, type: 3}
