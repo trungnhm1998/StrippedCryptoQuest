@@ -126,6 +126,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _inputMediator: {fileID: 11400000, guid: 1fb61cdb72f0a484f8e4db68e2011977, type: 2}
   _sceneLoadedEvent: {fileID: 11400000, guid: b8b96e43d21a7bf4c96df4cb83c2b764, type: 2}
+  _checkLoginCheckState: {fileID: 0}
   <LoginFailedPanel>k__BackingField: {fileID: 6871181009220155183}
   <AutoCloseLoginFailedPanelTime>k__BackingField: 3
 --- !u!114 &4125204084637897429
@@ -1644,9 +1645,69 @@ PrefabInstance:
       propertyPath: m_Name
       value: OptionPanel
       objectReference: {fileID: 0}
+    - target: {fileID: 444465887659380661, guid: 9caa854ee08550844af7534aa81d22f7, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1299338466706128805, guid: 9caa854ee08550844af7534aa81d22f7, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1299338466706128805, guid: 9caa854ee08550844af7534aa81d22f7, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5337474819891467928, guid: 9caa854ee08550844af7534aa81d22f7, type: 3}
+      propertyPath: m_fontSize
+      value: 24
+      objectReference: {fileID: 0}
+    - target: {fileID: 6286333978635967626, guid: 9caa854ee08550844af7534aa81d22f7, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6286333978635967626, guid: 9caa854ee08550844af7534aa81d22f7, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6286333978635967626, guid: 9caa854ee08550844af7534aa81d22f7, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6286333978635967626, guid: 9caa854ee08550844af7534aa81d22f7, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6432628561602542427, guid: 9caa854ee08550844af7534aa81d22f7, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: 22.700073
+      objectReference: {fileID: 0}
+    - target: {fileID: 7108221237347754987, guid: 9caa854ee08550844af7534aa81d22f7, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7396256773712636317, guid: 9caa854ee08550844af7534aa81d22f7, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7396256773712636317, guid: 9caa854ee08550844af7534aa81d22f7, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7980813746105703193, guid: 9caa854ee08550844af7534aa81d22f7, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7980813746105703193, guid: 9caa854ee08550844af7534aa81d22f7, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7980813746105703193, guid: 9caa854ee08550844af7534aa81d22f7, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7980813746105703193, guid: 9caa854ee08550844af7534aa81d22f7, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8281616442728220193, guid: 9caa854ee08550844af7534aa81d22f7, type: 3}
       propertyPath: m_Pivot.x
@@ -1732,6 +1793,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8999055100287308072, guid: 9caa854ee08550844af7534aa81d22f7, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8999055100287308072, guid: 9caa854ee08550844af7534aa81d22f7, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8999055100287308072, guid: 9caa854ee08550844af7534aa81d22f7, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1787,10 +1860,6 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 3175500637234172143}
     - target: {fileID: 524340468061886003, guid: 260333c911feba7419182faf81603130, type: 3}
-      propertyPath: _buttons.Array.data[4]
-      value: 
-      objectReference: {fileID: 4492756049393181720}
-    - target: {fileID: 524340468061886003, guid: 260333c911feba7419182faf81603130, type: 3}
       propertyPath: <MailLoginBtn>k__BackingField
       value: 
       objectReference: {fileID: 3175500637234172143}
@@ -1802,10 +1871,6 @@ PrefabInstance:
       propertyPath: _requestGmailLoginEventChannel
       value: 
       objectReference: {fileID: 11400000, guid: 5d11f532f9b67aa4bbdb155dc4202a32, type: 2}
-    - target: {fileID: 524340468061886003, guid: 260333c911feba7419182faf81603130, type: 3}
-      propertyPath: <WalletLoginBtn>k__BackingField
-      value: 
-      objectReference: {fileID: 4492756049393181720}
     - target: {fileID: 524340468061886003, guid: 260333c911feba7419182faf81603130, type: 3}
       propertyPath: _requestWalletLoginEventChannel
       value: 
@@ -1948,19 +2013,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7445489238433180293, guid: 260333c911feba7419182faf81603130, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 100
+      value: 45.1753
       objectReference: {fileID: 0}
     - target: {fileID: 7445489238433180293, guid: 260333c911feba7419182faf81603130, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 100
+      value: 80.244
       objectReference: {fileID: 0}
     - target: {fileID: 7445489238433180293, guid: 260333c911feba7419182faf81603130, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -0.000024796
+      value: 12.7
       objectReference: {fileID: 0}
     - target: {fileID: 7445489238433180293, guid: 260333c911feba7419182faf81603130, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0.0000014305
+      value: -8.14
       objectReference: {fileID: 0}
     - target: {fileID: 8375321888291047439, guid: 260333c911feba7419182faf81603130, type: 3}
       propertyPath: m_Name
@@ -2023,9 +2088,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 5678446928938192432, guid: 260333c911feba7419182faf81603130, type: 3}
       insertIndex: -1
       addedObject: {fileID: 3175500637234172143}
-    - targetCorrespondingSourceObject: {fileID: 4317557250972546803, guid: 260333c911feba7419182faf81603130, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 4492756049393181720}
   m_SourcePrefab: {fileID: 100100000, guid: 260333c911feba7419182faf81603130, type: 3}
 --- !u!114 &351607661581937632 stripped
 MonoBehaviour:
@@ -2320,78 +2382,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!1 &7121382361456097090 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4317557250972546803, guid: 260333c911feba7419182faf81603130, type: 3}
-  m_PrefabInstance: {fileID: 6430912631094362545}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &4492756049393181720
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7121382361456097090}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Navigation:
-    m_Mode: 3
-    m_WrapAround: 0
-    m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 0}
-    m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
-  m_Colors:
-    m_NormalColor: {r: 1, g: 1, b: 1, a: 0}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 0.44705883}
-    m_PressedColor: {r: 1, g: 0.43164763, b: 0, a: 0.75686276}
-    m_SelectedColor: {r: 1, g: 0.83413935, b: 0, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
-    m_ColorMultiplier: 1
-    m_FadeDuration: 0.1
-  m_SpriteState:
-    m_HighlightedSprite: {fileID: 0}
-    m_PressedSprite: {fileID: 0}
-    m_SelectedSprite: {fileID: 0}
-    m_DisabledSprite: {fileID: 0}
-  m_AnimationTriggers:
-    m_NormalTrigger: Normal
-    m_HighlightedTrigger: Highlighted
-    m_PressedTrigger: Pressed
-    m_SelectedTrigger: Selected
-    m_DisabledTrigger: Disabled
-  m_Interactable: 1
-  m_TargetGraphic: {fileID: 8198740838193304355}
-  m_OnClick:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 6807723101359642498}
-        m_TargetAssemblyTypeName: CryptoQuest.UI.Title.UISocialPanel, indi-games.crypto-quest
-        m_MethodName: RequestWalletLogin
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
---- !u!114 &8198740838193304355 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2952381881094754962, guid: 260333c911feba7419182faf81603130, type: 3}
-  m_PrefabInstance: {fileID: 6430912631094362545}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &8255947360476173765 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3146948061770699892, guid: 260333c911feba7419182faf81603130, type: 3}
