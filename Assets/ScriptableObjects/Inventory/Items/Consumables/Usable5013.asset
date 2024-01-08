@@ -78,7 +78,7 @@ MonoBehaviour:
     m_SubObjectName: 
     m_SubObjectType: 
     m_EditorAssetChanged: 0
-  <ConsumableType>k__BackingField: 0
+  <Type>k__BackingField: 0
   <Price>k__BackingField: 1000
   <SellPrice>k__BackingField: 500
   <Effect>k__BackingField: {fileID: -8414268229814570941}
@@ -106,7 +106,8 @@ MonoBehaviour:
     BlockAbilityWithTags: []
     ActivationTags: []
     OwnerTags:
-      RequireTags: []
+      RequireTags:
+      - {fileID: 11400000, guid: c60a47c5f453a024d8657f7b3cafc7cc, type: 2}
       IgnoreTags: []
     SourceTags:
       RequireTags: []

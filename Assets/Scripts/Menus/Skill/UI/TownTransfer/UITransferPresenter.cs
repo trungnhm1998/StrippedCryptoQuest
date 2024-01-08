@@ -110,6 +110,7 @@ namespace CryptoQuest.Menus.Skill.UI.TownTransfer
             else
                 ItemConsumeState.Cancelled -= CancelConsuming;
 
+            ActionDispatcher.Dispatch(new TownTransferCancelEvent());
             _content.SetActive(false);
         }
 
