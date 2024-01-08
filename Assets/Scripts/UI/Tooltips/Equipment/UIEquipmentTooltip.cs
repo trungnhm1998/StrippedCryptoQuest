@@ -21,6 +21,7 @@ namespace CryptoQuest.UI.Tooltips.Equipment
         [SerializeField] private AttributeConfigMapping _attributeConfigMapping;
         [SerializeField] private Image _headerBackground;
         [SerializeField] private Image _rarity;
+        [SerializeField] private Image _weaponType;
         [SerializeField] private GameObject _nftTag;
         [SerializeField] private Image _illustration;
         [SerializeField] protected TMP_Text _lvl;
@@ -65,6 +66,7 @@ namespace CryptoQuest.UI.Tooltips.Equipment
             _illustration.enabled = false;
             _headerBackground.color = _equipment.Rarity.Color;
             _rarity.sprite = _equipment.Rarity.Icon;
+            _weaponType.sprite = _equipment.Type.Icon;
             _nftTag.SetActive(_equipment.IsNft);
             _nameLocalize.StringReference = _equipment.Prefab.DisplayName;
 
