@@ -1,53 +1,36 @@
 ﻿using System.Collections;
 using CryptoQuest.Beast;
+using CryptoQuest.UI.Tooltips;
 using CryptoQuest.UI.Tooltips.Events;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
 namespace CryptoQuest.Ranch.Tooltip
 {
-    public class TooltipController : MonoBehaviour
+    public class TooltipController : UITooltipBase
     {
         [SerializeField] private UIBeastTooltip _uiTooltip;
-        [SerializeField] private ShowTooltipEvent _showBeastTooltipChannelSO;
         [SerializeField] private float _delayTime = 0.1f;
+        private Tween _delayedCall;
         private IBeast _beast;
 
-        private void OnEnable() => _showBeastTooltipChannelSO.EventRaised += ShowTooltip;
-
-        private void OnDisable() => _showBeastTooltipChannelSO.EventRaised -= ShowTooltip;
-
-        private void ShowTooltip(bool isShowDetail)
-        {
-            if (!isShowDetail)
-            {
-                HideTooltip();
-                return;
-            }
-            CanShowTooltip();
-        }
-
-        private void HideTooltip()
-        {
-            _uiTooltip.gameObject.SetActive(false);
-        }
-
-        private void CanShowTooltip()
+        protected override bool CanShow()
         {
             var selectedGameObject = EventSystem.current.currentSelectedGameObject;
-            if (selectedGameObject == null) return;
+            if (selectedGameObject == null) return false;
             var provider = selectedGameObject.GetComponent<ITooltipBeastProvider>();
-            if (provider == null) return;
-            if (provider.Beast == null || provider.Beast.IsValid() == false) return;
+            if (provider == null) return false;
+            if (provider.Beast == null || provider.Beast.IsValid() == false) return false;
             _beast = provider.Beast;
-            StartCoroutine(ShowTooltip(_delayTime));
+            return true;
         }
-
-        private IEnumerator ShowTooltip(float time)
+        
+        protected override void Init()
         {
-            yield return new WaitForSeconds(time);
-            _uiTooltip.gameObject.SetActive(true);
-            _uiTooltip.Init(_beast);
+            _delayedCall?.Kill();
+            _delayedCall = DOVirtual.DelayedCall(_delayTime,
+                () => _uiTooltip.Init(_beast));
         }
     }
 }
