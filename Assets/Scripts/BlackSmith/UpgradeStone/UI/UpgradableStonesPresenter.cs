@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using CryptoQuest.BlackSmith.Commons.UI;
@@ -24,13 +25,13 @@ namespace CryptoQuest.BlackSmith.UpgradeStone.UI
         [SerializeField] private CurrencySO _gold;
         [SerializeField] private CurrencySO _metad;
         [SerializeField] private UpgradableStoneDataMapping _stoneMappings;
-        
+
         [SerializeField] private ScrollRect _scrollRect;
         [SerializeField] private UIUpgradableStone _stonePrefab;
         [SerializeField] private int _maxLevel = 9;
         public Transform Content => _scrollRect.content;
         protected IObjectPool<UIUpgradableStone> _itemPool;
-        protected const float ERROR_PRONE_DELAY = 0.05f;
+
         private List<UIUpgradableStone> _cachedItems = new();
 
         private void Awake()
@@ -51,7 +52,25 @@ namespace CryptoQuest.BlackSmith.UpgradeStone.UI
                 SetupStonePrice(stoneUI);
             }
 
-            Invoke(nameof(SelectFirstButton), ERROR_PRONE_DELAY);
+            StartCoroutine(SelectFirstButton());
+        }
+
+        private IEnumerator SelectFirstButton()
+        {
+            foreach (var item in _cachedItems)
+            {
+                if (item.Button.interactable)
+                {
+                    while (item.MagicStone.Passives.Length < 2)
+                    {
+                        yield return null;
+                    }
+
+                    item.Button.Select();
+                    StoneInspected?.Invoke(item.MagicStone);
+                    yield break;
+                }
+            }
         }
 
         public void SetupStonePrice(UIUpgradableStone itemUI)
@@ -75,18 +94,6 @@ namespace CryptoQuest.BlackSmith.UpgradeStone.UI
             itemUI.InitPrice(goldInfo, metadInfo, stoneMapping);
         }
 
-        protected void SelectFirstButton()
-        {
-            foreach (var item in _cachedItems)
-            {
-                if (item.Button.interactable)
-                {
-                    item.Button.Select();
-                    StoneInspected?.Invoke(item.MagicStone);
-                    return;
-                }
-            }
-        }
 
         public void ClearStones(UIUpgradableStone exceptionUI = null)
         {
