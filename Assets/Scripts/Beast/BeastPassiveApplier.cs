@@ -30,7 +30,7 @@ namespace CryptoQuest.Beast
         public void ApplyPassive(IBeast beast)
         {
             if (_equippedBeast.IsValid()) RemovePassive(_equippedBeast);
-            if (!beast.IsValid()) return;
+            if (!beast.IsValid() || beast.Passive == null) return;
             foreach (var partySlot in _partyController.Slots)
             {
                 if (partySlot.IsValid() == false) continue;
