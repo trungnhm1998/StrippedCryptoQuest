@@ -18,23 +18,25 @@ namespace CryptoQuest.Gameplay.Encounter
         /// </summary>
         [SerializeField] private StringEventChannelSO _triggerBattleEncounterEvent;
 
+        [SerializeField] protected BattleBus _battleBus;
         [SerializeField] protected GameplayBus _gameplayBus;
         [SerializeField] protected float _minEncounterSteps = 3f;
         [SerializeField] protected float _maxEncounterSteps = 5f; // allow half a step?
         [SerializeField] private EncounterDatabase _database;
         [SerializeField] private GameStateSO _gameState;
-        protected EncounterData _currentEncounterData;
+
         protected float _stepLeftBeforeTriggerBattle;
 
         private float _encounterBuff = 1;
-        public float EncounterBuff 
-        { 
+
+        public float EncounterBuff
+        {
             get => _encounterBuff;
             set
             {
                 _encounterBuff = value;
                 GenerateRandomStepTilNextTrigger();
-            } 
+            }
         }
 
         protected virtual void Awake()
@@ -55,10 +57,10 @@ namespace CryptoQuest.Gameplay.Encounter
 
         private void RemoveStepHandler(string encounterId)
         {
-            if (_currentEncounterData == null) return;
+            if (_battleBus.CurrentEncounter == null) return;
             if (_gameplayBus.Hero.TryGetComponent(out StepBehaviour stepBehaviourComponent))
                 stepBehaviourComponent.Step -= DecrementStepCountBeforeTriggerBattle;
-            _currentEncounterData = null; // either null or new EncounterData()
+            _battleBus.CurrentEncounter = null; // either null or new EncounterData()
         }
 
         private void RegisterStepHandler(string encounterId)
@@ -66,8 +68,8 @@ namespace CryptoQuest.Gameplay.Encounter
 
         protected virtual void SetupStepsCounter(EncounterData encounter)
         {
-            _currentEncounterData = encounter;
-            _maxEncounterSteps = _currentEncounterData.EncounterRate;
+            _battleBus.CurrentEncounter = encounter;
+            _maxEncounterSteps = _battleBus.CurrentEncounter.EncounterRate;
             GenerateRandomStepTilNextTrigger();
             if (_gameplayBus.Hero.TryGetComponent(out StepBehaviour stepBehaviourComponent))
                 stepBehaviourComponent.Step += DecrementStepCountBeforeTriggerBattle;
@@ -82,7 +84,7 @@ namespace CryptoQuest.Gameplay.Encounter
             if (SafeZoneController.IsSafeZoneActive) return;
             _stepLeftBeforeTriggerBattle--;
             if (_stepLeftBeforeTriggerBattle > 0) return;
-            TriggerBattle(_currentEncounterData);
+            TriggerBattle(_battleBus.CurrentEncounter);
         }
 
         private void TriggerBattle(EncounterData encounter)
