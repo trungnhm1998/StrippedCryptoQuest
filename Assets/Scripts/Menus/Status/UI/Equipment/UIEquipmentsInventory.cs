@@ -9,6 +9,7 @@ using CryptoQuest.UI.Common;
 using CryptoQuest.UI.Utilities;
 using IndiGames.Core.Common;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
@@ -19,6 +20,7 @@ namespace CryptoQuest.Menus.Status.UI.Equipment
     /// </summary>
     public class UIEquipmentsInventory : MonoBehaviour
     {
+        public UnityAction OnEquipEquipmentEvent;
         [SerializeField] private EquipmentInventory _inventory;
         [SerializeField] private ScrollRect _scrollRect;
         [SerializeField] private UIEquipmentItem _equipmentItemPrefab;
@@ -175,6 +177,7 @@ namespace CryptoQuest.Menus.Status.UI.Equipment
         {
             _equippingItemToBeRemoveFromInventory = equippingItemUI;
             _equipmentsController.Equip(equippingItemUI.Equipment, _slotSlot);
+            OnEquipEquipmentEvent?.Invoke();
         }
 
         public void UnequipPressed() => _equipmentsController.Unequip(_slotSlot);

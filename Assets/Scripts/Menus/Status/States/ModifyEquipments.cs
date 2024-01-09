@@ -15,6 +15,7 @@ namespace CryptoQuest.Menus.Status.States
 
             StatusPanel.CharacterEquipmentsPanel.Hide();
             StatusPanel.EquipmentsInventoryPanel.SetActiveAllEquipmentButtons(true);
+            StatusPanel.EquipmentsInventoryPanel.OnEquipEquipmentEvent += BackToOverview;
             StatusPanel.EquipmentsInventoryPanel.RenderEquipmentsInInventory(StatusPanel.InspectingHero,
                 StatusPanel.ModifyingSlot, StatusPanel.ModifyingCategory);
             StatusPanel.EquipmentsInventoryPanel.SelectItem();
@@ -25,6 +26,7 @@ namespace CryptoQuest.Menus.Status.States
             StatusPanel.Input.MenuCancelEvent -= BackToOverview;
             StatusPanel.ShowTooltipEvent.RaiseEvent(false);
             StatusPanel.EquipmentsInventoryPanel.SetActiveAllEquipmentButtons(false);
+            StatusPanel.EquipmentsInventoryPanel.OnEquipEquipmentEvent -= BackToOverview;
         }
 
         private void BackToOverview()
