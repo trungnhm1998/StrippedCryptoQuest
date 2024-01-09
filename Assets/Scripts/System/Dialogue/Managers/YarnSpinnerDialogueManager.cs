@@ -111,7 +111,6 @@ namespace CryptoQuest.System.Dialogue.Managers
             _currentYarnNode = yarnNodeName;
             Debug.Log($"YarnSpinnerDialogueManager::ShowDialogue: yarnNodeName[{yarnNodeName}]");
             _gameState.UpdateGameState(EGameState.Dialogue);
-            _inputMediator.EnableDialogueInput();
             StartCoroutine(CoRunDialogue(yarnNodeName));
         }
 

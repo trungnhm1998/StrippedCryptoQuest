@@ -100,7 +100,7 @@ namespace CryptoQuest.UI.Dialogs.BattleDialog
         {
             _nextMark.SetActive(false);
             _dialogText.text = _message;
-            if (_requireInput) _inputMediator.EnableInputMap("Dialogues");
+            if (_requireInput) _inputMediator.EnableDialogueInput();
 
             base.Show();
 
