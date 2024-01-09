@@ -107,7 +107,7 @@ MonoBehaviour:
   _onSceneLoadedEventChannel: {fileID: 11400000, guid: b8b96e43d21a7bf4c96df4cb83c2b764, type: 2}
   _spawnPoint: {fileID: 7015920802311275793}
   _actorDef: {fileID: 11400000, guid: 2e7720293a9bafb4391b1b90541067e8, type: 2}
-  _actorSpawnSettingSO: {fileID: 11400000, guid: 411c5cf03ffb23749922827cae38bc32, type: 2}
+  _actorSpawnSettingSO: {fileID: 0}
   _actorDeSpawnSettingSO: {fileID: 11400000, guid: 74cbef86989f4c6449c89aed54a0633d, type: 2}
 --- !u!1001 &7896420215358794962
 PrefabInstance:
@@ -161,6 +161,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8239929161965676886, guid: 5db2daaaa67c7554f9ab4f59f1c52346, type: 3}
+      propertyPath: m_SceneBindings.Array.size
+      value: 33
+      objectReference: {fileID: 0}
+    - target: {fileID: 8239929161965676886, guid: 5db2daaaa67c7554f9ab4f59f1c52346, type: 3}
+      propertyPath: m_SceneBindings.Array.data[32].key
+      value: 
+      objectReference: {fileID: 461362429141689004, guid: 20e9dbbc4e7e03e46a25e48fa3664ed5, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
