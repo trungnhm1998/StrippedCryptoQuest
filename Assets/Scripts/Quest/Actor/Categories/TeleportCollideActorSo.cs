@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using CryptoQuest.EditorTool;
 using CryptoQuest.Map;
 using IndiGames.Core.SceneManagementSystem.ScriptableObjects;
 using UnityEngine;
@@ -34,6 +35,10 @@ namespace CryptoQuest.Quest.Actor.Categories
 
             GoTo actorConfig = _handle.Result.GetComponent<GoTo>();
             actorConfig.SetUpTeleportInfo(Data.Destination, Data.Path);
+
+            if (!parent.TryGetComponent<ShowCubeWireUtil>(out var showCubeWireUtil)) yield break;
+            actorConfig.SetBoxSize(showCubeWireUtil.SizeBox);
+
 
             if (!_handle.Result.TryGetComponent<BoxCollider2D>(out var targetCollider2D)) yield break;
             if (!parent.TryGetComponent<BoxCollider2D>(out var parentCollider2D)) yield break;

@@ -51,5 +51,7 @@ namespace CryptoQuest.Map
             _nextScene = nextScene;
             _mapPath = mapPath;
         }
+
+        public void SetBoxSize(Vector2 componentSizeBox) => _collider.size = componentSizeBox;
     }
 }
