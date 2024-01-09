@@ -122,6 +122,7 @@ namespace CryptoQuest.Battle
         private void OnBattleEnd()
         {
             _unloadSceneEvent.RequestUnload(_battleSceneSO);
+            _battleBus.CurrentBattlefield = null;
         }
 
         private CompletedContext _context;

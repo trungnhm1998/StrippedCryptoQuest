@@ -118,10 +118,13 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Monster
             _encounterDatabase = AssetDatabase.LoadAssetAtPath<EncounterDatabase>(AssetDatabase.GUIDToAssetPath(guid));
         }
 
-        private Sprite GetBackgroundSprite(string name)
+        private AssetReferenceT<Sprite> GetBackgroundSprite(string name)
         {
             bool isFound = _backgrounds.TryGetValue(name.ToLower(), out var result);
-            return isFound ? result : null;
+            if (!isFound) return null;
+            string path = AssetDatabase.GetAssetPath(result);
+            string guid = AssetDatabase.AssetPathToGUID(path);
+            return new AssetReferenceT<Sprite>(guid);
         }
 
         private List<EncounterData.GroupConfig> GetGroupConfigs(EncounterDataModel data)

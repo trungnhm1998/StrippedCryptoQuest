@@ -12,7 +12,6 @@ namespace CryptoQuest.Battle.PostBattleHandlers
     {
         [SerializeField] private RewardLootEvent _rewardLootEvent;
         [SerializeField] private BattleResultEventSO _battleWonEvent;
-        [SerializeField] private BattleBus _battleBus;
         private TinyMessageSubscriptionToken _wonToken;
 
         private void Awake()
@@ -22,7 +21,7 @@ namespace CryptoQuest.Battle.PostBattleHandlers
 
         private void OnDestroy()
         {
-            if(_wonToken != null ) BattleEventBus.UnsubscribeEvent(_wonToken);
+            if (_wonToken != null) BattleEventBus.UnsubscribeEvent(_wonToken);
         }
 
         private BattleWonEvent _context;

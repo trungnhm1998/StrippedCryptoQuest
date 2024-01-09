@@ -23,8 +23,13 @@ namespace CryptoQuest.Battle.PostBattleHandlers
         [SerializeField] private GameStateSO _gameState;
         protected SceneScriptableObject BattleSceneSO => _battleSceneSO;
         [SerializeField] private UnloadSceneEventChannelSO _unloadSceneEvent;
+        [SerializeField] protected BattleBus _battleBus;
 
-        protected void UnloadBattleScene() => _unloadSceneEvent.RequestUnload(_battleSceneSO);
+        protected void UnloadBattleScene()
+        {
+            _unloadSceneEvent.RequestUnload(_battleSceneSO);
+            _battleBus.CurrentBattlefield = null;
+        }
 
         protected void FinishPresentationAndEnableInput()
         {
