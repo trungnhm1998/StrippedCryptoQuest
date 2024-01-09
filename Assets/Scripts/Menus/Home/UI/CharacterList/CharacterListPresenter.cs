@@ -21,8 +21,6 @@ namespace CryptoQuest.Menus.Home.UI.CharacterList
         private void OnDisable()
         {
             _uiCharacterList.InspectingHero -= UpdateDetails;
-            _uiCharacterList.gameObject.SetActive(true);
-            _characterDetails.gameObject.SetActive(true);
         }
 
         private void UpdateDetails(HeroSpec spec)

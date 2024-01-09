@@ -1,10 +1,13 @@
 ﻿using CryptoQuest.Battle.Components;
+using CryptoQuest.Character.Hero.AvatarProvider;
 using CryptoQuest.UI.Character;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.Components;
 using TMPro;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 using UnityEngine.Localization;
 using UnityEngine.Localization.Components;
+using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.UI;
 
 namespace CryptoQuest.Menus.Home.UI.CharacterList
@@ -24,6 +27,9 @@ namespace CryptoQuest.Menus.Home.UI.CharacterList
         private AttributeSystemBehaviour _inspectingAttributeSystem;
         [SerializeField] private string _lvlTxtFormat = "Lv. {0}";
 
+        [SerializeField] private HeroAvatarDatabase _avatarDatabase;
+        private AsyncOperationHandle<Sprite> _handle;
+
         public void InspectCharacter(HeroBehaviour hero)
         {
             if (hero.IsValid() == false) return;
@@ -38,7 +44,7 @@ namespace CryptoQuest.Menus.Home.UI.CharacterList
             SetElement(hero.Spec.Elemental.Icon);
             SetLevel(levelSystem.Level);
             SetLocalizedName(hero.DetailsInfo.LocalizedName);
-            if (hero.BattleAvatar != null) SetAvatar(hero.BattleAvatar);
+            SetAvatarAsync(hero);
             SetupExpUI(hero);
         }
 
@@ -55,7 +61,39 @@ namespace CryptoQuest.Menus.Home.UI.CharacterList
 
         private void SetName(string charName) => _name.text = charName;
 
-        private void SetAvatar(Sprite avatar) => _avatar.sprite = avatar;
+        private void SetAvatarAsync(HeroBehaviour hero)
+        {
+            if (_handle.IsValid())
+            {
+                _handle.Completed -= SetAvatarInternal;
+                _avatar.enabled = false;
+                Addressables.Release(_handle);
+                _handle = new();
+            }
+
+            var id = $"{hero.DetailsInfo.Id}-{hero.Class.Id}";
+            var avatar = _avatarDatabase.CacheLookupTable[id];
+            if (avatar.OperationHandle.IsValid())
+            {
+                SetAvatar(avatar.OperationHandle.Result as Sprite);
+                return;
+            }
+            _handle = avatar.LoadAssetAsync();
+            _handle.Completed += SetAvatarInternal;
+        }
+
+        private void OnDisable()
+        {
+            if (_handle.IsValid()) _handle.Completed -= SetAvatarInternal;
+        }
+
+        private void SetAvatarInternal(AsyncOperationHandle<Sprite> _) => SetAvatar(_handle.Result);
+
+        private void SetAvatar(Sprite sprite)
+        {
+            _avatar.enabled = true;
+            _avatar.sprite = sprite;
+        }
 
         private void SetElement(Sprite elementIcon) => _characterElement.sprite = elementIcon;
 
