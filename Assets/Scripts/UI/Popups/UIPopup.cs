@@ -2,6 +2,7 @@
 using UnityEngine;
 using UnityEngine.Localization;
 using UnityEngine.Localization.Components;
+using UnityEngine.Localization.Settings;
 
 namespace CryptoQuest.UI.Popups
 {
@@ -21,7 +22,14 @@ namespace CryptoQuest.UI.Popups
         public UIPopup WithBody(LocalizedString body)
         {
             // Prevent change to same message when multiple show up
-            _bodyString.StringReference = new LocalizedString(body.TableReference, body.TableEntryReference);
+            LocalizedString stringReference = new LocalizedString
+            {
+                TableReference = body.TableReference,
+                TableEntryReference = body.TableEntryReference,
+                Arguments = body.Arguments
+            };
+
+            _bodyString.StringReference = stringReference;
             return this;
         }
 
