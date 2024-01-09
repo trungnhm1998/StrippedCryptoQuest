@@ -6,13 +6,19 @@ using CryptoQuest.Gameplay.PlayerParty;
 using IndiGames.Core.Common;
 using UnityEngine;
 
-namespace CryptoQuest.BlackSmith.Evolve.UI
+namespace CryptoQuest.ShopSystem.PreviewCharacter
 {
     public class CharacterPartyPresenter : MonoBehaviour
     {
-        [SerializeField] private List<UICharacterInfo> _listCharacter;
+        [SerializeField] private List<UICharacterInfo> _characterInfoUis;
         private IPartyController _partyController;
         private IHeroAvatarProvider _heroAvatarProvider;
+
+        private void OnValidate()
+        {
+            _characterInfoUis =
+                new List<UICharacterInfo>(GetComponentsInChildren<UICharacterInfo>(true));
+        }
 
         private void OnEnable()
         {
@@ -31,7 +37,7 @@ namespace CryptoQuest.BlackSmith.Evolve.UI
         {
             for (int i = 0; i < _partyController.Slots.Length; i++)
             {
-                _listCharacter[i].gameObject.SetActive(false);
+                _characterInfoUis[i].gameObject.SetActive(false);
             }
         }
 
@@ -39,10 +45,11 @@ namespace CryptoQuest.BlackSmith.Evolve.UI
         {
             for (int i = 0; i < _partyController.Slots.Length; i++)
             {
-                _listCharacter[i].gameObject.SetActive(true);
-                _listCharacter[i].LoadCharacterDetail(_partyController.Slots[i].HeroBehaviour);
+                if (!_partyController.Slots[i].HeroBehaviour.IsValid()) return;
+                _characterInfoUis[i].gameObject.SetActive(true);
+                _characterInfoUis[i].LoadCharacterDetail(_partyController.Slots[i]);
 
-                StartCoroutine(CoLoadAvatar(_partyController.Slots[i].HeroBehaviour, _listCharacter[i]));
+                StartCoroutine(CoLoadAvatar(_partyController.Slots[i].HeroBehaviour, _characterInfoUis[i]));
             }
         }
 
