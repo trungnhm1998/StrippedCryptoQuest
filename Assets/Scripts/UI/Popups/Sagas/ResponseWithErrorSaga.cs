@@ -10,7 +10,7 @@ namespace CryptoQuest.UI.Popups.Sagas
         {
             if (ctx.RequestException.StatusCode == (long)HttpStatusCode.ServiceUnavailable)
             {
-                ActionDispatcher.Dispatch(new ServerMaintaining());
+                ActionDispatcher.Dispatch(new ServerMaintaining(ctx.RequestException));
                 return;
             }
 

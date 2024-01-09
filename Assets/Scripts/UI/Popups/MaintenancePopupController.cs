@@ -6,7 +6,6 @@ namespace CryptoQuest.UI.Popups
 {
     public class MaintenancePopupController : BasePopupController<UIPopup>
     {
-        [SerializeField] private StringEventChannelSO _maintenancePopupEventSO;
         [SerializeField] private LocalizedStringEventChannelSO _localizedMaintenancePopupEventSO;
         [SerializeField] private LocalizedString _header;
         [SerializeField] private Color _headerColor;
@@ -14,26 +13,14 @@ namespace CryptoQuest.UI.Popups
 
         private void OnEnable()
         {
-            _maintenancePopupEventSO.EventRaised += ShowPopup;
             _localizedMaintenancePopupEventSO.EventRaised += ShowPopup;
-
             _inputManager.ClosePopupEvent += HideLastPopup;
         }
 
         private void OnDisable()
         {
-            _maintenancePopupEventSO.EventRaised -= ShowPopup;
             _localizedMaintenancePopupEventSO.EventRaised -= ShowPopup;
-
             _inputManager.ClosePopupEvent -= HideLastPopup;
-        }
-
-        private void ShowPopup(string body)
-        {
-            if (_popups.Count >= 1) return;
-            ShowPopup(popup =>
-                SetupMaintenancePopup(popup)
-                    .WithBody(body));
         }
 
         private void ShowPopup(LocalizedString body)
