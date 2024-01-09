@@ -211,6 +211,7 @@ namespace CryptoQuest.Battle.Events
 
     public class ReflectDamageEvent : LogEvent { }
 
+    public class CanNotEscapeEvent : LogEvent{}
 
     public class CastSkillEvent : LogEvent
     {

@@ -1,3 +1,4 @@
+using CryptoQuest.Battle.Events;
 using CryptoQuest.Map;
 using CryptoQuest.System;
 using CryptoQuest.UI.SpiralFX;
@@ -53,6 +54,7 @@ namespace CryptoQuest.Gameplay.Manager
             {
                 Debug.LogWarning($"No escape route found for scene {currentScene.name}");
                 escapeAction.OnEscapeFailed?.Invoke();
+                BattleEventBus.RaiseEvent(new CanNotEscapeEvent());
             }
         }
 
