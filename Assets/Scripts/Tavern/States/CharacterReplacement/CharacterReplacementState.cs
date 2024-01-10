@@ -89,8 +89,14 @@ namespace CryptoQuest.Tavern.States.CharacterReplacement
             if (_controller.UICharacterReplacement.SelectedGameItemsIds.Count == 0 &&
                 _controller.UICharacterReplacement.SelectedDboxItemsIds.Count == 0) return;
 
+            _controller.UICharacterReplacement.SelectedGameItemsIds.Clear();
+            _controller.UICharacterReplacement.SelectedDboxItemsIds.Clear();
+
             _controller.UIGameList.SetData(_cachedGameData);
             _controller.UIDboxList.SetData(_cachedDboxData);
+            _controller.UIGameList.UpdateList();
+            _controller.UIDboxList.UpdateList();
+            _controller.UIGameList.HandleInPartyHeroes();
         }
 
         private void ViewCharacterDetails()

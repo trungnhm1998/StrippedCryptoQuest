@@ -60,7 +60,7 @@ namespace CryptoQuest.Tavern.States.PartyOrganization
             foreach (var partySlot in _party.GetParty())
             {
                 if (partySlot.IsValid() == false) continue;
-                var isMain = partySlot.Hero.Id == 0;
+                var isMain = partySlot.Hero.Origin.DetailInformation.Id == 0;
                 if (isMain) continue;
                 _cachedInPartyHeroes.Add(partySlot.Hero);
             }
@@ -110,8 +110,13 @@ namespace CryptoQuest.Tavern.States.PartyOrganization
             if (_controller.UIPartyOrganization.SelectedNonPartyCharacterIds.Count == 0 &&
                 _controller.UIPartyOrganization.SelectedPartyCharacterIds.Count == 0) return;
 
+            _controller.UIPartyOrganization.SelectedNonPartyCharacterIds.Clear();
+            _controller.UIPartyOrganization.SelectedPartyCharacterIds.Clear();
+
             _controller.UIParty.SetData(_cachedInPartyHeroes);
             _controller.UINonParty.SetData(_cachedNonPartyHeroes);
+            _controller.UIParty.UpdateList();
+            _controller.UINonParty.UpdateList();
         }
 
         private void ViewCharacterDetails()
