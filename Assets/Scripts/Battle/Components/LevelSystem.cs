@@ -1,5 +1,6 @@
 using System;
 using CryptoQuest.Character.LevelSystem;
+using CryptoQuest.Inventory.Actions;
 using IndiGames.Core.EditorTools.Attributes.ReadOnlyAttribute;
 using IndiGames.Core.Events;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.Components;
@@ -39,6 +40,7 @@ namespace CryptoQuest.Battle.Components
 
         private HeroBehaviour _character;
         private AttributeSystemBehaviour _attributeSystem;
+
         private void Awake()
         {
             _character = GetComponent<HeroBehaviour>();
@@ -67,10 +69,13 @@ namespace CryptoQuest.Battle.Components
             var addedExp = expToAdd * expBuffValue.CurrentValue;
             _expProvider.Exp += addedExp;
 
+            ActionDispatcher.Dispatch(new UpdateCharacterExpAction(_character.Spec.Id, _expProvider.Exp));
+
             CalculateCurrentLevel();
         }
 
         private float _lastKnownExp;
+
         private int CalculateCurrentLevel()
         {
             if (_needToRecalculateLevel == false && Mathf.Approximately(_lastKnownExp, _expProvider.Exp)) return _level;
@@ -94,12 +99,14 @@ namespace CryptoQuest.Battle.Components
         public int GetNextLevelRequireExp()
         {
             var currentLevel = Level;
-            return new LevelCalculator(_statsProvider.Stats.MaxLevel).RequiredExps[IsMaxedLevel ? currentLevel - 1 : currentLevel];
+            return new LevelCalculator(_statsProvider.Stats.MaxLevel).RequiredExps[
+                IsMaxedLevel ? currentLevel - 1 : currentLevel];
         }
 
         public int GetCurrentLevelExp()
         {
-            var currentLevelAccumulateExp = new LevelCalculator(_statsProvider.Stats.MaxLevel).AccumulatedExps[Level - 1];
+            var currentLevelAccumulateExp =
+                new LevelCalculator(_statsProvider.Stats.MaxLevel).AccumulatedExps[Level - 1];
             return IsMaxedLevel
                 ? GetNextLevelRequireExp()
                 : (int)(_expProvider.Exp - currentLevelAccumulateExp);
