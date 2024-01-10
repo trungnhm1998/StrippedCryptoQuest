@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using CryptoQuest.Sagas.Objects;
 using IndiGames.Core.Events;
-using Obj = CryptoQuest.Sagas.Objects;
 
 namespace CryptoQuest.Actions
 {
@@ -38,12 +37,12 @@ namespace CryptoQuest.Actions
     public class GetGameNftBeastsSucceed : ActionBase
     {
         public List<BeastResponse> InGameBeasts { get; }
-        
+
         public GetGameNftBeastsSucceed(List<BeastResponse> inGameBeasts)
         {
             InGameBeasts = inGameBeasts;
         }
     }
-    
+
     public class FetchProfileConsumablesAction : ActionBase { }
 }

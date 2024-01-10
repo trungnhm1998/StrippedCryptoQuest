@@ -4,7 +4,6 @@ using System.Linq;
 using CryptoQuest.Character.Hero;
 using CryptoQuest.Item.Equipment;
 using UnityEngine;
-using ECategory = CryptoQuest.Item.Equipment.EEquipmentCategory;
 
 namespace CryptoQuest.Battle.Components
 {
@@ -121,5 +120,14 @@ namespace CryptoQuest.Battle.Components
         }
 
         private void OnEquipmentRemoved(IEquipment equipment) => Removed?.Invoke(equipment);
+
+        public void UnequipAll()
+        {
+            foreach (var slot in _equipments.Slots)
+            {
+                if (slot.IsValid() == false) continue;
+                Unequip(slot.Equipment);
+            }
+        }
     }
 }

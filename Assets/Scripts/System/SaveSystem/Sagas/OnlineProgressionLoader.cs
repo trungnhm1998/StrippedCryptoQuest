@@ -6,6 +6,7 @@ using CryptoQuest.API;
 using CryptoQuest.Networking;
 using CryptoQuest.Sagas;
 using CryptoQuest.System.SaveSystem.Loaders;
+using CryptoQuest.UI.Actions;
 using IndiGames.Core.Common;
 using IndiGames.Core.Events;
 using Newtonsoft.Json;
@@ -37,6 +38,7 @@ namespace CryptoQuest.System.SaveSystem.Sagas
     {
         [SerializeField] private Credentials _credentials;
         [SerializeField] private SaveSystemSO _saveSystem;
+        [SerializeReference, SubclassSelector] private ILoader[] _progressionLoaders;
 
         private void Awake()
         {
@@ -130,13 +132,15 @@ namespace CryptoQuest.System.SaveSystem.Sagas
 
         private IEnumerator CoLoadProgression()
         {
-            var loaders = GetComponents<ILoader>();
-            foreach (var loader in loaders)
+            ActionDispatcher.Dispatch(new ShowLoading());
+            foreach (var loader in _progressionLoaders)
             {
-                Debug.Log($"{loader.GetType().Name} loading...");
-                yield return loader.Load(_saveSystem); // adjust loader order on inspector
+                Debug.Log($"OnlineProgressionLoader::CoLoadProgression::{loader.GetType().Name} loading...");
+                loader.Load();
+                yield return loader.LoadAsync(); // adjust loader order on inspector
             }
 
+            ActionDispatcher.Dispatch(new ShowLoading(false));
             ActionDispatcher.Dispatch(new GetProfileSucceed());
         }
     }

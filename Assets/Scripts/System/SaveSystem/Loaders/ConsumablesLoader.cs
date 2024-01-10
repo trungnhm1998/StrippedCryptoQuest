@@ -1,73 +1,56 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
-using CryptoQuest.Actions;
 using CryptoQuest.API;
 using CryptoQuest.Inventory;
 using CryptoQuest.Item.Consumable;
 using CryptoQuest.Networking;
 using CryptoQuest.Sagas.Objects;
 using IndiGames.Core.Common;
-using IndiGames.Core.Events;
 using UniRx;
-#if UNITY_EDITOR
-using UnityEditor;
-#endif
 using UnityEngine;
 
-namespace CryptoQuest.Sagas
+namespace CryptoQuest.System.SaveSystem.Loaders
 {
-    public class FetchConsumableInventorySaga : SagaBase<FetchProfileConsumablesAction>
+    [Serializable]
+    public class ConsumablesLoader : Loader
     {
         [SerializeField] private ConsumableInventory _inventory;
         [SerializeField] private ConsumableSO[] _consumables;
-        
+
         private readonly Dictionary<string, ConsumableSO> _consumableMap = new();
+        private bool _inventoryFilled;
 
-#if UNITY_EDITOR
-        private void OnValidate()
-        {
-            var consumableAssetGuids = AssetDatabase.FindAssets("t:ConsumableSO");
-            _consumables = new ConsumableSO[consumableAssetGuids.Length];
-            for (var index = 0; index < consumableAssetGuids.Length; index++)
-            {
-                var assetPath = AssetDatabase.GUIDToAssetPath(consumableAssetGuids[index]);
-                _consumables[index] = AssetDatabase.LoadAssetAtPath<ConsumableSO>(assetPath);
-            }
-        }
-#endif
-
-        private void Awake()
+        public override IEnumerator LoadAsync()
         {
             foreach (var consumable in _consumables)
             {
                 _consumableMap.Add(consumable.ID, consumable);
             }
-        }
 
-        protected override void HandleAction(FetchProfileConsumablesAction ctx)
-        {
             _inventory.Items.Clear();
             var restClient = ServiceProvider.GetService<IRestClient>();
-            restClient
+            var op = restClient
                 .Get<ItemsResponse>(Consumable.ITEMS)
-                .Subscribe(AddToInventory);
-        }
+                .ToYieldInstruction();
+            yield return op;
 
-        private void AddToInventory(ItemsResponse response)
-        {
-            var responseItems = response.data.items;
-            foreach (var item in responseItems)
+            var itemResponses = op.Result.data.items;
+            foreach (var item in itemResponses)
             {
                 _inventory.Items.Add(new ConsumableInfo(_consumableMap[item.itemId], item.itemNum));
             }
+
         }
     }
+
+    #region Network Object
 
     [Serializable]
     public class ItemsResponse : CommonResponse
     {
         public Data data;
-        
+
         [Serializable]
         public class Data
         {
@@ -101,4 +84,6 @@ namespace CryptoQuest.Sagas
         public int price;
         public int sellingPrice;
     }
+
+    #endregion
 }

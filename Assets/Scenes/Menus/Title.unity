@@ -666,9 +666,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1020480044}
   - component: {fileID: 1020480045}
-  - component: {fileID: 1020480059}
-  - component: {fileID: 1020480058}
-  - component: {fileID: 1020480060}
   m_Layer: 0
   m_Name: ProgressionLoaders
   m_TagString: Untagged
@@ -705,46 +702,86 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _credentials: {fileID: 11400000, guid: 3bc0ee02274acb749913af55e08d1158, type: 2}
   _saveSystem: {fileID: 11400000, guid: 660bab7c7e2db6946b3a03dc73ffe40f, type: 2}
---- !u!114 &1020480058
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1020480043}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3a719608e99ae4e4c8ec04eab3a12a4d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _audioSetting: {fileID: 11400000, guid: d52bbf0b92f08de4b8bc3cd5b8270cb8, type: 2}
-  _languageSetting: {fileID: 11400000, guid: be5a91d1f7a553f4597eaae6d1d12e2d, type: 2}
---- !u!114 &1020480059
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1020480043}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f08f78cdb895c354f8715541dbdb492e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _questSave: {fileID: 11400000, guid: 03445ebfc72acfc499a1e02a30488822, type: 2}
---- !u!114 &1020480060
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1020480043}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8e09e018fba57734ca37fedfca937c8c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _shipBus: {fileID: 11400000, guid: 312b6b19365a1864b9390012b99f669d, type: 2}
+  _progressionLoaders:
+  - rid: 3779421920259735575
+  - rid: 3779421920259735568
+  - rid: 3779421920259735570
+  - rid: 3779421920259735576
+  - rid: 3779421920259735577
+  - rid: 3779421920259735580
+  - rid: 3779421920259735739
+  - rid: 3779421920259735794
+  references:
+    version: 2
+    RefIds:
+    - rid: 3779421920259735568
+      type: {class: ConsumablesLoader, ns: CryptoQuest.System.SaveSystem.Loaders, asm: IndiGames.CryptoQuest}
+      data:
+        _inventory: {fileID: 11400000, guid: 91c03abe9611adc418b808c8d96bb5a5, type: 2}
+        _consumables:
+        - {fileID: 11400000, guid: 332cc0df41750b84999f821d3a1dcceb, type: 2}
+        - {fileID: 11400000, guid: 8326705ae5446bf4385dea75efa747ac, type: 2}
+        - {fileID: 11400000, guid: 99cb0d7269d29d24c9f720d7efee1804, type: 2}
+        - {fileID: 11400000, guid: a961e85997144724099730212570833c, type: 2}
+        - {fileID: 11400000, guid: 338077341d112d24ab842d09a34bcb68, type: 2}
+        - {fileID: 11400000, guid: 94fb93885a5334742bc55a0e7b90010d, type: 2}
+        - {fileID: 11400000, guid: 5a3b57c8aef77b048a9fbb9faaa18477, type: 2}
+        - {fileID: 11400000, guid: 451517a4e117d164bab06b4976325a40, type: 2}
+        - {fileID: 11400000, guid: 963bf739a829c9a4b99e827b67d2f5da, type: 2}
+        - {fileID: 11400000, guid: 18511e1eee3e0ff438cdc599327f78b9, type: 2}
+        - {fileID: 11400000, guid: c5327e73095b81843984647b0aceb06a, type: 2}
+        - {fileID: 11400000, guid: b45a0424f18bd1946a52be454faa2f4d, type: 2}
+        - {fileID: 11400000, guid: f25511123a406b8429066961b502a524, type: 2}
+        - {fileID: 11400000, guid: 708dab7cacdc65a4a9fb403601b1ea5d, type: 2}
+        - {fileID: 11400000, guid: bcc98914c87c007479cf096cc5e3310b, type: 2}
+        - {fileID: 11400000, guid: 667c486bd1d87674cadfb6d9c1ce00e5, type: 2}
+        - {fileID: 11400000, guid: 86e962023eccd114ebff43baa0f90bdb, type: 2}
+        - {fileID: 11400000, guid: 87da3ac7b3a7147428667d8f9bcf3554, type: 2}
+        - {fileID: 11400000, guid: d353957fae1a3d441895216f147e40f9, type: 2}
+        - {fileID: 11400000, guid: 3e959586ab24b23468230c8a165aa860, type: 2}
+        - {fileID: 11400000, guid: 3f66f23f70f71714cb749225152851a7, type: 2}
+        - {fileID: 11400000, guid: eb15ce78a24af324bbd741c21594e71a, type: 2}
+        - {fileID: 11400000, guid: a4ae179df4167764cb0567587323c36f, type: 2}
+        - {fileID: 11400000, guid: 0b1bd7900a10d934ab2473e0a8d91875, type: 2}
+        - {fileID: 11400000, guid: c6d75d32773668c4eb9a6ee0bd99571f, type: 2}
+        - {fileID: 11400000, guid: 2e8f98d127e23414ba3d272d6a4e48c5, type: 2}
+        - {fileID: 11400000, guid: ea4cdd1ffc5577048b2b08c3fa61bf9c, type: 2}
+        - {fileID: 11400000, guid: 6aa2900c2ec6add468e8faa5628d743a, type: 2}
+        - {fileID: 11400000, guid: b53faeac480f88e4d8afab849433d50e, type: 2}
+        - {fileID: 11400000, guid: c672ded6ec7a31b458d77e56b16d27b0, type: 2}
+        - {fileID: 11400000, guid: 899c01dc1a82d514f9ae14503a387e84, type: 2}
+    - rid: 3779421920259735570
+      type: {class: QuestProgressionLoader, ns: CryptoQuest.System.SaveSystem.Loaders, asm: IndiGames.CryptoQuest}
+      data:
+        _questSave: {fileID: 11400000, guid: 03445ebfc72acfc499a1e02a30488822, type: 2}
+        _progressionSystem: {fileID: 11400000, guid: 660bab7c7e2db6946b3a03dc73ffe40f, type: 2}
+    - rid: 3779421920259735575
+      type: {class: SettingsLoader, ns: CryptoQuest.System.SaveSystem.Loaders, asm: IndiGames.CryptoQuest}
+      data:
+        _audioSetting: {fileID: 11400000, guid: d52bbf0b92f08de4b8bc3cd5b8270cb8, type: 2}
+        _languageSetting: {fileID: 11400000, guid: be5a91d1f7a553f4597eaae6d1d12e2d, type: 2}
+        _progressionSystem: {fileID: 11400000, guid: 660bab7c7e2db6946b3a03dc73ffe40f, type: 2}
+    - rid: 3779421920259735576
+      type: {class: ShipLoader, ns: CryptoQuest.System.SaveSystem.Loaders, asm: IndiGames.CryptoQuest}
+      data:
+        _shipBus: {fileID: 11400000, guid: 312b6b19365a1864b9390012b99f669d, type: 2}
+        _progressionSystem: {fileID: 11400000, guid: 660bab7c7e2db6946b3a03dc73ffe40f, type: 2}
+    - rid: 3779421920259735577
+      type: {class: EquipmentsLoader, ns: CryptoQuest.System.SaveSystem.Loaders, asm: IndiGames.CryptoQuest}
+      data:
+        _equipmentInventory: {fileID: 11400000, guid: 4b4903dbe1c434d418a3afff1b12a3ba, type: 2}
+    - rid: 3779421920259735580
+      type: {class: ComponentLoader, ns: CryptoQuest.System.SaveSystem.Loaders, asm: IndiGames.CryptoQuest}
+      data:
+        _loaderContainer: {fileID: 1020480043}
+    - rid: 3779421920259735739
+      type: {class: HeroesInventoryLoader, ns: CryptoQuest.System.SaveSystem.Loaders, asm: IndiGames.CryptoQuest}
+      data:
+        _inventory: {fileID: 11400000, guid: 8e54c04f1de81b14b9717fd394372769, type: 2}
+    - rid: 3779421920259735794
+      type: {class: MagicStoneInventoryLoader, ns: CryptoQuest.System.SaveSystem.Loaders, asm: IndiGames.CryptoQuest}
+      data:
+        _inventory: {fileID: 11400000, guid: dac3b863c8895c7408d0d03a95d1d969, type: 2}
 --- !u!1 &1120536256
 GameObject:
   m_ObjectHideFlags: 0
@@ -904,7 +941,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1387519487}
-  - component: {fileID: 1387519488}
   m_Layer: 0
   m_Name: Sagas
   m_TagString: Untagged
@@ -933,18 +969,6 @@ Transform:
   - {fileID: 1352650705}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1387519488
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1387519486}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b23eb9db8c6b412492a2d73db679f89c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1647131038
 PrefabInstance:
   m_ObjectHideFlags: 0
