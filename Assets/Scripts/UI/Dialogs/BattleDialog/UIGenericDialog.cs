@@ -114,11 +114,11 @@ namespace CryptoQuest.UI.Dialogs.BattleDialog
             base.Hide();
             _inputMediator.NextDialoguePressed -= Hide;
             _inputMediator.EscapeDialoguePressed -= Hide;
-            _dialogText.text = "";
             _hideCallback?.Invoke();
             _hideCallback = null;
 
             _requireInput = false;
+            Clear();
         }
 
         private float _autoHideDuration;
@@ -129,7 +129,7 @@ namespace CryptoQuest.UI.Dialogs.BattleDialog
             return this;
         }
 
-        public void Clear()
+        public virtual void Clear()
         {
             _dialogText.text = "";
         }

@@ -1,6 +1,6 @@
 using CryptoQuest.Gameplay;
 using CryptoQuest.Gameplay.PlayerParty;
-using CryptoQuest.UI.Dialogs.BattleDialog;
+using CryptoQuest.UI.Dialogs.DialogWithCharacterName;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Localization;
@@ -13,10 +13,11 @@ namespace CryptoQuest.Map
         [SerializeField] private PartySO _party;
         [SerializeField] private GameStateSO _gameState;
         [SerializeField] private LocalizedString _message;
+        [SerializeField] private LocalizedString _characterName;
         [SerializeField] private UnityEvent _onShowDialogAndBlock;
         [SerializeField] private UnityEvent _onShowGateAndDisableBlock;
 
-        private UIGenericDialog _dialogue;
+        private UICharacterNamedDialog _dialogue;
 
         private void OnTriggerEnter2D(Collider2D other)
         {
@@ -32,13 +33,15 @@ namespace CryptoQuest.Map
             else _onShowGateAndDisableBlock.Invoke();
         }
 
-        public void ShowMerchantDialogue() => GenericDialogController.Instance.InstantiateAsync(SetDialogueReference);
+        public void ShowMerchantDialogue() =>
+            DialogWithCharacterNameController.Instance.InstantiateAsync(SetDialogueReference);
 
-        private void SetDialogueReference(UIGenericDialog dialog)
+        private void SetDialogueReference(UICharacterNamedDialog characterNamedDialog)
         {
             _gameState.UpdateGameState(EGameState.Dialogue);
-            _dialogue = dialog;
+            _dialogue = characterNamedDialog;
             _dialogue
+                .WithHeader(_characterName)
                 .WithMessage(_message)
                 .RequireInput()
                 .WithHideCallback(HideCallBack)
