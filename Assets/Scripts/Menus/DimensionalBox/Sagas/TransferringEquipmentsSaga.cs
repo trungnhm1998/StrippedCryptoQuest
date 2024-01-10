@@ -34,6 +34,7 @@ namespace CryptoQuest.Menus.DimensionalBox.Sagas
         {
             if (response.code != (int)HttpStatusCode.OK) return;
             ActionDispatcher.Dispatch(new FetchNftEquipmentSucceed(response.data.equipments));
+            ActionDispatcher.Dispatch(new UpdateEquipmentAction(response.data.equipments));
             ActionDispatcher.Dispatch(new TransferSucceed());
         }
 
