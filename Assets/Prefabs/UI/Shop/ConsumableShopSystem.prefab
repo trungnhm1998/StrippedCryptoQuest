@@ -323,6 +323,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88d1a8c47962418c8bd91a1e044fdff1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _merchantInput: {fileID: 11400000, guid: 48ece151462c85b4fa9f6ea804617569, type: 2}
   _strSuccess:
     m_TableReference:
       m_TableCollectionName: GUID:797efb245e165b7468b295e62cb3c0b5
@@ -469,6 +470,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88d1a8c47962418c8bd91a1e044fdff1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _merchantInput: {fileID: 11400000, guid: 48ece151462c85b4fa9f6ea804617569, type: 2}
   _strSuccess:
     m_TableReference:
       m_TableCollectionName: GUID:797efb245e165b7468b295e62cb3c0b5
@@ -1166,6 +1168,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1355424134279613911, guid: b4a8465f3fdf7e44badd9b95905100bd, type: 3}
       propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1377463006589123053, guid: b4a8465f3fdf7e44badd9b95905100bd, type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1460524858902163043, guid: b4a8465f3fdf7e44badd9b95905100bd, type: 3}
@@ -2458,6 +2464,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: UIQuantityDialog
       objectReference: {fileID: 0}
+    - target: {fileID: 8442431061003846663, guid: cc3d7728496a8c84ba8aee8f994051d6, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 6022805063530129103, guid: cc3d7728496a8c84ba8aee8f994051d6, type: 3}
@@ -2637,6 +2647,14 @@ PrefabInstance:
     m_TransformParent: {fileID: 2347290195525006910}
     m_Modifications:
     - target: {fileID: 129962517685438982, guid: f80e19854a7cd7b41829a0d68ed142d8, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 129962517685438982, guid: f80e19854a7cd7b41829a0d68ed142d8, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Mode
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 129962517685438982, guid: f80e19854a7cd7b41829a0d68ed142d8, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
       objectReference: {fileID: 3789870454772370866}
@@ -2644,6 +2662,26 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Target
       value: 
       objectReference: {fileID: 8039117299309811672}
+    - target: {fileID: 129962517685438982, guid: f80e19854a7cd7b41829a0d68ed142d8, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: SetActive
+      objectReference: {fileID: 0}
+    - target: {fileID: 129962517685438982, guid: f80e19854a7cd7b41829a0d68ed142d8, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
+      value: SetActive
+      objectReference: {fileID: 0}
+    - target: {fileID: 129962517685438982, guid: f80e19854a7cd7b41829a0d68ed142d8, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_BoolArgument
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 129962517685438982, guid: f80e19854a7cd7b41829a0d68ed142d8, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 129962517685438982, guid: f80e19854a7cd7b41829a0d68ed142d8, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 2093369584229436193, guid: f80e19854a7cd7b41829a0d68ed142d8, type: 3}
       propertyPath: m_Name
       value: SelectActionPanel
@@ -2860,6 +2898,10 @@ PrefabInstance:
       propertyPath: _shopSystem
       value: 
       objectReference: {fileID: 8377733117027540253}
+    - target: {fileID: 8294525842125602948, guid: f80e19854a7cd7b41829a0d68ed142d8, type: 3}
+      propertyPath: _closeSystemEvent
+      value: 
+      objectReference: {fileID: 11400000, guid: de9c4c3130ad0d043b231d343332db90, type: 2}
     - target: {fileID: 9058052419903585982, guid: f80e19854a7cd7b41829a0d68ed142d8, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1

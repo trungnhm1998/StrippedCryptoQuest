@@ -1,4 +1,7 @@
-﻿using CryptoQuest.UI.Dialogs.BattleDialog;
+﻿using CryptoQuest.Battle.Presenter.Commands;
+using CryptoQuest.Input;
+using CryptoQuest.Merchant;
+using CryptoQuest.UI.Dialogs.BattleDialog;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Events;
@@ -8,6 +11,7 @@ namespace CryptoQuest.ShopSystem
 {
     public class TransactionResultPanel : MonoBehaviour
     {
+        [SerializeField] private MerchantInput _merchantInput;
         [SerializeField] private LocalizedString _strSuccess;
         [SerializeField] private LocalizedString _strFailed;
         [SerializeField] private UnityEvent _showing;
@@ -18,7 +22,6 @@ namespace CryptoQuest.ShopSystem
             _hiding.AddListener(callback);
             return this;
         }
-
 
         public void ShowSuccess()
         {
@@ -32,6 +35,8 @@ namespace CryptoQuest.ShopSystem
                             _hiding?.Invoke();
                             _hiding?.RemoveAllListeners();
                         });
+                        // Require input in dialog cause merchant input disable
+                        _merchantInput.EnableInput();
                     })
                     .RequireInput()
                     .WithMessage(_strSuccess)
@@ -49,6 +54,7 @@ namespace CryptoQuest.ShopSystem
                     {
                         _hiding?.Invoke();
                         _hiding?.RemoveAllListeners();
+                        _merchantInput.EnableInput();
                     })
                     .RequireInput()
                     .WithMessage(_strFailed)

@@ -133,5 +133,11 @@ namespace CryptoQuest.UI.Dialogs.BattleDialog
         {
             _dialogText.text = "";
         }
+
+        private void OnDisable()
+        {
+            _inputMediator.NextDialoguePressed -= Hide;
+            _inputMediator.EscapeDialoguePressed -= Hide;
+        }
     }
 }

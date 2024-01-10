@@ -1,4 +1,6 @@
-﻿using CryptoQuest.ShopSystem.Sagas;
+﻿using System.Collections;
+using CryptoQuest.ShopSystem.Helpers;
+using CryptoQuest.ShopSystem.Sagas;
 using CryptoQuest.UI.Dialogs.ChoiceDialog;
 using IndiGames.Core.Events;
 using UnityEngine;
@@ -53,7 +55,7 @@ namespace CryptoQuest.ShopSystem
                 .Show(item.Info.Quantity);
 
             _confirmDialog
-                .WithNoCallback(() => EventSystem.current.SetSelectedGameObject(item.gameObject))
+                .WithNoCallback(() => StartCoroutine(item.gameObject.CoDelaySelect()))
                 .WithYesCallback(() => OnConfirmSell(item))
                 .WithHideCallback(() =>
                 {
