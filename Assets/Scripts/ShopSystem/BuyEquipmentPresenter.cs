@@ -1,4 +1,6 @@
-﻿using CryptoQuest.ShopSystem.Sagas;
+﻿using System.Collections;
+using CryptoQuest.ShopSystem.Helpers;
+using CryptoQuest.ShopSystem.Sagas;
 using CryptoQuest.UI.Dialogs.ChoiceDialog;
 using IndiGames.Core.Events;
 using UnityEngine;
@@ -42,12 +44,11 @@ namespace CryptoQuest.ShopSystem
             foreach (var selectable in selectables) selectable.interactable = false;
             _strConfirmBuy["PRICE"] = new StringVariable() { Value = item.PriceText };
             _confirmDialog
-                .WithNoCallback(() => EventSystem.current.SetSelectedGameObject(item.gameObject))
+                .WithNoCallback(() => StartCoroutine(item.gameObject.CoDelaySelect()))
                 .WithYesCallback(() => OnConfirmBuy(item))
                 .WithHideCallback(() =>
                 {
                     foreach (var selectable in selectables) selectable.interactable = true;
-                    EventSystem.current.SetSelectedGameObject(item.gameObject);
                     _buyPanel.enabled = true;
                 })
                 .SetMessage(_strConfirmBuy)

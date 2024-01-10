@@ -1,4 +1,6 @@
-﻿using CryptoQuest.Item.Consumable;
+﻿using System.Collections;
+using CryptoQuest.Item.Consumable;
+using CryptoQuest.ShopSystem.Helpers;
 using CryptoQuest.ShopSystem.Sagas;
 using CryptoQuest.UI.Dialogs.ChoiceDialog;
 using IndiGames.Core.Events;
@@ -55,7 +57,7 @@ namespace CryptoQuest.ShopSystem.Buy.Consumable
                 .Show(_maxQuantityToBuyPerOp);
 
             _confirmDialog
-                .WithNoCallback(() => EventSystem.current.SetSelectedGameObject(item.gameObject))
+                .WithNoCallback(() => StartCoroutine(item.gameObject.CoDelaySelect()))
                 .WithYesCallback(() => OnConfirmBuy(item))
                 .WithHideCallback(() =>
                 {

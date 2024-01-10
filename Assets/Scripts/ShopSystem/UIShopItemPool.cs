@@ -38,6 +38,12 @@ namespace CryptoQuest.ShopSystem
             return uiItem;
         }
 
-        public void Release(TItem item) => _pool.Release(item);
+        public void Release(TItem item)
+        {
+            if (item == null || !item.gameObject.activeInHierarchy)
+                return;
+
+            _pool.Release(item);
+        }
     }
 }
