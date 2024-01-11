@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &1906316362281323888
+--- !u!1 &7524018608237545400
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,87 +8,78 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 4892331544638419590}
-  - component: {fileID: 2318009215599323881}
-  - component: {fileID: 926940271508494187}
-  - component: {fileID: 6141819310579935081}
-  - component: {fileID: 7059610610441106143}
+  - component: {fileID: 1159402272485989553}
+  - component: {fileID: 7377197457449814323}
+  - component: {fileID: 5312257319231163184}
+  - component: {fileID: 766162402664188755}
+  - component: {fileID: 6185177512103234604}
   m_Layer: 0
-  m_Name: ConfigureEquipmentRewardDisplay
+  m_Name: Rewards
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4892331544638419590
+--- !u!4 &1159402272485989553
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1906316362281323888}
+  m_GameObject: {fileID: 7524018608237545400}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 112.48181, y: -97.51701, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2318009215599323881
+--- !u!114 &7377197457449814323
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1906316362281323888}
+  m_GameObject: {fileID: 7524018608237545400}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fc7e8a42c03243ec9b138f0583eaf739, type: 3}
+  m_Script: {fileID: 11500000, guid: c595355cbd98481faedaf3fc9165211e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &926940271508494187
+--- !u!114 &5312257319231163184
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1906316362281323888}
+  m_GameObject: {fileID: 7524018608237545400}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 059a8ee415f140828354ca6f47e8ce0e, type: 3}
+  m_Script: {fileID: 11500000, guid: d931fa7baa1e4ffd9ae2207b0396b67f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _database: {fileID: 11400000, guid: 15f716e2454800f4788ac3aad533640e, type: 2}
-  _tableReference:
-    m_TableCollectionName: Weapon
---- !u!114 &6141819310579935081
+--- !u!114 &766162402664188755
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1906316362281323888}
+  m_GameObject: {fileID: 7524018608237545400}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 614f9398cc2544b5b9510d0e211de0f5, type: 3}
+  m_Script: {fileID: 11500000, guid: 9d6e306f450d4c7982f7aaced0ec227e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _database: {fileID: 11400000, guid: 4758700fa9f3f37408fce38aac7ee0a3, type: 2}
-  _tableReference:
-    m_TableCollectionName: Armor
---- !u!114 &7059610610441106143
+--- !u!114 &6185177512103234604
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1906316362281323888}
+  m_GameObject: {fileID: 7524018608237545400}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 001c3cc5892b451aa1dae5bf09b3e4eb, type: 3}
+  m_Script: {fileID: 11500000, guid: 36a0ad5e1b824b029384ba25309a09ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _database: {fileID: 11400000, guid: bf325462615caa34283c106ca05788e3, type: 2}
-  _tableReference:
-    m_TableCollectionName: Accessory

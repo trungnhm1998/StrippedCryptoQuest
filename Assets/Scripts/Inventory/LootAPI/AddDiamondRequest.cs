@@ -7,6 +7,7 @@ using IndiGames.Core.Common;
 using IndiGames.Core.Events;
 using Newtonsoft.Json;
 using UniRx;
+using UnityEngine;
 
 namespace CryptoQuest.Inventory.LootAPI
 {
@@ -26,7 +27,17 @@ namespace CryptoQuest.Inventory.LootAPI
             _restClient
                 .WithBody(new Body { Diamond = ctx.Amount })
                 .Post<ProfileResponse>(Reward.ADD_DIAMOND)
-                .Subscribe();
+                .Subscribe(OnAddSucceed, OnAddFailed);
+        }
+
+        private void OnAddSucceed(ProfileResponse response)
+        {
+            ActionDispatcher.Dispatch(new SetDiamondAction(response.diamond));
+        }
+
+        private void OnAddFailed(Exception exception)
+        {
+            Debug.LogWarning($"Add currency fail. Log:\n{exception.Message}");
         }
     }
 }

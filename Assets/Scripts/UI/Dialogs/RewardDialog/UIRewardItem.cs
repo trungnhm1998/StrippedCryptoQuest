@@ -59,4 +59,31 @@ namespace CryptoQuest.UI.Dialogs.RewardDialog
             Loot = loot;
         }
     }
+
+    public class RequestConfigEquipmentRewardBase : ActionBase
+    {
+        public UIRewardItem RewardItem { get; set; }
+        public EquipmentLoot Loot { get; set; }
+
+        public RequestConfigEquipmentRewardBase(UIRewardItem rewardItem, EquipmentLoot loot)
+        {
+            RewardItem = rewardItem;
+            Loot = loot;
+        }
+    }
+
+    public class RequestConfigWeaponReward : RequestConfigEquipmentRewardBase
+    {
+        public RequestConfigWeaponReward(UIRewardItem rewardItem, EquipmentLoot loot) : base(rewardItem, loot) { }
+    }
+
+    public class RequestConfigArmorReward : RequestConfigEquipmentRewardBase
+    {
+        public RequestConfigArmorReward(UIRewardItem rewardItem, EquipmentLoot loot) : base(rewardItem, loot) { }
+    }
+
+    public class RequestConfigAccessoryReward : RequestConfigEquipmentRewardBase
+    {
+        public RequestConfigAccessoryReward(UIRewardItem rewardItem, EquipmentLoot loot) : base(rewardItem, loot) { }
+    }
 }
