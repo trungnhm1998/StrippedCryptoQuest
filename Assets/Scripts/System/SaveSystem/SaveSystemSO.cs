@@ -5,7 +5,9 @@ using UnityEngine;
 
 namespace CryptoQuest.System.SaveSystem
 {
-    [CreateAssetMenu(menuName = "Crypto Quest/SaveSystem/SaveSystemSO")]
+    /// <summary>
+    /// Wrapper around the PlayerPrefs for network and local saving
+    /// </summary>
     public class SaveSystemSO : ScriptableObject
     {
         [SerializeField] private string _version = "0.0.1";

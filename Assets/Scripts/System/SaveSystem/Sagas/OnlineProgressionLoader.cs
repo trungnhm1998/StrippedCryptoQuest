@@ -4,7 +4,6 @@ using System.Net;
 using CryptoQuest.Actions;
 using CryptoQuest.API;
 using CryptoQuest.Networking;
-using CryptoQuest.Sagas;
 using CryptoQuest.System.SaveSystem.Loaders;
 using CryptoQuest.UI.Actions;
 using IndiGames.Core.Common;
@@ -143,5 +142,14 @@ namespace CryptoQuest.System.SaveSystem.Sagas
             ActionDispatcher.Dispatch(new ShowLoading(false));
             ActionDispatcher.Dispatch(new GetProfileSucceed());
         }
+
+#if UNITY_EDITOR
+        [ContextMenu("ForceLoad")]
+        public void ForceLoad()
+        {
+            if (Application.isPlaying == false) return;
+            OnComplete();
+        }
+#endif
     }
 }
