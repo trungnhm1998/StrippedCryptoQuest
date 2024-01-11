@@ -40,7 +40,7 @@ public class EquipmentIdToName_importer : AssetPostprocessor
                         AssetDatabase.CreateAsset((ScriptableObject)data, exportPath);
                         data.hideFlags = HideFlags.NotEditable;
                     }
-                    data.param.Clear();
+                    data.Params.Clear();
 
 					// check sheet
                     var sheet = book.GetSheet(sheetName);
@@ -61,7 +61,7 @@ public class EquipmentIdToName_importer : AssetPostprocessor
 					cell = row.GetCell(0); p.equipment_id = (cell == null ? "" : cell.StringCellValue);
 					cell = row.GetCell(1); p.localize_key = (cell == null ? "" : cell.StringCellValue);
 
-                        data.param.Add(p);
+                        data.Params.Add(p);
                     }
                     
                     // save scriptable object

@@ -1,11 +1,13 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.Serialization;
 
 
 public class EquipmentIdToName : ScriptableObject
 {
-    public List<Param> param = new List<Param>();
+    [FormerlySerializedAs("param")]
+    public List<Param> Params = new List<Param>();
 
     [System.SerializableAttribute]
     public class Param
