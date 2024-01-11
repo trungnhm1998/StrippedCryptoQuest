@@ -135,14 +135,14 @@ namespace CryptoQuest.Menus.Home.UI
         public void SwapRight()
         {
             //Swap to first if currently in the last slot
-            var otherTargetIndex = CurrentIndex < _partySlots.Length - 1 ? CurrentIndex + 1 : 0;
+            var otherTargetIndex = CurrentIndex < PartyController.Size - 1 ? CurrentIndex + 1 : 0;
             Swap(otherTargetIndex);
         }
 
         public void SwapLeft()
         {
             //Swap to last if currently in the first slot
-            var otherTargetIndex = CurrentIndex >= 1 ? CurrentIndex - 1 : _partySlots.Length - 1;
+            var otherTargetIndex = CurrentIndex >= 1 ? CurrentIndex - 1 : PartyController.Size - 1;
             Swap(otherTargetIndex);
         }
 
@@ -155,6 +155,8 @@ namespace CryptoQuest.Menus.Home.UI
             }
 
             Transform currentTarget = _sortLayers[CurrentIndex].transform.GetChild(0);
+
+            if (CurrentIndex == otherTargetIndex) return;
             Transform otherTarget = _partySlots[otherTargetIndex].transform.GetChild(0);
             PartyController.Sort(otherTargetIndex, CurrentIndex);
 

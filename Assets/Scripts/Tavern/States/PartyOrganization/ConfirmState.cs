@@ -182,6 +182,13 @@ namespace CryptoQuest.Tavern.States.PartyOrganization
             });
             _heroInventorySO.OwnedHeroes.Add(hero);
             _partySO.GetParty()[index].Hero = new();
+            var validSlots = new List<PartySlotSpec>();
+            foreach (var slot in  _partySO.GetParty())
+            {
+                if (!slot.IsValid()) continue;
+                validSlots.Add(slot);
+            }
+            _partySO.SetParty(validSlots.ToArray());
         }
 
         private void RemoveEquipmentsFromHeroAndAddBackToInventory(PartySlotSpec partySlotSpec)
