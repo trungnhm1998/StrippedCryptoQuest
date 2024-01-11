@@ -280,11 +280,33 @@ PrefabInstance:
       propertyPath: m_Name
       value: MagicStoneInventoryController
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 9086531159809118242, guid: ceb8d725c7c84b24d90703a74758e88d, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7928521171690806024, guid: ceb8d725c7c84b24d90703a74758e88d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 85108599}
   m_SourcePrefab: {fileID: 100100000, guid: ceb8d725c7c84b24d90703a74758e88d, type: 3}
+--- !u!1 &85108598 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7928521171690806024, guid: ceb8d725c7c84b24d90703a74758e88d, type: 3}
+  m_PrefabInstance: {fileID: 85108597}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &85108599
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 85108598}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4556583a148fb21468d40eac41fd2275, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _stoneInventory: {fileID: 11400000, guid: dac3b863c8895c7408d0d03a95d1d969, type: 2}
 --- !u!1 &207858020
 GameObject:
   m_ObjectHideFlags: 0
@@ -466,7 +488,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 597479587}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2dfeb3ae815436f40b9cd0aef1659e8e, type: 3}
   m_Name: 
@@ -1081,7 +1103,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 192679091103723902, guid: 7d6c35d654339cb489dfbf91416939fe, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 192679091103723902, guid: 7d6c35d654339cb489dfbf91416939fe, type: 3}
       propertyPath: m_Interactable
@@ -1335,8 +1357,7 @@ PrefabInstance:
       propertyPath: m_Interactable
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 6753514806078558888, guid: 7d6c35d654339cb489dfbf91416939fe, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
