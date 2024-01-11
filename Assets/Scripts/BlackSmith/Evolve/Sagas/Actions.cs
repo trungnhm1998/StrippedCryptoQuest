@@ -24,15 +24,6 @@ namespace CryptoQuest.BlackSmith.Evolve.Sagas
         }
     }
 
-    public class RemoveEquipments : ActionBase
-    {
-        public List<IEquipment> Equipments { get; private set; }
-        public RemoveEquipments(List<IEquipment> equipments)
-        {
-            Equipments = equipments;
-        }
-    }
-
     public class ResolveResponseSuccessAction : ActionBase
     {
         public EquipmentResponse EquipmentData { get; private set; }

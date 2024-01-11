@@ -52,29 +52,15 @@ namespace CryptoQuest.ChangeClass
             if (member.Spec.Hero.Id == heroId)
             {
                 member.Spec.Hero = new();
-                RemoveEquipmentsFromHeroAndAddBackToInventory(member.Spec);
+                RemoveEquipmentsFromHero(member.Spec);
                 return true;
             }
             return false;
         }
 
-        private void RemoveEquipmentsFromHeroAndAddBackToInventory(PartySlotSpec partySlotSpec)
+        private void RemoveEquipmentsFromHero(PartySlotSpec partySlotSpec)
         {
-            var equippingItems = FilterUniqueEquippingItems(partySlotSpec);
-            foreach (var item in equippingItems) ActionDispatcher.Dispatch(new AddEquipmentAction(item));
             partySlotSpec.EquippingItems.Slots = new();
-        }
-
-        private static HashSet<IEquipment> FilterUniqueEquippingItems(PartySlotSpec partySlotSpec)
-        {
-            var equippingItems = new HashSet<IEquipment>();
-            foreach (var equipmentSlot in partySlotSpec.EquippingItems.Slots)
-            {
-                if (equipmentSlot.IsValid() == false) continue;
-                var item = equipmentSlot.Equipment;
-                equippingItems.Add(item);
-            }
-            return equippingItems;
         }
 
         private void SetCharacterToInventory()

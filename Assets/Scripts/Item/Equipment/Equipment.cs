@@ -23,6 +23,12 @@ namespace CryptoQuest.Item.Equipment
 
         public PassiveAbility[] Passives => Data.Passives;
         public LocalizedString DisplayName => Data.Prefab.DisplayName;
+        
+        public int AttachCharacterId
+        {
+            get => Data.AttachCharacterId;
+            set => Data.AttachCharacterId = value;
+        }
 
         #region Utils
 
@@ -50,6 +56,7 @@ namespace CryptoQuest.Item.Equipment
 
         #endregion
 
+        public virtual bool IsEquipped() => AttachCharacterId != 0;
         public virtual bool IsValid()
             => Data != null && !string.IsNullOrEmpty(Data.ID) && Data.Prefab != null;
     }

@@ -39,9 +39,8 @@ namespace CryptoQuest.BlackSmith.Evolve
         private List<IEquipment> GetAvailableEquipments()
         {
             _partyController ??= ServiceProvider.GetService<IPartyController>();
-            var equipments = new List<IEquipment>(_equipmentInventory.Equipments);
-            equipments.AddRange(_partyController.GetEquippingEquipments());
-            return equipments.Where(e => e.IsNft).ToList();
+            // Equipped equipment will be removed from the list
+            return _equipmentInventory.Equipments.Where(e => (e.IsNft && !e.IsEquipped())).ToList();
         }
 
         /// Only items with max level can be evolved
