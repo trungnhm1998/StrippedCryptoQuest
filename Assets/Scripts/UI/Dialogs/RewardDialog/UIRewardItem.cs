@@ -1,4 +1,5 @@
 using CryptoQuest.Gameplay.Loot;
+using IndiGames.Core.Events;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Localization;
@@ -40,12 +41,22 @@ namespace CryptoQuest.UI.Dialogs.RewardDialog
         public void Visit(EquipmentLoot loot)
         {
             Debug.LogWarning($"Try to loot equipment loot {loot.EquipmentId} but haven't implemented yet");
-            _text.text = $"Equipment {loot.EquipmentId}";
-            // TODO: Implement this
-            // _text.text = loot.EquipmentSO.name;
-            // StartCoroutine(CoLoadName(loot.EquipmentSO.Data.PrefabId));
+            ActionDispatcher.Dispatch(new RequestConfigEquipmentRewardInfo(this, loot));
         }
 
         public void Visit(ExpLoot loot) => _text.text = $"{loot.Exp} EXP";
+        public void SetContentStringRef(LocalizedString localizedString) => _content.StringReference = localizedString;
+    }
+
+    public class RequestConfigEquipmentRewardInfo : ActionBase
+    {
+        public UIRewardItem RewardItem { get; set; }
+        public EquipmentLoot Loot { get; set; }
+
+        public RequestConfigEquipmentRewardInfo(UIRewardItem rewardItem, EquipmentLoot loot)
+        {
+            RewardItem = rewardItem;
+            Loot = loot;
+        }
     }
 }
