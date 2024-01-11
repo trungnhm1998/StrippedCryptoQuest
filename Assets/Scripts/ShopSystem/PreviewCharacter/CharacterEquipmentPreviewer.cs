@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using CryptoQuest.Battle.Components;
+using CryptoQuest.Character.Hero;
 using CryptoQuest.Gameplay.PlayerParty;
 using CryptoQuest.Item.Equipment;
 using CryptoQuest.UI.Character;
@@ -106,8 +107,17 @@ namespace CryptoQuest.ShopSystem.PreviewCharacter
             var cloneSpec = new PartySlotSpec()
             {
                 Hero = slot.Spec.Hero,
+                EquippingItems = new Equipments()
             };
-            cloneSpec.EquippingItems.Slots = slot.Spec.EquippingItems.Slots.ToList();
+
+            foreach (var slotItem in slot.Spec.EquippingItems.Slots)
+            {
+                cloneSpec.EquippingItems.Slots.Add(new EquipmentSlot()
+                {
+                    Type = slotItem.Type,
+                    Equipment = slotItem.Equipment
+                });
+            }
             _clonedSlot.Init(cloneSpec);
 
             // Remove this so equip/unequip wont affect server or inventory
