@@ -22,4 +22,14 @@ namespace CryptoQuest.Inventory.Actions
     {
         public RemoveEquipmentAction(IEquipment item) : base(item) { }
     }
+
+    public class AddEquipmentRequestAction : ActionBase
+    {
+        public string EquipmentId;
+
+        public AddEquipmentRequestAction(string equipmentId)
+        {
+            EquipmentId = equipmentId;
+        }
+    }
 }
