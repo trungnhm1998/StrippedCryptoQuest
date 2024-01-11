@@ -102,7 +102,7 @@ namespace CryptoQuest.Ranch.Evolve.Presenters
             yield break;
         }
 
-        private EvolvableBeast CreateEvolvableBeast(Beast.Beast beast, IBeastEvolvableInfo evolvableInfo)
+        private EvolvableBeast CreateEvolvableBeast(IBeast beast, IBeastEvolvableInfo evolvableInfo)
         {
             return new EvolvableBeast
             {

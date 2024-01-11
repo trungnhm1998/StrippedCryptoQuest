@@ -5,6 +5,7 @@ namespace CryptoQuest.Beast
 {
     public class BeastInventorySO : ScriptableObject
     {
-        [field: SerializeField] public List<Beast> OwnedBeasts { get; set; } = new();
+        [field: SerializeReference, SubclassSelector]
+        public List<IBeast> OwnedBeasts { get; set; } = new();
     }
 }

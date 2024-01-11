@@ -6,7 +6,7 @@ using CryptoQuest.UI.Utilities;
 using UnityEngine;
 using UnityEngine.Pool;
 using UnityEngine.UI;
-using BeastData = CryptoQuest.Beast.Beast;
+using BeastData = CryptoQuest.Beast.IBeast;
 
 namespace CryptoQuest.Ranch.Upgrade.UI
 {
