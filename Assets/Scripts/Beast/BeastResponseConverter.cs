@@ -1,10 +1,7 @@
-﻿using System;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using CryptoQuest.AbilitySystem.Abilities;
-using CryptoQuest.AbilitySystem.Attributes;
-using CryptoQuest.Character;
 using CryptoQuest.Gameplay;
 using CryptoQuest.Sagas.Objects;
 using IndiGames.Core.Common;
@@ -20,19 +17,10 @@ namespace CryptoQuest.Beast
 
     public class BeastResponseConverter : MonoBehaviour, IBeastResponseConverter
     {
-        [SerializeField] private List<Elemental> _elements = new();
-        [SerializeField] private List<CharacterClass> _classes = new();
-        [SerializeField] private List<BeastTypeSO> _type = new();
-        [SerializeField] private List<PassiveAbility> _passive = new();
-        [SerializeField] private List<ResponseAttributeMap> _attributeMap = new();
-        private Dictionary<string, AttributeScriptableObject> _lookupAttribute = new();
-        private FieldInfo[] _fields;
+        [SerializeField] private PassiveAbilityDatabase _passiveAbilityDatabase;
+        [SerializeField] private BeastDefinitionDatabase _database;
 
-        private void Awake()
-        {
-            _lookupAttribute = _attributeMap.ToDictionary(map => map.Name, map => map.Attribute);
-            ServiceProvider.Provide<IBeastResponseConverter>(this);
-        }
+        private void Awake() => ServiceProvider.Provide<IBeastResponseConverter>(this);
 
         public IBeast Convert(BeastResponse response)
         {
@@ -43,35 +31,43 @@ namespace CryptoQuest.Beast
                 Level = response.level,
                 MaxLevel = response.maxLv,
                 Stars = response.star,
-                Elemental = _elements.FirstOrDefault(element => element.Id == Int32.Parse(response.elementId)),
-                Class = _classes.FirstOrDefault(classes => classes.Id == Int32.Parse(response.classId)),
-                Type =
-                    _type.FirstOrDefault(type => type.Id == Int32.Parse(response.characterId)),
-                Passive = _passive.FirstOrDefault(passive => passive.Id == response.passiveSkillId),
+                Elemental = _database.GetElemental(response.elementId),
+                Class = _database.GetClass(response.classId),
+                Type = _database.GetType(response.characterId),
                 Stats = FillBeastStats(response)
             };
+
+            StartCoroutine(CoLoadPassiveAsync(beast, response));
             return beast;
+        }
+
+        private IEnumerator CoLoadPassiveAsync(Beast beast, BeastResponse response)
+        {
+            var passiveHandler = _passiveAbilityDatabase.GetDataById(response.passiveSkillId);
+            yield return passiveHandler;
+
+            beast.Passive = passiveHandler;
         }
 
         private StatsDef FillBeastStats(BeastResponse response)
         {
             var initialAttributes = new Dictionary<AttributeScriptableObject, CappedAttributeDef>();
-            _fields ??= typeof(BeastResponse).GetFields();
-            foreach (var fieldInfo in _fields)
+            foreach (var fieldInfo in _database.GetFields())
             {
-                if (_lookupAttribute.TryGetValue(fieldInfo.Name, out var attributeSO) == false) continue;
+                if (!_database.TryGetAttribute(fieldInfo.Name, out var attribute)) continue;
+
                 var value = (float)fieldInfo.GetValue(response);
-                if (initialAttributes.TryGetValue(attributeSO, out var def))
+                if (initialAttributes.TryGetValue(attribute, out var def))
                 {
                     if (fieldInfo.Name.Contains("min"))
                         def.MinValue = value;
                     else
                         def.MaxValue = value;
-                    initialAttributes[attributeSO] = def;
+                    initialAttributes[attribute] = def;
                 }
                 else
                 {
-                    initialAttributes.Add(attributeSO, new CappedAttributeDef(attributeSO)
+                    initialAttributes.Add(attribute, new CappedAttributeDef(attribute)
                     {
                         MinValue = fieldInfo.Name.Contains("min") ? value : -1,
                         MaxValue = fieldInfo.Name.Contains("max") ? value : -1
