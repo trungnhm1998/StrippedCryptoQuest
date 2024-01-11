@@ -22,6 +22,9 @@ namespace CryptoQuest.Item.Equipment
         public PassiveAbility[] Passives => Data.Passives;
         public LocalizedString DisplayName => Data.Prefab.DisplayName;
 
+        public int AttachCharacterId { get; set; }
+
+        public bool IsEquipped() => false;
         public bool IsValid() => true;
     }
 }

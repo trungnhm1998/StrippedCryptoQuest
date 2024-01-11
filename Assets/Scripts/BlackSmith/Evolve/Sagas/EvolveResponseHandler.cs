@@ -6,6 +6,7 @@ using IndiGames.Core.Events;
 using System.Collections.Generic;
 using CryptoQuest.Sagas.Equipment;
 using UnityEngine;
+using CryptoQuest.Inventory.Actions;
 
 namespace CryptoQuest.BlackSmith.Evolve.Sagas
 {
@@ -20,7 +21,7 @@ namespace CryptoQuest.BlackSmith.Evolve.Sagas
 
             int evolveStatus = response.data.success;
 
-            ActionDispatcher.Dispatch(new RemoveEquipments(GetRemoveEquipments(ctx, evolveStatus)));
+            RemoveEquipments(ctx, evolveStatus);
             ActionDispatcher.Dispatch(new FetchProfileAction());
 
             switch (evolveStatus)
@@ -37,20 +38,13 @@ namespace CryptoQuest.BlackSmith.Evolve.Sagas
             }
         }
 
-        private List<IEquipment> GetRemoveEquipments(EvolveResponsed ctx, int evolveStatus)
+        private void RemoveEquipments(EvolveResponsed ctx, int evolveStatus)
         {
-            // TODO: validate when server response has equipment id
-            var updateEquipments = new List<IEquipment>
-            {
-                ctx.RequestContext.Material
-            };
-
+            ActionDispatcher.Dispatch(new RemoveEquipmentAction(ctx.RequestContext.Material));
             if (evolveStatus == 1)
             {
-                updateEquipments.Add(ctx.RequestContext.Equipment);
+                ActionDispatcher.Dispatch(new RemoveEquipmentAction(ctx.RequestContext.Equipment));
             }
-
-            return updateEquipments;
         }
     }
 }

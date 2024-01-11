@@ -15,7 +15,7 @@ namespace CryptoQuest.ShopSystem
         {
             foreach (var item in _equipmentInventory.Equipments)
             {
-                if (item.IsNft || IsIgnoreType(item)) continue;
+                if (item.IsNft || IsIgnoreType(item) || item.IsEquipped()) continue;
                 if (PriceMappingDatabase.TryGetSellingPrice(item.Data.ID, out var price) == false) continue;
                 var uiItem = GetItem(price);
                 uiItem.Render(item);

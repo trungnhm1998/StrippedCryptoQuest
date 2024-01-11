@@ -21,7 +21,9 @@ namespace CryptoQuest.Item.Equipment
 
         public bool IsNft { get; }
         LocalizedString DisplayName { get; }
+        public int AttachCharacterId { get; set; }
 
+        public bool IsEquipped();
         public bool IsValid();
     }
 }

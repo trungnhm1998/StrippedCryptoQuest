@@ -21,12 +21,10 @@ namespace CryptoQuest.BlackSmith.Upgrade
         public IEnumerator CoGetData()
         {
             _equipmentData = new();
-            var equipments = new List<IEquipment>();
             _partyController ??= ServiceProvider.GetService<IPartyController>();
-            equipments.AddRange(_partyController.GetEquippingEquipments());
-            equipments.AddRange(_inventory.Equipments);
-            
-            foreach (var equipment in equipments)
+
+            // Equipping equipments will not be removed from inventory
+            foreach (var equipment in _inventory.Equipments)
             {
                 if (equipment.Level >= equipment.Data.MaxLevel) continue;
                 _equipmentData.Add(equipment);
