@@ -13,7 +13,7 @@ using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
 using UnityEngine;
 using BeastItem = CryptoQuest.Beast;
 
-namespace CryptoQuest.Ranch.Sagas
+namespace CryptoQuest.Beast
 {
     public interface IBeastResponseConverter
     {

@@ -44,7 +44,7 @@ namespace CryptoQuest.Ranch.Upgrade.Presenters
             UiBeastUpgradeDetail.SetupUI(ui.Beast);
         }
 
-        public void InitBeast(List<Beast.Beast> beasts)
+        public void InitBeast(List<IBeast> beasts)
         {
             LeftPanel.SetActive(true);
             if (beasts.Count <= 0) return;

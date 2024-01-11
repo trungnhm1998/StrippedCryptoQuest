@@ -7,7 +7,7 @@ namespace CryptoQuest.Ranch.Evolve.Interface
 {
     public interface IBeastModel
     {
-        public List<Beast.Beast> Beasts { get; }
+        public List<IBeast> Beasts { get; }
         public IEnumerator CoGetData(BeastInventorySO inventory);
     }
 }

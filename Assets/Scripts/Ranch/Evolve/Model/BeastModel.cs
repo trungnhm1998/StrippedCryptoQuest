@@ -8,11 +8,11 @@ namespace CryptoQuest.Ranch.Evolve.Model
 {
     public class BeastModel : MonoBehaviour, IBeastModel
     {
-        public List<Beast.Beast> Beasts { get; private set; }
+        public List<IBeast> Beasts { get; private set; }
 
         public IEnumerator CoGetData(BeastInventorySO inventory)
         {
-            Beasts = new List<Beast.Beast>();
+            Beasts = new List<IBeast>();
             Beasts.AddRange(inventory.OwnedBeasts);
             yield break;
         }

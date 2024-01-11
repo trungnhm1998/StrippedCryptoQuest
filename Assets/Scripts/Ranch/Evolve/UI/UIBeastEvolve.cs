@@ -1,4 +1,5 @@
 ﻿using System;
+using CryptoQuest.Beast;
 using CryptoQuest.BlackSmith.Commons.UI;
 using CryptoQuest.Menu;
 using CryptoQuest.UI.Tooltips;
@@ -10,7 +11,7 @@ namespace CryptoQuest.Ranch.Evolve.UI
 {
     public class EvolvableBeast
     {
-        public Beast.Beast Beast { get; set; }
+        public IBeast Beast { get; set; }
         public ICurrencyValueEnough GoldCheck { get; set; }
         public ICurrencyValueEnough DiamondCheck { get; set; }
     }
@@ -29,10 +30,10 @@ namespace CryptoQuest.Ranch.Evolve.UI
         [SerializeField] private Color _defaultColor;
         [SerializeField] private UICurrencyValueEnoughText _goldText;
         [SerializeField] private UICurrencyValueEnoughText _diamondText;
-        public Beast.Beast Beast { get; private set; }
+        public IBeast Beast { get; private set; }
         public bool IsEnoughCurrencies { get; private set; }
 
-        public void ConfigureCell(Beast.Beast beast)
+        public void ConfigureCell(IBeast beast)
         {
             Beast = beast;
             _displayName.StringReference = beast.LocalizedName;
