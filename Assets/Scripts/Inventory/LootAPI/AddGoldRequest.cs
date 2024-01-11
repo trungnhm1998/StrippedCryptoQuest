@@ -26,11 +26,7 @@ namespace CryptoQuest.Inventory.LootAPI
             _restClient
                 .WithBody(new Body { Gold = ctx.Amount })
                 .Post<ProfileResponse>(Reward.ADD_GOLD)
-                .Subscribe(OnAddSucceed, OnAddFailed);
+                .Subscribe();
         }
-
-        private void OnAddSucceed(ProfileResponse response) { }
-
-        private void OnAddFailed(Exception exception) { }
     }
 }

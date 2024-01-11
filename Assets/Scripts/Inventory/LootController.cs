@@ -46,7 +46,7 @@ namespace CryptoQuest.Inventory
         public void Visit(EquipmentLoot loot)
         {
             Debug.LogWarning($"Try to loot equipment {loot.EquipmentId} but haven't implemented yet");
-            // TODO: Implement
+            ActionDispatcher.Dispatch(new AddEquipmentRequestAction(loot.EquipmentId));
         }
 
         public void Visit(ExpLoot loot)

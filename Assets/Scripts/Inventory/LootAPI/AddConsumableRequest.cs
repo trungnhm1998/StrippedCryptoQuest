@@ -29,11 +29,7 @@ namespace CryptoQuest.Inventory.LootAPI
             _restClient
                 .WithBody(new Body { Id = ctx.Item.ID, Amount = ctx.Quantity })
                 .Post<ItemsResponse>(Consumable.ITEMS)
-                .Subscribe(OnAddSucceed, OnAddFailed);
+                .Subscribe();
         }
-
-        private void OnAddSucceed(ItemsResponse response) { }
-
-        private void OnAddFailed(Exception exception) { }
     }
 }
