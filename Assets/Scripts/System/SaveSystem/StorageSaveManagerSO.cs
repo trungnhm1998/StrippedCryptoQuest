@@ -33,6 +33,7 @@ namespace CryptoQuest.System.SaveSystem
             FileManager.MoveFile(_fileName, _backupFileName);
             return FileManager.WriteToFile(_fileName, jsonData);
 #else
+            PlayerPrefs.SetString(_backupFileName, PlayerPrefs.GetString(_fileName));
             PlayerPrefs.SetString(_fileName, jsonData);
             return true;
 #endif

@@ -595,6 +595,7 @@ MonoBehaviour:
   - rid: 3779421920259735739
   - rid: 3779421920259735794
   - rid: 6753055534399356935
+  - rid: 3779421944645943390
   references:
     version: 2
     RefIds:
@@ -666,6 +667,13 @@ MonoBehaviour:
       type: {class: MagicStoneInventoryLoader, ns: CryptoQuest.System.SaveSystem.Loaders, asm: IndiGames.CryptoQuest}
       data:
         _inventory: {fileID: 11400000, guid: dac3b863c8895c7408d0d03a95d1d969, type: 2}
+    - rid: 3779421944645943390
+      type: {class: PartyLoader, ns: CryptoQuest.Gameplay.PlayerParty, asm: IndiGames.CryptoQuest}
+      data:
+        _heroInventory: {fileID: 11400000, guid: 8e54c04f1de81b14b9717fd394372769, type: 2}
+        _partySO: {fileID: 11400000, guid: 197a08cf381438a48875f05c90e104fb, type: 2}
+        _saveSystemSO: {fileID: 11400000, guid: 660bab7c7e2db6946b3a03dc73ffe40f, type: 2}
+        _defaultMainHero: {fileID: 11400000, guid: df24061ed8a2b8643b7df406d8114b50, type: 2}
     - rid: 6753055534399356935
       type: {class: BeastInventoryLoader, ns: CryptoQuest.Beast.Loader, asm: IndiGames.CryptoQuest.Beast}
       data:

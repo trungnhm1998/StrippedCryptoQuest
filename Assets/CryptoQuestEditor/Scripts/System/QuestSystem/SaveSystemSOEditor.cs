@@ -1,10 +1,9 @@
 using CryptoQuest.API;
 using CryptoQuest.Networking;
-using CryptoQuest.SaveSystem;
-using CryptoQuest.System;
 using CryptoQuest.System.SaveSystem;
 using CryptoQuest.System.SaveSystem.Savers;
 using IndiGames.Core.Common;
+using UniRx;
 using UnityEditor;
 using UnityEditor.UIElements;
 using UnityEngine;
@@ -43,7 +42,7 @@ namespace CryptoQuestEditor.System.QuestSystem
             Target.Save();
             var restClient = ServiceProvider.GetService<IRestClient>();
             restClient?.WithBody(new IntervalOnlineProgressionSaver.SaveDataBody() { GameData = Target.SaveData })
-                .Post<IntervalOnlineProgressionSaver.SaveDataResult>(Accounts.USER_SAVE_DATA);
+                .Post<IntervalOnlineProgressionSaver.SaveDataResult>(Accounts.USER_SAVE_DATA).Subscribe(_ => { });
             EditorUtility.SetDirty(Target);
             AssetDatabase.SaveAssets();
         }

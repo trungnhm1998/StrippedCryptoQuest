@@ -20,13 +20,6 @@ namespace CryptoQuest.Gameplay.PlayerParty
     public class PartySO : ScriptableObject
     {
         [SerializeField] private PartySlotSpec[] _heroSpecs;
-
-        public PartySlotSpec[] Heroes
-        {
-            get => _heroSpecs;
-            set => _heroSpecs = value;
-        }
-
         public PartySlotSpec[] GetParty() => _heroSpecs;
         public void SetParty(PartySlotSpec[] newSpecs) => _heroSpecs = newSpecs;
     }

@@ -10,7 +10,6 @@ using CryptoQuest.Gameplay.PlayerParty;
 using CryptoQuest.Inventory;
 using CryptoQuest.Networking;
 using CryptoQuest.Sagas.Objects;
-using CryptoQuest.Sagas.Party;
 using CryptoQuest.UI.Actions;
 using IndiGames.Core.Common;
 using IndiGames.Core.Events;
@@ -22,6 +21,7 @@ using CharacterObject = CryptoQuest.Sagas.Objects.Character;
 
 namespace CryptoQuest.Sagas.Character
 {
+    [Obsolete("Using HeroesInventoryLoader instead.")]
     public class FetchProfileCharacters : SagaBase<FetchProfileCharactersAction>
     {
         [SerializeField] private AssetReferenceT<HeroInventorySO> _heroInventoryAsset;
@@ -58,16 +58,17 @@ namespace CryptoQuest.Sagas.Character
         {
             if (heroResponseList.Length == 0) return;
 
-            var dboxHeroes = heroResponseList.Where(hero => hero.inGameStatus == (int)Objects.ECharacterStatus.InBox)
-            .ToArray();
+            var dboxHeroes = heroResponseList.Where(hero => hero.inGameStatus == (int)ECharacterStatus.InBox)
+                .ToArray();
             ActionDispatcher.Dispatch(new GetInDboxHeroesSucceeded(dboxHeroes));
 
             List<CharacterObject> inGameHeroes = new();
             foreach (var hero in heroResponseList)
             {
                 if (hero.isHero == 1) continue;
-                if (hero.inGameStatus == (int)Objects.ECharacterStatus.InGame) inGameHeroes.Add(hero);
+                if (hero.inGameStatus == (int)ECharacterStatus.InGame) inGameHeroes.Add(hero);
             }
+
             ActionDispatcher.Dispatch(new GetInGameHeroesSucceeded(inGameHeroes.ToArray()));
 
             OnInventoryFilled(inGameHeroes.ToArray());
@@ -78,7 +79,6 @@ namespace CryptoQuest.Sagas.Character
                 if (hero.partyId == 0) continue;
                 inPartyHeroes.Add(hero);
             }
-            ActionDispatcher.Dispatch(new SavePartyAction(inPartyHeroes.ToArray()));
         }
 
         private void OnInventoryFilled(CharacterObject[] heroResponseList)
@@ -101,6 +101,7 @@ namespace CryptoQuest.Sagas.Character
                 if (heroResponse.id == -1) continue;
                 nftHeroes.Add(converter.Convert(heroResponse));
             }
+
             _heroInventory.OwnedHeroes = nftHeroes;
             _inventoryFilled.RaiseEvent(_heroInventory.OwnedHeroes);
         }
