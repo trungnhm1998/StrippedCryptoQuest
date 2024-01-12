@@ -7,7 +7,6 @@ namespace CryptoQuest.UI.Tooltips
     public class ShopEquipmentTooltipController : MonoBehaviour
     {
         [SerializeField] private ShowTooltipEvent _showTooltipEvent;
-        [SerializeField] private float _autoReleaseTime = 5f;
         [SerializeField] private GameObject _toolTipGameObject;
 
         private void OnEnable()
