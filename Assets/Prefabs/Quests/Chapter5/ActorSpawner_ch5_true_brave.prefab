@@ -433,7 +433,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7899208893105534016
 Transform:
   m_ObjectHideFlags: 0
@@ -466,7 +466,7 @@ MonoBehaviour:
   _onSceneLoadedEventChannel: {fileID: 11400000, guid: b8b96e43d21a7bf4c96df4cb83c2b764, type: 2}
   _spawnPoint: {fileID: 4281324462355962651}
   _actorDef: {fileID: 11400000, guid: b4a963a887a8d124890e3c79cd428974, type: 2}
-  _actorSpawnSettingSO: {fileID: 0}
+  _actorSpawnSettingSO: {fileID: 11400000, guid: a500b3c9fad6ca14e9ceb4f3bd64439e, type: 2}
   _actorDeSpawnSettingSO: {fileID: 11400000, guid: 1eb97721726e78d46a673312da43e338, type: 2}
 --- !u!1 &4057755775557231455
 GameObject:
@@ -495,7 +495,7 @@ Transform:
   m_GameObject: {fileID: 4057755775557231455}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -29.05, y: -74.79, z: 0}
+  m_LocalPosition: {x: -29.05, y: -77.71, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -832,7 +832,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &884520755545168138
 Transform:
   m_ObjectHideFlags: 0
@@ -1059,6 +1059,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7899208893105534016}
     m_Modifications:
+    - target: {fileID: 437602440254262248, guid: ce382afe6e467424192ba8fac2a12353, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1731360935000182590, guid: ce382afe6e467424192ba8fac2a12353, type: 3}
       propertyPath: questCutsceneDef
       value: 
@@ -1066,6 +1070,14 @@ PrefabInstance:
     - target: {fileID: 3370019011821533867, guid: ce382afe6e467424192ba8fac2a12353, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3680859270376539149, guid: ce382afe6e467424192ba8fac2a12353, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3998604883914401461, guid: ce382afe6e467424192ba8fac2a12353, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4049255670598434316, guid: ce382afe6e467424192ba8fac2a12353, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1097,7 +1109,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4414341839223721585, guid: ce382afe6e467424192ba8fac2a12353, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6019965971319400563, guid: ce382afe6e467424192ba8fac2a12353, type: 3}
       propertyPath: m_Image
