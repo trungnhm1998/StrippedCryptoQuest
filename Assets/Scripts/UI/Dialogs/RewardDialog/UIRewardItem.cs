@@ -1,4 +1,5 @@
 using CryptoQuest.Gameplay.Loot;
+using CryptoQuest.UI.Dialogs.RewardDialog.ConfigDisplayAction;
 using IndiGames.Core.Events;
 using TMPro;
 using UnityEngine;
@@ -42,6 +43,11 @@ namespace CryptoQuest.UI.Dialogs.RewardDialog
         {
             Debug.LogWarning($"Try to loot equipment loot {loot.EquipmentId} but haven't implemented yet");
             ActionDispatcher.Dispatch(new RequestConfigEquipmentRewardInfo(this, loot));
+        }
+
+        public void Visit(MagicStoneLoot loot)
+        {
+            ActionDispatcher.Dispatch(new ConfigureMagicStoneLootDisplayAction(loot, this));
         }
 
         public void Visit(ExpLoot loot) => _text.text = $"{loot.Exp} EXP";

@@ -8,5 +8,6 @@ namespace CryptoQuest.Inventory
         void Visit(CurrencyLootInfo loot);
         void Visit(EquipmentLoot loot);
         void Visit(ExpLoot loot);
+        void Visit(MagicStoneLoot loot);
     }
 }
