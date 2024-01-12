@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using CryptoQuest.Item.Equipment;
+using CryptoQuest.UI.Menu.Character;
 using CryptoQuest.UI.Tooltips.Equipment;
 using CryptoQuest.UI.Tooltips.Events;
 using UnityEngine;
@@ -9,13 +10,13 @@ namespace CryptoQuest.ShopSystem.PreviewCharacter
 {
     public class CharactersPreviewPresenter : MonoBehaviour
     {
-        [SerializeField] private List<CharacterEquipmentPreviewer> _previewers;
+        [SerializeField] private List<HeroEquipmentPreviewer> _previewers;
         [SerializeField] private ShowTooltipEvent _showEquipmentEvent;
 
         private void OnValidate()
         {
             _previewers =
-                new(GetComponentsInChildren<CharacterEquipmentPreviewer>(true));
+                new(GetComponentsInChildren<HeroEquipmentPreviewer>(true));
         }
 
         private void OnEnable()

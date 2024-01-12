@@ -1,8 +1,7 @@
 using System.Collections.Generic;
 using CryptoQuest.Battle.Components;
-using CryptoQuest.Gameplay.PlayerParty;
-using CryptoQuest.Item.Equipment;
 using CryptoQuest.UI.Character;
+using CryptoQuest.UI.Menu.Character;
 using IndiGames.GameplayAbilitySystem.AttributeSystem;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.Components;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
@@ -17,21 +16,21 @@ namespace CryptoQuest.ShopSystem.PreviewCharacter
         [SerializeField] private Image _avatar;
         [SerializeField] private LocalizeStringEvent _displayName;
         [SerializeField] private List<UIAttribute> _attribute;
-        [SerializeField] private CharacterEquipmentPreviewer _characterPreviewer;
+        [SerializeField] private HeroEquipmentPreviewer _characterPreviewer;
         private AttributeSystemBehaviour _attributeSystemBehaviour;
         private HeroBehaviour _hero;
         private int _previewSlotIndex = 0;
 
-        public void LoadCharacterDetail(PartySlot heroSlot)
+        public void LoadCharacterDetail(HeroBehaviour hero)
         {
-            _hero = heroSlot.HeroBehaviour;
+            _hero = hero;
             _displayName.StringReference = _hero.DetailsInfo.LocalizedName;
             _attributeSystemBehaviour = _hero.AttributeSystem;
             foreach (var attribute in _attribute)
             {
                 SetStat(attribute, attribute.Attribute);
             }
-            _characterPreviewer.SetCharacter(heroSlot);
+            _characterPreviewer.SetPreviewHero(_hero);
         }
 
         private void SetStat(UIAttribute attribute, AttributeScriptableObject attributeSO)
