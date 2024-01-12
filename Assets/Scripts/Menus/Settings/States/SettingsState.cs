@@ -15,7 +15,6 @@ namespace CryptoQuest.Menus.Settings.States
 
         public override void OnEnter()
         {
-            UIMainMenu.OnBackToNavigation();
             _settingsPanel.Input.MenuCancelEvent += HandleCancel;
             _settingsPanel.LanguageOptions.Initialize();
         }
