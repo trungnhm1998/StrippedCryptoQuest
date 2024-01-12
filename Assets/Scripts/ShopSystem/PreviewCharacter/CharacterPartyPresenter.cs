@@ -47,7 +47,7 @@ namespace CryptoQuest.ShopSystem.PreviewCharacter
             {
                 if (!_partyController.Slots[i].HeroBehaviour.IsValid()) return;
                 _characterInfoUis[i].gameObject.SetActive(true);
-                _characterInfoUis[i].LoadCharacterDetail(_partyController.Slots[i]);
+                _characterInfoUis[i].LoadCharacterDetail(_partyController.Slots[i].HeroBehaviour);
 
                 StartCoroutine(CoLoadAvatar(_partyController.Slots[i].HeroBehaviour, _characterInfoUis[i]));
             }
