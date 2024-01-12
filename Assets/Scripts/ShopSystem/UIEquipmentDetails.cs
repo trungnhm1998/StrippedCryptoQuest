@@ -21,7 +21,6 @@ namespace CryptoQuest.ShopSystem
         
         public void OnSelected()
         {
-            _showTooltipEvent.RaiseEvent(false);
             _showTooltipEvent.RaiseEvent(true);
         }
         
