@@ -17,7 +17,7 @@ public class MagicStoneDatabase : ScriptableObject
 	public class Param
 	{
 		
-		public double stone_id;
+		public string stone_id;
 		public string name_key;
 	}
 }

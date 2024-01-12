@@ -49,6 +49,8 @@ namespace CryptoQuest.Inventory
             ActionDispatcher.Dispatch(new AddEquipmentRequestAction(loot.EquipmentId));
         }
 
+        public void Visit(MagicStoneLoot loot) { }
+
         public void Visit(ExpLoot loot)
         {
             foreach (var slot in _partyManager.Slots)

@@ -17,5 +17,6 @@ namespace CryptoQuest.Battle
         bool Merge(ConsumableLootInfo otherLoot);
         bool Merge(CurrencyLootInfo loot);
         bool Merge(ExpLoot otherLoot);
+        bool Merge(MagicStoneLoot otherLoot);
     }
 }

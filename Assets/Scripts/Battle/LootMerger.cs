@@ -18,6 +18,7 @@ namespace CryptoQuest.Battle
                     i++;
                     continue;
                 }
+
                 loot.TryMerge(this);
                 for (int j = i + 1; j < mergedLoots.Count;)
                 {
@@ -94,6 +95,26 @@ namespace CryptoQuest.Battle
             if (_mergingCurrency.Item.Data != loot.Item.Data) return false;
 
             _mergingCurrency.Item.UpdateCurrencyAmount(loot.Item.Amount);
+            return true;
+        }
+
+        #endregion
+
+        #region Magic Stone
+
+        private MagicStoneLoot _mergingStone;
+
+        public bool Merge(MagicStoneLoot otherLoot)
+        {
+            if (_mergingStone == null)
+            {
+                _mergingStone = otherLoot;
+                return false;
+            }
+
+            if (_mergingStone.StoneId != otherLoot.StoneId) return false;
+
+            _mergingStone.Quantity += otherLoot.Quantity;
             return true;
         }
 
