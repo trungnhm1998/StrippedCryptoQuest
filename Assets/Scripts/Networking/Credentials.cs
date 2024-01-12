@@ -50,6 +50,7 @@ namespace CryptoQuest.Networking
             Wallet = string.Empty;
             Token = string.Empty;
             RefreshToken = string.Empty;
+            Save();
         }
     }
 }
